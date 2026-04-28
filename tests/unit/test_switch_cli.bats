@@ -47,6 +47,62 @@ teardown() {
     rm -rf "$TEST_TMP"
 }
 
+make_fake_tmux() {
+    local fake_bin="${TEST_TMP}/bin"
+    mkdir -p "$fake_bin"
+    cat > "${fake_bin}/tmux" <<'SH'
+#!/usr/bin/env bash
+cmd="$1"
+shift || true
+
+case "$cmd" in
+    list-panes)
+        echo "0: [80x24] [history 0/2000, 0 bytes] %0"
+        ;;
+    display-message)
+        echo "ashigaru1"
+        ;;
+    show-options)
+        for arg in "$@"; do
+            case "$arg" in
+                @pane_base)
+                    echo "0"
+                    exit 0
+                    ;;
+                @agent_cli)
+                    echo "claude"
+                    exit 0
+                    ;;
+            esac
+        done
+        echo "0"
+        ;;
+    capture-pane)
+        echo "$"
+        ;;
+    send-keys|set-option|select-pane)
+        ;;
+    *)
+        ;;
+esac
+SH
+    chmod +x "${fake_bin}/tmux"
+    echo "$fake_bin"
+}
+
+run_switch_cli_with_settings() {
+    local settings_file="$1"
+    shift
+    local fake_bin
+    fake_bin="$(make_fake_tmux)"
+
+    run env \
+        PATH="${fake_bin}:$PATH" \
+        SWITCH_CLI_SETTINGS_FILE="$settings_file" \
+        CLI_ADAPTER_SETTINGS="$settings_file" \
+        bash "${PROJECT_ROOT}/scripts/switch_cli.sh" "$@"
+}
+
 # =============================================================================
 # resolve_pane テスト (switch_cli.sh 内の関数を直接テスト)
 # =============================================================================
@@ -118,6 +174,60 @@ load_resolve_pane() {
     [ "$result" = "multiagent:agents.5" ]
     result=$(resolve_pane "gunshi")
     [ "$result" = "multiagent:agents.10" ]
+}
+
+@test "switch_cli: adds cli.agents block when settings has no cli section" {
+    cat > "${TEST_TMP}/settings_no_cli.yaml" <<'YAML'
+language: ja
+shell: bash
+display_mode: shout
+YAML
+
+    run_switch_cli_with_settings "${TEST_TMP}/settings_no_cli.yaml" \
+        ashigaru1 --type codex --model gpt-5.3-codex
+    [ "$status" -eq 0 ]
+
+    export CLI_ADAPTER_SETTINGS="${TEST_TMP}/settings_no_cli.yaml"
+    source "${PROJECT_ROOT}/lib/cli_adapter.sh"
+    [ "$(get_cli_type ashigaru1)" = "codex" ]
+    [ "$(get_agent_model ashigaru1)" = "gpt-5.3-codex" ]
+}
+
+@test "switch_cli: adds agents block when cli section exists without agents" {
+    cat > "${TEST_TMP}/settings_no_agents.yaml" <<'YAML'
+language: ja
+cli:
+  default: claude
+YAML
+
+    run_switch_cli_with_settings "${TEST_TMP}/settings_no_agents.yaml" \
+        ashigaru1 --type codex --model gpt-5.3-codex
+    [ "$status" -eq 0 ]
+
+    export CLI_ADAPTER_SETTINGS="${TEST_TMP}/settings_no_agents.yaml"
+    source "${PROJECT_ROOT}/lib/cli_adapter.sh"
+    [ "$(get_cli_type ashigaru1)" = "codex" ]
+    [ "$(get_agent_model ashigaru1)" = "gpt-5.3-codex" ]
+}
+
+@test "switch_cli: adds missing agent under existing cli.agents" {
+    cat > "${TEST_TMP}/settings_missing_agent.yaml" <<'YAML'
+cli:
+  default: claude
+  agents:
+    karo:
+      type: claude
+      model: claude-sonnet-4-6
+YAML
+
+    run_switch_cli_with_settings "${TEST_TMP}/settings_missing_agent.yaml" \
+        ashigaru1 --type codex --model gpt-5.3-codex
+    [ "$status" -eq 0 ]
+
+    export CLI_ADAPTER_SETTINGS="${TEST_TMP}/settings_missing_agent.yaml"
+    source "${PROJECT_ROOT}/lib/cli_adapter.sh"
+    [ "$(get_cli_type ashigaru1)" = "codex" ]
+    [ "$(get_agent_model ashigaru1)" = "gpt-5.3-codex" ]
 }
 
 # =============================================================================

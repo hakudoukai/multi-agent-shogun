@@ -31,10 +31,11 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-SETTINGS_FILE="${PROJECT_ROOT}/config/settings.yaml"
+SETTINGS_FILE="${SWITCH_CLI_SETTINGS_FILE:-${PROJECT_ROOT}/config/settings.yaml}"
 LOG_FILE="${PROJECT_ROOT}/logs/switch_cli.log"
 
 # cli_adapter.sh をロード
+export CLI_ADAPTER_SETTINGS="${CLI_ADAPTER_SETTINGS:-${SETTINGS_FILE}}"
 source "${PROJECT_ROOT}/lib/cli_adapter.sh"
 
 # ─── ログ ───
@@ -145,12 +146,54 @@ data['cli']['agents'][agent_id] = agent_cfg
 # 完全性のためyaml.dumpを使用。コメントは失われる。
 # → 代わりにsed的なアプローチ: 対象ブロックだけ書き換える
 
-# Simple approach: read lines, find agent block, replace
-lines = content.split('\n')
+# Simple approach: read lines, find agent block, replace. If the target
+# block does not exist yet, append it under cli.agents without rewriting the
+# whole YAML file and losing comments.
+lines = content.splitlines()
 new_lines = []
-in_agent_block = False
-agent_indent = None
-skip_until_next = False
+agent_block_found = False
+
+def indent_of(line):
+    return len(line) - len(line.lstrip())
+
+def agent_block(indent):
+    block = [f"{' ' * indent}{agent_id}:"]
+    inner_indent = ' ' * (indent + 2)
+    if new_type:
+        block.append(f'{inner_indent}type: {new_type}')
+    if new_model:
+        block.append(f'{inner_indent}model: {new_model}  {comment}')
+    return block
+
+def find_top_level_cli(lines):
+    for idx, line in enumerate(lines):
+        stripped = line.lstrip()
+        if stripped == 'cli:' and indent_of(line) == 0:
+            return idx
+    return None
+
+def find_cli_agents(lines, cli_idx):
+    cli_indent = indent_of(lines[cli_idx])
+    for idx in range(cli_idx + 1, len(lines)):
+        stripped = lines[idx].lstrip()
+        if stripped == '' or stripped.startswith('#'):
+            continue
+        line_indent = indent_of(lines[idx])
+        if line_indent <= cli_indent:
+            return None
+        if stripped == 'agents:':
+            return idx
+    return None
+
+def block_end(lines, start_idx):
+    start_indent = indent_of(lines[start_idx])
+    for idx in range(start_idx + 1, len(lines)):
+        stripped = lines[idx].lstrip()
+        if stripped == '' or stripped.startswith('#'):
+            continue
+        if indent_of(lines[idx]) <= start_indent:
+            return idx
+    return len(lines)
 
 i = 0
 while i < len(lines):
@@ -159,7 +202,7 @@ while i < len(lines):
 
     # Detect our agent's block start
     if stripped.startswith(f'{agent_id}:'):
-        in_agent_block = True
+        agent_block_found = True
         agent_indent = len(line) - len(stripped)
         new_lines.append(line)
         # Write the updated fields
@@ -183,18 +226,35 @@ while i < len(lines):
             if next_indent <= agent_indent:
                 break  # Next agent or section
             i += 1
-        in_agent_block = False
         continue
     else:
         new_lines.append(line)
     i += 1
 
-with open(settings_path, 'w', encoding='utf-8') as f:
-    f.write('\n'.join(new_lines))
-    if not content.endswith('\n'):
-        pass
+if not agent_block_found:
+    cli_idx = find_top_level_cli(new_lines)
+    if cli_idx is None:
+        if new_lines and new_lines[-1].strip() != '':
+            new_lines.append('')
+        new_lines.extend(['cli:', '  agents:'])
+        new_lines.extend(agent_block(4))
     else:
-        f.write('\n') if not '\n'.join(new_lines).endswith('\n') else None
+        agents_idx = find_cli_agents(new_lines, cli_idx)
+        if agents_idx is None:
+            insert_at = block_end(new_lines, cli_idx)
+            new_lines[insert_at:insert_at] = ['  agents:'] + agent_block(4)
+        else:
+            insert_at = block_end(new_lines, agents_idx)
+            new_lines[insert_at:insert_at] = agent_block(indent_of(new_lines[agents_idx]) + 2)
+
+settings_dir = os.path.dirname(settings_path)
+if settings_dir:
+    os.makedirs(settings_dir, exist_ok=True)
+with open(settings_path, 'w', encoding='utf-8') as f:
+    new_content = '\n'.join(new_lines)
+    if new_content:
+        new_content += '\n'
+    f.write(new_content)
 
 print("OK")
 PYEOF
