@@ -60,6 +60,7 @@ shim:
     - hakudokai_escalation.py
     - hakudokai_audit_scheduler.sh
     - hakudokai_daily_summary.py
+    - hakudokai_git_guard.py
 
 # エスカレーション設定
 escalation:
