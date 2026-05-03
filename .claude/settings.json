@@ -33,7 +33,14 @@
       "Bash(mkfs*)",
       "Bash(dd if=*)",
       "Bash(chmod -R * /)",
-      "Bash(chown -R * /)"
+      "Bash(chown -R * /)",
+      "Bash(curl *|bash*)",
+      "Bash(curl *|sh*)",
+      "Bash(wget *|bash*)",
+      "Bash(wget *|sh*)",
+      "Bash(rm -rf /mnt/c/Windows*)",
+      "Bash(rm -rf /mnt/c/Users*)",
+      "Bash(rm -rf /mnt/c/Program*)"
     ]
   },
   "spinnerVerbs": {

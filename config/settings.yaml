@@ -42,6 +42,13 @@ shim:
     - hakudokai_dashboard_sync.py
     - hakudokai_skill_candidate.py
     - hakudokai_skill_review.py
+    - hakudokai_dev_lessons.py
+    - hakudokai_resistance_guard.py
+    - hakudokai_audit_misconduct.py
+    - hakudokai_watchdog.sh
+    - hakudokai_start_watchers.sh
+    - hakudokai_fukuincho_watcher.sh
+    - hakudokai_fukuincho_poll.py
 
 # Supabase連携 (~/.openclaw/env から流用)
 supabase:
