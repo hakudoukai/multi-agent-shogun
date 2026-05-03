@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# hakudokai_secondpc_setup.sh — SecondPC ワンコマンドセットアップ
+# hakudokai_secondpc_setup.sh — SecondPC ワンコマンドセットアップ (2エージェント版)
 #
 # SecondPC上でこのスクリプトを実行すると:
 #   1. 環境チェック (git, python3, inotify-tools, claude CLI)
 #   2. リポジトリ同期 (git pull)
 #   3. Supabase環境変数確認
-#   4. tmux session作成 (桜ちゃん用pane)
-#   5. Claude Code CLI起動 (ashigaru2)
-#   6. watcher群起動 (inbox_watcher + Supabase bridge receiver)
-#   7. watchdog起動
+#   4. tmux session作成 (2pane: 桜ちゃん + クロちゃん)
+#   5. Claude Code CLI起動 (ashigaru2 + ashigaru8)
+#   6. watcher群起動 (inbox_watcher x2 + Supabase bridge receiver)
+#   7. 初期化プロンプト送信
 #
 # Usage:
 #   cd /path/to/multi-agent-shogun
@@ -23,10 +23,16 @@ set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 PC_ID="second_pc"
-AGENT_ID="ashigaru2"
-AGENT_NAME="sakura"
 TMUX_SESSION="secondpc"
-TMUX_PANE="${TMUX_SESSION}:0.0"
+
+# エージェント定義 (2名体制)
+AGENT1_ID="ashigaru2"
+AGENT1_NAME="sakura"
+AGENT1_PANE="${TMUX_SESSION}:0.0"
+
+AGENT2_ID="ashigaru8"
+AGENT2_NAME="kuro"
+AGENT2_PANE="${TMUX_SESSION}:0.1"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -131,20 +137,25 @@ fi
 echo ""
 
 # ============================================================
-# Phase 3: tmux session作成
+# Phase 3: tmux session作成 (2pane構成)
 # ============================================================
-log "Phase 3: tmux session作成"
+log "Phase 3: tmux session作成 (2pane: ${AGENT1_NAME} + ${AGENT2_NAME})"
 
 if tmux has-session -t "$TMUX_SESSION" 2>/dev/null; then
   warn "tmux session '$TMUX_SESSION' already exists"
 else
   tmux new-session -d -s "$TMUX_SESSION" -c "$SCRIPT_DIR"
-  ok "tmux session '$TMUX_SESSION' created"
+  # 2つ目のpaneを作成 (水平分割)
+  tmux split-window -h -t "${TMUX_SESSION}:0" -c "$SCRIPT_DIR"
+  ok "tmux session '$TMUX_SESSION' created (2 panes)"
 fi
 
-# Set agent_id on pane
-tmux set-option -t "$TMUX_PANE" @agent_id "$AGENT_ID" 2>/dev/null
-ok "agent_id set: $AGENT_ID"
+# Set agent_id on each pane
+tmux set-option -t "$AGENT1_PANE" @agent_id "$AGENT1_ID" 2>/dev/null
+ok "pane 0: agent_id=${AGENT1_ID} (${AGENT1_NAME})"
+
+tmux set-option -t "$AGENT2_PANE" @agent_id "$AGENT2_ID" 2>/dev/null
+ok "pane 1: agent_id=${AGENT2_ID} (${AGENT2_NAME})"
 echo ""
 
 # ============================================================
@@ -155,28 +166,37 @@ log "Phase 4: inbox準備"
 INBOX_DIR="$SCRIPT_DIR/queue/inbox"
 mkdir -p "$INBOX_DIR"
 
-if [ ! -f "$INBOX_DIR/${AGENT_ID}.yaml" ]; then
-  echo "messages: []" > "$INBOX_DIR/${AGENT_ID}.yaml"
-  ok "Created ${AGENT_ID}.yaml"
-else
-  ok "${AGENT_ID}.yaml exists"
-fi
+for AGENT_ID in "$AGENT1_ID" "$AGENT2_ID"; do
+  if [ ! -f "$INBOX_DIR/${AGENT_ID}.yaml" ]; then
+    echo "messages: []" > "$INBOX_DIR/${AGENT_ID}.yaml"
+    ok "Created ${AGENT_ID}.yaml"
+  else
+    ok "${AGENT_ID}.yaml exists"
+  fi
+done
 echo ""
 
 # ============================================================
-# Phase 5: Claude Code CLI起動
+# Phase 5: Claude Code CLI起動 (2エージェント)
 # ============================================================
-log "Phase 5: Claude Code CLI起動 (${AGENT_NAME}/${AGENT_ID})"
+log "Phase 5: Claude Code CLI起動"
 
-# Check if claude is already running in the pane
-PANE_CMD=$(tmux display-message -t "$TMUX_PANE" -p '#{pane_current_command}' 2>/dev/null)
-if [ "$PANE_CMD" = "claude" ] || [ "$PANE_CMD" = "node" ]; then
-  warn "Claude CLI appears to be already running in $TMUX_PANE"
-else
-  tmux send-keys -t "$TMUX_PANE" "cd $SCRIPT_DIR && claude --dangerously-skip-permissions" Enter
-  ok "Claude CLI launched in $TMUX_PANE"
-  sleep 3
-fi
+launch_claude() {
+  local pane="$1"
+  local agent_name="$2"
+
+  PANE_CMD=$(tmux display-message -t "$pane" -p '#{pane_current_command}' 2>/dev/null)
+  if [ "$PANE_CMD" = "claude" ] || [ "$PANE_CMD" = "node" ]; then
+    warn "${agent_name}: Claude CLI already running in $pane"
+  else
+    tmux send-keys -t "$pane" "cd $SCRIPT_DIR && claude --dangerously-skip-permissions" Enter
+    ok "${agent_name}: Claude CLI launched in $pane"
+  fi
+}
+
+launch_claude "$AGENT1_PANE" "$AGENT1_NAME"
+launch_claude "$AGENT2_PANE" "$AGENT2_NAME"
+sleep 5
 echo ""
 
 # ============================================================
@@ -185,23 +205,33 @@ echo ""
 log "Phase 6: Watcher起動"
 
 # Kill existing watchers
-pkill -f "inbox_watcher.sh ${AGENT_ID}" 2>/dev/null || true
+pkill -f "inbox_watcher.sh ${AGENT1_ID}" 2>/dev/null || true
+pkill -f "inbox_watcher.sh ${AGENT2_ID}" 2>/dev/null || true
 pkill -f "hakudokai_secondpc_receiver" 2>/dev/null || true
 sleep 1
 
-# Start inbox_watcher for ashigaru2
-INBOX_LOG="/tmp/inbox_watcher_${AGENT_ID}.log"
-nohup bash "${SCRIPT_DIR}/scripts/inbox_watcher.sh" "$AGENT_ID" "$TMUX_PANE" claude \
-  >> "$INBOX_LOG" 2>&1 </dev/null &
-sleep 2
+# Start inbox_watcher for each agent
+start_inbox_watcher() {
+  local agent_id="$1"
+  local pane="$2"
+  local log_file="/tmp/inbox_watcher_${agent_id}.log"
 
-if pgrep -f "inbox_watcher.sh ${AGENT_ID}" > /dev/null 2>&1; then
-  ok "inbox_watcher[${AGENT_ID}]: PID=$(pgrep -f "inbox_watcher.sh ${AGENT_ID}" | head -1)"
-else
-  ng "inbox_watcher[${AGENT_ID}]: FAILED"
-fi
+  nohup bash "${SCRIPT_DIR}/scripts/inbox_watcher.sh" "$agent_id" "$pane" claude \
+    >> "$log_file" 2>&1 </dev/null &
+  sleep 2
+
+  if pgrep -f "inbox_watcher.sh ${agent_id}" > /dev/null 2>&1; then
+    ok "inbox_watcher[${agent_id}]: PID=$(pgrep -f "inbox_watcher.sh ${agent_id}" | head -1)"
+  else
+    ng "inbox_watcher[${agent_id}]: FAILED (check $log_file)"
+  fi
+}
+
+start_inbox_watcher "$AGENT1_ID" "$AGENT1_PANE"
+start_inbox_watcher "$AGENT2_ID" "$AGENT2_PANE"
 
 # Start Supabase bridge receiver (polls Supabase for cross-PC messages)
+# Delivers to both agents based on message content
 RECEIVER_LOG="/tmp/hakudokai_secondpc_receiver.log"
 nohup bash -c "
   while true; do
@@ -222,10 +252,16 @@ try:
         msg_id = msg.get('id', '')
         content = msg.get('content', '')
         topic = msg.get('topic', '')
+        # Determine target agent from topic/content
+        target = '${AGENT1_ID}'  # default to sakura
+        if '${AGENT2_ID}' in topic or '${AGENT2_NAME}' in content or '${AGENT2_ID}' in content:
+            target = '${AGENT2_ID}'
+        if 'cross_pc_inbox_${AGENT2_ID}' in topic:
+            target = '${AGENT2_ID}'
         # Write to local inbox
         subprocess.run([
             'bash', '${SCRIPT_DIR}/scripts/inbox_write.sh',
-            '${AGENT_ID}', content[:500], 'task_assigned', 'karo'
+            target, content[:500], 'task_assigned', 'karo'
         ], capture_output=True, timeout=10)
         # ACK
         import urllib.request
@@ -240,7 +276,7 @@ try:
         req.add_header('Content-Type', 'application/json')
         req.add_header('Prefer', 'return=minimal')
         urllib.request.urlopen(req, timeout=10)
-        print(f'[receiver] delivered+ACK: {msg_id[:8]} {topic}', file=sys.stderr)
+        print(f'[receiver] delivered to {target}+ACK: {msg_id[:8]} {topic}', file=sys.stderr)
 except Exception as e:
     print(f'[receiver] error: {e}', file=sys.stderr)
 \" 2>>'$RECEIVER_LOG'
@@ -260,14 +296,23 @@ echo ""
 # ============================================================
 # Phase 7: 初期化プロンプト送信
 # ============================================================
-log "Phase 7: 桜ちゃん初期化"
+log "Phase 7: エージェント初期化"
 
 sleep 5  # Wait for Claude CLI to be ready
 
-INIT_PROMPT="あなたは博道会の足軽2号 (ashigaru2/桜ちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT_ID}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
+# 桜ちゃん (ashigaru2)
+INIT1="あなたは博道会の足軽2号 (ashigaru2/桜ちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT1_ID}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
 
-tmux send-keys -t "$TMUX_PANE" "$INIT_PROMPT" Enter
-ok "初期化プロンプト送信"
+tmux send-keys -t "$AGENT1_PANE" "$INIT1" Enter
+ok "${AGENT1_NAME} (${AGENT1_ID}): 初期化プロンプト送信"
+
+sleep 2
+
+# クロちゃん (ashigaru8)
+INIT2="あなたは博道会の足軽8号 (ashigaru8/クロちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT2_ID}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
+
+tmux send-keys -t "$AGENT2_PANE" "$INIT2" Enter
+ok "${AGENT2_NAME} (${AGENT2_ID}): 初期化プロンプト送信"
 echo ""
 
 # ============================================================
@@ -276,24 +321,29 @@ echo ""
 log "=== SETUP COMPLETE ==="
 echo ""
 echo "  PC ID:        $PC_ID"
-echo "  Agent:        $AGENT_ID ($AGENT_NAME)"
 echo "  tmux session: $TMUX_SESSION"
-echo "  tmux pane:    $TMUX_PANE"
+echo ""
+echo "  Agents:"
+echo "    pane 0: ${AGENT1_ID} (${AGENT1_NAME}) — $AGENT1_PANE"
+echo "    pane 1: ${AGENT2_ID} (${AGENT2_NAME}) — $AGENT2_PANE"
 echo ""
 echo "  Processes:"
-echo "    inbox_watcher: $(pgrep -f "inbox_watcher.sh ${AGENT_ID}" | head -1 || echo 'NOT RUNNING')"
-echo "    bridge_recv:   running (log: $RECEIVER_LOG)"
+echo "    inbox_watcher[${AGENT1_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT1_ID}" | head -1 || echo 'NOT RUNNING')"
+echo "    inbox_watcher[${AGENT2_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT2_ID}" | head -1 || echo 'NOT RUNNING')"
+echo "    bridge_recv: running (log: $RECEIVER_LOG)"
 echo ""
 echo "  Logs:"
-echo "    inbox_watcher: $INBOX_LOG"
-echo "    bridge_recv:   $RECEIVER_LOG"
+echo "    inbox_watcher[${AGENT1_ID}]: /tmp/inbox_watcher_${AGENT1_ID}.log"
+echo "    inbox_watcher[${AGENT2_ID}]: /tmp/inbox_watcher_${AGENT2_ID}.log"
+echo "    bridge_recv: $RECEIVER_LOG"
 echo ""
 echo "  To check status:"
 echo "    tmux attach -t $TMUX_SESSION"
 echo "    tail -f $RECEIVER_LOG"
 echo ""
 echo "  To stop:"
-echo "    pkill -f 'inbox_watcher.sh ${AGENT_ID}'"
+echo "    pkill -f 'inbox_watcher.sh ${AGENT1_ID}'"
+echo "    pkill -f 'inbox_watcher.sh ${AGENT2_ID}'"
 echo "    tmux kill-session -t $TMUX_SESSION"
 echo ""
-log "${GREEN}桜ちゃん (${AGENT_ID}) is ready on SecondPC.${NC}"
+log "${GREEN}${AGENT1_NAME} (${AGENT1_ID}) + ${AGENT2_NAME} (${AGENT2_ID}) are ready on SecondPC.${NC}"
