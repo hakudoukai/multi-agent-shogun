@@ -34,13 +34,15 @@ CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 SUPABASE_API="${SUPABASE_URL}/rest/v1"
 
 # Agents to monitor inbox_watcher.sh for
-INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8"
+INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8 shogun:shogun:0.0"
 
 # Restart failure counters (associative array)
 declare -A RESTART_FAIL_COUNT
 declare -A MANUAL_MODE
 RESTART_FAIL_COUNT[fukuincho]=0
 MANUAL_MODE[fukuincho]=false
+RESTART_FAIL_COUNT[fukuincho_reverse]=0
+MANUAL_MODE[fukuincho_reverse]=false
 for entry in $INBOX_AGENTS; do
   agent="${entry%%:*}"
   RESTART_FAIL_COUNT[$agent]=0
@@ -138,6 +140,41 @@ start_inbox_watcher() {
   fi
 }
 
+start_fukuincho_reverse_watcher() {
+  log "Starting fukuincho_reverse_watcher..."
+  nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+    bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh" --interval 5 \
+    >> /tmp/hakudokai_fukuincho_reverse_watcher.log 2>&1 </dev/null &
+  local pid=$!
+  sleep 3
+  if ps -p "$pid" > /dev/null 2>&1; then
+    log "fukuincho_reverse_watcher STARTED (PID=$pid)"
+    RESTART_FAIL_COUNT[fukuincho_reverse]=0
+    TOTAL_RESTARTS=$((TOTAL_RESTARTS + 1))
+    return 0
+  else
+    log "fukuincho_reverse_watcher FAILED TO START"
+    return 1
+  fi
+}
+
+check_and_restart_fukuincho_reverse() {
+  if ! pgrep -f "hakudokai_fukuincho_reverse_watcher.sh" > /dev/null 2>&1; then
+    if [ "${MANUAL_MODE[fukuincho_reverse]}" = "true" ]; then
+      log "fukuincho_reverse DEAD — MANUAL MODE (skipping)"
+      return 1
+    fi
+    log "ALERT: fukuincho_reverse DEAD — restarting"
+    if ! start_fukuincho_reverse_watcher; then
+      RESTART_FAIL_COUNT[fukuincho_reverse]=$((RESTART_FAIL_COUNT[fukuincho_reverse] + 1))
+      if [ "${RESTART_FAIL_COUNT[fukuincho_reverse]}" -ge "$MAX_RESTART_FAILS" ]; then
+        MANUAL_MODE[fukuincho_reverse]=true
+        send_urgent_alert "fukuincho_reverse" "fukuincho_reverse_watcher: ${MAX_RESTART_FAILS} restart failures. MANUAL MODE."
+      fi
+    fi
+  fi
+}
+
 # DD-142 §4.5 Stage 1+2: check, restart, escalate
 check_and_restart_fukuincho() {
   if ! pgrep -f "hakudokai_fukuincho_watcher.sh" > /dev/null 2>&1; then
@@ -192,8 +229,10 @@ update_dashboard() {
   # Build per-process status
   local fukuincho_alive="false"
   pgrep -f "hakudokai_fukuincho_watcher.sh" > /dev/null 2>&1 && fukuincho_alive="true"
+  local reverse_alive="false"
+  pgrep -f "hakudokai_fukuincho_reverse_watcher.sh" > /dev/null 2>&1 && reverse_alive="true"
 
-  local processes="\"fukuincho_watcher\":{\"alive\":${fukuincho_alive},\"manual_mode\":${MANUAL_MODE[fukuincho]},\"restart_fails\":${RESTART_FAIL_COUNT[fukuincho]}}"
+  local processes="\"fukuincho_watcher\":{\"alive\":${fukuincho_alive},\"manual_mode\":${MANUAL_MODE[fukuincho]},\"restart_fails\":${RESTART_FAIL_COUNT[fukuincho]}},\"fukuincho_reverse\":{\"alive\":${reverse_alive},\"manual_mode\":${MANUAL_MODE[fukuincho_reverse]},\"restart_fails\":${RESTART_FAIL_COUNT[fukuincho_reverse]}}"
 
   for entry in $INBOX_AGENTS; do
     agent="${entry%%:*}"
@@ -218,6 +257,7 @@ log "started (interval=${CHECK_INTERVAL}s, max_restart_fails=${MAX_RESTART_FAILS
 
 # Initial health check
 check_and_restart_fukuincho
+check_and_restart_fukuincho_reverse
 for entry in $INBOX_AGENTS; do
   agent="${entry%%:*}"
   pane="${entry#*:}"
@@ -229,6 +269,7 @@ while true; do
   sleep "$CHECK_INTERVAL"
 
   check_and_restart_fukuincho
+  check_and_restart_fukuincho_reverse
 
   for entry in $INBOX_AGENTS; do
     agent="${entry%%:*}"

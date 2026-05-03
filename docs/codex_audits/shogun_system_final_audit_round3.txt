@@ -1,0 +1,53 @@
+**Final Judgment**
+
+| Axis | Current | Post-Fix Projected |
+|---|---:|---:|
+| 1. Config / installer / CLI hygiene | YELLOW | GREEN if Gemini is completed or removed |
+| 2. Delivery / ACK / watcher reliability | RED | GREEN after ACK-after-confirm, shogun watcher, health freshness |
+| 3. Instruction integrity / forbidden actions | RED | GREEN after FKI source+generated validation and full deny list |
+| 4. dev_lessons / audit feedback loop | RED | GREEN after table creation, fail-closed behavior, real date filter |
+| 5. Clinic boundary / data scope | YELLOW single-clinic, RED 7-clinic | GREEN single-clinic; 7-clinic stays YELLOW/RED until scoped auth is proven |
+| 6. Git safety guard | RED | GREEN after tested git_guard |
+
+Overall current rating: RED.  
+Projected after all 14 fixes, correctly implemented and tested: YELLOW for supervised single-clinic production. Not unsupervised production, and not 7-clinic SaaS.
+
+**Priority Judgment**
+
+I mostly agree with the five immediate fixes, but the priority list is incomplete. Move `shogun inbox_watcher` and `git_guard` into must-do-now. `config/settings.yaml` registry cleanup is useful, but it is lower risk than command delivery, destructive Git protection, and generated instruction integrity.
+
+Must-do-now before any production deployment:
+
+1. `fukuincho_poll.py`: ACK only after exact message-id confirmation in shogun inbox; do not mark locally processed on ACK failure.
+2. Add shogun inbox watcher to startup/watchdog, plus health-file freshness checks.
+3. Implement `hakudokai_git_guard`: block unsafe reset/restore/clean/force-push/delete paths before agents can write production code.
+4. Inject FKI into source instructions and validate generated files in CI/build.
+5. Complete deny list: `git clean`, `git checkout`, `git restore`, `fdisk`, `mount`, `umount`, plus scoped handling for existing `pkill` usage.
+6. Create required DB tables/migrations for `dev_lessons` and `improvement_proposals`; fail closed if unavailable.
+7. Add real date filter to recurrence checks.
+8. Fix clinic scoping on destructive/data-moving paths, especially heartbeat archive and patient lookup.
+
+Can wait until after supervised single-clinic launch:
+
+- Gemini adapter completion, if Gemini is disabled/removed from active routing first.
+- Audit misconduct confidence scoring, provided manual review remains required.
+- Full 7-clinic scoped auth rollout.
+- Cosmetic registry completeness, unless used by installer/health checks.
+
+**Unaddressed Concerns**
+
+Several Round 1/2 items are still not actually fixed in the current files: FKI is absent from generated shogun instructions, `.claude/settings.json` still lacks multiple deny entries, `dev_lessons` still soft-fails and has no real 30-day filter, and no git guard file exists.
+
+Additional concern: `hakudokai_start_watchers.sh` uses `pkill`, while the project’s destructive-operation rules ban `kill/pkill`. Either the policy must define a narrowly-scoped operational exception, or the script must switch to PID files and guarded process ownership checks.
+
+**Axis 6 Recommendation**
+
+Use Python for `git_guard`, with a thin Bash wrapper only for hook/CLI integration.
+
+Reason: this is policy logic, not shell glue. Python gives safer path normalization, structured parsing of `git status --porcelain -z`, JSON/YAML config, clearer tests, better WSL path handling, and less quoting risk. A 550-line Bash guard will be brittle exactly where correctness matters most.
+
+**Final Sign-Off**
+
+Conditional sign-off: MEDIUM confidence.
+
+If all 14 fixes are implemented correctly, tested, and DB migrations are actually applied, I would accept YELLOW supervised single-clinic production. I would not sign off for unsupervised or 7-clinic production yet.

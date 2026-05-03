@@ -26,6 +26,70 @@ if [ "$FROM" = "$TARGET" ]; then
     exit 1
 fi
 
+# Cross-PC bridge: if target agent is on a different PC, also INSERT to Supabase
+_cross_pc_bridge() {
+    local target="$1"
+    local content="$2"
+    local msg_type="$3"
+    local from="$4"
+
+    # Check if cross-PC delivery is needed via settings.yaml
+    local target_pc
+    target_pc=$("$SCRIPT_DIR/.venv/bin/python3" -c "
+import yaml, sys
+try:
+    with open('$SCRIPT_DIR/config/settings.yaml') as f:
+        cfg = yaml.safe_load(f) or {}
+    pc_map = cfg.get('pc_mapping', {})
+    for pc_name, pc_cfg in pc_map.items():
+        if pc_cfg.get('is_local'):
+            continue
+        agents = pc_cfg.get('agents', [])
+        if '$target' in agents and pc_cfg.get('supabase_bridge'):
+            print(pc_cfg.get('pc_id', pc_name))
+            sys.exit(0)
+    print('')
+except Exception:
+    print('')
+" 2>/dev/null)
+
+    if [ -z "$target_pc" ]; then
+        return 0  # Local agent, no bridge needed
+    fi
+
+    # Load Supabase env
+    local sb_url sb_key
+    if [ -f "$HOME/.openclaw/env" ]; then
+        sb_url=$(grep '^SUPABASE_URL=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
+        sb_key=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
+    fi
+    sb_url="${SUPABASE_URL:-$sb_url}"
+    sb_key="${SUPABASE_SERVICE_ROLE_KEY:-$sb_key}"
+
+    if [ -z "$sb_url" ] || [ -z "$sb_key" ]; then
+        echo "[inbox_write] WARN: cross-PC bridge skipped (no Supabase env)" >&2
+        return 0
+    fi
+
+    # Truncate content for Supabase (max 2000 chars)
+    local truncated="${content:0:2000}"
+
+    # INSERT to Supabase for cross-PC delivery
+    curl -sS -X POST \
+        "${sb_url}/rest/v1/pc_handshake" \
+        -H "Authorization: Bearer ${sb_key}" \
+        -H "apikey: ${sb_key}" \
+        -H "Content-Type: application/json" \
+        -H "Prefer: return=minimal" \
+        -d "{\"message_type\":\"status_update\",\"from_pc\":\"main_pc\",\"to_pc\":\"${target_pc}\",\"topic\":\"cross_pc_inbox_${target}\",\"content\":\"[${from}→${target}][${msg_type}] ${truncated}\",\"requires_response\":false,\"priority\":\"normal\",\"clinic_id\":\"hakudoukai_main\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+        2>/dev/null \
+        && echo "[inbox_write] cross-PC bridge: ${target} → ${target_pc} via Supabase" >&2 \
+        || echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}" >&2
+}
+
+# Trigger cross-PC bridge (non-blocking, runs in background)
+_cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM" &
+
 # Initialize inbox if not exists
 if [ ! -f "$INBOX" ]; then
     mkdir -p "$(dirname "$INBOX")"

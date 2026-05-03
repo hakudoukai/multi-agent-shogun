@@ -40,7 +40,13 @@
       "Bash(wget *|sh*)",
       "Bash(rm -rf /mnt/c/Windows*)",
       "Bash(rm -rf /mnt/c/Users*)",
-      "Bash(rm -rf /mnt/c/Program*)"
+      "Bash(rm -rf /mnt/c/Program*)",
+      "Bash(git checkout -- *)",
+      "Bash(git restore *)",
+      "Bash(git clean -f*)",
+      "Bash(fdisk*)",
+      "Bash(mount *)",
+      "Bash(umount *)"
     ]
   },
   "spinnerVerbs": {

@@ -1,0 +1,121 @@
+I read the requested files and also checked `scripts/inbox_watcher.sh` because the hakudokai startup scripts invoke it directly. Verdict: this is not production-ready. The fork is structurally based on upstream `v4.6.0`, but the hakudokai customization layer is only partially wired and has serious operability, safety, and multi-tenant isolation gaps.
+
+**Axis 1: YELLOW**
+Official `shutsujin_departure.sh` + shim integrity
+
+Findings:
+- The git base is consistent: `HEAD` is `v4.6.0` + `80f2812` + `1c31ecc`; `shutsujin_departure.sh` is unchanged from upstream.
+- Shim inventory is inconsistent. There are 28 files under `shim/hakudokai`, while [config/settings.yaml](/mnt/c/Users/User/projects/multi-agent-shogun/config/settings.yaml:29) registers only 22 modules. Missing from config: `hakudokai_clinic_switch.sh`, `hakudokai_heartbeat_archive.py`, `hakudokai_heartbeat_check.py`, `hakudokai_inbox_write.py`, `hakudokai_init_agents.sh`, `hakudokai_minimal_install.sh`.
+- `gemini` was added to allowed CLIs at [lib/cli_adapter.sh:19](/mnt/c/Users/User/projects/multi-agent-shogun/lib/cli_adapter.sh:19), but `get_cli_type`, `build_cli_command`, `get_instruction_file`, and `validate_cli_availability` still hard-code only `claude/codex/copilot/kimi` at [lib/cli_adapter.sh:90](/mnt/c/Users/User/projects/multi-agent-shogun/lib/cli_adapter.sh:90), [lib/cli_adapter.sh:144](/mnt/c/Users/User/projects/multi-agent-shogun/lib/cli_adapter.sh:144), and [lib/cli_adapter.sh:209](/mnt/c/Users/User/projects/multi-agent-shogun/lib/cli_adapter.sh:209). So the Gemini alias is not functional.
+- `hakudokai_minimal_install.sh` computes `REPO_ROOT` as the parent of `shim/hakudokai`, i.e. `shim`, not the repo root, then looks for nonexistent paths at [hakudokai_minimal_install.sh:25](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_minimal_install.sh:25), [hakudokai_minimal_install.sh:109](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_minimal_install.sh:109), and [hakudokai_minimal_install.sh:145](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_minimal_install.sh:145).
+- No Python AST import cycles were found. `bash -n` passed for shell scripts. But three Python scripts have CRLF shebangs and fail when executed directly: [hakudokai_dev_lessons.py:1](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dev_lessons.py:1), [hakudokai_audit_misconduct.py:1](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_audit_misconduct.py:1), [hakudokai_resistance_guard.py:1](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_resistance_guard.py:1).
+
+Critical bugs:
+- Broken installer paths.
+- Half-implemented Gemini adapter.
+- Config/module registry mismatch.
+
+Recommendations:
+- Regenerate `config/settings.yaml` from actual shim inventory.
+- Finish or remove Gemini support.
+- Normalize all files to LF and add `git diff --check` to CI.
+- Extract common Supabase/env/logging helpers; current patterns are inconsistent.
+
+**Axis 2: RED**
+Watcher chain end-to-end operability
+
+Findings:
+- `hakudokai_fukuincho_watcher.sh` polls Supabase and calls `scripts/inbox_write.sh` for `shogun` at [hakudokai_fukuincho_poll.py:51](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fukuincho_poll.py:51), but `hakudokai_start_watchers.sh` starts local `scripts/inbox_watcher.sh` only for `karo`, `ashigaru1`, and `gunshi` at [hakudokai_start_watchers.sh:68](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_start_watchers.sh:68). No shogun wake-up chain is started.
+- The Supabase `hakudokai_inbox_watcher.py` only prints `HAKUDOKAI_INBOX_NOTIFY=...` to stdout at [hakudokai_inbox_watcher.py:273](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_inbox_watcher.py:273). `hakudokai_departure.sh` backgrounds it into a log at [hakudokai_departure.sh:151](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_departure.sh:151), so nobody consumes the notification.
+- `hakudokai_start_watchers.sh` uses the upstream file watcher, not the hakudokai Supabase watcher, at [hakudokai_start_watchers.sh:73](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_start_watchers.sh:73). The transport model is split.
+- Message loss bug: `hakudokai_fukuincho_poll.py` records a message as processed regardless of inbox write/ACK success at [hakudokai_fukuincho_poll.py:107](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fukuincho_poll.py:107).
+- Watchdog only checks `pgrep`, not the health file written by the watcher at [hakudokai_fukuincho_watcher.sh:66](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fukuincho_watcher.sh:66). A hung-but-alive watcher passes health.
+- Startup kills processes with `pkill` at [hakudokai_start_watchers.sh:48](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_start_watchers.sh:48), directly conflicting with the project’s own D006 ban in [CLAUDE.md:277](/mnt/c/Users/User/projects/multi-agent-shogun/CLAUDE.md:277).
+
+Critical bugs:
+- Supabase → karo/ashigaru/gunshi bridge is not actually wired.
+- Supabase → shogun can write inbox but may not wake shogun.
+- Failed dispatches can be permanently skipped.
+
+Recommendations:
+- Choose one transport model: Supabase-backed watcher or YAML/inotify, not both.
+- ACK only after durable local enqueue and wake-up success.
+- Replace `pgrep` health with heartbeat freshness, last successful poll, last ACK, queue depth, and last error.
+- Remove `pkill`/`kill` operational dependency or wrap it in a safe supervisor outside agent-controlled commands.
+
+**Axis 3: RED**
+Resistance pattern eradication
+
+Findings:
+- The guard validates only four source instruction files at [hakudokai_resistance_guard.py:57](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_resistance_guard.py:57). It does not validate generated codex/copilot/kimi instruction files.
+- Current validation fails: `instructions/shogun.md` is missing both FKI directives. The search found FKI directives in `karo`, `ashigaru`, and `gunshi`, but not `shogun` or generated codex files.
+- `audit_misconduct.py` patterns are broad and context-free: `should I`, `please review`, `you should`, `placeholder`, `partial`, `I cannot` at [hakudokai_audit_misconduct.py:40](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_audit_misconduct.py:40). It scans entire files as raw text at [hakudokai_audit_misconduct.py:115](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_audit_misconduct.py:115), so quoted task text, logs, test output, and legitimate safety refusals will false-positive.
+- `.claude/settings.json` deny list covers some Tier 1 bans at [.claude/settings.json:17](/mnt/c/Users/User/projects/multi-agent-shogun/.claude/settings.json:17), but misses `git checkout -- .`, `git restore .`, `git clean -f`, `fdisk`, `mount`, and `umount` from [CLAUDE.md:275](/mnt/c/Users/User/projects/multi-agent-shogun/CLAUDE.md:275) and [CLAUDE.md:278](/mnt/c/Users/User/projects/multi-agent-shogun/CLAUDE.md:278).
+
+Critical bugs:
+- “FKI injected into all 4 instruction files” is false for shogun.
+- The deny list does not match the authoritative destructive-operation policy.
+
+Recommendations:
+- Make generated instruction validation mandatory.
+- Parse YAML/structured reports and scan only agent-authored result fields.
+- Add context allowlists for legitimate blockers, safety refusals, and quoted user text.
+- Add tests with known false-positive and true-positive fixtures.
+
+**Axis 4: RED**
+SS7 self-improvement loop + Task D-3
+
+Findings:
+- Missing `dev_lessons` / `improvement_proposals` tables are a blocker for the feature claim. `api_request` returns `None` on API errors at [hakudokai_dev_lessons.py:66](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dev_lessons.py:66), but `main()` does not fail the command after `record_lesson()` fails at [hakudokai_dev_lessons.py:148](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dev_lessons.py:148).
+- The code comment says “last 30 days”, but the query has no date filter at [hakudokai_dev_lessons.py:92](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dev_lessons.py:92).
+- Watchdog’s direct `dev_lessons` insert is non-fatal at [hakudokai_watchdog.sh:91](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_watchdog.sh:91), so SS7 silently degrades.
+- `audit_misconduct.py` ignores subprocess return codes when recording lessons at [hakudokai_audit_misconduct.py:158](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_audit_misconduct.py:158).
+
+Critical bugs:
+- Self-improvement loop can appear successful while writing nothing.
+- Recurrence detection can count stale historical incidents forever.
+
+Recommendations:
+- Ship migrations and startup table checks.
+- Fail closed for `record-and-check` when inserts fail.
+- Add `created_at=gte.<30-days-ago>` and an idempotency key for proposals.
+- Replace string-pattern misconduct detection with structured, scored detections.
+
+**Axis 5: RED**
+7-clinic SaaS readiness
+
+Findings:
+- Most modules use `SUPABASE_SERVICE_ROLE_KEY` at client creation, for example [hakudokai_patient_chat.py:103](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_patient_chat.py:103) and [hakudokai_billing_tier.py:79](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_billing_tier.py:79). Service role bypasses RLS, so “RLS aligned with agent assignment” is not true at the application layer.
+- Dangerous cross-tenant gaps:
+  - Heartbeat archive counts, copies, and deletes without `clinic_id` filters at [hakudokai_heartbeat_archive.py:99](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_heartbeat_archive.py:99) and [hakudokai_heartbeat_archive.py:177](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_heartbeat_archive.py:177).
+  - Dashboard graduated skills query lacks `clinic_id` at [hakudokai_dashboard_sync.py:163](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dashboard_sync.py:163).
+  - Fast payment fetches `patient_master` by `id` only at [hakudokai_fast_payment.py:113](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fast_payment.py:113).
+  - PWA treatment options filter by clinic and tooth, but not patient/plan ownership unless optional `plan_id` is passed at [hakudokai_patient_pwa.py:172](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_patient_pwa.py:172).
+  - PayLight reconcile filters by `daily_report_id` only at [hakudokai_paylight_integration.py:397](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_paylight_integration.py:397).
+- `HAKUDOKAI_CLINIC_ID` silently defaults to `hakudoukai_main` in many modules, e.g. [hakudokai_inbox_watcher.py:106](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_inbox_watcher.py:106). Missing env can write to the wrong clinic.
+- `config/settings.yaml` defines only four role mappings at [config/settings.yaml:8](/mnt/c/Users/User/projects/multi-agent-shogun/config/settings.yaml:8), not the full 7-ashigaru topology.
+
+Critical bugs:
+- Multi-tenant isolation is not safe.
+- Heartbeat archive can delete data across all clinics.
+- Service-role CLI tools make RLS mostly advisory.
+
+Recommendations:
+- Stop using service role in agent-facing CLIs; use scoped JWTs or a trusted backend.
+- Require `clinic_id` explicitly for all mutating commands; no production default.
+- Add DB constraints and RLS tests for every table.
+- Make one watcher/process scope equal one clinic, or add explicit tenant lease/routing.
+
+**Overall Rating: RED**
+
+Top 3 critical issues:
+1. Multi-tenant data isolation is broken by service-role access plus missing `clinic_id` filters.
+2. Watcher transport is split and incomplete; messages can be lost or never delivered.
+3. Resistance/SS7 claims are not true yet: shogun FKI is missing, generated instructions are not checked, and dev_lessons/proposal failures are silent.
+
+Top 5 improvement priorities:
+1. Fix tenant isolation first: scoped auth, mandatory `clinic_id`, and query audits.
+2. Rebuild watcher chain as one coherent transport with durable ACK semantics.
+3. Normalize LF, repair installer paths, repair config module registry, and finish/remove Gemini.
+4. Add migrations and fail-fast preflight for `dev_lessons`, `improvement_proposals`, notified cache, heartbeat archive.
+5. Rewrite `audit_misconduct.py` around structured report fields, confidence scoring, allowlists, and tests.

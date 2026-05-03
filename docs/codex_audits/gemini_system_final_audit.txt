@@ -1,0 +1,51 @@
+I will begin by reading `config/settings.yaml` and listing the files in `shim/hakudokai/` to check module integrity, while also examining `lib/cli_adapter.sh` for Gemini support.
+I will examine the watcher scripts in `shim/hakudokai/` to assess the reliability of the chain and identify any gaps in Gemini handling in `lib/cli_adapter.sh`.
+I will now investigate the security measures and resistance eradication by reviewing `.claude/settings.json`, `instructions/shogun.md`, and `shim/hakudokai/hakudokai_audit_misconduct.py`.
+I will now examine the self-improvement loop by reviewing `shim/hakudokai/hakudokai_dev_lessons.py`.
+I will now focus on the medical data safety, multi-tenant isolation, and legal compliance by reviewing the relevant scripts in `shim/hakudokai/`, including `hakudokai_patient_chat.py`, `hakudokai_patient_notification.py`, `hakudokai_patient_pwa.py`, `hakudokai_fast_payment.py`, `hakudokai_pii_detector.py`, `hakudokai_billing_tier.py`, and `hakudokai_paylight_integration.py`.
+I have concluded my assessment of Axis 5, finding the medical safety and multi-tenant isolation to be very high, with strong legal compliance. I will now examine the `CLAUDE.md` destructive operation rules and the state of git persistence automation for Axis 6.
+I have identified a potential data loss risk due to the absence of automated git persistence in the current scripts. I will now examine `hakudokai_departure.sh` to see if it includes any sync or shutdown procedures that might mitigate this risk.
+I will now examine `hakudokai_inbox_watcher.py` to see if it contains any git commands, as part of my ongoing investigation into git persistence automation for Axis 6.
+I have determined that there is no automated git persistence in the current scripts, posing a risk of data loss. I will now examine `shim/hakudokai/hakudokai_inbox_write.py` and its integration with `hakudokai_pii_detector.py` to see if there are any related persistence or security measures.
+Based on a 6-axis audit of the `multi-agent-shogun` system and its `hakudokai` dental clinic implementation, I have completed my independent review. While the system demonstrates exceptional medical data safety and architectural rigor, critical gaps in persistence and CLI integration require immediate attention.
+
+### **Axis 1: Module Integrity + Upstream Alignment**
+**Status: [YELLOW]**
+- **Findings:** Module integrity is perfect (28/28 modules present and accounted for in `settings.yaml`). However, **Gemini integration is broken** in `lib/cli_adapter.sh`. While `gemini` is listed as an allowed CLI, the Python-based configuration parser and the `build_cli_command` shell function lack the necessary logic to handle it, defaulting to `claude`.
+- **Recommendation:** Update `lib/cli_adapter.sh` to include `gemini` in all Python inline tuples and add an explicit `gemini` case to `build_cli_command`.
+
+### **Axis 2: Watcher Chain Reliability**
+**Status: [YELLOW]**
+- **Findings:** The "read-back verify" logic in `hakudokai_fukuincho_poll.py` and the 3-stage failsafe in `hakudokai_watchdog.sh` are highly robust. However, the **`shogun` (fukuincho) agent is omitted** from the `INBOX_AGENTS` list in the watchdog and startup scripts. Since the Shogun is the primary destination for clinical directives, this creates a reliability gap for the system's most critical agent.
+- **Recommendation:** Add `shogun` to the `INBOX_AGENTS` list in `hakudokai_watchdog.sh` and `hakudokai_start_watchers.sh`.
+
+### **Axis 3: Security + Resistance Eradication**
+**Status: [GREEN]**
+- **Findings:** The `.claude/settings.json` deny list is one of the most comprehensive observed, covering everything from `rm -rf /` to `git push --force`. The `audit_misconduct.py` script effectively systematizes the eradication of agent resistance (hedging, choice-offering) according to FKI directives.
+- **Recommendation:** Periodically review `audit_misconduct.py` logs to tune regex patterns and avoid false positives on legitimate requests for clarification.
+
+### **Axis 4: Self-Improvement Loop**
+**Status: [GREEN]**
+- **Findings:** The implementation of the DD-142 §7 loop in `hakudokai_dev_lessons.py` is solid. It correctly handles recurrence thresholds (>=3), implements fail-closed behavior, and utilizes a lightweight `urllib.request` implementation suitable for minimal environments.
+- **Recommendation:** No immediate changes required; ensure the Supabase `dev_lessons` table is indexed on `error_pattern` and `created_at`.
+
+### **Axis 5: Medical Data Safety + Legal Compliance**
+**Status: [GREEN] (System Differentiator)**
+- **Findings:** This is the system's strongest area. The **Double Defense** PII strategy (App-layer `pii_detector.py` + DB-layer RLS triggers) is rigorously applied. The `patient_chat.py` script effectively prevents illegal AI medical diagnosis (確定診断) and treatment coercion (治療強制) via dual-direction keyword filters and automated sanitization.
+- **Recommendation:** Verify that `~/.openclaw/env` (containing the Service Role Key) has strict file permissions (`600`) to mitigate the risk of credential exposure.
+
+### **Axis 6: Git Persistence Automation**
+**Status: [RED]**
+- **Findings:** There is **zero automated git persistence**. While work is recorded in local YAML files, there is no background process for staging, committing, or pushing changes. In a multi-agent environment, this leads to a high risk of "silent work loss" if the local WSL instance or hardware fails before a manual commit is made.
+- **Recommendation:** Implement a "Git Heartbeat" in `hakudokai_watchdog.sh` that performs periodic safe commits (`git add` of specific dirs + `git commit --allow-empty`) to ensure work is never more than 5 minutes from persistence.
+
+---
+
+### **Overall Rating: 4.2 / 5.0**
+
+#### **Top 5 Concerns**
+1. **Persistence Gap:** Lack of automated git commits creates high risk for data/work loss in the event of a crash.
+2. **Gemini CLI Blind Spot:** The system cannot actually run Gemini as an agent due to omissions in the CLI adapter.
+3. **Shogun Watchdog Omission:** The most critical agent is not monitored by the automated health checks.
+4. **Credential Safety:** Relying on a local `.env` file for the Supabase Service Role Key without verified permission checks is a security risk.
+5. **Multi-Agent Race Conditions:** While idempotency keys are used, the lack of git automation means concurrent file edits by multiple agents are not synchronized to a remote source of truth automatically.

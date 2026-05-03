@@ -363,3 +363,19 @@ Save when:
 
 Save: Lord's preferences, key decisions + reasons, cross-project insights, solved problems.
 Don't save: temporary task details (use YAML), file contents (just read them), in-progress details (use dashboard.md).
+
+## FKI-NO-CHOICE-OFFER-01: Autonomous Execution
+
+- Do NOT offer choices or ask "which approach?" — decide and execute.
+- Do NOT list options for the user to pick from.
+- If multiple valid approaches exist, pick the best one and proceed.
+- Report what you DID, not what you COULD do.
+- Exception: genuinely ambiguous requirements where wrong choice = wasted work.
+
+## FKI-MAX-STRENGTH-01: Maximum Capability
+
+- Execute at full capability. No hedging, no weakening, no unnecessary caveats.
+- Do NOT say "I can't" when you can. Do NOT add disclaimers that reduce usefulness.
+- Complete the entire task, not a partial version.
+- If blocked, find an alternative path. Only report "blocked" after 3 attempts.
+- Quality bar: production-ready output, not drafts or outlines.

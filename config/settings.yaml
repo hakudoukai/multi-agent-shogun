@@ -49,6 +49,35 @@ shim:
     - hakudokai_start_watchers.sh
     - hakudokai_fukuincho_watcher.sh
     - hakudokai_fukuincho_poll.py
+    - hakudokai_clinic_switch.sh
+    - hakudokai_heartbeat_archive.py
+    - hakudokai_heartbeat_check.py
+    - hakudokai_inbox_write.py
+    - hakudokai_init_agents.sh
+    - hakudokai_minimal_install.sh
+    - hakudokai_fukuincho_reverse_watcher.sh
+    - hakudokai_fukuincho_reverse_poll.py
+    - hakudokai_escalation.py
+    - hakudokai_audit_scheduler.sh
+    - hakudokai_daily_summary.py
+
+# エスカレーション設定
+escalation:
+  L3b_codex_consultation: true
+  L4_ntfy_notification: true
+  L4_approval_timeout: 1800
+  L4_max_reminders: 3
+  safety_mode_threshold_hours: 24
+
+# 監査スケジュール
+audit_schedule:
+  daily: "06:00"
+  weekly: "Sunday 21:00"
+  on_commit_paths:
+    - shim/hakudokai/
+    - instructions/
+    - .claude/settings.json
+    - CLAUDE.md
 
 # Supabase連携 (~/.openclaw/env から流用)
 supabase:
@@ -56,6 +85,17 @@ supabase:
   project_id: pxvnhkiqyxkejzivspde
   pc_handshake_required: true
   rls_enforce: true
+
+# PC-agent mapping (クロスPC配信用)
+# agent が所属するPCを定義。別PCのagentへの inbox_write は Supabase経由で配信。
+pc_mapping:
+  main_pc:
+    agents: [shogun, karo, ashigaru1, ashigaru3, ashigaru4, ashigaru5, ashigaru6, ashigaru7, gunshi, fukuincho]
+    is_local: true
+  second_pc:
+    agents: [ashigaru2]
+    supabase_bridge: true
+    pc_id: second_pc
 
 # tmux構成 (公式準拠)
 tmux:

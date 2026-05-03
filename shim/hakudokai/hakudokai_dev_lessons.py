@@ -90,7 +90,9 @@ def record_lesson(url, key, error_pattern, root_cause, resolution):
 def check_recurrence_and_dispatch(url, key):
     """Check dev_lessons for patterns with recurrence >= threshold, dispatch proposals."""
     # Get all lessons grouped by error_pattern (last 30 days)
-    path = f"dev_lessons?select=error_pattern,root_cause,resolution_attempted&clinic_id=eq.{CLINIC_ID}&order=created_at.desc&limit=200"
+    from datetime import timedelta
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    path = f"dev_lessons?select=error_pattern,root_cause,resolution_attempted&clinic_id=eq.{CLINIC_ID}&created_at=gte.{cutoff}&order=created_at.desc&limit=200"
     lessons = api_request(url, key, path)
     if not lessons:
         print("No dev_lessons found or table missing", file=sys.stderr)
@@ -149,7 +151,10 @@ def main():
         if not args.error_pattern:
             print("ERROR: --error-pattern required for record", file=sys.stderr)
             sys.exit(1)
-        record_lesson(url, key, args.error_pattern, args.root_cause, args.resolution)
+        ok = record_lesson(url, key, args.error_pattern, args.root_cause, args.resolution)
+        if not ok and args.action == "record-and-check":
+            print("FATAL: record failed, aborting check-recurrence (fail-closed)", file=sys.stderr)
+            sys.exit(1)
 
     if args.action in ("check-recurrence", "record-and-check"):
         check_recurrence_and_dispatch(url, key)

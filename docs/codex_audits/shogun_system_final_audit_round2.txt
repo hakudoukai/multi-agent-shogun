@@ -1,0 +1,42 @@
+Audit scope was read-only. `tmux` identity was unavailable in this sandbox, so I audited repository state directly.
+
+**Axis Ratings**
+
+| Axis | Rebuttal | Updated Rating | Remaining Evidence |
+|---|---:|---:|---|
+| 1. Packaging/config | Accept, with correction | YELLOW now, GREEN after fixes | `settings.yaml` module list omits 6 runtime shim files, 7 if installer is counted: [config/settings.yaml](/mnt/c/Users/User/projects/multi-agent-shogun/config/settings.yaml:29). `gemini` is allowed but not implemented in CLI branches: [lib/cli_adapter.sh](/mnt/c/Users/User/projects/multi-agent-shogun/lib/cli_adapter.sh:19), [lib/cli_adapter.sh](/mnt/c/Users/User/projects/multi-agent-shogun/lib/cli_adapter.sh:144). Installer root is still wrong: [hakudokai_minimal_install.sh](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_minimal_install.sh:25). CRLF remains in generated/instruction files and some Python shebang files. |
+| 2. Transport/wakeup | Partially accept, but still RED | RED until processed/ACK semantics fixed | Hakudokai startup omits shogun file watcher: [hakudokai_start_watchers.sh](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_start_watchers.sh:67). Generic startup does include shogun watcher, proving split deployment behavior: [shutsujin_departure.sh](/mnt/c/Users/User/projects/multi-agent-shogun/shutsujin_departure.sh:903). Critical: fukuincho poll records a message as processed even after local write/ACK failure, suppressing retry: [hakudokai_fukuincho_poll.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fukuincho_poll.py:84), [hakudokai_fukuincho_poll.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fukuincho_poll.py:107). Watchdog still uses `pgrep`, not health-file freshness: [hakudokai_watchdog.sh](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_watchdog.sh:143). |
+| 3. Instruction/guardrails | Accept | RED now, YELLOW/GREEN after full fix | Resistance guard checks only source role files, not generated files: [hakudokai_resistance_guard.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_resistance_guard.py:56). `shogun.md` still lacks FKI markers while other roles have them. Deny list still misses `git checkout -- .`, `git restore .`, `git clean -f`, `fdisk`, `mount`, `umount`: [.claude/settings.json](/mnt/c/Users/User/projects/multi-agent-shogun/.claude/settings.json:16). Misconduct scanner is still regex-only and records subprocess failures silently: [hakudokai_audit_misconduct.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_audit_misconduct.py:34), [hakudokai_audit_misconduct.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_audit_misconduct.py:157). |
+| 4. Self-improvement DB loop | Accept | RED now, GREEN after migration/fatal fixes | Migration alters `dev_lessons` but does not create it, and no migration creates `improvement_proposals`: [002_phase_b4_clinic_id_4ai_tables.sql](/mnt/c/Users/User/projects/multi-agent-shogun/shim/migrations/002_phase_b4_clinic_id_4ai_tables.sql:27). Recurrence query says “last 30 days” but has no `created_at >=` filter: [hakudokai_dev_lessons.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dev_lessons.py:92). `record-and-check` ignores failed insert result: [hakudokai_dev_lessons.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dev_lessons.py:148). |
+| 5. Multi-tenant/security | Accept context, reject production readiness | YELLOW after planned filters, RED for 7-clinic until scoped auth | Service role full-access remains explicit: [002_phase_b4_clinic_id_4ai_tables.sql](/mnt/c/Users/User/projects/multi-agent-shogun/shim/migrations/002_phase_b4_clinic_id_4ai_tables.sql:117). `heartbeat_archive` still counts/selects/deletes without `clinic_id`: [hakudokai_heartbeat_archive.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_heartbeat_archive.py:96), [hakudokai_heartbeat_archive.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_heartbeat_archive.py:175). `dashboard_sync` filters most `pc_handshake` reads, but graduated skills query lacks `clinic_id`: [hakudokai_dashboard_sync.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_dashboard_sync.py:156). `fast_payment` patient lookup lacks clinic boundary: [hakudokai_fast_payment.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fast_payment.py:107). Silent default remains: [hakudokai_fast_payment.py](/mnt/c/Users/User/projects/multi-agent-shogun/shim/hakudokai/hakudokai_fast_payment.py:62). |
+| 6. Git automation | Current state: reject as missing | RED | No active git hooks beyond samples. Startup scripts have no pull/fetch guard; the only startup git reference is a comment: [shutsujin_departure.sh](/mnt/c/Users/User/projects/multi-agent-shogun/shutsujin_departure.sh:34). Current rules are manual only: [task_flow.md](/mnt/c/Users/User/projects/multi-agent-shogun/instructions/common/task_flow.md:192). CI checks generated drift only: [.github/workflows/test.yml](/mnt/c/Users/User/projects/multi-agent-shogun/.github/workflows/test.yml:134). |
+
+**Overall Rating**
+
+Assuming Axis 1-5 planned fixes are actually implemented: **YELLOW** for supervised single-clinic operation, **not GREEN**. Axis 6 keeps dual-PC development at **RED** until automated git guardrails exist.
+
+**Revised Top 3 Critical Issues**
+
+1. Transport loss risk: `hakudokai_fukuincho_poll.py` marks messages processed even after failed delivery/ACK.
+2. No git persistence/conflict automation for dual-PC operation.
+3. Multi-tenant fail-closed boundary is incomplete while service-role paths remain broad.
+
+**Axis 6 Implementation Plan**
+
+Add `shim/hakudokai/hakudokai_git_guard.py` or `.sh` with subcommands:
+
+- `prework`: `git fetch --prune`, resolve `@{u}` dynamically, refuse hard-coded `master`; if clean and behind-only, `git merge --ff-only`; if dirty/behind/diverged, send alert and stop.
+- `wip-commit`: every 60 min, if dirty, run `git diff --check`, stage with deny patterns for secrets, commit `[WIP] <task_id> <pc_id> <timestamp>`; never push automatically.
+- `check-divergence`: `git rev-list --left-right --count HEAD...@{u}`; if ahead>0 and behind>0, send Supabase `urgent_stop`.
+- `check-unpushed`: every 5 min, if `git log @{u}..HEAD` non-empty for more than 5 min, send high-priority warn alert.
+- `prepush`: installed as `.git/hooks/pre-push`; fetch first, block push if remote advanced/diverged.
+
+Integration points:
+
+- `shutsujin_departure.sh`: call `git_guard prework` after `cd "$SCRIPT_DIR"`.
+- `shim/hakudokai/hakudokai_departure.sh`: call `git_guard prework` before watcher start.
+- `shim/hakudokai/hakudokai_watchdog.sh`: call `wip-commit` hourly and `check-unpushed/check-divergence` every 5 min.
+- `scripts/install_git_hooks.sh`: installs pre-push hook.
+- `config/settings.yaml`: add `git_guard` config: enabled, remote, branch/upstream mode, WIP interval, alert role, strict mode.
+
+Estimated size: `git_guard` 300-350 LOC, hook installer 50-70 LOC, watchdog/startup integration 40-60 LOC, tests 120-180 LOC. Total: roughly **550 LOC**.
