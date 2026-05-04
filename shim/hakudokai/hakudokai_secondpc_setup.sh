@@ -121,7 +121,27 @@ echo ""
 # ============================================================
 # Phase 2: リポジトリ同期
 # ============================================================
-log "Phase 2: リポジトリ同期"
+log "Phase 2a: git credential helper セットアップ"
+
+# WSL から Windows Git Credential Manager を使えるようにする
+GCM_EXE="/mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe"
+GCM_LINK="$HOME/bin/git-credential-manager.exe"
+
+if [ -f "$GCM_EXE" ]; then
+  CURRENT_HELPER=$(git config --global credential.helper 2>/dev/null || true)
+  if [ "$CURRENT_HELPER" != "$GCM_LINK" ]; then
+    mkdir -p "$HOME/bin"
+    ln -sf "$GCM_EXE" "$GCM_LINK"
+    git config --global credential.helper "$GCM_LINK"
+    ok "credential helper → $GCM_LINK (symlink to Windows GCM)"
+  else
+    ok "credential helper already configured"
+  fi
+else
+  warn "Windows Git not found at $GCM_EXE — git push/pull may fail"
+fi
+
+log "Phase 2b: multi-agent-shogun リポジトリ同期"
 
 cd "$SCRIPT_DIR"
 git fetch origin 2>/dev/null
@@ -129,11 +149,131 @@ LOCAL=$(git rev-parse HEAD)
 REMOTE=$(git rev-parse origin/main 2>/dev/null || echo "unknown")
 
 if [ "$LOCAL" = "$REMOTE" ]; then
-  ok "Already up to date ($LOCAL)"
+  ok "multi-agent-shogun: up to date ($LOCAL)"
 else
   log "Pulling latest changes..."
   git pull --ff-only origin main 2>&1 && ok "Updated to $(git rev-parse HEAD)" || warn "Pull failed (may need manual merge)"
 fi
+
+log "Phase 2c: DentalBI リポジトリ同期"
+
+# DentalBI のパスを検出（MainPC と SecondPC で異なる）
+DENTALBI_CANDIDATES=(
+  "/mnt/c/Users/User/Documents/DentalBI"
+  "/mnt/c/Projects/hakudokai-dev"
+  "$HOME/Documents/DentalBI"
+)
+DENTALBI_DIR=""
+for d in "${DENTALBI_CANDIDATES[@]}"; do
+  if [ -d "$d/.git" ]; then
+    DENTALBI_DIR="$d"
+    break
+  fi
+done
+
+if [ -n "$DENTALBI_DIR" ]; then
+  log "  DentalBI found at: $DENTALBI_DIR"
+  cd "$DENTALBI_DIR"
+
+  # git hooks の CRLF 修正（WSL で実行不可になる問題の防止）
+  for hook in .git/hooks/*; do
+    if [ -f "$hook" ] && file "$hook" 2>/dev/null | grep -q "CRLF"; then
+      sed -i 's/\r$//' "$hook"
+      chmod +x "$hook"
+      ok "  fixed CRLF in $(basename "$hook")"
+    fi
+  done
+
+  # デフォルトブランチを検出して同期
+  DENTALBI_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||' || echo "master")
+  CURRENT_BRANCH=$(git branch --show-current)
+
+  git fetch origin 2>/dev/null
+  DB_LOCAL=$(git rev-parse HEAD)
+  DB_REMOTE=$(git rev-parse "origin/$DENTALBI_BRANCH" 2>/dev/null || echo "unknown")
+
+  if [ "$DB_LOCAL" = "$DB_REMOTE" ]; then
+    ok "DentalBI: up to date ($DB_LOCAL)"
+  else
+    # 作業中のブランチでない場合のみ自動マージ
+    if [ "$CURRENT_BRANCH" = "$DENTALBI_BRANCH" ]; then
+      git pull --ff-only origin "$DENTALBI_BRANCH" 2>&1 && ok "DentalBI: updated to $(git rev-parse HEAD)" || warn "DentalBI: pull failed (may need manual merge)"
+    else
+      warn "DentalBI: on branch '$CURRENT_BRANCH' (not '$DENTALBI_BRANCH'), skipping auto-pull"
+    fi
+  fi
+
+  # git hooks インストール（リポジトリ管理のhooksを .git/hooks/ に配置）
+  if [ -f "scripts/git-hooks/install.sh" ]; then
+    bash scripts/git-hooks/install.sh
+    ok "DentalBI: git hooks installed"
+  fi
+
+  # npm install（package-lock.json が更新されている場合のみ）
+  if [ -d "frontend" ]; then
+    cd frontend
+    if git diff "$DB_LOCAL" "$DB_REMOTE" --name-only 2>/dev/null | grep -q "frontend/package"; then
+      log "  package.json changed — running npm install..."
+      npm install --no-audit --no-fund 2>&1 | tail -3
+      ok "DentalBI frontend: npm install done"
+    else
+      ok "DentalBI frontend: packages unchanged"
+    fi
+  fi
+
+  cd "$SCRIPT_DIR"
+else
+  warn "DentalBI repo not found. Expected locations:"
+  for d in "${DENTALBI_CANDIDATES[@]}"; do
+    echo "    - $d"
+  done
+fi
+
+log "Phase 2d: Claude Code MCP設定同期"
+
+# agentation MCP が未設定なら追加
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+if [ -f "$CLAUDE_SETTINGS" ]; then
+  if grep -q "agentation" "$CLAUDE_SETTINGS"; then
+    ok "Claude Code MCP: agentation already configured"
+  else
+    # jq があれば使う、なければ python3 で追加
+    if command -v jq &>/dev/null; then
+      jq '.mcpServers.agentation = {"command": "npx", "args": ["-y", "agentation-mcp@latest"]}' "$CLAUDE_SETTINGS" > "${CLAUDE_SETTINGS}.tmp" \
+        && mv "${CLAUDE_SETTINGS}.tmp" "$CLAUDE_SETTINGS"
+    else
+      python3 -c "
+import json, pathlib
+p = pathlib.Path('$CLAUDE_SETTINGS')
+d = json.loads(p.read_text())
+d.setdefault('mcpServers', {})['agentation'] = {'command': 'npx', 'args': ['-y', 'agentation-mcp@latest']}
+p.write_text(json.dumps(d, indent=2) + '\n')
+"
+    fi
+    ok "Claude Code MCP: agentation added"
+  fi
+else
+  mkdir -p "$HOME/.claude"
+  cat > "$CLAUDE_SETTINGS" << 'SETTINGS_EOF'
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "agentation": {
+      "command": "npx",
+      "args": ["-y", "agentation-mcp@latest"]
+    }
+  }
+}
+SETTINGS_EOF
+  ok "Claude Code MCP: settings.json created"
+fi
+
+# design-feedback フォルダ作成
+FEEDBACK_DIR="/mnt/c/Users/User/Desktop/design-feedback"
+mkdir -p "$FEEDBACK_DIR" 2>/dev/null && ok "design-feedback folder: $FEEDBACK_DIR" || true
 echo ""
 
 # ============================================================
@@ -181,6 +321,8 @@ echo ""
 # ============================================================
 log "Phase 5: Claude Code CLI起動"
 
+source "${SCRIPT_DIR}/lib/tmux_send.sh"
+
 launch_claude() {
   local pane="$1"
   local agent_name="$2"
@@ -189,7 +331,7 @@ launch_claude() {
   if [ "$PANE_CMD" = "claude" ] || [ "$PANE_CMD" = "node" ]; then
     warn "${agent_name}: Claude CLI already running in $pane"
   else
-    tmux send-keys -t "$pane" "cd $SCRIPT_DIR && claude --dangerously-skip-permissions" Enter
+    tmux_send_text "$pane" "cd $SCRIPT_DIR && claude --dangerously-skip-permissions"
     ok "${agent_name}: Claude CLI launched in $pane"
   fi
 }
@@ -230,64 +372,17 @@ start_inbox_watcher() {
 start_inbox_watcher "$AGENT1_ID" "$AGENT1_PANE"
 start_inbox_watcher "$AGENT2_ID" "$AGENT2_PANE"
 
-# Start Supabase bridge receiver (polls Supabase for cross-PC messages)
-# Delivers to both agents based on message content
+# Start Supabase bridge receiver (v2: separate script with anti-duplicate + safe nudge)
 RECEIVER_LOG="/tmp/hakudokai_secondpc_receiver.log"
-nohup bash -c "
-  while true; do
-    # Poll Supabase for messages to second_pc
-    RESPONSE=\$(curl -sS \\
-      \"\${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.${PC_ID}&acknowledged_at=is.null&order=created_at.asc&limit=5\" \\
-      -H \"Authorization: Bearer \${SUPABASE_SERVICE_ROLE_KEY}\" \\
-      -H \"apikey: \${SUPABASE_SERVICE_ROLE_KEY}\" \\
-      -H \"Content-Type: application/json\" 2>/dev/null)
+pkill -f "hakudokai_secondpc_receiver" 2>/dev/null || true
+sleep 1
 
-    if [ -n \"\$RESPONSE\" ] && [ \"\$RESPONSE\" != \"[]\" ]; then
-      echo \"\$RESPONSE\" | python3 -c \"
-import sys, json, subprocess, os, time
-from datetime import datetime, timezone
-try:
-    data = json.load(sys.stdin)
-    for msg in data:
-        msg_id = msg.get('id', '')
-        content = msg.get('content', '')
-        topic = msg.get('topic', '')
-        # Determine target agent from topic/content
-        target = '${AGENT1_ID}'  # default to sakura
-        if '${AGENT2_ID}' in topic or '${AGENT2_NAME}' in content or '${AGENT2_ID}' in content:
-            target = '${AGENT2_ID}'
-        if 'cross_pc_inbox_${AGENT2_ID}' in topic:
-            target = '${AGENT2_ID}'
-        # Write to local inbox
-        subprocess.run([
-            'bash', '${SCRIPT_DIR}/scripts/inbox_write.sh',
-            target, content[:500], 'task_assigned', 'karo'
-        ], capture_output=True, timeout=10)
-        # ACK
-        import urllib.request
-        ack_url = '${SUPABASE_URL}/rest/v1/pc_handshake?id=eq.' + msg_id
-        ack_data = json.dumps({
-            'acknowledged_at': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'acknowledged_by': '${PC_ID}'
-        }).encode()
-        req = urllib.request.Request(ack_url, data=ack_data, method='PATCH')
-        req.add_header('Authorization', 'Bearer ${SUPABASE_SERVICE_ROLE_KEY}')
-        req.add_header('apikey', '${SUPABASE_SERVICE_ROLE_KEY}')
-        req.add_header('Content-Type', 'application/json')
-        req.add_header('Prefer', 'return=minimal')
-        urllib.request.urlopen(req, timeout=10)
-        print(f'[receiver] delivered to {target}+ACK: {msg_id[:8]} {topic}', file=sys.stderr)
-except Exception as e:
-    print(f'[receiver] error: {e}', file=sys.stderr)
-\" 2>>'$RECEIVER_LOG'
-    fi
-    sleep 5
-  done
-" >> "$RECEIVER_LOG" 2>&1 </dev/null &
+nohup bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_secondpc_receiver.sh" --interval 5 \
+  >> "$RECEIVER_LOG" 2>&1 </dev/null &
 sleep 2
 
-if pgrep -f "hakudokai_secondpc_receiver" > /dev/null 2>&1 || [ -f "$RECEIVER_LOG" ]; then
-  ok "Supabase bridge receiver: running"
+if pgrep -f "hakudokai_secondpc_receiver" > /dev/null 2>&1; then
+  ok "Supabase bridge receiver v2: PID=$(pgrep -f 'hakudokai_secondpc_receiver' | head -1)"
 else
   warn "Supabase bridge receiver: check $RECEIVER_LOG"
 fi
@@ -303,7 +398,7 @@ sleep 5  # Wait for Claude CLI to be ready
 # 桜ちゃん (ashigaru2)
 INIT1="あなたは博道会の足軽2号 (ashigaru2/桜ちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT1_ID}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
 
-tmux send-keys -t "$AGENT1_PANE" "$INIT1" Enter
+tmux_send_text "$AGENT1_PANE" "$INIT1"
 ok "${AGENT1_NAME} (${AGENT1_ID}): 初期化プロンプト送信"
 
 sleep 2
@@ -311,7 +406,7 @@ sleep 2
 # クロちゃん (ashigaru8)
 INIT2="あなたは博道会の足軽8号 (ashigaru8/クロちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT2_ID}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
 
-tmux send-keys -t "$AGENT2_PANE" "$INIT2" Enter
+tmux_send_text "$AGENT2_PANE" "$INIT2"
 ok "${AGENT2_NAME} (${AGENT2_ID}): 初期化プロンプト送信"
 echo ""
 
