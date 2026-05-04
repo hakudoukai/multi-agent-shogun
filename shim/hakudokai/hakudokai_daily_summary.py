@@ -24,7 +24,7 @@ def get_env():
     url = os.environ.get("SUPABASE_URL", "")
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
     if not url or not key:
-        env_file = os.path.expanduser("~/.openclaw/env")
+        env_file = os.path.expanduser("~/.hakudokai/env")
         if os.path.exists(env_file):
             with open(env_file) as f:
                 for line in f:

@@ -16,7 +16,7 @@
 #
 # 前提:
 #   - リポジトリがclone済み
-#   - ~/.openclaw/env にSupabase環境変数あり
+#   - ~/.hakudokai/env にSupabase環境変数あり
 #   - claude CLI インストール済み + 桜ちゃんアカウントでログイン済み
 
 set -u
@@ -92,21 +92,21 @@ else
 fi
 
 # Supabase env
-if [ -f "$HOME/.openclaw/env" ]; then
-  SB_URL=$(grep '^SUPABASE_URL=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
-  SB_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
+if [ -f "$HOME/.hakudokai/env" ]; then
+  SB_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+  SB_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
   if [ -n "$SB_URL" ] && [ -n "$SB_KEY" ]; then
     ok "Supabase env loaded"
     export SUPABASE_URL="$SB_URL" SUPABASE_SERVICE_ROLE_KEY="$SB_KEY"
   else
-    ng "Supabase env incomplete in ~/.openclaw/env"
+    ng "Supabase env incomplete in ~/.hakudokai/env"
     errors=$((errors + 1))
   fi
 else
-  ng "~/.openclaw/env not found"
+  ng "~/.hakudokai/env not found"
   echo "    Create it with:"
-  echo "    echo 'SUPABASE_URL=https://xxx.supabase.co' > ~/.openclaw/env"
-  echo "    echo 'SUPABASE_SERVICE_ROLE_KEY=eyJ...' >> ~/.openclaw/env"
+  echo "    echo 'SUPABASE_URL=https://xxx.supabase.co' > ~/.hakudokai/env"
+  echo "    echo 'SUPABASE_SERVICE_ROLE_KEY=eyJ...' >> ~/.hakudokai/env"
   errors=$((errors + 1))
 fi
 

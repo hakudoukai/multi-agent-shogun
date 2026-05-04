@@ -59,9 +59,9 @@ except Exception:
 
     # Load Supabase env
     local sb_url sb_key
-    if [ -f "$HOME/.openclaw/env" ]; then
-        sb_url=$(grep '^SUPABASE_URL=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
-        sb_key=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
+    if [ -f "$HOME/.hakudokai/env" ]; then
+        sb_url=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+        sb_key=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
     fi
     sb_url="${SUPABASE_URL:-$sb_url}"
     sb_key="${SUPABASE_SERVICE_ROLE_KEY:-$sb_key}"

@@ -22,19 +22,19 @@ log() {
 }
 
 # Validate env
-# Auto-source from ~/.openclaw/env if not set
+# Auto-source from ~/.hakudokai/env if not set
 if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
-  if [ -f "$HOME/.openclaw/env" ]; then
-    log "Sourcing Supabase env from ~/.openclaw/env"
-    SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
-    SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
+  if [ -f "$HOME/.hakudokai/env" ]; then
+    log "Sourcing Supabase env from ~/.hakudokai/env"
+    SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+    SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
     export SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY
   fi
 fi
 
 if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
   echo "ERROR: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY required" >&2
-  echo "Hint: Create ~/.openclaw/env with SUPABASE_URL=... and SUPABASE_SERVICE_ROLE_KEY=..." >&2
+  echo "Hint: Create ~/.hakudokai/env with SUPABASE_URL=... and SUPABASE_SERVICE_ROLE_KEY=..." >&2
   exit 1
 fi
 

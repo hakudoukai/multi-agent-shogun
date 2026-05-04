@@ -21,10 +21,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CHECK_INTERVAL="${2:-30}"
 MAX_RESTART_FAILS=3
 
-# Auto-source Supabase env from ~/.openclaw/env (CR stripped)
-if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.openclaw/env" ]; then
-  SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
-  SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
+# Auto-source Supabase env from ~/.hakudokai/env (CR stripped)
+if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+  SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+  SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
   export SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY
 fi
 

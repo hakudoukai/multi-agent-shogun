@@ -28,10 +28,10 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-# Auto-source from ~/.openclaw/env if not set (CR stripped)
-if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.openclaw/env" ]; then
-  SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
-  SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.openclaw/env" | cut -d= -f2- | tr -d '\r')
+# Auto-source from ~/.hakudokai/env if not set (CR stripped)
+if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+  SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+  SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
   export SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY
 fi
 

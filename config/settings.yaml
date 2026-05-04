@@ -80,9 +80,9 @@ audit_schedule:
     - .claude/settings.json
     - CLAUDE.md
 
-# Supabase連携 (~/.openclaw/env から流用)
+# Supabase連携 (~/.hakudokai/env から流用)
 supabase:
-  env_file: ~/.openclaw/env
+  env_file: ~/.hakudokai/env
   project_id: pxvnhkiqyxkejzivspde
   pc_handshake_required: true
   rls_enforce: true
