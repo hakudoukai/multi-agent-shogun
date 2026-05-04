@@ -188,10 +188,12 @@ Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML wi
 
 | Direction | Method | Reason |
 |-----------|--------|--------|
-| Ashigaru → Gunshi | Report YAML + inbox_write | Quality check & dashboard aggregation |
-| Gunshi → Karo | Report YAML + inbox_write | Quality check result + strategic reports |
+| Ashigaru → Karo | Report YAML + inbox_write | Task completion report (direct superior) |
+| Gunshi → Ashigaru | inbox_write | **QC fix/redo instructions only** (PDCA cycle). New task assignment forbidden (F003). |
+| Gunshi → Karo | Report YAML + inbox_write | QC results + strategic reports |
 | Karo → Shogun/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
 | Karo → Gunshi | YAML + inbox_write | Strategic task or quality check delegation |
+| Karo → Ashigaru | YAML + inbox_write | Task assignment (new work) |
 | Top → Down | YAML + inbox_write | Standard wake-up |
 
 ## File Operation Rule

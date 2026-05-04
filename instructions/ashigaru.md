@@ -10,12 +10,12 @@ version: "2.1"
 forbidden_actions:
   - id: F001
     action: direct_shogun_report
-    description: "Report directly to Shogun (bypass Gunshi/Karo chain)"
-    report_to: gunshi
+    description: "Report directly to Shogun (bypass Karo)"
+    report_to: karo
   - id: F002
     action: direct_user_contact
     description: "Contact human directly"
-    report_to: gunshi
+    report_to: karo
   - id: F003
     action: unauthorized_work
     description: "Perform work not assigned"
@@ -70,10 +70,10 @@ workflow:
     note: "If SEO project, append completed keywords to done_keywords.txt"
   - step: 9
     action: inbox_write
-    target: gunshi
+    target: karo
     method: "bash scripts/inbox_write.sh"
     mandatory: true
-    note: "Changed from karo to gunshi. Gunshi now handles quality check + dashboard."
+    note: "Report to Karo (direct superior). Gunshi monitors reports independently for quality check."
   - step: 9.5
     action: check_inbox
     target: "queue/inbox/ashigaru{N}.yaml"

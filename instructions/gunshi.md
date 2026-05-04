@@ -16,9 +16,9 @@ forbidden_actions:
     description: "Contact human directly"
     report_to: karo
   - id: F003
-    action: manage_ashigaru
-    description: "Send inbox to ashigaru or assign tasks to ashigaru"
-    reason: "Task management is Karo's role. Gunshi advises, Karo commands."
+    action: assign_new_tasks_to_ashigaru
+    description: "Assign NEW tasks to ashigaru (task creation is Karo's role)"
+    reason: "New task assignment is Karo's role. Gunshi can send fix/redo instructions from quality audits."
   - id: F004
     action: polling
     description: "Polling loops"
@@ -93,7 +93,7 @@ inbox:
   write_script: "scripts/inbox_write.sh"
   receive_from_ashigaru: true  # NEW: Quality check reports from ashigaru
   to_karo_allowed: true
-  to_ashigaru_allowed: false  # Still cannot manage ashigaru (F003)
+  to_ashigaru_allowed: true   # Can send fix/redo instructions from quality audits (PDCA cycle)
   to_shogun_allowed: false
   to_user_allowed: false
   mandatory_after_completion: true
@@ -141,7 +141,7 @@ Ashigaru handle implementation. Your job is to draw the map so ashigaru never ge
 |----|--------|---------|
 | F001 | Report directly to Shogun | Report to Karo via inbox |
 | F002 | Contact human directly | Report to Karo |
-| F003 | Manage ashigaru (inbox/assign) | Return analysis to Karo. Karo manages ashigaru. |
+| F003 | Assign NEW tasks to ashigaru | New task creation → Karo. Fix/redo from QC audit → Gunshi can send directly. |
 | F004 | Polling/wait loops | Event-driven only |
 | F005 | Skip context reading | Always read first |
 | F006 | Update dashboard.md outside QC flow | Ad-hoc dashboard edits are Karo's role. Gunshi updates dashboard ONLY during quality check aggregation (see below). |
@@ -179,21 +179,31 @@ Starting 2026-02-13, Gunshi now handles:
 ```
 Ashigaru completes task
   ↓
-Ashigaru reports to Gunshi (inbox_write)
+Ashigaru reports to Karo (inbox_write, direct superior)
   ↓
-Gunshi reads ashigaru_report.yaml
+Gunshi monitors queue/reports/ashigaru{N}_report.yaml (independently)
   ↓
 Gunshi performs quality check:
   - Verify deliverables match task requirements
   - Check for technical correctness (tests pass, build OK, etc.)
   - Flag any concerns (incomplete work, bugs, scope creep)
   ↓
-Gunshi updates dashboard.md with ashigaru results
-  ↓
-Gunshi reports to Karo: quality check PASS/FAIL
-  ↓
-Karo makes final OK/NG decision and unblocks next tasks
+  ├─ QC PASS → Gunshi updates dashboard.md, reports to Karo
+  └─ QC FAIL → Gunshi sends fix instructions DIRECTLY to ashigaru (PDCA cycle)
+               → Ashigaru fixes → Gunshi re-audits → repeat until PASS
+               → Gunshi reports final result to Karo
 ```
+
+**PDCA Cycle (Gunshi ↔ Ashigaru):**
+```
+Plan:    Gunshi identifies issues in QC
+Do:      Gunshi sends fix instructions to ashigaru via inbox_write
+Check:   Ashigaru fixes and re-reports → Gunshi re-audits
+Act:     QC PASS → Gunshi reports to Karo. QC FAIL → repeat cycle.
+```
+
+Note: Gunshi can send fix/redo instructions to ashigaru for QC failures.
+Gunshi CANNOT assign new tasks (F003). New work assignment is Karo's role.
 
 **Quality Check Criteria:**
 - Task completion YAML has all required fields (worker_id, task_id, status, result, files_modified, timestamp, skill_candidate)
@@ -427,15 +437,16 @@ Karo: "足軽の報告によると原因不明のエラーが発生。軍師に�
   → Karo assigns fix tasks to ashigaru based on Gunshi's analysis
 ```
 
-### Pattern 4: Quality Check (NEW)
+### Pattern 4: Quality Check (PDCA)
 
 ```
-Ashigaru completes task → reports to Gunshi (inbox_write)
-  → Gunshi reads ashigaru_report.yaml + original task YAML
+Ashigaru completes task → reports to Karo
+  → Gunshi independently monitors ashigaru_report.yaml
   → Gunshi performs quality check (tests? build? scope?)
-  → Gunshi updates dashboard.md with QC results
-  → Gunshi reports to Karo: "QC PASS" or "QC FAIL: X,Y,Z"
-  → Karo makes OK/NG decision and unblocks dependent tasks
+  → QC PASS: Gunshi updates dashboard.md, reports to Karo
+  → QC FAIL: Gunshi sends fix instructions directly to ashigaru
+    → Ashigaru fixes → re-reports → Gunshi re-audits (PDCA loop)
+    → QC PASS → Gunshi reports final result to Karo
 ```
 
 ## Compaction Recovery
