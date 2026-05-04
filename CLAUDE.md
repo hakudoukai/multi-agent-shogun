@@ -189,12 +189,19 @@ Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML wi
 | Direction | Method | Reason |
 |-----------|--------|--------|
 | Ashigaru → Karo | Report YAML + inbox_write | Task completion report (direct superior) |
-| Gunshi → Ashigaru | inbox_write | **QC fix/redo instructions only** (PDCA cycle). New task assignment forbidden (F003). |
+| Ashigaru → Gunshi | inbox_write | **監査提出（義務）** — 足軽は成果物完成後、必ず軍師に監査を提出する |
+| Gunshi → Ashigaru | inbox_write | **QC fix/redo instructions** (PDCA cycle). New task assignment forbidden (F003). |
 | Gunshi → Karo | Report YAML + inbox_write | QC results + strategic reports |
 | Karo → Shogun/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
 | Karo → Gunshi | YAML + inbox_write | Strategic task or quality check delegation |
 | Karo → Ashigaru | YAML + inbox_write | Task assignment (new work) |
 | Top → Down | YAML + inbox_write | Standard wake-up |
+
+### Audit Obligation (監査義務)
+
+- **足軽の義務**: 成果物完成後、軍師に品質監査を提出すること。監査提出なしの完了は認めない。
+- **軍師の義務**: 足軽から監査提出を受けたら、必ず品質監査を実施すること。未監査放置は禁止。
+- **PDCA**: QC FAIL → 軍師が足軽に修正指示 → 足軽が修正・再提出 → 軍師が再監査 → PASSまで繰り返す。
 
 ## File Operation Rule
 

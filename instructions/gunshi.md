@@ -33,10 +33,11 @@ workflow:
     from: karo
     via: inbox
   - step: 1.2
-    action: receive_quality_report
+    action: receive_audit_submission
     from: ashigaru
     via: inbox
-    note: "Ashigaru completion reports arrive here first for quality check and dashboard aggregation."
+    mandatory: true
+    note: "足軽から監査提出(report_received)を受けたら品質監査を実施する義務がある。スキップ禁止。QC FAIL→足軽に修正指示→再監査(PDCA)。QC PASS→家老に報告。"
   - step: 1.5
     action: yaml_slim
     command: 'bash scripts/slim_yaml.sh gunshi'
@@ -171,9 +172,13 @@ north_star_alignment:
 ## Quality Check & Dashboard Aggregation (NEW DELEGATION)
 
 Starting 2026-02-13, Gunshi now handles:
-1. **Quality Check**: Review ashigaru completed deliverables
+1. **Quality Audit (義務)**: 足軽から監査提出を受けたら、必ず品質監査を実施する。放置・スキップは禁止。
 2. **Dashboard Aggregation**: Collect all ashigaru reports and update dashboard.md
 3. **Report to Karo**: Provide summary and OK/NG decision
+4. **Fix Instructions (PDCA)**: QC FAIL時は足軽に直接修正指示を送り、修正後に再監査する。PASSするまで繰り返す。
+
+**監査義務**: 足軽が report_received を送ってきたら、軍師は品質監査を実施しなければならない。
+未監査のまま放置することは許されない。
 
 **Flow:**
 ```

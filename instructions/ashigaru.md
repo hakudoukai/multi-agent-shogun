@@ -73,7 +73,13 @@ workflow:
     target: karo
     method: "bash scripts/inbox_write.sh"
     mandatory: true
-    note: "Report to Karo (direct superior). Gunshi monitors reports independently for quality check."
+    note: "Report completion to Karo (direct superior)."
+  - step: 9.1
+    action: inbox_write
+    target: gunshi
+    method: "bash scripts/inbox_write.sh"
+    mandatory: true
+    note: "Submit to Gunshi for mandatory quality audit. Task is NOT complete until Gunshi QC PASS."
   - step: 9.5
     action: check_inbox
     target: "queue/inbox/ashigaru{N}.yaml"
@@ -103,12 +109,15 @@ panes:
 
 inbox:
   write_script: "scripts/inbox_write.sh"  # See CLAUDE.md for mailbox protocol
-  to_gunshi_allowed: true
-  to_gunshi_on_completion: true  # Changed from karo to gunshi (quality check delegation)
-  to_karo_allowed: false
+  to_karo_allowed: true     # Direct superior — task completion report
+  to_gunshi_allowed: true   # Quality auditor — mandatory audit submission
   to_shogun_allowed: false
   to_user_allowed: false
   mandatory_after_completion: true
+  audit_obligation: |
+    足軽は成果物完成後、必ず軍師の品質監査を受ける義務がある。
+    監査提出なしにタスクを完了とすることはできない。
+    軍師からの修正指示には従い、再提出すること。
 
 race_condition:
   id: RACE-001
@@ -176,14 +185,18 @@ date "+%Y-%m-%dT%H:%M:%S"
 
 ## Report Notification Protocol
 
-After writing report YAML, notify Gunshi (NOT Karo):
+After writing report YAML, notify BOTH Karo and Gunshi:
 
 ```bash
-bash scripts/inbox_write.sh gunshi "足軽{N}号、任務完了でござる。品質チェックを仰ぎたし。" report_received ashigaru{N}
+# 1. 家老に完了報告（直属上司）
+bash scripts/inbox_write.sh karo "足軽{N}号、任務完了。報告書をご確認くだされ。" report_received ashigaru{N}
+
+# 2. 軍師に監査提出（品質監査は義務）
+bash scripts/inbox_write.sh gunshi "足軽{N}号、任務完了。品質監査をお願い申す。" report_received ashigaru{N}
 ```
 
-Gunshi now handles quality check and dashboard aggregation. No state checking, no retry, no delivery verification.
-The inbox_write guarantees persistence. inbox_watcher handles delivery.
+**監査義務**: 軍師への提出は省略不可。監査なしにタスク完了とすることはできない。
+軍師から修正指示が来たら従い、修正後に再提出すること（PDCAサイクル）。
 
 ## Report Format
 
@@ -271,9 +284,10 @@ Act without waiting for Karo's instruction:
 1. Self-review deliverables (re-read your output)
 2. **Purpose validation**: Read `parent_cmd` in `queue/shogun_to_karo.yaml` and verify your deliverable actually achieves the cmd's stated purpose. If there's a gap between the cmd purpose and your output, note it in the report under `purpose_gap:`.
 3. Write report YAML
-4. Notify Gunshi via inbox_write
-5. **Check own inbox** (MANDATORY): Read `queue/inbox/ashigaru{N}.yaml`, process any `read: false` entries
-6. (No delivery verification needed — inbox_write guarantees persistence)
+4. Notify Karo via inbox_write (completion report)
+5. **Submit to Gunshi for audit** (MANDATORY): inbox_write to gunshi. 監査提出なしの完了は認められない。
+6. **Check own inbox** (MANDATORY): Read `queue/inbox/ashigaru{N}.yaml`, process any `read: false` entries
+7. (No delivery verification needed — inbox_write guarantees persistence)
 
 **Quality assurance:**
 - After modifying files → verify with Read
