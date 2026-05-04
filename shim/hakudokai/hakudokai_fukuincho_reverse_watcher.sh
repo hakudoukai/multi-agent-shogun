@@ -96,6 +96,10 @@ while true; do
     "${SUPABASE_SERVICE_ROLE_KEY}" \
     "$FUKUINCHO_PANE"
 
+  # ntfy notification for 理事長 (Desktop副医院長は自動受信できないため)
+  python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_escalation.py" \
+    notify --level L2 --summary "副医院長宛メッセージ到着" 2>/dev/null &
+
   # Heartbeat log every 10 polls
   if [ $((POLL_COUNT % 10)) -eq 0 ]; then
     log "HEARTBEAT: polls=${POLL_COUNT}, fails=${FAIL_COUNT}"
