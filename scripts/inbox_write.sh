@@ -133,8 +133,8 @@ max_attempts=3
 
 while [ $attempt -lt $max_attempts ]; do
     if _acquire_lock; then
-        "$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, sys
+        INBOX_CONTENT="$CONTENT" "$SCRIPT_DIR/.venv/bin/python3" -c "
+import yaml, sys, os
 
 try:
     # Load existing inbox
@@ -147,13 +147,13 @@ try:
     if not data.get('messages'):
         data['messages'] = []
 
-    # Add new message
+    # Add new message (content via env var to avoid quote injection)
     new_msg = {
         'id': '$MSG_ID',
         'from': '$FROM',
         'timestamp': '$TIMESTAMP',
         'type': '$TYPE',
-        'content': '''$CONTENT''',
+        'content': os.environ.get('INBOX_CONTENT', ''),
         'read': False
     }
     data['messages'].append(new_msg)
