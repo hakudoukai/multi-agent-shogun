@@ -38,6 +38,23 @@ if not new_msgs:
 success_count = 0
 fail_count = 0
 
+# Auto-forward patterns: detect target agent in content/topic
+AGENT_PATTERNS = {
+    "ashigaru1": ["こうちゃんへ", "ashigaru1降下", "ashigaru1へ", "kouchan"],
+    "ashigaru2": ["桜ちゃんへ", "ashigaru2降下", "ashigaru2へ", "sakura"],
+    "ashigaru8": ["クロちゃんへ", "ashigaru8降下", "ashigaru8へ", "kuro"],
+    "gunshi": ["軍師へ", "gunshi降下", "gunshiへ"],
+}
+
+def detect_forward_target(content, topic):
+    """Detect if message should be auto-forwarded to an agent."""
+    text = (content + " " + topic).lower()
+    for agent_id, patterns in AGENT_PATTERNS.items():
+        for pattern in patterns:
+            if pattern.lower() in text:
+                return agent_id
+    return None
+
 for msg in new_msgs:
     msg_id = msg["id"]
     topic = msg.get("topic", "unknown")
@@ -47,7 +64,20 @@ for msg in new_msgs:
     summary = f"[fukuincho][{priority}] {topic}: {content[:300]}"
     log(f"NEW: {msg_id[:8]} {topic}")
 
-    # Write to shogun inbox
+    # Auto-forward: detect target agent and write directly to their inbox
+    forward_target = detect_forward_target(content, topic)
+    if forward_target:
+        fwd_cmd = [
+            "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
+            forward_target, summary, "task_assigned", "fukuincho"
+        ]
+        try:
+            subprocess.run(fwd_cmd, check=True, capture_output=True, timeout=10)
+            log(f"AUTO-FORWARD: {msg_id[:8]} → {forward_target}")
+        except Exception as e:
+            log(f"AUTO-FORWARD FAILED to {forward_target}: {e}")
+
+    # Write to shogun inbox (always, for awareness)
     inbox_cmd = [
         "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
         "shogun", summary, "fukuincho_instruction", "fukuincho"
