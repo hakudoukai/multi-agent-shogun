@@ -57,7 +57,7 @@ while true; do
 
   # Query: messages TO fukuincho that are not yet acknowledged
   RESPONSE=$(curl -sS -w "\n%{http_code}" \
-    "${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&requires_response=eq.true&order=created_at.asc&limit=5" \
+    "${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
     -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" 2>/dev/null)
