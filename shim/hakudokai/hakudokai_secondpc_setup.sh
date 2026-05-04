@@ -282,20 +282,39 @@ echo ""
 log "Phase 3: tmux session作成 (2pane: ${AGENT1_NAME} + ${AGENT2_NAME})"
 
 if tmux has-session -t "$TMUX_SESSION" 2>/dev/null; then
-  warn "tmux session '$TMUX_SESSION' already exists"
-else
-  tmux new-session -d -s "$TMUX_SESSION" -c "$SCRIPT_DIR"
-  # 2つ目のpaneを作成 (水平分割)
-  tmux split-window -h -t "${TMUX_SESSION}:0" -c "$SCRIPT_DIR"
-  ok "tmux session '$TMUX_SESSION' created (2 panes)"
+  warn "tmux session '$TMUX_SESSION' already exists — killing and recreating"
+  tmux kill-session -t "$TMUX_SESSION" 2>/dev/null
+  sleep 1
 fi
 
-# Set agent_id on each pane
+# 常に新規作成（既存セッションのpane構成が壊れている可能性を排除）
+tmux new-session -d -s "$TMUX_SESSION" -c "$SCRIPT_DIR"
+# 2つ目のpaneを作成 (水平分割)
+tmux split-window -h -t "${TMUX_SESSION}:0" -c "$SCRIPT_DIR"
+ok "tmux session '$TMUX_SESSION' created (2 panes)"
+
+# pane数を確認
+PANE_COUNT=$(tmux list-panes -t "${TMUX_SESSION}:0" 2>/dev/null | wc -l)
+if [ "$PANE_COUNT" -ne 2 ]; then
+  ng "Expected 2 panes, got $PANE_COUNT — aborting"
+  exit 1
+fi
+
+# Set agent_id on each pane（pane存在を確認してから設定）
 tmux set-option -t "$AGENT1_PANE" @agent_id "$AGENT1_ID" 2>/dev/null
 ok "pane 0: agent_id=${AGENT1_ID} (${AGENT1_NAME})"
 
 tmux set-option -t "$AGENT2_PANE" @agent_id "$AGENT2_ID" 2>/dev/null
 ok "pane 1: agent_id=${AGENT2_ID} (${AGENT2_NAME})"
+
+# 設定後に検証
+VERIFY1=$(tmux display-message -t "$AGENT1_PANE" -p '#{@agent_id}' 2>/dev/null)
+VERIFY2=$(tmux display-message -t "$AGENT2_PANE" -p '#{@agent_id}' 2>/dev/null)
+if [ "$VERIFY1" != "$AGENT1_ID" ] || [ "$VERIFY2" != "$AGENT2_ID" ]; then
+  ng "agent_id verification failed: pane0=$VERIFY1 (expected $AGENT1_ID), pane1=$VERIFY2 (expected $AGENT2_ID)"
+  exit 1
+fi
+ok "agent_id verified: pane0=$VERIFY1, pane1=$VERIFY2"
 echo ""
 
 # ============================================================
