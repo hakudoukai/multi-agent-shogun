@@ -189,3 +189,65 @@ class TestInvalidPayload:
     def test_no_content_key(self, project_root):
         msg = {"id": "x"}
         assert handle_reverse_file_sync(msg, project_root) is False
+
+
+class TestAckMessage:
+    """TC1: ack_message retry behavior — ACK failure must not record as processed."""
+
+    def test_ack_success(self):
+        """ack_message returns True on successful urlopen."""
+        from unittest.mock import patch, MagicMock
+        # Extract ack_message from the module source
+        module_path = os.path.join(
+            os.path.dirname(__file__), "..", "shim", "hakudokai",
+            "hakudokai_secondpc_watcher_poll.py"
+        )
+        with open(module_path, encoding="utf-8") as f:
+            source = f.read()
+
+        # Build a minimal module context with the required globals
+        import types
+        mod = types.ModuleType("ack_test")
+        mod.__dict__.update({
+            "json": json, "os": os, "sys": sys,
+            "api_url": "http://localhost:54321/rest/v1",
+            "api_key": "fake_key",
+        })
+        exec("def log(msg): pass", mod.__dict__)
+
+        func_start = source.find("def ack_message(")
+        func_end = source.find("\ndef handle_reverse_file_sync(")
+        exec(source[func_start:func_end], mod.__dict__)
+
+        with patch("urllib.request.urlopen") as mock_urlopen:
+            mock_response = MagicMock()
+            mock_response.__enter__ = MagicMock(return_value=mock_response)
+            mock_response.__exit__ = MagicMock(return_value=False)
+            mock_urlopen.return_value = mock_response
+            assert mod.ack_message("test-id-001") is True
+
+    def test_ack_failure_returns_false(self):
+        """ack_message returns False when urlopen raises."""
+        from unittest.mock import patch
+        module_path = os.path.join(
+            os.path.dirname(__file__), "..", "shim", "hakudokai",
+            "hakudokai_secondpc_watcher_poll.py"
+        )
+        with open(module_path, encoding="utf-8") as f:
+            source = f.read()
+
+        import types
+        mod = types.ModuleType("ack_test")
+        mod.__dict__.update({
+            "json": json, "os": os, "sys": sys,
+            "api_url": "http://localhost:54321/rest/v1",
+            "api_key": "fake_key",
+        })
+        exec("def log(msg): pass", mod.__dict__)
+
+        func_start = source.find("def ack_message(")
+        func_end = source.find("\ndef handle_reverse_file_sync(")
+        exec(source[func_start:func_end], mod.__dict__)
+
+        with patch("urllib.request.urlopen", side_effect=Exception("connection refused")):
+            assert mod.ack_message("test-id-002") is False
