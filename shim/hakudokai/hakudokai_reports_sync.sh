@@ -36,10 +36,16 @@ if [ -f "$HOME/.hakudokai/env" ]; then
   [ -z "${HAKUDOKAI_CLINIC_ID:-}" ] && HAKUDOKAI_CLINIC_ID=$(grep '^HAKUDOKAI_CLINIC_ID=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
   export SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY
 fi
-CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-}"
 
 if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
   echo "[reports_sync] ERROR: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY required" >&2
+  exit 1
+fi
+
+# GS1 fix: clinic_id fail-fast (same strictness as SUPABASE credentials)
+if [ -z "$CLINIC_ID" ]; then
+  echo "[reports_sync] ERROR: HAKUDOKAI_CLINIC_ID required (set in ~/.hakudokai/env or env var)" >&2
   exit 1
 fi
 

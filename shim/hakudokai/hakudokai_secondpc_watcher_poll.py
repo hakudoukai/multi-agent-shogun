@@ -52,7 +52,8 @@ def ack_message(msg_id):
         req.add_header("apikey", api_key)
         req.add_header("Content-Type", "application/json")
         req.add_header("Prefer", "return=minimal")
-        urllib.request.urlopen(req, timeout=10)
+        with urllib.request.urlopen(req, timeout=10):
+            pass
         return True
     except Exception as e:
         log(f"ACK failed for {msg_id[:8]}: {e}")
