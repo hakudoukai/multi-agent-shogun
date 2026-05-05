@@ -48,6 +48,10 @@ fi
 log "Cleaning up existing watcher processes..."
 pkill -f "hakudokai_fukuincho_watcher.sh" 2>/dev/null || true
 pkill -f "hakudokai_fukuincho_reverse_watcher.sh" 2>/dev/null || true
+pkill -f "hakudokai_secondpc_watcher.sh" 2>/dev/null || true
+pkill -f "hakudokai_kuro_desktop_watcher.sh" 2>/dev/null || true
+pkill -f "hakudokai_activity_monitor.sh" 2>/dev/null || true
+pkill -f "hakudokai_task_sync.sh" 2>/dev/null || true
 pkill -f "hakudokai_watchdog.sh" 2>/dev/null || true
 for agent in karo ashigaru1 gunshi shogun; do
   pkill -f "inbox_watcher.sh ${agent}" 2>/dev/null || true
@@ -98,7 +102,55 @@ else
   log "fukuincho_reverse_watcher: FAILED"
 fi
 
-# 4. Start watchdog
+# 4. Start secondpc_watcher (SecondPC → MainPC bridge receiver)
+log "Starting secondpc_watcher..."
+nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+  bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_secondpc_watcher.sh" --interval 5 \
+  >> /tmp/hakudokai_secondpc_watcher.log 2>&1 </dev/null &
+sleep 2
+if pgrep -f "hakudokai_secondpc_watcher.sh" > /dev/null 2>&1; then
+  log "secondpc_watcher: OK"
+else
+  log "secondpc_watcher: FAILED"
+fi
+
+# 5. Start kuro_desktop_watcher (Desktop kuro ↔ MainPC bridge)
+log "Starting kuro_desktop_watcher..."
+nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+  bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_kuro_desktop_watcher.sh" --interval 5 \
+  >> /tmp/hakudokai_kuro_desktop_watcher.log 2>&1 </dev/null &
+sleep 2
+if pgrep -f "hakudokai_kuro_desktop_watcher.sh" > /dev/null 2>&1; then
+  log "kuro_desktop_watcher: OK"
+else
+  log "kuro_desktop_watcher: FAILED"
+fi
+
+# 6. Start task_sync (MainPC → SecondPC task YAML sync via Supabase)
+log "Starting task_sync..."
+nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+  bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_task_sync.sh" --interval 2 \
+  >> /tmp/hakudokai_task_sync.log 2>&1 </dev/null &
+sleep 2
+if pgrep -f "hakudokai_task_sync.sh" > /dev/null 2>&1; then
+  log "task_sync: OK"
+else
+  log "task_sync: FAILED"
+fi
+
+# 7. Start activity_monitor (agent idle detection)
+log "Starting activity_monitor..."
+nohup bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_activity_monitor.sh" \
+  --idle-threshold 300 --interval 30 \
+  >> /tmp/hakudokai_activity_monitor.log 2>&1 </dev/null &
+sleep 2
+if pgrep -f "hakudokai_activity_monitor.sh" > /dev/null 2>&1; then
+  log "activity_monitor: OK"
+else
+  log "activity_monitor: FAILED"
+fi
+
+# 8. Start watchdog
 log "Starting watchdog..."
 nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
   bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_watchdog.sh" --interval 30 \
@@ -114,9 +166,13 @@ fi
 log "=== STARTUP SUMMARY ==="
 log "fukuincho_watcher: $(pgrep -f 'hakudokai_fukuincho_watcher.sh' | head -1 || echo DEAD)"
 log "fukuincho_reverse: $(pgrep -f 'hakudokai_fukuincho_reverse_watcher.sh' | head -1 || echo DEAD)"
+log "secondpc_watcher: $(pgrep -f 'hakudokai_secondpc_watcher.sh' | head -1 || echo DEAD)"
+log "kuro_desktop_watcher: $(pgrep -f 'hakudokai_kuro_desktop_watcher.sh' | head -1 || echo DEAD)"
+log "task_sync: $(pgrep -f 'hakudokai_task_sync.sh' | head -1 || echo DEAD)"
 log "inbox_watcher[karo]: $(pgrep -f 'inbox_watcher.sh karo' | head -1 || echo DEAD)"
 log "inbox_watcher[ashigaru1]: $(pgrep -f 'inbox_watcher.sh ashigaru1' | head -1 || echo DEAD)"
 log "inbox_watcher[gunshi]: $(pgrep -f 'inbox_watcher.sh gunshi' | head -1 || echo DEAD)"
 log "inbox_watcher[shogun]: $(pgrep -f 'inbox_watcher.sh shogun' | head -1 || echo DEAD)"
+log "activity_monitor: $(pgrep -f 'hakudokai_activity_monitor.sh' | head -1 || echo DEAD)"
 log "watchdog: $(pgrep -f 'hakudokai_watchdog.sh' | head -1 || echo DEAD)"
 log "=== ALL DONE ==="

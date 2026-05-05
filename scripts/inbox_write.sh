@@ -34,28 +34,46 @@ _cross_pc_bridge() {
     local from="$4"
 
     # Check if cross-PC delivery is needed via settings.yaml
-    local target_pc
-    target_pc=$("$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, sys
+    # settings_local.yaml overrides pc_mapping (SecondPC uses different is_local)
+    # Returns: "local_pc_id|target_pc_id" or empty if no bridge needed
+    local bridge_info local_pc target_pc
+    bridge_info=$("$SCRIPT_DIR/.venv/bin/python3" -c "
+import yaml, sys, os
 try:
-    with open('$SCRIPT_DIR/config/settings.yaml') as f:
-        cfg = yaml.safe_load(f) or {}
-    pc_map = cfg.get('pc_mapping', {})
+    local_path = '$SCRIPT_DIR/config/settings_local.yaml'
+    main_path = '$SCRIPT_DIR/config/settings.yaml'
+    if os.path.exists(local_path):
+        with open(local_path) as f:
+            local_cfg = yaml.safe_load(f) or {}
+        pc_map = local_cfg.get('pc_mapping', {})
+    else:
+        pc_map = {}
+    if not pc_map:
+        with open(main_path) as f:
+            cfg = yaml.safe_load(f) or {}
+        pc_map = cfg.get('pc_mapping', {})
+    local_id = ''
+    for pc_name, pc_cfg in pc_map.items():
+        if pc_cfg.get('is_local'):
+            local_id = pc_cfg.get('pc_id', pc_name)
     for pc_name, pc_cfg in pc_map.items():
         if pc_cfg.get('is_local'):
             continue
         agents = pc_cfg.get('agents', [])
         if '$target' in agents and pc_cfg.get('supabase_bridge'):
-            print(pc_cfg.get('pc_id', pc_name))
+            print(f'{local_id}|{pc_cfg.get(\"pc_id\", pc_name)}')
             sys.exit(0)
     print('')
 except Exception:
     print('')
 " 2>/dev/null)
 
-    if [ -z "$target_pc" ]; then
+    if [ -z "$bridge_info" ]; then
         return 0  # Local agent, no bridge needed
     fi
+
+    local_pc="${bridge_info%%|*}"
+    target_pc="${bridge_info##*|}"
 
     # Load Supabase env
     local sb_url sb_key
@@ -81,7 +99,7 @@ except Exception:
         -H "apikey: ${sb_key}" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
-        -d "{\"message_type\":\"status_update\",\"from_pc\":\"main_pc\",\"to_pc\":\"${target_pc}\",\"topic\":\"cross_pc_inbox_${target}\",\"content\":\"[${from}→${target}][${msg_type}] ${truncated}\",\"requires_response\":false,\"priority\":\"normal\",\"clinic_id\":\"hakudoukai_main\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+        -d "{\"message_type\":\"status_update\",\"from_pc\":\"${local_pc:-main_pc}\",\"to_pc\":\"${target_pc}\",\"topic\":\"cross_pc_inbox_${target}\",\"content\":\"[${from}→${target}][${msg_type}] ${truncated}\",\"requires_response\":false,\"priority\":\"normal\",\"clinic_id\":\"hakudoukai_main\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
         2>/dev/null \
         && echo "[inbox_write] cross-PC bridge: ${target} → ${target_pc} via Supabase" >&2 \
         || echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}" >&2

@@ -9,6 +9,7 @@
 #   bash shim/hakudokai/hakudokai_init_agents.sh gunshi          # gunshi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "${SCRIPT_DIR}/lib/tmux_send.sh"
 CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 
 # Agent→pane mapping
@@ -45,7 +46,7 @@ init_agent() {
   local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: ${instructions} を読む。その後 queue/inbox/${agent}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
 
   echo "Initializing $agent ($pane)..."
-  tmux send-keys -t "$pane" "$prompt" Enter
+  tmux_send_text "$pane" "$prompt"
   echo "  -> prompt sent"
   sleep 1
 }

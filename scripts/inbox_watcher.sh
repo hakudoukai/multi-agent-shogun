@@ -1000,6 +1000,11 @@ for s in data.get('specials', []):
             echo "[$(date)] [AUTO-RECOVERY] queued task_assigned for $AGENT_ID ($recovery_id)" >&2
         fi
         info=$(get_unread_info)
+        # CRITICAL FIX: After clear_command + /clear, reset cooldown and send immediate nudge.
+        # Without this, agent sits at empty prompt with no idea it has inbox messages.
+        LAST_CLEAR_TS=0
+        LAST_NUDGE_TS=0
+        LAST_NUDGE_COUNT=""
     fi
 
     # Send wake-up nudge for normal messages (with escalation)
@@ -1058,6 +1063,19 @@ for s in data.get('specials', []):
         if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
             send_context_reset
             NEW_CONTEXT_SENT=1
+            # CRITICAL FIX: After /clear, agent has fresh context and is at prompt.
+            # It does NOT know about inbox — must send nudge immediately.
+            # Reset throttle state so the nudge is not suppressed.
+            LAST_NUDGE_TS=0
+            LAST_NUDGE_COUNT=""
+            # Reset /clear cooldown so agent_is_busy() returns false for the nudge.
+            # send_context_reset() already waited for agent to become idle (15s max).
+            LAST_CLEAR_TS=0
+            # Send immediate nudge (agent needs this to start CLAUDE.md recovery)
+            echo "[$(date)] [POST-RESET] Sending immediate post-reset nudge to $AGENT_ID" >&2
+            send_wakeup "$normal_count"
+            FIRST_UNREAD_SEEN=$now
+            return 0
         fi
 
         # If startup prompt was just sent (Codex), skip follow-up nudge this cycle.

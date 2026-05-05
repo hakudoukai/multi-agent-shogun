@@ -61,6 +61,10 @@ shim:
     - hakudokai_audit_scheduler.sh
     - hakudokai_daily_summary.py
     - hakudokai_git_guard.py
+    - hakudokai_kuro_desktop_watcher.sh
+    - hakudokai_kuro_desktop_poll.py
+    - hakudokai_task_sync.sh
+    - hakudokai_activity_monitor.sh
 
 # エスカレーション設定
 escalation:
@@ -97,6 +101,10 @@ pc_mapping:
     agents: [ashigaru2, ashigaru8]
     supabase_bridge: true
     pc_id: second_pc
+  kuro_desktop:
+    agents: [kuro_desktop]
+    supabase_bridge: true
+    pc_id: kuro_desktop
 
 # tmux構成 (公式準拠)
 tmux:

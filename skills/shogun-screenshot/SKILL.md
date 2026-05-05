@@ -4,7 +4,7 @@ description: |
   スクリーンショットの取得・加工を行う。ローカルスクショから最新画像を取得、
   PlaywrightでWebページをキャプチャ、画像のトリミング・リサイズ、機微情報を黒塗りマスキング。
   記事執筆、レポート作成、UI確認、画像加工時に起動。
-  「スクショ」「スクリーンショット」「画面キャプチャ」「最新のスクショ」「画像加工」「トリミング」「マスク」「写メ」「写メ撮った」「スクショ撮った」で起動。
+  「スクショ」「スクリーンショット」「画面キャプチャ」「最新のスクショ」「画像加工」「トリミング」「マスク」「写メ」「写メ撮った」「スクショ撮った」「リモート画面」「SecondPC画面」で起動。
   Do NOT use for: 画像生成（shogun-imagegenを使え）。
 argument-hint: "[url-or-target e.g. https://example.com, latest]"
 allowed-tools: Bash, Read
@@ -141,6 +141,31 @@ python3 skills/shogun-screenshot/scripts/mask_sensitive.py \
 1. Read ツールで画像を確認し、マスクすべき領域を特定
 2. `--preview` で座標が正しいか確認
 3. プレビューOKなら `--preview` を外して実行
+
+### Mode 5: リモートPC スクリーンショット
+
+SSH経由でリモートPC（SecondPC等）のデスクトップ画面をキャプチャする。
+ブラウザやGUIアプリの表示確認、エージェントの稼働状況確認に使用。
+
+```bash
+# SecondPC (デフォルト)
+bash scripts/screenshot_remote.sh
+
+# ホスト・出力先指定
+bash scripts/screenshot_remote.sh hakudokai@192.168.11.47 /tmp/secondpc.png
+```
+
+**前提**: SSH鍵認証が設定済み（~/.ssh/id_ed25519 → リモートの authorized_keys）
+
+**手順**:
+1. `bash scripts/screenshot_remote.sh` でスクリーンショット取得
+2. 出力パス（デフォルト: /tmp/secondpc_screenshot.png）を Read ツールで表示
+3. 画面内容を分析・報告
+
+**用途例**:
+- SecondPCのさくら・クロちゃんの作業画面確認
+- リモートPCのブラウザ表示確認（DentalBI等）
+- GUIアプリの状態確認
 
 ## Guidelines
 
