@@ -300,11 +300,11 @@ if [ "$PANE_COUNT" -ne 2 ]; then
   exit 1
 fi
 
-# Set agent_id on each pane（pane存在を確認してから設定）
-tmux set-option -t "$AGENT1_PANE" @agent_id "$AGENT1_ID" 2>/dev/null
+# Set agent_id on each pane（-p = pane-level option, not window-level）
+tmux set-option -p -t "$AGENT1_PANE" @agent_id "$AGENT1_ID" 2>/dev/null
 ok "pane 0: agent_id=${AGENT1_ID} (${AGENT1_NAME})"
 
-tmux set-option -t "$AGENT2_PANE" @agent_id "$AGENT2_ID" 2>/dev/null
+tmux set-option -p -t "$AGENT2_PANE" @agent_id "$AGENT2_ID" 2>/dev/null
 ok "pane 1: agent_id=${AGENT2_ID} (${AGENT2_NAME})"
 
 # 設定後に検証
@@ -405,6 +405,32 @@ if pgrep -f "hakudokai_secondpc_receiver" > /dev/null 2>&1; then
 else
   warn "Supabase bridge receiver: check $RECEIVER_LOG"
 fi
+
+# Start reports_sync (SecondPC → MainPC reverse file sync)
+# SR2 fix: use pidfile instead of broad pkill -f
+REPORTS_SYNC_LOG="/tmp/hakudokai_reports_sync.log"
+REPORTS_SYNC_PIDFILE="/tmp/hakudokai_reports_sync.pid"
+
+if [ -f "$REPORTS_SYNC_PIDFILE" ]; then
+  OLD_PID=$(cat "$REPORTS_SYNC_PIDFILE" 2>/dev/null)
+  if [ -n "$OLD_PID" ] && kill -0 "$OLD_PID" 2>/dev/null; then
+    kill "$OLD_PID" 2>/dev/null
+    sleep 1
+  fi
+  rm -f "$REPORTS_SYNC_PIDFILE"
+fi
+
+nohup bash "${SCRIPT_DIR}/shim/hakudokai/hakudokai_reports_sync.sh" --interval 2 \
+  >> "$REPORTS_SYNC_LOG" 2>&1 </dev/null &
+REPORTS_SYNC_PID=$!
+echo "$REPORTS_SYNC_PID" > "$REPORTS_SYNC_PIDFILE"
+sleep 2
+
+if kill -0 "$REPORTS_SYNC_PID" 2>/dev/null; then
+  ok "reports_sync (reverse): PID=$REPORTS_SYNC_PID"
+else
+  warn "reports_sync: check $REPORTS_SYNC_LOG"
+fi
 echo ""
 
 # ============================================================
@@ -445,11 +471,13 @@ echo "  Processes:"
 echo "    inbox_watcher[${AGENT1_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT1_ID}" | head -1 || echo 'NOT RUNNING')"
 echo "    inbox_watcher[${AGENT2_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT2_ID}" | head -1 || echo 'NOT RUNNING')"
 echo "    bridge_recv: running (log: $RECEIVER_LOG)"
+echo "    reports_sync: $(pgrep -f 'hakudokai_reports_sync' | head -1 || echo 'NOT RUNNING')"
 echo ""
 echo "  Logs:"
 echo "    inbox_watcher[${AGENT1_ID}]: /tmp/inbox_watcher_${AGENT1_ID}.log"
 echo "    inbox_watcher[${AGENT2_ID}]: /tmp/inbox_watcher_${AGENT2_ID}.log"
 echo "    bridge_recv: $RECEIVER_LOG"
+echo "    reports_sync: $REPORTS_SYNC_LOG"
 echo ""
 echo "  To check status:"
 echo "    tmux attach -t $TMUX_SESSION"
