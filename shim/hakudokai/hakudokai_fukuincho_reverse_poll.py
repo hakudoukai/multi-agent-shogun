@@ -48,10 +48,40 @@ for msg in new_msgs:
     content = msg.get("content", "")
     priority = msg.get("priority", "normal")
     from_pc = msg.get("from_pc", "unknown")
+    to_pc = msg.get("to_pc", "unknown")
     msg_type = msg.get("message_type", "status_update")
 
+    log(f"NEW: {msg_id[:8]} {topic} from {from_pc} to {to_pc}")
+
+    # Self-send detection: if from_pc == to_pc, ACK immediately and skip
+    if from_pc == to_pc or (from_pc == "main_pc" and to_pc == "main_pc"):
+        log(f"SELF-SEND detected: {msg_id[:8]} from={from_pc} to={to_pc} — immediate ACK")
+        try:
+            import urllib.request
+            from datetime import datetime, timezone
+            ack_url = f"{api_url}/rest/v1/pc_handshake?id=eq.{msg_id}"
+            ack_data = json.dumps({
+                "acknowledged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "acknowledged_by": "system",
+                "context_data": json.dumps({"close_reason": "self_send_rejected"})
+            }).encode()
+            req = urllib.request.Request(ack_url, data=ack_data, method="PATCH")
+            req.add_header("Authorization", f"Bearer {api_key}")
+            req.add_header("apikey", api_key)
+            req.add_header("Content-Type", "application/json")
+            req.add_header("Prefer", "return=minimal")
+            with urllib.request.urlopen(req, timeout=10) as _resp:
+                pass
+            success_count += 1
+        except Exception as e:
+            log(f"SELF-SEND ACK failed for {msg_id[:8]}: {e}")
+            fail_count += 1
+        # Record as processed regardless (prevent infinite retry)
+        with open(processed_file, "a") as f:
+            f.write(msg_id + "\n")
+        continue
+
     summary = f"[{from_pc}][{priority}] {topic}: {content[:500]}"
-    log(f"NEW: {msg_id[:8]} {topic} from {from_pc}")
 
     # Determine escalation level based on content
     escalation_hint = ""
@@ -107,7 +137,8 @@ for msg in new_msgs:
             req.add_header("apikey", api_key)
             req.add_header("Content-Type", "application/json")
             req.add_header("Prefer", "return=minimal")
-            urllib.request.urlopen(req, timeout=10)
+            with urllib.request.urlopen(req, timeout=10) as _resp:
+                pass
             success_count += 1
         except Exception as e:
             log(f"ACK failed for {msg_id[:8]}: {e}")

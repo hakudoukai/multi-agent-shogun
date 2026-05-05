@@ -164,6 +164,10 @@ check_and_restart_fukuincho_reverse() {
       log "fukuincho_reverse DEAD — MANUAL MODE (skipping)"
       return 1
     fi
+    if [ -f "$HOME/.openclaw/disable_fukuincho_reverse_watcher" ]; then
+      log "fukuincho_reverse DEAD — DISABLED by flag (skipping restart)"
+      return 1
+    fi
     log "ALERT: fukuincho_reverse DEAD — restarting"
     if ! start_fukuincho_reverse_watcher; then
       RESTART_FAIL_COUNT[fukuincho_reverse]=$((RESTART_FAIL_COUNT[fukuincho_reverse] + 1))
@@ -180,6 +184,10 @@ check_and_restart_fukuincho() {
   if ! pgrep -f "hakudokai_fukuincho_watcher.sh" > /dev/null 2>&1; then
     if [ "${MANUAL_MODE[fukuincho]}" = "true" ]; then
       log "fukuincho_watcher DEAD — MANUAL MODE (skipping restart)"
+      return 1
+    fi
+    if [ -f "$HOME/.openclaw/disable_fukuincho_watcher" ]; then
+      log "fukuincho_watcher DEAD — DISABLED by flag (skipping restart)"
       return 1
     fi
     log "ALERT: fukuincho_watcher DEAD — restarting (fail_count=${RESTART_FAIL_COUNT[fukuincho]})"
@@ -203,6 +211,10 @@ check_and_restart_inbox() {
   if ! pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then
     if [ "${MANUAL_MODE[$agent]}" = "true" ]; then
       log "inbox_watcher[$agent] DEAD — MANUAL MODE (skipping restart)"
+      return 1
+    fi
+    if [ -f "$HOME/.openclaw/disable_inbox_watcher_${agent}" ]; then
+      log "inbox_watcher[$agent] DEAD — DISABLED by flag (skipping restart)"
       return 1
     fi
     log "ALERT: inbox_watcher[$agent] DEAD — restarting (fail_count=${RESTART_FAIL_COUNT[$agent]})"
@@ -253,6 +265,15 @@ update_dashboard() {
 EOJSON
 }
 
+GLOBAL_DISABLE="$HOME/.openclaw/global_disable"
+WATCHDOG_DISABLE="$HOME/.openclaw/disable_watchdog"
+
+# Check disable flags before starting
+if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHDOG_DISABLE" ]; then
+  echo "[watchdog] DISABLED by flag file — refusing to start" >&2
+  exit 0
+fi
+
 log "started (interval=${CHECK_INTERVAL}s, max_restart_fails=${MAX_RESTART_FAILS}, agents=${INBOX_AGENTS})"
 
 # Initial health check
@@ -267,6 +288,13 @@ update_dashboard
 
 while true; do
   sleep "$CHECK_INTERVAL"
+
+  # Respect manual disable flags (Watcher Design Principles)
+  if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHDOG_DISABLE" ]; then
+    log "DISABLED by flag file — exiting gracefully"
+    rm -f "$DASHBOARD"
+    exit 0
+  fi
 
   check_and_restart_fukuincho
   check_and_restart_fukuincho_reverse

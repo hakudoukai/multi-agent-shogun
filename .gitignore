@@ -175,6 +175,7 @@ tests/specs/osato_lms_*
 !tests/
 !tests/*.bats
 !tests/*.sh
+!tests/*.py
 !tests/fixtures/
 !tests/fixtures/*.yaml
 !tests/unit/
