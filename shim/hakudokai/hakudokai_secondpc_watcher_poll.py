@@ -36,6 +36,29 @@ if not new_msgs:
 success_count = 0
 fail_count = 0
 
+
+def ack_message(msg_id):
+    """D1 fix: shared ACK PATCH helper. Returns True on success."""
+    try:
+        import urllib.request
+        from datetime import datetime, timezone
+        ack_url = f"{api_url}/pc_handshake?id=eq.{msg_id}"
+        ack_data = json.dumps({
+            "acknowledged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "acknowledged_by": "main_pc"
+        }).encode()
+        req = urllib.request.Request(ack_url, data=ack_data, method="PATCH")
+        req.add_header("Authorization", f"Bearer {api_key}")
+        req.add_header("apikey", api_key)
+        req.add_header("Content-Type", "application/json")
+        req.add_header("Prefer", "return=minimal")
+        urllib.request.urlopen(req, timeout=10)
+        return True
+    except Exception as e:
+        log(f"ACK failed for {msg_id[:8]}: {e}")
+        return False
+
+
 def handle_reverse_file_sync(msg, project_root):
     """Handle file_sync from SecondPC → MainPC (reverse direction).
 
@@ -67,6 +90,11 @@ def handle_reverse_file_sync(msg, project_root):
     written = 0
     failed = 0
     for entry in files:
+        # T1 fix: validate entry is a dict
+        if not isinstance(entry, dict):
+            log(f"reverse_file_sync: REJECTED non-dict entry: {type(entry)}")
+            failed += 1
+            continue
         rel_path = entry.get("path", "")
         file_content = entry.get("content", "")
 
@@ -161,31 +189,12 @@ for msg in new_msgs:
     if message_type == "file_sync" or topic.startswith("reports_sync"):
         write_ok = handle_reverse_file_sync(msg, project_root=script_dir)
         if write_ok:
-            ack_ok = False
-            try:
-                import urllib.request
-                from datetime import datetime, timezone
-                ack_url = f"{api_url}/pc_handshake?id=eq.{msg_id}"
-                ack_data = json.dumps({
-                    "acknowledged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                    "acknowledged_by": "main_pc"
-                }).encode()
-                req = urllib.request.Request(ack_url, data=ack_data, method="PATCH")
-                req.add_header("Authorization", f"Bearer {api_key}")
-                req.add_header("apikey", api_key)
-                req.add_header("Content-Type", "application/json")
-                req.add_header("Prefer", "return=minimal")
-                urllib.request.urlopen(req, timeout=10)
+            if ack_message(msg_id):
                 success_count += 1
-                ack_ok = True
-            except Exception as e:
-                log(f"ACK failed for {msg_id[:8]}: {e}")
-                fail_count += 1
-            # SR4 fix: only record as processed after successful ACK
-            if ack_ok:
                 with open(processed_file, "a") as f:
                     f.write(msg_id + "\n")
             else:
+                fail_count += 1
                 log(f"SKIPPED recording {msg_id[:8]} (ACK failed, will retry)")
         else:
             fail_count += 1
@@ -217,34 +226,17 @@ for msg in new_msgs:
     except Exception as e:
         log(f"inbox_write FAILED: {e}")
 
-    # ACK in Supabase (only after confirmed write)
+    # B1/D1 fix: unified ACK logic via ack_message helper
     if write_ok:
-        try:
-            import urllib.request
-            from datetime import datetime, timezone
-            ack_url = f"{api_url}/pc_handshake?id=eq.{msg_id}"
-            ack_data = json.dumps({
-                "acknowledged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "acknowledged_by": "main_pc"
-            }).encode()
-            req = urllib.request.Request(ack_url, data=ack_data, method="PATCH")
-            req.add_header("Authorization", f"Bearer {api_key}")
-            req.add_header("apikey", api_key)
-            req.add_header("Content-Type", "application/json")
-            req.add_header("Prefer", "return=minimal")
-            urllib.request.urlopen(req, timeout=10)
+        if ack_message(msg_id):
             success_count += 1
-        except Exception as e:
-            log(f"ACK failed for {msg_id[:8]}: {e}")
+            with open(processed_file, "a") as f:
+                f.write(msg_id + "\n")
+        else:
             fail_count += 1
+            log(f"SKIPPED recording {msg_id[:8]} (ACK failed, will retry)")
     else:
         fail_count += 1
-
-    # Record as processed only if write succeeded
-    if write_ok:
-        with open(processed_file, "a") as f:
-            f.write(msg_id + "\n")
-    else:
         log(f"SKIPPED recording {msg_id[:8]} (write failed, will retry)")
 
 if success_count or fail_count:

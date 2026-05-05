@@ -159,6 +159,22 @@ class TestEncodingSafe:
         assert handle_reverse_file_sync(msg, project_root) is True
 
 
+class TestEntryTypeValidation:
+    """T1: Non-dict entries in files list must be rejected."""
+
+    def test_reject_string_entry(self, project_root):
+        msg = _make_msg(["queue/reports/ashigaru2_report.yaml"])
+        assert handle_reverse_file_sync(msg, project_root) is False
+
+    def test_reject_null_entry(self, project_root):
+        msg = _make_msg([None])
+        assert handle_reverse_file_sync(msg, project_root) is False
+
+    def test_reject_int_entry(self, project_root):
+        msg = _make_msg([42])
+        assert handle_reverse_file_sync(msg, project_root) is False
+
+
 class TestInvalidPayload:
     """Edge cases for malformed messages."""
 

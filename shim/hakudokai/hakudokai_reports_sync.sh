@@ -15,7 +15,6 @@ set -u
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 INTERVAL=2
 ONCE=false
-CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 HEALTHCHECK_FILE="/tmp/hakudokai_reports_sync.health"
 HASH_DIR="/tmp/hakudokai_reports_sync_hashes"
 
@@ -30,12 +29,14 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-# Auto-source Supabase env
-if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
-  SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
-  SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+# Auto-source Supabase env + clinic_id (L1/G1 fix)
+if [ -f "$HOME/.hakudokai/env" ]; then
+  [ -z "${SUPABASE_URL:-}" ] && SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+  [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+  [ -z "${HAKUDOKAI_CLINIC_ID:-}" ] && HAKUDOKAI_CLINIC_ID=$(grep '^HAKUDOKAI_CLINIC_ID=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
   export SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY
 fi
+CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 
 if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
   echo "[reports_sync] ERROR: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY required" >&2
@@ -48,6 +49,7 @@ mkdir -p "$HASH_DIR"
 SYNC_COUNT=0
 FAIL_COUNT=0
 START_TIME=$(date +%s)
+MAX_FILE_BYTES=1048576  # 1MB — S1 fix: prevent DoS via oversized files
 
 log() {
   echo "[reports_sync][$(date '+%H:%M:%S')] $1" >&2
@@ -83,6 +85,19 @@ upload_file_sync() {
   local agent="$1"
   shift
   # Remaining args are file paths to sync
+
+  # S1 fix: check file sizes before upload
+  local f_path
+  for f_path in "$@"; do
+    if [ -f "$f_path" ]; then
+      local fsize
+      fsize=$(stat -c%s "$f_path" 2>/dev/null || echo 0)
+      if [ "$fsize" -gt "$MAX_FILE_BYTES" ]; then
+        log "ERROR: file too large (${fsize} bytes > ${MAX_FILE_BYTES}): $f_path"
+        return 1
+      fi
+    fi
+  done
 
   # SR6 fix: pass variables via env, not bash string interpolation in Python
   local payload
