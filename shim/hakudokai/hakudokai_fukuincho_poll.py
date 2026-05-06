@@ -37,6 +37,47 @@ if not new_msgs:
 
 success_count = 0
 fail_count = 0
+MAX_RETRY = 5
+
+# Retry tracking (Watcher Design Principles 必須項目)
+RETRY_TRACKER_FILE = "/tmp/hakudokai_fukuincho_retry_tracker.json"
+
+def load_retry_tracker():
+    try:
+        with open(RETRY_TRACKER_FILE) as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+def save_retry_tracker(tracker):
+    with open(RETRY_TRACKER_FILE, "w") as f:
+        json.dump(tracker, f)
+
+def dead_letter_message(msg_id, last_error):
+    """Mark message as dead-lettered in Supabase (stop retrying)."""
+    try:
+        import urllib.request
+        from datetime import datetime, timezone
+        dl_url = f"{api_url}/pc_handshake?id=eq.{msg_id}"
+        dl_data = json.dumps({
+            "acknowledged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "acknowledged_by": "dead_letter",
+            "context_data": json.dumps({"close_reason": "max_retry_exceeded", "last_error": last_error[:200]})
+        }).encode()
+        req = urllib.request.Request(dl_url, data=dl_data, method="PATCH")
+        req.add_header("Authorization", f"Bearer {api_key}")
+        req.add_header("apikey", api_key)
+        req.add_header("Content-Type", "application/json")
+        req.add_header("Prefer", "return=minimal")
+        with urllib.request.urlopen(req, timeout=10):
+            pass
+        log(f"DEAD-LETTERED: {msg_id[:8]} — {last_error}")
+        return True
+    except Exception as e:
+        log(f"dead_letter ACK failed for {msg_id[:8]}: {e}")
+        return False
+
+retry_tracker = load_retry_tracker()
 
 # Auto-forward patterns: detect target agent in content/topic
 AGENT_PATTERNS = {
@@ -60,6 +101,17 @@ for msg in new_msgs:
     topic = msg.get("topic", "unknown")
     content = msg.get("content", "")
     priority = msg.get("priority", "normal")
+
+    # Retry cap enforcement
+    retry_count = retry_tracker.get(msg_id, 0)
+    if retry_count >= MAX_RETRY:
+        log(f"RETRY CAP exceeded ({retry_count}/{MAX_RETRY}): {msg_id[:8]} — dead-lettering")
+        if dead_letter_message(msg_id, f"max_retry_exceeded_after_{retry_count}_attempts"):
+            with open(processed_file, "a") as f:
+                f.write(msg_id + "\n")
+            retry_tracker.pop(msg_id, None)
+            save_retry_tracker(retry_tracker)
+        continue
 
     summary = f"[fukuincho][{priority}] {topic}: {content[:300]}"
     log(f"NEW: {msg_id[:8]} {topic}")
@@ -138,8 +190,13 @@ for msg in new_msgs:
     if write_ok:
         with open(processed_file, "a") as f:
             f.write(msg_id + "\n")
+        if msg_id in retry_tracker:
+            retry_tracker.pop(msg_id, None)
+            save_retry_tracker(retry_tracker)
     else:
-        log(f"SKIPPED recording {msg_id[:8]} as processed (write failed, will retry next poll)")
+        retry_tracker[msg_id] = retry_count + 1
+        save_retry_tracker(retry_tracker)
+        log(f"SKIPPED recording {msg_id[:8]} as processed (write failed, retry {retry_count+1}/{MAX_RETRY})")
 
 log(f"dispatched {success_count} ok, {fail_count} failed (total {len(new_msgs)})")
 sys.exit(1 if fail_count > 0 and success_count == 0 else 0)

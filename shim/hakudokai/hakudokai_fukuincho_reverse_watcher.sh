@@ -19,6 +19,10 @@ FAIL_COUNT=0
 MAX_FAILS=5
 POLL_COUNT=0
 
+# Manual disable flags (Watcher Design Principles 必須項目)
+GLOBAL_DISABLE="$HOME/.openclaw/global_disable"
+WATCHER_DISABLE="$HOME/.openclaw/disable_fukuincho_reverse_watcher"
+
 # Auto-source Supabase env
 if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
   SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
@@ -53,6 +57,14 @@ log "started (interval=${POLL_INTERVAL}s, pane=${FUKUINCHO_PANE})"
 
 while true; do
   sleep "$POLL_INTERVAL"
+
+  # Manual disable flag check (Watcher Design Principles 必須項目)
+  if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHER_DISABLE" ]; then
+    log "DISABLED by flag file — exiting gracefully"
+    rm -f "$HEALTH_FILE"
+    exit 0
+  fi
+
   POLL_COUNT=$((POLL_COUNT + 1))
 
   # Query: messages TO fukuincho that are not yet acknowledged

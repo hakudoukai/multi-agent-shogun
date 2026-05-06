@@ -1182,7 +1182,17 @@ process_unread_once
 # Shorter timeout = faster escalation retry for stuck agents.
 INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
 
+# Manual disable flags (Watcher Design Principles 必須項目)
+GLOBAL_DISABLE_FLAG="$HOME/.openclaw/global_disable"
+WATCHER_DISABLE_FLAG="$HOME/.openclaw/disable_inbox_watcher_${AGENT_ID}"
+
 while true; do
+    # Manual disable flag check (Watcher Design Principles 必須項目)
+    if [ -f "$GLOBAL_DISABLE_FLAG" ] || [ -f "$WATCHER_DISABLE_FLAG" ]; then
+        echo "[$(date)] inbox_watcher[$AGENT_ID] DISABLED by flag file — exiting gracefully" >&2
+        exit 0
+    fi
+
     # Block until file is modified OR timeout
     # Backend-specific file watching: inotifywait (Linux) or fswatch (macOS)
     set +e

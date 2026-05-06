@@ -41,10 +41,22 @@ log() {
   echo "[receiver][$(date '+%H:%M:%S')] $1" | tee -a "$LOG" >&2
 }
 
+# Manual disable flags (Watcher Design Principles 必須項目)
+GLOBAL_DISABLE="$HOME/.openclaw/global_disable"
+WATCHER_DISABLE="$HOME/.openclaw/disable_secondpc_receiver"
+
 log "started (interval=${POLL_INTERVAL}s)"
 
 while true; do
   sleep "$POLL_INTERVAL"
+
+  # Manual disable flag check (Watcher Design Principles 必須項目)
+  if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHER_DISABLE" ]; then
+    log "DISABLED by flag file — exiting gracefully"
+    rm -f "$HEALTH_FILE"
+    exit 0
+  fi
+
   POLL_COUNT=$((POLL_COUNT + 1))
 
   # Poll Supabase

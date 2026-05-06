@@ -82,11 +82,22 @@ send_alert() {
     2>/dev/null || log "ALERT SEND FAILED"
 }
 
+# Manual disable flags (Watcher Design Principles 必須項目)
+GLOBAL_DISABLE="$HOME/.openclaw/global_disable"
+WATCHER_DISABLE="$HOME/.openclaw/disable_fukuincho_watcher"
+
 log "started (interval=${INTERVAL}s, once=${ONCE}, clinic=${CLINIC_ID}, heartbeat=${HEARTBEAT_INTERVAL}s)"
 # Initial health file
 echo "{\"alive\":true,\"ts\":$(date +%s),\"uptime\":0,\"polls\":0,\"fails\":0}" > "$HEALTHCHECK_FILE"
 
 while true; do
+  # Manual disable flag check (Watcher Design Principles 必須項目)
+  if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHER_DISABLE" ]; then
+    log "DISABLED by flag file — exiting gracefully"
+    rm -f "$HEALTHCHECK_FILE"
+    exit 0
+  fi
+
   POLL_COUNT=$((POLL_COUNT + 1))
 
   # Curl with timeout
