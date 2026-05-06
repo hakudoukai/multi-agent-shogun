@@ -92,6 +92,7 @@ features/ekarte-v6/
 - **R3**: Step 5 A/B 切替時の `selectedPanelCode` vs `selectedTreatmentSetCode` の伝搬不整合 (Phase 4 cycle1 の T1 と同型回帰) → モード切替テストで再現
 - **R4**: 102+156+182 = 既存単体テスト数増加に伴うビルド時間悪化 → CI 時間 baseline 計測
 - **R5** (軍師指摘 P5 / 家老採用): Phase 5 cycle3 fix 中の `base_commit` 変動リスク。E2E 開発期間中に Phase 1-5 のいずれかが re-fix され、`base_commit` が変動して E2E 計画前提が崩壊する可能性 (特に Phase 5 cycle3 fix の波及)。**対策**: Phase 5 PASS 確定後に `base_commit` を再固定し、変動分は差分監査で吸収。§5.3 のルール (`base_commit` を Phase 5 PASS 確定 commit に固定) を厳守し、変動発生時は本書 §3 表を更新 + 影響範囲の E2E シナリオを再評価。差分監査ルール (`docs/audit-framework.md`) に従い base 変動時は cycle1 から再開
+- **R6** (Phase 7 ドラフト連携、家老採用 msg_20260506_115140_698f441b): Phase 7 着手**前/後**で E2E-12.4/.5/.6 smoke の意味合いが反転する。Phase 7 着手前 (本 Phase 6 範囲): 「passport 系副作用ゼロ」が PASS 条件。Phase 7 着手後 (cmd_t13 Phase 7 実装後): 「期待される passport 連携 (XP 加算/スタンプ付与/ミッション完了) が確実に発火する」が PASS 条件で、副作用ゼロは逆に FAIL 化する。**scope 切替必須** — Phase 7 cmd 発令時に、本 §6 E2E-12.4/.5/.6 のテストを「逆向きテスト」へ書換える作業を含めること
 
 ## 5. テスト戦略
 
@@ -135,7 +136,7 @@ Phase 6 完了時、`docs/audit-framework.md` 準拠で:
 | E2E-09 | 歯周ポケット入力 6 点法 | 共通 | Step 7 で範囲外/非数入力時に親 state 不更新 (cycle2 B3 確認) |
 | E2E-10 | エラーコード表示 | 共通 | 強制エラー注入 → ERR-EKARTE-* がモーダル + コピー可 (CLAUDE.md §9/§12) |
 | E2E-11 | iPad 横向き 44px touch | 共通 | 全タップ要素が 44×44px 以上、14px min font |
-| E2E-12 | regression smoke + v3/v5/v6 クロス保存テスト (軍師指摘 P2 / 家老採用) | n/a | (a) ekarte v5 / handover-sheet / comment-navigator / dental-chart / /pdf-editor の 5 ルートが落ちない。(b) **ekarte-v3 ↔ ekarte-v5 ↔ ekarte-v6 クロス保存テスト**: v3 で保存 → v5 で表示/編集 → v6 で表示/編集 → v3 で再表示しても `useTreatmentSets` cache 汚染が起きないこと。Phase 4 cycle1 の T1 同型回帰の根本原因がクロス汚染のため、E2E-04 モード切替と組合せて 3 経路の整合性を explicit に検証 |
+| E2E-12 | regression smoke + v3/v5/v6 クロス保存 + passport 連携 non-regression (軍師 P2 / 足軽2号 Phase 7 連携 / 家老採用) | n/a | (a) ekarte v5 / handover-sheet / comment-navigator / dental-chart / /pdf-editor の 5 ルートが落ちない。(b) **ekarte-v3 ↔ ekarte-v5 ↔ ekarte-v6 クロス保存テスト**: v3 で保存 → v5 で表示/編集 → v6 で表示/編集 → v3 で再表示しても `useTreatmentSets` cache 汚染が起きないこと。Phase 4 cycle1 の T1 同型回帰の根本原因がクロス汚染のため、E2E-04 モード切替と組合せて 3 経路の整合性を explicit に検証。**サブシナリオ (Phase 7 ドラフト連携追補、家老承認 msg_20260506_115140_698f441b)**: <br>**E2E-12.4** `passport_xp_log` / `passport_stamp_log` / `passport_mission_log` への不正 INSERT 検出 (ekarte-v6 操作で passport 系テーブルに副作用が出ないこと) <br>**E2E-12.5** `/api/teriha-passport/*` + `/api/child-passport/*` レスポンス同型性 (ekarte-v6 操作前後でレスポンスが一致) <br>**E2E-12.6** `sync_handover_on_soap_finalize_all` 直後の passport 系副作用なし (Phase 7 で同位置に `sync_passport_on_soap_finalize_all` を追加する想定。Phase 6 時点で副作用ゼロが確認できれば Phase 7 着手後の差分検証で「増えた副作用 = 新規実装分のみ」と切り分け可) |
 | E2E-13 | Step 9 dedupe + RLS 整合性 — clinic_id 別データ分離検証 (軍師指摘 P6 / 家老採用) | 共通 | Step 9 で同一薬剤を連続追加 → dedupe 動作。`prescription.entries` 永続化時に Supabase RLS が `clinic_id` 境界で阻害しないこと。他医院 `clinic_id` のテストユーザーで同一処方を作成 → 互いに参照不能であることを explicit 検証 (clinic_id=5 香椎照葉 vs テスト用ダミー clinic_id) |
 
 ## 7. 観察容易性 (Error Design §1〜§13 準拠)
@@ -214,9 +215,24 @@ E2E テスト実施中に以下を成果物として収集:
 - 将軍ご自身が「Phase 5 監査と並行で効率化を図る理事長殿御指示。通常の Phase 6 本実装の発令は Phase 5 PASS 後に家老が行う (chain of command 復帰)」と明記
 - 足軽 1 号としては F001 (direct_shogun_report) / F003 (unauthorized_work) 違反にあたらない範囲で計画書策定のみ実施し、家老承認を経て本実装 cmd 発令へ繋ぐ
 
-## 15. 補足 — 将軍指示と実態の差分
+## 15. 補足 — 将軍指示と実態の差分 + Phase 7 連携
 
 将軍 inbox では「Phase 5 (足軽7) cycle1 fix1 commit 0c355e16 (PASS 期待)」とあるが、`queue/reports/gunshi_report.yaml` 確認したところ、Phase 5 は **cycle2 audit FAIL** (Codex axis2_bugs B1 high 禁忌 race / axis4_tests Q1 high race test 不在) で cycle3 PDCA 中。将軍ご認識との差分を本計画書 §2 前提条件に反映済。Phase 5 PASS 確定までは Phase 6 実装着手不可。
+
+### 15.1 Phase 7 ドラフト連携追補 (家老承認 msg_20260506_115140_698f441b)
+
+足軽 2 号 (さくら) より共有された Phase 7 接続点ドラフト (`docs/phase7_passport_integration_concept_draft.md`、9 接続点 C1-C9、C2 = SOAP finalize-all 後フックが最小起点) を踏まえ、Phase 6 の §6 E2E シナリオ表に E2E-12.4/.5/.6 サブシナリオを家老承認の上で追加した。
+
+**位置付け (Phase 7 未実装期 vs 実装後)**:
+
+| 時期 | E2E-12.4/.5/.6 の意味 | PASS 条件 |
+|---|---|---|
+| Phase 6 範囲 (Phase 7 未実装) | non-regression test | ekarte-v6 操作で passport 系に副作用ゼロ |
+| Phase 7 実装後 (cmd_t13 Phase 7 完了後) | 機能テスト (逆向き) | C2 等で期待される passport 連携が確実に発火する。副作用ゼロは逆に FAIL となる |
+
+Phase 7 cmd 発令時に、本 E2E-12.4/.5/.6 のテストコードを「逆向きテスト」へ書換える作業を必ず含めること。これは §4.3 R6 リスクに対応。
+
+**Phase 7 ドラフトの「2 系統エンジン併存」警告との関係**: ドラフト §1 で警告された `teriha_passport_engine` vs `child_adventure_engine` の併存問題は、Anti-Duplication Rule §「Root Cause 4 Patterns」§1 (旧版と新版の併存) に該当する重大リスク。Phase 7 着手前に統廃合判断が必須。本 Phase 6 計画書 §6 の E2E-12.5 (passport API レスポンス同型性) は両系統のエンドポイントを explicit に検証範囲に含むため、統廃合判断のための baseline データを Phase 6 段階で取得できる。
 
 ---
 
