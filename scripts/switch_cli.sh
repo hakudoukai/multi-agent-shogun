@@ -34,8 +34,9 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 SETTINGS_FILE="${PROJECT_ROOT}/config/settings.yaml"
 LOG_FILE="${PROJECT_ROOT}/logs/switch_cli.log"
 
-# cli_adapter.sh をロード
+# cli_adapter.sh + §18 役名定義をロード
 source "${PROJECT_ROOT}/lib/cli_adapter.sh"
+source "${PROJECT_ROOT}/lib/_section18_roles.sh"
 
 # ─── ログ ───
 log() {
@@ -77,29 +78,36 @@ resolve_pane() {
         log "WARN: @agent_id=$agent_id not found in any pane. Falling back to fixed mapping."
     fi
 
-    # Phase 2: フォールバック（従来の固定マッピング）
+    # Phase 2: フォールバック（§18 配置に基づく MainPC pane 固定マッピング）
+    #
+    # cycle1 三者監査 B2/R2 fix: 旧実装は SecondPC ashigaru5-8 にも multiagent:agents.5-8
+    # を返していたが、これは MainPC 上では存在しない pane (= 別 agent の pane を踏みかねない)。
+    # 動的検索失敗時に send-keys で送信先を誤ると、model_switch / clear_command が
+    # 別 agent に届く事故になるため、SecondPC agent には明示エラー終了を返す。
+    #
+    # SecondPC で switch_cli を実行する場合は、SecondPC 側 tmux で本スクリプトを
+    # 実行する想定 (Phase 1 の @agent_id 動的検索が SecondPC tmux 内で成立する)。
+    # MainPC から SecondPC を跨ぐ switch_cli は本スクリプト範囲外。
     local pane_base
     pane_base=$(tmux show-options -t multiagent -v @pane_base 2>/dev/null || echo "0")
 
-    # §18 PC×アカウント配置 (CLAUDE.md §18.1) — ashigaru4 は欠番のため非対応。
-    # SecondPC ashigaru5-8 は別 tmux のため、フォールバック固定マッピングは
-    # MainPC 視点での概念位置を保持する (実 SecondPC pane lookup は Phase 1 の
-    # @agent_id 動的検索で吸収)。MainPC ↔ SecondPC を跨ぐ switch_cli は通常想定外。
-    case "$agent_id" in
-        karo)       echo "multiagent:agents.$((pane_base + 0))" ;;
-        ashigaru1)  echo "multiagent:agents.$((pane_base + 1))" ;;
-        ashigaru2)  echo "multiagent:agents.$((pane_base + 2))" ;;
-        ashigaru3)  echo "multiagent:agents.$((pane_base + 3))" ;;
-        ashigaru5)  echo "multiagent:agents.$((pane_base + 5))" ;;
-        ashigaru6)  echo "multiagent:agents.$((pane_base + 6))" ;;
-        ashigaru7)  echo "multiagent:agents.$((pane_base + 7))" ;;
-        ashigaru8)  echo "multiagent:agents.$((pane_base + 8))" ;;
-        gunshi)     echo "multiagent:agents.$((pane_base + 4))" ;;
-        *)
-            log "ERROR: Unknown agent_id: $agent_id (§18: ashigaru4 は欠番)"
-            return 1
-            ;;
-    esac
+    # SecondPC agent: 動的検索失敗時はエラー終了 (B2/R2 fix)
+    if section18_is_secondpc_agent "$agent_id"; then
+        log "ERROR: SecondPC agent ($agent_id) の pane が動的検索で見つかりませんでした。"
+        log "       SecondPC tmux 上で本スクリプトを実行するか、@agent_id metadata を確認してください。"
+        log "       (CLAUDE.md §18.1: SecondPC は別 tmux session、MainPC からの fallback 不可)"
+        return 1
+    fi
+
+    # MainPC agent: SECTION18_MAINPC_PANE_ORDER 順で pane index を解決
+    local mainpc_idx
+    if mainpc_idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
+        echo "multiagent:agents.$((pane_base + mainpc_idx))"
+        return 0
+    fi
+
+    log "ERROR: Unknown agent_id: $agent_id (§18: ashigaru4 は欠番)"
+    return 1
 }
 
 # ─── settings.yaml 更新 (Python使用) ───
