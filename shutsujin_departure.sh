@@ -62,15 +62,31 @@ else
     CLI_ADAPTER_LOADED=false
 fi
 
-# 足軽IDリストと人数を動的に取得（settings.yaml から）
+# 足軽IDリストと人数を動的に取得（settings.yaml の pc_mapping.main_pc.agents から）
 # §18 (理事長殿御指示 2026-05-06) MainPC 配置: ashigaru1/2 通常 + ashigaru3 非常時。
 # ashigaru4 = 欠番 (PC 境界)、ashigaru5〜8 = SecondPC 専属 (本スクリプトでは起動禁止)。
+# get_mainpc_ashigaru_ids は pc_mapping.main_pc.agents をホワイトリスト filter し、
+# settings.yaml に SecondPC ashigaru が紛れていても本スクリプトでは起動しない。
 if [ "$CLI_ADAPTER_LOADED" = true ]; then
-    _ASHIGARU_IDS_STR=$(get_ashigaru_ids)
+    _ASHIGARU_IDS_STR=$(get_mainpc_ashigaru_ids)
 else
     _ASHIGARU_IDS_STR="ashigaru1 ashigaru2 ashigaru3"
 fi
 _ASHIGARU_COUNT=$(echo "$_ASHIGARU_IDS_STR" | wc -w | tr -d ' ')
+
+# §18 整合性ガード: MainPC 配置に SecondPC ashigaru (ashigaru5-8) が紛れていれば
+# 即時 abort。quota 暴走再発防止 (2026-05-05 SecondPC 38% 消費事故対策)。
+for _ai in $_ASHIGARU_IDS_STR; do
+    case "$_ai" in
+        ashigaru1|ashigaru2|ashigaru3) ;;
+        *)
+            echo "[shutsujin] FATAL: §18 違反 — MainPC 起動スクリプトに非 MainPC role '$_ai' が混入"
+            echo "  許容: ashigaru1 / ashigaru2 / ashigaru3 のみ (CLAUDE.md §18.1 配置表参照)"
+            echo "  確認: config/settings.yaml の pc_mapping.main_pc.agents"
+            exit 4
+            ;;
+    esac
+done
 
 # 色付きログ関数（戦国風）
 log_info() {
@@ -584,14 +600,30 @@ else
 fi
 
 # §18 MainPC 5 panes vertical 構成（karo + ashigaru1-3 + gunshi）
-# 起動時の唯一 pane を起点に split-window -v を 4 回連続実行することで、
-# pane 0=karo, 1=ashigaru1, 2=ashigaru2, 3=ashigaru3, 4=gunshi の順で
-# AGENT_IDS index と一致する縦並びを得る (pane-base-index 依存なし、相対分割)。
-tmux split-window -v -t "multiagent:agents"
-tmux split-window -v -t "multiagent:agents"
-tmux split-window -v -t "multiagent:agents"
-tmux split-window -v -t "multiagent:agents"
+# pane_index でなく pane_id (#{pane_id}) を捕捉して順序を厳格に保証する。
+# 軍師 cycle1 監査 B2 (2026-05-07): split-window -t window では active pane に
+# 依存し、AGENT_IDS index と pane の対応がズレる懸念があった。本実装では
+# 各 split で生成された pane_id を配列化し、後段の set-option で pane_id を直接
+# 指定することで「足軽1 のはずが karo に @agent_id を上書きする」事故を排除する。
+# (2026-02-13 家老誤認事件と同型回帰の防止 — gunshi 北極星整合)
+PANE_IDS=()
+PANE_IDS[0]=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+for _split_i in 1 2 3 4; do
+    _new_pid=$(tmux split-window -v -t "${PANE_IDS[$((_split_i-1))]}" -P -F '#{pane_id}')
+    if [[ -z "$_new_pid" ]]; then
+        echo "[shutsujin] FATAL: pane split failed at index $_split_i"
+        exit 5
+    fi
+    PANE_IDS[$_split_i]="$_new_pid"
+done
 tmux select-layout -t "multiagent:agents" even-vertical
+
+# 整合性検証: PANE_IDS と AGENT_IDS は後段で同 index で参照する。
+# 件数不一致は致命エラー (5 panes 期待) 。
+if [[ ${#PANE_IDS[@]} -ne 5 ]]; then
+    echo "[shutsujin] FATAL: expected 5 panes, got ${#PANE_IDS[@]}"
+    exit 5
+fi
 
 # ペインラベル・エージェントID・色設定 — settings.yaml から動的に構築
 PANE_LABELS=("karo")
@@ -627,14 +659,17 @@ if [ "$CLI_ADAPTER_LOADED" = true ]; then
     done
 fi
 
+# pane_id (PANE_IDS) を直接参照することで AGENT_IDS index ↔ pane の対応を厳格化。
+# 旧実装は multiagent:agents.${PANE_BASE+i} (pane_index 経由) で active pane の
+# 影響を受ける懸念があった。pane_id は tmux 内でユニークかつ kill 後も再利用されない。
 for i in "${!AGENT_IDS[@]}"; do
-    p=$((PANE_BASE + i))
-    tmux select-pane -t "multiagent:agents.${p}" -T "${MODEL_NAMES[$i]}"
-    tmux set-option -p -t "multiagent:agents.${p}" @agent_id "${AGENT_IDS[$i]}"
-    tmux set-option -p -t "multiagent:agents.${p}" @model_name "${MODEL_NAMES[$i]}"
-    tmux set-option -p -t "multiagent:agents.${p}" @current_task ""
+    pid="${PANE_IDS[$i]}"
+    tmux select-pane -t "$pid" -T "${MODEL_NAMES[$i]}"
+    tmux set-option -p -t "$pid" @agent_id "${AGENT_IDS[$i]}"
+    tmux set-option -p -t "$pid" @model_name "${MODEL_NAMES[$i]}"
+    tmux set-option -p -t "$pid" @current_task ""
     PROMPT_STR=$(generate_prompt "${PANE_LABELS[$i]}" "${PANE_COLORS[$i]}" "$SHELL_SETTING")
-    tmux send-keys -t "multiagent:agents.${p}" "cd \"$(pwd)\" && export PS1='${PROMPT_STR}' && clear" Enter
+    tmux send-keys -t "$pid" "cd \"$(pwd)\" && export PS1='${PROMPT_STR}' && clear" Enter
 done
 
 # 家老・軍師ペインの背景色（足軽との視覚的区別）

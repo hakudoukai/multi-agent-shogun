@@ -1180,3 +1180,32 @@ except Exception:
         echo "ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
     fi
 }
+
+# get_mainpc_ashigaru_ids()
+# settings.yaml の pc_mapping.main_pc.agents から MainPC 配置の ashigaru ID を返す。
+# §18 PC×アカウント配置 (理事長殿御指示 2026-05-06) に基づき、shutsujin_departure.sh
+# 等の MainPC 起動スクリプトが SecondPC の ashigaru5-8 を誤って起動しないよう、
+# pc_mapping のホワイトリストで filter する。
+# フォールバック: "ashigaru1 ashigaru2 ashigaru3" (§18 MainPC 通常 2 + 非常時 1)。
+# Reference: CLAUDE.md §18.1 配置表 / config/settings.yaml pc_mapping.main_pc.agents
+get_mainpc_ashigaru_ids() {
+    local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+    local result
+    result=$("$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" -c "
+import yaml
+try:
+    with open('${settings}') as f:
+        cfg = yaml.safe_load(f) or {}
+    main = cfg.get('pc_mapping', {}).get('main_pc', {}).get('agents', []) or []
+    results = [k for k in main if isinstance(k, str) and k.startswith('ashigaru')]
+    results.sort(key=lambda x: int(x.replace('ashigaru', '')) if x.replace('ashigaru', '').isdigit() else 99)
+    print(' '.join(results))
+except Exception:
+    pass
+" 2>/dev/null)
+    if [[ -n "$result" ]]; then
+        echo "$result"
+    else
+        echo "ashigaru1 ashigaru2 ashigaru3"
+    fi
+}
