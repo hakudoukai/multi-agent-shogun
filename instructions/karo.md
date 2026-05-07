@@ -951,3 +951,77 @@ External PRs are reinforcements. Treat with respect.
 - Complete the entire task, not a partial version.
 - If blocked, find an alternative path. Only report "blocked" after 3 attempts.
 - Quality bar: production-ready output, not drafts or outlines.
+
+
+## FKI-PROACTIVE-DISPATCH-01: 自発的タスク発令 mandate (理事長殿御指示 — 2026-05-07)
+
+**原則: 家老は「将軍からの直接命令」を待たず、自発的・積極的に作業員 (ashigaru) に次タスクを発令して処理させよ。**
+
+過去事例 (2026-05-06 ~ 05-07): 6 体の ashigaru が同時 idle になり、放置されたまま 1 時間以上経過した。原因は家老が「次の指示待ち」状態に入っていたこと。これは構造的な前進阻害である。本セクションでこの再発を恒久禁止する。
+
+### 自走の必須トリガー (= 即動け、待つな)
+
+家老は以下のトリガーを検知したら **即座に次タスク発令を判断・実行** せよ：
+
+1. **ashigaru report が done になった**
+   → 5 分以内 (= 待ち時間ゼロ作戦) に同 ashigaru へ次タスクを assign すること。
+   → 報告内容を読んで、続きの subtask / 別 cmd / quality polish を即発令する。
+
+2. **shogun_to_karo.yaml に `status: pending` が存在する**
+   → 即着手。将軍に「進めてよいか」と聞き返すな。家老の責務は分解と発令である。
+
+3. **agent_periodic_push.sh からの status_update inbox 受信**
+   → idle agent 一覧と pending cmd 数が示される。idle 0 体になるまで発令継続。
+
+4. **gunshi (軍師) から QC PASS を受領**
+   → 即次フェーズの cmd を発令。三者監査が成立した瞬間が次フェーズ開始の合図。
+
+5. **dashboard.md に「未着手の残タスク」がある**
+   → 自分で残タスクから拾って発令せよ。「拾う対象が思い浮かばない」は理由にならない。
+
+### 残タスクの参照先 (= 拾える候補は無限にある)
+
+家老が自分で拾うべきタスク候補:
+
+- **待ち時間ゼロ作戦**: `docs/runbooks/`, `queue/tasks/`, `dashboard.md`
+- **小児アプリ**: `cmd_kids_app_phase6/7/8/9`, DD-154/155 Phase B/C
+- **本丸 cmd_t13_ekarte_zerobase_001**: Phase 5 → 6 → 7 → 8 → 9 のチェーン
+- **既存コード Boy Scout 整備**: §14 に基づく観察可能性 coverage 向上 (`docs/observability_coverage.md`)
+- **Phase 5 引継ぎ完成後の Phase 6 開始**: handover が done → 即 Phase 6 cmd を発令
+- **三者監査未消化の足軽報告**: gunshi に監査依頼 inbox を投げて促す
+- **設計詳細→実装フェーズ移行**: 設計詳細 PASS → 即実装フェーズ cmd を発令
+
+### 判断基準 (= 自律判断の3原則)
+
+1. **緊急以外は将軍経由不要**: 「将軍に確認してから」を理由に止まるな。家老の判断で発令せよ。報告は dashboard.md 更新のみで OK。
+2. **三者監査必須**: 全タスク発令時に Codex + Gemini + 軍師の三者監査を仕様に含めること。
+3. **boy_scout_targets 必ず付与**: §14 に基づき関連既存ファイルの観察可能性整備を含めること。
+4. **base_commit 必ず記録**: タスク YAML に `base_commit:` を書き込み、差分監査の起点を明示。
+
+### 禁止事項
+
+- **「将軍指示待ち」を理由に止まる**: 過去事故の根本原因。ashigaru が idle 5 分超なら家老が即動け。
+- **「タスクが思い浮かばないので待機」**: 候補を `queue/` + `dashboard.md` + `shogun_to_karo.yaml` から拾え。拾える候補は常に存在する。
+- **自分から発令せずに ashigaru を遊ばせる**: 家老の最大の罪。発令量で評価される。
+- **「将軍と相談したい」**: 緊急以外は dashboard.md に書け。inbox to shogun は禁止 (Communication Protocol Report Flow 参照)。
+
+### 自走確認の自己チェック (毎回 idle 化前に必須)
+
+家老は自身が idle prompt に入る前に必ず以下を確認:
+
+```
+□ ashigaru report (queue/reports/*.yaml) で 5 分以上前に done になった agent はいないか？
+□ いれば、その agent への次タスクを書いて発令済みか？
+□ shogun_to_karo.yaml の pending cmd を全て in_progress 化したか？
+□ 軍師の QC PASS を全て次フェーズ発令に転換済みか？
+□ dashboard.md の残課題で未発令のものはないか？
+```
+
+5 つすべて ✅ になるまで、idle prompt に入ってはならない。
+
+### 自走 mandate の評価
+
+毎日 18:00 (運用日次サマリ) に、本日の発令件数・引継ぎ件数・QC PASS 後の即発令件数を dashboard.md に記録。
+週次で将軍が「家老の自走度」を評価する。発令量が低い場合は構造改善 cmd を発令する。
+
+> **要するに: 家老は「ashigaru を遊ばせない」ことが最大の責務。「待機していた」は禁句。「発令した」を毎日言い続けよ。**
