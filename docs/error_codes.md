@@ -22,6 +22,7 @@
 | `HANDOVER` | 申し送り A4 | 001〜 |
 | `CRM` | 患者CRM | 001〜 |
 | `AUDIT` | 監査ログ | 001〜 |
+| `MEISAI` | 明細入領収証 PDF 抽出基盤 | 001〜 |
 
 ## エラー定義
 
@@ -63,6 +64,42 @@
   2. DentalBI 入力 vs カルテット結果の差分一覧確認
   3. 正しい方を選択して再送信
 - **発生時 dump 取得項目**: visit_id, dentalbi_data, quartetto_data, diff_summary
+
+#### ERR-MEISAI-001
+- **発生条件**: 明細入領収証 PDF が見つからない / 入力パスがファイルでない / Storage 経由取得失敗
+- **重要度**: ERROR
+- **メール通知**: なし (dashboard.md 表示)
+- **ユーザー表示文言**: 「領収書 PDF を取得できませんでした。再試行してください。」
+- **対処法**:
+  1. Supabase Storage `receipts/{clinic_id}/{patient_no}/{visit_date}.pdf` の存在確認
+  2. テンプレート `assets/明細入領収証.pdf` の存在確認 (fallback render 経路)
+  3. `backend/api/meisai_receipt_api.py` の構造化ログ + corr_id を追跡
+- **発生時 dump 取得項目**: clinic_id, patient_no, visit_id, visit_date, object_path, source
+- **関連 corr_id 検索**: dashboard "ERR-MEISAI-001 last 7days"
+
+#### ERR-MEISAI-002
+- **発生条件**: pdfplumber が PDF を解析できない (corrupt bytes / 空ページ / retry 3回失敗)
+- **重要度**: ERROR
+- **メール通知**: なし (dashboard.md 表示)
+- **ユーザー表示文言**: 「領収書の解析に失敗しました。時間をおいて再試行してください。」
+- **対処法**:
+  1. `/tmp/meisai_receipt_extractor.health` で extracted_total / failed_total 確認
+  2. 失敗 PDF の sha256 / file size 確認
+  3. retry cap = 3, backoff (0.1/0.3/0.7s) を超える障害は上流側 (renderer / storage) を調査
+- **発生時 dump 取得項目**: file_hash, source, retry_count, last_error
+- **関連 corr_id 検索**: dashboard "ERR-MEISAI-002 last 24h"
+
+#### ERR-MEISAI-003
+- **発生条件**: 患者本人 / 医院関係者でない JWT が `GET /api/receipts/{patient_id}/{visit_id}` を呼んだ
+- **重要度**: WARN (RLS で正常に弾かれた状態)
+- **メール通知**: なし
+- **ユーザー表示文言**: 「対象の領収書を取得する権限がありません。」
+- **対処法**:
+  1. JWT の sub と karte_visits.clinic_id / patient_no の整合性確認
+  2. patient_receipt_pdfs RLS policy (`receipts_staff_sel` / `patient_receipt_pdfs_sel`) を再確認
+  3. 攻撃と判定される頻度であれば `audit_log` で送信元 IP を集計
+- **発生時 dump 取得項目**: jwt_sub, clinic_id, patient_no, visit_id
+- **関連 corr_id 検索**: dashboard "ERR-MEISAI-003 last 7days"
 
 #### ERR-INFRA-001
 - **発生条件**: pc_handshake テーブルの unack 件数が閾値（10件）超過
