@@ -1159,13 +1159,18 @@ except Exception:
 # get_ashigaru_ids()
 # settings.yaml の cli.agents から足軽ID一覧を返す（スペース区切り、番号順）
 # フォールバック: "ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
+#
+# settings パスは Python source への文字列リテラル展開でなく argv 経由で渡し、
+# パスにシングルクォート/改行/任意 Python コードが含まれても注入されないよう保護する
+# (cycle2 監査 S1 — Boy Scout で本関数も同時整備、CLAUDE.md §14 準拠)。
 get_ashigaru_ids() {
     local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
     local result
-    result=$("$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" -c "
+    result=$("$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" - "$settings" <<'PYEOF' 2>/dev/null
+import sys
 import yaml
 try:
-    with open('${settings}') as f:
+    with open(sys.argv[1]) as f:
         cfg = yaml.safe_load(f) or {}
     agents = cfg.get('cli', {}).get('agents', {})
     results = [k for k in agents if k.startswith('ashigaru')]
@@ -1173,7 +1178,8 @@ try:
     print(' '.join(results))
 except Exception:
     pass
-" 2>/dev/null)
+PYEOF
+)
     if [[ -n "$result" ]]; then
         echo "$result"
     else
@@ -1188,13 +1194,19 @@ except Exception:
 # pc_mapping のホワイトリストで filter する。
 # フォールバック: "ashigaru1 ashigaru2 ashigaru3" (§18 MainPC 通常 2 + 非常時 1)。
 # Reference: CLAUDE.md §18.1 配置表 / config/settings.yaml pc_mapping.main_pc.agents
+#
+# settings パスは argv 経由で Python に渡す (cycle2 監査 S1 high 解消)。
+# 旧実装は "import yaml; with open('${settings}')..." のように shell 展開で
+# Python source に直挿入していたため、パスにシングルクォートが含まれると任意
+# コード注入が成立する脆弱性があった。stdin heredoc + argv で展開を完全分離する。
 get_mainpc_ashigaru_ids() {
     local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
     local result
-    result=$("$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" -c "
+    result=$("$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" - "$settings" <<'PYEOF' 2>/dev/null
+import sys
 import yaml
 try:
-    with open('${settings}') as f:
+    with open(sys.argv[1]) as f:
         cfg = yaml.safe_load(f) or {}
     main = cfg.get('pc_mapping', {}).get('main_pc', {}).get('agents', []) or []
     results = [k for k in main if isinstance(k, str) and k.startswith('ashigaru')]
@@ -1202,7 +1214,8 @@ try:
     print(' '.join(results))
 except Exception:
     pass
-" 2>/dev/null)
+PYEOF
+)
     if [[ -n "$result" ]]; then
         echo "$result"
     else
