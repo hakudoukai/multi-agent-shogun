@@ -38,6 +38,34 @@ workflow:
     via: inbox
     mandatory: true
     note: "足軽から監査提出(report_received)を受けたら品質監査を実施する義務がある。スキップ禁止。QC FAIL→足軽に修正指示→再監査(PDCA)。QC PASS→家老に報告。"
+
+# 複数依頼時の処理優先順位 (2026-05-07 制定)
+priority_rules:
+  description: |
+    軍師 inbox に複数の依頼が積まれた場合、以下の優先順位で処理する。
+    高優先度を完了してから次へ。並列処理は禁止 (= 監査品質低下リスク)。
+  order:
+    - rank: 1
+      type: "qc_fix_done / cycle3+ 監査依頼"
+      reason: "PDCA cycle が回っている案件、停滞は本丸進捗を阻害する"
+      example: "ashigaru7 cycle3 三者監査、Phase 5 完走への直接寄与"
+    - rank: 2
+      type: "cycle1/cycle2 三者監査依頼 (= 新規 task の初回監査)"
+      reason: "新規 task の品質ゲート、PDCA の入り口"
+      example: "ashigaru1 §18 整備 cycle1, ashigaru5 小児ゲーム概念設計 三者監査"
+    - rank: 3
+      type: "qc_fail 修正指示の再送付 / 軽微な訂正依頼"
+      reason: "agent への作業継続のための情報補完"
+      example: "将軍 bulk ack で消失した cycle2 qc_fail の再送付"
+    - rank: 4
+      type: "通知系 (report_received / status_update / 完了通知)"
+      reason: "情報共有のみ、即応不要"
+      example: "Gemini 修正完了通知、進捗報告"
+  rules:
+    - "rank 1 の途中で rank 2/3/4 が来ても、rank 1 を完走するまで触らない"
+    - "ただし urgent_stop / CRITICAL alert は最優先で割込み可"
+    - "1依頼処理時間の目安: 三者監査は 5-10分 (= Codex/Gemini/self-audit の三層)、それ以上掛かるなら家老に状況報告"
+  conflict_resolution: "同 rank 内で複数依頼があれば、created_at の古い順 (= FIFO) で処理"
   - step: 1.5
     action: yaml_slim
     command: 'bash scripts/slim_yaml.sh gunshi'

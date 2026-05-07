@@ -789,6 +789,18 @@ send_wakeup() {
         return 0
     fi
 
+    # /clear+nudge 連結バグ防止 (2026-05-07 真因対策):
+    # /clear 送信後、claude が Welcome 画面遷移中に nudge を送ると
+    # 「/clearinbox1」のような不正コマンドに連結される (実例: 5/7 18:00 ashigaru6)。
+    # /clear 送信から 5 秒以内は nudge を抑制し、確実に画面遷移を待つ。
+    if [ -n "${LAST_CLEAR_TS:-}" ]; then
+        local _clear_elapsed=$(($(date +%s) - LAST_CLEAR_TS))
+        if [ "$_clear_elapsed" -lt 5 ]; then
+            echo "[$(date)] [SKIP] /clear sent ${_clear_elapsed}s ago for $AGENT_ID — deferring nudge (連結バグ防止)" >&2
+            return 0
+        fi
+    fi
+
     # 優先度1: Agent self-watch — nudge不要（エージェントが自分で気づく）
     if agent_has_self_watch; then
         echo "[$(date)] [SKIP] Agent $AGENT_ID has active self-watch, no nudge needed" >&2
@@ -1292,6 +1304,31 @@ while true; do
         fi
     else
         process_unread "event"
+    fi
+
+    # Token 飽和警告機構 (2026-05-07 制定):
+    # claude pane に「/clear to save XXXk tokens」が表示されたら、
+    # 200k 超の場合に agent の inbox に context size 警告を送付する。
+    # 自動 /clear はせず、agent 自身の判断に委ねる (= 進捗ロスト防止)。
+    # 重複送付防止のため LAST_TOKEN_WARN_TS で 30 分間隔に制限。
+    if [[ "$CLI_TYPE" == "claude" ]] && [[ "$AGENT_ID" != "shogun" ]]; then
+        _now_token=$(date +%s)
+        _token_warn_cooldown=1800  # 30 min
+        if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+            _pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+            _token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1)
+            if [ -n "$_token_match" ]; then
+                _token_num=$(echo "$_token_match" | grep -oE '[0-9]+(\.[0-9]+)?')
+                _token_int=${_token_num%.*}
+                if [ "${_token_int:-0}" -ge 200 ]; then
+                    echo "[$(date)] [TOKEN-WARN] $AGENT_ID context size ${_token_match} (>= 200k) — sending warning to inbox" >&2
+                    bash "$SCRIPT_DIR/scripts/inbox_write.sh" "$AGENT_ID" \
+                        "【context size 警告】貴殿の claude session は ${_token_match} 消費中。200k 超で減速の可能性。区切りの良い所で /clear で context リセット推奨 (進捗 commit 後)。" \
+                        notification shogun 2>/dev/null || true
+                    LAST_TOKEN_WARN_TS=$_now_token
+                fi
+            fi
+        fi
     fi
 done
 
