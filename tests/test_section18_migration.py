@@ -579,3 +579,210 @@ class TestKuroDesktopArchived:
                 continue
             assert "import hakudokai_kuro_desktop_poll" not in stripped, line
             assert "from hakudokai_kuro_desktop_poll" not in stripped, line
+
+
+# ============================================================
+# Test: cycle2 fix — Phase 3 scripts SoT 集約
+# ============================================================
+
+class TestSection18ShellHelper:
+    """lib/_section18_roles.sh が Python 版と同一定義を提供することを検証。"""
+
+    def _bash_eval(self, snippet: str) -> str:
+        """bash で snippet を実行し、stdout を返す (helper を source 済み)."""
+        helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
+        cmd = ["bash", "-c", f'source "{helper}"; {snippet}']
+        result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        return result.stdout.strip()
+
+    def test_helper_file_exists(self):
+        helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
+        assert os.path.exists(helper), "lib/_section18_roles.sh が存在せぬ"
+
+    def test_mainpc_pane_order_matches_section18(self):
+        out = self._bash_eval('echo "${SECTION18_MAINPC_PANE_ORDER[@]}"')
+        # MainPC pane 0..4: karo / ashigaru1 / ashigaru2 / ashigaru3 / gunshi
+        assert out.split() == ["karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi"]
+
+    def test_secondpc_agents_matches_section18(self):
+        out = self._bash_eval('echo "${SECTION18_SECONDPC_AGENTS[@]}"')
+        assert out.split() == ["ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"]
+
+    def test_all_roles_includes_shogun_and_excludes_ashigaru4(self):
+        out = self._bash_eval('echo "${SECTION18_ALL_ROLES[@]}"')
+        roles = out.split()
+        assert "shogun" in roles
+        assert "ashigaru4" not in roles
+        # 旧体制名は含まれない
+        for old in OLD_ROLE_NAMES:
+            assert old not in roles, f"旧体制名 {old} が helper に残っている"
+
+    def test_is_secondpc_agent_recognises_ashigaru5_to_8(self):
+        for ai in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
+            out = self._bash_eval(f'section18_is_secondpc_agent {ai} && echo YES || echo NO')
+            assert out == "YES", f"{ai} should be SecondPC"
+
+    def test_is_secondpc_agent_rejects_mainpc_and_ashigaru4(self):
+        for ai in ("karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi", "shogun", "ashigaru4"):
+            out = self._bash_eval(f'section18_is_secondpc_agent {ai} && echo YES || echo NO')
+            assert out == "NO", f"{ai} must NOT be SecondPC"
+
+    def test_mainpc_pane_index_returns_expected_values(self):
+        for ai, expected in [
+            ("karo", "0"),
+            ("ashigaru1", "1"),
+            ("ashigaru2", "2"),
+            ("ashigaru3", "3"),
+            ("gunshi", "4"),  # B1/R1 fix: gunshi は pane index 4
+        ]:
+            out = self._bash_eval(f'section18_mainpc_pane_index {ai}')
+            assert out == expected, f"{ai} expected pane index {expected}, got {out}"
+
+    def test_mainpc_pane_index_rejects_secondpc_and_gap(self):
+        for ai in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8", "ashigaru4", "shogun"):
+            out = self._bash_eval(f'section18_mainpc_pane_index {ai} && echo OK || echo NG')
+            assert out == "NG", f"{ai} must not have a MainPC pane index"
+
+
+class TestSwitchCliCycle2:
+    """switch_cli.sh resolve_pane の §18 fallback 修正を検証 (B1/R1 + B2/R2)."""
+
+    def _resolve_pane_fallback(self, agent_id: str, pane_base: int = 0) -> tuple[int, str]:
+        """switch_cli.sh の Phase 2 (固定マッピング) 相当を bash で実行し、
+        (exit_code, stdout) を返す。Phase 1 (@agent_id 動的検索) は MainPC tmux
+        が無いとほぼ即時 fallback に落ちるため、本検証で網羅できる。"""
+        helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
+        snippet = textwrap.dedent(
+            f"""
+            source "{helper}"
+            agent_id="{agent_id}"
+            pane_base={pane_base}
+            if section18_is_secondpc_agent "$agent_id"; then
+                exit 1
+            fi
+            if idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
+                echo "multiagent:agents.$((pane_base + idx))"
+                exit 0
+            fi
+            exit 1
+            """
+        )
+        result = subprocess.run(["bash", "-c", snippet], capture_output=True, text=True, check=False)
+        return result.returncode, result.stdout.strip()
+
+    def test_mainpc_agents_resolve_to_correct_pane(self):
+        """MainPC pane 配置 — gunshi は pane 4 (旧 8 ではない、B1/R1 fix)."""
+        cases = [
+            ("karo", 0, "multiagent:agents.0"),
+            ("ashigaru1", 0, "multiagent:agents.1"),
+            ("ashigaru2", 0, "multiagent:agents.2"),
+            ("ashigaru3", 0, "multiagent:agents.3"),
+            ("gunshi", 0, "multiagent:agents.4"),
+        ]
+        for agent, pb, expected in cases:
+            rc, out = self._resolve_pane_fallback(agent, pb)
+            assert rc == 0, f"{agent}: 解決失敗 rc={rc}"
+            assert out == expected, f"{agent}: expected {expected}, got {out}"
+
+    def test_secondpc_agents_explicitly_rejected(self):
+        """B2/R2 fix: SecondPC ashigaru5-8 は概念位置を返さず exit 1。"""
+        for ai in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
+            rc, out = self._resolve_pane_fallback(ai)
+            assert rc == 1, f"{ai}: SecondPC は exit 1 で reject すべし (got rc={rc})"
+            assert out == "", f"{ai}: stdout は空のはず (got {out!r})"
+
+    def test_ashigaru4_rejected_as_gap(self):
+        """ashigaru4 (欠番) は MainPC でも SecondPC でもない → exit 1。"""
+        rc, out = self._resolve_pane_fallback("ashigaru4")
+        assert rc == 1
+        assert out == ""
+
+    def test_shogun_rejected_separate_session(self):
+        """shogun は別 tmux session (shogun:0.0) のため multiagent:agents 解決対象外。"""
+        rc, out = self._resolve_pane_fallback("shogun")
+        assert rc == 1
+        assert out == ""
+
+    def test_pane_base_offset_only_affects_mainpc(self):
+        """pane_base != 0 でも SecondPC は依然 reject される (offset 適用は MainPC のみ)."""
+        rc, out = self._resolve_pane_fallback("karo", pane_base=2)
+        assert rc == 0 and out == "multiagent:agents.2"
+        rc, out = self._resolve_pane_fallback("gunshi", pane_base=2)
+        assert rc == 0 and out == "multiagent:agents.6"
+        rc, out = self._resolve_pane_fallback("ashigaru5", pane_base=2)
+        assert rc == 1 and out == ""
+
+    def test_switch_cli_sources_helper(self):
+        """scripts/switch_cli.sh が _section18_roles.sh を source している。"""
+        src = _read("scripts/switch_cli.sh")
+        assert "lib/_section18_roles.sh" in src, \
+            "switch_cli.sh が §18 helper を source していない"
+
+    def test_switch_cli_no_legacy_secondpc_fallback(self):
+        """switch_cli.sh から旧 fallback (ashigaru5-8 → multiagent:agents.5-8) が
+        消えていることを確認。"""
+        src = _read("scripts/switch_cli.sh")
+        # 旧パターン: ashigaru5)  echo "multiagent:agents.$((pane_base + 5))"
+        assert not re.search(
+            r'ashigaru5\)\s*echo\s+"multiagent:agents\.\$\(\(pane_base \+ 5\)\)"',
+            src,
+        ), "旧 SecondPC fallback マッピングが残存している (B2/R2 fix 未適用)"
+        for n in (6, 7, 8):
+            pat = rf'ashigaru{n}\)\s*echo\s+"multiagent:agents\.\$\(\(pane_base \+ {n}\)\)"'
+            assert not re.search(pat, src), f"ashigaru{n} 旧 fallback が残存"
+
+
+class TestAgentStatusCycle2:
+    """scripts/agent_status.sh の AGENTS 配列分割 (B1/R1 fix) を検証。"""
+
+    def test_agent_status_sources_helper(self):
+        src = _read("scripts/agent_status.sh")
+        assert "lib/_section18_roles.sh" in src, \
+            "agent_status.sh が §18 helper を source していない"
+
+    def test_agent_status_uses_split_arrays(self):
+        """AGENTS 単一配列でなく MAINPC_AGENTS / SECONDPC_AGENTS に分割されている。"""
+        src = _read("scripts/agent_status.sh")
+        assert re.search(r'\bMAINPC_AGENTS=\(', src), "MAINPC_AGENTS 配列が無い"
+        assert re.search(r'\bSECONDPC_AGENTS=\(', src), "SECONDPC_AGENTS 配列が無い"
+
+    def test_agent_status_no_legacy_mixed_array(self):
+        """旧 AGENTS=("karo" ... "ashigaru5" ... "gunshi") の混在配列が消えている。"""
+        src = _read("scripts/agent_status.sh")
+        # 旧: AGENTS=("karo" "ashigaru1" "ashigaru2" "ashigaru3" "ashigaru5" ... "gunshi")
+        assert not re.search(
+            r'AGENTS=\("karo"\s+"ashigaru1"\s+"ashigaru2"\s+"ashigaru3"\s+"ashigaru5"',
+            src,
+        ), "旧 AGENTS 混在配列が残存している (B1/R1 fix 未適用)"
+
+    def test_agent_status_secondpc_no_pane_lookup(self):
+        """SecondPC 用ループは pane_target を空文字で渡し pane lookup を回避する。"""
+        src = _read("scripts/agent_status.sh")
+        # for agent in "${SECONDPC_AGENTS[@]}"; do print_agent_row "$agent" ""
+        assert re.search(
+            r'for agent in "\$\{SECONDPC_AGENTS\[@\]\}".*?print_agent_row\s+"\$agent"\s+""',
+            src,
+            re.DOTALL,
+        ), "SecondPC ループから pane_target を空にする呼出が無い"
+
+
+class TestRatelimitCheckCycle2:
+    """scripts/ratelimit_check.sh の D1 部分対応 (helper 経由 fallback)。"""
+
+    def test_sources_helper(self):
+        src = _read("scripts/ratelimit_check.sh")
+        assert "lib/_section18_roles.sh" in src, \
+            "ratelimit_check.sh が §18 helper を source していない"
+
+    def test_no_hardcoded_fallback_list(self):
+        """fallback の "ashigaru1 ashigaru2 ... ashigaru8" 文字列リテラルが
+        消え、SECTION18_* 配列から自動構築されている。"""
+        src = _read("scripts/ratelimit_check.sh")
+        # 旧 fallback (echo の引数として ashigaru 列挙) が残っていない
+        assert not re.search(
+            r'echo\s+"ashigaru1\s+ashigaru2\s+ashigaru3\s+ashigaru5\s+ashigaru6\s+ashigaru7',
+            src,
+        ), "旧ハードコード fallback が残存している"
+        # 新方式: SECTION18_MAINPC_PANE_ORDER + SECTION18_SECONDPC_AGENTS から構築
+        assert "SECTION18_MAINPC_PANE_ORDER" in src
+        assert "SECTION18_SECONDPC_AGENTS" in src

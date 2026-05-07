@@ -51,65 +51,111 @@ teardown() {
 # resolve_pane テスト (switch_cli.sh 内の関数を直接テスト)
 # =============================================================================
 
-# resolve_pane は tmux に依存するため、関数定義のみ source して文字列生成テスト
+# resolve_pane は tmux に依存するため、§18 fallback 解決のみテストする。
+# _section18_roles.sh を直接 source し、switch_cli.sh の Phase 2 (固定マッピング)
+# 相当を再現する。Phase 1 (@agent_id 動的検索) は tmux 依存のためテスト対象外。
 load_resolve_pane() {
-    # switch_cli.sh から resolve_pane のみ抽出（tmux コマンドはモック化）
+    # _section18_roles.sh をロード
+    source "${PROJECT_ROOT}/lib/_section18_roles.sh"
+
+    # switch_cli.sh の resolve_pane Phase 2 相当 (§18 fallback)
     eval '
     resolve_pane() {
         local agent_id="$1"
         local pane_base="${MOCK_PANE_BASE:-0}"
-        case "$agent_id" in
-            karo)       echo "multiagent:agents.$((pane_base + 0))" ;;
-            ashigaru1)  echo "multiagent:agents.$((pane_base + 1))" ;;
-            ashigaru2)  echo "multiagent:agents.$((pane_base + 2))" ;;
-            ashigaru3)  echo "multiagent:agents.$((pane_base + 3))" ;;
-            ashigaru4)  echo "multiagent:agents.$((pane_base + 4))" ;;
-            ashigaru5)  echo "multiagent:agents.$((pane_base + 5))" ;;
-            ashigaru6)  echo "multiagent:agents.$((pane_base + 6))" ;;
-            ashigaru7)  echo "multiagent:agents.$((pane_base + 7))" ;;
-            gunshi)     echo "multiagent:agents.$((pane_base + 8))" ;;
-            *)          return 1 ;;
-        esac
+        # SecondPC は明示エラー終了 (B2/R2 cycle2 fix)
+        if section18_is_secondpc_agent "$agent_id"; then
+            return 1
+        fi
+        # MainPC は SECTION18_MAINPC_PANE_ORDER の index で解決
+        local idx
+        if idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
+            echo "multiagent:agents.$((pane_base + idx))"
+            return 0
+        fi
+        return 1
     }
     '
 }
 
-@test "resolve_pane: karo → multiagent:agents.0" {
+@test "resolve_pane: karo → multiagent:agents.0 (§18 MainPC pane 0)" {
     load_resolve_pane
     MOCK_PANE_BASE=0
     result=$(resolve_pane "karo")
     [ "$result" = "multiagent:agents.0" ]
 }
 
-@test "resolve_pane: ashigaru1 → multiagent:agents.1" {
+@test "resolve_pane: ashigaru1 → multiagent:agents.1 (§18 MainPC pane 1)" {
     load_resolve_pane
     MOCK_PANE_BASE=0
     result=$(resolve_pane "ashigaru1")
     [ "$result" = "multiagent:agents.1" ]
 }
 
-@test "resolve_pane: ashigaru7 → multiagent:agents.7" {
+@test "resolve_pane: ashigaru3 → multiagent:agents.3 (§18 MainPC 非常時)" {
     load_resolve_pane
     MOCK_PANE_BASE=0
-    result=$(resolve_pane "ashigaru7")
-    [ "$result" = "multiagent:agents.7" ]
+    result=$(resolve_pane "ashigaru3")
+    [ "$result" = "multiagent:agents.3" ]
 }
 
-@test "resolve_pane: gunshi → multiagent:agents.8" {
+@test "resolve_pane: gunshi → multiagent:agents.4 (§18 MainPC pane 4, B1/R1 fix)" {
     load_resolve_pane
     MOCK_PANE_BASE=0
     result=$(resolve_pane "gunshi")
-    [ "$result" = "multiagent:agents.8" ]
+    [ "$result" = "multiagent:agents.4" ]
 }
 
-@test "resolve_pane: unknown agent → return 1" {
+@test "resolve_pane: ashigaru4 → return 1 (§18 欠番)" {
+    load_resolve_pane
+    MOCK_PANE_BASE=0
+    run resolve_pane "ashigaru4"
+    [ "$status" -eq 1 ]
+}
+
+@test "resolve_pane: ashigaru5 → return 1 (§18 SecondPC, B2/R2 fix)" {
+    load_resolve_pane
+    MOCK_PANE_BASE=0
+    run resolve_pane "ashigaru5"
+    [ "$status" -eq 1 ]
+}
+
+@test "resolve_pane: ashigaru6 → return 1 (§18 SecondPC, B2/R2 fix)" {
+    load_resolve_pane
+    MOCK_PANE_BASE=0
+    run resolve_pane "ashigaru6"
+    [ "$status" -eq 1 ]
+}
+
+@test "resolve_pane: ashigaru7 → return 1 (§18 SecondPC, B2/R2 fix)" {
+    load_resolve_pane
+    MOCK_PANE_BASE=0
+    run resolve_pane "ashigaru7"
+    [ "$status" -eq 1 ]
+}
+
+@test "resolve_pane: ashigaru8 → return 1 (§18 SecondPC 非常時, B2/R2 fix)" {
+    load_resolve_pane
+    MOCK_PANE_BASE=0
+    run resolve_pane "ashigaru8"
+    [ "$status" -eq 1 ]
+}
+
+@test "resolve_pane: shogun → return 1 (別 tmux session: shogun:0.0)" {
     load_resolve_pane
     MOCK_PANE_BASE=0
     run resolve_pane "shogun"
     [ "$status" -eq 1 ]
 }
 
-@test "resolve_pane: pane_base=2 → offset applied" {
+@test "resolve_pane: unknown agent → return 1" {
+    load_resolve_pane
+    MOCK_PANE_BASE=0
+    run resolve_pane "fukuincho"
+    [ "$status" -eq 1 ]
+}
+
+@test "resolve_pane: pane_base=2 → offset applied to MainPC only" {
     load_resolve_pane
     MOCK_PANE_BASE=2
     result=$(resolve_pane "karo")
@@ -117,7 +163,10 @@ load_resolve_pane() {
     result=$(resolve_pane "ashigaru3")
     [ "$result" = "multiagent:agents.5" ]
     result=$(resolve_pane "gunshi")
-    [ "$result" = "multiagent:agents.10" ]
+    [ "$result" = "multiagent:agents.6" ]
+    # SecondPC は pane_base に関わらず return 1
+    run resolve_pane "ashigaru5"
+    [ "$status" -eq 1 ]
 }
 
 # =============================================================================
