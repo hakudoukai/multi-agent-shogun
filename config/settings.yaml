@@ -103,6 +103,9 @@ supabase:
 #   MainPC (sasebo@sasebo.or.jp): shogun + karo + gunshi + ashigaru1+2 [+3 非常時]
 #   SecondPC (hakudoukai@gmail.com): ashigaru5+6+7 [+8 非常時]
 #   足軽4 = 欠番 (PC 境界の視覚的区切り)
+# 注: ashigaru3 は非常時のみ起動 (= ~/.openclaw/enable_ashigaru3 フラグ)、
+#     PC 配信先としては MainPC に属するため main_pc.agents に保持。
+#     ashigaru8 も同様の理由で second_pc.agents に保持。
 pc_mapping:
   main_pc:
     agents: [shogun, karo, gunshi, ashigaru1, ashigaru2, ashigaru3]

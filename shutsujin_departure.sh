@@ -568,11 +568,15 @@ echo ""
 PANE_BASE=$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# STEP 5.1: multiagent セッション作成（§18 MainPC: karo + ashigaru1-3 + gunshi = 5 panes）
-# §18 (理事長殿御指示 2026-05-06): MainPC 通常 5 体 (shogun は別 session)、SecondPC 用は
-# shutsujin_departure_secondpc.sh で別整備 (Phase 3)。
+# STEP 5.1: multiagent セッション作成
+#   §18 MainPC 通常運用 4 panes:
+#     agents.0 = karo / agents.1 = ashigaru1 / agents.2 = ashigaru2 / agents.3 = gunshi
+#   非常時 +1 (ashigaru3) は ~/.openclaw/enable_ashigaru3 フラグで agents.4 を split
+#   shogun は別 session (shogun:main.0)、SecondPC 用は shutsujin_departure_secondpc.sh
+#   2026-05-07 整合性復元: 旧「5 panes (a3 含む常時)」設計の名残コメントを修正。
+#   実態 + supervisor + agent_periodic_push の 4 panes 通常運用に統一。
 # ═══════════════════════════════════════════════════════════════════════════════
-log_war "⚔️ 家老・足軽・軍師の陣を構築中（§18 MainPC 5 panes 配備）..."
+log_war "⚔️ 家老・足軽・軍師の陣を構築中（§18 MainPC 4 panes 通常配備、ashigaru3 は非常時 +1）..."
 
 # 最初のペイン作成
 if ! tmux new-session -d -s multiagent -n "agents" 2>/dev/null; then
