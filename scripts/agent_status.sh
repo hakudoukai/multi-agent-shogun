@@ -45,6 +45,7 @@ done
 
 # ─── Load shared library ───
 source "$SCRIPT_DIR/lib/agent_status.sh"
+source "$SCRIPT_DIR/lib/_section18_roles.sh"
 
 # ─── Label functions ───
 state_label() {
@@ -155,12 +156,17 @@ if [[ -x "$PYTHON" ]]; then
 fi
 
 # Agent definitions (§18 PC×アカウント配置 — CLAUDE.md §18.1)
-# 通常運用: MainPC karo + ashigaru1-3 + gunshi / SecondPC ashigaru5-7 / 非常時 ashigaru8。
-# ashigaru4 = 欠番 (PC 境界の視覚的区切り)。
-# 注意: pane_idx はループ index ベースで MainPC 5-pane 配置 (karo,ashigaru1-3,gunshi)
-#       の先頭 4 要素のみ正しい。SecondPC ashigaru (5-8) は別 tmux のため pane lookup
-#       は本スクリプトでは不可で、task YAML / inbox 表示のみ有効。
-AGENTS=("karo" "ashigaru1" "ashigaru2" "ashigaru3" "ashigaru5" "ashigaru6" "ashigaru7" "ashigaru8" "gunshi")
+#
+# cycle1 三者監査 B1/R1 fix: gunshi の index 不整合 (旧実装は AGENTS 末尾に gunshi
+# を置き pane_idx=8 で lookup していた。実 MainPC tmux 配置では gunshi は pane
+# index 4) を解消するため、_section18_roles.sh からpane順序を参照する。
+#
+# - MainPC pane 0..4: karo / ashigaru1 / ashigaru2 / ashigaru3 / gunshi
+#   (SECTION18_MAINPC_PANE_ORDER の定義順)
+# - SecondPC (ashigaru5-8) は別 tmux session のため pane lookup 対象外。
+#   task YAML / inbox status のみ表示する。
+MAINPC_AGENTS=("${SECTION18_MAINPC_PANE_ORDER[@]}")
+SECONDPC_AGENTS=("${SECTION18_SECONDPC_AGENTS[@]}")
 
 # pane-base-index
 PANE_BASE=$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)
@@ -218,34 +224,56 @@ else
     printf "%-10s %-7s %-9s %-42s %-10s %s\n" "----------" "-------" "---------" "------------------------------------------" "----------" "-----"
 fi
 
-for i in "${!AGENTS[@]}"; do
-    agent="${AGENTS[$i]}"
-    pane_idx=$((PANE_BASE + i))
-    pane_target="multiagent:agents.${pane_idx}"
+# ─── Print one agent row (with optional pane lookup) ───
+# Args: $1=agent, $2=pane_target ("" → pane state を 不在 で表示)
+print_agent_row() {
+    local agent="$1"
+    local pane_target="$2"
 
     # CLI type
+    local cli_type
     if $CLI_ADAPTER_AVAILABLE; then
         cli_type=$(get_cli_type "$agent" 2>/dev/null || echo "?")
     else
         cli_type="?"
     fi
 
-    # Pane state
-    agent_is_busy_check "$pane_target" && rc=0 || rc=$?
+    # Pane state — SecondPC は別 tmux のため lookup 不可 (rc=2 = 不在)
+    local rc pane_state
+    if [[ -n "$pane_target" ]]; then
+        agent_is_busy_check "$pane_target" && rc=0 || rc=$?
+    else
+        rc=2
+    fi
     pane_state=$(state_label "$rc")
 
     # Task info
+    local task_info task_id task_status
     task_info=$(get_task_info "$agent")
     task_id=$(echo "$task_info" | awk '{print $1}')
     task_status=$(echo "$task_info" | awk '{$1=""; print $0}' | sed 's/^ //')
 
     # Unread inbox
+    local unread
     unread=$(get_unread_count "$agent")
 
     # Print with CJK padding
     printf "%-10s %-7s " "$agent" "$cli_type"
     print_padded "$pane_state" 9
     printf " %-42s %-10s %s\n" "$task_id" "$task_status" "$unread"
+}
+
+# MainPC: pane lookup 有り (multiagent:agents.0..4)
+for i in "${!MAINPC_AGENTS[@]}"; do
+    agent="${MAINPC_AGENTS[$i]}"
+    pane_idx=$((PANE_BASE + i))
+    pane_target="multiagent:agents.${pane_idx}"
+    print_agent_row "$agent" "$pane_target"
+done
+
+# SecondPC: 別 tmux session のため pane lookup 不可。task/inbox のみ。
+for agent in "${SECONDPC_AGENTS[@]}"; do
+    print_agent_row "$agent" ""
 done
 
 printf "\n"
