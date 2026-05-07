@@ -9,6 +9,8 @@
 **改訂対象**: 既存 `directive_audit_pregate_diffstat_check_001` (= CLAUDE.md / instructions/karo.md 内、現状未明文化、本草案で初出案)
 **Out of scope**: CLAUDE.md / instructions/karo.md 直接編集 (= 理事長専権)、実装 (= script / hook / 自動化、別 cmd 待ち)、法令最終総合監査 (= 全機能完成後別 cmd)
 
+> **⚠ 実装前提依存 (= §9 詳細)**: 本草案 §3.2 step 5 / §7.1 step 5 / §7.3 で `audit_codex.sh --paths` / `audit_gemini.sh --paths` の使用を前提とするが、現行 `scripts/audit_codex.sh:41` / `scripts/audit_gemini.sh:42` は `CHANGED_PATHS` を `git diff --name-only` で自動算出する仕様で `--paths` 引数未対応。本 directive 適用には別 cmd `cmd_audit_script_paths_arg_001` (= 提案、未発令) で `--paths` 引数受領実装が前提。詳細は §9 参照。
+
 ---
 
 ## §1. 背景・教訓
@@ -46,12 +48,13 @@
 
 ## §2. 全足軽の義務 (= ashigaru / gunshi report 提出時)
 
-### §2.1 完了報告で必ず明示する 4 項目
+### §2.1 完了報告で必ず明示する 5 項目
 
 1. **base_commit / head_commit (= hash)**
 2. **拙者作業 path (= 明示、glob 可)**
 3. **`git diff --shortstat <base>..<head> -- <拙者 path>` の出力結果** (= path フィルタ適用済の差分)
 4. **テスト結果 (= pytest / vitest / bats 件数、PASS/FAIL/SKIP 内訳)**
+5. **task 着手時刻 (= ISO8601 JST、e.g. `2026-05-07T22:08:50+09:00`)** — §3.4 timestamp フィルタ補助用、§6.1 申告フォーマットと整合
 
 ### §2.2 義務違反時の扱い
 
@@ -64,6 +67,8 @@
 - 完了報告送信前に `git log --author=$(git config user.email) base..HEAD -- <拙者 path>` で本人 commit のみを抽出し申告と一致するか確認
 - 著者統一リポジトリ (= 本 multi-agent-shogun 等) では `--since=<task 着手 timestamp>` を併用
 - 不整合検知時は **報告送信せず家老に状況確認** (= 並行 commit 混在の可能性、事前申告で誤検出回避)
+
+> **※ 注記**: 本リポジトリ (= multi-agent-shogun) は `git config user.email` を全 agent 共通で `hakudoukai@gmail.com` 等に統一しており、`git log --author=...` 単独では agent 間の判別が不能である。ゆえに **`--since=<task 着手 timestamp>` 併用が必須** (= §2.1 (5) task 着手時刻 + §3.4 timestamp フィルタ補助と連動)。author フィルタは補助的位置付けで、第一義は **path フィルタ + timestamp フィルタ** の併用と心得よ。
 
 ---
 
@@ -87,6 +92,7 @@
 5. 整合性確認 PASS → Codex / Gemini 三者監査着手
    - audit_codex.sh / audit_gemini.sh 呼出時に --paths "<申告 path>" を必ず指定
    - 監査対象も path フィルタ適用 (= スコープ純化、誤判定防止)
+   - **※ 実装前提依存**: 現行 `scripts/audit_codex.sh:41` / `scripts/audit_gemini.sh:42` は `--paths` 引数未対応。本 step 5 適用には別 cmd `cmd_audit_script_paths_arg_001` (= 提案、未発令) での実装が前提 — 詳細 §9 参照。
 ```
 
 ### §3.3 author フィルタ補助 (= 異著者 repo の場合)
@@ -248,6 +254,7 @@ git diff --shortstat "$BASE..$HEAD" -- $ASHIGARU_PATHS
 
 # Step 4: 申告との数値一致確認 (= 家康目視 or 自動 diff)
 # Step 5: 整合 PASS → Codex / Gemini 三者監査着手 (--paths 指定必須)
+# ※ 実装前提依存: 現行 audit_codex.sh / audit_gemini.sh は --paths 未対応、別 cmd cmd_audit_script_paths_arg_001 で実装予定 (= §9 参照)
 bash scripts/audit_codex.sh --base "$BASE" --head "$HEAD" --paths "$ASHIGARU_PATHS"
 bash scripts/audit_gemini.sh --base "$BASE" --head "$HEAD" --paths "$ASHIGARU_PATHS"
 ```
@@ -365,6 +372,50 @@ gunshi_pregate_check:
 
 ---
 
+## §9. 実装前提依存
+
+### §9.1 現行スクリプトの仕様
+
+本 directive 適用に当たり、以下の現行スクリプトは **path フィルタ未対応** ゆえ、別 cmd での実装が前提となる:
+
+| スクリプト | 行 | 現状仕様 | 不足機能 |
+|---|---|---|---|
+| `scripts/audit_codex.sh` | :41 | `CHANGED_PATHS=$(git diff --name-only "$BASE..$HEAD")` で全変更 path を自動算出 | `--paths "<list>"` 引数で外部指定された path のみを監査対象とする機能 |
+| `scripts/audit_gemini.sh` | :42 | 同上 | 同上 |
+
+ゆえに本草案 §3.2 step 5 / §7.1 step 5 / §7.3 で示した `audit_codex.sh --paths` / `audit_gemini.sh --paths` は **現状実行不能**。
+
+### §9.2 別 cmd 提案: `cmd_audit_script_paths_arg_001`
+
+| 項目 | 内容 |
+|---|---|
+| **cmd_id** | `cmd_audit_script_paths_arg_001` (= 提案、本草案発令時点では未発令) |
+| **目的** | `scripts/audit_codex.sh` / `scripts/audit_gemini.sh` に `--paths` 引数を追加、外部指定された path のみを Codex / Gemini に渡せるようにする |
+| **scope** | `scripts/audit_codex.sh` + `scripts/audit_gemini.sh` 2 ファイル編集、既存の自動算出仕様は default 維持 (= 後方互換) |
+| **acceptance_criteria** | (1) `--paths "<glob>"` 引数受領、(2) `CHANGED_PATHS` を引数で上書き、(3) 引数省略時は従来通り自動算出、(4) pytest / bats 回帰なし |
+| **発令タイミング** | 本 directive `directive_audit_pregate_diffstat_check_001` が CLAUDE.md / instructions/karo.md に正式反映された後、即時発令推奨 (= 本 directive 実装基盤として最優先) |
+| **担当推奨** | ashigaru1 or ashigaru2 (= 直近 §18 polish + pregate 草案担当の context 直近)、家老ご裁可 |
+
+### §9.3 本 directive の段階的適用
+
+`cmd_audit_script_paths_arg_001` 完了前は **本 directive を部分適用** (= 申告フォーマット §6 + 自己検証 §2.3 + 家康事前ゲート §3.2 step 1-4 のみ運用可能、step 5 の自動 path フィルタは家康手動運用で代替):
+
+| 段階 | 適用範囲 | 制約 |
+|---|---|---|
+| **段階 1** (= 現状) | 申告フォーマット §6 + 自己検証 §2.3 + 家康事前ゲート §3.2 step 1-4 | step 5 の Codex / Gemini path 限定は家康手動 (= path 出力を人間が確認) |
+| **段階 2** (= `cmd_audit_script_paths_arg_001` 完了後) | 全 §1-§8 完全適用 | なし、自動 path フィルタ運用 |
+| **段階 3** (= 将来、別 cmd) | PreToolUse hook で commit 時自動警告 (= §2.2 提案) | 別 cmd 発令必須、本草案では未着手 |
+
+### §9.4 関連 deferred cmd
+
+| cmd_id | 目的 | 状態 |
+|---|---|---|
+| `cmd_audit_script_paths_arg_001` | `--paths` 引数追加 (= 本 §9 提案) | 提案、本 directive 反映後発令予定 |
+| `cmd_pregate_error_codes_001` | `ERR-PREGATE-001-005` 採番台帳追記 (= §5.3) | 提案、本 directive 反映後発令予定 |
+| `cmd_pregate_pretoolhook_warn_001` | PreToolUse hook で申告 path 明示なし commit 時の警告 (= §2.2) | 提案、段階 3 で発令検討 |
+
+---
+
 ## 付録 A: 本日事例の記録 (= 2026-05-07)
 
 ### A.1 `subtask_section18_full_quality_polish_001` cycle1
@@ -435,16 +486,18 @@ gunshi_pregate_check:
 | 草案 version | 改訂理由 | 反映元 |
 |---|---|---|
 | draft-001 | 初版作成 (= 2026-05-07 並行 commit 誤検出事例の恒久対策草案) | `subtask_pregate_directive_draft_001` task YAML + 本日事例 (`msg_20260507_224148` close 確定) |
+| draft-002 | 家康 cycle1 self-audit minor findings 3 件反映 — F1 (medium): §9 新設「実装前提依存」+ 冒頭注記 + §3.2/§7.1 step 5 注記で `audit_codex/gemini.sh --paths` 未対応を明示し別 cmd `cmd_audit_script_paths_arg_001` deferred を提案。F2 (low): §2.1 義務リスト 4→5 項目化、(5) task 着手時刻 ISO8601 JST 追加で §3.4 timestamp フィルタ補助と整合。F3 (low): §2.3 末尾注記で `git config user.email` 統一ゆえ author フィルタ単独不能、`--since` 併用必須を明示。 | 家康 self-audit `msg_20260508_001423_c0f7afaf` + `queue/reports/ieyasu_report.yaml` |
 
 ---
 
 ## 草案完成基準 (= self-check)
 
-- [x] §1-§5 + 申告フォーマット + 家康事前ゲート手順 + 運用フロー + 本日事例記録の 5 章立て + 4 付録
+- [x] §1-§5 + 申告フォーマット + 家康事前ゲート手順 + 運用フロー + 実装前提依存 + 本日事例記録の 6 章立て + 4 付録
 - [x] 実装着手なし (= markdown 1 ファイルのみ)
 - [x] CLAUDE.md / instructions/karo.md 直接編集なし
 - [x] Anti-Duplication 厳守 (= 既存 docs/runbooks/* / docs/incident_logs/* と非重複、初出案ゆえ重複対象なし)
 - [x] §directive_no_concurrent_stage_001 + §directive_commit_granularity_001 との整合性確保
 - [x] 本草案自身が申告フォーマットを実践する model task (= 完了報告で path 明示 + shortstat 添付)
+- [x] **draft-002**: 家康 cycle1 self-audit minor findings (F1/F2/F3) 全反映、実装前提依存を §9 で明示し段階的適用方針を確立
 
 信長承認後、本草案を base に CLAUDE.md / instructions/karo.md 改訂を理事長殿御判断で実施されたし。
