@@ -63,10 +63,12 @@ else
 fi
 
 # 足軽IDリストと人数を動的に取得（settings.yaml から）
+# §18 (理事長殿御指示 2026-05-06) MainPC 配置: ashigaru1/2 通常 + ashigaru3 非常時。
+# ashigaru4 = 欠番 (PC 境界)、ashigaru5〜8 = SecondPC 専属 (本スクリプトでは起動禁止)。
 if [ "$CLI_ADAPTER_LOADED" = true ]; then
     _ASHIGARU_IDS_STR=$(get_ashigaru_ids)
 else
-    _ASHIGARU_IDS_STR="ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
+    _ASHIGARU_IDS_STR="ashigaru1 ashigaru2 ashigaru3"
 fi
 _ASHIGARU_COUNT=$(echo "$_ASHIGARU_IDS_STR" | wc -w | tr -d ' ')
 
@@ -184,7 +186,7 @@ while [[ $# -gt 0 ]]; do
             echo "  -c, --clean         キューとダッシュボードをリセットして起動（クリーンスタート）"
             echo "                      未指定時は前回の状態を維持して起動"
             echo "  -k, --kessen        決戦の陣（全足軽をOpusで起動）"
-            echo "                      未指定時は平時の陣（足軽1-7=Sonnet, 軍師=Opus）"
+            echo "                      未指定時は平時の陣（足軽=Sonnet, 軍師=Opus）"
             echo "  -s, --setup-only    tmuxセッションのセットアップのみ（Claude起動なし）"
             echo "  -t, --terminal      Windows Terminal で新しいタブを開く"
             echo "  -shell, --shell SH  シェルを指定（bash または zsh）"
@@ -213,10 +215,10 @@ while [[ $# -gt 0 ]]; do
             echo "  将軍:      Opus（デフォルト。--shogun-no-thinkingで無効化）"
             echo "  家老:      Sonnet（高速タスク管理）"
             echo "  軍師:      Opus（戦略立案・設計判断）"
-            echo "  足軽1-7:   Sonnet（実働部隊）"
+            echo "  足軽1-3:   Sonnet（MainPC 実働部隊。3=非常時）"
             echo ""
-            echo "陣形:"
-            echo "  平時の陣（デフォルト）: 足軽1-7=Sonnet, 軍師=Opus"
+            echo "陣形 (§18 配置: MainPC 通常 5 体 = 将軍/家老/軍師/足軽1/足軽2):"
+            echo "  平時の陣（デフォルト）: 足軽=Sonnet, 軍師=Opus"
             echo "  決戦の陣（--kessen）:   全足軽=Opus, 軍師=Opus"
             echo ""
             echo "表示モード:"
@@ -277,18 +279,18 @@ show_battle_cry() {
     # 足軽隊列（オリジナル）
     # ═══════════════════════════════════════════════════════════════════════════
     echo -e "\033[1;34m  ╔═════════════════════════════════════════════════════════════════════════════╗\033[0m"
-    echo -e "\033[1;34m  ║\033[0m                \033[1;37m【 足 軽 隊 列 ・ 七 名 + 軍 師 配 備 】\033[0m                  \033[1;34m║\033[0m"
+    echo -e "\033[1;34m  ║\033[0m              \033[1;37m【 足 軽 隊 列 ・ 三 名 + 家 老 + 軍 師 配 備 】\033[0m              \033[1;34m║\033[0m"
     echo -e "\033[1;34m  ╚═════════════════════════════════════════════════════════════════════════════╝\033[0m"
 
     cat << 'ASHIGARU_EOF'
 
-       /\      /\      /\      /\      /\      /\      /\      /\
-      /||\    /||\    /||\    /||\    /||\    /||\    /||\    /||\
-     /_||\   /_||\   /_||\   /_||\   /_||\   /_||\   /_||\   /_||\
-       ||      ||      ||      ||      ||      ||      ||      ||
-      /||\    /||\    /||\    /||\    /||\    /||\    /||\    /||\
-      /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \
-     [足1]   [足2]   [足3]   [足4]   [足5]   [足6]   [足7]   [軍師]
+       /\      /\      /\      /\      /\
+      /||\    /||\    /||\    /||\    /||\
+     /_||\   /_||\   /_||\   /_||\   /_||\
+       ||      ||      ||      ||      ||
+      /||\    /||\    /||\    /||\    /||\
+      /  \    /  \    /  \    /  \    /  \
+     [家老]  [足1]   [足2]   [足3]   [軍師]
 
 ASHIGARU_EOF
 
@@ -301,7 +303,7 @@ ASHIGARU_EOF
     echo -e "\033[1;33m  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
     echo -e "\033[1;33m  ┃\033[0m  \033[1;37m🏯 multi-agent-shogun\033[0m  〜 \033[1;36m戦国マルチエージェント統率システム\033[0m 〜           \033[1;33m┃\033[0m"
     echo -e "\033[1;33m  ┃\033[0m                                                                           \033[1;33m┃\033[0m"
-    echo -e "\033[1;33m  ┃\033[0m  \033[1;35m将軍\033[0m: 統括  \033[1;31m家老\033[0m: 管理  \033[1;33m軍師\033[0m: 戦略(Opus)  \033[1;34m足軽\033[0m: 実働×7  \033[1;33m┃\033[0m"
+    echo -e "\033[1;33m  ┃\033[0m  \033[1;35m将軍\033[0m: 統括  \033[1;31m家老\033[0m: 管理  \033[1;33m軍師\033[0m: 戦略(Opus)  \033[1;34m足軽\033[0m: 実働×3 (§18)  \033[1;33m┃\033[0m"
     echo -e "\033[1;33m  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"
     echo ""
 }
@@ -550,9 +552,11 @@ echo ""
 PANE_BASE=$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# STEP 5.1: multiagent セッション作成（9ペイン：karo + ashigaru1-8）
+# STEP 5.1: multiagent セッション作成（§18 MainPC: karo + ashigaru1-3 + gunshi = 5 panes）
+# §18 (理事長殿御指示 2026-05-06): MainPC 通常 5 体 (shogun は別 session)、SecondPC 用は
+# shutsujin_departure_secondpc.sh で別整備 (Phase 3)。
 # ═══════════════════════════════════════════════════════════════════════════════
-log_war "⚔️ 家老・足軽・軍師の陣を構築中（9名配備）..."
+log_war "⚔️ 家老・足軽・軍師の陣を構築中（§18 MainPC 5 panes 配備）..."
 
 # 最初のペイン作成
 if ! tmux new-session -d -s multiagent -n "agents" 2>/dev/null; then
@@ -579,24 +583,15 @@ else
     tmux set-environment -t multiagent DISPLAY_MODE "shout"
 fi
 
-# 3x3グリッド作成（合計9ペイン）
-# ペイン番号は pane-base-index に依存（0 または 1）
-# 最初に3列に分割
-tmux split-window -h -t "multiagent:agents"
-tmux split-window -h -t "multiagent:agents"
-
-# 各列を3行に分割
-tmux select-pane -t "multiagent:agents.${PANE_BASE}"
-tmux split-window -v
-tmux split-window -v
-
-tmux select-pane -t "multiagent:agents.$((PANE_BASE+3))"
-tmux split-window -v
-tmux split-window -v
-
-tmux select-pane -t "multiagent:agents.$((PANE_BASE+6))"
-tmux split-window -v
-tmux split-window -v
+# §18 MainPC 5 panes vertical 構成（karo + ashigaru1-3 + gunshi）
+# 起動時の唯一 pane を起点に split-window -v を 4 回連続実行することで、
+# pane 0=karo, 1=ashigaru1, 2=ashigaru2, 3=ashigaru3, 4=gunshi の順で
+# AGENT_IDS index と一致する縦並びを得る (pane-base-index 依存なし、相対分割)。
+tmux split-window -v -t "multiagent:agents"
+tmux split-window -v -t "multiagent:agents"
+tmux split-window -v -t "multiagent:agents"
+tmux split-window -v -t "multiagent:agents"
+tmux select-layout -t "multiagent:agents" even-vertical
 
 # ペインラベル・エージェントID・色設定 — settings.yaml から動的に構築
 PANE_LABELS=("karo")
@@ -1030,17 +1025,19 @@ echo "     ┌──────────────────────
 echo "     │  Pane 0: 将軍 (SHOGUN)      │  ← 総大将・プロジェクト統括"
 echo "     └─────────────────────────────┘"
 echo ""
-echo "     【multiagentセッション】家老・足軽・軍師の陣（3x3 = 9ペイン）"
-echo "     ┌─────────┬─────────┬─────────┐"
-echo "     │  karo   │ashigaru3│ashigaru6│"
-echo "     │  (家老) │ (足軽3) │ (足軽6) │"
-echo "     ├─────────┼─────────┼─────────┤"
-echo "     │ashigaru1│ashigaru4│ashigaru7│"
-echo "     │ (足軽1) │ (足軽4) │ (足軽7) │"
-echo "     ├─────────┼─────────┼─────────┤"
-echo "     │ashigaru2│ashigaru5│ gunshi  │"
-echo "     │ (足軽2) │ (足軽5) │ (軍師)  │"
-echo "     └─────────┴─────────┴─────────┘"
+echo "     【multiagentセッション】§18 MainPC 5ペイン (vertical)"
+echo "     ┌─────────────────────────────┐"
+echo "     │ Pane 0: karo      (家老)    │"
+echo "     ├─────────────────────────────┤"
+echo "     │ Pane 1: ashigaru1 (足軽1)   │"
+echo "     ├─────────────────────────────┤"
+echo "     │ Pane 2: ashigaru2 (足軽2)   │"
+echo "     ├─────────────────────────────┤"
+echo "     │ Pane 3: ashigaru3 (足軽3)   │  ← 非常時 (§18 +1 体)"
+echo "     ├─────────────────────────────┤"
+echo "     │ Pane 4: gunshi    (軍師)    │"
+echo "     └─────────────────────────────┘"
+echo "     ※ ashigaru4=欠番、ashigaru5-8 は SecondPC 専属 (Phase 3 で別整備)"
 echo ""
 
 echo ""
@@ -1058,8 +1055,8 @@ if [ "$SETUP_ONLY" = true ]; then
     echo "  │  tmux send-keys -t shogun:main \\                         │"
     echo "  │    'claude ${PERMISSION_FLAG}' Enter         │"
     echo "  │                                                          │"
-    echo "  │  # 家老・足軽を一斉召喚                                  │"
-    echo "  │  for p in \$(seq $PANE_BASE $((PANE_BASE+8))); do                                 │"
+    echo "  │  # 家老・足軽・軍師を一斉召喚 (§18: 5 panes)              │"
+    echo "  │  for p in \$(seq $PANE_BASE $((PANE_BASE+4))); do                                 │"
     echo "  │      tmux send-keys -t multiagent:agents.\$p \\            │"
     echo "  │      'claude ${PERMISSION_FLAG}' Enter       │"
     echo "  │  done                                                    │"
