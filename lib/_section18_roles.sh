@@ -99,3 +99,18 @@ section18_mainpc_pane_index() {
     done
     return 1
 }
+
+
+# ─── Phase 3 partial (2026-05-07): persona 新名 → 旧 internal_id alias ───
+declare -A SECTION18_ROLE_ALIASES=(
+    [nobunaga]=shogun
+    [hideyoshi]=karo
+    [ieyasu]=gunshi
+)
+
+# 新 persona 名 → 旧 internal_id 解決 (旧名はそのまま返す)
+section18_resolve_alias() {
+    local name="$1"
+    local resolved="${SECTION18_ROLE_ALIASES[$name]:-$name}"
+    echo "$resolved"
+}

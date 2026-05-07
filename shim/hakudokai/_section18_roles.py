@@ -75,3 +75,18 @@ __all__ = [
     "is_valid_role",
     "get_pc_for_role",
 ]
+
+
+# Phase 3 partial (2026-05-07): persona 名乗り変更に伴う新名 → 旧 internal_id alias
+# 完全 rename (= 旧名削除) は別途、明朝着手予定。移行期間中は両名で参照可。
+ROLE_ALIASES: dict[str, str] = {
+    "nobunaga": "shogun",       # 信長 → shogun (internal_id)
+    "hideyoshi": "karo",         # 秀吉 → karo
+    "ieyasu": "gunshi",          # 家康 → gunshi
+    # maeda は新名のまま (= alias 不要)
+}
+
+
+def resolve_role(name: str) -> str:
+    """新 persona 名 → 旧 internal_id を解決。旧名はそのまま返す。"""
+    return ROLE_ALIASES.get(name, name)

@@ -18,6 +18,9 @@ cli:
     shogun: claude
     karo: claude
     gunshi: claude
+    nobunaga: claude       # 信長 alias → shogun (Phase 3 partial)
+    hideyoshi: claude     # 秀吉 alias → karo (Phase 3 partial)
+    ieyasu: claude         # 家康 alias → gunshi (Phase 3 partial)
     maeda: claude         # SecondPC 家老 (前田利家) — Phase 1 新設
     ashigaru1: claude       # MainPC 通常
     ashigaru2: claude       # MainPC 通常
