@@ -29,15 +29,17 @@ if [[ -n "${_SECTION18_ROLES_LOADED:-}" ]]; then
 fi
 _SECTION18_ROLES_LOADED=1
 
-# ─── MainPC tmux pane 配置順 (multiagent:agents 内 0..4) ───
+# ─── MainPC tmux pane 配置順 (multiagent:agents 内 0..5) ───
 # pane_base + index で実 pane を解決する。
 # 注意: shogun は別 tmux session (shogun:0.0) のため本配列に含めない。
+# Phase 15 (2026-05-08): takenaka (竹中半兵衛、信長直轄軍師) 新設、index 5 に配置。
 SECTION18_MAINPC_PANE_ORDER=(
     "hideyoshi"   # pane index 0 (= 旧 karo)
     "ashigaru1"   # pane index 1
     "ashigaru2"   # pane index 2
     "ashigaru3"   # pane index 3 (非常時 +1)
-    "ieyasu"      # pane index 4 (= 旧 gunshi)
+    "ieyasu"      # pane index 4 (= 旧 gunshi、Phase 5 で kuroda 置換予定)
+    "takenaka"    # pane index 5 (信長直轄軍師、Phase 15 新設)
 )
 
 # ─── SecondPC tmux pane 配置順 (multiagent:agents 内 0..4) ───
@@ -112,6 +114,7 @@ declare -A SECTION18_ROLE_ALIASES=(
     [hideyoshi]=hideyoshi
     [ieyasu]=ieyasu
     [maeda]=maeda
+    [takenaka]=takenaka  # Phase 15 (2026-05-08): 信長直轄軍師
 )
 
 # role 名 → 正規化 (= 旧名なら新名に変換、新名はそのまま、未知名もそのまま)
