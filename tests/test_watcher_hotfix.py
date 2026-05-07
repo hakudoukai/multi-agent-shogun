@@ -2,14 +2,16 @@
 """Tests for Watcher Hotfix 001 — self-send, retry cap, disable flags.
 
 Covers:
-  1. Self-send instant ACK (fukuincho_reverse_poll, secondpc_receiver_poll, kuro_desktop_poll)
-  2. Retry cap → dead-letter (secondpc_receiver_poll, kuro_desktop_poll)
+  1. Self-send instant ACK (fukuincho_reverse_poll, secondpc_receiver_poll)
+  2. Retry cap → dead-letter (secondpc_receiver_poll)
   3. Manual disable flag (watchdog.sh, kuro_desktop_watcher.sh) — shellcheck only
-  4. ntfy failure → no ACK (kuro_desktop_poll outbound)
+
+§18 (理事長殿御指示 2026-05-06) 移行で hakudokai_kuro_desktop_poll.py は
+shim/hakudokai/_archive/ に退避済。関連 outbound テストは本ファイルから削除し、
+watcher.sh の disable flag テストのみ残置 (Phase 3 で watcher.sh も整理予定)。
 """
 import json, os, sys, tempfile, types
 from unittest.mock import patch, MagicMock
-import pytest
 
 
 # --- Helpers to extract functions from module sources ---
@@ -243,72 +245,10 @@ class TestWatchdogDisableFlags:
 
 
 # ============================================================
-# Test: kuro_desktop_poll outbound ntfy failure → no ACK
+# §18 (理事長殿御指示 2026-05-06) 注記:
+# kuro_desktop_poll outbound ntfy failure テストは hakudokai_kuro_desktop_poll.py
+# 本体の _archive 退避に伴い本ファイルから削除。Phase 3 で
+# hakudokai_kuro_desktop_watcher.sh も整理する際、上の
+# TestWatchdogDisableFlags.test_kuro_desktop_watcher_has_disable_check も
+# 併せて整理予定。
 # ============================================================
-
-class TestKuroDesktopOutboundNoAckOnFail:
-    """Outbound (ntfy) failure must NOT ACK the message."""
-
-    def test_ntfy_failure_prevents_ack(self, tmp_path):
-        """When ntfy subprocess fails, message is not ACKed and retry increments."""
-        tracker_file = str(tmp_path / "retry_tracker.json")
-        with open(tracker_file, "w") as f:
-            json.dump({}, f)
-
-        msg_id = "test-ntfy-fail-001"
-        response_file = str(tmp_path / "response.json")
-        with open(response_file, "w") as f:
-            json.dump([{
-                "id": msg_id,
-                "from_pc": "main_pc",
-                "to_pc": "kuro_desktop",
-                "topic": "test_msg",
-                "content": "hello kuro",
-                "priority": "normal",
-                "message_type": "status_update",
-            }], f)
-
-        processed_file = str(tmp_path / "processed.txt")
-        open(processed_file, "w").close()
-
-        script_dir = os.path.join(os.path.dirname(__file__), "..")
-        source, _ = _extract_module("hakudokai_kuro_desktop_poll.py")
-
-        # Patch the retry tracker file path
-        source = source.replace(
-            'RETRY_TRACKER_FILE = f"/tmp/hakudokai_kuro_desktop_{direction}_retry_tracker.json"',
-            f'RETRY_TRACKER_FILE = "{tracker_file}"'
-        )
-
-        with patch("sys.argv", [
-            "test", response_file, processed_file, script_dir,
-            "http://localhost:54321/rest/v1", "fake_key", "outbound"
-        ]):
-            with patch("subprocess.run") as mock_run:
-                # Make ntfy subprocess fail
-                mock_result = MagicMock()
-                mock_result.returncode = 1
-                mock_result.stdout = b""
-                mock_result.stderr = b"connection refused"
-                mock_run.return_value = mock_result
-
-                with patch("urllib.request.urlopen") as mock_urlopen:
-                    mock_resp = MagicMock()
-                    mock_resp.__enter__ = MagicMock(return_value=mock_resp)
-                    mock_resp.__exit__ = MagicMock(return_value=False)
-                    mock_urlopen.return_value = mock_resp
-
-                    try:
-                        exec(compile(source, "<test>", "exec"), {"__name__": "__test__"})
-                    except SystemExit:
-                        pass
-
-        # Should NOT be recorded as processed
-        with open(processed_file) as f:
-            processed = set(line.strip() for line in f if line.strip())
-        assert msg_id not in processed
-
-        # Retry tracker should show 1 retry
-        with open(tracker_file) as f:
-            tracker = json.load(f)
-        assert tracker.get(msg_id) == 1
