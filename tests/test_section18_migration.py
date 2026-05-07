@@ -474,6 +474,10 @@ class TestShutsujinPaneIdAssertions:
         src = _read("shutsujin_departure.sh")
         # pane_id が ^%[0-9]+$ 形式であることを bash regex で検証
         assert "^%[0-9]+$" in src, "pane_id format assertion missing"
+        # B1 polish: 失敗時の診断メッセージに「期待形式」「pane_id」が含まれること
+        # (FATAL ログ抜粋を sub-assertion として追加 — 監査追跡可能性向上)
+        assert "想定外の pane_id" in src, "pane_id FATAL diagnostic missing"
+        assert "期待形式: %N" in src, "pane_id FATAL guidance ('期待形式: %N') missing"
 
     def test_agent_ids_pane_ids_parity_check(self):
         """AGENT_IDS と PANE_IDS の件数契約が宣言されている。"""
@@ -483,6 +487,137 @@ class TestShutsujinPaneIdAssertions:
             r'\$\{#AGENT_IDS\[@\]\}\s*-ne\s*\$\{#PANE_IDS\[@\]\}',
             src,
         ), "AGENT_IDS / PANE_IDS parity check missing"
+        # B1 polish: 失敗時の診断メッセージ抜粋を sub-assertion 化
+        assert "件数不一致" in src, "parity FATAL diagnostic ('件数不一致') missing"
+        assert "原因候補" in src, "parity FATAL guidance ('原因候補') missing"
+
+
+class TestShutsujinPaneIdRegexBoundary:
+    """B1 polish: pane_id regex `^%[0-9]+$` の境界値検証 (実 bash regex で評価).
+
+    shutsujin_departure.sh L625/L633 の assertion 形式を bash regex として直接
+    評価し、tmux が返しうる/返しえない pane_id 形式を網羅。実装を切り出した
+    純粋テストで、tmux 実機なしでも CI 実行可。
+    """
+
+    @staticmethod
+    def _match(pane_id: str) -> bool:
+        """assertion 相当 `[[ "$pane_id" =~ ^%[0-9]+$ ]]` を bash で評価し
+        match/non-match を返す。Python re.fullmatch でも結果は同一だが、
+        本テストは bash 実装を担保するため subprocess 経由で検証する。"""
+        cmd = f'[[ "$1" =~ ^%[0-9]+$ ]] && echo MATCH || echo NOMATCH'
+        result = subprocess.run(
+            ["bash", "-c", cmd, "_", pane_id],
+            capture_output=True, text=True, check=False,
+        )
+        return result.stdout.strip() == "MATCH"
+
+    def test_valid_pane_ids_accepted(self):
+        """tmux が実際に返しうる典型的な pane_id 形式は accept される。"""
+        for valid in ("%0", "%1", "%5", "%42", "%999", "%1234567890"):
+            assert self._match(valid), f"valid pane_id rejected: {valid!r}"
+
+    def test_invalid_pane_ids_rejected(self):
+        """tmux 仕様外 / 異常応答パターンは reject される。"""
+        # 各境界ケースに why コメント付与: 実装変更時のリグレッション分析容易化
+        cases = [
+            ("", "空文字 — display-message 失敗時にありえる"),
+            ("%", "%のみ — 数字欠落"),
+            ("0", "% prefix 欠落"),
+            ("%a", "数字でなくアルファベット"),
+            ("%0a", "数字+アルファベット混在"),
+            ("% 0", "空白混入"),
+            ("pane%0", "prefix 余分"),
+            ("%0%1", "2 件結合 (display-message 改行抜け検知)"),
+            ("%-1", "負号 (^[0-9] 不一致)"),
+            ("%+1", "正号"),
+            ("%0.5", "小数点"),
+            ("%0\n", "末尾 改行 (^...$ で reject されるべき)"),
+            ("\t%0", "先頭 タブ"),
+        ]
+        for pane_id, reason in cases:
+            assert not self._match(pane_id), f"invalid pane_id accepted ({reason}): {pane_id!r}"
+
+
+class TestShutsujinAgentIdsParityBoundary:
+    """B1 polish: AGENT_IDS と PANE_IDS の件数契約 (L665-L672) の境界値検証.
+
+    shutsujin_departure.sh L665 の `[[ ${#AGENT_IDS[@]} -ne ${#PANE_IDS[@]} ]]`
+    に相当する判定を bash で再現し、各サイズ組合せで FATAL 発火を検証。
+    pane 数 5 (L644) との二段ガードを完全に契約化。
+    """
+
+    @staticmethod
+    def _check_parity(agent_ids: list, pane_ids: list) -> tuple[int, str]:
+        """assertion 相当 bash snippet を実行し、(rc, stdout) を返す。"""
+        ai_decl = " ".join(f'"{a}"' for a in agent_ids) or ""
+        pi_decl = " ".join(f'"{p}"' for p in pane_ids) or ""
+        snippet = textwrap.dedent(f"""
+            AGENT_IDS=({ai_decl})
+            PANE_IDS=({pi_decl})
+            if [[ ${{#AGENT_IDS[@]}} -ne ${{#PANE_IDS[@]}} ]]; then
+                echo "MISMATCH"
+                exit 5
+            fi
+            if [[ ${{#PANE_IDS[@]}} -ne 5 ]]; then
+                echo "PANE_COUNT_BAD"
+                exit 5
+            fi
+            echo "OK"
+        """)
+        result = subprocess.run(["bash", "-c", snippet], capture_output=True, text=True, check=False)
+        return result.returncode, result.stdout.strip()
+
+    def test_normal_5_to_5_passes(self):
+        """正常配置 (5 体 vs 5 panes) は FATAL 発火せず OK。"""
+        rc, out = self._check_parity(
+            ["karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi"],
+            ["%0", "%1", "%2", "%3", "%4"],
+        )
+        assert rc == 0
+        assert out == "OK"
+
+    def test_agent_ids_shorter_triggers_mismatch(self):
+        """AGENT_IDS が PANE_IDS より少ない (settings 不正等) → FATAL 発火。"""
+        rc, out = self._check_parity(
+            ["karo", "ashigaru1", "gunshi"],
+            ["%0", "%1", "%2", "%3", "%4"],
+        )
+        assert rc == 5
+        assert "MISMATCH" in out
+
+    def test_agent_ids_longer_triggers_mismatch(self):
+        """AGENT_IDS が PANE_IDS より多い (ashigaru4 等の混入) → FATAL 発火。"""
+        rc, out = self._check_parity(
+            ["karo", "ashigaru1", "ashigaru2", "ashigaru3", "ashigaru4", "gunshi"],
+            ["%0", "%1", "%2", "%3", "%4"],
+        )
+        assert rc == 5
+        assert "MISMATCH" in out
+
+    def test_both_empty_triggers_pane_count(self):
+        """両方空 (致命的初期化失敗) は parity OK だが pane 数 5 ガードで FATAL。"""
+        rc, out = self._check_parity([], [])
+        assert rc == 5
+        assert "PANE_COUNT_BAD" in out
+
+    def test_5_agents_4_panes_triggers_mismatch(self):
+        """split-window 失敗で PANE_IDS が 4 件 → parity 検査で FATAL。"""
+        rc, out = self._check_parity(
+            ["karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi"],
+            ["%0", "%1", "%2", "%3"],
+        )
+        assert rc == 5
+        assert "MISMATCH" in out
+
+    def test_5_agents_6_panes_triggers_mismatch(self):
+        """異常 split で PANE_IDS が 6 件 → parity 検査で FATAL。"""
+        rc, out = self._check_parity(
+            ["karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi"],
+            ["%0", "%1", "%2", "%3", "%4", "%5"],
+        )
+        assert rc == 5
+        assert "MISMATCH" in out
 
 
 # ============================================================
