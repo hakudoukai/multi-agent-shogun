@@ -220,12 +220,19 @@ try:
         data['messages'] = unread + read[-30:]
 
     # Atomic write: tmp file + rename (prevents partial reads)
+    # CRITICAL: dereference symlinks BEFORE atomic replace.
+    # 2026-05-08 incident: queue/inbox/ split-brain. When INBOX was a symlink
+    # (e.g. karo.yaml -> hideyoshi.yaml), os.replace replaced the SYMLINK ITSELF
+    # with the tmp file, severing the alias and causing dual orphan files.
+    # Fix: resolve to canonical path so writes always land on the real file
+    # while symlink aliases remain intact.
     import tempfile, os
-    tmp_fd, tmp_path = tempfile.mkstemp(dir=os.path.dirname('$INBOX'), suffix='.tmp')
+    inbox_canonical = os.path.realpath('$INBOX')
+    tmp_fd, tmp_path = tempfile.mkstemp(dir=os.path.dirname(inbox_canonical), suffix='.tmp')
     try:
         with os.fdopen(tmp_fd, 'w') as f:
             yaml.dump(data, f, default_flow_style=False, allow_unicode=True, indent=2)
-        os.replace(tmp_path, '$INBOX')
+        os.replace(tmp_path, inbox_canonical)
     except:
         os.unlink(tmp_path)
         raise
