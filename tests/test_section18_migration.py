@@ -81,17 +81,25 @@ def make_section18_settings(
 def invoke_get_mainpc_ashigaru_ids(settings_path: str) -> tuple[int, str]:
     """source lib/cli_adapter.sh; CLI_ADAPTER_SETTINGS=path get_mainpc_ashigaru_ids.
 
+    settings_path / REPO_ROOT は環境変数で subprocess に渡すため、path にダブル
+    クォート/改行/シェルメタ文字を含めても test harness の bash コマンド文字列が
+    破壊されぬ。被テスト関数の堅牢性検証 (B2 polish) に必須の harness 設計。
+
     Returns (returncode, stdout_stripped).
     """
+    env = {
+        **os.environ,
+        "CLI_ADAPTER_PROJECT_ROOT": REPO_ROOT,
+        "CLI_ADAPTER_SETTINGS": settings_path,
+    }
     cmd = (
         'set -e; '
-        f'export CLI_ADAPTER_PROJECT_ROOT="{REPO_ROOT}"; '
-        f'export CLI_ADAPTER_SETTINGS="{settings_path}"; '
-        f'source "{REPO_ROOT}/lib/cli_adapter.sh" 2>/dev/null; '
+        'source "$CLI_ADAPTER_PROJECT_ROOT/lib/cli_adapter.sh" 2>/dev/null; '
         'get_mainpc_ashigaru_ids'
     )
     proc = subprocess.run(
         ["bash", "-c", cmd],
+        env=env,
         capture_output=True, text=True, timeout=30,
     )
     return proc.returncode, proc.stdout.strip()
@@ -490,6 +498,105 @@ class TestShutsujinPaneIdAssertions:
         # B1 polish: 失敗時の診断メッセージ抜粋を sub-assertion 化
         assert "件数不一致" in src, "parity FATAL diagnostic ('件数不一致') missing"
         assert "原因候補" in src, "parity FATAL guidance ('原因候補') missing"
+
+
+class TestCliAdapterArgvInjectionResistance:
+    """B2 polish: get_mainpc_ashigaru_ids の argv 経由読込 (S1 cycle3 fix) の堅牢性検証.
+
+    旧実装: ``with open('${settings}')`` — shell 展開で Python source に直挿入され、
+    settings がシングルクォートを含むと任意コード注入が成立 (S1 high)。
+    新実装: ``<<'PYEOF' ... with open(sys.argv[1]) ... PYEOF`` — single-quoted heredoc
+    で shell 展開を遮断、argv で path を文字列として渡す。
+
+    本テストは以下の多角的な adversarial 入力で PWNED が立たないことを実証:
+      - シングルクォート + Python コード片
+      - ダブルクォート + Python コード片
+      - 改行 + Python statement
+      - セミコロン + import / sys
+      - heredoc 構造を破壊しようとする path 形 (PYEOF 文字列)
+    """
+
+    @staticmethod
+    def _write_yaml(path: str) -> None:
+        """benign な settings YAML を作成 (関数の正常パス読込を確保)。"""
+        with open(path, "w", encoding="utf-8") as f:
+            f.write("pc_mapping:\n  main_pc:\n    agents: [ashigaru1]\n")
+
+    def _try_evil_path(self, tmp: str, evil_basename: str) -> tuple[int, str]:
+        """tmp 配下に evil_basename で benign YAML を書き、関数を呼出す。
+        OSError (FAT 等で許可されない文字) なら別の equivalent パターンを試す。"""
+        evil = os.path.join(tmp, evil_basename)
+        try:
+            self._write_yaml(evil)
+        except OSError:
+            # ファイル名として許可されない場合は、benign パスで関数を呼出して
+            # heredoc/shell quoting レイヤーの保護を最低限検証する。
+            evil = os.path.join(tmp, "harmless.yaml")
+            self._write_yaml(evil)
+        return invoke_get_mainpc_ashigaru_ids(evil)
+
+    def test_argv_single_quote_plus_python_no_pwned(self):
+        """シングルクォートで Python source 注入を試みても PWNED は出ない。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            rc, out = self._try_evil_path(tmp, "''; print('PWNED'); '#.yaml")
+            assert "PWNED" not in out, f"argv injection succeeded: {out!r}"
+            assert rc == 0
+
+    def test_argv_double_quote_plus_python_no_pwned(self):
+        """ダブルクォート + Python statement でも PWNED は出ない。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            rc, out = self._try_evil_path(tmp, '""; print("PWNED"); "#.yaml')
+            assert "PWNED" not in out
+            assert rc == 0
+
+    def test_argv_semicolon_plus_import_no_pwned(self):
+        """セミコロン + import 試行でも Python で文字列として扱われ PWNED 不在。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            rc, out = self._try_evil_path(tmp, "x.yaml; import os; os.system('echo PWNED')")
+            assert "PWNED" not in out
+            assert rc == 0
+
+    def test_argv_heredoc_terminator_no_pwned(self):
+        """path に heredoc 終端子 PYEOF を含めても heredoc が破壊されない
+        (single-quoted heredoc により shell 展開なし、Python source に展開なし)。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            rc, out = self._try_evil_path(tmp, "x.yaml\nPYEOF\nprint('PWNED')\n")
+            assert "PWNED" not in out
+            assert rc == 0
+
+    def test_argv_dollar_paren_command_substitution_no_pwned(self):
+        """path 文字列に $(...) 形式が含まれても、関数内 "$settings" が
+        既に変数展開済みのため二次展開されず、PWNED 不在。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            rc, out = self._try_evil_path(tmp, 'x.yaml$(echo PWNED).yaml')
+            assert "PWNED" not in out
+            assert rc == 0
+
+    def test_python_source_uses_argv_only_not_shell_var(self):
+        """ソースレベル静的検証: get_mainpc_ashigaru_ids 内 Python ブロックが
+        sys.argv[1] のみで path を取得し、shell 変数 ${settings} の参照が
+        Python source に存在しないこと (S1 cycle3 fix の固定化)。
+
+        単純な文字列マッチでなく、関数本体を抽出した上で「argv[1] 経由」と
+        「shell 展開された path 文字列リテラル」が両立しないことを検証。"""
+        src = _read("lib/cli_adapter.sh")
+        match = re.search(r"^get_mainpc_ashigaru_ids\(\).*?\n\}", src, re.DOTALL | re.MULTILINE)
+        assert match, "get_mainpc_ashigaru_ids 関数が見つからぬ"
+        body = match.group(0)
+        # heredoc は single-quoted PYEOF (展開抑止)
+        assert "<<'PYEOF'" in body, "single-quoted heredoc が必須 (展開遮断)"
+        # Python source は sys.argv[1] を使う
+        assert "sys.argv[1]" in body
+        # 旧脆弱パターン (path リテラル展開) が無いこと
+        assert "with open('${settings}')" not in body
+        assert 'with open("${settings}")' not in body
+        # 同じく、heredoc body に ${settings} の参照が無いこと
+        # (PYEOF block を抽出して検査)
+        py_match = re.search(r"<<'PYEOF'.*?\n(.*?)\nPYEOF\s*", body, re.DOTALL)
+        assert py_match, "PYEOF heredoc body が抽出できぬ"
+        py_body = py_match.group(1)
+        assert "${settings}" not in py_body, \
+            "Python heredoc 内に ${settings} 参照が残存 (shell 展開復活リスク)"
 
 
 class TestShutsujinPaneIdRegexBoundary:
