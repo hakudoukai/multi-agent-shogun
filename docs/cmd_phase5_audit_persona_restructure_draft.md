@@ -1,10 +1,15 @@
 # cmd_phase5_audit_persona_restructure_001 (草案)
 
-> **Status**: pending_design_review (= 信長草案、家康 8 観点 review 依頼中、理事長殿明示承認待ち)
+> **Status**: **persona_confirmed_pending_phase1_completion** (= 理事長殿御諾否確定 2026-05-08 09:00、家康 8 観点 review 依頼中)
 > **Drafted by**: 信長 (織田信長) 2026-05-08 08:20 JST
+> **Persona confirmed by**: 理事長殿 2026-05-08 09:00 JST
 > **Parent directive**: 理事長殿 2026-05-08 朝 御命令 (= 「Claude メイン監査が問題の一因」+「(A) 信長案 採用」+「Codex/Gemini = 徳川軍から招聘」)
 > **Pre-conditions**: cmd_phase1_pane_identity_4way_audit_001 完遂 + cmd_phase2_watchdog_registry_001 完遂
 > **Out of scope**: 法令最終総合監査 (= 全機能完成後別 cmd)
+
+## 🎯 理事長殿 確定 persona (= 2026-05-08 09:00)
+- **Gemini 武将 = 服部半蔵 (正成)** — 徳川 16 神将、伊賀忍者頭領
+- **Claude 議長 = 黒田官兵衛 (孝高)** — 戦国軍師代表、信長家中招聘
 
 ---
 
