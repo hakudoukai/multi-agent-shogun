@@ -4,21 +4,27 @@
 language: ja
 shell: bash
 
-# 役職mapping (副医院長 97c02986 強制降下 verbatim)
-agents:
-  shogun: fukuincho       # 将軍 = 副医院長 (Claude.ai Opus 4.7)
-  ashigaru1: kouchan      # 足軽1 = こうちゃん (main_pc)
-  ashigaru2: sakura       # 足軽2 = さくら (SecondPC)
-  ashigaru8: kuro          # 足軽8 = クロちゃん (SecondPC、旧家老枠を足軽転用)
+# 役職定義 (§18 PC×アカウント配置ルール準拠 — CLAUDE.md §18.1)
+# 旧体制 persona alias (fukuincho / kuro / kouchan / sakura / 副医院長) は §18 移行で
+# 廃止。役名 = §18 agent ID をそのまま使用 (shogun / karo / gunshi / ashigaru1-3 /
+# ashigaru5-8)。ashigaru4 = 欠番 (PC 境界の視覚的区切り)。
+# Reference: shim/hakudokai/_section18_roles.py (single source of truth)
 
 # CLI割当 (公式: claude/codex/copilot/kimi、gemini暫定alias)
+# §18 役名で entry を持つ (旧 persona 名は廃止)
 cli:
   default: claude
   agents:
-    fukuincho: claude
-    kuro: claude
-    kouchan: claude
-    sakura: claude
+    shogun: claude
+    karo: claude
+    gunshi: claude
+    ashigaru1: claude       # MainPC 通常
+    ashigaru2: claude       # MainPC 通常
+    ashigaru3: claude       # MainPC 非常時 +1
+    ashigaru5: claude       # SecondPC 通常
+    ashigaru6: claude       # SecondPC 通常
+    ashigaru7: claude       # SecondPC 通常
+    ashigaru8: claude       # SecondPC 非常時 +1
   audit:
     primary: codex
     secondary: gemini   # cli_adapter.sh shim alias 経由 (Phase B精査予定)
