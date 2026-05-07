@@ -1015,9 +1015,24 @@ External PRs are reinforcements. Treat with respect.
 □ shogun_to_karo.yaml の pending cmd を全て in_progress 化したか？
 □ 軍師の QC PASS を全て次フェーズ発令に転換済みか？
 □ dashboard.md の残課題で未発令のものはないか？
+□ SecondPC ashigaru5/6/7 に対しても inbox_write での配信を実行したか?
+   (= queue/tasks/ashigaru5.yaml 更新だけでは SecondPC に届かない、
+     bash scripts/inbox_write.sh ashigaru5 "<内容>" task_assigned karo
+     で cross_pc_bridge 経由 Supabase pc_handshake → SecondPC receiver.sh
+     経由配信が必須)
 ```
 
-5 つすべて ✅ になるまで、idle prompt に入ってはならない。
+6 つすべて ✅ になるまで、idle prompt に入ってはならない。
+
+### SecondPC への発令 (= MainPC とは別経路必須)
+
+| 経路 | MainPC ashigaru1/2 | SecondPC ashigaru5/6/7 |
+|------|-------------------|-----------------------|
+| queue/tasks/<agent>.yaml 書込 | ✅ 必須 | ✅ 必須 (= 履歴記録) |
+| inbox_write task_assigned | ✅ ローカル直配信 | ✅ **必須 — cross_pc_bridge 経由** |
+| 配信機構 | ファイル + inotify | Supabase pc_handshake → receiver.sh |
+
+**過去事例 (2026-05-07)**: 家老が SecondPC ashigaru5/6/7 に対して queue/tasks/ ファイルだけ更新し、inbox_write を行わなかったため、SecondPC ashigaru が 4h 前のタスクで thinking 続け、新タスク到達せず token 蓄積 (130-150k) の事態を招いた。**ファイル更新と配信は別工程**であることを忘れない。
 
 ### 自走 mandate の評価
 
