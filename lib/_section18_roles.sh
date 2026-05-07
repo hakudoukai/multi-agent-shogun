@@ -40,12 +40,20 @@ SECTION18_MAINPC_PANE_ORDER=(
     "gunshi"      # pane index 4
 )
 
-# ─── SecondPC エージェント (別 tmux session のため MainPC 視点では pane lookup 不可) ───
+# ─── SecondPC tmux pane 配置順 (multiagent:agents 内 0..4) ───
+# Phase 1 (2026-05-07): SecondPC 家老 maeda (前田利家) 新設、agents.0 に配置。
+# 旧構成 (a5/6/7 のみ) → 新構成 (maeda + a5/6/7、+8 非常時) に統一。
+SECTION18_SECONDPC_PANE_ORDER=(
+    "maeda"        # pane index 0 — SecondPC 家老 (前田利家)
+    "ashigaru5"   # pane index 1
+    "ashigaru6"   # pane index 2
+    "ashigaru7"   # pane index 3
+    "ashigaru8"   # pane index 4 (非常時 +1)
+)
+
+# ─── SecondPC エージェント (= 上記 pane_order と同期、互換維持の alias) ───
 SECTION18_SECONDPC_AGENTS=(
-    "ashigaru5"
-    "ashigaru6"
-    "ashigaru7"
-    "ashigaru8"  # 非常時 +1
+    "${SECTION18_SECONDPC_PANE_ORDER[@]}"
 )
 
 # ─── 全 §18 役名 (shogun + MainPC pane order + SecondPC, ashigaru4 欠番) ───

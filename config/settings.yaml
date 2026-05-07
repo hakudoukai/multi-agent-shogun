@@ -18,6 +18,7 @@ cli:
     shogun: claude
     karo: claude
     gunshi: claude
+    maeda: claude         # SecondPC 家老 (前田利家) — Phase 1 新設
     ashigaru1: claude       # MainPC 通常
     ashigaru2: claude       # MainPC 通常
     ashigaru3: claude       # MainPC 非常時 +1
@@ -112,7 +113,7 @@ pc_mapping:
     is_local: true
     pc_id: main_pc
   second_pc:
-    agents: [ashigaru5, ashigaru6, ashigaru7, ashigaru8]
+    agents: [maeda, ashigaru5, ashigaru6, ashigaru7, ashigaru8]
     supabase_bridge: true
     pc_id: second_pc
   kuro_desktop:

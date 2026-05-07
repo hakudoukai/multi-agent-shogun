@@ -45,7 +45,7 @@ fi
 
 # ─── idle agent 集計 (= 15分以上 report.yaml が更新されてない) ───
 IDLE_AGENTS=()
-for a in karo gunshi ashigaru1 ashigaru2; do
+for a in karo gunshi ashigaru1 ashigaru2 hideyoshi ieyasu; do
     report="$SCRIPT_DIR/queue/reports/${a}_report.yaml"
     if [ -f "$report" ]; then
         mtime=$(stat -c '%Y' "$report" 2>/dev/null || echo 0)
@@ -58,7 +58,7 @@ done
 
 # SecondPC agent 状況 (best-effort、SSH失敗時は無視)
 if ssh -o ConnectTimeout=5 -o BatchMode=yes hakudokai@192.168.11.47 'true' 2>/dev/null; then
-    for a in ashigaru5 ashigaru6 ashigaru7; do
+    for a in maeda ashigaru5 ashigaru6 ashigaru7; do
         sp_age=$(ssh -o ConnectTimeout=5 -o BatchMode=yes hakudokai@192.168.11.47 \
             "stat -c '%Y' ~/projects/multi-agent-shogun/queue/reports/${a}_report.yaml 2>/dev/null || echo 0" 2>/dev/null)
         sp_age=${sp_age:-0}

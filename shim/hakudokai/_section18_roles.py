@@ -38,8 +38,9 @@ MAINPC_ROLES: tuple[str, ...] = (
     "ashigaru3",
 )
 
-# §18 SecondPC 配置 (通常 3 体 + 非常時 1 体)
+# §18 SecondPC 配置 (Phase 1 2026-05-07 改訂: maeda 新設、通常 4 体 + 非常時 1 体)
 SECONDPC_ROLES: tuple[str, ...] = (
+    "maeda",       # SecondPC 家老 (前田利家) — Phase 1 新設
     "ashigaru5",
     "ashigaru6",
     "ashigaru7",
