@@ -727,6 +727,151 @@ class TestShutsujinAgentIdsParityBoundary:
         assert "MISMATCH" in out
 
 
+class TestShutsujinPaneIdRuntimeAssertion:
+    """T1 polish: pane_id 取得+assertion 実行時テスト (tmux スタブ化).
+
+    shutsujin_departure.sh L623-L646 の pane 構築 + assertion を、tmux 関数を
+    bash の関数定義で stub 化して実行時に検証。実機 tmux 不在環境でも CI 可。
+
+    検証範囲:
+      - 全 pane_id 正常 → 5 panes 構築 + parity OK
+      - 初期 pane_id 異常 (display-message が壊れた応答) → exit 5 + FATAL ログ
+      - split-window が空応答 (エラー) → exit 5 + FATAL ログ
+      - split-window が異常 pane_id 応答 → exit 5 + FATAL ログ
+      - 4 pane しか取れぬ (内部状態破綻、現実には起きにくいが理論的に契約)
+
+    bash 関数 stub による mock は subprocess Mock より shutsujin の挙動を忠実に
+    再現する (shell 関数は同 process 内で同 PATH を共有するため `tmux` 直接置換)。
+    """
+
+    @staticmethod
+    def _harness(tmux_outputs: list) -> tuple[int, str, str]:
+        """pane_id 取得 + assertion 部分を切り出し、tmux を実行可能 stub script に
+        差替えて実行。
+
+        tmux_outputs[0] = display-message の応答 (init pane_id)
+        tmux_outputs[1..N] = split-window の i 回目応答 (i=1..4)
+
+        各応答は文字列 (pane_id) または None (空応答 = exit 0 でも stdout 空)。
+        N < 5 の場合は不足分も空応答扱い。
+
+        stub は実行可能スクリプトとして tmpdir に置き、PATH 先頭に追加する。
+        呼出毎の counter は別ファイルで管理 (subshell `$()` を跨ぐ状態保持のため)。
+        """
+        encoded = "\n".join("" if x is None else str(x) for x in tmux_outputs)
+        tmpdir = tempfile.mkdtemp(prefix="t1_polish_pane_assert_")
+        try:
+            outputs_path = os.path.join(tmpdir, "outputs")
+            counter_path = os.path.join(tmpdir, "counter")
+            stub_path = os.path.join(tmpdir, "tmux")
+            with open(outputs_path, "w", encoding="utf-8") as f:
+                f.write(encoded + "\n")
+            with open(counter_path, "w", encoding="utf-8") as f:
+                f.write("0\n")
+            stub_body = textwrap.dedent(f"""\
+                #!/usr/bin/env bash
+                # tmux stub for T1 polish runtime assertion test
+                idx=$(< {counter_path!r})
+                echo $((idx + 1)) > {counter_path!r}
+                mapfile -t outputs < {outputs_path!r}
+                out="${{outputs[$idx]:-}}"
+                # 空応答時は何も出力しない (実 tmux 失敗時の挙動を模倣)
+                [[ -n "$out" ]] && printf '%s\\n' "$out"
+                exit 0
+                """)
+            with open(stub_path, "w", encoding="utf-8") as f:
+                f.write(stub_body)
+            os.chmod(stub_path, 0o755)
+
+            snippet = textwrap.dedent(r"""
+                set +e
+                export PATH="$STUB_DIR:$PATH"
+
+                # ─── shutsujin_departure.sh L623-L646 を逐語コピー ───
+                PANE_IDS=()
+                _init_pid=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+                if ! [[ "$_init_pid" =~ ^%[0-9]+$ ]]; then
+                    echo "[shutsujin] FATAL: tmux display-message が想定外の pane_id を返した: '$_init_pid'"
+                    echo "  期待形式: %N (例: %0, %5)。tmux バージョン or format 仕様変更を確認されたし。"
+                    exit 5
+                fi
+                PANE_IDS[0]="$_init_pid"
+                for _split_i in 1 2 3 4; do
+                    _new_pid=$(tmux split-window -v -t "${PANE_IDS[$((_split_i-1))]}" -P -F '#{pane_id}')
+                    if [[ -z "$_new_pid" ]] || ! [[ "$_new_pid" =~ ^%[0-9]+$ ]]; then
+                        echo "[shutsujin] FATAL: split-window index $_split_i で想定外の pane_id: '$_new_pid'"
+                        echo "  期待形式: %N (例: %1, %3)。split 失敗 or tmux 仕様変更を確認されたし。"
+                        exit 5
+                    fi
+                    PANE_IDS[$_split_i]="$_new_pid"
+                done
+                if [[ ${#PANE_IDS[@]} -ne 5 ]]; then
+                    echo "[shutsujin] FATAL: expected 5 panes, got ${#PANE_IDS[@]}"
+                    exit 5
+                fi
+                echo "OK: ${PANE_IDS[*]}"
+                exit 0
+            """)
+            env = {**os.environ, "STUB_DIR": tmpdir}
+            result = subprocess.run(
+                ["bash", "-c", snippet],
+                env=env, capture_output=True, text=True, check=False,
+            )
+            return result.returncode, result.stdout, result.stderr
+        finally:
+            import shutil
+            shutil.rmtree(tmpdir, ignore_errors=True)
+
+    def test_all_valid_pane_ids_pass(self):
+        """5 pane 全て valid → exit 0 + OK ログ + 5 件 pane_id 配列。"""
+        rc, out, _ = self._harness(["%0", "%1", "%2", "%3", "%4"])
+        assert rc == 0, f"valid path で FATAL 発火: {out!r}"
+        assert "OK: %0 %1 %2 %3 %4" in out
+
+    def test_invalid_initial_pane_id_fatal(self):
+        """display-message が空応答 → init pane_id assertion で FATAL 発火。"""
+        rc, out, _ = self._harness(["", "%1", "%2", "%3", "%4"])
+        assert rc == 5
+        assert "tmux display-message が想定外の pane_id" in out
+        assert "期待形式: %N" in out
+
+    def test_initial_pane_id_with_garbage(self):
+        """display-message が異常文字列 → init assertion で FATAL。"""
+        rc, out, _ = self._harness(["garbage_output", "%1", "%2", "%3", "%4"])
+        assert rc == 5
+        assert "tmux display-message が想定外の pane_id" in out
+        assert "garbage_output" in out  # 診断に値が含まれる
+
+    def test_split_window_empty_response(self):
+        """split-window i=2 が空応答 → split assertion で FATAL + index 表示。"""
+        rc, out, _ = self._harness(["%0", "%1", "", "%3", "%4"])
+        assert rc == 5
+        assert "split-window index 2" in out
+
+    def test_split_window_malformed_pane_id(self):
+        """split-window i=3 が異常 pane_id → split assertion で FATAL + index 表示。"""
+        rc, out, _ = self._harness(["%0", "%1", "%2", "BAD%3", "%4"])
+        assert rc == 5
+        assert "split-window index 3" in out
+        assert "BAD%3" in out
+
+    def test_split_window_first_failure(self):
+        """split-window 1 回目から空応答 → 即 FATAL (i=1 で停止、後続 split は呼ばれない)。"""
+        rc, out, _ = self._harness(["%0", "", None, None, None])
+        assert rc == 5
+        assert "split-window index 1" in out
+        # 後続 split が走らないため index 2/3/4 のメッセージが出ない
+        assert "split-window index 2" not in out
+        assert "split-window index 3" not in out
+
+    def test_high_pane_id_numbers_accepted(self):
+        """tmux が長期間稼働後に大きな pane_id (%100, %999) を返しても accept される
+        境界。^%[0-9]+$ は数値桁数を制限しないため (tmux 内部 unsigned int)。"""
+        rc, out, _ = self._harness(["%100", "%101", "%102", "%103", "%999"])
+        assert rc == 0
+        assert "OK: %100 %101 %102 %103 %999" in out
+
+
 # ============================================================
 # Test: hakudokai_departure.sh §18 role validation
 # ============================================================
