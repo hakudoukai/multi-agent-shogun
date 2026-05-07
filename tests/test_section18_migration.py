@@ -48,6 +48,90 @@ def _read(rel_path: str) -> str:
 
 
 # ============================================================
+# Shared helpers — D1 polish: settings YAML 生成 / bash eval / pane resolve を
+# モジュールレベルに集約し、複数 TestClass からの重複呼出を解消。
+# ============================================================
+
+
+def make_section18_settings(
+    tmpdir: str,
+    mainpc_agents,
+    secondpc_agents=None,
+) -> str:
+    """テスト用 settings.yaml を tmpdir に作成し、絶対パスを返す。
+
+    pc_mapping.main_pc.agents / pc_mapping.second_pc.agents の最小スキーマで、
+    cli_adapter.sh の get_mainpc_ashigaru_ids が読込可能な形式とする。"""
+    agents_lines = "\n      - ".join(mainpc_agents) if mainpc_agents else ""
+    sp_lines = "\n      - ".join(secondpc_agents or [])
+    path = os.path.join(tmpdir, "settings.yaml")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(textwrap.dedent(f"""\
+            pc_mapping:
+              main_pc:
+                agents:
+                  - {agents_lines}
+              second_pc:
+                agents:
+                  - {sp_lines if sp_lines else 'placeholder'}
+            """))
+    return path
+
+
+def invoke_get_mainpc_ashigaru_ids(settings_path: str) -> tuple[int, str]:
+    """source lib/cli_adapter.sh; CLI_ADAPTER_SETTINGS=path get_mainpc_ashigaru_ids.
+
+    Returns (returncode, stdout_stripped).
+    """
+    cmd = (
+        'set -e; '
+        f'export CLI_ADAPTER_PROJECT_ROOT="{REPO_ROOT}"; '
+        f'export CLI_ADAPTER_SETTINGS="{settings_path}"; '
+        f'source "{REPO_ROOT}/lib/cli_adapter.sh" 2>/dev/null; '
+        'get_mainpc_ashigaru_ids'
+    )
+    proc = subprocess.run(
+        ["bash", "-c", cmd],
+        capture_output=True, text=True, timeout=30,
+    )
+    return proc.returncode, proc.stdout.strip()
+
+
+def bash_eval_section18(snippet: str) -> str:
+    """bash で snippet を実行し、stdout を返す (lib/_section18_roles.sh source 済み)."""
+    helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
+    cmd = ["bash", "-c", f'source "{helper}"; {snippet}']
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    return result.stdout.strip()
+
+
+def resolve_pane_fallback_section18(agent_id: str, pane_base: int = 0) -> tuple[int, str]:
+    """switch_cli.sh の Phase 2 (固定マッピング) 相当を bash で実行し、(rc, stdout) を返す。
+
+    SecondPC agent → exit 1、MainPC pane agent → "multiagent:agents.<base+idx>"、
+    ashigaru4/shogun → exit 1 (helper 未マッチ)。
+    """
+    helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
+    snippet = textwrap.dedent(
+        f"""
+        source "{helper}"
+        agent_id="{agent_id}"
+        pane_base={pane_base}
+        if section18_is_secondpc_agent "$agent_id"; then
+            exit 1
+        fi
+        if idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
+            echo "multiagent:agents.$((pane_base + idx))"
+            exit 0
+        fi
+        exit 1
+        """
+    )
+    result = subprocess.run(["bash", "-c", snippet], capture_output=True, text=True, check=False)
+    return result.returncode, result.stdout.strip()
+
+
+# ============================================================
 # Test: _section18_roles.py 共通定義の整合性
 # ============================================================
 
@@ -320,50 +404,21 @@ class TestCliAdapterMainPCHelper:
 
 
 class TestCliAdapterRuntime:
-    """get_mainpc_ashigaru_ids を実 bash で実行し、各種 input を検証 (cycle2 TS1 解消)。"""
+    """get_mainpc_ashigaru_ids を実 bash で実行し、各種 input を検証 (cycle2 TS1 解消)。
 
-    @staticmethod
-    def _make_settings(tmpdir: str, mainpc_agents, secondpc_agents=None) -> str:
-        """テスト用 settings.yaml を tmpdir に作成し、パスを返す。"""
-        agents_lines = "\n      - ".join(mainpc_agents) if mainpc_agents else ""
-        sp_lines = "\n      - ".join(secondpc_agents or [])
-        path = os.path.join(tmpdir, "settings.yaml")
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(textwrap.dedent(f"""\
-                pc_mapping:
-                  main_pc:
-                    agents:
-                      - {agents_lines}
-                  second_pc:
-                    agents:
-                      - {sp_lines if sp_lines else 'placeholder'}
-                """))
-        return path
-
-    def _invoke(self, settings_path: str) -> tuple[int, str]:
-        """source lib/cli_adapter.sh; CLI_ADAPTER_SETTINGS=path get_mainpc_ashigaru_ids."""
-        cmd = (
-            'set -e; '
-            f'export CLI_ADAPTER_PROJECT_ROOT="{REPO_ROOT}"; '
-            f'export CLI_ADAPTER_SETTINGS="{settings_path}"; '
-            f'source "{REPO_ROOT}/lib/cli_adapter.sh" 2>/dev/null; '
-            'get_mainpc_ashigaru_ids'
-        )
-        proc = subprocess.run(
-            ["bash", "-c", cmd],
-            capture_output=True, text=True, timeout=30,
-        )
-        return proc.returncode, proc.stdout.strip()
+    settings YAML 生成 / 関数呼出は module-level helper
+    (make_section18_settings / invoke_get_mainpc_ashigaru_ids) に集約済 (D1 polish)。
+    """
 
     def test_normal_settings_returns_mainpc_subset(self):
         """通常 settings.yaml で ashigaru1/2/3 のみ返す。"""
         with tempfile.TemporaryDirectory() as tmp:
-            path = self._make_settings(
+            path = make_section18_settings(
                 tmp,
                 ["shogun", "karo", "gunshi", "ashigaru1", "ashigaru2", "ashigaru3"],
                 ["ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"],
             )
-            rc, out = self._invoke(path)
+            rc, out = invoke_get_mainpc_ashigaru_ids(path)
             assert rc == 0
             assert out == "ashigaru1 ashigaru2 ashigaru3"
 
@@ -373,11 +428,11 @@ class TestCliAdapterRuntime:
         逆に main_pc.agents に SecondPC ashigaru を意図的に入れた場合の挙動を確認。"""
         with tempfile.TemporaryDirectory() as tmp:
             # main_pc に意図的に ashigaru5 (SecondPC role) を混入
-            path = self._make_settings(
+            path = make_section18_settings(
                 tmp,
                 ["karo", "ashigaru1", "ashigaru2", "ashigaru5"],
             )
-            rc, out = self._invoke(path)
+            rc, out = invoke_get_mainpc_ashigaru_ids(path)
             # 関数は pc_mapping.main_pc.agents をそのまま読む。
             # ashigaru5 が含まれた状態で返される (shutsujin 側の §18 ガードで abort される設計)。
             assert rc == 0
@@ -387,7 +442,7 @@ class TestCliAdapterRuntime:
 
     def test_missing_settings_returns_fallback(self):
         """存在しない settings パスでもフォールバックが返り、shell が落ちない。"""
-        rc, out = self._invoke("/nonexistent/path/settings.yaml")
+        rc, out = invoke_get_mainpc_ashigaru_ids("/nonexistent/path/settings.yaml")
         assert rc == 0
         assert out == "ashigaru1 ashigaru2 ashigaru3"
 
@@ -406,7 +461,7 @@ class TestCliAdapterRuntime:
                 evil = os.path.join(tmp, "harmless.yaml")
                 with open(evil, "w", encoding="utf-8") as f:
                     f.write("pc_mapping:\n  main_pc:\n    agents: [ashigaru1]\n")
-            rc, out = self._invoke(evil)
+            rc, out = invoke_get_mainpc_ashigaru_ids(evil)
             # 注入が成立した場合 stdout に "PWNED" が出る → 出ないことが要件
             assert "PWNED" not in out
             assert rc == 0
@@ -586,30 +641,26 @@ class TestKuroDesktopArchived:
 # ============================================================
 
 class TestSection18ShellHelper:
-    """lib/_section18_roles.sh が Python 版と同一定義を提供することを検証。"""
+    """lib/_section18_roles.sh が Python 版と同一定義を提供することを検証。
 
-    def _bash_eval(self, snippet: str) -> str:
-        """bash で snippet を実行し、stdout を返す (helper を source 済み)."""
-        helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
-        cmd = ["bash", "-c", f'source "{helper}"; {snippet}']
-        result = subprocess.run(cmd, capture_output=True, text=True, check=False)
-        return result.stdout.strip()
+    bash 実行は module-level helper bash_eval_section18 経由 (D1 polish)。
+    """
 
     def test_helper_file_exists(self):
         helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
         assert os.path.exists(helper), "lib/_section18_roles.sh が存在せぬ"
 
     def test_mainpc_pane_order_matches_section18(self):
-        out = self._bash_eval('echo "${SECTION18_MAINPC_PANE_ORDER[@]}"')
+        out = bash_eval_section18('echo "${SECTION18_MAINPC_PANE_ORDER[@]}"')
         # MainPC pane 0..4: karo / ashigaru1 / ashigaru2 / ashigaru3 / gunshi
         assert out.split() == ["karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi"]
 
     def test_secondpc_agents_matches_section18(self):
-        out = self._bash_eval('echo "${SECTION18_SECONDPC_AGENTS[@]}"')
+        out = bash_eval_section18('echo "${SECTION18_SECONDPC_AGENTS[@]}"')
         assert out.split() == ["ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"]
 
     def test_all_roles_includes_shogun_and_excludes_ashigaru4(self):
-        out = self._bash_eval('echo "${SECTION18_ALL_ROLES[@]}"')
+        out = bash_eval_section18('echo "${SECTION18_ALL_ROLES[@]}"')
         roles = out.split()
         assert "shogun" in roles
         assert "ashigaru4" not in roles
@@ -619,12 +670,12 @@ class TestSection18ShellHelper:
 
     def test_is_secondpc_agent_recognises_ashigaru5_to_8(self):
         for ai in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
-            out = self._bash_eval(f'section18_is_secondpc_agent {ai} && echo YES || echo NO')
+            out = bash_eval_section18(f'section18_is_secondpc_agent {ai} && echo YES || echo NO')
             assert out == "YES", f"{ai} should be SecondPC"
 
     def test_is_secondpc_agent_rejects_mainpc_and_ashigaru4(self):
         for ai in ("karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi", "shogun", "ashigaru4"):
-            out = self._bash_eval(f'section18_is_secondpc_agent {ai} && echo YES || echo NO')
+            out = bash_eval_section18(f'section18_is_secondpc_agent {ai} && echo YES || echo NO')
             assert out == "NO", f"{ai} must NOT be SecondPC"
 
     def test_mainpc_pane_index_returns_expected_values(self):
@@ -635,40 +686,20 @@ class TestSection18ShellHelper:
             ("ashigaru3", "3"),
             ("gunshi", "4"),  # B1/R1 fix: gunshi は pane index 4
         ]:
-            out = self._bash_eval(f'section18_mainpc_pane_index {ai}')
+            out = bash_eval_section18(f'section18_mainpc_pane_index {ai}')
             assert out == expected, f"{ai} expected pane index {expected}, got {out}"
 
     def test_mainpc_pane_index_rejects_secondpc_and_gap(self):
         for ai in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8", "ashigaru4", "shogun"):
-            out = self._bash_eval(f'section18_mainpc_pane_index {ai} && echo OK || echo NG')
+            out = bash_eval_section18(f'section18_mainpc_pane_index {ai} && echo OK || echo NG')
             assert out == "NG", f"{ai} must not have a MainPC pane index"
 
 
 class TestSwitchCliCycle2:
-    """switch_cli.sh resolve_pane の §18 fallback 修正を検証 (B1/R1 + B2/R2)."""
+    """switch_cli.sh resolve_pane の §18 fallback 修正を検証 (B1/R1 + B2/R2).
 
-    def _resolve_pane_fallback(self, agent_id: str, pane_base: int = 0) -> tuple[int, str]:
-        """switch_cli.sh の Phase 2 (固定マッピング) 相当を bash で実行し、
-        (exit_code, stdout) を返す。Phase 1 (@agent_id 動的検索) は MainPC tmux
-        が無いとほぼ即時 fallback に落ちるため、本検証で網羅できる。"""
-        helper = os.path.join(REPO_ROOT, "lib", "_section18_roles.sh")
-        snippet = textwrap.dedent(
-            f"""
-            source "{helper}"
-            agent_id="{agent_id}"
-            pane_base={pane_base}
-            if section18_is_secondpc_agent "$agent_id"; then
-                exit 1
-            fi
-            if idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
-                echo "multiagent:agents.$((pane_base + idx))"
-                exit 0
-            fi
-            exit 1
-            """
-        )
-        result = subprocess.run(["bash", "-c", snippet], capture_output=True, text=True, check=False)
-        return result.returncode, result.stdout.strip()
+    bash 経由の resolve は module-level helper resolve_pane_fallback_section18 経由 (D1 polish)。
+    """
 
     def test_mainpc_agents_resolve_to_correct_pane(self):
         """MainPC pane 配置 — gunshi は pane 4 (旧 8 ではない、B1/R1 fix)."""
@@ -680,36 +711,36 @@ class TestSwitchCliCycle2:
             ("gunshi", 0, "multiagent:agents.4"),
         ]
         for agent, pb, expected in cases:
-            rc, out = self._resolve_pane_fallback(agent, pb)
+            rc, out = resolve_pane_fallback_section18(agent, pb)
             assert rc == 0, f"{agent}: 解決失敗 rc={rc}"
             assert out == expected, f"{agent}: expected {expected}, got {out}"
 
     def test_secondpc_agents_explicitly_rejected(self):
         """B2/R2 fix: SecondPC ashigaru5-8 は概念位置を返さず exit 1。"""
         for ai in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
-            rc, out = self._resolve_pane_fallback(ai)
+            rc, out = resolve_pane_fallback_section18(ai)
             assert rc == 1, f"{ai}: SecondPC は exit 1 で reject すべし (got rc={rc})"
             assert out == "", f"{ai}: stdout は空のはず (got {out!r})"
 
     def test_ashigaru4_rejected_as_gap(self):
         """ashigaru4 (欠番) は MainPC でも SecondPC でもない → exit 1。"""
-        rc, out = self._resolve_pane_fallback("ashigaru4")
+        rc, out = resolve_pane_fallback_section18("ashigaru4")
         assert rc == 1
         assert out == ""
 
     def test_shogun_rejected_separate_session(self):
         """shogun は別 tmux session (shogun:0.0) のため multiagent:agents 解決対象外。"""
-        rc, out = self._resolve_pane_fallback("shogun")
+        rc, out = resolve_pane_fallback_section18("shogun")
         assert rc == 1
         assert out == ""
 
     def test_pane_base_offset_only_affects_mainpc(self):
         """pane_base != 0 でも SecondPC は依然 reject される (offset 適用は MainPC のみ)."""
-        rc, out = self._resolve_pane_fallback("karo", pane_base=2)
+        rc, out = resolve_pane_fallback_section18("karo", pane_base=2)
         assert rc == 0 and out == "multiagent:agents.2"
-        rc, out = self._resolve_pane_fallback("gunshi", pane_base=2)
+        rc, out = resolve_pane_fallback_section18("gunshi", pane_base=2)
         assert rc == 0 and out == "multiagent:agents.6"
-        rc, out = self._resolve_pane_fallback("ashigaru5", pane_base=2)
+        rc, out = resolve_pane_fallback_section18("ashigaru5", pane_base=2)
         assert rc == 1 and out == ""
 
     def test_switch_cli_sources_helper(self):
