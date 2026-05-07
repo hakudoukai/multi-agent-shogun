@@ -1184,6 +1184,114 @@ class TestAgentStatusCycle2:
         ), "SecondPC ループから pane_target を空にする呼出が無い"
 
 
+class TestSection18ShellPythonSotDrift:
+    """D1 polish: Python (`shim/hakudokai/_section18_roles.py`) と Shell
+    (`lib/_section18_roles.sh`) の §18 SoT mirror の drift を機械的に検出する.
+
+    ハードコード期待値ではなく、両 SoT を実 runtime で読込んで直接比較。
+    片方を編集してもう片方を更新し忘れると CI で即発覚する仕組み。
+
+    比較契約:
+      - Python MAINPC_ROLES \\ {"shogun"} == Shell SECTION18_MAINPC_PANE_ORDER (集合等価)
+      - Python SECONDPC_ROLES == Shell SECTION18_SECONDPC_AGENTS (順序等価)
+      - Python VALID_ROLES (= MAINPC + SECONDPC) == Shell SECTION18_ALL_ROLES (集合等価)
+      - Python ROLE_TO_PC のキー集合 == Shell SECTION18_ALL_ROLES の集合
+      - 両方とも ashigaru4 を欠番として拒否
+      - 両方とも旧体制名を拒否
+    """
+
+    @staticmethod
+    def _load_python_roles():
+        """Python 版 _section18_roles を import 経由で取得 (副作用最小化)。"""
+        sys.path.insert(0, SHIM_DIR)
+        try:
+            import _section18_roles
+            return _section18_roles
+        finally:
+            sys.path.pop(0)
+
+    @staticmethod
+    def _shell_array(name: str) -> list:
+        """lib/_section18_roles.sh を source した上で配列名 name の内容を返す."""
+        out = bash_eval_section18(f'echo "${{{name}[@]}}"')
+        return out.split()
+
+    def test_mainpc_pane_order_subset_matches_python_mainpc_minus_shogun(self):
+        """Shell SECTION18_MAINPC_PANE_ORDER は Python MAINPC_ROLES から
+        shogun (別 session) を除いた集合に等しい (順序は pane 配置順)。"""
+        py = self._load_python_roles()
+        py_mainpc_pane_set = set(py.MAINPC_ROLES) - {"shogun"}
+        sh_pane_order = self._shell_array("SECTION18_MAINPC_PANE_ORDER")
+        assert set(sh_pane_order) == py_mainpc_pane_set, (
+            f"drift: shell {sh_pane_order} vs python {sorted(py_mainpc_pane_set)}"
+        )
+
+    def test_secondpc_agents_match_python_secondpc(self):
+        """Shell SECTION18_SECONDPC_AGENTS == Python SECONDPC_ROLES (順序保持)。"""
+        py = self._load_python_roles()
+        sh_secondpc = self._shell_array("SECTION18_SECONDPC_AGENTS")
+        assert tuple(sh_secondpc) == tuple(py.SECONDPC_ROLES), (
+            f"drift: shell {sh_secondpc} vs python {list(py.SECONDPC_ROLES)}"
+        )
+
+    def test_all_roles_match_python_valid_roles(self):
+        """Shell SECTION18_ALL_ROLES の集合 == Python VALID_ROLES の集合。"""
+        py = self._load_python_roles()
+        sh_all = self._shell_array("SECTION18_ALL_ROLES")
+        assert set(sh_all) == set(py.VALID_ROLES), (
+            f"drift: shell {sorted(sh_all)} vs python {sorted(py.VALID_ROLES)}"
+        )
+
+    def test_role_to_pc_keys_match_shell_all_roles(self):
+        """Python ROLE_TO_PC のキー集合 == Shell SECTION18_ALL_ROLES の集合。"""
+        py = self._load_python_roles()
+        sh_all = self._shell_array("SECTION18_ALL_ROLES")
+        assert set(py.ROLE_TO_PC.keys()) == set(sh_all), (
+            f"drift: python keys {sorted(py.ROLE_TO_PC.keys())} vs shell {sorted(sh_all)}"
+        )
+
+    def test_ashigaru4_rejected_by_both_sides(self):
+        """両 SoT で ashigaru4 が欠番として除外されている。"""
+        py = self._load_python_roles()
+        sh_all = self._shell_array("SECTION18_ALL_ROLES")
+        assert "ashigaru4" not in py.VALID_ROLES, "Python 側に ashigaru4 残存"
+        assert "ashigaru4" not in sh_all, "Shell 側に ashigaru4 残存"
+
+    def test_old_role_names_absent_from_both(self):
+        """両 SoT で旧体制名が完全廃止 (kuro はファイル名残存可、helper には不在)。"""
+        py = self._load_python_roles()
+        sh_all = self._shell_array("SECTION18_ALL_ROLES")
+        for old in OLD_ROLE_NAMES:
+            assert old not in py.VALID_ROLES, f"Python 側に旧体制名 {old} 残存"
+            assert old not in sh_all, f"Shell 側に旧体制名 {old} 残存"
+
+    def test_role_to_pc_classification_matches_shell_helpers(self):
+        """Python ROLE_TO_PC の分類 (main_pc/second_pc) と Shell helper
+        (section18_is_secondpc_agent / section18_is_mainpc_pane_agent) の
+        判定結果が一致する (shogun は両 helper で false、Python では main_pc)。"""
+        py = self._load_python_roles()
+        for role, pc in py.ROLE_TO_PC.items():
+            sh_secondpc = bash_eval_section18(
+                f'section18_is_secondpc_agent {role} && echo YES || echo NO'
+            )
+            if pc == "second_pc":
+                assert sh_secondpc == "YES", f"{role}: python=second_pc, shell={sh_secondpc}"
+            else:
+                # main_pc 側: SecondPC ではない → shell は NO
+                assert sh_secondpc == "NO", f"{role}: python={pc}, shell secondpc={sh_secondpc}"
+
+    def test_mainpc_pane_index_covers_all_python_mainpc_minus_shogun(self):
+        """Python MAINPC_ROLES (shogun 除く) 全てに対し shell pane_index が解決可能。"""
+        py = self._load_python_roles()
+        for role in py.MAINPC_ROLES:
+            if role == "shogun":
+                continue  # shogun は別 session のため pane index 対象外
+            out = bash_eval_section18(f'section18_mainpc_pane_index {role}')
+            assert out.isdigit(), (
+                f"{role}: Python では MainPC だが shell pane index 解決失敗 (drift)"
+            )
+
+
 class TestRatelimitCheckCycle2:
     """scripts/ratelimit_check.sh の D1 部分対応 (helper 経由 fallback)。"""
 
