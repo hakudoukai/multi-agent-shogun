@@ -48,6 +48,11 @@ if [ "${__INBOX_WATCHER_TESTING__:-}" != "1" ]; then
 
     echo "[$(date)] inbox_watcher started — agent: $AGENT_ID, pane: $PANE_TARGET, cli: $CLI_TYPE" >&2
 
+    # Fix 2026-05-07: 起動時に typing skip counter をクリアする
+    # (= 旧プロセスが skip 5/5 で終了 → 新プロセスが起動瞬間に「skip cap reached」で
+    # FORCE nudge 発動するバグの根本対策。プロセス間の counter 引き継ぎを断つ)
+    rm -f "/tmp/inbox_watcher_typing_skip_${AGENT_ID}" 2>/dev/null
+
     # Fix: CLI starts at welcome screen = idle. Create idle flag so watcher
     # doesn't false-busy deadlock waiting for a stop_hook that never fires.
     if [[ "$CLI_TYPE" == "claude" ]]; then
@@ -751,6 +756,30 @@ session_has_client() {
 #   1. If agent has active inotifywait self-watch → skip (agent wakes itself)
 #   2. If agent is busy (Working) → skip (nudge during Working loses Enter)
 #   3. tmux send-keys (短いnudgeのみ、timeout 5s)
+# ─── Detect if user is currently typing in the pane ───
+# 入力中検出: claude TUI の prompt「❯ <文字>」を capture-pane で確認。
+# 文字が入っている = 理事長殿/エージェントが入力中 → nudge を skip して入力保護。
+# Welcome screen の「Try "..."」suggestion は idle 扱い (実入力ではない)。
+# 連続 N 回 typing で skip された場合、強制 nudge (緊急メッセージが届かない事故防止)。
+is_user_typing() {
+    local pane="$1"
+    local prompt_content
+    prompt_content=$(timeout 3 tmux capture-pane -t "$pane" -p -e -J 2>/dev/null \
+        | sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g; s/\x1b[()][AB012]//g; s/\x1b[78]//g' \
+        | grep -oE '❯[[:space:]]+[^[:space:]].*' \
+        | tail -1)
+    if [ -z "$prompt_content" ]; then
+        return 1  # no prompt input visible — allow nudge
+    fi
+    local content
+    content=$(echo "$prompt_content" | sed 's/^❯[[:space:]]*//')
+    # 「Try "..."」suggestion (welcome画面) は idle 扱い
+    if [[ "$content" =~ ^Try\  ]]; then
+        return 1
+    fi
+    return 0  # typing — defer nudge
+}
+
 send_wakeup() {
     local unread_count="$1"
     local nudge="inbox${unread_count}"
@@ -764,6 +793,26 @@ send_wakeup() {
     if agent_has_self_watch; then
         echo "[$(date)] [SKIP] Agent $AGENT_ID has active self-watch, no nudge needed" >&2
         return 0
+    fi
+
+    # 優先度1.5: 入力中検出 — 理事長殿の入力を nudge で破壊しない (連続skip上限あり)
+    if is_user_typing "$PANE_TARGET"; then
+        local skip_state_file="/tmp/inbox_watcher_typing_skip_${AGENT_ID}"
+        local skip_count
+        skip_count=$(cat "$skip_state_file" 2>/dev/null || echo 0)
+        skip_count=$((skip_count + 1))
+        echo "$skip_count" > "$skip_state_file"
+        # 上限到達 (default 5 = 約 2.5分) で強制 nudge を許可 (緊急メッセージ事故防止)
+        local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+        if [ "$skip_count" -le "$max_typing_skip" ]; then
+            echo "[$(date)] [SKIP] $AGENT_ID is typing in pane — deferring nudge (skip ${skip_count}/${max_typing_skip})" >&2
+            return 0
+        fi
+        echo "[$(date)] [FORCE] $AGENT_ID typing skip cap (${max_typing_skip}) reached — forcing nudge" >&2
+        rm -f "$skip_state_file"
+    else
+        # 入力なくなった → counter リセット
+        rm -f "/tmp/inbox_watcher_typing_skip_${AGENT_ID}" 2>/dev/null
     fi
 
     # 優先度2: Agent busy — nudge送信するとEnterが消失するためスキップ

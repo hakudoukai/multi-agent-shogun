@@ -92,6 +92,27 @@ except Exception:
     # Truncate content for Supabase (max 2000 chars)
     local truncated="${content:0:2000}"
 
+    # JSON encode via python3 (heredoc + argv) — bash 文字列補間では改行/特殊文字が
+    # JSON に直接埋め込まれて Supabase が「0x0a must be escaped」で reject していた。
+    local payload
+    payload=$(python3 - "$truncated" "${local_pc:-main_pc}" "$target_pc" "$target" "$from" "$msg_type" <<'PYEOF'
+import json, sys
+content_truncated, local_pc, target_pc, target_agent, from_agent, msg_type = sys.argv[1:7]
+print(json.dumps({
+    "message_type": "status_update",
+    "from_pc": local_pc,
+    "to_pc": target_pc,
+    "topic": f"cross_pc_inbox_{target_agent}",
+    "content": f"[{from_agent}→{target_agent}][{msg_type}] {content_truncated}",
+    "requires_response": False,
+    "priority": "normal",
+    "clinic_id": "hakudoukai_main",
+    "bypass_5round_limit": False,
+    "is_meta_only": False
+}, ensure_ascii=False))
+PYEOF
+)
+
     # INSERT to Supabase for cross-PC delivery
     curl -sS -X POST \
         "${sb_url}/rest/v1/pc_handshake" \
@@ -99,7 +120,7 @@ except Exception:
         -H "apikey: ${sb_key}" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
-        -d "{\"message_type\":\"status_update\",\"from_pc\":\"${local_pc:-main_pc}\",\"to_pc\":\"${target_pc}\",\"topic\":\"cross_pc_inbox_${target}\",\"content\":\"[${from}→${target}][${msg_type}] ${truncated}\",\"requires_response\":false,\"priority\":\"normal\",\"clinic_id\":\"hakudoukai_main\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+        --data-binary "$payload" \
         2>/dev/null \
         && echo "[inbox_write] cross-PC bridge: ${target} → ${target_pc} via Supabase" >&2 \
         || echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}" >&2

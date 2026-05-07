@@ -93,12 +93,17 @@ supabase:
 
 # PC-agent mapping (クロスPC配信用)
 # agent が所属するPCを定義。別PCのagentへの inbox_write は Supabase経由で配信。
+# 2026-05-06 §18 PC × アカウント配置ルール準拠 (CLAUDE.md §18.1):
+#   MainPC (sasebo@sasebo.or.jp): shogun + karo + gunshi + ashigaru1+2 [+3 非常時]
+#   SecondPC (hakudoukai@gmail.com): ashigaru5+6+7 [+8 非常時]
+#   足軽4 = 欠番 (PC 境界の視覚的区切り)
 pc_mapping:
   main_pc:
-    agents: [shogun, ashigaru1, ashigaru3, ashigaru4, ashigaru5, ashigaru6, ashigaru7, gunshi, fukuincho]
+    agents: [shogun, karo, gunshi, ashigaru1, ashigaru2, ashigaru3]
     is_local: true
+    pc_id: main_pc
   second_pc:
-    agents: [ashigaru2, ashigaru8]
+    agents: [ashigaru5, ashigaru6, ashigaru7, ashigaru8]
     supabase_bridge: true
     pc_id: second_pc
   kuro_desktop:

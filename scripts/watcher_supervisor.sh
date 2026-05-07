@@ -38,6 +38,12 @@ start_watcher_if_missing() {
     local log_file="$3"
     local cli
 
+    # Per-agent disable flag (ex: ~/.openclaw/disable_inbox_watcher_shogun)
+    # supervisor が watcher を再起動しないようにする (= disable flag 永続尊重)
+    if [ -f "$HOME/.openclaw/disable_inbox_watcher_${agent}" ]; then
+        return 0
+    fi
+
     ensure_inbox_file "$agent"
     if ! pane_exists "$pane"; then
         return 0
