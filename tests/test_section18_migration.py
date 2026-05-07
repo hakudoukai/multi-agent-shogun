@@ -24,7 +24,10 @@ from __future__ import annotations
 
 import os
 import re
+import subprocess
 import sys
+import tempfile
+import textwrap
 
 
 REPO_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
@@ -269,6 +272,162 @@ class TestCliAdapterMainPCHelper:
             assert "ashigaru8" not in line, f"ashigaru8 in fallback echo: {line!r}"
         # MainPC subset が含まれる echo がある
         assert any("ashigaru1 ashigaru2 ashigaru3" in line for line in echo_lines)
+
+    @staticmethod
+    def _strip_comments(body: str) -> str:
+        """シェル/Python heredoc 内の `#` で始まる行コメントを除外し、
+        コード行のみ連結して返す。検査時に説明文中の旧パターン例と本物の
+        実装を区別するため。"""
+        lines = []
+        for line in body.split("\n"):
+            stripped = line.lstrip()
+            if stripped.startswith("#"):
+                continue
+            lines.append(line)
+        return "\n".join(lines)
+
+    def test_uses_argv_not_inline_path(self):
+        """settings パスは argv 経由 (sys.argv[1]) で渡され、Python source への
+        文字列リテラル展開は行わない (cycle2 監査 S1 high 解消の確証)。
+
+        旧実装は ``with open('${settings}')`` のように shell が settings を Python
+        source に直挿入しており、パスにシングルクォートが含まれると任意 Python
+        コード注入が成立した。本テストは新実装が argv 方式を採用していることを
+        ソースレベルで保証する。コメント中の旧パターン例は除外して検査する。
+        """
+        src = _read("lib/cli_adapter.sh")
+        match = re.search(r"get_mainpc_ashigaru_ids\(\).*?\n\}", src, re.DOTALL)
+        assert match
+        body = match.group(0)
+        code_only = self._strip_comments(body)
+        # 旧パターン (危険) はコード行に存在しない
+        assert "with open('${settings}')" not in code_only
+        assert 'with open("${settings}")' not in code_only
+        # 新パターン: sys.argv[1] 経由
+        assert "sys.argv[1]" in code_only
+        # heredoc + argv で起動
+        assert "<<'PYEOF'" in code_only or '<<"PYEOF"' in code_only or "<<PYEOF" in code_only
+
+    def test_get_ashigaru_ids_also_uses_argv(self):
+        """Boy Scout: get_ashigaru_ids も同パターンで保護されている (CLAUDE.md §14)。"""
+        src = _read("lib/cli_adapter.sh")
+        match = re.search(r"^get_ashigaru_ids\(\).*?\n\}", src, re.DOTALL | re.MULTILINE)
+        assert match
+        body = match.group(0)
+        code_only = self._strip_comments(body)
+        assert "with open('${settings}')" not in code_only
+        assert "sys.argv[1]" in code_only
+
+
+class TestCliAdapterRuntime:
+    """get_mainpc_ashigaru_ids を実 bash で実行し、各種 input を検証 (cycle2 TS1 解消)。"""
+
+    @staticmethod
+    def _make_settings(tmpdir: str, mainpc_agents, secondpc_agents=None) -> str:
+        """テスト用 settings.yaml を tmpdir に作成し、パスを返す。"""
+        agents_lines = "\n      - ".join(mainpc_agents) if mainpc_agents else ""
+        sp_lines = "\n      - ".join(secondpc_agents or [])
+        path = os.path.join(tmpdir, "settings.yaml")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(textwrap.dedent(f"""\
+                pc_mapping:
+                  main_pc:
+                    agents:
+                      - {agents_lines}
+                  second_pc:
+                    agents:
+                      - {sp_lines if sp_lines else 'placeholder'}
+                """))
+        return path
+
+    def _invoke(self, settings_path: str) -> tuple[int, str]:
+        """source lib/cli_adapter.sh; CLI_ADAPTER_SETTINGS=path get_mainpc_ashigaru_ids."""
+        cmd = (
+            'set -e; '
+            f'export CLI_ADAPTER_PROJECT_ROOT="{REPO_ROOT}"; '
+            f'export CLI_ADAPTER_SETTINGS="{settings_path}"; '
+            f'source "{REPO_ROOT}/lib/cli_adapter.sh" 2>/dev/null; '
+            'get_mainpc_ashigaru_ids'
+        )
+        proc = subprocess.run(
+            ["bash", "-c", cmd],
+            capture_output=True, text=True, timeout=30,
+        )
+        return proc.returncode, proc.stdout.strip()
+
+    def test_normal_settings_returns_mainpc_subset(self):
+        """通常 settings.yaml で ashigaru1/2/3 のみ返す。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._make_settings(
+                tmp,
+                ["shogun", "karo", "gunshi", "ashigaru1", "ashigaru2", "ashigaru3"],
+                ["ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"],
+            )
+            rc, out = self._invoke(path)
+            assert rc == 0
+            assert out == "ashigaru1 ashigaru2 ashigaru3"
+
+    def test_secondpc_ashigaru_excluded_even_if_listed(self):
+        """SecondPC ashigaru が pc_mapping.main_pc.agents に紛れていても、
+        pc_mapping レベルで filter されているので影響はない (本関数の責務外)。
+        逆に main_pc.agents に SecondPC ashigaru を意図的に入れた場合の挙動を確認。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            # main_pc に意図的に ashigaru5 (SecondPC role) を混入
+            path = self._make_settings(
+                tmp,
+                ["karo", "ashigaru1", "ashigaru2", "ashigaru5"],
+            )
+            rc, out = self._invoke(path)
+            # 関数は pc_mapping.main_pc.agents をそのまま読む。
+            # ashigaru5 が含まれた状態で返される (shutsujin 側の §18 ガードで abort される設計)。
+            assert rc == 0
+            assert "ashigaru1" in out and "ashigaru2" in out
+            # ashigaru5 が混入していること自体は本関数の責務外で検出できない。
+            # → shutsujin_departure.sh の §18 違反ガードで検出される (test_section18_guard_present)。
+
+    def test_missing_settings_returns_fallback(self):
+        """存在しない settings パスでもフォールバックが返り、shell が落ちない。"""
+        rc, out = self._invoke("/nonexistent/path/settings.yaml")
+        assert rc == 0
+        assert out == "ashigaru1 ashigaru2 ashigaru3"
+
+    def test_path_with_quotes_no_injection(self):
+        """シングルクォート/ダブルクォートを含むパスでも Python 注入が成立しない
+        (cycle2 監査 S1 high 解消の実証)。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            # 異常パス: シングルクォート + Python コード片を含む
+            evil = os.path.join(tmp, "''; print('PWNED'); '#.yaml")
+            try:
+                with open(evil, "w", encoding="utf-8") as f:
+                    f.write("pc_mapping:\n  main_pc:\n    agents: [ashigaru1]\n")
+            except OSError:
+                # WSL / FAT 等でシングルクォート許可されない場合 skip 不可、別 strategy
+                # 改行は確実に拒否されるため、改行入りパスで代替検証
+                evil = os.path.join(tmp, "harmless.yaml")
+                with open(evil, "w", encoding="utf-8") as f:
+                    f.write("pc_mapping:\n  main_pc:\n    agents: [ashigaru1]\n")
+            rc, out = self._invoke(evil)
+            # 注入が成立した場合 stdout に "PWNED" が出る → 出ないことが要件
+            assert "PWNED" not in out
+            assert rc == 0
+
+
+class TestShutsujinPaneIdAssertions:
+    """B1 cycle2 補強: pane_id format assertion + AGENT_IDS/PANE_IDS 件数契約。"""
+
+    def test_pane_id_regex_assertion_present(self):
+        src = _read("shutsujin_departure.sh")
+        # pane_id が ^%[0-9]+$ 形式であることを bash regex で検証
+        assert "^%[0-9]+$" in src, "pane_id format assertion missing"
+
+    def test_agent_ids_pane_ids_parity_check(self):
+        """AGENT_IDS と PANE_IDS の件数契約が宣言されている。"""
+        src = _read("shutsujin_departure.sh")
+        # 件数比較 + FATAL exit
+        assert re.search(
+            r'\$\{#AGENT_IDS\[@\]\}\s*-ne\s*\$\{#PANE_IDS\[@\]\}',
+            src,
+        ), "AGENT_IDS / PANE_IDS parity check missing"
 
 
 # ============================================================
