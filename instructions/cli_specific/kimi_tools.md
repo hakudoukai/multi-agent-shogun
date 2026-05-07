@@ -63,7 +63,7 @@ Kimi CLI uses a single-axis approval model (simpler than Codex's two-axis sandbo
 - Timeout controls with error classification (retryable vs non-retryable)
 - Exponential backoff retry logic in KimiSoul engine
 
-**Shogun system usage**: Ashigaru run with `--yolo` for unattended operation.
+**信長 system usage**: Ashigaru run with `--yolo` for unattended operation.
 
 ## Memory / State Management
 
@@ -210,9 +210,9 @@ Created via CreateSubagent tool:
 | LaborMarket (subagent registry) | **Isolated** | **Shared** |
 | Approval system | Shared (via `approval.share()`) | Shared |
 
-### Comparison with Shogun System
+### Comparison with 信長 System
 
-| Aspect | Shogun System | Kimi Agent Swarm |
+| Aspect | 信長 System | Kimi Agent Swarm |
 |--------|--------------|-----------------|
 | Execution model | tmux panes (separate processes) | In-process (single Python process) |
 | Agent count | 10 (shogun + karo + 8 ashigaru) | Up to 100 (claimed) |
@@ -220,7 +220,7 @@ Created via CreateSubagent tool:
 | Isolation | Full OS-level (separate tmux panes) | Python-level (separate KimiSoul instances) |
 | Recovery | /clear + CLAUDE.md auto-load | Checkpoint/DenwaRenji (time travel) |
 | CLI independence | Each agent runs own CLI instance | Single CLI, multiple internal agents |
-| Orchestration | Karo (manager agent) | Main agent auto-delegates |
+| Orchestration | 家老 (manager agent) | Main agent auto-delegates |
 
 **Key insight**: Kimi's Agent Swarm is complementary, not competing. It could run *inside* a single ashigaru's tmux pane, providing sub-delegation within that agent.
 
@@ -234,7 +234,7 @@ Unique feature: AI can "send messages to its past self" to correct course. Inter
 2. **Session resume**: `--continue` to resume, `--session <id>` for specific sessions
 3. **Checkpoint system**: DenwaRenji allows state reversion
 
-### Shogun System Recovery (Kimi Ashigaru)
+### 信長 System Recovery (Kimi Ashigaru)
 
 ```
 Step 1: AGENTS.md is auto-loaded (contains recovery procedure)

@@ -10,13 +10,13 @@ bash scripts/inbox_write.sh <target_agent> "<message>" <type> <from>
 
 Examples:
 ```bash
-# Shogun → Karo
+# 信長 → 家老
 bash scripts/inbox_write.sh karo "cmd_048を書いた。実行せよ。" cmd_new shogun
 
-# Ashigaru → Karo
+# Ashigaru → 家老
 bash scripts/inbox_write.sh karo "足軽5号、任務完了。報告YAML確認されたし。" report_received ashigaru5
 
-# Karo → Ashigaru
+# 家老 → Ashigaru
 bash scripts/inbox_write.sh ashigaru3 "タスクYAMLを読んで作業開始せよ。" task_assigned karo
 ```
 
@@ -35,7 +35,7 @@ The nudge is minimal: `inboxN` (e.g. `inbox3` = 3 unread). That's it.
 **Agent reads the inbox file itself.** Message content never travels through tmux — only a short wake-up signal.
 
 Safety note (shogun):
-- If the Shogun pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.
+- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.
 - Escalation keystrokes (`Escape×2`, context reset, `C-u`) must be suppressed for shogun to avoid clobbering human input.
 
 Special cases (CLI commands sent via `tmux send-keys`):
@@ -85,10 +85,10 @@ you will be stuck idle until the next nudge escalation or task reassignment.
 
 ## Redo Protocol
 
-When Karo determines a task needs to be redone:
+When 家老 determines a task needs to be redone:
 
-1. Karo writes new task YAML with new task_id (e.g., `subtask_097d` → `subtask_097d2`), adds `redo_of` field
-2. Karo sends `clear_command` type inbox message (NOT `task_assigned`)
+1. 家老 writes new task YAML with new task_id (e.g., `subtask_097d` → `subtask_097d2`), adds `redo_of` field
+2. 家老 sends `clear_command` type inbox message (NOT `task_assigned`)
 3. inbox_watcher delivers context reset to the agent（Claude Code: `/clear`, Codex: `/new`）→ session reset
 4. Agent recovers via Session Start procedure, reads new task YAML, starts fresh
 
@@ -98,9 +98,9 @@ Race condition is eliminated: context reset wipes old context. Agent re-reads YA
 
 | Direction | Method | Reason |
 |-----------|--------|--------|
-| Ashigaru/Gunshi → Karo | Report YAML + inbox_write | File-based notification |
-| Karo → Shogun/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
-| Karo → Gunshi | YAML + inbox_write | Strategic task delegation |
+| Ashigaru/家康 → 家老 | Report YAML + inbox_write | File-based notification |
+| 家老 → 信長/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
+| 家老 → 家康 | YAML + inbox_write | Strategic task delegation |
 | Top → Down | YAML + inbox_write | Standard wake-up |
 
 ## File Operation Rule
@@ -119,7 +119,7 @@ bash scripts/inbox_write.sh <target> "<message>" <type> <from>
 
 ### Report Notification Protocol
 
-After writing report YAML, notify Karo:
+After writing report YAML, notify 家老:
 
 ```bash
 bash scripts/inbox_write.sh karo "足軽{N}号、任務完了でござる。報告書を確認されよ。" report_received ashigaru{N}

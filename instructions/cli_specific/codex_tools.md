@@ -46,7 +46,7 @@ Codex uses a two-axis security model: **sandbox mode** (technical capabilities) 
 - `--full-auto`: Sets `--ask-for-approval on-request` + `--sandbox workspace-write` (recommended for unattended work)
 - `--dangerously-bypass-approvals-and-sandbox` / `--yolo`: Bypasses all approvals and sandboxing (unsafe, VM-only)
 
-**Shogun system usage**: Ashigaru run with `--full-auto` or `--yolo` depending on settings.yaml `cli.options.codex.approval_policy`.
+**信長 system usage**: Ashigaru run with `--full-auto` or `--yolo` depending on settings.yaml `cli.options.codex.approval_policy`.
 
 ## Memory / State Management
 
@@ -126,7 +126,7 @@ Codex handles compaction differently from Claude Code:
 2. **Manual**: Use `/compact` to explicitly trigger summarization
 3. **Recovery procedure**: After compaction or `/new`, the AGENTS.md is automatically re-read
 
-### Shogun System Recovery (Codex Ashigaru)
+### 信長 System Recovery (Codex Ashigaru)
 
 ```
 Step 1: AGENTS.md is auto-loaded (contains recovery procedure)
@@ -166,7 +166,7 @@ Step 4: Resume work based on task status
 
 For TUI mode with `--no-alt-screen`:
 - inbox_watcher.sh sends nudge text (e.g., `inbox3`) via tmux send-keys
-- Safety (shogun): if the Shogun pane is active (the Lord is typing), watcher avoids send-keys and uses tmux `display-message` only
+- Safety (shogun): if the 信長 pane is active (the Lord is typing), watcher avoids send-keys and uses tmux `display-message` only
 - After receiving a nudge, the agent reads `queue/inbox/<agent>.yaml` and processes unread messages
 
 For `codex exec` mode:
@@ -214,9 +214,9 @@ codex --model o4-mini                # Reasoning model
 
 Use `/model` to switch models during a session (includes reasoning effort setting when available).
 
-### Shogun System
+### 信長 System
 
-Model is set by `build_cli_command()` in cli_adapter.sh based on settings.yaml. Karo cannot dynamically switch Codex models via inbox (no `/model` send-keys equivalent in exec mode).
+Model is set by `build_cli_command()` in cli_adapter.sh based on settings.yaml. 家老 cannot dynamically switch Codex models via inbox (no `/model` send-keys equivalent in exec mode).
 
 ## Limitations (vs Claude Code)
 

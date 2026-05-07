@@ -1,9 +1,9 @@
 # Task Flow
 
-## Workflow: Shogun → Karo → Ashigaru
+## Workflow: 信長 → 家老 → Ashigaru
 
 ```
-Lord: command → Shogun: write YAML → inbox_write → Karo: decompose → inbox_write → Ashigaru: execute → report YAML → inbox_write → Karo: update dashboard → Shogun: read dashboard
+Lord: command → 信長: write YAML → inbox_write → 家老: decompose → inbox_write → Ashigaru: execute → report YAML → inbox_write → 家老: update dashboard → 信長: read dashboard
 ```
 
 ## Status Reference (Single Source)
@@ -23,7 +23,7 @@ Do NOT invent new status values without updating this section.
 Meanings and allowed/forbidden actions (short):
 
 - `pending`: not acknowledged yet
-  - Allowed: Karo reads and immediately ACKs (`pending → in_progress`)
+  - Allowed: 家老 reads and immediately ACKs (`pending → in_progress`)
   - Forbidden: dispatching subtasks while still `pending`
 
 - `in_progress`: acknowledged and being worked
@@ -44,7 +44,7 @@ The active queue file (`queue/shogun_to_karo.yaml`) must only contain
 `pending` and `in_progress` entries. All other statuses are archived.
 
 When a cmd reaches a terminal status (`done`, `cancelled`, `paused`),
-Karo must move the entire YAML entry to `queue/shogun_to_karo_archive.yaml`.
+家老 must move the entire YAML entry to `queue/shogun_to_karo_archive.yaml`.
 
 | Status | In active file? | Action |
 |--------|----------------|--------|
@@ -64,8 +64,8 @@ Karo must move the entire YAML entry to `queue/shogun_to_karo_archive.yaml`.
 Any other status value (e.g., `completed`, `active`, `superseded`) is
 forbidden. If found during archive, normalize to the canonical set above.
 
-**Karo rule (ack fast)**:
-- The moment Karo starts processing a cmd (after reading it), update that cmd status:
+**家老 rule (ack fast)**:
+- The moment 家老 starts processing a cmd (after reading it), update that cmd status:
   - `pending` → `in_progress`
   - This prevents "nobody is working" confusion and stabilizes escalation logic.
 
@@ -78,7 +78,7 @@ Meanings and allowed/forbidden actions (short):
   - Forbidden: other agents editing that ashigaru YAML
 
 - `blocked`: do NOT start yet (prereqs missing)
-  - Allowed: Karo unblocks by changing to `assigned` when ready, then inbox_write
+  - Allowed: 家老 unblocks by changing to `assigned` when ready, then inbox_write
   - Forbidden: nudging or starting work while `blocked`
 
 - `done`: completed
@@ -94,51 +94,51 @@ Note:
 - Exception (placeholder only): `status: idle` is allowed **only** when `task_id: null` (clean start template written by `shutsujin_departure.sh --clean`).
   - In that state, the file is a placeholder and should be treated as "no task assigned yet".
 
-### Pending Tasks (Karo-managed): `queue/tasks/pending.yaml`
+### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
 
 - `pending_blocked`: holding area; **must not** be assigned yet
-  - Allowed: Karo moves it to an `ashigaruN.yaml` as `assigned` after prerequisites complete
+  - Allowed: 家老 moves it to an `ashigaruN.yaml` as `assigned` after prerequisites complete
   - Forbidden: pre-assigning to ashigaru before ready
 
 ### NTFY Inbox (Lord phone): `queue/ntfy_inbox.yaml`
 
 - `pending`: needs processing
-  - Allowed: Shogun processes and sets `processed`
+  - Allowed: 信長 processes and sets `processed`
   - Forbidden: leaving it pending without reason
 
 - `processed`: processed; keep record
   - Allowed: read-only
   - Forbidden: flipping back to pending without creating a new entry
 
-## Immediate Delegation Principle (Shogun)
+## Immediate Delegation Principle (信長)
 
-**Delegate to Karo immediately and end your turn** so the Lord can input next command.
+**Delegate to 家老 immediately and end your turn** so the Lord can input next command.
 
 ```
-Lord: command → Shogun: write YAML → inbox_write → END TURN
+Lord: command → 信長: write YAML → inbox_write → END TURN
                                         ↓
                                   Lord: can input next
                                         ↓
-                              Karo/Ashigaru: work in background
+                              家老/Ashigaru: work in background
                                         ↓
                               dashboard.md updated as report
 ```
 
-## Event-Driven Wait Pattern (Karo)
+## Event-Driven Wait Pattern (家老)
 
 **After dispatching all subtasks: STOP.** Do not launch background monitors or sleep loops.
 
 ```
 Step 7: Dispatch cmd_N subtasks → inbox_write to ashigaru
 Step 8: check_pending → if pending cmd_N+1, process it → then STOP
-  → Karo becomes idle (prompt waiting)
+  → 家老 becomes idle (prompt waiting)
 Step 9: Ashigaru completes → inbox_write karo → watcher nudges karo
-  → Karo wakes, scans reports, acts
+  → 家老 wakes, scans reports, acts
 ```
 
 **Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CPU waste.
 
-**Karo wakes via**: inbox nudge from ashigaru report, shogun new cmd, or system event. Nothing else.
+**家老 wakes via**: inbox nudge from ashigaru report, shogun new cmd, or system event. Nothing else.
 
 ## "Wake = Full Scan" Pattern
 
@@ -159,7 +159,7 @@ Cross-reference with dashboard.md — process any reports not yet reflected.
 
 ## Foreground Block Prevention (24-min Freeze Lesson)
 
-**Karo blocking = entire army halts.** On 2026-02-06, foreground `sleep` during delivery checks froze karo for 24 minutes.
+**家老 blocking = entire army halts.** On 2026-02-06, foreground `sleep` during delivery checks froze karo for 24 minutes.
 
 **Rule: NEVER use `sleep` in foreground.** After dispatching tasks → stop and wait for inbox wakeup.
 

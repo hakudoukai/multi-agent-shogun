@@ -61,7 +61,7 @@ Don't save: temporary task details (use YAML), file contents (just read them), i
 ## Model Switching
 
 Ashigaru models are set in `config/settings.yaml` and applied at startup.
-Runtime switching is available but rarely needed (Gunshi handles L4+ tasks instead):
+Runtime switching is available but rarely needed (家康 handles L4+ tasks instead):
 
 ```bash
 # Manual override only — not for Bloom-based auto-switching
@@ -69,11 +69,11 @@ bash scripts/inbox_write.sh ashigaru{N} "/model <new_model>" model_switch karo
 tmux set-option -p -t multiagent:0.{N} @model_name '<DisplayName>'
 ```
 
-For Ashigaru: You don't switch models yourself. Karo manages this.
+For Ashigaru: You don't switch models yourself. 家老 manages this.
 
 ## /clear Protocol
 
-For Karo only: Send `/clear` to ashigaru for context reset:
+For 家老 only: Send `/clear` to ashigaru for context reset:
 
 ```bash
 bash scripts/inbox_write.sh ashigaru{N} "タスクYAMLを読んで作業開始せよ。" clear_command karo
