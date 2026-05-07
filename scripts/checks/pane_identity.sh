@@ -12,11 +12,11 @@ set -uo pipefail
 
 # 設計上の期待配置 (§18 通常 4 panes; ashigaru3 は非常時 +1 で agents.4)
 declare -A EXPECTED
-EXPECTED["multiagent:agents.0"]=karo
+EXPECTED["multiagent:agents.0"]=hideyoshi
 EXPECTED["multiagent:agents.1"]=ashigaru1
 EXPECTED["multiagent:agents.2"]=ashigaru2
-EXPECTED["multiagent:agents.3"]=gunshi
-EXPECTED["shogun:main.0"]=shogun
+EXPECTED["multiagent:agents.3"]=ieyasu
+EXPECTED["shogun:main.0"]=nobunaga
 
 violations=0
 warnings=0

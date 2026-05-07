@@ -30,9 +30,9 @@ from __future__ import annotations
 
 # §18 MainPC 配置 (通常 5 体 + 非常時 1 体)
 MAINPC_ROLES: tuple[str, ...] = (
-    "shogun",
-    "karo",
-    "gunshi",
+    "nobunaga",     # 信長 (= 旧 shogun)
+    "hideyoshi",    # 秀吉 (= 旧 karo)
+    "ieyasu",       # 家康 (= 旧 gunshi)
     "ashigaru1",
     "ashigaru2",
     "ashigaru3",
@@ -79,14 +79,15 @@ __all__ = [
 
 # Phase 3 partial (2026-05-07): persona 名乗り変更に伴う新名 → 旧 internal_id alias
 # 完全 rename (= 旧名削除) は別途、明朝着手予定。移行期間中は両名で参照可。
+# Phase 3 full (2026-05-07): 旧名 → 新名 alias (= 移行期間互換)
 ROLE_ALIASES: dict[str, str] = {
-    "nobunaga": "shogun",       # 信長 → shogun (internal_id)
-    "hideyoshi": "karo",         # 秀吉 → karo
-    "ieyasu": "gunshi",          # 家康 → gunshi
-    # maeda は新名のまま (= alias 不要)
+    "shogun": "nobunaga",
+    "karo": "hideyoshi",
+    "gunshi": "ieyasu",
 }
 
 
 def resolve_role(name: str) -> str:
-    """新 persona 名 → 旧 internal_id を解決。旧名はそのまま返す。"""
+    """旧名 (shogun/karo/gunshi) → 新名 (nobunaga/hideyoshi/ieyasu) に解決。
+    新名はそのまま返す。未知名もそのまま返す。"""
     return ROLE_ALIASES.get(name, name)

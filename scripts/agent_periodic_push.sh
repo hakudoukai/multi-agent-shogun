@@ -45,7 +45,7 @@ fi
 
 # ─── idle agent 集計 (= 15分以上 report.yaml が更新されてない) ───
 IDLE_AGENTS=()
-for a in karo gunshi ashigaru1 ashigaru2 hideyoshi ieyasu; do
+for a in hideyoshi ieyasu ashigaru1 ashigaru2; do
     report="$SCRIPT_DIR/queue/reports/${a}_report.yaml"
     if [ -f "$report" ]; then
         mtime=$(stat -c '%Y' "$report" 2>/dev/null || echo 0)

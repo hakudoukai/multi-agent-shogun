@@ -406,7 +406,7 @@ EOF
     done
 
     # 軍師タスクファイルリセット
-    cat > ./queue/tasks/gunshi.yaml << EOF
+    cat > ./queue/tasks/ieyasu.yaml << EOF
 # 軍師専用タスクファイル
 task:
   task_id: null
@@ -429,8 +429,8 @@ EOF
     done
 
     # 軍師レポートファイルリセット
-    cat > ./queue/reports/gunshi_report.yaml << EOF
-worker_id: gunshi
+    cat > ./queue/reports/ieyasu_report.yaml << EOF
+worker_id: ieyasu
 task_id: null
 timestamp: ""
 status: idle
@@ -441,7 +441,7 @@ EOF
     echo "inbox:" > ./queue/ntfy_inbox.yaml
 
     # agent inbox リセット
-    for agent in shogun karo $_ASHIGARU_IDS_STR gunshi; do
+    for agent in nobunaga hideyoshi $_ASHIGARU_IDS_STR ieyasu; do
         echo "messages:" > "./queue/inbox/${agent}.yaml"
     done
 
@@ -655,8 +655,8 @@ for _ai in $_ASHIGARU_IDS_STR; do
     AGENT_IDS+=("$_ai")
     PANE_COLORS+=("blue")
 done
-PANE_LABELS+=("gunshi")
-AGENT_IDS+=("gunshi")
+PANE_LABELS+=("ieyasu")
+AGENT_IDS+=("ieyasu")
 PANE_COLORS+=("yellow")
 
 # §18 整合性契約: AGENT_IDS と PANE_IDS は後段ループで同 index 参照するため
@@ -953,7 +953,7 @@ NINJA_EOF
 
     # inbox ディレクトリ初期化（シンボリックリンク先のLinux FSに作成）
     mkdir -p "$SCRIPT_DIR/logs"
-    for agent in shogun karo $_ASHIGARU_IDS_STR gunshi; do
+    for agent in nobunaga hideyoshi $_ASHIGARU_IDS_STR ieyasu; do
         [ -f "$SCRIPT_DIR/queue/inbox/${agent}.yaml" ] || echo "messages:" > "$SCRIPT_DIR/queue/inbox/${agent}.yaml"
     done
 

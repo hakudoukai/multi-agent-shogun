@@ -33,11 +33,11 @@ _SECTION18_ROLES_LOADED=1
 # pane_base + index で実 pane を解決する。
 # 注意: shogun は別 tmux session (shogun:0.0) のため本配列に含めない。
 SECTION18_MAINPC_PANE_ORDER=(
-    "karo"        # pane index 0
+    "hideyoshi"   # pane index 0 (= 旧 karo)
     "ashigaru1"   # pane index 1
     "ashigaru2"   # pane index 2
     "ashigaru3"   # pane index 3 (非常時 +1)
-    "gunshi"      # pane index 4
+    "ieyasu"      # pane index 4 (= 旧 gunshi)
 )
 
 # ─── SecondPC tmux pane 配置順 (multiagent:agents 内 0..4) ───
@@ -102,13 +102,19 @@ section18_mainpc_pane_index() {
 
 
 # ─── Phase 3 partial (2026-05-07): persona 新名 → 旧 internal_id alias ───
+# Phase 3 full (2026-05-07 deep night): 旧名 → 新名 alias (= 互換のため両方向 resolve)
 declare -A SECTION18_ROLE_ALIASES=(
-    [nobunaga]=shogun
-    [hideyoshi]=karo
-    [ieyasu]=gunshi
+    [shogun]=nobunaga
+    [karo]=hideyoshi
+    [gunshi]=ieyasu
+    # 新名はそのまま返す (= identity)
+    [nobunaga]=nobunaga
+    [hideyoshi]=hideyoshi
+    [ieyasu]=ieyasu
+    [maeda]=maeda
 )
 
-# 新 persona 名 → 旧 internal_id 解決 (旧名はそのまま返す)
+# role 名 → 正規化 (= 旧名なら新名に変換、新名はそのまま、未知名もそのまま)
 section18_resolve_alias() {
     local name="$1"
     local resolved="${SECTION18_ROLE_ALIASES[$name]:-$name}"
