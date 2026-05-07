@@ -45,14 +45,9 @@ except ImportError:
     scan_for_pii = None  # type: ignore
 
 
-# §18 PC×アカウント配置 (理事長殿御指示 2026-05-06):
-# MainPC (sasebo@sasebo.or.jp): shogun/karo/gunshi/ashigaru1-3、SecondPC (hakudoukai@gmail.com): ashigaru5-8。
-# ashigaru4 は欠番 (PC 境界)。旧体制名 (fukuincho/yama/kuro/sakura/kouchan) は §18 移行で廃止。
-VALID_ROLES = (
-    "shogun", "karo", "gunshi",
-    "ashigaru1", "ashigaru2", "ashigaru3",
-    "ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8",
-)
+# §18 PC×アカウント配置 (理事長殿御指示 2026-05-06): 役名定義は _section18_roles に集約。
+# 旧体制名 (fukuincho/yama/kuro/sakura/kouchan) は §18 移行で廃止。
+from _section18_roles import VALID_ROLES  # noqa: E402  (sys.path 設定後の動的 import)
 CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
 
 

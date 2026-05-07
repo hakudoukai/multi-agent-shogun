@@ -46,30 +46,12 @@ except ImportError:
     )
     sys.exit(2)
 
-
-def _build_role_to_pc() -> dict:
-    """§18 PC×アカウント配置 (理事長殿御指示 2026-05-06) に基づく role → pc マッピング。
-
-    MainPC (sasebo@sasebo.or.jp): shogun / karo / gunshi / ashigaru1 / ashigaru2 + 非常時 ashigaru3。
-    SecondPC (hakudoukai@gmail.com): ashigaru5 / ashigaru6 / ashigaru7 + 非常時 ashigaru8。
-    ashigaru4 は欠番 (PC 境界の視覚的区切り)。
-    旧体制名 (fukuincho/yama/kuro/sakura/kouchan) は §18 移行で廃止。
-    """
-    return {
-        "shogun": "main_pc",
-        "karo": "main_pc",
-        "gunshi": "main_pc",
-        "ashigaru1": "main_pc",
-        "ashigaru2": "main_pc",
-        "ashigaru3": "main_pc",
-        "ashigaru5": "second_pc",
-        "ashigaru6": "second_pc",
-        "ashigaru7": "second_pc",
-        "ashigaru8": "second_pc",
-    }
-
-
-ROLE_TO_PC = _build_role_to_pc()
+# §18 PC×アカウント配置 (理事長殿御指示 2026-05-06): 役名→PC マッピングは
+# _section18_roles に集約。旧 _build_role_to_pc は本モジュール read 経由で
+# 共通定義を参照する形へ簡素化 (DRY、複数 watcher 間の不整合バグ防止)。
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, _SCRIPT_DIR)
+from _section18_roles import ROLE_TO_PC  # noqa: E402  (sys.path 設定後の動的 import)
 
 
 def _load_role_json() -> dict:
