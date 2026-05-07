@@ -224,3 +224,4 @@ tests/specs/osato_lms_*
 !android/
 !android/**
 .claude/settings.local.json
+!scripts/agent_periodic_push.sh
