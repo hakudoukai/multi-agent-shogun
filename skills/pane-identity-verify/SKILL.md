@@ -82,7 +82,7 @@ bash scripts/checks/pane_identity.sh
 
 ### 2026-05-07 21:14 — gunshi 重複作成事件
 
-拙者将軍が「multiagent:agents.4 = gunshi」と pane 番号だけで判定し、`tmux split-window` で agents.4 に重複 gunshi pane を新設。実際は agents.3 = gunshi で生存中だった。
+拙者信長が「multiagent:agents.4 = gunshi」と pane 番号だけで判定し、`tmux split-window` で agents.4 に重複 gunshi pane を新設。実際は agents.3 = gunshi で生存中だった。
 
 詳細: [docs/incident_logs/2026-05-07_pane_misidentification.md](../../docs/incident_logs/2026-05-07_pane_misidentification.md)
 

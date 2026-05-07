@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# hakudokai_fukuincho_reverse_watcher.sh — 将軍→副医院長 通知デーモン
+# hakudokai_fukuincho_reverse_watcher.sh — 信長→副医院長 通知デーモン
 #
-# 将軍(shogun)がSupabase pc_handshakeにINSERTしたメッセージを
+# 信長(shogun)がSupabase pc_handshakeにINSERTしたメッセージを
 # 副医院長(fukuincho) CLIのinboxに配信し、tmux nudgeで起こす。
 #
 # 既存の hakudokai_fukuincho_watcher.sh の逆方向版。

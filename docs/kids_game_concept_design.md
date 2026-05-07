@@ -97,7 +97,7 @@ GameCode = 'cavity_hunt'   ← 本概念設計の対象
 | 2 回目以降 | 「まだまだだね」表示は既存仕様（MinigameMenu.tsx 64 行目）。**XP 半減付与は行わない**（passport_xp_log の付与トリガを `cleared=true` に固定し、XP 経済の乱れを避ける）。 |
 | 連敗時 | 1 日 3 連敗で別ゲーム推薦オーバーレイ（過剰挫折防止）。具体オーバーレイは Phase 7 本実装時にデザイン班案を待つ。 |
 
-> **設計判断**: タスク文の「経験値半減付与」案は既存 XP 設計（visit:30 自動 / mission_complete:reward_xp）との整合性を検討した結果、**採用しない**。理由は二重: (a) 敗北報酬は学習動機を逆転させる懸念、(b) 既存 award_xp は単一トリガ前提で書かれており、「半減」分岐を入れると engine API が膨らむ。家老 / 軍師の判断で覆って良い。
+> **設計判断**: タスク文の「経験値半減付与」案は既存 XP 設計（visit:30 自動 / mission_complete:reward_xp）との整合性を検討した結果、**採用しない**。理由は二重: (a) 敗北報酬は学習動機を逆転させる懸念、(b) 既存 award_xp は単一トリガ前提で書かれており、「半減」分岐を入れると engine API が膨らむ。家老 / 家康の判断で覆って良い。
 
 ---
 
@@ -324,14 +324,14 @@ Phase 7-δ（任意・軽〜中）
 
 ---
 
-## 8. Open Items（家老 / 軍師 / 理事長判断待ち）
+## 8. Open Items（家老 / 家康 / 理事長判断待ち）
 
 | # | 事項 | 確認先 | 緊急度 |
 |---|------|--------|--------|
 | O1 | story-master.md と本書の整合性確認（恐竜ヒーロー固有名 / 物語接続） | 家老 + 物語監修 | 高（Phase 7 着手前必須） |
-| O2 | 敗北時 XP 半減を採用するか（本書では非採用案） | 軍師 + 理事長 | 中 |
+| O2 | 敗北時 XP 半減を採用するか（本書では非採用案） | 家康 + 理事長 | 中 |
 | O3 | passport_adventure_mapping のうち cavity_hunt 紐付け対象 procedure_code 一覧の改訂可否 | データ運用班 + 家老 | 中 |
-| O4 | recordGameScore の冪等性（端末側 timestamp / nonce 受入）API 拡張可否 | 軍師 + backend 班 | 低（Phase 7-δ で再評価） |
+| O4 | recordGameScore の冪等性（端末側 timestamp / nonce 受入）API 拡張可否 | 家康 + backend 班 | 低（Phase 7-δ で再評価） |
 | O5 | clinic_id=5 専用 → 多医院展開時の specialty_mode 条件追加 | 家老（T15 連携） | 低（後続 DD） |
 | O6 | 個人情報保護・保護者同意フローへの影響（§7-7） | Gemini 法令監査 | 中（実装前必須） |
 | O7 | target_path 補正：タスク YAML の `/mnt/c/Users/User/projects/...` は SecondPC では存在しないため WSL 経路 `/home/hakudokai/projects/multi-agent-shogun/docs/` に配置した。MainPC へ git 反映時の同期方針を家老が決定。 | 家老 | 中（次タスク発令前） |

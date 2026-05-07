@@ -321,7 +321,7 @@ try:
             raise SystemExit(0)
 
     # Task YAML status guard: skip auto-recovery if task is cancelled or idle.
-    # This prevents restarting a task that Karo intentionally cancelled via clear_command.
+    # This prevents restarting a task that 家老 intentionally cancelled via clear_command.
     task_yaml_path = os.path.join(
         os.path.dirname(os.path.dirname(inbox)), "tasks", f"{agent_id}.yaml"
     )
@@ -353,7 +353,10 @@ try:
     messages.append(msg)
     data["messages"] = messages
 
-    tmp_path = f"{inbox}.tmp.{os.getpid()}"
+    # symlink保護: realpath経由で canonical 解決後に atomic replace
+    # (2026-05-08 split-brain 事故対策、commit dd706ad と同型 fix)
+    inbox_canonical = os.path.realpath(inbox)
+    tmp_path = f"{inbox_canonical}.tmp.{os.getpid()}"
     with open(tmp_path, "w", encoding="utf-8") as f:
         yaml.safe_dump(
             data,
@@ -362,7 +365,7 @@ try:
             allow_unicode=True,
             sort_keys=False,
         )
-    os.replace(tmp_path, inbox)
+    os.replace(tmp_path, inbox_canonical)
     print(msg["id"])
 except Exception:
     # Best-effort safety net only. Primary /clear delivery must not fail here.
@@ -424,7 +427,10 @@ try:
             if not m.get("read", False) and m.get("type") in special_types:
                 m["read"] = True
 
-        tmp_path = f"{inbox}.tmp.{os.getpid()}"
+        # symlink保護: realpath経由で canonical 解決後に atomic replace
+        # (2026-05-08 split-brain 事故対策、commit dd706ad と同型 fix)
+        inbox_canonical = os.path.realpath(inbox)
+        tmp_path = f"{inbox_canonical}.tmp.{os.getpid()}"
         with open(tmp_path, "w", encoding="utf-8") as f:
             yaml.safe_dump(
                 data,
@@ -433,7 +439,7 @@ try:
                 allow_unicode=True,
                 sort_keys=False,
             )
-        os.replace(tmp_path, inbox)
+        os.replace(tmp_path, inbox_canonical)
 
     normal_count = len(unread) - len(specials)
     normal_msgs = [m for m in unread if m.get("type") not in special_types]
@@ -473,7 +479,7 @@ send_cli_command() {
     fi
 
     # Safety: never inject CLI commands into the shogun pane.
-    # Shogun is controlled by the Lord; keystroke injection can clobber human input.
+    # 信長 is controlled by the Lord; keystroke injection can clobber human input.
     if [ "$AGENT_ID" = "shogun" ]; then
         echo "[$(date)] [SKIP] shogun: suppressing CLI command injection ($cmd)" >&2
         return 0
@@ -614,7 +620,7 @@ send_context_reset() {
 
     # Safety: never auto-reset context for command-layer agents.
     # Only ashigaru should receive automatic context resets (clear stale task context).
-    # Shogun (human-controlled), Karo (coordinator state), Gunshi (strategic state)
+    # 信長 (human-controlled), 家老 (coordinator state), 家康 (strategic state)
     # all maintain complex running context that should not be wiped automatically.
     if [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ]; then
         echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent)" >&2
@@ -845,7 +851,7 @@ send_wakeup() {
         return 0
     fi
 
-    # Shogun: deliver nudge via send-keys like other agents.
+    # 信長: deliver nudge via send-keys like other agents.
     # ntfy messages must reach Claude Code directly.
 
     # 優先度3: tmux send-keys（テキストとEnterを分離 — Codex TUI対策）
@@ -991,7 +997,7 @@ process_unread() {
         # Ensure idle flag exists (fast-path recovery)
         touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
         if ! agent_is_busy; then
-            # Shogun: only clear input when pane is not active (Lord is away)
+            # 信長: only clear input when pane is not active (Lord is away)
             if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
                 : # Lord may be typing — skip C-u
             else
@@ -1046,11 +1052,11 @@ for s in data.get('specials', []):
 
     # /clear は Codex で /new へ変換される。再起動直後の取りこぼし防止として
     # 追加 task_assigned を自動投入し、次サイクルで確実に wake-up 可能にする。
-    # 案B+待機: Karo がタスク YAML を cancelled に更新するまでの猶予を確保してから
+    # 案B+待機: 家老 がタスク YAML を cancelled に更新するまでの猶予を確保してから
     # status チェックを行い、cancelled/idle の場合はスキップする。
     # clear_sent（実際に送信）のみauto-recoveryを起動。busy時スキップは対象外。
     if [ "$clear_sent" -eq 1 ]; then
-        # Wait for Karo to update task YAML status (cancellation race condition mitigation).
+        # Wait for 家老 to update task YAML status (cancellation race condition mitigation).
         # send_cli_command already slept 3s for /clear; add 5s more = ~8s total before check.
         sleep 5
         local recovery_id
@@ -1218,7 +1224,7 @@ for s in data.get('specials', []):
         # Clear stale nudge text from input field (Codex CLI prefills last input on idle).
         # Only send C-u when agent is idle — during Working it would be disruptive.
         if ! agent_is_busy; then
-            # Shogun: only clear input when pane is not active (Lord is away)
+            # 信長: only clear input when pane is not active (Lord is away)
             if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
                 : # Lord may be typing — skip C-u
             else

@@ -7,7 +7,7 @@
 | 担当 | ashigaru2 (さくら) |
 | 起草日 | 2026-05-07 |
 | base_commit | 79ac2e74 |
-| ステータス | **draft-002 (概念設計のみ、実装着手禁止) — 軍師レビューPASS反映** |
+| ステータス | **draft-002 (概念設計のみ、実装着手禁止) — 家康レビューPASS反映** |
 | 範囲 | passport 系 RLS policy / clinic_id 検証ロジック / WARN+DLQ 防御パターン / pgTAP テスト戦略 — 設計のみ |
 | 前提ドキュメント | `docs/phase7_passport_integration_concept_draft.md` (cycle1 確定版, commit ca69709) §5.2 を実装視点に具体化 |
 
@@ -297,7 +297,7 @@ engine.record_game_score(member_id=..., game_code=..., score=...)
 
 - silent skip 禁止 — clinic_id mismatch は必ず WARN ログ + DLQ 永続化
 - DLQ 専用テーブル `passport_event_dlq` を新設 (Phase 7 本実装時、本ドラフトは DDL 雛形 §6 に掲載のみ)
-- DLQ エントリは **手動 ack 必須** (人間 or HQ Shogun runbook)
+- DLQ エントリは **手動 ack 必須** (人間 or HQ 信長 runbook)
 - 5 件/小時を超えたら ntfy CRITICAL (§16 自動応答パイプライン連携)
 
 **DLQ レコード構造 (推奨)**:
@@ -539,8 +539,8 @@ cmd_legal_final_audit_passport_001 (仮称、全機能完成後発令)
 
 | 監査 | 主担当 | タイミング | 本ドラフトとの関係 |
 |------|------|----------|------------------|
-| Phase 7 cycle 内 三者監査 | 軍師 + デコポン + ジェミちゃん (システム整合性) | Phase 7 cycle 毎 | 本ドラフトを参照資料として使う |
-| `cmd_passport_rls_audit_001` (推奨別 cmd) | 軍師主導、Codex/Gemini 並走 | 他院展開前 | 本ドラフト §2.4 / §6.2 を発展 |
+| Phase 7 cycle 内 三者監査 | 家康 + デコポン + ジェミちゃん (システム整合性) | Phase 7 cycle 毎 | 本ドラフトを参照資料として使う |
+| `cmd_passport_rls_audit_001` (推奨別 cmd) | 家康主導、Codex/Gemini 並走 | 他院展開前 | 本ドラフト §2.4 / §6.2 を発展 |
 | 法令最終総合監査 | ジェミちゃん主導 | 全機能完成後 | 本ドラフト §7.2 範囲、別 cmd |
 
 ---
@@ -584,8 +584,8 @@ Phase 7 cmd 発令時に家老が必ず確認する項目 (本ドラフト承認
 | 版 | 日時 | 変更内容 | 起草者 |
 |----|------|---------|-------|
 | draft-001 | 2026-05-07 | 初稿。Phase 7 ドラフト確定版 §5.2 を実装視点に具体化。RLS 棚卸し / 検証ポイント / DLQ 設計 / pgTAP 戦略 / 法令最終監査境界を整備 | ashigaru2 |
-| **draft-002** | **2026-05-07** | **軍師レビュー PASS 反映 + 家老最終裁可。改訂 6 項目: (P1) §3.1 V3 を V3a (本当に未 enroll) / V3b (他院 hit) に分離、多院展開時の能動検出強化 (P2) §3.1 V2 lookup を `WHERE patient_no` のみに変更し hit 後 clinic_id 比較で他院 hit 能動検出 (P3) §4.1 DLQ UNIQUE COALESCE に PostgreSQL expression index 性能注記 + 部分 INDEX/別テーブル分離検討余地明記 (P4) §4.4 L4 / §6.2 で `current_setting('app.clinic_id', true)` の NULL フォールバック挙動 (fail-secure) を明記 + ミドルウェア SET 必須を `cmd_passport_rls_audit_001` に組込 (P5) §5.2 RT05b 追加 (3 retry 失敗→DLQ→重複試行→UNIQUE 阻止) (P6) §5.3 で E2E-12.4/.5/.6 内容を 1 行ずつ説明し自己完結性向上 + 二段構成 (RT01-10 単体 / E2E-12.* 統合) を明示。CRITICAL §3.4 強調: Phase 7 cmd 発令時タスク YAML に必須記載 4 点 (engine 5 メソッド引数追加 / PassportRlsError 例外導入 / caller_clinic_id 取得経路確定 / enroll/link_family 整合性) を箇条書き化。** | **ashigaru2** |
+| **draft-002** | **2026-05-07** | **家康レビュー PASS 反映 + 家老最終裁可。改訂 6 項目: (P1) §3.1 V3 を V3a (本当に未 enroll) / V3b (他院 hit) に分離、多院展開時の能動検出強化 (P2) §3.1 V2 lookup を `WHERE patient_no` のみに変更し hit 後 clinic_id 比較で他院 hit 能動検出 (P3) §4.1 DLQ UNIQUE COALESCE に PostgreSQL expression index 性能注記 + 部分 INDEX/別テーブル分離検討余地明記 (P4) §4.4 L4 / §6.2 で `current_setting('app.clinic_id', true)` の NULL フォールバック挙動 (fail-secure) を明記 + ミドルウェア SET 必須を `cmd_passport_rls_audit_001` に組込 (P5) §5.2 RT05b 追加 (3 retry 失敗→DLQ→重複試行→UNIQUE 阻止) (P6) §5.3 で E2E-12.4/.5/.6 内容を 1 行ずつ説明し自己完結性向上 + 二段構成 (RT01-10 単体 / E2E-12.* 統合) を明示。CRITICAL §3.4 強調: Phase 7 cmd 発令時タスク YAML に必須記載 4 点 (engine 5 メソッド引数追加 / PassportRlsError 例外導入 / caller_clinic_id 取得経路確定 / enroll/link_family 整合性) を箇条書き化。** | **ashigaru2** |
 
 ---
 
-**注**: 本ドラフトは概念設計のみ。実装着手は Phase 7 cmd 発令後、家老の指示によること。本ドラフトは Phase 7 cmd 発令時の参照資料。`cmd_passport_engine_consolidation_001` (統廃合) 完了 + 本ドラフト軍師レビュー PASS が Phase 7 本実装着手の前提条件でござる。
+**注**: 本ドラフトは概念設計のみ。実装着手は Phase 7 cmd 発令後、家老の指示によること。本ドラフトは Phase 7 cmd 発令時の参照資料。`cmd_passport_engine_consolidation_001` (統廃合) 完了 + 本ドラフト家康レビュー PASS が Phase 7 本実装着手の前提条件でござる。

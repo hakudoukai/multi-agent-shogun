@@ -69,9 +69,9 @@ Output the reference tables below directly to the user. No tool calls required.
 
 | Agent | Recommended Model | Bloom Use | Reason |
 |-------|------------------|-----------|--------|
-| Shogun (You) | `claude-opus-4-6` | L6 | Strategic decisions, final review |
-| Karo (Manager) | `claude-sonnet-4-6` | L4-L5 | Task orchestration; Opus is overkill here |
-| Gunshi (Strategist) | `claude-opus-4-6` | L5-L6 | Deep QC, architecture evaluation |
+| 信長 (You) | `claude-opus-4-6` | L6 | Strategic decisions, final review |
+| 家老 (Manager) | `claude-sonnet-4-6` | L4-L5 | Task orchestration; Opus is overkill here |
+| 家康 (Strategist) | `claude-opus-4-6` | L5-L6 | Deep QC, architecture evaluation |
 | Ashigaru 1–7 | Configured via `capability_tiers` | L1-L3 | Workers — routed by Bloom level |
 
 ---
@@ -123,4 +123,4 @@ To generate a ready-to-paste `capability_tiers` YAML for your subscription:
 /shogun-bloom-config
 ```
 
-Or tell the Shogun: "set up capability tiers for my subscription"
+Or tell the 信長: "set up capability tiers for my subscription"

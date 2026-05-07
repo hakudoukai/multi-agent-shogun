@@ -2,7 +2,7 @@
 # hakudokai_activity_monitor.sh — エージェント稼働監視デーモン
 #
 # 「プロセスが生きているか」ではなく「実際に仕事をしているか」を監視する。
-# pane出力のハッシュを定期比較し、一定時間変化がなければ将軍に報告。
+# pane出力のハッシュを定期比較し、一定時間変化がなければ信長に報告。
 #
 # 監視対象 (§18 PC×アカウント配置 — 理事長殿御指示 2026-05-06):
 #   - MainPC multiagent session: karo, ashigaru1-3, gunshi (5 panes)
@@ -10,11 +10,11 @@
 #   ※ ashigaru4 は欠番 (PC 境界の視覚的区切り)
 #
 # 報告方法:
-#   - 将軍の inbox に idle_alert を書き込み（inbox_write.sh 経由）
+#   - 信長の inbox に idle_alert を書き込み（inbox_write.sh 経由）
 #   - /tmp/hakudokai_activity_dashboard.json に最新状態を常時出力
 #
 # 監査コンプライアンス監視:
-#   - タスク完了(done)なのに軍師の監査報告がない → audit_missing アラート
+#   - タスク完了(done)なのに家康の監査報告がない → audit_missing アラート
 #   - 監査報告にCodex/Geminiが欠けている → audit_incomplete アラート
 #   - 監査FAILなのに修正が進んでいない → pdca_stalled アラート
 #   - 監査ログをダッシュボードJSONに含めて常時可視化
@@ -151,7 +151,7 @@ send_idle_alert() {
 }
 
 # =============================================================
-# 監査コンプライアンスチェック（三者監査: 軍師Claude→Codex→Gemini）
+# 監査コンプライアンスチェック（三者監査: 家康Claude→Codex→Gemini）
 # =============================================================
 
 AUDIT_CHECK_INTERVAL="${AUDIT_CHECK_INTERVAL:-120}"  # 監査チェックは2分ごと（軽くするため毎回ではない）
@@ -217,17 +217,17 @@ check_audit_compliance() {
       continue
     fi
 
-    # 軍師の監査報告があるか
+    # 家康の監査報告があるか
     local gunshi_report="${SCRIPT_DIR}/queue/reports/gunshi_report.yaml"
     if [ ! -f "$gunshi_report" ]; then
       send_alert_with_cooldown "audit_missing" "${agent}_no_gunshi" \
-        "[監査未実施] ${agent}(${task_id})が完了済みだが軍師の監査報告なし。三者監査が必要。"
+        "[監査未実施] ${agent}(${task_id})が完了済みだが家康の監査報告なし。三者監査が必要。"
       if [ "$audit_first" = true ]; then audit_first=false; else audit_entries="${audit_entries},"; fi
       audit_entries="${audit_entries}\"${agent}\":{\"task_id\":\"${task_id}\",\"status\":\"audit_missing\"}"
       continue
     fi
 
-    # 軍師報告の内容を解析
+    # 家康報告の内容を解析
     local qa_decision
     qa_decision=$(grep '^\s*qa_decision:' "$gunshi_report" 2>/dev/null | head -1 | sed 's/.*qa_decision:\s*//' | tr -d "' \"" | tr -d $'\r')
 
@@ -236,9 +236,9 @@ check_audit_compliance() {
     audited_task=$(grep '^\s*ashigaru_task_id:' "$gunshi_report" 2>/dev/null | head -1 | sed 's/.*ashigaru_task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
 
     if [ "$audited_task" != "$task_id" ]; then
-      # 軍師報告はあるが、このタスクの監査ではない
+      # 家康報告はあるが、このタスクの監査ではない
       send_alert_with_cooldown "audit_missing" "${agent}_wrong_task" \
-        "[監査未実施] ${agent}(${task_id})の監査が未完了。軍師報告は別タスク(${audited_task})のもの。"
+        "[監査未実施] ${agent}(${task_id})の監査が未完了。家康報告は別タスク(${audited_task})のもの。"
       if [ "$audit_first" = true ]; then audit_first=false; else audit_entries="${audit_entries},"; fi
       audit_entries="${audit_entries}\"${agent}\":{\"task_id\":\"${task_id}\",\"status\":\"audit_missing_for_task\"}"
       continue

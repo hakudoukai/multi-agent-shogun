@@ -6,10 +6,10 @@
 | 親 cmd | cmd_t13_ekarte_zerobase_001 |
 | 担当 | ashigaru2 (さくら) |
 | 起草日 | 2026-05-06 |
-| 確定版日時 | 2026-05-06 (cycle1: 軍師レビュー PASS 反映 + 家老最終裁可) |
+| 確定版日時 | 2026-05-06 (cycle1: 家康レビュー PASS 反映 + 家老最終裁可) |
 | base_commit | 79ac2e74 |
 | ステータス | **確定版 (cycle1)** — Phase 7 cmd 発令時の参照資料 |
-| 範囲 | ekarte 側の接続点 (実装視点) のみ。UI ビジュアルはデザイン班 (理事長+将軍) 専権 |
+| 範囲 | ekarte 側の接続点 (実装視点) のみ。UI ビジュアルはデザイン班 (理事長+信長) 専権 |
 
 ---
 
@@ -386,7 +386,7 @@ GET passport_members (or eligibility API)
   - **primary**: 新規 `passport_sync.py` (8項目全充足)
   - **直接依存**: `ekarte_records.py:finalize_all_soap` (構造化ログ + corr_id + エラーコード追加)
   - **関連**: `teriha_passport_engine.py` (既に存在、最低限 corr_id 伝播)
-- **Phase 6 整備 observability コードとの衝突確認**: Phase 6 で構造化ログ・corr_id・エラーコードが整備されているはずなので、Phase 7 で重複設定しないよう Phase 7 着手時に再確認 (軍師指摘 6)
+- **Phase 6 整備 observability コードとの衝突確認**: Phase 6 で構造化ログ・corr_id・エラーコードが整備されているはずなので、Phase 7 で重複設定しないよう Phase 7 着手時に再確認 (家康指摘 6)
 
 ---
 
@@ -394,7 +394,7 @@ GET passport_members (or eligibility API)
 
 | 順 | 接続点 | 重さ | 優先度 | 着手前提 |
 |----|--------|------|--------|---------|
-| 0 | **`cmd_passport_engine_consolidation_001`** (統廃合 cmd) | - | **必須** | 家老/将軍別 cmd 発令、本確定版完了後の最初のステップ |
+| 0 | **`cmd_passport_engine_consolidation_001`** (統廃合 cmd) | - | **必須** | 家老/信長別 cmd 発令、本確定版完了後の最初のステップ |
 | 0' | `cmd_passport_rls_audit_001` (RLS 監査 cmd) | - | 並走推奨 | 0 と並走可、他院展開前に完了 |
 | 1 | C2: SOAP finalize-all 後フック (SAGA 併用) | 軽 | 高 | 0 完了 |
 | 2 | C1: 患者検索ヒット時誘導 (同意 UX 一体) | 軽 | 高 | 1 完了 + 5.3 デザイン班擦り合せ完了 |
@@ -426,7 +426,7 @@ ashigaru1 通達 (msg_20260506_115323): §4.3 R6 (Phase 7 前後で smoke 意味
 
 ---
 
-## 7. Phase 7 着手前に家老/将軍へ確認すべき事項
+## 7. Phase 7 着手前に家老/信長へ確認すべき事項
 
 1. **(必須)** `cmd_passport_engine_consolidation_001` 発令と完了 (本確定版の前提)
 2. **(必須)** `cmd_passport_rls_audit_001` 発令 (他院展開前)
@@ -446,7 +446,7 @@ ashigaru1 通達 (msg_20260506_115323): §4.3 R6 (Phase 7 前後で smoke 意味
 
 | 項目 | 範囲外理由 |
 |------|----------|
-| パスポート世界観 (恐竜王国の物語性) | デザイン班 (理事長+将軍) 専権 |
+| パスポート世界観 (恐竜王国の物語性) | デザイン班 (理事長+信長) 専権 |
 | ミニゲーム本体実装 | DD-126 Phase F 別タスク、本確定版はフック点のみ言及 |
 | 敵 90 体ビジュアル | デザイン班 |
 | push 通知 SDK 選定 | 別 cmd で計画的整備 |
@@ -461,7 +461,7 @@ ashigaru1 通達 (msg_20260506_115323): §4.3 R6 (Phase 7 前後で smoke 意味
 | 版 | 日時 | 変更内容 | 起草者 |
 |----|------|---------|-------|
 | draft-001 | 2026-05-06 | 初稿 | ashigaru2 |
-| **cycle1 確定版 (draft-002)** | **2026-05-06** | **軍師レビュー PASS 反映 + 家老最終裁可。改訂5項目: (1) C2 に SAGA パターン (passport_sync_status) 追記 (2) C9 dedupe 機構明記 (pending_ceremony_at/last_ceremony_displayed_at) + 表示先デザイン班合議事項化 (3) §5.1 並走フォールバック削除 + cmd_passport_engine_consolidation_001 統廃合 cmd 完了まで凍結方針 (4) §5.2 clinic_id 一致検証 + WARN+DLQ + cmd_passport_rls_audit_001 言及 (5) §5.3 Step1↔C1 同意 UX 一体フロー追記。さらに軍師(4)(7) 反映: §3.2 C7 in-app バッジ縮退方針、§6.5 各 C* の E2E カバレッジ案 (Phase 6 baseline E2E-12.4/.5/.6 連携)。ashigaru1 通達 (msg_20260506_115323) 反映済。** | **ashigaru2** |
+| **cycle1 確定版 (draft-002)** | **2026-05-06** | **家康レビュー PASS 反映 + 家老最終裁可。改訂5項目: (1) C2 に SAGA パターン (passport_sync_status) 追記 (2) C9 dedupe 機構明記 (pending_ceremony_at/last_ceremony_displayed_at) + 表示先デザイン班合議事項化 (3) §5.1 並走フォールバック削除 + cmd_passport_engine_consolidation_001 統廃合 cmd 完了まで凍結方針 (4) §5.2 clinic_id 一致検証 + WARN+DLQ + cmd_passport_rls_audit_001 言及 (5) §5.3 Step1↔C1 同意 UX 一体フロー追記。さらに家康(4)(7) 反映: §3.2 C7 in-app バッジ縮退方針、§6.5 各 C* の E2E カバレッジ案 (Phase 6 baseline E2E-12.4/.5/.6 連携)。ashigaru1 通達 (msg_20260506_115323) 反映済。** | **ashigaru2** |
 
 ---
 

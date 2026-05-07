@@ -3,7 +3,7 @@
 YAML Slimming Utility
 
 Removes completed/archived items from YAML queue files to maintain performance.
-- For Karo: Archives completed task/report files and finished command queue entries.
+- For 家老: Archives completed task/report files and finished command queue entries.
 - For all agents: Archives read: true messages from inbox files.
 """
 
@@ -366,7 +366,7 @@ def main():
     archive_dir = get_queue_dir() / 'archive'
     archive_dir.mkdir(parents=True, exist_ok=True)
 
-    # Process shogun_to_karo if this is Karo
+    # Process shogun_to_karo if this is 家老
     if agent_id == 'karo':
         if not slim_shugun_to_karo():
             sys.exit(1)

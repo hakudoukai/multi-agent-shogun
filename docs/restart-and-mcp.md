@@ -1,6 +1,6 @@
 # Claude Code 再起動・MCP接続 完全手順書
 
-**対象**: multi-agent-shogun プロジェクトを操作する全ての人（理事長・将軍・家老・足軽含む）
+**対象**: multi-agent-shogun プロジェクトを操作する全ての人（理事長・信長・家老・足軽含む）
 **作成**: 2026-05-05（再起動騒動の教訓を反映）
 **改訂**: 2026-05-06（§18 PC × アカウント分離ルール追加）
 
@@ -12,10 +12,10 @@
 
 | PC | アカウント | エージェント (通常 / 非常時) |
 |----|----------|---------------------------|
-| **MainPC** | `sasebo@sasebo.or.jp` Claude Max 20x | 将軍 + 家老 + 軍師 + 足軽1,2 (5体) / 足軽3 追加で 6体 |
+| **MainPC** | `sasebo@sasebo.or.jp` Claude Max 20x | 信長 + 家老 + 家康 + 足軽1,2 (5体) / 足軽3 追加で 6体 |
 | **SecondPC** | `hakudoukai@gmail.com` Claude Max 20x | 足軽5,6,7 (3体) / 足軽8 追加で 4体 |
 
-足軽4 = 欠番 (PC 境界の視覚区切り)。**越境起動禁止** (将軍は SecondPC で起動しない、足軽5は MainPC で起動しない)。
+足軽4 = 欠番 (PC 境界の視覚区切り)。**越境起動禁止** (信長は SecondPC で起動しない、足軽5は MainPC で起動しない)。
 
 詳細は CLAUDE.md §18 を参照。
 
@@ -38,7 +38,7 @@ WSL2 ターミナルを開く
   ↓
 ウォッチャー起動（メッセージ配信・監視）
   ↓
-将軍ペインにアタッチ → Claude Code 起動
+信長ペインにアタッチ → Claude Code 起動
   ↓
 （必要なら）SecondPC 接続
   ↓
@@ -84,9 +84,9 @@ bash shim/hakudokai/hakudokai_start_watchers.sh
 ```
 
 これで以下が全て起動：
-- `fukuincho_watcher` (Supabase → 将軍 inbox、5秒間隔)
+- `fukuincho_watcher` (Supabase → 信長 inbox、5秒間隔)
 - `inbox_watcher` × 4 (karo, ashigaru1, gunshi, shogun)
-- `fukuincho_reverse_watcher` (将軍 → Supabase)
+- `fukuincho_reverse_watcher` (信長 → Supabase)
 - `secondpc_watcher` (SecondPC ↔ MainPC)
 - `kuro_desktop_watcher` (Desktop kuro ↔ MainPC)
 - `task_sync` (タスクYAML自動同期)
@@ -100,13 +100,13 @@ bash shim/hakudokai/hakudokai_start_watchers.sh
 ps aux | grep -E "watcher|monitor|task_sync|watchdog" | grep -v grep
 ```
 
-### 手順 ④: 将軍ペインにアタッチ（理事長が操作する場所）
+### 手順 ④: 信長ペインにアタッチ（理事長が操作する場所）
 
 ```bash
 tmux attach -t shogun
 ```
 
-将軍ペインが表示されたら、Claude Code はもう起動済み。
+信長ペインが表示されたら、Claude Code はもう起動済み。
 理事長は普段通りメッセージを入力すればよい。
 
 **他のエージェントを見たい場合**:
@@ -167,8 +167,8 @@ tmux attach -t shogun
 □ WSL2ターミナル開いた
 □ ./shutsujin_departure.sh 実行 → tmux 2セッション + 10エージェント起動
 □ hakudokai_start_watchers.sh 実行 → 全ウォッチャー稼働
-□ tmux attach -t shogun で将軍ペインに入った
-□ 将軍が「準備完了」と返事した
+□ tmux attach -t shogun で信長ペインに入った
+□ 信長が「準備完了」と返事した
 □ （必要なら）SecondPC接続
 □ （必要なら）Vite/FastAPI起動
 ```
@@ -182,7 +182,7 @@ tmux attach -t shogun
 | `inotifywait not found` | `sudo apt install inotify-tools` |
 | `SUPABASE_URL required` | `~/.hakudokai/env` を作成（SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY） |
 | `tmux session multiagent already exists` | 既存セッションを `tmux kill-session -t multiagent` で削除してから再実行 |
-| 将軍が応答しない | `tmux attach -t shogun` でペイン直接確認 → Claude起動失敗ならペイン内で `claude` 手動実行 |
+| 信長が応答しない | `tmux attach -t shogun` でペイン直接確認 → Claude起動失敗ならペイン内で `claude` 手動実行 |
 
 ---
 
@@ -211,10 +211,10 @@ Claude Code には3種類の「持続性レイヤー」がある：
 /mnt/c/Users/User/projects/multi-agent-shogun/memory/MEMORY.md
 ```
 
-将軍に以下を依頼：
+信長に以下を依頼：
 > 「現在の作業状況をMEMORY.mdに保存してください。次回セッションでこの続きから再開できるように」
 
-将軍は以下を保存する：
+信長は以下を保存する：
 - 何をやっていたか（ファイル名・行番号レベル）
 - 次のステップ
 - 起動中のサーバー・プロセス（Vite/FastAPI/tmuxなど）
@@ -227,8 +227,8 @@ tmux list-sessions
 tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} agent=#{@agent_id}'
 ```
 
-エージェント（家老・足軽・軍師）は tmux pane で動いているので、Claude Code 再起動の影響は受けない。
-**再起動するのは将軍ペインの Claude Code だけ**。
+エージェント（家老・足軽・家康）は tmux pane で動いているので、Claude Code 再起動の影響は受けない。
+**再起動するのは信長ペインの Claude Code だけ**。
 
 ### ③ ローカルサーバーは継続稼働
 
@@ -244,7 +244,7 @@ ps aux | grep -E "vite|uvicorn|tmux" | grep -v grep
 
 ## 3. 再起動の手順
 
-### A. 将軍ペイン（shogun:0.0）の Claude Code を再起動
+### A. 信長ペイン（shogun:0.0）の Claude Code を再起動
 
 ```bash
 # 現在のセッション内で
@@ -267,7 +267,7 @@ claude
 MEMORY.md を読んで、前回の続きから再開してください。
 ```
 
-将軍が memory を読み込み、即座に作業状態を復元する。
+信長が memory を読み込み、即座に作業状態を復元する。
 
 ---
 
@@ -334,7 +334,7 @@ claude mcp add playwright -- npx @playwright/mcp@latest
 - `mcp__playwright__browser_click`
 - 等
 
-確認方法（将軍に依頼）：
+確認方法（信長に依頼）：
 > 「Playwright MCP のツールが読み込まれているか確認してください」
 
 ---
@@ -367,7 +367,7 @@ npx playwright install-deps chromium  # 自動修復
 
 ### 症状: tmux のエージェントが応答しない
 
-将軍ペインの再起動とエージェントペインは独立。
+信長ペインの再起動とエージェントペインは独立。
 エージェント側で問題があれば：
 
 ```bash
@@ -408,9 +408,9 @@ nohup python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 > /tmp/fast
 ## 8. 関連ドキュメント
 
 - [CLAUDE.md](../CLAUDE.md) — プロジェクト全体ルール
-- [memory/MEMORY.md](../memory/MEMORY.md) — 永続メモリ（将軍のみ）
+- [memory/MEMORY.md](../memory/MEMORY.md) — 永続メモリ（信長のみ）
 - [docs/philosophy.md](./philosophy.md) — システム哲学
-- [instructions/shogun.md](../instructions/shogun.md) — 将軍の役割定義
+- [instructions/shogun.md](../instructions/shogun.md) — 信長の役割定義
 
 ---
 
@@ -494,15 +494,15 @@ echo "$(date) unack=$(...)" >> /tmp/restart_health.log
 - [CLAUDE.md](../CLAUDE.md) — プロジェクト全体ルール (§Watcher Design Principles 含む)
 - [docs/audit-framework.md](./audit-framework.md) — 三者監査・差分監査ルール
 - [docs/incident_logs/](./incident_logs/) — 過去事故ログ
-- [memory/MEMORY.md](../memory/MEMORY.md) — 永続メモリ（将軍のみ）
+- [memory/MEMORY.md](../memory/MEMORY.md) — 永続メモリ（信長のみ）
 - [docs/philosophy.md](./philosophy.md) — システム哲学
-- [instructions/shogun.md](../instructions/shogun.md) — 将軍の役割定義
+- [instructions/shogun.md](../instructions/shogun.md) — 信長の役割定義
 
 ---
 
 ## 11. 今後この手順書が古くなったら
 
-このファイルは将軍が随時更新する。
+このファイルは信長が随時更新する。
 新しい問題に遭遇したら：
 1. トラブルシューティング章に追記
 2. memory/MEMORY.md にも要点を保存

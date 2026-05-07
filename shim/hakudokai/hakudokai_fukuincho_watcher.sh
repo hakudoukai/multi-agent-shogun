@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# hakudokai_fukuincho_watcher.sh — 副医院長→将軍 Supabase通信路 watcher (v2: root cure)
+# hakudokai_fukuincho_watcher.sh — 副医院長→信長 Supabase通信路 watcher (v2: root cure)
 #
 # pc_handshake (from_pc='fukuincho', to_pc='main_pc' OR 'broadcast')
 # を5秒間隔でSELECTし、未読メッセージを shogun inbox に転記。

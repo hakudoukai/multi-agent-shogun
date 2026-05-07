@@ -2,7 +2,7 @@
 # bulk_ack.sh — 安全な bulk ack (重要 type 除外) — 2026-05-07 制定
 #
 # 目的: 拙者が 5/7 18:00 頃の自己増殖ループ事件で全 inbox bulk ack した結果、
-#       軍師→ashigaru7 cycle2 qc_fail も ack で消失 → ashigaru7 指示見失い、
+#       家康→ashigaru7 cycle2 qc_fail も ack で消失 → ashigaru7 指示見失い、
 #       という事故を恒久防止。type 別フィルタで「処理が必要な指示」を保護。
 #
 # Usage:

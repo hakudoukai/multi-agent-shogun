@@ -1,8 +1,8 @@
 # 三者監査フレームワーク（完全版）
 
 **作成**: 2026-05-05（理事長直接指示「緻密に・抜け漏れなく設計」）
-**対象**: 将軍・家老・軍師・足軽・忍び 全エージェント
-**改訂責務**: 将軍直轄。家老・軍師は提案のみ可、改訂は将軍の発令を要す
+**対象**: 信長・家老・家康・足軽・忍び 全エージェント
+**改訂責務**: 信長直轄。家老・家康は提案のみ可、改訂は信長の発令を要す
 
 ---
 
@@ -13,7 +13,7 @@
 | **P1** | **第三者性**: コードを書いた者が監査してはならぬ | 自作自演バイアスの完全排除 |
 | **P2** | **差分主義**: 監査対象は差分のみ。フル走査禁止 | API料金抑制 + 偽陽性ノイズ抑制 + cycle進行に伴う収束保証 |
 | **P3** | **三者全員PASS必須**: 一者NGなら未完了 | 単一視点の見落とし防止 |
-| **P4** | **再現可能性**: 同じ diff を渡せば誰でも同じ判定が出る | 軍師交代・監査者不在時の継続性 |
+| **P4** | **再現可能性**: 同じ diff を渡せば誰でも同じ判定が出る | 家康交代・監査者不在時の継続性 |
 | **P5** | **トレーサビリティ**: 全監査結果はYAMLに永続記録 | 後日問題発生時の責任追跡・学習資料化 |
 
 ---
@@ -26,11 +26,11 @@
 
 | トリガー | 監査対象 | 起動責務 |
 |---------|---------|---------|
-| 足軽が `status: done` 報告 | 該当タスクのコミット範囲 | 足軽 → 軍師 inbox_write |
-| 設計書（DD-XXX）変更 commit | 影響受けるコード全て | 家老が検知 → 軍師に発令 |
-| DBスキーマ変更（migration） | RLS・型・参照整合性 | 家老が検知 → 軍師に発令 |
-| セキュリティパッチ commit | 緊急監査（SLA: 30分） | 足軽 → 軍師 inbox_write priority=critical |
-| cycle1 PASS後 mainブランチmerge前 | 最終確認（軍師のみ、Codex/Gemini省略可） | 家老が判断 |
+| 足軽が `status: done` 報告 | 該当タスクのコミット範囲 | 足軽 → 家康 inbox_write |
+| 設計書（DD-XXX）変更 commit | 影響受けるコード全て | 家老が検知 → 家康に発令 |
+| DBスキーマ変更（migration） | RLS・型・参照整合性 | 家老が検知 → 家康に発令 |
+| セキュリティパッチ commit | 緊急監査（SLA: 30分） | 足軽 → 家康 inbox_write priority=critical |
+| cycle1 PASS後 mainブランチmerge前 | 最終確認（家康のみ、Codex/Gemini省略可） | 家老が判断 |
 
 ### 1.2 ステート遷移
 
@@ -55,12 +55,12 @@ cycle1_in_progress  ← 初回監査
 | ステージ | 責務 | 期限SLA |
 |---------|------|---------|
 | 完了報告書作成 | 足軽 | 完了から10分以内 |
-| 軍師受領→監査開始 | 軍師 | 通知から15分以内 |
-| 軍師レビュー | 軍師 | 開始から30分以内 |
-| Codex監査呼出 | 軍師 | 軍師レビュー後5分以内 |
-| Gemini監査呼出 | 軍師 | Codex後5分以内（並列可） |
-| 軍師最終判定→家老報告 | 軍師 | 全監査完了から10分以内 |
-| 家老の次タスク発令（FAIL時） | 家老 | 軍師報告から15分以内 |
+| 家康受領→監査開始 | 家康 | 通知から15分以内 |
+| 家康レビュー | 家康 | 開始から30分以内 |
+| Codex監査呼出 | 家康 | 家康レビュー後5分以内 |
+| Gemini監査呼出 | 家康 | Codex後5分以内（並列可） |
+| 家康最終判定→家老報告 | 家康 | 全監査完了から10分以内 |
+| 家老の次タスク発令（FAIL時） | 家老 | 家康報告から15分以内 |
 
 SLA超過は忍びがアラート（cooldown 30分）。
 
@@ -111,7 +111,7 @@ task:
 
 ### 2.3 例外: スコープ拡大が必要な場合
 
-以下のケースのみ、軍師の判断で**スコープ拡大**を許可する。理由を `audit.scope.expansion_reason` に記載必須。
+以下のケースのみ、家康の判断で**スコープ拡大**を許可する。理由を `audit.scope.expansion_reason` に記載必須。
 
 - 削除ファイルが他コードから参照されていないか確認（呼出元検索）
 - 公開API変更時の呼出元影響範囲確認
@@ -120,9 +120,9 @@ task:
 
 ---
 
-## 3. 軍師（Claude）監査チェックリスト
+## 3. 家康（Claude）監査チェックリスト
 
-軍師は Codex/Gemini に投げる前に**自ら以下を確認**する。軍師の独立判断は不可欠。
+家康は Codex/Gemini に投げる前に**自ら以下を確認**する。家康の独立判断は不可欠。
 
 ### 3.1 構造監査（必須）
 
@@ -156,12 +156,12 @@ CLAUDE.md §Root Cause 4 Patterns 必須チェック：
 - [ ] エラーパステスト
 - [ ] 既存テストの回帰がない
 
-### 3.5 軍師判定基準
+### 3.5 家康判定基準
 
 - すべてPASS → Codex監査へ進む
-- 一つでもFAIL → 軍師の判定で足軽に差戻し（Codex/Gemini呼出し前）。修正後再監査。
+- 一つでもFAIL → 家康の判定で足軽に差戻し（Codex/Gemini呼出し前）。修正後再監査。
   - 早期差戻しは無料（API料金節約）
-  - 軍師指摘の証跡は `audit.gunshi.findings` に記録
+  - 家康指摘の証跡は `audit.gunshi.findings` に記録
 
 ---
 
@@ -181,7 +181,7 @@ CLAUDE.md §Root Cause 4 Patterns 必須チェック：
 ### 4.2 Codex呼出しコマンド（標準化）
 
 ```bash
-# 軍師が実行
+# 家康が実行
 DIFF=$(git -C /mnt/c/Users/User/Documents/DentalBI \
   diff <base_commit>..<head_commit> -- <changed_paths>)
 
@@ -225,10 +225,10 @@ EOF
 
 OpenAI API usage limit に達した場合：
 
-1. **軍師が前cycleのCodex判定を引用可能** — ただし以下の全てを満たす場合のみ：
+1. **家康が前cycleのCodex判定を引用可能** — ただし以下の全てを満たす場合のみ：
    - 当該cycleの fix が前cycleでCodexが指摘した内容と完全一致
    - fix の diff が極小（< 50行）
-   - 軍師が独立に動作確認済
+   - 家康が独立に動作確認済
 2. その旨を `audit.codex.fallback_reason` に明記
 3. 24時間以内に必ず Codex 再監査をスケジュール（家老が cron 登録）
 
@@ -343,7 +343,7 @@ EOF
 
 | 監査者 | PASS基準 |
 |--------|----------|
-| 軍師 | 構造監査・既存資産活用・Root Cause 4P・テスト網羅 全PASS |
+| 家康 | 構造監査・既存資産活用・Root Cause 4P・テスト網羅 全PASS |
 | Codex | 6軸全PASS、Critical/High指摘0件 |
 | Gemini | 5観点全PASS、Critical/High指摘0件 |
 
@@ -369,7 +369,7 @@ overall_pass = (gunshi == PASS) AND (codex == PASS) AND (gemini == PASS)
 |------|------|
 | Codex PASS / Gemini FAIL | Gemini指摘を採用（より厳しい方） |
 | Codex FAIL / Gemini PASS | Codex指摘を採用 |
-| 軍師 PASS / Codex or Gemini FAIL | 軍師は再考、最終的に外部判定優先 |
+| 家康 PASS / Codex or Gemini FAIL | 家康は再考、最終的に外部判定優先 |
 | 三者で評価が割れた | 家老エスカレーション、理事長判断 |
 
 ---
@@ -384,12 +384,12 @@ overall_pass = (gunshi == PASS) AND (codex == PASS) AND (gemini == PASS)
 ### 7.2 5サイクル超過時のエスカレーション
 
 ```
-cycle5 で FAIL → 軍師から家老に escalation 報告
+cycle5 で FAIL → 家康から家老に escalation 報告
   → 家老が以下を判断:
     1. タスクスコープが大き過ぎる → 分割
     2. 実装方針が誤り → 設計やり直し（前cycle破棄）
     3. 監査が過剰 → 受容可否を理事長に相談
-    4. 足軽の能力不足 → 別足軽 or 軍師が直接実装
+    4. 足軽の能力不足 → 別足軽 or 家康が直接実装
 ```
 
 ### 7.3 サイクル間の進捗監視
@@ -406,10 +406,10 @@ cycle5 で FAIL → 軍師から家老に escalation 報告
 
 | 状況 | フォールバック |
 |------|---------------|
-| Codex API usage limit | §4.3 のフォールバック条件下で軍師が前cycle引用 |
-| Codex 一時的停止（504, タイムアウト） | 5分後に最大3回リトライ → ダメなら軍師が前cycle引用 |
+| Codex API usage limit | §4.3 のフォールバック条件下で家康が前cycle引用 |
+| Codex 一時的停止（504, タイムアウト） | 5分後に最大3回リトライ → ダメなら家康が前cycle引用 |
 | Gemini API停止 | 1時間待機 → ダメなら家老エスカレーション（法令該当差分は強制待機） |
-| 軍師Claude停止 | Codex/Geminiは実行不可。家老が監視→Claude復旧待ち |
+| 家康Claude停止 | Codex/Geminiは実行不可。家老が監視→Claude復旧待ち |
 | 全監査者停止 | 家老が緊急停止指令、足軽の作業も一時停止 |
 
 ---
@@ -487,7 +487,7 @@ next_action:
 
 ## 10. 家老による監査検証（メタ監査）
 
-家老は軍師の監査結果を**機械的に検証**する。以下のチェックを `cmd完了処理時` に実施：
+家老は家康の監査結果を**機械的に検証**する。以下のチェックを `cmd完了処理時` に実施：
 
 ### 10.1 必須チェックリスト
 
@@ -504,7 +504,7 @@ next_action:
 ### 10.2 違反検知時の対応
 
 ```
-違反検知 → 監査結果を無効化 → 軍師に再監査指令（specific reason付き）
+違反検知 → 監査結果を無効化 → 家康に再監査指令（specific reason付き）
             ↓
        足軽 status: done のままだが audit_status: invalid
        忍びが audit_invalid_redo アラート発火
@@ -518,7 +518,7 @@ next_action:
 
 | アラート | 検知条件 | クールダウン |
 |---------|---------|------------|
-| `audit_missing` | 完了報告から15分後も軍師レポートなし | 30分 |
+| `audit_missing` | 完了報告から15分後も家康レポートなし | 30分 |
 | `audit_incomplete` | gunshi_report に codex/gemini フィールド欠落 | 30分 |
 | `audit_invalid_diff` | `verified_by_reading != true_via_diff` | 即時、再発しない |
 | `pdca_stalled` | 同一タスクで30分進展なし | 30分 |
@@ -593,8 +593,8 @@ CLAUDE.md §OSS Pull Request Review に従う（既定済）。
 ### 14.1 自作自演禁止の機械的保証
 
 - コミット author と監査者が同一エージェントの場合、エラーで監査拒否
-- ただし軍師は自身が手を出さない限り監査者として有効
-- 軍師が小修正を加えた場合（コメント追加等）、その修正を別足軽がレビュー
+- ただし家康は自身が手を出さない限り監査者として有効
+- 家康が小修正を加えた場合（コメント追加等）、その修正を別足軽がレビュー
 
 ### 14.2 監査者ローテーション（将来検討）
 
@@ -608,7 +608,7 @@ CLAUDE.md §OSS Pull Request Review に従う（既定済）。
 
 ### 15.1 `scripts/audit_codex.sh`
 
-軍師がCodex(デコポン)に6軸監査を依頼する標準実装。
+家康がCodex(デコポン)に6軸監査を依頼する標準実装。
 
 ```bash
 bash scripts/audit_codex.sh <task_id> <cycle> <base_commit> <head_commit> [<repo_path>]
@@ -623,7 +623,7 @@ bash scripts/audit_codex.sh <task_id> <cycle> <base_commit> <head_commit> [<repo
 
 ### 15.2 `scripts/audit_gemini.sh`
 
-軍師がGeminiに仕様準拠+法令監査を依頼する標準実装。
+家康がGeminiに仕様準拠+法令監査を依頼する標準実装。
 
 ```bash
 bash scripts/audit_gemini.sh <task_id> <cycle> <base_commit> <head_commit> [<repo_path>] [<spec_file>]
@@ -637,7 +637,7 @@ bash scripts/audit_gemini.sh <task_id> <cycle> <base_commit> <head_commit> [<rep
 
 ### 15.3 `scripts/audit_verify.sh`
 
-家老が軍師の監査結果をメタ監査する標準実装。
+家老が家康の監査結果をメタ監査する標準実装。
 
 ```bash
 bash scripts/audit_verify.sh <gunshi_report_path>
@@ -661,13 +661,13 @@ bash scripts/audit_verify.sh <gunshi_report_path>
 **家老の使い方**:
 - `cmd完了処理時` に必ず実行
 - exit 0 → cmd を done にしてよし
-- exit 1 → 監査結果無効、軍師に再監査指令
+- exit 1 → 監査結果無効、家康に再監査指令
 - exit 2 → スクリプト引数エラー
 
-### 15.4 軍師の標準フロー（厳守）
+### 15.4 家康の標準フロー（厳守）
 
 ```bash
-# 1. 軍師レビュー（手作業、§3チェックリスト）
+# 1. 家康レビュー（手作業、§3チェックリスト）
 # 2. Codex監査
 bash scripts/audit_codex.sh "$TASK_ID" "$CYCLE" "$BASE" "$HEAD" "$REPO"
 CODEX_VERDICT=$?
@@ -683,13 +683,13 @@ GEMINI_VERDICT=$?
 ### 15.5 家老の標準フロー（厳守）
 
 ```bash
-# 1. 軍師から完了通知受領
+# 1. 家康から完了通知受領
 # 2. メタ監査
 bash scripts/audit_verify.sh queue/reports/gunshi_report.yaml
 META_VERDICT=$?
 
 # 3. exit 0 なら cmd を完了化
-# 4. exit 1 なら軍師に「再監査せよ。理由: <stdout>」と差戻
+# 4. exit 1 なら家康に「再監査せよ。理由: <stdout>」と差戻
 ```
 
 ---
@@ -738,10 +738,10 @@ echo "exit: $?"
 
 | 日付 | 改訂者 | 内容 |
 |------|--------|------|
-| 2026-05-05 13:50 | 将軍 | 初版作成（理事長指示「緻密に・抜け漏れなく」） |
-| 2026-05-05 14:13 | 将軍 | §15-16追加: 実装済みスクリプト3本（audit_codex.sh / audit_gemini.sh / audit_verify.sh）、ドライラン手順 |
+| 2026-05-05 13:50 | 信長 | 初版作成（理事長指示「緻密に・抜け漏れなく」） |
+| 2026-05-05 14:13 | 信長 | §15-16追加: 実装済みスクリプト3本（audit_codex.sh / audit_gemini.sh / audit_verify.sh）、ドライラン手順 |
 
-将軍以外による改訂は禁止。改訂提案は inbox_write で将軍へ。
+信長以外による改訂は禁止。改訂提案は inbox_write で信長へ。
 
 ---
 
@@ -749,7 +749,7 @@ echo "exit: $?"
 
 - [CLAUDE.md §Third-Party Audit Rule](../CLAUDE.md#third-party-audit-rule-all-agents--理事長直接指示) — 概要・原則
 - [CLAUDE.md §Anti-Duplication Rule](../CLAUDE.md#anti-duplication-rule-all-agents--理事長直接指示) — 重複検知（Axis 5）
-- [CLAUDE.md §Root Cause 4 Patterns](../CLAUDE.md#root-cause-4-patterns-all-agents--理事長直接指示) — 軍師§3.3
-- [instructions/gunshi.md](../instructions/gunshi.md) — 軍師の役割定義
+- [CLAUDE.md §Root Cause 4 Patterns](../CLAUDE.md#root-cause-4-patterns-all-agents--理事長直接指示) — 家康§3.3
+- [instructions/gunshi.md](../instructions/gunshi.md) — 家康の役割定義
 - [docs/restart-and-mcp.md](./restart-and-mcp.md) — 再起動・MCP接続
 - [shim/hakudokai/hakudokai_activity_monitor.sh](../shim/hakudokai/hakudokai_activity_monitor.sh) — 忍び実装

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# audit_codex.sh — 軍師がCodex(デコポン)に6軸監査を依頼する標準スクリプト
+# audit_codex.sh — 家康がCodex(デコポン)に6軸監査を依頼する標準スクリプト
 #
 # Usage:
 #   bash scripts/audit_codex.sh <task_id> <cycle> <base_commit> <head_commit> [<repo_path>]

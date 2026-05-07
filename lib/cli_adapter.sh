@@ -816,7 +816,7 @@ should_trigger_bloom_analysis() {
     local bloom_analysis_required="${2:-false}"
     local gunshi_available="${3:-yes}"
 
-    # 軍師未起動 → Phase 2フォールバック
+    # 家康未起動 → Phase 2フォールバック
     if [[ "$gunshi_available" = "no" ]]; then
         echo "fallback"
         return 0

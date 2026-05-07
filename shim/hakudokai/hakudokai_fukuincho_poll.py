@@ -84,7 +84,7 @@ AGENT_PATTERNS = {
     "ashigaru1": ["こうちゃんへ", "ashigaru1降下", "ashigaru1へ", "kouchan"],
     "ashigaru2": ["桜ちゃんへ", "ashigaru2降下", "ashigaru2へ", "sakura"],
     "ashigaru8": ["クロちゃんへ", "ashigaru8降下", "ashigaru8へ", "kuro"],
-    "gunshi": ["軍師へ", "gunshi降下", "gunshiへ"],
+    "gunshi": ["家康へ", "gunshi降下", "gunshiへ"],
 }
 
 def detect_forward_target(content, topic):

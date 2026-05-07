@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# audit_gemini.sh — 軍師がGemini(ジェミちゃん)に仕様準拠+法令監査を依頼する標準スクリプト
+# audit_gemini.sh — 家康がGemini(ジェミちゃん)に仕様準拠+法令監査を依頼する標準スクリプト
 #
 # Usage:
 #   bash scripts/audit_gemini.sh <task_id> <cycle> <base_commit> <head_commit> [<repo_path>] [<spec_file>]

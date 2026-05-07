@@ -249,11 +249,11 @@ if [ $(wc -w < "$1") -lt 100 ]; then
 fi
 ```
 
-## 将軍システム固有ルール
+## 信長システム固有ルール
 
 - 保存先: `~/.claude/skills/shogun-{skill-name}/`
-- スキル候補は足軽が発見 → 家老経由で将軍に報告 → 将軍が設計 → 殿が承認 → 家老が作成
-- 将軍システム連携（inbox_write, task YAML等）が必要なスキルは allowed-tools に Bash を含めよ
+- スキル候補は足軽が発見 → 家老経由で信長に報告 → 信長が設計 → 殿が承認 → 家老が作成
+- 信長システム連携（inbox_write, task YAML等）が必要なスキルは allowed-tools に Bash を含めよ
 - north_star はフロントマターでなく**本文に記載**（フロントマターのカスタムフィールドはClaude Codeに無視される）
 
 

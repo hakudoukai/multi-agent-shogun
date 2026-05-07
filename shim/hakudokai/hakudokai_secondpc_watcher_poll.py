@@ -199,9 +199,9 @@ def detect_target_agent(content, topic):
 
     # Fallback: keyword matching
     patterns = {
-        "shogun": ["将軍へ", "shogunへ"],
+        "shogun": ["信長へ", "shogunへ"],
         "karo": ["家老へ", "karoへ"],
-        "gunshi": ["軍師へ", "gunshiへ"],
+        "gunshi": ["家康へ", "gunshiへ"],
         "ashigaru1": ["こうちゃんへ", "ashigaru1へ"],
         "ashigaru3": ["ashigaru3へ"],
         "ashigaru4": ["ashigaru4へ"],

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# hakudokai_kuro_desktop_watcher.sh — Desktopクロちゃん(Claude.ai) ↔ 将軍 双方向通信路
+# hakudokai_kuro_desktop_watcher.sh — Desktopクロちゃん(Claude.ai) ↔ 信長 双方向通信路
 #
 # 2つの方向を1つのデーモンで処理:
-#   1. Desktop kuro → main_pc: from_pc=kuro_desktop のメッセージを将軍inboxに転記
+#   1. Desktop kuro → main_pc: from_pc=kuro_desktop のメッセージを信長inboxに転記
 #   2. main_pc → Desktop kuro: to_pc=kuro_desktop のメッセージをntfy通知
 #
 # Usage: bash shim/hakudokai/hakudokai_kuro_desktop_watcher.sh [--interval 5]

@@ -6,7 +6,7 @@ set -euo pipefail
 #
 # 配置 (CLAUDE.md §18 PC × アカウント × エージェント配置ルール 準拠):
 #   MainPC (sasebo@sasebo.or.jp / Claude Max 20x)
-#     通常 5体: 将軍 + 家老 + 軍師 + 足軽1 + 足軽2
+#     通常 5体: 信長 + 家老 + 家康 + 足軽1 + 足軽2
 #     非常時 +1: 足軽3 (本 supervisor は通常 5体のみ管理、足軽3 は手動起動)
 #   足軽4: 欠番 (PC 境界の視覚的区切り)
 #   SecondPC: 足軽5/6/7/8 (本 supervisor 管理外、SecondPC 側で別 supervisor 起動)

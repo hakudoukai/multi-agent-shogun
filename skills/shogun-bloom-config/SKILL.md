@@ -17,7 +17,7 @@ ready-to-paste 形式で生成する。
 **Output:**
 1. `capability_tiers` YAML → `config/settings.yaml` にそのまま貼り付け可
 2. `available_cost_groups` 宣言
-3. 固定エージェント推奨モデル（Karo / Gunshi）
+3. 固定エージェント推奨モデル（家老 / 家康）
 4. カバレッジギャップ警告（Bloom L6が対応不可の場合など）
 
 ## When to Use
@@ -133,8 +133,8 @@ Output ONLY the matching pattern. Show:
 
 | エージェント | 推奨モデル | 備考 |
 |------------|-----------|------|
-| Karo (家老) | `claude-sonnet-4-6` | Opusは使えないのでSonnet |
-| Gunshi (軍師) | `claude-sonnet-4-6` | 同上 |
+| 家老 | `claude-sonnet-4-6` | Opusは使えないのでSonnet |
+| 家康 | `claude-sonnet-4-6` | 同上 |
 
 ### `config/settings.yaml` snippet
 
@@ -169,8 +169,8 @@ capability_tiers:
 
 | エージェント | 推奨モデル | 備考 |
 |------------|-----------|------|
-| Karo (家老) | `claude-sonnet-4-6` | L4-L5オーケストレーション。Opusは過剰。 |
-| Gunshi (軍師) | `claude-opus-4-6` | L5-L6の深いQC・アーキテクチャ評価 |
+| 家老 | `claude-sonnet-4-6` | L4-L5オーケストレーション。Opusは過剰。 |
+| 家康 | `claude-opus-4-6` | L5-L6の深いQC・アーキテクチャ評価 |
 
 ### `config/settings.yaml` snippet
 
@@ -206,12 +206,12 @@ capability_tiers:
 
 ### 固定エージェント
 
-> Claude サブスクなし → Karo/Gunshi も Codex モデル使用。L6 ギャップに注意。
+> Claude サブスクなし → 家老/家康 も Codex モデル使用。L6 ギャップに注意。
 
 | エージェント | 推奨モデル |
 |------------|-----------|
-| Karo (家老) | `gpt-5.3-codex` |
-| Gunshi (軍師) | `gpt-5.1-codex-max` |
+| 家老 | `gpt-5.3-codex` |
+| 家康 | `gpt-5.1-codex-max` |
 
 ### `config/settings.yaml` snippet
 
@@ -250,8 +250,8 @@ capability_tiers:
 
 | エージェント | 推奨モデル |
 |------------|-----------|
-| Karo (家老) | `gpt-5.3-codex` |
-| Gunshi (軍師) | `gpt-5.1-codex-max` |
+| 家老 | `gpt-5.3-codex` |
+| 家康 | `gpt-5.1-codex-max` |
 
 ### `config/settings.yaml` snippet
 
@@ -291,8 +291,8 @@ capability_tiers:
 
 | エージェント | 推奨モデル |
 |------------|-----------|
-| Karo (家老) | `claude-sonnet-4-6` |
-| Gunshi (軍師) | `claude-opus-4-6` |
+| 家老 | `claude-sonnet-4-6` |
+| 家康 | `claude-opus-4-6` |
 
 ### `config/settings.yaml` snippet
 
@@ -336,8 +336,8 @@ capability_tiers:
 
 | エージェント | 推奨モデル | 理由 |
 |------------|-----------|------|
-| Karo (家老) | `claude-sonnet-4-6` | L4-L5オーケストレーション。SWE-bench 79.6% |
-| Gunshi (軍師) | `claude-opus-4-6` | L5-L6深いQC。SWE-bench 80.8% |
+| 家老 | `claude-sonnet-4-6` | L4-L5オーケストレーション。SWE-bench 79.6% |
+| 家康 | `claude-opus-4-6` | L5-L6深いQC。SWE-bench 80.8% |
 
 ### Q3a×Q3b の回答別 config
 
@@ -479,10 +479,10 @@ cli:
   agents:
     karo:
       type: claude
-      model: claude-sonnet-4-6     # ← Karo推奨モデルに変更
+      model: claude-sonnet-4-6     # ← 家老推奨モデルに変更
     gunshi:
       type: claude
-      model: opus                  # ← Gunshi推奨モデルに変更
+      model: opus                  # ← 家康推奨モデルに変更
     ashigaru1:                     # ← 足軽はcapability_tiersに従って自動ルーティング
       type: codex                  #    CLIの種類はサブスクに合わせて設定
       model: gpt-5.3-codex-spark
@@ -507,7 +507,7 @@ source lib/cli_adapter.sh && validate_subscription_coverage
 
 ```
 Claude Pro以上を契約している?
-  Yes → 固定エージェント(Shogun/Karo/Gunshi)にClaudeが使える ✓
+  Yes → 固定エージェント(信長/家老/家康)にClaudeが使える ✓
   No  → Codexのみ。L6ギャップに注意 ⚠️
 
 ChatGPT Pro ($200) を契約している?
