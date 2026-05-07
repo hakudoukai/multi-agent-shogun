@@ -4,9 +4,10 @@
 # 「プロセスが生きているか」ではなく「実際に仕事をしているか」を監視する。
 # pane出力のハッシュを定期比較し、一定時間変化がなければ将軍に報告。
 #
-# 監視対象:
-#   - multiagent session: karo, ashigaru1-7, gunshi
-#   - secondpc session: ashigaru2(sakura), ashigaru8(kuro) ※存在時のみ
+# 監視対象 (§18 PC×アカウント配置 — 理事長殿御指示 2026-05-06):
+#   - MainPC multiagent session: karo, ashigaru1-3, gunshi (5 panes)
+#   - SecondPC secondpc session: ashigaru5-8 (4 panes) ※存在時のみ
+#   ※ ashigaru4 は欠番 (PC 境界の視覚的区切り)
 #
 # 報告方法:
 #   - 将軍の inbox に idle_alert を書き込み（inbox_write.sh 経由）
@@ -195,7 +196,8 @@ check_audit_compliance() {
   local audit_entries=""
   local audit_first=true
 
-  for agent in ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 ashigaru8; do
+  # §18: ashigaru4 は欠番。ashigaru1-3 = MainPC、ashigaru5-8 = SecondPC。
+  for agent in ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8; do
     local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
     [ ! -f "$task_file" ] && continue
 
@@ -275,7 +277,8 @@ check_audit_compliance() {
       # FAILなのに足軽のタスクがdoneのまま → PDCAが回っていない
       # 修正タスク(redo)が割り当てられているか確認
       local redo_exists=false
-      for redo_agent in ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 ashigaru8; do
+      # §18: ashigaru4 は欠番。
+      for redo_agent in ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8; do
         local redo_file="${SCRIPT_DIR}/queue/tasks/${redo_agent}.yaml"
         [ ! -f "$redo_file" ] && continue
         if grep -q "redo_of:" "$redo_file" 2>/dev/null; then
@@ -313,9 +316,9 @@ update_activity_dashboard() {
   local entries=""
   local first=true
 
-  # multiagent session
+  # multiagent session (§18 MainPC: karo + ashigaru1-3 + gunshi = 5 panes)
   local pane_index=0
-  for agent in karo ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 gunshi; do
+  for agent in karo ashigaru1 ashigaru2 ashigaru3 gunshi; do
     local pane="multiagent:0.${pane_index}"
     local status_file="${HASH_DIR}/${agent}.status"
     local status="unknown"
@@ -341,9 +344,9 @@ update_activity_dashboard() {
     pane_index=$((pane_index + 1))
   done
 
-  # secondpc session (if exists)
+  # secondpc session (§18 SecondPC: ashigaru5-8 = 4 panes、存在時のみ)
   if tmux has-session -t secondpc 2>/dev/null; then
-    for sp_entry in "sakura:secondpc:0.0" "kuro:secondpc:0.1"; do
+    for sp_entry in "ashigaru5:secondpc:0.0" "ashigaru6:secondpc:0.1" "ashigaru7:secondpc:0.2" "ashigaru8:secondpc:0.3"; do
       local sp_agent="${sp_entry%%:*}"
       local sp_pane="${sp_entry#*:}"
       local sp_status="unknown"
@@ -374,9 +377,9 @@ EOJSON
 log "started (idle_threshold=${IDLE_THRESHOLD}s, check_interval=${CHECK_INTERVAL}s)"
 
 while true; do
-  # multiagent session
+  # multiagent session (§18 MainPC: karo + ashigaru1-3 + gunshi = 5 panes)
   pane_index=0
-  for agent in karo ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 gunshi; do
+  for agent in karo ashigaru1 ashigaru2 ashigaru3 gunshi; do
     pane="multiagent:0.${pane_index}"
     result=$(check_activity "$agent" "$pane")
     echo "$result" > "${HASH_DIR}/${agent}.status"
@@ -390,9 +393,9 @@ while true; do
     pane_index=$((pane_index + 1))
   done
 
-  # secondpc session (if exists)
+  # secondpc session (§18 SecondPC: ashigaru5-8 = 4 panes、存在時のみ)
   if tmux has-session -t secondpc 2>/dev/null; then
-    for sp_entry in "sakura:secondpc:0.0" "kuro:secondpc:0.1"; do
+    for sp_entry in "ashigaru5:secondpc:0.0" "ashigaru6:secondpc:0.1" "ashigaru7:secondpc:0.2" "ashigaru8:secondpc:0.3"; do
       sp_agent="${sp_entry%%:*}"
       sp_pane="${sp_entry#*:}"
       result=$(check_activity "$sp_agent" "$sp_pane")
@@ -400,11 +403,8 @@ while true; do
       case "$result" in
         idle:*)
           idle_sec="${result#idle:}"
-          # SecondPCエージェントはashigaru2/ashigaru8のタスクを確認
-          case "$sp_agent" in
-            sakura) [ -f "${SCRIPT_DIR}/queue/tasks/ashigaru2.yaml" ] && send_idle_alert "ashigaru2(sakura)" "$idle_sec" ;;
-            kuro) [ -f "${SCRIPT_DIR}/queue/tasks/ashigaru8.yaml" ] && send_idle_alert "ashigaru8(kuro)" "$idle_sec" ;;
-          esac
+          # §18: agent 名が role 名と直接一致 (旧 sakura/kuro alias は廃止)
+          [ -f "${SCRIPT_DIR}/queue/tasks/${sp_agent}.yaml" ] && send_idle_alert "$sp_agent" "$idle_sec"
           ;;
       esac
     done

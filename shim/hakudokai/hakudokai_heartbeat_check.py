@@ -3,7 +3,7 @@
 hakudokai_heartbeat_check.py — 博道会 heartbeat 不達検知 (Phase B-2 task 3)
 
 各 role の最新 heartbeat タイムスタンプを取得し、threshold 超過時に
-副医院長 escalation を pc_handshake INSERT (shogun_kind=escalation, priority=urgent)。
+将軍 (MainPC) escalation を pc_handshake INSERT (shogun_kind=escalation, priority=urgent)。
 
 cron 設定例 (setup-departure.md task 3 参照):
   */10 * * * * cd /path/to/hakudokai-shogun && \\
@@ -16,7 +16,7 @@ Usage:
 - threshold-min default 15: heartbeat sender が 5min 間隔の場合、3 連続欠損で escalation
 - escalation 重複防止: 同 role 1h 以内に既送信なら抑制 (idempotency_key で UNIQUE)
 - --dry-run: 検知のみ、INSERT しない (運用テスト用)
-- --escalate なし: status report のみ stdout、副医院長 INSERT しない (default safe mode)
+- --escalate なし: status report のみ stdout、将軍 INSERT しない (default safe mode)
 
 License: MIT (shogun upstream credit 保持)
 """
@@ -45,7 +45,14 @@ except ImportError:
     scan_for_pii = None  # type: ignore
 
 
-VALID_ROLES = ("fukuincho", "yama", "kuro", "sakura", "kouchan")
+# §18 PC×アカウント配置 (理事長殿御指示 2026-05-06):
+# MainPC (sasebo@sasebo.or.jp): shogun/karo/gunshi/ashigaru1-3、SecondPC (hakudoukai@gmail.com): ashigaru5-8。
+# ashigaru4 は欠番 (PC 境界)。旧体制名 (fukuincho/yama/kuro/sakura/kouchan) は §18 移行で廃止。
+VALID_ROLES = (
+    "shogun", "karo", "gunshi",
+    "ashigaru1", "ashigaru2", "ashigaru3",
+    "ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8",
+)
 CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
 
 
@@ -167,7 +174,8 @@ def _is_escalation_recent(sb, role: str, hours: int = 1) -> bool:
 
 def _send_escalation(sb, role: str, last_seen: datetime | None,
                      threshold_min: int, dry_run: bool) -> str | None:
-    """副医院長へ escalation INSERT。"""
+    """将軍 (MainPC) へ escalation INSERT。§18 移行で副医院長 (fukuincho) は廃止、
+    指揮系統は MainPC 上の shogun に直結。"""
     now = datetime.now(timezone.utc)
     last = last_seen.strftime("%Y-%m-%dT%H:%M:%SZ") if last_seen else "never"
     elapsed = (
@@ -185,7 +193,7 @@ def _send_escalation(sb, role: str, last_seen: datetime | None,
     idem = f"heartbeat-escalation-{role}-{bucket}"
     payload = {
         "from_pc": "main_pc",
-        "to_pc": "fukuincho",
+        "to_pc": "main_pc",  # §18: shogun は MainPC、escalation 受信先も MainPC に統一
         "priority": "urgent",
         "topic": f"heartbeat 不達 {role} (threshold {threshold_min}min)",
         "content": content,

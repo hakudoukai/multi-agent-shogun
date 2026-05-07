@@ -48,19 +48,24 @@ except ImportError:
 
 
 def _build_role_to_pc() -> dict:
-    """Phase B-1: yama 独立化対応 (PHASE_B_ROADMAP §1 task 4)。
+    """§18 PC×アカウント配置 (理事長殿御指示 2026-05-06) に基づく role → pc マッピング。
 
-    Phase A 同居運用: yama → fukuincho (default)。
-    Phase B 独立スレ運用: HAKUDOKAI_YAMA_PC env で別 PC 識別子に切替可能。
-    後方互換のため未設定時は Phase A 挙動。
+    MainPC (sasebo@sasebo.or.jp): shogun / karo / gunshi / ashigaru1 / ashigaru2 + 非常時 ashigaru3。
+    SecondPC (hakudoukai@gmail.com): ashigaru5 / ashigaru6 / ashigaru7 + 非常時 ashigaru8。
+    ashigaru4 は欠番 (PC 境界の視覚的区切り)。
+    旧体制名 (fukuincho/yama/kuro/sakura/kouchan) は §18 移行で廃止。
     """
-    yama_pc = os.environ.get("HAKUDOKAI_YAMA_PC", "fukuincho")
     return {
-        "fukuincho": "fukuincho",
-        "yama": yama_pc,
-        "kuro": "second_pc",
-        "sakura": "second_pc",
-        "kouchan": "main_pc",
+        "shogun": "main_pc",
+        "karo": "main_pc",
+        "gunshi": "main_pc",
+        "ashigaru1": "main_pc",
+        "ashigaru2": "main_pc",
+        "ashigaru3": "main_pc",
+        "ashigaru5": "second_pc",
+        "ashigaru6": "second_pc",
+        "ashigaru7": "second_pc",
+        "ashigaru8": "second_pc",
     }
 
 
@@ -104,7 +109,7 @@ def _idle_flag_path(role: str) -> str:
 # 互換維持のため初回起動時に Supabase へ import (best-effort)。
 
 CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
-NOTIFIED_BY_PC = os.environ.get("HAKUDOKAI_PC_ID", "")  # main_pc / second_pc / fukuincho 等
+NOTIFIED_BY_PC = os.environ.get("HAKUDOKAI_PC_ID", "")  # §18 配置: main_pc / second_pc
 
 
 def _notified_cache_path(role: str) -> str:

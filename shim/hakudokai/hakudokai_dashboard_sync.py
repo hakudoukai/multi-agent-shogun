@@ -8,7 +8,7 @@ Supabase pc_handshake から最新 status を取得し、~/.openclaw/dashboard.m
 
 cron 設定例 (setup-departure.md task 2 参照):
   */5 * * * * cd /path/to/hakudokai-shogun && \\
-    HAKUDOKAI_ROLE=kuro python3 scripts/hakudokai_dashboard_sync.py
+    HAKUDOKAI_ROLE=karo python3 scripts/hakudokai_dashboard_sync.py
 
 Usage:
   hakudokai_dashboard_sync.py [--out PATH] [--dry-run] [--lookback-min N]
@@ -40,7 +40,14 @@ except ImportError:
     scan_for_pii = None  # type: ignore
 
 
-VALID_ROLES = ("fukuincho", "yama", "kuro", "sakura", "kouchan")
+# §18 PC×アカウント配置 (理事長殿御指示 2026-05-06):
+# MainPC (sasebo@sasebo.or.jp): shogun/karo/gunshi/ashigaru1-3、SecondPC (hakudoukai@gmail.com): ashigaru5-8。
+# ashigaru4 は欠番 (PC 境界)。旧体制名 (fukuincho/yama/kuro/sakura/kouchan) は §18 移行で廃止。
+VALID_ROLES = (
+    "shogun", "karo", "gunshi",
+    "ashigaru1", "ashigaru2", "ashigaru3",
+    "ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8",
+)
 CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
 
 
