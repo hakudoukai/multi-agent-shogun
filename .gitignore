@@ -115,6 +115,10 @@
 !scripts/bulk_ack.sh
 !scripts/agent_health_check.sh
 
+# Pre-action check scripts (§19 Post-Incident Lessons Capture)
+!scripts/checks/
+!scripts/checks/*.sh
+
 
 # SayTask (sample template only, not actual data)
 !saytask/
@@ -181,6 +185,11 @@
 !skills/shogun-screenshot/scripts/
 !skills/shogun-screenshot/scripts/*.sh
 !skills/shogun-screenshot/scripts/*.py
+# §19 Post-Incident skills
+!skills/pane-identity-verify/
+!skills/pane-identity-verify/SKILL.md
+!skills/lessons-to-skill/
+!skills/lessons-to-skill/SKILL.md
 
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/

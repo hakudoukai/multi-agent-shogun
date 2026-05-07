@@ -10,6 +10,18 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"${CLAUDE_TOOL_INPUT:-}\" | grep -qE '(tmux split-window|tmux kill-pane|tmux respawn-pane)'; then bash scripts/checks/pane_identity.sh >&2 || true; fi; exit 0",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "permissions": {
