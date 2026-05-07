@@ -154,8 +154,13 @@ if [[ -x "$PYTHON" ]]; then
     PYTHON_AVAILABLE=true
 fi
 
-# Agent definitions (from shutsujin_departure.sh)
-AGENTS=("karo" "ashigaru1" "ashigaru2" "ashigaru3" "ashigaru4" "ashigaru5" "ashigaru6" "ashigaru7" "gunshi")
+# Agent definitions (§18 PC×アカウント配置 — CLAUDE.md §18.1)
+# 通常運用: MainPC karo + ashigaru1-3 + gunshi / SecondPC ashigaru5-7 / 非常時 ashigaru8。
+# ashigaru4 = 欠番 (PC 境界の視覚的区切り)。
+# 注意: pane_idx はループ index ベースで MainPC 5-pane 配置 (karo,ashigaru1-3,gunshi)
+#       の先頭 4 要素のみ正しい。SecondPC ashigaru (5-8) は別 tmux のため pane lookup
+#       は本スクリプトでは不可で、task YAML / inbox 表示のみ有効。
+AGENTS=("karo" "ashigaru1" "ashigaru2" "ashigaru3" "ashigaru5" "ashigaru6" "ashigaru7" "ashigaru8" "gunshi")
 
 # pane-base-index
 PANE_BASE=$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)

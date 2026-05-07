@@ -15,8 +15,8 @@
 #   # 同一CLI内でモデルだけ変更（Sonnet → Opus）
 #   bash scripts/switch_cli.sh ashigaru3 --model claude-opus-4-6
 #
-#   # 全足軽を一括切替
-#   for i in $(seq 1 7); do bash scripts/switch_cli.sh ashigaru$i --type claude --model claude-sonnet-4-6; done
+#   # 全足軽を一括切替 (§18 配置: 1-3 + 5-8、4 は欠番)
+#   for i in 1 2 3 5 6 7 8; do bash scripts/switch_cli.sh ashigaru$i --type claude --model claude-sonnet-4-6; done
 #
 # Flow:
 #   1. (Optional) settings.yaml を更新
@@ -48,7 +48,7 @@ log() {
 usage() {
     echo "Usage: $0 <agent_id> [--type <cli_type>] [--model <model_name>]"
     echo ""
-    echo "  agent_id   karo, ashigaru1-7, gunshi"
+    echo "  agent_id   karo, ashigaru1-3, ashigaru5-8, gunshi (§18: 4 = 欠番)"
     echo "  --type     claude | codex | copilot | kimi"
     echo "  --model    claude-sonnet-4-6 | claude-opus-4-6 | gpt-5.3-codex | etc."
     echo ""
@@ -81,18 +81,22 @@ resolve_pane() {
     local pane_base
     pane_base=$(tmux show-options -t multiagent -v @pane_base 2>/dev/null || echo "0")
 
+    # §18 PC×アカウント配置 (CLAUDE.md §18.1) — ashigaru4 は欠番のため非対応。
+    # SecondPC ashigaru5-8 は別 tmux のため、フォールバック固定マッピングは
+    # MainPC 視点での概念位置を保持する (実 SecondPC pane lookup は Phase 1 の
+    # @agent_id 動的検索で吸収)。MainPC ↔ SecondPC を跨ぐ switch_cli は通常想定外。
     case "$agent_id" in
         karo)       echo "multiagent:agents.$((pane_base + 0))" ;;
         ashigaru1)  echo "multiagent:agents.$((pane_base + 1))" ;;
         ashigaru2)  echo "multiagent:agents.$((pane_base + 2))" ;;
         ashigaru3)  echo "multiagent:agents.$((pane_base + 3))" ;;
-        ashigaru4)  echo "multiagent:agents.$((pane_base + 4))" ;;
         ashigaru5)  echo "multiagent:agents.$((pane_base + 5))" ;;
         ashigaru6)  echo "multiagent:agents.$((pane_base + 6))" ;;
         ashigaru7)  echo "multiagent:agents.$((pane_base + 7))" ;;
-        gunshi)     echo "multiagent:agents.$((pane_base + 8))" ;;
+        ashigaru8)  echo "multiagent:agents.$((pane_base + 8))" ;;
+        gunshi)     echo "multiagent:agents.$((pane_base + 4))" ;;
         *)
-            log "ERROR: Unknown agent_id: $agent_id"
+            log "ERROR: Unknown agent_id: $agent_id (§18: ashigaru4 は欠番)"
             return 1
             ;;
     esac

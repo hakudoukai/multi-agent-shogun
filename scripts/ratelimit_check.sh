@@ -41,7 +41,9 @@ CODEX_CONTEXT_CRIT=10
 CODEX_LIMIT_HITS_WARN=3
 
 # ─── Agent list (dynamic from settings.yaml) ───
-_ashigaru_ids_str=$(get_ashigaru_ids 2>/dev/null || echo "ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7")
+# §18 PC×アカウント配置 (CLAUDE.md §18.1): ashigaru1-3 + ashigaru5-8 (4 = 欠番)。
+# settings.yaml 読取失敗時の fallback も §18 配置に合わせる。
+_ashigaru_ids_str=$(get_ashigaru_ids 2>/dev/null || echo "ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8")
 ALL_AGENTS=("shogun" "karo")
 for _aid in $_ashigaru_ids_str; do ALL_AGENTS+=("$_aid"); done
 ALL_AGENTS+=("gunshi")
