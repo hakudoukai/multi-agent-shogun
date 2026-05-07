@@ -27,6 +27,7 @@ done
 # ─── Load shared libraries ───
 source "$SCRIPT_DIR/lib/agent_status.sh"
 source "$SCRIPT_DIR/lib/cli_adapter.sh"
+source "$SCRIPT_DIR/lib/_section18_roles.sh"
 
 PYTHON="${SCRIPT_DIR}/.venv/bin/python3"
 
@@ -42,8 +43,17 @@ CODEX_LIMIT_HITS_WARN=3
 
 # ─── Agent list (dynamic from settings.yaml) ───
 # §18 PC×アカウント配置 (CLAUDE.md §18.1): ashigaru1-3 + ashigaru5-8 (4 = 欠番)。
-# settings.yaml 読取失敗時の fallback も §18 配置に合わせる。
-_ashigaru_ids_str=$(get_ashigaru_ids 2>/dev/null || echo "ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8")
+# settings.yaml 読取失敗時の fallback は _section18_roles.sh の SoT 定義から
+# 自動構築する (cycle2 D1 fix: ハードコードされた一覧の二重管理を排除)。
+_ashigaru_ids_str=$(get_ashigaru_ids 2>/dev/null || true)
+if [[ -z "$_ashigaru_ids_str" ]]; then
+    _ashigaru_ids_str=""
+    for _aid in "${SECTION18_MAINPC_PANE_ORDER[@]}" "${SECTION18_SECONDPC_AGENTS[@]}"; do
+        if [[ "$_aid" == ashigaru* ]]; then
+            _ashigaru_ids_str+="${_aid} "
+        fi
+    done
+fi
 ALL_AGENTS=("shogun" "karo")
 for _aid in $_ashigaru_ids_str; do ALL_AGENTS+=("$_aid"); done
 ALL_AGENTS+=("gunshi")
