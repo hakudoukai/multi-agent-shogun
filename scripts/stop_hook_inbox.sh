@@ -115,6 +115,18 @@ fi
 # Count unread messages using grep (fast, no python dependency)
 UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
 
+# Mass-unread guard (2026-05-07 真因対策):
+# 大量未読 (>5件) で block すると claude が turn 内で大量処理を試み、
+# その bash 実行で inbox_write 連鎖 → 自己増殖ループに陥る (5/7 18:00頃の事故)。
+# >5件は block せず、idle に戻して bulk ack を agent or human に委ねる。
+MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+    FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+    touch "$FLAG"
+    echo "[stop_hook] $AGENT_ID has ${UNREAD_COUNT} unread (> ${MASS_UNREAD_THRESHOLD}) — refusing to block (loop防止). bulk ack 推奨。" >&2
+    exit 0
+fi
+
 FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
 if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
     touch "$FLAG"

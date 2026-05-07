@@ -26,6 +26,16 @@ if [ "$FROM" = "$TARGET" ]; then
     exit 1
 fi
 
+# Amplification guard (2026-05-07 真因対策):
+# stop_hook block + claude bash 経由の自己増殖ループ防止。
+# content に「[<from>→<target>][<type>]」パターンが 3 回以上含まれていたら、
+# 既に増幅された content の再送信と判定して reject。
+_AMP_PATTERN_COUNT=$(echo "$CONTENT" | grep -oE '\[[a-zA-Z_0-9]+→[a-zA-Z_0-9]+\]\[[a-zA-Z_0-9]+\]' | wc -l)
+if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+    echo "[inbox_write] REJECTED: amplification loop detected (${_AMP_PATTERN_COUNT} embedded headers in content, threshold=3) target=$TARGET from=$FROM" >&2
+    exit 1
+fi
+
 # Cross-PC bridge: if target agent is on a different PC, also INSERT to Supabase
 _cross_pc_bridge() {
     local target="$1"
@@ -127,7 +137,11 @@ PYEOF
 }
 
 # Trigger cross-PC bridge (non-blocking, runs in background)
-_cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM" &
+# 緊急停止 2026-05-07 18:23: 連続 INSERT loop 発生中、source 不明
+# ~/.openclaw/disable_cross_pc_bridge flag 存在時は cross_pc_bridge を起動しない
+if [ ! -f "$HOME/.openclaw/disable_cross_pc_bridge" ]; then
+    _cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM" &
+fi
 
 # Initialize inbox if not exists
 if [ ! -f "$INBOX" ]; then
