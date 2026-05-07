@@ -600,18 +600,35 @@ else
 fi
 
 # §18 MainPC 5 panes vertical 構成（karo + ashigaru1-3 + gunshi）
-# pane_index でなく pane_id (#{pane_id}) を捕捉して順序を厳格に保証する。
+# pane_index でなく pane_id (#{pane_id} → %N) を捕捉して順序を厳格に保証する。
+#
+# tmux 仕様 (確証):
+#   - format string '#{pane_id}' は -F / display-message -p で展開され、結果は
+#     '%N' (例: '%0', '%5') を返す。これは tmux 標準のターゲット指定子で、
+#     `tmux split-window -t '%N'` のように直接 -t に渡せる。
+#   - cycle2 監査 B1 (2026-05-07 msg_20260507_191942) — Codex 指摘の懸念
+#     (#{pane_id} vs %pane_id) は format 展開と target 指定の混同で false
+#     positive。ただし防御的に、各 pane_id が ^%[0-9]+$ 形式である事を
+#     regex assertion でガードし、tmux 仕様逸脱時には即時 abort する。
+#
 # 軍師 cycle1 監査 B2 (2026-05-07): split-window -t window では active pane に
 # 依存し、AGENT_IDS index と pane の対応がズレる懸念があった。本実装では
 # 各 split で生成された pane_id を配列化し、後段の set-option で pane_id を直接
 # 指定することで「足軽1 のはずが karo に @agent_id を上書きする」事故を排除する。
 # (2026-02-13 家老誤認事件と同型回帰の防止 — gunshi 北極星整合)
 PANE_IDS=()
-PANE_IDS[0]=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+_init_pid=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+if ! [[ "$_init_pid" =~ ^%[0-9]+$ ]]; then
+    echo "[shutsujin] FATAL: tmux display-message が想定外の pane_id を返した: '$_init_pid'"
+    echo "  期待形式: %N (例: %0, %5)。tmux バージョン or format 仕様変更を確認されたし。"
+    exit 5
+fi
+PANE_IDS[0]="$_init_pid"
 for _split_i in 1 2 3 4; do
     _new_pid=$(tmux split-window -v -t "${PANE_IDS[$((_split_i-1))]}" -P -F '#{pane_id}')
-    if [[ -z "$_new_pid" ]]; then
-        echo "[shutsujin] FATAL: pane split failed at index $_split_i"
+    if [[ -z "$_new_pid" ]] || ! [[ "$_new_pid" =~ ^%[0-9]+$ ]]; then
+        echo "[shutsujin] FATAL: split-window index $_split_i で想定外の pane_id: '$_new_pid'"
+        echo "  期待形式: %N (例: %1, %3)。split 失敗 or tmux 仕様変更を確認されたし。"
         exit 5
     fi
     PANE_IDS[$_split_i]="$_new_pid"
@@ -637,6 +654,18 @@ done
 PANE_LABELS+=("gunshi")
 AGENT_IDS+=("gunshi")
 PANE_COLORS+=("yellow")
+
+# §18 整合性契約: AGENT_IDS と PANE_IDS は後段ループで同 index 参照するため
+# 件数完全一致を強制 (cycle2 監査 B2 medium 解消)。不一致時は @agent_id 設定が
+# 誤った pane に書き込まれ、別エージェントとして起動する事故が発生する。
+if [[ ${#AGENT_IDS[@]} -ne ${#PANE_IDS[@]} ]]; then
+    echo "[shutsujin] FATAL: AGENT_IDS と PANE_IDS の件数不一致"
+    echo "  AGENT_IDS=${#AGENT_IDS[@]} (${AGENT_IDS[*]})"
+    echo "  PANE_IDS=${#PANE_IDS[@]}"
+    echo "  原因候補: settings.yaml pc_mapping.main_pc.agents の ashigaru 件数 ≠ 3"
+    echo "  期待: §18 MainPC = karo + ashigaru1-3 + gunshi = 5 体"
+    exit 5
+fi
 
 # モデル名設定（pane-border-format で常時表示するため）- 動的構築
 MODEL_NAMES=()
