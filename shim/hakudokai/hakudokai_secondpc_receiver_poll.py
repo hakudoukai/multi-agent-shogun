@@ -87,8 +87,15 @@ retry_tracker = load_retry_tracker()
 
 # Agent pane mapping for nudge
 AGENT_PANES = {
-    "ashigaru2": "secondpc:0.0",
-    "ashigaru8": "secondpc:1.0",
+    # §18 SecondPC 配置 (CLAUDE.md §18.1、2026-05-06 移行):
+    #   通常 3体: ashigaru5/6/7 = multiagent:agents.0/1/2
+    #   非常時 +1: ashigaru8 = multiagent:agents.3
+    "ashigaru5": "multiagent:agents.0",
+    "ashigaru6": "multiagent:agents.1",
+    "ashigaru7": "multiagent:agents.2",
+    "ashigaru8": "multiagent:agents.3",
+    # 旧体制 (廃止) — sakura(ashigaru2) は §18 で MainPC 所属に変更
+    # "ashigaru2": "secondpc:0.0",  # 削除済 (= MainPC 所属、SecondPC で受信すべきでない)
 }
 
 def handle_file_sync(msg, script_dir):
@@ -150,15 +157,43 @@ def handle_file_sync(msg, script_dir):
 
 
 def detect_target(content, topic):
-    """Detect target agent from topic/content."""
-    if "cross_pc_inbox_ashigaru8" in topic:
-        return "ashigaru8"
-    if "ashigaru8" in topic or "kuro" in topic:
-        return "ashigaru8"
+    """Detect target agent from topic/content (§18 PC配置準拠).
+
+    旧体制 sakura/kuro hardcode 廃止。topic=cross_pc_inbox_<agent> から
+    正規表現で抽出し、SecondPC 所属 agent (§18 配置) のみ accept。
+    不明な場合は ashigaru5 フォールバック (旧 sakura 後継、警告ログ)。
+
+    バグ修正 2026-05-07: 旧コードは default=ashigaru2 で全配信が ashigaru2 に
+    誤転送されていた (家老が ashigaru5/6/7 に発令しても全部 ashigaru2 へ)。
+    """
+    import re
+    valid_secondpc = frozenset(["ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"])
+
+    # Primary: parse topic (most reliable)
+    m = re.match(r'cross_pc_inbox_(\w+)', topic)
+    if m:
+        target = m.group(1)
+        if target in valid_secondpc:
+            return target
+
+    # Secondary: parse content header [from→target]
+    m = re.search(r'\[(\w+)→(\w+)\]', content)
+    if m:
+        target = m.group(2)
+        if target in valid_secondpc:
+            return target
+
+    # Fallback: keyword
     text = (content + " " + topic).lower()
-    if "ashigaru8" in text or "kuro" in text or "クロ" in content:
+    for agent in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
+        if agent in text:
+            return agent
+    if "kuro" in text or "クロ" in content:
         return "ashigaru8"
-    return "ashigaru2"  # default to sakura
+
+    # Default: ashigaru5 (旧 sakura 後継、警告)
+    log(f"WARN: target unknown for topic={topic}, falling back to ashigaru5")
+    return "ashigaru5"
 
 def send_nudge(agent_id, count):
     """Send minimal nudge (inboxN only, no content)."""
@@ -230,7 +265,7 @@ for msg in new_msgs:
             # Determine target agent for nudge
             try:
                 payload = json.loads(content)
-                target = payload.get("target_agent", "ashigaru2")
+                target = payload.get("target_agent", "ashigaru5")  # §18: default を ashigaru5 (旧 sakura 後継)
             except (json.JSONDecodeError, TypeError):
                 target = detect_target(content, topic)
             agent_deliveries[target] = agent_deliveries.get(target, 0) + 1
