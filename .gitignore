@@ -131,6 +131,7 @@
 !scripts/bulk_ack.sh
 !scripts/agent_health_check.sh
 !scripts/setup_known_hosts.sh
+!scripts/karo_overload_monitor.sh
 
 # Pre-action check scripts (§19 Post-Incident Lessons Capture)
 !scripts/checks/
