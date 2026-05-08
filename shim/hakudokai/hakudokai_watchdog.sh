@@ -24,10 +24,13 @@
 #   - 再起動失敗時にdev_lessonsへ自動記録
 #   - recurrence>=3で改善提案自動dispatch
 #
-# §15 SH6 (Phase 2 追加):
-#   - 同一 agent 再起動 5/h cap → 超過時 ntfy 緊急発火 + 自動再起動停止
-#   - state file: /tmp/watchdog_restart_count_<agent>.json
+# §15 SH6 (Phase 2 追加 + cmd_agent_health_check_unified_001 hardening):
+#   - 同一 agent 再起動 5/h cap → 超過時 ntfy 緊急発火 + 指数バックオフ復活機構
+#   - state file: /tmp/watchdog_restart_count_<agent>.json (= 5/h sliding window)
 #   - alert dump: /tmp/watchdog_alert_<agent>_<ts>.json (ERR-WATCHDOG-001)
+#   - backoff state: /tmp/watchdog_backoff_<agent>.json (= 死亡検知後復活、ERR-WATCHDOG-002)
+#   - backoff schedule: 5min → 10min → 20min → 40min → 80min → 60min cap
+#     永久 dead lock を回避、復活成功時は cap state リセット (= 旧版の hard-block 廃止)。
 #
 # 手動停止フラグ (Watcher Design Principles 準拠):
 #   - ~/.openclaw/global_disable: 全 watchdog 機能無効化
@@ -234,6 +237,83 @@ restart_cap_exceeded() {
   local agent="$1" count
   count=$(restart_count_window "$agent")
   [ "$count" -ge "$RESTART_CAP_PER_HOUR" ]
+}
+
+# ─── ERR-WATCHDOG-002: exponential backoff revival after cap breach ─────
+# 旧版 (= cmd_phase2 cycle1) は cap 到達後 hard-block で永久 dead lock を引き起こし、
+# 全 watcher が 30s 周期で死亡 → 再起動拒否を繰り返す death loop が発生 (= 信長殿
+# msg_134138 R1 統合命令の CRITICAL 案件、cmd_watchdog_health_root_cause_001)。
+# 本版は cap 到達後も指数バックオフ (5min → 10min → 20min → 40min → 80min → 60min cap)
+# で復活を試行、復活成功時は cap state を完全リセット。
+BACKOFF_BASE_SEC=300        # 5 min
+BACKOFF_MAX_SEC=3600        # 60 min
+backoff_state_file() { echo "/tmp/watchdog_backoff_$1.json"; }
+
+# stdout: number of consecutive cap breaches (= 0 when no breach yet)
+backoff_breach_count() {
+  local agent="$1"
+  local file
+  file=$(backoff_state_file "$agent")
+  if [ ! -f "$file" ]; then echo 0; return 0; fi
+  python3 - "$file" 2>/dev/null <<'PY' || echo 0
+import json, sys
+try:
+    with open(sys.argv[1]) as f: data = json.load(f)
+    print(int(data.get('cap_breaches', 0)))
+except Exception:
+    print(0)
+PY
+}
+
+# Returns 0 (= true / skip) when within backoff window; 1 (= allow) when expired or no breach.
+# stdout: remaining seconds (informational) when skipping.
+backoff_should_skip() {
+  local agent="$1"
+  local file
+  file=$(backoff_state_file "$agent")
+  [ ! -f "$file" ] && return 1
+  python3 - "$file" "$BACKOFF_BASE_SEC" "$BACKOFF_MAX_SEC" 2>/dev/null <<'PY'
+import json, sys, time
+path, base, cap = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+try:
+    with open(path) as f: d = json.load(f)
+except Exception:
+    sys.exit(1)
+breaches = int(d.get('cap_breaches', 0))
+last = int(d.get('last_attempt', 0))
+if breaches <= 0:
+    sys.exit(1)
+backoff = min(base * (2 ** (breaches - 1)), cap)
+elapsed = int(time.time()) - last
+if elapsed < backoff:
+    print(f"{backoff - elapsed}s remaining (breach #{breaches}, backoff={backoff}s)")
+    sys.exit(0)
+sys.exit(1)
+PY
+}
+
+# Increment breach count + record attempt timestamp (= called at each revival attempt).
+backoff_record_breach() {
+  local agent="$1"
+  local file
+  file=$(backoff_state_file "$agent")
+  python3 - "$file" 2>/dev/null <<'PY'
+import json, sys, time
+path = sys.argv[1]
+try:
+    with open(path) as f: d = json.load(f)
+except Exception:
+    d = {}
+d['cap_breaches'] = int(d.get('cap_breaches', 0)) + 1
+d['last_attempt'] = int(time.time())
+with open(path, 'w') as f: json.dump(d, f)
+PY
+}
+
+# Reset backoff state on successful revival (= 復活成功時の完全 reset)。
+backoff_reset() {
+  local agent="$1"
+  rm -f "$(backoff_state_file "$agent")" 2>/dev/null || true
 }
 
 # Lazy init for dynamically-discovered agents (= registry-loaded entries).
@@ -452,19 +532,55 @@ check_and_restart_inbox() {
       log "inbox_watcher[$agent] DEAD — DISABLED by flag (skipping restart)"
       return 1
     fi
-    # §15 SH6: 5/h restart cap (= 暴走防止、過去 SecondPC 事故対策)
+    # §15 SH6 + ERR-WATCHDOG-002: 5/h restart cap + 指数バックオフ復活機構
+    # (= 旧版 hard-block 廃止、永久 dead lock を回避、cmd_watchdog_health_root_cause_001)。
     if restart_cap_exceeded "$agent"; then
       local cap_flag="/tmp/watchdog_alert_${agent}_capped"
+      # 初回 cap breach 時のみ ERR-WATCHDOG-001 で urgent alert + dump (1 回限り)
       if [ ! -f "$cap_flag" ]; then
-        log "RESTART CAP EXCEEDED [$agent]: ${RESTART_CAP_PER_HOUR}/h — escalating + skipping"
-        send_urgent_alert "$agent" "[ERR-WATCHDOG-001] inbox_watcher[${agent}] exceeded ${RESTART_CAP_PER_HOUR} restarts/hour. Auto-restart disabled. Manual investigation required."
+        log "RESTART CAP EXCEEDED [$agent]: ${RESTART_CAP_PER_HOUR}/h — entering exponential backoff revival"
+        send_urgent_alert "$agent" "[ERR-WATCHDOG-001] inbox_watcher[${agent}] exceeded ${RESTART_CAP_PER_HOUR} restarts/hour. Backoff revival enabled (5→10→20→40→80→60min cap)."
         cat > "/tmp/watchdog_alert_${agent}_$(date +%s).json" <<EOF
-{"err_code":"ERR-WATCHDOG-001","alert":"restart_cap_exceeded","agent":"${agent}","pane":"${pane}","timestamp":"$(date -u '+%Y-%m-%dT%H:%M:%SZ')","cap_per_hour":${RESTART_CAP_PER_HOUR},"window_seconds":3600}
+{"err_code":"ERR-WATCHDOG-001","alert":"restart_cap_exceeded","agent":"${agent}","pane":"${pane}","timestamp":"$(date -u '+%Y-%m-%dT%H:%M:%SZ')","cap_per_hour":${RESTART_CAP_PER_HOUR},"window_seconds":3600,"revival":"exponential_backoff"}
 EOF
-        log_struct "CRITICAL" "restart_cap_exceeded" "$agent" "{\"pane\":\"${pane}\",\"cap\":${RESTART_CAP_PER_HOUR}}"
+        log_struct "CRITICAL" "restart_cap_exceeded" "$agent" "{\"pane\":\"${pane}\",\"cap\":${RESTART_CAP_PER_HOUR},\"revival\":\"exponential_backoff\"}"
         touch "$cap_flag"
       fi
-      return 1
+      # 指数バックオフ判定: window 内なら skip、expired なら復活試行。
+      if backoff_should_skip "$agent" >/dev/null; then
+        return 1
+      fi
+      # Backoff window expired → 1 回だけ復活試行 (= 新 ERR-WATCHDOG-002 escalation)。
+      local breach_n
+      breach_n=$(backoff_breach_count "$agent")
+      log "BACKOFF REVIVAL ATTEMPT [$agent] (breach #$((breach_n + 1))) — backoff expired"
+      log_struct "WARN" "backoff_revival_attempt" "$agent" "{\"pane\":\"${pane}\",\"breach\":$((breach_n + 1))}"
+      backoff_record_breach "$agent"
+      restart_count_record "$agent"
+      if start_inbox_watcher "$agent" "$pane"; then
+        sleep 5
+        if pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then
+          log "BACKOFF REVIVAL SUCCESS [$agent] — resetting cap state"
+          log_struct "INFO" "backoff_revival_success" "$agent" "{\"pane\":\"${pane}\"}"
+          backoff_reset "$agent"
+          rm -f "$(restart_count_file "$agent")" 2>/dev/null || true
+          rm -f "$cap_flag" 2>/dev/null || true
+        fi
+      else
+        # 連続失敗時のみ ERR-WATCHDOG-002 escalation (= 3 breach 以降 = 35min+ 経過)
+        if [ "$((breach_n + 1))" -ge 3 ]; then
+          local prolonged_flag="/tmp/watchdog_alert_${agent}_prolonged"
+          if [ ! -f "$prolonged_flag" ]; then
+            send_urgent_alert "$agent" "[ERR-WATCHDOG-002] inbox_watcher[${agent}] prolonged death loop (${breach_n} backoff breaches). Manual investigation required."
+            cat > "/tmp/watchdog_alert_${agent}_prolonged_$(date +%s).json" <<EOF
+{"err_code":"ERR-WATCHDOG-002","alert":"prolonged_death_loop","agent":"${agent}","pane":"${pane}","timestamp":"$(date -u '+%Y-%m-%dT%H:%M:%SZ')","backoff_breaches":${breach_n}}
+EOF
+            log_struct "CRITICAL" "prolonged_death_loop" "$agent" "{\"pane\":\"${pane}\",\"breaches\":${breach_n}}"
+            touch "$prolonged_flag"
+          fi
+        fi
+      fi
+      return 0
     fi
     log "ALERT: inbox_watcher[$agent] DEAD — restarting (fail_count=${RESTART_FAIL_COUNT[$agent]}, hourly=$(restart_count_window "$agent"))"
     restart_count_record "$agent"
