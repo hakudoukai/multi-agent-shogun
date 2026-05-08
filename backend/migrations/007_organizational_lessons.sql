@@ -122,9 +122,19 @@ CREATE TRIGGER organizational_lessons_updated_at
 
 -- ============================================================
 -- (4) audit trigger (= INSERT / UPDATE / DELETE 全捕捉)
+--     SECURITY DEFINER: authenticated 経由で organizational_lessons を変更した場合でも
+--                       trigger は migration owner (postgres / supabase_admin 相当) の
+--                       elevated 権限で audit table へ INSERT する (= authenticated 直接の
+--                       audit INSERT policy 不要、改竄不能を担保)。
+--     SET search_path: SECURITY DEFINER と組合せた典型的な search_path 注入対策。
+--                       public + pg_temp に固定し、temp schema 経由の関数偽装を遮断。
 -- ============================================================
 CREATE OR REPLACE FUNCTION public.organizational_lessons_audit_log()
-RETURNS trigger LANGUAGE plpgsql AS $$
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, pg_temp
+AS $$
 DECLARE
     v_agent text := current_setting('app.current_agent', true);
 BEGIN
@@ -153,6 +163,14 @@ BEGIN
     RETURN NULL;
 END;
 $$;
+
+-- 関数 owner は migration 適用 role (= postgres / supabase_admin) のまま固定。
+-- 明示的 OWNER TO は環境差分 (Supabase / 自前 PG / pgserver fixture) が大きいため
+-- 記載しない (= migration apply 時の current role が owner となる暗黙挙動を採用)。
+-- SECURITY DEFINER ゆえ trigger 実行は本 owner 権限で行われる。
+
+-- 注: 関数のセキュリティ境界 — public schema 内の組織監査専用関数のため、引数なし、
+-- 副作用は audit table への append-only INSERT に限定。definer 権限濫用 risk なし。
 
 DROP TRIGGER IF EXISTS organizational_lessons_audit_trg ON public.organizational_lessons;
 CREATE TRIGGER organizational_lessons_audit_trg
@@ -229,8 +247,10 @@ CREATE POLICY organizational_lessons_audit_service_full ON public.organizational
     USING (true)
     WITH CHECK (true);
 
--- 注: authenticated に対する INSERT は付与しない (= trigger が SECURITY DEFINER 相当で動作するか
--- 各 deployment 環境次第。Supabase 環境では service_role 経由 + trigger で記録される運用を想定)。
+-- 注: authenticated に対する INSERT は付与しない。
+-- trigger 関数 organizational_lessons_audit_log() は SECURITY DEFINER で定義済 (= (4) 参照)
+-- ゆえ、authenticated が organizational_lessons を変更した際の audit INSERT は migration
+-- owner (= elevated) 権限で実行され、authenticated 直接の audit INSERT 権限は不要。
 -- UPDATE / DELETE policy も付与しない = authenticated は audit row を改竄不可。
 
 COMMIT;

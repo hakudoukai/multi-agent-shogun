@@ -230,6 +230,7 @@
 
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/
+.venv-pg-test/
 
 # Test specs
 !tests/specs/
@@ -266,6 +267,10 @@ tests/specs/osato_lms_*
 !tests/checks/fixtures/*.sh
 !tests/test_helper/
 !tests/test_helper/README.md
+# migrations/ (cmd_organizational_lessons_supabase_001 cycle2: 007 RLS + SECURITY DEFINER apply test)
+!tests/migrations/
+!tests/migrations/*.sh
+!tests/migrations/*.py
 
 # CI/CD
 !.github/

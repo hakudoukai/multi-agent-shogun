@@ -6,14 +6,22 @@
 --   migration apply に問題が発生した場合、または table 設計を再構築する場合に逆順実行する。
 --
 -- 安全装置:
---   - audit table を先に drop しないこと (= main table の drop trigger により記録されるため)
+--   - 本 rollback は (4) で trigger を drop した後に table を drop するため、
+--     DROP TABLE 時の削除イベントは audit log に **記録されない**。
+--     audit log を保全したい場合は本 script 実行**前**に必ず export すること (下記 必須手順)。
 --   - DROP TRIGGER は table drop 前に明示
 --   - service_role 推奨 (= RLS bypass)
 --
+-- 適用前 必須手順:
+--   1. SELECT count(*) FROM public.organizational_lessons;             -- row 数確認
+--   2. SELECT count(*) FROM public.organizational_lessons_audit;       -- audit row 数確認
+--   3. pg_dump -t public.organizational_lessons_audit > audit_export.sql
+--      (= trigger drop 前に必ず export、本 rollback は audit を破壊する破壊的操作)
+--   4. organizational_lessons 本体も必要なら pg_dump で別途 export
+--
 -- Boy Scout Rule:
---   - 適用前に SELECT count(*) FROM public.organizational_lessons; で row 数確認
---   - audit log は别途 export (CSV / pg_dump) してから rollback すること推奨
---   - rollback 履歴は organizational_lessons_audit を pg_dump で残してから drop
+--   - 上記 必須手順 を実行せずに本 rollback を流すと audit 履歴が完全消失する
+--   - rollback は idempotent (= 再実行可)、ただし二度目以降は drop 対象が既に存在しない
 --
 -- License: MIT (shogun upstream credit 保持)
 
@@ -64,8 +72,11 @@ DROP INDEX IF EXISTS public.organizational_lessons_incident_date_idx;
 -- ============================================================
 -- (7) table drop
 -- ============================================================
--- 注: audit table を先に drop すると、main table 側の trigger が動作した場合に
--- 記録先が消えることになるが、本 rollback は trigger も既に drop 済ゆえ安全。
+-- 注: 本 rollback は (4) で trigger を drop 済のため、以下 DROP TABLE の
+-- 削除イベントは audit log に記録されない (= ヘッダ「適用前 必須手順」参照、
+-- audit export は本 script 実行前に完了している前提)。
+-- audit table を main table より先に drop するのは、その方が安全だが、いずれにせよ
+-- trigger drop 後ゆえ順序による audit 記録挙動への影響はない。
 DROP TABLE IF EXISTS public.organizational_lessons_audit;
 DROP TABLE IF EXISTS public.organizational_lessons;
 
