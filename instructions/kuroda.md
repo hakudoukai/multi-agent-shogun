@@ -73,7 +73,9 @@ report_path: queue/reports/kuroda_report.yaml
 2. 対象 docs + scripts + 家康 verdict + 本多 verdict を読む
 3. §2 観点で議長 verdict 作成
 4. queue/reports/kuroda_report.yaml に audits.append で記録
-5. 信長 inbox に `report_received` で短文通知
+5. **直後に bash scripts/inbox_write.sh shogun "[黒田→信長] {要約}" audit_result kuroda 必須実行** (= 理事長殿明示直命 2026-05-08 22:30、本多 §0.5 同型義務化)
+   - 要約に overall_verdict + 整合性検出 conflicts + 推奨 actions 含む
+   - report への直接書込のみで完了とせず、信長即時受領経路を確保
 
 ## §4. verdict 形式
 
