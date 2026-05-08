@@ -63,6 +63,18 @@ CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 SUPABASE_API="${SUPABASE_URL}/rest/v1"
 CORR_ID="watchdog-$$-$(date +%s)"
 
+# §18 PC role (= MainPC | SecondPC、未設定時 MainPC)
+PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}"
+
+# Registry SSoT (Phase 1 で雛形作成済、Phase 2 動的読込)
+REGISTRY_FILE="${SCRIPT_DIR}/queue/pane_registry.yaml"
+
+# 手動停止フラグ (Watcher Design Principles)
+REGISTRY_UPDATING="$HOME/.openclaw/registry_updating"
+
+# Registry load status (= dashboard publishing field)
+REGISTRY_LOAD_STATUS="unknown"
+
 # Agents to monitor inbox_watcher.sh for
 INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8 shogun:shogun:0.0"
 
@@ -111,6 +123,61 @@ agent_alias_resolve() {
       *) echo "$1" ;;
     esac
   fi
+}
+
+# tmux pane existence check (= 不在 pane を kill 試行から除外).
+# `tmux list-panes -t <target>` returns non-zero when target absent or tmux not running.
+pane_exists() {
+  tmux list-panes -t "$1" >/dev/null 2>&1
+}
+
+# ─── Registry loading (Phase 2 必須 1) ─────────────────────────────────────
+# stdout: list of "agent_id:tmux_target" entries (one per line) for current PC_ROLE.
+# return: 0 = success (stdout has entries), 1 = degraded (caller should fallback).
+# Uses flock -s -w 5 (shared, 5s timeout) on REGISTRY_FILE to coexist with writers.
+# Sets REGISTRY_LOAD_STATUS = "ok" | "missing" | "parse_error" | "empty" | "updating".
+load_inbox_agents_from_registry() {
+  if [ ! -r "$REGISTRY_FILE" ]; then
+    log "registry: not readable ($REGISTRY_FILE) — fallback"
+    REGISTRY_LOAD_STATUS="missing"
+    return 1
+  fi
+
+  local script
+  script=$(cat <<'PY'
+import sys, yaml
+path, pc_role = sys.argv[1], sys.argv[2]
+try:
+    with open(path) as f:
+        data = yaml.safe_load(f)
+    panes = ((data or {}).get('pane_registry', {}) or {}).get('panes', []) or []
+    for p in panes:
+        if p.get('pc') != pc_role:
+            continue
+        aid = p.get('agent_id'); tgt = p.get('tmux_target')
+        if aid and tgt:
+            print(f"{aid}:{tgt}")
+except Exception as e:
+    sys.stderr.write(f"registry parse error: {e}\n")
+    sys.exit(2)
+PY
+)
+  local result rc
+  result=$(flock -s -w 5 "$REGISTRY_FILE" python3 -c "$script" "$REGISTRY_FILE" "$PC_ROLE" 2>>"$LOG")
+  rc=$?
+  if [ "$rc" -ne 0 ]; then
+    log "registry: parse FAILED (rc=$rc) — fallback to legacy"
+    REGISTRY_LOAD_STATUS="parse_error"
+    return 1
+  fi
+  if [ -z "$result" ]; then
+    log "registry: empty for pc=${PC_ROLE} — fallback to legacy"
+    REGISTRY_LOAD_STATUS="empty"
+    return 1
+  fi
+  REGISTRY_LOAD_STATUS="ok"
+  printf '%s\n' "$result"
+  return 0
 }
 
 send_urgent_alert() {
