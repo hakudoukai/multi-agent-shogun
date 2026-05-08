@@ -123,6 +123,7 @@
 !scripts/audit_meta_codex.sh
 !scripts/bulk_ack.sh
 !scripts/agent_health_check.sh
+!scripts/setup_known_hosts.sh
 
 # Pre-action check scripts (§19 Post-Incident Lessons Capture)
 !scripts/checks/
