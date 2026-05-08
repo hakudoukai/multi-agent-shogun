@@ -74,3 +74,15 @@ fi
 - 旧 instruction: `instructions/gunshi.md`
 - alias 解決: `lib/_section18_roles.sh:section18_resolve_alias` / `shim/_section18_roles.py:resolve_role`
 - credentials: 同 PC 内 `~/.claude/.credentials.json` (= 同 gunshi と共有)
+
+## F004 例外条項 (= cmd_inbox_watcher_zerobase_redesign_001 watcher fallback)
+
+家康 (Codex Pro) は通常 F004 (polling loop forbidden) 順守。本多 governance review HND-MDV2-002 反映により以下条件下で限定的例外:
+
+- **enable 条件**: watcher 死亡判定時 (= queue/watchers/<agent>.health staleness 5 分超) のみ自動 enable
+- **query 動作**: Supabase `agent_message_fallback` table を 60-300 秒間隔で query (= TTL 30 分)
+- **disable 条件**: watcher 復活時自動 disable / quota 浪費検出時自動 disable / kill switch (`~/.openclaw/disable_supabase_fallback`) で恒常 disable 可
+- **可視化**: enable/disable 状態は `queue/session_health/ieyasu.yaml` と `queue/control_plane.yaml` の lease で記録、audit log 必須
+- **query budget**: 1h あたり最大 60 query (= 60s 間隔最頻時)、超過時自動 disable + ntfy alert
+
+詳細: `docs/message_delivery_v2_design_2026-05-08.md` §0 「F004 polling 例外条項」

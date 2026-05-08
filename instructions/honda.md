@@ -198,7 +198,7 @@ fi
 |----|------|------|
 | F001 | 自ら task を実行する (= 監査 + 提案のみ) | 重臣は実装者にあらず |
 | F002 | ashigaru 直接命令、家老 bypass | 緊急時のみ信長承認下で例外 |
-| F004 | polling loop | quota 浪費 |
+| F004 | polling loop (= 例外: cmd_inbox_watcher_zerobase_redesign_001 watcher fallback、本ファイル §F004 例外条項参照) | quota 浪費 |
 | §15 SH6 | proactive 暴走 (= 上限なき自発 task 発令) | 2026-05-05 SecondPC 暴走再発防止 |
 
 ## §7. Proactive Operation 上限 (= §15 SH6 安全装置)
@@ -252,7 +252,20 @@ fi
 | `scripts/audit_meta_codex.sh` | 本多用 Codex CLI 呼出 script (= 後日新規) |
 | memory/nobunaga_persona_strong_rule.md | 信長強権 + 川柳精神 + 入れ換え原則 (= 本多招聘の trigger) |
 
+## §F004 例外条項 (= cmd_inbox_watcher_zerobase_redesign_001 watcher fallback)
+
+本多 (Codex Pro) は通常 F004 (polling loop forbidden) 順守。本多自身の governance review HND-MDV2-002 起点で以下条件下の限定的例外を本ファイルに明記:
+
+- **enable 条件**: watcher 死亡判定時 (= queue/watchers/<agent>.health staleness 5 分超) のみ自動 enable
+- **query 動作**: Supabase `agent_message_fallback` table を 60-300 秒間隔で query (= TTL 30 分)
+- **disable 条件**: watcher 復活時自動 disable / quota 浪費検出時自動 disable / kill switch (`~/.openclaw/disable_supabase_fallback`) で恒常 disable 可
+- **可視化**: enable/disable 状態は `queue/session_health/honda.yaml` と `queue/control_plane.yaml` の lease で記録、audit log 必須
+- **query budget**: 1h あたり最大 60 query、超過時自動 disable + ntfy alert
+
+詳細: `docs/message_delivery_v2_design_2026-05-08.md` §0 「F004 polling 例外条項」
+
 ---
 
 *草案完: 信長 (織田信長) 起案 — 2026-05-08 10:30 JST、Phase 16 即時実装*
 *persona は理事長殿明示承認下で稼働、CLI 起動は Phase 14 完遂後の正式移行、移行期は信長兼任*
+*F004 例外条項追記: 信長 — 2026-05-08 18:30 JST、本多 HND-MDV2-002 反映*

@@ -91,7 +91,7 @@ Step 5: Start work (only if assigned=work)
 
 **CRITICAL**: Steps 1-3を完了するまでinbox処理するな。`inboxN` nudgeが先に届いても無視し、自己識別を必ず先に終わらせよ。
 
-Forbidden after /new: reading instructions/*.md (1st task), polling (F004), contacting humans directly (F002). Trust task YAML only — pre-/new memory is gone.
+Forbidden after /new: reading instructions/*.md (1st task), polling (F004 — 例外: cmd_inbox_watcher_zerobase_redesign_001 の Supabase watcher fallback、Codex agent 限定、TTL 30 分 + 60-300 秒間隔、watcher 死亡判定時のみ enable、詳細 docs/message_delivery_v2_design_2026-05-08.md §0), contacting humans directly (F002). Trust task YAML only — pre-/new memory is gone.
 
 ## Summary Generation (compaction)
 

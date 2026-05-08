@@ -340,9 +340,11 @@ agent_inbox_path=$(get_inbox_path "hideyoshi")
 # returns: queue/inbox_v2/hideyoshi.yaml (workspace 内、symlink 排除)
 ```
 
-#### `scripts/lib/logger.sh` (新規)
+#### `scripts/lib/logger.sh` (新規 — Phase 2 cycle2 で実装、MVP 範囲外)
 
 **責務**: structured JSON log + correlation_id 統一。
+
+**注**: MVP (= Phase 2 cycle1) では各 script 内に簡易 `log_json` 関数を直書きで実装、Phase 2 cycle2 で本ライブラリへ集約する。本多 governance review HND-MDV2-008 反映。
 
 ```bash
 log_info() {
@@ -497,14 +499,7 @@ dual-write 時に msg loss を検出する仕組み:
 3. 1h 毎 audit script が両 path の digest を比較、一致率 < 99.9% で alert
 4. 監査記録: queue/migration_audit_<date>.yaml
 
-### 4.2 rollback path
-
-- Stage A/B 失敗時: 新 system 停止 → 旧 supervisor 起動 → 旧 watcher 復活
-- Stage C 後失敗時: scripts/archive/ から復元 → 旧 watcher 起動
-- Stage D 失敗時: migration tool reverse mode で旧 path 復元
-- Stage E 失敗時: instructions revert + path 復元
-
-### 4.3 migration tool (`scripts/message_delivery_v2/migrate.sh`)
+### 4.5 migration tool (`scripts/message_delivery_v2/migrate.sh`)
 
 ```bash
 # モード:

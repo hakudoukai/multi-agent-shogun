@@ -142,7 +142,7 @@ while true; do
 
     # inotifywait (no timeout、Phase 0 反省点 b 対応)
     if ! inotifywait -q -e modify,create,moved_to "$INBOX_PATH" >/dev/null 2>&1; then
-        log_json WARN "inotifywait_failed" "fallback_sleep_5s"
+        log_json WARN "inotifywait_failed" "error_backoff_5s"
         sleep 5
         continue
     fi
