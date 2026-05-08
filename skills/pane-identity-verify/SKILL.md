@@ -87,3 +87,86 @@ bash scripts/checks/pane_identity.sh
 詳細: [docs/incident_logs/2026-05-07_pane_misidentification.md](../../docs/incident_logs/2026-05-07_pane_misidentification.md)
 
 教訓: **「pane index = agent 名」の暗黙マッピングを絶対に推測しない**。
+
+### 2026-05-08 dawn — 家康 nudge 不発 (= 夜討ち失敗主因)
+
+家康への nudge が pane 認識ミスにより不発、夜討ち失敗の主因となった。pane mapping の SSoT が
+複数箇所 (CLAUDE.md §18.1 / watcher_supervisor.sh / lib/_section18_roles.sh / 実 tmux) に
+散在し、相互 drift が発生していたことが根本原因。
+
+詳細: [docs/incident_logs/2026-05-08_pane_mapping_drift.md](../../docs/incident_logs/2026-05-08_pane_mapping_drift.md)
+
+教訓: 単発 self-identification では検出できぬ「systemic drift」がある。Phase 1 (本拡張) で
+4-way audit を導入し、SSoT 二層化 (CLAUDE.md §18.1 + queue/pane_registry.yaml) で構造的
+根絶を図る。
+
+## §X. 4-way mapping audit (Phase 1 — cmd_phase1_pane_identity_4way_audit_001)
+
+単発 pane の self-identification (= 上記 §「必須チェック手順」) に加え、**全体配置の
+SSoT 整合性** を 4 source 横断で検証する仕組みを `scripts/checks/pane_identity.sh` に統合。
+
+### 目的
+
+pane mapping 認識ミスの構造的根絶 — 単発 check は「自分の pane」しか見ぬが、systemic drift
+は複数 source 間の不整合として現れる。4-way audit は次の 4 source を横断比較し、drift を
+事前検出する。
+
+### 4 source
+
+| source | 内容 | 役割 |
+|--------|------|------|
+| A. tmux 実態 | `tmux list-panes -t multiagent -F '#{pane_index}=#{@agent_id}'` | **現実 (= 真値)** |
+| B. queue/pane_registry.yaml | 静的 mapping 雛形 (= 本 cmd で作成) | machine-readable mirror |
+| C. watchdog 配置 | `scripts/watcher_supervisor.sh` の `start_watcher_if_missing` 行 | watcher 配置 SSoT |
+| D. CLAUDE.md §18.1 | 配置表 markdown (= human-readable SSoT) | **設計 SSoT (真の SoT)** |
+
+すべて persona alias (= shogun→nobunaga, karo→hideyoshi, gunshi→ieyasu) で正規化してから比較。
+
+### 実行
+
+```bash
+# 整合性検証 + 4-way audit を一括実行
+bash scripts/checks/pane_identity.sh
+```
+
+期待される動作:
+
+| 状況 | exit | stderr |
+|------|------|--------|
+| 全 source 整合 | 0 | (なし) |
+| warning (= session 不在等) | 1 | warning 一覧 |
+| drift 検出 (= source 間不整合) | 2 | `[WARN] pane drift detected at index N: A=... B=... C=... D=...` |
+
+drift 検出時は `/tmp/pane_identity_drift_<corr_id>.json` に dump 保存、
+`/tmp/pane_identity_last_run.json` に最終実行情報を保持。
+
+### advisory hook 原則 (= mandate、CLAUDE.md §19.3)
+
+本 audit は **advisory only**。以下を厳守する:
+
+| 原則 | 内容 |
+|------|------|
+| **絶対 block 禁止** | exit code は 0/1/2 のいずれか、絶対に他の操作を block しない (= mandate) |
+| **stderr 警告のみ** | drift 検出時は stderr に WARN を出力するのみ、副作用なし |
+| **手動停止フラグ尊重** | `~/.openclaw/disable_pane_identity_hook` 検出時は即 exit 0 でスキップ |
+| **timeout 5 秒上限** | 各 source 読込に internal `timeout` を設定、合計 5 秒以内 |
+| **degraded mode** | 4 source 中 1 つ以上取得失敗時はその source を skip して残 source で audit 継続 |
+| **dedupe** | hook 連続発火時の抑制は呼出側 (= PreToolUse hook 提案書) に委譲 |
+
+### PreToolUse hook 化 (= 提案、実装は理事長殿明示承認後)
+
+`scripts/checks/pane_identity.sh` を `.claude/settings.json` の PreToolUse hook
+(matcher: Bash) に登録する案 (= **advisory のみ、絶対 block しない**) を策定。
+
+提案書: [docs/proposals/pane_identity_pretool_hook_proposal.md](../../docs/proposals/pane_identity_pretool_hook_proposal.md)
+
+実装は **理事長殿明示承認後** にのみ実施 (= CLAUDE.md §19.3 強制力ルール厳守)。
+
+### Phase ロードマップ (= 本 SKILL は Phase 1 範囲)
+
+| Phase | 範囲 | 担当 |
+|-------|------|------|
+| Phase 0 | incident log + 根本原因確定 | 信長 (完遂、HEAD f5534b0) |
+| **Phase 1** | **4-way audit + pane_registry 雛形 + advisory hook 提案** (= 本 cmd) | **足軽2** |
+| Phase 2 | watchdog 動的更新 + drift 通知化 (pane_registry auto-update) | 別 cmd 発令予定 |
+| Phase 3 | shutsujin_departure*.sh 改修 + §18.1 表 auto-gen 化 | 別 cmd (理事長専権部分含む) |
