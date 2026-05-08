@@ -20,8 +20,14 @@
 #   - skills/pane-identity-verify/SKILL.md (= 検証手順)
 
 pane_registry:
-  version: 1
-  last_updated: "2026-05-08T09:05:00+09:00"
+  version: 2
+  last_updated: "2026-05-08T21:30:00+09:00"
+  pending_director_approval: |
+    2026-05-08 21:25 信長判断で実態合わせ修正:
+    - 0.3 ↔ 0.4 swap (実態 0.3=ieyasu/0.4=ashigaru3 反映、§18.1 改訂提案を上申)
+    - honda 1.0 + sanada 2.0 追加 (= Phase 16 招聘の Codex Pro + 改革 lane)
+    - persona_aliases に honda + sanada 追加
+    本日 19:04 ESCALATION /clear 暴発の真因 (= registry 0.3=ashigaru3 だが実態 ieyasu) を解消。
   update_method: manual  # Phase 2 で auto に切替予定
   source_of_truth: "CLAUDE.md §18.1"
   notes: |
@@ -60,32 +66,56 @@ pane_registry:
       role: 足軽
       status: 通常運用
 
+    # 2026-05-08 21:25 信長判断で実態合わせ修正 (= 5/8 朝以降の運用実態を反映、§18.1 改訂提案 ま上申)
+    # 旧記載 0.3=ashigaru3 / 0.4=gunshi(ieyasu) は本日 19:04 ESCALATION /clear 暴発の真因
     - tmux_target: "multiagent:0.3"
-      agent_id: ashigaru3
-      persona: ashigaru3
-      pc: MainPC
-      role: 足軽
-      status: 非常時 +1
-      note: "通常運用時は不在。enable_ashigaru3 フラグで起動。"
-
-    - tmux_target: "multiagent:0.4"
       agent_id: gunshi
       persona: ieyasu
+      cli: codex
       pc: MainPC
       role: 軍師
       status: 通常運用
       note: |
-        現状 watcher_supervisor.sh は agents.3 起動を維持 (drift 状態)。
-        4-way audit が本 entry と watcher_supervisor.sh / tmux 実態の不整合を検出する。
-        topology 整合は cmd_section18_topology_consensus_001 (別 cmd、理事長専権) で対応予定。
+        実態合わせ修正 2026-05-08 21:25。Codex Pro 稼働、cli=codex。
+        旧記載 (= 0.3=ashigaru3) は本日 19:04 watcher_supervisor が ESCALATION /clear 暴発の真因。
+        §18.1 改訂提案を理事長殿に上申。
+
+    - tmux_target: "multiagent:0.4"
+      agent_id: ashigaru3
+      persona: ashigaru3
+      cli: claude
+      pc: MainPC
+      role: 足軽
+      status: 非常時 +1
+      note: "実態合わせ修正 2026-05-08 21:25。通常運用時は不在 → 非常時 +1 として 0.4 配置。"
 
     - tmux_target: "multiagent:0.5"
       agent_id: takenaka
       persona: takenaka
+      cli: claude
       pc: MainPC
       role: 信長直轄軍師
       status: 持ち場準備中
       note: "Phase 15 (2026-05-08 commit 94833a6) で新設、招聘準備段階。"
+
+    # 2026-05-08 21:25 信長判断で追加 (= 5/8 Phase 16 招聘の本多 + 5/8 sanada 改革 lane)
+    - tmux_target: "multiagent:1.0"
+      agent_id: honda
+      persona: honda
+      cli: codex
+      pc: MainPC
+      role: 重臣 (= Phase 16 招聘、Codex Pro retrospective + governance audit)
+      status: 通常運用
+      note: "Phase 16 (2026-05-08) 招聘、Codex Pro。pane 配置は理事長殿確認待ち。"
+
+    - tmux_target: "multiagent:2.0"
+      agent_id: sanada
+      persona: sanada
+      cli: claude
+      pc: MainPC
+      role: 改革 lane (= 本多直属、特命改革担当)
+      status: 通常運用
+      note: "2026-05-08 招聘、claude sonnet。改革 lane direct dispatch (F002 緩和)。"
 
     # ─── SecondPC: multiagent session (= maeda + ashigaru5-8) ───
     # SecondPC は前田殿主管領域、本 cmd では advisory record のみ。
@@ -143,3 +173,5 @@ pane_registry:
     ieyasu: ieyasu
     maeda: maeda
     takenaka: takenaka
+    honda: honda
+    sanada: sanada
