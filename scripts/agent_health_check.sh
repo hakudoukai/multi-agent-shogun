@@ -14,6 +14,13 @@
 #   - Phase F: 会話 token 上限接近検知 (200k WARN / 240k CRITICAL)
 #     = ERR-TOKEN-WARN-001 / ERR-TOKEN-CRITICAL-001
 #   - 5min cooldown (連投防止) + Supabase error_log INSERT + 信長 inbox alert
+# Cycle2 fix: 2026-05-08 (信長殿 msg_145251 watcher 2 件欠陥対処)
+#   (1) ERR-PERSONA-CLI-001 誤検知修正 — pane_current_command='node' を codex 扱い
+#       (= scripts/checks/codex_cli_required_persona.sh 同型 case 文、
+#          AGENTS.md 444650b + skills/codex-cli-required-persona 整合)
+#   (2) TEST_MODE gate 導入 — bats test 時の信長 inbox 漏出を抑制
+#       (TEST_MODE=1 で send_shogun_inbox_alert を suppress、
+#        production 動作影響なし)
 #
 # Check 項目:
 #   1. Supabase 増殖ループ予兆 (1分間 5件超 INSERT)
@@ -136,7 +143,17 @@ EOF
 
 # 信長 inbox への alert 配信 (= scripts/inbox_write.sh 経由、self-send/amplification guard 通過)。
 # 失敗時は log に記録するのみで health_check 全体は止めない。
+#
+# TEST_MODE gate (= cmd_agent_health_check_unified_001 cycle2 fix):
+#   bats test 等で TEST_MODE=1 が設定されていれば実 inbox_write を抑制し、
+#   TEST_INBOX_WRITE_LOG が指定されていれば呼出記録のみ残す (= production 動作影響なし)。
 send_shogun_inbox_alert() {
+    if [ -n "${TEST_MODE:-}" ]; then
+        if [ -n "${TEST_INBOX_WRITE_LOG:-}" ]; then
+            printf 'shogun\t%s\t%s\n' "${2:-task_assigned}" "$1" >> "$TEST_INBOX_WRITE_LOG" 2>/dev/null || true
+        fi
+        return 0
+    fi
     local content="$1" type="${2:-task_assigned}"
     [ -x "$SCRIPT_DIR/scripts/inbox_write.sh" ] || return 0
     bash "$SCRIPT_DIR/scripts/inbox_write.sh" shogun "$content" "$type" health_check 2>>"$LOG" || \
@@ -241,15 +258,30 @@ if [ ! -f "$PERSONA_CHECK_DISABLE" ]; then
         pane_pid=$(tmux display-message -t "$target" -p '#{pane_pid}' 2>/dev/null || echo "")
         [ -z "$pane_pid" ] && continue
 
-        # pstree で descendant CLI を判定 (codex は bash → node → codex の階層、
-        # claude は bash → claude あるいは bash → node の階層になる)。
-        tree_out=$(pstree -p "$pane_pid" 2>/dev/null || echo "")
-        cli_kind="other"
-        if echo "$tree_out" | grep -qE '\bcodex\(|\bcodex\b|---codex'; then
-            cli_kind="codex"
-        elif echo "$tree_out" | grep -qE '\bclaude\(|\bclaude\b|---claude'; then
-            cli_kind="claude"
-        fi
+        # cycle2 fix: pane_current_command を直接判定し node|codex を codex 扱い
+        # (= scripts/checks/codex_cli_required_persona.sh 同型 case 文、
+        #    AGENTS.md commit 444650b + skills/codex-cli-required-persona と整合)。
+        # codex CLI は ~/.npm-global/bin/codex 経由で node child process として
+        # pane_current_command='node' を返すケースが頻出ゆえ ERR-PERSONA-CLI-001 誤検知防止。
+        # pane_current_command が空 or 想定外の場合は pstree fallback で詳細判定。
+        pane_cmd=$(tmux display-message -t "$target" -p '#{pane_current_command}' 2>/dev/null || echo "")
+        case "$pane_cmd" in
+            node|codex)
+                cli_kind="codex"
+                ;;
+            claude)
+                cli_kind="claude"
+                ;;
+            *)
+                tree_out=$(pstree -p "$pane_pid" 2>/dev/null || echo "")
+                cli_kind="other"
+                if echo "$tree_out" | grep -qE '\bcodex\(|\bcodex\b|---codex'; then
+                    cli_kind="codex"
+                elif echo "$tree_out" | grep -qE '\bclaude\(|\bclaude\b|---claude'; then
+                    cli_kind="claude"
+                fi
+                ;;
+        esac
         log_struct "INFO" "persona_cli_detected" "{\"pane\":\"${target}\",\"label\":\"${label}\",\"cli\":\"${cli_kind}\"}"
         if [ "$cli_kind" != "codex" ]; then
             cool_key="persona_${label}"

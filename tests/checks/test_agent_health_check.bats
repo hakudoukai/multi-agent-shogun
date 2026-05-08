@@ -16,6 +16,12 @@
 #   H-006 token 200k+ session 検出 → ERR-TOKEN-WARN-001 alert
 #   H-007 token 240k+ session 検出 → ERR-TOKEN-CRITICAL-001 alert
 #   H-008 cooldown 抑制 → 5min 以内の 2 回目 alert は発火せず
+#
+# cycle2 fix 追加シナリオ (信長殿 msg_145251 watcher 2 件欠陥対処):
+#   H-009 codex persona pane で pane_current_command='node' 検出 → alert なし
+#         (= ERR-PERSONA-CLI-001 誤検知修正、AGENTS.md 444650b 整合)
+#   H-010 TEST_MODE=1 で send_shogun_inbox_alert が真の inbox_write を抑制
+#         (= bats test fixture 漏出による信長 inbox 流入防止)
 
 setup_file() {
     PROJECT_ROOT="$(cd "$(dirname "$BATS_TEST_FILENAME")/../.." && pwd)"
@@ -39,6 +45,13 @@ setup() {
     export SUPABASE_URL="http://dummy.invalid"
     export SUPABASE_SERVICE_ROLE_KEY="dummy_key"
 
+    # cycle2 fix: TEST_MODE で send_shogun_inbox_alert を suppress
+    # (= bats test fixture が信長 inbox に漏出するのを防止)。
+    # TEST_INBOX_WRITE_LOG に呼出記録を残し、test 内で抑制を検証可能にする。
+    export TEST_MODE=1
+    export TEST_INBOX_WRITE_LOG="$BATS_TMPDIR_TEST/test_inbox_write.log"
+    : > "$TEST_INBOX_WRITE_LOG"
+
     # disable flag 経路を fixture HOME に隔離 (= ~/.openclaw を上書き)
     export HOME="$BATS_TMPDIR_TEST/home"
     mkdir -p "$HOME/.openclaw"
@@ -49,6 +62,8 @@ setup() {
     export PATH="$STUB_BIN:$PATH"
 
     # 既定 stub 群 (= claude/codex pane 存在シナリオを模擬、agent-down/inbox-overflow alert を抑制)
+    # cycle2 fix: display-message は -p '#{...}' format 別に応答 (= persona check で
+    # pane_current_command を直接判定する logic に対応、TMUX_STUB_PANE_CMD で test 制御可)。
     cat > "$STUB_BIN/tmux" <<'STUB'
 #!/usr/bin/env bash
 case "$1" in
@@ -60,7 +75,19 @@ case "$1" in
     exit 0
     ;;
   display-message)
-    echo 99999
+    fmt=""
+    shift
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        -p) shift; fmt="${1:-}"; shift ;;
+        *)  shift ;;
+      esac
+    done
+    case "$fmt" in
+      *pane_current_command*) echo "${TMUX_STUB_PANE_CMD:-}" ;;
+      *pane_pid*)             echo "99999" ;;
+      *)                      echo "99999" ;;
+    esac
     ;;
   *) exit 0 ;;
 esac
@@ -193,4 +220,49 @@ JSONL
     : > "$HEALTH_CHECK_LOG"
     run bash "$SCRIPT" --quiet
     ! grep -q "ERR-TOKEN-CRITICAL-001" "$HEALTH_CHECK_LOG"
+}
+
+# ─── H-009: cycle2 fix — pane_current_command='node' は codex 扱い (誤検知修正) ──
+@test "H-009: codex persona pane で pane_current_command='node' 検出 → ERR-PERSONA-CLI-001 alert なし (cycle2 fix)" {
+    # codex CLI は ~/.npm-global/bin/codex 経由で node child process として動作 → pane_current_command='node'
+    # cycle1 logic では pstree fallback で node のみだと "other" 扱い → 誤 alert
+    # cycle2 fix: pane_current_command の case 文で node|codex を codex 確定にする
+    export TMUX_STUB_PANE_CMD="node"
+
+    # pstree も "other" (= 誤検知側) を返す stub に置換、case 判定が優先することを検証
+    cat > "$STUB_BIN/pstree" <<'STUB'
+#!/usr/bin/env bash
+echo "bash(99999)---node(99998)"
+STUB
+    chmod +x "$STUB_BIN/pstree"
+
+    run bash "$SCRIPT" --quiet
+    # node は codex の child process ゆえ codex 扱い、persona alert 発火せず
+    ! grep -q "ERR-PERSONA-CLI-001" "$HEALTH_CHECK_LOG"
+    grep -q '"event":"persona_cli_detected"' "$HEALTH_CHECK_STRUCT_LOG"
+    grep -q '"cli":"codex"' "$HEALTH_CHECK_STRUCT_LOG"
+    # TEST_MODE=1 ゆえ inbox_write は呼ばれない (本 case では alert 自体ないが二重保証)
+    [ ! -s "$TEST_INBOX_WRITE_LOG" ]
+}
+
+# ─── H-010: cycle2 fix — TEST_MODE=1 で inbox_write 漏出抑制 ─────────────
+@test "H-010: TEST_MODE=1 で send_shogun_inbox_alert が真の inbox_write を抑制 (cycle2 fix)" {
+    # H-005 同型条件で persona alert を発火させ、TEST_MODE による suppress を検証。
+    # 真の inbox_write.sh が呼ばれず、TEST_INBOX_WRITE_LOG に呼出記録のみ残ることを確認。
+    cat > "$STUB_BIN/pstree" <<'STUB'
+#!/usr/bin/env bash
+echo "bash(99999)---claude(99997)"
+STUB
+    chmod +x "$STUB_BIN/pstree"
+
+    # setup() で TEST_MODE=1 / TEST_INBOX_WRITE_LOG=空ファイル 設定済
+    run bash "$SCRIPT" --quiet
+    [ "$status" -eq 1 ]
+    grep -q "ERR-PERSONA-CLI-001" "$HEALTH_CHECK_LOG"
+    # send_shogun_inbox_alert が呼ばれ、TEST_MODE gate で suppress された記録があること
+    grep -q "shogun" "$TEST_INBOX_WRITE_LOG"
+    grep -q "ERR-PERSONA-CLI-001" "$TEST_INBOX_WRITE_LOG"
+    # 真の signal: queue/inbox/shogun.yaml は touch されない (= 漏出ゼロ)
+    # (本 fixture は HOME 隔離済ゆえ間接的検証のみ可能、TEST_INBOX_WRITE_LOG に
+    #  記録ありかつ実 inbox_write.sh が呼ばれていないことが gate の核心保証)
 }
