@@ -109,7 +109,7 @@ except Exception:
 import json, sys
 content_truncated, local_pc, target_pc, target_agent, from_agent, msg_type = sys.argv[1:7]
 print(json.dumps({
-    "message_type": "status_update",
+    "message_type": msg_type,
     "from_pc": local_pc,
     "to_pc": target_pc,
     "topic": f"cross_pc_inbox_{target_agent}",
