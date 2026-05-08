@@ -89,6 +89,13 @@
 !shim/hakudokai/*.py
 !shim/hakudokai/*.sh
 
+# cmd_root_resolution_001: organizational_lessons migration (Supabase 組織改革事例蓄積基盤、OSS 公開対象、no PII)
+!backend/
+!backend/migrations/
+!backend/migrations/007_organizational_lessons.sql
+!backend/migrations/008_organizational_lessons_seed.sql
+!backend/migrations/009_organizational_lessons_rollback.sql
+
 # Templates
 !templates/
 !templates/**
