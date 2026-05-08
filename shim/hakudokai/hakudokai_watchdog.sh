@@ -135,14 +135,18 @@ pane_exists() {
 
 # ─── Registry loading (Phase 2 必須 1) ─────────────────────────────────────
 # stdout: list of "agent_id:tmux_target" entries (one per line) for current PC_ROLE.
-# return: 0 = success (stdout has entries), 1 = degraded (caller should fallback).
+# Return code disambiguation (= caller maps to REGISTRY_LOAD_STATUS in parent shell):
+#   0 = ok (entries printed)
+#   2 = missing (REGISTRY_FILE unreadable)
+#   3 = parse_error (yaml/python error)
+#   4 = empty (no entries matched PC_ROLE)
 # Uses flock -s -w 5 (shared, 5s timeout) on REGISTRY_FILE to coexist with writers.
-# Sets REGISTRY_LOAD_STATUS = "ok" | "missing" | "parse_error" | "empty" | "updating".
+# NOTE: REGISTRY_LOAD_STATUS is intentionally NOT set here because $() runs in a
+# subshell — assignment would not propagate. Caller (= get_active_agents) sets it.
 load_inbox_agents_from_registry() {
   if [ ! -r "$REGISTRY_FILE" ]; then
     log "registry: not readable ($REGISTRY_FILE) — fallback"
-    REGISTRY_LOAD_STATUS="missing"
-    return 1
+    return 2
   fi
 
   local script
@@ -169,15 +173,12 @@ PY
   rc=$?
   if [ "$rc" -ne 0 ]; then
     log "registry: parse FAILED (rc=$rc) — fallback to legacy"
-    REGISTRY_LOAD_STATUS="parse_error"
-    return 1
+    return 3
   fi
   if [ -z "$result" ]; then
     log "registry: empty for pc=${PC_ROLE} — fallback to legacy"
-    REGISTRY_LOAD_STATUS="empty"
-    return 1
+    return 4
   fi
-  REGISTRY_LOAD_STATUS="ok"
   printf '%s\n' "$result"
   return 0
 }
@@ -258,12 +259,20 @@ get_active_agents() {
   fi
 
   local -a candidates=()
-  local registry_output
+  local registry_output reg_rc
   registry_output=$(load_inbox_agents_from_registry)
-  if [ -n "$registry_output" ]; then
+  reg_rc=$?
+  case "$reg_rc" in
+    0) REGISTRY_LOAD_STATUS="ok" ;;
+    2) REGISTRY_LOAD_STATUS="missing" ;;
+    3) REGISTRY_LOAD_STATUS="parse_error" ;;
+    4) REGISTRY_LOAD_STATUS="empty" ;;
+    *) REGISTRY_LOAD_STATUS="unknown_error" ;;
+  esac
+  if [ "$reg_rc" -eq 0 ] && [ -n "$registry_output" ]; then
     mapfile -t candidates <<< "$registry_output"
   else
-    log "using LEGACY_INBOX_AGENTS fallback (= degraded mode)"
+    log "using LEGACY_INBOX_AGENTS fallback (= degraded mode, status=${REGISTRY_LOAD_STATUS})"
     # shellcheck disable=SC2206
     candidates=( $LEGACY_INBOX_AGENTS )
   fi
