@@ -1,11 +1,17 @@
-# cmd_phase5_audit_persona_restructure_001 (草案)
+# cmd_phase5_audit_persona_restructure_001 (草案 v2 — 家康 8 観点 review 反映 2026-05-08 09:30)
 
-> **Status**: **persona_confirmed_pending_phase1_completion** (= 理事長殿御諾否確定 2026-05-08 09:00、家康 8 観点 review 依頼中)
+> **Status**: **v2_post_ieyasu_review** (= 家康 PASS_with_strategic_concerns、R10 Codex retroactive 試験 + 移行期 2 週間 + 統合判定 黒田維持)
 > **Drafted by**: 信長 (織田信長) 2026-05-08 08:20 JST
 > **Persona confirmed by**: 理事長殿 2026-05-08 09:00 JST
-> **Parent directive**: 理事長殿 2026-05-08 朝 御命令 (= 「Claude メイン監査が問題の一因」+「(A) 信長案 採用」+「Codex/Gemini = 徳川軍から招聘」)
-> **Pre-conditions**: cmd_phase1_pane_identity_4way_audit_001 完遂 + cmd_phase2_watchdog_registry_001 完遂
+> **Reviewed by**: 家康 (徳川家康、当事者) 2026-05-08 09:30 JST
+> **Parent directive**: 理事長殿 2026-05-08 朝 御命令
+> **Pre-conditions**: cmd_phase1_pane_identity_4way_audit_001 完遂 + cmd_phase2_watchdog_registry_001 完遂 + **Codex retroactive 性能等価性試験 1 週間完了 (= 家康 v2 R10)**
+> **Priority order (家康推奨)**: 1.Phase 1 → 2.Phase 2 → 3.Phase 15 → 4.Phase 3 → **5.Phase 5 (本 cmd、最後)**
 > **Out of scope**: 法令最終総合監査 (= 全機能完成後別 cmd)
+> **🚨 v2 重大変更**:
+> - **R10 Codex retroactive 性能等価性試験 1 週間** = Phase 5-3 着手前に過去 audit (Phase 6 cycle3 等) を Codex で再実行、Claude self-audit と差分比較、品質確証後本格移行
+> - **移行期間 1 → 2 週間** (家康 Q7)、Codex 品質確証 1 週間 + dual operation 1 週間
+> - **統合判定は黒田 (Claude 議長) で残す** (家康 Q4 当事者意見) — Codex は raw 観点判定のみ、運用知見継承
 
 ## 🎯 理事長殿 確定 persona (= 2026-05-08 09:00)
 - **Gemini 武将 = 服部半蔵 (正成)** — 徳川 16 神将、伊賀忍者頭領

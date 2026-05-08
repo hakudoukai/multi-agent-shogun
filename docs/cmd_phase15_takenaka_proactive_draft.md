@@ -1,9 +1,20 @@
-# cmd_phase15_takenaka_proactive_001 (草案)
+# cmd_phase15_takenaka_proactive_001 (草案 v2 — 家康 8 観点 review 反映 2026-05-08 09:30)
 
-> **Status**: pending_design_review (= 信長草案、家康 8 観点 review 依頼予定)
+> **Status**: **v2_post_ieyasu_review** (= 家康 side_effects=FAIL_with_caveat、R2 quota 暴走対策強化最重要)
 > **Drafted by**: 信長 (織田信長) 2026-05-08 08:50 JST
+> **Reviewed by**: 家康 (徳川家康) 2026-05-08 09:30 JST
 > **Parent directive**: 理事長殿 2026-05-08 朝 御命令 (= 「信長計画の preparation 自発実行する直轄軍師竹中の招聘」+「常時フル稼働体制構築」)
-> **Priority**: 高 (= 受動稼働の構造的欠陥は本日明白になった)
+> **Priority order (家康推奨)**: 1.Phase 1 → 2.Phase 2 → **3.Phase 15 (本 cmd) ← Phase 5 より先行!** → 4.Phase 3 → 5.Phase 5
+> **🚨 v2 重大変更**:
+> - **竹中 quota 60% → 40%** (= 家康 Q4、SecondPC 暴走 38% を 26 分の事実踏まえ buffer 確保)
+> - **R10**: preparation 自発実行 停止条件明確化 = **信長 cmd 草案が信長 inbox に存在する場合のみ実行**、なければ idle
+> - **R11**: 竹中 idle 監視 ≠ 家老 FKI-PROACTIVE-DISPATCH-01。竹中 = 信長計画事前準備に特化、ashigaru idle 監視 + 発令は **家老専管に維持**
+> - **R12**: §Y.3 quota 監視 = §15 既存機構と統合、新規 monitor 増設 §14 違反回避
+> - **SH6 強化** (= 家康 Q5 過少指摘):
+>   - proactive trigger **cooldown 5 分必須** (= 同一 ashigaru 連続 task 提案抑止)
+>   - 全エージェント quota **Supabase 集中監視**、PC 越境合算 **90%/day で全停止**
+>   - **`~/.openclaw/global_disable` フラグを proactive 全停止 trigger として最優先尊重**
+> - **R13 (新規)**: Phase 5 前に Phase 15 着手するため、黒田未在期間は **竹中が暫定統合役兼任**、Phase 5-2 黒田招聘後に計画特化純化
 
 ---
 

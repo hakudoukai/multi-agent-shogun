@@ -1,9 +1,12 @@
-# cmd_phase3_shutsujin_dynamic_pane_001 (草案)
+# cmd_phase3_shutsujin_dynamic_pane_001 (草案 v2 — 家康 8 観点 review 反映 2026-05-08 09:30)
 
-> **Status**: pending_design_review (= 信長草案、家康 8 観点 review 依頼予定)
+> **Status**: **v2_post_ieyasu_review** (= 家康 PASS_with_concerns、3-4 別 cmd 分離 + R10/R11 + schema 拡張)
 > **Drafted by**: 信長 (織田信長) 2026-05-08 08:40 JST
+> **Reviewed by**: 家康 (徳川家康) 2026-05-08 09:30 JST
 > **Parent**: docs/incident_logs/2026-05-08_pane_mapping_drift.md (= Phase 0、家康推奨 Phase 0-4 段階の Phase 3)
 > **Pre-conditions**: Phase 1 + Phase 2 完遂 (= registry 雛形 + watchdog 動的読込実装済)
+> **Priority order (家康推奨)**: 1.Phase 1 → 2.Phase 2 → 3.Phase 15 → **4.Phase 3 (本 cmd)** → 5.Phase 5
+> **🚨 v2 重大変更**: **Phase 3-4 (CLAUDE.md §18.1 auto-gen) を別 cmd `cmd_claude_md_section18_autogen_001` に分離** (= 家康 Q3 強推奨、§19.5 理事長専権 + auto-gen 機構の独立複雑性)。本 cmd は 5 sub-phase (3-1, 3-2, 3-3, 3-5, 3-6) に簡略化。
 
 ---
 
@@ -27,7 +30,7 @@
   - `queue/pane_registry.yaml` を atomic update (= flock + symlink-safe os.replace、commit dd706ad pattern 適用)
   - registry のスキーマ versioning (= `version: 1`) 含む
 - `shutsujin_departure_secondpc.sh` 同型で SecondPC 配置を registry に追記 (= cross-PC bridge 経由で MainPC registry に sync)
-- `queue/pane_registry.yaml` schema:
+- `queue/pane_registry.yaml` schema (= 家康 v2 で 4 field 拡張):
   ```yaml
   version: 1
   generated_at: "2026-05-08T..."
@@ -40,6 +43,10 @@
       pc: main_pc
       cli: claude
       role: shogun
+      started_at: "2026-05-08T..."        # 家康 v2: pane 起動時刻、長時間稼働判定
+      last_health_check: "2026-05-08T..."  # 家康 v2: watchdog 最終確認時刻
+      health_status: alive                 # 家康 v2: alive/dead/unknown
+      hardcode_fallback_active: false      # 家康 v2: dual-read 期間中の fallback 利用フラグ
     hideyoshi:
       session: multiagent
       window: 0
@@ -53,6 +60,8 @@
     gunshi: ieyasu
     shogun: nobunaga
   ```
+- **R10 (家康 v2)**: Phase 3-3 (renumber 検証) は **専用 test session (e.g., `test_renumber`) で実施**、本番 multiagent session に影響させない
+- **R11 (家康 v2)**: scripts/codegen/regen_pane_table.sh は別 cmd で実装、本 cmd 範囲外
 - `watcher / watchdog / scripts` 動的解決:
   - `inbox_watcher.sh` が agent_id 引数を受領後、registry or tmux env で pane 解決
   - 不在 pane → fail-fast (= 虚空 nudge 防止、本朝事故再発 zero)
@@ -118,11 +127,10 @@
 - Phase 1 audit skill が drift 即時検出
 - 担当推奨: ashigaru3
 
-### Phase 3-4: CLAUDE.md §18.1 auto-gen 区間化 (= 理事長殿明示承認後)
-- AUTOGEN BEGIN/END マーカー導入
-- scripts/codegen/regen_pane_table.sh 新規作成
-- 区間内表 = registry → 自動生成
-- 担当: 信長直筆 (理事長殿明示承認後 commit)
+### ~~Phase 3-4: CLAUDE.md §18.1 auto-gen 区間化~~ — **v2 で別 cmd 分離 (家康 Q3)**
+- → **`cmd_claude_md_section18_autogen_001` (新規草案)** に分離
+- 理由: §19.5 理事長専権、auto-gen 機構の独立複雑性 (= regen 副作用 + 競合 lock + CI gate)、Phase 3 本流は 3-1〜3-3 + 3-5 + 3-6 で完結
+- docs/cmd_claude_md_section18_autogen_draft.md (= 同朝 起案) 参照
 
 ### Phase 3-5: hardcode 完全撤廃 (= 移行期間終了)
 - lib/_section18_roles.sh + shim/_section18_roles.py の旧 hardcode 削除

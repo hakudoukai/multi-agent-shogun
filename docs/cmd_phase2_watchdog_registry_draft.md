@@ -1,9 +1,11 @@
-# cmd_phase2_watchdog_registry_001 (草案)
+# cmd_phase2_watchdog_registry_001 (草案 v2 — 家康 8 観点 review 反映 2026-05-08 09:30)
 
-> **Status**: pending_design_review (= 信長草案、家康 8 観点 review 依頼予定)
+> **Status**: **v2_post_ieyasu_review** (= 家康 PASS_with_minor_findings、SH6 3/h + R8/R9 追記)
 > **Drafted by**: 信長 (織田信長) 2026-05-08 08:30 JST
+> **Reviewed by**: 家康 (徳川家康) 2026-05-08 09:30 JST (msg_20260508_091318)
 > **Parent**: docs/incident_logs/2026-05-08_pane_mapping_drift.md (= Phase 0、家康推奨 Phase 0-4 段階の Phase 2)
 > **Pre-conditions**: cmd_phase1_pane_identity_4way_audit_001 完遂 (= queue/pane_registry.yaml 雛形作成済)
+> **Priority order (家康推奨)**: 1.Phase 1 → **2.Phase 2 (本 cmd)** → 3.Phase 15 → 4.Phase 3 → 5.Phase 5
 
 ---
 
@@ -28,7 +30,10 @@
 - 監視対象追加: hideyoshi (0.0) / ashigaru1 (0.1) / ashigaru2 (0.2) / ieyasu (0.3、Phase 5-2 で kuroda 置換予定) / nobunaga (shogun:0.0) / ashigaru3 (= 非常時、登録のみ) / maeda (SecondPC、cross-PC bridge 経由)
 - registry 読込時 `flock` 必須 (= race 対策、inbox_write.sh 同 pattern)
 - `~/.openclaw/registry_updating` 存在時は restart 抑制 (= 家康 risk 4)
-- §15 SH6 (self-restart) 危険パターン回避: **再起動上限 5/h** + escalation 機構 + 2026-05-05 SecondPC 暴走事件型 防止
+- §15 SH6 (self-restart) 危険パターン回避: **再起動上限 3/h (= 家康 v2 推奨、5/h から下げ)** + escalation 機構 + 2026-05-05 SecondPC 暴走事件型 防止
+  - 根拠 (家康 v2): SecondPC 暴走 = 26 分で 38% quota = ~14 restart/h 相当、5/h は安全側だが ntfy 接続失敗時の二重 escalation 余地、3/h + 同 ERR-CODE 連続 2 回で escalation がより安全
+- registry YAML parse 失敗時 **last-known-good cache fallback** (= 家康 v2 R9)、初期 fresh start 時のみ hardcode 雛形 fallback
+- alias resolver の **max_depth=3 cap + cycle 検出** (= 家康 v2 R8、karo→hideyoshi→karo 等の循環参照防止)
 - 信長補完 watcher (= 2026-05-08 朝起動の 6 体) のような **手動起動 watcher を kill しない** 保証 (= 既存 INBOX_AGENTS 以外の watcher は監視対象外で温存)
 - 三者監査 PASS (= 移行期間中は現体系で実施、Phase 5 完遂後は新体制で)
 
