@@ -58,8 +58,10 @@ capture=$(tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null || echo "")
 capture_tail=$(echo "$capture" | tail -20)
 
 # TUI 空白判定 (= 反省点 d 対応)
-non_empty_lines=$(echo "$capture" | grep -cE '\S' || echo "0")
-if [[ "$non_empty_lines" -lt 2 ]]; then
+# grep -c は no-match で出力 "0" + exit 1。`|| echo "0"` だと "0\n0" 二重で
+# `[[ -lt ]]` が syntax error 化するゆえ `|| true` で exit code のみ吸収する。
+non_empty_lines=$(echo "$capture" | grep -cE '\S' || true)
+if [[ "${non_empty_lines:-0}" -lt 2 ]]; then
     echo "tui_empty: capture has $non_empty_lines non-empty lines, fallback to book mode" >&2
     exit 4
 fi
