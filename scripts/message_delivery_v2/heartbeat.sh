@@ -44,9 +44,12 @@ write_heartbeat() {
 
     local health_path
     health_path=$(get_health_path "$agent")
-    local tmp_path="${health_path}.tmp.$$"
+    # subshell PID 使用で race 回避 (= 反省点新規: $$ は parent shell 共有で衝突)
+    local tmp_path="${health_path}.tmp.${BASHPID:-$$}.$RANDOM"
 
-    cat > "$tmp_path" <<EOF
+    # fail-safe: heartbeat 失敗で watcher exit させない (= set -e 環境でも吸収)
+    {
+        cat > "$tmp_path" <<EOF
 {
   "schema_version": "${HEARTBEAT_SCHEMA_VERSION}",
   "agent_id": "${agent}",
@@ -63,7 +66,10 @@ write_heartbeat() {
   "restart_count_24h": ${restart_count}
 }
 EOF
-    mv -f "$tmp_path" "$health_path"
+        mv -f "$tmp_path" "$health_path" 2>/dev/null
+    } 2>/dev/null || true
+    rm -f "$tmp_path" 2>/dev/null
+    return 0
 }
 
 # read_heartbeat <agent_id>
