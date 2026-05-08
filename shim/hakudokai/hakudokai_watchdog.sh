@@ -79,11 +79,8 @@ REGISTRY_UPDATING="$HOME/.openclaw/registry_updating"
 REGISTRY_LOAD_STATUS="unknown"
 
 # Legacy hardcoded fallback (cycle1 dual-write 段階1; cycle2 で削除予定).
-# Agents to monitor inbox_watcher.sh for, used when registry load fails.
+# Used by get_active_agents() when registry load fails / returns empty.
 LEGACY_INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8 shogun:shogun:0.0"
-
-# Backward-compat alias (= 旧変数名を維持、本 cycle 段階1 では LEGACY と同値)
-INBOX_AGENTS="$LEGACY_INBOX_AGENTS"
 
 # Restart failure counters (associative array, lazy-initialized via init_agent_counters)
 declare -A RESTART_FAIL_COUNT
