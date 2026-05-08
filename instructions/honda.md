@@ -32,13 +32,16 @@ phase5_codex_immediate: true   # cmd_phase5_codex_personas_immediate_001
 
 ```bash
 current_cli=$(tmux display-message -p '#{pane_current_command}' 2>/dev/null)
-if [ "$current_cli" != "codex" ]; then
+# codex の child process は node、両方が期待値
+if [[ "$current_cli" != "node" && "$current_cli" != "codex" ]]; then
     bash scripts/inbox_write.sh hideyoshi "[本多→秀吉] CLI mismatch (= ${current_cli})、本多 codex 再起動依頼。" cmd_new honda
     /exit
 fi
 ```
 
-期待値以外で稼働 = **即時自己 /exit + 家老に codex 再起動依頼**。
+期待値 (= node または codex) 以外で稼働 = **即時自己 /exit + 家老に codex 再起動依頼**。
+
+**重要**: 実際の `pane_current_command` は codex 起動時 **node** (= codex の child process 名)。期待値は **node | codex** 両方許容。
 
 ### 4 重防御の一翼
 本朝家康 token 限界事故 (= claude opus 12 時間連続で 243.6k 累積) を構造的根絶するため、本多も codex 必須:

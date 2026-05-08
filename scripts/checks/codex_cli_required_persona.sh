@@ -18,17 +18,27 @@ command -v tmux >/dev/null 2>&1 || exit 0
 # tmux session が無ければ exit 0
 tmux list-sessions >/dev/null 2>&1 || exit 0
 
-REQUIRED_CLI="codex"
 REQUIRED_PERSONAS="ieyasu honda"
 WARNING_COUNT=0
+
+# codex 起動時の pane_current_command 期待値:
+#   - "codex": codex CLI 直接起動時
+#   - "node": codex の child process (= 実運用で最頻出、~/.npm-global/bin/codex 経由)
+# どちらも codex 稼働とみなす。
+is_codex_cli() {
+    case "$1" in
+        node|codex) return 0 ;;
+        *) return 1 ;;
+    esac
+}
 
 # 全 session × 全 window × 全 pane を scan
 while IFS=$'\t' read -r session_window_pane agent_id current_cmd; do
     [ -z "$agent_id" ] && continue
     for required_persona in $REQUIRED_PERSONAS; do
         if [ "$agent_id" = "$required_persona" ]; then
-            if [ "$current_cmd" != "$REQUIRED_CLI" ]; then
-                echo "[codex-cli-required-persona] WARN: ${agent_id} pane (${session_window_pane}) is running '${current_cmd}' instead of '${REQUIRED_CLI}'." >&2
+            if ! is_codex_cli "$current_cmd"; then
+                echo "[codex-cli-required-persona] WARN: ${agent_id} pane (${session_window_pane}) is running '${current_cmd}' instead of codex (node|codex)." >&2
                 echo "  Phase 5 violation. Restart with codex CLI to prevent token accumulation events." >&2
                 echo "  Re-launch via: tmux respawn-pane -k -t ${session_window_pane} + codex" >&2
                 WARNING_COUNT=$((WARNING_COUNT + 1))
