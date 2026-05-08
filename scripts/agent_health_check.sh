@@ -43,7 +43,8 @@
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LOG="/tmp/agent_health_check.log"
+# Test-friendly overrides (= bats fixtures から差し替え可、未設定時は既定 path)。
+LOG="${HEALTH_CHECK_LOG:-/tmp/agent_health_check.log}"
 QUIET=false
 [ "${1:-}" = "--quiet" ] && QUIET=true
 
@@ -72,9 +73,9 @@ if [ -f "$GLOBAL_DISABLE" ] || [ -f "$HEALTH_CHECK_DISABLE" ]; then
 fi
 
 # ─── 共通 helper: cooldown / shogun inbox / Supabase error_log ───
-ALERT_COOLDOWN_DIR="/tmp/agent_health_check_cooldown"
+ALERT_COOLDOWN_DIR="${HEALTH_CHECK_COOLDOWN_DIR:-/tmp/agent_health_check_cooldown}"
 mkdir -p "$ALERT_COOLDOWN_DIR" 2>/dev/null || true
-ALERT_COOLDOWN_SEC=300  # 5 min (= task spec)
+ALERT_COOLDOWN_SEC="${HEALTH_CHECK_COOLDOWN_SEC:-300}"  # 5 min (= task spec)
 
 ALERTS=()
 
@@ -142,8 +143,8 @@ send_shogun_inbox_alert() {
         echo "[health_check][${CORR_ID}] shogun inbox_write failed" >> "$LOG"
 }
 
-# 構造化 log (JSON) → /tmp/agent_health_check_struct.log
-STRUCT_LOG="/tmp/agent_health_check_struct.log"
+# 構造化 log (JSON) → /tmp/agent_health_check_struct.log (or HEALTH_CHECK_STRUCT_LOG)
+STRUCT_LOG="${HEALTH_CHECK_STRUCT_LOG:-/tmp/agent_health_check_struct.log}"
 log_struct() {
     local level="$1" event="$2" extra_json="${3:-{\}}"
     local iso
@@ -219,10 +220,16 @@ fi
 PERSONA_CHECK_DISABLE="$HOME/.openclaw/disable_persona_check"
 if [ ! -f "$PERSONA_CHECK_DISABLE" ]; then
     # entry format: "tmux_target:agent_label" — 配置改訂時はこの配列のみ更新する。
-    CODEX_PERSONA_PANES=(
-        "multiagent:0.3:ieyasu"   # 家康 (R1 統合命令)
-        "multiagent:1.0:honda"    # 本多 (R1 統合命令)
-    )
+    # bats fixture は HEALTH_CHECK_CODEX_PANES env (= space-separated) で差し替え可。
+    if [ -n "${HEALTH_CHECK_CODEX_PANES:-}" ]; then
+        # shellcheck disable=SC2206
+        CODEX_PERSONA_PANES=( $HEALTH_CHECK_CODEX_PANES )
+    else
+        CODEX_PERSONA_PANES=(
+            "multiagent:0.3:ieyasu"   # 家康 (R1 統合命令)
+            "multiagent:1.0:honda"    # 本多 (R1 統合命令)
+        )
+    fi
     for entry in "${CODEX_PERSONA_PANES[@]}"; do
         target="${entry%:*}"
         label="${entry##*:}"
@@ -268,9 +275,9 @@ fi
 # 注: 1 conversation = 1 jsonl ゆえ複数足軽が同 project dir を共有する場合は session 単位で
 # 別個に判定する (= signal 過多にならぬよう cooldown は session_id 単位)。
 TOKEN_CHECK_DISABLE="$HOME/.openclaw/disable_token_check"
-TOKEN_WARN_THRESHOLD=200000
-TOKEN_CRIT_THRESHOLD=240000
-TOKEN_PROJECT_DIR="$HOME/.claude/projects/-mnt-c-Users-User-projects-multi-agent-shogun"
+TOKEN_WARN_THRESHOLD="${HEALTH_CHECK_TOKEN_WARN:-200000}"
+TOKEN_CRIT_THRESHOLD="${HEALTH_CHECK_TOKEN_CRIT:-240000}"
+TOKEN_PROJECT_DIR="${HEALTH_CHECK_TOKEN_PROJECT_DIR:-$HOME/.claude/projects/-mnt-c-Users-User-projects-multi-agent-shogun}"
 if [ ! -f "$TOKEN_CHECK_DISABLE" ] && [ -d "$TOKEN_PROJECT_DIR" ]; then
     while IFS= read -r jsonl_path; do
         [ -z "$jsonl_path" ] && continue
