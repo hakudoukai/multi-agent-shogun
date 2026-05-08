@@ -1,0 +1,145 @@
+# queue/pane_registry.yaml — tmux pane ↔ agent_id ↔ persona ↔ PC マッピング SSoT 雛形
+#
+# 用途:
+#   scripts/checks/pane_identity.sh の 4-way mapping audit が参照する SSoT 候補。
+#   現状は手動編集ベース (= update_method: manual)、Phase 2 で動的更新化を予定。
+#
+# 改訂責務:
+#   配置改訂は CLAUDE.md §18.1 の改訂と同期させる (= 理事長殿の専権事項)。
+#   本 YAML は §18.1 の machine-readable mirror として位置付け、
+#   §18.1 が SSoT、本 YAML は二次 source。drift 検出時は §18.1 を真とする。
+#
+# Phase 1 (本 cmd_phase1_pane_identity_4way_audit_001) では雛形のみ作成。
+# Phase 2 (cmd 別途発令予定) で watchdog 起動時自動更新 + drift 通知化。
+#
+# Reference:
+#   - CLAUDE.md §18.1 配置表 (= SSoT)
+#   - lib/_section18_roles.sh / shim/hakudokai/_section18_roles.py (= shell/python mirror)
+#   - scripts/watcher_supervisor.sh (= watchdog 配置)
+#   - docs/incident_logs/2026-05-08_pane_mapping_drift.md (= Phase 0 incident log)
+#   - skills/pane-identity-verify/SKILL.md (= 検証手順)
+
+pane_registry:
+  version: 1
+  last_updated: "2026-05-08T09:05:00+09:00"
+  update_method: manual  # Phase 2 で auto に切替予定
+  source_of_truth: "CLAUDE.md §18.1"
+  notes: |
+    ashigaru4 は欠番 (PC 境界の視覚的区切り、CLAUDE.md §18.1 番号体系の原則)。
+    SecondPC entries は前田殿主管領域、本 PC からの tmux 検証は不可ゆえ
+    advisory のみ (= 4-way audit の対象は MainPC を主軸とし、SecondPC は記録参考)。
+
+  panes:
+    # ─── MainPC: shogun (信長専用 session) ───
+    - tmux_target: "shogun:0.0"
+      agent_id: shogun
+      persona: nobunaga
+      pc: MainPC
+      role: 将軍
+      status: 通常運用
+
+    # ─── MainPC: multiagent session (= karo + ashigaru1-3 + gunshi + takenaka) ───
+    - tmux_target: "multiagent:0.0"
+      agent_id: karo
+      persona: hideyoshi
+      pc: MainPC
+      role: 家老
+      status: 通常運用
+
+    - tmux_target: "multiagent:0.1"
+      agent_id: ashigaru1
+      persona: ashigaru1
+      pc: MainPC
+      role: 足軽
+      status: 通常運用
+
+    - tmux_target: "multiagent:0.2"
+      agent_id: ashigaru2
+      persona: ashigaru2
+      pc: MainPC
+      role: 足軽
+      status: 通常運用
+
+    - tmux_target: "multiagent:0.3"
+      agent_id: ashigaru3
+      persona: ashigaru3
+      pc: MainPC
+      role: 足軽
+      status: 非常時 +1
+      note: "通常運用時は不在。enable_ashigaru3 フラグで起動。"
+
+    - tmux_target: "multiagent:0.4"
+      agent_id: gunshi
+      persona: ieyasu
+      pc: MainPC
+      role: 軍師
+      status: 通常運用
+      note: |
+        現状 watcher_supervisor.sh は agents.3 起動を維持 (drift 状態)。
+        4-way audit が本 entry と watcher_supervisor.sh / tmux 実態の不整合を検出する。
+        topology 整合は cmd_section18_topology_consensus_001 (別 cmd、理事長専権) で対応予定。
+
+    - tmux_target: "multiagent:0.5"
+      agent_id: takenaka
+      persona: takenaka
+      pc: MainPC
+      role: 信長直轄軍師
+      status: 持ち場準備中
+      note: "Phase 15 (2026-05-08 commit 94833a6) で新設、招聘準備段階。"
+
+    # ─── SecondPC: multiagent session (= maeda + ashigaru5-8) ───
+    # SecondPC は前田殿主管領域、本 cmd では advisory record のみ。
+    # 動的更新は Phase 2/3 で対応 (= cmd 別途発令予定)。
+    - tmux_target: "multiagent:0.0"
+      agent_id: maeda
+      persona: maeda
+      pc: SecondPC
+      role: SecondPC 家老
+      status: 通常運用
+      note: "Phase 1 (2026-05-07) で新設、SecondPC 家老 (前田利家)。"
+
+    - tmux_target: "multiagent:0.1"
+      agent_id: ashigaru5
+      persona: ashigaru5
+      pc: SecondPC
+      role: 足軽
+      status: 通常運用
+
+    - tmux_target: "multiagent:0.2"
+      agent_id: ashigaru6
+      persona: ashigaru6
+      pc: SecondPC
+      role: 足軽
+      status: 通常運用
+
+    - tmux_target: "multiagent:0.3"
+      agent_id: ashigaru7
+      persona: ashigaru7
+      pc: SecondPC
+      role: 足軽
+      status: 通常運用
+
+    - tmux_target: "multiagent:0.4"
+      agent_id: ashigaru8
+      persona: ashigaru8
+      pc: SecondPC
+      role: 足軽
+      status: 非常時 +1
+      note: "通常運用時は不在。"
+
+  # ─── 欠番 (= PC 境界の視覚的区切り) ───
+  reserved_gaps:
+    - agent_id: ashigaru4
+      reason: "PC 境界の視覚的区切り (CLAUDE.md §18.1 番号体系原則)"
+
+  # ─── persona alias (= 旧名 → 新名) ───
+  # lib/_section18_roles.sh SECTION18_ROLE_ALIASES と同期する。
+  persona_aliases:
+    shogun: nobunaga
+    karo: hideyoshi
+    gunshi: ieyasu
+    nobunaga: nobunaga
+    hideyoshi: hideyoshi
+    ieyasu: ieyasu
+    maeda: maeda
+    takenaka: takenaka
