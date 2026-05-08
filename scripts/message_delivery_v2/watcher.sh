@@ -267,6 +267,10 @@ write_heartbeat "$AGENT_ID" "watcher_started"
 
 log_json INFO "main_loop_start" "inbox=${INBOX_PATH}"
 
+# 起動時 initial sweep (= 反省点新規: 起動前の既存 unread を取りこぼさない、cycle2 P1 真因対策)
+log_json INFO "initial_sweep" "processing existing unread at startup"
+process_unread_messages
+
 while true; do
     check_disable_flag
     check_natural_rotation

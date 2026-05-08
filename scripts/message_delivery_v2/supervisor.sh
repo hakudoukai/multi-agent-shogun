@@ -64,6 +64,8 @@ declare -A WATCHER_PANES=(
     [ashigaru3]="multiagent:0.4"
     [takenaka]="multiagent:0.5"
     [sanada]="multiagent:2.0"
+    [ieyasu]="multiagent:0.3"
+    [honda]="multiagent:1.0"
 )
 declare -A WATCHER_CLI=(
     [hideyoshi]="claude"
@@ -72,6 +74,8 @@ declare -A WATCHER_CLI=(
     [ashigaru3]="claude"
     [takenaka]="claude"
     [sanada]="claude"
+    [ieyasu]="codex"
+    [honda]="codex"
 )
 
 # restart count tracking
@@ -93,17 +97,18 @@ log_json() {
         "$ts" "$level" "$WATCHER_PID" "$msg" "$extra" >> "$LOG_FILE"
 }
 
-# disable flag chk
+# disable flag chk (= 検出時 exit 0、graceful 停止経路)
+# 旧設計の sleep 30 永久ループは廃止 (= 反省点新規: supervisor が exit せず restart 困難)
 check_disable() {
     if [[ -f "$GLOBAL_DISABLE" ]]; then
-        log_json INFO "global_disable_active" "sleep 30s"
-        sleep 30
-        return 1
+        log_json INFO "global_disable_exit" "flag=${GLOBAL_DISABLE}"
+        write_heartbeat "$AGENT_ID" "disabled_global_exit"
+        exit 0
     fi
     if [[ -f "$SUPERVISOR_DISABLE" ]]; then
-        log_json INFO "supervisor_disable_active" "sleep 30s"
-        sleep 30
-        return 1
+        log_json INFO "supervisor_disable_exit" "flag=${SUPERVISOR_DISABLE}"
+        write_heartbeat "$AGENT_ID" "disabled_specific_exit"
+        exit 0
     fi
     return 0
 }
