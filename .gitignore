@@ -333,6 +333,11 @@ tests/specs/osato_lms_*
 !shim/hakudokai/archive/hakudokai_watchdog.sh.archived_2026-05-08
 !shim/hakudokai/archive/hakudokai_start_watchers.sh.archived_2026-05-08
 !shim/hakudokai/archive/hakudokai_secondpc_watcher.sh.archived_2026-05-08
+# 元 path に復元 (Tier 0 archive revert 2026-05-08 21:15)
+!shim/hakudokai/hakudokai_secondpc_watcher.sh
+# v2 試作 archive (= 知見保管、scripts/archive/message_delivery_v2_full_20260508/)
+!scripts/archive/message_delivery_v2_full_20260508/
+!scripts/archive/message_delivery_v2_full_20260508/*.sh
 # pane drift 複合解決策 docs
 !docs/pane_communication_compound_resolution_2026-05-08.md
 !docs/message_delivery_v3_zerobase_design_2026-05-08.md
