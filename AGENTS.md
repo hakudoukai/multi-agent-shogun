@@ -412,3 +412,47 @@ python3 -c "import yaml; d=yaml.safe_load(open('queue/inbox/nobunaga.yaml')); pr
 ## 改訂責務
 
 本セクションの改訂は **理事長殿の専権事項**。家康・本多・信長・家老は提案のみ可。
+
+---
+
+# 🔍 Codex plan / account 確認 mandatory (= 理事長殿明示直命 2026-05-08 14:10)
+
+家康・本多・信長兼任で codex 操作前に **必ず** JWT decode で plan_type 確認:
+
+```bash
+python3 << 'PYEOF'
+import json, base64
+def decode_jwt(token):
+    pl = token.split('.')[1]
+    pl += '=' * ((4 - len(pl) % 4) % 4)
+    return json.loads(base64.urlsafe_b64decode(pl))
+
+with open('/home/user/.codex/auth.json') as f:
+    d = json.load(f)
+t = d.get('tokens', {})
+if 'id_token' in t:
+    pl = decode_jwt(t['id_token'])
+    auth = pl.get('https://api.openai.com/auth', {})
+    print(f'plan_type: {auth.get("chatgpt_plan_type")}')
+    print(f'account_id: {auth.get("chatgpt_account_id")}')
+    print(f'workspace: {[o.get("title") for o in auth.get("organizations", [])]}')
+PYEOF
+```
+
+## 期待値 (= 2026-05-08 以降)
+- plan_type: **"prolite"** (= ChatGPT Pro 個人プラン) 
+- account_id: 5258dfba-619d-4003-9880-9d6ad4e2957b
+- workspace: ["Personal"]
+
+## 警戒 (= 違反検知)
+- plan_type = "team" → **Team Business プラン誤使用**、即時 `codex login` で Pro 切替必要
+- account_id 不一致 → 別 account 使用、認証 reset 必要
+
+## 確認頻度
+- Session Start 時 (= 必須)
+- codex 関連事件発生時 (= 必須、本朝事件の learning)
+- 月次 audit (= 推奨)
+
+# 信長戒め (= 表面確認禁)
+「確認したか?」と問われた時、「field=value で確認済」と答えられない確認は確認にあらず。
+JWT/JSON/SQL/file の **値を直接読取** が真の検証。
