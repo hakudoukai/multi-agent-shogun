@@ -60,9 +60,11 @@ fi
 LOG="/tmp/hakudokai_watchdog.log"
 STRUCT_LOG="/tmp/hakudokai_watchdog_struct.log"
 DASHBOARD="/tmp/hakudokai_health_dashboard.json"
+HEALTH_FILE="/tmp/hakudokai_watchdog.health"
 CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 SUPABASE_API="${SUPABASE_URL}/rest/v1"
 CORR_ID="watchdog-$$-$(date +%s)"
+LAST_ACTION="startup"
 
 # §18 PC role (= MainPC | SecondPC、未設定時 MainPC)
 PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}"
@@ -488,24 +490,36 @@ update_dashboard() {
 
   local processes="\"fukuincho_watcher\":{\"alive\":${fukuincho_alive},\"manual_mode\":${MANUAL_MODE[fukuincho]},\"restart_fails\":${RESTART_FAIL_COUNT[fukuincho]}},\"fukuincho_reverse\":{\"alive\":${reverse_alive},\"manual_mode\":${MANUAL_MODE[fukuincho_reverse]},\"restart_fails\":${RESTART_FAIL_COUNT[fukuincho_reverse]}}"
 
-  local entry agent
+  local entry agent hourly
   for entry in "${ACTIVE_AGENTS[@]}"; do
     agent="${entry%%:*}"
     init_agent_counters "$agent"
     local alive="false"
     pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1 && alive="true"
-    processes="${processes},\"inbox_watcher_${agent}\":{\"alive\":${alive},\"manual_mode\":${MANUAL_MODE[$agent]},\"restart_fails\":${RESTART_FAIL_COUNT[$agent]}}"
+    hourly=$(restart_count_window "$agent")
+    processes="${processes},\"inbox_watcher_${agent}\":{\"alive\":${alive},\"manual_mode\":${MANUAL_MODE[$agent]},\"restart_fails\":${RESTART_FAIL_COUNT[$agent]},\"hourly_restart_count\":${hourly}}"
   done
 
+  local now_iso
+  now_iso=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
   cat > "$DASHBOARD" <<EOJSON
 {
-  "timestamp": "$(date -u '+%Y-%m-%dT%H:%M:%SZ')",
+  "timestamp": "${now_iso}",
   "uptime_seconds": ${uptime},
   "total_restarts": ${TOTAL_RESTARTS},
   "total_alerts": ${TOTAL_ALERTS},
   "check_interval": ${CHECK_INTERVAL},
+  "pc_role": "${PC_ROLE}",
+  "registry_load_status": "${REGISTRY_LOAD_STATUS}",
+  "active_agents_count": ${#ACTIVE_AGENTS[@]},
+  "restart_cap_per_hour": ${RESTART_CAP_PER_HOUR},
   "processes": {${processes}}
 }
+EOJSON
+
+  # §Error Design 8項目 #6: ヘルスチェックファイル (= 5min 以上未更新で死亡判定)
+  cat > "$HEALTH_FILE" <<EOJSON
+{"alive":true,"uptime":${uptime},"last_action":"${LAST_ACTION}","timestamp":"${now_iso}","pc_role":"${PC_ROLE}","registry_load_status":"${REGISTRY_LOAD_STATUS}","active_agents_count":${#ACTIVE_AGENTS[@]}}
 EOJSON
 }
 
@@ -519,12 +533,16 @@ if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHDOG_DISABLE" ]; then
 fi
 
 log "started (interval=${CHECK_INTERVAL}s, max_restart_fails=${MAX_RESTART_FAILS}, restart_cap_per_hour=${RESTART_CAP_PER_HOUR}, pc_role=${PC_ROLE})"
+log_struct "INFO" "startup" "watchdog" "{\"pc_role\":\"${PC_ROLE}\",\"interval\":${CHECK_INTERVAL},\"max_restart_fails\":${MAX_RESTART_FAILS},\"restart_cap_per_hour\":${RESTART_CAP_PER_HOUR}}"
 
 # Phase 2: registry 動的読込 → ACTIVE_AGENTS 解決 (= 旧 INBOX_AGENTS hardcode 廃止)
+LAST_ACTION="get_active_agents_initial"
 get_active_agents
 log "initial ACTIVE_AGENTS (n=${#ACTIVE_AGENTS[@]}, registry=${REGISTRY_LOAD_STATUS}): ${ACTIVE_AGENTS[*]:-<empty>}"
+log_struct "INFO" "active_agents_resolved" "watchdog" "{\"count\":${#ACTIVE_AGENTS[@]},\"registry_status\":\"${REGISTRY_LOAD_STATUS}\"}"
 
 # Initial health check
+LAST_ACTION="initial_check"
 check_and_restart_fukuincho
 check_and_restart_fukuincho_reverse
 for entry in "${ACTIVE_AGENTS[@]}"; do
@@ -533,6 +551,7 @@ for entry in "${ACTIVE_AGENTS[@]}"; do
   init_agent_counters "$agent"
   check_and_restart_inbox "$agent" "$pane"
 done
+LAST_ACTION="initial_dashboard"
 update_dashboard
 
 while true; do
@@ -541,24 +560,30 @@ while true; do
   # Respect manual disable flags (Watcher Design Principles)
   if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHDOG_DISABLE" ]; then
     log "DISABLED by flag file — exiting gracefully"
-    rm -f "$DASHBOARD"
+    log_struct "INFO" "shutdown_disabled" "watchdog" "{\"reason\":\"flag_file\"}"
+    rm -f "$DASHBOARD" "$HEALTH_FILE"
     exit 0
   fi
 
   # Refresh ACTIVE_AGENTS each cycle (= registry 変更 + REGISTRY_UPDATING flag 反映)
+  LAST_ACTION="get_active_agents"
   get_active_agents
 
+  LAST_ACTION="check_fukuincho"
   check_and_restart_fukuincho
+  LAST_ACTION="check_fukuincho_reverse"
   check_and_restart_fukuincho_reverse
 
   for entry in "${ACTIVE_AGENTS[@]}"; do
     agent="${entry%%:*}"
     pane="${entry#*:}"
     init_agent_counters "$agent"
+    LAST_ACTION="check_inbox_${agent}"
     check_and_restart_inbox "$agent" "$pane"
   done
 
   # DD-142 §4.5 Stage 3: Update health dashboard every cycle
+  LAST_ACTION="update_dashboard"
   update_dashboard
 
   # Heartbeat
