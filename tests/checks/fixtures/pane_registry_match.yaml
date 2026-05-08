@@ -1,0 +1,23 @@
+# bats fixture: pane_registry — 4 source 整合 (pass シナリオ用)
+# tests/checks/test_pane_identity.bats から参照
+schema_version: 1
+metadata:
+  description: "test fixture: all sources match"
+
+panes:
+  - tmux_target: "multiagent:0.0"
+    persona: hideyoshi
+    agent_id: hideyoshi
+    pc: MainPC
+  - tmux_target: "multiagent:0.1"
+    persona: ashigaru1
+    agent_id: ashigaru1
+    pc: MainPC
+  - tmux_target: "multiagent:0.2"
+    persona: ashigaru2
+    agent_id: ashigaru2
+    pc: MainPC
+  - tmux_target: "multiagent:0.3"
+    persona: ieyasu
+    agent_id: ieyasu
+    pc: MainPC

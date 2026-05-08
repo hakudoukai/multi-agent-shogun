@@ -247,6 +247,13 @@ tests/specs/osato_lms_*
 !tests/e2e/fixtures/*.yaml
 !tests/e2e/mock_behaviors/
 !tests/e2e/mock_behaviors/*.sh
+# checks/ (cycle2 M3: pane_identity.sh bats test for cmd_phase1_pane_identity_4way_audit_001)
+!tests/checks/
+!tests/checks/*.bats
+!tests/checks/fixtures/
+!tests/checks/fixtures/*.yaml
+!tests/checks/fixtures/*.md
+!tests/checks/fixtures/*.sh
 !tests/test_helper/
 !tests/test_helper/README.md
 

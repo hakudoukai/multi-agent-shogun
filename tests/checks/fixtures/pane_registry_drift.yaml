@@ -1,0 +1,23 @@
+# bats fixture: pane_registry — 4 source drift シナリオ用
+# idx 1 を意図的に違う persona にして drift を発生
+schema_version: 1
+metadata:
+  description: "test fixture: idx 1 drift"
+
+panes:
+  - tmux_target: "multiagent:0.0"
+    persona: hideyoshi
+    agent_id: hideyoshi
+    pc: MainPC
+  - tmux_target: "multiagent:0.1"
+    persona: WRONG_AGENT
+    agent_id: WRONG_AGENT
+    pc: MainPC
+  - tmux_target: "multiagent:0.2"
+    persona: ashigaru2
+    agent_id: ashigaru2
+    pc: MainPC
+  - tmux_target: "multiagent:0.3"
+    persona: ieyasu
+    agent_id: ieyasu
+    pc: MainPC

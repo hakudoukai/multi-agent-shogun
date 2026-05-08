@@ -170,3 +170,25 @@ drift 検出時は `/tmp/pane_identity_drift_<corr_id>.json` に dump 保存、
 | **Phase 1** | **4-way audit + pane_registry 雛形 + advisory hook 提案** (= 本 cmd) | **足軽2** |
 | Phase 2 | watchdog 動的更新 + drift 通知化 (pane_registry auto-update) | 別 cmd 発令予定 |
 | Phase 3 | shutsujin_departure*.sh 改修 + §18.1 表 auto-gen 化 | 別 cmd (理事長専権部分含む) |
+
+### bash 戻り値設計 (cycle2 fix S2)
+
+`scripts/checks/pane_identity.sh` は bash の `return` が modulo 256 で wrap する性質を回避するため、
+**count 系はグローバル変数経由、関数 return は 0/1 のみ** の設計とする。
+
+| 変数 / return | 用途 | 値域 | 備考 |
+|---------------|------|------|------|
+| `MISMATCH_COUNT_GLOBAL` | 4-way drift 件数 | 0..N (任意の int) | bats test + 外部 caller 参照可 |
+| `SOURCES_SKIPPED_GLOBAL` | degraded で skip した source 数 | 0..4 | 同上 |
+| `LAST_AUDIT_STATUS_GLOBAL` | 直近 audit 結果ラベル | `ok` / `drift` / `unknown` | 同上 |
+| `run_4way_audit` 関数 return | 整合 = 0、drift = 1 | 0 or 1 のみ | 256 件超の drift でも正確 (= modulo 256 wrap 影響なし) |
+| script exit | self-id 違反 + 4-way drift | 0 (整合) / 1 (warning) / 2 (drift) | advisory only、絶対 block しない |
+
+**意図**:
+- `run_4way_audit; echo $?` 形式の caller 用途では count 取得を期待しない (= 0/1 のみ)。
+- count を必要とする caller (= 通常の script 末尾、bats test、外部監視) は `MISMATCH_COUNT_GLOBAL` を read。
+- 256 件以上の drift でも `MISMATCH_COUNT_GLOBAL` は正確に保持される (= int variable は overflow しない)。
+
+**過去の不具合 (cycle1 → cycle2 で修正)**:
+cycle1 では `return "$mismatch_count"` だったため、`mismatch_count=256` の場合 `$?` が `0` となり、
+caller が "drift なし" と誤判定する Codex B1 high finding を受領。cycle2 で本設計に変更。
