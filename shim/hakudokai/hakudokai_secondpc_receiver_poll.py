@@ -87,13 +87,20 @@ retry_tracker = load_retry_tracker()
 
 # Agent pane mapping for nudge
 AGENT_PANES = {
-    # §18 SecondPC 配置 (CLAUDE.md §18.1、2026-05-06 移行):
-    #   通常 3体: ashigaru5/6/7 = multiagent:agents.0/1/2
-    #   非常時 +1: ashigaru8 = multiagent:agents.3
-    "ashigaru5": "multiagent:agents.0",
-    "ashigaru6": "multiagent:agents.1",
-    "ashigaru7": "multiagent:agents.2",
-    "ashigaru8": "multiagent:agents.3",
+    # §18 SecondPC 配置 (CLAUDE.md §18.1、2026-05-06 移行 + Phase 4-5 体制改編):
+    #   家老 1体: maeda = multiagent:agents.0 (旧 instructions/maeda.md §1)
+    #   通常 ashigaru 3体: ashigaru5/6/7 = multiagent:agents.0/1/2
+    #     ※ maeda と ashigaru5 は同 pane (multiagent:agents.0) に同居していない、
+    #     SecondPC tmux session の実 pane 構成は shutsujin_departure_secondpc.sh が決定。
+    #     旧期 receiver の pane 表は ashigaru5 を 0、ashigaru6 を 1 等としていたが、
+    #     maeda 新設 (Phase 4) で実体は maeda=0、ashigaru5=1、ashigaru6=2、ashigaru7=3 へ
+    #     再編されている可能性あり (= shutsujin script を SSoT として確認すべし)。
+    #   非常時 +1: ashigaru8 = multiagent:agents.4 (= 暫定、shutsujin で確定)
+    "maeda": "multiagent:agents.0",
+    "ashigaru5": "multiagent:agents.1",
+    "ashigaru6": "multiagent:agents.2",
+    "ashigaru7": "multiagent:agents.3",
+    "ashigaru8": "multiagent:agents.4",
     # 旧体制 (廃止) — sakura(ashigaru2) は §18 で MainPC 所属に変更
     # "ashigaru2": "secondpc:0.0",  # 削除済 (= MainPC 所属、SecondPC で受信すべきでない)
 }
@@ -161,13 +168,18 @@ def detect_target(content, topic):
 
     旧体制 sakura/kuro hardcode 廃止。topic=cross_pc_inbox_<agent> から
     正規表現で抽出し、SecondPC 所属 agent (§18 配置) のみ accept。
-    不明な場合は ashigaru5 フォールバック (旧 sakura 後継、警告ログ)。
+    不明な場合は警告ログ + maeda フォールバック (= SecondPC 家老が一次受領)。
 
     バグ修正 2026-05-07: 旧コードは default=ashigaru2 で全配信が ashigaru2 に
     誤転送されていた (家老が ashigaru5/6/7 に発令しても全部 ashigaru2 へ)。
+    バグ修正 2026-05-08: maeda (= SecondPC 家老、Phase 4-5 体制改編で新設)
+    が valid_secondpc に未登録のため、信長 → maeda 宛 msg が fallback で
+    全件 ashigaru5 に misroute されていた。maeda + 全 SecondPC 所属を
+    AGENT_PANES と整合させた。default も ashigaru5 → maeda に変更
+    (= 不明 msg は家老が一次受領、配下に裁量配信、誤配信抑止)。
     """
     import re
-    valid_secondpc = frozenset(["ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"])
+    valid_secondpc = frozenset(["maeda", "ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"])
 
     # Primary: parse topic (most reliable)
     m = re.match(r'cross_pc_inbox_(\w+)', topic)
@@ -185,15 +197,15 @@ def detect_target(content, topic):
 
     # Fallback: keyword
     text = (content + " " + topic).lower()
-    for agent in ("ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
+    for agent in ("maeda", "ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
         if agent in text:
             return agent
     if "kuro" in text or "クロ" in content:
         return "ashigaru8"
 
-    # Default: ashigaru5 (旧 sakura 後継、警告)
-    log(f"WARN: target unknown for topic={topic}, falling back to ashigaru5")
-    return "ashigaru5"
+    # Default: maeda (= SecondPC 家老、不明 msg 一次受領 + 配下裁量配信)
+    log(f"WARN: target unknown for topic={topic}, falling back to maeda")
+    return "maeda"
 
 def send_nudge(agent_id, count):
     """Send minimal nudge (inboxN only, no content)."""
