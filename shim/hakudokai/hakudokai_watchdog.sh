@@ -42,6 +42,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CHECK_INTERVAL="${2:-30}"
 MAX_RESTART_FAILS=3
+RESTART_CAP_PER_HOUR=5  # §15 SH6 limited self-restart cap (1h sliding window)
 
 # Source §18 alias resolver (read-only mirror of CLAUDE.md §18.1)
 # shellcheck disable=SC1091
@@ -178,6 +179,59 @@ PY
   REGISTRY_LOAD_STATUS="ok"
   printf '%s\n' "$result"
   return 0
+}
+
+# ─── §15 SH6: restart cap (5/h sliding window) ────────────────────────────
+# State stored in /tmp/watchdog_restart_count_<agent>.json:
+#   {"timestamps": [<unix_ts>, ...]}  (entries older than 1h auto-pruned)
+restart_count_file() { echo "/tmp/watchdog_restart_count_$1.json"; }
+
+# stdout: number of restart timestamps within last 3600 seconds
+restart_count_window() {
+  local agent="$1"
+  local file
+  file=$(restart_count_file "$agent")
+  if [ ! -f "$file" ]; then echo 0; return 0; fi
+  python3 - "$file" 2>/dev/null <<'PY' || echo 0
+import json, time, sys
+path = sys.argv[1]
+now = int(time.time())
+cutoff = now - 3600
+try:
+    with open(path) as f: data = json.load(f)
+    ts = [t for t in data.get('timestamps', []) if t > cutoff]
+    print(len(ts))
+except Exception:
+    print(0)
+PY
+}
+
+# Append a restart timestamp + prune entries older than 1h.
+restart_count_record() {
+  local agent="$1"
+  local file
+  file=$(restart_count_file "$agent")
+  python3 - "$file" 2>/dev/null <<'PY'
+import json, time, sys
+path = sys.argv[1]
+now = int(time.time())
+cutoff = now - 3600
+try:
+    with open(path) as f: data = json.load(f)
+except Exception:
+    data = {'timestamps': []}
+ts = [t for t in data.get('timestamps', []) if t > cutoff]
+ts.append(now)
+data['timestamps'] = ts
+with open(path, 'w') as f: json.dump(data, f)
+PY
+}
+
+# Returns 0 (= true / cap reached) when count >= RESTART_CAP_PER_HOUR; else 1.
+restart_cap_exceeded() {
+  local agent="$1" count
+  count=$(restart_count_window "$agent")
+  [ "$count" -ge "$RESTART_CAP_PER_HOUR" ]
 }
 
 send_urgent_alert() {
