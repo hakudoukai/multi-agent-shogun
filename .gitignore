@@ -305,3 +305,15 @@ tests/specs/osato_lms_*
 !docs/ieyasu_communication_breakdown_audit_2026-05-08.md
 !docs/honda_self_resilience_design_2026-05-08.md
 !docs/shogun_control_brief_2026-05-08.md
+!docs/honda_three_perspectives_unified_v2_2026-05-08.md
+!docs/sanada_secondpc_reconciliation_2026-05-08.md
+!docs/inbox_watcher_failure_modes_2026-05-08.md
+!docs/message_delivery_v2_design_2026-05-08.md
+!docs/ieyasu_inbox_watcher_phase0_audit_2026-05-08.md
+# message_delivery_v2 — ゼロベース watcher 新製 (cmd_inbox_watcher_zerobase_redesign_001)
+!scripts/lib/
+!scripts/lib/inbox_path.sh
+!scripts/message_delivery_v2/
+!scripts/message_delivery_v2/heartbeat.sh
+!scripts/message_delivery_v2/watcher.sh
+!scripts/message_delivery_v2/supervisor.sh
