@@ -317,3 +317,13 @@ tests/specs/osato_lms_*
 !scripts/message_delivery_v2/heartbeat.sh
 !scripts/message_delivery_v2/watcher.sh
 !scripts/message_delivery_v2/supervisor.sh
+# message_delivery_v2 cycle2 配達本体
+!scripts/message_delivery_v2/safe_nudge.sh
+!scripts/message_delivery_v2/codex_guard.sh
+!scripts/message_delivery_v2/dedup.sh
+!scripts/message_delivery_v2/dead_letter.sh
+# 旧 watcher archive (rollback path 保持)
+!scripts/archive/
+!scripts/archive/inbox_watcher.sh.archived_2026-05-08
+# pane drift 複合解決策 docs
+!docs/pane_communication_compound_resolution_2026-05-08.md
