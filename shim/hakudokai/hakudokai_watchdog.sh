@@ -76,21 +76,23 @@ REGISTRY_UPDATING="$HOME/.openclaw/registry_updating"
 # Registry load status (= dashboard publishing field)
 REGISTRY_LOAD_STATUS="unknown"
 
-# Agents to monitor inbox_watcher.sh for
-INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8 shogun:shogun:0.0"
+# Legacy hardcoded fallback (cycle1 dual-write 段階1; cycle2 で削除予定).
+# Agents to monitor inbox_watcher.sh for, used when registry load fails.
+LEGACY_INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8 shogun:shogun:0.0"
 
-# Restart failure counters (associative array)
+# Backward-compat alias (= 旧変数名を維持、本 cycle 段階1 では LEGACY と同値)
+INBOX_AGENTS="$LEGACY_INBOX_AGENTS"
+
+# Restart failure counters (associative array, lazy-initialized via init_agent_counters)
 declare -A RESTART_FAIL_COUNT
 declare -A MANUAL_MODE
 RESTART_FAIL_COUNT[fukuincho]=0
 MANUAL_MODE[fukuincho]=false
 RESTART_FAIL_COUNT[fukuincho_reverse]=0
 MANUAL_MODE[fukuincho_reverse]=false
-for entry in $INBOX_AGENTS; do
-  agent="${entry%%:*}"
-  RESTART_FAIL_COUNT[$agent]=0
-  MANUAL_MODE[$agent]=false
-done
+
+# Active agent list (= registry-driven, refreshed every cycle; fallback to LEGACY)
+declare -a ACTIVE_AGENTS=()
 
 # Stats
 START_TIME=$(date +%s)
@@ -232,6 +234,53 @@ restart_cap_exceeded() {
   local agent="$1" count
   count=$(restart_count_window "$agent")
   [ "$count" -ge "$RESTART_CAP_PER_HOUR" ]
+}
+
+# Lazy init for dynamically-discovered agents (= registry-loaded entries).
+init_agent_counters() {
+  local agent="$1"
+  if [ -z "${RESTART_FAIL_COUNT[$agent]+x}" ]; then
+    RESTART_FAIL_COUNT[$agent]=0
+    MANUAL_MODE[$agent]=false
+  fi
+}
+
+# ─── Active agent resolution (Phase 2 dual-write 段階1) ───────────────────
+# Populates ACTIVE_AGENTS array each cycle:
+#   1. If REGISTRY_UPDATING flag present → keep previous list, return 1
+#   2. Try registry read → on success use those entries
+#   3. On failure → fall back to LEGACY_INBOX_AGENTS (degraded mode)
+#   4. Filter by pane_exists() (= 不在 pane を kill 試行から除外)
+get_active_agents() {
+  if [ -f "$REGISTRY_UPDATING" ]; then
+    log "registry_updating flag detected — keeping previous ACTIVE_AGENTS this cycle"
+    REGISTRY_LOAD_STATUS="updating"
+    return 1
+  fi
+
+  local -a candidates=()
+  local registry_output
+  registry_output=$(load_inbox_agents_from_registry)
+  if [ -n "$registry_output" ]; then
+    mapfile -t candidates <<< "$registry_output"
+  else
+    log "using LEGACY_INBOX_AGENTS fallback (= degraded mode)"
+    # shellcheck disable=SC2206
+    candidates=( $LEGACY_INBOX_AGENTS )
+  fi
+
+  ACTIVE_AGENTS=()
+  local entry agent pane
+  for entry in "${candidates[@]}"; do
+    agent="${entry%%:*}"
+    pane="${entry#*:}"
+    if pane_exists "$pane"; then
+      ACTIVE_AGENTS+=("$entry")
+    else
+      log "skip [$agent]: pane $pane absent (PC=${PC_ROLE})"
+    fi
+  done
+  return 0
 }
 
 send_urgent_alert() {
@@ -384,6 +433,8 @@ check_and_restart_fukuincho() {
 check_and_restart_inbox() {
   local agent="$1"
   local pane="$2"
+  init_agent_counters "$agent"
+
   if ! pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then
     if [ "${MANUAL_MODE[$agent]}" = "true" ]; then
       log "inbox_watcher[$agent] DEAD — MANUAL MODE (skipping restart)"
@@ -393,7 +444,22 @@ check_and_restart_inbox() {
       log "inbox_watcher[$agent] DEAD — DISABLED by flag (skipping restart)"
       return 1
     fi
-    log "ALERT: inbox_watcher[$agent] DEAD — restarting (fail_count=${RESTART_FAIL_COUNT[$agent]})"
+    # §15 SH6: 5/h restart cap (= 暴走防止、過去 SecondPC 事故対策)
+    if restart_cap_exceeded "$agent"; then
+      local cap_flag="/tmp/watchdog_alert_${agent}_capped"
+      if [ ! -f "$cap_flag" ]; then
+        log "RESTART CAP EXCEEDED [$agent]: ${RESTART_CAP_PER_HOUR}/h — escalating + skipping"
+        send_urgent_alert "$agent" "[ERR-WATCHDOG-001] inbox_watcher[${agent}] exceeded ${RESTART_CAP_PER_HOUR} restarts/hour. Auto-restart disabled. Manual investigation required."
+        cat > "/tmp/watchdog_alert_${agent}_$(date +%s).json" <<EOF
+{"err_code":"ERR-WATCHDOG-001","alert":"restart_cap_exceeded","agent":"${agent}","pane":"${pane}","timestamp":"$(date -u '+%Y-%m-%dT%H:%M:%SZ')","cap_per_hour":${RESTART_CAP_PER_HOUR},"window_seconds":3600}
+EOF
+        log_struct "CRITICAL" "restart_cap_exceeded" "$agent" "{\"pane\":\"${pane}\",\"cap\":${RESTART_CAP_PER_HOUR}}"
+        touch "$cap_flag"
+      fi
+      return 1
+    fi
+    log "ALERT: inbox_watcher[$agent] DEAD — restarting (fail_count=${RESTART_FAIL_COUNT[$agent]}, hourly=$(restart_count_window "$agent"))"
+    restart_count_record "$agent"
     if ! start_inbox_watcher "$agent" "$pane"; then
       RESTART_FAIL_COUNT[$agent]=$((RESTART_FAIL_COUNT[$agent] + 1))
       if [ "${RESTART_FAIL_COUNT[$agent]}" -ge "$MAX_RESTART_FAILS" ]; then
@@ -422,8 +488,10 @@ update_dashboard() {
 
   local processes="\"fukuincho_watcher\":{\"alive\":${fukuincho_alive},\"manual_mode\":${MANUAL_MODE[fukuincho]},\"restart_fails\":${RESTART_FAIL_COUNT[fukuincho]}},\"fukuincho_reverse\":{\"alive\":${reverse_alive},\"manual_mode\":${MANUAL_MODE[fukuincho_reverse]},\"restart_fails\":${RESTART_FAIL_COUNT[fukuincho_reverse]}}"
 
-  for entry in $INBOX_AGENTS; do
+  local entry agent
+  for entry in "${ACTIVE_AGENTS[@]}"; do
     agent="${entry%%:*}"
+    init_agent_counters "$agent"
     local alive="false"
     pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1 && alive="true"
     processes="${processes},\"inbox_watcher_${agent}\":{\"alive\":${alive},\"manual_mode\":${MANUAL_MODE[$agent]},\"restart_fails\":${RESTART_FAIL_COUNT[$agent]}}"
@@ -450,14 +518,19 @@ if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHDOG_DISABLE" ]; then
   exit 0
 fi
 
-log "started (interval=${CHECK_INTERVAL}s, max_restart_fails=${MAX_RESTART_FAILS}, agents=${INBOX_AGENTS})"
+log "started (interval=${CHECK_INTERVAL}s, max_restart_fails=${MAX_RESTART_FAILS}, restart_cap_per_hour=${RESTART_CAP_PER_HOUR}, pc_role=${PC_ROLE})"
+
+# Phase 2: registry 動的読込 → ACTIVE_AGENTS 解決 (= 旧 INBOX_AGENTS hardcode 廃止)
+get_active_agents
+log "initial ACTIVE_AGENTS (n=${#ACTIVE_AGENTS[@]}, registry=${REGISTRY_LOAD_STATUS}): ${ACTIVE_AGENTS[*]:-<empty>}"
 
 # Initial health check
 check_and_restart_fukuincho
 check_and_restart_fukuincho_reverse
-for entry in $INBOX_AGENTS; do
+for entry in "${ACTIVE_AGENTS[@]}"; do
   agent="${entry%%:*}"
   pane="${entry#*:}"
+  init_agent_counters "$agent"
   check_and_restart_inbox "$agent" "$pane"
 done
 update_dashboard
@@ -472,12 +545,16 @@ while true; do
     exit 0
   fi
 
+  # Refresh ACTIVE_AGENTS each cycle (= registry 変更 + REGISTRY_UPDATING flag 反映)
+  get_active_agents
+
   check_and_restart_fukuincho
   check_and_restart_fukuincho_reverse
 
-  for entry in $INBOX_AGENTS; do
+  for entry in "${ACTIVE_AGENTS[@]}"; do
     agent="${entry%%:*}"
     pane="${entry#*:}"
+    init_agent_counters "$agent"
     check_and_restart_inbox "$agent" "$pane"
   done
 
@@ -485,5 +562,5 @@ while true; do
   update_dashboard
 
   # Heartbeat
-  log "HEARTBEAT: all checks complete"
+  log "HEARTBEAT: all checks complete (active=${#ACTIVE_AGENTS[@]}, registry=${REGISTRY_LOAD_STATUS})"
 done
