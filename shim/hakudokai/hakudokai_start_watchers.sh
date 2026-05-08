@@ -162,6 +162,19 @@ else
   log "watchdog: FAILED"
 fi
 
+# Tier 1 v2 Phase E: realtime_bridge 起動 (Supabase Realtime push 経路、polling watcher と並走)
+log "Starting realtime_bridge..."
+nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+  HAKUDOKAI_PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}" \
+  python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_realtime_bridge.py" \
+  >> /tmp/hakudokai_realtime_bridge.log 2>&1 </dev/null &
+sleep 2
+if pgrep -f "hakudokai_realtime_bridge.py" > /dev/null 2>&1; then
+  log "realtime_bridge: OK"
+else
+  log "realtime_bridge: FAILED (= polling watcher fallback で動作継続、§15 SH3 graceful degradation)"
+fi
+
 # Summary
 log "=== STARTUP SUMMARY ==="
 log "fukuincho_watcher: $(pgrep -f 'hakudokai_fukuincho_watcher.sh' | head -1 || echo DEAD)"

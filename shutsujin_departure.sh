@@ -947,6 +947,16 @@ NINJA_EOF
     done
 
     # ═══════════════════════════════════════════════════════════════════
+    # STEP 6.5: Tier 1 v2 — MainPC 恒久 leader (advisory lock、split-brain 排除)
+    # ═══════════════════════════════════════════════════════════════════
+    if [[ "${HAKUDOKAI_PC_ROLE:-MainPC}" == "MainPC" ]] && [ -n "${SUPABASE_DB_URL:-}" ]; then
+        log_info "🔒 Tier 1 v2: MainPC advisory lock 取得 (shogun-leader)"
+        psql "$SUPABASE_DB_URL" -t -c "SELECT pg_try_advisory_lock(hashtext('shogun-leader'));" 2>/dev/null \
+            && log_success "  └─ leader lock 取得 OK" \
+            || log_info "  └─ psql 不在 or 取得 skip (= 既存 lock or DB 不通、Realtime + watchdog で代替)"
+    fi
+
+    # ═══════════════════════════════════════════════════════════════════
     # STEP 6.6: inbox_watcher起動（全エージェント）
     # ═══════════════════════════════════════════════════════════════════
     log_info "📬 メールボックス監視を起動中..."

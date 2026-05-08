@@ -126,6 +126,15 @@ send_idle_alert() {
   local now
   now=$(date +%s)
 
+  # disable flag 尊重 (= 意図的休止 agent への alert 抑制、2026-05-08 22:15 信長 patch)
+  # ~/.openclaw/disable_inbox_watcher_<agent> または ~/.openclaw/global_disable で alert 停止
+  if [ -f "$HOME/.openclaw/global_disable" ]; then
+    return
+  fi
+  if [ -f "$HOME/.openclaw/disable_inbox_watcher_${agent}" ]; then
+    return  # agent は意図的休止中、alert 不要
+  fi
+
   # Cooldownチェック
   if [ -f "$cooldown_file" ]; then
     local last_alert
@@ -198,6 +207,10 @@ check_audit_compliance() {
 
   # §18: ashigaru4 は欠番。ashigaru1-3 = MainPC、ashigaru5-8 = SecondPC。
   for agent in ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8; do
+    # disable flag 尊重 (= 意図的休止 agent への audit_missing alert 抑制、2026-05-08 22:15 信長 patch)
+    if [ -f "$HOME/.openclaw/global_disable" ] || [ -f "$HOME/.openclaw/disable_inbox_watcher_${agent}" ]; then
+      continue
+    fi
     local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
     [ ! -f "$task_file" ] && continue
 
