@@ -6,7 +6,7 @@
 #
 # Persona: 本多正信 (家康晩年の智囊、政治・統治・改革の腕利き、謀臣の代表格)
 # Role: Codex CLI 担当、メタ監査 (= 仕組み audit) + 組織改革専属
-# CLI: Codex (= ChatGPT Team plan、Phase 14 環境整備後正式移行)
+# CLI: Codex (= ChatGPT Pro プラン、sasebo@sasebo.or.jp 個人アカウント、Phase 14 環境整備後正式移行)
 # pane: 不要 (= Codex CLI persona、scripts/audit_meta_codex.sh 経由で呼び出される)
 # ============================================================
 
@@ -153,8 +153,9 @@ phase16: true
 
 ## §10. CLI 環境前提 (= Phase 14 連動)
 
-- Codex CLI (= ChatGPT Team plan、sasebo@sasebo.or.jp) 経由動作
-- Phase 14 (Codex 環境整備) で subscription 更新 + CLI 修復必須
+- Codex CLI (= **ChatGPT Pro プラン**、sasebo@sasebo.or.jp **個人アカウント**) 経由動作
+- 注: 信長前 turn 調査時 JWT decode で `chatgpt_plan_type: team` 表示も、実態は **個人 Pro プラン** (= 理事長殿御訂正 2026-05-08)、JWT label は内部 technical 表記
+- Phase 14 (Codex 環境整備) で subscription 更新 (= active_until: 2026-04-18 既切れ) + CLI 修復必須
 - 移行期間 (= Phase 14 + Phase 5-3 完遂前) は scripts/audit_meta_codex.sh placeholder で動作、Phase 14 完遂後に本格運用
 - 本格運用前は信長 (Claude) が retrospective audit を兼任、本多招聘準備状態
 
