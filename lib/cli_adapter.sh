@@ -1016,7 +1016,7 @@ except Exception:
 #   $1: recommended_model — get_recommended_model() の返り値
 #
 # 返り値:
-#   空き足軽ID (例: "ashigaru4") — 完全一致またはフォールバック
+#   空き足軽ID (例: "ashigaru5") — 完全一致またはフォールバック
 #   全員ビジー → "QUEUE"
 #   エラー → "" (空文字)
 #
@@ -1158,7 +1158,8 @@ except Exception:
 
 # get_ashigaru_ids()
 # settings.yaml の cli.agents から足軽ID一覧を返す（スペース区切り、番号順）
-# フォールバック: "ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
+# フォールバック: "ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8"
+# (§18 配置ルール: 足軽4 は欠番 = PC 境界の視覚的区切り、足軽8 は SecondPC 非常時+1)
 #
 # settings パスは Python source への文字列リテラル展開でなく argv 経由で渡し、
 # パスにシングルクォート/改行/任意 Python コードが含まれても注入されないよう保護する
@@ -1183,7 +1184,7 @@ PYEOF
     if [[ -n "$result" ]]; then
         echo "$result"
     else
-        echo "ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
+        echo "ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8"
     fi
 }
 

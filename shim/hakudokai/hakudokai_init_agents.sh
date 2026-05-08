@@ -13,12 +13,12 @@ source "${SCRIPT_DIR}/lib/tmux_send.sh"
 CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 
 # Agent→pane mapping
+# §18 配置ルール (理事長殿御指示 2026-05-06): 足軽4 は欠番 = PC 境界の視覚的区切り
 declare -A PANE_MAP=(
   [karo]="multiagent:0.0"
   [ashigaru1]="multiagent:0.1"
   [ashigaru2]="multiagent:0.2"
   [ashigaru3]="multiagent:0.3"
-  [ashigaru4]="multiagent:0.4"
   [ashigaru5]="multiagent:0.5"
   [ashigaru6]="multiagent:0.6"
   [ashigaru7]="multiagent:0.7"
@@ -53,15 +53,16 @@ init_agent() {
 
 expand_targets() {
   local target="$1"
+  # §18 配置ルール (理事長殿御指示 2026-05-06): 足軽4 は欠番 = PC 境界の視覚的区切り
   case "$target" in
     all)
-      echo "karo ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 gunshi"
+      echo "karo ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 gunshi"
       ;;
     ashigaru2-7)
-      echo "ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
+      echo "ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7"
       ;;
     ashigaru1-7)
-      echo "ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
+      echo "ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7"
       ;;
     *)
       echo "$target"
