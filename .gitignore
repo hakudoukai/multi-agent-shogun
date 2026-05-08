@@ -138,6 +138,10 @@
 !scripts/checks/
 !scripts/checks/*.sh
 
+# Redundancy fallback watchers (本多 v3 HND-T1V3-004)
+!scripts/redundancy/
+!scripts/redundancy/*.sh
+
 
 # SayTask (sample template only, not actual data)
 !saytask/
