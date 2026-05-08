@@ -1,25 +1,53 @@
 #!/usr/bin/env bash
-# hakudokai_watchdog.sh — プロセス死活監視 + 自動再起動 + フェイルセーフ (DD-142 §4.5/§7)
+# hakudokai_watchdog.sh — プロセス死活監視 + 自動再起動 + フェイルセーフ
+# (DD-142 §4.5/§7 + Phase 2 Registry-driven monitoring + §15 SH6 restart cap)
 #
-# 監視対象:
+# 監視対象 (Phase 2 — registry 動的読込化):
 #   1. hakudokai_fukuincho_watcher.sh (Supabase→shogun inbox)
-#   2. inbox_watcher.sh per agent (inotifywait→tmux nudge)
+#   2. hakudokai_fukuincho_reverse_watcher.sh (shogun→Supabase)
+#   3. inbox_watcher.sh per agent (= queue/pane_registry.yaml driven、legacy hardcode fallback)
+#
+# Phase 2 (cmd_phase2_watchdog_registry_001、base=94833a6、2026-05-08):
+#   - INBOX_AGENTS hardcode → queue/pane_registry.yaml 動的読込 (flock + python yaml)
+#   - 旧名→新名 alias (lib/_section18_roles.sh の section18_resolve_alias)
+#   - 不在 pane (multiagent:0.8 等) は pane_exists() で自動除外
+#   - takenaka/maeda/ashigaru2/ashigaru3 を registry 経由で監視
+#   - §15 SH6: 同一 agent 再起動 5/h cap + escalation
+#   - dual-write: registry 失敗時 LEGACY_INBOX_AGENTS 配列 fallback (cycle1 段階1)
 #
 # DD-142 §4.5 フェイルセーフ3段階:
 #   Stage 1: 死亡検出→60秒以内に自動再起動
-#   Stage 2: 3回連続失敗→urgent_stop alert (手動搬送モード)
+#   Stage 2: 3回連続失敗→urgent_stop alert (手動搬送モード = MANUAL_MODE)
 #   Stage 3: /tmp/hakudokai_health_dashboard.json 30秒更新
 #
 # DD-142 §7 自律改善ループ:
 #   - 再起動失敗時にdev_lessonsへ自動記録
 #   - recurrence>=3で改善提案自動dispatch
 #
+# §15 SH6 (Phase 2 追加):
+#   - 同一 agent 再起動 5/h cap → 超過時 ntfy 緊急発火 + 自動再起動停止
+#   - state file: /tmp/watchdog_restart_count_<agent>.json
+#   - alert dump: /tmp/watchdog_alert_<agent>_<ts>.json (ERR-WATCHDOG-001)
+#
+# 手動停止フラグ (Watcher Design Principles 準拠):
+#   - ~/.openclaw/global_disable: 全 watchdog 機能無効化
+#   - ~/.openclaw/disable_watchdog: watchdog 単独停止
+#   - ~/.openclaw/registry_updating: registry 更新中、本 cycle はスキップ
+#   - ~/.openclaw/disable_inbox_watcher_<agent>: 個別停止
+#
 # Usage: bash shim/hakudokai/hakudokai_watchdog.sh [--interval 30]
 # 前提: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY 環境変数
+#       HAKUDOKAI_PC_ROLE (= MainPC|SecondPC、未設定時 MainPC)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CHECK_INTERVAL="${2:-30}"
 MAX_RESTART_FAILS=3
+
+# Source §18 alias resolver (read-only mirror of CLAUDE.md §18.1)
+# shellcheck disable=SC1091
+if [ -r "${SCRIPT_DIR}/lib/_section18_roles.sh" ]; then
+  source "${SCRIPT_DIR}/lib/_section18_roles.sh"
+fi
 
 # Auto-source Supabase env from ~/.hakudokai/env (CR stripped)
 if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
@@ -29,9 +57,11 @@ if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
 fi
 
 LOG="/tmp/hakudokai_watchdog.log"
+STRUCT_LOG="/tmp/hakudokai_watchdog_struct.log"
 DASHBOARD="/tmp/hakudokai_health_dashboard.json"
 CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
 SUPABASE_API="${SUPABASE_URL}/rest/v1"
+CORR_ID="watchdog-$$-$(date +%s)"
 
 # Agents to monitor inbox_watcher.sh for
 INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8 shogun:shogun:0.0"
@@ -56,6 +86,31 @@ TOTAL_ALERTS=0
 
 log() {
   echo "[watchdog][$(date '+%H:%M:%S')] $1" | tee -a "$LOG" >&2
+}
+
+# §Error Design 8項目 #1: 構造化ログ (JSON) → STRUCT_LOG
+# Usage: log_struct LEVEL ACTION [AGENT] [EXTRA_JSON]
+log_struct() {
+  local level="$1" action="$2" agent="${3:-watchdog}" extra="${4:-{\}}"
+  local iso
+  iso=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+  printf '{"ts":"%s","level":"%s","agent":"%s","action":"%s","corr_id":"%s","ctx":%s}\n' \
+    "$iso" "$level" "$agent" "$action" "${CORR_ID}" "$extra" >> "$STRUCT_LOG" 2>/dev/null || true
+}
+
+# §18 alias resolver wrapper (旧名 → 新名).
+# Falls back to inline alias map if lib/_section18_roles.sh failed to load.
+agent_alias_resolve() {
+  if declare -f section18_resolve_alias >/dev/null 2>&1; then
+    section18_resolve_alias "$1"
+  else
+    case "$1" in
+      shogun) echo "nobunaga" ;;
+      karo) echo "hideyoshi" ;;
+      gunshi) echo "ieyasu" ;;
+      *) echo "$1" ;;
+    esac
+  fi
 }
 
 send_urgent_alert() {
