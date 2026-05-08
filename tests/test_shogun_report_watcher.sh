@@ -274,6 +274,121 @@ T6_singleton_lock() {
   rm -rf "$tmp"
 }
 
+T8_dual_notification_idempotency() {
+  # HND-SRW-C3: simulate "audit author already notified shogun via own
+  # inbox_write + watcher fallback fires" — under same content, watcher
+  # must produce exactly one notification per checksum change, not storm.
+  # Also verify the notification content carries the audit_id (for downstream
+  # idempotency by report+audit_id+checksum tuple).
+  local tmp state lock log pid
+  tmp=$(setup_env)
+  state="$tmp/state.json"
+  lock="$tmp/lock"
+  log="$tmp/inbox.log"
+  : > "$log"
+  pid=$(start_watcher "$tmp" "$state" "$lock" 60 "$log")
+  warmup_watcher
+  echo "audit_id: aud_idem_001" > "$tmp/queue/reports/honda_report.yaml"
+  sleep 0.6
+  # repeated identical writes → no further notifications
+  for _ in 1 2 3 4 5; do
+    echo "audit_id: aud_idem_001" > "$tmp/queue/reports/honda_report.yaml"
+    sleep 0.2
+  done
+  stop_watcher "$pid"
+  local n; n=$(count_inbox_lines "$log")
+  assert_eq "T8a same-content storm → 1 notify" 1 "$n"
+  # audit_id should be in the notification content
+  if grep -q "aud_idem_001" "$log" 2>/dev/null; then
+    PASS_COUNT=$((PASS_COUNT+1))
+    log "    ✅ T8b notification content includes audit_id"
+  else
+    FAIL_COUNT=$((FAIL_COUNT+1))
+    FAILURES+=("T8b notification content missing audit_id")
+    log "    ❌ T8b notification content missing audit_id"
+  fi
+  rm -rf "$tmp"
+}
+
+T9_yaml_parser_nested_id() {
+  # HND-SRW-C4: yaml.safe_load picks top-level audit_id, not a nested
+  # finding's "id:". Fixture has finding list with id values that would
+  # confuse a naive grep.
+  local tmp state lock log pid
+  tmp=$(setup_env)
+  state="$tmp/state.json"
+  lock="$tmp/lock"
+  log="$tmp/inbox.log"
+  : > "$log"
+  pid=$(start_watcher "$tmp" "$state" "$lock" 60 "$log")
+  warmup_watcher
+  cat > "$tmp/queue/reports/sanada_report.yaml" <<'EOF'
+audit_id: AUD_TOPLEVEL_KEEP
+findings:
+  - id: finding_first
+    severity: low
+  - id: finding_LAST_NESTED
+    severity: high
+EOF
+  sleep 0.6
+  stop_watcher "$pid"
+  # The notification content must include AUD_TOPLEVEL_KEEP, NOT finding_LAST_NESTED.
+  if grep -q "AUD_TOPLEVEL_KEEP" "$log" 2>/dev/null; then
+    PASS_COUNT=$((PASS_COUNT+1))
+    log "    ✅ T9a yaml parser picks top-level audit_id"
+  else
+    FAIL_COUNT=$((FAIL_COUNT+1))
+    FAILURES+=("T9a top-level audit_id not picked")
+    log "    ❌ T9a top-level audit_id not picked"
+  fi
+  if grep -q "finding_LAST_NESTED" "$log" 2>/dev/null; then
+    FAIL_COUNT=$((FAIL_COUNT+1))
+    FAILURES+=("T9b nested finding id leaked into notify")
+    log "    ❌ T9b nested finding id leaked"
+  else
+    PASS_COUNT=$((PASS_COUNT+1))
+    log "    ✅ T9b nested finding id correctly NOT picked"
+  fi
+  rm -rf "$tmp"
+}
+
+T10_pending_since_timestamp() {
+  # HND-SRW-C1: pending_since must be set (non-null) when a checksum
+  # is stashed during cooldown. This is the "evidence trail" honda required.
+  local tmp state lock log pid
+  tmp=$(setup_env)
+  state="$tmp/state.json"
+  lock="$tmp/lock"
+  log="$tmp/inbox.log"
+  : > "$log"
+  pid=$(start_watcher "$tmp" "$state" "$lock" 5 "$log")  # 5s cooldown
+  warmup_watcher
+  echo "audit_id: aud_first" > "$tmp/queue/reports/takenaka_report.yaml"
+  sleep 0.5
+  # Trigger pending stash
+  echo "audit_id: aud_second" > "$tmp/queue/reports/takenaka_report.yaml"
+  sleep 0.5
+  local pending_since
+  pending_since=$(python3 -c "
+import json
+try:
+    d = json.load(open('$state'))
+    e = d.get('takenaka_report.yaml', {})
+    print(e.get('pending_since') or 'NONE')
+except: print('NONE')
+")
+  stop_watcher "$pid"
+  if [ "$pending_since" != "NONE" ] && [ -n "$pending_since" ] && [ "$pending_since" -gt 0 ] 2>/dev/null; then
+    PASS_COUNT=$((PASS_COUNT+1))
+    log "    ✅ T10 pending_since recorded: $pending_since"
+  else
+    FAIL_COUNT=$((FAIL_COUNT+1))
+    FAILURES+=("T10 pending_since not recorded: $pending_since")
+    log "    ❌ T10 pending_since not recorded: $pending_since"
+  fi
+  rm -rf "$tmp"
+}
+
 T7_inbox_write_failure() {
   local tmp state lock log pid
   tmp=$(setup_env)
@@ -328,6 +443,9 @@ run_test "T4 same-checksum dedup" T4_same_checksum_dedup
 run_test "T5 cooldown pending+post-delivery (SRW-C1)" T5_pending_post_delivery
 run_test "T6 singleton lock (SRW-C2)" T6_singleton_lock
 run_test "T7 inbox_write failure resilience" T7_inbox_write_failure
+run_test "T8 dual-notify idempotency (HND-SRW-C3)" T8_dual_notification_idempotency
+run_test "T9 yaml parser top-level pick (HND-SRW-C4)" T9_yaml_parser_nested_id
+run_test "T10 pending_since timestamp (HND-SRW-C1)" T10_pending_since_timestamp
 
 echo ""
 echo "════════════════════════════════════════════════════════════════"
