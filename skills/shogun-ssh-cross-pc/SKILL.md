@@ -187,6 +187,94 @@ Host secondpc
 - 家康 → MainPC 接続用 pub key
 - WSL bridge 罠の家康側経験
 
+## Cross-PC Portability — settings.json / hook path の両 PC 対応
+
+### 問題 — 絶対 path で MainPC/SecondPC 不整合
+
+`.claude/settings.json` の hook command を絶対 path で書くと、両 PC の WSL user 名 (= MainPC=`user` / SecondPC=`hakudokai`) で path 分岐:
+
+```jsonc
+// ❌ MainPC 専用、SecondPC で動かぬ
+"command": "bash /home/user/projects/multi-agent-shogun-newbuild/scripts/stop_hook_inbox.sh"
+```
+
+### 解 — 3 段戦略 (= 優先順)
+
+#### 優先 1: 相対 path (= 最も簡素、推奨)
+
+`bash scripts/stop_hook_inbox.sh` のように相対 path で書く。
+Claude Code は hook 実行時に **cwd = project root** で起動するゆえ動作。
+SessionStart hook は既にこの形式 (= 確立済 pattern)。
+
+```jsonc
+"command": "bash scripts/session_start_hook.sh"   // ✅ 既に相対
+```
+
+#### 優先 2: `$HOME` 動的展開 (= 本日 2026-05-10 採用)
+
+JSON 内 `$HOME` を **bash が hook 起動時に解釈** する形式。両 PC 共通 subpath (= `~/projects/multi-agent-shogun-newbuild/`) で動作:
+
+```jsonc
+"command": "bash $HOME/projects/multi-agent-shogun-newbuild/scripts/stop_hook_inbox.sh"
+```
+
+| PC | `$HOME` 展開後 |
+|----|---------------|
+| MainPC | `/home/user/projects/multi-agent-shogun-newbuild/scripts/stop_hook_inbox.sh` |
+| SecondPC | `/home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/stop_hook_inbox.sh` |
+
+⚠ 注意: JSON spec として `$HOME` は単なる文字列、Claude Code は文字列のまま hook command として bash に渡す → **bash が展開**。`type: command` 経路でのみ動作、`type: script` 経路では未確認。
+
+#### 優先 3: `.claude/settings.local.json` で PC 個別 override (= escape hatch)
+
+両 PC で path 構造が完全に異なる場合 (= 例: MainPC 直書きで /opt/foo、SecondPC で /home/bar/baz)、PC 個別 override を書く。`.claude/settings.local.json` は git 管理外 (= `.gitignore` 既登録) ゆえ PC 毎の差異を保持可。
+
+例 (= SecondPC で全く異なる path にする場合):
+```jsonc
+// .claude/settings.local.json (SecondPC のみ)
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /opt/custom/stop_hook.sh",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Claude Code は settings.json + settings.local.json を merge、後者が優先。
+
+### 検証手順 (= cross-PC 反映確認)
+
+```bash
+# 自 PC で hook command の \$HOME 展開結果確認
+bash -c "echo \"$(jq -r '.hooks.Stop[0].hooks[0].command' .claude/settings.json)\""
+
+# 期待 output: bash /home/{user|hakudokai}/projects/.../stop_hook_inbox.sh
+
+# 実 hook 動作確認 (= dry run)
+bash -c "echo {} | timeout 5 \$(jq -r '.hooks.Stop[0].hooks[0].command' .claude/settings.json)"
+echo exit=$?
+```
+
+両 PC で exit=0 + 実 path の file existence 確認できれば cross-PC 統合完遂。
+
+### 鉄則 — 新規 hook 追加時
+
+| 場面 | 推奨 |
+|------|------|
+| 全 PC 同一 path (= relative OK) | 相対 path `bash scripts/...` |
+| 全 PC 同一 subpath under home | `bash $HOME/projects/.../scripts/...` |
+| PC 別構造 | settings.local.json で PC 別 override |
+| 絶対 path 直書き | **禁** (= 「毎日トラブル」の温床) |
+
 ## Appendix — GitHub SSH 鍵登録 (= LAN SSH と独立、git pull 用)
 
 LAN 内 SSH と別件で、SecondPC が `git@github.com:...` で pull するには家康鍵を GitHub アカウントに登録要。
