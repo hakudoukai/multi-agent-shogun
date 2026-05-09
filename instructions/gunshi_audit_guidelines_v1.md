@@ -96,7 +96,48 @@
 - README 更新
 - doc と実装の整合 (= 仕様変更時の doc 同期)
 
-### 1-4. Codex / Gemini 視点分担 (= 補完性、重複させない)
+### 1-4a. Domain 別役割分担 (v1.1 = 陛下御差配 2026-05-10 08:30)
+
+**「プログラム監査は CODEX のみで精密に行い、家老の起草とか計画案の監査専門に Gemini を使ったらどうかな?」**
+→ 採択、両軍師合同監査 (= cross-domain) で補完性両立。
+
+#### Domain 分類 (= 主担マトリクス)
+
+| Domain | 内容 | 主担軍師 | 理由 |
+|--------|------|---------|------|
+| **CODE** | 実装ファイル / commit / migration / test / config code | **Codex** (= 黒田 / 直政) | line-level 精密、AST、static analysis 得意 |
+| **PLAN** | cmd YAML / 起草 doc / 戦略 doc / roadmap / acceptance criteria / persona / instruction | **Gemini** (= 竹中 / 阿茶) | long context (= 1M token)、整合性・narrative・抜け漏れ得意 |
+| **CROSS** | code + plan 跨ぐ deliverable (= cmd YAML に snippet 含、impl + design 一体提出) | **両軍師合同** | Codex code 部、Gemini 計画部、合同で 1 entry に統合 |
+
+#### Cross-domain 合同監査 protocol
+
+```
+deliverable A (= cross-domain と karo 判定)
+    ↓
+inbox_write to gunshi (Codex):  "audit_request_codex (code 部)"
+inbox_write to gunshi2 (Gemini): "audit_request_gemini (plan 部)"
+    ↓
+両軍師が並行で各自 domain 観点を audit
+    ↓
+1 audit_id を 2 軍師で共有、findings は perspective 別に記録
+    ↓
+verdict は両軍師合意で確定 (= 両 domain 共 pass で deliverable PASS)
+```
+
+#### Quota 戦略上の利点
+
+- **Codex sub plan**: code 監査専担で query 数集中 → preview model 等の小 quota bucket 回避
+- **Gemini Pro20 sub**: plan/doc 監査で long-context 1 query で深掘 → 短 query 反復よりも quota 効率良
+- 本日の `gemini-3-flash-preview` 枯渇 = code 監査に flash 多用の帰結、本方針で再発防止
+
+#### karo (= 政の眼) の追加責務
+
+deliverable 毎に **domain 判定** + 軍師 routing:
+1. 純 code (= ファイル/commit のみ) → Codex 単独
+2. 純 plan (= cmd YAML / doc のみ) → Gemini 単独
+3. cross-domain → 両軍師合同 (= inbox 同時発令、両 verdict で chain_passed 判定)
+
+### 1-4b. 9 観点 × 軍師視点 (= 旧 1-4、cross-domain 合同監査時に活用)
 
 各観点で Codex と Gemini が**異なる視点**から審査、合計で死角ゼロ:
 
@@ -112,7 +153,7 @@
 | 8. 運用 / UX | error message 列挙 / a11y attribute 検出 | 操作 flow / 心情察知 / 事故 story |
 | 9. ドキュメンテーション | 構文 check (= docstring 有無) | 内容整合 (= 仕様 vs 実装 vs doc) |
 
-→ **Codex = 機械的精緻、Gemini = 人間的洞察**、両者で完全 cover
+→ **Codex = 機械的精緻、Gemini = 人間的洞察**、両者で完全 cover (= cross-domain 合同監査時に発揮)
 
 ### 1-5. 監査 evidence 必須 schema (= 裏付けなき信頼禁、cmd_010 schema 強化版)
 
