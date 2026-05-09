@@ -49,6 +49,24 @@
 !instructions/generated/
 !instructions/generated/*.md
 
+# Audit chain instructions (= 5 層 + 必殺監査ガイドライン v1.0)
+!instructions/gunshi_audit_personas.md
+!instructions/gunshi_audit_guidelines_v1.md
+!instructions/karo_audit_supervision.md
+!instructions/shogun_fukuincho_audit_personas.md
+!instructions/work_flow_basics.md
+
+# Project docs (= 25 form SoT、Phase 7 復活 doc 等)
+!docs/
+!docs/dental_form_inventory/
+!docs/dental_form_inventory/*.md
+!docs/dental_form_inventory/*.json
+!docs/kids_app_push_ceremony_detail_design.md
+
+# Audit / verification scripts
+!scripts/sync_to_supabase.sh
+!scripts/shogun_verify_audit.sh
+
 # Multi-CLI: CLI adapter library + ntfy auth
 !lib/
 !lib/cli_adapter.sh
