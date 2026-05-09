@@ -190,6 +190,19 @@ logs/
 !skills/shogun-ssh-cross-pc/scripts/*.sh
 !skills/shogun-ssh-cross-pc/reference/
 !skills/shogun-ssh-cross-pc/reference/*.yaml
+!skills/shogun-auto-register/
+!skills/shogun-auto-register/SKILL.md
+!skills/shogun-auto-register/scripts/
+!skills/shogun-auto-register/scripts/*.sh
+!skills/shogun-auto-register/patterns/
+!skills/shogun-auto-register/patterns/*.md
+!skills/shogun-trouble-auto-skill/
+!skills/shogun-trouble-auto-skill/SKILL.md
+!skills/shogun-trouble-auto-skill/scripts/
+!skills/shogun-trouble-auto-skill/scripts/*.sh
+!skills/shogun-trouble-auto-skill/reference/
+!skills/shogun-trouble-auto-skill/reference/*.md
+!queue/skill_candidates.yaml
 
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/
