@@ -32,13 +32,11 @@ import sys
 import urllib.request
 from datetime import datetime, timezone, timedelta
 
+## Phase γ ε-1: asyncpg 任意化 — 二者間 watcher は worker mode で十分
 try:
-    import asyncpg
+    import asyncpg  # type: ignore
 except ImportError:
-    sys.stderr.write(
-        "[realtime_bridge] asyncpg not installed. pip install asyncpg\n"
-    )
-    sys.exit(2)
+    asyncpg = None  # worker mode (= REST polling のみ) で続行可
 
 logging.basicConfig(
     level=logging.INFO,
@@ -145,13 +143,70 @@ def _acknowledge_message(rest_url: str, rest_key: str, msg_id: str) -> bool:
         return False
 
 
+## Phase γ ε-1 (2026-05-09): bridge dispatch を inbox_write 呼ぶよう実装。
+## 二者間 (= 信長 / 家康) cross-PC message を local agent inbox に流す。
+## type filter で system message (urgent_stop / file_sync) は bridge せず。
+BRIDGE_MESSAGE_TYPES = {
+    "status_update",
+    "question",
+    "answer",
+    "ack",
+    "request_permission",
+    "grant_permission",
+    "decline_permission",
+}
+
+
 def _dispatch_message(msg: dict) -> None:
-    """Process a received cross-PC message (bridge delivery)."""
+    """Process a received cross-PC message (bridge delivery to local inbox)."""
     topic = msg.get("topic", "")
     content = msg.get("content", "")
     from_pc = msg.get("from_pc", "?")
     msg_type = msg.get("message_type", "?")
     log.info("bridge recv [%s] from=%s topic=%s :: %s", msg_type, from_pc, topic, content[:100])
+
+    # System message (urgent_stop / file_sync 等) は bridge せず
+    if msg_type not in BRIDGE_MESSAGE_TYPES:
+        log.debug("type=%s not bridged (system message)", msg_type)
+        return
+
+    # Local target agent: 当方 main_pc なら shogun (= 信長)、SecondPC 側なら shogun (= 家康)
+    pc_role = os.environ.get("HAKUDOKAI_PC_ROLE", "fukuincho")
+    if pc_role == "main_pc":
+        local_target = "shogun"
+        local_from = "ieyasu"  # 御弟方からの message
+    else:
+        local_target = "shogun"
+        local_from = "nobunaga"  # 兄からの message
+
+    try:
+        import subprocess
+        repo_root = os.path.expanduser("~/projects/multi-agent-shogun-newbuild")
+        inbox_write = os.path.join(repo_root, "scripts/inbox_write.sh")
+        if not os.path.exists(inbox_write):
+            log.warning("inbox_write.sh not found at %s — bridge skipped", inbox_write)
+            return
+
+        short_content = (
+            f"[bridge:{msg_type} from={from_pc}] {topic} :: {content[:300]}"
+            f"{'...' if len(content) > 300 else ''}"
+        )
+        result = subprocess.run(
+            ["bash", inbox_write, local_target, short_content, msg_type, local_from],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0:
+            log.info("bridged → %s (from=%s, type=%s)", local_target, local_from, msg_type)
+        else:
+            log.warning(
+                "inbox_write bridge failed (rc=%d): %s",
+                result.returncode,
+                result.stderr.strip(),
+            )
+    except Exception as exc:
+        log.warning("inbox_write bridge exception: %s", exc)
 
 
 async def _bridge_loop(
@@ -200,10 +255,9 @@ async def _run(poll_interval: int) -> None:
     lock_conn: asyncpg.Connection | None = None
     is_leader = False
 
-    if pc_role == "main_pc":
-        if not db_url:
-            log.error("SUPABASE_DB_URL required for MainPC advisory lock — set env and retry")
-            sys.exit(1)
+    ## Phase γ ε-1: 二者間 watcher は worker mode で十分。
+    ## asyncpg 不在 OR DB_URL 不在なら advisory lock skip、REST polling のみで動作。
+    if pc_role == "main_pc" and asyncpg is not None and db_url:
         try:
             pool = await asyncpg.create_pool(db_url, min_size=1, max_size=3)
             lock_conn = await pool.acquire()
@@ -212,8 +266,7 @@ async def _run(poll_interval: int) -> None:
                 log.info("advisory lock acquired — running as leader (main_pc)")
             else:
                 log.warning(
-                    "pg_try_advisory_lock returned false — another process holds shogun-leader lock. "
-                    "Continuing as worker mode."
+                    "pg_try_advisory_lock returned false — running as worker mode."
                 )
                 await pool.release(lock_conn)
                 lock_conn = None
@@ -226,7 +279,12 @@ async def _run(poll_interval: int) -> None:
                 pool = None
             lock_conn = None
     else:
-        log.info("pc_role=%s — running as worker (no advisory lock)", pc_role)
+        if asyncpg is None:
+            log.info("asyncpg not available — REST-only worker mode (pc_role=%s)", pc_role)
+        elif not db_url:
+            log.info("SUPABASE_DB_URL not set — REST-only worker mode (pc_role=%s)", pc_role)
+        else:
+            log.info("pc_role=%s — running as worker (no advisory lock)", pc_role)
 
     try:
         await _bridge_loop(rest_url, rest_key, poll_interval, stop_event, is_leader)
