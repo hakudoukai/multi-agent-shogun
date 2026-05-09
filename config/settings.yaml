@@ -48,8 +48,9 @@ supabase:
   pc_handshake_required: true
 
 github:
-  repo: yohey-w/multi-agent-shogun
-  remote: origin
+  repo: hakudoukai/multi-agent-shogun-newbuild
+  remote: newbuild
+  upstream_repo: yohey-w/multi-agent-shogun  ## upstream pristine 参照 (= 編集禁、merge 元)
 
 ## ntfy 通知 (= スマホ push)
 ## TODO 陛下御差配仰ぎ: ntfy_topic を御指定下されたく候
