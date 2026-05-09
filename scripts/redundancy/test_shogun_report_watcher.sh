@@ -13,7 +13,6 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 PASS_COUNT=0
 FAIL_COUNT=0
 TEST_DIR="$(mktemp -d /tmp/.srw_test.XXXXXX)"
-trap 'rm -rf "$TEST_DIR"' EXIT
 
 _pass() { echo "  ✓ $1"; (( PASS_COUNT++ )) || true; }
 _fail() { echo "  ✗ $1"; (( FAIL_COUNT++ )) || true; }

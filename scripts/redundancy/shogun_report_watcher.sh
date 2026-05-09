@@ -190,11 +190,10 @@ _flush_pending() {
 
 # ── Cleanup ─────────────────────────────────────────────────────────────────
 EVENT_FIFO=""
-INOTIFY_PID=""
 
 _cleanup() {
+    exec 3<&- 2>/dev/null || true
     [[ -n "$EVENT_FIFO" && -p "$EVENT_FIFO" ]] && rm -f "$EVENT_FIFO"
-    [[ -n "$INOTIFY_PID" ]] && kill "$INOTIFY_PID" 2>/dev/null || true
 }
 trap _cleanup EXIT INT TERM
 
@@ -217,7 +216,6 @@ _main() {
     # Launch inotifywait writer into FIFO
     inotifywait -m -q -e close_write,moved_to --format '%w%f' \
         "${watch_paths[@]}" > "$EVENT_FIFO" 2>/dev/null &
-    INOTIFY_PID=$!
 
     # Open read-end on fd 3 (this unblocks the background inotifywait writer)
     exec 3< "$EVENT_FIFO"
