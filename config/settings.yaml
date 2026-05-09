@@ -1,0 +1,83 @@
+## multi-agent-shogun-newbuild settings (Phase γ minimal)
+## upstream v4.6.0 pristine + minimal 5% patch 規律準拠
+## 参照: instructions/roles/{shogun,karo,gunshi,ashigaru}_role.md
+## 編成: doc 60061f25 (= 2 system 編成 v1.1) — MainPC 信長系 10 体 / SecondPC 家康系 10 体
+
+language: ja
+shell: bash
+
+## CLI 割当 (編成 v1.1 + 監査体制)
+## - 将軍/家老/足軽: claude
+## - 軍師1 (一次監査): codex
+## - 軍師2 (二次監査): gemini
+## 編成 v1.1 (= doc 60061f25): MainPC 信長系 10 体 = shogun(1) + karo(1) + gunshi 2 体 + ashigaru 6 体
+## tmux pane 配置:
+##   shogun:0.0      = shogun (Claude)
+##   multiagent:0.0  = karo
+##   multiagent:0.1-6 = ashigaru1-6
+##   multiagent:0.7  = gunshi (= 軍師1, Codex)
+##   multiagent:0.8  = gunshi2 (= 軍師2, Gemini)
+cli:
+  default: claude
+  agents:
+    shogun: claude       ## 将軍 (= 信長 / MainPC, 拙者) — Opus 4.7 推奨
+    karo: claude         ## 家老/副官 (= 秀吉 / MainPC)
+    ashigaru1: claude
+    ashigaru2: claude
+    ashigaru3: claude
+    ashigaru4: claude
+    ashigaru5: claude
+    ashigaru6: claude
+    gunshi: codex        ## 軍師1 一次監査 (= 黒田) — Codex CLI
+    gunshi2: gemini      ## 軍師2 二次監査 (= 竹中) — Gemini CLI
+  audit:
+    primary: codex       ## 黒田 / 直政 (SecondPC 軍師1) 共に Codex
+    secondary: gemini    ## 竹中 / あちゃ (SecondPC 軍師2) 共に Gemini
+
+## tmux 構成 (= upstream 準拠)
+tmux:
+  sessions:
+    - name: shogun
+      windows: [main]
+    - name: multiagent
+      windows: [agents]
+
+## 通信路 (Supabase + GitHub + ntfy + view_shogun)
+supabase:
+  project_id: pxvnhkiqyxkejzivspde
+  pc_handshake_required: true
+
+github:
+  repo: yohey-w/multi-agent-shogun
+  remote: origin
+
+## ntfy 通知 (= スマホ push)
+## TODO 陛下御差配仰ぎ: ntfy_topic を御指定下されたく候
+##   例: hakudoukai-shogun-newbuild  (推奨、識別容易)
+##   有効化前は ntfy.sh 実行で exit 1 (= 通知不発)、害なし
+ntfy_topic: TODO_LORD_DIRECTIVE
+
+## PC mapping (= cross-PC 通信、編成 v1.1 準拠)
+pc_mapping:
+  main_pc:
+    pc_id: main_pc
+    is_local: true
+    agents: [shogun, karo, ashigaru1, ashigaru2, ashigaru3, ashigaru4, ashigaru5, ashigaru6, gunshi, gunshi2]
+  second_pc:
+    pc_id: second_pc
+    supabase_bridge: true
+    ## SecondPC 家康系 10 体 (= 副将軍家康 + 本多 + 直政(Codex) + あちゃ(Gemini) + 足軽 6)
+    ## 武将 alias で明示
+    agents: [ieyasu, honda, sanada, achacha, ashigaru1_sp, ashigaru2_sp, ashigaru3_sp, ashigaru4_sp, ashigaru5_sp, ashigaru6_sp]
+
+## エスカレーション (= upstream 準拠最小)
+escalation:
+  L4_ntfy_notification: true
+  L4_approval_timeout: 1800
+
+## screenshot path (Shogun mandatory rules §5)
+screenshot:
+  path: /mnt/c/Users/User/Pictures/Screenshots/
+
+## clinic_id (DD-146 R2 multi-tenant、Phase γ では single tenant)
+clinic_id: hakudoukai_main
