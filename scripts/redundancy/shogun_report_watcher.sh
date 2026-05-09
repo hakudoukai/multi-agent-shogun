@@ -7,9 +7,10 @@
 #
 # Cycle2: SRW-C1 pending_checksum, SRW-C2 flock, HND-SRW-C3 dedup precision,
 #         HND-SRW-C4 YAML verdict parse, HND-SRW-C5 TODO for cycle3.
-#
-# TODO(HND-SRW-C5 cycle3): Migrate inotifywait background process to coproc
+# Cycle3: D002/D006 safety compliance (trap rm-rf → removed, kill → exec 3<&- FIFO close)
+# Cycle4 (TODO HND-SRW-C5): Migrate inotifywait background process to coproc
 # for cleaner resource lifecycle management and better portability.
+# Cycle4 also: WATCH_REPORTS updated to 編成 v1.1 (kuroda/takenaka/naomasa/acha/ieyasu/honda)
 
 set -euo pipefail
 
@@ -27,13 +28,14 @@ if ! flock -n 200; then
     exit 1
 fi
 
-# ── Target reports ──────────────────────────────────────────────────────────
+# ── Target reports (編成 v1.1: MainPC 黒田/竹中 + SecondPC 直政/あちゃ/家康/本多) ────
 WATCH_REPORTS=(
+    "kuroda_report.yaml"
+    "takenaka_report.yaml"
+    "naomasa_report.yaml"
+    "acha_report.yaml"
     "ieyasu_report.yaml"
     "honda_report.yaml"
-    "kuroda_report.yaml"
-    "sanada_report.yaml"
-    "takenaka_report.yaml"
 )
 
 # ── State helpers ───────────────────────────────────────────────────────────
@@ -188,16 +190,17 @@ _flush_pending() {
     done
 }
 
-# ── Cleanup ─────────────────────────────────────────────────────────────────
-EVENT_FIFO=""
+# ── Coproc state (HND-SRW-C5 cycle4) ────────────────────────────────────────
+# coproc fd refs stored in global so _cleanup can close them
+INOTIFY_READ_FD=""
 
 _cleanup() {
-    exec 3<&- 2>/dev/null || true
-    [[ -n "$EVENT_FIFO" && -p "$EVENT_FIFO" ]] && rm -f "$EVENT_FIFO"
+    # Close coproc read fd — sends EOF to inotifywait, letting it exit naturally
+    [[ -n "$INOTIFY_READ_FD" ]] && eval "exec ${INOTIFY_READ_FD}<&-" 2>/dev/null || true
 }
 trap _cleanup EXIT INT TERM
 
-# ── Main ─────────────────────────────────────────────────────────────────────
+# ── Main (cycle4: coproc replaces FIFO + background &) ───────────────────────
 _main() {
     _init_state
 
@@ -208,37 +211,34 @@ _main() {
         watch_paths+=("$REPORTS_DIR/$r")
     done
 
-    EVENT_FIFO="$(mktemp -u /tmp/.shogun_watcher_fifo.XXXXXX)"
-    mkfifo "$EVENT_FIFO"
+    echo "shogun_report_watcher: starting (cycle4/coproc), watching ${#WATCH_REPORTS[@]} reports" >&2
 
-    echo "shogun_report_watcher: starting, watching ${#WATCH_REPORTS[@]} reports" >&2
-
-    # Launch inotifywait writer into FIFO
-    inotifywait -m -q -e close_write,moved_to --format '%w%f' \
-        "${watch_paths[@]}" > "$EVENT_FIFO" 2>/dev/null &
-
-    # Open read-end on fd 3 (this unblocks the background inotifywait writer)
-    exec 3< "$EVENT_FIFO"
+    # Launch inotifywait as coproc (HND-SRW-C5)
+    # INOTIFY_PROC[0] = read fd (inotifywait stdout), INOTIFY_PROC[1] = write fd (inotifywait stdin)
+    # shellcheck disable=SC2034
+    coproc INOTIFY_PROC {
+        inotifywait -m -q -e close_write,moved_to --format '%w%f' \
+            "${watch_paths[@]}" 2>/dev/null
+    }
+    INOTIFY_READ_FD="${INOTIFY_PROC[0]}"
 
     # Event loop: read with timeout to periodically flush pending notifications
     local filepath rc
     while true; do
         filepath=""
-        if IFS= read -r -t "$COOLDOWN_SECS" filepath <&3; then
+        if IFS= read -r -t "$COOLDOWN_SECS" filepath <&"${INOTIFY_PROC[0]}"; then
             _process_change "$filepath"
         else
             rc=$?
             if (( rc <= 128 )); then
-                # EOF: inotifywait died unexpectedly
-                echo "shogun_report_watcher: inotifywait exited, stopping" >&2
+                # EOF: inotifywait coproc exited unexpectedly
+                echo "shogun_report_watcher: inotifywait coproc exited, stopping" >&2
                 break
             fi
             # rc > 128 → read timeout: fall through to _flush_pending
         fi
         _flush_pending
     done
-
-    exec 3<&-
 }
 
 _main

@@ -104,12 +104,20 @@ PYEOF
 }
 
 WATCH_REPORTS=(
+    "kuroda_report.yaml"
+    "takenaka_report.yaml"
+    "naomasa_report.yaml"
+    "acha_report.yaml"
     "ieyasu_report.yaml"
     "honda_report.yaml"
-    "kuroda_report.yaml"
-    "sanada_report.yaml"
-    "takenaka_report.yaml"
 )
+
+# cycle4: coproc state variables (used by _cleanup)
+INOTIFY_READ_FD=""
+
+_cleanup() {
+    [[ -n "$INOTIFY_READ_FD" ]] && eval "exec ${INOTIFY_READ_FD}<&-" 2>/dev/null || true
+}
 
 _process_change() {
     local filepath="$1"
@@ -321,6 +329,71 @@ if [[ "$(_notification_count kuroda_report.yaml)" -eq 0 ]]; then
     _pass "restart: no duplicate notification for already-seen checksum"
 else
     _fail "expected 0 notifications after restart with existing state"
+fi
+
+# ── Scenario 8 (cycle4): WATCH_REPORTS 編成 v1.1 verification ───────────────
+echo ""
+echo "Scenario 8: WATCH_REPORTS contains 編成 v1.1 entries"
+_reset
+expected_reports=(
+    "kuroda_report.yaml"
+    "takenaka_report.yaml"
+    "naomasa_report.yaml"
+    "acha_report.yaml"
+    "ieyasu_report.yaml"
+    "honda_report.yaml"
+)
+all_found=1
+for expected in "${expected_reports[@]}"; do
+    found=0
+    for actual in "${WATCH_REPORTS[@]}"; do
+        [[ "$actual" == "$expected" ]] && { found=1; break; }
+    done
+    if [[ "$found" -eq 0 ]]; then
+        _fail "WATCH_REPORTS missing: $expected"
+        all_found=0
+    fi
+done
+# Ensure stale entries are absent
+stale_reports=("sanada_report.yaml" "ashigaru1_report.yaml")
+for stale in "${stale_reports[@]}"; do
+    for actual in "${WATCH_REPORTS[@]}"; do
+        if [[ "$actual" == "$stale" ]]; then
+            _fail "WATCH_REPORTS contains stale entry: $stale"
+            all_found=0
+            break
+        fi
+    done
+done
+if [[ "$all_found" -eq 1 ]]; then
+    _pass "WATCH_REPORTS has all 6 編成 v1.1 entries and no stale entries"
+fi
+
+# ── Scenario 9 (cycle4): _cleanup with empty INOTIFY_READ_FD is graceful ────
+echo ""
+echo "Scenario 9: _cleanup graceful when INOTIFY_READ_FD is empty"
+_reset
+INOTIFY_READ_FD=""
+set +e
+_cleanup
+rc=$?
+set -e
+if [[ "$rc" -eq 0 ]]; then
+    _pass "_cleanup: no error when INOTIFY_READ_FD is empty"
+else
+    _fail "_cleanup: unexpected exit code $rc with empty INOTIFY_READ_FD"
+fi
+
+# ── Scenario 10 (cycle4): No FIFO file created by _main bootstrap ───────────
+echo ""
+echo "Scenario 10: No FIFO file left in /tmp after coproc-based startup"
+_reset
+# Verify there are no leftover FIFO files from old implementation
+fifo_files="$(find /tmp -maxdepth 1 -name '.shogun_watcher_fifo.*' 2>/dev/null | wc -l)"
+if [[ "$fifo_files" -eq 0 ]]; then
+    _pass "no stale FIFO files in /tmp (coproc replaces FIFO)"
+else
+    _fail "found $fifo_files leftover FIFO file(s) in /tmp — coproc migration incomplete"
 fi
 
 # ── Results ──────────────────────────────────────────────────────────────────

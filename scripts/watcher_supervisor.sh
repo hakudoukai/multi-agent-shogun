@@ -40,6 +40,14 @@ start_watcher_if_missing() {
     nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" >> "$log_file" 2>&1 &
 }
 
+start_report_watcher_if_missing() {
+    local log_file="$1"
+    if pgrep -f "scripts/redundancy/shogun_report_watcher.sh" >/dev/null 2>&1; then
+        return 0
+    fi
+    nohup bash scripts/redundancy/shogun_report_watcher.sh >> "$log_file" 2>&1 &
+}
+
 while true; do
     start_watcher_if_missing "shogun" "shogun:main.0" "logs/inbox_watcher_shogun.log"
     start_watcher_if_missing "karo" "multiagent:agents.0" "logs/inbox_watcher_karo.log"
@@ -49,7 +57,8 @@ while true; do
     start_watcher_if_missing "ashigaru4" "multiagent:agents.4" "logs/inbox_watcher_ashigaru4.log"
     start_watcher_if_missing "ashigaru5" "multiagent:agents.5" "logs/inbox_watcher_ashigaru5.log"
     start_watcher_if_missing "ashigaru6" "multiagent:agents.6" "logs/inbox_watcher_ashigaru6.log"
-    start_watcher_if_missing "ashigaru7" "multiagent:agents.7" "logs/inbox_watcher_ashigaru7.log"
-    start_watcher_if_missing "gunshi" "multiagent:agents.8" "logs/inbox_watcher_gunshi.log"
+    start_watcher_if_missing "gunshi" "multiagent:agents.7" "logs/inbox_watcher_gunshi.log"
+    start_watcher_if_missing "gunshi2" "multiagent:agents.8" "logs/inbox_watcher_gunshi2.log"
+    start_report_watcher_if_missing "logs/shogun_report_watcher.log"
     sleep 5
 done

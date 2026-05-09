@@ -56,7 +56,7 @@ github:
 ## TODO 陛下御差配仰ぎ: ntfy_topic を御指定下されたく候
 ##   例: hakudoukai-shogun-newbuild  (推奨、識別容易)
 ##   有効化前は ntfy.sh 実行で exit 1 (= 通知不発)、害なし
-ntfy_topic: TODO_LORD_DIRECTIVE
+ntfy_topic: hakudoukai-shogun-newbuild
 
 ## PC mapping (= cross-PC 通信、編成 v1.1 準拠)
 pc_mapping:
