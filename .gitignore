@@ -203,6 +203,12 @@ logs/
 !skills/shogun-trouble-auto-skill/reference/
 !skills/shogun-trouble-auto-skill/reference/*.md
 !queue/skill_candidates.yaml
+!skills/shogun-system-coherence/
+!skills/shogun-system-coherence/SKILL.md
+!skills/shogun-system-coherence/scripts/
+!skills/shogun-system-coherence/scripts/*.sh
+!skills/shogun-system-coherence/reference/
+!skills/shogun-system-coherence/reference/*.md
 
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/
