@@ -24,6 +24,9 @@
     ]
   },
   "permissions": {
+    "allow": [
+      "Bash(kill:*)"
+    ],
     "deny": [
       "Bash(rm -rf /)",
       "Bash(rm -rf /*)",
@@ -33,7 +36,9 @@
       "Bash(rm -rf ~*)",
       "Bash(sudo *)",
       "Bash(su *)",
-      "Bash(kill *)",
+      "Bash(kill -9 1)",
+      "Bash(kill 0)",
+      "Bash(kill -9 0)",
       "Bash(killall *)",
       "Bash(pkill *)",
       "Bash(git push --force*)",
