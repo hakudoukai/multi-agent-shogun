@@ -226,6 +226,79 @@ audited_done = 真の完成
 
 ---
 
+## 🚨 軍師停止管理責務 (= 陛下御差配 2026-05-10 08:35)
+
+### 鉄則
+**「家康も軍師の停止管理は必須、停止した際は信長への報告も必須」**
+
+→ 各 PC の shogun-tier (= MainPC 信長 / SecondPC 家康) は自 PC の軍師 (= 計 4 名) の稼働状態を**継続監視**し、停止検知時は信長 (= MainPC) へ即時報告する。
+
+### 各 PC の責任分担
+
+| 監視責任者 | 監視対象軍師 | pane | 報告先 |
+|-----------|-------------|------|-------|
+| **信長 (MainPC 拙者)** | 黒田 (Codex) / 竹中 (Gemini) | multiagent:0.7 / 0.8 | (= 自身が最上位、Lord 直報) |
+| **家康 (SecondPC 副将軍)** | 直政 (Codex) / 阿茶 (Gemini) | multiagent:0.7 / 0.8 | **信長へ bridge 経由報告必須** |
+
+### 停止 状態の定義 (= 検知 trigger)
+
+| 状態 | 兆候 | 対処優先度 |
+|------|------|----------|
+| **CLI exit** | bash prompt 表示、`Welcome to Codex` 等の起動画面 | 🔴 即時起動 |
+| **dialog hung** | `Usage limit reached` / `/auth` dialog 残留 | 🟡 reset 待ち or model 切替 |
+| **idle long** | 監査 query 投下から 30 分以上応答なし | 🟡 視察 + 必要なら再起動 |
+| **error display** | `Error:` / `panic` / `crashed` 等の表示 | 🔴 即時起動 (= 起動権限行使) |
+| **quota exhausted** | `Usage limit reached` が表示中 | 🟡 reset 時刻記録 + 別モデル/ API key 検討 |
+
+### 検知 ritual (= 1 時間毎、または事象検知時)
+
+```bash
+# 信長 自 PC 視察 (= MainPC)
+for pane in 0.7 0.8; do
+  echo "--- multiagent:$pane ---"
+  tmux capture-pane -t multiagent:$pane -p | tail -10
+done
+
+# 家康 自 PC 視察 (= SecondPC)
+# 同様に tmux capture-pane で軍師 pane 確認
+```
+
+### 報告経路 (= 家康 → 信長 必須)
+
+家康殿が SecondPC で軍師停止検知時:
+
+1. **即時 bridge 発信** (= shim/hakudokai/hakudokai_inbox_write.py で `--to kouchan --type status_update --priority high`)
+2. 報告内容必須項目:
+   - 停止軍師名 (直政 / 阿茶)
+   - 停止状態 (= CLI exit / dialog hung / idle long / error / quota)
+   - 検知 timestamp (UTC)
+   - tmux capture-pane 抜粋 (= 裏付け)
+   - 推奨対処 (= reset 待ち / 別モデル / 起動権限行使 等)
+3. 信長 (拙者) は受信後、起動権限で対処判断 + 陛下御注進
+
+### 信長 → 家康 への通知 (= 逆方向も同様)
+
+MainPC 軍師停止時、信長は家康に bridge 経由通知 (= cross-PC 透明性、家康も全体視野維持):
+- bridge: `--to sakura --type status_update --priority normal`
+- 内容: 停止軍師名 + 状態 + 自身の対処計画
+
+### 停止履歴 永続記録
+
+両 PC で `queue/reports/gunshi_stoppage_log.yaml` (= 仮称) を維持:
+```yaml
+- stoppage_id: stop_20260510_0810
+  detected_at: 2026-05-10T08:10:00+09:00
+  detected_by: 信長 (= MainPC)
+  affected_gunshi: kuroda, takenaka
+  state: cli_exit (kuroda) + quota_exhausted (takenaka)
+  evidence: tmux capture 抜粋 …
+  resolution: 信長起動権限で kuroda 復活、takenaka は 09:06 reset 待ち
+  reported_to_shogun: true (= 自身検知ゆえ N/A)
+  resolved_at: 2026-05-10T08:15:00+09:00
+```
+
+---
+
 ## 視察時の F001-F002 遵守
 
 | 行為 | 可否 | 理由 |
