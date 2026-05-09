@@ -245,3 +245,6 @@ tests/specs/osato_lms_*
 !android/
 !android/**
 .claude/settings.local.json
+# PC 個別 override (= shogun-ssh-cross-pc skill Cross-PC Portability 解 #3)
+# screenshot.path / 個別 path override 等を PC 毎にここで上書き、git 管理外で保持
+config/settings.local.yaml

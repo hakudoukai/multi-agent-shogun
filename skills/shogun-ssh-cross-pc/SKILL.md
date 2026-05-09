@@ -225,23 +225,27 @@ JSON 内 `$HOME` を **bash が hook 起動時に解釈** する形式。両 PC 
 
 ⚠ 注意: JSON spec として `$HOME` は単なる文字列、Claude Code は文字列のまま hook command として bash に渡す → **bash が展開**。`type: command` 経路でのみ動作、`type: script` 経路では未確認。
 
-#### 優先 3: `.claude/settings.local.json` で PC 個別 override (= escape hatch)
+#### 優先 3: `*/settings.local.*` で PC 個別 override (= escape hatch)
 
-両 PC で path 構造が完全に異なる場合 (= 例: MainPC 直書きで /opt/foo、SecondPC で /home/bar/baz)、PC 個別 override を書く。`.claude/settings.local.json` は git 管理外 (= `.gitignore` 既登録) ゆえ PC 毎の差異を保持可。
+両 PC で path 構造が完全に異なる場合 (= 例: Windows username が `User` と `taro` で違う、Pictures フォルダ位置が異なる 等)、PC 個別 override で対応:
 
-例 (= SecondPC で全く異なる path にする場合):
+| 設定 file | local override file | 用途 |
+|----------|--------------------|---------|
+| `.claude/settings.json` | `.claude/settings.local.json` | hook command、permission 等 |
+| `config/settings.yaml` | `config/settings.local.yaml` | screenshot.path、PC 別 ntfy_topic 等 |
+
+両 local override file は `.gitignore` 既登録、git 管理外で PC 毎の差異を保持可。
+
+例 1 — `.claude/settings.local.json` (= hook command を PC 別に):
 ```jsonc
-// .claude/settings.local.json (SecondPC のみ)
 {
   "hooks": {
     "Stop": [
       {
         "hooks": [
-          {
-            "type": "command",
+          { "type": "command",
             "command": "bash /opt/custom/stop_hook.sh",
-            "timeout": 60
-          }
+            "timeout": 60 }
         ]
       }
     ]
@@ -249,7 +253,15 @@ JSON 内 `$HOME` を **bash が hook 起動時に解釈** する形式。両 PC 
 }
 ```
 
-Claude Code は settings.json + settings.local.json を merge、後者が優先。
+例 2 — `config/settings.local.yaml` (= screenshot.path 等を PC 別に):
+```yaml
+# SecondPC で Windows username が異なる場合
+screenshot:
+  path: /mnt/c/Users/Taro/Pictures/Screenshots/
+```
+
+Claude Code/シェル script 双方とも settings.json + settings.local.json を merge、後者が優先。
+yaml 側 merge は読み込み script 側で `[[ -f settings.local.yaml ]] && yq merge` 等で実装する慣例。
 
 ### 検証手順 (= cross-PC 反映確認)
 
