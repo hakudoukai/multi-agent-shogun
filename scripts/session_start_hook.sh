@@ -34,6 +34,25 @@ mkdir -p "$LOG_DIR" || true
 echo "[$(date -Iseconds)] $AGENT_ID session_start_hook fired" \
     >> "$LOG_DIR/session_start_hook.log" || true
 
+# ════════════════════════════════════════════════════════════════
+# 拡張 #1: shogun のみ — 1 日 1 回 skill_candidate_scan を background 起動
+# 過去 24h スキャン無し時のみ発火、shogun の context 注入には影響せぬ
+# ════════════════════════════════════════════════════════════════
+SKILL_SCAN_STAMP="/tmp/.skill_candidate_scan_stamp"
+SKILL_SCAN_SCRIPT="$(dirname "$0")/../skills/shogun-trouble-auto-skill/scripts/skill_candidate_scan.sh"
+if [ "$AGENT_ID" = "shogun" ] && [ -x "$SKILL_SCAN_SCRIPT" ]; then
+    if [ ! -f "$SKILL_SCAN_STAMP" ] || [ $(($(date +%s) - $(stat -c %Y "$SKILL_SCAN_STAMP" 2>/dev/null || echo 0))) -gt 86400 ]; then
+        # background 起動、stdout 抑止 (= context 注入と分離)
+        (
+            bash "$SKILL_SCAN_SCRIPT" scan > "$LOG_DIR/skill_candidate_scan.log" 2>&1
+            DASH_SCAN="$(dirname "$0")/../skills/shogun-trouble-auto-skill/scripts/dashboard_scan.sh"
+            [ -x "$DASH_SCAN" ] && bash "$DASH_SCAN" >> "$LOG_DIR/skill_candidate_scan.log" 2>&1
+            touch "$SKILL_SCAN_STAMP"
+        ) &
+        disown
+    fi
+fi
+
 case "$AGENT_ID" in
     shogun|karo|gunshi)
         # command-layer agents: full Session Start (Step 1-5)

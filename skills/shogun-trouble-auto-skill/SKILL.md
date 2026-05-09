@@ -91,9 +91,24 @@ severity 自動判定: signature の keywords に「停止」「不能」「fail
 
 ## 起動方式
 
-### 自動 (= 推奨)
-- `scripts/skill_candidate_scan.sh` を **session_start_hook** で 1 日 1 回起動 (= rate-limited)
-- Stage 1〜3 自動、Stage 4 草案化も自動 (= ただし `_draft/` 配置で本採用は陛下承認要)
+### 自動 (= 推奨、3 系統で常時稼働)
+
+**拡張 #1 — session_start_hook で 1 日 1 回 scan + dashboard_scan**
+- shogun (= 拙者) session 開始時に `scripts/skill_candidate_scan.sh scan` 起動
+- 続けて `dashboard_scan.sh` で 🚨 残留 entry も検知
+- Rate-limit: `/tmp/.skill_candidate_scan_stamp` で 24h 1 回
+- background + disown、shogun context 注入には干渉せぬ
+
+**拡張 #2 — Lord 発話自動検知 (= 拙者 ritual)**
+- 拙者は Lord の各発言後、trouble phrase 含む可能性ある場合 `lord_phrase_detect.sh` 呼出
+- trigger phrase: 「毎日トラブル」「また同じ」「何度も」「繰り返し」等
+- 検知時は signature に `_count++`、severity 自動判定、閾値超過で auto-draft 候補化
+- 通常会話には呼出禁 (= overhead 回避)
+
+**拡張 #3 — dashboard 🚨 残留 24h 検知**
+- `dashboard_scan.sh` で `dashboard.md` 内 🚨【要対応】 entry を抽出
+- git log -S で初出 commit 時刻を取得、24h 以上残留なら candidate 化
+- severity = 🔴🔴 含 → blocking、🔴 → normal
 
 ### 手動
 ```
@@ -101,6 +116,15 @@ severity 自動判定: signature の keywords に「停止」「不能」「fail
 /shogun-trouble-auto-skill aggregate # 既検知の hit_count 再集計
 /shogun-trouble-auto-skill draft     # 閾値超え candidate を即草案化
 /shogun-trouble-auto-skill status    # candidates.yaml の現状一覧
+```
+
+### 拙者 (Claude Code shogun) の ritual
+
+```bash
+# Lord 発言が trouble の臭いある時:
+bash skills/shogun-trouble-auto-skill/scripts/lord_phrase_detect.sh "<lord 発言>"
+# → no_match なら何もせぬ
+# → match: ... threshold_reached=True なら 草案化検討
 ```
 
 ## Detection Rules (= 検知 ruleset、scripts/skill_candidate_scan.sh と双子)
