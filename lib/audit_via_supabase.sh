@@ -238,6 +238,14 @@ PY
 # audit_submit_async <gunshi> <prompt_file> [scope]
 #   pc_handshake に audit request を INSERT、queue_id を返却
 audit_submit_async() {
+    # DEPRECATED (= 陛下御差配 2026-05-10 + commit 265dc14 屋上屋一掃 + 三軍師合意丁案):
+    #   async 経路は worker daemon 退役で行先無、新規 audit は audit_run_local (turn-sync)
+    #   を gunshi inbox 経由 (= instructions/gunshi.md Pattern 5) で呼ぶこと。
+    #   本関数は後方互換のため残置、INSERT は実行されるが poll する worker 不在ゆえ resolve せぬ。
+    echo "DEPRECATED: audit_submit_async は丁案 (= 上流哲学回帰、worker daemon 退役) で廃止予告。" >&2
+    echo "  → 新規 audit は karo→gunshi inbox 経由で audit_run_local (turn-sync) を使え。" >&2
+    echo "  → 詳細: instructions/gunshi.md 'Pattern 5: Audit Dispatch'" >&2
+
     local gunshi="$1"
     local prompt_file="$2"
     local scope="${3:-}"

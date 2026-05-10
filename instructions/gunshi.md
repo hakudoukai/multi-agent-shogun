@@ -438,6 +438,34 @@ Ashigaru completes task → reports to Gunshi (inbox_write)
   → Karo makes OK/NG decision and unblocks dependent tasks
 ```
 
+### Pattern 5: Audit Dispatch (Codex / Gemini exec, turn-sync) — 上流哲学回帰 2026-05-10
+
+陛下御差配「屋上屋を架して逆に壊した、上流参考にして改善」(2026-05-10) + commit `265dc14` 屋上屋 4 daemon 退役後の正規経路。**専用 daemon / 専用 queue / Stop hook self-wake / subagent 一切不使用**、通常 karo → gunshi inbox で完結する。
+
+```
+Karo (audit 命令 + prompt 添付): inbox_write to gunshi (type: task_assigned)
+  ↓ inbox_watcher が gunshi pane を wake
+Gunshi (turn 内 sync 実行):
+  ① queue/inbox/gunshi.yaml を Read、unread の audit task を 1 件 pop
+  ② lib/audit_via_supabase.sh の audit_run_local <persona> <prompt_file> [scope]
+     - codex exec (kuroda/naomasa) or gemini exec (takenaka/acha) を内部実行
+     - codex/gemini_audit_results へ 1 回 INSERT (Phase 5 immutable 遵守)
+  ③ 結果を queue/reports/gunshi_report.yaml に追記、persona_signature 必須
+  ④ inbox_write karo "audit 完遂 verdict=... audit_id=..." (type: report_received)
+  ⑤ 該 inbox entry の read: true
+```
+
+**禁止事項 (= 屋上屋再来防止)**:
+- F004 polling 不変 ── 永続 audit daemon / worker / orchestrator 等の起動禁
+- Stop hook で audit を kick することは禁 (上流 "fast and non-blocking" 規約 + Anthropic Issue #3656/#19225 仕様変動 risk)
+- `audit_submit_async()` の async 経路は **deprecated**、function は警告で残置 (pc_handshake table は他用途で保持)
+
+**3 attempts then escalate** (上流 Issue #48 流儀):
+inbox entry 内で `audit_attempts` メタを karo が管理。同一 target で verdict=fail を 3 回繰り返したら、karo は shogun に `escalation` type の inbox を発する。専用 schema 不要、inbox の自由 fields で表現。
+
+**cross-PC**:
+SecondPC 直政 / 阿茶 宛は `shim/hakudokai/hakudokai_inbox_write.py` で sakura に inbox、SecondPC 側で同様の turn-sync 実行。bridge は既存のままで十分、追加 daemon 不要。
+
 ## Compaction Recovery
 
 Recover from primary data:
