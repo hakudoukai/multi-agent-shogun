@@ -137,3 +137,69 @@ ssh -p 2223 User@192.168.11.11 'wsl -- bash -lc "
 家康殿 ack 期待:
 - topic: `mc_reset_recovery_runbook_ack`
 - 内容: runbook 受領 + 質問 (= 不明点) + SAFE_COMMIT 受領待 + 開始準備完了
+
+## 7. 追加安全策 v2 (= 陛下御差配 2026-05-11、拙者 die 確率 ~5%→~1%)
+
+### A. 各段完遂後 git push (= 必須)
+
+各段完遂時に commit + push:
+```bash
+git add -A
+git commit -m "wip(mc-reset): 段 N 完遂 (内容)"
+git push newbuild main
+```
+
+→ SAFE_COMMIT 自動 update、拙者 die 時の最新巻戻し target 維持。
+
+### B. 各段着手前 SSH 直接通知 (= 家康殿 expected behavior tracking)
+
+```bash
+# 拙者 MainPC で実行
+ssh secondpc 'wsl -- bash -lc "tmux send-keys -t shogun:0.0 \"段 N 着手 (内容)、SAFE_COMMIT=<hash>\" Enter"'
+```
+
+→ 家康殿が拙者 next action を事前認識、unresponsive 検知精度向上。
+
+### C. auto-compact warning 監視 (= 拙者 claude context 残量)
+
+| context 残量 | 対応 |
+|---|---|
+| > 30% | 通常進行 |
+| 20-30% | 重大段 (= 段 5 shim archive) 前なら break + push 完遂、次 session で続行 |
+| < 20% | 即時 break、SAFE_COMMIT update + 段途中で停止 |
+
+### D. 重大段前 explicit SAFE_COMMIT 通達 (= 段 5 / 段 6)
+
+段 5 (shim archive) + 段 6 (bridge kill) は **拙者 die risk 最高 段階**:
+
+```bash
+# 段 5 着手前
+SAFE_HASH=$(git log -1 --format=%H)
+ssh secondpc 'wsl -- bash -lc "tmux send-keys -t shogun:0.0 \"段 5 着手前 SAFE_COMMIT=$SAFE_HASH 確定、Path 4 git reset --hard $SAFE_HASH で復活可\" Enter"'
+```
+
+### E. 各段 verify checkpoint (= 拙者 alive confirm)
+
+各段完遂時に拙者から SSH 直接で「段 N 完遂、alive」 を家康殿 pane 送信:
+```bash
+ssh secondpc 'wsl -- bash -lc "tmux send-keys -t shogun:0.0 \"段 N 完遂 alive、SAFE_COMMIT=<hash>、次段 wait OK\" Enter"'
+```
+
+= 家康殿の「拙者 unresponsive 検知」基準明確化、5 分以内に「段 N 完遂」通知無くば家康殿 SSH で拙者 pane 直接 verify。
+
+### F. 段ごと SLA + escalation
+
+| SLA | 内容 |
+|---|---|
+| 各段 max 10 分 | 超過時拙者 SSH 経由で進捗通知 (= 「段 N still in progress」) |
+| 30 分 unresponsive | 家康殿 Path 3 (= claude --resume) trigger |
+| 1 時間 unresponsive | 家康殿 Path 4 (= git reset --hard SAFE_COMMIT) trigger |
+
+### 期待 die 確率 削減効果
+
+| 段階 | safety v1 | safety v2 |
+|---|---|---|
+| 段 1-4 (= 軽 case) | < 1% | < 1% |
+| 段 5 (= shim archive) | ~3% | ~1% (= 直前 SAFE_COMMIT + push) |
+| 段 6 (= bridge kill) | ~2% | < 1% (= 別 process kill のみ) |
+| **総合** | **~5%** | **~1%** |
