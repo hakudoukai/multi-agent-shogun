@@ -67,9 +67,14 @@ pc_mapping:
   second_pc:
     pc_id: second_pc
     supabase_bridge: true
-    ## SecondPC 家康系 10 体 (= 副将軍家康 + 本多 + 直政(Codex) + あちゃ(Gemini) + 足軽 6)
-    ## 武将 alias で明示
-    agents: [ieyasu, honda, sanada, achacha, ashigaru1_sp, ashigaru2_sp, ashigaru3_sp, ashigaru4_sp, ashigaru5_sp, ashigaru6_sp]
+    ## SecondPC 家康系 10 体 (= 副将軍家康 + 本多 + 直政(Codex) + 阿茶(Gemini) + 足軽 6)
+    ## 武将 alias 統一 (= 黒田 strategy-03 是正 2026-05-10):
+    ##   naomasa = 井伊直政 (Codex 軍師1) — 旧 sanada は誤、井伊直政が正
+    ##   acha    = 阿茶局 (Gemini 軍師2) — 旧 achacha は冗長、acha 統一
+    agents: [ieyasu, honda, naomasa, acha, ashigaru1_sp, ashigaru2_sp, ashigaru3_sp, ashigaru4_sp, ashigaru5_sp, ashigaru6_sp]
+    ## audit routing で使用される canonical name (= lib/audit_via_supabase.sh 参照):
+    ##   naomasa → codex_audit_results
+    ##   acha    → gemini_audit_results
 
 ## エスカレーション (= upstream 準拠最小)
 escalation:
