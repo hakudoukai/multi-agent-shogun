@@ -610,6 +610,10 @@ done
 PANE_LABELS+=("gunshi")
 AGENT_IDS+=("gunshi")
 PANE_COLORS+=("yellow")
+# 軍師2 追加 (= 編成 v1.1、cmd_002/003 で導入、shutsujin に gunshi2 deploy 漏れ修正 2026-05-10)
+PANE_LABELS+=("gunshi2")
+AGENT_IDS+=("gunshi2")
+PANE_COLORS+=("gold")
 
 # モデル名設定（pane-border-format で常時表示するため）- 動的構築
 MODEL_NAMES=()
@@ -793,6 +797,27 @@ with open(f,'w') as fh: yaml.safe_dump(d, fh, default_flow_style=False, allow_un
     _gunshi_display=$(get_model_display_name "gunshi" 2>/dev/null || echo "Opus+T")
     tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_gunshi_display" 2>/dev/null || true
     log_info "  └─ 軍師（${_gunshi_display}）、召喚完了"
+
+    # 軍師2 (pane _ASHIGARU_COUNT+2) — 二次監査専任 (= cmd_002/003 で導入、編成 v1.1)
+    # 2026-05-10: gunshi2 deploy 漏れ修正、軍師 Domain 別役割分担 v1.1 で plan 監査専担
+    p=$((PANE_BASE + _ASHIGARU_COUNT + 2))
+    _gunshi2_cli_type="gemini"
+    _gunshi2_cmd="gemini"
+    if [ "$CLI_ADAPTER_LOADED" = true ]; then
+        _gunshi2_cli_type=$(get_cli_type "gunshi2")
+        _gunshi2_cmd=$(build_cli_command "gunshi2")
+    fi
+    _startup_prompt2=$(get_startup_prompt "gunshi2" 2>/dev/null)
+    if [[ -n "$_startup_prompt2" ]]; then
+        _gunshi2_cmd="$_gunshi2_cmd \"$_startup_prompt2\""
+    fi
+    tmux set-option -p -t "multiagent:agents.${p}" @agent_id "gunshi2"
+    tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_gunshi2_cli_type"
+    tmux send-keys -t "multiagent:agents.${p}" "$_gunshi2_cmd"
+    tmux send-keys -t "multiagent:agents.${p}" Enter
+    _gunshi2_display=$(get_model_display_name "gunshi2" 2>/dev/null || echo "Gemini")
+    tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_gunshi2_display" 2>/dev/null || true
+    log_info "  └─ 軍師2（${_gunshi2_display}）、召喚完了"
 
     if [ "$KESSEN_MODE" = true ]; then
         log_success "✅ 決戦の陣で出陣！全軍Opus！"
