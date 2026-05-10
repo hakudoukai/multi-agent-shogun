@@ -28,11 +28,11 @@ cli:
     ashigaru4: claude
     ashigaru5: claude
     ashigaru6: claude
-    gunshi: codex        ## 軍師1 一次監査 (= 黒田) — Codex CLI
-    gunshi2: gemini      ## 軍師2 二次監査 (= 竹中) — Gemini CLI
+    ashigaru7: claude    ## SC reset 2026-05-11 新設、上流 original 路線
+    gunshi: codex        ## 軍師 (= 直政、SC reset 2026-05-11 で 1 軍師体制) — Codex CLI
   audit:
-    primary: codex       ## 黒田 / 直政 (SecondPC 軍師1) 共に Codex
-    secondary: gemini    ## 竹中 / あちゃ (SecondPC 軍師2) 共に Gemini
+    primary: codex       ## 直政 (SC reset 後 1 軍師) — Codex 専担
+    ## secondary: gemini 廃止 (= SC reset 2026-05-11 阿茶廃止)
 
 ## tmux 構成 (= upstream 準拠)
 tmux:
@@ -66,12 +66,11 @@ pc_mapping:
     agents: [shogun, karo, ashigaru1, ashigaru2, ashigaru3, ashigaru4, ashigaru5, ashigaru6, gunshi, gunshi2]
   second_pc:
     pc_id: second_pc
-    supabase_bridge: true
-    ## SecondPC 家康系 10 体 (= 副将軍家康 + 本多 + 直政(Codex) + 阿茶(Gemini) + 足軽 6)
-    ## 武将 alias 統一 (= 黒田 strategy-03 是正 2026-05-10):
-    ##   naomasa = 井伊直政 (Codex 軍師1) — 旧 sanada は誤、井伊直政が正
-    ##   acha    = 阿茶局 (Gemini 軍師2) — 旧 achacha は冗長、acha 統一
-    agents: [ieyasu, honda, naomasa, acha, ashigaru1_sp, ashigaru2_sp, ashigaru3_sp, ashigaru4_sp, ashigaru5_sp, ashigaru6_sp]
+    supabase_bridge: false  ## SC reset 2026-05-11 で bridge 廃止、SSH 直接路で代替
+    ## SC reset 2026-05-11: 上流 original 構成回帰
+    ## - 副将軍家康 + 本多 (karo) + 直政 (Codex 1 軍師) + 足軽 1-7 = 10 体
+    ## - 阿茶 (Gemini) 廃止、武将装飾廃止
+    agents: [shogun, karo, ashigaru1, ashigaru2, ashigaru3, ashigaru4, ashigaru5, ashigaru6, ashigaru7, gunshi]
     ## audit routing で使用される canonical name (= lib/audit_via_supabase.sh 参照):
     ##   naomasa → codex_audit_results
     ##   acha    → gemini_audit_results
