@@ -133,26 +133,32 @@ PY
 #   poller 不要、互換 path (= 軽量 / single-shot)
 # ─────────────────────────────────────────────────────────────
 audit_run_local() {
+    # ────────────────────────────────────────────────────────
+    # codex_audit_results / gemini_audit_results は Phase 5 immutable
+    # (= INSERT only、UPDATE/DELETE 不可、DD-128 v2.1c §3.2 準拠)
+    # ゆえに「INSERT pending → UPDATE completed」設計禁、INSERT は完遂後に 1 回のみ。
+    # ────────────────────────────────────────────────────────
     local gunshi="$1"
     local prompt_file="$2"
     local scope="${3:-}"
 
-    # SUPABASE env を当 shell に読込 (= UPDATE phase でも参照可、subshell 失効防止)
     _audit_load_supabase_env || { echo "ERR: SUPABASE env 不在" >&2; return 2; }
 
-    local audit_id
-    audit_id=$(audit_request "$gunshi" "$prompt_file" "$scope") || return $?
-    [ -z "$audit_id" ] && { echo "ERR: audit_id 取得失敗" >&2; return 5; }
-    echo "[audit_run_local] audit_id=$audit_id"
-
-    # 実行
-    local table tool
+    # gunshi → table mapping
+    local table tool ran_pc
     case "$gunshi" in
-        kuroda|naomasa) table='codex_audit_results';  tool='codex'  ;;
-        takenaka|acha)  table='gemini_audit_results'; tool='gemini' ;;
+        kuroda)   table='codex_audit_results';  tool='codex';  ran_pc='main_pc'   ;;
+        takenaka) table='gemini_audit_results'; tool='gemini'; ran_pc='main_pc'   ;;
+        naomasa)  table='codex_audit_results';  tool='codex';  ran_pc='second_pc' ;;
+        acha)     table='gemini_audit_results'; tool='gemini'; ran_pc='second_pc' ;;
+        *) echo "ERR: 未知 gunshi=$gunshi" >&2; return 1 ;;
     esac
 
-    local log_file="logs/audit_${audit_id}.log"
+    [ -z "$scope" ] && scope=$(head -1 "$prompt_file" | cut -c1-200)
+
+    # 実行 (= INSERT 前に codex/gemini を先に動かす)
+    local log_file
+    log_file="logs/audit_$(date +%Y%m%d_%H%M%S)_${gunshi}.log"
     mkdir -p logs
     local started_at
     started_at=$(date +%s)
@@ -160,6 +166,7 @@ audit_run_local() {
     local prompt_content
     prompt_content=$(cat "$prompt_file")
 
+    echo "[audit_run_local] running $tool for $gunshi (timeout 300s, log=$log_file)"
     if [ "$tool" = "codex" ]; then
         timeout 300 codex exec "$prompt_content" > "$log_file" 2>&1
     else
@@ -172,22 +179,21 @@ audit_run_local() {
     ended_at=$(date +%s)
     duration_sec=$((ended_at - started_at))
 
-    # 結果 UPDATE
+    # 結果を 1 回 INSERT (= Phase 5 immutable 遵守)
     local result_text
-    result_text=$(cat "$log_file" | tail -100)
-    AUDIT_ID="$audit_id" TABLE="$table" RESULT_TEXT="$result_text" DURATION="$duration_sec" \
-    EXIT_CODE="$exit_code" LOG_PATH="$log_file" python3 <<'PY'
-import os, json, urllib.request
+    result_text=$(cat "$log_file" | tail -200)
+    AUDIT_TABLE="$table" RESULT_TEXT="$result_text" DURATION="$duration_sec" \
+    EXIT_CODE="$exit_code" LOG_PATH="$log_file" SCOPE="$scope" RAN_PC="$ran_pc" \
+    GUNSHI="$gunshi" TOOL="$tool" python3 <<'PY'
+import os, json, urllib.request, re, sys
 url = os.environ['SUPABASE_URL']
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
-table = os.environ['TABLE']
-audit_id = os.environ['AUDIT_ID']
+table = os.environ['AUDIT_TABLE']
 exit_code = int(os.environ['EXIT_CODE'])
-
-# verdict 推定 (= result_text 内に verdict: pass / fail / pass_with_concerns あれば抽出)
-import re
 text = os.environ['RESULT_TEXT']
-verdict = 'green'  # default
+
+# verdict 推定
+verdict = 'green'
 m = re.search(r'verdict:\s*(\w+)', text, re.IGNORECASE)
 if m:
     v = m.group(1).lower()
@@ -195,28 +201,56 @@ if m:
     elif 'concern' in v: verdict = 'yellow'
 if exit_code != 0: verdict = 'red'
 
+# triaged_issues 抽出 (= "- id: kN" pattern)
+issues = []
+for m in re.finditer(r'(?m)^\s*-\s*id:\s*(\S+)\s*\n\s*.*?severity:\s*(\w+).*?title:\s*([^\n]+)', text, re.DOTALL):
+    issues.append({'id': m.group(1).strip(), 'severity': m.group(2).strip(), 'title': m.group(3).strip()[:100]})
+
+cnt = {'a': 0, 'b': 0, 'c': 0}
+for i in issues:
+    sv = i.get('severity', 'c').lower()
+    if sv in ('a', 'high'): cnt['a'] += 1
+    elif sv in ('b', 'medium'): cnt['b'] += 1
+    else: cnt['c'] += 1
+
 payload = {
+    'audit_scope': os.environ['SCOPE'],
+    'audit_summary_md': text[:8000],
     'overall_signal': verdict,
-    'audit_summary_md': text[:8000],  # truncate to 8KB safe
+    'triaged_issues': issues,
+    'issues_count_a': cnt['a'],
+    'issues_count_b': cnt['b'],
+    'issues_count_c': cnt['c'],
+    'ran_on_pc': os.environ['RAN_PC'],
     'audit_duration_sec': int(os.environ['DURATION']),
     'audit_file_path': os.environ['LOG_PATH'],
+    'task_title': f"audit:{os.environ['GUNSHI']}",
 }
+if os.environ['TOOL'] == 'codex':
+    payload['codex_version'] = 'codex (gpt-5.5)'
+else:
+    payload['gemini_version'] = 'gemini-2.5-pro'
+
 req = urllib.request.Request(
-    f"{url}/rest/v1/{table}?id=eq.{audit_id}",
-    method='PATCH',
-    headers={
-        'apikey': key,
-        'Authorization': f'Bearer {key}',
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
-    },
+    f"{url}/rest/v1/{table}",
+    method='POST',
+    headers={'apikey': key, 'Authorization': f'Bearer {key}',
+             'Content-Type': 'application/json',
+             'Prefer': 'return=representation'},
     data=json.dumps(payload).encode()
 )
 try:
-    urllib.request.urlopen(req, timeout=15)
-    print(f'[audit_run_local] UPDATED audit_id={audit_id} signal={verdict} duration={os.environ["DURATION"]}s')
+    with urllib.request.urlopen(req, timeout=15) as r:
+        data = json.loads(r.read())
+        if isinstance(data, list) and data:
+            aid = data[0]['id']
+            print(f'[audit_run_local] INSERTED audit_id={aid} signal={verdict} issues={len(issues)} duration={os.environ["DURATION"]}s')
+        else:
+            print('ERR: empty INSERT response', file=sys.stderr)
+            sys.exit(3)
 except Exception as e:
-    print(f'ERR UPDATE: {e}', file=__import__('sys').stderr)
+    print(f'ERR INSERT: {e}', file=sys.stderr)
+    sys.exit(4)
 PY
     return $exit_code
 }
