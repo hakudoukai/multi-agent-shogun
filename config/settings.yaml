@@ -63,7 +63,7 @@ pc_mapping:
   main_pc:
     pc_id: main_pc
     is_local: true
-    agents: [shogun, karo, ashigaru1, ashigaru2, ashigaru3, ashigaru4, ashigaru5, ashigaru6, gunshi, gunshi2]
+    agents: [shogun, karo, ashigaru1, ashigaru2, ashigaru3, ashigaru4, ashigaru5, ashigaru6, ashigaru7, gunshi]
   second_pc:
     pc_id: second_pc
     supabase_bridge: false  ## SC reset 2026-05-11 で bridge 廃止、SSH 直接路で代替

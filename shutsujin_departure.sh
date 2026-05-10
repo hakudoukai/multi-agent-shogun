@@ -802,27 +802,6 @@ with open(f,'w') as fh: yaml.safe_dump(d, fh, default_flow_style=False, allow_un
     tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_gunshi_display" 2>/dev/null || true
     log_info "  └─ 軍師（${_gunshi_display}）、召喚完了"
 
-    # 軍師2 (pane _ASHIGARU_COUNT+2) — 二次監査専任 (= cmd_002/003 で導入、編成 v1.1)
-    # 2026-05-10: gunshi2 deploy 漏れ修正、軍師 Domain 別役割分担 v1.1 で plan 監査専担
-    p=$((PANE_BASE + _ASHIGARU_COUNT + 2))
-    _gunshi2_cli_type="gemini"
-    _gunshi2_cmd="gemini"
-    if [ "$CLI_ADAPTER_LOADED" = true ]; then
-        _gunshi2_cli_type=$(get_cli_type "gunshi2")
-        _gunshi2_cmd=$(build_cli_command "gunshi2")
-    fi
-    _startup_prompt2=$(get_startup_prompt "gunshi2" 2>/dev/null)
-    if [[ -n "$_startup_prompt2" ]]; then
-        _gunshi2_cmd="$_gunshi2_cmd \"$_startup_prompt2\""
-    fi
-    tmux set-option -p -t "multiagent:agents.${p}" @agent_id "gunshi2"
-    tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_gunshi2_cli_type"
-    tmux send-keys -t "multiagent:agents.${p}" "$_gunshi2_cmd"
-    tmux send-keys -t "multiagent:agents.${p}" Enter
-    _gunshi2_display=$(get_model_display_name "gunshi2" 2>/dev/null || echo "Gemini")
-    tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_gunshi2_display" 2>/dev/null || true
-    log_info "  └─ 軍師2（${_gunshi2_display}）、召喚完了"
-
     if [ "$KESSEN_MODE" = true ]; then
         log_success "✅ 決戦の陣で出陣！全軍Opus！"
     else
@@ -952,14 +931,6 @@ NINJA_EOF
     done < <(apm_list_agents)
     _wcount=$(apm_list_agents | wc -l)
     log_success "  └─ ${_wcount}エージェント分のinbox_watcher起動完了 (= shogun + karo + ashigaru + 軍師全数)"
-
-    # ═══════════════════════════════════════════════════════════════════════════════
-    # STEP 6.6b: audit_queue_worker daemon 起動 (= Phase C async queue、陛下御差配 2026-05-10)
-    # ═══════════════════════════════════════════════════════════════════════════════
-    log_info "📊 audit_queue_worker daemon 起動中..."
-    if [ -x "$SCRIPT_DIR/scripts/start_audit_workers.sh" ]; then
-        bash "$SCRIPT_DIR/scripts/start_audit_workers.sh" 2>&1 | sed 's/^/  /'
-    fi
 
     # STEP 6.7 は廃止 — CLAUDE.md Session Start (step 1: tmux agent_id) で各自が自律的に
     # 自分のinstructions/*.mdを読み込む。検証済み (2026-02-08)。
