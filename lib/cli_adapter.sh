@@ -275,8 +275,13 @@ get_agent_model() {
                 *)              echo "k2.5" ;;
             esac
             ;;
+        codex)
+            # Codex CLI: ChatGPT account で 'opus' (= Anthropic) 不対応、--model 指定省略で
+            # codex default model 利用 (= 陛下御差配 2026-05-11、両軍師同時死亡 root cause 是正)
+            echo ""
+            ;;
         *)
-            # Claude Code/Codex/Copilot用デフォルトモデル
+            # Claude Code/Copilot 用デフォルトモデル
             case "$agent_id" in
                 shogun)         echo "opus" ;;
                 karo)           echo "sonnet" ;;
