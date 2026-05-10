@@ -224,6 +224,11 @@ queue/skill_candidates.yaml
 !skills/shogun-system-coherence/scripts/*.sh
 !skills/shogun-system-coherence/reference/
 !skills/shogun-system-coherence/reference/*.md
+!skills/shogun-pdca-enforcer/
+!skills/shogun-pdca-enforcer/SKILL.md
+!skills/shogun-pdca-enforcer/scripts/
+!skills/shogun-pdca-enforcer/scripts/*.sh
+!queue/pdca_state.yaml
 
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/
