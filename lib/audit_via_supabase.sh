@@ -137,6 +137,9 @@ audit_run_local() {
     local prompt_file="$2"
     local scope="${3:-}"
 
+    # SUPABASE env を当 shell に読込 (= UPDATE phase でも参照可、subshell 失効防止)
+    _audit_load_supabase_env || { echo "ERR: SUPABASE env 不在" >&2; return 2; }
+
     local audit_id
     audit_id=$(audit_request "$gunshi" "$prompt_file" "$scope") || return $?
     [ -z "$audit_id" ] && { echo "ERR: audit_id 取得失敗" >&2; return 5; }
