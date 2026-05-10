@@ -37,11 +37,12 @@ checks = {
 flags = []
 
 # 軍師 reports から target_id matching entry を探索
+# 2026-05-10 sync 修復: PC suffix 命名規則採用 (= 家康 Option 1)
 report_files = [
-    f"{repo_root}/queue/reports/kuroda_report.yaml",
-    f"{repo_root}/queue/reports/takenaka_report.yaml",
-    f"{repo_root}/queue/reports/naomasa_report.yaml",
-    f"{repo_root}/queue/reports/acha_report.yaml",
+    f"{repo_root}/queue/reports/kuroda_mainpc_report.yaml",
+    f"{repo_root}/queue/reports/takenaka_mainpc_report.yaml",
+    f"{repo_root}/queue/reports/naomasa_secondpc_report.yaml",
+    f"{repo_root}/queue/reports/acha_secondpc_report.yaml",
 ]
 
 audit_entry = None
@@ -146,7 +147,7 @@ case "${1:-}" in
     --all)
         # 陛下御差配 2026-05-10 00:10: ランダム sampling 厳禁、全数全件
         # 全軍師 report yaml の全 audit entry を全件 verify
-        for rf in queue/reports/{kuroda,takenaka,naomasa,acha}_report.yaml; do
+        for rf in queue/reports/{kuroda_mainpc,takenaka_mainpc,naomasa_secondpc,acha_secondpc}_report.yaml; do
             [ -f "$rf" ] || continue
             python3 -c "
 import yaml, sys

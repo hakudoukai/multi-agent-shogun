@@ -145,6 +145,15 @@
 !saytask/
 !saytask/streaks.yaml.sample
 
+# 軍師 audit reports (= cross-PC sync 用、PC suffix で衝突回避)
+# 家康殿 Option 1 採用 2026-05-10 (= MainPC + SecondPC で git push/pull で event-driven sync)
+# 各 PC は自 PC suffix の file のみ書込、他 PC suffix file は git pull で取得 (= read-only 扱い)
+!queue/reports/
+!queue/reports/kuroda_mainpc_report.yaml
+!queue/reports/takenaka_mainpc_report.yaml
+!queue/reports/naomasa_secondpc_report.yaml
+!queue/reports/acha_secondpc_report.yaml
+
 # Reports (private — not tracked)
 logs/
 
