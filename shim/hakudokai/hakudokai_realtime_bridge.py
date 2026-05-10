@@ -2,7 +2,8 @@
 """
 hakudokai_realtime_bridge.py — 博道会 cross-PC realtime bridge
 
-Bridges MainPC (信長 shogun) and SecondPC (副医院長 fukuincho) via Supabase.
+Bridges MainPC (信長 shogun) and SecondPC (家康 ieyasu) via Supabase.
+§18 PC×アカウント配置 (= 理事長殿御差配 2026-05-06): main_pc / second_pc 統一、旧名 fukuincho 廃止。
 Uses asyncpg advisory lock (pg_try_advisory_lock) to establish MainPC as leader.
 
 Modes:
@@ -16,7 +17,7 @@ Env:
   SUPABASE_DB_URL        — PostgreSQL DSN (asyncpg, for advisory lock)
   SUPABASE_URL           — REST endpoint
   SUPABASE_SERVICE_ROLE_KEY — REST key
-  HAKUDOKAI_PC_ROLE      — 'main_pc' or 'fukuincho' (default: fukuincho)
+  HAKUDOKAI_PC_ROLE      — 'main_pc' or 'second_pc' (default: main_pc、§18 移行で fukuincho 廃止)
   HAKUDOKAI_CLINIC_ID    — clinic identifier (default: hakudoukai_main)
 
 License: MIT (shogun upstream credit 保持)
@@ -59,7 +60,7 @@ def _get_env() -> tuple[str, str, str, str]:
         os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
         or os.environ.get("SUPABASE_KEY", "")
     )
-    pc_role = os.environ.get("HAKUDOKAI_PC_ROLE", "fukuincho")
+    pc_role = os.environ.get("HAKUDOKAI_PC_ROLE", "main_pc")  # §18 移行: fukuincho 廃止
 
     if not all([db_url, rest_url, rest_key]):
         env_file = os.path.expanduser("~/.hakudokai/env")
@@ -100,7 +101,7 @@ async def _release_advisory_lock(conn: asyncpg.Connection) -> None:
 
 def _fetch_pending_messages(rest_url: str, rest_key: str) -> list[dict]:
     """Fetch unacknowledged pc_handshake messages for this PC."""
-    pc_role = os.environ.get("HAKUDOKAI_PC_ROLE", "fukuincho")
+    pc_role = os.environ.get("HAKUDOKAI_PC_ROLE", "main_pc")  # §18 移行: fukuincho 廃止
     cutoff = (datetime.now(timezone.utc) - timedelta(minutes=10)).strftime(
         "%Y-%m-%dT%H:%M:%SZ"
     )
@@ -171,7 +172,7 @@ def _dispatch_message(msg: dict) -> None:
         return
 
     # Local target agent: 当方 main_pc なら shogun (= 信長)、SecondPC 側なら shogun (= 家康)
-    pc_role = os.environ.get("HAKUDOKAI_PC_ROLE", "fukuincho")
+    pc_role = os.environ.get("HAKUDOKAI_PC_ROLE", "main_pc")  # §18 移行: fukuincho 廃止
     if pc_role == "main_pc":
         local_target = "shogun"
         local_from = "ieyasu"  # 御弟方からの message
