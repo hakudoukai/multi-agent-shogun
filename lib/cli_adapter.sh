@@ -281,10 +281,12 @@ get_agent_model() {
             echo ""
             ;;
         *)
-            # Claude Code/Copilot 用デフォルトモデル
+            # Claude Code/Copilot 用デフォルトモデル (= 陛下御差配 2026-05-11、最新 opus 規範)
+            # 規範: codex 利用 agent (= 黒田/直政) 以外は最新 opus 指定
+            # 足軽は default sonnet、ケース別で karo 判断で opus 切替可
             case "$agent_id" in
                 shogun)         echo "opus" ;;
-                karo)           echo "sonnet" ;;
+                karo)           echo "opus" ;;
                 gunshi)         echo "opus" ;;
                 ashigaru*)      echo "sonnet" ;;
                 *)              echo "sonnet" ;;
