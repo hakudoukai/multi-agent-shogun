@@ -282,14 +282,16 @@ get_agent_model() {
             ;;
         *)
             # Claude Code/Copilot 用デフォルトモデル (= 陛下御差配 2026-05-11、最新 opus 規範)
-            # 規範: codex 利用 agent (= 黒田/直政) 以外は最新 opus 指定
-            # 足軽は default sonnet、ケース別で karo 判断で opus 切替可
+            # 規範:
+            #   - codex 利用 agent (= 黒田/直政) 以外は default 最新 opus 4.7
+            #   - 足軽 default も opus、ケース別で軽作業時のみ karo 判断で sonnet 切替可
+            #   - 軽作業 = 単純 lint/typo fix/小さな build verify 等、判断基準は karo
             case "$agent_id" in
                 shogun)         echo "opus" ;;
                 karo)           echo "opus" ;;
                 gunshi)         echo "opus" ;;
-                ashigaru*)      echo "sonnet" ;;
-                *)              echo "sonnet" ;;
+                ashigaru*)      echo "opus" ;;
+                *)              echo "opus" ;;
             esac
             ;;
     esac
