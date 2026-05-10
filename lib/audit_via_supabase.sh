@@ -212,22 +212,123 @@ with urllib.request.urlopen(req, timeout=10) as r:
 PY
 }
 
+# ════════════════════════════════════════════════════════════════
+# Async path (= Phase C、pc_handshake table 利用)
+# pc_handshake は mutable (acknowledged_at/resolved_at update 可)
+# 提出 → worker が poll → codex/gemini exec → audit_results INSERT → pc_handshake resolved
+# ════════════════════════════════════════════════════════════════
+
+# audit_submit_async <gunshi> <prompt_file> [scope]
+#   pc_handshake に audit request を INSERT、queue_id を返却
+audit_submit_async() {
+    local gunshi="$1"
+    local prompt_file="$2"
+    local scope="${3:-}"
+
+    [ -z "$gunshi" ] && { echo "ERR: gunshi 必須" >&2; return 1; }
+    [ -f "$prompt_file" ] || { echo "ERR: prompt_file 不在" >&2; return 1; }
+    _audit_load_supabase_env || return 2
+
+    local target_pc
+    case "$gunshi" in
+        kuroda|takenaka) target_pc='main_pc' ;;
+        naomasa|acha)    target_pc='second_pc' ;;
+        *) echo "ERR: 未知 gunshi=$gunshi" >&2; return 1 ;;
+    esac
+
+    [ -z "$scope" ] && scope=$(head -1 "$prompt_file" | cut -c1-150)
+    local prompt_content
+    prompt_content=$(cat "$prompt_file")
+
+    PROMPT_CONTENT="$prompt_content" SCOPE="$scope" GUNSHI="$gunshi" TARGET_PC="$target_pc" python3 <<'PY'
+import os, json, urllib.request, sys
+url = os.environ['SUPABASE_URL']
+key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
+payload = {
+    'message_type': 'question',
+    'from_pc': 'main_pc',
+    'to_pc': os.environ['TARGET_PC'],
+    'topic': f"audit_request:{os.environ['GUNSHI']}:{os.environ['SCOPE'][:80]}",
+    'content': os.environ['PROMPT_CONTENT'],
+    'context_data': {'shogun_kind': 'audit_request', 'gunshi': os.environ['GUNSHI']},
+    'requires_response': True,
+    'priority': 'normal',
+    'clinic_id': 'hakudoukai_main',
+}
+req = urllib.request.Request(
+    f"{url}/rest/v1/pc_handshake",
+    method='POST',
+    headers={'apikey': key, 'Authorization': f'Bearer {key}',
+             'Content-Type': 'application/json',
+             'Prefer': 'return=representation'},
+    data=json.dumps(payload).encode()
+)
+try:
+    with urllib.request.urlopen(req, timeout=15) as r:
+        data = json.loads(r.read())
+        if isinstance(data, list) and data:
+            print(data[0]['id'])
+except Exception as e:
+    print(f'ERR: {e}', file=sys.stderr)
+    sys.exit(3)
+PY
+}
+
+# audit_get_async <queue_id>
+#   pc_handshake row + 関連 *_audit_results の状態を統合表示
+audit_get_async() {
+    local queue_id="$1"
+    [ -z "$queue_id" ] && { echo "ERR: queue_id 必須" >&2; return 1; }
+    _audit_load_supabase_env || return 2
+
+    QUEUE_ID="$queue_id" python3 <<'PY'
+import os, json, urllib.request, urllib.parse, sys
+url = os.environ['SUPABASE_URL']
+key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
+qs = urllib.parse.urlencode({
+    'select': 'id,topic,context_data,acknowledged_at,resolved_at,resolution_type,created_at',
+    'id': f'eq.{os.environ["QUEUE_ID"]}',
+})
+req = urllib.request.Request(f"{url}/rest/v1/pc_handshake?{qs}",
+    headers={'apikey': key, 'Authorization': f'Bearer {key}'})
+with urllib.request.urlopen(req, timeout=10) as r:
+    data = json.loads(r.read())
+    if not data:
+        print(f'queue_id {os.environ["QUEUE_ID"]} not found')
+        sys.exit(1)
+    x = data[0]
+    status = 'pending'
+    if x.get('resolved_at'):
+        status = 'completed' if x.get('resolution_type') != 'failed' else 'failed'
+    elif x.get('acknowledged_at'):
+        status = 'processing'
+    audit_id = (x.get('context_data') or {}).get('audit_result_id', '')
+    resolved = x.get('resolved_at') or '-'
+    resolved_short = resolved[:19] if resolved != '-' else '-'
+    print(f"queue_id={x['id']} status={status} created={x['created_at'][:19]} resolved={resolved_short} audit_id={audit_id}")
+PY
+}
+
 # ─────────────────────────────────────────────────────────────
 # Self-test (= direct execution 時のみ)
 # ─────────────────────────────────────────────────────────────
 if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
     case "${1:-help}" in
-        run)      audit_run_local "${@:2}" ;;
-        summary)  audit_get_summary "${@:2}" ;;
-        request)  audit_request "${@:2}" ;;  # DEPRECATED で error 返す
+        run)            audit_run_local "${@:2}" ;;
+        summary)        audit_get_summary "${@:2}" ;;
+        submit-async)   audit_submit_async "${@:2}" ;;
+        get-async)      audit_get_async "${@:2}" ;;
+        request)        audit_request "${@:2}" ;;  # DEPRECATED で error 返す
         *)
             cat <<HELP
 Usage:
-  $0 run     <gunshi> <prompt_file> [scope]   — exec → INSERT (Phase 5 immutable 遵守)
-  $0 summary <audit_id> [table]                — 結果 summary 取得 (context 圧迫回避)
+  $0 run          <gunshi> <prompt_file> [scope]   — sync 即実行 (= Phase 5 INSERT only)
+  $0 summary      <audit_id> [table]                — 結果 summary 取得 (= context 圧迫回避)
+  $0 submit-async <gunshi> <prompt_file> [scope]    — async submit、queue_id 返却
+  $0 get-async    <queue_id>                        — async 結果取得 (pending|completed|failed)
 
 gunshi: kuroda | takenaka | naomasa | acha
-table:  codex_audit_results | gemini_audit_results
+queue: pc_handshake table (= acknowledged_at/resolved_at で状態管理)
 
 廃止: audit_request (= 黒田 arch-01、Phase 5 immutable と矛盾)
 HELP
