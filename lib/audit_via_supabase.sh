@@ -245,19 +245,18 @@ import os, json, urllib.request, sys
 url = os.environ['SUPABASE_URL']
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 payload = {
-    'message_type': 'question',
+    # message_type=status_update (= DD-107 制約: is_meta_only=true で question/answer 禁、
+    # status_update/ack/urgent_stop のみ可、家康指摘 + 拙者試行で判明 2026-05-10)
+    'message_type': 'status_update',
     'from_pc': 'main_pc',
     'to_pc': os.environ['TARGET_PC'],
     'topic': f"audit_request:{os.environ['GUNSHI']}:{os.environ['SCOPE'][:80]}",
     'content': os.environ['PROMPT_CONTENT'],
     'context_data': {'shogun_kind': 'audit_request', 'gunshi': os.environ['GUNSHI']},
-    'requires_response': True,
+    'requires_response': False,   # status_update + is_meta_only との整合
     'priority': 'normal',
     'clinic_id': 'hakudoukai_main',
-    # 家康指摘 (2026-05-10 15:25) bridge 誤配是正:
-    # is_meta_only=true で bridge が shogun pane への送り込みを skip
-    # → audit_queue_worker daemon が直接 pc_handshake query するゆえ family inbox flooding 不要
-    'is_meta_only': True,
+    'is_meta_only': True,         # bridge skip family flooding
 }
 req = urllib.request.Request(
     f"{url}/rest/v1/pc_handshake",

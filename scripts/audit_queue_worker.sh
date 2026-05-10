@@ -64,7 +64,8 @@ key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 # (= 旧 client side filter は order=created_at.asc + limit=5 で古い question rows に埋もれて 0 件問題)
 qs = urllib.parse.urlencode({
     'select': 'id,topic,content,context_data,priority,created_at',
-    'message_type': 'eq.question',
+    # message_type=status_update も対象 (= DD-107 制約で is_meta_only=true 行は status_update 必須)
+    'message_type': 'in.(question,status_update)',
     'to_pc': f'eq.{os.environ["MY_PC"]}',
     'resolved_at': 'is.null',
     'context_data->>shogun_kind': 'eq.audit_request',
