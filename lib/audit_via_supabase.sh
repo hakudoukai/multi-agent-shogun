@@ -65,11 +65,28 @@ audit_run_local() {
     # ────────────────────────────────────────────────────────
     # codex_audit_results / gemini_audit_results は Phase 5 immutable
     # (= INSERT only、UPDATE/DELETE 不可、DD-128 v2.1c §3.2 準拠)
-    # ゆえに「INSERT pending → UPDATE completed」設計禁、INSERT は完遂後に 1 回のみ。
     # ────────────────────────────────────────────────────────
     local gunshi="$1"
     local prompt_file="$2"
     local scope="${3:-}"
+
+    # ────────────────────────────────────────────────────────
+    # ルール (= 陛下御差配 2026-05-10):
+    # プログラム監査 = Codex 限定 (= kuroda / naomasa のみ可)
+    # Gemini (= takenaka / acha) は plan / 起草 / 戦略 doc 監査 専担
+    # 違反時: HARD STOP、エラーで返す
+    # ────────────────────────────────────────────────────────
+    if [ "$gunshi" = "takenaka" ] || [ "$gunshi" = "acha" ]; then
+        # 「program 系」 keyword 検出 → Gemini ルート禁
+        local scope_lower
+        scope_lower=$(echo "$scope" | tr '[:upper:]' '[:lower:]')
+        if echo "$scope_lower" | grep -qE "ashigaru|deliverable|implementation|code|file|commit|.py|.sh|.ts|.tsx"; then
+            echo "ERR: プログラム監査は Codex (kuroda/naomasa) 限定 (= 陛下御差配 2026-05-10)" >&2
+            echo "   $gunshi (Gemini) は plan/起草/戦略 doc 専担、program scope=$scope は不可" >&2
+            echo "   → audit_run_local kuroda or naomasa を使え" >&2
+            return 90
+        fi
+    fi
 
     _audit_load_supabase_env || { echo "ERR: SUPABASE env 不在" >&2; return 2; }
 
@@ -228,6 +245,17 @@ audit_submit_async() {
     [ -z "$gunshi" ] && { echo "ERR: gunshi 必須" >&2; return 1; }
     [ -f "$prompt_file" ] || { echo "ERR: prompt_file 不在" >&2; return 1; }
     _audit_load_supabase_env || return 2
+
+    # ルール (= 陛下御差配 2026-05-10): プログラム監査 = Codex 限定
+    if [ "$gunshi" = "takenaka" ] || [ "$gunshi" = "acha" ]; then
+        local scope_lower
+        scope_lower=$(echo "$scope" | tr '[:upper:]' '[:lower:]')
+        if echo "$scope_lower" | grep -qE "ashigaru|deliverable|implementation|code|file|commit|\.py|\.sh|\.ts|\.tsx"; then
+            echo "ERR: プログラム監査は Codex (kuroda/naomasa) 限定 (= 陛下御差配 2026-05-10)" >&2
+            echo "   $gunshi (Gemini) は plan/起草/戦略 doc 専担、program scope=$scope は不可" >&2
+            return 90
+        fi
+    fi
 
     local target_pc
     case "$gunshi" in
