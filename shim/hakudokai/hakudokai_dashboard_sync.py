@@ -40,9 +40,14 @@ except ImportError:
     scan_for_pii = None  # type: ignore
 
 
-# §18 PC×アカウント配置 (理事長殿御指示 2026-05-06): 役名定義は _section18_roles に集約。
-# 旧体制名 (fukuincho/yama/kuro/sakura/kouchan) は §18 移行で廃止。
-from _section18_roles import VALID_ROLES  # noqa: E402  (sys.path 設定後の動的 import)
+# 上流 yohey-w/multi-agent-shogun original 体系で inline (= 陛下御差配 2026-05-10 履行):
+# 旧 _section18_roles module 残骸を import せず、上流 original 10 体で inline。
+VALID_ROLES = (
+    "shogun", "karo",
+    "ashigaru1", "ashigaru2", "ashigaru3",
+    "ashigaru4", "ashigaru5", "ashigaru6",
+    "gunshi", "gunshi2",
+)
 CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
 
 
