@@ -109,6 +109,11 @@ recover_supporting_daemons() {
         fail=$((fail+1))
     fi
 
+    # audit_queue_worker daemon (= Phase C async queue、永続化、陛下御差配 2026-05-10)
+    if [ -x "$REPO_ROOT/scripts/start_audit_workers.sh" ]; then
+        bash "$REPO_ROOT/scripts/start_audit_workers.sh" 2>&1 | sed 's/^/  /'
+    fi
+
     return $fail
 }
 

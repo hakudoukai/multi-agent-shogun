@@ -953,6 +953,14 @@ NINJA_EOF
     _wcount=$(apm_list_agents | wc -l)
     log_success "  └─ ${_wcount}エージェント分のinbox_watcher起動完了 (= shogun + karo + ashigaru + 軍師全数)"
 
+    # ═══════════════════════════════════════════════════════════════════════════════
+    # STEP 6.6b: audit_queue_worker daemon 起動 (= Phase C async queue、陛下御差配 2026-05-10)
+    # ═══════════════════════════════════════════════════════════════════════════════
+    log_info "📊 audit_queue_worker daemon 起動中..."
+    if [ -x "$SCRIPT_DIR/scripts/start_audit_workers.sh" ]; then
+        bash "$SCRIPT_DIR/scripts/start_audit_workers.sh" 2>&1 | sed 's/^/  /'
+    fi
+
     # STEP 6.7 は廃止 — CLAUDE.md Session Start (step 1: tmux agent_id) で各自が自律的に
     # 自分のinstructions/*.mdを読み込む。検証済み (2026-02-08)。
     log_info "📜 指示書読み込みは各エージェントが自律実行（CLAUDE.md Session Start）"
