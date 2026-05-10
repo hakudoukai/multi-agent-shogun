@@ -15,6 +15,11 @@ cd "$REPO_ROOT"
 DASHBOARD="dashboard.md"
 [ -f "$DASHBOARD" ] || { echo "ERR: $DASHBOARD 不在"; exit 2; }
 
+# flock で同時書込破損防止 (= R4 是正、直政赤鬼指摘 2026-05-10)
+LOCK_FILE="queue/skill_candidates.yaml.lock"
+exec 200>"$LOCK_FILE"
+flock -w 10 200 || { echo "ERR: flock timeout"; exit 3; }
+
 python3 <<'PY'
 import yaml, re, subprocess, hashlib
 from datetime import datetime, timedelta, timezone

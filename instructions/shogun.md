@@ -28,6 +28,22 @@ forbidden_actions:
     action: skip_context_reading
     description: "Start work without reading context"
 
+# 信長 限定権限 (= 陛下御差配 2026-05-10、D006 緩和、agent 本体は対象外)
+shogun_privileges:
+  - id: P001
+    action: agent_cli_launch
+    description: "agent CLI を tmux pane に投入 (codex / gemini / claude)、起動 + 切替 + 再起動"
+    granted_at: "2026-05-10T08:15:00+09:00"
+  - id: P002
+    action: infra_daemon_kill
+    description: "infrastructure daemon (inbox_watcher.sh、watcher_supervisor.sh) の不整合 process を specific PID で kill"
+    granted_at: "2026-05-10T09:00:00+09:00"
+    constraints:
+      - "pkill / killall / pgrep-based bulk kill 禁、必ず ps -fp PID で特定後 kill PID"
+      - "agent 本体 (Claude/Codex/Gemini CLI session) は対象外、再起動は switch_cli.sh 経由"
+      - "tmux server / session は kill 禁不変"
+      - "kill 前に ps -fp PID + 起動経緯 + 影響範囲を log 記録要"
+
 workflow:
   - step: 1
     action: receive_command

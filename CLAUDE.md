@@ -273,6 +273,7 @@ When processing large datasets (30+ items requiring individual web search, API c
 | D004 | `git reset --hard`, `git checkout -- .`, `git restore .`, `git clean -f` | Destroys all uncommitted work in the repo |
 | D005 | `sudo`, `su`, `chmod -R`, `chown -R` on system paths | Privilege escalation / system modification |
 | D006 | `kill`, `killall`, `pkill`, `tmux kill-server`, `tmux kill-session` | Terminates other agents or infrastructure |
+| D006-EXC | **shogun (信長) のみ** infrastructure daemon (= `inbox_watcher.sh`、`watcher_supervisor.sh` の不整合 process) に対して `kill PID` (= `pkill` ではなく specific PID) のみ可。陛下御差配 2026-05-10 09:00 で grant。agent 本体 (Claude/Codex/Gemini CLI session) / tmux server / tmux session は不変禁。kill 前に必ず ps -fp で対象特定 + log 記録要 | shogun の coherence 修復責務、`pkill` 全面禁、specific PID kill のみ |
 | D007 | `mkfs`, `dd if=`, `fdisk`, `mount`, `umount` | Disk/partition destruction |
 | D008 | `curl|bash`, `wget -O-|sh`, `curl|sh` (pipe-to-shell patterns) | Remote code execution |
 

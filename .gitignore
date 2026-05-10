@@ -254,3 +254,6 @@ tests/specs/osato_lms_*
 # PC 個別 override (= shogun-ssh-cross-pc skill Cross-PC Portability 解 #3)
 # screenshot.path / 個別 path override 等を PC 毎にここで上書き、git 管理外で保持
 config/settings.local.yaml
+
+# flock 用 lock file (= R4 是正、queue YAML 同時書込 防護)
+*.lock

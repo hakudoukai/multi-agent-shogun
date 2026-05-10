@@ -136,8 +136,12 @@ for c in explicit:
     print(f"  → 草案化推奨: {c['signature']} (Lord 明示)")
 PY
 
-  print_section "✅ scan 完遂、last_scan_at 更新"
-  python3 -c "
+  print_section "✅ scan 完遂、last_scan_at 更新 (= flock 化、R4 是正)"
+  (
+    LOCK_FILE="queue/skill_candidates.yaml.lock"
+    exec 200>"$LOCK_FILE"
+    flock -w 10 200 || { echo "ERR: flock timeout"; exit 3; }
+    python3 -c "
 import yaml
 d = yaml.safe_load(open('queue/skill_candidates.yaml'))
 d.setdefault('stats', {})['last_scan_at'] = '$NOW'
@@ -145,4 +149,5 @@ with open('queue/skill_candidates.yaml','w') as f:
     yaml.safe_dump(d, f, allow_unicode=True, sort_keys=False)
 print('last_scan_at = $NOW')
 "
+  )
 fi

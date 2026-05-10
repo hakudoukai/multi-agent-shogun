@@ -23,7 +23,13 @@ LORD_MSG="${1:-}"
 CANDIDATES="queue/skill_candidates.yaml"
 [ -f "$CANDIDATES" ] || { echo "ERR: $CANDIDATES 不在"; exit 2; }
 
-# Python で集約処理 (= bash で yaml は重い)
+# flock で同時書込破損防止 (= R4 是正、直政赤鬼指摘 2026-05-10)
+LOCK_FILE="${CANDIDATES}.lock"
+
+# Python で集約処理 (= bash で yaml は重い)、flock 内で実行
+exec 200>"$LOCK_FILE"
+flock -w 10 200 || { echo "ERR: flock timeout on $LOCK_FILE"; exit 3; }
+
 LORD_MSG="$LORD_MSG" python3 <<'PY'
 import os, sys, yaml, re, hashlib
 from datetime import datetime, timedelta, timezone
