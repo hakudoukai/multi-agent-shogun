@@ -209,6 +209,20 @@ deliverable 毎に **domain 判定** + 軍師 routing:
   persona_signature: "黒田官兵衛、智囊の眼、本 deliverable の論理を粘着的に追及"
 ```
 
+### 1-5b. 報告 file 階層 (= v1.1 整合明示、竹中 f3 是正 2026-05-10)
+
+各軍師は**自身の独立 report file**に entry 投函する。**旧単一 `gunshi_report.yaml` は legacy** (= v1.0 以前)、新規投函禁、参照のみ可。
+
+| 軍師 | 所属 PC | 担当 (= v1.1) | report file |
+|------|--------|--------------|-------------|
+| 黒田官兵衛 | MainPC | code 一次監査 | `queue/reports/kuroda_report.yaml` |
+| 竹中半兵衛 | MainPC | plan 一次監査 | `queue/reports/takenaka_report.yaml` |
+| 井伊直政 | SecondPC | code 一次監査 | `queue/reports/naomasa_report.yaml` |
+| 阿茶 | SecondPC | plan 二次監査 | `queue/reports/acha_report.yaml` |
+| (legacy) gunshi 統合 | — | — | `queue/reports/gunshi_report.yaml` (= 旧 v1.0、参照のみ) |
+
+各軍師 file は本書 1-5 schema に整合 (= audit_id 必須、persona_signature 必須等)、cross-PC で同 ID 衝突回避のため UUID v4 推奨。
+
 ### 1-6. log_path 規約
 
 - Codex: `/tmp/codex_audit_<audit_id>.log` (= codex exec の stdout/stderr 完全保存)

@@ -21,6 +21,10 @@ set -uo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$REPO_ROOT"
 
+# 共通 helper (= 竹中 f1 是正、DRY 違反解消)
+# shellcheck source=/dev/null
+source "$REPO_ROOT/lib/agent_pane_mapping.sh"
+
 AUTO_FIX="${1:-}"
 [ "$AUTO_FIX" = "--auto-fix" ] && AUTO_FIX="yes" || AUTO_FIX="no"
 
@@ -55,26 +59,11 @@ canonicalize_pane() {
 }
 
 # ════════════════════════════════════════════════════════════════
-# Stage A: settings.yaml から期待 mapping 抽出
+# Stage A: settings.yaml から期待 mapping 抽出 (= lib helper 経由、DRY 遵守)
 # ════════════════════════════════════════════════════════════════
 EXPECTED_FILE="$(mktemp)"
 trap 'rm -f "$EXPECTED_FILE"' EXIT
-
-python3 > "$EXPECTED_FILE" <<'PY'
-import yaml, json
-d = yaml.safe_load(open('config/settings.yaml'))
-agents = d.get('cli', {}).get('agents', {})
-out = {}
-idx = 0
-for a, cli in agents.items():
-    if a == 'shogun':
-        pane = 'shogun:main.0'
-    else:
-        pane = f'multiagent:agents.{idx}'
-        idx += 1
-    out[a] = {'pane': pane, 'cli': cli}
-print(json.dumps(out))
-PY
+apm_get_all_mappings_json > "$EXPECTED_FILE"
 
 log ""
 log "[期待 mapping (settings.yaml)]"

@@ -53,24 +53,17 @@ start_report_watcher_if_missing() {
 # config/settings.yaml の cli.agents から動的読込、編成変更時の再起動忘れ根絶
 # 慣例: shogun → shogun:main.0、他は出現順で multiagent:agents.{idx} (idx=0..)
 # ════════════════════════════════════════════════════════════════
-read_agents_from_settings() {
-    awk '/^  agents:/{f=1;next} f&&/^  [^ ]/{exit} f&&/^[ ]{4}[A-Za-z0-9_]+:/{
-        sub(/^[ ]*/,""); sub(/:.*/,""); print
-    }' config/settings.yaml
-}
+# 共通 helper を source (= 竹中 f1 是正、DRY 違反解消)
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib/agent_pane_mapping.sh"
 
 while true; do
-    idx=0
     while read -r agent; do
         [ -z "$agent" ] && continue
-        if [ "$agent" = "shogun" ]; then
-            pane="shogun:main.0"
-        else
-            pane="multiagent:agents.${idx}"
-            idx=$((idx+1))
-        fi
+        pane=$(apm_get_pane "$agent")
+        [ -z "$pane" ] && continue
         start_watcher_if_missing "$agent" "$pane" "logs/inbox_watcher_${agent}.log"
-    done < <(read_agents_from_settings)
+    done < <(apm_list_agents)
     start_report_watcher_if_missing "logs/shogun_report_watcher.log"
     sleep 5
 done
