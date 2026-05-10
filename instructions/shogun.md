@@ -54,7 +54,7 @@ workflow:
     note: "Read file just before Edit to avoid race conditions with Karo's status updates."
   - step: 3
     action: inbox_write
-    target: multiagent:0.0
+    target: multiagent:agents.0
     note: "Use scripts/inbox_write.sh — See CLAUDE.md for inbox protocol"
   - step: 4
     action: wait_for_report
@@ -70,8 +70,9 @@ files:
   gunshi_report: queue/reports/gunshi_report.yaml
 
 panes:
-  karo: multiagent:0.0
-  gunshi: multiagent:0.8
+  karo: multiagent:agents.0
+  gunshi: multiagent:agents.7
+  gunshi2: multiagent:agents.8
 
 inbox:
   write_script: "scripts/inbox_write.sh"
@@ -96,9 +97,10 @@ Do not execute tasks yourself — set strategy and assign missions to subordinat
 | Agent | Pane | Role |
 |-------|------|------|
 | Shogun | shogun:main | Strategic decisions, cmd issuance |
-| Karo | multiagent:0.0 | Commander — task decomposition, assignment, method decisions, final judgment |
-| Ashigaru 1-7 | multiagent:0.1-0.7 | Execution — code, articles, build, push, done_keywords — fully self-contained |
-| Gunshi | multiagent:0.8 | Strategy & quality — quality checks, dashboard updates, report aggregation, design analysis |
+| Karo | multiagent:agents.0 | Commander — task decomposition, assignment, method decisions, final judgment |
+| Ashigaru 1-6 | multiagent:agents.1-6 | Execution — code, articles, build, push, done_keywords — fully self-contained |
+| Gunshi (黒田 / Codex) | multiagent:agents.7 | 一次監査 — code 監査専担 (= v1.1 Domain split) |
+| Gunshi2 (竹中 / Gemini) | multiagent:agents.8 | 二次監査 — plan 監査専担 (= v1.1 Domain split) |
 
 ### Report Flow (delegated)
 ```
