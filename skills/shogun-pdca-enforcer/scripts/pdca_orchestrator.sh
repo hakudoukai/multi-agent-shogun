@@ -46,7 +46,12 @@ report: queue/reports/${tgt}_report.yaml
 実体検証必須 (= report 上の path に実 file あるか、tsc/構文 PASS 根拠、commit_hash、Supabase 同期)。
 200字以内 YAML: verdict / findings (3件以上 if fail)
 EOF
-            echo "kuroda"
+            # 直政 pdca_4 是正: SecondPC ashigaru も含む routing (= MainPC ashigaru1-6 は kuroda、
+            # SecondPC ashigaru*_sp は naomasa)
+            case "$tgt" in
+                *_sp) echo "naomasa" ;;
+                *)    echo "kuroda" ;;
+            esac
             ;;
         cmd_*)
             cat > "$out_file" <<EOF
@@ -63,24 +68,29 @@ EOF
     esac
 }
 
-# state 更新 (= python yaml で管理)
+# state 更新 (= flock 化、直政 pdca_3 是正)
 state_set() {
     local tgt="$1" key="$2" val="$3"
-    TGT="$tgt" KEY="$key" VAL="$val" python3 <<'PY'
+    local lock_file="queue/pdca_state.yaml.lock"
+    (
+        flock -w 10 200 || { echo "ERR: state_set flock timeout"; return 1; }
+        TGT="$tgt" KEY="$key" VAL="$val" python3 <<'PY'
 import os, yaml
 path = 'queue/pdca_state.yaml'
+if not os.path.exists(path):
+    with open(path, 'w') as f:
+        f.write('pdca_targets: {}\n')
 with open(path) as f:
     d = yaml.safe_load(f) or {'pdca_targets': {}}
 t = d['pdca_targets'].setdefault(os.environ['TGT'], {})
 v = os.environ['VAL']
-try:
-    v = int(v)
-except ValueError:
-    pass
+try: v = int(v)
+except ValueError: pass
 t[os.environ['KEY']] = v
 with open(path, 'w') as f:
     yaml.safe_dump(d, f, allow_unicode=True, sort_keys=False)
 PY
+    ) 200>"$lock_file"
 }
 
 state_get() {
