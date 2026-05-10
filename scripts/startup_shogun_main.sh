@@ -22,6 +22,21 @@ set -uo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
+# 黒田 kl1 是正: SecondPC で実行された場合の自己再帰防止
+# 既定 = local + remote 両 PC 起動、--local-only で remote skip
+LOCAL_ONLY="no"
+for arg in "$@"; do
+    [ "$arg" = "--local-only" ] && LOCAL_ONLY="yes"
+done
+
+# hostname 検出で SecondPC 上での実行は自動 --local-only 化
+case "$(hostname)" in
+    *USER-O6AK*|USER-O6AK917NTU)
+        LOCAL_ONLY="yes"
+        echo "[auto-local-only] SecondPC 上での実行を検出、remote SSH 段階を skip (= kl1 自己再帰防止)"
+        ;;
+esac
+
 LOG_DIR="logs"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/startup_$(date +%Y%m%d_%H%M%S).log"
@@ -94,14 +109,17 @@ else
 fi
 
 # ─────────────────────────────────────────────────────────────
-# Step 5: SecondPC startup (= SSH + 同 script 実行)
+# Step 5: SecondPC startup (= SSH + 同 script を --local-only で実行、kl1 是正)
 # ─────────────────────────────────────────────────────────────
 echo ""
 echo "═══ Step 5: SecondPC startup ═══"
-if ssh -o BatchMode=yes -o ConnectTimeout=5 -p 2222 User@192.168.11.47 'echo OK' 2>/dev/null | grep -q OK; then
+if [ "$LOCAL_ONLY" = "yes" ]; then
+    echo "[skip] --local-only 指定、SecondPC 起動段階 skip"
+elif ssh -o BatchMode=yes -o ConnectTimeout=5 -p 2222 User@192.168.11.47 'echo OK' 2>/dev/null | grep -q OK; then
     echo "[5a] SecondPC SSH 疎通 ✅"
+    # SecondPC 側では --local-only 強制 (= 自己再帰防止)
     ssh -o BatchMode=yes -p 2222 User@192.168.11.47 \
-        'wsl -- bash -lc "cd /home/hakudokai/projects/multi-agent-shogun-newbuild && bash scripts/startup_shogun_main.sh 2>&1 | tail -20"' 2>&1 | head -30
+        'wsl -- bash -lc "cd /home/hakudokai/projects/multi-agent-shogun-newbuild && bash scripts/startup_shogun_main.sh --local-only --no-confirm 2>&1 | tail -20"' 2>&1 | head -30
 else
     echo "⚠ SecondPC SSH 不通、SecondPC 起動 skip (= 別途 SecondPC で手動起動要)"
 fi

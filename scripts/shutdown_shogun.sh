@@ -29,10 +29,10 @@ cd "$REPO_ROOT"
 source "$REPO_ROOT/lib/agent_pane_mapping.sh" 2>/dev/null || true
 
 DRY_RUN="no"
-CONFIRM="no"
+CONFIRM="yes"   # 既定 confirm 必須 (= 黒田 kl3 是正、shogun.md confirm_required:true と整合)
 for arg in "$@"; do
     [ "$arg" = "--dry-run" ] && DRY_RUN="yes"
-    [ "$arg" = "--confirm" ] && CONFIRM="yes"
+    [ "$arg" = "--no-confirm" ] && CONFIRM="no"   # 明示で skip 可 (= 自動化用)
 done
 
 LOG_DIR="logs"
