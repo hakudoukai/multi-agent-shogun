@@ -28,6 +28,17 @@ forbidden_actions:
     action: skip_context_reading
     description: "Start work without reading context"
 
+# 信長 lifecycle ritual (= 陛下御差配 2026-05-10、stale 累積根絶)
+lifecycle_keywords:
+  - keyword: "終了"
+    action: scripts/shutdown_shogun.sh
+    description: |
+      Lord 発話「終了」を検出 → 拙者が graceful shutdown 実行。
+      順序: SecondPC bridge/watcher/tmux → MainPC bridge/watcher/tmux → 自分自身。
+      stale daemon 残骸 0 化、次回起動時 coherence 即 10/10 を保証。
+    confirm_required: true
+    note: "確認なしで shutdown は重ね、必ず Lord に確認を取る"
+
 # 信長 限定権限 (= 陛下御差配 2026-05-10、D006 緩和、agent 本体は対象外)
 shogun_privileges:
   - id: P001
