@@ -982,3 +982,325 @@ ieyasu_audit_request:
       execution_timestamp: "2026-05-10T13:20:00+09:00"
       confidence: high
       confidence_note: "テスト35件 PASS/SKIP=0/TypeScript EXIT:0 が物的証拠; obs_8=na (frontend テーマのみ)"
+
+# cmd_new retry: 会計待ち時間ゼロ作戦 kanban.py 9観点監査 (Codex native 2026-05-11T03:16)
+new_project_audits:
+  - audit_id: naomasa_new_001
+    target_type: project_code
+    target_id: zero_wait_accounting_kanban
+    parent_cmd: cmd_new_20260511_031515
+    cycle_n: 1
+    audited_at: "2026-05-11T03:16:54+09:00"
+    audited_by: naomasa
+    audit_routing: "Codex native line-level static audit"
+    verdict: partial
+    findings:
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:244 get_kanban_board() — patients JOIN が patient_id のみで clinic_id を結合条件に含めていない。patient_id 重複・移行途中データ・TEMP系ID混在時に別院患者名をカードへ表示し得るため、医療データ分離観点で危うい。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:546 get_daily_report() — daily_report_lines も patients JOIN が patient_id のみ。日計表は会計・患者名を扱うため、clinic_id 条件なし JOIN は cross-clinic 誤表示リスクが高い。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:323 move_card() — docstring は billing からの移動不可と明記する一方、VALID_MOVES は billing→done/review/input_waiting/inputting/arrived を許可している。会計完了状態を手動で前工程へ戻せるため、PDF抽出完了→billing のゼロ待ち導線と会計確定導線の整合が崩れる。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:1068 _ensure_done_entered_at_column() — GET /board と PATCH /move の通常リクエスト中に ALTER TABLE を実行し、OperationalError を理由判別せず握りつぶしている。readonly/locked/DDL失敗も既存列扱いになり、直後の SELECT h.done_entered_at で本番障害化し得る。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:816 _next_temp_seq() — TEMP ID を COUNT(*)+1 で採番しており同時受付で同一 patient_id を発行し得る。患者受付は並行発生するため、DB unique 制約任せの失敗ではなくトランザクション内採番または衝突リトライが必要。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:1192 _ensure_active_card_unique_index() — チェックイン要求時に CREATE UNIQUE INDEX を実行する設計。既存重複データがある環境では通常受付パスが即失敗するため、migration/preflight で検出・是正してから本番導入すべき。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:1207 register_arrived_card() — INSERT OR IGNORE + 部分UNIQUE索引で同日同患者activeカード重複を防ぐ設計は妥当。patient_checkin.py 側の正規化テストも存在し、Anti-Duplication 観点では既存 kanban.py に集約されている。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:1082 register_payment_completed() — BEGIN IMMEDIATE と UPDATE側 archived 再チェックで SELECT-UPDATE race を潰しており、PDF抽出完了→billing 自動移動の中核ロジックは妥当。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/main.py:25/268 app.include_router() — kanban_router は main.py に一度だけ登録されており、重複ルーター実装は見当たらない。"
+    recommendations:
+      - "patients JOIN は全箇所で `LEFT JOIN patients p ON h.patient_id = p.patient_id AND h.clinic_id = p.clinic_id` 相当に修正せよ。daily_report_lines 側も d.clinic_id を必ず結合条件へ入れるべし。"
+      - "billing からの移動ポリシーを決定し、不可なら VALID_MOVES['billing'] を空配列または限定遷移に修正せよ。許可するなら docstring と会計確定/アーカイブ条件を再定義せよ。"
+      - "`done_entered_at` と active unique index は request path ではなく migration へ移せ。少なくとも OperationalError は duplicate-column のみ握りつぶし、その他は監視可能な失敗として返すべし。"
+      - "TEMP 採番は transaction + unique retry、または専用 sequence table に寄せよ。COUNT(*)+1 は受付並行性に耐えぬ。"
+      - "WSL 上では pytest 実行不能であったため、Windows venv または CI で `backend/tests/test_patient_checkin.py` と `backend/tests/test_temporary_patient.py` を SKIP=0 で再実行せよ。"
+    related_files:
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/main.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_patient_checkin.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_temporary_patient.py"
+    commit_hash: "b66ffe0b"
+    log_path: "queue/reports/naomasa_secondpc_report.yaml"
+    audit_passed: false
+    verification:
+      syntax_check: "PASS: python3 -m py_compile /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py"
+      pytest_attempt_1: "FAIL: /usr/bin/python3 has no pytest module"
+      pytest_attempt_2: "FAIL: Windows .venv/Scripts/python.exe returned WSL UtilAcceptVsock accept4 failed 110"
+      skip_count: "unknown (tests did not start)"
+    perspective_verdicts:
+      1_func: partial
+      2_anti_dup: pass
+      3_kiritsu: partial
+      4_logic: partial
+      5_schema: fail
+      6_test: fail
+      7_legal: partial
+      8_ux: partial
+      9_doc: partial
+    persona_signature:
+      audited_by_agent: "naomasa (赤鬼の眼)"
+      native_execution: true
+      execution_method: "Codex TUI direct audit after inbox recovery"
+      execution_timestamp: "2026-05-11T03:16:54+09:00"
+      confidence: medium
+      confidence_note: "line-level static audit + py_compile は完了。pytest は環境制約で未完了のため test 観点は fail 扱い。"
+
+  - audit_id: naomasa_new_002
+    target_type: project_code
+    target_id: child_dinosaur_kingdom_app
+    parent_cmd: cmd_new_20260511_031812
+    cycle_n: 1
+    audited_at: "2026-05-11T03:28:00+09:00"
+    audited_by: naomasa
+    audit_routing: "Codex native line-level static audit"
+    verdict: partial
+    findings:
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:182 dashboard() — member_id だけで passport_members / xp_log / stamp_log / mission_log / reward_history を取得しており、clinic_id 条件が無い。member_id を知る者が別院データへ到達し得る設計で、医療/小児データ境界として弱い。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:131 get_member() — member_id 単独 lookup で clinic_id を要求しない。add_xp(), assign_mission_from_procedure(), award_stamp(), redeem_reward(), record_game_score() の根元が全て member_id 単独認可になり、router 側の clinic_id 既定値では防げない。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:237 add_xp() — 任意 delta_xp をそのまま engine に渡しており、負数・巨大値・reason_code の権限制御が無い。公開APIとして使われるなら rank/報酬残高の改ざん面が広い。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:95 enroll_member() — clinic_id をリクエストから受け取りつつ world_theme_id は DINO_WORLD_THEME_ID 固定。コメント上は clinic_id=5 固定だが、API は任意 clinic_id を受けるため、他院に dinosaur_kingdom 会員を作れる。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:115 enroll_member() — birth_date が None でも egg として subscription_status=active/monthly_fee_jpy=500 で登録する。小児向け・課金付き機能として年齢未確認登録は運用事故に直結する。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:158 add_xp() — コメントは最新 total_xp_after 算出とあるが実装は delta_xp 全件 SUM。交換時の負数ログを rank_for_xp に反映するため、reward redeem で称号が降格し得る。仕様なら文書化、非仕様なら lifetime_xp と spendable_xp を分離すべき。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/child_passport.py:35 check_eligibility() — clinic_id + patient_no で患者を絞り込む設計は妥当。14歳境界は ChildAdventureEngine 側テストが存在する。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/child_passport.py:99 get_passport() — child_adventure_stats/logs は clinic_id + patient_no で取得しており、旧 child-passport 系の医院境界は概ね保たれている。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py:70 test_no_mapping_returns_no_mapping() — member_id 直指定で patient_no/clinic_id 解決を迂回する正常系をテストしている。現行仕様として固定化されており、境界チェック不足をテストが検出できない。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/main.py:379/380 app.include_router() — child_passport_router と teriha_passport_router は別 prefix で登録され、重複ルート衝突は見当たらない。"
+    recommendations:
+      - "passport 系 API は member_id 単独操作を廃し、clinic_id + member_id の複合条件または認証済み clinic scope を全操作に通せ。engine.get_member() も clinic_id を受ける形へ変更すべし。"
+      - "add_xp/redeem/game/family/stamp は内部イベント専用か外部公開かを切り分け、公開するなら権限・delta範囲・reason_code allowlist を実装せよ。"
+      - "enroll は clinic_id=5 固定をサーバ側で強制するか、world_theme_id を clinic/theme 設定から解決せよ。birth_date 未登録時の有料active登録は禁止または pending に落とすべし。"
+      - "XP は lifetime_xp/rank_xp と spendable_xp を分け、報酬交換で称号が落ちるのか仕様決定せよ。少なくとも dashboard と add_xp の計算規則を一致させるべし。"
+      - "関連テストに cross-clinic member_id 直指定拒否、成人/生年月日未設定 enroll 拒否、負数/巨大 delta_xp 拒否を追加せよ。"
+    related_files:
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/child_passport.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_child_passport_router.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_child_adventure_engine.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_engine.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py"
+    commit_hash: "b66ffe0b"
+    log_path: "queue/reports/naomasa_secondpc_report.yaml"
+    audit_passed: false
+    verification:
+      syntax_check: "PASS: python3 -m py_compile child_passport.py teriha_passport.py teriha_passport_engine.py"
+      pytest_attempt: "NOT RUN: prior Windows .venv/Scripts/python.exe execution failed with WSL UtilAcceptVsock accept4 failed 110; /usr/bin/python3 has no pytest"
+      skip_count: "unknown (tests did not start)"
+    perspective_verdicts:
+      1_func: partial
+      2_anti_dup: pass
+      3_kiritsu: partial
+      4_logic: partial
+      5_schema: partial
+      6_test: fail
+      7_legal: fail
+      8_ux: partial
+      9_doc: partial
+    persona_signature:
+      audited_by_agent: "naomasa (赤鬼の眼)"
+      native_execution: true
+      execution_method: "Codex TUI direct audit after inbox recovery"
+      execution_timestamp: "2026-05-11T03:28:00+09:00"
+      confidence: medium
+      confidence_note: "line-level static audit + py_compile は完了。pytest は環境制約で未完了のため test 観点は fail 扱い。"
+
+# phase_B: audit_passed=false 8件 再監査 (Codex native 2026-05-11T03:36)
+phase_b_reaudits:
+  - audit_id: naomasa_reaudit_001
+    target_audit_id: naomasa_008
+    target_id: cmd_001
+    verdict: pass
+    audit_passed: true
+    findings:
+      - "queue/reports/ashigaru1_bootstrap_cert.yaml:8 parent_cmd — cmd_001 証明文書が後続作成され、bootstrap 任務との紐付けが確認できる。"
+      - "queue/reports/ashigaru1_bootstrap_cert.yaml:41 inbox_read_status — status: all_read_true により当初 fail 理由の inbox 未読疑義は解消。"
+      - "queue/reports/ashigaru1_bootstrap_cert.yaml:60 dashboard_reflection — cmd_001 完了反映の証跡が記録されている。"
+    recommendations: []
+
+  - audit_id: naomasa_reaudit_002
+    target_audit_id: naomasa_009
+    target_id: cmd_002
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "queue/reports/ashigaru_alias_cert.yaml:16 cmd_002_summary — cmd_002 発令と alias 配備の証跡は後続作成済み。"
+      - "queue/reports/ashigaru_alias_cert.yaml:47 alias_use_status — ashigaru1-5 は CONFIRMED で alias 使用確認済み。"
+      - "queue/reports/ashigaru_alias_cert.yaml:154 alias_use_status — ashigaru6 は PARTIAL のまま。全6足軽 alias 完全確認には一件不足が残る。"
+    recommendations:
+      - "ashigaru6 の alias 受領・使用証跡を追加確認し、CONFIRMED に昇格せよ。"
+
+  - audit_id: naomasa_reaudit_003
+    target_audit_id: naomasa_010
+    target_id: cmd_003
+    verdict: pass
+    audit_passed: true
+    findings:
+      - "queue/reports/cmd003_completion_cert.yaml:19 cmd_003_reception — cmd_003 配信・受領証跡が全6前線分で整理済み。"
+      - "queue/reports/cmd003_completion_cert.yaml:75 status — ashigaru1-6 各戦線の設計調査 status: completed が並ぶ。"
+      - "queue/reports/cmd003_completion_cert.yaml:128 combined — naomasa/acha 二者監査 combined: pass が記録され、当初 partial 理由は解消。"
+    recommendations: []
+
+  - audit_id: naomasa_reaudit_004
+    target_audit_id: naomasa_014
+    target_id: cmd_008
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "queue/reports/naomasa_secondpc_report.yaml:551 naomasa_014 — retroactive_audit field 後付け未実施が残存。"
+      - "queue/reports/naomasa_secondpc_report.yaml:552 naomasa_014 — dual_pass deliverable の source_code_cache UPSERT 全数確認が未完。"
+      - "dashboard.md:80 source_code_cache UPSERT 義務 — 義務は明文化済みだが、cmd_008 全 deliverable 充足証跡はまだ揃わぬ。"
+    recommendations:
+      - "全 ashigaru report/task へ retroactive_audit field を後付けし、UPSERT 全数ログを同一報告へ集約せよ。"
+
+  - audit_id: naomasa_reaudit_005
+    target_audit_id: naomasa_016
+    target_id: cmd_010
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "queue/reports/shogun_verification_log.yaml:30 shogun_verified — false のまま。家康直接 verify 未完。"
+      - "queue/reports/shogun_verification_log.yaml:33 chain_passed — false のまま。二層フラグの audited_done 昇格条件未達。"
+      - "queue/reports/shogun_verification_log.yaml:205 chain_passed_count — 0 と集計されており、cmd_010 の目的は未完了。"
+    recommendations:
+      - "家康直接 verify_ieyasu entry を起案し、proxy ではなく本人確認で shogun_verified を true 化せよ。"
+
+  - audit_id: naomasa_reaudit_006
+    target_audit_id: naomasa_017
+    target_id: cmd_011
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "config/settings.yaml:20 gunshi — SC reset 後は gunshi 1体制と記録され、旧 gunshi2/阿茶 前提は廃止方向。"
+      - "queue/inbox/gunshi.yaml:230 persona_assign — 井伊直政=赤鬼の眼 persona 配備命令は既読化済みで、本 session では persona 確立済み。"
+      - "queue/reports/naomasa_secondpc_report.yaml:665 naomasa_017 — 旧判定は gunshi_audit_personas.md 取得不可 + 阿茶 quota を含むため、現行 SC reset 後の acceptance に合わせた再定義が必要。"
+    recommendations:
+      - "cmd_011 を現行一軍師体制へ正規化し、阿茶 native 必須条件を廃止するか別 cmd として扱え。正規化後なら直政側は pass 相当。"
+
+  - audit_id: naomasa_reaudit_007
+    target_audit_id: naomasa_018
+    target_id: cmd_012
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "queue/reports/shogun_verification_log.yaml:205 chain_passed_count — 0。Layer 5 audited_done 昇格は未到達。"
+      - "queue/reports/shogun_verification_log.yaml:213 pending_for_audited_done — Layer 4/5 が pending と明記されている。"
+      - "dashboard.md:177 audited_done — Layer 5 は監査待ちのまま。cmd_012 は設計/記録は進んだが完了条件未達。"
+    recommendations:
+      - "家康 verify 完了後に chain_passed=true + audited_done=true を該当 entry に反映せよ。"
+
+  - audit_id: naomasa_reaudit_008
+    target_audit_id: naomasa_020
+    target_id: subtask_006e_fix
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "queue/reports/ashigaru5_report_cycle3.yaml:18 migration_applied — patient_chat_messages_rls_v1 適用成功で、naomasa_020 の HIGH RLS risk は解消。"
+      - "queue/reports/ashigaru5_report_cycle3.yaml:53 post_state — patient_chat_messages policies 3件が pg_policies で確認済み。"
+      - "queue/reports/ashigaru5_report_cycle3.yaml:77 handoff_remaining — ANTHROPIC_API_KEY 実キー設定が HIGH のまま残存。"
+      - "queue/reports/ashigaru5_report_cycle3.yaml:100 overall_result — RLS観点は PASS だが、実キー設定と E2E 疎通は未完のため subtask_006e_fix 全体は partial 継続。"
+    recommendations:
+      - "ANTHROPIC_API_KEY 実キー設定後、backend 起動環境で patient chat E2E を SKIP=0 で実行せよ。"
+
+# cycle2 fix 再監査 (Codex native 2026-05-11T03:45)
+cycle2_fix_reaudits:
+  - audit_id: naomasa_reaudit_009
+    target_audit_id: naomasa_009
+    target_id: cmd_002
+    redo_task_id: subtask_cmd002_alias6
+    verdict: pass
+    audit_passed: true
+    findings:
+      - "queue/reports/ashigaru6_alias_confirm_report.yaml:25 cmd_002_inbox_message() — msg_20260509_191455_4a83adf6 を queue/archive/inbox_ashigaru6_20260509211540.yaml:10-14 で直接確認。ashigaru6 の alias 受領証拠が補完された。"
+      - "queue/reports/ashigaru_alias_cert.yaml:153 alias_use_status — ashigaru6 が CONFIRMED に更新済み。旧 PARTIAL 理由は解消。"
+      - "queue/reports/ashigaru_alias_cert.yaml:174 summary() — confirmed: 6 / partial: 0 / fail: 0。全6足軽について alias 受領 + 使用証跡が揃った。"
+    recommendations: []
+    related_files:
+      - "queue/reports/ashigaru6_alias_confirm_report.yaml"
+      - "queue/reports/ashigaru_alias_cert.yaml"
+      - "queue/archive/inbox_ashigaru6_20260509211540.yaml"
+    persona_signature:
+      audited_by_agent: "naomasa (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+
+  - audit_id: naomasa_reaudit_010
+    target_audit_id: naomasa_new_002
+    target_id: child_dinosaur_kingdom_app
+    redo_task_id: subtask_teriha_p2_fix
+    cycle_n: 2
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:131 get_member() — clinic_id 引数と .eq('clinic_id', clinic_id) が追加され、member_id 単独 lookup 指摘の中核は一部解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:192 dashboard() — clinic_id Query と passport_members clinic filter が追加され、dashboard の入口は改善。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:246 add_xp() — delta_xp 範囲 1..10000 と reason_code allowlist が追加され、負数・巨大値・任意 reason の外部注入は解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:124 enroll_member() — birth_date=None 時 subscription_status='pending' へ変更され、年齢未確認 active 課金登録は抑止。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:346 _resolve_member_id() — member_id が渡された場合は clinic_id 照合なしで即 return する経路が残存。on_appointment_created()/on_visit_checked_in() は member_id 直指定で cross-clinic boundary を迂回し得る。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:162 enroll() — req.clinic_id をそのまま enroll_member() に渡し、DINO_WORLD_THEME_ID 固定のまま他 clinic_id へ登録できる。前回 recommendation の clinic_id=5 enforcement は未完。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:200 dashboard() — xp_log/stamp/mission/reward は member_id のみで取得するまま。入口 member 取得で clinic_id は見るが、下流 table 側に clinic_id が無い/使われないため RLS か member_id global uniqueness への依存が残る。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_engine.py:197 TestGetMemberClinicEnforcement — engine 単体テストは追加済み。ただし webhook member_id 直指定拒否、enroll clinic_id=5 強制、router add_xp 422 の API テストは未確認。"
+      - "検証: python3 -m py_compile routers/teriha_passport.py services/teriha_passport_engine.py tests/test_teriha_passport_engine.py は PASS。pytest は環境制約により未実行で SKIP 数不明、テスト観点は完了扱い不可。"
+    recommendations:
+      - "_resolve_member_id() は member_id 指定時も passport_members を clinic_id + member_id で照合し、不一致なら 404 とせよ。"
+      - "enroll() は clinic_id=TERIHA_CLINIC_ID 以外を 400/422 で拒否するか、world_theme_id を clinic 設定から解決せよ。"
+      - "webhook member_id 直指定拒否/cross-clinic 404、enroll clinic_id mismatch、add_xp invalid delta/reason の router tests を追加し、pytest を SKIP=0 で通せ。"
+    related_files:
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_engine.py"
+      - "queue/reports/ashigaru4_teriha_p2_report.yaml"
+    commit_hash: "3419464d"
+    log_path: "queue/reports/ashigaru4_teriha_p2_report.yaml"
+    perspective_verdicts:
+      1_func: partial
+      2_anti_dup: pass
+      3_kiritsu: partial
+      4_logic: partial
+      5_schema: partial
+      6_test: fail
+      7_legal: partial
+      8_ux: partial
+      9_doc: partial
+    persona_signature:
+      audited_by_agent: "naomasa (赤鬼の眼)"
+      native_execution: true
+      confidence: medium
+      confidence_note: "主要修正は確認。ただし clinic boundary 迂回経路と pytest 未実行が残るため partial。"
+
+  - audit_id: naomasa_reaudit_011
+    target_audit_id: naomasa_new_002
+    target_id: child_dinosaur_kingdom_app
+    redo_task_id: subtask_teriha_p3_fix
+    cycle_n: 3
+    verdict: pass
+    audit_passed: true
+    findings:
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:348 _resolve_member_id() — member_id 直指定時も passport_members を clinic_id + member_id で照合し、不一致なら HTTP 404。cycle2 の cross-clinic 迂回経路は解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:162 enroll() — req.clinic_id != TERIHA_CLINIC_ID を HTTP 422 で拒否。他院 clinic_id への dinosaur_kingdom 登録は遮断。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:246 add_xp() — delta_xp 範囲 + reason_code allowlist は cycle2 修正から維持され、外部からの負数/任意 reason 注入は抑止済み。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py:135 TestCrossClinicSecurity — webhook member_id cross-clinic 404 / enroll clinic mismatch 422 / add_xp invalid input 422 の router tests 4件が追加済み。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:124 enroll_member() — birth_date=None は pending のまま維持。小児・課金機能の年齢未確認 active 登録は抑止済み。"
+      - "pytest: `python3 -m pytest backend/tests/test_teriha_passport_webhooks.py backend/tests/test_teriha_passport_engine.py -q` → 45 passed, 0 skipped, 0 failed。SKIP=0 条件を満たす。"
+      - "commit 3f835a53 — backend/routers/teriha_passport.py と backend/tests/test_teriha_passport_webhooks.py の cycle3 差分を確認。"
+      - "dashboard 下流テーブル clinic_id 不在は ashigaru4_teriha_p3_report.yaml で明記済み。member_id global uniqueness 前提として現行 acceptance では受容。ただし将来 RLS 強化時は clinic_id カラム追加を再検討すべし。"
+    recommendations:
+      - "将来のRLS強化時に passport_xp_log / passport_stamp_log / passport_mission_log / passport_reward_history へ clinic_id を追加する設計検討を別タスク化せよ。"
+    related_files:
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_engine.py"
+      - "queue/reports/ashigaru4_teriha_p3_report.yaml"
+    commit_hash: "3f835a53"
+    log_path: "queue/reports/ashigaru4_teriha_p3_report.yaml"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass
+      5_schema: pass
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass
+    persona_signature:
+      audited_by_agent: "naomasa (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "コード行番号確認 + pytest 45 passed/SKIP=0 を直接実行確認。"
