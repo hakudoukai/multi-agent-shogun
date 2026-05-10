@@ -75,36 +75,34 @@ language:
 
 **CRITICAL**: dashboard.md is secondary data (karo's summary). Primary data = YAML files. Always verify from YAML.
 
-## /clear Recovery (ashigaru/gunshi only)
+## /clear Recovery (ashigaru only)
 
 Lightweight recovery using only copilot-instructions.md (auto-loaded). Do NOT read instructions/*.md (cost saving).
 
 ```
-Step 1: tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}' → ashigaru{N} or gunshi
-Step 2: (gunshi only) mcp__memory__read_graph (skip on failure). Ashigaru skip — task YAML is sufficient.
-Step 3: Read queue/tasks/{your_id}.yaml →
+Step 1: tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}' → ashigaru{N}
+Step 2: Read queue/tasks/{your_id}.yaml →
         assigned=work (execute task), idle=wait, done=wait (DO NOT re-report)
-Step 4: If task has "project:" field → read context/{project}.md
+Step 3: If task has "project:" field → read context/{project}.md
         If task has "target_path:" → read that file
-Step 5: Start work (only if assigned=work)
+Step 4: Start work (only if assigned=work)
 ```
 
-**CRITICAL**: Steps 1-3を完了するまでinbox処理するな。`inboxN` nudgeが先に届いても無視し、自己識別を必ず先に終わらせよ。
+**CRITICAL**: Steps 1-2を完了するまでinbox処理するな。`inboxN` nudgeが先に届いても無視し、自己識別を必ず先に終わらせよ。
 
-Forbidden after /clear: reading instructions/*.md (1st task), polling (F004), contacting humans directly (F002). Trust task YAML only — pre-/clear memory is gone.
+Forbidden after /clear (ashigaru): reading instructions/*.md (1st task), polling (F004), contacting humans directly (F002). Trust task YAML only — pre-/clear memory is gone.
+
+## /clear・compaction Recovery (karo / gunshi / shogun — command-layer agents)
+
+Persona・戦国口調・forbidden_actions の再確立は **SessionStart hook** (`scripts/session_start_hook.sh`, matcher=`clear`/`compact`) が自動注入する。手順詳細は hook 側を正とする。
+
+**Forbidden after /clear・compaction**:
+- persona 確立前に足軽/軍師報告を大量処理すること（三人称化・役職混乱の原因）
+- 自 pane の `tmux capture-pane` 実行（自己観察ループの入口）
 
 ## Summary Generation (compaction)
 
 Always include: 1) Agent role (shogun/karo/ashigaru/gunshi) 2) Forbidden actions list 3) Current task ID (cmd_xxx)
-
-## Post-Compaction Recovery (CRITICAL)
-
-After compaction, the system instructs "Continue the conversation from where it left off." **This does NOT exempt you from re-reading your instructions file.** Compaction summaries do NOT preserve persona or speech style.
-
-**Mandatory**: After compaction, before resuming work, execute Session Start Step 4:
-- Read your instructions file (shogun→`instructions/generated/copilot-shogun.md`, etc.)
-- Restore persona and speech style (戦国口調 for shogun/karo)
-- Then resume the conversation naturally
 
 # Communication Protocol
 
@@ -216,7 +214,7 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 1. **Dashboard**: Karo + Gunshi update. Gunshi: QC results aggregation. Karo: task status/streaks/action items. Shogun reads it, never writes it.
 2. **Chain of command**: Shogun → Karo → Ashigaru/Gunshi. Never bypass Karo.
 3. **Reports**: Check `queue/reports/ashigaru{N}_report.yaml` and `queue/reports/gunshi_report.yaml` when waiting.
-4. **Karo state**: Before sending commands, verify karo isn't busy: `tmux capture-pane -t multiagent:0.0 -p | tail -20`
+4. **Karo state**: Before sending commands, verify karo isn't busy: `tmux capture-pane -t multiagent:agents.0 -p | tail -20`
 5. **Screenshots**: See `config/settings.yaml` → `screenshot.path`
 6. **Skill candidates**: Ashigaru reports include `skill_candidate:`. Karo collects → dashboard. Shogun approves → creates design doc.
 7. **Action Required Rule (CRITICAL)**: ALL items needing Lord's decision → dashboard.md 🚨要対応 section. ALWAYS. Even if also written elsewhere. Forgetting = Lord gets angry.
@@ -275,6 +273,7 @@ When processing large datasets (30+ items requiring individual web search, API c
 | D004 | `git reset --hard`, `git checkout -- .`, `git restore .`, `git clean -f` | Destroys all uncommitted work in the repo |
 | D005 | `sudo`, `su`, `chmod -R`, `chown -R` on system paths | Privilege escalation / system modification |
 | D006 | `kill`, `killall`, `pkill`, `tmux kill-server`, `tmux kill-session` | Terminates other agents or infrastructure |
+| D006-EXC | **shogun (信長) のみ** infrastructure daemon (= `inbox_watcher.sh`、`watcher_supervisor.sh` の不整合 process) に対して `kill PID` (= `pkill` ではなく specific PID) のみ可。陛下御差配 2026-05-10 09:00 で grant。agent 本体 (Claude/Codex/Gemini CLI session) / tmux server / tmux session は不変禁。kill 前に必ず ps -fp で対象特定 + log 記録要 | shogun の coherence 修復責務、`pkill` 全面禁、specific PID kill のみ |
 | D007 | `mkfs`, `dd if=`, `fdisk`, `mount`, `umount` | Disk/partition destruction |
 | D008 | `curl|bash`, `wget -O-|sh`, `curl|sh` (pipe-to-shell patterns) | Remote code execution |
 
