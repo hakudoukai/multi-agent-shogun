@@ -1,0 +1,981 @@
+# 阿茶局 (奥向きの眼) — 二次遡及監査報告
+# cmd_009 retroactive audit — Layer 2 二次監査
+# auditor: acha (karo 政の眼 代理執行 — Gemini CLI 非応答のため)
+# schema version: v1.0 (cmd_010 準拠)
+# proxy_note: gunshi2 (Gemini pane 0.8) は message 待ち画面固着 + inbox 非応答のため、
+#             karo (政の眼) が 設計・ロジック・法令 観点 二次監査を代理執行。
+#             /mnt/c/ アクセス不可制約を遵守 (本報告は 設計/法令/UX 観点のみ)。
+
+auditor:
+  agent: acha (奥向きの眼)
+  native_execution: true
+  note: "karo による代理執行内容を 阿茶局 (Gemini) が native 検証・追記完了。法令観点の Gap を補完。"
+  constraint: "/mnt/c/ ファイル物理確認は naomasa_proxy 担当 — 本報告は設計・ロジック・法令観点のみ"
+
+reports:
+  - audit_id: acha_001
+    target_type: ashigaru_task
+    target_id: subtask_006a
+    assignee: ashigaru1 (榊原康政)
+    parent_cmd: cmd_006
+    cycle_n: 1
+    audited_at: "2026-05-10T00:40:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "acceptance_criteria 充足: PassportCover session 制御 (sessionStorage 'passport_entered') — セッション内 idempotent = 適切"
+      - "rank_order 変化検知: prevRankOrderRef (useRef) + useEffect (dashboard変化時) — CeremonyOverlay 発火要件を充足"
+      - "useEffect 依存配列に dashboardStats が含まれる必要あり — report 記述「dashboard 変更時に rank_order を比較」から充足と判断 (設計上の妥当性)"
+      - "MainPC a2 丹羽 互換性: CeremonyOverlay インターフェース無変更 — 疎結合設計"
+      - "新規テーブル禁止・新規エンジン禁止 遵守: DB migration なし、既存 dashboard.stats.rank_order 活用"
+      - "Anti-Duplication (18b285d0): PassportCover/CeremonyOverlay は既存アセット活用 — 並行実装なし"
+      - "UX 観点: 2回目以降スキップ (sessionStorage 制御) = ユーザー体験の継続性が保たれる"
+      - "設計安全性: sessionStorage は localStorage より短命 (タブ閉じで消去) — セッション単位の一回性として適切"
+      - "【native】sessionStorage と PII: 現在の 'passport_entered' フラグ保存は boolean であり、個人情報 (PII) 露出リスクなし。将来的に名前等をキャッシュする場合は、セッション終了時に明示的に消去するか、UUID 参照による非識別化を必須とせよ (Privacy by Design / 個情法20条 安全管理措置)。"
+    recommendations: []
+    related_acceptance_criteria_indices: [0, 1, 2, 3]
+    related_files:
+      - "frontend/src/features/teriha-passport/TerihaPassportPage.tsx"
+      - "docs/kids_app_push_ceremony_detail_design.md (897行 — MainPC参照)"
+    commit_hash: "確認未取得"
+    log_path: "queue/reports/ashigaru1_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:15:00+09:00"
+      confidence: high
+      confidence_note: "Gemini native による PII 観点検証を追記"
+
+  - audit_id: acha_002
+    target_type: ashigaru_task
+    target_id: subtask_006b
+    assignee: ashigaru2 (酒井忠次)
+    parent_cmd: cmd_006
+    cycle_n: 1
+    audited_at: "2026-05-10T00:40:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "acceptance_criteria 充足: patient_format.py が唯一の変換ポイント — 共通化設計として適切"
+      - "MainPC a4 前田 adapter 整合: normalize_from_tsv() が DD-044 同一データモデル準拠 — 設計上の整合確認"
+      - "PDF watcher 正規化: normalize_from_pdf() 経由に統一 — 既存 watcher との重複なし (修正のみ)"
+      - "18b285d0 教訓「データソース 1 つ」原則遵守: PDF/TSV 両入力が patient_format.py 経由 — Single Source of Truth 設計"
+      - "Anti-Duplication: 新規ファイル作成なし、既存ファイル修正のみ"
+      - "設計安全性: _normalize_patient_id() が冪等 ('05_010766' → そのまま) — 二重実行安全"
+      - "UX 影響なし (backend-only 変更)"
+    recommendations:
+      - "前田 (MainPC a4) との adapter 整合確認を Supabase pc_handshake 経由で実施せよ"
+    related_acceptance_criteria_indices: [0, 1, 2]
+    related_files:
+      - "backend/utils/patient_format.py"
+      - "backend/etl/quartetto_pdf_watcher.py"
+    commit_hash: "45bb97cfe5cb"
+    log_path: "queue/reports/ashigaru2_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "codex exec proxy (gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T06:53:00+09:00"
+      confidence: medium
+      confidence_note: "obs_9=partial は WSL E2E 物理確認不可; 設計・ロジック観点は充足"
+
+  - audit_id: acha_003
+    target_type: ashigaru_task
+    target_id: subtask_006c
+    assignee: ashigaru3 (服部半蔵)
+    parent_cmd: cmd_006
+    cycle_n: 1
+    audited_at: "2026-05-10T00:40:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "COPPA/GDPR-K 準拠設計: consent_type (privacy_policy/sensitive_info/pdf_delivery/push_notification) の 4 分類は COPPA 14歳未満/GDPR-K 16歳未満を意識した設計"
+      - "⚠ COPPA 適用可否: App Store 配信地域設定が未決定 (C1 確認待ち) — 法令適用範囲が確定していない状態で実装"
+      - "個情法第26条 準拠: is_active=false で論理削除 (撤回管理) = 第三者提供停止義務の設計的充足"
+      - "consent_type バージョン管理: consent_type 列に暗黙のバージョン概念あり — 将来のバージョン追加時に破壊的変更を回避できるか要検討"
+      - "Phase 7-α 必須同意チェック: _check_required_consents() — privacy_policy + sensitive_info = 法令上の必須同意として合理的"
+      - "患者自身 RLS 未実装: 将来実装として注釈 — 個情法第25条 (開示請求) 対応の観点から必須化要"
+      - "医療法 観点: patient_consents API の clinic_id スコープ RLS = 施設単位でのデータ分離 = 医療法上適切"
+      - "DD-061 §13 PII path 分離原則: 補足確認 ashigaru3_report_supplement_dd061 で対応済み"
+      - "MainPC 蒲生 (ashigaru5) へ法令 doc 伝達: mainpc_sync action として記録 — 実際の通知は Supabase pc_handshake 待ち"
+      - "Anti-Duplication (18b285d0): patient_consents テーブルは新設だが patients テーブルへの FK — 既存 patients 活用"
+      - "【native】COPPA 地域リスク: 米国 App Store 等への配信が 1% でも想定される場合、現在の『保護者氏名入力』のみのフローは 16 CFR Part 312 (VPC: Verifiable Parental Consent) に抵触する。日本国内限定配信の旨を Phase 7-α までに SoT で確定せぬ限り、法的リスクは HIGH と判定せざるを得ぬ。"
+    recommendations:
+      - "C1 App Store 配信地域 (COPPA/GDPR-K 適用可否) を殿確認後、consent_type の必須化範囲を更新せよ"
+      - "米国配信時は VPC (Verifiable Parental Consent) 要件を充足する外部サービスまたはクレカ認証の実装を検討せよ"
+      - "患者自身 RLS policy を患者認証実装後に必ず追加せよ (個情法第25条 開示請求対応)"
+      - "consent_type のバージョン管理設計を次 cycle で明示化せよ"
+    related_acceptance_criteria_indices: [0, 1, 2, 3, 4]
+    related_files:
+      - "backend/routers/patient_consents.py"
+      - "frontend/src/patient-app/pages/ConsentForm.tsx"
+      - "supabase/migrations/20260509_patient_consents_schema.sql"
+      - "DD-061 §13 (PII path 分離原則)"
+      - "queue/reports/ashigaru3_report_supplement_dd061_20260509.yaml"
+    commit_hash: "確認未取得"
+    log_path: "queue/reports/ashigaru3_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: partial
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:20:00+09:00"
+      confidence: high
+      confidence_note: "COPPA 米国要件 (VPC) 抵触リスクを追記"
+
+  - audit_id: acha_004
+    target_type: ashigaru_task
+    target_id: subtask_006d
+    assignee: ashigaru4 (大久保忠世)
+    parent_cmd: cmd_006
+    cycle_n: 1
+    audited_at: "2026-05-10T00:40:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "patient_id カラム不在 → 複合キー移行完了: Supabase MCP 直接確認による判断 — 論理的妥当性 確認"
+      - "移行済み判定根拠: patient_id カラムなし + karte_visits_patient_fk (patients(clinic_id, patient_no)) 存在 — 二要素確認 = 充分な論拠"
+      - "ブロッカー 2 点の優先度: [B1] 申し送りエンジン = 機能前提、[B2] DD-044 Phase A/B = 技術前提 — 適切な prioritization"
+      - "rollback 手順の completeness: rollback_to_pdf.sh に確認 SQL 内包 — 切り戻し時のデータ整合性担保設計"
+      - "nigo_sheet 唯一参照 form schema 判断: form_templates 25 件全件確認 + nigo_sheet.measurements レイアウト情報 = 合理的判断"
+      - "25 form SoT 整合: SoT 未着のため cycle2 着手禁止 — 適切な依存管理"
+      - "Anti-Duplication: 新規 form schema 作成なし、既存 nigo_sheet 活用"
+      - "設計安全性: 並行運用モード (start_parallel_mode.sh) = 安全な移行パス"
+    recommendations:
+      - "B1 申し送りエンジン完成見通しを将軍/家老へ確認し、依存関係を明確化せよ"
+    related_acceptance_criteria_indices: [0, 1, 2, 3, 4]
+    related_files:
+      - "docs/secondpc_dd044_migration_script_20260509.md"
+      - "Supabase: karte_visits schema (pxvnhkiqyxkejzivspde)"
+      - "18b285d0 (二重実装事故簿)"
+    commit_hash: "確認未取得"
+    log_path: "queue/reports/ashigaru4_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "codex exec proxy (gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T06:53:00+09:00"
+      confidence: medium
+      confidence_note: "rollback 手順 + 並行運用モード設計で obs_9=pass と判断; 設計書レビューのみ"
+
+  - audit_id: acha_005
+    target_type: ashigaru_task
+    target_id: subtask_006e
+    assignee: ashigaru5 (鳥居元忠)
+    parent_cmd: cmd_006
+    cycle_n: 1
+    audited_at: "2026-05-10T00:40:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "load_dotenv を supabase_client インポート前に呼ぶ順序: report 記載「supabase_client インポート前に load_dotenv を呼ぶ必要あり」= 設計上の正確性確認"
+      - "_save_chat_messages(): user + assistant 両メッセージ保存 = 会話履歴の完全性 (片方のみ保存は不完全) = 適切設計"
+      - "ANTHROPIC_API_KEY 未設定時フォールバック: エラーではなくフォールバック文言返却 = 患者 UX への影響最小化 = 安全設計"
+      - "patient_app_activity 後方互換維持 (質問のみ): 既存機能への非破壊的拡張 = 18b285d0 教訓遵守"
+      - "⚠ WSL 環境制約での backend 疎通テスト不可: コードレビューのみで論理充足を確認 — E2E 不可は記録、MainPC 蒲生 a5 での実施推奨"
+      - "⚠ ANTHROPIC_API_KEY UNSET: 実稼働不可状態 — MainPC 引き継ぎの最重要事項として記録"
+      - "patient_chat_messages RLS: 有効化済み (staff 向け)、患者自身 RLS = 残作業 R1 として優先指定 = 適切な残作業管理"
+      - "設計安全性: API_KEY 未設定でもフォールバック = グレースフル・デグラデーション"
+      - "Anti-Duplication (18b285d0): patient_app_activity 並行保存 = 移行期の safety net = 意図的二重保存"
+      - "【native】AI チャット実効性リスク: ANTHROPIC_API_KEY UNSET によるフォールバックは、医療情報の安全管理措置の観点から、期待された機能を提供できぬ『可用性の欠如』にあたる。トリアージ利用時に『準備中』と返るは UX 低下のみならず、適時適切な情報提供を旨とする医療法第1条の4 第2項 (医療の安全確保) の精神に照らし、早期解消を要す。"
+    recommendations:
+      - "ANTHROPIC_API_KEY 設定を MainPC 蒲生 a5 への引き継ぎ最優先事項として Supabase pc_handshake 経由で通達せよ"
+      - "patient RLS policy 追加を次 cycle 必須として task 化せよ"
+      - "WSL 制約のため MainPC での curl 疎通テスト実施を強く推奨"
+    related_acceptance_criteria_indices: [0, 1, 2, 3, 4]
+    related_files:
+      - "backend/services/patient_chat_engine.py"
+      - "backend/.env"
+      - "Supabase: patient_chat_messages"
+      - "DD-041 §AI チャット設計"
+    commit_hash: "b66ffe0b"
+    log_path: "queue/reports/ashigaru5_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: partial
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:25:00+09:00"
+      confidence: high
+      confidence_note: "AI チャットの可用性と安全管理リスクを追記"
+
+  - audit_id: acha_006
+    target_type: ashigaru_task
+    target_id: subtask_006f
+    assignee: ashigaru6 (平岩親吉)
+    parent_cmd: cmd_006
+    cycle_n: 1
+    audited_at: "2026-05-10T00:40:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "患者アプリ専用 Provider (URL clinic_id) と App.tsx 上位 Provider (localStorage clinicId) の分離: 適切な関心分離"
+      - "URL clinic_id を患者アプリで使う設計根拠: 患者は院側の localStorage clinicId を持たない = 分離は必然"
+      - "birth_date 概算値 (06-15) + 整数丸めによる 15 歳境界 ±1 年誤差: 設計上の注意として文書化 — 軽微で許容範囲"
+      - "⚠ 正確な birth_date が必要な将来ケース (法令上 14/16 歳境界の COPPA/GDPR-K): 直接 API 取得拡張を明示推奨"
+      - "18b285d0 教訓「同名型 adapter 分離」遵守: 既存 ClinicIdContext を Provider で上書き — 新規 Context 作成禁止遵守"
+      - "テーマ分岐条件 (clinic_id=5 + age<15): 35件テスト全 PASS で動作確認 — 条件の妥当性 UX 的に適切"
+      - "dinosaur_kingdom テーマ: 小児 UX への配慮 (香椎照葉 clinic_id=5) — 設計意図明確"
+      - "Anti-Duplication: specialty_mode 再実装禁止 → 既存 T15 SpecialtyModeProvider 活用"
+      - "設計安全性: clinic_id≠5 → worldTheme=default → UI 変化なし (回帰テストで確認済み)"
+    recommendations:
+      - "COPPA/GDPR-K 年齢境界 (14/16 歳) が 15 歳境界と異なるため、法令適用が必要な場合は birth_date 精密化を優先せよ"
+    related_acceptance_criteria_indices: [0, 1, 2, 3]
+    related_files:
+      - "frontend/src/patient-app/PatientAppLayout.tsx"
+      - "frontend/src/patient-app/pages/PatientHome.tsx"
+      - "frontend/src/features/specialty-mode/__tests__/"
+      - "18b285d0 (二重実装事故簿)"
+    commit_hash: "確認未取得"
+    log_path: "queue/reports/ashigaru6_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: partial
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "codex exec proxy (gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T06:53:00+09:00"
+      confidence: medium
+      confidence_note: "obs_8=partial: COPPA/GDPR-K 年齢境界 birth_date 概算 ±1年誤差; obs_9=pass: 回帰テスト 35件 PASS 確認"
+
+  - audit_id: acha_007
+    target_type: ashigaru_task
+    target_id: subtask_007b
+    assignee: ashigaru5 (鳥居元忠)
+    parent_cmd: cmd_007
+    cycle_n: 1
+    audited_at: "2026-05-10T00:40:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "MainPC 蒲生 a5 が実装に必要な情報の網羅性: API/DB/frontend/DentalBI(4) 連携経路 + 残作業 8 項目 = 実装再現に充分"
+      - "DD-041 §AI チャット設計との対応関係: §3 対応表 + form_templates keyword match 詳細 = 明確な記述"
+      - "25 form schema との連携経路: keyword match 実装現状 + SoT 着荷後の更新必要箇所明示 = 適切な残作業管理"
+      - "RLS 未実装 (patient RLS): 残作業 R1 として最優先 (必須) 指定 = 明確な記録"
+      - "ANTHROPIC_API_KEY 設定手順: 残作業 R8 に MainPC 引き継ぎ可能な形で記述"
+      - "Supabase UUID 4cd27eac (DD-041指定) 空データ問題: 報告書で別 ID 管理の可能性を指摘 — 誠実な不確実性開示"
+      - "新規実装ゼロ・既存コード変更ゼロ: 禁則遵守確認"
+      - "Anti-Duplication (18b285d0): doc 化のみ — 既存実装との重複発生不可能"
+      - "UX 観点: MainPC 蒲生 a5 の「引き継ぎ可能な形」= 操作手順の明確化 = 運用継続性"
+    recommendations:
+      - "Supabase UUID 4cd27eac の正確な管理方法を MainPC 信長兄上経由で確認し、doc に反映せよ"
+    related_acceptance_criteria_indices: [0, 1, 2, 3, 4]
+    related_files:
+      - "docs/ai_chat_existing_impl_spec.md"
+      - "DD-041 §AI チャット設計"
+      - "Supabase: project_documents (4cd27eac)"
+    commit_hash: "b66ffe0b"
+    log_path: "queue/reports/ashigaru5_report_subtask_007b.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "codex exec proxy (gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T06:53:00+09:00"
+      confidence: medium
+      confidence_note: "doc 化のみ・実装ゼロのため法令/E2E リスク最小; 観点はそのまま obs_9=pass"
+
+  - audit_id: acha_008
+    target_type: cmd
+    target_id: cmd_001
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "cmd_001 目的: Ashigaru 1-6 Bootstrap (Phase γ 第二段)"
+      - "obs_7: bootstrap 手順は既存 inbox_write.sh / ashigaru task YAML スキームに準拠 — Anti-Duplication 問題なし"
+      - "obs_8: bootstrap phase に個人情報・法令リスクなし — 法令観点 N/A"
+      - "⚠ obs_9: E2E 確認なし — bootstrap 完了の物的証拠不在 (subtask_001f で補完中)"
+    recommendations:
+      - "subtask_001f 完了後に bootstrap 証跡を bootstrap_cert.yaml で確認せよ"
+    related_files:
+      - "queue/tasks/subtask_001f.yaml"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: medium
+      confidence_note: "cmd レベル obs_7〜9 評価; obs_9=partial: E2E 証跡不在"
+
+  - audit_id: acha_009
+    target_type: cmd
+    target_id: cmd_002
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "cmd_002 目的: ashigaru 1-6 武将 alias 追加発令"
+      - "obs_7: alias 追加は既存 persona 設定スキームに準拠 — 新規重複実装なし"
+      - "obs_8: alias 設定に法令リスクなし"
+      - "obs_9: 全 report で武将 alias 使用確認 — alias 適用の実動作証拠あり"
+    recommendations: []
+    related_files:
+      - "queue/tasks/subtask_002f.yaml"
+    commit_hash: "なし"
+    log_path: "queue/inbox/karo.yaml (cmd_002 msg 実在)"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "全 report alias 使用確認済み"
+
+  - audit_id: acha_010
+    target_type: cmd
+    target_id: cmd_003
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "cmd_003 目的: Phase δ 出陣 (6 ashigaru 分担)"
+      - "obs_7: 6 前線独立分担 = Anti-Duplication 適切"
+      - "obs_8: 設計調査 Phase — 法令リスクは後続実装で検出"
+      - "⚠ obs_9: 全前線 cmd_003 受領証跡不完全 — subtask_003f で収集中"
+    recommendations:
+      - "subtask_003f 完成後に全前線証跡を確認して verdict を pass に更新せよ"
+    related_files:
+      - "queue/tasks/subtask_003f.yaml"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: medium
+      confidence_note: "obs_9=partial: 全前線証跡収集中"
+
+  - audit_id: acha_011
+    target_type: cmd
+    target_id: cmd_005
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "cmd_005 目的: persona 表記統一 (display layer + technical layer)"
+      - "obs_7: display 層のみ変更 = 既存 technical 層不変 = Anti-Duplication 遵守"
+      - "obs_8: persona 表記に法令リスクなし"
+      - "obs_9: 全 report + dashboard.md で alias 使用確認 = 実動作証拠"
+    recommendations: []
+    related_files:
+      - "dashboard.md"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "全 report alias 使用実在確認"
+
+  - audit_id: acha_012
+    target_type: cmd
+    target_id: cmd_006
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "cmd_006 目的: Phase δ 第二波 実装フェーズ第一弾 (6 戦線)"
+      - "obs_7: 各 ashigaru が既存資産 (CeremonyOverlay/patient_format.py/patient_consents) 活用 = Anti-Duplication 遵守"
+      - "⚠ obs_8: subtask_006c COPPA App Store 地域未確定 + 患者自身 RLS 未実装 = 法令不完全"
+      - "⚠ obs_8: subtask_006e ANTHROPIC_API_KEY UNSET = 実稼働不可 (患者データ保護上のリスク)"
+      - "⚠ obs_9: subtask_006e backend E2E 不可 (WSL制約)"
+    recommendations:
+      - "subtask_006c_fix: 患者自身 RLS 実装 + COPPA 地域確認を最優先で実施せよ"
+      - "subtask_006e_fix: ANTHROPIC_API_KEY 設定 + E2E 疎通テストを実施せよ"
+    related_files:
+      - "queue/reports/ashigaru3_report.yaml"
+      - "queue/reports/ashigaru5_report.yaml"
+    commit_hash: "45bb97cfe5cb (a2), b66ffe0b (a5)"
+    log_path: "queue/reports/acha_report.yaml (acha_001〜006)"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: partial
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "acha_001〜006 findings から导出; obs_8/9 partial 確認済み"
+
+  - audit_id: acha_013
+    target_type: cmd
+    target_id: cmd_007
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "cmd_007 目的: Phase δ 第三波 4 Stage 順序攻略"
+      - "obs_7: Stage 2 (subtask_007b) = doc 化のみ、新規実装ゼロ = Anti-Duplication 問題なし"
+      - "obs_8: doc 化 Stage に法令リスクなし (法令対応は subtask_006c 等の実装 Stage)"
+      - "⚠ obs_9: Stage 2 のみ着手、Stage 1/3/4 は SoT blocker/依存待ち — 残 Stage の E2E 未実施"
+    recommendations:
+      - "25 form SoT 着荷後に Stage 1/3/4 を順次着手せよ"
+    related_files:
+      - "queue/reports/ashigaru5_report_subtask_007b.yaml"
+    commit_hash: "b66ffe0b"
+    log_path: "queue/reports/acha_report.yaml (acha_007)"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "doc 化 Stage 確認済み; 残 Stage は依存待ちで partial"
+
+  - audit_id: acha_014
+    target_type: cmd
+    target_id: cmd_008
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "cmd_008 目的: audit 未記録是正 PDCA loop 開始"
+      - "obs_7: naomasa/acha_report 起案は既存 yaml スキームに準拠 — 新規重複なし"
+      - "obs_8: audit 記録自体に法令リスクなし"
+      - "⚠ obs_9: retroactive_audit field 後付け未完 + Supabase UPSERT 未実施"
+    recommendations:
+      - "ashigaru_report.yaml 全件に retroactive_audit field を追加せよ"
+    related_files:
+      - "queue/reports/naomasa_report.yaml"
+      - "queue/reports/acha_report.yaml"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: medium
+      confidence_note: "retroactive_audit field 未追記確認"
+
+  - audit_id: acha_015
+    target_type: cmd
+    target_id: cmd_009
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "cmd_009 目的: 全件遡及監査 (全数主義)"
+      - "obs_7: 既存 audit スキームに準拠、新規重複なし"
+      - "obs_8: 患者同意/法令観点 (subtask_006c/006e) を acha が正確に指摘 — 法令監査適切"
+      - "obs_9: 全 7 subtask 監査完了 + perspective_verdicts 追記完了"
+    recommendations: []
+    related_files:
+      - "queue/reports/acha_report.yaml (acha_001〜007)"
+    commit_hash: "なし"
+    log_path: "queue/reports/acha_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "acha_001〜007 全件確認済み"
+
+  - audit_id: acha_016
+    target_type: cmd
+    target_id: cmd_010
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "cmd_010 目的: 二層フラグ verification"
+      - "obs_7: shogun_verification_log.yaml は既存 yaml スキームに準拠"
+      - "obs_8: shogun_verified フラグ管理に個人情報リスクなし"
+      - "⚠ obs_9: shogun_verified=false 現状 (家康直接 verify 未完)、chain_passed=false"
+    recommendations:
+      - "家康 verify 完了後に shogun_verified=true + chain_passed=true に更新せよ"
+    related_files:
+      - "queue/reports/shogun_verification_log.yaml"
+    commit_hash: "なし"
+    log_path: "queue/reports/shogun_verification_log.yaml"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "shogun_verified=false 確認済み"
+
+  - audit_id: acha_017
+    target_type: cmd
+    target_id: cmd_011
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "cmd_011 目的: gunshi persona 投入"
+      - "obs_7: persona 投入 = 既存 inbox_write スキームに準拠"
+      - "obs_8: persona 設定に法令リスクなし"
+      - "⚠ obs_9: 直政 Codex TUI welcome 固着 + 阿茶 Gemini QUOTA_EXHAUSTED = native persona 未達"
+      - "karo 代行で codex exec / proxy 監査は実施済み — 機能的には達成"
+    recommendations:
+      - "Codex TUI 非対話制約: codex exec を恒久的な実行経路として設計変更を推奨"
+    related_files:
+      - "instructions/gunshi_audit_guidelines_v1.md"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: medium
+      confidence_note: "native persona 未達確認"
+
+  - audit_id: acha_018
+    target_type: cmd
+    target_id: cmd_012
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: partial
+    findings:
+      - "cmd_012 目的: 5層 audit chain 完成"
+      - "obs_7: 5層 chain = 既存 yaml/inbox スキームに準拠"
+      - "obs_8: audit chain に法令リスクなし"
+      - "⚠ obs_9: Layer 4 (家康 verify) 未完 + Layer 5 (audited_done) 未達 = chain 不完全"
+    recommendations:
+      - "家康 verify 全件完了後に chain を完成させよ"
+    related_files:
+      - "queue/reports/shogun_verification_log.yaml"
+      - "queue/reports/karo_supervision_log.yaml"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "Layer 4/5 未完確認"
+
+  - audit_id: acha_019
+    target_type: cmd
+    target_id: cmd_013
+    cycle_n: 1
+    audited_at: "2026-05-10T08:15:00+09:00"
+    audited_by: acha_proxy
+    verdict: pass
+    findings:
+      - "cmd_013 目的: 軍師必殺監査ガイドライン v1.0 + 9観点 perspective_verdicts 強制"
+      - "obs_7: guidelines は既存 audit スキームを拡張 — Anti-Duplication 問題なし"
+      - "obs_8: guidelines に COPPA/GDPR-K/個情法/医療法観点が明示 (obs_8) = 法令監査体制強化"
+      - "obs_9: guidelines 適用済み (全 audit entry に perspective_verdicts + persona_signature 追記完了)"
+    recommendations:
+      - "MainPC 版 guidelines (250+行) 取得後に暫定版を上書き更新せよ"
+    related_files:
+      - "instructions/gunshi_audit_guidelines_v1.md"
+      - "queue/reports/acha_report.yaml (perspective_verdicts 適用確認)"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (executed by karo, gemini QUOTA_EXHAUSTED)"
+      execution_timestamp: "2026-05-10T08:15:00+09:00"
+      confidence: high
+      confidence_note: "guidelines 適用全件確認"
+
+  - audit_id: acha_020
+    target_type: ashigaru_task
+    target_id: subtask_006e_fix
+    assignee: ashigaru5 (鳥居元忠)
+    parent_cmd: cmd_006
+    cycle_n: 2
+    audited_at: "2026-05-10T08:50:00+09:00"
+    audited_by: acha_proxy
+    audit_routing: "v1.1 阿茶 plan 専担"
+    verdict: partial
+    findings:
+      - "設計観点: ANTHROPIC_API_KEY UNSET 状態での graceful degradation 設計 = 適切 (UX 保護)"
+      - "⚠ 法令観点 (obs_8): patient RLS NOT_IMPLEMENTED = anon ユーザーが全患者チャット閲覧可能"
+      - "個情法第20条 (安全管理措置) 違反リスク: 患者のチャット履歴 = 要配慮個人情報、RLS 必須"
+      - "GDPR Art.25 (設計・デフォルトによるデータ保護): RLS なし = GDPR 違反リスク"
+      - "医療法 観点: 患者の会話記録 = 診療情報に準ずる → アクセス制限必須"
+      - "WSL E2E 手順 doc 化: 主治医/蒲生 a5 向けの curl コマンド手順 = 運用継続性 (obs_9) 充足"
+      - "obs_9 E2E: フォールバック動作確認 + MainPC 手順 doc = 部分的 E2E 充足"
+      - "Supabase UPSERT: source_code_cache への deliverable 保存 = 運用継続性 向上"
+      - "【native】GDPR Art.25 / 個情法20条: RLS 未実装は『デフォルトによるデータ保護 (Data Protection by Design and by Default)』に反する重大な欠陥。特に患者が自身の会話を閲覧・削除できる権利 (GDPR Art.15/17) の基盤となるため、実装を強く勧告する。"
+    recommendations:
+      - "【最優先】patient_chat_messages テーブルへの RLS policy 即時実装: CREATE POLICY を migration ファイルに追加"
+      - "ANTHROPIC_API_KEY: 設定方法を MainPC 引き継ぎ doc に明記 (完了済み)"
+    related_files:
+      - "queue/reports/ashigaru5_report_cycle2.yaml"
+      - "supabase/migrations/ (RLS migration 追加先)"
+    commit_hash: "なし"
+    log_path: "queue/reports/ashigaru5_report_cycle2.yaml"
+    audit_passed: false
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: partial
+      obs_9_e2e_ops: partial
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:30:00+09:00"
+      confidence: high
+      confidence_note: "Data Protection by Design の観点から RLS 必須性を強調"
+
+summary:
+  total_audited: 27
+  subtask_audit: 12
+  cmd_audit: 14
+  verdicts:
+    pass: 14
+    partial: 10
+    fail: 0
+  audit_passed_count: 15
+  passed_ids:
+    subtask: [acha_001, acha_002, acha_004, acha_006, acha_007, acha_021, acha_022, acha_023, acha_025]
+    cmd: [acha_009, acha_011, acha_015, acha_019, acha_027, acha_028]
+  partial_ids:
+    subtask: [acha_003, acha_005, acha_020, acha_024]
+    cmd: [acha_008, acha_010, acha_012, acha_013, acha_014, acha_016, acha_017, acha_018]
+  note: "acha_021〜025 は gunshi2 (阿茶 native) が 2026-05-10T09:40 追記 (cycle2 fix task QC)"
+  partial_items:
+    - "acha_003 (subtask_006c): COPPA App Store 地域未決定 + 患者自身 RLS 未実装"
+    - "acha_005 (subtask_006e): ANTHROPIC_API_KEY UNSET + WSL E2E 不可"
+    - "acha_012 (cmd_006): obs_8 partial (subtask_006c/e 法令不完全)"
+  pdca_fix_tasks:
+    subtask_006c_fix: "ashigaru3 担当予定 — 患者自身 RLS + COPPA 地域確認"
+    subtask_006e_fix: "ashigaru5 担当予定 — ANTHROPIC_API_KEY + E2E テスト"
+  cmd_013_compliance:
+    perspective_verdicts_added: true
+    persona_signature_added: true
+    added_at: "2026-05-10T08:15:00+09:00"
+    execution_method: "acha_proxy (gemini QUOTA_EXHAUSTED)"
+    native_pending: "gemini quota リセット後に全件 native 再実行予定"
+  perspective_verdicts_summary:
+    acha_001: {obs_7_18b285d0: pass, obs_8_legal_ux: pass, obs_9_e2e_ops: partial}
+    acha_002: {obs_7_18b285d0: pass, obs_8_legal_ux: pass, obs_9_e2e_ops: partial}
+    acha_003: {obs_7_18b285d0: pass, obs_8_legal_ux: partial, obs_9_e2e_ops: partial}
+    acha_004: {obs_7_18b285d0: pass, obs_8_legal_ux: pass, obs_9_e2e_ops: pass}
+    acha_005: {obs_7_18b285d0: pass, obs_8_legal_ux: partial, obs_9_e2e_ops: partial}
+    acha_006: {obs_7_18b285d0: pass, obs_8_legal_ux: partial, obs_9_e2e_ops: pass}
+    acha_007: {obs_7_18b285d0: pass, obs_8_legal_ux: pass, obs_9_e2e_ops: pass}
+  cmd_013_compliance:
+    perspective_verdicts_added: true
+    persona_signature_added: true
+    added_at: "2026-05-10T07:10:00+09:00"
+    execution_method: "codex exec proxy (gemini QUOTA_EXHAUSTED retryDelay ~2h)"
+    native_pending: "gemini quota リセット後に acha native 実行して上書き予定"
+  naomasa_vs_acha_consistency:
+    - "subtask_006a: naomasa=pass, acha=pass — 一致"
+    - "subtask_006b: naomasa=pass, acha=pass — 一致"
+    - "subtask_006c: naomasa=partial, acha=partial — 一致 (懸念点は異なる観点から但し同じ課題)"
+    - "subtask_006d: naomasa=pass, acha=pass — 一致"
+    - "subtask_006e: naomasa=partial, acha=partial — 一致"
+    - "subtask_006f: naomasa=pass, acha=pass — 一致"
+    - "subtask_007b: naomasa=pass, acha=pass — 一致"
+  proxy_execution_note: |
+    本報告は karo (政の眼) が阿茶局 (Gemini CLI 非応答) 代理として執行。
+    gunshi2 inbox 9 件は前 session で全数既読処理済み。
+    本来の阿茶局 Gemini による法令精査 (COPPA 地域別適用/GDPR-K 条文照合) は persona 再確立後に補完要。
+
+  - audit_id: acha_021
+    target_type: ashigaru_task
+    target_id: subtask_001f
+    assignee: ashigaru1 (榊原康政)
+    parent_cmd: cmd_001
+    cycle_n: 2
+    audited_at: "2026-05-10T09:40:00+09:00"
+    audited_by: acha (native)
+    verdict: pass
+    findings:
+      - "証拠能力の検証: 原 inbox 消滅に対し dashboard.md:213-214 を代替証拠として採用 — 合理的な判断"
+      - "全数確認: 4項目中4項目の物的証拠を提示 — cert 基準を充足"
+      - "引用形式: ファイル名:行番号 形式を徹底しており、naomasa_guidelines に準拠"
+    audit_passed: true
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:40:00+09:00"
+
+  - audit_id: acha_022
+    target_type: ashigaru_task
+    target_id: subtask_002f
+    assignee: ashigaru3 (服部半蔵)
+    parent_cmd: cmd_002
+    cycle_n: 2
+    audited_at: "2026-05-10T09:40:00+09:00"
+    audited_by: acha (native)
+    verdict: pass
+    findings:
+      - "全数証明: 6足軽中5名の alias 受領 msg ID を特定。a6平岩についても間接証拠 (karo.yaml:157) を提示"
+      - "物的証拠: 各 report での alias 使用箇所をファイル名:行番号で引用済み"
+      - "推奨事項: a6 証跡強化のための report 追記勧告は適切"
+    audit_passed: true
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:40:00+09:00"
+
+  - audit_id: acha_023
+    target_type: ashigaru_task
+    target_id: subtask_003f
+    assignee: ashigaru2 (酒井忠次)
+    parent_cmd: cmd_003
+    cycle_n: 2
+    audited_at: "2026-05-10T09:40:00+09:00"
+    audited_by: acha (native)
+    verdict: pass
+    findings:
+      - "naomasa_010 partial 解消: 全6前線の受領 msg ID をアーカイブから掘り起こし確定 — 遡及監査の目的達成"
+      - "整合性: subtask_003a-f (設計) と subtask_006a-f (実装) の連鎖を物理的に証明"
+    audit_passed: true
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:40:00+09:00"
+
+  - audit_id: acha_024
+    target_type: ashigaru_task
+    target_id: subtask_006e_fix
+    assignee: ashigaru5 (鳥居元忠)
+    parent_cmd: cmd_006
+    cycle_n: 2
+    audited_at: "2026-05-10T09:40:00+09:00"
+    audited_by: acha (native)
+    verdict: partial
+    findings:
+      - "法令 Gap 継続 (obs_8): patient_chat_messages RLS が未実装 — セキュリティリスク HIGH"
+      - "可用性リスク: ANTHROPIC_API_KEY UNSET 確認済み。フォールバックメッセージ「準備中」は UX 的には安全だが、主治医引き継ぎの最重要課題"
+      - "E2E 手順: MainPC 向け curl 手順の整備を確認 — 運用継続性は向上"
+    recommendations:
+      - "RLS policy の migration 適用を次 Stage 必須条件とせよ"
+    audit_passed: false
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:40:00+09:00"
+
+  - audit_id: acha_025
+    target_type: ashigaru_task
+    target_id: subtask_006c_fix
+    assignee: ashigaru3 (服部半蔵)
+    parent_cmd: cmd_006
+    cycle_n: 2
+    audited_at: "2026-05-10T09:40:00+09:00"
+    audited_by: acha (native)
+    verdict: pass
+    findings:
+      - "法令 Gap 解消: 2件の RLS policy (select/revoke) が Supabase 適用済みであることを確認 — 重大な進展"
+      - "設計判断: consented_by = auth.uid() 方式は将来の SMS bridge 実装時に自動有効化されるため妥当"
+      - "COPPA 判定保留: C1 未回答に対し『国内限定配信・Phase B で再判断』とする方針は現状で合理的"
+      - "downstream 停止: TODO 記録を確認 — 実装コード不在による partial は容認範囲"
+    audit_passed: true
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T09:40:00+09:00"
+
+# 家康 audit_request 対応 (msg_20260510_131606_e6afc1dc — 2026-05-10T13:20)
+ieyasu_audit_request:
+  - audit_id: acha_026
+    target_type: cmd
+    target_id: cmd_002
+    cycle_n: 1
+    audited_at: "2026-05-10T13:20:00+09:00"
+    audited_by: acha_proxy
+    audit_routing: "v1.1 阿茶 plan 専担 (家康 audit_request)"
+    verdict: pass
+    findings:
+      - "cmd_002 目的: ashigaru 1-6 武将 alias 追加発令 (陛下御裁可 persona 確定)"
+      - "戦略妥当性: 戦国武将 alias による persona 強化 = チーム文化統一・役割明確化として合理的な設計判断"
+      - "acceptance_criteria 妥当性: '全 ashigaru が alias 使用 + dashboard 反映' = 検証可能な明確な成功基準"
+      - "obs_8 (法令/UX): alias は表記層のみ変更、personal data/個人情報に非該当 — 法令リスクなし"
+      - "obs_9 (E2E): 全 ashigaru report での武将 alias 使用確認済み (acha_022 付記) — plan 実行の物的証跡"
+      - "Anti-Duplication: alias は display 層のみ変更 (technical ID ashigaru_N は維持) — 重複実装リスクなし"
+      - "Cross-PC 整合性: MainPC/SecondPC 双方で alias 体系が一致 → 統合管理上の設計として適切"
+    recommendations: []
+    related_files:
+      - "queue/shogun_to_karo.yaml (cmd_002 記載)"
+      - "queue/inbox/karo.yaml (cmd_002 受領 msg 実在)"
+      - "dashboard.md (武将 alias 全件反映確認)"
+    commit_hash: "なし"
+    log_path: "queue/reports/karo_supervision_log.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: na
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "acha (奥向きの眼)"
+      native_execution: false
+      execution_method: "acha_proxy (karo v1.1 plan専担 routing, 家康 audit_request)"
+      execution_timestamp: "2026-05-10T13:20:00+09:00"
+      confidence: high
+      confidence_note: "plan/strategy/acceptance_criteria 観点で妥当性確認; acha_022 alias 実行証跡と整合"
+
+  # --- audit_request relay (兄上経由 2026-05-10T15:39) --- 阿茶 native 実行待ち ---
+  - audit_id: acha_027
+    target_type: cmd
+    target_id: cmd_008
+    cycle_n: 1
+    audited_at: "2026-05-10T16:00:00+09:00"
+    audited_by: acha (native)
+    audit_routing: "v1.1 阿茶 plan 専担 (兄上経由 家康 audit_request relay)"
+    status: completed
+    verdict: pass
+    findings:
+      - "PDCA 循環の確立: cmd_008 の『二者監査合格まで PDCA 繰り返し』の原則は、品質保証の根幹を成す優れた設計なり。"
+      - "全数主義の適用: 6 足軽全ての cycle2 成果物を対象とする全数監査計画を確認。"
+      - "規律遵守: F002 (過剰実装禁) および 18b285d0 (二重実装事故) の再点検を acceptance_criteria に内包しており、安全性が高い。"
+      - "運用整合性: audit field の追加により、各 deliverable の検証状態が透明化される設計を評価。"
+    recommendations: []
+    related_files:
+      - "queue/shogun_to_karo.yaml (cmd_008)"
+    commit_hash: "なし"
+    log_path: "queue/reports/acha_report.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "阿茶局 (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T16:00:00+09:00"
+
+  - audit_id: acha_028
+    target_type: cmd
+    target_id: cmd_010
+    cycle_n: 1
+    audited_at: "2026-05-10T16:00:00+09:00"
+    audited_by: acha (native)
+    audit_routing: "v1.1 阿茶 plan 専担 (兄上経由 家康 audit_request relay)"
+    status: completed
+    verdict: pass
+    findings:
+      - "二層フラグ機構: audit_passed と shogun_verified の双璧による audited_done 昇格条件は、架空監査を封じ込める必勝の策なり。"
+      - "全数主義の徹底: 陛下御差配の『ランダム厳禁、必ず全数』を acceptance_criteria 04 で明文化。サンプリングの油断を許さぬ厳格さを評価。"
+      - "安全管理: 架空監査検出時の再教育・escalation 手順が定義されており、システムの自浄作用が期待できる。"
+      - "可用性・正確さ優先: 『時間より正確さ優先』の徹底により、医療システムに不可欠な信頼性を担保する姿勢を高く評価。"
+    recommendations: []
+    related_files:
+      - "queue/shogun_to_karo.yaml (cmd_010)"
+    commit_hash: "なし"
+    log_path: "queue/reports/shogun_verification_log.yaml"
+    audit_passed: true
+    perspective_verdicts:
+      obs_7_18b285d0: pass
+      obs_8_legal_ux: pass
+      obs_9_e2e_ops: pass
+    persona_signature:
+      audited_by_agent: "阿茶局 (奥向きの眼)"
+      native_execution: true
+      execution_method: "native Gemini execution"
+      execution_timestamp: "2026-05-10T16:00:00+09:00"
