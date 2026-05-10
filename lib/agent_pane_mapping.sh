@@ -39,32 +39,34 @@ apm_list_agents() {
 }
 
 # ─────────────────────────────────────────────────────────────
-# apm_get_pane <agent_id> — agent → pane (canonical form)
-#   shogun → shogun:main.0
-#   それ以外 → multiagent:agents.{index} (= 出現順 0-based、shogun を除く)
+# apm_get_pane <agent_id> [pane_base] — agent → pane (canonical form)
+#   shogun → shogun:main.0 (= pane_base 不問、固定)
+#   それ以外 → multiagent:agents.{pane_base + index} (= 出現順)
+#
+# pane_base (= 第 2 引数、default 0): tmux pane-base-index 対応 (= 上流 PR #11)
+#
+# 本関数は apm_get_all_mappings_json を真実源として参照、内部 DRY (= 直政 N1)
 # ─────────────────────────────────────────────────────────────
 apm_get_pane() {
     local target="$1"
+    local pane_base="${2:-0}"
     [ -z "$target" ] && { echo ""; return 1; }
 
-    if [ "$target" = "shogun" ]; then
-        echo "shogun:main.0"
-        return 0
-    fi
-
-    local idx=0
-    local agent
-    while read -r agent; do
-        [ -z "$agent" ] && continue
-        [ "$agent" = "shogun" ] && continue
-        if [ "$agent" = "$target" ]; then
-            echo "multiagent:agents.${idx}"
-            return 0
-        fi
-        idx=$((idx+1))
-    done < <(apm_list_agents)
-    echo ""
-    return 1
+    apm_get_all_mappings_json | python3 -c "
+import json, sys, os
+pane_base = int(os.environ.get('APM_PANE_BASE', '$pane_base'))
+target = '$target'
+data = json.loads(sys.stdin.read())
+if target not in data:
+    sys.exit(1)
+m = data[target]
+pane = m['pane']
+# pane_base 加算 (= multiagent:agents.N → N + pane_base)
+if pane.startswith('multiagent:agents.') and pane_base != 0:
+    idx = int(pane.split('.')[-1])
+    pane = f'multiagent:agents.{idx + pane_base}'
+print(pane)
+"
 }
 
 # ─────────────────────────────────────────────────────────────

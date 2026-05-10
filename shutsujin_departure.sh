@@ -599,21 +599,25 @@ tmux split-window -v
 tmux split-window -v
 
 # ペインラベル・エージェントID・色設定 — settings.yaml から動的に構築
-PANE_LABELS=("karo")
-AGENT_IDS=("karo")
-PANE_COLORS=("red")
-for _ai in $_ASHIGARU_IDS_STR; do
+# (= 竹中 f1 + Lord 御指摘是正 2026-05-10、lib/agent_pane_mapping.sh 経由で完全 DRY)
+# shellcheck source=/dev/null
+source "$(dirname "${BASH_SOURCE[0]}")/lib/agent_pane_mapping.sh"
+PANE_LABELS=()
+AGENT_IDS=()
+PANE_COLORS=()
+while read -r _ai; do
+    [ -z "$_ai" ] && continue
+    [ "$_ai" = "shogun" ] && continue   # shogun は別 session、本 loop で skip
     PANE_LABELS+=("$_ai")
     AGENT_IDS+=("$_ai")
-    PANE_COLORS+=("blue")
-done
-PANE_LABELS+=("gunshi")
-AGENT_IDS+=("gunshi")
-PANE_COLORS+=("yellow")
-# 軍師2 追加 (= 編成 v1.1、cmd_002/003 で導入、shutsujin に gunshi2 deploy 漏れ修正 2026-05-10)
-PANE_LABELS+=("gunshi2")
-AGENT_IDS+=("gunshi2")
-PANE_COLORS+=("gold")
+    case "$_ai" in
+        karo)         PANE_COLORS+=("red") ;;
+        ashigaru*)    PANE_COLORS+=("blue") ;;
+        gunshi)       PANE_COLORS+=("yellow") ;;
+        gunshi2)      PANE_COLORS+=("gold") ;;
+        *)            PANE_COLORS+=("white") ;;
+    esac
+done < <(apm_list_agents)
 
 # モデル名設定（pane-border-format で常時表示するため）- 動的構築
 MODEL_NAMES=()
@@ -915,47 +919,39 @@ NINJA_EOF
 
     # inbox ディレクトリ初期化（シンボリックリンク先のLinux FSに作成）
     mkdir -p "$SCRIPT_DIR/logs"
-    for agent in shogun karo $_ASHIGARU_IDS_STR gunshi; do
-        [ -f "$SCRIPT_DIR/queue/inbox/${agent}.yaml" ] || echo "messages:" > "$SCRIPT_DIR/queue/inbox/${agent}.yaml"
-    done
+    while read -r _wagent; do
+        [ -z "$_wagent" ] && continue
+        [ -f "$SCRIPT_DIR/queue/inbox/${_wagent}.yaml" ] || echo "messages:" > "$SCRIPT_DIR/queue/inbox/${_wagent}.yaml"
+    done < <(apm_list_agents)
 
-    # 既存のwatcherと孤児inotifywait/fswatchをkill
-    pkill -f "inbox_watcher.sh" 2>/dev/null || true
-    pkill -f "inotifywait.*queue/inbox" 2>/dev/null || true
-    pkill -f "fswatch.*queue/inbox" 2>/dev/null || true
+    # 既存 watcher / 孤児 inotifywait/fswatch を ps + 個別 kill で停止 (= D006-EXC P002 遵守、pkill 全廃)
+    for _proc_pat in "inbox_watcher.sh" "inotifywait.*queue/inbox" "fswatch.*queue/inbox"; do
+        for _wpid in $(ps -eo pid,args | awk -v pat="$_proc_pat" '$0 ~ pat && !/awk/ {print $1}'); do
+            kill "$_wpid" 2>/dev/null || true
+        done
+    done
     sleep 1
 
-    # 将軍のwatcher（ntfy受信の自動起床に必要）
-    # 安全モード: phase2/phase3エスカレーションは無効、timeout周期処理も無効（event-drivenのみ）
-    _shogun_watcher_cli=$(tmux show-options -p -t "shogun:main" -v @agent_cli 2>/dev/null || echo "claude")
-    nohup env ASW_DISABLE_ESCALATION=1 ASW_PROCESS_TIMEOUT=0 ASW_DISABLE_NORMAL_NUDGE=0 \
-        bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" shogun "shogun:main" "$_shogun_watcher_cli" \
-        >> "$SCRIPT_DIR/logs/inbox_watcher_shogun.log" 2>&1 &
-    disown
-
-    # 家老のwatcher
-    _karo_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${PANE_BASE}" -v @agent_cli 2>/dev/null || echo "claude")
-    nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" karo "multiagent:agents.${PANE_BASE}" "$_karo_watcher_cli" \
-        >> "$SCRIPT_DIR/logs/inbox_watcher_karo.log" 2>&1 &
-    disown
-
-    # 足軽のwatcher
-    for i in $(seq 1 "$_ASHIGARU_COUNT"); do
-        p=$((PANE_BASE + i))
-        _ashi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
-        nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" "ashigaru${i}" "multiagent:agents.${p}" "$_ashi_watcher_cli" \
-            >> "$SCRIPT_DIR/logs/inbox_watcher_ashigaru${i}.log" 2>&1 &
+    # 全 agent watcher を apm 経由で動的起動 (= 竹中 f1 + 直政指摘 是正、shogun は別 session)
+    log_success "  └─ inbox_watcher 動的起動 (= apm helper 経由、編成変更追随)"
+    while read -r _wagent; do
+        [ -z "$_wagent" ] && continue
+        _wpane=$(apm_get_pane "$_wagent" "$PANE_BASE")
+        [ -z "$_wpane" ] && continue
+        _wcli=$(tmux show-options -p -t "$_wpane" -v @agent_cli 2>/dev/null || apm_get_cli "$_wagent")
+        if [ "$_wagent" = "shogun" ]; then
+            # shogun は phase2/3 escalation 無効、timeout 無効
+            nohup env ASW_DISABLE_ESCALATION=1 ASW_PROCESS_TIMEOUT=0 ASW_DISABLE_NORMAL_NUDGE=0 \
+                bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" "$_wagent" "$_wpane" "$_wcli" \
+                >> "$SCRIPT_DIR/logs/inbox_watcher_${_wagent}.log" 2>&1 &
+        else
+            nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" "$_wagent" "$_wpane" "$_wcli" \
+                >> "$SCRIPT_DIR/logs/inbox_watcher_${_wagent}.log" 2>&1 &
+        fi
         disown
-    done
-
-    # 軍師のwatcher
-    p=$((PANE_BASE + _ASHIGARU_COUNT + 1))
-    _gunshi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
-    nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" "gunshi" "multiagent:agents.${p}" "$_gunshi_watcher_cli" \
-        >> "$SCRIPT_DIR/logs/inbox_watcher_gunshi.log" 2>&1 &
-    disown
-
-    log_success "  └─ $((_ASHIGARU_COUNT + 3))エージェント分のinbox_watcher起動完了（将軍+家老+足軽${_ASHIGARU_COUNT}+軍師）"
+    done < <(apm_list_agents)
+    _wcount=$(apm_list_agents | wc -l)
+    log_success "  └─ ${_wcount}エージェント分のinbox_watcher起動完了 (= shogun + karo + ashigaru + 軍師全数)"
 
     # STEP 6.7 は廃止 — CLAUDE.md Session Start (step 1: tmux agent_id) で各自が自律的に
     # 自分のinstructions/*.mdを読み込む。検証済み (2026-02-08)。
@@ -1026,7 +1022,10 @@ fi
 # ═══════════════════════════════════════════════════════════════════════════════
 NTFY_TOPIC=$(grep 'ntfy_topic:' ./config/settings.yaml 2>/dev/null | awk '{print $2}' | tr -d '"')
 if [ -n "$NTFY_TOPIC" ]; then
-    pkill -f "ntfy_listener.sh" 2>/dev/null || true
+    # ntfy_listener kill (= ps + 個別 kill、D006-EXC 遵守)
+    for _npid in $(ps -eo pid,args | awk '/ntfy_listener\.sh/ && !/awk/ {print $1}'); do
+        kill "$_npid" 2>/dev/null || true
+    done
     [ ! -f ./queue/ntfy_inbox.yaml ] && echo "inbox:" > ./queue/ntfy_inbox.yaml
     nohup bash "$SCRIPT_DIR/scripts/ntfy_listener.sh" &>/dev/null &
     disown
