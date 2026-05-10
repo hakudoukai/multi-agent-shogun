@@ -254,6 +254,10 @@ payload = {
     'requires_response': True,
     'priority': 'normal',
     'clinic_id': 'hakudoukai_main',
+    # 家康指摘 (2026-05-10 15:25) bridge 誤配是正:
+    # is_meta_only=true で bridge が shogun pane への送り込みを skip
+    # → audit_queue_worker daemon が直接 pc_handshake query するゆえ family inbox flooding 不要
+    'is_meta_only': True,
 }
 req = urllib.request.Request(
     f"{url}/rest/v1/pc_handshake",
