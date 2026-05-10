@@ -106,9 +106,10 @@ import os, json, urllib.request
 url = os.environ['SUPABASE_URL']
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 import datetime
+# acknowledged_by check constraint: main_pc/second_pc/system/auto_ack 等
 payload = {
     'acknowledged_at': datetime.datetime.utcnow().isoformat() + 'Z',
-    'acknowledged_by': f"audit_queue_worker_{os.environ['MY_PC']}",
+    'acknowledged_by': os.environ['MY_PC'],   # = main_pc | second_pc (= constraint 適合)
 }
 req = urllib.request.Request(
     f"{url}/rest/v1/pc_handshake?id=eq.{os.environ['QUEUE_ID']}",
@@ -116,7 +117,11 @@ req = urllib.request.Request(
     headers={'apikey': key, 'Authorization': f'Bearer {key}', 'Content-Type': 'application/json'},
     data=json.dumps(payload).encode()
 )
-urllib.request.urlopen(req, timeout=10)
+try:
+    urllib.request.urlopen(req, timeout=10)
+except Exception as e:
+    # 既 ack 済等の 400 は無視 (= 旧 worker による ack を尊重、続行)
+    print(f'  [warn] ack PATCH skip: {e}')
 PY
 
     # 実行 — audit_via_supabase.sh の audit_run_local 機構を流用
@@ -156,9 +161,11 @@ import datetime
 url = os.environ['SUPABASE_URL']
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 exit_code = int(os.environ['EXIT_CODE'])
+# resolution_type check constraint: agreed/deferred/escalated/withdrawn/split のみ
+# completed → agreed (= 合意完遂)、failed → withdrawn (= 取下げ相当)
 payload = {
     'resolved_at': datetime.datetime.utcnow().isoformat() + 'Z',
-    'resolution_type': 'completed' if exit_code == 0 else 'failed',
+    'resolution_type': 'agreed' if exit_code == 0 else 'withdrawn',
     'context_data': {'shogun_kind': 'audit_request', 'audit_result_id': os.environ['AUDIT_ID']},
 }
 req = urllib.request.Request(
@@ -167,7 +174,10 @@ req = urllib.request.Request(
     headers={'apikey': key, 'Authorization': f'Bearer {key}', 'Content-Type': 'application/json'},
     data=json.dumps(payload).encode()
 )
-urllib.request.urlopen(req, timeout=10)
+try:
+    urllib.request.urlopen(req, timeout=10)
+except Exception as e:
+    print(f'  [err] resolve PATCH failed: {e}', file=__import__('sys').stderr)
 PY
 
     worker_log "resolved queue_id=$queue_id audit_id=$audit_id exit=$exit_code"
