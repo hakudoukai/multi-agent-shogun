@@ -614,7 +614,6 @@ while read -r _ai; do
         karo)         PANE_COLORS+=("red") ;;
         ashigaru*)    PANE_COLORS+=("blue") ;;
         gunshi)       PANE_COLORS+=("yellow") ;;
-        gunshi2)      PANE_COLORS+=("gold") ;;
         *)            PANE_COLORS+=("white") ;;
     esac
 done < <(apm_list_agents)

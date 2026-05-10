@@ -545,3 +545,367 @@ reports:
     audit_passed: true
     note: "ashigaru6 cycle3 redo 全 AC 達成確認。backend proxy 方式による signed URL 配信 + ReceiptList PDF台帳表示が実コード・テストで証明済み。家老代替監査 (黒田 pane 対話プロンプト中)。DentalBI commit fedb9822 は当 repo 管轄外のため commit_hash は別途 DentalBI repo 参照のこと。"
     persona_signature: "智囊の眼・黒田官兵衛 (家老代替監査 — 秀吉権限代行 2026-05-10T15:41)"
+
+  - audit_id: kuroda_001_cycle4_review
+    target_type: deliverable_file
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle4_fix_001
+    cycle_n: 4
+    redo_of: kuroda_001_fix_review
+    audited_at: "2026-05-10T21:02:28+09:00"
+    audited_by: kuroda
+    verdict: pass_with_concerns
+    perspectives:
+      1_functional_correctness: pass
+      2_anti_duplication: concerns
+      3_discipline: pass
+      4_logic_robustness: pass
+      5_schema_integrity: pass
+      6_test_coverage: concerns
+      7_legal_compliance: pass
+      8_operations_ux: pass
+      9_documentation: pass
+    findings:
+      - perspective: 7_legal_compliance
+        severity: info
+        file: backend/etl/quartetto_pdf_watcher.py
+        line: 375-381
+        function: process_pdf
+        issue: "cycle3 で残った logger.error(..., exc_info=True) は除去済み。実装は _sanitize_exception(exc) の型名のみを出し、traceback 末尾の生例外メッセージ流出経路を閉じた。"
+      - perspective: 7_legal_compliance
+        severity: info
+        file: backend/etl/quartetto_pdf_watcher.py
+        line: 428-430
+        function: QuartettoPdfHandler._handle
+        issue: "追加で handler 側の path.name + raw exc + exc_info=True も [path_masked] + _sanitize_exception(exc) へ修正済み。横展開対応として妥当。"
+      - perspective: 6_test_coverage
+        severity: info
+        file: backend/tests/test_quartetto_pdf_parser.py
+        line: 718-751
+        function: TestPiiMaskInErrorLog.test_stream_handler_output_no_pii
+        issue: "StreamHandler 実出力全体を検査する regression test が追加され、caplog.message だけでは漏れる traceback PII を捕捉できるようになった。"
+      - perspective: 6_test_coverage
+        severity: medium
+        file: backend/tests/test_quartetto_pdf_parser.py
+        line: 1-8
+        function: module_scope
+        issue: "実機Quartetto PDF fixture は未入手のまま。PII/fail-closed のコード品質 gate は通過だが、pdfplumber実抽出・rules調整・meisai_receipt_extractorとの最終境界判定は実機PDF取得後に再監査が必要。"
+      - perspective: 2_anti_duplication
+        severity: low
+        file: backend/etl/quartetto_pdf_parser.py
+        line: 15-18
+        function: module_docstring
+        issue: "bbox方式 meisai_receipt_extractor.py と text-mining方式 quartetto_pdf_parser.py の適用境界は明文化されたが、実機PDF未取得のため採用/ fallback 決定は未完。"
+    recommendations:
+      - "家老は実機または匿名化Quartetto PDFを入手後、parse_quartetto_pdf() 実抽出・rules調整・meisai_receipt_extractorとの境界判定を cycle5 実機検証として発令されたし。"
+      - "現時点では PII traceback leak の再発防止は test_stream_handler_output_no_pii で担保済み。cycle3 fail の残余は close 可。"
+    acceptance_criteria_check:
+      pii_flow_eliminated: "PASS — process_pdf / _handle とも exc_info=True と raw path/raw exc を除去"
+      stream_handler_test_added: "PASS — formatted output 全体で患者識別子非流出を検査"
+      tests_pass_skip0: "PASS — python3 -m pytest backend/tests/test_quartetto_pdf_parser.py -q => 43 passed, 0 skipped"
+      real_pdf_fixture: "CONCERN — 実機Quartetto PDF未入手。別 gate として継続"
+    related_files:
+      - /mnt/c/Users/User/Documents/DentalBI/backend/etl/quartetto_pdf_watcher.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/tests/test_quartetto_pdf_parser.py
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru1_report.yaml
+    test_evidence:
+      command: "python3 -m pytest backend/tests/test_quartetto_pdf_parser.py -q"
+      workdir: /mnt/c/Users/User/Documents/DentalBI
+      result: "43 passed in 1.30s"
+      skipped: 0
+      log_path: /tmp/codex_audit_kuroda_001_cycle4.log
+    commit_hash: "37c8897d"
+    current_head_note: "DentalBI current HEAD is later commit fedb9822; branch master contains 37c8897d. Audit used commit diff 5274c03c..37c8897d and current test run."
+    log_path: /tmp/codex_audit_kuroda_001_cycle4.log
+    audit_passed: true
+    persona_signature: "智囊の眼・黒田官兵衛。traceback PII 流出の残余は閉じた。実機PDF未入手のみ concerns として残す。"
+
+  - audit_id: kuroda_006_direct
+    target_type: deliverable_file
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+    cycle_n: 3
+    redo_of: kuroda_006
+    audited_at: "2026-05-10T21:08:00+09:00"
+    audited_by: kuroda
+    verdict: fail
+    perspectives:
+      1_functional_correctness: concerns
+      2_anti_duplication: pass
+      3_discipline: pass
+      4_logic_robustness: concerns
+      5_schema_integrity: pass
+      6_test_coverage: concerns
+      7_legal_compliance: fail
+      8_operations_ux: concerns
+      9_documentation: pass
+    findings:
+      - perspective: 7_legal_compliance
+        severity: high
+        file: backend/adapters/checkin_passport_adapter.py
+        line: 60-70
+        function: CheckinPassportAdapter.award_checkin_xp
+        issue: "logger.info が patient_no を平文出力し、except 節も exc_info=True で traceback 末尾に生例外メッセージを出す。patient_no/例外文字列に患者識別子が含まれるため PII ログ流出経路。kuroda_001 と同型。"
+      - perspective: 7_legal_compliance
+        severity: high
+        file: backend/adapters/patient_app_karte_adapter.py
+        line: 67-78
+        function: PatientAppKarteAdapter.sync_payment_to_karte
+        issue: "logger.info が visit_id と amount を平文出力し、except 節は exc_info=True。payment_id/patient_id/visit_id を扱う adapter で traceback 生出力を許すと医療会計情報の漏洩経路になる。"
+      - perspective: 6_test_coverage
+        severity: medium
+        file: queue/reports/ashigaru4_report.yaml
+        line: 48-56
+        function: quality_gates
+        issue: "tsc --noEmit と ast.parse は確認済みだが、adapter 2本の unit test / PII log regression test は未実施。本監査でも py_compile と tsc は PASS したが runtime 契約は未検証。"
+      - perspective: 1_functional_correctness
+        severity: medium
+        file: backend/adapters/patient_app_karte_adapter.py
+        line: 61-65
+        function: PatientAppKarteAdapter.sync_payment_to_karte
+        issue: "karte_visits 更新時に clinic_id/patient_id 条件を再付与せず visit_id のみで update する。payment_requests の取得条件はあるが、visit_id 誤紐付け・汚染時の blast radius を DB 側で限定できない。"
+      - perspective: 4_logic_robustness
+        severity: low
+        file: backend/adapters/checkin_passport_adapter.py
+        line: 47-59
+        function: CheckinPassportAdapter.award_checkin_xp
+        issue: "add_xp 成功後 award_stamp 失敗時に部分成功が残る。source_event_ref による冪等性が engine 側で保証されるか本 deliverable からは不明。"
+    recommendations:
+      - "patient_no/payment_id/visit_id/amount をログに出す箇所を mask し、except の exc_info=True を除去または sanitized secure log に限定する。"
+      - "PatientAppKarteAdapter.update に clinic_id/patient_id 条件を追加する、または取得した visit row の clinic/patient 整合を update 前に検証する。"
+      - "adapter 2本の unit test と PII log regression test を追加し、SKIP=0で再提出する。"
+    acceptance_criteria_check:
+      commit_hash_recorded: "PASS — eaab62d6"
+      tsc_noEmit_pass: "PASS — /tmp/tsc_ashigaru4_redo.log と再実行 npx tsc --noEmit PASS"
+      python_syntax_pass: "PASS — py_compile 対象 backend schema/adapters OK"
+      patient_id_pattern_added: "PASS — common_base.py line 18 pattern='^HK_[0-9]{6}$'"
+      runtime_security: "FAIL — adapter logs still expose identifiers / exc_info traceback"
+    related_files:
+      - /mnt/c/Users/User/Documents/DentalBI/backend/schemas/common_base.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/adapters/patient_app_karte_adapter.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/adapters/checkin_passport_adapter.py
+      - /mnt/c/Users/User/Documents/DentalBI/frontend/src/types/common-base.ts
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru4_report.yaml
+    test_evidence:
+      python_compile: "PASS — py_compile common_base.py / adapter 2本"
+      tsc_noEmit: "PASS — npx tsc --noEmit from frontend"
+      skipped: 0
+      caveat: "pytest/vitest adapter runtime tests are not present."
+    commit_hash: "eaab62d6"
+    audit_passed: false
+    persona_signature: "黒田官兵衛、智囊の眼。構文と型は通れど、患者識別子ログと exc_info traceback は看過せず。"
+
+  - audit_id: kuroda_007_direct
+    target_type: deliverable_file
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    cycle_n: 3
+    redo_of: kuroda_007
+    audited_at: "2026-05-10T21:08:00+09:00"
+    audited_by: kuroda
+    verdict: fail
+    perspectives:
+      1_functional_correctness: concerns
+      2_anti_duplication: pass
+      3_discipline: pass
+      4_logic_robustness: fail
+      5_schema_integrity: concerns
+      6_test_coverage: fail
+      7_legal_compliance: fail
+      8_operations_ux: concerns
+      9_documentation: concerns
+    findings:
+      - perspective: 7_legal_compliance
+        severity: critical
+        file: backend/routers/patient_receipts.py
+        line: 23-46
+        function: get_receipt_pdfs
+        issue: "患者向け endpoint が JWT/認証ユーザー確認を一切行わず、path の patient_id と query clinic_id だけで list_receipts_for_patient() を呼ぶ。任意 caller が他患者の patient_id を推測すると signed_url 付き台帳へ到達し得る。"
+      - perspective: 4_logic_robustness
+        severity: high
+        file: backend/services/receipt_storage.py
+        line: 169-207
+        function: list_receipts_for_patient
+        issue: "service role 相当の get_supabase_client() で patient_receipt_pdfs を clinic_id/patient_no 条件だけで照会し、patient_auth_user_id / auth.uid() と照合しない。backend proxy 方式の認可層が欠落している。"
+      - perspective: 5_schema_integrity
+        severity: medium
+        file: backend/services/receipt_storage.py
+        line: 182-204
+        function: list_receipts_for_patient
+        issue: "signed URL 発行可否に SUPABASE_SERVICE_KEY を参照するが、運用設定は SUPABASE_SERVICE_ROLE_KEY 系で統一されている。環境名不整合で signed_url=None になり、機能要件と運用がずれる。"
+      - perspective: 7_legal_compliance
+        severity: medium
+        file: backend/routers/patient_receipts.py
+        line: 44-46
+        function: get_receipt_pdfs
+        issue: "logger.error が patient_id と raw exc を平文出力する。patient_id は患者番号派生値であり、例外文字列も Supabase 応答を含む可能性があるため PII/診療情報ログ流出経路。"
+      - perspective: 6_test_coverage
+        severity: high
+        file: backend/tests/test_patient_receipts_endpoint.py
+        line: 36-89
+        function: module_tests
+        issue: "5件の pytest は list_receipts_for_patient を mock しており、認証なしアクセス禁止・他患者アクセス禁止・service role signed URL 認可を検証しない。手元再実行は無出力で長時間停止したため完走再現も未確認。既存 /tmp ログでは5/5 PASSを確認。"
+      - perspective: 6_test_coverage
+        severity: medium
+        file: frontend/src/patient-app/pages/ReceiptList.test.tsx
+        line: 1-112
+        function: ReceiptList tests
+        issue: "報告コマンドをrepo rootから実行すると alias/jsdom の前提が崩れ失敗する。frontend cwd + jsdom では6/6 PASSを確認したが、報告コマンドは再現条件を明記すべき。"
+    recommendations:
+      - "get_receipt_pdfs に患者JWT検証を追加し、path patient_id / patient_no と auth.uid() または patient_auth_user_id を照合して不一致は403にする。"
+      - "list_receipts_for_patient は service role で全件照会するなら patient_auth_user_id を必須引数にし、DB query にも条件追加する。"
+      - "SUPABASE_SERVICE_KEY と SUPABASE_SERVICE_ROLE_KEY の環境名を統一し、signed URL が確実に発行される設定にする。"
+      - "pytest に未認証401/他患者403/signed_url発行ありの統合テストを追加し、mockだけで合格しないようにする。"
+      - "router error log は patient_id/raw exc を mask し、exc_info なしで型名のみ記録する。"
+    acceptance_criteria_check:
+      router_exists: "PASS — backend/main.py router registration confirmed"
+      receiptlist_uses_api: "PASS — ReceiptList.tsx getReceiptPdfs() call confirmed"
+      signed_url_field: "PASS_WITH_RISK — UI displays signed_url when present, but backend auth gate missing"
+      pytest_claim: "LOG_PASS_ONLY — /tmp/pytest_ashigaru6_redo.log shows 5/5 PASS; live rerun hung without output"
+      vitest_claim: "PASS — frontend cwd with jsdom => 6/6 PASS"
+      skip_count: "0 in recorded logs"
+    related_files:
+      - /mnt/c/Users/User/Documents/DentalBI/backend/routers/patient_receipts.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/services/receipt_storage.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/main.py
+      - /mnt/c/Users/User/Documents/DentalBI/frontend/src/services/patientAppApi.ts
+      - /mnt/c/Users/User/Documents/DentalBI/frontend/src/patient-app/pages/ReceiptList.tsx
+      - /mnt/c/Users/User/Documents/DentalBI/frontend/src/patient-app/components/ReceiptDetail.tsx
+      - /mnt/c/Users/User/Documents/DentalBI/backend/tests/test_patient_receipts_endpoint.py
+      - /mnt/c/Users/User/Documents/DentalBI/frontend/src/patient-app/pages/ReceiptList.test.tsx
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru6_report.yaml
+    test_evidence:
+      python_compile: "PASS — py_compile router/service"
+      pytest_existing_log: "/tmp/pytest_ashigaru6_redo.log => 5 passed, 0 skipped"
+      pytest_live_rerun: "INCONCLUSIVE — python3 -m pytest backend/tests/test_patient_receipts_endpoint.py -q produced no output for >2 min"
+      vitest_live_rerun: "PASS — cd frontend && npx vitest run src/patient-app/pages/ReceiptList.test.tsx --environment jsdom => 6 passed"
+      tsc_live_rerun: "PASS — cd frontend && npx tsc --noEmit"
+    commit_hash: "fedb9822"
+    audit_passed: false
+    persona_signature: "黒田官兵衛、智囊の眼。signed URL は見えたが、認可なき backend proxy は患者領収書の城門を開け放つに等し。"
+
+  - audit_id: kuroda_006_cycle4_review
+    target_type: ashigaru_report
+    target_id: subtask_delta_ashigaru4_common_base_cycle4_fix_001
+    cycle_n: 4
+    redo_of: kuroda_006_direct
+    audited_at: "2026-05-10T22:40:56+09:00"
+    audited_by: kuroda
+    verdict: pass_with_concerns
+    perspectives:
+      1_functional_correctness: pass
+      2_anti_duplication: pass
+      3_discipline: pass
+      4_logic_robustness: concerns
+      5_schema_integrity: pass
+      6_test_coverage: pass
+      7_legal_compliance: concerns
+      8_operations_ux: pass
+      9_documentation: pass
+    findings:
+      - perspective: 7_legal_compliance
+        severity: low
+        file: backend/adapters/patient_app_karte_adapter.py
+        line: 51-54
+        function: PatientAppKarteAdapter.sync_payment_to_karte
+        issue: "失敗時 warning に payment_id=%s が残る。前回指摘した visit_id/amount/patient_no/traceback 露出は解消済みだが、payment_id も運用上識別子扱いなら [masked] に寄せるべき。"
+      - perspective: 4_logic_robustness
+        severity: low
+        file: backend/adapters/checkin_passport_adapter.py
+        line: 47-59
+        function: CheckinPassportAdapter.award_checkin_xp
+        issue: "add_xp 成功後 award_stamp 失敗時の部分成功リスクは残る。source_event_ref による冪等性が engine 側で保証されるかは本修正範囲外。"
+    resolutions_confirmed:
+      - "checkin_passport_adapter.py:60-70 は patient_no/checkin_id を出さず、例外も type(e).__name__ のみ。"
+      - "patient_app_karte_adapter.py:61-65 は karte_visits update に clinic_id/patient_id 条件を追加済み。"
+      - "patient_app_karte_adapter.py:67-76 は visit_id/amount/raw traceback を出さず、例外型名のみ。"
+    recommendations:
+      - "payment_id の warning ログも [masked] に統一する。"
+      - "XP付与とスタンプ付与の部分成功を許容する設計か、engine 側冪等性の根拠を設計書または test に追記する。"
+    acceptance_criteria_check:
+      pii_log_fix: "PASS_WITH_CONCERN — 前回critical対象は解消、payment_id warningのみ低リスク残。"
+      clinic_patient_condition: "PASS — karte_visits update に clinic_id/patient_id 条件あり。"
+      exc_info_removed: "PASS — adapter 2本の except は例外型名のみ。"
+      unit_tests: "PASS — python3 -m pytest backend/tests/test_common_base_adapters.py -q => 12 passed, 0 skipped"
+    related_files:
+      - /mnt/c/Users/User/Documents/DentalBI/backend/adapters/patient_app_karte_adapter.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/adapters/checkin_passport_adapter.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/tests/test_common_base_adapters.py
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru4_report.yaml
+    test_evidence:
+      pytest_live_rerun: "PASS — backend/tests/test_common_base_adapters.py => 12 passed, 0 skipped"
+      skipped: 0
+    commit_hash: "dc002efd"
+    audit_passed: true
+    persona_signature: "黒田官兵衛、智囊の眼。主たる漏洩路は塞がれた。残る識別子ログは次の磨きで潰すが、差し戻しの刃までは振るわぬ。"
+
+  - audit_id: kuroda_007_cycle4_review
+    target_type: ashigaru_report
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle4_fix_001
+    cycle_n: 4
+    redo_of: kuroda_007_direct
+    audited_at: "2026-05-10T22:40:56+09:00"
+    audited_by: kuroda
+    verdict: fail
+    perspectives:
+      1_functional_correctness: concerns
+      2_anti_duplication: pass
+      3_discipline: pass
+      4_logic_robustness: concerns
+      5_schema_integrity: pass
+      6_test_coverage: concerns
+      7_legal_compliance: fail
+      8_operations_ux: concerns
+      9_documentation: concerns
+    findings:
+      - perspective: 7_legal_compliance
+        severity: high
+        file: backend/services/receipt_storage.py
+        line: 197-199
+        function: list_receipts_for_patient
+        issue: "DB query 失敗時に raw exception を logger.error(... %s, exc) で出す。Supabase例外文に query 条件・応答・識別子が混ざる可能性があり、前回の PII/raw error log 指摘が service 層に残存している。"
+      - perspective: 7_legal_compliance
+        severity: high
+        file: backend/services/receipt_storage.py
+        line: 205-208
+        function: list_receipts_for_patient
+        issue: "sign_url 失敗時に row.get('object_path') と raw exception を warning 出力する。object_path は receipts/{clinic_id}/{patient_no}/{date}.pdf 形式で患者番号・受診日を含み得るため、診療情報ログ流出経路。"
+      - perspective: 4_logic_robustness
+        severity: medium
+        file: backend/routers/patient_receipts.py
+        line: 37-49
+        function: get_receipt_pdfs
+        issue: "ctx.clinic_id は検証するが、path の patient_no と ctx.patient_no の一致は明示検証しない。service が patient_auth_user_id で絞るため他者漏洩は抑えられる見込みだが、不一致要求は403ではなく空結果になり得る。"
+      - perspective: 6_test_coverage
+        severity: medium
+        file: backend/tests/test_patient_receipts_endpoint.py
+        line: 1
+        function: module_tests
+        issue: "報告ログでは8/8 PASS、手元 timeout 45 秒付き再実行は exit 124 で完走再現できず。既存 /tmp/pytest_ashigaru6_cycle4.log は 8 passed を示すが、ライブ環境での安定性確認は未完。"
+    resolutions_confirmed:
+      - "patient_receipts.py:30-49 は require_patient_auth を必須化し、ctx.auth_user_id を service へ渡す。"
+      - "receipt_storage.py:185-194 は patient_auth_user_id 条件を query に追加済み。"
+      - "receipt_storage.py:174 は SUPABASE_SERVICE_ROLE_KEY に統一済み。"
+      - "patient_receipts.py:51-53 の router error log は patient_id/raw exc を出さず例外型名のみ。"
+    recommendations:
+      - "receipt_storage.py の logger.error/logger.warning は raw exc と object_path を出さず、例外型名 + masked context のみにする。"
+      - "get_receipt_pdfs で path patient_no と ctx.patient_no の一致を検証し、不一致は403にする。PatientContext に patient_no がない場合は auth middleware のclaim設計から補う。"
+      - "pytest timeout の原因を切り分け、CI/手元で同一コマンドが安定して8/8 PASSする証跡を再提出する。"
+    acceptance_criteria_check:
+      jwt_required: "PASS — Depends(require_patient_auth) confirmed."
+      patient_auth_user_id_filter: "PASS — patient_receipt_pdfs query に patient_auth_user_id 条件あり。"
+      env_name_unified: "PASS — SUPABASE_SERVICE_ROLE_KEY confirmed."
+      pii_log_eliminated: "FAIL — receipt_storage.py line 197-208 に raw exc/object_path log 残存。"
+      pytest_claim: "LOG_PASS_BUT_LIVE_TIMEOUT — /tmp/pytest_ashigaru6_cycle4.log => 8 passed, 0 skipped; timeout 45 live rerun => exit 124."
+      vitest_claim: "PASS — frontend cwd with jsdom => 6 passed, 0 skipped."
+    related_files:
+      - /mnt/c/Users/User/Documents/DentalBI/backend/routers/patient_receipts.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/services/receipt_storage.py
+      - /mnt/c/Users/User/Documents/DentalBI/backend/tests/test_patient_receipts_endpoint.py
+      - /mnt/c/Users/User/Documents/DentalBI/frontend/src/patient-app/pages/ReceiptList.test.tsx
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru6_report.yaml
+    test_evidence:
+      pytest_existing_log: "/tmp/pytest_ashigaru6_cycle4.log => 8 passed, 0 skipped"
+      pytest_live_rerun: "FAIL_TO_COMPLETE — timeout 45 python3 -m pytest backend/tests/test_patient_receipts_endpoint.py -q => exit 124"
+      vitest_live_rerun: "PASS — npx vitest run src/patient-app/pages/ReceiptList.test.tsx --environment jsdom => 6 passed"
+      skipped: 0
+    commit_hash: "ca744ea4"
+    audit_passed: false
+    persona_signature: "黒田官兵衛、智囊の眼。門番は立ったが、倉の帳面が患者番号と例外文をまだ漏らす。ここは通せぬ。"
