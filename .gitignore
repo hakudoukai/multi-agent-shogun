@@ -31,6 +31,7 @@
 !instructions/karo.md
 !instructions/ashigaru.md
 !instructions/gunshi.md
+!instructions/gunshi2.md
 
 # Multi-CLI: CLI-specific tool descriptions
 !instructions/cli_specific/
@@ -134,6 +135,7 @@
 !scripts/redundancy/
 !scripts/redundancy/shogun_report_watcher.sh
 !scripts/redundancy/test_shogun_report_watcher.sh
+!scripts/skill_candidate_daily.sh
 
 
 # SayTask (sample template only, not actual data)
@@ -192,7 +194,9 @@ logs/
 !skills/shogun-ssh-cross-pc/scripts/
 !skills/shogun-ssh-cross-pc/scripts/*.sh
 !skills/shogun-ssh-cross-pc/reference/
-!skills/shogun-ssh-cross-pc/reference/*.yaml
+# 実 endpoints.yaml は gitignored (= LAN IP/公開鍵/host info 漏洩防止、黒田 privacy-05 是正 2026-05-10)
+!skills/shogun-ssh-cross-pc/reference/*.sample
+skills/shogun-ssh-cross-pc/reference/endpoints.yaml
 !skills/shogun-auto-register/
 !skills/shogun-auto-register/SKILL.md
 !skills/shogun-auto-register/scripts/
@@ -205,7 +209,9 @@ logs/
 !skills/shogun-trouble-auto-skill/scripts/*.sh
 !skills/shogun-trouble-auto-skill/reference/
 !skills/shogun-trouble-auto-skill/reference/*.md
-!queue/skill_candidates.yaml
+# queue/skill_candidates.yaml は実データ (Lord 発話含) ゆえ gitignored、sample のみ whitelist
+queue/skill_candidates.yaml
+!queue/skill_candidates.yaml.sample
 !skills/shogun-system-coherence/
 !skills/shogun-system-coherence/SKILL.md
 !skills/shogun-system-coherence/scripts/

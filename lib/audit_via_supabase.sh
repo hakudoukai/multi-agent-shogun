@@ -5,20 +5,18 @@
 # 陛下御差配 (2026-05-10): 監査・計画書・指示文 等を Supabase 統一経由で扱う。
 # context 消費抑止 + 資料保存 + 大量投稿 bug 防止 + cross-PC 透明性。
 #
-# 提供関数:
-#   audit_request <gunshi> <prompt_file> [scope] [task_id]
-#     → audit_id (UUID) を出力、prompt は Supabase に INSERT
-#     → 軍師 pane の poller が pending row を処理
-#
-#   audit_wait <audit_id> [timeout=300]
-#     → status=completed まで polling、result_yaml を出力
-#
-#   audit_get_summary <audit_id>
-#     → 結果 summary (overall_signal + issues_count) のみ取得
-#
+# 提供関数 (= 黒田 arch-01 是正後):
 #   audit_run_local <gunshi> <prompt_file> [scope]
-#     → INSERT pending → 同 process で codex/gemini exec → UPDATE completed
-#     → poller 不要、即時実行 (= 互換 path)
+#     → codex/gemini exec を先行 → 完遂後に 1 回だけ INSERT (= Phase 5 immutable 遵守)
+#     → 拙者 (信長) context への流入は wrapper 出力のみ (= prompt/log は DB+log file)
+#
+#   audit_get_summary <audit_id> [table]
+#     → 結果 summary (overall_signal + issues_count) のみ取得 (= context 圧迫回避)
+#
+# 廃止 (= Phase 5 immutable と矛盾):
+#   - audit_request (= INSERT pending → UPDATE 設計、UPDATE 不可で矛盾)
+#   - audit_wait (= async poller 想定、現 schema では未実装)
+#   将来 async 必要時は別 queue table (= pc_handshake 等) で実装予定
 #
 # 依存:
 #   - SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY env
@@ -47,84 +45,15 @@ _audit_load_supabase_env() {
 }
 
 # ─────────────────────────────────────────────────────────────
-# audit_request <gunshi> <prompt_file> [scope] [task_id]
-#   gunshi: kuroda | takenaka | naomasa | acha
-#   prompt_file: prompt 全文 file path
-#   scope: audit_scope text (省略時 prompt 1 行目)
-#   task_id: 任意の uuid (省略時 NULL)
-#
-# 出力: audit_id (UUID) を stdout
+# audit_request — DEPRECATED (= 黒田 arch-01 指摘で廃止)
+# Phase 5 immutable 制約により INSERT pending → UPDATE 不可、本関数は使用禁。
+# 将来 async 必要時は pc_handshake / 専用 queue table で再実装。
 # ─────────────────────────────────────────────────────────────
 audit_request() {
-    local gunshi="$1"
-    local prompt_file="$2"
-    local scope="${3:-}"
-    local task_id="${4:-}"
-
-    [ -z "$gunshi" ] && { echo "ERR: gunshi 必須" >&2; return 1; }
-    [ -f "$prompt_file" ] || { echo "ERR: prompt_file 不在: $prompt_file" >&2; return 1; }
-
-    _audit_load_supabase_env || { echo "ERR: SUPABASE env 不在" >&2; return 2; }
-
-    # gunshi → table mapping
-    local table tool ran_pc
-    case "$gunshi" in
-        kuroda)   table='codex_audit_results';  tool='codex';  ran_pc='main_pc' ;;
-        takenaka) table='gemini_audit_results'; tool='gemini'; ran_pc='main_pc' ;;
-        naomasa)  table='codex_audit_results';  tool='codex';  ran_pc='second_pc' ;;
-        acha)     table='gemini_audit_results'; tool='gemini'; ran_pc='second_pc' ;;
-        *) echo "ERR: 未知 gunshi=$gunshi (valid: kuroda/takenaka/naomasa/acha)" >&2; return 1 ;;
-    esac
-
-    [ -z "$scope" ] && scope=$(head -1 "$prompt_file" | cut -c1-200)
-    local prompt_content
-    prompt_content=$(cat "$prompt_file")
-
-    # INSERT pending row (audit_summary_md=prompt 全文、status は signal で表現:
-    # 'pending' → audit 投函済、未実行 (= overall_signal 制約上 green/yellow/red のみ可ゆえ
-    # 'pending' は別 col もしくは task_title で表現)
-    # 既存 schema は status field 無し、audit_summary_md に prompt 入れて
-    # overall_signal='yellow' (= pending 相当) で投函、worker が green/red に UPDATE
-    PROMPT_CONTENT="$prompt_content" SCOPE="$scope" TABLE="$table" RAN_PC="$ran_pc" GUNSHI="$gunshi" TASK_ID="$task_id" python3 <<'PY'
-import os, json, urllib.request, urllib.parse
-url = os.environ['SUPABASE_URL']
-key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
-table = os.environ['TABLE']
-
-payload = {
-    'audit_scope': os.environ['SCOPE'],
-    'audit_summary_md': f"## PROMPT (= worker が処理する audit query)\n\n{os.environ['PROMPT_CONTENT']}",
-    'overall_signal': 'yellow',  # pending 相当 (= 未実行/処理中、worker が完遂時 green/red に UPDATE)
-    'triaged_issues': [],
-    'ran_on_pc': os.environ['RAN_PC'],
-    'task_title': f"audit_request:{os.environ['GUNSHI']}",
-}
-task_id = os.environ.get('TASK_ID', '')
-if task_id: payload['task_id'] = task_id
-
-req = urllib.request.Request(
-    f"{url}/rest/v1/{table}",
-    method='POST',
-    headers={
-        'apikey': key,
-        'Authorization': f'Bearer {key}',
-        'Content-Type': 'application/json',
-        'Prefer': 'return=representation',
-    },
-    data=json.dumps(payload).encode()
-)
-try:
-    with urllib.request.urlopen(req, timeout=15) as r:
-        data = json.loads(r.read())
-        if isinstance(data, list) and data:
-            print(data[0]['id'])
-        else:
-            print('ERR: empty response', file=__import__('sys').stderr)
-            __import__('sys').exit(3)
-except Exception as e:
-    print(f'ERR: {e}', file=__import__('sys').stderr)
-    __import__('sys').exit(4)
-PY
+    echo "DEPRECATED: audit_request は Phase 5 immutable 制約と矛盾、廃止 (= 黒田 arch-01)。" >&2
+    echo "  → audit_run_local を使え (= sync 1 回 INSERT、Phase 5 遵守)。" >&2
+    echo "  → async 必要時は別途 queue table 設計待ち。" >&2
+    return 99
 }
 
 # ─────────────────────────────────────────────────────────────
@@ -288,18 +217,19 @@ PY
 # ─────────────────────────────────────────────────────────────
 if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
     case "${1:-help}" in
-        request)  audit_request "${@:2}" ;;
         run)      audit_run_local "${@:2}" ;;
         summary)  audit_get_summary "${@:2}" ;;
+        request)  audit_request "${@:2}" ;;  # DEPRECATED で error 返す
         *)
             cat <<HELP
 Usage:
-  $0 request <gunshi> <prompt_file> [scope] [task_id]  — INSERT pending only
-  $0 run     <gunshi> <prompt_file> [scope]            — INSERT + exec + UPDATE
-  $0 summary <audit_id> [table]                         — fetch summary
+  $0 run     <gunshi> <prompt_file> [scope]   — exec → INSERT (Phase 5 immutable 遵守)
+  $0 summary <audit_id> [table]                — 結果 summary 取得 (context 圧迫回避)
 
 gunshi: kuroda | takenaka | naomasa | acha
 table:  codex_audit_results | gemini_audit_results
+
+廃止: audit_request (= 黒田 arch-01、Phase 5 immutable と矛盾)
 HELP
             ;;
     esac

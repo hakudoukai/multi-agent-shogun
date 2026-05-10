@@ -1,0 +1,43 @@
+---
+# ════════════════════════════════════════════════════════════════
+# Cross-PC SSH Endpoints Inventory — SAMPLE TEMPLATE
+# 実データは endpoints.yaml (= gitignored) に保存、本 sample のみ public
+# 黒田 privacy-05 是正 (= 2026-05-10、LAN IP/公開鍵/host info の OSS 漏洩防止)
+# ════════════════════════════════════════════════════════════════
+
+endpoints:
+  main_pc:
+    role: shogun (信長 / 鬼信長)
+    hostname: <YOUR_MAIN_PC_HOSTNAME>
+    lan_ipv4: <YOUR_MAIN_PC_LAN_IP>     # 例: 192.168.x.y、private LAN 内のみ
+    sshd_port: <YOUR_PORT>               # 例: 2223
+    windows_user: <YOUR_WIN_USER>
+    wsl_distro: Ubuntu
+    wsl_user: <YOUR_WSL_USER>
+    pub_key_fp: "<YOUR_FINGERPRINT>"
+    pub_key_comment: "<YOUR_PUB_KEY_COMMENT>"
+    project_root: /home/<wsl_user>/projects/multi-agent-shogun-newbuild
+
+  second_pc:
+    role: fukushogun (家康 / 副将軍)
+    hostname: <YOUR_SECOND_PC_HOSTNAME>
+    lan_ipv4: <YOUR_SECOND_PC_LAN_IP>
+    sshd_port: <YOUR_PORT>
+    windows_user: <YOUR_WIN_USER>
+    wsl_distro: Ubuntu
+    wsl_user: <YOUR_WSL_USER>
+    pub_key_fp: "<YOUR_FINGERPRINT>"
+    pub_key_comment: "<YOUR_PUB_KEY_COMMENT>"
+    pub_key_path_secondpc: /home/<wsl_user>/.ssh/id_ed25519.pub
+    project_root: /home/<wsl_user>/projects/multi-agent-shogun-newbuild
+
+quick_connect:
+  main_to_second:
+    cmd: ssh -p <PORT> <USER>@<SECOND_LAN_IP>
+    via_wsl: ssh -p <PORT> <USER>@<SECOND_LAN_IP> 'wsl -- bash -lc "<command>"'
+  second_to_main:
+    cmd: ssh -p <PORT> <USER>@<MAIN_LAN_IP>
+    via_wsl: ssh -p <PORT> <USER>@<MAIN_LAN_IP> 'wsl -- bash -lc "<command>"'
+
+# 実運用では skills/shogun-ssh-cross-pc/reference/endpoints.yaml を作成
+# (= 本 file を copy + 実値で埋める)、本 .sample のみ commit。

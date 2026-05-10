@@ -1,0 +1,24 @@
+# skill_candidates.yaml — SAMPLE TEMPLATE
+# 実 candidates (= Lord 発話・運用文脈含) は queue/skill_candidates.yaml (gitignored)
+# 黒田 privacy-05 是正 (= 2026-05-10)
+
+candidates: []
+
+config:
+  thresholds:
+    blocking: 2
+    normal: 3
+    cosmetic: 5
+  time_window_days: 7
+  severity_keywords:
+    blocking: [停止, 不能, failed, エラー, blocker]
+    cosmetic: [UI, format, warning, alignment, typo]
+
+stats:
+  total_candidates: 0
+  approved: 0
+  drafted: 0
+  threshold_reached_pending_approval: 0
+  rejected: 0
+
+signature_index: {}

@@ -35,27 +35,16 @@ echo "[$(date -Iseconds)] $AGENT_ID session_start_hook fired" \
     >> "$LOG_DIR/session_start_hook.log" || true
 
 # ════════════════════════════════════════════════════════════════
-# 拡張 #1: shogun のみ — 1 日 1 回 skill_candidate_scan を background 起動
-# 過去 24h スキャン無し時のみ発火、shogun の context 注入には影響せぬ
+# 黒田 debt-04 是正 (= 2026-05-10): SessionStart hook から日次スキャン分離
+# 旧: 本 hook で skill_candidate_scan + dashboard_scan を background 起動
+# 新: scripts/skill_candidate_daily.sh + cron で別管理 (= 復旧 hook は deterministic で短く)
+# 復旧 hook は persona 復元の生命線、運用ジョブを混ぜると毎起動・/clear・compact で副作用累積
 # ════════════════════════════════════════════════════════════════
-SKILL_SCAN_STAMP="/tmp/.skill_candidate_scan_stamp"
-SKILL_SCAN_SCRIPT="$(dirname "$0")/../skills/shogun-trouble-auto-skill/scripts/skill_candidate_scan.sh"
-if [ "$AGENT_ID" = "shogun" ] && [ -x "$SKILL_SCAN_SCRIPT" ]; then
-    if [ ! -f "$SKILL_SCAN_STAMP" ] || [ $(($(date +%s) - $(stat -c %Y "$SKILL_SCAN_STAMP" 2>/dev/null || echo 0))) -gt 86400 ]; then
-        # background 起動、stdout 抑止 (= context 注入と分離)
-        (
-            bash "$SKILL_SCAN_SCRIPT" scan > "$LOG_DIR/skill_candidate_scan.log" 2>&1
-            DASH_SCAN="$(dirname "$0")/../skills/shogun-trouble-auto-skill/scripts/dashboard_scan.sh"
-            [ -x "$DASH_SCAN" ] && bash "$DASH_SCAN" >> "$LOG_DIR/skill_candidate_scan.log" 2>&1
-            touch "$SKILL_SCAN_STAMP"
-        ) &
-        disown
-    fi
-fi
 
 case "$AGENT_ID" in
-    shogun|karo|gunshi)
+    shogun|karo|gunshi|gunshi2)
         # command-layer agents: full Session Start (Step 1-5)
+        # gunshi2 追加 (= 黒田 daemon-02 是正 2026-05-10、軍師 v1.1 で plan 監査専担)
         cat <<EOF
 **CRITICAL: Session Start 手順を最優先で実行せよ**
 
@@ -66,7 +55,7 @@ case "$AGENT_ID" in
 1. \`tmux display-message -t "\$TMUX_PANE" -p '#{@agent_id}'\` で自己識別を再確認
 2. \`mcp__memory__read_graph\` でルール・嗜好・教訓を復元
 3. (shogun のみ) \`memory/MEMORY.md\` を Read
-4. \`instructions/${AGENT_ID}.md\` を最後まで必読 — persona・戦国口調・forbidden_actions 再確立 **(絶対省略禁止)**
+4. \`instructions/${AGENT_ID}.md\` を最後まで必読 (gunshi2 は instructions/gunshi.md + instructions/gunshi_audit_personas.md を読む) — persona・戦国口調・forbidden_actions 再確立 **(絶対省略禁止)**
 5. \`queue/\` 配下 (tasks/, inbox/, reports/) から state 再構築
 
 **Step 1-4 完了まで inbox 処理・ユーザ応答は禁止**。inbox{N} nudge が先に届いても無視し、persona 確立を優先せよ。
