@@ -60,11 +60,14 @@ fetch_pending() {
 import os, json, urllib.request, urllib.parse, sys
 url = os.environ['SUPABASE_URL']
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
+# jsonb filter (= context_data->>'shogun_kind'='audit_request') を SQL level で適用
+# (= 旧 client side filter は order=created_at.asc + limit=5 で古い question rows に埋もれて 0 件問題)
 qs = urllib.parse.urlencode({
     'select': 'id,topic,content,context_data,priority,created_at',
     'message_type': 'eq.question',
     'to_pc': f'eq.{os.environ["MY_PC"]}',
     'resolved_at': 'is.null',
+    'context_data->>shogun_kind': 'eq.audit_request',
     'order': 'created_at.asc',
     'limit': '5',
 })
@@ -73,8 +76,6 @@ req = urllib.request.Request(f"{url}/rest/v1/pc_handshake?{qs}",
 try:
     with urllib.request.urlopen(req, timeout=10) as r:
         rows = json.loads(r.read())
-        # context_data.shogun_kind=audit_request のみ
-        rows = [x for x in rows if (x.get('context_data') or {}).get('shogun_kind') == 'audit_request']
         print(json.dumps(rows))
 except Exception as e:
     print(f'ERR: {e}', file=sys.stderr)
