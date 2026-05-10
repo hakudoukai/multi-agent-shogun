@@ -23,7 +23,7 @@
 #
 # my_pc: main_pc | second_pc
 # ════════════════════════════════════════════════════════════════
-set -uo pipefail
+set -o pipefail   # set -u 外し (= Claude Code shell snapshot 競合回避)
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"

@@ -23,7 +23,7 @@
 #   - codex (Codex CLI) / gemini (Gemini CLI) 何れか
 #   - python3
 # ════════════════════════════════════════════════════════════════
-set -uo pipefail
+set -o pipefail   # set -u 外し (= Claude Code shell snapshot の ZSH_VERSION 参照と競合)
 
 AUDIT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AUDIT_PROJECT_ROOT="$(cd "${AUDIT_DIR}/.." && pwd)"
