@@ -139,9 +139,6 @@
 !scripts/shutdown_shogun.sh
 !scripts/startup_shogun_main.sh
 !scripts/recover_shogun.sh
-!scripts/audit_queue_worker.sh
-!scripts/start_audit_workers.sh
-!scripts/redo_loop.sh
 
 
 # SayTask (sample template only, not actual data)
@@ -224,13 +221,8 @@ queue/skill_candidates.yaml
 !skills/shogun-system-coherence/scripts/*.sh
 !skills/shogun-system-coherence/reference/
 !skills/shogun-system-coherence/reference/*.md
-!skills/shogun-pdca-enforcer/
-!skills/shogun-pdca-enforcer/SKILL.md
-!skills/shogun-pdca-enforcer/scripts/
-!skills/shogun-pdca-enforcer/scripts/*.sh
 !skills/shogun-audit-routing-rule/
 !skills/shogun-audit-routing-rule/SKILL.md
-!queue/pdca_state.yaml
 
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/
