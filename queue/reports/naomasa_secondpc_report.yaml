@@ -667,6 +667,76 @@ cmd004_last_task_pre_delivery_audits:
       delivery_to_ashigaru5: blocked_until_pass
       summary: "AC0/worktree/printf 規範は取り込まれているが、Stage 1 正本の anti-dup 方針と真逆の新規 schema/API/page を作るため配信不可。既 handover_sheets 拡張 task へ組み直すべし。"
 
+shogun_charter_audits:
+  - audit_id: naomasa_shogun_charter_v0_1_round1_source_gate
+    target_type: charter_audit_source_gate
+    target_id: shogun_charter_v0_1
+    parent_cmd: shogun_charter
+    audited_at: "2026-05-12T08:35:46+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_083342_01d1b20f
+    requested_sources:
+      - "Supabase project_documents id=89ac869b-0d1d-4acd-9367-f3049a289821"
+      - "docs/shogun_charter_v0_1_nobunaga_initial_review.md"
+      - "memory MCP 23 entities"
+    verdict: fail
+    evidence_state: blocked_env
+    completion_gate: blocked
+    audit_gate_status: source_missing_resubmit_required
+    audit_passed: false
+    source_availability:
+      charter_full_text:
+        status: missing
+        evidence: "Local rg found no Shogun Charter text or Supabase id match; no Supabase MCP/tool credentials are exposed in this Codex toolset."
+      nobunaga_review:
+        status: missing
+        evidence: "docs/shogun_charter_v0_1_nobunaga_initial_review.md does not exist in this workspace."
+      memory_entities:
+        status: missing
+        evidence: "No memory MCP tool is available in this session; memory/MEMORY.md is absent and only memory/MEMORY.md.sample exists."
+    requested_audit_items:
+      nine_perspectives_ten_lens: blocked_source_missing
+      memory_23_entities_consistency: blocked_source_missing
+      machine_evidence_gap_detection: partial
+      section_11_six_rules: blocked_source_missing
+      section_5_6_review: blocked_source_missing
+    machine_evidence:
+      local_charter_search: "rg -n 'Shogun Charter|charter|89ac869b|6 鉄則|越境禁|CI 絶対審判|絶対審判' found no charter source; only unrelated clinic_id RLS wording in docs/cmd004_engagement_analytics_design.md."
+      nobunaga_review_path_check: "sed docs/shogun_charter_v0_1_nobunaga_initial_review.md failed: No such file or directory."
+      file_inventory: "rg --files found memory/MEMORY.md.sample, config/settings.yaml, scripts/sync_to_supabase.sh, lib/audit_via_supabase.sh, docs/memory_sync_design.md, docs/supabase_verification_events_fallback.md; no charter/review export."
+      tracked_report_scope: "This source-gate report is recorded in queue/reports/naomasa_secondpc_report.yaml without fabricating a full-text audit."
+    conditional_findings:
+      - severity: high
+        perspective: 9_doc
+        issue: "The audit target is identified only by a Supabase id and a missing local review path. A substantive 9観点 + 10 lens audit would require quoting or line-referencing source text that is unavailable here."
+        recommendation: "Export the charter and Nobunaga review into repo docs with section and line numbers, then resubmit the audit request."
+      - severity: high
+        perspective: 3_kiritsu
+        issue: "memory MCP 23 entities cannot be checked from this environment because neither the memory MCP tool nor a canonical local memory snapshot is available."
+        recommendation: "Provide a memory entity export or committed snapshot and declare it as the comparison baseline."
+      - severity: medium
+        perspective: 6_test
+        issue: "The requested §11 6鉄則 audit cannot determine whether 'CI絶対審判' conflicts with existing SKIP=FAIL / evidence-gate rules without the exact charter wording."
+        recommendation: "In v0.1/v0.2, state explicitly that CI is necessary but not sufficient when SKIP>0, missing artifacts, or unverifiable cross-PC evidence exists."
+      - severity: medium
+        perspective: 10_ecosystem_coherence
+        issue: "The requested '越境禁' audit cannot verify boundary definitions without §11 text. The rule likely needs explicit repo, agent-role, PC, data-tenancy, dashboard-writer, and exception boundaries."
+        recommendation: "Define each boundary and permitted exception path in the charter, then cross-reference AGENTS destructive-operation and chain-of-command rules."
+      - severity: medium
+        perspective: 8_ops
+        issue: "Supabase-only source references are not reproducible across agents/PCs unless the fetching method, version, timestamp, and checksum are recorded."
+        recommendation: "Treat local exported docs or a signed fetch transcript as mandatory machine evidence for council audits."
+    required_resubmission_before_audit:
+      - "Add docs/shogun_charter_v0_1.md or equivalent local export containing Supabase id, version, timestamp, and checksum."
+      - "Add docs/shogun_charter_v0_1_nobunaga_initial_review.md, or provide the correct path if renamed."
+      - "Provide memory MCP 23 entity export or memory/MEMORY.md canonical snapshot used for consistency verification."
+      - "Include line-numbered sections for §5, §6, and §11 so findings can cite exact locations."
+      - "After source export, request round1 audit again; this entry should be superseded rather than treated as substantive charter approval."
+    recommendation_to_shogun:
+      action: export_sources_then_resubmit
+      summary: "現環境では source 不足につき全文監査は不可。根拠なき合格/不合格を避け、source gate fail として差戻しが妥当。"
+
 dashboard_task_pre_delivery_audits:
   - audit_id: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render
     target_type: task_yaml_pre_delivery_gate
