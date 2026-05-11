@@ -10,7 +10,7 @@ from pathlib import Path
 import yaml
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 from normalize_audit_reports import (
     _detect_partial_reason,
     _normalize_verdict,
@@ -387,7 +387,7 @@ class TestNormalize:
 # cycle2 fixes: parse error / missing file → blocked row, --strict
 # ---------------------------------------------------------------------------
 
-_SCRIPT = Path(__file__).parent / "normalize_audit_reports.py"
+_SCRIPT = Path(__file__).parent.parent / "scripts" / "normalize_audit_reports.py"
 
 
 class TestCycle2Fixes:

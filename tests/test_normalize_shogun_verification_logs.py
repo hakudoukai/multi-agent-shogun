@@ -7,7 +7,7 @@ from pathlib import Path
 import yaml
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 from normalize_shogun_verification_logs import (  # noqa: E402
     normalize,
     normalize_entry,
@@ -17,7 +17,7 @@ from normalize_shogun_verification_logs import (  # noqa: E402
     stable_event_id,
 )
 
-SCRIPT_PATH = Path(__file__).parent / "normalize_shogun_verification_logs.py"
+SCRIPT_PATH = Path(__file__).parent.parent / "scripts" / "normalize_shogun_verification_logs.py"
 
 
 def _sample_entry(target="kuroda_001", verified_at="2026-05-10T06:42:22+00:00"):

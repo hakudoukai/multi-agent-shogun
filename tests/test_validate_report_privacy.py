@@ -7,10 +7,10 @@ from pathlib import Path
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 from validate_report_privacy import scan_text, scan_file  # noqa: E402
 
-SCRIPT_PATH = Path(__file__).parent / "validate_report_privacy.py"
+SCRIPT_PATH = Path(__file__).parent.parent / "scripts" / "validate_report_privacy.py"
 
 
 # ---------------------------------------------------------------------------
