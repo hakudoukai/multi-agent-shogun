@@ -2466,3 +2466,54 @@ cmd018_qc:
       native_execution: true
       confidence: high
       confidence_note: "ashigaru3 report + naomasa_cmd018_016_verification_log_c2_qc (直政 QC) 機械確認 + 全 7 AC EVIDENCE COMPLETE 確認済み"
+  - audit_id: naomasa_reaudit_016_option_c_qc
+    target_task_id: subtask_cmd018_016_verification_log_c2
+    target_type: audit_entry_qc
+    target_audit_id: naomasa_reaudit_016
+    target_id: cmd_010
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: true
+    summary: "家老 Option C 代筆による naomasa_reaudit_016 をQC。cycle_n=2、redo_of=naomasa_016、verdict=pass、audit_passed=true、全7 AC PASS、proxy false 7件の intentional false、shogun_verification_log.yaml parse OK、persona_signature の Option C 代筆表記を確認。大筋 pass。ただし `direct_verifications` 節は6件で、proxy 7件の正式 verify は同節ではなく `verifications` 側の verify_ieyasu_001〜007 に存在するため、用語の紛らわしさを軽微懸念として残す。"
+    requested_by_inbox: msg_20260511_125919_b98b89a6
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass_with_concerns
+      10_ecosystem_coherence: pass
+    findings:
+      - "queue/reports/naomasa_secondpc_report.yaml:2397-2408 — naomasa_reaudit_016 は cycle_n=2、redo_of=naomasa_016、target_id=cmd_010、verdict=pass、evidence_state=complete、completion_gate=open、audit_passed=true。"
+      - "機械検査: naomasa_reaudit_016 acceptance_criteria_evidence は7件、status は全て PASS。"
+      - "queue/reports/naomasa_secondpc_report.yaml:2414-2435 — 全7 AC が PASS 記録。"
+      - "queue/reports/shogun_verification_log.yaml:18-199 — proxy 7件 (verify_20260510_001〜007) は shogun_verified=false / chain_passed=false / audited_done=false かつ ieyasu_correction を保持。intentional false として妥当。"
+      - "queue/reports/shogun_verification_log.yaml:201-336 — verify_ieyasu_001〜007 が家康直接 verify として存在し、shogun_verified=true / chain_passed=true / audited_done=true を保持。"
+      - "機械検査: shogun_verification_log.yaml は yaml.safe_load OK、keys は metadata/verifications/summary/direct_verifications、verifications=18、direct_verifications=6、chain_passed=false は7件で全て ieyasu_proxy。"
+      - "queue/reports/shogun_verification_log.yaml:431 — direct_verifications key は存在し、parse error fix と整合。"
+      - "git check-ignore: queue/reports/shogun_verification_log.yaml は .gitignore:7 により ignore 対象。local only / commit N/A の説明は妥当。"
+      - "queue/reports/naomasa_secondpc_report.yaml:2464-2468 — persona_signature は `井伊直政 (赤鬼の眼) — karo Option C 代筆` と明記され、家康裁決 msg id も含む。"
+      - "軽微懸念: naomasa_reaudit_016 finding line 2441 の `direct_verify entry (verify_ieyasu_001〜007)` は、現物上 `direct_verifications` 節ではなく `verifications` 配列内の家康直接 verify entries を指す。意味は通るが、節名と混同しやすい。"
+    recommendations:
+      - "この entry は pass 扱いでよい。家老 dashboard では旧 naomasa_016 partial を superseded と明記し、naomasa_reaudit_016 を現行判定に据えよ。"
+      - "用語混同を避けるため、後続追記では `verify_ieyasu_001〜007 entries in verifications` と明記し、`direct_verifications` 節とは分けて書け。"
+      - "dashboard.md の cmd_010 pending 古い節を、Option C 裁決済み・naomasa_reaudit_016 pass に更新せよ。"
+    related_files:
+      - queue/reports/naomasa_secondpc_report.yaml
+      - queue/reports/shogun_verification_log.yaml
+      - queue/reports/ashigaru3_cmd018_016_report.yaml
+      - dashboard.md
+    verification_commands:
+      - "python3 - <<'PY' ... locate naomasa_reaudit_016 and count 7 PASS AC ... PY"
+      - "python3 - <<'PY' ... yaml.safe_load shogun_verification_log.yaml, count proxy false and verify_ieyasu_001〜007 ... PY"
+      - "git check-ignore -v queue/reports/shogun_verification_log.yaml || true"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "指定5点を機械検査し、全て成立確認。残懸念は direct_verify 用語の曖昧さのみ。"
