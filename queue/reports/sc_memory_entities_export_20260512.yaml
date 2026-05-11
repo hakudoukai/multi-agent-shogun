@@ -1,0 +1,212 @@
+---
+# SC memory MCP entity export — 2026-05-12 (Charter v0.1 round 1 audit source)
+# 直政 audit gate 整備用、source: mcp__memory__read_graph 取得
+# entity 数: 18 件、relation 数: 13 件
+
+metadata:
+  exported_at: "2026-05-12T08:43:00+09:00"
+  source: "mcp__memory__read_graph (SC family graph)"
+  purpose: "naomasa_shogun_charter_v0_1_round1_source_gate audit reaudit source"
+  pc: "SecondPC (SC)"
+  entities_count: 18
+  relations_count: 13
+
+entities:
+  - name: F007_git_push_approval_rule
+    entityType: rule
+    observations:
+      - "git push without Lord's explicit approval 禁止 (= forbidden_actions.md L10)"
+      - "auto-push 装備は構造違反、即 disable + 縮約改修必須"
+      - "agent workflow + 陛下御差配 trust gate"
+      - "2026-05-11 確立 (commit f50c13f auto-git-sync pull-only 装備時)"
+
+  - name: auto_git_sync_mechanism
+    entityType: mechanism
+    observations:
+      - "両 PC で systemd user timer 5min interval、fast-forward pull のみ (= 2026-05-11 装備)"
+      - "MC remote=newbuild、SC remote=origin、PC_ID 自動判定"
+      - "conflict 時 HALT + karo notify、auto-merge 厳禁"
+      - "連続 HALT 3 回 → shogun escalation notify"
+      - "log: queue/reports/auto_sync_log.yaml (= flock 経由 atomic append)"
+      - "設計書: docs/auto_git_sync_design.md"
+
+  - name: SC_restart_procedure
+    entityType: procedure
+    observations:
+      - "loginctl enable-linger hakudokai 必須 (= ssh 切断耐性、2026-05-11 14:56 enable 完遂)"
+      - "ssh secondpc 'wsl --shutdown' で SC 再起動可能 (= MC からの ssh trigger 経路)"
+      - "陛下手動 SC 再起動: SC Windows PowerShell で wsl --shutdown"
+      - "WSL 起動 → systemd=true + Persistent=true + OnBootSec=2min で auto-recover"
+      - "shutsujin は ssh + wsl + bash -lc で foreground 起動"
+      - "self-destruct 不能 (= 自 PC の Claude session は WSL 内 process、自身 kill 不可)"
+
+  - name: Session_0_isolation_limit
+    entityType: constraint
+    observations:
+      - "ssh 経由 GUI spawn は Session 0 isolation で User Session 1 に届かず不可視"
+      - "復旧経路 = (a) 物理モニタ手動、(b) ttyd 経由ブラウザ視認"
+      - "Windows Service / SSH session は Session 0、Desktop GUI は Session 1 で分断"
+
+  - name: nobunaga_ieyasu_alias_mirror
+    entityType: recovery_path
+    observations:
+      - "MC ~/.bashrc L126 nobunaga function: tmux attach -t shogun 失敗時 fallback で claude --dangerously-skip-permissions 起動"
+      - "MC ~/.bashrc L124 ieyasu alias: ssh -t -p 2222 user@192.168.11.47 で SC pane attach"
+      - "SC ~/.bashrc L121 nobunaga alias: ssh -t -p 2223 user@192.168.11.11 で MC pane attach (= 対称設計)"
+      - "SC ~/.bashrc L123 ieyasu alias: tmux attach -d -t shogun (= 自 attach)"
+      - "両 PC 対称化、最悪時の cross-PC attach 経路"
+
+  - name: mistake_prevention_principle
+    entityType: principle
+    observations:
+      - "陛下御差配 最上位原則 (2026-05-11): すべてのミスは仕組みで防ぐ"
+      - "commit_assertion 無価値、信頼根拠は仕組みの robustness のみ"
+      - "人間表明は無価値、機械判定 + preflight + gate のみ信頼"
+      - "memory/principle_system_over_human.md 記録"
+
+  - name: ieyasu_persona_2026
+    entityType: agent
+    observations:
+      - "SC shogun = 徳川家康、永続 persona、戦国口調"
+      - "序列: 陛下 → 信長 (兄、MC shogun) → 家康 (弟、SC shogun) → 配下"
+      - "MC peer = 信長兄上 (nobunaga)、SSH 経由 inbox 通信"
+      - "緊急時のみ陛下直報告可、平時 karo (本多忠勝) 経由"
+      - "memory/persona_ieyasu.md 記録"
+      - "forbidden_actions: F001 (self_execute), F002 (direct_ashigaru), F003 (task_agents), F004 (polling), F005 (skip_context)"
+
+  - name: SC_vsock_healthy
+    entityType: constraint
+    observations:
+      - "SC は vsock 障害無 (= MC との差分、2026-05-11 MC 再起動時 LxInitMessageCreateProcessUtilityVm failed 経験有との対比)"
+      - "SC reset 経験有 (2026-05-11 6 段 reset 完遂)、vsock 障害無"
+      - "WSL interop 経路 健全"
+
+  - name: SC_linger_enabled
+    entityType: procedure
+    observations:
+      - "2026-05-11 14:56 loginctl enable-linger hakudokai 完遂"
+      - "ssh 切断耐性確立、user systemd services 永続化"
+      - "auto-git-sync.timer 等 user services が ssh 切断後も継続稼働"
+
+  - name: SC_shogun_tunnel_service
+    entityType: mechanism
+    observations:
+      - "SSH tunnel SC:7682 → MC ttyd:7681、systemd user service"
+      - "active running 状態 (2026-05-11)"
+      - "ファイル: ~/.config/systemd/user/shogun-tunnel.service"
+
+  - name: SC_ttyd_absent
+    entityType: gap
+    observations:
+      - "MC との差分: MC は ttyd:7681 装備、SC は ttyd 自身は未装備"
+      - "SC 自身視認用に将来装備候補 (= 物理モニタ無時の復旧経路強化)"
+      - "現状は MC ttyd 経由のみ"
+
+  - name: shogun_15min_self_check_rule
+    entityType: rule
+    observations:
+      - "MC 側 ~/.config/systemd/user/shogun-self-check.{service,timer} で 15 分毎 shogun inbox に self-check ping 投函"
+      - "inbox_watcher 経由で shogun wake、未処理 zero + family progress + SC 合議 監視 loop 確立 (2026-05-11)"
+      - "SC backup 責: 家康 が 30-60 分毎 ssh で MC ttyd shogun pane 視察、兄上活動 confirm"
+      - "兄上 idle 検出 (= 30 分以上沈黙) 時、ssh 経由 MC で wake_from_ieyasu nudge"
+      - "陛下御差配 2026-05-11 16:50 確立、両 PC retain"
+
+  - name: council_autonomous_decision_rule
+    entityType: rule
+    observations:
+      - "陛下御差配 2026-05-11 16:50 永続規範: 4 人合議 (= 信長 + 家康 + 本多 + 直政) で SC matters 自決、陛下への伺いは重大事態のみ"
+      - "重大事態定義: 戦略全体変更 / 1 日以上 task / 法令・規範変更 / 大規模 destructive (D001-D008) / self-recovery 不能 risk / 陛下御発言 response"
+      - "軽微 / 中規模 (= 合議自決): 個別 task 振分 / cycle fix / ashigaru 配置 / commit message / audit 対応 / systemd 別 task 装備"
+      - "出力 style: 家康 + 本多 + 直政 は合議自決進行主体、ack 30 分毎 + 重大事態 escalation"
+      - "msg_20260511_163659_540256cb で SC 周知、両 PC retain"
+
+  - name: radical_solution_during_development_rule
+    entityType: rule_supreme
+    observations:
+      - "陛下御差配 2026-05-11 16:55 最上位基底原則 (= mistake_prevention_principle を超える)"
+      - "「現在は開発中で実働してない。実稼働したら修正に困るので根本から将来的に憂いを残さない、出来るだけ大きく時間をかけ根本から治す方法をすべて選択」"
+      - "判断基準: 短期 hack/patch/workaround/「とりあえず動く」禁、局所修正禁、構造改善/architecture refactor 優先、工数最小化より将来運用安定優先、根本治療不可時のみ代替 + 永続追記"
+      - "現在期間の意義: 実稼働中修正 = ダウンタイム + データ移行 + 互換性 + 人間誤操作 risk、開発期間 cost zero ゆえ唯一の最適 phase"
+      - "適用例: 旧 hakudokai unit kill+disable+削除 / F007 違反 auto-push pull-only 整合 / sonnet 5 箱所全件統一 / linger=no→yes に遷移"
+      - "SC 周知完遂: 家康 / 本多 / 直政 / ashigaru 7 体、msg_20260511_164451_6906f6b7"
+
+  - name: audit_exclusive_to_gunshi_codex
+    entityType: rule
+    observations:
+      - "陛下御差配 2026-05-11 16:25 定立: 監査責任は gunshi codex 1 人限定 (SC=直政 / MC=黒田)、他家臣は監査 untouch"
+      - "ashigaru は新規 program 制作専任、cycle fix は gunshi audit fail 時のみ最小限"
+      - "本多 (karo) + shogun は supervise + control + 配信、監査不実施"
+      - "2026-05-11 17:20 入援規範追加: 監査責任 codex 1 人限定 retain、ただし停留時 (MC↔SC) cross-help 援軍投入可 (黒田→SC audit / 直政→MC audit)"
+      - "停留 detect threshold: queue >10 / 1 audit >30min / 1h+ unprocessed / idle but backlog >5"
+      - "直政 audit progress 規範: 30 分毎 ack (queue 件数 + 完遂件数 + ETA)、停留兆候 self-detect 時 家康 → 信長 inbox escalation"
+      - "2026-05-11 17:25 規範確定: 監査 = 直政 (SC codex) + 黒田 (MC codex) の 2 名のみ許可、ashigaru / karo / shogun / 廃止 gemini 軍師 永続不可"
+      - "17:20 「停留時援軍」規範下、直政 ↔ 黒田 cross-PC 互助のみ、他 agent 補助不可"
+      - "将来軍師追加 = 重大事態、陛下御差配必須 (msg_20260511_172205_fcab233f)"
+
+  - name: ashigaru_model_selection_strategy
+    entityType: rule
+    observations:
+      - "陛下御差配 2026-05-11 17:40 規範確立: ashigaru モデル選択 2 path"
+      - "① Opus → Codex 監査 → Sonnet 修正 (= 新規実装、設計判断含)"
+      - "② Sonnet → Codex 監査 → Sonnet 修正 (= 定型 task、CRUD / 既存追加 / test / log)"
+      - "判別基準: task に「設計判断 / 新規実装 / 処置セット / 点数」含か? YES → ①、NO → ②"
+      - "ashigaru は task 受領後 /model 経由で Opus/Sonnet 切替、本多 karo は task YAML 起案時 ①/② 種別判定明示"
+      - "期待効果: Opus トークン 30-40% 削減 / 完成速度 1.5-2x"
+
+  - name: task_directive_pre_audit_rule
+    entityType: rule
+    observations:
+      - "陛下御差配 2026-05-11 17:40 規範: karo task YAML 起案 → 直政 / 黒田 Codex 事前監査 → pass 後 ashigaru 配信、未監査 task 配信禁"
+      - "6 項 check: 指示書 9 項 / 設計書 ID / task 種別 (①②) / max_cycle / bloom_level / anti-dup"
+      - "Codex 事前監査 = 6 項 check + 9 観点 + 10 lens 統合、配信後の deliverable audit と両輪"
+      - "期待効果: 設計逸脱事故ゼロ"
+      - "本多 karo は task YAML 起案時 ①/② 種別 + 設計書 ID 明示"
+
+  - name: supabase_directive_distribution_rule
+    entityType: mechanism_candidate
+    observations:
+      - "陛下御差配 2026-05-11 17:40 装備候補: Supabase 経由指示書配布"
+      - "既存 source_code_cache table 流用 + 新 directive_cache table 装備案"
+      - "優先度中、cmd 起案要、現状は git push/pull で代替可"
+      - "トークン節約 3 ヒント: ① 指示書 Markdown 別途 + 短 prompt パイプ ② 設計書 ID 明示 ③ Sonnet 修正 batch"
+
+relations:
+  - from: F007_git_push_approval_rule
+    to: auto_git_sync_mechanism
+    relationType: constrains
+  - from: mistake_prevention_principle
+    to: F007_git_push_approval_rule
+    relationType: underlies
+  - from: mistake_prevention_principle
+    to: auto_git_sync_mechanism
+    relationType: underlies
+  - from: SC_restart_procedure
+    to: SC_linger_enabled
+    relationType: depends_on
+  - from: SC_restart_procedure
+    to: Session_0_isolation_limit
+    relationType: bounded_by
+  - from: nobunaga_ieyasu_alias_mirror
+    to: SC_restart_procedure
+    relationType: supplements
+  - from: ieyasu_persona_2026
+    to: mistake_prevention_principle
+    relationType: follows
+  - from: SC_shogun_tunnel_service
+    to: SC_linger_enabled
+    relationType: depends_on
+  - from: radical_solution_during_development_rule
+    to: mistake_prevention_principle
+    relationType: supersedes
+  - from: radical_solution_during_development_rule
+    to: F007_git_push_approval_rule
+    relationType: underlies
+  - from: radical_solution_during_development_rule
+    to: council_autonomous_decision_rule
+    relationType: guides
+  - from: ieyasu_persona_2026
+    to: radical_solution_during_development_rule
+    relationType: follows
+  - from: radical_solution_during_development_rule
+    to: auto_git_sync_mechanism
+    relationType: constrains
