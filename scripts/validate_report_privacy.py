@@ -62,6 +62,16 @@ EXEMPT_FIELDS = frozenset({
     "report_file", "source_hash", "target_hash",
 })
 
+# File-level pragma: when this marker appears anywhere in a file, WARN
+# patterns are not reported for that file. HIGH patterns are still scanned.
+# Intended for test fixture files where 5-10 digit synthetic IDs are unavoidable.
+FIXTURE_MARKER = "privacy-validator: fixtures-allowed"
+
+# Line-level pragma: any line containing this marker skips WARN scanning for
+# that single line only. HIGH patterns are still scanned. Intended for one-off
+# docstring examples where masking would harm readability.
+LINE_ALLOW_MARKER = "privacy-allow"
+
 # YAML simple key-value line pattern
 _YAML_KV_RE = re.compile(r"^(\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:\s*(.*)")
 
@@ -97,7 +107,9 @@ def scan_file(path: Path) -> dict:
     """Scan a single file. Return result dict (MC-compatible format).
 
     Field-aware: EXEMPT_FIELDS lines are skipped for HIGH/WARN checks.
-    Non-keyed lines and non-exempt keyed lines are fully scanned.
+    File-level FIXTURE_MARKER suppresses WARN reporting for the whole file.
+    Line-level LINE_ALLOW_MARKER suppresses WARN reporting for that line only.
+    HIGH patterns are always scanned regardless of markers.
     """
     if not path.exists():
         return {"file": str(path), "status": "missing", "high": [], "warn": []}
@@ -105,6 +117,8 @@ def scan_file(path: Path) -> dict:
         text = path.read_text(encoding="utf-8", errors="replace")
     except OSError as exc:
         return {"file": str(path), "status": "read_error", "error": str(exc), "high": [], "warn": []}
+
+    file_fixture_mode = FIXTURE_MARKER in text
 
     high: list[dict] = []
     warn: list[dict] = []
@@ -124,7 +138,8 @@ def scan_file(path: Path) -> dict:
 
         h, w = scan_text(scan_target)
         high.extend(h)
-        warn.extend(w)
+        if not file_fixture_mode and LINE_ALLOW_MARKER not in line:
+            warn.extend(w)
 
     return {
         "file": str(path),
