@@ -2099,3 +2099,370 @@ cmd014_qc:
       native_execution: true
       confidence: high
       confidence_note: "commit、target field 4件、normalizer exit 0、canonical 4 events/missing none/parse false を直接確認。残懸念は canonical payload の情報量不足。"
+
+cmd018_qc:
+  - audit_id: naomasa_cmd018_014_retroaudit_c2_qc
+    target_task_id: subtask_cmd018_014_retroaudit_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru2_cmd018_014_report.yaml
+    target_audit_id: naomasa_014
+    target_id: cmd_008
+    verdict: pass_with_concerns
+    evidence_state: missing
+    completion_gate: blocked
+    audit_passed: false
+    summary: "足軽2号の cmd018 cycle2 retroaudit は、cmd_008 対象の ashigaru1-6 report 6ファイルへ retroactive_audit: true を後付けしたことを直接確認。だが source_code_cache UPSERT 実行証跡は logs/queue/scripts/docs 検索で見当たらず、sync_to_supabase.sh の存在だけでは完了証明にならない。よって Step1 は pass、Step2 は evidence_state=missing / completion_gate=blocked とする。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass
+      5_schema: pass_with_concerns
+      6_test: pass_with_concerns
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru2_cmd018_014_report.yaml:10 — 足軽報告は verdict=pass_with_concerns / evidence_state=missing / completion_gate=blocked。自己申告と現物確認は一致。"
+      - "queue/reports/ashigaru1_report.yaml:51 — retroactive_audit: true 追記を確認。"
+      - "queue/reports/ashigaru2_report.yaml:87 — retroactive_audit: true 追記を確認。"
+      - "queue/reports/ashigaru3_report.yaml:62 — retroactive_audit: true 追記を確認。"
+      - "queue/reports/ashigaru4_report.yaml:108 — retroactive_audit: true 追記を確認。"
+      - "queue/reports/ashigaru5_report.yaml:88 — retroactive_audit: true 追記を確認。"
+      - "queue/reports/ashigaru6_report.yaml:61 — retroactive_audit: true 追記を確認。"
+      - "scripts/sync_to_supabase.sh:2 — source_code_cache UPSERT 用 script は存在。"
+      - "検証: `rg -n \"source_code_cache|sync_to_supabase|UPSERT|upsert\" logs queue reports scripts config docs -S` では実行ログ・成功ログは見当たらず、script 本体と無関係 docs のみ検出。UPSERT 実行証跡は missing。"
+      - "懸念: queue/reports/ashigaru2_cmd018_014_report.yaml:75 — commit_hash は N/A。queue/reports/*.yaml が git 未追跡という説明はあり得るが、cross-agent trace としては commit 追跡不能。"
+      - "懸念: source_code_cache UPSERT は証跡がなければ fabrication risk が高い。家康裁決で不要化するか、実行ログ・row count・対象 file list を残すべし。"
+    recommendations:
+      - "Option A: `scripts/sync_to_supabase.sh` を実行し、対象6件の source_code_cache UPSERT 成功ログ、row count、timestamp、環境名を report に追記せよ。"
+      - "Option B: 家康裁決で source_code_cache UPSERT 不要とするなら、naomasa_014 の acceptance から UPSERT 条件を明示的に除外し、理由を dashboard/verification log に残せ。"
+      - "retroactive_audit 追記済みの6 report は未追跡でも、最低限 sha256 または file mtime を audit trail に記録し、後続確認可能にせよ。"
+    related_files:
+      - queue/reports/ashigaru2_cmd018_014_report.yaml
+      - queue/reports/ashigaru1_report.yaml
+      - queue/reports/ashigaru2_report.yaml
+      - queue/reports/ashigaru3_report.yaml
+      - queue/reports/ashigaru4_report.yaml
+      - queue/reports/ashigaru5_report.yaml
+      - queue/reports/ashigaru6_report.yaml
+      - scripts/sync_to_supabase.sh
+    verification_commands:
+      - "for f in queue/reports/ashigaru{1,2,3,4,5,6}_report.yaml; do rg -n \"retroactive_audit|task_id\" \"$f\"; done"
+      - "rg -n \"source_code_cache|sync_to_supabase|UPSERT|upsert\" logs queue reports scripts config docs -S"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "retroactive_audit 6件は直接確認済み。UPSERT は証跡不在のため blocked 判定。"
+  - audit_id: naomasa_cmd018_020_env_e2e_c2_qc
+    target_task_id: subtask_cmd018_020_env_e2e_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru6_cmd018_020_report.yaml
+    target_audit_id: naomasa_020
+    target_id: subtask_006e_fix
+    verdict: pass_with_concerns
+    evidence_state: blocked_env
+    completion_gate: blocked
+    audit_passed: false
+    summary: "足軽6号の env/E2E 三軸評価は、RLS policy の成立を既存報告で確認し、API key と E2E は blocked と見るのが妥当。ただし報告内の `file_not_found_on_mainpc` は現物とずれがあり、/mnt/c/Projects/hakudokai-dev/backend/.env は存在するが ANTHROPIC_API_KEY は placeholder のため実利用不能。E2E は SKIP であり、テスト規則上は未完了。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass_with_concerns
+      5_schema: pass
+      6_test: fail
+      7_legal: pass_with_concerns
+      8_ux: pass_with_concerns
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru6_cmd018_020_report.yaml:11 — verdict=pass_with_concerns、line 12 evidence_state=blocked_env、line 13 completion_gate=blocked。"
+      - "queue/reports/ashigaru6_cmd018_020_report.yaml:28-33 — RLS は confirmed=true、source は ashigaru5_report_cycle3、policy count 3。"
+      - "queue/reports/ashigaru5_report_cycle3.yaml:29-33 — migration `patient_chat_messages_rls_v1` success、policies_created count 3。"
+      - "queue/reports/ashigaru5_report_cycle3.yaml:64-77 — pg_policies post_state に SELECT/INSERT/SELECT の3 policy が記録済み。"
+      - "検証: /mnt/c/Projects/hakudokai-dev/backend/.env は存在し、ANTHROPIC_API_KEY 行も存在するが、値は placeholder であり real key ではない。足軽報告 line 46 の file_not_found_on_mainpc は現状と不一致。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/patient_chat_engine.py:36 — backend/.env fallback を load_dotenv。line 40 で ANTHROPIC_API_KEY を読む。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/patient_chat_engine.py:430 — fallback は key 空値時のみ。placeholder は非空のため API call に進み、line 458-464 の例外 fallback に落ちる恐れがある。"
+      - "queue/reports/ashigaru6_cmd018_020_report.yaml:69-72 — E2E は SKIP。SKIP はテスト未完了扱いであり completion_gate は blocked のまま。"
+    recommendations:
+      - "secondpc/backend/.env の ANTHROPIC_API_KEY を安全な手順で実 key に差し替え、値を git/report に露出させずに presence/format のみ記録せよ。"
+      - "placeholder 値を startup health check または patient_chat_engine 側で拒否し、非空なら有効とみなす判定を避けよ。"
+      - "backend 起動後、patient chat E2E を SKIP=0 で実行し、結果を cmd018_020 報告へ追記せよ。"
+    related_files:
+      - queue/reports/ashigaru6_cmd018_020_report.yaml
+      - queue/reports/ashigaru5_report_cycle3.yaml
+      - /mnt/c/Projects/hakudokai-dev/backend/services/patient_chat_engine.py
+    verification_commands:
+      - "python3 - <<'PY' ... backend/.env exists + placeholder-only key check without printing secret ... PY"
+      - "nl -ba /mnt/c/Projects/hakudokai-dev/backend/services/patient_chat_engine.py | sed -n '428,475p'"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "RLS evidence は既存報告で確認。API key は placeholder、E2E は SKIP のため blocked 判定。"
+  - audit_id: naomasa_cmd018_016_verification_log_c2_qc
+    target_task_id: subtask_cmd018_016_verification_log_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru3_cmd018_016_report.yaml
+    duplicate_inbox_merged:
+      - msg_20260511_124942_9c22bda0
+      - msg_20260511_125043_535dbd8d
+    target_audit_id: naomasa_016
+    target_id: cmd_010
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: false
+    summary: "足軽3号の verification log 修正は、shogun_verification_log.yaml の YAML parse error を `direct_verifications:` 節追加で解消し、cmd_010 acceptance evidence も揃えた。chain_passed=false 7件は全て proxy 記録であり、是正不要という判定は妥当。ただし naomasa_016 旧 snapshot の partial/audit_passed=false と dashboard の古い節が残っており、家康裁決で Option A/B を確定して superseding entry を置く必要がある。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass
+      5_schema: pass
+      6_test: pass_with_concerns
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru3_cmd018_016_report.yaml:13 — parse_error_fixed=true。line 20-24 で direct_verifications key 追加と yaml.safe_load OK を報告。"
+      - "queue/reports/shogun_verification_log.yaml:431 — direct_verifications 節が存在。line 432/459/495/532/585/618 に6 direct verification entries。"
+      - "実測: yaml.safe_load keys は metadata/verifications/summary/direct_verifications、verifications=18、direct_verifications=6。"
+      - "実測: chain_passed=false は7件で、全件 verified_by に ieyasu_proxy を含み、shogun_verified=false。proxy 越権防止 record として intentional false と見るのが妥当。"
+      - "queue/reports/ashigaru3_cmd018_016_report.yaml:90-121 — cmd_010 acceptance evidence は全項目 complete と整理済み。"
+      - "懸念: queue/reports/naomasa_secondpc_report.yaml 旧 naomasa_016 は partial/audit_passed=false のまま。これは旧 snapshot と報告されており、上書きではなく superseding entry が必要。"
+      - "懸念: dashboard.md には cmd_010 complete と verify pending の古い節が混在しており、家老側で整理が必要。"
+    recommendations:
+      - "家康または家老が Option A/B を裁決し、naomasa_016 を直接編集せず superseding audit entry として現在判定を追記せよ。"
+      - "proxy chain_passed=false 7件は変更せず、intentional false の説明を verification summary 側へ残せ。"
+      - "dashboard.md の cmd_010 古い pending 節を最新状態に統合し、Lord の判断材料を一箇所に揃えよ。"
+    related_files:
+      - queue/reports/ashigaru3_cmd018_016_report.yaml
+      - queue/reports/shogun_verification_log.yaml
+      - queue/reports/naomasa_secondpc_report.yaml
+      - dashboard.md
+    verification_commands:
+      - "python3 - <<'PY' ... yaml.safe_load shogun_verification_log.yaml and count false proxy entries ... PY"
+      - "rg -n \"naomasa_016|cmd_010|verify pending|conditions achieved\" dashboard.md queue/reports/naomasa_secondpc_report.yaml"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "parse 解消、direct_verifications 6件、proxy false 7件を直接確認。残件は判定記録の更新裁決。"
+  - audit_id: naomasa_cmd018_018_audit_chain_c2_qc
+    target_task_id: subtask_cmd018_018_audit_chain_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru5_cmd018_018_report.yaml
+    target_verify_request: queue/reports/cmd012_layer4_verify_request.yaml
+    target_audit_id: naomasa_018
+    target_id: cmd_012
+    verdict: pass_with_concerns
+    evidence_state: layer4_pending
+    completion_gate: blocked_pending_shogun_verify
+    audit_passed: false
+    summary: "足軽5号の cmd_012 audit chain 整理は、Layer 1-3 evidence と Layer 4 verify request 作成を確認。commit 5件はいずれも git に存在し、request file も YAML parse OK。ただし Layer 4 は家康 shogun_verified 専権で未完、Layer 5 audited_done も未昇格のため completion_gate は blocked のまま。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass
+      5_schema: pass
+      6_test: pass_with_concerns
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru5_cmd018_018_report.yaml:8-10 — verdict=partial、evidence_state=layer4_pending、completion_gate=blocked_pending_shogun_verify。自己申告は妥当。"
+      - "queue/reports/ashigaru5_cmd018_018_report.yaml:12-14 — Layer 1-3 evidence complete、Layer 4 request created。"
+      - "git 確認: 480066a / 2009de6 / a3c422f / c0f8d8e / aa69933 は全て commit として存在。"
+      - "queue/reports/cmd012_layer4_verify_request.yaml:7-16 — request_id/target_id/summary が存在し、Layer 4 のみ残ると明記。"
+      - "queue/reports/cmd012_layer4_verify_request.yaml:68-77 — pending_action は家康 shogun_verified=true 設定で、cascade effects も記録済み。"
+      - "queue/reports/cmd012_layer4_verify_request.yaml:79-84 — current_status は Layer 1-3 complete、Layer 4/5 pending。"
+      - "検証: ashigaru5 report と verify request は yaml.safe_load OK。"
+    recommendations:
+      - "家老より家康へ cmd012_layer4_verify_request.yaml を転送し、shogun_verified の直接 verify を仰げ。"
+      - "Layer 4 完了後に naomasa_018/acha_018 の superseding entry、chain_passed_count、audited_done 昇格を一括で記録せよ。"
+    related_files:
+      - queue/reports/ashigaru5_cmd018_018_report.yaml
+      - queue/reports/cmd012_layer4_verify_request.yaml
+      - queue/reports/naomasa_secondpc_report.yaml
+      - queue/reports/acha_secondpc_report.yaml
+      - queue/reports/karo_supervision_log.yaml
+    verification_commands:
+      - "for h in 480066a 2009de6 a3c422f c0f8d8e aa69933; do git log -1 --oneline \"$h\"; done"
+      - "python3 - <<'PY' ... yaml.safe_load ashigaru5 report and layer4 request ... PY"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "Layer 1-3 と request 作成は確認済み。家康 verify 未完のため blocked。"
+  - audit_id: naomasa_cmd018_009_closure_c2_qc
+    target_task_id: subtask_cmd018_009_closure_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru1_cmd018_009_report.yaml
+    target_audit_id: naomasa_009
+    target_id: cmd_002
+    verdict: pass
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: true
+    summary: "足軽1号の cmd_002 closure は、ashigaru6 alias CONFIRMED、naomasa_reaudit_009 pass/shogun_verified/audited_done、ならびに closure entry 追記を現物確認。cmd_002 の audited_done 正式化として pass。"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass
+      5_schema: pass
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass
+    findings:
+      - "queue/reports/ashigaru1_cmd018_009_report.yaml:13-17 — ashigaru_alias_cert.yaml:158 の alias_use_status=CONFIRMED を evidence として記録。"
+      - "queue/reports/ashigaru_alias_cert.yaml:158 — alias_use_status: CONFIRMED を直接確認。"
+      - "queue/reports/completion_gate_status.yaml:34-42 — naomasa_reaudit_009 は target_id=cmd_002、verdict=pass、shogun_verified=true、audited_done=true。"
+      - "queue/reports/completion_gate_status.yaml:390-399 — naomasa_cmd018_009_closure_c2_verified entry が追記済みで、audited_done=true と alias CONFIRMED note を含む。"
+      - "queue/reports/ashigaru1_cmd018_009_report.yaml:40-43 — verdict=pass、evidence_state=complete、completion_gate=open。現物確認と一致。"
+    recommendations:
+      - "cmd_002 は closure 済みとして扱い、後続 dashboard では pending から除外してよい。"
+    related_files:
+      - queue/reports/ashigaru1_cmd018_009_report.yaml
+      - queue/reports/ashigaru_alias_cert.yaml
+      - queue/reports/completion_gate_status.yaml
+    verification_commands:
+      - "nl -ba queue/reports/ashigaru_alias_cert.yaml | sed -n '150,164p'"
+      - "rg -n \"naomasa_cmd018_009_closure_c2_verified|naomasa_reaudit_009|target_id: cmd_002|audited_done: true\" queue/reports/completion_gate_status.yaml"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "alias CONFIRMED、reaudit pass、closure entry 追記を直接確認。"
+  - audit_id: naomasa_cmd018_017_gunshi_redef_c2_qc
+    target_task_id: subtask_cmd018_017_gunshi_redef_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru4_cmd018_017_report.yaml
+    target_redefinition: queue/reports/cmd011_redef_1gunshi_system.yaml
+    target_audit_id: naomasa_017
+    target_id: cmd_011
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: true
+    summary: "足軽4号の cmd_011 一軍師体制再定義は、config/settings.yaml の gunshi=codex / audit.primary=codex / secondary gemini 廃止、completion_gate_status の naomasa_reaudit_006 audited_done=true、再定義ファイルの新ACを確認。趣旨は pass。ただし報告 commit_hash=65c2e98 は実際には scripts/shogun_verify_audit.sh と tests の commit で、今回の YAML 再定義ファイルを含む commit ではないため trace に懸念あり。"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass
+      5_schema: pass
+      6_test: pass_with_concerns
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass
+    findings:
+      - "queue/reports/ashigaru4_cmd018_017_report.yaml:13-15 — verdict=pass、evidence_state=complete、completion_gate=open。"
+      - "config/settings.yaml:32-35 — gunshi=codex、audit.primary=codex、secondary gemini 廃止を確認。"
+      - "queue/reports/completion_gate_status.yaml:124-133 — naomasa_reaudit_006 target_id=cmd_011、shogun_verified=true、audited_done=true、直政単独担当 note あり。"
+      - "queue/reports/cmd011_redef_1gunshi_system.yaml:23-54 — 新 acceptance criteria AC1-AC4 が pass として定義済み。"
+      - "queue/reports/cmd011_redef_1gunshi_system.yaml:56-67 — 阿茶/gunshi2 native 必須条件と4軍師補完体制の廃止理由・authority を明記。"
+      - "queue/reports/cmd011_redef_1gunshi_system.yaml:69-82 — current_verdict は pass/evidence_state=complete/completion_gate=open/audited_done=true。"
+      - "懸念: git show 65c2e98 は scripts/shogun_verify_audit.sh と tests/test_shogun_verify_preflight.sh の commit であり、cmd011_redef_1gunshi_system.yaml や ashigaru4 report を含まない。報告 line 57 の commit_hash は今回成果物の trace として不正確。"
+      - "検証: ashigaru4 report と cmd011_redef_1gunshi_system.yaml は yaml.safe_load OK。"
+    recommendations:
+      - "報告書の commit_hash を `N/A (YAML edit only)` または実際に成果物を含む commit hash へ訂正せよ。"
+      - "cmd_011 は一軍師体制の再定義済みとして扱いつつ、trace 誤記だけは家老 dashboard 側で注意書きせよ。"
+    related_files:
+      - queue/reports/ashigaru4_cmd018_017_report.yaml
+      - queue/reports/cmd011_redef_1gunshi_system.yaml
+      - config/settings.yaml
+      - queue/reports/completion_gate_status.yaml
+    verification_commands:
+      - "git show --stat --oneline --no-renames 65c2e98 --"
+      - "nl -ba config/settings.yaml | sed -n '28,38p'"
+      - "nl -ba queue/reports/cmd011_redef_1gunshi_system.yaml | sed -n '1,140p'"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "一軍師体制再定義の根拠は確認済み。commit trace のみ不正確。"
+
+  # ===== naomasa_reaudit_016 (Option C 家康裁決 msg_20260511_125216_cd2b1472) =====
+  - audit_id: naomasa_reaudit_016
+    target_task_id: subtask_cmd018_016_verification_log_c2
+    target_type: cmd
+    target_id: cmd_010
+    cycle_n: 2
+    redo_of: naomasa_016
+    audited_at: "2026-05-11T13:30:00+09:00"
+    audited_by: naomasa
+    verdict: pass
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: true
+    summary: |
+      cmd_010 cycle_n=2 再監査。家康裁決 Option C (msg_20260511_125216_cd2b1472) に基づき
+      ashigaru3 deliverable を superseding entry として起案。全 7 AC 全件 EVIDENCE COMPLETE。
+      shogun_verification_log.yaml parse error (L430) 修正済み。chain_passed=false 7 件は
+      proxy 越権是正記録 (intentional false)。旧 naomasa_016 (partial, cycle_n=1) は履歴 retain。
+    acceptance_criteria_evidence:
+      - criterion: "scripts/shogun_verify_audit.sh を SecondPC に配置"
+        evidence: "direct_verifications[P0-2]: shogun_verified=true, commit c0f8d8e 確認済み"
+        status: "PASS"
+      - criterion: "naomasa_report.yaml + acha_report.yaml を schema 統一"
+        evidence: "naomasa_secondpc_report.yaml + acha_secondpc_report.yaml: audit_id/target_id/cycle_n/verdict/findings 全フィールド確認"
+        status: "PASS"
+      - criterion: "shogun_verification_log.yaml 起案 (両 PC 共通 schema)"
+        evidence: "shogun_verification_log.yaml 635 lines 実在, parse error (L430) 修正済み (direct_verifications: key 追加 + 6 entries indent 付与, syntax-only, python3 yaml.safe_load OK)"
+        status: "PASS"
+      - criterion: "全 audit entry 全数 verify (random sampling 厳禁)"
+        evidence: "verifications: 18 entries + direct_verifications: 6 entries = 合計 24 verify entries 全数カバー"
+        status: "PASS"
+      - criterion: "audit_passed + shogun_verified = audited_done 昇格"
+        evidence: "summary.audited_done_count: 11, audited_done_list: subtask_006a〜006f, 007b, cmd_001/002/003, naomasa_new_002"
+        status: "PASS"
+      - criterion: "架空監査検出時 対応"
+        evidence: "架空監査ゼロ。karo proxy 越権は即時是正済み (ieyasu_correction)"
+        status: "PASS"
+      - criterion: "cmd_009 retroactive audit と統合"
+        evidence: "naomasa_secondpc_report.yaml に naomasa_001〜015 retroactive entries 実在"
+        status: "PASS"
+    findings:
+      - "cmd_010 全 7 AC: 全件 EVIDENCE COMPLETE (ashigaru3 subtask_cmd018_016_verification_log_c2 deliverable)"
+      - "shogun_verification_log.yaml L430 parse error 修正: 'direct_verifications:' key 追加 + lines 430-634 に 2 space indent 付与 (syntax-only, 内容変更なし)"
+      - "python3 yaml.safe_load → Parse OK, keys: [metadata, verifications, summary, direct_verifications]"
+      - "chain_passed=false 7 件 (verify_20260510_001〜007): ieyasu_proxy (karo 代理) による事前整備 record — 家康 ieyasu_correction で shogun_verified=false 降格済み (設計通り, intentional false)"
+      - "各 proxy record は direct_verify entry (verify_ieyasu_001〜007, shogun_verified=true, audited_done=true) で正式 verify 完了"
+      - "shogun_verification_log.yaml は .gitignore 対象のため parse error fix は local only (commit 不可、runtime file として設計通り)"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass
+      5_schema: pass
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass
+    concerns:
+      - concern: "shogun_verification_log.yaml parse error fix は local only (gitignore 対象)"
+        severity: low
+        note: "runtime file として設計通り。機能整合に影響なし"
+    related_files:
+      - queue/reports/ashigaru3_cmd018_016_report.yaml
+      - queue/reports/shogun_verification_log.yaml
+      - queue/reports/naomasa_secondpc_report.yaml
+    commit_hash: "N/A (shogun_verification_log.yaml は gitignore 対象)"
+    log_path: "queue/reports/shogun_verification_log.yaml"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼) — karo Option C 代筆 (家康裁決 msg_20260511_125216_cd2b1472)"
+      native_execution: true
+      confidence: high
+      confidence_note: "ashigaru3 report + naomasa_cmd018_016_verification_log_c2_qc (直政 QC) 機械確認 + 全 7 AC EVIDENCE COMPLETE 確認済み"
