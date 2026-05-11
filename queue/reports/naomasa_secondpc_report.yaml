@@ -1376,3 +1376,196 @@ self_reflections:
       native_execution: true
       confidence: high
       confidence_note: "対象文書 commit 5b548d2 の行番号を直接確認し、今回の partial/audit_passed 矛盾に対する再発防止として妥当と判断。ただし運用強制前は pass_with_concerns。"
+
+p0_reviews:
+  - audit_id: naomasa_p0_preflight_review
+    target_task_id: subtask_p0_preflight
+    target_deliverable: scripts/shogun_verify_audit.sh
+    target_report: queue/reports/ashigaru3_p0_preflight_report.yaml
+    target_commit: "c0f8d8e4508f1ac8d1fe23bba866dba7fbc9b0fb"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    findings:
+      - "scripts/shogun_verify_audit.sh:146 preflight_one() — `--preflight <audit_id>` 専用関数が追加され、`queue/reports/audit_report_index.yaml` を唯一の入力 index として読む設計。P0-2 の責務境界は明確。"
+      - "scripts/shogun_verify_audit.sh:156 preflight_one() — audit_report_index.yaml 不在時は `missing_audit_entry` を出力し exit 1。直実行でも `missing_audit_entry: ... not found` / exit 1 を確認し、graceful handling は成立。"
+      - "scripts/shogun_verify_audit.sh:176 preflight_one() — audit_id が index に無い場合も `missing_audit_entry` / exit 1。missing index と missing entry が同じ exit 1 で扱われる点は仕様内だが、運用ログ上は理由文字列の保持が必要。"
+      - "scripts/shogun_verify_audit.sh:181 preflight_one() — `evidence_state=cross_pc_missing` を `missing_cross_pc_report` / exit 2 へ変換。直実行で test_cross exit 2 を確認。"
+      - "scripts/shogun_verify_audit.sh:187 preflight_one() — `evidence_state=schema_unsupported` を `unsupported_report_schema` / exit 3 へ変換。直実行で test_schema exit 3 を確認。"
+      - "scripts/shogun_verify_audit.sh:192 preflight_one() — raw `verdict: partial` を `partial_verdict_blocked` / exit 4 として検出。直実行で test_partial exit 4 を確認し、partial terminal verdict 廃止の防波堤として機能。"
+      - "scripts/shogun_verify_audit.sh:198 preflight_one() — `log_path` または `commit_hash` が空なら `missing_log_or_commit` / exit 5。直実行で test_missing exit 5 を確認。ただし非空値の実在・git object 妥当性までは preflight で検証しない。"
+      - "scripts/shogun_verify_audit.sh:205 preflight_one() — 主要 blockers が無く log_path/commit_hash が非空なら `ready_to_verify` / exit 0。直実行で test_ready exit 0 を確認。"
+      - "scripts/shogun_verify_audit.sh:210 case dispatch — 既存 `--all`, `--random*|--all-yellow`, empty usage, default `verify_one` 分岐は維持され、`--preflight` 分岐のみ追加。backward compatibility はコード上保たれている。"
+      - "queue/reports/ashigaru3_p0_preflight_report.yaml:17 git_commit — commit `c0f8d8e`、files_changed=1、insertions=72、deletions=1 と報告。`git show --stat c0f8d8e` でも scripts/shogun_verify_audit.sh のみ変更と一致。"
+      - "queue/reports/audit_report_index.yaml:1 generated_at — 現行 index は P0-1 により存在し、`naomasa_new_001` / `naomasa_reaudit_011` / `naomasa_self_reflection_on_solution_20260511` の実運用 preflight はいずれも exit 5。P0-2 というより index 側が log_path/commit_hash を渡していない結合懸念である。"
+      - "検証: `bash -n scripts/shogun_verify_audit.sh` → bash_n_ok。さらに一時 index を用い、missing_index=1 / missing_entry=1 / cross_pc=2 / schema=3 / partial=4 / missing_log_commit=5 / ready=0 を直接確認。"
+    recommendations:
+      - "P0-1 normalizer は `log_path` と `commit_hash` を audit_report_index.yaml へ正規化出力せよ。現状の index では P0-2 が常時 exit 5 になり、実運用 ready_to_verify へ到達しにくい。"
+      - "P0-2 preflight は次 cycle で `log_path` の実在と `git cat-file -e <commit_hash>` まで確認し、非空だが無効な evidence を `ready_to_verify` にしないこと。"
+      - "missing index と missing audit_id は同じ exit 1 でよいが、completion_gate_status.yaml へは reason を別 field で保持せよ。"
+      - "usage header に `bash scripts/shogun_verify_audit.sh --preflight <audit_id>` を追記し、運用者が `--preflight` を発見できるようにせよ。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass_with_concerns
+      9_doc: pass_with_concerns
+    related_files:
+      - scripts/shogun_verify_audit.sh
+      - queue/reports/ashigaru3_p0_preflight_report.yaml
+      - queue/reports/audit_report_index.yaml
+    verification_commands:
+      - "bash -n scripts/shogun_verify_audit.sh"
+      - "一時 audit_report_index.yaml による --preflight 全状態 exit code 0-5 直接確認"
+      - "bash scripts/shogun_verify_audit.sh --preflight naomasa_new_001"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "P0-2 単体の六状態・partial blocker・backward-compatible dispatch は直接確認済み。ただし P0-1 index 連携と evidence 実在検証に改善余地あり。"
+
+  - audit_id: naomasa_p0_normalize_review
+    target_task_id: subtask_p0_normalize_reports
+    target_deliverable: scripts/normalize_audit_reports.py
+    target_output: queue/reports/audit_report_index.yaml
+    target_report: queue/reports/ashigaru2_p0_normalize_report.yaml
+    target_commit: "2009de6"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: blocked
+    findings:
+      - "scripts/normalize_audit_reports.py:29 VERDICT_MAPPING — `partial` は `verdict: fail`, `evidence_state: blocked_env`, `completion_gate: blocked` に明示 mapping。黙って pass_with_concerns に丸めない実装で、再発防止の中核は成立。"
+      - "scripts/normalize_audit_reports.py:88 normalize_entry() — entry 側に既存 `evidence_state` / `completion_gate` があれば保存し、無ければ mapping 値を補完する。三軸 fields を全 entry へ付与する設計は成立。"
+      - "queue/reports/audit_report_index.yaml:1 generated_at — 直実行後の index は total=52 / pass=18 / pass_with_concerns=8 / fail=26 / partial_auto_mapped_to_fail=18。全 52 entry に verdict/evidence_state/completion_gate/shogun_verified が存在し、raw `verdict: partial` は 0 件。"
+      - "scripts/normalize_audit_reports.py:120 process_file() — YAML parse error は stderr WARN 後に `return []` し、top-level `skipped_files` へ入るのみ。`acha_secondpc_report.yaml` の schema_unsupported entry が reports 配下に作られず、preflight で `unsupported_report_schema` を audit_id 単位に返せない。"
+      - "scripts/normalize_audit_reports.py:170 main() — `skipped_files` は file path list のみで、skip reason / line / evidence_state=schema_unsupported / completion_gate=blocked を構造化しない。Acha line 782 の障害は人間ログに残るが gate table 連携には弱い。"
+      - "scripts/normalize_audit_reports.py:70 get_target_id() — target_id 解決対象は `target_id` / `target_audit_id` / `target_doc` のみ。P0 review entry の `target_task_id` / `target_deliverable` は拾われず、`naomasa_p0_preflight_review` は index 上 `target_id: null` になった。"
+      - "scripts/normalize_audit_reports.py:130 process_file() — `reports/new_project_audits/phase_b_reaudits/cycle2_fix_reaudits/self_reflections` と legacy list blocks を抽出できる。今回の `p0_reviews` も legacy block として抽出され、section 拡張耐性はある。"
+      - "queue/reports/audit_report_index.yaml:77 naomasa_new_001 / queue/reports/audit_report_index.yaml:191 naomasa_reaudit_011 — 同一 target の旧 partial/fail と新 pass が並列に残る。`naomasa_new_002` は fail mapping、`naomasa_reaudit_011` は pass として共存するが、target の最新 effective verdict を選ぶ設計は無い。"
+      - "scripts/normalize_audit_reports.py:94 normalize_entry() — `log_path` / `commit_hash` / `audit_passed` / `cycle_n` を index に伝播しない。P0-2 `--preflight` は log_path/commit_hash を要求するため、現行 index では実運用 preflight が `missing_log_or_commit` に偏る。"
+      - "検証: `python3 scripts/normalize_audit_reports.py` → exit 0。stderr で takenaka missing と acha YAML parse error を確認。`python3` 直接検査で missing_required_count=0, raw_verdict_partial_count=0, original_partial_count=18 を確認。"
+    recommendations:
+      - "parse error file は単なる skipped_files ではなく、synthetic report entry または skipped_reports 配列として `evidence_state: schema_unsupported`, `completion_gate: blocked`, reason/line を構造化せよ。"
+      - "同一 `target_id` の latest/effective status を別 section (`targets` または `latest_by_target`) に出力し、cycle_n / audited_at / redo_task_id に基づき `naomasa_new_002` より `naomasa_reaudit_011` を現行判定にできるようにせよ。"
+      - "normalize_entry() は `log_path`, `commit_hash`, `cycle_n`, `audit_passed`, `redo_task_id`, `target_task_id`, `target_deliverable` を可能な範囲で保持し、P0-2 preflight と結合させよ。"
+      - "summary は `partial_auto_mapped_to_fail` だけでなく `schema_unsupported_files` と `target_conflicts` を出し、Karo/Honda が completion summary 前に見落とさぬ形にせよ。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: fail
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass_with_concerns
+      9_doc: pass_with_concerns
+    related_files:
+      - scripts/normalize_audit_reports.py
+      - queue/reports/audit_report_index.yaml
+      - queue/reports/ashigaru2_p0_normalize_report.yaml
+      - queue/reports/acha_secondpc_report.yaml
+    verification_commands:
+      - "python3 scripts/normalize_audit_reports.py"
+      - "python3 - <<'PY' ... audit_report_index.yaml required fields / partial count / latest target checks ... PY"
+      - "git show --stat --oneline 2009de6 -- scripts/normalize_audit_reports.py queue/reports/audit_report_index.yaml"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "partial mapping と三軸付与は直確認済み。ただし schema_unsupported の audit_id 化、latest effective target 判定、P0-2 用 evidence 伝播が未完成のため completion_gate は blocked とする。"
+
+  - audit_id: naomasa_p0_normalize_review_cycle2
+    target_task_id: subtask_p0_normalize_reports_fix
+    target_deliverable: scripts/normalize_audit_reports.py
+    target_output: queue/reports/audit_report_index.yaml
+    target_report: queue/reports/ashigaru2_p0_normalize_fix_report.yaml
+    target_commit: "bb4df37"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    findings:
+      - "scripts/normalize_audit_reports.py:125 process_file() — YAML parse error を捕捉し、`acha_secondpc_report_parse_error` placeholder を `verdict: fail`, `evidence_state: schema_unsupported`, `completion_gate: blocked` として返す実装に変更。前回指摘の『parse error が index entry 化されない』問題は解消。"
+      - "queue/reports/audit_report_index.yaml:583 acha_secondpc_report_parse_error — 実生成 index に schema_unsupported entry が存在。`bash scripts/shogun_verify_audit.sh --preflight acha_secondpc_report_parse_error` は exit 3 / unsupported_report_schema を返し、P0-2 と結合した。"
+      - "scripts/normalize_audit_reports.py:94 normalize_entry() — `log_path` と `commit_hash` field を全 normalized entry に出力。直検査で required field 欠落 0 件を確認。"
+      - "queue/reports/audit_report_index.yaml:229 naomasa_reaudit_011 — `log_path: queue/reports/ashigaru4_teriha_p3_report.yaml` と `commit_hash: 3f835a53` が入り、`--preflight naomasa_reaudit_011` は exit 0 / ready_to_verify を返した。"
+      - "queue/reports/audit_report_index.yaml:91 naomasa_new_001 — 非最新 partial entry は `verdict: partial` として残り、`--preflight naomasa_new_001` は exit 4 / partial_verdict_blocked を返した。家老指定の動作確認条件は満たす。"
+      - "scripts/normalize_audit_reports.py:202 main() — `latest_per_target` は同一 target の最後の audit_id を保持し、非最新 partial を scripts/normalize_audit_reports.py:209 で `verdict: partial` に戻す。child_dinosaur_kingdom_app は `naomasa_new_002` が partial、`naomasa_reaudit_011` が pass として並存する。"
+      - "懸念: scripts/normalize_audit_reports.py:202 の latest 判定は `latest_by_target` や `effective_targets` section を出力せず、entry 単位の並存に留まる。『child_dinosaur_kingdom_app の effective verdict = pass』は人間が `naomasa_reaudit_011` を選ぶことで読めるが、機械 gate としてはまだ曖昧。"
+      - "懸念: scripts/normalize_audit_reports.py:209 は非最新 partial を `verdict: partial` に戻すため、audit_report_index.yaml に raw partial が 9 件残る。これは `--preflight` の blocker 検出には有効だが、『partial は terminal verdict ではない』原則との整合を documentation で固定すべし。"
+      - "懸念: `log_path` / `commit_hash` field は全 entry に存在するが、直検査で empty_log_path=20 / empty_commit_hash=18。field 存在条件は満たすものの、ready_to_verify 可能 entry はまだ限定される。"
+      - "検証: `python3 scripts/normalize_audit_reports.py` → exit 0。Total entries 54、partial_auto_mapped_to_fail 18。`--preflight` は naomasa_reaudit_011 exit 0、naomasa_new_001 exit 4、acha_secondpc_report_parse_error exit 3 を確認。"
+    recommendations:
+      - "次 cycle では `latest_by_target` または `effective_targets` section を追加し、`target_id: child_dinosaur_kingdom_app` の effective verdict/pass/evidence_state complete/completion_gate open を機械的に読める形にせよ。"
+      - "raw `verdict: partial` を historical blocker entry として残す設計なら、index schema に `entry_role: historical_blocker | effective` などを追加し、terminal verdict と誤読されないようにせよ。"
+      - "empty log_path/commit_hash は `evidence_state: missing` または `completion_gate: blocked` へ自動反映するか、少なくとも summary に empty evidence count を出すべし。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass_with_concerns
+      9_doc: pass_with_concerns
+    related_files:
+      - scripts/normalize_audit_reports.py
+      - queue/reports/audit_report_index.yaml
+      - queue/reports/ashigaru2_p0_normalize_fix_report.yaml
+      - scripts/shogun_verify_audit.sh
+    verification_commands:
+      - "python3 scripts/normalize_audit_reports.py"
+      - "bash scripts/shogun_verify_audit.sh --preflight naomasa_reaudit_011"
+      - "bash scripts/shogun_verify_audit.sh --preflight naomasa_new_001"
+      - "bash scripts/shogun_verify_audit.sh --preflight acha_secondpc_report_parse_error"
+      - "python3 - <<'PY' ... audit_report_index.yaml required fields / raw partial / empty evidence counts ... PY"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "家老指定の三修正と preflight 実動作は直確認済み。effective verdict の機械可読性と raw partial 残存に設計懸念があるため pass_with_concerns。"
+
+p2_designs:
+  - audit_id: naomasa_p2_ecosystem_coherence_lens_sample
+    target_task_id: p2_1_ecosystem_coherence_lens
+    target_deliverable: instructions/gunshi_audit_guidelines_v1.md
+    target_doc: docs/final_solution_synthesis_20260511.md
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    summary: "Optional 10th lens `10_ecosystem_coherence` を軍師監査ガイドラインへ追加。cross-PC / report-schema / memory-sync 監査では必須、通常 deliverable では optional と定義。"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass_with_concerns
+      9_doc: pass
+      10_ecosystem_coherence: concerns
+    findings:
+      - "instructions/gunshi_audit_guidelines_v1.md:99 1-3b — `10_ecosystem_coherence: pass | concerns | fail` を追加し、既存9観点を置換しない optional lens と明記。"
+      - "instructions/gunshi_audit_guidelines_v1.md:103 1-3b — cross-PC 同期 / audit report schema / memory sync 関連監査では第十観点を必須化。P2-1 の適用条件を満たす。"
+      - "instructions/gunshi_audit_guidelines_v1.md:109 1-3b — pass/concerns/fail の評価基準を cross-PC 同期状態、report schema 整合、memory sync 有無に結びつけた。"
+      - "instructions/gunshi_audit_guidelines_v1.md:117 1-3b — source PC suffix / transfer hash / PII scan / schema fields / shared memory block の確認項目を定義。"
+      - "instructions/gunshi_audit_guidelines_v1.md:204 schema sample — `perspectives` に `10_ecosystem_coherence` を追加し、cross-PC/report-schema/memory-sync 監査時は必須と注記。"
+      - "懸念: instructions/generated/codex-gunshi.md 等の生成済み instruction には未反映。次回生成・配布まで、現行 pane は本ガイドライン追記を直接参照する必要がある。"
+    recommendations:
+      - "次 cycle で instructions/generated/{codex-gunshi,gunshi,copilot-gunshi,kimi-gunshi}.md へ同 lens を再生成反映せよ。"
+      - "normalize_audit_reports.py が `10_ecosystem_coherence` を落とさないよう、perspective_verdicts の schema preservation を別途確認せよ。"
+      - "cross-PC/report-schema/memory-sync の task YAML template に `10_ecosystem_coherence` 必須条件を入れよ。"
+    related_files:
+      - instructions/gunshi_audit_guidelines_v1.md
+      - docs/final_solution_synthesis_20260511.md
+      - queue/reports/naomasa_secondpc_report.yaml
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "P2-1 の定義・評価基準・sample entry は実装済み。generated instructions 未反映のため pass_with_concerns。"

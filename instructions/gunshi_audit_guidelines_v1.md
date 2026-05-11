@@ -96,6 +96,28 @@
 - README 更新
 - doc と実装の整合 (= 仕様変更時の doc 同期)
 
+### 1-3b. Optional 10th lens: ecosystem_coherence
+
+`10_ecosystem_coherence: pass | concerns | fail`
+
+この第十観点は既存 9 観点を置換しない。通常 deliverable では optional とし、以下のいずれかを扱う監査では必須とする。
+
+- cross-PC 同期 / MainPC-SecondPC 間の report transfer
+- audit report schema / normalizer / completion gate / preflight
+- memory sync / shared memory block / instruction propagation
+
+評価基準:
+
+- `pass`: cross-PC 同期状態、report schema、memory sync の責務境界が明示され、hash / source PC / schema version / gate status が機械的に検証できる。
+- `concerns`: 主要 flow は成立するが、片側 PC の未到着、schema の人間読み替え、memory sync の手作業依存、または stale gate table の余地が残る。
+- `fail`: report が片側にしか存在しない、schema 不整合で preflight 不能、memory/instruction が分岐している、または completion 判定が prose summary に依存している。
+
+必須確認項目:
+
+- cross-PC: source PC suffix、transfer hash、PII/secret scan、受信側存在確認、再送時の idempotency。
+- report schema: `verdict` / `evidence_state` / `completion_gate` / `shogun_verified` / `log_path` / `commit_hash` の整合。
+- memory sync: shared memory block のみ同期、raw secret/PII 不同期、更新元・更新時刻・適用先 instruction の追跡可能性。
+
 ### 1-4a. Domain 別役割分担 (v1.1 = 陛下御差配 2026-05-10 08:30)
 
 **「プログラム監査は CODEX のみで精密に行い、家老の起草とか計画案の監査専門に Gemini を使ったらどうかな?」**
@@ -179,8 +201,10 @@ deliverable 毎に **domain 判定** + 軍師 routing:
     7_legal_compliance: pass | concerns | fail
     8_operations_ux: pass | concerns | fail
     9_documentation: pass | concerns | fail
+    # cross-PC / report-schema / memory-sync 監査では必須。通常 deliverable では optional。
+    10_ecosystem_coherence: pass | concerns | fail
   
-  # 統合 verdict (= 9 観点の最低値)
+  # 統合 verdict (= 9 観点 + 必須化された 10th lens の最低値)
   verdict: pass | pass_with_concerns | fail
   
   # 必須 evidence
