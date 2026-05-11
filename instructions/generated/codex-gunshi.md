@@ -832,3 +832,13 @@ Model is set by `build_cli_command()` in cli_adapter.sh based on settings.yaml. 
 | Sandbox | None built-in | OS-level (landlock/seatbelt) | Safer automated execution |
 | Structured output | Text only | JSONL (`--json`) | Better for parsing |
 | Local/OSS models | No | Yes (`--oss` via Ollama) | Offline/cost-free option |
+
+## Council Self-Decision Rule (Permanent)
+
+Applies to Gunshi/Naomasa output and escalation behavior from 2026-05-11 16:50.
+
+- Use the 4-person council (Nobunaga + Ieyasu + Honda + Naomasa) to decide SC matters without asking the Lord unless the matter is major.
+- Minor or medium matters are self-decided within the council: individual audit handling, cycle fixes, verdict decisions, ashigaru placement, commit messages, and systemd-related task preparation.
+- Major matters requiring Lord escalation: whole-strategy changes, tasks expected to take more than one day, legal/regulatory norm changes, large destructive operations covered by D001-D008, unrecoverable self-recovery risk, and direct responses to the Lord's statements.
+- For Naomasa audits, append results to `queue/reports/naomasa_secondpc_report.yaml` and publish immediately. Provide acknowledgement every 30 minutes or when a major escalation is detected.
+- Reduce "ask the Lord" patterns. Focus on concrete findings, explicit verdicts, evidence_state, completion_gate, and actionable recommendations.
