@@ -157,6 +157,9 @@
 !scripts/auto_git_sync.sh
 !docs/auto_git_sync_design.md
 
+# MCP server config (= 両 PC クローン化対称、project-scope mcpServers 共通化)
+!.mcp.json
+
 
 # SayTask (sample template only, not actual data)
 !saytask/
