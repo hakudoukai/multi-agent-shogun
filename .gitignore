@@ -245,6 +245,9 @@ logs/
 !queue/reports/ashigaru2_cmd004_engagement_analytics_dashboard_report.yaml
 !queue/reports/ashigaru2_cmd004_engagement_analytics_pytest.log
 !queue/reports/ashigaru2_cmd004_engagement_analytics_vitest.log
+# cmd_004 subtask_cmd004_pdf_v02_hardening_and_form_fix cycle3 deliverables (= ashigaru2/丹羽長秀、25 form 不通分類)
+!queue/reports/ashigaru2_form_inventory.yaml
+!scripts/extract_dentalbi_form_inventory.py
 
 # cmd_020 dashboard Layer A 構想層 render component (= ashigaru1、subtask_cmd020_dashboard_layer_a_kousou_render)
 !docs/dashboard_layer_a_kousou.md
