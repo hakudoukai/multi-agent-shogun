@@ -3380,3 +3380,110 @@ cmd004_pdf_v02_fixture_setup_qc:
       reason: "会計待ち時間ゼロの根幹であるPDF抽出を、実稼働前に短期base実装で通さず、既存unit failure/OCR未対応/未pushを根本治療対象として遮断した。"
       risks_to_north_star:
         - "v0.1 unit failure と watcher未接続を放置すると、fixtureだけgreenでも実運用のbilling自動移動は改善しない。"
+
+clinic_id_hardcode_eradication_design_reviews:
+  - audit_id: naomasa_council_ashigaru7_clinic_id_eradication_design_review
+    target_type: design_draft_review
+    target_task_id: subtask_cmd004_clinic_id_hardcode_eradication
+    parent_cmd: cmd_004
+    audited_at: "2026-05-11T16:58:42+09:00"
+    audited_by: naomasa
+    source_reports:
+      - queue/reports/ashigaru7_cmd004_clinic_id_hardcode_eradication_inventory.yaml
+      - queue/reports/ashigaru7_cmd004_clinic_id_hardcode_eradication_design_draft.yaml
+    target_repo: /mnt/c/Projects/hakudokai-dev
+    target_repo_commit: "bff0451e7bdfdaf228cd475ef66c5ea1f267bd1c"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    log_path: queue/reports/naomasa_secondpc_report.yaml:clinic_id_hardcode_eradication_design_reviews
+    related_files:
+      - /mnt/c/Projects/hakudokai-dev/backend/main.py
+      - /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py
+      - /mnt/c/Projects/hakudokai-dev/backend/api/supabase_auth.py
+      - /mnt/c/Projects/hakudokai-dev/frontend/src/hooks/useClinicId.ts
+      - /mnt/c/Projects/hakudokai-dev/frontend/src/App.tsx
+      - /mnt/c/Projects/hakudokai-dev/frontend/eslint.config.js
+      - /mnt/c/Projects/hakudokai-dev/frontend/eslint-rules/dental-bi.js
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: concerns
+      3_kiritsu: pass
+      4_logic: concerns
+      5_schema: concerns
+      6_test: concerns
+      7_legal: pass
+      8_ops: concerns
+      9_doc: pass
+      10_ecosystem_coherence: concerns
+      11_cross_pc_repo_check: concerns
+      12_future_operations_radicality: concerns
+    summary: |
+      ashigaru7 の scope explosion 検出は妥当。focused grep でも backend/frontend production
+      code に 40 files / 62 lines の clinic_id=1 系 hardcode を確認した。6 phase 分割も
+      30 files/session 制約と根本治療原則に整合する。一方、既存資産として frontend
+      `useClinicId` と `dental-bi` ESLint custom rule 基盤が既にあり、draft の「新規
+      ClinicIdContext」「grep hook 中心」は一部再発明。Backend も短期 TERIHA_CLINIC_ID
+      固定を主案にすると将来 multi-clinic 根本治療が薄くなるため、Depends/get_current_clinic_id
+      本線 + TERIHA fallback を過渡期限定に修正するのがよい。
+    evidence:
+      inventory_yaml_ok: true
+      design_draft_yaml_ok: true
+      target_commit_verified: "bff0451e feat(cmd_004): add Web Push infra (subscriptions + VAPID + SW handlers)"
+      repo_state: "master...origin/master ahead 15; multiple dirty/untracked files present, so implementation must avoid stale line assumptions"
+      focused_grep_result: "40 files / 62 production-code hardcode lines after excluding tests/scripts/db/sqlite_init"
+      existing_frontend_context: "frontend/src/hooks/useClinicId.ts:1-12 already exports ClinicIdContext/useClinicId; default is createContext<number>(1)"
+      existing_eslint_base: "frontend/eslint.config.js imports eslint-rules/dental-bi.js; custom dental-bi plugin already enforces three project rules"
+      backend_auth_context: "backend/api/supabase_auth.py:12-32 only extracts JWT; no current clinic resolver yet"
+    findings:
+      - severity: high
+        perspective: 12_future_operations_radicality
+        location: "queue/reports/ashigaru7_cmd004_clinic_id_hardcode_eradication_design_draft.yaml backend_di_design"
+        issue: "short_term_pattern が TERIHA_CLINIC_ID constant + post-validation を主案に置く。香椎照葉実証には有効だが、全システム clinic_id hardcode の根本原因である current clinic propagation 不在を治しきらない。"
+        recommendation: "採択方針は `Depends(get_current_clinic_id)` / request context / staff clinic_id 解決を本線、TERIHA_CLINIC_ID は cmd_004 feature-scoped fallback として明確に期限付きにする。"
+      - severity: medium
+        perspective: 2_anti_dup
+        location: "/mnt/c/Projects/hakudokai-dev/frontend/src/hooks/useClinicId.ts:1-12 / design_draft frontend_context_design"
+        issue: "draft は `frontend/src/contexts/ClinicIdContext.tsx` 新規を提案するが、既に `frontend/src/hooks/useClinicId.ts` に ClinicIdContext/useClinicId がある。新規作成は二重実装リスク。"
+        recommendation: "既存 hook を改修し、`createContext<number | null>(null)` + provider外throw + tests を追加する。新規 contexts module は不要、または既存ファイル移動を伴う明示的refactorにする。"
+      - severity: medium
+        perspective: 2_anti_dup
+        location: "/mnt/c/Projects/hakudokai-dev/frontend/eslint.config.js:1-24 / frontend/eslint-rules/dental-bi.js:1-220"
+        issue: "draft は grep-based pre-commit hook を主にするが、frontendには既に dental-bi custom ESLint plugin が存在する。frontend hardcode検出はESLint ruleへ足す方が既存lint体系に整合する。"
+        recommendation: "frontendは `dental-bi/no-clinic-id-literal` を追加。backendは当面grep/ruff rule相当スクリプトでよいが、CIから双方を呼ぶ単一gateにする。"
+      - severity: medium
+        perspective: 10_ecosystem_coherence
+        location: "/mnt/c/Projects/hakudokai-dev git status / inventory target_repo_commit"
+        issue: "inventoryは commit bff0451e を基準にするが、target repo は origin/master ahead 15 かつ多数dirty/untracked。line番号は変動し得る。"
+        recommendation: "実装修正前に target repo の基準commitを固定し、focused grep snapshotを `docs/cmd004_clinic_id_safety_pattern.md` または report に保存してからphase着手する。"
+      - severity: medium
+        perspective: 6_test
+        location: "design_draft phased_implementation_plan phase_3/4/5"
+        issue: "unit pytest/vitest/Playwright smoke は方針のみで、clinic_id mismatch negative tests の具体ACが不足。"
+        recommendation: "各phase ACに `clinic_id=5 passes`, `clinic_id=1 rejected or not defaulted`, `provider missing throws`, `lint catches new literal` を必須化する。SKIP=0原則も明記する。"
+      - severity: low
+        perspective: 1_func
+        location: "inventory backend/frontend totals"
+        issue: "focused grepでは40 files/62 lines。inventoryのbackend28 + frontend13とは整合するが、`50+` はline基準/周辺既知含みであることを明記した方がよい。"
+        recommendation: "Karo向け上奏では `production focused: 40 files/62 lines`、`initial inventory: 41 files plus prior fast_checkout` と表記を分ける。"
+    assessment_of_ashigaru7_proposals:
+      depends_refactor: "妥当。ただし optional/long-term ではなく根本治療の本線に昇格。TERIHA constant は移行期fallback。"
+      grep_hook: "backendには妥当。frontendは既存 dental-bi ESLint plugin へ rule追加がより整合。repo-wide CIから両方を呼ぶ。"
+      pre_commit: "妥当。ただし既存違反allowlist方式は新規違反防止には有効だが、全件fix完了後にallowlistを空にする期限をphase ACへ入れるべし。"
+      docs_in_target_repo: "妥当。規範は実コード利用者が見る target_repo/docs に置く。newbuild側には監査結果のみ残す。"
+      six_phase_plan: "妥当。phase_2で基準commit固定・規範文書・lint/CIを先に置き、phase_3/4で修正、phase_5でSKIP0 integrationがよい。"
+    recommendation_to_karo:
+      verdict_for_chain: pass_with_concerns
+      approval_condition: "ashigaru7案を採択してよいが、(1) Depends/get_current_clinic_id を本線化、(2) frontend既存 useClinicId/ESLint資産を再利用、(3) focused grep snapshot保存、(4) mismatch negative tests をAC化、(5) allowlist撤廃期限を明記してから phase_2 へ進める。"
+      phase_2_required_outputs:
+        - "target_repo/docs/cmd004_clinic_id_safety_pattern.md"
+        - "backend dependency helper design or implementation with tests"
+        - "frontend existing useClinicId hardening, not duplicate context"
+        - "backend hardcode grep gate + frontend dental-bi ESLint rule"
+        - "CI/pre-commit wiring with clear allowlist removal plan"
+    audit_passed: true
+    north_star_alignment:
+      status: aligned
+      reason: "clinic_id=1散在を局所修正でなく、context propagation + lint/CI + phased fix に引き上げ、cmd_004香椎照葉運用と将来multi-clinic運用の双方を守る設計へ補正した。"
+      risks_to_north_star:
+        - "TERIHA固定だけで全修正すると、香椎照葉実証後のmulti-clinic展開で再び大規模refactorが必要になる。"
