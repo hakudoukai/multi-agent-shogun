@@ -743,6 +743,80 @@ dashboard_task_pre_delivery_audits:
       delivery_to_ashigaru1: blocked_until_pass
       summary: "Layer A の中身は正本と整合するが、MC anti-dup evidence と test/repo placement が未成立。multi-agent-only task に縮め、MC regenerate_dashboard.py 実体を指定すれば pass 可能。"
 
+  - audit_id: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render_r2
+    target_type: task_yaml_pre_delivery_gate
+    target_task_id: subtask_cmd020_dashboard_layer_a_kousou_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-11T22:06:43+09:00"
+    audited_by: naomasa
+    revision_of: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render
+    source_inbox:
+      - msg_20260511_220438_66d1c394
+    source_task_yaml: queue/tasks/subtask_cmd020_dashboard_layer_a_kousou_render.yaml
+    source_design_docs:
+      - docs/dashboard_design_v0.1.md
+      - docs/dashboard_design_v0.2.md
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_delivery_allowed
+    pre_delivery_gate_passed: true
+    six_point_check:
+      directive_nine_sections: {status: pass}
+      design_doc_id: {status: pass, value: "docs/dashboard_design_v0.1.md §2 + docs/dashboard_design_v0.2.md §2"}
+      task_path_type: {status: pass, value: sonnet_codex_sonnet}
+      max_cycle: {status: pass, value: 7}
+      bloom_level_suitability: {status: pass, value: L3}
+      anti_dup: {status: pass_with_concerns, reason: "MC regenerate_dashboard.py artifact is explicitly unavailable; task is now scoped to SC docs only and defers MC integration to a later task."}
+    revision_check:
+      multi_agent_repo_only: {status: pass}
+      local_test_path: {status: pass_with_concerns, reason: "scripts/test does not exist yet, but the task creates scripts/test/test_dashboard_layer_a_static_contract.py in this repo."}
+      mc_artifact_unknown_deferred: {status: pass}
+      v01_section2_source_explicit: {status: pass}
+      hakudokai_dev_removed: {status: pass}
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass_with_concerns
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass
+      6_test: pass_with_concerns
+      7_legal: pass
+      8_ops: pass_with_concerns
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: pass
+      12_future_operations_radicality: pass_with_concerns
+    machine_evidence:
+      v01_source: "docs/dashboard_design_v0.1.md §2 contains Layer A DD-054 5階層 + 10柱 source table."
+      v02_reference: "docs/dashboard_design_v0.2.md §2 explicitly retains v0.1 §2 unchanged."
+      regenerate_dashboard_absent: "scripts/regenerate_dashboard.py absent locally; task now records MC artifact as unknown and out of scope."
+      repo_scope: "Task now states multi-agent-shogun-newbuild repo only and removes hakudokai-dev push path."
+      test_path_state: "scripts/test directory does not exist before the task; creating it is acceptable if only this task's test file is added."
+    findings:
+      - severity: medium
+        perspective: 2_anti_dup
+        issue: "MC anti-dup cannot be fully verified because regenerate_dashboard.py is still absent."
+        recommendation: "Treat Layer A markdown as a standalone SC artifact only. Do not claim MC integration until Karo supplies the generator path/commit/interface."
+      - severity: low
+        perspective: 6_test
+        issue: "scripts/test is a new local test directory."
+        recommendation: "Keep the first test file minimal and self-contained; ensure pytest collection works from repo root and SKIP=0."
+      - severity: low
+        perspective: 8_ops
+        issue: "Push plan still depends on post-implementation TBD SHAs."
+        recommendation: "Before push, replace TBDs in the report with actual SHAs and require equality diff exit 0."
+    delivery_conditions:
+      - "Do not edit dashboard.md directly."
+      - "Do not involve hakudokai-dev in this Layer A task."
+      - "Do not claim MC generator integration; record it as deferred until artifact exists."
+      - "If pytest reports SKIP > 0, task is not complete."
+      - "If worktree path already exists, stop and report rather than deleting unknown files."
+    recommendation_to_karo:
+      action: deliver_to_ashigaru1
+      delivery_to_ashigaru1: allowed
+      summary: "第10度 revise で前回4主因は解消。MC artifact 不在は後段化され、Layer A は multi-agent-only の standalone docs/test task として配信可。"
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review
