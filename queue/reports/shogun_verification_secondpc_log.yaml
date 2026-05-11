@@ -27,6 +27,7 @@ verifications:
 
   - verify_id: verify_ieyasu_p2_1_secondpc
     pc_suffix: _secondpc
+    target: naomasa_p2_ecosystem_coherence_lens_sample
     target_audit_ids:
       - naomasa_p2_ecosystem_coherence_lens_sample
     target_commit: 8a29caa
@@ -52,6 +53,7 @@ verifications:
 
   - verify_id: verify_ieyasu_p2_3_secondpc
     pc_suffix: _secondpc
+    target: naomasa_p2_worker_eval_design
     target_audit_ids:
       - naomasa_p2_worker_eval_design
     target_commit: 91c2491
@@ -73,6 +75,7 @@ verifications:
 
   - verify_id: verify_ieyasu_p1_1_secondpc
     pc_suffix: _secondpc
+    target: naomasa_p1_memory_sync_design_review
     target_audit_ids:
       - naomasa_p1_memory_sync_design_review
     target_commit: f416a8d
@@ -97,6 +100,7 @@ verifications:
 
   - verify_id: verify_ieyasu_p2_2_secondpc
     pc_suffix: _secondpc
+    target: naomasa_p2_cross_pc_trust_gate_review
     target_audit_ids:
       - naomasa_p2_cross_pc_trust_gate_review
     target_commit: 364e78a

@@ -1,7 +1,47 @@
 schema_version: '1'
 generator: scripts/normalize_shogun_verification_logs.py
-generated_at: '2026-05-11T12:05:49+09:00'
+generated_at: '2026-05-11T12:11:41+09:00'
 missing_pc_logs: []
 parse_error_seen: false
-total_events: 0
-events: []
+total_events: 4
+events:
+- event_id: 6da53add6b44
+  source_pc: secondpc
+  target_id: naomasa_p2_ecosystem_coherence_lens_sample
+  auditor_who: unknown
+  shogun_verified: true
+  checks_passed: ''
+  verified_at: '2026-05-11T10:27:00+09:00'
+  payload_hash: 969259f8cac0ef6a
+  audit_entry_excerpt: {}
+  flags: []
+- event_id: 0d11d0131146
+  source_pc: secondpc
+  target_id: naomasa_p2_worker_eval_design
+  auditor_who: unknown
+  shogun_verified: true
+  checks_passed: ''
+  verified_at: '2026-05-11T10:27:00+09:00'
+  payload_hash: 969259f8cac0ef6a
+  audit_entry_excerpt: {}
+  flags: []
+- event_id: ec2556ca5875
+  source_pc: secondpc
+  target_id: naomasa_p1_memory_sync_design_review
+  auditor_who: unknown
+  shogun_verified: true
+  checks_passed: ''
+  verified_at: '2026-05-11T10:27:00+09:00'
+  payload_hash: 969259f8cac0ef6a
+  audit_entry_excerpt: {}
+  flags: []
+- event_id: de25ad05ba9d
+  source_pc: secondpc
+  target_id: naomasa_p2_cross_pc_trust_gate_review
+  auditor_who: unknown
+  shogun_verified: true
+  checks_passed: ''
+  verified_at: '2026-05-11T10:27:00+09:00'
+  payload_hash: 969259f8cac0ef6a
+  audit_entry_excerpt: {}
+  flags: []
