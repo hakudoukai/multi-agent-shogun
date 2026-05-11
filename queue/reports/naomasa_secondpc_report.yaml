@@ -2676,3 +2676,115 @@ cmd018_qc:
       native_execution: true
       confidence: high
       confidence_note: "ashigaru5 report + shogun_verification_log.yaml Layer4 直接確認 + 全5 AC EVIDENCE COMPLETE 確認済み"
+  - audit_id: naomasa_reaudit_014_option_c_qc
+    target_type: audit_entry_qc
+    target_audit_id: naomasa_reaudit_014
+    target_id: cmd_008
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: true
+    requested_by_inbox: msg_20260511_132934_d3440d9c
+    summary: "naomasa_reaudit_014 をQC。cycle_n=2 / redo_of=naomasa_014 / verdict=pass / evidence_state=complete / completion_gate=open / audit_passed=true、7 AC 全PASS、retroactive_audit 6件、家康 Supabase MCP verify 記録、UPSERT timestamp 整合を確認。再監査 entry としては pass。ただし Supabase MCP は本軍師環境で再実行できず、家康 inbox/dashboard/completion_gate_status の記録に基づく検証であること、completion_gate_status.yaml と acha_secondpc_report.yaml に既存 YAML parse error があること、Option A/Option C 表記が混在することを懸念として残す。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass_with_concerns
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/naomasa_secondpc_report.yaml:2522-2532 — naomasa_reaudit_014 は target_id=cmd_008、cycle_n=2、redo_of=naomasa_014、verdict=pass、evidence_state=complete、completion_gate=open、audit_passed=true。"
+      - "機械検査: naomasa_reaudit_014 acceptance_criteria_evidence は7件、status は全て PASS。"
+      - "queue/reports/ashigaru1_report.yaml:51 / ashigaru2_report.yaml:87 / ashigaru3_report.yaml:62 / ashigaru4_report.yaml:108 / ashigaru5_report.yaml:88 / ashigaru6_report.yaml:61 — retroactive_audit: true 6件を直接確認。"
+      - "queue/inbox/karo.yaml:600-615 — 家康 Supabase MCP 直接 verify 記録あり。source_code_cache 6件 record 全件存在、content_len > 0、updated_at 13:14:03〜05 と記録。"
+      - "queue/inbox/ieyasu.yaml:797-812 — 本多から家康への UPSERT stdout 証跡回答あり。6件 HTTP 201 と return=minimal 仕様、commit 不要を説明。"
+      - "dashboard.md:66-68 — cmd_008 shogun_verified=true 真確定、naomasa_reaudit_014 起案完了を記録。"
+      - "queue/reports/completion_gate_status.yaml:464-478 — naomasa_cmd018_014_retroaudit_c2_upsert_done は audited_done=true、verified_by=ieyasu、verified_at=2026-05-11T13:25:47 と記録。"
+      - "懸念: completion_gate_status.yaml は yaml.safe_load で parse error。line 240 summary mapping の直下に line 252 以降の audit list item が混在しており、台帳全体は機械処理不可。"
+      - "懸念: acha_secondpc_report.yaml も yaml.safe_load で parse error。line 726 summary mapping の直下に line 782 以降の audit list item が混在。naomasa/acha 二者監査 schema 統一の機械検査には傷がある。"
+      - "懸念: naomasa_reaudit_014 summary は Option A 採択に基づく sync 実行と Option C 一貫 path を併記し、inbox 依頼は cmd_008 cycle_n=2 Option C と呼ぶ。実態は `Option AでUPSERT実行を採択し、Option C方式でsuperseding entryを起案` と明記すべき。"
+      - "懸念: target_task_id がなく target_type=cmd のみ。cmd 再監査 entry としては許容できるが、ashigaru task 起案型の 018 と比べ trace が薄い。"
+    recommendations:
+      - "cmd_008 は naomasa_reaudit_014 を現行 pass 判定として扱ってよい。"
+      - "completion_gate_status.yaml と acha_secondpc_report.yaml の YAML parse error を別タスクで修復し、台帳・二者監査 report の機械可読性を戻せ。"
+      - "Option 表記は `UPSERT実行=Option A / superseding entry起案=Option C path` に統一せよ。"
+      - "可能なら Supabase MCP verify 結果を inbox だけでなく専用 report file に転記し、後続QCが inbox 横断に依存しない形へ寄せよ。"
+    related_files:
+      - queue/reports/naomasa_secondpc_report.yaml
+      - queue/reports/ashigaru2_cmd018_014_report.yaml
+      - queue/reports/completion_gate_status.yaml
+      - queue/reports/acha_secondpc_report.yaml
+      - queue/inbox/karo.yaml
+      - queue/inbox/ieyasu.yaml
+      - dashboard.md
+    verification_commands:
+      - "python3 - <<'PY' ... locate naomasa_reaudit_014 and count 7 PASS AC ... PY"
+      - "for f in queue/reports/ashigaru{1,2,3,4,5,6}_report.yaml; do rg -n \"retroactive_audit\" \"$f\"; done"
+      - "nl -ba queue/inbox/karo.yaml | sed -n '600,615p'"
+      - "python3 - <<'PY' ... yaml.safe_load completion_gate_status.yaml / acha_secondpc_report.yaml ... PY"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "entry本体、7 AC、retroactive_audit 6件、家康MCP記録は確認。残懸念は関連YAML破損、Option表記揺れ、外部MCP再実行不可。"
+  - audit_id: naomasa_reaudit_018_option_c_qc
+    target_type: audit_entry_qc
+    target_audit_id: naomasa_reaudit_018
+    target_task_id: subtask_cmd018_019_naomasa_reaudit018_c2
+    target_id: cmd_012
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: true
+    requested_by_inbox: msg_20260511_132934_d3440d9c
+    summary: "naomasa_reaudit_018 をQC。cycle_n=2 / redo_of=naomasa_018 / verdict=pass / evidence_state=complete / completion_gate=open / audit_passed=true、5 AC 全PASS、ashigaru5 report、Layer4 家康 verify entries、関連 commit 実在、preflight 実行 exit 0 を確認。再監査 entry としては pass。ただし completion_gate_status.yaml は未だ pending entry のままかつ YAML parse error を含み、Layer5/audited_done 反映台帳としては未整備。P0-1 commit 記述も direct verification entry の bb4df37 と再監査 entry の aa69933/2009de6/480066a が役割別に混在するため補足が必要。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/naomasa_secondpc_report.yaml:2603-2614 — naomasa_reaudit_018 は target_task_id=subtask_cmd018_019_naomasa_reaudit018_c2、target_id=cmd_012、cycle_n=2、redo_of=naomasa_018、verdict=pass、evidence_state=complete、completion_gate=open、audit_passed=true。"
+      - "機械検査: naomasa_reaudit_018 acceptance_criteria_evidence は5件、status は全て PASS。"
+      - "queue/reports/ashigaru5_cmd018_019_report.yaml:25-36 — verify_ieyasu_p0_preflight_p0_normalize と verify_ieyasu_p1_1_p2_1_p2_2_p2_3 を Layer4 COMPLETE と報告。"
+      - "queue/reports/ashigaru5_cmd018_019_report.yaml:38-49 — AC1-AC5 all PASS、verdict=pass、evidence_state=complete、completion_gate=open、audit_passed=true。"
+      - "queue/reports/shogun_verification_log.yaml:431-493 — direct_verifications に P0-1/P0-2/P1-1/P2-1/P2-2/P2-3 の shogun_verified=true entries が存在。"
+      - "git 確認: 480066a / 2009de6 / a3c422f / c0f8d8e / aa69933 / bb4df37 / 8a29caa / 91c2491 / f416a8d / 364e78a はいずれも commit として存在。"
+      - "実測: `bash scripts/shogun_verify_audit.sh --preflight naomasa_reaudit_011` は `ready_to_verify` / EXIT:0。"
+      - "queue/reports/audit_report_index.yaml は yaml.safe_load OK。ただし audit_id text count は76で、naomasa_reaudit_018 の evidence にある 54 entries は過去時点の記録と見られる。現時点との差分は非ブロッキングだが、数値固定証跡としては古い。"
+      - "懸念: queue/reports/completion_gate_status.yaml:479-492 は naomasa_cmd018_018_option_c_pending のまま shogun_verified=false / audited_done=false / completion_gate=blocked_pending_naomasa_qc。再監査 entry の pass/open とは台帳反映が未同期。"
+      - "懸念: completion_gate_status.yaml は yaml.safe_load で parse error。台帳更新前に構文修復が必要。"
+      - "懸念: Layer4 verify entry 側の P0-1 commit は bb4df37 だが、naomasa_reaudit_018 の AC1 は aa69933/2009de6/480066a を挙げる。いずれも関連 commit として存在するが、`家康verify対象commit` と `実装履歴commit` を分けて書く方がよい。"
+    recommendations:
+      - "cmd_012 は naomasa_reaudit_018 を現行 pass 判定として扱ってよい。"
+      - "completion_gate_status.yaml を構文修復したうえで、naomasa_cmd018_018_option_c_pending を QC済み・家康verify待ちまたは audited_done 昇格後の正しい状態へ更新せよ。"
+      - "P0-1 commit 証跡は `bb4df37=家康verify entry`, `480066a/2009de6/aa69933=実装・cycle2履歴` と分けて記録せよ。"
+      - "audit_report_index の件数など時点依存の数値は generated_at とセットで書け。"
+    related_files:
+      - queue/reports/naomasa_secondpc_report.yaml
+      - queue/reports/ashigaru5_cmd018_019_report.yaml
+      - queue/reports/shogun_verification_log.yaml
+      - queue/reports/completion_gate_status.yaml
+      - queue/reports/audit_report_index.yaml
+      - scripts/shogun_verify_audit.sh
+    verification_commands:
+      - "python3 - <<'PY' ... locate naomasa_reaudit_018 and count 5 PASS AC ... PY"
+      - "python3 - <<'PY' ... inspect shogun_verification_log direct_verifications targets ... PY"
+      - "for h in 480066a 2009de6 a3c422f c0f8d8e aa69933 bb4df37 8a29caa 91c2491 f416a8d 364e78a; do git log -1 --oneline \"$h\"; done"
+      - "bash scripts/shogun_verify_audit.sh --preflight naomasa_reaudit_011; echo EXIT:$?"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "entry本体、5 AC、ashigaru5報告、Layer4 direct_verifications、commit実在、preflight exit 0 を直接確認。残懸念は completion_gate_status 未同期/構文破損と commit役割表記。"
