@@ -1,0 +1,144 @@
+# shogun_verification_log_secondpc.yaml
+# PC suffix 版 — SC (SecondPC) 担当 verify 記録分離
+# 根拠: cmd_013 Stream B Option A prime (家康御差配 2026-05-11T10:25)
+# 起案: ashigaru1 本多忠勝 (2026-05-11T10:35:00+09:00)
+# schema version: v1.0 (PC suffix 拡張)
+#
+# 本 file は shogun_verification_log.yaml の PC suffix 分離版。
+# MainPC 共有 entries は shogun_verification_log.yaml を正とする。
+# SC 担当 verify のみ本 file で管理。
+
+metadata:
+  pc: secondpc
+  pc_suffix: _secondpc
+  verifier: ieyasu (家康 副将軍)
+  karo_supervisor: honda (本多忠勝 政の眼)
+  schema_version: "1.0"
+  parent_log: queue/reports/shogun_verification_log.yaml
+  scope: SC 担当 verify records (cmd_013 Stream B 対象 P1/P2 設計 doc)
+  verification_criteria:
+    audit_passed: "直政 QC verdict pass または pass_with_concerns (critical fail なし)"
+    shogun_verified: "家康 副将軍が直接確認した audit entry"
+    chain_passed: "5 層 audit chain 通過確認 (cmd_012 準拠)"
+    audited_done: "audit_passed AND shogun_verified AND chain_passed = 全 3 フラグ true"
+
+verifications:
+  # ─── P2/P1 設計 doc verify (家康 副将軍 直接 verify 2026-05-11T10:27) ───
+
+  - verify_id: verify_ieyasu_p2_1_secondpc
+    pc_suffix: _secondpc
+    target_audit_ids:
+      - naomasa_p2_ecosystem_coherence_lens_sample
+    target_commit: 8a29caa
+    target_task: P2-1 10_ecosystem_coherence lens
+    target_file: instructions/gunshi_audit_guidelines_v1.md
+    verified_at: "2026-05-11T10:27:00+09:00"
+    verified_by: ieyasu (家康 副将軍 — 直接 verify)
+    verification_method: |
+      instructions/gunshi_audit_guidelines_v1.md L101 + L205 で
+      '10_ecosystem_coherence: pass | concerns | fail' 確認。
+      naomasa_secondpc_report.yaml p2_designs[0]: sample entry
+      naomasa_p2_ecosystem_coherence_lens_sample 実在確認。
+      verdict=pass_with_concerns / evidence_state=complete / completion_gate=open 確認。
+      git push 8a29caa → GitHub 同期確認。
+    gunshi_verdict: pass_with_concerns
+    shogun_verified: true
+    audit_passed: true
+    chain_passed: true
+    audited_done: true
+    concerns:
+      - "generated instructions (codex-gunshi.md 等) 未反映 — 次 cycle 再生成 task 登録要"
+    notes: "P2-1 ecosystem_coherence lens: 10観点に追加 / cross-PC/report-schema/memory-sync 監査で必須化 — 昇格"
+
+  - verify_id: verify_ieyasu_p2_3_secondpc
+    pc_suffix: _secondpc
+    target_audit_ids:
+      - naomasa_p2_worker_eval_design
+    target_commit: 91c2491
+    target_task: P2-3 background_worker_eval gate
+    target_file: docs/background_worker_eval_gate.md
+    verified_at: "2026-05-11T10:27:00+09:00"
+    verified_by: ieyasu (家康 副将軍 — 直接 verify)
+    verification_method: |
+      docs/background_worker_eval_gate.md 8765B 166 lines 実在確認 (本多報告完全一致)。
+      直政 QC 全10観点 pass 確認。
+      completion_gate_status.yaml audit_id: naomasa_p2_worker_eval_design
+      verdict=pass / evidence_state=complete / completion_gate=open 確認。
+    gunshi_verdict: pass
+    shogun_verified: true
+    audit_passed: true
+    chain_passed: true
+    audited_done: true
+    notes: "P2-3 background_worker_eval_gate: 直政 QC 全10観点 pass — 昇格"
+
+  - verify_id: verify_ieyasu_p1_1_secondpc
+    pc_suffix: _secondpc
+    target_audit_ids:
+      - naomasa_p1_memory_sync_design_review
+    target_commit: f416a8d
+    target_task: P1-1 memory_sync_design
+    target_file: docs/memory_sync_design.md
+    verified_at: "2026-05-11T10:27:00+09:00"
+    verified_by: ieyasu (家康 副将軍 — 直接 verify)
+    verification_method: |
+      docs/memory_sync_design.md 10677B 220 lines 実在確認 (本多報告完全一致)。
+      直政 QC pass 確認。
+      completion_gate_status.yaml audit_id: naomasa_p1_memory_sync_design_review
+      verdict=pass_with_concerns / evidence_state=complete / completion_gate=open 確認。
+    gunshi_verdict: pass_with_concerns
+    shogun_verified: true
+    audit_passed: true
+    chain_passed: true
+    audited_done: true
+    concerns:
+      - "inotify 表現 P2-3 整合確認要 (non-blocking)"
+      - "scripts/memory_sync.sh 未実装 → 次 cycle 推奨"
+    notes: "P1-1 memory_sync_design: 直政 QC pass / 懸念 non-blocking — 昇格"
+
+  - verify_id: verify_ieyasu_p2_2_secondpc
+    pc_suffix: _secondpc
+    target_audit_ids:
+      - naomasa_p2_cross_pc_trust_gate_review
+    target_commit: 364e78a
+    target_task: P2-2 cross_pc_trust_gate
+    target_file: docs/cross_pc_trust_gate.md
+    verified_at: "2026-05-11T10:27:00+09:00"
+    verified_by: ieyasu (家康 副将軍 — 直接 verify)
+    verification_method: |
+      docs/cross_pc_trust_gate.md 6488B 実在確認。
+      G1 PC suffix + G2 sha256 hash + G3 PII scan + G4 audit trail 4 gate 全構造確認
+      (本多報告 100% 一致)。
+      completion_gate_status.yaml audit_id: naomasa_p2_cross_pc_trust_gate_review
+      verdict=pass_with_concerns / evidence_state=complete / completion_gate=open 確認。
+    gunshi_verdict: pass_with_concerns
+    shogun_verified: true
+    audit_passed: true
+    chain_passed: true
+    audited_done: true
+    concerns:
+      - "hash file 転送手順の明確化 (non-blocking)"
+      - "PII scan 過検知 → allowlist 整備 (次 cycle 推奨)"
+    notes: "P2-2 cross_pc_trust_gate: 4 gate 全構造確認済み / 懸念 non-blocking — 昇格"
+
+summary:
+  total_verified: 4
+  ieyasu_direct_entries: 4
+  shogun_verified_count: 4
+  audit_passed_count: 4
+  chain_passed_count: 4
+  audited_done_count: 4
+  pc: secondpc
+  pc_suffix: _secondpc
+  verified_at: "2026-05-11T10:27:00+09:00"
+  verifier: ieyasu (家康 副将軍)
+  audited_done_list:
+    - P2-1 ecosystem_coherence lens (verify_ieyasu_p2_1_secondpc) ✅ commit: 8a29caa
+    - P2-3 background_worker_eval (verify_ieyasu_p2_3_secondpc) ✅ commit: 91c2491
+    - P1-1 memory_sync_design (verify_ieyasu_p1_1_secondpc) ✅ commit: f416a8d
+    - P2-2 cross_pc_trust_gate (verify_ieyasu_p2_2_secondpc) ✅ commit: 364e78a
+  chain_status: |
+    Layer 1 ashigaru 完了 (P1-1/P2-1/P2-2/P2-3 設計 doc 実装)。
+    Layer 2 軍師監査 完了 (直政 QC pass/pass_with_concerns)。
+    Layer 3 家老監督 完了 (karo chain 監督)。
+    Layer 4 家康直接 verify 完了 (verify_ieyasu_p2_1/p2_3/p1_1/p2_2 _secondpc)。
+    Layer 5 audited_done 昇格: 4件。
