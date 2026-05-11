@@ -7,7 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
-from validate_cmd_schema import validate_file, validate_cmd, _load_simultaneous_reviews
+from validate_cmd_schema import validate_file, validate_cmd, _load_simultaneous_reviews, _check_tracked_files_gate
 
 
 def write_yaml(data: dict, path: Path) -> None:
@@ -512,3 +512,99 @@ class TestFullValidCommand:
         violations, code = validate_file(f, None)
         assert code == 0
         assert violations == []
+
+
+# ─── V2.1-3-gate: tracked file duplicate warning ─────────────────────────────
+
+class TestTrackedFileGate:
+    """V2.1-3-gate: if implementation_pc is set and target_files contains an already-tracked
+    scripts/ file, a duplicate-commit warning is emitted."""
+
+    def _make_cmd_with_files(self, files: list[str], impl_pc: str = "mc_only") -> dict:
+        return make_valid_cmd(implementation_pc=impl_pc, target_files=files)
+
+    def test_tracked_file_emits_warning_violation(self, tmp_path):
+        """A tracked scripts/ file → V2.1-3-gate violation added to violations list."""
+        from unittest.mock import MagicMock
+        tracked = MagicMock()
+        tracked.stdout = "scripts/some_tracked.py\n"
+
+        cmd = self._make_cmd_with_files(["scripts/some_tracked.py"])
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [cmd]}, f)
+
+        with patch("validate_cmd_schema.subprocess.run", return_value=tracked):
+            violations, code = validate_file(f, None)
+
+        gate_v = [v for v in violations if v.get("rule") == "V2.1-3-gate"]
+        assert len(gate_v) >= 1
+        assert gate_v[0]["dispatch_gate"] == "blocked"
+        assert "scripts/some_tracked.py" in gate_v[0]["message"]
+
+    def test_untracked_file_no_gate_violation(self, tmp_path):
+        """A new (untracked) scripts/ file → no V2.1-3-gate violation."""
+        from unittest.mock import MagicMock
+        untracked = MagicMock()
+        untracked.stdout = ""  # git ls-files returns empty for untracked files
+
+        cmd = self._make_cmd_with_files(["scripts/brand_new_tool.py"])
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [cmd]}, f)
+
+        with patch("validate_cmd_schema.subprocess.run", return_value=untracked):
+            violations, _ = validate_file(f, None)
+
+        gate_v = [v for v in violations if v.get("rule") == "V2.1-3-gate"]
+        assert gate_v == []
+
+    def test_non_scripts_file_ignored(self, tmp_path):
+        """Files outside scripts/ are not checked against git-tracked."""
+        from unittest.mock import MagicMock
+        tracked = MagicMock()
+        tracked.stdout = "queue/reports/foo.yaml\n"
+
+        cmd = self._make_cmd_with_files(["queue/reports/foo.yaml"])
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [cmd]}, f)
+
+        with patch("validate_cmd_schema.subprocess.run", return_value=tracked):
+            violations, _ = validate_file(f, None)
+
+        gate_v = [v for v in violations if v.get("rule") == "V2.1-3-gate"]
+        assert gate_v == []
+
+    def test_implementation_pc_not_set_no_gate(self, tmp_path):
+        """If implementation_pc is absent (or grandfathered), no gate check is performed."""
+        from unittest.mock import MagicMock
+        tracked = MagicMock()
+        tracked.stdout = "scripts/some_tracked.py\n"
+
+        cmd = make_valid_cmd(status="done", target_files=["scripts/some_tracked.py"])
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [cmd]}, f)
+
+        with patch("validate_cmd_schema.subprocess.run", return_value=tracked):
+            violations, code = validate_file(f, None)
+
+        assert code == 0
+        gate_v = [v for v in violations if v.get("rule") == "V2.1-3-gate"]
+        assert gate_v == []
+
+    def test_both_implementation_pc_tracked_file(self, tmp_path):
+        """implementation_pc=both with a tracked file also triggers the gate."""
+        from unittest.mock import MagicMock
+        tracked = MagicMock()
+        tracked.stdout = "scripts/shared_tool.py\n"
+
+        cmd = self._make_cmd_with_files(
+            ["scripts/shared_tool.py"], impl_pc="both"
+        )
+        cmd["implementation_pc_rationale"] = "両 PC に必要"
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [cmd]}, f)
+
+        with patch("validate_cmd_schema.subprocess.run", return_value=tracked):
+            violations, _ = validate_file(f, None)
+
+        gate_v = [v for v in violations if v.get("rule") == "V2.1-3-gate"]
+        assert len(gate_v) >= 1

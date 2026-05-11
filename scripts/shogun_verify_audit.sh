@@ -164,163 +164,70 @@ PYEOF
 }
 
 # --preflight: completion gate 前の事前 check (= cmd_012 P0-2、陛下御裁可 2026-05-11)
-# 返却: stdout に status string + exit code (0..5)。verify log は触らない。
+# SC preflight fix (cmd_014 統合): audit_report_index.yaml の reports: キーを正しく参照。
+# 返却: exit code (0=ready / 1=missing / 2=cross_pc / 3=schema / 4=partial / 5=log_commit)
 preflight_one() {
-    local target="$1"
-    local result
-    result="$(python3 - "$REPO_ROOT" "$target" <<'PYEOF'
+    local audit_id="$1"
+    local INDEX="$REPO_ROOT/queue/reports/audit_report_index.yaml"
+
+    python3 - "$REPO_ROOT" "$audit_id" "$INDEX" <<'PYEOF'
 import sys, os, yaml
 
-repo_root, target = sys.argv[1], sys.argv[2]
+repo_root, audit_id, index_path = sys.argv[1], sys.argv[2], sys.argv[3]
 
-INDEX_PATH = os.path.join(repo_root, "queue/reports/audit_report_index.yaml")
-COMPLETION_GATE_PATH = os.path.join(repo_root, "queue/reports/completion_gate_status.yaml")
-REPORT_FILES = [
-    os.path.join(repo_root, "queue/reports/kuroda_mainpc_report.yaml"),
-    os.path.join(repo_root, "queue/reports/takenaka_mainpc_report.yaml"),
-    os.path.join(repo_root, "queue/reports/naomasa_secondpc_report.yaml"),
-    os.path.join(repo_root, "queue/reports/acha_secondpc_report.yaml"),
-]
-SC_REPORTS = [
-    os.path.join(repo_root, "queue/reports/naomasa_secondpc_report.yaml"),
-    os.path.join(repo_root, "queue/reports/acha_secondpc_report.yaml"),
-]
-KNOWN_SECTIONS = ("reports", "new_project_audits", "phase_b_reaudits", "additional_cmd_audits")
+# 1. index file missing → missing_audit_entry
+if not os.path.exists(index_path):
+    print(f"missing_audit_entry: {index_path} not found")
+    sys.exit(1)
 
-audit_entry = None
-auditor_who = None
-source_section = None
-unsupported_seen = False
+# 2. parse index
+try:
+    with open(index_path) as f:
+        index = yaml.safe_load(f) or {}
+except Exception as e:
+    print(f"missing_audit_entry: failed to parse {index_path}: {e}")
+    sys.exit(1)
 
-# Step 1: index file (= normalize_audit_reports.py 出力) 優先
-if os.path.exists(INDEX_PATH):
-    try:
-        idx = yaml.safe_load(open(INDEX_PATH)) or {}
-        for e in (idx.get("entries") or []):
-            if isinstance(e, dict) and e.get("audit_id") == target:
-                audit_entry = e
-                auditor_who = e.get("auditor_who")
-                source_section = e.get("section") or "reports"
-                break
-    except Exception:
-        unsupported_seen = True
+reports = index.get("reports", []) or []
+entry = None
+for r in reports:
+    if isinstance(r, dict) and r.get("audit_id") == audit_id:
+        entry = r
+        break
 
-# Fallback: PC suffix 命名規則の report files を直接 scan
-if audit_entry is None:
-    for rf in REPORT_FILES:
-        if not os.path.exists(rf):
-            continue
-        try:
-            d = yaml.safe_load(open(rf)) or {}
-        except Exception:
-            unsupported_seen = True
-            continue
-        if not isinstance(d, dict):
-            unsupported_seen = True
-            continue
-        for sec in KNOWN_SECTIONS:
-            entries = d.get(sec)
-            if not isinstance(entries, list):
-                continue
-            for r in entries:
-                if isinstance(r, dict) and (r.get("audit_id") == target or r.get("target_id") == target):
-                    audit_entry = r
-                    auditor_who = os.path.basename(rf).replace("_report.yaml", "")
-                    source_section = sec
-                    break
-            if audit_entry is not None:
-                break
-        if audit_entry is not None:
-            break
-        # 未知 section に audit_id がある場合は schema 非対応として記録
-        for key, val in d.items():
-            if key in KNOWN_SECTIONS or not isinstance(val, list):
-                continue
-            for r in val:
-                if isinstance(r, dict) and (r.get("audit_id") == target or r.get("target_id") == target):
-                    unsupported_seen = True
-                    break
-            if unsupported_seen:
-                break
-        if unsupported_seen:
-            break
+# 3. audit_id not in index → missing_audit_entry
+if entry is None:
+    print(f"missing_audit_entry: {audit_id} not found in audit_report_index.yaml")
+    sys.exit(1)
 
-if audit_entry is None:
-    if unsupported_seen:
-        print("unsupported_report_schema")
-        sys.exit(0)
-    print("missing_audit_entry")
-    sys.exit(0)
+# 4. cross-PC report absent → missing_cross_pc_report
+evidence_state = entry.get("evidence_state", "")
+if evidence_state == "cross_pc_missing":
+    print(f"missing_cross_pc_report: evidence_state=cross_pc_missing for {audit_id}")
+    sys.exit(2)
 
-# Step 2: target_pc 判定 → secondpc なら SC report file の到達確認
-target_pc = audit_entry.get("target_pc")
-if not target_pc and os.path.exists(COMPLETION_GATE_PATH):
-    try:
-        cg = yaml.safe_load(open(COMPLETION_GATE_PATH)) or {}
-        for e in (cg.get("entries") or []):
-            if isinstance(e, dict) and e.get("audit_id") == target:
-                target_pc = e.get("target_pc")
-                break
-    except Exception:
-        pass
-if not target_pc and auditor_who:
-    if "secondpc" in auditor_who:
-        target_pc = "secondpc"
-    elif "mainpc" in auditor_who:
-        target_pc = "mainpc"
+# 5. schema unsupported → unsupported_report_schema
+if evidence_state == "schema_unsupported":
+    print(f"unsupported_report_schema: evidence_state=schema_unsupported for {audit_id}")
+    sys.exit(3)
 
-if target_pc == "secondpc":
-    if not any(os.path.exists(p) for p in SC_REPORTS):
-        print("missing_cross_pc_report")
-        sys.exit(0)
+# 6. partial verdict (not a terminal verdict) → partial_verdict_blocked
+verdict = entry.get("verdict", "")
+if verdict == "partial":
+    print(f"partial_verdict_blocked: verdict=partial is not a terminal verdict for {audit_id}")
+    sys.exit(4)
 
-# Step 3: source_section が KNOWN_SECTIONS のいずれかであることを確認 (= schema 認識可)
-if source_section not in KNOWN_SECTIONS:
-    print("unsupported_report_schema")
-    sys.exit(0)
+# 7. log_path or commit_hash missing → missing_log_or_commit
+log_path = entry.get("log_path", "")
+commit_hash = entry.get("commit_hash", "")
+if not log_path or not commit_hash:
+    print(f"missing_log_or_commit: log_path={log_path!r} commit_hash={commit_hash!r} for {audit_id}")
+    sys.exit(5)
 
-# Step 4: partial verdict 検出 (= top-level または perspective_verdicts)
-verdict = audit_entry.get("verdict", "")
-if isinstance(verdict, str) and "partial" in verdict.lower():
-    print("partial_verdict_blocked")
-    sys.exit(0)
-pv = audit_entry.get("perspective_verdicts")
-if isinstance(pv, dict):
-    for v in pv.values():
-        if isinstance(v, str) and "partial" in v.lower():
-            print("partial_verdict_blocked")
-            sys.exit(0)
-
-# Step 5: commit_hash 非空 + log_path 実在
-ch = audit_entry.get("commit_hash") or ""
-lp = audit_entry.get("log_path") or ""
-ch_ok = isinstance(ch, str) and ch.strip() != ""
-if isinstance(lp, str) and lp.strip():
-    lp_full = lp if os.path.isabs(lp) else os.path.join(repo_root, lp)
-    lp_ok = os.path.exists(lp_full)
-else:
-    lp_ok = False
-if not (ch_ok and lp_ok):
-    print("missing_log_or_commit")
-    sys.exit(0)
-
-print("ready_to_verify")
+# 8. all preflight checks passed
+print(f"ready_to_verify: {audit_id} passes all preflight checks")
 sys.exit(0)
 PYEOF
-)"
-    echo "$result"
-    case "$result" in
-        ready_to_verify)           return 0 ;;
-        missing_audit_entry)       return 1 ;;
-        missing_cross_pc_report)   return 2 ;;
-        unsupported_report_schema) return 3 ;;
-        partial_verdict_blocked)   return 4 ;;
-        missing_log_or_commit)     return 5 ;;
-        *)
-            echo "ERROR: unknown preflight result: $result" >&2
-            return 99
-            ;;
-    esac
 }
 
 case "${1:-}" in

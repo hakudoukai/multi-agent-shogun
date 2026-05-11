@@ -16,6 +16,7 @@ Exit codes:
 """
 
 import argparse
+import subprocess
 import sys
 import yaml
 from datetime import datetime
@@ -215,12 +216,50 @@ def _validate_task_v2_1_6(task: dict, cmd_id: str, task_idx: int, violations: li
             ))
 
 
+def _check_tracked_files_gate(cmd: dict, cmd_id: str, violations: list) -> None:
+    """V2.1-3 gate: if implementation_pc is set, warn if declared scripts/ files are already tracked.
+
+    Prevents duplicate-commit errors when the same script is ordered to both PCs.
+    Checks target_files field (list of file paths) against git ls-files output.
+    """
+    impl_pc = str(cmd.get("implementation_pc", "")).lower()
+    if impl_pc not in {"both", "mc_only", "sc_only"}:
+        return
+
+    target_files = cmd.get("target_files") or []
+    if isinstance(target_files, str):
+        target_files = [target_files]
+    if not isinstance(target_files, list):
+        return
+
+    scripts_files = [str(f) for f in target_files if str(f).startswith("scripts/")]
+    if not scripts_files:
+        return
+
+    for filepath in scripts_files:
+        try:
+            result = subprocess.run(
+                ["git", "ls-files", "--", filepath],
+                capture_output=True, text=True, timeout=5,
+            )
+            if result.stdout.strip():
+                msg = (
+                    f"implementation_pc={impl_pc} declares '{filepath}' but it is already "
+                    "git-tracked — potential duplicate commit across PCs"
+                )
+                print(f"WARNING: [V2.1-3-gate] {msg}", file=sys.stderr)
+                violations.append(_v(cmd_id, "V2.1-3-gate", "target_files", msg))
+        except Exception:
+            pass
+
+
 def validate_cmd(cmd: dict, cmd_id: str, reviews: dict, violations: list) -> None:
     """Run all V2.1 checks on a single command."""
     if _is_grandfathered(cmd):
         return
     _validate_v2_1_1(cmd, cmd_id, violations)
     _validate_v2_1_3(cmd, cmd_id, violations, reviews)
+    _check_tracked_files_gate(cmd, cmd_id, violations)
     for idx, task in enumerate(cmd.get("tasks") or []):
         if isinstance(task, dict):
             _validate_task_v2_1_6(task, cmd_id, idx, violations)

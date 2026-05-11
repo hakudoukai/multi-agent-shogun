@@ -17,6 +17,7 @@ import argparse
 import sys
 import re
 import yaml
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -30,6 +31,8 @@ DEFAULT_REPORT_FILES = [
 ]
 
 OUTPUT_FILE = REPORT_DIR / "audit_report_index.yaml"
+
+JST = timezone(timedelta(hours=9))
 
 # Environment-related keywords for partial → blocked_env detection
 _ENV_KEYWORDS = re.compile(
@@ -233,8 +236,27 @@ def load_report_file(path: Path, _errors: "list[str] | None" = None) -> list[dic
                     _normalize_entry(entry, source_file, "phase_b_reaudits", "phase_b_reaudits")
                 )
 
+    # Section: cycle2_fix_reaudits (cmd_014 統合: SC の追加 section タイプ)
+    if "cycle2_fix_reaudits" in raw and isinstance(raw["cycle2_fix_reaudits"], list):
+        for entry in raw["cycle2_fix_reaudits"]:
+            if isinstance(entry, dict):
+                results.append(
+                    _normalize_entry(entry, source_file, "cycle2_fix_reaudits", "cycle2_fix_reaudits")
+                )
+
+    # Section: self_reflections (cmd_014 統合: SC の追加 section タイプ)
+    if "self_reflections" in raw and isinstance(raw["self_reflections"], list):
+        for entry in raw["self_reflections"]:
+            if isinstance(entry, dict):
+                results.append(
+                    _normalize_entry(entry, source_file, "self_reflections", "self_reflections")
+                )
+
     # Legacy named blocks (any other dict-valued top-level key containing a list)
-    known_sections = {"reports", "new_project_audits", "phase_b_reaudits"}
+    known_sections = {
+        "reports", "new_project_audits", "phase_b_reaudits",
+        "cycle2_fix_reaudits", "self_reflections",
+    }
     for key, value in raw.items():
         if key in known_sections:
             continue
@@ -292,7 +314,25 @@ def main() -> None:
 
     error_files: list[str] = []
     entries = normalize(report_files, error_files)
-    output = {"reports": entries}
+
+    # cmd_014 統合: SC の summary metadata を追加
+    pass_count = sum(1 for e in entries if e.get("verdict") == "pass")
+    pwc_count  = sum(1 for e in entries if e.get("verdict") == "pass_with_concerns")
+    fail_count = sum(1 for e in entries if e.get("verdict") == "fail")
+    partial_mapped = sum(1 for e in entries if "partial→fail" in e.get("normalization_reason", ""))
+    output = {
+        "generated_at": datetime.now(JST).strftime("%Y-%m-%dT%H:%M:%S+09:00"),
+        "generator": "scripts/normalize_audit_reports.py",
+        "schema_version": "P0-1",
+        "summary": {
+            "total": len(entries),
+            "pass": pass_count,
+            "pass_with_concerns": pwc_count,
+            "fail": fail_count,
+            "partial_auto_mapped_to_fail": partial_mapped,
+        },
+        "reports": entries,
+    }
     yaml_text = yaml.dump(output, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
     if args.dry_run:

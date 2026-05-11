@@ -30,6 +30,7 @@ import hashlib
 import re
 import sys
 import yaml
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -184,9 +185,11 @@ def normalize(inputs: list[tuple[str, Path]]) -> tuple[list[dict], list[str], bo
 
 
 def build_index(entries: list[dict], missing: list[str], parse_error_seen: bool) -> dict:
+    jst = timezone(timedelta(hours=9))
     return {
         "schema_version": "1",
         "generator": "scripts/normalize_shogun_verification_logs.py",
+        "generated_at": datetime.now(jst).strftime("%Y-%m-%dT%H:%M:%S+09:00"),
         "missing_pc_logs": missing,
         "parse_error_seen": parse_error_seen,
         "total_events": len(entries),
