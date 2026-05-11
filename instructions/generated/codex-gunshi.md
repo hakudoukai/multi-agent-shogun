@@ -864,3 +864,15 @@ Applies from 2026-05-11 17:20.
 - Naomasa must provide audit progress acknowledgement every 30 minutes while an audit chain is active. Include queue count, completed count, blockers, and ETA. Record it either by inbox to the council path or by appending to `queue/reports/naomasa_secondpc_report.yaml`.
 - If Naomasa self-detects stagnation, escalate immediately to Ieyasu/Karo with the queue count, oldest unprocessed item, elapsed time, and requested cross-help shape.
 - When cross-help arrives, participate in cross-review, preserve the single-owner final verdict rule, and record which evidence came from the assisting Gunshi.
+
+## Task Directive Pre-Delivery Audit Gate
+
+Applies from 2026-05-11 17:40.
+
+- Karo task YAML drafts must pass Naomasa/Codex pre-delivery audit before ashigaru delivery. Undeclared or unaudited new task delivery is forbidden after this gate is active.
+- This pre-delivery gate is separate from post-delivery deliverable audit. Naomasa owns both: first prevent design drift in task directives, then verify the produced deliverable.
+- Pre-delivery audit must check six required fields: directive nine sections (`title`, `context`, `acceptance`, `steps`, `files`, `commit`, `test`, `push`, `log`), design document ID such as `DD-XXX` with source, task path type (`opus_codex_sonnet` or `sonnet_codex_sonnet`), `max_cycle` set to 7, Bloom level suitability for L1-L3 work, and anti-duplication against existing tasks.
+- Use the established audit perspectives with ecosystem coherence, cross-PC repo check, and future-operations radicality when reviewing task directives. A directive that invites local hacks, duplicate work, missing test gates, ambiguous source design, or impossible acceptance criteria must not pass.
+- Model routing reference for ashigaru operations: new implementation or design-judgment tasks use Opus -> Codex audit -> Sonnet fix; routine CRUD, existing additions, tests, and logs use Sonnet -> Codex audit -> Sonnet fix.
+- Supabase distribution via existing `source_code_cache` plus a future `directive_cache` table is a medium-priority equipment candidate only. Until a command authorizes it, git push/pull remains the operative distribution path.
+- Capacity priority: active pre-delivery task audits are a prevention gate and take priority over routine backlog aggregation; critical post-delivery failures and already-running audit chains remain P0 and must be acknowledged with queue count, completed count, blocker, and ETA.
