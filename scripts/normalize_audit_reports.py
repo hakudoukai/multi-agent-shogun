@@ -124,7 +124,21 @@ def process_file(file_path):
             data = yaml.safe_load(f)
     except yaml.YAMLError as e:
         print(f"  WARN: {file_path} — YAML parse error: {e}", file=sys.stderr)
-        return []
+        base = os.path.splitext(os.path.basename(file_path))[0]
+        placeholder = {
+            "audit_id": f"{base}_parse_error",
+            "source_file": file_path,
+            "source_section": "_parse_error",
+            "target_id": None,
+            "verdict": "fail",
+            "evidence_state": "schema_unsupported",
+            "completion_gate": "blocked",
+            "log_path": "",
+            "commit_hash": "",
+            "shogun_verified": False,
+            "parse_error": str(e).split("\n")[0],
+        }
+        return [placeholder]
 
     if not data:
         print(f"  WARN: {file_path} — empty or non-parseable YAML", file=sys.stderr)

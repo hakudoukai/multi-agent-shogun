@@ -1,17 +1,17 @@
-generated_at: '2026-05-11T09:14:38+09:00'
+generated_at: '2026-05-11T09:18:21+09:00'
 generator: scripts/normalize_audit_reports.py
 schema_version: P0-1
 source_files:
 - queue/reports/naomasa_secondpc_report.yaml
 - queue/reports/kuroda_mainpc_report.yaml
+- queue/reports/acha_secondpc_report.yaml
 skipped_files:
 - queue/reports/takenaka_mainpc_report.yaml
-- queue/reports/acha_secondpc_report.yaml
 summary:
-  total: 53
+  total: 54
   pass: 18
   pass_with_concerns: 9
-  fail: 17
+  fail: 18
   partial_auto_mapped_to_fail: 18
 reports:
 - audit_id: naomasa_001
@@ -580,3 +580,14 @@ reports:
   log_path: ''
   commit_hash: ca744ea4
   shogun_verified: false
+- audit_id: acha_secondpc_report_parse_error
+  source_file: queue/reports/acha_secondpc_report.yaml
+  source_section: _parse_error
+  target_id: null
+  verdict: fail
+  evidence_state: schema_unsupported
+  completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
+  shogun_verified: false
+  parse_error: while parsing a block mapping
