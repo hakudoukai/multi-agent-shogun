@@ -737,6 +737,89 @@ shogun_charter_audits:
       action: export_sources_then_resubmit
       summary: "現環境では source 不足につき全文監査は不可。根拠なき合格/不合格を避け、source gate fail として差戻しが妥当。"
 
+  - audit_id: naomasa_shogun_charter_v0_1_source_requirements
+    target_type: charter_audit_source_requirements
+    target_id: shogun_charter_v0_1
+    parent_cmd: shogun_charter
+    audited_at: "2026-05-12T08:40:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_083810_4a1185c5
+    verdict: pass_with_concerns
+    evidence_state: partial
+    completion_gate: blocked_until_minimum_sources_arrive
+    audit_gate_status: minimum_source_set_declared
+    minimum_required_sources_for_round1_reaudit:
+      charter_v0_1_full_text:
+        required: true
+        acceptable_paths:
+          - "Preferred: committed docs/shogun_charter_v0_1.md with Supabase id, exported_at, source_version or updated_at, and checksum."
+          - "Acceptable fallback: full_text pasted into gunshi inbox, preserving section headings and all §5/§6/§11 text."
+        reason: "9観点 + 10 lens audit and §11 6鉄則 review require exact wording and line/section citations."
+      nobunaga_initial_review:
+        required: true
+        acceptable_paths:
+          - "Preferred: committed docs/shogun_charter_v0_1_nobunaga_initial_review.md."
+          - "Acceptable fallback: full review pasted into gunshi inbox with §5 proposal and §6 questions intact."
+        reason: "The request explicitly asks for audit view on Nobunaga §5 improvement proposal and §6 questions."
+      memory_norm_baseline:
+        required: true
+        acceptable_paths:
+          - "SC graph entity export is the minimum baseline because the target is Shogun Charter v0.1 for SC governance."
+          - "MC graph export is additionally required only if the charter claims MC/SC cross-environment parity or changes MC-managed norms."
+          - "If memory MCP remains unavailable in this Codex session, paste or commit the entity list with names, rule text, and source timestamps."
+        reason: "Consistency verification cannot be done from entity counts alone; exact rule text is required."
+    source_count_clarification:
+      issue: "Original request said memory MCP 23 entities; follow-up lists SC graph as 18 and MC graph as 7+alpha."
+      requirement: "Before final consistency verdict, provide the intended baseline set and exact entity list. If uncertain, use SC 18 as required and MC 7+alpha as comparison appendix."
+    tool_availability_note:
+      supabase_sql_path: "Not available in this Codex toolset at time of audit; no mcp__claude_ai_Supabase__execute_sql tool is exposed."
+      memory_read_graph_path: "Not available in this Codex toolset at time of audit; no mcp__memory__read_graph tool is exposed."
+      fallback: "Inbox paste or committed local docs are acceptable; committed docs are preferred for reproducibility and cross-PC audit."
+    recommended_next_action:
+      to_shogun: "Send or commit the three minimum sources above, then nudge gunshi for naomasa_shogun_charter_v0_1_round1_reaudit."
+      to_karo: "Keep dashboard chain running in parallel; Charter audit reopens immediately after source arrival."
+
+  - audit_id: naomasa_shogun_charter_v0_1_source_path_followup
+    target_type: charter_audit_source_path_followup
+    target_id: shogun_charter_v0_1
+    parent_cmd: shogun_charter
+    audited_at: "2026-05-12T08:44:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_083925_1995972f
+    verdict: pass_with_concerns
+    evidence_state: partial
+    completion_gate: blocked_until_source_export
+    audit_gate_status: source_paths_acknowledged_but_not_fetchable_by_codex
+    acknowledged_new_sources:
+      karo_supabase_query_verified:
+        status: acknowledged
+        project_id: pxvnhkiqyxkejzivspde
+        query: "SELECT full_text FROM project_documents WHERE id='89ac869b-0d1d-4acd-9367-f3049a289821'"
+        reported_result: "6714 chars / 18 sections retrieved in karo session"
+      karo_review_markdown:
+        status: available_locally
+        path: docs/karo_shogun_charter_v0_1_review.md
+        size_bytes: 9660
+        use: "Reference cross-check only; not a substitute for charter full_text or Nobunaga review."
+      nobunaga_review_markdown:
+        status: still_missing_locally
+        path: docs/shogun_charter_v0_1_nobunaga_initial_review.md
+      memory_graph:
+        status: still_unavailable_in_codex
+        evidence: "instructions/cli_specific/codex_tools.md states Codex has no mcp__memory__read_graph equivalent; generated codex-gunshi instructions repeat this limitation."
+    blocking_reason:
+      - "This Codex session has no mcp__claude_ai_Supabase__execute_sql tool exposed, so Karo's working Supabase query path cannot be executed here."
+      - "This Codex session has no mcp__memory__read_graph tool exposed, so memory entities must be pasted or committed as source data."
+      - "Nobunaga initial review remains missing in SC workspace, so requested §5/§6 audit view is still blocked."
+    required_action_for_reaudit:
+      - "Karo/Shogun should paste or commit the 6714-char charter full_text retrieved from Supabase."
+      - "Karo/Shogun should paste or commit the SC memory entity export to be used as baseline."
+      - "Nobunaga review should be pushed, uploaded, or pasted before the full requested audit is claimed complete."
+    interim_position:
+      summary: "Karo's query proof narrows the source path, but it does not change Naomasa Codex gate state. Full audit remains blocked until source text is present in this session or committed locally."
+
 dashboard_task_pre_delivery_audits:
   - audit_id: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render
     target_type: task_yaml_pre_delivery_gate
