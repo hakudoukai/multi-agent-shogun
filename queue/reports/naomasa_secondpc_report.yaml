@@ -820,6 +820,124 @@ shogun_charter_audits:
     interim_position:
       summary: "Karo's query proof narrows the source path, but it does not change Naomasa Codex gate state. Full audit remains blocked until source text is present in this session or committed locally."
 
+  - audit_id: naomasa_shogun_charter_v0_1_round1_partial_sc
+    target_type: charter_design_audit
+    target_id: shogun_charter_v0_1
+    parent_cmd: shogun_charter
+    audited_at: "2026-05-12T08:52:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_084331_d8ee830f
+      - msg_20260512_084435_af5e4703
+    source_files:
+      - "docs/shogun_charter_v0_1_full_export.md"
+      - "queue/reports/sc_memory_entities_export_20260512.yaml"
+      - "docs/karo_shogun_charter_v0_1_review.md"
+    missing_sources:
+      - "docs/shogun_charter_v0_1_nobunaga_initial_review.md"
+      - "MC memory graph export"
+    verdict: pass_with_concerns
+    evidence_state: partial_sc_sources_complete
+    completion_gate: open_for_v0_2_sc_revision
+    audit_gate_status: partial_audit_complete_nobunaga_review_pending
+    audit_scope:
+      included:
+        - "Charter v0.1 full text, 18 sections, Supabase export"
+        - "SC memory graph 18 entities / 13 relations"
+        - "Karo review cross-check"
+      excluded:
+        - "Nobunaga §5 improvement proposal and §6 questions because the Nobunaga review file is not present in SC workspace"
+        - "MC memory graph consistency because MC export is not present"
+    perspective_verdicts:
+      1_functional_completeness: pass_with_concerns
+      2_anti_duplication: concerns
+      3_kiritsu_chain_of_command: concerns
+      4_logic_consistency: concerns
+      5_schema_data_contract: concerns
+      6_test_ci_evidence: concerns
+      7_legal_privacy_security: pass_with_concerns
+      8_operations: concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: concerns
+      11_cross_pc_repo_check: concerns
+      12_future_operations_radicality: pass_with_concerns
+    memory_consistency:
+      aligned:
+        - "Charter L15-L16, L380-L385 aligns with mistake_prevention_principle and radical_solution_during_development_rule: trust should rest on mechanisms, gates, and root-cause design."
+        - "Charter L217-L226 aligns with audit_exclusive_to_gunshi_codex in spirit: review role should not implement, and P1/security findings remain gated."
+        - "Charter L389-L391 aligns with council_autonomous_decision_rule: v0.1 is not final and expects 4-person council consolidation before v1.0."
+      needs_reconciliation:
+        - "F007_git_push_approval_rule bans push without Lord approval, while Charter L109 bans direct main push categorically and L27/L324 require PR flow. v0.2 must define cutover and exception policy for current SC main-push report commits."
+        - "task_directive_pre_audit_rule currently uses queue/tasks YAML pre-audit before ashigaru delivery, while Charter L104/L235 makes GitHub Issue the task SoT. v0.2 must define whether YAML is transitional queue mirror, not competing SoT."
+        - "supabase_directive_distribution_rule remains a mechanism candidate, while Charter L60/L236 treats Supabase/docs as core SoT. v0.2 must define precedence and sync conflict resolution."
+    findings:
+      - severity: high
+        perspective: "10_ecosystem_coherence"
+        location: "docs/shogun_charter_v0_1_full_export.md L102-L105, L230-L240"
+        issue: "The charter makes GitHub Issue/PR the task and deliverable SoT, but the live family system still uses queue/tasks YAML, inbox YAML, and report YAML as authoritative workflow state."
+        recommendation: "Add a migration section: YAML remains runtime queue until GitHub Issue/PR integration is implemented; each YAML task gets github_issue_id/branch/pr_url fields; cutover criteria and rollback path are explicit."
+      - severity: high
+        perspective: "3_kiritsu_chain_of_command"
+        location: "docs/shogun_charter_v0_1_full_export.md L109, L141-L152, L322-L324"
+        issue: "Direct main push is banned in v0.1, but current SC audit/report operation still commits and pushes directly to main under F007-style permission. Without a transition exception, the charter would instantly make normal report publication non-compliant."
+        recommendation: "Define an interim exception for governance/report-only commits or move reports to PR flow first. Tie the exception to F007 approval, file allowlists, and expiration at CI/PR cutover."
+      - severity: high
+        perspective: "6_test_ci_evidence"
+        location: "docs/shogun_charter_v0_1_full_export.md L29-L30, L66, L183-L184, L380-L385"
+        issue: "'CI absolute judgement' is directionally correct, but CI is not yet equipped and the charter does not say how SKIP>0, missing artifacts, blocked_env, or un-runnable E2E are judged."
+        recommendation: "State that CI green is necessary but not sufficient: SKIP>0, source_missing, missing logs, or unverifiable cross-PC evidence keep completion_gate blocked even if CI passes. Until GitHub Actions exists, local command logs + Codex audit gates are temporary evidence."
+      - severity: high
+        perspective: "8_operations"
+        location: "docs/shogun_charter_v0_1_full_export.md L283-L342"
+        issue: "mini-swe-agent is a central execution component, but install state, authentication, rate limits, failure recovery, prompt boundary, and repository write permissions are not verified."
+        recommendation: "Before implementation, add a mini-swe-agent preflight design: installed version, allowed repos, token scope, issue labels, branch naming, timeout/retry, and handoff back to Karo/Gunshi."
+      - severity: medium
+        perspective: "5_schema_data_contract"
+        location: "docs/shogun_charter_v0_1_full_export.md L60-L66, L102-L105, L230-L240"
+        issue: "Supabase, docs, GitHub Issue, PR, and migration are all named as sources of truth, but conflict precedence is unspecified."
+        recommendation: "Add a SoT precedence table by data class: command/task state, specs, decisions, code, DB schema, audit reports, and dashboard summaries. Include sync direction and stale-source handling."
+      - severity: medium
+        perspective: "1_functional_completeness"
+        location: "docs/shogun_charter_v0_1_full_export.md L157-L169; docs/karo_shogun_charter_v0_1_review.md L64-L90"
+        issue: "The 9 AI departments are defined abstractly, but they are not mapped to SC's actual 7 ashigaru + Karo + Gunshi topology."
+        recommendation: "Adopt Karo's mapping proposal in v0.2, including primary/secondary department ownership, overload limits for Gunshi, and persona file updates."
+      - severity: medium
+        perspective: "7_legal_privacy_security"
+        location: "docs/shogun_charter_v0_1_full_export.md L70-L78, L126-L138, L217-L226"
+        issue: "P1 risk classes are listed, but destructive-operation bans D001-D008, network unknown URL stop rule, and WSL /mnt protections are not referenced in the charter AGENTS excerpt."
+        recommendation: "Reference the existing destructive-operation safety table instead of duplicating it, and make P1 security review explicitly include D001-D008 and unknown external network operations."
+      - severity: medium
+        perspective: "2_anti_duplication"
+        location: "docs/shogun_charter_v0_1_full_export.md L94-L138, L188-L213"
+        issue: "The charter proposes AGENTS.md text and docs tree, but does not define whether this replaces, imports, or overlays the existing AGENTS/CLAUDE/instructions/generated files."
+        recommendation: "Use an overlay plan: v0.2 charter becomes docs governance source; generated instructions are updated by a controlled script or checklist; AGENTS.md retains platform-specific operational rules."
+      - severity: medium
+        perspective: "11_cross_pc_repo_check"
+        location: "queue/reports/sc_memory_entities_export_20260512.yaml L15-L31, L165-L171"
+        issue: "SC memory includes auto-git-sync pull-only and Supabase directive distribution candidate, but the charter's GitHub-centric flow does not say how MC/SC divergence, behind/ahead state, or sync HALT affects PR/Issue automation."
+        recommendation: "Add cross-PC preflight: branch freshness, auto-sync HALT state, origin/newbuild remote mapping, and who is allowed to create/push branches on which PC."
+    section_11_six_rules_audit:
+      verdict: pass_with_concerns
+      source_location: "docs/shogun_charter_v0_1_full_export.md L217-L226"
+      assessment:
+        implementation_ai_no_spec_change: "Good; aligns with anti-scope-creep. Needs explicit exception for reporting defects back to spec owner."
+        review_ai_no_implementation: "Good; define that audit/report YAML/doc edits by Gunshi are governance artifacts, not product implementation."
+        spec_ai_no_code: "Good; needs GitHub Issue/PR label enforcement or task pre-audit to prevent role drift."
+        security_p1_human_gate: "Good; add destructive-operation and unknown-network stop rules."
+        db_auth_permission_pii_no_auto_merge: "Strong; include RLS and migration review checklist."
+        ci_absolute_judgement: "Directionally strong but must be 'CI necessary, not sufficient' under SKIP=FAIL/source evidence rules."
+    five_to_ten_year_ops_risk:
+      - "Without a SoT migration map, future agents will split truth between YAML, GitHub Issues, Supabase, docs, and PRs; this is a long-term governance fracture."
+      - "If direct-main pushes are banned before PR infrastructure exists, governance reports may stop or shift to ad-hoc exceptions."
+      - "If CI becomes the only trusted signal, evidence gaps outside CI such as source_missing, legal review, and cross-PC sync failures will be missed."
+      - "If mini-swe-agent is adopted before token/permission boundaries are defined, the platform may gain a new uncontrolled writer."
+    recommendation_to_shogun:
+      action: revise_to_v0_2
+      summary: "v0.1 direction is sound and should proceed to v0.2, but only after adding migration/cutover rules for YAML→GitHub SoT, F007/direct-main transition, CI necessary-not-sufficient evidence policy, mini-swe-agent preflight, and cross-PC branch/sync gates."
+    recommendation_to_karo:
+      action: keep_dashboard_parallel_and_prepare_charter_v0_2_task
+      summary: "Charterはdashboardよりsource到着時に段階監査継続で可。信長review到着後に§5/§6 audit viewを追加し、本entryをfinal round1へsupersedeする。"
+
 dashboard_task_pre_delivery_audits:
   - audit_id: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render
     target_type: task_yaml_pre_delivery_gate
