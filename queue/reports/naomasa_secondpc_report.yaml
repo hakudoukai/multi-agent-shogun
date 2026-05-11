@@ -2855,3 +2855,309 @@ cmd018_qc:
       native_execution: true
       confidence: high
       confidence_note: "commit実在、対象行、失敗再現テスト、py_compile、pytest 83 passed/SKIP=0 を直接確認。残懸念は報告済み caveat と同一の request path DDL 完全分離未達。"
+
+round1_unaudited_program_audits:
+  metadata:
+    task_id: subtask_unaudited_programs_audit_round1
+    parent_cmd: residual_blocked_pdca_chain
+    audited_at: "2026-05-11T16:21:07+09:00"
+    audited_by: naomasa
+    source_files:
+      - queue/reports/audit_report_index.yaml
+      - queue/reports/kuroda_mainpc_report.yaml
+      - queue/reports/shogun_verification_canonical_index.yaml
+      - queue/reports/shogun_verification_mainpc_log.yaml
+    selection_rule: "audit_report_index.yaml 先頭15件。max 15 件/session 制限に従い round1 として固定。"
+    note: "本 round は MainPC cmd_004 系の既存 audit entry を SC 側から再監査する aggregation audit。MC 専属 source path は SC から直接実体確認不可のため 11_cross_pc_repo_check を適用。"
+  entries:
+    - audit_id: naomasa_round1_kuroda_code_audit_001_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_code_audit_001
+      target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_v3_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "missing"
+      log_path: logs/codex_audits/codex_audit_kuroda_code_audit_001.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: concerns, 3_kiritsu: fail, 4_logic: concerns, 5_schema: concerns, 6_test: concerns, 7_legal: concerns, 8_ops: concerns, 9_doc: fail, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:2 audit_id=kuroda_code_audit_001 — source verdict は pass_with_concerns だが line 18 commit_hash が `なし` で家康4項verifyの commit 条件を満たさない。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:76 target_id=kuroda_code_audit_001 — shogun_verified=false / checks_passed=1/6。line 91-95 に invalid commit_hash, generic findings, timestamp drift, related_files 不在 flags。"
+        - "queue/reports/kuroda_mainpc_report.yaml:605 kuroda_code_audit_001 — findings は行番号付きだが commit 未記録のため audited_done へ進めない。"
+      recommendations:
+        - "MC側で当該 deliverable commit を確定し、log_path 実在と related_files の repo-root 相対/絶対 path を修正して再verifyせよ。"
+
+    - audit_id: naomasa_round1_kuroda_001_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_001
+      target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "0dcfc6b0"
+      log_path: /tmp/codex_audit_kuroda_001.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: fail, 2_anti_dup: concerns, 3_kiritsu: pass, 4_logic: fail, 5_schema: concerns, 6_test: fail, 7_legal: concerns, 8_ops: fail, 9_doc: concerns, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:20 kuroda_001 — verdict=fail / evidence_state=missing / completion_gate=blocked が正規 index に記録済み。"
+        - "queue/reports/kuroda_mainpc_report.yaml:647 kuroda_001 — process_pdf fail-closed 欠如、実PDF fixture 欠落、PII log risk など複数 high finding が行番号付きで存在。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:96 target_id=kuroda_001 — shogun_verified=false、line 111 に invalid commit_hash flag。"
+      recommendations:
+        - "旧 cycle2 entry は superseded 済みであれば effective=false を index に持たせる。未解消扱いなら cycle fix を継続。"
+
+    - audit_id: naomasa_round1_kuroda_001_fix_review_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_001_fix_review
+      target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "5274c03c"
+      log_path: /tmp/codex_audit_kuroda_001_fix.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: pass, 2_anti_dup: concerns, 3_kiritsu: pass, 4_logic: pass, 5_schema: pass, 6_test: concerns, 7_legal: fail, 8_ops: pass, 9_doc: concerns, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:45 kuroda_001_fix_review — verdict=fail / evidence_state=missing / completion_gate=blocked。"
+        - "queue/reports/kuroda_mainpc_report.yaml:778 kuroda_001_fix_review — line 803-810 process_pdf() traceback PII leak が high finding として残る。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:112 target_id=kuroda_001_fix_review — shogun_verified=false、line 127 invalid commit_hash flag。"
+      recommendations:
+        - "cycle4 review が後続にあるため、この cycle3 fail は historical_blocker として明示し、現行判定は cycle4 側へ寄せよ。"
+
+    - audit_id: naomasa_round1_kuroda_002_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_002
+      target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "0dcfc6b0"
+      log_path: logs/codex_audits/kuroda_002_karo_proxy.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: concerns, 3_kiritsu: fail, 4_logic: concerns, 5_schema: concerns, 6_test: concerns, 7_legal: pass, 8_ops: concerns, 9_doc: fail, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:64 kuroda_002 — sourceは pass_with_concerns/open だが shogun_verified=false。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:128 target_id=kuroda_002 — checks_passed=1/6、line 143-145 に log missing / invalid commit / generic findings flags。"
+        - "queue/reports/audit_report_index.yaml:77 related_files — `/mnt/c/Users/User/Documents/DentalBI/...` は MC 専属 path で SC から直接確認不可。"
+      recommendations:
+        - "karo_proxy log を実ファイルとして共有 repo に置くか、canonical index に redacted excerpt を持たせよ。"
+
+    - audit_id: naomasa_round1_kuroda_003_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_003
+      target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "1fdb419e"
+      log_path: logs/codex_audits/kuroda_003_karo_proxy.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: pass, 3_kiritsu: fail, 4_logic: concerns, 5_schema: pass, 6_test: concerns, 7_legal: pass, 8_ops: concerns, 9_doc: fail, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:82 kuroda_003 — sourceは pass_with_concerns/open だが shogun_verified=false。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:146 target_id=kuroda_003 — checks_passed=1/6、line 161-163 に log missing / invalid commit / generic findings flags。"
+        - "queue/reports/audit_report_index.yaml:95 related_files — frontend CheckinQRDisplay.tsx は MC DentalBI path でSC repo_access_preflight不可。"
+      recommendations:
+        - "MC側で commit object と log を canonical transfer し、SC側は 11_cross_pc_repo_check を再評価せよ。"
+
+    - audit_id: naomasa_round1_kuroda_004_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_004
+      target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "HEAD"
+      log_path: logs/codex_audits/kuroda_004_karo_proxy.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: concerns, 3_kiritsu: fail, 4_logic: concerns, 5_schema: concerns, 6_test: concerns, 7_legal: pass, 8_ops: concerns, 9_doc: fail, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:98 kuroda_004 — commit_hash=HEAD は監査証跡として不変でなく、家康4項verifyに不適。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:164 target_id=kuroda_004 — shogun_verified=false、line 179-180 に log missing / generic findings flags。"
+        - "queue/reports/audit_report_index.yaml:111 related_files — common_base.py等はMC DentalBI専属 path であり、SC現物検査不能。"
+      recommendations:
+        - "HEAD ではなく immutable short SHA を記録し、log_pathを共有可能な queue/reports または transferred audit log に移せ。"
+
+    - audit_id: naomasa_round1_kuroda_005_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_005
+      target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "57272e5"
+      log_path: logs/codex_audits/kuroda_005_karo_proxy.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: concerns, 3_kiritsu: fail, 4_logic: concerns, 5_schema: concerns, 6_test: concerns, 7_legal: concerns, 8_ops: concerns, 9_doc: fail, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:116 kuroda_005 — shogun_verified=false のまま open 扱いで、completion gate chainが未閉鎖。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:181 target_id=kuroda_005 — checks_passed=1/6、line 196-198 に log missing / invalid commit / generic findings flags。"
+        - "queue/reports/audit_report_index.yaml:129 related_files — `/mnt/c/Users/User/projects/multi-agent-shogun/...` はMC側 pathでSC側の current repoとは異なる。"
+      recommendations:
+        - "shim成果物はMC/SCどちらの repo を正とするか分類し、cross_pc_repo_protocol の prefix mapping へ追加せよ。"
+
+    - audit_id: naomasa_round1_kuroda_006_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_006
+      target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+      verdict: pass_with_concerns
+      evidence_state: complete
+      completion_gate: open
+      commit_hash: "missing"
+      log_path: logs/codex_audits/kuroda_006_karo_proxy.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: pass, 2_anti_dup: pass, 3_kiritsu: concerns, 4_logic: pass, 5_schema: pass, 6_test: pass, 7_legal: pass, 8_ops: pass, 9_doc: concerns, 10_ecosystem_coherence: concerns, 11_cross_pc_repo_check: concerns}
+      findings:
+        - "queue/reports/audit_report_index.yaml:133 kuroda_006 — verdict=pass/evidence_state=complete/open。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:199 target_id=kuroda_006 — shogun_verified=true / checks_passed=4/6、flags空。"
+        - "queue/reports/audit_report_index.yaml:151 commit_hash is empty — verification は true だが immutable commit 証跡が空で、次回正規化では補完必須。"
+      recommendations:
+        - "commit_hash 空欄を当該MC commitで補完し、passから真の audited_done 候補へ昇格させよ。"
+
+    - audit_id: naomasa_round1_kuroda_007_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_007
+      target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+      verdict: pass_with_concerns
+      evidence_state: complete
+      completion_gate: open
+      commit_hash: "missing"
+      log_path: logs/codex_audits/kuroda_007_karo_proxy.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/shogun_verification_canonical_index.yaml]
+      perspective_verdicts: {1_func: pass, 2_anti_dup: pass, 3_kiritsu: concerns, 4_logic: pass, 5_schema: pass, 6_test: pass, 7_legal: concerns, 8_ops: pass, 9_doc: concerns, 10_ecosystem_coherence: concerns, 11_cross_pc_repo_check: concerns}
+      findings:
+        - "queue/reports/audit_report_index.yaml:153 kuroda_007 — verdict=pass/evidence_state=complete/open。"
+        - "queue/reports/shogun_verification_canonical_index.yaml:214 target_id=kuroda_007 — shogun_verified=true / checks_passed=4/6 / flags空。"
+        - "queue/reports/audit_report_index.yaml:171 commit_hash is empty — verified passだが commit不変証跡が空。"
+      recommendations:
+        - "receipt_storage redo の最終 pass entry へ commit_hash を補記し、古い false verification event との関係を canonical index で superseded と明記せよ。"
+
+    - audit_id: naomasa_round1_kuroda_001_cycle4_review_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_001_cycle4_review
+      target_id: subtask_delta_ashigaru1_pdf_extractor_cycle4_fix_001
+      verdict: pass_with_concerns
+      evidence_state: complete
+      completion_gate: open
+      commit_hash: "37c8897d"
+      log_path: /tmp/codex_audit_kuroda_001_cycle4.log
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml]
+      perspective_verdicts: {1_func: pass, 2_anti_dup: concerns, 3_kiritsu: pass, 4_logic: pass, 5_schema: pass, 6_test: concerns, 7_legal: pass, 8_ops: pass, 9_doc: concerns, 10_ecosystem_coherence: concerns, 11_cross_pc_repo_check: concerns}
+      findings:
+        - "queue/reports/audit_report_index.yaml:173 kuroda_001_cycle4_review — pass_with_concerns/open、commit_hash=37c8897d、log_path=/tmp/codex_audit_kuroda_001_cycle4.log。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1151 kuroda_001_cycle4_review — PII traceback leakは解消、line 1186-1197 に実機PDF fixture 未入手と二重抽出境界未完の concerns が残る。"
+        - "queue/reports/audit_report_index.yaml:186 related_files — MC DentalBI path と shared reportが混在し、SCから実機PDF/MC codeは直接確認不可。"
+      recommendations:
+        - "実機または匿名化Quartetto PDF fixture取得後に cycle5 実機検証を別 gate として扱え。"
+
+    - audit_id: naomasa_round1_kuroda_006_direct_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_006_direct
+      target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "eaab62d6"
+      log_path: "missing"
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: pass, 3_kiritsu: pass, 4_logic: concerns, 5_schema: pass, 6_test: concerns, 7_legal: fail, 8_ops: concerns, 9_doc: pass, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:191 kuroda_006_direct — verdict=fail/evidence_state=missing/completion_gate=blocked/log_path=null。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1222 kuroda_006_direct — line 1241-1252 に adapter PII log/exc_info high findings。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1253-1258 — runtime契約未検証で test coverage concerns。"
+      recommendations:
+        - "cycle4 review が後続にあるため、この direct fail は superseded_by=kuroda_006_cycle4_review を index に持たせよ。"
+
+    - audit_id: naomasa_round1_kuroda_007_direct_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_007_direct
+      target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "fedb9822"
+      log_path: "missing"
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: pass, 3_kiritsu: pass, 4_logic: fail, 5_schema: concerns, 6_test: fail, 7_legal: fail, 8_ops: concerns, 9_doc: concerns, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:211 kuroda_007_direct — verdict=fail/evidence_state=missing/completion_gate=blocked/log_path=null。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1296 kuroda_007_direct — line 1315-1326 に patient_receipts auth gate 欠落と service role signed URL 認可欠如の critical/high findings。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1339-1344 — pytest はmock中心で認証なし/他患者アクセス禁止を検証していない。"
+      recommendations:
+        - "receipt_storage cycle4 fix だけで未解消なら、患者認証/403/署名URL認可の統合テストを cycle5 として起案せよ。"
+
+    - audit_id: naomasa_round1_kuroda_006_cycle4_review_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_006_cycle4_review
+      target_id: subtask_delta_ashigaru4_common_base_cycle4_fix_001
+      verdict: pass_with_concerns
+      evidence_state: complete
+      completion_gate: open
+      commit_hash: "dc002efd"
+      log_path: "missing"
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml]
+      perspective_verdicts: {1_func: pass, 2_anti_dup: pass, 3_kiritsu: pass, 4_logic: concerns, 5_schema: pass, 6_test: pass, 7_legal: concerns, 8_ops: pass, 9_doc: pass, 10_ecosystem_coherence: concerns, 11_cross_pc_repo_check: concerns}
+      findings:
+        - "queue/reports/audit_report_index.yaml:235 kuroda_006_cycle4_review — pass_with_concerns/open、commit_hash=dc002efd、log_path=null。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1384 kuroda_006_cycle4_review — line 1403-1414 に payment_id warning残存とXP/スタンプ部分成功リスクの low concerns。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1422-1436 — pytest 12 passed/SKIP=0、audit_passed=true。"
+      recommendations:
+        - "log_path null を補い、payment_id masking とXP部分成功設計根拠を次の小修正で閉じよ。"
+
+    - audit_id: naomasa_round1_kuroda_007_cycle4_review_audit
+      target_type: audit_entry_qc
+      target_audit_id: kuroda_007_cycle4_review
+      target_id: subtask_delta_ashigaru6_receipt_storage_cycle4_fix_001
+      verdict: fail
+      evidence_state: missing
+      completion_gate: blocked
+      commit_hash: "ca744ea4"
+      log_path: "missing"
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml]
+      perspective_verdicts: {1_func: concerns, 2_anti_dup: pass, 3_kiritsu: pass, 4_logic: concerns, 5_schema: pass, 6_test: concerns, 7_legal: fail, 8_ops: concerns, 9_doc: concerns, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:254 kuroda_007_cycle4_review — verdict=fail/evidence_state=missing/completion_gate=blocked/log_path=null。"
+        - "queue/reports/kuroda_mainpc_report.yaml:1439 kuroda_007_cycle4_review — line 1458-1469 に receipt_storage raw exception/object_path log leak が high findings として残存。"
+        - "queue/reports/audit_report_index.yaml:267 related_files — MC DentalBI service/test pathはSCで直接検証不可、cross-PC transfer evidenceも不足。"
+      recommendations:
+        - "receipt_storage の raw exception/object_path logging を除去し、患者領収書系の法令リスクを最優先 cycle fix とせよ。"
+
+    - audit_id: naomasa_round1_gunshi_windows_linux_blend_analysis_audit
+      target_type: audit_entry_qc
+      target_audit_id: gunshi_windows_linux_blend_analysis
+      target_id: windows_linux_project_structure
+      verdict: fail
+      evidence_state: schema_unsupported
+      completion_gate: blocked
+      commit_hash: "missing"
+      log_path: "missing"
+      related_files: [queue/reports/audit_report_index.yaml, queue/reports/kuroda_mainpc_report.yaml]
+      perspective_verdicts: {1_func: fail, 2_anti_dup: concerns, 3_kiritsu: fail, 4_logic: fail, 5_schema: fail, 6_test: fail, 7_legal: concerns, 8_ops: fail, 9_doc: fail, 10_ecosystem_coherence: fail, 11_cross_pc_repo_check: fail}
+      findings:
+        - "queue/reports/audit_report_index.yaml:274 gunshi_windows_linux_blend_analysis — source_verdict=`整理要` は canonical normalization で unknown verdict として fail/schema_unsupported/blocked に変換済み。"
+        - "queue/reports/audit_report_index.yaml:286-290 related_files — Windows/Linux project structure path が混在し、PC分類とrepo_access_preflightが未付与。"
+        - "queue/reports/kuroda_mainpc_report.yaml 該当 entry は通常 audit schema ではなく analysis 体裁で、round1 audit evidence requirementsを満たさない。"
+      recommendations:
+        - "analysis は audit entry から分離し、必要なら `type: analysis` schemaで別管理。completion gate対象に入れる場合は三軸verdictへ変換してから扱え。"
+  summary:
+    total: 15
+    pass: 0
+    pass_with_concerns: 5
+    fail: 10
+    first_audit_id: naomasa_round1_kuroda_code_audit_001_audit
+    completed_entry_ids:
+      - naomasa_round1_kuroda_code_audit_001_audit
+      - naomasa_round1_kuroda_001_audit
+      - naomasa_round1_kuroda_001_fix_review_audit
+      - naomasa_round1_kuroda_002_audit
+      - naomasa_round1_kuroda_003_audit
+      - naomasa_round1_kuroda_004_audit
+      - naomasa_round1_kuroda_005_audit
+      - naomasa_round1_kuroda_006_audit
+      - naomasa_round1_kuroda_007_audit
+      - naomasa_round1_kuroda_001_cycle4_review_audit
+      - naomasa_round1_kuroda_006_direct_audit
+      - naomasa_round1_kuroda_007_direct_audit
+      - naomasa_round1_kuroda_006_cycle4_review_audit
+      - naomasa_round1_kuroda_007_cycle4_review_audit
+      - naomasa_round1_gunshi_windows_linux_blend_analysis_audit

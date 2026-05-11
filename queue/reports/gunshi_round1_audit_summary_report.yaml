@@ -1,0 +1,71 @@
+worker_id: gunshi
+task_id: subtask_unaudited_programs_audit_round1
+parent_cmd: residual_blocked_pdca_chain
+timestamp: "2026-05-11T16:21:07+09:00"
+status: done
+verdict: pass_with_concerns
+evidence_state: complete
+completion_gate: open
+commit_hash: "pending"
+log_path: queue/reports/gunshi_round1_audit_summary_report.yaml
+
+summary: |
+  未監査 program aggregation round1 として audit_report_index.yaml 先頭15件を監査した。
+  対象は cmd_004 系 MainPC 黒田監査 entry と Windows/Linux 構造 analysis entry。
+  15件すべてに verdict/evidence_state/completion_gate/perspective_verdicts を付与し、
+  partial verdict は使用していない。
+
+selection:
+  source: queue/reports/audit_report_index.yaml
+  rule: "先頭15件、max_items_per_session=15"
+  first_audit_id: naomasa_round1_kuroda_code_audit_001_audit
+  completed_entry_ids:
+    - naomasa_round1_kuroda_code_audit_001_audit
+    - naomasa_round1_kuroda_001_audit
+    - naomasa_round1_kuroda_001_fix_review_audit
+    - naomasa_round1_kuroda_002_audit
+    - naomasa_round1_kuroda_003_audit
+    - naomasa_round1_kuroda_004_audit
+    - naomasa_round1_kuroda_005_audit
+    - naomasa_round1_kuroda_006_audit
+    - naomasa_round1_kuroda_007_audit
+    - naomasa_round1_kuroda_001_cycle4_review_audit
+    - naomasa_round1_kuroda_006_direct_audit
+    - naomasa_round1_kuroda_007_direct_audit
+    - naomasa_round1_kuroda_006_cycle4_review_audit
+    - naomasa_round1_kuroda_007_cycle4_review_audit
+    - naomasa_round1_gunshi_windows_linux_blend_analysis_audit
+
+verdict_stats:
+  total: 15
+  pass: 0
+  pass_with_concerns: 5
+  fail: 10
+  partial: 0
+
+main_findings:
+  - "kuroda_002/kuroda_003/kuroda_004/kuroda_005 は source index では open だが canonical verification は shogun_verified=false かつ log missing/generic findings/invalid commit flags。round1では fail に再判定。"
+  - "kuroda_006/kuroda_007 は shogun_verified=true だが commit_hash 空欄のため pass_with_concerns。"
+  - "kuroda_001_cycle4_review と kuroda_006_cycle4_review は有効な後続改善 entry だが、実機PDF未入手/log_path null等の残懸念で pass_with_concerns。"
+  - "kuroda_007_cycle4_review と gunshi_windows_linux_blend_analysis は blocked 継続。"
+  - "MC専属 `/mnt/c/Users/User/Documents/DentalBI/` 系 path が多く、SCから直接実体検証できないため 11_cross_pc_repo_check を concerns/fail とした。"
+
+next_round_candidates:
+  - "audit_report_index.yaml 16件目以降: cmd_004 remaining + cmd_018 residual entries"
+  - "completion_gate_status.yaml の blocked entries と naomasa_secondpc_report.yaml の superseded old partial entries の effective/current 判定整理"
+
+files_modified:
+  - queue/reports/naomasa_secondpc_report.yaml
+  - queue/reports/gunshi_round1_audit_summary_report.yaml
+  - queue/tasks/gunshi.yaml
+
+skill_candidate:
+  found: true
+  name: audit_index_round_runner
+  description: "Take N audit_report_index entries and produce canonical round audit verdicts with 9+10+11 perspective fields."
+
+north_star_alignment:
+  status: aligned
+  reason: "未監査・未検証の program entries を機械 evidence で fail/pass_with_concerns に再分類し、Karo cycle fix trigger に渡せる状態へ進めた。"
+  risks_to_north_star:
+    - "MC専属 source path の現物検証には cross-PC transfer evidence が必要。SC単独では code-level audited_done を確定できない。"
