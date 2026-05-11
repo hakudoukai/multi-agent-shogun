@@ -6,6 +6,10 @@
 - parent_cmd: cmd_004「会計待ち時間ゼロ」
 - 範囲: spec のみ。実装 commit は本 task 範囲外 (constraints L8)
 - 評価原則: 本能寺戒め厳格遵守、機械 evidence のみ評価
+- 実装連動: 本 spec は実装 task `subtask_cmd004_pdf_v0_2_fixture_setup` (= commit b73e64bd) +
+  `subtask_cmd004_pdf_v0_2_parser_full_integration` の base となる。
+  §6 fixture / §4.4 normalization / §4.6 OCR / §4.7 後方互換 — 本 spec の設計を実装に反映済み。
+  詳細実装は backend/etl/quartetto_pdf_parser_v2.py + backend/etl/quartetto_extraction_rules.yaml (v2.0)。
 
 ---
 
@@ -172,11 +176,31 @@ extract_text_from_pdf_v2(pdf_path) -> tuple[str, str]:
 - `source = "ocr:tesseract"` 等を `ExtractedReceiptData.source_file` の隣接フィールド `extraction_source` に格納し、下流 (daily_summary 等) で信頼度フラグとして利用可。
 - OCR engine は `quartetto_extraction_rules.yaml` の `ocr.engine` で切替 (default: `tesseract`)。
 
-### 4.7 後方互換
+### 4.7 後方互換 + Migration path (= production-ready)
 
 - `parse_quartetto_pdf` の戻り値 `ExtractedReceiptData` は **新 field 追加のみ**、既存 field 削除なし。
-- `extract_text_from_pdf` は v0.1 シグネチャ維持 (戻り値は `str`)、v0.2 は `extract_text_from_pdf_v2` を別関数として並走。
-- 設定 YAML version は `1.0` → `2.0` に bump。
+  v0.2 では `extraction_source: str = ""` を追加 (= 経路ラベル「text_layer+tables」等を下流に伝播)。
+- v0.1 関数 (`parse_receipt_text` / `extract_text_from_pdf`) は不変、v0.2 は `parse_quartetto_pdf_v2` を別 entry として並走。
+- 設定 YAML version は `1.0` → `2.0` に bump。`normalization` / `extraction_v2` セクションを YAML 駆動化、
+  コード変更なしで alias / OCR engine / text 閾値 / parser default version を切替可能。
+- **Feature flag dispatch** (= migration path、rollback safe):
+  `parse_quartetto_pdf()` が以下の優先順で v0.1 / v0.2 経路を選択。
+    1. env `QUARTETTO_PARSER_VERSION` ("1" | "2")
+    2. rules.yaml `extraction_v2.default_version` ("1" | "2"、default "1")
+  default は "1" 維持で production 既存挙動を温存、env や設定で段階的に v0.2 投入可能。
+
+### 4.8 OCR Strategy pattern (= production-ready 実装、§4.6 を構造化)
+
+`OcrEngine` Protocol + 具体 engine の差替で blocked_env 安全に運用:
+
+| engine name | impl | 用途 |
+|---|---|---|
+| `tesseract` | `TesseractOcrEngine` — pytesseract + pdf2image lazy import | 本番、依存不在時は `OcrNotAvailable` raise |
+| `sidecar` | `SidecarOcrEngine` — `pdf_path.with_suffix(".ocr_stub.txt")` を読む | test 用 stub。tesseract 不能環境でも SKIP=0 で F-A 検証可能 |
+| `none` | `NullOcrEngine` — 常時 `OcrNotAvailable` | OCR を明示 disable |
+
+選択優先順: env `QUARTETTO_OCR_ENGINE` > rules.yaml `extraction_v2.ocr.engine` > default `"tesseract"`。
+`OcrNotAvailable` 発生時は `extraction_source = "low_text+blocked_env"` を返し、上流が運用判断可能。
 
 ## 5. 検査値正規化 ruleset 詳細
 
@@ -203,17 +227,21 @@ ocr:
 
 ## 6. regression test suite (AC3 必須)
 
-### 6.1 fixture 整備
+### 6.1 fixture 整備 (= 実装連動、commit b73e64bd / parser_full_integration で構築)
 
-`backend/tests/fixtures/quartetto/` に下記 3 系統 × 各 N=10 件 (匿名化必須) を配置:
+`backend/tests/fixtures/quartetto/` に 3 系統配置。実 PDF 不在の現段階は reportlab synthetic で deterministic 生成:
 
-| 系統 | 想定失敗類型 | 期待挙動 |
-|---|---|---|
-| `text/` テキスト埋め込み PDF | F-C / F-D | text_layer 経路で grid_totals 完全一致 |
-| `scanned/` スキャン画像 PDF | F-A | OCR fallback 起動、`extraction_source == "ocr:tesseract"` |
-| `layout/` 複数列・折り返しレイアウト | F-B | extract_tables 経路で行数 = 期待値 |
+| 系統 | 想定失敗類型 | 期待挙動 | 現状 fixture |
+|---|---|---|---|
+| `text/` テキスト埋め込み PDF | F-C / F-D | text_layer 経路で grid_totals 完全一致 | text_01 / text_02 (F-C) / text_03 (F-D) |
+| `scanned/` スキャン画像 PDF | F-A | OCR fallback 起動、`extraction_source` が `ocr:*` で始まる | scanned_01_normal + `.ocr_stub.txt` sidecar |
+| `layout/` 複数列・折り返しレイアウト | F-B | extract_tables 経路で行数 = 期待値 | layout_01_two_column |
 
 匿名化規範: 患者番号 → `9999_NNNN`、氏名 → 「テスト N 郎」、生年月日 → 1900-01-01 固定。実 PDF 取込みは陛下御差配 + RLS gate 通過後のみ。
+生成器: `backend/tests/fixtures/quartetto/generate_fixtures.py` (= reportlab + PIL Image)。
+F-A fixture は Pillow で text 画像レンダリング → reportlab.drawImage で PDF 埋め込み (= text layer なし)、`.ocr_stub.txt` を sidecar 配置することで SidecarOcrEngine が deterministic 読込み。
+
+実 PDF 投入時は N=10 件 / 系統まで拡張する。現状は base layer 検証用に各 1-3 件。
 
 ### 6.2 golden test
 
