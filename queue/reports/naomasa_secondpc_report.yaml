@@ -667,6 +667,82 @@ cmd004_last_task_pre_delivery_audits:
       delivery_to_ashigaru5: blocked_until_pass
       summary: "AC0/worktree/printf 規範は取り込まれているが、Stage 1 正本の anti-dup 方針と真逆の新規 schema/API/page を作るため配信不可。既 handover_sheets 拡張 task へ組み直すべし。"
 
+dashboard_task_pre_delivery_audits:
+  - audit_id: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render
+    target_type: task_yaml_pre_delivery_gate
+    target_task_id: subtask_cmd020_dashboard_layer_a_kousou_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-11T22:01:44+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260511_215757_5a3c7947
+    source_task_yaml: queue/tasks/subtask_cmd020_dashboard_layer_a_kousou_render.yaml
+    source_design_docs:
+      - docs/dashboard_design_v0.2.md
+      - docs/dashboard_design_v0.1.md
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    audit_gate_status: fail_requires_karo_revision
+    pre_delivery_gate_passed: false
+    six_point_check:
+      directive_nine_sections: {status: pass}
+      design_doc_id: {status: pass_with_concerns, value: docs/dashboard_design_v0.2.md, reason: "v0.2 §2 retains v0.1 §2 by reference, so v0.1 is required source material for Layer A details."}
+      task_path_type: {status: pass, value: sonnet_codex_sonnet}
+      max_cycle: {status: pass, value: 7}
+      bloom_level_suitability: {status: pass, value: L3}
+      anti_dup: {status: fail, reason: "Task requires MC regenerate_dashboard.py anti-dup verification, but the concrete MC artifact/path/commit is not provided and no local regenerate_dashboard.py was found in this workspace or /mnt/c/Projects/hakudokai-dev."}
+    perspective_verdicts:
+      1_func: concerns
+      2_anti_dup: fail
+      3_kiritsu: pass_with_concerns
+      4_logic: concerns
+      5_schema: pass
+      6_test: fail
+      7_legal: pass
+      8_ops: fail
+      9_doc: pass_with_concerns
+      10_ecosystem_coherence: fail
+      11_cross_pc_repo_check: fail
+      12_future_operations_radicality: concerns
+    machine_evidence:
+      v02_layer_ref: "docs/dashboard_design_v0.2.md §2 is `[v0.1 §2 全 retain...]`; actual Layer A table is in docs/dashboard_design_v0.1.md §2."
+      layer_a_source: "docs/dashboard_design_v0.1.md §2 defines Layer A as DD-054 5階層 + 10柱."
+      local_backend_tests_missing: "multi-agent-shogun-newbuild has no backend/ or backend/tests directory, but task asks for backend/tests/test_dashboard_layer_a_static_contract.py."
+      regenerate_dashboard_missing: "scripts/regenerate_dashboard.py and /mnt/c/Projects/hakudokai-dev/scripts/regenerate_dashboard.py were not found."
+      hkd_repo_state: "/mnt/c/Projects/hakudokai-dev is master...origin/master ahead 31, behind 76, with many dirty/untracked files."
+    findings:
+      - severity: high
+        perspective: 6_test
+        issue: "The test file path is `backend/tests/test_dashboard_layer_a_static_contract.py`, but the files under test (`docs/dashboard_layer_a_kousou.md`, queue reports) are in the multi-agent repo, which has no backend/tests directory. This makes the static source-contract test location ambiguous and likely non-runnable."
+        recommendation: "Place the static contract test in this repo under an existing/new local tests path, or explicitly state it is in hakudokai-dev and reads multi-agent docs via absolute path. Prefer local repo tests for local docs."
+      - severity: high
+        perspective: 2_anti_dup
+        issue: "MC anti-dup check is mandatory, but the task does not provide the MC regenerate_dashboard.py path, branch, commit, or expected interface. Local searches found no regenerate_dashboard.py in this workspace or hakudokai-dev."
+        recommendation: "Add a concrete MC artifact reference: path, commit, owner, and grep/assertion pattern. If unavailable, mark MC anti-dup as blocked and do not dispatch implementation."
+      - severity: high
+        perspective: 8_ops
+        issue: "Push plan includes a hakudokai-dev worktree/test commit even though Layer A deliverables are docs/reports in the multi-agent repo. This reintroduces repo split complexity without evidence that hakudokai-dev needs a commit."
+        recommendation: "Make this a multi-agent-only task: inventory, docs/dashboard_layer_a_kousou.md, local static tests, report/log. Remove hakudokai-dev push path unless a real hkd artifact is required."
+      - severity: medium
+        perspective: 9_doc
+        issue: "Task says `v0.2 §2` as design source, but v0.2 §2 only says v0.1 §2 is retained. Executor must read v0.1 §2 for actual 5-layer/10-pillar content."
+        recommendation: "Promote `docs/dashboard_design_v0.1.md §2` to an explicit required source in design_doc/read evidence and acceptance criteria."
+      - severity: medium
+        perspective: 11_cross_pc_repo_check
+        issue: "hakudokai-dev is behind origin by 76 commits. Any worktree push to master from origin/master may be safe for a single commit, but it is unrelated to this local docs task and increases operational risk."
+        recommendation: "Do not involve hakudokai-dev for Layer A markdown unless Karo supplies an exact cross-repo integration reason."
+    required_revision_before_delivery:
+      - "Convert the task to multi-agent repo only unless a concrete hakudokai-dev artifact is truly required."
+      - "Move static tests to a local repo test path or explicitly define how hkd pytest reads this repo's docs."
+      - "Provide concrete MC regenerate_dashboard.py path/commit/interface for anti-dup verification, or block until MC artifact exists."
+      - "Make v0.1 §2 an explicit required source, not just v0.2 §2."
+      - "Remove hakudokai-dev worktree/push path unless needed."
+    recommendation_to_karo:
+      action: revise_task_yaml_then_resubmit_pre_audit
+      delivery_to_ashigaru1: blocked_until_pass
+      summary: "Layer A の中身は正本と整合するが、MC anti-dup evidence と test/repo placement が未成立。multi-agent-only task に縮め、MC regenerate_dashboard.py 実体を指定すれば pass 可能。"
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review
