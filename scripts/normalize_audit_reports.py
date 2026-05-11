@@ -91,6 +91,9 @@ def normalize_entry(entry, source_file, source_section):
 
     normalized = (original_verdict == "partial")
 
+    log_path = entry.get("log_path", "") or ""
+    commit_hash = entry.get("commit_hash", "") or ""
+
     result = {
         "audit_id": audit_id,
         "source_file": source_file,
@@ -99,6 +102,8 @@ def normalize_entry(entry, source_file, source_section):
         "verdict": verdict,
         "evidence_state": evidence_state,
         "completion_gate": completion_gate,
+        "log_path": log_path,
+        "commit_hash": commit_hash,
         "shogun_verified": False,
     }
 
@@ -179,6 +184,21 @@ def main():
             print(f"  -> {len(entries)} entries extracted")
         else:
             skipped_files.append(file_path)
+
+    # Determine latest audit_id per target_id (last occurrence wins)
+    latest_per_target = {}
+    for e in all_entries:
+        tid = e.get("target_id")
+        if tid is not None:
+            latest_per_target[tid] = e.get("audit_id")
+
+    # Non-latest partial entries: revert verdict back to "partial"
+    # (partial→fail mapping applies only to the latest audit per target)
+    for e in all_entries:
+        tid = e.get("target_id")
+        if tid is not None and e.get("audit_id") != latest_per_target.get(tid):
+            if e.get("original_verdict") == "partial":
+                e["verdict"] = "partial"
 
     partial_count = sum(1 for e in all_entries if e.get("normalized"))
     fail_count = sum(1 for e in all_entries if e["verdict"] == "fail")

@@ -1,4 +1,4 @@
-generated_at: '2026-05-11T09:06:00+09:00'
+generated_at: '2026-05-11T09:14:38+09:00'
 generator: scripts/normalize_audit_reports.py
 schema_version: P0-1
 source_files:
@@ -8,10 +8,10 @@ skipped_files:
 - queue/reports/takenaka_mainpc_report.yaml
 - queue/reports/acha_secondpc_report.yaml
 summary:
-  total: 51
+  total: 53
   pass: 18
-  pass_with_concerns: 7
-  fail: 26
+  pass_with_concerns: 9
+  fail: 17
   partial_auto_mapped_to_fail: 18
 reports:
 - audit_id: naomasa_001
@@ -21,6 +21,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru1_report.yaml
+  commit_hash: 確認未取得 (commit SHA は report 未記載 — 次 cycle で確認要)
   shogun_verified: false
 - audit_id: naomasa_002
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -29,6 +31,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru2_report.yaml
+  commit_hash: 45bb97cfe5cb
   shogun_verified: false
 - audit_id: naomasa_003
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -37,6 +41,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/ashigaru3_report.yaml
+  commit_hash: 確認未取得
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -47,6 +53,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru4_report.yaml
+  commit_hash: 確認未取得
   shogun_verified: false
 - audit_id: naomasa_005
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -55,6 +63,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/ashigaru5_report.yaml
+  commit_hash: b66ffe0b (patient_chat_messages migration)
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -65,6 +75,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru6_report.yaml
+  commit_hash: 確認未取得
   shogun_verified: false
 - audit_id: naomasa_007
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -73,14 +85,18 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru5_report_subtask_007b.yaml
+  commit_hash: b66ffe0b
   shogun_verified: false
 - audit_id: naomasa_new_001
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: new_project_audits
   target_id: zero_wait_accounting_kanban
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/naomasa_secondpc_report.yaml
+  commit_hash: b66ffe0b
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -88,9 +104,11 @@ reports:
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: new_project_audits
   target_id: child_dinosaur_kingdom_app
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/naomasa_secondpc_report.yaml
+  commit_hash: b66ffe0b
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -101,14 +119,18 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
 - audit_id: naomasa_reaudit_002
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: phase_b_reaudits
   target_id: cmd_002
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -119,14 +141,18 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
 - audit_id: naomasa_reaudit_004
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: phase_b_reaudits
   target_id: cmd_008
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -134,9 +160,11 @@ reports:
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: phase_b_reaudits
   target_id: cmd_010
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -144,9 +172,11 @@ reports:
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: phase_b_reaudits
   target_id: cmd_011
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -154,9 +184,11 @@ reports:
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: phase_b_reaudits
   target_id: cmd_012
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -164,9 +196,11 @@ reports:
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: phase_b_reaudits
   target_id: subtask_006e_fix
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -177,14 +211,18 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
 - audit_id: naomasa_reaudit_010
   source_file: queue/reports/naomasa_secondpc_report.yaml
   source_section: cycle2_fix_reaudits
   target_id: child_dinosaur_kingdom_app
-  verdict: fail
+  verdict: partial
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/ashigaru4_teriha_p2_report.yaml
+  commit_hash: 3419464d
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -195,6 +233,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru4_teriha_p3_report.yaml
+  commit_hash: 3f835a53
   shogun_verified: false
 - audit_id: naomasa_reaudit_012
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -203,6 +243,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/ashigaru1_kanban_pytest_report.yaml
+  commit_hash: 578a4f99
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -213,6 +255,8 @@ reports:
   verdict: pass_with_concerns
   evidence_state: complete
   completion_gate: open
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
 - audit_id: naomasa_008
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -221,6 +265,8 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
 - audit_id: naomasa_009
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -229,6 +275,8 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
 - audit_id: naomasa_010
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -237,6 +285,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -247,6 +297,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/karo_supervision_log.yaml
+  commit_hash: なし (persona 設定変更のみ)
   shogun_verified: false
 - audit_id: naomasa_012
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -255,6 +307,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/naomasa_report.yaml (naomasa_001〜006)
+  commit_hash: 45bb97cfe5cb (a2), b66ffe0b (a5)
   shogun_verified: false
 - audit_id: naomasa_013
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -263,6 +317,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru5_report_subtask_007b.yaml
+  commit_hash: b66ffe0b
   shogun_verified: false
 - audit_id: naomasa_014
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -271,6 +327,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/karo_supervision_log.yaml
+  commit_hash: なし (YAML 追記のみ)
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -281,6 +339,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/naomasa_report.yaml
+  commit_hash: なし
   shogun_verified: false
 - audit_id: naomasa_016
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -289,6 +349,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/shogun_verification_log.yaml
+  commit_hash: なし
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -299,6 +361,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/karo_supervision_log.yaml
+  commit_hash: なし
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -309,6 +373,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/karo_supervision_log.yaml
+  commit_hash: なし
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -319,6 +385,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/karo_supervision_log.yaml
+  commit_hash: なし
   shogun_verified: false
 - audit_id: naomasa_020
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -327,6 +395,8 @@ reports:
   verdict: fail
   evidence_state: blocked_env
   completion_gate: blocked
+  log_path: queue/reports/ashigaru5_report_cycle2.yaml
+  commit_hash: なし (確認・doc 化のみ)
   shogun_verified: false
   original_verdict: partial
   normalized: true
@@ -337,6 +407,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru3_report_cycle2.yaml
+  commit_hash: 未取得 (Supabase MCP 直接適用)
   shogun_verified: false
 - audit_id: naomasa_022
   source_file: queue/reports/naomasa_secondpc_report.yaml
@@ -345,6 +417,28 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: queue/reports/ashigaru6_report.yaml
+  commit_hash: 未取得
+  shogun_verified: false
+- audit_id: naomasa_p0_preflight_review
+  source_file: queue/reports/naomasa_secondpc_report.yaml
+  source_section: p0_reviews
+  target_id: null
+  verdict: pass_with_concerns
+  evidence_state: complete
+  completion_gate: open
+  log_path: ''
+  commit_hash: ''
+  shogun_verified: false
+- audit_id: naomasa_p0_normalize_review
+  source_file: queue/reports/naomasa_secondpc_report.yaml
+  source_section: p0_reviews
+  target_id: null
+  verdict: pass_with_concerns
+  evidence_state: complete
+  completion_gate: blocked
+  log_path: ''
+  commit_hash: ''
   shogun_verified: false
 - audit_id: kuroda_code_audit_001
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -353,6 +447,8 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: logs/codex_audits/codex_audit_kuroda_code_audit_001.log
+  commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)
   shogun_verified: false
 - audit_id: kuroda_001
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -361,6 +457,8 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: /tmp/codex_audit_kuroda_001.log
+  commit_hash: 0dcfc6b0
   shogun_verified: false
 - audit_id: kuroda_001_fix_review
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -369,6 +467,8 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: /tmp/codex_audit_kuroda_001_fix.log
+  commit_hash: 5274c03c
   shogun_verified: false
 - audit_id: kuroda_002
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -377,6 +477,8 @@ reports:
   verdict: pass_with_concerns
   evidence_state: complete
   completion_gate: open
+  log_path: logs/codex_audits/kuroda_002_karo_proxy.log
+  commit_hash: 0dcfc6b0
   shogun_verified: false
 - audit_id: kuroda_003
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -385,6 +487,8 @@ reports:
   verdict: pass_with_concerns
   evidence_state: complete
   completion_gate: open
+  log_path: logs/codex_audits/kuroda_003_karo_proxy.log
+  commit_hash: 1fdb419e
   shogun_verified: false
 - audit_id: kuroda_004
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -393,6 +497,8 @@ reports:
   verdict: pass_with_concerns
   evidence_state: complete
   completion_gate: open
+  log_path: logs/codex_audits/kuroda_004_karo_proxy.log
+  commit_hash: HEAD
   shogun_verified: false
 - audit_id: kuroda_005
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -401,6 +507,8 @@ reports:
   verdict: pass_with_concerns
   evidence_state: complete
   completion_gate: open
+  log_path: logs/codex_audits/kuroda_005_karo_proxy.log
+  commit_hash: 57272e5
   shogun_verified: false
 - audit_id: kuroda_006
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -409,6 +517,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: logs/codex_audits/kuroda_006_karo_proxy.log
+  commit_hash: ''
   shogun_verified: false
 - audit_id: kuroda_007
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -417,6 +527,8 @@ reports:
   verdict: pass
   evidence_state: complete
   completion_gate: open
+  log_path: logs/codex_audits/kuroda_007_karo_proxy.log
+  commit_hash: ''
   shogun_verified: false
 - audit_id: kuroda_001_cycle4_review
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -425,6 +537,8 @@ reports:
   verdict: pass_with_concerns
   evidence_state: complete
   completion_gate: open
+  log_path: /tmp/codex_audit_kuroda_001_cycle4.log
+  commit_hash: 37c8897d
   shogun_verified: false
 - audit_id: kuroda_006_direct
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -433,6 +547,8 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: ''
+  commit_hash: eaab62d6
   shogun_verified: false
 - audit_id: kuroda_007_direct
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -441,6 +557,8 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: ''
+  commit_hash: fedb9822
   shogun_verified: false
 - audit_id: kuroda_006_cycle4_review
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -449,6 +567,8 @@ reports:
   verdict: pass_with_concerns
   evidence_state: complete
   completion_gate: open
+  log_path: ''
+  commit_hash: dc002efd
   shogun_verified: false
 - audit_id: kuroda_007_cycle4_review
   source_file: queue/reports/kuroda_mainpc_report.yaml
@@ -457,4 +577,6 @@ reports:
   verdict: fail
   evidence_state: missing
   completion_gate: blocked
+  log_path: ''
+  commit_hash: ca744ea4
   shogun_verified: false
