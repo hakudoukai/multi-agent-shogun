@@ -437,6 +437,85 @@ cmd004_last_task_pre_delivery_audits:
       delivery_to_ashigaru1: blocked_until_pass
       summary: "4 修正条件のうち AC0 schema は pass、test exact は concerns、F007 bounded push は未達。placeholder SHA と branch push のままでは ahead30 dirty repo を安全に押せぬ。既存 14 commit push を外して本 task 3 commit のみにすれば即 pass 可能域。"
 
+  - audit_id: naomasa_pre_audit_cmd004_dd126_ceremony_alternative_inventory_r3
+    target_type: task_yaml_pre_delivery_gate
+    target_task_id: subtask_cmd004_dd126_ceremony_alternative_inventory
+    parent_cmd: cmd_004
+    audited_at: "2026-05-11T20:32:10+09:00"
+    audited_by: naomasa
+    revision_of: naomasa_pre_audit_cmd004_dd126_ceremony_alternative_inventory_r2
+    source_inbox:
+      - msg_20260511_202954_22d153dd
+    source_task_yaml: queue/tasks/subtask_cmd004_dd126_ceremony_alternative_inventory.yaml
+    target_repo: /mnt/c/Projects/hakudokai-dev
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    audit_gate_status: fail_requires_minimal_procedure_revision
+    pre_delivery_gate_passed: false
+    six_point_check:
+      directive_nine_sections: {status: pass}
+      design_doc_id: {status: pass_with_concerns, value: docs/cmd004_dinosaur_100enemies_spec.md}
+      task_path_type: {status: pass, value: sonnet_codex_sonnet}
+      max_cycle: {status: pass, value: 7}
+      bloom_level_suitability: {status: pass, value: L3}
+      anti_dup: {status: pass}
+      f007_exception: {status: concerns, reason: "Scope is now correctly reduced to this task's 3 commits only, but the push procedure still needs a clean worktree/worktree-add command and executable equality assert."}
+    revision_check:
+      本_task_3_commit_only_scope: {status: pass}
+      placeholder_sha_removed_for_existing_14_commits: {status: pass}
+      fresh_branch_cherry_pick_path: {status: fail, reason: "Commands use `checkout -b ... origin/master` inside a dirty tracked worktree. This can fail or mix local worktree state; use `git worktree add` to a clean path instead."}
+      pre_push_equality_assert: {status: fail, reason: "`cat <commit_1_sha> <commit_3_sha>` attempts to read files named by SHA. Use `printf '%s\\n' <sha1> <sha2>` and compare against `git log` output."}
+      exact_pytest_command_and_names: {status: concerns, reason: "Backend pytest may be acceptable if these are static source-contract tests, but the task should state that explicitly or add vitest for frontend runtime behavior."}
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: concerns
+      4_logic: concerns
+      5_schema: pass
+      6_test: concerns
+      7_legal: pass_with_concerns
+      8_ops: fail
+      9_doc: pass_with_concerns
+      10_ecosystem_coherence: concerns
+      11_cross_pc_repo_check: fail
+      12_future_operations_radicality: pass_with_concerns
+    machine_evidence:
+      target_repo_state: "/mnt/c/Projects/hakudokai-dev remains master...origin/master ahead 30 with many modified tracked files and many untracked files."
+      current_push_scope: "Task now excludes existing ashigaru1 14 commits and all other ashigaru commits; only commit_1/commit_2/commit_3 are in scope."
+      unsafe_branch_creation: "git -C /mnt/c/Projects/hakudokai-dev checkout -b cmd_004_ceremony_alternative_inventory_push origin/master is not a clean-worktree bypass when the current worktree has tracked modifications."
+      invalid_equality_command: "cat <commit_1_sha> <commit_3_sha> is not a valid way to emit expected SHAs."
+    findings:
+      - severity: high
+        perspective: 8_ops
+        issue: "The task says ahead30 + dirty is fully bypassed, but the proposed `checkout -b ... origin/master` runs in the existing dirty worktree. With many tracked modifications present, branch creation from origin/master is not guaranteed safe and may be blocked or carry local working tree changes."
+        recommendation: "Use a clean worktree path, e.g. `git -C /mnt/c/Projects/hakudokai-dev worktree add /tmp/hkd_cmd004_inventory_push origin/master`, then cherry-pick only commit_2 there."
+      - severity: high
+        perspective: 11_cross_pc_repo_check
+        issue: "The equality assert uses `cat <commit_1_sha> <commit_3_sha>`, which reads files rather than printing SHA values. The guard would fail or be bypassed."
+        recommendation: "Use `printf '%s\\n' <commit_1_sha> <commit_3_sha> | sort > /tmp/push_expected.txt` and compare to `git log origin/main..HEAD --format=%H | sort`."
+      - severity: medium
+        perspective: 6_test
+        issue: "Seven exact test names are listed, but several are frontend/source-integration concepts while only backend pytest is specified."
+        recommendation: "Declare `test_cmd004_cross_cutting_integration.py` as static source-contract pytest reading frontend/backend files, or add a separate vitest command."
+      - severity: medium
+        perspective: 9_doc
+        issue: "Some earlier prose still mentions `既累計 14 commit list` in step_3/to_reference, though push_plan correctly excludes it."
+        recommendation: "Remove stale 14-commit wording from steps/to_reference to avoid executor confusion."
+    positives:
+      - "The major bounded-push scope error is corrected: this task now limits push scope to its own 3 commits."
+      - "AC0 inventory schema remains pass."
+      - "This is now one small procedural revision away from pass."
+    required_revision_before_delivery:
+      - "Replace checkout-in-dirty-worktree commands with `git worktree add` clean worktree commands for both repos."
+      - "Replace `cat <sha>` equality assert with `printf '%s\\n' ...` and exact `diff` command."
+      - "Clarify backend pytest as static source-contract tests or add vitest for frontend runtime cases."
+      - "Remove stale 14-commit wording from step_3/to_reference."
+    recommendation_to_karo:
+      action: revise_task_yaml_then_resubmit_pre_audit
+      delivery_to_ashigaru1: blocked_until_pass
+      summary: "本 task 3 commit only への縮小は成功。残る問題は実行手順の機械性のみ。dirty worktree を checkout で避けるのは不可、clean worktree + printf equality assert に直せば pass 可能。"
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review
