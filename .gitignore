@@ -139,6 +139,8 @@
 !scripts/shutdown_shogun.sh
 !scripts/startup_shogun_main.sh
 !scripts/recover_shogun.sh
+!scripts/normalize_audit_reports.py
+!scripts/test_normalize_audit_reports.py
 
 
 # SayTask (sample template only, not actual data)
@@ -153,6 +155,7 @@
 !queue/reports/takenaka_mainpc_report.yaml
 !queue/reports/naomasa_secondpc_report.yaml
 !queue/reports/acha_secondpc_report.yaml
+!queue/reports/audit_report_index.yaml
 
 # Reports (private — not tracked)
 logs/
@@ -168,6 +171,9 @@ logs/
 !docs/three_layer_design.md
 !docs/mc_reset_plan.md
 !docs/mc_reset_qa_response.md
+!docs/memory_sync_design.md
+!docs/issue_analysis_20260511.md
+!docs/final_solution_synthesis_20260511.md
 
 # Screenshots (masked — no secrets)
 !images/
