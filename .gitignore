@@ -142,6 +142,14 @@
 !scripts/normalize_audit_reports.py
 !scripts/test_normalize_audit_reports.py
 !scripts/test_shogun_verify_preflight.sh
+!scripts/normalize_shogun_verification_logs.py
+!scripts/validate_report_privacy.py
+!scripts/test_normalize_shogun_verification_logs.py
+!scripts/test_validate_report_privacy.py
+!scripts/validate_cmd_schema.py
+!scripts/test_validate_cmd_schema.py
+!scripts/validate_cross_pc_directive.py
+!scripts/test_validate_cross_pc_directive.py
 
 
 # SayTask (sample template only, not actual data)
@@ -157,6 +165,10 @@
 !queue/reports/naomasa_secondpc_report.yaml
 !queue/reports/acha_secondpc_report.yaml
 !queue/reports/audit_report_index.yaml
+# 信長 verification log: PC-suffix で各 PC single-writer (黒田 audit kuroda_logic_audit_verification_log_sharing_20260511 推奨)
+!queue/reports/shogun_verification_mainpc_log.yaml
+!queue/reports/shogun_verification_secondpc_log.yaml
+!queue/reports/shogun_verification_canonical_index.yaml
 
 # Reports (private — not tracked)
 logs/
@@ -175,6 +187,7 @@ logs/
 !docs/memory_sync_design.md
 !docs/issue_analysis_20260511.md
 !docs/final_solution_synthesis_20260511.md
+!docs/supabase_verification_events_fallback.md
 
 # Screenshots (masked — no secrets)
 !images/
