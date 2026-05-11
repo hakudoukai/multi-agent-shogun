@@ -153,6 +153,10 @@
 !scripts/validate_cross_pc_directive.py
 !scripts/test_validate_cross_pc_directive.py
 
+# cmd_020 Stage 2 dashboard generator (= karo-owned systemd service writes dashboard.md)
+!scripts/regenerate_dashboard.py
+!tests/test_regenerate_dashboard.py
+
 # Auto Git Sync Protocol (= 2026-05-11 装備、両 PC pull-only mode、F007 遵守)
 !scripts/auto_git_sync.sh
 !docs/auto_git_sync_design.md
