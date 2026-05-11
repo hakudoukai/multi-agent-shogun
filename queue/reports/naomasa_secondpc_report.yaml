@@ -270,6 +270,90 @@ cmd004_last_task_pre_delivery_audits:
       delivery_to_ashigaru1: blocked_until_pass
       summary: "scope縮小の方針は妥当だが、既存 ceremony infra との差分、event_kind schema、battle trigger dependency が未定義。現状配信すると重複実装または schema 破壊に進むため blocked。"
 
+  - audit_id: naomasa_pre_audit_cmd004_dd126_ceremony_alternative_inventory
+    target_type: task_yaml_pre_delivery_gate
+    target_task_id: subtask_cmd004_dd126_ceremony_alternative_inventory
+    parent_cmd: cmd_004
+    audited_at: "2026-05-11T20:21:55+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260511_202101_112bf939
+    source_task_yaml: queue/tasks/subtask_cmd004_dd126_ceremony_alternative_inventory.yaml
+    source_design_docs:
+      - docs/cmd004_dinosaur_100enemies_spec.md
+      - queue/reports/ashigaru2_cmd004_ceremony_event_api_report.yaml
+      - queue/reports/ashigaru2_cmd004_tier_up_celebration_api_report.yaml
+      - queue/reports/ashigaru4_cmd004_consent_versioning_impl_report.yaml
+      - queue/reports/ashigaru7_cmd004_clinic_id_hardcode_eradication_inventory.yaml
+    target_repo: /mnt/c/Projects/hakudokai-dev
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    audit_gate_status: fail_requires_karo_revision
+    pre_delivery_gate_passed: false
+    six_point_check:
+      directive_nine_sections: {status: pass}
+      design_doc_id: {status: pass_with_concerns, value: docs/cmd004_dinosaur_100enemies_spec.md, reason: "Primary DD-126 doc is present, but this alternative plan also depends on several implemented reports that should be elevated to explicit dependency inputs."}
+      task_path_type: {status: pass, value: sonnet_codex_sonnet}
+      max_cycle: {status: pass, value: 7}
+      bloom_level_suitability: {status: pass, value: L3}
+      anti_dup: {status: pass_with_concerns, reason: "AC0 inventory-first and new-logic-zero are the correct corrective direction. The remaining duplication risk is only in test scope unless the task allows helper implementation during test writing."}
+      f007_exception: {status: fail, reason: "The exception is cited, but push_plan expands to ashigaru1 cumulative commits plus other ashigaru push-waiting commits. That is not a bounded allowlist under an ahead-30 dirty worktree."}
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass_with_concerns
+      3_kiritsu: concerns
+      4_logic: pass_with_concerns
+      5_schema: pass
+      6_test: concerns
+      7_legal: pass_with_concerns
+      8_ops: fail
+      9_doc: concerns
+      10_ecosystem_coherence: concerns
+      11_cross_pc_repo_check: fail
+      12_future_operations_radicality: concerns
+    machine_evidence:
+      target_repo_head: "/mnt/c/Projects/hakudokai-dev HEAD 21f6218c, master...origin/master ahead 30."
+      target_repo_dirty: "/mnt/c/Projects/hakudokai-dev has many modified and untracked files, including backend APIs, patient app files, consent routers/services/tests, notification/security services, CI files, migrations, and docs."
+      ceremony_existing: "/mnt/c/Projects/hakudokai-dev/backend/routers/ceremony_events.py and frontend useCeremonyEvent/useCelebration/TerihaPassportPage ceremony path exist."
+      available_reports: "queue/reports contains ashigaru1/2/3/4/7 cmd004 reports for ceremony, consent, dinosaur, push/PWA, clinic_id, QR, secret rotation, analytics, and legal/security work."
+      task_improvement: "Compared with prior failed tasks, this task avoids new product logic and introduces AC0 inventory-first plus supersedes history."
+    findings:
+      - severity: high
+        perspective: 11_cross_pc_repo_check
+        issue: "push_plan says ashigaru1 cumulative commits plus other ashigaru push-waiting commits will be pushed in one F007 exception path. The repo is ahead 30 and dirty with many unrelated modified/untracked files, so this is not an auditable bounded push."
+        recommendation: "Replace with an exact push allowlist: either (A) no push in this task, report only; or (B) push only a named SHA range already verified by Karo, with `git diff --name-only origin/master..HEAD` attached before push."
+      - severity: high
+        perspective: 8_ops
+        issue: "The task requires ashigaru1 to verify other ashigaru push-waiting commits, but does not list exact commit hashes, owners, reports, or pass/fail gates for those commits."
+        recommendation: "Move cross-agent release/push orchestration to Karo, or include an explicit commit table with owner, report, audit id, and allowed files for each commit."
+      - severity: medium
+        perspective: 6_test
+        issue: "AC2/AC3 use approximate counts (`5-10`, `~7`) and do not name exact pytest command or required test names. This repeats a smaller version of the prior '概算 test' problem."
+        recommendation: "Specify the exact command, for example `cd /mnt/c/Projects/hakudokai-dev/backend && pytest backend/tests/test_cmd004_cross_cutting_integration.py -q`, and name the required cases."
+      - severity: medium
+        perspective: 9_doc
+        issue: "The AC0 inventory output path is good, but the inventory schema is not defined. Without required fields, ashigaru may produce prose instead of machine-reviewable inventory."
+        recommendation: "Define required YAML keys per item: system, file, line_start, symbol, endpoint/table, owner_report, commit_hash, integration_status, gap, test_candidate."
+      - severity: medium
+        perspective: 10_ecosystem_coherence
+        issue: "The task spans reports in the multi-agent repo and tests in /mnt/c/Projects/hakudokai-dev but does not separate which commits belong to which repository."
+        recommendation: "Add repo-specific commit plan: multi-agent report commit is separate from hakudokai-dev test commit; do not mix push evidence."
+    positives:
+      - "AC0 inventory-first directly addresses the repeated root cause of insufficient existing-implementation inventory."
+      - "new logic 0 and integration-test-only scope avoids the previous ceremony/game/consent overreach."
+      - "supersedes list preserves audit history and prevents silent retry of failed task shapes."
+    required_revision_before_delivery:
+      - "Narrow F007 scope: no 'other ashigaru push-waiting commits' unless exact SHA/report/owner/file allowlist is embedded."
+      - "Define the AC0 inventory YAML schema and required fields."
+      - "Replace approximate test counts with exact pytest command and named test cases."
+      - "Split commit/push plan by repository: multi-agent reports vs /mnt/c/Projects/hakudokai-dev tests."
+      - "State that ashigaru1 must not create new product logic, endpoints, hooks, or services; test scaffolding only."
+    recommendation_to_karo:
+      action: revise_task_yaml_then_resubmit_pre_audit
+      delivery_to_ashigaru1: blocked_until_pass
+      summary: "AC0 inventory-first への転換は正しい。ただし F007 push が ahead30 dirty repo で他者 commit 一括 push に拡張されており、配信前 gate としては危険。push allowlist と inventory schema を固定すれば pass 可能域。"
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review
