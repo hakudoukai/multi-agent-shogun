@@ -184,7 +184,7 @@ while [[ $# -gt 0 ]]; do
             echo "  -c, --clean         キューとダッシュボードをリセットして起動（クリーンスタート）"
             echo "                      未指定時は前回の状態を維持して起動"
             echo "  -k, --kessen        決戦の陣（全足軽をOpusで起動）"
-            echo "                      未指定時は平時の陣（足軽1-7=Sonnet, 軍師=Opus）"
+            echo "                      未指定時は平時の陣（足軽1-7=Opus, 軍師=Opus）"
             echo "  -s, --setup-only    tmuxセッションのセットアップのみ（Claude起動なし）"
             echo "  -t, --terminal      Windows Terminal で新しいタブを開く"
             echo "  -shell, --shell SH  シェルを指定（bash または zsh）"
@@ -211,12 +211,12 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "モデル構成:"
             echo "  将軍:      Opus（デフォルト。--shogun-no-thinkingで無効化）"
-            echo "  家老:      Sonnet（高速タスク管理）"
+            echo "  家老:      Opus（戦略管理）"
             echo "  軍師:      Opus（戦略立案・設計判断）"
-            echo "  足軽1-7:   Sonnet（実働部隊）"
+            echo "  足軽1-7:   Opus（実働部隊）"
             echo ""
             echo "陣形:"
-            echo "  平時の陣（デフォルト）: 足軽1-7=Sonnet, 軍師=Opus"
+            echo "  平時の陣（デフォルト）: 足軽1-7=Opus, 軍師=Opus"
             echo "  決戦の陣（--kessen）:   全足軽=Opus, 軍師=Opus"
             echo ""
             echo "表示モード:"
@@ -804,7 +804,7 @@ with open(f,'w') as fh: yaml.safe_dump(d, fh, default_flow_style=False, allow_un
     if [ "$KESSEN_MODE" = true ]; then
         log_success "✅ 決戦の陣で出陣！全軍Opus！"
     else
-        log_success "✅ 平時の陣で出陣（家老=Sonnet, 足軽=Sonnet, 軍師=Opus）"
+        log_success "✅ 平時の陣で出陣（家老=Opus, 足軽=Opus, 軍師=Opus）"
     fi
     echo ""
 
