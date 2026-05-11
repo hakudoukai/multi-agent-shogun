@@ -8,6 +8,12 @@ Coverage (per 黒田 audit kuroda_dashboard_design_v0_2_reaudit_20260511, perspe
   - Supabase timeout fallback: REST failure → cached payload used
   - cache fallback: ETag 304 → cache_hit=True
 
+cycle2 additions (kuroda_cmd020_regenerate_dashboard_py_audit_20260511):
+  - F1: verify is time-stable across generated_at drift / git_log relative age
+  - F2: live-queue audit-waiting statuses aggregate to stage values, not 'unknown'
+  - F3: privacy result classifier separates HIGH/WARN; warned ≠ clean
+  - F4: legacy hand-edited dashboard.md is archived once before overwrite
+
 SKIP=0 mandated. Each test must execute deterministically; no network calls.
 """
 
@@ -19,6 +25,7 @@ import re
 import subprocess
 import sys
 import textwrap
+import time
 import urllib.error
 from pathlib import Path
 from typing import Any
@@ -514,6 +521,7 @@ def test_main_writes_output_under_lock(
     monkeypatch.setattr(rd, "MEMORY_FILE", memory_file)
     monkeypatch.setattr(rd, "LOCK_FILE", tmp_path / "lock")
     monkeypatch.setattr(rd, "PREFLIGHT_REPORT", tmp_path / "preflight.yaml")
+    monkeypatch.setattr(rd, "ARCHIVE_DIR", tmp_path / "archive")
     monkeypatch.delenv("SUPABASE_URL", raising=False)
     monkeypatch.delenv("SUPABASE_ANON_KEY", raising=False)
     code = rd.main([
@@ -526,3 +534,322 @@ def test_main_writes_output_under_lock(
     content = output.read_text(encoding="utf-8")
     assert "auto-generated" in content
     assert "t_done_verified" in content
+
+
+# ---------------------------------------------------------------------------
+# F1 cycle2: verify must be stable across wall-clock drift
+# (kuroda audit verify_time_delta — write tmp → sleep 2 → --verify rc=1)
+# ---------------------------------------------------------------------------
+
+
+def test_verify_ignores_generated_at_drift(tmp_path: Path):
+    """F1 regression: verify must succeed when generated_at differs.
+
+    Reproduces kuroda 21:47 audit finding (verify_time_delta). Two contexts
+    that differ ONLY in their generated_at timestamp must hash-equal under
+    verify_dashboard.
+    """
+    base = _baseline_context()
+    rendered_a = rd.render_dashboard(base)
+    base2 = dict(base)
+    base2["generated_at"] = "2099-01-01T00:00:00+09:00"
+    rendered_b = rd.render_dashboard(base2)
+    # Sanity: only generated_at differs between the two strings.
+    assert rendered_a != rendered_b
+    target = tmp_path / "dashboard.md"
+    target.write_text(rendered_a, encoding="utf-8")
+    assert rd.verify_dashboard(rendered_b, target) is True, (
+        "verify must ignore generated_at drift (AC6 SC verify-only)"
+    )
+
+
+def test_verify_ignores_git_log_age_drift(tmp_path: Path):
+    """F1 regression: relative git age (e.g. '2 minutes ago' → '5 minutes ago')
+    must not trip verify."""
+    base = _baseline_context()
+    base_with_log = dict(base)
+    base_with_log["git_log"] = [
+        {"hash": "abc1234", "subject": "feat: x", "age": "2 minutes ago"},
+        {"hash": "def5678", "subject": "fix: y", "age": "1 hour ago"},
+    ]
+    rendered_old = rd.render_dashboard(base_with_log)
+    drifted = dict(base_with_log)
+    drifted["git_log"] = [
+        {"hash": "abc1234", "subject": "feat: x", "age": "5 minutes ago"},
+        {"hash": "def5678", "subject": "fix: y", "age": "2 hours ago"},
+    ]
+    rendered_new = rd.render_dashboard(drifted)
+    assert rendered_old != rendered_new
+    target = tmp_path / "dashboard.md"
+    target.write_text(rendered_old, encoding="utf-8")
+    assert rd.verify_dashboard(rendered_new, target) is True
+
+
+def test_verify_detects_actual_content_change(tmp_path: Path):
+    """F1 negative: a real content change (task list, etc.) must still mismatch."""
+    base = _baseline_context()
+    target = tmp_path / "dashboard.md"
+    target.write_text(rd.render_dashboard(base), encoding="utf-8")
+    different = dict(base)
+    different["source_commit"] = "0000000"
+    assert rd.verify_dashboard(rd.render_dashboard(different), target) is False
+
+
+def test_verify_against_just_written_output_is_time_stable(
+    sample_tasks_dir: Path,
+    sample_reports_dir: Path,
+    memory_file: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    """F1 end-to-end: write via main() → sleep → render again → verify.
+
+    Mirrors the kuroda machine_evidence reproducer (write then sleep 2
+    then --verify) without spawning a subprocess.
+    """
+    output = tmp_path / "dashboard_out.md"
+    monkeypatch.setattr(rd, "QUEUE_TASKS_DIR", sample_tasks_dir)
+    monkeypatch.setattr(rd, "QUEUE_REPORTS_DIR", sample_reports_dir)
+    monkeypatch.setattr(rd, "MEMORY_FILE", memory_file)
+    monkeypatch.setattr(rd, "LOCK_FILE", tmp_path / "lock")
+    monkeypatch.setattr(rd, "PREFLIGHT_REPORT", tmp_path / "preflight.yaml")
+    monkeypatch.setattr(rd, "ARCHIVE_DIR", tmp_path / "archive")
+    monkeypatch.delenv("SUPABASE_URL", raising=False)
+    monkeypatch.delenv("SUPABASE_ANON_KEY", raising=False)
+
+    args = [
+        "--no-supabase",
+        "--memory-snapshot", str(memory_file),
+        "--output", str(output),
+    ]
+    assert rd.main(args) == 0
+    # Wait long enough to advance the seconds component of generated_at.
+    time.sleep(1.1)
+    verify_code = rd.main(args + ["--verify"])
+    assert verify_code == 0, "verify after time drift must succeed (AC6)"
+
+
+# ---------------------------------------------------------------------------
+# F2 cycle2: STATUS_ENUM + stage values for live audit-waiting statuses
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "status,expected",
+    [
+        ("ready_for_audit", 70.0),
+        ("audit_pending", 80.0),
+        ("completed_pending_audit", 85.0),
+        ("done_pending_audit", 90.0),
+        ("audit_pending_verification", 95.0),
+        ("failed", 0.0),
+        ("pending", 10.0),
+    ],
+)
+def test_progress_stage_value_for_live_status(status: str, expected: float):
+    """F2: live-queue audit-waiting statuses must map to explicit stage values
+    (not be excluded as 'unknown' as cycle1 did)."""
+    t = rd.TaskEntry(task_id="x", assigned_to="a", status=status, raw_status=status)
+    score = rd.progress_for_task(t)
+    assert score == expected, (
+        f"{status} should be stage value {expected}, got {score}"
+    )
+
+
+def test_progress_done_without_verdict_is_75_not_zero():
+    """F2: done without verdict yet must be 75% (audit awaits), not 0%."""
+    t = rd.TaskEntry(task_id="x", assigned_to="a", status="done", raw_status="done")
+    assert rd.progress_for_task(t) == 75.0
+
+
+@pytest.fixture
+def live_status_tasks_dir(tmp_path: Path) -> Path:
+    """Fixture mirroring the production status set found in queue/tasks/."""
+    tasks = tmp_path / "tasks"
+    tasks.mkdir()
+    (tasks / "ashigaru1.yaml").write_text(
+        textwrap.dedent(
+            """
+            task:
+              task_id: t_audit_pending
+              assigned_to: ashigaru1
+              status: audit_pending
+
+            ---
+
+            task:
+              task_id: t_completed_pending_audit
+              assigned_to: ashigaru1
+              status: completed_pending_audit
+
+            ---
+
+            task:
+              task_id: t_done_pending_audit
+              assigned_to: ashigaru1
+              status: done_pending_audit
+
+            ---
+
+            task:
+              task_id: t_ready_for_audit
+              assigned_to: ashigaru1
+              status: ready_for_audit
+            """
+        ).strip(),
+        encoding="utf-8",
+    )
+    return tasks
+
+
+def test_live_status_set_no_excluded_as_unknown(
+    live_status_tasks_dir: Path, sample_reports_dir: Path
+):
+    """F2 integration (audit recommendation): production audit-waiting statuses
+    must aggregate, not become 'unknown' (which excluded them from %)."""
+    state = rd.load_local_state(
+        tasks_dir=live_status_tasks_dir, reports_dir=sample_reports_dir
+    )
+    assert state.tasks, "fixture must load 4 tasks"
+    excluded = [t.task_id for t in state.tasks if rd.progress_for_task(t) is None]
+    assert excluded == [], f"these must not be 'unknown': {excluded}"
+    for t in state.tasks:
+        score = rd.progress_for_task(t)
+        assert score is not None and score > 0, (
+            f"{t.task_id} ({t.raw_status}) -> {score}"
+        )
+    agg = rd.aggregate_progress(state.tasks)
+    assert agg["leaf_count"] == 4
+    assert agg["excluded_count"] == 0
+    # Average of 70/80/85/90 = 81.25 → rounds to 81.2 or 81.3 depending on banker's.
+    assert agg["overall_pct"] >= 80.0
+
+
+# ---------------------------------------------------------------------------
+# F3 cycle2: privacy result classifier (HIGH/WARN separation)
+# ---------------------------------------------------------------------------
+
+
+def test_classify_privacy_clean_requires_zero_warn():
+    """F3: clean iff HIGH 0 AND WARN 0 — WARN-only is NOT clean."""
+    assert (
+        rd.classify_privacy_result([{"high": [], "warn": []}]) == rd.PRIVACY_CLEAN
+    )
+
+
+def test_classify_privacy_warn_only_is_warned_not_clean():
+    """F3: WARN-only result must classify as 'warned'.
+
+    Cycle1 report incorrectly called this 'CLEAN' even though privacy gate
+    surfaced 4 WARN entries. New language: 'warned' communicates HIGH=0 but
+    WARN>0.
+    """
+    result = rd.classify_privacy_result(
+        [{"high": [], "warn": [{"pattern": "digit_id_candidate"}] * 4}]
+    )
+    assert result == rd.PRIVACY_WARNED
+    assert result != rd.PRIVACY_CLEAN
+
+
+def test_classify_privacy_high_is_blocked():
+    """F3: any HIGH violation must be 'blocked' (release-blocker)."""
+    assert (
+        rd.classify_privacy_result(
+            [{"high": [{"pattern": "api_key"}], "warn": []}]
+        )
+        == rd.PRIVACY_BLOCKED
+    )
+
+
+def test_classify_privacy_accepts_single_dict():
+    assert (
+        rd.classify_privacy_result({"high": [], "warn": []}) == rd.PRIVACY_CLEAN
+    )
+
+
+def test_classify_privacy_aggregates_across_files():
+    """F3: WARN in any file → 'warned' even if other files are clean."""
+    result = rd.classify_privacy_result(
+        [
+            {"high": [], "warn": []},
+            {"high": [], "warn": [{"pattern": "x"}]},
+        ]
+    )
+    assert result == rd.PRIVACY_WARNED
+
+
+# ---------------------------------------------------------------------------
+# F4 cycle2: archive legacy dashboard.md before generator overwrites
+# ---------------------------------------------------------------------------
+
+
+def test_archive_legacy_dashboard_first_run(tmp_path: Path):
+    """F4: first run with hand-edited dashboard.md must archive it."""
+    target = tmp_path / "dashboard.md"
+    archive = tmp_path / "archive"
+    target.write_text(
+        "# 🏯 Multi-Agent Shogun — Dashboard\n\n手動編集 legacy 内容。\n",
+        encoding="utf-8",
+    )
+    archived = rd._archive_legacy_dashboard(target, archive)
+    assert archived is not None, "legacy dashboard must be archived"
+    assert archived.exists()
+    assert archived.read_text(encoding="utf-8").startswith("# 🏯 Multi-Agent Shogun")
+    # Archive name format: dashboard_legacy_YYYYMMDD.md
+    assert archived.name.startswith("dashboard_legacy_")
+    assert archived.name.endswith(".md")
+
+
+def test_archive_skipped_for_generator_output(tmp_path: Path):
+    """F4: generator output must NOT be re-archived (idempotent)."""
+    target = tmp_path / "dashboard.md"
+    archive = tmp_path / "archive"
+    target.write_text(
+        "# DentalBI Dashboard (auto-generated)\n\n"
+        "*Generated by scripts/regenerate_dashboard.py*\n",
+        encoding="utf-8",
+    )
+    archived = rd._archive_legacy_dashboard(target, archive)
+    assert archived is None, "generator output must not re-archive"
+    assert not archive.exists() or not any(archive.iterdir())
+
+
+def test_archive_skipped_when_target_absent(tmp_path: Path):
+    """F4: nothing to archive when target file does not exist."""
+    target = tmp_path / "no_dashboard.md"
+    archive = tmp_path / "archive"
+    archived = rd._archive_legacy_dashboard(target, archive)
+    assert archived is None
+
+
+def test_archive_dedupes_same_day(tmp_path: Path):
+    """F4: multiple legacy contents in one day must each get a unique name."""
+    archive = tmp_path / "archive"
+    target1 = tmp_path / "dashboard.md"
+    target1.write_text("legacy v1", encoding="utf-8")
+    a1 = rd._archive_legacy_dashboard(target1, archive)
+    # Replace with a different legacy content and archive again.
+    target1.write_text("legacy v2", encoding="utf-8")
+    a2 = rd._archive_legacy_dashboard(target1, archive)
+    assert a1 is not None and a2 is not None
+    assert a1 != a2, "second archive must get a unique suffix"
+    assert a1.read_text(encoding="utf-8") == "legacy v1"
+    assert a2.read_text(encoding="utf-8") == "legacy v2"
+
+
+def test_write_output_archives_before_overwrite(tmp_path: Path):
+    """F4 end-to-end: write_output() must archive legacy before overwriting."""
+    target = tmp_path / "dashboard.md"
+    archive = tmp_path / "archive"
+    target.write_text("legacy hand-edited content", encoding="utf-8")
+    rd.write_output(
+        "# DentalBI Dashboard (auto-generated)\n\nnew content via scripts/regenerate_dashboard.py\n",
+        target,
+        archive_dir=archive,
+    )
+    # Target now holds new generator output.
+    assert "auto-generated" in target.read_text(encoding="utf-8")
+    # Archive holds the previous legacy content.
+    archived_files = list(archive.glob("dashboard_legacy_*.md"))
+    assert len(archived_files) == 1
+    assert archived_files[0].read_text(encoding="utf-8") == "legacy hand-edited content"

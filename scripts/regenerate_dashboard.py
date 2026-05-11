@@ -76,6 +76,7 @@ QUEUE_TASKS_DIR = PROJECT_ROOT / "queue" / "tasks"
 QUEUE_REPORTS_DIR = PROJECT_ROOT / "queue" / "reports"
 MEMORY_FILE = PROJECT_ROOT / "memory" / "MEMORY.md"
 DASHBOARD_FILE = PROJECT_ROOT / "dashboard.md"
+ARCHIVE_DIR = PROJECT_ROOT / "archive"
 PREFLIGHT_REPORT = QUEUE_REPORTS_DIR / "dashboard_supabase_preflight.yaml"
 LOCK_FILE = PROJECT_ROOT / ".dashboard_generation.lock"
 CACHE_DIR = Path(os.environ.get("DASHBOARD_CACHE_DIR", str(Path.home() / ".cache" / "dentalbi-dashboard")))
@@ -92,10 +93,68 @@ DEFAULT_TABLES: list[dict[str, Any]] = [
     {"name": "form_templates",            "strategy": "full",     "select": "id,name"},
 ]
 
-STATUS_ENUM = {"done", "in_progress", "blocked", "not_started", "assigned",
-               "pending", "drafted_pending_kuroda_pre_audit", "audit_pending_verification", "unknown"}
+# Canonical status set (= instructions/common/task_flow.md "assigned/blocked/done/failed"
+# 規範 + de-facto audit lifecycle statuses observed in queue/tasks/*.yaml).
+# F2 cycle2 fix: kuroda_cmd020_regenerate_dashboard_py_audit_20260511 — 監査待ち系を
+# unknown に丸めると dashboard 進捗が実態を落とす。明示段階値を持つ。
+STATUS_ENUM = {
+    # task_flow.md canonical (4)
+    "assigned", "blocked", "done", "failed",
+    # de-facto lifecycle (audit / verification waiting)
+    "in_progress", "not_started", "pending",
+    "drafted_pending_kuroda_pre_audit",
+    "ready_for_audit",
+    "audit_pending",
+    "completed_pending_audit",
+    "done_pending_audit",
+    "audit_pending_verification",
+    "unknown",
+}
+
+# Stage-based base score for non-done statuses. 監査待ちは 0% でなく明示段階値
+# (= 黒田 cycle2 F2 推奨)。
+STATUS_STAGE_PCT: dict[str, float] = {
+    "blocked": 0.0,
+    "not_started": 0.0,
+    "failed": 0.0,
+    "pending": 10.0,
+    "drafted_pending_kuroda_pre_audit": 15.0,
+    "assigned": 25.0,
+    "in_progress": 50.0,
+    "ready_for_audit": 70.0,
+    "audit_pending": 80.0,
+    "completed_pending_audit": 85.0,
+    "done_pending_audit": 90.0,
+    "audit_pending_verification": 95.0,
+}
 
 STALE_THRESHOLD_DAYS = 14
+
+# F3 cycle2 fix: privacy gate 語彙統一 — WARN 残存は CLEAN ではない。
+PRIVACY_CLEAN = "clean"
+PRIVACY_WARNED = "warned"
+PRIVACY_BLOCKED = "blocked"
+
+
+def classify_privacy_result(reports: Any) -> str:
+    """Map validate_report_privacy.py JSON output to a canonical verdict.
+
+    'clean' iff HIGH 0 AND WARN 0. WARN-only results are 'warned', NOT 'clean'.
+    'blocked' iff any HIGH > 0. Accepts a list of per-file result dicts or a
+    single dict (mirrors validate_report_privacy.py --format json shape).
+    """
+    if isinstance(reports, dict):
+        reports = [reports]
+    high_total = 0
+    warn_total = 0
+    for r in reports or []:
+        high_total += len(r.get("high") or [])
+        warn_total += len(r.get("warn") or [])
+    if high_total > 0:
+        return PRIVACY_BLOCKED
+    if warn_total > 0:
+        return PRIVACY_WARNED
+    return PRIVACY_CLEAN
 
 
 # ---------------------------------------------------------------------------
@@ -482,47 +541,58 @@ def write_preflight_report(report: dict[str, Any], path: Path = PREFLIGHT_REPORT
 def progress_for_task(task: TaskEntry) -> float | None:
     """Compute progress percent for a single leaf task.
 
-    Evaluation order is FIXED (do not rearrange — black-box tests pin it):
-      1. status == 'blocked'                                -> 0
-      2. status == 'not_started'                            -> 0
-      3. parse_error / unknown raw_status                   -> None (excluded from aggregation)
-      4. shogun_verified=true AND completion_gate=open AND
-         evidence_state=complete                            -> 100
-      5. status=='done' AND verdict=='pass'                 -> capped at 100 (or 75 if shogun_verified=false)
-      6. status=='done' AND verdict.startswith('pass_with') -> 75
-      7. evidence_state in {'blocked_env','missing',
-         'schema_unsupported','cross_pc_missing'}           -> min(current,50)
-      8. status=='in_progress'                              -> 50
-      9. status=='assigned' AND task_id                     -> 25
-     10. status=='drafted_pending_kuroda_pre_audit'         -> 15
-     11. otherwise                                          -> 0
+    Evaluation order is FIXED (black-box tests pin it):
+      1. raw_status == 'unknown' or status == 'unknown'  -> None (excluded)
+      2. status == 'done':
+           a) shogun_verified=true AND completion_gate=open
+              AND evidence_state=complete                 -> 100
+           b) verdict.startswith('pass') and not 'pass_with'
+                                                          -> 100 (verified) / 75 (unverified)
+           c) verdict.startswith('pass_with')             -> 75
+           d) verdict empty (audit awaits)                -> 75 (capped further by gates)
+      3. status in STATUS_STAGE_PCT                       -> stage value
+      4. status == 'assigned' AND task_id missing         -> 0 (degenerate)
+      5. otherwise                                        -> 0
+
+    Then apply caps:
+      - evidence_state in {blocked_env, missing,
+        schema_unsupported, cross_pc_missing}             -> min(score, 50)
+      - shogun_verified=false                             -> min(score, 75)
+
+    F2 cycle2 fix (黒田 audit): 監査待ち系 (audit_pending /
+    completed_pending_audit / done_pending_audit / ready_for_audit) を
+    unknown に丸めず、STATUS_STAGE_PCT 経由で明示段階値に。
     """
-    if task.status == "blocked":
-        return 0.0
-    if task.status == "not_started":
-        return 0.0
     if task.raw_status == "unknown" or task.status == "unknown":
         return None
 
     base: float
-    if task.shogun_verified and task.completion_gate == "open" and task.evidence_state == "complete":
-        base = 100.0
-    elif task.status == "done" and task.verdict.startswith("pass") and not task.verdict.startswith("pass_with"):
-        base = 100.0 if task.shogun_verified else 75.0
-    elif task.status == "done" and task.verdict.startswith("pass_with"):
-        base = 75.0
-    elif task.status == "in_progress":
-        base = 50.0
-    elif task.status == "assigned" and task.task_id:
-        base = 25.0
-    elif task.status == "drafted_pending_kuroda_pre_audit":
-        base = 15.0
+    if task.status == "done":
+        if (task.shogun_verified
+                and task.completion_gate == "open"
+                and task.evidence_state == "complete"):
+            base = 100.0
+        elif task.verdict.startswith("pass") and not task.verdict.startswith("pass_with"):
+            base = 100.0 if task.shogun_verified else 75.0
+        elif task.verdict.startswith("pass_with"):
+            base = 75.0
+        else:
+            # done without verdict yet — treat as awaiting audit, not 0%.
+            base = 75.0
+    elif task.status == "assigned":
+        # degenerate: assigned without task_id is a placeholder, not progress.
+        base = 25.0 if task.task_id else 0.0
+    elif task.status in STATUS_STAGE_PCT:
+        base = STATUS_STAGE_PCT[task.status]
     else:
         base = 0.0
 
     if task.evidence_state in {"blocked_env", "missing", "schema_unsupported", "cross_pc_missing"}:
         base = min(base, 50.0)
-    if not task.shogun_verified:
+    # shogun_verified=false cap only blocks 'done' from claiming 100% — stage
+    # values 80/85/90/95 are explicit "awaiting verification" markers and must
+    # surface as-is (cycle1 universally capped them at 75 which hid progress).
+    if task.status == "done" and not task.shogun_verified:
         base = min(base, 75.0)
     return base
 
@@ -689,18 +759,85 @@ def build_context(
     }
 
 
-def write_output(rendered: str, output_path: Path) -> None:
+# F4 cycle2 fix: 初回本番 write 前に手動編集 dashboard.md を archive へ退避。
+# auto-generated header の有無で legacy 判定 (idempotent — generator output には
+# 再 archive しない)。
+_LEGACY_HEADER_MARKERS = ("auto-generated", "scripts/regenerate_dashboard.py")
+
+
+def _archive_legacy_dashboard(target: Path, archive_dir: Path | None = None) -> Path | None:
+    """Archive a hand-edited dashboard.md before the generator overwrites it.
+
+    Returns the archive destination if archiving happened, else None.
+    Subsequent runs (where target already carries the auto-generated banner)
+    are no-ops, so the archive is created at most once per legacy file per day.
+    """
+    if archive_dir is None:
+        archive_dir = ARCHIVE_DIR
+    if not target.exists():
+        return None
+    try:
+        text = target.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    if all(marker in text for marker in _LEGACY_HEADER_MARKERS):
+        return None  # already generator output
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    today = _dt.datetime.now().strftime("%Y%m%d")
+    base_name = f"dashboard_legacy_{today}.md"
+    dest = archive_dir / base_name
+    n = 1
+    while dest.exists():
+        dest = archive_dir / f"dashboard_legacy_{today}_{n}.md"
+        n += 1
+    dest.write_text(text, encoding="utf-8")
+    return dest
+
+
+def write_output(rendered: str, output_path: Path, archive_dir: Path | None = None) -> None:
+    archived = _archive_legacy_dashboard(output_path, archive_dir)
+    if archived is not None:
+        print(f"[regenerate_dashboard] archived legacy {output_path.name} -> {archived}",
+              file=sys.stderr)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     tmp = output_path.with_suffix(output_path.suffix + ".tmp")
     tmp.write_text(rendered, encoding="utf-8")
     tmp.replace(output_path)
 
 
+# F1 cycle2 fix (kuroda audit verify_time_delta): rendered 全文比較は
+# generated_at と git_log の relative age が時刻 drift で必ず割れるため
+# AC6 verify-only mode が運用不能。verify 直前に非決定値を mask する。
+_VERIFY_VOLATILE_PATTERNS = (
+    # ヘッダ generated_at: `2026-05-11T22:00:00+09:00`
+    re.compile(r"^- generated_at: `[^`]+`\s*$", re.MULTILINE),
+    # 表行 | hash | subject | 5 minutes ago | (最終列が age)
+    re.compile(r"^(\| `[0-9a-fA-F]+` \| [^|\n]+ \|)([^|\n]*)\|\s*$", re.MULTILINE),
+)
+
+
+def _normalize_for_verify(text: str) -> str:
+    """Strip wall-clock / relative-age values so verify is time-stable.
+
+    Reproducer (kuroda 21:47 audit): write tmp output → sleep 2 → --verify
+    → previously rc=1 (generated_at 2 sec apart). After normalization both
+    sides hash identically because the volatile span is masked.
+    """
+    out = _VERIFY_VOLATILE_PATTERNS[0].sub("- generated_at: `<volatile>`", text)
+    out = _VERIFY_VOLATILE_PATTERNS[1].sub(r"\1 <volatile> |", out)
+    return out
+
+
 def verify_dashboard(expected: str, actual_path: Path) -> bool:
     if not actual_path.exists():
         return False
     actual = actual_path.read_text(encoding="utf-8")
-    return hashlib.sha256(expected.encode("utf-8")).hexdigest() == hashlib.sha256(actual.encode("utf-8")).hexdigest()
+    expected_n = _normalize_for_verify(expected)
+    actual_n = _normalize_for_verify(actual)
+    return (
+        hashlib.sha256(expected_n.encode("utf-8")).hexdigest()
+        == hashlib.sha256(actual_n.encode("utf-8")).hexdigest()
+    )
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
