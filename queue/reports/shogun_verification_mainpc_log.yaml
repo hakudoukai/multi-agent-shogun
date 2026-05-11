@@ -1,0 +1,18 @@
+# shogun_verification_mainpc_log.yaml
+# Owner: MainPC 信長 (single writer)
+# Schema (per entry):
+#   event_id:        stable id (= "<source_pc>_<auditor_who>_<target>_<verified_at_iso>" の sha1 short)
+#   source_pc:       "mainpc"
+#   target_id:       審査対象 audit_id / target_id
+#   auditor_who:     軍師名 (kuroda / takenaka 等)
+#   shogun_verified: bool
+#   checks_passed:   "N/M" string (= verify_one() 集計)
+#   verified_at:     ISO 8601 (= verify 実施 timestamp)
+#   payload_hash:    sha256(checks + flags + audit_entry_excerpt) の short hex
+#   redaction_note:  redact 後 sanitization 経緯 (任意)
+#
+# 規律:
+#   - SecondPC からはこのファイルへ書き込まない (= cross-PC は git pull 取得のみ、read-only)
+#   - 全 entry は normalize_shogun_verification_logs.py で canonical index に redact 集約
+#   - PII / API key / absolute local path は writer 側で除去 (validate_report_privacy.py で gate)
+verifications: []

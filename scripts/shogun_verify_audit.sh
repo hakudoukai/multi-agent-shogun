@@ -16,17 +16,36 @@ set -euo pipefail
 
 # REPO_ROOT は env override 可 (= --preflight test 用)。production では default を使う。
 REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
-LOG="$REPO_ROOT/queue/reports/shogun_verification_log.yaml"
+
+# cmd_013 Stream B: --pc-id <mainpc|secondpc> で writer-owned log path を選択。
+# env PC_ID も同等扱い。未指定なら legacy shogun_verification_log.yaml に書込 (= backward compat)。
+# 各 PC は自 suffix file のみ書込、他 PC file は read-only。
+PC_ID="${PC_ID:-}"
+while [ "${1:-}" = "--pc-id" ]; do
+    PC_ID="${2:-}"
+    shift 2 || true
+done
+
+case "$PC_ID" in
+    mainpc)   LOG_BASENAME="shogun_verification_mainpc_log.yaml" ;;
+    secondpc) LOG_BASENAME="shogun_verification_secondpc_log.yaml" ;;
+    "")       LOG_BASENAME="shogun_verification_log.yaml" ;;
+    *)
+        echo "ERROR: unknown PC_ID='$PC_ID' (= mainpc|secondpc only)" >&2
+        exit 1
+        ;;
+esac
+LOG="$REPO_ROOT/queue/reports/$LOG_BASENAME"
 mkdir -p "$(dirname "$LOG")"
 [ -f "$LOG" ] || echo "verifications: []" > "$LOG"
 
 verify_one() {
     local target="$1"
-    python3 - "$REPO_ROOT" "$target" <<'PYEOF'
+    python3 - "$REPO_ROOT" "$target" "$LOG" <<'PYEOF'
 import sys, os, yaml, subprocess, re, json, hashlib
 from datetime import datetime, timezone
 
-repo_root, target = sys.argv[1], sys.argv[2]
+repo_root, target, log_path_arg = sys.argv[1], sys.argv[2], sys.argv[3]
 checks = {
     "codex_log_exists": False,
     "gemini_log_exists": False,
@@ -134,8 +153,8 @@ result = {
 }
 print(json.dumps(result, ensure_ascii=False, indent=2))
 
-# Append to verification log
-log_path = f"{repo_root}/queue/reports/shogun_verification_log.yaml"
+# Append to verification log (= cmd_013 Stream B: writer-owned log path)
+log_path = log_path_arg
 try:
     with open(log_path) as f: log = yaml.safe_load(f) or {}
 except: log = {}
