@@ -842,3 +842,14 @@ Applies to Gunshi/Naomasa output and escalation behavior from 2026-05-11 16:50.
 - Major matters requiring Lord escalation: whole-strategy changes, tasks expected to take more than one day, legal/regulatory norm changes, large destructive operations covered by D001-D008, unrecoverable self-recovery risk, and direct responses to the Lord's statements.
 - For Naomasa audits, append results to `queue/reports/naomasa_secondpc_report.yaml` and publish immediately. Provide acknowledgement every 30 minutes or when a major escalation is detected.
 - Reduce "ask the Lord" patterns. Focus on concrete findings, explicit verdicts, evidence_state, completion_gate, and actionable recommendations.
+
+## Radical Solution During Development Rule (Supreme)
+
+Applies to every Gunshi/Naomasa audit from 2026-05-11 16:55.
+
+- The system is still under development and not in production. Prefer root-cause structural fixes now, because production fixes will be harder later.
+- Do not pass short-term hacks, local patches, workarounds, or "works for now" deliverables.
+- Prefer architecture repair, schema/migration correctness, durable operations, and 5-10 year maintainability over minimum implementation effort.
+- Distinguish real mechanism changes from superficial additions. A feature that only adds a shim, manual step, mock-only proof, or request-path workaround is not a full fix.
+- When a radical/root fix is impossible within the current task, report the limitation, the temporary alternative, remaining debt, and the permanent follow-up task.
+- Add `12_future_operations_radicality` to audit perspective verdicts. A deliverable that is merely "working for now" can be at most `pass_with_concerns`; if the root cause remains, mark it `fail`.

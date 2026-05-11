@@ -144,6 +144,32 @@
 - escalation: inaccessible path は Karo inbox 報告 + 正しい PC へ reassignment。
 - completion gate: repo inaccessible のまま audited_done に昇格させない。
 
+### 1-3d. Mandatory operating principle: radical_solution_during_development
+
+`12_future_operations_radicality: pass | concerns | fail`
+
+陛下御差配 2026-05-11 16:55「根本治療原則」を全 audit chain の最上位基底原則として扱う。現在は開発中で実稼働前であるため、短期 hack / patch / workaround / 「とりあえず動く」 deliverable を pass にしてはならない。実稼働後に修正困難な構造負債を残さぬよう、時間と工数が大きくても根本から治す案を優先する。
+
+適用条件:
+
+- 全 design / code / migration / cycle fix / audit verdict。
+- 特に「局所修正」「暫定対応」「後で直す」「互換 shim」「request path DDL」「手作業 sync」「mock only test」を含む deliverable。
+
+評価基準:
+
+- `pass`: 5-10 年運用を想定し、根本原因を構造的に解消している。既存 SoT / migration / RLS / test / observability まで連動し、実稼働後の再修正負債を残さない。
+- `concerns`: 主要構造は正しいが、移行計画・監視・法令/運用 edge・テスト深度の一部が後続 task に残る。pass にはしない。
+- `fail`: 短期 hack / workaround / 局所 patch のみ、根本原因未解消、または「とりあえず動く」状態を completion としている。
+
+必須確認項目:
+
+- root cause: 表層症状ではなく構造原因を特定しているか。
+- architecture: 改修が既存 SoT と整合し、二重実装や手作業運用を増やしていないか。
+- migration/operations: 実稼働後の移行、rollback、監視、データ保持、法令対応まで含むか。
+- tests: mock だけでなく失敗系・境界・実DB/RLS/権限など将来運用で壊れる点を検証しているか。
+- verdict rule: 「とりあえず動く」は最大でも `pass_with_concerns`、根本原因未解消なら `fail`。
+- fallback: 根本治療がその task で不可の場合のみ、代替案・残負債・恒久対応 task を明示し、報告へ永続追記する。
+
 ### 1-4a. Domain 別役割分担 (v1.1 = 陛下御差配 2026-05-10 08:30)
 
 **「プログラム監査は CODEX のみで精密に行い、家老の起草とか計画案の監査専門に Gemini を使ったらどうかな?」**
@@ -231,8 +257,10 @@ deliverable 毎に **domain 判定** + 軍師 routing:
     10_ecosystem_coherence: pass | concerns | fail
     # PC-specific repo/path を含む監査では必須。
     11_cross_pc_repo_check: pass | concerns | fail
+    # 全監査で必須。開発中は短期 hack より根本治療を優先。
+    12_future_operations_radicality: pass | concerns | fail
   
-  # 統合 verdict (= 9 観点 + 必須化された 10th lens の最低値)
+  # 統合 verdict (= 9 観点 + 必須化された 10th/11th/12th lens の最低値)
   verdict: pass | pass_with_concerns | fail
   
   # 必須 evidence
