@@ -1715,3 +1715,387 @@ p2_designs:
       native_execution: true
       confidence: high
       confidence_note: "P1-1 設計要件は満たす。P2-3 との文言整合と helper 未実装が残るため pass_with_concerns。"
+
+stream_b_qc:
+  - audit_id: naomasa_stream_b_b1_secondpc_verify_log_qc
+    target_task_id: subtask_v21_b1_verification_log_sc
+    target_deliverable: queue/reports/shogun_verification_log_secondpc.yaml
+    target_report: queue/reports/ashigaru1_v21_b1_report.yaml
+    target_commit: "5d649f4"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    summary: "Stream B B1 SecondPC verification log は pc: secondpc / pc_suffix: _secondpc を持ち、P2-1/P2-3/P1-1/P2-2 の4件 verify entry 全てで shogun_verified/audit_passed/chain_passed/audited_done が true。SecondPC log 単体は schema 正常。ただし親 log queue/reports/shogun_verification_log.yaml が YAML parse error を起こし、既存 schema 整合の機械比較は完全には成立しない。"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/shogun_verification_log_secondpc.yaml:11 metadata — `pc: secondpc` と `pc_suffix: _secondpc` が定義され、SecondPC suffix 分離の識別条件は満たす。"
+      - "queue/reports/shogun_verification_log_secondpc.yaml:28 verify_ieyasu_p2_1_secondpc — P2-1 ecosystem_coherence lens の verify entry が存在し、pc_suffix=_secondpc、shogun_verified=true、audit_passed=true、chain_passed=true、audited_done=true。"
+      - "queue/reports/shogun_verification_log_secondpc.yaml:53 verify_ieyasu_p2_3_secondpc — P2-3 background_worker_eval の verify entry が存在し、4 flags 全て true。"
+      - "queue/reports/shogun_verification_log_secondpc.yaml:74 verify_ieyasu_p1_1_secondpc — P1-1 memory_sync_design の verify entry が存在し、4 flags 全て true。"
+      - "queue/reports/shogun_verification_log_secondpc.yaml:98 verify_ieyasu_p2_2_secondpc — P2-2 cross_pc_trust_gate の verify entry が存在し、4 flags 全て true。"
+      - "queue/reports/shogun_verification_log_secondpc.yaml:123 summary — total_verified=4 / shogun_verified_count=4 / audit_passed_count=4 / chain_passed_count=4 / audited_done_count=4 / pc_suffix=_secondpc と集計が entry 実数に一致。"
+      - "機械検査: PyYAML で queue/reports/shogun_verification_log_secondpc.yaml を parse し、required keys 欠落 0、expected verify_id 4件全存在、all_pc_suffix=True、all_done=True を確認。"
+      - "queue/reports/ashigaru1_v21_b1_report.yaml:12 deliverables — target file 作成、.gitignore whitelist、commit 5d649f4、GitHub 同期確認が報告され、`git show 5d649f4` でも target file 追加を確認。"
+      - "懸念: queue/reports/shogun_verification_log.yaml:430 — 親 log は top-level `metadata/verifications` 後に `- entry_id` が出現し、PyYAML parse error。SecondPC log の schema は親構造を継承しているが、既存 log との機械的 schema 整合比較は親 log 破損により完全検証不能。"
+      - "懸念: queue/reports/shogun_verification_log_secondpc.yaml:32 / 57 / 78 / 102 target_commit は短縮 SHA。既存運用では短縮 SHA も使われるが、cross-PC trust gate と hash audit では full SHA の方が望ましい。"
+    recommendations:
+      - "queue/reports/shogun_verification_log.yaml の line 430 以降を `verifications:` 配下へ正規化し、親 log 自体を YAML parse 可能に戻せ。"
+      - "SecondPC verify log の future entries では target_commit を full 40-char SHA に統一し、cross-PC hash/audit trail と連携しやすくせよ。"
+      - "schema_version v1.0 (PC suffix 拡張) の正式 schema を docs または instructions に固定し、parent/secondpc 双方で同一 validator を通せ。"
+    related_files:
+      - queue/reports/shogun_verification_log_secondpc.yaml
+      - queue/reports/shogun_verification_log.yaml
+      - queue/reports/ashigaru1_v21_b1_report.yaml
+    verification_commands:
+      - "python3 - <<'PY' ... parse shogun_verification_log_secondpc.yaml / required fields / flags ... PY"
+      - "python3 - <<'PY' ... parse parent and secondpc schema keys ... PY"
+      - "git show --stat --oneline 5d649f4 -- queue/reports/shogun_verification_log_secondpc.yaml"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "SecondPC log 単体の4 verify entryと audited_done flags は直接検証済み。親 log YAML 破損により schema 整合だけ pass_with_concerns。"
+  - audit_id: naomasa_stream_b_b2_normalize_verification_logs_qc
+    target_task_id: subtask_v21_b2_normalize_verification_logs
+    target_deliverable:
+      - scripts/normalize_shogun_verification_logs.py
+      - queue/reports/verification_index.yaml
+    target_report: queue/reports/ashigaru3_v21_b2_report.yaml
+    target_commit: "ce767a8"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    summary: "Stream B B2 normalizer は exit 0 で動作し、verification_index.yaml は 28 entries を生成。P2-1/P2-3/P1-1/P2-2 の SecondPC verify 4件は index 先頭に収録され、target_audit_id 重複は 0。deduplicate は normalize_audit_reports.py と同じ last occurrence wins 方針で機能する。ただし既存 parent log の metadata.pc が secondpc のため、mainpc file 由来 entries も pc_source=secondpc となり summary.by_pc は secondpc:28 のみ。recoverable な混在 YAML parse は split fallback で吸収され、schema_unsupported entry は unrecoverable parse error 時のみ出る。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "scripts/normalize_shogun_verification_logs.py:24 — INPUT_FILES は secondpc と mainpc の2 source を読む設計。`python3 scripts/normalize_shogun_verification_logs.py` は exit 0 で完了し、Processing 2 files / Total entries 28 / Done. exit 0 を確認。"
+      - "queue/reports/verification_index.yaml:8 — summary.total=28、shogun_verified=28、audited_done=28、error_entries=0。依頼条件の 28 entries 生成は満たす。"
+      - "queue/reports/verification_index.yaml:16 / 26 / 36 / 46 — naomasa_p2_ecosystem_coherence_lens_sample、naomasa_p2_worker_eval_design、naomasa_p1_memory_sync_design_review、naomasa_p2_cross_pc_trust_gate_review の4件が収録済み。"
+      - "scripts/normalize_shogun_verification_logs.py:207 — deduplicate は target_audit_id ごとに後勝ちで上書きする実装。synthetic check で duplicate target x が latest verify_id に置換されることを確認。既存 verification_index.yaml 上も target_audit_id 重複 0。"
+      - "scripts/normalize_audit_reports.py:202 — 既存 normalize_audit_reports.py も last occurrence wins 方針であり、B2 の重複採用方針は既存方式と整合する。"
+      - "scripts/normalize_shogun_verification_logs.py:35 — load_yaml_lenient は通常 safe_load 失敗時、root-level `- entry_id` split fallback を試みる。queue/reports/shogun_verification_log.yaml:430 の混在 root list はこの fallback で抽出され、実行ログでも 32 entries from verifications / 7 entries from top-level entry blocks を確認。"
+      - "scripts/normalize_shogun_verification_logs.py:167 — unrecoverable parse error では entry_type=error / evidence_state=schema_unsupported を返す実装。temp malformed YAML で tmp*_parse_error の schema_unsupported entry が返ることを確認。"
+      - "懸念: queue/reports/verification_index.yaml:13 — summary.by_pc は secondpc:28 のみ。queue/reports/shogun_verification_log.yaml:8 が pc: secondpc のため、filename 的には mainpc slot で読んだ parent log entries も pc_source=secondpc となる。cross-PC index として mainpc/secondpc の由来分離を期待するなら不十分。"
+      - "懸念: recoverable parse error は schema_unsupported entry ではなく split fallback で正常 entries 化される。これは実用上は良いが、依頼文の 'parse error 時の schema_unsupported entry 処理' を全 parse error で期待するなら仕様差分あり。"
+      - "queue/reports/ashigaru3_v21_b2_report.yaml:14 — deliverables は script/output/git commit を列挙し、commit ce767a8 は `git show` で .gitignore、verification_index.yaml、normalize script の変更を確認。"
+    recommendations:
+      - "pc_source は metadata.pc だけでなく INPUT_FILES の slot 名と整合チェックし、不一致時は warning または `pc_slot` を別 field として index に残せ。"
+      - "recoverable split fallback と unrecoverable schema_unsupported の扱いを docs に明記し、schema_unsupported を『完全解析不能』限定にするか、『raw YAML parse failed』も別 warning field で保存せよ。"
+      - "verification_index.yaml は generated_at が毎回変わるため、QC 実行で不要 diff が出る。検証時は temp output option または --check mode を追加するとよい。"
+    related_files:
+      - scripts/normalize_shogun_verification_logs.py
+      - queue/reports/verification_index.yaml
+      - queue/reports/ashigaru3_v21_b2_report.yaml
+      - queue/reports/shogun_verification_log.yaml
+      - queue/reports/shogun_verification_log_secondpc.yaml
+    verification_commands:
+      - "python3 scripts/normalize_shogun_verification_logs.py; echo EXIT:$?"
+      - "python3 - <<'PY' ... parse verification_index.yaml / count / duplicates / expected 4 ids ... PY"
+      - "python3 - <<'PY' ... import normalizer / synthetic deduplicate / temp malformed parse_error ... PY"
+      - "git show --name-only --format='%H%n%s' ce767a8"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "生成数・4件収録・重複後勝ち・unrecoverable parse error の schema_unsupported は直接確認済み。PC source 分離と recoverable parse error 表現に仕様上の懸念が残る。"
+  - audit_id: naomasa_stream_b_b3_validate_report_privacy_qc
+    target_task_id: subtask_v21_b3_validate_report_privacy
+    target_deliverable: scripts/validate_report_privacy.py
+    target_report: queue/reports/ashigaru4_v21_b3_report.yaml
+    target_commit: "69f6337"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    summary: "Stream B B3 privacy validator は naomasa_secondpc_report.yaml に対して SCAN_PASS / exit 0。synthetic 入力で secret・email・patient_id・birth_date は SCAN_FAIL / exit 1、存在しない file は SCAN_ERROR / exit 2、PII field name のみまたは null は warning + exit 0 を確認。docs/cross_pc_trust_gate.md の G3 PII/Secret Scan の主目的とは整合する。ただし docs の例示 grep にある address や汎用 token/key 名の一部は同等には実装されておらず、現時点は pass_with_concerns。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass
+      6_test: pass
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "scripts/validate_report_privacy.py:6 — exit code 0/1/2 の意味が明記され、CLI 実測でも SCAN_PASS=0、SCAN_FAIL=1、SCAN_ERROR=2 を確認。"
+      - "実測: `python3 scripts/validate_report_privacy.py queue/reports/naomasa_secondpc_report.yaml; echo EXIT:$?` は `SCAN_PASS ... no PII or secrets detected` / EXIT:0。依頼条件 1 を満たす。"
+      - "scripts/validate_report_privacy.py:29 — sk-ant-, sk-, xai-, ghp_, glpat-, password, secret, Bearer token の具体 regex を実装。synthetic `api_token: sk-ant-...` は sk-ant と credential-named field の両方で SCAN_FAIL。"
+      - "scripts/validate_report_privacy.py:47 — email / SSN / Japanese phone の universal PII regex を実装。synthetic `email: user@example.com` は PII real value として SCAN_FAIL。"
+      - "scripts/validate_report_privacy.py:53 — patient_id / birth_date / phone_number / phone / email の field-specific PII value regex を実装。synthetic patient_id=12345678 と birth_date=1990-05-11 は SCAN_FAIL。"
+      - "scripts/validate_report_privacy.py:155 — PII field name は値を見て分岐する。`patient_id: 確認未取得` と `birth_date: null` は WARNING のみで EXIT:0 となり、field name と実 PII value の区別は機能。"
+      - "scripts/validate_report_privacy.py:18 — EXEMPT_FIELDS は docs/cross_pc_trust_gate.md:139 のスキャン対象外 field に加え、transfer_id/source_hash/target_hash 等も含む。cross-PC audit trail との整合は概ね良い。"
+      - "docs/cross_pc_trust_gate.md:109 — G3 PII/Secret Scan は outbound sync 直前の必須 gate。B3 script はこの gate を手動実行可能な validator として具体化している。"
+      - "懸念: docs/cross_pc_trust_gate.md:119 の例示 grep は `ANTHROPIC_API_KEY` と `token\\s*[:=]` を含むが、script は field name set に `api_token/access_token/auth_token` を持つ一方、任意の `token:` field は credential-named field としては検知しない。"
+      - "懸念: docs/cross_pc_trust_gate.md:127 の PII 例示 grep は `address\\s*[:=]` を含むが、script の FIELD_PII に address はない。住所漏洩 gate としては未カバー。"
+      - "queue/reports/ashigaru4_v21_b3_report.yaml:21 — 足軽報告は SCAN_PASS、SCAN_FAIL、PII value、field name warning、SCAN_ERROR のテストを列挙。手元実測とも一致。"
+      - "commit 69f6337 は `git show` で .gitignore と scripts/validate_report_privacy.py の追加を確認。"
+    recommendations:
+      - "docs/cross_pc_trust_gate.md の例示 grep と validator の対象範囲を揃え、少なくとも `address` と generic `token` field を扱うか、docs 側で非対象理由を明記せよ。"
+      - "PII/secret scan の検知パターンを unit test 化し、exit 0/1/2 と warning-only behavior を regression test に固定せよ。"
+      - "outbound sync workflow に `python3 scripts/validate_report_privacy.py <report>` を正式 gate として組み込み、SCAN_PASS 証跡を cross_pc_transfer_audit.yaml に残せ。"
+    related_files:
+      - scripts/validate_report_privacy.py
+      - docs/cross_pc_trust_gate.md
+      - queue/reports/ashigaru4_v21_b3_report.yaml
+      - queue/reports/naomasa_secondpc_report.yaml
+    verification_commands:
+      - "python3 scripts/validate_report_privacy.py queue/reports/naomasa_secondpc_report.yaml; echo EXIT:$?"
+      - "bash -lc 'python3 scripts/validate_report_privacy.py <(printf ... secret/email/patient_id/birth_date ...); echo EXIT:$?'"
+      - "bash -lc 'python3 scripts/validate_report_privacy.py <(printf ... field-name-only ...); echo EXIT:$?'"
+      - "python3 scripts/validate_report_privacy.py /tmp/nonexistent_validate_report_privacy_$$.yaml; echo EXIT:$?"
+      - "git show --name-only --format='%H%n%s' 69f6337"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "主要 gate 動作と exit code は実測済み。docs 例示 pattern との完全一致に不足があり pass_with_concerns。"
+
+cmd016_qc:
+  - audit_id: naomasa_cmd016_dino_engine_c2_qc
+    target_task_id: subtask_cmd016_dino_engine_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru6_cmd016_dino_engine_report.yaml
+    target_repo: /mnt/c/Projects/hakudokai-dev
+    target_commit: "32fa1f6dc7715aa373f54a53b9bdc0513e4eb93f"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: false
+    summary: "足軽6号の cmd016 dino engine cycle2 報告は、F1/F2/F3 の中核修正と 51 passed / SKIP=0 を直接確認できたため実装品質は前進。ただし engine の clinic_id 引数は default=TERIHA_CLINIC_ID で後方互換を保つ暫定形であり、router 側の明示 clinic_id 伝播は ashigaru7 へ未完依存として残る。また award_stamp/redeem_reward/record_game_score は insert 前に get_member(clinic_id) を必ず通す構造ではないため、member_id global uniqueness 前提への依存が残る。よって PASS ではなく pass_with_concerns とする。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru6_cmd016_dino_engine_report.yaml:8 — 足軽報告 verdict=PASS、pytest 51 passed / failed 0 / skipped 0 と記録。"
+      - "/mnt/c/Projects/hakudokai-dev commit 32fa1f6dc7715aa373f54a53b9bdc0513e4eb93f — backend/services/teriha_passport_engine.py のみ 31 lines changed。報告 commit と実 repo commit は一致。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:105 — enroll_member() は clinic_id != TERIHA_CLINIC_ID を ValueError とし、他院 clinic_id への dinosaur_kingdom 登録を engine 層で遮断。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:128 — birth_date=None 時 subscription_status='pending'、line 130 monthly_fee_jpy=0。年齢未確認 active 課金登録は抑止。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:135 — get_member(member_id, clinic_id=TERIHA_CLINIC_ID) は .eq('clinic_id', clinic_id) を含み、member_id 単独 lookup は解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:148 / 210 / 241 / 318 / 384 / 440 — 報告通り add_xp, assign_mission_from_procedure, complete_mission, award_stamp, redeem_reward, record_game_score に clinic_id default 引数が追加済み。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:164 — add_xp() は lifetime_xp を正の delta_xp 累計として rank 判定し、reward_redeem の負数ログで降格しない設計へ修正。F3 の中核は解消。"
+      - "実測: `python3 -m py_compile backend/services/teriha_passport_engine.py backend/routers/teriha_passport.py backend/tests/test_teriha_passport_engine.py backend/tests/test_teriha_passport_webhooks.py` は exit 0。"
+      - "実測: `python3 -m pytest backend/tests/test_teriha_passport_engine.py backend/tests/test_teriha_passport_webhooks.py -q` は 51 passed in 2.04s。SKIP=0 条件を満たす。"
+      - "懸念: /mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:337 — award_stamp() は stamp insert 前に get_member(member_id, clinic_id) を呼ばない。stamp_kind が XP 付与を伴わない場合は clinic_id 検証なしで member_id 書込が成立し得る。"
+      - "懸念: /mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:395 / 417 — redeem_reward() は balance 計算と reward_history insert を member_id のみで実施し、clinic_id 検証は後続 add_xp() まで遅れる。insert 後に add_xp が失敗する順序リスクも残る。"
+      - "懸念: /mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:451 — record_game_score() は game_score insert 前に member clinic を検証しない。cleared=false なら add_xp() も通らないため、clinic_id 引数が境界検証に使われない。"
+      - "懸念: /mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:268 / 281 / 289 / 301 / 313 — router 直 endpoint は clinic_id を request schema に持たず、engine default に依存。足軽6報告 line 55 の通り ashigaru7 に router 側明示 clinic_id 追加が必要。"
+    recommendations:
+      - "ashigaru7 は git pull 後、router schemas と endpoint 呼び出しに clinic_id を明示的に追加し、engine default 依存を縮小せよ。"
+      - "award_stamp/redeem_reward/record_game_score は insert 前に `member = get_member(member_id, clinic_id)` を必ず通し、不一致なら 404/ValueError とせよ。特に redeem_reward は reward_history insert 前に検証すること。"
+      - "router/API tests に direct endpoints の clinic_id mismatch 404/422 を追加し、51 passed に加えて境界テストを SKIP=0 で固定せよ。"
+      - "passport_* log/history/score tables が member_id global uniqueness に依存する設計なら、その前提を schema doc へ明記せよ。clinic_id カラム追加が可能なら将来 RLS 強化として別 task 化せよ。"
+    related_files:
+      - queue/reports/ashigaru6_cmd016_dino_engine_report.yaml
+      - /mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py
+      - /mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_engine.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py
+    verification_commands:
+      - "git -C /mnt/c/Projects/hakudokai-dev show --stat --oneline 32fa1f6d"
+      - "python3 -m py_compile backend/services/teriha_passport_engine.py backend/routers/teriha_passport.py backend/tests/test_teriha_passport_engine.py backend/tests/test_teriha_passport_webhooks.py"
+      - "python3 -m pytest backend/tests/test_teriha_passport_engine.py backend/tests/test_teriha_passport_webhooks.py -q"
+      - "rg -n \"add_xp\\(|assign_mission_from_procedure\\(|complete_mission\\(|award_stamp\\(|redeem_reward\\(|record_game_score\\(|get_member\\(\" backend/routers backend/services backend/tests"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "commit、コード行、py_compile、pytest 51 passed/SKIP=0 を直接確認。残懸念は境界検証順序と router 明示伝播の設計リスク。"
+  - audit_id: naomasa_cmd016_kanban_fix_c2_qc
+    target_task_id: subtask_cmd016_kanban_fix_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru5_cmd016_kanban_report.yaml
+    target_repo: /mnt/c/Projects/hakudokai-dev
+    target_commit: "c124f0ebc3f255f25cbac5b444fd1076ccbd10f2"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: false
+    summary: "足軽5号の cmd016 kanban F1-F4 修正は、clinic_id join と billing 遷移禁止、TEMP 採番改善、23 passed/SKIP=0 を直接確認。F1/F2 は中核解消。F3 は DDL を毎 request から一回限り flag に寄せた改善だが、初回 request path で DDL を実行する構造は残る。F4 は COUNT+1 から MAX+IntegrityError retry へ改善したが、BEGIN IMMEDIATE 等の明示 lock はなく完全な並行採番保証とは言い切れない。よって pass_with_concerns。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru5_cmd016_kanban_report.yaml:7 — 足軽報告 verdict=pass、evidence_state=complete、completion_gate=open。"
+      - "/mnt/c/Projects/hakudokai-dev commit c124f0ebc3f255f25cbac5b444fd1076ccbd10f2 — backend/api/kanban.py のみ 76 lines changed。報告 commit と実 repo commit は一致。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:258 — get_kanban_board() の patients join は `h.patient_id = p.patient_id AND h.clinic_id = p.clinic_id` へ修正。F1 の board 側 cross-clinic name 混入は解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:559 — get_daily_report() の daily_report_lines join も `d.patient_id = p.patient_id AND d.clinic_id = p.clinic_id`。F1 の日計表側も解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:44 — VALID_MOVES['billing'] は []。line 343 docstring の billing から移動不可と整合し、F2 は解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:30 — _ensure_kanban_schema() は _SCHEMA_INITIALIZED flag で _ensure_done_entered_at_column() と _ensure_active_card_unique_index() を一回限りに集約。毎 request DDL は減った。"
+      - "懸念: /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:235 / 1251 — _ensure_kanban_schema() は get_kanban_board() と register_arrived_card() の初回 request path 内で実行される。migration/preflight へ完全分離されたわけではない。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:829 — _next_temp_seq() は COUNT(*)+1 から MAX(CAST(SUBSTR...))+1 へ変更。削除済み TEMP による再利用は避けられる。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:859 — create_temporary_patient() は IntegrityError retry を最大10回実施。単純 race には前進。"
+      - "懸念: /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:855 — TEMP 採番は明示 transaction/BEGIN IMMEDIATE なしで MAX→INSERT を繰り返すため、高並行下では retry 依存。完全保証には専用 sequence table または transaction lock が望ましい。"
+      - "実測: `python3 -m py_compile backend/api/kanban.py backend/tests/test_kanban_smoke.py` は exit 0。"
+      - "実測: `PYTHONPATH=/mnt/c/Projects/hakudokai-dev python3 -m pytest backend/tests/test_kanban_smoke.py -q` は 23 passed in 1.29s。SKIP=0 条件を満たす。"
+      - "懸念: /mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_smoke.py:1 — smoke test は import/pure function/Pydantic/in-memory sqlite helper 中心。get_kanban_board/daily_report join の clinic_id 分離、billing から move_card 拒否、temporary patient retry の並行性は API 経由では固定されていない。"
+    recommendations:
+      - "F3 は Alembic/SQLite init/preflight migration へ移し、通常 request path から ALTER/CREATE INDEX を完全に外せ。最低でも duplicate-column 以外の OperationalError は握り潰さず fail fast せよ。"
+      - "F4 は BEGIN IMMEDIATE 内で MAX+INSERT を行うか、clinic_id ごとの sequence table を導入し、retry 依存から transaction 保証へ上げよ。"
+      - "get_kanban_board/daily_report の clinic_id join、billing から move_card 400、temporary patient concurrent insert を API/integration test として追加し、23 passed に含めよ。"
+    related_files:
+      - queue/reports/ashigaru5_cmd016_kanban_report.yaml
+      - /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_smoke.py
+    verification_commands:
+      - "git -C /mnt/c/Projects/hakudokai-dev show --stat --oneline c124f0eb"
+      - "python3 -m py_compile backend/api/kanban.py backend/tests/test_kanban_smoke.py"
+      - "PYTHONPATH=/mnt/c/Projects/hakudokai-dev python3 -m pytest backend/tests/test_kanban_smoke.py -q"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "commit、行番号、py_compile、pytest 23 passed/SKIP=0 を直接確認。残懸念は DDL の request path 残存、TEMP 採番の lock 不足、API 経由 regression test 不足。"
+  - audit_id: naomasa_cmd016_dino_router_c2_qc
+    target_task_id: subtask_cmd016_dino_router_c2
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru7_cmd016_dino_router_report.yaml
+    target_repo: /mnt/c/Projects/hakudokai-dev
+    target_commit: "4ed605214d495c922453239ac1b89e5205d1457e"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: false
+    summary: "足軽7号の dino router cycle2 は、engine 側 clinic_id 引数追加後の router 明示伝播を実装し、pytest 59 passed/SKIP=0 を直接確認。前回 naomasa_cmd016_dino_engine_c2_qc の『router 直 endpoint の clinic_id 明示伝播未完』懸念は大筋で解消。ただし AddXp/AwardStamp/RedeemReward/RecordGameScore/AssignMission/CompleteMission request schema 自体に clinic_id はなく、直接 endpoint は TERIHA_CLINIC_ID 固定。multi-clinic 化時には schema 拡張が必要。また engine 内部の award_stamp/redeem_reward/record_game_score insert 前 clinic 検証順序は別懸念として残るため pass_with_concerns。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass_with_concerns
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru7_cmd016_dino_router_report.yaml:9 — 足軽報告 verdict=pass、py_compile/pass、pytest_all_pass/pass、skip_count=0 と記録。"
+      - "/mnt/c/Projects/hakudokai-dev commit 4ed605214d495c922453239ac1b89e5205d1457e — backend/routers/teriha_passport.py と backend/tests/test_teriha_passport_webhooks.py の2 files changed。報告 commit と実 repo commit は一致。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:257 — add_xp endpoint は `_engine().add_xp(... clinic_id=TERIHA_CLINIC_ID ...)` へ明示伝播。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:270 — assign_mission endpoint は `clinic_id=TERIHA_CLINIC_ID` を engine へ渡す。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:283 — complete_mission endpoint は `clinic_id=TERIHA_CLINIC_ID` を engine へ渡す。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:292 / 306 / 318 — award_stamp, redeem_reward, record_game_score も `clinic_id=TERIHA_CLINIC_ID` を engine へ渡す。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:383 — on_appointment_created は `_resolve_member_id(req.clinic_id, ...)` 後、assign_mission_from_procedure へ `clinic_id=req.clinic_id` を伝播。webhook 経路は request clinic_id と整合。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py:405 — on_visit_checked_in は award_stamp へ `clinic_id=req.clinic_id` を伝播。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py:63 — appointment-created test は assign_mission_from_procedure 呼び出しに clinic_id=5 を期待し、router 伝播 regression を固定。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py:193 — dashboard cross-clinic 404 test が追加され、F4 の入口防御は regression 化。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py:230 — add_xp negative/overlimit 422 parameterized tests 4件が追加され、F5 の範囲境界は regression 化。"
+      - "実測: `python3 -m py_compile backend/routers/teriha_passport.py backend/tests/test_teriha_passport_webhooks.py backend/tests/test_teriha_passport_engine.py backend/tests/test_child_passport_router.py` は exit 0。"
+      - "実測: `python3 -m pytest backend/tests/test_teriha_passport_webhooks.py backend/tests/test_teriha_passport_engine.py backend/tests/test_child_passport_router.py -q` は 59 passed, 1 warning, SKIP=0。"
+      - "懸念: queue/reports/ashigaru7_cmd016_dino_router_report.yaml:56 — Request schema への clinic_id 追加は scope 外と明記。現状 direct endpoints は TERIHA_CLINIC_ID 固定であり、multi-clinic 化時は schema 拡張が必要。"
+      - "懸念継続: /mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py:337 / 417 / 451 — award_stamp/redeem_reward/record_game_score は insert 前に get_member(clinic_id) を必ず通す構造ではない。router が clinic_id を渡すだけでは engine 内部の書込順序リスクは完全には閉じない。"
+      - "注意: pytest は WSL python3 で実施。足軽報告 line 104 の通り Windows venv は WSL interop 障害で未確認。SKIP=0 だが runtime parity は別途確認余地あり。"
+    recommendations:
+      - "次 cycle で AddXpRequest/AwardStampRequest/RedeemRewardRequest/RecordGameScoreRequest/AssignMissionRequest/CompleteMissionRequest に clinic_id を追加し、TERIHA 固定から request/認証 scope に基づく伝播へ移行せよ。"
+      - "engine 側 award_stamp/redeem_reward/record_game_score は insert 前に get_member(member_id, clinic_id) を実行し、不一致なら書込前に停止せよ。"
+      - "webhook の on_visit_checked_in も `engine.award_stamp.assert_called_once` だけでなく kwargs['clinic_id'] を assertion へ追加し、appointment-created と同等に regression 固定せよ。"
+      - "WSL interop 回復後、Windows venv で同一 59 tests を再実行し runtime parity を確認せよ。"
+    related_files:
+      - queue/reports/ashigaru7_cmd016_dino_router_report.yaml
+      - /mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_webhooks.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_teriha_passport_engine.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_child_passport_router.py
+    verification_commands:
+      - "git -C /mnt/c/Projects/hakudokai-dev show --stat --oneline 4ed60521"
+      - "git -C /mnt/c/Projects/hakudokai-dev diff 32fa1f6d..4ed60521 -- backend/routers/teriha_passport.py backend/tests/test_teriha_passport_webhooks.py"
+      - "python3 -m py_compile backend/routers/teriha_passport.py backend/tests/test_teriha_passport_webhooks.py backend/tests/test_teriha_passport_engine.py backend/tests/test_child_passport_router.py"
+      - "python3 -m pytest backend/tests/test_teriha_passport_webhooks.py backend/tests/test_teriha_passport_engine.py backend/tests/test_child_passport_router.py -q"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "commit、diff、router 行番号、py_compile、pytest 59 passed/SKIP=0 を直接確認。残懸念は request schema 未拡張、engine insert 前 clinic 検証順序、Windows venv parity。"
+
+cmd014_qc:
+  - audit_id: naomasa_cmd014_sc_log_rename_qc
+    target_task_id: subtask_cmd014_sc_log_rename
+    target_type: ashigaru_report_qc
+    target_report: queue/reports/ashigaru1_cmd014_sc_log_rename_report.yaml
+    target_commit: "20f903f1094c6fd4f191cfeee30e32705d69ad44"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: false
+    summary: "足軽1号の cmd014 SC log rename/schema fix は、secondpc log の target 欠落を4件すべて補い、normalize_shogun_verification_logs.py が canonical index 4 events を exit 0 で生成することを直接確認。missing_pc_logs=[], parse_error_seen=false, malformed skip なし。rename 後の canonical 出力は成立。ただし canonical events は auditor_who=unknown、checks_passed=''、audit_entry_excerpt={}、flags=[]、payload_hash が全件同一で、検証 payload の情報量が薄い。schema 正常化としては前進だが、監査証跡 index としては pass_with_concerns。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "queue/reports/ashigaru1_cmd014_sc_log_rename_report.yaml:11 — 足軽報告は secondpc log schema 修正と canonical index 再生成を完了と記録。"
+      - "commit 20f903f1094c6fd4f191cfeee30e32705d69ad44 — queue/reports/shogun_verification_secondpc_log.yaml と queue/reports/shogun_verification_canonical_index.yaml の2 files changed。報告 commit と実 repo commit は一致。"
+      - "queue/reports/shogun_verification_secondpc_log.yaml:28 / 54 / 76 / 101 — secondpc verify 4 entries が存在。"
+      - "queue/reports/shogun_verification_secondpc_log.yaml:30 / 56 / 78 / 103 — 4 entries すべてに normalize_entry() が要求する `target` string field が追加済み。機械検査でも missing_target_fields=[]。"
+      - "scripts/normalize_shogun_verification_logs.py:95 — normalize_entry() は target と verified_at が string でない entry を malformed として None にする。今回の target 追加は根本原因に合致。"
+      - "実測: `python3 scripts/normalize_shogun_verification_logs.py; echo EXIT:$?` は `Written 4 canonical events ... (missing=none)` / EXIT:0。"
+      - "queue/reports/shogun_verification_canonical_index.yaml:4 — missing_pc_logs=[]、line 5 parse_error_seen=false、line 6 total_events=4。"
+      - "queue/reports/shogun_verification_canonical_index.yaml:8 / 18 / 28 / 38 — event_id 4件は一意、source_pc は全て secondpc、shogun_verified は全て true。"
+      - "queue/reports/shogun_verification_canonical_index.yaml:10 / 20 / 30 / 40 — expected target_id 4件 (P2-1/P2-3/P1-1/P2-2) が全て canonical index に収録済み。"
+      - "懸念: queue/reports/shogun_verification_canonical_index.yaml:11 / 21 / 31 / 41 — auditor_who が全件 unknown。secondpc log には verified_by はあるが auditor_who がないため canonical identity が弱い。"
+      - "懸念: queue/reports/shogun_verification_canonical_index.yaml:13 / 23 / 33 / 43 — checks_passed が全件空文字。監査 chain の check 数が canonical index から読めない。"
+      - "懸念: queue/reports/shogun_verification_canonical_index.yaml:15 / 25 / 35 / 45 — payload_hash が全件 969259f8cac0ef6a で同一。audit_entry_excerpt と flags が空のため、target ごとの実証 payload 差分を表していない。"
+      - "懸念: scripts/normalize_shogun_verification_logs.py:39 — mainpc/secondpc の両 canonical input を読む設計だが、現時点の canonical index は secondpc 4件のみ。mainpc log は存在するものの実 event なしなら妥当、ただし mainpc 側 verify も統合対象なら別途生成が必要。"
+    recommendations:
+      - "secondpc log entries に `auditor_who` または normalizer 側の `verified_by -> auditor_who` fallback を追加し、canonical event_id の identity を unknown から脱せよ。"
+      - "`checks_passed`、`flags`、`audit_entry_excerpt` を secondpc log に追加するか、normalizer が existing fields (audit_passed/chain_passed/audited_done/verification_method) から canonical payload を構成するよう拡張せよ。"
+      - "canonical index の regression test を追加し、4 target 全存在、malformed=0、payload_hash が target 差分を持つこと、missing_pc_logs の扱いを固定せよ。"
+    related_files:
+      - queue/reports/ashigaru1_cmd014_sc_log_rename_report.yaml
+      - scripts/normalize_shogun_verification_logs.py
+      - queue/reports/shogun_verification_secondpc_log.yaml
+      - queue/reports/shogun_verification_canonical_index.yaml
+      - queue/reports/shogun_verification_mainpc_log.yaml
+    verification_commands:
+      - "git show --stat --oneline 20f903f"
+      - "python3 scripts/normalize_shogun_verification_logs.py; echo EXIT:$?"
+      - "python3 - <<'PY' ... parse canonical index / secondpc log / target fields / event uniqueness ... PY"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "commit、target field 4件、normalizer exit 0、canonical 4 events/missing none/parse false を直接確認。残懸念は canonical payload の情報量不足。"
