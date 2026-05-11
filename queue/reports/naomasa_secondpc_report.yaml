@@ -938,6 +938,114 @@ shogun_charter_audits:
       action: keep_dashboard_parallel_and_prepare_charter_v0_2_task
       summary: "Charterはdashboardよりsource到着時に段階監査継続で可。信長review到着後に§5/§6 audit viewを追加し、本entryをfinal round1へsupersedeする。"
 
+  - audit_id: naomasa_shogun_charter_v0_1_round1_reaudit
+    target_type: charter_design_reaudit
+    target_id: shogun_charter_v0_1_plus_openhands_addendum
+    parent_cmd: shogun_charter
+    audited_at: "2026-05-12T09:02:00+09:00"
+    audited_by: naomasa
+    redo_of: naomasa_shogun_charter_v0_1_round1_partial_sc
+    source_inbox:
+      - msg_20260512_084750_d0da0526
+    source_files:
+      - "docs/shogun_orchestration_charter_v0.1.md"
+      - "docs/shogun_openhands_role_split_v0.1.md"
+      - "queue/reports/sc_memory_entities_export_20260512.yaml"
+      - "docs/karo_shogun_charter_v0_1_review.md"
+    missing_sources:
+      - "docs/shogun_charter_v0_1_nobunaga_initial_review.md"
+      - "MC memory graph export"
+    verdict: pass_with_concerns
+    evidence_state: partial_missing_nobunaga_review
+    completion_gate: open_for_v0_2_draft
+    audit_gate_status: reaudit_complete_with_nobunaga_section_pending
+    supersedes:
+      - naomasa_shogun_charter_v0_1_round1_source_gate
+      - naomasa_shogun_charter_v0_1_source_requirements
+      - naomasa_shogun_charter_v0_1_source_path_followup
+      - naomasa_shogun_charter_v0_1_round1_partial_sc
+    perspective_verdicts:
+      1_functional_completeness: pass_with_concerns
+      2_anti_duplication: concerns
+      3_kiritsu_chain_of_command: concerns
+      4_logic_consistency: concerns
+      5_schema_data_contract: concerns
+      6_test_ci_evidence: concerns
+      7_legal_privacy_security: pass_with_concerns
+      8_operations: concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: concerns
+      11_cross_pc_repo_check: concerns
+      12_future_operations_radicality: pass
+    key_updates_since_partial_audit:
+      - "Charter mirror is now committed as docs/shogun_orchestration_charter_v0.1.md with Supabase mirror metadata."
+      - "OpenHands role split addendum is now committed and changes §15 interpretation: OpenHands is foundation layer, multi-agent-shogun is acceleration layer, mini-swe-agent may be integrated/merged with OpenHands."
+      - "SC memory export is committed and parseable; SC graph baseline is no longer blocked."
+    findings:
+      - severity: high
+        perspective: "10_ecosystem_coherence"
+        location: "docs/shogun_orchestration_charter_v0.1.md L91-L96, L221-L231; docs/shogun_openhands_role_split_v0.1.md L98-L117"
+        issue: "The charter still states GitHub Issue/PR as SoT, while the addendum introduces OpenHands as the future operating foundation. The relationship among OpenHands task state, GitHub Issue, current queue/tasks YAML, Supabase directives, and PR reports is not defined."
+        recommendation: "v0.2 should add a SoT transition matrix: current YAML queue -> GitHub Issue mirror -> OpenHands-managed execution, including sync direction, conflict winner, and rollback."
+      - severity: high
+        perspective: "8_operations"
+        location: "docs/shogun_openhands_role_split_v0.1.md L42-L50, L131-L137"
+        issue: "The addendum correctly detects mini-swe-agent/OpenHands overlap, but leaves the decision open: integrate, coexist, or retire mini-swe-agent."
+        recommendation: "Before tooling implementation, hold a narrow architecture decision: OpenHands as single runner unless mini-swe-agent has a proven unique capability. Record acceptance criteria and deprecation path."
+      - severity: high
+        perspective: "3_kiritsu_chain_of_command"
+        location: "docs/shogun_orchestration_charter_v0.1.md L100-L106, L253-L259, L386-L387"
+        issue: "The document mirrors itself by direct push under an F007 exception while the charter text bans direct main pushes and makes human-approved PR the target flow."
+        recommendation: "v0.2 needs an explicit transitional-governance exception: source-export/report-only direct pushes are allowed only until PR infrastructure exists, with file allowlist, F007 approval evidence, and sunset condition."
+      - severity: high
+        perspective: "6_test_ci_evidence"
+        location: "docs/shogun_orchestration_charter_v0.1.md L20-L21, L57, L174-L175, L371-L376"
+        issue: "CI is called the absolute judgement, but the charter still does not encode SKIP=FAIL, blocked_env, source_missing, and cross-PC evidence-gate rules."
+        recommendation: "Use wording: CI green is necessary but not sufficient; completion remains blocked if skips, missing logs, unreviewed P1 findings, source gaps, or cross-PC sync HALT exist."
+      - severity: medium
+        perspective: "1_functional_completeness"
+        location: "docs/shogun_orchestration_charter_v0.1.md L25-L45, L148-L160; docs/karo_shogun_charter_v0_1_review.md L64-L90"
+        issue: "The charter's example hierarchy lists only five ashigaru role labels and does not map the 9 departments to the actual 7 ashigaru + Karo + Gunshi topology."
+        recommendation: "Adopt or refine Karo's 9-department mapping, including Gunshi overload limits and persona/instruction file updates."
+      - severity: medium
+        perspective: "7_legal_privacy_security"
+        location: "docs/shogun_orchestration_charter_v0.1.md L61-L69, L117-L128, L208-L217"
+        issue: "P1 classes cover DB/RLS/auth/PII, but existing destructive-operation safety D001-D008 and unknown-network stop rules are not referenced."
+        recommendation: "In v0.2, reference AGENTS destructive-operation table as non-overridable and extend P1 security review to unknown URLs, external data transfer, and WSL /mnt protections."
+      - severity: medium
+        perspective: "11_cross_pc_repo_check"
+        location: "queue/reports/sc_memory_entities_export_20260512.yaml L23-L31, L165-L171; docs/shogun_openhands_role_split_v0.1.md L74-L82"
+        issue: "OpenHands promises stable remote execution, but MC/SC auto-sync, remote names, HALT states, and cross-PC branch ownership are not mapped into the OpenHands transition."
+        recommendation: "Add OpenHands adoption preflight: repo remotes, branch freshness, auto-sync state, credential scopes, and whether OpenHands replaces or observes SC/MC auto-git-sync."
+      - severity: medium
+        perspective: "2_anti_duplication"
+        location: "docs/shogun_orchestration_charter_v0.1.md L85-L128, L179-L204"
+        issue: "The charter proposes AGENTS.md and docs tree content without defining overlay vs replacement against existing AGENTS.md, CLAUDE.md, instructions/generated, and queue protocols."
+        recommendation: "Treat the charter as governance design until a generated-instructions migration task updates files through review; do not manually fork rule text in multiple locations."
+      - severity: medium
+        perspective: "5_schema_data_contract"
+        location: "docs/shogun_orchestration_charter_v0.1.md L221-L231"
+        issue: "The source mapping lacks audit reports, inbox messages, dashboard summaries, memory entities, and OpenHands run records."
+        recommendation: "Add rows for queue/reports, queue/inbox, dashboard.md, memory graph exports, OpenHands run logs, and CI artifacts."
+    section_11_six_rules_audit:
+      verdict: pass_with_concerns
+      source_location: "docs/shogun_orchestration_charter_v0.1.md L208-L217"
+      answer: "The six rules are directionally valid, but v0.2 must define enforcement mechanisms. Role bans need labels/permissions; P1 security needs human approval plus D001-D008 linkage; CI absolute judgement must be reframed as necessary-not-sufficient under SKIP/source/evidence rules."
+    openhands_addendum_audit:
+      verdict: pass_with_concerns
+      source_location: "docs/shogun_openhands_role_split_v0.1.md L24-L39, L98-L117, L120-L128"
+      answer: "OpenHands-as-foundation and Shogun-as-weapon is a better 5-10 year operations model than Shogun-only. The addendum should be integrated into Charter v0.2 before mini-swe-agent implementation, because it changes §15 architecture from three-peer components to a layered platform model."
+    nobunaga_review_status:
+      status: pending
+      impact: "Cannot answer the explicit Nobunaga §5 improvement proposal + §6 question audit item until the review doc is exported."
+      next_audit_id: naomasa_shogun_charter_v0_1_nobunaga_review_addendum
+    recommendation_to_shogun:
+      action: draft_v0_2_with_blockers_resolved
+      summary: "v0.1 + OpenHands補遺は採用方向でよい。v0.2では SoT transition, direct-push exception sunset, CI necessary-not-sufficient rule, OpenHands-vs-mini-swe decision, 9部署 mapping, destructive safety linkage を必ず入れるべし。"
+    recommendation_to_karo:
+      action: integrate_into_council_summary
+      summary: "家老reviewの5提案は概ね採択。OpenHands補遺により、mini-swe-agentは独立導入でなくOpenHands基盤評価後の統合/廃止判断に格上げ。信長review到着後に最終round1へ追補。"
+
 dashboard_task_pre_delivery_audits:
   - audit_id: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render
     target_type: task_yaml_pre_delivery_gate
