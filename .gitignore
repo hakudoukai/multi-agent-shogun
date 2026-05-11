@@ -153,6 +153,10 @@
 !scripts/validate_cross_pc_directive.py
 !scripts/test_validate_cross_pc_directive.py
 
+# Auto Git Sync Protocol (= 2026-05-11 装備、両 PC pull-only mode、F007 遵守)
+!scripts/auto_git_sync.sh
+!docs/auto_git_sync_design.md
+
 
 # SayTask (sample template only, not actual data)
 !saytask/
