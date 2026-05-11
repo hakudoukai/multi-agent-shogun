@@ -169,6 +169,8 @@
 !queue/reports/shogun_verification_mainpc_log.yaml
 !queue/reports/shogun_verification_secondpc_log.yaml
 !queue/reports/shogun_verification_canonical_index.yaml
+!queue/reports/shogun_verification_log_secondpc.yaml
+!queue/reports/verification_index.yaml
 
 # Reports (private — not tracked)
 logs/
@@ -188,6 +190,8 @@ logs/
 !docs/issue_analysis_20260511.md
 !docs/final_solution_synthesis_20260511.md
 !docs/supabase_verification_events_fallback.md
+!docs/background_worker_eval_gate.md
+!docs/cross_pc_trust_gate.md
 
 # Screenshots (masked — no secrets)
 !images/

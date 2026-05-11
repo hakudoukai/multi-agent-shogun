@@ -198,6 +198,10 @@ result:
   files_modified:
     - "/path/to/file"
   notes: "Additional details"
+# P0-4 三軸 verdict gate (陛下御差配 2026-05-11 — 必須 fields)
+verdict: pass | pass_with_concerns | fail   # partial 使用禁止
+evidence_state: complete | blocked_env | missing | schema_unsupported | cross_pc_missing
+completion_gate: open | blocked              # blocked → karo が即 cycle fix 発令
 skill_candidate:
   found: false  # MANDATORY — true/false
   # If true, also include:
@@ -206,7 +210,12 @@ skill_candidate:
   reason: null      # e.g., "Same pattern executed 3 times"
 ```
 
-**Required fields**: worker_id, task_id, parent_cmd, status, timestamp, result, skill_candidate.
+**Required fields**: worker_id, task_id, parent_cmd, status, timestamp, result, verdict, evidence_state, completion_gate, skill_candidate.
+
+**verdict rules (P0-4 gate)**:
+- `partial` は廃止。使用禁止。test 未実施 = `evidence_state: blocked_env` + `completion_gate: blocked`
+- `completion_gate: blocked` の report を受信した karo は即 cycle fix task を発令する (裁量なし)
+- `evidence_state: complete` + `verdict != fail` のみ `audited_done` 昇格 eligible
 Missing fields = incomplete report.
 
 ## Race Condition (RACE-001)
