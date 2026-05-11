@@ -1304,3 +1304,75 @@ cycle2_fix_reaudits:
       native_execution: true
       confidence: high
       confidence_note: "コード行番号確認 + pytest 45 passed/SKIP=0 を直接実行確認。"
+
+  - audit_id: naomasa_reaudit_012
+    target_audit_id: naomasa_new_001
+    target_id: zero_wait_accounting_kanban
+    redo_task_id: subtask_kanban_pytest_fix
+    cycle_n: 2
+    verdict: partial
+    audit_passed: false
+    findings:
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_smoke.py:1 module — kanban.py 用 smoke test が新規追加され、constants / pure helper / Pydantic models / sqlite helpers を対象化。"
+      - "pytest: `python3 -m pytest backend/tests/test_kanban_smoke.py -q` → 23 passed, 0 skipped, 0 failed。naomasa_new_001 の test 観点 fail は部分解消。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:244 get_kanban_board() — patients JOIN は依然 `h.patient_id = p.patient_id` のみで clinic_id 条件なし。前回の cross-clinic 誤表示リスクは未修正。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:546 get_daily_report() — daily_report_lines と patients の JOIN も patient_id のみで、clinic_id 条件なし。会計日計表の医療データ分離リスクは未修正。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:323 move_card() — docstring は billing からの移動不可と明記するが、VALID_MOVES は billing から複数遷移を許す状態が継続。会計確定導線の論理不整合は未修正。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:1068 _ensure_done_entered_at_column() — request path 中の ALTER TABLE + OperationalError 握りつぶし設計は未修正。smoke test は既存列/未存在列のみで、readonly/locked/DDL失敗を検出しない。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:816 _next_temp_seq() — COUNT(*)+1 採番による仮患者ID同時発行リスクは未修正。今回追加テストの対象外。"
+      - "commit 578a4f99 — test_kanban_smoke.py 追加のみ。backend/api/kanban.py の実装差分はなし。"
+    recommendations:
+      - "次 cycle で kanban.py 本体を修正せよ: JOIN に clinic_id を追加、billing 遷移仕様の統一、DDL を migration/preflight へ移動、TEMP 採番の競合対策。"
+      - "smoke test に加え、clinic_id 混在JOIN・billing遷移拒否・TEMP concurrent registration の失敗再現テストを追加せよ。"
+    related_files:
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_smoke.py"
+      - "queue/reports/ashigaru1_kanban_pytest_report.yaml"
+    commit_hash: "578a4f99"
+    log_path: "queue/reports/ashigaru1_kanban_pytest_report.yaml"
+    perspective_verdicts:
+      1_func: partial
+      2_anti_dup: pass
+      3_kiritsu: partial
+      4_logic: partial
+      5_schema: fail
+      6_test: partial
+      7_legal: partial
+      8_ux: partial
+      9_doc: partial
+    persona_signature:
+      audited_by_agent: "naomasa (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "pytest 23 passed/SKIP=0 は直接確認。ただし kanban.py 本体未修正のため partial 継続。"
+
+self_reflections:
+  - audit_id: naomasa_self_reflection_on_solution_20260511
+    target_doc: docs/final_solution_synthesis_20260511.md
+    target_commit: "5b548d2"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    所見:
+      - "docs/final_solution_synthesis_20260511.md:56 Core Model — verdict / evidence_state / completion_gate を三軸分離し、直政が用いた `partial` 混在を構造的に排除する設計である。"
+      - "docs/final_solution_synthesis_20260511.md:66 Rules — `partial` is not a top-level verdict と明記され、今後は部分合格を verdict ではなく evidence_state/blocker として扱える。"
+      - "docs/final_solution_synthesis_20260511.md:67 Rules — test unavailable は `evidence_state: blocked_env`, `completion_gate: blocked` と定義され、pytest 環境制約を合格寄りに表現する余地を塞ぐ。"
+      - "docs/final_solution_synthesis_20260511.md:70 Rules — audited_done は `verdict != fail` だけでなく `evidence_state: complete` と `shogun_verified: true` を要求し、audit_passed=false との矛盾表示を抑止する。"
+      - "docs/final_solution_synthesis_20260511.md:169 Bounded Fix Loop — max 7 cycles / blocked environment stop / every iteration writes test evidence により、fix loop を感情的に継続・凍結せず、状態遷移で扱える。"
+      - "docs/final_solution_synthesis_20260511.md:231 Final Proposed Rule — No canonical report, no verification. No verification, no completion. No full test evidence, no audited_done. は今回の直政の過失に対する最短の再発防止規則である。"
+    commit_assertion: "井伊直政は以後、terminal verdict に `partial` を使わず、pass / pass_with_concerns / fail のみを用いる。pytest・E2E・cross-PC report・schema の不足は必ず evidence_state と completion_gate に分離し、full test evidence 不在のまま audited_done と報じぬ。"
+    不安点:
+      - "既存 report 群に `partial` と audit_passed が混在しており、normalizer 実装前は旧 schema を人間が読み替える余地が残る。"
+      - "completion_gate_status.yaml が Karo/Honda の実運用前に参照必須化されなければ、また prose summary が gate table を上書きする恐れがある。"
+      - "pass_with_concerns と fail の境界が未教育のままだと、重大 bug 未修正を concerns 扱いへ逃がす新たな曖昧さが生じる。"
+      - "cross-PC hash/PII gate は P2 であり、P0 実装までの間は SecondPC 報告の到着・同一性確認が手作業に残る。"
+    改善要望:
+      - "P0 normalizer は `partial` を検出した時点で `verdict: fail`, `evidence_state: blocked_env|missing|schema_unsupported` への明示 mapping を要求し、黙って pass_with_concerns に丸めぬこと。"
+      - "generated instructions と task YAML template に三軸 fields を必須化し、verdict vocabulary violation を preflight で即 blocked にすること。"
+      - "completion_gate_status.yaml は dashboard より上位の一次 gate とし、Karo completion summary 発行前の read 必須手順へ入れること。"
+      - "10_ecosystem_coherence は optional から開始でよいが、cross-PC/report-schema/memory-sync を扱う監査では必須化すること。"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "対象文書 commit 5b548d2 の行番号を直接確認し、今回の partial/audit_passed 矛盾に対する再発防止として妥当と判断。ただし運用強制前は pass_with_concerns。"

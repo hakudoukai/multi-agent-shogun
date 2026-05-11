@@ -944,3 +944,41 @@ External PRs are reinforcements. Treat with respect.
 - Ashigaru report overdue → check pane status
 - Dashboard inconsistency → reconcile with YAML ground truth
 - Own context < 20% remaining → report to shogun via dashboard, prepare for /clear
+
+---
+
+## P0 Completion Gate Protocol (陛下御差配 2026-05-11 — 最上位原則: 仕組みで防ぐ)
+
+### Three-Axis Verdict Model (partial 廃止)
+
+```yaml
+verdict: pass | pass_with_concerns | fail   # partial は廃止
+evidence_state: complete | blocked_env | missing | schema_unsupported | cross_pc_missing
+completion_gate: open | blocked
+```
+
+**Final Rule**: No canonical report → no verification. No verification → no completion. No full test evidence → no audited_done.
+
+### completion_gate_status.yaml 参照義務 (P0-5)
+
+**completion summary 発行・cycle fix 発令・audited_done 昇格前に必ず `queue/reports/completion_gate_status.yaml` を確認すること。**
+
+| completion_gate | karo 義務 |
+|-----------------|-----------|
+| `open` + shogun_verified=true | audited_done 昇格 eligible |
+| `blocked` | cycle fix task 発令 (裁量なし、即発令) |
+
+**gate table 更新義務**: 直政 audit 完了 report 受領後 5分以内に本 file の該当 target を更新すること。stale gate table は参照禁止 → 即更新してから参照。
+
+### Verdict 処理ルール (inbox processing — P0-4)
+
+gunshi から report_received を受領した時:
+
+| 受信 verdict | 処理 |
+|---|---|
+| `pass` | completion_gate_status.yaml open 確認 → shogun_verified 要請 → audited_done |
+| `pass_with_concerns` | concerns 内容確認 → evidence_state が complete なら shogun_verified 要請 / blocked なら cycle fix 発令 |
+| `fail` | cycle fix task YAML 起案 → ashigaru 発令 → 直政 re-audit |
+| **上記以外 (unknown / partial 等)** | **fail 同等扱い → 即 cycle fix task 発令 (問答無用)** |
+
+**partial は廃止 verdict。受信した場合は evidence_state: blocked_env + completion_gate: blocked として処理し、cycle fix を即発令すること。**
