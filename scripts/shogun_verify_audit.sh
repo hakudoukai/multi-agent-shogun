@@ -175,56 +175,82 @@ import sys, os, yaml
 
 repo_root, audit_id, index_path = sys.argv[1], sys.argv[2], sys.argv[3]
 
-# 1. index file missing → missing_audit_entry
-if not os.path.exists(index_path):
-    print(f"missing_audit_entry: {index_path} not found")
-    sys.exit(1)
+KNOWN_REPORT_FILES = [
+    f"{repo_root}/queue/reports/kuroda_mainpc_report.yaml",
+    f"{repo_root}/queue/reports/takenaka_mainpc_report.yaml",
+    f"{repo_root}/queue/reports/naomasa_secondpc_report.yaml",
+    f"{repo_root}/queue/reports/acha_secondpc_report.yaml",
+]
+KNOWN_SECTIONS = {"reports"}
 
-# 2. parse index
-try:
-    with open(index_path) as f:
-        index = yaml.safe_load(f) or {}
-except Exception as e:
-    print(f"missing_audit_entry: failed to parse {index_path}: {e}")
-    sys.exit(1)
-
-reports = index.get("reports", []) or []
 entry = None
-for r in reports:
-    if isinstance(r, dict) and r.get("audit_id") == audit_id:
-        entry = r
-        break
 
-# 3. audit_id not in index → missing_audit_entry
+# 1. Check audit_report_index.yaml first.
+#    SC fix: support both 'reports:' (canonical) and 'entries:' (legacy) keys.
+if os.path.exists(index_path):
+    try:
+        with open(index_path) as f:
+            index = yaml.safe_load(f) or {}
+    except Exception:
+        index = {}
+    index_entries = index.get("reports") or index.get("entries") or []
+    for r in (index_entries if isinstance(index_entries, list) else []):
+        if isinstance(r, dict) and r.get("audit_id") == audit_id:
+            entry = r
+            break
+    if entry is not None:
+        evidence_state = entry.get("evidence_state", "")
+        target_pc = entry.get("target_pc", "")
+        if evidence_state == "cross_pc_missing" or target_pc == "secondpc":
+            print(f"missing_cross_pc_report: evidence_state=cross_pc_missing for {audit_id}")
+            sys.exit(2)
+        if evidence_state == "schema_unsupported":
+            print(f"unsupported_report_schema: evidence_state=schema_unsupported for {audit_id}")
+            sys.exit(3)
+
+# 2. MC base: fallback to direct report file scan when not in index.
 if entry is None:
-    print(f"missing_audit_entry: {audit_id} not found in audit_report_index.yaml")
+    for rf in KNOWN_REPORT_FILES:
+        if not os.path.exists(rf):
+            continue
+        try:
+            d = yaml.safe_load(open(rf)) or {}
+        except Exception:
+            continue
+        for section_key, section_data in d.items():
+            if not isinstance(section_data, list):
+                continue
+            for r in section_data:
+                if isinstance(r, dict) and r.get("audit_id") == audit_id:
+                    if section_key not in KNOWN_SECTIONS:
+                        print(f"unsupported_report_schema: entry found in unrecognized section '{section_key}' for {audit_id}")
+                        sys.exit(3)
+                    entry = r
+                    break
+            if entry is not None:
+                break
+        if entry is not None:
+            break
+
+# 3. Not found anywhere → missing_audit_entry
+if entry is None:
+    print(f"missing_audit_entry: {audit_id} not found in any auditor report or index")
     sys.exit(1)
 
-# 4. cross-PC report absent → missing_cross_pc_report
-evidence_state = entry.get("evidence_state", "")
-if evidence_state == "cross_pc_missing":
-    print(f"missing_cross_pc_report: evidence_state=cross_pc_missing for {audit_id}")
-    sys.exit(2)
-
-# 5. schema unsupported → unsupported_report_schema
-if evidence_state == "schema_unsupported":
-    print(f"unsupported_report_schema: evidence_state=schema_unsupported for {audit_id}")
-    sys.exit(3)
-
-# 6. partial verdict (not a terminal verdict) → partial_verdict_blocked
+# 4. partial verdict → partial_verdict_blocked
 verdict = entry.get("verdict", "")
 if verdict == "partial":
     print(f"partial_verdict_blocked: verdict=partial is not a terminal verdict for {audit_id}")
     sys.exit(4)
 
-# 7. log_path or commit_hash missing → missing_log_or_commit
+# 5. log_path or commit_hash missing → missing_log_or_commit
 log_path = entry.get("log_path", "")
 commit_hash = entry.get("commit_hash", "")
 if not log_path or not commit_hash:
     print(f"missing_log_or_commit: log_path={log_path!r} commit_hash={commit_hash!r} for {audit_id}")
     sys.exit(5)
 
-# 8. all preflight checks passed
+# 6. all preflight checks passed
 print(f"ready_to_verify: {audit_id} passes all preflight checks")
 sys.exit(0)
 PYEOF

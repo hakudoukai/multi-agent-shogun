@@ -57,7 +57,7 @@ WARN_PATTERNS = [
 # These are known metadata fields that legitimately contain IDs, hashes, etc.
 EXEMPT_FIELDS = frozenset({
     "verdict", "evidence_state", "completion_gate",
-    "task_id", "audit_id", "timestamp", "log_path",
+    "task_id", "audit_id", "timestamp",
     "commit_hash", "transfer_id", "assigned_at", "audited_at",
     "report_file", "source_hash", "target_hash",
 })

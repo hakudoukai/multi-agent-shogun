@@ -85,6 +85,13 @@ class TestScanFile:
         result = scan_file(p)
         assert result["status"] == "missing"
 
+    def test_log_path_wsl_detected(self, tmp_path: Path):
+        p = tmp_path / "report.yaml"
+        p.write_text("log_path: /mnt/c/Users/User/secret.log\n")
+        result = scan_file(p)
+        assert result["status"] == "violations"
+        assert any(v["pattern"] == "absolute_wsl_c" for v in result["high"])
+
 
 # ---------------------------------------------------------------------------
 # CLI: exit codes
