@@ -7,10 +7,9 @@
 #
 # Usage:
 #   bash scripts/shogun_verify_audit.sh <audit_id_or_target>
-#   bash scripts/shogun_verify_audit.sh --random-20pct  (= 20% ランダム検査)
-#   bash scripts/shogun_verify_audit.sh --all-yellow    (= 全 🟡 PASS_WITH_CONCERNS 検査)
+#   bash scripts/shogun_verify_audit.sh --all  (= 全数全件 verify)
 #
-# Output: queue/reports/shogun_verification_log.yaml に検査 entry 追加
+# Output: queue/reports/shogun_verification_mainpc_log.yaml に検査 entry 追加
 
 set -euo pipefail
 
@@ -18,18 +17,17 @@ set -euo pipefail
 REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 
 # cmd_013 Stream B: --pc-id <mainpc|secondpc> で writer-owned log path を選択。
-# env PC_ID も同等扱い。未指定なら legacy shogun_verification_log.yaml に書込 (= backward compat)。
-# 各 PC は自 suffix file のみ書込、他 PC file は read-only。
-PC_ID="${PC_ID:-}"
+# env PC_ID も同等扱い。
+# AC4 (cmd_014): --pc-id 未指定 → mainpc を default (legacy fallback 廃止)
+PC_ID="${PC_ID:-mainpc}"
 while [ "${1:-}" = "--pc-id" ]; do
-    PC_ID="${2:-}"
+    PC_ID="${2:-mainpc}"
     shift 2 || true
 done
 
 case "$PC_ID" in
     mainpc)   LOG_BASENAME="shogun_verification_mainpc_log.yaml" ;;
     secondpc) LOG_BASENAME="shogun_verification_secondpc_log.yaml" ;;
-    "")       LOG_BASENAME="shogun_verification_log.yaml" ;;
     *)
         echo "ERROR: unknown PC_ID='$PC_ID' (= mainpc|secondpc only)" >&2
         exit 1
@@ -39,13 +37,86 @@ LOG="$REPO_ROOT/queue/reports/$LOG_BASENAME"
 mkdir -p "$(dirname "$LOG")"
 [ -f "$LOG" ] || echo "verifications: []" > "$LOG"
 
+# AC2: 共通 resolver — audit_id → entry JSON (preflight/full-verify 共用)
+# audit_report_index.yaml を優先参照 (AC1)、存在しなければ 4 report files に fallback。
+# stdout: entry JSON (_source/_auditor_who/_section_key/_schema_known メタフィールド付き)
+# exit:   0=found, 1=not_found
+_resolve_audit_entry() {
+    local audit_id="$1"
+    local INDEX="$REPO_ROOT/queue/reports/audit_report_index.yaml"
+    python3 - "$REPO_ROOT" "$audit_id" "$INDEX" <<'PYEOF'
+import sys, os, yaml, json
+
+repo_root, audit_id, index_path = sys.argv[1], sys.argv[2], sys.argv[3]
+
+KNOWN_REPORT_FILES = [
+    f"{repo_root}/queue/reports/kuroda_mainpc_report.yaml",
+    f"{repo_root}/queue/reports/takenaka_mainpc_report.yaml",
+    f"{repo_root}/queue/reports/naomasa_secondpc_report.yaml",
+    f"{repo_root}/queue/reports/acha_secondpc_report.yaml",
+]
+KNOWN_SECTIONS = {"reports"}
+
+entry = None
+
+# 1. audit_report_index.yaml first (AC1: single source of truth)
+if os.path.exists(index_path):
+    try:
+        idx = yaml.safe_load(open(index_path)) or {}
+    except Exception:
+        idx = {}
+    for r in (idx.get("reports") or idx.get("entries") or []):
+        if isinstance(r, dict) and (r.get("audit_id") == audit_id or r.get("target_id") == audit_id):
+            entry = {**r, "_source": "index", "_auditor_who": None,
+                     "_section_key": None, "_schema_known": True}
+            break
+
+# 2. fallback to direct report file scan (backward compat when not in index)
+if entry is None:
+    for rf in KNOWN_REPORT_FILES:
+        if not os.path.exists(rf):
+            continue
+        try:
+            d = yaml.safe_load(open(rf)) or {}
+        except Exception:
+            continue
+        for section_key, section_data in d.items():
+            if not isinstance(section_data, list):
+                continue
+            for r in section_data:
+                if isinstance(r, dict) and (r.get("audit_id") == audit_id or r.get("target_id") == audit_id):
+                    auditor_who = os.path.basename(rf).replace("_report.yaml", "")
+                    entry = {**r, "_source": "report", "_auditor_who": auditor_who,
+                             "_section_key": section_key,
+                             "_schema_known": section_key in KNOWN_SECTIONS}
+                    break
+            if entry is not None:
+                break
+        if entry is not None:
+            break
+
+if entry is None:
+    sys.exit(1)
+
+print(json.dumps(entry, ensure_ascii=False))
+sys.exit(0)
+PYEOF
+}
+
+# AC1: full verify — _resolve_audit_entry() 経由で audit_report_index.yaml を参照
 verify_one() {
     local target="$1"
-    python3 - "$REPO_ROOT" "$target" "$LOG" <<'PYEOF'
-import sys, os, yaml, subprocess, re, json, hashlib
+    local entry_json resolve_rc
+    set +e
+    entry_json=$(_resolve_audit_entry "$target")
+    resolve_rc=$?
+    set -e
+    python3 - "$REPO_ROOT" "$target" "$LOG" "$entry_json" "$resolve_rc" <<'PYEOF'
+import sys, os, yaml, subprocess, re, json
 from datetime import datetime, timezone
 
-repo_root, target, log_path_arg = sys.argv[1], sys.argv[2], sys.argv[3]
+repo_root, target, log_path_arg, entry_json_str, resolve_rc_str = \
+    sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
 checks = {
     "codex_log_exists": False,
     "gemini_log_exists": False,
@@ -56,32 +127,20 @@ checks = {
 }
 flags = []
 
-# 軍師 reports から target_id matching entry を探索
-# 2026-05-10 sync 修復: PC suffix 命名規則採用 (= 家康 Option 1)
-report_files = [
-    f"{repo_root}/queue/reports/kuroda_mainpc_report.yaml",
-    f"{repo_root}/queue/reports/takenaka_mainpc_report.yaml",
-    f"{repo_root}/queue/reports/naomasa_secondpc_report.yaml",
-    f"{repo_root}/queue/reports/acha_secondpc_report.yaml",
-]
-
-audit_entry = None
-auditor_who = None
-for rf in report_files:
-    if not os.path.exists(rf): continue
-    try:
-        d = yaml.safe_load(open(rf)) or {}
-        for r in d.get("reports", []) or []:
-            if isinstance(r, dict) and (r.get("audit_id") == target or r.get("target_id") == target):
-                audit_entry = r
-                auditor_who = os.path.basename(rf).replace("_report.yaml","")
-                break
-    except: pass
-    if audit_entry: break
-
-if not audit_entry:
-    print(json.dumps({"target": target, "status": "NOT_FOUND", "checks": checks, "flags": ["target audit entry not found in any auditor report"]}, ensure_ascii=False))
+if int(resolve_rc_str) != 0:
+    print(json.dumps({"target": target, "status": "NOT_FOUND", "checks": checks,
+                      "flags": ["target audit entry not found in any auditor report or index"]},
+                     ensure_ascii=False))
     sys.exit(0)
+
+try:
+    audit_entry = json.loads(entry_json_str)
+except Exception:
+    print(json.dumps({"target": target, "status": "NOT_FOUND", "checks": checks,
+                      "flags": ["resolver output parse error"]}, ensure_ascii=False))
+    sys.exit(0)
+
+auditor_who = audit_entry.get("_auditor_who") or audit_entry.get("_source", "index")
 
 # Check 1: codex/gemini log
 log_pattern = audit_entry.get("log_path", "")
@@ -96,7 +155,7 @@ else:
 # Check 2: commit_hash valid (= git log で出るか)
 ch = audit_entry.get("commit_hash", "")
 if ch:
-    r = subprocess.run(["git","-C",repo_root,"cat-file","-e",ch], capture_output=True)
+    r = subprocess.run(["git", "-C", repo_root, "cat-file", "-e", ch], capture_output=True)
     checks["commit_hash_valid"] = (r.returncode == 0)
     if r.returncode != 0:
         flags.append(f"invalid commit_hash: {ch}")
@@ -104,7 +163,7 @@ if ch:
 # Check 3: findings 具体性 (= 行番号 / 関数名 / 具体的な観点)
 findings = audit_entry.get("findings", []) or []
 findings_text = " ".join(str(f) for f in findings) if findings else ""
-generic_phrases = ["all good","looks fine","problem none","適切","問題ありません","良好です","特記なし","実装適切"]
+generic_phrases = ["all good", "looks fine", "problem none", "適切", "問題ありません", "良好です", "特記なし", "実装適切"]
 generic_count = sum(1 for p in generic_phrases if p in findings_text.lower() or p in findings_text)
 specific_count = len(re.findall(r"L\d+|line \d+|\.[a-zA-Z]+:\d+|def \w+|class \w+|function \w+", findings_text))
 if findings and specific_count > 0 and generic_count <= 1:
@@ -119,27 +178,30 @@ audited_at = audit_entry.get("audited_at", "")
 if audited_at and log_pattern and os.path.exists(log_pattern):
     log_mtime = os.path.getmtime(log_pattern)
     try:
-        a = audited_at.replace("Z","+00:00")
+        a = str(audited_at).replace("Z", "+00:00")
         ts = datetime.fromisoformat(a).timestamp()
         drift = abs(log_mtime - ts)
         checks["timestamp_consistent"] = drift < 60
         if drift >= 60:
             flags.append(f"timestamp drift {int(drift)}s > 60s threshold")
-    except: pass
+    except Exception:
+        pass
 
 # Check 5: related_files exist
-rf = audit_entry.get("related_files", []) or []
-if rf:
-    all_exist = all(os.path.exists(os.path.join(repo_root, p)) or os.path.exists(p) for p in rf)
+rf_list = audit_entry.get("related_files", []) or []
+if rf_list:
+    all_exist = all(os.path.exists(os.path.join(repo_root, p)) or os.path.exists(p) for p in rf_list)
     checks["related_files_exist"] = all_exist
     if not all_exist:
-        flags.append(f"some related_files do not exist: {[p for p in rf if not (os.path.exists(os.path.join(repo_root,p)) or os.path.exists(p))]}")
+        flags.append(f"some related_files do not exist: {[p for p in rf_list if not (os.path.exists(os.path.join(repo_root, p)) or os.path.exists(p))]}")
 else:
     flags.append("no related_files field")
 
 passed = sum(1 for v in checks.values() if v)
 total = len(checks)
-shogun_verified = (passed >= 4 and "log file not found" not in str(flags) and "invalid commit_hash" not in str(flags))
+shogun_verified = (passed >= 4
+                   and "log file not found" not in str(flags)
+                   and "invalid commit_hash" not in str(flags))
 
 result = {
     "target": target,
@@ -148,7 +210,9 @@ result = {
     "checks_passed": f"{passed}/{total}",
     "checks": checks,
     "flags": flags,
-    "audit_entry_excerpt": {k: audit_entry.get(k) for k in ["audit_id","target_id","verdict","audited_at","commit_hash"] if k in audit_entry},
+    "audit_entry_excerpt": {k: audit_entry.get(k) for k in
+                             ["audit_id", "target_id", "verdict", "audited_at", "commit_hash"]
+                             if k in audit_entry},
     "verified_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
 }
 print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -156,86 +220,55 @@ print(json.dumps(result, ensure_ascii=False, indent=2))
 # Append to verification log (= cmd_013 Stream B: writer-owned log path)
 log_path = log_path_arg
 try:
-    with open(log_path) as f: log = yaml.safe_load(f) or {}
-except: log = {}
+    with open(log_path) as f:
+        log = yaml.safe_load(f) or {}
+except Exception:
+    log = {}
 log.setdefault("verifications", []).append(result)
-with open(log_path, "w") as f: yaml.safe_dump(log, f, allow_unicode=True, default_flow_style=False)
+with open(log_path, "w") as f:
+    yaml.safe_dump(log, f, allow_unicode=True, default_flow_style=False)
 PYEOF
 }
 
-# --preflight: completion gate 前の事前 check (= cmd_012 P0-2、陛下御裁可 2026-05-11)
-# SC preflight fix (cmd_014 統合): audit_report_index.yaml の reports: キーを正しく参照。
+# AC2: preflight — _resolve_audit_entry() 経由で audit_id lookup (共通 resolver)
+# cmd_012 P0-2: completion gate 前の事前 check (= 6 種 return code)
 # 返却: exit code (0=ready / 1=missing / 2=cross_pc / 3=schema / 4=partial / 5=log_commit)
 preflight_one() {
     local audit_id="$1"
-    local INDEX="$REPO_ROOT/queue/reports/audit_report_index.yaml"
+    local entry_json resolve_rc
+    set +e
+    entry_json=$(_resolve_audit_entry "$audit_id")
+    resolve_rc=$?
+    set -e
+    python3 - "$REPO_ROOT" "$audit_id" "$entry_json" "$resolve_rc" <<'PYEOF'
+import sys, json
 
-    python3 - "$REPO_ROOT" "$audit_id" "$INDEX" <<'PYEOF'
-import sys, os, yaml
+_repo_root, audit_id, entry_json_str, resolve_rc_str = \
+    sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 
-repo_root, audit_id, index_path = sys.argv[1], sys.argv[2], sys.argv[3]
-
-KNOWN_REPORT_FILES = [
-    f"{repo_root}/queue/reports/kuroda_mainpc_report.yaml",
-    f"{repo_root}/queue/reports/takenaka_mainpc_report.yaml",
-    f"{repo_root}/queue/reports/naomasa_secondpc_report.yaml",
-    f"{repo_root}/queue/reports/acha_secondpc_report.yaml",
-]
-KNOWN_SECTIONS = {"reports"}
-
-entry = None
-
-# 1. Check audit_report_index.yaml first.
-#    SC fix: support both 'reports:' (canonical) and 'entries:' (legacy) keys.
-if os.path.exists(index_path):
-    try:
-        with open(index_path) as f:
-            index = yaml.safe_load(f) or {}
-    except Exception:
-        index = {}
-    index_entries = index.get("reports") or index.get("entries") or []
-    for r in (index_entries if isinstance(index_entries, list) else []):
-        if isinstance(r, dict) and r.get("audit_id") == audit_id:
-            entry = r
-            break
-    if entry is not None:
-        evidence_state = entry.get("evidence_state", "")
-        target_pc = entry.get("target_pc", "")
-        if evidence_state == "cross_pc_missing" or target_pc == "secondpc":
-            print(f"missing_cross_pc_report: evidence_state=cross_pc_missing for {audit_id}")
-            sys.exit(2)
-        if evidence_state == "schema_unsupported":
-            print(f"unsupported_report_schema: evidence_state=schema_unsupported for {audit_id}")
-            sys.exit(3)
-
-# 2. MC base: fallback to direct report file scan when not in index.
-if entry is None:
-    for rf in KNOWN_REPORT_FILES:
-        if not os.path.exists(rf):
-            continue
-        try:
-            d = yaml.safe_load(open(rf)) or {}
-        except Exception:
-            continue
-        for section_key, section_data in d.items():
-            if not isinstance(section_data, list):
-                continue
-            for r in section_data:
-                if isinstance(r, dict) and r.get("audit_id") == audit_id:
-                    if section_key not in KNOWN_SECTIONS:
-                        print(f"unsupported_report_schema: entry found in unrecognized section '{section_key}' for {audit_id}")
-                        sys.exit(3)
-                    entry = r
-                    break
-            if entry is not None:
-                break
-        if entry is not None:
-            break
-
-# 3. Not found anywhere → missing_audit_entry
-if entry is None:
+# 1. not found → missing_audit_entry
+if int(resolve_rc_str) != 0:
     print(f"missing_audit_entry: {audit_id} not found in any auditor report or index")
     sys.exit(1)
+
+try:
+    entry = json.loads(entry_json_str)
+except Exception:
+    print(f"missing_audit_entry: resolver parse error for {audit_id}")
+    sys.exit(1)
+
+# 2. cross-PC check
+evidence_state = entry.get("evidence_state", "")
+target_pc = entry.get("target_pc", "")
+if evidence_state == "cross_pc_missing" or target_pc == "secondpc":
+    print(f"missing_cross_pc_report: evidence_state=cross_pc_missing for {audit_id}")
+    sys.exit(2)
+
+# 3. schema unsupported (from report-file fallback with unrecognized section)
+if evidence_state == "schema_unsupported" or not entry.get("_schema_known", True):
+    section_key = entry.get("_section_key", "unknown")
+    print(f"unsupported_report_schema: entry found in unrecognized section '{section_key}' for {audit_id}")
+    sys.exit(3)
 
 # 4. partial verdict → partial_verdict_blocked
 verdict = entry.get("verdict", "")

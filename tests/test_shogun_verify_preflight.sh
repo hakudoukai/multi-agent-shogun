@@ -113,6 +113,83 @@ YAML
 REPO_ROOT="$t6_dir" bash "$SCRIPT" --preflight t6_no_evidence_id >/dev/null 2>&1
 run_case "6-missing_log_or_commit" 5 $?
 
+# Test 7: full verify → audit_report_index.yaml 経由で entry 取得 (NOT_FOUND 解消)
+# naomasa_new_001 類似: index-only entry を full verify が見つけること
+t7_dir="$(mktemp -d)"
+mkdir -p "$t7_dir/queue/reports"
+cat >"$t7_dir/queue/reports/audit_report_index.yaml" <<'YAML'
+reports:
+  - audit_id: t7_index_only_id
+    target_id: t7_target
+    verdict: fail
+    evidence_state: blocked_env
+    completion_gate: blocked
+    log_path: ''
+    commit_hash: ''
+    related_files: []
+    audited_at: null
+YAML
+t7_out=$(PC_ID=mainpc REPO_ROOT="$t7_dir" bash "$SCRIPT" t7_index_only_id 2>/dev/null)
+if echo "$t7_out" | grep -q '"NOT_FOUND"'; then
+    t7_result=1
+else
+    t7_result=0
+fi
+run_case "7-full_verify_via_index_not_found_resolved" 0 "$t7_result"
+
+# Test 8: preflight + full verify — 共通 resolver で同一 audit_id の lookup 結果が一致
+t8_dir="$(mktemp -d)"
+mkdir -p "$t8_dir/queue/reports"
+: >"$t8_dir/queue/reports/dummy_log.yaml"
+cat >"$t8_dir/queue/reports/audit_report_index.yaml" <<'YAML'
+reports:
+  - audit_id: t8_shared_id
+    target_pc: mainpc
+    verdict: pass
+    evidence_state: complete
+    completion_gate: open
+    log_path: queue/reports/dummy_log.yaml
+    commit_hash: deadbeef0102abcd
+    related_files: []
+    audited_at: '2026-05-11T12:00:00+09:00'
+YAML
+REPO_ROOT="$t8_dir" bash "$SCRIPT" --preflight t8_shared_id >/dev/null 2>&1
+t8_preflight=$?
+t8_verify=$(PC_ID=mainpc REPO_ROOT="$t8_dir" bash "$SCRIPT" t8_shared_id 2>/dev/null)
+if echo "$t8_verify" | grep -q '"NOT_FOUND"'; then
+    t8_verify_ok=1
+else
+    t8_verify_ok=0
+fi
+if [ "$t8_preflight" = "0" ] && [ "$t8_verify_ok" = "0" ]; then
+    t8_result=0
+else
+    t8_result=1
+fi
+run_case "8-preflight_full_verify_common_resolver" 0 "$t8_result"
+
+# Test 9: --pc-id 未指定 → mainpc log file が生成される (AC4 default)
+t9_dir="$(mktemp -d)"
+mkdir -p "$t9_dir/queue/reports"
+cat >"$t9_dir/queue/reports/audit_report_index.yaml" <<'YAML'
+reports:
+  - audit_id: t9_test_id
+    verdict: pass
+    evidence_state: complete
+    completion_gate: open
+    log_path: ''
+    commit_hash: ''
+    related_files: []
+    audited_at: null
+YAML
+REPO_ROOT="$t9_dir" bash "$SCRIPT" t9_test_id >/dev/null 2>&1
+if [ -f "$t9_dir/queue/reports/shogun_verification_mainpc_log.yaml" ]; then
+    t9_result=0
+else
+    t9_result=1
+fi
+run_case "9-default_mainpc_log" 0 "$t9_result"
+
 echo "============================================================"
 echo "Total: $total | Pass: $pass | Fail: $fail | SKIP: 0"
 if [ "$fail" -ne 0 ]; then
