@@ -14,7 +14,8 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# REPO_ROOT は env override 可 (= --preflight test 用)。production では default を使う。
+REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 LOG="$REPO_ROOT/queue/reports/shogun_verification_log.yaml"
 mkdir -p "$(dirname "$LOG")"
 [ -f "$LOG" ] || echo "verifications: []" > "$LOG"
@@ -143,6 +144,166 @@ with open(log_path, "w") as f: yaml.safe_dump(log, f, allow_unicode=True, defaul
 PYEOF
 }
 
+# --preflight: completion gate 前の事前 check (= cmd_012 P0-2、陛下御裁可 2026-05-11)
+# 返却: stdout に status string + exit code (0..5)。verify log は触らない。
+preflight_one() {
+    local target="$1"
+    local result
+    result="$(python3 - "$REPO_ROOT" "$target" <<'PYEOF'
+import sys, os, yaml
+
+repo_root, target = sys.argv[1], sys.argv[2]
+
+INDEX_PATH = os.path.join(repo_root, "queue/reports/audit_report_index.yaml")
+COMPLETION_GATE_PATH = os.path.join(repo_root, "queue/reports/completion_gate_status.yaml")
+REPORT_FILES = [
+    os.path.join(repo_root, "queue/reports/kuroda_mainpc_report.yaml"),
+    os.path.join(repo_root, "queue/reports/takenaka_mainpc_report.yaml"),
+    os.path.join(repo_root, "queue/reports/naomasa_secondpc_report.yaml"),
+    os.path.join(repo_root, "queue/reports/acha_secondpc_report.yaml"),
+]
+SC_REPORTS = [
+    os.path.join(repo_root, "queue/reports/naomasa_secondpc_report.yaml"),
+    os.path.join(repo_root, "queue/reports/acha_secondpc_report.yaml"),
+]
+KNOWN_SECTIONS = ("reports", "new_project_audits", "phase_b_reaudits", "additional_cmd_audits")
+
+audit_entry = None
+auditor_who = None
+source_section = None
+unsupported_seen = False
+
+# Step 1: index file (= normalize_audit_reports.py 出力) 優先
+if os.path.exists(INDEX_PATH):
+    try:
+        idx = yaml.safe_load(open(INDEX_PATH)) or {}
+        for e in (idx.get("entries") or []):
+            if isinstance(e, dict) and e.get("audit_id") == target:
+                audit_entry = e
+                auditor_who = e.get("auditor_who")
+                source_section = e.get("section") or "reports"
+                break
+    except Exception:
+        unsupported_seen = True
+
+# Fallback: PC suffix 命名規則の report files を直接 scan
+if audit_entry is None:
+    for rf in REPORT_FILES:
+        if not os.path.exists(rf):
+            continue
+        try:
+            d = yaml.safe_load(open(rf)) or {}
+        except Exception:
+            unsupported_seen = True
+            continue
+        if not isinstance(d, dict):
+            unsupported_seen = True
+            continue
+        for sec in KNOWN_SECTIONS:
+            entries = d.get(sec)
+            if not isinstance(entries, list):
+                continue
+            for r in entries:
+                if isinstance(r, dict) and (r.get("audit_id") == target or r.get("target_id") == target):
+                    audit_entry = r
+                    auditor_who = os.path.basename(rf).replace("_report.yaml", "")
+                    source_section = sec
+                    break
+            if audit_entry is not None:
+                break
+        if audit_entry is not None:
+            break
+        # 未知 section に audit_id がある場合は schema 非対応として記録
+        for key, val in d.items():
+            if key in KNOWN_SECTIONS or not isinstance(val, list):
+                continue
+            for r in val:
+                if isinstance(r, dict) and (r.get("audit_id") == target or r.get("target_id") == target):
+                    unsupported_seen = True
+                    break
+            if unsupported_seen:
+                break
+        if unsupported_seen:
+            break
+
+if audit_entry is None:
+    if unsupported_seen:
+        print("unsupported_report_schema")
+        sys.exit(0)
+    print("missing_audit_entry")
+    sys.exit(0)
+
+# Step 2: target_pc 判定 → secondpc なら SC report file の到達確認
+target_pc = audit_entry.get("target_pc")
+if not target_pc and os.path.exists(COMPLETION_GATE_PATH):
+    try:
+        cg = yaml.safe_load(open(COMPLETION_GATE_PATH)) or {}
+        for e in (cg.get("entries") or []):
+            if isinstance(e, dict) and e.get("audit_id") == target:
+                target_pc = e.get("target_pc")
+                break
+    except Exception:
+        pass
+if not target_pc and auditor_who:
+    if "secondpc" in auditor_who:
+        target_pc = "secondpc"
+    elif "mainpc" in auditor_who:
+        target_pc = "mainpc"
+
+if target_pc == "secondpc":
+    if not any(os.path.exists(p) for p in SC_REPORTS):
+        print("missing_cross_pc_report")
+        sys.exit(0)
+
+# Step 3: source_section が KNOWN_SECTIONS のいずれかであることを確認 (= schema 認識可)
+if source_section not in KNOWN_SECTIONS:
+    print("unsupported_report_schema")
+    sys.exit(0)
+
+# Step 4: partial verdict 検出 (= top-level または perspective_verdicts)
+verdict = audit_entry.get("verdict", "")
+if isinstance(verdict, str) and "partial" in verdict.lower():
+    print("partial_verdict_blocked")
+    sys.exit(0)
+pv = audit_entry.get("perspective_verdicts")
+if isinstance(pv, dict):
+    for v in pv.values():
+        if isinstance(v, str) and "partial" in v.lower():
+            print("partial_verdict_blocked")
+            sys.exit(0)
+
+# Step 5: commit_hash 非空 + log_path 実在
+ch = audit_entry.get("commit_hash") or ""
+lp = audit_entry.get("log_path") or ""
+ch_ok = isinstance(ch, str) and ch.strip() != ""
+if isinstance(lp, str) and lp.strip():
+    lp_full = lp if os.path.isabs(lp) else os.path.join(repo_root, lp)
+    lp_ok = os.path.exists(lp_full)
+else:
+    lp_ok = False
+if not (ch_ok and lp_ok):
+    print("missing_log_or_commit")
+    sys.exit(0)
+
+print("ready_to_verify")
+sys.exit(0)
+PYEOF
+)"
+    echo "$result"
+    case "$result" in
+        ready_to_verify)           return 0 ;;
+        missing_audit_entry)       return 1 ;;
+        missing_cross_pc_report)   return 2 ;;
+        unsupported_report_schema) return 3 ;;
+        partial_verdict_blocked)   return 4 ;;
+        missing_log_or_commit)     return 5 ;;
+        *)
+            echo "ERROR: unknown preflight result: $result" >&2
+            return 99
+            ;;
+    esac
+}
+
 case "${1:-}" in
     --all)
         # 陛下御差配 2026-05-10 00:10: ランダム sampling 厳禁、全数全件
@@ -165,8 +326,21 @@ except: pass" | while IFS= read -r aid; do
         echo "ERROR: ランダム sampling は陛下御差配で禁止。--all で全件全数 verify せよ" >&2
         exit 1
         ;;
+    --preflight)
+        # cmd_012 P0-2: completion gate 前の事前 check (= 6 種 return code)
+        if [ -z "${2:-}" ]; then
+            echo "Usage: $0 --preflight <audit_id>" >&2
+            exit 1
+        fi
+        set +e
+        preflight_one "$2"
+        ec=$?
+        set -e
+        exit "$ec"
+        ;;
     "")
         echo "Usage: $0 <audit_id_or_target_id> | --all (= 全数全件 verify、必ず全件)" >&2
+        echo "       $0 --preflight <audit_id>  (= completion gate 前の事前 check)" >&2
         echo "陛下御差配: ランダム sampling 厳禁、時間より正確さ優先、全数主義" >&2
         exit 1
         ;;
