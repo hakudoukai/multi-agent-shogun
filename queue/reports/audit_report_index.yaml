@@ -409,6 +409,46 @@ reports:
   - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/completion_gate_status.yaml
   commit_hash: bcae8ec
   log_path: n/a (interactive codex v2 synthesis)
+- audit_id: kuroda_cmd012_p01_normalize_audit_reports_review
+  source_file: queue/reports/kuroda_mainpc_report.yaml
+  source_section: reports
+  original_schema_type: reports
+  target_id: cmd012_p01_normalize_audit_reports
+  verdict: fail
+  source_verdict: fail
+  evidence_state: missing
+  completion_gate: blocked
+  shogun_verified: false
+  normalization_reason: fail→canonical
+  audited_at: '2026-05-11T09:08:02+09:00'
+  related_files:
+  - /home/user/projects/multi-agent-shogun-newbuild/scripts/normalize_audit_reports.py
+  - /home/user/projects/multi-agent-shogun-newbuild/scripts/test_normalize_audit_reports.py
+  - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/audit_report_index.yaml
+  - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/acha_secondpc_report.yaml
+  - /home/user/projects/multi-agent-shogun-newbuild/queue/tasks/ashigaru1.yaml
+  commit_hash: 480066a0fd4e558ed33aca25e52a45ffc0075655
+  log_path: n/a (interactive codex audit; pytest and normalizer commands executed)
+- audit_id: kuroda_cmd012_p02_preflight_verify_review
+  source_file: queue/reports/kuroda_mainpc_report.yaml
+  source_section: reports
+  original_schema_type: reports
+  target_id: cmd012_p02_preflight_verify
+  verdict: fail
+  source_verdict: fail
+  evidence_state: missing
+  completion_gate: blocked
+  shogun_verified: false
+  normalization_reason: fail→canonical
+  audited_at: '2026-05-11T09:12:52+09:00'
+  related_files:
+  - /home/user/projects/multi-agent-shogun-newbuild/scripts/shogun_verify_audit.sh
+  - /home/user/projects/multi-agent-shogun-newbuild/scripts/test_shogun_verify_preflight.sh
+  - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/audit_report_index.yaml
+  - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru7_report.yaml
+  - /home/user/projects/multi-agent-shogun-newbuild/queue/tasks/ashigaru7.yaml
+  commit_hash: a3c422fa042adab747156d45381e2e6295e633d4
+  log_path: n/a (interactive codex audit; bash tests and real smoke executed)
 - audit_id: 8a1b2c3d
   source_file: queue/reports/takenaka_report.yaml
   source_section: reports
@@ -1264,3 +1304,25 @@ reports:
   - queue/reports/ashigaru4_teriha_p3_report.yaml
   commit_hash: 3f835a53
   log_path: queue/reports/ashigaru4_teriha_p3_report.yaml
+- audit_id: acha_secondpc_report_parse_error
+  source_file: queue/reports/acha_secondpc_report.yaml
+  source_section: file_level
+  original_schema_type: schema_unsupported
+  target_id: unknown
+  verdict: fail
+  source_verdict: N/A
+  evidence_state: schema_unsupported
+  completion_gate: blocked
+  shogun_verified: false
+  normalization_reason: "YAML parse error: while parsing a block mapping\n  in \"\
+    <unicode string>\", line 727, column 3:\n      total_audited: 27\n      ^\nexpected\
+    \ <block end>, but found '-'\n  in \"<unicode string>\", line 782, column 3:\n\
+    \      - audit_id: acha_021\n      ^"
+  blocker_reason: "YAML parse error: while parsing a block mapping\n  in \"<unicode\
+    \ string>\", line 727, column 3:\n      total_audited: 27\n      ^\nexpected <block\
+    \ end>, but found '-'\n  in \"<unicode string>\", line 782, column 3:\n      -\
+    \ audit_id: acha_021\n      ^"
+  audited_at: null
+  related_files: []
+  commit_hash: null
+  log_path: null

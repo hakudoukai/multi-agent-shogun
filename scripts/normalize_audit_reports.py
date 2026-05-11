@@ -144,7 +144,29 @@ def _normalize_entry(
     }
 
 
-def load_report_file(path: Path) -> list[dict]:
+def _make_file_level_blocked(source_file: str, audit_id: str, blocker_reason: str) -> dict:
+    """Return a file-level blocked row for parse errors or missing files."""
+    return {
+        "audit_id": audit_id,
+        "source_file": source_file,
+        "source_section": "file_level",
+        "original_schema_type": "schema_unsupported",
+        "target_id": "unknown",
+        "verdict": "fail",
+        "source_verdict": "N/A",
+        "evidence_state": "schema_unsupported",
+        "completion_gate": "blocked",
+        "shogun_verified": False,
+        "normalization_reason": blocker_reason,
+        "blocker_reason": blocker_reason,
+        "audited_at": None,
+        "related_files": [],
+        "commit_hash": None,
+        "log_path": None,
+    }
+
+
+def load_report_file(path: Path, _errors: "list[str] | None" = None) -> list[dict]:
     """
     Load a report file and return a list of normalized canonical entries.
 
@@ -153,23 +175,33 @@ def load_report_file(path: Path) -> list[dict]:
       - new_project_audits
       - phase_b_reaudits
       - legacy named blocks (warn)
-    """
-    if not path.exists():
-        print(f"WARNING: report file not found, skipping: {path}", file=sys.stderr)
-        return []
 
+    On parse error or missing file, returns a single file-level blocked row
+    instead of an empty list. Appends path to _errors if provided.
+    """
     try:
         source_file = str(path.relative_to(PROJECT_ROOT))
     except ValueError:
         source_file = str(path)
+
+    if not path.exists():
+        print(f"WARNING: {path} not found, recorded as missing", file=sys.stderr)
+        if _errors is not None:
+            _errors.append(str(path))
+        return [_make_file_level_blocked(source_file, f"{path.stem}_missing", "file not found")]
+
     try:
         raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     except yaml.YAMLError as exc:
-        print(
-            f"WARNING: YAML parse error in {path}: {exc} — skipping file",
-            file=sys.stderr,
-        )
-        return []
+        msg = str(exc)
+        print(f"WARNING: {path} skipped due to parse error: {msg}", file=sys.stderr)
+        if _errors is not None:
+            _errors.append(str(path))
+        return [_make_file_level_blocked(
+            source_file,
+            f"{path.stem}_parse_error",
+            f"YAML parse error: {msg}",
+        )]
 
     if not isinstance(raw, dict):
         print(f"WARNING: unexpected top-level type in {path}, skipping", file=sys.stderr)
@@ -224,11 +256,11 @@ def load_report_file(path: Path) -> list[dict]:
     return results
 
 
-def normalize(report_files: list[Path]) -> list[dict]:
+def normalize(report_files: list[Path], _errors: "list[str] | None" = None) -> list[dict]:
     """Process all report files and return combined canonical entries."""
     all_entries = []
     for path in report_files:
-        all_entries.extend(load_report_file(path))
+        all_entries.extend(load_report_file(path, _errors))
     return all_entries
 
 
@@ -246,6 +278,11 @@ def main() -> None:
         metavar="FILE",
         help="Process a single report file instead of all defaults.",
     )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit 1 if any report file cannot be parsed or is missing.",
+    )
     args = parser.parse_args()
 
     if args.report:
@@ -253,17 +290,23 @@ def main() -> None:
     else:
         report_files = DEFAULT_REPORT_FILES
 
-    entries = normalize(report_files)
+    error_files: list[str] = []
+    entries = normalize(report_files, error_files)
     output = {"reports": entries}
     yaml_text = yaml.dump(output, allow_unicode=True, sort_keys=False, default_flow_style=False)
 
     if args.dry_run:
         print(yaml_text)
+        if args.strict and error_files:
+            sys.exit(1)
         return
 
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_FILE.write_text(yaml_text, encoding="utf-8")
     print(f"Written {len(entries)} entries to {OUTPUT_FILE}", file=sys.stderr)
+
+    if args.strict and error_files:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
