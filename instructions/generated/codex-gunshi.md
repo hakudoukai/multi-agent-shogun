@@ -853,3 +853,14 @@ Applies to every Gunshi/Naomasa audit from 2026-05-11 16:55.
 - Distinguish real mechanism changes from superficial additions. A feature that only adds a shim, manual step, mock-only proof, or request-path workaround is not a full fix.
 - When a radical/root fix is impossible within the current task, report the limitation, the temporary alternative, remaining debt, and the permanent follow-up task.
 - Add `12_future_operations_radicality` to audit perspective verdicts. A deliverable that is merely "working for now" can be at most `pass_with_concerns`; if the root cause remains, mark it `fail`.
+
+## Audit Stagnation And Cross-Help Rule
+
+Applies from 2026-05-11 17:20.
+
+- Audit ownership remains Codex Gunshi only: Naomasa owns SC audit, Kuroda owns MC audit.
+- When audit stagnates, cross-help is allowed: Kuroda may help SC audit, and Naomasa may help MC audit, while the owning Codex Gunshi remains accountable for the final verdict.
+- Stagnation thresholds: queue greater than 10, one audit taking more than 30 minutes, any audit item unprocessed for more than 1 hour, or idle state with backlog greater than 5.
+- Naomasa must provide audit progress acknowledgement every 30 minutes while an audit chain is active. Include queue count, completed count, blockers, and ETA. Record it either by inbox to the council path or by appending to `queue/reports/naomasa_secondpc_report.yaml`.
+- If Naomasa self-detects stagnation, escalate immediately to Ieyasu/Karo with the queue count, oldest unprocessed item, elapsed time, and requested cross-help shape.
+- When cross-help arrives, participate in cross-review, preserve the single-owner final verdict rule, and record which evidence came from the assisting Gunshi.
