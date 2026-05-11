@@ -3487,3 +3487,109 @@ clinic_id_hardcode_eradication_design_reviews:
       reason: "clinic_id=1散在を局所修正でなく、context propagation + lint/CI + phased fix に引き上げ、cmd_004香椎照葉運用と将来multi-clinic運用の双方を守る設計へ補正した。"
       risks_to_north_star:
         - "TERIHA固定だけで全修正すると、香椎照葉実証後のmulti-clinic展開で再び大規模refactorが必要になる。"
+
+pre_delivery_task_audits:
+  - audit_id: naomasa_pre_audit_cmd004_legal_compliance_gap_p1_p2_fix
+    target_type: task_yaml_pre_delivery_gate
+    target_task_id: subtask_cmd004_legal_compliance_gap_p1_p2_fix
+    parent_cmd: cmd_004
+    audited_at: "2026-05-11T17:48:30+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260511_174502_c8105234
+    source_task_yaml: queue/tasks/subtask_cmd004_legal_compliance_gap_p1_p2_fix.yaml
+    source_design_docs:
+      - docs/cmd004_legal_compliance_full_audit.md
+      - queue/reports/ashigaru4_cmd004_full_legal_compliance_audit_report.yaml
+      - queue/reports/ashigaru4_cmd004_legal_compliance_gap_top3_fix_report.yaml
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    audit_gate_status: fail_requires_karo_revision
+    pre_delivery_gate_passed: false
+    six_point_check:
+      directive_nine_sections:
+        status: fail
+        present:
+          - title
+          - context_equivalent_background
+          - acceptance_criteria
+        missing_or_not_separate:
+          - steps
+          - files
+          - commit
+          - test
+          - push
+          - log
+        reason: "新規範の nine sections は task YAML 上で明示欄として検査可能である必要がある。本 YAML は acceptance/constraints 内に一部文言を含むが、ashigaru が実行順・対象 file・commit/push/log 手順を機械的に追えない。"
+      design_doc_id:
+        status: pass
+        value: docs/cmd004_legal_compliance_full_audit.md
+        source_quality: "source は存在し、§2 gap matrix と queue/reports/ashigaru4_cmd004_full_legal_compliance_audit_report.yaml に対応する。"
+      task_path_type:
+        status: pass_with_concerns
+        value: opus_codex_sonnet
+        reason: "法令 cross-cutting 構造改善なので Opus 起案 -> Codex 監査 -> Sonnet 修正 path は妥当。ただし task_type は structural_fix であり、task_path_type との欄名を分ける方がよい。"
+      max_cycle:
+        status: pass
+        value: 7
+      bloom_level_suitability:
+        status: fail
+        value: L4
+        reason: "新規範 check は L1-L3 適性確認を要求している。L4 の構造改善・法令判断を ashigaru 配信するなら、Karo が L4 例外理由、review depth、追加監査点を明示すべき。現状は L4 と gate 規範の衝突が未解消。"
+      anti_dup:
+        status: pass_with_concerns
+        reason: "前 6 task との直接重複は見えない。ただし残 7 件は top3 report の remaining_gaps_for_next_cycle と一致させる必要があり、PATIENT_CHAT_GATE_RESTORE が full audit §2 の original gap ではなく observation 由来であることを task 上に明記すべき。"
+    perspective_verdicts:
+      1_func: fail
+      2_anti_dup: concerns
+      3_kiritsu: pass
+      4_logic: concerns
+      5_schema: concerns
+      6_test: fail
+      7_legal: concerns
+      8_ops: concerns
+      9_doc: fail
+      10_ecosystem_coherence: concerns
+      11_cross_pc_repo_check: concerns
+      12_future_operations_radicality: fail
+    findings:
+      - severity: high
+        perspective: 9_doc
+        issue: "事前監査 gate の必須 nine sections が YAML 上で独立していない。特に steps/files/commit/test/push/log が欠落し、配信後に ashigaru が推測で実装範囲を決める余地がある。"
+        recommendation: "task YAML に `context`, `steps`, `files`, `commit`, `test`, `push`, `log` を明示欄として追加し、各 field に具体 command/path/output を入れて再監査へ回す。"
+      - severity: high
+        perspective: 12_future_operations_radicality
+        issue: "AC2 は構造改善を要求するが、7 gap を一括で『残 0 件』にする範囲は広く、G-FH(SQLite handover), guardian OTP, VAPID unsubscribe, retention class, hash salt standardization が別設計を要する。1 task 一括は局所 patch 誘発 risk が高い。"
+        recommendation: "7 gap を root-cause domain ごとに phase 分割し、少なくとも files/steps/test を gap 別に分ける。handover SQLite と guardian OTP は独立 task 化を検討する。"
+      - severity: high
+        perspective: 6_test
+        issue: "test 欄が AC5 の抽象文のみ。SKIP=0 は明記されるが、どの pytest/vitest/integration を実行し、gap 別 negative/positive が何件必要か不明。"
+        recommendation: "各 gap ごとに required tests を列挙し、最低限 `patient_chat_gate_restore`, `handover_pseudonymize`, `guardian_proxy_otp`, `vapid_unsubscribe`, `retention_10y`, `hash_salt_standard` の regression/negative を明示する。"
+      - severity: medium
+        perspective: 7_legal
+        issue: "AC4 は e-Gov path を要求するが、source design は個人情報保護法 e-Gov path を report 内で一部示すのみで、今回 7 gap それぞれの条文/source URL まで task に展開されていない。"
+        recommendation: "残 7 gap の各項目に law_article と source_url を task YAML の input matrix として入れる。法務確認 flag が残る項目は expected docs output へ明示する。"
+      - severity: medium
+        perspective: 11_cross_pc_repo_check
+        issue: "target repo `/mnt/c/Projects/hakudokai-dev` の基準 commit、dirty 前提、既往未push commit 群との関係が task 本体に固定されていない。"
+        recommendation: "preflight に `git rev-parse HEAD`, `git status --short`, focused grep/check commands を追加し、F007 一括 push 前の安全確認を steps に入れる。"
+      - severity: medium
+        perspective: 2_anti_dup
+        issue: "`残 7 件 P1/P2` と top3 report の `remaining_gaps_for_next_cycle` は概ね整合するが、PATIENT_CHAT_GATE_RESTORE は observation 由来で original gap matrix 由来ではない。"
+        recommendation: "scope を `original remaining gaps 6 + observation recovery 1` のように分離して、gap matrix の残件数と復元 task を混同しない。"
+      - severity: medium
+        perspective: 5_schema
+        issue: "report output path はあるが report schema が未定義。事前監査後の deliverable audit で 7 gap evidence を機械判定しにくい。"
+        recommendation: "report YAML に `gap_fixes[]` schema (`gap_id`, `source_law`, `files_changed`, `tests`, `commit_hash`, `remaining_risk`) を指定する。"
+    required_revision_before_delivery:
+      - "Add explicit nine sections: context, acceptance, steps, files, commit, test, push, log, and keep title."
+      - "Resolve Bloom conflict: either downgrade/split into L1-L3 Sonnet-suitable subtasks or document L4 exception controls."
+      - "Replace broad residual 7 wording with a concrete gap input matrix sourced from full audit §2 and top3 report remaining_gaps_for_next_cycle."
+      - "Add per-gap files and required tests, with SKIP=0 and exact commands."
+      - "Define report schema for `queue/reports/ashigaru4_cmd004_legal_compliance_gap_p1_p2_fix_report.yaml`."
+      - "Add target repo preflight and F007 push/commit grouping instructions."
+    recommendation_to_karo:
+      action: revise_task_yaml_then_resubmit_pre_audit
+      delivery_to_ashigaru4: blocked_until_pass
+      summary: "新規範 100% 適用第1弾として gate を通すには、現 YAML はまだ旧型の高密度 assignment であり、設計逸脱防止の検査可能性が不足。配信前に field 化・分割・test matrix 化を行うべし。"
