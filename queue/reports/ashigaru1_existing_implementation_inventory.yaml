@@ -1,0 +1,243 @@
+inventory_id: ashigaru1_cmd004_existing_implementation_inventory_v1
+inventoried_at: "2026-05-11T20:45:00+09:00"
+inventoried_by: ashigaru1
+task_ref: subtask_cmd004_dd126_ceremony_alternative_inventory
+schema_ref: ac0_inventory_yaml_schema (= task YAML 内定義、本 task で確定 schema 適用)
+
+cmd_004_scope_components:
+  - component_id: ceremony_event_api
+    component_type: backend_router
+    file_path: backend/routers/ceremony_events.py:1-160
+    key_functions:
+      - "create_ceremony_event (line 55)"
+      - "list_ceremony_events (line 93)"
+      - "acknowledge_ceremony_event (line 122)"
+      - "_assert_member (line 41)"
+    existing_endpoints:
+      - "POST /api/teriha-passport/ceremony-events"
+      - "GET /api/teriha-passport/ceremony-events"
+      - "POST /api/teriha-passport/ceremony-events/{event_id}/ack"
+    existing_db_tables:
+      - passport_ceremony_log
+      - passport_members
+    owner_ashigaru: ashigaru2
+    commit_hash: "7db5f6ea"
+    integration_status: integrated
+    gap_notes: "main.py include_router 登録済、frontend useCeremonyEvent.ts と整合。push 待ち (hakudokai-dev master)"
+
+  - component_id: tier_up_celebration_api
+    component_type: backend_router
+    file_path: backend/routers/celebration_api.py:1-180
+    key_functions:
+      - "create_tier_up_celebration (line 73)"
+      - "_resolve_member (line 56)"
+      - "_validate_tier (line 46)"
+      - "_default_message (line 69)"
+    existing_endpoints:
+      - "POST /api/celebrations/tier-up"
+    existing_db_tables:
+      - passport_tier_up_celebrations
+      - passport_ceremony_log
+      - passport_members
+    owner_ashigaru: ashigaru2
+    commit_hash: "b12c2338"
+    integration_status: integrated
+    gap_notes: "ceremony_event 連動 (event_kind='tier_up' insert) 実装済。useCelebration.ts と接続。push 待ち。"
+
+  - component_id: consent_gate
+    component_type: backend_service
+    file_path: backend/services/consent_gate.py:1-300
+    key_functions:
+      - "check_consent_gate (line 45)"
+      - "detect_orphan_versions (line 168)"
+      - "_resolve_required (line 277)"
+    existing_endpoints: []
+    existing_db_tables:
+      - patient_consents
+      - consent_versions
+    owner_ashigaru: ashigaru4
+    commit_hash: null
+    integration_status: unwired
+    gap_notes: "service logic 実装済だが ceremony / celebration endpoint からの consent block 呼出未配線。F007 push 待ち。"
+
+  - component_id: consent_versioning
+    component_type: backend_service
+    file_path: backend/services/consent_gate.py:168-260 (detect_orphan_versions)
+    key_functions:
+      - "detect_orphan_versions (line 168)"
+    existing_endpoints: []
+    existing_db_tables:
+      - consent_versions
+      - patient_consents
+    owner_ashigaru: ashigaru4
+    commit_hash: null
+    integration_status: unwired
+    gap_notes: "version 切替 chain 実装済、guardian_consent + portability + gdpr_art32 chain と統合途上。"
+
+  - component_id: dinosaur_stub
+    component_type: backend_service
+    file_path: backend/services/teriha_passport_engine.py:505-590
+    key_functions:
+      - "list_dino_candidates (stub, line 518)"
+      - "start_dino_battle (stub, line 530)"
+      - "resolve_dino_battle (stub, line 544)"
+      - "list_dino_battle_history (stub, line 556)"
+      - "_score_battle_actions (stub, line 568)"
+      - "_award_dino_drop (stub, line 580)"
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru1
+    commit_hash: "(本 task scope 外、ashigaru1 既 14 commit 内 dinosaur_100enemies spec 起案 commit)"
+    integration_status: orphan
+    gap_notes: "DD-126 stub function I/O 形のみ規定、cycle N+1 で実装委譲。spec doc: docs/cmd004_dinosaur_100enemies_spec.md"
+
+  - component_id: clinic_id_resolver
+    component_type: backend_service
+    file_path: backend/dependencies/clinic_id_resolver.py:100-160
+    key_functions:
+      - "get_current_clinic_id (line 100, FastAPI Depends helper)"
+      - "_resolve_via_auth_chain (line 60)"
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru7
+    commit_hash: null
+    integration_status: unwired
+    gap_notes: "Depends helper 実装 + phase3 batch1/2 で router 配線途上。eradication 全 batch 完遂前。F007 push 待ち。"
+
+  - component_id: observability_metrics
+    component_type: backend_service
+    file_path: backend/services/observability/metrics.py:61-140
+    key_functions:
+      - "MetricsRegistry (line 61)"
+      - "get_default_registry (line 150)"
+      - "is_prometheus_available (line 161)"
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru3
+    commit_hash: "(uncommitted、ashigaru3 observability_infra report は infra only、commit_hash 未記録)"
+    integration_status: unwired
+    gap_notes: "Prometheus metric registration 実装済 (http/notification/consent/clinic_id_mismatch/pii/alert/secret_rotation/analytics)。ceremony / celebration endpoint への計測注入は未配線。"
+
+  - component_id: notification_facade
+    component_type: backend_service
+    file_path: backend/services/notifications/facade.py:36-110
+    key_functions:
+      - "NotificationFacade (line 36)"
+      - "NotificationFacade._adapters (line 48)"
+      - "NotificationFacade.send (line 91)"
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru3
+    commit_hash: "(uncommitted、ashigaru3 notification_facade_pattern report)"
+    integration_status: unwired
+    gap_notes: "Email/Ntfy/SMS/WebPush adapter chain 実装済、consent gate との重複 check は consent_gate.py 経由。celebration endpoint からの送出は未配線。"
+
+  - component_id: qr_token_security
+    component_type: backend_service
+    file_path: backend/utils/qr_token.py:1-200
+    key_functions:
+      - "sign_qr_token (HMAC-SHA256)"
+      - "verify_qr_token (TOTP expire)"
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru1
+    commit_hash: "(本 task scope 外、ashigaru1 既 commit 内 qr_token_security_hardening commit)"
+    integration_status: integrated
+    gap_notes: "qr_processor / qr_hmac_adapter (secret_rotation) と接続済、本 task では参照のみ。"
+
+  - component_id: ci_cd_lint_workflow
+    component_type: config
+    file_path: .github/workflows/cmd004-lint.yml:1-end
+    key_functions:
+      - "GitHub Actions workflow (cmd004 lint gate)"
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru3
+    commit_hash: "(untracked、ashigaru3 cicd_pipeline_construction report 直近成果物)"
+    integration_status: unwired
+    gap_notes: "本 task で commit 含めず scope 外。ashigaru3 別 task で push 予定。"
+
+cross_cutting_summary:
+  integration_chain:
+    - chain_id: ceremony_to_celebration
+      flow: "POST /api/celebrations/tier-up → passport_tier_up_celebrations.insert → passport_ceremony_log.insert(event_kind='tier_up') → useCeremonyEvent.ts polling → CeremonyOverlay 描画"
+      status: integrated
+      components:
+        - tier_up_celebration_api
+        - ceremony_event_api
+        - passport_ceremony_log (DB)
+        - passport_tier_up_celebrations (DB)
+    - chain_id: ceremony_direct_post
+      flow: "POST /api/teriha-passport/ceremony-events → passport_ceremony_log.insert → useCeremonyEvent.ts → CeremonyOverlay"
+      status: integrated
+      components:
+        - ceremony_event_api
+        - passport_ceremony_log (DB)
+    - chain_id: consent_gate_chain
+      flow: "(設計のみ) consent_gate.check_consent_gate → ceremony / celebration endpoint で patient_consents 確認 → unconsented なら 4xx block"
+      status: unwired
+      components:
+        - consent_gate
+        - ceremony_event_api
+        - tier_up_celebration_api
+    - chain_id: clinic_id_resolver_chain
+      flow: "FastAPI request → Depends(get_current_clinic_id) → JWT chain → ceremony / celebration endpoint scope 確定"
+      status: unwired
+      components:
+        - clinic_id_resolver
+        - ceremony_event_api
+        - tier_up_celebration_api
+    - chain_id: observability_chain
+      flow: "(設計のみ) ceremony / celebration endpoint → MetricsRegistry.http_requests_total.labels(...).inc()"
+      status: unwired
+      components:
+        - observability_metrics
+        - ceremony_event_api
+        - tier_up_celebration_api
+    - chain_id: notification_chain
+      flow: "(設計のみ) tier_up_celebration_api 完了 → NotificationFacade.send(channels=[webpush, ntfy]) → adapter chain → 親 device 通知"
+      status: unwired
+      components:
+        - notification_facade
+        - tier_up_celebration_api
+    - chain_id: dinosaur_battle_stub_chain
+      flow: "(stub) teriha_passport_engine.start_dino_battle → resolve_dino_battle → passport_ceremony_log graduation event 連動"
+      status: orphan
+      components:
+        - dinosaur_stub
+        - passport_ceremony_log (DB)
+  orphan_components:
+    - dinosaur_stub
+    - ci_cd_lint_workflow
+  test_coverage_gaps:
+    - location: "backend/routers/ceremony_events.py:55 (create_ceremony_event)"
+      gap: "consent gate 接続 test 欠落 — consent_gate.check_consent_gate が router 内呼出されていない"
+      needed_test: "test_ceremony_event_endpoint_static_contract — endpoint signature + clinic_id check + event_kind validation の source presence 検証"
+    - location: "backend/routers/celebration_api.py:73 (create_tier_up_celebration)"
+      gap: "NotificationFacade 接続 test 欠落 — tier_up 完了通知未配線"
+      needed_test: "test_tier_up_celebration_endpoint_static_contract — endpoint signature + tier validation + ceremony_log 連動 source presence 検証"
+    - location: "backend/services/consent_gate.py:45 (check_consent_gate)"
+      gap: "ceremony / celebration から呼出 path 未配線、cross-cutting test 不在"
+      needed_test: "test_consent_gate_blocks_unconsented_patient_static_contract — function signature + block logic source presence 検証"
+    - location: "backend/services/teriha_passport_engine.py:518-580 (dinosaur stubs)"
+      gap: "DD-126 stub function source presence のみ verify 可、runtime test は cycle N+1 待ち"
+      needed_test: "test_dinosaur_stub_passport_xp_log_static_contract — stub function 6 件の source presence 検証"
+    - location: "backend/dependencies/clinic_id_resolver.py:100 (get_current_clinic_id)"
+      gap: "ceremony / celebration endpoint 配線未完、cross-cutting import chain test 不在"
+      needed_test: "test_clinic_id_resolver_dependency_chain_static_contract — file presence + import chain source verify"
+    - location: "backend/services/observability/metrics.py:61 (MetricsRegistry)"
+      gap: "ceremony / celebration への metric labels 注入未配線"
+      needed_test: "test_observability_metric_on_ceremony_static_contract — Counter/Histogram registration source verify"
+    - location: "backend/services/notifications/facade.py:36 (NotificationFacade)"
+      gap: "celebration endpoint からの adapter 呼出 path 不在"
+      needed_test: "test_notification_facade_on_celebration_static_contract — adapter registration source verify"
+
+notes:
+  scope_exclusion:
+    - "本 task は新規 logic 0、既実装 verify のみ (Anti-Dup 厳格)"
+    - "frontend hook (useCeremonyEvent.ts / useCelebration.ts) は backend pytest で import 不能、static source-contract assertion で対応"
+    - "DD-126 dinosaur stub runtime 実装は cycle N+1 委譲"
+    - "本 task scope 外: ashigaru1 既 14 commit、他 ashigaru push 待ち全件"
+  push_scope:
+    - "本 task 3 commit only bounded F007 push、worktree + cherry-pick + equality assert で ahead30/dirty 完全 bypass"
+    - "repo 別 plan: commit_1/3 → multi-agent-shogun-newbuild origin/main、commit_2 → hakudokai-dev origin/master"
