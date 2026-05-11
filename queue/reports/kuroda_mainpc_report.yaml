@@ -1655,3 +1655,171 @@ reports:
         - "task-level schema が分解後に検査されなければ、曖昧 directive が acceptance prose から task YAML へ移動するだけで防止にならない。"
         - "field 名が揺れたままだと validator と template が互いに通らず、仕組みそのものが blocked noise になる。"
     persona_signature: "黒田官兵衛、智囊の眼。6件目の策は筋よし、されど task 分解後の門番なきままでは、曖昧さは城外でなく城内に移るのみ。"
+
+  - audit_id: kuroda_audit_auto_git_sync_20260511
+    target_id: auto_git_sync_装備
+    target_type: infrastructure_audit
+    parent_cmd: ad-hoc
+    cycle_n: 1
+    audited_at: "2026-05-11T14:13:50+09:00"
+    audited_by: kuroda
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: blocked
+    commit_hash: "80cc68e"
+    audit_session_id: kuroda_audit_auto_git_sync_20260511
+    executive_summary: "auto-git-sync は drift 防止の中核 mechanism として採用可。`git pull --ff-only`、divergent HALT、flock、固定 commit message、bounded push retry、privacy validator 接続、systemd timer active は確認済み。一方で、設計 AC9 の `tests/test_auto_git_sync.py` が不在、auto_sync_log.yaml は設計 schema より簡略、5分 timer が監査中の未完成差分を自動 commit し得る、privacy gate は設計の `--staged` mode ではなく staged file list 直接渡しで運用しており、完成 gate は blocked が妥当。"
+    perspectives:
+      1_functional_correctness: pass
+      2_anti_duplication: pass
+      3_discipline: pass
+      4_logic_robustness: concerns
+      5_schema_integrity: concerns
+      6_test_coverage: fail
+      7_legal_compliance: concerns
+      8_operations_ux: concerns
+      9_documentation: pass
+      10_ecosystem_coherence: concerns
+      11_do_not_break_contract: concerns
+    findings:
+      - perspective: 1_functional_correctness
+        severity: low
+        file: scripts/auto_git_sync.sh
+        line: 160-190
+        function: fetch_pull_decision
+        issue: "fetch 後、local が remote ancestor なら `git pull --ff-only`、remote が local ancestor なら push phase、divergent は halt する。auto-merge を避ける主要機能は仕様通り。"
+      - perspective: 2_anti_duplication
+        severity: low
+        file: scripts/auto_git_sync.sh
+        line: 117-128
+        function: notify_karo_and_shogun_escalation
+        issue: "通知は既存 `scripts/inbox_write.sh` を流用し、privacy は既存 `scripts/validate_report_privacy.py` を流用している。新規 mailbox/secret scanner の二重実装は見当たらない。"
+      - perspective: 3_discipline
+        severity: low
+        file: scripts/auto_git_sync.sh
+        line: 177-190
+        function: pull_conflict_gate
+        issue: "D003 禁止の `git push --force`、D004 禁止の `git reset --hard`、auto-merge conflict は使用されていない。line 213 の `git reset` は staged index 解除であり hard reset ではない。"
+      - perspective: 4_logic_robustness
+        severity: medium
+        file: scripts/auto_git_sync.sh
+        line: 199-224
+        function: auto_commit_local_changes
+        issue: "5分 timer が作業中の未完成差分も `git add -A` でまとめて commit する。agent が report や code を書いている途中の transient state を捕まえる可能性があり、manual commit window / dirty file age / allowlist が無い。"
+      - perspective: 4_logic_robustness
+        severity: medium
+        file: scripts/auto_git_sync.sh
+        line: 227-255
+        function: push_retry_loop
+        issue: "push rejected 時に再 fetch/pull せず、同じ local state のまま 30/60/120 秒で push を再試行する。remote が進んだ通常 reject は自然解決しにくく、設計書 line 151 の『pull 先行で retry』と実装がずれる。"
+      - perspective: 5_schema_integrity
+        severity: medium
+        file: queue/reports/auto_sync_log.yaml
+        line: 1-12
+        function: auto_sync_log_schema
+        issue: "実ログは `ts/pc_id/operation/halt_reason/extra` のみ。設計書 docs/auto_git_sync_design.md:121-143 の fetched/pulled_count/committed/pushed/errors/duration_ms schema とは不一致で、機械集計しにくい。"
+      - perspective: 6_test_coverage
+        severity: high
+        file: tests/test_auto_git_sync.py
+        line: 1
+        function: missing_test_file
+        issue: "設計 AC9 は `pytest tests/test_auto_git_sync.py` 全 PASS/SKIP=0 を要求するが、当該 test file が存在せず `no tests ran`。bash -n、shellcheck、dry-run は確認したが fail injection / bare repo / privacy failure / divergent HALT の自動テストは未完。"
+      - perspective: 7_legal_compliance
+        severity: medium
+        file: scripts/auto_git_sync.sh
+        line: 205-214
+        function: privacy_gate
+        issue: "staged files を privacy validator に渡して strict scan する点はよいが、head -200 により 200 files 超過分は検査対象外になる。MAX_CHANGED_FILES は1000であるため、201-1000件目に secret/PII がある場合は漏れる。"
+      - perspective: 8_operations_ux
+        severity: medium
+        file: memory/MEMORY.md
+        line: 860-872
+        function: emergency_stop_restart_procedure
+        issue: "停止/再開手順は明記済みだが、通常作業時に『未完成差分を自動 commit させない一時停止 ritual』が無い。監査・大規模編集・conflict 解消時の UX risk が残る。"
+      - perspective: 9_documentation
+        severity: low
+        file: docs/auto_git_sync_design.md
+        line: 203-216
+        function: acceptance_criteria
+        issue: "10 AC、failure mode、open questions、systemd unit 仕様が揃っており、設計資料としては十分。ただし実装後の既知差分 (log schema 簡略、test 未実装、privacy --staged 不在) を追記する必要がある。"
+      - perspective: 10_ecosystem_coherence
+        severity: medium
+        file: docs/auto_git_sync_design.md
+        line: 182-190
+        function: gitignored_file_sync_scope
+        issue: "`memory/MEMORY.md` は gitignored のため git sync 経路外と設計されている一方、今回の『壊すな』契約は memory 側にある。両PCで同 section が一致する保証は auto-git-sync 単体では持たない。"
+      - perspective: 11_do_not_break_contract
+        severity: medium
+        file: memory/MEMORY.md
+        line: 826-833
+        function: do_not_break_deployed_files
+        issue: "『壊すな』対象は MEMORY に明示され、script/service/timer/log/design は存在確認済み。ただし script 自身はこの不変対象を allowlist/protect する機械 gate を持たず、将来の auto commit で壊す変更を止められない。"
+    machine_evidence:
+      head:
+        command: "git rev-parse --short HEAD"
+        observed: "80cc68e"
+      systemd_timer:
+        command: "systemctl --user is-enabled/is-active auto-git-sync.timer"
+        observed: "enabled / active"
+      service_status:
+        command: "systemctl --user status auto-git-sync.service --no-pager"
+        observed: "ExecStart auto_git_sync.sh exited status=0/SUCCESS at 14:08:38"
+      auto_sync_log:
+        file: queue/reports/auto_sync_log.yaml
+        observed: "14:08 full_cycle pulled=4 committed=1 commit_hash=80cc68e7d033 push_attempts=1; 14:13 full_cycle pulled=0 committed=0 push_attempts=0"
+      syntax:
+        command: "bash -n scripts/auto_git_sync.sh"
+        observed: "PASS rc=0"
+      shellcheck:
+        command: "shellcheck scripts/auto_git_sync.sh"
+        observed: "PASS rc=0"
+      dry_run:
+        command: "bash scripts/auto_git_sync.sh --dry-run"
+        observed: "clean path; would fetch newbuild main; pulled=0 committed=0 pushed=1"
+      privacy_tests:
+        command: "python3 -m pytest tests/test_validate_report_privacy.py -q"
+        observed: "18 passed in 0.13s; SKIP=0"
+      auto_sync_tests:
+        command: "python3 -m pytest tests/test_auto_git_sync.py -q"
+        observed: "ERROR file not found; no tests ran"
+    recommendations:
+      - priority: P0
+        action: "追加実装前に `tests/test_auto_git_sync.py` を作り、bare repo fixture で FF pull、divergent HALT、push reject after fetch、privacy fail、flock二重起動を検証する。SKIP=0 必須。"
+        effort: medium
+      - priority: P0
+        action: "privacy gate の `head -200` を撤廃するか、200超過時は HALT にする。secret/PII 漏れは自動 sync の最大事故である。"
+        effort: small
+      - priority: P0
+        action: "auto commit 対象を allowlist 化するか、dirty file age threshold / `.auto-sync-include` / `.auto-sync-exclude` を導入し、作業途中ファイルの自動 commit を避ける。"
+        effort: medium
+      - priority: P1
+        action: "push reject 時は retry 前に fetch + FF pull 再判定を行い、divergent なら即 HALT にする。"
+        effort: small
+      - priority: P1
+        action: "auto_sync_log.yaml を設計 schema に寄せ、pulled_count/committed/pushed/push_attempts/duration_ms/errors を構造 field として記録する。"
+        effort: small
+      - priority: P1
+        action: "MEMORY の『壊すな』対象を machine-readable allowlist に写し、auto-sync が該当ファイル変更時に `manual_review_required` として HALT できるようにする。"
+        effort: medium
+      - priority: P2
+        action: "gitignored memory sync は別 cmd として、auto-git-sync と同じ completion gate に接続する。"
+        effort: medium
+    related_files:
+      - scripts/auto_git_sync.sh
+      - docs/auto_git_sync_design.md
+      - queue/reports/auto_sync_log.yaml
+      - memory/MEMORY.md
+      - scripts/validate_report_privacy.py
+      - ~/.config/systemd/user/auto-git-sync.service
+      - ~/.config/systemd/user/auto-git-sync.timer
+    log_path: /tmp/codex_audit_kuroda_audit_auto_git_sync_20260511.log
+    cross_review_targets:
+      - karo: "P0 test_auto_git_sync.py と privacy head-200 撤廃を ashigaru へ分解推奨。"
+      - shogun: "completion_gate は tests/test_auto_git_sync.py PASS まで blocked と扱うべし。"
+    north_star_alignment:
+      status: aligned
+      reason: "git drift を timer + gate で防ぐ発想は『すべてのミスは仕組みで防ぐ』に合致する。"
+      risks_to_north_star:
+        - "未完成差分の自動 commit は、drift 防止の代償として別種の事故を作る。"
+        - "privacy scan 範囲が head-200 に限定されると、仕組みへの信頼根拠が崩れる。"
+    persona_signature: "黒田官兵衛、智囊の眼。sync の城門は立った。されど、未完成の荷まで城外へ運ぶ荷駄隊では困る。試験と守備範囲を固めて初めて開門と申せる。"
