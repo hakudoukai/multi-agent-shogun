@@ -2788,3 +2788,70 @@ cmd018_qc:
       native_execution: true
       confidence: high
       confidence_note: "entry本体、5 AC、ashigaru5報告、Layer4 direct_verifications、commit実在、preflight exit 0 を直接確認。残懸念は completion_gate_status 未同期/構文破損と commit役割表記。"
+  - audit_id: naomasa_reaudit_019_kanban_cycle3_qc
+    target_type: ashigaru_task_qc
+    target_task_id: subtask_kanban_cycle3_fix
+    target_id: naomasa_new_001
+    cycle_n: 3
+    redo_of: naomasa_reaudit_012
+    requested_by_inbox: msg_20260511_160834_f49ab5f8
+    audited_at: "2026-05-11T16:13:22+09:00"
+    audited_by: naomasa
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_passed: true
+    summary: "subtask_kanban_cycle3_fix を9観点+10/11 lensでQC。commit 1302d5b3 は存在し、JOIN clinic_id、billing終端、TEMP SELECT MAX+retry、失敗再現テスト、pytest 83 passed/SKIP=0 を直接確認。主ACはPASS。ただし kanban.py request path 内の _ensure_kanban_schema() は依然 get_kanban_board()/register_arrived_card() 系から呼ばれ、DDL完全分離ではなく safety net 残存。main.py startup wiring も報告どおり未接続のため pass_with_concerns とする。"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass_with_concerns
+      4_logic: pass
+      5_schema: pass_with_concerns
+      6_test: pass
+      7_legal: pass
+      8_ops: pass_with_concerns
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: pass
+    findings:
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:265 get_kanban_board() — patients JOIN は `h.patient_id = p.patient_id AND h.clinic_id = p.clinic_id` で clinic_id 混在を防止。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:567 get_daily_report() — daily_report_lines JOIN も `d.patient_id = p.patient_id AND d.clinic_id = p.clinic_id` で同一 patient_id 他院混入を防止。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:51 VALID_MOVES — input_waiting から billing を除外し、billing は line 57 で空配列の終端ステータス。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:345 move_card() — docstring line 350 に billing は archive 経由のみと明記。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:837 _next_temp_seq() — SELECT MAX(CAST(SUBSTR(...))) による採番へ変更、COUNT(*)+1 は実行コードから消滅。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:867 create_temporary_patient() — 10回 INSERT-then-catch retry により IntegrityError 時の連番競合を再試行。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:1096 _ensure_done_entered_at_column() — PRAGMA table_info で列存在確認後に ALTER TABLE、duplicate-column 以外の OperationalError は再送出設計。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py:26 _ensure_kanban_schema() — get_kanban_board() line 243 など request path safety net が残る。報告 caveat 通りだが、前回F3『通常 request path からDDL完全分離』には未完全。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/db/migrations/034_kanban_done_entered_at.sql:1 — migration declaration file exists; line 15 creates active-card partial unique index, but done_entered_at ALTER は SQL単独でなく Python側 PRAGMA-checked 実行と記載。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_cycle3_findings.py:196 test_kanban_py_join_sql_has_clinic_id() — source assertion で両 JOIN の clinic_id 条件を固定。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_cycle3_findings.py:217 test_valid_moves_billing_is_terminal() — billing終端を直接検査。"
+      - "/mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_cycle3_findings.py:274 test_concurrent_temp_patient_creation_unique_ids() — 5 threads barrier 同時起動で TEMP patient_id 一意性を実行検査。"
+      - "pytest direct run — `python3 -m pytest backend/tests/test_kanban_smoke.py backend/tests/test_patient_checkin.py backend/tests/test_temporary_patient.py backend/tests/test_kanban_cycle3_findings.py -q` returned 83 passed, 0 skipped, 0 failed, 1 PyPDF2 deprecation warning."
+      - "git evidence — /mnt/c/Projects/hakudokai-dev commit 1302d5b3 modifies backend/api/kanban.py, backend/db/migrations/034_kanban_done_entered_at.sql, backend/tests/test_kanban_cycle3_findings.py."
+    recommendations:
+      - "completion_gate は open としてよいが、audited_done 前に Karo/Shogun は request path DDL safety net 残存を明示的に non-blocking と裁決すること。"
+      - "次 cycle で main.py startup event から apply_kanban_startup_migration() を呼び、_ensure_kanban_schema() request path 呼び出しを完全撤去すれば F3 懸念は消える。"
+      - "migration 034 は SQL単独で done_entered_at を追加しないため、運用手順には Python startup migration が正と明記せよ。"
+      - "target repo は master ahead origin/master by 9 と報告されており、F007 方針に従い push 権限者が同期判断を行うこと。"
+    related_files:
+      - /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py
+      - /mnt/c/Projects/hakudokai-dev/backend/db/migrations/034_kanban_done_entered_at.sql
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_cycle3_findings.py
+      - queue/reports/ashigaru1_kanban_cycle3_fix_report.yaml
+      - queue/reports/ashigaru1_kanban_cycle3_pytest.log
+    verification_commands:
+      - "git -C /mnt/c/Projects/hakudokai-dev show --stat --oneline 1302d5b3"
+      - "nl -ba /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py | sed -n '1,70p;235,365p;545,570p;820,885p;1080,1115p;1185,1260p'"
+      - "nl -ba /mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_cycle3_findings.py | sed -n '1,390p'"
+      - "python3 -m py_compile /mnt/c/Projects/hakudokai-dev/backend/api/kanban.py /mnt/c/Projects/hakudokai-dev/backend/tests/test_kanban_cycle3_findings.py"
+      - "python3 -m pytest backend/tests/test_kanban_smoke.py backend/tests/test_patient_checkin.py backend/tests/test_temporary_patient.py backend/tests/test_kanban_cycle3_findings.py -q"
+    commit_hash: "1302d5b3"
+    log_path: "queue/reports/ashigaru1_kanban_cycle3_pytest.log"
+    cross_review_targets:
+      - "阿茶: request path DDL safety net 残存を運用事故/責任分界の観点で再評価されたし。"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "commit実在、対象行、失敗再現テスト、py_compile、pytest 83 passed/SKIP=0 を直接確認。残懸念は報告済み caveat と同一の request path DDL 完全分離未達。"
