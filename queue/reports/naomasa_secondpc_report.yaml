@@ -1569,3 +1569,149 @@ p2_designs:
       native_execution: true
       confidence: high
       confidence_note: "P2-1 の定義・評価基準・sample entry は実装済み。generated instructions 未反映のため pass_with_concerns。"
+
+  - audit_id: naomasa_p2_worker_eval_design
+    target_task_id: subtask_p2_background_worker_eval
+    target_deliverable: docs/background_worker_eval_gate.md
+    target_commit: "91c2491"
+    verdict: pass
+    evidence_state: complete
+    completion_gate: open
+    summary: "Background worker / automated trust scoring の採否判断 gate を文書化。6チェック質問、NG/OK事例、現行 worker 事例、markdown checklist、decision template を含む。"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass
+      5_schema: pass
+      6_test: pass
+      7_legal: pass
+      8_ux: pass
+      9_doc: pass
+      10_ecosystem_coherence: pass
+    findings:
+      - "docs/background_worker_eval_gate.md:25 Evaluation Gate — P2-3 の6質問を table 化し、pass/fail 条件をそれぞれ明文化。抽象論に留まらず testable な採否条件になっている。"
+      - "docs/background_worker_eval_gate.md:49 Anti-Patterns — polling loop / always-on manager / unbounded retry / narrative-only trust score / silent repair / completion by side effect を具体的 NG として列挙。"
+      - "docs/background_worker_eval_gate.md:66 Concrete current-system risks — `scripts/watcher_supervisor.sh` の5秒 supervisor loop を狭い scope の注意事例として扱い、広域 daemon 化を禁じている。"
+      - "docs/background_worker_eval_gate.md:69 Concrete current-system risks — `scripts/ntfy_listener.sh` の streaming reconnect を OK 事例にしつつ、auth/corrupt-file/audit trail/stop procedure の文書化を要求。"
+      - "docs/background_worker_eval_gate.md:72 Concrete current-system risks — `scripts/inbox_watcher.sh` は event-driven が主、timeout/escalation は WSL2/CLI edge fallback と位置づけ、polling-first を避けている。"
+      - "docs/background_worker_eval_gate.md:82 Approved Patterns — inbox_watcher / inbox_write / ntfy_listener / watcher_supervisor / shogun_verify_audit --preflight を現行 system の OK pattern として引用。"
+      - "docs/background_worker_eval_gate.md:97 Checklist — markdown checkbox 形式で failure mode、trigger、runtime、retry、audit trail、health signal、stop/rollback、PII、completion gate を全確認できる。"
+      - "docs/background_worker_eval_gate.md:117 Decision Record Template — worker_eval YAML template を用意し、採否判断を構造化できる。"
+      - "commit 91c2491 — `.gitignore` whitelist 追加 + docs/background_worker_eval_gate.md 新規作成を確認。"
+    recommendations:
+      - "次 cycle で worker_eval template を task YAML 生成時の任意添付 schema に昇格し、P2-2 cross-PC trust gate と連携させよ。"
+      - "watcher_supervisor.sh の stop/disable 手順を別運用 doc に明記すると、P2-3 gate の実運用がさらに堅くなる。"
+    related_files:
+      - docs/background_worker_eval_gate.md
+      - docs/final_solution_synthesis_20260511.md
+      - scripts/inbox_watcher.sh
+      - scripts/watcher_supervisor.sh
+      - scripts/ntfy_listener.sh
+      - scripts/inbox_write.sh
+    verification_commands:
+      - "rg -n 'What concrete failure|Is the trigger|maximum runtime|audit trail|stopped|health signal|inbox_watcher|ntfy_listener|watcher_supervisor|checklist|worker_eval' docs/background_worker_eval_gate.md"
+      - "git commit -m 'docs(P2-3): add background worker evaluation gate'"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "任務 YAML の5 section、6質問、現行事例引用、checkbox checklist、git commit 条件を満たす。"
+
+  - audit_id: naomasa_p2_cross_pc_trust_gate_review
+    target_task_id: subtask_p2_cross_pc_trust_gate
+    target_deliverable: docs/cross_pc_trust_gate.md
+    target_report: queue/reports/ashigaru5_p2_trust_gate_report.yaml
+    target_commit: "364e78a"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    summary: "P2-2 cross-PC trust gate は PC suffix / hash verification / PII scan / audit trail の4 gate を定義し、mTLS/federation daemon 不要の軽量方針を満たす。ただし hash ファイル転送手順と PII scan の過検知に実運用懸念あり。"
+    perspective_verdicts:
+      1_func: pass_with_concerns
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass_with_concerns
+      7_legal: pass_with_concerns
+      8_ux: pass_with_concerns
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "docs/cross_pc_trust_gate.md:11 Trust Requirements — G1 naming / G2 hash / G3 PII scan / G4 audit record の4 gate を全通過条件とし、未通過なら completion_gate blocked と明記。P2-2 の中核要件は充足。"
+      - "docs/cross_pc_trust_gate.md:20 Trust Requirements — 現在の2-PC local構成では mTLS/federation daemon 不要、identity drift/report spoofing の証拠が出た時のみ P2-3 gate で再評価とし、過剰 daemon を避けている。"
+      - "docs/cross_pc_trust_gate.md:25 PC Suffix Naming Convention — `{agent_id}_{pc_suffix}_report...yaml` と mainpc/secondpc の命名規則を定義し、既存4軍師 report の suffix 整合を列挙。"
+      - "docs/cross_pc_trust_gate.md:61 Hash Verification — sha256 before/after 比較の狙いは妥当。ただし docs/cross_pc_trust_gate.md:73 の `/tmp/naomasa_secondpc_report.sha256` を MC 側へどう転送するかが明記されず、docs/cross_pc_trust_gate.md:90 の `sha256sum -c /tmp/...` は別PCではそのまま成立しない恐れ。"
+      - "docs/cross_pc_trust_gate.md:109 PII/Secret Scan — secret pattern と PII pattern を分離して grep 例を提示。法令・secret leak 防止の方向性は妥当。"
+      - "docs/cross_pc_trust_gate.md:127 PII pattern — `patient_id` / `birth_date` を固定語として検出するため、医療系 audit report の schema 名・findings 文言だけで SCAN_FAIL になり得る。PII value と field name の区別が必要。"
+      - "docs/cross_pc_trust_gate.md:153 Audit Record Schema — `cross_pc_transfer_audit.yaml` の transfers schema に source/target hash、scan result、operator を含め、append-only 証跡として completion gate と接続している。"
+      - "queue/reports/ashigaru5_p2_trust_gate_report.yaml:12 deliverables — 5 section 構成、commit 364e78a、acceptance criteria 全 PASS と報告。`git show 364e78a` でも docs/cross_pc_trust_gate.md 196行追加を確認。"
+    recommendations:
+      - "hash verification は hash file 自体の転送方法、または `sha256sum <received_file>` の値を audit record に直接比較する手順へ修正せよ。"
+      - "PII scan は `patient_id` など field name だけで fail にせず、値 pattern・allowlist・redaction済み marker を区別せよ。"
+      - "cross_pc_transfer_audit.yaml の実ファイル作成 whitelist と append helper を次 cycle で用意し、人手 YAML 破損を避けよ。"
+    related_files:
+      - docs/cross_pc_trust_gate.md
+      - queue/reports/ashigaru5_p2_trust_gate_report.yaml
+      - docs/final_solution_synthesis_20260511.md
+      - docs/background_worker_eval_gate.md
+    verification_commands:
+      - "nl -ba docs/cross_pc_trust_gate.md | sed -n '1,260p'"
+      - "cat queue/reports/ashigaru5_p2_trust_gate_report.yaml"
+      - "git show --stat --oneline 364e78a -- docs/cross_pc_trust_gate.md"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "4 gate と lightweight trust 方針は成立。hash/PII scan の実運用誤爆リスクが残るため pass_with_concerns。"
+
+  - audit_id: naomasa_p1_memory_sync_design_review
+    target_task_id: subtask_p1_memory_sync_design
+    target_deliverable: docs/memory_sync_design.md
+    target_report: queue/reports/ashigaru4_p1_memory_sync_report.yaml
+    target_commit: "f416a8d"
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    summary: "P1-1 memory sync design は shared memory blocks のみ同期、raw MEMORY.md 不同期、secret/PII scan、event-triggered helper script 方針を定義。daemon 不採用の方針は明確だが、inotify を polling daemon と同一視する表現は P2-3 gate と整合整理が必要。"
+    perspective_verdicts:
+      1_func: pass
+      2_anti_dup: pass
+      3_kiritsu: pass
+      4_logic: pass_with_concerns
+      5_schema: pass_with_concerns
+      6_test: pass_with_concerns
+      7_legal: pass
+      8_ux: pass_with_concerns
+      9_doc: pass
+      10_ecosystem_coherence: pass_with_concerns
+    findings:
+      - "docs/memory_sync_design.md:9 Problem — SC/MC memory 分離、raw dump、partial verdict 伝達遅延、権限伝達遅延を具体的な過去不整合として列挙し、P1-1 の failure mode が明確。"
+      - "docs/memory_sync_design.md:50 Design Constraints — shared memory blocks のみ同期、secret/PII scan 必須、event-triggered push/pull のみ、background worker は value-and-side-effects gate 後のみと定義。"
+      - "docs/memory_sync_design.md:65 Candidate a — git tracked + secrets check は履歴/rollback が得られる一方、public repo risk を明記。採否の tradeoff が具体的。"
+      - "docs/memory_sync_design.md:78 Candidate b — Supabase UPSERT 案も value/side-effects を比較し、cloud 保存の PII risk を明記。"
+      - "docs/memory_sync_design.md:90 Candidate c — inotify watch + rsync を却下している。memory sync 用の常駐 rsync は過剰という判断は妥当だが、`inotifywait 常駐 = polling daemon と等価` の表現は P2-3 docs/background_worker_eval_gate.md の event-driven watcher 容認方針と衝突し得る。"
+      - "docs/memory_sync_design.md:121 Recommendation — a+d hybrid、`scripts/memory_sync.sh {push|pull|diff|scan}`、shared:true タグ制、raw MEMORY.md 不同期を採用。P1-1 の主規則に適合。"
+      - "docs/memory_sync_design.md:137 Step 1 — shared true/false 候補を列挙し、PII/secret risk のある files を local-only と明記。個情法・secret leak 観点は良い。"
+      - "docs/memory_sync_design.md:163 Step 2 — push/pull/diff/scan の helper command 仕様と `memory_sync_log.yaml` audit trail を定義。ただし script 本体は未実装であり、現段階は設計完了に留まる。"
+      - "docs/memory_sync_design.md:197 value-and-side-effects gate — failure mode、trigger、runtime、audit trail、stop method、health signal を6項目で回答し、P2-3 gate と接続している。"
+      - "queue/reports/ashigaru4_p1_memory_sync_report.yaml:18 deliverables — docs/memory_sync_design.md と .gitignore whitelist、commit f416a8d を報告。`git show f416a8d` でも docs/memory_sync_design.md 220行追加を確認。"
+    recommendations:
+      - "docs/memory_sync_design.md:98 の `inotifywait 常駐 = polling daemon と等価` は、P2-3 gate に合わせて『memory sync用途では副作用過大のため却下』へ表現を調整せよ。event-driven watcher 一般を否定しないこと。"
+      - "次 cycle で `scripts/memory_sync.sh scan|push|pull|diff` の最小実装と `queue/reports/memory_sync_log.yaml` append schema を追加せよ。"
+      - "shared:true frontmatter の正規 schema と secret/PII scan allowlist を定義し、raw memory の誤同期を機械的に止めよ。"
+    related_files:
+      - docs/memory_sync_design.md
+      - queue/reports/ashigaru4_p1_memory_sync_report.yaml
+      - docs/final_solution_synthesis_20260511.md
+      - docs/background_worker_eval_gate.md
+    verification_commands:
+      - "nl -ba docs/memory_sync_design.md | sed -n '1,320p'"
+      - "cat queue/reports/ashigaru4_p1_memory_sync_report.yaml"
+      - "git show --stat --oneline f416a8d -- docs/memory_sync_design.md"
+    persona_signature:
+      audited_by_agent: "井伊直政 (赤鬼の眼)"
+      native_execution: true
+      confidence: high
+      confidence_note: "P1-1 設計要件は満たす。P2-3 との文言整合と helper 未実装が残るため pass_with_concerns。"
