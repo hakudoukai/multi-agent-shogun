@@ -3289,3 +3289,94 @@ council_moushi_engine_round1:
       reason: "cmd_004 B1 ブロッカーである申し送りUIのv0.2化に向け、実装前にschema/legal/stateの破綻点を分離した。"
       risks_to_north_star:
         - "v0.1のschema認識を放置するとStage2実装が既存DD-044/handover stackと二重化し、B1解消が遅れる。"
+
+cmd004_pdf_v02_fixture_setup_qc:
+  - audit_id: naomasa_qc_ashigaru6_pdf_v02_fixture_setup
+    target_type: ashigaru_report_qc
+    target_task_id: subtask_cmd004_pdf_v0_2_fixture_setup
+    parent_cmd: cmd_004
+    source_report: queue/reports/ashigaru6_cmd004_pdf_v0_2_fixture_setup_report.yaml
+    target_repo: /mnt/c/Projects/hakudokai-dev
+    target_commit_hash: "b73e64bd"
+    audited_at: "2026-05-11T16:52:42+09:00"
+    audited_by: naomasa
+    verdict: fail
+    evidence_state: partial
+    completion_gate: blocked
+    log_path: queue/reports/naomasa_secondpc_report.yaml:cmd004_pdf_v02_fixture_setup_qc
+    related_files:
+      - queue/tasks/subtask_cmd004_pdf_v0_2_fixture_setup.yaml
+      - queue/reports/ashigaru6_cmd004_pdf_v0_2_fixture_setup_report.yaml
+      - docs/cmd004_kartetto_pdf_v0_2_spec.md
+      - /mnt/c/Projects/hakudokai-dev/backend/etl/quartetto_pdf_parser_v2.py
+      - /mnt/c/Projects/hakudokai-dev/backend/etl/quartetto_extraction_rules.yaml
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_quartetto_pdf_v0_2.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/test_quartetto_pdf_parser.py
+      - /mnt/c/Projects/hakudokai-dev/backend/tests/fixtures/quartetto/generate_fixtures.py
+    perspective_verdicts:
+      1_func: concerns
+      2_anti_dup: pass
+      3_kiritsu: concerns
+      4_logic: concerns
+      5_schema: pass
+      6_test: fail
+      7_legal: pass
+      8_ops: concerns
+      9_doc: concerns
+      10_ecosystem_coherence: concerns
+      11_cross_pc_repo_check: concerns
+      12_future_operations_radicality: fail
+    evidence:
+      commit_exists: "git -C /mnt/c/Projects/hakudokai-dev show --stat --oneline b73e64bd succeeded"
+      repo_state: "master...origin/master ahead 15; commit b73e64bd local/unpushed; unrelated dirty/untracked files also present"
+      v0_2_test_direct: "python3 -m pytest backend/tests/test_quartetto_pdf_v0_2.py -q => 5 passed, 0 skipped"
+      v0_1_test_direct: "python3 -m pytest backend/tests/test_quartetto_pdf_parser.py -q => 31 passed, 1 failed, 0 skipped"
+      failing_test: "backend/tests/test_quartetto_pdf_parser.py:483 TestOutputCommonPatient.test_output_creates_json expected '1234' but got '05_1234'"
+    findings:
+      - severity: high
+        perspective: 6_test
+        location: "docs/cmd004_kartetto_pdf_v0_2_spec.md:246-254 §6.4 AC-T5 / backend/tests/test_quartetto_pdf_parser.py:483"
+        issue: "spec受入条件は v0.1 unit test 全 pass 維持だが、直政再実行で TestOutputCommonPatient.test_output_creates_json が FAIL。報告は既存failとするが、completion gate を open にできる状態ではない。"
+        recommendation: "parser full integration task では patient_no 正規化契約 (`1234` vs `05_1234`) を root cause から整理し、期待値か output_common_patient contract を一元化して v0.1 suite green を必須にする。"
+      - severity: high
+        perspective: 12_future_operations_radicality
+        location: "backend/etl/quartetto_pdf_parser_v2.py:104-128 / backend/tests/fixtures/quartetto/scanned/README.md:1-6"
+        issue: "F-A scanned/OCR は README のみで未生成・未測定。開発中に根本治療する原則では、スキャンPDF未対応を後回しにしたまま PASS とはできない。"
+        recommendation: "P2別taskに逃がす場合でも、現task verdictは fail または blocked とし、scanned synthetic image PDF + OCR unavailable fallback test を次taskの必須ACへ昇格させる。"
+      - severity: medium
+        perspective: 1_func
+        location: "queue/tasks/subtask_cmd004_pdf_v0_2_fixture_setup.yaml:10-15 / ashigaru6 report AC1"
+        issue: "task AC1 は `backend/tests/fixtures/pdf_samples/` への複数sample配置を求めるが、実装は `backend/tests/fixtures/quartetto/`。spec §6.1 に寄せた判断は合理的だが、AC逸脱の明示承認がない。"
+        recommendation: "Karo側でACを `quartetto/` に正規化するか、互換symlink/READMEで pdf_samples 期待を閉じる。"
+      - severity: medium
+        perspective: 10_ecosystem_coherence
+        location: "/mnt/c/Projects/hakudokai-dev git status"
+        issue: "target repo は origin/master から ahead 15、b73e64bd は未push。SC/MC共有・家康verify chainへ渡す証跡としては不十分。"
+        recommendation: "F007裁決後に guarded push し、push後 commit hash を Karo/Gunshi report に再記録する。push前は completion_gate=blocked のまま扱う。"
+      - severity: medium
+        perspective: 8_ops
+        location: "backend/etl/quartetto_pdf_parser_v2.py:225-285"
+        issue: "parse_quartetto_pdf_v2 は追加されたが、watcher production path から未接続。base fixture としては価値があるが、会計完了→billing自動移動の運用改善はまだ発火しない。"
+        recommendation: "次task `subtask_cmd004_pdf_v0_2_parser_full_integration` で feature flag 付き接続、fallback、metrics、rollbackを実装する。"
+    acceptance_criteria_qc:
+      AC1: "concerns: synthetic fallback 自体は許容余地あり。ただし task指定 path と実装 path が乖離。"
+      AC2: "concerns: watcher.py ではなく parser_v2 へ配置。spec整合の理由はあるが task ACとは差分あり。"
+      AC3: "fail: F-B/C/D は直接5 passで確認。F-A は P2として未測定、4失敗類型ベースライン完遂ではない。"
+      AC4: "fail: SKIP=0は満たすが v0.1 suite に FAIL=1。テスト規範上、完了扱い不可。push待機はF007遵守。"
+      AC5: "concerns: reportあり。ただし v0.1 suite件数報告は実測 31 passed/1 failed と不一致。"
+    recommendation_to_karo:
+      verdict_for_chain: "fail"
+      next_task: "既に割当済みの subtask_cmd004_pdf_v0_2_parser_full_integration で、v0.1 FAIL解消・F-A scanned fixture/OCR unavailable path・watcher接続・push後verifyを根本治療ACに含めるべし。"
+      push_guidance: "未push commit b73e64bd は家康/F007裁決まで push しない。ただし未pushの間は audited_done にしない。"
+    test_evidence:
+      skip_count: 0
+      fail_count: 1
+      direct_commands:
+        - "python3 -m pytest backend/tests/test_quartetto_pdf_v0_2.py -q"
+        - "python3 -m pytest backend/tests/test_quartetto_pdf_parser.py -q"
+    audit_passed: false
+    north_star_alignment:
+      status: aligned
+      reason: "会計待ち時間ゼロの根幹であるPDF抽出を、実稼働前に短期base実装で通さず、既存unit failure/OCR未対応/未pushを根本治療対象として遮断した。"
+      risks_to_north_star:
+        - "v0.1 unit failure と watcher未接続を放置すると、fixtureだけgreenでも実運用のbilling自動移動は改善しない。"
