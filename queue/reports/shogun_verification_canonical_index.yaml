@@ -1,10 +1,1827 @@
 schema_version: '1'
 generator: scripts/normalize_shogun_verification_logs.py
-generated_at: '2026-05-11T12:11:41+09:00'
+generated_at: '2026-05-11T12:32:22+09:00'
 missing_pc_logs: []
 parse_error_seen: false
-total_events: 4
+total_events: 107
 events:
+- event_id: e33c5a04202f
+  source_pc: mainpc
+  target_id: naomasa_new_001
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T23:02:40+00:00'
+  payload_hash: 969259f8cac0ef6a
+  audit_entry_excerpt: {}
+  flags: []
+- event_id: 61ca1c8141ef
+  source_pc: mainpc
+  target_id: naomasa_new_002
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T23:02:40+00:00'
+  payload_hash: 969259f8cac0ef6a
+  audit_entry_excerpt: {}
+  flags: []
+- event_id: f4fe5f0aa861
+  source_pc: mainpc
+  target_id: kuroda_006
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:42:22+00:00'
+  payload_hash: 5293515d0cd11927
+  audit_entry_excerpt:
+    audit_id: kuroda_006
+    audited_at: '2026-05-10T15:40:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 85bb87502ce7
+  source_pc: mainpc
+  target_id: kuroda_007
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 3/6
+  verified_at: '2026-05-10T06:42:27+00:00'
+  payload_hash: 37a50e335f8b154c
+  audit_entry_excerpt:
+    audit_id: kuroda_007
+    audited_at: '2026-05-10T15:41:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    verdict: pass
+  flags:
+  - 'some related_files do not exist: [''<REDACTED:absolute_wsl_c>'']'
+  redaction_note:
+  - absolute_wsl_c
+- event_id: 4b8b7288ca19
+  source_pc: mainpc
+  target_id: kuroda_007
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:42:47+00:00'
+  payload_hash: 2dfba2d553d31c93
+  audit_entry_excerpt:
+    audit_id: kuroda_007
+    audited_at: '2026-05-10T15:41:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: f3393829656b
+  source_pc: mainpc
+  target_id: kuroda_code_audit_001
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:04+00:00'
+  payload_hash: dfafb3a105606b56
+  audit_entry_excerpt:
+    audit_id: kuroda_code_audit_001
+    audited_at: '2026-05-10T08:40:00+09:00'
+    commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_v3_001
+    verdict: concerns
+  flags:
+  - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 249s > 60s threshold
+  - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
+    ''test_quartetto_pdf_parser.py'']'
+- event_id: 58f728780338
+  source_pc: mainpc
+  target_id: kuroda_001
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: ba5bdf001cfede84
+  audit_entry_excerpt:
+    audit_id: kuroda_001
+    audited_at: '2026-05-10T08:59:10+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 0dcfc6b0'
+- event_id: 7ea0f3866e92
+  source_pc: mainpc
+  target_id: kuroda_001_fix_review
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 60b74251845c35eb
+  audit_entry_excerpt:
+    audit_id: kuroda_001_fix_review
+    audited_at: '2026-05-10T09:55:30+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 5274c03c'
+- event_id: c0fdaa47f097
+  source_pc: mainpc
+  target_id: kuroda_002
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 9f2e772f6bcca37a
+  audit_entry_excerpt:
+    audit_id: kuroda_002
+    audited_at: '2026-05-10T13:12:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+- event_id: 45a074595d14
+  source_pc: mainpc
+  target_id: kuroda_003
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: c688a1ef67c3b706
+  audit_entry_excerpt:
+    audit_id: kuroda_003
+    audited_at: '2026-05-10T13:13:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+- event_id: 9424ca4830b9
+  source_pc: mainpc
+  target_id: kuroda_004
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 780097d5796f6f25
+  audit_entry_excerpt:
+    audit_id: kuroda_004
+    audited_at: '2026-05-10T13:14:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
+  - findings too generic (specific=0, generic=0)
+- event_id: cea96bbfd0b0
+  source_pc: mainpc
+  target_id: kuroda_005
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 63223d861e092be8
+  audit_entry_excerpt:
+    audit_id: kuroda_005
+    audited_at: '2026-05-10T13:15:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+- event_id: 095924e5323f
+  source_pc: mainpc
+  target_id: kuroda_006
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 5293515d0cd11927
+  audit_entry_excerpt:
+    audit_id: kuroda_006
+    audited_at: '2026-05-10T15:40:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: b79ba88770ec
+  source_pc: mainpc
+  target_id: kuroda_007
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 2dfba2d553d31c93
+  audit_entry_excerpt:
+    audit_id: kuroda_007
+    audited_at: '2026-05-10T15:41:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 8958f326e815
+  source_pc: mainpc
+  target_id: 8a1b2c3d
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 9598b73a44837e13
+  audit_entry_excerpt:
+    audit_id: 8a1b2c3d
+    audited_at: '2026-05-10T09:20:00+09:00'
+    commit_hash: 36bbc93
+    target_id: cmd_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: d03031145bbc
+  source_pc: mainpc
+  target_id: 9e4f5g6h
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 3b7cac51a3c73d8a
+  audit_entry_excerpt:
+    audit_id: 9e4f5g6h
+    audited_at: '2026-05-10T09:22:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_002
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: ca515dde04ed
+  source_pc: mainpc
+  target_id: 1i2j3k4l
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 86c7ce5b1063b35f
+  audit_entry_excerpt:
+    audit_id: 1i2j3k4l
+    audited_at: '2026-05-10T09:24:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_003
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 3711567bd35b
+  source_pc: mainpc
+  target_id: 5m6n7o8p
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 752da86f219627b7
+  audit_entry_excerpt:
+    audit_id: 5m6n7o8p
+    audited_at: '2026-05-10T09:26:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_004
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: eb8e54b39a7f
+  source_pc: mainpc
+  target_id: 9q0r1s2t
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 50fcf2f98557292b
+  audit_entry_excerpt:
+    audit_id: 9q0r1s2t
+    audited_at: '2026-05-10T09:28:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_005
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 047c0e3babe7
+  source_pc: mainpc
+  target_id: 3u4v5w6x
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 76ff75d2526adcea
+  audit_entry_excerpt:
+    audit_id: 3u4v5w6x
+    audited_at: '2026-05-10T09:30:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cycle1_inventory
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: d3d2fabb1b45
+  source_pc: mainpc
+  target_id: f1a2b3c4
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 8bda993c4e13d72f
+  audit_entry_excerpt:
+    audit_id: f1a2b3c4
+    audited_at: '2026-05-10T09:35:00+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 5274c03c'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/etl/quartetto_pdf_parser.py'', ''backend/etl/quartetto_pdf_watcher.py'']'
+- event_id: f707dec4be44
+  source_pc: mainpc
+  target_id: d2e3f4g5
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: 3c3926134d90f3b2
+  audit_entry_excerpt:
+    audit_id: d2e3f4g5
+    audited_at: '2026-05-10T09:37:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/services/teriha_passport_engine.py'',
+    ''supabase/migrations/20260509_ceremony_event.sql'']'
+- event_id: 44254727ae60
+  source_pc: mainpc
+  target_id: h6i7j8k9
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:05+00:00'
+  payload_hash: e97b0c85f949836b
+  audit_entry_excerpt:
+    audit_id: h6i7j8k9
+    audited_at: '2026-05-10T09:39:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''frontend/src/pages/reception/CheckinQRDisplay.tsx'',
+    ''docs/secondpc_sakai_kanban_adapter_design_v1.md'']'
+- event_id: 659995b1e226
+  source_pc: mainpc
+  target_id: l0m1n2o3
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:06+00:00'
+  payload_hash: 4fdb1b86d9108c4f
+  audit_entry_excerpt:
+    audit_id: l0m1n2o3
+    audited_at: '2026-05-10T09:41:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''shim/hakudokai/hakudokai_consent_api.py'',
+    ''shim/hakudokai/hakudokai_aichat_api.py'']'
+- event_id: 04fad8b5fcca
+  source_pc: mainpc
+  target_id: p4q5r6s7
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:06+00:00'
+  payload_hash: 085f027bcf9010a1
+  audit_entry_excerpt:
+    audit_id: p4q5r6s7
+    audited_at: '2026-05-10T09:43:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/routers/meisai_receipt.py'']'
+- event_id: ba30390c9bd6
+  source_pc: mainpc
+  target_id: u8v9w0x1
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:06+00:00'
+  payload_hash: 643e3c4fbffe1100
+  audit_entry_excerpt:
+    audit_id: u8v9w0x1
+    audited_at: '2026-05-10T09:50:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/schemas/common_base.py'', ''frontend/src/types/common-base.ts'',
+    ''docs/common_base_adapter_design_v1.md'']'
+- event_id: da7b1c8d79e7
+  source_pc: mainpc
+  target_id: kuroda_code_audit_001
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: dfafb3a105606b56
+  audit_entry_excerpt:
+    audit_id: kuroda_code_audit_001
+    audited_at: '2026-05-10T08:40:00+09:00'
+    commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_v3_001
+    verdict: concerns
+  flags:
+  - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 249s > 60s threshold
+  - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
+    ''test_quartetto_pdf_parser.py'']'
+- event_id: 51b4cff8a171
+  source_pc: mainpc
+  target_id: kuroda_001
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: ba5bdf001cfede84
+  audit_entry_excerpt:
+    audit_id: kuroda_001
+    audited_at: '2026-05-10T08:59:10+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 0dcfc6b0'
+- event_id: d688eae2b730
+  source_pc: mainpc
+  target_id: kuroda_001_fix_review
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: 60b74251845c35eb
+  audit_entry_excerpt:
+    audit_id: kuroda_001_fix_review
+    audited_at: '2026-05-10T09:55:30+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 5274c03c'
+- event_id: e33bfc5c3d4b
+  source_pc: mainpc
+  target_id: kuroda_002
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: 9f2e772f6bcca37a
+  audit_entry_excerpt:
+    audit_id: kuroda_002
+    audited_at: '2026-05-10T13:12:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+- event_id: 2d3173953f73
+  source_pc: mainpc
+  target_id: kuroda_003
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: c688a1ef67c3b706
+  audit_entry_excerpt:
+    audit_id: kuroda_003
+    audited_at: '2026-05-10T13:13:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+- event_id: 5a036ceb4666
+  source_pc: mainpc
+  target_id: kuroda_004
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: 780097d5796f6f25
+  audit_entry_excerpt:
+    audit_id: kuroda_004
+    audited_at: '2026-05-10T13:14:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
+  - findings too generic (specific=0, generic=0)
+- event_id: b121b9e7d931
+  source_pc: mainpc
+  target_id: kuroda_005
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: 63223d861e092be8
+  audit_entry_excerpt:
+    audit_id: kuroda_005
+    audited_at: '2026-05-10T13:15:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+- event_id: 77d8d039741d
+  source_pc: mainpc
+  target_id: kuroda_006
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: 5293515d0cd11927
+  audit_entry_excerpt:
+    audit_id: kuroda_006
+    audited_at: '2026-05-10T15:40:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: c56c4d1870aa
+  source_pc: mainpc
+  target_id: kuroda_007
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:08+00:00'
+  payload_hash: 2dfba2d553d31c93
+  audit_entry_excerpt:
+    audit_id: kuroda_007
+    audited_at: '2026-05-10T15:41:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 7f6520fb378f
+  source_pc: mainpc
+  target_id: 8a1b2c3d
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 9598b73a44837e13
+  audit_entry_excerpt:
+    audit_id: 8a1b2c3d
+    audited_at: '2026-05-10T09:20:00+09:00'
+    commit_hash: 36bbc93
+    target_id: cmd_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: c0dbcfcaf4e6
+  source_pc: mainpc
+  target_id: 9e4f5g6h
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 3b7cac51a3c73d8a
+  audit_entry_excerpt:
+    audit_id: 9e4f5g6h
+    audited_at: '2026-05-10T09:22:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_002
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 50a68608e3c9
+  source_pc: mainpc
+  target_id: 1i2j3k4l
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 86c7ce5b1063b35f
+  audit_entry_excerpt:
+    audit_id: 1i2j3k4l
+    audited_at: '2026-05-10T09:24:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_003
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 02cdc5e8357b
+  source_pc: mainpc
+  target_id: 5m6n7o8p
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 752da86f219627b7
+  audit_entry_excerpt:
+    audit_id: 5m6n7o8p
+    audited_at: '2026-05-10T09:26:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_004
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 07a1ca62a658
+  source_pc: mainpc
+  target_id: 9q0r1s2t
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 50fcf2f98557292b
+  audit_entry_excerpt:
+    audit_id: 9q0r1s2t
+    audited_at: '2026-05-10T09:28:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_005
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: c5db26d0e4c3
+  source_pc: mainpc
+  target_id: 3u4v5w6x
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 76ff75d2526adcea
+  audit_entry_excerpt:
+    audit_id: 3u4v5w6x
+    audited_at: '2026-05-10T09:30:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cycle1_inventory
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: aa12f73c17e2
+  source_pc: mainpc
+  target_id: f1a2b3c4
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 8bda993c4e13d72f
+  audit_entry_excerpt:
+    audit_id: f1a2b3c4
+    audited_at: '2026-05-10T09:35:00+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 5274c03c'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/etl/quartetto_pdf_parser.py'', ''backend/etl/quartetto_pdf_watcher.py'']'
+- event_id: 4eb7cd9e8c05
+  source_pc: mainpc
+  target_id: d2e3f4g5
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 3c3926134d90f3b2
+  audit_entry_excerpt:
+    audit_id: d2e3f4g5
+    audited_at: '2026-05-10T09:37:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/services/teriha_passport_engine.py'',
+    ''supabase/migrations/20260509_ceremony_event.sql'']'
+- event_id: 2ca1ed372308
+  source_pc: mainpc
+  target_id: h6i7j8k9
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: e97b0c85f949836b
+  audit_entry_excerpt:
+    audit_id: h6i7j8k9
+    audited_at: '2026-05-10T09:39:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''frontend/src/pages/reception/CheckinQRDisplay.tsx'',
+    ''docs/secondpc_sakai_kanban_adapter_design_v1.md'']'
+- event_id: af7fe804b56a
+  source_pc: mainpc
+  target_id: l0m1n2o3
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 4fdb1b86d9108c4f
+  audit_entry_excerpt:
+    audit_id: l0m1n2o3
+    audited_at: '2026-05-10T09:41:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''shim/hakudokai/hakudokai_consent_api.py'',
+    ''shim/hakudokai/hakudokai_aichat_api.py'']'
+- event_id: ef5a3f5e99c9
+  source_pc: mainpc
+  target_id: p4q5r6s7
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 085f027bcf9010a1
+  audit_entry_excerpt:
+    audit_id: p4q5r6s7
+    audited_at: '2026-05-10T09:43:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/routers/meisai_receipt.py'']'
+- event_id: 4751c9712f84
+  source_pc: mainpc
+  target_id: u8v9w0x1
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T06:43:09+00:00'
+  payload_hash: 643e3c4fbffe1100
+  audit_entry_excerpt:
+    audit_id: u8v9w0x1
+    audited_at: '2026-05-10T09:50:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/schemas/common_base.py'', ''frontend/src/types/common-base.ts'',
+    ''docs/common_base_adapter_design_v1.md'']'
+- event_id: 7d3f50748e08
+  source_pc: mainpc
+  target_id: kuroda_001
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:18+00:00'
+  payload_hash: ba5bdf001cfede84
+  audit_entry_excerpt:
+    audit_id: kuroda_001
+    audited_at: '2026-05-10T08:59:10+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 0dcfc6b0'
+- event_id: eb65528c80b1
+  source_pc: mainpc
+  target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:34+00:00'
+  payload_hash: 5293515d0cd11927
+  audit_entry_excerpt:
+    audit_id: kuroda_006
+    audited_at: '2026-05-10T15:40:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 4f766e07e667
+  source_pc: mainpc
+  target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T06:43:34+00:00'
+  payload_hash: 2dfba2d553d31c93
+  audit_entry_excerpt:
+    audit_id: kuroda_007
+    audited_at: '2026-05-10T15:41:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: cdb5320bf57c
+  source_pc: mainpc
+  target_id: kuroda_code_audit_001
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:27:36+00:00'
+  payload_hash: dfafb3a105606b56
+  audit_entry_excerpt:
+    audit_id: kuroda_code_audit_001
+    audited_at: '2026-05-10T08:40:00+09:00'
+    commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_v3_001
+    verdict: concerns
+  flags:
+  - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 249s > 60s threshold
+  - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
+    ''test_quartetto_pdf_parser.py'']'
+- event_id: 6effb8c11735
+  source_pc: mainpc
+  target_id: kuroda_001
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: ba5bdf001cfede84
+  audit_entry_excerpt:
+    audit_id: kuroda_001
+    audited_at: '2026-05-10T08:59:10+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 0dcfc6b0'
+- event_id: 6fc83cb8ea4a
+  source_pc: mainpc
+  target_id: kuroda_001_fix_review
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 60b74251845c35eb
+  audit_entry_excerpt:
+    audit_id: kuroda_001_fix_review
+    audited_at: '2026-05-10T09:55:30+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 5274c03c'
+- event_id: a6bc066c8e63
+  source_pc: mainpc
+  target_id: kuroda_002
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 9f2e772f6bcca37a
+  audit_entry_excerpt:
+    audit_id: kuroda_002
+    audited_at: '2026-05-10T13:12:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+- event_id: 136b1a54950a
+  source_pc: mainpc
+  target_id: kuroda_003
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: c688a1ef67c3b706
+  audit_entry_excerpt:
+    audit_id: kuroda_003
+    audited_at: '2026-05-10T13:13:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+- event_id: 0119ca432638
+  source_pc: mainpc
+  target_id: kuroda_004
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 780097d5796f6f25
+  audit_entry_excerpt:
+    audit_id: kuroda_004
+    audited_at: '2026-05-10T13:14:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
+  - findings too generic (specific=0, generic=0)
+- event_id: 1c210302a68e
+  source_pc: mainpc
+  target_id: kuroda_005
+  auditor_who: kuroda
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 63223d861e092be8
+  audit_entry_excerpt:
+    audit_id: kuroda_005
+    audited_at: '2026-05-10T13:15:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+- event_id: 173820b4b1c6
+  source_pc: mainpc
+  target_id: kuroda_006
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 5293515d0cd11927
+  audit_entry_excerpt:
+    audit_id: kuroda_006
+    audited_at: '2026-05-10T15:40:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 5fcfdaf834ee
+  source_pc: mainpc
+  target_id: kuroda_007
+  auditor_who: kuroda
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 2dfba2d553d31c93
+  audit_entry_excerpt:
+    audit_id: kuroda_007
+    audited_at: '2026-05-10T15:41:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 13329901fa72
+  source_pc: mainpc
+  target_id: 8a1b2c3d
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 9598b73a44837e13
+  audit_entry_excerpt:
+    audit_id: 8a1b2c3d
+    audited_at: '2026-05-10T09:20:00+09:00'
+    commit_hash: 36bbc93
+    target_id: cmd_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 4c1564732855
+  source_pc: mainpc
+  target_id: 9e4f5g6h
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:27:37+00:00'
+  payload_hash: 3b7cac51a3c73d8a
+  audit_entry_excerpt:
+    audit_id: 9e4f5g6h
+    audited_at: '2026-05-10T09:22:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_002
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 5f99e8b5b923
+  source_pc: mainpc
+  target_id: 1i2j3k4l
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 86c7ce5b1063b35f
+  audit_entry_excerpt:
+    audit_id: 1i2j3k4l
+    audited_at: '2026-05-10T09:24:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_003
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: c1702ebcb6fc
+  source_pc: mainpc
+  target_id: 5m6n7o8p
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 752da86f219627b7
+  audit_entry_excerpt:
+    audit_id: 5m6n7o8p
+    audited_at: '2026-05-10T09:26:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_004
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 9a82d7e083ac
+  source_pc: mainpc
+  target_id: 9q0r1s2t
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 50fcf2f98557292b
+  audit_entry_excerpt:
+    audit_id: 9q0r1s2t
+    audited_at: '2026-05-10T09:28:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cmd_005
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: f023ddab62a5
+  source_pc: mainpc
+  target_id: 3u4v5w6x
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 76ff75d2526adcea
+  audit_entry_excerpt:
+    audit_id: 3u4v5w6x
+    audited_at: '2026-05-10T09:30:00+09:00'
+    commit_hash: 928d3cc
+    target_id: cycle1_inventory
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+- event_id: 3ce0a2f2f6cf
+  source_pc: mainpc
+  target_id: f1a2b3c4
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 8bda993c4e13d72f
+  audit_entry_excerpt:
+    audit_id: f1a2b3c4
+    audited_at: '2026-05-10T09:35:00+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 5274c03c'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/etl/quartetto_pdf_parser.py'', ''backend/etl/quartetto_pdf_watcher.py'']'
+- event_id: 17265098cbf6
+  source_pc: mainpc
+  target_id: d2e3f4g5
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 3c3926134d90f3b2
+  audit_entry_excerpt:
+    audit_id: d2e3f4g5
+    audited_at: '2026-05-10T09:37:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/services/teriha_passport_engine.py'',
+    ''supabase/migrations/20260509_ceremony_event.sql'']'
+- event_id: 1af151997171
+  source_pc: mainpc
+  target_id: h6i7j8k9
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: e97b0c85f949836b
+  audit_entry_excerpt:
+    audit_id: h6i7j8k9
+    audited_at: '2026-05-10T09:39:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''frontend/src/pages/reception/CheckinQRDisplay.tsx'',
+    ''docs/secondpc_sakai_kanban_adapter_design_v1.md'']'
+- event_id: 16bf1c621207
+  source_pc: mainpc
+  target_id: l0m1n2o3
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 4fdb1b86d9108c4f
+  audit_entry_excerpt:
+    audit_id: l0m1n2o3
+    audited_at: '2026-05-10T09:41:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''shim/hakudokai/hakudokai_consent_api.py'',
+    ''shim/hakudokai/hakudokai_aichat_api.py'']'
+- event_id: 25456724b0fd
+  source_pc: mainpc
+  target_id: p4q5r6s7
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:27:38+00:00'
+  payload_hash: 085f027bcf9010a1
+  audit_entry_excerpt:
+    audit_id: p4q5r6s7
+    audited_at: '2026-05-10T09:43:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/routers/meisai_receipt.py'']'
+- event_id: 46cd4e5aa92c
+  source_pc: mainpc
+  target_id: u8v9w0x1
+  auditor_who: takenaka
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:27:39+00:00'
+  payload_hash: 643e3c4fbffe1100
+  audit_entry_excerpt:
+    audit_id: u8v9w0x1
+    audited_at: '2026-05-10T09:50:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass
+  flags:
+  - 'log file not found: (no log_path field)'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''backend/schemas/common_base.py'', ''frontend/src/types/common-base.ts'',
+    ''docs/common_base_adapter_design_v1.md'']'
+- event_id: 4680e5669a81
+  source_pc: mainpc
+  target_id: shogun_self_punishment_2026_05_10_18
+  auditor_who: shogun_self
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T18:30:01+09:00'
+  payload_hash: 37211f6fdb72ac5e
+  audit_entry_excerpt: {}
+  flags:
+  - '判断瑕疵: pc_handshake.resolution_type=agreed のみで 31 件監査完了 と粗く報告'
+  - shogun_verify_audit.sh を session 中 1 度も走らせず
+  - 85.5% 失敗 (= 59/69) を御問発まで認識せず
+  - SecondPC 軍師 report sync 欠落も検出漏れ
+  - 本能寺戒め違反、戦国時代なら拙者首が飛ぶ
+- event_id: cba7ecd98d36
+  source_pc: mainpc
+  target_id: kuroda_code_audit_001
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: dfafb3a105606b56
+  audit_entry_excerpt:
+    audit_id: kuroda_code_audit_001
+    audited_at: '2026-05-10T08:40:00+09:00'
+    commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_v3_001
+    verdict: concerns
+  flags:
+  - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 249s > 60s threshold
+  - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
+    ''test_quartetto_pdf_parser.py'']'
+- event_id: 207b6e450e26
+  source_pc: mainpc
+  target_id: kuroda_001
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: ba5bdf001cfede84
+  audit_entry_excerpt:
+    audit_id: kuroda_001
+    audited_at: '2026-05-10T08:59:10+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 0dcfc6b0'
+- event_id: bc93fdceee85
+  source_pc: mainpc
+  target_id: kuroda_001_fix_review
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: 60b74251845c35eb
+  audit_entry_excerpt:
+    audit_id: kuroda_001_fix_review
+    audited_at: '2026-05-10T09:55:30+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 5274c03c'
+- event_id: d6589f946145
+  source_pc: mainpc
+  target_id: kuroda_002
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: 9f2e772f6bcca37a
+  audit_entry_excerpt:
+    audit_id: kuroda_002
+    audited_at: '2026-05-10T13:12:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+- event_id: 75344c000178
+  source_pc: mainpc
+  target_id: kuroda_003
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: c688a1ef67c3b706
+  audit_entry_excerpt:
+    audit_id: kuroda_003
+    audited_at: '2026-05-10T13:13:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+- event_id: f04da14fbdb5
+  source_pc: mainpc
+  target_id: kuroda_004
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: 780097d5796f6f25
+  audit_entry_excerpt:
+    audit_id: kuroda_004
+    audited_at: '2026-05-10T13:14:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
+  - findings too generic (specific=0, generic=0)
+- event_id: 76f6c2c55057
+  source_pc: mainpc
+  target_id: kuroda_005
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: 63223d861e092be8
+  audit_entry_excerpt:
+    audit_id: kuroda_005
+    audited_at: '2026-05-10T13:15:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+- event_id: d2f5bd75b0df
+  source_pc: mainpc
+  target_id: kuroda_006
+  auditor_who: kuroda_mainpc
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:42:37+00:00'
+  payload_hash: 5293515d0cd11927
+  audit_entry_excerpt:
+    audit_id: kuroda_006
+    audited_at: '2026-05-10T15:40:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 59633d3fcf23
+  source_pc: mainpc
+  target_id: kuroda_007
+  auditor_who: kuroda_mainpc
+  shogun_verified: true
+  checks_passed: 4/6
+  verified_at: '2026-05-10T09:42:38+00:00'
+  payload_hash: 2dfba2d553d31c93
+  audit_entry_excerpt:
+    audit_id: kuroda_007
+    audited_at: '2026-05-10T15:41:00+09:00'
+    commit_hash: ''
+    target_id: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
+    verdict: pass
+  flags: []
+- event_id: 38e75c4d66da
+  source_pc: mainpc
+  target_id: naomasa_001
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:42:38+00:00'
+  payload_hash: 19f9aecfb387f75f
+  audit_entry_excerpt:
+    audit_id: naomasa_001
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得 (commit SHA は report 未記載 — 次 cycle で確認要)
+    target_id: subtask_006a
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 確認未取得 (commit SHA は report 未記載 — 次 cycle で確認要)'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 33980s > 60s threshold
+  - 'some related_files do not exist: [''frontend/src/features/teriha-passport/TerihaPassportPage.tsx'',
+    ''frontend/src/features/teriha-passport/components/PassportCover.tsx (既存)'']'
+- event_id: 4aeebb7d7687
+  source_pc: mainpc
+  target_id: naomasa_002
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:42:38+00:00'
+  payload_hash: 76934ab0c696797a
+  audit_entry_excerpt:
+    audit_id: naomasa_002
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 45bb97cfe5cb
+    target_id: subtask_006b
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 45bb97cfe5cb'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 3606s > 60s threshold
+  - 'some related_files do not exist: [''backend/utils/patient_format.py'', ''backend/etl/quartetto_pdf_watcher.py'',
+    ''backend/routers/patient_checkin.py'']'
+- event_id: 2849dc730f60
+  source_pc: mainpc
+  target_id: naomasa_003
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:42:38+00:00'
+  payload_hash: 56db27a69cd71d7c
+  audit_entry_excerpt:
+    audit_id: naomasa_003
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得
+    target_id: subtask_006c
+    verdict: partial
+  flags:
+  - 'invalid commit_hash: 確認未取得'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 3598s > 60s threshold
+  - 'some related_files do not exist: [''backend/routers/patient_consents.py'', ''frontend/src/patient-app/pages/ConsentForm.tsx'',
+    ''supabase/migrations/20260509_patient_consents_schema.sql'', ''queue/reports/ashigaru3_report_supplement_dd061_20260509.yaml'']'
+- event_id: b9b3d8174c0e
+  source_pc: mainpc
+  target_id: naomasa_004
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:42:38+00:00'
+  payload_hash: 1148f200c6ccd3bd
+  audit_entry_excerpt:
+    audit_id: naomasa_004
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得
+    target_id: subtask_006d
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 確認未取得'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 55128s > 60s threshold
+  - 'some related_files do not exist: [''docs/secondpc_dd044_migration_script_20260509.md'',
+    ''Supabase: karte_visits (pxvnhkiqyxkejzivspde)'']'
+- event_id: 3d8ee8ef3dfe
+  source_pc: mainpc
+  target_id: naomasa_005
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:42:38+00:00'
+  payload_hash: a26a104738694530
+  audit_entry_excerpt:
+    audit_id: naomasa_005
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: b66ffe0b (patient_chat_messages migration)
+    target_id: subtask_006e
+    verdict: partial
+  flags:
+  - 'invalid commit_hash: b66ffe0b (patient_chat_messages migration)'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 3578s > 60s threshold
+  - 'some related_files do not exist: [''backend/services/patient_chat_engine.py'',
+    ''backend/.env'', ''Supabase: patient_chat_messages (pxvnhkiqyxkejzivspde)'']'
+- event_id: bf722cf871d1
+  source_pc: mainpc
+  target_id: naomasa_006
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:42:41+00:00'
+  payload_hash: 5198684abcdbd56e
+  audit_entry_excerpt:
+    audit_id: naomasa_006
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得
+    target_id: subtask_006f
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 確認未取得'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 55115s > 60s threshold
+  - 'some related_files do not exist: [''frontend/src/patient-app/PatientAppLayout.tsx'',
+    ''frontend/src/patient-app/pages/PatientHome.tsx'', ''frontend/src/features/specialty-mode/__tests__/
+    (4ファイル)'']'
+- event_id: c89ae6ef1577
+  source_pc: mainpc
+  target_id: naomasa_007
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-10T09:42:41+00:00'
+  payload_hash: 5ba9b917d32ee6b4
+  audit_entry_excerpt:
+    audit_id: naomasa_007
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: b66ffe0b
+    target_id: subtask_007b
+    verdict: pass
+  flags:
+  - 'log file not found: queue/reports/ashigaru5_report_subtask_007b.yaml'
+  - 'invalid commit_hash: b66ffe0b'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''docs/ai_chat_existing_impl_spec.md'', ''Supabase:
+    patient_chat_messages'', ''backend/services/patient_chat_engine.py'', ''backend/routers/patient_chat.py'']'
+- event_id: 34d904650c3b
+  source_pc: mainpc
+  target_id: kuroda_code_audit_001
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-11T03:16:12+00:00'
+  payload_hash: dfafb3a105606b56
+  audit_entry_excerpt:
+    audit_id: kuroda_code_audit_001
+    audited_at: '2026-05-10T08:40:00+09:00'
+    commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_v3_001
+    verdict: concerns
+  flags:
+  - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 249s > 60s threshold
+  - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
+    ''test_quartetto_pdf_parser.py'']'
+- event_id: ec4c82152d5a
+  source_pc: mainpc
+  target_id: kuroda_001
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-11T03:16:12+00:00'
+  payload_hash: ba5bdf001cfede84
+  audit_entry_excerpt:
+    audit_id: kuroda_001
+    audited_at: '2026-05-10T08:59:10+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 0dcfc6b0'
+- event_id: 42b721f7789d
+  source_pc: mainpc
+  target_id: kuroda_001_fix_review
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 4/6
+  verified_at: '2026-05-11T03:16:12+00:00'
+  payload_hash: 60b74251845c35eb
+  audit_entry_excerpt:
+    audit_id: kuroda_001_fix_review
+    audited_at: '2026-05-10T09:55:30+09:00'
+    commit_hash: 5274c03c
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle3_fix_001
+    verdict: fail
+  flags:
+  - 'invalid commit_hash: 5274c03c'
+- event_id: 650b0c7eb4c6
+  source_pc: mainpc
+  target_id: kuroda_002
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-11T03:16:13+00:00'
+  payload_hash: 9f2e772f6bcca37a
+  audit_entry_excerpt:
+    audit_id: kuroda_002
+    audited_at: '2026-05-10T13:12:00+09:00'
+    commit_hash: 0dcfc6b0
+    target_id: subtask_delta_ashigaru2_ceremony_trigger_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
+  - 'invalid commit_hash: 0dcfc6b0'
+  - findings too generic (specific=0, generic=0)
+- event_id: 063d261dff75
+  source_pc: mainpc
+  target_id: kuroda_003
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-11T03:16:13+00:00'
+  payload_hash: c688a1ef67c3b706
+  audit_entry_excerpt:
+    audit_id: kuroda_003
+    audited_at: '2026-05-10T13:13:00+09:00'
+    commit_hash: 1fdb419e
+    target_id: subtask_delta_ashigaru3_qr_kanban_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
+  - 'invalid commit_hash: 1fdb419e'
+  - findings too generic (specific=0, generic=0)
+- event_id: 23835720df36
+  source_pc: mainpc
+  target_id: kuroda_004
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 2/6
+  verified_at: '2026-05-11T03:16:13+00:00'
+  payload_hash: 780097d5796f6f25
+  audit_entry_excerpt:
+    audit_id: kuroda_004
+    audited_at: '2026-05-10T13:14:00+09:00'
+    commit_hash: HEAD
+    target_id: subtask_delta_ashigaru4_common_base_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
+  - findings too generic (specific=0, generic=0)
+- event_id: ceb3d6c43fe0
+  source_pc: mainpc
+  target_id: kuroda_005
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 1/6
+  verified_at: '2026-05-11T03:16:13+00:00'
+  payload_hash: 63223d861e092be8
+  audit_entry_excerpt:
+    audit_id: kuroda_005
+    audited_at: '2026-05-10T13:15:00+09:00'
+    commit_hash: 57272e5
+    target_id: subtask_delta_ashigaru5_consent_aichat_cycle2_001
+    verdict: pass_with_concerns
+  flags:
+  - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
+  - 'invalid commit_hash: 57272e5'
+  - findings too generic (specific=0, generic=0)
+- event_id: 5c0a6fe962f9
+  source_pc: mainpc
+  target_id: kuroda_001_cycle4_review
+  auditor_who: kuroda_mainpc
+  shogun_verified: false
+  checks_passed: 3/6
+  verified_at: '2026-05-11T03:16:14+00:00'
+  payload_hash: 52663b4ac6268686
+  audit_entry_excerpt:
+    audit_id: kuroda_001_cycle4_review
+    audited_at: '2026-05-10T21:02:28+09:00'
+    commit_hash: 37c8897d
+    target_id: subtask_delta_ashigaru1_pdf_extractor_cycle4_fix_001
+    verdict: pass_with_concerns
+  flags:
+  - 'invalid commit_hash: 37c8897d'
+  - findings too generic (specific=0, generic=0)
+- event_id: 9989fadf52dc
+  source_pc: mainpc
+  target_id: naomasa_001
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-11T03:16:17+00:00'
+  payload_hash: 532c3bd6f0143da7
+  audit_entry_excerpt:
+    audit_id: naomasa_001
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得 (commit SHA は report 未記載 — 次 cycle で確認要)
+    target_id: subtask_006a
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 確認未取得 (commit SHA は report 未記載 — 次 cycle で確認要)'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 128322s > 60s threshold
+  - 'some related_files do not exist: [''frontend/src/features/teriha-passport/TerihaPassportPage.tsx'',
+    ''frontend/src/features/teriha-passport/components/PassportCover.tsx (既存)'']'
+- event_id: 77600553e7da
+  source_pc: mainpc
+  target_id: naomasa_002
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-11T03:16:17+00:00'
+  payload_hash: 76934ab0c696797a
+  audit_entry_excerpt:
+    audit_id: naomasa_002
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 45bb97cfe5cb
+    target_id: subtask_006b
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 45bb97cfe5cb'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 3606s > 60s threshold
+  - 'some related_files do not exist: [''backend/utils/patient_format.py'', ''backend/etl/quartetto_pdf_watcher.py'',
+    ''backend/routers/patient_checkin.py'']'
+- event_id: 4dc72a162880
+  source_pc: mainpc
+  target_id: naomasa_003
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-11T03:16:18+00:00'
+  payload_hash: 56db27a69cd71d7c
+  audit_entry_excerpt:
+    audit_id: naomasa_003
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得
+    target_id: subtask_006c
+    verdict: partial
+  flags:
+  - 'invalid commit_hash: 確認未取得'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 3598s > 60s threshold
+  - 'some related_files do not exist: [''backend/routers/patient_consents.py'', ''frontend/src/patient-app/pages/ConsentForm.tsx'',
+    ''supabase/migrations/20260509_patient_consents_schema.sql'', ''queue/reports/ashigaru3_report_supplement_dd061_20260509.yaml'']'
+- event_id: 6dc113fa10c0
+  source_pc: mainpc
+  target_id: naomasa_004
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-11T03:16:18+00:00'
+  payload_hash: e508b76f2f516afa
+  audit_entry_excerpt:
+    audit_id: naomasa_004
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得
+    target_id: subtask_006d
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 確認未取得'
+  - findings too generic (specific=0, generic=0)
+  - timestamp drift 75494s > 60s threshold
+  - 'some related_files do not exist: [''docs/secondpc_dd044_migration_script_20260509.md'',
+    ''Supabase: karte_visits (pxvnhkiqyxkejzivspde)'']'
+- event_id: e3ee0f6d737a
+  source_pc: mainpc
+  target_id: naomasa_005
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-11T03:16:18+00:00'
+  payload_hash: a26a104738694530
+  audit_entry_excerpt:
+    audit_id: naomasa_005
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: b66ffe0b (patient_chat_messages migration)
+    target_id: subtask_006e
+    verdict: partial
+  flags:
+  - 'invalid commit_hash: b66ffe0b (patient_chat_messages migration)'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 3578s > 60s threshold
+  - 'some related_files do not exist: [''backend/services/patient_chat_engine.py'',
+    ''backend/.env'', ''Supabase: patient_chat_messages (pxvnhkiqyxkejzivspde)'']'
+- event_id: fc717cca282b
+  source_pc: mainpc
+  target_id: naomasa_006
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-11T03:16:19+00:00'
+  payload_hash: fec0e94687ba283f
+  audit_entry_excerpt:
+    audit_id: naomasa_006
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: 確認未取得
+    target_id: subtask_006f
+    verdict: pass
+  flags:
+  - 'invalid commit_hash: 確認未取得'
+  - findings too generic (specific=0, generic=1)
+  - timestamp drift 74459s > 60s threshold
+  - 'some related_files do not exist: [''frontend/src/patient-app/PatientAppLayout.tsx'',
+    ''frontend/src/patient-app/pages/PatientHome.tsx'', ''frontend/src/features/specialty-mode/__tests__/
+    (4ファイル)'']'
+- event_id: 316b18991efe
+  source_pc: mainpc
+  target_id: naomasa_007
+  auditor_who: naomasa_secondpc
+  shogun_verified: false
+  checks_passed: 0/6
+  verified_at: '2026-05-11T03:16:19+00:00'
+  payload_hash: 5ba9b917d32ee6b4
+  audit_entry_excerpt:
+    audit_id: naomasa_007
+    audited_at: '2026-05-10T00:35:00+09:00'
+    commit_hash: b66ffe0b
+    target_id: subtask_007b
+    verdict: pass
+  flags:
+  - 'log file not found: queue/reports/ashigaru5_report_subtask_007b.yaml'
+  - 'invalid commit_hash: b66ffe0b'
+  - findings too generic (specific=0, generic=0)
+  - 'some related_files do not exist: [''docs/ai_chat_existing_impl_spec.md'', ''Supabase:
+    patient_chat_messages'', ''backend/services/patient_chat_engine.py'', ''backend/routers/patient_chat.py'']'
 - event_id: 6da53add6b44
   source_pc: secondpc
   target_id: naomasa_p2_ecosystem_coherence_lens_sample

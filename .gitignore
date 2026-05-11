@@ -143,6 +143,8 @@
 !scripts/test_normalize_audit_reports.py
 !scripts/test_shogun_verify_preflight.sh
 !scripts/normalize_shogun_verification_logs.py
+!scripts/migrate_legacy_verification_log.py
+!scripts/test_migrate_legacy_verification_log.py
 !scripts/validate_report_privacy.py
 !scripts/test_normalize_shogun_verification_logs.py
 !scripts/test_validate_report_privacy.py
@@ -169,6 +171,7 @@
 !queue/reports/shogun_verification_mainpc_log.yaml
 !queue/reports/shogun_verification_secondpc_log.yaml
 !queue/reports/shogun_verification_canonical_index.yaml
+!queue/reports/shogun_verification_log_archive.yaml
 !queue/reports/shogun_verification_log_secondpc.yaml
 !queue/reports/verification_index.yaml
 
