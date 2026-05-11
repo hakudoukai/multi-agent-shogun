@@ -1,0 +1,238 @@
+task_id: subtask_cmd004_qr_token_security_hardening
+parent_cmd: cmd_004
+bloom_level: L4
+agent: ashigaru1
+reported_at: "2026-05-11T17:25:00+09:00"
+
+verdict: pass
+evidence_state: complete
+completion_gate: open
+commit_hash_dev: "af7512d6"  # /mnt/c/Projects/hakudokai-dev master, push 保留 (F007 陛下御差配仰ぎ)
+commit_hash_shogun: pending   # newbuild repo main, この report yaml を含む commit を本 task 末尾で作成、push 保留 (F007)
+log_path: "queue/reports/ashigaru1_cmd004_qr_token_security_hardening_pytest.log"
+
+scope: |
+  cmd_004 機能① 会計待ち時間ゼロ の QR 受付トークン security backbone を、
+  公開 SHA256[:16] (= v1 legacy) から HMAC-SHA256 + TOTP-style time-bound (= v2 signed) に
+  構造改善。陛下御差配【根本治療原則】(msg_164625) 下、短期 hack ではなく仕組み追加 +
+  migration path で根本治療。前 ashigaru1 任務 qr_kanban_impl_base spec doc §5 β1 (HMAC) +
+  β2 (TOTP expire) を本 task 範囲として確定、構造改善 + 実稼働前の最適 phase で完遂。
+
+target_repo_dev: "/mnt/c/Projects/hakudokai-dev"
+target_branch_dev: "master"
+target_files_changed_dev:
+  - "backend/utils/qr_token.py"                                   # new file +317 行、HMAC + TOTP + 検証 module
+  - "backend/routers/patient_checkin.py"                          # ±79 行、qr_token wrapper + reason→HTTP 分岐 + meta
+  - "backend/tests/test_patient_checkin.py"                       # +175 行、TestQrTokenSecurityHardening +11 test
+  - "docs/cmd004_qr_security_management.md"                       # new file +235 行、運用 + rotation + migration + threat model
+  - "frontend/src/services/patientAppApi.ts"                      # ±43 行、ApiError class + QrTokenResponse 拡張
+  - "frontend/src/pages/reception/CheckinQRDisplay.tsx"           # ±41 行、server-driven refresh + version 表示
+  - "frontend/src/patient-app/pages/PatientCheckin.tsx"           # ±25 行、status code 別 error 表示 (errorMessageFor)
+  - "frontend/src/__tests__/patient-app/PatientCheckin.test.tsx"  # new file +131 行、5 vitest
+  - "frontend/src/__tests__/reception/CheckinQRDisplay.test.tsx"  # new file +73 行、2 vitest
+
+target_repo_shogun: "/home/hakudokai/projects/multi-agent-shogun-newbuild"
+target_branch_shogun: "main"
+target_files_changed_shogun:
+  - "queue/reports/ashigaru1_cmd004_qr_token_security_hardening_report.yaml"  # this file
+  - "queue/inbox/ashigaru1.yaml"                                                # msg_165533 read=true mark
+
+acceptance_criteria_status:
+  - id: AC1
+    title: "HMAC-SHA256 + TOTP-style time-bound token、unsigned/expired は 401/403"
+    status: PASS
+    evidence: |
+      実装:
+        backend/utils/qr_token.py L18-L317:
+          - v2 format: "v2.{clinic_id}.{counter}.{mac_b64url}"
+          - mac = base64url(HMAC-SHA256(secret, "v2|{cid}|{counter}"))[:22] (= ~128bit)
+          - counter = floor(unix_time / QR_TOTP_WINDOW_SEC)、default 900s (= 15 min)
+          - skew = ±QR_TOTP_SKEW (= default ±1 window) で clock skew 吸収
+          - hmac.compare_digest で timing attack 耐性
+          - status_code_for: malformed/legacy_mismatch=400、signed_required=401、tampered/expired=403
+        backend/routers/patient_checkin.py qr_checkin: reason→HTTP map + detail map
+      test 機械 evidence:
+        TestQrTokenSecurityHardening::test_signed_token_issued_when_secret_set    PASSED
+        TestQrTokenSecurityHardening::test_signed_token_accepted_for_valid_request PASSED
+        TestQrTokenSecurityHardening::test_signed_token_rejects_malformed_v2      PASSED
+        TestQrTokenSecurityHardening::test_signed_token_window_skew_tolerance     PASSED
+        TestQrTokenSecurityHardening::test_token_endpoint_returns_meta_for_legacy_mode PASSED
+
+  - id: AC2
+    title: "HMAC secret env 管理、rotation path docs/cmd004_qr_security_management.md 記載、commit に secret 含めず"
+    status: PASS
+    evidence: |
+      env vars (= backend/utils/qr_token.py L36-L80):
+        QR_HMAC_SECRET    : signed mode の HMAC 鍵 (= URL-safe 32+ bytes 推奨)
+        QR_REQUIRE_SIGNED : true で v1 legacy 拒否 (= strict mode)
+        QR_TOTP_WINDOW_SEC: TOTP 時刻バケット秒 (= default 900)
+        QR_TOTP_SKEW      : 受容前後 window 数 (= default 1)
+      docs/cmd004_qr_security_management.md §2-§3:
+        §2-1 secret 生成: secrets.token_bytes(32) + base64url
+        §2-2 配備: 本番 /etc/dentalbi/env + systemd EnvironmentFile、staging/dev 分離
+        §2-3 hardcode 検出 (= 後続 β16 候補として明示)
+        §3-1 通常 rotation (= dual-secret 設計予約、β14 として確定)
+        §3-2 incident rotation (= secret 上書き → 即時 backend 再起動 + 旧 secret shred)
+      commit に secret hardcode 不在: git diff --cached で QR_HMAC_SECRET 文字列が
+      test fixture 内の "test-secret-do-not-use-in-production-abcdefghij" のみ、
+      本番 secret 文字列なし (= test fixture は monkeypatch.setenv 経由、明示プレースホルダ)。
+
+  - id: AC3
+    title: "TOTP expire — 既 QR 15 min default、staff 発行/再発行 path、lost QR logic"
+    status: PASS
+    evidence: |
+      実装:
+        - 15 min default: QR_TOTP_WINDOW_SEC=900、CheckinQRDisplay.tsx で server expires_at を
+          基に残時間 70% で auto-refresh (= 受付窓口側 staff は手動操作不要)
+        - staff 手動再発行: CheckinQRDisplay.tsx の 🔄 トークン更新 button + fetchToken (= 既存)
+        - lost QR 対応: token 自体は window 経過で expired 化、患者は staff に新表示依頼
+          → 既 graceful fallback (= migration period) で再発行影響なし
+        - 同 window 内 replay: 既 patient_checkin_logs の今日重複チェック (qr_checkin L65-L72)
+          + already_checked_in path で吸収。完全 nonce tracker は β14 (= docs §7-2) で確定
+      docs/cmd004_qr_security_management.md §5: 検証 reason → UI 推奨表示マッピング表
+
+  - id: AC4
+    title: "frontend hardened token 対応 + 既存 unsigned graceful fallback"
+    status: PASS
+    evidence: |
+      実装:
+        frontend/src/services/patientAppApi.ts L30-L80:
+          - ApiError class (= status + detail で error 詳細化)
+          - QrTokenResponse 型に version / issued_at / expires_at / window_sec 拡張
+        frontend/src/pages/reception/CheckinQRDisplay.tsx:
+          - useClinicId() で ClinicIdContext 経由、hardcode useState(1) を context 既定値に変更
+          - server-driven refresh (= setTimeout で expires_at の 70% 経過時 refresh、最低 30s)
+          - 「方式: 署名付き (v2) / 従来 (v1)」表示 (data-testid=qr-token-version)
+        frontend/src/patient-app/pages/PatientCheckin.tsx:
+          - errorMessageFor helper で ApiError.status 別 UI 表示:
+            401 → 古い形式 / 403 expired → 有効期限切れ / 403 tampered → 正しく読み取れない / 400 → 不正
+        graceful fallback (= migration period、Stage B):
+          - QR_HMAC_SECRET 未設定 → v1 token 発行 (= 既存挙動完全互換)
+          - QR_HMAC_SECRET 設定 + QR_REQUIRE_SIGNED 未設定 → v2 発行、v1+v2 両受容
+      test 機械 evidence (frontend vitest 7 test):
+        PatientCheckin.test.tsx: 5 test (= 403/401/400 status 表示 + 200 success)
+        CheckinQRDisplay.test.tsx: 2 test (= v2 表示 / v1 表示)
+
+  - id: AC5
+    title: "backend pytest + frontend vitest SKIP=0、replay/tamper/expire test"
+    status: PASS
+    evidence: |
+      backend (= /mnt/c/Projects/hakudokai-dev):
+        実行 cmd: python3 -m pytest backend/tests/test_patient_checkin.py -v
+        結果: 47 passed in 6.54s、SKIP=0 / FAIL=0 / 1 warning (= PyPDF2 deprecation、無関係)
+        新規 11 test (= TestQrTokenSecurityHardening クラス):
+          test_signed_token_issued_when_secret_set            (AC1 + v2 format)
+          test_signed_token_accepted_for_valid_request        (AC1 正規受容)
+          test_signed_token_rejects_tampered_mac              (AC5 tamper、HMAC 1bit 改竄 → 403)
+          test_signed_token_rejects_expired_window            (AC5 expire、counter-2 → 403)
+          test_signed_token_rejects_replay_with_wrong_clinic  (AC5 replay、cross-clinic → 403)
+          test_signed_token_rejects_malformed_v2              (AC1 malformed → 400)
+          test_legacy_v1_token_accepted_in_migration_mode     (AC4 Stage B graceful fallback)
+          test_legacy_v1_token_rejected_in_strict_mode        (AC4 Stage C strict → 401)
+          test_legacy_v1_token_mismatch_returns_400           (AC4 互換)
+          test_signed_token_window_skew_tolerance             (AC1 ±1 window 受容)
+          test_token_endpoint_returns_meta_for_legacy_mode    (AC1 v1 mode meta)
+      frontend (= /mnt/c/Projects/hakudokai-dev/frontend):
+        実行 cmd: npx vitest run src/__tests__/patient-app/PatientCheckin.test.tsx src/__tests__/reception/CheckinQRDisplay.test.tsx
+        結果: 7 passed in 23.67s、SKIP=0 / FAIL=0
+      docs/cmd004_qr_security_management.md §6 に test coverage 表記載。
+
+  - id: AC6
+    title: "F007 push 前陛下御差配仰ぎ + report yaml に verdict + commit_hash + log_path + security test evidence"
+    status: PASS
+    evidence: |
+      F007 遵守: dev af7512d6 + shogun (本 commit 予定) いずれも local commit のみ、push 未実行。
+      陛下御差配仰ぐ事項:
+        1. dev af7512d6 (+ 既 6345bfe1) push 可否御判断
+        2. 旧 ashigaru1 commit a576591 (= newbuild repo) + 本 report commit 一括 push 推奨
+      本 report yaml に verdict=pass / commit_hash_dev=af7512d6 / log_path + 全 AC evidence 記録済。
+
+design_decisions:
+  - "本能寺戒め: secret はコード hardcode 禁、env 経由のみ。test fixture は明示プレースホルダ secret を monkeypatch.setenv で注入 (= 本番 secret に直結しない設計)。"
+  - "module 分離: backend/utils/qr_token.py に logic 集約、patient_checkin.py は thin wrapper。新規 caller (= 別 endpoint) も同 module 経由で統一可能。"
+  - "三段階 rollout (= Stage A→B→C): 構造変更 + 仕組み追加 + migration path で根本品質、Stage B (= graceful fallback) を default 推奨にして実稼働後の段階移行を可能化。"
+  - "TOTP window=900s (= 15 min) 既定: 受付窓口 staff 操作・clock skew・QR 読取 retry 余裕の三点バランス。env で上書可。"
+  - "clinic_id を HMAC 入力に含む: cross-clinic replay 自動防御、別途 logic 不要。"
+  - "status code map (= 400/401/403): RFC 7235 + RFC 9110 整合、frontend UI で error UX 分岐可能化。"
+
+findings:
+  preflight_gate:
+    - "/mnt/c/Projects/hakudokai-dev/ SC WSL access 可。前 task qr_kanban_impl_base + dinosaur_100enemies_spec 実績準拠。"
+  hakudokai_dev_repo_state:
+    - "hakudokai-dev は task 開始時点で多数 dirty (M backend/etl/quartetto_*, backend/main.py, teriha 等)、別 ashigaru の進行中作業混在。私の commit af7512d6 は path filter で 9 file のみ stage、他作業を一切混入させず単独 commit 済 (= +1075/-44 完全一致)。"
+  incident_recovery:
+    - "task 中盤 (= 17:18) で `git reset --hard HEAD` 相当が外部発生し作業逸失、auto-git-sync 経由の `git stash` (= stash@{0} 2026-05-11 17:18:30) から 9 files を path 指定で復元、test 再実行で完全動作確認後 commit (= af7512d6) で再喪失防止。reflog HEAD@{2026-05-11 17:18:58 +0900} reset 痕跡。"
+    - "再発防止: 大規模 task は **inline batch commit** (= 30 min 毎) を default 化推奨。本件は 17:00 〜 17:18 の 18 min 作業を一気に失った教訓、karo に design feedback として記録依頼。"
+  forbidden_actions_compliance:
+    - "F001 (推測禁): 全 evidence は file:line 引用 + test 名 + commit hash、推測値なし。"
+    - "F007 (push 前陛下御差配仰ぐ): dev af7512d6 / shogun (本 commit 予定) いずれも local のみ、push 未実行。"
+    - "本能寺戒め (= 機械 evidence のみ評価): backend pytest 47 PASS / frontend vitest 7 PASS、SKIP=0 / FAIL=0 確認後に report 起案。"
+    - "D-tier 破壊操作なし: 既 file 修正は本能寺戒め下で localized、新 file 追加 (= qr_token.py / docs / 2 test) のみ。"
+    - "Tier 1 D003 (force push): 該当なし、push 自体未実行。"
+    - "二重実装回避: 既 _generate_qr_token / _validate_qr_token を wrapper として保持、新規 endpoint 起案なし、既 endpoint への構造改善 + meta 拡張で完成度。"
+
+threat_model:
+  defended:
+    - "任意者の token 偽造 (= secret 不在で v1 公開計算式)"
+    - "古い token replay (= TOTP window で 15 min 経過後 expired)"
+    - "cross-clinic token 流用 (= clinic_id を HMAC 入力)"
+    - "token 改竄 (= 1bit 変化で HMAC 不一致、constant-time compare)"
+    - "HMAC brute force 推測 (= 128bit truncated MAC、空間 2^128)"
+    - "secret 漏洩 (= rotation 手順 §3 で即時無効化)"
+  not_defended_explicitly_deferred:
+    - "同一 window 内 shoulder-surfing replay → β14 nonce tracker (= redis 等)"
+    - "API DoS / brute force → β15 rate limit middleware (= cmd_004 spec G-S3)"
+    - "patient_no enumeration → β16 patient_no 単独受付ロック (= 別 task)"
+    - "OS-level secret 漏洩 → Secrets Manager (= AWS SSM 等、infra task)"
+
+skill_candidate: |
+  本 task 中で次のような skill 候補に当たり機会あり (= 陛下御覧後に skill 化判断仰ぎ):
+  「security backbone migration spec generator」
+    - 入力: 既実装 file:line + 脅威モデル (= STRIDE / OWASP API Top 10 等)
+    - 動作: token / auth / crypto の構造的 gap 検出 + 三段階 rollout 設計 +
+            secret rotation 手順 + threat model + test coverage 自動生成
+    - 出力: docs/{cmd}_security_management.md + 実装 stub + test 雛形
+    - 適用先: cmd_004 のような患者データ + 認証 + 法令 backbone を伴う機能群
+  ただし本 task は手作業で完遂、skill 化必要性は陛下御任せ。
+
+beta_candidates_appended_to_qr_kanban_spec:
+  - id: β14
+    title: "Dual-secret rotation hook + nonce tracker"
+    treats_gap: G-S1 (rotation) + 同一 window replay
+    scale: L3 backend
+    motivation: "docs §3-1 計画的 rotation 実装 + 同一 window replay 防御 (= redis nonce tracker)。"
+  - id: β15
+    title: "Rate limit middleware (= QR endpoint)"
+    treats_gap: G-S3
+    scale: L2 infra
+    motivation: "DoS 対策、cmd004_qr_kanban_spec.md G-S3 + 本 doc §7-2。"
+  - id: β16
+    title: "Secret hardcode 検出 pre-commit hook"
+    treats_gap: (= 本 doc §2-3 強制機構)
+    scale: L1 tooling
+    motivation: "secret 漏洩防止の machine guarantee。"
+  - id: β17
+    title: "Audit log retention policy + at-rest 暗号化"
+    treats_gap: G-L1
+    scale: L3 backend + spec
+    motivation: "医療情報ガイドライン 6.0 (= 最低 5 年) 準拠、cmd004_qr_kanban_spec.md G-L1 治療。"
+
+next_actions_requested:
+  - "陛下御差配: dev af7512d6 + shogun (本 commit) の push 可否御判断仰ぎ。前 commit a576591 + 6345bfe1 と本 task af7512d6 一括 push 推奨。"
+  - "家老: β14〜β17 を別 task 候補として 軍師 review 推奨。特に β14 (= rotation hook) は本 doc §3 設計予約済、運用展開後 早期実装推奨。"
+  - "家老: hakudokai-dev の dirty 状態 (= 別 ashigaru の進行中作業) を家康 / 軍師 経由で点検仰ぐ (= F007 push 前に整理状況確認)。"
+  - "家老 design feedback: 18 min 作業逸失 incident (= 17:18 git reset 痕跡) を踏まえ、大規模 task の inline batch commit (= 30 min 毎) を default 化検討推奨。"
+
+pytest_log_inline: |
+  cd /mnt/c/Projects/hakudokai-dev && python3 -m pytest backend/tests/test_patient_checkin.py -v
+  ============================== 47 passed, 1 warning in 6.54s ==============================
+  (内訳: 既存 36 + 新規 11 (TestQrTokenSecurityHardening)。
+   SKIP=0 / FAIL=0、warning は PyPDF2 deprecation で本 task 無関係)
+
+vitest_log_inline: |
+  cd /mnt/c/Projects/hakudokai-dev/frontend && npx vitest run src/__tests__/patient-app/PatientCheckin.test.tsx src/__tests__/reception/CheckinQRDisplay.test.tsx
+   Test Files  2 passed (2)
+        Tests  7 passed (7)
+     Duration  23.67s
+  (内訳: PatientCheckin.test.tsx 5 (status 表示分岐) + CheckinQRDisplay.test.tsx 2 (v1/v2 表示)。
+   SKIP=0 / FAIL=0)
