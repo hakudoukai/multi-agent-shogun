@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_dashboard_layer_a_static_contract.py::test_layer_a_5_kaisou_section_present PASSED [ 20%]
+scripts/test/test_dashboard_layer_a_static_contract.py::test_layer_a_10_pillar_section_present PASSED [ 40%]
+scripts/test/test_dashboard_layer_a_static_contract.py::test_layer_a_mermaid_graph_td_syntax PASSED [ 60%]
+scripts/test/test_dashboard_layer_a_static_contract.py::test_layer_a_dd054_reference_anchor PASSED [ 80%]
+scripts/test/test_dashboard_layer_a_static_contract.py::test_layer_a_kumonoito_reference_anchor PASSED [100%]
+
+============================== 5 passed in 0.02s ===============================
