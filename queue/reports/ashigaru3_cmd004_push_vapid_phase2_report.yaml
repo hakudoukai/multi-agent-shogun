@@ -1,0 +1,270 @@
+task_id: subtask_cmd004_push_vapid_phase2
+parent_cmd: cmd_004
+bloom_level: L3
+agent: ashigaru3
+agent_persona: 滝川一益 (= infra + key 管理、Phase 2 統合 fix)
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+reported_at: "2026-05-11T17:25:00+09:00"
+verdict: pass
+self_assessment: |
+  Phase 1 残 5 findings (F-PVI-1〜5) を統合 fix し、AC1-AC7 全件達成。
+  pytest 12/12 pass (新規 5 + Phase 1 7、SKIP=0)。
+  本能寺戒め厳守、機械 evidence のみ評価。F007 commit/push は陛下御差配仰ぎ姿勢を堅持。
+  根本治療原則 (= 陛下御差配 msg_20260511_164625) を本実装に適用:
+    - 構造的解決優先 (= IF EXISTS guard 付 FK、state machine 完全実装)
+    - 局所 patch (linter noqa) には併せて構造的 OD-PVI-8 を申し送り
+    - 「とりあえず動く」回避 (= test + 法令 + UX 完備)
+
+# ───────────────────────────────────────────────
+# AC 達成状況 (= 7 件全達成)
+# ───────────────────────────────────────────────
+ac_results:
+  AC1:
+    status: done
+    title: "main.py linter revert 修正"
+    summary: |
+      backend/main.py L136-138 (import) + L388-390 (include_router) に
+      明示 comment + `# noqa: F401` 付きで再追加。
+      過去 Phase 1 で reverted された原因を防ぐため、linter 自動削除禁止の警告を併記。
+    evidence:
+      grep_cmd: "grep -n 'push_notifications' /mnt/c/Projects/hakudokai-dev/backend/main.py"
+      grep_result:
+        - "138:from backend.routers.push_notifications import router as push_notifications_router"
+        - "388:app.include_router(push_notifications_router)"
+      coexistence: "並行で別 agent (ashigaru2/celebration_api) が直前 (L135 import + L387 include) に追加、衝突なく共存"
+
+  AC2:
+    status: done
+    title: "passport_members FK 拡張"
+    summary: |
+      新規 migration 起案: supabase/migrations/20260511b_cmd004_push_subscriptions_member_id.sql
+      設計:
+        - member_id uuid NULL 列追加 (既存 subscription 維持)
+        - FK は IF EXISTS passport_members ガード付 (= 二重 apply 安全)
+        - ON DELETE SET NULL (= orphan 防止 + subscription 継続)
+        - 部分 index (push_subscriptions_member_active)
+      router 側更新: SubscribeRequest.member_id 追加 + insert_row["member_id"]
+    deliverables:
+      - "/mnt/c/Projects/hakudokai-dev/supabase/migrations/20260511b_cmd004_push_subscriptions_member_id.sql (69 lines, 新規)"
+      - "backend/routers/push_notifications.py (SubscribeRequest + insert_row 更新)"
+    orphan_prevention_strategy: |
+      - patient_id (= patients.id) FK は既存 CASCADE 削除維持
+      - member_id (= passport_members.id) FK は SET NULL — passport 解除しても push 経路は patient ベースで存続
+      - 部分 index で passport 連携済 active subscription を高速検索
+
+  AC3:
+    status: done
+    title: "send_push 再 check + retry/cleanup logic"
+    summary: |
+      新規 endpoint: POST /api/push-notifications/send (status_code=202)
+      state machine:
+        1. 同意 re-check → 失敗 = consent_missing 記録 + 403
+        2. 有効 subscription 取得 → なし = opt_out_skip + delivered=0
+        3. 各 subscription を順送信
+        4. 失効 (gone/404/410) → _cleanup_expired_subscription で論理 revoke
+        5. 全 status を push_delivery_log に記録
+    deliverables:
+      - "backend/routers/push_notifications.py: send_push / _attempt_push_send / _cleanup_expired_subscription / _is_subscription_expired_error / _log_delivery / SendPushRequest 追加"
+    scaffold_note: |
+      _attempt_push_send は Phase 2 scaffold (= None 固定 stub)、実 VAPID HTTP 配信は
+      OD-PVI-2 で後続 (= py-vapid + httpx 統合は別 task で仕組み追加)。
+      本実装は state machine + cleanup logic に責任を絞り、根本治療原則の
+      「仕組み追加 vs 改修区別」(規範4) に整合。
+
+  AC4:
+    status: done
+    title: "ntfy 経路分離 audit + docs 更新"
+    summary: |
+      docs/cmd004_push_vapid_management.md §10-4 に audit 結果を追記。
+      8 観点比較表 + 例外運用 (= VAPID 漏洩時のみ ntfy.sh で内部 admin 通知許可) を明記。
+    machine_evidence:
+      forward_audit:
+        cmd: "grep -r 'ntfy' /mnt/c/Projects/hakudokai-dev/backend/"
+        result: "1 件のみヒット — push_notifications.py の docstring 内『分離宣言』comment、import/参照ゼロ"
+      reverse_audit:
+        cmd: "grep -r 'push_notifications|VAPID|webpush|push_subscriptions' /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/ntfy*.sh /home/hakudokai/projects/multi-agent-shogun-newbuild/lib/ntfy*.sh"
+        result: "ヒット数 0 — multi-agent scripts は Web Push を参照しない、完全分離"
+
+  AC5:
+    status: done
+    title: "Anti-Dup 既設計 SoT 再 verify"
+    summary: |
+      SoT (docs/kids_app_push_ceremony_detail_design.md 897 行 v0.1) と本実装の重複再確認。
+      6 観点比較表で重複検出なしを立証 (= 詳細は docs §10-5)。
+      唯一 SoT 未定義領域は send_push state machine、これを OD-PVI-7 として
+      逆反映 (= SoT 詳細設計書改訂) を後続申し送り。
+
+  AC6:
+    status: done
+    title: "pytest SKIP=0"
+    summary: "12/12 pass、SKIP=0"
+    pytest_result:
+      command: "python3 -m pytest backend/tests/test_push_notifications_router.py -v"
+      cwd: "/mnt/c/Projects/hakudokai-dev"
+      passed: 12
+      failed: 0
+      skipped: 0
+      error: 0
+      duration_sec: 1.72
+      cases:
+        phase1_inherited:
+          - test_get_vapid_public_key_success
+          - test_get_vapid_public_key_503_when_no_active_key
+          - test_subscribe_rejected_without_consent
+          - test_subscribe_success_inserts_new_row
+          - test_subscribe_duplicate_endpoint_returns_existing
+          - test_revoke_subscription_success
+          - test_revoke_already_revoked_returns_409
+        phase2_new:
+          - test_send_push_rejects_when_consent_revoked
+          - test_send_push_no_active_subscription_returns_opt_out_skip
+          - test_send_push_cleans_up_expired_subscription
+          - test_send_push_success_records_sent_in_delivery_log
+          - test_subscribe_with_member_id_inserts_passport_link
+
+  AC7:
+    status: done
+    title: "phase2 report + karo 報告"
+    deliverable: "queue/reports/ashigaru3_cmd004_push_vapid_phase2_report.yaml (本書)"
+    karo_inbox_planned: "本 report 完了後 inbox_write.sh で送信"
+
+# ───────────────────────────────────────────────
+# 5 findings 解消確認 (Phase 1 から継承)
+# ───────────────────────────────────────────────
+findings_resolution:
+  F-PVI-1:
+    severity: notable
+    title: "既設計 SoT との重複回避 (Anti-Duplication 厳守)"
+    phase1_state: "実装層 + 運用 runbook 層に絞り重複回避"
+    phase2_action: "AC5 で再 verify、6 観点比較表で重複なし立証"
+    status: "resolved"
+  F-PVI-2:
+    severity: blocker_for_activation
+    title: "backend/main.py 登録 1 行が reverted"
+    phase1_state: "別 agent / linter による reverted"
+    phase2_action: "AC1 で再追加、`# noqa: F401` + 明示 comment 併記、構造改善 OD-PVI-8 申し送り"
+    status: "resolved (= 局所 fix + 構造改善後続)"
+  F-PVI-3:
+    severity: notable
+    title: "passport_members FK 連携の後続課題"
+    phase1_state: "patient_id ベースで最小実装"
+    phase2_action: "AC2 で member_id 列 + 条件付 FK migration 起案"
+    status: "resolved (= live Supabase 適用後 FK 自動有効化)"
+  F-PVI-4:
+    severity: notable
+    title: "保護者同意 gate は subscribe 時のみ、send_push 時 re-check 申し送り"
+    phase1_state: "subscribe 時のみ check、send_push 未実装"
+    phase2_action: "AC3 で send_push state machine 実装、_has_push_consent re-check 統合"
+    status: "resolved"
+  F-PVI-5:
+    severity: informational
+    title: "ntfy.sh (multi-agent) と Web Push (患者向け) は経路分離"
+    phase1_state: "docs §5 で役割分担表"
+    phase2_action: "AC4 で双方向 grep audit 実施、ヒット 0 立証"
+    status: "resolved"
+
+# ───────────────────────────────────────────────
+# 機械 evidence (= 検証可能 fact)
+# ───────────────────────────────────────────────
+machine_evidence:
+  preflight:
+    sc_wsl_access: "ok (= /mnt/c/Projects/hakudokai-dev/ アクセス可)"
+  files_created:
+    - path: "/mnt/c/Projects/hakudokai-dev/supabase/migrations/20260511b_cmd004_push_subscriptions_member_id.sql"
+      lines: 69
+      purpose: "member_id 列 + 条件付 FK + 部分 index"
+  files_modified:
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/main.py"
+      change: "+5 lines (push_notifications import + include_router、linter exemption comment 付)"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/routers/push_notifications.py"
+      change: "+162 lines / -7 lines (datetime import 移動、SendPushRequest 追加、send_push endpoint、_attempt_push_send / _cleanup_expired_subscription / _is_subscription_expired_error / _log_delivery 追加、member_id 対応)"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/tests/test_push_notifications_router.py"
+      change: "+225 lines (Phase 2 新 test 5 件追加)"
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_push_vapid_management.md"
+      change: "+126 lines (§10 Phase 2 統合 fix 追補 8 sub-sections)"
+  commit_status: "未実施 (F007 遵守、陛下御差配仰ぎ)"
+  push_status: "未実施 (F007 遵守、Phase 1 commit 2789da3 + bff0451e と一括推奨)"
+
+# ───────────────────────────────────────────────
+# 根本治療原則適用 (= 陛下御差配 msg_20260511_164625 反映)
+# ───────────────────────────────────────────────
+supreme_rule_application:
+  rule_id: "msg_20260511_164625 (= 根本治療原則 最上位基底)"
+  applied_at: "2026-05-11T17:00:00+09:00 (= Phase 2 進行中受領後)"
+  verifications:
+    - aspect: "短期 hack/patch 厳禁"
+      compliance: "OK"
+      note: "AC2 の FK は IF EXISTS ガード付き構造的解決、AC3 は state machine 完全実装"
+    - aspect: "局所修正禁、構造改善優先"
+      compliance: "partial (= 改修と構造的後続を区別)"
+      note: |
+        AC1 の linter exemption は局所 fix だが、根本治療として
+        OD-PVI-8 (linter 設定改修) を後続 task として申し送り。
+        即時の app activation を阻害せずに構造改善 path も確保。
+    - aspect: "工数最小化より将来運用安定優先"
+      compliance: "OK"
+      note: "test 5 件追加で品質保証拡張、scaffold 部分は明示記載で運用時混乱回避"
+    - aspect: "仕組み追加 vs 改修区別"
+      compliance: "OK"
+      note: |
+        本 task は AC3 改修 scope (= state machine + cleanup)、
+        py-vapid + httpx 等の dependency 追加 (= 仕組み) は OD-PVI-2 で後続。
+    - aspect: "test + 法令 + UX 完備で根本品質"
+      compliance: "OK"
+      note: "pytest 12/12、個情法 28 条引用、403/202 status code 適切、エラー msg 日本語"
+
+# ───────────────────────────────────────────────
+# Open Items 更新 (Phase 2 完遂後)
+# ───────────────────────────────────────────────
+open_items:
+  resolved_in_phase2:
+    - "OD-PVI-1: passport_members FK 連携 → AC2 で migration 起案"
+    - "OD-PVI-2 (partial): send_push 実装 → state machine + cleanup 完成、実 VAPID HTTP 配信のみ後続"
+  remaining:
+    - id: OD-PVI-2-remaining
+      title: "send_push 実 VAPID HTTP 配信 (py-vapid + httpx 統合)"
+      handoff_to: "karo (= 別 ashigaru 配分、dependency 追加 = 仕組み task)"
+    - id: OD-PVI-3
+      title: "WORM mirror 5 年保管自動化"
+      handoff_to: "karo (= ops subtask)"
+    - id: OD-PVI-4
+      title: "同意撤回 → push_subscriptions cascade revoke trigger"
+      handoff_to: "ashigaru4 (= 同意 spec §5.5 統合)"
+    - id: OD-PVI-5
+      title: "LINE Bot / メール fallback (= multi-channel 配信失敗時)"
+      handoff_to: "karo (= 後続 subtask)"
+    - id: OD-PVI-6
+      title: "14 日過渡期の自動 revoke cron"
+      handoff_to: "karo (= ops subtask)"
+    - id: OD-PVI-7
+      title: "send_push state machine を SoT 詳細設計書に逆反映"
+      handoff_to: "karo (= SoT 改訂 task)"
+    - id: OD-PVI-8 (new)
+      title: "linter (ruff / ESLint) 設定改修 — F401 個別 noqa を構造的設定に置換"
+      handoff_to: "karo (= ops/infra subtask、根本治療継続)"
+
+# ───────────────────────────────────────────────
+# Skill candidate (= ashigaru → karo aggregation)
+# ───────────────────────────────────────────────
+skill_candidate: |
+  本 Phase 2 で「Phase 1 残 findings 統合 fix」パターンが再現性高い。
+  - finding ごとに AC mapping
+  - 根本治療原則と局所 fix を区別、構造改善 OD で申し送り
+  - 既設計 SoT を破壊せず追補形式で docs 拡張
+  この 3 step を含む skill 候補「findings_integration_phase2_protocol」を提案。
+  既提案 (Phase 1) の "design_sot_preflight" と組み合わせると
+  「初動 SoT 確認 → Phase 1 実装 → 残 findings 統合 fix Phase 2」の完全 workflow になる。
+
+# ───────────────────────────────────────────────
+# 規律遵守 (= 戒め + F001-F007)
+# ───────────────────────────────────────────────
+discipline:
+  honnoji_kaime: 遵守 (= 機械 evidence のみ評価、推測 verdict 不在)
+  F001_no_polling: 遵守
+  F002_no_direct_human: 遵守 (= 本報告 inbox 経由)
+  F003_no_self_capture: 遵守
+  F004_no_idle_loop: 遵守
+  F007_manual_commit_push: 遵守 (= 未実施、陛下御差配仰ぐ)
+  destructive_ops: なし
+  prompt_injection_defense: 遵守 (= task YAML + inbox karo 命令のみ実行)
+  supreme_rule_msg_20260511_164625: 適用済 (= supreme_rule_application section 参照)

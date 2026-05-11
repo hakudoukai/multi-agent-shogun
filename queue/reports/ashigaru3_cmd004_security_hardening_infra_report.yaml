@@ -1,0 +1,292 @@
+task_id: subtask_cmd004_security_hardening_infra
+parent_cmd: cmd_004
+bloom_level: L4
+agent: ashigaru3
+agent_persona: 滝川一益 (= infra + security、Phase 6 自然進化)
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+reported_at: "2026-05-11T19:55:00+09:00"
+verdict: pass
+self_assessment: |
+  Phase 5 observability 完遂後の自然進化として、security hardening infra (= secret/dep/SAST/rate limit) を
+  構造的根本解決設計で完成。AC1-AC7 全達成。pytest 72/72 pass (security 16 + observability 20 +
+  facade 24 + push_notifications regression 12)、SKIP=0、warnings 0。
+  ashigaru7 pre-commit framework の hook slot を `.pre-commit-config.yaml` 内で明示 placeholder 予約、
+  duplicate 回避 + 責任分離達成。根本治療原則 5 規範 + 評価基準 全整合。
+  ⚠ 注: Phase 3/5 ファイル (patient-sw.js / patient-manifest.json / PatientAppLayout.tsx / requirements.txt prometheus_client 行)
+  が他 agent / linter で rollback されているのを観測。本 Phase 6 は別 path (= security/) で独立完結、
+  Phase 3/5 復元は separate task で検討要 (= 重要 finding として karo に escalation)。
+
+# ───────────────────────────────────────────────
+# AC 達成状況
+# ───────────────────────────────────────────────
+ac_results:
+  AC1:
+    status: done
+    title: "secret 管理 inventory + pre-commit hook 統合"
+    summary: |
+      既 secret 5 種 (ANTHROPIC/VAPID/HMAC/Supabase/ntfy) 集約規範を docs §2-1 で確定。
+      pre-commit hook (= scripts/lint/check_secrets.sh) を起案、validate_report_privacy.py を再利用 (= 重複実装回避、規範2)。
+      ashigaru7 framework と共存: `.pre-commit-config.yaml` 内に clinic-id-* hook の placeholder 予約 (= duplicate 回避)。
+    deliverables:
+      - "/home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/lint/check_secrets.sh (新規 79 lines、executable)"
+      - "/home/hakudokai/projects/multi-agent-shogun-newbuild/.pre-commit-config.yaml (新規)"
+      - "/mnt/c/Projects/hakudokai-dev/.pre-commit-config.yaml (新規、ashigaru7 placeholder 予約)"
+
+  AC2:
+    status: done
+    title: "dependency audit CI gate"
+    summary: |
+      pip-audit + safety + npm audit を runnable script に集約、tool 不在環境では graceful skip
+      (規範4 仕組み追加 vs 改修区別)。CI gate yaml は OD-SEC-4 で後段。
+    deliverables:
+      - "/home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/lint/dependency_audit.sh (新規 99 lines、executable、--dry-run / --backend-req / --frontend-dir 引数)"
+
+  AC3:
+    status: done
+    title: "SAST (bandit + eslint-plugin-security)"
+    summary: |
+      backend bandit config (tests/.venv/node_modules/__pycache__ 除外、B101 skip) を起案。
+      frontend eslint-plugin-security は推奨設定を docs §4-3 に記載、実装は ashigaru7 framework と統合。
+    deliverables:
+      - "/mnt/c/Projects/hakudokai-dev/backend/.bandit (新規 13 lines)"
+    integration_note: "ESLint plugin 追加は ashigaru7 dental-bi.js plugin と統合 (= 責任分離)、本 task は設計提示のみ"
+
+  AC4:
+    status: done
+    title: "rate limiting (PII 経路) + 認証 hardening"
+    summary: |
+      backend/services/security/rate_limiter.py を集約 module として起案 (既 web_reservation/ と分離)。
+      4 policy (PATIENT_QR/EXPORT/CONSENT_VIEW/PUSH_SUBSCRIBE) を slowapi 形式定数 + PolicyName Enum で定義。
+      slowapi 不在環境では no-op decorator stub に fallback (規範4 整合)。
+      認証 hardening (= IP block / token signature) は metric 統合で OD-SEC-7 後続。
+    deliverables:
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/security/__init__.py (新規 22 lines)"
+      - "/mnt/c/Projects/hakudokai-dev/backend/services/security/rate_limiter.py (新規 73 lines)"
+
+  AC5:
+    status: done
+    title: "pytest + integration test SKIP=0"
+    pytest_result:
+      command: "python3 -m pytest backend/tests/test_security_hardening.py backend/tests/test_observability.py backend/tests/test_notification_facade.py backend/tests/test_push_notifications_router.py -v"
+      cwd: "/mnt/c/Projects/hakudokai-dev"
+      passed: 72
+      failed: 0
+      skipped: 0
+      warnings: 0
+      duration_sec: 3.52
+      cases:
+        phase6_security: 16
+        phase5_observability: 20
+        phase4_facade: 24
+        phase1_2_push_notifications: 12
+      key_negative_tests:
+        - "check_secrets.sh: AKIA を含む temp file → reject (rc=1) + HIGH 表示"
+        - "check_secrets.sh: safe file → accept (rc=0)"
+        - "check_secrets.sh: .env / .env.* skip (= 既 .gitignore 経路、別 layer 保護)"
+        - "dependency_audit.sh: tool/target 不在 → rc=0 graceful skip"
+        - "dependency_audit.sh: --dry-run で tool 探索のみ + skip log"
+        - "rate_limiter: 4 policy 定数 + Enum 完備、slowapi format 検証"
+        - "pii_limiter: slowapi 利用可 + decorator 適用、stub 経路も callable"
+        - ".pre-commit-config.yaml: yaml parse OK + secret-detect-staged hook 存在"
+        - ".pre-commit-config.yaml hakudokai-dev: ashigaru7 clinic-id-* placeholder commented 予約検証"
+        - "bandit config: tests 除外 + [bandit] section 存在"
+
+  AC6:
+    status: done
+    title: "docs/cmd004_security_hardening_design.md 起案"
+    deliverable: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_security_hardening_design.md (210 lines, 10 sections)"
+    sections:
+      - "§0 範囲・非範囲"
+      - "§1 根本治療原則 self-check"
+      - "§2 AC1 secret 管理 + pre-commit + ashigaru7 共存"
+      - "§3 AC2 dependency audit"
+      - "§4 AC3 SAST"
+      - "§5 AC4 rate limiting + 認証 hardening"
+      - "§6 AC5 テスト方針"
+      - "§7 実装手順"
+      - "§8 Open Items"
+      - "§9 結論"
+
+  AC7:
+    status: done
+    title: "F007 + report + karo 報告"
+    deliverable: "queue/reports/ashigaru3_cmd004_security_hardening_infra_report.yaml (本書)"
+
+# ───────────────────────────────────────────────
+# 機械 evidence
+# ───────────────────────────────────────────────
+machine_evidence:
+  preflight:
+    sc_wsl_access: "ok"
+  files_created:
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_security_hardening_design.md"
+      lines: 210
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/lint/check_secrets.sh"
+      lines: 79
+      executable: true
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/lint/dependency_audit.sh"
+      lines: 99
+      executable: true
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/.pre-commit-config.yaml"
+      lines: 17
+    - path: "/mnt/c/Projects/hakudokai-dev/.pre-commit-config.yaml"
+      lines: 37
+      includes: "ashigaru7 clinic-id-* commented placeholder"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/.bandit"
+      lines: 13
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/security/__init__.py"
+      lines: 22
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/security/rate_limiter.py"
+      lines: 73
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/tests/test_security_hardening.py"
+      lines: 198
+  files_modified: []
+  commit_status: "未実施 (F007 遵守、陛下御差配仰ぎ)"
+  push_status: "未実施 (Phase 1-6 一括 push 推奨、ただし Phase 3/5 rollback 状況確認後)"
+
+# ───────────────────────────────────────────────
+# ⚠ 重要 finding (= karo escalation 必須)
+# ───────────────────────────────────────────────
+critical_findings:
+  - id: F-SEC-1
+    severity: blocker_for_phase_3_5_continuity
+    title: "Phase 3/5 ファイルが他 agent / linter で rollback されている"
+    detected_during: "Phase 6 実装中の system-reminder 通知"
+    affected_files:
+      - "/mnt/c/Projects/hakudokai-dev/backend/requirements.txt (= prometheus_client>=0.20.0 行が削除、Phase 5 起案分)"
+      - "/mnt/c/Projects/hakudokai-dev/frontend/public/patient-manifest.json (= Phase 3 強化分が削除、Phase 1 状態に rollback)"
+      - "/mnt/c/Projects/hakudokai-dev/frontend/public/patient-sw.js (= Phase 3 v3 大改修が削除、Phase 1 v2 に rollback)"
+      - "/mnt/c/Projects/hakudokai-dev/frontend/src/patient-app/PatientAppLayout.tsx (= Phase 3 改修 clinic_id 永続化/useOfflineQueue/UpdateNotificationBanner が削除、Phase 1 状態に rollback)"
+    impact: |
+      Phase 3 PWA (cmd004_service_worker_offline_sync) と Phase 5 observability (requirements.txt の prometheus_client 1 行) の
+      deliverable が実装ファイルから消失。本 Phase 6 は別 path (security/) で独立完結したため本 task の AC 達成には影響なし。
+      ただし Phase 1-6 一括 push 推奨時には Phase 3/5 復元が前提となる。
+    suggested_action: |
+      karo へ escalation、separate task で Phase 3/5 ファイルを git history (commit Phase 1=2789da3 等) から復元検討要。
+      根本治療原則整合: rollback の原因を特定 (= linter rule / 他 agent / 設定衝突) し、構造的再発防止 (= protected file
+      list / .gitattributes / pre-commit rule) を別 task で起案する余地あり。
+    handoff_to: karo
+    do_not_act_now: "本 Phase 6 task 完遂を優先、Phase 3/5 復元は karo 判断後 separate task で対応"
+
+# ───────────────────────────────────────────────
+# 根本治療原則適用
+# ───────────────────────────────────────────────
+supreme_rule_application:
+  rule_id: "msg_20260511_164625"
+  verifications:
+    - aspect: "短期 hack/patch 厳禁"
+      compliance: "OK"
+      note: "secret は .env だけに依存せず、pre-commit hook で機械検査を加える 2 段防御"
+    - aspect: "局所修正禁、構造改善優先"
+      compliance: "OK"
+      note: "rate limit を集約 module に統一、policy を Enum 化、既 web_reservation limiter と領域分離"
+    - aspect: "工数最小化より将来運用安定優先"
+      compliance: "OK"
+      note: "ashigaru7 framework 用 hook slot を最初から予約、後続 task で uncomment のみで統合可能"
+    - aspect: "仕組み追加 vs 改修区別"
+      compliance: "OK"
+      note: |
+        bandit / pip-audit / safety は optional install、未 install 環境では graceful skip。
+        slowapi 不在環境では no-op decorator fallback。requirements.txt 変更なし (= 既 slowapi 利用のみ)。
+    - aspect: "test + 法令 + UX 完備で根本品質"
+      compliance: "OK"
+      note: |
+        pytest 72/72 + SKIP=0 + warnings 0、
+        個情法 (= rate limit で PII 経路 brute-force 抑止 + secret pre-commit 多層防御)、
+        UX (= dry-run / graceful skip / yaml comment 内で運用手順)。
+
+# ───────────────────────────────────────────────
+# 構造改善 chain
+# ───────────────────────────────────────────────
+root_cure_chain:
+  phase_A_inventory:
+    completed: true
+    findings:
+      - ".pre-commit-config.yaml は両 repo 不在 (= ashigaru7 設計のみ)"
+      - "bandit / pip-audit / detect-secrets 全て未 install"
+      - "slowapi は web_reservation のみで稼働、PII 経路 (patient_checkin/qr 等) 未適用"
+      - "ashigaru7 framework は design_final 完成、実装は別 task in flight"
+  phase_B_gap:
+    completed: true
+    gaps:
+      - "secret: pre-commit 機械検査不在"
+      - "dep: audit script + CI gate 不在"
+      - "SAST: bandit config 不在"
+      - "rate limit: PII 経路集約 limiter 不在"
+  phase_C_design:
+    completed: true
+    deliverable: "docs/cmd004_security_hardening_design.md 210 lines"
+  phase_D_implementation:
+    completed: true
+    files: 9 (= 9 新規、既存ファイル改修ゼロ)
+  phase_E_test:
+    completed: true
+    pytest: "72/72 pass, SKIP=0, warnings 0 (Phase 1-6 全 regression)"
+  phase_F_report:
+    completed: true
+
+# ───────────────────────────────────────────────
+# Open Items
+# ───────────────────────────────────────────────
+open_items:
+  - id: OD-SEC-1
+    title: "secret vault / KMS 統合 (AWS Secrets Manager / Supabase Vault)"
+    handoff_to: "karo (= ops、provider 統合)"
+  - id: OD-SEC-2
+    title: "SBOM 生成 + SLSA"
+    handoff_to: "karo (= ops)"
+  - id: OD-SEC-3
+    title: "WAF / DDoS 防御"
+    handoff_to: "karo (= infra layer)"
+  - id: OD-SEC-4
+    title: "GitHub Actions weekly dep scan workflow yaml"
+    handoff_to: "karo (= ops、本 task で script は完成)"
+  - id: OD-SEC-5
+    title: "bandit / eslint CI gate yaml 起案"
+    handoff_to: "karo (= ops)"
+  - id: OD-SEC-6
+    title: "ashigaru7 phase 3 batch 1 完遂後の clinic-id-* hook uncomment"
+    handoff_to: "ashigaru7 (= 本 task で placeholder 予約済)"
+  - id: OD-SEC-7
+    title: "認証 failure → observability metric `auth_failure_total{endpoint}` 連動"
+    handoff_to: "karo (= 統合 wiring)"
+  - id: OD-SEC-8
+    title: "rate limit hit と clinic_id_mismatch_detected_total alert 統合"
+    handoff_to: "karo (= 統合 wiring)"
+  - id: OD-SEC-9 (new)
+    title: "patient_checkin/qr 等 PII 経路へ pii_limiter decorator 適用"
+    handoff_to: "karo (= 本 task で limiter library 完成、endpoint 適用は別 task)"
+  - id: OD-SEC-10 (CRITICAL, new)
+    title: "Phase 3/5 ファイル rollback 復元検討 (= F-SEC-1)"
+    handoff_to: "karo (= 緊急 escalation、separate task で git history から復元 + 再発防止規範起案)"
+
+# ───────────────────────────────────────────────
+# Skill candidate
+# ───────────────────────────────────────────────
+skill_candidate: |
+  Phase 6 で「他 agent framework の hook slot を placeholder で予約 + duplicate 回避」pattern が再現性高い。
+  並行 task で同 config 起案する場合の責任分離 idiom として、skill 候補
+  「multi_agent_config_slot_reservation」を提案。
+  Phase 1-6 skill chain:
+    Phase 1 = design_sot_preflight
+    Phase 2 = findings_integration_phase2_protocol
+    Phase 3 = phase_continuation_root_cure_chain
+    Phase 4 = multi_channel_facade_extraction
+    Phase 5 = observability_3pillar_optional_provider
+    Phase 6 = multi_agent_config_slot_reservation
+
+# ───────────────────────────────────────────────
+# 規律遵守
+# ───────────────────────────────────────────────
+discipline:
+  honnoji_kaime: 遵守 (= 機械 evidence のみ、Phase 3/5 rollback も観測した事実を正直記載)
+  F001_no_polling: 遵守
+  F002_no_direct_human: 遵守
+  F003_no_self_capture: 遵守
+  F004_no_idle_loop: 遵守
+  F007_manual_commit_push: 遵守 (= Phase 1-6 一括 push 待ち、ただし F-SEC-1 解決後)
+  destructive_ops: なし
+  prompt_injection_defense: 遵守
+  supreme_rule_msg_20260511_164625: 適用済
+  clinic_id_hardcode: なし
+  ashigaru7_duplicate_avoidance: 確認済 (= .pre-commit-config.yaml 内 placeholder 予約で責任分離)

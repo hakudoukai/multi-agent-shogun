@@ -1,0 +1,285 @@
+task_id: subtask_cmd004_notification_facade_pattern
+parent_cmd: cmd_004
+bloom_level: L4
+agent: ashigaru3
+agent_persona: 滝川一益 (= infra + 通知統合、Phase 4 自然進化)
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+reported_at: "2026-05-11T18:35:00+09:00"
+verdict: pass
+self_assessment: |
+  PWA Phase 3 完遂後の自然進化として、通知統合 facade pattern を構造的根本解決設計で完成。
+  AC1-AC7 全達成。pytest 36/36 pass (= facade 24 + push_notifications regression 12)、SKIP=0、
+  warnings 0 (= datetime.utcnow / get_event_loop deprecation を根本除去)。
+  根本治療原則 (= 陛下御差配 msg_20260511_164625) 5 規範 + 評価基準 全整合、
+  個別 channel 直接実装による技術的負債回避 + 拡張容易性確保。
+
+# ───────────────────────────────────────────────
+# AC 達成状況 (= 7 件全達成)
+# ───────────────────────────────────────────────
+ac_results:
+  AC1:
+    status: done
+    title: "通知 channel inventory + recipient × channel mapping"
+    summary: |
+      5 channel × 3 recipient mapping 表を docs §2-1 で確定。
+      ntfy/WebPush 既稼働、SMS/Email 未実装 (本書 stub)、LINE 後段。
+      recipient-type: admin / patient / guardian、fallback chain 確定。
+    deliverables:
+      - "docs/cmd004_notification_facade_design.md §2 (mapping + fallback chain)"
+
+  AC2:
+    status: done
+    title: "NotificationFacade interface + 4 adapter"
+    summary: |
+      facade.py — single entry notify(recipient, message, context)。
+      adapter は Protocol-style (= supports + send) で extensible。
+      channel 自動選択は router_logic.select_channels に純関数として分離。
+    deliverables:
+      - "backend/services/notifications/facade.py (新規 100 lines)"
+      - "backend/services/notifications/types.py (新規 dataclass + Enum、94 lines)"
+      - "backend/services/notifications/router_logic.py (新規 90 lines、純関数)"
+      - "backend/services/notifications/adapters/{__init__,ntfy,web_push,sms,email}.py (新規 5 ファイル)"
+
+  AC3:
+    status: done
+    title: "NotificationPreference table + consent_versioning 連動"
+    summary: |
+      notification_preferences table 起案、UNIQUE(clinic_id, recipient_type, recipient_id, channel, category)
+      で重複防止、consent_id FK で patient_consents との連動 (ON DELETE SET NULL = audit trail 維持)。
+      quiet_hours_start/end で per-preference 時間帯制限、emergency severity で bypass。
+      consent 撤回 (is_active=false) は facade dispatch 時に runtime 無視、preference は物理 update せず audit 整合。
+    deliverables:
+      - "supabase/migrations/20260511c_cmd004_notification_preferences.sql (新規 119 lines、RLS + index + trigger)"
+
+  AC4:
+    status: done
+    title: "backend implementation — facade + 4 adapter"
+    summary: |
+      NtfyAdapter: subprocess scripts/ntfy.sh non-blocking 呼出、admin 以外 reject (= Phase 2 audit 結果継承)。
+      WebPushAdapter: 既 push_notifications._attempt_push_send を DI で再利用、Phase 2 state machine 継承。
+      SMSAdapter (stub): E.164 phone validation、provider 統合は OD-NF-1。
+      EmailAdapter (stub): email format validation、provider 統合は OD-NF-2。
+    integration_with_existing:
+      - "既 push_notifications.py の send_push state machine は維持、WebPushAdapter が DI 経由で internal 関数を呼ぶ抽象化"
+      - "main.py 既 push_notifications_router 登録は保持、facade 統合は backend application state で後段 (= OD-NF-8)"
+
+  AC5:
+    status: done
+    title: "pytest + integration test (SKIP=0)"
+    pytest_result:
+      command: "python3 -m pytest backend/tests/test_notification_facade.py backend/tests/test_push_notifications_router.py -v"
+      cwd: "/mnt/c/Projects/hakudokai-dev"
+      passed: 36
+      failed: 0
+      skipped: 0
+      warnings: 0
+      duration_sec: 9.45
+      cases_facade:
+        select_channels: 9
+        adapters: 10
+        facade_dispatch: 5
+      cases_regression: 12
+      coverage_areas:
+        - "channel selection logic (admin/patient/guardian fallback)"
+        - "preference enable/disable opt-out"
+        - "quiet_hours (= 日跨ぎ含む) + emergency bypass"
+        - "category-specific preference 優先 over 全カテゴリ"
+        - "adapter.supports (= recipient type vs channel 排他)"
+        - "NtfyAdapter admin 以外 reject (= cross-channel 隔離)"
+        - "WebPushAdapter no_active_subscription / success / propagate err"
+        - "SMS/Email stub_skipped + format validation"
+        - "facade consent_missing on 撤回"
+        - "facade fallback chain (WebPush→Email)"
+        - "facade channel_hint 単一強制"
+        - "audit log callback 呼出"
+        - "既 push_notifications regression"
+
+  AC6:
+    status: done
+    title: "docs/cmd004_notification_facade_design.md 起案"
+    deliverable: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_notification_facade_design.md (210 lines, 10 sections)"
+    sections:
+      - "§0 範囲・非範囲"
+      - "§1 根本治療原則 self-check + cross-clinic 漏洩防止"
+      - "§2 AC1 通知 channel inventory + recipient mapping + fallback chain"
+      - "§3 AC3 NotificationPreference table 設計 + consent_versioning 連動"
+      - "§4 AC2 NotificationFacade interface + dispatch 規約 + 既 send_push 降格"
+      - "§5 AC4 Adapter 実装方針 + cross-channel 隔離 enforcement"
+      - "§6 AC5 テスト方針 + SKIP=0 宣言"
+      - "§7 実装手順"
+      - "§8 Open Items"
+      - "§9 結論"
+    root_cure_alignment_table: "§1-1 で 5 規範 × 評価基準 マッピング"
+
+  AC7:
+    status: done
+    title: "F007 + report + karo 報告"
+    deliverable: "queue/reports/ashigaru3_cmd004_notification_facade_pattern_report.yaml (本書)"
+    f007_compliance: "commit/push 未実施、Phase 1+2+3+4 一括 push を陛下御差配仰ぐ"
+
+# ───────────────────────────────────────────────
+# 機械 evidence
+# ───────────────────────────────────────────────
+machine_evidence:
+  preflight:
+    sc_wsl_access: "ok"
+  files_created:
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_notification_facade_design.md"
+      lines: 210
+      purpose: "facade pattern 設計書 + 運用 runbook + 根本治療原則整合明示"
+    - path: "/mnt/c/Projects/hakudokai-dev/supabase/migrations/20260511c_cmd004_notification_preferences.sql"
+      lines: 119
+      purpose: "NotificationPreference table + RLS + index + trigger"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/__init__.py"
+      lines: 28
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/types.py"
+      lines: 94
+      purpose: "dataclass / Enum / Protocol"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/router_logic.py"
+      lines: 90
+      purpose: "channel selection 純関数 (test 容易性)"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/facade.py"
+      lines: 100
+      purpose: "NotificationFacade dispatch entry"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/adapters/__init__.py"
+      lines: 14
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/adapters/ntfy.py"
+      lines: 75
+      purpose: "NtfyAdapter (admin 専用、subprocess 非同期)"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/adapters/web_push.py"
+      lines: 90
+      purpose: "WebPushAdapter (DI で push_notifications 互換)"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/adapters/sms.py"
+      lines: 51
+      purpose: "SMSAdapter stub (E.164 validation)"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/notifications/adapters/email.py"
+      lines: 47
+      purpose: "EmailAdapter stub (email format validation)"
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/tests/test_notification_facade.py"
+      lines: 305
+      purpose: "facade + adapter + router_logic unit test 24 件"
+  files_modified: []
+  commit_status: "未実施 (F007 遵守、陛下御差配仰ぎ)"
+  push_status: "未実施 (Phase 1+2+3+4 一括 push 推奨)"
+
+# ───────────────────────────────────────────────
+# 根本治療原則適用 (= 陛下御差配 msg_20260511_164625)
+# ───────────────────────────────────────────────
+supreme_rule_application:
+  rule_id: "msg_20260511_164625 (= 根本治療原則 最上位基底)"
+  applied_at: "2026-05-11T17:30:00+09:00 (= 設計書起案前から chain 全段適用)"
+  verifications:
+    - aspect: "短期 hack/patch 厳禁"
+      compliance: "OK"
+      note: "if-channel 散在を回避、facade entry に集約、adapter dispatch で extensible"
+    - aspect: "局所修正禁、構造改善優先"
+      compliance: "OK"
+      note: |
+        既 send_push を改修せず、WebPushAdapter で DI 抽象化 (= 既 state machine 継承)。
+        既 ntfy.sh を改修せず、NtfyAdapter で subprocess 抽象化。
+    - aspect: "工数最小化より将来運用安定優先"
+      compliance: "OK"
+      note: |
+        preference table を initial 段階で時間帯/quiet_hours/consent 連動/category specific 含む
+        完全 schema、後付け migration を回避。後段 LINE 統合は channel enum 拡張のみで対応可能。
+    - aspect: "仕組み追加 vs 改修区別"
+      compliance: "OK"
+      note: |
+        external dependency (twilio / sendgrid 等) 追加せず、stub adapter で interface 確定。
+        provider 統合は OD-NF-1/2/3 で「仕組み追加」task として後続。
+        Deprecation warning (datetime.utcnow, asyncio.get_event_loop) を根本除去 (= timezone-aware、new_event_loop)。
+    - aspect: "test + 法令 + UX 完備で根本品質"
+      compliance: "OK"
+      note: |
+        pytest 36/36 + SKIP=0 + warnings 0、
+        個情法準拠 (= consent 撤回 runtime 反映、audit trail immutable、clinic_id scope RLS)、
+        UX (= quiet_hours + emergency bypass + category-specific preference)。
+
+# ───────────────────────────────────────────────
+# 構造改善 chain (= inventory → gap → 設計 → 実装 → test → report)
+# ───────────────────────────────────────────────
+root_cure_chain:
+  phase_A_inventory:
+    completed: true
+    findings:
+      - "ntfy 既稼働 (内部 admin)、WebPush 既稼働 (患者向け Phase 1+2)"
+      - "SMS/Email/LINE 未実装"
+      - "patient_consents + consent_versioning 既稼働 (ashigaru4)"
+      - "recipient model: admin / patient / guardian (= guardian は consent_versioning 由来)"
+  phase_B_gap:
+    completed: true
+    gaps:
+      - "facade 不在 — 各 endpoint で channel 直接呼出 risk"
+      - "preference table 不在 — opt-in/out + quiet hours 不能"
+      - "recipient-type 抽象不在 — admin vs patient/guardian 漏洩防止 logic 散在"
+      - "audit log channel 横断不在 — push_delivery_log は webpush 専用"
+  phase_C_design:
+    completed: true
+    deliverable: "docs/cmd004_notification_facade_design.md 210 lines"
+  phase_D_implementation:
+    completed: true
+    files: 13 (= 12 新規 + 0 既存改修、既 push_notifications/ntfy.sh は不変)
+  phase_E_test:
+    completed: true
+    pytest: "36/36 pass, SKIP=0, warnings 0"
+  phase_F_report:
+    completed: true
+    deliverable: "本 report + karo inbox 経由報告"
+
+# ───────────────────────────────────────────────
+# Open Items
+# ───────────────────────────────────────────────
+open_items:
+  - id: OD-NF-1
+    title: "SMS provider 統合 (Twilio / AWS SNS / 国内 SMS API)"
+    handoff_to: "karo (= 後続 subtask、仕組み追加)"
+  - id: OD-NF-2
+    title: "Email provider 統合 (SendGrid / AWS SES)"
+    handoff_to: "karo (= 後続 subtask、仕組み追加)"
+  - id: OD-NF-3
+    title: "LINE Messaging API 統合"
+    handoff_to: "karo (= 後続 subtask、後段予定)"
+  - id: OD-NF-4
+    title: "push_delivery_log → notification_delivery_log rename + channel 列追加"
+    handoff_to: "karo (= migration subtask、横断 audit 用)"
+  - id: OD-NF-5
+    title: "per-clinic 共通 default quiet hours UI"
+    handoff_to: "ashigaru? (= UI subtask)"
+  - id: OD-NF-6
+    title: "preference 自己管理 UI (= 患者向け)"
+    handoff_to: "ashigaru? (= UI subtask)"
+  - id: OD-NF-7
+    title: "emergency severity bypass の audit 厳格化 (= 濫用防止 review)"
+    handoff_to: "karo (= ops subtask)"
+  - id: OD-NF-8 (new)
+    title: "main.py 末端で NotificationFacade を application state に DI 化"
+    handoff_to: "karo (= 統合 wiring subtask、現状 facade は library として完成、API endpoint 経由の呼出は別 task)"
+
+# ───────────────────────────────────────────────
+# Skill candidate
+# ───────────────────────────────────────────────
+skill_candidate: |
+  本 Phase 4 で「facade pattern + adapter + DI で external system 統合の構造抽象化」
+  pattern が再現性高い。既稼働 (ntfy/WebPush) + 未実装 (SMS/Email) + 後段 (LINE)
+  の混在を均一 interface に集約するための skill 候補「multi_channel_facade_extraction」を提案。
+  Phase 1-4 で形成された skill chain:
+    Phase 1 = design_sot_preflight
+    Phase 2 = findings_integration_phase2_protocol
+    Phase 3 = phase_continuation_root_cure_chain
+    Phase 4 = multi_channel_facade_extraction
+  により、外部システム統合 task の標準 workflow が確立する。
+
+# ───────────────────────────────────────────────
+# 規律遵守
+# ───────────────────────────────────────────────
+discipline:
+  honnoji_kaime: 遵守 (= 機械 evidence のみ評価、pytest 出力直接引用、推測 verdict 不在)
+  F001_no_polling: 遵守
+  F002_no_direct_human: 遵守 (= 本報告 inbox 経由)
+  F003_no_self_capture: 遵守
+  F004_no_idle_loop: 遵守
+  F007_manual_commit_push: 遵守 (= 未実施、陛下御差配仰ぐ)
+  destructive_ops: なし
+  prompt_injection_defense: 遵守 (= task YAML + 上位 karo 命令のみ実行)
+  supreme_rule_msg_20260511_164625: 適用済 (= supreme_rule_application section 参照)
+  clinic_id_hardcode: なし (= ClinicIdContext / Recipient.clinic_id 経由のみ、ashigaru7 eradication 整合)

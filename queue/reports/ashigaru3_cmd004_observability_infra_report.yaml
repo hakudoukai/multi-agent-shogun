@@ -1,0 +1,270 @@
+task_id: subtask_cmd004_observability_infra
+parent_cmd: cmd_004
+bloom_level: L4
+agent: ashigaru3
+agent_persona: 滝川一益 (= infra + 観測性、Phase 5 自然進化)
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+reported_at: "2026-05-11T19:25:00+09:00"
+verdict: pass
+self_assessment: |
+  Phase 4 通知統合 facade 完遂後の自然進化として、観測性 infra (3 pillar) を構造的根本解決設計で完成。
+  AC1-AC7 全達成。pytest 56/56 pass (= observability 20 + facade 24 + push_notifications regression 12)、
+  SKIP=0、warnings 0。PII 漏洩 negative test (= AKIA/sk-ant-/Bearer/digit_id) 全 redact 立証、
+  AlertRouter は Phase 4 NotificationFacade に統合済、prometheus_client は optional import で
+  未 install 環境でも no-op stub fallback で起動継続 — 根本治療原則「仕組み追加 vs 改修区別」整合。
+
+# ───────────────────────────────────────────────
+# AC 達成状況 (= 7 件全達成)
+# ───────────────────────────────────────────────
+ac_results:
+  AC1:
+    status: done
+    title: "観測性 3 pillar (logs / metrics / traces) inventory"
+    summary: |
+      既 source 一覧確定 — backend logging (= flat text)、ntfy.sh / auto_git_sync.sh (= stdout)、
+      supabase logs (= hosted)、frontend console.error (= shim 既存)、metrics 完全不在。
+      改修方針を 3 pillar ごとに表で確定 (設計書 §2)。
+    deliverables:
+      - "docs/cmd004_observability_design.md §2 (3 pillar 表 + 改修方針)"
+
+  AC2:
+    status: done
+    title: "構造化 JSON log + PII filter"
+    summary: |
+      JsonFormatter (= ts/level/logger/msg/extra 構造化)、PIIFilter (= runtime redact、
+      validate_report_privacy.py 同等 pattern set 適用)、configure_logging で root handler
+      完全置換 (= 既存衝突排除)。
+    deliverables:
+      - "backend/services/observability/pii_filter.py (新規 102 lines)"
+      - "backend/services/observability/logging_config.py (新規 88 lines)"
+    pii_pattern_coverage:
+      high: ["aws_key", "anthropic_key", "openai_key", "github_token", "xai_key", "gitlab_pat", "bearer_token", "absolute_home", "absolute_wsl_c"]
+      warn: ["digit_id_candidate"]
+      same_as_validate_report_privacy_py: "9 high + 1 warn (= scripts/validate_report_privacy.py 同等、CI gate と runtime filter で目的層異なるが pattern drift は test で抑止)"
+
+  AC3:
+    status: done
+    title: "prometheus metric middleware + custom metrics"
+    summary: |
+      MetricsRegistry (= optional import + stub fallback、prometheus_client 未 install 環境でも起動継続)、
+      ObservabilityMiddleware (= HTTP request 計測 + path normalization)、7 metric 定義。
+    deliverables:
+      - "backend/services/observability/metrics.py (新規 109 lines、optional import branch)"
+      - "backend/services/observability/middleware.py (新規 71 lines)"
+      - "backend/requirements.txt: prometheus_client>=0.20.0 追加 (= 仕組み追加点、明示)"
+    metric_set:
+      standard: ["http_requests_total", "http_request_duration_seconds"]
+      custom:
+        - "notification_delivery_total{channel,status}"
+        - "consent_versioning_active_total{version}"
+        - "clinic_id_mismatch_detected_total{layer}"
+        - "pii_filter_redactions_total{pattern}"
+        - "alert_router_fired_total{rule,delivered}"
+
+  AC4:
+    status: done
+    title: "AlertRouter (= NotificationFacade 経由 admin alert)"
+    summary: |
+      AlertRouter は AlertRule を NotificationFacade.notify(ADMIN, ...) に dispatch、
+      4 標準 rule (error_rate_spike / consent_violation / clinic_id_leakage / patient_delete_request)、
+      severity = NORMAL/HIGH/EMERGENCY (= Phase 4 Severity 再利用)、metric snapshot 添付可。
+    deliverables:
+      - "backend/services/observability/alert_router.py (新規 117 lines)"
+    integration_with_phase4: |
+      Phase 4 NotificationFacade に依存、ADMIN recipient + NtfyAdapter 経路で配信。
+      ntfy 経路の cross-channel 隔離 (= Phase 2 audit 結果) が AlertRouter にも自動継承。
+
+  AC5:
+    status: done
+    title: "pytest + integration test SKIP=0"
+    pytest_result:
+      command: "python3 -m pytest backend/tests/test_observability.py backend/tests/test_notification_facade.py backend/tests/test_push_notifications_router.py -v"
+      cwd: "/mnt/c/Projects/hakudokai-dev"
+      passed: 56
+      failed: 0
+      skipped: 0
+      warnings: 0
+      duration_sec: 11.29
+      cases:
+        observability_new: 20
+        facade_regression: 24
+        push_notifications_regression: 12
+      key_negative_tests:
+        - "PII filter: AKIA / sk-ant- / Bearer / absolute_home / digit_id_candidate 全 redact"
+        - "JsonFormatter: extra fields 構造化、ts は timezone-aware ISO 8601"
+        - "configure_logging: 既 handler 全置換 (= 衝突排除)"
+        - "MetricsRegistry: prometheus_client 不在環境でも no-op stub で起動継続"
+        - "AlertRouter: consent_violation EMERGENCY が facade.notify に dispatch、delivered_via 計測"
+        - "AlertRouter: 配信失敗時 delivered=false で metric 記録"
+        - "normalize_path: uuid / numeric id → {uuid}/{id} template 化、cardinality 抑制"
+
+  AC6:
+    status: done
+    title: "docs/cmd004_observability_design.md 起案"
+    deliverable: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_observability_design.md (240 lines, 10 sections)"
+    sections:
+      - "§0 範囲・非範囲"
+      - "§1 根本治療原則 self-check + PII chain"
+      - "§2 AC1 観測性 3 pillar inventory"
+      - "§3 AC2 構造化 JSON log + PII filter"
+      - "§4 AC3 Prometheus metric (optional import)"
+      - "§5 AC4 AlertRouter NotificationFacade 経由"
+      - "§6 AC5 テスト方針"
+      - "§7 実装手順"
+      - "§8 Open Items"
+      - "§9 結論"
+
+  AC7:
+    status: done
+    title: "F007 + report + karo 報告"
+    deliverable: "queue/reports/ashigaru3_cmd004_observability_infra_report.yaml (本書)"
+    f007_compliance: "commit/push 未実施、Phase 1+2+3+4+5 一括 push を陛下御差配仰ぐ"
+
+# ───────────────────────────────────────────────
+# 機械 evidence
+# ───────────────────────────────────────────────
+machine_evidence:
+  preflight:
+    sc_wsl_access: "ok"
+  files_created:
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_observability_design.md"
+      lines: 240
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/observability/__init__.py"
+      lines: 28
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/observability/pii_filter.py"
+      lines: 102
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/observability/logging_config.py"
+      lines: 88
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/observability/metrics.py"
+      lines: 109
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/observability/middleware.py"
+      lines: 71
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/services/observability/alert_router.py"
+      lines: 117
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/tests/test_observability.py"
+      lines: 266
+  files_modified:
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/requirements.txt"
+      change: "+4 lines (prometheus_client>=0.20.0 追加、Phase 5 マーカ comment)"
+  commit_status: "未実施 (F007 遵守、陛下御差配仰ぎ)"
+  push_status: "未実施 (Phase 1+2+3+4+5 一括 push 推奨)"
+
+# ───────────────────────────────────────────────
+# 根本治療原則適用 (= 陛下御差配 msg_20260511_164625)
+# ───────────────────────────────────────────────
+supreme_rule_application:
+  rule_id: "msg_20260511_164625"
+  verifications:
+    - aspect: "短期 hack/patch 厳禁"
+      compliance: "OK"
+      note: "print()/ad-hoc log 散在を回避、root handler に JSON formatter + PII filter を統一 attach"
+    - aspect: "局所修正禁、構造改善優先"
+      compliance: "OK"
+      note: "endpoint 個別計測でなく middleware で横断計測、metric は MetricsRegistry に集約"
+    - aspect: "工数最小化より将来運用安定優先"
+      compliance: "OK"
+      note: "initial で 7 metric 完備、後付け migration 回避。AlertRouter は initial で Phase 4 facade に統合"
+    - aspect: "仕組み追加 vs 改修区別"
+      compliance: "OK"
+      note: |
+        prometheus_client は optional import + requirements.txt 表明、未 install 環境でも app 起動継続。
+        Loki/Vector/OpenTelemetry は OD-OBS-1/4 で「仕組み追加」task に区別。
+    - aspect: "test + 法令 + UX 完備で根本品質"
+      compliance: "OK"
+      note: |
+        pytest 56/56 + SKIP=0 + warnings 0、
+        個情法 (= PII filter 9 high + 1 warn pattern)、
+        cross-clinic 漏洩 (= clinic_id_mismatch_detected_total metric + alert)、
+        UX (= alert severity EMERGENCY/HIGH/NORMAL + metric snapshot 添付)。
+
+# ───────────────────────────────────────────────
+# 構造改善 chain
+# ───────────────────────────────────────────────
+root_cure_chain:
+  phase_A_inventory:
+    completed: true
+    findings:
+      - "backend logging は flat text、JSON 化不在"
+      - "metrics 完全不在 (prometheus_client install もされていない)"
+      - "PII filter は scripts/validate_report_privacy.py に CI gate のみ、runtime 不在"
+      - "Phase 4 NotificationFacade で admin 配信経路は既稼働"
+  phase_B_gap:
+    completed: true
+    gaps:
+      - "log: 構造化 + PII redact"
+      - "metrics: 計測点 + sink"
+      - "alert: dispatch + severity + facade 統合"
+  phase_C_design:
+    completed: true
+    deliverable: "docs/cmd004_observability_design.md 240 lines"
+  phase_D_implementation:
+    completed: true
+    files: 9 (= 8 新規 + 1 requirements 改修)
+  phase_E_test:
+    completed: true
+    pytest: "56/56 pass, SKIP=0, warnings 0"
+  phase_F_report:
+    completed: true
+
+# ───────────────────────────────────────────────
+# Open Items
+# ───────────────────────────────────────────────
+open_items:
+  - id: OD-OBS-1
+    title: "外部 log sink 統合 (Loki / Vector / ELK)"
+    handoff_to: "karo (= ops、provider 統合)"
+  - id: OD-OBS-2
+    title: "frontend web-vitals + RUM"
+    handoff_to: "ashigaru? (= UI subtask)"
+  - id: OD-OBS-3
+    title: "frontend console.error → sink ship"
+    handoff_to: "karo (= 後続)"
+  - id: OD-OBS-4
+    title: "OpenTelemetry tracing 全面導入"
+    handoff_to: "karo (= 仕組み追加 task)"
+  - id: OD-OBS-5
+    title: "metric 閾値 cron + 動的 alert rule 設定 UI"
+    handoff_to: "karo (= ops)"
+  - id: OD-OBS-6
+    title: "Grafana dashboard provisioning"
+    handoff_to: "karo (= ops)"
+  - id: OD-OBS-7
+    title: "supabase log と app log の corr_id 突合"
+    handoff_to: "karo (= ops)"
+  - id: OD-OBS-8 (new)
+    title: "main.py 末端で configure_logging + ObservabilityMiddleware + AlertRouter を application state に DI 化"
+    handoff_to: "karo (= 統合 wiring subtask、本 task で library 完成、API endpoint 経由の呼出は別 task)"
+  - id: OD-OBS-9 (new)
+    title: "facade.audit_log → metrics.notification_delivery_total 連動の hook 配線"
+    handoff_to: "karo (= 統合 wiring subtask、interface 確定済)"
+
+# ───────────────────────────────────────────────
+# Skill candidate
+# ───────────────────────────────────────────────
+skill_candidate: |
+  Phase 5 で「観測性 3 pillar を optional dependency + stub fallback で初版品質確立」
+  pattern が再現性高い。Provider 統合を「仕組み追加」として明示分離する Phase 4 pattern と組合せて、
+  「core library 完成 → application state DI 配線は別 task」という分業 pattern を確立。
+  skill 候補「observability_3pillar_optional_provider」を提案。
+  Phase 1-5 skill chain:
+    Phase 1 = design_sot_preflight
+    Phase 2 = findings_integration_phase2_protocol
+    Phase 3 = phase_continuation_root_cure_chain
+    Phase 4 = multi_channel_facade_extraction
+    Phase 5 = observability_3pillar_optional_provider
+
+# ───────────────────────────────────────────────
+# 規律遵守
+# ───────────────────────────────────────────────
+discipline:
+  honnoji_kaime: 遵守
+  F001_no_polling: 遵守
+  F002_no_direct_human: 遵守
+  F003_no_self_capture: 遵守
+  F004_no_idle_loop: 遵守
+  F007_manual_commit_push: 遵守 (= Phase 1-5 一括 push 待ち)
+  destructive_ops: なし
+  prompt_injection_defense: 遵守
+  supreme_rule_msg_20260511_164625: 適用済
+  clinic_id_hardcode: なし (= ashigaru7 eradication 整合、AlertRouter は clinic_id を constructor 引数で受領)
+  pii_protection: 適用 (= 9 high + 1 warn pattern runtime redact、aggregate-only metric)
