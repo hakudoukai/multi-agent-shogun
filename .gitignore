@@ -195,6 +195,7 @@ logs/
 !docs/supabase_verification_events_fallback.md
 !docs/background_worker_eval_gate.md
 !docs/cross_pc_trust_gate.md
+!docs/auto_git_sync_design.md
 
 # Screenshots (masked — no secrets)
 !images/
@@ -293,6 +294,7 @@ tests/specs/osato_lms_*
 !tests/e2e/mock_behaviors/*.sh
 !tests/test_helper/
 !tests/test_helper/README.md
+!tests/test_auto_git_sync.py
 
 # CI/CD
 !.github/
