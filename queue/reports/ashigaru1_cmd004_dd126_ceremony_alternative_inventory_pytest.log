@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+collecting ... collected 7 items
+
+backend/tests/test_cmd004_cross_cutting_integration.py::test_ceremony_event_endpoint_static_contract PASSED [ 14%]
+backend/tests/test_cmd004_cross_cutting_integration.py::test_tier_up_celebration_endpoint_static_contract PASSED [ 28%]
+backend/tests/test_cmd004_cross_cutting_integration.py::test_consent_gate_blocks_unconsented_patient_static_contract PASSED [ 42%]
+backend/tests/test_cmd004_cross_cutting_integration.py::test_dinosaur_stub_passport_xp_log_static_contract PASSED [ 57%]
+backend/tests/test_cmd004_cross_cutting_integration.py::test_clinic_id_resolver_dependency_chain_static_contract PASSED [ 71%]
+backend/tests/test_cmd004_cross_cutting_integration.py::test_observability_metric_on_ceremony_static_contract PASSED [ 85%]
+backend/tests/test_cmd004_cross_cutting_integration.py::test_notification_facade_on_celebration_static_contract PASSED [100%]
+
+============================== 7 passed in 1.10s ===============================
