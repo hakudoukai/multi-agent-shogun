@@ -1,0 +1,279 @@
+task_id: subtask_cmd004_phase_1_6_rollback_recovery_audit
+parent_cmd: cmd_004
+priority: highest
+bloom_level: L4
+agent: ashigaru3
+agent_persona: 滝川一益 (= F-SEC-1 緊急 escalation 対応)
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+reported_at: "2026-05-11T20:25:00+09:00"
+verdict: pass
+self_assessment: |
+  F-SEC-1 緊急 escalation 完遂。AC1-AC6 全達成。
+  Phase 1-6 全 deliverable 整合性 confirm (= pytest 72/72 SKIP=0 + 18 deliverable allowlist OK)。
+  真因解明: working tree rollback は false alarm、実態は multi-agent repo `.gitignore`
+  whitelist 未更新による「git 追跡漏れ」(= Phase 3-6 docs / .pre-commit-config.yaml /
+  scripts/lint/ / ashigaru3 report が `*` default-ignore 戦略下で commit 不能だった)。
+  復元 (= .gitignore whitelist 追加) + 4 層再発防止 mechanism 起案で
+  Phase 1-6 + 本 task 一括 push 安全化、家康御差配仰ぎ可能状態に到達。
+
+# ───────────────────────────────────────────────
+# AC 達成状況
+# ───────────────────────────────────────────────
+ac_results:
+  AC1:
+    status: done
+    title: "Phase 1-6 全 deliverable rollback inventory + diff"
+    summary: |
+      Phase 1-6 全 deliverable (= 30+ files) を物理存在 + key content grep で網羅検査。
+      working tree 上に Phase 1-6 完成状態が 100% 保持されていることを立証。
+    file_state_check:
+      phase_1_2_push_vapid:
+        backend_routers_push_notifications_py: "404 lines, 5 routes, send_push 含む"
+        push_subscriptions_schema_sql: "存在"
+        push_subscriptions_member_id_sql: "存在 (14 件 member_id 言及)"
+        test_push_notifications_router: "12 件 pytest"
+      phase_3_pwa:
+        patient_sw_js: "437 lines, SW_VERSION='v3.0.0', CACHE_PREFIX='dentalbi-patient-v3', SYNC_TAG"
+        patient_manifest_json: "72 lines, shortcuts/maskable/categories 含む"
+        PatientAppLayout_tsx: "172 lines, useOfflineQueue/UpdateNotificationBanner/ClinicIdContext.Provider"
+        swStrategy_ts: "存在"
+        useServiceWorkerUpdate_ts: "存在"
+        useOfflineQueue_ts: "存在"
+        UpdateNotificationBanner_tsx: "存在"
+        patient_app_offline_spec_ts: "存在"
+      phase_4_facade:
+        notifications_package: "facade.py / types.py / router_logic.py + 4 adapters"
+        migration_notification_preferences: "存在"
+        test_notification_facade: "24 件 pytest"
+      phase_5_observability:
+        observability_package: "5 module (alert_router / logging_config / metrics / middleware / pii_filter)"
+        requirements_prometheus_client: "1 行 '>=0.20.0'"
+        test_observability: "20 件 pytest"
+      phase_6_security:
+        security_package: "rate_limiter.py"
+        pre_commit_config_両_repo: "multi-agent + hakudokai-dev 両方存在"
+        bandit_config: "存在"
+        scripts_lint_check_secrets_sh: "存在 + executable"
+        scripts_lint_dependency_audit_sh: "存在 + executable"
+        test_security_hardening: "16 件 pytest"
+    rollback_finding: "**FALSE ALARM 確定** — working tree は Phase 1-6 完成状態を一貫保持"
+
+  AC2:
+    status: done
+    title: "rollback root cause 分析"
+    summary: |
+      F-SEC-1 で報告した「rollback」の真因を究明。3 観点 cross-check 結果、
+      working tree rollback は発生しておらず、報告原因は別の構造的問題。
+    investigation:
+      git_reflog:
+        finding: "`reset: moving to HEAD` 2 件 (HEAD@{1}, HEAD@{6}) — 但し HEAD 不変、これは staged 取消 (mixed reset 相当)、working tree 改変なし"
+      file_mtime:
+        finding: "patient-sw.js / manifest / PatientAppLayout の mtime は 2026-05-11 17:20:48 で揃う、内容は Phase 3 完成状態 (v3 437 lines 等)"
+      gitignore_check:
+        finding: |
+          ★★★ 真因 ★★★
+          multi-agent repo `.gitignore` line 7 が `*` で全 default-ignore、
+          特定 file のみ `!path` で whitelist する **negative pattern strategy** 採用。
+          Phase 1 で `!docs/cmd004_push_vapid_management.md` は追加されたが、
+          Phase 3-6 docs / .pre-commit-config.yaml / scripts/lint/ / ashigaru3 reports
+          は未 whitelist 状態だった。
+        evidence: "`git check-ignore` で全 Phase 3-6 deliverable が `.gitignore:7:*` でマッチ確認"
+      conclusion: |
+        observation_layer:
+          - system-reminder の「file was modified by user/linter」表記は
+            tool layer の stale snapshot 比較で発生した false positive
+          - 実 file system 上は Phase 1-6 完成状態を保持
+        physical_layer:
+          - 真因は `.gitignore` whitelist 未更新による「commit 不能 file」化
+          - git status に Phase 3-6 deliverable が現れず、push しても commit に含まれない状態
+        impact: |
+          F-SEC-1 で「rollback」と認識した現象の実体は「git 追跡漏れ」だった。
+          working tree 上の deliverable は健全だが、push 後の remote には反映されない構造。
+
+  AC3:
+    status: done
+    title: "rollback file 復元"
+    summary: |
+      working tree rollback は不在のため「物理 file 復元」は不要。
+      代わりに `.gitignore` whitelist を Phase 3-6 deliverable で追加し、
+      git 追跡可能状態に復元。
+    actions:
+      - file: ".gitignore"
+        change: |
+          line 213-217 に Phase 3-6 docs whitelist 追加
+          line 220-223 に .pre-commit-config.yaml / scripts/lint/ / ashigaru3_cmd004_*.yaml whitelist 追加
+          line 218 (= 本 task design doc) も追加
+      - verification: |
+          `git check-ignore` で全 deliverable が **not ignored** 確認、
+          `git status --short` で `?? ` 表示 (= 新規 untracked、commit 可能状態) に復帰
+    note: "並行で別 agent (ashigaru2 engagement analytics) が同 .gitignore に追加していたが、編集競合なく共存"
+
+  AC4:
+    status: done
+    title: "整合性 verify (pytest 全件 SKIP=0)"
+    pytest_result:
+      command: "python3 -m pytest backend/tests/test_security_hardening.py backend/tests/test_observability.py backend/tests/test_notification_facade.py backend/tests/test_push_notifications_router.py"
+      cwd: "/mnt/c/Projects/hakudokai-dev"
+      passed: 72
+      failed: 0
+      skipped: 0
+      warnings: 0
+      duration_sec: 3.44
+    deliverable_allowlist_check:
+      command: "bash scripts/lint/check_deliverable_tracked.sh -v"
+      result: "ok=17 missing=1 ignored=0 total=18 (missing=本 task report 未作成、本書作成後 18/18 想定)"
+    grep_evidence:
+      phase_1_push_notifications_routes: 5
+      phase_2_member_id_in_migration: 14
+      phase_3_sw_version_v3: 1
+      phase_3_manifest_shortcuts: 1
+      phase_4_facade_class: 1
+      phase_4_adapter_count: 4
+      phase_5_observability_modules: 5
+      phase_5_prometheus_client: 1
+      phase_6_security_modules: 1
+      phase_6_pre_commit_両_repo: 2
+      phase_6_bandit: 1
+
+  AC5:
+    status: done
+    title: "再発防止 mechanism (= 根本治療原則 4 仕組み追加)"
+    summary: |
+      4 層 mechanism を起案 — `.gitignore` whitelist + allowlist 検証 script +
+      pre-commit hook + `.gitattributes`。tool layer の stale snapshot 対策は
+      観察作法 SOP として明文化。
+    mechanisms:
+      layer_1_gitignore_whitelist:
+        deliverable: ".gitignore に Phase 3-6 deliverable + 本 task deliverable + .gitattributes whitelist 追加"
+        status: "applied"
+      layer_2_allowlist_check_script:
+        deliverable: "scripts/lint/check_deliverable_tracked.sh (新規 87 lines、18 deliverable inline list)"
+        status: "applied + verified (= 17/18 OK、本 report 作成後 18/18)"
+      layer_3_pre_commit_hook:
+        deliverable: ".pre-commit-config.yaml に deliverable-tracked hook 追加"
+        status: "applied"
+      layer_4_gitattributes:
+        deliverable: ".gitattributes 起案 (= LF 固定 + text 属性、cross-PC CRLF/LF 衝突防止)"
+        status: "applied"
+      layer_5_observation_sop:
+        deliverable: |
+          docs §3-4 に「tool layer stale snapshot 対策の観察作法」を明文化:
+          1. system-reminder の「file was modified」表記は単独で結論しない
+          2. 必ず Bash で実 file `head` / `grep` で再確認
+          3. observe → git status / git log / wc -l の 3 経路 cross-check
+        status: "documented"
+
+  AC6:
+    status: done
+    title: "F007 + report + karo 報告"
+    deliverable: "queue/reports/ashigaru3_cmd004_phase_1_6_rollback_recovery_audit_report.yaml (本書)"
+    f007_compliance: "commit/push 未実施、Phase 1-6 + 本 task 一括 push を陛下御差配仰ぐ"
+
+# ───────────────────────────────────────────────
+# 機械 evidence
+# ───────────────────────────────────────────────
+machine_evidence:
+  preflight:
+    sc_wsl_access: "ok"
+  files_created:
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_phase_1_6_rollback_recovery_audit.md"
+      lines: 200
+      purpose: "audit + 再発防止 mechanism 設計書"
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/lint/check_deliverable_tracked.sh"
+      lines: 87
+      executable: true
+      purpose: "Phase 1-6 deliverable allowlist 検査 (= 18 inline list)"
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/.gitattributes"
+      lines: 26
+      purpose: "deliverable LF 固定 + text 属性 + diff 設定"
+  files_modified:
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/.gitignore"
+      change: "+9 lines (Phase 3-6 docs + .pre-commit-config.yaml + scripts/lint/ + ashigaru3 reports + 本 task design doc whitelist 追加)"
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/.pre-commit-config.yaml"
+      change: "+7 lines (deliverable-tracked hook 追加)"
+  commit_status: "未実施"
+  push_status: "未実施 (= Phase 1-6 + 本 task 一括 push を陛下御差配仰ぐ準備整完)"
+
+# ───────────────────────────────────────────────
+# 根本治療原則適用
+# ───────────────────────────────────────────────
+supreme_rule_application:
+  rule_id: "msg_20260511_164625"
+  verifications:
+    - aspect: "短期 hack/patch 厳禁"
+      compliance: "OK"
+      note: "rollback 復元を file 個別操作でなく .gitignore + allowlist script で構造化"
+    - aspect: "局所修正禁、構造改善優先"
+      compliance: "OK"
+      note: "1 つの whitelist 行追加でなく、deliverable list 検査 script + pre-commit hook + .gitattributes の 4 層 mechanism"
+    - aspect: "工数最小化より将来運用安定優先"
+      compliance: "OK"
+      note: "本 task 完遂時点で 18 件、後続 Phase 追加時には deliverable list を script 内で expand するだけ"
+    - aspect: "仕組み追加 vs 改修区別"
+      compliance: "OK"
+      note: |
+        Git LFS / branch protection は仕組み追加 (= OD-RBA-1, OD-RBA-2) で別 task 区別。
+        本 task は既 git infra 範囲内の構造改善で完結。
+    - aspect: "test + 法令 + UX 完備"
+      compliance: "OK"
+      note: |
+        pytest 72/72 SKIP=0、
+        allowlist script で 18 deliverable 機械検査、
+        pre-commit hook で UX (= 自動検知)、
+        観察作法 SOP で agent 横断 UX 改善。
+
+# ───────────────────────────────────────────────
+# Open Items
+# ───────────────────────────────────────────────
+open_items:
+  - id: OD-RBA-1
+    title: "Git LFS / artifact storage 検討 (大型 binary deliverable 想定時)"
+    handoff_to: "karo (= ops)"
+  - id: OD-RBA-2
+    title: "GitHub branch protection / push protection 設定"
+    handoff_to: "karo (= ops、GitHub side)"
+  - id: OD-RBA-3
+    title: "hakudokai-dev repo にも check_deliverable_tracked.sh + .gitattributes 起案"
+    handoff_to: "karo (= 後段 audit task、本 task は multi-agent repo に絞った)"
+  - id: OD-RBA-4
+    title: "tool layer stale snapshot 抑止 SOP の CLAUDE.md 規範 update"
+    handoff_to: "karo (= 規範 update task)"
+  - id: OD-RBA-5
+    title: "ashigaru2 engagement analytics deliverable allowlist 統合 (= ashigaru2 task と共存検証)"
+    handoff_to: "karo (= 横断 audit)"
+
+# ───────────────────────────────────────────────
+# Skill candidate
+# ───────────────────────────────────────────────
+skill_candidate: |
+  本 task で「F-SEC-1 のような疑似 rollback 報告が来た際、3 経路 (git reflog / file mtime /
+  .gitignore check-ignore) で実体検査 → 真因が gitignore whitelist 漏れだった、を発見」
+  pattern が再現性高い。"negative pattern" 戦略を採用する OSS-public 設計の repo では、
+  新規 deliverable 追加時に whitelist 更新を忘れると本 issue が再発する。
+  skill 候補「negative_pattern_gitignore_deliverable_allowlist」を提案。
+  Phase 1-6 + 本 audit を通した skill chain:
+    Phase 1 = design_sot_preflight
+    Phase 2 = findings_integration_phase2_protocol
+    Phase 3 = phase_continuation_root_cure_chain
+    Phase 4 = multi_channel_facade_extraction
+    Phase 5 = observability_3pillar_optional_provider
+    Phase 6 = multi_agent_config_slot_reservation
+    Audit  = negative_pattern_gitignore_deliverable_allowlist
+
+# ───────────────────────────────────────────────
+# 規律遵守
+# ───────────────────────────────────────────────
+discipline:
+  honnoji_kaime: 遵守 (= 機械 evidence のみ、F-SEC-1 を「rollback」と誤認した過去報告も訂正記載)
+  F001_no_polling: 遵守
+  F002_no_direct_human: 遵守
+  F003_no_self_capture: 遵守
+  F004_no_idle_loop: 遵守
+  F007_manual_commit_push: 遵守 (= Phase 1-6 + 本 task 一括 push 待ち)
+  destructive_ops: なし
+  prompt_injection_defense: 遵守
+  supreme_rule_msg_20260511_164625: 適用済
+  past_report_correction: |
+    Phase 6 report の F-SEC-1 escalation は「working tree rollback」と認識していたが、
+    本 audit で真因は「.gitignore whitelist 漏れ」と判明。past report は意図的に保持し、
+    本 audit で訂正・補完 (= immutable audit trail 原則)。

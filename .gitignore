@@ -212,6 +212,17 @@ logs/
 !docs/cmd004_qr_kanban_spec.md
 # cmd_004 engagement analytics dashboard (= ashigaru2/池田恒興、subtask_cmd004_engagement_analytics_dashboard AC5)
 !docs/cmd004_engagement_analytics_design.md
+# cmd_004 Phase 3-6 + rollback recovery audit (= ashigaru3/滝川一益、subtask_cmd004_phase_1_6_rollback_recovery_audit AC3+AC5)
+# 再追加 (= 並行 agent .gitignore update での競合書込みで一度消失、設計書 §3-1 layer_1 復元)
+!docs/cmd004_patient_app_pwa_design.md
+!docs/cmd004_notification_facade_design.md
+!docs/cmd004_observability_design.md
+!docs/cmd004_security_hardening_design.md
+!docs/cmd004_phase_1_6_rollback_recovery_audit.md
+!.pre-commit-config.yaml
+!scripts/lint/
+!scripts/lint/*.sh
+!queue/reports/ashigaru3_cmd004_*.yaml
 !queue/reports/ashigaru1_cmd004_qr_kanban_pytest.log
 !queue/reports/ashigaru1_cmd004_qr_kanban_impl_base_report.yaml
 !queue/reports/ashigaru1_cmd004_qr_token_security_hardening_report.yaml

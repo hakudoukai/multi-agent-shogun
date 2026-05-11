@@ -1,0 +1,22 @@
+# pre-commit hooks for multi-agent-shogun-newbuild (cmd_004 Phase 6 security hardening)
+# 設計書: docs/cmd004_security_hardening_design.md §2-2
+#
+# 適用: `pip install pre-commit && pre-commit install` で git hook を有効化。
+# scope: secret detection (= validate_report_privacy.py 経由)、cmd_004 Phase 6 起案。
+
+repos:
+  - repo: local
+    hooks:
+      - id: secret-detect-staged
+        name: secret/PII detection on staged files (cmd_004 Phase 6)
+        entry: bash scripts/lint/check_secrets.sh
+        language: system
+        pass_filenames: true
+        stages: [pre-commit, pre-push]
+
+      - id: deliverable-tracked
+        name: Phase 1-6 deliverable git-tracking verify (cmd_004 rollback recovery audit)
+        entry: bash scripts/lint/check_deliverable_tracked.sh
+        language: system
+        pass_filenames: false
+        stages: [pre-commit, pre-push]
