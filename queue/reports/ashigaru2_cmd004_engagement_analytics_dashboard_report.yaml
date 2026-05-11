@@ -1,0 +1,97 @@
+task_id: subtask_cmd004_engagement_analytics_dashboard
+agent: ashigaru2
+agent_name: "池田恒興"
+parent_cmd: cmd_004
+bloom_level: L4
+completed_at: "2026-05-11T17:30:00+09:00"
+
+verdict: pass
+evidence_state: full
+completion_gate: ok
+
+commit_hash: d2e90e7f
+commit_repo: hakudokai-dev (master)
+push_status: pending_lord_approval  # F007 = 陛下御差配仰ぎ
+related_pending_commit: b12c2338    # 前 tier_up_celebration_api、一括 push 推奨
+
+log_path:
+  pytest: queue/reports/ashigaru2_cmd004_engagement_analytics_pytest.log
+  vitest: queue/reports/ashigaru2_cmd004_engagement_analytics_vitest.log
+
+design_doc: docs/cmd004_engagement_analytics_design.md  # multi-agent-shogun-newbuild repo
+
+acceptance_criteria_status:
+  AC1_backend_endpoint:
+    status: pass
+    evidence: |
+      backend/routers/engagement_analytics.py = GET /api/analytics/patient-engagement
+      backend/services/engagement_analytics_service.py = aggregate 純粋関数群
+      clinic_id 必須 + period_days [7, 180] + end_date optional
+      passport_xp_log + passport_tier_up_celebrations + patient_checkin_logs +
+      handover_notes の 4 metric を JST 日次集計、clinic_id RLS 厳守
+  AC2_frontend_dashboard:
+    status: pass
+    evidence: |
+      frontend/src/pages/EngagementAnalyticsDashboard.tsx = recharts 4 chart + KPI 5 種
+      frontend/src/services/engagementAnalyticsApi.ts = aggregate-only response 型
+      period_days セレクタ (7/30/90/180)、useClinicId() で ClinicIdContext 経由注入
+  AC3_pii_protection:
+    status: pass
+    evidence: |
+      三段防衛:
+        Layer 1: service 層で patient_consents.erase_requested_at / is_active=false
+                 の患者を member_id 集合化して xp/tier_up から除外、patient_id 集合で
+                 checkin/handover から除外
+        Layer 2: router Pydantic response model が scalar + zero-fill series のみ
+                 (= patient_id / member_id / patient_no を型レベルで排除)
+        Layer 3: pytest test_response_passes_privacy_scan で
+                 validate_report_privacy.scan_text(response) → HIGH 0 件
+  AC4_tests_skip_zero:
+    status: pass
+    evidence: |
+      pytest: 15 passed, 0 skipped, 0 failed (backend/tests/test_engagement_analytics.py)
+      vitest: 7 passed, 0 skipped, 0 failed (frontend/src/__tests__/engagement_analytics/)
+      regression: 1979 passed (3 pre-existing failures in test_auto_thanks /
+                  test_soap_handover_sync は本 task と無関係、c94b3805 由来)
+      F007 push 前陛下御差配仰ぎ
+  AC5_design_doc:
+    status: pass
+    evidence: |
+      docs/cmd004_engagement_analytics_design.md (multi-agent-shogun-newbuild repo)
+      構造設計 + RLS 戦略 + PII 三段防衛 + 拡張性 chain 完備
+      analytics_aggregate consent_type を将来予約、recharts 採択理由 + ファイル配置 +
+      非目標 (商用 / patient timeline / 多 clinic 横断) を明記
+  AC6_report:
+    status: pass
+    evidence: 本 yaml 自体
+
+constraints_status:
+  本能寺戒め: "機械 evidence (pytest 15/15 + vitest 7/7 + privacy scan) のみ評価"
+  F001_to_F007: "厳守 (F007: push せず本報告)"
+  preflight_gate: "hakudokai-dev repo access OK (ls 成功、SC WSL mount 経由)"
+  新規範: "naomasa audit 不要、家康 shogun_verified path"
+  根本治療原則:
+    aggregate_only: true
+    patient_privacy: "型レベル + 三段防衛で完備"
+    analytics_scope: "engagement 改善のみ、商用利用排除を design §9 で明記"
+    commercial_use_ban: confirmed
+  clinic_id_hardcode_ban: "useClinicId() / API query 経由、TERIHA_CLINIC_ID 等のハード固定無し"
+
+structural_notes: |
+  本 task は前 tier_up_celebration_api (b12c2338) 上に analytics layer を構築する形態 A
+  自然進化。celebration data + passport XP + 受診 history + 申し送り を単一 endpoint で
+  集約し、frontend は ClinicIdContext + recharts で staff 向け dashboard を提供。
+  個別 patient/member 識別子は service 層・router schema・test scan の三段で排除し、
+  将来 commercial_use や individual patient detail への滑り込みを物理的に困難化した。
+  analytics_aggregate consent_type 予約により、将来 consent_gate 連動を破壊変更無く
+  追加可能 (= 根本治療「仕組み追加 vs 改修区別」原則の体現)。
+
+skill_candidate: null
+
+next_action_request_to_karo: |
+  以下 2 commit を一括 push 推奨につき、陛下御差配仰ぎたく:
+    - b12c2338 feat(celebration-api): tier_up celebration API (前 task)
+    - d2e90e7f feat(cmd_004): engagement analytics dashboard (本 task)
+  なお hakudokai-dev master には patient_me_router / push_notifications_router
+  関連の未 commit 変更 (= ashigaru3/滝川一益 系統と推定) が working tree に残存する。
+  本 commit には混入させていない (= main.py 該当 hunk のみ選択 stage)。

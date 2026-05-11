@@ -1,0 +1,16 @@
+
+ RUN  v4.1.5 /mnt/c/Projects/hakudokai-dev/frontend
+
+ ✓ src/__tests__/engagement_analytics/EngagementAnalyticsDashboard.test.tsx > EngagementAnalyticsDashboard > renders KPI cards from aggregate report 117ms
+ ✓ src/__tests__/engagement_analytics/EngagementAnalyticsDashboard.test.tsx > EngagementAnalyticsDashboard > renders 4 charts in the chart grid 25ms
+ ✓ src/__tests__/engagement_analytics/EngagementAnalyticsDashboard.test.tsx > EngagementAnalyticsDashboard > changes period and refetches 57ms
+ ✓ src/__tests__/engagement_analytics/EngagementAnalyticsDashboard.test.tsx > EngagementAnalyticsDashboard > passes clinic_id from ClinicIdContext to the API 24ms
+ ✓ src/__tests__/engagement_analytics/EngagementAnalyticsDashboard.test.tsx > EngagementAnalyticsDashboard > shows error UI when API fails and retries on click 37ms
+ ✓ src/__tests__/engagement_analytics/EngagementAnalyticsDashboard.test.tsx > EngagementAnalyticsDashboard > does not leak PII into rendered DOM 25ms
+ ✓ src/__tests__/engagement_analytics/EngagementAnalyticsDashboard.test.tsx > EngagementAnalyticsDashboard > shows privacy footer with excluded members 22ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  17:26:03
+   Duration  32.01s (transform 373ms, setup 4.27s, import 3.34s, tests 312ms, environment 22.58s)
+

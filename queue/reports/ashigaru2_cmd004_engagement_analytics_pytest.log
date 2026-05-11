@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Projects/hakudokai-dev
+plugins: anyio-4.13.0
+collecting ... collected 15 items
+
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsRouter::test_happy_path_returns_aggregate_only PASSED [  6%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsRouter::test_invalid_clinic_id_returns_422 PASSED [ 13%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsRouter::test_period_days_out_of_range_returns_422 PASSED [ 20%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsRouter::test_service_value_error_returns_422 PASSED [ 26%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsRouter::test_service_unexpected_error_returns_500 PASSED [ 33%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_period_days_validation PASSED [ 40%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_zero_fill_daily_series_when_no_data PASSED [ 46%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_xp_aggregation_filters_negative_delta PASSED [ 53%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_excludes_erase_requested_patients PASSED [ 60%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_inactive_consent_also_excludes PASSED [ 66%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_supabase_failure_falls_back_safely PASSED [ 73%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_tier_up_count_aggregates_by_day PASSED [ 80%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_handover_count_aggregates PASSED [ 86%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_response_passes_privacy_scan PASSED [ 93%]
+backend/tests/test_engagement_analytics.py::TestEngagementAnalyticsService::test_active_members_dedup_across_days PASSED [100%]
+
+============================== 15 passed in 1.48s ==============================
