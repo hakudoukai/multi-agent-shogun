@@ -140,6 +140,7 @@
 !scripts/startup_shogun_main.sh
 !scripts/recover_shogun.sh
 !scripts/normalize_audit_reports.py
+!scripts/normalize_shogun_verification_logs.py
 
 # SayTask (sample template only, not actual data)
 !saytask/
@@ -154,6 +155,7 @@
 !queue/reports/naomasa_secondpc_report.yaml
 !queue/reports/acha_secondpc_report.yaml
 !queue/reports/audit_report_index.yaml
+!queue/reports/verification_index.yaml
 !queue/reports/shogun_verification_log_secondpc.yaml
 
 # Reports (private — not tracked)
