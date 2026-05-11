@@ -2,6 +2,606 @@
 # v1.1 採択後 初 entry — 信長 escalation proxy で起動
 
 reports:
+  - audit_id: kuroda_cmd014_verify_resolver_review_20260511
+    target_id: cmd014_completion_verify_resolver
+    target_type: implementation_audit
+    audited_at: "2026-05-11T12:42:19+09:00"
+    audited_by: "黒田官兵衛"
+    verdict: pass_with_concerns
+    parent_cmd: cmd_014
+    commit_hash: "65c2e98"
+    executive_summary: "AC1/AC2/AC4 は受入可。full verify は _resolve_audit_entry() を通じて audit_report_index.yaml を index-first 参照し、naomasa_new_001 類の index-only entry は NOT_FOUND ではなく verification result として出力される。preflight も同 resolver を使い、--pc-id 未指定時は mainpc log を default とする。ただし full verify の target not found / resolver parse error は依然 rc=0 で、index 経由 entry の auditor_who は index になり実 auditor 情報が落ちるため、証跡品質の P1/P2 残課題あり。"
+    machine_evidence:
+      commit:
+        command: "git show --stat --oneline --name-status 65c2e98 --"
+        observed: "M scripts/shogun_verify_audit.sh; M tests/test_shogun_verify_preflight.sh"
+      bash_preflight_suite:
+        command: "bash tests/test_shogun_verify_preflight.sh"
+        observed: "Total: 9 | Pass: 9 | Fail: 0 | SKIP: 0"
+      pytest:
+        command: "python3 -m pytest tests/ scripts/ -q"
+        observed: "159 passed in 0.55s; SKIP=0"
+      shell_syntax:
+        command: "bash -n scripts/shogun_verify_audit.sh tests/test_shogun_verify_preflight.sh"
+        observed: "PASS"
+      shellcheck:
+        command: "shellcheck scripts/shogun_verify_audit.sh tests/test_shogun_verify_preflight.sh"
+        observed: "PASS"
+      targeted_naomasa_index_verify:
+        command: "REPO_ROOT=<tmp-with-audit_report_index> bash scripts/shogun_verify_audit.sh naomasa_new_001"
+        observed:
+          status: null
+          target: naomasa_new_001
+          auditor_who: index
+          checks_passed: "0/6"
+          mainpc_log_created: true
+          log_entries: 1
+    acceptance_criteria:
+      ac1_full_verify_index_first_not_found_resolved: pass
+      ac2_common_resolver_for_preflight_and_full_verify: pass
+      ac4_default_pc_id_mainpc: pass
+      bash_tests_pass_skip_zero: pass
+      pytest_pass_skip_zero: pass
+      shellcheck_clean: pass
+    findings:
+      - severity: medium
+        file: scripts/shogun_verify_audit.sh
+        line: 130
+        issue: "target not found / resolver parse error でも full verify は JSON を出して sys.exit(0) のまま。今回 AC1 の NOT_FOUND 解消対象は満たすが、completion gate で見逃しやすい挙動は前監査の P0/P1 懸念として残る。"
+      - severity: medium
+        file: scripts/shogun_verify_audit.sh
+        line: 143
+        issue: "audit_report_index.yaml 経由 entry は _auditor_who が無いため auditor_who=index で記録される。source_file から naomasa_secondpc/kuroda_mainpc 等を復元しないと、canonical verification log の監査者追跡性が弱い。"
+      - severity: low
+        file: tests/test_shogun_verify_preflight.sh
+        line: 132
+        issue: "追加テストは NOT_FOUND でないことを主に見るため、checks_passed や auditor_who、shogun_verified の意味的品質までは検証していない。今回の AC には足るが regression coverage は薄い。"
+      - severity: low
+        file: queue/reports/ashigaru1_report.yaml
+        line: 1
+        issue: "inbox 報告は ashigaru1 だが commit author は ashigaru7。実装内容には影響しないが、並列作業時の provenance は task/report で補足した方がよい。"
+    recommendation:
+      - "cmd_014 補完の AC1/AC2/AC4 としては PASS 扱いでよい。"
+      - "次 cycle で full verify の NOT_FOUND 系を non-zero または structured failure として gate 化すること。"
+      - "index entry の source_file/source_section から auditor_who を復元し、verification log の writer/auditor lineage を明確化すること。"
+
+  - audit_id: kuroda_cmd014_ac3_legacy_migration_review_20260511
+    target_id: cmd014_completion_legacy_migration
+    target_type: implementation_audit
+    audited_at: "2026-05-11T12:37:00+09:00"
+    audited_by: "黒田官兵衛"
+    verdict: pass_with_concern
+    parent_cmd: cmd_014
+    commit_hash: "6c0f0cf"
+    executive_summary: "AC3 legacy verification log migration は受入可。legacy 103件は mainpc writer-owned log に dedupe 済みで 103件保持され、canonical index は mainpc 103 + secondpc 4 = total_events 107 を生成する。pytest は 15/15 PASS、SKIP 0。なお raw mainpc/archive 側には既存 legacy 由来の絶対パスが残るため、外部共有・正本参照は redaction 済み canonical index に限定すべき。"
+    machine_evidence:
+      pytest:
+        command: "python3 -m pytest scripts/test_migrate_legacy_verification_log.py -q"
+        observed: "15 passed in 0.09s; SKIP=0"
+      migration_dry_run:
+        command: "python3 scripts/migrate_legacy_verification_log.py --dry-run"
+        observed: "Total legacy=103; Existing mainpc_log entries=103; Dedup skipped=103; Invalid skipped=0; New entries to add=0"
+      normalize_strict_dry_run:
+        command: "python3 scripts/normalize_shogun_verification_logs.py --strict --dry-run"
+        observed:
+          total_events: 107
+          missing_pc_logs: []
+          parse_error_seen: false
+          mainpc_events: 103
+          secondpc_events: 4
+          naomasa_new_001_entries: 1
+          naomasa_new_002_entries: 1
+      artifact_counts:
+        legacy_log_verifications: 103
+        mainpc_log_verifications: 103
+        archive_verifications: 103
+        canonical_total_events: 107
+        mainpc_event_ids_unique: true
+        canonical_event_ids_unique: true
+    acceptance_criteria:
+      migrate_script_created_and_executed: pass
+      mainpc_log_legacy_entries_deduped: pass
+      canonical_index_total_events_gt_100: pass
+      archive_created_with_legacy_entries: pass
+      pytest_pass_skip_zero: pass
+      inbox_report_sent: pass
+    findings:
+      - severity: medium
+        file: queue/reports/shogun_verification_log_archive.yaml
+        issue: "archive_source に /home/... absolute path が保存され、legacy flags 内にも /mnt/c/... path が残る。canonical index は redaction_note により参照安全化されているため、外部共有・集計正本は canonical index に限定すること。"
+      - severity: low
+        file: scripts/migrate_legacy_verification_log.py
+        issue: "task 文面の新 schema 例は target_id を挙げるが、既存 normalizer は target を正規入力として扱う。本実装は現行 normalizer 互換を優先しており、AC3 の実動作上は妥当。将来 schema 固定時に target_id alias を明文化するとよい。"
+    recommendation:
+      - "AC3 は PASS として cmd_014 補完 cycle を次工程へ進めてよい。"
+      - "raw/archive の path 含有は P1 hygiene として後続で redaction または archive_source の相対化を検討。"
+      - "Shogun verify/full verify 改修側では canonical index を正本として privacy gate を維持。"
+
+  - audit_id: kuroda_logic_audit_full_verify_integration_20260511
+    target_id: shogun_verify_audit_full_verify_canonical_index_integration
+    target_type: logic_audit
+    audited_at: "2026-05-11T12:19:57+09:00"
+    audited_by: "黒田官兵衛"
+    verdict: adopt_as_cmd014_completion
+    executive_summary: "提案Aは採用。ただし『preflight と full verify を完全同一化』ではなく、共通 resolver を使い、preflight は eligibility gate、full verify は verification evidence generation として分離するのが正。現行は --preflight naomasa_new_001 が ready_to_verify rc=0 なのに full verify は NOT_FOUND rc=0 となり、同一 target の解決経路が割れている。これは cmd_014 の conflict integration 残課題であり、cmd_017 新設ではなく cmd_014 補完 cycle で直すべき。"
+    machine_evidence:
+      preflight_naomasa_new_001:
+        command: "bash scripts/shogun_verify_audit.sh --preflight naomasa_new_001"
+        observed: "ready_to_verify: naomasa_new_001 passes all preflight checks; rc=0"
+      full_verify_naomasa_new_001:
+        command: "bash scripts/shogun_verify_audit.sh --pc-id mainpc naomasa_new_001"
+        observed: "NOT_FOUND; target audit entry not found in any auditor report; rc=0"
+      log_inventory:
+        audit_report_index_reports: 74
+        legacy_shogun_verification_log_verifications: 103
+        mainpc_suffix_log_verifications: 0
+        secondpc_suffix_log_verifications: 4
+        shogun_verification_canonical_index_events: 0
+        secondpc_verification_index_verifications: 28
+      migration_evidence:
+        legacy_log_contains:
+          - naomasa_new_001
+          - naomasa_new_002
+        mainpc_suffix_log_contains: []
+    adoption_decision:
+      proposal_a_full_verify_via_canonical_index: "adopt_with_role_split"
+      proposal_b_legacy_to_mainpc_migration: "adopt_with_dedupe_and_archive"
+      proposal_c_manual_append_two_entries_migration: "adopt_as_part_of_bulk_migration_not_manual_special_case"
+      cmd_scope: "cmd_014 completion cycle, not cmd_017"
+      reason: "この不整合は cmd_014 Stage3+4+5 の4 file統合で残った direct resolver gap。別 cmd に逃がすと completion gate が再び二重化する。"
+    findings:
+      - perspective: 1_functional_correctness
+        severity: critical
+        file: scripts/shogun_verify_audit.sh
+        line: 59
+        issue: "full verify mode は旧4軍師 report の reports section のみ探索する。audit_report_index.yaml に存在する naomasa_new_001 は full verify で NOT_FOUND となる。"
+      - perspective: 2_role_separation
+        severity: high
+        file: scripts/shogun_verify_audit.sh
+        line: 169
+        issue: "preflight は eligibility 判定、full verify は証跡生成であり役割は別。ただし target resolver は共通化すべき。現状は resolver が二重化し、preflight ready と full NOT_FOUND が同時成立する。"
+      - perspective: 3_option_a_prime_fit
+        severity: high
+        file: scripts/shogun_verify_audit.sh
+        line: 29
+        issue: "--pc-id mainpc による writer-owned suffix log は実装済みだが、legacy fallback 未指定時は旧 shogun_verification_log.yaml に書く。移行完了後は MainPC production default を mainpc suffix に寄せる必要あり。"
+      - perspective: 4_migration_safety
+        severity: high
+        file: queue/reports/shogun_verification_log.yaml
+        line: 1874
+        issue: "legacy log に naomasa_new_001/002 が存在する一方、shogun_verification_mainpc_log.yaml は verifications: []。手動 append を個別移送するより、legacy 103件を deterministic event_id + payload_hash で dedupe migration する方が安全。"
+      - perspective: 5_schema_integrity
+        severity: high
+        file: queue/reports/audit_report_index.yaml
+        line: 1
+        issue: "audit_report_index.yaml は reports key で canonical entries を持つが、full verify の result payload は original audit entry の findings/related_files/log_path を必要とする。index entry に不足がある場合は source_file/source_section から raw entry を再解決する adapter が必要。"
+      - perspective: 6_test_coverage
+        severity: high
+        file: tests/test_shogun_verify_preflight.sh
+        line: 1
+        issue: "preflight regression はあるが full verify の canonical-index target resolution test が無い。naomasa_new_001 のような non-reports section entry が verify_one で NOT_FOUND にならない fixture が必要。"
+      - perspective: 7_legal_compliance
+        severity: medium
+        file: scripts/normalize_shogun_verification_logs.py
+        line: 44
+        issue: "migration では legacy log 内 flags/audit_entry_excerpt の absolute path/API key redaction と validate_report_privacy.py を必須 gate にするべき。旧 file をそのまま tracked 正本化してはならない。"
+      - perspective: 8_operations_ux
+        severity: medium
+        file: scripts/shogun_verify_audit.sh
+        line: 293
+        issue: "full verify NOT_FOUND が rc=0 で返るため、人間が見逃しやすい。target not found は full verify でも non-zero exit か structured status gate にすべき。"
+      - perspective: 9_documentation
+        severity: medium
+        file: docs/final_solution_synthesis_20260511.md
+        line: 541
+        issue: "V2.1 documents は audit_report_index/completion_gate_status を重視するが、full verify mode の resolver 統合と legacy verification log migration までは明文化不足。"
+    recommendations:
+      - priority: P0
+        owner: "ashigaru"
+        effort: medium
+        path: "scripts/shogun_verify_audit.sh"
+        action: "resolve_audit_entry(target) helper を作り、audit_report_index.yaml reports/entries → source_file/source_section raw entry → direct report fallback の順で preflight/full verify から共用する。"
+      - priority: P0
+        owner: "ashigaru"
+        effort: small
+        path: "tests/test_shogun_verify_full_verify.sh or pytest wrapper"
+        action: "audit_report_index にだけ存在する new_project_audits target が full verify で NOT_FOUND にならず、writer-owned mainpc log に append される fixture を追加する。SKIP=0 必須。"
+      - priority: P0
+        owner: "ashigaru"
+        effort: medium
+        path: "scripts/migrate_shogun_verification_log.py"
+        action: "legacy shogun_verification_log.yaml 103件を shogun_verification_mainpc_log.yaml へ deterministic event_id/payload_hash 付きで import dry-run → privacy scan → write。naomasa_new_001/002 はこの bulk migration に含める。"
+      - priority: P0
+        owner: "karo"
+        effort: small
+        path: "cmd_014 completion gate"
+        action: "migration 後に normalize_shogun_verification_logs.py --strict を実行し、shogun_verification_canonical_index.yaml events が mainpc+secondpc の両方を反映することを gate にする。"
+      - priority: P1
+        owner: "ashigaru"
+        effort: small
+        path: "scripts/shogun_verify_audit.sh"
+        action: "full verify の NOT_FOUND は rc=1 以上にし、success rc=0 と区別する。既存呼び出し影響があるなら --strict-full-verify から導入。"
+      - priority: P1
+        owner: "gunshi"
+        effort: small
+        path: "docs/final_solution_synthesis_20260511.md"
+        action: "preflight=eligibility、full verify=evidence generation、resolver=shared の役割分離を V2.1 補足として明記する。"
+    alternatives:
+      - name: "new --inventory mode"
+        decision: "do_not_start_now"
+        reason: "inventory 視点は有用だが、既に audit_report_index / completion_gate_status / verification normalizer がある。まず full verify resolver と migration を cmd_014 で完了させるべき。"
+      - name: "preflight-only extension"
+        decision: "insufficient"
+        reason: "preflight は既に ready を返しており、問題は full verify が同じ target を解決できないこと。preflight だけ広げても証跡生成は直らない。"
+      - name: "dashboard viewer"
+        decision: "P2_after_gate"
+        reason: "可視化は補助。今回の root cause は機械 resolver の二重化であり viewer では防止不能。"
+      - name: "cmd_017"
+        decision: "not_recommended"
+        reason: "cmd_014 の統合残課題なので、別 cmd 化は未完を温存する。cmd_014 completion cycle に含める。"
+    cmd_initiation:
+      cmd_017_required: false
+      cmd_014_completion_task_required: true
+      suggested_task_id: "cmd014_full_verify_resolver_migration"
+    related_files:
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/shogun_verify_audit.sh
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/normalize_shogun_verification_logs.py
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/audit_report_index.yaml
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/shogun_verification_log.yaml
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/shogun_verification_mainpc_log.yaml
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/shogun_verification_secondpc_log.yaml
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/shogun_verification_canonical_index.yaml
+    commit_hash: "n/a (logic audit)"
+    log_path: "n/a (interactive codex audit; machine evidence recorded above)"
+    audit_passed: true
+    persona_signature: "黒田官兵衛"
+  - audit_id: kuroda_cmd014_pytest_fixture_addition_review_20260511
+    target_id: cmd014_pytest_fixture_addition
+    target_type: implementation_review
+    audited_at: "2026-05-11T12:12:37+09:00"
+    audited_by: "黒田官兵衛"
+    verdict: pass
+    parent_cmd: cmd_014
+    reviewed_commit: "a1ea3e8"
+    executive_summary: "統合 4 file の pytest/shell fixture は scripts/ から tests/ へ git mv され、import/path 修正も成立。pytest tests/ scripts/ は 144 PASS/SKIP=0、bash tests/test_shogun_verify_preflight.sh は 6/6 PASS/SKIP=0、py_compile/bash -n/shellcheck も通過。cmd014_pytest_fixture_addition は PASS。"
+    test_evidence:
+      pytest:
+        command: "python3 -m pytest tests/ scripts/ -q"
+        result: "144 passed in 0.48s"
+        passed: 144
+        failed: 0
+        skipped: 0
+      shell_preflight:
+        command: "bash tests/test_shogun_verify_preflight.sh"
+        result: "Total: 6 | Pass: 6 | Fail: 0 | SKIP: 0"
+        passed: 6
+        failed: 0
+        skipped: 0
+      syntax:
+        py_compile_tests: pass
+        bash_n_preflight: pass
+        shellcheck_preflight: pass
+      tracked_files:
+        tests_test_normalize_audit_reports_py: tracked
+        tests_test_normalize_shogun_verification_logs_py: tracked
+        tests_test_validate_report_privacy_py: tracked
+        tests_test_shogun_verify_preflight_sh: tracked
+        old_scripts_test_files: removed_from_tracking
+    findings:
+      - perspective: 1_functional_correctness
+        severity: low
+        file: tests/test_normalize_audit_reports.py
+        line: 1
+        issue: "tests/ 配下への移設後も pytest collection は成功し、対象統合 tests は scripts/ 実装を参照して通過。"
+      - perspective: 2_anti_duplication
+        severity: low
+        file: git
+        line: 1
+        issue: "scripts/test_*.py から tests/test_*.py へ rename され、旧 scripts 側との重複 tracking は残っていない。"
+      - perspective: 3_discipline
+        severity: low
+        file: tests/test_shogun_verify_preflight.sh
+        line: 1
+        issue: "前回必須化した shell regression が tests/ 配下で実行可能。6/6 PASS/SKIP=0 を確認。"
+      - perspective: 4_logic_robustness
+        severity: low
+        file: tests/test_shogun_verify_preflight.sh
+        line: 10
+        issue: "SCRIPT_PATH 修正により tests/ から scripts/shogun_verify_audit.sh を参照でき、移設による cwd/path regression はない。"
+      - perspective: 5_schema_integrity
+        severity: low
+        file: queue/reports/ashigaru1_report.yaml
+        line: 543
+        issue: "報告は task_id/parent_cmd/commit_hash/deliverables/test_results/acceptance_criteria を含み、再監査に必要な schema を満たす。"
+      - perspective: 6_test_coverage
+        severity: low
+        file: tests
+        line: 1
+        issue: "pytest tests/ scripts/ = 144 PASS/SKIP=0、shell preflight = 6/6 PASS/SKIP=0。SKIP=FAIL 規律にも抵触なし。"
+      - perspective: 7_legal_compliance
+        severity: low
+        file: tests/test_validate_report_privacy.py
+        line: 1
+        issue: "privacy validator fixture は tests/ 配下で維持され、log_path absolute path gate の regression 検出路が残る。"
+      - perspective: 8_operations_ux
+        severity: low
+        file: tests
+        line: 1
+        issue: "pytest entrypoint が tests/ へ寄せられ、Karo が tests/ と scripts/ をまとめて実行しやすい。"
+      - perspective: 9_documentation
+        severity: medium
+        file: .gitignore
+        line: 273
+        issue: "tests/*.py の明示 whitelist は見当たらない。今回の files は tracked 済みなので問題は出ていないが、今後 tests/ 直下に Python test を追加する際に gitignore と衝突し得る。"
+    recommendations:
+      - priority: P1
+        owner: "karo -> ashigaru"
+        effort: small
+        path: ".gitignore"
+        action: "tests/ 直下の Python tests を今後も標準配置にするなら !tests/*.py を明示 whitelist に追加する。"
+      - priority: P2
+        owner: "karo"
+        effort: small
+        path: "cmd_014 completion gate"
+        action: "pytest tests/ scripts/ と bash tests/test_shogun_verify_preflight.sh を completion gate の標準 test command として採用する。"
+    acceptance_recheck:
+      tests_in_tests_dir: pass
+      pytest_tests_pass_skip0: pass
+      pytest_scripts_pass_skip0: pass
+      shell_preflight_pass_skip0: pass
+      no_duplicate_old_scripts_tests: pass
+      commit_pushed: pass
+    related_files:
+      - /home/user/projects/multi-agent-shogun-newbuild/tests/test_normalize_audit_reports.py
+      - /home/user/projects/multi-agent-shogun-newbuild/tests/test_normalize_shogun_verification_logs.py
+      - /home/user/projects/multi-agent-shogun-newbuild/tests/test_validate_report_privacy.py
+      - /home/user/projects/multi-agent-shogun-newbuild/tests/test_shogun_verify_preflight.sh
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru1_report.yaml
+    commit_hash: "a1ea3e8"
+    log_path: "n/a (interactive codex audit; test commands recorded above)"
+    audit_passed: true
+    redo_required: false
+    persona_signature: "黒田官兵衛"
+  - audit_id: kuroda_cmd014_stage3_4_5_cycle2_review_20260511
+    target_id: cmd014_stage345_conflict_integration_cycle2
+    target_type: implementation_review
+    audited_at: "2026-05-11T11:32:49+09:00"
+    audited_by: "黒田官兵衛"
+    verdict: pass
+    parent_cmd: cmd_014
+    redo_of: kuroda_cmd014_stage3_4_5_integration_review_20260511
+    reviewed_commit: "cfed202"
+    executive_summary: "前回 FAIL の二点は修正済み。shogun_verify_audit.sh preflight は reports/entries index key と direct report fallback を両立し、test_shogun_verify_preflight.sh は 6/6 PASS/SKIP=0。validate_report_privacy.py は log_path: /mnt/c/... を HIGH absolute_wsl_c として検出し rc=1。pytest 144 PASS/SKIP=0、bash -n/shellcheck/py_compile も通過。cmd_014 Stage3+4+5 cycle2 は PASS。"
+    test_evidence:
+      preflight_regression:
+        command: "bash scripts/test_shogun_verify_preflight.sh"
+        result: "Total: 6 | Pass: 6 | Fail: 0 | SKIP: 0"
+        passed: 6
+        failed: 0
+        skipped: 0
+      pytest:
+        command: "python3 -m pytest -q scripts/test_normalize_audit_reports.py scripts/test_normalize_shogun_verification_logs.py scripts/test_validate_report_privacy.py scripts/test_validate_cmd_schema.py scripts/test_validate_cross_pc_directive.py"
+        result: "144 passed in 0.48s"
+        passed: 144
+        failed: 0
+        skipped: 0
+      privacy_smoke:
+        command: "validate_report_privacy.py on file containing log_path: /mnt/c/Users/User/secret.log"
+        result: "HIGH absolute_wsl_c, rc=1"
+      shell_and_compile:
+        bash_n_shogun_verify_audit: pass
+        shellcheck_shogun_verify_audit: pass
+        py_compile: pass
+      normalizer_smoke:
+        audit_reports_dry_run: "exit 0, generated P0-1 summary with reports key"
+        shogun_logs_dry_run: "exit 0, partial output with secondpc missing warning"
+    findings:
+      - perspective: 1_functional_correctness
+        severity: low
+        file: scripts/shogun_verify_audit.sh
+        line: 188
+        issue: "preflight は audit_report_index.yaml の reports/entries 双対 key を先に読み、未検出時は direct report fallback へ進む。前回の index-only regression は解消。"
+      - perspective: 2_anti_duplication
+        severity: low
+        file: scripts/shogun_verify_audit.sh
+        line: 211
+        issue: "index path と direct report fallback が一つの preflight_one 内に統合され、SC reports key fix と MC fallback が併存。"
+      - perspective: 3_discipline
+        severity: low
+        file: scripts/test_shogun_verify_preflight.sh
+        line: 31
+        issue: "既存 shell regression 6 cases が全 PASS。Stage4 回帰0件の証跡として今回は成立。"
+      - perspective: 4_logic_robustness
+        severity: low
+        file: scripts/validate_report_privacy.py
+        line: 58
+        issue: "EXEMPT_FIELDS から log_path が外れ、log_path value 内の /mnt/c absolute path が HIGH violation になる。"
+      - perspective: 5_schema_integrity
+        severity: low
+        file: scripts/shogun_verify_audit.sh
+        line: 196
+        issue: "reports / entries の双対 key を許容し、index schema 移行期の互換性を確保している。"
+      - perspective: 6_test_coverage
+        severity: low
+        file: scripts/test_validate_report_privacy.py
+        line: 88
+        issue: "log_path WSL absolute path の専用 fixture が追加され、pytest は 144 PASS/SKIP=0。"
+      - perspective: 7_legal_compliance
+        severity: low
+        file: scripts/validate_report_privacy.py
+        line: 47
+        issue: "absolute /mnt/c path が tracked output で検出可能になり、患者/医院名や Windows user path の漏洩 risk を低減。"
+      - perspective: 8_operations_ux
+        severity: low
+        file: scripts/shogun_verify_audit.sh
+        line: 253
+        issue: "ready/missing/cross_pc/schema/partial/log_commit の exit code が regression test で固定され、Karo completion gate が扱いやすい。"
+      - perspective: 9_documentation
+        severity: low
+        file: queue/reports/ashigaru1_report.yaml
+        line: 501
+        issue: "cycle2 report は F1/F2、preflight bash、pytest 144、acceptance を明示しており再監査可能。"
+    acceptance_recheck:
+      stage3_conflicts_resolved: pass
+      stage4_144_pytest_pass_skip0: pass
+      stage4_shell_preflight_regression: pass
+      stage5_v2_1_3_gate_implemented: pass
+      privacy_absolute_path_gate: pass
+      push_to_newbuild_main: pass
+    recommendations:
+      - priority: P1
+        owner: "karo"
+        effort: small
+        path: "cmd_014 completion gate"
+        action: "今後も pytest だけでなく scripts/test_shogun_verify_preflight.sh と privacy smoke を completion gate に含める。"
+      - priority: P2
+        owner: "ashigaru1"
+        effort: small
+        path: "scripts/validate_report_privacy.py"
+        action: "patient/clinic field-aware PII は現在 warning 中心。医療 payload を直接 tracked output に入れる段階では additional fixtures を増やす。"
+    related_files:
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/shogun_verify_audit.sh
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/test_shogun_verify_preflight.sh
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/validate_report_privacy.py
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/test_validate_report_privacy.py
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru1_report.yaml
+    commit_hash: "cfed202"
+    log_path: "n/a (interactive codex audit; test commands recorded above)"
+    audit_passed: true
+    redo_required: false
+    persona_signature: "黒田官兵衛"
+  - audit_id: kuroda_cmd014_stage3_4_5_integration_review_20260511
+    target_id: cmd014_stage3_4_5_four_file_integration
+    target_type: implementation_review
+    audited_at: "2026-05-11T11:23:30+09:00"
+    audited_by: "黒田官兵衛"
+    verdict: fail
+    parent_cmd: cmd_014
+    reviewed_commit: "741d808"
+    reviewed_merge_commit: "e8fe6da"
+    executive_summary: "pytest 143 PASS/SKIP=0 は再現したが、既存 shell regression scripts/test_shogun_verify_preflight.sh が 1/6 PASS・5 FAIL。Stage4『回帰0件』は成立しない。また validate_report_privacy.py は log_path field を exempt しており、log_path: /mnt/c/... を CLEAN exit 0 で通すため、Option A prime の absolute path gate 条件に反する。cmd_014 Stage3+4+5 は redo_required。"
+    test_evidence:
+      pytest:
+        command: "python3 -m pytest -q scripts/test_normalize_audit_reports.py scripts/test_normalize_shogun_verification_logs.py scripts/test_validate_report_privacy.py scripts/test_validate_cmd_schema.py scripts/test_validate_cross_pc_directive.py"
+        result: "143 passed in 0.47s"
+        passed: 143
+        failed: 0
+        skipped: 0
+      preflight_regression:
+        command: "bash scripts/test_shogun_verify_preflight.sh"
+        result: "Total: 6 | Pass: 1 | Fail: 5 | SKIP: 0"
+        passed: 1
+        failed: 5
+        skipped: 0
+        failures:
+          - "1-ready_to_verify expected=0 actual=1"
+          - "3-missing_cross_pc_report expected=2 actual=1"
+          - "4-unsupported_report_schema expected=3 actual=1"
+          - "5-partial_verdict_blocked expected=4 actual=1"
+          - "6-missing_log_or_commit expected=5 actual=1"
+      shell:
+        bash_n_shogun_verify_audit: pass
+        shellcheck_shogun_verify_audit: pass
+      privacy_smoke:
+        absolute_log_path_only:
+          command: "validate_report_privacy.py on file containing only 'log_path: /mnt/c/Users/User/secret.log'"
+          observed: "CLEAN rc=0"
+          expected: "HIGH absolute_wsl_c rc=1 for tracked verification outputs"
+        patient_fields:
+          command: "validate_report_privacy.py on patient_id/birth_date/email sample"
+          observed: "patient_id digit warning only; rc=0"
+          expected: "field-aware PII behavior should be explicit and tested"
+    findings:
+      - perspective: 1_functional_correctness
+        severity: critical
+        file: scripts/shogun_verify_audit.sh
+        line: 178
+        issue: "preflight_one が audit_report_index.yaml 必須・index-only になり、既存 test_shogun_verify_preflight.sh の mock report fallback を失った。ready_to_verify / cross_pc_missing / unsupported_schema / partial / missing_log_or_commit の 5 cases が全て missing_audit_entry exit 1 に退化。"
+      - perspective: 2_anti_duplication
+        severity: medium
+        file: scripts/shogun_verify_audit.sh
+        line: 191
+        issue: "reports key fix 自体は正しいが、MC 版が持っていた direct report scan fallback と KNOWN_SECTIONS handling を削った形になっている。reports-key対応と fallback は統合すべきで、片方だけ採用ではない。"
+      - perspective: 3_discipline
+        severity: high
+        file: queue/reports/ashigaru1_report.yaml
+        line: 445
+        issue: "報告は Stage4『回帰0件』とするが、既存 shell regression が FAIL。SKIP=0 でも FAIL>0 のためテスト未完了扱いであり、完了報告不可。"
+      - perspective: 4_logic_robustness
+        severity: high
+        file: scripts/validate_report_privacy.py
+        line: 58
+        issue: "EXEMPT_FIELDS に log_path が含まれ、log_path: /mnt/c/... が scan 対象外になる。Option A prime の tracked output では raw absolute path を許さないため、少なくとも tracked verification outputs では log_path exemption を無効化する必要あり。"
+      - perspective: 5_schema_integrity
+        severity: medium
+        file: scripts/normalize_audit_reports.py
+        line: 26
+        issue: "DEFAULT_REPORT_FILES は takenaka_report.yaml を参照。現作業木では takenaka_report.yaml が存在するため直ちに破綻していないが、前回比較で議論した PC suffix canonical name との関係が未整理。file naming の正本を明文化すべき。"
+      - perspective: 6_test_coverage
+        severity: high
+        file: scripts/test_shogun_verify_preflight.sh
+        line: 31
+        issue: "pytest 143 には shell preflight regression が含まれない。cmd_014 Stage4 は pytest だけでなく bash regression を gate に含める必要がある。"
+      - perspective: 7_legal_compliance
+        severity: high
+        file: scripts/validate_report_privacy.py
+        line: 60
+        issue: "absolute local path は患者/医院名や Windows user path を含み得る。log_path exemption により漏洩 gate が穴になる。"
+      - perspective: 8_operations_ux
+        severity: medium
+        file: scripts/shogun_verify_audit.sh
+        line: 178
+        issue: "index-only preflight は運用上 audit_report_index 生成忘れに弱い。missing index 時も direct reports fallback または明示的な normalize instruction が必要。"
+      - perspective: 9_documentation
+        severity: medium
+        file: queue/reports/ashigaru1_report.yaml
+        line: 442
+        issue: "report の test_results は python pytest のみで、shell regression と privacy smoke の結果が未記載。acceptance_criteria の Stage4 回帰0件を示す証跡として不足。"
+    recommendations:
+      - priority: P0
+        owner: "ashigaru1"
+        effort: small
+        path: "scripts/shogun_verify_audit.sh"
+        action: "preflight_one に reports key index support を残しつつ、audit_report_index.yaml missing 時・audit_id not found 時は MC 版の direct report scan fallback を復活させる。test_shogun_verify_preflight.sh 6/6 PASS/SKIP=0 を必須 gate にする。"
+      - priority: P0
+        owner: "ashigaru1"
+        effort: small
+        path: "scripts/validate_report_privacy.py"
+        action: "tracked verification output mode では log_path を exempt しない。最低限 /mnt/c と /home absolute path は field 名に関係なく HIGH にする test を追加する。"
+      - priority: P0
+        owner: "ashigaru1"
+        effort: small
+        path: "scripts/test_validate_report_privacy.py"
+        action: "log_path absolute path reject fixture と field-aware PII expectation を追加。必要なら --allow-metadata-paths のような明示 option でのみ exemption を許可。"
+      - priority: P1
+        owner: "karo"
+        effort: small
+        path: "cmd_014 completion gate"
+        action: "pytest 143 に加え bash scripts/test_shogun_verify_preflight.sh、bash -n、shellcheck、privacy smoke を completion gate に含める。"
+      - priority: P1
+        owner: "ashigaru1"
+        effort: small
+        path: "queue/reports/ashigaru1_report.yaml"
+        action: "redo cycle で shell regression と privacy smoke の実測を test_results に追記する。"
+    acceptance_recheck:
+      stage3_conflicts_resolved: partial
+      stage4_143_pytest_pass_skip0: pass
+      stage4_shell_preflight_regression: fail
+      stage5_v2_1_3_gate_implemented: pass
+      privacy_absolute_path_gate: fail
+      push_to_newbuild_main: pass
+    related_files:
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/shogun_verify_audit.sh
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/test_shogun_verify_preflight.sh
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/validate_report_privacy.py
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/test_validate_report_privacy.py
+      - /home/user/projects/multi-agent-shogun-newbuild/scripts/normalize_audit_reports.py
+      - /home/user/projects/multi-agent-shogun-newbuild/queue/reports/ashigaru1_report.yaml
+    commit_hash: "741d808 / merge e8fe6da"
+    log_path: "n/a (interactive codex audit; test commands recorded above)"
+    audit_passed: false
+    redo_required: true
+    persona_signature: "黒田官兵衛"
   - audit_id: kuroda_code_audit_001
     target_type: deliverable_file
     target_id: subtask_delta_ashigaru1_pdf_extractor_cycle2_v3_001
@@ -909,3 +1509,149 @@ reports:
     commit_hash: "ca744ea4"
     audit_passed: false
     persona_signature: "黒田官兵衛、智囊の眼。門番は立ったが、倉の帳面が患者番号と例外文をまだ漏らす。ここは通せぬ。"
+
+  - audit_id: kuroda_logic_audit_mechanism_6th_20260511
+    target_id: task_91_mechanism_6th_execution_strategy_gate
+    target_type: mechanism_logic_audit
+    parent_cmd: cmd_013
+    cycle_n: 1
+    audited_at: "2026-05-11T12:50:31+09:00"
+    audited_by: kuroda
+    verdict: pass_with_concerns
+    adoption: "採用可。ただし task-level schema の機械強制範囲と field naming を修正条件とする。"
+    commit_hash: "65c2e98"
+    audit_session_id: kuroda_logic_audit_mechanism_6th_20260511
+    perspectives:
+      1_functional_correctness: concerns
+      2_anti_duplication: concerns
+      3_discipline: pass
+      4_logic_robustness: concerns
+      5_schema_integrity: concerns
+      6_test_coverage: concerns
+      7_legal_compliance: pass
+      8_operations_ux: concerns
+      9_documentation: concerns
+      10_ecosystem_coherence: concerns
+    executive_summary: "6件目の execution_strategy/dependencies/SLA/start_trigger gate は、cmd_012 の曖昧 directive 再発を仕組みで潰す方針として正しい。だが現 v2.1 設計と実装には、task entries が cmd YAML に無い場合の不検出、field 名の揺れ、parallel DAG と sequential/staged の境界未定義、既存 P0-4 gate との責務重複が残る。採用は可、ただし validator と template の canonical schema を一本化し、Karo 分解後 task YAML まで gate しなければ『曖昧 directive 物理防止』としては未完成。"
+    findings:
+      - perspective: 1_functional_correctness
+        severity: high
+        file: scripts/validate_cmd_schema.py
+        line: 263-265
+        function: validate_cmd
+        issue: "V2.1-6 は task-level dependencies/sla/start_trigger を必須化する設計だが、validator は cmd.get('tasks') が存在する場合だけ検査する。実際の cmd_013 は queue/shogun_to_karo.yaml:923-940 に execution_strategy と acceptance_criteria しかなく tasks 配列が無いため、分解前 cmd intake では task-level 欠落を検出できない。"
+      - perspective: 5_schema_integrity
+        severity: high
+        file: docs/final_solution_synthesis_20260511.md
+        line: 205-213
+        function: V2.1-6 schema
+        issue: "設計本文は sla.first_action_within / sla.final_deadline を例示する一方、実装 validator は scripts/validate_cmd_schema.py:175-195 で sla.first_action_within_minutes / sla.final_deadline_iso を要求する。queue/shogun_to_karo.yaml:930 も first_action_within/final_deadline 表記で、canonical field name が未固定。"
+      - perspective: 4_logic_robustness
+        severity: medium
+        file: docs/final_solution_synthesis_20260511.md
+        line: 216-229
+        function: command_and_task_gate_rules
+        issue: "`execution_strategy: parallel` with dependencies that imply ordering を violation とするが、scripts/test_validate_cmd_schema.py:360-369 は parallel + DAG dependency を valid と明示している。parallel DAG を許すのか、依存ありは staged に寄せるのかが論理的に分岐している。"
+      - perspective: 2_anti_duplication
+        severity: medium
+        file: docs/final_solution_synthesis_20260511.md
+        line: 201-244
+        function: V2.1-6 mechanism
+        issue: "V2.1-6 の task template gate は P0-4 Generated Instruction / Task Template Gate (docs/final_solution_synthesis_20260511.md:392-419) と同じ template_violation/completion_gate: blocked 領域を扱う。validate_cmd_schema.py と validate_task_template.py の責務境界を明記しないと二重 validator または片側未実装の穴になる。"
+      - perspective: 6_test_coverage
+        severity: medium
+        file: scripts/test_validate_cmd_schema.py
+        line: 297-454
+        function: TestTaskLevelFields
+        issue: "単体テストは task がある場合の欠落検出を 52 passed / SKIP 0 で確認できたが、cmd に tasks 配列が無い active command を V2.1-6 違反とする test、sequential の ordered task list、staged の stage/gate criteria を検証する test が無い。"
+      - perspective: 8_operations_ux
+        severity: medium
+        file: queue/shogun_to_karo.yaml
+        line: 923-955
+        function: cmd_013 command contract
+        issue: "cmd_013 は execution_strategy: parallel と acceptance_criteria に self-dogfooding を書くが、実 task 分解の dependencies/sla/start_trigger が cmd YAML 上に残らない。Karo が別 YAML に分解した後の gate timing と、未準拠時に pending_tasks へ戻す運用手順が不明。"
+      - perspective: 3_discipline
+        severity: low
+        file: docs/final_solution_synthesis_20260511.md
+        line: 246-256
+        function: Upstream Fit
+        issue: "event-driven inbox と Karo coordinator を維持し、常駐 manager 追加を避けるため、F004 polling 禁止および upstream philosophy には整合する。規律上の破綻は見当たらない。"
+      - perspective: 7_legal_compliance
+        severity: low
+        file: docs/final_solution_synthesis_20260511.md
+        line: 201-244
+        function: V2.1-6 mechanism
+        issue: "6件目自体は個人情報を新規移送しないため法令リスクは低い。ただし SLA/final_deadline や blocker reason を report/index に出す際、絶対ローカルパスや患者/医院 ID を含めぬ redaction gate との接続を acceptance に残す方が堅い。"
+      - perspective: 9_documentation
+        severity: medium
+        file: docs/final_solution_synthesis_20260511.md
+        line: 258-267
+        function: Shogun Output Style Fit
+        issue: "出力 style 規範との接続はあるが、memory/MEMORY.md:85-123 の『結論先、根拠は短く』『答えが決まれば推奨のみ』を validator でどう支えるかは未定義。field 強制だけでは冗長 directive 防止までは機械化されない。"
+      - perspective: 10_ecosystem_coherence
+        severity: medium
+        file: queue/shogun_to_karo.yaml
+        line: 923-940
+        function: cmd_013 acceptance_criteria
+        issue: "cmd_013 は implementation_pc: both かつ execution_strategy: parallel のため cross-PC/report-schema に跨るが、現 validator 実行では simultaneous_implementation_review 不在で dispatch_gate blocked となった。6件目採用前に review row 生成責務を明確化せねば self-dogfooding が詰まる。"
+    overlooked_points:
+      - "Ambiguous directive 防止の追加候補: `task_group_id` と `stage_id` を必須化し、Karo が task YAML へ分解した後も cmd acceptance_criteria と逆参照できるようにする。"
+      - "Dependency 配列だけでなく `blocks` または `unblocks` を正規化して、pending_tasks から assigned へ移す gate を機械判定できるようにする。"
+      - "SLA は duration と absolute deadline を分離する。first_action は minutes、final_deadline は ISO8601 timezone 必須に統一し、human prose の『15分以内』を schema に落とす。"
+      - "start_trigger は enum だけでなく `trigger_source` (`karo`, `dependency_task_id`, `lord_approval_record`, `completion_gate_row`) を持たせ、御差配・依存完遂・gate open の証跡を追えるようにする。"
+    recommendations:
+      - perspective: 5_schema_integrity
+        action: "canonical schema を `dependencies`, `sla.first_action_within_minutes`, `sla.final_deadline_iso`, `start_trigger` に固定し、docs/queue/inbox/validator/tests の表記を一括統一する。"
+        effort: small
+      - perspective: 1_functional_correctness
+        action: "active cmd で `tasks` が無い場合の扱いを決める。cmd intake では `decomposition_required: true` を許すか、Karo 分解後に `validate_task_template.py queue/tasks/*.yaml --parent-cmd <cmd>` を必須実行する。"
+        effort: medium
+      - perspective: 4_logic_robustness
+        action: "parallel は independent-only か DAG-parallel かを明文化する。DAG を許すなら docs line 221 を『cycle detected / missing dependency / start_trigger mismatch』へ修正する。"
+        effort: small
+      - perspective: 2_anti_duplication
+        action: "V2.1-6 は P0-4 の下位実装として位置付け、`validate_cmd_schema.py` は command-level、`validate_task_template.py` は decomposed task-level と責務分割を明記する。"
+        effort: small
+      - perspective: 6_test_coverage
+        action: "missing tasks, sequential order metadata, staged stage criteria, field-name alias rejection, pending_blocked placement の fixture tests を追加する。"
+        effort: medium
+      - perspective: 8_operations_ux
+        action: "Karo dispatch rule に『blocked dependency task は queue/tasks/pending.yaml に置き、ashigaru YAML へ事前割当しない』を validator output と接続する。"
+        effort: medium
+    machine_evidence:
+      validate_cmd013:
+        command: "python3 scripts/validate_cmd_schema.py queue/shogun_to_karo.yaml --cmd cmd_013"
+        observed: "1 violation: implementation_pc=both requires a pass review in simultaneous_implementation_reviews.yaml"
+      validate_cmd014:
+        command: "python3 scripts/validate_cmd_schema.py queue/shogun_to_karo.yaml --cmd cmd_014"
+        observed: "OK: no violations found"
+      validator_tests:
+        command: "python3 -m pytest scripts/test_validate_cmd_schema.py -q"
+        observed: "52 passed in 0.10s; SKIP=0"
+      context_file_check:
+        command: "find . -path '*hakudokai_pii_detector.py' -print"
+        observed: "no matching file found in current worktree"
+    related_files:
+      - queue/inbox/gunshi.yaml
+      - queue/shogun_to_karo.yaml
+      - docs/final_solution_synthesis_20260511.md
+      - scripts/validate_cmd_schema.py
+      - scripts/test_validate_cmd_schema.py
+      - memory/MEMORY.md
+      - instructions/common/task_flow.md
+    related_acceptance_criteria_indices:
+      - 5
+      - 6
+      - 12
+      - 13
+    log_path: /tmp/codex_audit_kuroda_logic_audit_mechanism_6th_20260511.log
+    cross_review_targets:
+      - takenaka: "field naming と narrative/doc 整合、特に parallel DAG vs staged の表現を二次監査願う。"
+      - karo: "採用前に simultaneous_implementation_reviews.yaml の cmd_013 review row と Karo 分解後 task validation 手順を補うべし。"
+    north_star_alignment:
+      status: aligned
+      reason: "曖昧 directive を人間注意ではなく schema/preflight/completion gate で防ぐ方向は、最上位原則『すべてのミスは仕組みで防ぐ』に合致する。"
+      risks_to_north_star:
+        - "task-level schema が分解後に検査されなければ、曖昧 directive が acceptance prose から task YAML へ移動するだけで防止にならない。"
+        - "field 名が揺れたままだと validator と template が互いに通らず、仕組みそのものが blocked noise になる。"
+    persona_signature: "黒田官兵衛、智囊の眼。6件目の策は筋よし、されど task 分解後の門番なきままでは、曖昧さは城外でなく城内に移るのみ。"

@@ -1,22 +1,22 @@
 verifications:
-- event_id: e33c5a04202f
-  source_pc: mainpc
-  auditor_who: naomasa_secondpc
-  shogun_verified: false
+- auditor_who: naomasa_secondpc
   checks_passed: 2/6
-  verified_at: '2026-05-10T23:02:40+00:00'
+  event_id: e33c5a04202f
   payload_hash: 11b71945dcee
   redaction_note: 朝の手動 append から migration (= 旧 shogun_verification_log.yaml 由来)
-  target: naomasa_new_001
-- event_id: 61ca1c8141ef
-  source_pc: mainpc
-  auditor_who: naomasa_secondpc
   shogun_verified: false
-  checks_passed: 2/6
+  source_pc: mainpc
+  target: naomasa_new_001
   verified_at: '2026-05-10T23:02:40+00:00'
+- auditor_who: naomasa_secondpc
+  checks_passed: 2/6
+  event_id: 61ca1c8141ef
   payload_hash: 96a07b601874
   redaction_note: 朝の手動 append から migration (= 旧 shogun_verification_log.yaml 由来)
+  shogun_verified: false
+  source_pc: mainpc
   target: naomasa_new_002
+  verified_at: '2026-05-10T23:02:40+00:00'
 - audit_entry_excerpt:
     audit_id: kuroda_006
     audited_at: '2026-05-10T15:40:00+09:00'
@@ -32,14 +32,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: f4fe5f0aa861
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 5293515d0cd11927
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_006
   verified_at: '2026-05-10T06:42:22+00:00'
-  source_pc: mainpc
-  event_id: f4fe5f0aa861
-  payload_hash: 5293515d0cd11927
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_007
     audited_at: '2026-05-10T15:41:00+09:00'
@@ -55,15 +55,15 @@ verifications:
     related_files_exist: false
     timestamp_consistent: true
   checks_passed: 3/6
+  event_id: 85bb87502ce7
   flags:
   - 'some related_files do not exist: [''/mnt/c/Users/User/Documents/DentalBI/frontend/src/patient-app/api/patientAppApi.ts'']'
+  migration_note: legacy_migrated
+  payload_hash: 37a50e335f8b154c
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_007
   verified_at: '2026-05-10T06:42:27+00:00'
-  source_pc: mainpc
-  event_id: 85bb87502ce7
-  payload_hash: 37a50e335f8b154c
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_007
     audited_at: '2026-05-10T15:41:00+09:00'
@@ -79,14 +79,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 4b8b7288ca19
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 2dfba2d553d31c93
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_007
   verified_at: '2026-05-10T06:42:47+00:00'
-  source_pc: mainpc
-  event_id: 4b8b7288ca19
-  payload_hash: 2dfba2d553d31c93
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_code_audit_001
     audited_at: '2026-05-10T08:40:00+09:00'
@@ -102,19 +102,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: f3393829656b
   flags:
   - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 249s > 60s threshold
   - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
     ''test_quartetto_pdf_parser.py'']'
+  migration_note: legacy_migrated
+  payload_hash: dfafb3a105606b56
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_code_audit_001
   verified_at: '2026-05-10T06:43:04+00:00'
-  source_pc: mainpc
-  event_id: f3393829656b
-  payload_hash: dfafb3a105606b56
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001
     audited_at: '2026-05-10T08:59:10+09:00'
@@ -130,15 +130,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 58f728780338
   flags:
   - 'invalid commit_hash: 0dcfc6b0'
+  migration_note: legacy_migrated
+  payload_hash: ba5bdf001cfede84
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 58f728780338
-  payload_hash: ba5bdf001cfede84
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001_fix_review
     audited_at: '2026-05-10T09:55:30+09:00'
@@ -154,15 +154,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 7ea0f3866e92
   flags:
   - 'invalid commit_hash: 5274c03c'
+  migration_note: legacy_migrated
+  payload_hash: 60b74251845c35eb
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001_fix_review
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 7ea0f3866e92
-  payload_hash: 60b74251845c35eb
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_002
     audited_at: '2026-05-10T13:12:00+09:00'
@@ -178,17 +178,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: c0fdaa47f097
   flags:
   - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9f2e772f6bcca37a
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_002
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: c0fdaa47f097
-  payload_hash: 9f2e772f6bcca37a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_003
     audited_at: '2026-05-10T13:13:00+09:00'
@@ -204,17 +204,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 45a074595d14
   flags:
   - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: c688a1ef67c3b706
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_003
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 45a074595d14
-  payload_hash: c688a1ef67c3b706
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_004
     audited_at: '2026-05-10T13:14:00+09:00'
@@ -230,16 +230,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 9424ca4830b9
   flags:
   - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 780097d5796f6f25
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_004
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 9424ca4830b9
-  payload_hash: 780097d5796f6f25
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_005
     audited_at: '2026-05-10T13:15:00+09:00'
@@ -255,17 +255,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: cea96bbfd0b0
   flags:
   - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 63223d861e092be8
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_005
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: cea96bbfd0b0
-  payload_hash: 63223d861e092be8
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_006
     audited_at: '2026-05-10T15:40:00+09:00'
@@ -281,14 +281,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 095924e5323f
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 5293515d0cd11927
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_006
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 095924e5323f
-  payload_hash: 5293515d0cd11927
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_007
     audited_at: '2026-05-10T15:41:00+09:00'
@@ -304,14 +304,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: b79ba88770ec
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 2dfba2d553d31c93
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_007
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: b79ba88770ec
-  payload_hash: 2dfba2d553d31c93
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 8a1b2c3d
     audited_at: '2026-05-10T09:20:00+09:00'
@@ -327,16 +327,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 8958f326e815
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9598b73a44837e13
   shogun_verified: false
+  source_pc: mainpc
   target: 8a1b2c3d
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 8958f326e815
-  payload_hash: 9598b73a44837e13
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 9e4f5g6h
     audited_at: '2026-05-10T09:22:00+09:00'
@@ -352,16 +352,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: d03031145bbc
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 3b7cac51a3c73d8a
   shogun_verified: false
+  source_pc: mainpc
   target: 9e4f5g6h
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: d03031145bbc
-  payload_hash: 3b7cac51a3c73d8a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 1i2j3k4l
     audited_at: '2026-05-10T09:24:00+09:00'
@@ -377,16 +377,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: ca515dde04ed
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 86c7ce5b1063b35f
   shogun_verified: false
+  source_pc: mainpc
   target: 1i2j3k4l
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: ca515dde04ed
-  payload_hash: 86c7ce5b1063b35f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 5m6n7o8p
     audited_at: '2026-05-10T09:26:00+09:00'
@@ -402,16 +402,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 3711567bd35b
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 752da86f219627b7
   shogun_verified: false
+  source_pc: mainpc
   target: 5m6n7o8p
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 3711567bd35b
-  payload_hash: 752da86f219627b7
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 9q0r1s2t
     audited_at: '2026-05-10T09:28:00+09:00'
@@ -427,16 +427,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: eb8e54b39a7f
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 50fcf2f98557292b
   shogun_verified: false
+  source_pc: mainpc
   target: 9q0r1s2t
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: eb8e54b39a7f
-  payload_hash: 50fcf2f98557292b
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 3u4v5w6x
     audited_at: '2026-05-10T09:30:00+09:00'
@@ -452,16 +452,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 047c0e3babe7
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 76ff75d2526adcea
   shogun_verified: false
+  source_pc: mainpc
   target: 3u4v5w6x
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 047c0e3babe7
-  payload_hash: 76ff75d2526adcea
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: f1a2b3c4
     audited_at: '2026-05-10T09:35:00+09:00'
@@ -477,18 +477,18 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: d3d2fabb1b45
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 5274c03c'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/etl/quartetto_pdf_parser.py'', ''backend/etl/quartetto_pdf_watcher.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 8bda993c4e13d72f
   shogun_verified: false
+  source_pc: mainpc
   target: f1a2b3c4
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: d3d2fabb1b45
-  payload_hash: 8bda993c4e13d72f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: d2e3f4g5
     audited_at: '2026-05-10T09:37:00+09:00'
@@ -504,19 +504,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: f707dec4be44
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/services/teriha_passport_engine.py'',
     ''supabase/migrations/20260509_ceremony_event.sql'']'
+  migration_note: legacy_migrated
+  payload_hash: 3c3926134d90f3b2
   shogun_verified: false
+  source_pc: mainpc
   target: d2e3f4g5
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: f707dec4be44
-  payload_hash: 3c3926134d90f3b2
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: h6i7j8k9
     audited_at: '2026-05-10T09:39:00+09:00'
@@ -532,19 +532,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 44254727ae60
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''frontend/src/pages/reception/CheckinQRDisplay.tsx'',
     ''docs/secondpc_sakai_kanban_adapter_design_v1.md'']'
+  migration_note: legacy_migrated
+  payload_hash: e97b0c85f949836b
   shogun_verified: false
+  source_pc: mainpc
   target: h6i7j8k9
   verified_at: '2026-05-10T06:43:05+00:00'
-  source_pc: mainpc
-  event_id: 44254727ae60
-  payload_hash: e97b0c85f949836b
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: l0m1n2o3
     audited_at: '2026-05-10T09:41:00+09:00'
@@ -560,19 +560,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 659995b1e226
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''shim/hakudokai/hakudokai_consent_api.py'',
     ''shim/hakudokai/hakudokai_aichat_api.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 4fdb1b86d9108c4f
   shogun_verified: false
+  source_pc: mainpc
   target: l0m1n2o3
   verified_at: '2026-05-10T06:43:06+00:00'
-  source_pc: mainpc
-  event_id: 659995b1e226
-  payload_hash: 4fdb1b86d9108c4f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: p4q5r6s7
     audited_at: '2026-05-10T09:43:00+09:00'
@@ -588,17 +588,17 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 04fad8b5fcca
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/routers/meisai_receipt.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 085f027bcf9010a1
   shogun_verified: false
+  source_pc: mainpc
   target: p4q5r6s7
   verified_at: '2026-05-10T06:43:06+00:00'
-  source_pc: mainpc
-  event_id: 04fad8b5fcca
-  payload_hash: 085f027bcf9010a1
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: u8v9w0x1
     audited_at: '2026-05-10T09:50:00+09:00'
@@ -614,18 +614,18 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: ba30390c9bd6
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/schemas/common_base.py'', ''frontend/src/types/common-base.ts'',
     ''docs/common_base_adapter_design_v1.md'']'
+  migration_note: legacy_migrated
+  payload_hash: 643e3c4fbffe1100
   shogun_verified: false
+  source_pc: mainpc
   target: u8v9w0x1
   verified_at: '2026-05-10T06:43:06+00:00'
-  source_pc: mainpc
-  event_id: ba30390c9bd6
-  payload_hash: 643e3c4fbffe1100
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_code_audit_001
     audited_at: '2026-05-10T08:40:00+09:00'
@@ -641,19 +641,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: da7b1c8d79e7
   flags:
   - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 249s > 60s threshold
   - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
     ''test_quartetto_pdf_parser.py'']'
+  migration_note: legacy_migrated
+  payload_hash: dfafb3a105606b56
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_code_audit_001
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: da7b1c8d79e7
-  payload_hash: dfafb3a105606b56
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001
     audited_at: '2026-05-10T08:59:10+09:00'
@@ -669,15 +669,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 51b4cff8a171
   flags:
   - 'invalid commit_hash: 0dcfc6b0'
+  migration_note: legacy_migrated
+  payload_hash: ba5bdf001cfede84
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: 51b4cff8a171
-  payload_hash: ba5bdf001cfede84
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001_fix_review
     audited_at: '2026-05-10T09:55:30+09:00'
@@ -693,15 +693,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: d688eae2b730
   flags:
   - 'invalid commit_hash: 5274c03c'
+  migration_note: legacy_migrated
+  payload_hash: 60b74251845c35eb
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001_fix_review
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: d688eae2b730
-  payload_hash: 60b74251845c35eb
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_002
     audited_at: '2026-05-10T13:12:00+09:00'
@@ -717,17 +717,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: e33bfc5c3d4b
   flags:
   - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9f2e772f6bcca37a
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_002
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: e33bfc5c3d4b
-  payload_hash: 9f2e772f6bcca37a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_003
     audited_at: '2026-05-10T13:13:00+09:00'
@@ -743,17 +743,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 2d3173953f73
   flags:
   - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: c688a1ef67c3b706
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_003
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: 2d3173953f73
-  payload_hash: c688a1ef67c3b706
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_004
     audited_at: '2026-05-10T13:14:00+09:00'
@@ -769,16 +769,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 5a036ceb4666
   flags:
   - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 780097d5796f6f25
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_004
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: 5a036ceb4666
-  payload_hash: 780097d5796f6f25
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_005
     audited_at: '2026-05-10T13:15:00+09:00'
@@ -794,17 +794,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: b121b9e7d931
   flags:
   - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 63223d861e092be8
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_005
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: b121b9e7d931
-  payload_hash: 63223d861e092be8
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_006
     audited_at: '2026-05-10T15:40:00+09:00'
@@ -820,14 +820,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 77d8d039741d
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 5293515d0cd11927
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_006
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: 77d8d039741d
-  payload_hash: 5293515d0cd11927
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_007
     audited_at: '2026-05-10T15:41:00+09:00'
@@ -843,14 +843,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: c56c4d1870aa
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 2dfba2d553d31c93
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_007
   verified_at: '2026-05-10T06:43:08+00:00'
-  source_pc: mainpc
-  event_id: c56c4d1870aa
-  payload_hash: 2dfba2d553d31c93
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 8a1b2c3d
     audited_at: '2026-05-10T09:20:00+09:00'
@@ -866,16 +866,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 7f6520fb378f
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9598b73a44837e13
   shogun_verified: false
+  source_pc: mainpc
   target: 8a1b2c3d
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: 7f6520fb378f
-  payload_hash: 9598b73a44837e13
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 9e4f5g6h
     audited_at: '2026-05-10T09:22:00+09:00'
@@ -891,16 +891,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: c0dbcfcaf4e6
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 3b7cac51a3c73d8a
   shogun_verified: false
+  source_pc: mainpc
   target: 9e4f5g6h
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: c0dbcfcaf4e6
-  payload_hash: 3b7cac51a3c73d8a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 1i2j3k4l
     audited_at: '2026-05-10T09:24:00+09:00'
@@ -916,16 +916,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 50a68608e3c9
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 86c7ce5b1063b35f
   shogun_verified: false
+  source_pc: mainpc
   target: 1i2j3k4l
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: 50a68608e3c9
-  payload_hash: 86c7ce5b1063b35f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 5m6n7o8p
     audited_at: '2026-05-10T09:26:00+09:00'
@@ -941,16 +941,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 02cdc5e8357b
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 752da86f219627b7
   shogun_verified: false
+  source_pc: mainpc
   target: 5m6n7o8p
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: 02cdc5e8357b
-  payload_hash: 752da86f219627b7
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 9q0r1s2t
     audited_at: '2026-05-10T09:28:00+09:00'
@@ -966,16 +966,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 07a1ca62a658
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 50fcf2f98557292b
   shogun_verified: false
+  source_pc: mainpc
   target: 9q0r1s2t
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: 07a1ca62a658
-  payload_hash: 50fcf2f98557292b
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 3u4v5w6x
     audited_at: '2026-05-10T09:30:00+09:00'
@@ -991,16 +991,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: c5db26d0e4c3
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 76ff75d2526adcea
   shogun_verified: false
+  source_pc: mainpc
   target: 3u4v5w6x
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: c5db26d0e4c3
-  payload_hash: 76ff75d2526adcea
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: f1a2b3c4
     audited_at: '2026-05-10T09:35:00+09:00'
@@ -1016,18 +1016,18 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: aa12f73c17e2
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 5274c03c'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/etl/quartetto_pdf_parser.py'', ''backend/etl/quartetto_pdf_watcher.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 8bda993c4e13d72f
   shogun_verified: false
+  source_pc: mainpc
   target: f1a2b3c4
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: aa12f73c17e2
-  payload_hash: 8bda993c4e13d72f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: d2e3f4g5
     audited_at: '2026-05-10T09:37:00+09:00'
@@ -1043,19 +1043,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 4eb7cd9e8c05
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/services/teriha_passport_engine.py'',
     ''supabase/migrations/20260509_ceremony_event.sql'']'
+  migration_note: legacy_migrated
+  payload_hash: 3c3926134d90f3b2
   shogun_verified: false
+  source_pc: mainpc
   target: d2e3f4g5
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: 4eb7cd9e8c05
-  payload_hash: 3c3926134d90f3b2
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: h6i7j8k9
     audited_at: '2026-05-10T09:39:00+09:00'
@@ -1071,19 +1071,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 2ca1ed372308
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''frontend/src/pages/reception/CheckinQRDisplay.tsx'',
     ''docs/secondpc_sakai_kanban_adapter_design_v1.md'']'
+  migration_note: legacy_migrated
+  payload_hash: e97b0c85f949836b
   shogun_verified: false
+  source_pc: mainpc
   target: h6i7j8k9
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: 2ca1ed372308
-  payload_hash: e97b0c85f949836b
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: l0m1n2o3
     audited_at: '2026-05-10T09:41:00+09:00'
@@ -1099,19 +1099,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: af7fe804b56a
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''shim/hakudokai/hakudokai_consent_api.py'',
     ''shim/hakudokai/hakudokai_aichat_api.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 4fdb1b86d9108c4f
   shogun_verified: false
+  source_pc: mainpc
   target: l0m1n2o3
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: af7fe804b56a
-  payload_hash: 4fdb1b86d9108c4f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: p4q5r6s7
     audited_at: '2026-05-10T09:43:00+09:00'
@@ -1127,17 +1127,17 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: ef5a3f5e99c9
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/routers/meisai_receipt.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 085f027bcf9010a1
   shogun_verified: false
+  source_pc: mainpc
   target: p4q5r6s7
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: ef5a3f5e99c9
-  payload_hash: 085f027bcf9010a1
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: u8v9w0x1
     audited_at: '2026-05-10T09:50:00+09:00'
@@ -1153,18 +1153,18 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 4751c9712f84
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/schemas/common_base.py'', ''frontend/src/types/common-base.ts'',
     ''docs/common_base_adapter_design_v1.md'']'
+  migration_note: legacy_migrated
+  payload_hash: 643e3c4fbffe1100
   shogun_verified: false
+  source_pc: mainpc
   target: u8v9w0x1
   verified_at: '2026-05-10T06:43:09+00:00'
-  source_pc: mainpc
-  event_id: 4751c9712f84
-  payload_hash: 643e3c4fbffe1100
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001
     audited_at: '2026-05-10T08:59:10+09:00'
@@ -1180,15 +1180,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 7d3f50748e08
   flags:
   - 'invalid commit_hash: 0dcfc6b0'
+  migration_note: legacy_migrated
+  payload_hash: ba5bdf001cfede84
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001
   verified_at: '2026-05-10T06:43:18+00:00'
-  source_pc: mainpc
-  event_id: 7d3f50748e08
-  payload_hash: ba5bdf001cfede84
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_006
     audited_at: '2026-05-10T15:40:00+09:00'
@@ -1204,14 +1204,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: eb65528c80b1
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 5293515d0cd11927
   shogun_verified: true
+  source_pc: mainpc
   target: subtask_delta_ashigaru4_common_base_cycle2_redo_001
   verified_at: '2026-05-10T06:43:34+00:00'
-  source_pc: mainpc
-  event_id: eb65528c80b1
-  payload_hash: 5293515d0cd11927
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_007
     audited_at: '2026-05-10T15:41:00+09:00'
@@ -1227,14 +1227,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 4f766e07e667
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 2dfba2d553d31c93
   shogun_verified: true
+  source_pc: mainpc
   target: subtask_delta_ashigaru6_receipt_storage_cycle2_redo_001
   verified_at: '2026-05-10T06:43:34+00:00'
-  source_pc: mainpc
-  event_id: 4f766e07e667
-  payload_hash: 2dfba2d553d31c93
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_code_audit_001
     audited_at: '2026-05-10T08:40:00+09:00'
@@ -1250,19 +1250,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: cdb5320bf57c
   flags:
   - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 249s > 60s threshold
   - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
     ''test_quartetto_pdf_parser.py'']'
+  migration_note: legacy_migrated
+  payload_hash: dfafb3a105606b56
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_code_audit_001
   verified_at: '2026-05-10T09:27:36+00:00'
-  source_pc: mainpc
-  event_id: cdb5320bf57c
-  payload_hash: dfafb3a105606b56
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001
     audited_at: '2026-05-10T08:59:10+09:00'
@@ -1278,15 +1278,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 6effb8c11735
   flags:
   - 'invalid commit_hash: 0dcfc6b0'
+  migration_note: legacy_migrated
+  payload_hash: ba5bdf001cfede84
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 6effb8c11735
-  payload_hash: ba5bdf001cfede84
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001_fix_review
     audited_at: '2026-05-10T09:55:30+09:00'
@@ -1302,15 +1302,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 6fc83cb8ea4a
   flags:
   - 'invalid commit_hash: 5274c03c'
+  migration_note: legacy_migrated
+  payload_hash: 60b74251845c35eb
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001_fix_review
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 6fc83cb8ea4a
-  payload_hash: 60b74251845c35eb
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_002
     audited_at: '2026-05-10T13:12:00+09:00'
@@ -1326,17 +1326,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: a6bc066c8e63
   flags:
   - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9f2e772f6bcca37a
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_002
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: a6bc066c8e63
-  payload_hash: 9f2e772f6bcca37a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_003
     audited_at: '2026-05-10T13:13:00+09:00'
@@ -1352,17 +1352,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 136b1a54950a
   flags:
   - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: c688a1ef67c3b706
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_003
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 136b1a54950a
-  payload_hash: c688a1ef67c3b706
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_004
     audited_at: '2026-05-10T13:14:00+09:00'
@@ -1378,16 +1378,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 0119ca432638
   flags:
   - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 780097d5796f6f25
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_004
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 0119ca432638
-  payload_hash: 780097d5796f6f25
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_005
     audited_at: '2026-05-10T13:15:00+09:00'
@@ -1403,17 +1403,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 1c210302a68e
   flags:
   - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 63223d861e092be8
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_005
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 1c210302a68e
-  payload_hash: 63223d861e092be8
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_006
     audited_at: '2026-05-10T15:40:00+09:00'
@@ -1429,14 +1429,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 173820b4b1c6
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 5293515d0cd11927
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_006
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 173820b4b1c6
-  payload_hash: 5293515d0cd11927
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_007
     audited_at: '2026-05-10T15:41:00+09:00'
@@ -1452,14 +1452,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 5fcfdaf834ee
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 2dfba2d553d31c93
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_007
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 5fcfdaf834ee
-  payload_hash: 2dfba2d553d31c93
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 8a1b2c3d
     audited_at: '2026-05-10T09:20:00+09:00'
@@ -1475,16 +1475,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 13329901fa72
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9598b73a44837e13
   shogun_verified: false
+  source_pc: mainpc
   target: 8a1b2c3d
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 13329901fa72
-  payload_hash: 9598b73a44837e13
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 9e4f5g6h
     audited_at: '2026-05-10T09:22:00+09:00'
@@ -1500,16 +1500,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 4c1564732855
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 3b7cac51a3c73d8a
   shogun_verified: false
+  source_pc: mainpc
   target: 9e4f5g6h
   verified_at: '2026-05-10T09:27:37+00:00'
-  source_pc: mainpc
-  event_id: 4c1564732855
-  payload_hash: 3b7cac51a3c73d8a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 1i2j3k4l
     audited_at: '2026-05-10T09:24:00+09:00'
@@ -1525,16 +1525,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 5f99e8b5b923
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 86c7ce5b1063b35f
   shogun_verified: false
+  source_pc: mainpc
   target: 1i2j3k4l
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: 5f99e8b5b923
-  payload_hash: 86c7ce5b1063b35f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 5m6n7o8p
     audited_at: '2026-05-10T09:26:00+09:00'
@@ -1550,16 +1550,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: c1702ebcb6fc
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 752da86f219627b7
   shogun_verified: false
+  source_pc: mainpc
   target: 5m6n7o8p
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: c1702ebcb6fc
-  payload_hash: 752da86f219627b7
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 9q0r1s2t
     audited_at: '2026-05-10T09:28:00+09:00'
@@ -1575,16 +1575,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 9a82d7e083ac
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 50fcf2f98557292b
   shogun_verified: false
+  source_pc: mainpc
   target: 9q0r1s2t
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: 9a82d7e083ac
-  payload_hash: 50fcf2f98557292b
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: 3u4v5w6x
     audited_at: '2026-05-10T09:30:00+09:00'
@@ -1600,16 +1600,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: f023ddab62a5
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 76ff75d2526adcea
   shogun_verified: false
+  source_pc: mainpc
   target: 3u4v5w6x
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: f023ddab62a5
-  payload_hash: 76ff75d2526adcea
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: f1a2b3c4
     audited_at: '2026-05-10T09:35:00+09:00'
@@ -1625,18 +1625,18 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 3ce0a2f2f6cf
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 5274c03c'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/etl/quartetto_pdf_parser.py'', ''backend/etl/quartetto_pdf_watcher.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 8bda993c4e13d72f
   shogun_verified: false
+  source_pc: mainpc
   target: f1a2b3c4
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: 3ce0a2f2f6cf
-  payload_hash: 8bda993c4e13d72f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: d2e3f4g5
     audited_at: '2026-05-10T09:37:00+09:00'
@@ -1652,19 +1652,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 17265098cbf6
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/services/teriha_passport_engine.py'',
     ''supabase/migrations/20260509_ceremony_event.sql'']'
+  migration_note: legacy_migrated
+  payload_hash: 3c3926134d90f3b2
   shogun_verified: false
+  source_pc: mainpc
   target: d2e3f4g5
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: 17265098cbf6
-  payload_hash: 3c3926134d90f3b2
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: h6i7j8k9
     audited_at: '2026-05-10T09:39:00+09:00'
@@ -1680,19 +1680,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 1af151997171
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''frontend/src/pages/reception/CheckinQRDisplay.tsx'',
     ''docs/secondpc_sakai_kanban_adapter_design_v1.md'']'
+  migration_note: legacy_migrated
+  payload_hash: e97b0c85f949836b
   shogun_verified: false
+  source_pc: mainpc
   target: h6i7j8k9
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: 1af151997171
-  payload_hash: e97b0c85f949836b
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: l0m1n2o3
     audited_at: '2026-05-10T09:41:00+09:00'
@@ -1708,19 +1708,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 16bf1c621207
   flags:
   - 'log file not found: (no log_path field)'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''shim/hakudokai/hakudokai_consent_api.py'',
     ''shim/hakudokai/hakudokai_aichat_api.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 4fdb1b86d9108c4f
   shogun_verified: false
+  source_pc: mainpc
   target: l0m1n2o3
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: 16bf1c621207
-  payload_hash: 4fdb1b86d9108c4f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: p4q5r6s7
     audited_at: '2026-05-10T09:43:00+09:00'
@@ -1736,17 +1736,17 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 25456724b0fd
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/routers/meisai_receipt.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 085f027bcf9010a1
   shogun_verified: false
+  source_pc: mainpc
   target: p4q5r6s7
   verified_at: '2026-05-10T09:27:38+00:00'
-  source_pc: mainpc
-  event_id: 25456724b0fd
-  payload_hash: 085f027bcf9010a1
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: u8v9w0x1
     audited_at: '2026-05-10T09:50:00+09:00'
@@ -1762,37 +1762,37 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 46cd4e5aa92c
   flags:
   - 'log file not found: (no log_path field)'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''backend/schemas/common_base.py'', ''frontend/src/types/common-base.ts'',
     ''docs/common_base_adapter_design_v1.md'']'
+  migration_note: legacy_migrated
+  payload_hash: 643e3c4fbffe1100
   shogun_verified: false
+  source_pc: mainpc
   target: u8v9w0x1
   verified_at: '2026-05-10T09:27:39+00:00'
-  source_pc: mainpc
-  event_id: 46cd4e5aa92c
-  payload_hash: 643e3c4fbffe1100
-  migration_note: legacy_migrated
 - auditor_who: shogun_self
   checks_passed: 0/6
+  event_id: 4680e5669a81
   flags:
   - '判断瑕疵: pc_handshake.resolution_type=agreed のみで 31 件監査完了 と粗く報告'
   - shogun_verify_audit.sh を session 中 1 度も走らせず
   - 85.5% 失敗 (= 59/69) を御問発まで認識せず
   - SecondPC 軍師 report sync 欠落も検出漏れ
   - 本能寺戒め違反、戦国時代なら拙者首が飛ぶ
+  migration_note: legacy_migrated
+  payload_hash: 37211f6fdb72ac5e
   persona_signature: 信長 (= 自己罰)
   remediation_committed: true
   remediation_doc: memory/MEMORY.md 「拙者の判断瑕疵 — pc_handshake 偽完遂」 section
   self_punishment: true
   shogun_verified: false
+  source_pc: mainpc
   target: shogun_self_punishment_2026_05_10_18
   verified_at: '2026-05-10T18:30:01+09:00'
-  source_pc: mainpc
-  event_id: 4680e5669a81
-  payload_hash: 37211f6fdb72ac5e
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_code_audit_001
     audited_at: '2026-05-10T08:40:00+09:00'
@@ -1808,19 +1808,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: cba7ecd98d36
   flags:
   - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 249s > 60s threshold
   - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
     ''test_quartetto_pdf_parser.py'']'
+  migration_note: legacy_migrated
+  payload_hash: dfafb3a105606b56
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_code_audit_001
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: cba7ecd98d36
-  payload_hash: dfafb3a105606b56
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001
     audited_at: '2026-05-10T08:59:10+09:00'
@@ -1836,15 +1836,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 207b6e450e26
   flags:
   - 'invalid commit_hash: 0dcfc6b0'
+  migration_note: legacy_migrated
+  payload_hash: ba5bdf001cfede84
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: 207b6e450e26
-  payload_hash: ba5bdf001cfede84
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001_fix_review
     audited_at: '2026-05-10T09:55:30+09:00'
@@ -1860,15 +1860,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: bc93fdceee85
   flags:
   - 'invalid commit_hash: 5274c03c'
+  migration_note: legacy_migrated
+  payload_hash: 60b74251845c35eb
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001_fix_review
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: bc93fdceee85
-  payload_hash: 60b74251845c35eb
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_002
     audited_at: '2026-05-10T13:12:00+09:00'
@@ -1884,17 +1884,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: d6589f946145
   flags:
   - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9f2e772f6bcca37a
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_002
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: d6589f946145
-  payload_hash: 9f2e772f6bcca37a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_003
     audited_at: '2026-05-10T13:13:00+09:00'
@@ -1910,17 +1910,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 75344c000178
   flags:
   - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: c688a1ef67c3b706
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_003
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: 75344c000178
-  payload_hash: c688a1ef67c3b706
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_004
     audited_at: '2026-05-10T13:14:00+09:00'
@@ -1936,16 +1936,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: f04da14fbdb5
   flags:
   - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 780097d5796f6f25
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_004
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: f04da14fbdb5
-  payload_hash: 780097d5796f6f25
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_005
     audited_at: '2026-05-10T13:15:00+09:00'
@@ -1961,17 +1961,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 76f6c2c55057
   flags:
   - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 63223d861e092be8
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_005
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: 76f6c2c55057
-  payload_hash: 63223d861e092be8
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_006
     audited_at: '2026-05-10T15:40:00+09:00'
@@ -1987,14 +1987,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: d2f5bd75b0df
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 5293515d0cd11927
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_006
   verified_at: '2026-05-10T09:42:37+00:00'
-  source_pc: mainpc
-  event_id: d2f5bd75b0df
-  payload_hash: 5293515d0cd11927
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_007
     audited_at: '2026-05-10T15:41:00+09:00'
@@ -2010,14 +2010,14 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 59633d3fcf23
   flags: []
+  migration_note: legacy_migrated
+  payload_hash: 2dfba2d553d31c93
   shogun_verified: true
+  source_pc: mainpc
   target: kuroda_007
   verified_at: '2026-05-10T09:42:38+00:00'
-  source_pc: mainpc
-  event_id: 59633d3fcf23
-  payload_hash: 2dfba2d553d31c93
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_001
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2033,19 +2033,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 38e75c4d66da
   flags:
   - 'invalid commit_hash: 確認未取得 (commit SHA は report 未記載 — 次 cycle で確認要)'
   - findings too generic (specific=0, generic=1)
   - timestamp drift 33980s > 60s threshold
   - 'some related_files do not exist: [''frontend/src/features/teriha-passport/TerihaPassportPage.tsx'',
     ''frontend/src/features/teriha-passport/components/PassportCover.tsx (既存)'']'
+  migration_note: legacy_migrated
+  payload_hash: 19f9aecfb387f75f
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_001
   verified_at: '2026-05-10T09:42:38+00:00'
-  source_pc: mainpc
-  event_id: 38e75c4d66da
-  payload_hash: 19f9aecfb387f75f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_002
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2061,19 +2061,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 4aeebb7d7687
   flags:
   - 'invalid commit_hash: 45bb97cfe5cb'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 3606s > 60s threshold
   - 'some related_files do not exist: [''backend/utils/patient_format.py'', ''backend/etl/quartetto_pdf_watcher.py'',
     ''backend/routers/patient_checkin.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 76934ab0c696797a
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_002
   verified_at: '2026-05-10T09:42:38+00:00'
-  source_pc: mainpc
-  event_id: 4aeebb7d7687
-  payload_hash: 76934ab0c696797a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_003
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2089,19 +2089,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 2849dc730f60
   flags:
   - 'invalid commit_hash: 確認未取得'
   - findings too generic (specific=0, generic=1)
   - timestamp drift 3598s > 60s threshold
   - 'some related_files do not exist: [''backend/routers/patient_consents.py'', ''frontend/src/patient-app/pages/ConsentForm.tsx'',
     ''supabase/migrations/20260509_patient_consents_schema.sql'', ''queue/reports/ashigaru3_report_supplement_dd061_20260509.yaml'']'
+  migration_note: legacy_migrated
+  payload_hash: 56db27a69cd71d7c
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_003
   verified_at: '2026-05-10T09:42:38+00:00'
-  source_pc: mainpc
-  event_id: 2849dc730f60
-  payload_hash: 56db27a69cd71d7c
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_004
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2117,19 +2117,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: b9b3d8174c0e
   flags:
   - 'invalid commit_hash: 確認未取得'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 55128s > 60s threshold
   - 'some related_files do not exist: [''docs/secondpc_dd044_migration_script_20260509.md'',
     ''Supabase: karte_visits (pxvnhkiqyxkejzivspde)'']'
+  migration_note: legacy_migrated
+  payload_hash: 1148f200c6ccd3bd
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_004
   verified_at: '2026-05-10T09:42:38+00:00'
-  source_pc: mainpc
-  event_id: b9b3d8174c0e
-  payload_hash: 1148f200c6ccd3bd
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_005
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2145,19 +2145,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 3d8ee8ef3dfe
   flags:
   - 'invalid commit_hash: b66ffe0b (patient_chat_messages migration)'
   - findings too generic (specific=0, generic=1)
   - timestamp drift 3578s > 60s threshold
   - 'some related_files do not exist: [''backend/services/patient_chat_engine.py'',
     ''backend/.env'', ''Supabase: patient_chat_messages (pxvnhkiqyxkejzivspde)'']'
+  migration_note: legacy_migrated
+  payload_hash: a26a104738694530
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_005
   verified_at: '2026-05-10T09:42:38+00:00'
-  source_pc: mainpc
-  event_id: 3d8ee8ef3dfe
-  payload_hash: a26a104738694530
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_006
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2173,6 +2173,7 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: bf722cf871d1
   flags:
   - 'invalid commit_hash: 確認未取得'
   - findings too generic (specific=0, generic=1)
@@ -2180,13 +2181,12 @@ verifications:
   - 'some related_files do not exist: [''frontend/src/patient-app/PatientAppLayout.tsx'',
     ''frontend/src/patient-app/pages/PatientHome.tsx'', ''frontend/src/features/specialty-mode/__tests__/
     (4ファイル)'']'
+  migration_note: legacy_migrated
+  payload_hash: 5198684abcdbd56e
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_006
   verified_at: '2026-05-10T09:42:41+00:00'
-  source_pc: mainpc
-  event_id: bf722cf871d1
-  payload_hash: 5198684abcdbd56e
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_007
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2202,19 +2202,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: c89ae6ef1577
   flags:
   - 'log file not found: queue/reports/ashigaru5_report_subtask_007b.yaml'
   - 'invalid commit_hash: b66ffe0b'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''docs/ai_chat_existing_impl_spec.md'', ''Supabase:
     patient_chat_messages'', ''backend/services/patient_chat_engine.py'', ''backend/routers/patient_chat.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 5ba9b917d32ee6b4
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_007
   verified_at: '2026-05-10T09:42:41+00:00'
-  source_pc: mainpc
-  event_id: c89ae6ef1577
-  payload_hash: 5ba9b917d32ee6b4
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_code_audit_001
     audited_at: '2026-05-10T08:40:00+09:00'
@@ -2230,19 +2230,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 34d904650c3b
   flags:
   - 'invalid commit_hash: なし (= ashigaru1 deliverable、commit 確認後追記要)'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 249s > 60s threshold
   - 'some related_files do not exist: [''quartetto_pdf_parser.py'', ''quartetto_pdf_watcher.py'',
     ''test_quartetto_pdf_parser.py'']'
+  migration_note: legacy_migrated
+  payload_hash: dfafb3a105606b56
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_code_audit_001
   verified_at: '2026-05-11T03:16:12+00:00'
-  source_pc: mainpc
-  event_id: 34d904650c3b
-  payload_hash: dfafb3a105606b56
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001
     audited_at: '2026-05-10T08:59:10+09:00'
@@ -2258,15 +2258,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: ec4c82152d5a
   flags:
   - 'invalid commit_hash: 0dcfc6b0'
+  migration_note: legacy_migrated
+  payload_hash: ba5bdf001cfede84
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001
   verified_at: '2026-05-11T03:16:12+00:00'
-  source_pc: mainpc
-  event_id: ec4c82152d5a
-  payload_hash: ba5bdf001cfede84
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001_fix_review
     audited_at: '2026-05-10T09:55:30+09:00'
@@ -2282,15 +2282,15 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 4/6
+  event_id: 42b721f7789d
   flags:
   - 'invalid commit_hash: 5274c03c'
+  migration_note: legacy_migrated
+  payload_hash: 60b74251845c35eb
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001_fix_review
   verified_at: '2026-05-11T03:16:12+00:00'
-  source_pc: mainpc
-  event_id: 42b721f7789d
-  payload_hash: 60b74251845c35eb
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_002
     audited_at: '2026-05-10T13:12:00+09:00'
@@ -2306,17 +2306,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 650b0c7eb4c6
   flags:
   - 'log file not found: logs/codex_audits/kuroda_002_karo_proxy.log'
   - 'invalid commit_hash: 0dcfc6b0'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 9f2e772f6bcca37a
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_002
   verified_at: '2026-05-11T03:16:13+00:00'
-  source_pc: mainpc
-  event_id: 650b0c7eb4c6
-  payload_hash: 9f2e772f6bcca37a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_003
     audited_at: '2026-05-10T13:13:00+09:00'
@@ -2332,17 +2332,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: 063d261dff75
   flags:
   - 'log file not found: logs/codex_audits/kuroda_003_karo_proxy.log'
   - 'invalid commit_hash: 1fdb419e'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: c688a1ef67c3b706
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_003
   verified_at: '2026-05-11T03:16:13+00:00'
-  source_pc: mainpc
-  event_id: 063d261dff75
-  payload_hash: c688a1ef67c3b706
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_004
     audited_at: '2026-05-10T13:14:00+09:00'
@@ -2358,16 +2358,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 2/6
+  event_id: 23835720df36
   flags:
   - 'log file not found: logs/codex_audits/kuroda_004_karo_proxy.log'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 780097d5796f6f25
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_004
   verified_at: '2026-05-11T03:16:13+00:00'
-  source_pc: mainpc
-  event_id: 23835720df36
-  payload_hash: 780097d5796f6f25
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_005
     audited_at: '2026-05-10T13:15:00+09:00'
@@ -2383,17 +2383,17 @@ verifications:
     related_files_exist: true
     timestamp_consistent: false
   checks_passed: 1/6
+  event_id: ceb3d6c43fe0
   flags:
   - 'log file not found: logs/codex_audits/kuroda_005_karo_proxy.log'
   - 'invalid commit_hash: 57272e5'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 63223d861e092be8
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_005
   verified_at: '2026-05-11T03:16:13+00:00'
-  source_pc: mainpc
-  event_id: ceb3d6c43fe0
-  payload_hash: 63223d861e092be8
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: kuroda_001_cycle4_review
     audited_at: '2026-05-10T21:02:28+09:00'
@@ -2409,16 +2409,16 @@ verifications:
     related_files_exist: true
     timestamp_consistent: true
   checks_passed: 3/6
+  event_id: 5c0a6fe962f9
   flags:
   - 'invalid commit_hash: 37c8897d'
   - findings too generic (specific=0, generic=0)
+  migration_note: legacy_migrated
+  payload_hash: 52663b4ac6268686
   shogun_verified: false
+  source_pc: mainpc
   target: kuroda_001_cycle4_review
   verified_at: '2026-05-11T03:16:14+00:00'
-  source_pc: mainpc
-  event_id: 5c0a6fe962f9
-  payload_hash: 52663b4ac6268686
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_001
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2434,19 +2434,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 9989fadf52dc
   flags:
   - 'invalid commit_hash: 確認未取得 (commit SHA は report 未記載 — 次 cycle で確認要)'
   - findings too generic (specific=0, generic=1)
   - timestamp drift 128322s > 60s threshold
   - 'some related_files do not exist: [''frontend/src/features/teriha-passport/TerihaPassportPage.tsx'',
     ''frontend/src/features/teriha-passport/components/PassportCover.tsx (既存)'']'
+  migration_note: legacy_migrated
+  payload_hash: 532c3bd6f0143da7
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_001
   verified_at: '2026-05-11T03:16:17+00:00'
-  source_pc: mainpc
-  event_id: 9989fadf52dc
-  payload_hash: 532c3bd6f0143da7
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_002
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2462,19 +2462,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 77600553e7da
   flags:
   - 'invalid commit_hash: 45bb97cfe5cb'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 3606s > 60s threshold
   - 'some related_files do not exist: [''backend/utils/patient_format.py'', ''backend/etl/quartetto_pdf_watcher.py'',
     ''backend/routers/patient_checkin.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 76934ab0c696797a
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_002
   verified_at: '2026-05-11T03:16:17+00:00'
-  source_pc: mainpc
-  event_id: 77600553e7da
-  payload_hash: 76934ab0c696797a
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_003
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2490,19 +2490,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 4dc72a162880
   flags:
   - 'invalid commit_hash: 確認未取得'
   - findings too generic (specific=0, generic=1)
   - timestamp drift 3598s > 60s threshold
   - 'some related_files do not exist: [''backend/routers/patient_consents.py'', ''frontend/src/patient-app/pages/ConsentForm.tsx'',
     ''supabase/migrations/20260509_patient_consents_schema.sql'', ''queue/reports/ashigaru3_report_supplement_dd061_20260509.yaml'']'
+  migration_note: legacy_migrated
+  payload_hash: 56db27a69cd71d7c
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_003
   verified_at: '2026-05-11T03:16:18+00:00'
-  source_pc: mainpc
-  event_id: 4dc72a162880
-  payload_hash: 56db27a69cd71d7c
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_004
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2518,19 +2518,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 6dc113fa10c0
   flags:
   - 'invalid commit_hash: 確認未取得'
   - findings too generic (specific=0, generic=0)
   - timestamp drift 75494s > 60s threshold
   - 'some related_files do not exist: [''docs/secondpc_dd044_migration_script_20260509.md'',
     ''Supabase: karte_visits (pxvnhkiqyxkejzivspde)'']'
+  migration_note: legacy_migrated
+  payload_hash: e508b76f2f516afa
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_004
   verified_at: '2026-05-11T03:16:18+00:00'
-  source_pc: mainpc
-  event_id: 6dc113fa10c0
-  payload_hash: e508b76f2f516afa
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_005
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2546,19 +2546,19 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: e3ee0f6d737a
   flags:
   - 'invalid commit_hash: b66ffe0b (patient_chat_messages migration)'
   - findings too generic (specific=0, generic=1)
   - timestamp drift 3578s > 60s threshold
   - 'some related_files do not exist: [''backend/services/patient_chat_engine.py'',
     ''backend/.env'', ''Supabase: patient_chat_messages (pxvnhkiqyxkejzivspde)'']'
+  migration_note: legacy_migrated
+  payload_hash: a26a104738694530
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_005
   verified_at: '2026-05-11T03:16:18+00:00'
-  source_pc: mainpc
-  event_id: e3ee0f6d737a
-  payload_hash: a26a104738694530
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_006
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2574,6 +2574,7 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: fc717cca282b
   flags:
   - 'invalid commit_hash: 確認未取得'
   - findings too generic (specific=0, generic=1)
@@ -2581,13 +2582,12 @@ verifications:
   - 'some related_files do not exist: [''frontend/src/patient-app/PatientAppLayout.tsx'',
     ''frontend/src/patient-app/pages/PatientHome.tsx'', ''frontend/src/features/specialty-mode/__tests__/
     (4ファイル)'']'
+  migration_note: legacy_migrated
+  payload_hash: fec0e94687ba283f
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_006
   verified_at: '2026-05-11T03:16:19+00:00'
-  source_pc: mainpc
-  event_id: fc717cca282b
-  payload_hash: fec0e94687ba283f
-  migration_note: legacy_migrated
 - audit_entry_excerpt:
     audit_id: naomasa_007
     audited_at: '2026-05-10T00:35:00+09:00'
@@ -2603,16 +2603,66 @@ verifications:
     related_files_exist: false
     timestamp_consistent: false
   checks_passed: 0/6
+  event_id: 316b18991efe
   flags:
   - 'log file not found: queue/reports/ashigaru5_report_subtask_007b.yaml'
   - 'invalid commit_hash: b66ffe0b'
   - findings too generic (specific=0, generic=0)
   - 'some related_files do not exist: [''docs/ai_chat_existing_impl_spec.md'', ''Supabase:
     patient_chat_messages'', ''backend/services/patient_chat_engine.py'', ''backend/routers/patient_chat.py'']'
+  migration_note: legacy_migrated
+  payload_hash: 5ba9b917d32ee6b4
   shogun_verified: false
+  source_pc: mainpc
   target: naomasa_007
   verified_at: '2026-05-11T03:16:19+00:00'
-  source_pc: mainpc
-  event_id: 316b18991efe
-  payload_hash: 5ba9b917d32ee6b4
-  migration_note: legacy_migrated
+- audit_entry_excerpt:
+    audit_id: naomasa_new_001
+    audited_at: '2026-05-11T03:16:54+09:00'
+    commit_hash: b66ffe0b
+    target_id: zero_wait_accounting_kanban
+    verdict: fail
+  auditor_who: index
+  checks:
+    codex_log_exists: false
+    commit_hash_valid: false
+    findings_specific: false
+    gemini_log_exists: false
+    related_files_exist: false
+    timestamp_consistent: false
+  checks_passed: 0/6
+  flags:
+  - 'invalid commit_hash: b66ffe0b'
+  - no findings (但し true zero-issue case may be valid)
+  - timestamp drift 32673s > 60s threshold
+  - 'some related_files do not exist: [''/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py'',
+    ''/mnt/c/Projects/hakudokai-dev/backend/main.py'', ''/mnt/c/Projects/hakudokai-dev/backend/tests/test_patient_checkin.py'',
+    ''/mnt/c/Projects/hakudokai-dev/backend/tests/test_temporary_patient.py'']'
+  shogun_verified: false
+  target: naomasa_new_001
+  verified_at: '2026-05-11T03:41:11+00:00'
+- audit_entry_excerpt:
+    audit_id: naomasa_new_001
+    audited_at: '2026-05-11T03:16:54+09:00'
+    commit_hash: b66ffe0b
+    target_id: zero_wait_accounting_kanban
+    verdict: fail
+  auditor_who: index
+  checks:
+    codex_log_exists: false
+    commit_hash_valid: false
+    findings_specific: false
+    gemini_log_exists: false
+    related_files_exist: false
+    timestamp_consistent: false
+  checks_passed: 0/6
+  flags:
+  - 'invalid commit_hash: b66ffe0b'
+  - no findings (但し true zero-issue case may be valid)
+  - timestamp drift 32673s > 60s threshold
+  - 'some related_files do not exist: [''/mnt/c/Projects/hakudokai-dev/backend/api/kanban.py'',
+    ''/mnt/c/Projects/hakudokai-dev/backend/main.py'', ''/mnt/c/Projects/hakudokai-dev/backend/tests/test_patient_checkin.py'',
+    ''/mnt/c/Projects/hakudokai-dev/backend/tests/test_temporary_patient.py'']'
+  shogun_verified: false
+  target: naomasa_new_001
+  verified_at: '2026-05-11T03:41:29+00:00'
