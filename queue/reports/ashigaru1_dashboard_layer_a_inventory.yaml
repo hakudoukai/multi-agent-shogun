@@ -1,0 +1,134 @@
+inventory_id: ashigaru1_dashboard_layer_a_inventory_20260511
+inventoried_at: "2026-05-11T22:15:00+09:00"
+inventoried_by: ashigaru1
+scope: dashboard cmd_020 Layer A 構想層 (= DD-054 5 階層 + 10 柱 + 蜘蛛の糸 anchor) 既実装 inventory
+repo: multi-agent-shogun-newbuild
+parent_task: subtask_cmd020_dashboard_layer_a_kousou_render
+parent_cmd: cmd_020
+
+mc_anti_dup_check:
+  status: unknown
+  reason: |
+    MC regenerate_dashboard.py 等 generator 具体 artifact は本 repo 内に不在 (= 直政
+    pre_audit msg_20260511_220304 で検出)。家康殿 + 秀吉殿合議結果未着、本 task では
+    SC docs 起案単独進行とし、MC 統合 interface は後段別 task で verify する。
+  verify_basis: "find multi-agent-shogun-newbuild repo -name 'regenerate_dashboard*' → 0 件"
+  followup: "合議結果着後 別 task で MC 側 generator artifact (= 既存 or 新規) と
+    照合し、Layer A render 部分の二重実装可否を再確認"
+
+layer_a_scope_components:
+  - component_id: dashboard_design_v01_section2
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.1.md
+    section_anchor: "§2 6 Layer 階層設計 (= 大項目 → 中項目 → 小項目 drill-down) / Layer A 構想層"
+    line_range_approx: "14-27"
+    key_concepts:
+      - "5 階層 (= 第 0 層 憲法 / 第 1 層 診療コア / 第 2 層 周辺診療 / 第 3 層 患者接点 / 第 4 層 AI 統合 / 第 5 層 事業推進)"
+      - "10 柱 (= 画像 AI / 歯の状態 DB / 治療計画ナビ / 患者アプリ + AI チャット / AI 副院長 / 処置セット / リアルタイム会計 / 蜘蛛の糸 / AI 副院長+AI 事務長 / AI 副社長)"
+      - "DD-054 anchor (= 5 階層 + 10 柱 source)"
+      - "蜘蛛の糸 (= DD-020 法令 6 本目 + 8,000+ records、Layer D へ接続)"
+    owner: 信長 (= MC shogun、v0.1 起草 2026-05-11 19:25)
+    integration_status: integrated
+    role_in_layer_a: 主 source (= 5 階層 + 10 柱 + 蜘蛛の糸 原本)
+    mc_dup_check_note: "MC artifact 不在故 unknown、合議結果着後 verify"
+
+  - component_id: dashboard_design_v02_section2
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§2 6 Layer 階層設計 (= v0.1 retain、本 section 変更なし)"
+    line_range_approx: "23-26"
+    key_concepts:
+      - "v0.1 §2 全 retain (= 5 階層 + 10 柱 構造維持)"
+      - "黒田 audit 7 修正点は §3 以降に反映 (= Layer A 自体は無変更)"
+    owner: 信長 (= v0.2 起草 2026-05-11 19:42、黒田 audit 反映)
+    integration_status: integrated
+    role_in_layer_a: retain reference (= v0.1 §2 source pointer)
+    mc_dup_check_note: "v0.1 と同 source 参照のため独立 dup 検査対象外"
+
+  - component_id: dd054_5kaisou_10pillar_original
+    component_type: design_doc
+    file_path: external (= DentalBI 蜘蛛の糸 project 配下、本 repo 外)
+    section_anchor: "DD-054 (統合構想 v1.1 等、project_documents)"
+    key_concepts:
+      - "5 階層 / 10 柱 原典 (= DentalBI 本体 docs)"
+      - "本 repo 内に正本 .md なし、参照のみ (= grep DD-054 docs/ → dashboard_design_v0.1.md のみ)"
+    owner: 信長 (= cmd_020 起案前から既存、DentalBI project_documents 配下)
+    integration_status: orphan
+    role_in_layer_a: 原典 source (= 本 repo 内 reference のみ、Supabase project_documents で取得想定)
+    mc_dup_check_note: "MC 側 generator が DD-054 全文を Supabase fetch するなら本 task render は
+      anchor 名 + 短縮要約のみ、duplication 回避"
+
+  - component_id: kumonoito_layer_d_anchor
+    component_type: existing_markdown
+    file_path: docs/dashboard_design_v0.1.md
+    section_anchor: "§2 Layer D 頭脳層 (= 蜘蛛の糸 + 法令蓄積) / §4.2 階層 drill-down UI mermaid"
+    line_range_approx: "46-53, 127-132"
+    key_concepts:
+      - "蜘蛛の糸 = DD-020 法令 6 本目 + 8,000+ records"
+      - "Layer A から Layer D へ接続 anchor (= cross-layer reference)"
+      - "mermaid 内 'C1 -.蜘蛛の糸.-> D' 接続線 (= v0.2 §4.2)"
+    owner: 信長
+    integration_status: integrated
+    role_in_layer_a: cross-layer anchor (= Layer A 内で蜘蛛の糸 reference 提示、本体 Layer D)
+    mc_dup_check_note: "MC artifact 不在、Layer A render では reference anchor のみ提示、本体は Layer D 担当別 task"
+
+  - component_id: three_layer_design_md
+    component_type: existing_markdown
+    file_path: docs/three_layer_design.md
+    section_anchor: "L2 / L3 関連 DD reference 記述"
+    line_range_approx: "105 周辺"
+    key_concepts:
+      - "DD-* business decision の正本 doc は別 project (= DentalBI / 蜘蛛の糸) 内"
+      - "本 repo は config / instructions / shim 内 reference のみ"
+    owner: 既存 (= cmd_020 以前)
+    integration_status: integrated
+    role_in_layer_a: 補助 context (= DD-* 正本所在の根拠、本 task render では unused)
+    mc_dup_check_note: "Layer A render に直接寄与せず、duplication 検査対象外"
+
+related_but_out_of_scope:
+  - component_id: dashboard_md_root
+    file_path: dashboard.md
+    reason: "delivery_conditions #1 で本 task は dashboard.md 直接編集禁。読取参照のみで触れない"
+  - component_id: layer_b_to_f_design_sections
+    file_path: docs/dashboard_design_v0.1.md §2 Layer B-F + v0.2 §3-§8
+    reason: "本 task は Layer A 構想層単独 render、Layer B-F は後段別 task"
+  - component_id: hakudokai_dev_repo
+    file_path: /mnt/c/Projects/hakudokai-dev/
+    reason: "delivery_conditions #2 で本 task は multi-agent-shogun-newbuild repo only、関与禁"
+
+artifacts_to_create_by_this_task:
+  - docs/dashboard_layer_a_kousou.md
+  - scripts/test/test_dashboard_layer_a_static_contract.py
+  - queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_report.yaml
+  - queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_pytest.log
+  - queue/reports/ashigaru1_dashboard_layer_a_inventory.yaml (= 本 yaml)
+
+gap_analysis:
+  - id: gap_1
+    description: "Layer A 構想層単独 render component が未起案 (= v0.1/v0.2 §2 は 6 layer 横断 doc 内 section、独立 sub-section markdown が不在)"
+    resolution_in_this_task: "docs/dashboard_layer_a_kousou.md で 5 階層 + 10 柱 + 蜘蛛の糸 anchor + DD-054 anchor の独立 markdown を新規起案"
+
+  - id: gap_2
+    description: "mermaid graph TD で Layer A 内構造 (= 第 0-5 層 → 10 柱 → 蜘蛛の糸 anchor) を可視化する図が未起案"
+    resolution_in_this_task: "dashboard_layer_a_kousou.md 内に graph TD block を埋込、native markdown + mermaid text-based"
+
+  - id: gap_3
+    description: "Layer A 構造に対する静的 source-contract test が不在"
+    resolution_in_this_task: "scripts/test/test_dashboard_layer_a_static_contract.py で 5 test、markdown grep + mermaid syntax check"
+
+acceptance_criteria_alignment:
+  AC0: 本 yaml 起案 (= 完了 on write)
+  AC1: design doc 正本 read 完遂 evidence = 本 yaml 内 dashboard_design_v01_section2 / v02_section2 entry
+  AC2: docs/dashboard_layer_a_kousou.md 新規起案 → 次 step
+  AC3: MC 統合 interface は本 task 範囲外 (= mc_anti_dup_check + followup field で明示)
+  AC4: 5 static test → 次 step
+  AC5: bounded F007 push → 完遂前 陛下御差配仰ぎ
+  AC6: report + log + 完遂 ack → 最終 step
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery conditions 5 件遵守 (= dashboard.md 直接編集禁 / hakudokai-dev 関与禁 / MC 統合 claim 禁 / SKIP>0 未完了 / worktree 既存 stop)
+  - native markdown + mermaid text-based (= 黒田 #4 self-contained 整合)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 (= ashigaru1 第 1 弾実証者本人 retain)
+  - design doc 正本 read 徹底 (= 8 度目 + 9 度目 fail 教訓)
