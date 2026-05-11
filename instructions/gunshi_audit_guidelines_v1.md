@@ -118,6 +118,32 @@
 - report schema: `verdict` / `evidence_state` / `completion_gate` / `shogun_verified` / `log_path` / `commit_hash` の整合。
 - memory sync: shared memory block のみ同期、raw secret/PII 不同期、更新元・更新時刻・適用先 instruction の追跡可能性。
 
+### 1-3c. Conditional 11th lens: cross_pc_repo_check
+
+`11_cross_pc_repo_check: pass | concerns | fail`
+
+この第十一観点は `target_path` / `deliverable` / task 本文に PC 固有 repo path が含まれる監査で必須とする。既存 `10_ecosystem_coherence` は report/schema/memory の流通整合を扱い、本 lens は「割当 PC から対象 repo/path を物理的に読めるか」を扱う。
+
+適用条件:
+
+- `/mnt/c/Users/User/Documents/DentalBI/` など PC 専属 path を含む task。
+- `/mnt/c/Projects/hakudokai-dev/` など shared repo でも、担当 PC で `stat` / `git status` 証跡が必要な task。
+- cross-PC reassignment、repo sync、blocked_env、completion gate を扱う task。
+
+評価基準:
+
+- `pass`: 全 target path が SC-only / MC-only / Shared / unknown に分類され、担当 PC で `ls` / `stat` / `git -C ... status` の機械証跡があり、assignment_allowed が論理的に成立する。
+- `concerns`: shared repo として作業可能だが、push/pull 後の対向 PC 享受 verify path、または新規 file の親 directory preflight 証跡が不足している。
+- `fail`: 担当 PC から不可視の PC 専属 path が割り当てられている、path 分類が無い、または blocked_env を completion_gate=open と誤判定している。
+
+必須確認項目:
+
+- target_path prefix mapping: SC-only / MC-only / Shared / unknown。
+- local access: `test -e` / `stat` / nearest existing parent for new files。
+- git evidence: repo root, branch, dirty state, commit/push responsibility。
+- escalation: inaccessible path は Karo inbox 報告 + 正しい PC へ reassignment。
+- completion gate: repo inaccessible のまま audited_done に昇格させない。
+
 ### 1-4a. Domain 別役割分担 (v1.1 = 陛下御差配 2026-05-10 08:30)
 
 **「プログラム監査は CODEX のみで精密に行い、家老の起草とか計画案の監査専門に Gemini を使ったらどうかな?」**
@@ -203,6 +229,8 @@ deliverable 毎に **domain 判定** + 軍師 routing:
     9_documentation: pass | concerns | fail
     # cross-PC / report-schema / memory-sync 監査では必須。通常 deliverable では optional。
     10_ecosystem_coherence: pass | concerns | fail
+    # PC-specific repo/path を含む監査では必須。
+    11_cross_pc_repo_check: pass | concerns | fail
   
   # 統合 verdict (= 9 観点 + 必須化された 10th lens の最低値)
   verdict: pass | pass_with_concerns | fail
