@@ -1,0 +1,226 @@
+task_id: subtask_cmd004_qr_kanban_impl_base
+parent_cmd: cmd_004
+bloom_level: L3
+agent: ashigaru1
+reported_at: "2026-05-11T16:55:00+09:00"
+
+verdict: pass
+evidence_state: complete
+completion_gate: open
+commit_hash_dev: "6345bfe1"  # /mnt/c/Projects/hakudokai-dev master, push 保留 (F007 陛下御差配仰ぎ)
+commit_hash_shogun: pending   # newbuild repo main, この report yaml + spec.md + .gitignore + pytest.log を含む commit を本 task 末尾で作成、push 保留 (F007)
+log_path: "queue/reports/ashigaru1_cmd004_qr_kanban_pytest.log"
+
+scope_resolution: |
+  本 task は当初「QR スキャン UI 新規実装 + decode endpoint 新規 + kanban カード遷移 logic 新規」を想定 (= 元 AC1-AC2)。
+  preflight + AC0 inventory で **既実装 95%+ 検出** (= POST /api/patient-checkin/qr / PatientCheckin.tsx 等)、
+  二重実装回避のため karo Option α 採択 (msg_164541) → AC0=spec 化、AC1=gap 分析、AC2=test 拡充 に範囲調整。
+  陛下根本治療原則 (msg_164625) 下、局所 hack 否定、構造的 gap 列挙 + 永続 spec 化で根本品質を担保。
+
+target_repo_dev: "/mnt/c/Projects/hakudokai-dev"
+target_branch_dev: "master"
+target_files_changed_dev:
+  - "backend/tests/test_patient_checkin.py"  # +64 lines, 4 new tests (G-T1 / G-T3 x2 / G-T4)
+
+target_repo_shogun: "/home/hakudokai/projects/multi-agent-shogun-newbuild"
+target_branch_shogun: "main"
+target_files_changed_shogun:
+  - "docs/cmd004_qr_kanban_spec.md"                                          # new file 約 15.4 KB、§0-§7 統合 spec
+  - ".gitignore"                                                              # +3 whitelist entries (spec / pytest log / this yaml)
+  - "queue/reports/ashigaru1_cmd004_qr_kanban_impl_base_report.yaml"          # this file
+  - "queue/reports/ashigaru1_cmd004_qr_kanban_pytest.log"                     # pytest 36 passed 出力
+  - "queue/inbox/ashigaru1.yaml"                                              # read=true mark (msg_163909/164158/164541/164625 等)
+
+acceptance_criteria_status:
+  - id: AC0
+    title: "docs/cmd004_qr_kanban_spec.md 起案 (7 file inventory + 統合 spec)"
+    status: PASS
+    evidence: |
+      docs/cmd004_qr_kanban_spec.md §1 全節:
+        §1-1 flow 全景 (= 受付 QR 表示 → 患者スキャン → POST → token 検証 → DB → kanban + passport)
+        §1-2 Backend 層 inventory:
+          - backend/main.py:380 include_router(patient_checkin_router)
+          - backend/main.py:273 include_router(kanban_router)
+          - backend/routers/patient_checkin.py:53-126 POST /api/patient-checkin/qr
+          - backend/routers/patient_checkin.py:196-205 GET /qr-token/{clinic_id}
+          - backend/routers/patient_checkin.py:208-222 GET /today/{clinic_id}
+          - backend/routers/patient_checkin.py:225-242 PUT /{id}/status
+          - backend/routers/patient_checkin.py:40-44 _generate_qr_token (SHA256[:16])
+          - backend/routers/patient_checkin.py:47-50 _validate_qr_token
+          - backend/utils/patient_format.py:21-31 _normalize_patient_id
+          - backend/api/kanban.py:1246-1338 register_arrived_card (部分 UNIQUE 索引 + INSERT OR IGNORE)
+          - backend/routers/patient_checkin.py:153-193 _safe_register_passport_xp
+        §1-3 Frontend 層 inventory:
+          - frontend/src/pages/reception/CheckinQRDisplay.tsx (受付側、30 分自動更新)
+          - frontend/src/patient-app/pages/PatientCheckin.tsx (319 行、BarcodeDetector + manual fallback)
+          - frontend/src/services/patientAppApi.ts:155-165 qrCheckin
+        §1-4 Test 層 inventory: 既 32 test 7 クラス (TestQrToken / TestQrCheckin 等)
+        §1-5 DB schema (handover_notes + idx_handover_active_per_day UNIQUE PARTIAL)
+
+  - id: AC1
+    title: "gap 分析 — 構造的根本治療観点で 14 gap 列挙 + severity 評価"
+    status: PASS
+    evidence: |
+      docs/cmd004_qr_kanban_spec.md §2 gap table:
+        High severity (2): G-S1 (token 平文生成、secret 不含) / G-L1 (監査ログ retention 規定無し)
+        Mid severity (6): G-S2 (1 日 token 期限、リプレイ余地) / G-S3 (rate limit 無し) /
+                          G-L2 (PII mask 手動依存) / G-U1 (BarcodeDetector 非対応 fallback 未 test) /
+                          G-U3 (高齢者向け入力補助無し) / G-D1 (SQLite vs Supabase 二重持ち整合)
+        Low severity (6): G-T1〜G-T4 (test 拡充範囲) / G-U2 / G-A1
+      §2-2 根本治療優先順位: High 系は別 task 切出、本 task は G-T1/G-T3/G-T4 を test で吸収。
+      §6 陛下根本治療原則 self-check 表 (5 原則すべて遵守確認)。
+
+  - id: AC2
+    title: "test 拡充 — backend/tests/test_patient_checkin.py に 4 test 追加"
+    status: PASS
+    evidence: |
+      backend/tests/test_patient_checkin.py L225-L287 (= +64 行、TestQrCheckin クラス内):
+        test_checkin_rejects_clinic_id_mismatch_token   (G-T1: 別 clinic token → 400)
+        test_checkin_rejects_empty_token                 (G-T3: 空 token → 400)
+        test_checkin_rejects_oversized_token             (G-T3: 1024 文字 → 400)
+        test_checkin_normalizes_patient_id_with_surrounding_whitespace (G-T4: 前後空白 strip)
+      全 4 test とも既 fixture (client / mock_sb / kanban_mock) を流用、副作用なし。
+      dev commit: 6345bfe1 test(patient-checkin): cmd_004 機能① QR + kanban gap 治療 4 test 追加
+
+  - id: AC3
+    title: "pytest + integration test SKIP=0 / FAIL=0"
+    status: PASS
+    evidence: |
+      実行 cmd: cd /mnt/c/Projects/hakudokai-dev && python3 -m pytest backend/tests/test_patient_checkin.py -v
+      結果: 36 passed in 5.99s (= 既存 32 + 新規 4)、SKIP=0 / FAIL=0 / 1 warning (= PyPDF2 deprecation、本 task 無関係)
+      log: queue/reports/ashigaru1_cmd004_qr_kanban_pytest.log (50 lines、本 commit 同梱)
+
+  - id: AC4
+    title: "queue/reports/ashigaru1_cmd004_qr_kanban_impl_base_report.yaml 起案 + gap list + β 候補列挙"
+    status: PASS
+    evidence: |
+      本 file (= queue/reports/ashigaru1_cmd004_qr_kanban_impl_base_report.yaml) 起案、
+      verdict / commit_hash_dev=6345bfe1 / log_path / findings / gap_summary / beta_candidates 記録、
+      karo inbox 報告予定。
+
+findings:
+  pivotal_finding:
+    - "**機能① 既実装 95%+**: POST /api/patient-checkin/qr / register_arrived_card / PatientCheckin.tsx 等が完成済 (= 元 task の新規実装は二重実装になる)。karo に msg_164436 で報告 → Option α (= spec 化 + gap 分析 + test 拡充) 採択 (msg_164541)。"
+  gap_summary:
+    high:
+      - "G-S1: _generate_qr_token は patient_checkin.py:40-44 で SHA256('dentalbi-checkin-{clinic_id}-{date}')[:16]、secret 不含。任意者が clinic_id だけで token を再現可能、認証として脆弱。"
+      - "G-L1: patient_checkin_logs / handover_notes の保存期間 + 暗号化規定が DB schema に無く、医療情報セキュリティガイドライン 6.0 (最低 5 年) 準拠不明。"
+    mid:
+      - "G-S2: token 有効期間 = 当日全日 (= 日付 + clinic_id のみ)、リプレイ攻撃に脆弱。short-window expire (e.g. 30 分 rolling、TOTP 様) で構造改善要。"
+      - "G-S3: POST /api/patient-checkin/qr に rate limit 無し、DoS / brute force 余地。"
+      - "G-L2: patient_no log mask は KGL1 fix で個別実装、logging filter で global 強制機構なし。"
+      - "G-U1: BarcodeDetector 非対応 (Safari iOS < 17 等) 時の fallback 動線 frontend test 無し。"
+      - "G-U3: 高齢者向け大文字 token 手動入力時の入力補助 (O/0 混同字対策、空白/小文字許容) 無し。"
+      - "G-D1: SQLite (kanban) と Supabase (patient_checkin_logs / patient_app_notifications) の二重持ち、整合保証無し。"
+    low:
+      - "G-T1〜G-T4: test 拡充範囲 (本 task AC2 で吸収済)。"
+      - "G-U2: カメラ permission 拒否時の再申請動線無し。"
+      - "G-A1: 既受付時の補完登録 (= qr_checkin:73-87) の理由口承、spec 永続化未済 (本 spec で永続化済)。"
+  design_decisions:
+    - "本 task の test 追加は既存 fixture (client / mock_sb / kanban_mock) 流用、新 fixture 追加なし。副作用ゼロ、回帰 risk 最小。"
+    - "spec doc は新規 file (cmd004_qr_kanban_spec.md)、既存 spec doc (kartetto/ai_chat/dinosaur_100enemies/moushi_engine/push_vapid_management) と独立、衝突無し。"
+    - "新規 endpoint を起案しなかった理由 = 既 /api/patient-checkin/qr が機能要件をほぼ充足 (= Option α 根拠)、karo 御差配整合。"
+  qc_concerns:
+    - "TZ 境界 (= 23:59:59 → 00:00:01 JST 跨ぎ) の token 拒否 test (G-T2) は _generate_qr_token monkey patch が必要で副作用大、本 task scope out、β8 として別 task 候補化済。"
+    - "frontend test (jest / vitest) は backend pytest と別 stack、AC2 範囲外。BarcodeDetector 非対応 fallback test (G-U1 → β9) は別 task 候補化。"
+  preflight_gate:
+    - "/mnt/c/Projects/hakudokai-dev/ SC WSL access 可 (= ls + find + grep + read + git add/commit/diff 全動作確認)、cmd_016 ashigaru5 実績 + 直前 dinosaur_100enemies_spec 実績準拠。"
+  hakudokai_dev_repo_state_notice:
+    - "hakudokai-dev は 109 行の git status (= 別 ashigaru の進行中 staged/unstaged 多数、celebration_api / push_notifications / TerihaPassportPage 等)、私の commit 6345bfe1 は path filter `git commit -o backend/tests/test_patient_checkin.py` で他作業を一切混入させず単独 commit 済。+64 insertions 完全一致確認 (diff stat)。"
+  forbidden_actions_compliance:
+    - "F001 (推測禁): 全 inventory は file:line 引用、推測値なし。spec §1 / report acceptance_criteria_status の evidence 欄すべて機械 evidence。"
+    - "F007 (push 前陛下御差配仰ぐ): dev repo 6345bfe1 / shogun repo (本 commit 予定) いずれも local のみ、push 未実行。"
+    - "本能寺戒め (= 機械 evidence のみ評価): patient_checkin.py 243 行 + kanban.py register_arrived_card / register_payment_completed 関連 + test_patient_checkin.py 774 行を Read 経由で実体把握、PatientCheckin.tsx 319 行も Read。frontend BarcodeDetector 非対応 case は test 不在を確認 (= grep ヒット 0)。"
+    - "D-tier 破壊操作なし: 既 file への append のみ (test_patient_checkin.py に test class 内追加)、削除 / 上書き なし。"
+    - "二重実装回避: 既 endpoint 検出後、新規 endpoint 起案を停止 → karo 御差配仰ぎ → Option α 採択経路を選択。これは根本治療原則 (2) 構造改善優先と整合。"
+
+skill_candidate: |
+  本 task 中で次のような skill 候補に当たり機会あり (= 陛下御覧後に skill 化判断仰ぎ):
+  「既実装 vs 新規 task 重複検出 skill」
+    - 入力: task YAML の AC 文 + target codebase path
+    - 動作: grep + endpoint inventory + symbol map で重複機能を自動検出、severity 評価
+    - 出力: 重複 file:line list + 範囲再定義案 (= spec 化 / gap 分析 / test 拡充 / 範囲縮小)
+    - 適用先: 大規模 monorepo で同一機能の独立実装が散在しやすい状況 (= 本件のような flow 系機能)
+  ただし karo の preflight check + msg_164541 御差配で本件は解決、skill 化必要性は陛下御任せ。
+
+beta_candidates_for_truly_remaining_features:
+  - id: β1
+    title: "clinic 毎 secret + HMAC 化"
+    treats_gap: G-S1
+    scale: L3 backend
+    motivation: "security backbone、認証が clinic_id のみで突破可能な現状の根本治癒。"
+  - id: β2
+    title: "Token 短期 expire (TOTP 様、30 分 rolling)"
+    treats_gap: G-S2
+    scale: L3 backend + frontend
+    motivation: "リプレイ攻撃対策、frontend 既 30 分自動更新と整合。"
+  - id: β3
+    title: "Rate limit middleware"
+    treats_gap: G-S3
+    scale: L2 infra
+    motivation: "DoS / brute force 対策。FastAPI dependency + redis 等。"
+  - id: β4
+    title: "検診カード対応 (= card_type 拡張)"
+    treats_gap: (新機能、gap 外)
+    scale: L3 backend + spec
+    motivation: "自費/健診患者の受付対応。"
+  - id: β5
+    title: "子供用 QR モード (保護者親 QR で複数子受付)"
+    treats_gap: (新機能、gap 外)
+    scale: L4 backend + frontend + 法令
+    motivation: "小児歯科の親同伴 UX 改善、cmd_004 主軸機能。"
+  - id: β6
+    title: "家族同時 QR (1 QR で 2-4 名同時受付)"
+    treats_gap: (新機能、gap 外)
+    scale: L4 backend + frontend
+    motivation: "同伴家族短縮、受付混雑緩和。"
+  - id: β7
+    title: "NFC bridge (診察券 NFC + QR 両対応)"
+    treats_gap: (新機能、gap 外)
+    scale: L4 hardware + frontend
+    motivation: "高齢者向け非カメラ動線、cmd_004 UX 拡充。"
+  - id: β8
+    title: "TZ 境界完全 test"
+    treats_gap: G-T2
+    scale: L2 test
+    motivation: "12 月末 / 1 月始の運用安全、_generate_qr_token monkey patch 整理。"
+  - id: β9
+    title: "BarcodeDetector 非対応 fallback E2E test"
+    treats_gap: G-U1
+    scale: L2 frontend test
+    motivation: "Safari iOS 旧版対応、PatientCheckin.tsx:93-98 path 検証。"
+  - id: β10
+    title: "高齢者向け入力補助 + 混同字対策"
+    treats_gap: G-U3
+    scale: L2 frontend
+    motivation: "UX backbone、token 手動入力の信頼性向上。"
+  - id: β11
+    title: "patient_no 自動 mask logging filter"
+    treats_gap: G-L2
+    scale: L2 backend infra
+    motivation: "法令準拠強制、KGL1 fix の global 化。"
+  - id: β12
+    title: "DB 戦略 spec (SQLite vs Supabase 整合)"
+    treats_gap: G-D1
+    scale: L3 spec
+    motivation: "データ整合 backbone、cmd_004 payment_flow_spec と統合検討要。"
+  - id: β13
+    title: "監査ログ retention policy + 暗号化"
+    treats_gap: G-L1
+    scale: L3 backend + spec
+    motivation: "医療情報セキュリティガイドライン 6.0 (最低 5 年) 準拠、cmd_004 全体に波及。"
+
+next_actions_requested:
+  - "陛下御差配: dev repo 6345bfe1 + shogun repo (本 commit) の push 可否御判断仰ぎ。"
+  - "家老: β1〜β3 (security backbone)、β8〜β9 (test 拡充)、β12〜β13 (法令 backbone) を別 task 化候補として 軍師 review 推奨。"
+  - "家老: hakudokai-dev 109 行 dirty 状態を家康 / 軍師 経由で点検仰ぐ (= 他 ashigaru の進行中作業の整理状況確認)。"
+
+pytest_log_inline: |
+  cd /mnt/c/Projects/hakudokai-dev && python3 -m pytest backend/tests/test_patient_checkin.py -v
+  ============================== 36 passed, 1 warning in 5.99s ==============================
+  (内訳: 既存 32 + 新規 4、TestQrCheckin に
+   test_checkin_rejects_clinic_id_mismatch_token /
+   test_checkin_rejects_empty_token /
+   test_checkin_rejects_oversized_token /
+   test_checkin_normalizes_patient_id_with_surrounding_whitespace 追加。
+   SKIP=0 / FAIL=0、warning は PyPDF2 deprecation で本 task 無関係)

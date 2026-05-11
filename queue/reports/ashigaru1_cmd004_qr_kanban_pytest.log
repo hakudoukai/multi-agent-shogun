@@ -1,0 +1,50 @@
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Projects/hakudokai-dev
+plugins: anyio-4.13.0
+collecting ... collected 36 items
+
+backend/tests/test_patient_checkin.py::TestQrToken::test_generate_token PASSED [  2%]
+backend/tests/test_patient_checkin.py::TestQrToken::test_token_deterministic_same_day PASSED [  5%]
+backend/tests/test_patient_checkin.py::TestQrToken::test_token_different_clinics PASSED [  8%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_success PASSED [ 11%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_invalid_token PASSED [ 13%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_already_checked_in PASSED [ 16%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_kanban_failure_does_not_break_checkin PASSED [ 19%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_passport_failure_isolated PASSED [ 22%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_normalizes_patient_id_when_prefix_missing PASSED [ 25%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_keeps_patient_id_when_already_prefixed PASSED [ 27%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_rejects_clinic_id_mismatch_token PASSED [ 30%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_rejects_empty_token PASSED [ 33%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_rejects_oversized_token PASSED [ 36%]
+backend/tests/test_patient_checkin.py::TestQrCheckin::test_checkin_normalizes_patient_id_with_surrounding_whitespace PASSED [ 38%]
+backend/tests/test_patient_checkin.py::TestTodayCheckins::test_get_today_checkins PASSED [ 41%]
+backend/tests/test_patient_checkin.py::TestStatusUpdate::test_update_status PASSED [ 44%]
+backend/tests/test_patient_checkin.py::TestStatusUpdate::test_update_invalid_status PASSED [ 47%]
+backend/tests/test_patient_checkin.py::TestRegisterArrivedCard::test_creates_arrived_card_on_first_call PASSED [ 50%]
+backend/tests/test_patient_checkin.py::TestRegisterArrivedCard::test_dedup_same_day_same_patient PASSED [ 52%]
+backend/tests/test_patient_checkin.py::TestRegisterArrivedCard::test_different_patients_independent PASSED [ 55%]
+backend/tests/test_patient_checkin.py::TestRegisterArrivedCard::test_different_dates_independent PASSED [ 58%]
+backend/tests/test_patient_checkin.py::TestRegisterArrivedCard::test_archived_card_does_not_block_new PASSED [ 61%]
+backend/tests/test_patient_checkin.py::TestRegisterArrivedCard::test_concurrent_calls_create_only_one_card PASSED [ 63%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_moves_done_to_billing PASSED [ 66%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_moves_inputting_to_billing PASSED [ 69%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_idempotent_when_already_billing PASSED [ 72%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_returns_skipped_when_card_not_found PASSED [ 75%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_archived_card_is_ignored PASSED [ 77%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_clinic_isolation PASSED [ 80%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_kq1_update_guard_when_status_flips_mid_transaction PASSED [ 83%]
+backend/tests/test_patient_checkin.py::TestRegisterPaymentCompleted::test_kb2_done_entered_at_recorded_on_move PASSED [ 86%]
+backend/tests/test_patient_checkin.py::TestTriggerKanbanBillingMove::test_skips_when_patient_no_missing PASSED [ 88%]
+backend/tests/test_patient_checkin.py::TestTriggerKanbanBillingMove::test_skips_when_visit_date_missing PASSED [ 91%]
+backend/tests/test_patient_checkin.py::TestTriggerKanbanBillingMove::test_swallows_db_exception PASSED [ 94%]
+backend/tests/test_patient_checkin.py::TestTriggerKanbanBillingMove::test_kgl1_local_mask_fallback_when_helper_missing PASSED [ 97%]
+backend/tests/test_patient_checkin.py::TestTriggerKanbanBillingMove::test_kgl1_log_does_not_emit_raw_patient_no PASSED [100%]
+
+=============================== warnings summary ===============================
+../../../../home/hakudokai/.local/lib/python3.12/site-packages/PyPDF2/__init__.py:21
+  /home/hakudokai/.local/lib/python3.12/site-packages/PyPDF2/__init__.py:21: DeprecationWarning: PyPDF2 is deprecated. Please move to the pypdf library instead.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 36 passed, 1 warning in 7.11s =========================
