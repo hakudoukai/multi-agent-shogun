@@ -368,6 +368,76 @@ class TestTaskLevelFields:
         dag_v = [v for v in violations if "parallel" in v.get("message", "").lower() and "depend" in v.get("message", "").lower()]
         assert dag_v == []
 
+    def test_negative_first_action_rejected(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["first_action_within_minutes"] = -5
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, code = validate_file(f, None)
+        assert code == 1
+        assert any(v.get("field") == "sla.first_action_within_minutes" for v in violations)
+
+    def test_zero_first_action_rejected(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["first_action_within_minutes"] = 0
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, code = validate_file(f, None)
+        assert code == 1
+        assert any(v.get("field") == "sla.first_action_within_minutes" for v in violations)
+
+    def test_float_first_action_rejected(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["first_action_within_minutes"] = 10.5
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, code = validate_file(f, None)
+        assert code == 1
+        assert any(v.get("field") == "sla.first_action_within_minutes" for v in violations)
+
+    def test_string_first_action_rejected(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["first_action_within_minutes"] = "ten"
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, code = validate_file(f, None)
+        assert code == 1
+        assert any(v.get("field") == "sla.first_action_within_minutes" for v in violations)
+
+    def test_invalid_iso_deadline_rejected(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["final_deadline_iso"] = "not-a-date"
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, code = validate_file(f, None)
+        assert code == 1
+        assert any(v.get("field") == "sla.final_deadline_iso" for v in violations)
+
+    def test_iso_without_timezone_rejected(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["final_deadline_iso"] = "2026-05-11T12:00:00"  # no tz
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, code = validate_file(f, None)
+        assert code == 1
+        assert any(v.get("field") == "sla.final_deadline_iso" for v in violations)
+
+    def test_iso_with_utc_offset_accepted(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["final_deadline_iso"] = "2026-05-11T12:00:00+09:00"
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, _ = validate_file(f, None)
+        assert not any(v.get("field") == "sla.final_deadline_iso" for v in violations)
+
+    def test_iso_utc_z_accepted(self, tmp_path):
+        task = make_valid_task()
+        task["sla"]["final_deadline_iso"] = "2026-05-11T03:00:00+00:00"
+        f = tmp_path / "cmd.yaml"
+        write_yaml({"commands": [make_valid_cmd(tasks=[task])]}, f)
+        violations, _ = validate_file(f, None)
+        assert not any(v.get("field") == "sla.final_deadline_iso" for v in violations)
+
     def test_multiple_tasks_all_checked(self, tmp_path):
         task_bad1 = make_valid_task(task_id="bad1")
         del task_bad1["dependencies"]

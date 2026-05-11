@@ -18,6 +18,7 @@ Exit codes:
 import argparse
 import sys
 import yaml
+from datetime import datetime
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -47,6 +48,30 @@ def _load_simultaneous_reviews() -> dict:
         if isinstance(entry, dict) and "cmd_id" in entry:
             reviews[entry["cmd_id"]] = entry
     return reviews
+
+
+def _validate_iso_datetime_with_tz(
+    value: str, cmd_id: str, field: str, task_id: str | None, violations: list
+) -> None:
+    """Validate that value is an ISO 8601 datetime string with timezone offset."""
+    formats = [
+        "%Y-%m-%dT%H:%M:%S%z",
+        "%Y-%m-%dT%H:%M:%S.%f%z",
+        "%Y-%m-%dT%H:%M%z",
+    ]
+    for fmt in formats:
+        try:
+            dt = datetime.strptime(value, fmt)
+            if dt.tzinfo is None:
+                break
+            return
+        except ValueError:
+            continue
+    violations.append(_v(
+        cmd_id, "V2.1-6", field,
+        f"{field} must be an ISO 8601 datetime with timezone (e.g. 2026-05-11T12:00:00+09:00), got {value!r}",
+        task_id=task_id
+    ))
 
 
 def _v(cmd_id: str, rule: str, field: str, message: str, task_id: str | None = None) -> dict:
@@ -146,16 +171,27 @@ def _validate_task_v2_1_6(task: dict, cmd_id: str, task_idx: int, violations: li
         ))
 
     sla = task.get("sla") or {}
-    if not isinstance(sla, dict) or not sla.get("first_action_within_minutes"):
+    first_action = sla.get("first_action_within_minutes") if isinstance(sla, dict) else None
+    if first_action is None:
         violations.append(_v(
             cmd_id, "V2.1-6", "sla.first_action_within_minutes",
             "task.sla.first_action_within_minutes is required", task_id=task_id
         ))
-    if not isinstance(sla, dict) or not sla.get("final_deadline_iso"):
+    elif not isinstance(first_action, int) or isinstance(first_action, bool) or first_action <= 0:
+        violations.append(_v(
+            cmd_id, "V2.1-6", "sla.first_action_within_minutes",
+            f"task.sla.first_action_within_minutes must be a positive integer, got {first_action!r}",
+            task_id=task_id
+        ))
+
+    final_deadline = sla.get("final_deadline_iso") if isinstance(sla, dict) else None
+    if not final_deadline:
         violations.append(_v(
             cmd_id, "V2.1-6", "sla.final_deadline_iso",
             "task.sla.final_deadline_iso is required", task_id=task_id
         ))
+    else:
+        _validate_iso_datetime_with_tz(str(final_deadline), cmd_id, "sla.final_deadline_iso", task_id, violations)
 
     start_trigger = task.get("start_trigger")
     if not start_trigger:
