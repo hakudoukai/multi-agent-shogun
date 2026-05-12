@@ -1729,3 +1729,175 @@ def test_render_dashboard_grandchildren_no_legacy_ul_li_for_evidence():
     assert "- **audit (黒田):**" not in rendered, "cycle7 ul/li 旧 format 残存 (audit)"
     assert "- **shogun_verified:**" not in rendered, "cycle7 ul/li 旧 format 残存 (shogun_verified)"
     assert "- **参照:**" not in rendered, "cycle7 ul/li 旧 format 残存 (参照)"
+
+
+# ---------------------------------------------------------------------------
+# cycle8: 🚨 cmd_004 audit 状態 alert section (= 9 件 verdict 軸 SoT)
+#   黒田 v2 preaudit 条件 (verdict 軸 SoT / 7+2+0 / pass_with_concerns 表記 /
+#   relative path / privacy HIGH=0 / 修正待ち完了扱い禁) を test 化。
+# ---------------------------------------------------------------------------
+
+
+def _fake_kuroda_entries_9docs() -> list[dict[str, Any]]:
+    """Build fake kuroda_mainpc_report 'reports' list with the 9-doc audit.
+
+    Used to exercise classify_verdict_for_alert / build_cmd004_audit_alert_section
+    without depending on the live report yaml (= deterministic test fixture).
+    """
+    return [
+        {
+            "audit_id": rd.CMD004_AUDIT_ALERT_AUDIT_ID,
+            "timestamp": "2026-05-12T17:05:30+09:00",
+            "verdict": "fail_for_privacy_sanitization_required",
+            "target_docs": [
+                {"id": "cmd004_dinosaur_100enemies_spec",
+                 "path": "docs/cmd004_dinosaur_100enemies_spec.md",
+                 "verdict": "fail"},
+                {"id": "cmd004_patient_app_pwa_design",
+                 "path": "docs/cmd004_patient_app_pwa_design.md",
+                 "verdict": "fail"},
+                {"id": "cmd004_moushi_engine_stage1_design",
+                 "path": "docs/cmd004_moushi_engine_stage1_design.md",
+                 "verdict": "fail"},
+                {"id": "cmd004_engagement_analytics_design",
+                 "path": "docs/cmd004_engagement_analytics_design.md",
+                 "verdict": "pass_with_concerns"},
+                {"id": "cmd004_security_hardening_design",
+                 "path": "docs/cmd004_security_hardening_design.md",
+                 "verdict": "fail"},
+                {"id": "cmd004_notification_facade_design",
+                 "path": "docs/cmd004_notification_facade_design.md",
+                 "verdict": "fail"},
+                {"id": "cmd004_observability_design",
+                 "path": "docs/cmd004_observability_design.md",
+                 "verdict": "fail"},
+                {"id": "cmd004_push_vapid_management",
+                 "path": "docs/cmd004_push_vapid_management.md",
+                 "verdict": "fail"},
+                {"id": "cmd004_phase_1_6_rollback_recovery_audit",
+                 "path": "docs/cmd004_phase_1_6_rollback_recovery_audit.md",
+                 "verdict": "pass"},
+            ],
+        },
+    ]
+
+
+def test_classify_verdict_for_alert_pass_axis():
+    """pass / pass_with_concerns は 通行可 ('pass') tier (= verdict 軸 SoT)。"""
+    assert rd.classify_verdict_for_alert("pass") == "pass"
+    assert rd.classify_verdict_for_alert("pass_with_concerns") == "pass"
+    # uppercase / whitespace を許容
+    assert rd.classify_verdict_for_alert(" PASS ") == "pass"
+
+
+def test_classify_verdict_for_alert_fail_axis():
+    """fail / fail_for_* は 修正待ち ('wait') tier。"""
+    assert rd.classify_verdict_for_alert("fail") == "wait"
+    assert rd.classify_verdict_for_alert("fail_for_privacy_sanitization_required") == "wait"
+
+
+def test_classify_verdict_for_alert_unaudit_axis():
+    """空 / None は 未監査 ('unaudit') tier、audit_id 有無の判定禁の test 整合。"""
+    assert rd.classify_verdict_for_alert(None) == "unaudit"
+    assert rd.classify_verdict_for_alert("") == "unaudit"
+
+
+def test_build_cmd004_audit_alert_section_count_7_2_0():
+    """黒田 v2 preaudit 条件 2: 修正待ち 7 + 通行可 2 + 未監査 0 の count assertion (= verdict 軸 SoT で 3 軸分類)。"""
+    section = rd.build_cmd004_audit_alert_section(_fake_kuroda_entries_9docs())
+    assert section["audit_present"] is True
+    assert section["wait_count"] == 7, f"修正待ち count 不一致: {section['wait_count']} (= 想定 7)"
+    assert section["pass_count"] == 2, f"通行可 count 不一致: {section['pass_count']} (= 想定 2)"
+    assert section["unaudit_count"] == 0, f"未監査 count 不一致: {section['unaudit_count']} (= 想定 0)"
+    assert len(section["wait_rows"]) == 7
+    assert len(section["pass_rows"]) == 2
+
+
+def test_build_cmd004_audit_alert_section_pass_with_concerns_engagement():
+    """黒田 v2 preaudit 条件 3: engagement_analytics は pass_with_concerns 表記で通行可 section に入る。"""
+    section = rd.build_cmd004_audit_alert_section(_fake_kuroda_entries_9docs())
+    engagement = [r for r in section["pass_rows"] if "engagement_analytics" in r["id"]]
+    assert len(engagement) == 1, "engagement_analytics が通行可 section に不在"
+    assert engagement[0]["status_display"] == "pass_with_concerns", (
+        f"engagement status_display = {engagement[0]['status_display']} (= pass_with_concerns 期待)"
+    )
+
+
+def test_build_cmd004_audit_alert_section_verdict_axis_not_audit_id_only():
+    """黒田 v2 preaudit 条件 1: audit_id 有無のみで判定禁 — verdict 軸が SoT。
+
+    target_doc に verdict=fail だけ与えれば修正待ちに、verdict=pass だけ与えれば通行可に
+    分類される (= audit_id list は同一でも verdict 変化で tier が swap する)。
+    """
+    base = _fake_kuroda_entries_9docs()
+    # 1 件を fail → pass に書き換え → 修正待ち -1 / 通行可 +1 になる確認
+    base[0]["target_docs"][0] = {**base[0]["target_docs"][0], "verdict": "pass"}
+    section = rd.build_cmd004_audit_alert_section(base)
+    assert section["wait_count"] == 6, f"verdict swap 後 修正待ち count = {section['wait_count']} (= 想定 6)"
+    assert section["pass_count"] == 3, f"verdict swap 後 通行可 count = {section['pass_count']} (= 想定 3)"
+
+
+def test_build_cmd004_audit_alert_section_wait_entry_not_completed():
+    """黒田 v2 preaudit 条件 6: dashboard alert で修正待ち 7 件を完了扱いしない。
+
+    wait_rows の status_display は『privacy修正待ち』 (= 未完遂 state retain)、
+    『pass』『done』『completed』『修正済』 等の完了扱い文字列は登場しないこと。
+    """
+    section = rd.build_cmd004_audit_alert_section(_fake_kuroda_entries_9docs())
+    completed_tokens = ("pass", "done", "completed", "修正済", "verified")
+    for row in section["wait_rows"]:
+        status = row["status_display"]
+        assert "修正待ち" in status, f"修正待ち row が未完遂表記でない: {row['id']} → {status}"
+        for token in completed_tokens:
+            assert token not in status.lower(), (
+                f"修正待ち row {row['id']} の status_display に完了扱い文字列 {token!r} 検出: {status}"
+            )
+
+
+def test_build_cmd004_audit_alert_section_relative_path_only():
+    """黒田 v2 preaudit 条件 4: 関連 doc は relative path のみ (= 絶対パス禁)。"""
+    section = rd.build_cmd004_audit_alert_section(_fake_kuroda_entries_9docs())
+    all_rows = section["wait_rows"] + section["pass_rows"] + section["unaudit_rows"]
+    for row in all_rows:
+        path = row["path"]
+        assert path, f"path 空: {row['id']}"
+        assert not path.startswith("/"), f"絶対パス検出: {row['id']} → {path}"
+        assert path.startswith("docs/cmd004_"), f"relative path 形式違反: {row['id']} → {path}"
+
+
+def test_build_cmd004_audit_alert_section_missing_audit_fallback():
+    """audit 不在時は audit_present=False + count 全 0 で safe fallback (= 捏造禁)。"""
+    section = rd.build_cmd004_audit_alert_section([])  # 空 entries
+    assert section["audit_present"] is False
+    assert section["wait_count"] == 0
+    assert section["pass_count"] == 0
+    assert section["unaudit_count"] == 0
+
+
+def test_render_dashboard_includes_cmd004_audit_alert_section(monkeypatch: pytest.MonkeyPatch):
+    """rendered dashboard.md に 🚨 cmd_004 audit 状態 alert section が登場する (= 全体進捗直下 visible)。"""
+    monkeypatch.setattr(rd, "load_kuroda_index", lambda: _fake_kuroda_entries_9docs())
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "🚨 cmd_004 audit 状態 alert" in rendered, "alert section heading 不在"
+    assert "🟠 修正待ち 7 件" in rendered, "修正待ち sub-heading 7 件 不在"
+    assert "🟢 通行可 2 件" in rendered, "通行可 sub-heading 2 件 不在"
+    assert "🔴 未監査 0 件" in rendered, "未監査 sub-heading 0 件 不在"
+    # 全体進捗直下: 「全体進捗」見出し位置 < alert 見出し位置 < 6 Layer 見出し位置
+    pos_overall = rendered.index("🚀 全体進捗")
+    pos_alert = rendered.index("🚨 cmd_004 audit 状態 alert")
+    pos_layer6 = rendered.index("6 Layer 構造")
+    assert pos_overall < pos_alert < pos_layer6, (
+        f"alert section 位置不整合: overall={pos_overall} alert={pos_alert} layer6={pos_layer6}"
+    )
+
+
+def test_render_dashboard_cmd004_alert_no_absolute_path(monkeypatch: pytest.MonkeyPatch):
+    """rendered alert section 内に絶対パス (/mnt/c, /home, /Users) が登場しないこと (= privacy retain + 条件 4)。"""
+    monkeypatch.setattr(rd, "load_kuroda_index", lambda: _fake_kuroda_entries_9docs())
+    rendered = rd.render_dashboard(_baseline_context())
+    # alert section の範囲 (= 🚨 から 6 Layer まで) を切り出して absolute path 検査
+    start = rendered.index("🚨 cmd_004 audit 状態 alert")
+    end = rendered.index("6 Layer 構造")
+    alert_block = rendered[start:end]
+    for forbidden in ("/mnt/c/", "/home/", "/Users/"):
+        assert forbidden not in alert_block, f"alert section に absolute path 残存: {forbidden}"

@@ -891,6 +891,144 @@ def _fallback_evidence(child: dict[str, Any]) -> dict[str, str]:
 
 
 # ---------------------------------------------------------------------------
+# cycle8: cmd_004 audit 状態 alert section (= 黒田 17:00 9 件 audit 結果 visible)
+#   verdict 軸 SoT — 各 target_doc.verdict を pass/fail/None で 3 軸分類。
+#   audit_id 有無のみの判定は禁 (= 黒田 v2 preaudit 条件 1 整合)。
+# ---------------------------------------------------------------------------
+
+CMD004_AUDIT_ALERT_AUDIT_ID = "kuroda_cmd004_remaining_9_design_docs_audit_20260512"
+
+# verdict 状態表示 (= 黒田 v2 preaudit 条件 3 整合、engagement pass_with_concerns 明示)
+_ALERT_STATUS_FAIL = "privacy修正待ち"
+_ALERT_STATUS_UNAUDIT = "未監査"
+
+
+def classify_verdict_for_alert(verdict: Any) -> str:
+    """Map a target_doc verdict to alert tier (= 'pass' | 'wait' | 'unaudit').
+
+    Verdict 軸 SoT (= 黒田 v2 preaudit 条件 1 整合):
+      - pass / pass_with_concerns → 'pass' (= 通行可)
+      - fail* (privacy sanitization 等) → 'wait' (= 修正待ち)
+      - None / 空 → 'unaudit' (= 未監査 placeholder)
+    audit_id 有無のみの分類は禁。
+    """
+    if not verdict:
+        return "unaudit"
+    v = str(verdict).strip().lower()
+    if v.startswith("pass"):
+        return "pass"
+    if v.startswith("fail"):
+        return "wait"
+    return "unaudit"
+
+
+def _alert_status_display(verdict: Any) -> str:
+    """Render verdict as a short status label for the alert table."""
+    if not verdict:
+        return _ALERT_STATUS_UNAUDIT
+    v = str(verdict).strip().lower()
+    if v == "pass":
+        return "pass"
+    if v == "pass_with_concerns":
+        return "pass_with_concerns"
+    if v.startswith("fail"):
+        return _ALERT_STATUS_FAIL
+    return str(verdict)
+
+
+def _alert_doc_size_label(path_str: str, root: Path = PROJECT_ROOT) -> str:
+    """Format relative-path doc size as e.g. '8.4KB' / '29KB'."""
+    if not path_str:
+        return ""
+    full = root / path_str
+    try:
+        size_bytes = full.stat().st_size
+    except OSError:
+        return ""
+    kb = size_bytes / 1024
+    return f"{kb:.1f}KB" if kb < 10 else f"{kb:.0f}KB"
+
+
+def _alert_relative_path(path_str: str) -> str:
+    """Coerce a doc path to repo-relative form (= 黒田 v2 preaudit 条件 4 整合).
+
+    Absolute paths leaked into audit data are stripped to relative form
+    via PROJECT_ROOT resolution; if outside the repo, return the basename
+    only so the alert section never renders absolute paths.
+    """
+    if not path_str:
+        return ""
+    p = path_str.strip()
+    if not p.startswith("/"):
+        return p
+    try:
+        rel = Path(p).resolve().relative_to(PROJECT_ROOT)
+        return str(rel)
+    except (ValueError, OSError):
+        return Path(p).name
+
+
+def build_cmd004_audit_alert_section(
+    kuroda_entries: list[dict[str, Any]],
+    audit_id: str = CMD004_AUDIT_ALERT_AUDIT_ID,
+    docs_root: Path = PROJECT_ROOT,
+) -> dict[str, Any]:
+    """Build cmd_004 9-doc audit alert section data for the template.
+
+    Each target_doc is classified by its verdict (SoT axis) — pass /
+    pass_with_concerns → 通行可、fail* → 修正待ち、無 → 未監査. The
+    section data carries counts + per-tier rows; the template renders
+    counts + tables under the '🚨 cmd_004 audit 状態 alert' heading.
+    """
+    audit = find_latest_audit_for_pattern(kuroda_entries, audit_id)
+    if not audit:
+        return {
+            "audit_id": audit_id,
+            "audit_present": False,
+            "audit_timestamp": "",
+            "audit_verdict": "",
+            "wait_count": 0, "pass_count": 0, "unaudit_count": 0,
+            "wait_rows": [], "pass_rows": [], "unaudit_rows": [],
+        }
+    target_docs = audit.get("target_docs") or []
+    wait_rows: list[dict[str, Any]] = []
+    pass_rows: list[dict[str, Any]] = []
+    unaudit_rows: list[dict[str, Any]] = []
+    for doc in target_docs:
+        if not isinstance(doc, dict):
+            continue
+        verdict_raw = doc.get("verdict")
+        category = classify_verdict_for_alert(verdict_raw)
+        rel_path = _alert_relative_path(str(doc.get("path") or ""))
+        size_label = _alert_doc_size_label(rel_path, docs_root)
+        row = {
+            "id": str(doc.get("id") or ""),
+            "path": rel_path,
+            "size_label": size_label,
+            "verdict": str(verdict_raw or ""),
+            "status_display": _alert_status_display(verdict_raw),
+        }
+        if category == "pass":
+            pass_rows.append(row)
+        elif category == "wait":
+            wait_rows.append(row)
+        else:
+            unaudit_rows.append(row)
+    return {
+        "audit_id": audit.get("audit_id", audit_id),
+        "audit_present": True,
+        "audit_timestamp": str(audit.get("timestamp", "")),
+        "audit_verdict": str(audit.get("verdict", "")),
+        "wait_count": len(wait_rows),
+        "pass_count": len(pass_rows),
+        "unaudit_count": len(unaudit_rows),
+        "wait_rows": wait_rows,
+        "pass_rows": pass_rows,
+        "unaudit_rows": unaudit_rows,
+    }
+
+
+# ---------------------------------------------------------------------------
 # cycle5: 子項目 summary line 一目視認 format
 #   各子項目の machine state から pct + 1 行現状 を計算し、全体進捗 § と同形式の
 #   progress bar (= progress_bar_html、4 色 tier 80/50/25/0 retain) を summary 行に流す。
@@ -1628,6 +1766,50 @@ DASHBOARD_TEMPLATE = """<!-- auto-generated by scripts/regenerate_dashboard.py �
 | {{ agent }} | {{ per_agent_bars.get(agent, pct ~ '%') }} | {{ task_counts.get(agent, 0) }} |
 {% endfor %}
 
+## 🚨 cmd_004 audit 状態 alert (= {{ cmd004_audit_alert.wait_count + cmd004_audit_alert.pass_count + cmd004_audit_alert.unaudit_count }} 件)
+
+{% if cmd004_audit_alert.audit_present -%}
+> ⚠️ 黒田 audit 完遂結果 (`{{ cmd004_audit_alert.audit_id }}`): **修正待ち {{ cmd004_audit_alert.wait_count }} 件 (privacy sanitization 要)** / **通行可 {{ cmd004_audit_alert.pass_count }} 件** / 未監査 {{ cmd004_audit_alert.unaudit_count }} 件、本日中完遂目標。
+{%- else -%}
+> ⚠️ 黒田 audit (`{{ cmd004_audit_alert.audit_id }}`) 未検出 — kuroda_mainpc_report.yaml に対象 audit 不在。
+{%- endif %}
+
+### 🟠 修正待ち {{ cmd004_audit_alert.wait_count }} 件 (= privacy HIGH 絶対パス/疑似 secret、sanitization 後再監査要)
+
+{% if cmd004_audit_alert.wait_count > 0 -%}
+| 優先 | 子項目 | 状態 | 関連 doc |
+|---|---|---|---|
+{% for row in cmd004_audit_alert.wait_rows -%}
+| {{ loop.index }} | 🟠 {{ row.id }} | {{ row.status_display }} | `{{ row.path }}`{% if row.size_label %} ({{ row.size_label }}){% endif %} |
+{% endfor %}
+{%- else -%}
+(修正待ち 0 件)
+{%- endif %}
+
+### 🟢 通行可 {{ cmd004_audit_alert.pass_count }} 件 (= 黒田 audit pass、信長殿 verify ledger 待ち)
+
+{% if cmd004_audit_alert.pass_count > 0 -%}
+| 優先 | 子項目 | 状態 | 関連 doc |
+|---|---|---|---|
+{% for row in cmd004_audit_alert.pass_rows -%}
+| {{ loop.index }} | 🟢 {{ row.id }} | {{ row.status_display }} | `{{ row.path }}`{% if row.size_label %} ({{ row.size_label }}){% endif %} |
+{% endfor %}
+{%- else -%}
+(通行可 0 件)
+{%- endif %}
+
+### 🔴 未監査 {{ cmd004_audit_alert.unaudit_count }} 件
+
+{% if cmd004_audit_alert.unaudit_count > 0 -%}
+| 優先 | 子項目 | 関連 doc |
+|---|---|---|
+{% for row in cmd004_audit_alert.unaudit_rows -%}
+| {{ loop.index }} | 🔴 {{ row.id }} | `{{ row.path }}`{% if row.size_label %} ({{ row.size_label }}){% endif %} |
+{% endfor %}
+{%- else -%}
+(現在 0 件、将来 cmd_004 新 design doc 追加時用 placeholder)
+{%- endif %}
+
 ## 🗂 6 Layer 構造 (A〜F 構想〜規範 + G 統合)
 
 cmd_020 dashboard 設計 v0.1 / v0.2 の **6 Layer** (= A 構想 / B Phase / C 機能 / D 頭脳蜘蛛の糸 / E 運用 / F 規範) に
@@ -1837,6 +2019,7 @@ def build_context(
         w9_stages=w9_stage_rows,
         w9_batches=w9_batch_rows,
     )
+    cmd004_audit_alert = build_cmd004_audit_alert_section(kuroda_entries)
 
     return {
         "generated_at": _dt.datetime.now().astimezone().isoformat(timespec="seconds"),
@@ -1857,6 +2040,7 @@ def build_context(
         "layer_c_children_mermaid": LAYER_C_CHILDREN_MERMAID,
         "w9_stages": w9_stage_rows,
         "w9_batches": w9_batch_rows,
+        "cmd004_audit_alert": cmd004_audit_alert,
     }
 
 
