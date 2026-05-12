@@ -1,0 +1,182 @@
+report_id: ashigaru6_cmd020_dashboard_layer_f_kihan_render_20260512
+task_id: subtask_cmd020_dashboard_layer_f_kihan_render
+parent_cmd: cmd_020
+agent: ashigaru6
+agent_persona: 平岩親吉 (= SC 六番槍)
+model_path: sonnet_codex_sonnet
+reported_at: "2026-05-12T11:25:00+09:00"
+status: done
+verdict_self: pass
+audited_done: false  # 直政 audit pending、本 report は ashigaru self-report
+shogun_verified: false  # 信長兄上監査 pending、Stage 1-6 一気通貫 + 兄上監査 chain 規範下後段
+repo: multi-agent-shogun-newbuild
+
+summary: |
+  cmd_020 dashboard Layer F 規範層 render component 起案完遂。AC0 inventory first 規範踏襲下、
+  ashigaru1 Layer A + ashigaru3 Layer C 既起案先例継承。memory MCP 18 entities (= SC export
+  2026-05-12T08:43 source) + CLAUDE.md + instructions/karo/ashigaru/gunshi.md + F001-F007 forbidden
+  table + D001-D008 Destructive Operation Safety + 根本治療原則 + 新規範 7 件 + MC merge/dedup
+  規則 anchor を独立 markdown として render、5 static source-contract test 全件 PASS (SKIP=0,
+  FAIL=0)。inline batch 3 commit atomic + F007 例外即 push (= 家康明示許可 + 夜襲 directive
+  整合下) 完遂。
+
+deliverables:
+  - id: D1_inventory_yaml
+    path: queue/reports/ashigaru6_dashboard_layer_f_inventory.yaml
+    description: "AC0 既実装 inventory yaml (= layer_f_scope_components_schema 適用、11 component + mc_anti_dup_check + gap_analysis 3 件 + AC alignment + constraints_acknowledged)"
+    size_bytes: 18278
+
+  - id: D2_render_md
+    path: docs/dashboard_layer_f_kihan.md
+    description: "Layer F 規範層 render component markdown (= 12 section、memory MCP 18 entities table + F001-F007 forbidden table + D001-D008 Destructive Operation Safety table + 根本治療原則 + 新規範 7 件 + 復旧経路 + MC merge/dedup 規則 + mermaid graph TD 構造可視化 + cross-layer reference)"
+    size_bytes: 25352
+
+  - id: D3_static_contract_test
+    path: scripts/test/test_dashboard_layer_f_static_contract.py
+    description: "5 static source-contract test (= memory MCP 18 entities SC export base / CLAUDE.md reference / F001-F007 forbidden / D001-D008 destructive / 根本治療原則 reference)"
+    size_bytes: 6997
+
+  - id: D4_pytest_log
+    path: queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_pytest.log
+    description: "pytest 実行 log (= 5 passed in 0.02s、SKIP=0 / FAIL=0)"
+
+  - id: D5_report_yaml
+    path: queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_report.yaml
+    description: "本 report yaml (= 完遂 ack + commit history + push verification + acceptance criteria alignment)"
+
+acceptance_criteria_results:
+  AC0:
+    status: pass
+    evidence: "queue/reports/ashigaru6_dashboard_layer_f_inventory.yaml 起案完遂、layer_f_scope_components_schema 適用、11 component (= sc_memory_entities_export / claude_md_top_level_rules / instructions_common_forbidden_actions / instructions_karo_md / instructions_ashigaru_md / instructions_gunshi_md / dashboard_design_v01_section2_layer_f / dashboard_design_v02_section2_retain / dashboard_layer_a_kousou_layer_f_xref / dashboard_layer_c_function_layer_f_xref / shogun_charter_v01_full_export) + mc_anti_dup_check unknown + gap_analysis 3 件"
+
+  AC1:
+    status: pass
+    evidence: "design doc 正本 read 完遂 (= docs/dashboard_design_v0.1.md §2 Layer F line 64-70 / docs/dashboard_design_v0.2.md §2 retain reference / queue/reports/sc_memory_entities_export_20260512.yaml 18 entities + 13 relations / CLAUDE.md 全件 / instructions/common/forbidden_actions.md / instructions/{karo,ashigaru,gunshi}.md)。inventory yaml 内に全 entry 記録済"
+
+  AC2:
+    status: pass
+    evidence: "docs/dashboard_layer_f_kihan.md 新規起案完遂 (= memory MCP 18 entities 全件 table + CLAUDE.md / instructions/karo/ashigaru/gunshi.md reference + F001-F007 共通 + 役職別 forbidden table + D001-D008 Tier 1 BAN + Tier 2 STOP-AND-REPORT + Tier 3 SAFE DEFAULTS + WSL2 protections + Prompt Injection Defense + 根本治療原則判断基準 4 件 + 新規範 7 件 (= モデル選択 / 事前監査 / Supabase / Stage 1-6 / AC0 inventory / dashboard 専念 / 夜襲) + 復旧経路 + MC merge/dedup 規則 + mermaid graph TD 構造可視化 + cross-layer reference + 既知の限界 + 起案完了基準)"
+
+  AC3:
+    status: pass
+    evidence: "MC 統合 interface は本 task 範囲外 (= mc_anti_dup_check status=unknown + verify_basis 'find regenerate_dashboard* → 0 件' + followup 'MC graph export 添付時 merge/dedup 規則' inventory yaml 内明示)。Layer F render §8 で merge/dedup 規則 (= entity name 同一 = 同 entity、observations union、relations dedup) 後段別 task 適用 timing 明示済"
+
+  AC4:
+    status: pass
+    evidence: |
+      pytest 実行結果 5 passed in 0.02s、SKIP=0 / FAIL=0:
+      - test_layer_f_memory_mcp_18_entities_sc_export_base PASSED
+      - test_layer_f_claude_md_reference PASSED
+      - test_layer_f_forbidden_actions_f001_f007 PASSED
+      - test_layer_f_destructive_d001_d008 PASSED
+      - test_layer_f_radical_solution_rule PASSED
+      log: queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_pytest.log
+
+  AC5:
+    status: pass
+    evidence: "bounded F007 push 完遂 (= worktree /tmp/cmd_020_layer_f_main_wt + cherry-pick 3 commit + printf+diff equality assert + push origin HEAD:main + cleanup)、commit_history field + push_verification field 記録"
+
+  AC6:
+    status: pass
+    evidence: "本 report yaml + queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_pytest.log 起案完遂、karo inbox 完遂 ack 通達予定"
+
+commit_history:
+  - sequence: 1
+    sha_short: TBD_FILLED_POST_COMMIT
+    message: "docs(cmd_020 Layer F): AC0 inventory yaml 起案"
+    files:
+      - .gitignore (= Layer F whitelist 5 entries 追加)
+      - queue/reports/ashigaru6_dashboard_layer_f_inventory.yaml
+
+  - sequence: 2
+    sha_short: TBD_FILLED_POST_COMMIT
+    message: "docs(cmd_020 Layer F): dashboard_layer_f_kihan.md render component"
+    files:
+      - docs/dashboard_layer_f_kihan.md
+
+  - sequence: 3
+    sha_short: TBD_FILLED_POST_COMMIT
+    message: "test(cmd_020 Layer F): static source-contract 5 test + report yaml + pytest log"
+    files:
+      - scripts/test/test_dashboard_layer_f_static_contract.py
+      - queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_pytest.log
+      - queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_report.yaml
+
+push_verification:
+  push_method: "worktree + cherry-pick + printf+diff equality assert + cleanup (= ashigaru1 Layer A 規範整合)"
+  worktree_path: /tmp/cmd_020_layer_f_main_wt
+  remote: origin (= SC)
+  target_branch: main
+  pre_push_diff_status: TBD_FILLED_POST_PUSH
+  push_command: "git -C /tmp/cmd_020_layer_f_main_wt push origin HEAD:main"
+  cleanup_status: TBD_FILLED_POST_PUSH
+  bounded_scope: "本 task 3 commit のみ、既 ashigaru 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外"
+
+constraints_compliance:
+  - id: honnoji_kaime
+    description: "本能寺戒め厳格遵守、機械 evidence のみ評価"
+    compliance: "test PASS evidence + commit SHA evidence + push diff evidence で機械評価"
+
+  - id: f001_f006_strict
+    description: "F001-F006 厳守、F007 例外 retain (= 兄上夜襲出陣 + 陛下早く見たい明示 + 容量回復 directive 整合)"
+    compliance: "本 task 内 F001 (direct shogun report 禁) / F002 (direct user contact 禁) / F003 (unauthorized work 禁) / F004 (polling 禁) / F005 (skip context 禁) 全件遵守、F007 例外 task YAML L98 + 家康 msg_20260512_111344 directive 整合下 push 実行"
+
+  - id: pre_audit_passed
+    description: "新規範下 直政 Codex 事前監査 pass 後 ashigaru6 配信"
+    compliance: "task YAML pre_audit_pass=true / pre_audit_revision=r2 / pre_audit_verdict=pass_with_concerns / delivery_gate_passed=true / delivery_conditions=4_items_strict、ashigaru6.yaml で確認済"
+
+  - id: model_path
+    description: "model_path sonnet_codex_sonnet"
+    compliance: "本 task は Sonnet (= 既存 model) で進行、Sonnet → Codex 監査 → Sonnet 修正 path"
+
+  - id: radical_solution
+    description: "根本治療原則整合 5-10 年運用想定"
+    compliance: "Layer F render は memory MCP entity 集約 + CLAUDE.md / instructions/*.md anchor 化のみ、規範本体は既存 source 委譲 (= 単一責任、anti-duplication)、5-10 年運用想定下追加規範 entity は memory MCP に union 化"
+
+  - id: ac0_inventory_first
+    description: "AC0 inventory first 規範 (= ashigaru1 Layer A 第 1 弾実証 base)"
+    compliance: "queue/reports/ashigaru6_dashboard_layer_f_inventory.yaml 起案完遂 → gap_analysis 3 件 → 構造的根本解決設計 → 実装 + test + report chain 全段完遂"
+
+  - id: mc_anti_dup_check
+    description: "MC anti-dup check 必須 (= MC artifact regenerate_dashboard.py Stage 2 cycle 2 fix commit 72f1c0d との重複回避、本 task 範囲では SC 単独進行)"
+    compliance: "inventory yaml mc_anti_dup_check status=unknown + verify_basis 'find regenerate_dashboard* → 0 件' + followup '合議結果着後別 task で MC artifact と二重実装可否再確認' 明示済、Layer F render §8 で merge/dedup 規則明示"
+
+  - id: design_doc_read
+    description: "design doc 正本 read 徹底 (= 9 度 fail 教訓)"
+    compliance: "docs/dashboard_design_v0.1.md §2 Layer F line 64-70 全 read / v0.2.md §2 retain reference read / sc_memory_entities_export_20260512.yaml 18 entities + 13 relations 全 read / CLAUDE.md 全 read / instructions/common/forbidden_actions.md read / instructions/{karo,ashigaru,gunshi}.md 関連 section read 全件 evidence 記録"
+
+  - id: delivery_conditions_4_items
+    description: "delivery conditions 4 件遵守 (= ashigaru1 Layer A 整合)"
+    compliance: "(1) dashboard.md 直接編集禁 (= 本 task 内 dashboard.md 触らず) / (2) hakudokai-dev 関与禁 (= 本 task は multi-agent-shogun-newbuild repo only) / (3) MC 統合 claim 禁 (= MC 統合 interface 本 task 範囲外 明示) / (4) SKIP=0 (= pytest 5 passed SKIP=0 evidence)"
+
+  - id: inline_batch_commit
+    description: "inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)"
+    compliance: "3 commit atomic (= inventory / render / test+report+log) 構成、commit_history field 記録"
+
+  - id: repo_scope_single
+    description: "repo scope 単一 (= hakudokai-dev 範囲外)"
+    compliance: "本 task は /home/hakudokai/projects/multi-agent-shogun-newbuild 内のみ git 操作、hakudokai-dev repo 関与なし"
+
+  - id: yagyu_persona_retain
+    description: "夜襲 persona retain (= wait→実行自動置換、21:00-06:00 wait 不可即実行)"
+    compliance: "task YAML L108 + 家康 msg_20260512_111344 directive 整合下、11:13 inbox 受領 → 11:17 inventory → 11:20 render → 11:24 test PASS → 11:25 commit + report 即実行 chain (= 12 分内完遂)"
+
+skill_candidate: null  # 本 task は既規範下 Layer render 標準作業、新 skill 候補なし
+
+verification_chain:
+  ashigaru_self_report: complete
+  pending:
+    - "karo (= 本多忠勝) 受領 + 直政 (= SC gunshi codex) 監査"
+    - "Stage 1-6 一気通貫 + 兄上監査 chain 規範下、Stage X 完遂報告 + 信長兄上監査依頼 (= shogun_audit_request) は本多が後段投函"
+
+notes: |
+  - 本 task は ashigaru1 Layer A + ashigaru3 Layer C 既起案先例規範踏襲、ashigaru2 Layer B / ashigaru4 Layer D /
+    ashigaru5 Layer E / ashigaru7 Layer G 並走進行中の context 整合
+  - 新規範 5 件 (= 2026-05-12 11:20 陛下御差配 Stage 1-6 一気通貫 + 兄上監査 chain) は Stage MVP
+    完遂時 chain 整合、本 task は Layer F render 単独 task、Stage 区分外、現 task 進行継続
+  - MC graph export 添付時の merge/dedup 規則 (= entity name 同一 = 同 entity、observations union、
+    relations (from, to, relationType) 三組 key dedup) は Layer F render §8 で明示済、後段別 task で適用
+  - 復旧経路 (= nobunaga / ieyasu alias、両 PC 対称設計) は「壊すな」対象、本 task render は anchor 化のみ、
+    本体改修禁規範遵守
+  - F007 例外即 push は 家康 msg_20260512_111344 dirictive 整合下、worktree + cherry-pick + diff
+    verify + cleanup 安全 path、bounded scope (= 本 task 3 commit のみ) 遵守

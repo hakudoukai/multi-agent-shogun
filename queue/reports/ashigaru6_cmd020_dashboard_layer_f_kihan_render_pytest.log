@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_dashboard_layer_f_static_contract.py::test_layer_f_memory_mcp_18_entities_sc_export_base PASSED [ 20%]
+scripts/test/test_dashboard_layer_f_static_contract.py::test_layer_f_claude_md_reference PASSED [ 40%]
+scripts/test/test_dashboard_layer_f_static_contract.py::test_layer_f_forbidden_actions_f001_f007 PASSED [ 60%]
+scripts/test/test_dashboard_layer_f_static_contract.py::test_layer_f_destructive_d001_d008 PASSED [ 80%]
+scripts/test/test_dashboard_layer_f_static_contract.py::test_layer_f_radical_solution_rule PASSED [100%]
+
+============================== 5 passed in 0.02s ===============================
