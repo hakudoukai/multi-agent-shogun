@@ -1388,6 +1388,93 @@ dashboard_task_pre_delivery_audits:
       completed_pre_audits: 6
       eta: "F revision arrival後 10-15min で追加pre-audit可能"
 
+  - audit_id: naomasa_pre_audit_cmd020_dashboard_layer_f_kihan_render_r2
+    target_type: task_yaml_pre_delivery_gate
+    target_task_id: subtask_cmd020_dashboard_layer_f_kihan_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T11:13:00+09:00"
+    audited_by: naomasa
+    revision_of: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    source_inbox:
+      - msg_20260512_110954_26eba36c
+    source_task_yaml: queue/tasks/subtask_cmd020_dashboard_layer_f_kihan_render.yaml
+    source_design_docs:
+      - docs/dashboard_design_v0.1.md
+      - docs/dashboard_design_v0.2.md
+      - queue/reports/sc_memory_entities_export_20260512.yaml
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_delivery_allowed
+    pre_delivery_gate_passed: true
+    revision_check:
+      memory_count_23_removed: {status: pass}
+      sc_18_export_baseline_added: {status: pass, source: queue/reports/sc_memory_entities_export_20260512.yaml}
+      mc_merge_dedup_deferred: {status: pass_with_concerns, reason: "Task now states MC graph export merge/dedup rules are required when MC export is attached; no MC export is currently attached."}
+      test_name_updated: {status: pass, value: test_layer_f_memory_mcp_18_entities_sc_export_base}
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass_with_concerns
+      3_kiritsu_chain_of_command: pass
+      4_logic_consistency: pass
+      5_schema_data_contract: pass
+      6_test_ci_evidence: pass_with_concerns
+      7_legal_privacy_security: pass
+      8_operations: pass_with_concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: pass_with_concerns
+      12_future_operations_radicality: pass
+    machine_evidence:
+      task_revision: "queue/tasks/subtask_cmd020_dashboard_layer_f_kihan_render.yaml now says memory MCP entities (= SC export 18 件 base...) in step_2 and AC2."
+      test_revision: "Exact test name is now test_layer_f_memory_mcp_18_entities_sc_export_base."
+      memory_source: "queue/reports/sc_memory_entities_export_20260512.yaml records exported_at 2026-05-12T08:43:00+09:00, entities_count=18, relations_count=13."
+      remaining_mc_gap: "No MC memory graph export is attached in this workspace."
+    findings:
+      - severity: low
+        perspective: 9_documentation
+        issue: "Task references CLAUDE.md and instructions/* but still omits AGENTS.md, although AGENTS.md is the active auto-loaded operational source for destructive-operation and chain-of-command rules."
+        recommendation: "Executor should include AGENTS.md in the inventory/render if covering D001-D008 and current runtime rules."
+      - severity: low
+        perspective: 2_anti_duplication
+        issue: "MC regenerate_dashboard.py commit 72f1c0d remains unverifiable in this repo."
+        recommendation: "Do not claim MC generator integration or anti-dup completion; record MC integration as deferred."
+    delivery_conditions:
+      - "Use SC memory export 18 entities / 13 relations as the current baseline."
+      - "If MC graph export is later used, define merge/dedup rules before combining counts."
+      - "Do not edit dashboard.md directly."
+      - "Do not claim MC generator integration."
+      - "If pytest SKIP > 0, task is incomplete."
+      - "Include AGENTS.md if rendering D001-D008 destructive-operation rules."
+    recommendation_to_karo:
+      action: deliver_to_ashigaru6
+      delivery_to_ashigaru6: allowed
+      summary: "第2度 reviseで23/19/18 entity衝突は解消。SC 18 export基準のLayer F standalone docs/test taskとして配信可。"
+
+  - audit_id: naomasa_rule_ack_stage_1_6_shogun_audit_request_chain
+    target_type: rule_ack
+    target_id: stage_1_6_shogun_audit_request_chain
+    parent_cmd: cmd_020
+    acknowledged_at: "2026-05-12T11:16:00+09:00"
+    acknowledged_by: naomasa
+    source_inbox:
+      - msg_20260512_111035_ee5f6a27
+    verdict: acknowledged
+    evidence_state: complete
+    completion_gate: open
+    rule_summary:
+      - "Stage 1-6 一気通貫"
+      - "shogun_audit_request 投函義務"
+      - "sequential 厳守"
+      - "兄上 checklist"
+      - "直政 verdict 後 trigger"
+    naomasa_operational_interpretation:
+      - "直政はaudit verdictをkaroへ即通達する。"
+      - "shogun_audit_request 投函は karo -> 本多 -> 家康 -> 兄上 chain に委ね、直政は監査専念を維持する。"
+      - "Layer F r2 pre-audit result is already recorded as pass_with_concerns / delivery_allowed, so this rule ack does not alter the verdict."
+    risk_note:
+      - "直政が直接 shogun_audit_request を投函すると監査専念規範とchain-of-commandを乱すため、本 rule は通達義務のみとして運用する。"
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review
