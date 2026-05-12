@@ -115,23 +115,39 @@ commit_plan:
       sha: TBD_SHA_3
 
 commit_history:
-  pending: true
-  note: "実 SHA は commit 後本 report に back-fill。F007 push は本 commit 後陛下御差配仰ぎ (= 兄上「夜襲出陣」 + 陛下「早く見たい」明示 + 容量回復 directive 整合、ただし bounded F007 は明示許可下のみ)。"
+  pending: false
+  note: "3 commit atomic 完遂 (= multi-agent-shogun-newbuild repo only、main branch 直 commit)。F007 push は陛下御差配仰ぎ pending (= ashigaru1 Layer A 規範踏襲、pending_user_sashihai)。"
+  commits:
+    - sha: a8cdf0969ec1e54bc2933c11961d99ea00cc641b
+      message: "docs(cmd_020 Layer E): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+      files:
+        - .gitignore (= cmd_020 Layer E whitelist 5 entry 追記)
+        - queue/reports/ashigaru5_dashboard_layer_e_inventory.yaml
+    - sha: 05bdedfc87d3b50497179586126fbea8ab1f0a19
+      message: "docs(cmd_020 Layer E): dashboard_layer_e_unyou.md render component + mermaid (= multi-agent-shogun-newbuild repo)"
+      files:
+        - docs/dashboard_layer_e_unyou.md
+    - sha: ee3d7524315ea4012d11777333f2d118ac818bee
+      message: "test(cmd_020 Layer E): static source-contract 5 test + report yaml + pytest log (= multi-agent-shogun-newbuild repo)"
+      files:
+        - scripts/test/test_dashboard_layer_e_static_contract.py
+        - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
+        - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
 
 push_plan:
   status: pending_user_sashihai
   repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
   bounded_allowlist:
-    本_task_3_commits_only: [TBD_SHA_1, TBD_SHA_2, TBD_SHA_3]
+    本_task_3_commits_only: [a8cdf0969ec1e54bc2933c11961d99ea00cc641b, 05bdedfc87d3b50497179586126fbea8ab1f0a19, ee3d7524315ea4012d11777333f2d118ac818bee]
     scope_exclusion:
       - 既 ashigaru5 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外
       - hakudokai-dev repo は本 task 範囲外
   worktree_clean_path:
     worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_e_main_wt origin/main"
-    cherry_pick: "git -C /tmp/cmd_020_layer_e_main_wt cherry-pick TBD_SHA_1 TBD_SHA_2 TBD_SHA_3"
+    cherry_pick: "git -C /tmp/cmd_020_layer_e_main_wt cherry-pick a8cdf0969ec1e54bc2933c11961d99ea00cc641b 05bdedfc87d3b50497179586126fbea8ab1f0a19 ee3d7524315ea4012d11777333f2d118ac818bee"
     pre_push_verify: |
       git -C /tmp/cmd_020_layer_e_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main_e.txt
-      printf '%s\n' TBD_SHA_1 TBD_SHA_2 TBD_SHA_3 | sort > /tmp/push_expected_main_e.txt
+      printf '%s\n' a8cdf0969ec1e54bc2933c11961d99ea00cc641b 05bdedfc87d3b50497179586126fbea8ab1f0a19 ee3d7524315ea4012d11777333f2d118ac818bee | sort > /tmp/push_expected_main_e.txt
       diff /tmp/push_actual_main_e.txt /tmp/push_expected_main_e.txt
       (= equality assert exit 0 必須、不一致 push abort)
     push_command: "git -C /tmp/cmd_020_layer_e_main_wt push origin HEAD:main"
