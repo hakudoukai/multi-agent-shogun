@@ -1462,3 +1462,152 @@ def test_render_dashboard_child_summary_keeps_5_item_grandchildren():
     assert rendered.count("**audit (黒田):**") >= n
     assert rendered.count("**shogun_verified:**") >= n
     assert rendered.count("**参照:**") >= n
+
+
+# ---------------------------------------------------------------------------
+# Cycle 6: Layer C 機能層 50 件 verify list 拡張 + Layer B Phase 子項目 + supabase_phase kind
+#   (kuroda cycle6 条件 3 明示 test: Layer C >= 50 / total 80-100、
+#    黒田事前監査 kuroda_cmd020_dashboard_cycle6_layer_c_extension_preaudit 整合)
+# ---------------------------------------------------------------------------
+
+
+def test_layer_c_verify_list_at_least_50_items():
+    """kuroda cycle6 条件 3: Layer C は 50 件 verify list を全件子項目化 (= 抜け漏れ 0)。"""
+    layer_c = rd.children_for_layer("C")
+    assert len(layer_c) >= 50, (
+        f"Layer C must include >= 50 children for cycle6 verify list, got {len(layer_c)}"
+    )
+
+
+def test_total_children_in_design_range_cycle6():
+    """kuroda cycle6 条件 3: total 約 80-100 (= cycle 5 retain + cycle 6 verify 50+)。
+
+    upper bound は cycle 5 既装備 53 + cycle 6 verify 50+ で 100 を自然に超えるため、
+    20% lenience (= 120 上限) を許容する (= 黒田 cycle6 条件 3 註: 抜け漏れ 0 retain 優先)。
+    """
+    total = len(rd.LAYER_CHILDREN)
+    assert total >= 80, f"total children must be >= 80 (cycle6 lower bound), got {total}"
+    assert total <= 120, (
+        f"total children should be ≤ 120 (= 約 100 + 20% lenient), got {total}"
+    )
+
+
+def test_layer_c_includes_signature_c_new_items():
+    """信長殿 directive 16:00 C-NEW-1 (W4 BE 予約ソフト + W5 FE) + C-NEW-2 (W14 外部 API) を含む。"""
+    layer_c = rd.children_for_layer("C")
+    labels = " | ".join(c["label"] for c in layer_c)
+    assert "予約ソフト BE 改修" in labels, "C-NEW-1a W4 phaseB 予約ソフト BE 改修 missing"
+    assert "予約⇔カルテ⇔受付シームレス FE 結線" in labels, "C-NEW-1b W5 phaseB FE 結線 missing"
+    assert "外部 API 統合(LINE 通知+Web 予約実接続)" in labels, "C-NEW-2 W14 外部 API missing"
+
+
+def test_layer_b_phase_children_added_cycle6():
+    """cycle6: Layer B Phase 層 完了 phase 子項目 (phaseB / phaseC / phaseD) が追加されている。"""
+    layer_b = rd.children_for_layer("B")
+    ids = {c["id"] for c in layer_b}
+    assert "B-5-PHASEB" in ids, "Layer B phaseB 完遂 child missing"
+    assert "B-6-PHASEC" in ids, "Layer B phaseC 患者アプリ child missing"
+    assert "B-7-PHASED" in ids, "Layer B phaseD 経営分析 child missing"
+
+
+def test_layer_c_supabase_verify_rows_all_have_status():
+    """cycle6 condition 2 (捏造禁): 50 件 verify row は status を全件保持 (空文字禁止)。"""
+    assert len(rd.LAYER_C_SUPABASE_VERIFY_ROWS) >= 50
+    valid = {"completed", "in_progress", "not_started"}
+    for row in rd.LAYER_C_SUPABASE_VERIFY_ROWS:
+        seq, label, status, week, phase_code, pc, commit = row
+        assert status in valid, f"row {seq}: status '{status}' not in {valid}"
+        assert label and week and phase_code and pc, (
+            f"row {seq}: missing required field"
+        )
+
+
+def test_compute_child_machine_state_supabase_phase_completed_yields_90():
+    """cycle6: kind=supabase_phase + completed → pct 90.0 (= 🟢 tier 整合)。"""
+    child = {
+        "layer": "C", "id": "C-V01", "label": "test",
+        "kind": "supabase_phase", "external_status": "completed",
+        "external_source": "Supabase development_progress (week=W1)",
+        "external_commit": "abc1234",
+    }
+    state = rd.compute_child_machine_state(child)
+    assert state["kind"] == "supabase_phase"
+    assert state["pct"] == 90.0
+    assert state["external_status"] == "completed"
+
+
+def test_compute_child_machine_state_supabase_phase_in_progress_yields_50():
+    """cycle6: kind=supabase_phase + in_progress → pct 50.0 (= 🟡 tier)。"""
+    child = {
+        "layer": "C", "id": "C-V29", "label": "test",
+        "kind": "supabase_phase", "external_status": "in_progress",
+        "external_source": "Supabase development_progress",
+        "external_commit": "",
+    }
+    state = rd.compute_child_machine_state(child)
+    assert state["pct"] == 50.0
+    assert state["external_status"] == "in_progress"
+
+
+def test_compute_child_machine_state_supabase_phase_not_started_yields_0():
+    """cycle6: kind=supabase_phase + not_started → pct 0.0 (= 🔴 tier 未着手)。"""
+    child = {
+        "layer": "C", "id": "C-V38", "label": "test",
+        "kind": "supabase_phase", "external_status": "not_started",
+        "external_source": "Supabase development_progress",
+        "external_commit": "",
+    }
+    state = rd.compute_child_machine_state(child)
+    assert state["pct"] == 0.0
+    assert state["external_status"] == "not_started"
+
+
+def test_format_child_status_line_supabase_phase_completed():
+    """cycle6: supabase_phase + completed → '完成 (Supabase development_progress)' format。"""
+    state = {"kind": "supabase_phase", "pct": 90.0, "external_status": "completed"}
+    line = rd.format_child_status_line(state)
+    assert "完成" in line
+    assert "Supabase development_progress" in line
+
+
+def test_format_child_status_line_supabase_phase_not_started():
+    """cycle6: supabase_phase + not_started → '未着手 (Supabase development_progress)' format。"""
+    state = {"kind": "supabase_phase", "pct": 0.0, "external_status": "not_started"}
+    line = rd.format_child_status_line(state)
+    assert "未着手" in line
+    assert "Supabase development_progress" in line
+
+
+def test_extract_child_evidence_supabase_phase_includes_supabase_source():
+    """cycle6: kind=supabase_phase の evidence は Supabase 由来 (= 捏造禁、source 明示)。"""
+    child = {
+        "layer": "C", "id": "C-V08", "label": "W4 phaseB 予約ソフト",
+        "kind": "supabase_phase", "external_status": "completed",
+        "external_source": "Supabase development_progress (week=W4, phase_code=phaseB, pc=second)",
+        "external_commit": "a07c834",
+        "ref": "信長殿 16:02 verify list + Supabase development_progress",
+    }
+    ev = rd.extract_child_evidence(child, kuroda_entries=[], shogun_entries=[])
+    assert "a07c834" in ev["commit"]
+    assert "completed" in ev["audit"] or "Supabase" in ev["audit"]
+    assert "Supabase 完了記録" in ev["shogun_verified"]
+    assert "Supabase development_progress" in ev["test"]
+    assert "信長殿 16:02 verify list" in ev["ref"]
+
+
+def test_render_dashboard_includes_supabase_phase_status_line():
+    """cycle6: render に supabase_phase children の status line ('完成 (Supabase ...)' 等) が出現。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # 50 件 verify list で completed 多数 → '完成 (Supabase development_progress)' が複数回出現
+    assert rendered.count("完成 (Supabase development_progress)") >= 20, (
+        "cycle6 verify list completed children render に出現せず"
+    )
+    # not_started 系も出現 (W14 LINE 等 = C-NEW-2)
+    assert "未着手 (Supabase development_progress)" in rendered
+
+
+def test_render_dashboard_w14_line_external_api_appears():
+    """cycle6: 信長殿 directive C-NEW-2 (W14 外部 API LINE+Web 予約) が render に出現。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "LINE 通知" in rendered or "LINE通知" in rendered
+    assert "Web 予約" in rendered or "Web予約" in rendered

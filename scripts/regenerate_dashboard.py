@@ -356,6 +356,136 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
 ]
 
 
+# cycle6: Layer C verify list 拡張 — 信長殿 16:02 能動 verify 50 件全件抜け漏れ反映
+# (= 黒田事前監査 kuroda_cmd020_dashboard_cycle6_layer_c_extension_preaudit 条件 1 + 2 整合)。
+# 各 row は Supabase development_progress を SoT として明示 (= 捏造禁、source 列含む)。
+# Row 形式: (id_seq, label, status, week, phase_code, pc, commit_hash)
+# status ∈ {completed, in_progress, not_started} を kind=supabase_phase で 90/50/0 pct 化。
+LAYER_C_SUPABASE_VERIFY_ROWS: list[tuple[str, str, str, str, str, str, str]] = [
+    # 基盤 W1-W2 (4 件)
+    ("V01-W1DB",      "W1 DB拡張+API(7 テーブル+9 API)",                              "completed",  "W1",        "phase1",                   "second", ""),
+    ("V02-W1KARTE",   "W1 カルテ画面 v2.0 骨格+デザイントークン+SKILL.md",            "completed",  "W1",        "phase2w1",                 "main",   "4d56e6d"),
+    ("V03-W2COMP",    "W2 コンポーネント接続+ロール別+SOAP UI",                       "completed",  "W2",        "phase2w2",                 "main",   "5b6811d"),
+    ("V04-W2AIIMG",   "W2 AI 画像判定 API+所見提案 API",                              "completed",  "W2",        "phase3",                   "second", ""),
+    # W3-W5 機能 (6 件)
+    ("V05-W3AIUI",    "W3 AI 判定 UI(黄バッジ)+確認訂正 UI",                          "completed",  "W3",        "phase3",                   "main",   "097bb29"),
+    ("V06-W3SPID",    "W3 蜘蛛の糸 BE+日計表+受付ダッシュボード+Quartetto",           "completed",  "W3",        "phase4",                   "second", "5aaa5dc"),
+    ("V07-W4FE",      "W4 FE 結線(歯式→処置セット制御+日計表 FE+受付 FE)",            "completed",  "W4",        "phase4",                   "main",   "b37a5ee"),
+    ("V08-W4YOYAKU",  "W4 phaseB 予約ソフト BE 改修(次回予約提案+脱落 AI+カルテ橋渡し)", "completed", "W4",        "phaseB",                   "second", "a07c834"),
+    ("V09-W5YOYFE",   "W5 phaseB 予約⇔カルテ⇔受付シームレス FE 結線",                "completed",  "W5",        "phaseB",                   "main",   "cd5e3df"),
+    ("V10-W5KEIEI",   "W5 phaseD 経営分析+AI メール+CTI 基盤",                        "completed",  "W5",        "phaseD",                   "second", "4051e26"),
+    # W6-W9 患者+AI (10 件)
+    ("V11-W6PWABE",   "W6 phaseC 患者アプリ BE(PWA API+AI チャット+電子明細書+高速会計)", "completed", "W6",       "phaseC",                   "second", "f0b5fed"),
+    ("V12-W6PWAUI",   "W6 phaseC 患者アプリ UI(PWA+歯式+治療選択肢+電子明細書+AI チャット)", "completed", "W6",     "phaseC",                   "main",   "b753f1e"),
+    ("V13-W7LEARN",   "W7 学習ループ(contributor 設定+精度測定)",                      "completed",  "W7",        "phase5",                   "second", "ed6cb5c"),
+    ("V14-W7KEIEIUI", "W7 phaseD 経営分析ダッシュボード UI+AI メール設定画面",         "completed",  "W7",        "phaseD",                   "main",   "fad02dd"),
+    ("V15-W8TCUI",    "W8 TC カウンセリング画面+治療計画 UI",                          "completed",  "W8",        "phase6",                   "main",   "48dca02"),
+    ("V16-W8TPNAVI",  "W8 治療計画ナビ BE(治療計画 AI+TC カウンセリング API)",         "completed",  "W8",        "phase6",                   "second", "156749d"),
+    ("V17-W9AIK",     "W9 P1-karte 2 号用紙 AI 清書配線(DD-036→v2 UI 接続)",          "completed",  "W9",        "P1-karte",                 "main",   "9beb61b"),
+    ("V18-W9KARTE",   "W9 P1-karte カルテ履歴画面(患者別時系列 SOAP 一覧)",            "completed",  "W9",        "P1-karte",                 "main",   "cb02e50"),
+    ("V19-W9TENKI",   "W9 P1-karte カルテ転記(清書変換+整理+プレビュー)",              "completed",  "W9",        "P1-karte",                 "main",   "021b492"),
+    ("V20-W9MOKB",    "W9 P1-karte 申し送りカンバン連動(SOAP 確定→自動記載)",          "completed",  "W9",        "P1-karte",                 "main",   "77ebed6"),
+    # W9 補強 + SEC-1 (3 件)
+    ("V21-W9TENSU",   "W9 P2-engine R8 施行前の全処置セット点数確認",                  "not_started","W9",        "P2-engine",                "either", ""),
+    ("V22-W9SPIDCHK", "W9 P2-engine 蜘蛛の糸 算定チェック+バリデーション(design_tasks 169 件)", "not_started", "W9", "P2-engine",            "either", ""),
+    ("V23-W9SEC1",    "W9 SEC-1: datetime 統一+CORS+SECRET+API_BASE 集約",            "completed",  "W9",        "P4-security",              "second", "7c2e567"),
+    # W10 (4 件)
+    ("V24-W10CNV2",   "W10 P1-karte CNV2 連動(A 欄確定→処置セット自動反映)",          "completed",  "W10",       "P1-karte",                 "main",   "cb02e50"),
+    ("V25-W10PDFP",   "W10 P1-karte カルテ印刷 PDF 出力",                              "completed",  "W10",       "P1-karte",                 "main",   "b22a368"),
+    ("V26-W10DATE",   "W10 P1-karte 日付管理(同日複数回・日付またぎ)",                  "completed",  "W10",       "P1-karte",                 "main",   "e866946"),
+    ("V27-W10JIHI",   "W10 P1-karte 自費カルテ欄(保険/自費分離記載)",                  "completed",  "W10",       "P1-karte",                 "main",   "892be39"),
+    # W11 (4 件)
+    ("V28-W11HOMON",  "W11 訪問 Phase5(申し送り+画像+AI 清書)",                       "completed",  "W11",       "P6-visit",                 "either", "967474a6"),
+    ("V29-W11DDA",    "W11 DD-054 Phase A: ID 体系統一(meisai_receipt_renderer→患者番号/医院 ID 複合キー)", "in_progress", "W11", "phase_a_id_unification", "main", ""),
+    ("V30-W11DDB",    "W11 DD-054 Phase B: カルテ TAB→karte_visits/karte_visit_items 同時投入ローダー新設", "in_progress", "W11", "phase_b_karte_loader", "main", ""),
+    ("V31-W11CHOREI", "W11 朝礼フル版 Phase1-4",                                       "not_started","W11",       "POST-deploy",              "either", ""),
+    # W12 (2 件)
+    ("V32-W12TPL",    "W12 書式テンプレート Lv2",                                      "completed",  "W12",       "P5-docs",                  "either", "56cb6dbe"),
+    ("V33-W12CLNUI",  "W12 臨床ナレッジ UI",                                           "not_started","W12",       "POST-deploy",              "either", ""),
+    # W13 (2 件)
+    ("V34-W13VISIT",  "W13 訪問 Phase4-7(中期残)",                                    "not_started","W13",       "P6-visit",                 "either", ""),
+    ("V35-W13RTE",    "W13 訪問ルート最適化",                                          "not_started","W13",       "P6-visit",                 "either", ""),
+    # W14 (4 件) — 信長殿 directive 16:00 C-NEW-2 を V38 で明示
+    ("V36-W14PAY",    "W14 ペイライト 実 API 接続",                                    "not_started","W14",       "P3-patient",               "either", ""),
+    ("V37-W14CTI",    "W14 CTI 実接続(VALTEC MOT/TEL)",                                "not_started","W14",       "POST-deploy",              "either", ""),
+    ("V38-W14LINE",   "W14 外部 API 統合(LINE 通知+Web 予約実接続) ※C-NEW-2",         "not_started","W14",       "POST-deploy",              "either", ""),
+    ("V39-W14YOSHI3", "W14 書式 Lv3+唾液検査",                                        "not_started","W14",       "POST-deploy",              "either", ""),
+    # W15 (3 件)
+    ("V40-W15VAL",    "W15 D-1 全文書バリデーション",                                  "completed",  "W15",       "P5-docs",                  "either", "9e7d838c"),
+    ("V41-W15DEP",    "W15 D-2 デプロイ手順書+実データテスト+Tailscale",               "not_started","W15",       "P7-deploy",                "either", ""),
+    ("V42-W15MAN",    "W15 D-3 操作マニュアル",                                        "not_started","W15",       "P7-deploy",                "either", ""),
+    # W16-W17 (2 件)
+    ("V43-W16MAT",    "W16 材料管理(QR スキャン+納品 OCR+棚 AI+理論消費量)",          "not_started","W16",       "POST-deploy",              "either", ""),
+    ("V44-W17JINJI",  "W17 人事+DTF アダプター+全院展開",                              "not_started","W17",       "POST-deploy",              "either", ""),
+    # 2026-W17 RM-003e/f (2 件)
+    ("V45-RM3E",      "RM-003e queuer.py(Step 5-5 receipt_mail_queue INSERT)",         "completed",  "2026-W17",  "P8-receipt-mail",          "second", "7cb76588"),
+    ("V46-RM3F",      "RM-003f processor.enqueue 統合(Step 5-6 watcher→extract→stamp→match→rename→queue)", "completed", "2026-W17", "P8-receipt-mail", "second", "ca69c8c9"),
+    # week-null (5 件 grouped)
+    ("V47-AIVICE",    "AI 副院長 Phase3: ViceDirectorChat.tsx 音声フック接続",         "completed",  "(week=null)", "ai_vice",                "main",   ""),
+    ("V48-KVERIFY",   "患者 02 照合 Day16〜再開",                                       "completed",  "(week=null)", "karte_verify",           "either", ""),
+    ("V49-RMGROUP",   "RM-001〜RM-003d 領収書メール処理(queue/watcher/extract/stamp/rename/match 完遂 8 件)", "completed", "(week=null)", "P8-receipt-mail", "second", "292de49e+b4c24baf+e441e6eb+c433cdc0+cae1abaa+99c819cc+073174fd"),
+    ("V50-QUALITY",   "品質改善 A/B/C+デザイントークン 340+dental-ui+BE/FE 監査+TS_DENTURE_NEW+疑義解釈 18 件(week-null quality cluster 完遂)", "completed", "(week=null)", "quality+shochi_set", "main+second", "15bf356+06f41296+3983ac90+cff2966+d325863+c4f7615+35ad8c1"),
+]
+
+
+def _build_supabase_phase_child(
+    seq: str, label: str, status: str, week: str, phase_code: str, pc: str, commit_hash: str,
+    *, layer: str = "C", note: str = "",
+) -> dict[str, Any]:
+    """Build a LAYER_CHILDREN entry from a Supabase development_progress row.
+
+    kind=supabase_phase で compute_child_machine_state が status→pct を 90/50/0 に
+    決定する。捏造禁 (黒田 cycle6 条件 2): status 不明時は呼出側が source_unavailable
+    経路へ振る分岐責務、本関数は機械抽出値のみ封入する。
+    """
+    source = (
+        f"Supabase development_progress (week={week}, phase_code={phase_code}, pc={pc})"
+    )
+    ref_parts = ["信長殿 16:02 verify list", source]
+    if note:
+        ref_parts.append(note)
+    return {
+        "layer": layer,
+        "id": f"{layer}-{seq}",
+        "label": label,
+        "kind": "supabase_phase",
+        "external_status": status,
+        "external_source": source,
+        "external_commit": commit_hash,
+        "supabase_table": "development_progress",
+        "ref": " / ".join(ref_parts),
+    }
+
+
+# Layer C を 50 件 verify list で拡張 (= 22 → 72)。
+LAYER_CHILDREN.extend(
+    _build_supabase_phase_child(*row) for row in LAYER_C_SUPABASE_VERIFY_ROWS
+)
+
+# cycle6: Layer B Phase 層 完了 phase 子項目 list (= 計画書 v0.1 §4.1 mockup 整合、
+# Layer C と grouping 整合)。phaseB 予約ソフト / phaseC 患者アプリ / phaseD 経営分析。
+LAYER_CHILDREN.extend([
+    _build_supabase_phase_child(
+        "5-PHASEB", "phaseB 予約ソフト 完遂(W4 BE a07c834 + W5 FE cd5e3df)",
+        "completed", "W4+W5", "phaseB", "second+main", "a07c834+cd5e3df",
+        layer="B",
+        note="Layer C V08-W4YOYAKU + V09-W5YOYFE と grouping 整合 (= 信長殿 directive C-NEW-1)",
+    ),
+    _build_supabase_phase_child(
+        "6-PHASEC", "phaseC 患者アプリ 延伸 完遂(W6 BE f0b5fed + UI b753f1e)",
+        "completed", "W6", "phaseC", "second+main", "f0b5fed+b753f1e",
+        layer="B",
+        note="PWA+歯式+AI チャット+電子明細書+高速会計連携 (Layer C V11/V12 と整合)",
+    ),
+    _build_supabase_phase_child(
+        "7-PHASED", "phaseD 経営分析+AI メール+CTI 基盤 完遂(W5 BE 4051e26 + W7 UI fad02dd)",
+        "completed", "W5+W7", "phaseD", "second+main", "4051e26+fad02dd",
+        layer="B",
+        note="BE 経営分析+AI メール+CTI 基盤 (W5) + UI 経営分析 dashboard+AI メール設定 (W7)",
+    ),
+])
+
+
 # cycle4: mermaid v0.2 §4.2 — Layer C 機能層 → 会計待ちゼロ / 小児恐竜王国 / 申し送り
 # children 接続図。第 1 mermaid (= Layer A 5 階層 + 10 柱) と別 block で表示する。
 LAYER_C_CHILDREN_MERMAID = """```mermaid
@@ -621,6 +751,23 @@ def extract_child_evidence(
     """
     kind = child.get("kind")
 
+    # cycle6: Supabase development_progress 直接参照 children (= 50 件 verify list).
+    # 黒田 cycle6 条件 2 整合 — status は Supabase 抽出値、捏造禁。
+    if kind == "supabase_phase":
+        status = str(child.get("external_status", ""))
+        commit = str(child.get("external_commit", "")) or "(commit_hash unrecorded)"
+        source = str(child.get("external_source", ""))
+        audit_label = f"Supabase development_progress: {status or 'unknown'}"
+        shogun_label = "Supabase 完了記録" if status == "completed" else FALLBACK_SHOGUN_FALSE
+        ref_parts: list[str] = [str(child.get("ref", FALLBACK_REF))]
+        return {
+            "commit": commit,
+            "test": f"status={status} ({source})" if source else f"status={status}",
+            "audit": audit_label,
+            "shogun_verified": shogun_label,
+            "ref": ref_parts[0] if ref_parts else FALLBACK_REF,
+        }
+
     # W9 batch / stage children — reuse aggregate stats as machine evidence.
     if kind == "w9_batch":
         batch_id = str(child.get("batch", ""))
@@ -735,6 +882,26 @@ def compute_child_machine_state(
     shogun_entries = shogun_entries if shogun_entries is not None else []
     kind = child.get("kind")
 
+    # cycle6: Supabase development_progress 直接参照 (= 50 件 verify list).
+    # status → pct: completed=90 / in_progress=50 / not_started=0、捏造禁。
+    if kind == "supabase_phase":
+        status = str(child.get("external_status", ""))
+        if status == "completed":
+            pct = 90.0
+        elif status == "in_progress":
+            pct = 50.0
+        elif status == "not_started":
+            pct = 0.0
+        else:
+            pct = 0.0  # unknown / blank → 0、source_unavailable 経路
+        return {
+            "kind": "supabase_phase",
+            "pct": pct,
+            "external_status": status,
+            "external_source": str(child.get("external_source", "")),
+            "external_commit": str(child.get("external_commit", "")),
+        }
+
     if kind == "w9_batch":
         batch_id = str(child.get("batch", ""))
         match = next(
@@ -819,6 +986,16 @@ def format_child_status_line(state: dict[str, Any]) -> str:
     """
     kind = str(state.get("kind", ""))
     pct = float(state.get("pct") or 0.0)
+
+    if kind == "supabase_phase":
+        status = str(state.get("external_status", ""))
+        if status == "completed":
+            return "完成 (Supabase development_progress)"
+        if status == "in_progress":
+            return "進行中 (Supabase development_progress)"
+        if status == "not_started":
+            return "未着手 (Supabase development_progress)"
+        return "未照合 (Supabase status_unknown)"
 
     if kind == "w9_batch":
         return f"batch{state.get('batch', '?')} 平均 {pct:.1f}% ({state.get('task_count', 0)} 件)"
