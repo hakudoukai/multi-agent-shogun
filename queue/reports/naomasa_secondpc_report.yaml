@@ -1196,6 +1196,198 @@ dashboard_task_pre_delivery_audits:
       delivery_to_ashigaru1: allowed
       summary: "第10度 revise で前回4主因は解消。MC artifact 不在は後段化され、Layer A は multi-agent-only の standalone docs/test task として配信可。"
 
+  - audit_id: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    target_type: task_yaml_pre_delivery_gate_batch
+    target_task_ids:
+      - subtask_cmd020_dashboard_layer_b_phase_render
+      - subtask_cmd020_dashboard_layer_c_function_render
+      - subtask_cmd020_dashboard_layer_d_zunou_kumonoito_render
+      - subtask_cmd020_dashboard_layer_e_unyou_render
+      - subtask_cmd020_dashboard_layer_f_kihan_render
+      - subtask_cmd020_dashboard_layer_g_integration_drill_down_js
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T11:18:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_110414_6c590daf
+      - msg_20260512_110513_21bc7802
+    source_task_yamls:
+      - queue/tasks/subtask_cmd020_dashboard_layer_b_phase_render.yaml
+      - queue/tasks/subtask_cmd020_dashboard_layer_c_function_render.yaml
+      - queue/tasks/subtask_cmd020_dashboard_layer_d_zunou_kumonoito_render.yaml
+      - queue/tasks/subtask_cmd020_dashboard_layer_e_unyou_render.yaml
+      - queue/tasks/subtask_cmd020_dashboard_layer_f_kihan_render.yaml
+      - queue/tasks/subtask_cmd020_dashboard_layer_g_integration_drill_down_js.yaml
+    source_design_docs:
+      - docs/dashboard_design_v0.1.md
+      - docs/dashboard_design_v0.2.md
+      - docs/dashboard_layer_a_kousou.md
+      - queue/reports/sc_memory_entities_export_20260512.yaml
+    batch_verdict: pass_with_one_blocked
+    evidence_state: complete
+    completion_gate: partially_open
+    audit_gate_status: "B,C,D,E,G pass_with_concerns_delivery_allowed; F fail_requires_karo_revision"
+    pre_delivery_gate_summary:
+      layer_b: {verdict: pass_with_concerns, delivery_allowed: true}
+      layer_c: {verdict: pass_with_concerns, delivery_allowed: true}
+      layer_d: {verdict: pass_with_concerns, delivery_allowed: true}
+      layer_e: {verdict: pass_with_concerns, delivery_allowed: true}
+      layer_f: {verdict: fail, delivery_allowed: false}
+      layer_g: {verdict: pass_with_concerns, delivery_allowed: true}
+    common_assessment:
+      six_point_check:
+        directive_nine_sections: {status: pass}
+        design_doc_id: {status: pass, value: "docs/dashboard_design_v0.1.md §2 + docs/dashboard_design_v0.2.md §3-5"}
+        task_path_type: {status: pass, value: sonnet_codex_sonnet}
+        max_cycle: {status: pass, value: 7}
+        bloom_level_suitability: {status: pass, value: L3}
+        anti_dup: {status: pass_with_concerns, reason: "All six tasks are SC standalone docs/reports/tests and defer MC generator integration. However commit 72f1c0d/regenerate_dashboard.py is not present in this repo, so MC anti-dup remains a later integration gate, not a claimable AC in these tasks."}
+      perspective_verdicts:
+        1_functional_completeness: pass_with_concerns
+        2_anti_duplication: pass_with_concerns
+        3_kiritsu_chain_of_command: pass_with_concerns
+        4_logic_consistency: pass_with_concerns
+        5_schema_data_contract: pass_with_concerns
+        6_test_ci_evidence: pass_with_concerns
+        7_legal_privacy_security: pass
+        8_operations: pass_with_concerns
+        9_documentation: pass
+        10_ecosystem_coherence: pass_with_concerns
+        11_cross_pc_repo_check: pass_with_concerns
+        12_future_operations_radicality: pass_with_concerns
+      machine_evidence:
+        layer_source: "docs/dashboard_design_v0.1.md L29-L70 defines Layers B-F; docs/dashboard_design_v0.2.md L79-L103 defines progress and color rules; L119-L152 defines HTML details/progress; L176-L187 defines stages."
+        layer_a_pattern: "docs/dashboard_layer_a_kousou.md L3-L8 records SC standalone docs scope and MC integration defer pattern."
+        mc_commit_check: "git cat-file -t 72f1c0d returned no object in this repo; local git log has dashboard Layer A commits but no regenerate_dashboard.py commit object."
+        memory_count_check: "queue/reports/sc_memory_entities_export_20260512.yaml L6-L12 records SC graph entities_count=18, relations_count=13."
+    per_task_findings:
+      layer_b:
+        target_task_id: subtask_cmd020_dashboard_layer_b_phase_render
+        verdict: pass_with_concerns
+        evidence_state: complete
+        completion_gate: open
+        audit_gate_status: pass_delivery_allowed
+        findings:
+          - severity: medium
+            perspective: 2_anti_duplication
+            issue: "Task says MC anti-dup check is required against commit 72f1c0d, but this Codex workspace cannot verify that commit/artifact."
+            recommendation: "Deliver as SC standalone Layer B component only. Do not claim generator integration or MC anti-dup completion; record it deferred."
+          - severity: low
+            perspective: 5_schema_data_contract
+            issue: "AC2 says Supabase read of development_progress 50+ records, but task deliverable is a static markdown component."
+            recommendation: "Inventory may cite expected fields and source table, but must not fabricate live 50+ rows unless an actual export is supplied."
+        delivery_conditions:
+          - "Do not edit dashboard.md directly."
+          - "Do not claim MC regenerate_dashboard.py integration."
+          - "If pytest SKIP > 0, task is incomplete."
+          - "If live Supabase rows are unavailable, label record examples as schema/anchor, not fetched data."
+      layer_c:
+        target_task_id: subtask_cmd020_dashboard_layer_c_function_render
+        verdict: pass_with_concerns
+        evidence_state: complete
+        completion_gate: open
+        audit_gate_status: pass_delivery_allowed
+        findings:
+          - severity: medium
+            perspective: 4_logic_consistency
+            issue: "Layer C spans cmd_004 dossiers, two battlefields, Moushi engine, and function 1-7 anchors; scope is broad for one static doc."
+            recommendation: "Keep this as a dossier index/render component, not a factual completion verdict for each feature unless reports are cited."
+          - severity: low
+            perspective: 10_ecosystem_coherence
+            issue: "Spider-thread Layer D references are required but Layer D is separate."
+            recommendation: "Use cross-layer anchors only and avoid duplicating Layer D legal records."
+        delivery_conditions:
+          - "Cite queue reports or mark status unknown; no invented completion rates."
+          - "Do not involve hakudokai-dev."
+          - "Do not claim MC generator integration."
+      layer_d:
+        target_task_id: subtask_cmd020_dashboard_layer_d_zunou_kumonoito_render
+        verdict: pass_with_concerns
+        evidence_state: complete
+        completion_gate: open
+        audit_gate_status: pass_delivery_allowed
+        findings:
+          - severity: medium
+            perspective: 6_test_ci_evidence
+            issue: "Task requires counts such as legal_sources 1600 and legal_source_linkages 3235, but no fresh Supabase export is attached."
+            recommendation: "Render counts from design v0.1/v0.2 as expected source counts unless a fetched data export is provided; test should verify anchors, not live data truth."
+          - severity: medium
+            perspective: 7_legal_privacy_security
+            issue: "Layer D touches legal/inspection datasets. Full listing of 8000+ records would be too large and may leak sensitive operational details if blindly copied."
+            recommendation: "Use aggregated counts, table names, update timestamps, and drill-down placeholders; defer full record drill-down to generator with RLS and query budget controls."
+        delivery_conditions:
+          - "No bulk 8000+ record paste into docs."
+          - "Use ETag/diff strategy as design reference only unless real fetch artifact exists."
+          - "Do not claim live Supabase verification without log."
+      layer_e:
+        target_task_id: subtask_cmd020_dashboard_layer_e_unyou_render
+        verdict: pass_with_concerns
+        evidence_state: complete
+        completion_gate: open
+        audit_gate_status: pass_delivery_allowed
+        findings:
+          - severity: medium
+            perspective: 8_operations
+            issue: "Layer E asks for tmux pane, process count, service, inbox, ntfy, and ttyd status. Static docs can define render schema, but live status changes minute by minute."
+            recommendation: "Make this a schema/render contract plus sample snapshot format. Live status must come from generator/runtime logs, not hardcoded markdown."
+          - severity: low
+            perspective: 11_cross_pc_repo_check
+            issue: "MC/SC status requires cross-PC access and may diverge."
+            recommendation: "Include stale_at/source_host fields and mark unreachable hosts as blocked_env rather than guessing."
+        delivery_conditions:
+          - "No polling loop by ashigaru."
+          - "No tmux send-keys or process killing."
+          - "Live values require timestamped command log or are marked sample/unknown."
+      layer_f:
+        target_task_id: subtask_cmd020_dashboard_layer_f_kihan_render
+        verdict: fail
+        evidence_state: complete
+        completion_gate: blocked
+        audit_gate_status: fail_requires_karo_revision
+        findings:
+          - severity: high
+            perspective: 5_schema_data_contract
+            issue: "Task repeatedly requires 'memory MCP 23 entities', but the available SC export records 18 entities and dashboard v0.1 references 19 entities. The baseline is inconsistent."
+            evidence:
+              - "queue/reports/sc_memory_entities_export_20260512.yaml L6-L12: entities_count=18, relations_count=13."
+              - "docs/dashboard_design_v0.1.md L78: memory MCP 19 entities + relations."
+              - "Task AC2/test name says memory MCP 23 entities."
+            recommendation: "Revise Layer F task to use the committed SC 18-entity export as current baseline, and optionally add a separate MC graph appendix once exported. Do not dispatch with a hardcoded 23 count."
+          - severity: medium
+            perspective: 9_documentation
+            issue: "Task references CLAUDE.md and instructions/*.md but not AGENTS.md, which is the auto-loaded active operational rule in this Codex session."
+            recommendation: "Add AGENTS.md and instructions/generated/codex-gunshi.md as explicit sources, and state that Codex lacks memory MCP direct access."
+        required_revision_before_delivery:
+          - "Replace 'memory MCP 23 entities' with 'SC memory export 18 entities / 13 relations as of 2026-05-12T08:43+09:00'."
+          - "If 23 is required, attach the MC graph export and define SC+MC merge/dedup rules."
+          - "Add AGENTS.md as an explicit source for D001-D008 and current chain-of-command rules."
+      layer_g:
+        target_task_id: subtask_cmd020_dashboard_layer_g_integration_drill_down_js
+        verdict: pass_with_concerns
+        evidence_state: complete
+        completion_gate: open
+        audit_gate_status: pass_delivery_allowed
+        findings:
+          - severity: medium
+            perspective: 4_logic_consistency
+            issue: "Task id/title says drill-down JS, while dashboard v0.2 §4.1 says HTML5 <details> native accordion and JS 0."
+            recommendation: "Executor may keep the existing task id, but deliverable text should call it native HTML drill-down, not custom JS."
+          - severity: medium
+            perspective: 8_operations
+            issue: "Task bundles Stage 3 HTML, Stage 4 timer design, and Stage 5 verification plan in one doc. It says spec only, which is acceptable, but implementation wording could drift."
+            recommendation: "Keep this task as spec/render contract only; no systemd unit install, timer enable, or 24h verification claim in this cycle."
+        delivery_conditions:
+          - "No systemd unit creation/enable in this task."
+          - "No dashboard.md direct edit."
+          - "HTML must remain self-contained and avoid external CDN dependency."
+    recommendation_to_karo:
+      action: "deliver_B_C_D_E_G_revise_F"
+      summary: "B/C/D/E/GはSC standalone docs/test taskとして配信可。Fはmemory entity countが23/19/18で衝突するため、SC 18 export基準へ修正後に再監査せよ。"
+    progress_ack:
+      queue_count: 6
+      completed_pre_audits: 6
+      eta: "F revision arrival後 10-15min で追加pre-audit可能"
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review
