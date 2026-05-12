@@ -10,9 +10,9 @@
   - `docs/cmd004_ai_chat_spec.md` (ashigaru5 起案、AI チャット系)
   - `docs/cmd004_guardian_consent_spec.md` (ashigaru4 起案、保護者同意 gate)
 - 根拠 file (= 機械 evidence 引用):
-  - `/mnt/c/Projects/hakudokai-dev/backend/services/teriha_passport_engine.py` (502 行、L1-502 全数把握)
-  - `/mnt/c/Projects/hakudokai-dev/backend/routers/teriha_passport.py` (431 行)
-  - `/mnt/c/Projects/hakudokai-dev/backend/services/child_adventure_engine.py` (203 行、参考)
+  - `<DENTALBI_REPO_ROOT>/backend/services/teriha_passport_engine.py` (502 行、L1-502 全数把握)
+  - `<DENTALBI_REPO_ROOT>/backend/routers/teriha_passport.py` (431 行)
+  - `<DENTALBI_REPO_ROOT>/backend/services/child_adventure_engine.py` (203 行、参考)
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 1. AC1: dinosaur_kingdom 既実装 inventory (file:line)
 
-調査 base: `/mnt/c/Projects/hakudokai-dev/` HEAD (2026-05-11 16:35 push 後)。
+調査 base: `<DENTALBI_REPO_ROOT>/` HEAD (2026-05-11 16:35 push 後)。
 
 ### 1-1. Engine 層 (= 既存)
 
@@ -481,7 +481,7 @@ import 追加: `import hashlib` (RNG seed 派生)、`import secrets` (battle_id 
 
 ## 8. F007 + 本能寺戒め 遵守宣言
 
-- 本 spec 起案中に **`/mnt/c/Projects/hakudokai-dev/` への破壊的操作なし** (= read-only inventory + ローカル `docs/` 起案のみ)。
+- 本 spec 起案中に **`<DENTALBI_REPO_ROOT>/` への破壊的操作なし** (= read-only inventory + ローカル `docs/` 起案のみ)。
 - engine への stub 追加 commit 後、**push は陛下御差配仰ぎ** (F007)、ashigaru 単独 push 禁。
 - 戦闘 logic の数値根拠 (HP 10/30/60/120/250) は本 spec 内で baseline + 計算式として明示 (= 推測不在、合議で調整可)。
 - 100 体名称はカタカナ + 児童向け、医療文脈との混同を避けるため **歯科処置名は使用せず** (= 既存 `assign_mission_from_procedure` 経路と分離)。
