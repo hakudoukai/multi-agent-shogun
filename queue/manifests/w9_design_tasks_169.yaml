@@ -1,0 +1,297 @@
+# cmd_004 W9 design_tasks 169 件 manifest v1.0
+#
+# SoT 根拠:
+#   - session_minutes.id = cc20258b-d27b-40d8-a501-572902f11256 (副院長三点照合判定)
+#   - development_progress: week='W9' / phase_code='P2-engine' / status='not_started'
+#   - design_tasks SELECT WHERE status='pending' = 169 件 完全一致
+#
+# 起案: 信長 (= MC shogun) 2026-05-11T22:38:00+09:00
+# 規範: task_directive_pre_emit_sot_check_rule (= Supabase 三点照合済)
+# 用途: バッチ task YAML 起案時の design_task ID 参照 manifest、anti-duplication machine gate
+
+manifest:
+  version: "1.0"
+  generated_by: shogun
+  generated_at: "2026-05-11T22:38:00+09:00"
+  source: design_tasks
+  source_query: "SELECT id, category, priority, status, title FROM design_tasks WHERE status='pending'"
+  total_count: 169
+  priority_distribution:
+    high: 124
+    medium: 40
+    low: 4
+    deferred: 1
+  status_check:
+    pending: 169
+    completeness: "100% (= 副院長判定値完全一致)"
+  related_phase:
+    week: W9
+    phase_code: P2-engine
+    title: "蜘蛛の糸: 算定チェック+バリデーション実装(design_tasks 169件)"
+    pc: either
+
+batches:
+  - batch_id: 1
+    category: 算定チェック
+    count: 42
+    priority_distribution: {high: 31, medium: 11}
+    starting_task_recommended: "32be109c-c7bd-465d-bbf6-561708bda4ff (算定前提条件マスタ prerequisite_rules)"
+    ids:
+      # high (31)
+      - {id: "020c76b9-890e-48af-bc76-ffda41bac0ed", priority: high, title: "カルテ→文書/文書→カルテの双方向自動転記"}
+      - {id: "09d2a5fa-332b-4932-a6dc-6d5c6050aae7", priority: high, title: "算定チェックエンジン多層構造設計"}
+      - {id: "117b428b-3beb-4268-aa6e-54e3d778fbf3", priority: high, title: "6歳未満乳幼児加算の自動付加(処置通則)"}
+      - {id: "2a784d49-337d-4e55-ac7e-4ad404e82516", priority: high, title: "病名チェックマスタ（処置↔病名双方向）"}
+      - {id: "31eb8a06-b586-4e6d-aae2-336e03572871", priority: high, title: "浸潤麻酔(K001)の包括ルール具体実装"}
+      - {id: "32be109c-c7bd-465d-bbf6-561708bda4ff", priority: high, title: "算定前提条件マスタ(prerequisite_rules)"}
+      - {id: "3b1e790b-6110-41e5-8f0e-6a9ceef5ab60", priority: high, title: "根管数の歯種別自動判定＋Dr確定フロー"}
+      - {id: "40650694-c025-4a02-ba02-cd8f68e3f293", priority: high, title: "50%増しルール(処置通則5)の自動計算"}
+      - {id: "499ed1bd-5605-4f09-bf84-59de5277a2a3", priority: high, title: "セット算定(1処置→複数コード自動)"}
+      - {id: "4f8b3ebf-9432-4a50-b757-1e6fa309f4db", priority: high, title: "D000根管数加算の自動計算"}
+      - {id: "5718d228-24de-4248-b04a-64618c91b000", priority: high, title: "算定目的(reason_code)＋レセプトコメント自動生成"}
+      - {id: "5d800283-e98b-4121-be90-5125b4d74557", priority: high, title: "技術料+材料料分離の算定モデル実装"}
+      - {id: "62f635c5-a43a-413d-9ddf-e00ca17eea4a", priority: high, title: "加圧根管充填処置の根管数チェック＋デンタル撮影確認＋施設基準チェック"}
+      - {id: "7076c785-f2d1-4578-8ed1-201f867e0d9d", priority: high, title: "B013新義歯管理料の困難判定自動化"}
+      - {id: "71665316-b38e-40ce-89ad-84c05037a036", priority: high, title: "機歯清のSPT/P重防排他＋SPT開始前例外"}
+      - {id: "885286f6-6514-4bbf-9a08-1e92838e8faa", priority: high, title: "年齢チェック(18歳未満/6歳未満等)"}
+      - {id: "8f9cad60-8ed6-4346-9161-bfa23f820078", priority: high, title: "算定期間制限4パターン設計"}
+      - {id: "93b97083-00c0-470e-acbf-82adabe00b94", priority: high, title: "SPT開始後の歯周外科50%減算＋全身疾患例外"}
+      - {id: "948bcabb-3a65-4c8c-93be-0c442cd4adba", priority: high, title: "同日算定可/不可ルール管理"}
+      - {id: "9fd305cc-0c5d-48f7-b25d-08a137f13680", priority: high, title: "算定チェック2段階アラート(赤ブロック/黄警告)"}
+      - {id: "a2e40b7e-5550-45b9-88b2-7ff2df3d981b", priority: high, title: "F100処方料の条件分岐＋加算選択＋加算間排他"}
+      - {id: "a35538ca-bccc-4fe2-962c-212a7bf4351e", priority: high, title: "基本点数＋状況加算の構造拡張"}
+      - {id: "a4d99a77-5aa1-4dd4-bfa8-64ad524c85f9", priority: high, title: "F局の起算月パターン実装"}
+      - {id: "b17e8d19-27f5-4374-8e2b-4f976932ab85", priority: high, title: "逓減ルール(同日N枚/同月N回)"}
+      - {id: "b58f0d2c-b6f5-420a-b8e9-868a24f70daa", priority: high, title: "訪問歯科衛生指導料の単一建物患者数バッチ計算"}
+      - {id: "c5ea23c8-497b-4ce3-a95a-6f5b5b7eac44", priority: high, title: "包括ルール(他処置に費用が含まれ別算定不可)"}
+      - {id: "ca5f19f3-dac6-4a84-8774-5ff00b15f8c4", priority: high, title: "急性Pul/Per＋金属修復物→除去困難格上げ"}
+      - {id: "e803a886-a1f2-400c-822e-4a353228684b", priority: high, title: "施設基準マスタ新設"}
+      - {id: "f62aa338-f5e0-4fb7-a32e-4b0147e698d0", priority: high, title: "Br装着の算定ルール実装"}
+      - {id: "f6f398e3-51ea-4adc-ac66-3a5ed1af0113", priority: high, title: "I000-2咬合調整の病名×算定目的×回数制限の完全マッピング"}
+      - {id: "f7bef628-fc1c-424a-98ab-180846fb5b48", priority: high, title: "算定可能お知らせ機能"}
+      # medium (11)
+      - {id: "05b3660c-71d1-47d1-b2f6-65f3474f2850", priority: medium, title: "う蝕多発傾向者チェックロジック"}
+      - {id: "0a917b46-a0a0-409b-9900-95f74a34d034", priority: medium, title: "C001複数名訪問歯科衛生指導加算(R6新設150点)"}
+      - {id: "19f8dc41-6112-45c7-8bef-1f1489a21846", priority: medium, title: "I029周術期等口腔衛生処置の博道会算定判定"}
+      - {id: "25c9de3a-3336-4a19-9d2c-52d384611d0a", priority: medium, title: "患者属性による期間制限分岐"}
+      - {id: "374b331a-dac5-4ebd-bdf2-b120c88146f6", priority: medium, title: "B013-3管理料1/2の分離＋歯管併算定不可"}
+      - {id: "4a13442f-4298-4eab-8509-bc508915220f", priority: medium, title: "排他制限マスタ新設"}
+      - {id: "66a4b94a-9a2b-4a75-b4ad-b2a097c29479", priority: medium, title: "合算上限パターン(複数処置の合計回数制限)"}
+      - {id: "66bc94f1-826a-4e49-899c-93df75f94355", priority: medium, title: "E100/E200他院撮影・自院診断パターン対応"}
+      - {id: "8291859e-a585-4ce2-b11e-2e27191d055a", priority: medium, title: "年齢→点数変動パターン"}
+      - {id: "98dd2185-9d59-43cc-976d-efe5d0bc87fb", priority: medium, title: "Ce管理料の口管強加算連動(+48点)"}
+      - {id: "b3106762-550b-4146-8885-2dea41678a26", priority: medium, title: "サホ塗布(I002-2)月3回黄色警告の閾値設定"}
+
+  - batch_id: 2
+    category: ui_logic
+    count: 28
+    priority_distribution: {high: 20, medium: 8}
+    starting_task_recommended: "7acadd19-1bd9-4892-83ce-4826bb032cf5 (★訪問診療 算定サジェストエンジン 統合上位)"
+    ids:
+      # high (20)
+      - {id: "10f4ac4e-938e-4433-b9c0-de9f534d3d0a", priority: high, title: "暫間固定の固定方法記録→除去料(I020)自動判定"}
+      - {id: "142cd3d8-191f-4a3d-8dea-915e41204a4d", priority: high, title: "再初診判定の自動チェック＋提案機能"}
+      - {id: "18e6c23a-19df-4a5b-bd71-06942bb14952", priority: high, title: "C001-5 在宅患者訪問口腔リハビリテーション指導管理料チェックロジック（18項目）"}
+      - {id: "23d8792a-9029-46e0-af6b-92be32e82e76", priority: high, title: "I000 う蝕処置 算定チェック"}
+      - {id: "26f7ff9a-cfad-43d1-a03d-80c32e7b4750", priority: high, title: "B000-4 歯科疾患管理料 チェックロジック（20項目）"}
+      - {id: "295abd75-d178-4b0e-b8d3-590cbeed1282", priority: high, title: "訪問診療DH処置の算定自動提案: C001 vs I029-2判定"}
+      - {id: "34b17935-81bd-44ae-a2a1-66b133dad511", priority: high, title: "I017 口腔内装置 算定チェック"}
+      - {id: "3b2245e3-cd37-4680-8769-045d65ab0559", priority: high, title: "I014 暫間固定 算定チェック"}
+      - {id: "4225bd83-bd53-41ae-abfd-deee98e9fa12", priority: high, title: "M009 充填(CR充填) 算定チェック"}
+      - {id: "44fdf58d-960a-4f1b-8a2f-ef55eca12bc6", priority: high, title: "画像診断(E000/E100)算定チェック"}
+      - {id: "529e04a6-fd8c-4d1b-bd37-36805b94c09c", priority: high, title: "I008 根管充填+加圧根管充填 算定チェック"}
+      - {id: "577e1aa5-1035-4c84-ba66-fa4d489c525b", priority: high, title: "B001-2 歯科衛生実地指導料チェックロジック（19項目）"}
+      - {id: "66f9380a-1615-4cc2-a8c2-d34b44f5cb09", priority: high, title: "C001 訪問歯科衛生指導料チェックロジック（15項目）"}
+      - {id: "71504168-4ccc-4857-8f8d-794d85a77bcb", priority: high, title: "D002 歯周病検査チェックロジック（17項目）"}
+      - {id: "7acadd19-1bd9-4892-83ce-4826bb032cf5", priority: high, title: "★訪問診療 算定サジェストエンジン（統合上位タスク）"}
+      - {id: "953f78ae-f86c-4a9e-9346-81ddc2f83ea0", priority: high, title: "M000-2 補管(クラウン・ブリッジ維持管理料) 算定チェック"}
+      - {id: "c14fbec3-c53c-454a-a5c4-9f496b755f56", priority: high, title: "I011-2-3 歯周病重症化予防治療(P重防) チェックロジック（16項目）"}
+      - {id: "d5804d7a-c5f4-4a6b-bc65-427e76dc2d04", priority: high, title: "I011-2 歯周病安定期治療(SPT) チェックロジック（20項目）"}
+      - {id: "d96e48ef-cc1a-4e4e-bbc4-203e05a9df8c", priority: high, title: "I010 歯周病処置 算定チェック"}
+      - {id: "fc2aac21-f329-4146-b1fe-a095f62eb250", priority: high, title: "I005 抜髄 算定チェック"}
+      # medium (8)
+      - {id: "101659ab-09a7-4ce1-9fb5-72150d0020c4", priority: medium, title: "B000-13 エナメル質初期う蝕管理料 自動チェック"}
+      - {id: "47f21e17-cf92-4592-946d-ecb6cd744052", priority: medium, title: "B000-10 回復期等口腔機能管理計画策定料 自動チェック"}
+      - {id: "66138ee5-9ce5-4711-9e95-8bfd54c1e5c3", priority: medium, title: "B000-11 回復期等口腔機能管理料 自動チェック"}
+      - {id: "684c6417-794b-4e22-a494-efbbe79fffd8", priority: medium, title: "B000-12 根面う蝕管理料 自動チェック"}
+      - {id: "7bf54cc7-6c20-4281-b061-79bd6082cb58", priority: medium, title: "B000-5 周術期等口腔機能管理計画策定料 自動チェック"}
+      - {id: "8a16f59e-8565-4ceb-b629-4128c59c2665", priority: medium, title: "B004-6 歯科治療時医療管理料 自動チェック"}
+      - {id: "93771ee9-e797-4354-a527-40deb8ee7919", priority: medium, title: "I020 暫間固定装置除去 算定チェック"}
+      - {id: "a85609d9-02b9-4943-b82c-bd8f7c570a3f", priority: medium, title: "B002 歯科特定疾患療養管理料 自動チェック"}
+
+  - batch_id: 3
+    category: check_logic
+    count: 26
+    priority_distribution: {high: 18, medium: 5, low: 3}
+    ids:
+      # high (18)
+      - {id: "047cd613-2518-4ca4-81a0-6388f6623eb2", priority: high, title: "J000 抜歯手術: 区分判定・難抜歯・埋伏・カルテ記載・包括【個別指導最重点】"}
+      - {id: "1a70423e-c6b4-43c7-ab76-6063ddada18e", priority: high, title: "B013 新製有床義歯管理料: 情報提供文書・写し添付・記載内容"}
+      - {id: "2975e605-7b9b-44d3-bf45-4c6685d38baf", priority: high, title: "I011 歯周基本治療(SC/SRP): P検前提・算定順序・包括"}
+      - {id: "5d6055ef-9c3e-4a10-a4e4-352df1abffa4", priority: high, title: "M018 有床義歯: 残根理由記載・鋳造鉤/バー/材料・設計記載"}
+      - {id: "820b8e49-92bc-466b-bbe3-0bec86d60447", priority: high, title: "C000 歯科訪問診療料: 区分・20分・時刻・計画・補助加算・施設基準【最重点】"}
+      - {id: "8b70a1fa-0c82-4a59-99b0-cb83b5e110a7", priority: high, title: "B001-3 歯周病患者画像活用指導料: 写真保存・動機付け・包括"}
+      - {id: "8f6eda9e-ccef-470d-ad60-c2cd01f864b2", priority: high, title: "J063 歯周外科手術: P精検前提・術式・暫間固定・SPT減算・カルテ記載【最重点】"}
+      - {id: "94d692f1-0ac4-4e58-acbb-ff1e0a0f732f", priority: high, title: "M029 有床義歯修理: 修理内容・印象/咬合/試適制限・6月減算"}
+      - {id: "998f3133-1017-47a0-aa0d-c0ad48efb9b2", priority: high, title: "J003 歯根嚢胞摘出手術: 大きさ判定・カルテ記載・包括"}
+      - {id: "a23160a2-580a-43d4-95dd-00bbd8ee5f9f", priority: high, title: "C001-3 歯在管: 管理計画・併算制限・文書提供"}
+      - {id: "aac9a4db-1a70-40cc-9937-e379d91e16fa", priority: high, title: "M003/M006 印象採得・咬合採得: 区分判定・誤り検出・材料・義歯修理制限"}
+      - {id: "b501d11a-e96a-49ac-9b92-6c39677d6e6d", priority: high, title: "K001 浸潤麻酔: 包括判定・薬剤記載【全処置横断】"}
+      - {id: "c29b391c-18b2-429f-8aa6-f43632c7ff44", priority: high, title: "J004/J004-2/J004-3/J006 歯根端切除・再植・移植・歯槽骨整形: 施設基準・包括"}
+      - {id: "cc43df2d-53a9-4e44-ba23-c2c8243de071", priority: high, title: "M000 補綴時診断料: 3項目記載・3月制限"}
+      - {id: "ead02214-cad4-4d14-b2cb-848540114861", priority: high, title: "J013 口腔内消炎手術: 区分・同一病巣制限・病名連動・カルテ記載【個別指導重点】"}
+      - {id: "ec23586c-dfff-47eb-af4d-0d4918f78b33", priority: high, title: "I019 歯冠修復物/補綴物の除去: 「著しく困難」要件・手術当日包括【critical全7件】"}
+      - {id: "f469639b-e244-4dc0-8a07-2303b0eb44d3", priority: high, title: "M002 支台築造: 区分・保険外混在・包括"}
+      - {id: "fef6f759-e671-4308-aed8-5e5ea2312fb1", priority: high, title: "M001 歯冠形成: 区分・無痛的加算・CAD/CAM要件・材料記載"}
+      # medium (5)
+      - {id: "3597a9f1-bed6-42a5-b376-baa2659ec72c", priority: medium, title: "K999 歯科診療特別対応加算: 障害者区分・年齢・補管連動"}
+      - {id: "8f02b70f-0510-45d1-9c71-1b4f50472c12", priority: medium, title: "M030 有床義歯内面適合法: 実施内容記載・短期間繰り返し"}
+      - {id: "91dcdfdf-604b-48a0-b9b9-2e8267487836", priority: medium, title: "I022 床下粘膜調整処置(T.コンデ): 義歯前提・回数"}
+      - {id: "aa2e4beb-f63e-44d3-adbc-d70b2f385795", priority: medium, title: "J084/J084-2/J085 創傷処理・小児創傷・デブリードマン: 区分・年齢・深度"}
+      - {id: "fb0407af-4ba5-4749-947d-a4a261e0e431", priority: medium, title: "I009-4〜I009-10 病院歯科処置群: 入外区分・病名・適応"}
+      # low (3)
+      - {id: "0c799eb2-b251-42f3-b784-d877f6c5d1fb", priority: low, title: "M007仮床試適/M025-2広範囲顎骨支持型補綴: 区分・施設基準"}
+      - {id: "5f1b92cd-e1fb-4b9f-b81a-73d46f23428a", priority: low, title: "口腔外科手術群(J010/J011/J077/J080/J082/J109/J110): 施設基準・包括"}
+      - {id: "f430c199-6256-49a0-8b85-dd315695b76e", priority: low, title: "N001/N002/N003/N016 保険矯正: 顎変形症・施設基準"}
+
+  - batch_id: 4
+    category: validation
+    count: 18
+    priority_distribution: {high: 12, medium: 5, low: 1}
+    ids:
+      # high (12)
+      - {id: "166389f1-d040-4e84-8719-30de4d64eb4a", priority: high, title: "P検動揺なし+暫間固定(I014)算定=矛盾エラー"}
+      - {id: "2687e9d8-14a7-4302-9054-5d44f4f2b519", priority: high, title: "I030-2非経口摂取患者口腔粘膜処置: 月2回制限+C001-5包括"}
+      - {id: "3e8cf467-cc78-4ada-b8d4-369d07398974", priority: high, title: "I018歯周治療用装置: P精検前提+包括違反+治療順序"}
+      - {id: "5b0fa889-31ed-4525-a7aa-b4f8c53f76a8", priority: high, title: "I011歯周基本治療: P検未実施"}
+      - {id: "6e56e088-6d4f-4e01-9cd5-9d044ccf7e31", priority: high, title: "I011-2 SPT: 歯管未算定+2月間隔"}
+      - {id: "75a01d68-d71f-4a0f-8c43-b078b67da4dd", priority: high, title: "I006感染根管処置: 再治療6月制限"}
+      - {id: "8302037a-1413-435a-bf54-9ab80f29b028", priority: high, title: "I029-2同日排他+同月排他+前提条件"}
+      - {id: "87e7710f-1175-4c2a-91bc-718c77231459", priority: high, title: "I011-2-3 P重防: 4mm以上残存"}
+      - {id: "8a33ef99-8548-4a69-bc61-c2ec7e753c46", priority: high, title: "I002知覚過敏処置: 失活歯+同日排他+月4回警告+Rコート排他"}
+      - {id: "8a4a8e46-f6e3-4d7c-95a0-374e578a0295", priority: high, title: "I007歯周病処置: P基本治療なし警告+月回数+SPT/P重防排他"}
+      - {id: "9a5e6d34-d90d-4f3a-9d37-ee037d2e1f68", priority: high, title: "I017-1-2 SAS装置 算定チェック（全項目）"}
+      - {id: "b47d7829-a263-4a8f-a895-b92f9b2004c3", priority: high, title: "口腔衛生処置6種 排他+前提+算定（I029〜I030-3）"}
+      # medium (5)
+      - {id: "2191c7ee-6e28-4cf2-93a1-e001b66d23ad", priority: medium, title: "I009-5口腔内分泌物吸引: 月2回制限"}
+      - {id: "2cec9b9e-dec4-4c85-8629-af449d68344c", priority: medium, title: "I017口腔内装置: 外傷歯保護18歳未満"}
+      - {id: "a7a34572-ab3a-40f6-8229-3b28948c3f52", priority: medium, title: "I009/I009-2/I009-3 外科後処置・創傷処置・ドレーン法: 包括・排他"}
+      - {id: "c0b8ed8f-1247-4367-9835-b0e78efeb545", priority: medium, title: "I004歯髄切断+I005抜髄: 同一歯併施排他"}
+      - {id: "cdc85193-4886-4c1c-b8ce-7e313e4ff4c3", priority: medium, title: "I017-1-3 舌接触補助床 算定チェック（全項目）"}
+      # low (1)
+      - {id: "6c32b345-0ba2-43d9-aeee-20023a2665cc", priority: low, title: "I023心身医学療法: 医科治療依頼"}
+
+  - batch_id: 5
+    category: [データ品質, 処置セット]
+    count: 20
+    priority_distribution: {high: 16, medium: 4}
+    sub_category_counts: {データ品質: 10, 処置セット: 10}
+    ids:
+      # データ品質 high (9)
+      - {id: "1de9d13c-3df3-4824-b8e4-02a69c47bbe0", priority: high, category: データ品質, title: "残144件照合: 医学管理等(26件)"}
+      - {id: "3a4d0041-9680-4a5a-bf46-20f6d8312482", priority: high, category: データ品質, title: "残144件照合: リハ+麻酔+投薬+基本+画像+病理(16件)"}
+      - {id: "68e3053b-3b44-42f6-b4a7-b3f4a2b5159c", priority: high, category: データ品質, title: "補綴系欠落15区分のINSERT"}
+      - {id: "8d4d2d77-f30c-43fc-87ba-27a542742709", priority: high, category: データ品質, title: "既存レコード名称異常4件の修正"}
+      - {id: "93d7130e-9a1a-42dc-a5dd-d61cd1fe23f4", priority: high, category: データ品質, title: "残144件照合: 手術(24件)"}
+      - {id: "ada3005b-7ddd-46b3-8bb9-3bb9961c07ee", priority: high, category: データ品質, title: "残144件照合: 歯冠修復及び欠損補綴(19件)"}
+      - {id: "bc83140a-ef47-4fde-a5f6-f2344c8b6f38", priority: high, category: データ品質, title: "残144件照合: 検査(14件)"}
+      - {id: "e59ba54f-9a75-45a8-b388-361bfdb38ecf", priority: high, category: データ品質, title: "shika_master_base R6改定反映漏れ確認"}
+      - {id: "ee134d18-083e-48f8-a15b-3cb1c6155f30", priority: high, category: データ品質, title: "残144件照合: 在宅医療(7件)"}
+      # データ品質 medium (1)
+      - {id: "4a569320-04e0-430a-a79e-6e7ac197e8f7", priority: medium, category: データ品質, title: "残144件照合: 歯科矯正(8件)"}
+      # 処置セット high (7)
+      - {id: "107a6826-77e7-49a5-a1fd-41261200e9d8", priority: high, category: 処置セット, title: "除去の先行ステップ自動追加"}
+      - {id: "51847667-da4f-4bed-b247-c390df3854eb", priority: high, category: 処置セット, title: "伝達麻酔の下顎臼歯auto_suggest"}
+      - {id: "9becdabd-7ae4-4fa9-b013-0755cbf0c356", priority: high, category: 処置セット, title: "処置セット「？」ボタン→算定ルール解説ポップアップ"}
+      - {id: "ca05cc47-3a74-491e-9ba4-81c1fbdf8acd", priority: high, category: 処置セット, title: "除去段階の補綴物マスタ自動判定"}
+      - {id: "d2a68786-295d-44d4-86c6-e5ae1223745d", priority: high, category: 処置セット, title: "処置セット新設9件のtreatment_setsへのINSERT"}
+      - {id: "eef2ab11-9f88-455f-8a02-c69ca6ca718c", priority: high, category: 処置セット, title: "CAD/CAM冠内面処理加算auto_suggest"}
+      - {id: "ef57fa53-ad30-4cc6-8d83-5f38a5680579", priority: high, category: 処置セット, title: "薬剤料を全処置セットに追加"}
+      # 処置セット medium (3)
+      - {id: "1026f2f4-da0c-422f-8d9a-8c3aa353e3c1", priority: medium, category: 処置セット, title: "萌出困難歯AI候補検出→開窓術提案"}
+      - {id: "77c3b12a-4355-4612-8e03-a4c0586f9a54", priority: medium, category: 処置セット, title: "口腔機能検査セット一括提案"}
+      - {id: "8173adb8-c193-4aab-80a3-03f0ad864451", priority: medium, category: 処置セット, title: "院内/院外処方切替設定"}
+
+  - batch_id: 6
+    category: [補管, 補綴管理, 歯の状態管理, CAD/CAM]
+    count: 19
+    priority_distribution: {high: 15, medium: 4}
+    sub_category_counts: {補管: 9, 補綴管理: 4, 歯の状態管理: 3, CAD/CAM: 3}
+    ids:
+      # 補管 high (7)
+      - {id: "139f38f2-9da4-4fbf-b82a-3ea918770b6f", priority: high, category: 補管, title: "6歳未満/特別対応加算患者の補管除外"}
+      - {id: "6f4b1de4-7e5e-49fd-8160-e41266e7bfff", priority: high, category: 補管, title: "維持管理説明書の自動生成"}
+      - {id: "9e5218ef-46b1-45ae-b7b5-5a7322f98e01", priority: high, category: 補管, title: "補管3軸判定ロジック実装"}
+      - {id: "c0681bb6-21df-4236-9ee2-55ab0c94db44", priority: high, category: 補管, title: "補管レセプト摘要欄自動記載"}
+      - {id: "cb3ddef4-be17-4d8d-afa7-79ce97092306", priority: high, category: 補管, title: "補管届出なし→一連費用70/100減算"}
+      - {id: "d1fbef4d-64ea-47c9-8b03-1b1d1042706e", priority: high, category: 補管, title: "補管中2年間制約"}
+      - {id: "d961ec49-6d5c-4d93-87b8-8e876268ab87", priority: high, category: 補管, title: "訪問診療患者の補管対象外"}
+      # 補管 medium (2)
+      - {id: "043ecf9b-e1c1-4748-8b5e-49a1408f34c2", priority: medium, category: 補管, title: "乳歯への歯冠修復の補管除外"}
+      - {id: "82d9e504-da76-4645-ad77-93875a93f58b", priority: medium, category: 補管, title: "歯式塗りつぶし連動"}
+      # 補綴管理 high (4)
+      - {id: "502b2cb4-2e57-407a-8809-09ec415e7260", priority: high, category: 補綴管理, title: "義歯工程の歯式ゼロクリック設計"}
+      - {id: "86e639d4-3381-42f7-827d-a91c648428d5", priority: high, category: 補綴管理, title: "患者補綴物マスタ＋困難判定自動化＋歯式引継ぎ"}
+      - {id: "c81ca41c-28e1-45a8-a5ad-e6f65b854bf4", priority: high, category: 補綴管理, title: "H001-2困難条件の臼歯Br咬合支持判定"}
+      - {id: "d37ec7b5-4de3-4eb4-90ba-a3c762526aec", priority: high, category: 補綴管理, title: "口腔内装置もpatient_prostheticsに管理追加"}
+      # 歯の状態管理 high (3)
+      - {id: "29274c20-56c4-4130-bd74-fbdfc67347f7", priority: high, category: 歯の状態管理, title: "AI清書10段フロー⑥-bに歯の状態遷移検出追加"}
+      - {id: "3fc79b55-9df6-443a-9404-fae20b7fd9ef", priority: high, category: 歯の状態管理, title: "歯髄保護処置の経過観察期間管理(EXC-002)"}
+      - {id: "707e4a33-1050-4561-ab29-bbd5cebfef19", priority: high, category: 歯の状態管理, title: "生活歯/失活歯判定＋所見駆動の状態遷移"}
+      # CAD/CAM high (1)
+      - {id: "bfd959b8-b142-4bd6-bc21-616a7151de5d", priority: high, category: CAD/CAM, title: "材料Ⅲ大臼歯の咬合支持自動チェック"}
+      # CAD/CAM medium (2)
+      - {id: "a6564e3a-1c0e-4f29-9b5b-01633fff0604", priority: medium, category: CAD/CAM, title: "エンドクラウン独立フロー"}
+      - {id: "b49d7084-be53-43c4-82e0-1032936d74a6", priority: medium, category: CAD/CAM, title: "LOTシール管理チェック"}
+
+  - batch_id: 7
+    category: [alert, alert_rule, data_fix, AI機能, ui_feature, facility_linkage, infrastructure, planning, 患者管理, 改定管理, 院管理]
+    count: 16
+    priority_distribution: {high: 12, medium: 3, deferred: 1}
+    starting_task_recommended: "246d77a8-8b50-4d5a-985a-66f109b2ca32 (TASK-ALERT-001 相当 T.コンデ I022 回数警告)"
+    ids:
+      # alert high (3)
+      - {id: "246d77a8-8b50-4d5a-985a-66f109b2ca32", priority: high, category: alert, title: "T.コンデ(I022)回数警告+リライン/新製予定記録"}
+      - {id: "32b3df38-3008-4338-8420-9690139beb46", priority: high, category: alert, title: "暫間固定(I014)算定あり+除去(I020)算定なし→注意喚起"}
+      - {id: "97d751e0-5d7a-46ba-9dbf-92ed82dcc94c", priority: high, category: alert, title: "暫間固定(I014)6月制限アラート"}
+      # alert_rule high (1)
+      - {id: "52949e98-cd88-41fd-81ff-404b2fe6bb85", priority: high, category: alert_rule, title: "SC後P検間隔3色アラート+SC分割警告+再治療混在チェック"}
+      # data_fix high (2)
+      - {id: "2531ec5b-cd71-42e9-8824-64671cf550ac", priority: high, category: data_fix, title: "M000-2(補管)カスケードエラー修正"}
+      - {id: "b9af2bcd-63f1-49ee-89aa-8fdeb4912faf", priority: high, category: data_fix, title: "kubun_code玉突き3件修正(I007/I010/根管貼薬)"}
+      # AI機能 high (1)
+      - {id: "fe9cae58-1f76-4c10-a44f-39d8fbc5929a", priority: high, category: AI機能, title: "画像2層アーキテクチャ: 原画ローカル＋サムネクラウド"}
+      # AI機能 deferred (1)
+      - {id: "b17da40d-06b4-4d5f-98c2-5c80a18685df", priority: deferred, category: AI機能, title: "パノラマAI読影→対話式所見→歯式自動更新"}
+      # ui_feature high (1)
+      - {id: "31326c6f-1cc5-4c55-b161-53706a07ac51", priority: high, category: ui_feature, title: "画像管理モジュール拡張: テンプレ+トリミング+レイヤー+処置セット連動"}
+      # facility_linkage high (1)
+      - {id: "efbce116-1328-42d7-b73a-0f8248906587", priority: high, category: facility_linkage, title: "口管強(か強診)マスター連動→SPT/P重防頻度自動切替+加算"}
+      # infrastructure high (1)
+      - {id: "8e922d65-9947-4533-b479-36e525c16379", priority: high, category: infrastructure, title: "Supabase障害時ローカルフォールバック機構"}
+      # 患者管理 high (1)
+      - {id: "d710d65f-7b65-4ba0-981a-8b3611bfd8e8", priority: high, category: 患者管理, title: "糖尿病＝医科情報提供書タグ管理"}
+      # 改定管理 high (1)
+      - {id: "fb020c81-23ee-4359-95df-70a92d48555f", priority: high, category: 改定管理, title: "金属材料料の随時改定対応(3ヶ月/臨時)"}
+      # planning medium (1)
+      - {id: "0fa01705-46d2-4e4f-9ecb-96710ed1c74a", priority: medium, category: planning, title: "画像管理拡張予定一覧"}
+      # 院管理 medium (2)
+      - {id: "79d9667a-10ec-4550-a6eb-3093cccf081a", priority: medium, category: 院管理, title: "院ごとの算定スコープ管理"}
+      - {id: "c3744028-38c9-4e12-8ef8-3df130ebd8c8", priority: medium, category: 院管理, title: "J040/J111等の装備のみ処置の扱い決定"}
+
+# 整合性チェック
+integrity:
+  total_ids_in_batches: 169
+  total_match_with_source: true
+  source_validation: "2026-05-11T22:38:00 Supabase MCP SELECT 完全一致確認"
+  priority_aggregation_check:
+    high: 124  # = 31+20+18+12+9+7+7+4+1+3+3+2+1+0+1+1+1+1+1+0+1 (= category 別合計)
+    medium: 40
+    low: 4
+    deferred: 1
+    total: 169
+
+# anti-duplication 規範 machine gate
+anti_duplication:
+  rule: "各バッチの ids list は exclusive、他バッチと ID 重複禁。pre-implementation で本 manifest を SELECT 参照、重複検出時 task 起案禁止"
+  implementation_guidance: "task YAML AC0 inventory で本 manifest 参照、対象 ID list を引き当て後実装"
