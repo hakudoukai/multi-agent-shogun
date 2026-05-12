@@ -5901,3 +5901,25 @@ unverified_program_audits_cycle2_20260512:
     recommendation_to_shogun:
       action: accept_cycle2_corrections_and_publish_manifest_for_deep_audit
       summary: "初回 W9 4 件 fail/missing は過剰判定として訂正。ただし SC には manifest 本体が無いため deep body audit は未完。残 8 件は fail/blocked retain。"
+
+sc_audit_phase2_status_green_path_20260512:
+  - audit_id: naomasa_sc_audit_phase2_status_green_path_20260512
+    source_inbox:
+      - msg_20260512_naomasa_c_0afce82c
+    detail_report: queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml
+    target_count: 17
+    verdict: pass_with_concerns_for_plan
+    evidence_state: complete_with_live_supabase_gap
+    completion_gate: blocked_for_green
+    machine_evidence:
+      inventory_parse: pass
+      verification_log_grep: "No matches for 17 target ids/patterns in shogun_verification_*log.yaml"
+      pytest: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k 'supabase or development_progress or w9' => 20 passed, 1 failed, 148 deselected"
+      pytest_failure: "test_real_shogun_log_w9_batch1_to_batch6_all_matched failed with matched_ids=[]"
+    status_summary:
+      supabase_not_started_14: "fail/blocked; implementation required before audit green"
+      w11_in_progress_2: "monitor only; audit trigger when completed + commit hash appears"
+      w9_batch7_1: "fail/blocked; requires W9 manifest git-tracked publish + implementation evidence"
+    recommendation_to_shogun:
+      action: no_audit_only_green_available
+      summary: "17 件は SC audit だけでは追加緑化不可。2 件は完了監視、15 件は実装または manifest publish が先。"
