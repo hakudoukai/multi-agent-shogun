@@ -1,0 +1,107 @@
+report_id: naomasa_sc_audit_phase2_status_green_path_20260512
+reported_at: "2026-05-12T22:52:00+09:00"
+reported_by: gunshi_naomasa
+source_inbox:
+  - msg_20260512_naomasa_c_0afce82c
+task: "17 件 SC 側 status audit + green path proposal"
+
+execution_constraints:
+  supabase_mcp_live_query: unavailable_in_this_codex_runtime
+  substitute_machine_sources:
+    - queue/reports/unverified_inventory_20260512.yaml
+    - scripts/regenerate_dashboard.py LAYER_C_SUPABASE_VERIFY_ROWS
+    - queue/reports/shogun_verification_*log.yaml
+    - queue/reports/active_verify_queue_candidate_log.yaml
+  note: "Live Supabase MCP query was requested, but no Supabase MCP tool is exposed in this session. This report uses git-tracked SC data and records the live-query gap explicitly."
+
+machine_evidence:
+  inventory_parse: pass
+  extracted_candidates: 17
+  verification_log_grep: "No matches for all 17 target ids/patterns in shogun_verification_log.yaml, mainpc, secondpc, archive."
+  pytest_command: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k 'supabase or development_progress or w9'"
+  pytest_result: "20 passed, 1 failed, 148 deselected"
+  pytest_failure: "test_real_shogun_log_w9_batch1_to_batch6_all_matched failed; matched_ids=[] for real shogun log, reinforcing that SC verification-log evidence is not green."
+
+status_groups:
+  supabase_not_started_14:
+    verdict: fail
+    completion_gate: blocked
+    green_path: "Implementation/design evidence must be produced first; audit alone cannot green not_started rows."
+    candidates:
+      - { id: C-V21-W9TENSU, status: not_started, phase: "W9/P2-engine", path: "implement treatment-set point verification + commit + tests + audit" }
+      - { id: C-V22-W9SPIDCHK, status: not_started, phase: "W9/P2-engine", path: "publish/track W9 manifest, then implement calculation/validation check evidence" }
+      - { id: C-V31-W11CHOREI, status: not_started, phase: "W11/POST-deploy", path: "create morning-meeting Phase1-4 task, report, tests, audit" }
+      - { id: C-V33-W12CLNUI, status: not_started, phase: "W12/POST-deploy", path: "clinical knowledge UI implementation task" }
+      - { id: C-V34-W13VISIT, status: not_started, phase: "W13/P6-visit", path: "visit Phase4-7 implementation task" }
+      - { id: C-V35-W13RTE, status: not_started, phase: "W13/P6-visit", path: "visit route optimization implementation task" }
+      - { id: C-V36-W14PAY, status: not_started, phase: "W14/P3-patient", path: "Pay Light real API connection task with security/privacy tests" }
+      - { id: C-V37-W14CTI, status: not_started, phase: "W14/POST-deploy", path: "CTI real connection task" }
+      - { id: C-V38-W14LINE, status: not_started, phase: "W14/POST-deploy", path: "LINE notification + web reservation connection task" }
+      - { id: C-V39-W14YOSHI3, status: not_started, phase: "W14/POST-deploy", path: "form level 3 + saliva inspection task" }
+      - { id: C-V41-W15DEP, status: not_started, phase: "W15/P7-deploy", path: "deploy runbook + real-data test + Tailscale task" }
+      - { id: C-V42-W15MAN, status: not_started, phase: "W15/P7-deploy", path: "operation manual task" }
+      - { id: C-V43-W16MAT, status: not_started, phase: "W16/POST-deploy", path: "materials management implementation task" }
+      - { id: C-V44-W17JINJI, status: not_started, phase: "W17/POST-deploy", path: "HR + DTF adapter + rollout task" }
+
+  w11_in_progress_2:
+    verdict: pass_with_concerns_for_monitoring_plan_only
+    completion_gate: monitor
+    candidates:
+      - { id: C-V29-W11DDA, status: in_progress, phase: "W11/phase_a_id_unification", trigger: "external_status becomes completed and commit_hash non-empty in development_progress/source rows" }
+      - { id: C-V30-W11DDB, status: in_progress, phase: "W11/phase_b_karte_loader", trigger: "external_status becomes completed and commit_hash non-empty in development_progress/source rows" }
+    monitor_proposal:
+      - "Every sync cycle, compare unverified_inventory candidate external_status/external_commit with scripts/regenerate_dashboard.py rows."
+      - "Completion trigger = status completed + commit hash present + report/test path present + shogun_verification log entry absent/present explicitly checked."
+      - "On trigger, Karo assigns immediate post-completion audit to Gunshi; expected audit ETA 10-15 min per item."
+
+  w9_batch7_1:
+    verdict: fail
+    completion_gate: blocked
+    candidate: C-15-B7
+    current_state:
+      inventory_pct: 0.0
+      ref: "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=7]"
+      source_manifest_on_sc: absent
+      shogun_verify_entry_exists: false
+      target_pattern: stage_b_batch7
+    green_path:
+      - "MC must git-track and push queue/manifests/w9_design_tasks_169.yaml."
+      - "SC receives manifest and extracts batch7 alert residual 14 item list."
+      - "Karo assigns implementation/audit split: likely ashigaru4 or ashigaru6 for alert validation implementation, Gunshi for post-completion audit."
+      - "Green only after manifest body, implementation commit, tests, and shogun verification mapping are present."
+
+manifest_recovery_plan:
+  owner: "MC Shogun/Karo"
+  sc_acceptance_after_push:
+    - "git fetch origin main"
+    - "git ls-tree -r --name-only origin/main | rg 'queue/manifests/w9_design_tasks_169.yaml'"
+    - "ls -la queue/manifests/w9_design_tasks_169.yaml"
+    - "yaml parse + extract Stage A/batches 1-7 counts"
+    - "rerun W9 matching tests and update status proposal"
+
+recommended_assignment:
+  immediate_greenable_by_audit_only: []
+  monitor_only:
+    - C-V29-W11DDA
+    - C-V30-W11DDB
+  implementation_required:
+    - C-V21-W9TENSU
+    - C-V22-W9SPIDCHK
+    - C-V31-W11CHOREI
+    - C-V33-W12CLNUI
+    - C-V34-W13VISIT
+    - C-V35-W13RTE
+    - C-V36-W14PAY
+    - C-V37-W14CTI
+    - C-V38-W14LINE
+    - C-V39-W14YOSHI3
+    - C-V41-W15DEP
+    - C-V42-W15MAN
+    - C-V43-W16MAT
+    - C-V44-W17JINJI
+    - C-15-B7
+
+summary_for_shogun:
+  verdict: "No additional green items from SC audit alone."
+  partial_path: "2 W11 in_progress items can be monitored and audited immediately after completion trigger."
+  blocker: "15 items require implementation or manifest publication before green."

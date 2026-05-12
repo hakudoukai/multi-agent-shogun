@@ -5764,3 +5764,162 @@ analytics_access_control_audits:
         - "prometheus_client 実環境 metric path check"
         - "docs/cmd004_clinic_id_safety_pattern.md へ analytics endpoint fallback 不適用例外を追記"
     audit_passed: true
+
+unverified_program_audits_20260512:
+  - audit_id: naomasa_unverified_batch1_20260512
+    target_type: unverified_inventory_assigned_batch
+    source_inbox:
+      - msg_20260512_shogun_to_naomasa_3a2998d6
+      - msg_20260512_shogun_to_naomasa_v2_73236010
+    source_inventory: queue/reports/unverified_inventory_20260512.yaml
+    detail_report: queue/reports/naomasa_unverified_audit_batch1_20260512.yaml
+    assigned_count: 12
+    audited_count: 12
+    verdict: fail
+    evidence_state: complete_with_missing_sources
+    completion_gate: blocked
+    machine_evidence:
+      inventory_parse: pass
+      assigned_ids_found: 12
+      pytest: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k 'supabase or C_NEW or development_progress' => 11 passed, 158 deselected, 0 skipped"
+      missing_source: queue/manifests/w9_design_tasks_169.yaml
+    candidate_verdicts:
+      C-15-A: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-15-B2: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-15-B4: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-15-B6: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-V21-W9TENSU: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V29-W11DDA: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V31-W11CHOREI: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V34-W13VISIT: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V36-W14PAY: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V38-W14LINE: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V41-W15DEP: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V43-W16MAT: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+    recommendation_to_shogun:
+      action: record_as_audited_blocked_not_green
+      summary: "直政担当 12 件は全件 audit 済。ただし緑化不可。W9 4 件は manifest 欠落、Supabase phase 8 件は not_started/in_progress + empty commit + no shogun verify。"
+
+dashboard_layer_b_post_completion_audit_20260512:
+  - audit_id: naomasa_post_audit_cmd020_dashboard_layer_b_phase_render
+    target_type: ashigaru_deliverable_post_completion_audit
+    target_task_id: subtask_cmd020_dashboard_layer_b_phase_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T21:38:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_213215_1a297f64
+    assignee: ashigaru2
+    pre_audit_id: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    source_commits:
+      inventory_swept_into_layer_c_commit: f3651ae
+      render: 3723b35
+      test_report: 988e3d8
+      sha_backfill: 273e669
+    source_files:
+      - queue/reports/ashigaru2_dashboard_layer_b_inventory.yaml
+      - docs/dashboard_layer_b_phase.md
+      - scripts/test/test_dashboard_layer_b_static_contract.py
+      - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_report.yaml
+      - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_pytest.log
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass_with_concerns
+      3_kiritsu_chain_of_command: pass_with_concerns
+      4_logic_consistency: pass
+      5_schema_data_contract: pass_with_concerns
+      6_test_ci_evidence: pass
+      7_legal_privacy_security: pass
+      8_operations: pass_with_concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: pass_with_concerns
+      12_future_operations_radicality: pass_with_concerns
+    acceptance_criteria_evidence:
+      AC0_inventory: "pass_with_concerns; inventory exists and is coherent, but was swept into ashigaru3 Layer C commit f3651ae"
+      AC1_design_source_read: pass
+      AC2_render_component: pass
+      AC3_mc_integration_deferred: pass
+      AC4_static_tests: "pass; recorded log 5 passed / 0 skipped, Naomasa rerun also 5 passed / 0 skipped"
+      AC5_bounded_push: "pass_with_concerns; commits are published, but report records push-level bounded allowlist deviation via 12-commit FF push"
+      AC6_report_log_ack: pass
+    machine_evidence:
+      git_show: "git show --stat confirms f3651ae contains Layer B inventory + .gitignore in Layer C commit, 3723b35 render, 988e3d8 test/report/log, 273e669 SHA back-fill."
+      pytest_rerun: "python3 -m pytest scripts/test/test_dashboard_layer_b_static_contract.py -v --no-header => 5 passed, 0 skipped."
+      report_state: "ashigaru2 report verdict=pass, commit_history.pending=false, push_plan.status=pushed, with explicit bounded_allowlist_deviation."
+    findings:
+      - severity: medium
+        perspective: 3_kiritsu_chain_of_command
+        issue: "AC0 inventory and .gitignore Layer B allowlist were committed inside ashigaru3 Layer C commit f3651ae."
+        recommendation: "Do not fail the Layer B deliverable, but record staged-index isolation as process debt and require staged-file inspection before future commits."
+      - severity: medium
+        perspective: 11_cross_pc_repo_check
+        issue: "Layer B report states push-level bounded allowlist deviation: 12 commits were FF-pushed together rather than a strict 3-commit worktree cherry-pick."
+        recommendation: "Accept because commits are scoped and already published, but future F007 exception pushes should use isolated worktree/equality assertion unless Karo explicitly approves batch FF push."
+      - severity: low
+        perspective: 2_anti_duplication
+        issue: "MC generator integration remains deferred and live development_progress fetch is schema-anchor only."
+        recommendation: "Treat this as SC spec component acceptance; generator integration/live data render requires separate audit."
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_chain_with_process_notes
+      summary: "Layer B deliverable passes with concerns. Trigger chain as spec acceptance; carry forward f3651ae staged sweep and push-level bounded deviation as process hygiene fixes."
+
+unverified_program_audits_cycle2_20260512:
+  - audit_id: naomasa_unverified_batch1_cycle2_20260512
+    redo_of: naomasa_unverified_batch1_20260512
+    source_inbox:
+      - msg_20260512_remand_0fe0669b
+    detail_report: queue/reports/naomasa_unverified_audit_batch1_cycle2_20260512.yaml
+    verdict: pass_with_concerns
+    evidence_state: complete_with_external_gap
+    completion_gate: partially_open
+    corrections:
+      C-15-A: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+      C-15-B2: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+      C-15-B4: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+      C-15-B6: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+    retained_blocked:
+      - C-V21-W9TENSU
+      - C-V29-W11DDA
+      - C-V31-W11CHOREI
+      - C-V34-W13VISIT
+      - C-V36-W14PAY
+      - C-V38-W14LINE
+      - C-V41-W15DEP
+      - C-V43-W16MAT
+    machine_evidence:
+      manifest_sc_ls: "queue/manifests/w9_design_tasks_169.yaml absent on SC"
+      origin_tree: "origin/main has no queue/manifests/w9_design_tasks_169.yaml"
+      upstream_tree: "upstream/main has no queue/manifests/w9_design_tasks_169.yaml"
+      c63e94f: "scripts/regenerate_dashboard.py + tests/test_regenerate_dashboard.py only"
+      w9_available_evidence: "queue/reports/active_verify_queue_candidate_log.yaml has Kuroda pass_with_concerns/pass_with_conditions entries for the 4 W9 candidates"
+      residual_8_verification_grep: "No matches for C-V21/C-V29/C-V31/C-V34/C-V36/C-V38/C-V41/C-V43 nor V21/V29/V31/V34/V36/V38/V41/V43 in shogun_verification_*log.yaml"
+    recommendation_to_shogun:
+      action: accept_cycle2_corrections_and_publish_manifest_for_deep_audit
+      summary: "初回 W9 4 件 fail/missing は過剰判定として訂正。ただし SC には manifest 本体が無いため deep body audit は未完。残 8 件は fail/blocked retain。"
+
+sc_audit_phase2_status_green_path_20260512:
+  - audit_id: naomasa_sc_audit_phase2_status_green_path_20260512
+    source_inbox:
+      - msg_20260512_naomasa_c_0afce82c
+    detail_report: queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml
+    target_count: 17
+    verdict: pass_with_concerns_for_plan
+    evidence_state: complete_with_live_supabase_gap
+    completion_gate: blocked_for_green
+    machine_evidence:
+      inventory_parse: pass
+      verification_log_grep: "No matches for 17 target ids/patterns in shogun_verification_*log.yaml"
+      pytest: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k 'supabase or development_progress or w9' => 20 passed, 1 failed, 148 deselected"
+      pytest_failure: "test_real_shogun_log_w9_batch1_to_batch6_all_matched failed with matched_ids=[]"
+    status_summary:
+      supabase_not_started_14: "fail/blocked; implementation required before audit green"
+      w11_in_progress_2: "monitor only; audit trigger when completed + commit hash appears"
+      w9_batch7_1: "fail/blocked; requires W9 manifest git-tracked publish + implementation evidence"
+    recommendation_to_shogun:
+      action: no_audit_only_green_available
+      summary: "17 件は SC audit だけでは追加緑化不可。2 件は完了監視、15 件は実装または manifest publish が先。"

@@ -1,0 +1,69 @@
+report_id: naomasa_unverified_inventory_plan_20260512
+reported_at: "2026-05-12T21:34:00+09:00"
+reported_by: gunshi_naomasa
+source_inbox:
+  msg_id: msg_20260512_shogun_to_naomasa_3a2998d6
+  from: shogun
+  type: directive_strategic_audit_assignment
+directive_summary: "Review unverified inventory, prepare 25-candidate audit plan and ETA, then accelerate cmd_004 / W9 / layer_e audits."
+
+source_file_status:
+  requested_file: queue/reports/unverified_inventory_20260512.yaml
+  status: missing_after_fetch
+  checks_performed:
+    - "ls -l queue/reports/unverified_inventory_20260512.yaml => no such file"
+    - "git fetch origin main completed; origin/main remains d67fe24"
+    - "find queue/reports -maxdepth 1 -iname '*unverified*' -o -iname '*inventory*20260512*' => no matching unverified inventory"
+  impact: "The exact 25-candidate list is not yet locally available, so definitive per-candidate audit_id assignment is gated on inventory arrival."
+
+fallback_inventory_review:
+  source_file: queue/reports/audit_report_index.yaml
+  parse_status: pass
+  total_reports: 74
+  shogun_verified_false: 74
+  verdict_counts:
+    pass: 32
+    pass_with_concerns: 13
+    fail: 29
+  completion_gate_counts:
+    open: 45
+    blocked: 29
+  note: "This fallback index is broader than the requested 25-candidate inventory and cannot safely replace the missing source-of-truth list."
+
+audit_execution_plan:
+  policy:
+    - "Batch size max 15 per session; if the missing inventory contains 25 candidates, split into batch1=10 and batch2=15."
+    - "Batch1 receives full QC gate before batch2, preserving large-scale batch protocol."
+    - "Each candidate gets a stable audit_id: naomasa_unverified_20260512_<domain>_<seq>."
+    - "SKIP > 0 is not accepted as completion."
+    - "Each audit records verdict, evidence_state, completion_gate, related_files, commit_hash if present, and machine evidence."
+  proposed_batch_1:
+    size: 10
+    focus: "highest-risk cmd_004 chain extension candidates, especially C-15-A/B and V21-V28 if present in source inventory"
+    eta_after_inventory_arrival: "45-60 minutes"
+    output: "queue/reports/naomasa_unverified_audit_batch1_20260512.yaml"
+  proposed_batch_2:
+    size: 15
+    focus: "remaining W9 spider_thread and operations/layer_e/other candidates"
+    eta_after_batch1_gate: "75-90 minutes"
+    output: "queue/reports/naomasa_unverified_audit_batch2_20260512.yaml"
+  final_rollup:
+    eta_after_batches: "15 minutes"
+    output: "queue/reports/naomasa_unverified_audit_rollup_20260512.yaml"
+
+triage_rules_on_inventory_arrival:
+  priority_1: "Candidates already claimed as pass/open but lacking shogun_verified ledger evidence."
+  priority_2: "cmd_004 C-15-A/B and V21-V44 items affecting green-rate calculation."
+  priority_3: "W9 spider_thread 10 candidates after cycle 13 mapping normalization."
+  priority_4: "operations layer_e and other remaining candidates."
+  priority_5: "blocked/fail entries only after confirming whether they are expected non-green blockers or need redo."
+
+current_blocker:
+  severity: high
+  issue: "queue/reports/unverified_inventory_20260512.yaml is absent locally after fetch."
+  requested_action: "Producer should publish or inbox the exact inventory path/content; otherwise Naomasa will proceed from fallback audit_report_index.yaml with lower confidence."
+
+notifications:
+  to_shogun: pending
+  to_karo: pending
+  message: "Plan ready; exact candidate audit waits on missing unverified inventory source."

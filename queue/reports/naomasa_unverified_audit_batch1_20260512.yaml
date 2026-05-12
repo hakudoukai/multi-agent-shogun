@@ -1,0 +1,213 @@
+report_id: naomasa_unverified_audit_batch1_20260512
+reported_at: "2026-05-12T21:47:00+09:00"
+reported_by: gunshi_naomasa
+source_inbox:
+  - msg_20260512_shogun_to_naomasa_3a2998d6
+  - msg_20260512_shogun_to_naomasa_v2_73236010
+assignment:
+  requested_count: 12
+  assigned_candidate_ids:
+    - C-15-A
+    - C-15-B2
+    - C-15-B4
+    - C-15-B6
+    - C-V21-W9TENSU
+    - C-V29-W11DDA
+    - C-V31-W11CHOREI
+    - C-V34-W13VISIT
+    - C-V36-W14PAY
+    - C-V38-W14LINE
+    - C-V41-W15DEP
+    - C-V43-W16MAT
+source_inventory:
+  path: queue/reports/unverified_inventory_20260512.yaml
+  parse_status: pass
+  candidates_total: 28
+  assigned_candidates_found: 12
+  distribution_plan_path: queue/reports/audit_distribution_plan_20260512.yaml
+  distribution_plan_status: missing_locally
+machine_evidence:
+  inventory_extract: "python3 yaml.safe_load(queue/reports/unverified_inventory_20260512.yaml); all 12 assigned ids found"
+  dashboard_source_rows: "scripts/regenerate_dashboard.py LAYER_C_SUPABASE_VERIFY_ROWS contains V21/V29/V31/V34/V36/V38/V41/V43 with statuses used below"
+  pytest_command: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k 'supabase or C_NEW or development_progress'"
+  pytest_result: "11 passed, 158 deselected, 0 skipped"
+  w9_manifest_check: "ls queue/manifests/w9_design_tasks_169.yaml => missing"
+overall_verdict: fail
+overall_evidence_state: complete_with_missing_sources
+overall_completion_gate: blocked
+summary: "12 件を全件 audit した。緑化対象としては全件 blocked。4 件は W9 manifest 欠落、8 件は Supabase phase source 上 not_started/in_progress かつ commit/audit/shogun_verify が無い。"
+
+audits:
+  - audit_id: naomasa_unverified_20260512_c15a_stage_a_foundation
+    candidate_id: C-15-A
+    label: "W9 Stage A foundation 9 件"
+    verdict: fail
+    evidence_state: missing
+    completion_gate: blocked
+    nine_view_summary: "Source manifest missing; cannot verify 9 foundation tasks, commit, tests, legal/schema coverage, or operational readiness."
+    evidence:
+      ref: "queue/manifests/w9_design_tasks_169.yaml Stage A"
+      source_exists: false
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: true
+    finding: "Inventory says a shogun verify entry exists, but the referenced manifest is absent in SC worktree; candidate cannot be greened from machine evidence."
+
+  - audit_id: naomasa_unverified_20260512_c15b2_ui_logic
+    candidate_id: C-15-B2
+    label: "W9 batch2 ui_logic 28"
+    verdict: fail
+    evidence_state: missing
+    completion_gate: blocked
+    nine_view_summary: "Batch details are unavailable because the W9 manifest is missing; UI logic scope and evidence cannot be audited."
+    evidence:
+      ref: "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=2]"
+      source_exists: false
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: true
+    finding: "Referenced manifest path absent; no target docs, commits, tests, or latest audit id are attached."
+
+  - audit_id: naomasa_unverified_20260512_c15b4_validation
+    candidate_id: C-15-B4
+    label: "W9 batch4 validation 18"
+    verdict: fail
+    evidence_state: missing
+    completion_gate: blocked
+    nine_view_summary: "Validation batch is not auditable without the manifest; no executable validation evidence is present."
+    evidence:
+      ref: "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=4]"
+      source_exists: false
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: true
+    finding: "Manifest absence blocks all 9-view audit checks."
+
+  - audit_id: naomasa_unverified_20260512_c15b6_hotetsu
+    candidate_id: C-15-B6
+    label: "W9 batch6 補綴系 19"
+    verdict: fail
+    evidence_state: missing
+    completion_gate: blocked
+    nine_view_summary: "Prosthetics batch details are missing; cannot inspect schema, calculation logic, legal linkage, or tests."
+    evidence:
+      ref: "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=6]"
+      source_exists: false
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: true
+    finding: "Manifest path must be published before this candidate can move beyond blocked."
+
+  - audit_id: naomasa_unverified_20260512_cv21_w9tensu
+    candidate_id: C-V21-W9TENSU
+    label: "W9 P2-engine R8 施行前の全処置セット点数確認"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "Function is explicitly not_started in Supabase phase rows; no commit, audit, target_doc, or shogun verification exists."
+    evidence:
+      inventory_status: not_started
+      dashboard_row: "V21-W9TENSU / W9 / P2-engine / either / commit empty"
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: false
+    finding: "This is an implementation backlog item, not an auditable completed deliverable."
+
+  - audit_id: naomasa_unverified_20260512_cv29_w11dda
+    candidate_id: C-V29-W11DDA
+    label: "W11 DD-054 Phase A: ID 体系統一"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "Phase is in_progress with no commit hash and no shogun verification; acceptance cannot be opened."
+    evidence:
+      inventory_status: in_progress
+      dashboard_row: "V29-W11DDA / W11 / phase_a_id_unification / main / commit empty"
+      inventory_pct: 50.0
+      shogun_verify_entry_exists: false
+    finding: "Keep blocked until a completed commit, report, and tests are attached."
+
+  - audit_id: naomasa_unverified_20260512_cv31_w11chorei
+    candidate_id: C-V31-W11CHOREI
+    label: "W11 朝礼フル版 Phase1-4"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "Supabase phase row and inventory both state not_started; no artifact evidence exists."
+    evidence:
+      inventory_status: not_started
+      dashboard_row: "V31-W11CHOREI / W11 / POST-deploy / either / commit empty"
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: false
+    finding: "Candidate should remain ungreen until implementation begins and completion evidence is attached."
+
+  - audit_id: naomasa_unverified_20260512_cv34_w13visit
+    candidate_id: C-V34-W13VISIT
+    label: "W13 訪問 Phase4-7(中期残)"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "Visit phase is not_started; no design/implementation report, commit, or test evidence is linked."
+    evidence:
+      inventory_status: not_started
+      dashboard_row: "V34-W13VISIT / W13 / P6-visit / either / commit empty"
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: false
+    finding: "Not auditable as completed deliverable."
+
+  - audit_id: naomasa_unverified_20260512_cv36_w14pay
+    candidate_id: C-V36-W14PAY
+    label: "W14 ペイライト 実 API 接続"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "Real payment API integration is not_started; legal/security/ops checks cannot pass without implementation evidence."
+    evidence:
+      inventory_status: not_started
+      dashboard_row: "V36-W14PAY / W14 / P3-patient / either / commit empty"
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: false
+    finding: "Payment integration must require security, privacy, error-handling, and external API evidence before green."
+
+  - audit_id: naomasa_unverified_20260512_cv38_w14line
+    candidate_id: C-V38-W14LINE
+    label: "W14 外部 API 統合(LINE 通知+Web 予約実接続)"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "LINE/Web reservation integration is not_started; C-NEW-2 appears in dashboard source but has no implementation evidence."
+    evidence:
+      inventory_status: not_started
+      dashboard_row: "V38-W14LINE / W14 / POST-deploy / either / commit empty"
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: false
+    finding: "Leave blocked until provider credentials handling, retry/fallback, privacy, and tests are present."
+
+  - audit_id: naomasa_unverified_20260512_cv41_w15dep
+    candidate_id: C-V41-W15DEP
+    label: "W15 D-2 デプロイ手順書+実データテスト+Tailscale"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "Deploy procedure and real-data/Tailscale task is not_started; no runbook or verification evidence is linked."
+    evidence:
+      inventory_status: not_started
+      dashboard_row: "V41-W15DEP / W15 / P7-deploy / either / commit empty"
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: false
+    finding: "Ops candidate must remain blocked until runbook, dry-run, and rollback evidence exist."
+
+  - audit_id: naomasa_unverified_20260512_cv43_w16mat
+    candidate_id: C-V43-W16MAT
+    label: "W16 材料管理(QR スキャン+納品 OCR+棚 AI+理論消費量)"
+    verdict: fail
+    evidence_state: complete
+    completion_gate: blocked
+    nine_view_summary: "Materials management phase is not_started; no schema, OCR/AI, inventory, or test evidence is attached."
+    evidence:
+      inventory_status: not_started
+      dashboard_row: "V43-W16MAT / W16 / POST-deploy / either / commit empty"
+      inventory_pct: 0.0
+      shogun_verify_entry_exists: false
+    finding: "Keep blocked until implementation and audit evidence exist."
+
+recommendations:
+  - "Publish queue/manifests/w9_design_tasks_169.yaml or attach its extracted Stage A / batch2 / batch4 / batch6 records; four W9 audits are evidence-missing until then."
+  - "Do not green Supabase phase candidates with status not_started/in_progress and empty commit_hash."
+  - "For green-rate math, classify these 12 as audited-blocked, not verified-green."
+  - "Next Naomasa batch should take the remaining assigned inventory only after producer confirms whether these fail/blocked verdicts should feed shogun ledger directly."
