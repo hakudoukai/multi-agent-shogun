@@ -654,7 +654,7 @@ generate_nigo.py → nigo_sheet_renderer.py (PDF)
 | # | 項目 | 状態 | 根拠 |
 |---|------|------|------|
 | 1 | 既 file:line を機械 evidence で引用 | ✅ | §1 で 13 file inventory + 行数 |
-| 2 | DentalBI repo (/mnt/c/Projects/hakudokai-dev/) preflight 確認 | ✅ | `find` / `grep` 全実行成功 |
+| 2 | DentalBI repo (`<DENTALBI_REPO_ROOT>`) preflight 確認 | ✅ | `find` / `grep` 全実行成功 |
 | 3 | 兄弟 spec 整合 | ✅ | §5-4 で AI chat spec §5 contract 引用、§4-1 で patient_consents FK 整合 |
 | 4 | Anti-Duplication 遵守 | ✅ | §0-3 で 6 項目 check |
 | 5 | 推測引用なし | ✅ | 不確定箇所は §1-4「不明 (要 Stage 2)」「(要 read)」と但書 |
@@ -667,7 +667,7 @@ generate_nigo.py → nigo_sheet_renderer.py (PDF)
 
 ### 6-2. F001-F007 整合
 
-- F001 (preflight): /mnt/c/Projects/hakudokai-dev/ SC WSL access 全実行成功、本書 §1 全 inventory 実機検証
+- F001 (preflight): `<DENTALBI_REPO_ROOT>` (SC WSL access) 全実行成功、本書 §1 全 inventory 実機検証
 - F002 (自走実装禁止): Stage 1 = L2 設計のみ、impl コードは本書内に含めず (= mermaid / SQL skeleton は contract 明示用、apply せず)
 - F006 (推測引用禁止): 不確定箇所は §1-4「(要 Stage 2 確認)」、§5-6 LM1-LM5 で隔離
 - F007 (scope 外作業禁止): Stage 2 / Stage 3 / 別 task 領域に踏み込まず、明示分離
