@@ -1,0 +1,29 @@
+# shogun-active-verify-queue.timer.template
+#
+# Purpose:
+#   Fires shogun-active-verify-queue.service every 15 minutes
+#   (= cycle 1 dry-run candidate scanner cadence).
+#
+# Install (cycle 2 別承認後 karo 手動操作 — ashigaru は project 外 path 変更禁):
+#   1. Copy this file to ~/.config/systemd/user/shogun-active-verify-queue.timer
+#   2. systemctl --user daemon-reload
+#   3. systemctl --user enable --now shogun-active-verify-queue.timer
+#
+# Persistent=true:
+#   Catches up missed runs after sleep / reboot / WSL restart
+#   (= auto_git_sync.timer と同 pattern)。
+#
+# OnUnitActiveSec=15min:
+#   15 分 interval — 信長 idle full processing rule に整合 (= 黒田 audit pass を放置せず拾う)。
+
+[Unit]
+Description=Timer for shogun-active-verify-queue (15min cadence)
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=15min
+Persistent=true
+Unit=shogun-active-verify-queue.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,30 @@
+# shogun-active-verify-queue.service.template
+#
+# Purpose:
+#   Cycle 1 dry-run candidate scanner — local YAML scan + candidate log only.
+#   No --execute, no Supabase, no shogun inbox auto-post (= 黒田 14:19 condition).
+#
+# Install (cycle 2 別承認後 karo 手動操作 — ashigaru は project 外 path 変更禁):
+#   1. Copy this file to ~/.config/systemd/user/shogun-active-verify-queue.service
+#   2. Replace REPLACE_REPO_ROOT_ABSOLUTE_PATH with the actual repo path on this PC.
+#   3. systemctl --user daemon-reload
+#
+# Notes:
+#   - User-scope unit (= ~/.config/systemd/user/), not system scope.
+#   - WorkingDirectory must point at the repo root so relative paths resolve.
+#   - ExecStart calls the script with no flags (= dry-run is default).
+
+[Unit]
+Description=Shogun active verify queue — cycle 1 dry-run candidate scanner
+After=default.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=REPLACE_REPO_ROOT_ABSOLUTE_PATH
+ExecStart=/usr/bin/python3 REPLACE_REPO_ROOT_ABSOLUTE_PATH/scripts/shogun_active_verify_queue.py --quiet
+StandardOutput=journal
+StandardError=journal
+# No Restart= directive — oneshot, fired by the timer.
+
+[Install]
+WantedBy=default.target

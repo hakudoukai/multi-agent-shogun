@@ -397,6 +397,14 @@ tests/specs/osato_lms_*
 !tests/test_helper/
 !tests/test_helper/README.md
 !tests/test_auto_git_sync.py
+!tests/test_shogun_active_verify_queue.py
+
+# subtask_shogun_active_verify_queue_systemd (= 信長殿 13:57 仕組み task cycle 1)
+!scripts/shogun_active_verify_queue.py
+!docs/systemd_templates/
+!docs/systemd_templates/*.template
+!queue/reports/active_verify_queue_candidate_log.yaml
+!queue/reports/ashigaru7_shogun_active_verify_queue_report.yaml
 
 # CI/CD
 !.github/
