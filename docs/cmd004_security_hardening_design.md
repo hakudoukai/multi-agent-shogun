@@ -5,7 +5,7 @@
 - bloom_level: L4
 - 文書種別: **設計書 + 運用 runbook**
 - author: ashigaru3 (= 滝川一益、Phase 6 自然進化)
-- preflight: /mnt/c/Projects/hakudokai-dev/ + multi-agent SC WSL access 確認済
+- preflight: `<HAKUDOKAI_DEV_REPO_ROOT>` + multi-agent SC WSL access 確認済
 - 前提 (= 既設計 / 既実装):
   - `scripts/validate_report_privacy.py` — secret/PII pattern 検出 (cmd_013、Phase 5 で runtime filter にも転用)
   - `backend/services/observability/pii_filter.py` (Phase 5) — runtime secret redact
@@ -15,8 +15,8 @@
   - `docs/cmd004_notification_facade_design.md` (Phase 4) — alert dispatch
   - `docs/cmd004_observability_design.md` (Phase 5) — alert routing 統合点
 - 本書 deliverable:
-  - `/mnt/c/Projects/hakudokai-dev/.pre-commit-config.yaml` (= 新規、ashigaru7 設計 hook を placeholder 予約 + secret hook 実装)
-  - `/home/hakudokai/projects/multi-agent-shogun-newbuild/.pre-commit-config.yaml` (= 新規、multi-agent 側 secret hook)
+  - `<HAKUDOKAI_DEV_REPO_ROOT>/.pre-commit-config.yaml` (= 新規、ashigaru7 設計 hook を placeholder 予約 + secret hook 実装)
+  - `<MULTI_AGENT_REPO_ROOT>/.pre-commit-config.yaml` (= 新規、multi-agent 側 secret hook)
   - `scripts/lint/check_secrets.sh` (= staged file に validate_report_privacy.py を適用する pre-commit wrapper)
   - `scripts/lint/dependency_audit.sh` (= pip-audit + npm audit を runnable、CI gate drafted)
   - `backend/.bandit` (= SAST 設定)
@@ -67,7 +67,7 @@
 
 | secret | 配置 | 規範 |
 |--------|------|------|
-| `ANTHROPIC_API_KEY` | `/home/hakudokai/.config/codex/.env` (個別 PC)、commit 含めず | env_only |
+| `ANTHROPIC_API_KEY` | `<USER_HOME>/.config/codex/.env` (個別 PC)、commit 含めず | env_only |
 | `VAPID_PRIVATE_V{N}` | Supabase Secrets (= `vapid_key_versions.secret_name` 参照) | secrets_manager_only |
 | HMAC secret (QR token) | env / secrets | env_only |
 | Supabase service role key | env | env_only |
@@ -79,7 +79,7 @@
 
 両 repo に `.pre-commit-config.yaml` を起案。ashigaru7 clinic_id hook (= 設計済、実装未着手) のための **placeholder** を共存 slot として予約。
 
-`/mnt/c/Projects/hakudokai-dev/.pre-commit-config.yaml`:
+`<HAKUDOKAI_DEV_REPO_ROOT>/.pre-commit-config.yaml`:
 ```yaml
 repos:
   - repo: local
@@ -100,7 +100,7 @@ repos:
       #   ...
 ```
 
-`/home/hakudokai/projects/multi-agent-shogun-newbuild/.pre-commit-config.yaml`:
+`<MULTI_AGENT_REPO_ROOT>/.pre-commit-config.yaml`:
 ```yaml
 repos:
   - repo: local
