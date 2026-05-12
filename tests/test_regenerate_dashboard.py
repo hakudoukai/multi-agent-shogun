@@ -426,9 +426,12 @@ def test_render_dashboard_html_smoke():
 def test_render_dashboard_snapshot_stable():
     a = rd.render_dashboard(_baseline_context())
     b = rd.render_dashboard(_baseline_context())
-    # generated_at differs per call, strip it before comparing the structural skeleton
-    skeleton_a = re.sub(r"generated_at: `[^`]+`", "generated_at: `STAMP`", a)
-    skeleton_b = re.sub(r"generated_at: `[^`]+`", "generated_at: `STAMP`", b)
+    # cycle3 i18n で `- 生成時刻 (generated_at): \`...\`` に変わったため、
+    # 旧 regex `generated_at: \`...\`` は paren 越しで match できない (= 旧 test の
+    # 暗黙バグ、両 render が同秒なら偶然 pass)。cycle4 で children render の追加
+    # 処理時間で秒境界 drift が顕在化。`_normalize_for_verify` を共通 mask に流用。
+    skeleton_a = rd._normalize_for_verify(a)
+    skeleton_b = rd._normalize_for_verify(b)
     assert skeleton_a == skeleton_b
 
 
@@ -1045,6 +1048,237 @@ def test_aggregate_w9_batch_groups_by_batch_id():
     by_batch = {r["batch"]: r for r in rows}
     assert by_batch["1"]["avg_pct"] == 85.0
     assert by_batch["7"]["avg_pct"] == 15.0
+
+
+# ---------------------------------------------------------------------------
+# Cycle 4: Layer 子項目 (children) + 孫項目 (grandchildren) drill-down
+# (kuroda cycle4 条件 2: 子項目 / 孫 5 項 / fallback / mermaid §4.2 / single-writer
+# を明示 assert SKIP=0)
+# ---------------------------------------------------------------------------
+
+
+def test_layer_children_inventory_has_all_layers():
+    """LAYER_CHILDREN は A-G 全 7 layer をカバーする。"""
+    layers_with_children = {c["layer"] for c in rd.LAYER_CHILDREN}
+    assert layers_with_children == set("ABCDEFG"), (
+        f"missing children for layers: {set('ABCDEFG') - layers_with_children}"
+    )
+
+
+def test_layer_children_count_at_least_28():
+    """cycle4 要件: 子項目 28 件以上装着 (= AC4 計画書 v0.2 §4)。"""
+    assert len(rd.LAYER_CHILDREN) >= 28, (
+        f"need ≥28 children for cycle4 AC, got {len(rd.LAYER_CHILDREN)}"
+    )
+
+
+def test_layer_c_children_count_at_least_14():
+    """Layer C 機能層は cmd_004 二大戦線 + W9 で 14 件以上 (= 計画書 v0.2 §2)。"""
+    c_children = rd.children_for_layer("C")
+    assert len(c_children) >= 14, (
+        f"Layer C needs ≥14 children, got {len(c_children)}"
+    )
+
+
+def test_render_dashboard_has_children_accordion():
+    """各 Layer accordion 内に nested <details> (= 子項目) が render される。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # 7 layer (= cycle3) + 子項目 nested <details> で合計 ≥ 7 + len(LAYER_CHILDREN)
+    expected_min = 7 + len(rd.LAYER_CHILDREN)
+    actual = rendered.count("<details>")
+    assert actual >= expected_min, (
+        f"expected ≥{expected_min} <details> (7 layers + {len(rd.LAYER_CHILDREN)} children), got {actual}"
+    )
+
+
+def test_render_dashboard_grandchildren_5_item_template():
+    """各子項目 expand で 5 項固定 (commit/test/audit/shogun_verified/参照) が render される。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # 各 children 1 件につき 5 行 (commit/test/audit/shogun_verified/参照) → ≥ 5 * children
+    n = len(rd.LAYER_CHILDREN)
+    assert rendered.count("**commit:**") >= n
+    assert rendered.count("**test:**") >= n
+    assert rendered.count("**audit (黒田):**") >= n
+    assert rendered.count("**shogun_verified:**") >= n
+    assert rendered.count("**参照:**") >= n
+
+
+def test_render_dashboard_contains_specific_child_labels():
+    """計画書 v0.2 §2 で指定された主要子項目が render される。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    for label_token in (
+        "領収書 PDF",
+        "AI チャット",
+        "QR kanban",
+        "PWA",
+        "申し送りエンジン",
+        "legal_sources",
+        "memory MCP",
+    ):
+        assert label_token in rendered, f"child label '{label_token}' missing"
+
+
+def test_render_dashboard_layer_c_w9_children_present():
+    """Layer C 内に W9 batch1-7 + Stage A の蜘蛛の糸 算定 children が render される。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    for batch_label in ("W9 batch1", "W9 batch2", "W9 batch7", "W9 Stage A"):
+        assert batch_label in rendered, f"W9 child label '{batch_label}' missing"
+
+
+def test_render_dashboard_v02_children_mermaid_section():
+    """改訂③: mermaid v0.2 §4.2 children 接続図 section が含まれる。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "Layer C children mermaid (v0.2 §4.2)" in rendered, "v0.2 §4.2 section heading missing"
+    # children mermaid block が出力されること (= LR graph + Layer C 接続)
+    assert "LC[Layer C 機能層]" in rendered, "Layer C mermaid root node missing"
+    assert "KZ[会計待ちゼロ作戦]" in rendered
+    assert "SK[小児恐竜王国アプリ]" in rendered
+    assert "MO[申し送りエンジン]" in rendered
+    # graph LR direction
+    assert "graph LR" in rendered
+
+
+def test_render_dashboard_single_writer_warning_retained_cycle4():
+    """改訂②: generator 単一 writer の警告 banner が cycle4 でも retain される。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "scripts/regenerate_dashboard.py" in rendered
+    assert "単独 writer" in rendered or "sole writer" in rendered
+    # cycle3 既装備の i18n 注意 retain
+    assert "手動編集" in rendered and "禁止" in rendered
+
+
+def test_extract_child_evidence_fallback_for_missing_data():
+    """機械 evidence 不在時、捏造せず fallback 文字列を返す (黒田 cycle4 条件 1 整合)。"""
+    child = {"layer": "X", "id": "X-99", "label": "test child"}
+    ev = rd.extract_child_evidence(child, kuroda_entries=[], shogun_entries=[])
+    assert ev["commit"] == rd.FALLBACK_COMMIT
+    assert ev["test"] == rd.FALLBACK_TEST
+    assert ev["audit"] == rd.FALLBACK_AUDIT
+    assert ev["shogun_verified"] == rd.FALLBACK_SHOGUN_FALSE
+    assert ev["ref"] == rd.FALLBACK_REF
+
+
+def test_extract_child_evidence_uses_kuroda_audit_match():
+    """audit_id_pattern が kuroda entries に一致すると verdict + audit_id を返す。"""
+    child = {
+        "layer": "G", "id": "G-test", "label": "test",
+        "audit_id_pattern": "kuroda_test_audit",
+    }
+    kuroda = [
+        {"audit_id": "kuroda_test_audit_20260512", "verdict": "pass",
+         "audited_at": "2026-05-12T14:00:00+09:00",
+         "machine_evidence": {"pytest": {"observed": "100 passed; SKIP=0"}}},
+    ]
+    ev = rd.extract_child_evidence(child, kuroda_entries=kuroda, shogun_entries=[])
+    assert "kuroda_test_audit_20260512" in ev["audit"]
+    assert "pass" in ev["audit"]
+    assert "100 passed" in ev["test"]  # machine_evidence.pytest.observed flowed in
+
+
+def test_extract_child_evidence_picks_latest_audit():
+    """同 pattern が複数 hit すると audited_at 最新が選ばれる。"""
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "audit_id_pattern": "kuroda_alpha"}
+    kuroda = [
+        {"audit_id": "kuroda_alpha_v1", "verdict": "fail",
+         "audited_at": "2026-01-01T00:00:00+09:00"},
+        {"audit_id": "kuroda_alpha_v2", "verdict": "pass",
+         "audited_at": "2026-05-12T14:00:00+09:00"},
+    ]
+    ev = rd.extract_child_evidence(child, kuroda_entries=kuroda, shogun_entries=[])
+    assert "kuroda_alpha_v2" in ev["audit"]
+    assert "pass" in ev["audit"]
+
+
+def test_extract_child_evidence_shogun_verified_true_when_match():
+    """shogun_target_pattern が verifications log に hit すると true + timestamp。"""
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "shogun_target_pattern": "qr_kanban"}
+    shogun = [
+        {"target": "subtask_cmd004_qr_kanban_impl", "shogun_verified": True,
+         "verified_at": "2026-05-11T22:00:00+09:00"},
+    ]
+    ev = rd.extract_child_evidence(child, kuroda_entries=[], shogun_entries=shogun)
+    assert ev["shogun_verified"].startswith("true")
+    assert "2026-05-11" in ev["shogun_verified"]
+
+
+def test_extract_child_evidence_w9_batch_uses_aggregate():
+    """kind=w9_batch は aggregate_w9_batch_progress 集計値を流用する。"""
+    child = {"layer": "C", "id": "C-W9-7", "label": "W9 batch7",
+             "kind": "w9_batch", "batch": "7"}
+    w9 = [{"batch": "7", "task_count": 15, "avg_pct": 12.3,
+           "task_ids": []}]
+    ev = rd.extract_child_evidence(child, kuroda_entries=[], shogun_entries=[],
+                                   w9_batches=w9)
+    assert "15" in ev["commit"]
+    assert "12.3" in ev["audit"]
+
+
+def test_extract_child_evidence_w9_stage_uses_aggregate():
+    """kind=w9_stage は aggregate_w9_stage_progress 集計値を流用する。"""
+    child = {"layer": "C", "id": "C-W9-A", "label": "W9 Stage A",
+             "kind": "w9_stage", "stage": "A"}
+    stages = [{"stage": "A", "task_count": 9, "scored_count": 9, "avg_pct": 100.0}]
+    ev = rd.extract_child_evidence(child, kuroda_entries=[], shogun_entries=[],
+                                   w9_stages=stages)
+    assert "9" in ev["commit"]
+    assert "100.0" in ev["audit"]
+
+
+def test_load_kuroda_index_returns_empty_when_missing(tmp_path: Path):
+    """ファイル不在時は空 list (例外を投げない)。"""
+    assert rd.load_kuroda_index(tmp_path / "nope.yaml") == []
+
+
+def test_load_kuroda_index_parses_reports(tmp_path: Path):
+    """reports: が list なら entries を返す。"""
+    p = tmp_path / "k.yaml"
+    p.write_text(
+        "reports:\n  - audit_id: a1\n    verdict: pass\n  - audit_id: a2\n    verdict: fail\n",
+        encoding="utf-8",
+    )
+    entries = rd.load_kuroda_index(p)
+    assert len(entries) == 2
+    assert entries[0]["audit_id"] == "a1"
+
+
+def test_load_shogun_verification_index_returns_empty_when_missing(tmp_path: Path):
+    assert rd.load_shogun_verification_index(tmp_path / "no.yaml") == []
+
+
+def test_load_shogun_verification_index_parses_entries(tmp_path: Path):
+    p = tmp_path / "sv.yaml"
+    p.write_text(
+        "verifications:\n  - target: x\n    shogun_verified: true\n    verified_at: '2026-01-01'\n",
+        encoding="utf-8",
+    )
+    entries = rd.load_shogun_verification_index(p)
+    assert len(entries) == 1
+    assert entries[0]["target"] == "x"
+
+
+def test_build_layer_render_entries_attaches_children():
+    """build_layer_render_entries は各 layer に children + child_count を付ける。"""
+    entries = rd.build_layer_render_entries()
+    by_code = {e["code"]: e for e in entries}
+    assert set(by_code.keys()) == set("ABCDEFG")
+    for code, layer in by_code.items():
+        assert "children" in layer
+        assert "child_count" in layer
+        assert layer["child_count"] == len(rd.children_for_layer(code))
+
+
+def test_render_dashboard_size_baseline_above_cycle3_floor():
+    """cycle4 装着で baseline render size が cycle3 比 1.5× 以上に拡張。
+
+    cycle3 baseline (2 sample tasks) で約 5-6K bytes だったところ、cycle4 で
+    54 children × 5 行 grandchildren で render される結果、≥8K bytes 必達。
+    """
+    rendered = rd.render_dashboard(_baseline_context())
+    assert len(rendered.encode("utf-8")) >= 8000, (
+        f"cycle4 baseline render too small: {len(rendered.encode('utf-8'))} bytes"
+    )
 
 
 def test_legacy_marker_still_detects_generator_output(tmp_path: Path):

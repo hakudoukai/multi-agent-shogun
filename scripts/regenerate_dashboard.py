@@ -187,12 +187,212 @@ PROGRESS_COLOR_TIERS: list[dict[str, Any]] = [
 ]
 
 
+# cycle4: Layer 子項目 — 各 Layer の sub-item として render する。
+# 計画書 v0.2 §4.1 + cycle4 詳細指示書 docs/cmd_020_cycle4_drill_down_detail.md §2/§4。
+# 各 child は機械 evidence (= commit / test / audit / shogun_verified / 参照) を持つ。
+# kind="w9_stage" / "w9_batch" は aggregate_w9_*_progress() の集計値を流用する特殊扱い。
+LAYER_CHILDREN: list[dict[str, Any]] = [
+    # Layer A 構想層 — 5 階層 + 10 柱
+    {"layer": "A", "id": "A-1", "label": "第 0 層 憲法",
+     "ref": "DD-010/037/048/054/061", "supabase_table": "design_decisions"},
+    {"layer": "A", "id": "A-2", "label": "第 1 層 診療コア",
+     "ref": "DD-036 nigo_sheet + 2 号用紙カルテ"},
+    {"layer": "A", "id": "A-3", "label": "第 2 層 周辺診療",
+     "ref": "予約 + 画像 + 問診 + CRM"},
+    {"layer": "A", "id": "A-4", "label": "第 3 層 患者接点",
+     "ref": "PWA + AI チャット + 会計"},
+    {"layer": "A", "id": "A-5", "label": "第 4 層 AI 統合",
+     "ref": "AI 副院長 + 画像 AI"},
+    {"layer": "A", "id": "A-6", "label": "第 5 層 事業推進",
+     "ref": "AI 副社長"},
+    {"layer": "A", "id": "A-7", "label": "10 柱 P1-P10",
+     "ref": "1 画像 AI / 2 歯 DB / 3 治療計画 / 4 患者アプリ / 5 AI 副院長 / 6 処置セット / 7 会計 / 8 蜘蛛の糸 / 9 AI 副院長+事務長 / 10 AI 副社長"},
+    # Layer B Phase 層 — Supabase development_progress
+    {"layer": "B", "id": "B-1", "label": "完了 phase",
+     "ref": "Supabase development_progress WHERE status='done'",
+     "supabase_table": "development_progress"},
+    {"layer": "B", "id": "B-2", "label": "進行中 phase",
+     "ref": "Supabase development_progress WHERE status='in_progress'",
+     "supabase_table": "development_progress"},
+    {"layer": "B", "id": "B-3", "label": "未着手 phase",
+     "ref": "Supabase development_progress WHERE status='not_started'",
+     "supabase_table": "development_progress"},
+    {"layer": "B", "id": "B-4", "label": "各 phase 詳細",
+     "ref": "week + phase_code + title + pc"},
+    # Layer C 機能層 — cmd_004 二大戦線 (会計待ちゼロ 7 + 小児恐竜王国 3 + 共通基盤 3 + 申し送り 1 = 14)
+    {"layer": "C", "id": "C-1", "label": "領収書 PDF + cycle6",
+     "design_doc": "docs/cmd004_kartetto_pdf_v0_2_spec.md",
+     "audit_id_pattern": "kuroda_receipt", "shogun_target_pattern": "receipt",
+     "ref": "queue/tasks/ashigaru6.yaml subtask_cmd004_receipt_cycle6_p1_residual"},
+    {"layer": "C", "id": "C-2", "label": "PDF v0.2 hardening + form fix",
+     "design_doc": "docs/cmd004_kartetto_pdf_v0_2_spec.md",
+     "audit_id_pattern": "kuroda_pdf_v02",
+     "ref": "queue/tasks/ashigaru2.yaml subtask_cmd004_pdf_v02_hardening_and_form_fix"},
+    {"layer": "C", "id": "C-3", "label": "AI チャット + 同意",
+     "design_doc": "docs/cmd004_ai_chat_spec.md",
+     "audit_id_pattern": "kuroda_aichat", "shogun_target_pattern": "aichat",
+     "ref": "queue/tasks/ashigaru5.yaml subtask_cmd004_aichat_consent_impl"},
+    {"layer": "C", "id": "C-4", "label": "QR kanban impl",
+     "design_doc": "docs/cmd004_qr_kanban_spec.md",
+     "audit_id_pattern": "kuroda_cmd004_qr_kanban", "shogun_target_pattern": "qr_kanban",
+     "ref": "queue/tasks/ashigaru3.yaml subtask_cmd004_qr_kanban_impl"},
+    {"layer": "C", "id": "C-5", "label": "保護者同意 + dinosaur 連動",
+     "design_doc": "docs/cmd004_dinosaur_100enemies_spec.md",
+     "ref": "未監査残 9 件の 1"},
+    {"layer": "C", "id": "C-6", "label": "handover_notes_anon + /api/handover",
+     "ref": "DentalBI 本体既装備 + Supabase handover_notes_anon table",
+     "supabase_table": "handover_notes_anon"},
+    {"layer": "C", "id": "C-7", "label": "engagement analytics dashboard",
+     "design_doc": "docs/cmd004_engagement_analytics_design.md",
+     "ref": "未監査残"},
+    {"layer": "C", "id": "C-8", "label": "100 敵 spec + 実装",
+     "design_doc": "docs/cmd004_dinosaur_100enemies_spec.md",
+     "ref": "未監査残 9 件の 1"},
+    {"layer": "C", "id": "C-9", "label": "PWA 実装",
+     "design_doc": "docs/cmd004_patient_app_pwa_design.md",
+     "ref": "未監査残"},
+    {"layer": "C", "id": "C-10", "label": "push_vapid management",
+     "design_doc": "docs/cmd004_push_vapid_management.md",
+     "audit_id_pattern": "kuroda_cmd004_push_vapid",
+     "ref": "queue/reports/ashigaru3_cmd004_push_vapid_*.yaml"},
+    {"layer": "C", "id": "C-11", "label": "notification facade",
+     "design_doc": "docs/cmd004_notification_facade_design.md",
+     "ref": "queue/reports/ashigaru3_cmd004_notification_facade_*.yaml"},
+    {"layer": "C", "id": "C-12", "label": "observability",
+     "design_doc": "docs/cmd004_observability_design.md",
+     "ref": "queue/reports/ashigaru3_cmd004_observability_*.yaml"},
+    {"layer": "C", "id": "C-13", "label": "security hardening",
+     "design_doc": "docs/cmd004_security_hardening_design.md",
+     "ref": "queue/reports/ashigaru3_cmd004_security_hardening_*.yaml"},
+    {"layer": "C", "id": "C-14", "label": "申し送りエンジン (touch panel)",
+     "design_doc": "docs/cmd004_moushi_engine_stage1_design.md",
+     "audit_id_pattern": "kuroda_moushi",
+     "ref": "Stage 1 完遂 + Stage 2 blocked (直政 anti-dup fail)"},
+    # Layer C W9 蜘蛛の糸 算定チェック — aggregate (= aggregate_w9_*_progress 流用)
+    {"layer": "C", "id": "C-15-A", "label": "W9 Stage A foundation 9 件",
+     "kind": "w9_stage", "stage": "A",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml Stage A"},
+    {"layer": "C", "id": "C-15-B1", "label": "W9 batch1 算定チェック 42",
+     "kind": "w9_batch", "batch": "1",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=1]"},
+    {"layer": "C", "id": "C-15-B2", "label": "W9 batch2 ui_logic 28",
+     "kind": "w9_batch", "batch": "2",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=2]"},
+    {"layer": "C", "id": "C-15-B3", "label": "W9 batch3 check_logic 26",
+     "kind": "w9_batch", "batch": "3",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=3]"},
+    {"layer": "C", "id": "C-15-B4", "label": "W9 batch4 validation 18",
+     "kind": "w9_batch", "batch": "4",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=4]"},
+    {"layer": "C", "id": "C-15-B5", "label": "W9 batch5 data_quality + 処置セット 20",
+     "kind": "w9_batch", "batch": "5",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=5]"},
+    {"layer": "C", "id": "C-15-B6", "label": "W9 batch6 補綴系 19",
+     "kind": "w9_batch", "batch": "6",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=6]"},
+    {"layer": "C", "id": "C-15-B7", "label": "W9 batch7 alert 残 15",
+     "kind": "w9_batch", "batch": "7",
+     "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=7]"},
+    # Layer D 頭脳層 蜘蛛の糸 — 法令 8,000+ records
+    {"layer": "D", "id": "D-1", "label": "legal_sources 1,600 件",
+     "ref": "Supabase legal_sources SELECT category, COUNT",
+     "supabase_table": "legal_sources"},
+    {"layer": "D", "id": "D-2", "label": "inspection_checklists 2,495 件",
+     "ref": "Supabase inspection_checklists",
+     "supabase_table": "inspection_checklists"},
+    {"layer": "D", "id": "D-3", "label": "inspection_findings 621 件",
+     "ref": "Supabase inspection_findings",
+     "supabase_table": "inspection_findings"},
+    {"layer": "D", "id": "D-4", "label": "procedure_codes_audit 250 件",
+     "ref": "Supabase procedure_codes_audit (算定可否分布)",
+     "supabase_table": "procedure_codes_audit"},
+    {"layer": "D", "id": "D-5", "label": "design_tasks 169 件 W9 蜘蛛の糸",
+     "ref": "Supabase design_tasks WHERE category 全 21",
+     "supabase_table": "design_tasks"},
+    # Layer E 運用層 — MC/SC pane + systemd + 通信規範 + auto-git-sync
+    {"layer": "E", "id": "E-1", "label": "MC pane 状態",
+     "ref": "tmux capture-pane + pid count"},
+    {"layer": "E", "id": "E-2", "label": "SC pane 状態",
+     "ref": "ssh secondpc tmux + pid"},
+    {"layer": "E", "id": "E-3", "label": "systemd unit 全",
+     "ref": "systemctl --user list-units"},
+    {"layer": "E", "id": "E-4", "label": "通信規範 (inbox_watcher / watcher_supervisor)",
+     "design_doc": "scripts/inbox_watcher.sh",
+     "ref": "inbox_watcher.sh + watcher_supervisor.sh"},
+    {"layer": "E", "id": "E-5", "label": "auto-git-sync",
+     "design_doc": "scripts/auto_git_sync.sh",
+     "audit_id_pattern": "kuroda_audit_auto_git_sync",
+     "ref": "queue/reports/auto_sync_log.yaml + docs/auto_git_sync_design.md"},
+    # Layer F 規範層 — memory MCP + forbidden_actions + persona
+    {"layer": "F", "id": "F-1", "label": "memory MCP 26 entities",
+     "ref": "mcp__memory__read_graph"},
+    {"layer": "F", "id": "F-2", "label": "F001-F005 forbidden_actions",
+     "design_doc": "instructions/shogun.md",
+     "ref": "instructions/shogun.md F001-F005"},
+    {"layer": "F", "id": "F-3", "label": "shogun_privileges P001-P002",
+     "design_doc": "instructions/shogun.md",
+     "ref": "instructions/shogun.md P001-P002"},
+    {"layer": "F", "id": "F-4", "label": "persona 規範",
+     "design_doc": "instructions/ashigaru.md",
+     "ref": "instructions/{shogun,karo,ashigaru,gunshi}.md"},
+    {"layer": "F", "id": "F-5", "label": "規範 audit chain",
+     "ref": "task_directive_pre_audit_rule + pre_emit_sot_check_rule + eta_machine_evidence_rule"},
+    # Layer G 統合層 — Stage 3-5 + 監査 chain
+    {"layer": "G", "id": "G-1", "label": "HTML drill-down (cycle 3 完遂 + cycle 4 子・孫装着)",
+     "design_doc": "scripts/regenerate_dashboard.py",
+     "audit_id_pattern": "kuroda_cmd020_regenerate_dashboard",
+     "ref": "本 generator + tests/test_regenerate_dashboard.py"},
+    {"layer": "G", "id": "G-2", "label": "mermaid 統合",
+     "design_doc": "docs/dashboard_layer_a_kousou.md",
+     "ref": "docs/dashboard_layer_a_kousou.md §4 graph TD + v0.2 §4.2 children"},
+    {"layer": "G", "id": "G-3", "label": "systemd dashboard-update.timer",
+     "ref": "(未装着、Stage 5 予定)"},
+    {"layer": "G", "id": "G-4", "label": "shogun_active_verify_queue (= ashigaru7 cycle 1 完遂)",
+     "design_doc": "scripts/shogun_active_verify_queue.py",
+     "audit_id_pattern": "kuroda_active_verify",
+     "ref": "queue/reports/active_verify_queue_candidate_log.yaml"},
+    {"layer": "G", "id": "G-5", "label": "検証 24h 運用",
+     "ref": "(未装着、Stage 6 予定)"},
+]
+
+
+# cycle4: mermaid v0.2 §4.2 — Layer C 機能層 → 会計待ちゼロ / 小児恐竜王国 / 申し送り
+# children 接続図。第 1 mermaid (= Layer A 5 階層 + 10 柱) と別 block で表示する。
+LAYER_C_CHILDREN_MERMAID = """```mermaid
+graph LR
+    LC[Layer C 機能層]
+    LC --> KZ[会計待ちゼロ作戦]
+    LC --> SK[小児恐竜王国アプリ]
+    LC --> MO[申し送りエンジン]
+    LC --> W9[W9 蜘蛛の糸 算定]
+    KZ --> KZ1[領収書 PDF + cycle6]
+    KZ --> KZ2[PDF v0.2 hardening]
+    KZ --> KZ3[AI チャット + 同意]
+    KZ --> KZ4[QR kanban]
+    KZ --> KZ5[handover_notes_anon]
+    KZ --> KZ6[engagement analytics]
+    SK --> SK1[100 敵 spec]
+    SK --> SK2[PWA]
+    SK --> SK3[push_vapid]
+    SK --> SK4[保護者同意]
+    MO --> MO1[Stage 1 設計完遂]
+    MO --> MO2[Stage 2 blocked]
+    W9 --> W9A[Stage A foundation 9]
+    W9 --> W9B[Stage B batch1-7]
+```"""
+
+
 def progress_color_tier(pct: float) -> dict[str, str]:
     """Map a progress percentage to the highest-priority color tier."""
     for tier in PROGRESS_COLOR_TIERS:
         if pct >= tier["min_pct"]:
             return tier  # type: ignore[return-value]
     return PROGRESS_COLOR_TIERS[-1]  # type: ignore[return-value]
+
+
+def children_for_layer(layer_code: str) -> list[dict[str, Any]]:
+    """Return all children entries declared for a given Layer code (A-G)."""
+    return [c for c in LAYER_CHILDREN if c.get("layer") == layer_code]
 
 
 def progress_bar_html(pct: float, *, width_px: int = 200, height_px: int = 14) -> str:
@@ -281,6 +481,268 @@ def aggregate_w9_batch_progress(tasks: Iterable[TaskEntry]) -> list[dict[str, An
             "task_ids": [t.task_id for _, t in entries],
         })
     return rows
+
+# ---------------------------------------------------------------------------
+# cycle4: 子項目 evidence extraction (= 5 項固定 grandchildren template)
+#   commit / test / audit / shogun_verified / 参照
+# 機械抽出のみ。捏造禁 (= 黒田 cycle4 事前監査 条件 1)、data 不在は fallback。
+# ---------------------------------------------------------------------------
+
+
+KURODA_REPORT_FILE = QUEUE_REPORTS_DIR / "kuroda_mainpc_report.yaml"
+SHOGUN_VERIFICATION_FILE = QUEUE_REPORTS_DIR / "shogun_verification_mainpc_log.yaml"
+
+
+def load_kuroda_index(report_path: Path | None = None) -> list[dict[str, Any]]:
+    """Read kuroda_mainpc_report.yaml and return a flat list of audit entries."""
+    path = report_path if report_path is not None else KURODA_REPORT_FILE
+    if not path.exists():
+        return []
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (yaml.YAMLError, OSError):
+        return []
+    if not isinstance(data, dict):
+        return []
+    reports = data.get("reports") or []
+    return [r for r in reports if isinstance(r, dict)]
+
+
+def load_shogun_verification_index(log_path: Path | None = None) -> list[dict[str, Any]]:
+    """Read shogun_verification_mainpc_log.yaml and return entries flat list."""
+    path = log_path if log_path is not None else SHOGUN_VERIFICATION_FILE
+    if not path.exists():
+        return []
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (yaml.YAMLError, OSError):
+        return []
+    if not isinstance(data, dict):
+        return []
+    entries = data.get("verifications") or []
+    return [v for v in entries if isinstance(v, dict)]
+
+
+def find_latest_audit_for_pattern(
+    kuroda_entries: list[dict[str, Any]], pattern: str
+) -> dict[str, Any] | None:
+    """Return the newest kuroda audit entry whose audit_id contains pattern (case-insensitive)."""
+    if not pattern:
+        return None
+    needle = pattern.lower()
+    matches = [
+        e for e in kuroda_entries
+        if needle in str(e.get("audit_id", "")).lower()
+        or needle in str(e.get("target_id", "")).lower()
+    ]
+    if not matches:
+        return None
+    return max(matches, key=lambda e: str(e.get("audited_at", "")))
+
+
+def find_latest_shogun_verified(
+    shogun_entries: list[dict[str, Any]], pattern: str
+) -> dict[str, Any] | None:
+    """Return the newest shogun_verified=true entry whose target contains pattern."""
+    if not pattern:
+        return None
+    needle = pattern.lower()
+    matches = [
+        v for v in shogun_entries
+        if needle in str(v.get("target", "")).lower()
+        and bool(v.get("shogun_verified"))
+    ]
+    if not matches:
+        return None
+    return max(matches, key=lambda v: str(v.get("verified_at", "")))
+
+
+def git_log_for_path(path: str, repo: Path = PROJECT_ROOT) -> dict[str, str]:
+    """Return {hash,subject,author_date} for the newest commit touching path, or {}.
+
+    author_date は ISO 形式 (= %ai)。relative age (%ar) は時刻 drift で snapshot/verify
+    test を不安定にするため (cycle4 で複数 child の commit が render されると秒境界で
+    age 表記が "X seconds ago"→"Y seconds ago" にずれて再現性が消える) ISO 化する。
+    """
+    if not path:
+        return {}
+    try:
+        out = subprocess.check_output(
+            ["git", "-C", str(repo), "log", "-1",
+             "--pretty=format:%h|%s|%ai", "--", path],
+            stderr=subprocess.DEVNULL, timeout=5,
+        ).decode().strip()
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+        return {}
+    if not out:
+        return {}
+    parts = out.split("|", 2)
+    if len(parts) != 3:
+        return {}
+    return {"hash": parts[0], "subject": parts[1], "author_date": parts[2]}
+
+
+# Fallback strings — cycle4 §3-2 規範 (= 「捏造禁、data 不在時は明示」)
+FALLBACK_COMMIT = "(未 commit)"
+FALLBACK_TEST = "(test 未実行)"
+FALLBACK_AUDIT = "(黒田監査未)"
+FALLBACK_SHOGUN_FALSE = "false"
+FALLBACK_REF = "(参照 doc 未起案)"
+
+
+def _audit_evidence_pytest(audit_entry: dict[str, Any]) -> str | None:
+    """Pull machine_evidence.pytest.observed from a kuroda audit entry, if present."""
+    if not isinstance(audit_entry, dict):
+        return None
+    me = audit_entry.get("machine_evidence")
+    if not isinstance(me, dict):
+        return None
+    pytest_block = me.get("pytest")
+    if isinstance(pytest_block, dict):
+        observed = pytest_block.get("observed")
+        if isinstance(observed, str) and observed.strip():
+            return observed.strip()
+    return None
+
+
+def extract_child_evidence(
+    child: dict[str, Any],
+    *,
+    kuroda_entries: list[dict[str, Any]],
+    shogun_entries: list[dict[str, Any]],
+    w9_batches: list[dict[str, Any]] | None = None,
+    w9_stages: list[dict[str, Any]] | None = None,
+    repo: Path = PROJECT_ROOT,
+) -> dict[str, str]:
+    """Resolve 5-fixed grandchildren evidence for a single child entry.
+
+    Returns dict with keys: commit / test / audit / shogun_verified / ref.
+    Missing data → fallback strings (黒田 cycle4 条件 1 整合、捏造禁)。
+    """
+    kind = child.get("kind")
+
+    # W9 batch / stage children — reuse aggregate stats as machine evidence.
+    if kind == "w9_batch":
+        batch_id = str(child.get("batch", ""))
+        match = next(
+            (r for r in (w9_batches or []) if str(r.get("batch", "")) == batch_id),
+            None,
+        )
+        if match:
+            return {
+                "commit": f"(集計値、{match['task_count']} 件)",
+                "test": f"task_count={match['task_count']}",
+                "audit": f"batch{batch_id} 平均進捗 {match['avg_pct']}%",
+                "shogun_verified": f"{match['avg_pct']}%",
+                "ref": str(child.get("ref", FALLBACK_REF)),
+            }
+        return _fallback_evidence(child)
+    if kind == "w9_stage":
+        stage = str(child.get("stage", ""))
+        match = next(
+            (r for r in (w9_stages or []) if str(r.get("stage", "")) == stage),
+            None,
+        )
+        if match:
+            return {
+                "commit": f"(集計値、{match['task_count']} 件)",
+                "test": f"scored={match['scored_count']}/{match['task_count']}",
+                "audit": f"Stage {stage} 平均進捗 {match['avg_pct']}%",
+                "shogun_verified": f"{match['avg_pct']}%",
+                "ref": str(child.get("ref", FALLBACK_REF)),
+            }
+        return _fallback_evidence(child)
+
+    # Standard child — derive from design_doc git log + kuroda + shogun_verified.
+    design_doc = str(child.get("design_doc", ""))
+    audit_pattern = str(child.get("audit_id_pattern", ""))
+    shogun_pattern = str(child.get("shogun_target_pattern", "")) or audit_pattern
+
+    commit_info = git_log_for_path(design_doc) if design_doc else {}
+    if commit_info:
+        commit_str = f"`{commit_info['hash']}` {commit_info['subject']} ({commit_info['author_date']})"
+    else:
+        commit_str = FALLBACK_COMMIT
+
+    audit_match = find_latest_audit_for_pattern(kuroda_entries, audit_pattern)
+    if audit_match:
+        verdict = str(audit_match.get("verdict", "")) or "(verdict 不在)"
+        audit_str = f"`{audit_match.get('audit_id', '')}` → {verdict}"
+        test_observed = _audit_evidence_pytest(audit_match)
+        test_str = test_observed if test_observed else FALLBACK_TEST
+    else:
+        audit_str = FALLBACK_AUDIT
+        test_str = FALLBACK_TEST
+
+    verif_match = find_latest_shogun_verified(shogun_entries, shogun_pattern)
+    if verif_match:
+        verified_at = str(verif_match.get("verified_at", ""))
+        shogun_str = f"true ({verified_at})"
+    else:
+        shogun_str = FALLBACK_SHOGUN_FALSE
+
+    ref_parts: list[str] = []
+    if design_doc:
+        ref_parts.append(design_doc)
+    if child.get("ref"):
+        ref_parts.append(str(child["ref"]))
+    if child.get("supabase_table"):
+        ref_parts.append(f"Supabase `{child['supabase_table']}`")
+    ref_str = " / ".join(ref_parts) if ref_parts else FALLBACK_REF
+
+    return {
+        "commit": commit_str,
+        "test": test_str,
+        "audit": audit_str,
+        "shogun_verified": shogun_str,
+        "ref": ref_str,
+    }
+
+
+def _fallback_evidence(child: dict[str, Any]) -> dict[str, str]:
+    return {
+        "commit": FALLBACK_COMMIT,
+        "test": FALLBACK_TEST,
+        "audit": FALLBACK_AUDIT,
+        "shogun_verified": FALLBACK_SHOGUN_FALSE,
+        "ref": str(child.get("ref") or FALLBACK_REF),
+    }
+
+
+def build_layer_render_entries(
+    *,
+    kuroda_entries: list[dict[str, Any]] | None = None,
+    shogun_entries: list[dict[str, Any]] | None = None,
+    w9_stages: list[dict[str, Any]] | None = None,
+    w9_batches: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    """Build layer dicts (= LAYER_DEFINITIONS extended with children + evidence) for template."""
+    kuroda_entries = kuroda_entries if kuroda_entries is not None else []
+    shogun_entries = shogun_entries if shogun_entries is not None else []
+    entries: list[dict[str, Any]] = []
+    for layer in LAYER_DEFINITIONS:
+        children = children_for_layer(layer["code"])
+        rendered_children = []
+        for child in children:
+            evidence = extract_child_evidence(
+                child,
+                kuroda_entries=kuroda_entries,
+                shogun_entries=shogun_entries,
+                w9_batches=w9_batches,
+                w9_stages=w9_stages,
+            )
+            rendered_children.append({
+                "id": child["id"],
+                "label": child["label"],
+                "evidence": evidence,
+            })
+        entries.append({
+            **layer,
+            "children": rendered_children,
+            "child_count": len(rendered_children),
+        })
+    return entries
+
 
 # F3 cycle2 fix: privacy gate 語彙統一 — WARN 残存は CLEAN ではない。
 PRIVACY_CLEAN = "clean"
@@ -821,9 +1283,29 @@ HTML drill-down は `<details>` accordion で expand する (= Layer G 仕様準
 
 - 設計 doc anchor: `{{ layer.doc }}`
 - data source: {{ layer.data_source }}
+- 子項目: {{ layer.child_count }} 件
+
+{% for child in layer.children %}
+<details>
+<summary>📦 {{ child.id }} {{ child.label }}</summary>
+
+- **commit:** {{ child.evidence.commit }}
+- **test:** {{ child.evidence.test }}
+- **audit (黒田):** {{ child.evidence.audit }}
+- **shogun_verified:** {{ child.evidence.shogun_verified }}
+- **参照:** {{ child.evidence.ref }}
 
 </details>
 {% endfor %}
+
+</details>
+{% endfor %}
+
+## 🕸 Layer C children mermaid (v0.2 §4.2)
+
+`docs/dashboard_design_v0.2.md §4.2` 整合 — Layer C 機能層 から 会計待ちゼロ作戦 / 小児恐竜王国 / 申し送りエンジン / W9 蜘蛛の糸 への children 接続図。
+
+{{ layer_c_children_mermaid }}
 
 ## 🌳 階層 mermaid tree (5 階層 + 10 柱 + 蜘蛛の糸)
 
@@ -990,6 +1472,17 @@ def build_context(
     for row in w9_batch_rows:
         row["bar"] = progress_bar_html(row["avg_pct"], width_px=180, height_px=12)
 
+    # cycle4: Layer 子項目 + 孫項目 (= 5 項固定 grandchildren) を機械抽出。
+    # 不在時は fallback (= "(黒田監査未)" / "false" 等)、捏造禁。
+    kuroda_entries = load_kuroda_index()
+    shogun_entries = load_shogun_verification_index()
+    layers_with_children = build_layer_render_entries(
+        kuroda_entries=kuroda_entries,
+        shogun_entries=shogun_entries,
+        w9_stages=w9_stage_rows,
+        w9_batches=w9_batch_rows,
+    )
+
     return {
         "generated_at": _dt.datetime.now().astimezone().isoformat(timespec="seconds"),
         "source_commit": state.source_commit,
@@ -1005,7 +1498,8 @@ def build_context(
         "memory": memory_snapshot,
         "git_log": state.git_log,
         "parse_errors": state.parse_errors,
-        "layers": LAYER_DEFINITIONS,
+        "layers": layers_with_children,
+        "layer_c_children_mermaid": LAYER_C_CHILDREN_MERMAID,
         "w9_stages": w9_stage_rows,
         "w9_batches": w9_batch_rows,
     }
