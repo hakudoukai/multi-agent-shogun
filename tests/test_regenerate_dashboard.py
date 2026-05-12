@@ -1901,3 +1901,148 @@ def test_render_dashboard_cmd004_alert_no_absolute_path(monkeypatch: pytest.Monk
     alert_block = rendered[start:end]
     for forbidden in ("/mnt/c/", "/home/", "/Users/"):
         assert forbidden not in alert_block, f"alert section に absolute path 残存: {forbidden}"
+
+
+# ---------------------------------------------------------------------------
+# Cycle 9 v2: Layer C 子項目 ref 2 軸 dynamic 結合 (= 黒田 verdict + 信長 shogun_verified)
+#   黒田 cycle9 v2 preaudit 条件:
+#     (1) 既存 shogun_verified helper 再利用 (= 重複実装禁)
+#     (2) 二軸優先順 test 必須 (= shogun_verified > 黒田 verdict 優先順 assertion)
+#   karo task spec:
+#     - static "未監査残" 禁則 pytest 装着 (= regression prevention、grep test)
+#     - L241/247/250/253 hardcoded "未監査残" 全 4 件 削除済 verify
+#     - 上段 alert section と下段 Layer C ref が同 data source ゆえ自然整合
+# ---------------------------------------------------------------------------
+
+
+def test_no_hardcoded_unaudited_residual_string_in_generator():
+    """regenerate_dashboard.py source 内に hardcoded "未監査残" が残存しないこと (= cycle9 v2 regression gate)。
+
+    cycle 5 以前は LAYER_CHILDREN に "未監査残" placeholder ref が hardcoded されており、
+    上段 cmd_004 audit 状態 alert (verdict 軸 SoT) との整合性が損なわれていた。
+    cycle 9 v2 で audit_id_pattern + shogun_target_pattern に置換し、dynamic 結合化。
+    今後 hardcoded で「未監査残」を埋めない (= 黒田 verdict 軸 + 信長 shogun_verified 軸
+    の dual-axis SoT 維持) ための禁則 grep test。
+    """
+    source = (REPO_ROOT / "scripts" / "regenerate_dashboard.py").read_text(encoding="utf-8")
+    assert "未監査残" not in source, (
+        "hardcoded '未監査残' 残存禁 — verdict 軸 SoT を破壊する。"
+        "audit_id_pattern + shogun_target_pattern を設定し dynamic 結合せよ。"
+    )
+
+
+def test_cmd004_design_doc_children_have_audit_id_pattern():
+    """C-5/C-7/C-8/C-9 (= cmd_004 design_doc children) が audit_id_pattern を持つこと。
+
+    旧 hardcoded "未監査残 9 件の 1" を置換した 4 児が dynamic 結合源を備えており、
+    kuroda_mainpc_report.yaml verdict 軸から状態が機械抽出される構造になっていることを
+    明示 assert (= 黒田 cycle9 v2 preaudit 条件 1 整合)。
+    """
+    target_ids = {"C-5", "C-7", "C-8", "C-9"}
+    by_id = {c["id"]: c for c in rd.LAYER_CHILDREN if c.get("layer") == "C"}
+    for child_id in target_ids:
+        assert child_id in by_id, f"C-layer 子項目 {child_id} が LAYER_CHILDREN に存在しない"
+        child = by_id[child_id]
+        assert child.get("audit_id_pattern"), (
+            f"{child_id}: audit_id_pattern 未設定 — 黒田 verdict 軸への dynamic 結合源が無い"
+        )
+        assert child.get("shogun_target_pattern"), (
+            f"{child_id}: shogun_target_pattern 未設定 — 信長 shogun_verified 軸への dynamic 結合源が無い"
+        )
+        assert "未監査残" not in str(child.get("ref", "")), (
+            f"{child_id}: hardcoded '未監査残' ref 残存 — verdict 軸 SoT 違反"
+        )
+
+
+def test_dual_axis_priority_shogun_verified_overrides_kuroda_fail():
+    """黒田 fail でも 信長 shogun_verified=true なら 🟢 化 (= 二軸優先順)。
+
+    黒田 cycle9 v2 preaudit 条件 2 整合 — shogun_verified > 黒田 verdict の優先順
+    を機械的に assertion する。dual-axis SoT で 信長殿陛下 verify ledger が最終正本。
+    """
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "audit_id_pattern": "kuroda_dual_axis_test",
+             "shogun_target_pattern": "dual_axis_test"}
+    kuroda = [{"audit_id": "kuroda_dual_axis_test_v1", "verdict": "fail",
+               "audited_at": "2026-05-12T10:00:00+09:00"}]
+    shogun = [{"target": "dual_axis_test_target", "shogun_verified": True,
+               "verified_at": "2026-05-12T17:00:00+09:00"}]
+    state = rd.compute_child_machine_state(
+        child, kuroda_entries=kuroda, shogun_entries=shogun
+    )
+    assert state["pct"] == 90.0, (
+        f"shogun_verified=true 優先順違反 — 黒田 fail でも shogun_verified=true なら 🟢 90% 必達 "
+        f"(実: {state['pct']})"
+    )
+    assert state["shogun_verified"] is True
+
+
+def test_dual_axis_kuroda_pass_with_shogun_pending_yields_yellow():
+    """黒田 pass + 信長 pending (= shogun_verified=false) なら 🟡 60% (= 進行中)。
+
+    karo task spec の 2 軸統合 logic を assertion:
+      shogun_verified=true → 🟢 / 黒田 pass + 信長 pending → 🟡 / 黒田 fail → 🟠 / 無 → 🔴
+    """
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "audit_id_pattern": "kuroda_passwait",
+             "shogun_target_pattern": "passwait"}
+    kuroda = [{"audit_id": "kuroda_passwait_v1", "verdict": "pass",
+               "audited_at": "2026-05-12T10:00:00+09:00"}]
+    state = rd.compute_child_machine_state(
+        child, kuroda_entries=kuroda, shogun_entries=[]
+    )
+    assert state["pct"] == 60.0
+    assert state["shogun_verified"] is False
+
+
+def test_dual_axis_kuroda_fail_yields_orange_when_shogun_pending():
+    """黒田 fail + 信長 pending → 🟠 30% (= 修正待ち)。alert 軸 修正待ち 7 件と整合。"""
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "audit_id_pattern": "kuroda_failwait",
+             "shogun_target_pattern": "failwait"}
+    kuroda = [{"audit_id": "kuroda_failwait_v1", "verdict": "fail",
+               "audited_at": "2026-05-12T10:00:00+09:00"}]
+    state = rd.compute_child_machine_state(
+        child, kuroda_entries=kuroda, shogun_entries=[]
+    )
+    assert state["pct"] == 30.0
+
+
+def test_cmd004_design_doc_children_use_existing_shogun_helper():
+    """C-5/C-7/C-8/C-9 が find_latest_shogun_verified helper を経由すること
+    (= 黒田 cycle9 v2 preaudit 条件 1: 既存 helper 再利用、重複実装禁)。
+
+    実行時に shogun_entries 経由で shogun_verified 状態を取得できることを
+    機能 contract レベルで verify。直接 LAYER_CHILDREN 4 児の compute_child_machine_state
+    が shogun_entries を respect することを assertion。
+    """
+    by_id = {c["id"]: c for c in rd.LAYER_CHILDREN}
+    child = by_id["C-7"]  # engagement_analytics — shogun_target_pattern="engagement_analytics"
+    shogun = [{"target": "engagement_analytics_pwa_consolidated",
+               "shogun_verified": True,
+               "verified_at": "2026-05-12T17:00:00+09:00"}]
+    state = rd.compute_child_machine_state(
+        child, kuroda_entries=[], shogun_entries=shogun
+    )
+    assert state["shogun_verified"] is True
+    assert state["pct"] == 90.0
+
+
+def test_render_dashboard_layer_c_no_hardcoded_unaudited_residual():
+    """render された dashboard.md 内に hardcoded "未監査残 9 件の 1" / "未監査残" placeholder
+    が登場しないこと (= verdict 軸 SoT で dynamic 化済の証拠)。
+
+    上段 alert section 内の「未監査 0」labels は class indicator として retain。
+    禁則対象は LAYER_CHILDREN 内に旧 hardcoded されていた placeholder ref 残骸のみ。
+    """
+    rendered = rd.render_dashboard(_baseline_context())
+    # LAYER_CHILDREN 旧 placeholder は「未監査残 9 件の 1」「未監査残</p>」 form。
+    # alert section 内の「未監査 0」は count 表示で残骸ではない。
+    assert "未監査残 9 件の 1" not in rendered, "旧 hardcoded placeholder 残存"
+    # alert section 以外の Layer C ref に "未監査残" placeholder が無いことを確認
+    # (alert section 内の "未監査" labels は完全不含、count "未監査 0" のみ retain)
+    layer_c_start = rendered.find("Layer C")
+    if layer_c_start >= 0:
+        layer_c_end = rendered.find("Layer D", layer_c_start)
+        layer_c_block = rendered[layer_c_start:layer_c_end if layer_c_end > 0 else len(rendered)]
+        assert "未監査残" not in layer_c_block, "Layer C 内に旧 placeholder 残存"
