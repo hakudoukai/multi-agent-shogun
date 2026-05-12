@@ -249,6 +249,11 @@ logs/
 !queue/reports/ashigaru2_form_inventory.yaml
 !scripts/extract_dentalbi_form_inventory.py
 
+# cmd_004 / cmd_020 cycle 12 unverified inventory extraction (= ashigaru1/鬼柴田、信長殿 20:18 audit pipeline 復活)
+!scripts/extract_unverified_inventory.py
+!queue/reports/unverified_inventory_20260512.yaml
+!queue/reports/ashigaru1_unverified_inventory_extraction_report.yaml
+
 # cmd_020 dashboard Layer A 構想層 render component (= ashigaru1、subtask_cmd020_dashboard_layer_a_kousou_render)
 !docs/dashboard_layer_a_kousou.md
 !scripts/test/

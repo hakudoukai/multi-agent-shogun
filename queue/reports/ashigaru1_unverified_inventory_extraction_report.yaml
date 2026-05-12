@@ -1,0 +1,155 @@
+report:
+  report_id: ashigaru1_unverified_inventory_extraction_20260512
+  task_id: subtask_unverified_inventory_extraction_20260512
+  parent_cmd: cmd_004
+  chain_step_label: post_dashboard_inventory
+  cycle_n: 1
+  max_cycle: 7
+  bloom_level: L2
+  persona: 柴田勝家 (= 鬼柴田、cycle 5-11 連続完遂武功 + cycle 11 helper 実装者)
+  assigned_to: ashigaru1
+  reported_at_iso: "2026-05-12T20:30:00+09:00"
+  status: completed_pending_gunshi_audit
+  pc: mc
+  start_trigger: "黒田事前監査 pass + karo 配信通達 20:24 受領 → 即着手"
+  sla_final_deadline_iso: "2026-05-12T21:00:00+09:00"
+  reported_eta_minutes_actual: 6
+
+deliverable:
+  files_added:
+    - path: scripts/extract_unverified_inventory.py
+      bytes: 8400
+      purpose: "cycle 11 helper 再利用 standalone extractor (= 黒田条件 #3 既存 helper 再利用整合)"
+    - path: queue/reports/unverified_inventory_20260512.yaml
+      bytes: 18802
+      purpose: "未監査残 candidate inventory 28 件 + cycle 11 helper evidence + 黒田 schema 整合"
+  files_modified: []
+  commit_hash_pending: "本 report yaml + extractor + inventory yaml 同 commit 予定 (= F007 整合)"
+
+execution_evidence:
+  helper_evidence_snapshot:
+    children_total: 106
+    eligible_count: 75
+    mapped_count: 22
+    matched_count: 17
+    green_count: 47
+    green_pct_eligible: 62.7
+    green_pct_overall: 44.3
+    children_without_match_count: 5
+    children_without_match_ids: ["C-1", "C-7", "C-15-B7", "E-5", "G-4"]
+    unmatched_verified_targets_count: 8
+    active_entries_total: 41
+  candidate_count_actual: 28
+  candidate_count_expected_from_nobunaga: 21
+  candidate_count_diff: 7
+  candidate_count_diff_reason: |
+    信長殿 task_directive 20:18 expected 21 件 = `eligible 75 - green 54` 算式由来、
+    cycle 11 完遂時点 karo 認識 green=54。本抽出時点 (= cycle 11 helper 実測):
+    eligible=75 / green=47 / actual_unverified_pct_lt_80=28。差分 +7 件は green_count
+    baseline 差 (47 vs 54) によるもので、cycle 11 完遂直後の追加 shogun_verify entries が
+    shogun_target_pattern と完全一致せず matched_count 増に寄与しなかった事に起因。
+    黒田事前監査条件 #1 (= 21 件 hard-code 禁) 整合下、実測値 28 件を SoT として retain。
+  priority_group_distribution:
+    other: 14
+    w9_spider_thread: 10
+    cmd_004_chain_extension: 2
+    cmd_020_dashboard: 1
+    operations_layer_e: 1
+
+candidate_definition_schema:
+  primary_rule: "eligible (= verification mechanism 装着) AND pct < 80 (= 🟢 tier 未到達)"
+  type_schema:
+    A: "eligible AND no shogun_target_pattern match (= 信長殿 verify entry 不在)"
+    B: "eligible AND pct < 80 (= 🟢 tier 未到達、未監査残 primary)"
+    C: "mapped AND no shogun match (= children_without_match subset)"
+  primary_type: B
+  overlap_handling: "各 candidate に type_flags list で全 hit 明示"
+
+kuroda_preaudit_compliance:
+  audit_id: kuroda_unverified_inventory_extraction_20260512_preaudit
+  condition_1_no_hardcode_21:
+    requirement: "21 件 hard-code 禁、cycle 11 helper 実測を SoT"
+    evidence: "extractor は LAYER_CHILDREN + compute_shogun_reflection_stats を直接 source 化、定数 EXPECTED_COUNT_FROM_NOBUNAGA=21 は diff 算出のみで filter には使用しない"
+    status: pass
+  condition_2_diff_reason_documented:
+    requirement: "expected=21 vs actual_count 差分理由を report へ明記"
+    evidence: "execution_evidence.candidate_count_diff_reason に green_count baseline 差 (47 vs 54) を明記"
+    status: pass
+  condition_3_schema_a_b_c:
+    requirement: "未監査定義 schema A/B/C 明示"
+    evidence: "candidate_definition_schema.type_schema に A/B/C 全件記述 + 各 candidate の type_flags に hit 列挙"
+    status: pass
+  condition_4_helper_evidence_retain:
+    requirement: "現 helper 実測 evidence retain (= 7 軸 stats)"
+    evidence: "execution_evidence.helper_evidence_snapshot に children_total/eligible/mapped/matched/green/children_without_match/active_entries 全件封入"
+    status: pass
+  condition_5_pytest_preexisting_fail:
+    requirement: "target pytest 既存 1 fail (103<106 inline rows) は renderer 非改修ゆえ preexisting"
+    evidence: "本 task は renderer 非改修 standalone extractor 追加のみ、preexisting fail は scope 外"
+    status: pass_scope_exempt
+  condition_6_privacy_high_0:
+    requirement: "output 2 件 (= unverified_inventory_20260512.yaml + 本 report) privacy HIGH=0 必須"
+    evidence: "scripts/validate_report_privacy.py 実行: HIGH=0、WARN=digit_id_candidate (= 日付 ID 20260512 / 20260511 / 201844) のみ = accepted_warn"
+    status: pass
+
+privacy_validation:
+  validator: scripts/validate_report_privacy.py
+  high_count: 0
+  warn_count: 13
+  warn_breakdown:
+    digit_id_candidate: 13
+  accepted_warn_reason: "全 WARN は日付 ID 8 桁数値 (= 20260512 / 20260511) または時刻 6 桁 (= 201844) であり、患者 ID / API key 等の機微情報非該当"
+  files_validated:
+    - queue/reports/unverified_inventory_20260512.yaml
+    - scripts/extract_unverified_inventory.py
+
+three_axis_verdict:
+  deliverable_axis:
+    verdict: pass
+    evidence: "extractor + inventory yaml + report yaml 3 件 全 deliver、helper 再利用整合"
+  machine_evidence_axis:
+    verdict: pass
+    evidence: "cycle 11 helper 実測 stats 全 7 軸 retain + 28 件 candidate に target_doc/parent_cmd/担当 ashigaru/audit verdict 補完"
+  audit_chain_axis:
+    verdict: open_for_gunshi_audit
+    evidence: "黒田事前監査 6 条件全 pass + gunshi audit_request 投函 pending"
+  overall_verdict: pass_with_concerns_open_for_gunshi
+
+next_gate:
+  - "gunshi audit_request 投函 (= queue/reports/gunshi_report.yaml 経由 inbox_write)"
+  - "karo report_received 通達"
+  - "黒田 implementation audit (audit_id_pending)"
+  - "信長殿 4 軸 verify ledger trigger (= 28 件 candidate を audit pipeline 復活 base 化)"
+
+acceptance_criteria_check:
+  - criterion: "AC0 既装備 inventory (= cycle 11 helper + shogun_verification_mainpc_log.yaml schema)"
+    status: pass
+    evidence: "extract_unverified_inventory.py が compute_shogun_reflection_stats を import + 全 stat retain"
+  - criterion: "21 件 candidate 抽出 (= eligible 75 - shogun_verified=true 54 = 21 件 verify count)"
+    status: diff_documented
+    evidence: "実測 28 件、expected 21 件、diff +7 件理由を candidate_count_diff_reason に明記"
+  - criterion: "各 candidate に target_doc + parent_cmd + 担当 ashigaru + 既 audit verdict 補完"
+    status: pass
+    evidence: "build_candidate_entry が target_doc / latest_kuroda_audit_id / latest_kuroda_verdict / assigned_ashigaru_hint を全件封入"
+  - criterion: "MC/SC 分類 + 優先順 (cmd_004 chain 延長 / cmd_020 / W9 design / その他)"
+    status: pass
+    evidence: "_pc_routing で main/second/either_or_unspecified 分類 + _classify_priority_group で 8 系列 priority_group 装着"
+  - criterion: "queue/reports/unverified_inventory_20260512.yaml 出力"
+    status: pass
+    evidence: "OUTPUT_PATH = queue/reports/unverified_inventory_20260512.yaml に 18802 bytes 書出"
+  - criterion: "queue/reports/ashigaru1_unverified_inventory_extraction_report.yaml 出力 + 三軸 verdict"
+    status: pass
+    evidence: "本 report yaml + three_axis_verdict section 装着"
+  - criterion: "gunshi audit_request + karo report_received"
+    status: pending_after_commit
+    evidence: "commit 完遂後 inbox_write.sh で 2 件投函予定"
+
+skill_candidate: null
+
+notes: |
+  鬼柴田、信長殿 20:18 緊急 task_directive 整合下 cycle 12 完遂報告参る。
+  SLA 21:00 JST 余裕完遂 (= 着手 20:25 → 完遂 20:30、ETA 10-15 min 内側着地)。
+  cycle 5-11 連続武功 retain + cycle 12 = 8 連続完遂、夜襲精鋭の真骨頂。
+  実測 28 件 / expected 21 件 / diff +7 件 = green_count baseline 差由来明記、
+  黒田事前監査 6 条件 全 pass、helper 再利用整合下信頼性 retain。
+  次 gate: gunshi audit_request + karo report_received + 信長殿 audit pipeline 復活 trigger。

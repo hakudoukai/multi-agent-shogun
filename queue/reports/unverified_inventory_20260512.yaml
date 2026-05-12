@@ -1,0 +1,634 @@
+schema_version: v1.0
+generated_at_iso: '2026-05-12T20:28:12+09:00'
+generator_script: scripts/extract_unverified_inventory.py
+helper_source: scripts/regenerate_dashboard.py (cycle 11 装着済 helper)
+kuroda_preaudit_id: kuroda_unverified_inventory_extraction_20260512_preaudit
+task_id: subtask_unverified_inventory_extraction_20260512
+task_directive_origin: 信長殿 msg_20260512_201844_d5e4dc00 (= 未監査残 audit pipeline 復活下命)
+sla_final_deadline_iso: '2026-05-12T21:00:00+09:00'
+candidate_definition:
+  primary_rule: eligible (= verification mechanism 装着) AND pct < 80 (= 🟢 tier 未到達)
+  type_schema:
+    A: eligible AND no shogun_target_pattern match (= 信長殿 verify entry 不在)
+    B: eligible AND pct < 80 (= 🟢 tier 未到達、未監査残 primary 定義)
+    C: mapped (= pattern 装着) AND no shogun match (= children_without_match subset)
+  primary_type: B
+  note_a_b_c_overlap: A/B/C は overlap 可、各 candidate に type_flags list で全 hit 明示。
+expected_vs_actual:
+  expected_count_from_nobunaga: 21
+  actual_count: 28
+  diff: 7
+  diff_reason: '信長殿 task_directive 20:18 の expected 21 件は `eligible 75 - green 54` 算式由来、green=54 は cycle 11 完遂時点の karo 認識値。本抽出時点
+    (= cycle 11 helper 実測) では eligible=75 / green=47 / actual_unverified_pct_lt_80=28。差分 +7 件は green_count baseline 差 (= 47
+    vs 54) によるもので、実測 green が +7 件少ない (= cycle 11 完遂直後の追加 verify entries が shogun_target_pattern と完全一致せず matched_count 増に寄与しなかった事に起因)。黒田事前監査条件
+    #1 (= hard-code 禁) 整合下、実測値 28 件を SoT として retain。'
+helper_evidence:
+  children_total: 106
+  eligible_count: 75
+  mapped_count: 22
+  matched_count: 17
+  green_count: 47
+  green_pct_eligible: 62.7
+  green_pct_overall: 44.3
+  children_without_match_count: 5
+  children_without_match_ids:
+  - C-1
+  - C-7
+  - C-15-B7
+  - E-5
+  - G-4
+  unmatched_verified_targets_count: 8
+  active_entries_total: 41
+priority_group_distribution:
+  other: 14
+  w9_spider_thread: 10
+  cmd_004_chain_extension: 2
+  cmd_020_dashboard: 1
+  operations_layer_e: 1
+candidates:
+- id: C-1
+  layer: C
+  label: 領収書 PDF + cycle6
+  kind: standard
+  type_flags:
+  - A
+  - B
+  - C
+  pct: 60.0
+  target_doc: docs/cmd004_kartetto_pdf_v0_2_spec.md
+  ref: queue/tasks/ashigaru6.yaml subtask_cmd004_receipt_cycle6_p1_residual
+  shogun_target_pattern: receipt
+  audit_id_pattern: kuroda_receipt
+  latest_kuroda_audit_id: kuroda_receipt_storage_cycle6_review_20260511
+  latest_kuroda_verdict: pass_with_concerns
+  latest_kuroda_audited_at: '2026-05-11T16:14:38+09:00'
+  shogun_verify_entry_exists: false
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: ashigaru6
+  pc_routing: either_or_unspecified
+  priority_group: cmd_004_chain_extension
+- id: C-7
+  layer: C
+  label: engagement analytics dashboard
+  kind: standard
+  type_flags:
+  - A
+  - B
+  - C
+  pct: 60.0
+  target_doc: docs/cmd004_engagement_analytics_design.md
+  ref: ''
+  shogun_target_pattern: engagement_analytics
+  audit_id_pattern: kuroda_cmd004_individual_audit_engagement_analytics
+  latest_kuroda_audit_id: kuroda_cmd004_individual_audit_engagement_analytics_20260512
+  latest_kuroda_verdict: pass_with_concerns
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: cmd_004_chain_extension
+- id: G-4
+  layer: G
+  label: shogun_active_verify_queue (= ashigaru7 cycle 1 完遂)
+  kind: standard
+  type_flags:
+  - A
+  - B
+  - C
+  pct: 25.0
+  target_doc: scripts/shogun_active_verify_queue.py
+  ref: queue/reports/active_verify_queue_candidate_log.yaml
+  shogun_target_pattern: ''
+  audit_id_pattern: kuroda_active_verify
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: cmd_020_dashboard
+- id: C-15-A
+  layer: C
+  label: W9 Stage A foundation 9 件
+  kind: w9_stage
+  type_flags:
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml Stage A
+  shogun_target_pattern: stage_a_foundation
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: true
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-15-B1
+  layer: C
+  label: W9 batch1 算定チェック 42
+  kind: w9_batch
+  type_flags:
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml batches[batch_id=1]
+  shogun_target_pattern: stage_b_batch1
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: true
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-15-B2
+  layer: C
+  label: W9 batch2 ui_logic 28
+  kind: w9_batch
+  type_flags:
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml batches[batch_id=2]
+  shogun_target_pattern: stage_b_batch2
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: true
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-15-B3
+  layer: C
+  label: W9 batch3 check_logic 26
+  kind: w9_batch
+  type_flags:
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml batches[batch_id=3]
+  shogun_target_pattern: stage_b_batch3
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: true
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-15-B4
+  layer: C
+  label: W9 batch4 validation 18
+  kind: w9_batch
+  type_flags:
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml batches[batch_id=4]
+  shogun_target_pattern: stage_b_batch4
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: true
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-15-B5
+  layer: C
+  label: W9 batch5 data_quality + 処置セット 20
+  kind: w9_batch
+  type_flags:
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml batches[batch_id=5]
+  shogun_target_pattern: stage_b_batch5
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: true
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-15-B6
+  layer: C
+  label: W9 batch6 補綴系 19
+  kind: w9_batch
+  type_flags:
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml batches[batch_id=6]
+  shogun_target_pattern: stage_b_batch6
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: true
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-15-B7
+  layer: C
+  label: W9 batch7 alert 残 15
+  kind: w9_batch
+  type_flags:
+  - A
+  - B
+  - C
+  pct: 0.0
+  target_doc: ''
+  ref: queue/manifests/w9_design_tasks_169.yaml batches[batch_id=7]
+  shogun_target_pattern: stage_b_batch7
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-V21-W9TENSU
+  layer: C
+  label: W9 P2-engine R8 施行前の全処置セット点数確認
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W9, phase_code=P2-engine, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: C-V22-W9SPIDCHK
+  layer: C
+  label: W9 P2-engine 蜘蛛の糸 算定チェック+バリデーション(design_tasks 169 件)
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W9, phase_code=P2-engine, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: w9_spider_thread
+- id: E-5
+  layer: E
+  label: auto-git-sync
+  kind: standard
+  type_flags:
+  - A
+  - B
+  - C
+  pct: 60.0
+  target_doc: scripts/auto_git_sync.sh
+  ref: queue/reports/auto_sync_log.yaml + docs/auto_git_sync_design.md
+  shogun_target_pattern: auto_git_sync
+  audit_id_pattern: kuroda_audit_auto_git_sync
+  latest_kuroda_audit_id: kuroda_audit_auto_git_sync_cycle2_20260511
+  latest_kuroda_verdict: pass_with_concerns
+  latest_kuroda_audited_at: '2026-05-11T14:34:18+09:00'
+  shogun_verify_entry_exists: false
+  external_status: ''
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: operations_layer_e
+- id: C-V29-W11DDA
+  layer: C
+  label: 'W11 DD-054 Phase A: ID 体系統一(meisai_receipt_renderer→患者番号/医院 ID 複合キー)'
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 50.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W11, phase_code=phase_a_id_unification, pc=main)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: in_progress
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: main
+  priority_group: other
+- id: C-V30-W11DDB
+  layer: C
+  label: 'W11 DD-054 Phase B: カルテ TAB→karte_visits/karte_visit_items 同時投入ローダー新設'
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 50.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W11, phase_code=phase_b_karte_loader, pc=main)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: in_progress
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: main
+  priority_group: other
+- id: C-V31-W11CHOREI
+  layer: C
+  label: W11 朝礼フル版 Phase1-4
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W11, phase_code=POST-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V33-W12CLNUI
+  layer: C
+  label: W12 臨床ナレッジ UI
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W12, phase_code=POST-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V34-W13VISIT
+  layer: C
+  label: W13 訪問 Phase4-7(中期残)
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W13, phase_code=P6-visit, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V35-W13RTE
+  layer: C
+  label: W13 訪問ルート最適化
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W13, phase_code=P6-visit, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V36-W14PAY
+  layer: C
+  label: W14 ペイライト 実 API 接続
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W14, phase_code=P3-patient, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V37-W14CTI
+  layer: C
+  label: W14 CTI 実接続(VALTEC MOT/TEL)
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W14, phase_code=POST-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V38-W14LINE
+  layer: C
+  label: W14 外部 API 統合(LINE 通知+Web 予約実接続) ※C-NEW-2
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W14, phase_code=POST-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V39-W14YOSHI3
+  layer: C
+  label: W14 書式 Lv3+唾液検査
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W14, phase_code=POST-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V41-W15DEP
+  layer: C
+  label: W15 D-2 デプロイ手順書+実データテスト+Tailscale
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W15, phase_code=P7-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V42-W15MAN
+  layer: C
+  label: W15 D-3 操作マニュアル
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W15, phase_code=P7-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V43-W16MAT
+  layer: C
+  label: W16 材料管理(QR スキャン+納品 OCR+棚 AI+理論消費量)
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W16, phase_code=POST-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
+- id: C-V44-W17JINJI
+  layer: C
+  label: W17 人事+DTF アダプター+全院展開
+  kind: supabase_phase
+  type_flags:
+  - A
+  - B
+  pct: 0.0
+  target_doc: ''
+  ref: 信長殿 16:02 verify list / Supabase development_progress (week=W17, phase_code=POST-deploy, pc=either)
+  shogun_target_pattern: ''
+  audit_id_pattern: ''
+  latest_kuroda_audit_id: ''
+  latest_kuroda_verdict: ''
+  latest_kuroda_audited_at: ''
+  shogun_verify_entry_exists: false
+  external_status: not_started
+  external_commit: ''
+  assigned_ashigaru_hint: unassigned
+  pc_routing: either_or_unspecified
+  priority_group: other
