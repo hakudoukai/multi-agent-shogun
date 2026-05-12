@@ -278,6 +278,13 @@ logs/
 !queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
 !queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
 
+# cmd_020 dashboard Layer F 規範層 render component (= ashigaru6、subtask_cmd020_dashboard_layer_f_kihan_render)
+!docs/dashboard_layer_f_kihan.md
+!scripts/test/test_dashboard_layer_f_static_contract.py
+!queue/reports/ashigaru6_dashboard_layer_f_inventory.yaml
+!queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_report.yaml
+!queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_pytest.log
+
 # cmd_020 dashboard Layer G 統合層 render component (= ashigaru7、subtask_cmd020_dashboard_layer_g_integration_drill_down_js)
 !docs/dashboard_layer_g_integration_drill_down.md
 !scripts/test/test_dashboard_layer_g_static_contract.py

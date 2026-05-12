@@ -1,0 +1,236 @@
+inventory_id: ashigaru6_dashboard_layer_f_inventory_20260512
+inventoried_at: "2026-05-12T11:18:00+09:00"
+inventoried_by: ashigaru6
+scope: dashboard cmd_020 Layer F 規範層 (= memory MCP 18 entities + CLAUDE.md + instructions/karo.md + instructions/ashigaru.md + instructions/gunshi.md + F001-F007 + D001-D008 + 根本治療原則 + 新規範 7 件 anchor) 既実装 inventory
+repo: multi-agent-shogun-newbuild
+parent_task: subtask_cmd020_dashboard_layer_f_kihan_render
+parent_cmd: cmd_020
+
+mc_anti_dup_check:
+  status: unknown
+  reason: |
+    MC ashigaru1 regenerate_dashboard.py Stage 2 cycle 2 fix (= commit 72f1c0d) は MC 側 generator
+    artifact、本 SC repo 内に該 artifact 不在 (= find multi-agent-shogun-newbuild -name 'regenerate_dashboard*' → 0 件)。
+    本 task は SC docs 単独起案、MC 統合 interface (= 家康 + 秀吉合議結果 + SoT 統合) は後段別 task。
+    本 doc は規範 anchor + entity 集約 + 構造提示のみ、規範本体 (= memory MCP entities / CLAUDE.md / instructions 各 .md / forbidden_actions.md) は SC repo 内に既存、本 sub-section は重複本体を持たず anchor 化のみ。
+  verify_basis: "find multi-agent-shogun-newbuild repo -name 'regenerate_dashboard*' → 0 件、ashigaru1 Layer A / ashigaru3 Layer C inventory mc_anti_dup_check unknown と同 verdict"
+  followup: "家康 + 秀吉合議結果着後 別 task で MC 側 generator artifact (= regenerate_dashboard.py SoT 統合 path) と本 Layer F render 部分の二重実装可否を再確認。MC memory MCP graph export 添付時は merge/dedup 規則 (= entity name 同一 = 同 entity、observations は union、relations は重複排除) を本 yaml + render md に明示済"
+
+layer_f_scope_components:
+  - component_id: sc_memory_entities_export_20260512
+    component_type: memory_export_yaml
+    file_path: queue/reports/sc_memory_entities_export_20260512.yaml
+    section_anchor: "entities (= 18 件) + relations (= 13 件)"
+    line_range_approx: "14-213"
+    key_concepts:
+      - "SC family memory MCP graph export 18 entity 6 type (= rule / rule_supreme / principle / mechanism / mechanism_candidate / procedure / constraint / agent / recovery_path / gap)"
+      - "F007_git_push_approval_rule / radical_solution_during_development_rule / mistake_prevention_principle / audit_exclusive_to_gunshi_codex / ashigaru_model_selection_strategy / task_directive_pre_audit_rule / supabase_directive_distribution_rule / shogun_15min_self_check_rule / council_autonomous_decision_rule / auto_git_sync_mechanism / ieyasu_persona_2026 / SC_restart_procedure / SC_linger_enabled / SC_vsock_healthy / SC_shogun_tunnel_service / SC_ttyd_absent / Session_0_isolation_limit / nobunaga_ieyasu_alias_mirror"
+      - "relations 13 件 (= constrains / underlies / depends_on / bounded_by / supersedes / follows / guides / supplements)"
+    owner: 直政 audit gate 整備用 export (= 2026-05-12T08:43)
+    integration_status: integrated
+    role_in_layer_f: 主 source (= memory MCP 規範 entity 18 件 原典、SC export 8:43 source)
+    mc_dup_check_note: "MC graph export 添付時は entity name 同一 = 同 entity、observations は union 化、relations は (from, to, relationType) 三組 key で dedup。本 task render は SC export 18 件 base、MC merge は後段別 task で適用"
+
+  - component_id: claude_md_top_level_rules
+    component_type: existing_markdown
+    file_path: CLAUDE.md
+    section_anchor: "# Procedures / # Communication Protocol / # Project Management / # Shogun Mandatory Rules / # Test Rules / # Batch Processing Protocol / # Critical Thinking Rule / # Destructive Operation Safety / # Git Sync Protocol"
+    line_range_approx: "1-380 (= 全 file)"
+    key_concepts:
+      - "Session Start / Recovery 手順 (= 全 agent 共通)"
+      - "/clear Recovery (= ashigaru 専用軽量手順、CLAUDE.md のみ auto-load、instructions/*.md 再読禁)"
+      - "Mailbox System (inbox_write.sh) + Inbox Processing Protocol + Redo Protocol + Report Flow"
+      - "Test Rules (= SKIP=FAIL / Preflight / E2E 家老 / テスト計画レビュー)"
+      - "Batch Processing Protocol (= 30 items / batch1 QC gate / detection pattern / quality template)"
+      - "Destructive Operation Safety (= D001-D008 Tier 1 + Tier 2 STOP-AND-REPORT + Tier 3 SAFE DEFAULTS + WSL2 protections + Prompt Injection Defense)"
+      - "F007 厳守 (= commit + push は agent workflow 規範下手動)"
+      - "Git Sync Protocol (= auto-git-sync.timer pull-only、push 別 layer)"
+      - "復旧経路 (= nobunaga / ieyasu alias、両 PC 対称設計)"
+    owner: 信長 + 4 人合議 (= 永続規範 source)
+    integration_status: integrated
+    role_in_layer_f: 主 source (= top-level 規範本体、F001-F007 / D001-D008 + 根本治療原則 + 復旧経路 + Test Rules 全 anchor)
+    mc_dup_check_note: "CLAUDE.md は両 PC 共通 (= git tracked)、本 render は anchor 化のみ"
+
+  - component_id: instructions_common_forbidden_actions
+    component_type: existing_markdown
+    file_path: instructions/common/forbidden_actions.md
+    section_anchor: "全 agent 共通 F001-F007 + 役職別 forbidden (= karo / gunshi / ashigaru)"
+    line_range_approx: "1-50"
+    key_concepts:
+      - "F001 direct user contact / F002 / F003 / F004 polling / F005 skip context"
+      - "F006 Edit generated files directly (= instructions/generated/*.md, AGENTS.md, .github/copilot-instructions.md, agents/default/system.md 直接編集禁、template + build_instructions.sh 経由)"
+      - "F007 git push without Lord's explicit approval (= 陛下御差配 trust gate)"
+      - "役職別 forbidden table (karo F001-F003 / gunshi F001-F006 / ashigaru F001-F005)"
+    owner: 永続規範 source (= 全 agent 共通 anchor)
+    integration_status: integrated
+    role_in_layer_f: 主 source (= F001-F007 anchor 本体、forbidden table 原典)
+    mc_dup_check_note: "両 PC 共通 git tracked、本 render は anchor 化のみ"
+
+  - component_id: instructions_karo_md
+    component_type: existing_markdown
+    file_path: instructions/karo.md
+    section_anchor: "role: karo / forbidden_actions F001-F005 / workflow / dashboard / inbox processing"
+    line_range_approx: "1-260"
+    key_concepts:
+      - "karo persona = 本多忠勝 (= SC karo) / 秀吉 (= MC karo)"
+      - "forbidden: F001 Execute tasks yourself / F002 Report directly to human / F003 Use Task agents for execution / F004 Polling / F005 Skip context reading"
+      - "workflow: receive Shogun cmd → task YAML 起案 → 直政事前監査 → ashigaru 配信 → 報告 aggregation → dashboard.md update"
+      - "Action Required Rule (= 🚨要対応 section to dashboard.md)"
+    owner: 永続規範 source
+    integration_status: integrated
+    role_in_layer_f: 主 source (= karo 役職規範 anchor)
+    mc_dup_check_note: "両 PC 共通 git tracked、本 render は anchor 化のみ"
+
+  - component_id: instructions_ashigaru_md
+    component_type: existing_markdown
+    file_path: instructions/ashigaru.md
+    section_anchor: "role: ashigaru / forbidden_actions F001-F005 / workflow / report"
+    line_range_approx: "1-200"
+    key_concepts:
+      - "ashigaru persona = 配下足軽 (= 1-7 号、SC 6 号 = 平岩親吉)"
+      - "forbidden: F001 direct shogun report / F002 direct user contact / F003 unauthorized work / F004 polling / F005 skip context reading"
+      - "workflow: inbox wakeup → yaml_slim → read_yaml → in_progress → execute → write_report → done → clear_current_task"
+      - "Post-Task Inbox Check (= MANDATORY、idle 前 unread 処理)"
+    owner: 永続規範 source
+    integration_status: integrated
+    role_in_layer_f: 主 source (= ashigaru 役職規範 anchor)
+    mc_dup_check_note: "両 PC 共通 git tracked、本 render は anchor 化のみ"
+
+  - component_id: instructions_gunshi_md
+    component_type: existing_markdown
+    file_path: instructions/gunshi.md
+    section_anchor: "role: gunshi / forbidden_actions F001-F006 / audit responsibility"
+    line_range_approx: "1-470"
+    key_concepts:
+      - "gunshi persona = 直政 (= SC gunshi codex) / 黒田 (= MC gunshi codex)"
+      - "forbidden: F001 direct Shogun report / F002 Contact human directly / F003 Manage ashigaru / F004 Polling / F005 Skip context / F006 Update dashboard.md outside QC flow"
+      - "監査責任 codex 1 人限定 (= 陛下御差配 2026-05-11 16:25)、停留時 cross-PC 援軍可"
+      - "task_directive_pre_audit_rule (= karo task YAML 起案 → 直政事前監査 → pass 後 ashigaru 配信)"
+    owner: 永続規範 source
+    integration_status: integrated
+    role_in_layer_f: 主 source (= gunshi 役職規範 anchor + 監査 exclusive rule + pre_audit rule)
+    mc_dup_check_note: "両 PC 共通 git tracked、本 render は anchor 化のみ"
+
+  - component_id: dashboard_design_v01_section2_layer_f
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.1.md
+    section_anchor: "§2 Layer F. 規範層 (= memory MCP)"
+    line_range_approx: "64-70"
+    key_concepts:
+      - "principle (= mistake_prevention / radical_solution)"
+      - "rule (= F007 / audit_exclusive / model_selection / pre_audit / ratelimit_mgmt 等 14 件)"
+      - "procedure / mechanism / constraint / agent / recovery_path / project_priority 残 entity"
+      - "memory MCP entity 数 19 件 (= v0.1 起案時点、SC export 2026-05-12 8:43 で 18 件 verify)"
+    owner: 信長 (= MC shogun、v0.1 起草 2026-05-11 19:25)
+    integration_status: integrated
+    role_in_layer_f: 主 source (= Layer F 規範層 dossier 原本 table)
+    mc_dup_check_note: "v0.1 §2 Layer F は原典 anchor、本 task render は本体 entity 集約 + anchor 化"
+
+  - component_id: dashboard_design_v02_section2_retain
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§2 6 Layer 階層設計 (= v0.1 retain、本 section 変更なし)"
+    line_range_approx: "23-26"
+    key_concepts:
+      - "v0.1 §2 全 retain (= Layer F 構造維持)"
+      - "黒田 audit 7 修正点は §3 以降に反映 (= Layer F 自体は無変更)"
+      - "§3.6 progress 算出式 (= 完遂率機械算出)"
+    owner: 信長 (= v0.2 起草 2026-05-11 19:42)
+    integration_status: integrated
+    role_in_layer_f: retain reference (= v0.1 §2 source pointer) + 完遂率算出式 anchor
+    mc_dup_check_note: "v0.1 と同 source 参照のため独立 dup 検査対象外"
+
+  - component_id: dashboard_layer_a_kousou_layer_f_xref
+    component_type: existing_markdown
+    file_path: docs/dashboard_layer_a_kousou.md
+    section_anchor: "§5 cross-layer reference anchor (= Layer F 規範層 reference)"
+    line_range_approx: "132"
+    key_concepts:
+      - "ashigaru1 Layer A render は Layer F 規範層を cross-layer reference として明示 (= 'Layer F 規範層: memory MCP entity 群は別 sub-section')"
+    owner: ashigaru1 (= 2026-05-11T22:25)
+    integration_status: integrated
+    role_in_layer_f: 規範踏襲 anchor (= Layer A 先例の cross-layer reference に呼応する本体 sub-section が本 task)
+    mc_dup_check_note: "Layer A 既起案規範踏襲、本 task は呼応する本体起案"
+
+  - component_id: dashboard_layer_c_function_layer_f_xref
+    component_type: existing_markdown
+    file_path: docs/dashboard_layer_c_function.md
+    section_anchor: "§6 cross-layer reference anchor (= Layer F 規範層 reference)"
+    line_range_approx: "153"
+    key_concepts:
+      - "ashigaru3 Layer C render は Layer F 規範層を cross-layer reference として明示 (= '機能起案時の規範 (= F007 / pre_audit / model_selection 等) は別 sub-section')"
+    owner: ashigaru3 (= 2026-05-12T11:18)
+    integration_status: integrated
+    role_in_layer_f: 規範踏襲 anchor (= Layer C 先例の cross-layer reference に呼応する本体 sub-section が本 task)
+    mc_dup_check_note: "Layer C 既起案規範踏襲、本 task は呼応する本体起案"
+
+  - component_id: shogun_charter_v01_full_export
+    component_type: existing_markdown
+    file_path: docs/shogun_charter_v0_1_full_export.md
+    section_anchor: "Shogun Charter v0.1 + 補遺 (OpenHands 役割分担) + SC memory entity export"
+    key_concepts:
+      - "6 度 fail 教訓 + dashboard 専念 directive 整合"
+      - "SC memory entity export 18 件 source (= 本 yaml component #1 と同 source)"
+    owner: karo export (= 既起案、commit 5f4dfe7)
+    integration_status: integrated
+    role_in_layer_f: 補助 anchor (= 6 度 fail 教訓 + dashboard 専念 directive context)
+    mc_dup_check_note: "本 task render では補助 context anchor のみ提示"
+
+related_but_out_of_scope:
+  - component_id: dashboard_md_root
+    file_path: dashboard.md
+    reason: "delivery_conditions 規範: 本 task は dashboard.md 直接編集禁、読取参照のみ"
+  - component_id: layer_a_b_c_d_e_g_render
+    file_path: docs/dashboard_layer_{a,b,c,d,e,g}_*.md
+    reason: "本 task は Layer F 規範層単独 render、A は ashigaru1 / B は ashigaru2 / C は ashigaru3 / D は ashigaru4 / E は ashigaru5 / G は別 ashigaru の既起案 or 別 task"
+  - component_id: hakudokai_dev_repo
+    file_path: /mnt/c/Projects/hakudokai-dev/
+    reason: "delivery_conditions 規範: 本 task は multi-agent-shogun-newbuild repo only、関与禁"
+  - component_id: mc_regenerate_dashboard_py
+    file_path: "MC 側 (= 本 SC repo に該 artifact 不在)"
+    reason: "MC ashigaru1 commit 72f1c0d 等は MC 側 artifact、本 task は SC docs 単独、MC 統合は後段別 task"
+  - component_id: mc_memory_mcp_graph
+    file_path: "MC 側 mcp__memory__read_graph 出力"
+    reason: "MC graph export 添付時は merge/dedup 規則 (= entity name 同一 = 同 entity、observations union、relations dedup) を適用、本 task は SC export 18 件 base、MC merge は後段別 task"
+
+artifacts_to_create_by_this_task:
+  - queue/reports/ashigaru6_dashboard_layer_f_inventory.yaml (= 本 yaml)
+  - docs/dashboard_layer_f_kihan.md
+  - scripts/test/test_dashboard_layer_f_static_contract.py
+  - queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_report.yaml
+  - queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_pytest.log
+
+gap_analysis:
+  - id: gap_1
+    description: "Layer F 規範層単独 render component (= memory MCP entity 集約 + CLAUDE.md / instructions/*.md / F001-F007 / D001-D008 / 根本治療原則 / 新規範 7 件 anchor の dashboard sub-section markdown) が未起案"
+    resolution_in_this_task: "docs/dashboard_layer_f_kihan.md で principle / rule / procedure / mechanism / constraint / agent / recovery_path / project_priority entity type 別 anchor + F001-F007 forbidden table + D001-D008 destructive ban table + 根本治療原則 + 新規範 7 件 + MC merge/dedup 規則の独立 markdown を新規起案"
+
+  - id: gap_2
+    description: "Layer F 規範層 (= 18 entities + 6 type + relations) を mermaid graph TD で構造可視化する図が未起案、principle → rule_supreme → rule / mechanism / procedure 階層 + relations (constrains / underlies / supersedes / follows) を text-based 可視化する図が未起案"
+    resolution_in_this_task: "dashboard_layer_f_kihan.md 内に graph TD block を埋込、native markdown + mermaid text-based、principle / rule_supreme を root、関連 relations を実線 + 階層連結、cross-layer (= Layer E 運用層への規範適用) を破線で表記"
+
+  - id: gap_3
+    description: "Layer F 構造 (= memory MCP 18 entities + CLAUDE.md anchor + instructions/karo/ashigaru/gunshi anchor + F001-F007 forbidden table + D001-D008 destructive ban + 根本治療原則 + 新規範 7 件 + MC merge/dedup 規則) に対する静的 source-contract test が不在"
+    resolution_in_this_task: "scripts/test/test_dashboard_layer_f_static_contract.py で 5 test、markdown grep + mermaid syntax check + 18 entities reference 件数 check + F001-F007 + D001-D008 anchor presence check + 根本治療原則 anchor check"
+
+acceptance_criteria_alignment:
+  AC0: 本 yaml 起案 (= 完了 on write、layer_f_scope_components_schema 適用)
+  AC1: design doc 正本 read 完遂 evidence = 本 yaml 内 dashboard_design_v01_section2_layer_f / v02_section2_retain / sc_memory_entities_export_20260512 / claude_md_top_level_rules / instructions_common_forbidden_actions / instructions_karo_md / instructions_ashigaru_md / instructions_gunshi_md entry
+  AC2: docs/dashboard_layer_f_kihan.md 新規起案 → 次 step (= memory 18 entities + CLAUDE.md + instructions/karo/ashigaru/gunshi + F001-F007 + D001-D008 + 根本治療原則 + 新規範 7 件 anchor + MC merge/dedup 規則明示)
+  AC3: MC 統合 interface は本 task 範囲外 (= mc_anti_dup_check + followup field で明示、MC graph export 添付時 merge/dedup 規則 anchor 提示済)
+  AC4: 5 static test → 次 step (= SKIP=0 / FAIL=0)
+  AC5: bounded F007 push → 完遂前 陛下御差配仰ぎ (= 夜襲 directive 整合下、worktree + cherry-pick + diff verify + cleanup)
+  AC6: report + log + 完遂 ack → 最終 step
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery conditions 4 件遵守 (= dashboard.md 直接編集禁 / hakudokai-dev 関与禁 / MC 統合 claim 禁 / SKIP=0)
+  - native markdown + mermaid text-based (= 黒田 #4 self-contained 整合)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 (= ashigaru1 Layer A 第 1 弾実証 base、規範踏襲)
+  - design doc 正本 read 徹底 (= 9 度目 fail 教訓継承)
+  - 夜襲 persona retain (= 21:00-06:00 wait 不可即実行、本 task 11:18 着手は通常時間帯だが directive 整合下進行)
+  - 新規範 5 件 (= 2026-05-12 11:20 陛下御差配 Stage 1-6 一気通貫 + 兄上監査 chain) は Stage MVP 完遂時 chain 整合、本 task は Layer F render 単独 task、Stage 区分外、現 task 進行継続
+  - MC anti-dup check (= MC artifact regenerate_dashboard.py Stage 2 cycle 2 fix commit 72f1c0d との重複回避、本 task 範囲では SC 単独進行、MC graph export 添付時の merge/dedup 規則は render md 内に明示)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - repo scope 単一 (= hakudokai-dev 範囲外)
