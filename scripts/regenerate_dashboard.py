@@ -261,12 +261,18 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
      "ref": "queue/reports/ashigaru3_cmd004_push_vapid_*.yaml"},
     {"layer": "C", "id": "C-11", "label": "notification facade",
      "design_doc": "docs/cmd004_notification_facade_design.md",
+     "audit_id_pattern": "kuroda_cmd004_notification_facade",
+     "shogun_target_pattern": "notification_facade",
      "ref": "queue/reports/ashigaru3_cmd004_notification_facade_*.yaml"},
     {"layer": "C", "id": "C-12", "label": "observability",
      "design_doc": "docs/cmd004_observability_design.md",
+     "audit_id_pattern": "kuroda_cmd004_observability",
+     "shogun_target_pattern": "observability",
      "ref": "queue/reports/ashigaru3_cmd004_observability_*.yaml"},
     {"layer": "C", "id": "C-13", "label": "security hardening",
      "design_doc": "docs/cmd004_security_hardening_design.md",
+     "audit_id_pattern": "kuroda_cmd004_security_hardening",
+     "shogun_target_pattern": "security_hardening",
      "ref": "queue/reports/ashigaru3_cmd004_security_hardening_*.yaml"},
     {"layer": "C", "id": "C-14", "label": "申し送りエンジン (touch panel)",
      "design_doc": "docs/cmd004_moushi_engine_stage1_design.md",
@@ -357,7 +363,9 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
     {"layer": "G", "id": "G-1", "label": "HTML drill-down (cycle 3 完遂 + cycle 4 子・孫装着)",
      "design_doc": "scripts/regenerate_dashboard.py",
      "audit_id_pattern": "kuroda_cmd020_regenerate_dashboard",
-     "shogun_target_pattern": "cmd020_dashboard",
+     # cycle13: shogun_target_patterns (list) — 新旧両命名揺れを包含
+     # (= subtask_cmd020_dashboard_* 系 + subtask_cmd020_regenerate_dashboard_py_* 系)。
+     "shogun_target_patterns": ["cmd020_dashboard", "cmd020_regenerate_dashboard"],
      "ref": "本 generator + tests/test_regenerate_dashboard.py"},
     {"layer": "G", "id": "G-2", "label": "mermaid 統合",
      "design_doc": "docs/dashboard_layer_a_kousou.md",
@@ -367,6 +375,10 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
     {"layer": "G", "id": "G-4", "label": "shogun_active_verify_queue (= ashigaru7 cycle 1 完遂)",
      "design_doc": "scripts/shogun_active_verify_queue.py",
      "audit_id_pattern": "kuroda_active_verify",
+     # cycle13: shogun_target_patterns 修正 — kuroda_active_verify 単独では
+     # target=subtask_shogun_active_verify_queue_systemd を捕捉できぬため
+     # active_verify_queue / shogun_active_verify 双方を candidate に展開。
+     "shogun_target_patterns": ["active_verify_queue", "shogun_active_verify"],
      "ref": "queue/reports/active_verify_queue_candidate_log.yaml"},
     {"layer": "G", "id": "G-5", "label": "検証 24h 運用",
      "ref": "(未装着、Stage 6 予定)"},
@@ -713,8 +725,36 @@ def find_latest_audit_for_pattern(
     return max(matches, key=lambda e: str(e.get("audited_at", "")))
 
 
+def _child_shogun_patterns(child: dict[str, Any]) -> list[str]:
+    """Return effective shogun match patterns for a child as a deduped list.
+
+    cycle13: 既存 single-pattern (shogun_target_pattern / audit_id_pattern)
+    に加えて list 形式 shogun_target_patterns を支援 (= W9 spider_thread
+    系の複数 target/audit_id_ref 命名揺れに対応する mapping 正規化)。
+    list 不在時は既存 single field を継承 (= cycle 11 既装着 helper 再利用、
+    重複実装禁、黒田条件 3 整合)。
+    """
+    out: list[str] = []
+    seen: set[str] = set()
+    extras = child.get("shogun_target_patterns")
+    if isinstance(extras, (list, tuple)):
+        for p in extras:
+            s = str(p or "").lower()
+            if s and s not in seen:
+                seen.add(s)
+                out.append(s)
+    shogun_pat = str(child.get("shogun_target_pattern", "") or "").lower()
+    audit_pat = str(child.get("audit_id_pattern", "") or "").lower()
+    fallback = shogun_pat or audit_pat
+    if fallback and fallback not in seen:
+        seen.add(fallback)
+        out.append(fallback)
+    return out
+
+
 def find_latest_shogun_verified(
-    shogun_entries: list[dict[str, Any]], pattern: str
+    shogun_entries: list[dict[str, Any]],
+    pattern: str | list[str] | tuple[str, ...],
 ) -> dict[str, Any] | None:
     """Return the newest active shogun_verified entry matching pattern.
 
@@ -724,16 +764,24 @@ def find_latest_shogun_verified(
     audit_id_ref=kuroda_cmd020_dashboard_cycle9_v2_*) are reachable for
     child mapping. Eligibility = _is_active_shogun_entry (boolean true 限定
     + legacy_migrated 除外)。
+    cycle13: pattern 引数を str | list[str] に拡張 (= W9 spider_thread
+    命名揺れ対応、多 pattern OR match)。既存 str 渡し caller は内部で
+    list 化、後方互換 retain。
     """
-    if not pattern:
+    if isinstance(pattern, str):
+        needles = [pattern.lower()] if pattern else []
+    else:
+        needles = [str(p).lower() for p in pattern if p]
+    needles = [n for n in needles if n]
+    if not needles:
         return None
-    needle = pattern.lower()
     matches = [
         v for v in shogun_entries
         if _is_active_shogun_entry(v)
-        and (
-            needle in str(v.get("target", "")).lower()
-            or needle in str(v.get("audit_id_ref", "")).lower()
+        and any(
+            n in str(v.get("target", "")).lower()
+            or n in str(v.get("audit_id_ref", "")).lower()
+            for n in needles
         )
     ]
     if not matches:
@@ -891,7 +939,7 @@ def extract_child_evidence(
     # Standard child — derive from design_doc git log + kuroda + shogun_verified.
     design_doc = str(child.get("design_doc", ""))
     audit_pattern = str(child.get("audit_id_pattern", ""))
-    shogun_pattern = str(child.get("shogun_target_pattern", "")) or audit_pattern
+    shogun_patterns = _child_shogun_patterns(child)
 
     commit_info = git_log_for_path(design_doc) if design_doc else {}
     if commit_info:
@@ -909,7 +957,7 @@ def extract_child_evidence(
         audit_str = FALLBACK_AUDIT
         test_str = FALLBACK_TEST
 
-    verif_match = find_latest_shogun_verified(shogun_entries, shogun_pattern)
+    verif_match = find_latest_shogun_verified(shogun_entries, shogun_patterns)
     if verif_match:
         verified_at = str(verif_match.get("verified_at", ""))
         shogun_str = f"true ({verified_at})"
@@ -1138,7 +1186,7 @@ def compute_child_machine_state(
             base_pct = float(match.get("avg_pct") or 0.0)
             sv = find_latest_shogun_verified(
                 shogun_entries,
-                str(child.get("shogun_target_pattern", "")),
+                _child_shogun_patterns(child),
             )
             sv_pct = _shogun_verified_pct(sv)
             return {
@@ -1161,7 +1209,7 @@ def compute_child_machine_state(
             base_pct = float(match.get("avg_pct") or 0.0)
             sv = find_latest_shogun_verified(
                 shogun_entries,
-                str(child.get("shogun_target_pattern", "")),
+                _child_shogun_patterns(child),
             )
             sv_pct = _shogun_verified_pct(sv)
             return {
@@ -1177,11 +1225,11 @@ def compute_child_machine_state(
 
     design_doc = str(child.get("design_doc", ""))
     audit_pattern = str(child.get("audit_id_pattern", ""))
-    shogun_pattern = str(child.get("shogun_target_pattern", "")) or audit_pattern
+    shogun_patterns = _child_shogun_patterns(child)
 
     commit_info = git_log_for_path(design_doc, repo=repo) if design_doc else {}
     audit_match = find_latest_audit_for_pattern(kuroda_entries, audit_pattern) if audit_pattern else None
-    verif_match = find_latest_shogun_verified(shogun_entries, shogun_pattern) if shogun_pattern else None
+    verif_match = find_latest_shogun_verified(shogun_entries, shogun_patterns) if shogun_patterns else None
 
     audit_verdict = str(audit_match.get("verdict", "")) if audit_match else ""
     has_commit = bool(commit_info)
@@ -1283,19 +1331,19 @@ def compute_shogun_reflection_stats(
 
     _trackable_kinds = {"supabase_phase", "w9_batch", "w9_stage"}
     for child in children:
-        shogun_pat = str(child.get("shogun_target_pattern", ""))
-        audit_pat = str(child.get("audit_id_pattern", ""))
-        effective_pat = shogun_pat or audit_pat
+        # cycle13: _child_shogun_patterns で list 形式 patterns を取得
+        # (= 既存 single-field と list-field を統合、helper 経由再利用)。
+        patterns = _child_shogun_patterns(child)
         kind = str(child.get("kind", "") or "")
         # 子項目が verification mechanism を持つか否か (= 緑化率分母 eligible)
         # mechanism = pattern 装着 or supabase_phase / w9_* kind。Layer A/D 等の
         # 構造 placeholder は eligible から除外し、空評価 children を緑化率分母から外す。
-        is_eligible = bool(effective_pat) or kind in _trackable_kinds
+        is_eligible = bool(patterns) or kind in _trackable_kinds
         if is_eligible:
             eligible_count += 1
-        if effective_pat:
+        if patterns:
             mapped_children.append(child)
-            match = find_latest_shogun_verified(active_entries, effective_pat)
+            match = find_latest_shogun_verified(active_entries, patterns)
             if match:
                 matched_children.append(child)
             else:
@@ -1315,19 +1363,18 @@ def compute_shogun_reflection_stats(
 
     # Unmatched entries: scan every active entry, mark "matched" iff any
     # mapped child's pattern is a substring of target/audit_id_ref.
+    # cycle13: _child_shogun_patterns で list 対応 (= 多 pattern OR 判定)。
     unmatched: list[dict[str, str]] = []
     for v in active_entries:
         target = str(v.get("target", "")).lower()
         audit_id_ref = str(v.get("audit_id_ref", "")).lower()
         matched_by_any = False
         for child in mapped_children:
-            shogun_pat = str(child.get("shogun_target_pattern", "")).lower()
-            audit_pat = str(child.get("audit_id_pattern", "")).lower()
-            effective_pat = shogun_pat or audit_pat
-            if not effective_pat:
-                continue
-            if effective_pat in target or effective_pat in audit_id_ref:
-                matched_by_any = True
+            for needle in _child_shogun_patterns(child):
+                if needle in target or needle in audit_id_ref:
+                    matched_by_any = True
+                    break
+            if matched_by_any:
                 break
         if not matched_by_any:
             unmatched.append({

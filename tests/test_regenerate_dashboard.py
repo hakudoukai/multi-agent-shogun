@@ -2295,3 +2295,201 @@ def test_real_render_dashboard_shogun_reflection_stats_passes_threshold():
         f"overall {stats['green_pct_overall']}% / "
         f"green {stats['green_count']}/{stats['eligible_count']} eligible"
     )
+
+
+# --- cycle13 W9 spider_thread mapping 正規化 tests ---
+
+
+def test_child_shogun_patterns_collects_list_form():
+    """cycle13: shogun_target_patterns (list) を patterns に展開する。"""
+    child = {
+        "id": "TEST-1",
+        "shogun_target_patterns": ["alpha", "beta"],
+    }
+    assert rd._child_shogun_patterns(child) == ["alpha", "beta"]
+
+
+def test_child_shogun_patterns_dedupes_with_single_fields():
+    """cycle13: list と single field を統合し dedupe (= 重複実装禁)。"""
+    child = {
+        "id": "TEST-2",
+        "shogun_target_patterns": ["alpha", "beta"],
+        "shogun_target_pattern": "alpha",
+        "audit_id_pattern": "gamma",
+    }
+    patterns = rd._child_shogun_patterns(child)
+    assert patterns == ["alpha", "beta"], (
+        f"list 優先 + single 既存と dedupe — 実 {patterns}"
+    )
+
+
+def test_child_shogun_patterns_falls_back_to_audit_when_shogun_absent():
+    """cycle13: shogun_target_pattern / patterns 不在時は audit_id_pattern fallback。"""
+    child = {
+        "id": "TEST-3",
+        "audit_id_pattern": "kuroda_delta",
+    }
+    assert rd._child_shogun_patterns(child) == ["kuroda_delta"]
+
+
+def test_child_shogun_patterns_empty_when_no_pattern_fields():
+    """cycle13: 全 pattern 不在 child は空 list (= eligible 判定で除外)。"""
+    child = {"id": "TEST-4", "label": "structural placeholder"}
+    assert rd._child_shogun_patterns(child) == []
+
+
+def test_find_latest_shogun_verified_accepts_list_patterns():
+    """cycle13: list[str] 引数で OR match。"""
+    entries = [
+        {"verified_at": "2026-05-12T10:00", "shogun_verified": True,
+         "target": "subtask_alpha_one", "audit_id_ref": ""},
+        {"verified_at": "2026-05-12T11:00", "shogun_verified": True,
+         "target": "subtask_beta_two", "audit_id_ref": ""},
+    ]
+    match = rd.find_latest_shogun_verified(entries, ["zeta", "beta"])
+    assert match is not None and match["target"] == "subtask_beta_two"
+
+
+def test_find_latest_shogun_verified_list_returns_latest_across_patterns():
+    """cycle13: 多 pattern OR match で最新 entry を返す (= verified_at 最大)。"""
+    entries = [
+        {"verified_at": "2026-05-12T10:00", "shogun_verified": True,
+         "target": "alpha_target", "audit_id_ref": ""},
+        {"verified_at": "2026-05-12T12:00", "shogun_verified": True,
+         "target": "beta_target", "audit_id_ref": ""},
+        {"verified_at": "2026-05-12T11:00", "shogun_verified": True,
+         "target": "alpha_target_v2", "audit_id_ref": ""},
+    ]
+    match = rd.find_latest_shogun_verified(entries, ["alpha", "beta"])
+    assert match is not None and match["target"] == "beta_target"
+
+
+def test_find_latest_shogun_verified_empty_list_returns_none():
+    """cycle13: 空 list / 全空文字 list は None (= 後方互換 retain)。"""
+    entries = [{"verified_at": "2026-05-12T10:00", "shogun_verified": True,
+                "target": "anything", "audit_id_ref": ""}]
+    assert rd.find_latest_shogun_verified(entries, []) is None
+    assert rd.find_latest_shogun_verified(entries, ["", ""]) is None
+
+
+def test_compute_shogun_reflection_stats_handles_list_patterns():
+    """cycle13: child に shogun_target_patterns (list) があれば多 pattern match。"""
+    children = [
+        {"id": "X-1", "shogun_target_patterns": ["old_name", "new_name"]},
+    ]
+    entries = [
+        {"verified_at": "2026-05-12T10:00", "shogun_verified": True,
+         "target": "subtask_new_name_v2", "audit_id_ref": ""},
+    ]
+    stats = rd.compute_shogun_reflection_stats(children, entries)
+    assert stats["mapped_count"] == 1
+    assert stats["matched_count"] == 1
+    assert stats["children_without_match"] == []
+
+
+def test_layer_c_cmd004_chain_extension_children_have_shogun_patterns():
+    """cycle13: C-11 (notification_facade) / C-12 (observability) /
+    C-13 (security_hardening) が shogun_target_pattern 装着 (= 黒田条件
+    1 整合、shogun_verified=true entry が dashboard 緑化対象に反映される
+    mapping 経路を確保)。
+    """
+    targets = {c["id"]: c for c in rd.LAYER_CHILDREN if c.get("id") in {"C-11", "C-12", "C-13"}}
+    assert set(targets.keys()) == {"C-11", "C-12", "C-13"}
+    expected = {
+        "C-11": "notification_facade",
+        "C-12": "observability",
+        "C-13": "security_hardening",
+    }
+    for cid, pat in expected.items():
+        assert rd._child_shogun_patterns(targets[cid]) == [pat], (
+            f"{cid} shogun_target_pattern 不整合"
+        )
+
+
+def test_layer_g1_supports_legacy_regenerate_dashboard_naming():
+    """cycle13: G-1 が新 (cmd020_dashboard) / 旧
+    (cmd020_regenerate_dashboard) 両命名を mapping 経路に含む。
+    """
+    g1 = next(c for c in rd.LAYER_CHILDREN if c.get("id") == "G-1")
+    patterns = rd._child_shogun_patterns(g1)
+    assert "cmd020_dashboard" in patterns
+    assert "cmd020_regenerate_dashboard" in patterns
+
+
+def test_layer_g4_active_verify_queue_pattern_matches_real_target():
+    """cycle13: G-4 の patterns が
+    target=subtask_shogun_active_verify_queue_systemd を match する。
+    """
+    g4 = next(c for c in rd.LAYER_CHILDREN if c.get("id") == "G-4")
+    entries = [
+        {"verified_at": "2026-05-12T10:00", "shogun_verified": True,
+         "target": "subtask_shogun_active_verify_queue_systemd",
+         "audit_id_ref": ""},
+    ]
+    match = rd.find_latest_shogun_verified(entries, rd._child_shogun_patterns(g4))
+    assert match is not None
+
+
+def test_real_shogun_log_w9_batch1_to_batch6_all_matched():
+    """cycle13: 実 shogun verify log で W9 batch1〜batch6 全件 matched
+    (= C-15-B1〜B6 各 shogun_target_pattern が active entry を捕捉する)。
+    B7 は verify entry 不在ゆえ children_without_match retain (= 黒田条件
+    2 整合の正当 unmatched)。
+    """
+    shogun_entries = rd.load_shogun_verification_index()
+    targets = {c["id"]: c for c in rd.LAYER_CHILDREN
+               if c.get("id", "").startswith("C-15-B")}
+    matched_ids: list[str] = []
+    for cid in ("C-15-B1", "C-15-B2", "C-15-B3", "C-15-B4", "C-15-B5", "C-15-B6"):
+        patterns = rd._child_shogun_patterns(targets[cid])
+        match = rd.find_latest_shogun_verified(shogun_entries, patterns)
+        if match is not None:
+            matched_ids.append(cid)
+    assert matched_ids == ["C-15-B1", "C-15-B2", "C-15-B3", "C-15-B4", "C-15-B5", "C-15-B6"], (
+        f"W9 batch1-6 全 6 件 matched 必達 — 実 {matched_ids}"
+    )
+
+
+def test_real_shogun_log_unmatched_verified_targets_reduced_below_8():
+    """cycle13: mapping 正規化で unmatched_verified_targets が cycle 12
+    baseline (8 件) より減少すること (= 黒田条件 2 整合、固定 0 化禁、
+    実測 SoT で 5 件以下 = +3 件以上 mapping 回収を assertion)。
+    """
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+    shogun_entries = rd.load_shogun_verification_index()
+    kuroda_entries = rd.load_kuroda_index()
+    stats = rd.compute_shogun_reflection_stats(
+        rd.LAYER_CHILDREN, shogun_entries,
+        kuroda_entries=kuroda_entries,
+        w9_batches=w9_batches,
+        w9_stages=w9_stages,
+    )
+    unmatched_count = len(stats["unmatched_verified_targets"])
+    assert unmatched_count <= 5, (
+        f"cycle13 W9 mapping 正規化で unmatched 5 件以下必達 — 実 {unmatched_count} 件 "
+        f"(cycle12 baseline=8、+3 件以上 mapping 回収目標)"
+    )
+
+
+def test_real_shogun_log_matched_count_increased_over_baseline():
+    """cycle13: mapping 正規化で matched_count が cycle 12 baseline (20)
+    より増加 (= 24 以上 = C-11/C-12/C-13/G-4 newly matched)。
+    """
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+    shogun_entries = rd.load_shogun_verification_index()
+    kuroda_entries = rd.load_kuroda_index()
+    stats = rd.compute_shogun_reflection_stats(
+        rd.LAYER_CHILDREN, shogun_entries,
+        kuroda_entries=kuroda_entries,
+        w9_batches=w9_batches,
+        w9_stages=w9_stages,
+    )
+    assert stats["matched_count"] >= 24, (
+        f"cycle13 mapping 正規化で matched >= 24 必達 — 実 "
+        f"{stats['matched_count']} / mapped {stats['mapped_count']} / "
+        f"unmatched {len(stats['unmatched_verified_targets'])}"
+    )
