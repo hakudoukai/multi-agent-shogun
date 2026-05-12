@@ -1310,15 +1310,20 @@ def test_legacy_marker_still_detects_generator_output(tmp_path: Path):
 # ---------------------------------------------------------------------------
 
 
-def test_compute_child_machine_state_shogun_verified_yields_90_pct():
-    """shogun_verified=true match → pct 90.0 (= 🟢 tier 整合)。"""
+def test_compute_child_machine_state_shogun_verified_yields_100_pct_clean_pass():
+    """cycle11: shogun_verified=true + verdict clean → pct 100.0 (= 🟢 信長 pure pass)。
+
+    cycle9 v2 既装備 helper (find_latest_shogun_verified) を経由した上で
+    cycle11 の 100% / 90% split が clean pass 側 100% に到達することを assertion。
+    """
     child = {"layer": "X", "id": "X-1", "label": "t",
              "shogun_target_pattern": "qr_kanban"}
     shogun = [{"target": "subtask_cmd004_qr_kanban_impl", "shogun_verified": True,
+               "verdict": "PASS",
                "verified_at": "2026-05-11T22:00:00+09:00"}]
     state = rd.compute_child_machine_state(child, shogun_entries=shogun)
     assert state["kind"] == "standard"
-    assert state["pct"] == 90.0
+    assert state["pct"] == 100.0
     assert state["shogun_verified"] is True
 
 
@@ -1959,6 +1964,7 @@ def test_dual_axis_priority_shogun_verified_overrides_kuroda_fail():
 
     黒田 cycle9 v2 preaudit 条件 2 整合 — shogun_verified > 黒田 verdict の優先順
     を機械的に assertion する。dual-axis SoT で 信長殿陛下 verify ledger が最終正本。
+    cycle11 で 100% / 90% split が入ったため、clean PASS は 100% を確認する。
     """
     child = {"layer": "X", "id": "X-1", "label": "t",
              "audit_id_pattern": "kuroda_dual_axis_test",
@@ -1966,12 +1972,13 @@ def test_dual_axis_priority_shogun_verified_overrides_kuroda_fail():
     kuroda = [{"audit_id": "kuroda_dual_axis_test_v1", "verdict": "fail",
                "audited_at": "2026-05-12T10:00:00+09:00"}]
     shogun = [{"target": "dual_axis_test_target", "shogun_verified": True,
+               "verdict": "PASS",
                "verified_at": "2026-05-12T17:00:00+09:00"}]
     state = rd.compute_child_machine_state(
         child, kuroda_entries=kuroda, shogun_entries=shogun
     )
-    assert state["pct"] == 90.0, (
-        f"shogun_verified=true 優先順違反 — 黒田 fail でも shogun_verified=true なら 🟢 90% 必達 "
+    assert state["pct"] == 100.0, (
+        f"shogun_verified=true clean pass 優先順違反 — 黒田 fail でも shogun=true clean なら 🟢 100% 必達 "
         f"(実: {state['pct']})"
     )
     assert state["shogun_verified"] is True
@@ -2014,18 +2021,19 @@ def test_cmd004_design_doc_children_use_existing_shogun_helper():
 
     実行時に shogun_entries 経由で shogun_verified 状態を取得できることを
     機能 contract レベルで verify。直接 LAYER_CHILDREN 4 児の compute_child_machine_state
-    が shogun_entries を respect することを assertion。
+    が shogun_entries を respect することを assertion。cycle11 で clean pass は 100%。
     """
     by_id = {c["id"]: c for c in rd.LAYER_CHILDREN}
     child = by_id["C-7"]  # engagement_analytics — shogun_target_pattern="engagement_analytics"
     shogun = [{"target": "engagement_analytics_pwa_consolidated",
                "shogun_verified": True,
+               "verdict": "PASS",
                "verified_at": "2026-05-12T17:00:00+09:00"}]
     state = rd.compute_child_machine_state(
         child, kuroda_entries=[], shogun_entries=shogun
     )
     assert state["shogun_verified"] is True
-    assert state["pct"] == 90.0
+    assert state["pct"] == 100.0
 
 
 def test_render_dashboard_layer_c_no_hardcoded_unaudited_residual():
@@ -2046,3 +2054,244 @@ def test_render_dashboard_layer_c_no_hardcoded_unaudited_residual():
         layer_c_end = rendered.find("Layer D", layer_c_start)
         layer_c_block = rendered[layer_c_start:layer_c_end if layer_c_end > 0 else len(rendered)]
         assert "未監査残" not in layer_c_block, "Layer C 内に旧 placeholder 残存"
+
+
+# ---------------------------------------------------------------------------
+# cycle11: shogun_verified_log 全 Layer 反映 — global reflection
+# 黒田条件 6 件 (boolean true 限定 / 5 軸 stats 報告 / 既存 helper 再利用 /
+#               100% vs 90% semantics / false+legacy 除外 test / privacy HIGH=0)
+# ---------------------------------------------------------------------------
+
+
+def test_load_shogun_verification_index_merges_verifications_and_entries(tmp_path: Path):
+    """cycle11: 'verifications' + 'entries' 双方の top-level section が
+    単一 list に merge されること (= 旧 legacy + 新 bulk 追記の合算読込)。
+    """
+    log = tmp_path / "shogun_log.yaml"
+    log.write_text(
+        "verifications:\n"
+        "- target: legacy_001\n"
+        "  shogun_verified: false\n"
+        "entries:\n"
+        "- target: new_001\n"
+        "  shogun_verified: true\n"
+        "  verdict: PASS\n",
+        encoding="utf-8",
+    )
+    out = rd.load_shogun_verification_index(log)
+    assert len(out) == 2
+    targets = {str(v.get("target", "")) for v in out}
+    assert "legacy_001" in targets
+    assert "new_001" in targets
+
+
+def test_shogun_verified_boolean_true_only_excludes_string_truthy():
+    """黒田条件 #1: shogun_verified は厳密 boolean True のみ accept。
+    'true' string / 1 / "yes" 等 truthy 値は除外 (= 緑化判定 false)。
+    """
+    entries = [
+        {"target": "alpha", "shogun_verified": "true"},  # string, not bool
+        {"target": "beta", "shogun_verified": 1},          # int truthy
+        {"target": "gamma", "shogun_verified": True},      # only this one passes
+    ]
+    assert rd._is_active_shogun_entry(entries[0]) is False
+    assert rd._is_active_shogun_entry(entries[1]) is False
+    assert rd._is_active_shogun_entry(entries[2]) is True
+    match = rd.find_latest_shogun_verified(entries, "alpha")
+    assert match is None, "string 'true' は緑化判定対象外"
+    match = rd.find_latest_shogun_verified(entries, "gamma")
+    assert match is not None
+
+
+def test_shogun_verified_legacy_migrated_excluded():
+    """黒田条件 #5: migration_note=legacy_migrated は除外 (= 旧 log migrate 期 verify)。
+    cycle10 で陛下が御自認の通り legacy 期 verify は規範外 evidence ゆえ緑化対象外。
+    """
+    entries = [
+        {"target": "kuroda_006", "shogun_verified": True,
+         "migration_note": "legacy_migrated",
+         "verified_at": "2026-05-10T06:42:22+00:00"},
+        {"target": "kuroda_006_new", "shogun_verified": True,
+         "verified_at": "2026-05-12T18:20:00+09:00"},
+    ]
+    assert rd._is_active_shogun_entry(entries[0]) is False
+    assert rd._is_active_shogun_entry(entries[1]) is True
+    # find_latest が legacy_migrated を skip して新 entry を返すこと
+    match = rd.find_latest_shogun_verified(entries, "kuroda_006")
+    assert match is not None
+    assert match["target"] == "kuroda_006_new"
+
+
+def test_find_latest_shogun_verified_matches_audit_id_ref_field():
+    """cycle11: bulk-append 系 entry は audit_id_ref に黒田 audit_id を記録する。
+    pattern が target に無くても audit_id_ref に substring match すれば緑化対象。
+    """
+    entries = [
+        {"target": "subtask_cmd020_dashboard_dual_axis_dynamic_binding_cycle9_v2",
+         "audit_id_ref": "kuroda_cmd020_dashboard_cycle9_v2_dual_axis_impl_audit_20260512",
+         "shogun_verified": True,
+         "verdict": "PASS",
+         "kuroda_verdict_original": "pass_with_concerns",
+         "verified_at": "2026-05-12T18:20:00+09:00"},
+    ]
+    # G-1 既装備 pattern (= kuroda_cmd020_regenerate_dashboard) では audit_id_ref とは別系統
+    # のため substring "cmd020_dashboard" を shogun_target_pattern として match path 確認。
+    match_target = rd.find_latest_shogun_verified(entries, "cmd020_dashboard")
+    assert match_target is not None
+    # audit_id_ref 経由 match 確認
+    match_audit = rd.find_latest_shogun_verified(
+        entries, "kuroda_cmd020_dashboard_cycle9_v2"
+    )
+    assert match_audit is not None
+
+
+def test_compute_child_machine_state_pass_with_concerns_yields_90():
+    """黒田条件 #4: shogun_verified=true + kuroda_verdict_original=pass_with_concerns → 90%。
+    100% / 90% semantics: clean PASS = 100、concerns / conditions 含み = 90。
+    """
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "shogun_target_pattern": "concerns_target"}
+    shogun = [{"target": "concerns_target_001", "shogun_verified": True,
+               "verdict": "PASS",
+               "kuroda_verdict_original": "pass_with_concerns",
+               "verified_at": "2026-05-12T18:20:00+09:00"}]
+    state = rd.compute_child_machine_state(child, shogun_entries=shogun)
+    assert state["pct"] == 90.0, (
+        f"pass_with_concerns 含み → 90% 期待 (実: {state['pct']})"
+    )
+    assert state["shogun_verified"] is True
+
+
+def test_compute_child_machine_state_w9_batch_shogun_verified_overrides_avg():
+    """W9 batch kind: shogun_verified=true entry match → pct を 100/90 に bump。
+    aggregate avg_pct より高い場合は shogun 側を採用 (= 信長殿 verify 完遂を緑化)。
+    """
+    child = {"layer": "C", "id": "C-15-B3", "label": "W9 batch3 check_logic 26",
+             "kind": "w9_batch", "batch": "3",
+             "shogun_target_pattern": "stage_b_batch3"}
+    w9 = [{"batch": "3", "task_count": 26, "avg_pct": 50.0, "task_ids": []}]
+    shogun = [{"target": "subtask_cmd004_w9_stage_b_batch3_check_logic_26",
+               "shogun_verified": True, "verdict": "PASS",
+               "verified_at": "2026-05-12T17:50:00+09:00"}]
+    state = rd.compute_child_machine_state(child, w9_batches=w9, shogun_entries=shogun)
+    assert state["kind"] == "w9_batch"
+    assert state["pct"] == 100.0, (
+        f"w9_batch shogun_verified clean → 100% bump 期待 (実: {state['pct']})"
+    )
+    assert state["shogun_verified"] is True
+
+
+def test_compute_shogun_reflection_stats_reports_5_axes():
+    """黒田条件 #2: 5 軸 stats 出力必達 — children_total / mapped_count /
+    matched_count / children_without_match / unmatched_verified_targets。
+    """
+    children = [
+        {"id": "X-1", "shogun_target_pattern": "alpha"},
+        {"id": "X-2", "shogun_target_pattern": "beta"},
+        {"id": "X-3"},  # not mapped
+    ]
+    entries = [
+        {"target": "alpha_target", "shogun_verified": True, "verdict": "PASS",
+         "verified_at": "2026-05-12T18:00:00+09:00"},
+        {"target": "orphan_target", "shogun_verified": True, "verdict": "PASS",
+         "verified_at": "2026-05-12T18:01:00+09:00"},
+    ]
+    stats = rd.compute_shogun_reflection_stats(children, entries)
+    assert stats["children_total"] == 3
+    assert stats["mapped_count"] == 2
+    assert stats["matched_count"] == 1
+    assert stats["active_entries_total"] == 2
+    assert "X-2" in stats["children_without_match"]
+    assert len(stats["unmatched_verified_targets"]) == 1
+    assert stats["unmatched_verified_targets"][0]["target"] == "orphan_target"
+
+
+def test_compute_shogun_reflection_stats_excludes_false_and_legacy():
+    """黒田条件 #5: stats 集計時にも false / legacy_migrated は active から除外。"""
+    children = [{"id": "X-1", "shogun_target_pattern": "alpha"}]
+    entries = [
+        {"target": "alpha_a", "shogun_verified": False,
+         "verified_at": "2026-05-11T00:00:00+09:00"},
+        {"target": "alpha_b", "shogun_verified": True,
+         "migration_note": "legacy_migrated",
+         "verified_at": "2026-05-10T00:00:00+09:00"},
+        {"target": "alpha_c", "shogun_verified": True, "verdict": "PASS",
+         "verified_at": "2026-05-12T18:00:00+09:00"},
+    ]
+    stats = rd.compute_shogun_reflection_stats(children, entries)
+    assert stats["active_entries_total"] == 1, "active = boolean true & not legacy"
+    assert stats["matched_count"] == 1
+
+
+def test_compute_shogun_reflection_stats_uses_existing_helpers():
+    """黒田条件 #3: compute_shogun_reflection_stats は既存 helper を経由する
+    (= 重複実装禁、find_latest_shogun_verified + _is_active_shogun_entry を流用)。
+
+    contract レベル test: helper monkey-patch すれば stats 出力が変動する事で
+    helper 経由を確認する。
+    """
+    children = [{"id": "X-1", "shogun_target_pattern": "alpha"}]
+    entries = [{"target": "alpha_x", "shogun_verified": True, "verdict": "PASS",
+                "verified_at": "2026-05-12T18:00:00+09:00"}]
+    stats = rd.compute_shogun_reflection_stats(children, entries)
+    assert stats["matched_count"] == 1
+    # boolean True 厳密 filter (= _is_active_shogun_entry 経由) を contract verify
+    entries_str_true = [{"target": "alpha_y", "shogun_verified": "true"}]
+    stats_str = rd.compute_shogun_reflection_stats(children, entries_str_true)
+    assert stats_str["matched_count"] == 0, "string 'true' は active 対象外"
+
+
+def test_real_shogun_log_green_pct_at_least_60_pct():
+    """🎯 緑化率 60%+ 達成 verify — cycle11 acceptance criterion 中核。
+
+    実 shogun_verification_mainpc_log.yaml + kuroda_mainpc_report.yaml +
+    queue/tasks W9 aggregate を直接 input に compute_shogun_reflection_stats
+    を回し、verify 可能 children 中 緑化率 >= 60% を assertion。
+    cycle 11 design doc 「35.8% → 60%+」 目標達成証拠 (= 全 SoT 反映 path)。
+    """
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+    shogun_entries = rd.load_shogun_verification_index()
+    kuroda_entries = rd.load_kuroda_index()
+    stats = rd.compute_shogun_reflection_stats(
+        rd.LAYER_CHILDREN, shogun_entries,
+        kuroda_entries=kuroda_entries,
+        w9_batches=w9_batches,
+        w9_stages=w9_stages,
+    )
+    assert stats["green_pct"] >= 60.0, (
+        f"cycle11 緑化率目標 60%+ 未達 — 実 {stats['green_pct']}% / matched "
+        f"{stats['matched_count']}/{stats['mapped_count']} mapped / "
+        f"green {stats['green_count']}/{stats['eligible_count']} eligible / "
+        f"overall {stats['green_pct_overall']}%"
+    )
+
+
+def test_render_dashboard_includes_reflection_stats_section():
+    """dashboard.md に 信長殿 verify ledger 反映状況 section が render されること。
+    緑化率 / matched_count / mapped_count / children_total を明示視認。
+    """
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "信長殿 verify ledger 反映状況" in rendered, "cycle11 新 section 不在"
+    assert "緑化率" in rendered, "緑化率 label 不在"
+    # 全 Layer 子項目 label retain
+    assert "全 Layer 子項目" in rendered
+
+
+def test_real_render_dashboard_shogun_reflection_stats_passes_threshold():
+    """build_context で実 SoT (= queue/tasks/) を input にし、緑化率 60%+ 必達。"""
+    state = rd.load_local_state()  # = 実 queue/tasks/ aggregate に W9 batch 反映
+    ctx = rd.build_context(
+        state=state,
+        supabase_report={"blocking": False, "tables": [], "schema_version": 1},
+        memory_snapshot={"available": True, "source": "memory/MEMORY.md",
+                         "byte_size": 0, "head_lines": []},
+        writer_pc="mainpc",
+    )
+    stats = ctx["shogun_reflection_stats"]
+    assert stats["green_pct"] >= 60.0, (
+        f"build_context 経由でも 60%+ 必達 — 実 {stats['green_pct']}% / "
+        f"overall {stats['green_pct_overall']}% / "
+        f"green {stats['green_count']}/{stats['eligible_count']} eligible"
+    )

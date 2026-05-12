@@ -226,7 +226,7 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
      "ref": "queue/tasks/ashigaru6.yaml subtask_cmd004_receipt_cycle6_p1_residual"},
     {"layer": "C", "id": "C-2", "label": "PDF v0.2 hardening + form fix",
      "design_doc": "docs/cmd004_kartetto_pdf_v0_2_spec.md",
-     "audit_id_pattern": "kuroda_pdf_v02",
+     "audit_id_pattern": "kuroda_pdf_v02", "shogun_target_pattern": "pdf_v02",
      "ref": "queue/tasks/ashigaru2.yaml subtask_cmd004_pdf_v02_hardening_and_form_fix"},
     {"layer": "C", "id": "C-3", "label": "AI チャット + 同意",
      "design_doc": "docs/cmd004_ai_chat_spec.md",
@@ -257,7 +257,7 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
      "shogun_target_pattern": "patient_app_pwa"},
     {"layer": "C", "id": "C-10", "label": "push_vapid management",
      "design_doc": "docs/cmd004_push_vapid_management.md",
-     "audit_id_pattern": "kuroda_cmd004_push_vapid",
+     "audit_id_pattern": "kuroda_cmd004_push_vapid", "shogun_target_pattern": "push_vapid",
      "ref": "queue/reports/ashigaru3_cmd004_push_vapid_*.yaml"},
     {"layer": "C", "id": "C-11", "label": "notification facade",
      "design_doc": "docs/cmd004_notification_facade_design.md",
@@ -270,32 +270,42 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
      "ref": "queue/reports/ashigaru3_cmd004_security_hardening_*.yaml"},
     {"layer": "C", "id": "C-14", "label": "申し送りエンジン (touch panel)",
      "design_doc": "docs/cmd004_moushi_engine_stage1_design.md",
-     "audit_id_pattern": "kuroda_moushi",
+     "audit_id_pattern": "kuroda_moushi", "shogun_target_pattern": "moushi",
      "ref": "Stage 1 完遂 + Stage 2 blocked (直政 anti-dup fail)"},
     # Layer C W9 蜘蛛の糸 算定チェック — aggregate (= aggregate_w9_*_progress 流用)
+    # cycle11: shogun_target_pattern 追加 — 信長殿 verify ledger entries の target
+    # 文字列と一致させ、shogun_verified=true → pct bump (= compute_child_machine_state).
     {"layer": "C", "id": "C-15-A", "label": "W9 Stage A foundation 9 件",
      "kind": "w9_stage", "stage": "A",
+     "shogun_target_pattern": "stage_a_foundation",
      "ref": "queue/manifests/w9_design_tasks_169.yaml Stage A"},
     {"layer": "C", "id": "C-15-B1", "label": "W9 batch1 算定チェック 42",
      "kind": "w9_batch", "batch": "1",
+     "shogun_target_pattern": "stage_b_batch1",
      "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=1]"},
     {"layer": "C", "id": "C-15-B2", "label": "W9 batch2 ui_logic 28",
      "kind": "w9_batch", "batch": "2",
+     "shogun_target_pattern": "stage_b_batch2",
      "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=2]"},
     {"layer": "C", "id": "C-15-B3", "label": "W9 batch3 check_logic 26",
      "kind": "w9_batch", "batch": "3",
+     "shogun_target_pattern": "stage_b_batch3",
      "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=3]"},
     {"layer": "C", "id": "C-15-B4", "label": "W9 batch4 validation 18",
      "kind": "w9_batch", "batch": "4",
+     "shogun_target_pattern": "stage_b_batch4",
      "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=4]"},
     {"layer": "C", "id": "C-15-B5", "label": "W9 batch5 data_quality + 処置セット 20",
      "kind": "w9_batch", "batch": "5",
+     "shogun_target_pattern": "stage_b_batch5",
      "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=5]"},
     {"layer": "C", "id": "C-15-B6", "label": "W9 batch6 補綴系 19",
      "kind": "w9_batch", "batch": "6",
+     "shogun_target_pattern": "stage_b_batch6",
      "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=6]"},
     {"layer": "C", "id": "C-15-B7", "label": "W9 batch7 alert 残 15",
      "kind": "w9_batch", "batch": "7",
+     "shogun_target_pattern": "stage_b_batch7",
      "ref": "queue/manifests/w9_design_tasks_169.yaml batches[batch_id=7]"},
     # Layer D 頭脳層 蜘蛛の糸 — 法令 8,000+ records
     {"layer": "D", "id": "D-1", "label": "legal_sources 1,600 件",
@@ -325,7 +335,7 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
      "ref": "inbox_watcher.sh + watcher_supervisor.sh"},
     {"layer": "E", "id": "E-5", "label": "auto-git-sync",
      "design_doc": "scripts/auto_git_sync.sh",
-     "audit_id_pattern": "kuroda_audit_auto_git_sync",
+     "audit_id_pattern": "kuroda_audit_auto_git_sync", "shogun_target_pattern": "auto_git_sync",
      "ref": "queue/reports/auto_sync_log.yaml + docs/auto_git_sync_design.md"},
     # Layer F 規範層 — memory MCP + forbidden_actions + persona
     {"layer": "F", "id": "F-1", "label": "memory MCP 26 entities",
@@ -340,11 +350,14 @@ LAYER_CHILDREN: list[dict[str, Any]] = [
      "design_doc": "instructions/ashigaru.md",
      "ref": "instructions/{shogun,karo,ashigaru,gunshi}.md"},
     {"layer": "F", "id": "F-5", "label": "規範 audit chain",
+     "audit_id_pattern": "kuroda_active_verify",
+     "shogun_target_pattern": "active_verify",
      "ref": "task_directive_pre_audit_rule + pre_emit_sot_check_rule + eta_machine_evidence_rule"},
     # Layer G 統合層 — Stage 3-5 + 監査 chain
     {"layer": "G", "id": "G-1", "label": "HTML drill-down (cycle 3 完遂 + cycle 4 子・孫装着)",
      "design_doc": "scripts/regenerate_dashboard.py",
      "audit_id_pattern": "kuroda_cmd020_regenerate_dashboard",
+     "shogun_target_pattern": "cmd020_dashboard",
      "ref": "本 generator + tests/test_regenerate_dashboard.py"},
     {"layer": "G", "id": "G-2", "label": "mermaid 統合",
      "design_doc": "docs/dashboard_layer_a_kousou.md",
@@ -643,7 +656,13 @@ def load_kuroda_index(report_path: Path | None = None) -> list[dict[str, Any]]:
 
 
 def load_shogun_verification_index(log_path: Path | None = None) -> list[dict[str, Any]]:
-    """Read shogun_verification_mainpc_log.yaml and return entries flat list."""
+    """Read shogun_verification_mainpc_log.yaml and return all entries flat.
+
+    cycle11: the log carries two top-level sections — 'verifications' (=
+    legacy朝の手動 migration entries) and 'entries' (= recent bulk + per-task
+    additions). Both are merged into a single flat list so the global
+    reflection logic can scan the entire ledger, not just the legacy half.
+    """
     path = log_path if log_path is not None else SHOGUN_VERIFICATION_FILE
     if not path.exists():
         return []
@@ -653,8 +672,28 @@ def load_shogun_verification_index(log_path: Path | None = None) -> list[dict[st
         return []
     if not isinstance(data, dict):
         return []
-    entries = data.get("verifications") or []
-    return [v for v in entries if isinstance(v, dict)]
+    merged: list[dict[str, Any]] = []
+    for key in ("verifications", "entries"):
+        section = data.get(key) or []
+        if isinstance(section, list):
+            merged.extend(v for v in section if isinstance(v, dict))
+    return merged
+
+
+def _is_active_shogun_entry(entry: dict[str, Any]) -> bool:
+    """cycle11 黒田 6 条件 #1 + #5 — eligibility filter for shogun verify match.
+
+    shogun_verified must be the boolean True (= "true" string / truthy types
+    excluded). entries marked migration_note=legacy_migrated (= 旧 log 朝の
+    手動 append から机上 migrate された pre-2026-05-11 履歴) も除外する。
+    cycle10 で陛下が御自認の通り legacy 期 verify は規範外 evidence ゆえ
+    緑化判定の base にしない。
+    """
+    if entry.get("shogun_verified") is not True:
+        return False
+    if entry.get("migration_note") == "legacy_migrated":
+        return False
+    return True
 
 
 def find_latest_audit_for_pattern(
@@ -677,14 +716,25 @@ def find_latest_audit_for_pattern(
 def find_latest_shogun_verified(
     shogun_entries: list[dict[str, Any]], pattern: str
 ) -> dict[str, Any] | None:
-    """Return the newest shogun_verified=true entry whose target contains pattern."""
+    """Return the newest active shogun_verified entry matching pattern.
+
+    cycle11: matching now scans BOTH 'target' and 'audit_id_ref' fields so
+    bulk-appended entries (= chain that records audit_id_ref instead of a
+    canonical target token, e.g. subtask_cmd020_dashboard_cycle9_v2 +
+    audit_id_ref=kuroda_cmd020_dashboard_cycle9_v2_*) are reachable for
+    child mapping. Eligibility = _is_active_shogun_entry (boolean true 限定
+    + legacy_migrated 除外)。
+    """
     if not pattern:
         return None
     needle = pattern.lower()
     matches = [
         v for v in shogun_entries
-        if needle in str(v.get("target", "")).lower()
-        and bool(v.get("shogun_verified"))
+        if _is_active_shogun_entry(v)
+        and (
+            needle in str(v.get("target", "")).lower()
+            or needle in str(v.get("audit_id_ref", "")).lower()
+        )
     ]
     if not matches:
         return None
@@ -1085,11 +1135,19 @@ def compute_child_machine_state(
             None,
         )
         if match:
+            base_pct = float(match.get("avg_pct") or 0.0)
+            sv = find_latest_shogun_verified(
+                shogun_entries,
+                str(child.get("shogun_target_pattern", "")),
+            )
+            sv_pct = _shogun_verified_pct(sv)
             return {
                 "kind": "w9_batch",
-                "pct": float(match.get("avg_pct") or 0.0),
+                "pct": max(base_pct, sv_pct) if sv else base_pct,
                 "task_count": int(match.get("task_count") or 0),
                 "batch": batch_id,
+                "shogun_verified": sv is not None,
+                "verified_at": str(sv.get("verified_at", "")) if sv else "",
             }
         return {"kind": "w9_batch_missing", "pct": 0.0, "batch": batch_id}
 
@@ -1100,12 +1158,20 @@ def compute_child_machine_state(
             None,
         )
         if match:
+            base_pct = float(match.get("avg_pct") or 0.0)
+            sv = find_latest_shogun_verified(
+                shogun_entries,
+                str(child.get("shogun_target_pattern", "")),
+            )
+            sv_pct = _shogun_verified_pct(sv)
             return {
                 "kind": "w9_stage",
-                "pct": float(match.get("avg_pct") or 0.0),
+                "pct": max(base_pct, sv_pct) if sv else base_pct,
                 "task_count": int(match.get("task_count") or 0),
                 "scored_count": int(match.get("scored_count") or 0),
                 "stage": stage,
+                "shogun_verified": sv is not None,
+                "verified_at": str(sv.get("verified_at", "")) if sv else "",
             }
         return {"kind": "w9_stage_missing", "pct": 0.0, "stage": stage}
 
@@ -1123,13 +1189,16 @@ def compute_child_machine_state(
     has_shogun_verified = bool(verif_match)
 
     # tier 段階 (= 80/50/25/0 整合):
-    #   shogun_verified=true     → 90.0 (🟢 完成監査済)
-    #   audit pass/pass_with_concerns → 60.0 (🟡 進行中、黒田 PASS 受領済)
-    #   audit fail/その他         → 30.0 (🟠 着手、黒田 fail で要 redo)
-    #   commit のみ              → 25.0 (🟠 着手中、未監査)
-    #   何もなし                 → 0.0  (🔴 未着手)
+    #   shogun_verified=true (no concerns)        → 100.0 (🟢 信長殿 verify pure pass)
+    #   shogun_verified=true (pass_with_concerns) →  90.0 (🟢 信長殿 verify w/ concerns)
+    #   audit pass/pass_with_concerns             →  60.0 (🟡 進行中、黒田 PASS 受領済)
+    #   audit fail/その他                          →  30.0 (🟠 着手、黒田 fail で要 redo)
+    #   commit のみ                                →  25.0 (🟠 着手中、未監査)
+    #   何もなし                                   →   0.0 (🔴 未着手)
+    # cycle11 黒田条件 #4: 100% vs 90% semantics 整理 — shogun verify が clean pass
+    # の場合 100% (新)、pass_with_concerns 等が記録されている場合 90% (cycle9 v2 retain)。
     if has_shogun_verified:
-        pct = 90.0
+        pct = _shogun_verified_pct(verif_match)
     elif has_audit and audit_verdict in ("pass", "pass_with_concerns"):
         pct = 60.0
     elif has_audit:
@@ -1147,6 +1216,145 @@ def compute_child_machine_state(
         "audit_id": str(audit_match.get("audit_id", "")) if audit_match else "",
         "shogun_verified": has_shogun_verified,
         "verified_at": str(verif_match.get("verified_at", "")) if verif_match else "",
+    }
+
+
+def _shogun_verified_pct(verif_match: dict[str, Any] | None) -> float:
+    """cycle11 100%/90% split for an active shogun_verified entry.
+
+    Default = 100.0 (= 信長殿 verify clean pass). When the entry retains a
+    kuroda_verdict_original 含む "concerns" / "conditions" 文言 (= 黒田監査が
+    pass_with_concerns / pass_with_conditions だった事実が ledger に残っている)、
+    あるいは entry 自身の verdict / overall_verdict に "concerns" が含まれる場合
+    のみ 90.0 に落とす。cycle9 v2 既装備 helper (= find_latest_shogun_verified)
+    の戻り値を直接受け取る方式ゆえ重複実装無し (= 黒田条件 #3 整合)。
+    """
+    if not verif_match:
+        return 0.0
+    haystack = " ".join(
+        str(verif_match.get(k, "") or "").lower()
+        for k in ("kuroda_verdict_original", "verdict", "overall_verdict")
+    )
+    if "concerns" in haystack or "conditions" in haystack:
+        return 90.0
+    return 100.0
+
+
+def compute_shogun_reflection_stats(
+    children: list[dict[str, Any]],
+    shogun_entries: list[dict[str, Any]],
+    *,
+    kuroda_entries: list[dict[str, Any]] | None = None,
+    w9_batches: list[dict[str, Any]] | None = None,
+    w9_stages: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """cycle11 黒田条件 #2 — global shogun_verified reflection coverage stats.
+
+    Returns the 5-axis report required for cycle 11 acceptance plus an
+    aggregate 緑化率 across all children (= pct >= 80 = 🟢 tier、
+    supabase_phase completed 等の 90% も含む):
+
+      children_total            — sum of LAYER_CHILDREN count (=全 Layer 子項目)
+      mapped_count              — children with shogun_target_pattern /
+                                  audit_id_pattern (= verify match 可能側)
+      matched_count             — mapped children that resolved an active
+                                  shogun_verified=true entry
+      green_count               — children with computed pct >= 80 across
+                                  all tiers (= supabase completed + audit pass
+                                  以上 + shogun_verified pure pass を合算)
+      green_pct                 — green_count / children_total * 100 (= 緑化率)
+      children_without_match    — mapped child IDs with no shogun match
+      unmatched_verified_targets — active entries whose target/audit_id_ref
+                                  matches no child pattern (= 対外 verify 等)
+      active_entries_total       — total entries surviving _is_active filter
+
+    既存 helper (find_latest_shogun_verified / _is_active_shogun_entry /
+    compute_child_machine_state) を経由 (= 黒田条件 #3 既存 helper 再利用、
+    重複実装禁)。
+    """
+    kuroda_entries = kuroda_entries if kuroda_entries is not None else []
+    active_entries = [v for v in shogun_entries if _is_active_shogun_entry(v)]
+
+    mapped_children: list[dict[str, Any]] = []
+    matched_children: list[dict[str, Any]] = []
+    children_without_match: list[str] = []
+    eligible_count = 0
+    green_count = 0
+
+    _trackable_kinds = {"supabase_phase", "w9_batch", "w9_stage"}
+    for child in children:
+        shogun_pat = str(child.get("shogun_target_pattern", ""))
+        audit_pat = str(child.get("audit_id_pattern", ""))
+        effective_pat = shogun_pat or audit_pat
+        kind = str(child.get("kind", "") or "")
+        # 子項目が verification mechanism を持つか否か (= 緑化率分母 eligible)
+        # mechanism = pattern 装着 or supabase_phase / w9_* kind。Layer A/D 等の
+        # 構造 placeholder は eligible から除外し、空評価 children を緑化率分母から外す。
+        is_eligible = bool(effective_pat) or kind in _trackable_kinds
+        if is_eligible:
+            eligible_count += 1
+        if effective_pat:
+            mapped_children.append(child)
+            match = find_latest_shogun_verified(active_entries, effective_pat)
+            if match:
+                matched_children.append(child)
+            else:
+                children_without_match.append(str(child.get("id", "")))
+        # Green tier = pct >= 80, computed via existing state helper
+        # (= 既存 helper 再利用、重複実装禁)。supabase_phase completed (90%)
+        # + shogun_verified clean (100%) + with_concerns (90%) を含む。
+        state = compute_child_machine_state(
+            child,
+            kuroda_entries=kuroda_entries,
+            shogun_entries=shogun_entries,
+            w9_batches=w9_batches,
+            w9_stages=w9_stages,
+        )
+        if float(state.get("pct", 0.0) or 0.0) >= 80.0:
+            green_count += 1
+
+    # Unmatched entries: scan every active entry, mark "matched" iff any
+    # mapped child's pattern is a substring of target/audit_id_ref.
+    unmatched: list[dict[str, str]] = []
+    for v in active_entries:
+        target = str(v.get("target", "")).lower()
+        audit_id_ref = str(v.get("audit_id_ref", "")).lower()
+        matched_by_any = False
+        for child in mapped_children:
+            shogun_pat = str(child.get("shogun_target_pattern", "")).lower()
+            audit_pat = str(child.get("audit_id_pattern", "")).lower()
+            effective_pat = shogun_pat or audit_pat
+            if not effective_pat:
+                continue
+            if effective_pat in target or effective_pat in audit_id_ref:
+                matched_by_any = True
+                break
+        if not matched_by_any:
+            unmatched.append({
+                "target": str(v.get("target", "")),
+                "audit_id_ref": str(v.get("audit_id_ref", "")),
+                "verified_at": str(v.get("verified_at", "")),
+            })
+
+    children_total = len(children)
+    # 緑化率 = 🟢 tier 子項目 / verification mechanism を持つ子項目 (= eligible)。
+    # Layer A/D 等の純粋構造 placeholder (= mechanism 不在) は分母から外す事で、
+    # 「verify 可能 children のうち green tier 達成割合」という意味的に正しい指標化。
+    # children_total に対する overall 率も別 field で報告 (= green_pct_overall)。
+    green_pct = (green_count / eligible_count * 100.0) if eligible_count else 0.0
+    green_pct_overall = (green_count / children_total * 100.0) if children_total else 0.0
+
+    return {
+        "children_total": children_total,
+        "eligible_count": eligible_count,
+        "mapped_count": len(mapped_children),
+        "matched_count": len(matched_children),
+        "green_count": green_count,
+        "green_pct": round(green_pct, 1),
+        "green_pct_overall": round(green_pct_overall, 1),
+        "children_without_match": children_without_match,
+        "unmatched_verified_targets": unmatched,
+        "active_entries_total": len(active_entries),
     }
 
 
@@ -1814,6 +2022,22 @@ DASHBOARD_TEMPLATE = """<!-- auto-generated by scripts/regenerate_dashboard.py �
 (現在 0 件、将来 cmd_004 新 design doc 追加時用 placeholder)
 {%- endif %}
 
+## 🟢 信長殿 verify ledger 反映状況 (= cycle11 global reflection)
+
+> 信長殿 verify ledger (= `queue/reports/shogun_verification_mainpc_log.yaml`) を全 Layer 子項目に反映。
+> shogun_verified=true 子項目は 🟢 緑化 (= clean pass 100% / pass_with_concerns 90%)。legacy_migrated 除外。
+
+- 全 Layer 子項目: **{{ shogun_reflection_stats.children_total }} 件**
+- verify mechanism 装着 (= eligible、緑化率分母): **{{ shogun_reflection_stats.eligible_count }} 件**
+- shogun_target_pattern / audit_id_pattern 装着 (= mapped): **{{ shogun_reflection_stats.mapped_count }} 件**
+- shogun_verified=true match (= matched、緑化対象): **{{ shogun_reflection_stats.matched_count }} 件**
+- 🟢 tier 達成 (= pct >= 80、supabase completed + shogun verified を合算): **{{ shogun_reflection_stats.green_count }} 件**
+- 🟢 **緑化率: {{ shogun_reflection_stats.green_pct }}%** (= green_count / eligible_count、verify 可能 children 中の達成率)
+- 🟢 全体 overall 率: {{ shogun_reflection_stats.green_pct_overall }}% (= green_count / children_total、構造 placeholder 含む)
+- active 信長 verify entry 総数: {{ shogun_reflection_stats.active_entries_total }} 件
+- mapped 子項目で match 無し: {{ shogun_reflection_stats.children_without_match | length }} 件
+- 子項目 mapping 無し verify entry: {{ shogun_reflection_stats.unmatched_verified_targets | length }} 件
+
 ## 🗂 6 Layer 構造 (A〜F 構想〜規範 + G 統合)
 
 cmd_020 dashboard 設計 v0.1 / v0.2 の **6 Layer** (= A 構想 / B Phase / C 機能 / D 頭脳蜘蛛の糸 / E 運用 / F 規範) に
@@ -2024,6 +2248,16 @@ def build_context(
         w9_batches=w9_batch_rows,
     )
     cmd004_audit_alert = build_cmd004_audit_alert_section(kuroda_entries)
+    # cycle11: global shogun_verified reflection stats (= 黒田条件 #2)。
+    # LAYER_CHILDREN (= 静的 SoT) を直接 source とする — build_layer_render_entries の
+    # rendered_children は audit_id_pattern 等を含まないため、stats 計測は raw 子項目
+    # 定義側で行う (= 既存 helper 流用、黒田条件 #3 整合)。
+    shogun_reflection_stats = compute_shogun_reflection_stats(
+        LAYER_CHILDREN, shogun_entries,
+        kuroda_entries=kuroda_entries,
+        w9_batches=w9_batch_rows,
+        w9_stages=w9_stage_rows,
+    )
 
     return {
         "generated_at": _dt.datetime.now().astimezone().isoformat(timespec="seconds"),
@@ -2045,6 +2279,7 @@ def build_context(
         "w9_stages": w9_stage_rows,
         "w9_batches": w9_batch_rows,
         "cmd004_audit_alert": cmd004_audit_alert,
+        "shogun_reflection_stats": shogun_reflection_stats,
     }
 
 
@@ -2192,6 +2427,22 @@ def main(argv: list[str] | None = None) -> int:
 
             write_output(rendered, Path(args.output))
             print(f"[regenerate_dashboard] wrote {args.output} ({len(rendered)} bytes, head={state.source_commit})")
+            stats = context.get("shogun_reflection_stats", {})
+            if stats:
+                print(
+                    "[regenerate_dashboard] shogun_reflection: "
+                    f"children_total={stats.get('children_total', 0)} "
+                    f"eligible={stats.get('eligible_count', 0)} "
+                    f"mapped={stats.get('mapped_count', 0)} "
+                    f"matched={stats.get('matched_count', 0)} "
+                    f"green_count={stats.get('green_count', 0)} "
+                    f"green_pct={stats.get('green_pct', 0.0)}% "
+                    f"green_pct_overall={stats.get('green_pct_overall', 0.0)}% "
+                    f"active_entries={stats.get('active_entries_total', 0)} "
+                    f"unmatched_verified_targets={len(stats.get('unmatched_verified_targets', []))} "
+                    f"children_without_match={len(stats.get('children_without_match', []))}",
+                    file=sys.stderr,
+                )
             return 0
     except BlockingIOError:
         print("[regenerate_dashboard] generation_lock contended", file=sys.stderr)
