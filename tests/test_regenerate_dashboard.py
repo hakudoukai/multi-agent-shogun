@@ -1297,3 +1297,168 @@ def test_legacy_marker_still_detects_generator_output(tmp_path: Path):
         "cycle3 generator output must be detected by legacy marker scan "
         "(otherwise we re-archive ourselves every run)"
     )
+
+
+# ---------------------------------------------------------------------------
+# Cycle 5: 子項目 summary line 一目視認 format
+#   (kuroda cycle5 条件 3: summary format / 4 色 / progress bar / 1 行現状 を明示 assert
+#    karo task spec: 全 53 children・5 evidence fields retain + summary 統一 + SKIP=0)
+# ---------------------------------------------------------------------------
+
+
+def test_compute_child_machine_state_shogun_verified_yields_90_pct():
+    """shogun_verified=true match → pct 90.0 (= 🟢 tier 整合)。"""
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "shogun_target_pattern": "qr_kanban"}
+    shogun = [{"target": "subtask_cmd004_qr_kanban_impl", "shogun_verified": True,
+               "verified_at": "2026-05-11T22:00:00+09:00"}]
+    state = rd.compute_child_machine_state(child, shogun_entries=shogun)
+    assert state["kind"] == "standard"
+    assert state["pct"] == 90.0
+    assert state["shogun_verified"] is True
+
+
+def test_compute_child_machine_state_pass_audit_yields_60_pct():
+    """audit verdict=pass のみ (shogun_verified なし) → pct 60.0 (= 🟡 tier)。"""
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "audit_id_pattern": "kuroda_alpha"}
+    kuroda = [{"audit_id": "kuroda_alpha_v1", "verdict": "pass",
+               "audited_at": "2026-05-12T14:00:00+09:00"}]
+    state = rd.compute_child_machine_state(child, kuroda_entries=kuroda)
+    assert state["pct"] == 60.0
+    assert state["audit_verdict"] == "pass"
+
+
+def test_compute_child_machine_state_fail_audit_yields_30_pct():
+    """audit verdict=fail → pct 30.0 (= 🟠 tier、要 redo)。"""
+    child = {"layer": "X", "id": "X-1", "label": "t",
+             "audit_id_pattern": "kuroda_beta"}
+    kuroda = [{"audit_id": "kuroda_beta_v1", "verdict": "fail",
+               "audited_at": "2026-05-12T14:00:00+09:00"}]
+    state = rd.compute_child_machine_state(child, kuroda_entries=kuroda)
+    assert state["pct"] == 30.0
+
+
+def test_compute_child_machine_state_no_data_yields_0_pct():
+    """audit / shogun_verified / commit 何もなし → pct 0.0 (= 🔴 tier 未着手)。"""
+    child = {"layer": "X", "id": "X-99", "label": "test child"}
+    state = rd.compute_child_machine_state(child)
+    assert state["pct"] == 0.0
+    assert state["kind"] == "standard"
+
+
+def test_compute_child_machine_state_w9_batch_uses_avg_pct():
+    """kind=w9_batch は aggregate avg_pct を直接流用 (= 集計値 retain、捏造禁)。"""
+    child = {"layer": "C", "id": "C-W9-7", "label": "W9 batch7",
+             "kind": "w9_batch", "batch": "7"}
+    w9 = [{"batch": "7", "task_count": 15, "avg_pct": 42.5, "task_ids": []}]
+    state = rd.compute_child_machine_state(child, w9_batches=w9)
+    assert state["kind"] == "w9_batch"
+    assert state["pct"] == 42.5
+    assert state["task_count"] == 15
+
+
+def test_compute_child_machine_state_w9_stage_uses_avg_pct():
+    """kind=w9_stage は aggregate avg_pct + scored_count を直接流用。"""
+    child = {"layer": "C", "id": "C-W9-A", "label": "W9 Stage A",
+             "kind": "w9_stage", "stage": "A"}
+    stages = [{"stage": "A", "task_count": 9, "scored_count": 9, "avg_pct": 100.0}]
+    state = rd.compute_child_machine_state(child, w9_stages=stages)
+    assert state["kind"] == "w9_stage"
+    assert state["pct"] == 100.0
+    assert state["scored_count"] == 9
+
+
+def test_format_child_status_line_shogun_verified_includes_commit_and_verdict():
+    """🟢 完成監査済 → '完成監査済 (commit <hash>, 黒田 <verdict>)' format。"""
+    state = {"kind": "standard", "pct": 90.0, "commit_hash": "abc1234",
+             "audit_verdict": "pass", "shogun_verified": True}
+    line = rd.format_child_status_line(state)
+    assert "完成監査済" in line
+    assert "abc1234" in line
+    assert "pass" in line
+
+
+def test_format_child_status_line_in_progress_format():
+    """🟡 進行中 → '進行中 (黒田 <verdict>)' format。"""
+    state = {"kind": "standard", "pct": 60.0, "audit_verdict": "pass_with_concerns"}
+    line = rd.format_child_status_line(state)
+    assert "進行中" in line
+    assert "pass_with_concerns" in line
+
+
+def test_format_child_status_line_未着手():
+    """🔴 未着 → '未着手' (= blank state)。"""
+    state = {"kind": "standard", "pct": 0.0}
+    line = rd.format_child_status_line(state)
+    assert "未着手" in line
+
+
+def test_format_child_status_line_w9_batch_shows_avg_and_count():
+    """w9_batch 集計値 → 'batchN 平均 X% (M 件)' format。"""
+    state = {"kind": "w9_batch", "pct": 42.5, "batch": "7", "task_count": 15}
+    line = rd.format_child_status_line(state)
+    assert "batch7" in line
+    assert "42.5%" in line
+    assert "15" in line
+
+
+def test_build_layer_render_entries_includes_progress_bar_and_status():
+    """各 child に pct / progress_bar / status_line が attach されること (= cycle5 新規)。"""
+    entries = rd.build_layer_render_entries()
+    for layer in entries:
+        for child in layer["children"]:
+            assert "pct" in child
+            assert "progress_bar" in child
+            assert "status_line" in child
+            # progress_bar は <progress> HTML tag を含む (= 全体進捗 § と同 format)
+            assert "<progress" in child["progress_bar"]
+            # status_line は空文字でない
+            assert isinstance(child["status_line"], str)
+            assert len(child["status_line"]) > 0
+
+
+def test_render_dashboard_child_summary_contains_progress_tag():
+    """各子項目 summary 行に <progress> tag が含まれる (= 一目視認、karo spec)。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # 子項目数 (= LAYER_CHILDREN) 以上の <progress> tag が現れる
+    # (全体進捗 + per-agent + W9 batch/stage table + 子項目 summary)
+    n_children = len(rd.LAYER_CHILDREN)
+    # progress tag 数 ≥ 子項目数 (children の summary 行に各 1 個装着) + 既存 (overall 1 + per_agent + w9 rows)
+    # 既存 baseline で 2-3 だったので children 数 + 余裕で n_children + 1 以上
+    assert rendered.count("<progress") >= n_children, (
+        f"summary 行 progress bar 不足: {rendered.count('<progress')} < {n_children}"
+    )
+
+
+def test_render_dashboard_child_summary_contains_4_color_tier_emoji():
+    """各子項目 summary 行に 🟢🟡🟠🔴 のいずれかが含まれる (= 4 色 tier visible)。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # 53 children + 全体進捗 (= 1+) で総数 ≥ children 数。
+    tier_emoji = ["🟢", "🟡", "🟠", "🔴"]
+    total = sum(rendered.count(e) for e in tier_emoji)
+    assert total >= len(rd.LAYER_CHILDREN), (
+        f"4 色 tier emoji 不足: total {total} < {len(rd.LAYER_CHILDREN)}"
+    )
+
+
+def test_render_dashboard_child_summary_contains_status_text():
+    """子項目 summary 行に 1 行現状 mapping (完成監査済 / 進行中 / 着手 / 未着手) のいずれかが含まれる。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    status_tokens = ["完成監査済", "進行中", "着手", "未着手", "平均"]
+    # children 1 行ごとに 1 token 出る想定 → 総和 ≥ children 数
+    total = sum(rendered.count(t) for t in status_tokens)
+    assert total >= len(rd.LAYER_CHILDREN), (
+        f"1 行現状 mapping 不足: total {total} < {len(rd.LAYER_CHILDREN)}"
+    )
+
+
+def test_render_dashboard_child_summary_keeps_5_item_grandchildren():
+    """summary 行 refactor 後も 5 項 grandchildren (= cycle4 既装備) が retain (= karo AC)。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    n = len(rd.LAYER_CHILDREN)
+    assert rendered.count("**commit:**") >= n
+    assert rendered.count("**test:**") >= n
+    assert rendered.count("**audit (黒田):**") >= n
+    assert rendered.count("**shogun_verified:**") >= n
+    assert rendered.count("**参照:**") >= n

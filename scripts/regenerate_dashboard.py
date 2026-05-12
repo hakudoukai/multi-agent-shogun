@@ -709,6 +709,141 @@ def _fallback_evidence(child: dict[str, Any]) -> dict[str, str]:
     }
 
 
+# ---------------------------------------------------------------------------
+# cycle5: 子項目 summary line 一目視認 format
+#   各子項目の machine state から pct + 1 行現状 を計算し、全体進捗 § と同形式の
+#   progress bar (= progress_bar_html、4 色 tier 80/50/25/0 retain) を summary 行に流す。
+#   詳細 5 項 grandchildren は <details> 既装備で default collapsed (= cycle4 retain)。
+# ---------------------------------------------------------------------------
+
+
+def compute_child_machine_state(
+    child: dict[str, Any],
+    *,
+    kuroda_entries: list[dict[str, Any]] | None = None,
+    shogun_entries: list[dict[str, Any]] | None = None,
+    w9_batches: list[dict[str, Any]] | None = None,
+    w9_stages: list[dict[str, Any]] | None = None,
+    repo: Path = PROJECT_ROOT,
+) -> dict[str, Any]:
+    """Resolve child progress-pct + raw machine state used by summary line.
+
+    pct は audit/shogun_verified/commit の有無から段階決定 (= 黒田推奨 80/50/25/0 tier 整合)。
+    w9_batch/w9_stage は aggregate avg_pct を直接流用。data 不在は捏造禁 (= 黒田 cycle4 条件 1)。
+    """
+    kuroda_entries = kuroda_entries if kuroda_entries is not None else []
+    shogun_entries = shogun_entries if shogun_entries is not None else []
+    kind = child.get("kind")
+
+    if kind == "w9_batch":
+        batch_id = str(child.get("batch", ""))
+        match = next(
+            (r for r in (w9_batches or []) if str(r.get("batch", "")) == batch_id),
+            None,
+        )
+        if match:
+            return {
+                "kind": "w9_batch",
+                "pct": float(match.get("avg_pct") or 0.0),
+                "task_count": int(match.get("task_count") or 0),
+                "batch": batch_id,
+            }
+        return {"kind": "w9_batch_missing", "pct": 0.0, "batch": batch_id}
+
+    if kind == "w9_stage":
+        stage = str(child.get("stage", ""))
+        match = next(
+            (r for r in (w9_stages or []) if str(r.get("stage", "")) == stage),
+            None,
+        )
+        if match:
+            return {
+                "kind": "w9_stage",
+                "pct": float(match.get("avg_pct") or 0.0),
+                "task_count": int(match.get("task_count") or 0),
+                "scored_count": int(match.get("scored_count") or 0),
+                "stage": stage,
+            }
+        return {"kind": "w9_stage_missing", "pct": 0.0, "stage": stage}
+
+    design_doc = str(child.get("design_doc", ""))
+    audit_pattern = str(child.get("audit_id_pattern", ""))
+    shogun_pattern = str(child.get("shogun_target_pattern", "")) or audit_pattern
+
+    commit_info = git_log_for_path(design_doc, repo=repo) if design_doc else {}
+    audit_match = find_latest_audit_for_pattern(kuroda_entries, audit_pattern) if audit_pattern else None
+    verif_match = find_latest_shogun_verified(shogun_entries, shogun_pattern) if shogun_pattern else None
+
+    audit_verdict = str(audit_match.get("verdict", "")) if audit_match else ""
+    has_commit = bool(commit_info)
+    has_audit = bool(audit_match)
+    has_shogun_verified = bool(verif_match)
+
+    # tier 段階 (= 80/50/25/0 整合):
+    #   shogun_verified=true     → 90.0 (🟢 完成監査済)
+    #   audit pass/pass_with_concerns → 60.0 (🟡 進行中、黒田 PASS 受領済)
+    #   audit fail/その他         → 30.0 (🟠 着手、黒田 fail で要 redo)
+    #   commit のみ              → 25.0 (🟠 着手中、未監査)
+    #   何もなし                 → 0.0  (🔴 未着手)
+    if has_shogun_verified:
+        pct = 90.0
+    elif has_audit and audit_verdict in ("pass", "pass_with_concerns"):
+        pct = 60.0
+    elif has_audit:
+        pct = 30.0
+    elif has_commit:
+        pct = 25.0
+    else:
+        pct = 0.0
+
+    return {
+        "kind": "standard",
+        "pct": pct,
+        "commit_hash": commit_info.get("hash", "") if commit_info else "",
+        "audit_verdict": audit_verdict,
+        "audit_id": str(audit_match.get("audit_id", "")) if audit_match else "",
+        "shogun_verified": has_shogun_verified,
+        "verified_at": str(verif_match.get("verified_at", "")) if verif_match else "",
+    }
+
+
+def format_child_status_line(state: dict[str, Any]) -> str:
+    """Render the 1-line current-status string for a child summary row.
+
+    Mapping (= karo task spec):
+      🟢 完成監査済 → "commit <hash>, 黒田 <verdict>"
+      🟡 進行中    → "進行中 (黒田 <verdict>)"
+      🟠 着手     → "着手 (commit <hash>)"
+      🔴 未着     → "未着手"
+    w9_batch/w9_stage は集計値 (avg_pct + 件数) を流用。捏造禁。
+    """
+    kind = str(state.get("kind", ""))
+    pct = float(state.get("pct") or 0.0)
+
+    if kind == "w9_batch":
+        return f"batch{state.get('batch', '?')} 平均 {pct:.1f}% ({state.get('task_count', 0)} 件)"
+    if kind == "w9_stage":
+        return (
+            f"Stage {state.get('stage', '?')} 平均 {pct:.1f}% "
+            f"({state.get('scored_count', 0)}/{state.get('task_count', 0)} 件)"
+        )
+    if kind in ("w9_batch_missing", "w9_stage_missing"):
+        return "未着 (集計値不在)"
+
+    # standard child
+    if pct >= 80.0:
+        h = state.get("commit_hash") or "(未 commit)"
+        v = state.get("audit_verdict") or "(verdict 不在)"
+        return f"完成監査済 (commit `{h}`, 黒田 {v})"
+    if pct >= 50.0:
+        v = state.get("audit_verdict") or "監査待ち"
+        return f"進行中 (黒田 {v})"
+    if pct >= 25.0:
+        h = state.get("commit_hash") or "未 commit"
+        return f"着手 (commit `{h}`、監査未)"
+    return "未着手"
+
+
 def build_layer_render_entries(
     *,
     kuroda_entries: list[dict[str, Any]] | None = None,
@@ -731,10 +866,21 @@ def build_layer_render_entries(
                 w9_batches=w9_batches,
                 w9_stages=w9_stages,
             )
+            state = compute_child_machine_state(
+                child,
+                kuroda_entries=kuroda_entries,
+                shogun_entries=shogun_entries,
+                w9_batches=w9_batches,
+                w9_stages=w9_stages,
+            )
+            pct = float(state.get("pct") or 0.0)
             rendered_children.append({
                 "id": child["id"],
                 "label": child["label"],
                 "evidence": evidence,
+                "pct": pct,
+                "progress_bar": progress_bar_html(pct, width_px=180, height_px=12),
+                "status_line": format_child_status_line(state),
             })
         entries.append({
             **layer,
@@ -1287,7 +1433,7 @@ HTML drill-down は `<details>` accordion で expand する (= Layer G 仕様準
 
 {% for child in layer.children %}
 <details>
-<summary>📦 {{ child.id }} {{ child.label }}</summary>
+<summary>📦 {{ child.id }} {{ child.label }}: {{ child.progress_bar }} — {{ child.status_line }}</summary>
 
 - **commit:** {{ child.evidence.commit }}
 - **test:** {{ child.evidence.test }}
