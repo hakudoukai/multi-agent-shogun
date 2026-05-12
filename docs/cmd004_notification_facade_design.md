@@ -5,7 +5,7 @@
 - bloom_level: L4
 - 文書種別: **設計書 + 運用 runbook** (= 構造的根本解決設計、根本治療原則整合)
 - author: ashigaru3 (= 滝川一益、SC WSL hakudoukai@gmail.com)
-- preflight: /mnt/c/Projects/hakudokai-dev/ SC WSL access 確認済
+- preflight: `<SC_WSL_PROJECT_ROOT>` SC WSL access 確認済
 - 前提 (= 既設計 / 既実装):
   - `docs/cmd004_push_vapid_management.md` (Phase 1+2) — Web Push infra 正本
   - `docs/cmd004_patient_app_pwa_design.md` (Phase 3) — PWA + offline + clinic_id namespace
