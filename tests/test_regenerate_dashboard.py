@@ -1092,15 +1092,19 @@ def test_render_dashboard_has_children_accordion():
 
 
 def test_render_dashboard_grandchildren_5_item_template():
-    """各子項目 expand で 5 項固定 (commit/test/audit/shogun_verified/参照) が render される。"""
+    """各子項目 expand で 5 項固定 (commit/test/audit/shogun_verified/参照) が render される。
+
+    cycle7: markdown ul/li → inline <p> + separator " | " に refactor。最初 4 項 (commit/test
+    /audit/shogun_verified) は横一列 1 行、参照 doc は別行 (長文対策)。label は <b> HTML bold。
+    """
     rendered = rd.render_dashboard(_baseline_context())
-    # 各 children 1 件につき 5 行 (commit/test/audit/shogun_verified/参照) → ≥ 5 * children
+    # 各 children 1 件につき 5 label が render される → ≥ children 数
     n = len(rd.LAYER_CHILDREN)
-    assert rendered.count("**commit:**") >= n
-    assert rendered.count("**test:**") >= n
-    assert rendered.count("**audit (黒田):**") >= n
-    assert rendered.count("**shogun_verified:**") >= n
-    assert rendered.count("**参照:**") >= n
+    assert rendered.count("<b>commit:</b>") >= n
+    assert rendered.count("<b>test:</b>") >= n
+    assert rendered.count("<b>audit (黒田):</b>") >= n
+    assert rendered.count("<b>shogun_verified:</b>") >= n
+    assert rendered.count("<b>参照:</b>") >= n
 
 
 def test_render_dashboard_contains_specific_child_labels():
@@ -1454,14 +1458,17 @@ def test_render_dashboard_child_summary_contains_status_text():
 
 
 def test_render_dashboard_child_summary_keeps_5_item_grandchildren():
-    """summary 行 refactor 後も 5 項 grandchildren (= cycle4 既装備) が retain (= karo AC)。"""
+    """summary 行 refactor 後も 5 項 grandchildren (= cycle4 既装備) が retain (= karo AC)。
+
+    cycle7: ul/li → inline <p>/<b> refactor 後も 5 label 全件 retain (= cycle 4-6 既装備 retain)。
+    """
     rendered = rd.render_dashboard(_baseline_context())
     n = len(rd.LAYER_CHILDREN)
-    assert rendered.count("**commit:**") >= n
-    assert rendered.count("**test:**") >= n
-    assert rendered.count("**audit (黒田):**") >= n
-    assert rendered.count("**shogun_verified:**") >= n
-    assert rendered.count("**参照:**") >= n
+    assert rendered.count("<b>commit:</b>") >= n
+    assert rendered.count("<b>test:</b>") >= n
+    assert rendered.count("<b>audit (黒田):</b>") >= n
+    assert rendered.count("<b>shogun_verified:</b>") >= n
+    assert rendered.count("<b>参照:</b>") >= n
 
 
 # ---------------------------------------------------------------------------
@@ -1611,3 +1618,114 @@ def test_render_dashboard_w14_line_external_api_appears():
     rendered = rd.render_dashboard(_baseline_context())
     assert "LINE 通知" in rendered or "LINE通知" in rendered
     assert "Web 予約" in rendered or "Web予約" in rendered
+
+
+# ---------------------------------------------------------------------------
+# Cycle 7: 孫項目 inline 化 refactor (= 信長殿陛下御差配 16:04「孫項目改行 4 行 → 横一列」)
+#   - ul/li 5 行 → <p> element 1 行 (= 最初 4 項 commit/test/audit/shogun_verified 横一列)
+#   - separator " | " 統一
+#   - short fallback (= 「未 commit」 → 「(未)」) で 1 行 fit
+#   - 5 項 retain (= cycle4 既装備、6 cycle 全 retain)、参照 doc は別行 (長文対策)
+# ---------------------------------------------------------------------------
+
+
+def test_shorten_inline_value_compresses_known_fallback():
+    """cycle7: fallback (= 「未 commit」「test 未実行」「黒田監査未」「参照 doc 未起案」) は「(未)」短縮。"""
+    assert rd.shorten_inline_value(rd.FALLBACK_COMMIT) == "(未)"
+    assert rd.shorten_inline_value(rd.FALLBACK_TEST) == "(未)"
+    assert rd.shorten_inline_value(rd.FALLBACK_AUDIT) == "(未)"
+    assert rd.shorten_inline_value(rd.FALLBACK_REF) == "(未)"
+
+
+def test_shorten_inline_value_passes_through_real_values():
+    """cycle7: 実 commit hash / verdict / audit_id 等 fallback 以外はそのまま retain。"""
+    real_commit = "`f4230da` feat: bla (2026-05-12T16:30:00+09:00)"
+    assert rd.shorten_inline_value(real_commit) == real_commit
+    assert rd.shorten_inline_value("100 passed; SKIP=0") == "100 passed; SKIP=0"
+    assert rd.shorten_inline_value("`kuroda_xxx_audit_20260512` → pass") == "`kuroda_xxx_audit_20260512` → pass"
+
+
+def test_build_inline_evidence_retains_5_fields_with_shortening():
+    """cycle7: evidence dict 5 field retain + fallback 短縮 (= 内容質 retain + 文字量圧縮)。"""
+    full_fallback = {
+        "commit": rd.FALLBACK_COMMIT,
+        "test": rd.FALLBACK_TEST,
+        "audit": rd.FALLBACK_AUDIT,
+        "shogun_verified": rd.FALLBACK_SHOGUN_FALSE,
+        "ref": rd.FALLBACK_REF,
+    }
+    inline = rd.build_inline_evidence(full_fallback)
+    assert inline["commit"] == "(未)"
+    assert inline["test"] == "(未)"
+    assert inline["audit"] == "(未)"
+    # shogun_verified=false は短縮不要 (= 既に短い文字列)
+    assert inline["shogun_verified"] == "false"
+    assert inline["ref"] == "(未)"
+    # 5 field 全件 retain (= 黒田 cycle4 evidence 構造 retain)
+    assert set(inline.keys()) == {"commit", "test", "audit", "shogun_verified", "ref"}
+
+
+def test_render_dashboard_grandchildren_inline_p_element():
+    """cycle7: 孫項目 render が ul/li ではなく <p> element + separator " | " で出力される。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    n = len(rd.LAYER_CHILDREN)
+    # 1 子項目あたり最初 4 項 (commit/test/audit/shogun_verified) を 1 <p> に、参照を別 <p> に
+    # → <b>commit:</b> 〜 <b>shogun_verified:</b> までを含む <p> が n 件以上
+    # separator " | " (両端 space) が 1 行に 3 個 (= 4 項を区切る) × n 行
+    assert rendered.count("<b>commit:</b>") >= n
+    assert rendered.count("<b>shogun_verified:</b>") >= n
+    # separator " | " の総数は 1 行あたり 3 個 × n
+    sep_count = rendered.count(" | ")
+    assert sep_count >= n * 3, (
+        f"cycle7 separator ' | ' 不足: {sep_count} < {n * 3} (= n × 3 区切り)"
+    )
+
+
+def test_render_dashboard_grandchildren_first_four_fields_on_single_line():
+    """cycle7: commit / test / audit / shogun_verified が 1 <p> 内で同一行 (= 横一列) に出力。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # <p>...<b>commit:</b>...<b>test:</b>...<b>audit (黒田):</b>...<b>shogun_verified:</b>...</p>
+    # の pattern を regex で検出 (= 単一 <p> 内に 4 label 全件含まれる行が n 件以上)
+    pattern = re.compile(
+        r"<p><b>commit:</b>[^<]+\|\s*<b>test:</b>[^<]+\|\s*<b>audit \(黒田\):</b>[^<]+\|\s*<b>shogun_verified:</b>[^<]+</p>"
+    )
+    matches = pattern.findall(rendered)
+    n = len(rd.LAYER_CHILDREN)
+    assert len(matches) >= n, (
+        f"cycle7 inline 1 行 format 不足: {len(matches)} < {n} (= 全子項目 1 行 fit 必達)"
+    )
+
+
+def test_render_dashboard_grandchildren_ref_on_separate_line():
+    """cycle7: 参照 doc は長文ゆえ別 <p> 行 (= 計画書整合、最初 4 項 inline + 参照 別行)。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # <p><b>参照:</b> ...</p> の独立 line が children 数以上
+    pattern = re.compile(r"<p><b>参照:</b>[^<]+</p>")
+    matches = pattern.findall(rendered)
+    n = len(rd.LAYER_CHILDREN)
+    assert len(matches) >= n, (
+        f"cycle7 参照 別行 不足: {len(matches)} < {n}"
+    )
+
+
+def test_render_dashboard_grandchildren_short_fallback_appears():
+    """cycle7: fallback 値の inline 表示は「(未)」短縮形 (= 文字量圧縮、1 行 fit 用)。"""
+    # 全 child を fallback 状態に追い込む → render で「(未)」が出現
+    ctx = _baseline_context()
+    # kuroda / shogun_verification を空にして全 child を fallback path に強制
+    rendered = rd.render_dashboard(ctx)
+    # 標準 child (= w9 / supabase_phase 以外) のうち最低 1 件は fallback 出る前提なので
+    # 「(未)」が少なくとも 1 回は出現する。長文 fallback (「(未 commit)」「(test 未実行)」等)
+    # は inline 表示から消える (= ただし参照行など別 <p> 内で出る可能性は許容)。
+    assert "(未)" in rendered, "cycle7 短縮 fallback「(未)」が render に出現せず"
+
+
+def test_render_dashboard_grandchildren_no_legacy_ul_li_for_evidence():
+    """cycle7: 孫項目 evidence 5 項 が markdown bullet 「- **commit:** 」形式で出力されない (= ul/li 廃止)。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # 旧 cycle4-6 の bullet format が消えていること (= 完全置換確認)
+    assert "- **commit:**" not in rendered, "cycle7 ul/li 旧 format 残存 (commit)"
+    assert "- **test:**" not in rendered, "cycle7 ul/li 旧 format 残存 (test)"
+    assert "- **audit (黒田):**" not in rendered, "cycle7 ul/li 旧 format 残存 (audit)"
+    assert "- **shogun_verified:**" not in rendered, "cycle7 ul/li 旧 format 残存 (shogun_verified)"
+    assert "- **参照:**" not in rendered, "cycle7 ul/li 旧 format 残存 (参照)"

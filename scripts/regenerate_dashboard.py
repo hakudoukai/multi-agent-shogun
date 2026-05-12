@@ -719,6 +719,40 @@ FALLBACK_AUDIT = "(黒田監査未)"
 FALLBACK_SHOGUN_FALSE = "false"
 FALLBACK_REF = "(参照 doc 未起案)"
 
+# cycle7: 1 行 inline 表示用 短縮 fallback (= 文字量圧縮、p element 1 行 fit 用)。
+# 既存 FALLBACK_* は machine state evidence dict 用 retain (= cycle4-6 test 整合)。
+# 横一列 render 時のみ INLINE_FALLBACK_MAP で「(未)」に短縮。
+INLINE_FALLBACK_SHORT = "(未)"
+INLINE_FALLBACK_MAP = {
+    FALLBACK_COMMIT: INLINE_FALLBACK_SHORT,
+    FALLBACK_TEST: INLINE_FALLBACK_SHORT,
+    FALLBACK_AUDIT: INLINE_FALLBACK_SHORT,
+    FALLBACK_REF: INLINE_FALLBACK_SHORT,
+}
+
+
+def shorten_inline_value(value: str) -> str:
+    """cycle7: 1 行 inline 表示で fallback 文字列を「(未)」に短縮 (= 文字量圧縮)。
+
+    fallback 以外の値 (= 実 commit hash / verdict / audit_id / ref 等) はそのまま返す。
+    """
+    return INLINE_FALLBACK_MAP.get(value, value)
+
+
+def build_inline_evidence(evidence: dict[str, str]) -> dict[str, str]:
+    """cycle7: evidence dict を 1 行 inline 表示用に短縮 (= 黒田 cycle4 evidence retain + 視認圧縮)。
+
+    cycle 4-6 既装備の evidence dict 5 field (commit/test/audit/shogun_verified/ref) を
+    そのまま受け取り、fallback 検出時のみ INLINE_FALLBACK_SHORT に置換した dict を返す。
+    """
+    return {
+        "commit": shorten_inline_value(evidence.get("commit", "")),
+        "test": shorten_inline_value(evidence.get("test", "")),
+        "audit": shorten_inline_value(evidence.get("audit", "")),
+        "shogun_verified": evidence.get("shogun_verified", ""),
+        "ref": shorten_inline_value(evidence.get("ref", "")),
+    }
+
 
 def _audit_evidence_pytest(audit_entry: dict[str, Any]) -> str | None:
     """Pull machine_evidence.pytest.observed from a kuroda audit entry, if present."""
@@ -1055,6 +1089,7 @@ def build_layer_render_entries(
                 "id": child["id"],
                 "label": child["label"],
                 "evidence": evidence,
+                "evidence_inline": build_inline_evidence(evidence),
                 "pct": pct,
                 "progress_bar": progress_bar_html(pct, width_px=180, height_px=12),
                 "status_line": format_child_status_line(state),
@@ -1612,11 +1647,8 @@ HTML drill-down は `<details>` accordion で expand する (= Layer G 仕様準
 <details>
 <summary>📦 {{ child.id }} {{ child.label }}: {{ child.progress_bar }} — {{ child.status_line }}</summary>
 
-- **commit:** {{ child.evidence.commit }}
-- **test:** {{ child.evidence.test }}
-- **audit (黒田):** {{ child.evidence.audit }}
-- **shogun_verified:** {{ child.evidence.shogun_verified }}
-- **参照:** {{ child.evidence.ref }}
+<p><b>commit:</b> {{ child.evidence_inline.commit }} | <b>test:</b> {{ child.evidence_inline.test }} | <b>audit (黒田):</b> {{ child.evidence_inline.audit }} | <b>shogun_verified:</b> {{ child.evidence_inline.shogun_verified }}</p>
+<p><b>参照:</b> {{ child.evidence_inline.ref }}</p>
 
 </details>
 {% endfor %}
