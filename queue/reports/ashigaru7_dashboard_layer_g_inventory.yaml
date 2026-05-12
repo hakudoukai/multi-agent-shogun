@@ -1,0 +1,201 @@
+inventory_id: ashigaru7_dashboard_layer_g_inventory_20260512
+inventoried_at: "2026-05-12T11:25:00+09:00"
+inventoried_by: ashigaru7
+scope: |
+  dashboard cmd_020 Layer G 統合層 (= Stage 3 HTML drill-down + Stage 4 systemd 15min
+  timer + Stage 5 検証 plan) 既実装 inventory。本 task は spec 起案のみ、実装は別 cycle。
+repo: multi-agent-shogun-newbuild
+parent_task: subtask_cmd020_dashboard_layer_g_integration_drill_down_js
+parent_cmd: cmd_020
+
+mc_anti_dup_check:
+  status: deferred_to_integration_phase
+  reason: |
+    MC ashigaru1 regenerate_dashboard.py Stage 2 cycle 2 fix (= commit 72f1c0d) と
+    本 SC Layer G render component は SoT 統合経由で組込まれる path。本 task は SC docs
+    spec 起案のみ、MC 側 generator artifact (= regenerate_dashboard.py 本体) は
+    multi-agent-shogun-newbuild repo 内に不在 (= find scripts -name 'regenerate_dashboard*'
+    → 0 件、scripts/dashboard-viewer.py のみ既存)。MC 統合 interface = 家康 + 秀吉合議 +
+    MC SoT 統合 後段別 task で verify。
+  verify_basis: |
+    find /home/hakudokai/projects/multi-agent-shogun-newbuild -maxdepth 4
+      -name 'regenerate_dashboard*' → 0 件
+    find /home/hakudokai/projects/multi-agent-shogun-newbuild -maxdepth 4
+      -name 'dashboard-update*' → 0 件
+    既存 HTML viewer = scripts/dashboard-viewer.py のみ (= dashboard.md → HTTP serve、
+    Stage 3 統合先候補)
+  followup: |
+    家康 + 秀吉合議結果着後、別 task で MC 側 generator artifact (= regenerate_dashboard.py
+    本体 + dashboard.html template) と本 Layer G spec を照合、HTML drill-down 実装
+    + systemd timer 配備 + 24h 検証 cycle を回す。
+
+layer_g_scope_components:
+  - component_id: dashboard_design_v01_section5
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.1.md
+    section_anchor: "§5 Tech Stack + §6 自動更新 mechanism (= 6 Stage 一覧 + regenerate_dashboard.py 構想)"
+    line_range_approx: "150-200"
+    key_concepts:
+      - "6 Stage 列挙 (= Stage 1 設計 / 2 dashboard.md 基本 view / 3 dashboard.html drill-down / 4 mermaid 統合 / 5 timer 自動更新 + 両 PC 配備 / 6 検証)"
+      - "Tech Stack (= Python 3.12 + jinja2 + PyYAML + mermaid + dashboard-viewer.py + ttyd + systemd user timer + Supabase + git tracked + memory MCP)"
+      - "新規 install 0 件、新 daemon 0 件 (= 根本治療 anti-duplication 最大化)"
+    owner: 信長 (= MC shogun、v0.1 起草 2026-05-11 19:25)
+    integration_status: integrated
+    role_in_layer_g: 6 Stage 上位 source (= Stage 3-5 spec の上位 anchor)
+    mc_dup_check_note: "MC artifact 不在故 unknown、合議結果着後 verify"
+
+  - component_id: dashboard_design_v02_section4_1
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§4.1 階層 drill-down HTML mockup (= 拙者補強)"
+    line_range_approx: "119-152"
+    key_concepts:
+      - "<details class='layer'> native accordion + <summary> + <progress> HTML element"
+      - "ネスト構造 (= Layer → 機能 → DD reference) drill-down click 展開"
+      - "HTML5 <details> native accordion、JS 0、軽量、ブラウザ即動作"
+      - "Tailwind CSS + Alpine.js (= 外部 CDN 不使用、static inline)"
+    owner: 信長 (= v0.2 起草 2026-05-11 19:42、黒田 audit 反映 + 拙者 8 補強)
+    integration_status: integrated
+    role_in_layer_g: 主 source for Stage 3 (= HTML drill-down mockup 原本)
+    mc_dup_check_note: "本 Layer G spec は mockup を Stage 3 spec として展開、本体 HTML 実装は別 cycle"
+
+  - component_id: dashboard_design_v02_section5_1
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§5.1 段階的実装 + MVP path (= Stage 表)"
+    line_range_approx: "178-188"
+    key_concepts:
+      - "Stage 3 HTML drill-down: dashboard.html + <details> accordion + progress bar + 色分け"
+      - "Stage 5 systemd 装備: dashboard-update.{service,timer} 両 PC 配備 + Persistent=true + 15min"
+      - "Stage 6 検証: 24h 運用 + 全 layer drill-down test + query budget verify + 黒田 final audit"
+      - "MVP 基準: ブラウザで階層 click 動作 + 6 layer 展開、両 PC で 15min 毎 dashboard 自動更新 + HEAD 同期"
+    owner: 信長 (= v0.2 §5.1 補強)
+    integration_status: integrated
+    role_in_layer_g: 主 source for Stage 4-5 (= systemd 装備 + 検証 plan 原本、本 task 内 numbering は task YAML 採用)
+    mc_dup_check_note: "Stage numbering: design doc v0.2 Stage 5/6 = task YAML Stage 4/5。本 spec は task YAML numbering 採用、内容は design doc 同義"
+
+  - component_id: dashboard_design_v02_section3_6
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§3.6 progress 算出式 (= 黒田 #5 明文化、機械判定)"
+    line_range_approx: "80-103"
+    key_concepts:
+      - "progress_pct 機械算出式 (= weight 加重平均 + shogun_verified gate)"
+      - "色分け 4 段階 (= green ✅ 100% / yellow 🟡 50-99% / orange 25-49% / red 🔴 0-24% or blocked)"
+      - "weight = A=3 / B=2 / C=1 (= 陛下御差配 priority)"
+    owner: 信長 (= v0.2 §3.6)
+    integration_status: integrated
+    role_in_layer_g: Stage 3 色分け 4 段階 + progress bar 値供給 source
+    mc_dup_check_note: "Layer G spec は色分け anchor のみ提示、算出本体は generator (= 別 cycle) 担当"
+
+  - component_id: dashboard_design_v03_sc
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.3-sc.md
+    section_anchor: "SC 視点 v0.3 (= 25 form template / HEAD 一致 verify / pre-commit dup-check)"
+    line_range_approx: "100-205"
+    key_concepts:
+      - "mermaid inline 埋込 (= Stage 3 で markdown 埋込で simple、pre-rendered SVG cache は別 phase)"
+      - "両 PC HEAD 一致 verify + dashboard.md hash 一致 alert (= AC18 alert 発火条件第 1 項)"
+      - "Stage 6 検証 phase で pre-commit-dup-check.sh 起案 (= 21:01 教訓)"
+    owner: SC shogun (= v0.3 SC 補強)
+    integration_status: integrated
+    role_in_layer_g: Stage 5 検証 plan 補強 source (= HEAD divergent banner + pre-commit hook 検証序列)
+    mc_dup_check_note: "本 Layer G spec は anchor のみ提示、本体は別 doc"
+
+  - component_id: existing_dashboard_viewer_py
+    component_type: existing_script
+    file_path: scripts/dashboard-viewer.py
+    section_anchor: "既存 HTTP serve viewer (= dashboard.md → marked.min.js → browser)"
+    line_range_approx: "1-50 (entry + HTML_TEMPLATE)"
+    key_concepts:
+      - "Python3 standard library only、http.server で port 8787 配信"
+      - "dashboard.md を marked.min.js 経由 HTML render、auto-refresh on file change"
+      - "外部 CDN (= cdn.jsdelivr.net) 依存 (= v0.2 §3.7 self-contained 方針と乖離、要 cutover)"
+    owner: 既存 (= cmd_020 以前)
+    integration_status: integrated
+    role_in_layer_g: Stage 3 統合先候補 (= 新 dashboard.html generator output を viewer 経由配信、または viewer を deprecated 化して generator 単独 owner 化)
+    mc_dup_check_note: "Stage 3 実装 cycle で cutover plan 確定、本 task は spec のみ anchor 提示"
+
+  - component_id: existing_auto_git_sync_design
+    component_type: design_doc
+    file_path: docs/auto_git_sync_design.md
+    section_anchor: "§2 auto-git-sync.{service,timer} (= systemd user timer + Persistent=true + 5min interval)"
+    line_range_approx: "84-115"
+    key_concepts:
+      - "~/.config/systemd/user/auto-git-sync.{service,timer} 両 PC 配備済"
+      - "OnBootSec=2min + OnUnitActiveSec=5min + Persistent=true (= WSL 再起動跨ぎ自動復活)"
+      - "pull-only cycle (= F007 整合、commit/push なし)"
+    owner: 既装備 (= 2026-05-11 起案、両 PC 配備済)
+    integration_status: integrated
+    role_in_layer_g: Stage 4 dashboard-update.{service,timer} 同型 reference (= systemd user timer pattern 流用、配置 path + Persistent + OnUnitActiveSec 直接 mirror)
+    mc_dup_check_note: "Stage 4 は auto-git-sync pattern を 15min interval + dashboard-update unit に展開、別 daemon 増設なし"
+
+  - component_id: existing_auto_git_sync_sh
+    component_type: existing_script
+    file_path: scripts/auto_git_sync.sh
+    section_anchor: "auto-git-sync.service の ExecStart target"
+    key_concepts:
+      - "flock + log + atomic append + dirty stash + FF pull のみ (= F007 遵守)"
+      - "log path = queue/reports/auto_sync_log.yaml"
+    owner: 既装備
+    integration_status: integrated
+    role_in_layer_g: Stage 4 dashboard-update.service の ExecStart 流用 pattern (= flock + log 規範同型、内容は regenerate_dashboard.py 起動 + push なし)
+    mc_dup_check_note: "Stage 4 実装 cycle で scripts/dashboard_update.sh wrapper 起案候補、本 task は spec のみ"
+
+related_but_out_of_scope:
+  - component_id: dashboard_md_root
+    file_path: dashboard.md
+    reason: "delivery_conditions #1 で本 task は dashboard.md 直接編集禁。読取参照のみで触れない"
+  - component_id: layer_a_through_f_sections
+    file_path: docs/dashboard_design_v0.1.md §2 + v0.2 §2 + v0.3-sc 各 layer section
+    reason: "本 task は Layer G 統合層単独 spec、Layer A-F は別 sub-section 担当 (= ashigaru1 Layer A 既起案、Layer B-F は別 task)"
+  - component_id: hakudokai_dev_repo
+    file_path: /mnt/c/Projects/hakudokai-dev/
+    reason: "delivery_conditions #2 で本 task は multi-agent-shogun-newbuild repo only、関与禁"
+  - component_id: mc_regenerate_dashboard_py
+    file_path: MC 側 (= 本 SC repo 内不在)
+    reason: "MC artifact regenerate_dashboard.py Stage 2 cycle 2 fix (= 72f1c0d) は MC 担当、SC 側 spec とは SoT 統合経由で組込、本 task は anti-dup check のみ defer"
+
+artifacts_to_create_by_this_task:
+  - docs/dashboard_layer_g_integration_drill_down.md
+  - scripts/test/test_dashboard_layer_g_static_contract.py
+  - queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report.yaml
+  - queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log
+  - queue/reports/ashigaru7_dashboard_layer_g_inventory.yaml (= 本 yaml)
+
+gap_analysis:
+  - id: gap_1
+    description: "Stage 3 HTML drill-down 単独 spec markdown が未起案 (= v0.2 §4.1 は mockup 部分のみ、Stage 3 完成基準 + 4 段階色分け + progress bar element + accordion structure + cutover plan の独立 spec が不在)"
+    resolution_in_this_task: "docs/dashboard_layer_g_integration_drill_down.md §2 で Stage 3 HTML drill-down 完成基準 + <details> accordion + <progress> + 色分け 4 段階 + 既存 dashboard-viewer.py との cutover plan を spec 化"
+
+  - id: gap_2
+    description: "Stage 4 systemd 15min timer 装備設計が未起案 (= dashboard-update.service + dashboard-update.timer の unit file template + OnUnitActiveSec=15min + Persistent=true + 配置 path + scripts/dashboard_update.sh wrapper 候補)"
+    resolution_in_this_task: "本 spec §3 で auto-git-sync pattern を 15min + dashboard-update unit に展開、両 PC 配備 path 明示、ExecStart wrapper 候補列挙"
+
+  - id: gap_3
+    description: "Stage 5 検証 plan (= 24h 運用 + AC 17+1 件 verify + 黒田 final audit chain) が未起案"
+    resolution_in_this_task: "本 spec §4 で 24h 運用 verify 計画 + AC 17+1 件 mapping + HEAD 一致 verify + pre-commit dup-check 序列 + 黒田 final audit gate を spec 化"
+
+  - id: gap_4
+    description: "Stage 3-5 に対する static source-contract test が不在"
+    resolution_in_this_task: "scripts/test/test_dashboard_layer_g_static_contract.py で 5 test (= <details> accordion / <progress> / 色分け 4 段階 / systemd timer 15min / Stage 5 verify plan) を markdown grep + syntax check"
+
+acceptance_criteria_alignment:
+  AC0: 本 yaml 起案 (= 完了 on write、layer_g_scope_components 8 件 inventory)
+  AC1: design doc 正本 read 完遂 evidence = 本 yaml 内 dashboard_design_v01/v02/v03 entry + dashboard-viewer.py + auto_git_sync_design.md
+  AC2: docs/dashboard_layer_g_integration_drill_down.md 新規起案 → 次 step
+  AC3: MC 統合 interface は本 task 範囲外 (= mc_anti_dup_check + followup field で明示)
+  AC4: 5 static test → 次 step
+  AC5: bounded F007 push → 完遂前 worktree + cherry-pick + equality assert + cleanup
+  AC6: report + log + 完遂 ack → 最終 step
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery conditions 4 件遵守 (= dashboard.md 直接編集禁 / hakudokai-dev 関与禁 / MC 統合 claim 禁 / SKIP>0 未完了)
+  - F001-F006 厳守、F007 例外 retain (= 兄上「夜襲出陣」 + 陛下「早く見たい」明示 + 容量回復 directive 整合)
+  - native HTML5 <details> + <progress> + Tailwind/Alpine static inline (= 黒田 #4 self-contained 整合)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 (= ashigaru1 Layer A 第 1 弾実証 base 踏襲)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - Stage numbering: task YAML 採用 (= Stage 3/4/5)、design doc v0.2 §5.1 Stage 5/6 内容と同義
+  - 新規範: Stage MVP 完遂時 karo 報告 + 本多 shogun_audit_request 投函 chain (= msg_111035 broadcast 整合、本 task は spec 起案完遂時)

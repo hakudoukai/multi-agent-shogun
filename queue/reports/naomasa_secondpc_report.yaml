@@ -1475,6 +1475,99 @@ dashboard_task_pre_delivery_audits:
     risk_note:
       - "直政が直接 shogun_audit_request を投函すると監査専念規範とchain-of-commandを乱すため、本 rule は通達義務のみとして運用する。"
 
+dashboard_post_completion_audits:
+  - audit_id: naomasa_post_audit_cmd020_dashboard_layer_a_kousou_render
+    target_type: ashigaru_deliverable_post_completion_audit
+    target_task_id: subtask_cmd020_dashboard_layer_a_kousou_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T11:25:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_111209_b277238a
+    assignee: ashigaru1
+    pre_audit_id: naomasa_pre_audit_cmd020_dashboard_layer_a_kousou_render_r2
+    source_commits:
+      inventory: 68982f0ddf1be90d30e3696eef69bfc975c23c76
+      render: 6b0d12c19d249712a479e86abe784f9271d26cca
+      test_report: 727e7815a1c24acd574a6db7b020c4d086dfa240
+    source_files:
+      - queue/reports/ashigaru1_dashboard_layer_a_inventory.yaml
+      - docs/dashboard_layer_a_kousou.md
+      - scripts/test/test_dashboard_layer_a_static_contract.py
+      - queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_report.yaml
+      - queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_pytest.log
+    requested_but_not_found:
+      - queue/reports/ashigaru1_cmd020_dashboard_layer_a_inventory.yaml
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass_with_concerns
+      3_kiritsu_chain_of_command: pass_with_concerns
+      4_logic_consistency: pass
+      5_schema_data_contract: pass_with_concerns
+      6_test_ci_evidence: pass
+      7_legal_privacy_security: pass
+      8_operations: pass_with_concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: pass
+      12_future_operations_radicality: pass_with_concerns
+    acceptance_criteria_evidence:
+      AC0_inventory:
+        status: pass_with_concerns
+        evidence: "Actual inventory file is queue/reports/ashigaru1_dashboard_layer_a_inventory.yaml; inbox requested queue/reports/ashigaru1_cmd020_dashboard_layer_a_inventory.yaml, which is absent."
+      AC1_design_source_read:
+        status: pass
+        evidence: "Report lines 19-27 cite dashboard_design_v0.1 §2 and v0.2 §2; inventory lines 19-47 records both design anchors."
+      AC2_render_component:
+        status: pass
+        evidence: "docs/dashboard_layer_a_kousou.md contains Layer A standalone component, 5階層, 10柱, DD-054 anchor, Layer D / 蜘蛛の糸 cross-layer references, and mermaid graph TD."
+      AC3_mc_integration_deferred:
+        status: pass
+        evidence: "Inventory lines 9-17 and docs/dashboard_layer_a_kousou.md lines 138-145 state MC generator integration is unknown/deferred, not claimed."
+      AC4_static_tests:
+        status: pass
+        evidence: "Recorded log shows 5 passed / 0 failed / 0 skipped; Naomasa reran python3 -m pytest scripts/test/test_dashboard_layer_a_static_contract.py -v --no-header with 5 passed in 0.02s."
+      AC5_bounded_push:
+        status: pass_with_concerns
+        evidence: "Commits 68982f0, 6b0d12c, 727e781 are present in git history. Ashigaru report still says pending_user_sashihai / TBD_SHA, so report metadata was not backfilled after push."
+      AC6_report_log_ack:
+        status: pass
+        evidence: "Report YAML and pytest log exist and parse/read successfully."
+    machine_evidence:
+      git_show: "git show --stat confirms 68982f0 adds .gitignore + inventory, 6b0d12c adds docs/dashboard_layer_a_kousou.md, 727e781 adds test/report/log."
+      pytest_rerun: "python3 -m pytest scripts/test/test_dashboard_layer_a_static_contract.py -v --no-header => 5 passed, 0 skipped."
+      dirty_worktree_note: "Current worktree contains unrelated ashigaru2/4/5 and cmd004 untracked changes; this audit did not modify or judge them."
+    findings:
+      - severity: medium
+        perspective: 9_documentation
+        issue: "The inbox deliverable name `queue/reports/ashigaru1_cmd020_dashboard_layer_a_inventory.yaml` does not exist; the actual committed file is `queue/reports/ashigaru1_dashboard_layer_a_inventory.yaml`."
+        recommendation: "Karo/dashboard chain should use the actual file path or add a compatibility note in the next dashboard aggregation."
+      - severity: medium
+        perspective: 3_kiritsu_chain_of_command
+        issue: "Ashigaru report still contains TBD_SHA and pending_user_sashihai for commit/push fields even though the commits are now present."
+        recommendation: "Do not block acceptance, but require future reports to backfill actual SHAs before final ack or state that Karo backfilled via git evidence."
+      - severity: low
+        perspective: 2_anti_duplication
+        issue: "MC regenerate_dashboard.py remains unknown/deferred."
+        recommendation: "Keep this as a standalone SC docs/test component; MC integration must be separately audited."
+    five_to_ten_year_ops_risk:
+      - "If report file names drift between task, inbox, and actual commits, automated dashboard aggregation will miss artifacts."
+      - "If reports keep TBD commit hashes after push, future traceability relies on manual git archaeology."
+      - "Standalone docs components are useful now, but generator integration must eventually replace manual aggregation to avoid drift."
+    delivery_conditions_check:
+      dashboard_md_direct_edit: pass
+      hakudokai_dev_untouched: pass
+      mc_generator_integration_not_claimed: pass
+      skip_zero: pass
+      worktree_existing_stop_rule: pass_with_concerns
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_chain
+      summary: "Layer A deliverable is acceptable with concerns. Start shogun_audit_request chain per new rule, while recording path-name drift and stale TBD SHA metadata as follow-up hygiene issues."
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review

@@ -278,6 +278,13 @@ logs/
 !queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
 !queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
 
+# cmd_020 dashboard Layer G 統合層 render component (= ashigaru7、subtask_cmd020_dashboard_layer_g_integration_drill_down_js)
+!docs/dashboard_layer_g_integration_drill_down.md
+!scripts/test/test_dashboard_layer_g_static_contract.py
+!queue/reports/ashigaru7_dashboard_layer_g_inventory.yaml
+!queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report.yaml
+!queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log
+
 # Screenshots (masked — no secrets)
 !images/
 !images/company-creed-all-panes.png
