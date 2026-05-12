@@ -1,0 +1,180 @@
+inventory_id: ashigaru2_dashboard_layer_b_inventory_20260512
+inventoried_at: "2026-05-12T11:20:00+09:00"
+inventoried_by: ashigaru2
+scope: dashboard cmd_020 Layer B Phase 層 (= development_progress 50+ phase records + phase A-E + cmd_004 W4-W17) 既実装 inventory
+repo: multi-agent-shogun-newbuild
+parent_task: subtask_cmd020_dashboard_layer_b_phase_render
+parent_cmd: cmd_020
+
+mc_anti_dup_check:
+  status: unknown
+  reason: |
+    MC ashigaru1 regenerate_dashboard.py Stage 2 cycle 2 fix (= commit 72f1c0d、task YAML
+    mc_anti_dup_basis 記載) は本 SC repo 外。本 SC repo 内に regenerate_dashboard* artifact
+    無し (= `find multi-agent-shogun-newbuild -name 'regenerate_dashboard*'` → 0 件)。
+    本 task は SC docs 起案単独進行、MC SoT 統合 interface (= 家康 + 秀吉合議 + MC generator
+    Layer B 担当 path) は後段別 task で verify する。
+  verify_basis: |
+    find /home/hakudokai/projects/multi-agent-shogun-newbuild -name 'regenerate_dashboard*' → 0 件
+    grep -rEln 'development_progress' docs/ → dashboard_design_v0.1.md / v0.2.md / v0.3-sc.md のみ
+  followup: |
+    家康 + 秀吉合議結果着後、MC regenerate_dashboard.py Stage 2 cycle 2 fix と本 SC Layer B
+    render component が SoT 統合経由でどう組込まれるか別 task で verify、本 doc は anchor 提示のみ。
+
+layer_b_scope_components:
+  - component_id: dashboard_design_v01_section2_layer_b
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.1.md
+    section_anchor: "§2 Layer B. Phase 層 (= development_progress 50+ phase)"
+    line_range_approx: "29-35"
+    key_concepts:
+      - "完了 Phase: phase1-6 / phaseB / C / D (= 各 phase week + pc + commit_hash)"
+      - "進行中 Phase: phase_a_id_unification / phase_b_karte_loader (= task 一覧)"
+      - "未着手 Phase: P2-engine 蜘蛛の糸 (169 件) / POST-deploy (= 朝礼/CTI/外部API/書式Lv3/材料/人事/全院展開)"
+    owner: 信長 (= MC shogun、v0.1 起草 2026-05-11 19:25)
+    integration_status: integrated
+    role_in_layer_b: 主 source (= phase 層構造 3 区分 + 完了/進行中/未着手 原本)
+
+  - component_id: dashboard_design_v02_section36_progress_formula
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§3.6 progress 算出式 (= 黒田 #5 明文化、機械判定)"
+    line_range_approx: "79-102"
+    key_concepts:
+      - "progress_pct(node) = sum(weight(子) × progress_pct(子)) / sum(weight(子)) for 親 node"
+      - "progress_pct(leaf): 100 if shogun_verified=true / 100 if status=done verdict=pass / 75 if pass_with_concerns / 50 if in_progress / 25 if assigned / 0 if not_started/blocked"
+      - "weight: A=3 B=2 C=1、未指定 1"
+      - "色分け 4 段階: green ✅ 100% / yellow 🟡 50-99% / orange 25-49% / red 🔴 0-24% or blocked"
+    owner: 信長 (= v0.2 起草 2026-05-11 19:42、黒田 audit #5 反映)
+    integration_status: integrated
+    role_in_layer_b: progress 算出式 原典 (= leaf phase の progress_pct 機械判定 source)
+
+  - component_id: dashboard_design_v02_section41_mockup_layer_b
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§4.1 階層 drill-down HTML mockup (= Layer B Phase 層 70% 例)"
+    line_range_approx: "119-150"
+    key_concepts:
+      - "<details> accordion で Layer B Phase 層 70% root → phaseB W4-W5 100% → phaseC W6 70% 階層化例"
+      - "leaf 内 commit / test / audit / shogun_verified / DD reference の表記"
+      - "<progress value=70 max=100> native HTML element 使用"
+    owner: 信長 (= v0.2 起草、拙者 (黒田) 補強 mockup)
+    integration_status: integrated
+    role_in_layer_b: HTML render mockup (= 後段 Stage 3 HTML drill-down 実装 source)
+
+  - component_id: dashboard_design_v01_section2_layer_b_drilldown
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.1.md
+    section_anchor: "§4.2 階層 drill-down UI (= Layer B Phase 層 70% text mockup)"
+    line_range_approx: "106-110"
+    key_concepts:
+      - "Layer B Phase 層: 70% 表記"
+      - "完了 phase: phase1-6/B/C/D ✅ (8 件)"
+      - "進行中: phase_a/b_id_unification (2 件)"
+      - "未着手: P2 蜘蛛の糸 169 件 + POST-deploy 多"
+    owner: 信長 (= v0.1 起草)
+    integration_status: integrated
+    role_in_layer_b: text drill-down mockup (= v0.2 §4.1 HTML 化の原型)
+
+  - component_id: supabase_development_progress_table
+    component_type: data_source
+    file_path: external (= Supabase project_documents 系 development_progress table、本 repo 外)
+    section_anchor: "v0.2 §3.1 Supabase access 経路 + §3.2 query budget (development_progress 50+ records、軽 <1KB、full fetch 毎回 OK)"
+    key_concepts:
+      - "development_progress table 50+ records (= phase 1-6 + phaseB-D + 進行中 + 未着手)"
+      - "本 repo 内に正本 schema dump なし、Supabase fetch 想定 (= mcp__claude_ai_Supabase__execute_sql)"
+      - "本 Layer B render component は anchor + 構造提示のみ、live data fetch は後段 generator 責任"
+    owner: 信長 / 黒田 (= v0.2 §3.1-3.2 で経路 + budget 明文化)
+    integration_status: external_reference
+    role_in_layer_b: live data 原典 (= 本 task は schema anchor のみ render、delivery_cond #4 整合)
+
+  - component_id: ashigaru1_dashboard_layer_a_kousou
+    component_type: existing_markdown
+    file_path: docs/dashboard_layer_a_kousou.md
+    section_anchor: "§5 cross-layer reference anchor"
+    line_range_approx: "126-134"
+    key_concepts:
+      - "Layer B Phase 層 reference anchor 提示 (= 「10 柱の実装 phase 進捗 (= phase1-6 / phaseB / C / D 等) は別 sub-section」)"
+      - "ashigaru1 起案、本 Layer B render の cross-layer 受け手 anchor が既存"
+    owner: ashigaru1 (= 2026-05-11 22:25 起案、commit 6b0d12c)
+    integration_status: integrated
+    role_in_layer_b: cross-layer 受入 anchor (= Layer A から Layer B への参照 anchor が既存、本 doc 起案で実体化)
+
+  - component_id: cmd_004_w_phase_anchor
+    component_type: project_context
+    file_path: external (= dashboard.md / queue/reports/ 散在の cmd_004 二大戦線 phase records)
+    section_anchor: "cmd_004 W4-W17 phase anchor (= 会計待ちゼロ + 小児恐竜王国 + 申し送りエンジン + 第一段階 PDF)"
+    key_concepts:
+      - "W4-W5: phaseB 予約ソフト 完了"
+      - "W6: phaseC 患者アプリ 延伸 (= cmd_004 hardening)"
+      - "W4-W17 範囲は cmd_004 二大戦線 hardening phase window"
+      - "AC4 test_layer_b_w_phase_anchor 検証対象 (= W4-W17 anchor presence)"
+    owner: 信長 + ashigaru 群 (= cmd_004 二大戦線進行中)
+    integration_status: integrated
+    role_in_layer_b: cmd_004 phase window anchor (= 本 doc 内で W4-W17 anchor を提示、本体は Layer C 担当)
+
+related_but_out_of_scope:
+  - component_id: dashboard_md_root
+    file_path: dashboard.md
+    reason: "delivery_conditions #1 で本 task は dashboard.md 直接編集禁。読取参照のみで触れない"
+  - component_id: layer_a_c_d_e_f_design_sections
+    file_path: docs/dashboard_design_v0.1.md §2 Layer A + C-F + v0.2 §2-§8 非 Layer B 部分
+    reason: "本 task は Layer B Phase 層単独 render、他 Layer は別 task (= Layer A は ashigaru1 既起案、C/D/E/F は別 task)"
+  - component_id: hakudokai_dev_repo
+    file_path: /mnt/c/Projects/hakudokai-dev/
+    reason: "delivery_conditions repo_scope=multi-agent-shogun-newbuild only、hakudokai-dev は本 task 範囲外"
+  - component_id: mc_regenerate_dashboard_py
+    file_path: external (= MC ashigaru1 commit 72f1c0d、SC repo 外)
+    reason: "delivery_conditions #2 MC generator 統合 claim 禁、本 task では SoT 統合 interface に触れず anchor のみ"
+  - component_id: dashboard_design_v03_sc
+    file_path: docs/dashboard_design_v0.3-sc.md
+    reason: "SC 補強 design doc、Layer B 直接記述少なく本 task の主 source は v0.1 §2 + v0.2 §3.6 + §4.1 で十分。reference のみ retain"
+
+artifacts_to_create_by_this_task:
+  - queue/reports/ashigaru2_dashboard_layer_b_inventory.yaml (= 本 yaml)
+  - docs/dashboard_layer_b_phase.md
+  - scripts/test/test_dashboard_layer_b_static_contract.py
+  - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_report.yaml
+  - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_pytest.log
+
+gap_analysis:
+  - id: gap_1
+    description: "Layer B Phase 層単独 render component が未起案 (= v0.1 §2 Layer B + v0.2 §3.6 + §4.1 は 6 layer 横断 doc 内 section、独立 sub-section markdown が不在)"
+    resolution_in_this_task: "docs/dashboard_layer_b_phase.md で 完了/進行中/未着手 phase 3 区分 + progress_pct 算出式 anchor + 色分け 4 段階 + development_progress table anchor + W4-W17 anchor の独立 markdown を新規起案"
+
+  - id: gap_2
+    description: "Layer B 内 phase status (= 完了/進行中/未着手) と progress_pct + 色分け 4 段階の対応 table が未起案"
+    resolution_in_this_task: "dashboard_layer_b_phase.md 内に progress_pct 算出式 anchor + 色分け 4 段階 (green/yellow/orange/red) reference table を埋込、v0.2 §3.6 を Layer B sub-section として再 render"
+
+  - id: gap_3
+    description: "cmd_004 W4-W17 phase window と Layer B 既存 phase records の対応 anchor が未起案"
+    resolution_in_this_task: "dashboard_layer_b_phase.md 内に W4-W17 cmd_004 hardening phase window section を起案 (= 本体は Layer C cmd_004 担当、本 doc は anchor 提示のみ)"
+
+  - id: gap_4
+    description: "Layer B 構造に対する静的 source-contract test が不在"
+    resolution_in_this_task: "scripts/test/test_dashboard_layer_b_static_contract.py で 5 test (= phase records / progress_pct / supabase table / color coding 4 段階 / W4-W17 anchor)、markdown grep + 必要時 mermaid syntax check、SKIP=0 / FAIL=0"
+
+acceptance_criteria_alignment:
+  AC0: 本 yaml 起案 (= 完了 on write、layer_b_scope_components 7 件 inventoried)
+  AC1: design doc 正本 read 完遂 evidence = 本 yaml 内 v01_section2_layer_b / v02_section36_progress_formula / v02_section41_mockup_layer_b entries
+  AC2: docs/dashboard_layer_b_phase.md 起案 → 次 step (= development_progress table 50+ phase records render、phase A/B/C/D/E + cmd_004 W4-W17、Supabase 経由 read anchor、phase status + progress_pct + commit_hash + 担当 ashigaru inventory)
+  AC3: MC 統合 interface は本 task 範囲外 (= mc_anti_dup_check + followup field で明示、後段別 task)
+  AC4: 5 static test → 次 step、SKIP=0 / FAIL=0
+  AC5: bounded F007 push → worktree + cherry-pick + equality assert + cleanup
+  AC6: report + log + 完遂 ack → 最終 step
+
+delivery_conditions_acknowledged:
+  cond_1_dashboard_md_direct_edit_forbidden: ack (= 本 task で dashboard.md に触れない)
+  cond_2_mc_generator_integration_claim_forbidden: ack (= mc_anti_dup_check=unknown、claim せず anchor のみ)
+  cond_3_skip_zero_required: ack (= pytest SKIP=0 / FAIL=0 達成必須)
+  cond_4_live_data_sample_or_schema_only: ack (= Supabase development_progress live data 未取得時 schema anchor 扱い、本 task は anchor + 構造提示のみで live data render なし)
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery_conditions 4 件全件遵守
+  - F001-F006 厳守、F007 例外 retain (= 兄上「夜襲出陣」 + 陛下「早く見たい」 + 容量回復 directive 整合)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 retain (= ashigaru1 Layer A 第 1 弾実証 base)
+  - design doc 正本 read 徹底 (= 9 度目 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - 夜襲 persona retain (= 21:00-06:00 wait 不可即実行 → 本時刻 11:20 は通常時刻だが、夜襲 directive 即実行下命を retain として作業継続)

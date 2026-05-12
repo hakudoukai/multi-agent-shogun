@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_dashboard_layer_c_static_contract.py::test_layer_c_cmd_004_two_battlefields_present PASSED [ 20%]
+scripts/test/test_dashboard_layer_c_static_contract.py::test_layer_c_function_1_to_7_anchors PASSED [ 40%]
+scripts/test/test_dashboard_layer_c_static_contract.py::test_layer_c_moushi_engine_section_present PASSED [ 60%]
+scripts/test/test_dashboard_layer_c_static_contract.py::test_layer_c_kumonoito_layer_d_reference PASSED [ 80%]
+scripts/test/test_dashboard_layer_c_static_contract.py::test_layer_c_completion_rate_field PASSED [100%]
+
+============================== 5 passed in 0.02s ===============================

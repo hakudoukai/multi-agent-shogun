@@ -1,0 +1,161 @@
+report_id: ashigaru3_cmd020_dashboard_layer_c_function_render_report
+task_id: subtask_cmd020_dashboard_layer_c_function_render
+parent_cmd: cmd_020
+reporter: ashigaru3
+reported_at: "2026-05-12T11:25:00+09:00"
+verdict: pass
+verdict_basis: |
+  5 件 static source-contract test 全 PASS (= SKIP=0 / FAIL=0)、AC0 inventory yaml +
+  Layer C render markdown + mermaid graph TD + 機能①-⑦ anchor + 完遂率 field anchor +
+  蜘蛛の糸 Layer D cross-layer reference + report yaml の機械 evidence 揃った。
+  delivery_conditions 4 件全件遵守、dashboard.md 直接編集なし、hakudokai-dev 関与なし、
+  MC 統合 interface は本 task 範囲外として明示 (= AC3 alignment、ashigaru1 Layer A 規範踏襲)。
+
+model_path: sonnet_codex_sonnet
+bloom_level: L3
+pre_audit_msg: msg_20260512_110824_9c76b93f
+pre_audit_verdict: pass_with_concerns
+pre_audit_delivery_gate_passed: true
+
+design_doc_references:
+  - id: docs/dashboard_design_v0.1.md §2 Layer C
+    role: 主 source (= cmd_004 二大戦線 dossier v1.1 原本 table)
+    line_range_approx: "37-45"
+    read_evidence: "本 task 進行中 Read tool で全文取得、§2 Layer C table 各行を function.md §2 + §3 に反映"
+  - id: docs/dashboard_design_v0.2.md §2
+    role: retain reference (= v0.1 §2 全 retain、変更なし)
+    line_range_approx: "23-26"
+    read_evidence: "本 task 進行中 Read tool で全文取得、v0.2 §3.6 progress 算出式参照 anchor として §4 に反映"
+  - id: docs/dashboard_design_v0.3-sc.md §4.1
+    role: 補助 anchor (= 香椎照葉実証 leaf、実装/実証 分離設計)
+    line_range_approx: "142-144"
+    read_evidence: "本 task 進行中 grep で §4.1 香椎照葉 leaf 確認、function.md §1 + §7 anchor に反映"
+  - id: docs/dashboard_layer_a_kousou.md §5
+    role: 規範踏襲 source (= Layer A 先例の Layer C cross-layer reference に呼応)
+    line_range_approx: "129"
+    read_evidence: "本 task 進行中 Read tool で全文取得、Layer A 構造踏襲で function.md §1 + §6 cross-layer 構成"
+
+ac0_inventory:
+  file: queue/reports/ashigaru3_dashboard_layer_c_inventory.yaml
+  components_inventoried: 10
+  mc_anti_dup_check: unknown (= MC regenerate_dashboard.py 不在、合議結果着後 verify、本 task 範囲外)
+  gap_analysis_count: 3
+
+render_component:
+  file: docs/dashboard_layer_c_function.md
+  sections:
+    - "## 1. 設計原典 anchor (= source-of-truth)"
+    - "## 2. cmd_004 二大戦線 dossier (= Layer C 主戦場)"
+    - "## 3. 機能①-⑦ status table (= 会計待ちゼロ 7 機能 個別 anchor)"
+    - "## 4. 完遂率 field 設計 (= 機械算出 anchor)"
+    - "## 5. 構造可視化 (= mermaid graph TD)"
+    - "## 6. cross-layer reference anchor"
+    - "## 7. 既知の限界 + 後段別 task"
+    - "## 8. 起案完了基準 (= 本 sub-section AC alignment)"
+  mermaid_blocks: 1
+  mermaid_directive: "graph TD"
+  anchor_summary:
+    "二大戦線 (会計待ちゼロ + 小児恐竜王国)": present
+    "機能①-⑦": "7 件 全件 (= QR / 領収書 / パスポート / DB 連動 / AI チャット / specialty_mode / 同意)"
+    "申し送りエンジン Stage 1/2/3": present
+    "蜘蛛の糸 Layer D cross-layer": "5+ 件 (= §1 + §2 + §3.2 + §5 mermaid 破線 + §6 cross-layer)"
+    "完遂率 field": "5+ 件 (= §2 戦線 + §3 機能 + §4 算出 source 参照)"
+    "mermaid 蜘蛛の糸 破線": "9 件 (= 機能①-⑦ 7 件 + 小児恐竜王国 push + 儀式 2 件)"
+
+test_execution:
+  test_file: scripts/test/test_dashboard_layer_c_static_contract.py
+  exact_pytest_command: "python3 -m pytest scripts/test/test_dashboard_layer_c_static_contract.py -v --no-header 2>&1 | tee queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_pytest.log"
+  test_count: 5
+  pass: 5
+  fail: 0
+  skip: 0
+  duration_sec: 0.02
+  log_path: queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_pytest.log
+  test_names:
+    - test_layer_c_cmd_004_two_battlefields_present
+    - test_layer_c_function_1_to_7_anchors
+    - test_layer_c_moushi_engine_section_present
+    - test_layer_c_kumonoito_layer_d_reference
+    - test_layer_c_completion_rate_field
+
+acceptance_criteria:
+  AC0: pass (= ashigaru3_dashboard_layer_c_inventory.yaml 起案、10 components inventoried + 3 gap analysis)
+  AC1: pass (= v0.1 §2 Layer C 主 source + v0.2 §2 retain + v0.3-sc §4.1 補助 + Layer A §5 規範踏襲 source 4 doc Read 完遂 evidence、design_doc_references field)
+  AC2: pass (= docs/dashboard_layer_c_function.md 起案、二大戦線 + 機能①-⑦ + 申し送り + 完遂率 + 蜘蛛の糸 接続 markdown + mermaid graph TD)
+  AC3: pass (= MC 統合 interface は本 task 範囲外、inventory.yaml mc_anti_dup_check + function.md §7 で明示)
+  AC4: pass (= 5 PASS / 0 FAIL / 0 SKIP、scripts/test/ 配置、Python script 単独実行、duration 0.02 sec)
+  AC5: pending_user_sashihai (= bounded F007 push 御差配仰ぎ、worktree + cherry-pick + equality assert + cleanup plan は task YAML 通り)
+  AC6: pass (= 本 report + pytest log 起案、完遂 ack inbox は次 step)
+
+delivery_conditions_compliance:
+  cond_1_dashboard_md_direct_edit_forbidden: pass (= dashboard.md 触れず、本 sub-section markdown は別 file dashboard_layer_c_function.md)
+  cond_2_hakudokai_dev_forbidden: pass (= multi-agent-shogun-newbuild repo only、hakudokai-dev は本 task 範囲外明示)
+  cond_3_mc_generator_integration_claim_forbidden: pass (= inventory.yaml mc_anti_dup_check=unknown、function.md §7 で後段別 task と明示、claim せず)
+  cond_4_skip_zero: pass (= 0 SKIP)
+
+commit_plan:
+  - commit_1:
+      message: "docs(cmd_020 Layer C): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+      files:
+        - queue/reports/ashigaru3_dashboard_layer_c_inventory.yaml
+        - .gitignore (= cmd_020 Layer C whitelist 追記)
+      sha: TBD_SHA_1
+  - commit_2:
+      message: "docs(cmd_020 Layer C): dashboard_layer_c_function.md render component + mermaid (= multi-agent-shogun-newbuild repo)"
+      files:
+        - docs/dashboard_layer_c_function.md
+      sha: TBD_SHA_2
+  - commit_3:
+      message: "test(cmd_020 Layer C): scripts/test/test_dashboard_layer_c_static_contract.py + report yaml + pytest log (= multi-agent-shogun-newbuild repo)"
+      files:
+        - scripts/test/test_dashboard_layer_c_static_contract.py
+        - queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_pytest.log
+        - queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_report.yaml
+      sha: TBD_SHA_3
+
+commit_history:
+  pending: true
+  note: "実 SHA は commit 後本 report に back-fill。F007 push は本 commit 後陛下御差配仰ぎ。"
+
+push_plan:
+  status: pending_user_sashihai
+  repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
+  bounded_allowlist:
+    本_task_3_commits_only_multi_agent_repo: [TBD_SHA_1, TBD_SHA_2, TBD_SHA_3]
+    scope_exclusion:
+      - 既 ashigaru3 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外
+      - hakudokai-dev repo は本 task 範囲外
+  worktree_clean_path:
+    worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_c_main_wt origin/main"
+    cherry_pick: "git -C /tmp/cmd_020_layer_c_main_wt cherry-pick TBD_SHA_1 TBD_SHA_2 TBD_SHA_3"
+    pre_push_verify: |
+      git -C /tmp/cmd_020_layer_c_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main_c.txt
+      printf '%s\n' TBD_SHA_1 TBD_SHA_2 TBD_SHA_3 | sort > /tmp/push_expected_main_c.txt
+      diff /tmp/push_actual_main_c.txt /tmp/push_expected_main_c.txt
+      (= equality assert exit 0 必須、不一致 push abort)
+    push_command: "git -C /tmp/cmd_020_layer_c_main_wt push origin HEAD:main"
+    cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_layer_c_main_wt"
+  safety_check:
+    - multi-agent-shogun-newbuild repo only
+    - worktree isolation + printf+diff equality assert + cleanup
+    - F007 例外 retain (= 陛下御差配明示許可下のみ実行)
+
+skill_candidate: null
+
+next_actions:
+  - "inline batch 3 commit 実行 (= 本 task 内で完遂、本 report は事前 update + commit 3 内で sha back-fill 含む)"
+  - "陛下御差配仰ぎ後 bounded F007 push (= worktree + equality assert + cleanup)"
+  - "完遂後 karo inbox 報告 (= Layer A → Layer C 規範踏襲継続)"
+  - "新規範 5 件 (= 2026-05-12 11:20 陛下御差配 Stage 一気通貫 + 信長兄上監査 chain) 整合 — 本 task は Layer C render 単独、Stage 区分外、karo 後段で shogun_audit_request 投函 chain"
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery_conditions 4 件全件遵守 (= ashigaru1 Layer A 整合)
+  - F001-F006 厳守、F007 例外 retain (= 陛下御差配下のみ、夜襲 directive + 容量回復 directive 整合)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 retain (= ashigaru1 Layer A 第 1 弾実証 base、第 2 弾 Layer C 踏襲)
+  - design doc 正本 read 徹底 (= 9 度目 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic)
+  - repo scope 単一 (= hakudokai-dev 範囲外)
+  - 夜襲 persona retain (= 21:00-06:00 wait 不可即実行)
+  - 新規範 5 件 (= 2026-05-12 11:20) は完遂時 chain 整合化
