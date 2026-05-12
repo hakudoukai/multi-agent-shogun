@@ -29,13 +29,13 @@ deliverables:
     commit: 1cd9176
   - file: scripts/test/test_dashboard_layer_d_static_contract.py
     purpose: 5 件 static source-contract test (= legal_sources count / legal_linkages section / design_decisions anchor / 蜘蛛の糸 cross-layer mermaid / query budget compliance)
-    commit: pending_commit_3
+    commit: 7daae68
   - file: queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log
     purpose: pytest 実行 log (= 5 PASS、SKIP=0、0.02s)
-    commit: pending_commit_3
+    commit: 7daae68
   - file: queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_report.yaml
     purpose: 本 yaml (= 完遂報告)
-    commit: pending_commit_3
+    commit: 7daae68
 
 commit_history:
   - sha: 3776e2a
@@ -49,7 +49,7 @@ commit_history:
     files:
       - docs/dashboard_layer_d_zunou.md (= 新規、174 行、§1 anchor + §2 4 大項目 + §3 cross-layer + §4 mermaid + §5 query budget + §6 reference + §7 限界 + §8 完了基準)
     timestamp: "2026-05-12T11:32:00+09:00"
-  - sha: pending_commit_3
+  - sha: 7daae68
     subject: "test(cmd_020 Layer D): static source-contract 5 test + report yaml + pytest log"
     files:
       - scripts/test/test_dashboard_layer_d_static_contract.py
@@ -102,14 +102,15 @@ acceptance_criteria_evidence:
     status: pass
     evidence: pytest log 5 PASS / 0 FAIL / 0 SKIP (= test rule #1 SKIP=FAIL 厳守、queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log)
   AC5:
-    status: pending_at_report_time
+    status: pass
     evidence: |
-      bounded F007 push は本 yaml 起案後に worktree + cherry-pick + equality assert + cleanup で実施。
-      task spec push_plan の bounded_allowlist は 本 task 3 commits only (= 3776e2a +
-      1cd9176 + pending_commit_3) に限定、scope_exclusion で 既 ashigaru 累計 commit + 他
-      ashigaru commit + MC commit + hakudokai-dev repo は全件 scope 外。
-      陛下御差配「夜襲 directive 即実行」 + 家康殿 msg_20260512_110245 明示許可下、
-      F007 例外即 push 路 retain。
+      bounded F007 push 完遂 (= worktree + cherry-pick + equality assert + cleanup)。
+      task spec push_plan の bounded_allowlist 厳格遵守 (= 本 task 3 commits only =
+      3776e2a + 1cd9176 + 7daae68)、scope_exclusion で 既 ashigaru 累計 commit + 他
+      ashigaru commit + MC commit + hakudokai-dev repo は全件 scope 外、副作用 0。
+      worktree push attempt 1 = non-fast-forward reject、fetch + reset + cherry-pick 再施行で
+      auto-git-sync 経由先行取り込み確認 → 空 cherry-pick skip + cleanup。
+      最終 verify: git log origin/main で本 task 3 commit 全件存在確認、AC5 充足。
   AC6:
     status: pass_at_report_time
     evidence: |
@@ -150,18 +151,36 @@ constraints_compliance:
 push_plan_evidence:
   worktree_clean_path:
     multi_agent_shogun_newbuild:
-      worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_d_main_wt origin/main"
       cherry_pick_targets:
-        - 3776e2a (= AC0 inventory + .gitignore)
-        - 1cd9176 (= render component + mermaid)
-        - TBD_commit_3_after_this_yaml (= test + report + pytest log)
-      pre_push_verify_command: |
-        git -C /tmp/cmd_020_layer_d_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main_d.txt
-        printf '%s\n' 3776e2a 1cd9176 TBD_commit_3 | sort > /tmp/push_expected_main_d.txt
-        diff /tmp/push_actual_main_d.txt /tmp/push_expected_main_d.txt
-      push_command: "git -C /tmp/cmd_020_layer_d_main_wt push origin HEAD:main"
-      cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_layer_d_main_wt"
+        - 3776e2a (= AC0 inventory + .gitignore、push 着手時 既 origin/main 配下)
+        - 1cd9176 (= render component + mermaid、push 着手時 既 origin/main 配下)
+        - 7daae68 (= test + report + pytest log、本 worktree cherry-pick 対象)
+      executed_at: "2026-05-12T11:42:00+09:00"
+      worktree_add_command: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_d_main_wt origin/main"
+      worktree_add_result: "Preparing worktree (detached HEAD 116cab1)"
+      cherry_pick_command: "git -C /tmp/cmd_020_layer_d_main_wt cherry-pick 7daae68"
+      cherry_pick_result_initial: "[detached HEAD b5d1e37] test(cmd_020 Layer D): static source-contract 5 test + report yaml + pytest log (= rebase 後 SHA b5d1e37)"
+      pre_push_equality_assert: "diff /tmp/push_actual_main_d.txt /tmp/push_expected_main_d.txt → EQUALITY_OK (= b5d1e37 のみ)"
+      push_attempt_1: "git -C /tmp/cmd_020_layer_d_main_wt push origin HEAD:main → rejected non-fast-forward (= origin moved ahead with Layer B back-fill 273e669)"
+      recovery: "git fetch origin main → reset --hard origin/main → cherry-pick 7daae68"
+      cherry_pick_result_recovery: |
+        nothing to commit, working tree clean → 7daae68 が auto-git-sync 経由で origin/main に
+        既取り込み済を確認、cherry-pick --skip で空 cherry-pick を解消
+      final_verify_command: "git log origin/main --oneline | grep 'Layer D'"
+      final_verify_result: |
+        7daae68 test(cmd_020 Layer D): static source-contract 5 test + report yaml + pytest log
+        1cd9176 docs(cmd_020 Layer D): dashboard_layer_d_zunou.md render component + mermaid
+        3776e2a docs(cmd_020 Layer D): AC0 inventory yaml 起案
+      cleanup_command: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_layer_d_main_wt"
+      cleanup_result: "worktree removed、worktree list = main only、tmp files cleaned"
+      net_outcome: "本 task 3 commit (= 3776e2a + 1cd9176 + 7daae68) 全件 origin/main 配下、AC5 充足"
   safety_check: ashigaru1 Layer A 規範整合、worktree isolation + printf+diff equality assert + cleanup
+  observation_for_followup: |
+    本 task 3 commit のうち最初の 2 (= 3776e2a + 1cd9176) は本 worktree push 着手前に既
+    origin/main 配下、3 commit 目 (= 7daae68) も非同期 sync 経路で先行取り込み済を確認。
+    auto_git_sync.sh は pull-only 規範のため、押し上げ path は MC または別 agent worktree
+    cherry-pick の可能性。本 task scope 内では bounded allowlist (= 本 task 3 commit only)
+    + cleanup 完遂、副作用 0。後段別 task で push path 透明化を検討推奨。
 
 new_regime_5_items_acknowledgement:
   msg_id: msg_20260512_111035_cca756e9
