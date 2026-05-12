@@ -1,0 +1,175 @@
+report_id: ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report
+task_id: subtask_cmd020_dashboard_layer_g_integration_drill_down_js
+parent_cmd: cmd_020
+reporter: ashigaru7
+reported_at: "2026-05-12T11:35:00+09:00"
+verdict: pass
+verdict_basis: |
+  5 件 static source-contract test 全 PASS (= SKIP=0 / FAIL=0)、AC0 inventory yaml +
+  Layer G spec markdown + Stage 3 HTML drill-down + Stage 4 systemd 15min timer +
+  Stage 5 検証 plan + report yaml の機械 evidence 揃った。delivery_conditions 4 件全件遵守、
+  dashboard.md 直接編集なし、hakudokai-dev 関与なし、MC 統合 interface は本 task 範囲外として明示
+  (= AC3 alignment、合議結果着後別 task で verify)、SKIP=0。
+
+model_path: sonnet_codex_sonnet
+bloom_level: L3
+pre_audit_msg: msg_20260512_110824_9c76b93f
+pre_audit_verdict: pass_with_concerns
+pre_audit_delivery_gate_passed: true
+
+design_doc_references:
+  - id: docs/dashboard_design_v0.2.md §4.1
+    role: 主 source (= HTML drill-down mockup 原本、<details> accordion + <progress>)
+    line_range_approx: "119-152"
+    read_evidence: "本 task 進行中 Read tool で全文取得、§4.1 mockup を spec §2 に展開"
+  - id: docs/dashboard_design_v0.2.md §5.1
+    role: 主 source (= Stage 表、Stage 3 HTML + Stage 5 systemd + Stage 6 検証)
+    line_range_approx: "178-188"
+    read_evidence: "本 task 進行中 Read tool で全文取得、Stage 3/5/6 内容を task numbering Stage 3/4/5 に再 mapping"
+  - id: docs/dashboard_design_v0.2.md §3.6
+    role: 主 source (= progress 算出式 + 色分け 4 段階)
+    line_range_approx: "80-103"
+    read_evidence: "本 task 進行中 Read tool で全文取得、色分け 4 段階を spec §2.3 に展開"
+  - id: docs/dashboard_design_v0.1.md §5-6
+    role: 参考 source (= 6 Stage 一覧 + Tech Stack + regenerate_dashboard.py 構想)
+    line_range_approx: "150-200"
+    read_evidence: "本 task 進行中 sed -n 110,170p で取得、Tech Stack を spec inventory に登録"
+  - id: docs/dashboard_design_v0.3-sc.md
+    role: SC 補強 source (= HEAD 一致 verify + pre-commit dup-check)
+    line_range_approx: "100-205"
+    read_evidence: "本 task 進行中 grep で取得、Stage 5 検証 plan §4.3 に展開"
+  - id: docs/auto_git_sync_design.md §2
+    role: 参考 source (= systemd user timer pattern、Stage 4 流用)
+    line_range_approx: "84-115"
+    read_evidence: "本 task 進行中 grep で取得、Stage 4 systemd unit template 同型 reference として inventory + spec §3 に展開"
+  - id: scripts/dashboard-viewer.py
+    role: 既存 artifact (= Stage 3 統合先候補)
+    line_range_approx: "1-50"
+    read_evidence: "本 task 進行中 head で確認、spec §2.5 cutover plan の対象として inventory + spec に登録"
+  - id: docs/shogun_charter_v0_1_full_export.md
+    role: 参考 source (= 6 度 fail 教訓 + dashboard 専念 directive 整合)
+    line_range_approx: "全体"
+    read_evidence: "task YAML files.to_reference 経由 anchor、本 spec design doc 正本 read 規範に整合"
+
+ac0_inventory:
+  file: queue/reports/ashigaru7_dashboard_layer_g_inventory.yaml
+  components_inventoried: 8
+  mc_anti_dup_check: deferred_to_integration_phase (= MC regenerate_dashboard.py 本 repo 内不在、合議結果着後別 task で verify)
+  gap_analysis_count: 4
+
+render_component:
+  file: docs/dashboard_layer_g_integration_drill_down.md
+  sections:
+    - "## 1. 設計原典 anchor (= source-of-truth)"
+    - "## 2. Stage 3 HTML drill-down spec"
+    - "## 3. Stage 4 systemd 15min timer spec"
+    - "## 4. Stage 5 検証 plan"
+    - "## 5. cross-layer reference anchor"
+    - "## 6. 既知の限界 + 後段別 task"
+    - "## 7. 起案完了基準 (= 本 sub-section AC alignment)"
+  html_code_blocks: 1
+  ini_code_blocks: 2
+  css_code_blocks: 1
+  anchor_summary:
+    "<details> accordion": "present (= §2.2 native HTML5 accordion + nested example)"
+    "<progress>": "present (= §2.3 value/max attribute, 0-100 range)"
+    "色分け 4 段階": "present (= §2.3 green/yellow/orange/red table + CSS sketch)"
+    "dashboard-update.timer 15min": "present (= §3.3 OnUnitActiveSec=15min + Persistent=true)"
+    "Stage 5 verify plan": "present (= §4 24h 運用 + AC 17+1 件 mapping + rollback)"
+
+test_execution:
+  test_file: scripts/test/test_dashboard_layer_g_static_contract.py
+  exact_pytest_command: "python3 -m pytest /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/test/test_dashboard_layer_g_static_contract.py -v --no-header 2>&1 | tee queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log"
+  test_count: 5
+  pass: 5
+  fail: 0
+  skip: 0
+  duration_sec: 0.05
+  log_path: queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log
+  test_names:
+    - test_layer_g_html_details_accordion_design
+    - test_layer_g_progress_bar_section
+    - test_layer_g_color_coding_4_levels
+    - test_layer_g_systemd_timer_15min
+    - test_layer_g_stage_5_verify_plan
+
+acceptance_criteria:
+  AC0: pass (= ashigaru7_dashboard_layer_g_inventory.yaml 起案、8 components inventoried)
+  AC1: pass (= v0.2 §4.1 + §5.1 + §3.6 主 source + v0.1 §5-6 + v0.3-sc + auto_git_sync_design + dashboard-viewer.py 7 anchor Read 完遂 evidence、design_doc_references field)
+  AC2: pass (= docs/dashboard_layer_g_integration_drill_down.md 起案、Stage 3 HTML drill-down + Stage 4 systemd 15min timer + Stage 5 検証 plan 全 spec section)
+  AC3: pass (= MC 統合 interface は本 task 範囲外、inventory.yaml mc_anti_dup_check + spec §6 で明示)
+  AC4: pass (= 5 PASS / 0 FAIL / 0 SKIP、scripts/test/ 配置、Python script 単独実行)
+  AC5: pending_push (= bounded F007 push、worktree + cherry-pick + equality assert + cleanup plan、本 task 内実施)
+  AC6: pass (= 本 report + pytest log 起案、完遂 ack inbox は次 step)
+
+delivery_conditions_compliance:
+  cond_1_dashboard_md_direct_edit_forbidden: pass (= dashboard.md 触れず、本 sub-section markdown は別 file)
+  cond_2_hakudokai_dev_forbidden: pass (= multi-agent-shogun-newbuild repo only、hakudokai-dev は本 task 範囲外明示)
+  cond_3_mc_generator_integration_claim_forbidden: pass (= inventory.yaml mc_anti_dup_check=deferred_to_integration_phase、spec §6 で後段別 task と明示、claim せず)
+  cond_4_skip_zero: pass (= 0 SKIP)
+
+commit_plan:
+  - commit_1:
+      message: "docs(cmd_020 Layer G): AC0 inventory yaml 起案"
+      files:
+        - queue/reports/ashigaru7_dashboard_layer_g_inventory.yaml
+        - .gitignore (= cmd_020 Layer G whitelist 追記)
+      sha: TBD_SHA_1
+  - commit_2:
+      message: "docs(cmd_020 Layer G): dashboard_layer_g_integration_drill_down.md render component"
+      files:
+        - docs/dashboard_layer_g_integration_drill_down.md
+      sha: TBD_SHA_2
+  - commit_3:
+      message: "test(cmd_020 Layer G): static source-contract 5 test + report yaml + pytest log"
+      files:
+        - scripts/test/test_dashboard_layer_g_static_contract.py
+        - queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log
+        - queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report.yaml
+      sha: TBD_SHA_3
+
+commit_history:
+  pending: true
+  note: "実 SHA は commit 後本 report に back-fill。F007 push は本 commit 後 worktree + equality assert で実施 (= 家康 directive + 夜襲 即実行整合)。"
+
+push_plan:
+  status: in_progress
+  repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
+  bounded_allowlist:
+    本_task_3_commits_only_multi_agent_repo: [TBD_SHA_1, TBD_SHA_2, TBD_SHA_3]
+    scope_exclusion:
+      - 既 ashigaru1-6 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外
+      - 並行 ashigaru (= ashigaru2/3/4 等) の untracked artifact (= docs/dashboard_layer_b_phase.md, scripts/test/test_dashboard_layer_b_static_contract.py 等) は本 task scope 外
+      - hakudokai-dev repo は本 task 範囲外
+  worktree_clean_path:
+    worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_g_main_wt origin/main"
+    cherry_pick: "git -C /tmp/cmd_020_layer_g_main_wt cherry-pick TBD_SHA_1 TBD_SHA_2 TBD_SHA_3"
+    pre_push_verify: |
+      git -C /tmp/cmd_020_layer_g_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main_g.txt
+      printf '%s\n' TBD_SHA_1 TBD_SHA_2 TBD_SHA_3 | sort > /tmp/push_expected_main_g.txt
+      diff /tmp/push_actual_main_g.txt /tmp/push_expected_main_g.txt
+      (= equality assert exit 0 必須、不一致 push abort)
+    push_command: "git -C /tmp/cmd_020_layer_g_main_wt push origin HEAD:main"
+    cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_layer_g_main_wt"
+  safety_check:
+    - multi-agent-shogun-newbuild repo only
+    - worktree isolation + printf+diff equality assert + cleanup
+    - F007 例外 retain (= 兄上「夜襲出陣」 + 陛下「早く見たい」明示 + 容量回復 directive 整合)
+
+skill_candidate: null
+
+next_actions:
+  - "inline batch 3 commit 実行 (= 本 task 内で完遂、本 report は事前 update)"
+  - "worktree + cherry-pick + equality assert + push (= F007 例外 即 push、家康明示許可整合)"
+  - "完遂後 karo inbox 報告 (= Stage MVP 完遂時 chain 整合、本多 shogun_audit_request 投函は後段)"
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery_conditions 4 件全件遵守
+  - F001-F006 厳守、F007 例外 retain (= 家康明示許可下のみ実行、本 task は許可整合)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 retain (= ashigaru1 Layer A 第 1 弾実証 base 踏襲)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - Stage numbering: task YAML 採用 (= Stage 3/4/5)、design doc v0.2 §5.1 Stage 5/6 内容同義
+  - 新規範 chain ack (= Stage MVP 完遂時 karo 報告 + 本多 shogun_audit_request 投函 chain)

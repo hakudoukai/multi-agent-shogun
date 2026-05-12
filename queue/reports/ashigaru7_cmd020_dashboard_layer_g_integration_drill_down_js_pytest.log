@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_dashboard_layer_g_static_contract.py::test_layer_g_html_details_accordion_design PASSED [ 20%]
+scripts/test/test_dashboard_layer_g_static_contract.py::test_layer_g_progress_bar_section PASSED [ 40%]
+scripts/test/test_dashboard_layer_g_static_contract.py::test_layer_g_color_coding_4_levels PASSED [ 60%]
+scripts/test/test_dashboard_layer_g_static_contract.py::test_layer_g_systemd_timer_15min PASSED [ 80%]
+scripts/test/test_dashboard_layer_g_static_contract.py::test_layer_g_stage_5_verify_plan PASSED [100%]
+
+============================== 5 passed in 0.05s ===============================
