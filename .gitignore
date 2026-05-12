@@ -257,6 +257,13 @@ logs/
 !queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_report.yaml
 !queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_pytest.log
 
+# cmd_020 dashboard Layer D 頭脳層 蜘蛛の糸 render component (= ashigaru4、subtask_cmd020_dashboard_layer_d_zunou_kumonoito_render)
+!docs/dashboard_layer_d_zunou.md
+!scripts/test/test_dashboard_layer_d_static_contract.py
+!queue/reports/ashigaru4_dashboard_layer_d_inventory.yaml
+!queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_report.yaml
+!queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log
+
 # cmd_020 dashboard Layer C 機能層 render component (= ashigaru3、subtask_cmd020_dashboard_layer_c_function_render)
 !docs/dashboard_layer_c_function.md
 !scripts/test/test_dashboard_layer_c_static_contract.py
