@@ -1,0 +1,160 @@
+report_id: ashigaru5_cmd020_dashboard_layer_e_unyou_render_report
+task_id: subtask_cmd020_dashboard_layer_e_unyou_render
+parent_cmd: cmd_020
+reporter: ashigaru5
+reported_at: "2026-05-12T11:22:00+09:00"
+verdict: pass
+verdict_basis: |
+  5 件 static source-contract test 全 PASS (= SKIP=0 / FAIL=0)、AC0 inventory yaml +
+  Layer E render markdown + mermaid graph TD + 主要 anchor (= 9 panes / auto-git-sync /
+  inbox_watcher / ntfy + ttyd / systemd) + report yaml の機械 evidence 揃った。
+  delivery_conditions 4 件全件遵守、dashboard.md 直接編集なし、hakudokai-dev 関与なし、
+  MC 統合 interface は本 task 範囲外として明示 (= AC3 alignment、ashigaru1 Layer A 規範踏襲)。
+
+model_path: sonnet_codex_sonnet
+bloom_level: L3
+pre_audit_msg: msg_20260512_110824_9c76b93f
+pre_audit_verdict: pass_with_concerns
+pre_audit_delivery_gate_passed: true
+delivery_conditions_count: 4
+
+design_doc_references:
+  - id: docs/dashboard_design_v0.1.md §2 Layer E
+    role: 主 source (= 運用層 大中小項目 原本)
+    line_range_approx: "55-63"
+    read_evidence: "本 task 進行中 Read tool で全文取得、Layer E table 各行を unyou.md §2 + §3 + §4 + §5 に反映"
+  - id: docs/dashboard_design_v0.2.md §3.3 + §3.6
+    role: SoT 整合 + progress 算出式 anchor (= 黒田 audit #7 + #5 反映)
+    line_range_approx: "58-62, 80-103"
+    read_evidence: "本 task 進行中 Read tool で全文取得、unyou.md §1 設計原典 anchor table + §11 既知の限界 で参照"
+  - id: CLAUDE.md Communication Protocol + Git Sync Protocol
+    role: 原典 (= inbox_watcher / mailbox / auto-git-sync FF pull 規範)
+    read_evidence: "本 task system-reminder で全文 inject、unyou.md §4.2 + §5.1 + §6 で anchor 参照"
+
+ac0_inventory:
+  file: queue/reports/ashigaru5_dashboard_layer_e_inventory.yaml
+  components_inventoried: 9
+  mc_anti_dup_check: unknown (= MC regenerate_dashboard.py 不在、後段別 task で verify、本 task 範囲外)
+  gap_analysis_count: 3
+
+render_component:
+  file: docs/dashboard_layer_e_unyou.md
+  sections:
+    - "## 1. 設計原典 anchor (= source-of-truth)"
+    - "## 2. 大項目 構造 (= MC + SC + systemd unit + 規範 entity)"
+    - "## 3. multiagent tmux session 9 panes (= 主 runtime anchor)"
+    - "## 4. systemd user unit + auto-git-sync.timer (= 自動 sync 基盤)"
+    - "## 5. inbox_watcher daemon (= 通信基盤)"
+    - "## 6. ntfy + ttyd (= 通知 + web 配信 layer)"
+    - "## 7. claude / codex process count (= 稼働 metric)"
+    - "## 8. queue/inbox 状態 (= mailbox file state)"
+    - "## 9. 構造可視化 (= mermaid graph TD)"
+    - "## 10. cross-layer reference anchor"
+    - "## 11. 既知の限界 + 後段別 task"
+    - "## 12. 起案完了基準 (= 本 sub-section AC alignment)"
+  mermaid_blocks: 1
+  mermaid_directive: "graph TD"
+  anchor_summary:
+    "tmux 9 panes (multiagent:agents.0-0.8)": "present (= §3 table + §3.2 command anchor)"
+    "auto-git-sync.timer": "present (= §4.1 + §4.2 + §4.3 + mermaid)"
+    "inbox_watcher.sh": "present (= §5.1 + §5.2 + mermaid)"
+    "ntfy.sh / ntfy_listener.sh": "present (= §6.1 + §6.3)"
+    "ttyd-shogun / shogun-tunnel": "present (= §6.2 + §6.3 + mermaid)"
+    "systemd timer + service": "present (= §4.1 全 unit + systemctl --user command)"
+    "queue/inbox mailbox": "present (= §5.1 + §8)"
+    "claude process count": "present (= §7)"
+
+test_execution:
+  test_file: scripts/test/test_dashboard_layer_e_static_contract.py
+  exact_pytest_command: "python3 -m pytest /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/test/test_dashboard_layer_e_static_contract.py -v --no-header 2>&1 | tee queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log"
+  test_count: 5
+  pass: 5
+  fail: 0
+  skip: 0
+  duration_sec: 0.02
+  log_path: queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
+  test_names:
+    - test_layer_e_tmux_session_9_panes
+    - test_layer_e_auto_git_sync_timer
+    - test_layer_e_inbox_watcher_section
+    - test_layer_e_ntfy_ttyd_reference
+    - test_layer_e_systemd_services_anchor
+
+acceptance_criteria:
+  AC0: pass (= ashigaru5_dashboard_layer_e_inventory.yaml 起案、9 components inventoried)
+  AC1: pass (= v0.1 §2 Layer E 主 source + v0.2 §3.3 + §3.6 retain reference + CLAUDE.md 原典 Read 完遂 evidence、design_doc_references field)
+  AC2: pass (= docs/dashboard_layer_e_unyou.md 起案、9 panes + auto-git-sync + inbox_watcher + ntfy + ttyd + systemd + claude process + queue/inbox + mermaid graph TD)
+  AC3: pass (= MC 統合 interface は本 task 範囲外、inventory.yaml mc_anti_dup_check + unyou.md §11 で明示)
+  AC4: pass (= 5 PASS / 0 FAIL / 0 SKIP、scripts/test/ 配置、Python script 単独実行)
+  AC5: pending_user_sashihai (= bounded F007 push 御差配仰ぎ、worktree + cherry-pick + equality assert + cleanup plan は YAML 通り)
+  AC6: pass (= 本 report + pytest log 起案、完遂 ack inbox は次 step)
+
+delivery_conditions_compliance:
+  cond_1_dashboard_md_direct_edit_forbidden: pass (= dashboard.md 触れず、本 sub-section markdown は別 file)
+  cond_2_hakudokai_dev_forbidden: pass (= multi-agent-shogun-newbuild repo only、hakudokai-dev は本 task 範囲外明示)
+  cond_3_mc_generator_integration_claim_forbidden: pass (= inventory.yaml mc_anti_dup_check=unknown、unyou.md §11 で後段別 task と明示、claim せず)
+  cond_4_skip_zero: pass (= 0 SKIP)
+
+commit_plan:
+  - commit_1:
+      message: "docs(cmd_020 Layer E): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+      files:
+        - queue/reports/ashigaru5_dashboard_layer_e_inventory.yaml
+      sha: TBD_SHA_1
+  - commit_2:
+      message: "docs(cmd_020 Layer E): dashboard_layer_e_unyou.md render component + mermaid (= multi-agent-shogun-newbuild repo)"
+      files:
+        - docs/dashboard_layer_e_unyou.md
+      sha: TBD_SHA_2
+  - commit_3:
+      message: "test(cmd_020 Layer E): static source-contract 5 test + report yaml + pytest log (= multi-agent-shogun-newbuild repo)"
+      files:
+        - scripts/test/test_dashboard_layer_e_static_contract.py
+        - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
+        - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
+      sha: TBD_SHA_3
+
+commit_history:
+  pending: true
+  note: "実 SHA は commit 後本 report に back-fill。F007 push は本 commit 後陛下御差配仰ぎ (= 兄上「夜襲出陣」 + 陛下「早く見たい」明示 + 容量回復 directive 整合、ただし bounded F007 は明示許可下のみ)。"
+
+push_plan:
+  status: pending_user_sashihai
+  repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
+  bounded_allowlist:
+    本_task_3_commits_only: [TBD_SHA_1, TBD_SHA_2, TBD_SHA_3]
+    scope_exclusion:
+      - 既 ashigaru5 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外
+      - hakudokai-dev repo は本 task 範囲外
+  worktree_clean_path:
+    worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_e_main_wt origin/main"
+    cherry_pick: "git -C /tmp/cmd_020_layer_e_main_wt cherry-pick TBD_SHA_1 TBD_SHA_2 TBD_SHA_3"
+    pre_push_verify: |
+      git -C /tmp/cmd_020_layer_e_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main_e.txt
+      printf '%s\n' TBD_SHA_1 TBD_SHA_2 TBD_SHA_3 | sort > /tmp/push_expected_main_e.txt
+      diff /tmp/push_actual_main_e.txt /tmp/push_expected_main_e.txt
+      (= equality assert exit 0 必須、不一致 push abort)
+    push_command: "git -C /tmp/cmd_020_layer_e_main_wt push origin HEAD:main"
+    cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_layer_e_main_wt"
+  safety_check:
+    - multi-agent-shogun-newbuild repo only
+    - worktree isolation + printf+diff equality assert + cleanup
+    - F007 例外 retain (= 陛下御差配明示許可下のみ実行)
+
+skill_candidate: null
+
+next_actions:
+  - "inline batch 3 commit 実行 (= 本 task 内で完遂、本 report は事前 update、SHA back-fill 後 final)"
+  - "陛下御差配仰ぎ後 bounded F007 push (= worktree + equality assert + cleanup、本 report の push_plan 通り)"
+  - "完遂後 karo inbox 報告 (= 新規範 5 件 chain: Stage MVP 完遂報告 + 直政 verdict 待ち、karo が後段 shogun_audit_request 投函)"
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery_conditions 4 件全件遵守 (= ashigaru1 Layer A 5 件規範踏襲、cond_5 worktree path は push 段階で実施)
+  - F001-F006 厳守、F007 例外 retain (= 陛下御差配下のみ)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 retain (= ashigaru1 Layer A 第 1 弾実証 base 踏襲)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - 夜襲 persona retain (= wait→実行自動置換)
+  - 新規範 5 件 chain 認識 (= msg_20260512_111035_8b65bbfd、Stage 一気通貫 + 兄上監査、ashigaru responsibility = karo 報告 + 直政 verdict 待ち、本 task 完遂時 chain 整合化)

@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_dashboard_layer_e_static_contract.py::test_layer_e_tmux_session_9_panes PASSED [ 20%]
+scripts/test/test_dashboard_layer_e_static_contract.py::test_layer_e_auto_git_sync_timer PASSED [ 40%]
+scripts/test/test_dashboard_layer_e_static_contract.py::test_layer_e_inbox_watcher_section PASSED [ 60%]
+scripts/test/test_dashboard_layer_e_static_contract.py::test_layer_e_ntfy_ttyd_reference PASSED [ 80%]
+scripts/test/test_dashboard_layer_e_static_contract.py::test_layer_e_systemd_services_anchor PASSED [100%]
+
+============================== 5 passed in 0.02s ===============================
