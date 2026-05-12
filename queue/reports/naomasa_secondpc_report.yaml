@@ -5764,3 +5764,38 @@ analytics_access_control_audits:
         - "prometheus_client 実環境 metric path check"
         - "docs/cmd004_clinic_id_safety_pattern.md へ analytics endpoint fallback 不適用例外を追記"
     audit_passed: true
+
+unverified_program_audits_20260512:
+  - audit_id: naomasa_unverified_batch1_20260512
+    target_type: unverified_inventory_assigned_batch
+    source_inbox:
+      - msg_20260512_shogun_to_naomasa_3a2998d6
+      - msg_20260512_shogun_to_naomasa_v2_73236010
+    source_inventory: queue/reports/unverified_inventory_20260512.yaml
+    detail_report: queue/reports/naomasa_unverified_audit_batch1_20260512.yaml
+    assigned_count: 12
+    audited_count: 12
+    verdict: fail
+    evidence_state: complete_with_missing_sources
+    completion_gate: blocked
+    machine_evidence:
+      inventory_parse: pass
+      assigned_ids_found: 12
+      pytest: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k 'supabase or C_NEW or development_progress' => 11 passed, 158 deselected, 0 skipped"
+      missing_source: queue/manifests/w9_design_tasks_169.yaml
+    candidate_verdicts:
+      C-15-A: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-15-B2: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-15-B4: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-15-B6: { verdict: fail, evidence_state: missing, completion_gate: blocked }
+      C-V21-W9TENSU: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V29-W11DDA: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V31-W11CHOREI: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V34-W13VISIT: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V36-W14PAY: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V38-W14LINE: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V41-W15DEP: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+      C-V43-W16MAT: { verdict: fail, evidence_state: complete, completion_gate: blocked }
+    recommendation_to_shogun:
+      action: record_as_audited_blocked_not_green
+      summary: "直政担当 12 件は全件 audit 済。ただし緑化不可。W9 4 件は manifest 欠落、Supabase phase 8 件は not_started/in_progress + empty commit + no shogun verify。"
