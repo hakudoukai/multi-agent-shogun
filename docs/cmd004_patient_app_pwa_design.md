@@ -5,7 +5,7 @@
 - bloom_level: L4
 - 文書種別: **設計書 + 運用 runbook** (= 根本治療原則整合明示、構造的根本解決設計)
 - author: ashigaru3 (= 滝川一益、SC WSL hakudoukai@gmail.com)
-- preflight: /mnt/c/Projects/hakudokai-dev/ SC WSL access 確認済
+- preflight: `<SC_WSL_PROJECT_ROOT>` SC WSL access 確認済
 - 前提 (= 既設計/既実装):
   - `docs/kids_app_push_ceremony_detail_design.md` (信長手動再構築 v0.1) — VAPID/SW/DDL 正本
   - `docs/cmd004_push_vapid_management.md` — Phase 1+2 push infra 運用 runbook (= ashigaru3 push_vapid 既起案)
