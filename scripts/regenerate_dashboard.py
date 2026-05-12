@@ -130,6 +130,158 @@ STATUS_STAGE_PCT: dict[str, float] = {
 
 STALE_THRESHOLD_DAYS = 14
 
+# cycle3: 6 Layer (A-F) 構想〜規範 + G 統合 — dashboard_layer_{a-g}_*.md anchor mapping。
+# 各 entry は dashboard.md の「6 Layer 構造」section と HTML drill-down accordion に流す。
+LAYER_DEFINITIONS: list[dict[str, str]] = [
+    {
+        "code": "A", "name": "構想層",
+        "summary": "5 階層 + 10 柱 + 蜘蛛の糸",
+        "doc": "docs/dashboard_layer_a_kousou.md",
+        "data_source": "DD-054 anchor / project_documents (Supabase)",
+    },
+    {
+        "code": "B", "name": "Phase 層",
+        "summary": "3 区分 (完了 / 進行中 / 未着手)",
+        "doc": "docs/dashboard_layer_b_phase.md",
+        "data_source": "Supabase development_progress + queue/tasks/*.yaml",
+    },
+    {
+        "code": "C", "name": "機能層",
+        "summary": "cmd_004 二大戦線 dossier (会計待ちゼロ + 小児恐竜王国)",
+        "doc": "docs/dashboard_layer_c_function.md",
+        "data_source": "queue/reports/ + cmd_004 design docs",
+    },
+    {
+        "code": "D", "name": "頭脳層 (蜘蛛の糸)",
+        "summary": "法令 8,000+ records + design_decisions",
+        "doc": "docs/dashboard_layer_d_zunou.md",
+        "data_source": "Supabase legal_sources / linkages / checklists / findings",
+    },
+    {
+        "code": "E", "name": "運用層",
+        "summary": "MC/SC pane + systemd timer + 通信規範",
+        "doc": "docs/dashboard_layer_e_unyou.md",
+        "data_source": "tmux + systemd + CLAUDE.md + auto-git-sync log",
+    },
+    {
+        "code": "F", "name": "規範層",
+        "summary": "memory MCP 18 entities + forbidden actions",
+        "doc": "docs/dashboard_layer_f_kihan.md",
+        "data_source": "memory MCP read_graph / memory/MEMORY.md / instructions/",
+    },
+    {
+        "code": "G", "name": "統合層 (Stage 3-5)",
+        "summary": "HTML drill-down + systemd timer + 検証 plan",
+        "doc": "docs/dashboard_layer_g_integration_drill_down.md",
+        "data_source": "本 generator (regenerate_dashboard.py) + dashboard-viewer.py",
+    },
+]
+
+# cycle3: 色分け 4 段階 (= dashboard_design_v0.2.md §3.6 retain) — progress %
+# tier を emoji + class で表示する。HTML drill-down + 大 progress bar に流す。
+PROGRESS_COLOR_TIERS: list[dict[str, Any]] = [
+    {"min_pct": 80.0, "emoji": "🟢", "label": "verified", "css_class": "tier-green"},
+    {"min_pct": 50.0, "emoji": "🟡", "label": "in_flight", "css_class": "tier-yellow"},
+    {"min_pct": 25.0, "emoji": "🟠", "label": "early",     "css_class": "tier-orange"},
+    {"min_pct":  0.0, "emoji": "🔴", "label": "stalled",   "css_class": "tier-red"},
+]
+
+
+def progress_color_tier(pct: float) -> dict[str, str]:
+    """Map a progress percentage to the highest-priority color tier."""
+    for tier in PROGRESS_COLOR_TIERS:
+        if pct >= tier["min_pct"]:
+            return tier  # type: ignore[return-value]
+    return PROGRESS_COLOR_TIERS[-1]  # type: ignore[return-value]
+
+
+def progress_bar_html(pct: float, *, width_px: int = 200, height_px: int = 14) -> str:
+    """Render an HTML5 <progress> bar with color-tier emoji prefix.
+
+    Markdown viewers that strip inline HTML still render the emoji + text;
+    viewers that honor HTML (GitHub, dashboard-viewer.py) get the bar.
+    """
+    tier = progress_color_tier(pct)
+    style = f"width:{width_px}px;height:{height_px}px"
+    return (
+        f"{tier['emoji']} "
+        f"<progress class=\"{tier['css_class']}\" "
+        f"value=\"{pct:.1f}\" max=\"100\" style=\"{style}\"></progress> "
+        f"**{pct:.1f}%**"
+    )
+
+
+# cycle3: cmd_004 W9 Stage / batch 識別 — task_id から Stage A/B + batch_id を抽出する。
+# example task_id:
+#   subtask_cmd004_w9_batch1_stage_a_foundation       -> stage=A, batch=1
+#   subtask_cmd004_w9_stage_b_batch3_check_logic_26   -> stage=B, batch=3
+#   subtask_cmd004_w9_batch1_keisan_check_42_v2       -> stage=None, batch=1
+_W9_BATCH_RE = re.compile(r"w9_(?:stage_(?P<sa>[ab])_)?batch(?P<bid>\d+)(?:_stage_(?P<sb>[ab]))?", re.IGNORECASE)
+
+
+def _extract_w9_meta(task_id: str) -> dict[str, str | None]:
+    """Extract W9 stage + batch identifiers from a task_id, if present."""
+    match = _W9_BATCH_RE.search(task_id or "")
+    if not match:
+        return {"stage": None, "batch": None}
+    stage = (match.group("sa") or match.group("sb") or "").upper() or None
+    batch = match.group("bid")
+    return {"stage": stage, "batch": batch}
+
+
+def aggregate_w9_stage_progress(tasks: Iterable[TaskEntry]) -> list[dict[str, Any]]:
+    """Aggregate cmd_004 W9 progress grouped by Stage (A/B/未分類)."""
+    buckets: dict[str, list[float]] = {"A": [], "B": [], "未分類": []}
+    counts: dict[str, int] = {"A": 0, "B": 0, "未分類": 0}
+    for task in tasks:
+        if "cmd004_w9" not in (task.task_id or ""):
+            continue
+        meta = _extract_w9_meta(task.task_id)
+        key = meta["stage"] or "未分類"
+        if key not in buckets:
+            continue
+        counts[key] += 1
+        score = progress_for_task(task)
+        if score is not None:
+            buckets[key].append(score)
+    rows: list[dict[str, Any]] = []
+    for key in ("A", "B", "未分類"):
+        scores = buckets[key]
+        avg = (sum(scores) / len(scores)) if scores else 0.0
+        rows.append({
+            "stage": key,
+            "task_count": counts[key],
+            "scored_count": len(scores),
+            "avg_pct": round(avg, 1),
+        })
+    return rows
+
+
+def aggregate_w9_batch_progress(tasks: Iterable[TaskEntry]) -> list[dict[str, Any]]:
+    """Aggregate cmd_004 W9 progress grouped by batch_id 1-7."""
+    buckets: dict[str, list[tuple[float, TaskEntry]]] = {}
+    for task in tasks:
+        if "cmd004_w9" not in (task.task_id or ""):
+            continue
+        meta = _extract_w9_meta(task.task_id)
+        batch = meta["batch"]
+        if not batch:
+            continue
+        score = progress_for_task(task)
+        buckets.setdefault(batch, []).append((score if score is not None else 0.0, task))
+    rows: list[dict[str, Any]] = []
+    for batch in sorted(buckets.keys(), key=lambda b: int(b)):
+        entries = buckets[batch]
+        scored = [s for s, _ in entries if s is not None]
+        avg = (sum(scored) / len(scored)) if scored else 0.0
+        rows.append({
+            "batch": batch,
+            "task_count": len(entries),
+            "avg_pct": round(avg, 1),
+            "task_ids": [t.task_id for _, t in entries],
+        })
+    return rows
+
 # F3 cycle2 fix: privacy gate 語彙統一 — WARN 残存は CLEAN ではない。
 PRIVACY_CLEAN = "clean"
 PRIVACY_WARNED = "warned"
@@ -625,34 +777,115 @@ def aggregate_progress(tasks: Iterable[TaskEntry]) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
-DASHBOARD_TEMPLATE = """# DentalBI Dashboard (auto-generated)
+DASHBOARD_TEMPLATE = """<!-- auto-generated by scripts/regenerate_dashboard.py — do not hand-edit -->
+# DentalBI ダッシュボード (自動生成)
 
 > ⚠️ 本ファイルは `scripts/regenerate_dashboard.py` が単独 writer。
 > Karo / Gunshi / Shogun の手動編集は禁止 — state source (queue/reports/, queue/tasks/, memory/MEMORY.md) を更新せよ。
 > 手動編集された旧版は `archive/dashboard_legacy_YYYYMMDD.md` へ退避すること。
 
-- generated_at: `{{ generated_at }}`
-- source_commit: `{{ source_commit }}`
-- writer_pc: `{{ writer_pc }}`
-- supabase_blocking: `{{ supabase.blocking }}`
+- 生成時刻 (generated_at): `{{ generated_at }}`
+- ソースコミット (source_commit): `{{ source_commit }}`
+- 書込PC (writer_pc): `{{ writer_pc }}`
+- Supabase接続状態 (supabase_blocking): `{{ supabase.blocking }}`
 {% if stale_warning -%}
-- ⚠️ stale_warning: {{ stale_warning }}
+- ⚠️ 古い report 警告 (stale_warning): {{ stale_warning }}
 {%- endif %}
 
-## 進捗 (機械算出)
+## 🚀 全体進捗 (一目視認)
 
-| 項目 | 値 |
+{{ overall_bar }}
+
+| 末端タスク数 | 除外件数 (不明/古い) |
 |---|---|
-| 全体進捗 | {{ progress.overall_pct }}% |
-| 末端タスク数 | {{ progress.leaf_count }} |
-| 除外件数 (不明/古い) | {{ progress.excluded_count }} |
+| {{ progress.leaf_count }} | {{ progress.excluded_count }} |
 
-### エージェント別
+### エージェント別 進捗
 
-| エージェント | 平均 | タスク数 |
+| エージェント | 進捗 | タスク数 |
 |---|---|---|
 {% for agent, pct in progress.per_agent_pct.items() %}
-| {{ agent }} | {{ pct }}% | {{ task_counts.get(agent, 0) }} |
+| {{ agent }} | {{ per_agent_bars.get(agent, pct ~ '%') }} | {{ task_counts.get(agent, 0) }} |
+{% endfor %}
+
+## 🗂 6 Layer 構造 (A〜F 構想〜規範 + G 統合)
+
+cmd_020 dashboard 設計 v0.1 / v0.2 の **6 Layer** (= A 構想 / B Phase / C 機能 / D 頭脳蜘蛛の糸 / E 運用 / F 規範) に
+Layer **G 統合 (Stage 3-5)** を加えた 7 sub-section が、本 dashboard の全体像。
+各 Layer は単一責任 sub-section として `docs/dashboard_layer_<code>_*.md` に anchor を持つ。
+HTML drill-down は `<details>` accordion で expand する (= Layer G 仕様準拠)。
+
+{% for layer in layers %}
+<details>
+<summary><b>Layer {{ layer.code }}:</b> {{ layer.name }} — {{ layer.summary }}</summary>
+
+- 設計 doc anchor: `{{ layer.doc }}`
+- data source: {{ layer.data_source }}
+
+</details>
+{% endfor %}
+
+## 🌳 階層 mermaid tree (5 階層 + 10 柱 + 蜘蛛の糸)
+
+`docs/dashboard_layer_a_kousou.md` §4 graph TD を Layer A 構想の機械可視 anchor として転載 (= 縦軸=5 階層、横軸=10 柱、破線=Layer D 蜘蛛の糸接続)。
+
+```mermaid
+graph TD
+    DD054[DD-054 anchor<br/>5 階層 + 10 柱 原典]
+    DD054 --> L0[第 0 層 憲法<br/>DD-010/037/048/054/061]
+    L0 --> L1[第 1 層 診療コア<br/>2 号用紙カルテ DD-036]
+    L1 --> L2[第 2 層 周辺診療<br/>予約/画像/問診/CRM]
+    L2 --> L3[第 3 層 患者接点<br/>PWA/AI チャット/会計]
+    L3 --> L4[第 4 層 AI 統合<br/>AI 副院長/画像 AI]
+    L4 --> L5[第 5 層 事業推進<br/>AI 副社長]
+
+    P1[1 画像 AI]
+    P2[2 歯の状態 DB]
+    P3[3 治療計画ナビ]
+    P4[4 患者アプリ + AI チャット]
+    P5[5 AI 副院長]
+    P6[6 処置セット]
+    P7[7 リアルタイム会計]
+    P8[8 蜘蛛の糸]
+    P9[9 AI 副院長+AI 事務長]
+    P10[10 AI 副社長]
+
+    L1 --- P2
+    L1 --- P6
+    L2 --- P1
+    L2 --- P3
+    L3 --- P4
+    L3 --- P7
+    L4 --- P5
+    L4 --- P8
+    L5 --- P9
+    L5 --- P10
+
+    P8 -. 蜘蛛の糸 .-> LD[Layer D 頭脳層<br/>法令 8,000+ records]
+    P1 -. 蜘蛛の糸 .-> LD
+    P3 -. 蜘蛛の糸 .-> LD
+    P4 -. 蜘蛛の糸 .-> LD
+    P7 -. 蜘蛛の糸 .-> LD
+```
+
+## 🎯 cmd_004 W9 Stage 別進捗
+
+cmd_004 W9 タスク群を Stage A (基盤) / Stage B (batch 残) で集計。
+
+| Stage | 平均進捗 | タスク数 |
+|---|---|---|
+{% for row in w9_stages %}
+| Stage {{ row.stage }} | {{ row.bar }} | {{ row.task_count }} |
+{% endfor %}
+
+## 📦 cmd_004 W9 batch 別進捗
+
+W9 batch_id 単位の集計 (= batch1 keisan_check / batch2 ui_logic / batch3 check_logic / batch4 validation / batch5 data_quality / batch6 prosthesis / batch7 alert)。
+
+| batch_id | 平均進捗 | タスク数 |
+|---|---|---|
+{% for row in w9_batches %}
+| batch{{ row.batch }} | {{ row.bar }} | {{ row.task_count }} |
 {% endfor %}
 
 ## タスク一覧 (状態源)
@@ -663,24 +896,24 @@ DASHBOARD_TEMPLATE = """# DentalBI Dashboard (auto-generated)
 | {{ task.assigned_to }} | `{{ task.task_id }}` | {{ task.status }} | {{ task.verdict }} | {{ task.completion_gate }} | {{ task.evidence_state }} | {{ task_progress.get(task.task_id, 'n/a') }} |
 {% endfor %}
 
-## Supabase接続事前確認
+## Supabase 接続事前確認
 
 {% if supabase.blocking -%}
 🚨 **接続障害**: {{ supabase.get('blocker_reason', '権限拒否を検出') }}
 {% endif %}
 
-| テーブル | 状態 | キャッシュ | 件数 | 備考 |
+| テーブル | 状態コード | キャッシュ | 件数 | 備考 |
 |---|---|---|---|---|
 {% for tbl in supabase.tables %}
 | {{ tbl.name }} | {{ tbl.status }} | {{ 'HIT' if tbl.cache_hit else 'MISS' }} | {{ tbl.row_count if tbl.row_count is not none else 'n/a' }} | {{ tbl.error or '' }} |
 {% endfor %}
 
-## メモリ取込 (MCPフォールバック)
+## メモリ取込 (memory MCP フォールバック)
 
 - 取得可: `{{ memory.available }}`
 {% if memory.available -%}
 - 取得元: `{{ memory.source }}`
-- サイズ: {{ memory.byte_size }}
+- サイズ: {{ memory.byte_size }} バイト
 {% else -%}
 - 理由: {{ memory.reason }}
 {%- endif %}
@@ -739,16 +972,32 @@ def build_context(
 
     stale_reports = [name for name, info in state.reports_snapshot.items() if info["stale"]]
     stale_warning = (
-        f"{len(stale_reports)} report(s) older than {STALE_THRESHOLD_DAYS}d: " + ", ".join(stale_reports[:5])
+        f"{len(stale_reports)} 件の report が {STALE_THRESHOLD_DAYS} 日以上未更新: " + ", ".join(stale_reports[:5])
         if stale_reports else ""
     )
+
+    progress = aggregate_progress(state.tasks)
+    overall_bar = progress_bar_html(progress["overall_pct"], width_px=420, height_px=24)
+    per_agent_bars = {
+        agent: progress_bar_html(pct, width_px=180, height_px=12)
+        for agent, pct in progress["per_agent_pct"].items()
+    }
+
+    w9_stage_rows = aggregate_w9_stage_progress(state.tasks)
+    for row in w9_stage_rows:
+        row["bar"] = progress_bar_html(row["avg_pct"], width_px=180, height_px=12)
+    w9_batch_rows = aggregate_w9_batch_progress(state.tasks)
+    for row in w9_batch_rows:
+        row["bar"] = progress_bar_html(row["avg_pct"], width_px=180, height_px=12)
 
     return {
         "generated_at": _dt.datetime.now().astimezone().isoformat(timespec="seconds"),
         "source_commit": state.source_commit,
         "writer_pc": writer_pc,
         "stale_warning": stale_warning,
-        "progress": aggregate_progress(state.tasks),
+        "progress": progress,
+        "overall_bar": overall_bar,
+        "per_agent_bars": per_agent_bars,
         "task_counts": task_counts,
         "task_progress": task_progress,
         "tasks": state.tasks,
@@ -756,6 +1005,9 @@ def build_context(
         "memory": memory_snapshot,
         "git_log": state.git_log,
         "parse_errors": state.parse_errors,
+        "layers": LAYER_DEFINITIONS,
+        "w9_stages": w9_stage_rows,
+        "w9_batches": w9_batch_rows,
     }
 
 
@@ -809,8 +1061,9 @@ def write_output(rendered: str, output_path: Path, archive_dir: Path | None = No
 # generated_at と git_log の relative age が時刻 drift で必ず割れるため
 # AC6 verify-only mode が運用不能。verify 直前に非決定値を mask する。
 _VERIFY_VOLATILE_PATTERNS = (
-    # ヘッダ generated_at: `2026-05-11T22:00:00+09:00`
-    re.compile(r"^- generated_at: `[^`]+`\s*$", re.MULTILINE),
+    # ヘッダ 生成時刻 (generated_at): `2026-05-11T22:00:00+09:00`
+    # cycle3 (i18n): 旧 "- generated_at: `..`" / 新 "- 生成時刻 (generated_at): `..`" 双方対応。
+    re.compile(r"^- (?:generated_at|生成時刻 \(generated_at\)): `[^`]+`\s*$", re.MULTILINE),
     # 表行 | hash | subject | 5 minutes ago | (最終列が age)
     re.compile(r"^(\| `[0-9a-fA-F]+` \| [^|\n]+ \|)([^|\n]*)\|\s*$", re.MULTILINE),
 )
@@ -823,7 +1076,7 @@ def _normalize_for_verify(text: str) -> str:
     → previously rc=1 (generated_at 2 sec apart). After normalization both
     sides hash identically because the volatile span is masked.
     """
-    out = _VERIFY_VOLATILE_PATTERNS[0].sub("- generated_at: `<volatile>`", text)
+    out = _VERIFY_VOLATILE_PATTERNS[0].sub("- 生成時刻 (generated_at): `<volatile>`", text)
     out = _VERIFY_VOLATILE_PATTERNS[1].sub(r"\1 <volatile> |", out)
     return out
 

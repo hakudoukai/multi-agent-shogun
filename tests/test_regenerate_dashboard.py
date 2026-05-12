@@ -853,3 +853,213 @@ def test_write_output_archives_before_overwrite(tmp_path: Path):
     archived_files = list(archive.glob("dashboard_legacy_*.md"))
     assert len(archived_files) == 1
     assert archived_files[0].read_text(encoding="utf-8") == "legacy hand-edited content"
+
+
+# ---------------------------------------------------------------------------
+# Cycle 3: 6 Layer section / HTML drill-down / mermaid tree / visual emphasis /
+#          Japanese localization
+# (kuroda 条件 1: cycle 3 UI 要素を pytest で明示 assert)
+# ---------------------------------------------------------------------------
+
+
+def test_render_dashboard_has_6_layer_section():
+    """改訂①: 6 Layer (A-F) + G 統合 section が存在し、各 layer doc anchor が出力される。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "## 🗂 6 Layer 構造" in rendered, "6 Layer section heading missing"
+    # 各 layer (A-G) が <summary> に列挙されること
+    for code, name_keyword in [
+        ("A", "構想層"), ("B", "Phase 層"), ("C", "機能層"),
+        ("D", "頭脳層"), ("E", "運用層"), ("F", "規範層"), ("G", "統合層"),
+    ]:
+        assert f"Layer {code}:" in rendered, f"Layer {code} missing from output"
+        assert name_keyword in rendered, f"Layer {code} name '{name_keyword}' missing"
+    # 各 layer doc anchor (docs/dashboard_layer_*.md) が出力されること
+    for code in "abcdefg":
+        assert f"docs/dashboard_layer_{code}_" in rendered, (
+            f"Layer {code.upper()} doc anchor missing"
+        )
+
+
+def test_render_dashboard_layer_definitions_have_data_source():
+    """LAYER_DEFINITIONS の各 entry に data_source 説明が存在する (kuroda 条件 3)。"""
+    for layer in rd.LAYER_DEFINITIONS:
+        assert layer["code"], "layer code required"
+        assert layer["name"], f"layer {layer['code']} name required"
+        assert layer["summary"], f"layer {layer['code']} summary required"
+        assert layer["data_source"], f"layer {layer['code']} data_source required"
+        assert layer["doc"].startswith("docs/dashboard_layer_"), (
+            f"layer {layer['code']} doc must point to dashboard_layer_*.md"
+        )
+
+
+def test_render_dashboard_has_html_drill_down():
+    """改訂②: HTML drill-down (<details>/<summary> accordion + <progress> bar) が含まれる。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # accordion 7 entries (Layer A-G) → <details>/</details> 各 7 件以上
+    assert rendered.count("<details>") >= 7, "expected ≥7 <details> blocks (one per layer)"
+    assert rendered.count("</details>") >= 7
+    assert rendered.count("<summary>") >= 7
+    # <progress> bar が overall + per_agent + (任意で stage/batch) で複数出現
+    assert rendered.count("<progress") >= 2, "expected overall + per-agent progress bars"
+
+
+def test_render_dashboard_has_mermaid_tree():
+    """改訂③: mermaid 階層 tree (Layer A → 10 柱 + 蜘蛛の糸) が含まれる。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "```mermaid" in rendered, "mermaid code fence missing"
+    assert "graph TD" in rendered, "mermaid graph TD declaration missing"
+    # 10 柱 P1-P10 + 蜘蛛の糸接続
+    for pillar in ("P1[", "P5[", "P8[", "P10["):
+        assert pillar in rendered, f"pillar {pillar} missing"
+    assert "蜘蛛の糸" in rendered, "蜘蛛の糸 connection missing"
+    # 5 階層 L0-L5
+    for layer_node in ("L0[", "L1[", "L2[", "L3[", "L4[", "L5["):
+        assert layer_node in rendered, f"hierarchy node {layer_node} missing"
+
+
+def test_render_dashboard_visual_emphasis():
+    """改訂④: 大 progress bar (overall) + Stage A/B + batch %別 visual 強調。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    # 大 progress bar — width 420 (Stage 4 visual emphasis)
+    assert "width:420px" in rendered, "large overall progress bar missing"
+    # 全体進捗 section
+    assert "🚀 全体進捗" in rendered
+    # Stage A/B + batch 別 section
+    assert "Stage 別進捗" in rendered, "W9 Stage breakdown section missing"
+    assert "batch 別進捗" in rendered, "W9 batch breakdown section missing"
+    # 色 tier emoji が少なくとも 1 つ表示される (overall bar)
+    has_tier_emoji = any(t["emoji"] in rendered for t in rd.PROGRESS_COLOR_TIERS)
+    assert has_tier_emoji, "expected at least one tier emoji in rendered output"
+
+
+def test_render_dashboard_japanese_localization():
+    """改訂⑤: title + metadata label の日本語化 (cycle1 shogun 推奨残懸念解消)。"""
+    rendered = rd.render_dashboard(_baseline_context())
+    assert "DentalBI ダッシュボード (自動生成)" in rendered, "Japanese title missing"
+    # 技術 token (英語 retain) が併記される
+    assert "生成時刻 (generated_at)" in rendered
+    assert "ソースコミット (source_commit)" in rendered
+    assert "書込PC (writer_pc)" in rendered
+    assert "Supabase接続状態 (supabase_blocking)" in rendered
+    assert "memory MCP フォールバック" in rendered
+    # 旧 cycle2 残: 単独「supabase_blocking: …」のみは消える (label が付く)
+    # but technical token "supabase_blocking" itself must still appear
+    assert "supabase_blocking" in rendered
+
+
+def test_progress_color_tier_levels():
+    """色分け 4 段階 (green/yellow/orange/red) — 境界値分類が決定的であること。"""
+    assert rd.progress_color_tier(100.0)["css_class"] == "tier-green"
+    assert rd.progress_color_tier(80.0)["css_class"] == "tier-green"
+    assert rd.progress_color_tier(79.9)["css_class"] == "tier-yellow"
+    assert rd.progress_color_tier(50.0)["css_class"] == "tier-yellow"
+    assert rd.progress_color_tier(49.9)["css_class"] == "tier-orange"
+    assert rd.progress_color_tier(25.0)["css_class"] == "tier-orange"
+    assert rd.progress_color_tier(24.9)["css_class"] == "tier-red"
+    assert rd.progress_color_tier(0.0)["css_class"] == "tier-red"
+
+
+def test_progress_bar_html_emits_progress_tag():
+    """progress_bar_html: HTML <progress> tag + emoji + percent label を生成。"""
+    bar = rd.progress_bar_html(73.5, width_px=180, height_px=12)
+    assert "<progress" in bar
+    assert "value=\"73.5\"" in bar
+    assert "max=\"100\"" in bar
+    assert "width:180px" in bar
+    assert "height:12px" in bar
+    assert "**73.5%**" in bar
+    # 50<=73.5<80 → tier-yellow
+    assert "tier-yellow" in bar
+    assert "🟡" in bar
+
+
+def test_extract_w9_meta_handles_both_orderings():
+    """task_id naming variants — stage prefix vs stage suffix の双方を解釈。"""
+    # stage prefix: subtask_cmd004_w9_stage_b_batch3_check_logic_26
+    pre = rd._extract_w9_meta("subtask_cmd004_w9_stage_b_batch3_check_logic_26")
+    assert pre == {"stage": "B", "batch": "3"}
+    # stage suffix: subtask_cmd004_w9_batch1_stage_a_foundation
+    post = rd._extract_w9_meta("subtask_cmd004_w9_batch1_stage_a_foundation")
+    assert post == {"stage": "A", "batch": "1"}
+    # no stage: subtask_cmd004_w9_batch1_keisan_check_42_v2
+    none = rd._extract_w9_meta("subtask_cmd004_w9_batch1_keisan_check_42_v2")
+    assert none == {"stage": None, "batch": "1"}
+    # non-W9 task: no match
+    other = rd._extract_w9_meta("subtask_cmd020_regenerate_dashboard_py")
+    assert other == {"stage": None, "batch": None}
+
+
+def test_aggregate_w9_stage_groups_a_b():
+    """W9 タスクが Stage A / B / 未分類 に集計され、各 avg_pct が決定的。"""
+    tasks = [
+        rd.TaskEntry(
+            task_id="subtask_cmd004_w9_batch1_stage_a_foundation",
+            assigned_to="ashigaru4", status="done", raw_status="done",
+            verdict="pass", completion_gate="open", evidence_state="complete",
+            shogun_verified=True,
+        ),  # Stage A, 100%
+        rd.TaskEntry(
+            task_id="subtask_cmd004_w9_stage_b_batch3_check_logic_26",
+            assigned_to="ashigaru3", status="in_progress", raw_status="in_progress",
+        ),  # Stage B, 50%
+        rd.TaskEntry(
+            task_id="subtask_cmd004_w9_batch1_keisan_check_42_v2",
+            assigned_to="ashigaru4", status="in_progress", raw_status="in_progress",
+        ),  # 未分類, 50%
+        rd.TaskEntry(
+            task_id="subtask_cmd020_dashboard_japanese_localization",
+            assigned_to="ashigaru1", status="done", raw_status="done",
+        ),  # excluded — non-W9
+    ]
+    rows = rd.aggregate_w9_stage_progress(tasks)
+    by_stage = {r["stage"]: r for r in rows}
+    assert by_stage["A"]["task_count"] == 1
+    assert by_stage["A"]["avg_pct"] == 100.0
+    assert by_stage["B"]["task_count"] == 1
+    assert by_stage["B"]["avg_pct"] == 50.0
+    assert by_stage["未分類"]["task_count"] == 1
+
+
+def test_aggregate_w9_batch_groups_by_batch_id():
+    """W9 タスクが batch_id 単位で集計され、batch 順 (1,2,...) で sort される。"""
+    tasks = [
+        rd.TaskEntry(
+            task_id="subtask_cmd004_w9_stage_b_batch7_remaining_alert_15",
+            assigned_to="ashigaru1", status="drafted_pending_kuroda_pre_audit",
+            raw_status="drafted_pending_kuroda_pre_audit",
+        ),  # batch 7, 15%
+        rd.TaskEntry(
+            task_id="subtask_cmd004_w9_batch1_stage_a_foundation",
+            assigned_to="ashigaru4", status="completed_pending_audit",
+            raw_status="completed_pending_audit",
+        ),  # batch 1, 85%
+        rd.TaskEntry(
+            task_id="subtask_cmd004_w9_stage_b_batch3_check_logic_26",
+            assigned_to="ashigaru3", status="completed_pending_audit",
+            raw_status="completed_pending_audit",
+        ),  # batch 3, 85%
+    ]
+    rows = rd.aggregate_w9_batch_progress(tasks)
+    batches = [r["batch"] for r in rows]
+    assert batches == ["1", "3", "7"], f"expected sorted batch ids, got {batches}"
+    by_batch = {r["batch"]: r for r in rows}
+    assert by_batch["1"]["avg_pct"] == 85.0
+    assert by_batch["7"]["avg_pct"] == 15.0
+
+
+def test_legacy_marker_still_detects_generator_output(tmp_path: Path):
+    """generator 切替後 (cycle3) も legacy 検出が後方互換であること (F4 retain)。
+
+    cycle3 の新 title「DentalBI ダッシュボード (自動生成)」は marker "auto-generated"
+    を含まなくなったが、HTML コメント `<!-- auto-generated by scripts/... -->`
+    で marker を retain している。既存 generator output が re-archive されないこと。
+    """
+    target = tmp_path / "dashboard.md"
+    archive = tmp_path / "archive"
+    # 実際の cycle3 generator output を render して書く
+    target.write_text(rd.render_dashboard(_baseline_context()), encoding="utf-8")
+    archived = rd._archive_legacy_dashboard(target, archive)
+    assert archived is None, (
+        "cycle3 generator output must be detected by legacy marker scan "
+        "(otherwise we re-archive ourselves every run)"
+    )
