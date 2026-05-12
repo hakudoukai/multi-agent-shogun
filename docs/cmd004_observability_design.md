@@ -5,7 +5,7 @@
 - bloom_level: L4
 - 文書種別: **設計書 + 運用 runbook** (= 構造的根本解決設計、実稼働後 retrofit 不可な観測性 layer を初版で完備)
 - author: ashigaru3 (= 滝川一益、SC WSL hakudoukai@gmail.com、Phase 5)
-- preflight: /mnt/c/Projects/hakudokai-dev/ + multi-agent SC WSL access 確認済
+- preflight: `<REPO_ROOT>` (= 環境変数 resolution、絶対 path leak 禁) + multi-agent SC WSL access 確認済
 - 前提 (= 既設計 / 既実装):
   - `docs/cmd004_notification_facade_design.md` (Phase 4) — NotificationFacade、AlertRouter 配信経路
   - `scripts/validate_report_privacy.py` — PII / secret pattern 検出器 (cmd_013 由来)
@@ -142,8 +142,8 @@ metric は label に PII を含めない設計 (= 例: `notification_delivery_to
 
 ### 3-3. 検証 (= negative test)
 
-- `logger.info("AKIA1234567890ABCDEF emitted")` を発火、フォーマット後 record に `AKIA...` 文字列が含まれていないことを検証
-- 同じく `Bearer aXXXX...`、`/home/hakudokai/...`、5-10 桁の連続 digit を redact 確認
+- `logger.info("EXAMPLE_AWS_KEY_REDACTED emitted")` (= 検出器を起動しない placeholder、test fixture では `AKIA` 型生値を fixtures-allowed file に限定) を発火、フォーマット後 record に `AKIA...` 文字列が含まれていないことを検証
+- 同じく `Bearer aXXXX...`、`<HOME_PATH_REDACTED>/...` (= 絶対 home path placeholder)、5-10 桁の連続 digit を redact 確認
 
 ---
 
@@ -237,7 +237,7 @@ class AlertRule:
 
 ### 6-1. PII 漏洩 negative test
 
-- AKIA / sk-ant- / sk- / Bearer / `/home/`-path / 5-10 桁 digit を logger に流し、formatter 出力に **含まれない** ことを assert
+- AKIA / sk-ant- / sk- / Bearer / `<home-path>` 形式絶対 path / 5-10 桁 digit を logger に流し、formatter 出力に **含まれない** ことを assert
 - `pii_filter_redactions_total` インクリメントを確認
 
 ### 6-2. metric test
