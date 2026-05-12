@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_dashboard_layer_b_static_contract.py::test_layer_b_phase_records_present PASSED [ 20%]
+scripts/test/test_dashboard_layer_b_static_contract.py::test_layer_b_progress_pct_field_present PASSED [ 40%]
+scripts/test/test_dashboard_layer_b_static_contract.py::test_layer_b_supabase_table_reference_anchor PASSED [ 60%]
+scripts/test/test_dashboard_layer_b_static_contract.py::test_layer_b_color_coding_4_levels PASSED [ 80%]
+scripts/test/test_dashboard_layer_b_static_contract.py::test_layer_b_w_phase_anchor PASSED [100%]
+
+============================== 5 passed in 0.02s ===============================

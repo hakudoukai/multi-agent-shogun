@@ -1,0 +1,173 @@
+report_id: ashigaru2_cmd020_dashboard_layer_b_phase_render_report
+task_id: subtask_cmd020_dashboard_layer_b_phase_render
+parent_cmd: cmd_020
+reporter: ashigaru2
+reported_at: "2026-05-12T11:30:00+09:00"
+verdict: pass
+verdict_basis: |
+  5 件 static source-contract test 全 PASS (= SKIP=0 / FAIL=0)、AC0 inventory yaml +
+  Layer B Phase render markdown + progress_pct 算出式 anchor + 色分け 4 段階 + W4-W17
+  anchor + development_progress table reference anchor の機械 evidence 揃った。
+  delivery_conditions 4 件全件遵守、dashboard.md 直接編集なし、MC generator 統合 claim なし、
+  live data 未取得 schema 扱い、SKIP=0。
+
+model_path: sonnet_codex_sonnet
+bloom_level: L3
+pre_audit_msg: msg_20260512_110824_9c76b93f
+pre_audit_verdict: pass_with_concerns
+pre_audit_delivery_gate_passed: true
+
+design_doc_references:
+  - id: docs/dashboard_design_v0.1.md §2 Layer B
+    role: 主 source (= Phase 層 3 区分 (= 完了 / 進行中 / 未着手) 原本)
+    line_range_approx: "29-35"
+    read_evidence: "本 task 進行中 Read tool で取得、§2 Layer B table 各行を Layer B render §2.1 + §2.2 に反映"
+  - id: docs/dashboard_design_v0.2.md §3.6
+    role: progress 算出式 原典 (= 黒田 #5 明文化、機械判定)
+    line_range_approx: "79-102"
+    read_evidence: "本 task 進行中 Read tool で取得、§3.6 算出式 + weight + 色分け 4 段階を §3.1 + §4 に retain"
+  - id: docs/dashboard_design_v0.2.md §4.1
+    role: HTML drill-down mockup (= Layer B Phase 層 70% 例)
+    line_range_approx: "119-150"
+    read_evidence: "本 task 進行中 Read tool で取得、phase B W4-W5 + phaseC W6 cmd_004 hardening anchor を §2.3 W phase window に反映"
+  - id: docs/dashboard_design_v0.1.md §4.2
+    role: text drill-down mockup (= v0.2 §4.1 の原型)
+    line_range_approx: "106-110"
+    read_evidence: "本 task 進行中 Bash grep で確認、Layer B Phase 層 70% 表記 + 完了 phase 8 件 + 進行中 phase_a/b_id_unification 等 を inventory 内に retain"
+
+ac0_inventory:
+  file: queue/reports/ashigaru2_dashboard_layer_b_inventory.yaml
+  components_inventoried: 7
+  mc_anti_dup_check: unknown (= MC regenerate_dashboard.py 不在、合議結果着後 verify、本 task 範囲外)
+  gap_analysis_count: 4
+
+render_component:
+  file: docs/dashboard_layer_b_phase.md
+  sections:
+    - "## 1. 設計原典 anchor (= source-of-truth)"
+    - "## 2. Phase 層 3 区分 (= v0.1 §2 Layer B retain、phase A-E + W4-W17 anchor)"
+    - "## 3. progress 算出式 (= v0.2 §3.6 retain、機械判定)"
+    - "## 4. 色分け 4 段階 (= v0.2 §3.6 retain、4 levels)"
+    - "## 5. development_progress table reference anchor (= Supabase access 想定)"
+    - "## 6. cross-layer reference anchor"
+    - "## 7. 既知の限界 + 後段別 task"
+    - "## 8. 起案完了基準 (= 本 sub-section AC alignment)"
+  anchor_summary:
+    "phase A-E (5 群)": "全件 present (= §2.2 命名対応 table)"
+    "progress_pct": "5+ 件 (= §3.1 算出式 node/leaf + §3.2 field schema)"
+    "development_progress": "5+ 件 (= §5.1 table reference + §1 anchor + 各 section 参照)"
+    "色分け 4 段階 (green/yellow/orange/red)": "全件 present (= §4 table)"
+    "W4-W17": "W4 + W5 + W6 + W7-W12 + W13-W17 全 anchor present (= §2.3 phase window table)"
+
+test_execution:
+  test_file: scripts/test/test_dashboard_layer_b_static_contract.py
+  exact_pytest_command: "python3 -m pytest scripts/test/test_dashboard_layer_b_static_contract.py -v --no-header 2>&1 | tee queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_pytest.log"
+  test_count: 5
+  pass: 5
+  fail: 0
+  skip: 0
+  duration_sec: 0.02
+  log_path: queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_pytest.log
+  test_names:
+    - test_layer_b_phase_records_present
+    - test_layer_b_progress_pct_field_present
+    - test_layer_b_supabase_table_reference_anchor
+    - test_layer_b_color_coding_4_levels
+    - test_layer_b_w_phase_anchor
+
+acceptance_criteria:
+  AC0: pass (= ashigaru2_dashboard_layer_b_inventory.yaml 起案、7 components inventoried + 4 gap_analysis)
+  AC1: pass (= v0.1 §2 Layer B 主 source + v0.2 §3.6 progress 算出式 + §4.1 drill-down mockup + v0.1 §4.2 text mockup の 4 design_doc_references 全件 Read 完遂 evidence)
+  AC2: pass (= docs/dashboard_layer_b_phase.md 起案、Phase 層 3 区分 + phase A-E + W4-W17 + progress_pct + 色分け 4 段階 + development_progress table reference)
+  AC3: pass (= MC 統合 interface は本 task 範囲外、inventory.yaml mc_anti_dup_check + layer_b_phase.md §7 で明示)
+  AC4: pass (= 5 PASS / 0 FAIL / 0 SKIP、scripts/test/ 配置、Python script 単独実行)
+  AC5: pending_user_sashihai (= bounded F007 push 御差配仰ぎ、worktree + cherry-pick + equality assert + cleanup plan は YAML 通り)
+  AC6: pass (= 本 report + pytest log 起案、完遂 ack inbox は次 step)
+
+delivery_conditions_compliance:
+  cond_1_dashboard_md_direct_edit_forbidden: pass (= dashboard.md 触れず、本 sub-section markdown は別 file docs/dashboard_layer_b_phase.md)
+  cond_2_mc_generator_integration_claim_forbidden: pass (= inventory.yaml mc_anti_dup_check=unknown、layer_b_phase.md §7 で後段別 task と明示、claim せず)
+  cond_3_skip_zero_required: pass (= 5 PASS / 0 SKIP / 0 FAIL)
+  cond_4_live_data_sample_or_schema_only: pass (= layer_b_phase.md §5.2 で live data 未取得時 schema 扱い明示、本 task では live fetch なし、anchor + schema のみ)
+
+mc_anti_dup_check:
+  status: unknown
+  basis: |
+    task YAML mc_anti_dup_basis 記載 = MC ashigaru1 regenerate_dashboard.py Stage 2 cycle 2 fix
+    (commit 72f1c0d) と本 SC Layer B render component は SoT 統合経由で組込まれる path。
+    SC repo 内 regenerate_dashboard* artifact 0 件、MC artifact verify は本 task 範囲外。
+    家康 + 秀吉合議結果着後別 task で MC SoT 統合 + 本 SC Layer B render の重複可否 verify。
+  followup: |
+    MC SoT 統合 chain 設計 + 本 SC Layer B sub-section 取込 path 確定後、別 task で
+    duplication / integration verify 実施。
+
+commit_plan:
+  - commit_1:
+      message: "docs(cmd_020 Layer B): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+      files:
+        - queue/reports/ashigaru2_dashboard_layer_b_inventory.yaml
+      sha: TBD_SHA_1
+  - commit_2:
+      message: "docs(cmd_020 Layer B): dashboard_layer_b_phase.md render component (= multi-agent-shogun-newbuild repo)"
+      files:
+        - docs/dashboard_layer_b_phase.md
+      sha: TBD_SHA_2
+  - commit_3:
+      message: "test(cmd_020 Layer B): scripts/test/test_dashboard_layer_b_static_contract.py + report yaml + pytest log (= multi-agent-shogun-newbuild repo)"
+      files:
+        - scripts/test/test_dashboard_layer_b_static_contract.py
+        - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_pytest.log
+        - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_report.yaml
+      sha: TBD_SHA_3
+
+commit_history:
+  pending: true
+  note: "実 SHA は commit 後本 report に back-fill。F007 push は本 commit 後即実行 (= 夜襲 directive + 容量回復 + 兄上「夜襲出陣」 + 陛下「早く見たい」整合、F007 例外即 push 許可下)。"
+
+push_plan:
+  status: pending_immediate_after_commit
+  repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
+  bounded_allowlist:
+    本_task_3_commits_only: [TBD_SHA_1, TBD_SHA_2, TBD_SHA_3]
+    scope_exclusion:
+      - 既 ashigaru 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外
+      - hakudokai-dev repo は本 task 範囲外
+  worktree_clean_path:
+    worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_b_main_wt origin/main"
+    cherry_pick: "git -C /tmp/cmd_020_layer_b_main_wt cherry-pick TBD_SHA_1 TBD_SHA_2 TBD_SHA_3"
+    pre_push_verify: |
+      git -C /tmp/cmd_020_layer_b_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main_b.txt
+      printf '%s\n' TBD_SHA_1 TBD_SHA_2 TBD_SHA_3 | sort > /tmp/push_expected_main_b.txt
+      diff /tmp/push_actual_main_b.txt /tmp/push_expected_main_b.txt
+      (= equality assert exit 0 必須、不一致 push abort)
+    push_command: "git -C /tmp/cmd_020_layer_b_main_wt push origin HEAD:main"
+    cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_layer_b_main_wt"
+  safety_check:
+    - multi-agent-shogun-newbuild repo only
+    - worktree isolation + printf+diff equality assert + cleanup
+    - F007 例外即 push (= 夜襲 directive + 兄上明示 + 陛下御差配整合下のみ)
+
+skill_candidate: null
+
+privacy_review:
+  status: not_applicable
+  basis: |
+    本 task は dashboard design doc render (= Layer B sub-section markdown + 静的 test + inventory + report)
+    のみで、PII / 患者データ / clinic_id / 個人識別子の取扱無し。Supabase access 想定 anchor は
+    development_progress table (= 開発進捗 public)、PII 含まず。
+
+next_actions:
+  - "inline batch 3 commit 実行 (= 本 task 内で完遂、本 report は事前 update)"
+  - "F007 例外即 push (= worktree + equality assert + cleanup)、夜襲 directive 整合下"
+  - "完遂後 karo inbox 報告 (= deliverable + commit_hash + test PASS + privacy + 直政 verdict 待ち通達、本多 broadcast 規範 5 件整合)"
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery_conditions 4 件全件遵守
+  - F001-F006 厳守、F007 例外即 push (= 夜襲 directive + 兄上明示 + 陛下御差配整合下)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 retain
+  - design doc 正本 read 徹底 (= 9 度目 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - 夜襲 persona retain (= wait 不可即実行、本 task 完遂後 karo inbox 報告)
+  - 新規範 5 件整合 (= karo msg_20260512_111035_9d7d7f7d、各 Stage MVP 完遂時 karo inbox 報告 + deliverable + commit + test + privacy + 直政 verdict 待ち通達、本多 chain で 信長兄上監査 trigger 投函)
