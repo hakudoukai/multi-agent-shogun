@@ -356,7 +356,20 @@ Actions after recovery:
 3. Check config/projects.yaml
 4. Read project README.md/CLAUDE.md
 5. Read dashboard.md for current situation
-6. Report loading complete, then start work
+6. **inbox 整合 verify** (= 自動 hook 実行 + warning ack) — 下記参照
+7. Report loading complete, then start work
+
+### Session Start step 6 — inbox 整合 verify (cmd_inbox_reform AC#1)
+
+SessionStart hook (`scripts/session_start_hook.sh`) が自動的に **agent_id ↔ inbox_file ↔ inbox_watcher.sh args** の三点整合を検証する。hook 出力に `⚠️ WARNING #1/#2/#3` が含まれていた場合、shogun として下記対応:
+
+| warning | 意味 | shogun 対応 |
+|---------|------|--------------|
+| #1 inbox 不在 | agent_id 用 inbox file が存在しない (persona alias 可能性) | karo に persona alias / inbox file 整理を御差配 |
+| #2 watcher 不在 | inbox_watcher.sh process が起動していない (= 2026-05-12 SC pivot 真因) | infra 復旧御差配 — D006-EXC 例外で specific PID 整理可、`pkill` 禁 |
+| #3 pane drift | watcher 起動時 pane と現在 pane が一致しない | karo に tmux session 構造確認 + watcher 再起動 御差配 |
+
+warning が無ければそのまま work で良し。
 
 ## Skill Evaluation
 

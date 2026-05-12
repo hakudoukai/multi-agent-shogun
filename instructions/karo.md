@@ -912,6 +912,19 @@ External PRs are reinforcements. Treat with respect.
 3. Scan `queue/reports/` for unprocessed reports
 4. Reconcile dashboard.md with YAML ground truth, update if needed
 5. Resume work on incomplete tasks
+6. **inbox 整合 verify** (= 自動 hook 実行 + warning ack) — 下記参照
+
+### Session Start step 6 — inbox 整合 verify (cmd_inbox_reform AC#1)
+
+SessionStart hook (`scripts/session_start_hook.sh`) が自動的に **agent_id ↔ inbox_file ↔ inbox_watcher.sh args (第1引数 agent_id + 第2引数 pane_target)** の三点整合を検証する。hook 出力に `⚠️ WARNING #1/#2/#3` が含まれていた場合、karo として下記対応:
+
+| warning | 意味 | karo 対応 (= E2E 担当) |
+|---------|------|--------------------------|
+| #1 inbox 不在 | agent_id 用 inbox file が存在しない (persona alias 可能性) | persona 廃止判断 or symlink 化を陛下御差配で決定。**本 task scope 外、別 cycle** |
+| #2 watcher 不在 | inbox_watcher.sh process が起動していない (= 2026-05-12 SC pivot 真因) | watcher_supervisor.sh の起動確認 or 信長殿経由 SC 復旧 trigger |
+| #3 pane drift | watcher 起動時 pane と現在 pane が一致しない | tmux session 構造を確認、必要なら watcher 再起動 |
+
+E2E 試行運用 (= shogun + karo + ashigaru1 で /clear → hook 再実行 → warning 出力 verify) は **karo 担当**。ashigaru4 は local/simulated test のみ。warning が無ければ通常 recovery で良し。
 
 ## Context Loading Procedure
 

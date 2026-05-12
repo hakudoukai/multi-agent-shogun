@@ -488,7 +488,20 @@ Step 2: mcp__memory__read_graph (skip on failure)
 Step 3: Read queue/tasks/gunshi.yaml → assigned=work, idle=wait
 Step 4: Read context files if specified
 Step 5: Start work
+Step 6: inbox 整合 verify (= 自動 hook 実行 + warning ack) — 下記参照
 ```
+
+### Session Start step 6 — inbox 整合 verify (cmd_inbox_reform AC#1)
+
+SessionStart hook (`scripts/session_start_hook.sh`) が自動的に **agent_id ↔ inbox_file ↔ inbox_watcher.sh args** の三点整合を検証する。hook 出力内に `⚠️ WARNING #1/#2/#3` が含まれていた場合:
+
+| warning | 意味 | 訂正 path |
+|---------|------|----------|
+| #1 inbox 不在 | agent_id 用 inbox file が存在しない (persona alias 可能性) | karo に inbox_write で「inbox file 不在」報告 |
+| #2 watcher 不在 | inbox_watcher.sh process が起動していない (= SC pivot 誤投函先 真因) | karo に inbox_write で「watcher process 未起動」報告 |
+| #3 pane drift | watcher 起動時 pane と現在 pane が一致しない | karo に inbox_write で「pane_target drift」報告 |
+
+**操作禁則**: watcher 再起動 / tmux 操作 / persona 切替実行は warning 出力後の判断 (gunshi=karo 経由)。documentation のみ retain、自身で実行禁。warning が無ければそのまま work で良し。
 
 ## Autonomous Judgment Rules
 

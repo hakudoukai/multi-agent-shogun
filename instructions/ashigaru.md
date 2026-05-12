@@ -262,6 +262,18 @@ Recover from primary data:
 - CLAUDE.md /clear flow (~5,000 tokens) is sufficient for first task
 - Read instructions only if needed for 2nd+ tasks
 
+### Session Start step 6 — inbox 整合 verify (cmd_inbox_reform AC#1)
+
+SessionStart hook (`scripts/session_start_hook.sh`) が自動的に **agent_id ↔ inbox_file ↔ inbox_watcher.sh args** の三点整合を検証する。hook 出力内に `⚠️ WARNING #1/#2/#3` が含まれていた場合:
+
+| warning | 意味 | 訂正 path (= ashigaru 範囲) |
+|---------|------|------------------------------|
+| #1 inbox 不在 | agent_id 用 inbox file が存在しない (persona alias 可能性) | karo に inbox_write で「inbox file 不在」報告。**自分で alias 切替 / symlink 操作禁** |
+| #2 watcher 不在 | inbox_watcher.sh process が起動していない (= SC pivot 誤投函先 真因) | karo に inbox_write で「watcher process 未起動」報告。**自分で watcher 再起動禁、足軽範囲外** |
+| #3 pane drift | watcher 起動時 pane と現在 pane が一致しない | karo に inbox_write で「pane_target drift」報告。**自分で watcher 再起動禁** |
+
+**警告: watcher 再起動 / tmux 操作 / persona 切替実行は ashigaru 範囲外** (= F002 違反 risk 防止)。warning 内容を ack の上、karo 報告 path で停止せよ。warning が無ければそのままタスク着手で良し。
+
 **Before /clear** (ensure these are done):
 1. If task complete → report YAML written + inbox_write sent
 2. If task in progress → save progress to task YAML:
