@@ -1,0 +1,184 @@
+report_id: ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_20260512
+task_id: subtask_cmd020_dashboard_layer_d_zunou_kumonoito_render
+parent_cmd: cmd_020
+agent: ashigaru4
+model_path: sonnet_codex_sonnet
+reported_at: "2026-05-12T11:35:00+09:00"
+status: completed
+verdict: pass
+evidence_state: complete
+completion_gate: open
+repo: multi-agent-shogun-newbuild
+repo_scope_compliance: confirmed_single_repo (= hakudokai-dev 関与禁、本 task 範囲外)
+
+summary: |
+  cmd_020 Layer D 頭脳層 蜘蛛の糸 render component を AC0 inventory first 規範下に
+  起案完遂 (= 第 4 弾 ashigaru1 Layer A 規範踏襲)。docs/dashboard_layer_d_zunou.md で
+  4 大項目 9,209 records 法令層 + 蜘蛛の糸 cross-layer mermaid + design_decisions anchor +
+  v0.2 §3.2 query budget compliance を一括 render、5 static source-contract test
+  全件 PASS (= SKIP=0 / FAIL=0)、3 commit inline batch atomic 完了。
+  MC 統合 interface は task spec AC3 + inventory mc_anti_dup_check.followup field で
+  本 task 範囲外として明示済、後段別 task で SoT 統合 verify 予定。
+
+deliverables:
+  - file: queue/reports/ashigaru4_dashboard_layer_d_inventory.yaml
+    purpose: AC0 既実装 inventory yaml (= 7 component + 4 out-of-scope + 4 gap + AC alignment)
+    commit: 3776e2a
+  - file: docs/dashboard_layer_d_zunou.md
+    purpose: Layer D 頭脳層単独 render component (= 4 大項目 10 table 9,209 records + mermaid + cross-layer + query budget)
+    commit: 1cd9176
+  - file: scripts/test/test_dashboard_layer_d_static_contract.py
+    purpose: 5 件 static source-contract test (= legal_sources count / legal_linkages section / design_decisions anchor / 蜘蛛の糸 cross-layer mermaid / query budget compliance)
+    commit: pending_commit_3
+  - file: queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log
+    purpose: pytest 実行 log (= 5 PASS、SKIP=0、0.02s)
+    commit: pending_commit_3
+  - file: queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_report.yaml
+    purpose: 本 yaml (= 完遂報告)
+    commit: pending_commit_3
+
+commit_history:
+  - sha: 3776e2a
+    subject: "docs(cmd_020 Layer D): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+    files:
+      - .gitignore (= +6 lines、Layer D 5 件 negation pattern 追記)
+      - queue/reports/ashigaru4_dashboard_layer_d_inventory.yaml (= 新規、195 行)
+    timestamp: "2026-05-12T11:30:00+09:00"
+  - sha: 1cd9176
+    subject: "docs(cmd_020 Layer D): dashboard_layer_d_zunou.md render component + mermaid (= multi-agent-shogun-newbuild repo)"
+    files:
+      - docs/dashboard_layer_d_zunou.md (= 新規、174 行、§1 anchor + §2 4 大項目 + §3 cross-layer + §4 mermaid + §5 query budget + §6 reference + §7 限界 + §8 完了基準)
+    timestamp: "2026-05-12T11:32:00+09:00"
+  - sha: pending_commit_3
+    subject: "test(cmd_020 Layer D): static source-contract 5 test + report yaml + pytest log"
+    files:
+      - scripts/test/test_dashboard_layer_d_static_contract.py
+      - queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_report.yaml (= 本 yaml)
+      - queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log
+    timestamp: "2026-05-12T11:35:00+09:00"
+
+test_evidence:
+  exact_pytest_command: "python3 -m pytest /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/test/test_dashboard_layer_d_static_contract.py -v --no-header"
+  test_count_target: 5
+  test_count_actual: 5
+  pass: 5
+  fail: 0
+  skip: 0
+  duration_seconds: 0.02
+  test_names:
+    - test_layer_d_legal_sources_count_field
+    - test_layer_d_legal_linkages_section
+    - test_layer_d_design_decisions_anchor
+    - test_layer_d_kumonoito_cross_layer_diff
+    - test_layer_d_query_budget_compliance
+  log_path: queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log
+  skip_zero_compliance: true (= test rule #1 SKIP=FAIL 厳守)
+
+acceptance_criteria_evidence:
+  AC0:
+    status: pass
+    evidence: queue/reports/ashigaru4_dashboard_layer_d_inventory.yaml (= 7 layer_d_scope_components + 4 related_but_out_of_scope + 4 gap_analysis + AC alignment + constraints_acknowledged 全 field 充足)
+  AC1:
+    status: pass
+    evidence: |
+      design doc 正本 read 完遂 = inventory 内 dashboard_design_v01_section2_layer_d /
+      dashboard_design_v02_section3_2_query_budget /
+      dashboard_design_v01_section4_2_drilldown_layer_d /
+      dashboard_design_v02_section_4_2_mermaid_kumonoito の 4 entry で line_range_approx +
+      key_concepts 機械引用済
+  AC2:
+    status: pass
+    evidence: |
+      docs/dashboard_layer_d_zunou.md 起案完遂、4 大項目 10 table 9,209 records +
+      design_decisions anchor + 蜘蛛の糸 cross-layer mermaid + query budget compliance +
+      cross-layer reference + 限界 + 完了基準を含む 174 行 markdown
+  AC3:
+    status: pass
+    evidence: |
+      MC 統合 interface は本 task 範囲外と明示 (= task spec step_3 + inventory
+      mc_anti_dup_check.status: confirmed_no_artifact_in_repo + followup field で
+      別 task 移行明文化、本 task は SC docs 起案単独進行)
+  AC4:
+    status: pass
+    evidence: pytest log 5 PASS / 0 FAIL / 0 SKIP (= test rule #1 SKIP=FAIL 厳守、queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log)
+  AC5:
+    status: pending_at_report_time
+    evidence: |
+      bounded F007 push は本 yaml 起案後に worktree + cherry-pick + equality assert + cleanup で実施。
+      task spec push_plan の bounded_allowlist は 本 task 3 commits only (= 3776e2a +
+      1cd9176 + pending_commit_3) に限定、scope_exclusion で 既 ashigaru 累計 commit + 他
+      ashigaru commit + MC commit + hakudokai-dev repo は全件 scope 外。
+      陛下御差配「夜襲 directive 即実行」 + 家康殿 msg_20260512_110245 明示許可下、
+      F007 例外即 push 路 retain。
+  AC6:
+    status: pass_at_report_time
+    evidence: |
+      report (= 本 yaml) + log (= pytest log) + 完遂 ack (= 本 yaml summary + status:
+      completed + verdict: pass) 起案完遂、commit 3 で atomic 配信予定。
+
+constraints_compliance:
+  honnoji_strict: true (= 機械 evidence のみ評価、推測 / 願望排除)
+  forbidden_actions_F001_F006: compliant
+  F007_exception_basis: |
+    陛下御差配 + 家康殿 msg_20260512_110245 「夜襲 directive 即実行」 + 容量回復
+    directive 整合、bounded allowlist (= 本 task 3 commits only) 厳格遵守、
+    worktree + cherry-pick + printf+diff equality assert + cleanup の 4 段安全 path
+  pre_audit_basis: 直政 Codex 事前監査 pass_with_concerns (= msg_20260512_110824_9c76b93f) 受領、本 task 配信
+  model_path_compliance: sonnet_codex_sonnet (= 規範 1 path ②)
+  radical_solution_5_10_year: |
+    Layer D は 8,000+ records 法令層 + 蜘蛛の糸 cross-layer 接続を独立 sub-section
+    として render、5-10 年運用想定の根本治療品質。query budget compliance で課金 risk 0、
+    diff fetch ETag strategy で大規模 table 増加に対応、self-contained markdown +
+    mermaid text-based で外部 CDN 依存 0、native viewer 互換。
+  ac0_inventory_first_regime: |
+    第 4 弾 (= ashigaru1 Layer A 第 1 弾、ashigaru2 Layer B / ashigaru3 Layer C /
+    ashigaru5 Layer E 等続く規範踏襲)、AC0 inventory yaml で既実装 component + gap +
+    out-of-scope を機械列挙してから render に着手、duplication risk 0
+  mc_anti_dup_check_basis: |
+    MC `regenerate_dashboard.py` Stage 2 cycle 2 fix (= commit 72f1c0d) 由来 artifact は
+    本 multi-agent-shogun-newbuild repo 内に不在を機械検証 (= find -name 'regenerate_dashboard*'
+    → 0 件 in scripts/ + backend/)、本 task は SC docs 起案単独、SoT 統合は後段別 task。
+  design_doc_source_read: 9 度目 fail 教訓踏襲、inventory + render 双方で正本 source line_range + section anchor 引用
+  delivery_conditions_4_items: |
+    (1) dashboard.md 直接編集禁: 本 task 不実施 (= dashboard_layer_d_zunou.md 単独起案)、
+    (2) hakudokai-dev 関与禁: 本 task 不実施 (= multi-agent-shogun-newbuild repo only)、
+    (3) MC 統合 claim 禁: AC3 + inventory followup で別 task 委譲明示、
+    (4) SKIP>0 未完了: pytest 5 PASS / 0 SKIP で全件 compliant
+  inline_batch_commit_3_atomic: 3 commit (= inventory + render + test/report/log) atomic、本 task scope 外 file 触らず
+  yashu_persona_retain: 「夜襲出陣」persona 下 wait→実行自動置換、ぐずらず即実行完遂
+
+push_plan_evidence:
+  worktree_clean_path:
+    multi_agent_shogun_newbuild:
+      worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_layer_d_main_wt origin/main"
+      cherry_pick_targets:
+        - 3776e2a (= AC0 inventory + .gitignore)
+        - 1cd9176 (= render component + mermaid)
+        - TBD_commit_3_after_this_yaml (= test + report + pytest log)
+      pre_push_verify_command: |
+        git -C /tmp/cmd_020_layer_d_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main_d.txt
+        printf '%s\n' 3776e2a 1cd9176 TBD_commit_3 | sort > /tmp/push_expected_main_d.txt
+        diff /tmp/push_actual_main_d.txt /tmp/push_expected_main_d.txt
+      push_command: "git -C /tmp/cmd_020_layer_d_main_wt push origin HEAD:main"
+      cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_layer_d_main_wt"
+  safety_check: ashigaru1 Layer A 規範整合、worktree isolation + printf+diff equality assert + cleanup
+
+new_regime_5_items_acknowledgement:
+  msg_id: msg_20260512_111035_cca756e9
+  rule_summary: Stage 一気通貫 + 信長兄上監査 chain (= 各 Stage MVP 完遂時 karo inbox 報告 + deliverable + commit + test + privacy + 直政 verdict 待ち通達、本多が後段 shogun_audit_request 投函 chain)
+  ack_status: ack_received_at_inbox_processing
+  applied_to_this_task: |
+    本 task は karo inbox 報告 + deliverable + commit_history + test_evidence + repo_scope
+    + 直政 pre_audit verdict (= msg_20260512_110824_9c76b93f pass_with_concerns) を本 yaml に
+    全件 含む、本多が後段 shogun_audit_request chain trigger 可能な完備 form
+
+skill_candidate: null (= 本 task は AC0 inventory first 規範第 4 弾、新規 skill 不要、Layer A 規範踏襲)
+
+next_action_recommendation:
+  for_karo: |
+    本 yaml + pytest log + commit 3 SHA を確認後、bounded F007 push (= worktree + cherry-pick +
+    equality assert + cleanup) を実行 or 信長兄上監査 chain (= shogun_audit_request 投函)
+    を新規範 5 件に従い trigger
+  for_post_task: |
+    Layer A/D 起案済、Layer B/C/E/F 残起案 + MC SoT 統合 (= regenerate_dashboard.py
+    commit 72f1c0d との接続) は別 task で進行
