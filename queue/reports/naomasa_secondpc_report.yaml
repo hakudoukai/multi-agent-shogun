@@ -5799,3 +5799,71 @@ unverified_program_audits_20260512:
     recommendation_to_shogun:
       action: record_as_audited_blocked_not_green
       summary: "直政担当 12 件は全件 audit 済。ただし緑化不可。W9 4 件は manifest 欠落、Supabase phase 8 件は not_started/in_progress + empty commit + no shogun verify。"
+
+dashboard_layer_b_post_completion_audit_20260512:
+  - audit_id: naomasa_post_audit_cmd020_dashboard_layer_b_phase_render
+    target_type: ashigaru_deliverable_post_completion_audit
+    target_task_id: subtask_cmd020_dashboard_layer_b_phase_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T21:38:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_213215_1a297f64
+    assignee: ashigaru2
+    pre_audit_id: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    source_commits:
+      inventory_swept_into_layer_c_commit: f3651ae
+      render: 3723b35
+      test_report: 988e3d8
+      sha_backfill: 273e669
+    source_files:
+      - queue/reports/ashigaru2_dashboard_layer_b_inventory.yaml
+      - docs/dashboard_layer_b_phase.md
+      - scripts/test/test_dashboard_layer_b_static_contract.py
+      - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_report.yaml
+      - queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_pytest.log
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass_with_concerns
+      3_kiritsu_chain_of_command: pass_with_concerns
+      4_logic_consistency: pass
+      5_schema_data_contract: pass_with_concerns
+      6_test_ci_evidence: pass
+      7_legal_privacy_security: pass
+      8_operations: pass_with_concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: pass_with_concerns
+      12_future_operations_radicality: pass_with_concerns
+    acceptance_criteria_evidence:
+      AC0_inventory: "pass_with_concerns; inventory exists and is coherent, but was swept into ashigaru3 Layer C commit f3651ae"
+      AC1_design_source_read: pass
+      AC2_render_component: pass
+      AC3_mc_integration_deferred: pass
+      AC4_static_tests: "pass; recorded log 5 passed / 0 skipped, Naomasa rerun also 5 passed / 0 skipped"
+      AC5_bounded_push: "pass_with_concerns; commits are published, but report records push-level bounded allowlist deviation via 12-commit FF push"
+      AC6_report_log_ack: pass
+    machine_evidence:
+      git_show: "git show --stat confirms f3651ae contains Layer B inventory + .gitignore in Layer C commit, 3723b35 render, 988e3d8 test/report/log, 273e669 SHA back-fill."
+      pytest_rerun: "python3 -m pytest scripts/test/test_dashboard_layer_b_static_contract.py -v --no-header => 5 passed, 0 skipped."
+      report_state: "ashigaru2 report verdict=pass, commit_history.pending=false, push_plan.status=pushed, with explicit bounded_allowlist_deviation."
+    findings:
+      - severity: medium
+        perspective: 3_kiritsu_chain_of_command
+        issue: "AC0 inventory and .gitignore Layer B allowlist were committed inside ashigaru3 Layer C commit f3651ae."
+        recommendation: "Do not fail the Layer B deliverable, but record staged-index isolation as process debt and require staged-file inspection before future commits."
+      - severity: medium
+        perspective: 11_cross_pc_repo_check
+        issue: "Layer B report states push-level bounded allowlist deviation: 12 commits were FF-pushed together rather than a strict 3-commit worktree cherry-pick."
+        recommendation: "Accept because commits are scoped and already published, but future F007 exception pushes should use isolated worktree/equality assertion unless Karo explicitly approves batch FF push."
+      - severity: low
+        perspective: 2_anti_duplication
+        issue: "MC generator integration remains deferred and live development_progress fetch is schema-anchor only."
+        recommendation: "Treat this as SC spec component acceptance; generator integration/live data render requires separate audit."
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_chain_with_process_notes
+      summary: "Layer B deliverable passes with concerns. Trigger chain as spec acceptance; carry forward f3651ae staged sweep and push-level bounded deviation as process hygiene fixes."
