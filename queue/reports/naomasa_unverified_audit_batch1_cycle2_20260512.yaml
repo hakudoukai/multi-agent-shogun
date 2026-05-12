@@ -1,0 +1,95 @@
+report_id: naomasa_unverified_audit_batch1_cycle2_20260512
+reported_at: "2026-05-12T21:56:00+09:00"
+reported_by: gunshi_naomasa
+redo_of: naomasa_unverified_audit_batch1_20260512
+source_inbox:
+  - msg_20260512_remand_0fe0669b
+remand_reason: "Initial cycle said W9 manifest missing and marked C-15-A/B2/B4/B6 fail. Shogun remanded because MC-side evidence says the manifest exists."
+
+manifest_reverify:
+  sc_direct_ls: "ls -la queue/manifests/w9_design_tasks_169.yaml => no such file or directory"
+  origin_main_tree: "git ls-tree -r --name-only origin/main | rg queue/manifests/w9_design_tasks_169.yaml => no match"
+  upstream_tree: "git ls-tree -r --name-only upstream/main | rg queue/manifests/w9_design_tasks_169.yaml => no match"
+  c63e94f_stat: "c63e94f changes scripts/regenerate_dashboard.py and tests/test_regenerate_dashboard.py only; no manifest file"
+  local_project_find: "find /home/hakudokai/projects ... w9_design_tasks_169.yaml => no match"
+  status: "manifest_still_absent_on_sc"
+  correction: "Cycle1 over-relied on manifest absence. Cycle2 uses active_verify_queue_candidate_log.yaml as available SC evidence for the four W9 items."
+
+cycle2_machine_evidence:
+  active_verify_queue_log: queue/reports/active_verify_queue_candidate_log.yaml
+  active_verify_queue_parse: pass
+  shogun_verification_logs_checked:
+    - queue/reports/shogun_verification_log.yaml
+    - queue/reports/shogun_verification_mainpc_log.yaml
+    - queue/reports/shogun_verification_secondpc_log.yaml
+    - queue/reports/shogun_verification_log_archive.yaml
+  residual_8_grep_result: "No matches for C-V21/C-V29/C-V31/C-V34/C-V36/C-V38/C-V41/C-V43 nor V21/V29/V31/V34/V36/V38/V41/V43 in shogun_verification_*log.yaml."
+
+corrected_w9_audits:
+  - audit_id: naomasa_unverified_20260512_c15a_stage_a_foundation_cycle2
+    candidate_id: C-15-A
+    prior_verdict: fail
+    corrected_verdict: pass_with_concerns
+    evidence_state: partial_external
+    completion_gate: open_with_concerns
+    correction_basis:
+      - "queue/reports/active_verify_queue_candidate_log.yaml has kuroda_pre_delivery_w9_stage_a_foundation_task_cycle2_reaudit_20260511 => pass_with_concerns."
+      - "queue/reports/active_verify_queue_candidate_log.yaml has kuroda_qc_w9_stage_a_foundation_ashigaru4_20260512 => pass_with_concerns, commit_hash 9079d715."
+    remaining_concern: "SC still lacks queue/manifests/w9_design_tasks_169.yaml, so detailed 9-task manifest body cannot be inspected locally."
+
+  - audit_id: naomasa_unverified_20260512_c15b2_ui_logic_cycle2
+    candidate_id: C-15-B2
+    prior_verdict: fail
+    corrected_verdict: pass_with_concerns
+    evidence_state: partial_external
+    completion_gate: open_with_concerns
+    correction_basis:
+      - "active_verify_queue log has kuroda_w9_stage_b_batch2_ui_logic_ac0_inventory_audit_20260512 => pass_with_conditions."
+      - "active_verify_queue log has kuroda_w9_stage_b_batch2_phase1_exemplar_7acadd19_audit_20260512 => pass_with_concerns."
+      - "active_verify_queue log has kuroda_w9_stage_b_batch2_phase2_remaining_27_cycle1_audit_20260512 => pass_with_concerns."
+    remaining_concern: "Batch2 manifest/detail source is absent on SC; verdict relies on queued Kuroda audit entries."
+
+  - audit_id: naomasa_unverified_20260512_c15b4_validation_cycle2
+    candidate_id: C-15-B4
+    prior_verdict: fail
+    corrected_verdict: pass_with_concerns
+    evidence_state: partial_external
+    completion_gate: open_with_concerns
+    correction_basis:
+      - "active_verify_queue log has kuroda_w9_stage_b_batch4_validation_18_cycle1_audit_20260512 => pass_with_concerns."
+    remaining_concern: "Validation 18 body is not inspectable locally without the W9 manifest."
+
+  - audit_id: naomasa_unverified_20260512_c15b6_hotetsu_cycle2
+    candidate_id: C-15-B6
+    prior_verdict: fail
+    corrected_verdict: pass_with_concerns
+    evidence_state: partial_external
+    completion_gate: open_with_concerns
+    correction_basis:
+      - "active_verify_queue log has kuroda_w9_stage_b_batch6_prosthesis_19_cycle1_audit_20260512 => pass_with_concerns."
+    remaining_concern: "Prosthetics 19 body is not inspectable locally without the W9 manifest."
+
+residual_8_retain:
+  verdict: fail
+  evidence_state: complete
+  completion_gate: blocked
+  candidates:
+    - C-V21-W9TENSU
+    - C-V29-W11DDA
+    - C-V31-W11CHOREI
+    - C-V34-W13VISIT
+    - C-V36-W14PAY
+    - C-V38-W14LINE
+    - C-V41-W15DEP
+    - C-V43-W16MAT
+  evidence:
+    - "unverified_inventory_20260512.yaml marks these as not_started or in_progress with empty external_commit."
+    - "scripts/regenerate_dashboard.py LAYER_C_SUPABASE_VERIFY_ROWS has matching rows with not_started/in_progress and empty commit_hash."
+    - "shogun_verification_*log.yaml grep found no target IDs for these eight candidates."
+
+overall_cycle2_verdict: pass_with_concerns
+overall_cycle2_completion_gate: partially_open
+recommendation_to_shogun:
+  - "Treat C-15-A/B2/B4/B6 as corrected from fail/missing to pass_with_concerns/open_with_concerns, pending SC receipt of the actual manifest for deep body inspection."
+  - "Retain the eight Supabase phase candidates as fail/blocked."
+  - "If MC manifest is authoritative, publish queue/manifests/w9_design_tasks_169.yaml into origin/main so SC audit can verify the body, not only active queue summaries."

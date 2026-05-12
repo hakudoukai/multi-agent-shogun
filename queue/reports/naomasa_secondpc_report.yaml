@@ -5867,3 +5867,37 @@ dashboard_layer_b_post_completion_audit_20260512:
     recommendation_to_karo:
       action: trigger_shogun_audit_request_chain_with_process_notes
       summary: "Layer B deliverable passes with concerns. Trigger chain as spec acceptance; carry forward f3651ae staged sweep and push-level bounded deviation as process hygiene fixes."
+
+unverified_program_audits_cycle2_20260512:
+  - audit_id: naomasa_unverified_batch1_cycle2_20260512
+    redo_of: naomasa_unverified_batch1_20260512
+    source_inbox:
+      - msg_20260512_remand_0fe0669b
+    detail_report: queue/reports/naomasa_unverified_audit_batch1_cycle2_20260512.yaml
+    verdict: pass_with_concerns
+    evidence_state: complete_with_external_gap
+    completion_gate: partially_open
+    corrections:
+      C-15-A: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+      C-15-B2: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+      C-15-B4: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+      C-15-B6: { prior: fail_missing, corrected: pass_with_concerns, completion_gate: open_with_concerns }
+    retained_blocked:
+      - C-V21-W9TENSU
+      - C-V29-W11DDA
+      - C-V31-W11CHOREI
+      - C-V34-W13VISIT
+      - C-V36-W14PAY
+      - C-V38-W14LINE
+      - C-V41-W15DEP
+      - C-V43-W16MAT
+    machine_evidence:
+      manifest_sc_ls: "queue/manifests/w9_design_tasks_169.yaml absent on SC"
+      origin_tree: "origin/main has no queue/manifests/w9_design_tasks_169.yaml"
+      upstream_tree: "upstream/main has no queue/manifests/w9_design_tasks_169.yaml"
+      c63e94f: "scripts/regenerate_dashboard.py + tests/test_regenerate_dashboard.py only"
+      w9_available_evidence: "queue/reports/active_verify_queue_candidate_log.yaml has Kuroda pass_with_concerns/pass_with_conditions entries for the 4 W9 candidates"
+      residual_8_verification_grep: "No matches for C-V21/C-V29/C-V31/C-V34/C-V36/C-V38/C-V41/C-V43 nor V21/V29/V31/V34/V36/V38/V41/V43 in shogun_verification_*log.yaml"
+    recommendation_to_shogun:
+      action: accept_cycle2_corrections_and_publish_manifest_for_deep_audit
+      summary: "初回 W9 4 件 fail/missing は過剰判定として訂正。ただし SC には manifest 本体が無いため deep body audit は未完。残 8 件は fail/blocked retain。"
