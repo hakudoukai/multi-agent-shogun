@@ -2493,3 +2493,200 @@ def test_real_shogun_log_matched_count_increased_over_baseline():
         f"{stats['matched_count']} / mapped {stats['mapped_count']} / "
         f"unmatched {len(stats['unmatched_verified_targets'])}"
     )
+
+
+# -----------------------------------------------------------------------
+# cycle14: SoT 化 (precomputed_states) + retain registry + W9 mapping verify
+# -----------------------------------------------------------------------
+
+def test_compute_shogun_reflection_stats_precomputed_equals_internal():
+    """cycle14: 黒田 cycle 13 「direct helper vs generator context 値差」 懸念解消 evidence。
+
+    compute_shogun_reflection_stats を precomputed_states 経由 (= generator SoT)
+    と従来 internal_recompute 経由 で呼出し、matched_count / green_count /
+    green_pct / unmatched 数 等の主要 metrics が完全一致する事を assertion。
+    一致 = render path と stats path が同一 SoT を共有する evidence。
+    """
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+    shogun_entries = rd.load_shogun_verification_index()
+    kuroda_entries = rd.load_kuroda_index()
+
+    stats_legacy = rd.compute_shogun_reflection_stats(
+        rd.LAYER_CHILDREN, shogun_entries,
+        kuroda_entries=kuroda_entries,
+        w9_batches=w9_batches, w9_stages=w9_stages,
+    )
+
+    layers, precomputed = rd.build_layer_render_entries(
+        kuroda_entries=kuroda_entries,
+        shogun_entries=shogun_entries,
+        w9_stages=w9_stages, w9_batches=w9_batches,
+        collect_states=True,
+    )
+    stats_sot = rd.compute_shogun_reflection_stats(
+        rd.LAYER_CHILDREN, shogun_entries,
+        kuroda_entries=kuroda_entries,
+        w9_batches=w9_batches, w9_stages=w9_stages,
+        precomputed_states=precomputed,
+    )
+
+    diff_keys = []
+    for k in stats_legacy:
+        if k == "sot_source":
+            continue
+        if stats_legacy[k] != stats_sot[k]:
+            diff_keys.append(k)
+    assert diff_keys == [], (
+        f"cycle14 SoT 等価性違反 — diff keys: {diff_keys} "
+        f"(legacy_matched={stats_legacy['matched_count']} sot_matched={stats_sot['matched_count']} "
+        f"legacy_green={stats_legacy['green_count']} sot_green={stats_sot['green_count']})"
+    )
+    assert stats_legacy["sot_source"] == "internal_recompute"
+    assert stats_sot["sot_source"] == "precomputed_states"
+
+
+def test_build_layer_render_entries_collect_states_returns_tuple():
+    """cycle14: collect_states=True で (layers, precomputed) tuple 返す事を assertion。
+    後方互換 retain (= collect_states 不指定 / False の従来 caller は list 単体)。
+    """
+    kuroda_entries = rd.load_kuroda_index()
+    shogun_entries = rd.load_shogun_verification_index()
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+
+    # collect_states=False (default) — list を返す
+    res_default = rd.build_layer_render_entries(
+        kuroda_entries=kuroda_entries, shogun_entries=shogun_entries,
+        w9_stages=w9_stages, w9_batches=w9_batches,
+    )
+    assert isinstance(res_default, list), "collect_states=False で list 返す事 (= 後方互換)"
+
+    # collect_states=True — (list, list) tuple を返す
+    res_sot = rd.build_layer_render_entries(
+        kuroda_entries=kuroda_entries, shogun_entries=shogun_entries,
+        w9_stages=w9_stages, w9_batches=w9_batches,
+        collect_states=True,
+    )
+    assert isinstance(res_sot, tuple) and len(res_sot) == 2
+    layers, precomputed = res_sot
+    assert isinstance(layers, list)
+    assert isinstance(precomputed, list)
+    # precomputed pair 数 == children_total
+    assert len(precomputed) == len(rd.LAYER_CHILDREN), (
+        f"precomputed pair 数 {len(precomputed)} != children_total {len(rd.LAYER_CHILDREN)}"
+    )
+    # 各 pair は (child_dict, state_dict) 形式
+    for child, st in precomputed:
+        assert isinstance(child, dict) and isinstance(st, dict)
+        assert "id" in child and "pct" in st
+
+
+def test_annotate_unmatched_with_retain_registers_all_four():
+    """cycle14 AC A-P0-1: 4 件 unmatched verify target 全件 retain registry に登録済。"""
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+    shogun_entries = rd.load_shogun_verification_index()
+    kuroda_entries = rd.load_kuroda_index()
+    stats = rd.compute_shogun_reflection_stats(
+        rd.LAYER_CHILDREN, shogun_entries,
+        kuroda_entries=kuroda_entries,
+        w9_batches=w9_batches, w9_stages=w9_stages,
+    )
+    unmatched = stats["unmatched_verified_targets"]
+    unregistered = [u for u in unmatched if u.get("retain_status") != "registered"]
+    assert stats["unmatched_unregistered_count"] == 0, (
+        f"cycle14 AC A-P0-1: 全 unmatched entry に retain registry 整合必達 — 未登録 "
+        f"{len(unregistered)} 件 / 全 {len(unmatched)} 件、未登録 entries={unregistered}"
+    )
+    # 各 registered entry に candidate_id / reason / source_log が非空
+    for u in unmatched:
+        if u.get("retain_status") == "registered":
+            assert u.get("candidate_id"), f"candidate_id 空: {u}"
+            assert u.get("reason"), f"reason 空: {u}"
+            assert u.get("source_log"), f"source_log 空: {u}"
+
+
+def test_annotate_unmatched_unregistered_when_no_match():
+    """cycle14: registry に未登録の target は retain_status='unregistered' を持つ。"""
+    fake_unmatched = [
+        {"target": "subtask_completely_unknown_xyz", "audit_id_ref": "", "verified_at": "2026-05-12T00:00"},
+    ]
+    annotated = rd.annotate_unmatched_with_retain(fake_unmatched)
+    assert len(annotated) == 1
+    assert annotated[0]["retain_status"] == "unregistered"
+    assert annotated[0]["candidate_id"] == ""
+    assert annotated[0]["reason"] == ""
+
+
+def test_w9_stage_a_b1_b6_all_green_in_real_state():
+    """cycle14 path A mapping_recheck: C-15-A / C-15-B1〜B6 全 7 件が pct >= 80
+    (= green tier) を達成する事 (= 黒田 audit chain
+    kuroda_unverified_distribution_union19_audit_chain_20260512 整合)。
+    """
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+    shogun_entries = rd.load_shogun_verification_index()
+    kuroda_entries = rd.load_kuroda_index()
+    ids = ["C-15-A", "C-15-B1", "C-15-B2", "C-15-B3", "C-15-B4", "C-15-B5", "C-15-B6"]
+    not_green: list[tuple[str, float]] = []
+    for cid in ids:
+        child = next((c for c in rd.LAYER_CHILDREN if c.get("id") == cid), None)
+        assert child is not None, f"{cid} not in LAYER_CHILDREN"
+        st = rd.compute_child_machine_state(
+            child, kuroda_entries=kuroda_entries, shogun_entries=shogun_entries,
+            w9_batches=w9_batches, w9_stages=w9_stages,
+        )
+        pct = float(st.get("pct") or 0.0)
+        if pct < 80.0:
+            not_green.append((cid, pct))
+    assert not_green == [], (
+        f"cycle14 mapping_recheck: W9 Stage A + B1-B6 全 7 件 green tier 必達 — "
+        f"未達 {not_green}"
+    )
+
+
+def test_w9_stage_a_b1_b6_direct_helper_matches_generator():
+    """cycle14: 直接 find_latest_shogun_verified 呼出と generator render path
+    (= build_layer_render_entries) の shogun verify resolution が一致する事
+    (= 黒田 cycle 13 懸念解消 evidence per-child level)。
+    """
+    state = rd.load_local_state()
+    w9_stages = rd.aggregate_w9_stage_progress(state.tasks)
+    w9_batches = rd.aggregate_w9_batch_progress(state.tasks)
+    shogun_entries = rd.load_shogun_verification_index()
+    kuroda_entries = rd.load_kuroda_index()
+    layers, precomputed = rd.build_layer_render_entries(
+        kuroda_entries=kuroda_entries, shogun_entries=shogun_entries,
+        w9_stages=w9_stages, w9_batches=w9_batches,
+        collect_states=True,
+    )
+    precomputed_lookup = {str(c.get("id", "")): st for c, st in precomputed}
+    ids = ["C-15-A", "C-15-B1", "C-15-B2", "C-15-B3", "C-15-B4", "C-15-B5", "C-15-B6"]
+    mismatches: list[str] = []
+    for cid in ids:
+        child = next((c for c in rd.LAYER_CHILDREN if c.get("id") == cid), None)
+        assert child is not None
+        patterns = rd._child_shogun_patterns(child)
+        direct_match = rd.find_latest_shogun_verified(shogun_entries, patterns)
+        gen_state = precomputed_lookup.get(cid, {})
+        # generator state should reflect shogun_verified resolution via pct >= 80
+        gen_pct = float(gen_state.get("pct") or 0.0)
+        if direct_match is not None and gen_pct < 80.0:
+            mismatches.append(f"{cid} direct=YES gen_pct={gen_pct} (= direct/generator 不一致)")
+        if direct_match is None and gen_pct >= 80.0:
+            mismatches.append(f"{cid} direct=NO gen_pct={gen_pct} (= direct/generator 不一致)")
+    assert mismatches == [], f"cycle14 direct vs generator equality 違反 — {mismatches}"
+
+
+def test_unmatched_verify_retain_registry_schema_valid():
+    """cycle14: UNMATCHED_VERIFY_RETAIN_REGISTRY 各 entry が必須 field を持つ。"""
+    for entry in rd.UNMATCHED_VERIFY_RETAIN_REGISTRY:
+        for k in ("match_substring", "candidate_id", "reason", "source_log"):
+            assert k in entry and entry[k], (
+                f"cycle14 retain registry entry に必須 field 欠落: key={k} entry={entry}"
+            )

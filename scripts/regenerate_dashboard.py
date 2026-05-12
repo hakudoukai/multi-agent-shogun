@@ -998,6 +998,79 @@ def _fallback_evidence(child: dict[str, Any]) -> dict[str, str]:
 #   audit_id 有無のみの判定は禁 (= 黒田 v2 preaudit 条件 1 整合)。
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# cycle14: 正当 retain registry (= AC A-P0-1 整合、unmatched 機械証跡 retain)
+#   shogun_verification_mainpc_log.yaml の active entry のうち、本 dashboard の
+#   LAYER_CHILDREN mapping 対象外 (= 構造的に children に紐付かない verify) を
+#   正当 retain として登録する。hard-code 0 化禁の代わりに、各 entry に
+#   candidate_id / reason / source_log を機械証跡として付与する。
+#   key = target / audit_id_ref のいずれかの substring (= 命名揺れ吸収)。
+# ---------------------------------------------------------------------------
+UNMATCHED_VERIFY_RETAIN_REGISTRY: list[dict[str, str]] = [
+    {
+        "match_substring": "kuroda_audit_cmd004_phase_1_6_rollback",
+        "candidate_id": "retain_phase_1_6_rollback_kuroda_meta_audit",
+        "reason": "kuroda audit chain の個別 formal audit (= cmd_004 phase 1-6 rollback)。dashboard children には phase rollback 用 placeholder 不在ゆえ正当 retain。",
+        "source_log": "queue/reports/kuroda_mainpc_report.yaml#kuroda_cmd004_phase_1_6_rollback_individual_formal_audit_20260512",
+    },
+    {
+        "match_substring": "cmd012_p02_preflight_verify",
+        "candidate_id": "retain_cmd012_preflight_verify",
+        "reason": "cmd_012 phase02 preflight verify (= 別 chain、cmd_020 dashboard 6 Layer 外)。Layer C-12/13 系は cmd_012 implementation を carry するが preflight verify entry 自体は構造 children に紐付かず、正当 retain。",
+        "source_log": "queue/reports/shogun_verification_mainpc_log.yaml#target=cmd012_p02_preflight_verify",
+    },
+    {
+        "match_substring": "subtask_cmd004_w9_supabase_completed_evidence_audit_71",
+        "candidate_id": "retain_w9_supabase_completed_evidence_71",
+        "reason": "W9 Supabase completed evidence audit (= 71 件外部証跡 audit)。Stage B batch1-6 (C-15-B1-B6) とは別 chain の supabase metadata audit ゆえ children mapping 対象外、正当 retain。",
+        "source_log": "queue/reports/shogun_verification_mainpc_log.yaml#target=subtask_cmd004_w9_supabase_completed_evidence_audit_71",
+    },
+    {
+        "match_substring": "subtask_delta_ashigaru2_ceremony_trigger_cycle2_001",
+        "candidate_id": "retain_delta_ashigaru2_ceremony_trigger_cycle2",
+        "reason": "delta ashigaru2 ceremony_trigger cycle2 (= 別 delta chain、cycle 13 後追加された verify entry)。dashboard 6 Layer 構造には delta ceremony chain 用 placeholder 不在ゆえ正当 retain。後続 cycle で Layer E に明示 placeholder 起案候補。",
+        "source_log": "queue/reports/shogun_verification_mainpc_log.yaml#target=subtask_delta_ashigaru2_ceremony_trigger_cycle2_001",
+    },
+]
+
+
+def annotate_unmatched_with_retain(
+    unmatched: list[dict[str, str]],
+    registry: list[dict[str, str]] | None = None,
+) -> list[dict[str, Any]]:
+    """cycle14 AC A-P0-1: 正当 retain registry 整合付与。
+
+    unmatched_verified_targets 各 entry の target / audit_id_ref を registry の
+    match_substring (case-insensitive substring match) と照合し、合致時に
+    candidate_id / reason / source_log を annotate する。registry 不在 entry は
+    "unregistered" 扱い (= 後続 cycle で registry 追加 or mapping 改修要)。
+    """
+    registry = registry if registry is not None else UNMATCHED_VERIFY_RETAIN_REGISTRY
+    out: list[dict[str, Any]] = []
+    for entry in unmatched:
+        target = str(entry.get("target", "")).lower()
+        audit_id_ref = str(entry.get("audit_id_ref", "")).lower()
+        registered: dict[str, str] | None = None
+        for r in registry:
+            needle = str(r.get("match_substring", "")).lower()
+            if needle and (needle in target or needle in audit_id_ref):
+                registered = r
+                break
+        annotated: dict[str, Any] = dict(entry)
+        if registered:
+            annotated["retain_status"] = "registered"
+            annotated["candidate_id"] = registered.get("candidate_id", "")
+            annotated["reason"] = registered.get("reason", "")
+            annotated["source_log"] = registered.get("source_log", "")
+        else:
+            annotated["retain_status"] = "unregistered"
+            annotated["candidate_id"] = ""
+            annotated["reason"] = ""
+            annotated["source_log"] = ""
+        out.append(annotated)
+    return out
+
+
 CMD004_AUDIT_ALERT_AUDIT_ID = "kuroda_cmd004_remaining_9_design_docs_audit_20260512"
 
 # verdict 状態表示 (= 黒田 v2 preaudit 条件 3 整合、engagement pass_with_concerns 明示)
@@ -1295,6 +1368,8 @@ def compute_shogun_reflection_stats(
     kuroda_entries: list[dict[str, Any]] | None = None,
     w9_batches: list[dict[str, Any]] | None = None,
     w9_stages: list[dict[str, Any]] | None = None,
+    precomputed_states: list[tuple[dict[str, Any], dict[str, Any]]] | None = None,
+    retain_registry: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     """cycle11 黒田条件 #2 — global shogun_verified reflection coverage stats.
 
@@ -1313,15 +1388,36 @@ def compute_shogun_reflection_stats(
       green_pct                 — green_count / children_total * 100 (= 緑化率)
       children_without_match    — mapped child IDs with no shogun match
       unmatched_verified_targets — active entries whose target/audit_id_ref
-                                  matches no child pattern (= 対外 verify 等)
+                                  matches no child pattern (= 対外 verify 等、
+                                  cycle14 で各 entry に retain registry 整合の
+                                  candidate_id/reason/source_log を annotate)
+      unmatched_retain_registered_count — annotated entries with registered
+                                  retain (= AC A-P0-1 機械証跡 retain)
       active_entries_total       — total entries surviving _is_active filter
 
     既存 helper (find_latest_shogun_verified / _is_active_shogun_entry /
     compute_child_machine_state) を経由 (= 黒田条件 #3 既存 helper 再利用、
     重複実装禁)。
+
+    cycle14 (= 黒田 cycle 13 懸念 「direct helper vs generator context 値差」
+    解消): build_layer_render_entries が生成済の (child, state) pairs を
+    precomputed_states として渡せば、stats は再計算せず carry された state
+    から derive する。これにより generator render path = stats path = 単一
+    SoT となり、find_latest_shogun_verified の重複呼出が解消される。
+    precomputed_states 不在時は従来通り内部で compute_child_machine_state を
+    呼ぶ (= 後方互換 retain、既存 test 整合)。
     """
     kuroda_entries = kuroda_entries if kuroda_entries is not None else []
     active_entries = [v for v in shogun_entries if _is_active_shogun_entry(v)]
+
+    # cycle14: precomputed_states 経由で SoT 化。dict による child -> state
+    # lookup を構築 (= id ベース、build_layer_render_entries の state と整合)。
+    precomputed_lookup: dict[str, dict[str, Any]] = {}
+    if precomputed_states is not None:
+        for src_child, src_state in precomputed_states:
+            cid = str(src_child.get("id", ""))
+            if cid:
+                precomputed_lookup[cid] = src_state
 
     mapped_children: list[dict[str, Any]] = []
     matched_children: list[dict[str, Any]] = []
@@ -1348,23 +1444,25 @@ def compute_shogun_reflection_stats(
                 matched_children.append(child)
             else:
                 children_without_match.append(str(child.get("id", "")))
-        # Green tier = pct >= 80, computed via existing state helper
-        # (= 既存 helper 再利用、重複実装禁)。supabase_phase completed (90%)
-        # + shogun_verified clean (100%) + with_concerns (90%) を含む。
-        state = compute_child_machine_state(
-            child,
-            kuroda_entries=kuroda_entries,
-            shogun_entries=shogun_entries,
-            w9_batches=w9_batches,
-            w9_stages=w9_stages,
-        )
+        # cycle14: SoT 化 — precomputed state 利用可能なら再計算せず derive。
+        cid = str(child.get("id", ""))
+        if cid and cid in precomputed_lookup:
+            state = precomputed_lookup[cid]
+        else:
+            state = compute_child_machine_state(
+                child,
+                kuroda_entries=kuroda_entries,
+                shogun_entries=shogun_entries,
+                w9_batches=w9_batches,
+                w9_stages=w9_stages,
+            )
         if float(state.get("pct", 0.0) or 0.0) >= 80.0:
             green_count += 1
 
     # Unmatched entries: scan every active entry, mark "matched" iff any
     # mapped child's pattern is a substring of target/audit_id_ref.
     # cycle13: _child_shogun_patterns で list 対応 (= 多 pattern OR 判定)。
-    unmatched: list[dict[str, str]] = []
+    unmatched_raw: list[dict[str, str]] = []
     for v in active_entries:
         target = str(v.get("target", "")).lower()
         audit_id_ref = str(v.get("audit_id_ref", "")).lower()
@@ -1377,11 +1475,18 @@ def compute_shogun_reflection_stats(
             if matched_by_any:
                 break
         if not matched_by_any:
-            unmatched.append({
+            unmatched_raw.append({
                 "target": str(v.get("target", "")),
                 "audit_id_ref": str(v.get("audit_id_ref", "")),
                 "verified_at": str(v.get("verified_at", "")),
             })
+
+    # cycle14 AC A-P0-1: 各 unmatched entry に retain registry 整合の
+    # candidate_id/reason/source_log を annotate (= hard-code 0 化禁の代わりに
+    # 機械証跡 retain)。
+    unmatched = annotate_unmatched_with_retain(unmatched_raw, registry=retain_registry)
+    unmatched_retain_registered = [u for u in unmatched if u.get("retain_status") == "registered"]
+    unmatched_unregistered = [u for u in unmatched if u.get("retain_status") != "registered"]
 
     children_total = len(children)
     # 緑化率 = 🟢 tier 子項目 / verification mechanism を持つ子項目 (= eligible)。
@@ -1401,7 +1506,10 @@ def compute_shogun_reflection_stats(
         "green_pct_overall": round(green_pct_overall, 1),
         "children_without_match": children_without_match,
         "unmatched_verified_targets": unmatched,
+        "unmatched_retain_registered_count": len(unmatched_retain_registered),
+        "unmatched_unregistered_count": len(unmatched_unregistered),
         "active_entries_total": len(active_entries),
+        "sot_source": "precomputed_states" if precomputed_states is not None else "internal_recompute",
     }
 
 
@@ -1458,11 +1566,23 @@ def build_layer_render_entries(
     shogun_entries: list[dict[str, Any]] | None = None,
     w9_stages: list[dict[str, Any]] | None = None,
     w9_batches: list[dict[str, Any]] | None = None,
-) -> list[dict[str, Any]]:
-    """Build layer dicts (= LAYER_DEFINITIONS extended with children + evidence) for template."""
+    collect_states: bool = False,
+) -> list[dict[str, Any]] | tuple[list[dict[str, Any]], list[tuple[dict[str, Any], dict[str, Any]]]]:
+    """Build layer dicts (= LAYER_DEFINITIONS extended with children + evidence) for template.
+
+    cycle14: collect_states=True で (rendered_layers, precomputed_states) tuple を
+    返す。precomputed_states = [(source_child_dict, state_dict), ...] で
+    compute_shogun_reflection_stats に直接渡せる形式。これにより
+    build_layer_render_entries の per-child compute_child_machine_state 結果を
+    SoT として stats が derive し、find_latest_shogun_verified の重複呼出を
+    解消する (= 黒田 cycle 13 「direct vs generator 値差」 懸念解消)。
+    collect_states=False (default) は cycle 4 以来の従来 signature (= 単一 list
+    return)、既存 caller / test 後方互換 retain。
+    """
     kuroda_entries = kuroda_entries if kuroda_entries is not None else []
     shogun_entries = shogun_entries if shogun_entries is not None else []
     entries: list[dict[str, Any]] = []
+    precomputed: list[tuple[dict[str, Any], dict[str, Any]]] = []
     for layer in LAYER_DEFINITIONS:
         children = children_for_layer(layer["code"])
         rendered_children = []
@@ -1491,11 +1611,15 @@ def build_layer_render_entries(
                 "progress_bar": progress_bar_html(pct, width_px=180, height_px=12),
                 "status_line": format_child_status_line(state),
             })
+            if collect_states:
+                precomputed.append((child, state))
         entries.append({
             **layer,
             "children": rendered_children,
             "child_count": len(rendered_children),
         })
+    if collect_states:
+        return entries, precomputed
     return entries
 
 
@@ -2083,7 +2207,21 @@ DASHBOARD_TEMPLATE = """<!-- auto-generated by scripts/regenerate_dashboard.py �
 - 🟢 全体 overall 率: {{ shogun_reflection_stats.green_pct_overall }}% (= green_count / children_total、構造 placeholder 含む)
 - active 信長 verify entry 総数: {{ shogun_reflection_stats.active_entries_total }} 件
 - mapped 子項目で match 無し: {{ shogun_reflection_stats.children_without_match | length }} 件
-- 子項目 mapping 無し verify entry: {{ shogun_reflection_stats.unmatched_verified_targets | length }} 件
+- 子項目 mapping 無し verify entry: {{ shogun_reflection_stats.unmatched_verified_targets | length }} 件 (= 機械証跡 retain {{ shogun_reflection_stats.unmatched_retain_registered_count }} 件 / 未登録 {{ shogun_reflection_stats.unmatched_unregistered_count }} 件)
+- stats SoT source: `{{ shogun_reflection_stats.sot_source }}` (= cycle14 generator context SoT 化、黒田 cycle13 「direct vs generator 値差」 懸念解消)
+
+{% if shogun_reflection_stats.unmatched_verified_targets %}
+<details>
+<summary>📋 mapping 無し verify entry 詳細 (= cycle14 機械証跡 retain registry)</summary>
+
+| target / audit_id_ref | retain | candidate_id | reason | source_log |
+|---|---|---|---|---|
+{% for u in shogun_reflection_stats.unmatched_verified_targets -%}
+| `{{ u.target or u.audit_id_ref }}` | {{ '🟢 registered' if u.retain_status == 'registered' else '🟠 unregistered' }} | {{ u.candidate_id or '-' }} | {{ u.reason or '-' }} | {{ u.source_log or '-' }} |
+{% endfor %}
+
+</details>
+{% endif %}
 
 ## 🗂 6 Layer 構造 (A〜F 構想〜規範 + G 統合)
 
@@ -2288,22 +2426,31 @@ def build_context(
     # 不在時は fallback (= "(黒田監査未)" / "false" 等)、捏造禁。
     kuroda_entries = load_kuroda_index()
     shogun_entries = load_shogun_verification_index()
-    layers_with_children = build_layer_render_entries(
+    # cycle14: collect_states=True で per-child state を SoT carry。
+    # build_layer_render_entries の compute_child_machine_state 結果を
+    # compute_shogun_reflection_stats に precomputed_states として渡し、
+    # render path と stats path の SoT を単一化する (= 黒田 cycle 13 「direct
+    # vs generator 値差」 懸念解消、AC「generator context SoT 化改修」整合)。
+    layers_with_children, precomputed_states = build_layer_render_entries(
         kuroda_entries=kuroda_entries,
         shogun_entries=shogun_entries,
         w9_stages=w9_stage_rows,
         w9_batches=w9_batch_rows,
+        collect_states=True,
     )
     cmd004_audit_alert = build_cmd004_audit_alert_section(kuroda_entries)
     # cycle11: global shogun_verified reflection stats (= 黒田条件 #2)。
     # LAYER_CHILDREN (= 静的 SoT) を直接 source とする — build_layer_render_entries の
     # rendered_children は audit_id_pattern 等を含まないため、stats 計測は raw 子項目
     # 定義側で行う (= 既存 helper 流用、黒田条件 #3 整合)。
+    # cycle14: precomputed_states 経由で SoT 化 (= per-child state 再計算回避、
+    # render path = stats path 単一化)。
     shogun_reflection_stats = compute_shogun_reflection_stats(
         LAYER_CHILDREN, shogun_entries,
         kuroda_entries=kuroda_entries,
         w9_batches=w9_batch_rows,
         w9_stages=w9_stage_rows,
+        precomputed_states=precomputed_states,
     )
 
     return {
