@@ -1073,9 +1073,26 @@ def annotate_unmatched_with_retain(
 
 CMD004_AUDIT_ALERT_AUDIT_ID = "kuroda_cmd004_remaining_9_design_docs_audit_20260512"
 
+# cycle15: shogun_verified=true 追跡用 substring patterns (= doc_id → shogun_entry
+# 命名揺れ吸収)。各 doc に対応する subsequent shogun_verified=true entry を
+# shogun_verification_mainpc_log から検出するための match needle 群。
+# patterns は target / audit_id_ref の case-insensitive substring match。
+CMD004_AUDIT_ALERT_SHOGUN_PATTERNS: dict[str, list[str]] = {
+    "cmd004_dinosaur_100enemies_spec": ["dinosaur_100enemies"],
+    "cmd004_patient_app_pwa_design": ["patient_app_pwa"],
+    "cmd004_moushi_engine_stage1_design": ["moushi_engine_stage1"],
+    "cmd004_engagement_analytics_design": ["engagement_analytics"],
+    "cmd004_security_hardening_design": ["security_hardening"],
+    "cmd004_notification_facade_design": ["notification_facade"],
+    "cmd004_observability_design": ["cmd004_observability"],
+    "cmd004_push_vapid_management": ["push_vapid"],
+    "cmd004_phase_1_6_rollback_recovery_audit": ["phase_1_6_rollback"],
+}
+
 # verdict 状態表示 (= 黒田 v2 preaudit 条件 3 整合、engagement pass_with_concerns 明示)
 _ALERT_STATUS_FAIL = "privacy修正待ち"
 _ALERT_STATUS_UNAUDIT = "未監査"
+_ALERT_STATUS_COMPLETED = "✅ 完遂 (shogun_verified)"
 
 
 def classify_verdict_for_alert(verdict: Any) -> str:
@@ -1147,13 +1164,21 @@ def build_cmd004_audit_alert_section(
     kuroda_entries: list[dict[str, Any]],
     audit_id: str = CMD004_AUDIT_ALERT_AUDIT_ID,
     docs_root: Path = PROJECT_ROOT,
+    shogun_entries: list[dict[str, Any]] | None = None,
+    shogun_patterns: dict[str, list[str]] | None = None,
 ) -> dict[str, Any]:
     """Build cmd_004 9-doc audit alert section data for the template.
 
-    Each target_doc is classified by its verdict (SoT axis) — pass /
-    pass_with_concerns → 通行可、fail* → 修正待ち、無 → 未監査. The
-    section data carries counts + per-tier rows; the template renders
-    counts + tables under the '🚨 cmd_004 audit 状態 alert' heading.
+    Each target_doc is classified across 4 tiers:
+      - 完遂 (completed) — shogun_verified=true entry exists for the doc
+        (= cycle15、subsequent sanitization audit chain で shogun verify ledger
+        反映済の 9-doc audit entries を「✅ 完遂」 tier に昇格させる dynamic 仕様)
+      - 通行可 (pass) — verdict pass / pass_with_concerns、未だ shogun verify 未
+      - 修正待ち (wait) — verdict fail*、未だ shogun verify 未
+      - 未監査 (unaudit) — verdict 不在、未だ shogun verify 未
+    shogun_verified の検出は CMD004_AUDIT_ALERT_SHOGUN_PATTERNS 経由 substring
+    match (= find_latest_shogun_verified 再利用、cycle 11 既装着 helper 流用)。
+    shogun_entries=None 時は完遂 tier=空、verdict 軸 SoT のみで分類 (= 後方互換)。
     """
     audit = find_latest_audit_for_pattern(kuroda_entries, audit_id)
     if not audit:
@@ -1162,28 +1187,45 @@ def build_cmd004_audit_alert_section(
             "audit_present": False,
             "audit_timestamp": "",
             "audit_verdict": "",
-            "wait_count": 0, "pass_count": 0, "unaudit_count": 0,
-            "wait_rows": [], "pass_rows": [], "unaudit_rows": [],
+            "wait_count": 0, "pass_count": 0, "unaudit_count": 0, "completed_count": 0,
+            "wait_rows": [], "pass_rows": [], "unaudit_rows": [], "completed_rows": [],
         }
     target_docs = audit.get("target_docs") or []
+    patterns = shogun_patterns if shogun_patterns is not None else CMD004_AUDIT_ALERT_SHOGUN_PATTERNS
+    shogun = shogun_entries or []
     wait_rows: list[dict[str, Any]] = []
     pass_rows: list[dict[str, Any]] = []
     unaudit_rows: list[dict[str, Any]] = []
+    completed_rows: list[dict[str, Any]] = []
     for doc in target_docs:
         if not isinstance(doc, dict):
             continue
+        doc_id = str(doc.get("id") or "")
         verdict_raw = doc.get("verdict")
         category = classify_verdict_for_alert(verdict_raw)
         rel_path = _alert_relative_path(str(doc.get("path") or ""))
         size_label = _alert_doc_size_label(rel_path, docs_root)
         row = {
-            "id": str(doc.get("id") or ""),
+            "id": doc_id,
             "path": rel_path,
             "size_label": size_label,
             "verdict": str(verdict_raw or ""),
             "status_display": _alert_status_display(verdict_raw),
         }
-        if category == "pass":
+        verified_entry: dict[str, Any] | None = None
+        doc_patterns = patterns.get(doc_id) or []
+        if shogun and doc_patterns:
+            verified_entry = find_latest_shogun_verified(shogun, doc_patterns)
+        if verified_entry is not None:
+            row["status_display"] = _ALERT_STATUS_COMPLETED
+            row["shogun_audit_id_ref"] = str(verified_entry.get("audit_id_ref") or "")
+            row["shogun_verified_at"] = str(
+                verified_entry.get("verified_at")
+                or verified_entry.get("timestamp")
+                or ""
+            )
+            completed_rows.append(row)
+        elif category == "pass":
             pass_rows.append(row)
         elif category == "wait":
             wait_rows.append(row)
@@ -1197,9 +1239,11 @@ def build_cmd004_audit_alert_section(
         "wait_count": len(wait_rows),
         "pass_count": len(pass_rows),
         "unaudit_count": len(unaudit_rows),
+        "completed_count": len(completed_rows),
         "wait_rows": wait_rows,
         "pass_rows": pass_rows,
         "unaudit_rows": unaudit_rows,
+        "completed_rows": completed_rows,
     }
 
 
@@ -2149,24 +2193,24 @@ DASHBOARD_TEMPLATE = """<!-- auto-generated by scripts/regenerate_dashboard.py �
 | {{ agent }} | {{ per_agent_bars.get(agent, pct ~ '%') }} | {{ task_counts.get(agent, 0) }} |
 {% endfor %}
 
-## 🚨 cmd_004 audit 状態 alert (= {{ cmd004_audit_alert.wait_count + cmd004_audit_alert.pass_count + cmd004_audit_alert.unaudit_count }} 件)
+## 🚨 cmd_004 audit 状態 alert (= {{ cmd004_audit_alert.wait_count + cmd004_audit_alert.pass_count + cmd004_audit_alert.unaudit_count + cmd004_audit_alert.completed_count }} 件)
 
 {% if cmd004_audit_alert.audit_present -%}
-> ⚠️ 黒田 audit 完遂結果 (`{{ cmd004_audit_alert.audit_id }}`): **修正待ち {{ cmd004_audit_alert.wait_count }} 件 (privacy sanitization 要)** / **通行可 {{ cmd004_audit_alert.pass_count }} 件** / 未監査 {{ cmd004_audit_alert.unaudit_count }} 件、本日中完遂目標。
+> ⚠️ 黒田 audit 完遂結果 (`{{ cmd004_audit_alert.audit_id }}`): **✅ 完遂 {{ cmd004_audit_alert.completed_count }} 件 (shogun_verified)** / **🟢 通行可 {{ cmd004_audit_alert.pass_count }} 件 (verify 待ち)** / **🟠 修正待ち {{ cmd004_audit_alert.wait_count }} 件 (privacy sanitization 要)** / 🔴 未監査 {{ cmd004_audit_alert.unaudit_count }} 件、本日中完遂目標。
 {%- else -%}
 > ⚠️ 黒田 audit (`{{ cmd004_audit_alert.audit_id }}`) 未検出 — kuroda_mainpc_report.yaml に対象 audit 不在。
 {%- endif %}
 
-### 🟠 修正待ち {{ cmd004_audit_alert.wait_count }} 件 (= privacy HIGH 絶対パス/疑似 secret、sanitization 後再監査要)
+### ✅ 完遂 {{ cmd004_audit_alert.completed_count }} 件 (= shogun_verified=true 反映済、信長殿 verify ledger entry あり)
 
-{% if cmd004_audit_alert.wait_count > 0 -%}
-| 優先 | 子項目 | 状態 | 関連 doc |
-|---|---|---|---|
-{% for row in cmd004_audit_alert.wait_rows -%}
-| {{ loop.index }} | 🟠 {{ row.id }} | {{ row.status_display }} | `{{ row.path }}`{% if row.size_label %} ({{ row.size_label }}){% endif %} |
+{% if cmd004_audit_alert.completed_count > 0 -%}
+| 優先 | 子項目 | 状態 | 関連 doc | shogun verify entry |
+|---|---|---|---|---|
+{% for row in cmd004_audit_alert.completed_rows -%}
+| {{ loop.index }} | ✅ {{ row.id }} | {{ row.status_display }} | `{{ row.path }}`{% if row.size_label %} ({{ row.size_label }}){% endif %} | `{{ row.shogun_audit_id_ref or '-' }}` |
 {% endfor %}
 {%- else -%}
-(修正待ち 0 件)
+(完遂 0 件)
 {%- endif %}
 
 ### 🟢 通行可 {{ cmd004_audit_alert.pass_count }} 件 (= 黒田 audit pass、信長殿 verify ledger 待ち)
@@ -2179,6 +2223,18 @@ DASHBOARD_TEMPLATE = """<!-- auto-generated by scripts/regenerate_dashboard.py �
 {% endfor %}
 {%- else -%}
 (通行可 0 件)
+{%- endif %}
+
+### 🟠 修正待ち {{ cmd004_audit_alert.wait_count }} 件 (= privacy HIGH 絶対パス/疑似 secret、sanitization 後再監査要)
+
+{% if cmd004_audit_alert.wait_count > 0 -%}
+| 優先 | 子項目 | 状態 | 関連 doc |
+|---|---|---|---|
+{% for row in cmd004_audit_alert.wait_rows -%}
+| {{ loop.index }} | 🟠 {{ row.id }} | {{ row.status_display }} | `{{ row.path }}`{% if row.size_label %} ({{ row.size_label }}){% endif %} |
+{% endfor %}
+{%- else -%}
+(修正待ち 0 件)
 {%- endif %}
 
 ### 🔴 未監査 {{ cmd004_audit_alert.unaudit_count }} 件
@@ -2438,7 +2494,9 @@ def build_context(
         w9_batches=w9_batch_rows,
         collect_states=True,
     )
-    cmd004_audit_alert = build_cmd004_audit_alert_section(kuroda_entries)
+    cmd004_audit_alert = build_cmd004_audit_alert_section(
+        kuroda_entries, shogun_entries=shogun_entries,
+    )
     # cycle11: global shogun_verified reflection stats (= 黒田条件 #2)。
     # LAYER_CHILDREN (= 静的 SoT) を直接 source とする — build_layer_render_entries の
     # rendered_children は audit_id_pattern 等を含まないため、stats 計測は raw 子項目

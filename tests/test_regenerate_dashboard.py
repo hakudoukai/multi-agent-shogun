@@ -1807,15 +1807,54 @@ def test_classify_verdict_for_alert_unaudit_axis():
     assert rd.classify_verdict_for_alert("") == "unaudit"
 
 
-def test_build_cmd004_audit_alert_section_count_7_2_0():
-    """黒田 v2 preaudit 条件 2: 修正待ち 7 + 通行可 2 + 未監査 0 の count assertion (= verdict 軸 SoT で 3 軸分類)。"""
-    section = rd.build_cmd004_audit_alert_section(_fake_kuroda_entries_9docs())
+def _expected_counts_from_fixture(
+    fixture: list[dict[str, Any]],
+) -> dict[str, int]:
+    """cycle15: fixture target_docs の verdict から expected wait/pass/unaudit を導出。
+
+    test 側で 7/2/0 等の literal hard-code を排し、入力 fixture から動的算出する
+    (= 黒田 cycle 15 4 guard #1 「既存 cycle 8 固定値 test も dynamic 仕様へ更新必達、
+    test だけ hard-code 残し禁、generator と整合」 整合)。
+    """
+    target_docs = fixture[0]["target_docs"]
+    wait = sum(1 for d in target_docs if str(d.get("verdict", "")).lower().startswith("fail"))
+    passed = sum(1 for d in target_docs if str(d.get("verdict", "")).lower().startswith("pass"))
+    unaudit = sum(1 for d in target_docs if not d.get("verdict"))
+    return {"wait": wait, "pass": passed, "unaudit": unaudit, "total": len(target_docs)}
+
+
+def test_build_cmd004_audit_alert_section_dynamic_counts_from_fixture():
+    """cycle15 dynamic 仕様: counts は fixture target_docs verdict から動的算出 (= literal 7/2/0 hard-code 禁、generator と整合)。
+
+    cycle 8 (= literal 7/2/0 assertion) の hard-code 痕跡を排除し、fixture 内 verdict
+    分布から expected を算出する (= 黒田 cycle 15 4 guard #1 整合)。
+    shogun_entries 未指定時は完遂 tier=0、verdict 軸 SoT のみで分類される後方互換。
+    """
+    fixture = _fake_kuroda_entries_9docs()
+    expected = _expected_counts_from_fixture(fixture)
+    section = rd.build_cmd004_audit_alert_section(fixture)
     assert section["audit_present"] is True
-    assert section["wait_count"] == 7, f"修正待ち count 不一致: {section['wait_count']} (= 想定 7)"
-    assert section["pass_count"] == 2, f"通行可 count 不一致: {section['pass_count']} (= 想定 2)"
-    assert section["unaudit_count"] == 0, f"未監査 count 不一致: {section['unaudit_count']} (= 想定 0)"
-    assert len(section["wait_rows"]) == 7
-    assert len(section["pass_rows"]) == 2
+    assert section["wait_count"] == expected["wait"], (
+        f"修正待ち count = {section['wait_count']} (= fixture 算出 {expected['wait']})"
+    )
+    assert section["pass_count"] == expected["pass"], (
+        f"通行可 count = {section['pass_count']} (= fixture 算出 {expected['pass']})"
+    )
+    assert section["unaudit_count"] == expected["unaudit"], (
+        f"未監査 count = {section['unaudit_count']} (= fixture 算出 {expected['unaudit']})"
+    )
+    # 完遂 tier は shogun_entries 不在で 0 件 (後方互換)
+    assert section["completed_count"] == 0, (
+        f"shogun_entries 不在時 完遂 count = {section['completed_count']} (= 想定 0)"
+    )
+    assert len(section["wait_rows"]) == expected["wait"]
+    assert len(section["pass_rows"]) == expected["pass"]
+    # 全 tier 合計 = target_docs 件数 (= 漏れ禁)
+    total = (section["wait_count"] + section["pass_count"]
+             + section["unaudit_count"] + section["completed_count"])
+    assert total == expected["total"], (
+        f"tier 合計 {total} != target_docs 件数 {expected['total']}"
+    )
 
 
 def test_build_cmd004_audit_alert_section_pass_with_concerns_engagement():
@@ -1833,13 +1872,19 @@ def test_build_cmd004_audit_alert_section_verdict_axis_not_audit_id_only():
 
     target_doc に verdict=fail だけ与えれば修正待ちに、verdict=pass だけ与えれば通行可に
     分類される (= audit_id list は同一でも verdict 変化で tier が swap する)。
+    cycle15: expected counts は fixture から動的算出 (= 4 guard #1 整合)。
     """
     base = _fake_kuroda_entries_9docs()
+    baseline = _expected_counts_from_fixture(base)
     # 1 件を fail → pass に書き換え → 修正待ち -1 / 通行可 +1 になる確認
     base[0]["target_docs"][0] = {**base[0]["target_docs"][0], "verdict": "pass"}
     section = rd.build_cmd004_audit_alert_section(base)
-    assert section["wait_count"] == 6, f"verdict swap 後 修正待ち count = {section['wait_count']} (= 想定 6)"
-    assert section["pass_count"] == 3, f"verdict swap 後 通行可 count = {section['pass_count']} (= 想定 3)"
+    assert section["wait_count"] == baseline["wait"] - 1, (
+        f"verdict swap 後 修正待ち count = {section['wait_count']} (= baseline {baseline['wait']} - 1)"
+    )
+    assert section["pass_count"] == baseline["pass"] + 1, (
+        f"verdict swap 後 通行可 count = {section['pass_count']} (= baseline {baseline['pass']} + 1)"
+    )
 
 
 def test_build_cmd004_audit_alert_section_wait_entry_not_completed():
@@ -1877,16 +1922,165 @@ def test_build_cmd004_audit_alert_section_missing_audit_fallback():
     assert section["wait_count"] == 0
     assert section["pass_count"] == 0
     assert section["unaudit_count"] == 0
+    assert section["completed_count"] == 0
+    assert section["completed_rows"] == []
+
+
+# ---------------------------------------------------------------------------
+# cycle15: ✅ 完遂 tier (= shogun_verified=true) dynamic 昇格 logic
+#   真因: 9-doc audit entries.target_docs[].verdict は audit 当時の snapshot
+#   ゆえ後続 sanitization cycle で pass しても fail のまま retain される。
+#   shogun_verification_mainpc_log.yaml の shogun_verified=true entry を
+#   subsequent ground-truth として読み、完遂 tier に昇格させる。
+# ---------------------------------------------------------------------------
+
+
+def _fake_shogun_entries_for_docs(doc_ids: list[str]) -> list[dict[str, Any]]:
+    """Build fake shogun_verification entries (= shogun_verified=true) for the
+    given doc_ids using CMD004_AUDIT_ALERT_SHOGUN_PATTERNS substrings。
+
+    各 entry は target/audit_id_ref に substring を含むように生成し、
+    find_latest_shogun_verified の matching を triggers する。
+    """
+    entries: list[dict[str, Any]] = []
+    for doc_id in doc_ids:
+        patterns = rd.CMD004_AUDIT_ALERT_SHOGUN_PATTERNS.get(doc_id) or []
+        if not patterns:
+            continue
+        needle = patterns[0]
+        entries.append({
+            "target": f"subtask_cmd004_{needle}_privacy_sanitization_completion",
+            "audit_id_ref": f"kuroda_cmd004_{needle}_sanitization_cycle2_audit_20260512",
+            "shogun_verified": True,
+            "verified_at": "2026-05-12T22:00:00+09:00",
+            "timestamp": "2026-05-12T22:00:00+09:00",
+        })
+    return entries
+
+
+def test_build_cmd004_audit_alert_section_completed_promotion_via_shogun_verified():
+    """cycle15: shogun_verified=true 検出 doc は完遂 tier に昇格 (= 修正待ち/通行可から離脱)。
+
+    9-doc fixture (= 7 fail + 2 pass) のうち 3 件 fail + 1 件 pass を shogun_verified=true
+    として shogun_entries に投入 → 完遂 4 件、修正待ち 4、通行可 1、unaudit 0 へ
+    dynamic 再分類されることを検証する。
+    """
+    fixture = _fake_kuroda_entries_9docs()
+    baseline = _expected_counts_from_fixture(fixture)
+    promoted_doc_ids = [
+        "cmd004_dinosaur_100enemies_spec",
+        "cmd004_observability_design",
+        "cmd004_notification_facade_design",
+        "cmd004_engagement_analytics_design",
+    ]
+    shogun_entries = _fake_shogun_entries_for_docs(promoted_doc_ids)
+    section = rd.build_cmd004_audit_alert_section(
+        fixture, shogun_entries=shogun_entries,
+    )
+    promoted_wait = sum(
+        1 for did in promoted_doc_ids
+        if any(d["id"] == did and str(d.get("verdict", "")).startswith("fail")
+               for d in fixture[0]["target_docs"])
+    )
+    promoted_pass = sum(
+        1 for did in promoted_doc_ids
+        if any(d["id"] == did and str(d.get("verdict", "")).startswith("pass")
+               for d in fixture[0]["target_docs"])
+    )
+    assert section["completed_count"] == len(promoted_doc_ids), (
+        f"完遂 count = {section['completed_count']} (= promoted {len(promoted_doc_ids)} 件)"
+    )
+    assert section["wait_count"] == baseline["wait"] - promoted_wait, (
+        f"修正待ち count = {section['wait_count']} (= baseline {baseline['wait']} - promoted_wait {promoted_wait})"
+    )
+    assert section["pass_count"] == baseline["pass"] - promoted_pass, (
+        f"通行可 count = {section['pass_count']} (= baseline {baseline['pass']} - promoted_pass {promoted_pass})"
+    )
+    # tier 合計 = target_docs 件数 (= 漏れ禁)
+    total = (section["wait_count"] + section["pass_count"]
+             + section["unaudit_count"] + section["completed_count"])
+    assert total == baseline["total"], (
+        f"tier 合計 {total} != target_docs {baseline['total']}"
+    )
+    # 完遂 row に shogun_audit_id_ref が retain される (= evidence trace)
+    for row in section["completed_rows"]:
+        assert row["status_display"] == "✅ 完遂 (shogun_verified)"
+        assert row["shogun_audit_id_ref"], f"完遂 row {row['id']} に shogun_audit_id_ref 不在"
+
+
+def test_build_cmd004_audit_alert_section_no_shogun_no_promotion():
+    """shogun_entries 不在 / None / 空時は完遂 tier=0 retain (= 後方互換)。"""
+    fixture = _fake_kuroda_entries_9docs()
+    for shogun_entries in (None, []):
+        section = rd.build_cmd004_audit_alert_section(
+            fixture, shogun_entries=shogun_entries,
+        )
+        assert section["completed_count"] == 0, (
+            f"shogun_entries={shogun_entries!r} 時 完遂 count = {section['completed_count']} (= 想定 0)"
+        )
+        assert section["completed_rows"] == []
+
+
+def test_build_cmd004_audit_alert_section_completed_priority_over_verdict():
+    """二軸優先順: shogun_verified=true > verdict (= cycle 9 v2 條件 2 整合)。
+
+    verdict=fail (= 通常なら修正待ち tier) の doc でも shogun_verified=true が
+    あれば完遂 tier に昇格する (= verdict 上書き)。
+    """
+    fixture = _fake_kuroda_entries_9docs()
+    fail_doc_id = "cmd004_dinosaur_100enemies_spec"  # fixture で verdict=fail
+    shogun_entries = _fake_shogun_entries_for_docs([fail_doc_id])
+    section = rd.build_cmd004_audit_alert_section(
+        fixture, shogun_entries=shogun_entries,
+    )
+    wait_ids = {r["id"] for r in section["wait_rows"]}
+    completed_ids = {r["id"] for r in section["completed_rows"]}
+    assert fail_doc_id not in wait_ids, (
+        f"verdict=fail だが shogun_verified=true の {fail_doc_id} が修正待ち tier 残存"
+    )
+    assert fail_doc_id in completed_ids, (
+        f"shogun_verified=true の {fail_doc_id} が完遂 tier 不在"
+    )
+
+
+def test_cmd004_audit_alert_shogun_patterns_covers_all_9_docs():
+    """CMD004_AUDIT_ALERT_SHOGUN_PATTERNS は 9-doc audit fixture の全 doc_id を網羅する。
+
+    pattern mapping 漏れがあると一部 doc が完遂 tier に昇格できず static retain
+    される為、9 件全件の patterns 存在を強制する (= regression guard)。
+    """
+    fixture = _fake_kuroda_entries_9docs()
+    fixture_doc_ids = {str(d["id"]) for d in fixture[0]["target_docs"]}
+    pattern_doc_ids = set(rd.CMD004_AUDIT_ALERT_SHOGUN_PATTERNS.keys())
+    missing = fixture_doc_ids - pattern_doc_ids
+    assert not missing, (
+        f"CMD004_AUDIT_ALERT_SHOGUN_PATTERNS に未登録 doc: {sorted(missing)}"
+    )
 
 
 def test_render_dashboard_includes_cmd004_audit_alert_section(monkeypatch: pytest.MonkeyPatch):
-    """rendered dashboard.md に 🚨 cmd_004 audit 状態 alert section が登場する (= 全体進捗直下 visible)。"""
+    """rendered dashboard.md に 🚨 cmd_004 audit 状態 alert section が登場する (= 全体進捗直下 visible)。
+
+    cycle15: counts は fixture から動的算出 (= literal hard-code 禁、4 guard #1 整合)。
+    load_shogun_verification_index は空 list で監修 patch (= baseline no-promotion 状態、
+    完遂 tier 検証は別 test で実施)。
+    """
     monkeypatch.setattr(rd, "load_kuroda_index", lambda: _fake_kuroda_entries_9docs())
+    monkeypatch.setattr(rd, "load_shogun_verification_index", lambda: [])
     rendered = rd.render_dashboard(_baseline_context())
+    expected = _expected_counts_from_fixture(_fake_kuroda_entries_9docs())
     assert "🚨 cmd_004 audit 状態 alert" in rendered, "alert section heading 不在"
-    assert "🟠 修正待ち 7 件" in rendered, "修正待ち sub-heading 7 件 不在"
-    assert "🟢 通行可 2 件" in rendered, "通行可 sub-heading 2 件 不在"
-    assert "🔴 未監査 0 件" in rendered, "未監査 sub-heading 0 件 不在"
+    assert f"🟠 修正待ち {expected['wait']} 件" in rendered, (
+        f"修正待ち sub-heading {expected['wait']} 件 不在 (= fixture 動的算出)"
+    )
+    assert f"🟢 通行可 {expected['pass']} 件" in rendered, (
+        f"通行可 sub-heading {expected['pass']} 件 不在 (= fixture 動的算出)"
+    )
+    assert f"🔴 未監査 {expected['unaudit']} 件" in rendered, (
+        f"未監査 sub-heading {expected['unaudit']} 件 不在 (= fixture 動的算出)"
+    )
+    # shogun_entries 空 → 完遂 tier 0 件 retain
+    assert "✅ 完遂 0 件" in rendered, "完遂 sub-heading 0 件 不在 (shogun 不在 baseline)"
     # 全体進捗直下: 「全体進捗」見出し位置 < alert 見出し位置 < 6 Layer 見出し位置
     pos_overall = rendered.index("🚀 全体進捗")
     pos_alert = rendered.index("🚨 cmd_004 audit 状態 alert")
@@ -1899,6 +2093,7 @@ def test_render_dashboard_includes_cmd004_audit_alert_section(monkeypatch: pytes
 def test_render_dashboard_cmd004_alert_no_absolute_path(monkeypatch: pytest.MonkeyPatch):
     """rendered alert section 内に絶対パス (/mnt/c, /home, /Users) が登場しないこと (= privacy retain + 条件 4)。"""
     monkeypatch.setattr(rd, "load_kuroda_index", lambda: _fake_kuroda_entries_9docs())
+    monkeypatch.setattr(rd, "load_shogun_verification_index", lambda: [])
     rendered = rd.render_dashboard(_baseline_context())
     # alert section の範囲 (= 🚨 から 6 Layer まで) を切り出して absolute path 検査
     start = rendered.index("🚨 cmd_004 audit 状態 alert")
@@ -1906,6 +2101,41 @@ def test_render_dashboard_cmd004_alert_no_absolute_path(monkeypatch: pytest.Monk
     alert_block = rendered[start:end]
     for forbidden in ("/mnt/c/", "/home/", "/Users/"):
         assert forbidden not in alert_block, f"alert section に absolute path 残存: {forbidden}"
+
+
+def test_render_dashboard_cmd004_alert_completed_tier_dynamic(monkeypatch: pytest.MonkeyPatch):
+    """cycle15: rendered alert に ✅ 完遂 tier section + shogun_verified=true による昇格が反映される。
+
+    fake shogun_entries で 3 件 promote → rendered output に「✅ 完遂 3 件」 + 修正待ち
+    が baseline - 3 で表示されることを動的検証 (= 4 guard #1 整合、literal hard-code 禁)。
+    """
+    promoted_doc_ids = [
+        "cmd004_dinosaur_100enemies_spec",
+        "cmd004_observability_design",
+        "cmd004_notification_facade_design",
+    ]
+    monkeypatch.setattr(rd, "load_kuroda_index", lambda: _fake_kuroda_entries_9docs())
+    monkeypatch.setattr(
+        rd, "load_shogun_verification_index",
+        lambda: _fake_shogun_entries_for_docs(promoted_doc_ids),
+    )
+    rendered = rd.render_dashboard(_baseline_context())
+    expected = _expected_counts_from_fixture(_fake_kuroda_entries_9docs())
+    # promoted 内訳: fail / pass どちらに居たかを fixture から動的算出
+    fixture_docs = _fake_kuroda_entries_9docs()[0]["target_docs"]
+    promoted_wait = sum(
+        1 for d in fixture_docs
+        if d["id"] in promoted_doc_ids and str(d.get("verdict", "")).startswith("fail")
+    )
+    expected_wait = expected["wait"] - promoted_wait
+    assert f"✅ 完遂 {len(promoted_doc_ids)} 件" in rendered, (
+        f"完遂 sub-heading {len(promoted_doc_ids)} 件 不在 (= shogun 昇格反映)"
+    )
+    assert f"🟠 修正待ち {expected_wait} 件" in rendered, (
+        f"修正待ち sub-heading {expected_wait} 件 不在 (= 完遂昇格後 dynamic 残)"
+    )
+    # 完遂 row の status_display が rendered に登場 (= evidence trace)
+    assert "✅ 完遂 (shogun_verified)" in rendered, "完遂 row status_display 不在"
 
 
 # ---------------------------------------------------------------------------
