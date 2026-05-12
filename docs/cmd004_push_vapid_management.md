@@ -5,7 +5,7 @@
 - bloom_level: L4
 - 文書種別: **運用 runbook** (= 設計は別文書、本書は実装/運用手順)
 - author: ashigaru3 (= 滝川一益、SC WSL hakudoukai@gmail.com)
-- preflight: /mnt/c/Projects/hakudokai-dev/ SC WSL access 確認済
+- preflight: <DENTALBI_REPO_ROOT>/ SC WSL access 確認済
 - base 既存資産 (= 改変禁、本書はこの設計を実装する側):
   - `docs/kids_app_push_ceremony_detail_design.md` §1 / §2 / §8 (信長手動再構築 v0.1) — **VAPID/SW/DDL の正本**
   - `docs/cmd004_guardian_consent_spec.md` (= ashigaru4 並行起案、保護者同意 gate の正本)
@@ -259,7 +259,7 @@ ORDER BY occurred_at DESC;
 ### 6-1. 単体テスト
 
 ```bash
-cd /mnt/c/Projects/hakudokai-dev
+cd <DENTALBI_REPO_ROOT>
 pytest backend/tests/test_push_notifications_router.py -v
 ```
 
@@ -401,8 +401,8 @@ OD-PVI-2 (旧 send_push 実装) → **scaffold 完遂、実 push HTTP 配信の�
 - **VAPID 漏洩検知時の内部緊急通知**: 鍵 rotation 実行をスタッフへ通知する目的で ntfy.sh 経由の内部 admin 通知が許可される。**患者向け配信** は引き続き Web Push のみ。
 
 **機械 evidence**: 
-- `grep -r "ntfy" /mnt/c/Projects/hakudokai-dev/backend/` → ヒットなし (= 患者 backend は ntfy.sh を import しない)
-- `grep -r "push_notifications\|VAPID\|webpush" /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/ntfy*.sh` → ヒットなし (= multi-agent scripts は Web Push を参照しない)
+- `grep -r "ntfy" <DENTALBI_REPO_ROOT>/backend/` → ヒットなし (= 患者 backend は ntfy.sh を import しない)
+- `grep -r "push_notifications\|VAPID\|webpush" <MULTI_AGENT_REPO_ROOT>/scripts/ntfy*.sh` → ヒットなし (= multi-agent scripts は Web Push を参照しない)
 
 ### 10-5. AC5 — Anti-Dup 既設計 SoT 再 verify
 
