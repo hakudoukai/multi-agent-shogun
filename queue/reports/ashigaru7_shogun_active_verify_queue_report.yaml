@@ -1,0 +1,127 @@
+# ashigaru7 report — subtask_shogun_active_verify_queue_systemd (cycle 1 縮小版)
+# 信長殿陛下御差配 13:57 仕組み task / 黒田 14:19 pre-audit pass_with_conditions / open_for_assignment
+
+report:
+  task_id: subtask_shogun_active_verify_queue_systemd
+  parent_cmd: ad-hoc (信長殿御差配 13:57 仕組み task)
+  agent: ashigaru7
+  persona: ashigaru7 (夜襲精鋭)
+  cycle_n: 1
+  status: ready_for_audit
+  completed_at: "2026-05-12T14:30:00+09:00"
+  head_commit: "d0b6c0d"
+  base_commit: "9957a33"
+  reported_at: "2026-05-12T14:30:00+09:00"
+
+  three_axis_verdict:
+    self: pass
+    machine_evidence: pass
+    privacy_gate: clean
+
+  deliverables:
+    - path: scripts/shogun_active_verify_queue.py
+      kind: implementation
+      lines: 246
+      note: |
+        cycle 1 縮小版。local YAML scan + candidate log + flock + dry-run のみ。
+        --execute / Supabase MCP scan / shogun inbox 自動投函 / systemctl 起動は cycle 2 別承認 scope (= 未実装)。
+    - path: docs/systemd_templates/shogun-active-verify-queue.service.template
+      kind: systemd_template
+      note: |
+        ~/.config/systemd/user/ への install は cycle 2 別承認後 karo 手動操作 scope。
+        WorkingDirectory + ExecStart の絶対 path は install 時 karo が REPLACE_REPO_ROOT_ABSOLUTE_PATH を置換。
+    - path: docs/systemd_templates/shogun-active-verify-queue.timer.template
+      kind: systemd_template
+      note: OnUnitActiveSec=15min, Persistent=true (= auto_git_sync.timer と同 pattern)
+    - path: tests/test_shogun_active_verify_queue.py
+      kind: unit_tests
+      note: 14 tests across 5 test classes (scan helpers, candidates, run_scan, lock)
+    - path: queue/reports/active_verify_queue_candidate_log.yaml
+      kind: dry_run_evidence
+      note: 1 cycle 動作確認の生成物 (= acceptance_criteria evidence)
+    - path: .gitignore
+      kind: config_change
+      note: whitelist 6 entries 追記 (scripts / docs/systemd_templates/ / tests / candidate log / report)
+
+  machine_evidence:
+    syntax_check:
+      command: "python3 -c \"import ast; ast.parse(open('scripts/shogun_active_verify_queue.py').read())\""
+      observed: "SYNTAX_OK"
+    pytest_target:
+      command: "python3 -m pytest tests/test_shogun_active_verify_queue.py -v"
+      observed: "14 passed in 0.04s; SKIP=0"
+    pytest_full_regression:
+      command: "python3 -m pytest tests/ -q"
+      observed: "150 passed in 2.46s; SKIP=0"
+    dry_run_cycle:
+      command: "python3 scripts/shogun_active_verify_queue.py"
+      observed_summary:
+        audit_pass_total: 65
+        already_verified_total: 63
+        candidates_total: 42
+        candidate_log_written: true
+        candidate_log_path: queue/reports/active_verify_queue_candidate_log.yaml
+    privacy_gate:
+      command: "python3 scripts/validate_report_privacy.py scripts/shogun_active_verify_queue.py tests/test_shogun_active_verify_queue.py docs/systemd_templates/shogun-active-verify-queue.service.template docs/systemd_templates/shogun-active-verify-queue.timer.template queue/reports/active_verify_queue_candidate_log.yaml"
+      observed: "CLEAN x5; rc=0; HIGH=0; WARN=0"
+    git_diff_stat:
+      command: "git show --stat d0b6c0d"
+      observed: "6 files changed, 921 insertions(+)"
+
+  acceptance_criteria_status:
+    ac0_inventory:
+      pass: true
+      evidence: "scripts/auto_git_sync.sh + scripts/validate_report_privacy.py + 既存 verify log + 既存 auditor reports を読了"
+    cycle1_script_implementation:
+      pass: true
+      evidence: "scripts/shogun_active_verify_queue.py 246 行、dry-run のみ、flock 排他、--execute 未実装"
+    systemd_unit_templates_only:
+      pass: true
+      evidence: "docs/systemd_templates/ 配下 .template ファイルのみ生成、~/.config/systemd/user/ 触らず"
+    pytest_pass_skip_zero:
+      pass: true
+      evidence: "tests/test_shogun_active_verify_queue.py 14/14 PASS SKIP=0 + 全 tests/ 150 PASS SKIP=0"
+    dry_run_cycle_evidence:
+      pass: true
+      evidence: "queue/reports/active_verify_queue_candidate_log.yaml 生成 (audit_pass=65 verified=63 candidates=42)"
+    privacy_gate_clean:
+      pass: true
+      evidence: "validate_report_privacy.py rc=0 HIGH=0 WARN=0 (5 ファイル全件 CLEAN)"
+    commit_no_push:
+      pass: true
+      evidence: "commit d0b6c0d on main、F007 整合 push 無"
+    gunshi_karo_inbox:
+      pass: pending
+      evidence: "本 report 出力後 inbox_write.sh で送付予定"
+
+  kuroda_pre_audit_conditions_compliance:
+    condition_1_cycle1_scope_only:
+      compliant: true
+      note: "local dry-run scan + candidate log + docs/systemd_templates のみ実装"
+    condition_2_no_project_outside_path:
+      compliant: true
+      note: "~/.config/systemd/user/ への install は実施せず、repo 内 docs/systemd_templates/ のみ生成"
+    condition_3_no_systemctl_execute_inbox_auto_post:
+      compliant: true
+      note: "--execute flag 未実装、shogun inbox 自動投函機構は cycle 2 scope ゆえ未装備"
+    condition_4_candidate_log_path:
+      compliant: true
+      note: "queue/reports/active_verify_queue_candidate_log.yaml に dry-run output 配置"
+
+  scope_explicitly_excluded_cycle2:
+    - "--execute flag (= write path: shogun inbox 自動投函)"
+    - "Supabase MCP scan (= 黒田 audit pass を Supabase 経由でも検出する path)"
+    - "~/.config/systemd/user/ install + systemctl --user enable --now (= karo 手動 or D006 例外申請 path)"
+    - "連続 candidate detection の dedup / cooldown (= 必要なら cycle 2 で追加)"
+
+  next_action:
+    - "gunshi (黒田) 三者監査依頼 inbox 送付 (本 report 経由)"
+    - "karo report_received 通知 inbox 送付"
+    - "cycle 2 起案は karo 主導、ashigaru7 retain"
+
+  notes:
+    - "F001-F005 + Tier1 Destructive ban 厳守: rm-rf / kill / sudo / chmod / git push --force 一切無し"
+    - "SLA 16:00 JST、14:30 完遂 = 余裕"
+    - "根本治療規範遵守: dry-run only により仕組み未稼動でも誤投函 risk 0"
+
+  skill_candidate: null
