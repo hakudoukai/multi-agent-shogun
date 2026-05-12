@@ -1568,6 +1568,248 @@ dashboard_post_completion_audits:
       action: trigger_shogun_audit_request_chain
       summary: "Layer A deliverable is acceptable with concerns. Start shogun_audit_request chain per new rule, while recording path-name drift and stale TBD SHA metadata as follow-up hygiene issues."
 
+  - audit_id: naomasa_post_audit_cmd020_dashboard_layer_c_function_render
+    target_type: ashigaru_deliverable_post_completion_audit
+    target_task_id: subtask_cmd020_dashboard_layer_c_function_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T11:34:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_111743_343d79dc
+    assignee: ashigaru3
+    pre_audit_id: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    source_commits:
+      inventory: 46f5b99
+      render: ee98285
+      test_report: f3651ae
+    source_files:
+      - queue/reports/ashigaru3_dashboard_layer_c_inventory.yaml
+      - docs/dashboard_layer_c_function.md
+      - scripts/test/test_dashboard_layer_c_static_contract.py
+      - queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_report.yaml
+      - queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_pytest.log
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass_with_concerns
+      3_kiritsu_chain_of_command: concerns
+      4_logic_consistency: pass
+      5_schema_data_contract: pass_with_concerns
+      6_test_ci_evidence: pass
+      7_legal_privacy_security: pass
+      8_operations: pass_with_concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: concerns
+      12_future_operations_radicality: pass_with_concerns
+    acceptance_criteria_evidence:
+      AC0_inventory: pass
+      AC1_design_source_read: pass
+      AC2_render_component: pass
+      AC3_mc_integration_deferred: pass
+      AC4_static_tests: "pass; recorded log 5 passed / 0 skipped, Naomasa rerun also 5 passed / 0 skipped"
+      AC5_bounded_push: "pass_with_concerns; commit f3651ae includes out-of-scope Layer B inventory + .gitignore staged content"
+      AC6_report_log_ack: pass
+    machine_evidence:
+      git_show: "git show --stat confirms 46f5b99 inventory, ee98285 render, f3651ae test/report/log plus ashigaru2_dashboard_layer_b_inventory.yaml and .gitignore scope mixture."
+      pytest_rerun: "python3 -m pytest scripts/test/test_dashboard_layer_c_static_contract.py -v --no-header => 5 passed, 0 skipped."
+    findings:
+      - severity: high
+        perspective: 3_kiritsu_chain_of_command
+        issue: "Commit f3651ae includes ashigaru2 Layer B staged files in an ashigaru3 Layer C commit."
+        recommendation: "Do not fail Layer C deliverable because functional files are intact, but Karo should record scope-mixing as process debt and require pre-commit staged-file inspection before future push."
+      - severity: medium
+        perspective: 9_documentation
+        issue: "Layer C report still contains TBD_SHA and pending_user_sashihai despite committed SHAs being known."
+        recommendation: "Back-fill Layer C report SHAs before final dashboard aggregation."
+      - severity: low
+        perspective: 2_anti_duplication
+        issue: "MC generator integration remains deferred."
+        recommendation: "Keep Layer C as standalone SC render component until generator integration task is audited."
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_chain_with_scope_mixing_note
+      summary: "Layer C deliverable passes with concerns. Scope-mixed commit f3651ae is a process issue, not a functional blocker; require staged-file inspection correction in next cycle."
+
+  - audit_id: naomasa_post_audit_cmd020_dashboard_layer_e_unyou_render
+    target_type: ashigaru_deliverable_post_completion_audit
+    target_task_id: subtask_cmd020_dashboard_layer_e_unyou_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T11:36:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_111838_16940266
+    assignee: ashigaru5
+    pre_audit_id: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    source_commits:
+      inventory: a8cdf0969ec1e54bc2933c11961d99ea00cc641b
+      render: 05bdedfc87d3b50497179586126fbea8ab1f0a19
+      test_report: ee3d7524315ea4012d11777333f2d118ac818bee
+      sha_backfill: 678e6d0
+    source_files:
+      - queue/reports/ashigaru5_dashboard_layer_e_inventory.yaml
+      - docs/dashboard_layer_e_unyou.md
+      - scripts/test/test_dashboard_layer_e_static_contract.py
+      - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
+      - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
+    verdict: pass
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass
+      3_kiritsu_chain_of_command: pass
+      4_logic_consistency: pass
+      5_schema_data_contract: pass
+      6_test_ci_evidence: pass
+      7_legal_privacy_security: pass
+      8_operations: pass
+      9_documentation: pass
+      10_ecosystem_coherence: pass
+      11_cross_pc_repo_check: pass
+      12_future_operations_radicality: pass
+    acceptance_criteria_evidence:
+      AC0_inventory: pass
+      AC1_design_source_read: pass
+      AC2_render_component: pass
+      AC3_mc_integration_deferred: pass
+      AC4_static_tests: "pass; recorded log 5 passed / 0 skipped, Naomasa rerun also 5 passed / 0 skipped"
+      AC5_bounded_push: "pass; commit history and SHA back-fill are present"
+      AC6_report_log_ack: pass
+    machine_evidence:
+      git_show: "git show --stat confirms a8cdf09 inventory, 05bdedf render, ee3d752 test/report/log, 678e6d0 SHA back-fill."
+      pytest_rerun: "python3 -m pytest scripts/test/test_dashboard_layer_e_static_contract.py -v --no-header => 5 passed, 0 skipped."
+      report_backfill: "ashigaru5 report lines 117-158 contain actual commit history and bounded allowlist."
+    findings: []
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_chain
+      summary: "Layer E deliverable passes. Runtime values are correctly treated as anchors/commands, not hardcoded live state."
+
+  - audit_id: naomasa_post_audit_cmd020_dashboard_layer_g_integration_drill_down_js
+    target_type: ashigaru_deliverable_post_completion_audit
+    target_task_id: subtask_cmd020_dashboard_layer_g_integration_drill_down_js
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T11:45:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_112105_f1bae9fc
+    assignee: ashigaru7
+    pre_audit_id: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    source_commits:
+      inventory: 116cab1
+      render: c86e7c6
+      test_report: 29585a1
+      sha_backfill: 28274b2
+    source_files:
+      - queue/reports/ashigaru7_dashboard_layer_g_inventory.yaml
+      - docs/dashboard_layer_g_integration_drill_down.md
+      - scripts/test/test_dashboard_layer_g_static_contract.py
+      - queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report.yaml
+      - queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass
+      3_kiritsu_chain_of_command: pass_with_concerns
+      4_logic_consistency: pass
+      5_schema_data_contract: pass_with_concerns
+      6_test_ci_evidence: pass
+      7_legal_privacy_security: pass
+      8_operations: pass_with_concerns
+      9_documentation: pass_with_concerns
+      10_ecosystem_coherence: pass_with_concerns
+      11_cross_pc_repo_check: pass_with_concerns
+      12_future_operations_radicality: pass_with_concerns
+    acceptance_criteria_evidence:
+      AC0_inventory: "pass_with_concerns; inventory exists and is valid, but was committed via gunshi sweep commit 116cab1 rather than ashigaru7's own atomic commit."
+      AC1_design_source_read: pass
+      AC2_render_component: pass
+      AC3_mc_integration_deferred: pass
+      AC4_static_tests: "pass; recorded log 5 passed / 0 skipped, Naomasa rerun also 5 passed / 0 skipped"
+      AC5_bounded_push: "pass_with_concerns; report records origin/main integration and equality assertion, but bounded_allowlist still contains TBD_SHA placeholders."
+      AC6_report_log_ack: pass
+    machine_evidence:
+      git_show: "git show --stat confirms 116cab1 includes ashigaru7 inventory + .gitignore in gunshi audit commit, c86e7c6 render, 29585a1 test/report/log, 28274b2 SHA back-fill."
+      pytest_rerun: "python3 -m pytest scripts/test/test_dashboard_layer_g_static_contract.py -v --no-header => 5 passed, 0 skipped."
+      report_state: "ashigaru7 report has commit_history.pending=false and origin/main integration notes, while push_plan.bounded_allowlist still lists TBD_SHA_1..3."
+    findings:
+      - severity: medium
+        perspective: 3_kiritsu_chain_of_command
+        issue: "Commit 116cab1 mixed gunshi Layer A post-audit report work with ashigaru7 Layer G inventory and .gitignore staged content."
+        recommendation: "Do not fail Layer G deliverable because the artifact content is coherent, but record staged-index isolation as process debt."
+      - severity: medium
+        perspective: 5_schema_data_contract
+        issue: "Layer G report's `push_plan.bounded_allowlist` still contains TBD_SHA placeholders despite later SHA back-fill evidence."
+        recommendation: "Back-fill that allowlist before final dashboard aggregation so automated traceability does not rely on prose."
+      - severity: low
+        perspective: 8_operations
+        issue: "Layer G is a specification for HTML drill-down, systemd timer, and verification plan; it is not the actual dashboard/systemd implementation."
+        recommendation: "Treat shogun_audit_request as spec acceptance. Schedule implementation/systemd enablement as a separate audited task."
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_chain_with_process_notes
+      summary: "Layer G deliverable passes with concerns. Trigger chain as spec acceptance; carry forward the 116cab1 staged-index sweep and stale TBD allowlist as hygiene fixes."
+
+  - audit_id: naomasa_post_audit_cmd020_dashboard_layer_d_zunou_kumonoito_render
+    target_type: ashigaru_deliverable_post_completion_audit
+    target_task_id: subtask_cmd020_dashboard_layer_d_zunou_kumonoito_render
+    parent_cmd: cmd_020
+    audited_at: "2026-05-12T11:50:00+09:00"
+    audited_by: naomasa
+    source_inbox:
+      - msg_20260512_112311_fbf8b4ab
+    assignee: ashigaru4
+    pre_audit_id: naomasa_pre_audit_cmd020_dashboard_layers_b_to_g_batch
+    source_commits:
+      inventory: 3776e2a
+      render: 1cd9176
+      test_report: 7daae68
+      sha_backfill: ea97152
+    source_files:
+      - queue/reports/ashigaru4_dashboard_layer_d_inventory.yaml
+      - docs/dashboard_layer_d_zunou.md
+      - scripts/test/test_dashboard_layer_d_static_contract.py
+      - queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_report.yaml
+      - queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_pytest.log
+    verdict: pass
+    evidence_state: complete
+    completion_gate: open
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    perspective_verdicts:
+      1_functional_completeness: pass
+      2_anti_duplication: pass
+      3_kiritsu_chain_of_command: pass
+      4_logic_consistency: pass
+      5_schema_data_contract: pass
+      6_test_ci_evidence: pass
+      7_legal_privacy_security: pass
+      8_operations: pass
+      9_documentation: pass
+      10_ecosystem_coherence: pass
+      11_cross_pc_repo_check: pass
+      12_future_operations_radicality: pass
+    acceptance_criteria_evidence:
+      AC0_inventory: pass
+      AC1_design_source_read: pass
+      AC2_render_component: pass
+      AC3_mc_integration_deferred: pass
+      AC4_static_tests: "pass; recorded log 5 passed / 0 skipped, Naomasa rerun also 5 passed / 0 skipped"
+      AC5_bounded_push: "pass; report records bounded worktree/cherry-pick/equality path and source commits are present in history"
+      AC6_report_log_ack: pass
+    machine_evidence:
+      git_show: "git show --stat confirms 3776e2a inventory, 1cd9176 render, 7daae68 test/report/log, ea97152 SHA back-fill."
+      pytest_rerun: "python3 -m pytest scripts/test/test_dashboard_layer_d_static_contract.py -v --no-header => 5 passed, 0 skipped."
+      report_state: "ashigaru4 report has verdict pass, evidence_state complete, completion_gate open, and repo_scope_compliance confirmed_single_repo."
+    findings: []
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_chain
+      summary: "Layer D deliverable passes. 9,209-record legal layer, spider-thread cross-layer mermaid, design-decision anchors, and query-budget compliance are acceptable for spec-chain review."
+
 dashboard_design_audits:
   - audit_id: naomasa_council_dashboard_v02_round2
     target_type: design_review
