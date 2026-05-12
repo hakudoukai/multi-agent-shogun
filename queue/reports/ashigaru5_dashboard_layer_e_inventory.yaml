@@ -1,0 +1,218 @@
+inventory_id: ashigaru5_dashboard_layer_e_inventory_20260512
+inventoried_at: "2026-05-12T11:15:00+09:00"
+inventoried_by: ashigaru5
+scope: dashboard cmd_020 Layer E 運用層 (= multiagent tmux 9 panes + systemd + auto-git-sync + inbox_watcher + ntfy + ttyd + claude process + queue/inbox 状態) 既実装 inventory
+repo: multi-agent-shogun-newbuild
+parent_task: subtask_cmd020_dashboard_layer_e_unyou_render
+parent_cmd: cmd_020
+
+mc_anti_dup_check:
+  status: unknown
+  reason: |
+    MC regenerate_dashboard.py Stage 2 cycle 2 fix (= commit 72f1c0d) は MC 側 generator 統合 path、
+    SC 側 Layer E render component は本 doc 起案単独、MC 統合 interface は本 task 範囲外。
+    本 task 段階では SC docs/dashboard_layer_e_unyou.md render component のみで進行、
+    後段別 task で MC SoT 統合経由二重実装可否を機械 verify する。
+  verify_basis: "find multi-agent-shogun-newbuild repo -name 'regenerate_dashboard*' → 0 件 (= SC 側、ashigaru1 Layer A inventory 同 evidence)"
+  followup: "MC 統合 task 着手時、MC 側 Layer E render と本 docs の anchor 整合を再 verify"
+
+layer_e_scope_components:
+  - component_id: dashboard_design_v01_section2_layer_e
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.1.md
+    section_anchor: "§2 Layer E. 運用層 (= 拙者 system 稼働状態)"
+    line_range_approx: "55-63"
+    key_concepts:
+      - "MC: shogun + karo + ashigaru 7 体 + gunshi 黒田 (= 10 体、各 pane status + model + uptime)"
+      - "SC: shogun + karo + ashigaru 7 体 + gunshi 直政 (= 10 体、各 pane status + ratelimit %)"
+      - "systemd unit: auto-git-sync / shogun-self-check / ttyd-shogun / shogun-tunnel / openclaw-gateway"
+      - "規範 entity (= memory MCP) 計測 anchor (= 実体は Layer F、Layer E は infra 側のみ)"
+    owner: 信長 (= MC shogun、v0.1 起草 2026-05-11 19:25)
+    integration_status: integrated
+    role_in_layer_e: 主 source (= 運用層 大中小項目 原本)
+    mc_dup_check_note: "MC 統合 generator 不在故 unknown、後段別 task で verify"
+
+  - component_id: dashboard_design_v02_section3_sot
+    component_type: design_doc
+    file_path: docs/dashboard_design_v0.2.md
+    section_anchor: "§3.3 両 PC source-of-truth (= 黒田 #7 明文化) + §3.6 progress 算出式"
+    line_range_approx: "58-62, 80-103"
+    key_concepts:
+      - "SoT = Supabase 単一 master、両 PC generator idempotent"
+      - "auto-git-sync.timer 経由 5min 以内 sync、HEAD 一致 verify"
+      - "progress 算出式 機械判定、color coding 4 段階 (= green/yellow/orange/red)"
+    owner: 信長 (= v0.2 起草 2026-05-11 19:42、黒田 audit 反映)
+    integration_status: integrated
+    role_in_layer_e: SoT + 進捗算出 anchor (= Layer E でも適用)
+    mc_dup_check_note: "本 doc は anchor 引用のみ、二重定義禁"
+
+  - component_id: tmux_multiagent_session_9_panes
+    component_type: runtime_infrastructure
+    file_path: tmux session multiagent:agents (= 0-8 panes、live runtime)
+    section_anchor: "multiagent:agents.0 (karo) + .1-.7 (ashigaru1-7) + .8 (gunshi)"
+    key_concepts:
+      - "9 panes 構成 (= karo 1 + ashigaru 7 + gunshi 1)"
+      - "shogun は別 session shogun:main.0 (= 別 tmux session)"
+      - "各 pane status は tmux list-panes + capture-pane で取得可"
+    owner: 既存 infrastructure (= 拙者 system 起動時より)
+    integration_status: runtime_active
+    role_in_layer_e: 主 runtime anchor (= 9 panes mention 必須、テスト anchor)
+    evidence:
+      - "ps -ef | grep inbox_watcher → 9 watcher processes (= shogun + karo + ashigaru1-7 + gunshi)"
+      - "tmux list-panes -t multiagent → 9 panes 0-8"
+    mc_dup_check_note: "MC 側にも対称な multiagent session あり、Layer E render は構造 anchor 提示のみ"
+
+  - component_id: auto_git_sync_timer
+    component_type: systemd_user_unit
+    file_path: ~/.config/systemd/user/auto-git-sync.{service,timer}
+    section_anchor: "auto-git-sync.timer (= 5min interval、Persistent=true、OnBootSec=2min)"
+    key_concepts:
+      - "両 PC pull-only 自動 sync"
+      - "scripts/auto_git_sync.sh 経由 FF pull のみ、push 厳禁 (= F007 遵守)"
+      - "divergent 検出時 HALT + karo inbox notify、auto-merge 厳禁"
+      - "log: queue/reports/auto_sync_log.yaml"
+    owner: 既存 infrastructure (= 2026-05-11 装備)
+    integration_status: runtime_active
+    role_in_layer_e: systemd timer anchor (= テスト anchor、auto-git-sync mention 必須)
+    evidence:
+      - "systemctl --user list-unit-files | grep auto-git-sync → enabled"
+      - "scripts/auto_git_sync.sh 実在"
+      - "docs/auto_git_sync_design.md 設計書"
+    mc_dup_check_note: "両 PC 対称配備、本 docs は anchor 提示のみ"
+
+  - component_id: inbox_watcher_daemon
+    component_type: runtime_process
+    file_path: scripts/inbox_watcher.sh + scripts/watcher_supervisor.sh
+    section_anchor: "inbox_watcher.sh per-agent process + watcher_supervisor.sh 監督"
+    key_concepts:
+      - "agent 毎 1 process、inotifywait で queue/inbox/{agent}.yaml watch"
+      - "短い nudge (= inboxN) を tmux send-keys 経由 agent pane へ送信"
+      - "Communication Protocol delivery layer (= CLAUDE.md 規定)"
+    owner: 既存 infrastructure
+    integration_status: runtime_active
+    role_in_layer_e: inbox delivery 基盤 anchor (= テスト anchor、inbox_watcher mention 必須)
+    evidence:
+      - "ps -ef | grep inbox_watcher → 9 processes (shogun + karo + ashigaru1-7 + gunshi)"
+      - "scripts/inbox_watcher.sh + watcher_supervisor.sh 実在"
+    mc_dup_check_note: "両 PC 対称配備、本 docs は anchor 提示のみ"
+
+  - component_id: ntfy_listener
+    component_type: notification_script
+    file_path: scripts/ntfy.sh + scripts/ntfy_listener.sh
+    section_anchor: "ntfy push 通知 layer"
+    key_concepts:
+      - "ntfy.sh = ad-hoc 通知送信 script"
+      - "ntfy_listener.sh = subscribe 側、外部 push trigger"
+      - "agent ↔ 陛下 通知 layer"
+    owner: 既存 infrastructure
+    integration_status: runtime_active_script_only
+    role_in_layer_e: 通知 layer anchor (= テスト anchor、ntfy mention 必須)
+    evidence:
+      - "scripts/ntfy.sh + scripts/ntfy_listener.sh 実在"
+      - "systemd unit 不在 (= script-only、daemon 起動は手動 or supervisor 経由)"
+    mc_dup_check_note: "両 PC 対称配備、本 docs は anchor 提示のみ"
+
+  - component_id: ttyd_shogun_service
+    component_type: web_terminal_service
+    file_path: ttyd-shogun.service (= 設計書記載) + shogun-tunnel.service (= systemd active)
+    section_anchor: "ttyd-shogun + shogun-tunnel + 外部認証"
+    key_concepts:
+      - "ttyd 経由 web 端末配信 (= ブラウザ tmux attach)"
+      - "shogun-tunnel.service (= systemd active enabled) で外部 tunnel"
+      - "config/ttyd_auth.env で token 認証 (= 黒田 audit #4 evidence、v0.2 §3.7)"
+    owner: 既存 infrastructure
+    integration_status: runtime_active
+    role_in_layer_e: web 配信 + 認証 anchor (= テスト anchor、ttyd mention 必須)
+    evidence:
+      - "systemctl --user list-unit-files | grep shogun-tunnel → enabled"
+      - "docs/dashboard_design_v0.2.md §3.7 ttyd 認証参照"
+    mc_dup_check_note: "ttyd-shogun.service は設計書記載、shogun-tunnel.service は active 実体、本 doc は anchor 提示のみ"
+
+  - component_id: claude_process_count
+    component_type: runtime_metric
+    file_path: ps -ef (= runtime)
+    section_anchor: "claude / codex process 数 (= 各 pane CLI 稼働状態)"
+    key_concepts:
+      - "claude process = sonnet/opus CLI session 数"
+      - "codex process = Codex CLI session 数 (= 直政/黒田 など gunshi)"
+      - "pane と process の整合 verify"
+    owner: 既存 infrastructure (= runtime metric、static doc では anchor のみ)
+    integration_status: runtime_metric_only
+    role_in_layer_e: 稼働 metric anchor (= テスト anchor、claude process count mention 必須)
+    evidence:
+      - "ps -ef | grep -E '(claude|codex)' で count 可能"
+      - "inbox_watcher の第 3 引数 (= claude / codex) で CLI 種別判定"
+    mc_dup_check_note: "両 PC で対称 count、本 docs は anchor 提示のみ"
+
+  - component_id: queue_inbox_state
+    component_type: file_state
+    file_path: queue/inbox/{agent}.yaml (= per-agent mailbox)
+    section_anchor: "queue/inbox 状態 (= read: false 数 + 直近 timestamp)"
+    key_concepts:
+      - "mailbox 各 agent 1 yaml、read: true/false で消化状態管理"
+      - "未読件数 = 未消化 directive (= karo の処理遅延 verify 指標)"
+      - "CLAUDE.md Communication Protocol で規定"
+    owner: 既存 infrastructure
+    integration_status: file_state_only
+    role_in_layer_e: mailbox state anchor (= テスト anchor、queue/inbox mention 必須)
+    evidence:
+      - "ls queue/inbox/*.yaml → 各 agent mailbox 実在"
+      - "grep -c 'read: false' で未読 count 可能"
+    mc_dup_check_note: "両 PC で別個 mailbox state、本 docs は anchor 提示のみ"
+
+related_but_out_of_scope:
+  - component_id: dashboard_md_root
+    file_path: dashboard.md
+    reason: "delivery_conditions #1 で本 task は dashboard.md 直接編集禁。読取参照のみで触れない (= ashigaru1 Layer A 規範踏襲)"
+  - component_id: layer_a_b_c_d_f_render
+    file_path: docs/dashboard_layer_a_kousou.md (= Layer A 既起案) / Layer B-D + F 未起案
+    reason: "本 task は Layer E 運用層単独 render、他 Layer は別 task"
+  - component_id: hakudokai_dev_repo
+    file_path: /mnt/c/Projects/hakudokai-dev/
+    reason: "delivery_conditions #2 で本 task は multi-agent-shogun-newbuild repo only、関与禁 (= ashigaru1 Layer A 規範踏襲)"
+  - component_id: mc_regenerate_dashboard_py
+    file_path: MC 側 regenerate_dashboard.py (= commit 72f1c0d Stage 2 cycle 2 fix)
+    reason: "MC 統合 generator artifact、本 task の SC docs render とは別 layer、後段別 task で統合"
+  - component_id: memory_mcp_entities
+    file_path: memory MCP (= 19 entities + relations)
+    reason: "規範 entity 本体は Layer F 担当、Layer E は infra metric (= process / unit / mailbox) のみ"
+
+artifacts_to_create_by_this_task:
+  - docs/dashboard_layer_e_unyou.md
+  - scripts/test/test_dashboard_layer_e_static_contract.py
+  - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
+  - queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
+  - queue/reports/ashigaru5_dashboard_layer_e_inventory.yaml (= 本 yaml)
+
+gap_analysis:
+  - id: gap_1
+    description: "Layer E 運用層単独 render component が未起案 (= v0.1 §2 Layer E は 6 layer 横断 doc 内 section、独立 sub-section markdown が不在)"
+    resolution_in_this_task: "docs/dashboard_layer_e_unyou.md で 9 panes + auto-git-sync + inbox_watcher + ntfy + ttyd + claude process + queue/inbox 状態 anchor の独立 markdown を新規起案"
+
+  - id: gap_2
+    description: "Layer E 構造に対する静的 source-contract test が不在"
+    resolution_in_this_task: "scripts/test/test_dashboard_layer_e_static_contract.py で 5 test、markdown grep + 必要 mermaid syntax check"
+
+  - id: gap_3
+    description: "Layer E render が runtime metric (= ps / systemctl 出力) を時刻固定値で記載すると stale 化、static anchor のみで描く規範要"
+    resolution_in_this_task: "本 doc は anchor + 取得 command + 算出式 のみ記載、固定値は禁、generator (= 後段 MC task) が runtime fetch する規範を明示"
+
+acceptance_criteria_alignment:
+  AC0: 本 yaml 起案 (= 完了 on write)
+  AC1: design doc 正本 read 完遂 evidence = 本 yaml 内 dashboard_design_v01_section2_layer_e + v02_section3_sot entry
+  AC2: docs/dashboard_layer_e_unyou.md 新規起案 → 次 step
+  AC3: MC 統合 interface は本 task 範囲外 (= mc_anti_dup_check + followup field で明示)
+  AC4: 5 static test → 次 step
+  AC5: bounded F007 push → 完遂前 陛下御差配仰ぎ
+  AC6: report + log + 完遂 ack → 最終 step
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery conditions 4 件遵守 (= ashigaru1 Layer A 整合: dashboard.md 直接編集禁 / hakudokai-dev 関与禁 / MC 統合 claim 禁 / SKIP>0 未完了)
+  - native markdown + mermaid text-based (= 黒田 #4 self-contained 整合)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 (= ashigaru1 Layer A 第 1 弾実証 base)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - repo scope 単一 (= hakudokai-dev 範囲外)
+  - 夜襲 persona retain (= wait→実行自動置換)

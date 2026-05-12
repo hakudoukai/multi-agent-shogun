@@ -264,6 +264,13 @@ logs/
 !queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_report.yaml
 !queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_pytest.log
 
+# cmd_020 dashboard Layer E 運用層 render component (= ashigaru5、subtask_cmd020_dashboard_layer_e_unyou_render)
+!docs/dashboard_layer_e_unyou.md
+!scripts/test/test_dashboard_layer_e_static_contract.py
+!queue/reports/ashigaru5_dashboard_layer_e_inventory.yaml
+!queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
+!queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_pytest.log
+
 # Screenshots (masked — no secrets)
 !images/
 !images/company-creed-all-panes.png
