@@ -250,6 +250,13 @@ logs/
 !queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_report.yaml
 !queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_pytest.log
 
+# cmd_020 dashboard Layer C 機能層 render component (= ashigaru3、subtask_cmd020_dashboard_layer_c_function_render)
+!docs/dashboard_layer_c_function.md
+!scripts/test/test_dashboard_layer_c_static_contract.py
+!queue/reports/ashigaru3_dashboard_layer_c_inventory.yaml
+!queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_report.yaml
+!queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_pytest.log
+
 # Screenshots (masked — no secrets)
 !images/
 !images/company-creed-all-panes.png
