@@ -162,49 +162,76 @@ commit_plan:
       files:
         - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory.yaml
         - .gitignore
-      sha: TBD_SHA_1
+      sha: d2cf3c227e3c196991f9c254fe0f7b6b2a28915b
   - commit_2:
-      message: "docs(cmd_020 classification_logic): canonical classification logic doc + Layer C/D cross-layer reference anchor"
+      message: "docs(cmd_020 classification_logic): canonical doc + Layer C/D cross-layer anchor"
       files:
         - docs/dashboard_status_classification_logic.md
         - docs/dashboard_layer_c_function.md
         - docs/dashboard_layer_d_zunou.md
-      sha: TBD_SHA_2
+      sha: 240dd7a6df76edd2bf9f62deecbc151e2b8d9bf8
   - commit_3:
       message: "test(cmd_020 classification_logic): static source-contract 5 test + report yaml + pytest log"
       files:
         - scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py
         - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log
         - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
-      sha: TBD_SHA_3
+      sha: 26ee3d4_TBD_back_fill_at_commit_3
 
 commit_history:
-  pending: true
-  note: "実 SHA は commit 後本 report に back-fill。F007 push は本 commit 後 worktree + equality assert で実施 (= 朝駆け directive + 家康明示許可 + 直政 pass_with_concerns delivery_gate=true 整合)。"
+  pending: false
+  note: |
+    3 atomic commits 全件 origin/main 取込 verified (= origin/main 941cc05 内包確認、
+    git merge-base --is-ancestor で 3 SHA 全件 present)。F007 push は worktree path
+    で実行、初回 push attempt は non-fast-forward (= origin/main 更新先行) 検出後
+    再 fetch で既 push 確認 → cleanup。worktree (/tmp/cmd_020_classification_main_wt)
+    清掃済。
+  commit_1_sha: d2cf3c227e3c196991f9c254fe0f7b6b2a28915b
+  commit_2_sha: 240dd7a6df76edd2bf9f62deecbc151e2b8d9bf8
+  commit_3_sha: pending_self_ref (= 本 report yaml は commit 3 内、commit 後 SHA 固定)
+  scope_contamination_incident:
+    occurrence: "commit 2 初回 (7d0c462) で他 agent (ashigaru3) 同時 staged files 3 件混入"
+    detection: "git show --stat HEAD 直後の自己 verify で検出"
+    correction: "git reset --soft HEAD~1 → 他 agent files unstage → 自身 3 files のみ再 commit (240dd7a)"
+    root_cause: "並行 agent 環境で commit 直前に他 agent も git add 実施、git index 共有故"
+    mitigation_for_future: "git add 前に git status 検査 + 自身 files 明示 staging + commit 前 git diff --cached 確認"
 
 push_plan:
-  status: prepared
+  status: complete
   repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
   bounded_allowlist:
-    本_task_3_commits_only_multi_agent_repo: [TBD_SHA_1, TBD_SHA_2, TBD_SHA_3]
+    本_task_3_commits_only_multi_agent_repo:
+      - d2cf3c227e3c196991f9c254fe0f7b6b2a28915b
+      - 240dd7a6df76edd2bf9f62deecbc151e2b8d9bf8
+      - 26ee3d4_TBD_self_ref
     scope_exclusion:
       - 既 ashigaru1-7 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外
       - 並行 ashigaru (= ashigaru6 cmd020 14 件 + ashigaru3 cmd004 cicd 等) の untracked artifact は本 task scope 外
       - hakudokai-dev repo は本 task 範囲外
   worktree_clean_path:
-    worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_classification_main_wt origin/main"
-    cherry_pick: "git -C /tmp/cmd_020_classification_main_wt cherry-pick TBD_SHA_1 TBD_SHA_2 TBD_SHA_3"
+    worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_classification_main_wt origin/main (= 実行済、d9a5c05 detached HEAD)"
+    cherry_pick: |
+      git -C /tmp/cmd_020_classification_main_wt cherry-pick d2cf3c2 240dd7a 26ee3d4
+      (= .gitignore conflict 1 件、ashigaru3 SC specialty block を keep ours 解消、
+      cherry-pick 結果 worktree SHA: e418f0c / 20b6a95 / 5238971)
     pre_push_verify: |
       git -C /tmp/cmd_020_classification_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_classification.txt
-      printf '%s\n' TBD_SHA_1 TBD_SHA_2 TBD_SHA_3 | sort > /tmp/push_expected_classification.txt
-      diff /tmp/push_actual_classification.txt /tmp/push_expected_classification.txt
-      (= equality assert exit 0 必須、不一致 push abort)
-    push_command: "git -C /tmp/cmd_020_classification_main_wt push origin HEAD:main"
-    cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_classification_main_wt"
+      printf '%s\n' e418f0c 20b6a95 5238971 | xargs -n1 git -C /tmp/cmd_020_classification_main_wt rev-parse | sort > /tmp/push_expected_classification.txt
+      diff /tmp/push_actual_classification.txt /tmp/push_expected_classification.txt → EQUALITY ASSERT PASS
+    push_command: |
+      git -C /tmp/cmd_020_classification_main_wt push origin HEAD:main
+      → 初回 attempt rejected (= non-fast-forward、origin/main 更新先行 941cc05)
+      → re-fetch で d2cf3c2 / 240dd7a / 26ee3d4 全件既 push 済 verify (= git merge-base --is-ancestor pass)
+      → cherry-pick duplicates 不要、worktree cleanup で完遂
+    cleanup: "git worktree remove /tmp/cmd_020_classification_main_wt + /tmp/push_*.txt 清掃完了"
+  origin_main_verify:
+    method: "git merge-base --is-ancestor d2cf3c2 origin/main && git merge-base --is-ancestor 240dd7a origin/main && git merge-base --is-ancestor 26ee3d4 origin/main"
+    result: "3/3 commits present on origin/main (= 941cc05 内包)"
   safety_check:
     - multi-agent-shogun-newbuild repo only
     - worktree isolation + printf+diff equality assert + cleanup
     - F007 例外 retain (= 朝駆け directive + 直政 pre_audit pass + delivery_gate=true 整合)
+    - non-fast-forward 検出時 force push せず、re-fetch で既 push 確認 path 採択
 
 skill_candidate: null
 
