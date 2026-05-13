@@ -1,0 +1,305 @@
+inventory_id: ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_inventory_v1
+inventoried_at: "2026-05-13T14:50:00+09:00"
+inventoried_by: ashigaru6
+agent_persona: 平岩親吉 (= SC 六番槍)
+task_ref: subtask_cmd020_implementation_required_14_cmd_proposal
+parent_cmd: cmd_020
+schema_ref: ac0_inventory_first_normative (= ashigaru1 Layer A + ashigaru6 Layer F 既起案先例継承)
+model_path: sonnet_codex_sonnet
+design_doc_id_source:
+  - queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml
+  - docs/shogun_orchestration_charter_v0.1.md §15 (= 1 Issue = 1 Branch = 1 PR)
+  - queue/reports/unverified_inventory_20260512.yaml (= 14 candidate canonical source)
+
+scope_definition:
+  in_scope_14_items:
+    - C-V21-W9TENSU
+    - C-V22-W9SPIDCHK
+    - C-V31-W11CHOREI
+    - C-V33-W12CLNUI
+    - C-V34-W13VISIT
+    - C-V35-W13RTE
+    - C-V36-W14PAY
+    - C-V37-W14CTI
+    - C-V38-W14LINE
+    - C-V39-W14YOSHI3
+    - C-V41-W15DEP
+    - C-V42-W15MAN
+    - C-V43-W16MAT
+    - C-V44-W17JINJI
+  out_of_scope_boundary:
+    - id: C-15-B7
+      reason: "W9 batch7 alert residual 14 item — separate green path (= manifest publication + impl + audit chain)、本 task で混入禁 (= 直政 pre_audit finding medium 2 整合)"
+    - id: C-V29-W11DDA
+      reason: "W11 phase_a_id_unification、in_progress monitor 対象、impl task 不要 (= naomasa monitor_proposal 経路)"
+    - id: C-V30-W11DDB
+      reason: "W11 phase_b_karte_loader、in_progress monitor 対象、impl task 不要 (= naomasa monitor_proposal 経路)"
+  deliverable_nature: "docs/report ONLY (= 直政 pre_audit finding medium 1 整合)、本 task は新 cmd 上申提案の起案であり以下は厳禁:"
+  forbidden_side_effects:
+    - "queue/tasks/ 配下の新 task YAML 起案 (= 任務外)"
+    - "Supabase development_progress / design_tasks の status edit"
+    - "queue/inbox/ 配下への task_assigned 発信"
+    - "ashigaru 配分の runtime 反映 (= 上申案として記載のみ、実配信は本多殿御差配 + 直政 post_audit 後)"
+
+candidates:
+  - id: C-V21-W9TENSU
+    label: "W9 P2-engine R8 施行前の全処置セット点数確認"
+    week: W9
+    phase_code: P2-engine
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "implement treatment-set point verification + commit + tests + audit"
+    existing_artifacts_grep:
+      - search: "find docs -name '*tensu*' -o -name '*treatment_set*'"
+        hits: 0
+      - search: "find docs -name '*point_verification*'"
+        hits: 0
+      - related_existing: "queue/manifests/w9_design_tasks_169.yaml (= 169 design_tasks pending、batch1-7 包含)"
+    gap_analysis: "spec doc 不在、impl 0 件、test 0 件、source-of-truth は session_minutes (cc20258b) + design_tasks 169 件。R8 (= 2026 改定保険) 施行前検算 logic 必要"
+    bloom_estimate: L4 (= 構造設計 + impl + test、複合 task)
+
+  - id: C-V22-W9SPIDCHK
+    label: "W9 P2-engine 蜘蛛の糸 算定チェック+バリデーション(design_tasks 169 件)"
+    week: W9
+    phase_code: P2-engine
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "publish/track W9 manifest, then implement calculation/validation check evidence"
+    existing_artifacts_grep:
+      - search: "ls queue/manifests/w9_design_tasks_169.yaml"
+        hits: 1
+        result: "MC tracked 済 (= commit 3e1a734)"
+      - search: "find docs -name '*spider*' -o -name '*kumo*'"
+        hits: 0
+    gap_analysis: "manifest publication 完遂 (= commit 3e1a734)、impl + test + audit chain 未着手。169 task batch1-7 を 5-7 ashigaru 並列で分担想定"
+    bloom_estimate: L5 (= 169 design_task 並列 impl、最大規模)
+
+  - id: C-V31-W11CHOREI
+    label: "W11 朝礼フル版 Phase1-4"
+    week: W11
+    phase_code: POST-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "create morning-meeting Phase1-4 task, report, tests, audit"
+    existing_artifacts_grep:
+      - search: "grep -l '朝礼' docs/*.md"
+        hits: 0
+      - search: "find . -name '*chorei*' -o -name '*morning*'"
+        hits: 0
+    gap_analysis: "Phase1-4 仕様未定義、UI/UX + backend + WebRTC/録画 + 議事録 AI 要素複合、フェーズ分割設計必須"
+    bloom_estimate: L4 (= 4 phase 連続実装、UI/AI/録画 stack 複合)
+
+  - id: C-V33-W12CLNUI
+    label: "W12 臨床ナレッジ UI"
+    week: W12
+    phase_code: POST-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "clinical knowledge UI implementation task"
+    existing_artifacts_grep:
+      - search: "grep -l '臨床ナレッジ\\|clinical_knowledge' docs/*.md"
+        hits: 0
+      - search: "find . -path './node_modules' -prune -o -name '*clinical*' -print"
+        hits: 0
+    gap_analysis: "ナレッジ DB schema + 編集 UI + 検索 UI + access control + privacy 要件不在、AI 要約 / tagging 連携も別 task 化検討"
+    bloom_estimate: L4 (= schema + UI + AI 連携、3 layer 複合)
+
+  - id: C-V34-W13VISIT
+    label: "W13 訪問 Phase4-7(中期残)"
+    week: W13
+    phase_code: P6-visit
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "visit Phase4-7 implementation task"
+    existing_artifacts_grep:
+      - search: "grep -l '訪問\\|visit' docs/dashboard_layer_*.md"
+        hits: "TBD (multiple)"
+      - search: "find . -name '*visit*' -path './backend/*'"
+        hits: 0
+    gap_analysis: "Phase1-3 完遂前提 (= 別 cmd 着手済 or pending 別 task)、Phase4-7 は 訪問ルート + 患者記録 + 法令 (= 介護保険 / 訪問診療) + 帳票 chain、bloom L4+ 想定"
+    bloom_estimate: L4 (= 4 phase 連続、法令 + UX + integration 複合)
+
+  - id: C-V35-W13RTE
+    label: "W13 訪問ルート最適化"
+    week: W13
+    phase_code: P6-visit
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "visit route optimization implementation task"
+    existing_artifacts_grep:
+      - search: "find . -name '*route*' -o -name '*tsp*'"
+        hits: 0
+      - search: "grep -rl 'Google Maps\\|OSRM\\|valhalla' docs/"
+        hits: 0
+    gap_analysis: "経路最適化 algorithm (= TSP/VRP) + map provider 選定 + 実時間 traffic + 患者宅 geocoding chain 未着手"
+    bloom_estimate: L4 (= 数理最適化 + 外部 API + UI、3 軸複合)
+
+  - id: C-V36-W14PAY
+    label: "W14 ペイライト 実 API 接続"
+    week: W14
+    phase_code: P3-patient
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "Pay Light real API connection task with security/privacy tests"
+    existing_artifacts_grep:
+      - search: "grep -rl 'paylight\\|PayLight\\|ペイライト' docs/ backend/ frontend/ 2>/dev/null"
+        hits: 0
+      - search: "find . -name '*payment*' -path './backend/*'"
+        hits: "TBD (need verify)"
+    gap_analysis: "決済 API 仕様書取得 + PCI DSS 準拠範囲 + tokenization + webhook + reconciliation 全件未着手"
+    bloom_estimate: L4 (= 外部 API + 法令 (PCI DSS) + security、3 軸複合)
+
+  - id: C-V37-W14CTI
+    label: "W14 CTI 実接続(VALTEC MOT/TEL)"
+    week: W14
+    phase_code: POST-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "CTI real connection task"
+    existing_artifacts_grep:
+      - search: "grep -rl 'CTI\\|VALTEC\\|MOT/TEL' docs/ 2>/dev/null"
+        hits: 0
+      - search: "find . -name '*cti*' -o -name '*sip*' -o -name '*telephony*'"
+        hits: 0
+    gap_analysis: "VALTEC MOT/TEL SDK 仕様 + 発信者番号通知 + 患者紐付け + 録音 + 法令 (= 電気通信事業) 全件未着手"
+    bloom_estimate: L4 (= ハードウェア / SDK + 法令 + UI、3 軸複合)
+
+  - id: C-V38-W14LINE
+    label: "W14 外部 API 統合(LINE 通知+Web 予約実接続) ※C-NEW-2"
+    week: W14
+    phase_code: POST-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "LINE notification + web reservation connection task"
+    existing_artifacts_grep:
+      - search: "grep -rl 'LINE\\|line_notify\\|line_messaging' docs/ backend/ 2>/dev/null"
+        hits: "TBD (need verify)"
+      - search: "find . -name '*reservation*' -o -name '*reserve*' -path './backend/*'"
+        hits: "TBD (need verify)"
+    gap_analysis: "LINE Messaging API + Web 予約 (= 既存 SaaS or 自前 UI) + 予約状態同期 + 通知 template + 法令 (= 改正電気通信事業)、未着手 or 着手途上"
+    bloom_estimate: L4 (= 外部 API + 法令 + UI、3 軸複合)
+
+  - id: C-V39-W14YOSHI3
+    label: "W14 書式 Lv3+唾液検査"
+    week: W14
+    phase_code: POST-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "form level 3 + saliva inspection task"
+    existing_artifacts_grep:
+      - search: "find . -name 'dental_form_inventory' -type d"
+        hits: 1
+        result: "docs/dental_form_inventory/ 存在 (= 別 ashigaru 既着手 inventory)"
+      - search: "grep -rl '唾液\\|saliva' docs/ 2>/dev/null"
+        hits: 0
+    gap_analysis: "書式 Lv3 inventory 部分着手 (= dental_form_inventory)、唾液検査 spec 未着手、検査機器 + 結果 import + 患者通知 chain 必要"
+    bloom_estimate: L4 (= 書式 + 検査 + 通知、3 軸複合)
+
+  - id: C-V41-W15DEP
+    label: "W15 D-2 デプロイ手順書+実データテスト+Tailscale"
+    week: W15
+    phase_code: P7-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "deploy runbook + real-data test + Tailscale task"
+    existing_artifacts_grep:
+      - search: "find . -name '*deploy*' -name '*.md' -not -path './node_modules/*'"
+        hits: "TBD"
+      - search: "grep -rl 'Tailscale' docs/ 2>/dev/null"
+        hits: 0
+    gap_analysis: "deploy runbook + production data test (= GDPR / 改正個人情報保護法 整合) + Tailscale VPN 構成 + secret 管理 chain 未着手"
+    bloom_estimate: L3 (= runbook + test scenario + infra、文書中心)
+
+  - id: C-V42-W15MAN
+    label: "W15 D-3 操作マニュアル"
+    week: W15
+    phase_code: P7-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "operation manual task"
+    existing_artifacts_grep:
+      - search: "find . -name '*manual*' -name '*.md' -not -path './node_modules/*'"
+        hits: 0
+      - search: "find . -name '*operation*' -name '*.md'"
+        hits: 0
+    gap_analysis: "院内向け操作マニュアル (= スタッフ役職別 + 業務別 + 緊急時) + 画面 capture + 動画 chain 未着手"
+    bloom_estimate: L3 (= 文書 + capture + 翻訳 retain、文書中心)
+
+  - id: C-V43-W16MAT
+    label: "W16 材料管理(QR スキャン+納品 OCR+棚 AI+理論消費量)"
+    week: W16
+    phase_code: POST-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "materials management implementation task"
+    existing_artifacts_grep:
+      - search: "ls docs/cmd004_qr_kanban_spec.md"
+        hits: 1
+        result: "QR kanban spec 既存、部分 anti-dup 可能性"
+      - search: "grep -rl 'OCR\\|納品' docs/cmd004_*.md 2>/dev/null"
+        hits: 1
+    gap_analysis: "QR スキャン (= QR kanban spec 既存、流用可能) + 納品 OCR + 棚 AI (= computer vision) + 理論消費量 (= treatment-set 連動) chain、QR 既存と統合設計必要"
+    bloom_estimate: L4 (= QR + OCR + CV + 数理消費量、4 軸複合)
+
+  - id: C-V44-W17JINJI
+    label: "W17 人事+DTF アダプター+全院展開"
+    week: W17
+    phase_code: POST-deploy
+    supabase_status: not_started
+    pct: 0.0
+    type_flags: [A, B]
+    naomasa_green_path: "HR + DTF adapter + rollout task"
+    existing_artifacts_grep:
+      - search: "find . -name '*hr*' -o -name '*jinji*' -o -name '*personnel*' -path './backend/*'"
+        hits: 0
+      - search: "grep -rl 'DTF\\|dtf_adapter' docs/ 2>/dev/null"
+        hits: 0
+    gap_analysis: "人事 (= 勤怠 + 給与 + 評価 + 労務法令) + DTF (= Dental Treatment Form?) adapter + 全院展開 chain 全件未着手、最終 phase 想定"
+    bloom_estimate: L5 (= 人事 stack + 法令 + 全院 rollout、最大規模 cmd 想定)
+
+mc_anti_dup_check:
+  status: partial
+  verify_basis: "本 task は新 cmd 上申提案であり、MC 側 cmd 提案 artifact (= dashboard.md / regenerate_dashboard.py 等) と重複しない。但し W16 (= C-V43) は docs/cmd004_qr_kanban_spec.md と部分流用可能性あり、本 inventory で flag 済。MC 並走 task は naomasa pre_audit 7 件 chain で別 ashigaru 担当、本 task と独立"
+  followup: "本 cmd 提案 docs が兄上経由 cmd 上申された後、queue/tasks/ 新規発番は karo + naomasa post_audit chain で実施 (= 本 task 範囲外)"
+
+constraints_acknowledged:
+  honnoji_kaime: "本能寺戒め厳格遵守、機械 evidence のみ評価、本 inventory 内 grep_hits 数値で示す"
+  f001_f006_strict: "F001-F006 厳守、F007 例外 retain (= 朝駆け directive 整合下、bounded push)"
+  preflight_gate: "/mnt/c/Projects/hakudokai-dev/ SC WSL access 可 (= 本 task 範囲外、参照のみ)"
+  pre_audit_passed: "naomasa pre_audit pass_with_concerns ✅ (= msg_20260513_134905、findings medium 2 件 acknowledge 済)"
+  model_path: "sonnet_codex_sonnet (= Sonnet 起案 → Codex 監査 → Sonnet 修正)"
+  radical_solution: "根本治療原則整合 5-10 年運用想定、各 cmd 提案で (= 法令 / privacy / UX / test) 4 軸 acceptance_criteria 必須化"
+  ac0_inventory_first: "本 yaml が AC0 evidence、後続 AC1-AC6 chain"
+  mc_anti_dup_check: "上記 mc_anti_dup_check section 参照"
+  design_doc_read: "naomasa_sc_audit_phase2_status_green_path_20260512.yaml 全 read / Charter v0.1 §15 read / unverified_inventory_20260512.yaml 14 candidate 全 read evidence 記録"
+  delivery_conditions_4_items:
+    - "(1) dashboard.md 直接編集禁 (= 本 task 内 dashboard.md 触らず)"
+    - "(2) hakudokai-dev 関与禁 (= 本 task は multi-agent-shogun-newbuild repo only)"
+    - "(3) MC 統合 claim 禁 (= MC artifact regenerate_dashboard.py 等への記述追加禁)"
+    - "(4) SKIP=0 (= AC3 pytest SKIP=0 必須)"
+  inline_batch_commit: "3 commit atomic (= inventory / proposal_md / test+report+log)、multi-agent-shogun-newbuild repo only"
+  repo_scope_single: "本 task は /home/hakudokai/projects/multi-agent-shogun-newbuild 内のみ git 操作"
+  yagyu_persona_retain: "朝駆け persona retain (= wait→実行自動置換、cycle 内即実行)"
+  pre_audit_finding_medium_1: "deliverable は docs/report only、queue task assignment NG、Supabase status edit NG (= 本 inventory forbidden_side_effects section で明示)"
+  pre_audit_finding_medium_2: "14 件と C-15-B7 / C-V29 / C-V30 を collapse しない (= 本 inventory out_of_scope_boundary section で明示)"
+
+next_steps_after_ac0:
+  - "AC1: design doc 正本 read evidence (= 本 yaml 内 design_doc_id_source field で証跡記録、完遂)"
+  - "AC2: docs/cmd020_implementation_required_14_cmd_proposal.md 起案 (= 14 cmd 提案、各々 acceptance_criteria / target_file / test plan / ashigaru 配分案 / bloom level)"
+  - "AC3: scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py 起案 (= 3-5 静的 contract test)"
+  - "AC4: inline batch commit 3 件 atomic"
+  - "AC5: bounded F007 push (= worktree + cherry-pick + diff verify + cleanup)"
+  - "AC6: 完遂報告 + 直政 post-audit 流入準備"

@@ -319,6 +319,13 @@ logs/
 !queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
 !queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log
 
+# cmd_020 implementation_required 14 件 cmd 上申準備提案 (= ashigaru6、subtask_cmd020_implementation_required_14_cmd_proposal)
+!docs/cmd020_implementation_required_14_cmd_proposal.md
+!scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py
+!queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_inventory.yaml
+!queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_report.yaml
+!queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_pytest.log
+
 # cmd_020 SC specialty inventory (= ashigaru3、subtask_cmd020_sc_specialty_inventory、Charter v0.1 §8 9 部署 × 9 SC agent mapping)
 !docs/sc_specialty_inventory.md
 !scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py
