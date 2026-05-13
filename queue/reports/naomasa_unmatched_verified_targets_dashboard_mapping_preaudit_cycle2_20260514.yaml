@@ -1,0 +1,56 @@
+worker_id: gunshi
+task_id: naomasa_unmatched_verified_targets_dashboard_mapping_preaudit_cycle2_20260514
+parent_cmd: cmd_020
+timestamp: "2026-05-14T00:21:00+09:00"
+status: done
+result:
+  type: evaluation
+  summary: "Revision 2 addresses the main blockers and is dispatchable after one command-target clarification."
+  target_task:
+    task_file: queue/tasks/subtask_cmd020_unmatched_verified_targets_dashboard_mapping.yaml
+    revision: 2
+    assignee: ashigaru4
+    bloom_level: L4
+  verdict: pass_with_conditions
+  completion_gate: open_with_conditions
+  dispatch_decision: dispatch_after_minor_text_fix
+  machine_evidence:
+    yaml_parse: "yaml.safe_load PASS; revision=2; bloom_level=L4"
+    current_dashboard_dry_run: "python3 scripts/regenerate_dashboard.py --dry-run => rc=0; rendered unmatched_verified_targets=0"
+    current_stats_rendered:
+      eligible_count: 78
+      matched_count: 0
+      green_pct: "47.4%"
+      unmatched_verified_targets: 0
+      sot_source: precomputed_states
+    hook_state: ".git/hooks/pre-commit absent; task now records this as an explicit preflight fact"
+    check_file_path_owner_manual: "bash scripts/lint/check_file_path_owner.sh -v => rc=0; no staged files"
+    check_report_finalization_no_arg: "bash scripts/lint/check_report_finalization.sh => rc=2 usage error because the script requires at least one report path"
+  resolved_from_cycle1:
+    - "AC0 current truth gate added before implementation."
+    - "Task pivoted from dashboard mutation to transition documentation and regression tests when current unmatched=0."
+    - "Existing helpers compute_shogun_reflection_stats and annotate_unmatched_with_retain are explicitly reused; duplicate extraction is forbidden."
+    - "dashboard.md mutation is forbidden for current unmatched=0 path."
+    - "Allowed and forbidden file paths are now enumerated."
+    - "Hook install is no longer assumed; manual guard invocation is required."
+  remaining_condition:
+    - id: ac0e_report_finalization_target
+      severity: medium
+      issue: "AC0(e) says to run check_report_finalization.sh, but the script requires report path arguments; without args it exits 2."
+      required_fix: "Specify the target path, e.g. bash scripts/lint/check_report_finalization.sh queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml after the report exists, or define a pre-report skip with explicit post-report enforcement."
+  non_blocking_concerns:
+    - "AC0 evidence files such as dry_run_log/stats_dict/hook_absent_evidence may be embedded in the inventory YAML; if emitted as standalone files, add them to the allowlist first."
+    - "green/matched values should be treated as measured baseline values, not as success targets, because current matched_count is 0 while green_count comes from non-shogun verified mechanisms."
+  bloom_assessment:
+    status: L4_valid
+    reason: "The task now requires analyzing stale snapshot versus current generator state and designing invariants."
+  recommendation_to_karo:
+    action: patch_ac0e_then_dispatch
+    summary: "AC0(e) の対象 report path だけ明記すれば配信可。/clear 後 ashigaru4 へ送ってよい。"
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "The revised task protects dashboard truth by documenting 8-to-0 transition and adding regression guards instead of mutating current zero-unmatched state."
+  risks_to_north_star:
+    - "If finalization lint is not run against the actual final report path, the report-finalization failure pattern can recur."
