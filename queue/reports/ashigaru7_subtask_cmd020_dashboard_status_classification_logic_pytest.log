@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py::test_classification_doc_2_axis_section_present PASSED [ 20%]
+scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py::test_classification_doc_pass_with_concerns_yellow_rule PASSED [ 40%]
+scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py::test_classification_doc_audited_blocked_12_items_listed PASSED [ 60%]
+scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py::test_classification_doc_references_existing_constants_no_duplicate_table PASSED [ 80%]
+scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py::test_layer_c_d_cross_layer_reference_anchor_present PASSED [100%]
+
+============================== 5 passed in 0.03s ===============================
