@@ -30,18 +30,33 @@ jobs:
 
       - name: Secret detection on changed files (= Phase 6)
         run: |
-          # PR の場合は base...HEAD、push は HEAD~1...HEAD
+          # cmd_014 Option C 二重防御 (= 副医院長 handshake b4fac131):
+          #   (1) null-terminated path list (= word-splitting hazard 解消、空白含む path safe)
+          #   (2) queue/reports/* path filter (= check_secrets.sh case 文と二重防御)
+          set -o pipefail
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            files=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+            git diff -z --name-only --diff-filter=ACM \
+              "origin/${{ github.base_ref }}...HEAD" > /tmp/changed_files.z
           else
-            files=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+            git diff -z --name-only --diff-filter=ACM HEAD~1 HEAD > /tmp/changed_files.z 2>/dev/null \
+              || : > /tmp/changed_files.z
           fi
-          if [ -z "$files" ]; then
-            echo "no changed files to scan"
+
+          # queue/reports/ 配下を NUL-safe に除外
+          # (= awk RS=\0 / ORS=\0、grep -z は GNU/ugrep で意味が分かれる為回避)
+          if [ -s /tmp/changed_files.z ]; then
+            awk 'BEGIN { RS="\0"; ORS="\0" } !/^queue\/reports\// && !/\/queue\/reports\//' \
+              /tmp/changed_files.z > /tmp/filtered_files.z
+          else
+            : > /tmp/filtered_files.z
+          fi
+
+          if [ ! -s /tmp/filtered_files.z ]; then
+            echo "no changed files to scan (after queue/reports/ filter)"
             exit 0
           fi
-          # check_secrets.sh は引数列で file path を受ける
-          bash scripts/lint/check_secrets.sh $files
+          # xargs -0 で null-terminated list を check_secrets.sh に渡す (= word-splitting 回避)
+          xargs -0 -r bash scripts/lint/check_secrets.sh < /tmp/filtered_files.z
 
       - name: clinic_id hardcode grep gate (= ashigaru7 framework placeholder)
         run: |

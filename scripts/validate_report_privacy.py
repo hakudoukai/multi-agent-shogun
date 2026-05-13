@@ -75,6 +75,17 @@ LINE_ALLOW_MARKER = "privacy-allow"
 # YAML simple key-value line pattern
 _YAML_KV_RE = re.compile(r"^(\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:\s*(.*)")
 
+# YAML empty-value tokens. When scan_target reduces to one of these after
+# strip, the line carries no real value (`key:` / `key: null` / `key: ~` /
+# `key: "None"`) and must not produce HIGH/WARN findings even if a future
+# pattern would otherwise match the literal token.
+_YAML_EMPTY_TOKENS = frozenset({"", "null", "~", "none", "''", '""'})
+
+
+def _is_empty_yaml_value(s: str) -> bool:
+    """Return True if s represents an empty YAML scalar."""
+    return s.strip().lower() in _YAML_EMPTY_TOKENS
+
 
 # ---------------------------------------------------------------------------
 # Core scan functions
@@ -85,18 +96,29 @@ def scan_text(text: str) -> tuple[list[dict], list[dict]]:
 
     Field-unaware: scans the full text string. Used by scan_file() for
     non-YAML lines and directly by callers that have extracted value text.
+
+    Empty / YAML-null inputs ("", null, ~, None, whitespace-only) are
+    short-circuited to two empty lists — they cannot carry a real secret and
+    a bug elsewhere that hands us such a sample must not surface as HIGH.
     """
+    if _is_empty_yaml_value(text):
+        return [], []
+
     high: list[dict] = []
     warn: list[dict] = []
     for name, pat in HIGH_PATTERNS:
         for m in pat.finditer(text):
             sample = m.group(0)
+            if _is_empty_yaml_value(sample):
+                continue
             if len(sample) > 80:
                 sample = sample[:77] + "..."
             high.append({"pattern": name, "match_sample": sample})
     for name, pat in WARN_PATTERNS:
         for m in pat.finditer(text):
             sample = m.group(0)
+            if _is_empty_yaml_value(sample):
+                continue
             if len(sample) > 80:
                 sample = sample[:77] + "..."
             warn.append({"pattern": name, "match_sample": sample})

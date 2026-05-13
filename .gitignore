@@ -496,6 +496,9 @@ tests/specs/osato_lms_*
 !tests/test_session_start_hook_git_config.py
 # cmd_inbox_reform cycle 17 cycle2 = pre_commit_author_verify wrapper unit tests (= 黒田 v2 P0#2/#3 装着)
 !tests/test_pre_commit_author_verify.py
+# cmd_014 Phase 6 false-positive 根本治癒 (= Option C 二重防御) regression test
+!tests/lint/
+!tests/lint/*.py
 
 # subtask_shogun_active_verify_queue_systemd (= 信長殿 13:57 仕組み task cycle 1)
 !scripts/shogun_active_verify_queue.py

@@ -38,6 +38,14 @@ for f in "${files[@]}"; do
         *.env|*.env.*|*.lock|*node_modules*|*.git/*|*.venv/*)
             continue
             ;;
+        queue/reports/*|*/queue/reports/*)
+            # cmd_014 Phase 6 false-positive cure (Option C 二重防御):
+            # queue/reports/*.yaml は infra path (= /home/*) を legitimate に含む
+            # agent report 蓄積層であり、本物機密の入る経路ではない (= secret は
+            # env_only / secrets_manager_only 規範下、コミット対象外)。Path 単位で
+            # 構造的に exclude する。詳細: docs/cmd004_security_hardening_design.md §2-3。
+            continue
+            ;;
     esac
     # validate_report_privacy.py の関数を直接 import 実行
     if ! python3 - "$f" <<'PY'
@@ -73,7 +81,7 @@ except Exception as e:
 high, warn = mod.scan_text(text)
 if high:
     for h in high:
-        print(f\"[HIGH] {h.get('name')} in $f sample={h.get('sample','')[:80]!r}\")
+        print(f\"[HIGH] {h.get('pattern')} in $f sample={h.get('match_sample','')[:80]!r}\")
     sys.exit(1)
 sys.exit(0)
 " 2>&1) || rc=$?
