@@ -20,3 +20,10 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]
+
+      - id: agent-author-verify
+        name: git author 適正 verify (cmd_inbox_reform cycle 17 Rule 13 = session_start_hook + commit 直前 二重 safety)
+        entry: bash scripts/pre_commit_author_verify.sh
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]

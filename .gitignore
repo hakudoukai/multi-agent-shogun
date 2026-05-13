@@ -128,6 +128,8 @@
 !scripts/seo_qc.sh
 !scripts/stop_hook_inbox.sh
 !scripts/session_start_hook.sh
+# cmd_inbox_reform cycle 17 cycle2 = commit 直前 author 整合 verify wrapper (= 黒田 v2 P0#2/#3 装着、last-write-wins race 防護)
+!scripts/pre_commit_author_verify.sh
 !scripts/agent_status.sh
 !scripts/ratelimit_check.sh
 !scripts/switch_cli.sh
@@ -410,6 +412,8 @@ tests/specs/osato_lms_*
 !tests/test_shogun_active_verify_queue.py
 # cmd_inbox_reform cycle 17 = SessionStart hook git config local user 自動設定 unit tests
 !tests/test_session_start_hook_git_config.py
+# cmd_inbox_reform cycle 17 cycle2 = pre_commit_author_verify wrapper unit tests (= 黒田 v2 P0#2/#3 装着)
+!tests/test_pre_commit_author_verify.py
 
 # subtask_shogun_active_verify_queue_systemd (= 信長殿 13:57 仕組み task cycle 1)
 !scripts/shogun_active_verify_queue.py

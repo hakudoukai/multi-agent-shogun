@@ -76,13 +76,17 @@ language:
    # whitelist: shogun karo gunshi ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 (= 10 種)
    case "$AGENT_ID" in
      shogun|karo|gunshi|ashigaru1|ashigaru2|ashigaru3|ashigaru4|ashigaru5|ashigaru6|ashigaru7)
-       git -C "$REPO_ROOT" config --local user.name "$AGENT_ID"
+       git -C "$REPO_ROOT" config --local user.name  "$AGENT_ID"
        git -C "$REPO_ROOT" config --local user.email "${AGENT_ID}@multi-agent-shogun.local"
        ;;
      *)
-       # whitelist 外 → 設定 skip + karo へ inbox_write 報告 (= persona alias / 未定義 agent / 誤 env risk)
+       # whitelist 外 (= persona alias / 未定義 agent / 誤 env risk) → 設定 skip
+       # karo に inbox_write で「agent_id=$AGENT_ID whitelist 外、git config 未設定」報告 (= 自分で whitelist 拡張禁、F002 違反 risk 防止)
+       echo "WARN: agent_id=$AGENT_ID whitelist 外、git config skip" >&2
        ;;
    esac
+   # F007 commit 直前にも下記 wrapper を呼び author 整合を再 verify (= last-write-wins race 防護、黒田 v2 P0#2/#3 整合):
+   #   bash "$REPO_ROOT/scripts/pre_commit_author_verify.sh"
    ```
    bare `git config --local` 禁、必ず `git -C "$REPO_ROOT"` で cwd 不依存化。失敗時は karo に inbox_write で報告 (= 自分で git 復旧禁、足軽範囲外、F002 違反 risk 防止)。
 6. Review forbidden actions, then start work
@@ -103,13 +107,19 @@ Step 3: If task has "project:" field → read context/{project}.md
         If task has "target_path:" → read that file
 Step 4: Git config local user 自動設定 (Rule 13) — Codex CLI 経路自走:
         REPO_ROOT=$(git rev-parse --show-toplevel)
+        AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}')
         case "$AGENT_ID" in
           ashigaru1|ashigaru2|ashigaru3|ashigaru4|ashigaru5|ashigaru6|ashigaru7)
-            git -C "$REPO_ROOT" config --local user.name "$AGENT_ID"
+            git -C "$REPO_ROOT" config --local user.name  "$AGENT_ID"
             git -C "$REPO_ROOT" config --local user.email "${AGENT_ID}@multi-agent-shogun.local"
             ;;
-          *) # whitelist 外 → skip + karo 報告 ;;
+          *)
+            # whitelist 外 → skip + karo 報告 (= 自分で whitelist 拡張禁)
+            echo "WARN: agent_id=$AGENT_ID whitelist 外、git config skip" >&2
+            ;;
         esac
+        # F007 commit 直前にも下記 wrapper を呼び author 整合を再 verify (= last-write-wins race 防護):
+        #   bash "$REPO_ROOT/scripts/pre_commit_author_verify.sh"
 Step 5: Start work (only if assigned=work)
 ```
 

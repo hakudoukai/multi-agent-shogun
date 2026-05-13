@@ -52,7 +52,7 @@ task:
   parent_cmd: cmd_001
   bloom_level: L3        # L1-L3=Ashigaru, L4-L6=Gunshi
   description: "Create hello1.md with content 'おはよう1'"
-  target_path: "/mnt/c/tools/multi-agent-shogun/hello1.md"
+  target_path: "${PROJECT_ROOT}/hello1.md"  # (= cycle 17 黒田 v2 P0#4 privacy 整合 sanitization、absolute WSL path 削除)
   echo_message: "🔥 足軽1号、先陣を切って参る！八刃一志！"
   status: assigned
   timestamp: "2026-01-25T12:00:00"
@@ -64,7 +64,7 @@ task:
   bloom_level: L6
   blocked_by: [subtask_001, subtask_002]
   description: "Integrate research results from ashigaru 1 and 2"
-  target_path: "/mnt/c/tools/multi-agent-shogun/reports/integrated_report.md"
+  target_path: "${PROJECT_ROOT}/reports/integrated_report.md"  # (= cycle 17 黒田 v2 P0#4 privacy 整合 sanitization)
   echo_message: "⚔️ 足軽3号、統合の刃で斬り込む！"
   status: blocked         # Initial status when blocked_by exists
   timestamp: "2026-01-25T12:00:00"
@@ -309,8 +309,11 @@ case "$AGENT_ID" in
   *)
     # whitelist 外 (= persona alias / 未定義 agent / 誤 env risk) → 設定 skip
     # 配下 agent から「whitelist 外」報告を受けた場合 karo が判断 (= whitelist 拡張要件 / persona alias 廃止 / shogun escalation)
+    echo "WARN: agent_id=$AGENT_ID whitelist 外、git config skip" >&2
     ;;
 esac
+# F007 commit 直前にも下記 wrapper を呼び author 整合を再 verify (= last-write-wins race 防護、黒田 v2 P0#2/#3 整合):
+#   bash "$REPO_ROOT/scripts/pre_commit_author_verify.sh"
 ```
 
 **遵守要件**:

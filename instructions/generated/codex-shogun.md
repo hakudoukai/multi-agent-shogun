@@ -281,8 +281,11 @@ case "$AGENT_ID" in
   *)
     # whitelist 外 (= persona alias / 未定義 agent / 誤 env risk) → 設定 skip
     # karo に inbox_write で「agent_id=$AGENT_ID whitelist 外、git config 未設定」報告
+    echo "WARN: agent_id=$AGENT_ID whitelist 外、git config skip" >&2
     ;;
 esac
+# F007 commit 直前にも下記 wrapper を呼び author 整合を再 verify (= last-write-wins race 防護、黒田 v2 P0#2/#3 整合):
+#   bash "$REPO_ROOT/scripts/pre_commit_author_verify.sh"
 ```
 
 **遵守要件**:
