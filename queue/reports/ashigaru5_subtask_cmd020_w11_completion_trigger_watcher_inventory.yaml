@@ -1,0 +1,209 @@
+inventory_id: ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_inventory_v1
+inventoried_at: "2026-05-13T16:05:00+09:00"
+inventoried_by: ashigaru5
+task_ref: subtask_cmd020_w11_completion_trigger_watcher
+schema_ref: ac0_inventory_yaml_schema (= ashigaru1_existing_implementation_inventory 規範整合)
+
+# ───────────────────────────────────────────────
+# 本 task scope (= 既実装 inventory + gap 抽出)
+# ───────────────────────────────────────────────
+scope_summary: |
+  W11 in_progress 2 件 (C-V29-W11DDA + C-V30-W11DDB) の external Supabase completion
+  event を SC 側で検知する scheduled watcher を装着する。AC0 inventory として、
+  本 watcher が新規追加でなく既実装 (= 0 件) であることを立証し、隣接 watcher との
+  Anti-Dup 関係を明示する。
+
+# ───────────────────────────────────────────────
+# 既実装 component inventory (= 隣接 watcher / pattern)
+# ───────────────────────────────────────────────
+cmd_020_w11_trigger_scope_components:
+  - component_id: watch_w11_trigger_script
+    component_type: ops_script
+    file_path: scripts/watch_w11_trigger.sh
+    key_functions: []
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru5
+    commit_hash: null
+    integration_status: absent
+    gap_notes: "本 task で新規追加 (= 0 件既実装、Anti-Dup pass)。one-shot scheduled, single Supabase MCP query + 即終了 (resident 禁)。"
+
+  - component_id: dashboard_w11_trigger_systemd_unit
+    component_type: ops_systemd_unit
+    file_path: systemd/dashboard-w11-trigger.service + systemd/dashboard-w11-trigger.timer
+    key_functions: []
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru5
+    commit_hash: null
+    integration_status: absent
+    gap_notes: |
+      本 task で新規追加 (= 0 件既実装、Anti-Dup pass)。
+      systemd user unit、OnUnitActiveSec=10-15min、Persistent=true、各 trigger 起動毎 single query + 即終了。
+      auto-git-sync.timer (= 既装備 pull-only 5min cadence) と異 cadence + 異 scope (= 異 owner script)。
+
+  - component_id: watch_w11_trigger_run_log
+    component_type: audit_trail_yaml
+    file_path: queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_run_log.yaml
+    key_functions: []
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru5
+    commit_hash: null
+    integration_status: absent
+    gap_notes: "本 task で新規追加 (= 0 件既実装)。timestamped + result_code + items_detected 構造、append-only。"
+
+  - component_id: watch_w11_trigger_heartbeat
+    component_type: metrics_yaml
+    file_path: queue/metrics/w11_trigger_heartbeat.yaml
+    key_functions: []
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru5
+    commit_hash: null
+    integration_status: absent
+    gap_notes: "本 task で新規追加 (= 0 件既実装)。last_run_ts + last_result + items_detected の health signal。"
+
+  - component_id: watch_w11_trigger_log_file
+    component_type: log_file
+    file_path: logs/watch_w11_trigger.log
+    key_functions: []
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru5
+    commit_hash: null
+    integration_status: absent
+    gap_notes: "本 task で新規追加 (= 0 件既実装)。stderr/stdout 構造 log、systemd journal とは別、機械 evidence 路。"
+
+  - component_id: worker_eval_gate_check_doc
+    component_type: docs_decision_record
+    file_path: docs/cmd020_w11_trigger_worker_eval_gate_check.md
+    key_functions: []
+    existing_endpoints: []
+    existing_db_tables: []
+    owner_ashigaru: ashigaru5
+    commit_hash: null
+    integration_status: absent
+    gap_notes: "本 task で新規追加 (= 0 件既実装)。worker_eval 13 fields full + 6 質問 1-to-1 mapping + anti-pattern 自検。"
+
+# ───────────────────────────────────────────────
+# 隣接既実装 (= Anti-Dup 比較対象、改修禁、参照のみ)
+# ───────────────────────────────────────────────
+adjacent_existing_workers:
+  - component_id: inbox_watcher
+    file_path: scripts/inbox_watcher.sh
+    trigger_type: event_based
+    cadence: "inotifywait file change"
+    overlap_with_w11_trigger: none
+    rationale: "inotifywait は inbox YAML file change を起点とする event-driven、本 W11 trigger は SC 上 Supabase external state を起点とする scheduled query。event source が異なる (= local file vs external DB) ため重複なし。"
+
+  - component_id: ntfy_listener
+    file_path: scripts/ntfy_listener.sh
+    trigger_type: continuous
+    cadence: "streaming reconnect"
+    overlap_with_w11_trigger: none
+    rationale: "ntfy streaming は携帯 → SC inbox の入力 channel、Supabase development_progress の状態遷移とは無関係。"
+
+  - component_id: auto_git_sync_timer
+    file_path: scripts/auto_git_sync.sh + ~/.config/systemd/user/auto-git-sync.timer
+    trigger_type: scheduled
+    cadence: "5 min FF pull"
+    overlap_with_w11_trigger: none
+    rationale: |
+      両者 scheduled だが scope/cadence 全く異なる:
+      - auto-git-sync: git remote → working tree FF pull、5min interval、pull-only。
+      - watch_w11_trigger: Supabase development_progress 状態 query、10-15min interval、inbox notify-only。
+      target API / cadence / write target が全件異、Anti-Dup pass。
+
+  - component_id: watcher_supervisor
+    file_path: scripts/watcher_supervisor.sh
+    trigger_type: continuous
+    cadence: "5s loop"
+    overlap_with_w11_trigger: none
+    rationale: "5s loop は既存 watcher process supervision 専用、scope 限定 (= 既存 docs/background_worker_eval_gate.md §Anti-Patterns で acceptable 認定)。W11 trigger とは別 layer。"
+
+# ───────────────────────────────────────────────
+# 対象 W11 in_progress 候補 (= unverified_inventory_20260512.yaml と整合)
+# ───────────────────────────────────────────────
+w11_in_progress_targets:
+  - id: C-V29-W11DDA
+    phase: "W11/phase_a_id_unification"
+    current_status: in_progress
+    completion_trigger:
+      - "external_status becomes completed in development_progress row"
+      - "commit_hash field becomes non-empty"
+    expected_audit_eta: "10-15 min after trigger"
+    source_evidence: "queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml w11_in_progress_2"
+
+  - id: C-V30-W11DDB
+    phase: "W11/phase_b_karte_loader"
+    current_status: in_progress
+    completion_trigger:
+      - "external_status becomes completed in development_progress row"
+      - "commit_hash field becomes non-empty"
+    expected_audit_eta: "10-15 min after trigger"
+    source_evidence: "queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml w11_in_progress_2"
+
+# ───────────────────────────────────────────────
+# Cross-cutting summary
+# ───────────────────────────────────────────────
+cross_cutting_summary:
+  integration_chain:
+    - chain_id: w11_completion_detect_chain
+      flow: |
+        systemd dashboard-w11-trigger.timer (10-15min) →
+        scripts/watch_w11_trigger.sh (one-shot) →
+        Supabase MCP query (= mcp__claude_ai_Supabase__execute_sql or list_tables, single shot) →
+        completion detection (status=completed + commit_hash non-empty) →
+        queue/reports/.../run_log.yaml append + queue/metrics/.../heartbeat.yaml update →
+        scripts/inbox_write.sh karo "W11 completion detected" report_received ashigaru5 →
+        karo が naomasa post-audit chain trigger 起動 (= direct audited_done 禁)
+      status: absent (= 本 task で新規装着)
+      components:
+        - watch_w11_trigger_script
+        - dashboard_w11_trigger_systemd_unit
+        - watch_w11_trigger_run_log
+        - watch_w11_trigger_heartbeat
+        - watch_w11_trigger_log_file
+
+  orphan_components: []
+
+  out_of_scope_boundary:
+    - id: C-15-B7
+      reason: "W9 batch7 manifest 経路、別 task scope (= ashigaru6 implementation_required_14_cmd_proposal で out_of_scope 明示済)"
+    - id: "14 件 not_started cmd_020 candidates"
+      reason: "implementation 必須 candidates、本 W11 monitor 経路と完全分離"
+    - id: hakudokai-dev_repo
+      reason: "本 task は multi-agent-shogun-newbuild repo only、hakudokai-dev 関与禁"
+
+  test_coverage_gaps:
+    - location: "scripts/watch_w11_trigger.sh (= 新規追加)"
+      gap: "static source-contract test 未配備"
+      needed_test: "test_watch_w11_trigger_static_contract — script presence + scheduled trigger + single-shot + inbox notify + direct audited_done 禁 検証"
+    - location: "systemd/dashboard-w11-trigger.{service,timer} (= 新規追加)"
+      gap: "static source-contract test 未配備"
+      needed_test: "test_systemd_unit_static_contract — unit file presence + OnUnitActiveSec + ExecStart + Persistent=true 検証"
+    - location: "docs/cmd020_w11_trigger_worker_eval_gate_check.md (= 新規追加)"
+      gap: "static source-contract test 未配備"
+      needed_test: "test_worker_eval_gate_check_doc_13_fields — 13 fields 全件 + 6 質問 1-to-1 mapping + anti-pattern 自検 + decision approve_with_concerns 以上 検証"
+    - location: "completion_gate_interaction"
+      gap: "direct audited_done forbidden の machine guard 不在"
+      needed_test: "test_no_direct_audited_done — watch_w11_trigger.sh 内 audited_done / shogun_verified 書込 source 不在検証"
+
+notes:
+  scope_exclusion:
+    - "本 task は cmd_020 next phase 補助 stream、新規 logic 0 件既実装、Anti-Dup 厳格遵守"
+    - "frontend 関与 0 (= backend / ops layer only)"
+    - "hakudokai-dev repo 触れず (= multi-agent-shogun-newbuild only)"
+    - "C-15-B7 / 14 件 not_started cmd_020 candidates は本 task 範囲外明記"
+  push_scope:
+    - "本 task 3 atomic commit only bounded F007 push、worktree + cherry-pick + printf+diff equality assert で ahead/dirty 完全 bypass"
+    - "repo: multi-agent-shogun-newbuild origin/main only"
+  supreme_rule_application:
+    rule_id: "msg_20260511_164625 (= 根本治療原則 最上位基底)"
+    applied_aspects:
+      - "短期 hack 厳禁: scheduled trigger は polling-adjacent だが SC 上 Supabase event source 不在故必要、cadence_reason evidence-based 記録"
+      - "局所修正禁、構造改善優先: completion_gate_interaction 明示で direct audited_done 禁、canonical post-audit chain 維持"
+      - "工数最小化より将来運用安定優先: 13 fields decision record full 埋め + anti-pattern 全件自検 + health signal + stop_or_disable procedure 装備"
+      - "仕組み追加 vs 改修区別: 本 task は scheduled trigger 新規追加 (= 仕組み)、既 inbox_watcher / ntfy / auto-git-sync には改修なし"
+      - "test + 法令 + UX 完備で根本品質: static source-contract test 3-5 件 + PII/secret policy 記述 + dashboard row health signal"

@@ -347,6 +347,20 @@ logs/
 !queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
 !queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml
 
+# cmd_020 W11 completion trigger watcher (= ashigaru5、subtask_cmd020_w11_completion_trigger_watcher、scheduled one-shot watcher、detect-and-notify only、direct audited_done 禁、worker_eval 13 fields full + 6 質問 1-to-1 mapping)
+!scripts/watch_w11_trigger.sh
+!systemd/
+!systemd/dashboard-w11-trigger.service
+!systemd/dashboard-w11-trigger.timer
+!docs/cmd020_w11_trigger_worker_eval_gate_check.md
+!scripts/test/test_subtask_cmd020_w11_completion_trigger_watcher_static_contract.py
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_inventory.yaml
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_report.yaml
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_run_log.yaml
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_pytest.log
+!queue/metrics/
+!queue/metrics/w11_trigger_heartbeat.yaml
+
 # Screenshots (masked — no secrets)
 !images/
 !images/company-creed-all-panes.png
