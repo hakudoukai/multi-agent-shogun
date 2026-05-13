@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py::test_pre_commit_config_has_staged_residual_check PASSED [ 20%]
+scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py::test_scope_contamination_prevention_doc_4_measures_present PASSED [ 40%]
+scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py::test_check_staged_residual_script_present_and_executable PASSED [ 60%]
+scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py::test_audit_gate_staged_check_section_present PASSED [ 80%]
+scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py::test_ashigaru_report_pre_commit_verify_field_section_present PASSED [100%]
+
+============================== 5 passed in 0.02s ===============================
