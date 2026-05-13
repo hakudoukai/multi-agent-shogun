@@ -1,0 +1,16 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/hakudokai/projects/multi-agent-shogun-newbuild
+plugins: anyio-4.13.0
+collecting ... collected 7 items
+
+scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py::test_inventory_yaml_nine_agents_present PASSED [ 14%]
+scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py::test_inventory_yaml_nine_department_mapping PASSED [ 28%]
+scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py::test_inventory_yaml_ac0_anti_dup_present PASSED [ 42%]
+scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py::test_inventory_yaml_no_runtime_config_paths PASSED [ 57%]
+scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py::test_md_nine_department_table_present PASSED [ 71%]
+scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py::test_md_no_runtime_change_declaration PASSED [ 85%]
+scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py::test_md_timestamp_evidence_anchor PASSED [100%]
+
+============================== 7 passed in 0.07s ===============================
