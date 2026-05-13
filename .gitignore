@@ -333,6 +333,13 @@ logs/
 !queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml
 !queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_pytest.log
 
+# cmd_020 persona 廃止 + SC inbox 整理 plan (= ashigaru4、subtask_cmd020_persona_廃止_sc_inbox_整理、read-only inventory + plan 文書化のみ、live inbox mutation / watcher process 操作 0 件)
+!docs/sc_inbox_整理_plan.md
+!scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
+!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml
+!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
+!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
+
 # Screenshots (masked — no secrets)
 !images/
 !images/company-creed-all-panes.png

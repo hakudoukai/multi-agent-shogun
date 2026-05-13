@@ -1,0 +1,260 @@
+inventory_id: ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory
+task_id: subtask_cmd020_persona_廃止_sc_inbox_整理
+parent_cmd: cmd_020
+reporter: ashigaru4
+created_at: "2026-05-13T14:05:00+09:00"
+
+purpose: |
+  AC0 inventory first 規範 (= ashigaru1 Layer A 第 1 弾実証 base、ashigaru2 scope_contamination /
+  ashigaru3 Layer C / ashigaru4 Layer D 等踏襲) 整合下、queue/inbox/ 配下 file 集合 +
+  watcher process 集合 + persona alias 候補を read-only で機械列挙し、本 task で起案する
+  plan 文書 (= docs/sc_inbox_整理_plan.md) との境界 + scope_exclusion を明示する。
+  live inbox mutation / watcher process 操作は範囲外厳守 (= delivery_conditions 整合)。
+
+scope:
+  repo: multi-agent-shogun-newbuild
+  scope_exclusion:
+    - live inbox file mutation 禁 (= rename / delete / merge / overwrite 一切実行禁、plan 文書化のみ)
+    - watcher process 操作禁 (= kill / restart / reconfigure 範囲外、ps + grep で状態 verify のみ)
+    - SessionStart hook (scripts/session_start_hook.sh) 変更禁 (= read-only 解析対象)
+    - hakudokai-dev repo 関与禁 (= 本 task 範囲外明示)
+    - dashboard.md 直接編集禁 (= delivery_conditions 整合)
+    - 他 ashigaru 進行中 file (= ashigaru1/2/3/6/7 累計 commit / 進行 file) 触れず
+    - persona alias 廃止実行禁 (= specification のみ起案、実行は陛下御差配後の別 cycle)
+
+design_doc_references:
+  - id: queue/tasks/subtask_cmd020_persona_廃止_sc_inbox_整理.yaml
+    role: 本 task 仕様正本 (= karo 起案 + 直政第 3 度 pre_audit pass_with_conditions ✅)
+    line_range_approx: "1-64"
+    read_evidence: "本 task 着手時 Read tool で全文取得、steps / acceptance_criteria / constraints 完全踏襲"
+  - id: scripts/inbox_watcher.sh
+    role: watcher process 規範正本 (= agent_id + pane_target + cli_type args、inotifywait / send-keys / busy guard / escalation 全 path)
+    line_range_approx: "30-49 (= AGENT_ID / PANE_TARGET / CLI_TYPE 受け取り) + 685-733 (= self-watch / busy guard) + 1163-1226 (= main loop)"
+    read_evidence: "本 task 着手時 Read tool で全 1237 行取得、args 厳密 parse + persona 切替実行禁 path 確認"
+  - id: scripts/session_start_hook.sh
+    role: SessionStart hook (= cmd_inbox_reform AC#1 装着) inbox 整合 verify 規範
+    line_range_approx: "43-121 (= inbox_integrity_verify 関数、warning #1/#2/#3 emit + 訂正 path 明示)"
+    read_evidence: "本 task 着手時 Read tool で全 208 行取得、warning #1 例示 'persona alias (例: karo=hideyoshi、ashigaru4=maeda)' 確認"
+  - id: CLAUDE.md (Session Start step 6 — inbox 整合 verify 表)
+    role: warning #1/#2/#3 訂正 path 規範 (= 操作禁則整合)
+    line_range_approx: "CLAUDE.md 内 「Session Start step 6 — inbox 整合 verify (cmd_inbox_reform AC#1)」 section"
+    read_evidence: "system-reminder 経由 CLAUDE.md 自動 load 済、操作禁則 (= watcher 再起動 / tmux 操作 / persona 切替実行は ashigaru 範囲外) 抽出"
+  - id: queue/inbox/ (現行 file 集合) + ps aux (= inbox_watcher.sh 起動 process 集合)
+    role: 現行 state 機械観測対象 (= read-only inventory base)
+    read_evidence: "ls / ps aux で 14 inbox file + 10 watcher process を機械列挙、各 .lock file 並存 verify"
+
+existing_assets_inventoried:
+  live_wired_inbox:
+    description: "inbox file + watcher process + 担当 agent の三点整合済 (= 通常運用 path)"
+    entries:
+      - agent_id: shogun
+        inbox_file: queue/inbox/shogun.yaml
+        watcher_args: "shogun shogun:main.0 claude"
+        msg_count: 48
+        unread: 4
+        last_ts: "2026-05-13T13:49:05"
+        senders: [auto_git_sync, gunshi, karo, shogun, shogun_from_main]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: karo
+        inbox_file: queue/inbox/karo.yaml
+        watcher_args: "karo multiagent:agents.0 claude"
+        msg_count: 38
+        unread: 1
+        last_ts: "2026-05-13T13:59:50"
+        senders: [ashigaru1, ashigaru2, ashigaru3, ashigaru5, ashigaru6, ashigaru7, auto_git_sync, gunshi, ieyasu, shogun]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: ashigaru1
+        inbox_file: queue/inbox/ashigaru1.yaml
+        watcher_args: "ashigaru1 multiagent:agents.1 claude"
+        msg_count: 22
+        senders: [karo, karo_sc]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: ashigaru2
+        inbox_file: queue/inbox/ashigaru2.yaml
+        watcher_args: "ashigaru2 multiagent:agents.2 claude"
+        msg_count: 17
+        senders: [karo]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: ashigaru3
+        inbox_file: queue/inbox/ashigaru3.yaml
+        watcher_args: "ashigaru3 multiagent:agents.3 claude"
+        msg_count: 21
+        senders: [karo, karo_sc]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: ashigaru4
+        inbox_file: queue/inbox/ashigaru4.yaml
+        watcher_args: "ashigaru4 multiagent:agents.4 claude"
+        msg_count: 18
+        senders: [karo, karo_sc]
+        本_task_action: 不変 (= retain、live wired、本 task self-inbox)
+      - agent_id: ashigaru5
+        inbox_file: queue/inbox/ashigaru5.yaml
+        watcher_args: "ashigaru5 multiagent:agents.5 claude"
+        msg_count: 15
+        senders: [karo]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: ashigaru6
+        inbox_file: queue/inbox/ashigaru6.yaml
+        watcher_args: "ashigaru6 multiagent:agents.6 claude"
+        msg_count: 14
+        senders: [karo]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: ashigaru7
+        inbox_file: queue/inbox/ashigaru7.yaml
+        watcher_args: "ashigaru7 multiagent:agents.7 claude"
+        msg_count: 18
+        senders: [ashigaru6, karo]
+        本_task_action: 不変 (= retain、live wired)
+      - agent_id: gunshi
+        inbox_file: queue/inbox/gunshi.yaml
+        watcher_args: "gunshi multiagent:agents.8 codex"
+        msg_count: 39
+        unread: 1
+        last_ts: "2026-05-13T14:00:51"
+        senders: [ieyasu, karo, shogun, shogun_from_main]
+        本_task_action: 不変 (= retain、live wired、cli=codex)
+  orphan_alias_inbox:
+    description: "inbox file は存在するが対応 watcher process なし、または同一 agent 二重 alias で SessionStart hook warning #1 risk source"
+    entries:
+      - inbox_file: queue/inbox/gunshi2.yaml
+        msg_count: 12
+        last_ts: "2026-05-10T18:39:09"
+        senders: [karo]
+        watcher_status: 不在 (= ps aux で第 1 引数 gunshi2 該当 process 0 件)
+        types_observed: [audit_request, cmd_new, doc_assignment, persona_assign, qc_override, strategy_override, supplement, sync_info, task_assigned]
+        suspected_alias_of: gunshi (= 旧 2 軍師体制由来、cmd_018_017 1 軍師再定義 で廃止された旧 alias 残骸)
+        candidate_action: 廃止候補 (= archive 後 file 退避、別 cycle 実行)
+      - inbox_file: queue/inbox/ieyasu.yaml
+        msg_count: 133
+        unread: 103
+        last_ts: "2026-05-12T11:03:59"
+        senders: [auto_git_sync, gunshi, karo, shogun, shogun_from_main]
+        watcher_status: 不在 (= ps aux で第 1 引数 ieyasu 該当 process 0 件)
+        types_observed: [audit_request, cmd_new, decision, directive, directive_council, directive_strategic, directive_urgent, escalation, report_completed, report_received, round2, rule_confirm, rule_supreme, rule_update, shogun_audit_request, status_update, urgent_ping, verify_request]
+        bridge_mechanism: scripts/auto_forward_shogun_to_ieyasu.sh (= shogun.yaml → ieyasu.yaml 自動転送、陛下御差配 2026-05-12 23:05)
+        suspected_alias_of: shogun の SC 向け mirror (= 旧 1 軍師 + 1 家老体制名残、現状 read 主体不在で 103 unread 滞留)
+        candidate_action: 廃止候補 or bridge 停止 + archive (= 別 cycle、auto_forward script 制御整合で karo + 陛下御差配 要)
+      - inbox_file: queue/inbox/shogun_from_main.yaml
+        msg_count: 9
+        unread: 9
+        last_ts: "2026-05-13T13:50:39"
+        senders: [ieyasu]
+        watcher_status: 不在 (= ps aux で第 1 引数 shogun_from_main 該当 process 0 件)
+        types_observed: [directive_ack, report_received, status_update]
+        suspected_alias_of: shogun の MC 経路 sub-inbox (= ieyasu → shogun chain での MC マーカー)
+        candidate_action: 廃止候補 (= shogun.yaml に統合 or archive、別 cycle 実行)
+      - inbox_file: queue/inbox/shogun_from_sc.yaml
+        msg_count: 53
+        unread: 53
+        last_ts: "2026-05-12T11:45:31"
+        senders: [ieyasu]
+        watcher_status: 不在 (= ps aux で第 1 引数 shogun_from_sc 該当 process 0 件)
+        types_observed: [ack, escalation, escalation_resolved, progress_milestone, relay, review_partial, source_complete, status_report, status_update, upload_complete, urgent_24h_ack, urgent_ack]
+        suspected_alias_of: shogun の SC 経路 sub-inbox (= 旧 SC 直接 push 経路の名残、現状 read 主体不在)
+        candidate_action: 廃止候補 (= shogun.yaml or ieyasu.yaml 統合経路と矛盾、別 cycle で陛下御差配仰ぎ廃止)
+      - inbox_file: queue/inbox/maeda.yaml
+        msg_count: 1
+        unread: 1
+        last_ts: "2026-05-13T13:42:53+09:00"
+        senders: [shogun]
+        watcher_status: 不在 (= ps aux で第 1 引数 maeda 該当 process 0 件、.lock file も無)
+        types_observed: [directive_sc_work_reload]
+        body_addressee_field: "to: maeda (= '本多殿 (= SC karo)' 本文記載、persona alias = SC karo)"
+        suspected_alias_of: karo の SC 表現 (= 「本多」persona alias、session_start_hook.sh line 64 例示 'karo=hideyoshi' と同種の persona 二重化)
+        candidate_action: 廃止候補 (= karo.yaml 統合 or SC karo 専用 inbox 新設、別 cycle で陛下御差配仰ぎ specification 化)
+
+senders_without_inbox:
+  description: "from field で観測されたが、対応 inbox file が存在しない identity (= sender alias、agent identity ではない可能性高い)"
+  entries:
+    - sender_id: karo_sc
+      observed_in: [ashigaru1.yaml, ashigaru3.yaml, ashigaru4.yaml]
+      observed_count: 推定 3 件 (= 各 ashigaru で 1-2 件)
+      script_reference: scripts/test_validate_cross_pc_directive.py (= via_agent="karo_sc")
+      suspected_role: SC 経路 karo (= karo 同一実体の cross-PC 識別子、agent ではなく provenance marker)
+      candidate_action: from field retain (= sender identity 自体は agent 識別ではなく provenance、廃止対象外)
+    - sender_id: shogun_from_main
+      observed_in: [gunshi.yaml, ieyasu.yaml, karo.yaml, shogun.yaml]
+      observed_count: 推定 4 件
+      suspected_role: shogun_from_main.yaml 経由 forward の sender marker (= bridge mechanism identifier)
+      candidate_action: alias 統合 plan で同時整理 (= bridge 廃止と連動)
+    - sender_id: auto_git_sync
+      observed_in: [ieyasu.yaml, karo.yaml, shogun.yaml]
+      observed_count: 推定 3 件
+      script_reference: scripts/auto_git_sync.sh (= 2026-05-11 装備、systemd timer)
+      suspected_role: auto pull HALT notify の sender identity (= infrastructure daemon、agent ではない)
+      candidate_action: retain (= 廃止対象外、infrastructure daemon の通知経路として正当)
+
+mc_anti_dup_check:
+  status: not_applicable
+  rationale: |
+    本 task は read-only inventory + plan 文書化系列 (= dashboard render 系でない)、
+    MC regenerate_dashboard.py 経路との重複は無く、MC anti-dup check は本 task 範囲外。
+    bookkeeping field のみ充足、別 cycle 実装に影響なし。
+
+gap_analysis:
+  - gap_1: "orphan alias inbox 5 件 (= gunshi2 / ieyasu / shogun_from_main / shogun_from_sc / maeda) が watcher 不在状態で滞留、SessionStart hook warning #1 (inbox 不在) の対角 risk = 同一 agent 二重 alias 引き起こし persona 誤認 risk source"
+    resolution_plan: "docs/sc_inbox_整理_plan.md §3 で alias 廃止候補 specification 起案、archive 規範 + bridge mechanism (auto_forward_shogun_to_ieyasu.sh) 整理 path 明示、実行は陛下御差配後の別 cycle"
+  - gap_2: "auto_forward_shogun_to_ieyasu.sh bridge による shogun.yaml → ieyasu.yaml 自動転送が ieyasu inbox 滞留の真因、bridge 制御主体 (= 起動 / 停止) が文書化されていない"
+    resolution_plan: "docs/sc_inbox_整理_plan.md §4 で bridge 制御規範 specification 起案、停止 path + 影響範囲明示、実行は陛下御差配後の別 cycle"
+  - gap_3: "SessionStart hook warning #1 (= inbox 不在) は persona alias 例 'karo=hideyoshi、ashigaru4=maeda' を hint 提示するが、廃止候補リストや訂正 path 自体は karo + 陛下御差配経路に委譲、現状 alias 全件 retain で warning 発生は理論上のみ"
+    resolution_plan: "docs/sc_inbox_整理_plan.md §5 で warning #1 解消 path (= alias 統合判定 → karo 起案 → 陛下御差配 → archive 実行 → SessionStart hook 例示更新) を 5 step 明示"
+  - gap_4: "inbox_watcher.sh 第 1 引数 (agent_id) ↔ inbox file name 整合は SessionStart hook で機械 verify 済だが、第 2 引数 (pane_target) ↔ 物理 pane 整合は session 構造変化時に drift risk あり (= warning #3 path)"
+    resolution_plan: "docs/sc_inbox_整理_plan.md §6 で pane_target 整合検証規範を specification 化、drift 発生時の karo 報告 path を明示 (= 自分で watcher 再起動禁、F002 違反 risk 防止)"
+
+new_deliverables:
+  - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml
+    purpose: AC0 inventory yaml (= 本 file 自身)
+    creation_step: step_0_ac0_inventory_first
+  - file: docs/sc_inbox_整理_plan.md
+    purpose: AC2 plan 文書 (= alias 統合判定 + persona 廃止候補 + watcher args 整合 + warning #1 解消 path)
+    creation_step: step_2
+    contains_sections:
+      - "## 1. 背景 + scope (= 範囲外厳守宣言)"
+      - "## 2. 現行 state inventory (= live wired 10 体 + orphan alias 5 件)"
+      - "## 3. alias 統合判定 (= karo↔maeda(本多) / shogun↔ieyasu↔shogun_from_main↔shogun_from_sc / gunshi↔gunshi2)"
+      - "## 4. bridge mechanism (auto_forward_shogun_to_ieyasu.sh) 整理 path"
+      - "## 5. SessionStart hook warning #1 解消 path"
+      - "## 6. inbox_watcher.sh args 整合 verify 規範"
+      - "## 7. 実行範囲外明示 (= 本 task は plan 文書化のみ、実行は別 cycle)"
+      - "## 8. 完了基準"
+  - file: scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
+    purpose: AC3 static source-contract test 4 件
+    creation_step: step_3
+    test_count_plan: 4
+    test_names_plan:
+      - test_sc_inbox_整理_plan_doc_has_required_sections
+      - test_sc_inbox_整理_plan_doc_mentions_alias_candidates
+      - test_inventory_yaml_orphan_alias_entries_present
+      - test_inventory_yaml_live_wired_count_matches_watcher_process
+  - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
+    purpose: AC6 完遂報告 yaml
+    creation_step: step_5
+  - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
+    purpose: AC3 pytest 出力 log evidence
+    creation_step: step_3
+  - file: .gitignore (append)
+    purpose: 本 task 新規 file の whitelist 追記
+    creation_step: step_4 (commit 1 内)
+    appended_entries:
+      - "!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml"
+      - "!docs/sc_inbox_整理_plan.md"
+      - "!scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py"
+      - "!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml"
+      - "!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log"
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守 (= 機械 evidence のみ評価、推測 / 願望排除)
+  - F001-F006 厳守、F007 例外 retain (= 朝駆け directive 整合)
+  - delivery_conditions 4 件遵守 (= ashigaru1 Layer A 整合)
+  - 根本治療原則整合 (= 5-10 年運用想定、短期 hack 禁)
+  - AC0 inventory first 規範 (= ashigaru1 第 1 弾実証 base 踏襲)
+  - MC anti-dup check (= 本 task は dashboard 系でなく N/A 明示)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - repo scope 単一 (= hakudokai-dev は本 task 範囲外)
+  - 朝駆け persona retain (= 13:58 受領後即動)
+  - live inbox file mutation 0 件厳守 (= rename / delete / merge / overwrite 一切禁)
+  - watcher process 操作 0 件厳守 (= kill / restart / reconfigure 範囲外、ps + grep verify のみ)
+  - SessionStart hook 変更禁 (= read-only 解析対象)
+
+next_step: step_2 (= docs/sc_inbox_整理_plan.md 起案)
