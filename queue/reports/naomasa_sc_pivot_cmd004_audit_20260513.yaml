@@ -1,0 +1,172 @@
+audit_id: naomasa_sc_pivot_cmd004_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T14:10:00+09:00"
+source_inbox:
+  - msg_20260513_sc_naomasa_27eda007
+  - msg_20260513_134230_7fac3883
+scope:
+  - inventory_cross_check
+  - three_spec_deliverable_audit
+  - w9_path_d_step3_preparation_plan
+overall_verdict: pass_with_concerns
+evidence_state: complete_with_source_gap
+completion_gate: partially_open
+
+inventory_cross_check:
+  audit_id: naomasa_sc_pivot_inventory_cross_check_20260513
+  requested_source: queue/reports/ashigaru1_dinosaur_kingdom_complete_inventory_20260513.yaml
+  verdict: blocked_source_missing
+  evidence_state: source_missing
+  completion_gate: blocked
+  machine_evidence:
+    worktree_lookup: missing
+    origin_main_tree_lookup: missing
+    available_proxy_report: queue/reports/ashigaru1_cmd004_dinosaur_100enemies_report.yaml
+    proxy_limitation: "Proxy report covers dinosaur 100 enemies task only; it is not the requested five-scope complete inventory."
+  requested_five_scopes:
+    - A_spec_12
+    - B_28_task
+    - C_supabase
+    - D_18_task
+    - E_shogun_verified_34
+  finding:
+    severity: high
+    issue: "Requested complete inventory is not available in SC worktree or origin/main, so the five-scope SC audit cannot be truthfully completed."
+    recommendation: "Publish the complete inventory as a git-tracked report, then re-run this cross-check before using it as shogun_verified source."
+
+three_spec_deliverable_audit:
+  - audit_id: naomasa_sc_pivot_ai_chat_spec_audit_20260513
+    target: ai_chat_spec
+    deliverable: docs/cmd004_ai_chat_spec.md
+    source_report: queue/reports/ashigaru5_cmd004_ai_chat_report.yaml
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_for_spec_only
+    commit_evidence:
+      spec_commit: 8a6c20c
+      report_commit: report_present
+    privacy_status:
+      validator: scripts/validate_report_privacy.py
+      result: fail
+      high_findings_summary: "Spec/report contain absolute WSL path strings; no API token pattern was observed in validator output."
+      warn_findings_summary: "Synthetic digit/date-like ids present."
+    sc_findings:
+      - "Deliverable exists and report records spec-only pass."
+      - "Implementation remains blocked by unresolved API key / backend environment dependency noted in source report."
+      - "Legal/privacy confirmations remain open before production implementation."
+    shogun_verified_candidate:
+      eligible: true
+      candidate_type: spec_deliverable_only
+      condition: "Accept only as spec completion; do not mark implementation/security complete."
+
+  - audit_id: naomasa_sc_pivot_qr_kanban_spec_audit_20260513
+    target: qr_kanban_spec
+    deliverable: docs/cmd004_qr_kanban_spec.md
+    source_report: queue/reports/ashigaru1_cmd004_qr_kanban_impl_base_report.yaml
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_security_followups
+    commit_evidence:
+      spec_and_report_commit: a576591
+      implementation_base_commit_reported: 6345bfe1
+    test_evidence:
+      command_summary: "pytest source report: 36 passed, SKIP=0"
+      skip_count: 0
+    privacy_status:
+      validator: scripts/validate_report_privacy.py
+      result: fail
+      high_findings_summary: "Spec/report contain absolute WSL/home path strings; no API token pattern was observed in validator output."
+      warn_findings_summary: "Synthetic digit-like ids present."
+    sc_findings:
+      - "Deliverable exists, report exists, and SC commit evidence is present."
+      - "Source report records high gaps for token secret absence and retention/encryption policy."
+      - "Existing implementation base is useful but must not be treated as full privacy/security green."
+    shogun_verified_candidate:
+      eligible: true
+      candidate_type: spec_plus_test_deliverable
+      condition: "Accept spec/report/test evidence; keep security gaps as follow-up implementation tasks."
+
+  - audit_id: naomasa_sc_pivot_guardian_consent_spec_audit_20260513
+    target: guardian_consent_spec
+    deliverable: docs/cmd004_guardian_consent_spec.md
+    source_report: queue/reports/ashigaru4_cmd004_guardian_consent_report.yaml
+    verdict: pass_with_concerns
+    evidence_state: complete_with_commit_gap
+    completion_gate: open_for_spec_only_with_legal_review
+    commit_evidence:
+      spec_commit: absent_from_git_log
+      git_ls_files: not_tracked
+      source_report_commit_hash: null
+    privacy_status:
+      validator: scripts/validate_report_privacy.py
+      result: fail
+      high_findings_summary: "Spec/report contain absolute WSL path strings; no API token pattern was observed in validator output."
+      warn_findings_summary: "Date-like and digit-like ids present."
+    sc_findings:
+      - "Deliverable and source report exist in worktree, but the spec is not git-tracked in current origin/main evidence."
+      - "Source report records legal-review flags and corrects the legal basis away from the originally cited child-welfare article."
+      - "Production implementation should remain blocked until legal review and consent-policy versioning are resolved."
+    shogun_verified_candidate:
+      eligible: false
+      candidate_type: blocked_until_git_tracked
+      condition: "First track/commit the spec and report; then it can be considered for spec-only verification with legal-review caveat."
+
+w9_path_d_step3_preparation_plan:
+  audit_id: naomasa_sc_pivot_w9_path_d_step3_plan_20260513
+  source_manifest: queue/manifests/w9_design_tasks_169.yaml
+  verdict: pass_with_concerns_for_plan
+  evidence_state: complete
+  completion_gate: open_for_task_dispatch
+  manifest_evidence:
+    git_tracked_commit: 3e1a734
+    total_count: 169
+    batch_count: 7
+    batch7_count: 16
+    directive_count_note: "Directive says pending 15; manifest batch7 currently lists 16 items including one deferred AI item."
+    starting_task_recommended: 246d77a8-8b50-4d5a-985a-66f109b2ca32
+  batch7_priority_split:
+    high_alert_and_rule:
+      count: 4
+      recommended_owner: "alert/rule implementation worker"
+      ids:
+        - 246d77a8-8b50-4d5a-985a-66f109b2ca32
+        - 32b3df38-c576-47c6-935e-b6211875c6d4
+        - 97d751e0-a716-440b-9383-b0ae4b0379a3
+        - 52949e98-971e-4454-a250-12f438477db9
+    high_data_and_infra:
+      count: 4
+      recommended_owner: "data-fix/infrastructure worker"
+      ids:
+        - 2531ec5b-ee46-4058-a90d-4d930186e91d
+        - b9af2bcd-11d5-44f2-ae65-4804b181d4ca
+        - 8e922d65-805d-4a68-b416-8109fdf32266
+        - fb020c81-7a48-4af4-b3a5-8c30626da966
+    high_ai_ui_facility_patient:
+      count: 4
+      recommended_owner: "AI/UI/facility/patient workflow worker"
+      ids:
+        - fe9cae58-09fa-4a44-aec1-527d436012b0
+        - 31326c6f-1865-4dfa-9627-1bf1434b0bf1
+        - efbce116-4100-4e3f-9dfa-e273b7df7fcd
+        - d710d65f-5e38-44e3-8536-fb850305b79e
+    medium_planning_and_clinic_admin:
+      count: 3
+      recommended_owner: "planning/admin decision worker"
+      ids:
+        - 0fa01705-3b03-44e0-ae54-82ecf83ece8a
+        - 79d9667a-f1fb-45ba-9f29-ed19b53fe895
+        - c3744028-8b80-4987-969a-14d2773d851f
+    deferred_ai:
+      count: 1
+      recommended_owner: "hold until image/storage architecture is accepted"
+      ids:
+        - b17da40d-f37f-4353-85bb-7a80d68cf87f
+  dispatch_gate:
+    - "Each task must cite W9 manifest commit 3e1a734 and exact UUID."
+    - "Each implementation task must include anti-dup inventory before edit."
+    - "Each completion report must include commit hash, tests with SKIP=0, and privacy validator result where reports/docs are produced."
+    - "Treat the deferred pano-AI item separately; do not hide it inside the pending-15 wording."
+
+recommendation_to_shogun:
+  action: accept_partial_sc_pivot_audit_and_request_missing_inventory
+  summary: "3 spec audits and W9 batch7 preparation are usable. The complete dinosaur inventory cross-check remains blocked because the requested source file is absent from SC and origin/main."

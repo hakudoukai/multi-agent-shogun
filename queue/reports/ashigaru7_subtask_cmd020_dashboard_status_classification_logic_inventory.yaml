@@ -1,0 +1,266 @@
+inventory_id: ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory
+inventoried_at: "2026-05-13T14:30:00+09:00"
+inventoried_by: ashigaru7
+scope: |
+  dashboard cmd_020 next phase 補助 stream A — status classification logic
+  既実装 inventory。3 分類 (implementation_required=red / monitor=yellow with trigger /
+  manifest_pending=orange with W9 ref) + pass_with_concerns visual + audited-blocked
+  12 件 status 整合の既実装 source 確認、parallel rendering path 重複回避。
+repo: multi-agent-shogun-newbuild
+parent_task: subtask_cmd020_dashboard_status_classification_logic
+parent_cmd: cmd_020
+
+mc_anti_dup_check:
+  status: confirmed_no_duplicate_classifier_table
+  reason: |
+    naomasa pre_audit msg_20260513_134905 verdict=pass_with_conditions の concerns
+    に従い、既存 progress tier / status / verdict 系の constants を全件 inventory し、
+    本 task が起案する dashboard_status_classification_logic.md は既存 source の
+    複製ではなく **直交 axis (= task lifecycle classification)** として位置付ける。
+    既存 PROGRESS_COLOR_TIERS / STATUS_STAGE_PCT は **progress %-based axis**、
+    本 task の 3 分類は **task-state axis** で、双方は別軸 (= 直交) として doc 内
+    で明示する。Layer C/D markdown は anchor 追加のみ、parallel rendering path
+    は起案しない。
+  verify_basis: |
+    grep -nE 'PROGRESS_COLOR_TIERS|STATUS_STAGE_PCT|progress_color_tier|LAYER_CHILDREN'
+    scripts/regenerate_dashboard.py → 既存 4 constants / 1 function を同定。
+  followup: |
+    本 doc 起案後、MC 側 regenerate_dashboard.py に classification field 追加するか否か
+    は別 task で 4 人合議。本 task scope は SC docs + test + Layer C/D anchor のみ。
+
+existing_constants_and_functions_inventory:
+  - component_id: PROGRESS_COLOR_TIERS_constant
+    component_type: python_constant
+    file_path: scripts/regenerate_dashboard.py
+    line_range_approx: "182-187"
+    axis: progress_percent_based
+    description: |
+      progress % → tier mapping (= 4 段階)。
+      green ≥80 / yellow ≥50 / orange ≥25 / red ≥0。
+      label = verified / in_flight / early / stalled、css_class = tier-{color}。
+      docs/dashboard_design_v0.2.md §3.6 retain。
+    role_in_classification: |
+      progress %-based axis、本 task の task-state classification とは直交。
+      pass_with_concerns visual (= 75% / yellow) はここで既に在 anchor (= 75 ≥ 50 → yellow)。
+    mc_dup_check_note: "本 task は本 constant を改変せず、参照 anchor として doc 内引用のみ。"
+
+  - component_id: STATUS_STAGE_PCT_constant
+    component_type: python_constant
+    file_path: scripts/regenerate_dashboard.py
+    line_range_approx: "116-129"
+    axis: status_stage_based
+    description: |
+      status string → base progress % mapping。
+      blocked/not_started/failed=0、pending=10、drafted_pending_kuroda_pre_audit=15、
+      assigned=25、in_progress=50、ready_for_audit=70、audit_pending=80、
+      completed_pending_audit=85、done_pending_audit=90、audit_pending_verification=95。
+    role_in_classification: |
+      status string → progress % 紐付け、本 task の 3 分類 (implementation_required /
+      monitor / manifest_pending) は本 mapping の **subset semantic grouping** として
+      位置付ける (= 3 分類は status 列の意味分類、本 PCT は数値紐付け)。
+    mc_dup_check_note: "本 task は本 constant を改変せず、3 分類が本 mapping と整合する事を doc + test で verify。"
+
+  - component_id: progress_color_tier_function
+    component_type: python_function
+    file_path: scripts/regenerate_dashboard.py
+    line_range_approx: "544-549"
+    axis: progress_percent_based
+    description: |
+      def progress_color_tier(pct: float) -> dict[str, str]:
+        PROGRESS_COLOR_TIERS を min_pct で線型探索、最初に該当する tier を返す。
+    role_in_classification: |
+      progress % → tier 解決 entry point。本 task の classification doc は
+      本 function の semantic (= tier lookup) を doc 内に明示し、3 分類が
+      progress-tier 軸とは独立して task-state 軸で適用される事を明文化する。
+    mc_dup_check_note: "本 task は本 function を改変せず、参照 anchor として doc 内引用のみ。"
+
+  - component_id: verdict_based_score_mapping
+    component_type: python_logic
+    file_path: scripts/regenerate_dashboard.py
+    line_range_approx: "2042-2070"
+    axis: verdict_based
+    description: |
+      verdict → score mapping:
+      - shogun_verified=true → 100
+      - verdict.startswith("pass") and not "pass_with" → (full pass, 100 path 候補)
+      - verdict.startswith("pass_with") → 75 (= pass_with_concerns)
+      - fail / 無 → 0 系
+    role_in_classification: |
+      pass_with_concerns visual (= 75 → yellow tier) は本 mapping で既装備。
+      本 task は本 mapping を改変せず、classification doc 内に
+      "pass_with_concerns → yellow conditional 表示 (= 既装備)" anchor として明示。
+    mc_dup_check_note: "本 task は本 logic を改変せず、参照のみ。"
+
+  - component_id: LAYER_CHILDREN_constant
+    component_type: python_constant
+    file_path: scripts/regenerate_dashboard.py
+    line_range_approx: "194-510"
+    axis: layer_structure
+    description: |
+      6 Layer (A-G) の子項目 mapping。Layer C に C-15-A / C-15-B1..B7 (W9 batches)、
+      C-V21..V44 (Supabase phase) を含む。本 task の audited-blocked 12 件
+      (= C-15-A / B2 / B4 / B6 + C-V21 / V29 / V31 / V34 / V36 / V38 / V41 / V43) は
+      本 LAYER_CHILDREN 内に既登録。
+    role_in_classification: |
+      audited-blocked 12 件 status 整合 verify の対象 anchor 群。
+      classification doc 内では 12 件 id + 既存 LAYER_CHILDREN 内 entry を
+      引用形式で参照、改変は行わない。
+    mc_dup_check_note: "本 task は本 constant を改変せず、12 件 id を doc 内に列挙 + test で existence assert。"
+
+design_doc_references:
+  - id: docs/dashboard_design_v0.2.md §3.6
+    role: 主 source (= progress 算出式 + 色分け 4 段階 原本)
+    line_range_approx: "80-103"
+    read_evidence: "Read tool 全文取得、§3.6 progress_pct(leaf) 式 + 色分け 4 段階 (green ≥100% / yellow 50-99% / orange 25-49% / red ≤24%) を引用。"
+  - id: docs/dashboard_design_v0.2.md §3.5
+    role: 補助 source (= dashboard.md 更新権限 + generator 単独 writer 規範)
+    line_range_approx: "72-77"
+    read_evidence: "Read tool 全文取得、本 task の classification doc は generator が read する規範 source として位置付け。"
+  - id: queue/reports/naomasa_unverified_audit_batch1_20260512.yaml
+    role: 主 source (= audited-blocked 12 件 audit verdict 原本)
+    line_range_approx: "1-214"
+    read_evidence: "Read tool 全文取得、12 件 candidate id + verdict=fail + completion_gate=blocked 確認、4 W9 (C-15-A/B2/B4/B6) + 8 phase (C-V21/V29/V31/V34/V36/V38/V41/V43) 分類確認。"
+  - id: queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml
+    role: 主 source (= 3 分類 semantic 原本、implementation_required / monitor / manifest_pending)
+    line_range_approx: "25-103"
+    read_evidence: "Read tool 全文取得、status_groups: supabase_not_started_14 + w11_in_progress_2 + w9_batch7_1 の 3 分類 + recommended_assignment field を引用。"
+  - id: queue/reports/naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml
+    role: 規範 source (= 本 task pre_audit verdict + concerns)
+    line_range_approx: "166-184"
+    read_evidence: "Read tool 全文取得、本 task verdict=pass_with_conditions の 2 件 medium finding (= AC0 inventory must identify existing progress/tier functions + focused static tests against existing constants) を本 inventory で対応。"
+  - id: scripts/regenerate_dashboard.py
+    role: 既実装 source (= 既存 constants + functions inventory 対象)
+    line_range_approx: "100-187, 544-549, 194-510, 2042-2070"
+    read_evidence: "Read tool で各 range 取得、4 既存 constants + 1 既存 function を上記 existing_constants_and_functions_inventory に列挙。"
+
+audited_blocked_12_items_anchor:
+  total_count: 12
+  source: queue/reports/naomasa_unverified_audit_batch1_20260512.yaml
+  classification_mapping:
+    manifest_pending_4:
+      classification: manifest_pending
+      visual_signal: orange_with_w9_ref
+      reason: "W9 manifest (queue/manifests/w9_design_tasks_169.yaml) 欠落、source_exists=false、機械 audit 不能"
+      candidates:
+        - C-15-A
+        - C-15-B2
+        - C-15-B4
+        - C-15-B6
+    implementation_required_7:
+      classification: implementation_required
+      visual_signal: red
+      reason: "status=not_started + commit empty + shogun_verify_entry_exists=false、実装 backlog"
+      candidates:
+        - C-V21-W9TENSU
+        - C-V31-W11CHOREI
+        - C-V34-W13VISIT
+        - C-V36-W14PAY
+        - C-V38-W14LINE
+        - C-V41-W15DEP
+        - C-V43-W16MAT
+    monitor_1:
+      classification: monitor
+      visual_signal: yellow_with_trigger
+      reason: "status=in_progress + commit empty、completion trigger 設定で監視のみ"
+      candidates:
+        - C-V29-W11DDA
+  task_statement_counts:
+    "8 件 fail/blocked": 7_implementation_required + 1_monitor = 8 (= 上記 7+1、本 task 文言整合)
+    "4 件 W9 pass_with_concerns/open_with_concerns": 4_manifest_pending (= 上記 4)
+  integrity_verify: |
+    audited-blocked 12 = 8 fail/blocked (= implementation_required 7 + monitor 1 with empty commit)
+    + 4 W9 manifest_pending (= pass_with_concerns 系、shogun_verify_entry_exists=true だが
+    manifest source 欠落故 audit-blocked)。本 task は 12 件全件を classification doc + test
+    で id列挙 + 分類整合 assert する。
+
+related_but_out_of_scope:
+  - component_id: dashboard_md_root
+    file_path: dashboard.md
+    reason: "delivery_conditions 4 件 #1 で本 task は dashboard.md 直接編集禁、touch せず。"
+  - component_id: hakudokai_dev_repo
+    file_path: /mnt/c/Projects/hakudokai-dev/
+    reason: "本 task は multi-agent-shogun-newbuild repo only、SC pivot 整合。"
+  - component_id: regenerate_dashboard_py_modification
+    file_path: scripts/regenerate_dashboard.py
+    reason: |
+      naomasa pre_audit concerns 整合 — 本 task は SC docs + Layer C/D markdown anchor +
+      static test の起案のみ。Python source 改変 (= PROGRESS_COLOR_TIERS / STATUS_STAGE_PCT
+      / LAYER_CHILDREN / progress_color_tier 改修) は後段別 task 担当、本 task scope 外。
+  - component_id: layer_a_b_e_f_g_render_components
+    file_path: docs/dashboard_layer_{a,b,e,f,g}_*.md
+    reason: |
+      本 task は Layer C/D に limit (= task YAML AC2 (a) 明示)。Layer A/B/E/F/G は触らず、
+      classification doc 内に cross-layer reference anchor として参照のみ。
+
+artifacts_to_create_by_this_task:
+  - docs/dashboard_status_classification_logic.md
+  - scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py
+  - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
+  - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log
+  - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory.yaml (= 本 yaml)
+
+artifacts_to_edit_by_this_task:
+  - docs/dashboard_layer_c_function.md (= 既存 §6 末尾 or §7 直前に classification anchor section 追加、既 anchor 構造維持)
+  - docs/dashboard_layer_d_zunou.md (= 同上、§6 末尾 or §7 直前に classification anchor section 追加、既 anchor 構造維持)
+  - .gitignore (= 本 task whitelist 5 line 追加)
+
+gap_analysis:
+  - id: gap_1
+    description: |
+      task-state axis (= implementation_required / monitor / manifest_pending) と
+      progress-percent axis (= PROGRESS_COLOR_TIERS) の関係性 + 切り分け規範を
+      定義する canonical doc が不在。
+    resolution_in_this_task: |
+      docs/dashboard_status_classification_logic.md で 2 軸 (= progress-pct axis +
+      task-state axis) の直交性 + 各軸の visual signal mapping + classification
+      decision tree を canonical 化。
+  - id: gap_2
+    description: |
+      pass_with_concerns visual (= 75% / yellow) は verdict_based_score_mapping +
+      PROGRESS_COLOR_TIERS で既装備だが、「green ではなく yellow conditional 表示」
+      規範が doc 化されていない。
+    resolution_in_this_task: |
+      classification doc 内 §3 (= pass_with_concerns visual rule) で
+      "pass_with_concerns ≠ green、yellow conditional with concerns_note 必須"
+      規範を明文化、既装備との整合 anchor 提示。
+  - id: gap_3
+    description: |
+      audited-blocked 12 件 (= 4 W9 + 8 Supabase phase) の status 整合 verify が
+      機械 test 化されていない、verbal report 内のみで manifest 化が無い。
+    resolution_in_this_task: |
+      classification doc 内 §4 (= audited-blocked 12 件 status 整合 table) で
+      12 件全件 id + classification + visual_signal + audit verdict source を列挙、
+      static test で 12 件 id existence + classification mapping を assert。
+  - id: gap_4
+    description: |
+      Layer C/D markdown は既起案 (= ashigaru3/4) だが、classification logic への
+      cross-layer reference anchor が未設置。
+    resolution_in_this_task: |
+      Layer C 末尾 §6 or §7 + Layer D 末尾 §6 or §7 に小さな
+      "classification anchor" subsection を追加、本 doc への参照のみ提示、
+      既 anchor 構造は維持 (= 並行 rendering path 起案禁、naomasa concerns 整合)。
+
+acceptance_criteria_alignment:
+  AC0: 本 yaml 起案 (= 完了 on write)
+  AC1: design doc 正本 read 完遂 evidence = 本 yaml 内 design_doc_references entry (6 sources)
+  AC2:
+    a: "Layer C/D markdown に classification anchor 追加 → 次 step"
+    b: "pass_with_concerns visual rule doc 化 → 次 step"
+    c: "audited-blocked 12 件 status 整合 verify table → 次 step"
+    d: "docs/dashboard_status_classification_logic.md 新規起案 → 次 step"
+  AC3: static source-contract test 3-5 件 → 次 step
+  AC4: 3 atomic commit + report + log → 次 step
+  AC5: bounded F007 push (= worktree + cherry-pick + equality assert) → 完遂前 実施
+  AC6: report + pytest log + 完遂 ack inbox → 最終 step
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - F001-F006 厳守、F007 例外 retain (= 朝駆け directive 整合、家康明示許可整合)
+  - delivery_conditions 4 件遵守 (= dashboard.md 直接編集禁 / hakudokai-dev 関与禁 / MC 統合 claim 禁 / SKIP=0)
+  - naomasa pre_audit concerns 整合 (= AC0 で既存 progress/tier functions inventory + 並行 rendering path 禁 + focused static tests against existing constants)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 (= ashigaru1 第 1 弾実証 base 踏襲)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - SC pivot 整合 (= 本 repo 内完結、hakudokai-dev 範囲外)
+  - 朝駆け persona retain

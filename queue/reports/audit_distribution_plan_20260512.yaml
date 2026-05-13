@@ -1,0 +1,134 @@
+distribution_plan: 陛下御差配 21:30「未監査プログラムの監査 直政と黒田に全て渡す事」
+generated_at: '2026-05-12T21:30:00+09:00'
+total: 25
+kuroda_count: 13
+naomasa_count: 12
+kuroda_ids:
+- G-4
+- C-15-B1
+- C-15-B3
+- C-15-B5
+- C-15-B7
+- C-V22-W9SPIDCHK
+- C-V30-W11DDB
+- C-V33-W12CLNUI
+- C-V35-W13RTE
+- C-V37-W14CTI
+- C-V39-W14YOSHI3
+- C-V42-W15MAN
+- C-V44-W17JINJI
+naomasa_ids:
+- C-15-A
+- C-15-B2
+- C-15-B4
+- C-15-B6
+- C-V21-W9TENSU
+- C-V29-W11DDA
+- C-V31-W11CHOREI
+- C-V34-W13VISIT
+- C-V36-W14PAY
+- C-V38-W14LINE
+- C-V41-W15DEP
+- C-V43-W16MAT
+kuroda_targets:
+- id: G-4
+  label: shogun_active_verify_queue (= ashigaru7 cycle 1 完遂)
+  target_doc: scripts/shogun_active_verify_queue.py
+  audit_id_pattern: kuroda_active_verify
+- id: C-15-B1
+  label: W9 batch1 算定チェック 42
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-15-B3
+  label: W9 batch3 check_logic 26
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-15-B5
+  label: W9 batch5 data_quality + 処置セット 20
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-15-B7
+  label: W9 batch7 alert 残 15
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V22-W9SPIDCHK
+  label: W9 P2-engine 蜘蛛の糸 算定チェック+バリデーション(design_tasks 169 件)
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V30-W11DDB
+  label: 'W11 DD-054 Phase B: カルテ TAB→karte_visits/karte_visit_items 同時投入ローダー新設'
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V33-W12CLNUI
+  label: W12 臨床ナレッジ UI
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V35-W13RTE
+  label: W13 訪問ルート最適化
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V37-W14CTI
+  label: W14 CTI 実接続(VALTEC MOT/TEL)
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V39-W14YOSHI3
+  label: W14 書式 Lv3+唾液検査
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V42-W15MAN
+  label: W15 D-3 操作マニュアル
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V44-W17JINJI
+  label: W17 人事+DTF アダプター+全院展開
+  target_doc: ''
+  audit_id_pattern: ''
+naomasa_targets:
+- id: C-15-A
+  label: W9 Stage A foundation 9 件
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-15-B2
+  label: W9 batch2 ui_logic 28
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-15-B4
+  label: W9 batch4 validation 18
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-15-B6
+  label: W9 batch6 補綴系 19
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V21-W9TENSU
+  label: W9 P2-engine R8 施行前の全処置セット点数確認
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V29-W11DDA
+  label: 'W11 DD-054 Phase A: ID 体系統一(meisai_receipt_renderer→患者番号/医院 ID 複合キー)'
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V31-W11CHOREI
+  label: W11 朝礼フル版 Phase1-4
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V34-W13VISIT
+  label: W13 訪問 Phase4-7(中期残)
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V36-W14PAY
+  label: W14 ペイライト 実 API 接続
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V38-W14LINE
+  label: W14 外部 API 統合(LINE 通知+Web 予約実接続) ※C-NEW-2
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V41-W15DEP
+  label: W15 D-2 デプロイ手順書+実データテスト+Tailscale
+  target_doc: ''
+  audit_id_pattern: ''
+- id: C-V43-W16MAT
+  label: W16 材料管理(QR スキャン+納品 OCR+棚 AI+理論消費量)
+  target_doc: ''
+  audit_id_pattern: ''

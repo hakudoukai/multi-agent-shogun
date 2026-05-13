@@ -1,0 +1,46 @@
+audit_id: naomasa_ashigaru4_persona_sc_inbox_reaudit_cycle3_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T18:15:00+09:00"
+source_inbox:
+  - msg_20260513_143735_4f5a5506
+  - msg_20260513_143754_7e847b94
+target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+target_assignee: ashigaru4
+parent_cmd: cmd_020
+verdict: pass_with_concerns
+evidence_state: complete
+completion_gate: open_with_concerns
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py -q"
+    result: "4 passed in 0.04s"
+    skip_count: 0
+  remote_reachability:
+    revise_commit: e3e6c7b
+    revise_commit_in_origin_main: true
+  report_finalization:
+    executed_post_audit_revise_commit_present: true
+    post_audit_revise_commit_pending_field_present: false
+    note: "Historical mentions of prior stale text remain only in explanation fields."
+
+positive_evidence:
+  - "The cycle2 report replaces the actual pending field with executed_post_audit_revise_commit evidence."
+  - "Decision matrix now states NOT AUTHORIZED FOR EXECUTION and clarifies it is only a precondition for future work."
+  - "Origin/main contains e3e6c7b."
+  - "Focused pytest passes with SKIP=0."
+
+findings:
+  - severity: medium
+    perspective: 10_ecosystem_coherence
+    issue: "Alias archive/merge/wire decisions are still proposals, not authorization."
+    recommendation: "Require explicit Karo/Lord decision before any inbox archive, bridge stop, watcher start, or read-owner change."
+
+completion_decision:
+  deliverable_content: pass_with_concerns
+  completion_gate: open_with_concerns
+  reason: "The prior stale pending field is resolved; remaining concerns are follow-up governance gates."
+
+recommendation_to_karo:
+  action: accept_ashigaru4_revise_with_governance_gate
+  summary: "足軽4号 persona/SC inbox plan は通過可。ただし alias 実行は別 cycle の明示承認後に限る。"

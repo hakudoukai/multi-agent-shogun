@@ -1,0 +1,84 @@
+audit_id: naomasa_ashigaru2_scope_contamination_post_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T15:20:00+09:00"
+source_inbox:
+  - msg_20260513_135744_6fabe6c6
+target_task: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+target_assignee: ashigaru2
+verdict: fail_requires_revision
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  commits_observed:
+    - e062f63
+    - 9676222
+    - 651efcf
+  files_observed:
+    - docs/scope_contamination_prevention.md
+    - .pre-commit-config.yaml
+    - scripts/lint/check_staged_residual.sh
+    - scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py
+    - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml
+    - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py -q"
+    result: "5 passed in 0.02s"
+    skip_count: 0
+  git_tracking: pass
+
+perspective_verdicts:
+  1_functional: fail
+  2_anti_dup: pass_with_concerns
+  3_kiritsu: concerns
+  4_logic: fail
+  5_schema: pass
+  6_test: concerns
+  7_legal: pass
+  8_ops: fail
+  9_doc: concerns
+  10_ecosystem_coherence: concerns
+  11_cross_pc_repo_check: concerns
+  12_future_operations_radicality: fail
+
+findings:
+  - severity: high
+    perspective: 1_functional
+    issue: "staged-residual-check cannot detect the original failure mode under normal pre-commit usage. pre-commit passes the staged filenames to the hook, and the script defines those filenames as commit_set; staged_set - commit_set is therefore normally empty even when unrelated staged files are present."
+    evidence:
+      - ".pre-commit-config.yaml has pass_filenames: true for staged-residual-check."
+      - "scripts/lint/check_staged_residual.sh builds commit_set from \"$@\" and staged_set from git diff --cached --name-only."
+    recommendation: "Use an explicit allowlist/manifest for the current task commit, or a commit wrapper that passes intended files only. Static tests must include a negative fixture where unrelated staged files cause exit 1."
+
+  - severity: high
+    perspective: 8_ops
+    issue: "The report claims completion, but its own fields still say AC5 pending_user_sashihai, commit_3 SHA TBD, and push_plan pending. This conflicts with the inbox claim that e062f63/9676222/651efcf are complete."
+    evidence:
+      - "queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml contains commit_3 sha: TBD_SHA_3."
+      - "Same report contains AC5: pending_user_sashihai and push_plan status: pending_user_sashihai."
+    recommendation: "Backfill the final report after commit/push, or issue a corrected report with actual commit_3 hash and push status."
+
+  - severity: medium
+    perspective: 9_doc
+    issue: "docs/scope_contamination_prevention.md describes the hook as pre-commit-msg stage, but .pre-commit-config.yaml registers it at pre-commit."
+    recommendation: "Align the doc with the actual hook stage, or move implementation to the documented stage."
+
+  - severity: medium
+    perspective: 6_test
+    issue: "The 5 static tests validate presence of anchors but do not test hook behavior with a residual staged file scenario."
+    recommendation: "Add behavioral tests for no residual, residual present, and no-arg graceful skip."
+
+positive_evidence:
+  - "All expected files are git-tracked."
+  - "Existing hooks secret-detect-staged and deliverable-tracked are retained."
+  - "Static source-contract tests pass with SKIP=0."
+
+required_revision_before_pass:
+  - "Fix staged residual detection so it can distinguish intended commit files from unrelated staged files."
+  - "Add behavioral negative tests for the hook."
+  - "Correct or supersede the stale report fields: AC5, commit_3 SHA, push_plan."
+  - "Align documentation hook stage with implementation."
+
+recommendation_to_karo:
+  action: remand_to_ashigaru2_for_hook_logic_and_report_correction
+  summary: "成果物は揃っているが、根本治療 hook が通常 pre-commit 運用で混入を止められない。完遂扱い不可。"

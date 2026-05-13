@@ -1,0 +1,62 @@
+audit_id: naomasa_cmd020_next_phase_3task_reaudit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T14:50:00+09:00"
+source_inbox:
+  - msg_20260513_135102_b5e900b1
+scope: "cmd_020 next phase revised 3 task YAML re-audit"
+overall_verdict: fail_source_mismatch
+evidence_state: complete
+completion_gate: blocked
+machine_evidence:
+  message_claim: "3 件 revise 完遂 + 第 2 度 pre_audit 即動依頼"
+  task_yaml_read:
+    - queue/tasks/subtask_cmd020_w9_shogun_verification_log_pytest_fix.yaml
+    - queue/tasks/subtask_cmd020_persona_廃止_sc_inbox_整理.yaml
+    - queue/tasks/subtask_cmd020_w11_completion_trigger_watcher.yaml
+  task_yaml_diff_against_worktree: "No unstaged diff for the three task YAML files; read content still carries prior risky wording."
+  retained_prior_blockers:
+    - "W9 pytest task adds AC7/AC8, but step_2/AC2 still permits either log-entry insertion or pattern fix without explicitly forbidding synthetic entries in the executable step."
+    - "Persona/inbox task still says 各 inbox file 整理 and does not explicitly forbid live inbox mutation, rename, delete, truncate, or watcher process operation."
+    - "W11 watcher task still says cron base watcher, 10-15 minute polling, scripts/watch_w11_trigger.sh, and systemd timer."
+
+task_reaudits:
+  - task_id: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    assigned_to: ashigaru1
+    verdict: fail_source_mismatch
+    evidence_state: complete
+    completion_gate: blocked
+    finding:
+      severity: high
+      issue: "Inbox claims synthetic shogun verification entries are forbidden, but the task's executable step_2 and AC2 remain broad enough to allow adding verification-log entries as the fix path."
+      required_revision: "Patch step_2 and AC2 themselves to say synthetic shogun verification entries are forbidden and root cause must be resolved by real mapping evidence or truthful test expectation."
+
+  - task_id: subtask_cmd020_persona_廃止_sc_inbox_整理
+    assigned_to: ashigaru4
+    verdict: fail_source_mismatch
+    evidence_state: complete
+    completion_gate: blocked
+    finding:
+      severity: high
+      issue: "Inbox claims live inbox mutation is forbidden, but task YAML still instructs 各 inbox file 整理 and lacks explicit read-only / no-mutation constraints."
+      required_revision: "Patch steps, AC2, and constraints to make this docs/report-only inventory: no delete, merge, rename, truncate, rewrite, watcher operation, or live mailbox mutation."
+
+  - task_id: subtask_cmd020_w11_completion_trigger_watcher
+    assigned_to: ashigaru5
+    verdict: fail_source_mismatch
+    evidence_state: complete
+    completion_gate: blocked
+    finding:
+      severity: high
+      issue: "Inbox claims polling is forbidden and process is non-persistent, but task YAML still requires cron watcher, 10-15 minute polling, scripts/watch_w11_trigger.sh, and systemd timer."
+      required_revision: "Patch steps and AC2 to remove polling/watcher/systemd deliverables, or route through background_worker_eval_gate before any daemon/timer work."
+
+delivery_decision:
+  pass_now: []
+  blocked_for_revision:
+    - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    - subtask_cmd020_persona_廃止_sc_inbox_整理
+    - subtask_cmd020_w11_completion_trigger_watcher
+
+recommendation_to_karo:
+  action: patch_task_yaml_then_resubmit
+  summary: "Revision claims exist only in inbox prose, not in authoritative task YAML. Do not dispatch ashigaru1/4/5 until YAML itself is corrected."

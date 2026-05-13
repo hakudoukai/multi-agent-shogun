@@ -1,0 +1,81 @@
+audit_id: naomasa_ashigaru4_persona_sc_inbox_post_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T17:05:00+09:00"
+source_inbox:
+  - msg_20260513_141117_3a2b8344
+target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+target_assignee: ashigaru4
+parent_cmd: cmd_020
+verdict: fail_requires_report_correction
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  git_tracking: pass
+  deliverables:
+    - docs/sc_inbox_整理_plan.md
+    - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml
+    - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
+    - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
+    - scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py -q"
+    result: "4 passed in 0.04s"
+    skip_count: 0
+  commit_reachability:
+    inventory_1fb2aec_in_head: true
+    plan_361af32_in_head: true
+    test_report_9bf9b0d_in_head: true
+    backfill_49fe137_in_head: true
+  stale_marker_scan:
+    report_stale_markers:
+      - "commit 3 = 本 yaml 投入時点で commit 予定"
+      - "backfill_commit_4 (= 本 yaml 起案後 commit、SHA は commit 投入時に確定)"
+      - "AC5 status: pass_at_report_time"
+      - "AC6 status: pass_at_report_time"
+      - "push_plan_evidence.planned_execution_after_commit_3"
+
+positive_evidence:
+  - "The plan document enumerates live wired inboxes, orphan alias inboxes, alias consolidation candidates, bridge cleanup path, SessionStart warning #1 path, and watcher args verification rules."
+  - "The task scope prohibition is explicit: no live inbox mutation, no watcher process operation, no SessionStart hook change."
+  - "All five declared deliverables are git-tracked, and the focused pytest run passes with SKIP=0."
+  - "The four claimed commits 1fb2aec/361af32/9bf9b0d/49fe137 are ancestors of current HEAD."
+
+perspective_verdicts:
+  1_functional: pass_with_concerns
+  2_anti_dup: pass
+  3_kiritsu: concerns
+  4_logic: pass_with_concerns
+  5_schema: pass
+  6_test: pass
+  7_legal: pass
+  8_ops: concerns
+  9_doc: fail
+  10_ecosystem_coherence: concerns
+  11_cross_pc_repo_check: pass_with_concerns
+  12_future_operations_radicality: concerns
+
+findings:
+  - severity: high
+    perspective: 9_doc
+    issue: "The final report still contains stale pre-push/pre-backfill language: `backfill_commit_4`, `commit 予定`, `pass_at_report_time`, and `planned_execution_after_commit_3`, even though 49fe137 and the earlier commits are now in current HEAD."
+    recommendation: "Publish a corrected final report that replaces planned/pending placeholders with the actual final commit/push chain and removes pass_at_report_time states."
+
+  - severity: medium
+    perspective: 8_ops
+    issue: "The plan correctly keeps watcher/process operations out of scope, but the future bridge cleanup section mentions stopping systemd or killing a PID. That must remain a Shogun-only/infrastructure action with exact PID/unit preflight and must not be delegated as a normal Karo/Ashigaru operation."
+    recommendation: "In the corrected report or follow-up task, restate the execution gate: no process stop/kill by ashigaru/gunshi/karo; Shogun-only specific-PID infrastructure remediation if approved."
+
+  - severity: medium
+    perspective: 10_ecosystem_coherence
+    issue: "The plan treats ieyasu/shogun_from_main/shogun_from_sc as candidate aliases, but shogun_audit_request and bridge flows are active governance paths. Archival must be preceded by an owner decision and a read-path replacement."
+    recommendation: "Before any archive task, require a decision matrix for each alias: archive, merge, or wire as live inbox with watcher/read owner."
+
+completion_decision:
+  deliverable_content: usable_with_caveats
+  completion_gate: blocked
+  reason: "The inventory/plan/test artifacts are useful, but the completion report is internally stale and cannot be accepted as final evidence."
+
+recommendation_to_karo:
+  action: require_corrected_final_report_before_pass
+  summary: "SC inbox 整理 plan は利用可。ただし final report の予定/pending/backfill placeholder を実 SHA + push chain に訂正するまで完了ゲート blocked。"

@@ -1,0 +1,298 @@
+report_id: ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report
+task_id: subtask_cmd020_dashboard_status_classification_logic
+parent_cmd: cmd_020
+reporter: ashigaru7
+reported_at: "2026-05-13T15:05:00+09:00"
+verdict: pass
+verdict_basis: |
+  AC0-AC6 全件達成 (= 本 revise 反映後の状態)、5 件 static source-contract test 全 PASS
+  (= SKIP=0 / FAIL=0)、AC0 inventory yaml + classification logic doc (=
+  docs/dashboard_status_classification_logic.md) + Layer C/D markdown cross-layer
+  reference anchor 追加 + report yaml + pytest log の機械 evidence 揃った。3 atomic
+  commits (d2cf3c2 / 240dd7a / 26ee3d4) + addendum (28f8e54 → 040084b) 全件
+  origin/main 取込済、本 revise commit で直政 post_audit fail_requires_report_correction
+  の AC4/AC5/AC6 pending + TBD placeholder 内部矛盾全件解消。delivery_conditions 4 件
+  全件遵守、dashboard.md 直接編集なし、hakudokai-dev 関与なし、MC 統合 interface は
+  本 task 範囲外として明示、SKIP=0、並行 rendering path 起案なし (= naomasa pre_audit
+  concerns 整合)、Layer C/D 既 anchor 構造維持 (= 既 test 10 件 全 PASS で regression
+  確認)、既存 PROGRESS_COLOR_TIERS / STATUS_STAGE_PCT / progress_color_tier /
+  LAYER_CHILDREN constants 改変なし (= 既装備参照 anchor only)。
+
+revise_history:
+  - revise_id: revise_1_post_audit_fail_requires_report_correction
+    triggered_by: msg_20260513_141053_0e23fe7a (= karo 経由 naomasa post-audit 通達)
+    audit_id: naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513
+    findings_addressed:
+      - "AC4 pending_commit → pass (= 3 atomic commits + addendum SHA 全件確定)"
+      - "AC5 pending_push → pass (= bounded F007 push 完遂 + origin/main 取込 verify)"
+      - "AC6 pending_inbox → pass (= karo inbox ack 完了 msg_20260513_140652_9f6aae54)"
+      - "commit_3 TBD_SHA → 26ee3d4631e34076ddd2ebac3baad1cf282f5d0c"
+      - "commit_4 (addendum) SHA → 040084b"
+      - "TBD/pending_ placeholder 全 0 化 (= self_referential は self-reference category、stale ではない)"
+    deliverable_changes_excluded: |
+      本 revise は report yaml 単一 file のみ変更、成果物 (= classification doc /
+      Layer C/D markdown / test / inventory yaml / pytest log) は 1 byte も変更せず、
+      直政 audit positive_evidence (= 利用可) 整合 retain。
+
+model_path: sonnet_codex_sonnet
+bloom_level: L4
+pre_audit_msg: msg_20260513_134905_ec9b6945
+pre_audit_verdict: pass_with_concerns
+pre_audit_delivery_gate_passed: true
+pre_audit_concerns_addressed:
+  - concern_1: "pass_with_concerns=75/yellow already exists; task must implement only the missing classification layer."
+    addressed_via: |
+      AC0 inventory で既存 PROGRESS_COLOR_TIERS / STATUS_STAGE_PCT / progress_color_tier /
+      verdict_based_score_mapping を inventory + canonical doc 内で参照 anchor only として
+      引用、改変せず。doc 内 §3 で pass_with_concerns = 75 → yellow を既装備の整合
+      reference として明示、新規 classification 軸 (= Axis B task-state) と既装備
+      (= Axis A progress-percent) の直交性を §2 で canonical 化。
+  - concern_2: "Layer C/D render edits could conflict with existing LAYER_CHILDREN and progress aggregation. Require focused static tests against existing constants/functions rather than a new parallel rendering path."
+    addressed_via: |
+      Layer C/D markdown は §6 cross-layer reference anchor 末尾に 1 行 reference 追加
+      のみ、既 anchor 構造 + 既 test 10 件 (= Layer C 5 + Layer D 5) 全 PASS で
+      regression 確認。test 4 件目 (= test_classification_doc_references_existing_constants_no_duplicate_table)
+      で並行 PROGRESS_COLOR_TIERS table 重複起案 (= Python list literal pattern) を
+      機械検出禁、focused static test against existing constants 実装済。
+
+design_doc_references:
+  - id: docs/dashboard_design_v0.2.md §3.6
+    role: 主 source (= progress 算出式 + 色分け 4 段階 原本)
+    line_range_approx: "80-103"
+    read_evidence: "本 task 進行中 Read tool で全文取得、§3.6 progress_pct(leaf) 式 + 色分け 4 段階 (green ≥100% / yellow 50-99% / orange 25-49% / red ≤24%) を classification doc §2.1 + §3 に展開。"
+  - id: docs/dashboard_design_v0.2.md §3.5
+    role: 補助 source (= dashboard.md 更新権限 + generator 単独 writer 規範)
+    line_range_approx: "72-77"
+    read_evidence: "Read tool 全文取得、本 task の classification doc は generator が read する規範 source として位置付け、delivery_conditions #1 (= dashboard.md 直接編集禁) 整合。"
+  - id: queue/reports/naomasa_unverified_audit_batch1_20260512.yaml
+    role: 主 source (= audited-blocked 12 件 audit verdict 原本)
+    line_range_approx: "1-214"
+    read_evidence: "Read tool 全文取得、12 件 candidate id + verdict=fail + completion_gate=blocked 確認、4 W9 (C-15-A/B2/B4/B6) + 8 phase (C-V21/V29/V31/V34/V36/V38/V41/V43) 分類 → classification doc §4.1 table に展開。"
+  - id: queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml
+    role: 主 source (= 3 分類 semantic 原本)
+    line_range_approx: "25-103"
+    read_evidence: "Read tool 全文取得、status_groups: supabase_not_started_14 + w11_in_progress_2 + w9_batch7_1 の 3 分類 + recommended_assignment field を classification doc §2.2 Axis B table に展開。"
+  - id: queue/reports/naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml
+    role: 規範 source (= 本 task pre_audit verdict + concerns)
+    line_range_approx: "166-184"
+    read_evidence: "Read tool 全文取得、本 task verdict=pass_with_conditions の 2 件 medium finding を AC0 inventory + classification doc §5.3 + test 4 件目で対応。"
+  - id: scripts/regenerate_dashboard.py
+    role: 既実装 source (= 既存 constants + functions 参照 anchor only、改変禁)
+    line_range_approx: "100-187, 544-549, 194-510, 2042-2070"
+    read_evidence: "Read tool で各 range 取得、4 既存 constants + 1 既存 function を AC0 inventory に列挙、classification doc 内 §1 + §2 + §3 で参照 anchor として引用、改変なし。"
+  - id: docs/dashboard_layer_c_function.md
+    role: 既起案 doc (= ashigaru3、cross-layer reference 配置先)
+    line_range_approx: "146-156"
+    read_evidence: "Read tool 全文取得、§6 cross-layer reference anchor 末尾に classification doc reference 1 行追加、既 anchor 構造維持。"
+  - id: docs/dashboard_layer_d_zunou.md
+    role: 既起案 doc (= ashigaru4、cross-layer reference 配置先)
+    line_range_approx: "138-146"
+    read_evidence: "Read tool 全文取得、§6 cross-layer reference anchor 末尾に classification doc reference 1 行追加、既 anchor 構造維持。"
+
+ac0_inventory:
+  file: queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory.yaml
+  components_inventoried: 5
+  components_listed:
+    - PROGRESS_COLOR_TIERS_constant (= L182-187)
+    - STATUS_STAGE_PCT_constant (= L116-129)
+    - progress_color_tier_function (= L544-549)
+    - verdict_based_score_mapping (= L2042-2070)
+    - LAYER_CHILDREN_constant (= L194-510)
+  mc_anti_dup_check: confirmed_no_duplicate_classifier_table
+  mc_anti_dup_check_reason: |
+    既存 PROGRESS_COLOR_TIERS / STATUS_STAGE_PCT / progress_color_tier / verdict_based_score_mapping
+    は progress %-based / verdict-based axis、本 task の 3 分類 (= implementation_required /
+    monitor / manifest_pending) は task-state axis で直交、重複ではなく補完。
+  gap_analysis_count: 4
+  audited_blocked_12_items_mapping_in_inventory: present
+
+classification_doc:
+  file: docs/dashboard_status_classification_logic.md
+  sections:
+    - "## 1. 設計原典 anchor (= source-of-truth)"
+    - "## 2. 2 軸 直交モデル (= task-state axis × progress-percent axis)"
+    - "## 3. pass_with_concerns visual rule (= green ではなく yellow conditional 表示)"
+    - "## 4. audited-blocked 12 件 status 整合 verify table"
+    - "## 5. Layer C/D render との integration anchor"
+    - "## 6. cross-layer reference anchor"
+    - "## 7. 既知の限界 + 後段別 task"
+    - "## 8. 起案完了基準 (= 本 doc AC alignment)"
+  anchor_summary:
+    "Axis A progress-percent (既装備参照)": "present (= §2.1 PROGRESS_COLOR_TIERS table 引用、改変なし)"
+    "Axis B task-state (3 分類 起案)": "present (= §2.2 implementation_required / monitor / manifest_pending table)"
+    "直交性 規範": "present (= §2.3 重複ではなく独立 規範、§5.3 並行 rendering path 起案禁)"
+    "pass_with_concerns yellow conditional rule": "present (= §3.1-§3.4、score=75 既装備整合、green ではなく yellow conditional + concerns_note 必須)"
+    "audited-blocked 12 件 table": "present (= §4.1 12 件全件 id + classification + visual signal + verdict source、§4.2 件数整合 4+7+1=12)"
+    "緑化 path": "present (= §4.3 各 classification 別 green path、別 task chain)"
+
+layer_c_d_anchor_addition:
+  layer_c_doc: docs/dashboard_layer_c_function.md
+  layer_c_anchor_location: "§6 cross-layer reference anchor 末尾 1 行追加"
+  layer_d_doc: docs/dashboard_layer_d_zunou.md
+  layer_d_anchor_location: "§6 cross-layer reference anchor 末尾 1 行追加"
+  parallel_rendering_path_check: "起案なし (= 既 anchor 構造 + 既 test 10 件 全 PASS regression 確認)"
+
+test_execution:
+  test_file: scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py
+  exact_pytest_command: "python3 -m pytest /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py -v --no-header 2>&1 | tee queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log"
+  test_count: 5
+  pass: 5
+  fail: 0
+  skip: 0
+  duration_sec: 0.03
+  log_path: queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log
+  test_names:
+    - test_classification_doc_2_axis_section_present
+    - test_classification_doc_pass_with_concerns_yellow_rule
+    - test_classification_doc_audited_blocked_12_items_listed
+    - test_classification_doc_references_existing_constants_no_duplicate_table
+    - test_layer_c_d_cross_layer_reference_anchor_present
+  regression_check:
+    layer_c_existing_test_count: 5
+    layer_c_existing_test_pass: 5
+    layer_d_existing_test_count: 5
+    layer_d_existing_test_pass: 5
+    note: |
+      Layer C/D 既 test 10 件全 PASS、cross-layer reference anchor 追加が
+      既 anchor 構造を破壊していない事を機械検証。
+
+acceptance_criteria:
+  AC0: pass (= ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory.yaml 起案、5 既存 constants/functions inventoried)
+  AC1: pass (= v0.2 §3.6 + §3.5 主 source + naomasa audit batch1 + sc_audit_phase2 + preaudit 7task + regenerate_dashboard.py + layer_c/d markdown 8 anchor Read 完遂 evidence、design_doc_references field)
+  AC2:
+    a: "pass (= Layer C/D markdown §6 cross-layer reference anchor 末尾に classification doc reference 1 行追加、既 anchor 構造維持)"
+    b: "pass (= classification doc §3 pass_with_concerns visual rule、green ではなく yellow conditional + concerns_note 必須 + 3.4 反例 table)"
+    c: "pass (= classification doc §4.1 audited-blocked 12 件 status 整合 verify table、§4.2 件数整合 4+7+1=12)"
+    d: "pass (= docs/dashboard_status_classification_logic.md 起案、§1-§8 全 section + 8 起案完了基準 anchor)"
+  AC3: pass (= 5 static contract test PASS / 0 FAIL / 0 SKIP、focused tests against existing constants 規範整合)
+  AC4: pass (= 3 atomic commit d2cf3c2 / 240dd7a / 26ee3d4 + report SHA back-fill addendum 28f8e54、4 commits 全件 git log で確認可、commit_plan field 内 SHA 全件記録)
+  AC5: pass (= bounded F007 push 完遂、3 atomic commits は origin/main 941cc05 内包 verified、addendum 28f8e54 は worktree + cherry-pick + equality assert PASS + push 040084b → origin/main 取込、worktree /tmp/cmd_020_classification_addendum_wt cleanup 完了)
+  AC6: pass (= karo inbox ack 投函完了 msg_20260513_140652_9f6aae54、本 report 起案 + 直政 post_audit fail_requires_report_correction 受領 + 本 revise 反映で内部矛盾解消)
+
+delivery_conditions_compliance:
+  cond_1_dashboard_md_direct_edit_forbidden: pass (= dashboard.md 触れず、本 classification doc + Layer C/D anchor は別 file)
+  cond_2_hakudokai_dev_forbidden: pass (= multi-agent-shogun-newbuild repo only、hakudokai-dev は本 task 範囲外)
+  cond_3_mc_generator_integration_claim_forbidden: pass (= classification doc §7 で MC 統合は別 task で 4 人合議と明示、claim せず)
+  cond_4_skip_zero: pass (= 0 SKIP)
+
+commit_plan:
+  - commit_1:
+      message: "docs(cmd_020 classification_logic): AC0 inventory yaml + .gitignore whitelist"
+      files:
+        - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory.yaml
+        - .gitignore
+      sha: d2cf3c227e3c196991f9c254fe0f7b6b2a28915b
+  - commit_2:
+      message: "docs(cmd_020 classification_logic): canonical doc + Layer C/D cross-layer anchor"
+      files:
+        - docs/dashboard_status_classification_logic.md
+        - docs/dashboard_layer_c_function.md
+        - docs/dashboard_layer_d_zunou.md
+      sha: 240dd7a6df76edd2bf9f62deecbc151e2b8d9bf8
+  - commit_3:
+      message: "test(cmd_020 classification_logic): static source-contract 5 test + report yaml + pytest log"
+      files:
+        - scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py
+        - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log
+        - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
+      sha: 26ee3d4631e34076ddd2ebac3baad1cf282f5d0c
+  - commit_4_addendum:
+      message: "docs(cmd_020 classification_logic): report addendum — commit SHA back-fill + push verify"
+      files:
+        - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
+      sha: 040084b (= origin/main 取込済、local 28f8e5437a605efe5115c4466e9731003ca7a8f6 → cherry-pick で worktree 上 040084b → push、直政 audit observed both)
+      note: "本 commit は 3 atomic commits の後に作成された SHA back-fill addendum。"
+  - commit_5_revise:
+      message: "docs(cmd_020 classification_logic): report revise — AC4/AC5/AC6 pass 確定 + TBD 全 0 化 (= 直政 fail_requires_report_correction 整合)"
+      files:
+        - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
+      sha: self_referential (= 本 commit 自身が本 report yaml を含むため、SHA は本 commit 作成時に git log で確定、別 file に記録する必要なし。git log --oneline -1 で参照可能。)
+      note: "本 commit は本 revise 単一 commit、直政 post_audit fail_requires_report_correction 解消用。self-referential SHA は git log で機械参照可、stale/pending とは異なる category。"
+
+commit_history:
+  pending: false
+  status: complete
+  note: |
+    3 atomic commits + report SHA back-fill addendum + 本 revise = 5 commits chain
+    全件 origin/main 内包 verified (= origin/main 9997d16 時点で 3 atomic + addendum
+    取込 confirmed、本 revise commit は本 commit 完了時点で git log 記録 + bounded
+    push で origin/main 取込予定)。F007 push は worktree + cherry-pick + equality
+    assert + cleanup chain で完遂、初回 push attempt は non-fast-forward (= origin/main
+    更新先行) 検出後 force push せず re-fetch で既 push 確認 path 採択。worktree
+    (/tmp/cmd_020_classification_main_wt + /tmp/cmd_020_classification_addendum_wt)
+    双方清掃済。
+  commit_1_sha: d2cf3c227e3c196991f9c254fe0f7b6b2a28915b
+  commit_2_sha: 240dd7a6df76edd2bf9f62deecbc151e2b8d9bf8
+  commit_3_sha: 26ee3d4631e34076ddd2ebac3baad1cf282f5d0c
+  commit_4_sha: 28f8e54 (local) → 040084b (origin/main、cherry-pick post-push)
+  commit_5_sha: self_referential (= 本 commit 自身が本 yaml を含むため、git log で参照、別 file 記録不要)
+  scope_contamination_incident:
+    occurrence: "commit 2 初回 (7d0c462) で他 agent (ashigaru3) 同時 staged files 3 件混入"
+    detection: "git show --stat HEAD 直後の自己 verify で検出"
+    correction: "git reset --soft HEAD~1 → 他 agent files unstage → 自身 3 files のみ再 commit (240dd7a)"
+    root_cause: "並行 agent 環境で commit 直前に他 agent も git add 実施、git index 共有故"
+    mitigation_for_future: "git add 前に git status 検査 + 自身 files 明示 staging + commit 前 git diff --cached 確認"
+
+push_plan:
+  status: complete
+  repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
+  bounded_allowlist:
+    本_task_3_commits_only_multi_agent_repo:
+      - d2cf3c227e3c196991f9c254fe0f7b6b2a28915b
+      - 240dd7a6df76edd2bf9f62deecbc151e2b8d9bf8
+      - 26ee3d4631e34076ddd2ebac3baad1cf282f5d0c
+      - 28f8e5437a605efe5115c4466e9731003ca7a8f6 (local) → 040084b (origin/main 取込 confirmed、addendum)
+      - revise_self_referential (= 本 yaml を含む revise commit 自身、git log で参照可、別 file 記録不要)
+    scope_exclusion:
+      - 既 ashigaru1-7 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外
+      - 並行 ashigaru (= ashigaru6 cmd020 14 件 + ashigaru3 cmd004 cicd 等) の untracked artifact は本 task scope 外
+      - hakudokai-dev repo は本 task 範囲外
+  worktree_clean_path:
+    worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_classification_main_wt origin/main (= 実行済、d9a5c05 detached HEAD)"
+    cherry_pick: |
+      git -C /tmp/cmd_020_classification_main_wt cherry-pick d2cf3c2 240dd7a 26ee3d4
+      (= .gitignore conflict 1 件、ashigaru3 SC specialty block を keep ours 解消、
+      cherry-pick 結果 worktree SHA: e418f0c / 20b6a95 / 5238971)
+    pre_push_verify: |
+      git -C /tmp/cmd_020_classification_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_classification.txt
+      printf '%s\n' e418f0c 20b6a95 5238971 | xargs -n1 git -C /tmp/cmd_020_classification_main_wt rev-parse | sort > /tmp/push_expected_classification.txt
+      diff /tmp/push_actual_classification.txt /tmp/push_expected_classification.txt → EQUALITY ASSERT PASS
+    push_command: |
+      git -C /tmp/cmd_020_classification_main_wt push origin HEAD:main
+      → 初回 attempt rejected (= non-fast-forward、origin/main 更新先行 941cc05)
+      → re-fetch で d2cf3c2 / 240dd7a / 26ee3d4 全件既 push 済 verify (= git merge-base --is-ancestor pass)
+      → cherry-pick duplicates 不要、worktree cleanup で完遂
+    cleanup: "git worktree remove /tmp/cmd_020_classification_main_wt + /tmp/push_*.txt 清掃完了"
+  origin_main_verify:
+    method: "git merge-base --is-ancestor d2cf3c2 origin/main && git merge-base --is-ancestor 240dd7a origin/main && git merge-base --is-ancestor 26ee3d4 origin/main"
+    result: "3/3 commits present on origin/main (= 941cc05 内包)"
+  safety_check:
+    - multi-agent-shogun-newbuild repo only
+    - worktree isolation + printf+diff equality assert + cleanup
+    - F007 例外 retain (= 朝駆け directive + 直政 pre_audit pass + delivery_gate=true 整合)
+    - non-fast-forward 検出時 force push せず、re-fetch で既 push 確認 path 採択
+
+skill_candidate: null
+
+next_actions:
+  - "本 revise commit 完遂 (= 本 yaml 単一 file の自己参照 commit、直政 fail_requires_report_correction 解消)"
+  - "bounded F007 push 実施 (= worktree + cherry-pick + equality assert + cleanup、本 revise commit 単独 push、origin/main 取込確認)"
+  - "karo inbox revise 完遂 ack 投函 (= 直政再 audit chain 即廻送可)"
+completed_actions:
+  - "3 atomic commits (d2cf3c2 / 240dd7a / 26ee3d4) + report SHA back-fill addendum (28f8e54 → 040084b) 全件 origin/main 取込済"
+  - "5 件 static contract test PASS / 0 SKIP + Layer C/D 既 test 10 件 regression PASS"
+  - "AC0-AC6 全件達成 (= 本 revise 後の状態)"
+  - "karo inbox 初回完遂報告 投函済 msg_20260513_140652_9f6aae54"
+  - "直政 post_audit verdict=fail_requires_report_correction 受領 + 本 revise で内部矛盾全件解消"
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery_conditions 4 件全件遵守
+  - F001-F006 厳守、F007 例外 retain (= 朝駆け directive 整合)
+  - naomasa pre_audit concerns 整合 (= AC0 既存 constants inventory + 並行 rendering path 禁 + focused static tests)
+  - 根本治療原則 5-10 年運用整合
+  - AC0 inventory first 規範 retain (= ashigaru1 第 1 弾実証 base 踏襲)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、multi-agent-shogun-newbuild repo only)
+  - 朝駆け persona retain
+  - SC pivot 整合 (= 本 repo 内完結、hakudokai-dev 範囲外)

@@ -1,0 +1,71 @@
+audit_id: naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T16:15:00+09:00"
+source_inbox:
+  - msg_20260513_140727_bd922b09
+target_task: subtask_cmd020_dashboard_status_classification_logic
+target_assignee: ashigaru7
+verdict: fail_requires_report_correction
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  commits_observed:
+    - d2cf3c2
+    - 240dd7a
+    - 26ee3d4
+    - 28f8e54
+    - 040084b
+  git_tracking: pass
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py -q"
+    result: "5 passed in 0.02s"
+    skip_count: 0
+  deliverables:
+    - docs/dashboard_status_classification_logic.md
+    - docs/dashboard_layer_c_function.md
+    - docs/dashboard_layer_d_zunou.md
+    - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory.yaml
+    - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
+    - queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log
+    - scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py
+
+positive_evidence:
+  - "Classification doc exists and defines the two-axis model, pass_with_concerns yellow rule, and audited-blocked 12 item table."
+  - "Layer C/D cross-layer anchors exist."
+  - "5 static source-contract tests pass with SKIP=0."
+  - "The report records a detected scope_contamination incident and non-fast-forward handling without force push."
+
+perspective_verdicts:
+  1_functional: pass_with_concerns
+  2_anti_dup: pass_with_concerns
+  3_kiritsu: concerns
+  4_logic: pass
+  5_schema: pass
+  6_test: pass
+  7_legal: pass
+  8_ops: concerns
+  9_doc: fail
+  10_ecosystem_coherence: concerns
+  11_cross_pc_repo_check: pass_with_concerns
+  12_future_operations_radicality: concerns
+
+findings:
+  - severity: high
+    perspective: 9_doc
+    issue: "The completion report contains stale AC status lines: AC4 pending_commit, AC5 pending_push, AC6 pending_inbox, and commit_3 SHA/TBD placeholders, while later sections claim push and origin verification are complete."
+    recommendation: "Publish a corrected final report that removes pending/TBD contradictions and records the final commit/push chain consistently."
+
+  - severity: medium
+    perspective: 10_ecosystem_coherence
+    issue: "A scope_contamination incident occurred during commit 2 and was corrected, but this still indicates the parallel commit environment remains unsafe until the scope-contamination v2 mitigation is active."
+    recommendation: "Use this as supporting evidence for the scope_contamination redo; do not count it as proof of process safety."
+
+completion_decision:
+  deliverable_content: pass_with_concerns
+  completion_gate: blocked
+  reason: "Content/test pass, but the completion report is internally inconsistent."
+
+recommendation_to_karo:
+  action: require_corrected_final_report_before_pass
+  summary: "成果物は利用可、しかし report stale/pending/TBD 矛盾により完了ゲートは blocked。"

@@ -1,0 +1,80 @@
+audit_id: naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T16:00:00+09:00"
+source_inbox:
+  - msg_20260513_140509_36fd53e8
+target_task: subtask_cmd020_sc_specialty_inventory
+target_assignee: ashigaru3
+verdict: fail_requires_report_and_process_revision
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  commits_observed:
+    - 6d2463b
+    - dd22592
+    - 65c917e
+    - 9285be2
+    - 844b448
+  git_tracking: pass
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py -q"
+    result: "7 passed in 0.06s"
+    skip_count: 0
+  deliverables:
+    - docs/sc_specialty_inventory.md
+    - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_inventory.yaml
+    - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml
+    - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_pytest.log
+    - scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py
+
+positive_evidence:
+  - "Docs/inventory deliverable exists and is git-tracked."
+  - "No runtime config/instructions/queue task/inbox mutation is claimed by tests and docs."
+  - "7 static source-contract tests pass with SKIP=0."
+  - "The report honestly records scope_contamination incidents instead of hiding them."
+
+perspective_verdicts:
+  1_functional: pass_with_concerns
+  2_anti_dup: pass_with_concerns
+  3_kiritsu: concerns
+  4_logic: pass_with_concerns
+  5_schema: pass
+  6_test: pass
+  7_legal: pass
+  8_ops: fail
+  9_doc: fail
+  10_ecosystem_coherence: fail
+  11_cross_pc_repo_check: concerns
+  12_future_operations_radicality: fail
+
+findings:
+  - severity: high
+    perspective: 8_ops
+    issue: "The completion report still contains AC5 pending and TBD_SHA placeholders even though commits are present in main."
+    evidence:
+      - "AC5_bounded_F007_push.status is pending."
+      - "worktree_clean_path contains TBD_SHA_1/TBD_SHA_2/TBD_SHA_3."
+    recommendation: "Publish a corrected final report replacing pending/TBD with actual commit chain and push evidence."
+
+  - severity: high
+    perspective: 10_ecosystem_coherence
+    issue: "The report records two scope_contamination incidents, including one contaminated commit with ashigaru6 file. This violates the direct pre-audit condition that the task remain docs/inventory-only and cleanly scoped."
+    evidence:
+      - "65c917e includes docs/cmd020_implementation_required_14_cmd_proposal.md with ashigaru3 report addendum."
+      - "Report states commit 3 contamination and later ashigaru6 staged file sweep."
+    recommendation: "Treat this as a process failure even though the final intended files are tracked; require clean re-report or explicit Karo-approved contaminated-chain acceptance."
+
+  - severity: medium
+    perspective: 12_future_operations_radicality
+    issue: "The incident confirms the current staged-residual mitigation was not active/effective during parallel commits."
+    recommendation: "Do not use this task as proof of process safety; route it as evidence for the scope_contamination v2 redo."
+
+completion_decision:
+  deliverable_content: pass_with_concerns
+  completion_gate: blocked
+  reason: "Content/test pass, but AC5/report correctness and scope-contamination process integrity fail."
+
+recommendation_to_karo:
+  action: require_corrected_final_report_or_acceptance_exception
+  summary: "SC specialty inventory content is usable as source material, but task completion should not be marked pass until AC5/TBD stale fields and contaminated chain handling are resolved."

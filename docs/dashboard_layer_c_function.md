@@ -151,6 +151,7 @@ graph TD
 - **Layer D 頭脳層**: 蜘蛛の糸 8,000+ records 本体 (= `legal_sources` / `legal_source_linkages` / `inspection_*` / `procedure_codes_audit` / `master_*`) は別 sub-section、本 Layer C は接続 anchor のみ提示
 - **Layer E 運用層**: 機能担当 ashigaru の稼働状態は別 sub-section、本 Layer C は担当 ashigaru anchor のみ提示
 - **Layer F 規範層**: 機能起案時の規範 (= F007 / pre_audit / model_selection 等) は別 sub-section
+- **Status classification logic**: `docs/dashboard_status_classification_logic.md` (= ashigaru7 起案、Axis B task-state 軸 = 3 分類 implementation_required=🔴 red / monitor=🟡 yellow with trigger / manifest_pending=🟠 orange with W9 ref + pass_with_concerns visual rule + audited-blocked 12 件 status 整合 table)。本 Layer C 子項目 (= C-1〜C-15-B7) の Axis B 分類は本 reference を canonical source として参照、改変はしない。
 
 = 本 sub-section は **機能 anchor + 構造 + 接続 only**、本体は各 Layer + 機能 design doc に委譲する (= 単一責任、self-contained)。
 

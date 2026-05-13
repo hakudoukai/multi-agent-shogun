@@ -1,0 +1,37 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/hakudokai/projects/multi-agent-shogun-newbuild
+plugins: anyio-4.13.0
+collecting ... collected 180 items / 152 deselected / 28 selected
+
+tests/test_regenerate_dashboard.py::test_supabase_preflight_missing_credentials_blocks PASSED [  3%]
+tests/test_regenerate_dashboard.py::test_supabase_preflight_writes_yaml_report PASSED [  7%]
+tests/test_regenerate_dashboard.py::test_extract_w9_meta_handles_both_orderings PASSED [ 10%]
+tests/test_regenerate_dashboard.py::test_aggregate_w9_stage_groups_a_b PASSED [ 14%]
+tests/test_regenerate_dashboard.py::test_aggregate_w9_batch_groups_by_batch_id PASSED [ 17%]
+tests/test_regenerate_dashboard.py::test_render_dashboard_layer_c_w9_children_present PASSED [ 21%]
+tests/test_regenerate_dashboard.py::test_extract_child_evidence_w9_batch_uses_aggregate PASSED [ 25%]
+tests/test_regenerate_dashboard.py::test_extract_child_evidence_w9_stage_uses_aggregate PASSED [ 28%]
+tests/test_regenerate_dashboard.py::test_compute_child_machine_state_w9_batch_uses_avg_pct PASSED [ 32%]
+tests/test_regenerate_dashboard.py::test_compute_child_machine_state_w9_stage_uses_avg_pct PASSED [ 35%]
+tests/test_regenerate_dashboard.py::test_format_child_status_line_w9_batch_shows_avg_and_count PASSED [ 39%]
+tests/test_regenerate_dashboard.py::test_layer_c_supabase_verify_rows_all_have_status PASSED [ 42%]
+tests/test_regenerate_dashboard.py::test_compute_child_machine_state_supabase_phase_completed_yields_90 PASSED [ 46%]
+tests/test_regenerate_dashboard.py::test_compute_child_machine_state_supabase_phase_in_progress_yields_50 PASSED [ 50%]
+tests/test_regenerate_dashboard.py::test_compute_child_machine_state_supabase_phase_not_started_yields_0 PASSED [ 53%]
+tests/test_regenerate_dashboard.py::test_format_child_status_line_supabase_phase_completed PASSED [ 57%]
+tests/test_regenerate_dashboard.py::test_format_child_status_line_supabase_phase_not_started PASSED [ 60%]
+tests/test_regenerate_dashboard.py::test_extract_child_evidence_supabase_phase_includes_supabase_source PASSED [ 64%]
+tests/test_regenerate_dashboard.py::test_render_dashboard_includes_supabase_phase_status_line PASSED [ 67%]
+tests/test_regenerate_dashboard.py::test_compute_child_machine_state_w9_batch_shogun_verified_overrides_avg PASSED [ 71%]
+tests/test_regenerate_dashboard.py::test_real_shogun_log_w9_batch1_to_batch6_all_matched PASSED [ 75%]
+tests/test_regenerate_dashboard.py::test_real_shogun_log_unmatched_verified_targets_reduced_below_8 PASSED [ 78%]
+tests/test_regenerate_dashboard.py::test_w9_stage_a_b1_b6_all_green_in_real_state PASSED [ 82%]
+tests/test_regenerate_dashboard.py::test_w9_stage_a_b1_b6_direct_helper_matches_generator PASSED [ 85%]
+scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py::test_compute_child_machine_state_w9_batch_blocked_field_present PASSED [ 89%]
+scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py::test_compute_child_machine_state_w9_stage_blocked_field_present PASSED [ 92%]
+scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py::test_test_regenerate_dashboard_w9_assertions_inverted_to_truth PASSED [ 96%]
+scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py::test_evidence_yaml_synthetic_zero_marker_present PASSED [100%]
+
+====================== 28 passed, 152 deselected in 2.16s ======================

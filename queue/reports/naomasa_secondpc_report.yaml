@@ -5923,3 +5923,478 @@ sc_audit_phase2_status_green_path_20260512:
     recommendation_to_shogun:
       action: no_audit_only_green_available
       summary: "17 件は SC audit だけでは追加緑化不可。2 件は完了監視、15 件は実装または manifest publish が先。"
+
+sc_pivot_cmd004_audits_20260513:
+  - audit_id: naomasa_sc_pivot_inventory_cross_check_20260513
+    source_inbox:
+      - msg_20260513_sc_naomasa_27eda007
+    detail_report: queue/reports/naomasa_sc_pivot_cmd004_audit_20260513.yaml
+    target: queue/reports/ashigaru1_dinosaur_kingdom_complete_inventory_20260513.yaml
+    verdict: blocked_source_missing
+    evidence_state: source_missing
+    completion_gate: blocked
+    machine_evidence:
+      worktree_lookup: missing
+      origin_main_tree_lookup: missing
+      proxy_report_available: queue/reports/ashigaru1_cmd004_dinosaur_100enemies_report.yaml
+      proxy_limitation: "Proxy report is not the requested five-scope complete inventory."
+    recommendation_to_shogun:
+      action: publish_missing_complete_inventory_then_reaudit
+      summary: "A/B/C/D/E 5 scope の SC 監査は正本 inventory 不在のため未完。git-tracked report 化後に再監査が必要。"
+
+  - audit_id: naomasa_sc_pivot_three_spec_deliverable_audit_20260513
+    source_inbox:
+      - msg_20260513_sc_naomasa_27eda007
+    detail_report: queue/reports/naomasa_sc_pivot_cmd004_audit_20260513.yaml
+    targets:
+      - docs/cmd004_ai_chat_spec.md
+      - docs/cmd004_qr_kanban_spec.md
+      - docs/cmd004_guardian_consent_spec.md
+    verdict: pass_with_concerns
+    evidence_state: complete_with_commit_gap
+    completion_gate: partially_open
+    shogun_verified_candidates:
+      ai_chat_spec:
+        eligible: true
+        type: spec_deliverable_only
+        commit: 8a6c20c
+      qr_kanban_spec:
+        eligible: true
+        type: spec_plus_test_deliverable
+        commit: a576591
+      guardian_consent_spec:
+        eligible: false
+        blocker: "not git-tracked in current evidence; legal-review caveats remain"
+    privacy_status:
+      validator: scripts/validate_report_privacy.py
+      result: fail
+      summary: "All three spec/report paths contain absolute path strings flagged by validator; no API-token pattern was observed in validator output."
+    recommendation_to_shogun:
+      action: accept_two_spec_candidates_and_track_guardian_before_verify
+      summary: "AI chat と QR/kanban は spec-level shogun_verified 候補。guardian consent は正本 git 化と法務 review caveat の明示が先。"
+
+  - audit_id: naomasa_sc_pivot_w9_path_d_step3_plan_20260513
+    source_inbox:
+      - msg_20260513_sc_naomasa_27eda007
+      - msg_20260513_134230_7fac3883
+    detail_report: queue/reports/naomasa_sc_pivot_cmd004_audit_20260513.yaml
+    target: queue/manifests/w9_design_tasks_169.yaml
+    verdict: pass_with_concerns_for_plan
+    evidence_state: complete
+    completion_gate: open_for_task_dispatch
+    manifest_evidence:
+      git_tracked_commit: 3e1a734
+      total_count: 169
+      batch_count: 7
+      batch7_count: 16
+      starting_task_recommended: 246d77a8-8b50-4d5a-985a-66f109b2ca32
+      count_mismatch_note: "Directive says pending 15; manifest batch7 lists 16 including one deferred AI item."
+    recommendation_to_shogun:
+      action: dispatch_batch7_as_4_workstreams_plus_deferred_ai_hold
+      summary: "高 priority 12 + medium 3 + deferred 1 に分け、先頭は T.コンデ I022 回数警告 task から開始が妥当。"
+
+cmd020_next_phase_7task_preaudits_20260513:
+  - audit_id: naomasa_cmd020_next_phase_7task_preaudit_20260513
+    source_inbox:
+      - msg_20260513_134539_37cf7a17
+    detail_report: queue/reports/naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml
+    target_count: 7
+    verdict: revise_before_delivery
+    evidence_state: complete
+    completion_gate: blocked_until_revisions
+    machine_evidence:
+      focused_test: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k real_shogun_log_w9_batch1_to_batch6_all_matched => 1 failed, 175 deselected"
+      existing_precommit_hooks: "secret-detect-staged + deliverable-tracked present"
+      inbox_runtime_state: "queue/inbox is a live runtime mailbox symlink; alias files include karo/ieyasu/shogun variants"
+    pass_now_with_conditions:
+      - subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+      - subtask_cmd020_sc_specialty_inventory
+      - subtask_cmd020_implementation_required_14_cmd_proposal
+      - subtask_cmd020_dashboard_status_classification_logic
+    blocked_for_revision:
+      - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+      - subtask_cmd020_persona_廃止_sc_inbox_整理
+      - subtask_cmd020_w11_completion_trigger_watcher
+    recommendation_to_karo:
+      action: revise_three_tasks_then_dispatch_in_two_waves
+      summary: "7 件一括配信は不可。false-green 防止、live inbox 改変禁止、polling/systemd 衝突を修正後に配信せよ。"
+
+cmd020_next_phase_3task_reaudits_20260513:
+  - audit_id: naomasa_cmd020_next_phase_3task_reaudit_20260513
+    source_inbox:
+      - msg_20260513_135102_b5e900b1
+    detail_report: queue/reports/naomasa_cmd020_next_phase_3task_reaudit_20260513.yaml
+    target_count: 3
+    verdict: fail_source_mismatch
+    evidence_state: complete
+    completion_gate: blocked
+    machine_evidence:
+      message_claim: "3 件 revise 完遂"
+      task_yaml_state: "Authoritative task YAML still retains prior risky wording; no task YAML diff observed."
+    blocked_for_revision:
+      - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+      - subtask_cmd020_persona_廃止_sc_inbox_整理
+      - subtask_cmd020_w11_completion_trigger_watcher
+    recommendation_to_karo:
+      action: patch_task_yaml_then_resubmit
+      summary: "修正 claims は inbox prose のみで、正本 task YAML に反映されておらぬ。ashigaru1/4/5 配信不可。"
+
+cmd020_next_phase_3task_reaudits_cycle3_20260513:
+  - audit_id: naomasa_cmd020_next_phase_3task_reaudit_cycle3_20260513
+    source_inbox:
+      - msg_20260513_135416_94d36510
+    detail_report: queue/reports/naomasa_cmd020_next_phase_3task_reaudit_cycle3_20260513.yaml
+    target_count: 3
+    verdict: pass_with_one_revision_required
+    evidence_state: complete
+    completion_gate: partially_open
+    pass_now_with_conditions:
+      - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+      - subtask_cmd020_persona_廃止_sc_inbox_整理
+    blocked_for_revision:
+      - subtask_cmd020_w11_completion_trigger_watcher
+    recommendation_to_karo:
+      action: dispatch_ashigaru1_and_ashigaru4_only_then_revise_ashigaru5
+      summary: "第3度で ashigaru1/4 は正本 YAML 修正済み。ashigaru5 は timer polling contradiction と background-worker gate 不足が残る。"
+
+cmd020_scope_contamination_post_audits_20260513:
+  - audit_id: naomasa_ashigaru2_scope_contamination_post_audit_20260513
+    source_inbox:
+      - msg_20260513_135744_6fabe6c6
+    detail_report: queue/reports/naomasa_ashigaru2_scope_contamination_post_audit_20260513.yaml
+    target_task: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+    target_assignee: ashigaru2
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    machine_evidence:
+      commits_observed: [e062f63, 9676222, 651efcf]
+      pytest: "python3 -m pytest scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py -q => 5 passed, SKIP=0"
+      git_tracking: pass
+    high_findings:
+      - "staged-residual-check は pre-commit が渡す staged 全件を commit_set とみなすため、通常運用では residual が空になり混入を検出できぬ。"
+      - "完遂 report 内に commit_3 SHA TBD / AC5 pending / push_plan pending が残存し、inbox claim と不整合。"
+    recommendation_to_karo:
+      action: remand_to_ashigaru2_for_hook_logic_and_report_correction
+      summary: "成果物と静的 test は揃うが、根本治療 hook の実効性不足と報告 stale のため完遂不可。"
+
+cmd020_w11_trigger_preaudits_cycle4_20260513:
+  - audit_id: naomasa_cmd020_w11_trigger_preaudit_cycle4_20260513
+    source_inbox:
+      - msg_20260513_140051_ff1d32b1
+    detail_report: queue/reports/naomasa_cmd020_w11_trigger_preaudit_cycle4_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    high_findings:
+      - "task YAML の worker_eval_gate 6 質問が docs/background_worker_eval_gate.md 正本 6 問と不一致。"
+      - "AC2 に旧 polling / cron base watcher 文言が残存し、scheduler design 矛盾が消えておらぬ。"
+    recommendation_to_karo:
+      action: revise_task_yaml_then_resubmit_cycle5
+      summary: "worker_eval decision record 正本 fields と AC2 を整合させるまで ashigaru5 配信不可。"
+
+cmd020_w11_trigger_preaudits_cycle5_20260513:
+  - audit_id: naomasa_cmd020_w11_trigger_preaudit_cycle5_20260513
+    source_inbox:
+      - msg_20260513_140437_07334583
+    detail_report: queue/reports/naomasa_cmd020_w11_trigger_preaudit_cycle5_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    conditions:
+      - "worker_eval decision record 13 fields full + decision=approve_with_concerns 以上"
+      - "static tests must assert no persistent sleep loop, no direct audited_done, audit trail/health/disable fields"
+      - "Supabase MCP preflight failure must produce terminal evidence, not readiness claim"
+    recommendation_to_karo:
+      action: dispatch_ashigaru5_with_conditions
+      summary: "第5度で正本 gate 整合済み。条件付き配信可。"
+
+cmd020_sc_specialty_inventory_post_audits_20260513:
+  - audit_id: naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513
+    source_inbox:
+      - msg_20260513_140509_36fd53e8
+    detail_report: queue/reports/naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513.yaml
+    target_task: subtask_cmd020_sc_specialty_inventory
+    target_assignee: ashigaru3
+    verdict: fail_requires_report_and_process_revision
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "deliverables git-tracked"
+      - "pytest 7 passed, SKIP=0"
+      - "no runtime config mutation invariant verified"
+    high_findings:
+      - "完遂 report に AC5 pending と TBD_SHA placeholders が残存。"
+      - "scope_contamination incidents を report 自身が記録し、clean scoped completion とは扱えぬ。"
+    recommendation_to_karo:
+      action: require_corrected_final_report_or_acceptance_exception
+      summary: "内容は source として利用可。ただし完了ゲートは report stale + contaminated chain 整理まで blocked。"
+
+cmd020_dashboard_status_classification_post_audits_20260513:
+  - audit_id: naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513
+    source_inbox:
+      - msg_20260513_140727_bd922b09
+    detail_report: queue/reports/naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513.yaml
+    target_task: subtask_cmd020_dashboard_status_classification_logic
+    target_assignee: ashigaru7
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "deliverables git-tracked"
+      - "pytest 5 passed, SKIP=0"
+      - "classification doc content usable"
+    high_findings:
+      - "完遂 report 内で AC4/AC5/AC6 pending と TBD placeholders が残り、後段 push complete 記述と矛盾。"
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "成果物は利用可。ただし report stale/pending/TBD 矛盾により完了ゲート blocked。"
+
+cmd020_implementation_required_14cmd_post_audits_20260513:
+  - audit_id: naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513
+    source_inbox:
+      - msg_20260513_140833_15b78751
+    detail_report: queue/reports/naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513.yaml
+    target_task: subtask_cmd020_implementation_required_14_cmd_proposal
+    target_assignee: ashigaru6
+    verdict: fail_requires_inventory_and_process_revision
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "14 candidate を cmd_021-cmd_029 の 9 cmd 案で cover"
+      - "docs/report-only 境界と C-15-B7 / C-V29 / C-V30 out-of-scope 境界を明示"
+      - "deliverables git-tracked"
+      - "pytest 5 passed, SKIP=0"
+    high_findings:
+      - "AC0 inventory の existing_artifacts_grep に TBD / need verify が 6 件残存し、自己報告の inventory 完備 claim と矛盾。"
+      - "D2 proposal が ashigaru3 commit chain に sweep され、mixed ashigaru3/ashigaru6 cherry-pick push で到達しているため、atomic ownership は汚染済み。"
+    recommendation_to_karo:
+      action: require_inventory_and_report_correction_before_pass
+      summary: "上申草案としては利用可。ただし inventory TBD 解消と混線 commit map 修正まで完了ゲート blocked。"
+
+cmd020_persona_sc_inbox_post_audits_20260513:
+  - audit_id: naomasa_ashigaru4_persona_sc_inbox_post_audit_20260513
+    source_inbox:
+      - msg_20260513_141117_3a2b8344
+    detail_report: queue/reports/naomasa_ashigaru4_persona_sc_inbox_post_audit_20260513.yaml
+    target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+    target_assignee: ashigaru4
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "SC inbox 整理 plan は live wired / orphan alias / bridge / warning #1 path / watcher args verify を列挙"
+      - "live inbox mutation 0、watcher operation 0、SessionStart hook change 0 の範囲外宣言あり"
+      - "deliverables git-tracked"
+      - "pytest 4 passed, SKIP=0"
+      - "1fb2aec/361af32/9bf9b0d/49fe137 は current HEAD 到達"
+    high_findings:
+      - "final report に backfill_commit_4 / commit 予定 / pass_at_report_time / planned_execution_after_commit_3 が残存し、実 SHA 到達状況と矛盾。"
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "plan 内容は利用可。ただし final report の予定/pending/backfill placeholder 解消まで完了ゲート blocked。"
+
+cmd020_dashboard_status_classification_reaudits_20260513:
+  - audit_id: naomasa_ashigaru7_dashboard_status_classification_reaudit_20260513
+    source_inbox:
+      - msg_20260513_141459_b7af3f7b
+    detail_report: queue/reports/naomasa_ashigaru7_dashboard_status_classification_reaudit_20260513.yaml
+    target_task: subtask_cmd020_dashboard_status_classification_logic
+    target_assignee: ashigaru7
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "AC4/AC5/AC6 pending/TBD 矛盾は revise report で解消"
+      - "origin/main contains revise commit 49d3dc1"
+      - "pytest 5 passed, SKIP=0"
+    remaining_concerns:
+      - "revise commit SHA は report 内 self_referential 表現で、外部監査 report 側で 49d3dc1 と確認。"
+      - "過去 scope_contamination incident は process fix の証拠として残すべき。"
+    recommendation_to_karo:
+      action: accept_ashigaru7_revise_with_process_concerns
+      summary: "足軽7号 revise は通過可。self-referential 表現は非阻害懸念として扱う。"
+
+cmd020_w9_shogun_verification_log_pytest_fix_post_audits_20260513:
+  - audit_id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513
+    source_inbox:
+      - msg_20260513_142106_3d2ba4d0
+    detail_report: queue/reports/naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513.yaml
+    target_task: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    target_assignee: ashigaru1
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "synthetic insertion 0、shogun log sha256 diff 0"
+      - "W9 rows are made visibly blocked instead of falsely green"
+      - "origin/main contains 9bf630d/e2189be/885c98b/0e2e5be"
+      - "pytest 28 passed, SKIP=0"
+    high_findings:
+      - "origin/main report still contains pending_commit_3, AC6 in_progress, and future next_actions after completion."
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "内容は利用可。ただし report final 化不足により完了ゲート blocked。"
+
+cmd020_w11_completion_trigger_watcher_post_audits_20260513:
+  - audit_id: naomasa_ashigaru5_w11_completion_trigger_watcher_post_audit_20260513
+    source_inbox:
+      - msg_20260513_142344_7c5950d0
+    detail_report: queue/reports/naomasa_ashigaru5_w11_completion_trigger_watcher_post_audit_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "worker_eval 13 fields + 6 questions mapping present"
+      - "detect-and-notify only; direct audited_done write guarded by test"
+      - "origin/main contains 4ed389c/aaf2d70/1cb5249/c480cff"
+      - "pytest 5 passed, SKIP=0"
+    high_findings:
+      - "final report machine_evidence still says commit_status planned and push_status planned."
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "実装証跡は利用可。ただし planned fields 解消まで完了ゲート blocked。"
+
+cmd020_persona_sc_inbox_reaudits_20260513:
+  - audit_id: naomasa_ashigaru4_persona_sc_inbox_reaudit_20260513
+    source_inbox:
+      - msg_20260513_142420_6d954891
+      - msg_20260513_142440_0b87293f
+    detail_report: queue/reports/naomasa_ashigaru4_persona_sc_inbox_reaudit_20260513.yaml
+    target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+    target_assignee: ashigaru4
+    verdict: fail_requires_report_correction_cycle2
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "main AC sections now mostly reflect pass state"
+      - "Shogun-only process-stop gate restated"
+      - "owner decision matrix template added"
+      - "origin/main contains 679a1db"
+      - "pytest 4 passed, SKIP=0"
+    high_findings:
+      - "revised report still contains post_audit_revise_commit_pending saying the revise commit is planned."
+    recommendation_to_karo:
+      action: require_final_report_correction_cycle2
+      summary: "改善済みだが pending section が残るため、もう一度 report-only 訂正が必要。"
+
+cmd020_implementation_required_14cmd_reaudits_v2_20260513:
+  - audit_id: naomasa_ashigaru6_implementation_required_14cmd_reaudit_v2_20260513
+    source_inbox:
+      - msg_20260513_142542_e20ee1ef
+    detail_report: queue/reports/naomasa_ashigaru6_implementation_required_14cmd_reaudit_v2_20260513.yaml
+    target_task: subtask_cmd020_implementation_required_14_cmd_proposal
+    target_assignee: ashigaru6
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "existing_artifacts_grep hits line TBD / need verify blockers resolved"
+      - "test_no_tbd_in_inventory_grep_evidence added"
+      - "scope_contamination_final_commit_map added"
+      - "origin/main contains revise commit 9fe998d"
+      - "pytest 6 passed, SKIP=0"
+    remaining_concerns:
+      - "scope contamination is documented, not process-fixed."
+      - "self-report still awaits later Gunshi/Shogun verification chain; do not treat as shogun_verified."
+    recommendation_to_karo:
+      action: accept_ashigaru6_revise_with_process_concerns
+      summary: "足軽6号 revision_v2 は通過可。各将来 cmd は別途 AC0 inventory から始める条件を維持。"
+
+cmd020_w11_completion_trigger_watcher_reaudits_20260513:
+  - audit_id: naomasa_ashigaru5_w11_completion_trigger_watcher_reaudit_20260513
+    source_inbox:
+      - msg_20260513_143443_d1e89599
+    detail_report: queue/reports/naomasa_ashigaru5_w11_completion_trigger_watcher_reaudit_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "commit_status / push_status are completed"
+      - "origin/main contains 5c37c52"
+      - "pytest 5 passed, SKIP=0"
+    remaining_concerns:
+      - "scheduled watcher remains acceptable only until event-based bridge or W11 completion cleanup."
+    recommendation_to_karo:
+      action: accept_ashigaru5_revise_with_ops_concern
+      summary: "足軽5号 revise は通過可。event-based 置換と自然停止を後続条件に残す。"
+
+cmd020_persona_sc_inbox_reaudits_cycle3_20260513:
+  - audit_id: naomasa_ashigaru4_persona_sc_inbox_reaudit_cycle3_20260513
+    source_inbox:
+      - msg_20260513_143735_4f5a5506
+      - msg_20260513_143754_7e847b94
+    detail_report: queue/reports/naomasa_ashigaru4_persona_sc_inbox_reaudit_cycle3_20260513.yaml
+    target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+    target_assignee: ashigaru4
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "executed_post_audit_revise_commit present"
+      - "decision matrix explicitly NOT AUTHORIZED FOR EXECUTION"
+      - "origin/main contains e3e6c7b"
+      - "pytest 4 passed, SKIP=0"
+    remaining_concerns:
+      - "alias archive/merge/wire requires explicit future decision."
+    recommendation_to_karo:
+      action: accept_ashigaru4_revise_with_governance_gate
+      summary: "足軽4号 revise は通過可。alias 実行は別 cycle 承認後に限る。"
+
+cmd020_w9_shogun_verification_log_pytest_fix_reaudits_20260513:
+  - audit_id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_reaudit_20260513
+    source_inbox:
+      - msg_20260513_143820_e496398c
+    detail_report: queue/reports/naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_reaudit_20260513.yaml
+    target_task: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    target_assignee: ashigaru1
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "pending_commit_3 / AC6 in_progress / future next_actions resolved"
+      - "origin/main contains 35dbfab and d77840e"
+      - "pytest 28 passed, SKIP=0"
+    remaining_concerns:
+      - "W9 rows are truth-aligned blocked, not Shogun verified."
+    recommendation_to_karo:
+      action: accept_ashigaru1_revise_with_truth_state_caveat
+      summary: "足軽1号 revise は通過可。W9 は real verification まで blocked 表示維持。"
+
+kuroda_13_handover_reaudits_20260513:
+  - audit_id: naomasa_kuroda_13_handover_audit_20260513
+    source_inbox:
+      - msg_20260513_naomasa_13_handover_f279c116
+    detail_report: queue/reports/naomasa_kuroda_13_handover_audit_20260513.yaml
+    target_count: 13
+    verdict: handover_inventory_complete_green_blocked
+    evidence_state: complete_with_distribution_plan_gap
+    completion_gate: blocked_for_green
+    machine_evidence:
+      missing_distribution_plan: "queue/reports/audit_distribution_plan_20260512.yaml not found by find queue -name '*audit*distribution*' -o -name '*distribution*plan*'"
+      inventory_source: "queue/reports/unverified_inventory_20260512.yaml covers all 13 directive targets"
+      kuroda_candidate_source: "queue/reports/active_verify_queue_candidate_log.yaml includes G-4 active_verify candidate plus W9 B3/B5 candidate audits"
+      w9_truth_source: "ashigaru1 W9 pytest fix records real Shogun ledger matched_ids=[] and W9 Stage A+B1-B6 blocked pct=0.0"
+      implementation_sources: "ashigaru6 14cmd proposal pass_with_concerns for future implementation_required items; ashigaru5 W11 watcher pass_with_concerns as monitor only"
+    status_summary:
+      g4: "kuroda_candidate_pending_shogun_verify; not green now"
+      w9_b1_b3_b5: "blocked_pending_real_shogun_ledger; Kuroda candidate only"
+      w9_b7: "ready_for_dispatch_not_verified; manifest commit 3e1a734 batch7_count=16"
+      c_v22_c_v33_c_v35_c_v37_c_v39_c_v42_c_v44: "not_started_implementation_required"
+      c_v30: "in_progress_monitor_pending; watcher is trigger only"
+    handover_inventory:
+      sc_receivable_count: 13
+      sc_completed_count: 0
+      green_eligible_now_count: 0
+      remaining_count: 13
+    recommendation_to_karo:
+      action: accept_inventory_not_green_and_restore_distribution_sot
+      summary: "黒田13件はSC棚卸受入済みだが、green完遂ではない。G-4含めledger/実装証跡待ちとして保持し、audit_distribution_plan正本を復元すべし。"

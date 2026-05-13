@@ -311,6 +311,62 @@ logs/
 !scripts/openai_image_client.py
 !scripts/gemini_image_client.py
 !tests/test_cmd016_dual_model_skeleton.py
+# cmd_020 scope_contamination 根本治療 (= ashigaru2、subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook)
+# (scripts/lint/ 配下 *.sh は L231-232 で既 whitelist 済、check_staged_residual.sh は自動取込)
+!docs/scope_contamination_prevention.md
+!scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory.yaml
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
+
+# cmd_020 dashboard status classification logic (= ashigaru7、subtask_cmd020_dashboard_status_classification_logic)
+!docs/dashboard_status_classification_logic.md
+!scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py
+!queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_inventory.yaml
+!queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_report.yaml
+!queue/reports/ashigaru7_subtask_cmd020_dashboard_status_classification_logic_pytest.log
+
+# cmd_020 implementation_required 14 件 cmd 上申準備提案 (= ashigaru6、subtask_cmd020_implementation_required_14_cmd_proposal)
+!docs/cmd020_implementation_required_14_cmd_proposal.md
+!scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py
+!queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_inventory.yaml
+!queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_report.yaml
+!queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_pytest.log
+
+# cmd_020 SC specialty inventory (= ashigaru3、subtask_cmd020_sc_specialty_inventory、Charter v0.1 §8 9 部署 × 9 SC agent mapping)
+!docs/sc_specialty_inventory.md
+!scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py
+!queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_inventory.yaml
+!queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml
+!queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_pytest.log
+
+# cmd_020 persona 廃止 + SC inbox 整理 plan (= ashigaru4、subtask_cmd020_persona_廃止_sc_inbox_整理、read-only inventory + plan 文書化のみ、live inbox mutation / watcher process 操作 0 件)
+!docs/sc_inbox_整理_plan.md
+!scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
+!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml
+!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
+!queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
+
+# cmd_020 W9 shogun_verification_log pytest fix (= ashigaru1、subtask_cmd020_w9_shogun_verification_log_pytest_fix、status-classification 変更 path、synthetic 投入 0 件)
+!scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py
+!queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory.yaml
+!queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml
+!queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
+!queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml
+
+# cmd_020 W11 completion trigger watcher (= ashigaru5、subtask_cmd020_w11_completion_trigger_watcher、scheduled one-shot watcher、detect-and-notify only、direct audited_done 禁、worker_eval 13 fields full + 6 質問 1-to-1 mapping)
+!scripts/watch_w11_trigger.sh
+!systemd/
+!systemd/dashboard-w11-trigger.service
+!systemd/dashboard-w11-trigger.timer
+!docs/cmd020_w11_trigger_worker_eval_gate_check.md
+!scripts/test/test_subtask_cmd020_w11_completion_trigger_watcher_static_contract.py
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_inventory.yaml
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_report.yaml
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_run_log.yaml
+!queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_pytest.log
+!queue/metrics/
+!queue/metrics/w11_trigger_heartbeat.yaml
 
 # Screenshots (masked — no secrets)
 !images/

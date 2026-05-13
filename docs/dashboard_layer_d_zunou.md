@@ -142,6 +142,7 @@ graph TD
 - **Layer C 機能層**: cmd_004 二大戦線 (= 会計待ちゼロ / 小児恐竜王国 / 申し送りエンジン) からの蜘蛛の糸接続 + 個別指導逆出射は別 sub-section、本 Layer D は anchor 提示のみ
 - **Layer E 運用層**: agent 稼働状態 + systemd unit 状態は別 sub-section、本 Layer D は無関連
 - **Layer F 規範層**: memory MCP entity 群は別 sub-section、本 Layer D は無関連
+- **Status classification logic**: `docs/dashboard_status_classification_logic.md` (= ashigaru7 起案、Axis B task-state 軸 = 3 分類 + pass_with_concerns visual rule + audited-blocked 12 件 status 整合 table)。本 Layer D は法令 record 緑化 verified 状態だが、Layer C 内 W9 manifest_pending 4 件 (= C-15-A/B2/B4/B6) は概念的に Layer D 蜘蛛の糸 (= W9 法令 6 本目) に接続するため、cross-layer reference anchor として明示する。本 reference は canonical source 参照のみ、Layer D 内 anchor 構造は改変しない。
 
 = 本 sub-section は **8,000+ records 法令層本体 + cross-layer 接続 anchor**、進捗 / 機能 / 運用 / 規範本体は各 Layer 担当 sub-section に委譲する (= 単一責任、self-contained)。
 

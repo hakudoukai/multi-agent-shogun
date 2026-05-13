@@ -1,0 +1,16 @@
+[Unit]
+Description=Timer for W11 in_progress completion trigger watcher (= cmd_020 / ashigaru5)
+Documentation=file:%h/projects/multi-agent-shogun-newbuild/docs/cmd020_w11_trigger_worker_eval_gate_check.md
+# cadence_reason: SC 側に Supabase 起点 file/inbox/webhook event source 不在故、
+# scheduled が narrowest cadence (= 13 fields decision record cadence_reason 参照)。
+# 10〜15 min は audit ETA と同 order で stale 上限を audit timeline に整合。
+
+[Timer]
+# 起動後 2 分で初回起動、以降 10 分間隔 (= 600s)、Persistent で系統復帰時 catch up。
+OnBootSec=2min
+OnUnitActiveSec=600s
+Persistent=true
+Unit=dashboard-w11-trigger.service
+
+[Install]
+WantedBy=timers.target

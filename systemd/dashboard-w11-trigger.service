@@ -1,0 +1,20 @@
+[Unit]
+Description=W11 in_progress completion trigger watcher (= cmd_020 / ashigaru5)
+Documentation=file:%h/projects/multi-agent-shogun-newbuild/docs/cmd020_w11_trigger_worker_eval_gate_check.md
+# Anti-Pattern guard: ExecStart は one-shot、resident process 禁。
+# `Type=oneshot` で各 timer tick に対し single Supabase MCP query + 即終了。
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/projects/multi-agent-shogun-newbuild
+ExecStart=/usr/bin/env bash %h/projects/multi-agent-shogun-newbuild/scripts/watch_w11_trigger.sh
+# bounded runtime guard (= 13 fields decision record max_runtime_sec=60 と整合)
+TimeoutStartSec=60
+# 秘密 / PII の log 漏洩 guard。systemd journal も最小限。
+StandardOutput=journal
+StandardError=journal
+# 環境変数注入は drop-in (= ~/.config/systemd/user/dashboard-w11-trigger.service.d/secret.conf, 0600)
+# を別途配備、本 unit には secret を直接書かない (= pii_secret_policy)。
+
+[Install]
+WantedBy=default.target

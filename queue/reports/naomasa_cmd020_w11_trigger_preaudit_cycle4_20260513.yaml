@@ -1,0 +1,74 @@
+audit_id: naomasa_cmd020_w11_trigger_preaudit_cycle4_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T15:35:00+09:00"
+source_inbox:
+  - msg_20260513_140051_ff1d32b1
+target_task: subtask_cmd020_w11_completion_trigger_watcher
+target_assignee: ashigaru5
+verdict: fail_requires_revision
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  task_yaml: queue/tasks/subtask_cmd020_w11_completion_trigger_watcher.yaml
+  gate_doc: docs/background_worker_eval_gate.md
+  task_yaml_status: read
+  gate_doc_status: read
+  key_mismatch:
+    - "Task step_2 says background_worker_eval_gate 6 questions are: why background, why not synchronous, atomic not daemon, restart-safe, failure-isolation, eval evidence."
+    - "Actual gate doc questions are: failure mode, trigger/cadence, max runtime/retry/backoff, audit trail, stop/rollback/disable, health signal."
+  retained_conflict:
+    - "AC2 still contains old parenthetical wording: cron base watcher script, 10-15 minute polling, scripts/watch_w11_trigger.sh + systemd timer."
+
+six_point_check:
+  directive_nine_sections: pass
+  design_doc_id: pass
+  task_path_type: pass
+  max_cycle: pass
+  bloom_level_suitability: pass
+  anti_dup: concerns
+
+perspective_verdicts:
+  1_functional: fail
+  2_anti_dup: concerns
+  3_kiritsu: pass
+  4_logic: fail
+  5_schema: concerns
+  6_test: concerns
+  7_legal: pass
+  8_ops: fail
+  9_doc: fail
+  10_ecosystem_coherence: concerns
+  11_cross_pc_repo_check: concerns
+  12_future_operations_radicality: fail
+
+findings:
+  - severity: high
+    perspective: 9_doc
+    issue: "Task YAML claims the background_worker_eval_gate six questions, but lists a different six-question set than the actual gate document."
+    recommendation: "Replace step_2(b) with the actual gate fields: failure_mode, trigger/cadence, max_runtime/retry/backoff, audit_trail_path, stop_or_disable, health_signal."
+
+  - severity: high
+    perspective: 4_logic
+    issue: "AC2 still contains old polling wording in parentheses, so the authoritative acceptance criteria remain internally contradictory."
+    recommendation: "Remove the stale parenthetical or rewrite it to scheduled-worker terminology without using polling/cron-base watcher language."
+
+  - severity: medium
+    perspective: 8_ops
+    issue: "The task still prescribes implementation of new systemd service/timer artifacts before showing a concrete worker_eval decision record shape and pass criteria."
+    recommendation: "Require docs/cmd020_w11_trigger_worker_eval_gate_check.md to include the full decision-record template fields from background_worker_eval_gate.md and decision=approve before service/timer install."
+
+  - severity: medium
+    perspective: 6_test
+    issue: "Static test requirement does not explicitly assert max runtime, retry/backoff, audit trail, health signal, and disable path."
+    recommendation: "Add static tests for the worker_eval fields and for absence of persistent loops/sleep loops."
+
+required_revision_before_pass:
+  - "Align task step_2(b) with the actual background_worker_eval_gate.md six questions."
+  - "Remove stale AC2 parenthetical containing 'polling' and 'cron base watcher script'."
+  - "Make worker_eval decision record fields mandatory before timer/service installation."
+  - "Add static tests for bounded runtime/retry/backoff, audit trail, health signal, stop/disable, and no persistent loop."
+
+recommendation_to_karo:
+  action: revise_task_yaml_then_resubmit_cycle5
+  summary: "Scheduler gate の参照が正本 gate と不一致、かつ AC2 に polling 旧文言が残る。ashigaru5 配信不可。"

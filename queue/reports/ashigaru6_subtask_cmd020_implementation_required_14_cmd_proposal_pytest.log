@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/hakudokai/projects/multi-agent-shogun-newbuild
+plugins: anyio-4.13.0
+collecting ... collected 6 items
+
+scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py::test_14_candidates_full_coverage PASSED [ 16%]
+scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py::test_out_of_scope_boundary_explicit PASSED [ 33%]
+scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py::test_docs_only_deliverable_nature PASSED [ 50%]
+scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py::test_per_cmd_acceptance_criteria_structure PASSED [ 66%]
+scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py::test_design_doc_charter_reference PASSED [ 83%]
+scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py::test_no_tbd_in_inventory_grep_evidence PASSED [100%]
+
+============================== 6 passed in 0.03s ===============================

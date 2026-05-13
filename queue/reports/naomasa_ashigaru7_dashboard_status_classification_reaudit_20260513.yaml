@@ -1,0 +1,65 @@
+audit_id: naomasa_ashigaru7_dashboard_status_classification_reaudit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T17:25:00+09:00"
+source_inbox:
+  - msg_20260513_141459_b7af3f7b
+target_task: subtask_cmd020_dashboard_status_classification_logic
+target_assignee: ashigaru7
+parent_cmd: cmd_020
+verdict: pass_with_concerns
+evidence_state: complete
+completion_gate: open_with_concerns
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py -q"
+    result: "5 passed in 0.02s"
+    skip_count: 0
+  remote_reachability:
+    revise_commit: 49d3dc1
+    revise_commit_in_origin_main: true
+    local_head_contains_revise_commit: false
+    note: "After fetch, origin/main points at 49d3dc1. Local main was behind origin by one commit at audit time, so remote evidence is authoritative for push completion."
+  stale_marker_scan:
+    remaining_tbd_or_pending: "Only historical mentions in revise_history; commit_history.pending=false and AC4/AC5/AC6 are pass."
+    remaining_self_reference: "commit_5_sha is self_referential; acceptable for a report commit that contains its own YAML, provided origin/main reachability is separately verified."
+
+positive_evidence:
+  - "The revised report changes only the report YAML; core deliverables remain unchanged."
+  - "AC4/AC5/AC6 are now marked pass, with commit_3 full SHA 26ee3d4631e34076ddd2ebac3baad1cf282f5d0c and addendum 040084b recorded."
+  - "origin/main contains revise commit 49d3dc1, matching Karo's claim."
+  - "Focused static tests pass with SKIP=0."
+
+perspective_verdicts:
+  1_functional: pass_with_concerns
+  2_anti_dup: pass_with_concerns
+  3_kiritsu: pass_with_concerns
+  4_logic: pass
+  5_schema: pass
+  6_test: pass
+  7_legal: pass
+  8_ops: concerns
+  9_doc: pass_with_concerns
+  10_ecosystem_coherence: concerns
+  11_cross_pc_repo_check: pass_with_concerns
+  12_future_operations_radicality: concerns
+
+findings:
+  - severity: medium
+    perspective: 9_doc
+    issue: "The report uses `self_referential` for the revise commit SHA and includes one historical phrase saying the revise commit will be pushed to origin. This is no longer a blocking contradiction because origin/main reachability of 49d3dc1 was independently verified, but it is less clean than recording the final SHA in a separate addendum."
+    recommendation: "No redo required for this task. For future report-only fix commits, use a follow-up addendum or external audit report to record the self commit SHA explicitly."
+
+  - severity: medium
+    perspective: 8_ops
+    issue: "The report still records a scope_contamination incident in the earlier commit chain. It was corrected and does not block this revised report, but it reinforces the need for scope-contamination v2 mitigation."
+    recommendation: "Treat this as supporting evidence for the scope-contamination process fix, not as a deliverable failure."
+
+completion_decision:
+  deliverable_content: pass_with_concerns
+  completion_gate: open_with_concerns
+  reason: "The prior report-blocking AC4/AC5/AC6 pending/TBD contradictions are resolved and origin/main contains the revise commit."
+
+recommendation_to_karo:
+  action: accept_ashigaru7_revise_with_process_concerns
+  summary: "足軽7号 revise は通過可。self-referential SHA 表現と過去 scope_contamination は懸念として残るが、完了ゲートは開いてよい。"
