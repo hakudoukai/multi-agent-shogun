@@ -6446,3 +6446,27 @@ cmd020_scope_contamination_v2_preaudits_20260513:
     recommendation_to_karo:
       action: minor_text_fix_then_dispatch
       summary: "修正版は配信可。step_3(o)文言だけallowlist modelへ揃え、足軽2へ /clear + new task_id 配信してよい。"
+
+cmd020_scope_contamination_v2_post_audits_20260513:
+  - audit_id: naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513
+    source_inbox:
+      - msg_20260513_184309_5ee2558d
+    detail_report: queue/reports/naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513.yaml
+    target_task: subtask_cmd020_scope_contamination_prevention_v2
+    target_assignee: ashigaru2
+    verdict: fail_requires_report_finalization_revision
+    implementation_verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: blocked_until_report_revision
+    positive_evidence:
+      - "origin/main contains d1a2ff1 with the five advertised commits."
+      - "pytest rerun: 25 passed, SKIP=0."
+      - "check_file_path_owner behavior tests cover the reported incident simulations."
+      - "install hook and scoped report-finalization tooling exist."
+    blocking_findings:
+      - "Final report still has push_plan.status=ready_for_bounded_push while origin/main already contains d1a2ff1."
+      - "Final report next_actions still include bounded push and commit_5 backfill as future work."
+      - "check_report_finalization.sh passes this stale semantic state, so AC5 is not fully proven."
+    recommendation_to_karo:
+      action: require_report_only_revision
+      summary: "実装と25 testsは強いが、最終報告がpush済み事実と矛盾。足軽2へreport-only訂正を命じ、d1a2ff1 SHAとpush完了状態を反映させるべし。"

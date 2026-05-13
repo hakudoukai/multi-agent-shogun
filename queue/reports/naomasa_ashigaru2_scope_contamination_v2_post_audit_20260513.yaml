@@ -1,0 +1,123 @@
+worker_id: gunshi
+audit_id: naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513
+parent_cmd: cmd_020
+task_id: subtask_cmd020_scope_contamination_prevention_v2
+target_assignee: ashigaru2
+source_inbox:
+  - msg_20260513_184309_5ee2558d
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T18:52:00+09:00"
+status: done
+result:
+  type: post_audit
+  verdict: fail_requires_report_finalization_revision
+  completion_gate: blocked_until_report_revision
+  implementation_verdict: pass_with_concerns
+  summary: "The v2 implementation and behavioral tests are materially strong: 25 pytest tests pass with SKIP=0, the owner-aware hook rejects the incident scenarios, install and scoped report-finalization tooling exist, and origin/main contains d1a2ff1. However, the final worker report still says push/backfill are future next_actions and push_plan.status is ready_for_bounded_push. This directly contradicts the inbox claim and git evidence that push completed, so AC5 report-finalization is not complete."
+  confidence: high
+
+machine_evidence:
+  commits:
+    command: "git show --stat --oneline --name-only e681820 2d97598 bb556ee 6ea0c71 d1a2ff1"
+    observed:
+      - "e681820 AC0 inventory + AC7 incident root cause"
+      - "2d97598 AC1 check_file_path_owner.sh"
+      - "bb556ee AC2 install script + AC5 finalization tooling"
+      - "6ea0c71 AC3/AC4/AC2/AC5 tests"
+      - "d1a2ff1 final report yaml + pytest log"
+  remote_reachability:
+    command: "git branch --contains d1a2ff1 && git log --oneline -8 --decorate"
+    result: "d1a2ff1 is HEAD, origin/main, origin/HEAD"
+  pytest_rerun:
+    command: "python3 -m pytest scripts/test/test_scope_contamination_re_introduce.py scripts/test/test_bounded_push_workflow_side_effect.py scripts/test/test_hook_install_script.py scripts/test/test_report_finalization_grep_evidence.py -q"
+    result: "25 passed in 1.23s"
+    skip_count: 0
+  report_finalization_lint:
+    command: "bash scripts/lint/check_report_finalization.sh queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml"
+    result: "OK — completion-claim sections clean for 1 file"
+    limitation: "The linter does not flag semantic stale states such as ready_for_bounded_push after push is already complete."
+  owner_hook_smoke:
+    command: "bash scripts/lint/check_file_path_owner.sh"
+    result: "pass; no staged files, agent_id=gunshi from tmux_pane_agent_id"
+  final_report_conflict:
+    path: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml
+    conflicting_lines:
+      - "line 123: scripts + related tests + commit + push 完遂"
+      - "line 161: commit_5 sha_source remains self-referential instead of actual d1a2ff1"
+      - "line 173: push_plan.status: ready_for_bounded_push"
+      - "lines 189-199: worktree push commands remain future plan"
+      - "lines 257-260: next_actions still include Karo inbox report, bounded F007 push, and backfill revise commit"
+
+perspective_verdicts:
+  1_functional: pass_with_concerns
+  2_anti_duplication: pass
+  3_chain_of_command: pass_with_concerns
+  4_logic: pass_with_concerns
+  5_schema: pass
+  6_test: pass
+  7_privacy_security: pass
+  8_ops: fail_report_state
+  9_doc: fail
+  10_ecosystem_coherence: pass_with_concerns
+  11_cross_pc_repo_check: pass
+  12_future_operations_radicality: pass_with_concerns
+
+positive_evidence:
+  - "Owner-aware hook uses tmux @agent_id primary and git config fallback only."
+  - "Behavioral re-introduce tests cover cross-owner staged residuals, three incident simulations, allowlisted shared files, unauthorized shared files, Karo warning-only behavior, and same-owner pass."
+  - "Install script creates an idempotent executable .git/hooks/pre-commit shim and supports dry-run and framework delegation."
+  - "Report-finalization linter is scoped and allowlisted, reducing the false-positive risk identified in pre-audit."
+  - "All 25 tests passed locally with SKIP=0."
+  - "The five advertised commits are on origin/main."
+
+findings:
+  - severity: high
+    perspective: "9_doc"
+    issue: "Final worker report is stale after push. It still describes bounded push and commit_5 backfill as future next_actions despite origin/main already containing d1a2ff1."
+    evidence:
+      - "queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml:171-199 push_plan.status=ready_for_bounded_push and future commands."
+      - "queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml:257-260 next_actions include bounded F007 push and backfill revise commit."
+      - "git log shows d1a2ff1 is HEAD and origin/main."
+    recommendation: "Issue a report-only revision: set push_plan.status=completed, record actual d1a2ff1 as commit_5 SHA, remove future push/backfill next_actions, and add push_result evidence."
+
+  - severity: medium
+    perspective: "8_ops"
+    issue: "The new report-finalization linter passes the stale report because it only detects token patterns, not semantic states like ready_for_bounded_push after push completed."
+    evidence:
+      - "check_report_finalization.sh exits 0 on the current report."
+      - "The stale state is visible but not forbidden by token regex."
+    recommendation: "Extend the linter or AC5 tests to treat ready_for_bounded_push / backfill revise commit / future push commands as invalid in final reports once the report verdict claims completion."
+
+  - severity: medium
+    perspective: "4_logic"
+    issue: "Karo/orchestrator warning-only behavior for unauthorized shared edits is useful during transition, but it can still allow shared-file drift if used as the normal path."
+    evidence:
+      - "test_5b_unauthorized_shared_file_warning_only_for_karo expects Karo to pass with warning."
+    recommendation: "Keep warning-only for Karo as an explicit emergency/transition mode, and require Karo to add shared_files_allowlist for planned shared edits."
+
+completion_decision:
+  implementation_content: pass_with_concerns
+  report_quality: fail
+  gate: blocked_until_report_revision
+  required_revision:
+    - "Report-only correction to queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml."
+    - "Backfill commit_5 actual SHA as d1a2ff1."
+    - "Change push_plan.status to completed and include push_result d19294d..d1a2ff1 or equivalent."
+    - "Replace next_actions with post-completion operational handoff, not future push/backfill actions."
+    - "Optionally add linter guard for stale semantic states."
+
+recommendation_to_karo:
+  action: require_report_only_revision
+  summary: "Do not mark done yet. Implementation/test evidence is strong, but the final report violates its own finalization norm by leaving future push/backfill state after push completed. Ask ashigaru2 for a report-only fix; no code redesign required."
+
+files_modified:
+  - queue/reports/naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513.yaml
+  - queue/reports/naomasa_secondpc_report.yaml
+  - queue/inbox/gunshi.yaml
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "The audit preserves the real implementation gains while preventing a stale completion report from weakening the new finalization norm."
+  risks_to_north_star:
+    - "If stale future push/backfill actions are accepted, AC5 becomes a string-lint only gate rather than a truthful completion gate."
