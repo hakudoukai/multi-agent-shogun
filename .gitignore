@@ -306,10 +306,11 @@ logs/
 !queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report.yaml
 !queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log
 
-# cmd_016 OpenAI gpt-image-1.5 integration Phase 2 spec design (= ashigaru5/蒲生氏郷、subtask_cmd016_gpt_image_2_integration_phase2_spec_design)
+# cmd_016 OpenAI gpt-image-2 + Google gemini-3.1-flash-image-preview dual model integration Phase 2 (= ashigaru5/蒲生氏郷、subtask_cmd016_phase2_dual_model_extension_gpt_image_2_and_gemini_3_1_flash)
 !docs/cmd_016_gpt_image_integration_spec.md
 !scripts/openai_image_client.py
-!tests/test_cmd016_gpt_image_skeleton.py
+!scripts/gemini_image_client.py
+!tests/test_cmd016_dual_model_skeleton.py
 
 # Screenshots (masked — no secrets)
 !images/
