@@ -6683,3 +6683,40 @@ cmd020_unmatched_verified_targets_dashboard_mapping_post_audits_20260514:
     recommendation_to_karo:
       action: require_scope_exception_or_manifest_revision_before_acceptance
       summary: "実装・テストは通せる水準だが、AC4 の書込範囲違反が完遂阻害。Karo が .gitignore 追記を明示例外承認するか、任務YAML/最終報告を scope exception 付きで改訂させてから再監査へ回すべし。"
+
+  - audit_id: naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_reaudit_20260514
+    audited_at: "2026-05-14T00:37:33+09:00"
+    source_commit: 6b76ff3dd508cf830d50d9140e5b3f4bfef97e86
+    redo_of: naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_post_audit_20260514
+    source_inbox:
+      - msg_20260514_003702_7952ea91
+    detail_report: queue/reports/naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_reaudit_20260514.yaml
+    target_task: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+    target_assignee: ashigaru4
+    target_revision: 2
+    verdict: pass_with_concerns
+    implementation_verdict: pass_with_concerns
+    report_quality_verdict: pass_with_exception_context
+    evidence_state: complete
+    completion_gate: open_with_karo_scope_exception
+    scope_exception_authorization:
+      exception_id: karo_scope_exception_ashigaru4_unmatched_verified_targets_gitignore_20260514
+      authorized_at: "2026-05-14T00:37:00+09:00"
+      authorized_by: karo
+      target_file: .gitignore
+      scope_exception_type: allowlist_addition_only
+    machine_evidence:
+      gitignore_diff: "git show c1bd793 -- .gitignore => only five task-deliverable allowlist additions"
+      deletion_scan: "git show c1bd793 -- .gitignore | grep '^-[^-]' || true => empty"
+      pytest_rerun: "5 passed in 2.24s, SKIP=0"
+      report_finalization: "check_report_finalization.sh target report => exit 0"
+    resolved_blockers:
+      - "AC4 .gitignore scope mismatch resolved by explicit Karo scope exception."
+      - "Manual guard rejection is now treated as authorized exception evidence, not silent downgrade."
+    remaining_concerns:
+      - "Task prose allowlist and check_file_path_owner.sh shared_files_allowlist schema remain misaligned."
+      - "active_entries 41 to 0 cross-PC history root cause remains follow-up only."
+      - "Final report commit 3 uses deictic self-reference."
+    recommendation_to_karo:
+      action: accept_with_concerns_and_relay_chain
+      summary: "家老明示例外により .gitignore blocker は解消。ashigaru4 revision 2 は pass_with_concerns / completion_gate=open_with_karo_scope_exception として扱い、shogun_audit_request chain へ進めてよい。"
