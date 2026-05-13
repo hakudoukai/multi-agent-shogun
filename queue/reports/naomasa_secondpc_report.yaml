@@ -6056,3 +6056,24 @@ cmd020_next_phase_3task_reaudits_cycle3_20260513:
     recommendation_to_karo:
       action: dispatch_ashigaru1_and_ashigaru4_only_then_revise_ashigaru5
       summary: "第3度で ashigaru1/4 は正本 YAML 修正済み。ashigaru5 は timer polling contradiction と background-worker gate 不足が残る。"
+
+cmd020_scope_contamination_post_audits_20260513:
+  - audit_id: naomasa_ashigaru2_scope_contamination_post_audit_20260513
+    source_inbox:
+      - msg_20260513_135744_6fabe6c6
+    detail_report: queue/reports/naomasa_ashigaru2_scope_contamination_post_audit_20260513.yaml
+    target_task: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+    target_assignee: ashigaru2
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    machine_evidence:
+      commits_observed: [e062f63, 9676222, 651efcf]
+      pytest: "python3 -m pytest scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py -q => 5 passed, SKIP=0"
+      git_tracking: pass
+    high_findings:
+      - "staged-residual-check は pre-commit が渡す staged 全件を commit_set とみなすため、通常運用では residual が空になり混入を検出できぬ。"
+      - "完遂 report 内に commit_3 SHA TBD / AC5 pending / push_plan pending が残存し、inbox claim と不整合。"
+    recommendation_to_karo:
+      action: remand_to_ashigaru2_for_hook_logic_and_report_correction
+      summary: "成果物と静的 test は揃うが、根本治療 hook の実効性不足と報告 stale のため完遂不可。"
