@@ -6398,3 +6398,28 @@ kuroda_13_handover_reaudits_20260513:
     recommendation_to_karo:
       action: accept_inventory_not_green_and_restore_distribution_sot
       summary: "黒田13件はSC棚卸受入済みだが、green完遂ではない。G-4含めledger/実装証跡待ちとして保持し、audit_distribution_plan正本を復元すべし。"
+
+cmd020_scope_contamination_v2_preaudits_20260513:
+  - audit_id: naomasa_scope_contamination_v2_preaudit_20260513
+    source_inbox:
+      - msg_20260513_180159_e36d23df
+    detail_report: queue/reports/naomasa_scope_contamination_v2_preaudit_20260513.yaml
+    target_task: subtask_cmd020_scope_contamination_prevention_v2
+    target_assignee: ashigaru2
+    verdict: fail_requires_task_yaml_fix_and_design_tightening
+    evidence_state: complete
+    completion_gate: blocked_before_dispatch
+    machine_evidence:
+      task_yaml_parse: "PyYAML ScannerError at queue/tasks/subtask_cmd020_scope_contamination_prevention_v2.yaml line 153; unquoted markdown '**報告書 final 化規範自身実証**' is parsed as an invalid alias."
+      prior_fail_report_parse: "queue/reports/naomasa_ashigaru2_scope_contamination_post_audit_20260513.yaml parses successfully and confirms the previous residual-check design defect."
+      local_identity_state: "git config --local user.name is 'hakudokai (SC karo)', not ashigaru2; .git/hooks/pre-commit is missing while pre-commit.sample exists."
+    blockers:
+      - "Task YAML must parse before /clear dispatch."
+      - "Hook identity must use tmux @agent_id as primary; shared git config is unsafe as primary source."
+      - "All-pane live verification must be Karo/infra-owned or separated from ashigaru2 completion gate."
+      - "report-finalization grep must be scoped to completion-claim sections with allowlist."
+      - "shared-file owner policy must allow explicit task manifest paths."
+      - "auto-git-sync tests must match pull-only behavior or be renamed bounded-push workflow tests."
+    recommendation_to_karo:
+      action: revise_task_yaml_then_dispatch
+      summary: "方向性は良いが、現 task は invalid YAML かつ設計条件未整理。足軽2へ送る前に上記6点を直すべし。"

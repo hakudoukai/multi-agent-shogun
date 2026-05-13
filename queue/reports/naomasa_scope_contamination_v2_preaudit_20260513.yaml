@@ -1,0 +1,146 @@
+worker_id: gunshi
+audit_id: naomasa_scope_contamination_v2_preaudit_20260513
+parent_cmd: cmd_020
+task_id: subtask_cmd020_scope_contamination_prevention_v2
+source_inbox:
+  - msg_20260513_180159_e36d23df
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T18:04:51+09:00"
+status: done
+result:
+  type: pre_audit
+  verdict: fail_requires_task_yaml_fix_and_design_tightening
+  completion_gate: blocked_before_dispatch
+  summary: "scope_contamination_v2 task direction is correct, but dispatch must stop until task YAML parses and five design constraints are corrected. The strongest blocker is PyYAML parse failure at line 153 caused by an unquoted markdown bold token. If sent now, ashigaru2 recovery can fail before execution."
+  confidence: high
+
+machine_evidence:
+  task_yaml_parse:
+    command: "python3 yaml.safe_load(queue/tasks/subtask_cmd020_scope_contamination_prevention_v2.yaml)"
+    result: fail
+    error: "ScannerError while scanning an alias at line 153, column 5: unquoted '**報告書 final 化規範自身実証**'"
+    blocker: true
+  task_yaml_line:
+    command: "nl -ba queue/tasks/subtask_cmd020_scope_contamination_prevention_v2.yaml | sed -n '145,160p'"
+    evidence: "line 153 starts with '- **報告書 final 化規範自身実証** ...', which YAML treats as an alias token."
+  prior_naomasa_fail_report:
+    path: queue/reports/naomasa_ashigaru2_scope_contamination_post_audit_20260513.yaml
+    parse: pass
+    key_findings:
+      - "staged-residual-check cannot detect the original failure mode because pre-commit passes staged filenames and the script treats them as commit_set."
+      - "previous report kept TBD/pending fields."
+  existing_docs:
+    path: docs/scope_contamination_prevention.md
+    key_gap: "Documented approach relies on staged residual logic that post-audit already found insufficient."
+  live_hook_state:
+    command: "git config --local user.name; git config --local user.email; ls -l .git/hooks/pre-commit .git/hooks/pre-commit.sample"
+    evidence:
+      user_name: "hakudokai (SC karo)"
+      user_email: "hakudoukai@gmail.com"
+      pre_commit_hook: missing
+      pre_commit_sample: present
+    implication: "Current repo-local git config does not identify gunshi or ashigaru2, and .git/hooks/pre-commit is not active in this worktree."
+  incident_commit_check:
+    command: "git show --stat --oneline --name-only 65c917e 240dd7a a25a1b7"
+    evidence:
+      - "65c917e contains docs/cmd020_implementation_required_14_cmd_proposal.md plus ashigaru3 report."
+      - "240dd7a contains ashigaru7 classification docs only in final commit view, while ashigaru7 report records a corrected prior contamination incident."
+      - "a25a1b7 contains ashigaru6 revision files."
+
+perspective_verdicts:
+  1_functional: fail_until_yaml_fixed
+  2_anti_duplication: pass_with_conditions
+  3_chain_of_command: pass_with_conditions
+  4_logic: revise_required
+  5_schema: fail
+  6_test: revise_required
+  7_privacy_security: pass_with_conditions
+  8_ops: revise_required
+  9_doc: revise_required
+  10_ecosystem_coherence: revise_required
+  11_cross_pc_repo_check: revise_required
+  12_future_operations_radicality: pass_with_conditions
+
+findings:
+  - severity: critical
+    perspective: "5_schema"
+    issue: "The task YAML is not valid YAML. Line 153 begins with an unquoted markdown bold token, which PyYAML parses as an invalid alias."
+    evidence:
+      - "PyYAML ScannerError at queue/tasks/subtask_cmd020_scope_contamination_prevention_v2.yaml line 153 column 5."
+      - "Line text: - **報告書 final 化規範自身実証** ..."
+    recommendation: "Quote the full constraints item or remove markdown emphasis before dispatch. Re-run yaml.safe_load on the task file as the first gate."
+
+  - severity: high
+    perspective: "4_logic"
+    issue: "Current-agent detection by repo-local git config is unsafe in this shared worktree. session_start_hook overwrites one shared .git/config, so whichever agent starts last can become the apparent author for every pane."
+    evidence:
+      - "Current local user.name is 'hakudokai (SC karo)', not gunshi or ashigaru2."
+      - "Task AC1(c) says current agent = git config user.name / fallback user.email."
+    recommendation: "Make TMUX_PANE -> tmux @agent_id the primary identity source inside the hook when available. Treat git config as fallback evidence only, with an explicit warning when it is not an ashigaru id."
+
+  - severity: high
+    perspective: "8_ops"
+    issue: "AC0 asks for all ashigaru pane git config and hook state, but the task also states local tmux direct test is impossible. This is internally inconsistent and can push ashigaru2 into broad pane inspection instead of scoped implementation."
+    evidence:
+      - "AC0 demands all ashigaru pane git config + .git/hooks ls state."
+      - "AC2(h) says direct local tmux pane test is impossible, so design evidence + script presence verify."
+    recommendation: "Split the requirement: ashigaru2 designs and tests the survey script; Karo performs or separately authorizes live all-pane verification. Do not make all-pane live inspection an ashigaru2 completion blocker."
+
+  - severity: high
+    perspective: "6_test"
+    issue: "AC5 report finalization grep is overbroad. Searching pending/予定/planned/TBD/in_progress across report YAML will flag legitimate history, status labels, source quotes, and this very task's pre-implementation fields."
+    evidence:
+      - "Task demands check_report_finalization.sh grep for pending, planned, TBD, in_progress."
+      - "Existing reports contain historical sections and status taxonomy where these strings are legitimate."
+    recommendation: "Scope the linter to final self-report sections that claim completion: commit_history, push_plan, acceptance_criteria, next_actions. Provide an allowlist for quoted prior evidence and status taxonomy."
+
+  - severity: medium
+    perspective: "1_functional"
+    issue: "The owner mapping design risks blocking legitimate task-authorized shared edits such as .gitignore or docs files by non-Karo agents."
+    evidence:
+      - "AC1(e) says config/dashboard/.gitignore shared files are editable only by Karo or Shogun."
+      - "The same task's historical pattern expects ashigaru deliverables to whitelist files in .gitignore."
+    recommendation: "Use a task manifest allowlist in addition to owner mapping. Shared files should require explicit task_id/path authorization, not only Karo/Shogun ownership."
+
+  - severity: medium
+    perspective: "8_ops"
+    issue: "AC4 auto-git-sync side-effect tests refer to rebase/detach/cherry-pick behavior, while scripts/auto_git_sync.sh is currently pull-only with ff-pull, local-ahead, divergent halt, stash dirty pull, and flock semantics."
+    evidence:
+      - "scripts/auto_git_sync.sh header: pull-only mode, never commits or pushes."
+      - "tests/test_auto_git_sync.py already covers FF pull, divergent halt, up_to_date, local_ahead, flock, dirty stash."
+    recommendation: "Change AC4 tests to align with the current pull-only script or explicitly mark rebase/cherry-pick checks as bounded-push workflow tests, not auto-git-sync unit tests."
+
+positive_assessment:
+  - "Redo scope correctly targets the post-audit root cause: prior residual-check design could not detect cross-agent staged contamination."
+  - "AC0 inventory-first, incident root cause document, behavior tests, and install/active verification are the right classes of evidence."
+  - "The task correctly keeps repo_scope to multi-agent-shogun-newbuild only and avoids hakudokai-dev."
+  - "Five-commit inline structure is reasonable if the task file is fixed and shared-file rules are tightened."
+
+dispatch_decision:
+  gate: blocked
+  required_before_ashigaru2_clear:
+    - "Fix task YAML line 153 and verify yaml.safe_load passes."
+    - "Amend identity design: tmux @agent_id primary, git config fallback only."
+    - "Clarify all-pane verification as Karo/infra live verification, while ashigaru2 supplies scripts and local proof."
+    - "Constrain report-finalization linter to completion-claim sections with allowlist."
+    - "Replace blanket shared-file Karo-only rule with task manifest allowlist for .gitignore/docs/shared files."
+    - "Align AC4 tests with pull-only auto_git_sync or rename them as bounded-push workflow tests."
+  pass_after_revisions: likely
+
+recommendation_to_karo:
+  action: revise_task_yaml_then_dispatch
+  summary: "Do not send /clear to ashigaru2 yet. First fix YAML syntax and the five design constraints above; after that the task is strong enough for dispatch."
+
+files_modified:
+  - queue/reports/naomasa_scope_contamination_v2_preaudit_20260513.yaml
+  - queue/reports/naomasa_secondpc_report.yaml
+  - queue/inbox/gunshi.yaml
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "The audit prevents another false completion by blocking a malformed task file and tightening the hook design before dispatch."
+  risks_to_north_star:
+    - "Dispatching invalid YAML can cause ashigaru2 recovery failure."
+    - "Using shared git config as identity can let the hook approve the wrong agent."
+    - "Overbroad finalization grep can create repeated false failures and stall the chain."
