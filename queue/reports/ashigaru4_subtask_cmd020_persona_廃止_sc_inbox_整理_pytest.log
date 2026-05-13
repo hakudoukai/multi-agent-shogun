@@ -1,0 +1,9 @@
+============================= test session starts ==============================
+collecting ... collected 4 items
+
+scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py::test_sc_inbox_整理_plan_doc_has_required_sections PASSED [ 25%]
+scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py::test_sc_inbox_整理_plan_doc_mentions_alias_candidates PASSED [ 50%]
+scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py::test_inventory_yaml_orphan_alias_entries_present PASSED [ 75%]
+scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py::test_inventory_yaml_live_wired_count_matches_expected PASSED [100%]
+
+============================== 4 passed in 0.05s ===============================

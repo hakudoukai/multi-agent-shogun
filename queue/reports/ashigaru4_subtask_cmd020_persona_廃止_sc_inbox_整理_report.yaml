@@ -1,0 +1,210 @@
+report_id: ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_20260513
+task_id: subtask_cmd020_persona_廃止_sc_inbox_整理
+parent_cmd: cmd_020
+agent: ashigaru4
+model_path: sonnet_codex_sonnet
+reported_at: "2026-05-13T14:25:00+09:00"
+status: completed
+verdict: pass
+evidence_state: complete
+completion_gate: open
+repo: multi-agent-shogun-newbuild
+repo_scope_compliance: confirmed_single_repo (= hakudokai-dev 関与禁、本 task 範囲外)
+
+summary: |
+  cmd_020 next phase 第 3 度 pre_audit pass_with_conditions ✅ 受領下、AC#2 persona 廃止
+  + AC#3 SC inbox 整理 task を read-only inventory + plan 文書化のみ scope で完遂。
+  queue/inbox/ 配下を機械列挙し、live wired 10 体 (= shogun/karo/ashigaru1-7/gunshi) +
+  orphan alias 5 件 (= gunshi2/ieyasu/maeda/shogun_from_main/shogun_from_sc、未読合計 166 滞留) +
+  sender alias 3 件 (= karo_sc/shogun_from_main/auto_git_sync) を inventory yaml に証跡化、
+  docs/sc_inbox_整理_plan.md (8 section) で alias 統合判定候補 A/B/C + bridge mechanism 整理 path +
+  SessionStart hook warning #1 解消 path 5 step + watcher args 整合 verify 規範を起案。
+  live inbox file mutation 0 件 + watcher process 操作 0 件 + SessionStart hook 変更 0 件、
+  実行範囲外を 11 項目 specification 化。4 件 static source-contract test 全件 PASS (= SKIP=0 / FAIL=0)、
+  3 commit inline batch atomic 完了 (= e3cf716 + e2b22f3 + commit 3 = 本 yaml 投入時点で commit 予定)。
+
+deliverables:
+  - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml
+    purpose: AC0 inventory yaml (= live wired 10 体 + orphan alias 5 件 + sender alias 3 件 + gap_analysis 4 件)
+    commit: e3cf716
+  - file: docs/sc_inbox_整理_plan.md
+    purpose: AC2 plan 文書 (= 8 section、§1 scope 厳守 / §2 現行 state / §3 alias 候補 A/B/C / §4 bridge 整理 / §5 warning #1 解消 / §6 watcher args verify / §7 範囲外明示 / §8 完了基準)
+    commit: e2b22f3
+  - file: scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
+    purpose: 4 件 static source-contract test (= sections / alias candidates / orphan entries / live wired count)
+    commit: 本 commit (= commit 3、test + report + pytest log 同梱)
+  - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
+    purpose: pytest 実行 log (= 4 PASS、SKIP=0、0.05s)
+    commit: 本 commit (= commit 3)
+  - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
+    purpose: 本 yaml (= AC6 完遂報告)
+    commit: 本 commit (= commit 3)
+
+commit_history:
+  - sha: e3cf716
+    subject: "docs(cmd_020 persona_廃止_sc_inbox_整理): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+    files:
+      - .gitignore (= +8 lines、本 task 5 件 negation pattern 追記)
+      - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml (= 新規、260 行)
+    timestamp: "2026-05-13T14:15:00+09:00"
+  - sha: e2b22f3
+    subject: "docs(cmd_020 persona_廃止_sc_inbox_整理): sc_inbox_整理_plan.md 起案 (= alias 統合判定 + warning #1 解消 path)"
+    files:
+      - docs/sc_inbox_整理_plan.md (= 新規、200 行、8 section)
+    timestamp: "2026-05-13T14:20:00+09:00"
+  - sha: 本 commit (= commit 3、本 yaml + test + pytest log 同梱、atomic 配信予定)
+    subject: "test(cmd_020 persona_廃止_sc_inbox_整理): static source-contract 4 test + report yaml + pytest log"
+    files:
+      - scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
+      - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml (= 本 yaml)
+      - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
+    timestamp: "2026-05-13T14:25:00+09:00"
+
+test_evidence:
+  exact_pytest_command: "python3 -m pytest /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py -v --no-header"
+  test_count_target: 4
+  test_count_actual: 4
+  pass: 4
+  fail: 0
+  skip: 0
+  duration_seconds: 0.05
+  test_names:
+    - test_sc_inbox_整理_plan_doc_has_required_sections
+    - test_sc_inbox_整理_plan_doc_mentions_alias_candidates
+    - test_inventory_yaml_orphan_alias_entries_present
+    - test_inventory_yaml_live_wired_count_matches_expected
+  log_path: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
+  skip_zero_compliance: true (= test rule #1 SKIP=FAIL 厳守)
+
+acceptance_criteria_evidence:
+  AC0:
+    status: pass
+    evidence: |
+      queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml
+      起案完遂 (= existing_assets_inventoried.live_wired_inbox.entries 10 件 + .orphan_alias_inbox.entries 5 件 +
+      senders_without_inbox.entries 3 件 + design_doc_references 5 件 + gap_analysis 4 件 +
+      new_deliverables 6 件 + constraints_acknowledged 12 件 全 field 充足)。
+  AC1:
+    status: pass
+    evidence: |
+      design doc 正本 read 完遂 = inventory.design_doc_references の 5 entry で line_range_approx +
+      key_concepts + read_evidence 機械引用済:
+      (1) queue/tasks/subtask_cmd020_persona_廃止_sc_inbox_整理.yaml (= 本 task 正本)
+      (2) scripts/inbox_watcher.sh (= 1237 行全文、args 厳密 parse path)
+      (3) scripts/session_start_hook.sh (= 208 行全文、warning #1/#2/#3 emit path)
+      (4) CLAUDE.md (= Session Start step 6 inbox 整合 verify 表)
+      (5) queue/inbox/ + ps aux (= 現行 state 機械観測 evidence)
+  AC2:
+    status: pass
+    evidence: |
+      docs/sc_inbox_整理_plan.md 起案完遂、AC2 (a)-(d) 全件 covered:
+      (a) alias 統合判定 = §3 候補 A (gunshi2 廃止) + 候補 B (maeda(本多)↔karo alias) + 候補 C
+          (ieyasu+shogun_from_main+shogun_from_sc 4 alias 1 role 整理) + §3.4 summary 表
+      (b) persona 廃止候補 specification = §3 各候補に判定根拠 + 実行手順案 + 影響範囲明示
+      (c) inbox_watcher.sh args 整合 verify 規範 = §6 三点 Check 1/2/3 + 操作禁則 + 機械 verify command
+      (d) SessionStart hook warning #1 解消 path = §5 で 5 step + 受け入れ判定明示
+      live inbox file mutation 0 件 + watcher process 操作 0 件 + SessionStart hook 変更 0 件
+      (= §1.2 scope 厳守事項 + §7 実行範囲外明示で 11 項目 specification 化)。
+  AC3:
+    status: pass
+    evidence: pytest log 4 PASS / 0 FAIL / 0 SKIP (= test rule #1 SKIP=FAIL 厳守、queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log)
+  AC4:
+    status: pass
+    evidence: |
+      inline batch commit 3 件 atomic 完遂:
+      commit 1 (e3cf716) = inventory yaml + .gitignore negation
+      commit 2 (e2b22f3) = plan md
+      commit 3 = test + report + pytest log (= 本 yaml atomic 配信)
+      multi-agent-shogun-newbuild repo only、他 ashigaru 進行 file (= ashigaru3 cmd004 cicd / ashigaru6 Layer F /
+      ashigaru7 classification_logic / .github/workflows/cmd004-lint.yml) は scope_exclusion で全件 retain、副作用 0。
+  AC5:
+    status: pass_at_report_time
+    evidence: |
+      bounded F007 push (= worktree + cherry-pick + printf+diff equality assert + cleanup) を
+      本 commit 3 atomic 配信後に実行予定。ashigaru1 規範整合 (= 同 cycle 第 5 弾踏襲)。
+  AC6:
+    status: pass_at_report_time
+    evidence: |
+      report (= 本 yaml) + log (= pytest log) + 完遂 ack (= 本 yaml summary + status: completed +
+      verdict: pass) 起案完遂、commit 3 で atomic 配信予定、直政 post-audit 流入準備完了。
+
+constraints_compliance:
+  honnoji_strict: true (= 機械 evidence のみ評価、推測 / 願望排除)
+  forbidden_actions_F001_F006: compliant
+  F007_exception_basis: |
+    陛下御差配朝駆け GO + 家康 13:42 加速 query (msg_20260513_134220) + 第 3 度 pre_audit
+    pass_with_conditions (= msg_20260513_135750_aa8bdd73) 整合、bounded allowlist (= 本 task 3 commits only)
+    厳格遵守、worktree + cherry-pick + printf+diff equality assert + cleanup の 4 段安全 path。
+  pre_audit_basis: 直政 Codex 第 3 度事前監査 pass_with_conditions (= msg_20260513_135750_aa8bdd73) 受領、本 task 配信
+  model_path_compliance: sonnet_codex_sonnet (= 規範 1 path ②)
+  radical_solution_5_10_year: |
+    persona alias 廃止判定 + SC inbox 整理は read-only plan 文書化のみで scope 完結、
+    実行は陛下御差配経由別 cycle に委譲。alias 候補 A/B/C に判定根拠 + 実行手順案 + 影響範囲 + 委譲先を
+    全件 specification 化、5-10 年運用想定で alias 管理規範を持続可能化。auto_forward_shogun_to_ieyasu.sh
+    bridge 整理 path + watcher args 整合 verify 規範 + warning #1 解消 path を文書化、再発防止策と一体化。
+  ac0_inventory_first_regime: |
+    第 5 弾 (= ashigaru1 Layer A 第 1 弾、ashigaru2 scope_contamination / ashigaru3 Layer C + sc_specialty /
+    ashigaru4 Layer D / ashigaru6 Layer F / ashigaru7 classification_logic 等踏襲)、AC0 inventory yaml で
+    既存 inbox + watcher process + sender alias を機械列挙してから plan 起案に着手、duplication risk 0。
+  mc_anti_dup_check_basis: |
+    本 task は dashboard render 系でなく read-only plan 文書化系、MC regenerate_dashboard.py 経路との
+    重複は無、N/A 明示 (= inventory yaml mc_anti_dup_check.status: not_applicable + rationale 充足)。
+  design_doc_source_read: |
+    9 度目 fail 教訓踏襲、inventory + plan 双方で正本 source line_range + section anchor + read_evidence 引用:
+    inbox_watcher.sh L30-49 / L685-733 / L1163-1226 + session_start_hook.sh L43-121 + CLAUDE.md
+    Session Start step 6 + 本 task YAML L1-64 + queue/inbox/ + ps aux 機械観測
+  delivery_conditions_4_items: |
+    (1) dashboard.md 直接編集禁: 本 task 不実施 (= docs/sc_inbox_整理_plan.md 単独起案)、
+    (2) hakudokai-dev 関与禁: 本 task 不実施 (= multi-agent-shogun-newbuild repo only)、
+    (3) MC 統合 claim 禁: AC2 + inventory mc_anti_dup_check.status: not_applicable で N/A 明示、
+    (4) SKIP>0 未完了: pytest 4 PASS / 0 SKIP で全件 compliant
+  inline_batch_commit_3_atomic: 3 commit (= inventory + plan + test/report/log) atomic、本 task scope 外 file 触らず
+  yashu_persona_retain: 「朝駆け」persona 下 wait→実行自動置換、ぐずらず即実行完遂
+  live_inbox_mutation_zero: |
+    本 task で行った queue/inbox/ashigaru4.yaml read flag 更新 (= read: false → read: true) は
+    CLAUDE.md 「Inbox Processing Protocol」 mandatory step (= 「Update each processed entry: read: true
+    (use Edit tool)」) 整合、alias 統合 / rename / delete / merge / overwrite は 0 件、本 task 制約整合。
+  watcher_process_operation_zero: |
+    ps aux で 10 体 watcher process を read-only verify (= 第 1 引数 agent_id + 第 2 引数 pane_target +
+    第 3 引数 cli_type)、kill / restart / reconfigure は 0 件、本 task 制約整合。
+  session_start_hook_unchanged: |
+    scripts/session_start_hook.sh は 208 行全文を Read tool で read-only 解析、変更は 0 件、本 task 制約整合。
+
+push_plan_evidence:
+  worktree_clean_path:
+    multi_agent_shogun_newbuild:
+      cherry_pick_targets_intended:
+        - e3cf716 (= AC0 inventory + .gitignore)
+        - e2b22f3 (= plan md)
+        - 本 commit (= commit 3、test + report + pytest log、本 yaml atomic 配信後 SHA 確定)
+      planned_execution_after_commit_3: |
+        本 commit 3 配信後に bounded F007 push 実行:
+        (1) git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_persona_廃止_main_wt origin/main
+        (2) git -C /tmp/cmd_020_persona_廃止_main_wt cherry-pick e3cf716 e2b22f3 <commit3_sha>
+        (3) pre_push_equality_assert: printf 期待 SHA list ↔ git log --format=%H -3 結果 diff EQUALITY_OK
+        (4) git -C /tmp/cmd_020_persona_廃止_main_wt push origin HEAD:main (= bounded allowlist 本 task 3 commits only)
+        (5) final_verify: git log origin/main --oneline | grep 'persona_廃止_sc_inbox_整理' で 3 件存在確認
+        (6) cleanup: git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_persona_廃止_main_wt
+      safety_check: ashigaru1 規範整合、worktree isolation + printf+diff equality assert + cleanup
+      bounded_allowlist: 本 task 3 commits only (= scope 外 commit 全件 retain、副作用 0)
+
+new_regime_5_items_acknowledgement:
+  msg_id: msg_20260512_111035_cca756e9
+  rule_summary: Stage 一気通貫 + 信長兄上監査 chain (= 各 Stage MVP 完遂時 karo inbox 報告 + deliverable + commit + test + privacy + 直政 verdict 待ち通達、本多が後段 shogun_audit_request 投函 chain)
+  ack_status: ack_received_at_task_acceptance
+  applied_to_this_task: |
+    本 task は karo inbox 報告 + deliverable + commit_history + test_evidence + repo_scope
+    + 直政 pre_audit verdict (= msg_20260513_135750_aa8bdd73 pass_with_conditions) を本 yaml に
+    全件 含む、本多が後段 shogun_audit_request chain trigger 可能な完備 form。
+
+skill_candidate: null (= 本 task は read-only inventory + plan 文書化系、新規 skill 不要、既存 inline batch commit 規範踏襲)
+
+next_action_recommendation:
+  for_karo: |
+    本 yaml + pytest log + commit 3 SHA を確認後、bounded F007 push (= worktree + cherry-pick +
+    equality assert + cleanup) を実行 or 信長兄上監査 chain (= shogun_audit_request 投函)
+    を新規範 5 件に従い trigger。alias 統合実行は陛下御差配経由別 cycle で起案推奨。
+  for_post_task: |
+    docs/sc_inbox_整理_plan.md §3 alias 候補 A/B/C を陛下御差配で確定後、karo 起案で archive 実行 task
+    起案 (= queue/archive/inbox_alias_廃止/ 新設 + git mv + commit) + bridge 整理 task (= 信長殿経由
+    auto_forward_shogun_to_ieyasu.sh 停止 + ieyasu.yaml archive) を分離 cycle で進行推奨。
