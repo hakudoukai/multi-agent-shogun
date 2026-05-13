@@ -26,39 +26,52 @@ summary: |
 deliverables:
   - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml
     purpose: AC0 inventory yaml (= live wired 10 体 + orphan alias 5 件 + sender alias 3 件 + gap_analysis 4 件)
-    commit: e3cf716
+    commit: 1fb2aec (= rebase 前 e3cf716、auto_git_sync pull --rebase --autostash で SHA 更新)
   - file: docs/sc_inbox_整理_plan.md
     purpose: AC2 plan 文書 (= 8 section、§1 scope 厳守 / §2 現行 state / §3 alias 候補 A/B/C / §4 bridge 整理 / §5 warning #1 解消 / §6 watcher args verify / §7 範囲外明示 / §8 完了基準)
-    commit: e2b22f3
+    commit: 361af32 (= rebase 前 e2b22f3、auto_git_sync pull --rebase --autostash で SHA 更新)
   - file: scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
     purpose: 4 件 static source-contract test (= sections / alias candidates / orphan entries / live wired count)
-    commit: 本 commit (= commit 3、test + report + pytest log 同梱)
+    commit: 9bf9b0d (= commit 3、test + report + pytest log atomic)
   - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
     purpose: pytest 実行 log (= 4 PASS、SKIP=0、0.05s)
-    commit: 本 commit (= commit 3)
+    commit: 9bf9b0d (= commit 3)
   - file: queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
-    purpose: 本 yaml (= AC6 完遂報告)
-    commit: 本 commit (= commit 3)
+    purpose: 本 yaml (= AC6 完遂報告、commit 4 で backfill 更新)
+    commit: 9bf9b0d (= commit 3 配信、+ backfill commit 4 で SHA 訂正)
 
 commit_history:
-  - sha: e3cf716
+  - sha: 1fb2aec
     subject: "docs(cmd_020 persona_廃止_sc_inbox_整理): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
     files:
       - .gitignore (= +8 lines、本 task 5 件 negation pattern 追記)
       - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_inventory.yaml (= 新規、260 行)
     timestamp: "2026-05-13T14:15:00+09:00"
-  - sha: e2b22f3
+    pre_rebase_sha: e3cf716 (= auto_git_sync pull --rebase --autostash 適用前)
+  - sha: 361af32
     subject: "docs(cmd_020 persona_廃止_sc_inbox_整理): sc_inbox_整理_plan.md 起案 (= alias 統合判定 + warning #1 解消 path)"
     files:
       - docs/sc_inbox_整理_plan.md (= 新規、200 行、8 section)
     timestamp: "2026-05-13T14:20:00+09:00"
-  - sha: 本 commit (= commit 3、本 yaml + test + pytest log 同梱、atomic 配信予定)
+    pre_rebase_sha: e2b22f3 (= auto_git_sync pull --rebase --autostash 適用前)
+  - sha: 9bf9b0d
     subject: "test(cmd_020 persona_廃止_sc_inbox_整理): static source-contract 4 test + report yaml + pytest log"
     files:
       - scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py
-      - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml (= 本 yaml)
+      - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml (= 本 yaml の commit 3 時点版、SHA backfill 前)
       - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
     timestamp: "2026-05-13T14:25:00+09:00"
+  - sha: backfill_commit_4 (= 本 yaml 起案後 commit、SHA は commit 投入時に確定)
+    subject: "docs(cmd_020 persona_廃止_sc_inbox_整理): report yaml SHA backfill (= rebase 後 SHA 反映)"
+    files:
+      - queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml (= SHA backfill のみ)
+    timestamp: "2026-05-13T14:30:00+09:00"
+    rationale: |
+      auto_git_sync.timer の pull --rebase --autostash が commit 2 と commit 3 の間に発火し、
+      commit 1 (e3cf716 → 1fb2aec) + commit 2 (e2b22f3 → 361af32) を rebase。commit 3 内の
+      report yaml は rebase 前 SHA を参照するため、ashigaru7 7851fd8 / 040084b の prior practice
+      整合 (= 「report yaml push_verification + commit_history backfill」「report addendum — commit
+      SHA back-fill + push verify」) で backfill commit を追加。
 
 test_evidence:
   exact_pytest_command: "python3 -m pytest /home/hakudokai/projects/multi-agent-shogun-newbuild/scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py -v --no-header"
@@ -111,12 +124,13 @@ acceptance_criteria_evidence:
   AC4:
     status: pass
     evidence: |
-      inline batch commit 3 件 atomic 完遂:
-      commit 1 (e3cf716) = inventory yaml + .gitignore negation
-      commit 2 (e2b22f3) = plan md
-      commit 3 = test + report + pytest log (= 本 yaml atomic 配信)
+      inline batch commit 3 件 atomic 完遂 + backfill commit 4 件目 (= rebase 後 SHA 反映):
+      commit 1 (1fb2aec、rebase 前 e3cf716) = inventory yaml + .gitignore negation
+      commit 2 (361af32、rebase 前 e2b22f3) = plan md
+      commit 3 (9bf9b0d) = test + report + pytest log (= atomic 配信、auto_git_sync rebase 後)
+      commit 4 (backfill_commit_4) = report yaml SHA backfill (= ashigaru7 7851fd8 / 040084b prior practice 整合)
       multi-agent-shogun-newbuild repo only、他 ashigaru 進行 file (= ashigaru3 cmd004 cicd / ashigaru6 Layer F /
-      ashigaru7 classification_logic / .github/workflows/cmd004-lint.yml) は scope_exclusion で全件 retain、副作用 0。
+      .github/workflows/cmd004-lint.yml) は scope_exclusion で全件 retain、副作用 0。
   AC5:
     status: pass_at_report_time
     evidence: |
