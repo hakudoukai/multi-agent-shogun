@@ -6077,3 +6077,20 @@ cmd020_scope_contamination_post_audits_20260513:
     recommendation_to_karo:
       action: remand_to_ashigaru2_for_hook_logic_and_report_correction
       summary: "成果物と静的 test は揃うが、根本治療 hook の実効性不足と報告 stale のため完遂不可。"
+
+cmd020_w11_trigger_preaudits_cycle4_20260513:
+  - audit_id: naomasa_cmd020_w11_trigger_preaudit_cycle4_20260513
+    source_inbox:
+      - msg_20260513_140051_ff1d32b1
+    detail_report: queue/reports/naomasa_cmd020_w11_trigger_preaudit_cycle4_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    high_findings:
+      - "task YAML の worker_eval_gate 6 質問が docs/background_worker_eval_gate.md 正本 6 問と不一致。"
+      - "AC2 に旧 polling / cron base watcher 文言が残存し、scheduler design 矛盾が消えておらぬ。"
+    recommendation_to_karo:
+      action: revise_task_yaml_then_resubmit_cycle5
+      summary: "worker_eval decision record 正本 fields と AC2 を整合させるまで ashigaru5 配信不可。"
