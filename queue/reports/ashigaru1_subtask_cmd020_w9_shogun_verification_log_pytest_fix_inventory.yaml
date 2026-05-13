@@ -1,0 +1,203 @@
+inventory_id: ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory
+task_id: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+parent_cmd: cmd_020
+generated_by: ashigaru1
+generated_at: "2026-05-13T14:05:00+09:00"
+inventory_purpose: |
+  AC0 既実装 inventory first 規範下、W9 shogun_verification_log pytest fix 着手前に
+  関連 source / log / test / dashboard logic / design doc の現状を機械的に列挙し、
+  二重実装 / 既存 helper 重複 / scope drift 防止の base evidence とする。
+repo_scope: multi-agent-shogun-newbuild
+repo_head_at_inventory: "844b4485ebb442baa4bfb88da3d34c299cae0e7b"
+
+design_doc_anchor:
+  - path: queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml
+    head_excerpt: |
+      pytest_command: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k 'supabase or development_progress or w9'"
+      pytest_result: "20 passed, 1 failed, 148 deselected"
+      pytest_failure: "test_real_shogun_log_w9_batch1_to_batch6_all_matched failed; matched_ids=[] for real shogun log, reinforcing that SC verification-log evidence is not green."
+    relevance: design doc 正本 (= 修正対象 test と root cause 推定先を明記)
+  - path: tests/test_regenerate_dashboard.py
+    head_lines: 2692
+    relevance: pytest 対象 file (= cycle13/14 W9 shogun mapping test 含む)
+
+target_pytest_cases:
+  - name: test_real_shogun_log_w9_batch1_to_batch6_all_matched
+    file: tests/test_regenerate_dashboard.py
+    line: 2433
+    cycle: cycle13
+    current_assertion: 'matched_ids == ["C-15-B1", "C-15-B2", "C-15-B3", "C-15-B4", "C-15-B5", "C-15-B6"]'
+    current_status: FAIL (= matched_ids = [])
+  - name: test_w9_stage_a_b1_b6_all_green_in_real_state
+    file: tests/test_regenerate_dashboard.py
+    line: 2625
+    cycle: cycle14
+    current_assertion: 'not_green == [] (= C-15-A + C-15-B1〜B6 全 7 件 pct >= 80)'
+    current_status: FAIL (= not_green に C-15-A + C-15-B1..B6 全 7 件、pct=0.0)
+
+related_pytest_cases_passing:
+  - name: test_real_shogun_log_unmatched_verified_targets_reduced_below_8
+    line: 2453
+    status: PASS
+  - name: test_real_shogun_log_matched_count_increased_over_baseline
+    line: 2476
+    status: PASS
+  - name: test_w9_stage_a_b1_b6_direct_helper_matches_generator
+    line: 2653
+    status: PASS (= direct=NO + gen_pct < 80 → 不一致なし、両者 zero で整合)
+
+target_logs:
+  - path: queue/reports/shogun_verification_mainpc_log.yaml
+    bytes: 83677
+    line_count: 105 top-level entries (= verifications: section single)
+    w9_pattern_grep_count: 0 (= stage_b_batchN / w9_batch / cmd004_w9 全件 hit 0)
+    relevance: load_shogun_verification_index() の主 source (= scripts/regenerate_dashboard.py L678)
+  - path: queue/reports/active_verify_queue_candidate_log.yaml
+    bytes: 10431
+    line_count: 315
+    candidates_total: 42
+    audit_pass_total: 65
+    already_verified_total: 63
+    w9_pattern_grep_count: 9 (= kuroda_w9_stage_b_batchN 系 audit candidates)
+    note: kuroda audit candidates / dry_run、shogun_verified=true entries は含まず
+  - path: queue/reports/shogun_verification_log.yaml
+    bytes: 31378
+    w9_pattern_grep_count: 0
+  - path: queue/reports/shogun_verification_secondpc_log.yaml
+    bytes: 6648
+    w9_pattern_grep_count: 0
+  - path: queue/reports/shogun_verification_log_archive.yaml
+    bytes: 71998
+    w9_pattern_grep_count: 0
+  - path: queue/reports/shogun_verification_canonical_index.yaml
+    bytes: 60987
+    w9_pattern_grep_count: 0
+
+dashboard_logic_anchor:
+  - path: scripts/regenerate_dashboard.py
+    helpers:
+      - name: load_shogun_verification_index
+        line: 670
+        purpose: shogun_verification_mainpc_log.yaml read + verifications/entries flat merge
+      - name: _is_active_shogun_entry
+        line: 695
+        purpose: 黒田 #1+#5 filter (= boolean True + legacy_migrated 除外)
+      - name: _child_shogun_patterns
+        line: 728
+        purpose: child の shogun_target_pattern[s] / audit_id_pattern を list 化
+      - name: find_latest_shogun_verified
+        line: 755
+        purpose: shogun_entries 中で pattern 命中する最新 active entry を返す
+      - name: compute_child_machine_state
+        line: 1252-1297
+        purpose: w9_batch / w9_stage の pct 計算 (= base_pct vs sv_pct 最大採用)
+      - name: aggregate_w9_batch_progress
+        line: 619
+        purpose: queue/tasks/ 内 cmd004_w9 task を batch 別集計
+      - name: aggregate_w9_stage_progress
+        line: 591
+        purpose: queue/tasks/ 内 cmd004_w9 task を Stage 別集計
+    layer_children_w9:
+      - id: C-15-A
+        line: 284
+        kind: w9_stage
+        shogun_target_pattern: stage_a_foundation
+      - id: C-15-B1
+        line: 288
+        shogun_target_pattern: stage_b_batch1
+      - id: C-15-B2
+        line: 292
+        shogun_target_pattern: stage_b_batch2
+      - id: C-15-B3
+        line: 296
+        shogun_target_pattern: stage_b_batch3
+      - id: C-15-B4
+        line: 300
+        shogun_target_pattern: stage_b_batch4
+      - id: C-15-B5
+        line: 304
+        shogun_target_pattern: stage_b_batch5
+      - id: C-15-B6
+        line: 308
+        shogun_target_pattern: stage_b_batch6
+      - id: C-15-B7
+        line: 312
+        shogun_target_pattern: stage_b_batch7
+
+w9_task_inventory_in_queue:
+  cmd004_w9_task_count: 0 (= queue/tasks/ glob "_w9_" hit = subtask_cmd020_w9_shogun_verification_log_pytest_fix.yaml 単独、cmd_004 W9 task 不在)
+  consequence: aggregate_w9_batch_progress() / aggregate_w9_stage_progress() は base_pct=0.0 を返す (= bucket 空)
+
+root_cause_hypothesis:
+  candidates:
+    - id: i
+      name: shogun_verification_log への W9 entry 投入欠落
+      evidence: 全 5 shogun log file で stage_b_batchN / cmd004_w9 grep hit = 0
+      status: confirmed (= 全 source 機械 grep evidence 取得済)
+    - id: ii
+      name: match pattern 誤
+      evidence: shogun_target_pattern = stage_b_batchN は cycle13 で導入、pattern 自体は妥当 (= cycle13 design 整合)
+      status: ruled_out (= pattern 正、source 側 entry 不在が真因)
+  selected: i
+
+fix_path_per_task_yaml:
+  selected: status_classification_change (= task step_2(d))
+  rationale: |
+    synthetic shogun verification entries 投入禁止 (= step_2(c)、false-green 厳禁)、
+    real W9 shogun_verified=true entry 不在を機械 grep で確定。
+    → blocked/unverified state を dashboard 表示 logic に整合反映、
+       test expectation を真実 (= matched_ids = []、not_green = 全 7 件) に合わせる修正。
+  exclusions:
+    - synthetic shogun verification entry append (= 全 shogun log file への偽 entry 注入)
+    - false-green 化 hack (= compute_child_machine_state 内 hard-code bump)
+    - test skip / xfail mark (= SKIP=0 規範違反)
+
+planned_changes:
+  - target: tests/test_regenerate_dashboard.py
+    test: test_real_shogun_log_w9_batch1_to_batch6_all_matched
+    change: assertion 反転 (= matched_ids == []) + docstring rewrite (= blocked/unverified 説明)
+    rationale: 真実 (= shogun verify 不在) を assert、未来 verify 投入時に再 cycle で再 update path
+  - target: tests/test_regenerate_dashboard.py
+    test: test_w9_stage_a_b1_b6_all_green_in_real_state
+    change: assertion 反転 (= not_green == 全 7 件 ID + pct=0.0) + docstring rewrite
+    rationale: 同上
+  - target: scripts/regenerate_dashboard.py
+    function: compute_child_machine_state (w9_batch / w9_stage)
+    change: blocked status field 追加 (= shogun_verified=False + base_pct=0.0 時 blocked: true)
+    rationale: dashboard render 側で「shogun verify 待ち」状態を visible 化、隠蔽禁
+  - target: scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py
+    test: 新規 (= 4 件 static source-contract test)
+    change: 新規起案
+    rationale: synthetic 投入 0 件 + 真 grep 反映 + blocked field 装着 + test 反転 整合 を契約 lock
+
+acceptance_criteria_coverage_plan:
+  AC0: 本 inventory yaml 起案 (= 本 file)
+  AC1: design doc + test_regenerate_dashboard.py + naomasa_sc_audit_phase2_status_green_path_20260512.yaml read 完了 evidence (= 本 inventory)
+  AC2: status_classification_change path 採択、grep evidence 別 yaml (= ashigaru1_w9_pytest_fix_evidence.yaml) で記録、SKIP=0 / FAIL=0 達成見込
+  AC3: scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py 4 件 PASS SKIP=0
+  AC4: 3 atomic commit (= inventory + impl + test/report)
+  AC5: bounded F007 push (= worktree + cherry-pick + diff equality assert + cleanup)
+  AC6: queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml + karo inbox 報告
+  AC7: shogun_verification_mainpc_log.yaml + active_verify_queue_candidate_log.yaml の before/after grep evidence yaml
+  AC8: synthetic 投入 0 件 evidence (= 修正後 grep diff = 0)
+
+deliverables:
+  - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory.yaml (= 本 file)
+  - queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml
+  - tests/test_regenerate_dashboard.py (= 既存 test 2 件 update)
+  - scripts/regenerate_dashboard.py (= compute_child_machine_state w9_batch/stage blocked field 追加)
+  - scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py (= 新規)
+  - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml
+
+constraints_compliance:
+  - F001-F006 厳守 (= 本 task 内 inbox / git mutating tmux 等の禁則 0 件)
+  - F007 例外 retain (= 朝駆け directive 整合、bounded worktree push)
+  - synthetic shogun verification entries 投入 0 件 (= AC8 直接整合)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓)
+  - delivery conditions 4 件遵守
+  - inline batch commit 規範 (= 3 commit atomic)
+  - repo scope 単一 (= multi-agent-shogun-newbuild only)
+  - hakudokai-dev 関与禁
+  - dashboard.md 直接編集禁
+  - SKIP>0 なら未完了
+  - worktree path 既存時 stop/report

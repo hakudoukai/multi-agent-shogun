@@ -340,6 +340,13 @@ logs/
 !queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
 !queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
 
+# cmd_020 W9 shogun_verification_log pytest fix (= ashigaru1、subtask_cmd020_w9_shogun_verification_log_pytest_fix、status-classification 変更 path、synthetic 投入 0 件)
+!scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py
+!queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory.yaml
+!queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml
+!queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
+!queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml
+
 # Screenshots (masked — no secrets)
 !images/
 !images/company-creed-all-panes.png
