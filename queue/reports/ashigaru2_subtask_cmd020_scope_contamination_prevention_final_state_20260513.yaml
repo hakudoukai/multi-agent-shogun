@@ -1,0 +1,125 @@
+snapshot_id: ashigaru2_subtask_cmd020_scope_contamination_prevention_final_state_20260513
+reporter: ashigaru2
+snapshot_at: "2026-05-13T17:50:00+09:00"
+purpose: |
+  karo msg_20260513_174431_c77e3b50 clear_recommendation 通達下、/clear 前の本日累計状態を
+  snapshot 化し、/clear 後の context 回復で参照可能化する。CLAUDE.md /clear Recovery (ashigaru only)
+  手順下、task YAML + snapshot yaml を primary data として活用する。
+
+session_period:
+  start_at_approx: "2026-05-13T13:50:00+09:00"
+  snapshot_at: "2026-05-13T17:50:00+09:00"
+  elapsed_hours_approx: 4.0
+
+completed_tasks:
+  - task_id: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+    parent_cmd: cmd_020
+    bloom_level: L3
+    model_path: sonnet_codex_sonnet
+    status: done
+    completed_at: "2026-05-13T13:57:13+09:00"
+    verdict: pass
+    test_summary: "5 PASS / 0 FAIL / 0 SKIP / 0.02 sec (= scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py)"
+    deliverables:
+      - docs/scope_contamination_prevention.md (= 規範 source-of-truth、§1-§6、再発防止策 4 件)
+      - .pre-commit-config.yaml (= staged-residual-check hook append)
+      - scripts/lint/check_staged_residual.sh (= entrypoint、集合差検査)
+      - scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py (= 5 件 test)
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory.yaml (= AC0)
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml (= 完遂報告 pre_commit_verify field 先行実装)
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
+    commits_inline_batch_atomic:
+      - sha: e062f63 (= e062f632c9c9080930c2acf447802c9928295fbf)
+        type: docs (AC0)
+        message: "docs(cmd_020 scope_contamination_prevention): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+        files:
+          - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory.yaml
+          - .gitignore (= 本 task 新規 5 件 whitelist 追記)
+      - sha: 9676222 (= 96762226467417b8681b708408613d74fb805d63)
+        type: feat (impl)
+        message: "feat(cmd_020 scope_contamination_prevention): 規範文書 + pre-commit hook 装備 (= 再発防止策 4 件 impl)"
+        files:
+          - docs/scope_contamination_prevention.md
+          - .pre-commit-config.yaml
+          - scripts/lint/check_staged_residual.sh
+      - sha: 651efcf (= 651efcfa9fc6e29c5ad123e0c824016d64a17a9a)
+        type: test
+        message: "test(cmd_020 scope_contamination_prevention): 5 件 static source-contract test + report yaml + pytest log"
+        files:
+          - scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py
+          - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml
+          - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
+    pre_commit_verify:
+      staged_residual_zero_after_commit: true (= 3 commit 全 verified)
+      commits_atomic_count: 3
+      cross_agent_contamination_risk_check: pass (= 他 ashigaru file 不変 retain)
+    push_status: pending_user_sashihai (= F007 bounded worktree path、commits e062f63 / 9676222 / 651efcf、push 後 SHA back-fill 予定)
+    karo_inbox_report: 投函済 (= type=report_received、scope_contamination 完遂 ack)
+
+held_tasks:
+  - task_id: shogun_direct_dispatch_cmd_020_persona_廃止_sc_inbox_整理_follow_up
+    parent_cmd: cmd_020
+    bloom_level: L3
+    status: stand_by (= karo msg_20260513_152851 通達下)
+    received_from: shogun (= 信長殿)
+    received_at: "2026-05-13T15:25:13+09:00"
+    type: directive_sc_direct_dispatch
+    rationale_stand_by: |
+      CLAUDE.md Shogun Mandatory Rule #2「Never bypass Karo」+ F002 chain-of-command + 規範 2「指示書事前監査」+
+      directive 内 AC4「shogun 直送禁守 retain」整合下、ashigaru 単独着手禁。
+      karo msg_20260513_152851 で stand-by 指示 + 「本 ashigaru の慎重判断 (= karo 経由 validation 仰ぎ) は CLAUDE.md
+      厳守 evidence、武功 retain」評価受領。
+    ashigaru_escalation_to_karo: 投函済 (= type=escalation、要望 3 件: 正式 task YAML 起案 / 直政事前監査 trigger / SC karo chain 整合化判断)
+    next_trigger: "家康御差配下命 (= karo 通達経由) 受領時即動着手"
+    options_on_table:
+      - (a) karo chain restore → 本多が task YAML 起案 + 直政 pre_audit 経由で正式配信 (= 規範整合 path)
+      - (b) shogun directive 例外 retain → karo ack 経由で着手 (= bypass 例外 path)
+
+repo_state:
+  branch: main
+  last_3_commits_self:
+    - 651efcf (= ashigaru2 commit 3)
+    - 9676222 (= ashigaru2 commit 2)
+    - e062f63 (= ashigaru2 commit 1)
+  uncommitted_self_files: none (= 各 commit 直後 staged 残存ゼロ verify 済)
+  other_agents_files_present:
+    - "queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_report.yaml (M, ashigaru6 進行中、本 task 不変)"
+    - ".github/workflows/cmd004-lint.yml (??, ashigaru3 起案、本 task 不変)"
+    - "queue/reports/ashigaru3_cmd004_cicd_pipeline_construction_report.yaml (??, ashigaru3 起案、本 task 不変)"
+    - "(auto-git-sync 経由流入分 = docs/dashboard_layer_c_function.md / docs/dashboard_layer_d_zunou.md / queue/reports/naomasa_secondpc_report.yaml 等、本 task 不変)"
+
+clear_recommendation_compliance:
+  source: karo msg_20260513_174431_c77e3b50
+  step_1_hold_task_record_explicit: done (= queue/tasks/ashigaru2.yaml stand_by_hold field 追記)
+  step_2_final_state_snapshot: done (= 本 file 自身)
+  step_3_clear_recovery_procedure_acknowledged: |
+    /clear 後の CLAUDE.md /clear Recovery (ashigaru only) 手順:
+    Step 1: tmux display-message agent_id 自己識別 (= ashigaru2)
+    Step 2: queue/tasks/ashigaru2.yaml 読み → status=done (scope_contamination_prevention 完遂) + stand_by_hold field
+    Step 3: project context / target_path 不要 (= 完遂 + stand_by 故)
+    Step 4: idle wait (= status=done + stand_by_hold = 着手禁、家康御差配下命待機)
+    Step 5: SessionStart hook inbox 整合 verify 自動実行
+    Forbidden after /clear (ashigaru): instructions/*.md 1st task read 禁 (= cost saving)、polling (F004)、直接 humans 接触 (F002)
+  step_4_clear_command_invitation: |
+    本 ashigaru は idle stand-by retain、/clear command 発信は karo or watcher (= clear_command type inbox 経由) に委ねる。
+    SLA 19:00 JST 整合下、karo 御差配仰ぎ。
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守 (= 機械 evidence のみ)
+  - F001-F006 厳守、F007 例外 retain (= 陛下御差配下のみ)
+  - CLAUDE.md Shogun Mandatory Rule #2「Never bypass Karo」整合
+  - chain of command 厳守 (= shogun → karo → ashigaru、bypass 禁)
+  - 規範 2 (= 指示書事前監査) 整合
+  - 規範 i (inline batch commit) 自身実証完遂
+  - 規範 iv (= 完遂報告 pre_commit_verify field 義務化) 先行実装
+  - 自身 staged 残存ゼロ verify 完遂 (= 各 commit 直後)
+  - hakudokai-dev 関与禁 (= 本 task 範囲外)
+  - dashboard.md 直接編集禁 (= delivery_conditions cond_1)
+  - 朝駆け persona retain (= 13:50 受領 → 13:57 完遂)
+  - Critical Thinking Rule 整合 (= shogun direct dispatch 受領時の karo escalation 判断 = 武功 retain 評価)
+
+next_actions_post_clear:
+  - "/clear command 受領 → CLAUDE.md /clear Recovery 手順遵守 (= 5 step)"
+  - "queue/tasks/ashigaru2.yaml 読み → idle (= stand_by_hold retain) 認識 + wait"
+  - "家康御差配下命受領時 (= karo 通達経由) 即動着手"
+  - "F007 bounded push (commits e062f63 / 9676222 / 651efcf) は別 path 御差配下のみ実行"
