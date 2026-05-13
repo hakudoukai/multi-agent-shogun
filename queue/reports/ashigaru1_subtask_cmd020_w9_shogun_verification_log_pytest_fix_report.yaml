@@ -59,7 +59,8 @@ acceptance_criteria_results:
         - test_compute_child_machine_state_w9_stage_blocked_field_present
         - test_test_regenerate_dashboard_w9_assertions_inverted_to_truth
         - test_evidence_yaml_synthetic_zero_marker_present
-    commit: pending_commit_3
+    commit_local: 4fe39c4
+    commit_origin: 885c98b
   AC4:
     description: 3 atomic commit + report + log
     status: pass
@@ -76,6 +77,12 @@ acceptance_criteria_results:
         hash_origin: 885c98b
         subject: "test(cmd_020 w9_shogun_verification_log_pytest_fix): static contract 4 件 + report + pytest log"
         files: 3
+    addendum:
+      hash_local: f1f92f0
+      hash_origin: 0e2e5be
+      subject: "docs(cmd_020 w9_shogun_verification_log_pytest_fix): report addendum — AC4 origin SHA + AC5 bounded F007 push 完遂"
+      files: 1
+      reason: bounded F007 push 完遂後の origin SHA + AC5 evidence backfill
   AC5:
     description: bounded F007 push 完遂 (= worktree path、ashigaru1 規範整合)
     status: pass
@@ -97,8 +104,20 @@ acceptance_criteria_results:
         c4_worktree_path_existing_check: pass (= ls 不在確認後 add)
   AC6:
     description: 完遂報告 + 直政 post-audit 流入準備
-    status: in_progress
-    plan: 本 report yaml の commit 3 取込後、karo inbox に完遂報告 (type=report_received)。
+    status: pass
+    evidence:
+      karo_inbox_msg_id: msg_20260513_142040_275fd732
+      karo_inbox_timestamp: "2026-05-13T14:20:40+09:00"
+      karo_inbox_type: report_received
+      karo_inbox_command: "bash scripts/inbox_write.sh karo '...verdict=pass...' report_received ashigaru1"
+      gunshi_post_audit_received:
+        audit_id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513
+        verdict: fail_requires_report_correction
+        karo_relay_msg_id: msg_20260513_143244_917b67b1
+      revise_chain:
+        - "本 revise commit (= report-only correction、stale marker 4 件全件解消)"
+        - "bounded F007 push 第 3 弾 (= worktree+cherry-pick+diff equality assert+cleanup)"
+        - "naomasa post-audit 再 review trigger 待ち"
   AC7:
     description: shogun_verification_mainpc_log.yaml + active_verify_queue_candidate_log.yaml の before/after grep evidence
     status: pass
@@ -177,16 +196,35 @@ out_of_scope_observations:
     matched_count 集計問題 (= 別 root cause)。本 task では report のみ実施、修正は別 task で起案推奨。
 
 deliverables:
-  committed:
-    - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory.yaml (commit 32a268bc)
-    - queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml (commit 32a268bc)
-    - .gitignore (commit 32a268bc)
-    - scripts/regenerate_dashboard.py (commit 4ab45fa)
-    - tests/test_regenerate_dashboard.py (commit 4ab45fa)
-  pending_commit_3:
-    - scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py
-    - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml (= 本 file)
-    - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
+  committed_and_pushed:
+    - file: queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory.yaml
+      commit_local: 32a268bc97fc9247c1672c4d4ffa206dac3a8279
+      commit_origin: 9bf630d
+    - file: queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml
+      commit_local: 32a268bc97fc9247c1672c4d4ffa206dac3a8279
+      commit_origin: 9bf630d
+    - file: .gitignore (= cmd_020 W9 pytest fix 5 deliverable allow rules 追記分)
+      commit_local: 32a268bc97fc9247c1672c4d4ffa206dac3a8279
+      commit_origin: 9bf630d
+    - file: scripts/regenerate_dashboard.py
+      commit_local: 4ab45fa
+      commit_origin: e2189be
+    - file: tests/test_regenerate_dashboard.py
+      commit_local: 4ab45fa
+      commit_origin: e2189be
+    - file: scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py
+      commit_local: 4fe39c4
+      commit_origin: 885c98b
+    - file: queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml (= 本 file、addendum + revise で 2 度更新)
+      commit_local_initial: 4fe39c4
+      commit_origin_initial: 885c98b
+      commit_local_addendum: f1f92f0
+      commit_origin_addendum: 0e2e5be
+      commit_local_revise: pending_revise_commit
+      commit_origin_revise: pending_revise_push
+    - file: queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
+      commit_local: 4fe39c4
+      commit_origin: 885c98b
 
 constraints_compliance:
   F001-F006: pass (= 本 task 範囲内 inbox / git mutating tmux 等の禁則 0 件)
@@ -199,8 +237,25 @@ constraints_compliance:
   dashboard_md_直接編集: 禁則遵守 (= dashboard.md は touch せず)
   worktree_path_既存時_stop: 厳守予定 (= AC5 実装時)
 
-next_actions:
-  - commit 3 (= test/report/log atomic commit)
-  - bounded F007 push (= AC5)
-  - karo inbox 完遂報告 (= AC6、type=report_received)
-  - 直政 post-audit 流入準備 (= karo 経由依頼予定)
+next_actions: []
+completed_actions:
+  - "commit 3 (= test/report/log atomic commit) 完了 (= 4fe39c4 → origin 885c98b)"
+  - "bounded F007 push (= AC5) 完了 (= 49d3dc1..885c98b → origin/main 取込)"
+  - "karo inbox 完遂報告 (= AC6、type=report_received) 完了 (= msg_20260513_142040_275fd732)"
+  - "直政 post-audit 流入完了 (= naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513.yaml verdict=fail_requires_report_correction、karo 経由 msg_20260513_143244_917b67b1)"
+  - "報告書 revise (= 本 commit、AC3/AC4/AC6/deliverables/next_actions stale marker 全件解消) + bounded F007 push 第 3 弾"
+revise_history:
+  - revise_id: revise_1
+    commit_local: pending_revise_commit
+    commit_origin: pending_revise_push
+    reason: |
+      naomasa post-audit verdict=fail_requires_report_correction (= 9_doc severity=high)
+      の指摘 4 件を全件解消:
+        (1) AC3.commit "pending_commit_3" → commit_local: 4fe39c4 / commit_origin: 885c98b
+        (2) AC6.status "in_progress" → "pass" + evidence (karo inbox msg_id + gunshi post-audit ack)
+        (3) deliverables.pending_commit_3 → committed_and_pushed (= 全 file に commit_local + commit_origin)
+        (4) next_actions future 文言 → 完了形 (next_actions: [] + completed_actions[])
+      成果物 (= scripts/regenerate_dashboard.py / tests/test_regenerate_dashboard.py /
+      scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py /
+      queue/reports/ashigaru1_*) は 1 byte も改変せず、report yaml only single-commit
+      revise + bounded F007 push 第 3 弾 で audit 整合 trace。
