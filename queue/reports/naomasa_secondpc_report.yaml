@@ -6368,3 +6368,33 @@ cmd020_w9_shogun_verification_log_pytest_fix_reaudits_20260513:
     recommendation_to_karo:
       action: accept_ashigaru1_revise_with_truth_state_caveat
       summary: "足軽1号 revise は通過可。W9 は real verification まで blocked 表示維持。"
+
+kuroda_13_handover_reaudits_20260513:
+  - audit_id: naomasa_kuroda_13_handover_audit_20260513
+    source_inbox:
+      - msg_20260513_naomasa_13_handover_f279c116
+    detail_report: queue/reports/naomasa_kuroda_13_handover_audit_20260513.yaml
+    target_count: 13
+    verdict: handover_inventory_complete_green_blocked
+    evidence_state: complete_with_distribution_plan_gap
+    completion_gate: blocked_for_green
+    machine_evidence:
+      missing_distribution_plan: "queue/reports/audit_distribution_plan_20260512.yaml not found by find queue -name '*audit*distribution*' -o -name '*distribution*plan*'"
+      inventory_source: "queue/reports/unverified_inventory_20260512.yaml covers all 13 directive targets"
+      kuroda_candidate_source: "queue/reports/active_verify_queue_candidate_log.yaml includes G-4 active_verify candidate plus W9 B3/B5 candidate audits"
+      w9_truth_source: "ashigaru1 W9 pytest fix records real Shogun ledger matched_ids=[] and W9 Stage A+B1-B6 blocked pct=0.0"
+      implementation_sources: "ashigaru6 14cmd proposal pass_with_concerns for future implementation_required items; ashigaru5 W11 watcher pass_with_concerns as monitor only"
+    status_summary:
+      g4: "kuroda_candidate_pending_shogun_verify; not green now"
+      w9_b1_b3_b5: "blocked_pending_real_shogun_ledger; Kuroda candidate only"
+      w9_b7: "ready_for_dispatch_not_verified; manifest commit 3e1a734 batch7_count=16"
+      c_v22_c_v33_c_v35_c_v37_c_v39_c_v42_c_v44: "not_started_implementation_required"
+      c_v30: "in_progress_monitor_pending; watcher is trigger only"
+    handover_inventory:
+      sc_receivable_count: 13
+      sc_completed_count: 0
+      green_eligible_now_count: 0
+      remaining_count: 13
+    recommendation_to_karo:
+      action: accept_inventory_not_green_and_restore_distribution_sot
+      summary: "黒田13件はSC棚卸受入済みだが、green完遂ではない。G-4含めledger/実装証跡待ちとして保持し、audit_distribution_plan正本を復元すべし。"

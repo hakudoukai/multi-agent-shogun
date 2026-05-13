@@ -1,0 +1,253 @@
+worker_id: gunshi
+audit_id: naomasa_kuroda_13_handover_audit_20260513
+parent_cmd: cmd_020
+source_inbox:
+  - msg_20260513_naomasa_13_handover_f279c116
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T15:33:08+09:00"
+status: done
+result:
+  type: handover_reaudit
+  target_count: 13
+  summary: "Kuroda 13件のSC受入棚卸は完了。ただし audit_distribution_plan_20260512.yaml はSC worktreeに存在せず、追加でshogun_verified=trueへ緑化できる完遂件は機械証跡上確認不可。G-4のみKuroda pass_with_conditions候補があり、残12件はreal Shogun ledger、W9 manifest/body audit、または実装完了証跡待ち。"
+  verdict: handover_inventory_complete_green_blocked
+  completion_gate: blocked_for_green
+  confidence: medium
+
+source_evidence:
+  requested_distribution_plan:
+    path: queue/reports/audit_distribution_plan_20260512.yaml
+    state: missing_on_sc_worktree
+    command: "find queue -name '*audit*distribution*' -o -name '*distribution*plan*' => no output"
+    impact: "25件配分SoTは直接照合不能。target 13 list と unverified_inventory_20260512.yaml を代替SoTとして使用。"
+  inventory_source:
+    path: queue/reports/unverified_inventory_20260512.yaml
+    state: present
+    coverage: "G-4, C-15-B1, C-15-B3, C-15-B5, C-15-B7, C-V22, C-V30, C-V33, C-V35, C-V37, C-V39, C-V42, C-V44 を確認。"
+  kuroda_source:
+    path: queue/reports/kuroda_mainpc_report.yaml
+    state: present
+    evidence: "W9 B3/B5、W9 7batch計画、active_verify_queue systemd task preaudit のKuroda候補あり。多くは target_id 空で、対象IDとの機械結合は弱い。"
+  naomasa_source:
+    path: queue/reports/naomasa_secondpc_report.yaml
+    state: present
+    evidence: "W9 false-green防止、batch7 dispatch plan、implementation_required 14cmd proposal、W11 watcher re-audit の既存SC判定あり。"
+  shogun_log_sources:
+    paths:
+      - queue/reports/shogun_verification_mainpc_log.yaml
+      - queue/reports/shogun_verification_log.yaml
+      - queue/reports/shogun_verification_secondpc_log.yaml
+      - queue/reports/shogun_verification_log_archive.yaml
+    evidence: "G-4/C-V22/C-V30/C-V33/C-V35/C-V37/C-V39/C-V42/C-V44 の直接verify hitなし。W9 batch1-6は足軽1修正で real Shogun ledger match 0 が真値固定。"
+
+handover_inventory:
+  sc_receivable_count: 13
+  sc_completed_count: 0
+  green_eligible_now_count: 0
+  kuroda_candidate_only_count: 4
+  implementation_or_manifest_required_count: 9
+  monitor_required_count: 1
+  remaining_count: 13
+  note: "receivable はSCで棚卸・再監査可能という意味。completed/green はshogun_verified=trueまたは同等の機械完了証跡が揃うことを要求した。"
+
+perspective_matrix:
+  applied_perspectives:
+    - "1_evidence_integrity"
+    - "2_status_truthfulness"
+    - "3_kuroda_verdict_consistency"
+    - "4_shogun_ledger_alignment"
+    - "5_green_eligibility"
+    - "6_handover_receivability"
+    - "7_scope_contamination"
+    - "8_ops_sustainability"
+    - "9_next_cycle_actionability"
+  aggregate_findings:
+    - severity: high
+      perspective: "4_shogun_ledger_alignment"
+      issue: "W9 B1/B3/B5 はKuroda候補がある一方、real Shogun ledger match は0として固定済み。候補ログをもってgreen化すると false-green になる。"
+      recommendation: "real shogun_verified entry が入るまで blocked 表示を維持。"
+    - severity: medium
+      perspective: "1_evidence_integrity"
+      issue: "audit_distribution_plan_20260512.yaml がSCで見つからず、配分SoTを直接再現できない。"
+      recommendation: "Karo側で当該planをgit-trackedまたはreport bundle化し、後続監査の一次根拠にする。"
+    - severity: medium
+      perspective: "3_kuroda_verdict_consistency"
+      issue: "Kuroda report の関連auditは target_id 空欄が多く、ID単位の機械結合が弱い。"
+      recommendation: "今後のKuroda auditは target_id / source_commit / verdict / completion_gate を必須化。"
+
+per_item:
+  - id: G-4
+    label: shogun_active_verify_queue
+    inventory_evidence: "unverified_inventory: pct=25.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "active_verify_queue_candidate_log: kuroda_shogun_active_verify_queue_systemd_task_preaudit_cycle3_pass_20260512, verdict=pass_with_conditions"
+    naomasa_evidence: "no prior SC completion entry for G-4 found"
+    shogun_log_evidence: "no direct G-4/active_verify shogun_verified ledger hit found in searched logs"
+    status_classification: kuroda_candidate_pending_shogun_verify
+    sc_reaudit_verdict: pass_with_conditions_pending_ledger
+    green_eligibility: not_green_now
+    green_route: "Shogun active_verify_queue systemd taskを実機で確認し、ledgerへtarget_id=G-4または同等pattern付きshogun_verified=trueを記録後にgreen候補。"
+
+  - id: C-15-B1
+    label: "W9 batch1 算定チェック 42"
+    inventory_evidence: "unverified_inventory: pct=0.0, shogun_target_pattern=stage_b_batch1, shogun_verify_entry_exists=true"
+    kuroda_evidence: "active_verify_queue_candidate_log/kuroda_mainpc_report: pre_delivery_w9_batch1_2_stage2_tasks_cycle1_reaudit pass_with_concerns"
+    naomasa_evidence: "ashigaru1 W9 pytest fix: real Shogun ledger W9 batch1-6 matched_ids == []; all W9 Stage A+B1-B6 blocked pct=0.0"
+    shogun_log_evidence: "no real W9 batch1 ledger match; synthetic injection count 0"
+    status_classification: blocked_pending_real_shogun_ledger
+    sc_reaudit_verdict: fail_for_green_pass_for_truthful_blocked_status
+    green_eligibility: not_green_now
+    green_route: "real task/ledger entryを作り、batch1 body evidenceとshogun_verified=trueを結合。現状は候補ログのみでgreen不可。"
+
+  - id: C-15-B3
+    label: "W9 batch3 check_logic"
+    inventory_evidence: "unverified_inventory: pct=0.0, shogun_target_pattern=stage_b_batch3, shogun_verify_entry_exists=true"
+    kuroda_evidence: "active_verify_queue_candidate_log/kuroda_mainpc_report: kuroda_w9_stage_b_batch3_check_logic_26_cycle1_audit_20260512, verdict=pass_with_concerns"
+    naomasa_evidence: "ashigaru1 W9 pytest fix keeps B1-B6 blocked until real ledger appears"
+    shogun_log_evidence: "no real W9 batch3 ledger match"
+    status_classification: blocked_pending_real_shogun_ledger
+    sc_reaudit_verdict: pass_with_concerns_as_kuroda_candidate_only
+    green_eligibility: not_green_now
+    green_route: "batch3 implementation/body evidenceをmanifest taskへ結び、Shogun verification ledgerに反映後green候補。"
+
+  - id: C-15-B5
+    label: "W9 batch5 data_quality + 処置セット 20"
+    inventory_evidence: "unverified_inventory: pct=0.0, shogun_target_pattern=stage_b_batch5, shogun_verify_entry_exists=true"
+    kuroda_evidence: "active_verify_queue_candidate_log/kuroda_mainpc_report: kuroda_w9_stage_b_batch5_data_quality_treatment_set_20_cycle1_audit_20260512, verdict=pass_with_concerns"
+    naomasa_evidence: "ashigaru1 W9 pytest fix keeps B1-B6 blocked until real ledger appears"
+    shogun_log_evidence: "no real W9 batch5 ledger match"
+    status_classification: blocked_pending_real_shogun_ledger
+    sc_reaudit_verdict: pass_with_concerns_as_kuroda_candidate_only
+    green_eligibility: not_green_now
+    green_route: "batch5 data_quality/treatment_set evidenceをledger化し、false-green防止testを再反転する。"
+
+  - id: C-15-B7
+    label: "W9 batch7 alert 残15/manifest 16"
+    inventory_evidence: "unverified_inventory: pct=0.0, shogun_target_pattern=stage_b_batch7, shogun_verify_entry_exists=false"
+    kuroda_evidence: "kuroda_w9_stage_b_subbatch_7task_materialized_reaudit_20260512 pass_with_conditions; W9 7batch plan entries pass_with_concerns"
+    naomasa_evidence: "naomasa_sc_pivot_w9_path_d_step3_plan: manifest tracked commit 3e1a734, batch7_count=16, dispatch as 4 workstreams plus deferred AI hold"
+    shogun_log_evidence: "no stage_b_batch7 ledger hit"
+    status_classification: ready_for_dispatch_not_verified
+    sc_reaudit_verdict: pass_with_concerns_for_plan_only
+    green_eligibility: not_green_now
+    green_route: "Karoがbatch7を4作業流へ配信し、各実装/監査完了後にledger化。"
+
+  - id: C-V22-W9SPIDCHK
+    label: "W9 spider check design_tasks 169"
+    inventory_evidence: "unverified_inventory: external_status=not_started, pct=0.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "W9 169/7batch plan audits exist, but no C-V22 completion audit found"
+    naomasa_evidence: "implementation_required 14cmd proposal is accepted for planning with concerns; no implementation completion"
+    shogun_log_evidence: "no C-V22/W9SPIDCHK ledger hit"
+    status_classification: not_started_implementation_required
+    sc_reaudit_verdict: fail_for_completion
+    green_eligibility: not_green_now
+    green_route: "14cmd proposalを正式cmd化し、AC0 inventory、design_tasks 169 body validation、SKIP=0 test後にShogun verify。"
+
+  - id: C-V30-W11DDB
+    label: "W11 DD-054 Phase B loader"
+    inventory_evidence: "unverified_inventory: external_status=in_progress, pct=50.0, pc=main, shogun_verify_entry_exists=false"
+    kuroda_evidence: "no C-V30/W11DDB Kuroda completion audit found"
+    naomasa_evidence: "ashigaru5 W11 completion trigger watcher re-audit pass_with_concerns; detect-and-notify only"
+    shogun_log_evidence: "no C-V30/W11DDB ledger hit"
+    status_classification: in_progress_monitor_pending
+    sc_reaudit_verdict: monitor_only_not_green
+    green_eligibility: not_green_now
+    green_route: "W11 completion watcherで実装完了commitを検知後、Kuroda/SC監査を実施してledger化。"
+
+  - id: C-V33-W12CLNUI
+    label: "W12 clinic UI"
+    inventory_evidence: "unverified_inventory: external_status=not_started, pct=0.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "no target-specific Kuroda audit found"
+    naomasa_evidence: "covered as future implementation_required line by accepted 14cmd proposal"
+    shogun_log_evidence: "no C-V33/W12CLNUI ledger hit"
+    status_classification: not_started_implementation_required
+    sc_reaudit_verdict: fail_for_completion
+    green_eligibility: not_green_now
+    green_route: "別cycleでUI implementation cmd化、AC0 inventoryとtestを通してからverify。"
+
+  - id: C-V35-W13RTE
+    label: "W13 RTE"
+    inventory_evidence: "unverified_inventory: external_status=not_started, pct=0.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "no target-specific Kuroda audit found"
+    naomasa_evidence: "covered as future implementation_required line by accepted 14cmd proposal"
+    shogun_log_evidence: "no C-V35/W13RTE ledger hit"
+    status_classification: not_started_implementation_required
+    sc_reaudit_verdict: fail_for_completion
+    green_eligibility: not_green_now
+    green_route: "別cycleで実装・証跡・SKIP=0試験後にverify。"
+
+  - id: C-V37-W14CTI
+    label: "W14 CTI"
+    inventory_evidence: "unverified_inventory: external_status=not_started, pct=0.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "no target-specific Kuroda audit found"
+    naomasa_evidence: "covered as future implementation_required line by accepted 14cmd proposal"
+    shogun_log_evidence: "no C-V37/W14CTI ledger hit"
+    status_classification: not_started_implementation_required
+    sc_reaudit_verdict: fail_for_completion
+    green_eligibility: not_green_now
+    green_route: "CTI integration cmdを別途起こし、実装完了commitと監査logを揃える。"
+
+  - id: C-V39-W14YOSHI3
+    label: "W14 yoshi3"
+    inventory_evidence: "unverified_inventory: external_status=not_started, pct=0.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "no target-specific Kuroda audit found"
+    naomasa_evidence: "covered as future implementation_required line by accepted 14cmd proposal"
+    shogun_log_evidence: "no C-V39/W14YOSHI3 ledger hit"
+    status_classification: not_started_implementation_required
+    sc_reaudit_verdict: fail_for_completion
+    green_eligibility: not_green_now
+    green_route: "仕様/実装/監査を分割し、target_id付きledgerへ接続。"
+
+  - id: C-V42-W15MAN
+    label: "W15 操作マニュアル"
+    inventory_evidence: "unverified_inventory: external_status=not_started, pct=0.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "no target-specific Kuroda audit found"
+    naomasa_evidence: "covered as future implementation_required line by accepted 14cmd proposal"
+    shogun_log_evidence: "no C-V42/W15MAN ledger hit"
+    status_classification: not_started_implementation_required
+    sc_reaudit_verdict: fail_for_completion
+    green_eligibility: not_green_now
+    green_route: "manual正本、変更履歴、review evidenceを作り、docs-only completionとしてverify候補化。"
+
+  - id: C-V44-W17JINJI
+    label: "W17 人事 + DTF adapter + 全院展開"
+    inventory_evidence: "unverified_inventory: external_status=not_started, pct=0.0, shogun_verify_entry_exists=false"
+    kuroda_evidence: "no target-specific Kuroda audit found"
+    naomasa_evidence: "covered as future implementation_required line by accepted 14cmd proposal"
+    shogun_log_evidence: "no C-V44/W17JINJI ledger hit"
+    status_classification: not_started_implementation_required
+    sc_reaudit_verdict: fail_for_completion
+    green_eligibility: not_green_now
+    green_route: "人事/DTF/全院展開を分割し、privacy/security gateを含む別cycleで処理。"
+
+recommendations_to_karo:
+  - priority: P0
+    action: "Do not mark the Kuroda 13 handover as completed/green. Mark it as SC inventory accepted, green blocked."
+    rationale: "Green evidence requires real Shogun ledger or implementation completion; current evidence is candidate/planning/monitor only."
+  - priority: P0
+    action: "Recover or publish audit_distribution_plan_20260512.yaml."
+    rationale: "The requested 25件配分SoT is absent on SC; future re-audit should not depend on inbox prose."
+  - priority: P0
+    action: "Keep W9 B1/B3/B5 blocked until real ledger entries exist."
+    rationale: "ashigaru1 fixed tests to reflect matched_ids=[] and synthetic injection count 0."
+  - priority: P1
+    action: "Dispatch C-15-B7 from tracked W9 manifest commit 3e1a734 as planned."
+    rationale: "This is the closest actionable implementation route but not yet verified."
+  - priority: P1
+    action: "For C-V22/C-V33/C-V35/C-V37/C-V39/C-V42/C-V44, promote the accepted 14cmd proposal into separate cmds with AC0 inventory."
+    rationale: "They are not started; audit-only green is not available."
+  - priority: P1
+    action: "Use W11 watcher only as a trigger for C-V30, not as completion evidence."
+    rationale: "Watcher has pass_with_concerns as detect-and-notify only."
+
+files_modified:
+  - queue/reports/naomasa_kuroda_13_handover_audit_20260513.yaml
+  - queue/reports/naomasa_secondpc_report.yaml
+  - queue/inbox/gunshi.yaml
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "false-greenを防ぎ、Kuroda候補・SC棚卸・Shogun ledgerを分離して、将軍確認済みの意味を守る。"
+  risks_to_north_star:
+    - "Kuroda候補ログだけでgreen化すると、実装未完やledger不在の項目が完了扱いになる。"
+    - "配分SoT不在を放置すると、後続の25件棚卸が再びinbox依存になる。"
