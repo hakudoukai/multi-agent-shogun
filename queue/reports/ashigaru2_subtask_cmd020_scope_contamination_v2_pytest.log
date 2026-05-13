@@ -1,0 +1,30 @@
+============================= test session starts ==============================
+collecting ... collected 25 items
+
+scripts/test/test_scope_contamination_re_introduce.py::test_1_ashigaru3_commit_with_ashigaru2_staged_residual_rejected PASSED [  4%]
+scripts/test/test_scope_contamination_re_introduce.py::test_2_ashigaru3_commit_with_ashigaru6_staged_residual_rejected PASSED [  8%]
+scripts/test/test_scope_contamination_re_introduce.py::test_3_today_3_incidents_reject[incident_1_65c917e-ashigaru3-staged_paths0-docs/cmd_020_implementation_required_14_cmd_proposal.md] PASSED [ 12%]
+scripts/test/test_scope_contamination_re_introduce.py::test_3_today_3_incidents_reject[incident_2_240dd7a-ashigaru7-staged_paths1-docs/dashboard_layer_c_function.md] PASSED [ 16%]
+scripts/test/test_scope_contamination_re_introduce.py::test_3_today_3_incidents_reject[incident_3_a25a1b7-ashigaru6-staged_paths2-queue/reports/ashigaru7_subtask_cmd020_implementation_required_14_cmd_proposal_inventory.yaml] PASSED [ 20%]
+scripts/test/test_scope_contamination_re_introduce.py::test_4_allowlisted_shared_file_passes_for_authorized_agent PASSED [ 24%]
+scripts/test/test_scope_contamination_re_introduce.py::test_5_unauthorized_shared_file_rejected_in_strict_mode PASSED [ 28%]
+scripts/test/test_scope_contamination_re_introduce.py::test_5b_unauthorized_shared_file_warning_only_for_karo PASSED [ 32%]
+scripts/test/test_scope_contamination_re_introduce.py::test_6_same_owner_file_passes PASSED [ 36%]
+scripts/test/test_bounded_push_workflow_side_effect.py::test_1_cherry_pick_yields_new_sha_and_equality_diff_detects_mismatch PASSED [ 40%]
+scripts/test/test_bounded_push_workflow_side_effect.py::test_2_parallel_cherry_picks_rebase_to_linear_consistent_chain PASSED [ 44%]
+scripts/test/test_bounded_push_workflow_side_effect.py::test_3_existing_auto_git_sync_test_is_retained_and_out_of_scope PASSED [ 48%]
+scripts/test/test_hook_install_script.py::test_install_script_present_and_executable PASSED [ 52%]
+scripts/test/test_hook_install_script.py::test_install_script_has_required_sections PASSED [ 56%]
+scripts/test/test_hook_install_script.py::test_install_writes_executable_hook_in_temp_repo PASSED [ 60%]
+scripts/test/test_hook_install_script.py::test_install_is_idempotent PASSED [ 64%]
+scripts/test/test_hook_install_script.py::test_install_with_framework_includes_delegation PASSED [ 68%]
+scripts/test/test_hook_install_script.py::test_install_dry_run_does_not_write PASSED [ 72%]
+scripts/test/test_report_finalization_grep_evidence.py::test_script_and_allowlist_and_norm_doc_present PASSED [ 76%]
+scripts/test/test_report_finalization_grep_evidence.py::test_clean_completion_claim_passes PASSED [ 80%]
+scripts/test/test_report_finalization_grep_evidence.py::test_forbidden_tokens_in_completion_claim_fail PASSED [ 84%]
+scripts/test/test_report_finalization_grep_evidence.py::test_historical_section_with_forbidden_tokens_is_ignored PASSED [ 88%]
+scripts/test/test_report_finalization_grep_evidence.py::test_allowlist_status_taxonomy_exempts_enum_value PASSED [ 92%]
+scripts/test/test_report_finalization_grep_evidence.py::test_self_verify_v2_final_report_passes_when_present PASSED [ 96%]
+scripts/test/test_report_finalization_grep_evidence.py::test_norm_doc_documents_scoped_sections_and_forbidden_tokens PASSED [100%]
+
+============================== 25 passed in 1.30s ==============================
