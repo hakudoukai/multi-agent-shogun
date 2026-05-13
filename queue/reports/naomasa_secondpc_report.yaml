@@ -5923,3 +5923,72 @@ sc_audit_phase2_status_green_path_20260512:
     recommendation_to_shogun:
       action: no_audit_only_green_available
       summary: "17 件は SC audit だけでは追加緑化不可。2 件は完了監視、15 件は実装または manifest publish が先。"
+
+sc_pivot_cmd004_audits_20260513:
+  - audit_id: naomasa_sc_pivot_inventory_cross_check_20260513
+    source_inbox:
+      - msg_20260513_sc_naomasa_27eda007
+    detail_report: queue/reports/naomasa_sc_pivot_cmd004_audit_20260513.yaml
+    target: queue/reports/ashigaru1_dinosaur_kingdom_complete_inventory_20260513.yaml
+    verdict: blocked_source_missing
+    evidence_state: source_missing
+    completion_gate: blocked
+    machine_evidence:
+      worktree_lookup: missing
+      origin_main_tree_lookup: missing
+      proxy_report_available: queue/reports/ashigaru1_cmd004_dinosaur_100enemies_report.yaml
+      proxy_limitation: "Proxy report is not the requested five-scope complete inventory."
+    recommendation_to_shogun:
+      action: publish_missing_complete_inventory_then_reaudit
+      summary: "A/B/C/D/E 5 scope の SC 監査は正本 inventory 不在のため未完。git-tracked report 化後に再監査が必要。"
+
+  - audit_id: naomasa_sc_pivot_three_spec_deliverable_audit_20260513
+    source_inbox:
+      - msg_20260513_sc_naomasa_27eda007
+    detail_report: queue/reports/naomasa_sc_pivot_cmd004_audit_20260513.yaml
+    targets:
+      - docs/cmd004_ai_chat_spec.md
+      - docs/cmd004_qr_kanban_spec.md
+      - docs/cmd004_guardian_consent_spec.md
+    verdict: pass_with_concerns
+    evidence_state: complete_with_commit_gap
+    completion_gate: partially_open
+    shogun_verified_candidates:
+      ai_chat_spec:
+        eligible: true
+        type: spec_deliverable_only
+        commit: 8a6c20c
+      qr_kanban_spec:
+        eligible: true
+        type: spec_plus_test_deliverable
+        commit: a576591
+      guardian_consent_spec:
+        eligible: false
+        blocker: "not git-tracked in current evidence; legal-review caveats remain"
+    privacy_status:
+      validator: scripts/validate_report_privacy.py
+      result: fail
+      summary: "All three spec/report paths contain absolute path strings flagged by validator; no API-token pattern was observed in validator output."
+    recommendation_to_shogun:
+      action: accept_two_spec_candidates_and_track_guardian_before_verify
+      summary: "AI chat と QR/kanban は spec-level shogun_verified 候補。guardian consent は正本 git 化と法務 review caveat の明示が先。"
+
+  - audit_id: naomasa_sc_pivot_w9_path_d_step3_plan_20260513
+    source_inbox:
+      - msg_20260513_sc_naomasa_27eda007
+      - msg_20260513_134230_7fac3883
+    detail_report: queue/reports/naomasa_sc_pivot_cmd004_audit_20260513.yaml
+    target: queue/manifests/w9_design_tasks_169.yaml
+    verdict: pass_with_concerns_for_plan
+    evidence_state: complete
+    completion_gate: open_for_task_dispatch
+    manifest_evidence:
+      git_tracked_commit: 3e1a734
+      total_count: 169
+      batch_count: 7
+      batch7_count: 16
+      starting_task_recommended: 246d77a8-8b50-4d5a-985a-66f109b2ca32
+      count_mismatch_note: "Directive says pending 15; manifest batch7 lists 16 including one deferred AI item."
+    recommendation_to_shogun:
+      action: dispatch_batch7_as_4_workstreams_plus_deferred_ai_hold
+      summary: "高 priority 12 + medium 3 + deferred 1 に分け、先頭は T.コンデ I022 回数警告 task から開始が妥当。"
