@@ -1,0 +1,57 @@
+audit_id: naomasa_ashigaru5_w11_completion_trigger_watcher_post_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T17:48:00+09:00"
+source_inbox:
+  - msg_20260513_142344_7c5950d0
+target_task: subtask_cmd020_w11_completion_trigger_watcher
+target_assignee: ashigaru5
+parent_cmd: cmd_020
+verdict: fail_requires_report_correction
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_w11_completion_trigger_watcher_static_contract.py -q"
+    result: "5 passed in 0.02s"
+    skip_count: 0
+  remote_reachability:
+    addendum_commit: c480cff
+    addendum_in_origin_main: true
+    commits_in_origin_main:
+      - 4ed389c
+      - aaf2d70
+      - 1cb5249
+      - c480cff
+  git_tracking: pass
+  stale_marker_scan:
+    blocking_markers:
+      - "machine_evidence.commit_status: planned"
+      - "machine_evidence.push_status: planned"
+
+positive_evidence:
+  - "The worker evaluation gate document records the 13 fields and six-question mapping."
+  - "The watcher is bounded as a one-shot systemd timer/service and the tests assert no persistent loop."
+  - "The tests assert no direct audited_done write, preserving the canonical Karo/Gunshi/Shogun audit chain."
+  - "origin/main contains the bounded push chain through c480cff."
+  - "Focused pytest passes with SKIP=0."
+
+findings:
+  - severity: high
+    perspective: 9_doc
+    issue: "The final report still states `commit_status: planned` and `push_status: planned` under machine_evidence even though the addendum and origin/main show the push completed."
+    recommendation: "Publish a report-only correction changing these fields to completed evidence with origin SHAs 4ed389c/aaf2d70/1cb5249/c480cff."
+
+  - severity: medium
+    perspective: 8_ops
+    issue: "The scheduled watcher is intentionally polling-adjacent because no event source exists. It is acceptable only while bounded and disabled/replaceable once a webhook or pg_notify bridge exists."
+    recommendation: "Keep the open item requiring event-based replacement and natural disable after W11 completion."
+
+completion_decision:
+  deliverable_content: usable_with_caveats
+  completion_gate: blocked
+  reason: "Implementation/test evidence passes, but final report still contains planned commit/push fields."
+
+recommendation_to_karo:
+  action: require_corrected_final_report_before_pass
+  summary: "足軽5号 W11 watcher は実装証跡として利用可。ただし report の commit_status/push_status planned を完了証跡へ訂正するまで完了不可。"

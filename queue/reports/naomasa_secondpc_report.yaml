@@ -6218,3 +6218,91 @@ cmd020_dashboard_status_classification_reaudits_20260513:
     recommendation_to_karo:
       action: accept_ashigaru7_revise_with_process_concerns
       summary: "足軽7号 revise は通過可。self-referential 表現は非阻害懸念として扱う。"
+
+cmd020_w9_shogun_verification_log_pytest_fix_post_audits_20260513:
+  - audit_id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513
+    source_inbox:
+      - msg_20260513_142106_3d2ba4d0
+    detail_report: queue/reports/naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513.yaml
+    target_task: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    target_assignee: ashigaru1
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "synthetic insertion 0、shogun log sha256 diff 0"
+      - "W9 rows are made visibly blocked instead of falsely green"
+      - "origin/main contains 9bf630d/e2189be/885c98b/0e2e5be"
+      - "pytest 28 passed, SKIP=0"
+    high_findings:
+      - "origin/main report still contains pending_commit_3, AC6 in_progress, and future next_actions after completion."
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "内容は利用可。ただし report final 化不足により完了ゲート blocked。"
+
+cmd020_w11_completion_trigger_watcher_post_audits_20260513:
+  - audit_id: naomasa_ashigaru5_w11_completion_trigger_watcher_post_audit_20260513
+    source_inbox:
+      - msg_20260513_142344_7c5950d0
+    detail_report: queue/reports/naomasa_ashigaru5_w11_completion_trigger_watcher_post_audit_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "worker_eval 13 fields + 6 questions mapping present"
+      - "detect-and-notify only; direct audited_done write guarded by test"
+      - "origin/main contains 4ed389c/aaf2d70/1cb5249/c480cff"
+      - "pytest 5 passed, SKIP=0"
+    high_findings:
+      - "final report machine_evidence still says commit_status planned and push_status planned."
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "実装証跡は利用可。ただし planned fields 解消まで完了ゲート blocked。"
+
+cmd020_persona_sc_inbox_reaudits_20260513:
+  - audit_id: naomasa_ashigaru4_persona_sc_inbox_reaudit_20260513
+    source_inbox:
+      - msg_20260513_142420_6d954891
+      - msg_20260513_142440_0b87293f
+    detail_report: queue/reports/naomasa_ashigaru4_persona_sc_inbox_reaudit_20260513.yaml
+    target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+    target_assignee: ashigaru4
+    verdict: fail_requires_report_correction_cycle2
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "main AC sections now mostly reflect pass state"
+      - "Shogun-only process-stop gate restated"
+      - "owner decision matrix template added"
+      - "origin/main contains 679a1db"
+      - "pytest 4 passed, SKIP=0"
+    high_findings:
+      - "revised report still contains post_audit_revise_commit_pending saying the revise commit is planned."
+    recommendation_to_karo:
+      action: require_final_report_correction_cycle2
+      summary: "改善済みだが pending section が残るため、もう一度 report-only 訂正が必要。"
+
+cmd020_implementation_required_14cmd_reaudits_v2_20260513:
+  - audit_id: naomasa_ashigaru6_implementation_required_14cmd_reaudit_v2_20260513
+    source_inbox:
+      - msg_20260513_142542_e20ee1ef
+    detail_report: queue/reports/naomasa_ashigaru6_implementation_required_14cmd_reaudit_v2_20260513.yaml
+    target_task: subtask_cmd020_implementation_required_14_cmd_proposal
+    target_assignee: ashigaru6
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "existing_artifacts_grep hits line TBD / need verify blockers resolved"
+      - "test_no_tbd_in_inventory_grep_evidence added"
+      - "scope_contamination_final_commit_map added"
+      - "origin/main contains revise commit 9fe998d"
+      - "pytest 6 passed, SKIP=0"
+    remaining_concerns:
+      - "scope contamination is documented, not process-fixed."
+      - "self-report still awaits later Gunshi/Shogun verification chain; do not treat as shogun_verified."
+    recommendation_to_karo:
+      action: accept_ashigaru6_revise_with_process_concerns
+      summary: "足軽6号 revision_v2 は通過可。各将来 cmd は別途 AC0 inventory から始める条件を維持。"

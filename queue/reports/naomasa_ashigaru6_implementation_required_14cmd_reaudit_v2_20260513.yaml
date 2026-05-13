@@ -1,0 +1,56 @@
+audit_id: naomasa_ashigaru6_implementation_required_14cmd_reaudit_v2_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T17:58:00+09:00"
+source_inbox:
+  - msg_20260513_142542_e20ee1ef
+target_task: subtask_cmd020_implementation_required_14_cmd_proposal
+target_assignee: ashigaru6
+parent_cmd: cmd_020
+verdict: pass_with_concerns
+evidence_state: complete
+completion_gate: open_with_concerns
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py -q"
+    result: "6 passed in 0.02s"
+    skip_count: 0
+  remote_reachability:
+    revise_commit: 9fe998d
+    revise_commit_in_origin_main: true
+  revision_files:
+    - queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_inventory.yaml
+    - queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_pytest.log
+    - queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_report.yaml
+    - scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py
+  tbd_guard:
+    test_name: test_no_tbd_in_inventory_grep_evidence
+    result: pass
+    scope: "existing_artifacts_grep hits lines"
+
+positive_evidence:
+  - "The previous TBD / need verify blockers in existing_artifacts_grep hits lines are replaced with concrete hit counts and result text."
+  - "A machine guard now fails if TBD / need verify returns to inventory grep hit lines."
+  - "scope_contamination_final_commit_map is present in the inventory with commit map, impact assessment, and forward-use constraints."
+  - "The proposal remains docs/report-only and keeps C-15-B7 / C-V29 / C-V30 out of scope."
+  - "origin/main contains the single revise commit 9fe998d."
+
+findings:
+  - severity: medium
+    perspective: 9_doc
+    issue: "The self-report still contains historical post-audit pending language (`audited_done=false`, `shogun_verified=false`, `revision_v2 ... pending_re_audit`). This is acceptable for a worker self-report awaiting Gunshi/Shogun chain, but Karo should avoid interpreting it as Shogun verification."
+    recommendation: "Accept for Karo dispatch planning only. Shogun verification remains a later chain after Karo promotes the proposed cmds."
+
+  - severity: medium
+    perspective: 8_ops
+    issue: "The proposal doc itself was previously swept through an ashigaru3 commit chain. The new final commit map documents the contamination but does not prove the shared-index process is fixed."
+    recommendation: "Use the proposal content, but keep scope-contamination v2 as a separate process remediation requirement."
+
+completion_decision:
+  deliverable_content: pass_with_concerns
+  completion_gate: open_with_concerns
+  reason: "The prior blocking findings are resolved or acknowledged with machine evidence; remaining concerns are downstream verification/process caveats."
+
+recommendation_to_karo:
+  action: accept_ashigaru6_revise_with_process_concerns
+  summary: "足軽6号 14cmd proposal revision_v2 は通過可。上申草案として利用し、各将来 cmd は改めて AC0 inventory から開始すべし。"

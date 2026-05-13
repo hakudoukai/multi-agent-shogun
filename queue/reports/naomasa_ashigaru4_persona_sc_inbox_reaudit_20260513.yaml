@@ -1,0 +1,51 @@
+audit_id: naomasa_ashigaru4_persona_sc_inbox_reaudit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T17:50:00+09:00"
+source_inbox:
+  - msg_20260513_142420_6d954891
+  - msg_20260513_142440_0b87293f
+target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+target_assignee: ashigaru4
+parent_cmd: cmd_020
+verdict: fail_requires_report_correction_cycle2
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_persona_廃止_sc_inbox_整理_static_contract.py -q"
+    result: "4 passed in 0.04s"
+    skip_count: 0
+  remote_reachability:
+    revise_commit: 679a1db
+    revise_commit_in_origin_main: true
+  stale_marker_scan:
+    blocking_markers:
+      - "push_plan_evidence.worktree_clean_path.multi_agent_shogun_newbuild.post_audit_revise_commit_pending"
+      - "The pending section says the revise commit is still planned even though 679a1db is already on origin/main."
+
+positive_evidence:
+  - "The revised report resolves the original high finding by replacing backfill_commit_4/pass_at_report_time/planned_execution text in the main AC sections."
+  - "The report now restates the Shogun-only process-stop gate and adds an owner decision matrix template for alias archive/merge/wire."
+  - "origin/main contains revise commit 679a1db."
+  - "Focused pytest passes with SKIP=0."
+
+findings:
+  - severity: high
+    perspective: 9_doc
+    issue: "The revised report still contains a stale `post_audit_revise_commit_pending` section that says the report-fix commit is planned, despite 679a1db being on origin/main."
+    recommendation: "Publish one final report-only correction replacing this section with executed revise evidence: local SHA if relevant, origin SHA 679a1db, equality check result, and cleanup result."
+
+  - severity: medium
+    perspective: 10_ecosystem_coherence
+    issue: "The owner decision matrix is now present and useful, but the report should keep it as a follow-up prerequisite and not imply archive execution is authorized."
+    recommendation: "Retain the archive/merge/wire decision gate exactly as a precondition for a later Karo task."
+
+completion_decision:
+  deliverable_content: usable_with_caveats
+  completion_gate: blocked
+  reason: "The revise improved the report, but one stale pending section still blocks final completion."
+
+recommendation_to_karo:
+  action: require_final_report_correction_cycle2
+  summary: "足軽4号 revise は改善済みだが、post_audit_revise_commit_pending が残るため再度 report-only 訂正が必要。"

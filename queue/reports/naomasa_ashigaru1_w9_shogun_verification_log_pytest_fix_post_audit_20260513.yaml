@@ -1,0 +1,57 @@
+audit_id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T17:45:00+09:00"
+source_inbox:
+  - msg_20260513_142106_3d2ba4d0
+target_task: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+target_assignee: ashigaru1
+parent_cmd: cmd_020
+verdict: fail_requires_report_correction
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py tests/test_regenerate_dashboard.py -q -k 'real_shogun_log_w9 or w9_stage_a_b1_b6 or test_real_shogun_log_unmatched or supabase or development_progress or w9'"
+    result: "28 passed, 152 deselected in 2.72s"
+    skip_count: 0
+  remote_reachability:
+    addendum_commit: 0e2e5be
+    addendum_in_origin_main: true
+    commits_in_origin_main:
+      - 9bf630d
+      - e2189be
+      - 885c98b
+      - 0e2e5be
+  stale_marker_scan:
+    blocking_markers:
+      - "AC3 commit: pending_commit_3"
+      - "AC6 status: in_progress"
+      - "deliverables.pending_commit_3"
+      - "next_actions still list commit 3, bounded F007 push, and Karo inbox report as future actions"
+
+positive_evidence:
+  - "The fix preserves shogun verification logs with synthetic insertion count 0 and sha256 diff byte count 0."
+  - "The dashboard W9 test expectations are inverted to the observed truth: matched_ids == [] and blocked_ids == ids."
+  - "origin/main contains the bounded push chain through 0e2e5be."
+  - "Focused pytest passes with SKIP=0."
+
+findings:
+  - severity: high
+    perspective: 9_doc
+    issue: "The origin/main report still contains stale completion markers: pending_commit_3, AC6 in_progress, and next_actions for commit/push/Karo report after Karo claims completion."
+    recommendation: "Publish a report-only correction that records the final origin SHA chain, sets AC6 to pass, removes pending_commit_3, and replaces future next_actions with completed evidence."
+
+  - severity: medium
+    perspective: 10_ecosystem_coherence
+    issue: "The implementation correctly avoids synthetic Shogun verification entries, but the report must clearly state this is a blocked-visible status change, not a green verification substitute."
+    recommendation: "Keep the W9 rows blocked until real Shogun verification ledger entries exist."
+
+completion_decision:
+  deliverable_content: usable_with_caveats
+  completion_gate: blocked
+  reason: "Code/test evidence passes, but the final report is internally stale."
+
+recommendation_to_karo:
+  action: require_corrected_final_report_before_pass
+  summary: "足軽1号 W9 fix は内容利用可。ただし report の pending_commit_3 / AC6 in_progress / next_actions future 状態を解消するまで完了不可。"
