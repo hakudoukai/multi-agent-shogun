@@ -1262,6 +1262,12 @@ def compute_child_machine_state(
                 _child_shogun_patterns(child),
             )
             sv_pct = _shogun_verified_pct(sv)
+            # cmd_020 W9 pytest fix: shogun_verified=False かつ aggregate
+            # base_pct=0 (= 該当 batch の cmd004_w9 task が queue 不在 +
+            # 信長殿 verify ledger entry 不在) の場合、blocked field を立てて
+            # dashboard 表示 logic 側で「shogun verify pending」を visible 化する。
+            # synthetic 投入禁則下 false-green 化を避け、真の未到達状態を露出する。
+            blocked = (sv is None) and (base_pct == 0.0)
             return {
                 "kind": "w9_batch",
                 "pct": max(base_pct, sv_pct) if sv else base_pct,
@@ -1269,8 +1275,19 @@ def compute_child_machine_state(
                 "batch": batch_id,
                 "shogun_verified": sv is not None,
                 "verified_at": str(sv.get("verified_at", "")) if sv else "",
+                "blocked": blocked,
+                "blocked_reason": (
+                    "shogun_verify_pending_no_w9_task_or_ledger_entry"
+                    if blocked else ""
+                ),
             }
-        return {"kind": "w9_batch_missing", "pct": 0.0, "batch": batch_id}
+        return {
+            "kind": "w9_batch_missing",
+            "pct": 0.0,
+            "batch": batch_id,
+            "blocked": True,
+            "blocked_reason": "w9_batch_aggregate_missing",
+        }
 
     if kind == "w9_stage":
         stage = str(child.get("stage", ""))
@@ -1285,6 +1302,7 @@ def compute_child_machine_state(
                 _child_shogun_patterns(child),
             )
             sv_pct = _shogun_verified_pct(sv)
+            blocked = (sv is None) and (base_pct == 0.0)
             return {
                 "kind": "w9_stage",
                 "pct": max(base_pct, sv_pct) if sv else base_pct,
@@ -1293,8 +1311,19 @@ def compute_child_machine_state(
                 "stage": stage,
                 "shogun_verified": sv is not None,
                 "verified_at": str(sv.get("verified_at", "")) if sv else "",
+                "blocked": blocked,
+                "blocked_reason": (
+                    "shogun_verify_pending_no_w9_task_or_ledger_entry"
+                    if blocked else ""
+                ),
             }
-        return {"kind": "w9_stage_missing", "pct": 0.0, "stage": stage}
+        return {
+            "kind": "w9_stage_missing",
+            "pct": 0.0,
+            "stage": stage,
+            "blocked": True,
+            "blocked_reason": "w9_stage_aggregate_missing",
+        }
 
     design_doc = str(child.get("design_doc", ""))
     audit_pattern = str(child.get("audit_id_pattern", ""))
