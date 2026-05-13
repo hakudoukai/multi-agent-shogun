@@ -6627,3 +6627,27 @@ cmd020_unmatched_verified_targets_dashboard_mapping_preaudits_20260514:
     recommendation_to_karo:
       action: revise_task_yaml_then_resubmit
       summary: "AC0 current truth gate、hook preflight、既存 helper reuse を明記してから再 pre_audit へ戻すべし。"
+
+  - audit_id: naomasa_unmatched_verified_targets_dashboard_mapping_preaudit_cycle2_20260514
+    audited_at: "2026-05-14T00:21:00+09:00"
+    source_commit: 21549fe3cdd98a070c1e705b8cc45eedcaa42ccd
+    redo_of: naomasa_unmatched_verified_targets_dashboard_mapping_preaudit_20260514
+    source_inbox:
+      - msg_20260514_001201_1f2c73ac
+    detail_report: queue/reports/naomasa_unmatched_verified_targets_dashboard_mapping_preaudit_cycle2_20260514.yaml
+    target_task: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+    target_assignee: ashigaru4
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    machine_evidence:
+      task_yaml_parse: "yaml.safe_load PASS; revision=2; bloom_level=L4"
+      current_dashboard_dry_run: "scripts/regenerate_dashboard.py --dry-run => unmatched_verified_targets=0"
+      hook_state: ".git/hooks/pre-commit absent; task records explicit manual guard path"
+      check_file_path_owner_manual: "bash scripts/lint/check_file_path_owner.sh -v => rc=0"
+      check_report_finalization_no_arg: "bash scripts/lint/check_report_finalization.sh => rc=2 usage error without report path"
+    remaining_condition:
+      - "AC0(e) must specify the target report path for check_report_finalization.sh, or define pre-report skip plus post-report enforcement."
+    recommendation_to_karo:
+      action: patch_ac0e_then_dispatch
+      summary: "revision 2 は配信可。AC0(e) の report path 明記だけ反映して /clear 後 ashigaru4 へ送るべし。"
