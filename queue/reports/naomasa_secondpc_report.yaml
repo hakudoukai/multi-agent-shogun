@@ -6602,3 +6602,28 @@ cmd020_scope_contamination_v2_post_audits_20260513:
     recommendation_to_karo:
       action: accept_ashigaru2_scope_contamination_v2_revision
       summary: "前回 blocker は解消。report-only revision を通過扱いとし、install/adoption は別 task で管理すべし。"
+
+cmd020_unmatched_verified_targets_dashboard_mapping_preaudits_20260514:
+  - audit_id: naomasa_unmatched_verified_targets_dashboard_mapping_preaudit_20260514
+    audited_at: "2026-05-14T00:24:00+09:00"
+    source_commit: 244912721c06017102ba6b714208c3d7c636a862
+    source_inbox:
+      - msg_20260514_000624_8f563253
+    detail_report: queue/reports/naomasa_unmatched_verified_targets_dashboard_mapping_preaudit_20260514.yaml
+    target_task: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+    target_assignee: ashigaru4
+    verdict: fail_requires_task_yaml_revision
+    evidence_state: complete
+    completion_gate: blocked_before_dispatch
+    machine_evidence:
+      task_yaml_parse: "yaml.safe_load PASS"
+      current_dashboard_dry_run: "scripts/regenerate_dashboard.py --dry-run => unmatched_verified_targets=0"
+      inventory_snapshot: "unverified_inventory_20260512.yaml says unmatched_verified_targets_count=8"
+      hook_state: ".git/hooks/pre-commit absent; pre-commit.sample only"
+    blocking_findings:
+      - "Task uses stale 2026-05-12 snapshot as SoT while current generator renders unmatched=0."
+      - "Task assumes scope_contamination_v2 hook is installed, but .git/hooks/pre-commit is absent."
+      - "Existing helper already extracts/renders unmatched details; AC2 risks duplicate logic unless narrowed."
+    recommendation_to_karo:
+      action: revise_task_yaml_then_resubmit
+      summary: "AC0 current truth gate、hook preflight、既存 helper reuse を明記してから再 pre_audit へ戻すべし。"
