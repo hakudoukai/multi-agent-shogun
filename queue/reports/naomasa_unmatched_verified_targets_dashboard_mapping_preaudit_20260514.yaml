@@ -1,0 +1,71 @@
+worker_id: gunshi
+task_id: naomasa_unmatched_verified_targets_dashboard_mapping_preaudit_20260514
+parent_cmd: cmd_020
+timestamp: "2026-05-14T00:24:00+09:00"
+status: done
+result:
+  type: evaluation
+  summary: "Pre-audit failed. The task direction is valid, but the task YAML rests on stale SoT and a false hook-install premise."
+  target_task:
+    task_file: queue/tasks/subtask_cmd020_unmatched_verified_targets_dashboard_mapping.yaml
+    assignee: ashigaru4
+    bloom_level_claim: L3-L4
+    task_model_path: "①"
+  verdict: fail_requires_task_yaml_revision
+  completion_gate: blocked_before_dispatch
+  dispatch_decision: do_not_dispatch_yet
+  machine_evidence:
+    yaml_parse: "python3 yaml.safe_load => PASS"
+    current_dashboard_dry_run: "python3 scripts/regenerate_dashboard.py --dry-run => rc=0; rendered unmatched_verified_targets=0"
+    inventory_snapshot: "queue/reports/unverified_inventory_20260512.yaml says unmatched_verified_targets_count=8 and children_without_match_count=5"
+    hook_state: ".git/hooks/pre-commit is absent; only pre-commit.sample exists"
+    existing_helper_state: "scripts/regenerate_dashboard.py already has UNMATCHED_VERIFY_RETAIN_REGISTRY, annotate_unmatched_with_retain, and dashboard detail rendering."
+  high_findings:
+    - id: stale_sot
+      perspective: 4_logic
+      issue: "Task treats the 2026-05-12 unverified_inventory snapshot as SoT, but current regenerate dry-run renders unmatched_verified_targets=0."
+      impact: "Implementing against the stale 8/11 count risks adding obsolete registry entries or dashboard sections for no-current-state items."
+      recommendation: "AC0 must first regenerate or recompute current shogun_reflection_stats, then compare current count vs snapshot/directive count."
+    - id: false_hook_install_premise
+      perspective: 8_ops
+      issue: "Task says scope_contamination_v2 hook is installed and will reject out-of-scope work, but .git/hooks/pre-commit is missing."
+      impact: "Dispatching with this premise repeats the earlier false-safety pattern."
+      recommendation: "Rewrite constraint as: run check_file_path_owner/report_finalization tools explicitly or make hook install a Karo/infra precondition, not an assumed guard."
+    - id: ac2_scope_ambiguity
+      perspective: 2_anti_dup
+      issue: "Existing helper already extracts and renders unmatched_verified_targets details; AC2 asks for extraction/rendering as if absent."
+      impact: "Ashigaru may duplicate helper logic or re-hard-code a registry instead of fixing the actual gap."
+      recommendation: "Limit implementation scope to current unregistered entries only, or if count is 0, convert task into a regression test/norm update rather than dashboard logic expansion."
+  medium_findings:
+    - id: count_mismatch_needs_clear_target
+      perspective: 6_test
+      issue: "Directive says 11, inventory says 8, current dry-run says 0; AC0 mentions the mismatch but acceptance criteria after AC0 still assume a nonzero mapping task."
+      recommendation: "Add a branch condition: if current unmatched count is 0, pass condition becomes evidence/report-only with no dashboard.md mutation."
+    - id: dashboard_regression_assertion_underspecified
+      perspective: 6_test
+      issue: "AC3 asks existing tier count invariance, but the task also may alter registry/mapping and therefore stats."
+      recommendation: "Define exact invariant fields: children_total, eligible_count, mapped_count, matched_count, green_count, and unmatched counts before/after."
+    - id: source_file_scope_too_broad
+      perspective: 3_kiritsu
+      issue: "Task says dashboard config + related registry/inventory file changes without naming the concrete files."
+      recommendation: "List the exact allowed paths and shared-file allowlist before dispatch."
+  bloom_assessment:
+    status: L4_valid_if_revised
+    reason: "Resolving stale snapshot vs current generator state and selecting report-only vs implementation path requires analysis, not just application."
+  recommended_revision:
+    - "AC0: require current dry-run or Python stats extraction first; record current unmatched count and snapshot count separately."
+    - "AC1: define whether the task is registry-extension, child-mapping extension, or regression-test-only after AC0 truth."
+    - "AC2: prohibit duplicate extraction helpers; reuse compute_shogun_reflection_stats and annotate_unmatched_with_retain."
+    - "AC3: add no-dashboard-mutation path when current unmatched count is 0."
+    - "constraints: replace 'hook installed' with explicit preflight result or Karo-owned hook install precondition."
+    - "deliverables: add an AC0 measurement log and exact allowed file list."
+  recommendation_to_karo:
+    action: revise_task_yaml_then_resubmit
+    summary: "方向性は妥当。ただし現 task は stale SoT と hook install 偽前提により配信不可。AC0 current truth gate を先頭に置いて再提出すべし。"
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "Blocking stale dashboard mapping prevents false green-rate or false backlog changes."
+  risks_to_north_star:
+    - "If stale snapshot counts drive implementation, dashboard trust and Shogun verification routing will degrade."
