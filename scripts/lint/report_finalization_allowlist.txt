@@ -1,0 +1,26 @@
+# report_finalization_allowlist.txt — check_report_finalization.sh の exempt 行 substring 列
+#
+# 各行は extended regex として line 全体に照合され、合致した行は forbidden token 検査から除外される。
+# `#` で始まる行と空行は comment 扱い。
+#
+# 設計書: docs/report_finalization_norm.md §3 allowlist 設計
+
+# 1. status taxonomy enum (= 状態名として正当な enum value、内部に "pending" 等を含み得る)
+completion_gate:[[:space:]]*open_with_concerns
+completion_gate:[[:space:]]*open_with_conditions
+completion_gate:[[:space:]]*blocked_with_concerns
+verdict:[[:space:]]*pass_with_concerns
+verdict:[[:space:]]*pass_with_conditions
+verdict:[[:space:]]*partial
+
+# 2. task lifecycle meta fields (= 完遂主張部内に過去の lifecycle marker が引用される場合)
+audit_gate_status:
+pre_audit_verdict:
+pre_audit_msg:
+pre_audit_cycle:
+pre_audit_pass:
+
+# 3. 履歴 / 引用 / fail evidence の cross-reference (= 完遂主張部に historical 引用される場合)
+historical_status:
+prior_state:
+cycle[0-9]+_state:
