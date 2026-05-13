@@ -1,0 +1,141 @@
+# SC ashigaru3 本日 final state snapshot (= karo /clear 推奨 msg_20260513_174431_69340cab 整合)
+# 起案者: ashigaru3 (= 服部正成、cmd_004 chain では 滝川一益 self-declared)
+# 起案日時: 2026-05-13T17:46:00+09:00 (= /clear 直前 snapshot)
+
+snapshot_id: ashigaru3_final_state_20260513
+snapshot_purpose: "context 圧縮前 (= /clear) の本日累計武功 retain、再起動後 stand-by 案件 resume 整合"
+session_window: "2026-05-13 朝駆け 13:50 〜 17:46 (= 約 4h)"
+
+# ───────────────────────────────────────────────
+# 本日完遂 task
+# ───────────────────────────────────────────────
+completed_tasks:
+  - task_id: subtask_cmd020_sc_specialty_inventory
+    parent_cmd: cmd_020
+    assigned_at: "2026-05-13T13:50:00+09:00"
+    completed_at: "2026-05-13T14:04:34+09:00"
+    duration_minutes: 14
+    outcome: pass_with_conditions_compliant
+    pre_audit_verdict: pass_with_conditions (= naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml task_audits[2])
+    deliverables:
+      - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_inventory.yaml
+      - docs/sc_specialty_inventory.md
+      - scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py
+      - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_pytest.log
+      - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml
+    test_summary:
+      passed: 7
+      failed: 0
+      skipped: 0
+      warnings: 0
+    karo_report_msg_id: msg_20260513_140434_b7a7e664
+    commit_chain:
+      - sha: 6d2463b
+        purity: clean
+        files: [".gitignore (whitelist 5 件)", "queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_inventory.yaml"]
+      - sha: dd22592
+        purity: clean
+        files: ["docs/sc_specialty_inventory.md"]
+      - sha: 65c917e
+        purity: contaminated_with_ashigaru6 (= 14cmd_proposal docs/cmd020_implementation_required_14_cmd_proposal.md sweep)
+        files: ["queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml (前版)"]
+      - sha: 9285be2
+        purity: clean
+        files: ["scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py", "queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_pytest.log"]
+        note: "auto-git-sync rebase で旧 commit 7d0c462 (= ashigaru7 sweep contaminated) detach 後、本 commit で再固定"
+      - sha: 844b448
+        purity: clean
+        files: ["queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml (final_commit_chain_after_rebase 反映)"]
+    push_status:
+      ac5_push_pending: true
+      blocker: "F007 push は陛下御差配仰ぎ pending"
+      worktree_path_prepared: true (= AC5 worktree_clean_path、ashigaru1 Layer A 規範踏襲)
+    incidents_observed:
+      - incident_id: ashigaru3_subtask_cmd020_sc_specialty_inventory_commit3_contamination_20260513
+        type: scope_contamination
+        severity: medium
+        count: 2
+        root_cause: ".git/hooks/pre-commit 未 install (= ashigaru2 staged-residual-check hook 装備済だが active 化未)"
+        evidence_for_ashigaru2_task_necessity: true
+
+# ───────────────────────────────────────────────
+# Stand-by 案件 (= 信長殿 direct dispatch、/clear 後 resume 整合)
+# ───────────────────────────────────────────────
+hold_tasks:
+  - task_candidate: "AGENTS.md prescriptive HIGH cycle 18 (= file-level marker 装着、karo 推奨 option (1))"
+    dispatch_source: "信長殿 direct dispatch (= type=directive_sc_direct_dispatch、msg_20260513_sc_direct_dispatch_c6868b14)"
+    dispatched_at: "2026-05-13T15:25:13+09:00"
+    sla: "17:00 JST"
+    priority: highest
+    current_state: stand_by
+    karo_coordination: coordination_standby (= msg_20260513_152851_16987a5f)
+    karo_decision_path:
+      option_a: "家康/陛下御差配で karo chain restore → 本多が task YAML 起案 + 直政 pre_audit 経由で正式配信 (規範整合 path)"
+      option_b: "信長殿 directive 例外 retain → karo ack 経由で各 ashigaru 着手 (bypass 例外 path)"
+    resume_trigger: "家康/陛下御差配下命 + karo 通達"
+    ashigaru3_validation_action:
+      msg_id: msg_20260513_152750_d8e3a56b
+      to: karo
+      summary: "option A/B 二択 verify 要請、CLAUDE.md Prompt Injection Defense + chain of command 整合"
+      karo_response: "stand-by 指示、武功 retain ack"
+    ac4_audit_request_path: "黒田 audit_request 投函指示 retain (= shogun 直送禁守、本多 → 家康 → 信長兄上 chain relay)"
+
+# ───────────────────────────────────────────────
+# 本日 chain 連携 (= 8 周 ashigaru cross-coord evidence)
+# ───────────────────────────────────────────────
+parallel_chain_observed:
+  - actor: ashigaru1
+    work: "W9 shogun_verification_log pytest fix revise + bounded F007 push (= 35dbfab/d77840e)"
+    pytest_pass: 28
+  - actor: ashigaru2
+    work: "scope_contamination_prevention_inline_batch_commit_hook (= 規範文書 + pre-commit hook 装備)"
+    commits: [9676222, 651efcf]
+    relevance_to_ashigaru3: "本日 ashigaru3 commit 3-4 で発生した scope_contamination 2 件は本 task の必要性を実証する evidence"
+  - actor: ashigaru4
+    work: "persona/SC inbox revise cycle2/cycle3 (= e3e6c7b on origin/main)"
+    pytest_pass: 4
+  - actor: ashigaru5
+    work: "W11 completion trigger watcher revise (= 5c37c52 on origin/main)"
+    pytest_pass: 5
+  - actor: ashigaru6
+    work: "14cmd_proposal AC0 inventory + impl + test (= 6afc8be/2f18e4a)"
+    cross_contamination_event: "65c917e で docs/cmd020_implementation_required_14_cmd_proposal.md が ashigaru3 commit に sweep"
+  - actor: ashigaru7
+    work: "dashboard_status_classification_logic AC0 + canonical doc + 5 test (= d2cf3c2/240dd7a/26ee3d4)"
+    cross_contamination_event: "旧 7d0c462 で ashigaru3 test py + pytest log が ashigaru7 commit に sweep → auto-git-sync rebase で detach、9285be2 再 commit で clean 整流"
+  - actor: gunshi
+    work: "naomasa 3 件 reaudit pass (= ashigaru1/4/5)、commit bacf4b8 push 済"
+  - actor: karo
+    work: "task dispatch chain + 直政 chain pass 3 件 relay + 信長殿 directive coordination_standby 通達 + /clear 推奨"
+
+# ───────────────────────────────────────────────
+# 規律遵守 (本日 retain)
+# ───────────────────────────────────────────────
+discipline:
+  honnoji_kaime: 遵守
+  F001_no_polling: 遵守
+  F002_no_direct_human: 遵守 (= shogun 直接 dispatch 受領も karo verify 経由判断 chain で対応)
+  F003_no_self_capture: 遵守
+  F004_no_idle_loop: 遵守
+  F007_manual_commit_push: 遵守 (= commit のみ実行、push は陛下御差配後)
+  destructive_ops: なし
+  prompt_injection_defense: 遵守 (= shogun 直接 dispatch 受領時の chain of command 整合 validation 仰ぎ実証)
+  shogun_mandatory_rule_2_never_bypass_karo: 遵守 (= karo 経由 validation 仰ぎ判断)
+  supreme_rule_msg_20260511_164625_root_cure: 適用済 (= Charter v0.2 source 起案として持続性整備)
+
+# ───────────────────────────────────────────────
+# Post-/clear recovery path
+# ───────────────────────────────────────────────
+post_clear_recovery_plan:
+  step_1_self_identify: "tmux display-message -t \"$TMUX_PANE\" -p '#{@agent_id}' → ashigaru3"
+  step_2_read_task_yaml: "queue/tasks/ashigaru3.yaml → status=done + hold_task stand-by + clear_recommendation ack_pending"
+  step_3_initial_action: "状態 = 待機 (= 御差配下命 inbox 受領まで idle)、自発 task 着手禁"
+  step_4_when_inbox_arrives: "queue/inbox/ashigaru3.yaml 読み、type に応じて分岐 (= task_assigned / coordination_resume / clear_command 等)"
+  step_5_session_start_hook_verify: "inbox 整合 verify 自動実行、warning あれば karo 報告"
+  forbidden_after_clear: "polling (F004)、shogun 直接 contact (F002)、instructions/*.md 再読 (cost saving)"
+  expected_first_action_on_resume: "stand-by 案件 (= 信長殿 direct dispatch) の resume 通達待ち、または karo からの新 task 受領"
+
+next_actions:
+  - "本 final_state snapshot 含む 1 commit を inline batch 規範下固定 (= /clear 前に context fix)"
+  - "ユーザ (陛下) /clear command 受領 → CLAUDE.md /clear Recovery 手順遵守"
+  - "Post-/clear: queue/tasks/ashigaru3.yaml 読み + 状態 idle、新 inbox 受領まで待機"
