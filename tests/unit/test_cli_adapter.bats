@@ -286,10 +286,10 @@ load_adapter_with() {
     [ "$result" = "claude --model opus --permission-mode auto-approved" ]
 }
 
-@test "build_cli_command: codex + default model → codex --model sonnet ..." {
+@test "build_cli_command: codex + default model → codex --search ... (= --model 省略、陛下御差配 2026-05-11 ChatGPT account 整合)" {
     load_adapter_with "${TEST_TMP}/settings_mixed.yaml"
     result=$(build_cli_command "ashigaru5")
-    [ "$result" = "codex --model sonnet --search --dangerously-bypass-approvals-and-sandbox --no-alt-screen" ]
+    [ "$result" = "codex --search --dangerously-bypass-approvals-and-sandbox --no-alt-screen" ]
 }
 
 @test "build_cli_command: copilot → copilot --yolo" {
@@ -492,22 +492,22 @@ load_adapter_with() {
     [ "$result" = "opus" ]
 }
 
-@test "get_agent_model: cliセクションなし karo → sonnet (デフォルト)" {
+@test "get_agent_model: cliセクションなし karo → opus (デフォルト、陛下御差配 2026-05-11 opus 規範)" {
     load_adapter_with "${TEST_TMP}/settings_none.yaml"
     result=$(get_agent_model "karo")
-    [ "$result" = "sonnet" ]
+    [ "$result" = "opus" ]
 }
 
-@test "get_agent_model: cliセクションなし ashigaru1 → sonnet (デフォルト)" {
+@test "get_agent_model: cliセクションなし ashigaru1 → opus (デフォルト、陛下御差配 2026-05-11 opus 規範)" {
     load_adapter_with "${TEST_TMP}/settings_none.yaml"
     result=$(get_agent_model "ashigaru1")
-    [ "$result" = "sonnet" ]
+    [ "$result" = "opus" ]
 }
 
-@test "get_agent_model: cliセクションなし ashigaru5 → sonnet (デフォルト)" {
+@test "get_agent_model: cliセクションなし ashigaru5 → opus (デフォルト、陛下御差配 2026-05-11 opus 規範)" {
     load_adapter_with "${TEST_TMP}/settings_none.yaml"
     result=$(get_agent_model "ashigaru5")
-    [ "$result" = "sonnet" ]
+    [ "$result" = "opus" ]
 }
 
 @test "get_agent_model: YAML指定 ashigaru1 → haiku (オーバーライド)" {
@@ -528,10 +528,10 @@ load_adapter_with() {
     [ "$result" = "gpt-5" ]
 }
 
-@test "get_agent_model: 未知agent → sonnet (デフォルト)" {
+@test "get_agent_model: 未知agent → opus (デフォルト、陛下御差配 2026-05-11 opus 規範)" {
     load_adapter_with "${TEST_TMP}/settings_none.yaml"
     result=$(get_agent_model "unknown_agent")
-    [ "$result" = "sonnet" ]
+    [ "$result" = "opus" ]
 }
 
 @test "get_agent_model: kimi CLI ashigaru3 → k2.5 (YAML指定)" {
