@@ -1,0 +1,45 @@
+audit_id: naomasa_ashigaru5_w11_completion_trigger_watcher_reaudit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T18:12:00+09:00"
+source_inbox:
+  - msg_20260513_143443_d1e89599
+target_task: subtask_cmd020_w11_completion_trigger_watcher
+target_assignee: ashigaru5
+parent_cmd: cmd_020
+verdict: pass_with_concerns
+evidence_state: complete
+completion_gate: open_with_concerns
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_w11_completion_trigger_watcher_static_contract.py -q"
+    result: "5 passed in 0.02s"
+    skip_count: 0
+  remote_reachability:
+    revise_commit: 5c37c52
+    revise_commit_in_origin_main: true
+  report_finalization:
+    commit_status: completed
+    push_status: completed
+    planned_fields_remaining: false
+
+positive_evidence:
+  - "The report now records commit_status and push_status as completed."
+  - "Origin SHA mapping is recorded: 4ed389c/aaf2d70/1cb5249/c480cff plus report-fix 5c37c52."
+  - "The watcher remains detect-and-notify only; direct audited_done write is guarded by test."
+  - "Focused pytest passes with SKIP=0."
+
+findings:
+  - severity: medium
+    perspective: 8_ops
+    issue: "The design is still intentionally scheduled/polling-adjacent because no event source exists."
+    recommendation: "Keep the open item to replace this with an event-based Supabase bridge when available, and disable the watcher after W11 completion."
+
+completion_decision:
+  deliverable_content: pass_with_concerns
+  completion_gate: open_with_concerns
+  reason: "The prior planned commit/push fields are corrected and machine evidence is sufficient."
+
+recommendation_to_karo:
+  action: accept_ashigaru5_revise_with_ops_concern
+  summary: "足軽5号 W11 watcher revise は通過可。event-based 置換と自然停止は後続運用条件として残すべし。"

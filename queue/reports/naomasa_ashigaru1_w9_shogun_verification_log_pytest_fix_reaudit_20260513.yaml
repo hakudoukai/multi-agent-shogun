@@ -1,0 +1,48 @@
+audit_id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_reaudit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T18:18:00+09:00"
+source_inbox:
+  - msg_20260513_143820_e496398c
+target_task: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+target_assignee: ashigaru1
+parent_cmd: cmd_020
+verdict: pass_with_concerns
+evidence_state: complete
+completion_gate: open_with_concerns
+
+machine_evidence:
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py tests/test_regenerate_dashboard.py -q -k 'real_shogun_log_w9 or w9_stage_a_b1_b6 or test_real_shogun_log_unmatched or supabase or development_progress or w9'"
+    result: "28 passed, 152 deselected in 2.29s"
+    skip_count: 0
+  remote_reachability:
+    revise_commits:
+      - 35dbfab
+      - d77840e
+    revise_commits_in_origin_main: true
+  report_finalization:
+    pending_commit_3_resolved: true
+    ac6_status_pass: true
+    next_actions_empty: true
+    completed_actions_present: true
+
+positive_evidence:
+  - "The report now resolves pending_commit_3 to local/origin SHAs and sets AC6 to pass."
+  - "next_actions is empty and completed_actions records commit, push, Karo report, and report revise."
+  - "The implementation preserves synthetic insertion count 0 and keeps W9 rows visibly blocked until real Shogun verification exists."
+  - "Focused pytest passes with SKIP=0."
+
+findings:
+  - severity: medium
+    perspective: 10_ecosystem_coherence
+    issue: "This fix intentionally changes dashboard logic from expected green matching to visible blocked state for W9 rows."
+    recommendation: "Accept this only as truth-aligned blocking, not as Shogun verification completion."
+
+completion_decision:
+  deliverable_content: pass_with_concerns
+  completion_gate: open_with_concerns
+  reason: "The prior report-finalization blockers are corrected and the test suite confirms the W9 truth state."
+
+recommendation_to_karo:
+  action: accept_ashigaru1_revise_with_truth_state_caveat
+  summary: "足軽1号 W9 pytest fix は通過可。W9 は real Shogun verification まで blocked 表示維持が条件。"

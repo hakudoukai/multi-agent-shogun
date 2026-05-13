@@ -6306,3 +6306,65 @@ cmd020_implementation_required_14cmd_reaudits_v2_20260513:
     recommendation_to_karo:
       action: accept_ashigaru6_revise_with_process_concerns
       summary: "足軽6号 revision_v2 は通過可。各将来 cmd は別途 AC0 inventory から始める条件を維持。"
+
+cmd020_w11_completion_trigger_watcher_reaudits_20260513:
+  - audit_id: naomasa_ashigaru5_w11_completion_trigger_watcher_reaudit_20260513
+    source_inbox:
+      - msg_20260513_143443_d1e89599
+    detail_report: queue/reports/naomasa_ashigaru5_w11_completion_trigger_watcher_reaudit_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "commit_status / push_status are completed"
+      - "origin/main contains 5c37c52"
+      - "pytest 5 passed, SKIP=0"
+    remaining_concerns:
+      - "scheduled watcher remains acceptable only until event-based bridge or W11 completion cleanup."
+    recommendation_to_karo:
+      action: accept_ashigaru5_revise_with_ops_concern
+      summary: "足軽5号 revise は通過可。event-based 置換と自然停止を後続条件に残す。"
+
+cmd020_persona_sc_inbox_reaudits_cycle3_20260513:
+  - audit_id: naomasa_ashigaru4_persona_sc_inbox_reaudit_cycle3_20260513
+    source_inbox:
+      - msg_20260513_143735_4f5a5506
+      - msg_20260513_143754_7e847b94
+    detail_report: queue/reports/naomasa_ashigaru4_persona_sc_inbox_reaudit_cycle3_20260513.yaml
+    target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+    target_assignee: ashigaru4
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "executed_post_audit_revise_commit present"
+      - "decision matrix explicitly NOT AUTHORIZED FOR EXECUTION"
+      - "origin/main contains e3e6c7b"
+      - "pytest 4 passed, SKIP=0"
+    remaining_concerns:
+      - "alias archive/merge/wire requires explicit future decision."
+    recommendation_to_karo:
+      action: accept_ashigaru4_revise_with_governance_gate
+      summary: "足軽4号 revise は通過可。alias 実行は別 cycle 承認後に限る。"
+
+cmd020_w9_shogun_verification_log_pytest_fix_reaudits_20260513:
+  - audit_id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_reaudit_20260513
+    source_inbox:
+      - msg_20260513_143820_e496398c
+    detail_report: queue/reports/naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_reaudit_20260513.yaml
+    target_task: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    target_assignee: ashigaru1
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "pending_commit_3 / AC6 in_progress / future next_actions resolved"
+      - "origin/main contains 35dbfab and d77840e"
+      - "pytest 28 passed, SKIP=0"
+    remaining_concerns:
+      - "W9 rows are truth-aligned blocked, not Shogun verified."
+    recommendation_to_karo:
+      action: accept_ashigaru1_revise_with_truth_state_caveat
+      summary: "足軽1号 revise は通過可。W9 は real verification まで blocked 表示維持。"
