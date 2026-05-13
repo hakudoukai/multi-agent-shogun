@@ -1,0 +1,200 @@
+audit_id: naomasa_cmd020_next_phase_7task_preaudit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T14:35:00+09:00"
+source_inbox:
+  - msg_20260513_134539_37cf7a17
+scope: "cmd_020 next phase 7 task YAML pre-audit"
+overall_verdict: revise_before_delivery
+evidence_state: complete
+completion_gate: blocked_until_revisions
+machine_evidence:
+  task_yaml_read_count: 7
+  source_docs_read:
+    - queue/reports/naomasa_sc_audit_phase2_status_green_path_20260512.yaml
+    - tests/test_regenerate_dashboard.py
+    - docs/dashboard_design_v0.2.md
+    - docs/shogun_charter_v0_1_full_export.md
+    - docs/karo_shogun_charter_v0_1_review.md
+    - scripts/inbox_watcher.sh
+    - scripts/regenerate_dashboard.py
+    - .pre-commit-config.yaml
+  focused_test:
+    command: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k real_shogun_log_w9_batch1_to_batch6_all_matched"
+    result: "1 failed, 175 deselected"
+    failure_summary: "matched_ids=[] for C-15-B1..B6"
+  inbox_runtime_state:
+    inbox_path: "queue/inbox -> external runtime inbox symlink"
+    alias_files_observed:
+      - karo.yaml
+      - ieyasu.yaml
+      - shogun.yaml
+      - shogun_from_main.yaml
+      - shogun_from_sc.yaml
+      - gunshi.yaml
+      - ashigaru1.yaml
+      - ashigaru2.yaml
+      - ashigaru3.yaml
+      - ashigaru4.yaml
+      - ashigaru5.yaml
+      - ashigaru6.yaml
+      - ashigaru7.yaml
+  existing_precommit_hooks:
+    - secret-detect-staged
+    - deliverable-tracked
+
+task_audits:
+  - task_id: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    assigned_to: ashigaru1
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    six_point_check:
+      directive_nine_sections: pass
+      design_doc_id: pass
+      task_path_type: pass
+      max_cycle: pass
+      bloom_level_suitability: pass
+      anti_dup: concerns
+    findings:
+      - severity: high
+        issue: "The current real-log pytest fails with matched_ids=[]; a task titled pytest fix can accidentally green the dashboard by rewriting tests or adding synthetic verification evidence."
+        recommendation: "Revise AC2 to forbid synthetic shogun verification entries and require either real shogun log mapping evidence, or a status-classification change that preserves blocked/unverified state while making the test expectation truthful."
+      - severity: medium
+        issue: "Task does not require a before/after grep of shogun_verification_mainpc_log.yaml and active_verify_queue_candidate_log.yaml."
+        recommendation: "Add explicit grep/equality evidence for C-15-B1..B6 and expected unmatched C-15-B7."
+
+  - task_id: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+    assigned_to: ashigaru2
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    six_point_check:
+      directive_nine_sections: pass
+      design_doc_id: pass_with_concerns
+      task_path_type: pass
+      max_cycle: pass
+      bloom_level_suitability: pass
+      anti_dup: concerns
+    findings:
+      - severity: medium
+        issue: "Existing .pre-commit-config.yaml already has secret-detect-staged and deliverable-tracked hooks; task says update hook but does not state extension-not-replacement."
+        recommendation: "Add AC requiring preservation of both existing hooks, plus a static test that asserts their IDs remain."
+      - severity: medium
+        issue: "Staged residual check is mentioned only as audit-gate docs, not as a machine gate."
+        recommendation: "Add exact command or script contract for staged residual detection before report completion."
+
+  - task_id: subtask_cmd020_sc_specialty_inventory
+    assigned_to: ashigaru3
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    six_point_check:
+      directive_nine_sections: pass
+      design_doc_id: pass
+      task_path_type: pass
+      max_cycle: pass
+      bloom_level_suitability: pass
+      anti_dup: pass_with_concerns
+    findings:
+      - severity: medium
+        issue: "Charter §8 gives 9 departments, while SC has 7 ashigaru plus karo/gunshi; the task must keep this as inventory/recommendation, not executable reassignment."
+        recommendation: "Add AC that no instruction persona/runtime config is changed in this task; only docs and inventory report are produced."
+      - severity: low
+        issue: "Completed-task inventory can become stale quickly."
+        recommendation: "Require source list from queue/tasks and queue/reports with timestamp."
+
+  - task_id: subtask_cmd020_persona_廃止_sc_inbox_整理
+    assigned_to: ashigaru4
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    six_point_check:
+      directive_nine_sections: pass
+      design_doc_id: concerns
+      task_path_type: pass
+      max_cycle: pass
+      bloom_level_suitability: pass
+      anti_dup: fail
+    findings:
+      - severity: high
+        issue: "queue/inbox is a symlink to the live runtime mailbox directory. The task wording '各 inbox file 整理 + alias 統合判定' can be read as editing/deleting live primary message stores."
+        recommendation: "Revise to design-only inventory. Explicitly forbid deleting, merging, renaming, truncating, or rewriting any inbox file in this task."
+      - severity: high
+        issue: "Alias consolidation touches watcher routing and sender identity. No migration/backfill/rollback plan is specified."
+        recommendation: "Require docs-only alias map, watcher arg audit, and a separate human-approved migration task before any runtime mailbox mutation."
+
+  - task_id: subtask_cmd020_w11_completion_trigger_watcher
+    assigned_to: ashigaru5
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    six_point_check:
+      directive_nine_sections: pass
+      design_doc_id: pass_with_concerns
+      task_path_type: pass
+      max_cycle: pass
+      bloom_level_suitability: pass
+      anti_dup: fail
+    findings:
+      - severity: high
+        issue: "Task proposes 10-15 minute polling plus systemd timer. Project communication rules are event-driven/no polling, and background worker additions require explicit eval gate."
+        recommendation: "Replace polling/systemd with a repo-local proposal or event-driven trigger using existing state sources and inbox_write. If a daemon is still needed, first pass docs/background_worker_eval_gate.md."
+      - severity: high
+        issue: "Supabase MCP live query is not available in this Codex runtime; prior status report recorded that gap."
+        recommendation: "Add fallback to git-tracked inventory/snapshot sources, or make live MCP access an explicit preflight blocker."
+
+  - task_id: subtask_cmd020_implementation_required_14_cmd_proposal
+    assigned_to: ashigaru6
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    six_point_check:
+      directive_nine_sections: pass
+      design_doc_id: pass
+      task_path_type: pass
+      max_cycle: pass
+      bloom_level_suitability: pass
+      anti_dup: pass_with_concerns
+    findings:
+      - severity: medium
+        issue: "Task is a command proposal, not implementation. It must avoid mutating task queues for the 14 items."
+        recommendation: "Add AC that deliverable is docs/report only, with no queue task assignment and no Supabase status edits."
+      - severity: medium
+        issue: "The 14 Supabase items are separate from W9 batch7; reports must not collapse C-15-B7 into the 14."
+        recommendation: "State out-of-scope boundary against W9 batch7 and W11 monitor items."
+
+  - task_id: subtask_cmd020_dashboard_status_classification_logic
+    assigned_to: ashigaru7
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    six_point_check:
+      directive_nine_sections: pass
+      design_doc_id: pass
+      task_path_type: pass
+      max_cycle: pass
+      bloom_level_suitability: pass
+      anti_dup: concerns
+    findings:
+      - severity: medium
+        issue: "pass_with_concerns=75/yellow already exists in dashboard_design_v0.2/v0.3 and regenerate_dashboard.py progress tiers; task must implement only the missing classification layer."
+        recommendation: "Add AC0 inventory to identify existing progress/tier functions and forbid duplicate status classifier tables."
+      - severity: medium
+        issue: "Layer C/D render edits could conflict with existing LAYER_CHILDREN and progress aggregation."
+        recommendation: "Require focused static tests against existing constants/functions rather than a new parallel rendering path."
+
+delivery_decision:
+  pass_now:
+    - subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+    - subtask_cmd020_sc_specialty_inventory
+    - subtask_cmd020_implementation_required_14_cmd_proposal
+    - subtask_cmd020_dashboard_status_classification_logic
+  blocked_for_revision:
+    - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    - subtask_cmd020_persona_廃止_sc_inbox_整理
+    - subtask_cmd020_w11_completion_trigger_watcher
+  note: "Four tasks may be delivered after adding listed conditions; three require YAML revision before ashigaru dispatch."
+
+recommendation_to_karo:
+  action: revise_three_tasks_then_dispatch_in_two_waves
+  summary: "Do not dispatch all seven as-is. Dispatch 2/3/6/7 with condition patches; revise 1/4/5 first to avoid false-green, live inbox mutation, and polling daemon conflicts."

@@ -5992,3 +5992,29 @@ sc_pivot_cmd004_audits_20260513:
     recommendation_to_shogun:
       action: dispatch_batch7_as_4_workstreams_plus_deferred_ai_hold
       summary: "高 priority 12 + medium 3 + deferred 1 に分け、先頭は T.コンデ I022 回数警告 task から開始が妥当。"
+
+cmd020_next_phase_7task_preaudits_20260513:
+  - audit_id: naomasa_cmd020_next_phase_7task_preaudit_20260513
+    source_inbox:
+      - msg_20260513_134539_37cf7a17
+    detail_report: queue/reports/naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml
+    target_count: 7
+    verdict: revise_before_delivery
+    evidence_state: complete
+    completion_gate: blocked_until_revisions
+    machine_evidence:
+      focused_test: "python3 -m pytest tests/test_regenerate_dashboard.py -q -k real_shogun_log_w9_batch1_to_batch6_all_matched => 1 failed, 175 deselected"
+      existing_precommit_hooks: "secret-detect-staged + deliverable-tracked present"
+      inbox_runtime_state: "queue/inbox is a live runtime mailbox symlink; alias files include karo/ieyasu/shogun variants"
+    pass_now_with_conditions:
+      - subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+      - subtask_cmd020_sc_specialty_inventory
+      - subtask_cmd020_implementation_required_14_cmd_proposal
+      - subtask_cmd020_dashboard_status_classification_logic
+    blocked_for_revision:
+      - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+      - subtask_cmd020_persona_廃止_sc_inbox_整理
+      - subtask_cmd020_w11_completion_trigger_watcher
+    recommendation_to_karo:
+      action: revise_three_tasks_then_dispatch_in_two_waves
+      summary: "7 件一括配信は不可。false-green 防止、live inbox 改変禁止、polling/systemd 衝突を修正後に配信せよ。"
