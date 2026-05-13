@@ -1,0 +1,13 @@
+# watch_w11_trigger run log — append-only structured evidence
+# (audit trail per docs/cmd020_w11_trigger_worker_eval_gate_check.md §1 Q4)
+run_log:
+  - timestamp: "2026-05-13T05:15:56Z"
+    result_code: "dry_run"
+    items_detected: 0
+    supabase_mcp_available: false
+    detail: "WATCH_W11_TRIGGER_DRY_RUN=1 set, no query executed"
+  - timestamp: "2026-05-13T05:17:13Z"
+    result_code: "dry_run"
+    items_detected: 0
+    supabase_mcp_available: false
+    detail: "WATCH_W11_TRIGGER_DRY_RUN=1 set, no query executed"

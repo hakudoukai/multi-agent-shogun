@@ -1,0 +1,8 @@
+# W11 trigger heartbeat (= human-visible health signal)
+# 13 fields decision record と整合、Karo が dashboard.md Layer F に集約予定。
+last_run_ts: "2026-05-13T05:17:13Z"
+last_result: "dry_run"
+items_detected: 0
+next_run_eta: "2026-05-13T05:27:13Z"
+watcher_id: watch_w11_trigger
+worker_eval_doc: docs/cmd020_w11_trigger_worker_eval_gate_check.md
