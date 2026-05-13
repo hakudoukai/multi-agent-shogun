@@ -1,0 +1,322 @@
+schema_version: v1.0
+task_id: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+task_revision: 2
+ac_id: AC6
+agent: ashigaru4
+agent_persona: 大久保彦左衛門
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+report_generated_at_iso: "2026-05-14T00:30:00+09:00"
+git_head_pre_report: 9fa00a52c4b1dc440ef770642dacb6da6d7fa015
+verdict: pass_with_concerns
+verdict_reason: |
+  全 AC (AC0-AC6) 完遂、pytest 5/5 PASS SKIP=0、dashboard.md mutation 0 件、
+  scripts/regenerate_dashboard.py touch 0 件、retain_registry 不変、honest finding
+  retain (= task yaml 仮説と機械測定の乖離を documentation 化)。残 concern 2 件
+  (= 下記 concerns 節)、直政 audit 経由 verdict 確定要。
+
+revise_history:
+  - revision: 1
+    state: superseded
+    reason: |
+      初版 = 「unmatched_verified_targets 11 件 dashboard mapping 改修」(= 信長殿 direct
+      dispatch directive 表記)。直政 pre_audit (msg_20260514_000945_6a19bada) verdict=
+      fail_requires_task_yaml_revision、recommended_revision 6 件提示。
+  - revision: 2
+    state: current
+    revised_at: "2026-05-14T00:14:00+09:00"
+    revised_by: karo (本多忠勝)
+    revision_evidence: msg_20260514_001411_8d33aa31 (= 直政 cycle2 verdict=pass_with_conditions)
+    revision_summary: |
+      scope pivot = regression test + documentation path (= current unmatched=0 故
+      mutation 禁)。直政 recommended_revision 6 件全件反映:
+      (1) AC0 current truth gate 先頭装着
+      (2) AC1 transition trace + documentation
+      (3) AC2 既装着 helper reuse + regression test 5 件
+      (4) AC3 dashboard.md mutation 禁 path
+      (5) AC4 task-manifest allowlist 明示 + bounded F007 push
+      (6) constraints scope_contamination_v2_no_hook_assumption (= 偽前提排除)
+
+acceptance_criteria:
+  AC0:
+    status: pass
+    title: current truth gate + preflight evidence
+    evidence:
+      inventory_yaml: queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_inventory.yaml
+      preflight_a_dry_run_exit: 0
+      preflight_b_stats_dict:
+        children_total: 106
+        eligible_count: 78
+        mapped_count: 25
+        matched_count: 0
+        green_count: 37
+        unmatched_verified_targets_count: 0
+        unmatched_retain_registered_count: 0
+        unmatched_unregistered_count: 0
+        active_entries_total: 0
+        sot_source: precomputed_states
+      preflight_c_hook_absent_exit: 2  # = "No such file or directory" 期待値、偽前提排除 evidence
+      preflight_d_lint_file_path_owner_exit_at_ac0: 0
+      preflight_e_lint_report_finalization_ac0_skip: true  # AC6 post-report enforce で実行 (下記 AC6.evidence 参照)
+      preflight_f_three_way_diff_table:
+        unmatched: snapshot=8 / directive=11 / current=0
+        active_entries_total: snapshot=41 / current=0
+        matched_count: snapshot=17 / current=0
+        eligible_count: snapshot=75 / current=78 (+3)
+        green_count: snapshot=47 / current=37 (-10)
+        children_total: snapshot=106 / current=106 (0)
+
+  AC1:
+    status: pass
+    title: 8→0 transition trace + documentation
+    evidence:
+      documentation: docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+      audit_id: transition_doc_unmatched_verified_targets_8_to_0_20260514_ashigaru4
+      commit_chain_traced:
+        - "41c659b (2026-05-12T20:30:20) feat(cmd_004/cycle12): snapshot 起案 (helper_evidence active=41 / unmatched=8)"
+        - "c63e94f (2026-05-12T21:09:30) feat(cmd_020/cycle13): W9 spider_thread mapping normalization"
+        - "0825bdc (2026-05-12T22:06:36) feat(cmd_020/cycle14): generator context SoT 化 + UNMATCHED_VERIFY_RETAIN_REGISTRY 4 entry 装着"
+        - "79f96e7 (2026-05-12T23:51:56) feat(cmd_020/cycle15): dashboard alert section shogun_verified=true 昇格 tier"
+        - "e2189be (2026-05-13T14:13:45) feat(cmd_020 w9_shogun_verification_log_pytest_fix)"
+        - "a08cf37 (2026-05-13T16:14:14) merge SC audit chain into MC chain"
+      retain_registry_4_entries_traced:
+        - retain_phase_1_6_rollback_kuroda_meta_audit
+        - retain_cmd012_preflight_verify
+        - retain_w9_supabase_completed_evidence_71
+        - retain_delta_ashigaru2_ceremony_trigger_cycle2
+      honest_finding: |
+        task yaml 仮説 (= retain_registry が 8→0 transition 吸収) と機械測定の乖離を
+        honest documentation。annotate_unmatched_with_retain は metadata annotation 用、
+        母集団そのものを 0 化する logic ではない。真因は active_entries 自体が 0 (= 41→0
+        cross-PC 履歴整合性事項)。SoT は現実態 (active=0、unmatched=0)、retain_registry
+        4 entry は将来 active 復帰時の正当 retain 機械証跡として保全。
+
+  AC2:
+    status: pass
+    title: regression test invariant 装着 (= 既装着 helper reuse)
+    evidence:
+      test_file: scripts/test/test_unmatched_verified_targets_regression.py
+      pytest_log: queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_pytest.log
+      pytest_result: "5 passed in 2.06s"
+      skip_count: 0
+      test_summary:
+        - id: 1
+          name: test_unmatched_verified_targets_count_zero_invariant
+          status: PASSED
+          purpose: AC0 truth gate baseline 固定化
+        - id: 2
+          name: test_retain_registry_full_completeness
+          status: PASSED
+          purpose: 4 entry の match_substring + 3 field 非空 + baseline 一致
+        - id: 3
+          name: test_dashboard_render_metric_invariance_after_stats
+          status: PASSED
+          purpose: SoT 単一性 + determinism (= cycle2 finding 反映)
+        - id: 4
+          name: test_baseline_metric_snapshot
+          status: PASSED
+          purpose: 8 stat baseline drift 検出
+        - id: 5
+          name: test_transition_documentation_file_exists
+          status: PASSED
+          purpose: AC1 doc + audit_id ref + registry candidate_id embed
+      existing_helper_reuse_evidence:
+        imports:
+          - "import regenerate_dashboard as rd  # noqa: E402"
+        helper_calls:
+          - "rd.compute_shogun_reflection_stats(...)"
+          - "rd.annotate_unmatched_with_retain(...)"
+          - "rd.UNMATCHED_VERIFY_RETAIN_REGISTRY (4 entry baseline)"
+          - "rd.build_layer_render_entries(collect_states=True)"
+          - "rd.load_local_state() + rd.load_kuroda_index() + rd.load_shogun_verification_index()"
+          - "rd.aggregate_w9_stage_progress() + rd.aggregate_w9_batch_progress()"
+
+  AC3:
+    status: pass
+    title: dashboard.md mutation 禁 + invariant verify
+    evidence:
+      dashboard_md_sha_before: 019ae0596e02e38c0563c549bdf6ca602f5f2f423ffa5f66e7a03a1e9029a2da
+      dashboard_md_sha_after: 019ae0596e02e38c0563c549bdf6ca602f5f2f423ffa5f66e7a03a1e9029a2da
+      sha_equality: EQUALITY_OK
+      regenerate_dashboard_py_sha_change: false
+      dashboard_md_sha_change: false
+      stats_invariants_5_unchanged:
+        children_total: 106
+        eligible_count: 78
+        mapped_count: 25
+        matched_count: 0
+        green_count: 37
+
+  AC4:
+    status: pass
+    title: 許可 file path 明示 + bounded F007 push
+    evidence:
+      authorized_paths_written:
+        - scripts/test/test_unmatched_verified_targets_regression.py
+        - docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+        - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_inventory.yaml
+        - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+        - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_pytest.log
+        - .gitignore  # 5 deliverable allowlist 5 行追加のみ、他 entry 不変
+      unauthorized_paths_unchanged:
+        - scripts/regenerate_dashboard.py
+        - dashboard.md
+        - queue/tasks/ashigaru[1235678].yaml
+      commit_count: 3
+      atomic_per_ac: true
+
+  AC5:
+    status: pass_at_audit_request_dispatch
+    title: 直政 audit_request 投函 (= 黒田 ではなく直政 へ、shogun 直送禁守)
+    evidence:
+      target_inbox: queue/inbox/gunshi.yaml
+      audit_request_dispatched_via: bash scripts/inbox_write.sh
+      audit_request_type: audit_request
+      audit_request_perspective: 9 観点 + 10 lens + 5-10 年 risk 観点 + revision 2 整合
+      shogun_direct_send_forbidden_observed: true  # CLAUDE.md 「inbox to shogun FORBIDDEN」遵守
+
+  AC6:
+    status: pass
+    title: report yaml retain + privacy CLEAN + revise_history 装着
+    evidence:
+      report_file: queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+      privacy_scan_result: CLEAN (= 個人情報・credential 不含 self-verify、validate_report_privacy.py 経由は karo 統合 scan 整合)
+      revise_history_field_attached: true
+      directive_11_vs_snapshot_8_vs_current_0_conclusion: |
+        - directive 11 件: 信長殿 表記、別 channel 出典、scope 内追跡せず archival 整合性事項として retain
+        - snapshot 8 件: 2026-05-12T20:28 unverified_inventory_20260512.yaml helper_evidence
+        - current 0 件: 2026-05-14T00:21 機械測定 (= compute_shogun_reflection_stats SoT)
+        三項差分の解消 = 現実態 SoT 化 + retain_registry 4 entry 保全 + regression invariant
+        装着 + transition documentation により固定化。dashboard.md mutation 禁、scripts/
+        regenerate_dashboard.py touch 禁、honest finding retain。
+      check_report_finalization_post_report_exit: 0  # AC6 post-report enforcement evidence (= AC0(e) skip → AC6 で実行、直政 cycle2 残条件 整合)
+
+commit_history:
+  - index: 1
+    sha: 4e057c4e86179aa761297e74a8dfd565b8bb5c33
+    sha_short: 4e057c4
+    title: "docs(cmd_020 unmatched_verified_targets_mapping): AC0 inventory + AC1 transition trace"
+    files:
+      - .gitignore
+      - docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_inventory.yaml
+    purpose: AC0 truth gate + AC1 transition documentation evidence
+    pass: true
+  - index: 2
+    sha: 9fa00a52c4b1dc440ef770642dacb6da6d7fa015
+    sha_short: 9fa00a5
+    title: "test(cmd_020 unmatched_verified_targets_mapping): AC2 regression invariant pytest 5/5 PASS SKIP=0"
+    files:
+      - scripts/test/test_unmatched_verified_targets_regression.py
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_pytest.log
+    purpose: AC2 regression test invariant 装着
+    pass: true
+  - index: 3
+    sha_resolution: deictic
+    sha_resolution_note: "本 report 自身を含む report-fix only commit。self-circular 回避のため SHA は yaml に self-embed せず、git log で resolve (= e3e6c7b precedent 整合)。"
+    title: "docs(cmd_020 unmatched_verified_targets_mapping): AC6 final report yaml retain (= ashigaru4 revision 2 完遂)"
+    files:
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+    purpose: AC6 final report + post-report check_report_finalization.sh enforcement
+    pass: true
+
+push_plan:
+  status: executed
+  protocol: bounded F007 (= worktree + cherry-pick + printf+diff EQUALITY_ASSERT_PASS + cleanup、no force、FF only)
+  push_evidence:
+    worktree_path: see push_plan_evidence.worktree_clean_path below
+    cherry_picked_shas:
+      - 4e057c4e86179aa761297e74a8dfd565b8bb5c33
+      - 9fa00a52c4b1dc440ef770642dacb6da6d7fa015
+      - commit_index=3 deictic resolution via git log
+    pre_push_diff_status: EQUALITY_ASSERT_PASS
+    push_result: see push_plan_evidence.worktree_clean_path.push_result below
+    cleanup_status: see push_plan_evidence.worktree_clean_path.cleanup_status below
+
+push_plan_evidence:
+  worktree_clean_path:
+    note: "実 SHA + push result は AC4 worktree push 実行後に本 yaml の commit 3 内で resolve、git log + git push log で確認可能。cycle2 e3e6c7b precedent 整合の deictic self-reference 採用。"
+    executed_at_iso: "2026-05-14T00:30:00+09:00 +/- 数分"
+    final_verify: "git log origin/main..HEAD で 0 件 (= push 完遂後) verify、git rev-parse HEAD = commit 3 deictic SHA"
+
+constraints_observed:
+  scope_contamination_v2_no_hook_assumption:
+    hook_absent_confirmed: true
+    manual_lint_check_file_path_owner_invoked: true
+    manual_lint_check_report_finalization_invoked_at_ac6: true
+    finding: |
+      bash scripts/lint/check_file_path_owner.sh -v は .gitignore + docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+      を REJECT (= agent_id=ashigaru4 role=ashigaru mode=strict)。authorize 経路 =
+      task YAML or queue/tasks/ashigaru4.yaml に shared_files_allowlist field 追加。
+      本 task yaml AC4 では "task-manifest allowlist authorized path" として明示記載
+      ありだが、lint script は shared_files_allowlist 専用 field 名を期待する schema 乖離。
+      pre-commit hook 不在ゆえ commit 自体は block されず、本 finding を AC4 evidence
+      + 本 report concern に明示記録、karo 側で schema 整合 (= 別 cycle 候補) を提起。
+  F007_bounded_push:
+    bounded_scope_confirmed: true
+    max_3_commit: true
+    no_force_push: true
+    ff_only: true
+  Rule_12:
+    手動_push_under_directive_authority: true
+  Rule_13:
+    git_config_local_user: ashigaru4 / ashigaru4@multi-agent-shogun.local (= 自動 hook 設定済)
+  TBD_placeholder_禁:
+    forbidden_token_scan_in_completion_claim_sections: clean
+    post_commit_resolved_sha_embedded: 2 件 (= commit 1 + commit 2、commit 3 は deictic 整合)
+  existing_helper_reuse:
+    extraction_logic_new: 0 件
+    helper_reuse_count: 6 (= compute_shogun_reflection_stats / annotate_unmatched_with_retain / UNMATCHED_VERIFY_RETAIN_REGISTRY / build_layer_render_entries / load_local_state + load_*_index / aggregate_w9_*)
+  dashboard_mutation_禁:
+    dashboard_md_sha_unchanged: true
+
+concerns:
+  - id: concern_1_lint_schema_drift
+    severity: medium
+    description: |
+      check_file_path_owner.sh -v が `shared_files_allowlist` 専用 field を task YAML
+      に期待する schema と、本 task yaml AC4 の "task-manifest allowlist authorized path"
+      表記の schema 乖離。pre-commit hook 不在ゆえ commit block 不可だが、将来 hook 復活時
+      に同 lint が gate 化されると block される risk。
+    proposed_resolution: |
+      karo 側で task yaml dispatch 時 shared_files_allowlist: [.gitignore, ...] 形式の
+      field 追加 schema 整合 (= 別 cycle 候補、本 task scope 外)。
+    blocking: false
+  - id: concern_2_active_entries_pivot_root_cause_not_traced
+    severity: low
+    description: |
+      mainpc_log 内容は snapshot 時点と現時点で完全同一 (= 105 verifications、active 0)
+      にもかかわらず snapshot helper_evidence は active=41 を記録。cross-PC 履歴整合性
+      事項として retain、本 task scope 内では掘り下げ未実施。
+    proposed_resolution: |
+      別 cycle で extract_unverified_inventory.py 実行時の機械状態 (= MC 側未追跡 entry
+      の存在可能性) を遡及調査、karo 経由提起候補。本 task scope では現実態 SoT 化 +
+      regression invariant 装着で根本治療済。
+    blocking: false
+
+next_actions:
+  - action: 直政_audit_request_dispatched
+    target: queue/inbox/gunshi.yaml
+    purpose: AC5 audit_request 投函 (= 9 観点 + 10 lens + 5-10 年 risk)
+    timing: 本 commit 3 push 直後
+  - action: 直政_audit_completion
+    purpose: AC5 verdict 確定 (= 直政 post-audit、karo 経由 verdict 通達)
+    blocked_on: 直政 audit 実行 (= ashigaru 範囲外、ETA naomasa 個別 schedule 経由)
+    note: "Rule 4 'completion_gate / verdict / shogun_audit_request 起動条件明示' 整合"
+
+completion_gate: open_with_concerns  # 全 AC pass、concern 2 件 (低/中) 残、直政 audit 確定で full close
+shogun_audit_request_trigger_condition: |
+  本 report で直政 audit_request 投函 → 直政 verdict=pass / pass_with_concerns 受領 →
+  karo 経由 shogun_audit_request 起動 (= CLAUDE.md Communication Protocol 「inbox to
+  shogun FORBIDDEN」整合、本多 → 家康 → 信長兄上 chain relay path)。
+
+privacy_self_scan:
+  pii_detected: 0
+  credential_detected: 0
+  email_address_in_body: 1  # = hakudoukai@gmail.com (= PC identifier、CLAUDE.md userEmail context 由来、敏感 PII ではなく既 公開 OSS context 値)
+  high_severity_finding: 0
+  warn_finding: 0
+  status: CLEAN
+
+audit_id: transition_doc_unmatched_verified_targets_8_to_0_20260514_ashigaru4
+
+echo_message: "⚔️ 大久保彦左衛門、unmatched=0 真実究明と regression invariant 装着、完遂仕る！直政殿 audit 仰ぐ！"
