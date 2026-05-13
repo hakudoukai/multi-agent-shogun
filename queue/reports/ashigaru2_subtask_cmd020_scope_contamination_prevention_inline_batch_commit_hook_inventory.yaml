@@ -1,0 +1,154 @@
+inventory_id: ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory
+task_id: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+parent_cmd: cmd_020
+reporter: ashigaru2
+created_at: "2026-05-13T14:05:00+09:00"
+
+purpose: |
+  AC0 inventory first 規範 (= ashigaru1 Layer A 第 1 弾実証 base、ashigaru3 Layer C 第 2 弾踏襲) 整合下、
+  cmd_020 scope_contamination 根本治療 task の既実装 / 既存 asset を inventory 化し、
+  本 task で新規制作する deliverable と既存 asset の境界を明示する。
+
+scope:
+  repo: multi-agent-shogun-newbuild
+  scope_exclusion:
+    - hakudokai-dev repo 関与禁 (= 本 task 範囲外明示)
+    - dashboard.md 直接編集禁 (= delivery_conditions cond_1)
+    - MC generator 統合 claim 禁 (= delivery_conditions cond_2)
+    - 他 ashigaru 進行中 file (= ashigaru6 Layer F report modified / ashigaru3 cmd_004 cicd untracked) 触れず
+
+design_doc_references:
+  - id: queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_report.yaml
+    role: 規範踏襲 base (= ashigaru1 第 1 弾 inline batch commit 3-commit atomic 規範実証)
+    line_range_approx: "86-104"
+    read_evidence: "本 task 進行中 Read tool で全文取得、commit_plan + push_plan + delivery_conditions_compliance を構造踏襲"
+  - id: queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_report.yaml
+    role: 規範踏襲 + root cause anchor (= ashigaru3 Layer C 11:18 通達で ashigaru2 staged 残存 file が混入した root cause source)
+    line_range_approx: "96-114"
+    read_evidence: "本 task 進行中 Read tool で全文取得、Layer A 規範踏襲 + 4 design_doc_references chain を確認、root cause = ashigaru2 pre-commit 未実施 + staged 残存"
+  - id: queue/inbox/ashigaru2.yaml (msg_20260512_111743_d21693f4)
+    role: 緊急通達 evidence (= karo 11:18 通達で commit f3651ae に貴殿 staged Layer B file 自動取込検出 + pre-commit 未実施 root cause + ashigaru1 inline batch commit 規範整合 適用指示)
+    line_range_approx: "170-183"
+    read_evidence: "本 task 進行中 Read tool で取得、通達文面を再発防止策 4 件に反映"
+  - id: .pre-commit-config.yaml (現行)
+    role: 既存 hook 設定 (= cmd_004 Phase 6 由来、secret-detect-staged + deliverable-tracked 2 hook)
+    line_range_approx: "1-23"
+    read_evidence: "本 task 進行中 Read tool で全文取得、現行 hook 2 件を retain しつつ追加 hook を append"
+  - id: scripts/lint/check_secrets.sh + scripts/lint/check_deliverable_tracked.sh
+    role: 既存 hook script (= 既存 hook の entrypoint script、retain reference)
+    line_range_approx: "1-50 ほど"
+    read_evidence: "本 task 進行中 Bash cat で head 取得、両 script 既存利用継続"
+
+existing_assets_inventoried:
+  - asset: .pre-commit-config.yaml
+    status: exists
+    role: pre-commit hook 設定 (= 装備済、本 task は append のみ)
+    location: ".pre-commit-config.yaml (repo root)"
+    line_count_approx: 23
+    contains:
+      - "id: secret-detect-staged (= cmd_004 Phase 6)"
+      - "id: deliverable-tracked (= cmd_004 Phase 1-6 rollback)"
+    本_task_action: append (= staged-residual-check hook 新規追加、既存 retain)
+  - asset: scripts/lint/check_secrets.sh
+    status: exists
+    role: pre-commit hook entrypoint (secret/PII)
+    location: "scripts/lint/check_secrets.sh"
+    本_task_action: 不変 (= 本 task scope 外、retain)
+  - asset: scripts/lint/check_deliverable_tracked.sh
+    status: exists
+    role: pre-commit hook entrypoint (deliverable git-tracking)
+    location: "scripts/lint/check_deliverable_tracked.sh"
+    本_task_action: 不変 (= 本 task scope 外、retain)
+  - asset: docs/cmd004_security_hardening_design.md
+    status: exists
+    role: 既存 pre-commit hook 設計 source-of-truth
+    location: "docs/cmd004_security_hardening_design.md"
+    本_task_action: 不変 (= 参照のみ、scope_contamination_prevention.md は別 source)
+  - asset: queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_report.yaml
+    status: exists
+    role: inline batch commit 規範第 1 弾実証 evidence
+    本_task_action: 参照のみ (= 規範踏襲 source、不変)
+  - asset: queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_report.yaml
+    status: exists
+    role: scope 混入 root cause anchor (= ashigaru2 pre-commit 未実施 で staged Layer B 取込 evidence)
+    本_task_action: 参照のみ (= root cause source、不変)
+
+new_deliverables:
+  - file: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory.yaml
+    purpose: AC0 inventory yaml (= 本 file 自身)
+    creation_step: step_0_ac0_inventory_first
+  - file: docs/scope_contamination_prevention.md
+    purpose: 規範文書 (= 4 件再発防止策 + root cause + 規範体系化)
+    creation_step: step_2
+    contains:
+      - "## 1. 背景 (= ashigaru3 Layer C 11:18 通達 root cause)"
+      - "## 2. root cause 分析 (= ashigaru2 pre-commit 未実施 + staged 残存)"
+      - "## 3. 再発防止策 4 件"
+      - "### 3.1 (i) inline batch commit 規範 broadcast"
+      - "### 3.2 (ii) pre-commit hook 装備 (= .pre-commit-config.yaml 更新)"
+      - "### 3.3 (iii) 直政 audit gate 「staged 残存 check」追加"
+      - "### 3.4 (iv) ashigaru 完遂報告 「pre-commit verify 完遂」明示 field 義務化"
+      - "## 4. 適用範囲 (= multi-agent-shogun-newbuild repo only)"
+      - "## 5. cross-reference (= cmd_004 Phase 6 既存 hook 整合)"
+      - "## 6. 起案完了基準"
+  - file: .pre-commit-config.yaml (append)
+    purpose: staged-residual-check hook 追加 (= 規範 ii 装備)
+    creation_step: step_2
+    appended_hook_id: staged-residual-check
+    note: "既存 secret-detect-staged + deliverable-tracked 2 hook retain、id: staged-residual-check append"
+  - file: scripts/lint/check_staged_residual.sh
+    purpose: pre-commit hook entrypoint (= staged 残存 file 検出)
+    creation_step: step_2
+    behavior: "git diff --cached --name-only で staged file 列挙、commit 直後の git status --porcelain で残存 staged 検出 → 警告 exit 1"
+  - file: scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py
+    purpose: AC3 static source-contract test 3-5 件
+    creation_step: step_3
+    test_count_plan: 5
+    test_names_plan:
+      - test_pre_commit_config_has_staged_residual_check
+      - test_scope_contamination_prevention_doc_4_measures_present
+      - test_check_staged_residual_script_present
+      - test_audit_gate_staged_check_section_present
+      - test_ashigaru_report_pre_commit_verify_field_section_present
+  - file: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml
+    purpose: AC6 完遂報告 yaml
+    creation_step: step_5
+  - file: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
+    purpose: AC3 pytest 出力 log evidence
+    creation_step: step_3
+  - file: .gitignore (append)
+    purpose: 本 task 新規 file の whitelist 追記
+    creation_step: step_4 (commit 1 内)
+    appended_entries:
+      - "!docs/scope_contamination_prevention.md"
+      - "!scripts/lint/check_staged_residual.sh"
+      - "!scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py"
+      - "!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory.yaml"
+      - "!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml"
+      - "!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log"
+
+mc_anti_dup_check: unknown (= MC regenerate_dashboard.py 不在、本 task は dashboard render 系列でなく規範文書系列、合議結果着後 verify、本 task 範囲外)
+
+gap_analysis:
+  - gap_1: "既存 pre-commit hook (secret + deliverable) は scope_contamination root cause を直接抑止しない。"
+    resolution: "staged-residual-check hook 追加 (= 規範 ii)。既存 hook と並列で実行、blast radius 局所。"
+  - gap_2: "ashigaru 完遂報告 yaml に pre_commit_verify field が無く、verify 完遂 evidence が報告に紐づかない。"
+    resolution: "規範 iv で必須 field 化 (= scope_contamination_prevention.md §3.4)、本 task の報告 yaml で先行実装 reference 化。"
+  - gap_3: "直政 audit gate は audit yaml の検査基準のみ、ashigaru 側 staged 残存検査が gate に含まれていない。"
+    resolution: "規範 iii で gate 追加項目を docs に明文化 (= scope_contamination_prevention.md §3.3)。実装は別 task (= karo 起案)、本 task は規範化のみ scope。"
+  - gap_4: "inline batch commit 規範は ashigaru1 Layer A 実証のみで明文化 docs が無い。"
+    resolution: "規範 i で明文化 (= scope_contamination_prevention.md §3.1)、3 commit atomic + commit 直後 staged ゼロ verify を規範化。"
+
+constraints_acknowledged:
+  - 本能寺戒め厳格遵守 (= 機械 evidence のみ評価)
+  - F001-F006 厳守、F007 例外 retain (= 朝駆け directive 整合、陛下御差配下のみ実行)
+  - delivery_conditions 4 件遵守 (= dashboard.md 直接編集禁 / hakudokai-dev 関与禁 / MC generator 統合 claim 禁 / SKIP=0)
+  - 根本治療原則整合 (= 5-10 年運用想定、短期 hack 禁)
+  - AC0 inventory first 規範 (= ashigaru1 第 1 弾実証 base 踏襲)
+  - MC anti-dup check (= 不在につき unknown 明記、defer)
+  - design doc 正本 read 徹底 (= 9 度 fail 教訓継承)
+  - inline batch commit 規範遵守 (= 3 commit atomic、本 task の core 規範を自身が実証)
+  - repo scope 単一 (= multi-agent-shogun-newbuild only)
+  - 朝駆け persona retain (= 13:50 受領後即動)
+
+next_step: step_2 (= 規範文書 + .pre-commit-config.yaml append + check_staged_residual.sh 起案)

@@ -304,6 +304,14 @@ logs/
 !queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report.yaml
 !queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_pytest.log
 
+# cmd_020 scope_contamination 根本治療 (= ashigaru2、subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook)
+# (scripts/lint/ 配下 *.sh は L231-232 で既 whitelist 済、check_staged_residual.sh は自動取込)
+!docs/scope_contamination_prevention.md
+!scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory.yaml
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
+
 # Screenshots (masked — no secrets)
 !images/
 !images/company-creed-all-panes.png
