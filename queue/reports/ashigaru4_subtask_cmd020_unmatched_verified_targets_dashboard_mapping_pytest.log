@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+scripts/test/test_unmatched_verified_targets_regression.py::test_unmatched_verified_targets_count_zero_invariant PASSED [ 20%]
+scripts/test/test_unmatched_verified_targets_regression.py::test_retain_registry_full_completeness PASSED [ 40%]
+scripts/test/test_unmatched_verified_targets_regression.py::test_dashboard_render_metric_invariance_after_stats PASSED [ 60%]
+scripts/test/test_unmatched_verified_targets_regression.py::test_baseline_metric_snapshot PASSED [ 80%]
+scripts/test/test_unmatched_verified_targets_regression.py::test_transition_documentation_file_exists PASSED [100%]
+
+============================== 5 passed in 2.06s ===============================
