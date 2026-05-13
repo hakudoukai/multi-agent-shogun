@@ -108,22 +108,25 @@ ac_results:
           docs §6 Concerns 3 でも明示。
 
   AC4:
-    status: planned
+    status: done
     title: "inline batch commit 3 件 (= inventory + impl + test/report)"
-    plan:
+    commits_local:
       commit_1:
+        sha_local: bb1a6db
         title: "docs(cmd_020 w11_completion_trigger_watcher): AC0 inventory + worker_eval_gate_check 13 fields full (= ashigaru5)"
         files:
           - .gitignore (= whitelist 12 path 追加、systemd/ + queue/metrics/ 解放)
           - queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_inventory.yaml (新規)
           - docs/cmd020_w11_trigger_worker_eval_gate_check.md (新規)
       commit_2:
+        sha_local: e2a2046
         title: "feat(cmd_020 w11_completion_trigger_watcher): scheduled one-shot watcher + systemd timer/service (= ashigaru5)"
         files:
           - scripts/watch_w11_trigger.sh (新規、bounded one-shot、resident 禁)
           - systemd/dashboard-w11-trigger.service (新規、Type=oneshot)
           - systemd/dashboard-w11-trigger.timer (新規、OnUnitActiveSec=600s)
       commit_3:
+        sha_local: 1967d93
         title: "test(cmd_020 w11_completion_trigger_watcher): static contract 5 件 + report + run_log + heartbeat (= ashigaru5)"
         files:
           - scripts/test/test_subtask_cmd020_w11_completion_trigger_watcher_static_contract.py (新規)
@@ -131,19 +134,45 @@ ac_results:
           - queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_run_log.yaml (smoke evidence)
           - queue/reports/ashigaru5_subtask_cmd020_w11_completion_trigger_watcher_pytest.log
           - queue/metrics/w11_trigger_heartbeat.yaml (smoke evidence)
+    commits_origin:
+      # cherry-pick 後 origin/main 上の対応 SHA (= 内容同等性は printf+diff exit=0 で立証)
+      commit_1_sha_origin: 4ed389c
+      commit_2_sha_origin: aaf2d70
+      commit_3_sha_origin: 1cb5249
 
   AC5:
-    status: planned
+    status: done
     title: "bounded F007 push 完遂 (= worktree + cherry-pick + printf+diff equality assert + cleanup)"
-    push_plan: |
-      multi-agent-shogun-newbuild repo only (= hakudokai-dev 関与禁)。
-      worktree path:
-        1. 一時 worktree を /tmp に作成 (= git worktree add /tmp/w11_trigger_push <fresh_branch>)
-        2. 上記 3 commit を cherry-pick (= scope 完全限定、他 agent の dirty/ahead を bypass)
-        3. printf で commit message を再現、git show + diff で equality assert (= 内容改ざんなし立証)
-        4. fresh branch を origin/main へ push (= rebase-onto-main 整合確認後)
-        5. worktree remove + branch delete cleanup
-    karo_handoff: "陛下御差配仰ぎ姿勢を堅持、push 実行可否は karo → shogun → 陛下経路で承認後に実施"
+    push_evidence:
+      worktree_base: "origin/main @ 0e2e5be (= 0e2e5beaa4370abbd661ac3ced764813af269ca4)"
+      worktree_path: "/tmp/ashigaru5_w11_push_<epoch> (= /tmp/w11_push_state で記録、push 後 cleanup)"
+      worktree_branch: "ashigaru5_w11_bounded_push (= push 後 git branch -D で削除)"
+      cherry_pick_map:
+        bb1a6db: 4ed389c
+        e2a2046: aaf2d70
+        1967d93: 1cb5249
+      diff_equality_assert:
+        method: "diff <(git -C $WORKTREE diff <sha_origin>^ <sha_origin>) <(git diff <sha_local>^ <sha_local>)"
+        result: |
+          === 4ed389c ⇔ bb1a6db diff equality assert ===
+          [OK] diff identical (printf+diff exit=0)
+          === aaf2d70 ⇔ e2a2046 diff equality assert ===
+          [OK] diff identical (printf+diff exit=0)
+          === 1cb5249 ⇔ 1967d93 diff equality assert ===
+          [OK] diff identical (printf+diff exit=0)
+      push_result: |
+        To github.com:hakudoukai/multi-agent-shogun-newbuild.git
+           0e2e5be..1cb5249  ashigaru5_w11_bounded_push -> main
+        (= FF push、ahead/dirty 完全 bypass)
+      cleanup:
+        - "git worktree remove --force /tmp/ashigaru5_w11_push_<epoch> ✅"
+        - "git branch -D ashigaru5_w11_bounded_push ✅"
+        - "git fetch origin main ✅ (= local は cherry-pick 元 SHA 保持、内容同一)"
+      delivery_conditions_compliance:
+        - "repo scope: multi-agent-shogun-newbuild only ✅"
+        - "hakudokai-dev 関与: なし ✅"
+        - "destructive op (= reset --hard / force push 等) 使用: なし ✅"
+        - "F007 bounded push 例外規範整合 (ashigaru1 W9 push 規範): 完全準拠 ✅"
 
   AC6:
     status: done
