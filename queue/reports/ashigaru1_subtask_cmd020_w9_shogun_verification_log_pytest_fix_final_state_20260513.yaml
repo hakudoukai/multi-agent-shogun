@@ -1,0 +1,87 @@
+snapshot_id: ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_final_state_20260513
+snapshot_purpose: /clear 直前 final state snapshot (= karo msg_20260513_174431_abe52854 推奨手順 (2))
+snapshot_by: ashigaru1
+snapshot_at: "2026-05-13T17:48:00+09:00"
+parent_cmd: cmd_020
+
+current_task_state:
+  task_yaml: queue/tasks/ashigaru1.yaml
+  task_id: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+  status: done
+  hold_state: idle (= 信長殿 direct dispatch stand-by retain、家康 → 兄上 chain restore 御差配仰ぎ pending)
+
+today_completed_chain:
+  - task: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    verdict: pass
+    post_audit_revise_cycle: 1 (= naomasa fail_requires_report_correction → revise 完遂)
+    pytest: "28 passed, 152 deselected (= 0 fail / 0 skip)"
+    synthetic_injection: 0 件 (= AC8 sha256 diff_byte_count 0)
+    root_cause: i_shogun_verification_log_w9_entry_missing
+    fix_path: status_classification_change
+
+today_commits_local:
+  - 32a268bc97fc9247c1672c4d4ffa206dac3a8279 (= docs AC0 inventory + grep evidence + .gitignore)
+  - 4ab45fa (= feat blocked field + test 反転)
+  - 4fe39c4 (= test static contract + report + log)
+  - f1f92f0 (= docs addendum AC4 origin SHA + AC5 push evidence)
+  - 2bfcbd5 (= docs revise stale marker 4 件解消)
+  - 3fdb94e (= docs revise SHA backfill)
+
+today_commits_origin:
+  - 9bf630d  (= cherry-pick of 32a268b)
+  - e2189be  (= cherry-pick of 4ab45fa)
+  - 885c98b  (= cherry-pick of 4fe39c4)
+  - 0e2e5be  (= cherry-pick of f1f92f0)
+  - 35dbfab  (= cherry-pick of 2bfcbd5)
+  - d77840e  (= cherry-pick of 3fdb94e)
+
+push_state:
+  origin_main_head: d77840e (= 本 task 系最終 push、本 snapshot 起案後の origin/main 進行で更新可能)
+  bounded_F007_push_count: 4 (= 3 commit 一括 + 1 addendum + 1 revise + 1 backfill)
+  delivery_conditions_pass:
+    - dirty original worktree push 禁守
+    - diff equality assert exit=0
+    - SKIP=0 retain
+    - worktree path 既存時 stop check
+
+deliverables_committed_and_pushed:
+  - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory.yaml
+  - queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml
+  - .gitignore (= cmd_020 W9 pytest fix 5 deliverable allow rules)
+  - scripts/regenerate_dashboard.py
+  - tests/test_regenerate_dashboard.py
+  - scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py
+  - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml
+  - queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
+
+karo_inbox_reports_sent:
+  - msg_20260513_142040_275fd732 (= 初回完遂報告)
+  - msg_20260513_143754_0bfc015e (= revise 完遂報告)
+
+gunshi_post_audit:
+  - id: naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513
+    verdict: fail_requires_report_correction
+    severity_high: 9_doc stale marker 4 件 (= revise で全件解消済)
+    severity_medium: 10_ecosystem_coherence (= blocked-visible status 明示済)
+
+post_clear_recovery_plan:
+  step_1: tmux display-message agent_id = ashigaru1 確認
+  step_2: queue/tasks/ashigaru1.yaml read → status=done → wait 状態 retain
+  step_3: hold_state=idle (= 信長殿 direct dispatch stand-by) ゆえ未着手
+  step_4: 着手禁、家康 → 兄上 chain restore 御差配下命 待機
+  step_5: SessionStart hook inbox 整合 verify (= warning 検出時 karo 報告)
+  forbidden_after_clear:
+    - instructions/*.md 再読 (= cost saving)
+    - 自発 polling (= F004 違反)
+    - 直接 tmux 操作 (= F002 違反)
+
+stand_by_directive:
+  source: karo msg_20260513_174431_abe52854 (= clear_recommendation)
+  source_higher: 家康 → 兄上 chain restore 御差配仰ぎ retain 中
+  resumption_trigger: 家康御差配下命受領時 (= karo 経由 inbox 配信)
+
+notes:
+  - karo 通達は ack 不要、自律 /clear 判断 retain
+  - 本 snapshot 起案後、agent は idle wait retain
+  - /clear command 実 trigger は karo 経由 inbox_watcher (= type=clear_command) 想定
+  - 本 file は git 追跡対象 (= .gitignore allow rule 必要)

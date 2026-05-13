@@ -353,6 +353,7 @@ logs/
 !queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_report.yaml
 !queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
 !queue/reports/ashigaru1_w9_pytest_fix_evidence.yaml
+!queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_final_state_20260513.yaml
 
 # cmd_020 W11 completion trigger watcher (= ashigaru5、subtask_cmd020_w11_completion_trigger_watcher、scheduled one-shot watcher、detect-and-notify only、direct audited_done 禁、worker_eval 13 fields full + 6 質問 1-to-1 mapping)
 !scripts/watch_w11_trigger.sh
