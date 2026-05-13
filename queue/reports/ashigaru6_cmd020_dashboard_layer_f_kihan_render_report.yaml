@@ -82,20 +82,23 @@ acceptance_criteria_results:
 
 commit_history:
   - sequence: 1
-    sha_short: TBD_FILLED_POST_COMMIT
+    sha_short: c9c51e6
+    sha_full: c9c51e6b55bf869604edc11bf48721c6f543062f
     message: "docs(cmd_020 Layer F): AC0 inventory yaml 起案"
     files:
       - .gitignore (= Layer F whitelist 5 entries 追加)
       - queue/reports/ashigaru6_dashboard_layer_f_inventory.yaml
 
   - sequence: 2
-    sha_short: TBD_FILLED_POST_COMMIT
+    sha_short: 5ac423b
+    sha_full: 5ac423b0084eb5b80c7eac2c14840846ef675dac
     message: "docs(cmd_020 Layer F): dashboard_layer_f_kihan.md render component"
     files:
       - docs/dashboard_layer_f_kihan.md
 
   - sequence: 3
-    sha_short: TBD_FILLED_POST_COMMIT
+    sha_short: a3b5269
+    sha_full: a3b5269cf30f96b78eb973b3fe5d17ddb4f93c4c
     message: "test(cmd_020 Layer F): static source-contract 5 test + report yaml + pytest log"
     files:
       - scripts/test/test_dashboard_layer_f_static_contract.py
@@ -105,12 +108,18 @@ commit_history:
 push_verification:
   push_method: "worktree + cherry-pick + printf+diff equality assert + cleanup (= ashigaru1 Layer A 規範整合)"
   worktree_path: /tmp/cmd_020_layer_f_main_wt
-  remote: origin (= SC)
+  worktree_base: "origin/main (= ea97152、fetch 2026-05-12T11:23)"
+  remote: origin (= SC、git@github.com:hakudoukai/multi-agent-shogun-newbuild.git)
   target_branch: main
-  pre_push_diff_status: TBD_FILLED_POST_PUSH
+  cherry_picked_shas:
+    - e999fc7587ff078b2af72dd2c7ae9efd4d8dc60a (= local c9c51e6 cherry-pick、inventory)
+    - 9b30adf80f001e24caca6538ab585f85f57cab68 (= local 5ac423b cherry-pick、render)
+    - fc0f51ad7420978e02bddc8d6eaa986a8e507675 (= local a3b5269 cherry-pick、test+report+log)
+  pre_push_diff_status: "EQUALITY_ASSERT_PASS (= /tmp/push_actual_main_f.txt vs /tmp/push_expected_main_f.txt 完全一致、bounded 3 SHA only)"
   push_command: "git -C /tmp/cmd_020_layer_f_main_wt push origin HEAD:main"
-  cleanup_status: TBD_FILLED_POST_PUSH
-  bounded_scope: "本 task 3 commit のみ、既 ashigaru 累計 commit + 他 ashigaru commit + MC commit 全件 本 task scope 外"
+  push_result: "ea97152..fc0f51a HEAD -> main (= 3 commit push 完遂)"
+  cleanup_status: "git worktree remove /tmp/cmd_020_layer_f_main_wt 完遂、git worktree list で /tmp/cmd_020_layer_f_main_wt 不在 verify 済"
+  bounded_scope: "本 task 3 commit のみ、既 ashigaru 累計 commit + 他 ashigaru commit (= ashigaru4 cae1990 local backfill / ashigaru7 28274b2 local backfill) + MC commit 全件 本 task scope 外、cherry-pick 経由で bounded 完遂"
 
 constraints_compliance:
   - id: honnoji_kaime
