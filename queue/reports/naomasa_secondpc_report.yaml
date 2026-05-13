@@ -6183,6 +6183,34 @@ cmd020_sc_specialty_inventory_post_audits_20260513:
       action: publish_or_sync_ashigaru3_revise_then_request_reaudit
       summary: "足軽3号は改善済みだが origin 未到達。0945196/d4e688c を正規 publish/sync してから弾6 relay 判定を再依頼すべし。"
 
+  - audit_id: naomasa_ashigaru3_sc_specialty_inventory_reaudit_after_sync_20260513
+    audited_at: "2026-05-13T20:12:00+09:00"
+    source_commit: cc0bc7b
+    source_inbox:
+      - msg_20260513_195451_3414240a
+    detail_report: queue/reports/naomasa_ashigaru3_sc_specialty_inventory_reaudit_after_sync_20260513.yaml
+    target_task: subtask_cmd020_sc_specialty_inventory
+    target_assignee: ashigaru3
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    audit_gate_status: pass_shogun_audit_request_chain_allowed
+    machine_evidence:
+      origin_main: ed87589c662e706b867374a8237295860f9aad02
+      origin_contains:
+        - cc0bc7b
+        - ed87589
+      pytest: "python3 -m pytest scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py -q => 7 passed, SKIP=0"
+      target_file_identity: "0945196->cc0bc7b report file no diff; d4e688c->ed87589 final_state file no diff."
+      tree_identity_note: "Whole tree SHA differs due to c763846 base; target-file identity is verified."
+    remaining_concerns:
+      - "d329ceb remains a documented Karo-approved contamination exception."
+      - "Tree identity claim must be read as target-file identity, not whole-tree identity."
+      - "Fleet-wide hook/linter adoption remains separate."
+    recommendation_to_karo:
+      action: trigger_shogun_audit_request_bullet_6_with_concerns
+      summary: "origin 同期 blocker は解消。足軽3号は pass_with_concerns とし、弾6 relay 起動可。"
+
 cmd020_dashboard_status_classification_post_audits_20260513:
   - audit_id: naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513
     audited_at: "2026-05-13T14:09:42+09:00"

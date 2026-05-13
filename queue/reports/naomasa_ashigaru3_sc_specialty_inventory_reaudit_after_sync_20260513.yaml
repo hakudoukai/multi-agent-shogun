@@ -1,0 +1,55 @@
+worker_id: gunshi
+task_id: naomasa_ashigaru3_sc_specialty_inventory_reaudit_after_sync_20260513
+parent_cmd: cmd_020
+timestamp: "2026-05-13T20:12:00+09:00"
+status: done
+result:
+  type: evaluation
+  summary: "ashigaru3 SC specialty revision is now on origin/main and may proceed to shogun_audit_request bullet 6 with process concerns recorded."
+  audit_target:
+    assignee: ashigaru3
+    task: subtask_cmd020_sc_specialty_inventory
+    report: queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml
+    origin_revise_commit: cc0bc7b
+    origin_final_state_commit: ed87589
+  verdict: pass_with_concerns
+  completion_gate: open_with_concerns
+  audit_gate_status: pass_shogun_audit_request_chain_allowed
+  evidence_state: complete
+  machine_evidence:
+    origin_main: ed87589c662e706b867374a8237295860f9aad02
+    origin_contains:
+      - cc0bc7b
+      - ed87589
+    focused_pytest: "python3 -m pytest scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py -q => 7 passed, SKIP=0"
+    target_file_identity:
+      report_file: "git diff 0945196:queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml cc0bc7b:queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml => no diff"
+      final_state_file: "git diff d4e688c:queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_final_state_20260513.yaml ed87589:queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_final_state_20260513.yaml => no diff"
+    tree_identity_note: "Whole-commit tree SHA is not identical because cc0bc7b/ed87589 are based on c763846, but the target files are content-identical to the local originals."
+  resolved_previous_blocker:
+    - "Previous local-only blocker is resolved: cc0bc7b and ed87589 are now on origin/main."
+    - "AC5 stale/TBD fields are resolved in the origin report file."
+    - "Karo-approved d329ceb contamination exception is recorded; this remains a process concern, not a completion blocker."
+    - "ashigaru2 scope_contamination_v2 evidence provides the follow-up prevention path."
+  remaining_concerns:
+    - "d329ceb remains a historical contaminated commit and must remain documented as an exception."
+    - "Karo's tree-identity claim is only valid at target-file level, not whole-commit tree level."
+    - "Fleet-wide hook/linter adoption remains separate from this task's completion."
+  rule11_v4_followup:
+    timestamping_status: pass_with_concerns
+    sequential_evidence:
+      - "bullet 7 remained sequential in the prior timing check: 319f081 audit commit at 19:04:32, Karo ack at 19:06:07, Ieyasu relay at 19:45:09."
+      - "ashigaru3 bullet 6 may now be relayed after this audit because the origin-sync blocker is closed."
+    stall_analysis:
+      - "14:10 revise transfer absence remains valid evidence of inbox delivery infrastructure gap."
+      - "19:45 nudge was the first visible recovery message in ashigaru3 inbox."
+  recommendation_to_karo:
+    action: trigger_shogun_audit_request_bullet_6_with_concerns
+    summary: "足軽3号 SC specialty inventory は origin 同期後 pass_with_concerns。弾6 relay を起動してよいが、d329ceb exception と tree-identity補正を併記すべし。"
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "Origin-visible evidence now matches the deliverable claim, while process exceptions remain explicit."
+  risks_to_north_star:
+    - "If target-file identity is overstated as whole-tree identity, future audit data integrity checks may overtrust rebase/cherry-pick claims."
