@@ -251,8 +251,34 @@ machine_evidence:
     failed: 0
     skipped: 0
     duration_sec: 0.02
-  commit_status: planned (= F007 遵守、陛下御差配仰ぎ)
-  push_status: planned (= F007 例外 bounded、worktree + cherry-pick + equality assert)
+  commit_status: completed
+  commit_status_evidence:
+    inline_batch_commits_local:
+      - sha: bb1a6db
+        title: "docs(cmd_020 w11_completion_trigger_watcher): AC0 inventory + worker_eval_gate_check 13 fields full"
+      - sha: e2a2046
+        title: "feat(cmd_020 w11_completion_trigger_watcher): scheduled one-shot watcher + systemd timer/service"
+      - sha: 1967d93
+        title: "test(cmd_020 w11_completion_trigger_watcher): static contract 5 件 + report + run_log + heartbeat"
+      - sha: e030b2d
+        title: "docs(cmd_020 w11_completion_trigger_watcher): report addendum — AC4 origin SHA + AC5 bounded F007 push 完遂"
+  push_status: completed
+  push_status_evidence:
+    bounded_F007_push_origin_main:
+      worktree_base: "origin/main @ 0e2e5be"
+      cherry_pick_map:
+        bb1a6db: 4ed389c
+        e2a2046: aaf2d70
+        1967d93: 1cb5249
+        e030b2d: c480cff
+      diff_equality_assert: EQUALITY_OK (= printf+diff exit=0 for all 4 pairs)
+      push_results:
+        - "0e2e5be..1cb5249  ashigaru5_w11_bounded_push -> main (FF, 3 commits)"
+        - "1cb5249..c480cff  ashigaru5_w11_addendum_push -> main (FF, addendum)"
+      cleanup:
+        - "git worktree remove --force <path> ✅ (2 worktrees)"
+        - "git branch -D ashigaru5_w11_bounded_push ✅"
+        - "git branch -D ashigaru5_w11_addendum_push ✅"
 
 # ───────────────────────────────────────────────
 # 根本治療原則適用
