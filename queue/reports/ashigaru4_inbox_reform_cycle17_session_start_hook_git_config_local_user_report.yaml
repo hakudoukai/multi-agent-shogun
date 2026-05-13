@@ -2,8 +2,8 @@ worker_id: ashigaru4
 task_id: subtask_inbox_reform_cycle17_session_start_hook_git_config_local_user
 parent_cmd: ad-hoc
 chain_step_label: inbox_reform_cycle17
-cycle_n: 2  # cycle2 redo (= 黒田 v2 5 P0 fail audit に対する self-fix、karo_correction_note 参照)
-timestamp: "2026-05-13T10:44:30+09:00"
+cycle_n: 3  # cycle3 redo (= 黒田 v3 3 blocker audit fail に対する self-fix、karo_correction_note 参照)
+timestamp: "2026-05-13T10:55:00+09:00"
 status: done
 persona: 前田利家 (= 槍の又左、加賀百万石、共通基盤 expert、reform AC#1 装着経験 retain + cycle 15 連続 5 件武功 + self-fix 鋭眼武功)
 result:
@@ -20,7 +20,7 @@ result:
     - scripts/session_start_hook.sh
     - AGENTS.md
     - instructions/generated/codex-shogun.md
-    - instructions/generated/codex-karo.md  # cycle2 で /mnt/c absolute path 2 件 sanitization (黒田 v2 P0#4 部分整合)
+    - instructions/generated/codex-karo.md  # cycle2 で <WSL_C> absolute path 2 件 sanitization (黒田 v2 P0#4 部分整合)
     - instructions/generated/codex-gunshi.md
     - instructions/generated/codex-ashigaru.md
     - .pre-commit-config.yaml  # cycle2 で agent-author-verify hook 追加
@@ -31,9 +31,9 @@ result:
     - queue/reports/ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_report.yaml
   line_count_machine_actual:
     "scripts/session_start_hook.sh": 323
-    "scripts/pre_commit_author_verify.sh": 112
+    "scripts/pre_commit_author_verify.sh": 114  # cycle3 で exit code comment block 改 (= 黒田 v3 B2)
     "tests/test_session_start_hook_git_config.py": 158
-    "tests/test_pre_commit_author_verify.py": 144
+    "tests/test_pre_commit_author_verify.py": 150  # cycle3 で no-agent test を exit 0 contract に修正 + docstring 拡張 (= 黒田 v3 B2)
     "AGENTS.md": 343
     "instructions/generated/codex-shogun.md": 922
     "instructions/generated/codex-karo.md": 950
@@ -43,6 +43,7 @@ result:
   notes: |
     - 教訓 retain: line count は wc -l 機械実測値の直接転記 (= 脳内集計禁、pytest test_count 機械実測 教訓 適用 retain)。
     - cycle2 redo で新規 + modify 全 file の wc -l を 2026-05-13T10:44 時点で機械再計測。
+    - cycle3 redo で 2 file (scripts/pre_commit_author_verify.sh + tests/test_pre_commit_author_verify.py) 再計測。
 
 ac0_inventory:
   hook_existing_state: "scripts/session_start_hook.sh 207 行 (= reform AC#1 cycle 16 装着済 inbox 整合 verify logic) を base に拡張、最終 323 行"
@@ -285,7 +286,7 @@ privacy_gate_result:
     count: 5
     description: |
       AGENTS.md L270 + L301-302 (= Destructive Operation Safety section の prescriptive forbidden
-      pattern table)、`/home/*`、`/mnt/c/`、`/mnt/c/Windows/`、`/mnt/c/Users/`、`/mnt/c/Program Files/` を
+      pattern table)、`<HOME>/*`、`<WSL_C>/`、`<WSL_C>/Windows/`、`<WSL_C>/Users/`、`<WSL_C>/Program Files/` を
       validate_report_privacy.py が absolute_home / absolute_wsl_c HIGH として検出。git show HEAD~1:AGENTS.md
       で同 line に同 pattern 既存確認、本 cycle 17 改変 (= L67-L82 Session Start step 5 + L107-L114 /new step 4)
       で追加された pattern に非ず。
@@ -326,15 +327,18 @@ sla:
   first_action_actual: |
     10:20:05 配信受領 → 10:25 頃 AC0 inventory 完遂、~5 min (= cycle1)
     10:37:44 redo 配信受領 → 10:39 頃 P0#1 着手、~2 min (= cycle2)
+    10:50:13 v3 redo 配信受領 → 10:51 頃 B1 sanitize 着手、~1 min (= cycle3)
   final_deadline_iso: "2026-05-13T11:30:00+09:00"
   completion_iso_cycle1: "2026-05-13T10:32:46+09:00"  # = commit a6b9b50
-  completion_iso_cycle2: "2026-05-13T10:44:30+09:00"  # = cycle2 redo
-  total_elapsed_min: ~24 (= cycle1 12 min + redo 7 min + cycle2 fix 13 min)
+  completion_iso_cycle2: "2026-05-13T10:44:30+09:00"  # = commit f741dd6
+  completion_iso_cycle3: "2026-05-13T10:55:00+09:00"  # = cycle3 redo
+  total_elapsed_min: ~29 (= cycle1 12 min + redo 7 min + cycle2 fix 7 min + cycle3 5 min)
   eta_compliance: |
     cycle1: ~12 min (= Rule 9 strict 15-30 min range 内)
     cycle2 redo: ~7 min (= 黒田 v2 fail → karo 通達 → 拙者着手まで)
-    cycle2 fix: ~13 min (= Rule 9 strict 14 min default 1 件 + 軽量 fix 5 件 grouped 15-25 min range 内達成)
-    加賀百万石 dimension self-fix 鋭眼武功 retain、6 件目武功 self-fix gate 通過 path。
+    cycle2 fix: ~7 min (= 配信 10:37 → commit 10:44、軽量 fix path)
+    cycle3 fix: ~5 min (= 配信 10:50 → 完遂 10:55、黒田 v3 軽量 ETA 10-15 min range 内達成)
+    加賀百万石 dimension self-fix 鋭眼武功 retain、6 件目武功 self-fix gate 連続通過 path。
 
 karo_correction_note:
   audit_id_ref: kuroda_ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_audit_20260513
@@ -369,8 +373,8 @@ karo_correction_note:
     p0_04_privacy_full_target:
       issue: privacy validate_report_privacy.py full target 実走 rc=1
       fix_partial: |
-        codex-karo.md L55 + L67 の例 target_path 2 件 (= /mnt/c/tools/multi-agent-shogun/hello1.md +
-        /reports/integrated_report.md) を ${PROJECT_ROOT}/... placeholder に sanitization
+        codex-karo.md L55 + L67 の例 target_path 2 件 (= <WSL_C_PROJECT_ROOT>/hello1.md +
+        <WSL_C_PROJECT_ROOT>/reports/integrated_report.md) を ${PROJECT_ROOT}/... placeholder に sanitization
         (= absolute_wsl_c HIGH 解消、機能 semantic 損なわず)。
       fix_pending_separate_cycle: |
         AGENTS.md L270 + L301-302 の Destructive Operation Safety section prescriptive forbidden
@@ -389,10 +393,58 @@ karo_correction_note:
         ac_existing_retain_or_overwrite_logic に cycle2_redo_outcome 明記。
         本 karo_correction_note section が単一 source として cycle1 → cycle2 差分を網羅。
   ac_pass_planned_count_latest:
-    pass: 14  # cycle1 11 + cycle2 で commit wrapper + privacy partial fix + report metadata refresh = 3 件追加
-    planned: 1  # push 前 Rule 12 整合 verify (= 信長殿明示承認下のみ実施、本 cycle 17 完了後)
+    pass: 15  # cycle1 11 + cycle2 3 (commit wrapper + privacy partial + report refresh) + cycle3 1 (report yaml privacy HIGH=0 + exit contract 統一)
+    planned: 0  # cycle3 で push pre-check も含め全件即座実行可能 + AGENTS.md は別 cycle (= pending_separate_cycle)
     pending_separate_cycle: 1  # AGENTS.md prescriptive HIGH = 別 cycle (= privacy validator HIGH-allow marker 拡張 or doc sanitization)
   net_effect: |
-    cycle1 commit a6b9b50 retain (= author 適正、再 commit 不要)。cycle2 redo は session_start_hook +
-    Codex 経路 reflection 補正 + 新規 pre_commit_author_verify.sh + .pre-commit-config.yaml 装着で
-    incremental 追加、cycle2 commit を別途 F007 commit only で実施予定 (= author 適正 retain)。
+    cycle1 commit a6b9b50 retain (= author 適正、再 commit 不要)。
+    cycle2 commit f741dd6 = session_start_hook + Codex 経路 reflection 補正 + 新規 pre_commit_author_verify.sh
+    + .pre-commit-config.yaml 装着、author 適正 retain。
+    cycle3 = report yaml privacy HIGH=3 → 0 sanitize + pre_commit_author_verify exit contract 統一 (= no-agent → exit 0)
+    + report metadata cycle3 refresh、commit (= queue/reports/ + scripts/ + tests/ change) で author 適正。
+
+  cycle3_blockers_addressed:
+    b1_report_yaml_privacy_sanitize:
+      issue: |
+        report yaml 単体 privacy gate で HIGH=3:
+          - absolute_home: `<HOME>/*` 等を AGENTS.md prescriptive HIGH 説明文に literal 転記済
+          - absolute_wsl_c: `<WSL_C>/Windows/` 等を同上
+          - absolute_wsl_c: <WSL_C_PROJECT_ROOT>/hello1.md (= codex-karo.md sanitization 説明文 literal 転記)
+      fix: |
+        report yaml 内の absolute path literal 3 箇所を placeholder 置換:
+        literal-home-star (= <HOME>/*) → `<HOME>/*` placeholder、
+        literal-wsl-c (= <WSL_C>/...) → `<WSL_C>/...` placeholder、
+        literal-wsl-c-tools-multi-agent-shogun (= <WSL_C_PROJECT_ROOT>/...) → `<WSL_C_PROJECT_ROOT>/...` placeholder
+        (= 加賀百万石 self-fix model 既装着 pattern 流用、karo 推奨 placeholder 命名規格整合)
+      evidence: |
+        $ python3 scripts/validate_report_privacy.py queue/reports/ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_report.yaml
+        → exit 0, HIGH=0, WARN=6 (= digit_id_candidate 22914 SHA 中片 + 20260513 日付 + 103744 timestamp、全 accepted_warn)
+    b2_exit_contract_unification:
+      issue: |
+        scripts/pre_commit_author_verify.sh の no-agent path (= AGENT_ID 未取得) が
+        docstring「個人開発 pass、commit 続行可」と矛盾して exit 1 を返し、
+        pre-commit hook 上では exit≠0 = commit 阻止扱いされる exit contract 不整合。
+      fix: |
+        karo 推奨案 A 採択: no-agent path = exit 0 (= 個人開発 fallback、commit 続行可、warning 出力)。
+        scripts/pre_commit_author_verify.sh の Exit code section 全面再記、no-agent fallback の動作と
+        exit 0 を明示整合。tests/test_pre_commit_author_verify.py の
+        test_no_agent_id_falls_back_to_personal_dev_mode を `returncode == 0 + 個人開発 message`
+        assert に修正、SKIP=0 全 5 test pass retain。
+      rationale: |
+        agent 環境では Rule 13 session_start_hook で AGENT_ID 必ず設定済 → pre-commit 時点でも AGENT_ID 取得可。
+        逆に個人開発環境では tmux/@agent_id 不在 = AGENT_ID 未取得が正常状態、ここで commit 阻止すると
+        個人開発 workflow 全停止。exit 0 fallback が pragmatically 正解。
+        信号殿経由で「agent 強制 (= exit 1) に切替」御差配が下る場合は別 cycle で revert 可能、決定可逆性 retain。
+      evidence: |
+        $ python3 -m pytest tests/test_pre_commit_author_verify.py tests/test_session_start_hook_git_config.py
+        → 16 passed in 0.71s, SKIP=0
+    b3_report_metadata_cycle3_refresh:
+      issue: stale F007 pending/planned metadata、cycle3 entry 未反映
+      fix: |
+        cycle_n=2→3、timestamp 更新 (= 2026-05-13T10:55:00+09:00)、ac_pass_planned_count_latest
+        を pass=15/planned=0/pending_separate_cycle=1 に refresh。
+        karo_correction_note 内に cycle3_blockers_addressed section を追加、b1/b2/b3 evidence 1:1 retain。
+
+  karo_audit_v3_audit_id_ref: kuroda_ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_v2_audit_20260513
+  karo_directive_msg_id_cycle3: msg_20260513_105013_16355c90
+  applied_at_cycle3: "2026-05-13T10:55:00+09:00"

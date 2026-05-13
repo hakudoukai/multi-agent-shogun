@@ -15,11 +15,13 @@
 #   - 手動: 任意の git commit 直前に `bash scripts/pre_commit_author_verify.sh`
 #   - .pre-commit-config.yaml の local hook 経由 (pre-commit install 済の場合)
 #
-# Exit code:
-#   0 = author 整合 OK (set / verified)
-#   1 = agent_id 未取得 (= TMUX_PANE 未設定 / tmux 不在) → 個人開発扱い、commit 続行可
-#   2 = whitelist 外 agent_id → 設定 skip、karo 報告 path (但し commit は許可しない)
-#   3 = git config 設定失敗 → karo 報告 path、commit 阻止
+# Exit code (= 黒田 v3 audit B2 統一 = no-agent path も exit 0、個人開発 pass、commit 続行可):
+#   0 = OK to proceed with commit, possible reasons:
+#       - author 整合 verified (= whitelist agent_id × in-sync local config)
+#       - author drift detected and reset (= whitelist agent_id × out-of-sync → re-set)
+#       - 個人開発 fallback (= AGENT_ID 未取得、TMUX_PANE 未設定 / tmux 不在、warning 出力のみ)
+#   2 = whitelist 外 agent_id → commit 阻止 (= persona alias / 未定義 agent / 誤 env)
+#   3 = git config 設定失敗 → commit 阻止 (= disk error / permission / git internal)
 
 set -uo pipefail
 
@@ -35,8 +37,8 @@ if [ -n "${PRE_COMMIT_AGENT_ID:-}" ]; then
 fi
 
 if [ -z "$AGENT_ID" ]; then
-    echo "[pre_commit_author_verify] agent_id 未取得 (= TMUX_PANE 未設定 / tmux 不在)、個人開発扱いで pass" >&2
-    exit 1
+    echo "[pre_commit_author_verify] agent_id 未取得 (= TMUX_PANE 未設定 / tmux 不在)、個人開発扱いで pass、commit 続行可" >&2
+    exit 0
 fi
 
 # REPO_ROOT 解決: env override > git rev-parse > script 位置 fallback

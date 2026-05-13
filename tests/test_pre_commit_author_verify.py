@@ -6,7 +6,7 @@
   - whitelist agent_id × drift config         → exit 0 + drift 補正 (reset)
   - whitelist agent_id × unset (= 初期) config → exit 0 + 新規 set
   - whitelist 外 agent_id                       → exit 2 + commit 阻止 + 無設定
-  - agent_id 未取得 (= env 全不在)              → exit 1 + commit 続行可
+  - agent_id 未取得 (= env 全不在)              → exit 0 + commit 続行可 + warning (= 個人開発 fallback、黒田 v3 B2 統一)
 
 SKIP=0 — 全 5 case を SKIP なしで pin。
 """
@@ -138,7 +138,13 @@ def test_whitelist_outsider_blocks_commit(fake_repo: Path) -> None:
 
 
 def test_no_agent_id_falls_back_to_personal_dev_mode(fake_repo: Path) -> None:
-    """agent_id 未取得 (= 個人開発) → exit 1 で commit 続行可、config 不変。"""
+    """agent_id 未取得 (= 個人開発) → exit 0 で commit 続行可 + warning、config 不変。
+
+    黒田 v3 audit B2 (exit contract 統一): 「個人開発 pass」を docstring と exit code で
+    一致させるため、AGENT_ID 未取得時は exit 0 (= commit 続行可) として個人開発 fallback。
+    pre-commit hook の中で no-agent path を阻止する設計が必要なら、別 hook で再表現する。
+    """
     result = _run(fake_repo, agent_id=None)
-    assert result.returncode == 1, f"stderr={result.stderr}"
+    assert result.returncode == 0, f"stderr={result.stderr}"
     assert _git_local_get(fake_repo, "user.name") == ""
+    assert "個人開発" in result.stderr
