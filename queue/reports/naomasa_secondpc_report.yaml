@@ -6133,3 +6133,23 @@ cmd020_sc_specialty_inventory_post_audits_20260513:
     recommendation_to_karo:
       action: require_corrected_final_report_or_acceptance_exception
       summary: "内容は source として利用可。ただし完了ゲートは report stale + contaminated chain 整理まで blocked。"
+
+cmd020_dashboard_status_classification_post_audits_20260513:
+  - audit_id: naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513
+    source_inbox:
+      - msg_20260513_140727_bd922b09
+    detail_report: queue/reports/naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513.yaml
+    target_task: subtask_cmd020_dashboard_status_classification_logic
+    target_assignee: ashigaru7
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "deliverables git-tracked"
+      - "pytest 5 passed, SKIP=0"
+      - "classification doc content usable"
+    high_findings:
+      - "完遂 report 内で AC4/AC5/AC6 pending と TBD placeholders が残り、後段 push complete 記述と矛盾。"
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "成果物は利用可。ただし report stale/pending/TBD 矛盾により完了ゲート blocked。"
