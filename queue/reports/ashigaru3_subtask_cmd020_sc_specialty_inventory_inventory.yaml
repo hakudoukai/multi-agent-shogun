@@ -1,0 +1,549 @@
+# SC Specialty Inventory (= subtask_cmd020_sc_specialty_inventory AC0+AC2)
+# AC0 = 既実装 anti-dup inventory、AC2 = SC 9 agent vs Charter v0.1 §8 9 部署 mapping
+# Scope: docs/inventory only (= 直政 pre_audit AC condition: no instruction persona / runtime config 変更不可)
+# Repo scope: multi-agent-shogun-newbuild only (= hakudokai-dev 触らず)
+
+inventory_id: ashigaru3_subtask_cmd020_sc_specialty_inventory_v1
+inventoried_at: "2026-05-13T13:55:00+09:00"
+inventoried_by: ashigaru3
+task_ref: subtask_cmd020_sc_specialty_inventory
+parent_cmd: cmd_020
+design_doc_ids:
+  - "Shogun Charter v0.1 (= docs/shogun_charter_v0_1_full_export.md §8 9 部署 + §9 10 段 + §15 mini-swe-agent)"
+  - "本多 review (= docs/karo_shogun_charter_v0_1_review.md §A4 9 部署 vs SC ashigaru 7 体 mapping case)"
+schema_ref: ac0_inventory_yaml_schema_v1
+
+# ─────────────────────────────────────────────────────────────
+# Section 0 — AC0 anti-dup inventory (= 既実装 verify、新規実装回避)
+# ─────────────────────────────────────────────────────────────
+ac0_anti_dup_inventory:
+  related_deliverables_found:
+    - artifact_path: docs/karo_shogun_charter_v0_1_review.md
+      artifact_type: review_md
+      relation: source_design_doc
+      timestamp_evidence: "2026-05-12T08:42+09:00 (= 本多 round 1 review)"
+      notes: "本 task の §A4 mapping case を参照源とする。本 task は inventory yaml + md で具体化、9 mapping を明示化する増分。"
+    - artifact_path: docs/shogun_charter_v0_1_full_export.md
+      artifact_type: full_export_md
+      relation: charter_export_source
+      timestamp_evidence: "2026-05-12T08:45+09:00"
+      notes: "Charter v0.1 §8 9 部署 table を直接参照、本 task で SC 9 agent 整合を表記化。"
+    - artifact_path: queue/reports/naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml
+      artifact_type: pre_audit_yaml
+      relation: gating_audit
+      timestamp_evidence: "2026-05-13T14:35:00+09:00"
+      notes: "本 task は pass_with_conditions、AC 追加条件 2 件 (docs only + timestamp evidence) を本 inventory で吸収。"
+    - artifact_path: queue/reports/ashigaru_alias_cert.yaml
+      artifact_type: alias_cert_yaml
+      relation: canonical_alias_source
+      timestamp_evidence: "(MC subtask_002f 完遂、6 ashigaru alias 物的証拠)"
+      notes: "MC 武将 alias の canonical source。SC pivot 後 cmd_004 chain で alias drift 観測 (= 後段 section 参照)、本 task では documented-state として記述のみ。"
+    - artifact_path: queue/reports/ashigaru1_existing_implementation_inventory.yaml
+      artifact_type: inventory_yaml
+      relation: schema_reference_pattern
+      timestamp_evidence: "2026-05-11T20:45:00+09:00"
+      notes: "ashigaru1 が確定した AC0 inventory yaml schema、本 task で同 schema 継承 (= component_id + integration_status + gap_notes pattern)。"
+  new_artifacts_planned:
+    - artifact_path: queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_inventory.yaml
+      artifact_type: inventory_yaml
+      reason_new: "SC 9 agent specialty + 9 部署 mapping を初出表現。本多 review §A4 を docs/inventory 化、specialty 推奨確定 source 起案。"
+    - artifact_path: docs/sc_specialty_inventory.md
+      artifact_type: docs_md
+      reason_new: "human-readable 9 mapping table + workload + assignment 推奨、4 人合議 round 2 source 用途。"
+    - artifact_path: scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py
+      artifact_type: pytest_static_contract
+      reason_new: "本 task deliverable (yaml + md) の構造 invariant を pytest で固定 (= 5 部署 + 9 agent + no_runtime_config_keys)。"
+    - artifact_path: queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml
+      artifact_type: report_yaml
+      reason_new: "完遂報告 + AC1-AC6 evidence + delivery_conditions 4 件遵守記録 + F007 worktree path 説明。"
+  duplicate_risk_zones:
+    - zone: "config/settings.yaml (= multi-agent persona slot mapping)"
+      risk: "本 task で persona/role mapping を docs 化、ただし config/settings.yaml の **既 runtime mapping は不変** (= 直政 verdict 条件遵守)。重複なし、新規範論文として並走。"
+      mitigation: "本 inventory および docs/sc_specialty_inventory.md の冒頭で「docs only、no runtime config change」を明示。pytest contract で config/settings.yaml の文字列を読まないことを保証。"
+    - zone: "instructions/ashigaru.md (= persona doc canonical)"
+      risk: "本 task で specialty 推奨が instructions persona doc と乖離する可能性。"
+      mitigation: "本 task では instructions/* を一切変更しない、specialty は推奨 (= 後段 task 起案 source) として明示、現 persona は retain。"
+    - zone: "queue/tasks/* (= 既 task assignment)"
+      risk: "9 部署 mapping から後段 task assignment 推奨を引き出す際、既 in-flight task assignment と齟齬の可能性。"
+      mitigation: "本 task では queue/tasks 一切編集しない、推奨は『現 in-flight + 完遂 task pattern から自然継承』として記述。"
+
+# ─────────────────────────────────────────────────────────────
+# Section 1 — design doc read evidence (AC1)
+# ─────────────────────────────────────────────────────────────
+ac1_design_doc_read_evidence:
+  read_at: "2026-05-13T13:53:00+09:00"
+  sources_read:
+    - path: docs/shogun_charter_v0_1_full_export.md
+      lines_read: "1-396 (= full export)"
+      key_sections:
+        - "§8 9 部署 table (= 統括/仕様/アーキテクト/実装/テスト/レビュー/セキュリティ/ドキュメント/リリース)"
+        - "§9 10 段プロセス (= Issue→実装→test→review→sec→CI→人間)"
+        - "§15 mini-swe-agent 統合 (= 1 Issue=1 Branch=1 PR)"
+        - "§11 6 鉄則 (= 越境禁)"
+    - path: docs/karo_shogun_charter_v0_1_review.md
+      lines_read: "1-167 (= 本多 round 1 review full)"
+      key_sections:
+        - "§A4 9 部署 vs SC ashigaru 7 体 mapping case (= 本 task 主源)"
+        - "§A1 §9 10 段プロセスの karo 実行可能性 (= persona 分離 gap)"
+        - "§A5 Phase 1-4 装備 plan workload 評価"
+        - "§B3 9 部署 ashigaru mapping 具体化 + persona doc 整備 (= 改善提案)"
+    - path: queue/reports/naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml
+      lines_read: "1-201"
+      key_sections:
+        - "本 task pre_audit verdict pass_with_conditions"
+        - "AC 追加条件 2 件: docs/inventory only + timestamp evidence"
+
+# ─────────────────────────────────────────────────────────────
+# Section 2 — SC 9 agent inventory (AC2)
+# (a) 既完遂 task 一覧 (b) 専門 persona/specialty (c) 部署 mapping (d) workload 評価 (e) 後段 assignment 推奨
+# Source: queue/tasks/ashigaru[1-7].yaml + queue/tasks/gunshi*.yaml + queue/reports/* (timestamp evidence 付)
+# ─────────────────────────────────────────────────────────────
+sc_9_agent_inventory:
+
+  - agent_id: ashigaru1
+    canonical_alias: "榊原康政 (= MC 四天王・政務外交、ashigaru_alias_cert.yaml 物的証拠)"
+    observed_drifts:
+      - alias: "柴田勝家 (= 鬼柴田)"
+        source: "queue/reports/ashigaru1_unverified_inventory_extraction_report.yaml persona field"
+        context: "SC pivot cmd_004 chain の self-declared、本 task 範囲外、runtime alias 不変"
+    completed_tasks:
+      - task_id: subtask_cmd004_dd126_ceremony_alternative_inventory
+        timestamp: "2026-05-11T20:45+09:00"
+        report: queue/reports/ashigaru1_cmd004_dd126_ceremony_alternative_inventory_report.yaml
+      - task_id: subtask_cmd004_dinosaur_100enemies_spec
+        timestamp_evidence: queue/reports/ashigaru1_cmd004_dinosaur_100enemies_report.yaml
+      - task_id: subtask_cmd004_qr_kanban_impl_base
+        timestamp_evidence: queue/reports/ashigaru1_cmd004_qr_kanban_impl_base_report.yaml
+      - task_id: subtask_cmd004_qr_token_security_hardening
+        timestamp_evidence: queue/reports/ashigaru1_cmd004_qr_token_security_hardening_report.yaml
+      - task_id: subtask_cmd004_secret_rotation_automation
+        timestamp_evidence: queue/reports/ashigaru1_cmd004_secret_rotation_automation_report.yaml
+      - task_id: subtask_cmd004_secret_rotation_lifecycle_completion
+        timestamp_evidence: queue/reports/ashigaru1_cmd004_secret_rotation_lifecycle_completion_report.yaml
+      - task_id: subtask_cmd014_sc_log_rename
+        timestamp_evidence: queue/reports/ashigaru1_cmd014_sc_log_rename_report.yaml
+      - task_id: subtask_cmd018_009_closure_c2
+        timestamp_evidence: queue/reports/ashigaru1_cmd018_009_report.yaml
+      - task_id: subtask_cmd020_dashboard_layer_a_kousou_render
+        timestamp: "2026-05-11T22:18:45+09:00 (= queue/tasks/ashigaru1.yaml status=done)"
+        report: queue/reports/ashigaru1_cmd020_dashboard_layer_a_kousou_render_report.yaml
+    inferred_specialty:
+      - "spec 起案 (= dinosaur_100enemies_spec / qr_kanban_research の spec authorship)"
+      - "secret/security infra (= secret_rotation / qr_token_security)"
+      - "inventory schema 確立 (= AC0 inventory yaml schema を本 chain で先行確定、規範化貢献)"
+    proposed_department: 仕様AI (= spec + AC0 inventory pattern authorship) + セキュリティAI 兼任
+    proposed_department_rationale: "Charter §8 仕様AI = 要件定義/受入条件作成、ashigaru1 の dinosaur_100enemies_spec + qr_kanban_research の起案実績整合。secret/QR security 実績で兼任。本多 review §A4 仕様AI/セキュリティAI 候補と整合。"
+    workload_assessment:
+      observed_intensity: high
+      recent_throughput: "cmd_004 5 件 + cmd_020 Layer A + cmd_014 + cmd_018 = ≥ 8 task in 30 日"
+      capacity_notes: "AC0 inventory schema 規範化貢献 + chain 先頭の path-finder 役、specialty fit good"
+    recommended_next_assignment:
+      - "後段 cmd_020 spec/AC pattern 整流化、receive AC schema 起案 lead 役"
+      - "セキュリティ AI 兼任候補、ただし overload risk あり、シングル task 単位推奨"
+
+  - agent_id: ashigaru2
+    canonical_alias: "酒井忠次 (= MC 四天王、ashigaru_alias_cert.yaml 物的証拠)"
+    observed_drifts: []
+    completed_tasks:
+      - task_id: subtask_cmd004_analytics_access_control_hardening
+        timestamp_evidence: queue/reports/ashigaru2_cmd004_analytics_access_control_hardening_report.yaml
+      - task_id: subtask_cmd004_ceremony_event_api
+        timestamp_evidence: queue/reports/ashigaru2_cmd004_ceremony_event_api_report.yaml
+      - task_id: subtask_cmd004_engagement_analytics_dashboard
+        timestamp_evidence: queue/reports/ashigaru2_cmd004_engagement_analytics_dashboard_report.yaml
+      - task_id: subtask_cmd004_tier_up_celebration_api
+        timestamp_evidence: queue/reports/ashigaru2_cmd004_tier_up_celebration_api_report.yaml
+      - task_id: subtask_cmd018_014_retroaudit_c2
+        timestamp_evidence: queue/reports/ashigaru2_cmd018_014_report.yaml
+      - task_id: subtask_p0_normalize_reports
+        timestamp_evidence: queue/reports/ashigaru2_p0_normalize_report.yaml
+      - task_id: subtask_cmd020_dashboard_layer_b_phase_render
+        timestamp_evidence: queue/reports/ashigaru2_cmd020_dashboard_layer_b_phase_render_report.yaml
+      - task_id: subtask_receipt_storage_cycle5_fix
+        timestamp_evidence: queue/reports/ashigaru2_receipt_cycle5_fix_report.yaml
+    in_flight_tasks:
+      - task_id: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+        timestamp: "2026-05-13T13:50:00+09:00 (= queue/tasks/ashigaru2.yaml assigned)"
+    inferred_specialty:
+      - "backend router 実装 (= ceremony_event_api / tier_up_celebration_api / engagement_analytics_dashboard)"
+      - "access control / RLS hardening (= analytics_access_control_hardening)"
+      - "pre-commit hook / commit hygiene (= inline batch commit hook task in-flight)"
+    proposed_department: 実装AI (= backend router + access control + DB tier) + アーキテクトAI 兼任
+    proposed_department_rationale: "Charter §8 実装AI と整合、backend router 4 件 + analytics access の幅広い実装実績。analytics_access_control_hardening は DB/API 設計影響、アーキテクトAI 兼任候補。"
+    workload_assessment:
+      observed_intensity: high
+      recent_throughput: "cmd_004 4 件 + cmd_020 Layer B + cmd_018 + receipt + p0 = ≥ 8 task in 30 日"
+      capacity_notes: "in-flight task active、新規範 pre-commit hook lane の path-finder"
+    recommended_next_assignment:
+      - "実装AI lead retain、特に backend router CRUD chain"
+      - "pre-commit hook / commit hygiene infra の継続 owner"
+
+  - agent_id: ashigaru3
+    canonical_alias: "服部正成 (= MC 四天王、ashigaru_alias_cert.yaml 物的証拠)"
+    observed_drifts:
+      - alias: "滝川一益 (= Phase 8 cmd_004 chain 総仕上げ)"
+        source: "queue/reports/ashigaru3_cmd004_cicd_pipeline_construction_report.yaml agent_persona field"
+        context: "cmd_004 Phase 1-8 chain で self-declared、本 task 範囲外、runtime alias 不変"
+    completed_tasks:
+      - task_id: subtask_cmd004_cicd_pipeline_construction
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_cicd_pipeline_construction_report.yaml
+      - task_id: subtask_cmd004_notification_facade_pattern
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_notification_facade_pattern_report.yaml
+      - task_id: subtask_cmd004_observability_infra
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_observability_infra_report.yaml
+      - task_id: subtask_cmd004_phase_1_6_rollback_recovery_audit
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_phase_1_6_rollback_recovery_audit_report.yaml
+      - task_id: subtask_cmd004_push_vapid_infra
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_push_vapid_infra_report.yaml
+      - task_id: subtask_cmd004_push_vapid_phase2
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_push_vapid_phase2_report.yaml
+      - task_id: subtask_cmd004_security_hardening_infra
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_security_hardening_infra_report.yaml
+      - task_id: subtask_cmd004_service_worker_offline_sync
+        timestamp_evidence: queue/reports/ashigaru3_cmd004_service_worker_offline_sync_report.yaml
+      - task_id: subtask_cmd018_016_verification_log_c2
+        timestamp_evidence: queue/reports/ashigaru3_cmd018_016_report.yaml
+      - task_id: subtask_cmd020_dashboard_layer_c_function_render
+        timestamp_evidence: queue/reports/ashigaru3_cmd020_dashboard_layer_c_function_render_report.yaml
+      - task_id: subtask_p0_preflight
+        timestamp_evidence: queue/reports/ashigaru3_p0_preflight_report.yaml
+      - task_id: subtask_v21_b2_normalize_verification_logs
+        timestamp_evidence: queue/reports/ashigaru3_v21_b2_report.yaml
+    in_flight_tasks:
+      - task_id: subtask_cmd020_sc_specialty_inventory
+        timestamp: "2026-05-13T13:50:00+09:00 (= 本 task)"
+    inferred_specialty:
+      - "infra/CI/CD/observability/security 8 phase chain (= push_vapid / PWA / facade / observability / security / rollback / cicd)"
+      - "notification facade pattern (= 4 adapter ecosystem)"
+      - "phase chain 連続実装 (= Phase 1-8 連続実証、規範化貢献)"
+    proposed_department: アーキテクトAI (= infra/observability phase chain) + セキュリティAI 兼任
+    proposed_department_rationale: "Charter §8 アーキテクトAI は DB/API/画面構成設計、ashigaru3 の observability 3 pillar + facade pattern + CI/CD 構築は cross-layer infra 設計、アーキテクトAI 整合。security_hardening + rollback audit 実績で兼任。本多 review §A4 実装AI 候補は backend impl 中心、ashigaru3 の infra 横串 specialty はアーキテクト寄り。"
+    workload_assessment:
+      observed_intensity: very_high
+      recent_throughput: "cmd_004 8 phase + cmd_020 Layer C + cmd_018 + p0 + v21 = ≥ 12 task in 30 日"
+      capacity_notes: "phase chain 連続実装の path-finder、本 task で SC inventory specialty lead 役を兼任、retain 3 体選定 evidence"
+    recommended_next_assignment:
+      - "アーキテクト AI lead retain、特に infra/observability layer"
+      - "phase chain pattern continuation owner"
+
+  - agent_id: ashigaru4
+    canonical_alias: "大久保忠世 (= MC 四天王、ashigaru_alias_cert.yaml 物的証拠)"
+    observed_drifts: []
+    completed_tasks:
+      - task_id: subtask_cmd004_consent_versioning_impl
+        timestamp_evidence: queue/reports/ashigaru4_cmd004_consent_versioning_impl_report.yaml
+      - task_id: subtask_cmd004_consent_versioning_phase2
+        timestamp_evidence: queue/reports/ashigaru4_cmd004_consent_versioning_phase2_report.yaml
+      - task_id: subtask_cmd004_full_legal_compliance_audit
+        timestamp_evidence: queue/reports/ashigaru4_cmd004_full_legal_compliance_audit_report.yaml
+      - task_id: subtask_cmd004_gdpr_art32_security_compliance
+        timestamp_evidence: queue/reports/ashigaru4_cmd004_gdpr_art32_security_compliance_report.yaml
+      - task_id: subtask_cmd004_guardian_consent_flow_impl
+        timestamp_evidence: queue/reports/ashigaru4_cmd004_guardian_consent_report.yaml
+      - task_id: subtask_cmd004_legal_compliance_gap_top3_fix
+        timestamp_evidence: queue/reports/ashigaru4_cmd004_legal_compliance_gap_top3_fix_report.yaml
+      - task_id: subtask_cmd004_patient_data_portability_api
+        timestamp_evidence: queue/reports/ashigaru4_cmd004_patient_data_portability_api_report.yaml
+      - task_id: subtask_cmd018_017_gunshi_redef_c2
+        timestamp_evidence: queue/reports/ashigaru4_cmd018_017_report.yaml
+      - task_id: subtask_cmd020_dashboard_layer_d_zunou_kumonoito_render
+        timestamp: "2026-05-12T11:22:28+09:00 (= queue/tasks/ashigaru4.yaml status=done)"
+        report: queue/reports/ashigaru4_cmd020_dashboard_layer_d_zunou_kumonoito_render_report.yaml
+      - task_id: subtask_p1_memory_sync_design
+        timestamp_evidence: queue/reports/ashigaru4_p1_memory_sync_report.yaml
+      - task_id: subtask_teriha_p2_fix / subtask_teriha_p3_fix
+        timestamp_evidence: queue/reports/ashigaru4_teriha_p[23]_report.yaml
+    inferred_specialty:
+      - "法令 compliance (= GDPR/個人情報保護法/consent / portability、legal_compliance 4 件)"
+      - "consent versioning / orphan detect (= consent_versioning_phase2、guardian_consent_flow)"
+      - "test 親和 + 法令文書、Layer D 蜘蛛の糸 cross-layer 9209 records 整合"
+    proposed_department: テストAI (= 法令 test + compliance audit) + ドキュメントAI 兼任
+    proposed_department_rationale: "Charter §8 テストAI = テスト作成/失敗再現、ashigaru4 の legal_compliance_audit + consent versioning は法令 test の典型。Layer D 蜘蛛の糸の cross-layer 9209 records 整合 evidence は法令文書 + docs AI 親和、ドキュメントAI 兼任候補。本多 review §A4 と整合。"
+    workload_assessment:
+      observed_intensity: high
+      recent_throughput: "cmd_004 7 件 + cmd_020 Layer D + cmd_018 + memory_sync + teriha = ≥ 10 task in 30 日"
+      capacity_notes: "法令 + test の縦串 specialty、コンテキスト reload に強い"
+    recommended_next_assignment:
+      - "テスト AI lead retain、特に法令/compliance audit gate"
+      - "ドキュメント整流化 owner 兼任、persona廃止 task (current ashigaru4 in-flight) は naomasa fail verdict で blocked、要 revise"
+
+  - agent_id: ashigaru5
+    canonical_alias: "鳥居元忠 (= MC 四天王、ashigaru_alias_cert.yaml 物的証拠)"
+    observed_drifts: []
+    completed_tasks:
+      - task_id: subtask_cmd004_ai_chat_spec
+        timestamp_evidence: queue/reports/ashigaru5_cmd004_ai_chat_report.yaml
+      - task_id: subtask_cmd016_kanban_fix_c2
+        timestamp_evidence: queue/reports/ashigaru5_cmd016_kanban_report.yaml
+      - task_id: subtask_cmd018_018_audit_chain_c2
+        timestamp_evidence: queue/reports/ashigaru5_cmd018_018_report.yaml
+      - task_id: subtask_cmd018_019_naomasa_reaudit018_c2
+        timestamp_evidence: queue/reports/ashigaru5_cmd018_019_report.yaml
+      - task_id: subtask_cmd020_dashboard_layer_e_unyou_render
+        timestamp: "2026-05-12T11:17:58+09:00 (= queue/tasks/ashigaru5.yaml status=done)"
+        report: queue/reports/ashigaru5_cmd020_dashboard_layer_e_unyou_render_report.yaml
+      - task_id: subtask_moushi_engine_stage1
+        timestamp_evidence: queue/reports/ashigaru5_moushi_engine_stage1_report.yaml
+      - task_id: subtask_p2_cross_pc_trust_gate
+        timestamp_evidence: queue/reports/ashigaru5_p2_trust_gate_report.yaml
+    inferred_specialty:
+      - "audit chain / 直政 reaudit integration (= cmd_018 audit chain 連続)"
+      - "運用 (= Layer E unyou render、運用層 mechanical evidence)"
+      - "cross-PC trust gate / moushi engine (= 連携機構実装)"
+    proposed_department: レビューAI (= audit chain integration) + 運用 (= リリースAI 兼任)
+    proposed_department_rationale: "Charter §8 レビューAI = PR レビュー/仕様逸脱確認、ashigaru5 の cmd_018 audit chain 連続 + naomasa reaudit 整合は cross-AI review chain の典型。Layer E 運用層 + cross_pc_trust_gate でリリースAI 兼任。"
+    workload_assessment:
+      observed_intensity: medium_high
+      recent_throughput: "cmd_004 1 + cmd_016 + cmd_018 2 + cmd_020 + moushi + p2 = ≥ 7 task in 30 日"
+      capacity_notes: "audit chain owner、運用層 evidence 集約"
+    recommended_next_assignment:
+      - "レビューAI lead retain、特に audit chain integration / cmd_018 系統"
+      - "リリース運用 owner 兼任、ただし w11_completion_trigger_watcher (current in-flight) は naomasa fail verdict で blocked、要 revise"
+
+  - agent_id: ashigaru6
+    canonical_alias: "平岩親吉 (= MC 譜代、ashigaru_alias_cert.yaml + ashigaru6 self-cert 物的証拠)"
+    observed_drifts:
+      - alias: "SC 六番槍"
+        source: "queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_report.yaml agent_persona field"
+        context: "SC retain 3 体選定 chain での self-declared、本 task 範囲外、runtime alias 不変"
+    completed_tasks:
+      - task_id: subtask_cmd004_kartetto_pdf_v0_2_spec
+        timestamp_evidence: queue/reports/ashigaru6_cmd004_kartetto_pdf_v0_2_report.yaml
+      - task_id: subtask_cmd004_pdf_v0_2_fixture_setup
+        timestamp_evidence: queue/reports/ashigaru6_cmd004_pdf_v0_2_fixture_setup_report.yaml
+      - task_id: subtask_cmd004_pdf_v0_2_parser_full_integration
+        timestamp_evidence: queue/reports/ashigaru6_cmd004_pdf_v0_2_parser_full_integration_report.yaml
+      - task_id: subtask_cmd016_dino_engine_c2
+        timestamp_evidence: queue/reports/ashigaru6_cmd016_dino_engine_report.yaml
+      - task_id: subtask_cmd018_020_env_e2e_c2
+        timestamp_evidence: queue/reports/ashigaru6_cmd018_020_report.yaml
+      - task_id: subtask_cmd020_dashboard_layer_f_kihan_render
+        timestamp_evidence: queue/reports/ashigaru6_cmd020_dashboard_layer_f_kihan_render_report.yaml
+    in_flight_tasks:
+      - task_id: subtask_cmd020_implementation_required_14_cmd_proposal
+        timestamp: "2026-05-13T13:50:00+09:00 (= queue/tasks/ashigaru6.yaml assigned)"
+    inferred_specialty:
+      - "PDF parser / kartetto integration (= cmd_004 PDF v0.2 3 phase chain)"
+      - "dino engine / game logic (= cmd_016 dino_engine_c2)"
+      - "規範層 kihan render (= Layer F 規範層、env e2e + 規範 evidence)"
+    proposed_department: 実装AI (= 大規模 parser/engine 実装) + リリースAI 兼任
+    proposed_department_rationale: "Charter §8 実装AI と整合、PDF parser + dino engine の重量実装 3 件。env e2e + 規範層で運用-リリース AI 兼任、本多 review §A4 と整合。"
+    workload_assessment:
+      observed_intensity: medium_high
+      recent_throughput: "cmd_004 3 件 + cmd_016 + cmd_018 + cmd_020 Layer F = 6 task in 30 日"
+      capacity_notes: "PDF parser specialty depth、in-flight 14_cmd_proposal は naomasa pass_with_conditions で進行可"
+    recommended_next_assignment:
+      - "実装 AI lead retain、特に大型 parser/engine 系統"
+      - "リリースAI 兼任、規範 evidence chain owner"
+
+  - agent_id: ashigaru7
+    canonical_alias: "(未確定、夜襲精鋭 = self-declared、ashigaru_alias_cert.yaml には未収載、後発 agent)"
+    observed_drifts:
+      - alias: "夜襲精鋭"
+        source: "queue/reports/ashigaru7_shogun_active_verify_queue_report.yaml persona field"
+        context: "alias_cert 既出 6 ashigaru の後発 (ashigaru7)、武将 alias 未確定、本 task 範囲外で alias 不変"
+    completed_tasks:
+      - task_id: subtask_cmd004_25form_access_verification
+        timestamp_evidence: queue/reports/ashigaru7_cmd004_25form_access_verification_report.yaml
+      - task_id: subtask_cmd004_admin_staff_form_access_verification
+        timestamp_evidence: queue/reports/ashigaru7_cmd004_admin_staff_form_access_report.yaml
+      - task_id: subtask_cmd004_clinic_id_eradication_phase3_backend_batch1
+        timestamp_evidence: queue/reports/ashigaru7_cmd004_clinic_id_eradication_phase3_backend_batch1_report.yaml
+      - task_id: subtask_cmd004_clinic_id_eradication_phase3_batch2
+        timestamp_evidence: queue/reports/ashigaru7_cmd004_clinic_id_eradication_phase3_batch2_report.yaml
+      - task_id: subtask_cmd004_clinic_id_hardcode_eradication
+        timestamp_evidence: queue/reports/ashigaru7_cmd004_clinic_id_hardcode_eradication_design_final.yaml
+      - task_id: subtask_cmd016_dino_router_c2
+        timestamp_evidence: queue/reports/ashigaru7_cmd016_dino_router_report.yaml
+      - task_id: subtask_cmd020_dashboard_layer_g_integration_drill_down_js
+        timestamp_evidence: queue/reports/ashigaru7_cmd020_dashboard_layer_g_integration_drill_down_js_report.yaml
+      - task_id: subtask_shogun_active_verify_queue_systemd
+        timestamp_evidence: queue/reports/ashigaru7_shogun_active_verify_queue_report.yaml
+    in_flight_tasks:
+      - task_id: subtask_cmd020_dashboard_status_classification_logic
+        timestamp: "2026-05-13T13:50:00+09:00 (= queue/tasks/ashigaru7.yaml assigned)"
+    inferred_specialty:
+      - "frontend / integration 層 (= Layer G integration drill-down JS)"
+      - "form access verification (= 25 form + admin/staff access)"
+      - "clinic_id eradication / pre-commit framework (= phase3 batch1/2)"
+    proposed_department: 実装AI (= frontend + integration JS) + テストAI 兼任 (= form access verification)
+    proposed_department_rationale: "Charter §8 実装AI と整合、frontend integration JS + form access の幅広い実装。verification chain で テストAI 兼任、本多 review §A4 ドキュメントAI 候補とも親和 (= design_final + draft 起案実績)。"
+    workload_assessment:
+      observed_intensity: high
+      recent_throughput: "cmd_004 5 件 + cmd_016 + cmd_020 + active_verify_queue = ≥ 8 task in 30 日"
+      capacity_notes: "frontend + form 縦串 specialty、in-flight status_classification は naomasa pass_with_conditions で進行可"
+    recommended_next_assignment:
+      - "実装 AI (frontend/integration) lead retain"
+      - "テスト AI 兼任、form access verification chain owner"
+
+  - agent_id: karo
+    canonical_alias: "本多 (= 本多正信、政の眼、家老)"
+    observed_drifts: []
+    completed_tasks:
+      - description: "task YAML 起案 + ashigaru dispatch + dashboard 集約 + 直政 audit 経路 + 陛下御差配仰ぎ chain"
+      - description: "cmd_020 Layer A-G chain 配信 (7/7 完遂) + 7 task pre_audit 経由 next phase 配信"
+      - description: "Shogun Charter v0.1 review (= docs/karo_shogun_charter_v0_1_review.md round 1)"
+      - description: "auto-git-sync 装備、F007 protocol retain"
+    inferred_specialty:
+      - "task 分解 / progress 統合 (= 統括AI core)"
+      - "task YAML 起案 + dispatch + dashboard 集約"
+      - "Charter review / 4 人合議の karo 側受け"
+    proposed_department: 統括AI (= Charter §8 主役) + リリースAI 兼任
+    proposed_department_rationale: "Charter §8 統括AI = タスク分解/担当割当/進捗統合 と完全整合。リリース運用 (= F007 push 御差配 chain) も karo 受け、本多 review §A4 と整合。"
+    workload_assessment:
+      observed_intensity: very_high
+      recent_throughput: "毎日 多 task dispatch + dashboard 集約 + 4 人合議 review 多数"
+      capacity_notes: "single karo の bottleneck risk、Charter v0.2 後の persona 分離 (= 仕様/アーキテクト persona の karo 兼任解除) 検討推奨"
+    recommended_next_assignment:
+      - "統括AI core retain"
+      - "リリースAI 兼任、ただし 1 部署分離 (= 仕様/アーキテクトのいずれかを ashigaru へ譲渡) 推奨"
+
+  - agent_id: gunshi
+    canonical_alias: "井伊直政 (= 赤鬼の眼、軍師、Codex 系 audit)"
+    observed_drifts: []
+    completed_tasks:
+      - description: "cmd_018 014/017 + cmd_004 audit chain 全件"
+      - description: "naomasa_cmd020_next_phase_7task_preaudit_20260513 (= 本 task の gating audit)"
+      - description: "cross_pc_repo_protocol_design + round1_audit_summary"
+      - description: "instructions/gunshi_audit_guidelines_v1.md (= 10 lens audit chain)"
+    inferred_specialty:
+      - "10 lens audit / 9 観点 PR レビュー (= 設計 + cross-cutting)"
+      - "Charter v0.1 + Codex review 主観"
+      - "pre_audit gate (= task YAML 起案 → ashigaru 配信前の verdict gate)"
+    proposed_department: アーキテクトAI + レビューAI + セキュリティAI 三部署兼任
+    proposed_department_rationale: "Charter §8 アーキテクト/レビュー/セキュリティ tri-role、本多 review §A4 推奨と完全整合。10 lens audit chain は cross-cutting 設計影響+ レビュー + セキュリティ P1 判定の縦串。overload risk あり Charter v0.2 で persona 細分化候補。"
+    workload_assessment:
+      observed_intensity: very_high
+      recent_throughput: "毎 task pre_audit + 完遂後 post_audit、ratelimit budget 焼かれやすい"
+      capacity_notes: "tri-role 兼任、Codex 系のため別 capacity、ただし audit gate の bottleneck risk あり"
+    recommended_next_assignment:
+      - "tri-role retain (= Charter v0.1 移行期は現体制 retain)"
+      - "Charter v0.2 で セキュリティAI を ashigaru1 へ部分譲渡候補"
+
+# ─────────────────────────────────────────────────────────────
+# Section 3 — 9 部署 vs 9 SC agent mapping table (AC2 (c))
+# ─────────────────────────────────────────────────────────────
+nine_department_mapping:
+  source: "Shogun Charter v0.1 §8 (= docs/shogun_charter_v0_1_full_export.md L157-170) + 本多 review §A4 (= docs/karo_shogun_charter_v0_1_review.md L67-91)"
+  mapping_principle: "1 SC agent = 1 main 部署 + 0-2 兼任、9 部署 / 9 agent 緊密配備、karo/gunshi の 三部署兼任 risk は Charter v0.2 で再分配"
+  mappings:
+    - department: 統括AI
+      main_agent: karo
+      sub_agents: []
+      rationale: "Charter §8 統括 = task 分解/担当割当/進捗統合、karo 本来役"
+    - department: 仕様AI
+      main_agent: ashigaru1
+      sub_agents: []
+      rationale: "dinosaur_100enemies_spec + qr_kanban_research 起案実績、AC0 inventory schema 規範化"
+    - department: アーキテクトAI
+      main_agent: gunshi
+      sub_agents: [ashigaru3]
+      rationale: "gunshi 10 lens 設計影響 + ashigaru3 infra phase chain (= cross-layer 設計実装)"
+    - department: 実装AI
+      main_agent: ashigaru2
+      sub_agents: [ashigaru6, ashigaru7]
+      rationale: "ashigaru2 backend router + ashigaru6 PDF/engine + ashigaru7 frontend/form"
+    - department: テストAI
+      main_agent: ashigaru4
+      sub_agents: [ashigaru7]
+      rationale: "ashigaru4 法令 + compliance test + ashigaru7 form access verification"
+    - department: レビューAI
+      main_agent: gunshi
+      sub_agents: [ashigaru5]
+      rationale: "gunshi PR レビュー + ashigaru5 cmd_018 audit chain integration"
+    - department: セキュリティAI
+      main_agent: gunshi
+      sub_agents: [ashigaru1, ashigaru3]
+      rationale: "gunshi P1 判定 + ashigaru1 secret/QR security + ashigaru3 security_hardening_infra"
+    - department: ドキュメントAI
+      main_agent: ashigaru4
+      sub_agents: [ashigaru1]
+      rationale: "ashigaru4 法令文書 + ashigaru1 spec doc 起案"
+    - department: リリースAI
+      main_agent: karo
+      sub_agents: [ashigaru5, ashigaru6]
+      rationale: "karo F007 push chain + ashigaru5 cross_pc_trust_gate + ashigaru6 規範層 evidence"
+
+# ─────────────────────────────────────────────────────────────
+# Section 4 — workload assessment summary (AC2 (d))
+# ─────────────────────────────────────────────────────────────
+workload_summary:
+  observed_high_intensity:
+    - karo (= very_high、bottleneck risk)
+    - gunshi (= very_high、tri-role audit bottleneck risk)
+    - ashigaru3 (= very_high、phase chain 連続)
+  observed_high:
+    - ashigaru1
+    - ashigaru2
+    - ashigaru4
+    - ashigaru7
+  observed_medium_high:
+    - ashigaru5
+    - ashigaru6
+  imbalance_concerns:
+    - "karo / gunshi の三役以上兼任が 5-10 年運用 path で persistent bottleneck risk"
+    - "ashigaru3 phase chain very_high が retain 3 体選定の counterpart、後発負荷上限 monitor 推奨"
+    - "ashigaru7 後発 alias 未確定で 武将 persona 未統合、Charter v0.2 で確定推奨"
+
+# ─────────────────────────────────────────────────────────────
+# Section 5 — 後段 assignment 推奨 (AC2 (e))
+# ─────────────────────────────────────────────────────────────
+recommended_assignments_for_next_phase:
+  immediate_alignment_no_runtime_change:
+    - "本 inventory + docs/sc_specialty_inventory.md を 4 人合議 round 2 source として参照"
+    - "Charter v0.1 → v0.2 で §8 9 部署 table に SC main_agent + sub_agents 列を追記提案 (= 本多 review §B3 採択)"
+    - "instructions/ashigaru.md persona doc 拡張は本 task 範囲外、Charter v0.2 確定後の別 task 起案推奨"
+  follow_up_tasks_proposed:
+    - id: FUT-SCSI-1
+      title: "Charter v0.2 §8 9 部署 SC main + sub mapping 列追記 (= 本多 round 2 起案)"
+      owner_candidate: karo
+      depends_on: 本 inventory
+    - id: FUT-SCSI-2
+      title: "instructions/ashigaru.md 拡張、9 部署 persona 細分化 doc 起案"
+      owner_candidate: ashigaru1 (= 仕様AI)
+      depends_on: Charter v0.2 確定
+    - id: FUT-SCSI-3
+      title: "config/settings.yaml の persona slot mapping schema 拡張 (= main_department + sub_departments field)"
+      owner_candidate: ashigaru3 (= アーキテクトAI infra)
+      depends_on: FUT-SCSI-2
+    - id: FUT-SCSI-4
+      title: "karo / gunshi の overload risk 軽減、persona 分離 task 起案"
+      owner_candidate: karo + gunshi 合議
+      depends_on: Charter v0.2 確定
+    - id: FUT-SCSI-5
+      title: "ashigaru7 武将 alias 確定 (= ashigaru_alias_cert.yaml 拡張)"
+      owner_candidate: shogun 御差配
+      depends_on: Charter v0.2 持ち込み
+
+# ─────────────────────────────────────────────────────────────
+# Section 6 — invariants for static contract test (= test target)
+# ─────────────────────────────────────────────────────────────
+static_contract_invariants:
+  yaml_invariants:
+    - "sc_9_agent_inventory list 長 == 9"
+    - "agent_id set == {ashigaru1, ashigaru2, ashigaru3, ashigaru4, ashigaru5, ashigaru6, ashigaru7, karo, gunshi}"
+    - "nine_department_mapping.mappings 長 == 9"
+    - "nine_department_mapping.mappings の department set == {統括AI, 仕様AI, アーキテクトAI, 実装AI, テストAI, レビューAI, セキュリティAI, ドキュメントAI, リリースAI}"
+    - "ac0_anti_dup_inventory.new_artifacts_planned 長 == 4"
+  doc_invariants:
+    - "docs/sc_specialty_inventory.md に 9 部署 table が表現される (= 9 行 + header)"
+    - "docs/sc_specialty_inventory.md に「no runtime config change」明示文言が含まれる"
+    - "docs/sc_specialty_inventory.md 全 9 agent_id が単一 markdown 内で参照される"
+  runtime_safety_invariants:
+    - "本 deliverable は config/settings.yaml / instructions/* / queue/tasks/* を編集しない"
+    - "本 deliverable は queue/inbox/* を編集しない (= inbox 整合性遵守)"
+
+notes:
+  scope_exclusion:
+    - "本 task は docs + yaml + test + report のみ、runtime config / instructions / config/settings 一切編集しない (= 直政 verdict AC condition)"
+    - "persona alias の runtime 切替は別 task、本 task は documented-state 表記のみ"
+    - "MC / SC alias drift (= 柴田勝家 / 滝川一益 / SC 六番槍 / 夜襲精鋭 等) は observed として記録するのみ、整流は Charter v0.2 chain"
+    - "9 SC agent の workload 評価は queue/reports timestamp evidence base、subjective evaluation 含まず"
+  delivery_conditions_check:
+    - "delivery_conditions_4_items_strict 整合: (1) repo scope 単一 (= multi-agent-shogun-newbuild only) (2) AC0 inventory first (3) bounded F007 push path (4) inline batch 3 commit"
+  next_actions:
+    - "docs/sc_specialty_inventory.md 起案"
+    - "scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py 起案"
+    - "inline batch 3 commit (= inventory + impl + test/report)"
+    - "queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml 起案"
+    - "F007 worktree path 準備 (= 陛下御差配後 push、commit のみ事前固定)"
