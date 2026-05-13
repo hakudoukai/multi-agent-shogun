@@ -6154,6 +6154,35 @@ cmd020_sc_specialty_inventory_post_audits_20260513:
       action: require_corrected_final_report_or_acceptance_exception
       summary: "内容は source として利用可。ただし完了ゲートは report stale + contaminated chain 整理まで blocked。"
 
+  - audit_id: naomasa_ashigaru3_sc_specialty_inventory_reaudit_rule11_v4_20260513
+    audited_at: "2026-05-13T20:05:00+09:00"
+    source_commit: 09451966fbf32027aae8495ec74602d3b3bade26
+    source_inbox:
+      - msg_20260513_195006_2803715e
+    detail_report: queue/reports/naomasa_ashigaru3_sc_specialty_inventory_reaudit_rule11_v4_20260513.yaml
+    target_task: subtask_cmd020_sc_specialty_inventory
+    target_assignee: ashigaru3
+    verdict: fail_requires_publish_or_reaudit_after_origin_sync
+    evidence_state: partial_local_only
+    completion_gate: blocked
+    machine_evidence:
+      origin_main: 319f081b89a6b2cef3be31f88a0c1b74eb45f795
+      local_head: d4e688c918ad51c888c96dc2b4624a3cd8557791
+      unpublished_local_commits:
+        - 09451966fbf32027aae8495ec74602d3b3bade26
+        - d4e688c918ad51c888c96dc2b4624a3cd8557791
+      pytest: "python3 -m pytest scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py -q => 7 passed, SKIP=0"
+    blocking_findings:
+      - "ashigaru3 report claims commit 0945196 is on origin/main, but origin/main is still 319f081 and does not contain 0945196/d4e688c."
+      - "shogun_audit_request bullet 6 must not be triggered from local-only evidence."
+    rule11_v4_findings:
+      - "15 old audit commits to 25 rollup entries mapping is present; 319f081 is a later audit commit outside the original mapping scope."
+      - "bullet 7 relay ordering is sequential: 319f081 audit commit at 19:04:32, Karo ack at 19:06:07, Ieyasu relay at 19:45:09."
+      - "14:10 ashigaru3 revise transfer absence is corroborated by ashigaru3 inbox; 19:45 nudge is the first visible recovery message."
+    recommendation_to_karo:
+      action: publish_or_sync_ashigaru3_revise_then_request_reaudit
+      summary: "足軽3号は改善済みだが origin 未到達。0945196/d4e688c を正規 publish/sync してから弾6 relay 判定を再依頼すべし。"
+
 cmd020_dashboard_status_classification_post_audits_20260513:
   - audit_id: naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513
     audited_at: "2026-05-13T14:09:42+09:00"

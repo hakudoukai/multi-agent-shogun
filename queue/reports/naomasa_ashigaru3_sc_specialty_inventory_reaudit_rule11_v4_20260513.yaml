@@ -1,0 +1,69 @@
+worker_id: gunshi
+task_id: naomasa_ashigaru3_sc_specialty_inventory_reaudit_rule11_v4_20260513
+parent_cmd: cmd_020
+timestamp: "2026-05-13T20:05:00+09:00"
+status: done
+result:
+  type: evaluation
+  summary: "ashigaru3 SC specialty revision is improved but not passable because the advertised revise commits are local-only and not on origin/main."
+  audit_target:
+    assignee: ashigaru3
+    task: subtask_cmd020_sc_specialty_inventory
+    report: queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml
+    claimed_revise_commit: 09451966fbf32027aae8495ec74602d3b3bade26
+    claimed_final_state_commit: d4e688c918ad51c888c96dc2b4624a3cd8557791
+  verdict: fail_requires_publish_or_reaudit_after_origin_sync
+  completion_gate: blocked
+  evidence_state: partial_local_only
+  machine_evidence:
+    git_state: "main is ahead of origin/main by 2 commits: 0945196 and d4e688c"
+    origin_main: 319f081b89a6b2cef3be31f88a0c1b74eb45f795
+    local_head: d4e688c918ad51c888c96dc2b4624a3cd8557791
+    origin_contains_0945196: false
+    origin_contains_d4e688c: false
+    local_commit_stats:
+      - "0945196 changes queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml"
+      - "d4e688c changes .gitignore and queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_final_state_20260513.yaml"
+    focused_pytest: "python3 -m pytest scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py -q => 7 passed, SKIP=0"
+  previous_findings_review:
+    stale_ac5_tbd:
+      local_report_state: resolved_in_0945196
+      audit_verdict: blocked_until_origin_publish
+      reason: "The fix is visible in local HEAD but cannot be accepted as chain-pass evidence while origin/main lacks the commit."
+    contaminated_d329ceb:
+      local_report_state: "Karo acceptance exception is recorded in inbox/ashigaru3 msg_20260513_195006_24538946."
+      audit_verdict: accepted_as_process_exception_with_concern
+      reason: "The exception is explicitly acknowledged by Karo and the broader root cause is covered by ashigaru2 scope_contamination_v2, but it remains historical process debt."
+    future_operations:
+      local_report_state: "ashigaru2 v2 chain references bb556ee/6ea0c71/d1a2ff1 and later 49720e7/319f081 evidence."
+      audit_verdict: improved
+      reason: "The prevention path now has behavior tests and semantic finalization guard, but fleet-wide install remains separate."
+  rule11_v4_timestamping_check:
+    status: concerns
+    audit_commit_vs_rollup:
+      verified:
+        - "4b1e6a7 through 0845255 are mapped in queue/reports/naomasa_audit_commit_mapping_20260513.yaml as 15 audit commits to 25 rollup entries."
+        - "queue/reports/naomasa_secondpc_report.yaml now contains audited_at/source_commit fields for the 2026-05-13 rollup entries reviewed in that mapping."
+      concern:
+        - "319f081 is a later audit(gunshi) commit outside the original 15-commit mapping scope; it introduced timestamped rollup evidence for ashigaru2 revise, but the mapping file title remains scoped to the pre-319 directive."
+    shogun_audit_request_sequence:
+      verified:
+        - "Karo ack at 2026-05-13T19:06:07 says ashigaru2 v2 chain pass reached shogun_audit_request bullet 7 after the 319f081 audit commit at 19:04:32."
+        - "Ieyasu relay for bullet 7 is recorded at 2026-05-13T19:45:09, after the 19:06 Karo ack."
+      concern:
+        - "Bullet 6 for ashigaru3 is still standby in the available evidence, because this reaudit is blocked by unpublished local commits."
+    revise_instruction_stall:
+      verified:
+        - "ashigaru3 inbox shows no 14:10 revise directive entry; the next relevant nudge is msg_20260513_194523_9631016f at 19:45:23."
+        - "Karo's msg_20260513_195006_24538946 explicitly records the 14:10 transfer absence and treats it as an inbox delivery infrastructure gap."
+      analysis: "The five-hour stall is consistent with a delivery gap rather than ashigaru3 refusal; next-cycle SessionStart/inbox delivery hardening is justified."
+  recommendation_to_karo:
+    action: publish_or_sync_ashigaru3_revise_then_request_reaudit
+    summary: "Do not trigger shogun_audit_request bullet 6 yet. First publish or otherwise synchronize 0945196/d4e688c to origin/main, then request a narrow re-audit."
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "The report blocks false chain-pass attribution until origin/main evidence matches the claimed deliverables."
+  risks_to_north_star:
+    - "If local-only commits are treated as origin-published, shogun_audit_request relay can greenlight work that other agents and Shogun cannot verify."
