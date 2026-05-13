@@ -1,0 +1,63 @@
+audit_id: naomasa_cmd020_next_phase_3task_reaudit_cycle3_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T15:05:00+09:00"
+source_inbox:
+  - msg_20260513_135416_94d36510
+scope: "cmd_020 next phase revised 3 task YAML pre-audit cycle3"
+overall_verdict: pass_with_one_revision_required
+evidence_state: complete
+completion_gate: partially_open
+machine_evidence:
+  task_yaml_read:
+    - queue/tasks/subtask_cmd020_w9_shogun_verification_log_pytest_fix.yaml
+    - queue/tasks/subtask_cmd020_persona_廃止_sc_inbox_整理.yaml
+    - queue/tasks/subtask_cmd020_w11_completion_trigger_watcher.yaml
+  source_mismatch_status: "Resolved for ashigaru1 and ashigaru4; unresolved design contradiction remains for ashigaru5."
+
+task_reaudits:
+  - task_id: subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    assigned_to: ashigaru1
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    resolved_prior_blocker: true
+    findings:
+      - severity: low
+        issue: "step_2 and AC2 now explicitly prohibit synthetic shogun verification entries and require before/after grep evidence."
+        condition: "Completion report must include the evidence file and confirm synthetic entry count=0."
+
+  - task_id: subtask_cmd020_persona_廃止_sc_inbox_整理
+    assigned_to: ashigaru4
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    resolved_prior_blocker: true
+    findings:
+      - severity: low
+        issue: "step_2 now restricts the work to read-only inventory/analysis and forbids live inbox mutation and watcher process operation."
+        condition: "Completion report must include mutation_count=0 and watcher_operation_count=0."
+
+  - task_id: subtask_cmd020_w11_completion_trigger_watcher
+    assigned_to: ashigaru5
+    verdict: fail_requires_revision
+    evidence_state: complete
+    completion_gate: blocked
+    resolved_prior_blocker: false
+    findings:
+      - severity: high
+        issue: "The task now says polling is forbidden, but AC2/step_2 still require a 10-15 minute systemd timer that performs repeated Supabase checks. That is still a scheduler-based polling design, even if each process exits."
+        required_revision: "Either make this docs-only/event-trigger design, or explicitly pass the background worker/scheduler eval gate before adding dashboard-w11-trigger.{service,timer}."
+      - severity: medium
+        issue: "Supabase MCP query availability remains a runtime preflight dependency, but AC2 treats it as implementation-ready."
+        required_revision: "Add preflight blocker/fallback: if Supabase MCP is unavailable, produce monitor-plan report only and do not install timer artifacts."
+
+delivery_decision:
+  pass_now_with_conditions:
+    - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+    - subtask_cmd020_persona_廃止_sc_inbox_整理
+  blocked_for_revision:
+    - subtask_cmd020_w11_completion_trigger_watcher
+
+recommendation_to_karo:
+  action: dispatch_ashigaru1_and_ashigaru4_only_then_revise_ashigaru5
+  summary: "第3度で 1/4 は正本 YAML 修正済み。5 は timer polling contradiction と background-worker gate 不足が残るため配信不可。"

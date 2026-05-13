@@ -6038,3 +6038,21 @@ cmd020_next_phase_3task_reaudits_20260513:
     recommendation_to_karo:
       action: patch_task_yaml_then_resubmit
       summary: "修正 claims は inbox prose のみで、正本 task YAML に反映されておらぬ。ashigaru1/4/5 配信不可。"
+
+cmd020_next_phase_3task_reaudits_cycle3_20260513:
+  - audit_id: naomasa_cmd020_next_phase_3task_reaudit_cycle3_20260513
+    source_inbox:
+      - msg_20260513_135416_94d36510
+    detail_report: queue/reports/naomasa_cmd020_next_phase_3task_reaudit_cycle3_20260513.yaml
+    target_count: 3
+    verdict: pass_with_one_revision_required
+    evidence_state: complete
+    completion_gate: partially_open
+    pass_now_with_conditions:
+      - subtask_cmd020_w9_shogun_verification_log_pytest_fix
+      - subtask_cmd020_persona_廃止_sc_inbox_整理
+    blocked_for_revision:
+      - subtask_cmd020_w11_completion_trigger_watcher
+    recommendation_to_karo:
+      action: dispatch_ashigaru1_and_ashigaru4_only_then_revise_ashigaru5
+      summary: "第3度で ashigaru1/4 は正本 YAML 修正済み。ashigaru5 は timer polling contradiction と background-worker gate 不足が残る。"
