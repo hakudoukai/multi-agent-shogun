@@ -1,0 +1,47 @@
+worker_id: gunshi
+task_id: naomasa_ashigaru2_scope_contamination_v2_reaudit_20260513
+parent_cmd: cmd_020
+timestamp: "2026-05-13T19:18:00+09:00"
+status: done
+result:
+  type: evaluation
+  summary: "ashigaru2 scope_contamination_v2 report-only revision accepted with concerns; completion gate open."
+  audit_target:
+    assignee: ashigaru2
+    task: subtask_cmd020_scope_contamination_prevention_v2
+    report: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml
+    source_commit: 49720e717dc1291a3a896ed1fc6477886c18b5cc
+    source_commit_subject: "report(cmd_020 scope_contamination_v2): post-audit revise — backfill d1a2ff1 + semantic stale guard"
+  verdict: pass_with_concerns
+  completion_gate: open_with_concerns
+  implementation_verdict: pass_with_concerns
+  report_quality_verdict: pass
+  machine_evidence:
+    origin_reachability: "origin/main and HEAD both resolve to 49720e717dc1291a3a896ed1fc6477886c18b5cc"
+    finalization_lint: "bash scripts/lint/check_report_finalization.sh queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml => OK, exit 0"
+    focused_pytest: "python3 -m pytest scripts/test/test_report_finalization_grep_evidence.py -q => 10 passed, SKIP=0"
+    revised_files_in_commit:
+      - docs/report_finalization_norm.md
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_pytest.log
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml
+      - scripts/lint/check_report_finalization.sh
+      - scripts/test/test_report_finalization_grep_evidence.py
+  resolved_previous_blockers:
+    - "push_plan.status is now completed, not ready_for_bounded_push."
+    - "commit_5 SHA is backfilled as d1a2ff1de956391a0add12ed1db4f15cbff5c14d."
+    - "future bounded-push/backfill actions moved out of next_actions into completed_actions/revise_history."
+    - "check_report_finalization.sh now has a semantic stale guard for post-push stale states."
+    - "test_report_finalization_grep_evidence.py includes stale-fail, pre-push-pass, and completed-pass coverage."
+  remaining_concerns:
+    - "The normal path still depends on install/adoption by Karo or infra; this audit accepts the deliverable, not fleet-wide deployment."
+    - "Historical scope-contamination incidents remain process evidence and should not be interpreted as already shogun_verified green work."
+  recommendation_to_karo:
+    action: accept_ashigaru2_scope_contamination_v2_revision
+    summary: "足軽2号の report-only revision は前回 blocker を解消。open_with_concerns として受理し、install/adoption は別 task で扱うべし。"
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "False-green and stale completion reports are now caught by machine checks before future audit chain acceptance."
+  risks_to_north_star:
+    - "If the hook/linter is not installed across agents, this remains a deliverable rather than an operational control."

@@ -1,0 +1,199 @@
+worker_id: gunshi
+report_id: naomasa_audit_commit_mapping_20260513
+generated_at: "2026-05-13T19:08:00+09:00"
+source_directive: msg_20260513_naomasa_audit_integrity_3604e925
+status: done
+scope:
+  included_audit_commits: 15
+  mapped_rollup_entries: 25
+  excluded_refs:
+    - short_sha: 70f5c47
+      subject: "index on main: d9a5c05 audit(gunshi): audit ashigaru2 scope contamination fix"
+      reason: "git stash/index ref, not an independent audit commit on main"
+  mapping_rule: "Each real 2026-05-13 audit(gunshi): commit is mapped to every naomasa_secondpc_report.yaml rollup entry introduced by that commit."
+rule11_v4_application:
+  future_rollup_entry_required_fields:
+    - audited_at
+    - source_commit
+    - detail_report
+    - descriptive audit_id
+  retroactive_backfill:
+    target_file: queue/reports/naomasa_secondpc_report.yaml
+    coverage: "2026-05-13 naomasa rollup sections created by the 15 included commits"
+mapping:
+  - source_commit: 4b1e6a7ef71b5c10d0fe70b969ccf58063d28ff5
+    short_sha: 4b1e6a7
+    committed_at: "2026-05-13T13:45:39+09:00"
+    subject: "audit(gunshi): record sc pivot cmd004 audit"
+    detail_reports:
+      - queue/reports/naomasa_sc_pivot_cmd004_audit_20260513.yaml
+    rollup_sections:
+      - sc_pivot_cmd004_audits_20260513
+    audit_entries:
+      - naomasa_sc_pivot_inventory_cross_check_20260513
+      - naomasa_sc_pivot_three_spec_deliverable_audit_20260513
+      - naomasa_sc_pivot_w9_path_d_step3_plan_20260513
+  - source_commit: 7fb021fbe69113c663a2a58584f680f0c3483312
+    short_sha: 7fb021f
+    committed_at: "2026-05-13T13:48:43+09:00"
+    subject: "audit(gunshi): preaudit cmd020 next phase tasks"
+    detail_reports:
+      - queue/reports/naomasa_cmd020_next_phase_7task_preaudit_20260513.yaml
+    rollup_sections:
+      - cmd020_next_phase_7task_preaudits_20260513
+    audit_entries:
+      - naomasa_cmd020_next_phase_7task_preaudit_20260513
+  - source_commit: 3b926bfb1f134d8abe267e31f1cedc5304b47007
+    short_sha: 3b926bf
+    committed_at: "2026-05-13T13:52:18+09:00"
+    subject: "audit(gunshi): reaudit revised cmd020 tasks"
+    detail_reports:
+      - queue/reports/naomasa_cmd020_next_phase_3task_reaudit_20260513.yaml
+    rollup_sections:
+      - cmd020_next_phase_3task_reaudits_20260513
+    audit_entries:
+      - naomasa_cmd020_next_phase_3task_reaudit_20260513
+  - source_commit: 2a5072c9c3d19798d886fb9741e21dd9676ac804
+    short_sha: 2a5072c
+    committed_at: "2026-05-13T13:57:33+09:00"
+    subject: "audit(gunshi): reaudit cmd020 cycle3 tasks"
+    detail_reports:
+      - queue/reports/naomasa_cmd020_next_phase_3task_reaudit_cycle3_20260513.yaml
+    rollup_sections:
+      - cmd020_next_phase_3task_reaudits_cycle3_20260513
+    audit_entries:
+      - naomasa_cmd020_next_phase_3task_reaudit_cycle3_20260513
+  - source_commit: d9a5c05c3d036ddc5017b9801ac67aed0d21790a
+    short_sha: d9a5c05
+    committed_at: "2026-05-13T13:59:33+09:00"
+    subject: "audit(gunshi): audit ashigaru2 scope contamination fix"
+    detail_reports:
+      - queue/reports/naomasa_ashigaru2_scope_contamination_post_audit_20260513.yaml
+    rollup_sections:
+      - cmd020_scope_contamination_post_audits_20260513
+    audit_entries:
+      - naomasa_ashigaru2_scope_contamination_post_audit_20260513
+  - source_commit: 941cc05a9f5984ca34396ff71fb5036e94972e29
+    short_sha: 941cc05
+    committed_at: "2026-05-13T14:02:51+09:00"
+    subject: "audit(gunshi): preaudit w11 trigger cycle4"
+    detail_reports:
+      - queue/reports/naomasa_cmd020_w11_trigger_preaudit_cycle4_20260513.yaml
+    rollup_sections:
+      - cmd020_w11_trigger_preaudits_cycle4_20260513
+    audit_entries:
+      - naomasa_cmd020_w11_trigger_preaudit_cycle4_20260513
+  - source_commit: cfe26efc16bb5d1aa1c0515342f1fb1fb4972b94
+    short_sha: cfe26ef
+    committed_at: "2026-05-13T14:07:26+09:00"
+    subject: "audit(gunshi): audit w11 trigger and sc specialty"
+    detail_reports:
+      - queue/reports/naomasa_cmd020_w11_trigger_preaudit_cycle5_20260513.yaml
+      - queue/reports/naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513.yaml
+    rollup_sections:
+      - cmd020_w11_trigger_preaudits_cycle5_20260513
+      - cmd020_sc_specialty_inventory_post_audits_20260513
+    audit_entries:
+      - naomasa_cmd020_w11_trigger_preaudit_cycle5_20260513
+      - naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513
+  - source_commit: 9997d16483d9633f524c9d396f019bf6e3a43a6e
+    short_sha: 9997d16
+    committed_at: "2026-05-13T14:09:42+09:00"
+    subject: "audit(gunshi): audit dashboard status classification"
+    detail_reports:
+      - queue/reports/naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513.yaml
+    rollup_sections:
+      - cmd020_dashboard_status_classification_post_audits_20260513
+    audit_entries:
+      - naomasa_ashigaru7_dashboard_status_classification_post_audit_20260513
+  - source_commit: 3381d9b84adf113815d91264c91b291e804bc7fa
+    short_sha: 3381d9b
+    committed_at: "2026-05-13T14:18:52+09:00"
+    subject: "audit(gunshi): audit cmd020 post-audit revisions"
+    detail_reports:
+      - queue/reports/naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513.yaml
+      - queue/reports/naomasa_ashigaru4_persona_sc_inbox_post_audit_20260513.yaml
+      - queue/reports/naomasa_ashigaru7_dashboard_status_classification_reaudit_20260513.yaml
+    rollup_sections:
+      - cmd020_implementation_required_14cmd_post_audits_20260513
+      - cmd020_persona_sc_inbox_post_audits_20260513
+      - cmd020_dashboard_status_classification_reaudits_20260513
+    audit_entries:
+      - naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513
+      - naomasa_ashigaru4_persona_sc_inbox_post_audit_20260513
+      - naomasa_ashigaru7_dashboard_status_classification_reaudit_20260513
+  - source_commit: d5f92181cc03445275146a39e7cd24bebd568f19
+    short_sha: d5f9218
+    committed_at: "2026-05-13T14:31:36+09:00"
+    subject: "audit(gunshi): audit cmd020 follow-up reports"
+    detail_reports:
+      - queue/reports/naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513.yaml
+      - queue/reports/naomasa_ashigaru5_w11_completion_trigger_watcher_post_audit_20260513.yaml
+      - queue/reports/naomasa_ashigaru4_persona_sc_inbox_reaudit_20260513.yaml
+      - queue/reports/naomasa_ashigaru6_implementation_required_14cmd_reaudit_v2_20260513.yaml
+    rollup_sections:
+      - cmd020_w9_shogun_verification_log_pytest_fix_post_audits_20260513
+      - cmd020_w11_completion_trigger_watcher_post_audits_20260513
+      - cmd020_persona_sc_inbox_reaudits_20260513
+      - cmd020_implementation_required_14cmd_reaudits_v2_20260513
+    audit_entries:
+      - naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_post_audit_20260513
+      - naomasa_ashigaru5_w11_completion_trigger_watcher_post_audit_20260513
+      - naomasa_ashigaru4_persona_sc_inbox_reaudit_20260513
+      - naomasa_ashigaru6_implementation_required_14cmd_reaudit_v2_20260513
+  - source_commit: bacf4b844c236b44b7ae7204d5c0fb758a8c53cf
+    short_sha: bacf4b8
+    committed_at: "2026-05-13T14:41:14+09:00"
+    subject: "audit(gunshi): accept cmd020 report revisions"
+    detail_reports:
+      - queue/reports/naomasa_ashigaru5_w11_completion_trigger_watcher_reaudit_20260513.yaml
+      - queue/reports/naomasa_ashigaru4_persona_sc_inbox_reaudit_cycle3_20260513.yaml
+      - queue/reports/naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_reaudit_20260513.yaml
+    rollup_sections:
+      - cmd020_w11_completion_trigger_watcher_reaudits_20260513
+      - cmd020_persona_sc_inbox_reaudits_cycle3_20260513
+      - cmd020_w9_shogun_verification_log_pytest_fix_reaudits_20260513
+    audit_entries:
+      - naomasa_ashigaru5_w11_completion_trigger_watcher_reaudit_20260513
+      - naomasa_ashigaru4_persona_sc_inbox_reaudit_cycle3_20260513
+      - naomasa_ashigaru1_w9_shogun_verification_log_pytest_fix_reaudit_20260513
+  - source_commit: 00464da4ebf7f2b8a08d0705fd0b1b90f80c7ac3
+    short_sha: 00464da
+    committed_at: "2026-05-13T15:36:42+09:00"
+    subject: "audit(gunshi): recheck kuroda 13 handover"
+    detail_reports:
+      - queue/reports/naomasa_kuroda_13_handover_audit_20260513.yaml
+    rollup_sections:
+      - kuroda_13_handover_reaudits_20260513
+    audit_entries:
+      - naomasa_kuroda_13_handover_audit_20260513
+  - source_commit: 8e0576b62ac38e61d88bcb04b6379535c5a4f45f
+    short_sha: 8e0576b
+    committed_at: "2026-05-13T18:09:54+09:00"
+    subject: "audit(gunshi): preaudit scope contamination v2"
+    detail_reports:
+      - queue/reports/naomasa_scope_contamination_v2_preaudit_20260513.yaml
+    rollup_sections:
+      - cmd020_scope_contamination_v2_preaudits_20260513
+    audit_entries:
+      - naomasa_scope_contamination_v2_preaudit_20260513
+  - source_commit: d19294d50ea2c41cdb3c8d6727dfb13bb522c649
+    short_sha: d19294d
+    committed_at: "2026-05-13T18:19:52+09:00"
+    subject: "audit(gunshi): accept scope contamination v2 revisions"
+    detail_reports:
+      - queue/reports/naomasa_scope_contamination_v2_preaudit_cycle2_20260513.yaml
+    rollup_sections:
+      - cmd020_scope_contamination_v2_preaudits_20260513
+    audit_entries:
+      - naomasa_scope_contamination_v2_preaudit_cycle2_20260513
+  - source_commit: 0845255a7489d0d0e1af9eae198d6182ca1a966a
+    short_sha: 0845255
+    committed_at: "2026-05-13T18:48:16+09:00"
+    subject: "audit(gunshi): review scope contamination v2 delivery"
+    detail_reports:
+      - queue/reports/naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513.yaml
+    rollup_sections:
+      - cmd020_scope_contamination_v2_post_audits_20260513
+    audit_entries:
+      - naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513
