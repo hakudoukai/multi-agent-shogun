@@ -6094,3 +6094,42 @@ cmd020_w11_trigger_preaudits_cycle4_20260513:
     recommendation_to_karo:
       action: revise_task_yaml_then_resubmit_cycle5
       summary: "worker_eval decision record 正本 fields と AC2 を整合させるまで ashigaru5 配信不可。"
+
+cmd020_w11_trigger_preaudits_cycle5_20260513:
+  - audit_id: naomasa_cmd020_w11_trigger_preaudit_cycle5_20260513
+    source_inbox:
+      - msg_20260513_140437_07334583
+    detail_report: queue/reports/naomasa_cmd020_w11_trigger_preaudit_cycle5_20260513.yaml
+    target_task: subtask_cmd020_w11_completion_trigger_watcher
+    target_assignee: ashigaru5
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    conditions:
+      - "worker_eval decision record 13 fields full + decision=approve_with_concerns 以上"
+      - "static tests must assert no persistent sleep loop, no direct audited_done, audit trail/health/disable fields"
+      - "Supabase MCP preflight failure must produce terminal evidence, not readiness claim"
+    recommendation_to_karo:
+      action: dispatch_ashigaru5_with_conditions
+      summary: "第5度で正本 gate 整合済み。条件付き配信可。"
+
+cmd020_sc_specialty_inventory_post_audits_20260513:
+  - audit_id: naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513
+    source_inbox:
+      - msg_20260513_140509_36fd53e8
+    detail_report: queue/reports/naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513.yaml
+    target_task: subtask_cmd020_sc_specialty_inventory
+    target_assignee: ashigaru3
+    verdict: fail_requires_report_and_process_revision
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "deliverables git-tracked"
+      - "pytest 7 passed, SKIP=0"
+      - "no runtime config mutation invariant verified"
+    high_findings:
+      - "完遂 report に AC5 pending と TBD_SHA placeholders が残存。"
+      - "scope_contamination incidents を report 自身が記録し、clean scoped completion とは扱えぬ。"
+    recommendation_to_karo:
+      action: require_corrected_final_report_or_acceptance_exception
+      summary: "内容は source として利用可。ただし完了ゲートは report stale + contaminated chain 整理まで blocked。"

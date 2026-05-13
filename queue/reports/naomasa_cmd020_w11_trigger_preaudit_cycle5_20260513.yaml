@@ -1,0 +1,68 @@
+audit_id: naomasa_cmd020_w11_trigger_preaudit_cycle5_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T15:55:00+09:00"
+source_inbox:
+  - msg_20260513_140437_07334583
+target_task: subtask_cmd020_w11_completion_trigger_watcher
+target_assignee: ashigaru5
+verdict: pass_with_conditions
+evidence_state: complete
+completion_gate: open_with_conditions
+
+machine_evidence:
+  task_yaml: queue/tasks/subtask_cmd020_w11_completion_trigger_watcher.yaml
+  gate_doc: docs/background_worker_eval_gate.md
+  source_alignment:
+    worker_eval_six_questions: aligned
+    decision_record_fields: required_13_fields
+    completion_gate_interaction: direct_audited_done_forbidden
+    stale_polling_parenthetical_removed: true
+  trigger_type: scheduled
+  cadence: "10-15 min"
+
+six_point_check:
+  directive_nine_sections: pass
+  design_doc_id: pass
+  task_path_type: pass
+  max_cycle: pass
+  bloom_level_suitability: pass
+  anti_dup: pass_with_concerns
+
+perspective_verdicts:
+  1_functional: pass_with_conditions
+  2_anti_dup: pass_with_concerns
+  3_kiritsu: pass
+  4_logic: pass_with_concerns
+  5_schema: pass
+  6_test: concerns
+  7_legal: pass
+  8_ops: pass_with_conditions
+  9_doc: pass
+  10_ecosystem_coherence: pass_with_concerns
+  11_cross_pc_repo_check: concerns
+  12_future_operations_radicality: pass_with_concerns
+
+findings:
+  - severity: medium
+    perspective: 8_ops
+    issue: "A scheduled Supabase check is still a polling-adjacent design, but the task now explicitly justifies scheduled cadence because no SC-side Supabase event source exists and binds runtime/retry/audit/disable/health evidence."
+    condition: "Completion deliverable must include docs/cmd020_w11_trigger_worker_eval_gate_check.md with decision=approve_with_concerns or approve and all 13 fields populated."
+
+  - severity: medium
+    perspective: 6_test
+    issue: "Static tests are not yet specified by exact names."
+    condition: "Add tests asserting all worker_eval fields, no persistent sleep loop, direct audited_done is absent, and timer/service files are named explicitly."
+
+  - severity: medium
+    perspective: 11_cross_pc_repo_check
+    issue: "Supabase MCP availability is assumed by implementation."
+    condition: "Completion report must include preflight result; if Supabase MCP is unavailable, script must write terminal failure evidence and not claim monitor readiness."
+
+delivery_decision:
+  pass_now_with_conditions:
+    - subtask_cmd020_w11_completion_trigger_watcher
+  blocked_for_revision: []
+
+recommendation_to_karo:
+  action: dispatch_ashigaru5_with_conditions
+  summary: "第5度で worker_eval gate 正本 field と completion gate interaction が task YAML に反映済み。条件付き配信可。"
