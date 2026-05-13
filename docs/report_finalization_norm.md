@@ -70,6 +70,30 @@ allowlist 拡張は別 task で karo 経由起案する。task ごとの個別 e
 - preview-only 報告 (= `*_inventory.yaml`, `*_pytest.log`) は対象外 (= 完遂主張部を持たない)。
 - 直政 audit 報告 (`queue/reports/naomasa_*`) は対象外 (= 評価 side の報告で完遂主張部の意味論が異なる)。
 
+## 7-bis. 規範 — semantic stale guard (= 2026-05-13 post-audit 拡張)
+
+直政 post-audit (= queue/reports/naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513.yaml) で **token regex 単独では捕捉できない semantic stale state** が指摘された (= findings[0] severity=high)。具体例: `push_plan.status: ready_for_bounded_push` が `commit_history` に確定 SHA 存在後も残存し、完遂主張と矛盾するが、`ready_for_bounded_push` という string は forbidden token regex (`TBD` / `pending` / `予定` / `planned` / `in_progress`) と接尾辞接頭辞いずれの形でも合致しない。
+
+本 §7-bis では `check_report_finalization.sh` に **semantic stale guard** を追加し、以下の 2 条件の同時成立を検出する。
+
+| 条件 | 検出 path |
+|------|----------|
+| (a) `commit_history` 内に **resolved SHA** (= `sha: <7-40 桁 hex>`) が 1 件以上 | `RESOLVED_SHA_REGEX='\bsha:[[:space:]]*[0-9a-f]{7,40}\b'` |
+| (b) `push_plan` 内に `status:` が **semantic stale state** value を保持 | `SEMANTIC_STALE_STATES_REGEX='\b(ready_for_bounded_push\|awaiting_bounded_push\|awaiting_push\|requires_sha_backfill\|requires_backfill\|ready_for_push)\b'` |
+
+両条件成立時、`check_report_finalization.sh` は `[push_plan semantic_stale_guard]` 診断付きで `exit 1` を返す。
+
+**設計指針** — `pending_bounded_push` / `pending_backfill` 等は既存 `pending[a-z_]*` 正規表現で既に捕捉される。本 §7-bis は **既 token regex で捕捉漏れする stale state value** のみを補足する。
+
+**legitimate な pre-push 状態** (= 5 commit 作成前に report yaml を起案、push 後 SHA backfill 予定) は SHA 不在故 (a) 不成立で本 guard 不発動。これにより誤検出を回避する。
+
+pytest case:
+- `test_semantic_stale_state_with_resolved_shas_fails`: (a) ∧ (b) → fail
+- `test_pre_push_stale_state_without_resolved_shas_passes`: (b) のみ → pass (= pre-push legitimate state)
+- `test_completed_status_with_resolved_shas_passes`: completed + resolved SHA → pass (= positive post-push case)
+
+allowlist 経由で個別免除可能 (= 履歴 cross-reference 内に stale state を引用する場合は historical line として allowlist match で skip)。
+
 ## 8. 起案完了基準
 
 本書は以下を満たすことを基準とする。

@@ -3,6 +3,7 @@ task_id: subtask_cmd020_scope_contamination_prevention_v2
 parent_cmd: cmd_020
 reporter: ashigaru2
 reported_at: "2026-05-13T19:05:00+09:00"
+revised_at: "2026-05-13T19:25:00+09:00"
 verdict: pass_with_conditions
 verdict_basis: |
   AC0-AC7 全件 deliverable 完遂 + 25 件 pytest 全 PASS (= SKIP=0、duration ~1 sec)、
@@ -23,6 +24,36 @@ pre_audit:
   message_id: msg_20260513_182027_e18f531c
   delivery_gate: open_with_conditions
   audit_report: queue/reports/naomasa_scope_contamination_v2_preaudit_cycle2_20260513.yaml
+
+post_audit:
+  audit_id: naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513
+  audited_at: "2026-05-13T18:52:00+09:00"
+  verdict: fail_requires_report_finalization_revision
+  implementation_verdict: pass_with_concerns
+  report_quality_verdict: fail
+  scope: report_only_revision (= 実装 + 25 pytest PASS + 5 commit origin/main 到達は強い ✅、AC5 自身実証 irony のみ訂正)
+  findings_summary:
+    - "高: 完遂主張部 push_plan.status=ready_for_bounded_push が d1a2ff1 push 済事実と矛盾 (= AC5 自規範違反 irony)"
+    - "中: 自 linter は token regex のみで semantic stale state (= ready_for_bounded_push after push) を flag せず"
+    - "中: karo warning-only path は緊急/移行用 retain、normal path として常用させない設計指針追加"
+  required_revision_addressed:
+    - "push_plan.status: ready_for_bounded_push → completed (本 revise commit で訂正)"
+    - "commit_5 sha_source self-referential → 実 SHA d1a2ff1de956391a0add12ed1db4f15cbff5c14d backfill"
+    - "next_actions の future push/backfill 文言 → completed_actions[] へ移管"
+    - "scripts/lint/check_report_finalization.sh に semantic stale guard 追加 (= push_plan.status semantic stale state + commit_history non-empty 組合せ検出、optional 推奨対応)"
+    - "scripts/test/test_report_finalization_grep_evidence.py に semantic stale guard test case 2 件追加"
+
+revise_history:
+  - cycle: 1
+    cycle_state: report_only_revise_applied (= 本 commit_6 で全 5 件指摘対応完遂)
+    trigger: msg_20260513_184928_192cee0b (= karo task_revise)
+    audit_basis: queue/reports/naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513.yaml
+    scope:
+      - completion-claim sections の SHA backfill (= 全 5 commit 確定 SHA 反映)
+      - push_plan.status: ready_for_bounded_push → completed
+      - next_actions の future actions → completed_actions[] への整理
+      - 自 linter の semantic stale guard 機能追加 (= optional 推奨対応)
+    code_change_required: false (= 実装本体 + 既 25 pytest + 5 commit origin/main は不変、linter 拡張は self-improvement)
 
 redo_of:
   prior_task_id: subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
@@ -90,17 +121,25 @@ test_execution:
       scripts/test/test_hook_install_script.py \
       scripts/test/test_report_finalization_grep_evidence.py \
       -v --no-header
-  test_count_total: 25
-  result_pass: 25
+  test_count_total: 28
+  result_pass: 28
   result_fail: 0
   result_skip: 0
-  duration_sec_approx: 0.85
+  duration_sec_approx: 1.62
   log_path: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_pytest.log
   per_file:
     test_scope_contamination_re_introduce: { pass: 9, fail: 0, skip: 0 }
     test_bounded_push_workflow_side_effect: { pass: 3, fail: 0, skip: 0 }
     test_hook_install_script: { pass: 6, fail: 0, skip: 0 }
-    test_report_finalization_grep_evidence: { pass: 7, fail: 0, skip: 0 }
+    test_report_finalization_grep_evidence: { pass: 10, fail: 0, skip: 0 }
+  revise_addendum_pytest_delta:
+    new_tests_added_in_revise_commit:
+      - test_semantic_stale_state_with_resolved_shas_fails (= 直政 findings[0] root cause、guard 動作 evidence)
+      - test_pre_push_stale_state_without_resolved_shas_passes (= guard scope 境界、誤検出回避 evidence)
+      - test_completed_status_with_resolved_shas_passes (= 本 revise 後 report shape positive 例)
+    initial_pytest_count: 25
+    post_revise_pytest_count: 28
+    delta: 3
 
 # Self-verify chain (= 本 report の completion-claim sections に未確定 token 残存ゼロ)
 self_verify_finalization:
@@ -158,49 +197,62 @@ commit_history:
       - scripts/test/test_hook_install_script.py
       - scripts/test/test_report_finalization_grep_evidence.py
   - n: 5
-    sha_source: "git log --format=%H -1 (= this commit, captured immediately after creation)"
-    title: "report(cmd_020 scope_contamination_v2): final report yaml + pytest log"
+    sha: d1a2ff1de956391a0add12ed1db4f15cbff5c14d
+    title: "report(cmd_020 scope_contamination_v2): final report yaml + pytest log (25 PASS SKIP=0)"
     files:
       - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml
       - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_pytest.log
     note: |
-      commit_5 SHA は本 file 自身を含む故 self-referential。bounded push 後の revise commit (= commit_6)
-      で sha を本 entry に backfill する経路を docs/report_finalization_norm.md §3 step 4 に明記。
-      backfill 完了 前後とも completion-claim sections は forbidden token 残存ゼロ (= 規範自身実証)。
+      commit_5 SHA d1a2ff1 は bounded push 完了直後の git log で確定取得し本 entry に backfill 済 (= revise
+      commit 経路、docs/report_finalization_norm.md §3 step 4 規範整合)。push 後 origin/main reachable 確認済。
 
 push_plan:
   repo_scope: multi-agent-shogun-newbuild only (= hakudokai-dev 関与禁)
-  status: ready_for_bounded_push
+  status: completed
+  pushed_commit_chain: d19294d..d1a2ff1
+  pushed_sha:
+    - e681820ed38868715ccf73cd9b8e92e8ed7346f9
+    - 2d9759874f878d019d70944d4976c1e98dd5f2fd
+    - bb556ee567d106cea9231016d515e1ce2d3cb0d9
+    - 6ea0c715a17103f53e2ad5d58699ee3bb0e99f31
+    - d1a2ff1de956391a0add12ed1db4f15cbff5c14d
+  push_result:
+    method: bounded_F007 (= worktree + cherry-pick + printf+diff equality assert + cleanup)
+    remote: origin (= multi-agent-shogun-newbuild)
+    branch: main
+    pre_push_diff_exit_code: 0 (= expected SHA 列 = actual SHA 列 equality assert pass)
+    post_push_remote_reachability: "d1a2ff1 is HEAD, origin/main, origin/HEAD (= naomasa post-audit machine_evidence.remote_reachability で再確認済)"
+    naomasa_post_audit_confirmation: "commit chain e681820 2d97598 bb556ee 6ea0c71 d1a2ff1 全件 git show --stat で reachable 確認済 (= queue/reports/naomasa_ashigaru2_scope_contamination_v2_post_audit_20260513.yaml machine_evidence.commits)"
   bounded_allowlist:
     本_task_5_commits_only_multi_agent_repo:
       - e681820ed38868715ccf73cd9b8e92e8ed7346f9
       - 2d9759874f878d019d70944d4976c1e98dd5f2fd
       - bb556ee567d106cea9231016d515e1ce2d3cb0d9
       - 6ea0c715a17103f53e2ad5d58699ee3bb0e99f31
-      - "(commit_5 self-sha captured at commit time, supplied to cherry-pick after this commit)"
+      - d1a2ff1de956391a0add12ed1db4f15cbff5c14d
     scope_exclusion:
       - 既 ashigaru2 累計 commit (e062f63 / 9676222 / 651efcf / d9a5c05) は本 task scope 外
       - 他 ashigaru commit 全件 本 task scope 外
       - hakudokai-dev は本 task 範囲外
       - working tree の ashigaru6 modified file / ashigaru3 untracked file は本 task scope 外、unstaged retain
   worktree_clean_path:
-    purpose: "ashigaru1 規範整合、本 task 5 commit only push、multi-agent-shogun-newbuild repo only"
+    purpose: "ashigaru1 規範整合、本 task 5 commit only push、multi-agent-shogun-newbuild repo only (= 実行済 evidence)"
     multi_agent_shogun_newbuild:
       worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/scope_v2_main_wt origin/main"
-      cherry_pick: "git -C /tmp/scope_v2_main_wt cherry-pick e681820 2d97598 bb556ee 6ea0c71 <commit_5_self_sha>"
+      cherry_pick: "git -C /tmp/scope_v2_main_wt cherry-pick e681820 2d97598 bb556ee 6ea0c71 d1a2ff1"
       pre_push_verify: |
         git -C /tmp/scope_v2_main_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main.txt
         printf '%s\n' e681820ed38868715ccf73cd9b8e92e8ed7346f9 2d9759874f878d019d70944d4976c1e98dd5f2fd \
                      bb556ee567d106cea9231016d515e1ce2d3cb0d9 6ea0c715a17103f53e2ad5d58699ee3bb0e99f31 \
-                     <commit_5_self_sha> | sort > /tmp/push_expected_main.txt
+                     d1a2ff1de956391a0add12ed1db4f15cbff5c14d | sort > /tmp/push_expected_main.txt
         diff /tmp/push_actual_main.txt /tmp/push_expected_main.txt
-        # equality assert exit 0 required; mismatch aborts push
+        # equality assert exit 0 confirmed
       push_command: "git -C /tmp/scope_v2_main_wt push origin HEAD:main"
       cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/scope_v2_main_wt"
   safety_check:
     - multi-agent-shogun-newbuild repo only (= hakudokai-dev 完全削除)
     - worktree isolation + printf + diff equality assert + cleanup
-    - report final 化規範自身実証 (= push 後 SHA backfill 経路明示、revise commit で commit_history 更新)
+    - report final 化規範自身実証 (= push 後 SHA backfill 完遂、revise commit で commit_history 更新済、本 yaml で完遂状態)
 
 acceptance_criteria:
   AC0:
@@ -239,7 +291,10 @@ acceptance_criteria:
       scripts/lint/check_report_finalization.sh + report_finalization_allowlist.txt + docs/report_finalization_norm.md +
       scripts/test/test_report_finalization_grep_evidence.py 起案、scope completion-claim 4 section + forbidden
       token 5 種 + allowlist 3 系統 (= status taxonomy enum / lifecycle meta field / 履歴 cross-reference)、
-      本 report 自身 scan で exit 0 (= 自身実証)、self-verify pytest case 含む 7 件 PASS、SKIP=0。
+      本 report 自身 scan で exit 0 (= 自身実証)、self-verify pytest case 含む 10 件 PASS、SKIP=0。
+      revise commit 拡張: semantic stale guard (= push_plan.status 将来 push 待ち value + commit_history
+      resolved SHA 存在の組合せ検出) 追加、norm doc §7-bis 規範化、pytest 3 件追加 (= stale fail / pre-push pass /
+      completed pass) — 直政 post-audit findings[0] root cause 構造解消 evidence。
   AC6:
     status: pass
     evidence: |
@@ -254,10 +309,16 @@ acceptance_criteria:
       a25a1b7) commit SHA + 含有 file + atomic_integrity + impact_assessment + git author + actual session
       agent 明示 + L1-L4 4 階層真因分析 + v2 deliverable 1:1 解消 logical proof。
 
+completed_actions:
+  - karo へ初回完遂報告 inbox_write 完遂 (= ashigaru2 → karo、msg_20260513_184309_5ee2558d、d1a2ff1 push 後送付)
+  - bounded F007 push d19294d..d1a2ff1 完遂 (= worktree add + cherry-pick e681820 2d97598 bb556ee 6ea0c71 d1a2ff1 + printf + diff equality OK + push origin HEAD:main + cleanup)
+  - 5 commit (= e681820/2d97598/bb556ee/6ea0c71/d1a2ff1) origin/main 到達確認 (= naomasa post-audit machine_evidence.remote_reachability、d1a2ff1 is HEAD, origin/main, origin/HEAD)
+  - commit_5 self-sha d1a2ff1 backfill 完遂 (= 本 revise commit 経由、commit_history[5].sha と push_plan.pushed_sha + bounded_allowlist 全 5 SHA 即埋め)
+  - linter semantic stale guard 拡張 完遂 (= scripts/lint/check_report_finalization.sh に push_plan.status semantic stale state + commit_history non-empty 組合せ検出 logic 追加、scripts/test/test_report_finalization_grep_evidence.py に test case 2 件追加)
+
 next_actions:
-  - karo inbox へ完遂報告 (= 直政 post-audit 流入準備整) — 本 commit 後 inbox_write 経由
-  - bounded F007 push (= worktree add + cherry-pick + printf + diff equality assert + cleanup) 実施 — 陛下御差配下
-  - push 後 commit_5 self-sha + push 完了 evidence を本 report の commit_history に backfill する revise commit を切り、再度 bounded push 1 commit only で完遂
+  - karo へ revise 完遂通達 inbox_write (= report_only_revision 完遂後、本 revise commit + bounded push 直後送付、直政 再 audit chain trigger)
+  - 直政 再 audit (= report-only revise の post_audit verdict 受領、completion_gate 解除 path)
 
 delivery_conditions_compliance:
   cond_1_dashboard_md_direct_edit_forbidden: pass (= 本 task で dashboard.md は不可触)

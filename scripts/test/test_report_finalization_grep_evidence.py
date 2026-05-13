@@ -176,6 +176,102 @@ def test_self_verify_v2_final_report_passes_when_present() -> None:
     )
 
 
+def test_semantic_stale_state_with_resolved_shas_fails(tmp_path: Path) -> None:
+    """post-audit findings[0] root cause: push_plan.status=ready_for_bounded_push remains
+    while commit_history holds resolved SHAs → must FAIL.
+
+    The pre-existing token regex (TBD / pending / 予定 / planned / in_progress) does not
+    capture `ready_for_bounded_push`, so a dedicated semantic-stale guard catches it.
+    """
+    f = tmp_path / "stale.yaml"
+    f.write_text(
+        textwrap.dedent(
+            """\
+            report_id: x
+            commit_history:
+              - n: 1
+                sha: e681820ed38868715ccf73cd9b8e92e8ed7346f9
+              - n: 2
+                sha: 2d97598
+            push_plan:
+              status: ready_for_bounded_push
+              bounded_allowlist:
+                - e681820ed38868715ccf73cd9b8e92e8ed7346f9
+                - 2d97598
+            acceptance_criteria:
+              AC0: pass
+            next_actions:
+              - karo へ revise 通達
+            """
+        ),
+        encoding="utf-8",
+    )
+    rc, _out, err = _run(f)
+    assert rc == 1, "stale state with resolved SHAs must fail"
+    assert "semantic_stale_guard" in err, f"semantic_stale_guard diagnostic expected; got: {err}"
+    assert "ready_for_bounded_push" in err, f"stale state value expected in diagnostic; got: {err}"
+
+
+def test_pre_push_stale_state_without_resolved_shas_passes(tmp_path: Path) -> None:
+    """Legitimate pre-push state: push_plan.status=ready_for_bounded_push WHEN commit_history has
+    no resolved SHA must NOT fail (= guard scope is strictly post-push contradiction).
+    """
+    f = tmp_path / "pre_push.yaml"
+    f.write_text(
+        textwrap.dedent(
+            """\
+            report_id: x
+            commit_history:
+              - n: 1
+                title: "inline batch commit 1"
+            push_plan:
+              status: ready_for_bounded_push
+              bounded_allowlist: []
+            acceptance_criteria:
+              AC0: pass
+            next_actions:
+              - karo へ revise 通達
+            """
+        ),
+        encoding="utf-8",
+    )
+    rc, _out, err = _run(f)
+    assert rc == 0, (
+        f"pre-push stale state without resolved SHAs must pass; stderr={err}"
+    )
+
+
+def test_completed_status_with_resolved_shas_passes(tmp_path: Path) -> None:
+    """post-push correctness: push_plan.status=completed AND commit_history full of resolved SHAs
+    must pass (= positive case for revised v2 report shape).
+    """
+    f = tmp_path / "completed.yaml"
+    f.write_text(
+        textwrap.dedent(
+            """\
+            report_id: x
+            commit_history:
+              - n: 1
+                sha: e681820ed38868715ccf73cd9b8e92e8ed7346f9
+              - n: 5
+                sha: d1a2ff1de956391a0add12ed1db4f15cbff5c14d
+            push_plan:
+              status: completed
+              pushed_sha:
+                - e681820ed38868715ccf73cd9b8e92e8ed7346f9
+                - d1a2ff1de956391a0add12ed1db4f15cbff5c14d
+            acceptance_criteria:
+              AC0: pass
+            next_actions:
+              - 直政 再 audit
+            """
+        ),
+        encoding="utf-8",
+    )
+    rc, _out, err = _run(f)
+    assert rc == 0, f"completed status with resolved SHAs must pass; stderr={err}"
+
+
 def test_norm_doc_documents_scoped_sections_and_forbidden_tokens() -> None:
     doc = NORM_DOC.read_text(encoding="utf-8")
     for section in ("commit_history", "push_plan", "acceptance_criteria", "next_actions"):

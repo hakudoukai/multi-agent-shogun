@@ -37,6 +37,12 @@ fi
 SCOPED_SECTIONS_REGEX='^(commit_history|push_plan|acceptance_criteria|next_actions):'
 # 部分一致: TBD/pending は接尾辞 (= _SHA_3, _audit, _user_sashihai 等) 込みで検出
 FORBIDDEN_REGEX='(TBD[A-Z0-9_]*|pending[a-z_]*|\bplanned\b|\bin_progress\b|予定)'
+# Semantic stale state guard (= push_plan.status が将来 push 待ち状態のまま commit_history に確定 SHA
+# が存在 → 完遂主張と矛盾、d1a2ff1 post-audit findings[0] root cause)。
+# 既 forbidden token regex (pending[a-z_]*) では捕捉できない `ready_for_bounded_push` 等を補足。
+SEMANTIC_STALE_STATES_REGEX='\b(ready_for_bounded_push|awaiting_bounded_push|awaiting_push|requires_sha_backfill|requires_backfill|ready_for_push)\b'
+# commit_history 内 resolved SHA = 7-40 桁 hex (= short / full SHA 両対応)
+RESOLVED_SHA_REGEX='\bsha:[[:space:]]*[0-9a-f]{7,40}\b'
 
 load_allowlist_into_var() {
     local file="$1"
@@ -73,6 +79,10 @@ scan_report() {
     local current_section=""
     local lineno=0
     local found=0
+    # Semantic stale guard state (= 2-pass artifact: collect during scan, evaluate at end)
+    local has_resolved_sha=0
+    local stale_status_line=""
+    local stale_status_lineno=0
     while IFS= read -r line; do
         lineno=$((lineno+1))
         # New top-level section
@@ -92,7 +102,20 @@ scan_report() {
         # Strip inline comments
         local clean
         clean=$(echo "$line" | sed 's/[[:space:]]*#.*$//')
-        # Check forbidden
+        # Semantic stale guard: collect commit_history resolved SHA + push_plan.status stale-state
+        if [ "$current_section" = "commit_history" ]; then
+            if echo "$clean" | grep -Eq -- "$RESOLVED_SHA_REGEX"; then
+                has_resolved_sha=1
+            fi
+        elif [ "$current_section" = "push_plan" ]; then
+            if echo "$clean" | grep -Eq -- '^[[:space:]]*status:[[:space:]]*'"$SEMANTIC_STALE_STATES_REGEX"; then
+                if ! is_allowlisted "$clean"; then
+                    stale_status_line="$line"
+                    stale_status_lineno="$lineno"
+                fi
+            fi
+        fi
+        # Forbidden token check (= existing path)
         if echo "$clean" | grep -Eq -- "$FORBIDDEN_REGEX"; then
             if is_allowlisted "$clean"; then
                 continue
@@ -101,6 +124,12 @@ scan_report() {
             found=1
         fi
     done < "$file"
+    # Semantic stale guard evaluate (= 確定 SHA 存在時に stale state 残存 → fail)
+    if [ "$has_resolved_sha" -eq 1 ] && [ -n "$stale_status_line" ]; then
+        echo "[check_report_finalization] FAIL $file:$stale_status_lineno [push_plan semantic_stale_guard] $stale_status_line" >&2
+        echo "[check_report_finalization]   reason: push_plan.status remains a future-push state while commit_history contains resolved SHAs (= post-push completion-claim stale)" >&2
+        found=1
+    fi
     return "$found"
 }
 
