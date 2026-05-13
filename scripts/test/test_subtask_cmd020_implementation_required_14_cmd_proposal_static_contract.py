@@ -189,3 +189,33 @@ def test_design_doc_charter_reference(proposal_text: str) -> None:
     assert "msg_20260513_134905" in proposal_text, (
         "proposal doc に 直政 pre_audit msg id (= msg_20260513_134905) anchor が無い"
     )
+
+
+def test_no_tbd_in_inventory_grep_evidence(inventory_text: str) -> None:
+    """直政 post_audit finding severity high 9_doc + medium 6_test 整合 machine guard:
+    inventory yaml の existing_artifacts_grep field 内に TBD / need verify placeholder が
+    残存しない (= AC0 evidence completeness、結果 hits 全件確定値で記述)。
+
+    本 test は revision_v2 (= 2026-05-13T17:00) で追加。直政 finding 6_test の指摘
+    『静的 test は構造的 anchor を見るのみで TBD 残存を検出しない』へ machine guard で応答。
+
+    検査範囲: 'hits:' 行に対する TBD / 'need verify' 文字列の検出のみ。
+    inventory metadata 内の改修記録 (= revision_v2 / impact_assessment 等)
+    は対象外 (= 改修履歴は事象記述に必要、guard 対象外)。
+    """
+    tbd_pattern = re.compile(
+        r'^\s*hits:\s*.*(?:TBD|need\s+verify)', re.MULTILINE | re.IGNORECASE
+    )
+    matches = tbd_pattern.findall(inventory_text)
+    assert not matches, (
+        f"inventory yaml の existing_artifacts_grep hits field に "
+        f"TBD / need verify placeholder が {len(matches)} 件残存 "
+        f"(= 直政 post_audit finding 9_doc 違反 risk)。"
+        f"残存例: {matches[:3]}"
+    )
+
+    grep_field_pattern = re.compile(r"existing_artifacts_grep:", re.MULTILINE)
+    assert grep_field_pattern.search(inventory_text), (
+        "inventory yaml に existing_artifacts_grep field 構造 anchor が無い "
+        "(= 本 test の検査 scope 前提崩壊)"
+    )

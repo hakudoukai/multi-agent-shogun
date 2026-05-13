@@ -118,7 +118,8 @@ candidates:
     naomasa_green_path: "visit Phase4-7 implementation task"
     existing_artifacts_grep:
       - search: "grep -l '訪問\\|visit' docs/dashboard_layer_*.md"
-        hits: "TBD (multiple)"
+        hits: 0
+        result: "executed 2026-05-13T16:55、dashboard_layer_*.md には 訪問/visit 言及なし"
       - search: "find . -name '*visit*' -path './backend/*'"
         hits: 0
     gap_analysis: "Phase1-3 完遂前提 (= 別 cmd 着手済 or pending 別 task)、Phase4-7 は 訪問ルート + 患者記録 + 法令 (= 介護保険 / 訪問診療) + 帳票 chain、bloom L4+ 想定"
@@ -150,9 +151,11 @@ candidates:
     naomasa_green_path: "Pay Light real API connection task with security/privacy tests"
     existing_artifacts_grep:
       - search: "grep -rl 'paylight\\|PayLight\\|ペイライト' docs/ backend/ frontend/ 2>/dev/null"
-        hits: 0
+        hits: 3
+        result: "executed 2026-05-13T16:55、hits = docs/cmd020_implementation_required_14_cmd_proposal.md (= 本 task 自己言及、anti-dup 対象外) + docs/dashboard_status_classification_logic.md (= ashigaru7 cmd_020 classification、ペイライト 言及 anchor のみ) + docs/three_layer_design.md (= ペイライト 言及 anchor のみ)、impl artifact なし"
       - search: "find . -name '*payment*' -path './backend/*'"
-        hits: "TBD (need verify)"
+        hits: 0
+        result: "executed 2026-05-13T16:55、backend/ 配下に payment 関連 file 不在"
     gap_analysis: "決済 API 仕様書取得 + PCI DSS 準拠範囲 + tokenization + webhook + reconciliation 全件未着手"
     bloom_estimate: L4 (= 外部 API + 法令 (PCI DSS) + security、3 軸複合)
 
@@ -182,9 +185,11 @@ candidates:
     naomasa_green_path: "LINE notification + web reservation connection task"
     existing_artifacts_grep:
       - search: "grep -rl 'LINE\\|line_notify\\|line_messaging' docs/ backend/ 2>/dev/null"
-        hits: "TBD (need verify)"
+        hits: 6
+        result: "executed 2026-05-13T16:55、hits = docs/cmd020_implementation_required_14_cmd_proposal.md (= 本 task 自己言及) + docs/dashboard_status_classification_logic.md (= ashigaru7 cmd_020) + docs/cmd004_push_vapid_management.md + docs/kids_app_push_ceremony_detail_design.md + docs/cmd004_notification_facade_design.md + docs/cmd004_kartetto_pdf_v0_2_spec.md、LINE Messaging API impl artifact (= backend/ 配下 line.py 等) なし、通知 facade design (= cmd004_notification_facade_design.md) は LINE 言及 anchor のみで impl 未着手"
       - search: "find . -name '*reservation*' -o -name '*reserve*' -path './backend/*'"
-        hits: "TBD (need verify)"
+        hits: 0
+        result: "executed 2026-05-13T16:55、backend/ 配下に reservation/reserve 関連 file 不在 (= -o は OR 構文、-path filter は 1 件目のみ適用、find 動作仕様上 reservation の全件 + reserve in backend のみ、結果として relevant 0 件)"
     gap_analysis: "LINE Messaging API + Web 予約 (= 既存 SaaS or 自前 UI) + 予約状態同期 + 通知 template + 法令 (= 改正電気通信事業)、未着手 or 着手途上"
     bloom_estimate: L4 (= 外部 API + 法令 + UI、3 軸複合)
 
@@ -215,7 +220,8 @@ candidates:
     naomasa_green_path: "deploy runbook + real-data test + Tailscale task"
     existing_artifacts_grep:
       - search: "find . -name '*deploy*' -name '*.md' -not -path './node_modules/*'"
-        hits: "TBD"
+        hits: 0
+        result: "executed 2026-05-13T16:55、deploy runbook .md ファイル不在"
       - search: "grep -rl 'Tailscale' docs/ 2>/dev/null"
         hits: 0
     gap_analysis: "deploy runbook + production data test (= GDPR / 改正個人情報保護法 整合) + Tailscale VPN 構成 + secret 管理 chain 未着手"
@@ -303,3 +309,75 @@ next_steps_after_ac0:
   - "AC4: inline batch commit 3 件 atomic"
   - "AC5: bounded F007 push (= worktree + cherry-pick + diff verify + cleanup)"
   - "AC6: 完遂報告 + 直政 post-audit 流入準備"
+
+# ═══════════════════════════════════════════════════════════════════════
+# REVISION v2 (= 直政 post_audit fail_requires_inventory_and_process_revision、
+#               msg_20260513_141908、commit 3381d9b 整合) 2026-05-13T17:00
+# ═══════════════════════════════════════════════════════════════════════
+
+revision_v2:
+  revised_at: "2026-05-13T17:00:00+09:00"
+  revision_trigger: "naomasa post_audit verdict=fail_requires_inventory_and_process_revision (= queue/reports/naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513.yaml)"
+  source_inbox: "msg_20260513_141957_767b77fc (= karo task_revise 通達)"
+  changes_summary:
+    - "existing_artifacts_grep 内 TBD / need verify 5 件 (= 直政 audit '6 件' 集計、L121/L155/L185/L187/L218) を全件確定値 + 実行時刻 + result 文に解消"
+    - "scope_contamination_final_commit_map section 追加 (= 直政 finding severity high 8_ops 整合、D2 proposal MD の ashigaru3 commit 取込 incident の影響範囲 + atomicity verify + author 名義整理 evidence 明示)"
+    - "tbd_marker_guard test 装着案 acknowledge (= scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py 内に test_no_tbd_in_inventory 追加、AC3 補強)"
+    - "constraints_acknowledged 内 pre_audit_finding_medium_1/2 に加え post_audit_findings_v2 4 件 acknowledge 追記"
+  re_audit_request:
+    target: gunshi_naomasa
+    expected_path: "queue/reports/naomasa_ashigaru6_implementation_required_14cmd_post_audit_v2_20260513.yaml (= karo 経由 trigger)"
+    delivery: "本 revision_v2 commit (= 単一 revise commit + bounded F007 push) 完遂後、karo inbox 経由 naomasa 再 audit 依頼"
+
+scope_contamination_final_commit_map:
+  incident_summary: |
+    本 task の D2 deliverable (= docs/cmd020_implementation_required_14_cmd_proposal.md 494 lines) が ashigaru3
+    の commit chain (= subtask_cmd020_sc_specialty_inventory) に concurrent commit で取込まれ、ashigaru6
+    author 名義での atomic 3 commit が破綻した。直政 post_audit finding severity high 8_ops の対応。
+  root_cause: |
+    pre-commit hook 未 install (= ashigaru2 task subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook
+    で staged-residual-check 装備済だが、.git/hooks/pre-commit 不在、pre-commit framework 未起動)。
+    ashigaru3 が `git commit -a` 相当 / `git add .` 系の操作で staged 状態の他 agent files (= 本 task の
+    docs/cmd020_implementation_required_14_cmd_proposal.md) を sweep。
+  final_commit_chain_on_origin_main:
+    - sequence: 1
+      origin_sha: "6afc8be (= local sha + cherry-pick 不要、auto-git-sync 経由 origin/main 941cc05 直接到達)"
+      author_attribution: ashigaru6 (= 本 task 正規 author、SC karo email、6afc8be は SC karo identity)
+      content: ".gitignore (= 14 cmd whitelist 5 entries) + queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_inventory.yaml"
+      deliverable_ref: D1 (= AC0 inventory yaml)
+      atomic_integrity: pass
+    - sequence: 2_displaced
+      origin_sha: "d329ceb (= local 65c917e の cherry-pick、worktree /tmp/cmd_020_14cmd_main_wt 経由 origin/main 153a2fd に到達)"
+      author_attribution_in_git: ashigaru3 (= SC karo email、commit message は ashigaru3 sc_specialty_inventory addendum)
+      author_attribution_logical: ashigaru6 (D2 部分) + ashigaru3 (addendum 部分)
+      content_split:
+        - "docs/cmd020_implementation_required_14_cmd_proposal.md (= 本 task D2、494 lines、ashigaru6 deliverable、scope_contamination で取込)"
+        - "queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml (= ashigaru3 D2 deliverable + addendum)"
+      deliverable_ref: D2 (= AC2 proposal markdown、本 task の主 deliverable)
+      atomic_integrity: contaminated (= 単一 commit に 2 agent deliverable 混在)
+      content_integrity: pass (= 494 lines hash byte-equal、内容変更なし、scope_contamination は形式 issue であり内容 issue ではない)
+    - sequence: 3
+      origin_sha: "bf45e0a (= local 2f18e4a の cherry-pick、同 worktree push)"
+      author_attribution: ashigaru6 (= SC karo email、本 task 正規 author)
+      content:
+        - "scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py (= D3)"
+        - "queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_pytest.log (= D4)"
+        - "queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_report.yaml (= D5、初版)"
+      deliverable_ref: D3 + D4 + D5
+      atomic_integrity: pass
+    - sequence: 4_addendum
+      origin_sha: "7851fd8 (= local c1c7365 の cherry-pick、worktree /tmp/cmd_020_14cmd_main_wt2 経由 origin/main 到達)"
+      author_attribution: ashigaru6
+      content: "queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_report.yaml (= D5 backfill、push_verification + commit_history + scope_contamination 注記)"
+      deliverable_ref: D5 (= 後続 backfill commit、AC5 push verify evidence + AC4 commit SHA backfill)
+      atomic_integrity: pass
+  impact_assessment:
+    deliverable_content_integrity: pass (= 全 5 deliverable byte-equal で origin/main 到達)
+    test_pass_status: pass (= pytest 5 passed SKIP=0、AC3 evidence)
+    atomic_commit_attribution: contaminated_for_D2 (= D2 commit author が ashigaru3 名義、内容は本 task ashigaru6 deliverable)
+    repo_history_correctness: usable (= 全 deliverable 到達済、scope_contamination は形式上の issue、内容上 issue なし)
+  remediation_path:
+    - "本 inventory yaml 内 commit map で正規 author 整理 evidence を retain (= 本 revision_v2 で完遂)"
+    - "ashigaru2 task subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook の hook を .git/hooks/pre-commit に install 経路で再発防止 (= 別 task、karo 御差配範囲)"
+    - "本 task は cmd_020 scope_contamination prevention v2 evidence として後続 audit chain に貢献 (= 直政 post_audit finding 8_ops 整合)"
+  forward_use_constraint: "本 task の atomic commit chain を current parallel commit process safety の根拠としては利用禁 (= 直政 finding 8_ops 整合)、本 task は contamination incident 記録としてのみ retain"
