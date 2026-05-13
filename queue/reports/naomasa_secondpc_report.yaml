@@ -6423,3 +6423,26 @@ cmd020_scope_contamination_v2_preaudits_20260513:
     recommendation_to_karo:
       action: revise_task_yaml_then_dispatch
       summary: "方向性は良いが、現 task は invalid YAML かつ設計条件未整理。足軽2へ送る前に上記6点を直すべし。"
+
+  - audit_id: naomasa_scope_contamination_v2_preaudit_cycle2_20260513
+    redo_of: naomasa_scope_contamination_v2_preaudit_20260513
+    source_inbox:
+      - msg_20260513_181324_0de99ad2
+    detail_report: queue/reports/naomasa_scope_contamination_v2_preaudit_cycle2_20260513.yaml
+    target_task: subtask_cmd020_scope_contamination_prevention_v2
+    target_assignee: ashigaru2
+    verdict: pass_with_conditions
+    evidence_state: complete
+    completion_gate: open_with_conditions
+    resolved:
+      - "task YAML yaml.safe_load PASS"
+      - "tmux @agent_id primary + git config fallback only"
+      - "all-pane live verify split to Karo/infra"
+      - "report finalization grep scoped to completion-claim sections + allowlist"
+      - "shared file policy moved toward task manifest allowlist"
+      - "AC4 renamed bounded-push workflow tests; auto_git_sync pull-only retained out-of-scope"
+    remaining_condition:
+      - "step_3(o) still says config/settings.yaml Karo pass / ashigaru reject; align it with task-manifest allowlist authorized/unauthorized shared-file test."
+    recommendation_to_karo:
+      action: minor_text_fix_then_dispatch
+      summary: "修正版は配信可。step_3(o)文言だけallowlist modelへ揃え、足軽2へ /clear + new task_id 配信してよい。"

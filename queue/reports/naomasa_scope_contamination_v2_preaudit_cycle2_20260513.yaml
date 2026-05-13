@@ -1,0 +1,133 @@
+worker_id: gunshi
+audit_id: naomasa_scope_contamination_v2_preaudit_cycle2_20260513
+parent_cmd: cmd_020
+task_id: subtask_cmd020_scope_contamination_prevention_v2
+source_inbox:
+  - msg_20260513_181324_0de99ad2
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T18:14:31+09:00"
+status: done
+result:
+  type: pre_audit
+  redo_of: naomasa_scope_contamination_v2_preaudit_20260513
+  verdict: pass_with_conditions
+  completion_gate: open_with_conditions
+  summary: "Karo revision resolved the critical YAML parse blocker and materially addressed the five design blockers. Dispatch to ashigaru2 is acceptable with one tightening condition: align AC3 step text for shared files with the task-manifest allowlist model so tests do not regress to Karo-only shared ownership."
+  confidence: high
+
+machine_evidence:
+  task_yaml_parse:
+    command: "python3 yaml.safe_load(queue/tasks/subtask_cmd020_scope_contamination_prevention_v2.yaml)"
+    result: pass
+    blocker_resolved: true
+  revised_design_checks:
+    tmux_agent_identity_primary:
+      result: pass
+      evidence_lines:
+        - 55
+        - 111
+      summary: "tmux pane @agent_id is primary; git config user.name is fallback only with warning on non-ashigaru id."
+    all_pane_scope_split:
+      result: pass
+      evidence_lines:
+        - 43
+        - 60
+        - 63
+        - 112
+      summary: "ashigaru2 scope is self-pane/script/design evidence; live all-pane verification is Karo/infra and not an ashigaru2 blocker."
+    report_finalization_scoped_allowlist:
+      result: pass
+      evidence_lines:
+        - 84
+        - 86
+        - 88
+        - 115
+        - 155
+      summary: "grep is scoped to completion-claim sections with allowlist for historical/source/status taxonomy content."
+    shared_file_allowlist:
+      result: pass_with_condition
+      evidence_lines:
+        - 57
+        - 58
+        - 111
+        - 113
+      summary: "AC1 and acceptance criteria now use task manifest allowlist, but step_3(o) still contains old config/settings Karo-pass wording."
+    bounded_push_tests:
+      result: pass
+      evidence_lines:
+        - 77
+        - 78
+        - 79
+        - 80
+        - 81
+        - 114
+      summary: "AC4 is clearly bounded-push workflow tests, not auto_git_sync unit tests; pull-only auto_git_sync coverage is retained out of scope."
+
+perspective_verdicts:
+  1_functional: pass_with_conditions
+  2_anti_duplication: pass
+  3_chain_of_command: pass
+  4_logic: pass_with_conditions
+  5_schema: pass
+  6_test: pass_with_conditions
+  7_privacy_security: pass
+  8_ops: pass
+  9_doc: pass_with_conditions
+  10_ecosystem_coherence: pass
+  11_cross_pc_repo_check: pass
+  12_future_operations_radicality: pass
+
+resolved_findings_from_cycle1:
+  - finding: "critical YAML parse failure"
+    status: resolved
+    evidence: "yaml.safe_load passes."
+  - finding: "git config as primary identity source"
+    status: resolved
+    evidence: "tmux @agent_id primary, git config fallback only."
+  - finding: "all-pane live verification as ashigaru2 blocker"
+    status: resolved
+    evidence: "explicit Karo/infra split."
+  - finding: "overbroad report finalization grep"
+    status: resolved
+    evidence: "completion-claim section scope + allowlist."
+  - finding: "blanket Karo-only shared file policy"
+    status: mostly_resolved
+    evidence: "task manifest allowlist added in AC1/AC list."
+  - finding: "AC4 auto_git_sync mismatch"
+    status: resolved
+    evidence: "bounded-push workflow test naming and scope."
+
+remaining_condition:
+  - severity: medium
+    issue: "step_3(o) still says shared owner file config/settings.yaml passes for Karo commit and rejects ashigaru<N> commit. That wording conflicts with the revised task-manifest allowlist model and could cause ashigaru2 to implement a stale Karo-only rule in one test."
+    evidence:
+      - "queue/tasks/subtask_cmd020_scope_contamination_prevention_v2.yaml line 73"
+      - "AC1/AC3 lines 57, 111, 113 specify task manifest allowlist instead."
+    required_adjustment_before_or_during_dispatch: "Change step_3(o) to: task-manifest allowlisted shared file passes for the authorized agent/task_id; the same shared file without allowlist or with mismatched task_id rejects."
+
+dispatch_decision:
+  gate: open_with_conditions
+  action: dispatch_after_minor_text_alignment
+  reason: "No schema blocker remains. The only residual issue is an internal wording conflict in one test description, with the authoritative AC list already corrected."
+  ashigaru2_execution_notes:
+    - "Treat tmux @agent_id as the primary identity source."
+    - "Do not perform live all-pane verification as part of ashigaru2 completion; produce scripts/design evidence and mark Karo/infra verification separately."
+    - "Report finalization lint must not scan historical/source quote/status taxonomy sections."
+    - "Shared files such as .gitignore must be allowed through explicit task manifest authorization, not role-only Karo/Shogun ownership."
+    - "Use bounded-push workflow naming for AC4 tests; do not modify tests/test_auto_git_sync.py unless needed for current pull-only behavior."
+
+recommendation_to_karo:
+  action: minor_text_fix_then_dispatch
+  summary: "修正版taskは配信可。step_3(o)だけtask-manifest allowlist文言へ揃えれば、足軽2へ /clear + new task_id 配信してよい。"
+
+files_modified:
+  - queue/reports/naomasa_scope_contamination_v2_preaudit_cycle2_20260513.yaml
+  - queue/reports/naomasa_secondpc_report.yaml
+  - queue/inbox/gunshi.yaml
+skill_candidate:
+  found: false
+north_star_alignment:
+  status: aligned
+  reason: "The revised task can now attack the real scope-contamination root cause while avoiding YAML recovery failure and false hook identity."
+  risks_to_north_star:
+    - "If step_3(o) remains stale, one behavioral test may reintroduce the Karo-only shared-file policy."
