@@ -1,0 +1,257 @@
+inventory_id: ashigaru2_subtask_cmd020_scope_contamination_v2_inventory
+task_id: subtask_cmd020_scope_contamination_prevention_v2
+parent_cmd: cmd_020
+reporter: ashigaru2
+created_at: "2026-05-13T18:35:00+09:00"
+repo_scope: multi-agent-shogun-newbuild only
+
+# AC0 inventory first 規範 — 既実装 + 本日 incident + 自 pane 状態 + scope split を機械 evidence 化。
+
+prior_ashigaru2_commits:
+  - sha: e062f63
+    message: "docs(cmd_020 scope_contamination_prevention): AC0 inventory yaml 起案 (= multi-agent-shogun-newbuild repo)"
+    files:
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_inventory.yaml
+      - .gitignore
+    role: AC0 inventory + gitignore whitelist
+    design_flaw: none (= inventory のみ)
+  - sha: 9676222
+    message: "feat(cmd_020 scope_contamination_prevention): 規範文書 + pre-commit hook 装備 (= 再発防止策 4 件 impl)"
+    files:
+      - docs/scope_contamination_prevention.md
+      - .pre-commit-config.yaml
+      - scripts/lint/check_staged_residual.sh
+    role: 規範文書 + hook 装備
+    design_flaw: |
+      staged-residual-check 設計欠陥 = pre-commit framework が staged 全件を $@ で渡すため
+      commit_set ⊇ staged_set が常成立、residual_set = staged_set - commit_set が常空、
+      元事故 (= 他 agent staged 巻取り) を構造的に検出不能。
+  - sha: 651efcf
+    message: "test(cmd_020 scope_contamination_prevention): 5 件 static source-contract test + report yaml + pytest log"
+    files:
+      - scripts/test/test_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_static_contract.py
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_report.yaml
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
+    role: static contract test (= 設計欠陥 hook の anchor のみ verify)
+    design_flaw: |
+      5 件 static test は file 存在 + anchor 文字列 verify のみで hook 挙動を behavioral test していない。
+      設計欠陥 (= staged_set = commit_set 常成立) を pytest が見抜けず pass で通した。
+  - sha: d9a5c05
+    message: "docs(cmd_020 scope_contamination_prevention): 本日 final_state snapshot + /clear 推奨対応 (= karo msg_20260513_174431)"
+    files:
+      - queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_final_state_20260513.yaml
+    role: final_state snapshot (= /clear 前 retain)
+    design_flaw: none (= snapshot のみ)
+
+today_incidents:
+  - incident_id: incident_1_ashigaru3_commit_65c917e
+    commit_sha: 65c917e
+    commit_at: "2026-05-13T14:03:05+09:00"
+    git_author: "hakudokai (SC karo)"
+    actual_session_agent: ashigaru3
+    incident_type: scope_contamination + git_author_drift
+    files_in_commit:
+      - docs/cmd_020_implementation_required_14_cmd_proposal.md  # = ashigaru7 deliverable
+      - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml  # = ashigaru3 own
+    atomic_integrity: broken (= ashigaru7 file 混入)
+    impact_assessment: |
+      ashigaru3 task の commit に ashigaru7 deliverable (= 14_cmd_proposal.md) が混入。
+      ashigaru3 自身は task 範囲外、commit 帰属が崩壊、bounded F007 equality assert 計算狂う。
+      author 名義 "hakudokai (SC karo)" は git config last-write-wins race で SC karo session が
+      後刻 overwrite した結果と推察、tmux pane @agent_id 経由なら ashigaru3 と verify 可能。
+    root_cause: ".git/hooks/pre-commit 未 active (= staged-residual-check 装備済だが install されていない)"
+
+  - incident_id: incident_2_ashigaru7_commit_240dd7a
+    commit_sha: 240dd7a
+    commit_at: "2026-05-13T14:02:15+09:00"
+    git_author: "hakudokai (SC karo)"
+    actual_session_agent: ashigaru7
+    incident_type: scope_contamination + git_author_drift
+    files_in_commit:
+      - docs/dashboard_layer_c_function.md  # = ashigaru3 deliverable (= Layer C)
+      - docs/dashboard_layer_d_zunou.md  # = ashigaru4 deliverable (= Layer D)
+      - docs/dashboard_status_classification_logic.md  # = ashigaru7 own (= classification logic)
+    atomic_integrity: broken (= ashigaru3 file + ashigaru4 file 混入)
+    impact_assessment: |
+      ashigaru7 classification_logic task の commit に ashigaru3 Layer C + ashigaru4 Layer D
+      の docs/*.md (= cross-layer reference anchor 1 行 edit) が混入。Layer C/D は ashigaru3/4 担当範囲、
+      ashigaru7 が直接 edit したのは cross-layer anchor のみだが commit 帰属が混在し原作者不明。
+    root_cause: |
+      .git/hooks/pre-commit 未 active + shared file (= 他 ashigaru の docs/*.md) を
+      task manifest allowlist 経由で authorize する仕組み欠落、cross-layer anchor edit が
+      正当か否か機械検出不能。
+
+  - incident_id: incident_3_ashigaru6_commit_a25a1b7
+    commit_sha: a25a1b7
+    commit_at: "2026-05-13T14:24:35+09:00"
+    git_author: "hakudokai (SC karo)"
+    actual_session_agent: ashigaru6
+    incident_type: scope_contamination_suspicious
+    files_in_commit:
+      - queue/reports/ashigaru7_subtask_cmd020_implementation_required_14_cmd_proposal_inventory.yaml  # = ashigaru7 deliverable
+      - queue/reports/ashigaru7_subtask_cmd020_implementation_required_14_cmd_proposal_pytest.log  # = ashigaru7 own
+      - queue/reports/ashigaru7_subtask_cmd020_implementation_required_14_cmd_proposal_report.yaml  # = ashigaru7 own
+      - scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py  # = ashigaru7 own
+    atomic_integrity: open_with_concerns (= author 名義 + actual session 不一致)
+    impact_assessment: |
+      commit message "docs(cmd_020 14cmd revision_v2)" は ashigaru7 task (= 14_cmd_proposal) revise だが
+      author 名義は "hakudokai (SC karo)"。tmux pane @agent_id verify 経路無しでは
+      ashigaru6/ashigaru7/karo の session 帰属が機械決定不能、3 candidate 混在状態。
+    root_cause: |
+      git config user.{name,email} last-write-wins race + tmux pane @agent_id primary 識別経路欠落 +
+      .git/hooks/pre-commit 未 active の 3 重欠陥が複合。
+
+  - incident_id: incident_4_prior_ashigaru3_commit_9285be2
+    commit_sha: 9285be2
+    commit_at: "2026-05-13T14:03:44+09:00"
+    git_author: "hakudokai (SC karo)"
+    actual_session_agent: ashigaru3
+    incident_type: post_rebase_recovery (= 副次 reference)
+    files_in_commit:
+      - queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_pytest.log
+      - scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py
+    atomic_integrity: pass (= 本人 file のみ)
+    note: |
+      task YAML AC7 で言及される 9285be2 commit は本人 file のみで scope_contamination 該当せず、
+      但し author 名義 drift は incident_1-3 と同 root cause なので reference として retain。
+
+pre_commit_hook_local_state:
+  hook_path: .git/hooks/pre-commit
+  installed: false
+  evidence: |
+    $ ls -la /home/hakudokai/projects/multi-agent-shogun-newbuild/.git/hooks/pre-commit
+    (= no pre-commit hook、本日 18:34 確認時点)
+  pre_commit_config_yaml: present (.pre-commit-config.yaml retain、4 hook 定義あり)
+  install_status_root_cause: |
+    `.pre-commit-config.yaml` は repo 内に存在するが、`pre-commit install` が実行されていない、
+    或いは `pre-commit` framework が当該 SC WSL 環境に未 install。
+    `.git/hooks/pre-commit` 自体が存在しない為、commit 直前検査が一切走らない。
+
+agent_identity_evidence:
+  tmux_at_agent_id_primary:
+    pane: "$TMUX_PANE"
+    value: ashigaru2
+    command: tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}'
+    evidence: ashigaru2 (= 2026-05-13 18:34 確認)
+  git_config_user_name_fallback:
+    command: git config user.name
+    value: ashigaru2
+    note: |
+      現時点では tmux @agent_id と git config user.name が一致しているが、
+      multi-pane 並行 commit 中は他 pane の session_start_hook が後刻 overwrite し得る (= race)。
+      よって本 task の新 hook は tmux @agent_id を primary、git config を fallback only として扱う。
+
+all_pane_scope_split:
+  ashigaru2_scope:
+    - 自 pane (= ashigaru2) の tmux @agent_id verify
+    - 自 pane の git config user.name verify
+    - 自 pane の .git/hooks/pre-commit 状態 verify
+    - scripts/lint/check_file_path_owner.sh + scripts/install_pre_commit_hook.sh の script + design 起案
+    - scripts/test/test_*_re_introduce.py / *_install_script.py / *_bounded_push_workflow.py / *_report_finalization_grep_evidence.py の test 起案
+  karo_infra_scope_deferred:
+    - 全 ashigaru pane (ashigaru1-7) の live tmux @agent_id verify
+    - 全 ashigaru pane の .git/hooks/pre-commit active 化 trigger
+    - SessionStart hook (= scripts/session_start_hook.sh) に install_pre_commit_hook.sh 呼出追加
+    - CLAUDE.md Session Start 手順に install procedure 追記 (= 別 cycle 規範変更 proposal)
+  rationale: |
+    ashigaru2 single pane では他 pane の live state を verify 不能、ashigaru2 完遂条件に
+    全 pane verify を含めると無限待機 blocker 化する。本 task では script + 設計 + 自 pane
+    machine evidence を完遂条件とし、live all-pane verify は karo/infra 別実行で確認する。
+
+new_components_planned:
+  - file: scripts/lint/check_file_path_owner.sh
+    role: file path owner 識別 + scope contamination 検出 + task manifest allowlist 引照
+    ac_anchor: AC1
+  - file: scripts/install_pre_commit_hook.sh
+    role: .git/hooks/pre-commit auto-install (= chmod +x + idempotent overwrite)
+    ac_anchor: AC2
+  - file: scripts/lint/check_report_finalization.sh
+    role: report final 化 scoped grep + allowlist (= completion-claim sections のみ)
+    ac_anchor: AC5
+  - file: scripts/lint/report_finalization_allowlist.txt
+    role: historical/quoted/status taxonomy 除外 allowlist
+    ac_anchor: AC5
+  - file: docs/report_finalization_norm.md
+    role: bounded push 後 SHA 即埋め step 明示化 規範
+    ac_anchor: AC5
+  - file: docs/cmd020_scope_contamination_v2_incident_root_cause.md
+    role: 本日 incident 3 件 root cause evidence + v2 解消 logical proof
+    ac_anchor: AC7
+  - file: scripts/test/test_scope_contamination_re_introduce.py
+    role: 6 件 behavioral re-introduce test (= 本日 incident 3 件 + allowlist authorized/unauthorized + same-owner pass)
+    ac_anchor: AC3
+  - file: scripts/test/test_bounded_push_workflow_side_effect.py
+    role: 3 件 bounded-push workflow side-effect test (= same-content divergent + race + pull-only scope retain)
+    ac_anchor: AC4
+  - file: scripts/test/test_hook_install_script.py
+    role: install_pre_commit_hook.sh presence + chmod + idempotent install verify
+    ac_anchor: AC2
+  - file: scripts/test/test_report_finalization_grep_evidence.py
+    role: scoped grep 動作 + allowlist 効果 + 本 task report 自身 auto verify
+    ac_anchor: AC5
+  - file: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml
+    role: 本 task 完遂 report (= SHA 即埋め、final 化規範自身実証)
+    ac_anchor: AC5/AC6
+
+gap_analysis:
+  - gap: 1
+    issue: pre-commit 渡し staged 全件 = commit_set logic = residual 常空
+    resolution: file path pattern による owner 識別 + tmux @agent_id 比較に再設計
+  - gap: 2
+    issue: shared file (= .gitignore / docs/*.md / .pre-commit-config.yaml 等) の authorize 経路無し
+    resolution: task YAML shared_files_allowlist field 経由 explicit 認可
+  - gap: 3
+    issue: git config user.name が last-write-wins race で他 agent に overwrite される
+    resolution: tmux pane @agent_id を primary identity source 化、git config は fallback only
+  - gap: 4
+    issue: .git/hooks/pre-commit 自体が install されておらず hook が無実体
+    resolution: scripts/install_pre_commit_hook.sh で chmod +x + idempotent install、SessionStart trigger proposal
+  - gap: 5
+    issue: 5 件 static test が behavioral 不在のため設計欠陥を見抜けず pass で通した
+    resolution: behavioral test 6 件 (= 元事故 re-introduce simulation) で実 hook 動作を verify
+  - gap: 6
+    issue: 完遂報告 yaml に pending/TBD/planned 残存しても全文 grep では historical/quoted/status enum も hit する
+    resolution: completion-claim sections のみ scoped grep + allowlist で historical/quoted 除外
+
+mc_anti_dup_check:
+  status: not_applicable
+  rationale: |
+    本 task は dashboard render 系列でなく scope contamination 抑止 tooling 系列、MC regenerate_dashboard.py
+    対象外。MC anti-dup は dashboard Layer A-G + 14_cmd_proposal 系列のみ適用 (= 本 task 範囲外)。
+
+cycle5_evidence_pattern:
+  one_to_one_mapping:
+    AC0: queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_inventory.yaml (= 本 file)
+    AC1: scripts/lint/check_file_path_owner.sh
+    AC2: scripts/install_pre_commit_hook.sh + scripts/test/test_hook_install_script.py
+    AC3: scripts/test/test_scope_contamination_re_introduce.py
+    AC4: scripts/test/test_bounded_push_workflow_side_effect.py
+    AC5: scripts/lint/check_report_finalization.sh + report_finalization_allowlist.txt + docs/report_finalization_norm.md + scripts/test/test_report_finalization_grep_evidence.py
+    AC6: 本 inventory + 本 report 内 self-verify evidence
+    AC7: docs/cmd020_scope_contamination_v2_incident_root_cause.md
+  13_fields_full:
+    - task_id
+    - parent_cmd
+    - reporter
+    - created_at
+    - repo_scope
+    - prior_ashigaru2_commits
+    - today_incidents
+    - pre_commit_hook_local_state
+    - agent_identity_evidence
+    - all_pane_scope_split
+    - new_components_planned
+    - gap_analysis
+    - cycle5_evidence_pattern
+  anti_pattern_self_check:
+    - TBD_in_inventory: 0  # = 本 file 内 grep -c TBD で確認
+    - pending_in_inventory: 0
+    - need_verify_in_inventory: 0
+
+constraints_acknowledged:
+  - AC0 inventory first 規範 (= ashigaru1 第 1 弾実証 base)
+  - 本能寺戒め厳格遵守、機械 evidence のみ
+  - delivery conditions 4 件遵守
+  - repo scope 単一 (= multi-agent-shogun-newbuild、hakudokai-dev 除外)
+  - tmux @agent_id primary + git config fallback only (= AC1(c))
+  - all-pane live verify は karo/infra 別実行 (= ashigaru2 完遂 blocker ではない、AC0 evidence 上明示)

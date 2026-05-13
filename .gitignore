@@ -320,6 +320,20 @@ logs/
 !queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook_pytest.log
 !queue/reports/ashigaru2_subtask_cmd020_scope_contamination_prevention_final_state_20260513.yaml
 
+# cmd_020 scope_contamination v2 redo (= ashigaru2、subtask_cmd020_scope_contamination_prevention_v2)
+# (scripts/lint/ 配下 *.sh + scripts/test/ 配下は既 whitelist 済、本 section は scripts/ 直下 + docs/ + queue/reports/ + scripts/lint/*.txt 個別)
+!scripts/install_pre_commit_hook.sh
+!scripts/lint/report_finalization_allowlist.txt
+!scripts/test/test_scope_contamination_re_introduce.py
+!scripts/test/test_bounded_push_workflow_side_effect.py
+!scripts/test/test_hook_install_script.py
+!scripts/test/test_report_finalization_grep_evidence.py
+!docs/report_finalization_norm.md
+!docs/cmd020_scope_contamination_v2_incident_root_cause.md
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_inventory.yaml
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_report.yaml
+!queue/reports/ashigaru2_subtask_cmd020_scope_contamination_v2_pytest.log
+
 # cmd_020 dashboard status classification logic (= ashigaru7、subtask_cmd020_dashboard_status_classification_logic)
 !docs/dashboard_status_classification_logic.md
 !scripts/test/test_subtask_cmd020_dashboard_status_classification_logic_static_contract.py
