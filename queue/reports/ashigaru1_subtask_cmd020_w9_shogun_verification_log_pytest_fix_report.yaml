@@ -220,8 +220,8 @@ deliverables:
       commit_origin_initial: 885c98b
       commit_local_addendum: f1f92f0
       commit_origin_addendum: 0e2e5be
-      commit_local_revise: pending_revise_commit
-      commit_origin_revise: pending_revise_push
+      commit_local_revise: 2bfcbd5
+      commit_origin_revise: 35dbfab
     - file: queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_pytest.log
       commit_local: 4fe39c4
       commit_origin: 885c98b
@@ -246,8 +246,8 @@ completed_actions:
   - "報告書 revise (= 本 commit、AC3/AC4/AC6/deliverables/next_actions stale marker 全件解消) + bounded F007 push 第 3 弾"
 revise_history:
   - revise_id: revise_1
-    commit_local: pending_revise_commit
-    commit_origin: pending_revise_push
+    commit_local: 2bfcbd5
+    commit_origin: 35dbfab
     reason: |
       naomasa post-audit verdict=fail_requires_report_correction (= 9_doc severity=high)
       の指摘 4 件を全件解消:
