@@ -1,0 +1,124 @@
+schema_version: v1.0
+audit_id: naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_post_audit_20260514
+auditor: gunshi
+auditor_persona: 井伊直政
+audited_at: "2026-05-14T00:34:13+09:00"
+parent_cmd: cmd_020
+target_task: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+target_revision: 2
+target_assignee: ashigaru4
+source_inbox:
+  - msg_20260514_003114_e475b17d
+target_report: queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+target_commits:
+  - c1bd793ebb1997ba9ff5f5e9d525159169c4c34d
+  - 491731ba1fb0ee81ab2fc8dcdf2d6c841faac108
+  - 7090d74d4544630ecce3c1bc7ca3d505b4cfe543
+
+verdict: fail_requires_scope_exception_or_manifest_revision
+implementation_verdict: pass_with_concerns
+report_quality_verdict: fail_scope_manifest_mismatch
+evidence_state: complete
+completion_gate: blocked_until_karo_scope_exception_or_task_manifest_revision
+
+summary: |
+  AC0 current truth gate、AC1 transition documentation、AC2 regression pytest、
+  AC3 dashboard/regenerator non-mutation、AC6 report finalization は機械証跡上おおむね
+  成立。されど AC4 の task-manifest authorized path に含まれない .gitignore が
+  commit c1bd793 で変更され、最終 report が後から authorized_paths_written に
+  .gitignore を追加して自己正当化している。scope_contamination_v2 guard を監査
+  対象にした任務であるため、これは非阻害 concern ではなく完遂阻害である。
+
+machine_evidence:
+  origin_contains_target_chain: true
+  origin_main_at_audit_time: 7090d74d4544630ecce3c1bc7ca3d505b4cfe543
+  commit_file_sets:
+    c1bd793:
+      - .gitignore
+      - docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_inventory.yaml
+    491731b:
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_pytest.log
+      - scripts/test/test_unmatched_verified_targets_regression.py
+    7090d74:
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+  pytest_rerun:
+    command: python3 -m pytest scripts/test/test_unmatched_verified_targets_regression.py -q
+    result: "5 passed in 2.31s"
+    skip_count: 0
+  report_finalization:
+    command: bash scripts/lint/check_report_finalization.sh queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+    result: "[check_report_finalization] OK"
+    exit_code: 0
+  task_yaml_ac4_authorized_paths:
+    - scripts/test/test_unmatched_verified_targets_regression.py
+    - docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+    - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_inventory.yaml
+    - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+    - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_pytest.log
+  unauthorized_written_path:
+    path: .gitignore
+    evidence: "c1bd793 modifies .gitignore, but task YAML AC4 authorized path list does not include .gitignore."
+  self_reported_guard_failure:
+    source: target_report.constraints_observed.scope_contamination_v2_no_hook_assumption.finding
+    value: "check_file_path_owner.sh -v rejects .gitignore + docs transition file under strict ashigaru4 mode."
+
+positive_evidence:
+  - "target commit chain is present on origin/main."
+  - "focused pytest rerun passes: 5 passed, SKIP=0."
+  - "check_report_finalization.sh passes the final report with explicit report path."
+  - "scripts/regenerate_dashboard.py and dashboard.md are reported unchanged; no contrary task-commit evidence was found."
+  - "honest finding retained: retain_registry absorption hypothesis was false; active_entries=0 is recorded as the real current-state cause."
+
+blocking_findings:
+  - id: high_ac4_manifest_scope_violation
+    severity: high
+    perspective: 3_kiritsu
+    issue: |
+      Task YAML AC4 declares a closed task-manifest allowlist of five writable deliverable
+      paths. Commit c1bd793 also modifies .gitignore. Because .gitignore is a shared
+      repository control file and not present in the task-manifest authorized path list,
+      the delivery violates its own AC4 scope boundary.
+    recommendation: |
+      Karo must either issue an explicit scope exception / manifest revision that authorizes
+      the .gitignore whitelist lines, or require a corrective report/scope revision before
+      this can be passed.
+  - id: high_guard_rejection_recorded_but_not_blocking
+    severity: high
+    perspective: 8_ops
+    issue: |
+      The final report records that check_file_path_owner.sh rejects .gitignore and the
+      docs transition file under strict ashigaru4 mode, then treats the schema drift as a
+      concern while marking AC4 pass. For a scope_contamination_v2-derived task, manual
+      guard rejection cannot be downgraded without explicit Karo exception.
+    recommendation: |
+      Convert the report verdict to blocked/pass_with_exception after Karo authorization,
+      and align task YAML with shared_files_allowlist or the current manifest allowlist
+      schema.
+  - id: medium_report_self_expands_authorized_paths
+    severity: medium
+    perspective: 9_doc
+    issue: |
+      The final report adds .gitignore to authorized_paths_written, but the assignment
+      YAML did not authorize it. A completion report cannot expand its own write scope
+      after implementation.
+    recommendation: "Revise the report to distinguish task-authorized paths from extra paths requiring exception."
+
+non_blocking_concerns:
+  - id: deictic_self_reference_commit3
+    severity: low
+    perspective: 9_doc
+    issue: "commit_history[3] uses deictic self-reference rather than the final origin SHA, though finalization lint passes."
+    recommendation: "Prefer explicit origin SHA in future final reports where feasible."
+  - id: cross_pc_active_entries_root_cause_open
+    severity: low
+    perspective: 11_cross_pc_repo_check
+    issue: "active_entries 41 to 0 is documented as cross-PC history issue but not root-caused."
+    recommendation: "Track as separate history-integrity follow-up if Karo needs long-term causality."
+
+recommendation_to_karo:
+  action: require_scope_exception_or_manifest_revision_before_acceptance
+  summary: |
+    実装・テストは通せる水準だが、AC4 の書込範囲違反が完遂阻害。Karo が .gitignore
+    追記を明示例外承認するか、任務YAML/最終報告を scope exception 付きで改訂させてから
+    再監査へ回すべし。
