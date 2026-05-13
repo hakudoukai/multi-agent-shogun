@@ -1,0 +1,275 @@
+task_id: subtask_cmd004_cicd_pipeline_construction
+parent_cmd: cmd_004
+bloom_level: L4
+agent: ashigaru3
+agent_persona: 滝川一益 (= Phase 8 cmd_004 chain 総仕上げ)
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+reported_at: "2026-05-11T20:55:00+09:00"
+verdict: pass
+self_assessment: |
+  cmd_004 chain 総仕上げ Phase 8 完遂。AC1-AC7 全達成。
+  pytest 93/93 pass (cicd 21 + security 16 + observability 20 + facade 24 + push 12)、
+  SKIP=0、warnings 0。GitHub Actions workflow 7 件 (= CI 4 + CD 2 + rollback 1 + multi-agent lint 1)、
+  F007 整合 (= production manual gate + shogun_directive_ref input + environment protection)、
+  AlertRouter (Phase 5) 連動 rollback notify、4 層 audit trail integration。
+  Phase 1-7 既 infra 統合自動化、ashigaru7 framework との duplicate 回避 (= clinic_id grep gate placeholder)、
+  根本治療原則 5 規範 + 評価基準 全整合。
+
+# ───────────────────────────────────────────────
+# AC 達成状況
+# ───────────────────────────────────────────────
+ac_results:
+  AC1:
+    status: done
+    title: "GitHub Actions workflow 設計"
+    summary: |
+      hakudokai-dev に 6 workflow + multi-agent に 1 workflow = 計 7 workflow 起案。
+      既 Phase 1-7 infra + ashigaru7 framework と統合、duplicate 回避。
+    workflow_count: 7
+    deliverables:
+      - "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-ci-backend.yml (新規 119 lines)"
+      - "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-ci-frontend.yml (新規 95 lines)"
+      - "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-ci-secret.yml (新規 80 lines)"
+      - "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-cd-staging.yml (新規 75 lines)"
+      - "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-cd-production.yml (新規 100 lines)"
+      - "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-rollback.yml (新規 110 lines)"
+      - "/home/hakudokai/projects/multi-agent-shogun-newbuild/.github/workflows/cmd004-lint.yml (新規 52 lines)"
+
+  AC2:
+    status: done
+    title: "CI pipeline 実装 (pytest/bandit/pip-audit/vitest/eslint/npm audit/secret/grep gate)"
+    summary: |
+      CI 4 workflow が PR / push 時 path-filter trigger で自動起動、SKIP=0 gate を全 pytest に適用。
+      bandit / pip-audit / npm audit を内蔵、Phase 6 security 統合。
+      multi-agent lint workflow が deliverable allowlist + secret + clinic_id grep の 3 層 gate を実行。
+    integrations:
+      - "Phase 5/6 pytest set (test_push_notifications + test_notification_facade + test_observability + test_security_hardening) を CI で全件実行"
+      - "Phase 6 .bandit config 直接利用"
+      - "Phase 6 scripts/lint/check_secrets.sh を CI secret workflow で再利用"
+      - "Phase 7 scripts/lint/check_deliverable_tracked.sh を multi-agent lint で再利用"
+      - "ashigaru7 framework の check_clinic_id_hardcode.sh を placeholder 予約 (= duplicate 回避)"
+
+  AC3:
+    status: done
+    title: "CD pipeline (staging auto + production F007 manual gate)"
+    summary: |
+      cd-staging.yml: main merge で automatic deploy (= staging environment)。
+      cd-production.yml: workflow_dispatch のみ trigger、`shogun_directive_ref` input 必須 (= F007 audit trail)、
+      `environment: production` で reviewer 承認 gate (= GitHub Environments protection rule、ops 側 provisioning)。
+    f007_compliance:
+      - "production workflow に push / pull_request trigger 不在を pytest で assert (test_production_workflow_is_dispatch_only)"
+      - "shogun_directive_ref 必須 input を pytest で assert (test_production_workflow_requires_shogun_directive_input)"
+      - "environment: production 設定を pytest で assert"
+
+  AC4:
+    status: done
+    title: "rollback workflow + AlertRouter 連動 + audit trail"
+    summary: |
+      rollback.yml は workflow_dispatch のみ、revert_to_commit + reason + severity (NORMAL/HIGH/EMERGENCY) input。
+      AlertRouter notify step で curl 経路 stub (= OD-CICD-4 endpoint 起案後 enable)。
+      audit trail JSON 生成 + artifact upload (90 日保管)。
+      rollback simulation test で Phase 5 AlertRouter.fire(rollback_rule) → EMERGENCY severity ADMIN ntfy 配信を立証。
+    deliverables:
+      - "cmd004-rollback.yml + AlertRouter notify hook (= 設計書 §5)"
+      - "rollback_audit.json 自動生成 + 90 日 retention"
+
+  AC5:
+    status: done
+    title: "pytest + workflow validator + rollback simulation"
+    pytest_result:
+      command: "python3 -m pytest backend/tests/test_cicd_pipeline.py backend/tests/test_security_hardening.py backend/tests/test_observability.py backend/tests/test_notification_facade.py backend/tests/test_push_notifications_router.py"
+      cwd: "/mnt/c/Projects/hakudokai-dev"
+      passed: 93
+      failed: 0
+      skipped: 0
+      warnings: 0
+      duration_sec: 3.66
+      cases:
+        phase8_cicd_new: 21
+        phase6_security_regression: 16
+        phase5_observability_regression: 20
+        phase4_facade_regression: 24
+        phase1_2_push_regression: 12
+    key_validations:
+      - "全 workflow yaml が parse 可能 (= yaml.safe_load)"
+      - "全 job に runs-on + steps 存在"
+      - "production workflow が workflow_dispatch のみ (= F007 整合 機械検証)"
+      - "production が shogun_directive_ref input を必須化"
+      - "rollback workflow に AlertRouter + rollback_executed + severity を含む"
+      - "multi-agent lint が 3 layer (deliverable + secret + clinic_id) を実行"
+      - "rollback simulation: AlertRouter.fire(EMERGENCY) → ntfy ADMIN dispatch 確認"
+      - "metric_snapshot (workflow_run/actor) が body に転写される"
+      - "workflow 数 = 7 (hakudokai 6 + multi-agent 1) 一致"
+      - "CI workflow に path filter (backend/** / frontend/**) 適用"
+
+  AC6:
+    status: done
+    title: "docs/cmd004_cicd_pipeline_design.md 起案"
+    deliverable: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_cicd_pipeline_design.md (335 lines, 10 sections)"
+    sections:
+      - "§0 範囲・非範囲"
+      - "§1 根本治療原則 self-check"
+      - "§2 AC1 Workflow 一覧 + path-filter trigger"
+      - "§3 AC2 CI pipeline 詳細"
+      - "§4 AC3 CD pipeline 詳細 + F007 integration"
+      - "§5 AC4 Rollback path + AlertRouter 連動"
+      - "§6 AC5 テスト方針"
+      - "§7 実装手順"
+      - "§8 Open Items"
+      - "§9 結論"
+
+  AC7:
+    status: done
+    title: "F007 + report + karo 報告"
+    deliverable: "queue/reports/ashigaru3_cmd004_cicd_pipeline_construction_report.yaml (本書)"
+    f007_compliance: "commit/push 未実施、Phase 1-8 一括 push を陛下御差配仰ぐ"
+
+# ───────────────────────────────────────────────
+# 機械 evidence
+# ───────────────────────────────────────────────
+machine_evidence:
+  preflight:
+    sc_wsl_access: "ok"
+    multi_agent_repo_state: "Phase 1-7 deliverable 既 commit 固定 (3e8dd2f + 1756136)、競合 risk 排除済"
+  files_created:
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/docs/cmd004_cicd_pipeline_design.md"
+      lines: 335
+    - path: "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-ci-backend.yml"
+      lines: 119
+    - path: "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-ci-frontend.yml"
+      lines: 95
+    - path: "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-ci-secret.yml"
+      lines: 80
+    - path: "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-cd-staging.yml"
+      lines: 75
+    - path: "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-cd-production.yml"
+      lines: 100
+    - path: "/mnt/c/Projects/hakudokai-dev/.github/workflows/cmd004-rollback.yml"
+      lines: 110
+    - path: "/home/hakudokai/projects/multi-agent-shogun-newbuild/.github/workflows/cmd004-lint.yml"
+      lines: 52
+    - path: "/mnt/c/Projects/hakudokai-dev/backend/tests/test_cicd_pipeline.py"
+      lines: 245
+  files_modified: []
+  commit_status: "未実施 (Phase 8 deliverable は別 commit で固定推奨、karo 御差配後 Phase 1-8 一括 push)"
+  push_status: "未実施"
+
+# ───────────────────────────────────────────────
+# 根本治療原則適用 (= 陛下御差配 msg_20260511_164625)
+# ───────────────────────────────────────────────
+supreme_rule_application:
+  rule_id: "msg_20260511_164625"
+  verifications:
+    - aspect: "短期 hack/patch 厳禁"
+      compliance: "OK"
+      note: "手動 deploy ad-hoc を排除、CI/CD で全自動化 + verification + audit trail"
+    - aspect: "局所修正禁、構造改善優先"
+      compliance: "OK"
+      note: "個別 PR test 起動指示でなく、path-filter で responsability 自動化"
+    - aspect: "工数最小化より将来運用安定優先"
+      compliance: "OK"
+      note: "rollback workflow を initial で完備、AlertRouter 連動 + audit trail で実稼働品質"
+    - aspect: "仕組み追加 vs 改修区別"
+      compliance: "OK"
+      note: |
+        GitHub Environments / required_reviewers は ops 側 provisioning (= 仕組み追加)、
+        本 task は yaml + workflow logic のみ起案 (= 改修)。OD-CICD-3 で区別明示。
+    - aspect: "test + 法令 + UX 完備"
+      compliance: "OK"
+      note: |
+        pytest 93/93 + SKIP=0 + warnings 0、
+        F007 整合 (= production manual gate + shogun_directive_ref audit trail)、
+        rollback UX (= severity choice input + audit trail artifact + AlertRouter notify)。
+
+# ───────────────────────────────────────────────
+# 構造改善 chain
+# ───────────────────────────────────────────────
+root_cure_chain:
+  phase_A_inventory:
+    completed: true
+    findings:
+      - "hakudokai-dev に既 3 workflow (phase5-integration-tests / sync-source-cache / test)、cmd_004 専用なし"
+      - "multi-agent に既 1 workflow (test.yml)、lint 専用なし"
+      - "ashigaru7 framework 設計済 + scripts/lint/check_clinic_id_hardcode.sh 既起案"
+  phase_B_gap:
+    completed: true
+    gaps:
+      - "CI 系: backend / frontend / secret 専用 workflow 不在"
+      - "CD 系: staging / production / rollback 完全不在"
+      - "multi-agent: deliverable / secret / clinic_id 3 層 lint 不在"
+      - "F007 整合: manual gate + audit trail input 不在"
+  phase_C_design:
+    completed: true
+    deliverable: "docs/cmd004_cicd_pipeline_design.md 335 lines"
+  phase_D_implementation:
+    completed: true
+    files: 9 (= 7 workflow + 1 test + 1 設計書)
+  phase_E_test:
+    completed: true
+    pytest: "93/93 pass, SKIP=0, warnings 0 (Phase 1-8 全 regression)"
+  phase_F_report:
+    completed: true
+
+# ───────────────────────────────────────────────
+# Open Items
+# ───────────────────────────────────────────────
+open_items:
+  - id: OD-CICD-1
+    title: "Container registry + Helm chart (= deploy infrastructure)"
+    handoff_to: "karo (= ops、仕組み追加)"
+  - id: OD-CICD-2
+    title: "Canary / Blue-Green の traffic switch logic"
+    handoff_to: "karo (= cloud infra)"
+  - id: OD-CICD-3
+    title: "GitHub Environments + Required reviewers provisioning"
+    handoff_to: "karo (= ops、GitHub side)"
+  - id: OD-CICD-4
+    title: "POST /api/alerts/fire endpoint 起案 (= workflow から AlertRouter 呼出)"
+    handoff_to: "karo (= 後段 backend subtask、Phase 5 連動)"
+  - id: OD-CICD-5
+    title: "actionlint CI gate + ESLint max-warnings 0 化"
+    handoff_to: "karo (= ops)"
+  - id: OD-CICD-6
+    title: "release tag → changelog 自動生成"
+    handoff_to: "karo (= ops)"
+  - id: OD-CICD-7
+    title: "dependency audit weekly schedule (= OD-SEC-4 と統合)"
+    handoff_to: "karo (= ops)"
+  - id: OD-CICD-8
+    title: "hakudokai-dev .pre-commit-config.yaml deliverable allowlist 統合"
+    handoff_to: "ashigaru7 / karo"
+  - id: OD-CICD-9 (new)
+    title: "Phase 8 deliverable defensive commit (= 設計書 + 7 workflow + test、multi-agent + hakudokai-dev)"
+    handoff_to: "ashigaru3 自身 (= 本 task 完遂直後)"
+
+# ───────────────────────────────────────────────
+# Skill candidate
+# ───────────────────────────────────────────────
+skill_candidate: |
+  Phase 8 で「Phase 1-7 chain 既 infra を CI/CD で統合自動化」pattern が再現性高い。
+  既存 module / script / config の path-based reference + workflow yaml を test 容易な構造で書く idiom、
+  skill 候補「phase_chain_cicd_integration」を提案。
+  Phase 1-8 skill chain:
+    Phase 1 = design_sot_preflight
+    Phase 2 = findings_integration_phase2_protocol
+    Phase 3 = phase_continuation_root_cure_chain
+    Phase 4 = multi_channel_facade_extraction
+    Phase 5 = observability_3pillar_optional_provider
+    Phase 6 = multi_agent_config_slot_reservation
+    Phase 7 = negative_pattern_gitignore_deliverable_allowlist
+    Phase 8 = phase_chain_cicd_integration
+
+# ───────────────────────────────────────────────
+# 規律遵守
+# ───────────────────────────────────────────────
+discipline:
+  honnoji_kaime: 遵守
+  F001_no_polling: 遵守
+  F002_no_direct_human: 遵守
+  F003_no_self_capture: 遵守
+  F004_no_idle_loop: 遵守
+  F007_manual_commit_push: 遵守 (= push 未、本 task deliverable は別 commit で defensive 固定推奨)
+  destructive_ops: なし
+  prompt_injection_defense: 遵守
+  supreme_rule_msg_20260511_164625: 適用済
+  new_rules_msg_20260511_173925: 受領 ack、本 task は移行期 retain、次 task で model_path 確認 + /model 切替適用

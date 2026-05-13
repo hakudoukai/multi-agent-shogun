@@ -1,0 +1,54 @@
+name: cmd_004 multi-agent Lint (deliverable allowlist + secret + clinic_id grep)
+
+# 設計書: docs/cmd004_cicd_pipeline_design.md §2-1 (= multi-agent repo lint)
+# ashigaru3 / 滝川一益 Phase 8
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: deliverable + secret + clinic_id gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Deliverable allowlist check (= Phase 7)
+        run: bash scripts/lint/check_deliverable_tracked.sh -v
+
+      - name: Secret detection on changed files (= Phase 6)
+        run: |
+          # PR の場合は base...HEAD、push は HEAD~1...HEAD
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            files=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          else
+            files=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+          fi
+          if [ -z "$files" ]; then
+            echo "no changed files to scan"
+            exit 0
+          fi
+          # check_secrets.sh は引数列で file path を受ける
+          bash scripts/lint/check_secrets.sh $files
+
+      - name: clinic_id hardcode grep gate (= ashigaru7 framework placeholder)
+        run: |
+          # ashigaru7 phase 3 batch 1 で scripts/lint/check_clinic_id_hardcode.sh 実装後に有効化。
+          # 現状は placeholder (= 本 task で先行実装すると責任越境)
+          if [ -f scripts/lint/check_clinic_id_hardcode.sh ]; then
+            bash scripts/lint/check_clinic_id_hardcode.sh || exit 1
+          else
+            echo "::notice::ashigaru7 check_clinic_id_hardcode.sh pending (= placeholder)"
+          fi
