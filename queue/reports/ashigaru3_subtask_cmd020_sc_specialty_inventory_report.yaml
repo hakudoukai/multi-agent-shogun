@@ -126,21 +126,61 @@ acceptance_criteria_evidence:
       - "本 incident は ashigaru2 subtask_cmd020_scope_contamination_prevention_inline_batch_commit_hook の必要性を実証する evidence、karo に通達"
 
   AC5_bounded_F007_push:
-    status: "pending — 陛下御差配仰ぎ後実行 (= F007 遵守、ashigaru1 Layer A 規範踏襲)"
-    worktree_clean_path:
+    status: "completed — auto-git-sync rebase + push 経由で origin/main 配置済 (= 直政 post_audit finding 8_ops 解消)"
+    actual_chain_on_origin_main:
+      - sha: 6d2463b
+        purity: clean
+        files: [".gitignore (whitelist 5 件)", "queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_inventory.yaml"]
+      - sha: dd22592
+        purity: clean
+        files: ["docs/sc_specialty_inventory.md"]
+      - sha: d329ceb
+        purity: contaminated_with_ashigaru6 (= 旧 65c917e の rebased SHA、docs/cmd020_implementation_required_14_cmd_proposal.md 同梱)
+        files: ["queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml (= 旧 addendum 版)"]
+        karo_acceptance_request: "本 contaminated commit を karo-approved acceptance exception として明示 ack 仰ぐ (= 直政 post_audit finding 10_ecosystem_coherence 解消 path)"
+      - sha: 3d82c06
+        purity: clean (= 旧 9285be2 の rebased SHA、post-旧7d0c462-detach re-commit)
+        files: ["scripts/test/test_subtask_cmd020_sc_specialty_inventory_static_contract.py", "queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_pytest.log"]
+      - sha: 153a2fd
+        purity: clean (= 旧 844b448 の rebased SHA、final_commit_chain_after_rebase 反映)
+        files: ["queue/reports/ashigaru3_subtask_cmd020_sc_specialty_inventory_report.yaml (= 旧 final 版)"]
+    publication_path: "auto-git-sync rebase で旧 SHA detach → 新 SHA で origin/main 配置、ashigaru3 自身は F007 push 実行せず (= bounded push path は AC5 整備として retain、実際の publication は系統 auto-rebase 経由)"
+    worktree_clean_path_retained_for_reference:
       worktree_add: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree add /tmp/cmd_020_sc_specialty_inventory_wt origin/main"
-      cherry_pick: "git -C /tmp/cmd_020_sc_specialty_inventory_wt cherry-pick TBD_SHA_1 TBD_SHA_2 TBD_SHA_3"
+      cherry_pick: "git -C /tmp/cmd_020_sc_specialty_inventory_wt cherry-pick 6d2463b dd22592 d329ceb 3d82c06 153a2fd"
       pre_push_verify: |
         git -C /tmp/cmd_020_sc_specialty_inventory_wt log origin/main..HEAD --format=%H | sort > /tmp/push_actual_main.txt
-        printf '%s\n' TBD_SHA_1 TBD_SHA_2 TBD_SHA_3 | sort > /tmp/push_expected_main.txt
+        printf '%s\n' 6d2463b dd22592 d329ceb 3d82c06 153a2fd | sort > /tmp/push_expected_main.txt
         diff /tmp/push_actual_main.txt /tmp/push_expected_main.txt
         (= equality assert exit 0 必須、不一致 push abort)
       push_command: "git -C /tmp/cmd_020_sc_specialty_inventory_wt push origin HEAD:main"
       cleanup: "git -C /home/hakudokai/projects/multi-agent-shogun-newbuild worktree remove /tmp/cmd_020_sc_specialty_inventory_wt"
+      note: "本 path は規範整備として retain、実際の publication は auto-git-sync rebase 経由 (= 上記 actual_chain_on_origin_main 参照)。"
     safety_check:
       - multi-agent-shogun-newbuild repo only (= hakudokai-dev 不触)
       - worktree isolation + printf+diff equality assert + cleanup
       - F007 例外 retain (= 陛下御差配明示許可下のみ実行)
+
+  AC5_post_audit_revise_compliance:
+    naomasa_post_audit_id: naomasa_ashigaru3_sc_specialty_inventory_post_audit_20260513
+    naomasa_verdict: fail_requires_report_and_process_revision
+    naomasa_audited_at: "2026-05-13T16:00:00+09:00"
+    findings_resolution:
+      - finding_severity: high
+        perspective: 8_ops
+        issue: "AC5 pending + TBD_SHA placeholders 残存"
+        resolution: "AC5 status を completed に更新、TBD_SHA を実 SHA (6d2463b/dd22592/d329ceb/3d82c06/153a2fd) に置換、actual_chain_on_origin_main field 追加"
+        status: resolved_in_current_report
+      - finding_severity: high
+        perspective: 10_ecosystem_coherence
+        issue: "contamined commit 1 件 (= 旧 65c917e / 新 d329ceb) に ashigaru6 file 同梱"
+        resolution: "d329ceb を karo-approved acceptance exception として明示 ack 仰ぐ field 追加、contamination は本 report で正直開示 retain"
+        status: pending_karo_acceptance_ack (= 別 commit / 別 message で karo 通達)
+      - finding_severity: medium
+        perspective: 12_future_operations_radicality
+        issue: "staged-residual mitigation が active でなかった証拠"
+        resolution: "ashigaru2 scope_contamination_v2 redo の evidence として route 済 (= karo 通達)、ashigaru2 v2 task で `pre-commit install` 規範化 + AC2 install script 装備済 (commit bb556ee/6ea0c71/d1a2ff1)"
+        status: resolved_by_ashigaru2_v2_chain
 
   AC6_completion_report_naomasa_postaudit_prep:
     status: completed
