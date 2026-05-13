@@ -64,23 +64,37 @@ acceptance_criteria_results:
     description: 3 atomic commit + report + log
     status: pass
     commits:
-      - hash: 32a268bc97fc9247c1672c4d4ffa206dac3a8279
+      - hash_local: 32a268bc97fc9247c1672c4d4ffa206dac3a8279
+        hash_origin: 9bf630d
         subject: "docs(cmd_020 w9_shogun_verification_log_pytest_fix): AC0 inventory + before/after grep evidence"
         files: 3
-      - hash: 4ab45fa
+      - hash_local: 4ab45fa
+        hash_origin: e2189be
         subject: "feat(cmd_020 w9_shogun_verification_log_pytest_fix): w9_batch/w9_stage blocked field + test 反転"
         files: 2
-      - hash: pending_commit_3
-        subject: "test+report(cmd_020 w9_shogun_verification_log_pytest_fix): static contract 4 件 + report + pytest log"
-        planned_files: 3
+      - hash_local: 4fe39c4
+        hash_origin: 885c98b
+        subject: "test(cmd_020 w9_shogun_verification_log_pytest_fix): static contract 4 件 + report + pytest log"
+        files: 3
   AC5:
     description: bounded F007 push 完遂 (= worktree path、ashigaru1 規範整合)
-    status: pending_post_commit_3
-    plan: |
-      AC4 commit 3 完了後、git worktree add /tmp/cmd_020_w9_shogun_pytest_fix_wt + cherry-pick 3 commits +
-      printf+diff equality assert exit 0 + push origin main + worktree cleanup を実施。
-      delivery conditions 4 件厳守: (1) dirty original worktree から push 禁、(2) push 前 diff equality assert exit 0 必須、
-      (3) SKIP>0 なら未完了 (= 既達成 28 pass / 0 skip)、(4) worktree path 既存時は削除せず stop/report。
+    status: pass
+    evidence:
+      worktree_path: /tmp/cmd_020_w9_shogun_pytest_fix_wt
+      base_branch: origin/main (= 49d3dc1 base)
+      cherry_picked_commits:
+        - { original: 32a268bc97fc9247c1672c4d4ffa206dac3a8279, in_worktree: 9bf630d }
+        - { original: 4ab45fa,                                  in_worktree: e2189be }
+        - { original: 4fe39c4,                                  in_worktree: 885c98b }
+      diff_equality_assert_exit: 0
+      diff_lines_per_pair: [0, 0, 0]
+      push_result: "49d3dc1..885c98b  HEAD -> main"
+      worktree_cleanup: removed
+      delivery_conditions_compliance:
+        c1_dirty_original_worktree_push: 禁守 (= worktree 経由のみ push、original cwd は touch せず)
+        c2_diff_equality_assert_exit_0: pass (= 全 3 pair diff_lines=0)
+        c3_skip_zero: pass (= 28 pass / 0 skip)
+        c4_worktree_path_existing_check: pass (= ls 不在確認後 add)
   AC6:
     description: 完遂報告 + 直政 post-audit 流入準備
     status: in_progress
