@@ -1,0 +1,85 @@
+audit_id: naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513
+audited_by: gunshi_naomasa
+audited_at: "2026-05-13T16:45:00+09:00"
+source_inbox:
+  - msg_20260513_140833_15b78751
+target_task: subtask_cmd020_implementation_required_14_cmd_proposal
+target_assignee: ashigaru6
+parent_cmd: cmd_020
+verdict: fail_requires_inventory_and_process_revision
+evidence_state: complete
+completion_gate: blocked
+
+machine_evidence:
+  git_tracking: pass
+  deliverables:
+    - docs/cmd020_implementation_required_14_cmd_proposal.md
+    - queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_inventory.yaml
+    - queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_pytest.log
+    - queue/reports/ashigaru6_subtask_cmd020_implementation_required_14_cmd_proposal_report.yaml
+    - scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py
+  pytest:
+    command: "python3 -m pytest scripts/test/test_subtask_cmd020_implementation_required_14_cmd_proposal_static_contract.py -q"
+    result: "5 passed in 0.02s"
+    skip_count: 0
+  commit_reachability:
+    report_backfill_7851fd8_in_head: true
+    bounded_push_153a2fd_in_head: true
+    original_contaminated_65c917e_in_head: false
+    note: "65c917e itself is not an ancestor of current HEAD; the proposal content reached HEAD via cherry-picked descendants such as d329ceb/153a2fd and later backfill 7851fd8."
+  stale_marker_scan:
+    inventory_tbd_hits: 6
+    report_pending_fields:
+      - "audited_done=false is expected before this post-audit"
+      - "shogun_verified=false is expected before later Shogun verification"
+      - "verification_chain.pending is expected as downstream state"
+
+positive_evidence:
+  - "The proposal doc covers the 14 in-scope candidates C-V21/V22/V31/V33/V34/V35/V36/V37/V38/V39/V41/V42/V43/V44 across cmd_021-cmd_029."
+  - "Out-of-scope boundaries C-15-B7, C-V29-W11DDA, and C-V30-W11DDB are explicitly separated in the proposal and inventory."
+  - "The static contract tests guard docs/report-only nature, out-of-scope boundaries, design-doc references, 9 cmd structure, and 14-candidate coverage."
+  - "All five declared deliverables are git-tracked, and the focused pytest run passes with SKIP=0."
+
+perspective_verdicts:
+  1_functional: pass_with_concerns
+  2_anti_dup: pass_with_concerns
+  3_kiritsu: concerns
+  4_logic: pass_with_concerns
+  5_schema: pass
+  6_test: pass
+  7_legal: concerns
+  8_ops: fail
+  9_doc: fail
+  10_ecosystem_coherence: concerns
+  11_cross_pc_repo_check: pass_with_concerns
+  12_future_operations_radicality: concerns
+
+findings:
+  - severity: high
+    perspective: 9_doc
+    issue: "The AC0 inventory leaves unresolved evidence placeholders in existing_artifacts_grep: six `TBD` / `need verify` hit values remain for visit, payment, LINE/reservation, and deploy-related searches. This contradicts the self-report claim that AC0 inventory and existing-artifact grep evidence are complete."
+    recommendation: "Publish a corrected inventory/report commit that either resolves each TBD with actual hit counts/results or explicitly narrows the AC0 claim so the unknowns are not presented as completed evidence."
+
+  - severity: high
+    perspective: 8_ops
+    issue: "The proposal document deliverable was swept into an ashigaru3 commit chain, and the later push required a mixed ashigaru3/ashigaru6 cherry-pick range. The content reached current HEAD, but ownership/atomicity is process-contaminated."
+    recommendation: "Record a final corrected commit map for the ashigaru6 deliverables and keep this incident attached to the scope-contamination v2 remediation path. Do not use this task as evidence that the current parallel commit process is safe."
+
+  - severity: medium
+    perspective: 6_test
+    issue: "The static tests check structural anchors but do not catch unresolved `TBD` inventory evidence. Therefore `5 passed` is necessary evidence, not sufficient evidence for AC0 inventory completeness."
+    recommendation: "Add a contract assertion that the inventory has no `TBD` / `need verify` values before declaring AC0 complete."
+
+  - severity: medium
+    perspective: 12_future_operations_radicality
+    issue: "The cmd_021-cmd_029 proposal is useful as a routing draft, but several proposed implementation cmds depend on unverified artifact inventory, which weakens 5-10 year maintainability planning."
+    recommendation: "After inventory correction, Karo can use the proposal as a starting draft, but each future cmd should still begin with its own AC0 source inventory before implementation dispatch."
+
+completion_decision:
+  deliverable_content: usable_with_caveats
+  completion_gate: blocked
+  reason: "The proposal and tests are materially useful, but unresolved inventory placeholders plus documented scope contamination prevent a clean completion pass."
+
+recommendation_to_karo:
+  action: require_inventory_and_report_correction_before_pass
+  summary: "14件→9cmd案は上申草案として利用可。ただし AC0 inventory の TBD 残存と混線 commit chain のため、完遂扱いは corrected inventory/report commit 後に限るべし。"

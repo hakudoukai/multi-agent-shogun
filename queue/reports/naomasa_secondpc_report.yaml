@@ -6153,3 +6153,68 @@ cmd020_dashboard_status_classification_post_audits_20260513:
     recommendation_to_karo:
       action: require_corrected_final_report_before_pass
       summary: "成果物は利用可。ただし report stale/pending/TBD 矛盾により完了ゲート blocked。"
+
+cmd020_implementation_required_14cmd_post_audits_20260513:
+  - audit_id: naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513
+    source_inbox:
+      - msg_20260513_140833_15b78751
+    detail_report: queue/reports/naomasa_ashigaru6_implementation_required_14cmd_post_audit_20260513.yaml
+    target_task: subtask_cmd020_implementation_required_14_cmd_proposal
+    target_assignee: ashigaru6
+    verdict: fail_requires_inventory_and_process_revision
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "14 candidate を cmd_021-cmd_029 の 9 cmd 案で cover"
+      - "docs/report-only 境界と C-15-B7 / C-V29 / C-V30 out-of-scope 境界を明示"
+      - "deliverables git-tracked"
+      - "pytest 5 passed, SKIP=0"
+    high_findings:
+      - "AC0 inventory の existing_artifacts_grep に TBD / need verify が 6 件残存し、自己報告の inventory 完備 claim と矛盾。"
+      - "D2 proposal が ashigaru3 commit chain に sweep され、mixed ashigaru3/ashigaru6 cherry-pick push で到達しているため、atomic ownership は汚染済み。"
+    recommendation_to_karo:
+      action: require_inventory_and_report_correction_before_pass
+      summary: "上申草案としては利用可。ただし inventory TBD 解消と混線 commit map 修正まで完了ゲート blocked。"
+
+cmd020_persona_sc_inbox_post_audits_20260513:
+  - audit_id: naomasa_ashigaru4_persona_sc_inbox_post_audit_20260513
+    source_inbox:
+      - msg_20260513_141117_3a2b8344
+    detail_report: queue/reports/naomasa_ashigaru4_persona_sc_inbox_post_audit_20260513.yaml
+    target_task: subtask_cmd020_persona_廃止_sc_inbox_整理
+    target_assignee: ashigaru4
+    verdict: fail_requires_report_correction
+    evidence_state: complete
+    completion_gate: blocked
+    positive_evidence:
+      - "SC inbox 整理 plan は live wired / orphan alias / bridge / warning #1 path / watcher args verify を列挙"
+      - "live inbox mutation 0、watcher operation 0、SessionStart hook change 0 の範囲外宣言あり"
+      - "deliverables git-tracked"
+      - "pytest 4 passed, SKIP=0"
+      - "1fb2aec/361af32/9bf9b0d/49fe137 は current HEAD 到達"
+    high_findings:
+      - "final report に backfill_commit_4 / commit 予定 / pass_at_report_time / planned_execution_after_commit_3 が残存し、実 SHA 到達状況と矛盾。"
+    recommendation_to_karo:
+      action: require_corrected_final_report_before_pass
+      summary: "plan 内容は利用可。ただし final report の予定/pending/backfill placeholder 解消まで完了ゲート blocked。"
+
+cmd020_dashboard_status_classification_reaudits_20260513:
+  - audit_id: naomasa_ashigaru7_dashboard_status_classification_reaudit_20260513
+    source_inbox:
+      - msg_20260513_141459_b7af3f7b
+    detail_report: queue/reports/naomasa_ashigaru7_dashboard_status_classification_reaudit_20260513.yaml
+    target_task: subtask_cmd020_dashboard_status_classification_logic
+    target_assignee: ashigaru7
+    verdict: pass_with_concerns
+    evidence_state: complete
+    completion_gate: open_with_concerns
+    positive_evidence:
+      - "AC4/AC5/AC6 pending/TBD 矛盾は revise report で解消"
+      - "origin/main contains revise commit 49d3dc1"
+      - "pytest 5 passed, SKIP=0"
+    remaining_concerns:
+      - "revise commit SHA は report 内 self_referential 表現で、外部監査 report 側で 49d3dc1 と確認。"
+      - "過去 scope_contamination incident は process fix の証拠として残すべき。"
+    recommendation_to_karo:
+      action: accept_ashigaru7_revise_with_process_concerns
+      summary: "足軽7号 revise は通過可。self-referential 表現は非阻害懸念として扱う。"
