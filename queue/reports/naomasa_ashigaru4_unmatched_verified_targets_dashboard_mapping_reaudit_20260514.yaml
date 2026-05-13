@@ -1,0 +1,90 @@
+schema_version: v1.0
+audit_id: naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_reaudit_20260514
+auditor: gunshi
+auditor_persona: 井伊直政
+audited_at: "2026-05-14T00:37:33+09:00"
+parent_cmd: cmd_020
+target_task: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+target_revision: 2
+target_assignee: ashigaru4
+redo_of: naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_post_audit_20260514
+source_inbox:
+  - msg_20260514_003702_7952ea91
+scope_exception_authorization:
+  exception_id: karo_scope_exception_ashigaru4_unmatched_verified_targets_gitignore_20260514
+  authorized_at: "2026-05-14T00:37:00+09:00"
+  authorized_by: karo
+  target_commit: c1bd793ebb1997ba9ff5f5e9d525159169c4c34d
+  target_file: .gitignore
+  scope_exception_type: allowlist_addition_only
+target_report: queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+target_commits:
+  - c1bd793ebb1997ba9ff5f5e9d525159169c4c34d
+  - 491731ba1fb0ee81ab2fc8dcdf2d6c841faac108
+  - 7090d74d4544630ecce3c1bc7ca3d505b4cfe543
+
+verdict: pass_with_concerns
+implementation_verdict: pass_with_concerns
+report_quality_verdict: pass_with_exception_context
+evidence_state: complete
+completion_gate: open_with_karo_scope_exception
+
+summary: |
+  前回 blocker (= .gitignore が task YAML AC4 authorized path に未記載) は、
+  Karo 明示例外承認 msg_20260514_003702_7952ea91 により例外解消と判定する。
+  git show c1bd793 -- .gitignore の再検証では削除行なし、追加は本 task 5 deliverable
+  を tracked 化する allowlist 5 entry のみ。pytest 5/5 PASS SKIP=0、report finalization
+  exit 0 も再確認済み。従って完遂ゲートは open。ただし shared_files_allowlist schema
+  drift と cross-PC active_entries 履歴乖離は後続規範化候補として retain。
+
+machine_evidence:
+  gitignore_diff_check:
+    command: git show --unified=20 c1bd793 -- .gitignore
+    only_added_task_allowlist_entries: true
+    destructive_or_removal_lines: false
+    added_allowlist_entries:
+      - docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+      - scripts/test/test_unmatched_verified_targets_regression.py
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_inventory.yaml
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+      - queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_pytest.log
+  deletion_scan:
+    command: git show c1bd793 -- .gitignore | grep '^-[^-]' || true
+    result: empty
+  pytest_rerun:
+    command: python3 -m pytest scripts/test/test_unmatched_verified_targets_regression.py -q
+    result: "5 passed in 2.24s"
+    skip_count: 0
+  report_finalization:
+    command: bash scripts/lint/check_report_finalization.sh queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+    result: "[check_report_finalization] OK"
+    exit_code: 0
+
+resolved_blockers:
+  - id: high_ac4_manifest_scope_violation
+    resolution: "Karo issued explicit scope exception for .gitignore allowlist_addition_only."
+  - id: high_guard_rejection_recorded_but_not_blocking
+    resolution: "Manual guard rejection is now covered by Karo exception authorization, not silently downgraded."
+  - id: medium_report_self_expands_authorized_paths
+    resolution: "Accepted only under external Karo authorization, not as report self-authorization."
+
+remaining_concerns:
+  - id: shared_files_allowlist_schema_drift
+    severity: medium
+    issue: "Task prose allowlist and check_file_path_owner.sh shared_files_allowlist schema remain misaligned."
+    recommendation: "Normalize the task-manifest allowlist schema in a separate Karo/ashigaru2 follow-up."
+  - id: cross_pc_active_entries_root_cause_open
+    severity: low
+    issue: "active_entries 41 to 0 is documented but not root-caused across PC history."
+    recommendation: "Track only if Karo needs long-term audit-history causality."
+  - id: deictic_self_reference_commit3
+    severity: low
+    issue: "Final report still uses deictic self-reference for commit 3."
+    recommendation: "Prefer explicit final origin SHA in future reports."
+
+recommendation_to_karo:
+  action: accept_with_concerns_and_relay_chain
+  summary: |
+    家老明示例外により .gitignore blocker は解消。ashigaru4 revision 2 は
+    pass_with_concerns / completion_gate=open_with_karo_scope_exception として扱い、
+    shogun_audit_request chain へ進めてよい。schema drift は別 task 候補として retain。
