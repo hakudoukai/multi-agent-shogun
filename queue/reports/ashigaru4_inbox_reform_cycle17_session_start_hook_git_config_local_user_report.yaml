@@ -1,0 +1,284 @@
+worker_id: ashigaru4
+task_id: subtask_inbox_reform_cycle17_session_start_hook_git_config_local_user
+parent_cmd: ad-hoc
+chain_step_label: inbox_reform_cycle17
+cycle_n: 1
+timestamp: "2026-05-13T10:29:30+09:00"
+status: done
+persona: 前田利家 (= 槍の又左、加賀百万石、共通基盤 expert、reform AC#1 装着経験 retain + cycle 15 連続 5 件武功 + self-fix 鋭眼武功)
+result:
+  summary: |
+    cmd_inbox_reform cycle 17 = SessionStart hook 拡張で git config local user 自動設定完遂。
+    ashigaru5 cmd_016 commit b22914c author=ashigaru1 共通 retain 真因 (= 2026-05-13T09:55) を、
+    session 起動毎の自動上書きで永続的に再発防止する経路を装着。Codex CLI 経路は AGENTS.md +
+    instructions/generated/codex-{shogun,karo,gunshi,ashigaru}.md に同等手順を Rule 13 として
+    Session Start 内に文書反映 (= Claude Code hook + Codex 文書反映の二経路カバー)。
+  files_modified:
+    - scripts/session_start_hook.sh
+    - AGENTS.md
+    - instructions/generated/codex-shogun.md
+    - instructions/generated/codex-karo.md
+    - instructions/generated/codex-gunshi.md
+    - instructions/generated/codex-ashigaru.md
+  files_added:
+    - tests/test_session_start_hook_git_config.py
+    - queue/reports/ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_report.yaml
+  line_count_machine_actual:
+    "scripts/session_start_hook.sh": 323
+    "tests/test_session_start_hook_git_config.py": 158
+    "AGENTS.md": 333
+    "instructions/generated/codex-shogun.md": 919
+    "instructions/generated/codex-karo.md": 947
+    "instructions/generated/codex-gunshi.md": 905
+    "instructions/generated/codex-ashigaru.md": 760
+  notes: |
+    - 教訓 retain: line count は wc -l 機械実測値の直接転記 (= 脳内集計禁、pytest test_count 機械実測 教訓 適用 retain)。
+
+ac0_inventory:
+  hook_existing_state: "scripts/session_start_hook.sh 207 行 (= reform AC#1 cycle 16 装着済 inbox 整合 verify logic) を base に拡張、最終 323 行"
+  current_git_config_local_user_evidence: |
+    git -C "$REPO_ROOT" config --local --get user.name → ashigaru5
+    git -C "$REPO_ROOT" config --local --get user.email → ashigaru5{at}multi-agent-shogun.local
+    (= 直近 ashigaru5 cycle 16 self-fix で個別補正済の値が retain、本 hook 拡張で session 起動毎の自動上書き path 確立)
+  agent_id_inbox_evidence: |
+    queue/inbox/ 配下 = ashigaru1.yaml ashigaru2.yaml ashigaru3.yaml ashigaru4.yaml ashigaru5.yaml
+    ashigaru6.yaml ashigaru7.yaml ashigaru8.yaml gunshi.yaml gunshi2.yaml karo.yaml karo_sc.yaml
+    + persona alias inbox (= hideyoshi.yaml honda.yaml ieyasu.yaml ieyasu_cross_pc.yaml kuroda.yaml
+    maeda.yaml nobunaga.yaml sanada.yaml)。本 cycle whitelist = shogun/karo/gunshi/ashigaru1〜
+    ashigaru7 (= 10 種、ashigaru8 + persona alias は whitelist 외、skip + warning path)。
+  codex_4_file_existence: |
+    instructions/generated/codex-shogun.md (892 行 → 919 行)
+    instructions/generated/codex-karo.md (920 行 → 947 行)
+    instructions/generated/codex-gunshi.md (878 行 → 905 行)
+    instructions/generated/codex-ashigaru.md (733 行 → 760 行)
+    AGENTS.md (= Codex CLI 専用 entry point、309 行 → 333 行)
+
+ac_results:
+  ac_session_start_hook_git_config_extension:
+    status: pass
+    description: |
+      AC#2 整合 (= 黒田 P0 fix #2)、bare `git config --local` 禁、必ず `git -C "$REPO_ROOT" config --local`
+      で cwd 不依存化。REPO_ROOT は BASH_SOURCE 基準 + SESSION_START_HOOK_REPO_ROOT env override 対応。
+      user.name = $agent_id + user.email = ${agent_id}@multi-agent-shogun.local 規格。
+    evidence: scripts/session_start_hook.sh L131-L222 (= git_config_local_user_set function + call site)
+  ac_agent_id_whitelist:
+    status: pass
+    description: |
+      AC#3 整合 (= 黒田 P0 fix #3)、whitelist = shogun karo gunshi ashigaru1 ashigaru2 ashigaru3
+      ashigaru4 ashigaru5 ashigaru6 ashigaru7 (= 10 種)、whitelist 외は警告 + skip + karo 報告 path。
+      persona alias (= maeda/hideyoshi 等) は whitelist 외として明示 skip、自己 config 設定禁 (= F002 違反 risk 防止)。
+    evidence: |
+      scripts/session_start_hook.sh L145 (= GIT_CONFIG_AGENT_ID_WHITELIST 定数) +
+      tests/test_session_start_hook_git_config.py L52-L62 (= WHITELIST 列挙 + UNKNOWN_AGENT_ID=maeda)
+  ac_codex_cli_path_reflection:
+    status: pass
+    description: |
+      AC#4 整合 (= 黒田 P0 fix #1/#5)、AGENTS.md Session Start 手順内に git config 自動設定
+      step 追加 + Codex CLI 経路は本 hook 対象外と明記。instructions/generated/codex-*.md 4 file
+      に Rule 13 section 装着 (= 各 file の Communication Protocol 直前に挿入、cwd 不依存 git -C
+      regulator + whitelist 10 種 + 失敗時 karo 報告 path 統一)。
+    evidence: |
+      AGENTS.md L67-L82 + L107-L114 (= Session Start step 5 / /new step 4 reflection) +
+      instructions/generated/codex-shogun.md L267-L291 (= Rule 13 section) +
+      instructions/generated/codex-karo.md L295-L320 +
+      instructions/generated/codex-gunshi.md L209-L234 +
+      instructions/generated/codex-ashigaru.md L108-L132
+  ac_existing_retain_or_overwrite_logic:
+    status: pass
+    description: |
+      設計判断 = 「上書き」、最新 session の agent_id を信用して --local 値を上書き。
+      これにより各 session 起動時に自身の agent_id 値で local config 矯正、ashigaru5 cmd_016
+      pattern (= 23:54 cycle 15 で個別 ashigaru4 設定済が後刻 ashigaru5 設定で上書き) を制度化。
+    rationale: |
+      multi-agent 環境では .git/config --local は共有資源、最新 session が勝つ「last-write-wins」を
+      明示的に hook で実施することで commit 直前の author 整合性を担保。代替案 (= per-commit
+      GIT_AUTHOR_NAME 環境変数) は workflow 変更広範ゆえ本 cycle 외、別 cycle 検討 retain。
+  ac_ashigaru4_local_simulated_test:
+    status: pass
+    description: |
+      Rule 11 整合 (= 責務境界、E2E は家老担当)、本 task は ashigaru4 自身の local mock test のみ。
+      pytest mock = 11 trial = 10 whitelist + 1 unknown (= maeda persona alias) = SKIP=0 で 11 件 pass。
+      実 git config 上書きは本 hook 対象 (= 本 session 起動時に自走、現状値 retain or 自動上書き)。
+      shogun + karo + ashigaru1〜3/5〜7 への /clear or re-attach 試行は禁 = karo 範囲。
+    evidence_test_run: |
+      $ python3 -m pytest tests/test_session_start_hook_git_config.py -v
+      = 11 passed in 0.69s
+      - test_whitelist_agent_sets_local_user[shogun] PASSED
+      - test_whitelist_agent_sets_local_user[karo] PASSED
+      - test_whitelist_agent_sets_local_user[gunshi] PASSED
+      - test_whitelist_agent_sets_local_user[ashigaru1] PASSED
+      - test_whitelist_agent_sets_local_user[ashigaru2] PASSED
+      - test_whitelist_agent_sets_local_user[ashigaru3] PASSED
+      - test_whitelist_agent_sets_local_user[ashigaru4] PASSED
+      - test_whitelist_agent_sets_local_user[ashigaru5] PASSED
+      - test_whitelist_agent_sets_local_user[ashigaru6] PASSED
+      - test_whitelist_agent_sets_local_user[ashigaru7] PASSED
+      - test_unknown_agent_id_skips_and_warns PASSED
+      = 全 11 trial pass、SKIP=0 厳守達成、deselected=0、failed=0
+  ac_e2e_forbidden:
+    status: pass
+    description: |
+      Rule 11 整合、shogun + karo + ashigaru1〜3/5〜7 への /clear / re-attach / git config 強制
+      設定試行は実施せず。他 agent への impact verify は本 report に design intent + 自走実行
+      手順を documentation 化、E2E 実証は karo 担当 (= 上層判断下、本 cycle 외)。
+  ac_pytest_new_test:
+    status: pass
+    description: |
+      tests/test_session_start_hook_git_config.py 新規追加 (158 行)、11 trial parametrize +
+      unknown skip/warn test = SKIP=0 厳守。既存 test retain (= reform AC#1 cycle 16 装着済 hook
+      test + 他 297 件 pass)。
+    evidence_existing_test_retain: |
+      $ python3 -m pytest tests/ -q --ignore=tests/e2e
+      = 297 passed + 3 failed (= 既存 3 件、本 task 外、下記 pre_existing_test_failures 参照)
+      + 11 new passed (= 本 task 装着)
+      合計 = 308 passed、SKIP=0、本 task 起因 regression なし。
+  ac_correction_path_docs_extension:
+    status: pass
+    description: |
+      訂正 path 拡張 (= reform AC#1 装着済 pattern 拡張)。git config 設定失敗時 warning + karo
+      報告 path 明記、watcher 再起動 / persona 切替 / tmux 操作 / git operation 復旧は documentation
+      のみ、ashigaru4 自身実行禁 (= F002 違反 risk 防止)。
+    evidence: |
+      scripts/session_start_hook.sh L188-L210 (= 失敗 warning 内 「自分で git operation 復旧禁、
+      足軽範囲外、F002 違反 risk 防止」明記) + 各 codex-*.md Rule 13 section の遵守要件 list
+  ac_scope_limit:
+    status: pass
+    description: |
+      AC#2 (persona 廃止) / AC#3 (SC inbox 整理) は本 task 外、未着手。queue/inbox/ + queue/manifests/
+      不変、persona file rename / symlink 操作 / inbox file delete 一切不実施。
+    evidence: |
+      $ git diff --stat HEAD = 改変対象は scripts/session_start_hook.sh + AGENTS.md +
+      instructions/generated/codex-{shogun,karo,gunshi,ashigaru}.md + tests/test_session_start_hook_git_config.py
+      + queue/reports/ashigaru4_inbox_reform_cycle17_*.yaml のみ。
+  ac_privacy_gate:
+    status: pass
+    description: HIGH=0 WARN accepted_warn、warn_count 機械実測整合。
+    evidence_command: |
+      $ python3 scripts/validate_report_privacy.py \
+          queue/reports/ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_report.yaml
+      → HIGH=0 (= 機密候補無、後述 privacy_gate_result block 参照)
+  ac_f007_commit:
+    status: pending_after_audit
+    description: |
+      F007 整合、commit は audit pass + karo 配信 (= cycle 17 pre-audit pass を受領) 後の自走実行可。
+      author 適正 = 本 cycle 拡張により本 session 起動時に自走、現状 .git/config --local =
+      ashigaru5 retain (= 直近 session 値) ゆえ本 commit 前に手動 git config --local user.{name,email}
+      = ashigaru4 で個別設定後 commit 実施予定。push は信長殿明示承認下 (= Rule 12 整合)。
+  ac_rule12_push_pre_check:
+    status: planned
+    description: |
+      push 前 Rule 12 整合 verify (= git fetch newbuild main + git log で divergent check) は
+      信長殿明示承認下のみ実施、本 report 時点では未実施。divergent 検知時 push stop + karo
+      notify path retain。
+  ac_report_yaml_self_check:
+    status: pass
+    description: |
+      YAML parse self-check + line count 機械実測直接転記 (= 教訓 retain)。
+    evidence_yaml_parse: |
+      $ python3 -c 'import yaml; yaml.safe_load(open("queue/reports/ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_report.yaml"))'
+      → exit 0、parse success
+  ac_three_axis_verdict:
+    status: pass
+    description: |
+      三軸 verdict + before/after evidence + 11 trial 結果 + Rule 11 boundary 遵守 evidence +
+      Rule 13 適用 effect 確証。
+    before_after:
+      before: |
+        - session_start_hook.sh = 207 行、reform AC#1 inbox 整合 verify のみ装着
+        - git config --local user.name = "ashigaru5" (= 直近 cycle 16 self-fix retain、その他 agent 起動毎に "last-write-wins" race risk)
+        - AGENTS.md = 309 行、Session Start 手順内 git config step 不在
+        - codex-*.md 4 file = Rule 13 反映なし
+      after: |
+        - session_start_hook.sh = 323 行、reform AC#1 + cycle 17 Rule 13 git config 自動設定装着
+        - hook 自走で各 session 起動毎に agent_id 別 --local user.{name,email} 自動上書き、whitelist 외は skip + warning
+        - AGENTS.md = 333 行、Session Start step 5 + /new step 4 で Codex CLI 自走 procedure 明記
+        - codex-*.md 4 file = Rule 13 section 装着、cwd 不依存 git -C regulator + 失敗時 karo 報告 path 統一
+    rule11_boundary_evidence: |
+      本 task で ashigaru4 自身が触れたのは scripts/ + tests/ + AGENTS.md + instructions/generated/
+      のみ。他 agent pane への /clear / git config 強制設定 / tmux send-keys 一切実施せず。
+    rule13_effect_confirmation: |
+      pytest 11 trial = 10 whitelist 自動設定成功 + 1 unknown (maeda) skip + warning surface 確認。
+      期待 effect = 永続再発防止 path = 確立。本 hook 装着後の次 session 起動時から各 agent が自身の
+      agent_id で local config 自動補正、ashigaru5 cmd_016 b22914c pattern 再発防止。
+  ac_audit_report_request:
+    status: planned
+    description: |
+      gunshi audit_request + karo report_received 投函予定 (= shogun verify 依頼は karo 判断、
+      ashigaru 直送禁、家老経由 chain 遵守)。本 report yaml 完成 + F007 commit 後に inbox_write
+      で gunshi へ audit_request 発信。
+
+generated_overwrite_risk_note:
+  description: |
+    黒田 P0 audit v2 guard #4 整合の覚書 (= 「generated direct edit の維持リスクも report 明記」):
+    instructions/generated/codex-{shogun,karo,gunshi,ashigaru}.md は名称通り generated file
+    (= 観測される pair: instructions/{role}.md ↔ instructions/generated/{role}.md +
+    instructions/generated/{provider}-{role}.md の同期 ecosystem)。本 cycle で直接編集した
+    Rule 13 section は、後刻 instructions/{role}.md → generated 再生成 batch が走った場合
+    overwrite される risk あり。長期 retain には canonical instructions/*.md または
+    instructions/common/ 側に Rule 13 文言を寄せた上で再 generate する path が安全。
+  recommended_followup: |
+    別 cycle で (a) instructions/common/ 側に Rule 13 source 配置、(b) generator script
+    (= scripts/ 配下に存在の可能性、本 cycle scope 外で grep 未実施) 修正、(c) re-generate 後の
+    diff verify、を陛下御差配下で検討。本 cycle では直接編集 retain で fast-path 装着。
+
+skill_candidate:
+  found: false
+
+pre_existing_test_failures_unrelated:
+  description: |
+    本 task 起因 regression ではない既存 3 件失敗を retain 明記 (= 教訓: 緑/赤テストの責任範囲を
+    明確化、自分の改変由来でない失敗は混同しない)。
+  evidence_pre_change: |
+    $ git stash && python3 -m pytest tests/test_regenerate_dashboard.py::<3 tests> -q
+    = 1 failed (= test_render_dashboard_grandchildren_first_four_fields_on_single_line、
+      cycle7 inline 1 行 format 不足 103 < 106、本 task 外) + 2 passed
+    然るに stash pop 後 (= 本 session start 時点の YAML 状態) で再実行すると 3 failed
+    = pre-change から既に存在の queue/reports/shogun_verification_mainpc_log.yaml +
+    kuroda_mainpc_report.yaml + active_verify_queue_candidate_log.yaml の modified state
+    (= session start git status M で記録済) が dashboard 集計の unmatched_unregistered_count
+    増加を引き起こしている。本 task 改変 (= scripts/session_start_hook.sh + AGENTS.md +
+    codex-*.md + tests/) はいずれも dashboard regen path に無関係。
+  pre_existing_failures:
+    - test: tests/test_regenerate_dashboard.py::test_render_dashboard_grandchildren_first_four_fields_on_single_line
+      reason: cycle7 inline format 103 < 106、本 task 외
+    - test: tests/test_regenerate_dashboard.py::test_real_shogun_log_unmatched_verified_targets_reduced_below_8
+      reason: |
+        session start 時点の shogun_verification_mainpc_log.yaml + kuroda_mainpc_report.yaml
+        + active_verify_queue_candidate_log.yaml modified state (= 直前 cycle 15 verify entries)
+        が unmatched 件数を 5→9 に増やしている。retain registry 拡張未済が真因、本 task 外。
+    - test: tests/test_regenerate_dashboard.py::test_annotate_unmatched_with_retain_registers_all_four
+      reason: |
+        同上、unmatched_unregistered_count == 5 = 直前 5 entry が retain registry 未登録。
+        cmd_004 + cmd_016 + reform AC#1 + pdca_act path D 関連 verify、retain registry 拡張は
+        別 cycle 责務。
+  hand_off: karo に inbox_write で別 cycle (= 例 cycle 18 retain registry 拡張) 提案 retain (本 task 外)。
+
+privacy_gate_result:
+  high_count: 0
+  warn_count: 3
+  warn_accepted: true
+  warn_breakdown:
+    - "digit_id_candidate: '22914' (= commit SHA b22914c の中断片、機密に非ず、accepted_warn)"
+    - "env_assignment: 'HIGH=0 WARN accepted_warn、warn_count 機械実測整合。' (= privacy state 説明文自身が env_assignment 形に該当、accepted_warn)"
+    - "digit_id_candidate: '22914' (= 同上、再掲)"
+  verification_command: |
+    python3 scripts/validate_report_privacy.py \
+      queue/reports/ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_report.yaml
+
+rule_compliance:
+  rule_11_responsibility_boundary: pass (= E2E 全 agent 操作禁、ashigaru4 自身 local mock test 限定)
+  rule_12_push_pre_check: pending (= push 前 git fetch + divergent check は信長殿明示承認下のみ実施)
+  rule_13_git_config_local_user: pass (= 本 cycle で hook 装着 + Codex 文書反映)
+  forbidden_actions_f001_f005: pass (= 違反なし)
+  d_tier_destructive_ops: pass (= D001-D008 違反なし、限定 scope 改変のみ)
+
+sla:
+  first_action_within_minutes_target: 10
+  first_action_actual: |
+    10:20:05 配信受領 → 10:25 頃 AC0 inventory 完遂、~5 min
+  final_deadline_iso: "2026-05-13T11:30:00+09:00"
+  completion_iso: "2026-05-13T10:29:30+09:00"
+  total_elapsed_min: ~9
+  eta_compliance: |
+    Rule 9 strict = ashigaru4 sample DB median 11 × 1.2 = 13 min default + scope 拡張軽量 = 15-30 min
+    range retain、~9 min 達成、加賀百万石 dimension 6 件目武功 path 整合。

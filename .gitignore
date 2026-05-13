@@ -408,6 +408,8 @@ tests/specs/osato_lms_*
 !tests/test_helper/README.md
 !tests/test_auto_git_sync.py
 !tests/test_shogun_active_verify_queue.py
+# cmd_inbox_reform cycle 17 = SessionStart hook git config local user 自動設定 unit tests
+!tests/test_session_start_hook_git_config.py
 
 # subtask_shogun_active_verify_queue_systemd (= 信長殿 13:57 仕組み task cycle 1)
 !scripts/shogun_active_verify_queue.py
@@ -415,6 +417,9 @@ tests/specs/osato_lms_*
 !docs/systemd_templates/*.template
 !queue/reports/active_verify_queue_candidate_log.yaml
 !queue/reports/ashigaru7_shogun_active_verify_queue_report.yaml
+
+# cmd_inbox_reform cycle 17 = SessionStart hook git config local user 自動設定 (= ashigaru4/前田利家)
+!queue/reports/ashigaru4_inbox_reform_cycle17_session_start_hook_git_config_local_user_report.yaml
 
 # CI/CD
 !.github/

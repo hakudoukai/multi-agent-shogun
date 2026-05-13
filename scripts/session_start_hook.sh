@@ -128,6 +128,104 @@ if [ -n "$INBOX_VERIFY_OUTPUT" ]; then
     printf '%s\n' "$INBOX_VERIFY_OUTPUT" >> "$LOG_DIR/session_start_hook.log" || true
 fi
 
+# ─── git config local user 自動設定 (cmd_inbox_reform cycle 17 = Rule 13) ───
+# ashigaru5 cmd_016 commit b22914c author=ashigaru1 共通 retain (= 2026-05-13T09:55)
+# を真因とする全 agent 共通 git config 未設定 issue を、session 起動毎に
+# agent_id 別の --local user.name / user.email を自動上書きすることで永続的に
+# 再発防止する。
+#
+# 設計判断:
+#   - 既存 --local 設定は agent_id 値に上書き (= 直近 session の agent_id を信用)
+#   - 既知 agent_id 以外は警告のみ + skip (whitelist 強制、persona alias 防護)
+#   - bare `git config --local` 禁、必ず `git -C "$REPO_ROOT" config --local` で cwd 不依存化
+#   - 失敗時は warning + karo 報告 path (= ashigaru/gunshi 範囲、自分で git 復旧禁)
+#   - Codex CLI 経路は本 hook 対象外、AGENTS.md + instructions/generated/codex-*.md
+#     に同等手順を Session Start 内に文書反映 (= Rule 13 二経路カバー)
+GIT_CONFIG_AGENT_ID_WHITELIST="shogun karo gunshi ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7"
+
+git_config_local_user_set() {
+    local agent_id="$1"
+    local repo_root
+    # robust resolution: BASH_SOURCE for hook-defining script, fallback to $0
+    if [ -n "${BASH_SOURCE[0]:-}" ] && [ -f "${BASH_SOURCE[0]}" ]; then
+        repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+    else
+        repo_root="$(cd "$(dirname "$0")/.." && pwd)"
+    fi
+    # env override (= 試験 / cross-checkout 兼用)
+    if [ -n "${SESSION_START_HOOK_REPO_ROOT:-}" ]; then
+        repo_root="$SESSION_START_HOOK_REPO_ROOT"
+    fi
+
+    if [ ! -d "$repo_root/.git" ] && [ ! -f "$repo_root/.git" ]; then
+        cat <<WARN
+⚠️ WARNING — git config skip (= repo_root が git 作業樹に非ず):
+   agent_id=$agent_id
+   repo_root=$repo_root
+   訂正 path: karo に inbox_write で「session_start_hook git config repo_root miss」報告 (= 自分で git init / symlink 操作禁、足軽範囲外)
+WARN
+        return 3
+    fi
+
+    local matched=0
+    local wl
+    for wl in $GIT_CONFIG_AGENT_ID_WHITELIST; do
+        if [ "$agent_id" = "$wl" ]; then
+            matched=1
+            break
+        fi
+    done
+
+    if [ "$matched" -eq 0 ]; then
+        cat <<WARN
+⚠️ WARNING — agent_id whitelist 外、git config 設定 skip:
+   agent_id=$agent_id
+   whitelist=$GIT_CONFIG_AGENT_ID_WHITELIST (= 10 種)
+   可能性: persona alias (例: maeda=ashigaru4、hideyoshi=karo)、未定義 agent、誤 tmux env
+   訂正 path: karo に inbox_write で「agent_id=$agent_id whitelist 外、git config 未設定」報告 (= 自分で whitelist 拡張 / config 設定実行禁、F002 違反 risk 防止)
+WARN
+        return 2
+    fi
+
+    local target_name="$agent_id"
+    local target_email="${agent_id}@multi-agent-shogun.local"
+    local set_failed=0
+
+    if ! git -C "$repo_root" config --local user.name "$target_name" 2>/dev/null; then
+        set_failed=1
+        cat <<WARN
+⚠️ WARNING — git -C "$repo_root" config --local user.name 設定失敗:
+   agent_id=$agent_id
+WARN
+    fi
+    if ! git -C "$repo_root" config --local user.email "$target_email" 2>/dev/null; then
+        set_failed=1
+        cat <<WARN
+⚠️ WARNING — git -C "$repo_root" config --local user.email 設定失敗:
+   agent_id=$agent_id
+WARN
+    fi
+
+    if [ "$set_failed" -ne 0 ]; then
+        cat <<WARN
+   訂正 path: karo に inbox_write で「session_start_hook git config 設定失敗」報告 (= 自分で git operation 復旧禁、足軽範囲外、F002 違反 risk 防止)
+WARN
+        return 1
+    fi
+    return 0
+}
+
+GIT_CONFIG_OUTPUT=""
+GIT_CONFIG_OUTPUT=$(git_config_local_user_set "$AGENT_ID" 2>&1 || true)
+if [ -n "$GIT_CONFIG_OUTPUT" ]; then
+    echo "[$(date -Iseconds)] $AGENT_ID git_config_local_user_set warning(s):" \
+        >> "$LOG_DIR/session_start_hook.log" || true
+    printf '%s\n' "$GIT_CONFIG_OUTPUT" >> "$LOG_DIR/session_start_hook.log" || true
+else
+    echo "[$(date -Iseconds)] $AGENT_ID git config --local user.{name,email} 設定完遂 (= Rule 13)" \
+        >> "$LOG_DIR/session_start_hook.log" || true
+fi
+
 case "$AGENT_ID" in
     shogun|karo|gunshi)
         # command-layer agents: full Session Start (Step 1-6)
@@ -143,7 +241,7 @@ case "$AGENT_ID" in
 3. (shogun のみ) \`memory/MEMORY.md\` を Read
 4. \`instructions/${AGENT_ID}.md\` を最後まで必読 — persona・戦国口調・forbidden_actions 再確立 **(絶対省略禁止)**
 5. \`queue/\` 配下 (tasks/, inbox/, reports/) から state 再構築
-6. **inbox 整合 verify** (自動 hook 実行済) — 下記 warning があれば内容 ack の上、訂正 path に従って karo 報告 (= watcher 再起動 / tmux 操作 / persona 切替実行は禁、warning + karo 報告まで)
+6. **inbox 整合 verify + git config 自動設定 (Rule 13)** (自動 hook 実行済) — 下記 warning があれば内容 ack の上、訂正 path に従って karo 報告 (= watcher 再起動 / tmux 操作 / persona 切替実行 / git operation 復旧は禁、warning + karo 報告まで)
 
 **Step 1-4 完了まで inbox 処理・ユーザ応答は禁止**。inbox{N} nudge が先に届いても無視し、persona 確立を優先せよ。
 
@@ -158,6 +256,12 @@ EOF
             echo "=== inbox 整合 verify 出力 (= cmd_inbox_reform AC#1 装着 hook) ==="
             printf '%s\n' "$INBOX_VERIFY_OUTPUT"
             echo "=== end inbox 整合 verify ==="
+        fi
+        if [ -n "$GIT_CONFIG_OUTPUT" ]; then
+            echo ""
+            echo "=== git config local user 設定 warning (= cmd_inbox_reform cycle 17 Rule 13) ==="
+            printf '%s\n' "$GIT_CONFIG_OUTPUT"
+            echo "=== end git config 警告 ==="
         fi
         ;;
     ashigaru*)
@@ -176,7 +280,7 @@ EOF
 2. タスクに \`project:\` があれば \`context/{project}.md\` を Read
 3. タスクに \`target_path:\` があれば対象ファイルを Read
 4. Step 1-3 完了後にタスク着手
-5. **inbox 整合 verify** (自動 hook 実行済) — 下記 warning があれば内容 ack の上、karo へ inbox_write で報告 (= watcher 再起動 / tmux 操作 / persona 切替実行は ashigaru 範囲外、F002 違反 risk 防止)
+5. **inbox 整合 verify + git config 自動設定 (Rule 13)** (自動 hook 実行済) — 下記 warning があれば内容 ack の上、karo へ inbox_write で報告 (= watcher 再起動 / tmux 操作 / persona 切替実行 / git operation 復旧は ashigaru 範囲外、F002 違反 risk 防止)
 
 **Step 1-2 完了まで inbox 処理・ユーザ応答は禁止**。
 初回起動時は CLAUDE.md 自動ロード済み、instructions/ashigaru.md の再読は不要 (コスト節約)。
@@ -190,6 +294,12 @@ EOF
             printf '%s\n' "$INBOX_VERIFY_OUTPUT"
             echo "=== end inbox 整合 verify ==="
         fi
+        if [ -n "$GIT_CONFIG_OUTPUT" ]; then
+            echo ""
+            echo "=== git config local user 設定 warning (= cmd_inbox_reform cycle 17 Rule 13) ==="
+            printf '%s\n' "$GIT_CONFIG_OUTPUT"
+            echo "=== end git config 警告 ==="
+        fi
         ;;
     *)
         cat <<EOF
@@ -200,6 +310,12 @@ EOF
             echo "=== inbox 整合 verify 出力 ==="
             printf '%s\n' "$INBOX_VERIFY_OUTPUT"
             echo "=== end inbox 整合 verify ==="
+        fi
+        if [ -n "$GIT_CONFIG_OUTPUT" ]; then
+            echo ""
+            echo "=== git config local user 設定 warning ==="
+            printf '%s\n' "$GIT_CONFIG_OUTPUT"
+            echo "=== end git config 警告 ==="
         fi
         ;;
 esac

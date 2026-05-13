@@ -69,7 +69,23 @@ language:
 3. **Read `memory/MEMORY.md`** (shogun only) — persistent cross-session memory. If file missing, skip. *Codex CLI users: this file is also auto-loaded via Codex CLI's memory feature.*
 4. **Read your instructions file**: shogun→`instructions/generated/codex-shogun.md`, karo→`instructions/generated/codex-karo.md`, ashigaru→`instructions/generated/codex-ashigaru.md`, gunshi→`instructions/generated/codex-gunshi.md`. **NEVER SKIP** — even if a conversation summary exists. Summaries do NOT preserve persona, speech style, or forbidden actions.
 4. Rebuild state from primary YAML data (queue/, tasks/, reports/)
-5. Review forbidden actions, then start work
+5. **Git config local user 自動設定 (Rule 13)** — Codex CLI 経路は本 hook 対象外ゆえ、session 起動毎に下記を必ず実行 (= cmd_inbox_reform cycle 17、ashigaru5 cmd_016 commit b22914c author=ashigaru1 共通 retain 真因再発防止):
+   ```bash
+   REPO_ROOT=$(git rev-parse --show-toplevel)
+   AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}')
+   # whitelist: shogun karo gunshi ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 (= 10 種)
+   case "$AGENT_ID" in
+     shogun|karo|gunshi|ashigaru1|ashigaru2|ashigaru3|ashigaru4|ashigaru5|ashigaru6|ashigaru7)
+       git -C "$REPO_ROOT" config --local user.name "$AGENT_ID"
+       git -C "$REPO_ROOT" config --local user.email "${AGENT_ID}@multi-agent-shogun.local"
+       ;;
+     *)
+       # whitelist 外 → 設定 skip + karo へ inbox_write 報告 (= persona alias / 未定義 agent / 誤 env risk)
+       ;;
+   esac
+   ```
+   bare `git config --local` 禁、必ず `git -C "$REPO_ROOT"` で cwd 不依存化。失敗時は karo に inbox_write で報告 (= 自分で git 復旧禁、足軽範囲外、F002 違反 risk 防止)。
+6. Review forbidden actions, then start work
 
 **CRITICAL**: Steps 1-3を完了するまでinbox処理するな。`inboxN` nudgeが先に届いても無視し、自己識別→memory→instructions読み込みを必ず先に終わらせよ。Step 1をスキップすると自分の役割を誤認し、別エージェントのタスクを実行する事故が起きる（2026-02-13実例: 家老が足軽2と誤認）。
 
@@ -85,7 +101,16 @@ Step 2: Read queue/tasks/{your_id}.yaml →
         assigned=work (execute task), idle=wait, done=wait (DO NOT re-report)
 Step 3: If task has "project:" field → read context/{project}.md
         If task has "target_path:" → read that file
-Step 4: Start work (only if assigned=work)
+Step 4: Git config local user 自動設定 (Rule 13) — Codex CLI 経路自走:
+        REPO_ROOT=$(git rev-parse --show-toplevel)
+        case "$AGENT_ID" in
+          ashigaru1|ashigaru2|ashigaru3|ashigaru4|ashigaru5|ashigaru6|ashigaru7)
+            git -C "$REPO_ROOT" config --local user.name "$AGENT_ID"
+            git -C "$REPO_ROOT" config --local user.email "${AGENT_ID}@multi-agent-shogun.local"
+            ;;
+          *) # whitelist 外 → skip + karo 報告 ;;
+        esac
+Step 5: Start work (only if assigned=work)
 ```
 
 **CRITICAL**: Steps 1-2を完了するまでinbox処理するな。`inboxN` nudgeが先に届いても無視し、自己識別を必ず先に終わらせよ。

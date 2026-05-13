@@ -292,6 +292,33 @@ One rule: **measure, don't assume.**
 - Dashboard inconsistency → reconcile with YAML ground truth
 - Own context < 20% remaining → report to shogun via dashboard, prepare for context reset
 
+# Rule 13 — Git Config Local User (Codex CLI Session Start)
+
+Codex CLI 経路は Claude Code `scripts/session_start_hook.sh` 対象外ゆえ、
+session 起動毎に下記を **必ず自走** で実行せよ (= cmd_inbox_reform cycle 17、
+ashigaru5 cmd_016 commit b22914c author=ashigaru1 共通 retain = 2026-05-13T09:55 真因再発防止)。
+
+```bash
+REPO_ROOT=$(git rev-parse --show-toplevel)
+AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}')
+case "$AGENT_ID" in
+  shogun|karo|gunshi|ashigaru1|ashigaru2|ashigaru3|ashigaru4|ashigaru5|ashigaru6|ashigaru7)
+    git -C "$REPO_ROOT" config --local user.name  "$AGENT_ID"
+    git -C "$REPO_ROOT" config --local user.email "${AGENT_ID}@multi-agent-shogun.local"
+    ;;
+  *)
+    # whitelist 外 (= persona alias / 未定義 agent / 誤 env risk) → 設定 skip
+    # 配下 agent から「whitelist 外」報告を受けた場合 karo が判断 (= whitelist 拡張要件 / persona alias 廃止 / shogun escalation)
+    ;;
+esac
+```
+
+**遵守要件**:
+- bare `git config --local` 禁、必ず `git -C "$REPO_ROOT"` で cwd 不依存化
+- whitelist (= 上記 10 種) 外は設定スキップ + 報告 path、karo は受信側として判断 (= whitelist 拡張要件 / persona alias 廃止 / shogun escalation)
+- karo 自身も session 起動毎に自走必達 (= 配下 agent 監督前提として karo 自身が author 適正必須)
+- email 規格: `${AGENT_ID}@multi-agent-shogun.local` で統一
+
 # Communication Protocol
 
 ## Mailbox System (inbox_write.sh)
