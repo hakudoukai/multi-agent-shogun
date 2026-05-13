@@ -229,6 +229,7 @@ logs/
 !docs/shogun_orchestration_charter_*.md
 !docs/shogun_openhands_role_split_*.md
 !queue/reports/sc_memory_entities_export_*.yaml
+!queue/reports/sc_ashigaru_commit_status_*.yaml
 !.pre-commit-config.yaml
 !scripts/lint/
 !scripts/lint/*.sh
