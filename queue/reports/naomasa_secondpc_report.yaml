@@ -6651,3 +6651,35 @@ cmd020_unmatched_verified_targets_dashboard_mapping_preaudits_20260514:
     recommendation_to_karo:
       action: patch_ac0e_then_dispatch
       summary: "revision 2 は配信可。AC0(e) の report path 明記だけ反映して /clear 後 ashigaru4 へ送るべし。"
+
+cmd020_unmatched_verified_targets_dashboard_mapping_post_audits_20260514:
+  - audit_id: naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_post_audit_20260514
+    audited_at: "2026-05-14T00:34:13+09:00"
+    source_commit: 23908661527e70c2f991d2574df75cc97983e1f1
+    source_inbox:
+      - msg_20260514_003114_e475b17d
+    detail_report: queue/reports/naomasa_ashigaru4_unmatched_verified_targets_dashboard_mapping_post_audit_20260514.yaml
+    target_task: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+    target_assignee: ashigaru4
+    target_revision: 2
+    verdict: fail_requires_scope_exception_or_manifest_revision
+    implementation_verdict: pass_with_concerns
+    report_quality_verdict: fail_scope_manifest_mismatch
+    evidence_state: complete
+    completion_gate: blocked_until_karo_scope_exception_or_task_manifest_revision
+    target_commits:
+      - c1bd793ebb1997ba9ff5f5e9d525159169c4c34d
+      - 491731ba1fb0ee81ab2fc8dcdf2d6c841faac108
+      - 7090d74d4544630ecce3c1bc7ca3d505b4cfe543
+    positive_evidence:
+      - "origin/main contains the advertised three-commit chain through 7090d74."
+      - "Focused pytest rerun passes: 5 passed, SKIP=0."
+      - "check_report_finalization.sh passes the final report with explicit report path."
+      - "dashboard.md and scripts/regenerate_dashboard.py are reported unchanged, consistent with the task pivot."
+    blocking_findings:
+      - "Commit c1bd793 modifies .gitignore, but task YAML AC4 authorized writable path list does not include .gitignore."
+      - "Final report records check_file_path_owner.sh rejection of .gitignore/docs path, then treats this as a concern while marking AC4 pass."
+      - "Final report self-expands authorized_paths_written to include .gitignore after the fact; a completion report cannot expand its own write scope."
+    recommendation_to_karo:
+      action: require_scope_exception_or_manifest_revision_before_acceptance
+      summary: "実装・テストは通せる水準だが、AC4 の書込範囲違反が完遂阻害。Karo が .gitignore 追記を明示例外承認するか、任務YAML/最終報告を scope exception 付きで改訂させてから再監査へ回すべし。"
