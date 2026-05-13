@@ -206,36 +206,6 @@ Examples:
 
 Plain text with emoji. No box/罫線.
 
-# Rule 13 — Git Config Local User (Codex CLI Session Start)
-
-Codex CLI 経路は Claude Code `scripts/session_start_hook.sh` 対象外ゆえ、
-session 起動毎に下記を **必ず自走** で実行せよ (= cmd_inbox_reform cycle 17、
-ashigaru5 cmd_016 commit b22914c author=ashigaru1 共通 retain = 2026-05-13T09:55 真因再発防止)。
-
-```bash
-REPO_ROOT=$(git rev-parse --show-toplevel)
-AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}')
-case "$AGENT_ID" in
-  shogun|karo|gunshi|ashigaru1|ashigaru2|ashigaru3|ashigaru4|ashigaru5|ashigaru6|ashigaru7)
-    git -C "$REPO_ROOT" config --local user.name  "$AGENT_ID"
-    git -C "$REPO_ROOT" config --local user.email "${AGENT_ID}@multi-agent-shogun.local"
-    ;;
-  *)
-    # whitelist 外 (= persona alias / 未定義 agent / 誤 env risk) → 設定 skip
-    # karo に inbox_write で「agent_id=$AGENT_ID whitelist 外、git config 未設定」報告
-    echo "WARN: agent_id=$AGENT_ID whitelist 外、git config skip" >&2
-    ;;
-esac
-# F007 commit 直前にも下記 wrapper を呼び author 整合を再 verify (= last-write-wins race 防護、黒田 v2 P0#2/#3 整合):
-#   bash "$REPO_ROOT/scripts/pre_commit_author_verify.sh"
-```
-
-**遵守要件**:
-- bare `git config --local` 禁、必ず `git -C "$REPO_ROOT"` で cwd 不依存化
-- whitelist (= 上記 10 種) 外は設定スキップ + karo 報告 path、自分で whitelist 拡張 / config 設定実行禁 (= F002 違反 risk 防止)
-- 設定失敗時は karo に inbox_write で報告、自分で git operation 復旧禁 (= gunshi 範囲外)
-- email 規格: `${AGENT_ID}@multi-agent-shogun.local` で統一
-
 # Communication Protocol
 
 ## Mailbox System (inbox_write.sh)
@@ -862,47 +832,3 @@ Model is set by `build_cli_command()` in cli_adapter.sh based on settings.yaml. 
 | Sandbox | None built-in | OS-level (landlock/seatbelt) | Safer automated execution |
 | Structured output | Text only | JSONL (`--json`) | Better for parsing |
 | Local/OSS models | No | Yes (`--oss` via Ollama) | Offline/cost-free option |
-
-## Council Self-Decision Rule (Permanent)
-
-Applies to Gunshi/Naomasa output and escalation behavior from 2026-05-11 16:50.
-
-- Use the 4-person council (Nobunaga + Ieyasu + Honda + Naomasa) to decide SC matters without asking the Lord unless the matter is major.
-- Minor or medium matters are self-decided within the council: individual audit handling, cycle fixes, verdict decisions, ashigaru placement, commit messages, and systemd-related task preparation.
-- Major matters requiring Lord escalation: whole-strategy changes, tasks expected to take more than one day, legal/regulatory norm changes, large destructive operations covered by D001-D008, unrecoverable self-recovery risk, and direct responses to the Lord's statements.
-- For Naomasa audits, append results to `queue/reports/naomasa_secondpc_report.yaml` and publish immediately. Provide acknowledgement every 30 minutes or when a major escalation is detected.
-- Reduce "ask the Lord" patterns. Focus on concrete findings, explicit verdicts, evidence_state, completion_gate, and actionable recommendations.
-
-## Radical Solution During Development Rule (Supreme)
-
-Applies to every Gunshi/Naomasa audit from 2026-05-11 16:55.
-
-- The system is still under development and not in production. Prefer root-cause structural fixes now, because production fixes will be harder later.
-- Do not pass short-term hacks, local patches, workarounds, or "works for now" deliverables.
-- Prefer architecture repair, schema/migration correctness, durable operations, and 5-10 year maintainability over minimum implementation effort.
-- Distinguish real mechanism changes from superficial additions. A feature that only adds a shim, manual step, mock-only proof, or request-path workaround is not a full fix.
-- When a radical/root fix is impossible within the current task, report the limitation, the temporary alternative, remaining debt, and the permanent follow-up task.
-- Add `12_future_operations_radicality` to audit perspective verdicts. A deliverable that is merely "working for now" can be at most `pass_with_concerns`; if the root cause remains, mark it `fail`.
-
-## Audit Stagnation And Cross-Help Rule
-
-Applies from 2026-05-11 17:20.
-
-- Audit ownership remains Codex Gunshi only: Naomasa owns SC audit, Kuroda owns MC audit.
-- When audit stagnates, cross-help is allowed: Kuroda may help SC audit, and Naomasa may help MC audit, while the owning Codex Gunshi remains accountable for the final verdict.
-- Stagnation thresholds: queue greater than 10, one audit taking more than 30 minutes, any audit item unprocessed for more than 1 hour, or idle state with backlog greater than 5.
-- Naomasa must provide audit progress acknowledgement every 30 minutes while an audit chain is active. Include queue count, completed count, blockers, and ETA. Record it either by inbox to the council path or by appending to `queue/reports/naomasa_secondpc_report.yaml`.
-- If Naomasa self-detects stagnation, escalate immediately to Ieyasu/Karo with the queue count, oldest unprocessed item, elapsed time, and requested cross-help shape.
-- When cross-help arrives, participate in cross-review, preserve the single-owner final verdict rule, and record which evidence came from the assisting Gunshi.
-
-## Task Directive Pre-Delivery Audit Gate
-
-Applies from 2026-05-11 17:40.
-
-- Karo task YAML drafts must pass Naomasa/Codex pre-delivery audit before ashigaru delivery. Undeclared or unaudited new task delivery is forbidden after this gate is active.
-- This pre-delivery gate is separate from post-delivery deliverable audit. Naomasa owns both: first prevent design drift in task directives, then verify the produced deliverable.
-- Pre-delivery audit must check six required fields: directive nine sections (`title`, `context`, `acceptance`, `steps`, `files`, `commit`, `test`, `push`, `log`), design document ID such as `DD-XXX` with source, task path type (`opus_codex_sonnet` or `sonnet_codex_sonnet`), `max_cycle` set to 7, Bloom level suitability for L1-L3 work, and anti-duplication against existing tasks.
-- Use the established audit perspectives with ecosystem coherence, cross-PC repo check, and future-operations radicality when reviewing task directives. A directive that invites local hacks, duplicate work, missing test gates, ambiguous source design, or impossible acceptance criteria must not pass.
-- Model routing reference for ashigaru operations: new implementation or design-judgment tasks use Opus -> Codex audit -> Sonnet fix; routine CRUD, existing additions, tests, and logs use Sonnet -> Codex audit -> Sonnet fix.
-- Supabase distribution via existing `source_code_cache` plus a future `directive_cache` table is a medium-priority equipment candidate only. Until a command authorizes it, git push/pull remains the operative distribution path.
-- Capacity priority: active pre-delivery task audits are a prevention gate and take priority over routine backlog aggregation; critical post-delivery failures and already-running audit chains remain P0 and must be acknowledged with queue count, completed count, blocker, and ETA.
