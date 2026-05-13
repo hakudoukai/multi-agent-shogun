@@ -20,3 +20,10 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]
+
+      - id: staged-residual-check
+        name: scope_contamination 抑止 (= staged 残存検査、cmd_020 ashigaru2)
+        entry: bash scripts/lint/check_staged_residual.sh
+        language: system
+        pass_filenames: true
+        stages: [pre-commit]
