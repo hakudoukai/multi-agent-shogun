@@ -1,0 +1,145 @@
+schema_version: v1.0
+task_id: subtask_cmd020_unmatched_verified_targets_dashboard_mapping
+task_revision: 2
+ac_id: AC0
+agent: ashigaru4
+agent_persona: 大久保彦左衛門
+pc: SC (= SecondPC, hakudoukai@gmail.com)
+generated_at_iso: "2026-05-14T00:21:00+09:00"
+git_head: 9ebb3e2fe4e5f94650c1f3395db847aa62d6f53e
+
+preflight_evidence:
+  (a)_dry_run:
+    cmd: python3 scripts/regenerate_dashboard.py --dry-run
+    exit_code: 0
+    log_path: queue/reports/work_evidence_ashigaru4_unmatched_mapping/dry_run_log.txt
+    stderr_path: queue/reports/work_evidence_ashigaru4_unmatched_mapping/dry_run_stderr.txt
+    rendered_metric_extracts:
+      - "shogun_verified=true match (= matched、緑化対象): **0 件**"
+      - "active 信長 verify entry 総数: 0 件"
+      - "子項目 mapping 無し verify entry: 0 件 (= 機械証跡 retain 0 件 / 未登録 0 件)"
+
+  (b)_stats_dict:
+    cmd: |
+      python3 -c "compute_shogun_reflection_stats(LAYER_CHILDREN, ...) を直接呼出
+      (= scripts/regenerate_dashboard.py の build_context と同 chain で
+      load_local_state → aggregate_w9_* → build_layer_render_entries(collect_states=True)
+      → compute_shogun_reflection_stats(..., retain_registry=UNMATCHED_VERIFY_RETAIN_REGISTRY)
+      を再現)"
+    json_path: queue/reports/work_evidence_ashigaru4_unmatched_mapping/stats_dict.json
+    measured_values:
+      children_total: 106
+      eligible_count: 78
+      mapped_count: 25
+      matched_count: 0
+      green_count: 37
+      green_pct: 47.4
+      green_pct_overall: 34.9
+      children_without_match_count: 25
+      unmatched_verified_targets_count: 0
+      unmatched_retain_registered_count: 0
+      unmatched_unregistered_count: 0
+      active_entries_total: 0
+      sot_source: precomputed_states
+
+  (c)_hook_absent:
+    cmd: ls -la .git/hooks/pre-commit
+    exit_code: 2
+    output: "ls: cannot access '.git/hooks/pre-commit': No such file or directory"
+    log_path: queue/reports/work_evidence_ashigaru4_unmatched_mapping/hook_absent_evidence.txt
+    note: |
+      pre-commit hook 不在を明示記録 (= 直政 false_hook_install_premise 整合)。
+      hook 不在下では作業中 bash scripts/lint/check_file_path_owner.sh -v 手動 invoke で代替。
+
+  (d)_lint_file_path_owner:
+    cmd: bash scripts/lint/check_file_path_owner.sh -v
+    exit_code: 0
+    log_path: queue/reports/work_evidence_ashigaru4_unmatched_mapping/lint_check_file_path_owner.log
+    output_summary: "[check_file_path_owner] no staged files (= pass、agent_id=ashigaru4 source=tmux_pane_agent_id)"
+
+  (e)_lint_report_finalization_skip:
+    note: |
+      AC0 段階では skip (= pre-report、最終 report 未生成、直政 cycle2 verdict 整合)。
+      AC6 で post-report enforcement 実施予定 (= bash scripts/lint/check_report_finalization.sh
+      queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml)。
+
+  (f)_diff_table_snapshot_vs_current_vs_directive:
+    snapshot_source: queue/reports/unverified_inventory_20260512.yaml
+    snapshot_generated_at: "2026-05-12T20:28:12+09:00"
+    directive_source: "msg_20260513_sc_direct_dispatch_6b77a957 (= 信長殿 → ashigaru4)"
+    current_measurement_at: "2026-05-14T00:21:00+09:00"
+    diff_table:
+      - metric: unmatched_verified_targets_count
+        snapshot_2026_05_12: 8
+        directive_20260513: 11
+        current_2026_05_14: 0
+        delta_snapshot_to_current: -8
+        delta_directive_to_current: -11
+      - metric: active_entries_total
+        snapshot_2026_05_12: 41
+        directive_20260513: "(unspecified)"
+        current_2026_05_14: 0
+        delta_snapshot_to_current: -41
+      - metric: matched_count
+        snapshot_2026_05_12: 17
+        directive_20260513: "(unspecified)"
+        current_2026_05_14: 0
+        delta_snapshot_to_current: -17
+      - metric: eligible_count
+        snapshot_2026_05_12: 75
+        directive_20260513: "(unspecified)"
+        current_2026_05_14: 78
+        delta_snapshot_to_current: +3
+      - metric: green_count
+        snapshot_2026_05_12: 47
+        directive_20260513: "(unspecified)"
+        current_2026_05_14: 37
+        delta_snapshot_to_current: -10
+      - metric: children_total
+        snapshot_2026_05_12: 106
+        directive_20260513: "(unspecified)"
+        current_2026_05_14: 106
+        delta_snapshot_to_current: 0
+
+honest_finding_truth_gate:
+  apparent_8_to_0_pivot_explanation_in_task_yaml: |
+    task yaml は「8→0 transition = 既装着 retain_registry + matching logic が全件吸収」と仮定するが、
+    truth gate 機械測定の結果はこの仮説と整合しない。実測 active_entries_total=0 (= shogun_verified=True
+    かつ migration_note != legacy_migrated を満たす entry が SHOGUN_VERIFICATION_FILE
+    (= queue/reports/shogun_verification_mainpc_log.yaml) に 1 件も存在しない)
+    ため、unmatched=0 は「active entry 自体が 0」の trivial 帰結である。
+    retain_registry の 4 entry (= UNMATCHED_VERIFY_RETAIN_REGISTRY) は metadata
+    annotation 用 (= retain_status=registered/unregistered 付与) であって、
+    unmatched 母集団そのものを 0 に圧縮する logic ではない。
+
+  underlying_data_state:
+    SHOGUN_VERIFICATION_FILE: queue/reports/shogun_verification_mainpc_log.yaml
+    last_commit_touching: "80cc68e (2026-05-11T14:08:36+09:00 auto(main_pc) 6files)"
+    file_state_at_snapshot_commit_41c659b: "verifications=105 / shogun_verified=True=12 / active(sv=True AND !legacy)=0"
+    file_state_current_9ebb3e2: "verifications=105 / shogun_verified=True=12 / active(sv=True AND !legacy)=0"
+    interpretation: |
+      mainpc_log 自体は snapshot 時点 (2026-05-12 20:28) と現時点 (2026-05-14 00:21) で内容不変。
+      よって snapshot helper_evidence の active_entries_total=41 と unmatched=8 は、
+      snapshot 生成時 extract_unverified_inventory.py が読み取った state と git 履歴上の
+      mainpc_log 内容との間に矛盾を残す (= 別 source 経由か or 同 commit に他 yaml の
+      未追跡変更が並存していた可能性)。但し本 task scope では掘り下げ不要 — 機械測定の
+      現実態 (= active=0、unmatched=0) を SoT とし、retain_registry 不変、dashboard
+      mutation 禁、regression invariant 装着で根本治療する。
+
+  three_way_diff_conclusion:
+    directive_11: "信長殿 directive の表記 11 件は snapshot 8 件と異なり、出典は別 channel (= karo task assignment 経由) 推定。本 AC0 では 11 vs 8 差分は archival 整合性事項として retain、scope 内では追跡しない。"
+    snapshot_8: "2026-05-12 snapshot 由来、当時 helper_evidence で active=41 / matched=17 / unmatched=8 と記録。"
+    current_0: "2026-05-14 truth-gate 機械測定値。current SoT。dashboard.md mutation 禁、AC1 transition trace + AC2 regression invariant で固定化。"
+
+  pivot_path_justification: |
+    revision 2 task yaml の「regression test + documentation path」(= dashboard mutation 禁) は
+    現実態整合。AC1 で 8→0 transition の trace (= retain_registry 追加 chain + active_entries
+    減少 chain) を documentation 化、AC2 で current state 固定化 invariant を pytest 装着、
+    AC3 で dashboard.md 不変 verify。既装着 helper (compute_shogun_reflection_stats /
+    annotate_unmatched_with_retain / UNMATCHED_VERIFY_RETAIN_REGISTRY) は touch 禁。
+
+ac0_completion_status: pass_with_honest_finding
+ac0_residual_for_ac1:
+  - 8→0 transition の根因 trace (= mainpc_log 内容不変なのに snapshot 値と現値が乖離する事象の git log 経由説明)
+  - retain_registry 4 entry 追加 chain の commit SHA + 目的 documentation
+  - active_entries 減少が registry annotation ではなく、別 mechanism (= 当時の mainpc_log と現在の同 file の整合性事項) であることの明示

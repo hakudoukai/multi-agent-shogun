@@ -364,6 +364,13 @@ logs/
 !queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_report.yaml
 !queue/reports/ashigaru4_subtask_cmd020_persona_廃止_sc_inbox_整理_pytest.log
 
+# cmd_020 unmatched_verified_targets dashboard mapping (= ashigaru4、subtask_cmd020_unmatched_verified_targets_dashboard_mapping revision 2、regression test + transition documentation path、既装着 helper reuse、dashboard.md mutation 0 件、scripts/regenerate_dashboard.py touch 0 件)
+!docs/unmatched_verified_targets_8_to_0_transition_20260514.md
+!scripts/test/test_unmatched_verified_targets_regression.py
+!queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_inventory.yaml
+!queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_report.yaml
+!queue/reports/ashigaru4_subtask_cmd020_unmatched_verified_targets_dashboard_mapping_pytest.log
+
 # cmd_020 W9 shogun_verification_log pytest fix (= ashigaru1、subtask_cmd020_w9_shogun_verification_log_pytest_fix、status-classification 変更 path、synthetic 投入 0 件)
 !scripts/test/test_subtask_cmd020_w9_shogun_verification_log_pytest_fix_static_contract.py
 !queue/reports/ashigaru1_subtask_cmd020_w9_shogun_verification_log_pytest_fix_inventory.yaml
