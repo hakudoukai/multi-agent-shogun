@@ -6,6 +6,9 @@
 
 setup() {
     unset PERMISSION_FLAG
+    # cmd_015 ccflare env injection 用 env を unset
+    # → host 側で PC_ID 等が export されていても test を deterministic に保つ
+    unset CLI_ADAPTER_PC_ID PC_ID SHOGUN_PC_ID
 
     # テスト用のtmpディレクトリ
     TEST_TMP="$(mktemp -d)"
@@ -129,6 +132,7 @@ YAML
 
 teardown() {
     unset PERMISSION_FLAG
+    unset CLI_ADAPTER_PC_ID PC_ID SHOGUN_PC_ID
     rm -rf "$TEST_TMP"
 }
 
@@ -757,4 +761,144 @@ YAML
     result=$(build_cli_command "ashigaru5")
     [[ "$result" != MAX_THINKING_TOKENS* ]]
     [[ "$result" == codex* ]]
+}
+
+# =============================================================================
+# cmd_015 ccflare env injection テスト
+# (= subtask_cmd015_env_injection_fix_for_cli_restart)
+# pre_audit pass_with_concerns 条件:
+#   - SC-prefix + MC-no-prefix 両 path、live machine identity 不依存
+#   - CLI_ADAPTER_PC_ID test hook で deterministic 化
+#   - claude + codex 両 CLI verify
+#   - MAX_THINKING_TOKENS + ANTHROPIC_BASE_URL 両 prefix で valid shell syntax
+#   - smoke: 生成 SC command が CLI binary 前に `ANTHROPIC_BASE_URL=http://localhost:8081` を含む
+# =============================================================================
+
+# ccflare 用 settings (claude + codex agent、enabled_pcs=[second_pc])
+_write_ccflare_settings() {
+    cat > "${TEST_TMP}/settings_ccflare.yaml" << 'YAML'
+cli:
+  default: claude
+  agents:
+    ashigaru1:
+      type: claude
+      model: opus
+    ashigaru5:
+      type: codex
+    ashigaru2:
+      type: claude
+      model: opus
+      thinking: false
+ccflare:
+  base_url: http://localhost:8081
+  enabled_pcs:
+    - second_pc
+  hostname_map:
+    USER-O6AK917NTU: second_pc
+YAML
+}
+
+@test "build_cli_command: ccflare SC path (CLI_ADAPTER_PC_ID=second_pc) → claude に ANTHROPIC_BASE_URL prefix 装着" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="second_pc"
+    result=$(build_cli_command "ashigaru1")
+    [ "$result" = "ANTHROPIC_BASE_URL=http://localhost:8081 claude --model opus --dangerously-skip-permissions" ]
+}
+
+@test "build_cli_command: ccflare MC path (CLI_ADAPTER_PC_ID=main_pc) → claude に prefix 非装着 (= 後方互換)" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="main_pc"
+    result=$(build_cli_command "ashigaru1")
+    [ "$result" = "claude --model opus --dangerously-skip-permissions" ]
+}
+
+@test "build_cli_command: ccflare SC path codex → codex に ANTHROPIC_BASE_URL prefix 装着" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="second_pc"
+    result=$(build_cli_command "ashigaru5")
+    [ "$result" = "ANTHROPIC_BASE_URL=http://localhost:8081 codex --search --dangerously-bypass-approvals-and-sandbox --no-alt-screen" ]
+}
+
+@test "build_cli_command: ccflare MC path codex → codex に prefix 非装着" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="main_pc"
+    result=$(build_cli_command "ashigaru5")
+    [ "$result" = "codex --search --dangerously-bypass-approvals-and-sandbox --no-alt-screen" ]
+}
+
+@test "build_cli_command: ccflare SC + thinking:false → MAX_THINKING_TOKENS=0 ANTHROPIC_BASE_URL=... claude (両 prefix 同時、valid shell syntax)" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="second_pc"
+    result=$(build_cli_command "ashigaru2")
+    [ "$result" = "MAX_THINKING_TOKENS=0 ANTHROPIC_BASE_URL=http://localhost:8081 claude --model opus --dangerously-skip-permissions" ]
+}
+
+@test "build_cli_command: ccflare SC pc_id 未定義 (CLI_ADAPTER_PC_ID=unknown_pc) → prefix 非装着" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="unknown_pc"
+    result=$(build_cli_command "ashigaru1")
+    [ "$result" = "claude --model opus --dangerously-skip-permissions" ]
+}
+
+@test "build_cli_command: ccflare section 不在 + CLI_ADAPTER_PC_ID=second_pc → prefix 非装着 (= 後方互換)" {
+    # settings_mixed.yaml は ccflare section 無し
+    load_adapter_with "${TEST_TMP}/settings_mixed.yaml"
+    CLI_ADAPTER_PC_ID="second_pc"
+    result=$(build_cli_command "shogun")
+    [ "$result" = "claude --model opus --dangerously-skip-permissions" ]
+}
+
+@test "build_cli_command: ccflare PC_ID env (= production fallback、CLI_ADAPTER_PC_ID 無) → SC path 装着" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    PC_ID="second_pc"
+    result=$(build_cli_command "ashigaru1")
+    [ "$result" = "ANTHROPIC_BASE_URL=http://localhost:8081 claude --model opus --dangerously-skip-permissions" ]
+}
+
+@test "build_cli_command: ccflare CLI_ADAPTER_PC_ID は PC_ID より優先 (= test hook 上書き)" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    PC_ID="second_pc"
+    CLI_ADAPTER_PC_ID="main_pc"
+    result=$(build_cli_command "ashigaru1")
+    [ "$result" = "claude --model opus --dangerously-skip-permissions" ]
+}
+
+@test "_cli_adapter_get_pc_id: hostname_map match (CLI_ADAPTER_PC_ID + PC_ID + SHOGUN_PC_ID 全 unset)" {
+    # hostname 依存 test → 現 host が USER-O6AK917NTU の時のみ match
+    # それ以外の host では空文字列 fallback → CI 環境でも安全
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    unset CLI_ADAPTER_PC_ID PC_ID SHOGUN_PC_ID
+    result=$(_cli_adapter_get_pc_id)
+    actual_hostname=$(hostname 2>/dev/null)
+    if [ "$actual_hostname" = "USER-O6AK917NTU" ]; then
+        [ "$result" = "second_pc" ]
+    else
+        # その他 hostname (= 未登録) → 空文字列
+        [ -z "$result" ]
+    fi
+}
+
+@test "_cli_adapter_build_env_prefix: SC pc_id → ANTHROPIC_BASE_URL=... (末尾 space 含む)" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="second_pc"
+    result=$(_cli_adapter_build_env_prefix)
+    [ "$result" = "ANTHROPIC_BASE_URL=http://localhost:8081 " ]
+}
+
+@test "_cli_adapter_build_env_prefix: MC pc_id → 空文字列" {
+    _write_ccflare_settings
+    load_adapter_with "${TEST_TMP}/settings_ccflare.yaml"
+    CLI_ADAPTER_PC_ID="main_pc"
+    result=$(_cli_adapter_build_env_prefix)
+    [ -z "$result" ]
 }

@@ -64,6 +64,90 @@ _cli_adapter_is_valid_cli() {
     return 1
 }
 
+# _cli_adapter_get_pc_id()
+# cmd_015 ccflare env injection 用 PC 判定。決定論的かつ test 可能。
+# 優先度:
+#   1. $CLI_ADAPTER_PC_ID   (test hook / explicit override)
+#   2. $PC_ID
+#   3. $SHOGUN_PC_ID
+#   4. hostname match against settings.yaml ccflare.hostname_map
+#   5. ""  (= 検出不能、安全 fallback、prefix 非装着)
+# 出力: pc_id 文字列 or 空。stderr 出力なし。
+_cli_adapter_get_pc_id() {
+    if [[ -n "${CLI_ADAPTER_PC_ID:-}" ]]; then
+        echo "$CLI_ADAPTER_PC_ID"
+        return 0
+    fi
+    if [[ -n "${PC_ID:-}" ]]; then
+        echo "$PC_ID"
+        return 0
+    fi
+    if [[ -n "${SHOGUN_PC_ID:-}" ]]; then
+        echo "$SHOGUN_PC_ID"
+        return 0
+    fi
+
+    local hn
+    hn=$(hostname 2>/dev/null)
+    if [[ -z "$hn" ]]; then
+        echo ""
+        return 0
+    fi
+
+    "$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" -c "
+import yaml, sys
+try:
+    with open('${CLI_ADAPTER_SETTINGS}') as f:
+        cfg = yaml.safe_load(f) or {}
+    ccflare = cfg.get('ccflare', {})
+    if not isinstance(ccflare, dict):
+        sys.exit(0)
+    hm = ccflare.get('hostname_map', {})
+    if not isinstance(hm, dict):
+        sys.exit(0)
+    val = hm.get('${hn}')
+    if val:
+        print(val)
+except Exception:
+    pass
+" 2>/dev/null
+}
+
+# _cli_adapter_build_env_prefix()
+# 現在 PC が ccflare.enabled_pcs に含まれる場合、
+# "ANTHROPIC_BASE_URL=<base_url> " を返す。それ以外は空。
+# cmd_015 SC pane の cli_restart 起動 claude/codex に ccflare bypass 防止 prefix を装着するための helper。
+# 出力例: "ANTHROPIC_BASE_URL=http://localhost:8081 " (末尾 space 含む)
+_cli_adapter_build_env_prefix() {
+    local pc_id
+    pc_id=$(_cli_adapter_get_pc_id)
+
+    if [[ -z "$pc_id" ]]; then
+        echo ""
+        return 0
+    fi
+
+    "$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" -c "
+import yaml, sys
+try:
+    with open('${CLI_ADAPTER_SETTINGS}') as f:
+        cfg = yaml.safe_load(f) or {}
+    ccflare = cfg.get('ccflare', {})
+    if not isinstance(ccflare, dict):
+        sys.exit(0)
+    base_url = ccflare.get('base_url')
+    enabled = ccflare.get('enabled_pcs', [])
+    if not isinstance(enabled, list):
+        sys.exit(0)
+    if not base_url:
+        sys.exit(0)
+    if '${pc_id}' in enabled:
+        sys.stdout.write(f'ANTHROPIC_BASE_URL={base_url} ')
+except Exception:
+    pass
+" 2>/dev/null
+}
+
 # --- 公開API ---
 
 # get_cli_type(agent_id)
@@ -141,6 +225,17 @@ build_cli_command() {
         prefix="MAX_THINKING_TOKENS=0 "
     fi
 
+    # cmd_015 ccflare env prefix: SC pane の cli_restart で
+    # ANTHROPIC_BASE_URL=<ccflare endpoint> を装着し ccflare bypass を防ぐ。
+    # 装着判定は _cli_adapter_get_pc_id + settings.yaml ccflare.enabled_pcs で行う。
+    # MC は enabled_pcs から外れる前提で空文字列 → 後方互換維持。
+    local env_prefix=""
+    case "$cli_type" in
+        claude|codex)
+            env_prefix=$(_cli_adapter_build_env_prefix)
+            ;;
+    esac
+
     case "$cli_type" in
         claude)
             local cmd="claude"
@@ -148,7 +243,7 @@ build_cli_command() {
                 cmd="$cmd --model $model"
             fi
             cmd="$cmd $permission_flag"
-            echo "${prefix}${cmd}"
+            echo "${prefix}${env_prefix}${cmd}"
             ;;
         codex)
             local cmd="codex"
@@ -156,7 +251,7 @@ build_cli_command() {
                 cmd="$cmd --model $model"
             fi
             cmd="$cmd --search --dangerously-bypass-approvals-and-sandbox --no-alt-screen"
-            echo "$cmd"
+            echo "${env_prefix}${cmd}"
             ;;
         copilot)
             echo "copilot --yolo"

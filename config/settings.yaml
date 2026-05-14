@@ -86,3 +86,19 @@ screenshot:
 
 ## clinic_id (DD-146 R2 multi-tenant、Phase γ では single tenant)
 clinic_id: hakudoukai_main
+
+## ccflare 統合 (= cmd_015 env injection、根本治癒、subtask_cmd015_env_injection_fix_for_cli_restart)
+## SC pane の cli_restart が起動する claude/codex に ANTHROPIC_BASE_URL prefix を装着し、
+## ccflare bypass を防ぐ。lib/cli_adapter.sh _cli_adapter_build_env_prefix で参照。
+## PC 判定優先度 (= lib/cli_adapter.sh _cli_adapter_get_pc_id):
+##   1. $CLI_ADAPTER_PC_ID  (test hook / explicit override)
+##   2. $PC_ID
+##   3. $SHOGUN_PC_ID
+##   4. hostname match against ccflare.hostname_map
+##   5. ""  (= 検出不能、prefix 非装着、安全 fallback)
+ccflare:
+  base_url: http://localhost:8081
+  enabled_pcs:
+    - second_pc
+  hostname_map:
+    USER-O6AK917NTU: second_pc
