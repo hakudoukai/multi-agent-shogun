@@ -458,14 +458,23 @@ send_cli_command() {
     local effective_cli
     effective_cli=$(get_effective_cli_type)
 
-    # cli_restart: delegate to switch_cli.sh (full /exit → relaunch cycle)
+    # cli_restart: delegate to switch_cli.sh (full /exit → relaunch cycle).
+    # Policy A (cmd_015 RCA fix): switch_cli.sh accepts only --type/--model — passing
+    # arbitrary cli_restart content as positional args caused usage exit 1 + pipefail
+    # watcher death. Ignore free-form content; switch_cli uses settings.yaml current values.
     if [[ "$cmd" == __CLI_RESTART__:* ]]; then
         local restart_args="${cmd#__CLI_RESTART__:}"
-        echo "[$(date)] [CLI-RESTART] Delegating to switch_cli.sh for $AGENT_ID: ${restart_args}" >&2
-        bash "${SCRIPT_DIR}/scripts/switch_cli.sh" "$AGENT_ID" $restart_args 2>&1 | while IFS= read -r line; do  # SCRIPT_DIR=project_root
-            echo "[$(date)] [switch_cli] $line" >&2
-        done
-        # Update effective CLI type after restart
+        echo "[$(date)] [CLI-RESTART] Delegating to switch_cli.sh for $AGENT_ID (raw content ignored): ${restart_args}" >&2
+        local switch_output=""
+        local switch_rc=0
+        switch_output=$(bash "${SCRIPT_DIR}/scripts/switch_cli.sh" "$AGENT_ID" 2>&1) || switch_rc=$?
+        while IFS= read -r line; do
+            [ -n "$line" ] && echo "[$(date)] [switch_cli] $line" >&2
+        done <<< "$switch_output"
+        if [ "$switch_rc" -ne 0 ]; then
+            echo "[$(date)] [CLI-RESTART] switch_cli failed for $AGENT_ID (exit=$switch_rc, restart_args='${restart_args}', output_lines=$(printf '%s' "$switch_output" | wc -l))" >&2
+        fi
+        # Update effective CLI type after restart attempt (failure-safe)
         CLI_TYPE=$(tmux show-options -p -t "$PANE_TARGET" -v @agent_cli 2>/dev/null || echo "$CLI_TYPE")
         return 0
     fi

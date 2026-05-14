@@ -55,6 +55,8 @@
 #   T-CRESET-003: send_context_reset — sends /clear for ashigaru
 #   T-COPILOT-001: send_cli_command — copilot /clear → Ctrl-C + restart
 #   T-COPILOT-002: send_cli_command — copilot /model → skip
+#   T-CLIRESTART-001: cli_restart free-form content does NOT propagate to switch_cli positional args
+#   T-CLIRESTART-002: switch_cli non-zero → send_cli_command returns 0 + durable failure log (watcher liveness)
 
 # --- セットアップ ---
 
@@ -1103,4 +1105,87 @@ YAML
 
     # /clear should have been sent via send-keys
     grep -q "send-keys.*/clear" "$MOCK_LOG"
+}
+
+# --- T-CLIRESTART-001: free-form content non-propagation ---
+# cmd_015 RCA fix: switch_cli.sh accepts only --type/--model. Passing free-form
+# message content as positional args caused usage exit 1 → pipefail watcher death.
+# Policy A: ignore content entirely, call switch_cli with agent_id only.
+
+@test "T-CLIRESTART-001: cli_restart free-form content does NOT propagate to switch_cli positional args" {
+    # Setup: fake SCRIPT_DIR with mock switch_cli.sh that records its args
+    local fake_root="$TEST_TMPDIR/fake_root_001"
+    mkdir -p "$fake_root/scripts"
+    local args_log="$TEST_TMPDIR/switch_cli_args_001.log"
+    cat > "$fake_root/scripts/switch_cli.sh" << EOF
+#!/bin/bash
+echo "argc=\$#" > "$args_log"
+for a in "\$@"; do printf '  arg: %s\n' "\$a" >> "$args_log"; done
+echo "OK: mock"
+exit 0
+EOF
+    chmod +x "$fake_root/scripts/switch_cli.sh"
+
+    # The exact free-form content shape that broke cmd_015 phase1
+    local free_form="cli_restart for cmd_015 phase1 live verify (= env injection inheritance test)"
+
+    run bash -c "
+        source '$TEST_HARNESS'
+        SCRIPT_DIR='$fake_root'
+        AGENT_ID='ashigaru1'
+        send_cli_command '__CLI_RESTART__:${free_form}'
+    "
+    [ "$status" -eq 0 ]
+
+    # switch_cli must have been invoked with exactly 1 positional arg (agent_id)
+    grep -q "^argc=1$" "$args_log"
+    grep -q "^  arg: ashigaru1$" "$args_log"
+
+    # Free-form content tokens must NOT appear anywhere in switch_cli args
+    ! grep -q "cli_restart for cmd_015" "$args_log"
+    ! grep -q "phase1" "$args_log"
+    ! grep -q "env injection" "$args_log"
+
+    # Delegation header must still record raw content for forensics (stderr only)
+    echo "$output" | grep -q "CLI-RESTART.*ashigaru1.*raw content ignored"
+}
+
+# --- T-CLIRESTART-002: switch_cli failure → return 0 + durable log (watcher liveness) ---
+# RCA: under set -euo pipefail, a non-zero switch_cli pipeline killed ashigaru1 watcher.
+# Fix must capture exit code, log durable failure line, and return 0 to keep watcher alive.
+
+@test "T-CLIRESTART-002: switch_cli non-zero → send_cli_command returns 0 with durable failure log" {
+    # Setup: fake SCRIPT_DIR with switch_cli that emulates the cmd_015 failure
+    local fake_root="$TEST_TMPDIR/fake_root_002"
+    mkdir -p "$fake_root/scripts"
+    cat > "$fake_root/scripts/switch_cli.sh" << 'EOF'
+#!/bin/bash
+echo "Unknown option: cli_restart" >&2
+echo "Usage: switch_cli.sh <agent_id> [--type <cli_type>] [--model <model_name>]" >&2
+exit 1
+EOF
+    chmod +x "$fake_root/scripts/switch_cli.sh"
+
+    # set -euo pipefail in the subshell emulates the watcher's daemon strictness:
+    # any non-zero command would kill the script. send_cli_command must return 0
+    # AND the surrounding pipeline/assignment must not propagate failure.
+    run bash -c "
+        set -euo pipefail
+        source '$TEST_HARNESS'
+        SCRIPT_DIR='$fake_root'
+        AGENT_ID='ashigaru1'
+        send_cli_command '__CLI_RESTART__:cli_restart for cmd_015 phase1'
+        echo 'POST_CALL_REACHED'
+    "
+    # Subshell must have run the line AFTER send_cli_command (= no early exit)
+    [ "$status" -eq 0 ]
+    echo "$output" | grep -q "POST_CALL_REACHED"
+
+    # Durable failure log must contain agent_id, exit code, and restart_args
+    echo "$output" | grep -q "CLI-RESTART.*switch_cli failed for ashigaru1"
+    echo "$output" | grep -q "exit=1"
+    echo "$output" | grep -q "restart_args=.*cli_restart for cmd_015 phase1"
+
+    # switch_cli's own stderr must be forwarded line-by-line for forensics
+    echo "$output" | grep -q "\\[switch_cli\\] Unknown option: cli_restart"
 }
