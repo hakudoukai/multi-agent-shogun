@@ -155,6 +155,8 @@
 !scripts/migrate_legacy_verification_log.py
 !scripts/test_migrate_legacy_verification_log.py
 !scripts/validate_report_privacy.py
+# privacy drift enforcement-wiring cycle2 gate (= ashigaru2、subtask_infra_privacy_drift_enforcement_wiring_cycle2、cycle3 DOA trap 解消 = bug-A cycle2 whitelist pattern 踏襲)
+!scripts/privacy_drift_gate.sh
 !scripts/test_normalize_shogun_verification_logs.py
 !scripts/test_validate_report_privacy.py
 !scripts/validate_cmd_schema.py
@@ -234,6 +236,14 @@ logs/
 !docs/cmd004_observability_design.md
 !docs/cmd004_security_hardening_design.md
 !docs/cmd004_phase_1_6_rollback_recovery_audit.md
+# cmd_004 二大戦線 release readiness + 出陣計画 (= directive 0fa1c9e3, shogun-main orchestrator)
+!docs/cmd004_release_readiness_dispatch_*.md
+# cmd_004 小児恐竜王国 P0 画像素材 受け口 spec + handoff manifest (= directive bf0617af 第2次実装)
+!docs/cmd004_dino_p0_assets_receptacle_spec.md
+# cmd_004 小児恐竜王国 P0 画像素材 受け口ディレクトリ (= デザイン班 P0 素材投入先、asset_key 命名規約準拠)
+!assets/
+!assets/dinosaur_kingdom/
+!assets/dinosaur_kingdom/**
 !docs/shogun_orchestration_charter_*.md
 !docs/shogun_openhands_role_split_*.md
 !queue/reports/sc_memory_entities_export_*.yaml
@@ -504,6 +514,10 @@ tests/specs/osato_lms_*
 !tests/test_session_start_hook_git_config.py
 # cmd_inbox_reform cycle 17 cycle2 = pre_commit_author_verify wrapper unit tests (= 黒田 v2 P0#2/#3 装着)
 !tests/test_pre_commit_author_verify.py
+# 構造バグ-A cycle2 = switch_cli.sh writeback 永続 regression test (= L7 '*' silent 除外防止、durable persist)
+!tests/test_switch_cli_writeback_regression.py
+# privacy drift enforcement-wiring cycle2 gate test (= ashigaru2、subtask_infra_privacy_drift_enforcement_wiring_cycle2、cycle3 DOA trap 解消 = bug-A cycle2 whitelist pattern 踏襲)
+!tests/test_privacy_drift_gate.py
 # cmd_014 Phase 6 false-positive 根本治癒 (= Option C 二重防御) regression test
 !tests/lint/
 !tests/lint/*.py
