@@ -63,6 +63,13 @@
 !docs/dental_form_inventory/*.md
 !docs/dental_form_inventory/*.json
 !docs/kids_app_push_ceremony_detail_design.md
+# 申し送りエンジン 設計 doc (= handoff-* operation, cross-PC sync 用、監査C-1解消)
+!docs/moushi_engine_ui_design_v0.1.md
+!docs/karo_moushi_v0_1_review.md
+!docs/cmd004_moushi_engine_stage1_design.md
+!docs/moushi_engine_converged_design_v0.2.md
+!docs/moushi_engine_ui_finalized_v0.3.md
+!docs/moushi_impl_scope_v0.4.md
 
 # Audit / verification scripts
 !scripts/sync_to_supabase.sh
@@ -180,6 +187,7 @@
 !queue/reports/naomasa_secondpc_report.yaml
 !queue/reports/acha_secondpc_report.yaml
 !queue/reports/audit_report_index.yaml
+!queue/reports/naomasa_codex_audit_moushi_79b0fa88.md
 # 信長 verification log: PC-suffix で各 PC single-writer (黒田 audit kuroda_logic_audit_verification_log_sharing_20260511 推奨)
 !queue/reports/shogun_verification_mainpc_log.yaml
 !queue/reports/shogun_verification_secondpc_log.yaml
