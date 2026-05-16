@@ -41,7 +41,11 @@
 
 | asset_key | category | 投入者 | 投入日 | 状態 |
 |-----------|----------|--------|--------|------|
-| (P0 素材未投入。デザイン班配信待ち。本受け口は構造のみ整備済) | - | - | - | pending |
+| dinosaur_kingdom/backgrounds/kids_dino_hero | backgrounds | shogun-main (3rd次取込) | 2026-05-17 | placeholder (visual-kids-dino-hero-001 サブスク生成待ち、差し替え手順=asset_manifest.json) |
+| dinosaur_kingdom/ui/icon_set | ui | shogun-main (3rd次取込) | 2026-05-17 | placeholder (visual-kids-dino-icons-001 サブスク生成待ち、6要素 stamp/badge/star/crown/check/treasure_box) |
+
+> 注: 上記は 3rd PC 画像部の全 job が status=planned (実画像未生成) のため placeholder で先行接続。
+> asset_key 不変ゆえ本物生成後は drop-in 差し替え (コード変更不要)。詳細 = `asset_manifest.json`。
 
 ## backend 連携 (実装側 next)
 

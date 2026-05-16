@@ -1,0 +1,89 @@
+{
+  "manifest_version": "1.0",
+  "directive_id": "c65d6f80-2e9a-4696-bd11-35cd0f217f83",
+  "operation_id": "zero-wait-dino-asset-integration",
+  "generated_at": "2026-05-17",
+  "source_3rd_pc": {
+    "visual_dept_report": "<WORKER_BUNDLE>/reports/visual-production-department.md",
+    "visual_jobs": "<WORKER_BUNDLE>/reports/visual-jobs-subscription-mode.json",
+    "mode": "subscription-only",
+    "note": "全 visual/media job が status=planned。実画像 binary ゼロ (reports/visual-assets/ 不在)。本マニフェストはサブスク生成待ちを placeholder で接続し差し替えを drop-in 化する。"
+  },
+  "asset_key_convention": "dinosaur_kingdom/{category}/{element_id} (= docs/cmd004_dinosaur_100enemies_spec.md L421 既定。本マニフェストは規約不変)",
+  "assets": [
+    {
+      "job_id": "visual-kids-dino-hero-001",
+      "asset_key": "dinosaur_kingdom/backgrounds/kids_dino_hero",
+      "category": "backgrounds",
+      "purpose": "アプリ最初の画面に使う安心感のある恐竜王国メイン背景",
+      "provider": "chatgpt_images_2_subscription",
+      "priority": 1,
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/backgrounds/kids_dino_hero.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/kids_dino_hero.webp",
+        "resolution_guide": "1080x1920, UI 中央 safe area を残す",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面 (ChatGPT Images 2.0) で visual-kids-dino-hero-001 の prompt を生成",
+        "2. 監査Codex が公開可否判定 (医療広告/患者写真風/誇張 NG チェック)",
+        "3. OK なら kids_dino_hero.webp を expected_path へ保存",
+        "4. kids_dino_hero.placeholder.svg を削除",
+        "5. current.kind を 'final' へ、final.status を 'integrated' へ更新",
+        "6. asset_key 不変ゆえ backend/frontend のコード変更不要 (drop-in)"
+      ]
+    },
+    {
+      "job_id": "visual-kids-dino-icons-001",
+      "asset_key": "dinosaur_kingdom/ui/icon_set",
+      "category": "ui",
+      "purpose": "スタンプ/バッジ/メニュー用の小画像セット",
+      "provider": "gemini_banana_subscription",
+      "priority": 1,
+      "elements": ["stamp", "badge", "star", "crown", "check", "treasure_box"],
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/ui/icon_set.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path_pattern": "assets/dinosaur_kingdom/ui/{element_id}.webp",
+        "resolution_guide": "透過 webp、フラット、同一線幅/色調",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面 (Gemini Nano Banana Pro) で visual-kids-dino-icons-001 の prompt を生成",
+        "2. 監査Codex 公開可否判定",
+        "3. icon-set を element 単位に分解し ui/{element_id}.webp を保存 (elements 配列と 1:1)",
+        "4. icon_set.placeholder.svg を削除",
+        "5. 各 element の asset_key = dinosaur_kingdom/ui/{element_id} で参照",
+        "6. asset_key 不変ゆえコード変更不要"
+      ]
+    }
+  ],
+  "not_integrated": [
+    {
+      "job_id": "media-kids-dino-intro-video-001",
+      "reason": "heygen-video、画像受け口対象外。動画は別 pipeline (media-dept)。本作戦の image 取り込みスコープ外",
+      "next": "media-dept 工程で別途配信。dino 画面の動画枠は将来 asset_key dinosaur_kingdom/video/intro で受け口追加候補"
+    },
+    {
+      "job_id": "media-claude-design-kids-dino-flow-001",
+      "reason": "prototype 成果物、画像 binary でなく設計 flow。素材取り込み対象外",
+      "next": "flow 確定後、画面遷移仕様として frontend 実装側へ連携"
+    }
+  ],
+  "screen_reflection_status": {
+    "live_browser_check": "未実施",
+    "reason": "恐竜王国アプリ本体は外部 dentalbi PWA、main_pc に clone 不在 (前 directive で機械確認済)。main_pc では live 画面レンダリング不能",
+    "verified_instead": [
+      "placeholder SVG は valid XML/SVG、ブラウザ/WebView で直接レンダー可能 (xmllint well-formed 検証)",
+      "asset_key → 物理パス解決を本マニフェストで機械的に bind、整合を検証スクリプトで確認"
+    ],
+    "next_action": "dentalbi clone 配備 or SC 側で PWA 起動 → asset_key 解決を実画面で表示確認"
+  }
+}
