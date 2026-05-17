@@ -1,7 +1,7 @@
 {
   "manifest_version": "1.0",
-  "directive_id": "c65d6f80-2e9a-4696-bd11-35cd0f217f83",
-  "operation_id": "zero-wait-dino-asset-integration",
+  "directive_id": "0ad2abf5-81b5-4f89-ac51-744ac07e71ac (第4次貼り込み)",
+  "operation_id": "zero-wait-dino-final-image-integration",
   "generated_at": "2026-05-17",
   "source_3rd_pc": {
     "visual_dept_report": "<WORKER_BUNDLE>/reports/visual-production-department.md",
@@ -44,7 +44,14 @@
       "purpose": "スタンプ/バッジ/メニュー用の小画像セット",
       "provider": "gemini_banana_subscription",
       "priority": 1,
-      "elements": ["stamp", "badge", "star", "crown", "check", "treasure_box"],
+      "elements": [
+        "stamp",
+        "badge",
+        "star",
+        "crown",
+        "check",
+        "treasure_box"
+      ],
       "current": {
         "kind": "placeholder",
         "path": "assets/dinosaur_kingdom/ui/icon_set.placeholder.svg",
@@ -62,6 +69,156 @@
         "4. icon_set.placeholder.svg を削除",
         "5. 各 element の asset_key = dinosaur_kingdom/ui/{element_id} で参照",
         "6. asset_key 不変ゆえコード変更不要"
+      ]
+    },
+    {
+      "directive_asset_id": "BG-HERO",
+      "asset_key": "dinosaur_kingdom/backgrounds/bg_hero",
+      "category": "backgrounds",
+      "purpose": "アプリ最初の画面 hero 背景",
+      "provider": "chatgpt_images_2_subscription",
+      "priority": 1,
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_hero.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_hero.webp",
+        "resolution_guide": "1080x1920 UI中央余白",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面で BG-HERO を生成",
+        "2. 監査Codex 公開可否判定 (医療広告/患者写真風/誇張/文字化け NG)",
+        "3. OK画像を assets/dinosaur_kingdom/backgrounds/bg_hero.webp へ保存",
+        "4. bg_hero.placeholder.svg を削除",
+        "5. asset_key 不変ゆえ drop-in (コード変更不要)、本 manifest current.kind を final へ"
+      ]
+    },
+    {
+      "directive_asset_id": "BG-S01",
+      "asset_key": "dinosaur_kingdom/backgrounds/bg_s01",
+      "category": "backgrounds",
+      "purpose": "シーン1 受付/入口背景",
+      "provider": "chatgpt_images_2_subscription",
+      "priority": 1,
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s01.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s01.webp",
+        "resolution_guide": "1080x1920",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面で BG-S01 を生成",
+        "2. 監査Codex 公開可否判定 (医療広告/患者写真風/誇張/文字化け NG)",
+        "3. OK画像を assets/dinosaur_kingdom/backgrounds/bg_s01.webp へ保存",
+        "4. bg_s01.placeholder.svg を削除",
+        "5. asset_key 不変ゆえ drop-in (コード変更不要)、本 manifest current.kind を final へ"
+      ]
+    },
+    {
+      "directive_asset_id": "BG-S02",
+      "asset_key": "dinosaur_kingdom/backgrounds/bg_s02",
+      "category": "backgrounds",
+      "purpose": "シーン2 探検フィールド背景",
+      "provider": "chatgpt_images_2_subscription",
+      "priority": 1,
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s02.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s02.webp",
+        "resolution_guide": "1080x1920",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面で BG-S02 を生成",
+        "2. 監査Codex 公開可否判定 (医療広告/患者写真風/誇張/文字化け NG)",
+        "3. OK画像を assets/dinosaur_kingdom/backgrounds/bg_s02.webp へ保存",
+        "4. bg_s02.placeholder.svg を削除",
+        "5. asset_key 不変ゆえ drop-in (コード変更不要)、本 manifest current.kind を final へ"
+      ]
+    },
+    {
+      "directive_asset_id": "BG-S03",
+      "asset_key": "dinosaur_kingdom/backgrounds/bg_s03",
+      "category": "backgrounds",
+      "purpose": "シーン3 戦闘エリア背景",
+      "provider": "chatgpt_images_2_subscription",
+      "priority": 1,
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s03.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s03.webp",
+        "resolution_guide": "1080x1920",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面で BG-S03 を生成",
+        "2. 監査Codex 公開可否判定 (医療広告/患者写真風/誇張/文字化け NG)",
+        "3. OK画像を assets/dinosaur_kingdom/backgrounds/bg_s03.webp へ保存",
+        "4. bg_s03.placeholder.svg を削除",
+        "5. asset_key 不変ゆえ drop-in (コード変更不要)、本 manifest current.kind を final へ"
+      ]
+    },
+    {
+      "directive_asset_id": "BG-S04",
+      "asset_key": "dinosaur_kingdom/backgrounds/bg_s04",
+      "category": "backgrounds",
+      "purpose": "シーン4 宝物/ごほうび背景",
+      "provider": "chatgpt_images_2_subscription",
+      "priority": 1,
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s04.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s04.webp",
+        "resolution_guide": "1080x1920",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面で BG-S04 を生成",
+        "2. 監査Codex 公開可否判定 (医療広告/患者写真風/誇張/文字化け NG)",
+        "3. OK画像を assets/dinosaur_kingdom/backgrounds/bg_s04.webp へ保存",
+        "4. bg_s04.placeholder.svg を削除",
+        "5. asset_key 不変ゆえ drop-in (コード変更不要)、本 manifest current.kind を final へ"
+      ]
+    },
+    {
+      "directive_asset_id": "CH-MASCOT-001",
+      "asset_key": "dinosaur_kingdom/characters/ch_mascot_001",
+      "category": "characters",
+      "purpose": "公式マスコット恐竜キャラ",
+      "provider": "chatgpt_images_2_subscription",
+      "priority": 1,
+      "current": {
+        "kind": "placeholder",
+        "path": "assets/dinosaur_kingdom/characters/ch_mascot_001.placeholder.svg",
+        "renderable": true
+      },
+      "final": {
+        "expected_path": "assets/dinosaur_kingdom/characters/ch_mascot_001.webp",
+        "resolution_guide": "640x640 透過",
+        "status": "awaiting_subscription_generation"
+      },
+      "swap_procedure": [
+        "1. サブスク画面で CH-MASCOT-001 を生成",
+        "2. 監査Codex 公開可否判定 (医療広告/患者写真風/誇張/文字化け NG)",
+        "3. OK画像を assets/dinosaur_kingdom/characters/ch_mascot_001.webp へ保存",
+        "4. ch_mascot_001.placeholder.svg を削除",
+        "5. asset_key 不変ゆえ drop-in (コード変更不要)、本 manifest current.kind を final へ"
       ]
     }
   ],
@@ -85,5 +242,16 @@
       "asset_key → 物理パス解決を本マニフェストで機械的に bind、整合を検証スクリプトで確認"
     ],
     "next_action": "dentalbi clone 配備 or SC 側で PWA 起動 → asset_key 解決を実画面で表示確認"
+  },
+  "premise_check": {
+    "directive_premise": "画像・素材部のP0実画像完成を検知",
+    "machine_verified": "UNMET — reports/visual-assets/ 不在、_staging/_approved 不在、asset-manifest.json 不在、bundle/project/git 全経路で実画像 binary ゼロ、visual-jobs(13:15再生成)全 status=planned、指令参照ID(BG-HERO/BG-S01-04/CH-MASCOT-001) bundle grep 該当なし",
+    "action": "指令『不足分は明示し止まらず進める』に従い、名指しスロット+placeholder+検知統合スクリプトを先行整備。実画像 0 件ゆえ実貼り込みは 0、全件 shortage 明示"
+  },
+  "integration_status": {
+    "real_images_detected": 0,
+    "real_images_integrated": 0,
+    "placeholder_slots_ready": 8,
+    "verify_command": "python3 assets/dinosaur_kingdom/check_integration.py"
   }
 }

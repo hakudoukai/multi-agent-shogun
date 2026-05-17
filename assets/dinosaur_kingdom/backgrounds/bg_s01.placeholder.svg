@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PLACEHOLDER — 差し替え対象
+  directive_asset_id : BG-S01
+  asset_key   : dinosaur_kingdom/backgrounds/bg_s01
+  status      : 実画像未生成 (3rd PC visual job 全 status=planned、reports/visual-assets/ 不在)
+  差し替え手順 : 本物生成→監査Codex公開可否→ backgrounds/bg_s01.webp 保存→本 .placeholder.svg 削除。
+                 asset_key 不変ゆえ drop-in (コード変更不要)。asset_manifest.json 参照。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#d4f0ff"/><stop offset="1" stop-color="#eafff4"/></linearGradient></defs>
+  <rect width="1080" height="1920" fill="url(#g)"/>
+  <rect x="6" y="6" width="1068" height="1908" rx="24" fill="none" stroke="#8fb89a" stroke-width="3" stroke-dasharray="14 10"/>
+  <text x="540" y="940" font-family="sans-serif" font-size="40" fill="#3a6b4a" text-anchor="middle" font-weight="bold">BG-S01</text>
+  <text x="540" y="990" font-family="sans-serif" font-size="24" fill="#5a7d66" text-anchor="middle">PLACEHOLDER — シーン1 背景 (受付/入口)</text>
+  <text x="540" y="1030" font-family="sans-serif" font-size="20" fill="#8fb89a" text-anchor="middle">subscription 生成待ち / drop-in 差し替え</text>
+</svg>

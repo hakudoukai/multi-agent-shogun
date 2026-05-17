@@ -44,8 +44,19 @@
 | dinosaur_kingdom/backgrounds/kids_dino_hero | backgrounds | shogun-main (3rd次取込) | 2026-05-17 | placeholder (visual-kids-dino-hero-001 サブスク生成待ち、差し替え手順=asset_manifest.json) |
 | dinosaur_kingdom/ui/icon_set | ui | shogun-main (3rd次取込) | 2026-05-17 | placeholder (visual-kids-dino-icons-001 サブスク生成待ち、6要素 stamp/badge/star/crown/check/treasure_box) |
 
-> 注: 上記は 3rd PC 画像部の全 job が status=planned (実画像未生成) のため placeholder で先行接続。
-> asset_key 不変ゆえ本物生成後は drop-in 差し替え (コード変更不要)。詳細 = `asset_manifest.json`。
+| dinosaur_kingdom/backgrounds/bg_hero | backgrounds | shogun-main (4th次貼込) | 2026-05-17 | placeholder (directive ID=BG-HERO、実画像未生成) |
+| dinosaur_kingdom/backgrounds/bg_s01 | backgrounds | shogun-main (4th次貼込) | 2026-05-17 | placeholder (directive ID=BG-S01 シーン1) |
+| dinosaur_kingdom/backgrounds/bg_s02 | backgrounds | shogun-main (4th次貼込) | 2026-05-17 | placeholder (directive ID=BG-S02 シーン2) |
+| dinosaur_kingdom/backgrounds/bg_s03 | backgrounds | shogun-main (4th次貼込) | 2026-05-17 | placeholder (directive ID=BG-S03 シーン3) |
+| dinosaur_kingdom/backgrounds/bg_s04 | backgrounds | shogun-main (4th次貼込) | 2026-05-17 | placeholder (directive ID=BG-S04 シーン4) |
+| dinosaur_kingdom/characters/ch_mascot_001 | characters | shogun-main (4th次貼込) | 2026-05-17 | placeholder (directive ID=CH-MASCOT-001 マスコット) |
+
+> 注: 3rd PC 画像部の全 job が status=planned (実画像未生成、reports/visual-assets/ 不在)。
+> 第4次指令前提「P0実画像完成検知」は機械検証で UNMET。指令『不足は明示し止まらず進める』に従い
+> 指令名指し ID (BG-HERO/BG-S01-04/CH-MASCOT-001) の名前付き placeholder スロット + 検知統合
+> スクリプト (`check_integration.py`) を先行整備。実画像出現時は本物を expected_path へ保存し
+> placeholder 削除のみで drop-in 反映 (asset_key 不変・コード変更不要)。詳細 = `asset_manifest.json`。
+> 検証: `python3 assets/dinosaur_kingdom/check_integration.py` (real/placeholder/broken 件数を機械判定)。
 
 ## backend 連携 (実装側 next)
 
