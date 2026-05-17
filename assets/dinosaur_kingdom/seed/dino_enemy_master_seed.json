@@ -1,0 +1,1898 @@
+{
+  "schema": "passport_dino_enemy_master",
+  "source_spec": "docs/cmd004_dinosaur_100enemies_spec.md",
+  "directive_id": "043b1384-e414-4932-9551-2821cfaccf13",
+  "generated": "2026-05-17",
+  "derivation": "敵100行+§3-1..3-5(20体/段)+§2-1 difficultyパラメータ表+min_rank_gate規約 から決定論的導出。乱数/捏造なし。",
+  "count": 100,
+  "by_difficulty": {
+    "very_easy": 20,
+    "easy": 20,
+    "normal": 20,
+    "hard": 20,
+    "boss": 20
+  },
+  "enemies": [
+    {
+      "enemy_id": "dino_ve_01",
+      "name": "コドモタマゴくん",
+      "difficulty": "very_easy",
+      "base_hp": 8,
+      "base_xp": 4,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_01",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_02",
+      "name": "ピヨピヨザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_02",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_03",
+      "name": "キノコザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_03",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_04",
+      "name": "クサクサくん",
+      "difficulty": "very_easy",
+      "base_hp": 9,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_04",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_05",
+      "name": "ミニトカゲ",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_05",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_06",
+      "name": "コアラザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 11,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_06",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_07",
+      "name": "ハナガメくん",
+      "difficulty": "very_easy",
+      "base_hp": 12,
+      "base_xp": 6,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_07",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_08",
+      "name": "ホタルザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 8,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_08",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_09",
+      "name": "コビトザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_09",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_10",
+      "name": "スイカザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 11,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_10",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_11",
+      "name": "ヒマワリくん",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_11",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_12",
+      "name": "ハマグリスケ",
+      "difficulty": "very_easy",
+      "base_hp": 9,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_12",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_13",
+      "name": "フルーツザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 11,
+      "base_xp": 6,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_13",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_14",
+      "name": "ウサミミ恐竜",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_14",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_15",
+      "name": "プチプチくん",
+      "difficulty": "very_easy",
+      "base_hp": 8,
+      "base_xp": 4,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_15",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_16",
+      "name": "チビザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_16",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_17",
+      "name": "アメちゃんザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_17",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_18",
+      "name": "リンゴくん",
+      "difficulty": "very_easy",
+      "base_hp": 11,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_18",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_19",
+      "name": "コドモリュウ",
+      "difficulty": "very_easy",
+      "base_hp": 10,
+      "base_xp": 5,
+      "age_tier_eligibility": [
+        "egg",
+        "chick"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_19",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_ve_20",
+      "name": "ニコニコザウルス",
+      "difficulty": "very_easy",
+      "base_hp": 12,
+      "base_xp": 6,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 1,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_ve_20",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.0,
+      "drop_rate": 0.05,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_01",
+      "name": "アンキロくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_01",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_02",
+      "name": "パラサウロくん",
+      "difficulty": "easy",
+      "base_hp": 32,
+      "base_xp": 16,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_02",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_03",
+      "name": "ステゴくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_03",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_04",
+      "name": "ハドロくん",
+      "difficulty": "easy",
+      "base_hp": 28,
+      "base_xp": 14,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_04",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_05",
+      "name": "プテラくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_05",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_06",
+      "name": "イグアノくん",
+      "difficulty": "easy",
+      "base_hp": 32,
+      "base_xp": 16,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_06",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_07",
+      "name": "プシッタコくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_07",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_08",
+      "name": "プロトケラくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_08",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_09",
+      "name": "コンプソくん",
+      "difficulty": "easy",
+      "base_hp": 25,
+      "base_xp": 12,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_09",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_10",
+      "name": "オルニトくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_10",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_11",
+      "name": "ノドサウルくん",
+      "difficulty": "easy",
+      "base_hp": 35,
+      "base_xp": 17,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_11",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_12",
+      "name": "ピナコくん",
+      "difficulty": "easy",
+      "base_hp": 28,
+      "base_xp": 14,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_12",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_13",
+      "name": "サウロロフくん",
+      "difficulty": "easy",
+      "base_hp": 32,
+      "base_xp": 16,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_13",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_14",
+      "name": "ガリミムくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_14",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_15",
+      "name": "エウオプロケファルくん",
+      "difficulty": "easy",
+      "base_hp": 35,
+      "base_xp": 17,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_15",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_16",
+      "name": "コリトくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_16",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_17",
+      "name": "アヴァケラくん",
+      "difficulty": "easy",
+      "base_hp": 28,
+      "base_xp": 14,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_17",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_18",
+      "name": "アロコドンくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_18",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_19",
+      "name": "ヘテロドンくん",
+      "difficulty": "easy",
+      "base_hp": 30,
+      "base_xp": 15,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_19",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_e_20",
+      "name": "ミクロラプトルくん",
+      "difficulty": "easy",
+      "base_hp": 25,
+      "base_xp": 13,
+      "age_tier_eligibility": [
+        "chick",
+        "adventurer"
+      ],
+      "min_rank_gate": "tamago",
+      "drop_tier": 2,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_e_20",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.05,
+      "drop_rate": 0.1,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_01",
+      "name": "トリケラくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_01",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_02",
+      "name": "アロサウルくん",
+      "difficulty": "normal",
+      "base_hp": 62,
+      "base_xp": 31,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_02",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_03",
+      "name": "ケラトくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_03",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_04",
+      "name": "スピノくん",
+      "difficulty": "normal",
+      "base_hp": 65,
+      "base_xp": 32,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_04",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_05",
+      "name": "カルノくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_05",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_06",
+      "name": "ディプロドクスくん",
+      "difficulty": "normal",
+      "base_hp": 70,
+      "base_xp": 35,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_06",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_07",
+      "name": "バリオニクスくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_07",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_08",
+      "name": "アクロカントくん",
+      "difficulty": "normal",
+      "base_hp": 65,
+      "base_xp": 32,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_08",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_09",
+      "name": "コエロフィシスくん",
+      "difficulty": "normal",
+      "base_hp": 55,
+      "base_xp": 28,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_09",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_10",
+      "name": "ディロフォくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_10",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_11",
+      "name": "メガロサウルくん",
+      "difficulty": "normal",
+      "base_hp": 65,
+      "base_xp": 32,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_11",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_12",
+      "name": "クリオロフォくん",
+      "difficulty": "normal",
+      "base_hp": 58,
+      "base_xp": 29,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_12",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_13",
+      "name": "ユタラプトルくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_13",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_14",
+      "name": "アウストロラプトルくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_14",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_15",
+      "name": "デイノニクスくん",
+      "difficulty": "normal",
+      "base_hp": 55,
+      "base_xp": 28,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_15",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_16",
+      "name": "バンビラプトルくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_16",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_17",
+      "name": "ヒパクロくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_17",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_18",
+      "name": "テノントくん",
+      "difficulty": "normal",
+      "base_hp": 65,
+      "base_xp": 32,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_18",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_19",
+      "name": "ドリオサウルくん",
+      "difficulty": "normal",
+      "base_hp": 60,
+      "base_xp": 30,
+      "age_tier_eligibility": [
+        "adventurer",
+        "hero"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_19",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_n_20",
+      "name": "プラテオくん",
+      "difficulty": "normal",
+      "base_hp": 70,
+      "base_xp": 35,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "hiyoko",
+      "drop_tier": 3,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_n_20",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.1,
+      "drop_rate": 0.2,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_01",
+      "name": "ティラノドン",
+      "difficulty": "hard",
+      "base_hp": 120,
+      "base_xp": 60,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_01",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_02",
+      "name": "ギガノトドン",
+      "difficulty": "hard",
+      "base_hp": 130,
+      "base_xp": 65,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_02",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_03",
+      "name": "マプサウルドン",
+      "difficulty": "hard",
+      "base_hp": 125,
+      "base_xp": 62,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_03",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_04",
+      "name": "カルカロドン",
+      "difficulty": "hard",
+      "base_hp": 130,
+      "base_xp": 65,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_04",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_05",
+      "name": "スコミムスドン",
+      "difficulty": "hard",
+      "base_hp": 115,
+      "base_xp": 58,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_05",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_06",
+      "name": "スーパーサウルドン",
+      "difficulty": "hard",
+      "base_hp": 140,
+      "base_xp": 70,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_06",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_07",
+      "name": "アルゼンチノドン",
+      "difficulty": "hard",
+      "base_hp": 145,
+      "base_xp": 72,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_07",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_08",
+      "name": "パタゴティタンドン",
+      "difficulty": "hard",
+      "base_hp": 145,
+      "base_xp": 72,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_08",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_09",
+      "name": "ドレッドノートゥスドン",
+      "difficulty": "hard",
+      "base_hp": 140,
+      "base_xp": 70,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_09",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_10",
+      "name": "ケツァルコアトルドン",
+      "difficulty": "hard",
+      "base_hp": 110,
+      "base_xp": 55,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_10",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_11",
+      "name": "ハツェゴプテリクスドン",
+      "difficulty": "hard",
+      "base_hp": 115,
+      "base_xp": 58,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_11",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_12",
+      "name": "アンキロサウルドン",
+      "difficulty": "hard",
+      "base_hp": 120,
+      "base_xp": 60,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_12",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_13",
+      "name": "ステゴサウルドン",
+      "difficulty": "hard",
+      "base_hp": 120,
+      "base_xp": 60,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_13",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_14",
+      "name": "パキケファロドン",
+      "difficulty": "hard",
+      "base_hp": 110,
+      "base_xp": 55,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_14",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_15",
+      "name": "スティギモロクドン",
+      "difficulty": "hard",
+      "base_hp": 110,
+      "base_xp": 55,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_15",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_16",
+      "name": "アロサウルスドン",
+      "difficulty": "hard",
+      "base_hp": 120,
+      "base_xp": 60,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_16",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_17",
+      "name": "ヤンチュアノドン",
+      "difficulty": "hard",
+      "base_hp": 125,
+      "base_xp": 62,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_17",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_18",
+      "name": "シノラプトルドン",
+      "difficulty": "hard",
+      "base_hp": 115,
+      "base_xp": 58,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_18",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_19",
+      "name": "ピアトニツキーサウルドン",
+      "difficulty": "hard",
+      "base_hp": 125,
+      "base_xp": 62,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_19",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_h_20",
+      "name": "バハリアサウルドン",
+      "difficulty": "hard",
+      "base_hp": 130,
+      "base_xp": 65,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "bokensha",
+      "drop_tier": 4,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_h_20",
+      "requires_subscription": false,
+      "world_theme_id": 3,
+      "crit_rate": 0.15,
+      "drop_rate": 0.3,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_01",
+      "name": "ティラノサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 250,
+      "base_xp": 150,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_01",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_02",
+      "name": "ギガノトサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 270,
+      "base_xp": 160,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_02",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_03",
+      "name": "スピノサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 280,
+      "base_xp": 170,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_03",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_04",
+      "name": "カルカロドントサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 260,
+      "base_xp": 155,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_04",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_05",
+      "name": "アルゼンチノサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 320,
+      "base_xp": 200,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 6,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_05",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_06",
+      "name": "パタゴティタンさま",
+      "difficulty": "boss",
+      "base_hp": 320,
+      "base_xp": 200,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 6,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_06",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_07",
+      "name": "アンキロサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 250,
+      "base_xp": 150,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_07",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_08",
+      "name": "ステゴサウルス王さま",
+      "difficulty": "boss",
+      "base_hp": 250,
+      "base_xp": 150,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_08",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_09",
+      "name": "トリケラトプス王さま",
+      "difficulty": "boss",
+      "base_hp": 260,
+      "base_xp": 155,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_09",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_10",
+      "name": "パキケファロサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 240,
+      "base_xp": 145,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_10",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_11",
+      "name": "プテラノドン王さま",
+      "difficulty": "boss",
+      "base_hp": 230,
+      "base_xp": 140,
+      "age_tier_eligibility": [
+        "hero",
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_11",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_12",
+      "name": "ケツァルコアトルス大王",
+      "difficulty": "boss",
+      "base_hp": 270,
+      "base_xp": 165,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 6,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_12",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_13",
+      "name": "モササウルス大王",
+      "difficulty": "boss",
+      "base_hp": 290,
+      "base_xp": 180,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 6,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_13",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_14",
+      "name": "プリオサウルス大王",
+      "difficulty": "boss",
+      "base_hp": 280,
+      "base_xp": 170,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 6,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_14",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_15",
+      "name": "デイノスクスさま",
+      "difficulty": "boss",
+      "base_hp": 260,
+      "base_xp": 155,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_15",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_16",
+      "name": "サルコスクスさま",
+      "difficulty": "boss",
+      "base_hp": 260,
+      "base_xp": 155,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_16",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_17",
+      "name": "テリジノサウルスさま",
+      "difficulty": "boss",
+      "base_hp": 250,
+      "base_xp": 150,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_17",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_18",
+      "name": "ユウオプロケファルスさま",
+      "difficulty": "boss",
+      "base_hp": 250,
+      "base_xp": 150,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 5,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_18",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_19",
+      "name": "アンフィコエリアスさま",
+      "difficulty": "boss",
+      "base_hp": 340,
+      "base_xp": 210,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 7,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_19",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    },
+    {
+      "enemy_id": "dino_bs_20",
+      "name": "王国最強キョウリュウオウ",
+      "difficulty": "boss",
+      "base_hp": 400,
+      "base_xp": 280,
+      "age_tier_eligibility": [
+        "kingdom_warrior"
+      ],
+      "min_rank_gate": "yusha",
+      "drop_tier": 8,
+      "drop_asset_key": "dinosaur_kingdom/drops/dino_bs_20",
+      "requires_subscription": true,
+      "world_theme_id": 3,
+      "crit_rate": 0.2,
+      "drop_rate": 0.6,
+      "is_active": true
+    }
+  ]
+}
