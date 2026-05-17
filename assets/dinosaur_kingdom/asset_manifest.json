@@ -79,14 +79,15 @@
       "provider": "chatgpt_images_2_subscription",
       "priority": 1,
       "current": {
-        "kind": "placeholder",
-        "path": "assets/dinosaur_kingdom/backgrounds/bg_hero.placeholder.svg",
+        "kind": "final",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_hero.png",
         "renderable": true
       },
       "final": {
-        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_hero.webp",
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_hero.png",
         "resolution_guide": "1080x1920 UI中央余白",
-        "status": "awaiting_subscription_generation"
+        "status": "integrated",
+        "format_note": "3rd-PC manifest declared .webp but actual bytes are PNG; extension corrected to .png to match content (latent MIME/serving bug averted)"
       },
       "swap_procedure": [
         "1. サブスク画面で BG-HERO を生成",
@@ -104,14 +105,15 @@
       "provider": "chatgpt_images_2_subscription",
       "priority": 1,
       "current": {
-        "kind": "placeholder",
-        "path": "assets/dinosaur_kingdom/backgrounds/bg_s01.placeholder.svg",
+        "kind": "final",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s01.png",
         "renderable": true
       },
       "final": {
-        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s01.webp",
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s01.png",
         "resolution_guide": "1080x1920",
-        "status": "awaiting_subscription_generation"
+        "status": "integrated",
+        "format_note": "3rd-PC manifest declared .webp but actual bytes are PNG; extension corrected to .png to match content (latent MIME/serving bug averted)"
       },
       "swap_procedure": [
         "1. サブスク画面で BG-S01 を生成",
@@ -129,14 +131,15 @@
       "provider": "chatgpt_images_2_subscription",
       "priority": 1,
       "current": {
-        "kind": "placeholder",
-        "path": "assets/dinosaur_kingdom/backgrounds/bg_s02.placeholder.svg",
+        "kind": "final",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s02.png",
         "renderable": true
       },
       "final": {
-        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s02.webp",
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s02.png",
         "resolution_guide": "1080x1920",
-        "status": "awaiting_subscription_generation"
+        "status": "integrated",
+        "format_note": "3rd-PC manifest declared .webp but actual bytes are PNG; extension corrected to .png to match content (latent MIME/serving bug averted)"
       },
       "swap_procedure": [
         "1. サブスク画面で BG-S02 を生成",
@@ -154,14 +157,15 @@
       "provider": "chatgpt_images_2_subscription",
       "priority": 1,
       "current": {
-        "kind": "placeholder",
-        "path": "assets/dinosaur_kingdom/backgrounds/bg_s03.placeholder.svg",
+        "kind": "final",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s03.png",
         "renderable": true
       },
       "final": {
-        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s03.webp",
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s03.png",
         "resolution_guide": "1080x1920",
-        "status": "awaiting_subscription_generation"
+        "status": "integrated",
+        "format_note": "3rd-PC manifest declared .webp but actual bytes are PNG; extension corrected to .png to match content (latent MIME/serving bug averted)"
       },
       "swap_procedure": [
         "1. サブスク画面で BG-S03 を生成",
@@ -179,14 +183,15 @@
       "provider": "chatgpt_images_2_subscription",
       "priority": 1,
       "current": {
-        "kind": "placeholder",
-        "path": "assets/dinosaur_kingdom/backgrounds/bg_s04.placeholder.svg",
+        "kind": "final",
+        "path": "assets/dinosaur_kingdom/backgrounds/bg_s04.png",
         "renderable": true
       },
       "final": {
-        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s04.webp",
+        "expected_path": "assets/dinosaur_kingdom/backgrounds/bg_s04.png",
         "resolution_guide": "1080x1920",
-        "status": "awaiting_subscription_generation"
+        "status": "integrated",
+        "format_note": "3rd-PC manifest declared .webp but actual bytes are PNG; extension corrected to .png to match content (latent MIME/serving bug averted)"
       },
       "swap_procedure": [
         "1. サブスク画面で BG-S04 を生成",
@@ -204,19 +209,19 @@
       "provider": "chatgpt_images_2_subscription",
       "priority": 1,
       "current": {
-        "kind": "placeholder",
-        "path": "assets/dinosaur_kingdom/characters/ch_mascot_001.placeholder.svg",
+        "kind": "final",
+        "path": "assets/dinosaur_kingdom/characters/ch_mascot_001.png",
         "renderable": true
       },
       "final": {
-        "expected_path": "assets/dinosaur_kingdom/characters/ch_mascot_001.webp",
+        "expected_path": "assets/dinosaur_kingdom/characters/ch_mascot_001.png",
         "resolution_guide": "640x640 透過",
-        "status": "awaiting_subscription_generation"
+        "status": "integrated"
       },
       "swap_procedure": [
         "1. サブスク画面で CH-MASCOT-001 を生成",
         "2. 監査Codex 公開可否判定 (医療広告/患者写真風/誇張/文字化け NG)",
-        "3. OK画像を assets/dinosaur_kingdom/characters/ch_mascot_001.webp へ保存",
+        "3. OK画像を assets/dinosaur_kingdom/characters/ch_mascot_001.png へ保存",
         "4. ch_mascot_001.placeholder.svg を削除",
         "5. asset_key 不変ゆえ drop-in (コード変更不要)、本 manifest current.kind を final へ"
       ]
@@ -253,5 +258,8 @@
     "real_images_integrated": 0,
     "placeholder_slots_ready": 8,
     "verify_command": "python3 assets/dinosaur_kingdom/check_integration.py"
+  },
+  "integration_audit": {
+    "format_mismatch_finding": "BG-HERO/BG-S01-04: 3rd-PC asset-manifest.json filename=*.webp but file magic=PNG (\\x89PNG). Corrected receptacle extension to .png. CH-MASCOT-001=true PNG OK. Flagged for 3rd-PC next audit."
   }
 }
