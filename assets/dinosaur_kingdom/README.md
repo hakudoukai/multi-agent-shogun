@@ -64,5 +64,5 @@ backend (`teriha_passport_engine`) は `drop_asset_key` / `stamp_asset_key` を�
 論理キーとして格納するのみ。実バイナリ配信は frontend/CDN 層の責務。受け口整備 (本作業) →
 seed 配信 → backend asset_key 書込 → frontend 配信、の順で結合する。
 
-> 第4次貼込実施 (directive fd2f1998): 3rd-PC実画像6点を /mnt/c/Users/user/daishogun-inbox/visual-assets から採用、integrate_assets.py --apply で placeholder→実画像 swap。
+> 第4次貼込実施 (directive fd2f1998): 3rd-PC実画像6点を <DAISHOGUN_INBOX>/visual-assets から採用、integrate_assets.py --apply で placeholder→実画像 swap。
 > ⚠ 品質ゲート検出: BG系5点は 3rd-PC manifest が .webp 宣言だが実体 PNG → 拡張子を .png へ是正 (MIME/配信バグ回避)。全6点 review=pending_codex_review (次監査対象)。
