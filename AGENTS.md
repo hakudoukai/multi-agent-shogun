@@ -456,3 +456,7 @@ PYEOF
 # 信長戒め (= 表面確認禁)
 「確認したか?」と問われた時、「field=value で確認済」と答えられない確認は確認にあらず。
 JWT/JSON/SQL/file の **値を直接読取** が真の検証。
+
+# FKI-SECOND-PC-SINGLE-DISTRO-01 (全AI恒久・拘束ルール) 参照
+
+second_pc = Ubuntu(無印) 一択 (DD-157補遺v1.2 id=8d6e579c)。新規distro作成/別distro deploy/Ubuntu-WSL/Ubuntu-24.04再作成 全AI禁止。詳細は **CLAUDE.md 末尾 FKI-SECOND-PC-SINGLE-DISTRO-01 章** を参照。

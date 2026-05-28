@@ -2773,3 +2773,27 @@ cd /home/hakudokai/projects/multi-agent-shogun
 
 本セクションの改訂は **理事長殿の専権事項**。信長・家老・家康は提案のみ可。
 
+
+# FKI-SECOND-PC-SINGLE-DISTRO-01 (全AI恒久・拘束ルール) — 理事長確定指示 2026-05-28
+
+**原則: second_pc = Ubuntu(無印) 一択。 削除済 distro 2件 (Ubuntu-WSL / Ubuntu-24.04) を二度と作るな。**
+
+出典: DD-157 補遺 v1.2 (project_documents id=8d6e579c) — 理事長確定指示 2026-05-28、Commander 焼き込み命令 (副医院長 e3c7a52d 2026-05-28 16:00 JST)。
+
+## 拘束 4 条
+
+1. **★ second_pc = Ubuntu(無印) 一択。** 正本 distro は Ubuntu (無印・default・whoami=hakudokai・HOME=/home/hakudokai) のみ。新規 distro 作成 / `wsl --install` / 別 distro への repo clone を **全 AI 禁止**。
+2. **★ 作業前の同定義務。** second_pc で作業する全 AI は着手前に `whoami=hakudokai` ＋ `~/projects/multi-agent-shogun` (および `-newbuild`) 実在 を確認してから動く。hostname だけで判断するな (全 distro 同名継承=USER-O6AK917NTU、whoami+repo+tmux で同定)。
+3. **★ 「迷子」時の鉄則。** 「将軍が見つからない/起動してない」と感じても、新階層を作る前にまず Ubuntu 無印を `tmux ls` で確認せよ。shogun-second + multiagent-second は9割ここに在る。新規 distro 作成は最終手段かつ副医院長の明示承認必須 (無断作成厳禁)。
+4. **★ 削除2件の復活禁止。** Ubuntu-WSL / Ubuntu-24.04 を再 import / 再作成しない。export tar (`C:\wsl-backup\`) は復元目的でのみ保持、平時の再登録禁止。
+
+## 補足
+
+- **docker-desktop は Docker Desktop 本体システム**=削除厳禁・将軍とは無関係 (理事長視認の3ディストリには含まれない別物)。
+- second_pc への watcher / dispatcher / agent deploy 対象は常に Ubuntu 一択。Ubuntu-WSL / Ubuntu-24.04 への配備は二度と発生しない (削除済)。
+- **interop 注意**: WSL 内からの直 `wsl -d <distro>` 実行が binfmt_misc(WSLInterop)再解除の trigger になる事象を観測。second_pc 作業は SSH 直結 (192.168.11.47:2223 hakudokai) 経由で進め、wsl.exe interop 非依存とする。
+- **正本** = 本追補 (DD-157 補遺 v1.2 / id=8d6e579c)。違反は FKI-PAST-DECISIONS-FIRST-01 ・第4条 (車輪の再発明禁止) の厳守対象。
+
+## 改訂責務
+
+本セクションの改訂は **理事長殿の専権事項**。副医院長・Commander・将軍・家老・家康は提案のみ可。改訂時は本セクション + 関連 docs (DD-157 補遺 v1.2 / memory FKI-SECOND-PC-SINGLE-DISTRO-01) を同時更新する。
