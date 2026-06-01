@@ -275,6 +275,9 @@ tests/specs/osato_lms_*
 !tests/checks/fixtures/*.yaml
 !tests/checks/fixtures/*.md
 !tests/checks/fixtures/*.sh
+# DD-169 cycle4 smoke test directory (stdin JSON 公式仕様準拠 hook 回帰 gate)
+!tests/checks/dd169_kill_term_guard/
+!tests/checks/dd169_kill_term_guard/*.sh
 !tests/test_helper/
 !tests/test_helper/README.md
 !tests/test_helper/*.bash

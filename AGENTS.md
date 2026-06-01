@@ -298,7 +298,12 @@ ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>
 
 **正本**: ★`<repo>/.claude/settings.json`★ (= project 配下、PR 監査対象、commit に固定). `~/.claude/settings.json` (home) は補助、本番監査は repo 側で実施
 
-**settings.json hook 連動**: `.claude/settings.json` で `Bash(kill -TERM <数値PID>)` のみ allow、wildcard `Bash(kill *)` deny 維持 (理事長承認 限定許可、本範囲超え拡大は再度理事長承認必須). PreToolUse hook `scripts/checks/dd169_kill_term_guard.sh` で regex `^kill -TERM [0-9]+$` 厳格化、通過時 ps 証跡を `/tmp/dd169_audit_log/` に記録、blocked 時 exit 2
+**settings.json hook 二層 enforcement (= cycle4 stdin JSON 公式仕様準拠)**:
+
+- **layer 1 (permission gate)**: `.claude/settings.json` の `permissions.allow` で `Bash(kill -TERM:*)` wildcard を許可。Claude Code 公式 permission syntax は wildcard ベース (regex 非対応) のため `:*` を retain せざるを得ず、本 layer は **permissive な hook 到達 gate** として機能する。なお wildcard `Bash(kill *)`・`Bash(kill -9:*)`・`Bash(pkill *)`・`Bash(killall *)`・`Bash(tmux kill-server*)`・`Bash(tmux kill-session*)` は `permissions.deny` で明示 deny 維持 (= 全 kill 拡大は理事長承認必須)。
+- **layer 2 (実体 enforcement)**: PreToolUse hook `scripts/checks/dd169_kill_term_guard.sh` が stdin JSON (= 公式 `{"tool_input":{"command":"..."}}` 仕様) で `.tool_input.command` を読み出し、regex `^kill -TERM [0-9]+$` で 1 数値PID only に **strict 検証**。通過時のみ `ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>` 証跡を `/tmp/dd169_audit_log/` に記録して exit 0、不通過 / parse 失敗 / command 空 / pkill / killall / tmux kill-* / kill -9 はすべて **対称 fail-secure** (exit 2) で deny。
+- **誤読防止**: 「settings.json で `kill -TERM` を許している」だけでは `kill -TERM $(pgrep ...)` や `kill -TERM -1` も通ると誤解しがちだが、実体は hook regex で必ず弾かれる。wildcard 文言と hook 実 enforcement は二層構造である点を必ず読み取ること。
+- **smoke 証跡**: `tests/checks/dd169_kill_term_guard/smoke_test.sh` (= 12 ケース、stdin JSON 形式) を回帰 gate として retain、全 PASS 必達。
 
 ## Tier 2: STOP-AND-REPORT (halt work, notify Karo/Shogun)
 
