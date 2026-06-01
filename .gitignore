@@ -120,6 +120,9 @@
 !scripts/slim_yaml.py
 !scripts/seo_qc.py
 !scripts/seo_qc.sh
+# 副院長令 86de0a2c: Enter watcher 本体・supervisor 正規 repo 化
+!scripts/pane_enter_watcher.py
+!scripts/pane_enter_watcher_supervisor.sh
 !scripts/stop_hook_inbox.sh
 !scripts/agent_status.sh
 !scripts/ratelimit_check.sh
