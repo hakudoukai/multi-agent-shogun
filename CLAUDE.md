@@ -431,6 +431,26 @@ When processing large datasets (30+ items requiring individual web search, API c
 | D007 | `mkfs`, `dd if=`, `fdisk`, `mount`, `umount` | Disk/partition destruction |
 | D008 | `curl|bash`, `wget -O-|sh`, `curl|sh` (pipe-to-shell patterns) | Remote code execution |
 
+### D006 conditional exception (DD-169) — 厳格 5 条件 AND 限定
+
+**★全 5 条件 AND 充足時のみ★** `kill -TERM <数値PID>` 自走可 (= 承認不要)、1 つでも満たさない・曖昧なら従来どおり理事長承認 (安全側)、「使い捨てだから」の拡大解釈禁。
+
+1. **同一作業セッション内起動**: 自分が同一作業セッション内で起動したプロセスのみ (他者起動・既存常駐は対象外)
+2. **検証/DRY-RUN/一時用途**: 本番・継続運用プロセスは対象外
+3. **kill -TERM (graceful) のみ**: `kill -9` / `pkill` / `killall` / `tmux kill-server` / `tmux kill-session` は ★例外に含めず★ 従来どおり禁止
+4. **PID 1 個ずつ明示**: パターン kill (例 `kill -TERM $(pgrep ...)`) 禁
+5. **対象が次のいずれでもない**: 本番 / 将軍 9pane / 患者テーブル / dev server / cron / systemd 常駐 / network listener / production-like service / shared watcher / supervisor 配下 / tmux pane 配下
+
+**例外実行前 DRY-RUN 証跡 必須化**:
+```bash
+ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>
+```
+の出力を例外実行前にログ/コミット message/handshake に記録 (PID/PPID/PGID/SID/command/cwd/起動者/起動時刻/用途 を明示)
+
+**出典**: design_decisions DD-169 81a56136 / 副院長令 9cb98a5d+4f7d549e (2026-06-01) / Codex YELLOW 修正提案 5 反映済
+
+**settings.json hook 連動**: `.claude/settings.json` で `Bash(kill -TERM <数値PID>)` のみ allow、wildcard `Bash(kill *)` deny 維持 (理事長承認 限定許可、本範囲超え拡大は再度理事長承認必須)
+
 ## Tier 2: STOP-AND-REPORT (halt work, notify 家老/信長)
 
 | Trigger | Action |
