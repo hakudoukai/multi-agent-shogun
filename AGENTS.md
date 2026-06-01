@@ -282,21 +282,23 @@ When processing large datasets (30+ items requiring individual web search, API c
 
 **★全 5 条件 AND 充足時のみ★** `kill -TERM <数値PID>` 自走可 (= 承認不要)、1 つでも満たさない・曖昧なら従来どおり理事長承認 (安全側)、「使い捨てだから」の拡大解釈禁。
 
-1. **同一作業セッション内起動**: 自分が同一作業セッション内で起動したプロセスのみ
+1. **同一作業セッション内起動**: 自分が同一作業セッション内で起動したプロセスのみ (他者起動・既存常駐は対象外)
 2. **検証/DRY-RUN/一時用途**: 本番・継続運用プロセスは対象外
 3. **kill -TERM (graceful) のみ**: `kill -9` / `pkill` / `killall` / `tmux kill-server` / `tmux kill-session` は ★例外に含めず★ 従来どおり禁止
-4. **PID 1 個ずつ明示**: パターン kill 禁
+4. **PID 1 個ずつ明示**: パターン kill (例 `kill -TERM $(pgrep ...)`) 禁
 5. **対象が次のいずれでもない**: 本番 / 将軍 9pane / 患者テーブル / dev server / cron / systemd 常駐 / network listener / production-like service / shared watcher / supervisor 配下 / tmux pane 配下
 
 **例外実行前 DRY-RUN 証跡 必須化**:
 ```bash
 ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>
 ```
-の出力を例外実行前にログ/commit message/handshake に記録
+の出力を例外実行前にログ/コミット message/handshake に記録 (PID/PPID/PGID/SID/command/cwd/起動者/起動時刻/用途 を明示)
 
-**出典**: design_decisions DD-169 81a56136 / 副院長令 9cb98a5d+4f7d549e (2026-06-01) / Codex YELLOW 修正提案 5 反映済
+**出典**: design_decisions DD-169 81a56136 / 副院長令 9cb98a5d+4f7d549e+1b7452cd (2026-06-01) / Codex YELLOW 修正提案 5 反映済 (cycle1+cycle2+cycle3)
 
-**settings.json hook 連動**: `.claude/settings.json` で `Bash(kill -TERM <数値PID>)` のみ allow、wildcard `Bash(kill *)` deny 維持
+**正本**: ★`<repo>/.claude/settings.json`★ (= project 配下、PR 監査対象、commit に固定). `~/.claude/settings.json` (home) は補助、本番監査は repo 側で実施
+
+**settings.json hook 連動**: `.claude/settings.json` で `Bash(kill -TERM <数値PID>)` のみ allow、wildcard `Bash(kill *)` deny 維持 (理事長承認 限定許可、本範囲超え拡大は再度理事長承認必須). PreToolUse hook `scripts/checks/dd169_kill_term_guard.sh` で regex `^kill -TERM [0-9]+$` 厳格化、通過時 ps 証跡を `/tmp/dd169_audit_log/` に記録、blocked 時 exit 2
 
 ## Tier 2: STOP-AND-REPORT (halt work, notify Karo/Shogun)
 

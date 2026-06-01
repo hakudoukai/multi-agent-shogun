@@ -447,9 +447,11 @@ ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>
 ```
 の出力を例外実行前にログ/コミット message/handshake に記録 (PID/PPID/PGID/SID/command/cwd/起動者/起動時刻/用途 を明示)
 
-**出典**: design_decisions DD-169 81a56136 / 副院長令 9cb98a5d+4f7d549e (2026-06-01) / Codex YELLOW 修正提案 5 反映済
+**出典**: design_decisions DD-169 81a56136 / 副院長令 9cb98a5d+4f7d549e+1b7452cd (2026-06-01) / Codex YELLOW 修正提案 5 反映済 (cycle1+cycle2+cycle3)
 
-**settings.json hook 連動**: `.claude/settings.json` で `Bash(kill -TERM <数値PID>)` のみ allow、wildcard `Bash(kill *)` deny 維持 (理事長承認 限定許可、本範囲超え拡大は再度理事長承認必須)
+**正本**: ★`<repo>/.claude/settings.json`★ (= project 配下、PR 監査対象、commit に固定). `~/.claude/settings.json` (home) は補助、本番監査は repo 側で実施
+
+**settings.json hook 連動**: `.claude/settings.json` で `Bash(kill -TERM <数値PID>)` のみ allow、wildcard `Bash(kill *)` deny 維持 (理事長承認 限定許可、本範囲超え拡大は再度理事長承認必須). PreToolUse hook `scripts/checks/dd169_kill_term_guard.sh` で regex `^kill -TERM [0-9]+$` 厳格化、通過時 ps 証跡を `/tmp/dd169_audit_log/` に記録、blocked 時 exit 2
 
 ## Tier 2: STOP-AND-REPORT (halt work, notify 家老/信長)
 
