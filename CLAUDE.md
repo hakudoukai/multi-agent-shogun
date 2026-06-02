@@ -112,6 +112,33 @@ After compaction, the system instructs "Continue the conversation from where it 
 - Restore persona and speech style (戦国口調 for shogun/karo)
 - Then resume the conversation naturally
 
+## Context Hygiene (STEP1-C 副院長令 baabd1ca 順守、機構装着)
+
+**原則**: 100% context 飽和は ★機構★ で防ぐ。Claude Code 2.x の auto-compact (context limit 接近時 built-in) を一次防衛とし、その手前で早期 /compact を促す二段構えで運用する。
+
+### 三層機構
+
+1. **L1 — built-in auto-compact (Claude Code 既装着)**
+   - System が context limit 接近時に過去メッセージを要約圧縮、会話は context window で頭打ちにならない。
+   - 無効化は ★しない★ (副院長令により最終 fallback として温存)。
+2. **L2 — UserPromptSubmit hook 早期警告 (本リポ装着)**
+   - `scripts/checks/context_usage_warn.sh` が session jsonl size を観測。
+   - 1.6MB (≒ 80% heuristic) で `★context_warn★ ... /compact 入力を検討` を stderr 出力。
+   - 2.0MB (≒ 95% heuristic) で `★context_danger★ ... ★即 /compact 入力推奨★` を stderr 出力。
+   - 絶対にブロックしない (exit 0 強制、DD-169 設計原則順守)。
+   - 閾値は env で上書き可: `CONTEXT_WARN_BYTES`, `CONTEXT_DANGER_BYTES`。
+3. **L3 — 運用ルール (本節)**
+   - 全エージェントは ★stderr に `context_warn` / `context_danger` を観測したら次 turn 内に /compact 入力★ を行う。
+   - /compact 入力前に必須報告は無し、即実行可 (作業継続性優先)。
+   - /compact 後は CLAUDE.md「Post-Compaction Recovery」セクションに従い persona + instructions/*.md 再読込。
+   - /context slash command で詳細 breakdown 確認可 (`/context` 入力で発火)。
+
+### 補足
+
+- jsonl size は immutable log で live in-memory context と厳密一致しないため heuristic (やや過大推定気味)。早期警告として実用上十分。
+- 厳密な context % 取得 API は Claude Code 2.x 公開仕様外。/context が唯一の標準手段 (claude-code-guide 確認済)。
+- 副院長令 baabd1ca STEP1-C 完遂条件「閾値到達前に /compact 機構で発火」を本三層で充足。
+
 # Communication Protocol
 
 ## Mailbox System (inbox_write.sh)
