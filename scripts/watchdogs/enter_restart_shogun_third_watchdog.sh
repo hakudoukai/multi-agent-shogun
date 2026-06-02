@@ -24,15 +24,16 @@
 set -euo pipefail
 
 # shogun-third 固有の envvar 設定 (差異は本 wrapper のみで完結)
-export ER_PANE_TARGET="shogun-third:0.0"
-export ER_SESSION_NAME="shogun-third"
-export ER_FROM_PC_FILTER="third_pc"
-export ER_LOG_DIR="/home/hakudoukai/.local/share/enter_restart_shogun_third"
-export ER_EVENT_TYPE="enter_restart_shogun_third_fire"
-export ER_ROLE_NAME="shogun-third"
-export ER_HEARTBEAT_FROM_PC="third_pc"
-export ER_HEARTBEAT_TOPIC_PREFIX="[enter_restart] shogun_third alive"
-export ER_CYCLE_LOG_PREFIX="enter_restart_shogun_third"
+# ★cycle4 Q1 fix: ${VAR:-default} 形で外部 override 可能化 (smoke test stub 用)★
+export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-third:0.0}"
+export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-third}"
+export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-third_pc}"
+export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_shogun_third}"
+export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_third_fire}"
+export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-third}"
+export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-third_pc}"
+export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] shogun_third alive}"
+export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_third}"
 # オプション (default 使用):
 #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
 

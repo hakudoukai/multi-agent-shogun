@@ -26,6 +26,8 @@
 #   ER_THRESHOLD_MIN=10        idle 判定閾値 (分)
 #   ER_FIRE_CAP_COUNT=3        連続発火上限
 #   ER_FIRE_CAP_WINDOW_MIN=15  発火カウント評価窓 (分)
+#   ER_PYTHON3_BIN             python3 binary path (default: hermes-agent venv python3)
+#                              ★cycle4 Q1 修正で envvar 化、smoke test で stub 化可能★
 #
 # 終了コード: 0 = 通常完遂 (skip / halt 含む)、2 = 必須 envvar 欠落
 #
@@ -54,6 +56,8 @@ FIRE_HISTORY="$LOG_DIR/fires.log"
 THRESHOLD_MIN="${ER_THRESHOLD_MIN:-10}"
 FIRE_CAP_COUNT="${ER_FIRE_CAP_COUNT:-3}"
 FIRE_CAP_WINDOW_MIN="${ER_FIRE_CAP_WINDOW_MIN:-15}"
+# ★cycle4 Q1 fix: python3 binary path envvar 化 (smoke test stub 化に対応)★
+ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/home/hakudoukai/.local/share/hermes-agent/venv/bin/python3}"
 EVENT_TYPE="$ER_EVENT_TYPE"
 ROLE_NAME="$ER_ROLE_NAME"
 HEARTBEAT_FROM_PC="$ER_HEARTBEAT_FROM_PC"
@@ -76,7 +80,7 @@ log "fire cap check: recent_fires_in_${FIRE_CAP_WINDOW_MIN}min=${RECENT_FIRES} c
 if [ "$RECENT_FIRES" -ge "$FIRE_CAP_COUNT" ]; then
     log "★HALT★ fire cap exceeded (${RECENT_FIRES} >= ${FIRE_CAP_COUNT}) in last ${FIRE_CAP_WINDOW_MIN}min — skip cycle"
     doppler run --project openhands --config dev -- \
-      /home/hakudoukai/.local/share/hermes-agent/venv/bin/python3 - << PYEOF || true
+      "$ER_PYTHON3_BIN" - << PYEOF || true
 import os, json, urllib.request
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/shireiko_audit_log'
@@ -109,7 +113,7 @@ fi
 
 # Step 2: Supabase で最終投函取得 (idle 判定)
 LAST_INFO=$(doppler run --project openhands --config dev -- \
-  /home/hakudoukai/.local/share/hermes-agent/venv/bin/python3 - << PYEOF
+  "$ER_PYTHON3_BIN" - << PYEOF
 import os, json, urllib.request
 from datetime import datetime, timezone
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
@@ -214,7 +218,7 @@ case "$RESULT" in
     *)        SHIREIKO_RESULT="detected_only" ;;
 esac
 doppler run --project openhands --config dev -- \
-  /home/hakudoukai/.local/share/hermes-agent/venv/bin/python3 - << PYEOF || true
+  "$ER_PYTHON3_BIN" - << PYEOF || true
 import os, json, urllib.request
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/shireiko_audit_log'
@@ -235,7 +239,7 @@ PYEOF
 
 # Step 8: heartbeat 投函
 doppler run --project openhands --config dev -- \
-  /home/hakudoukai/.local/share/hermes-agent/venv/bin/python3 - << PYEOF || true
+  "$ER_PYTHON3_BIN" - << PYEOF || true
 import os, json, urllib.request, uuid
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/pc_handshake'

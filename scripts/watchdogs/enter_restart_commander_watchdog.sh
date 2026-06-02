@@ -20,15 +20,16 @@
 set -euo pipefail
 
 # Commander 固有の envvar 設定 (差異は本 wrapper のみで完結)
-export ER_PANE_TARGET="commander-third:0.0"
-export ER_SESSION_NAME="commander-third"
-export ER_FROM_PC_FILTER="commander"
-export ER_LOG_DIR="/home/hakudoukai/.local/share/enter_restart_commander"
-export ER_EVENT_TYPE="enter_restart_commander_fire"
-export ER_ROLE_NAME="Commander"
-export ER_HEARTBEAT_FROM_PC="commander"
-export ER_HEARTBEAT_TOPIC_PREFIX="[enter_restart] commander alive"
-export ER_CYCLE_LOG_PREFIX="enter_restart_commander"
+# ★cycle4 Q1 fix: ${VAR:-default} 形で外部 override 可能化 (smoke test stub 用)★
+export ER_PANE_TARGET="${ER_PANE_TARGET:-commander-third:0.0}"
+export ER_SESSION_NAME="${ER_SESSION_NAME:-commander-third}"
+export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-commander}"
+export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_commander}"
+export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_commander_fire}"
+export ER_ROLE_NAME="${ER_ROLE_NAME:-Commander}"
+export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-commander}"
+export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] commander alive}"
+export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_commander}"
 # オプション (default 使用):
 #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
 

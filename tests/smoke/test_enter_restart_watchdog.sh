@@ -1,188 +1,277 @@
 #!/usr/bin/env bash
 #
-# Smoke test for enter_restart watchdog core logic units (cycle3 T1 fix)
+# Smoke test for enter_restart watchdog (cycle4 Q1 修正、本体 stub 化全面書換)
 #
-# 由来: 副院長令 baabd1ca【enter_restart RED 修正 Phase A 即修正】②、Codex audit
-#       e7e28c7a-1a77-4c31-bd6a-44176099075e (cycle2 ffa89df red) T1 high close。
+# 由来: 副院長令 baabd1ca【enter_restart RED 修正 Phase A 即修正】①、Codex audit
+#       40c0d3d2-0639-4f6d-bb32-3302c7d634d5 (cycle3 6845567 red) Q1 high close
+#       — 旧 smoke test は watchdog logic を bash で再実装、production script の
+#       breakage を捕捉できない欠陥を構造的に解消。本書は ★実 wrapper
+#       (enter_restart_commander_watchdog.sh / enter_restart_shogun_third_watchdog.sh)
+#       を stubbed tmux/doppler/python3 環境で実行★ し、watchdog 中核仕様を assertion。
 #
-# 監査仕様 4 観点 (副院長令明示):
-#   (a) 空 buffer → C-m (Enter) 送信なし
-#   (b) 非空 buffer (label match) → C-m 送信 1 回
-#   (c) 15 分以内 fire 3 回 → HALT (本 cycle 停止)
-#   (d) log dir 未作成でも script 起動 (mkdir で自動作成)
+# 検証 4 観点 (副院長令 + Codex Q1 fix_suggestion):
+#   (a) 空 buffer (label mismatch) → send-keys Enter 呼出 0 回
+#   (b) 非空 buffer (label match + idle 超過) → send-keys Enter 呼出 1 回
+#   (c) 15 分以内 fire 3 回 → cap halt (send-keys 呼出 0 回)
+#   (d) ER_LOG_DIR 未作成 → script 起動成功 (mkdir -p で自動作成)
 #
-# 実装方針:
-#   既存 watchdog script (enter_restart_shogun_third_watchdog.sh +
-#   enter_restart_commander_watchdog.sh) のコアロジック (label match /
-#   fire cap / log dir 自動作成) を本 smoke test 内に bash で同等再現し、
-#   各観点を assertion 検証。実装本体が divergence した場合は本 smoke も
-#   同期更新する運用 (D1 共通化後は 1 元化、本 smoke も 1 元検証へ)。
+# 追加検証 (wrapper env 契約):
+#   (e) 必須 envvar 欠落 → common watchdog が exit 2 で拒否
+#   (f) wrapper 経由で common watchdog が ER_* envvar を正常受領
 #
-# Usage:
-#   bash tests/smoke/test_enter_restart_watchdog.sh
-#
-# Output:
-#   各観点の PASS/FAIL を stdout 出力、最後に集計、終了コード 0=全 PASS / 1=FAIL 含む
+# 設計:
+#   - $TEST_DIR/bin/{tmux,doppler,fake_python3} で stub bin (PATH 前置)
+#   - ER_PYTHON3_BIN=$TEST_DIR/bin/fake_python3 で python3 path override (cycle4 Q1 envvar 化)
+#   - ER_LOG_DIR=$TEST_DIR/log_<role> で isolated log
+#   - 実 wrapper 起動 (enter_restart_commander_watchdog.sh / enter_restart_shogun_third_watchdog.sh)
+#   - send-keys 呼出は $TEST_DIR/send-keys.log に記録、assertion で行数検証
 
 set -euo pipefail
 
 PASS_COUNT=0
 FAIL_COUNT=0
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 TEST_DIR=$(mktemp -d -t enter_restart_smoke_XXXXXX)
 trap 'rm -rf "$TEST_DIR"' EXIT
 
 pass() { echo "PASS: $*"; PASS_COUNT=$((PASS_COUNT + 1)); }
 fail() { echo "FAIL: $*" >&2; FAIL_COUNT=$((FAIL_COUNT + 1)); }
 
-# ─── 共通: label match 判定ロジック (watchdog L150-L156 と等価) ────────────────
-check_label_match() {
-  local pane_tail="$1"
-  local last_line
-  last_line=$(printf '%s\n' "$pane_tail" | awk 'NF{last=$0} END{print last}')
-  if printf '%s' "$last_line" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]'; then
-    echo "1"  # match
-  else
-    echo "0"  # no match
-  fi
+# ─── stub bin setup ───
+setup_stub_bin() {
+  mkdir -p "$TEST_DIR/bin"
+
+  # fake tmux: argv に応じて mock
+  cat > "$TEST_DIR/bin/tmux" <<'STUBTMUX'
+#!/usr/bin/env bash
+# Stub tmux for enter_restart smoke test
+# 呼出ごとに $TEST_DIR/tmux-calls.log に argv を記録、send-keys は別 log にも記録
+LOG="${TEST_DIR}/tmux-calls.log"
+echo "$@" >> "$LOG"
+case "$1" in
+  has-session)
+    exit 0  # session 常に存在
+    ;;
+  display-message)
+    # -p '#{...}' format → dummy 値返答
+    echo "/dummy|stub|claude"
+    ;;
+  capture-pane)
+    # -p -S -3 で pane tail 出力
+    printf '%s\n' "${FAKE_PANE_TAIL:-}"
+    ;;
+  send-keys)
+    # send-keys 呼出を専用 log へ追記 (assertion 対象)
+    echo "$@" >> "${TEST_DIR}/send-keys.log"
+    exit 0
+    ;;
+  *)
+    exit 0
+    ;;
+esac
+STUBTMUX
+  chmod +x "$TEST_DIR/bin/tmux"
+
+  # fake doppler: shift 5 で `run --project openhands --config dev --` 食い、残りを exec
+  cat > "$TEST_DIR/bin/doppler" <<'STUBDOPPLER'
+#!/usr/bin/env bash
+# Stub doppler: `doppler run --project openhands --config dev -- <cmd> <args>` から
+# 先頭 5 token (`run --project openhands --config dev --`) を食い、残りを exec
+LOG="${TEST_DIR}/doppler-calls.log"
+echo "$@" >> "$LOG"
+shift 5
+# SUPABASE_* env を fake で注入 (本体 script 内 os.environ['SUPABASE_*'] 参照対応)
+export SUPABASE_SERVICE_ROLE_KEY="${SUPABASE_SERVICE_ROLE_KEY:-stub_role_key}"
+export SUPABASE_URL="${SUPABASE_URL:-http://stub.invalid}"
+exec "$@"
+STUBDOPPLER
+  chmod +x "$TEST_DIR/bin/doppler"
+
+  # fake python3: stdin 食って FAKE_PYTHON3_RESPONSE 出力 (default: NO_DATA)
+  cat > "$TEST_DIR/bin/fake_python3" <<'STUBPYTHON'
+#!/usr/bin/env bash
+# Stub python3: stdin (heredoc PYEOF) を捨て、FAKE_PYTHON3_RESPONSE を出力
+# default: NO_DATA (idle 判定 step で WARN: no ... handshake data → exit 0)
+LOG="${TEST_DIR}/python3-calls.log"
+echo "[$(date -Is)] fake_python3 invoked" >> "$LOG"
+cat > /dev/null  # discard heredoc
+echo "${FAKE_PYTHON3_RESPONSE:-NO_DATA}"
+STUBPYTHON
+  chmod +x "$TEST_DIR/bin/fake_python3"
+
+  export PATH="$TEST_DIR/bin:$PATH"
+  export TEST_DIR
 }
 
-# ─── (a) 空 buffer → C-m 送信なし ──────────────────────────────────────────────
+reset_logs() {
+  : > "$TEST_DIR/tmux-calls.log"
+  : > "$TEST_DIR/doppler-calls.log"
+  : > "$TEST_DIR/python3-calls.log"
+  : > "$TEST_DIR/send-keys.log"
+}
+
+count_send_keys_enter() {
+  if [ ! -f "$TEST_DIR/send-keys.log" ]; then
+    echo 0
+    return
+  fi
+  # grep -c は 0 match 時 rc=1 → `|| true` で suppress、出力は grep の数値のみ
+  local n
+  n=$(grep -c '^send-keys.*Enter' "$TEST_DIR/send-keys.log" 2>/dev/null || true)
+  echo "${n:-0}"
+}
+
+# ─── (a) 空 buffer (label mismatch) → send-keys Enter 呼出 0 回 ───
 test_empty_buffer_no_send() {
-  local desc='(a) 空 buffer (`│ > ` のみ) → label_match=0、C-m 送信スキップ'
-  local pane_tail=$'│ > '
-  local result
-  result=$(check_label_match "$pane_tail")
-  if [ "$result" = "0" ]; then
-    pass "$desc"
-  else
-    fail "$desc — expected 0, got $result (false positive)"
-  fi
+  local desc='(a) 空 buffer (`│ > `) → send-keys Enter 呼出 0 回 (実 wrapper 実走、commander 版)'
+  reset_logs
+  rm -rf "$TEST_DIR/log_commander"
 
-  # 念のため2系統の空パターンも検証
-  local pane_tail2=$'│ >'
-  local result2
-  result2=$(check_label_match "$pane_tail2")
-  if [ "$result2" = "0" ]; then
-    pass '(a) 空 buffer (`│ >` 末尾、trailing space なし) → label_match=0'
+  FAKE_PANE_TAIL=$'│ > ' \
+  FAKE_PYTHON3_RESPONSE="15.0|2026-06-02T20:00:00Z|test_topic" \
+  ER_PYTHON3_BIN="$TEST_DIR/bin/fake_python3" \
+  ER_LOG_DIR="$TEST_DIR/log_commander" \
+    bash "$REPO_ROOT/scripts/watchdogs/enter_restart_commander_watchdog.sh" >/dev/null 2>&1 || true
+
+  local enter_count
+  enter_count=$(count_send_keys_enter)
+  if [ "$enter_count" -eq 0 ]; then
+    pass "$desc (send-keys Enter count=$enter_count)"
   else
-    fail "(a) 空 buffer pattern2 — expected 0, got $result2"
+    fail "$desc — Enter count=$enter_count (expected 0、false positive)"
   fi
 }
 
-# ─── (b) 非空 buffer → C-m 送信 1 回 ──────────────────────────────────────────
+# ─── (b) 非空 buffer (label match + idle 超過) → send-keys Enter 呼出 1 回 ───
 test_nonempty_buffer_send_once() {
-  local desc='(b) 非空 buffer (`│ > hello world`) → label_match=1、C-m 送信実行'
-  local pane_tail=$'│ > hello world'
-  local result
-  result=$(check_label_match "$pane_tail")
-  if [ "$result" = "1" ]; then
-    pass "$desc"
-  else
-    fail "$desc — expected 1, got $result (false negative)"
-  fi
+  local desc='(b) 非空 buffer (`│ > hello`) + idle 15min → send-keys Enter 1 回 (実 wrapper 実走)'
+  reset_logs
+  rm -rf "$TEST_DIR/log_commander"
 
-  # 多行 + 非空入力の典型ケースも検証
-  local pane_tail2=$'some output\n│ > continue here'
-  local result2
-  result2=$(check_label_match "$pane_tail2")
-  if [ "$result2" = "1" ]; then
-    pass '(b) 多行 pane + 末尾非空 buffer → label_match=1'
+  FAKE_PANE_TAIL=$'│ > hello world' \
+  FAKE_PYTHON3_RESPONSE="15.0|2026-06-02T20:00:00Z|test_topic" \
+  ER_PYTHON3_BIN="$TEST_DIR/bin/fake_python3" \
+  ER_LOG_DIR="$TEST_DIR/log_commander" \
+    bash "$REPO_ROOT/scripts/watchdogs/enter_restart_commander_watchdog.sh" >/dev/null 2>&1 || true
+
+  local enter_count
+  enter_count=$(count_send_keys_enter)
+  if [ "$enter_count" -eq 1 ]; then
+    pass "$desc (send-keys Enter count=$enter_count)"
   else
-    fail "(b) 多行 + 非空 buffer — expected 1, got $result2"
+    fail "$desc — Enter count=$enter_count (expected 1)"
   fi
 }
 
-# ─── (c) 15 分以内 fire 3 回 → HALT ────────────────────────────────────────────
+# ─── (c) 15 分以内 fire 3 回 → cap halt (send-keys 呼出 0 回) ───
 test_fire_cap_halt() {
-  local desc='(c) 過去 15 分以内 fire 3 回 → recent_fires >= cap=3 → HALT'
-  local fires_log="$TEST_DIR/fires_cap_test.log"
+  local desc='(c) 過去 15 分以内 fires.log 3 行 → cap halt、send-keys Enter 呼出 0 回'
+  reset_logs
+  rm -rf "$TEST_DIR/log_shogun_third"
+  mkdir -p "$TEST_DIR/log_shogun_third"
   local now_epoch
   now_epoch=$(date +%s)
-  # 過去 15 分以内に 3 回 fire 記録 (10 分前 / 6 分前 / 3 分前)
+  # 過去 15 分以内に 3 回 fire 記録 (10/6/3 分前)
   {
     echo "$((now_epoch - 600))"
     echo "$((now_epoch - 360))"
     echo "$((now_epoch - 180))"
-  } > "$fires_log"
+  } > "$TEST_DIR/log_shogun_third/fires.log"
 
-  # watchdog L48-L52 fire cap 判定ロジック emulate
-  local fire_cap_window_min=15
-  local fire_cap_count=3
-  local window_epoch=$((now_epoch - fire_cap_window_min * 60))
-  local recent_fires
-  recent_fires=$(awk -v cutoff="$window_epoch" 'BEGIN{c=0} { if ($1+0 >= cutoff) c++ } END { print c }' "$fires_log")
+  FAKE_PANE_TAIL=$'│ > hello world' \
+  FAKE_PYTHON3_RESPONSE="15.0|2026-06-02T20:00:00Z|test_topic" \
+  ER_PYTHON3_BIN="$TEST_DIR/bin/fake_python3" \
+  ER_LOG_DIR="$TEST_DIR/log_shogun_third" \
+    bash "$REPO_ROOT/scripts/watchdogs/enter_restart_shogun_third_watchdog.sh" >/dev/null 2>&1 || true
 
-  if [ "$recent_fires" -ge "$fire_cap_count" ]; then
-    pass "$desc (recent_fires=$recent_fires)"
+  local enter_count
+  enter_count=$(count_send_keys_enter)
+  if [ "$enter_count" -eq 0 ]; then
+    pass "$desc (send-keys Enter count=$enter_count、cap halt 発動)"
   else
-    fail "$desc — recent_fires=$recent_fires < cap=$fire_cap_count、HALT 判定にならず"
-  fi
-
-  # 逆ケース: 16 分前以前の fire のみ → HALT しない
-  local fires_log_old="$TEST_DIR/fires_cap_test_old.log"
-  {
-    echo "$((now_epoch - 1200))"
-    echo "$((now_epoch - 1000))"
-    echo "$((now_epoch - 950))"
-  } > "$fires_log_old"
-  local recent_fires_old
-  recent_fires_old=$(awk -v cutoff="$window_epoch" 'BEGIN{c=0} { if ($1+0 >= cutoff) c++ } END { print c }' "$fires_log_old")
-  if [ "$recent_fires_old" -lt "$fire_cap_count" ]; then
-    pass '(c) 15 分以前の fire のみ → recent_fires < cap → HALT しない (false positive 防止)'
-  else
-    fail "(c) 古い fire しかないのに HALT 判定 (recent_fires=$recent_fires_old)"
+    fail "$desc — Enter count=$enter_count (expected 0、cap halt 未発動)"
   fi
 }
 
-# ─── (d) log dir 未作成でも script 起動 (mkdir -p で自動作成) ──────────────────
+# ─── (d) ER_LOG_DIR 未作成 → script 起動成功 (mkdir で自動作成) ───
 test_log_dir_autocreate() {
-  local desc='(d) log dir 未作成 → script L37 mkdir -p で自動作成成功'
-  local nonexistent_log_dir="$TEST_DIR/nonexistent_path/sub/log_dir"
+  local desc='(d) ER_LOG_DIR 未作成 → script L51 mkdir で自動作成、起動成功'
+  reset_logs
+  local nonexistent_log_dir="$TEST_DIR/nonexistent_sub/log_dir_$$"
+  rm -rf "$nonexistent_log_dir"
   if [ -d "$nonexistent_log_dir" ]; then
-    fail "(d) pre-test: 想定外に dir が既存 ($nonexistent_log_dir)"
+    fail "$desc — pre-test pollution"
     return
   fi
-  # watchdog L37 と等価
-  mkdir -p "$nonexistent_log_dir"
-  if [ -d "$nonexistent_log_dir" ]; then
-    pass "$desc"
-  else
-    fail "$desc — mkdir -p 失敗 ($nonexistent_log_dir)"
-  fi
 
-  # 補足: systemd ExecStartPre による cycle3 B1+B2 fix の動作確認
-  # (両 .service に ExecStartPre=/bin/mkdir -p が追加済、commit 33b98e9 で実証)
-  local service_files=(
-    "scripts/watchdogs/enter_restart_commander.service"
-    "scripts/watchdogs/enter_restart_shogun_third.service"
-  )
-  local repo_root
-  repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-  local exec_start_pre_count=0
-  for svc in "${service_files[@]}"; do
-    if grep -qE '^ExecStartPre=/bin/mkdir -p' "$repo_root/$svc"; then
-      exec_start_pre_count=$((exec_start_pre_count + 1))
-    fi
-  done
-  if [ "$exec_start_pre_count" -eq 2 ]; then
-    pass '(d) systemd 両 .service に ExecStartPre=/bin/mkdir -p 設定確認 (cycle3 B1+B2 fix)'
+  FAKE_PANE_TAIL=$'│ > ' \
+  FAKE_PYTHON3_RESPONSE="5.0|2026-06-02T20:00:00Z|test_topic" \
+  ER_PYTHON3_BIN="$TEST_DIR/bin/fake_python3" \
+  ER_LOG_DIR="$nonexistent_log_dir" \
+    bash "$REPO_ROOT/scripts/watchdogs/enter_restart_commander_watchdog.sh" >/dev/null 2>&1 || true
+
+  if [ -d "$nonexistent_log_dir" ]; then
+    pass "$desc (dir 作成済 $nonexistent_log_dir)"
   else
-    fail "(d) ExecStartPre 設定 .service 数 expected=2 got=$exec_start_pre_count"
+    fail "$desc — dir 未作成 ($nonexistent_log_dir)"
   fi
 }
 
-echo "=== Smoke test: enter_restart watchdog core logic (cycle3 T1) ==="
+# ─── (e) 必須 envvar 欠落 → common watchdog が exit 2 で拒否 ───
+test_required_envvar_missing_rejected() {
+  local desc='(e) wrapper 経由せず common watchdog 直接 + 必須 envvar 欠落 → exit 2 拒否'
+  reset_logs
+  local rc=0
+  # ER_PANE_TARGET 未設定で common watchdog 直接呼出
+  env -u ER_PANE_TARGET \
+    bash "$REPO_ROOT/scripts/watchdogs/enter_restart_common_watchdog.sh" >/dev/null 2>&1 || rc=$?
+  if [ "$rc" -eq 2 ]; then
+    pass "$desc (rc=$rc)"
+  else
+    fail "$desc — rc=$rc (expected 2)"
+  fi
+}
+
+# ─── (f) wrapper 経由で common watchdog が ER_* envvar を正常受領 ───
+test_wrapper_env_contract() {
+  local desc='(f) commander wrapper 起動で ER_PANE_TARGET=commander-third:0.0 等が common に渡る'
+  reset_logs
+  rm -rf "$TEST_DIR/log_commander"
+
+  # wrapper 起動、common watchdog が呼出時 envvar 設定済か (log 内文字列で間接検証)
+  FAKE_PANE_TAIL=$'│ > ' \
+  FAKE_PYTHON3_RESPONSE="5.0|2026-06-02T20:00:00Z|test_topic" \
+  ER_PYTHON3_BIN="$TEST_DIR/bin/fake_python3" \
+  ER_LOG_DIR="$TEST_DIR/log_commander" \
+    bash "$REPO_ROOT/scripts/watchdogs/enter_restart_commander_watchdog.sh" >/dev/null 2>&1 || true
+
+  # common watchdog の log 内に "Commander" role name が出ているか
+  local log_file
+  log_file=$(find "$TEST_DIR/log_commander" -name '*.log' -type f 2>/dev/null | head -1)
+  if [ -n "$log_file" ] && grep -q "Commander alive\|Commander last handshake\|enter_restart_commander cycle" "$log_file" 2>/dev/null; then
+    pass "$desc (log: $(basename "$log_file"))"
+  else
+    fail "$desc — log file no Commander envvar trace (log=$log_file)"
+  fi
+}
+
+# ─── Main ───
+setup_stub_bin
+
+echo "=== Smoke test: enter_restart watchdog 本体 stub 実行 (cycle4 Q1) ==="
 test_empty_buffer_no_send
 test_nonempty_buffer_send_once
 test_fire_cap_halt
 test_log_dir_autocreate
+test_required_envvar_missing_rejected
+test_wrapper_env_contract
 echo "---"
 echo "Total: PASS=$PASS_COUNT FAIL=$FAIL_COUNT"
 
 if [ "$FAIL_COUNT" -gt 0 ]; then
-  echo "RESULT: FAIL — smoke test に失敗 case あり、修正要" >&2
+  echo "RESULT: FAIL — smoke test 失敗 case あり、修正要" >&2
   exit 1
 fi
 
-echo "RESULT: PASS — 全 4 観点 (空 buffer 不送信 / 非空 buffer 送信 / 15 分 3 回 cap HALT / log dir 自動作成) 全 PASS"
+echo "RESULT: PASS — 全 6 観点 (空/非空 buffer / cap halt / log dir auto / envvar contract) 全 PASS、実 wrapper 実行で本体 breakage を捕捉可能"
 exit 0
