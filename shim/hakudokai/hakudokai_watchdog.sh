@@ -708,6 +708,34 @@ while true; do
   LAST_ACTION="update_dashboard"
   update_dashboard
 
+  # ★STEP1 残務 (副院長令 baabd1ca / 理事長 A 案 GO 2026-06-02)★:
+  #   active_on_pc=third_pc + status=in_progress の task.heartbeat_at を毎 cycle touch。
+  #   third_pc 側 watchdog 内の最も信頼できる固定 tick 経路 (= 30 秒毎の必達 cycle)
+  #   から Supabase REST PATCH を撃ち、自走 task が生きている証跡を確保する。
+  #   - 失敗時は log のみで loop は止めない (絶対 block 禁、DD-169 設計原則順守)
+  #   - ~/.openclaw/disable_task_heartbeat で手動 disable 可
+  #   - SUPABASE_SERVICE_ROLE_KEY 未配備時は silent skip
+  LAST_ACTION="update_third_pc_task_heartbeats"
+  if [ ! -f "$HOME/.openclaw/disable_task_heartbeat" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -n "${SUPABASE_API:-}" ]; then
+    HB_NOW=$(date -u '+%Y-%m-%dT%H:%M:%S.%3NZ')
+    HB_RC=0
+    HB_HTTP=$(curl -sS -o /tmp/hakudokai_watchdog_heartbeat.body -w '%{http_code}' \
+      -X PATCH \
+      "${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
+      -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
+      -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
+      -H "Content-Type: application/json" \
+      -H "Prefer: return=minimal" \
+      --max-time 10 \
+      -d "{\"heartbeat_at\":\"${HB_NOW}\"}" 2>>"$LOG") || HB_RC=$?
+    if [ "${HB_HTTP}" = "204" ] || [ "${HB_HTTP}" = "200" ]; then
+      log_struct "INFO" "task_heartbeat_touch" "watchdog" "{\"target_pc\":\"third_pc\",\"http\":${HB_HTTP},\"ts\":\"${HB_NOW}\"}"
+    else
+      log "task_heartbeat_touch FAILED http=${HB_HTTP} rc=${HB_RC}"
+      log_struct "WARN" "task_heartbeat_touch_failed" "watchdog" "{\"http\":${HB_HTTP:-0},\"rc\":${HB_RC}}"
+    fi
+  fi
+
   # Heartbeat
   log "HEARTBEAT: all checks complete (active=${#ACTIVE_AGENTS[@]}, registry=${REGISTRY_LOAD_STATUS})"
 done
