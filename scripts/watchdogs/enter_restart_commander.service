@@ -6,6 +6,11 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 WorkingDirectory=%h
+# ★cycle3 B1 fix (Codex e7e28c7a, 副院長令 baabd1ca)★:
+#   StandardOutput=append:%h/path は ExecStart 実行前に systemd が open するため、
+#   log dir 未作成だと service 起動自体が失敗し ExecStart 内の mkdir まで到達しない。
+#   ExecStartPre で log dir を保証する。
+ExecStartPre=/bin/mkdir -p %h/.local/share/enter_restart_commander
 ExecStart=/bin/bash %h/scripts/enter_restart_commander_watchdog.sh
 StandardOutput=append:%h/.local/share/enter_restart_commander/service.log
 StandardError=append:%h/.local/share/enter_restart_commander/service.err
