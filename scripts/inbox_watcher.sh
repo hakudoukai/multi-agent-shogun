@@ -800,10 +800,16 @@ is_user_typing() {
     if [ -z "$content" ]; then
         return 1
     fi
-    # 「Try "..."」suggestion (welcome画面) は idle 扱い
-    if [[ "$content" =~ ^Try\  ]]; then
-        return 1
-    fi
+    # claude TUI の placeholder / affordance hint 行は ❯ で始まるが実入力ではない。
+    # CLI 自身が描画する案内文ゆえ idle 扱い (= nudge を skip しない)。
+    #   - 'Try "..."'                       : welcome 画面の suggestion
+    #   - 'Press up to edit queued messages': メッセージ queue 時の案内
+    #     (2026-06-02 ee4d6ce4 Step0: a3-1/a3-5 で「empty idle なのに常時 typing 誤検出」の真因。
+    #      queue hint 行が ❯<NBSP>Press up... と column0 の ❯ で描画され grep '^❯'|tail -1 に拾われる)
+    case "$content" in
+        Try\ *)                                    return 1 ;;
+        Press\ up\ to\ edit\ queued\ message*)      return 1 ;;
+    esac
     return 0  # typing — defer nudge
 }
 
@@ -1325,12 +1331,18 @@ while true; do
     # All cases: check for unread, then loop back (re-watches new inode)
     sleep 0.3
 
+    # Daemon resilience (2026-06-02 ee4d6ce4 Step0 death-restart root-cure):
+    # process_unread runs under `set -euo pipefail`. Any unguarded command that
+    # returns non-zero (e.g. a grep with no match in a pipeline → pipefail) would
+    # otherwise kill the whole watcher daemon, causing the observed ~40s
+    # death-restart loop. Guard with `|| true` so a single bad cycle never
+    # terminates the long-lived loop. Errors still surface via stderr logs.
     if [ "$rc" -eq 2 ]; then
         if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
-            process_unread "timeout"
+            process_unread "timeout" || true
         fi
     else
-        process_unread "event"
+        process_unread "event" || true
     fi
 
     # Token 飽和警告機構 (2026-05-07 制定):
@@ -1343,9 +1355,11 @@ while true; do
         _token_warn_cooldown=1800  # 30 min
         if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
             _pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
-            _token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1)
+            # `|| true`: under `set -o pipefail`, a no-match grep returns 1 and would
+            # kill the daemon via `set -e` (ee4d6ce4 Step0 death-restart root-cure).
+            _token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1 || true)
             if [ -n "$_token_match" ]; then
-                _token_num=$(echo "$_token_match" | grep -oE '[0-9]+(\.[0-9]+)?')
+                _token_num=$(echo "$_token_match" | grep -oE '[0-9]+(\.[0-9]+)?' || true)
                 _token_int=${_token_num%.*}
                 if [ "${_token_int:-0}" -ge 200 ]; then
                     echo "[$(date)] [TOKEN-WARN] $AGENT_ID context size ${_token_match} (>= 200k) — sending warning to inbox" >&2
