@@ -767,18 +767,39 @@ session_has_client() {
 # 文字が入っている = 理事長殿/エージェントが入力中 → nudge を skip して入力保護。
 # Welcome screen の「Try "..."」suggestion は idle 扱い (実入力ではない)。
 # 連続 N 回 typing で skip された場合、強制 nudge (緊急メッセージが届かない事故防止)。
+#
+# DD-169 patch (2026-06-02 karo-third F001 例外, shogun msg_20260602_182927 承認下):
+#   旧版は grep -oE '❯[[:space:]]+[^[:space:]].*' で pane buffer 全体から非空 prompt 行を
+#   抽出していたため、historical スクロール (e.g. `❯ /clear` 既往) を current prompt と
+#   誤認 → system-wide typing false-positive で nudge 永久 skip (a3-1/a3-7 で実証)。
+#   修正: 全 ❯ 行 (空含む) を抽出し tail -1 で ★bottom (= current cursor 位置) のみ★ 判定。
+#   空 prompt は idle (return 1)、内容ある場合のみ typing 判定。
+#
+# Bypass flag (緊急時): INBOX_WATCHER_DISABLE_TYPING_CHECK=1 で typing 検出全体を無効化可。
 is_user_typing() {
     local pane="$1"
-    local prompt_content
-    prompt_content=$(timeout 3 tmux capture-pane -t "$pane" -p -e -J 2>/dev/null \
-        | sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g; s/\x1b[()][AB012]//g; s/\x1b[78]//g' \
-        | grep -oE '❯[[:space:]]+[^[:space:]].*' \
-        | tail -1)
-    if [ -z "$prompt_content" ]; then
-        return 1  # no prompt input visible — allow nudge
+    # Emergency bypass — typing 検出無効化 (root-cure 復旧用)
+    if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+        return 1  # treat as idle always — allow nudge
     fi
+    local current_prompt
+    current_prompt=$(timeout 3 tmux capture-pane -t "$pane" -p -e -J 2>/dev/null \
+        | sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g; s/\x1b[()][AB012]//g; s/\x1b[78]//g' \
+        | grep -E '^❯' \
+        | tail -1)
+    if [ -z "$current_prompt" ]; then
+        return 1  # no prompt visible — allow nudge
+    fi
+    # NBSP (U+00A0, claude TUI が空 prompt 描画に使用) を通常空白へ正規化。
+    # POSIX [:space:] は NBSP を含まぬため、これを行わぬと空 prompt が非空と誤判定される。
+    local normalized
+    normalized=$(echo "$current_prompt" | sed 's/\xc2\xa0/ /g')
     local content
-    content=$(echo "$prompt_content" | sed 's/^❯[[:space:]]*//')
+    content=$(echo "$normalized" | sed 's/^❯[[:space:]]*//' | sed 's/[[:space:]]*$//')
+    # 空 prompt (current cursor 位置) = idle
+    if [ -z "$content" ]; then
+        return 1
+    fi
     # 「Try "..."」suggestion (welcome画面) は idle 扱い
     if [[ "$content" =~ ^Try\  ]]; then
         return 1
