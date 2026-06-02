@@ -1,0 +1,12 @@
+[Unit]
+Description=Enter Restart — shogun-third 5min cycle (third_pc local / ee4d6ce4)
+Requires=enter_restart_shogun_third.service
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=5min
+AccuracySec=10s
+Unit=enter_restart_shogun_third.service
+
+[Install]
+WantedBy=timers.target

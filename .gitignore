@@ -145,6 +145,12 @@
 !scripts/redundancy/
 !scripts/redundancy/*.sh
 
+# Enter Restart watchdogs (ee4d6ce4 — commander_failsafe rename + shogun_third 新設)
+!scripts/watchdogs/
+!scripts/watchdogs/*.sh
+!scripts/watchdogs/*.service
+!scripts/watchdogs/*.timer
+
 
 # SayTask (sample template only, not actual data)
 !saytask/

@@ -1,0 +1,11 @@
+[Unit]
+Description=Enter Restart — Commander Watchdog (Phase 2 (β) third_pc local 番人、副院長令 e6b027a6 / ee4d6ce4)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h
+ExecStart=/bin/bash %h/scripts/enter_restart_commander_watchdog.sh
+StandardOutput=append:%h/.local/share/enter_restart_commander/service.log
+StandardError=append:%h/.local/share/enter_restart_commander/service.err
