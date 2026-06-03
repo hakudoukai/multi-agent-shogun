@@ -38,9 +38,11 @@ FAIL=0
 FAILED_CASES=()
 
 # label 判定ロジックを watchdog 本体と同一手順で再現
+# β改修 cycle4: NBSP (U+00A0) → ASCII space 正規化を本体と同期 (drift 防止)
 classify() {
     local pane_tail="$1"
     local last_non_footer
+    pane_tail=$(printf '%s' "$pane_tail" | sed 's/\xc2\xa0/ /g')
     last_non_footer=$(printf '%s\n' "$pane_tail" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
     if printf '%s' "$last_non_footer" | grep -qE "$NONEMPTY_RE"; then
         echo "match_nonempty"
@@ -170,6 +172,27 @@ run_case "C12" \
     "末尾 [N]% context used 単独 footer + 直前新形式 ❯ 非空 → match_nonempty (status 行除外確認)" \
     "❯ ok
                                              87% context used" \
+    "match_nonempty"
+
+# === β改修 cycle4 追加 (CANON 残 regression #1 Layer C): NBSP 正規化 ===
+
+# C13: 新形式 ❯ <NBSP> nonempty (= Claude Code TUI 実観察形式) → match_nonempty
+#      実環境 (shogun-third pane) で実測した 23:52:25 cycle log の last_non_footer_line = `❯\xc2\xa0fire_test_8a8179d`
+run_case "C13" \
+    "新形式 ❯<NBSP>非空 (Claude Code TUI 実観察形式) → match_nonempty (cycle4 核心)" \
+    "$(printf '\xe2\x9d\xaf\xc2\xa0hello_world')" \
+    "match_nonempty"
+
+# C14: 新形式 ❯ <NBSP> のみ (空 buffer 実観察形式) → match_empty
+run_case "C14" \
+    "新形式 ❯<NBSP> 空 buffer (実観察形式) → match_empty" \
+    "$(printf '\xe2\x9d\xaf\xc2\xa0')" \
+    "match_empty"
+
+# C15: 旧形式 + NBSP separator → 旧 regex でも NBSP 正規化後 match
+run_case "C15" \
+    "旧形式 │<NBSP>><NBSP>非空 (理論上の NBSP 混入) → match_nonempty" \
+    "$(printf '\xe2\x94\x82\xc2\xa0>\xc2\xa0legacy_with_nbsp')" \
     "match_nonempty"
 
 echo "----"

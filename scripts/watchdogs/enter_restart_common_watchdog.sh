@@ -162,8 +162,14 @@ log "${ROLE_NAME} last handshake: ${ELAPSED_MIN}min ago at $LAST_AT (topic: $LAS
 #   対策: capture 範囲を -S -10 (= 直近 N 行) に拡大、Step 5 で footer 除外 → last_non_footer_line 抽出。
 PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_path}|#{pane_title}|#{pane_current_command}' 2>/dev/null || echo "")
 PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -10 2>/dev/null || echo "")
+# β改修 cycle4 (CANON 残 regression #1 Layer C):
+#   Claude Code TUI は ASCII space を NBSP (U+00A0, UTF-8 = 0xC2 0xA0) に表示変換する場合がある。
+#   POSIX `[[:space:]]` クラスは C locale で NBSP を含まないため、label regex (`❯[[:space:]]+非空`)
+#   が NBSP separator に match できず永続 fire skip となる。
+#   最小適応 (原状追随): capture 直後に NBSP を ASCII space に正規化、regex は不変。
+PANE_TAIL=$(printf '%s' "$PANE_TAIL" | sed 's/\xc2\xa0/ /g')
 log "pane meta: $PANE_META"
-log "pane tail (last 10 lines, base64): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
+log "pane tail (last 10 lines, base64, after NBSP normalize): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
 
 # Step 4: idle threshold 判定
 SKIP_REASON=""
