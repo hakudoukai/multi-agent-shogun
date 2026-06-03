@@ -1,0 +1,13 @@
+[Unit]
+Description=Enter Restart — shogun-main Watchdog (横展開 main_pc, 10min idle → C-m only, label-match strict)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h
+# ExecStartPre で log dir を保証 (cycle3 B2 同型対策)
+ExecStartPre=/bin/mkdir -p %h/.local/share/enter_restart_shogun_main
+ExecStart=/bin/bash %h/projects/multi-agent-shogun-newbuild/scripts/watchdogs/enter_restart_shogun_main_watchdog.sh
+StandardOutput=append:%h/.local/share/enter_restart_shogun_main/service.log
+StandardError=append:%h/.local/share/enter_restart_shogun_main/service.err

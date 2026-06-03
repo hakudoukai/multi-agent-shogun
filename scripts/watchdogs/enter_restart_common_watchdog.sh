@@ -28,6 +28,9 @@
 #   ER_FIRE_CAP_WINDOW_MIN=15  発火カウント評価窓 (分)
 #   ER_PYTHON3_BIN             python3 binary path (default: hermes-agent venv python3)
 #                              ★cycle4 Q1 修正で envvar 化、smoke test で stub 化可能★
+#   ER_TARGET_PC               shireiko_audit_log.target_pc / 横展開 (default: third_pc)
+#                              ★副院長令 baabd1ca 横展開 (main_pc/second_pc) で envvar 化、
+#                              第三版 patch、後方互換 strict (未設定時 third_pc 既定)★
 #
 # 終了コード: 0 = 通常完遂 (skip / halt 含む)、2 = 必須 envvar 欠落
 #
@@ -58,6 +61,11 @@ FIRE_CAP_COUNT="${ER_FIRE_CAP_COUNT:-3}"
 FIRE_CAP_WINDOW_MIN="${ER_FIRE_CAP_WINDOW_MIN:-15}"
 # ★cycle4 Q1 fix: python3 binary path envvar 化 (smoke test stub 化に対応)★
 ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/home/hakudoukai/.local/share/hermes-agent/venv/bin/python3}"
+# ★副院長令 baabd1ca 横展開 patch: target_pc envvar 化 (main_pc/second_pc 対応)★
+# 由来: enter_restart 共通実装を main_pc / second_pc に展開する際、shireiko_audit_log
+# に投函する target_pc を per-PC 切替できるようにするため。後方互換 strict、未設定時は
+# third_pc 既定で third_pc 動作には一切影響なし。設定例: main → ER_TARGET_PC=main_pc。
+ER_TARGET_PC="${ER_TARGET_PC:-third_pc}"
 EVENT_TYPE="$ER_EVENT_TYPE"
 ROLE_NAME="$ER_ROLE_NAME"
 HEARTBEAT_FROM_PC="$ER_HEARTBEAT_FROM_PC"
@@ -91,7 +99,7 @@ payload = {
     "action_taken": "halted",
     "result": "escalated",
     "engine": "enter_restart",
-    "target_pc": "third_pc",
+    "target_pc": "${ER_TARGET_PC}",
 }
 req = urllib.request.Request(url, method='POST', data=json.dumps(payload).encode(),
     headers={'apikey':key,'Authorization':f'Bearer {key}','Content-Type':'application/json'})
@@ -229,7 +237,7 @@ payload = {
     "action_taken": "${ACTION}",
     "result": "${SHIREIKO_RESULT}",
     "engine": "enter_restart",
-    "target_pc": "third_pc",
+    "target_pc": "${ER_TARGET_PC}",
 }
 req = urllib.request.Request(url, method='POST', data=json.dumps(payload).encode(),
     headers={'apikey':key,'Authorization':f'Bearer {key}','Content-Type':'application/json'})
@@ -247,7 +255,7 @@ payload = {
     "id": str(uuid.uuid4()),
     "from_pc": "${HEARTBEAT_FROM_PC}", "to_pc": "fukuincho",
     "topic": "${HEARTBEAT_TOPIC_PREFIX}: last_${ROLE_NAME}=${ELAPSED_MIN}min ago",
-    "content": "third_pc local enter_restart heartbeat (5min cycle, engine=enter_restart, role=${ROLE_NAME}). last=${ELAPSED_MIN}min, threshold=${THRESHOLD_MIN}min, result=${RESULT}, action=${ACTION}",
+    "content": "${ER_TARGET_PC} enter_restart heartbeat (5min cycle, engine=enter_restart, role=${ROLE_NAME}). last=${ELAPSED_MIN}min, threshold=${THRESHOLD_MIN}min, result=${RESULT}, action=${ACTION}",
     "priority": "low", "message_type": "status_update"
 }
 req = urllib.request.Request(url, method='POST', data=json.dumps(payload).encode(),
