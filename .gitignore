@@ -287,6 +287,9 @@ tests/specs/osato_lms_*
 # ee4d6ce4 cycle4 B1 smoke test directory (pretooluse_bash_guard stdin JSON 対応 hook 検証 gate)
 !tests/checks/pretooluse_stdin_json/
 !tests/checks/pretooluse_stdin_json/*.sh
+# CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1 (enter_restart footer 耐性 β改修 regression gate)
+!tests/checks/enter_restart_footer_immune/
+!tests/checks/enter_restart_footer_immune/*.sh
 # ee4d6ce4 cycle3 T1 smoke test directory (enter_restart watchdog 4 観点 regression gate)
 !tests/smoke/
 !tests/smoke/*.sh

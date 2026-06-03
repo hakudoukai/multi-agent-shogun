@@ -156,10 +156,14 @@ ELAPSED_INT=$(echo "$ELAPSED_MIN" | cut -d. -f1)
 log "${ROLE_NAME} last handshake: ${ELAPSED_MIN}min ago at $LAST_AT (topic: $LAST_TOPIC)"
 
 # Step 3: pane 状態取得 (label 照合用)
+# β改修 (CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1):
+#   現 Claude Code TUI は footer (⏵⏵ bypass permissions / esc to interrupt 等) を常時 last_line に表示。
+#   旧 -S -3 + last_line 厳格照合では footer を拾い続け mismatch → 一生 fire skip。
+#   対策: capture 範囲を -S -10 (= 直近 N 行) に拡大、Step 5 で footer 除外 → last_non_footer_line 抽出。
 PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_path}|#{pane_title}|#{pane_current_command}' 2>/dev/null || echo "")
-PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -3 2>/dev/null || echo "")
+PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -10 2>/dev/null || echo "")
 log "pane meta: $PANE_META"
-log "pane tail (last 3 lines, base64): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
+log "pane tail (last 10 lines, base64): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
 
 # Step 4: idle threshold 判定
 SKIP_REASON=""
@@ -169,18 +173,26 @@ if [ "$ELAPSED_INT" -lt "$THRESHOLD_MIN" ]; then
 fi
 
 # Step 5: label 照合 (Claude TUI prompt + 非空 input buffer 検出)
+# β改修 (CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1):
+#   現 Claude Code TUI footer ("⏵⏵ bypass permissions on...", "esc to interrupt", "shift+tab to cycle",
+#   "⏵ Plan mode", "tab to expand", "ctrl+o to expand" 等) は常時 last_line に出るため、
+#   PANE_TAIL から footer 行を除外して last_non_footer_line を取得し、その上で照合する。
+#   照合自体の regex (`│ > 非空 │` パターン) は原状維持 (新規仕様増設禁、CANON 原状+最小適応原則順守)。
 LABEL_MATCH=0
 LABEL_REASON=""
+FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts'
 if [ -n "$PANE_TAIL" ]; then
     LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
+    LAST_NON_FOOTER_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
     log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
-    if printf '%s' "$LAST_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]'; then
+    log "last_non_footer_line (base64): $(printf '%s' "$LAST_NON_FOOTER_LINE" | base64 -w0)"
+    if printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]'; then
         LABEL_MATCH=1
         LABEL_REASON="claude_ui_with_nonempty_input_buffer"
-    elif printf '%s' "$LAST_LINE" | grep -qE '│[[:space:]]*>[[:space:]]*│?[[:space:]]*$'; then
+    elif printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]*│?[[:space:]]*$'; then
         LABEL_REASON="claude_ui_empty_input_buffer"
     else
-        LABEL_REASON="no_claude_ui_prompt_in_last_line"
+        LABEL_REASON="no_claude_ui_prompt_in_last_non_footer_line"
     fi
 else
     LABEL_REASON="empty_pane_tail"
