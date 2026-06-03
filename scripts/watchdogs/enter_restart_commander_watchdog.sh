@@ -30,7 +30,10 @@ export ER_ROLE_NAME="${ER_ROLE_NAME:-Commander}"
 export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-commander}"
 export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] commander alive}"
 export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_commander}"
+# ★副院長令 08e79036 (P0): Commander 自 pane の自動 Enter 実発火 threshold = 2 min★
+#   (= idle 2 分超 + label_match=1 で自動 fire、副院長殿御指示「他は一切触るな」)
+export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
 # オプション (default 使用):
-#   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+#   ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
 
 exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"
