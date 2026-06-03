@@ -193,13 +193,22 @@ fi
 LABEL_MATCH=0
 LABEL_REASON=""
 FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts|[0-9]+% context used|^─+[[:space:]]*$'
-PROMPT_LINE_PATTERN='^[[:space:]]*❯|│[[:space:]]*>'
+# β改修 cycle5c (CANON 残 regression #1 Layer E, anchor 強化):
+#   cycle5 の単純な行頭 anchor では output 中の prompt-like plain text (例: Claude が
+#   過去 user message を「  ❯ inboxN」形式で再表示する、bash 出力に "│ > xxx │" 含む) を
+#   誤検知 → unintended Enter injection リスク (Codex cycle5b B1 high)。
+#   strict 化: ★PROMPT 行は ──── ボーダー直後の `❯` / `│ >` 行のみ★ を真の Claude TUI
+#   input box と判定。awk の prev_border state で行間関係を判定 (pipefail 影響なし)。
 if [ -n "$PANE_TAIL" ]; then
     LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
-    # ★cycle5 Codex B1 fix: grep no-match (rc=1) を pipefail 下で正常終了として扱う (|| true)★
-    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | { grep -E "$PROMPT_LINE_PATTERN" || true; } | tail -1)
+    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | awk '
+        /^[[:space:]]*─+[[:space:]]*$/ { prev_border = 1; next }
+        prev_border && (/^[[:space:]]*❯/ || /^[[:space:]]*│[[:space:]]*>/) { last = $0 }
+        { prev_border = 0 }
+        END { if (last != "") print last }
+    ')
     log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
-    log "prompt_line (base64): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
+    log "prompt_line (base64, border-anchored): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
     if [ -n "$PROMPT_LINE" ]; then
         # β改修 cycle3 (CANON 残 regression #1 Layer B):
         #   Claude Code TUI prompt 形式が `│ > xxx │` (旧) → `❯ xxx` (新、上下 ──── ボーダー間) に進化。
@@ -212,7 +221,7 @@ if [ -n "$PANE_TAIL" ]; then
             LABEL_REASON="prompt_line_unclassifiable"
         fi
     else
-        LABEL_REASON="no_claude_ui_prompt_in_pane_tail"
+        LABEL_REASON="no_border_anchored_prompt_in_pane_tail"
     fi
 else
     LABEL_REASON="empty_pane_tail"

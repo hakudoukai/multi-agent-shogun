@@ -45,10 +45,15 @@ classify() {
     local pane_tail="$1"
     local prompt_line
     pane_tail=$(printf '%s' "$pane_tail" | sed 's/\xc2\xa0/ /g')
-    # ★cycle5 Codex T1 fix: grep no-match (rc=1) を pipefail 下で正常終了として扱う (|| true)★
-    prompt_line=$(printf '%s\n' "$pane_tail" | { grep -E "$PROMPT_LINE_PATTERN" || true; } | tail -1)
+    # ★cycle5c: ──── ボーダー直後の prompt 行のみ真の Claude TUI input box と判定 (anchor 強化)★
+    prompt_line=$(printf '%s\n' "$pane_tail" | awk '
+        /^[[:space:]]*─+[[:space:]]*$/ { prev_border = 1; next }
+        prev_border && (/^[[:space:]]*❯/ || /^[[:space:]]*│[[:space:]]*>/) { last = $0 }
+        { prev_border = 0 }
+        END { if (last != "") print last }
+    ')
     if [ -z "$prompt_line" ]; then
-        # PANE_TAIL に prompt 行不在
+        # PANE_TAIL に border-anchored prompt 行不在
         if [ -z "$(printf '%s\n' "$pane_tail" | { grep -vE "$FOOTER_PATTERN" || true; } | awk 'NF')" ]; then
             echo "no_content"
         else
@@ -89,22 +94,29 @@ echo "FOOTER_PATTERN extracted: $FOOTER_PATTERN"
 echo "----"
 
 # C01: footer のみ last_line + 直近に非空 input buffer → match_nonempty 期待 (= β改修核心)
+# ★cycle5c: 旧形式 │ > xxx │ も実環境では border で囲まれる前提に更新★
 run_case "C01" \
-    "footer 1 行 last + 直前に非空 input buffer (regression 再現本丸)" \
-    "│ > hello world │
+    "footer 1 行 last + border 付き非空 input buffer (regression 再現本丸)" \
+    "────
+│ > hello world │
+────
 ⏵⏵ bypass permissions on (shift+tab to cycle)" \
     "match_nonempty"
 
-# C02: 旧形式 = 末尾が非空 input buffer (footer 出現前の Claude TUI) → 既存ロジックでも通る
+# C02: 旧形式 = border 付き 非空 input buffer
 run_case "C02" \
-    "旧形式: last_line 自体が非空 input buffer (β改修前から通っていたケース)" \
-    "│ > legacy input │" \
+    "旧形式: border 付き 非空 input buffer (β改修前から通っていたケース)" \
+    "────
+│ > legacy input │
+────" \
     "match_nonempty"
 
 # C03: footer + 空 input buffer → match_empty 期待 (LABEL_MATCH=0 維持、false fire 防止)
 run_case "C03" \
-    "footer last + 直前 空 input buffer → empty 判定 (fire しない)" \
-    "│ > │
+    "footer last + border 付き 空 input buffer → empty 判定 (fire しない)" \
+    "────
+│ > │
+────
 ⏵⏵ bypass permissions on (shift+tab to cycle)" \
     "match_empty"
 
@@ -118,8 +130,10 @@ another line
 
 # C05: 多種 footer 行 (esc to interrupt + shift+tab to cycle 等) を除外しつつ非空 buffer 検出
 run_case "C05" \
-    "multi-line footer + 非空 input buffer" \
-    "│ > deep work │
+    "multi-line footer + border 付き非空 input buffer" \
+    "────
+│ > deep work │
+────
 esc to interrupt
 shift+tab to cycle
 ⏵⏵ bypass permissions on" \
@@ -127,15 +141,19 @@ shift+tab to cycle
 
 # C06: Plan mode footer
 run_case "C06" \
-    "Plan mode footer + 非空 input buffer" \
-    "│ > planning │
+    "Plan mode footer + border 付き非空 input buffer" \
+    "────
+│ > planning │
+────
 ⏵ Plan mode (shift+tab to cycle)" \
     "match_nonempty"
 
 # C07: tab to expand / ctrl+o to expand footer
 run_case "C07" \
-    "tab to expand + ctrl+o to expand footer + 非空 input buffer" \
-    "│ > expanding │
+    "tab to expand + ctrl+o to expand footer + border 付き非空 input buffer" \
+    "────
+│ > expanding │
+────
 tab to expand
 ctrl+o to expand" \
     "match_nonempty"
@@ -169,18 +187,25 @@ run_case "C10" \
                                              99% context used" \
     "match_empty"
 
-# C11: 新形式と旧形式 mixed (実環境では発生しないが OR ロジック健全性確認)
+# C11: 新形式と旧形式 mixed (cycle5c で border 付き両方検出可能性確認)
 run_case "C11" \
-    "新+旧 mixed (旧 last_non_footer) → 旧 regex で match_nonempty" \
-    "❯ early input
+    "border 付き 新+旧 mixed → 最下位 border 直後 prompt 採用" \
+    "────
+❯ early input
+────
+some output
+────
 │ > later legacy input │
+────
 ⏵⏵ bypass permissions on" \
     "match_nonempty"
 
 # C12: context status 行のみ + 直前に非空 input buffer (footer 漏れ verify)
 run_case "C12" \
-    "末尾 [N]% context used 単独 footer + 直前新形式 ❯ 非空 → match_nonempty (status 行除外確認)" \
-    "❯ ok
+    "末尾 [N]% context used 単独 footer + border 付き ❯ 非空 → match_nonempty (status 行除外確認)" \
+    "────
+❯ ok
+────
                                              87% context used" \
     "match_nonempty"
 
@@ -188,21 +213,22 @@ run_case "C12" \
 
 # C13: 新形式 ❯ <NBSP> nonempty (= Claude Code TUI 実観察形式) → match_nonempty
 #      実環境 (shogun-third pane) で実測した 23:52:25 cycle log の last_non_footer_line = `❯\xc2\xa0fire_test_8a8179d`
+#      ★cycle5c: border 付き形式に更新 (実環境準拠)★
 run_case "C13" \
-    "新形式 ❯<NBSP>非空 (Claude Code TUI 実観察形式) → match_nonempty (cycle4 核心)" \
-    "$(printf '\xe2\x9d\xaf\xc2\xa0hello_world')" \
+    "border 付き 新形式 ❯<NBSP>非空 (Claude Code TUI 実観察形式) → match_nonempty (cycle4 核心)" \
+    "$(printf '\xe2\x94\x80\xe2\x94\x80\n\xe2\x9d\xaf\xc2\xa0hello_world\n\xe2\x94\x80\xe2\x94\x80')" \
     "match_nonempty"
 
 # C14: 新形式 ❯ <NBSP> のみ (空 buffer 実観察形式) → match_empty
 run_case "C14" \
-    "新形式 ❯<NBSP> 空 buffer (実観察形式) → match_empty" \
-    "$(printf '\xe2\x9d\xaf\xc2\xa0')" \
+    "border 付き 新形式 ❯<NBSP> 空 buffer (実観察形式) → match_empty" \
+    "$(printf '\xe2\x94\x80\xe2\x94\x80\n\xe2\x9d\xaf\xc2\xa0\n\xe2\x94\x80\xe2\x94\x80')" \
     "match_empty"
 
 # C15: 旧形式 + NBSP separator → 旧 regex でも NBSP 正規化後 match
 run_case "C15" \
-    "旧形式 │<NBSP>><NBSP>非空 (理論上の NBSP 混入) → match_nonempty" \
-    "$(printf '\xe2\x94\x82\xc2\xa0>\xc2\xa0legacy_with_nbsp')" \
+    "border 付き 旧形式 │<NBSP>><NBSP>非空 (NBSP 混入) → match_nonempty" \
+    "$(printf '\xe2\x94\x80\xe2\x94\x80\n\xe2\x94\x82\xc2\xa0>\xc2\xa0legacy_with_nbsp\n\xe2\x94\x80\xe2\x94\x80')" \
     "match_nonempty"
 
 # === β改修 cycle5 追加 (CANON 残 regression #1 Layer D, α 堅牢版): output 流入 race 吸収 ===
@@ -241,14 +267,61 @@ some output line 2
 some output line 3" \
     "no_match"
 
-# C19: 複数 prompt 行 (= 履歴に過去 prompt が残るケース) → tail -1 で最下位を取る
+# C19: 複数 prompt 行 (= 履歴に過去 prompt が残るケース) → 最下位の border-anchored prompt
+#      ★cycle5c: 単純な tail -1 ではなく、────直後の prompt のみ抽出★
 run_case "C19" \
-    "複数 prompt 行混在 → tail -1 で最下位 (= 現在の) prompt 行を取る" \
-    "❯ old_prompt_with_text
+    "複数 prompt 行混在 (border-anchored) → 最下位の border 直後 prompt" \
+    "────
+❯ old_prompt_with_text
+────
 some output
+────
 ❯ current_input
+────
 output continues" \
     "match_nonempty"
+
+# === β改修 cycle5c 追加 (CANON 残 regression #1 Layer E, anchor 強化): false positive 防止 ===
+
+# C20: output 中のプレーン text `❯ sample` (上 ────ボーダー無し) → ★no_match★ (誤発火防止)
+run_case "C20" \
+    "★output 中 ❯ sample text (周囲 ──── 無し) → no_match (誤発火防止、cycle5c 核心)★" \
+    "some output line
+  ❯ this is a quoted user message from history
+another output line
+some more output" \
+    "no_match"
+
+# C21: output 中のプレーン text `│ > sample │` (上 ────ボーダー無し) → ★no_match★
+run_case "C21" \
+    "★output 中 │ > sample text │ (周囲 ──── 無し) → no_match (誤発火防止)★" \
+    "some output line
+  │ > legacy_quoted_text │
+another output line" \
+    "no_match"
+
+# C22: output 中に過去 ❯ (border 無し) + 現在 ❯ (border あり) 混在 → border 付きを採用
+run_case "C22" \
+    "過去 ❯ (border 無) + 現在 ❯ (border 有) → border 付き input box を採用" \
+    "  ❯ quoted_from_history_no_border
+some output
+────
+❯ real_current_input
+────
+100% context used" \
+    "match_nonempty"
+
+# C23: border あるが prompt 行が異常 (例: 解説文がたまたま ──── 直後) → border-anchored ロジック
+#      ★ロジック: border 直後の行が ❯ や │> で始まらなければ採用しない★
+run_case "C23" \
+    "border 直後が ❯ でも │> でもない行 → no_match (border あっても prompt 行不在)" \
+    "first output
+────
+some non-prompt text after border
+another line
+────
+more text after another border" \
+    "no_match"
 
 echo "----"
 echo "RESULT: PASS=$PASS FAIL=$FAIL TOTAL=$((PASS + FAIL))"
