@@ -865,3 +865,19 @@ Hermesは記憶力が良いがゆえに、副医院長が誤って「正しい�
 ## 改訂責務
 
 本セクションの改訂は **理事長殿の専権事項**。副医院長・Commander・将軍・家老・家康は提案のみ可。FKI-CANON-GUARDIAN-01 と一体運用。新接続先追加は副医院長 (正本守護者) の検証印必須。
+
+## SSH 着火経路 (将軍paneへの降下・正本=project_documents a9b266a6 第3部)
+
+接続前必読(ALL-SSH-CANON-FIRST-01)。手探り接続禁。鍵は daishogun_cef2002e5d (ed25519) を -i で必ず明示。
+
+- third→main将軍: ssh -i ~/.ssh/daishogun_cef2002e5d user@192.168.11.11 → tmux send-keys -t shogun-main:0.0 (投稿) → 別send-keysで Enter(C-m) 発火
+- third→second将軍: ssh -i ~/.ssh/daishogun_cef2002e5d -p 2223 hakudokai@192.168.11.47 → tmux send-keys -t shogun-second:0.0 → Enter発火
+- 多段(踏み台main経由): ssh -o "ProxyCommand=ssh -i ~/.ssh/daishogun_cef2002e5d -W %h:%p user@192.168.11.11" -i ~/.ssh/daishogun_cef2002e5d -p 2223 hakudokai@192.168.11.47
+- Permission denied(publickey)時: ①-i で正しい鍵を明示したか ②多段はjump(ProxyCommand)にも -i 明示したか ③鍵が third ~/.ssh/ に在り、宛先authorized_keysに登録済か(未登録なら理事長に鍵配備依頼=PW/鍵配備はAI代行不可)。
+- 切り分け: timed out=TCP不達(別経路/多段)/reset=sshd直後(時間おく)/banner timeout=sshd hung(中からservice ssh restart)/closed=port/user誤り。単一経路1回失敗で「死亡」と断定禁(ALL-EVIDENCE-BEFORE-ABSENCE-01)。
+- pane↔役職: 将軍=shogun-<PC>:0.0。送信先は物理pane列で引く(誤配防止)。
+- 発火=DD-177第1層(Commander正規send-keys/Enter)。投稿後Enter必須、F002対象外。
+
+### 改訂責務 (SSH 着火経路 節)
+
+本セクションの改訂は **理事長殿の専権事項**。副医院長・Commander・将軍は提案のみ可。正本=project_documents a9b266a6 第3部、本節は要約・逸脱禁。
