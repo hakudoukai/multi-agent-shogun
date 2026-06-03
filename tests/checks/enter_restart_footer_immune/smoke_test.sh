@@ -45,10 +45,11 @@ classify() {
     local pane_tail="$1"
     local prompt_line
     pane_tail=$(printf '%s' "$pane_tail" | sed 's/\xc2\xa0/ /g')
-    prompt_line=$(printf '%s\n' "$pane_tail" | grep -E "$PROMPT_LINE_PATTERN" | tail -1)
+    # ★cycle5 Codex T1 fix: grep no-match (rc=1) を pipefail 下で正常終了として扱う (|| true)★
+    prompt_line=$(printf '%s\n' "$pane_tail" | { grep -E "$PROMPT_LINE_PATTERN" || true; } | tail -1)
     if [ -z "$prompt_line" ]; then
         # PANE_TAIL に prompt 行不在
-        if [ -z "$(printf '%s\n' "$pane_tail" | grep -vE "$FOOTER_PATTERN" | awk 'NF')" ]; then
+        if [ -z "$(printf '%s\n' "$pane_tail" | { grep -vE "$FOOTER_PATTERN" || true; } | awk 'NF')" ]; then
             echo "no_content"
         else
             echo "no_match"

@@ -196,7 +196,8 @@ FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|�
 PROMPT_LINE_PATTERN='^[[:space:]]*❯|│[[:space:]]*>'
 if [ -n "$PANE_TAIL" ]; then
     LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
-    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -E "$PROMPT_LINE_PATTERN" | tail -1)
+    # ★cycle5 Codex B1 fix: grep no-match (rc=1) を pipefail 下で正常終了として扱う (|| true)★
+    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | { grep -E "$PROMPT_LINE_PATTERN" || true; } | tail -1)
     log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
     log "prompt_line (base64): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
     if [ -n "$PROMPT_LINE" ]; then
