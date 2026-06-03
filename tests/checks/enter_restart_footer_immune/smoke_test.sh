@@ -38,18 +38,27 @@ FAIL=0
 FAILED_CASES=()
 
 # label 判定ロジックを watchdog 本体と同一手順で再現
-# β改修 cycle4: NBSP (U+00A0) → ASCII space 正規化を本体と同期 (drift 防止)
+# β改修 cycle4: NBSP (U+00A0) → ASCII space 正規化
+# β改修 cycle5: last_non_footer_line → PROMPT_LINE 直接探索 (α 堅牢版)
+PROMPT_LINE_PATTERN='^[[:space:]]*❯|│[[:space:]]*>'
 classify() {
     local pane_tail="$1"
-    local last_non_footer
+    local prompt_line
     pane_tail=$(printf '%s' "$pane_tail" | sed 's/\xc2\xa0/ /g')
-    last_non_footer=$(printf '%s\n' "$pane_tail" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
-    if printf '%s' "$last_non_footer" | grep -qE "$NONEMPTY_RE"; then
+    prompt_line=$(printf '%s\n' "$pane_tail" | grep -E "$PROMPT_LINE_PATTERN" | tail -1)
+    if [ -z "$prompt_line" ]; then
+        # PANE_TAIL に prompt 行不在
+        if [ -z "$(printf '%s\n' "$pane_tail" | grep -vE "$FOOTER_PATTERN" | awk 'NF')" ]; then
+            echo "no_content"
+        else
+            echo "no_match"
+        fi
+        return
+    fi
+    if printf '%s' "$prompt_line" | grep -qE "$NONEMPTY_RE"; then
         echo "match_nonempty"
-    elif printf '%s' "$last_non_footer" | grep -qE "$EMPTY_RE"; then
+    elif printf '%s' "$prompt_line" | grep -qE "$EMPTY_RE"; then
         echo "match_empty"
-    elif [ -z "$last_non_footer" ]; then
-        echo "no_content"
     else
         echo "no_match"
     fi
@@ -193,6 +202,51 @@ run_case "C14" \
 run_case "C15" \
     "旧形式 │<NBSP>><NBSP>非空 (理論上の NBSP 混入) → match_nonempty" \
     "$(printf '\xe2\x94\x82\xc2\xa0>\xc2\xa0legacy_with_nbsp')" \
+    "match_nonempty"
+
+# === β改修 cycle5 追加 (CANON 残 regression #1 Layer D, α 堅牢版): output 流入 race 吸収 ===
+
+# C16: output 流入で ❯ 非空 行が中間に位置 (実観察 race case) → match_nonempty (cycle5 核心)
+run_case "C16" \
+    "output 流入 + ❯ 非空 + 末尾 output (PROMPT 行探索で捕捉) → match_nonempty (cycle5 核心)" \
+    "────────────────────────────────────────────────
+❯ user_typed_text
+────────────────────────────────────────────────
+100% context used
+
+● Bash(some long output line 1)
+● Bash(some long output line 2)
+● Bash(some long output line 3)
+some final tool output text" \
+    "match_nonempty"
+
+# C17: output 流入で ❯ 空 行が中間 → match_empty (誤発火防止維持)
+run_case "C17" \
+    "output 流入 + ❯ 空 + 末尾 output → match_empty (誤発火防止維持)" \
+    "────────────────────────────────────────────────
+❯
+────────────────────────────────────────────────
+100% context used
+
+● Bash(continuing output)
+final output line" \
+    "match_empty"
+
+# C18: PANE_TAIL 全体に prompt 行が一切ない (= pane の bottom 50 行に input 行が含まれない pathological case) → no_match
+run_case "C18" \
+    "PANE_TAIL に prompt 行なし → no_match" \
+    "some output line 1
+some output line 2
+some output line 3" \
+    "no_match"
+
+# C19: 複数 prompt 行 (= 履歴に過去 prompt が残るケース) → tail -1 で最下位を取る
+run_case "C19" \
+    "複数 prompt 行混在 → tail -1 で最下位 (= 現在の) prompt 行を取る" \
+    "❯ old_prompt_with_text
+some output
+❯ current_input
+output continues" \
     "match_nonempty"
 
 echo "----"

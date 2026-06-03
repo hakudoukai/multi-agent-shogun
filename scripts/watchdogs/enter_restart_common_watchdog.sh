@@ -161,7 +161,11 @@ log "${ROLE_NAME} last handshake: ${ELAPSED_MIN}min ago at $LAST_AT (topic: $LAS
 #   旧 -S -3 + last_line 厳格照合では footer を拾い続け mismatch → 一生 fire skip。
 #   対策: capture 範囲を -S -10 (= 直近 N 行) に拡大、Step 5 で footer 除外 → last_non_footer_line 抽出。
 PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_path}|#{pane_title}|#{pane_current_command}' 2>/dev/null || echo "")
-PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -10 2>/dev/null || echo "")
+# β改修 cycle5 (CANON 残 regression #1 Layer D, α堅牢版):
+#   capture 窓を -S -10 → -S -50 に拡張。
+#   active pane で output 流入中に input 行 (❯ ...) が直近 10 行範囲外に
+#   押し上がる race を吸収、prompt 行を範囲内に含める保証を上げる。
+PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -50 2>/dev/null || echo "")
 # β改修 cycle4 (CANON 残 regression #1 Layer C):
 #   Claude Code TUI は ASCII space を NBSP (U+00A0, UTF-8 = 0xC2 0xA0) に表示変換する場合がある。
 #   POSIX `[[:space:]]` クラスは C locale で NBSP を含まないため、label regex (`❯[[:space:]]+非空`)
@@ -169,7 +173,7 @@ PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -10 2>/dev/null || echo ""
 #   最小適応 (原状追随): capture 直後に NBSP を ASCII space に正規化、regex は不変。
 PANE_TAIL=$(printf '%s' "$PANE_TAIL" | sed 's/\xc2\xa0/ /g')
 log "pane meta: $PANE_META"
-log "pane tail (last 10 lines, base64, after NBSP normalize): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
+log "pane tail (last 50 lines, base64, after NBSP normalize): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
 
 # Step 4: idle threshold 判定
 SKIP_REASON=""
@@ -179,30 +183,35 @@ if [ "$ELAPSED_INT" -lt "$THRESHOLD_MIN" ]; then
 fi
 
 # Step 5: label 照合 (Claude TUI prompt + 非空 input buffer 検出)
-# β改修 (CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1):
-#   現 Claude Code TUI footer ("⏵⏵ bypass permissions on...", "esc to interrupt", "shift+tab to cycle",
-#   "⏵ Plan mode", "tab to expand", "ctrl+o to expand" 等) は常時 last_line に出るため、
-#   PANE_TAIL から footer 行を除外して last_non_footer_line を取得し、その上で照合する。
-#   照合自体の regex (`│ > 非空 │` パターン) は原状維持 (新規仕様増設禁、CANON 原状+最小適応原則順守)。
+# β改修 cycle5 (CANON 残 regression #1 Layer D, α堅牢版):
+#   従来 last_non_footer_line は「footer 除外後の最下位行」を取るが、
+#   active pane で output 流入中は input 行 (❯ ...) が範囲内のどこに居るか不定で、
+#   ★output 末尾文字列が拾われ label_match=0 → 自動 send-keys 不発★ となる現象 (実機 12/12 cycle)。
+#   対策: ★prompt 行自体を PANE_TAIL 全体から grep 探索★ (旧 `│ > xxx │` / 新 `^❯ xxx`)
+#   tail -1 で最下位 prompt 行を取得。output 流入で押し上がっても prompt 行を確実に捕捉。
+#   既存 footer 除外 + NBSP 正規化はそのまま、PROMPT 行探索が cycle3 の last_non_footer_line を代替。
 LABEL_MATCH=0
 LABEL_REASON=""
 FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts|[0-9]+% context used|^─+[[:space:]]*$'
+PROMPT_LINE_PATTERN='^[[:space:]]*❯|│[[:space:]]*>'
 if [ -n "$PANE_TAIL" ]; then
     LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
-    LAST_NON_FOOTER_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
+    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -E "$PROMPT_LINE_PATTERN" | tail -1)
     log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
-    log "last_non_footer_line (base64): $(printf '%s' "$LAST_NON_FOOTER_LINE" | base64 -w0)"
-    # β改修 cycle3 (CANON 残 regression #1 Layer B):
-    #   Claude Code TUI prompt 形式が `│ > xxx │` (旧) → `❯ xxx` (新、上下 ──── ボーダー間) に進化。
-    #   旧形式 regex 単独では新 UI 下で永続 NO MATCH → production 自動発火不能。
-    #   旧 OR 新 OR 規格で照合、empty 判定も同様に拡張。CANON 原状追随 + 最小適応原則順守。
-    if printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'; then
-        LABEL_MATCH=1
-        LABEL_REASON="claude_ui_with_nonempty_input_buffer"
-    elif printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]*│?[[:space:]]*$|^[[:space:]]*❯[[:space:]]*$'; then
-        LABEL_REASON="claude_ui_empty_input_buffer"
+    log "prompt_line (base64): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
+    if [ -n "$PROMPT_LINE" ]; then
+        # β改修 cycle3 (CANON 残 regression #1 Layer B):
+        #   Claude Code TUI prompt 形式が `│ > xxx │` (旧) → `❯ xxx` (新、上下 ──── ボーダー間) に進化。
+        if printf '%s' "$PROMPT_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'; then
+            LABEL_MATCH=1
+            LABEL_REASON="claude_ui_with_nonempty_input_buffer"
+        elif printf '%s' "$PROMPT_LINE" | grep -qE '│[[:space:]]*>[[:space:]]*│?[[:space:]]*$|^[[:space:]]*❯[[:space:]]*$'; then
+            LABEL_REASON="claude_ui_empty_input_buffer"
+        else
+            LABEL_REASON="prompt_line_unclassifiable"
+        fi
     else
-        LABEL_REASON="no_claude_ui_prompt_in_last_non_footer_line"
+        LABEL_REASON="no_claude_ui_prompt_in_pane_tail"
     fi
 else
     LABEL_REASON="empty_pane_tail"
