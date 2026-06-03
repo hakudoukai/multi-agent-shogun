@@ -6,6 +6,8 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 WorkingDirectory=%h
+# ★second_pc は /usr/bin/doppler だが PATH を明示し両 PC 共通フォーマット (副院長令 baabd1ca 横展開)★
+Environment=PATH=%h/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # ExecStartPre で log dir を保証 (cycle3 B2 同型対策)
 ExecStartPre=/bin/mkdir -p %h/.local/share/enter_restart_shogun_second
 ExecStart=/bin/bash %h/projects/multi-agent-shogun-newbuild/scripts/watchdogs/enter_restart_shogun_second_watchdog.sh
