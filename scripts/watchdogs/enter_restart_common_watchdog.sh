@@ -180,16 +180,20 @@ fi
 #   照合自体の regex (`│ > 非空 │` パターン) は原状維持 (新規仕様増設禁、CANON 原状+最小適応原則順守)。
 LABEL_MATCH=0
 LABEL_REASON=""
-FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts'
+FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts|[0-9]+% context used|^─+[[:space:]]*$'
 if [ -n "$PANE_TAIL" ]; then
     LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
     LAST_NON_FOOTER_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
     log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
     log "last_non_footer_line (base64): $(printf '%s' "$LAST_NON_FOOTER_LINE" | base64 -w0)"
-    if printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]'; then
+    # β改修 cycle3 (CANON 残 regression #1 Layer B):
+    #   Claude Code TUI prompt 形式が `│ > xxx │` (旧) → `❯ xxx` (新、上下 ──── ボーダー間) に進化。
+    #   旧形式 regex 単独では新 UI 下で永続 NO MATCH → production 自動発火不能。
+    #   旧 OR 新 OR 規格で照合、empty 判定も同様に拡張。CANON 原状追随 + 最小適応原則順守。
+    if printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'; then
         LABEL_MATCH=1
         LABEL_REASON="claude_ui_with_nonempty_input_buffer"
-    elif printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]*│?[[:space:]]*$'; then
+    elif printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]*│?[[:space:]]*$|^[[:space:]]*❯[[:space:]]*$'; then
         LABEL_REASON="claude_ui_empty_input_buffer"
     else
         LABEL_REASON="no_claude_ui_prompt_in_last_non_footer_line"

@@ -28,8 +28,10 @@ if [ -z "$FOOTER_PATTERN" ]; then
     echo "ERROR: FOOTER_PATTERN extract failed (watchdog 本体に定義無し or 形式変更)" >&2
     exit 1
 fi
-NONEMPTY_RE='│[[:space:]]*>[[:space:]]+[^[:space:]│]'
-EMPTY_RE='│[[:space:]]*>[[:space:]]*│?[[:space:]]*$'
+# β改修 cycle3 (CANON 残 regression #1 Layer B):
+#   Claude Code TUI prompt 形式 旧 `│ > xxx │` + 新 `❯ xxx` (上下 ──── ボーダー間) を OR 受理。
+NONEMPTY_RE='│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'
+EMPTY_RE='│[[:space:]]*>[[:space:]]*│?[[:space:]]*$|^[[:space:]]*❯[[:space:]]*$'
 
 PASS=0
 FAIL=0
@@ -133,6 +135,42 @@ run_case "C08" \
 esc to interrupt
 shift+tab to cycle" \
     "no_content"
+
+# === β改修 cycle3 追加 (CANON 残 regression #1 Layer B): 新 Claude TUI 形式 ❯ + context status 行 ===
+
+# C09: 新形式 (上下 ──── ボーダー + 中央 ❯ 非空) + 末尾 context status footer → match_nonempty
+#      = 現実観測した commander pane の状況 (cycle3 patch 後 fire 期待)
+run_case "C09" \
+    "新形式 ❯ 非空 buffer + 上下 ──── + 末尾 100% context used → match_nonempty (cycle3 核心)" \
+    "────────────────────────────────────────────────
+❯ hello world
+────────────────────────────────────────────────
+                                             100% context used" \
+    "match_nonempty"
+
+# C10: 新形式 (上下 ──── ボーダー + 中央 ❯ 空) + 末尾 context status → match_empty (fire しない)
+run_case "C10" \
+    "新形式 ❯ 空 buffer + 末尾 99% context used → match_empty" \
+    "────────────────────────────────────────────────
+❯
+────────────────────────────────────────────────
+                                             99% context used" \
+    "match_empty"
+
+# C11: 新形式と旧形式 mixed (実環境では発生しないが OR ロジック健全性確認)
+run_case "C11" \
+    "新+旧 mixed (旧 last_non_footer) → 旧 regex で match_nonempty" \
+    "❯ early input
+│ > later legacy input │
+⏵⏵ bypass permissions on" \
+    "match_nonempty"
+
+# C12: context status 行のみ + 直前に非空 input buffer (footer 漏れ verify)
+run_case "C12" \
+    "末尾 [N]% context used 単独 footer + 直前新形式 ❯ 非空 → match_nonempty (status 行除外確認)" \
+    "❯ ok
+                                             87% context used" \
+    "match_nonempty"
 
 echo "----"
 echo "RESULT: PASS=$PASS FAIL=$FAIL TOTAL=$((PASS + FAIL))"
