@@ -70,7 +70,7 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 | Batch Processing Protocol | [docs/03-workflows/batch-processing.md](docs/03-workflows/batch-processing.md) |
 | Destructive Operation Safety | [docs/08-ops/destructive-ops.md](docs/08-ops/destructive-ops.md) |
 | Watcher Design Principles | [docs/01-architecture/watcher-design.md](docs/01-architecture/watcher-design.md) |
-| §18 PC × アカウント × エージェント配置 | [docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) ★起動時必読★ |
+| §18 Claude/ChatGPT アカウント運用 (ccflare v3.8 整合) | [docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) ★起動時必読★ |
 | §19 Post-Incident Lessons Capture | [docs/03-workflows/post-incident-lessons.md](docs/03-workflows/post-incident-lessons.md) + [skills/lessons-to-skill/SKILL.md](skills/lessons-to-skill/SKILL.md) |
 | FKI-SECOND-PC-SINGLE-DISTRO-01 | `project_documents id=8d6e579c` (DD-157 補遺 v1.2) + memory `FKI-SECOND-PC-SINGLE-DISTRO-01` |
 | FKI-CANON-GUARDIAN-01 | [docs/05-charter/canon-guardian.md](docs/05-charter/canon-guardian.md) |
@@ -352,11 +352,11 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 
 詳細 (チェックリスト + 過去事故): [docs/01-architecture/watcher-design.md](docs/01-architecture/watcher-design.md) 移設実体参照。過去事故 = [docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md)。
 
-# §18. PC × アカウント × エージェント配置ルール (理事長直接指示 — 2026-05-06、副院長令 35bf1cea 25fc981d 安全核復帰 2026-06-04)
+# §18. Claude/ChatGPT アカウント運用ルール (理事長直接指示 — 2026-05-06、副院長令 695293a5 ccflare 正本 v3.8 整合書換 2026-06-04)
 
-**【安全核】PCごと別アカウント・quota完全分離。1アカウントに大量エージェント集約=quota共食いで暴走∴禁。MainPC=sasebo@sasebo.or.jp / SecondPC=hakudoukai@gmail.com。違反 A001-A006 = Tier 1 ABSOLUTE。★起動前必読★ → 詳細正本=[docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) (単一正本・二重防止)。過去事故=[docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md) (SecondPC 26分38% quota 共食い暴走)。**
+**【安全核・枠】Claude=ccflareで2契約(sasebo系/hakudoukai系)を集中管理しpriority+auto-fallbackで分配。1PC/paneへ負荷集中→共食い暴走∴禁(2026-05-05事故)。account追加/priority/fallback/経路変更は勝手にするな=副院長承認必須(DD-164)。ChatGPT系(codex/Hermes)=1PC/1プロセス/1契約厳守(v3.7)。正本→ccflare構成v3.7(project_documents 59a1b69b)+[docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md)**
 
-詳細 (§18.1 配置表 + §18.2 厳守事項 6 ID + §18.3 起動前チェック + §18.4 quota 監視 + §18.5 クロス PC 通信 + §18.6 起動順序 + §18.7 違反対応 + §18.8 関連ルール + §18.9 改訂責務): 上記正本参照。
+詳細 (§18.1 配置表 + §18.2 厳守事項 + §18.3 起動前チェック + §18.4 quota 監視 + §18.5 クロス PC 通信 + §18.6 起動順序 + §18.7 違反対応 + §18.8 関連ルール + §18.9 改訂責務): 上記正本参照。過去事故=[docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md) (SecondPC 26分38% 共食い暴走 — 防止策=ccflare 集中 refresh + priority/auto-fallback + 1PC/pane 負荷集中禁。★「PCごと別アカウント完全分離」=ccflare 導入前の旧モデル、v3.8 で誤りと確定★)。
 
 # §19. Post-Incident Lessons Capture (mandatory) — 理事長殿御指示 2026-05-07
 
