@@ -137,6 +137,15 @@
 !scripts/setup_known_hosts.sh
 !scripts/karo_overload_monitor.sh
 
+# Box CCG App + 3PC 視覚環境 (副院長裁定 4728acd7、2026-06-04)
+!scripts/box_setup.sh
+!scripts/box_get_carte_pdfs.sh
+!scripts/box_scope_verify.sh
+!scripts/box_pdf_to_png.sh
+!scripts/visual_env_setup.sh
+!scripts/visual_smoke.sh
+!scripts/screen_verify.py
+
 # Pre-action check scripts (§19 Post-Incident Lessons Capture)
 !scripts/checks/
 !scripts/checks/*.sh
