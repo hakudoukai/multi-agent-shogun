@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>3PC visual smoke fixture (DD-170 L1 / 副院長令 adc90399+ad21b690)</title>
+<style>
+  /* canon font = NotoSansJP-VF (副院長令 ad21b690 main_pc を canon base に 3PC 統一) */
+  body {
+    font-family: 'Noto Sans JP', 'NotoSansJP-VF', sans-serif;
+    margin: 20px;
+    background: #fff;
+    color: #222;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 22px; margin-top: 0; }
+  h2 { font-size: 18px; margin-top: 16px; }
+  table { border-collapse: collapse; width: 700px; margin-top: 8px; }
+  th, td { border: 1px solid #333; padding: 6px 10px; text-align: left; }
+  th { background: #eef; font-weight: 700; }
+  .meta { color: #666; font-size: 12px; margin-top: 4px; }
+  .grid {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    gap: 4px;
+    width: 320px;
+    margin-top: 8px;
+    font-family: monospace;
+    font-size: 13px;
+  }
+  .grid > div { border: 1px solid #999; padding: 4px; text-align: center; background: #fafafa; }
+</style>
+</head>
+<body>
+<h1>3PC visual smoke fixture (DD-170 L1)</h1>
+<p class="meta">副院長令 adc90399 + ad21b690 — main_pc canon base に second/third pixel 一致実証用</p>
+
+<h2>日本語テキスト (Noto Sans JP 検出)</h2>
+<p>主訴: 右下奥歯がしみる。SOAP記録: O = 6 C(5触) 確定 C_CR / 76 P(歯周病) 確定 P_SRP_LL。</p>
+<p>処置自動転記: 義歯調整・口腔機能精密検査・歯科疾患管理(継続)・聖隷式嚥下質問紙。</p>
+
+<h2>歯式 (monospace、metrics 差分検出)</h2>
+<div class="grid">
+  <div>8</div><div>7</div><div>6</div>
+  <div>5</div><div>4</div><div>3</div>
+  <div>2</div><div>1</div><div>|</div>
+</div>
+
+<h2>表 (border + 文字 + 数字)</h2>
+<table>
+  <tr><th>項目</th><th>値</th><th>備考</th></tr>
+  <tr><td>S (subjective)</td><td>主訴</td><td>口腔内疼痛</td></tr>
+  <tr><td>O (objective)</td><td>視診/打診</td><td>6番 動揺度 0</td></tr>
+  <tr><td>A (assessment)</td><td>確定診断</td><td>C2 (中位齲蝕)</td></tr>
+  <tr><td>P (plan)</td><td>修復処置</td><td>C_CR (コンポジットレジン)</td></tr>
+</table>
+
+<p class="meta">fixture id = adc90399-ad21b690 / canon font = NotoSansJP-VF / viewport target = 1280x800</p>
+</body>
+</html>

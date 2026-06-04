@@ -146,6 +146,10 @@
 !scripts/visual_smoke.sh
 !scripts/screen_verify.py
 
+# 3PC pixel 一致 smoke fixture (副院長令 adc90399 + ad21b690、tests/visual 配下)
+!tests/visual/
+!tests/visual/*.html
+
 # Pre-action check scripts (§19 Post-Incident Lessons Capture)
 !scripts/checks/
 !scripts/checks/*.sh
