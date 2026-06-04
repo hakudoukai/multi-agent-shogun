@@ -220,8 +220,12 @@ fi
 # ─── 5. SecondPC inbox 滞留 ───
 if ssh "${SECONDPC_SSH_OPTS[@]}" hakudokai@192.168.11.47 'true' 2>/dev/null; then
     for a in ashigaru5 ashigaru6 ashigaru7; do
+        # anchored regex: PyYAML sequence-item 2-space indent YAML key のみ match。
+        # quoted content 内 literal substring の false positive を排除 (sibling of f724fe9)。
+        # SSH 内側 shell で grep 評価ゆえ `\$` で local 展開を抑止、SecondPC 側 grep に
+        # literal `^  read: false$` を渡す。
         n=$(ssh "${SECONDPC_SSH_OPTS[@]}" hakudokai@192.168.11.47 \
-            "grep -c 'read: false' ~/projects/multi-agent-shogun/queue/inbox/${a}.yaml 2>/dev/null || echo 0" 2>/dev/null)
+            "grep -cE '^  read: false\$' ~/projects/multi-agent-shogun/queue/inbox/${a}.yaml 2>/dev/null || echo 0" 2>/dev/null)
         n=${n%%[^0-9]*}
         if [ "${n:-0}" -gt 10 ]; then
             ALERTS+=("ERR-INBOX-OVERFLOW: SecondPC ${a} unread=${n}")
