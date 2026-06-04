@@ -139,8 +139,14 @@ fi
 # ★副院長令 b0bdfa67 (P0): S1 high 根治 (Codex fix_suggestion 準拠)★
 # 旧版は ${FROM_PC_FILTER} を URL 文字列に直接展開 → URL injection の余地。
 # urllib.parse.urlencode で query 構築 + os.environ 経由値取得。
-ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" \
-LAST_INFO=$(doppler run --project openhands --config dev -- \
+#
+# ★Codex 再監査 (b0bdfa67 cycle2) B1/T1 high 根治: env propagation 順序修正★
+# 旧版 `ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" LAST_INFO=$(...)` は両方が
+# assignment-only simple command ゆえ bash 評価順で subshell の doppler に
+# env が伝播しない (= LAST_INFO は subshell の中で from_pc_filter='' となり
+# runtime breakage)。Step 0/7/8 と同形 (env prefix が doppler という command に
+# 直接付く形) になるよう、command substitution の括弧の中で env を渡す。
+LAST_INFO=$(ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" doppler run --project openhands --config dev -- \
   "$ER_PYTHON3_BIN" - <<'PYEOF'
 import os, json, urllib.request, urllib.parse
 from datetime import datetime, timezone

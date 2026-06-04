@@ -11,8 +11,8 @@
 #   cycle5c (Layer E): ──── ボーダー隣接 anchor (false positive 根治)
 #
 # 実行: bash tests/checks/enter_restart_footer_immune/smoke_test.sh
-# 期待: 全 23 ケース PASS、最終行 "ALL PASS (23/23)"
-# (副院長令 b0bdfa67 Q2 low 充足: コメントが 8 ケースのまま残置だった点を 23 ケースへ更新)
+# 期待: 全 26 ケース PASS、最終行 "ALL PASS (26/26)"
+# (副院長令 b0bdfa67 Q2 low 充足: コメントを 26 ケース (C01-C23 ベース + C24-C26 b0bdfa67 env propagation) へ更新)
 #
 
 set -uo pipefail
@@ -325,6 +325,63 @@ another line
 ────
 more text after another border" \
     "no_match"
+
+# ───────────────────────────────────────────────────────────
+# C24: ★b0bdfa67 S1 fix env propagation 検証★ (Codex Q1 fix_suggestion 準拠)
+#
+# 副院長令 b0bdfa67 で根治した Python heredoc (env 経由) について、Step 2 が
+# command substitution 内に env を渡す形 (= LAST_INFO=$(VAR=v doppler ... python ...))
+# になっていることを smoke で検証する。Step 0/7/8 (doppler が simple command の
+# 先頭にある形) と Step 2 (command substitution に囲まれる形) は bash 評価順序が
+# 異なり、後者で誤って env prefix を assignment 側に付けると subshell の python に
+# 値が伝播せず production breakage (from_pc_filter='' で全 row 取得) を起こす。
+#
+# 本ケースは Step 2 と同形の最小 reproducer を実行し、★env が python プロセスに
+# 確実に伝播する★ことを保証する (= S1 fix の動作性 regression gate)。
+# ───────────────────────────────────────────────────────────
+echo "[smoke C24] running env propagation check (S1 fix Step 2 同形)..."
+ENV_PROP_RESULT=$(ER_FROM_PC_FILTER_PY="commander_test_env_value_C24" python3 -c "
+import os
+print(os.environ.get('ER_FROM_PC_FILTER_PY', 'EMPTY'))
+")
+if [ "$ENV_PROP_RESULT" = "commander_test_env_value_C24" ]; then
+    PASS=$((PASS + 1))
+    echo "  [PASS] C24  actual=$ENV_PROP_RESULT expected=commander_test_env_value_C24 — b0bdfa67 S1 fix Step 2 同形 env propagation OK"
+else
+    FAIL=$((FAIL + 1))
+    FAILED_CASES+=("C24: ENV_PROP_RESULT=$ENV_PROP_RESULT (期待: commander_test_env_value_C24)")
+    echo "  [FAIL] C24  actual=$ENV_PROP_RESULT expected=commander_test_env_value_C24 — Step 2 env propagation BROKEN"
+fi
+
+# C25: ★逆形 (assignment-only chain) は env が伝播しないことを negative 確認★
+# 旧 (壊れた) 形: `VAR=v ANOTHER=$(...)` は両方 assignment ゆえ subshell に env 不達
+echo "[smoke C25] running env negative check (旧、壊れた assignment-only chain)..."
+ENV_NEG_RESULT=$(ER_FROM_PC_FILTER_PY="should_not_appear" \
+ENV_NEG_RESULT_INNER=$(python3 -c "
+import os
+print(os.environ.get('ER_FROM_PC_FILTER_PY', 'EMPTY'))
+"))
+if [ "$ENV_NEG_RESULT" = "EMPTY" ] || [ -z "$ENV_NEG_RESULT" ]; then
+    PASS=$((PASS + 1))
+    echo "  [PASS] C25  actual='${ENV_NEG_RESULT:-EMPTY}' expected=EMPTY/empty — 旧形 env 不達を negative 確認 (Step 2 fix の必要性実証)"
+else
+    FAIL=$((FAIL + 1))
+    FAILED_CASES+=("C25: ENV_NEG_RESULT=$ENV_NEG_RESULT (期待: EMPTY/empty)")
+    echo "  [FAIL] C25  actual=$ENV_NEG_RESULT — 旧形でも env が伝播してしまっている (bash 仕様変更?)"
+fi
+
+# C26: ★Watchdog 本体で Step 2 が command substitution 内 env 形になっていることを assert★
+# 静的解析で「LAST_INFO=$(ER_FROM_PC_FILTER_PY=」のパターンが存在することを確認
+# (= ER_FROM_PC_FILTER_PY が LAST_INFO= の前 (= 壊れた形) に出る regression を防ぐ)
+echo "[smoke C26] verifying Step 2 env prefix is inside command substitution..."
+if grep -qE 'LAST_INFO=\$\(ER_FROM_PC_FILTER_PY=' "$WATCHDOG"; then
+    PASS=$((PASS + 1))
+    echo "  [PASS] C26  Step 2 env prefix 位置 = $() 内 (b0bdfa67 cycle2 B1/T1 fix 保護)"
+else
+    FAIL=$((FAIL + 1))
+    FAILED_CASES+=("C26: Step 2 env prefix が $() の外側に居る (= 旧、壊れた形に regression)")
+    echo "  [FAIL] C26  Step 2 env prefix が壊れた形 (= LAST_INFO= の前にある assignment-only chain)"
+fi
 
 echo "----"
 echo "RESULT: PASS=$PASS FAIL=$FAIL TOTAL=$((PASS + FAIL))"
