@@ -164,6 +164,9 @@
 !scripts/validate_cross_pc_directive.py
 !scripts/test_validate_cross_pc_directive.py
 
+# enter-restart watchdog (= 3PC relay 恒久化、scp 直上書き廃止→git 追跡化、CANON-SHOGUN-COMMS-RESTORE-01 / 副院長令 c04130e4)
+!scripts/watchdogs/enter_restart_common_watchdog.sh
+
 # cmd_020 Stage 2 dashboard generator (= karo-owned systemd service writes dashboard.md)
 !scripts/regenerate_dashboard.py
 !tests/test_regenerate_dashboard.py
