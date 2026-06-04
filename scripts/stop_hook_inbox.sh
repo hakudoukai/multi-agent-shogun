@@ -70,7 +70,11 @@ if [ "$STOP_HOOK_ACTIVE" = "True" ]; then
             --timeout 10 \
             "${WATCH_TARGETS_ACTIVE[@]}" 2>/dev/null || true
     fi
-    UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
+    # Anchored to 2-space indent YAML key (sequence item field).
+    # Unanchored 'read: false' produced false positives when message content
+    # contained the literal substring (e.g. quoted grep output in a3-3 status
+    # report). karo-third 実機 verify 2026-06-04: phantom block loop の真因。
+    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
     if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
         exit 0
     fi
@@ -113,8 +117,11 @@ if [ ! -f "$INBOX" ]; then
     exit 0
 fi
 
-# Count unread messages using grep (fast, no python dependency)
-UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
+# Count unread messages using grep (fast, no python dependency).
+# Anchored to 2-space indent YAML key (sequence item field) to avoid
+# false positives from literal 'read: false' substring inside quoted
+# message content (karo-third 2026-06-04 phantom block loop 真因)。
+UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
 
 # Mass-unread guard (2026-05-07 真因対策):
 # 大量未読 (>5件) で block すると claude が turn 内で大量処理を試み、
@@ -146,8 +153,8 @@ if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
         # inotifywait not available: fall through to exit 0
         :
     fi
-    # 待機後に再チェック
-    UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
+    # 待機後に再チェック (anchored: 2-space indent YAML key only)
+    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
     if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
         exit 0
     fi
