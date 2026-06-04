@@ -79,6 +79,7 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 | Error Design & Observability | [docs/error-design-medical.md](docs/error-design-medical.md) |
 | Runbook ERR-EKARTE-001 | [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) |
 | §17 他院展開・リモートメンテナンス | [docs/clinic-expansion-design.md](docs/clinic-expansion-design.md) |
+| DentalBI 開発資料保管場所 (Win Documents、git 管理外) | `C:\Users\User\Documents\DentalBI\` (WSL: `/mnt/c/Users/User/Documents/DentalBI/`) — 正本 `project_documents id=0a640b68` ★資料探索時必ず確認★ (副院長令 923af3c6、2026-06-04) |
 
 # Procedures
 
