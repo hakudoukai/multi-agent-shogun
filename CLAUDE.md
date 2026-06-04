@@ -352,11 +352,11 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 
 詳細 (チェックリスト + 過去事故): [docs/01-architecture/watcher-design.md](docs/01-architecture/watcher-design.md) 移設実体参照。過去事故 = [docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md)。
 
-# §18. PC × アカウント × エージェント配置ルール (理事長直接指示 — 2026-05-06)
+# §18. PC × アカウント × エージェント配置ルール (理事長直接指示 — 2026-05-06、副院長令 35bf1cea 25fc981d 安全核復帰 2026-06-04)
 
-**原則: PC ごとに別アカウントを使い、quota を完全分離する。MainPC=sasebo@sasebo.or.jp / SecondPC=hakudoukai@gmail.com。違反 A001-A006 = Tier 1 ABSOLUTE。★起動前に必ず本ルール本体を読み、配置・アカウントを確認すること★。**
+**【安全核】PCごと別アカウント・quota完全分離。1アカウントに大量エージェント集約=quota共食いで暴走∴禁。MainPC=sasebo@sasebo.or.jp / SecondPC=hakudoukai@gmail.com。違反 A001-A006 = Tier 1 ABSOLUTE。★起動前必読★ → 詳細正本=[docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) (単一正本・二重防止)。過去事故=[docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md) (SecondPC 26分38% quota 共食い暴走)。**
 
-詳細 (§18.1 配置表 + §18.2 厳守事項 6 ID + §18.3 起動前チェック + §18.4 quota 監視 + §18.5 クロス PC 通信 + §18.6 起動順序 + §18.7 違反対応 + §18.8 関連ルール + §18.9 改訂責務): [docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) 移設実体参照。過去事故 = [docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md)。
+詳細 (§18.1 配置表 + §18.2 厳守事項 6 ID + §18.3 起動前チェック + §18.4 quota 監視 + §18.5 クロス PC 通信 + §18.6 起動順序 + §18.7 違反対応 + §18.8 関連ルール + §18.9 改訂責務): 上記正本参照。
 
 # §19. Post-Incident Lessons Capture (mandatory) — 理事長殿御指示 2026-05-07
 
