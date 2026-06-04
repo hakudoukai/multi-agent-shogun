@@ -122,13 +122,21 @@ update_settings_yaml() {
 
     log "Updating settings.yaml: ${agent_id} → type=${new_type:-<unchanged>}, model=${new_model:-<unchanged>}"
 
-    "${PROJECT_ROOT}/.venv/bin/python3" << PYEOF
+    # ★副院長令 b0bdfa67 (P0): S1 high 横展開根治★
+    # 旧版は heredoc unquoted で ${SETTINGS_FILE}/${agent_id}/${new_type}/${new_model} を
+    # Python ソースへ展開 → Python コード注入の余地 (enter_restart_common_watchdog.sh
+    # S1 と同型構造)。heredoc <<'PYEOF' quoted + 環境変数経由で根治。
+    SC_SETTINGS_FILE_PY="$SETTINGS_FILE" \
+    SC_AGENT_ID_PY="$agent_id" \
+    SC_NEW_TYPE_PY="$new_type" \
+    SC_NEW_MODEL_PY="$new_model" \
+    "${PROJECT_ROOT}/.venv/bin/python3" <<'PYEOF'
 import yaml, sys, os, datetime
 
-settings_path = "${SETTINGS_FILE}"
-agent_id = "${agent_id}"
-new_type = "${new_type}" or None
-new_model = "${new_model}" or None
+settings_path = os.environ['SC_SETTINGS_FILE_PY']
+agent_id = os.environ['SC_AGENT_ID_PY']
+new_type = os.environ.get('SC_NEW_TYPE_PY') or None
+new_model = os.environ.get('SC_NEW_MODEL_PY') or None
 
 with open(settings_path, 'r', encoding='utf-8') as f:
     content = f.read()

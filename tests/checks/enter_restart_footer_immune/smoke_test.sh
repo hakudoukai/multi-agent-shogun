@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 #
-# enter_restart_common_watchdog.sh β改修 footer 耐性 smoke test
-# (CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1 = footer 常時 last_line 占有問題への最小 patch 検証)
+# enter_restart_common_watchdog.sh β改修 footer 耐性 + cycle1-5c 累積 regression smoke test
+# (CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1 系列の累積 regression gate)
 #
-# 検証対象 (Step 5 抜粋, 改修箇所):
-#   FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|? for shortcuts'
-#   LAST_NON_FOOTER_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
-#   if printf '%s' "$LAST_NON_FOOTER_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]'; then LABEL_MATCH=1; fi
+# cycle 履歴 (= 本 smoke の coverage):
+#   cycle1  (Layer A): footer 常時 last_line 占有問題 → FOOTER_PATTERN 除外
+#   cycle3  (Layer B): label 形式 UI 進化追随 (旧 `│ > xxx │` + 新 `❯ xxx`)
+#   cycle4  (Layer C): NBSP 正規化 (TUI が ASCII space を U+00A0 に変換する case)
+#   cycle5  (Layer D): capture 窓拡張 -10→-50 + PROMPT 行探索 (output 流入 race)
+#   cycle5c (Layer E): ──── ボーダー隣接 anchor (false positive 根治)
 #
 # 実行: bash tests/checks/enter_restart_footer_immune/smoke_test.sh
-# 期待: 全 8 ケース PASS、最終行 "ALL PASS (8/8)"
+# 期待: 全 23 ケース PASS、最終行 "ALL PASS (23/23)"
+# (副院長令 b0bdfa67 Q2 low 充足: コメントが 8 ケースのまま残置だった点を 23 ケースへ更新)
 #
 
 set -uo pipefail

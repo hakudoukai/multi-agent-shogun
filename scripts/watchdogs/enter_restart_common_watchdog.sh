@@ -87,19 +87,35 @@ fi
 log "fire cap check: recent_fires_in_${FIRE_CAP_WINDOW_MIN}min=${RECENT_FIRES} cap=${FIRE_CAP_COUNT}"
 if [ "$RECENT_FIRES" -ge "$FIRE_CAP_COUNT" ]; then
     log "★HALT★ fire cap exceeded (${RECENT_FIRES} >= ${FIRE_CAP_COUNT}) in last ${FIRE_CAP_WINDOW_MIN}min — skip cycle"
+    # ★副院長令 b0bdfa67 (P0): S1 high (Codex implementation-scope audit 15ff8ff0) 根治★
+    # 旧版は heredoc unquoted で ${EVENT_TYPE} 等を bash 展開して Python ソースに混入
+    # → wrapper envvar override 経路から Python コード注入の余地。
+    # 構造修正: heredoc <<'PYEOF' (quoted = bash expansion 無効) + 環境変数経由 (os.environ)
+    # + json.dumps (string→Python literal は json で安全) で literal interpolation を断つ。
+    # (= homework#1 audit_gemini.sh と同型根治、FKI-DEV-ROOT-CURE-FIRST 順守)
+    ER_EVENT_TYPE_PY="$EVENT_TYPE" \
+    ER_RECENT_FIRES_PY="$RECENT_FIRES" \
+    ER_FIRE_CAP_COUNT_PY="$FIRE_CAP_COUNT" \
+    ER_FIRE_CAP_WINDOW_MIN_PY="$FIRE_CAP_WINDOW_MIN" \
+    ER_TARGET_PC_PY="$ER_TARGET_PC" \
     doppler run --project openhands --config dev -- \
-      "$ER_PYTHON3_BIN" - << PYEOF || true
+      "$ER_PYTHON3_BIN" - <<'PYEOF' || true
 import os, json, urllib.request
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/shireiko_audit_log'
+event_type = os.environ.get('ER_EVENT_TYPE_PY', '')
+recent_fires = os.environ.get('ER_RECENT_FIRES_PY', '')
+fire_cap_count = os.environ.get('ER_FIRE_CAP_COUNT_PY', '')
+fire_cap_window_min = os.environ.get('ER_FIRE_CAP_WINDOW_MIN_PY', '')
+target_pc = os.environ.get('ER_TARGET_PC_PY', '')
 payload = {
-    "event_type": "${EVENT_TYPE}",
-    "detail": "Fire cap exceeded (${RECENT_FIRES} >= ${FIRE_CAP_COUNT}) in last ${FIRE_CAP_WINDOW_MIN}min. Skipping cycle.",
+    "event_type": event_type,
+    "detail": f"Fire cap exceeded ({recent_fires} >= {fire_cap_count}) in last {fire_cap_window_min}min. Skipping cycle.",
     "judgment_level": 2,
     "action_taken": "halted",
     "result": "escalated",
     "engine": "enter_restart",
-    "target_pc": "${ER_TARGET_PC}",
+    "target_pc": target_pc,
 }
 req = urllib.request.Request(url, method='POST', data=json.dumps(payload).encode(),
     headers={'apikey':key,'Authorization':f'Bearer {key}','Content-Type':'application/json'})
@@ -120,12 +136,24 @@ if ! tmux display-message -t "$PANE_TARGET" -p '#{pane_id}' >/dev/null 2>&1; the
 fi
 
 # Step 2: Supabase で最終投函取得 (idle 判定)
+# ★副院長令 b0bdfa67 (P0): S1 high 根治 (Codex fix_suggestion 準拠)★
+# 旧版は ${FROM_PC_FILTER} を URL 文字列に直接展開 → URL injection の余地。
+# urllib.parse.urlencode で query 構築 + os.environ 経由値取得。
+ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" \
 LAST_INFO=$(doppler run --project openhands --config dev -- \
-  "$ER_PYTHON3_BIN" - << PYEOF
-import os, json, urllib.request
+  "$ER_PYTHON3_BIN" - <<'PYEOF'
+import os, json, urllib.request, urllib.parse
 from datetime import datetime, timezone
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
-url = os.environ['SUPABASE_URL'] + "/rest/v1/pc_handshake?from_pc=eq.${FROM_PC_FILTER}&select=created_at,topic&order=created_at.desc&limit=1"
+base = os.environ['SUPABASE_URL'] + '/rest/v1/pc_handshake'
+from_pc_filter = os.environ.get('ER_FROM_PC_FILTER_PY', '')
+query = urllib.parse.urlencode({
+    'from_pc': f'eq.{from_pc_filter}',
+    'select': 'created_at,topic',
+    'order': 'created_at.desc',
+    'limit': '1',
+})
+url = base + '?' + query
 req = urllib.request.Request(url, headers={'apikey':key,'Authorization':f'Bearer {key}'})
 try:
     with urllib.request.urlopen(req, timeout=15) as r:
@@ -266,19 +294,38 @@ case "$RESULT" in
     halted)   SHIREIKO_RESULT="escalated" ;;
     *)        SHIREIKO_RESULT="detected_only" ;;
 esac
+# ★副院長令 b0bdfa67 (P0): S1 high 根治 (Step 7 shireiko_audit_log INSERT)★
+# heredoc <<'PYEOF' quoted + 環境変数経由で全 bash 値を Python へ渡す。
+# 全文字列は json.dumps で安全に literal 化、Python source injection 不能。
+ER_EVENT_TYPE_PY="$EVENT_TYPE" \
+ER_ROLE_NAME_PY="$ROLE_NAME" \
+ER_ELAPSED_MIN_PY="$ELAPSED_MIN" \
+ER_THRESHOLD_MIN_PY="$THRESHOLD_MIN" \
+ER_DETAIL_EXTRA_PY="$DETAIL_EXTRA" \
+ER_ACTION_PY="$ACTION" \
+ER_SHIREIKO_RESULT_PY="$SHIREIKO_RESULT" \
+ER_TARGET_PC_PY="$ER_TARGET_PC" \
 doppler run --project openhands --config dev -- \
-  "$ER_PYTHON3_BIN" - << PYEOF || true
+  "$ER_PYTHON3_BIN" - <<'PYEOF' || true
 import os, json, urllib.request
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/shireiko_audit_log'
+event_type = os.environ.get('ER_EVENT_TYPE_PY', '')
+role_name = os.environ.get('ER_ROLE_NAME_PY', '')
+elapsed_min = os.environ.get('ER_ELAPSED_MIN_PY', '')
+threshold_min = os.environ.get('ER_THRESHOLD_MIN_PY', '')
+detail_extra = os.environ.get('ER_DETAIL_EXTRA_PY', '')
+action = os.environ.get('ER_ACTION_PY', '')
+shireiko_result = os.environ.get('ER_SHIREIKO_RESULT_PY', '')
+target_pc = os.environ.get('ER_TARGET_PC_PY', '')
 payload = {
-    "event_type": "${EVENT_TYPE}",
-    "detail": "${ROLE_NAME} last handshake ${ELAPSED_MIN}min ago (threshold ${THRESHOLD_MIN}min). ${DETAIL_EXTRA}",
+    "event_type": event_type,
+    "detail": f"{role_name} last handshake {elapsed_min}min ago (threshold {threshold_min}min). {detail_extra}",
     "judgment_level": 2,
-    "action_taken": "${ACTION}",
-    "result": "${SHIREIKO_RESULT}",
+    "action_taken": action,
+    "result": shireiko_result,
     "engine": "enter_restart",
-    "target_pc": "${ER_TARGET_PC}",
+    "target_pc": target_pc,
 }
 req = urllib.request.Request(url, method='POST', data=json.dumps(payload).encode(),
     headers={'apikey':key,'Authorization':f'Bearer {key}','Content-Type':'application/json'})
@@ -287,22 +334,42 @@ with urllib.request.urlopen(req, timeout=10) as r:
 PYEOF
 
 # Step 8: heartbeat 投函
+# ★副院長令 b0bdfa67 (P0): S1 high 根治 (Step 8 heartbeat INSERT)★
+# heredoc <<'PYEOF' quoted + 環境変数経由で全 bash 値を Python へ渡す。
+ER_HEARTBEAT_FROM_PC_PY="$HEARTBEAT_FROM_PC" \
+ER_HEARTBEAT_TOPIC_PREFIX_PY="$HEARTBEAT_TOPIC_PREFIX" \
+ER_ROLE_NAME_PY="$ROLE_NAME" \
+ER_ELAPSED_MIN_PY="$ELAPSED_MIN" \
+ER_TARGET_PC_PY="$ER_TARGET_PC" \
+ER_THRESHOLD_MIN_PY="$THRESHOLD_MIN" \
+ER_RESULT_PY="$RESULT" \
+ER_ACTION_PY="$ACTION" \
+ER_CYCLE_LOG_PREFIX_PY="$CYCLE_LOG_PREFIX" \
 doppler run --project openhands --config dev -- \
-  "$ER_PYTHON3_BIN" - << PYEOF || true
+  "$ER_PYTHON3_BIN" - <<'PYEOF' || true
 import os, json, urllib.request, uuid
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/pc_handshake'
+heartbeat_from_pc = os.environ.get('ER_HEARTBEAT_FROM_PC_PY', '')
+heartbeat_topic_prefix = os.environ.get('ER_HEARTBEAT_TOPIC_PREFIX_PY', '')
+role_name = os.environ.get('ER_ROLE_NAME_PY', '')
+elapsed_min = os.environ.get('ER_ELAPSED_MIN_PY', '')
+target_pc = os.environ.get('ER_TARGET_PC_PY', '')
+threshold_min = os.environ.get('ER_THRESHOLD_MIN_PY', '')
+result = os.environ.get('ER_RESULT_PY', '')
+action = os.environ.get('ER_ACTION_PY', '')
+cycle_log_prefix = os.environ.get('ER_CYCLE_LOG_PREFIX_PY', '')
 payload = {
     "id": str(uuid.uuid4()),
-    "from_pc": "${HEARTBEAT_FROM_PC}", "to_pc": "fukuincho",
-    "topic": "${HEARTBEAT_TOPIC_PREFIX}: last_${ROLE_NAME}=${ELAPSED_MIN}min ago",
-    "content": "${ER_TARGET_PC} enter_restart heartbeat (5min cycle, engine=enter_restart, role=${ROLE_NAME}). last=${ELAPSED_MIN}min, threshold=${THRESHOLD_MIN}min, result=${RESULT}, action=${ACTION}",
+    "from_pc": heartbeat_from_pc, "to_pc": "fukuincho",
+    "topic": f"{heartbeat_topic_prefix}: last_{role_name}={elapsed_min}min ago",
+    "content": f"{target_pc} enter_restart heartbeat (5min cycle, engine=enter_restart, role={role_name}). last={elapsed_min}min, threshold={threshold_min}min, result={result}, action={action}",
     "priority": "low", "message_type": "status_update"
 }
 req = urllib.request.Request(url, method='POST', data=json.dumps(payload).encode(),
     headers={'apikey':key,'Authorization':f'Bearer {key}','Content-Type':'application/json'})
 with urllib.request.urlopen(req, timeout=10) as r:
-    print(f"${CYCLE_LOG_PREFIX} heartbeat rc={r.status}")
+    print(f"{cycle_log_prefix} heartbeat rc={r.status}")
 PYEOF
 
 log "=== ${CYCLE_LOG_PREFIX} cycle complete (result=${RESULT} action=${ACTION}) ==="
