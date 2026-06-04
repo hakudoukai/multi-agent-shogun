@@ -290,6 +290,9 @@ tests/specs/osato_lms_*
 # CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1 (enter_restart footer 耐性 β改修 regression gate)
 !tests/checks/enter_restart_footer_immune/
 !tests/checks/enter_restart_footer_immune/*.sh
+# ee4d6ce4 30f198e3 homework#1 (audit_gemini.sh harness heredoc literal parse bug 根治 regression gate)
+!tests/checks/audit_gemini_harness/
+!tests/checks/audit_gemini_harness/*.sh
 # ee4d6ce4 cycle3 T1 smoke test directory (enter_restart watchdog 4 観点 regression gate)
 !tests/smoke/
 !tests/smoke/*.sh
