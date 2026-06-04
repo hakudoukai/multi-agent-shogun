@@ -132,15 +132,25 @@ if [ $GEMINI_EXIT -ne 0 ] || [ -z "$GEMINI_OUT" ]; then
 fi
 
 # Extract JSON from Gemini output (Gemini may include markdown fence)
-echo "$GEMINI_OUT" | python3 -c "
-import sys, json, re
-text = sys.stdin.read()
+#
+# ★副院長令 30f198e3 (P0): homework#1 根治★
+# 旧 python3 -c "..." では bash literal 展開 ('cycle': $CYCLE,) を行っていたため、
+# CYCLE='5c' のような alphanumeric サイクル名が python source に直接埋め込まれ
+# 'cycle': 5c, → SyntaxError: invalid decimal literal を発生させていた。
+# 構造修正: heredoc <<'PYEOF' (quoted = bash expansion 無効) + 環境変数経由 で
+# 全 bash 値を python に渡し、literal interpolation を完全に断つ。
+# (FKI-DEV-ROOT-CURE-FIRST 順守、迂回再発禁)
+GEMINI_OUT="$GEMINI_OUT" AUDIT_TASK_ID="$TASK_ID" AUDIT_CYCLE="$CYCLE" \
+python3 - <<'PYEOF' > "$OUTPUT"
+import sys, json, re, os
+text = os.environ.get('GEMINI_OUT', '')
+task_id = os.environ.get('AUDIT_TASK_ID', '')
+cycle = os.environ.get('AUDIT_CYCLE', '')
 # Try to extract JSON block
-m = re.search(r'\`\`\`(?:json)?\s*(\{.*\})\s*\`\`\`', text, re.DOTALL)
+m = re.search(r'```(?:json)?\s*(\{.*\})\s*```', text, re.DOTALL)
 if m:
     text = m.group(1)
 else:
-    # Find first { to last }
     start = text.find('{')
     end = text.rfind('}')
     if start >= 0 and end > start:
@@ -150,22 +160,23 @@ try:
     print(json.dumps(d, ensure_ascii=False, indent=2))
 except Exception as e:
     print(json.dumps({
-        'task_id': '$TASK_ID',
-        'cycle': $CYCLE,
+        'task_id': task_id,
+        'cycle': cycle,
         'overall_verdict': 'invocation_error',
         'parse_error': str(e),
         'raw_output': text[:500]
     }, ensure_ascii=False))
-" > "$OUTPUT"
+PYEOF
 
-VERDICT=$(python3 -c "
-import json
+VERDICT=$(AUDIT_OUTPUT_PATH="$OUTPUT" python3 - <<'PYEOF'
+import json, os
 try:
-  d = json.load(open('$OUTPUT'))
-  print(d.get('overall_verdict', 'invocation_error'))
+    d = json.load(open(os.environ['AUDIT_OUTPUT_PATH']))
+    print(d.get('overall_verdict', 'invocation_error'))
 except Exception:
-  print('invocation_error')
-")
+    print('invocation_error')
+PYEOF
+)
 
 echo "$VERDICT"
 
