@@ -353,21 +353,32 @@ else
     echo "  [FAIL] C24  actual=$ENV_PROP_RESULT expected=commander_test_env_value_C24 — Step 2 env propagation BROKEN"
 fi
 
-# C25: ★逆形 (assignment-only chain) は env が伝播しないことを negative 確認★
-# 旧 (壊れた) 形: `VAR=v ANOTHER=$(...)` は両方 assignment ゆえ subshell に env 不達
-echo "[smoke C25] running env negative check (旧、壊れた assignment-only chain)..."
-ENV_NEG_RESULT=$(ER_FROM_PC_FILTER_PY="should_not_appear" \
-ENV_NEG_RESULT_INNER=$(python3 -c "
+# C25: ★逆形 (Step 2 旧形と完全同形 = top-level assignment-only chain) で env が
+#       subshell の python に伝播しないことを negative 確認★
+# Step 2 旧形 (壊れた形):
+#   ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" \
+#   LAST_INFO=$(doppler run ... "$ER_PYTHON3_BIN" - <<'PYEOF' ...)
+# = top-level の `VAR=v VAR2=$(subshell)` で両方 assignment ゆえ subshell の python に
+# env prefix が伝播しない (= Codex B1/T1 high で実機 production breakage していた形)。
+# 本ケースは Step 2 旧形と完全同形 (= 二重 subshell でなく top-level assignment-only
+# chain) を実行し、★subshell python が env を受け取らない★ことを confirm。
+# (= C26 の静的 assert と組み合わせ、Step 2 が旧形に regression した瞬間 C25/C26 で
+# 検出する 2 重 gate を提供)
+echo "[smoke C25] running env negative check (Step 2 旧形 = top-level assignment-only chain)..."
+# top-level assignment-only chain: ER_..._PY="..." NEG_RESULT_C25=$(...)
+# subshell python は env を受け取らないので os.environ.get(..., 'EMPTY') は 'EMPTY' を返す
+ER_FROM_PC_FILTER_PY="should_not_propagate_C25" \
+NEG_RESULT_C25=$(python3 -c "
 import os
 print(os.environ.get('ER_FROM_PC_FILTER_PY', 'EMPTY'))
-"))
-if [ "$ENV_NEG_RESULT" = "EMPTY" ] || [ -z "$ENV_NEG_RESULT" ]; then
+")
+if [ "$NEG_RESULT_C25" = "EMPTY" ]; then
     PASS=$((PASS + 1))
-    echo "  [PASS] C25  actual='${ENV_NEG_RESULT:-EMPTY}' expected=EMPTY/empty — 旧形 env 不達を negative 確認 (Step 2 fix の必要性実証)"
+    echo "  [PASS] C25  actual=$NEG_RESULT_C25 expected=EMPTY — 旧形 (top-level assignment-only chain) で subshell python に env 不達を実証 (Step 2 fix の必要性 + 旧形 regression 検出)"
 else
     FAIL=$((FAIL + 1))
-    FAILED_CASES+=("C25: ENV_NEG_RESULT=$ENV_NEG_RESULT (期待: EMPTY/empty)")
-    echo "  [FAIL] C25  actual=$ENV_NEG_RESULT — 旧形でも env が伝播してしまっている (bash 仕様変更?)"
+    FAILED_CASES+=("C25: NEG_RESULT_C25=$NEG_RESULT_C25 (期待: EMPTY)")
+    echo "  [FAIL] C25  actual=$NEG_RESULT_C25 — Step 2 旧形でも env が伝播してしまっている (bash 仕様変更? 検証ロジック誤り?)"
 fi
 
 # C26: ★Watchdog 本体で Step 2 が command substitution 内 env 形になっていることを assert★
