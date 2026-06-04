@@ -204,7 +204,10 @@ done
 for a in shogun karo gunshi ashigaru1 ashigaru2; do
     inbox="$SCRIPT_DIR/queue/inbox/${a}.yaml"
     [ -f "$inbox" ] || continue
-    n=$(grep -c 'read: false' "$inbox" 2>/dev/null || echo 0)
+    # anchored regex: PyYAML sequence-item 2-space indent YAML key のみ match。
+    # quoted content 内 literal substring の false positive を排除
+    # (sibling of f724fe9 stop_hook_inbox.sh / e9fd397 SecondPC SSH 経路)。
+    n=$(grep -cE '^  read: false$' "$inbox" 2>/dev/null || echo 0)
     n=${n%%[^0-9]*}
     if [ "${n:-0}" -gt 10 ]; then
         ALERTS+=("ERR-INBOX-OVERFLOW: ${a} unread=${n} (threshold=10, loop の前兆)")
