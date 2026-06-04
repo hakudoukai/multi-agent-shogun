@@ -64,9 +64,10 @@ if [ "$STOP_HOOK_ACTIVE" = "True" ]; then
     if [ "$AGENT_ID" = "shogun" ]; then
         WATCH_TARGETS_ACTIVE+=("$SCRIPT_DIR/dashboard.md")
     fi
+    # timeout: 55→10 (副院長令83d84fa0 / Commander seq30274 — turn終端応答性回復)
     if command -v inotifywait &>/dev/null; then
         inotifywait -e close_write -e moved_to \
-            --timeout 55 \
+            --timeout 10 \
             "${WATCH_TARGETS_ACTIVE[@]}" 2>/dev/null || true
     fi
     UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
@@ -136,9 +137,10 @@ if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
     if [ "$AGENT_ID" = "shogun" ]; then
         WATCH_TARGETS+=("$SCRIPT_DIR/dashboard.md")
     fi
+    # timeout: 55→10 (副院長令83d84fa0 / Commander seq30274 — turn終端応答性回復)
     if command -v inotifywait &>/dev/null; then
         inotifywait -e close_write -e moved_to \
-            --timeout 55 \
+            --timeout 10 \
             "${WATCH_TARGETS[@]}" 2>/dev/null || true
     else
         # inotifywait not available: fall through to exit 0
