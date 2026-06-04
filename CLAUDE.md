@@ -4,7 +4,7 @@ version: "3.0"
 updated: "2026-02-07"
 description: "Claude Code + tmux multi-agent parallel dev platform with sengoku military hierarchy"
 
-hierarchy: "Lord (human) → 信長 → 家老 → Ashigaru 1-7 / 家康"
+hierarchy: "Lord (human) → 将軍 → 家老 → Ashigaru 1-7 / 軍師"
 communication: "YAML files + inbox mailbox system (event-driven, NO polling)"
 
 tmux_sessions:
@@ -15,15 +15,15 @@ files:
   config: config/projects.yaml          # Project list (summary)
   projects: "projects/<id>.yaml"        # Project details (git-ignored, contains secrets)
   context: "context/{project}.md"       # Project-specific notes for ashigaru/gunshi
-  cmd_queue: queue/shogun_to_karo.yaml  # 信長 → 家老 commands
+  cmd_queue: queue/shogun_to_karo.yaml  # 将軍 → 家老 commands
   tasks: "queue/tasks/ashigaru{N}.yaml" # 家老 → Ashigaru assignments (per-ashigaru)
-  gunshi_task: queue/tasks/gunshi.yaml  # 家老 → 家康 strategic assignments
+  gunshi_task: queue/tasks/gunshi.yaml  # 家老 → 軍師 strategic assignments
   pending_tasks: queue/tasks/pending.yaml # 家老管理の保留タスク（blocked未割当）
-  reports: "queue/reports/ashigaru{N}_report.yaml" # Ashigaru → 家康 reports
-  gunshi_report: queue/reports/gunshi_report.yaml  # 家康 → 家老 strategic reports
+  reports: "queue/reports/ashigaru{N}_report.yaml" # Ashigaru → 軍師 reports
+  gunshi_report: queue/reports/gunshi_report.yaml  # 軍師 → 家老 strategic reports
   dashboard: dashboard.md              # Human-readable summary (secondary data)
-  daily_log: "logs/daily/YYYY-MM-DD.md" # 家老 appends cmd summary on completion. 信長 reads for daily reports.
-  ntfy_inbox: queue/ntfy_inbox.yaml    # Incoming ntfy messages from Lord's phone
+  daily_log: "logs/daily/YYYY-MM-DD.md" # 家老 appends cmd summary on completion. 将軍 reads for daily reports.
+  ntfy_inbox: queue/ntfy_inbox.yaml    # 副院長窓口経由 (DD-110 副院長単一窓口・理事長↔現場直接禁)。Lord's phone 直行 ch は副院長令 4f2dea78 (2026-06-04) により廃止
 
 cmd_format:
   required_fields: [id, timestamp, purpose, acceptance_criteria, command, project, priority, status]
@@ -174,10 +174,10 @@ bash scripts/inbox_write.sh <target_agent> "<message>" <type> <from>
 
 Examples:
 ```bash
-# 信長 → 家老
+# 将軍 → 家老
 bash scripts/inbox_write.sh karo "cmd_048を書いた。実行せよ。" cmd_new shogun
 
-# Ashigaru → 家康
+# Ashigaru → 軍師
 bash scripts/inbox_write.sh gunshi "足軽5号、任務完了。品質チェックを仰ぎたし。" report_received ashigaru5
 
 # 家老 → Ashigaru
@@ -185,7 +185,7 @@ bash scripts/inbox_write.sh ashigaru3 "タスクYAMLを読んで作業開始せ�
 ```
 
 Delivery is handled by `inbox_watcher.sh` (infrastructure layer).
-**Agents NEVER call tmux send-keys directly.**
+**Agents (karo/ashigaru/gunshi/shogun) NEVER call tmux send-keys directly.** Commander の SSH 着火 (DD-177 第1層) は infrastructure 層の例外 (下記「SSH 着火経路」節参照、副院長令 4f2dea78 C1 限定明示 2026-06-04)。
 
 ## Delivery Mechanism
 
@@ -245,19 +245,19 @@ Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML wi
 | Direction | Method | Reason |
 |-----------|--------|--------|
 | Ashigaru → 家老 | Report YAML + inbox_write | Task completion report (direct superior) |
-| Ashigaru → 家康 | inbox_write | **監査提出（義務）** — 足軽は成果物完成後、必ず家康に監査を提出する |
-| 家康 → Ashigaru | inbox_write | **QC fix/redo instructions** (PDCA cycle). New task assignment forbidden (F003). |
-| 家康 → 家老 | Report YAML + inbox_write | QC results + strategic reports |
-| 家老 → 信長/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
-| 家老 → 家康 | YAML + inbox_write | Strategic task or quality check delegation |
+| Ashigaru → 軍師 | inbox_write | **監査提出（義務）** — 足軽は成果物完成後、必ず軍師に監査を提出する |
+| 軍師 → Ashigaru | inbox_write | **QC fix/redo instructions** (PDCA cycle). New task assignment forbidden (F003). |
+| 軍師 → 家老 | Report YAML + inbox_write | QC results + strategic reports |
+| 家老 → 将軍/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
+| 家老 → 軍師 | YAML + inbox_write | Strategic task or quality check delegation |
 | 家老 → Ashigaru | YAML + inbox_write | Task assignment (new work) |
 | Top → Down | YAML + inbox_write | Standard wake-up |
 
 ### Audit Obligation (監査義務)
 
-- **足軽の義務**: 成果物完成後、家康に品質監査を提出すること。監査提出なしの完了は認めない。
-- **家康の義務**: 足軽から監査提出を受けたら、必ず品質監査を実施すること。未監査放置は禁止。
-- **PDCA**: QC FAIL → 家康が足軽に修正指示 → 足軽が修正・再提出 → 家康が再監査 → PASSまで繰り返す。
+- **足軽の義務**: 成果物完成後、軍師に品質監査を提出すること。監査提出なしの完了は認めない。
+- **軍師の義務**: 足軽から監査提出を受けたら、必ず品質監査を実施すること。未監査放置は禁止。
+- **PDCA**: QC FAIL → 軍師が足軽に修正指示 → 足軽が修正・再提出 → 軍師が再監査 → PASSまで繰り返す。
 
 ## File Operation Rule
 
@@ -276,14 +276,14 @@ Layer 4: Session context — volatile (CLAUDE.md auto-loaded, instructions/*.md,
 
 System manages ALL white-collar work, not just self-improvement. Project folders can be external (outside this repo). `projects/` is git-ignored (contains secrets).
 
-# 信長 Mandatory Rules
+# 将軍 Mandatory Rules
 
-1. **Dashboard**: 家老 + 家康 update. 家康: QC results aggregation. 家老: task status/streaks/action items. 信長 reads it, never writes it.
-2. **Chain of command**: 信長 → 家老 → Ashigaru/家康. Never bypass 家老.
+1. **Dashboard**: 家老 + 軍師 update. 軍師: QC results aggregation. 家老: task status/streaks/action items. 将軍 reads it, never writes it.
+2. **Chain of command**: 将軍 → 家老 → Ashigaru/軍師. Never bypass 家老.
 3. **Reports**: Check `queue/reports/ashigaru{N}_report.yaml` and `queue/reports/gunshi_report.yaml` when waiting.
 4. **家老 state**: Before sending commands, verify karo isn't busy: `tmux capture-pane -t multiagent:0.0 -p | tail -20`
 5. **Screenshots**: See `config/settings.yaml` → `screenshot.path`
-6. **Skill candidates**: Ashigaru reports include `skill_candidate:`. 家老 collects → dashboard. 信長 approves → creates design doc.
+6. **Skill candidates**: Ashigaru reports include `skill_candidate:`. 家老 collects → dashboard. 将軍 approves → creates design doc.
 7. **Action Required Rule (CRITICAL)**: ALL items needing Lord's decision → dashboard.md 🚨要対応 section. ALWAYS. Even if also written elsewhere. Forgetting = Lord gets angry.
 
 # Test Rules (all agents)
@@ -295,7 +295,7 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 
 # Third-Party Audit Rule (all agents) — 理事長直接指示
 
-**原則: 第三者監査 (家康/Codex/Gemini) 三者全員 PASS まで完了不可。自作自演禁止、軽微修正でも省略不可。**
+**原則: 第三者監査 (軍師/Codex/Gemini) 三者全員 PASS まで完了不可。自作自演禁止、軽微修正でも省略不可。**
 
 詳細・監査フロー・6軸/8観点・PDCA上限・base_commit 記録・違反検知・改訂責務は [docs/audit-framework.md](docs/audit-framework.md) 正本参照。標準呼出しは `scripts/audit_codex.sh` / `scripts/audit_gemini.sh` 経由 (手書き禁)。
 
@@ -315,7 +315,7 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 
 **30+ 件処理時の必須プロトコル**: batch1 QC ゲート必達、batch size 上限 30/session、detection pattern + quality template 義務。
 
-詳細 (ワークフロー・6ルール・state management・家康 review scope): [docs/03-workflows/batch-processing.md](docs/03-workflows/batch-processing.md) 移設実体参照。
+詳細 (ワークフロー・6ルール・state management・軍師 review scope): [docs/03-workflows/batch-processing.md](docs/03-workflows/batch-processing.md) 移設実体参照。
 
 # Critical Thinking Rule (all agents)
 
@@ -354,7 +354,7 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 
 # §18. Claude/ChatGPT アカウント運用ルール (理事長直接指示 — 2026-05-06、副院長令 695293a5 ccflare 正本 v3.8 整合書換 2026-06-04)
 
-**【安全核・枠】Claude=ccflareで2契約(sasebo系/hakudoukai系)を集中管理しpriority+auto-fallbackで分配。1PC/paneへ負荷集中→共食い暴走∴禁(2026-05-05事故)。account追加/priority/fallback/経路変更は勝手にするな=副院長承認必須(DD-164)。ChatGPT系(codex/Hermes)=1PC/1プロセス/1契約厳守(v3.7)。正本→ccflare構成v3.7(project_documents 59a1b69b)+[docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md)**
+**【安全核・枠】Claude=ccflareで2契約(sasebo系/hakudoukai系)を集中管理しpriority+auto-fallbackで分配。1PC/paneへ負荷集中→共食い暴走∴禁(2026-05-05事故)。account追加/priority/fallback/経路変更は勝手にするな=副院長承認必須(DD-164)。★直接OAuth/ANTHROPIC_API_KEY従量課金経路=禁(gpt-image-2画像API例外のみ)=副院長承認案件(DD-164、副院長令 4f2dea78 C4 明示追記 2026-06-04)★。ChatGPT系(codex/Hermes)=1PC/1プロセス/1契約厳守(v3.7)。正本→ccflare構成v3.7(project_documents 59a1b69b)+[docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md)**
 
 詳細 (§18.1 配置表 + §18.2 厳守事項 + §18.3 起動前チェック + §18.4 quota 監視 + §18.5 クロス PC 通信 + §18.6 起動順序 + §18.7 違反対応 + §18.8 関連ルール + §18.9 改訂責務): 上記正本参照。過去事故=[docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md) (SecondPC 26分38% 共食い暴走 — 防止策=ccflare 集中 refresh + priority/auto-fallback + 1PC/pane 負荷集中禁。★「PCごと別アカウント完全分離」=ccflare 導入前の旧モデル、v3.8 で誤りと確定★)。
 
