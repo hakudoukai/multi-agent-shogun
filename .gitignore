@@ -166,6 +166,7 @@
 
 # enter-restart watchdog (= 3PC relay 恒久化、scp 直上書き廃止→git 追跡化、CANON-SHOGUN-COMMS-RESTORE-01 / 副院長令 c04130e4)
 !scripts/watchdogs/enter_restart_common_watchdog.sh
+!docs/3pc_relay_scp_prohibition.md
 
 # cmd_020 Stage 2 dashboard generator (= karo-owned systemd service writes dashboard.md)
 !scripts/regenerate_dashboard.py
