@@ -113,6 +113,8 @@
 !scripts/inbox_write.sh
 !scripts/inbox_watcher.sh
 !scripts/watcher_supervisor.sh
+# third PC 専用 supervisor — phantom inbox1 off-by-one cure 永続化 (karo-third 2026-06-05)
+!scripts/watcher_supervisor_third.sh
 !scripts/ntfy.sh
 !scripts/ntfy_listener.sh
 !scripts/build_instructions.sh
