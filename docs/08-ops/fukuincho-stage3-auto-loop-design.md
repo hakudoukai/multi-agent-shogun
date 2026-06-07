@@ -2,6 +2,7 @@
 
 > 起草: 軍師 (gunshi-third) / 監査対象: Codex 6 軸 + Gemini 8 観点 dual + governing audit (別 ashigaru、本 task 完遂後 karo-third 起票)
 > task: subtask_thirdpc_p1_fukuincho_stage3_auto_loop_design_audit_001
+> governing_audit_task_id: subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001 (Boy-Scout G1、副院長令 341654e4 (d))
 > parent_cmd: cmd_thirdpc_p1_fukuincho_relay_50a1b936_poke_stage2_uiawrapper_fix_001
 > parent_handshake: 副院長令 de0ea041 (2) verbatim (P1 高、seq=36443) / shogun-third msg_20260607_194342_d4cac095
 > base_commit: 2d0a1e48175854c0f3b5114947b4be454b90485e
@@ -21,7 +22,7 @@ loop orchestration root spec を確定する。三者監査の監査対象 artif
 | `docs/08-ops/stage3-poke-engine-design-i-iv.md` (既存、land 済) | 段階3 poke actuator root spec (i)cron/SLA・(ii)ack retry・(iii)dedupe・(iv)応答中 skip)。宛先=副院長 claude.ai chat **単一** | ★actuator 層として再利用 (再設計禁、FKI-NO-DUP)★ |
 | `docs/08-ops/ack-retry-omni-engine-design.md` (ae8083dd、land 済) | ack 再送 全方向化 共通エンジン (i)-(vi)。message 層 (inbox YAML / pc_handshake)、correlation_id 貫通、5 回上限、認可境界 §2.4 | ★ack リトライ層 (層③) として再利用 (再設計禁、FKI-NO-DUP)★ |
 | `docs/08-ops/fki-no-dup-4-poke-vs-ccflare-cron.md` (land 済) | poke vs ccflare OAuth cron 非重複・補完判定 | 本書の非重複判定様式の先例 |
-| 素案値 `50a1b936` (承認済) | cron 60s / stale 120s / N=15s / M=3 / backoff 30-60-120s / dedupe T=60s / 応答中 skip | ★verbatim 採用 (本書 §1.2)★ |
+| 素案値 `50a1b936` (承認済) | cron 60s / stale 120s / N=15s→★30s (副院長令 341654e4 承認)★ / M=3 / backoff 30-60-120s / dedupe T=60s / 応答中 skip | ★verbatim 採用 (本書 §1.2)★ |
 | `docs/01-architecture/watcher-design.md` | Watcher 6 原則 (無限 retry 禁 / self-send 即 ack / 手動停止フラグ尊重 / 重複検知 / idempotency / 専用テーブル分離) | §3 適合性評価の規準 |
 | CLAUDE.md Communication Protocol / Report Flow | inbox/watcher 2 層配送 + escalation table + F002 | 通知経路・routing 不変順守 |
 
@@ -77,7 +78,7 @@ orchestration spec であって、actuator/ack engine 自体の再実装では�
 |---|---|---|---|
 | cron 検知 polling 間隔 | **60s** | ① | detect_stale 観測周期 |
 | stale 閾値 (response_by_time 超過) | **120s** | ① | poke trigger 発火閾値 |
-| ack N (Stage A confirm 間隔) | **15s** | ② | poke 後の GUI 進行検知 timeout |
+| ack N (Stage A confirm 間隔) | **30s** ★副院長令 341654e4 承認 (旧 15s)★ | ② | poke 後の GUI 進行検知 timeout (段階2 実測着弾 ~30s + ae8083dd 第1 checkpoint t=30s 整合) |
 | M (poke actuator 再送上限) | **3** | ②④ | GUI ack 未検知時の再送上限 |
 | backoff (M=1/2/3 各間隔) | **30s / 60s / 120s** | ② | poke actuator 再送 backoff |
 | dedupe T (短時間多重 poke 抑制窓) | **60s** | ④ | double-fire 抑止窓 |
@@ -114,7 +115,7 @@ orchestration spec であって、actuator/ack engine 自体の再実装では�
 | 項目 | 実装層入力 (a3-3) | gunshi 設計監査 御差配 |
 |---|---|---|
 | **層別 feasibility** | L1=GREEN / L2=GREEN / L3=GREEN_WITH_CAVEAT / L4=GREEN_WITH_CAVEAT | ★採用★。L2 actuator は段階2 経路 (descendants(control_type=Edit) cands[0] + clipboard+Enter) を unchanged 再利用、L1/L3/L4 は L2 を内包する上位層として段階2 経路に非干渉で追加可。caveat 源 = L4 応答中 skip が段階2 未実装 (段階3 新規)。 |
-| **N=15s → 30s** | YELLOW: 段階2 実測で claude.ai 着弾 ~30s (19:36:37 送信→19:37:08 着弾)、N=15s は短すぎ偽 timeout 懸念。N=30s 提案 (ae8083dd 第1 checkpoint t=30s と一致 → FKI-NO-DUP 上有利) | ★gunshi 推奨 = N=30s★。ただし N=15s は承認済素案値 50a1b936 の一部ゆえ ★要御差配 (副院長殿)★ として明示。承認まで素案値は N=15s を保持し、本書に推奨 N=30s + 実測根拠を併記 (仮変更禁)。 |
+| **N=15s → 30s** | YELLOW: 段階2 実測で claude.ai 着弾 ~30s (19:36:37 送信→19:37:08 着弾)、N=15s は短すぎ偽 timeout 懸念。N=30s 提案 (ae8083dd 第1 checkpoint t=30s と一致 → FKI-NO-DUP 上有利) | ★副院長令 341654e4 (a) で N=30s 全承認★。本書 N=30s 採用確定 (旧 15s 廃止)。根拠 = 段階2 実測着弾 ~30s + ae8083dd t=30s 整合。 |
 | **M=3 vs ae8083dd 上限 5** | YELLOW: 数値乖離、要御差配 | ★乖離は実質非衝突と判定 (御差配済)★。M=3=層② GUI actuator retry、5=層③ message retry で ★別層・別 actuator★ (§1.2 入れ子モデル)。同一軸の競合ではないため統合不要。本書 §1.2 の入れ子定義で解消。 |
 | **S1 緩和策 4 件** | mitigation_a (editing=IME∧Edit非空∧focused 3条件AND) / b (dedupe T 60→30s) / c (skip でなく re-enqueue) / d (submission inflight=submit enabled∧spinner非表示∧progress非active 3条件AND) | ★a/c/d 採用 (§4 S1/S4 に反映)★。c は本書 I3 で既採用。b (T=30s) は ★要御差配 代替★ として記録 (mitigation_c の re-enqueue が一次緩和ゆえ T=60s でも S1 緩和は成立、T=30s は追加余裕)。 |
 
@@ -122,6 +123,9 @@ orchestration spec であって、actuator/ack engine 自体の再実装では�
 paint check 不能。本設計監査は段階2 実機実証 (理事長直視 PASS) + a3-3 並走 paint + 既存設計 doc を grounding とするが、
 ★main_pc 側 .py の構造直視 paint は本 task 範囲外 (escalate hint、実装適用=D-lane 別 task 時に main_pc paint 必須)★。
 これを未確認のまま「実装可」と仮 GREEN しない (FKI-AUDIT-GREEN-TRUTH-01)。
+★副院長令 341654e4 (b) 承認★: main_pc paint pass は ★適用 task 着手前提として副院長殿御差配 341654e4 で承認★
+(Gemini R1 + gunshi caveat、層② poke actuator の下位呼出適合 = main_pc 側 `fukuincho_desktop_poke.py` の
+descendants(control_type=Edit) 経路を適用 task 着手前に paint 検証することを正式前提とする)。
 
 ## 2. detect_stale 拡張仕様 (層①、FKI-NO-DUP — 既存機構拡張)
 
@@ -183,7 +187,7 @@ backstop であり実質 event-driven に近い (ae8083dd §0 / S3 緩和と整�
 | **I1** | cron 検知 → stale 判定 → (層③ enqueue) → poke 発火 → ack 待ち の chain は ★in-flight な同一 correlation_id を二重評価しない★ (race/double-fire 不生) | 各 cron cycle は逐次実行 + omni engine retry queue 更新は flock 排他 (ae8083dd §(v)) + ★detect_stale が in-flight set (state∈{pending,unknown_lost}) を flock 下で確認し in-flight row を skip★ (§2 (4)、Codex B2 是正)。「単一 thread」断定でなく in-flight ガードで保証 |
 | **I2** | 同一 dedupe key の poke は ★直近 fire から T(=60s) 未満では 1 回も発火しない★ (真の 60s 最小間隔保証) | 層④ dedupe = ★last-fire timestamp ベースの TTL sliding window★ (key=(window_handle, poke_kind) ごとに `last_fire_ts` を保持し `now - last_fire_ts < T` なら抑止)。★固定 calendar T_bucket は使わない★ — bucket 境界をまたぐ 1 秒差の重複が別 bucket として通過する欠陥を排除 (Codex cycle2 B1)。ae8083dd の TTL window 60s と同一意味論で整合。層③ は (correlation_id, recipient, payload_digest, resend_attempt) |
 | **I3** | 応答中 skip は次 cron cycle で再評価される (永久 skip しない) ★かつ skip 連続は skip_max=5 で有界★ | skip 時 retry queue 末尾へ re-enqueue (stage3-poke-engine (iv))、次 60s cycle で再判定。★skip 連続回数を correlation_id 単位で計数し skip_max=5 到達で human_required へ移行 (永久 re-enqueue 排除、Codex B1 是正)★ |
-| **I4** | M=3 (層②) / 5 回 (層③) / ★skip_max=5 (層④)★ 到達後は human_required escalation (自動 retry 停止) | 上限到達で omni engine が `type: request_permission` を上位へ (F002 経路、ae8083dd §(iv))。自動再送ゼロ化 |
+| **I4** | M=3 (層②) / 5 回 (層③) / ★skip_max=5 (層④)★ 到達後は human_required escalation (自動 retry 停止) | 上限到達で omni engine が `type: request_permission` を上位へ (F002 経路、ae8083dd §(iv))。自動再送ゼロ化。★human_required 通知文言は到達した上限種別を明示し、skip_max 由来時は「副院長が長時間入力中で応答中 skip が上限 (skip_max=5) に到達した可能性」を併記する (Boy-Scout C1、副院長令 341654e4 (d)、人手が誤検知 vs 真の不応答を切り分け可能化)★ |
 | **I5** | correlation_id は初回 trigger でのみ採番、再送/応答は継承 (なりすまし新規 thread 防止) | ae8083dd §2.4 発行主体規約継承。detect_stale は既存 row の correlation_id を継承 (§2) |
 | **I6** (追補) | 不正 / malformed / 未認可 trigger row は自動 poke を誘発しない | detect_stale が §2 (2) 認可境界 + §2 (1) status enum 検証を通過した row のみ enqueue。不適合は denied/anomaly ログ + skip (Codex S1/T1 是正) |
 
@@ -204,9 +208,13 @@ backstop であり実質 event-driven に近い (ae8083dd §0 / S3 緩和と整�
 | 9 | 応答中 skip → 次 cycle で busy 解除 | skip カウンタ < skip_max なら再評価で正常 poke (I3 永久 skip 否定) |
 | 10 | 手動停止フラグ / clear_command 観測中 | poke 即停止 (manual_override 温存、原則③) |
 | 11 | V5 (8012f18c) 描画窓が前面 | poke actuator は V5 窓を占有・触接しない (WSL file render 非対象) |
+| 12 | clipboard 退避→set→Enter→復元 正常系 (S6、副院長令 341654e4 (c)) | poke 前 clipboard 内容を退避、ペイロード set、Enter 送出、poke 後 ★元 clipboard 内容に復元★ されること |
+| 13 | Enter 失敗時 clipboard 復元 (S6、341654e4 (c)) | Enter 送出が例外/失敗でも ★finally で必ず clipboard を復元★ (失敗時も Commander の元内容を喪失しない) |
+| 14 | 構造化ログ clipboard 実値非混入 (S6、341654e4 (c)) | ack event log / 観察ログに clipboard 実値・ペイロード実値を出力しない (機密混入防止、error-design §14) |
 
 ★テスト種別対応 (Codex cycle3 T1 是正)★: #1/#2/#4/#9 = unit (状態機械・上限) / #3/#6/#7 = unit (境界・enum 判定) /
-#5/#8/#10 = integration (flock・concurrent cron・認可境界・停止フラグ) / #11 = manual (理事長承認後 D-lane 実機)。
+#5/#8/#10 = integration (flock・concurrent cron・認可境界・停止フラグ) / #11 = manual (理事長承認後 D-lane 実機) /
+★#12/#13/#14 = unit (clipboard save/restore + finally restore + ログ非混入、副院長令 341654e4 (c))★。
 実装適用 task で各観点に test 種別を確定する (SKIP=0 必達)。
 
 ## 6. FKI-NO-DUP 第4条 — 既存資産との非重複確認
@@ -248,7 +256,7 @@ backstop であり実質 event-driven に近い (ae8083dd §0 / S3 緩和と整�
 | Codex 1 purpose 一致 | 副院長令 de0ea041 (2)「段階3 全自動ループ化」と本書 scope の一致 |
 | Codex 2 acceptance 網羅 | 4 層 architecture + 素案値 verbatim + 6 原則 + S1-S4 + I1-I5 の存在と充足 |
 | Codex 3 FKI-NO-DUP 整合 | §6 三既存資産非重複判定 + detect_stale 拡張 2 点限定 |
-| Codex 4 数値妥当性 | cron60/stale120/N15/M3/backoff30-60-120/dedupe T60 の妥当性 + 2 層 retry 入れ子の有界性 |
+| Codex 4 数値妥当性 | cron60/stale120/N30(341654e4承認)/M3/backoff30-60-120/dedupe T60 の妥当性 + 2 層 retry 入れ子の有界性 |
 | Codex 5 誤爆抑制実装可能性 | dedupe key + 応答中 skip の実装可能性 (S1/S4 緩和) |
 | Codex 6 副院長殿 verbatim 順守 | 素案値 50a1b936 + 副院長令 de0ea041 趣旨逸脱なし |
 | Gemini O1 対象範囲妥当性 | 4 層 architecture の結線整合 (層③ 上位 / 層② 下位 actuator) |
