@@ -1,0 +1,405 @@
+#!/usr/bin/env bash
+#
+# enter_restart_common_watchdog.sh β改修 footer 耐性 + cycle1-5c 累積 regression smoke test
+# (CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1 系列の累積 regression gate)
+#
+# cycle 履歴 (= 本 smoke の coverage):
+#   cycle1  (Layer A): footer 常時 last_line 占有問題 → FOOTER_PATTERN 除外
+#   cycle3  (Layer B): label 形式 UI 進化追随 (旧 `│ > xxx │` + 新 `❯ xxx`)
+#   cycle4  (Layer C): NBSP 正規化 (TUI が ASCII space を U+00A0 に変換する case)
+#   cycle5  (Layer D): capture 窓拡張 -10→-50 + PROMPT 行探索 (output 流入 race)
+#   cycle5c (Layer E): ──── ボーダー隣接 anchor (false positive 根治)
+#
+# 実行: bash tests/checks/enter_restart_footer_immune/smoke_test.sh
+# 期待: 全 26 ケース PASS、最終行 "ALL PASS (26/26)"
+# (副院長令 b0bdfa67 Q2 low 充足: コメントを 26 ケース (C01-C23 ベース + C24-C26 b0bdfa67 env propagation) へ更新)
+#
+
+set -uo pipefail
+
+REPO_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+WATCHDOG="$REPO_ROOT/scripts/watchdogs/enter_restart_common_watchdog.sh"
+
+if [ ! -r "$WATCHDOG" ]; then
+    echo "ERROR: watchdog not readable: $WATCHDOG" >&2
+    exit 1
+fi
+
+# FOOTER_PATTERN / 照合 regex を watchdog 本体から抽出 (= 単一情報源、drift 防止)
+FOOTER_PATTERN=$(grep -E "^FOOTER_PATTERN=" "$WATCHDOG" | head -1 | sed -E "s/^FOOTER_PATTERN='([^']+)'/\\1/")
+if [ -z "$FOOTER_PATTERN" ]; then
+    echo "ERROR: FOOTER_PATTERN extract failed (watchdog 本体に定義無し or 形式変更)" >&2
+    exit 1
+fi
+# β改修 cycle3 (CANON 残 regression #1 Layer B):
+#   Claude Code TUI prompt 形式 旧 `│ > xxx │` + 新 `❯ xxx` (上下 ──── ボーダー間) を OR 受理。
+NONEMPTY_RE='│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'
+EMPTY_RE='│[[:space:]]*>[[:space:]]*│?[[:space:]]*$|^[[:space:]]*❯[[:space:]]*$'
+
+PASS=0
+FAIL=0
+FAILED_CASES=()
+
+# label 判定ロジックを watchdog 本体と同一手順で再現
+# β改修 cycle4: NBSP (U+00A0) → ASCII space 正規化
+# β改修 cycle5: last_non_footer_line → PROMPT_LINE 直接探索 (α 堅牢版)
+PROMPT_LINE_PATTERN='^[[:space:]]*❯|│[[:space:]]*>'
+classify() {
+    local pane_tail="$1"
+    local prompt_line
+    pane_tail=$(printf '%s' "$pane_tail" | sed 's/\xc2\xa0/ /g')
+    # ★cycle5c: ──── ボーダー直後の prompt 行のみ真の Claude TUI input box と判定 (anchor 強化)★
+    prompt_line=$(printf '%s\n' "$pane_tail" | awk '
+        /^[[:space:]]*─+[[:space:]]*$/ { prev_border = 1; next }
+        prev_border && (/^[[:space:]]*❯/ || /^[[:space:]]*│[[:space:]]*>/) { last = $0 }
+        { prev_border = 0 }
+        END { if (last != "") print last }
+    ')
+    if [ -z "$prompt_line" ]; then
+        # PANE_TAIL に border-anchored prompt 行不在
+        if [ -z "$(printf '%s\n' "$pane_tail" | { grep -vE "$FOOTER_PATTERN" || true; } | awk 'NF')" ]; then
+            echo "no_content"
+        else
+            echo "no_match"
+        fi
+        return
+    fi
+    if printf '%s' "$prompt_line" | grep -qE "$NONEMPTY_RE"; then
+        echo "match_nonempty"
+    elif printf '%s' "$prompt_line" | grep -qE "$EMPTY_RE"; then
+        echo "match_empty"
+    else
+        echo "no_match"
+    fi
+}
+
+run_case() {
+    local case_id="$1"
+    local description="$2"
+    local pane_tail="$3"
+    local expected="$4"
+    local actual
+    actual=$(classify "$pane_tail")
+    if [ "$actual" = "$expected" ]; then
+        printf '[PASS] %-4s actual=%-14s expected=%-14s — %s\n' "$case_id" "$actual" "$expected" "$description"
+        PASS=$((PASS + 1))
+    else
+        printf '[FAIL] %-4s actual=%-14s expected=%-14s — %s\n' "$case_id" "$actual" "$expected" "$description" >&2
+        printf '       pane_tail (base64): %s\n' "$(printf '%s' "$pane_tail" | base64 -w0)" >&2
+        FAIL=$((FAIL + 1))
+        FAILED_CASES+=("$case_id")
+    fi
+}
+
+echo "=== enter_restart footer 耐性 smoke test ==="
+echo "watchdog : $WATCHDOG"
+echo "FOOTER_PATTERN extracted: $FOOTER_PATTERN"
+echo "----"
+
+# C01: footer のみ last_line + 直近に非空 input buffer → match_nonempty 期待 (= β改修核心)
+# ★cycle5c: 旧形式 │ > xxx │ も実環境では border で囲まれる前提に更新★
+run_case "C01" \
+    "footer 1 行 last + border 付き非空 input buffer (regression 再現本丸)" \
+    "────
+│ > hello world │
+────
+⏵⏵ bypass permissions on (shift+tab to cycle)" \
+    "match_nonempty"
+
+# C02: 旧形式 = border 付き 非空 input buffer
+run_case "C02" \
+    "旧形式: border 付き 非空 input buffer (β改修前から通っていたケース)" \
+    "────
+│ > legacy input │
+────" \
+    "match_nonempty"
+
+# C03: footer + 空 input buffer → match_empty 期待 (LABEL_MATCH=0 維持、false fire 防止)
+run_case "C03" \
+    "footer last + border 付き 空 input buffer → empty 判定 (fire しない)" \
+    "────
+│ > │
+────
+⏵⏵ bypass permissions on (shift+tab to cycle)" \
+    "match_empty"
+
+# C04: footer 単独 + claude UI prompt 無し → no_match 期待
+run_case "C04" \
+    "footer のみ + UI prompt 無し → no_match" \
+    "some random output line
+another line
+⏵⏵ bypass permissions on (shift+tab to cycle)" \
+    "no_match"
+
+# C05: 多種 footer 行 (esc to interrupt + shift+tab to cycle 等) を除外しつつ非空 buffer 検出
+run_case "C05" \
+    "multi-line footer + border 付き非空 input buffer" \
+    "────
+│ > deep work │
+────
+esc to interrupt
+shift+tab to cycle
+⏵⏵ bypass permissions on" \
+    "match_nonempty"
+
+# C06: Plan mode footer
+run_case "C06" \
+    "Plan mode footer + border 付き非空 input buffer" \
+    "────
+│ > planning │
+────
+⏵ Plan mode (shift+tab to cycle)" \
+    "match_nonempty"
+
+# C07: tab to expand / ctrl+o to expand footer
+run_case "C07" \
+    "tab to expand + ctrl+o to expand footer + border 付き非空 input buffer" \
+    "────
+│ > expanding │
+────
+tab to expand
+ctrl+o to expand" \
+    "match_nonempty"
+
+# C08: 全行 footer のみ (= 直近 N 行が footer で埋め尽くされている異常状態) → no_content
+run_case "C08" \
+    "全行 footer (footer 過密) → no_content (fire しない)" \
+    "⏵⏵ bypass permissions on (shift+tab to cycle)
+esc to interrupt
+shift+tab to cycle" \
+    "no_content"
+
+# === β改修 cycle3 追加 (CANON 残 regression #1 Layer B): 新 Claude TUI 形式 ❯ + context status 行 ===
+
+# C09: 新形式 (上下 ──── ボーダー + 中央 ❯ 非空) + 末尾 context status footer → match_nonempty
+#      = 現実観測した commander pane の状況 (cycle3 patch 後 fire 期待)
+run_case "C09" \
+    "新形式 ❯ 非空 buffer + 上下 ──── + 末尾 100% context used → match_nonempty (cycle3 核心)" \
+    "────────────────────────────────────────────────
+❯ hello world
+────────────────────────────────────────────────
+                                             100% context used" \
+    "match_nonempty"
+
+# C10: 新形式 (上下 ──── ボーダー + 中央 ❯ 空) + 末尾 context status → match_empty (fire しない)
+run_case "C10" \
+    "新形式 ❯ 空 buffer + 末尾 99% context used → match_empty" \
+    "────────────────────────────────────────────────
+❯
+────────────────────────────────────────────────
+                                             99% context used" \
+    "match_empty"
+
+# C11: 新形式と旧形式 mixed (cycle5c で border 付き両方検出可能性確認)
+run_case "C11" \
+    "border 付き 新+旧 mixed → 最下位 border 直後 prompt 採用" \
+    "────
+❯ early input
+────
+some output
+────
+│ > later legacy input │
+────
+⏵⏵ bypass permissions on" \
+    "match_nonempty"
+
+# C12: context status 行のみ + 直前に非空 input buffer (footer 漏れ verify)
+run_case "C12" \
+    "末尾 [N]% context used 単独 footer + border 付き ❯ 非空 → match_nonempty (status 行除外確認)" \
+    "────
+❯ ok
+────
+                                             87% context used" \
+    "match_nonempty"
+
+# === β改修 cycle4 追加 (CANON 残 regression #1 Layer C): NBSP 正規化 ===
+
+# C13: 新形式 ❯ <NBSP> nonempty (= Claude Code TUI 実観察形式) → match_nonempty
+#      実環境 (shogun-third pane) で実測した 23:52:25 cycle log の last_non_footer_line = `❯\xc2\xa0fire_test_8a8179d`
+#      ★cycle5c: border 付き形式に更新 (実環境準拠)★
+run_case "C13" \
+    "border 付き 新形式 ❯<NBSP>非空 (Claude Code TUI 実観察形式) → match_nonempty (cycle4 核心)" \
+    "$(printf '\xe2\x94\x80\xe2\x94\x80\n\xe2\x9d\xaf\xc2\xa0hello_world\n\xe2\x94\x80\xe2\x94\x80')" \
+    "match_nonempty"
+
+# C14: 新形式 ❯ <NBSP> のみ (空 buffer 実観察形式) → match_empty
+run_case "C14" \
+    "border 付き 新形式 ❯<NBSP> 空 buffer (実観察形式) → match_empty" \
+    "$(printf '\xe2\x94\x80\xe2\x94\x80\n\xe2\x9d\xaf\xc2\xa0\n\xe2\x94\x80\xe2\x94\x80')" \
+    "match_empty"
+
+# C15: 旧形式 + NBSP separator → 旧 regex でも NBSP 正規化後 match
+run_case "C15" \
+    "border 付き 旧形式 │<NBSP>><NBSP>非空 (NBSP 混入) → match_nonempty" \
+    "$(printf '\xe2\x94\x80\xe2\x94\x80\n\xe2\x94\x82\xc2\xa0>\xc2\xa0legacy_with_nbsp\n\xe2\x94\x80\xe2\x94\x80')" \
+    "match_nonempty"
+
+# === β改修 cycle5 追加 (CANON 残 regression #1 Layer D, α 堅牢版): output 流入 race 吸収 ===
+
+# C16: output 流入で ❯ 非空 行が中間に位置 (実観察 race case) → match_nonempty (cycle5 核心)
+run_case "C16" \
+    "output 流入 + ❯ 非空 + 末尾 output (PROMPT 行探索で捕捉) → match_nonempty (cycle5 核心)" \
+    "────────────────────────────────────────────────
+❯ user_typed_text
+────────────────────────────────────────────────
+100% context used
+
+● Bash(some long output line 1)
+● Bash(some long output line 2)
+● Bash(some long output line 3)
+some final tool output text" \
+    "match_nonempty"
+
+# C17: output 流入で ❯ 空 行が中間 → match_empty (誤発火防止維持)
+run_case "C17" \
+    "output 流入 + ❯ 空 + 末尾 output → match_empty (誤発火防止維持)" \
+    "────────────────────────────────────────────────
+❯
+────────────────────────────────────────────────
+100% context used
+
+● Bash(continuing output)
+final output line" \
+    "match_empty"
+
+# C18: PANE_TAIL 全体に prompt 行が一切ない (= pane の bottom 50 行に input 行が含まれない pathological case) → no_match
+run_case "C18" \
+    "PANE_TAIL に prompt 行なし → no_match" \
+    "some output line 1
+some output line 2
+some output line 3" \
+    "no_match"
+
+# C19: 複数 prompt 行 (= 履歴に過去 prompt が残るケース) → 最下位の border-anchored prompt
+#      ★cycle5c: 単純な tail -1 ではなく、────直後の prompt のみ抽出★
+run_case "C19" \
+    "複数 prompt 行混在 (border-anchored) → 最下位の border 直後 prompt" \
+    "────
+❯ old_prompt_with_text
+────
+some output
+────
+❯ current_input
+────
+output continues" \
+    "match_nonempty"
+
+# === β改修 cycle5c 追加 (CANON 残 regression #1 Layer E, anchor 強化): false positive 防止 ===
+
+# C20: output 中のプレーン text `❯ sample` (上 ────ボーダー無し) → ★no_match★ (誤発火防止)
+run_case "C20" \
+    "★output 中 ❯ sample text (周囲 ──── 無し) → no_match (誤発火防止、cycle5c 核心)★" \
+    "some output line
+  ❯ this is a quoted user message from history
+another output line
+some more output" \
+    "no_match"
+
+# C21: output 中のプレーン text `│ > sample │` (上 ────ボーダー無し) → ★no_match★
+run_case "C21" \
+    "★output 中 │ > sample text │ (周囲 ──── 無し) → no_match (誤発火防止)★" \
+    "some output line
+  │ > legacy_quoted_text │
+another output line" \
+    "no_match"
+
+# C22: output 中に過去 ❯ (border 無し) + 現在 ❯ (border あり) 混在 → border 付きを採用
+run_case "C22" \
+    "過去 ❯ (border 無) + 現在 ❯ (border 有) → border 付き input box を採用" \
+    "  ❯ quoted_from_history_no_border
+some output
+────
+❯ real_current_input
+────
+100% context used" \
+    "match_nonempty"
+
+# C23: border あるが prompt 行が異常 (例: 解説文がたまたま ──── 直後) → border-anchored ロジック
+#      ★ロジック: border 直後の行が ❯ や │> で始まらなければ採用しない★
+run_case "C23" \
+    "border 直後が ❯ でも │> でもない行 → no_match (border あっても prompt 行不在)" \
+    "first output
+────
+some non-prompt text after border
+another line
+────
+more text after another border" \
+    "no_match"
+
+# ───────────────────────────────────────────────────────────
+# C24: ★b0bdfa67 S1 fix env propagation 検証★ (Codex Q1 fix_suggestion 準拠)
+#
+# 副院長令 b0bdfa67 で根治した Python heredoc (env 経由) について、Step 2 が
+# command substitution 内に env を渡す形 (= LAST_INFO=$(VAR=v doppler ... python ...))
+# になっていることを smoke で検証する。Step 0/7/8 (doppler が simple command の
+# 先頭にある形) と Step 2 (command substitution に囲まれる形) は bash 評価順序が
+# 異なり、後者で誤って env prefix を assignment 側に付けると subshell の python に
+# 値が伝播せず production breakage (from_pc_filter='' で全 row 取得) を起こす。
+#
+# 本ケースは Step 2 と同形の最小 reproducer を実行し、★env が python プロセスに
+# 確実に伝播する★ことを保証する (= S1 fix の動作性 regression gate)。
+# ───────────────────────────────────────────────────────────
+echo "[smoke C24] running env propagation check (S1 fix Step 2 同形)..."
+ENV_PROP_RESULT=$(ER_FROM_PC_FILTER_PY="commander_test_env_value_C24" python3 -c "
+import os
+print(os.environ.get('ER_FROM_PC_FILTER_PY', 'EMPTY'))
+")
+if [ "$ENV_PROP_RESULT" = "commander_test_env_value_C24" ]; then
+    PASS=$((PASS + 1))
+    echo "  [PASS] C24  actual=$ENV_PROP_RESULT expected=commander_test_env_value_C24 — b0bdfa67 S1 fix Step 2 同形 env propagation OK"
+else
+    FAIL=$((FAIL + 1))
+    FAILED_CASES+=("C24: ENV_PROP_RESULT=$ENV_PROP_RESULT (期待: commander_test_env_value_C24)")
+    echo "  [FAIL] C24  actual=$ENV_PROP_RESULT expected=commander_test_env_value_C24 — Step 2 env propagation BROKEN"
+fi
+
+# C25: ★逆形 (Step 2 旧形と完全同形 = top-level assignment-only chain) で env が
+#       subshell の python に伝播しないことを negative 確認★
+# Step 2 旧形 (壊れた形):
+#   ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" \
+#   LAST_INFO=$(doppler run ... "$ER_PYTHON3_BIN" - <<'PYEOF' ...)
+# = top-level の `VAR=v VAR2=$(subshell)` で両方 assignment ゆえ subshell の python に
+# env prefix が伝播しない (= Codex B1/T1 high で実機 production breakage していた形)。
+# 本ケースは Step 2 旧形と完全同形 (= 二重 subshell でなく top-level assignment-only
+# chain) を実行し、★subshell python が env を受け取らない★ことを confirm。
+# (= C26 の静的 assert と組み合わせ、Step 2 が旧形に regression した瞬間 C25/C26 で
+# 検出する 2 重 gate を提供)
+echo "[smoke C25] running env negative check (Step 2 旧形 = top-level assignment-only chain)..."
+# top-level assignment-only chain: ER_..._PY="..." NEG_RESULT_C25=$(...)
+# subshell python は env を受け取らないので os.environ.get(..., 'EMPTY') は 'EMPTY' を返す
+ER_FROM_PC_FILTER_PY="should_not_propagate_C25" \
+NEG_RESULT_C25=$(python3 -c "
+import os
+print(os.environ.get('ER_FROM_PC_FILTER_PY', 'EMPTY'))
+")
+if [ "$NEG_RESULT_C25" = "EMPTY" ]; then
+    PASS=$((PASS + 1))
+    echo "  [PASS] C25  actual=$NEG_RESULT_C25 expected=EMPTY — 旧形 (top-level assignment-only chain) で subshell python に env 不達を実証 (Step 2 fix の必要性 + 旧形 regression 検出)"
+else
+    FAIL=$((FAIL + 1))
+    FAILED_CASES+=("C25: NEG_RESULT_C25=$NEG_RESULT_C25 (期待: EMPTY)")
+    echo "  [FAIL] C25  actual=$NEG_RESULT_C25 — Step 2 旧形でも env が伝播してしまっている (bash 仕様変更? 検証ロジック誤り?)"
+fi
+
+# C26: ★Watchdog 本体で Step 2 が command substitution 内 env 形になっていることを assert★
+# 静的解析で「LAST_INFO=$(ER_FROM_PC_FILTER_PY=」のパターンが存在することを確認
+# (= ER_FROM_PC_FILTER_PY が LAST_INFO= の前 (= 壊れた形) に出る regression を防ぐ)
+echo "[smoke C26] verifying Step 2 env prefix is inside command substitution..."
+if grep -qE 'LAST_INFO=\$\(ER_FROM_PC_FILTER_PY=' "$WATCHDOG"; then
+    PASS=$((PASS + 1))
+    echo "  [PASS] C26  Step 2 env prefix 位置 = $() 内 (b0bdfa67 cycle2 B1/T1 fix 保護)"
+else
+    FAIL=$((FAIL + 1))
+    FAILED_CASES+=("C26: Step 2 env prefix が $() の外側に居る (= 旧、壊れた形に regression)")
+    echo "  [FAIL] C26  Step 2 env prefix が壊れた形 (= LAST_INFO= の前にある assignment-only chain)"
+fi
+
+echo "----"
+echo "RESULT: PASS=$PASS FAIL=$FAIL TOTAL=$((PASS + FAIL))"
+if [ "$FAIL" -gt 0 ]; then
+    printf 'FAILED CASES: %s\n' "${FAILED_CASES[*]}" >&2
+    echo "ALL PASS NOT REACHED" >&2
+    exit 1
+fi
+echo "ALL PASS ($PASS/$((PASS + FAIL)))"
+exit 0

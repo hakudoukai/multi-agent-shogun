@@ -17,14 +17,33 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if echo \"${CLAUDE_TOOL_INPUT:-}\" | grep -qE '(tmux split-window|tmux kill-pane|tmux respawn-pane)'; then bash scripts/checks/pane_identity.sh >&2 || true; fi; exit 0",
+            "command": "scripts/checks/pretooluse_bash_guard.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash scripts/checks/dd169_kill_term_guard.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/checks/context_usage_warn.sh",
+            "timeout": 5
           }
         ]
       }
     ]
   },
   "permissions": {
+    "allow": [
+      "Bash(kill -TERM:*)"
+    ],
     "deny": [
       "Bash(rm -rf /)",
       "Bash(rm -rf /*)",
@@ -34,7 +53,7 @@
       "Bash(rm -rf ~*)",
       "Bash(sudo *)",
       "Bash(su *)",
-      "Bash(kill *)",
+      "Bash(kill -9:*)",
       "Bash(killall *)",
       "Bash(pkill *)",
       "Bash(git push --force*)",

@@ -16,6 +16,22 @@
 #   TMUX_PANE — used to identify which agent is running
 #   __STOP_HOOK_SCRIPT_DIR — override for testing (default: auto-detect)
 #   __STOP_HOOK_AGENT_ID  — override for testing (default: from tmux)
+#
+# ─── fukuincho 段階3 全自動ループ連動 (副院長令 77bd5c6e + 341654e4 反映) ───
+# 設計章節正本: docs/08-ops/fukuincho-stage3-auto-loop-design.md
+#   commit f1c268d (SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b)
+#   governing audit: subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001
+#
+# 連動責務: 段階3 poke 自動発火後の ack 配送経路温存。
+#   - 副院長殿 → Commander の応答 message が inbox に届く → 本 hook が unread 検知 → block
+#     して agent に処理させる経路を ★無変更で温存★ する。
+#   - poke actuator (scripts/fukuincho_desktop_poke.py) や detect_stale 拡張
+#     (scripts/inbox_watcher.sh 末尾) は本 hook を呼出さない (単一責務分離)。
+#   - L77/L124/L157 の anchored unread grep (^  read: false$) は副院長令 fc3a5b0b
+#     phantom block loop 根治済、本連動でも維持。
+#
+# ★本 hook = 段階3 連動 referrer のみ、code 改修なし★
+# (poke 自動発火後の ack 配送経路は既存 unread→block path を温存することで成立)
 # ═══════════════════════════════════════════════════════════════
 
 set -euo pipefail
@@ -64,12 +80,17 @@ if [ "$STOP_HOOK_ACTIVE" = "True" ]; then
     if [ "$AGENT_ID" = "shogun" ]; then
         WATCH_TARGETS_ACTIVE+=("$SCRIPT_DIR/dashboard.md")
     fi
+    # timeout: 55→10 (副院長令83d84fa0 / Commander seq30274 — turn終端応答性回復)
     if command -v inotifywait &>/dev/null; then
         inotifywait -e close_write -e moved_to \
-            --timeout 55 \
+            --timeout 10 \
             "${WATCH_TARGETS_ACTIVE[@]}" 2>/dev/null || true
     fi
-    UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
+    # Anchored to 2-space indent YAML key (sequence item field).
+    # Unanchored 'read: false' produced false positives when message content
+    # contained the literal substring (e.g. quoted grep output in a3-3 status
+    # report). karo-third 実機 verify 2026-06-04: phantom block loop の真因。
+    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
     if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
         exit 0
     fi
@@ -112,8 +133,11 @@ if [ ! -f "$INBOX" ]; then
     exit 0
 fi
 
-# Count unread messages using grep (fast, no python dependency)
-UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
+# Count unread messages using grep (fast, no python dependency).
+# Anchored to 2-space indent YAML key (sequence item field) to avoid
+# false positives from literal 'read: false' substring inside quoted
+# message content (karo-third 2026-06-04 phantom block loop 真因)。
+UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
 
 # Mass-unread guard (2026-05-07 真因対策):
 # 大量未読 (>5件) で block すると claude が turn 内で大量処理を試み、
@@ -136,16 +160,17 @@ if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
     if [ "$AGENT_ID" = "shogun" ]; then
         WATCH_TARGETS+=("$SCRIPT_DIR/dashboard.md")
     fi
+    # timeout: 55→10 (副院長令83d84fa0 / Commander seq30274 — turn終端応答性回復)
     if command -v inotifywait &>/dev/null; then
         inotifywait -e close_write -e moved_to \
-            --timeout 55 \
+            --timeout 10 \
             "${WATCH_TARGETS[@]}" 2>/dev/null || true
     else
         # inotifywait not available: fall through to exit 0
         :
     fi
-    # 待機後に再チェック
-    UNREAD_COUNT=$(grep -c 'read: false' "$INBOX" 2>/dev/null || true)
+    # 待機後に再チェック (anchored: 2-space indent YAML key only)
+    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
     if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
         exit 0
     fi

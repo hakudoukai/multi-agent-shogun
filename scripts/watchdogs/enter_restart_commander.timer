@@ -1,0 +1,12 @@
+[Unit]
+Description=Enter Restart — Commander 5min cycle (Phase 2 (β) third_pc local / ee4d6ce4)
+Requires=enter_restart_commander.service
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=10s
+Unit=enter_restart_commander.service
+
+[Install]
+WantedBy=timers.target

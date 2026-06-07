@@ -278,6 +278,33 @@ When processing large datasets (30+ items requiring individual web search, API c
 | D007 | `mkfs`, `dd if=`, `fdisk`, `mount`, `umount` | Disk/partition destruction |
 | D008 | `curl|bash`, `wget -O-|sh`, `curl|sh` (pipe-to-shell patterns) | Remote code execution |
 
+### D006 conditional exception (DD-169) — 厳格 5 条件 AND 限定
+
+**★全 5 条件 AND 充足時のみ★** `kill -TERM <数値PID>` 自走可 (= 承認不要)、1 つでも満たさない・曖昧なら従来どおり理事長承認 (安全側)、「使い捨てだから」の拡大解釈禁。
+
+1. **同一作業セッション内起動**: 自分が同一作業セッション内で起動したプロセスのみ (他者起動・既存常駐は対象外)
+2. **検証/DRY-RUN/一時用途**: 本番・継続運用プロセスは対象外
+3. **kill -TERM (graceful) のみ**: `kill -9` / `pkill` / `killall` / `tmux kill-server` / `tmux kill-session` は ★例外に含めず★ 従来どおり禁止
+4. **PID 1 個ずつ明示**: パターン kill (例 `kill -TERM $(pgrep ...)`) 禁
+5. **対象が次のいずれでもない**: 本番 / 将軍 9pane / 患者テーブル / dev server / cron / systemd 常駐 / network listener / production-like service / shared watcher / supervisor 配下 / tmux pane 配下
+
+**例外実行前 DRY-RUN 証跡 必須化**:
+```bash
+ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>
+```
+の出力を例外実行前にログ/コミット message/handshake に記録 (PID/PPID/PGID/SID/command/cwd/起動者/起動時刻/用途 を明示)
+
+**出典**: design_decisions DD-169 81a56136 / 副院長令 9cb98a5d+4f7d549e+1b7452cd (2026-06-01) / Codex YELLOW 修正提案 5 反映済 (cycle1+cycle2+cycle3)
+
+**正本**: ★`<repo>/.claude/settings.json`★ (= project 配下、PR 監査対象、commit に固定). `~/.claude/settings.json` (home) は補助、本番監査は repo 側で実施
+
+**settings.json hook 二層 enforcement (= cycle4 stdin JSON 公式仕様準拠)**:
+
+- **layer 1 (permission gate)**: `.claude/settings.json` の `permissions.allow` で `Bash(kill -TERM:*)` wildcard を許可。Claude Code 公式 permission syntax は wildcard ベース (regex 非対応) のため `:*` を retain せざるを得ず、本 layer は **permissive な hook 到達 gate** として機能する。なお wildcard `Bash(kill *)`・`Bash(kill -9:*)`・`Bash(pkill *)`・`Bash(killall *)`・`Bash(tmux kill-server*)`・`Bash(tmux kill-session*)` は `permissions.deny` で明示 deny 維持 (= 全 kill 拡大は理事長承認必須)。
+- **layer 2 (実体 enforcement)**: PreToolUse hook `scripts/checks/dd169_kill_term_guard.sh` が stdin JSON (= 公式 `{"tool_input":{"command":"..."}}` 仕様) で `.tool_input.command` を読み出し、regex `^kill -TERM [0-9]+$` で 1 数値PID only に **strict 検証**。通過時のみ `ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>` 証跡を `/tmp/dd169_audit_log/` に記録して exit 0、不通過 / parse 失敗 / command 空 / pkill / killall / tmux kill-* / kill -9 はすべて **対称 fail-secure** (exit 2) で deny。
+- **誤読防止**: 「settings.json で `kill -TERM` を許している」だけでは `kill -TERM $(pgrep ...)` や `kill -TERM -1` も通ると誤解しがちだが、実体は hook regex で必ず弾かれる。wildcard 文言と hook 実 enforcement は二層構造である点を必ず読み取ること。
+- **smoke 証跡**: `tests/checks/dd169_kill_term_guard/smoke_test.sh` (= 12 ケース、stdin JSON 形式) を回帰 gate として retain、全 PASS 必達。
+
 ## Tier 2: STOP-AND-REPORT (halt work, notify Karo/Shogun)
 
 | Trigger | Action |

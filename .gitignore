@@ -112,7 +112,17 @@
 !scripts/
 !scripts/inbox_write.sh
 !scripts/inbox_watcher.sh
+!scripts/fukuincho_desktop_poke.py
+!scripts/fukuincho_detect_stale_cli.sh
+!scripts/lib/
+!scripts/lib/detect_stale.sh
+!scripts/tests/
+!scripts/tests/test_fukuincho_desktop_poke.py
+!scripts/tests/test_detect_stale.sh
+!scripts/tests/test_fukuincho_detect_stale_cli.sh
 !scripts/watcher_supervisor.sh
+# third PC 専用 supervisor — phantom inbox1 off-by-one cure 永続化 (karo-third 2026-06-05)
+!scripts/watcher_supervisor_third.sh
 !scripts/ntfy.sh
 !scripts/ntfy_listener.sh
 !scripts/build_instructions.sh
@@ -120,6 +130,9 @@
 !scripts/slim_yaml.py
 !scripts/seo_qc.py
 !scripts/seo_qc.sh
+# 副院長令 86de0a2c: Enter watcher 本体・supervisor 正規 repo 化
+!scripts/pane_enter_watcher.py
+!scripts/pane_enter_watcher_supervisor.sh
 !scripts/stop_hook_inbox.sh
 !scripts/agent_status.sh
 !scripts/ratelimit_check.sh
@@ -134,6 +147,15 @@
 !scripts/setup_known_hosts.sh
 !scripts/karo_overload_monitor.sh
 
+# Box CCG App + 3PC 視覚環境 (副院長裁定 4728acd7、2026-06-04)
+!scripts/box_setup.sh
+!scripts/box_get_carte_pdfs.sh
+!scripts/box_scope_verify.sh
+!scripts/box_pdf_to_png.sh
+!scripts/visual_env_setup.sh
+!scripts/visual_smoke.sh
+!scripts/screen_verify.py
+
 # Pre-action check scripts (§19 Post-Incident Lessons Capture)
 !scripts/checks/
 !scripts/checks/*.sh
@@ -141,6 +163,12 @@
 # Redundancy fallback watchers (本多 v3 HND-T1V3-004)
 !scripts/redundancy/
 !scripts/redundancy/*.sh
+
+# Enter Restart watchdogs (ee4d6ce4 — commander_failsafe rename + shogun_third 新設)
+!scripts/watchdogs/
+!scripts/watchdogs/*.sh
+!scripts/watchdogs/*.service
+!scripts/watchdogs/*.timer
 
 
 # SayTask (sample template only, not actual data)
@@ -183,6 +211,28 @@
 !docs/cmd_claude_md_section18_autogen_draft.md
 !docs/proposals/
 !docs/proposals/pane_identity_pretool_hook_proposal.md
+
+# CLAUDE.md slim 副院長令 7de922ec 移設先 (X-1+X-4、2026-06-04)
+!docs/00-overview/
+!docs/00-overview/*.md
+!docs/01-architecture/
+!docs/01-architecture/*.md
+!docs/02-roles/
+!docs/02-roles/*.md
+!docs/03-workflows/
+!docs/03-workflows/*.md
+!docs/04-naming/
+!docs/04-naming/*.md
+!docs/05-charter/
+!docs/05-charter/*.md
+!docs/06-protocols/
+!docs/06-protocols/*.md
+!docs/07-tools/
+!docs/07-tools/*.md
+!docs/08-ops/
+!docs/08-ops/*.md
+!docs/09-history/
+!docs/09-history/*.md
 
 # pane registry (= 4-way mapping audit SSoT mirror、CLAUDE.md §18.1 二次 source)
 !queue/
@@ -272,6 +322,21 @@ tests/specs/osato_lms_*
 !tests/checks/fixtures/*.yaml
 !tests/checks/fixtures/*.md
 !tests/checks/fixtures/*.sh
+# DD-169 cycle4 smoke test directory (stdin JSON 公式仕様準拠 hook 回帰 gate)
+!tests/checks/dd169_kill_term_guard/
+!tests/checks/dd169_kill_term_guard/*.sh
+# ee4d6ce4 cycle4 B1 smoke test directory (pretooluse_bash_guard stdin JSON 対応 hook 検証 gate)
+!tests/checks/pretooluse_stdin_json/
+!tests/checks/pretooluse_stdin_json/*.sh
+# CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1 (enter_restart footer 耐性 β改修 regression gate)
+!tests/checks/enter_restart_footer_immune/
+!tests/checks/enter_restart_footer_immune/*.sh
+# ee4d6ce4 30f198e3 homework#1 (audit_gemini.sh harness heredoc literal parse bug 根治 regression gate)
+!tests/checks/audit_gemini_harness/
+!tests/checks/audit_gemini_harness/*.sh
+# ee4d6ce4 cycle3 T1 smoke test directory (enter_restart watchdog 4 観点 regression gate)
+!tests/smoke/
+!tests/smoke/*.sh
 !tests/test_helper/
 !tests/test_helper/README.md
 !tests/test_helper/*.bash

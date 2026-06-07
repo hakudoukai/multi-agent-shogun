@@ -622,9 +622,20 @@ send_context_reset() {
     # Only ashigaru should receive automatic context resets (clear stale task context).
     # 信長 (human-controlled), 家老 (coordinator state), 家康 (strategic state)
     # all maintain complex running context that should not be wiped automatically.
-    if [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ]; then
-        echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent)" >&2
+    # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): bare-name 完全一致 → 前方一致化。
+    # third_pc/main_pc/second_pc 等の suffix 付き id (shogun-third 等) も保護対象。
+    # 旧 bug: shogun-third が guard すり抜け → task_assigned 毎に /clear 発火 (実物理証跡 17:53/17:56/18:11)。
+    if [[ "$AGENT_ID" == "shogun"* ]] || [[ "$AGENT_ID" == "karo"* ]] || [[ "$AGENT_ID" == "gunshi"* ]]; then
+        echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent, prefix-match)" >&2
         return 0
+    fi
+
+    # 副院長令 fc3a5b0b RC-1 cure (2026-06-07): busy 中は /clear を送らず defer。
+    # 旧 bug: busy 中でも /clear 貫通 (L681 proceeding anyway) → a3-3 の思考途中で割込み消失。
+    # busy 解除後の次 cycle で再評価。return 1 = caller に "未送信 retry 必要" を伝える。
+    if agent_is_busy; then
+        echo "[$(date)] [DEFER] $AGENT_ID: agent busy — postponing context reset (RC-1 cure)" >&2
+        return 1
     fi
 
     local reset_cmd
@@ -679,7 +690,11 @@ send_context_reset() {
         echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
     done
     if agent_is_busy; then
-        echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after 15s — proceeding anyway" >&2
+        # 副院長令 fc3a5b0b RC-1 cure (2026-06-07): /clear 送信後 15s wait しても busy なら
+        # post-reset nudge をスキップ (Claude Code Stop hook 経由配送に委任)。
+        # return 2 = "sent but still busy, skip post-reset nudge" (caller で NEW_CONTEXT_SENT=1 立てるが nudge skip)
+        echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after 15s — skip post-reset nudge (Stop hook will deliver)" >&2
+        return 2
     fi
 }
 
@@ -767,22 +782,49 @@ session_has_client() {
 # 文字が入っている = 理事長殿/エージェントが入力中 → nudge を skip して入力保護。
 # Welcome screen の「Try "..."」suggestion は idle 扱い (実入力ではない)。
 # 連続 N 回 typing で skip された場合、強制 nudge (緊急メッセージが届かない事故防止)。
+#
+# DD-169 patch (2026-06-02 karo-third F001 例外, shogun msg_20260602_182927 承認下):
+#   旧版は grep -oE '❯[[:space:]]+[^[:space:]].*' で pane buffer 全体から非空 prompt 行を
+#   抽出していたため、historical スクロール (e.g. `❯ /clear` 既往) を current prompt と
+#   誤認 → system-wide typing false-positive で nudge 永久 skip (a3-1/a3-7 で実証)。
+#   修正: 全 ❯ 行 (空含む) を抽出し tail -1 で ★bottom (= current cursor 位置) のみ★ 判定。
+#   空 prompt は idle (return 1)、内容ある場合のみ typing 判定。
+#
+# Bypass flag (緊急時): INBOX_WATCHER_DISABLE_TYPING_CHECK=1 で typing 検出全体を無効化可。
 is_user_typing() {
     local pane="$1"
-    local prompt_content
-    prompt_content=$(timeout 3 tmux capture-pane -t "$pane" -p -e -J 2>/dev/null \
-        | sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g; s/\x1b[()][AB012]//g; s/\x1b[78]//g' \
-        | grep -oE '❯[[:space:]]+[^[:space:]].*' \
-        | tail -1)
-    if [ -z "$prompt_content" ]; then
-        return 1  # no prompt input visible — allow nudge
+    # Emergency bypass — typing 検出無効化 (root-cure 復旧用)
+    if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+        return 1  # treat as idle always — allow nudge
     fi
+    local current_prompt
+    current_prompt=$(timeout 3 tmux capture-pane -t "$pane" -p -e -J 2>/dev/null \
+        | sed 's/\x1b\[[0-9;?]*[a-zA-Z]//g; s/\x1b[()][AB012]//g; s/\x1b[78]//g' \
+        | grep -E '^❯' \
+        | tail -1)
+    if [ -z "$current_prompt" ]; then
+        return 1  # no prompt visible — allow nudge
+    fi
+    # NBSP (U+00A0, claude TUI が空 prompt 描画に使用) を通常空白へ正規化。
+    # POSIX [:space:] は NBSP を含まぬため、これを行わぬと空 prompt が非空と誤判定される。
+    local normalized
+    normalized=$(echo "$current_prompt" | sed 's/\xc2\xa0/ /g')
     local content
-    content=$(echo "$prompt_content" | sed 's/^❯[[:space:]]*//')
-    # 「Try "..."」suggestion (welcome画面) は idle 扱い
-    if [[ "$content" =~ ^Try\  ]]; then
+    content=$(echo "$normalized" | sed 's/^❯[[:space:]]*//' | sed 's/[[:space:]]*$//')
+    # 空 prompt (current cursor 位置) = idle
+    if [ -z "$content" ]; then
         return 1
     fi
+    # claude TUI の placeholder / affordance hint 行は ❯ で始まるが実入力ではない。
+    # CLI 自身が描画する案内文ゆえ idle 扱い (= nudge を skip しない)。
+    #   - 'Try "..."'                       : welcome 画面の suggestion
+    #   - 'Press up to edit queued messages': メッセージ queue 時の案内
+    #     (2026-06-02 ee4d6ce4 Step0: a3-1/a3-5 で「empty idle なのに常時 typing 誤検出」の真因。
+    #      queue hint 行が ❯<NBSP>Press up... と column0 の ❯ で描画され grep '^❯'|tail -1 に拾われる)
+    case "$content" in
+        Try\ *)                                    return 1 ;;
+        Press\ up\ to\ edit\ queued\ message*)      return 1 ;;
+    esac
     return 0  # typing — defer nudge
 }
 
@@ -1092,7 +1134,8 @@ for s in data.get('specials', []):
         # Exception: shogun — ntfy must be delivered immediately.
         # Safety net: if busy detection persists for >5 min, assume false-busy (stale flag)
         # and force-create idle flag to allow nudge delivery.
-        if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+        # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): shogun 例外も前方一致化 (shogun-third/main/second)。
+        if agent_is_busy && [[ "$AGENT_ID" != shogun* ]]; then
             local busy_cli
             busy_cli=$(get_effective_cli_type)
             # Stale busy safety net: if agent has been "busy" for >5 minutes with
@@ -1128,20 +1171,40 @@ for s in data.get('specials', []):
         # Skip if: (1) already sent this batch, (2) clear_command already handled above,
         #          (3) agent is shogun (human-controlled).
         if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+            # 副院長令 fc3a5b0b: send_context_reset の return code を 3 系統で評価。
+            # 0=送信完了 or command-layer guard skip → 通常 post-reset nudge
+            # 1=busy defer (未送信) → NEW_CONTEXT_SENT 立てず次 cycle で retry
+            # 2=送信済だが 15s 経っても busy → NEW_CONTEXT_SENT=1 立てて nudge skip (Stop hook 配送)
             send_context_reset
-            NEW_CONTEXT_SENT=1
-            # CRITICAL FIX: After /clear, agent has fresh context and is at prompt.
-            # It does NOT know about inbox — must send nudge immediately.
-            # Reset throttle state so the nudge is not suppressed.
-            LAST_NUDGE_TS=0
-            LAST_NUDGE_COUNT=""
-            # Reset /clear cooldown so agent_is_busy() returns false for the nudge.
-            # send_context_reset() already waited for agent to become idle (15s max).
-            LAST_CLEAR_TS=0
-            # Send immediate nudge (agent needs this to start CLAUDE.md recovery)
-            echo "[$(date)] [POST-RESET] Sending immediate post-reset nudge to $AGENT_ID" >&2
-            send_wakeup "$normal_count"
-            FIRST_UNREAD_SEEN=$now
+            local reset_rc=$?
+            case "$reset_rc" in
+                0)
+                    NEW_CONTEXT_SENT=1
+                    # CRITICAL FIX: After /clear, agent has fresh context and is at prompt.
+                    # It does NOT know about inbox — must send nudge immediately.
+                    # Reset throttle state so the nudge is not suppressed.
+                    LAST_NUDGE_TS=0
+                    LAST_NUDGE_COUNT=""
+                    # Reset /clear cooldown so agent_is_busy() returns false for the nudge.
+                    # send_context_reset() already waited for agent to become idle (15s max).
+                    LAST_CLEAR_TS=0
+                    # Send immediate nudge (agent needs this to start CLAUDE.md recovery)
+                    echo "[$(date)] [POST-RESET] Sending immediate post-reset nudge to $AGENT_ID" >&2
+                    send_wakeup "$normal_count"
+                    FIRST_UNREAD_SEEN=$now
+                    ;;
+                1)
+                    # busy defer — retry next cycle, do NOT mark NEW_CONTEXT_SENT
+                    echo "[$(date)] [POST-RESET] $AGENT_ID: context reset deferred (busy) — retry next cycle (fc3a5b0b RC-1)" >&2
+                    FIRST_UNREAD_SEEN=$now
+                    ;;
+                2)
+                    # reset sent but agent still busy after 15s — skip nudge
+                    NEW_CONTEXT_SENT=1
+                    echo "[$(date)] [POST-RESET] $AGENT_ID: reset sent but still busy — Stop hook will deliver nudge (fc3a5b0b)" >&2
+                    FIRST_UNREAD_SEEN=$now
+                    ;;
+            esac
             return 0
         fi
 
@@ -1193,9 +1256,10 @@ for s in data.get('specials', []):
                     echo "[$(date)] ESCALATION Phase 3: $AGENT_ID unresponsive for ${age}s, but cli=codex — skipping /clear." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer (no destructive action)
                     send_wakeup "$normal_count"
-                elif [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ]; then
-                    # Command-layer agents (karo/gunshi/shogun): suppress /clear even in Phase 3
-                    echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent, ${age}s). Using Escape+nudge." >&2
+                elif [[ "$AGENT_ID" == "shogun"* ]] || [[ "$AGENT_ID" == "karo"* ]] || [[ "$AGENT_ID" == "gunshi"* ]]; then
+                    # Command-layer agents (karo/gunshi/shogun + suffix variants): suppress /clear even in Phase 3
+                    # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): 前方一致化で shogun-third 等 suffix も保護
+                    echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent prefix-match, ${age}s). Using Escape+nudge." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer
                     send_wakeup_with_escape "$normal_count"
                 else
@@ -1304,12 +1368,18 @@ while true; do
     # All cases: check for unread, then loop back (re-watches new inode)
     sleep 0.3
 
+    # Daemon resilience (2026-06-02 ee4d6ce4 Step0 death-restart root-cure):
+    # process_unread runs under `set -euo pipefail`. Any unguarded command that
+    # returns non-zero (e.g. a grep with no match in a pipeline → pipefail) would
+    # otherwise kill the whole watcher daemon, causing the observed ~40s
+    # death-restart loop. Guard with `|| true` so a single bad cycle never
+    # terminates the long-lived loop. Errors still surface via stderr logs.
     if [ "$rc" -eq 2 ]; then
         if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
-            process_unread "timeout"
+            process_unread "timeout" || true
         fi
     else
-        process_unread "event"
+        process_unread "event" || true
     fi
 
     # Token 飽和警告機構 (2026-05-07 制定):
@@ -1322,9 +1392,11 @@ while true; do
         _token_warn_cooldown=1800  # 30 min
         if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
             _pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
-            _token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1)
+            # `|| true`: under `set -o pipefail`, a no-match grep returns 1 and would
+            # kill the daemon via `set -e` (ee4d6ce4 Step0 death-restart root-cure).
+            _token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1 || true)
             if [ -n "$_token_match" ]; then
-                _token_num=$(echo "$_token_match" | grep -oE '[0-9]+(\.[0-9]+)?')
+                _token_num=$(echo "$_token_match" | grep -oE '[0-9]+(\.[0-9]+)?' || true)
                 _token_int=${_token_num%.*}
                 if [ "${_token_int:-0}" -ge 200 ]; then
                     echo "[$(date)] [TOKEN-WARN] $AGENT_ID context size ${_token_match} (>= 200k) — sending warning to inbox" >&2
@@ -1347,3 +1419,27 @@ _agent_status_lib="${SCRIPT_DIR}/lib/agent_status.sh"
 if [ -f "$_agent_status_lib" ] && ! type agent_is_busy_check &>/dev/null; then
     source "$_agent_status_lib"
 fi
+
+# ═══════════════════════════════════════════════════════════════
+# 段階3 全自動ループ化 — detect_stale lib 化 reference (redo_002 RED-1 cure)
+# ═══════════════════════════════════════════════════════════════
+# redo: subtask_thirdpc_p1_fukuincho_stage3_actual_impl_apply_redo_002
+#   gunshi-third governing RED-1 真因: 関数群が main loop (L1320 while true) の後ろに置かれ
+#   通常実行で永久未到達 dead code、かつ CLI dispatcher が comment のみで実 code 不在。
+#   ↓
+#   cure: 関数群を scripts/lib/detect_stale.sh へ分離 (runtime 到達可能化) + CLI entrypoint
+#         scripts/fukuincho_detect_stale_cli.sh を新規作成 (arg dispatch 実 code 化、RED-1)。
+#         path traversal 防御は lib 側で corr_id sanitize (basename + regex、RED-2 cure)。
+#
+# ★絶対前提★: 本 reference は inbox_watcher.sh の既存 main loop (L1-L1411) と完全独立。
+#              止血B (commit e0e98b7) 該当 line range (L625-639/L1138/L1174-1207/L1259-1264)
+#              prefix-match guard + busy defer の挙動には ★一切触接しない★。
+#
+# 関数群正本: scripts/lib/detect_stale.sh
+#   - detect_stale_evaluate_row()  trigger 候補評価 (status enum + 認可 + corr_id sanitize + in-flight)
+#   - detect_stale_enqueue()       層③ omni engine 呼出 (correlation_id 継承)
+#   - _detect_stale_sanitize_corr_id()  RED-2 cure (path traversal 防御)
+# CLI 正本: scripts/fukuincho_detect_stale_cli.sh
+#   - `bash scripts/fukuincho_detect_stale_cli.sh --detect-stale-handshake [--input <file>]`
+#   - cron 60s polling から invoke される (設計 §2 (1)-(4) verbatim)
+# ═══════════════════════════════════════════════════════════════

@@ -1,0 +1,12 @@
+[Unit]
+Description=Enter Restart — shogun-second 5min cycle (second_pc 横展開, 副院長令 baabd1ca)
+Requires=enter_restart_shogun_second.service
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=5min
+AccuracySec=10s
+Unit=enter_restart_shogun_second.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=Enter Restart — shogun-main 5min cycle (main_pc 横展開, 副院長令 baabd1ca)
+Requires=enter_restart_shogun_main.service
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=5min
+AccuracySec=10s
+Unit=enter_restart_shogun_main.service
+
+[Install]
+WantedBy=timers.target
