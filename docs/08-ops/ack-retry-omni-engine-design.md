@@ -101,8 +101,10 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | 1380s | 720s | 5 | confirm 未達 → 再送 #5 (★最終再送★) | — | 上限手前 |
 | >1380s & 未達 | — | 上限到達 | ★自動再送停止★ | ★human-required★ (上位 inbox `type: request_permission`「5 回再送しても受領不能」) | 5 回上限 |
 
-- **backoff の定義 (一本化)**: `gap` は base=30s から ★2 倍ずつ漸増★ し各値に ±20% jitter を付す (flood 防止)。
-  副院長 verbatim の 30 / 120 / 300s は ★上記表の固定 checkpoint として優先★ し、以降 (660s/1380s) は backoff 漸増で導出。
+- **backoff の定義 (一本化 — 表が唯一の正本、Codex cycle3 B2)**: 副院長 verbatim の固定 checkpoint
+  (t=30 / 120 / 300s, gap=30 / 90 / 180s) を ★優先★ する。t=300s 以降は ★`gap_next = gap_current × 2`★
+  (180 → 360 → 720s) で算出 (t=660s, t=1380s)。各 gap に ±20% jitter を付す (flood 防止)。
+  ★上記表の値が実装の唯一正本★ で、本文式は表の tail 導出根拠 (表と本文を一致させる)。
 - **escalate の意味**: 300s の escalate は ★通知 (notify) であり再送停止ではない★。再送は 5 回上限まで継続する。
 - **再送上限 = 5 回**。到達後 confirm 未達なら ★自動再送停止 + human-required escalation★
   (上位 inbox に `type: request_permission`)。Watcher Design Principles「無限 retry 禁」必達。
@@ -116,8 +118,13 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 
 ## (v) 誤爆抑制 (dedupe — recovery 順守)
 
-- **dedupe key**: `(correlation_id, recipient, payload_digest)` の三項組。`payload_digest` = content の sha (truncate 後)。
-- **TTL window**: 60 秒。同一 key の重複送信を TTL 窓内で抑止 (Watcher Design Principles 重複検知/idempotency 順守)。
+- **dedupe の対象 (限定)**: dedupe は ★偶発的な重複「初回」送信★ と ★(iii) bypass 由来の二重 delivery★ のみを抑止する。
+  ★(iv) の SLA scheduled retry は dedupe 対象外★ — さもなくば retry#1 (t=30s) が TTL=60s 窓内で同一 key として
+  抑止され、正当な再送が落ちる (Codex cycle3 B1)。
+- **dedupe key**: `(correlation_id, recipient, payload_digest, resend_attempt)` の四項組。`payload_digest` = content の sha (truncate 後)、
+  `resend_attempt` = retry_count (初回=0, 再送#N=N)。★`resend_attempt` を key に含めることで同一 retry_count の二重実行のみを抑止★ し、
+  異なる retry_count の scheduled retry は別 key として必ず投函される。
+- **TTL window**: 60 秒。同一四項 key の重複送信を TTL 窓内で抑止 (Watcher Design Principles 重複検知/idempotency 順守)。
 - **bypass 由来の二重を 1 本化**: (iii) の bypass で pc_handshake row と inbox entry が二重化した場合、
   同一 `correlation_id` で 1 本に収斂させる (watcher 復帰後の consolidation)。
 - **★応答中 (recipient working) は skip 不要 = 必ず投函★**:
@@ -174,8 +181,14 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 全方向化により ★ローカル実行可能な任意主体が高権限 type を偽装して inbox_write.sh を叩く★ 余地が生じる。
 これを機械的に閉じるため、本エンジンは下記認可契約を ★必須★ とする (bypass / 通常経路 双方に適用)。
 
-- **caller identity の確定**: 送信主体は `tmux display-message -p '#{@agent_id}'` 由来の自 agent_id を `from` に用いる
-  (Session Start Step1 と同一)。`from` 詐称防止のため ★`from` は呼出元 pane の @agent_id と一致必須★ (不一致 → 拒否 + 監査ログ)。
+- **caller identity の確定 (多層、tmux option 単独を認証根拠にしない、Codex cycle3 S1)**:
+  - inbox_write.sh は ★中央管理された trusted pane registry★ を唯一の認可根拠とする。registry =
+    `config/settings.yaml` `pc_mapping.*.agents` (固定 pane ↔ agent_id 対応の正本)。
+  - 呼出時、inbox_write.sh は ① 呼出元 pane (`$TMUX_PANE`) を取得 ② registry で当該 pane に紐づく agent_id を引き
+    ③ 引いた agent_id と引数 `from` が ★一致必須★ (不一致 → reject + `event=denied`/`reason=from_mismatch`)。
+  - ★tmux `@agent_id` option の自己申告値は補助確認のみ★ で、registry (固定 pane↔agent_id) が優越する
+    (pane option 改変・別 pane 経由実行を機械的に閉じる)。
+  - ★非 tmux 実行 ($TMUX_PANE 不在) は reject★ (infrastructure 層の Commander SSH 着火 = DD-177 第1層のみ例外、別経路)。
 - **sender × recipient × type 許可行列 (最小)**:
 
   | 区分 | 許可される sender → recipient / type | 拒否例 |
@@ -205,8 +218,9 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | | `next_checkpoint_at` | epoch sec | no | 次 poll/再送予定時刻 |
 | | `state` | enum | no | pending / unknown_lost / confirmed / escalated / human-required (`unknown_lost` = (ii) entry 消失時) |
 | | `status_detail` | string | yes | unknown_lost の理由 (entry_missing / parse_error 等) |
-| ack event log | `correlation_id` / `event` / `ts` | string | no | event ∈ {send, stageA, stageB, resend, escalate, human-required} |
+| ack event log | `correlation_id` / `event` / `ts` | string | no | event ∈ {send, stageA, stageB, resend, escalate, human-required, **denied**} |
 | | `retry_count` / `bypass` | int / bool | no | bypass=true は (iii) 経路のみ |
+| | `reason` | string | yes | denied 時必須 (from_mismatch / routing_violation / type_not_allowed / non_tmux) |
 
 ## 2.6 受け入れテスト観点 (SKIP=0 必達、Codex TS1)
 
@@ -225,6 +239,8 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | 11 | 高権限 type 偽装 (ashigaru が `directive`/`clear_command` 発行) | §2.4 行列で拒否 + denied ログ |
 | 12 | `from` 詐称 (呼出元 @agent_id 不一致) | from_mismatch で拒否 |
 | 13 | correlation_id 再採番試行 (再送/応答が新規採番) | 拒否 (既存 id 継承必須) |
+| 14 | dedupe TTL(60s) vs retry#1(30s) 相互作用 | 未 confirmed の retry#1 は TTL 窓内でも必ず再投函 (resend_attempt 差で別 key)、同一 retry_count 二重実行のみ抑止 |
+| 15 | 非 tmux 実行 ($TMUX_PANE 不在) | reject + denied/non_tmux ログ |
 
 ## 3. 軍師 dual audit 対象マッピング (本案件 self-audit)
 
