@@ -622,9 +622,20 @@ send_context_reset() {
     # Only ashigaru should receive automatic context resets (clear stale task context).
     # 信長 (human-controlled), 家老 (coordinator state), 家康 (strategic state)
     # all maintain complex running context that should not be wiped automatically.
-    if [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ]; then
-        echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent)" >&2
+    # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): bare-name 完全一致 → 前方一致化。
+    # third_pc/main_pc/second_pc 等の suffix 付き id (shogun-third 等) も保護対象。
+    # 旧 bug: shogun-third が guard すり抜け → task_assigned 毎に /clear 発火 (実物理証跡 17:53/17:56/18:11)。
+    if [[ "$AGENT_ID" == "shogun"* ]] || [[ "$AGENT_ID" == "karo"* ]] || [[ "$AGENT_ID" == "gunshi"* ]]; then
+        echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent, prefix-match)" >&2
         return 0
+    fi
+
+    # 副院長令 fc3a5b0b RC-1 cure (2026-06-07): busy 中は /clear を送らず defer。
+    # 旧 bug: busy 中でも /clear 貫通 (L681 proceeding anyway) → a3-3 の思考途中で割込み消失。
+    # busy 解除後の次 cycle で再評価。return 1 = caller に "未送信 retry 必要" を伝える。
+    if agent_is_busy; then
+        echo "[$(date)] [DEFER] $AGENT_ID: agent busy — postponing context reset (RC-1 cure)" >&2
+        return 1
     fi
 
     local reset_cmd
@@ -679,7 +690,11 @@ send_context_reset() {
         echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
     done
     if agent_is_busy; then
-        echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after 15s — proceeding anyway" >&2
+        # 副院長令 fc3a5b0b RC-1 cure (2026-06-07): /clear 送信後 15s wait しても busy なら
+        # post-reset nudge をスキップ (Claude Code Stop hook 経由配送に委任)。
+        # return 2 = "sent but still busy, skip post-reset nudge" (caller で NEW_CONTEXT_SENT=1 立てるが nudge skip)
+        echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after 15s — skip post-reset nudge (Stop hook will deliver)" >&2
+        return 2
     fi
 }
 
@@ -1119,7 +1134,8 @@ for s in data.get('specials', []):
         # Exception: shogun — ntfy must be delivered immediately.
         # Safety net: if busy detection persists for >5 min, assume false-busy (stale flag)
         # and force-create idle flag to allow nudge delivery.
-        if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+        # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): shogun 例外も前方一致化 (shogun-third/main/second)。
+        if agent_is_busy && [[ "$AGENT_ID" != shogun* ]]; then
             local busy_cli
             busy_cli=$(get_effective_cli_type)
             # Stale busy safety net: if agent has been "busy" for >5 minutes with
@@ -1155,20 +1171,40 @@ for s in data.get('specials', []):
         # Skip if: (1) already sent this batch, (2) clear_command already handled above,
         #          (3) agent is shogun (human-controlled).
         if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+            # 副院長令 fc3a5b0b: send_context_reset の return code を 3 系統で評価。
+            # 0=送信完了 or command-layer guard skip → 通常 post-reset nudge
+            # 1=busy defer (未送信) → NEW_CONTEXT_SENT 立てず次 cycle で retry
+            # 2=送信済だが 15s 経っても busy → NEW_CONTEXT_SENT=1 立てて nudge skip (Stop hook 配送)
             send_context_reset
-            NEW_CONTEXT_SENT=1
-            # CRITICAL FIX: After /clear, agent has fresh context and is at prompt.
-            # It does NOT know about inbox — must send nudge immediately.
-            # Reset throttle state so the nudge is not suppressed.
-            LAST_NUDGE_TS=0
-            LAST_NUDGE_COUNT=""
-            # Reset /clear cooldown so agent_is_busy() returns false for the nudge.
-            # send_context_reset() already waited for agent to become idle (15s max).
-            LAST_CLEAR_TS=0
-            # Send immediate nudge (agent needs this to start CLAUDE.md recovery)
-            echo "[$(date)] [POST-RESET] Sending immediate post-reset nudge to $AGENT_ID" >&2
-            send_wakeup "$normal_count"
-            FIRST_UNREAD_SEEN=$now
+            local reset_rc=$?
+            case "$reset_rc" in
+                0)
+                    NEW_CONTEXT_SENT=1
+                    # CRITICAL FIX: After /clear, agent has fresh context and is at prompt.
+                    # It does NOT know about inbox — must send nudge immediately.
+                    # Reset throttle state so the nudge is not suppressed.
+                    LAST_NUDGE_TS=0
+                    LAST_NUDGE_COUNT=""
+                    # Reset /clear cooldown so agent_is_busy() returns false for the nudge.
+                    # send_context_reset() already waited for agent to become idle (15s max).
+                    LAST_CLEAR_TS=0
+                    # Send immediate nudge (agent needs this to start CLAUDE.md recovery)
+                    echo "[$(date)] [POST-RESET] Sending immediate post-reset nudge to $AGENT_ID" >&2
+                    send_wakeup "$normal_count"
+                    FIRST_UNREAD_SEEN=$now
+                    ;;
+                1)
+                    # busy defer — retry next cycle, do NOT mark NEW_CONTEXT_SENT
+                    echo "[$(date)] [POST-RESET] $AGENT_ID: context reset deferred (busy) — retry next cycle (fc3a5b0b RC-1)" >&2
+                    FIRST_UNREAD_SEEN=$now
+                    ;;
+                2)
+                    # reset sent but agent still busy after 15s — skip nudge
+                    NEW_CONTEXT_SENT=1
+                    echo "[$(date)] [POST-RESET] $AGENT_ID: reset sent but still busy — Stop hook will deliver nudge (fc3a5b0b)" >&2
+                    FIRST_UNREAD_SEEN=$now
+                    ;;
+            esac
             return 0
         fi
 
@@ -1220,9 +1256,10 @@ for s in data.get('specials', []):
                     echo "[$(date)] ESCALATION Phase 3: $AGENT_ID unresponsive for ${age}s, but cli=codex — skipping /clear." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer (no destructive action)
                     send_wakeup "$normal_count"
-                elif [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ]; then
-                    # Command-layer agents (karo/gunshi/shogun): suppress /clear even in Phase 3
-                    echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent, ${age}s). Using Escape+nudge." >&2
+                elif [[ "$AGENT_ID" == "shogun"* ]] || [[ "$AGENT_ID" == "karo"* ]] || [[ "$AGENT_ID" == "gunshi"* ]]; then
+                    # Command-layer agents (karo/gunshi/shogun + suffix variants): suppress /clear even in Phase 3
+                    # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): 前方一致化で shogun-third 等 suffix も保護
+                    echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent prefix-match, ${age}s). Using Escape+nudge." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer
                     send_wakeup_with_escape "$normal_count"
                 else
