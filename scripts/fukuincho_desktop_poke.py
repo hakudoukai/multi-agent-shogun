@@ -189,9 +189,21 @@ class BusyDetection:
         """3 条件 AND (OR 誤検知率回避、S1 mitigation_a)。"""
         return self.ime_active and self.edit_nonempty and self.focused
 
-    def is_submission_inflight(self) -> bool:
-        """3 条件 AND (submit disable 中 poke の応答衝突回避、S4 mitigation_d)。"""
+    def is_ready_for_submission(self) -> bool:
+        """ready (送信可能、idle) 検出 — 3 条件 AND (a3-3 mitigation_d 元文言の literal 解釈)。
+
+        UI 状態: submit button enabled ∧ spinner 非表示 ∧ progress indicator 非active。
+        = 入力欄が安定して新規 submit を受け付け得る状態 (busy ではない)。
+        """
         return self.submit_enabled and self.spinner_hidden and self.progress_inactive
+
+    def is_submission_inflight(self) -> bool:
+        """submission 進行中検出 (redo_002 fix4: 意味反転是正、gunshi-third RED-MED-B3 cure)。
+
+        前 impl の致命誤りは ready 条件を inflight と返し is_busy に OR 連結 → idle を busy 誤判定。
+        正しい意味: ★ready 条件が満たされない (= 進行中)★ を True とする。
+        """
+        return not self.is_ready_for_submission()
 
     def is_busy(self) -> bool:
         return self.is_editing() or self.is_submission_inflight()
@@ -202,6 +214,27 @@ class BusyDetection:
 # save → set → Enter → restore (Enter 失敗時 finally restore)
 # 構造化ログに clipboard 実値非混入
 # ───────────────────────────────────────────────────────────
+def _is_textlike_clipboard(value) -> bool:
+    """fix6 (redo_002): clipboard 内容が text 系か判定。
+
+    pyperclip.paste() は通常 str を返すが、image/binary 系を含む場合の clipboard では
+    raise or 別 type を返す実装差異がある。str かつ surrogate-free を text 系として扱う。
+    bytes / None / non-str は非テキストと判定 (save/restore skip)。
+    """
+    if value is None:
+        return False
+    if isinstance(value, (bytes, bytearray)):
+        return False
+    if not isinstance(value, str):
+        return False
+    # surrogate を含む場合は明示的に skip (一部 OS で binary 経由 surrogate が混入する)
+    try:
+        value.encode("utf-8")
+    except (UnicodeError, ValueError):
+        return False
+    return True
+
+
 def safe_clipboard_poke(
     payload: str,
     set_clip,
@@ -209,35 +242,64 @@ def safe_clipboard_poke(
     send_enter,
     correlation_id: str,
 ) -> tuple[bool, str]:
-    """clipboard save/set/Enter/restore を安全実行。
+    """clipboard save/set/Enter/restore を安全実行 (redo_002 fix5/fix6 適用)。
 
     Args:
         payload: poke ペイロード (実値はログに出さない)
         set_clip: callable(str) -> None  — clipboard セット
-        get_clip: callable() -> str       — clipboard 取得
-        send_enter: callable() -> bool    — Enter 送出 (True=成功)
+        get_clip: callable() -> Any      — clipboard 取得 (非テキスト時も raise しない API 想定)
+        send_enter: callable() -> bool   — Enter 送出 (True=成功)
         correlation_id: 構造化ログ correlation_id
 
     Returns:
         (success, restore_status)
         success: True = Enter 送出成功
-        restore_status: "restored" | "restore_failed" | "no_original"
+        restore_status (final):
+            "restored"            — original 退避+復元成功
+            "restore_failed"      — 復元試行で例外
+            "no_original_text"    — original が非テキスト (fix6) ゆえ復元 skip
+            "save_failed"         — original 取得自体に失敗
+            "set_failed"          — payload set 失敗 (Enter 未実行)
 
-    ★finally で必ず clipboard を復元★ (Enter 失敗時も Commander 元内容喪失防止、§5.1 #13)
-    ★ログに clipboard 実値・payload 実値を出さない★ (§5.1 #14)
+    ★fix5 (redo_002)★: restore 結果を finally で最終確定し戻り値に反映する
+    (前 impl は send_enter 直後に "pending_restore" を返し、finally の実 restore 結果が
+     呼出側に伝達されない欠陥があった。本実装は nonlocal pattern で最終状態を返す)。
+    ★fix6 (redo_002)★: 非テキスト clipboard 時の save/restore を skip + log で堅牢化。
+    ★§5.1 #13/#14★: Enter 失敗時も finally で復元、ログに clipboard 実値・payload 実値非混入。
     """
     original = None
+    saved_textlike = False
+    final_restore_status = "save_failed"
+    result_ok = False
+    set_failed = False
+
     try:
+        # ── 退避 (fix6: 非テキスト時 skip) ──
         try:
-            original = get_clip()
+            raw = get_clip()
         except Exception as e:
             emit_event(
                 "clipboard_save_failed",
                 correlation_id,
                 error_type=type(e).__name__,
             )
-            original = None
+            raw = None
 
+        if _is_textlike_clipboard(raw):
+            original = raw
+            saved_textlike = True
+            final_restore_status = "pending"
+        elif raw is None:
+            final_restore_status = "save_failed"
+        else:
+            emit_event(
+                "clipboard_non_textlike_skipped",
+                correlation_id,
+                raw_type=type(raw).__name__,
+            )
+            final_restore_status = "no_original_text"
+
+        # ── set ──
         try:
             set_clip(payload)
         except Exception as e:
@@ -246,30 +308,39 @@ def safe_clipboard_poke(
                 correlation_id,
                 error_type=type(e).__name__,
             )
-            return False, "no_original" if original is None else "restored"
+            set_failed = True
+            final_restore_status = "set_failed"
 
-        try:
-            ok = bool(send_enter())
-        except Exception as e:
-            emit_event(
-                "enter_send_failed",
-                correlation_id,
-                error_type=type(e).__name__,
-            )
-            ok = False
-        return ok, "pending_restore"
+        # ── Enter 送出 (set 成功時のみ) ──
+        if not set_failed:
+            try:
+                result_ok = bool(send_enter())
+            except Exception as e:
+                emit_event(
+                    "enter_send_failed",
+                    correlation_id,
+                    error_type=type(e).__name__,
+                )
+                result_ok = False
     finally:
-        # ★finally で必ず復元 (§5.1 #13)★
-        if original is not None:
+        # ★finally で必ず復元 試行 (§5.1 #13)、結果を final_restore_status に反映★
+        if saved_textlike and original is not None:
             try:
                 set_clip(original)
                 emit_event("clipboard_restored", correlation_id)
+                # set_failed 起因の場合も restore 成功すれば "restored" に昇格
+                final_restore_status = "restored"
             except Exception as e:
                 emit_event(
                     "clipboard_restore_failed",
                     correlation_id,
                     error_type=type(e).__name__,
                 )
+                final_restore_status = "restore_failed"
+        # 非テキスト / save_failed / no_original_text は据置 (復元対象なし)
+
+    # ★fix5 (redo_002)★: return を try/finally の外に置き、finally 更新後の状態を返す
+    return result_ok, final_restore_status
 
 
 # ───────────────────────────────────────────────────────────
