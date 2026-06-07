@@ -43,12 +43,15 @@ bundle 構造 (要件 §2 atomic):
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import os
 import re
+import shlex
 import subprocess
 import sys
+import tempfile
 import time
 from dataclasses import dataclass, field
 from typing import Optional, Callable
@@ -193,24 +196,81 @@ def strict_window_title_verify(
 # correlation_id 単位の flock atomic 冪等 (要件 §4)
 # ─ 同一 correlation_id で二重 poke を禁ずる ─
 # ─ flock + on-disk marker で multi-process race safe ─
+# ─ ★cycle2 RED-G cure (cross-platform)★: stdlib fcntl (POSIX) / msvcrt (Windows) で
+#   全 origin_pc (Linux third/second + Windows main) 真 cover、tempfile.gettempdir で
+#   /tmp hardcode 排除 (6 要件 (1) universal canonical 順守) ─
+# ─ ★cycle2 B2 cure (cycle2 med)★: marker/lock path は sha256(corr_id) で
+#   truncate collision を排除 (誤 skip 防止) ─
 # ───────────────────────────────────────────────────────────
 
-_LOCK_DIR_DEFAULT = "/tmp/fukuincho_report_poke_bundle"
+# Portable file-lock wrapper (cycle2 RED-G cure)
+# POSIX 系は fcntl.flock、Windows は msvcrt.locking を採用 (どちらも stdlib、追加 dep なし)
+if sys.platform == "win32":
+    try:
+        import msvcrt as _msvcrt  # type: ignore[import-not-found]
+    except ImportError:
+        _msvcrt = None  # 安全側 fallback (best-effort、ロックは効かないが crash しない)
+    _fcntl = None
+else:
+    try:
+        import fcntl as _fcntl  # type: ignore[import-not-found]
+    except ImportError:
+        _fcntl = None
+    _msvcrt = None
+
+
+def _portable_lock_acquire(fd: int, timeout_sec: float) -> bool:
+    """LOCK_EX | LOCK_NB を timeout_sec まで retry。獲得=True / timeout=False。"""
+    deadline = time.time() + timeout_sec
+    while True:
+        try:
+            if _fcntl is not None:
+                _fcntl.flock(fd, _fcntl.LOCK_EX | _fcntl.LOCK_NB)
+                return True
+            if _msvcrt is not None:
+                # msvcrt.locking は file pos から N byte を lock
+                os.lseek(fd, 0, os.SEEK_SET)
+                _msvcrt.locking(fd, _msvcrt.LK_NBLCK, 1)
+                return True
+            # 両方無い (極稀な platform) → ロックなしで進む (best-effort)
+            return True
+        except (BlockingIOError, OSError):
+            if time.time() >= deadline:
+                return False
+            time.sleep(0.05)
+
+
+def _portable_lock_release(fd: int) -> None:
+    try:
+        if _fcntl is not None:
+            _fcntl.flock(fd, _fcntl.LOCK_UN)
+        elif _msvcrt is not None:
+            os.lseek(fd, 0, os.SEEK_SET)
+            _msvcrt.locking(fd, _msvcrt.LK_UNLCK, 1)
+    except OSError:
+        pass
+
+
+_LOCK_DIR_DEFAULT = os.path.join(
+    tempfile.gettempdir(), "fukuincho_report_poke_bundle"
+)
 
 
 def _ensure_lock_dir(lock_dir: str) -> None:
     os.makedirs(lock_dir, exist_ok=True)
 
 
+def _corr_id_hash(correlation_id: str) -> str:
+    """sha256 hex digest (★B2 cure★: truncate collision 完全排除、path traversal 防止)。"""
+    return hashlib.sha256(correlation_id.encode("utf-8")).hexdigest()
+
+
 def _marker_path(lock_dir: str, correlation_id: str) -> str:
-    # correlation_id を安全な basename に sanitize (path traversal 防止)
-    safe = re.sub(r"[^a-zA-Z0-9_\-\.]", "_", correlation_id)[:200]
-    return os.path.join(lock_dir, f"{safe}.poked")
+    return os.path.join(lock_dir, f"{_corr_id_hash(correlation_id)}.poked")
 
 
 def _lock_path(lock_dir: str, correlation_id: str) -> str:
-    safe = re.sub(r"[^a-zA-Z0-9_\-\.]", "_", correlation_id)[:200]
-    return os.path.join(lock_dir, f"{safe}.lock")
+    return os.path.join(lock_dir, f"{_corr_id_hash(correlation_id)}.lock")
 
 
 def acquire_correlation_lock(
@@ -218,36 +278,31 @@ def acquire_correlation_lock(
     lock_dir: str = _LOCK_DIR_DEFAULT,
     timeout_sec: float = 5.0,
 ):
-    """correlation_id 単位の flock を獲得し file descriptor を返す。
+    """correlation_id 単位の portable lock を獲得し file descriptor を返す。
 
     Returns:
         int fd (lock 獲得成功) / None (timeout)
 
-    ★flock LOCK_EX | LOCK_NB を timeout_sec まで retry★
+    ★cross-platform (POSIX fcntl / Windows msvcrt)★
     ★呼出側責任で release_correlation_lock(fd) を必ず呼ぶこと★
     """
     _ensure_lock_dir(lock_dir)
-    import fcntl
     lock_p = _lock_path(lock_dir, correlation_id)
     fd = os.open(lock_p, os.O_RDWR | os.O_CREAT, 0o644)
-    deadline = time.time() + timeout_sec
-    while True:
-        try:
-            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            return fd
-        except BlockingIOError:
-            if time.time() >= deadline:
-                os.close(fd)
-                return None
-            time.sleep(0.05)
+    if _portable_lock_acquire(fd, timeout_sec):
+        return fd
+    try:
+        os.close(fd)
+    except OSError:
+        pass
+    return None
 
 
 def release_correlation_lock(fd: Optional[int]) -> None:
     if fd is None:
         return
-    import fcntl
     try:
-        fcntl.flock(fd, fcntl.LOCK_UN)
+        _portable_lock_release(fd)
     finally:
         try:
             os.close(fd)
@@ -283,6 +338,11 @@ class ReportInsertResult:
     elapsed_sec: float
 
 
+# inbox_write.sh に content を stdin で渡すための placeholder + env (S2 cure)
+_INBOX_WRITE_STDIN_PLACEHOLDER = "__VIA_STDIN__"
+_INBOX_WRITE_STDIN_ENV = "INBOX_WRITE_CONTENT_STDIN"
+
+
 def report_insert_via_inbox_write(
     target_agent: str,
     content: str,
@@ -296,7 +356,7 @@ def report_insert_via_inbox_write(
 
     Args:
         target_agent: 報告先 agent id (例: "fukuincho", "shogun-third")
-        content: 報告本文 (★raw body はログ非出力★)
+        content: 報告本文 (★raw body はログ非出力 + ★cycle2 S2 cure★ argv 不経由 = stdin 渡し★)
         msg_type: メッセージタイプ (例: "report_received", "task_completed")
         from_agent: 送信元 agent id
         inbox_write_path: scripts/inbox_write.sh への absolute path (省略時=本 file と同 dir)
@@ -310,19 +370,34 @@ def report_insert_via_inbox_write(
 
     ★FKI-NO-DUP★: 直接 Supabase REST 叩かない。inbox_write.sh が唯一の正規 writer。
     ★機密★: content (報告 raw body) はログに出さない。エラー時 stderr のみ。
+    ★cycle2 S2 cure★: content を argv ($2) でなく stdin で渡す (process inspection 機密
+       露出 cure)。env INBOX_WRITE_CONTENT_STDIN=1 で inbox_write.sh が stdin を受領、$2
+       には placeholder (__VIA_STDIN__) を渡し空文字 reject を avoid。
     """
     if inbox_write_path is None:
         inbox_write_path = os.path.join(HERE, "inbox_write.sh")
     if runner is None:
         runner = subprocess.run
 
+    # ★S2 cure★: env + stdin 経路 (process inspection 機密露出 cure)
+    env = dict(os.environ)
+    env[_INBOX_WRITE_STDIN_ENV] = "1"
+
     start = time.time()
     try:
         proc = runner(
-            ["bash", inbox_write_path, target_agent, content, msg_type, from_agent],
+            [
+                "bash", inbox_write_path,
+                target_agent,
+                _INBOX_WRITE_STDIN_PLACEHOLDER,  # $2 はダミー placeholder、bash が stdin で上書き
+                msg_type,
+                from_agent,
+            ],
+            input=content,
             capture_output=True,
             text=True,
             timeout=timeout_sec,
+            env=env,
         )
         elapsed = time.time() - start
         rc = getattr(proc, "returncode", 1)
@@ -363,6 +438,27 @@ _SSH_KEY_PATH = os.path.expanduser("~/.ssh/daishogun_cef2002e5d")
 _MAIN_PC_POKE_SCRIPT = "scripts/fukuincho_desktop_poke.py"
 
 
+# ★cycle2 RED-S1 cure (high)★: correlation_id allowlist matrix
+# 設計 §2(2) 完全一致 reject: ASCII alphanumeric + '.' '_' '-' のみ、1〜200 文字
+# 拒否: ';' '&' '|' '$' '`' '(' ')' '<' '>' 改行 空白 \" \' \\ 等の shell meta 全件
+_VALID_CORR_ID_RE = re.compile(r"^[A-Za-z0-9._\-]{1,200}$")
+
+
+def validate_correlation_id(correlation_id: str) -> bool:
+    """RED-S1 cure: SSH path remote_cmd 内文字列補間に対する injection 防止。
+
+    allowlist 完全一致 reject (cycle2 HIGH-1 prefix 認可教訓継承)。
+    main_pc 直接 path も argv 安全だが、defense-in-depth で同 validate を入口で適用する。
+
+    Returns:
+        True = 安全 (poke 進行可)
+        False = 不正 (poke せず error 返却、raw value は log に出さない)
+    """
+    if not isinstance(correlation_id, str):
+        return False
+    return bool(_VALID_CORR_ID_RE.match(correlation_id))
+
+
 def fire_poke_via_origin(
     correlation_id: str,
     origin_pc: str,
@@ -383,14 +479,31 @@ def fire_poke_via_origin(
                   "human_required", "error", "unsupported_origin"}
 
     ★ALL-SSH-NO-NEW-ENDPOINT-01 順守: 既存 endpoint のみ★
+    ★cycle2 RED-S1 cure (high)★: SSH path remote_cmd に corr_id を unescaped 補間しない。
+       (a) 入口で allowlist 完全一致 reject、(b) defense-in-depth で shlex.quote 経由補間。
     """
     if runner is None:
         runner = subprocess.run
+
+    # ★RED-S1 cure (cycle2 HIGH)★: 入口で allowlist 完全一致 reject (SSH path/main_pc 直接両方)
+    if not validate_correlation_id(correlation_id):
+        emit_event(
+            "poke_corr_id_invalid",
+            correlation_id="(redacted)",  # raw 不正値は log に出さない
+            origin_pc=origin_pc,
+        )
+        return {
+            "status": "error",
+            "rc": 22,
+            "stderr": "invalid correlation_id (allowlist mismatch)",
+            "elapsed_sec": 0.0,
+        }
 
     start = time.time()
 
     if origin_pc == "main_pc":
         # 同一 host 直接呼出 (Windows host)
+        # argv 渡しゆえ shell 補間されない (subprocess は shell=False default)
         cmd = [
             "python3", _MAIN_PC_POKE_SCRIPT,
             "--auto-poke",
@@ -399,9 +512,13 @@ def fire_poke_via_origin(
     elif origin_pc in ("third_pc", "second_pc"):
         # SSH 経由 main_pc 上 poke script 発火
         # ★既存 endpoint daishogun key 経由、新 endpoint 不作成★
+        # ★RED-S1 cure (cycle2 HIGH)★: corr_id + script path を shlex.quote で escape。
+        # allowlist は通っているので metacharacter は含まれないが、defense-in-depth で適用。
+        q_corr = shlex.quote(correlation_id)
+        q_script = shlex.quote(_MAIN_PC_POKE_SCRIPT)
         remote_cmd = (
-            f"python3 {_MAIN_PC_POKE_SCRIPT} "
-            f"--auto-poke --correlation-id {correlation_id}"
+            f"python3 {q_script} "
+            f"--auto-poke --correlation-id {q_corr}"
         )
         cmd = [
             "ssh", "-i", _SSH_KEY_PATH,
@@ -651,6 +768,18 @@ def report_and_poke(
                 note="report INSERT rc!=0 — poke skipped per §2 verbatim",
             )
 
+        # ★cycle2 RED-B1 cure (high)★: INSERT 成功直後 (poke 前) に marker を立てる。
+        # 旧版は fired 時のみ mark していたため、INSERT 成功 + poke error/human_required
+        # の rerun で同一 corr_id が再 INSERT される (冪等性違反、dup-INSERT) 欠陥があった。
+        # 本順序変更で poke 結果に関わらず marker 残存 → rerun は skipped_already_poked で
+        # INSERT 0 件 + poke 0 件、運用は別 corr_id で再起票 = 仕様。
+        mark_poked(correlation_id, lock_dir=lock_dir)
+        emit_event(
+            "bundle_marker_set_post_insert",
+            correlation_id,
+            origin_pc=origin_pc,
+        )
+
         # 報告 INSERT → poke 発火 latency 計測 (verify (i))
         latency_before_poke_sec = time.time() - start
         emit_event(
@@ -669,9 +798,7 @@ def report_and_poke(
             sleeper=sleeper,
         )
 
-        # fired → marker 立て (二重 poke 防止)
         if poke_result.get("status") == "fired":
-            mark_poked(correlation_id, lock_dir=lock_dir)
             emit_event(
                 "bundle_fired",
                 correlation_id,

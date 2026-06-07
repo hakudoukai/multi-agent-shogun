@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # inbox_write.sh — メールボックスへのメッセージ書き込み（排他ロック付き）
-# Usage: bash scripts/inbox_write.sh <target_agent> <content> <type> <from>
+# Usage:
+#   通常 (argv 経由): bash scripts/inbox_write.sh <target_agent> <content> <type> <from>
+#   ★stdin 経由 (cycle2 S2 cure)★:
+#       INBOX_WRITE_CONTENT_STDIN=1 bash scripts/inbox_write.sh <target> __VIA_STDIN__ <type> <from> < <(echo "$CONTENT")
+#       env INBOX_WRITE_CONTENT_STDIN=1 が立っている時は $2 を無視して stdin から content を読む。
+#       process inspection (ps/argv leak) で機密内容が見えるのを防ぐ用途 (fukuincho_report_poke_bundle.py で利用)。
 # Example: bash scripts/inbox_write.sh karo "足軽5号、任務完了" report_received ashigaru5
 
 set -e
@@ -10,6 +15,12 @@ TARGET="$1"
 CONTENT="$2"
 TYPE="$3"
 FROM="$4"
+
+# ★cycle2 S2 cure (med)★: stdin 経由 content 受領 (argv 露出 cure)
+# 既存 caller (positional argv) は env 未設定で従来動作、backward compatible
+if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+    CONTENT="$(cat)"
+fi
 
 INBOX="$SCRIPT_DIR/queue/inbox/${TARGET}.yaml"
 LOCKFILE="${INBOX}.lock"
