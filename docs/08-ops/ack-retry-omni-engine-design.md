@@ -58,13 +58,15 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
     ★grep substring 一致は使わない★ (content 内 literal 誤検知回避、[[stop-hook-grep-unanchored-false-positive]] 教訓)。
   - L-handshake: `correlation_id` を key に対応 `pc_handshake` row を SELECT し存在確認。
   - root spec 命題: 「送ったつもり」を排除 (write 成功 ≠ 着信、必ず id 一致 entry の読み返しで grounding)。
-- **Stage B — 受領確認 (receipt)**: 相手が当該 message を ★処理した★ ことを確認。判定は ★対象 message id (or correlation_id) に直接ひも付ける★。
-  - 主信号: YAML parser で ★同一 id の entry を特定★ し、その entry の `read == true` を確認。
-    ★「read: false 行の消失」を confirmed と見なさない★ — entry 削除 / YAML 整形差分 / rotation / 別 entry の
-    read 変化では誤確認しうるため (Codex B1)。
+- **Stage B — 受領確認 (receipt)**: 相手が当該 message を ★処理した★ ことを確認。判定は ★correlation_id 単位★ で行う
+  (再送は同一 correlation_id で ★新規 entry id★ を再投函するため、初回 id 固定では retry entry 処理を取りこぼす — Codex cycle5 B1)。
+  - retry queue は当該 correlation_id で ★投函済みの全 entry id 群 (`posted_ids`)★ を保持する。
+  - 主信号: YAML parser で `posted_ids` のいずれか ★最新有効 entry が `read == true`★ になった時点で `confirmed`。
+    ★「read: false 行の消失」単独を confirmed と見なさない★ — entry 削除 / YAML 整形差分 / rotation では誤確認しうるため
+    (Codex cycle1 B1)、必ず id/correlation_id 一致 entry の `read == true` で grounding。
   - 副信号: 同一 `correlation_id` を ★明示参照★ する応答 message (報告 / qc / ack response id) の着信。
-  - ★entry 消失 (id が parser で発見不能) = `confirmed` ではなく `unknown/lost` 扱い★ → (iv) の retry / escalate
-    対象とする (silent に「届いた」と断定しない)。
+  - ★`posted_ids` の全 entry が parser で発見不能 (全消失) = `confirmed` ではなく `unknown_lost` 扱い★ → (iv) の
+    retry / escalate 対象とする (silent に「届いた」と断定しない)。
 - **fire-and-forget 禁**: Stage B `confirmed` 未達の間、message は「未確認」状態として送り手の retry queue に残る。
 - **poll cadence 素案**: Stage A は append 直後 1 回 + 2s 後再確認、Stage B は (iv) の SLA checkpoint で poll
   (独立した高頻度 poll loop は新設しない — Watcher Design Principles「無限 retry 禁」順守)。
@@ -96,10 +98,10 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | 0 | — | 0 | send + Stage A 着信確認 | — | — |
 | 30s | 30s | 1 | confirm 未達 → 再送 #1 | — | 副院長 verbatim |
 | 120s | 90s | 2 | confirm 未達 → 再送 #2 | — | 副院長 verbatim |
-| 300s | 180s | 3 | confirm 未達 → 再送 #3 + ★上位 escalate 通知★ (上位 inbox `type: notification`、再送は継続) | notify (停止せず) | 副院長 verbatim |
+| 300s | 180s | 3 | confirm 未達 → 再送 #3 + ★上位 escalate 通知★ (`type: notification`、通知先×transport は下表、再送は継続) | notify (停止せず) | 副院長 verbatim |
 | 660s | 360s | 4 | confirm 未達 → 再送 #4 | — | backoff 継続 |
 | 1380s | 720s | 5 | confirm 未達 → 再送 #5 (★最終再送★) | — | 上限手前 |
-| >1380s & 未達 | — | 上限到達 | ★自動再送停止★ | ★human_required★ (上位 inbox `type: request_permission`「5 回再送しても受領不能」) | 5 回上限 |
+| >1380s & 未達 | — | 上限到達 | ★自動再送停止★ | ★human_required★ (`type: request_permission`「5 回再送しても受領不能」、通知先×transport は下表) | 5 回上限 |
 
 - **backoff の定義 (一本化 — 表が唯一の正本、Codex cycle3 B2)**: 副院長 verbatim の固定 checkpoint
   (t=30 / 120 / 300s, gap=30 / 90 / 180s) を ★優先★ する。t=300s 以降は ★`gap_next = gap_current × 2`★
@@ -108,6 +110,16 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
   とする (escalate@300s 等の受け入れテストと厳密時刻が衝突しないため、Codex cycle4 B1)。
   ★上記表の値が実装の唯一正本★ で、本文式は表の tail 導出根拠 (表と本文を一致させる)。
 - **escalate の意味**: 300s の escalate は ★通知 (notify) であり再送停止ではない★。再送は 5 回上限まで継続する。
+- **escalate 通知先 × transport (sender role 別、F002 合法経路限定、Codex cycle5 B2)**:
+
+  | sender role | escalate/request_permission 通知先 | transport |
+  |---|---|---|
+  | ashigaru / gunshi | karo (直上位) | inbox (L-inbox / L-handshake) |
+  | karo | shogun | ★dashboard.md 経路★ (inbox 不可、「inbox to shogun FORBIDDEN」順守) |
+  | shogun | Commander | pc_handshake |
+  | Commander | 副院長殿 | pc_handshake |
+
+  ★karo 起点の escalate は shogun inbox へ投函せず dashboard.md に記載する★ (F002 割り込み防止境界順守)。
 - **再送上限 = 5 回**。到達後 confirm 未達なら ★自動再送停止 + human_required escalation★
   (上位 inbox に `type: request_permission`)。Watcher Design Principles「無限 retry 禁」必達。
 - **confirmed 到達時**: いずれの checkpoint でも Stage B `confirmed` を観測した時点で ★即座に retry queue から除去★ し以降の再送を停止。
@@ -198,11 +210,12 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
     ★固定 allowlist (caller host/user) + 署名 + 監査ログ必須★ とし、汎用 bypass にしない。
 - **sender × recipient × type 許可行列 (最小)**:
 
-  | 区分 | 許可される sender → recipient / type | 拒否例 |
+  | 区分 | 許可される sender → recipient / type (inbox/handshake 経路) | 拒否例 |
   |---|---|---|
-  | F002 routing | 下位 → 直上位のみ (ashigaru→karo/gunshi, gunshi→karo, karo→shogun(dashboard), shogun→commander, commander→副院長) | gunshi/ashigaru → 副院長 直接、下位 → 2段飛ばし |
+  | F002 routing | 下位 → 直上位のみ (ashigaru→karo/gunshi, gunshi→karo, shogun→commander, commander→副院長) | gunshi/ashigaru → 副院長 直接、下位 → 2段飛ばし |
   | 高権限 type | `directive` / `urgent_stop` / `clear_command` / `model_switch` は ★上位 → 下位 のみ★ | ashigaru/gunshi が `directive`/`clear_command` を発行 |
   | self-send | sender == recipient | inbox_write.sh 既存 guard で reject |
+  | ★karo → shogun は ack engine 対象外★ | inbox/handshake 送信 ★不可★ (dashboard.md pull 経路のみ) | karo → shogun inbox 投函 = 「inbox to shogun FORBIDDEN」違反として reject + denied/routing_violation ログ |
 
 - **correlation_id 発行主体**: ★初回送信者のみ★ が新規 `correlation_id` を採番する。再送・bypass・応答は
   既存 `correlation_id` を ★継承★ し新規採番しない (なりすまし新規 thread 防止)。
@@ -221,11 +234,13 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | | `from_pc` / `target_pc` / `target_agent` | string | no | 既存 bridge field |
 | retry queue item | `correlation_id` / `recipient` | string | no | dedupe key 構成 |
 | | `payload_digest` | string | no | content sha (truncate 後) |
-| | `retry_count` | int | no | 0..5、(iv) 状態表と対応 |
-| | `next_checkpoint_at` | epoch sec | no | 次 poll/再送予定時刻 |
-| | `state` | enum | no | pending / unknown_lost / confirmed / escalated / human_required (`unknown_lost` = (ii) entry 消失時) |
+| | `resend_attempt` / `retry_count` | int | no | 0..5、dedupe 四項組 + (iv) 状態表と対応 |
+| | `posted_ids` | string[] | no | 当該 correlation_id で投函済み全 entry id 群 (Stage B 判定対象、(ii)) |
+| | `next_checkpoint_at` | epoch sec (UTC) | no | 次 poll/再送予定時刻 |
+| | `state` | enum | no | pending / unknown_lost / confirmed / escalated / human_required (`unknown_lost` = (ii) entry 全消失時) |
 | | `status_detail` | string | yes | unknown_lost の理由 (entry_missing / parse_error 等) |
-| ack event log | `correlation_id` / `event` / `ts` | string | no | event ∈ {send, stageA, stageB, resend, escalate, human_required, **denied**} |
+| ack event log | `correlation_id` / `event` | string | no | event ∈ {send, stageA, stageB, resend, escalate, human_required, **denied**} |
+| | `ts` | epoch sec (UTC) | no | ★時刻型を retry queue と統一★ (Codex cycle5 T1)。next_checkpoint_at と同一型 |
 | | `retry_count` / `bypass` | int / bool | no | bypass=true は (iii) 経路のみ |
 | | `reason` | string | yes | denied 時必須 (from_mismatch / routing_violation / type_not_allowed / non_tmux) |
 
@@ -252,6 +267,8 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | 17 | 並行: retry queue lock 競合 | flock 待ち後に整合更新、状態破損なし |
 | 18 | 片側 transport 成功 (pc_handshake 成功 / inbox 失敗 or 逆) | 復旧後 correlation_id で 1 本化、喪失・二重なし |
 | 19 | correlation_id 衝突 (異 thread が同値採番) | §2.4 発行主体規約で防止、検出時 reject |
+| 20 | 初回 id 未読のまま retry#1 entry が read:true | ★confirmed★ (同一 correlation_id の有効 entry 処理で確定、初回 id 固定の取りこぼし無し、Codex cycle5 B1) |
+| 21 | karo 起点 escalate/request_permission | shogun inbox へ投函されず ★dashboard.md 経路★ (F002 dashboard-only 例外順守、Codex cycle5 TS2) |
 
 ## 3. 軍師 dual audit 対象マッピング (本案件 self-audit)
 
