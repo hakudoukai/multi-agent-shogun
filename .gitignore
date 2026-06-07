@@ -113,11 +113,15 @@
 !scripts/inbox_write.sh
 !scripts/inbox_watcher.sh
 !scripts/fukuincho_desktop_poke.py
+# direct-poke bundle (副院長令 FINAL DIRECTIVE phase ②、ba9c7281 + 21a87964 設計実装)
+!scripts/fukuincho_report_poke_bundle.py
 !scripts/fukuincho_detect_stale_cli.sh
 !scripts/lib/
 !scripts/lib/detect_stale.sh
 !scripts/tests/
 !scripts/tests/test_fukuincho_desktop_poke.py
+# direct-poke bundle unit test ((i)-(v) verify SKIP=0)
+!scripts/tests/test_fukuincho_report_poke_bundle.py
 !scripts/tests/test_detect_stale.sh
 !scripts/tests/test_fukuincho_detect_stale_cli.sh
 !scripts/watcher_supervisor.sh
