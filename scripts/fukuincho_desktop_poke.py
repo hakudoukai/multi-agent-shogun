@@ -255,16 +255,21 @@ def safe_clipboard_poke(
         (success, restore_status)
         success: True = Enter 送出成功
         restore_status (final):
-            "restored"            — original 退避+復元成功
-            "restore_failed"      — 復元試行で例外
+            "restored"            — original 退避+復元成功 (set 成功時のみ)
+            "restore_failed"      — 復元試行で例外 (set 成功時のみ)
             "no_original_text"    — original が非テキスト (fix6) ゆえ復元 skip
             "save_failed"         — original 取得自体に失敗
-            "set_failed"          — payload set 失敗 (Enter 未実行)
+            "set_failed"          — payload set 失敗 (Enter 未実行、restore は試行されるが status は set_failed 保持)
+            "set_failed_restore_failed" — set 失敗 ∧ restore 失敗 (両 fail を顕在化、cycle3 fix5 MED-3 cure)
 
     ★fix5 (redo_002)★: restore 結果を finally で最終確定し戻り値に反映する
     (前 impl は send_enter 直後に "pending_restore" を返し、finally の実 restore 結果が
      呼出側に伝達されない欠陥があった。本実装は nonlocal pattern で最終状態を返す)。
     ★fix6 (redo_002)★: 非テキスト clipboard 時の save/restore を skip + log で堅牢化。
+    ★cycle3 fix5 (MED-3 cure)★: set 失敗時に restore 成功が "set_failed" を "restored" に
+      上書きする欠陥を是正。set 失敗は呼出側に顕在化させる必要があるため (Enter 未実行を
+      hide してはならない)、restore 結果に関わらず set_failed を保持する。両 fail 時は
+      "set_failed_restore_failed" で両事象を表現。
     ★§5.1 #13/#14★: Enter 失敗時も finally で復元、ログに clipboard 実値・payload 実値非混入。
     """
     original = None
@@ -324,20 +329,31 @@ def safe_clipboard_poke(
                 result_ok = False
     finally:
         # ★finally で必ず復元 試行 (§5.1 #13)、結果を final_restore_status に反映★
+        # ★cycle3 fix5 (MED-3 cure)★: set 失敗時は restore 成否に関わらず set_failed を保持
+        #   (旧 impl は restore 成功で "set_failed" を "restored" に上書き → Enter 未実行を hide
+        #    する設計欠陥。新 impl は set 失敗を顕在化、両 fail 時は set_failed_restore_failed)。
         if saved_textlike and original is not None:
             try:
                 set_clip(original)
                 emit_event("clipboard_restored", correlation_id)
-                # set_failed 起因の場合も restore 成功すれば "restored" に昇格
-                final_restore_status = "restored"
+                if set_failed:
+                    # set 失敗 ∧ restore 成功 → set_failed 保持 (Enter 未実行を顕在化)
+                    final_restore_status = "set_failed"
+                else:
+                    # 正常系 (set 成功) → restore 成功で restored 確定
+                    final_restore_status = "restored"
             except Exception as e:
                 emit_event(
                     "clipboard_restore_failed",
                     correlation_id,
                     error_type=type(e).__name__,
                 )
-                final_restore_status = "restore_failed"
-        # 非テキスト / save_failed / no_original_text は据置 (復元対象なし)
+                if set_failed:
+                    # 両 fail → 両事象を表現する複合 status
+                    final_restore_status = "set_failed_restore_failed"
+                else:
+                    final_restore_status = "restore_failed"
+        # 非テキスト / save_failed / no_original_text は据置 (復元対象なし、set_failed も据置)
 
     # ★fix5 (redo_002)★: return を try/finally の外に置き、finally 更新後の状態を返す
     return result_ok, final_restore_status

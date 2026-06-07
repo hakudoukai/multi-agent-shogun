@@ -308,17 +308,80 @@ def test_clipboard_return_status_consistency():
     ok3, status3 = safe_clipboard_poke('payload', set_clip3, get_clip_raise, lambda: True, 'fix5-3')
     assert status3 == 'save_failed', f'expected save_failed, got {status3}'
 
-    # set_failed 系
+    # set_failed 系 — ★cycle3 fix5 (MED-3 cure)★ 適用後の挙動
+    # 全 set_clip 呼出が raise → set 失敗 + restore 失敗 → "set_failed_restore_failed"
     state4 = {'val': 'orig'}
     def get_clip4(): return state4['val']
     def set_clip_fail(v): raise RuntimeError('set 失敗')
     ok4, status4 = safe_clipboard_poke('payload', set_clip_fail, get_clip4, lambda: True, 'fix5-4')
-    # set 失敗時、send_enter 未実行ゆえ ok=False、restore は finally で試行されるが original ありゆえ restored へ
     assert ok4 is False
-    # set 失敗時の restore: original 退避済ゆえ "restored" にしたい (set 失敗を吸収して元に戻す)
-    # ただし set_clip_fail は本テストで restore も失敗させる ゆえ "restore_failed" になる
-    assert status4 in ('restore_failed', 'restored'), \
-        f'expected restore_failed or restored, got {status4}'
+    # ★cycle3 fix5 MED-3★: set 失敗時 restore 成否に関わらず set_failed を顕在化
+    # 本テストは restore も失敗するため複合 status
+    assert status4 == 'set_failed_restore_failed', \
+        f'cycle3 fix5 MED-3 cure: expected set_failed_restore_failed, got {status4}'
+
+
+# ════════════════════════════════════════════════════════════
+# 15. ★cycle3 fix5 (MED-3 cure)★ set 失敗時の status 顕在化
+# 旧 impl: set 失敗 + restore 成功 → "restored" (set_failed を hide する欠陥)
+# 新 impl: set 失敗 + restore 成功 → "set_failed" (Enter 未実行を顕在化)
+#         set 失敗 + restore 失敗 → "set_failed_restore_failed"
+# ════════════════════════════════════════════════════════════
+def test_set_failed_restore_success_preserves_set_failed():
+    """★cycle3 MED-3 cure★ set 失敗 + restore 成功 → status='set_failed' (上書き禁)。"""
+    state = {'val': 'commander_orig'}
+    call_seq = []
+    def get_clip(): return state['val']
+    def set_clip(v):
+        call_seq.append(v)
+        if len(call_seq) == 1:
+            # 1st call (payload set) → fail
+            raise RuntimeError('set payload 失敗 simulation')
+        # 2nd call (restore) → success
+        state['val'] = v
+    ok, status = safe_clipboard_poke('payload', set_clip, get_clip, lambda: True, 'med3-1')
+    assert ok is False, 'Enter 未実行ゆえ ok=False'
+    # ★MED-3 核心★: restore 成功でも set_failed を上書きしない
+    assert status == 'set_failed', \
+        f'cycle3 MED-3 cure: set 失敗を restore 成功で上書きするのは欠陥、got {status}'
+    # original へ戻っていること
+    assert state['val'] == 'commander_orig', 'restore 成功で元値復元されているはず'
+
+
+def test_set_failed_restore_failed_compound_status():
+    """★cycle3 MED-3 cure★ set 失敗 + restore 失敗 → status='set_failed_restore_failed'。"""
+    state = {'val': 'commander_orig'}
+    def get_clip(): return state['val']
+    def set_clip(v):
+        # 全 set_clip 呼出 (payload set + restore) を fail させる
+        raise RuntimeError('set/restore 共 fail simulation')
+    ok, status = safe_clipboard_poke('payload', set_clip, get_clip, lambda: True, 'med3-2')
+    assert ok is False
+    assert status == 'set_failed_restore_failed', \
+        f'cycle3 MED-3 cure: 両 fail は複合 status で顕在化、got {status}'
+
+
+def test_set_success_restore_success_normal():
+    """正常系: set 成功 + Enter 成功 + restore 成功 → 'restored' (旧仕様維持)。"""
+    state = {'val': 'commander_orig'}
+    def get_clip(): return state['val']
+    def set_clip(v): state['val'] = v
+    ok, status = safe_clipboard_poke('payload', set_clip, get_clip, lambda: True, 'med3-3')
+    assert ok is True
+    assert status == 'restored'
+    assert state['val'] == 'commander_orig'
+
+
+def test_set_success_enter_fail_restore_success_status_restored():
+    """Enter 失敗時も set 成功なら restored を返す (set_failed と区別)。"""
+    state = {'val': 'commander_orig'}
+    def get_clip(): return state['val']
+    def set_clip(v): state['val'] = v
+    def enter_fail(): raise RuntimeError('Enter 失敗')
+    ok, status = safe_clipboard_poke('payload', set_clip, get_clip, enter_fail, 'med3-4')
+    assert ok is False
+    # Enter 失敗は set 成功時の restore 成功で restored に整理 (set_failed と区別)
+    assert status == 'restored', f'Enter 失敗 ≠ set 失敗、got {status}'
 
 
 # ════════════════════════════════════════════════════════════
@@ -339,6 +402,10 @@ TESTS = [
     ('12. ★fix6★ clipboard 非テキスト判定', test_clipboard_textlike_detection),
     ('13. ★fix6★ clipboard 非テキスト時 save/restore skip', test_clipboard_nontextlike_skips_restore),
     ('14. ★fix5★ restore 戻り値整合性 (restored/restore_failed/save_failed/set_failed)', test_clipboard_return_status_consistency),
+    ('15. ★cycle3 fix5 MED-3★ set 失敗 + restore 成功 → set_failed 保持', test_set_failed_restore_success_preserves_set_failed),
+    ('16. ★cycle3 fix5 MED-3★ set 失敗 + restore 失敗 → set_failed_restore_failed', test_set_failed_restore_failed_compound_status),
+    ('17. ★cycle3 fix5 MED-3★ 正常系 set+Enter+restore → restored', test_set_success_restore_success_normal),
+    ('18. ★cycle3 fix5 MED-3★ set 成功 ∧ Enter 失敗 → restored (set_failed と区別)', test_set_success_enter_fail_restore_success_status_restored),
 ]
 
 

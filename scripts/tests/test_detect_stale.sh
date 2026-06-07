@@ -97,24 +97,19 @@ test_corr_id_underscore_pass() {
     [ "$out" = "poke_abc_123" ]
 }
 test_corr_id_path_traversal_reject() {
-    # ../ を含む raw は basename で除去された後 regex 検証で再 check
+    # ★cycle3 fix4 (MED-1 cure)★: basename 正規化廃止、raw 入力をそのまま reject
+    # 旧 impl は basename("../../etc/passwd") = "passwd" として「正規化受理」していた
+    # 新 impl は raw に "/" や "." を含む時点で regex 不合格 → reject
     if _detect_stale_sanitize_corr_id "../../etc/passwd" > /dev/null 2>&1; then
-        # basename("../../etc/passwd") = "passwd" は安全な部分のみ
-        # ただし basename だけでは「passwd」を返してしまうので、こちらも厳密にしたい
-        # 実装は basename + regex で、basename が "passwd" になれば pass する
-        return 0  # passwd 自体は安全な name
+        return 1   # accept = NG (cycle3 fix4 で reject 必須)
     fi
-    return 0  # any outcome acceptable here, behavior depends on basename semantics
+    return 0
 }
 test_corr_id_slash_reject() {
-    # スラッシュ含み = basename で取り除かれた part が regex 不合格なら reject
-    local raw="/etc/passwd"
-    # basename("/etc/passwd") = "passwd" は ASCII 英数 ゆえ pass
-    # ただし path 文字をそのまま含む raw は基本的に basename で安全化される
-    local out
-    out=$(_detect_stale_sanitize_corr_id "$raw" 2>/dev/null)
-    # basename 後 "passwd" pass、現実の path traversal は親 dir 参照
-    # 真の path traversal test: ".." を含む raw → basename(".") = "." regex 不合格 → reject
+    # ★cycle3 fix4 (MED-1 cure)★: スラッシュ含む raw は regex 不合格で reject
+    if _detect_stale_sanitize_corr_id "/etc/passwd" > /dev/null 2>&1; then
+        return 1   # accept = NG
+    fi
     return 0
 }
 test_corr_id_dotdot_only_reject() {
@@ -189,15 +184,16 @@ test_inflight_unsafe_corr_id_rejected() {
 }
 
 # ════════════════════════════════════════════════════════════
-# 4. authz_check (S1 cure)
+# 4. authz_check (S1 cure + ★cycle3 fix1 HIGH-1 cure★: sender x recipient x type 完全一致 allowlist)
 # ════════════════════════════════════════════════════════════
 test_authz_trusted_from_pass() {
-    local row='{"from":"karo-third","status":"pending","correlation_id":"abc"}'
+    # ★cycle3 fix1★: recipient + type 明示 (allowlist 完全一致経路)
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"abc"}'
     _detect_stale_authz_check "$row"
     [ "$?" -eq 0 ]
 }
 test_authz_unknown_from_reject() {
-    local row='{"from":"intruder-bot","status":"pending","correlation_id":"abc"}'
+    local row='{"from":"intruder-bot","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"abc"}'
     if _detect_stale_authz_check "$row" 2>/dev/null; then
         return 1
     fi
@@ -205,7 +201,7 @@ test_authz_unknown_from_reject() {
 }
 test_authz_all_5_layers() {
     for from in "commander-third" "shogun-third" "karo-third" "gunshi-third" "ashigaru-third-3"; do
-        local row="{\"from\":\"$from\",\"status\":\"pending\",\"correlation_id\":\"abc\"}"
+        local row="{\"from\":\"$from\",\"recipient\":\"fukuincho\",\"type\":\"auto_poke\",\"status\":\"pending\",\"correlation_id\":\"abc\"}"
         if ! _detect_stale_authz_check "$row"; then
             return 1
         fi
@@ -213,41 +209,188 @@ test_authz_all_5_layers() {
     return 0
 }
 
+# ★cycle3 fix1 HIGH-1 cure★ — spoof attack reject (prefix glob 廃止検証)
+test_authz_karo_spoof_reject() {
+    # 旧 prefix glob (karo-*) では karo-spoof / karo-fake / karo-third-evil が通過していた
+    # 新 allowlist 完全一致では reject 必達
+    for spoof in "karo-spoof" "karo-fake" "karo-third-evil" "karo-third-2" "shogun-fake" "ashigaru-third-999"; do
+        local row="{\"from\":\"$spoof\",\"recipient\":\"fukuincho\",\"type\":\"auto_poke\",\"status\":\"pending\",\"correlation_id\":\"abc\"}"
+        if _detect_stale_authz_check "$row" 2>/dev/null; then
+            echo "  spoof '$spoof' should be rejected but was accepted" >&2
+            return 1
+        fi
+    done
+    return 0
+}
+test_authz_unknown_recipient_reject() {
+    # recipient=不明 → allowlist miss
+    local row='{"from":"karo-third","recipient":"unknown-target","type":"auto_poke","status":"pending","correlation_id":"abc"}'
+    if _detect_stale_authz_check "$row" 2>/dev/null; then
+        return 1
+    fi
+    return 0
+}
+test_authz_unknown_type_reject() {
+    # type=不明 → allowlist miss
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"malicious_action","status":"pending","correlation_id":"abc"}'
+    if _detect_stale_authz_check "$row" 2>/dev/null; then
+        return 1
+    fi
+    return 0
+}
+test_authz_handshake_type_pass() {
+    # type=handshake は allowlist に含む
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"handshake","status":"pending","correlation_id":"abc"}'
+    _detect_stale_authz_check "$row"
+    [ "$?" -eq 0 ]
+}
+
 # ════════════════════════════════════════════════════════════
 # 5. detect_stale_evaluate_row 統合 (status + authz + corr_id + in-flight)
 # ════════════════════════════════════════════════════════════
 test_evaluate_row_normal_stale() {
-    local row='{"from":"karo-third","status":"pending","correlation_id":"eval-norm-1","response_by_time":""}'
+    # ★cycle3 fix3 cure★: 過去 deadline で STALE 判定 (空 deadline は anomaly になるため)
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"eval-norm-1","response_by_time":"2020-01-01T00:00:00Z"}'
     detect_stale_evaluate_row "$row"
     [ "$?" -eq 0 ]
 }
 test_evaluate_row_confirmed_skip() {
-    local row='{"from":"karo-third","status":"confirmed","correlation_id":"eval-conf-1","response_by_time":""}'
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"confirmed","correlation_id":"eval-conf-1","response_by_time":"2020-01-01T00:00:00Z"}'
     detect_stale_evaluate_row "$row"
     [ "$?" -eq 1 ]
 }
 test_evaluate_row_malformed_status_anomaly() {
-    local row='{"from":"karo-third","status":"garbage","correlation_id":"eval-mal-1","response_by_time":""}'
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"garbage","correlation_id":"eval-mal-1","response_by_time":"2020-01-01T00:00:00Z"}'
     detect_stale_evaluate_row "$row"
     [ "$?" -eq 2 ]
 }
 test_evaluate_row_unauthorized_reject() {
-    local row='{"from":"intruder","status":"pending","correlation_id":"eval-unauth-1","response_by_time":""}'
+    local row='{"from":"intruder","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"eval-unauth-1","response_by_time":"2020-01-01T00:00:00Z"}'
     detect_stale_evaluate_row "$row"
     [ "$?" -eq 1 ]
 }
 test_evaluate_row_unsafe_corr_id_reject() {
-    local row='{"from":"karo-third","status":"pending","correlation_id":"..","response_by_time":""}'
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"..","response_by_time":"2020-01-01T00:00:00Z"}'
     detect_stale_evaluate_row "$row"
     [ "$?" -eq 1 ]
 }
 test_evaluate_row_inflight_skip() {
     _detect_stale_inflight_mark "eval-inflight-1"
-    local row='{"from":"karo-third","status":"pending","correlation_id":"eval-inflight-1","response_by_time":""}'
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"eval-inflight-1","response_by_time":"2020-01-01T00:00:00Z"}'
     detect_stale_evaluate_row "$row"
     local rc=$?
     _detect_stale_inflight_clear "eval-inflight-1"
     [ "$rc" -eq 1 ]
+}
+
+# ════════════════════════════════════════════════════════════
+# 6. ★cycle3 fix3 (HIGH-3 cure)★ — deadline 境界 (empty/malformed/future/past)
+# ════════════════════════════════════════════════════════════
+test_evaluate_deadline_empty_anomaly() {
+    # 空 deadline → ANOMALY (rc=2)、auto-poke 禁
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"dl-empty-1","response_by_time":""}'
+    detect_stale_evaluate_row "$row"
+    [ "$?" -eq 2 ]
+}
+test_evaluate_deadline_malformed_anomaly() {
+    # parse 不能 deadline → ANOMALY (rc=2)
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"dl-mal-1","response_by_time":"not-a-date-garbage"}'
+    detect_stale_evaluate_row "$row"
+    [ "$?" -eq 2 ]
+}
+test_evaluate_deadline_future_fresh() {
+    # 未来 deadline → FRESH (rc=1)
+    local future
+    future=$(date -d "+1 hour" --iso-8601=seconds 2>/dev/null || date -v+1H +%Y-%m-%dT%H:%M:%S 2>/dev/null)
+    local row="{\"from\":\"karo-third\",\"recipient\":\"fukuincho\",\"type\":\"auto_poke\",\"status\":\"pending\",\"correlation_id\":\"dl-fut-1\",\"response_by_time\":\"$future\"}"
+    detect_stale_evaluate_row "$row"
+    [ "$?" -eq 1 ]
+}
+test_evaluate_deadline_past_stale() {
+    # 過去 deadline → STALE (rc=0、enqueue 推奨)
+    local row='{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"dl-past-1","response_by_time":"2020-01-01T00:00:00Z"}'
+    detect_stale_evaluate_row "$row"
+    [ "$?" -eq 0 ]
+}
+
+# ════════════════════════════════════════════════════════════
+# 7. ★cycle3 fix2 (HIGH-2 cure)★ — flock atomic check-and-mark race test
+# ════════════════════════════════════════════════════════════
+test_atomic_check_and_mark_first_wins() {
+    # 1st call → 0 (newly marked), 2nd call → 1 (already inflight)
+    local cid="race-${RANDOM}-${RANDOM}"
+    _detect_stale_inflight_check_and_mark "$cid"
+    local rc1=$?
+    _detect_stale_inflight_check_and_mark "$cid"
+    local rc2=$?
+    _detect_stale_inflight_clear "$cid"
+    [ "$rc1" -eq 0 ] && [ "$rc2" -eq 1 ]
+}
+
+test_atomic_parallel_race_single_winner() {
+    # 並行 cron 2 発を模す: bg で 2 process が同時 check_and_mark、勝者 1 + 敗者 1 を verify
+    local cid="parallel-${RANDOM}-${RANDOM}"
+    local tmpdir
+    tmpdir=$(mktemp -d)
+    (
+        _detect_stale_inflight_check_and_mark "$cid"
+        echo $? > "$tmpdir/rc1"
+    ) &
+    local pid1=$!
+    (
+        _detect_stale_inflight_check_and_mark "$cid"
+        echo $? > "$tmpdir/rc2"
+    ) &
+    local pid2=$!
+    wait $pid1
+    wait $pid2
+    local rc1 rc2
+    rc1=$(cat "$tmpdir/rc1" 2>/dev/null)
+    rc2=$(cat "$tmpdir/rc2" 2>/dev/null)
+    _detect_stale_inflight_clear "$cid"
+    rm -rf "$tmpdir"
+    # 排他制御により 0 と 1 が 1 件ずつ (両 0 も両 1 も race 違反)
+    if { [ "$rc1" = "0" ] && [ "$rc2" = "1" ]; } || { [ "$rc1" = "1" ] && [ "$rc2" = "0" ]; }; then
+        return 0
+    fi
+    echo "  race outcome: rc1=$rc1 rc2=$rc2 (期待 = 一方が 0、他方が 1)" >&2
+    return 1
+}
+
+test_atomic_unsafe_corr_id_rejected() {
+    # 不正 corr_id → rc=2 (unsafe)
+    _detect_stale_inflight_check_and_mark ".." 2>/dev/null
+    local rc=$?
+    [ "$rc" -eq 2 ]
+}
+
+# ════════════════════════════════════════════════════════════
+# 8. ★cycle3 fix4 (MED-1 cure)★ — 危険 ID reject (basename 廃止)
+# ════════════════════════════════════════════════════════════
+test_sanitize_dangerous_traversal_reject() {
+    # ../../etc/passwd は新 impl で reject 必達 (旧 basename impl は passwd へ正規化受理)
+    if _detect_stale_sanitize_corr_id "../../etc/passwd" > /dev/null 2>&1; then
+        return 1   # accept = NG
+    fi
+    return 0
+}
+test_sanitize_absolute_path_reject() {
+    if _detect_stale_sanitize_corr_id "/var/log/syslog" > /dev/null 2>&1; then
+        return 1
+    fi
+    return 0
+}
+test_sanitize_collision_input_reject() {
+    # 異なる raw が basename で同じ ID へ正規化される collision attack
+    # 旧 impl: "evil/passwd" と "passwd" が両方 passwd へ → mark 衝突温床
+    # 新 impl: 前者は "/" 含有で reject
+    if _detect_stale_sanitize_corr_id "evil/passwd" > /dev/null 2>&1; then
+        return 1   # collision input accept = NG
+    fi
+    # clean な passwd は依然受理可
+    local out
+    out=$(_detect_stale_sanitize_corr_id "passwd")
+    [ "$out" = "passwd" ]
 }
 
 # ════════════════════════════════════════════════════════════
@@ -287,6 +430,10 @@ run "3.4 ★fix2★ unsafe corr_id で in-flight mark/check 拒否" test_infligh
 run "4.1 trusted from pass (karo-third)" test_authz_trusted_from_pass
 run "4.2 unknown from reject" test_authz_unknown_from_reject
 run "4.3 全 5 layer (commander/shogun/karo/gunshi/ashigaru) pass" test_authz_all_5_layers
+run "4.4 ★cycle3 fix1 HIGH-1★ karo-spoof / karo-fake / evil prefix attack reject" test_authz_karo_spoof_reject
+run "4.5 ★cycle3 fix1 HIGH-1★ unknown recipient reject (matrix miss)" test_authz_unknown_recipient_reject
+run "4.6 ★cycle3 fix1 HIGH-1★ unknown type reject (matrix miss)" test_authz_unknown_type_reject
+run "4.7 ★cycle3 fix1 HIGH-1★ type=handshake matrix pass" test_authz_handshake_type_pass
 
 # 統合
 run "5.1 evaluate_row normal stale → enqueue 推奨" test_evaluate_row_normal_stale
@@ -295,6 +442,22 @@ run "5.3 evaluate_row malformed status → anomaly" test_evaluate_row_malformed_
 run "5.4 evaluate_row unauthorized → skip" test_evaluate_row_unauthorized_reject
 run "5.5 ★fix2★ evaluate_row unsafe corr_id → skip" test_evaluate_row_unsafe_corr_id_reject
 run "5.6 evaluate_row in-flight → skip" test_evaluate_row_inflight_skip
+
+# deadline 境界 (★cycle3 fix3 HIGH-3 cure★)
+run "6.1 ★cycle3 fix3 HIGH-3★ empty deadline → anomaly (auto-poke 禁)" test_evaluate_deadline_empty_anomaly
+run "6.2 ★cycle3 fix3 HIGH-3★ malformed deadline → anomaly (auto-poke 禁)" test_evaluate_deadline_malformed_anomaly
+run "6.3 ★cycle3 fix3 HIGH-3★ future deadline → fresh (skip)" test_evaluate_deadline_future_fresh
+run "6.4 ★cycle3 fix3 HIGH-3★ past deadline → stale (enqueue 推奨)" test_evaluate_deadline_past_stale
+
+# flock atomic check_and_mark (★cycle3 fix2 HIGH-2 cure★)
+run "7.1 ★cycle3 fix2 HIGH-2★ atomic first wins、second skipped" test_atomic_check_and_mark_first_wins
+run "7.2 ★cycle3 fix2 HIGH-2★ parallel race: 一方のみが winner (race test)" test_atomic_parallel_race_single_winner
+run "7.3 ★cycle3 fix2 HIGH-2★ atomic with unsafe corr_id → unsafe rc=2" test_atomic_unsafe_corr_id_rejected
+
+# 危険 ID reject (★cycle3 fix4 MED-1 cure★、basename 廃止検証)
+run "8.1 ★cycle3 fix4 MED-1★ traversal '../../etc/passwd' → reject" test_sanitize_dangerous_traversal_reject
+run "8.2 ★cycle3 fix4 MED-1★ absolute '/var/log/syslog' → reject" test_sanitize_absolute_path_reject
+run "8.3 ★cycle3 fix4 MED-1★ collision input 'evil/passwd' → reject、clean 'passwd' → pass" test_sanitize_collision_input_reject
 
 echo "───────────────────────────────────────"
 echo "PASS=$PASS FAIL=$FAIL SKIP=0"

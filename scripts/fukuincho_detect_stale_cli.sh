@@ -101,10 +101,12 @@ if [ "$ACTION" = "detect_stale_handshake" ]; then
         [ -z "$row" ] && continue
         PROCESSED=$((PROCESSED + 1))
         # detect_stale_evaluate_row: 0=enqueue 推奨, 1=skip, 2=anomaly
-        set +e
-        detect_stale_evaluate_row "$row"
+        # ★cycle3 fix5 (MED-2 cure)★: 旧 impl は set +e/set -e で toggle していたが、
+        #   script 冒頭は set -uo pipefail (★-e は未設定★)。set -e を toggle 末尾で
+        #   付与すると以降のコマンドで予期せぬ exit が発生する整合性違反。
+        #   set -e を有効化していない以上 toggle 不要 — || true で rc 安全捕捉のみ。
+        detect_stale_evaluate_row "$row" || true
         rc=$?
-        set -e
         case "$rc" in
             0)
                 # enqueue 推奨 — correlation_id + recipient を抽出して enqueue 呼出
