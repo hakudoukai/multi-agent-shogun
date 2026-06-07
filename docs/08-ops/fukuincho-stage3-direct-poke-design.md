@@ -40,6 +40,12 @@
 - ★FKI-NO-DUP★: 報告書込は既存経路 (inbox_write.sh / 報告 YAML → Supabase bridge) を再利用、新規 writer 新設禁。
   bundle は ★既存書込経路の成功フックに poke 呼出を結線するのみ★。
 
+- ★trigger 実装の選択肢 (4 軸調査 5f4305cf / FKI-NO-DUP 第4条 PASS、副院長令 FINAL DIRECTIVE 反映)★:
+  CC-agent 報告者 (Claude Code-driven agent) は ★Stop/Notification hook 併記★ を選択肢として採用可能。
+  Stop hook は Claude 応答終了毎 turn 発火するため、★「報告書込時のみ」の filter 必須★ (over-trigger 回避)。
+  hook は trigger 層のみ (shell 実行可) で、★GUI 注入 (claude.ai デスクトップアプリ) は hook では実行不能ゆえ★、
+  trigger filter 通過後の poke 実行は段階2 pywinauto (207bcdd) を invoke する hand-rolled bundle 回避 native lifecycle 活用方式。
+
 ## 3. 要件 (2) poke 対象 + window title 厳密一致 verify
 
 - 段階2 成功の ★同一 window 特定 logic (descendants(control_type=Edit) cands[0] + clipboard/type+Enter、commit 207bcdd) を流用★ (FKI-NO-DUP)。
