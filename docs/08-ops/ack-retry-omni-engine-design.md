@@ -50,15 +50,19 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 送り手は下記 2 段を ★必須★ とし、Stage B 達成まで message の責任を保持する。
 
 - **Stage A — 着信確認 (delivery)**: message が物理的に相手 inbox に landing したことを確認。
-  - L-inbox: append 直後 `inbox_write.sh` が返す `id` を `queue/inbox/{recipient}.yaml` で grep し、
-    `read: false` 状態の entry 実在を確認。
-  - L-handshake: 対応 `pc_handshake` row の SELECT で存在確認。
+  - L-inbox: append 直後 `inbox_write.sh` が返す `id` を ★YAML parser★ (`yaml.safe_load`) で
+    `queue/inbox/{recipient}.yaml` から探索し、`id == <返却 id>` の entry が実在しかつ `read == false` であることを確認。
+    ★grep substring 一致は使わない★ (content 内 literal 誤検知回避、[[stop-hook-grep-unanchored-false-positive]] 教訓)。
+  - L-handshake: `correlation_id` を key に対応 `pc_handshake` row を SELECT し存在確認。
   - root spec 命題: 「送ったつもり」を排除 (write 成功 ≠ 着信、必ず読み返しで grounding)。
-- **Stage B — 受領確認 (receipt)**: 相手が message を ★処理した★ ことを確認。
-  - 主信号: 当該 `id` の `read: true` 化 (anchored `^  read: false$` → 消失で判定、phantom 誤検知回避は
-    [[stop-hook-grep-unanchored-false-positive]] 教訓順守)。
-  - 副信号: 同一 `correlation_id` を参照する応答 message の着信 (報告/qc 等)。
-- **fire-and-forget 禁**: Stage B 未達の間、message は「未確認」状態として送り手の retry queue に残る。
+- **Stage B — 受領確認 (receipt)**: 相手が当該 message を ★処理した★ ことを確認。判定は ★対象 message id (or correlation_id) に直接ひも付ける★。
+  - 主信号: YAML parser で ★同一 id の entry を特定★ し、その entry の `read == true` を確認。
+    ★「read: false 行の消失」を confirmed と見なさない★ — entry 削除 / YAML 整形差分 / rotation / 別 entry の
+    read 変化では誤確認しうるため (Codex B1)。
+  - 副信号: 同一 `correlation_id` を ★明示参照★ する応答 message (報告 / qc / ack response id) の着信。
+  - ★entry 消失 (id が parser で発見不能) = `confirmed` ではなく `unknown/lost` 扱い★ → (iv) の retry / escalate
+    対象とする (silent に「届いた」と断定しない)。
+- **fire-and-forget 禁**: Stage B `confirmed` 未達の間、message は「未確認」状態として送り手の retry queue に残る。
 - **poll cadence 素案**: Stage A は append 直後 1 回 + 2s 後再確認、Stage B は (iv) の SLA checkpoint で poll
   (独立した高頻度 poll loop は新設しない — Watcher Design Principles「無限 retry 禁」順守)。
 
@@ -66,9 +70,13 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 
 - **主経路**: pc_handshake (跨 PC) / inbox_watcher 連動 (同一 PC wake)。
 - **bypass 条件**: recovery 中で ★watcher 起動前★ or cross-PC bridge 不通の場合に限り、
-  送り手は `queue/inbox/{recipient}.yaml` へ ★flock 経由直接 append★ を補助経路として許容する。
-  - 実装は既存 `inbox_write.sh` の local flock path を ★そのまま再利用★ (新規 writer を書かない、FKI-NO-DUP)。
-  - 跨 PC で相手 inbox に直接到達できない場合は pc_handshake を主経路に保ち、bypass は同一 PC 限定。
+  送り手は `queue/inbox/{recipient}.yaml` への flock append を補助経路として許容する。
+  - ★必ず既存 `inbox_write.sh` 経由に限定する (hand-rolled 直接 writer 禁)★ — これにより
+    self-send guard / amplification guard / flock を ★漏れなく継承★ する (新規 writer 余地を残さない、FKI-NO-DUP / Codex S1)。
+  - bypass の受け入れ条件 (全て必須): ① F002 routing 合法 (chain-of-command 順守) ② `type` allowlist 内
+    (task_assigned / report / qc 等、bulk_ack 保護 type と整合) ③ `correlation_id` 必須付与 ④ ack event log に
+    `bypass=true` を記録 (観察可能性 §2)。いずれか欠落で bypass 不許可 → 主経路復帰待ち。
+  - 跨 PC で相手 inbox に直接到達できない場合は pc_handshake を主経路に保ち、bypass は ★同一 PC 限定★。
 - **bypass 後の整合**: watcher 復帰後に同一 `correlation_id` の pc_handshake row と inbox entry が
   二重に存在しうるため、(v) dedupe で 1 本化する (double-delivery 防止)。
 - **third_pc 注意**: 実 inbox は `-third` suffix ([[third-pc-agent-id-suffixed-inbox-and-phantom-inbox1]]、
@@ -77,17 +85,25 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 
 ## (iv) 再送 SLA / 上限 (黄取りこぼし克服 — message 層)
 
-送信後、Stage B 受領確認の poll checkpoint を下記 SLA で配置する。
+送信後、Stage B `confirmed` 未達のとき下記 ★単一の状態遷移表★ に従って再送する
+(表と本文の数列を一本化、Codex B2 / Gemini COMP-01)。`t` は初回送信後の累計経過秒、`gap` は直前 checkpoint からの間隔。
 
-| 経過 (送信後) | action | 備考 |
-|---|---|---|
-| 30 秒 | confirm 未達 → **1 度目再送** | 素案 ★要御差配★ |
-| 120 秒 | confirm 未達 → **2 度目再送** | 素案 ★要御差配★ |
-| 300 秒 | confirm 未達 → **escalate** (上位 → Commander / 副院長殿、F002 経路) | 素案 ★要御差配★ |
+| t (累計) | gap | retry_count | action | escalate | 出典 |
+|---:|---:|:---:|---|---|---|
+| 0 | — | 0 | send + Stage A 着信確認 | — | — |
+| 30s | 30s | 1 | confirm 未達 → 再送 #1 | — | 副院長 verbatim |
+| 120s | 90s | 2 | confirm 未達 → 再送 #2 | — | 副院長 verbatim |
+| 300s | 180s | 3 | confirm 未達 → 再送 #3 + ★上位 escalate 通知★ (上位 inbox `type: notification`、再送は継続) | notify (停止せず) | 副院長 verbatim |
+| 660s | 360s | 4 | confirm 未達 → 再送 #4 | — | backoff 継続 |
+| 1380s | 720s | 5 | confirm 未達 → 再送 #5 (★最終再送★) | — | 上限手前 |
+| >1380s & 未達 | — | 上限到達 | ★自動再送停止★ | ★human-required★ (上位 inbox `type: request_permission`「5 回再送しても受領不能」) | 5 回上限 |
 
-- **backoff**: 指数バックオフ + jitter (flood 防止)。素案間隔 30 → 60 → 120 → 240s に jitter ±20%。
-- **再送上限 = 5 回**。超過時は ★人手判断要 escalation★ (自動再送停止 + 上位 inbox に
-  `type: request_permission` で「N 回再送しても受領不能」を報告)。Watcher Design Principles「無限 retry 禁」必達。
+- **backoff の定義 (一本化)**: `gap` は base=30s から ★2 倍ずつ漸増★ し各値に ±20% jitter を付す (flood 防止)。
+  副院長 verbatim の 30 / 120 / 300s は ★上記表の固定 checkpoint として優先★ し、以降 (660s/1380s) は backoff 漸増で導出。
+- **escalate の意味**: 300s の escalate は ★通知 (notify) であり再送停止ではない★。再送は 5 回上限まで継続する。
+- **再送上限 = 5 回**。到達後 confirm 未達なら ★自動再送停止 + human-required escalation★
+  (上位 inbox に `type: request_permission`)。Watcher Design Principles「無限 retry 禁」必達。
+- **confirmed 到達時**: いずれの checkpoint でも Stage B `confirmed` を観測した時点で ★即座に retry queue から除去★ し以降の再送を停止。
 - **★inbox_watcher escalation との非二重化 (FKI-NO-DUP 上の核心要件)★**:
   - inbox_watcher の escalation (PHASE1=120s Escape×2 / PHASE2=240s /clear) は ★受領側 session の wake-up★ 層。
   - 本エンジンの SLA 再送は ★送り手側 message の再投函★ 層。両者は ★key も actuator も別★
@@ -149,6 +165,39 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 - 全 ack イベント (send / Stage A confirm / Stage B confirm / resend#N / escalate / human-required) を
   構造化 JSON で記録、`correlation_id` を全 leg に貫通させる。
 - 再送回数・最終 verdict (confirmed / escalated / human-required) を集計可能に。
+
+## 2.5 最小スキーマ (実装者向け、Codex T1)
+
+| 構造体 | 必須 field | 型 | nullable | 備考 |
+|---|---|---|:---:|---|
+| inbox YAML entry | `id` | string | no | inbox_write.sh 採番 (既存) |
+| | `correlation_id` | string | no | ★本エンジン新設 (全 leg 貫通 key)★ |
+| | `from` / `type` / `content` / `timestamp` | string | no | 既存 inbox_write.sh field |
+| | `read` | bool | no | Stage B 判定対象 (既存) |
+| pc_handshake row | `correlation_id` | string | no | inbox entry と同値で対応付け |
+| | `from_pc` / `target_pc` / `target_agent` | string | no | 既存 bridge field |
+| retry queue item | `correlation_id` / `recipient` | string | no | dedupe key 構成 |
+| | `payload_digest` | string | no | content sha (truncate 後) |
+| | `retry_count` | int | no | 0..5、(iv) 状態表と対応 |
+| | `next_checkpoint_at` | epoch sec | no | 次 poll/再送予定時刻 |
+| | `state` | enum | no | pending / confirmed / escalated / human-required |
+| ack event log | `correlation_id` / `event` / `ts` | string | no | event ∈ {send, stageA, stageB, resend, escalate, human-required} |
+| | `retry_count` / `bypass` | int / bool | no | bypass=true は (iii) 経路のみ |
+
+## 2.6 受け入れテスト観点 (SKIP=0 必達、Codex TS1)
+
+| # | 観点 | 期待 |
+|---|---|---|
+| 1 | 正常: send → 相手 read:true → confirmed | 1 回送信で retry queue 除去、再送ゼロ |
+| 2 | Stage B 誤確認防止: read:false 行のみ消失 (id は別) | confirmed と判定しない (unknown/lost → retry) |
+| 3 | entry 消失 (id parser 発見不能) | unknown/lost 扱い → retry / escalate |
+| 4 | 重複 delivery (同 correlation_id+recipient+digest, TTL 60s 内) | dedupe で 1 本化、二重投函なし |
+| 5 | busy recipient | ★delivery は実行★ (nudge のみ watcher が skip) |
+| 6 | watcher 停止 + 同一 PC | bypass (inbox_write.sh 経由) で投函成功 + 復帰後 dedupe |
+| 7 | pc_handshake 不通 (跨 PC) | bypass せず主経路復帰待ち + escalate checkpoint 到達 |
+| 8 | retry 上限 (5 回) 到達 | 自動再送停止 + human-required (request_permission) |
+| 9 | F002 routing 違反 (gunshi→副院長 直接) | bypass/通常とも拒否 |
+| 10 | escalate@300s | notify 発火 + 再送継続 (停止しない) |
 
 ## 3. 軍師 dual audit 対象マッピング (本案件 self-audit)
 
