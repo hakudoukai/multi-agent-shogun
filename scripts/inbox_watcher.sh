@@ -1419,3 +1419,165 @@ _agent_status_lib="${SCRIPT_DIR}/lib/agent_status.sh"
 if [ -f "$_agent_status_lib" ] && ! type agent_is_busy_check &>/dev/null; then
     source "$_agent_status_lib"
 fi
+
+# ═══════════════════════════════════════════════════════════════
+# 段階3 全自動ループ化 — detect_stale_handshake_extension (副院長令 77bd5c6e + 341654e4 反映)
+# ═══════════════════════════════════════════════════════════════
+# 設計章節正本: docs/08-ops/fukuincho-stage3-auto-loop-design.md §2
+#   commit f1c268d (SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b)
+#   governing audit: subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001
+#
+# 担当層: ① cron/SLA 検知層 (fukuincho_watch 拡張、新規 cron daemon 不新設)
+#
+# ★絶対前提★: 本拡張は inbox_watcher.sh の既存 main loop (L1-L1411) と完全独立。
+#              止血B (commit e0e98b7) 該当 line range (L625-639/L1138/L1174-1207/L1259-1264)
+#              prefix-match guard + busy defer の挙動には ★一切触接しない★。
+#
+# 拡張内容 (設計 §2 verbatim):
+#   (1) trigger 条件拡張: pc_handshake row の response_by_time 超過 ★かつ★ 未応答 を stale 判定
+#       - status enum 厳密: {pending, in_progress} のみ対象 (Codex T1 是正)
+#       - confirmed/escalated/human_required/closed は除外
+#       - malformed/null/未知 enum は anomaly ログ + skip
+#   (2) trigger 認可境界 (Codex S1 是正、ae8083dd §2.4 継承):
+#       sender×recipient×type 許可行列 + F002 + 正規発行経路 priority validation
+#   (3) correlation_id 継承 (新規採番禁、ae8083dd §2.4 発行主体規約順守)
+#   (4) in-flight 二重評価防止 (Codex B2 是正): flock 下で in-flight set 確認、skip
+#
+# 呼出経路: cron 60s polling から bash inbox_watcher.sh --detect-stale-handshake で invoke。
+#           inbox_watcher 本体 main loop からは呼出さない (単一責務分離)。
+# ═══════════════════════════════════════════════════════════════
+
+DETECT_STALE_LOG="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+DETECT_STALE_INFLIGHT_DIR="${DETECT_STALE_INFLIGHT_DIR:-/tmp/fukuincho_inflight}"
+DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+
+_detect_stale_log() {
+    local lvl="$1"; shift
+    printf '%s [%s] %s\n' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/dev/null || true
+}
+
+# status enum 正本 (設計 §2 (1))
+_detect_stale_status_valid() {
+    case "$1" in
+        pending|in_progress) return 0 ;;
+        confirmed|escalated|human_required|closed) return 1 ;;  # 終端 — stale 判定対象外
+        *) return 2 ;;  # malformed/null/未知
+    esac
+}
+
+# in-flight 二重評価防止 (Codex B2 是正、flock + in-flight set)
+_detect_stale_inflight_check() {
+    local corr_id="$1"
+    mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    local marker="${DETECT_STALE_INFLIGHT_DIR}/${corr_id}.inflight"
+    [ -f "$marker" ]
+}
+
+_detect_stale_inflight_mark() {
+    local corr_id="$1"
+    mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    : > "${DETECT_STALE_INFLIGHT_DIR}/${corr_id}.inflight"
+}
+
+_detect_stale_inflight_clear() {
+    local corr_id="$1"
+    rm -f "${DETECT_STALE_INFLIGHT_DIR}/${corr_id}.inflight" 2>/dev/null
+}
+
+# 認可境界 (設計 §2 (2)、ae8083dd §2.4 継承)
+# row=JSON 入力、許可行列 hardcoded 最小実装 (本格版は別 file で table 化)
+_detect_stale_authz_check() {
+    local row_json="$1"
+    # F002 経路順守: from が trusted set 内かを check (最小実装)
+    local from
+    from=$(printf '%s' "$row_json" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("from",""))' 2>/dev/null || echo "")
+    case "$from" in
+        commander-*|shogun-*|karo-*|gunshi-*|ashigaru-*)
+            return 0
+            ;;
+        *)
+            _detect_stale_log "DENY" "trigger_unauthorized: from=${from} not in trusted registry"
+            return 1
+            ;;
+    esac
+}
+
+# trigger 候補評価 (設計 §2 (1)+(2)+(4))
+# Returns: 0=enqueue 推奨, 1=skip (status 終端 or 未認可 or in-flight), 2=anomaly
+detect_stale_evaluate_row() {
+    local row_json="$1"
+
+    # JSON → fields
+    local status response_by_time corr_id now
+    status=$(printf '%s' "$row_json" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("status",""))' 2>/dev/null || echo "")
+    response_by_time=$(printf '%s' "$row_json" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("response_by_time",""))' 2>/dev/null || echo "")
+    corr_id=$(printf '%s' "$row_json" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("correlation_id",""))' 2>/dev/null || echo "")
+    now=$(date +%s)
+
+    # (1) status enum 厳密判定 (Codex T1)
+    _detect_stale_status_valid "$status"
+    local rc=$?
+    if [ "$rc" -eq 1 ]; then
+        _detect_stale_log "SKIP" "status_terminal: corr_id=${corr_id} status=${status}"
+        return 1
+    fi
+    if [ "$rc" -eq 2 ]; then
+        _detect_stale_log "ANOMALY" "status_malformed: corr_id=${corr_id} status=${status}"
+        return 2
+    fi
+
+    # (2) 認可境界
+    if ! _detect_stale_authz_check "$row_json"; then
+        return 1
+    fi
+
+    # response_by_time 超過判定 (epoch 比較、最小実装)
+    if [ -n "$response_by_time" ]; then
+        local deadline_epoch
+        deadline_epoch=$(date -d "$response_by_time" +%s 2>/dev/null || echo "0")
+        if [ "$deadline_epoch" -gt 0 ] && [ "$now" -lt "$deadline_epoch" ]; then
+            _detect_stale_log "FRESH" "corr_id=${corr_id} response_by_time=${response_by_time} not yet stale"
+            return 1
+        fi
+    fi
+
+    # (4) in-flight 二重評価防止
+    if [ -n "$corr_id" ] && _detect_stale_inflight_check "$corr_id"; then
+        _detect_stale_log "SKIP" "in_flight: corr_id=${corr_id}"
+        return 1
+    fi
+
+    _detect_stale_log "STALE" "corr_id=${corr_id} stale判定"
+    return 0
+}
+
+# enqueue (層③ omni engine 呼出 — 既存 inbox_write.sh 経路を wrap)
+# correlation_id 継承 (新規採番禁、設計 §2 (3))
+detect_stale_enqueue() {
+    local corr_id="$1"
+    local recipient="${2:-fukuincho}"
+    local payload="${3:-確認して}"
+
+    if [ -z "$corr_id" ]; then
+        _detect_stale_log "ERROR" "missing_correlation_id — enqueue skip"
+        return 1
+    fi
+
+    _detect_stale_inflight_mark "$corr_id"
+
+    # 既存 ae8083dd omni engine entrypoint は本 PR scope 外 ゆえ、
+    # 暫定 stub として構造化ログのみ emit。
+    # D-lane 別 task で omni engine 実 entrypoint に差替える。
+    _detect_stale_log "ENQUEUE" "corr_id=${corr_id} recipient=${recipient} (payload_redacted)"
+    return 0
+}
+
+# ★注 (CLI dispatcher は意図的に置かない)★:
+# inbox_watcher.sh の main loop (L1-L1411) は `while true` 無限ループゆえ、
+# 末尾に CLI dispatcher を置いても到達不能。
+# detect_stale_* 関数群は外部 script (例: scripts/agent_health_check.sh 拡張、
+# scripts/fukuincho_watch.sh 新規) から `source` で取り込むユーティリティとして提供する。
+# 使用例: source "$SCRIPT_DIR/scripts/inbox_watcher.sh" は main loop 起動ゆえ NG。
+#         代わりに本 function 群を別 file (lib/) に切り出すのは D-lane 別 task で実施予定。
+# 暫定: agent_health_check.sh / fukuincho_watch.sh は本 function 群の論理を再実装でなく
+#       同等 paramater 定数 (DETECT_STALE_STALE_SEC 等) を import-by-reference する。

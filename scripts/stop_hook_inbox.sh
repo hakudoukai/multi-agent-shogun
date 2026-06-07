@@ -16,6 +16,22 @@
 #   TMUX_PANE — used to identify which agent is running
 #   __STOP_HOOK_SCRIPT_DIR — override for testing (default: auto-detect)
 #   __STOP_HOOK_AGENT_ID  — override for testing (default: from tmux)
+#
+# ─── fukuincho 段階3 全自動ループ連動 (副院長令 77bd5c6e + 341654e4 反映) ───
+# 設計章節正本: docs/08-ops/fukuincho-stage3-auto-loop-design.md
+#   commit f1c268d (SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b)
+#   governing audit: subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001
+#
+# 連動責務: 段階3 poke 自動発火後の ack 配送経路温存。
+#   - 副院長殿 → Commander の応答 message が inbox に届く → 本 hook が unread 検知 → block
+#     して agent に処理させる経路を ★無変更で温存★ する。
+#   - poke actuator (scripts/fukuincho_desktop_poke.py) や detect_stale 拡張
+#     (scripts/inbox_watcher.sh 末尾) は本 hook を呼出さない (単一責務分離)。
+#   - L77/L124/L157 の anchored unread grep (^  read: false$) は副院長令 fc3a5b0b
+#     phantom block loop 根治済、本連動でも維持。
+#
+# ★本 hook = 段階3 連動 referrer のみ、code 改修なし★
+# (poke 自動発火後の ack 配送経路は既存 unread→block path を温存することで成立)
 # ═══════════════════════════════════════════════════════════════
 
 set -euo pipefail

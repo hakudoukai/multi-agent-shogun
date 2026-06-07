@@ -79,6 +79,7 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 | Error Design & Observability | [docs/error-design-medical.md](docs/error-design-medical.md) |
 | Runbook ERR-EKARTE-001 | [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) |
 | §17 他院展開・リモートメンテナンス | [docs/clinic-expansion-design.md](docs/clinic-expansion-design.md) |
+| fukuincho 段階3 全自動ループ化 (副院長令 77bd5c6e + 341654e4 反映) | [docs/08-ops/fukuincho-stage3-auto-loop-design.md](docs/08-ops/fukuincho-stage3-auto-loop-design.md) (★governing audit task_id=`subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001` — Boy-Scout G1 traceability★、commit f1c268d、SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b) |
 
 # Procedures
 
@@ -363,6 +364,14 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 **原則: 事故・トラブル・誤作動が発生したら、復旧完了直後に必ず再発防止スキルを生成する。`/lessons-to-skill` skill 経由 = mandatory。**
 
 詳細 (§19.1 必須手順 + §19.2 生成物 5 種 + §19.3 強制力ルール + §19.4 月次自己点検 + §19.5 禁止事項 + §19.6 関連資産): [docs/03-workflows/post-incident-lessons.md](docs/03-workflows/post-incident-lessons.md) 移設実体参照。実行 skill 本体 = [skills/lessons-to-skill/SKILL.md](skills/lessons-to-skill/SKILL.md)。
+
+# fukuincho 段階3 全自動ループ化 通知文言 (Boy-Scout C1、副院長令 341654e4 (d) 承認反映)
+
+★skip_max=5 到達時 human_required 通知文言★: 層④ 応答中 skip 連続が `skip_max=5` 上限に到達して human_required へ escalation する際、通知文言には ★「副院長殿が長時間入力中で応答中 skip が上限 (skip_max=5) に到達した可能性」を併記★ する (人手が誤検知 vs 真の不応答を切り分け可能化、設計章節 §I4)。
+
+★G1 traceability★: 段階3 設計 doc の metadata に governing audit task_id = `subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001` を明示記載済 (本ファイル index table 並列、副院長令 341654e4 (d))。
+
+詳細: [docs/08-ops/fukuincho-stage3-auto-loop-design.md](docs/08-ops/fukuincho-stage3-auto-loop-design.md) §1.4 + §5 I4。
 
 # FKI-SECOND-PC-SINGLE-DISTRO-01 (全AI恒久・拘束ルール) — 理事長確定指示 2026-05-28
 

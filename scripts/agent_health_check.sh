@@ -361,6 +361,61 @@ print(mx)
     done < <(find "$TOKEN_PROJECT_DIR" -maxdepth 1 -name '*.jsonl' -mmin -10 2>/dev/null)
 fi
 
+# ═══════════════════════════════════════════════════════════════
+# Check 8: fukuincho_desktop_poke 段階3 全自動ループ health monitoring
+# ═══════════════════════════════════════════════════════════════
+# 設計章節正本: docs/08-ops/fukuincho-stage3-auto-loop-design.md
+#   commit f1c268d (SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b)
+#   governing audit: subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001
+#
+# Manual disable: ~/.openclaw/disable_fukuincho_check
+# 監視項目:
+#   (1) scripts/fukuincho_desktop_poke.py 存在 + syntax (python -m py_compile)
+#   (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在 (grep)
+#   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+# 異常: err_code=ERR-FUKUINCHO-HEALTH-001 (WARN) — 副院長 escalate せず log のみ。
+# ═══════════════════════════════════════════════════════════════
+FUKUINCHO_CHECK_DISABLE="$HOME/.openclaw/disable_fukuincho_check"
+if [ ! -f "$FUKUINCHO_CHECK_DISABLE" ] && [ ! -f "$GLOBAL_DISABLE" ]; then
+    _fukuincho_alerts=0
+
+    # (1) script 存在 + syntax check
+    _fukuincho_script="$SCRIPT_DIR/scripts/fukuincho_desktop_poke.py"
+    if [ ! -f "$_fukuincho_script" ]; then
+        ALERTS+=("ERR-FUKUINCHO-HEALTH-001: fukuincho_desktop_poke.py 不在 (期待 path=$_fukuincho_script)")
+        _fukuincho_alerts=$((_fukuincho_alerts + 1))
+    elif command -v python3 &>/dev/null; then
+        if ! python3 -m py_compile "$_fukuincho_script" 2>>"$LOG"; then
+            ALERTS+=("ERR-FUKUINCHO-HEALTH-001: fukuincho_desktop_poke.py syntax error")
+            _fukuincho_alerts=$((_fukuincho_alerts + 1))
+        fi
+    fi
+
+    # (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在確認
+    _inbox_watcher_script="$SCRIPT_DIR/scripts/inbox_watcher.sh"
+    if [ -f "$_inbox_watcher_script" ]; then
+        if ! grep -q '^detect_stale_evaluate_row' "$_inbox_watcher_script"; then
+            ALERTS+=("ERR-FUKUINCHO-HEALTH-001: inbox_watcher.sh detect_stale_evaluate_row 関数 不在")
+            _fukuincho_alerts=$((_fukuincho_alerts + 1))
+        fi
+    fi
+
+    # (3) detect_stale log 直近 update 確認
+    _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    if [ -f "$_detect_stale_log_file" ]; then
+        # mtime > 60min なら cron 不動作の兆候
+        _detect_stale_age_min=$(( ($(date +%s) - $(stat -c %Y "$_detect_stale_log_file" 2>/dev/null || echo 0)) / 60 ))
+        if [ "$_detect_stale_age_min" -gt 60 ]; then
+            log_struct "WARN" "fukuincho_detect_stale_log_stale" \
+                "{\"log_path\":\"$_detect_stale_log_file\",\"age_min\":$_detect_stale_age_min}"
+        fi
+    fi
+
+    if [ "$_fukuincho_alerts" -eq 0 ]; then
+        [ "$QUIET" = "false" ] && echo "[health_check][${CORR_ID}] fukuincho_check OK"
+    fi
+fi
+
 # ─── 結果記録 ───
 {
     echo "[$(date '+%Y-%m-%dT%H:%M:%S%z')][${CORR_ID}] health_check"
