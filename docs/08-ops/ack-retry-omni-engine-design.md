@@ -51,10 +51,13 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 
 - **Stage A — 着信確認 (delivery)**: message が物理的に相手 inbox に landing したことを確認。
   - L-inbox: append 直後 `inbox_write.sh` が返す `id` を ★YAML parser★ (`yaml.safe_load`) で
-    `queue/inbox/{recipient}.yaml` から探索し、`id == <返却 id>` の entry が実在しかつ `read == false` であることを確認。
+    `queue/inbox/{recipient}.yaml` から探索し、`id == <返却 id>` の entry が ★実在すること★ のみを着信成功条件とする。
+    ★`read` flag の値 (false/true) は Stage A 判定に用いない★ — append 直後に受領側が高速処理して `read == true`
+    になった正常配送を着信失敗と誤判定する race を排除するため (Codex cycle2 B1)。`read == true` を観測した場合は
+    その時点で Stage B `confirmed` に直行する。
     ★grep substring 一致は使わない★ (content 内 literal 誤検知回避、[[stop-hook-grep-unanchored-false-positive]] 教訓)。
   - L-handshake: `correlation_id` を key に対応 `pc_handshake` row を SELECT し存在確認。
-  - root spec 命題: 「送ったつもり」を排除 (write 成功 ≠ 着信、必ず読み返しで grounding)。
+  - root spec 命題: 「送ったつもり」を排除 (write 成功 ≠ 着信、必ず id 一致 entry の読み返しで grounding)。
 - **Stage B — 受領確認 (receipt)**: 相手が当該 message を ★処理した★ ことを確認。判定は ★対象 message id (or correlation_id) に直接ひも付ける★。
   - 主信号: YAML parser で ★同一 id の entry を特定★ し、その entry の `read == true` を確認。
     ★「read: false 行の消失」を confirmed と見なさない★ — entry 削除 / YAML 整形差分 / rotation / 別 entry の
@@ -73,9 +76,9 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
   送り手は `queue/inbox/{recipient}.yaml` への flock append を補助経路として許容する。
   - ★必ず既存 `inbox_write.sh` 経由に限定する (hand-rolled 直接 writer 禁)★ — これにより
     self-send guard / amplification guard / flock を ★漏れなく継承★ する (新規 writer 余地を残さない、FKI-NO-DUP / Codex S1)。
-  - bypass の受け入れ条件 (全て必須): ① F002 routing 合法 (chain-of-command 順守) ② `type` allowlist 内
-    (task_assigned / report / qc 等、bulk_ack 保護 type と整合) ③ `correlation_id` 必須付与 ④ ack event log に
-    `bypass=true` を記録 (観察可能性 §2)。いずれか欠落で bypass 不許可 → 主経路復帰待ち。
+  - bypass の受け入れ条件 (全て必須): ① ★§2.4 認可境界を通過★ (from 一致 + sender×recipient×type 許可行列 + F002)
+    ② `correlation_id` 付与 (再送/応答は既存継承、§2.4) ③ ack event log に `bypass=true` を記録 (観察可能性 §2)。
+    いずれか欠落で bypass 不許可 → 主経路復帰待ち。
   - 跨 PC で相手 inbox に直接到達できない場合は pc_handshake を主経路に保ち、bypass は ★同一 PC 限定★。
 - **bypass 後の整合**: watcher 復帰後に同一 `correlation_id` の pc_handshake row と inbox entry が
   二重に存在しうるため、(v) dedupe で 1 本化する (double-delivery 防止)。
@@ -166,6 +169,26 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
   構造化 JSON で記録、`correlation_id` を全 leg に貫通させる。
 - 再送回数・最終 verdict (confirmed / escalated / human-required) を集計可能に。
 
+## 2.4 認可境界 (authorization — 全方向化の権限境界、Codex S1)
+
+全方向化により ★ローカル実行可能な任意主体が高権限 type を偽装して inbox_write.sh を叩く★ 余地が生じる。
+これを機械的に閉じるため、本エンジンは下記認可契約を ★必須★ とする (bypass / 通常経路 双方に適用)。
+
+- **caller identity の確定**: 送信主体は `tmux display-message -p '#{@agent_id}'` 由来の自 agent_id を `from` に用いる
+  (Session Start Step1 と同一)。`from` 詐称防止のため ★`from` は呼出元 pane の @agent_id と一致必須★ (不一致 → 拒否 + 監査ログ)。
+- **sender × recipient × type 許可行列 (最小)**:
+
+  | 区分 | 許可される sender → recipient / type | 拒否例 |
+  |---|---|---|
+  | F002 routing | 下位 → 直上位のみ (ashigaru→karo/gunshi, gunshi→karo, karo→shogun(dashboard), shogun→commander, commander→副院長) | gunshi/ashigaru → 副院長 直接、下位 → 2段飛ばし |
+  | 高権限 type | `directive` / `urgent_stop` / `clear_command` / `model_switch` は ★上位 → 下位 のみ★ | ashigaru/gunshi が `directive`/`clear_command` を発行 |
+  | self-send | sender == recipient | inbox_write.sh 既存 guard で reject |
+
+- **correlation_id 発行主体**: ★初回送信者のみ★ が新規 `correlation_id` を採番する。再送・bypass・応答は
+  既存 `correlation_id` を ★継承★ し新規採番しない (なりすまし新規 thread 防止)。
+- **trusted-caller 境界**: 認可判定は ★inbox_write.sh 内★ で行う (単一 choke point)。hand-rolled writer 禁 ((iii) と一体)。
+- **拒否時**: 投函せず ack event log に `event=denied` + 理由 (from_mismatch / routing_violation / type_not_allowed) を記録。
+
 ## 2.5 最小スキーマ (実装者向け、Codex T1)
 
 | 構造体 | 必須 field | 型 | nullable | 備考 |
@@ -180,7 +203,8 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | | `payload_digest` | string | no | content sha (truncate 後) |
 | | `retry_count` | int | no | 0..5、(iv) 状態表と対応 |
 | | `next_checkpoint_at` | epoch sec | no | 次 poll/再送予定時刻 |
-| | `state` | enum | no | pending / confirmed / escalated / human-required |
+| | `state` | enum | no | pending / unknown_lost / confirmed / escalated / human-required (`unknown_lost` = (ii) entry 消失時) |
+| | `status_detail` | string | yes | unknown_lost の理由 (entry_missing / parse_error 等) |
 | ack event log | `correlation_id` / `event` / `ts` | string | no | event ∈ {send, stageA, stageB, resend, escalate, human-required} |
 | | `retry_count` / `bypass` | int / bool | no | bypass=true は (iii) 経路のみ |
 
@@ -196,8 +220,11 @@ dual audit の監査対象 artifact として供する。素案値は ★要御�
 | 6 | watcher 停止 + 同一 PC | bypass (inbox_write.sh 経由) で投函成功 + 復帰後 dedupe |
 | 7 | pc_handshake 不通 (跨 PC) | bypass せず主経路復帰待ち + escalate checkpoint 到達 |
 | 8 | retry 上限 (5 回) 到達 | 自動再送停止 + human-required (request_permission) |
-| 9 | F002 routing 違反 (gunshi→副院長 直接) | bypass/通常とも拒否 |
+| 9 | F002 routing 違反 (gunshi→副院長 直接) | bypass/通常とも拒否 + denied ログ |
 | 10 | escalate@300s | notify 発火 + 再送継続 (停止しない) |
+| 11 | 高権限 type 偽装 (ashigaru が `directive`/`clear_command` 発行) | §2.4 行列で拒否 + denied ログ |
+| 12 | `from` 詐称 (呼出元 @agent_id 不一致) | from_mismatch で拒否 |
+| 13 | correlation_id 再採番試行 (再送/応答が新規採番) | 拒否 (既存 id 継承必須) |
 
 ## 3. 軍師 dual audit 対象マッピング (本案件 self-audit)
 
