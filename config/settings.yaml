@@ -120,6 +120,17 @@ pc_mapping:
     agents: [kuro_desktop]
     supabase_bridge: true
     pc_id: kuro_desktop
+  # ★差配1 (1a) 副院長殿差配 835ea85d (理事長承認 D-lane、FKI-CANON-GUARDIAN-01)★:
+  #   fukuincho_pc を pc_mapping に新規追加。これで inbox_write.sh の cross-PC bridge
+  #   resolve が target=fukuincho を解決可能化、cross-PC INSERT skip 防止 (phantom 恒久根治)。
+  #   暫定回避策「fukuincho 宛は直接 curl 固定」が本登録で不要化される。
+  #   commander/third_pc 配置の登録は別 task 起票要 (副医院長正本守護承認案件)。
+  #   (1b) 廃止 persona 名 (nobunaga/hideyoshi/ieyasu/maeda/kuro_desktop) の現行役職名是正
+  #   は本 PR scope 外、副院長殿御差配仰ぐ正本守護承認案件として継続。
+  fukuincho_pc:
+    agents: [fukuincho]
+    supabase_bridge: true
+    pc_id: fukuincho_pc
 
 # tmux構成 (公式準拠)
 tmux:
