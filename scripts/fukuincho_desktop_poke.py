@@ -62,7 +62,7 @@ DEDUPE_T_SEC = 60               # 層④ dedupe last-fire TTL sliding window
 SKIP_MAX = 5                    # 層④ 応答中 skip 連続上限 (Codex cycle1 B1 是正)
 
 # 段階2 実証経路定数
-POKE_PAYLOAD = "確認して"        # 段階2 副院長令 verbatim payload
+POKE_PAYLOAD = "確認依頼、コマンダーより"  # 副院長令 24a47356 + 理事長令: 読点+「より」で判別性向上 (旧「確認依頼コマンダー」「確認して」)
 TARGET_WINDOW_TITLE_RE = r".*[Cc]laude.*"
 
 # refined V5 guard tokens (case-insensitive substring match)

@@ -1,13 +1,39 @@
 #!/usr/bin/env bash
-# hakudokai_fukuincho_reverse_watcher.sh — 信長→副医院長 通知デーモン
+# hakudokai_fukuincho_reverse_watcher.sh — shogun→副医院長 通知デーモン
 #
-# 信長(shogun)がSupabase pc_handshakeにINSERTしたメッセージを
-# 副医院長(fukuincho) CLIのinboxに配信し、tmux nudgeで起こす。
+# shogun が Supabase pc_handshake に INSERT したメッセージを
+# 副医院長 (fukuincho) CLI の inbox に配信し、tmux nudge で起こす。
 #
 # 既存の hakudokai_fukuincho_watcher.sh の逆方向版。
 #
 # Usage: bash shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh [--interval 5]
 # 前提: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY 環境変数
+
+# ★単一 instance guard (副院長令 24a47356、defense-in-depth)★:
+#   gunshi 当初 真因確定 msg_141706「reverse_watcher 2 instance 同時稼働」は msg_141814
+#   で撤回された (pgrep -fc が自身 bash の relay 文中 watcher 名 string を誤カウント、
+#   ps -eo args 精査で実 watcher は 1 instance のみ確認、PID 3293704)。
+#   ただし「watcher に flock -n 単一 instance guard が無いのは事実 (将来 多重起動時の
+#   予防として有用)」(gunshi msg_141814 verbatim) ゆえ、★将来予防策・深度防御として★
+#   flock -n を追加する。OS レベル単一 instance を強制、2 番目以降の起動は即座 exit 0
+#   (race 根絶)。現時点の二重投稿真因ではない (前 turn 認識訂正済) が land 妥当。
+_WATCHER_LOCK_FILE="/tmp/hakudokai_fukuincho_reverse_watcher.lock"
+exec 200>"$_WATCHER_LOCK_FILE"
+if ! flock -n 200; then
+    echo "[$(date -Iseconds)] [reverse_watcher] another instance running (lock=$_WATCHER_LOCK_FILE), exit 0" >&2
+    exit 0
+fi
+
+# ★SIGTERM/SIGINT handler (副院長令 fd832bcc)★:
+#   systemd 等から graceful な停止指示が来た時に flock を自動解放、exit 0 で終了。
+#   trap 設定後の bash exit で fd 200 (exec ... > 経由) は自動 close → flock 自動解放。
+#   message は journalctl で観測可能、shutdown 起因の意図停止と異常停止の区別を可能にする。
+_watcher_graceful_exit() {
+    echo "[$(date -Iseconds)] [reverse_watcher] $1 received, graceful exit 0 (lock auto-released)" >&2
+    exit 0
+}
+trap '_watcher_graceful_exit SIGTERM' SIGTERM
+trap '_watcher_graceful_exit SIGINT' SIGINT
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 POLL_INTERVAL="${2:-5}"

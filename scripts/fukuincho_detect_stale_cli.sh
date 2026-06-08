@@ -117,7 +117,7 @@ except Exception: print("")' 2>/dev/null || echo "")
                 recip=$(printf '%s' "$row" | python3 -c 'import sys,json
 try: print(json.load(sys.stdin).get("recipient","fukuincho"))
 except Exception: print("fukuincho")' 2>/dev/null || echo "fukuincho")
-                if detect_stale_enqueue "$corr_raw" "$recip" "確認して"; then
+                if detect_stale_enqueue "$corr_raw" "$recip" "確認依頼、コマンダーより"; then
                     ENQUEUED=$((ENQUEUED + 1))
                 fi
                 ;;

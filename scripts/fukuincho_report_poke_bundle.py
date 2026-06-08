@@ -579,6 +579,234 @@ def fire_poke_via_origin(
 
 
 # ───────────────────────────────────────────────────────────
+# ★案 A — 副院長令 6c4793fa (理事長承認、Commander msg_134241)★
+# fire_poke_local: third_pc local Claude Desktop App へ Win python.exe interop で直接 poke。
+# fire_poke_via_origin は origin_pc=third_pc 時 ★SSH 経由 main_pc 上 poke★ 設計ゆえ、
+# 副院長殿の third_pc Windows host 上 Claude Desktop には届かない。本 entrypoint は
+# 同一 third_pc 上の Windows interop (subprocess + python.exe + pywinauto) で直接 poke する。
+#
+# FKI-NO-DUP: validate_correlation_id (allowlist) + already_poked/mark_poked (flock dedupe) +
+#             safe_clipboard_poke (差配3 実証済) + refined_v5_guard 一式既存機構流用、
+#             新規実装は subprocess invoke + wslpath 動的解決のみ。
+# 設計拘束 : strict title `^Claude$` で Chrome ブラウザ排除、Ubuntu-24.04 hardcode 禁
+#             (memory FKI-SECOND-PC-SINGLE-DISTRO-01 一般原則、wslpath -w 動的解決)。
+# 障害時安全側: TimeoutExpired + 全 Exception 捕捉、log のみで暴走禁。
+# ────────────────────────────────────────────────────────────
+_DEFAULT_WIN_PYTHON = "/mnt/c/Users/user/AppData/Local/Programs/Python/Python313/python.exe"
+
+
+def fire_poke_local(
+    correlation_id: str,
+    win_python_path: str = _DEFAULT_WIN_PYTHON,
+    timeout_sec: float = 15.0,
+    runner: Optional[Callable] = None,
+    lock_dir: str = _LOCK_DIR_DEFAULT,
+) -> dict:
+    """third_pc local Claude Desktop App へ Win python.exe interop 経由 poke 発火。
+
+    Args:
+        correlation_id: 報告 → poke 連動 ID (allowlist 検査)。
+        win_python_path: Windows python.exe path (subprocess 経由実行)。
+        timeout_sec: subprocess timeout。
+        runner: テスト注入用 subprocess.run 互換 callable。
+        lock_dir: flock dedupe 用 lock dir (デフォルト bundle 標準)。
+
+    Returns:
+        dict: {"status": ..., "rc": ..., "stdout_redacted": ..., "stderr": ...,
+                "elapsed_sec": ...}
+        status ∈ {"fired", "skipped_dedupe", "v5_guard_block", "no_edit_candidates",
+                   "error"}
+    """
+    if runner is None:
+        runner = subprocess.run
+
+    # ★validate_correlation_id allowlist (atomic span 外で OK、副作用無)★
+    if not validate_correlation_id(correlation_id):
+        emit_event(
+            "fire_poke_local_corr_id_invalid",
+            correlation_id="(redacted)",
+        )
+        return {
+            "status": "error",
+            "rc": 22,
+            "stderr": "invalid correlation_id (allowlist mismatch)",
+            "elapsed_sec": 0.0,
+        }
+
+    # ★cycle4 RED1 root-cure (副院長令 atomic span mandate、gunshi cycle3 三者全一致 RED 受領)★:
+    #   acquire_correlation_lock → already_poked check → poke → mark_poked → release を
+    #   ★単一 flock 区間で連続保持★ で TOCTOU を完全排除 (run_bundle 同型 root-cure)。
+    #   bundle 既存 primitive (acquire/release_correlation_lock) を wrap、再実装ゼロ。
+    fd = acquire_correlation_lock(
+        correlation_id,
+        lock_dir=lock_dir,
+        timeout_sec=5.0,
+    )
+    if fd is None:
+        emit_event(
+            "fire_poke_local_lock_timeout",
+            correlation_id=correlation_id,
+        )
+        return {
+            "status": "skipped_lock_timeout",
+            "rc": 0,
+            "stderr": "acquire_correlation_lock timeout (5s)",
+            "elapsed_sec": 0.0,
+        }
+
+    start = time.time()
+    try:
+        # ★atomic 区間 (1): flock 保持下で dedupe check (TOCTOU 排除)★
+        if already_poked(correlation_id, lock_dir=lock_dir):
+            emit_event("fire_poke_local_skip_dedupe", correlation_id=correlation_id)
+            return {
+                "status": "skipped_dedupe",
+                "rc": 0,
+                "stderr": "already poked (atomic dedupe)",
+                "elapsed_sec": time.time() - start,
+            }
+
+        # ★atomic 区間 (2): wslpath -w で SCRIPTS UNC 動的解決 (RED3 MEDIUM cure)★
+        try:
+            scripts_unc = subprocess.check_output(
+                ["wslpath", "-w", HERE],
+                text=True,
+                timeout=5,
+            ).strip()
+        except Exception as e:
+            emit_event(
+                "fire_poke_local_wslpath_fail",
+                correlation_id=correlation_id,
+                error_type=type(e).__name__,
+            )
+            return {
+                "status": "error",
+                "rc": 1,
+                "stderr": f"wslpath resolve failed: {type(e).__name__}: {e}",
+                "elapsed_sec": time.time() - start,
+            }
+        if not scripts_unc.startswith(("\\\\", "//")):
+            return {
+                "status": "error",
+                "rc": 1,
+                "stderr": f"wslpath returned non-UNC: {scripts_unc!r}",
+                "elapsed_sec": time.time() - start,
+            }
+
+        # ★atomic 区間 (3): Win python.exe subprocess + safe_clipboard_poke 経路★
+        poke_script = (
+            "import sys, json, time\n"
+            f"sys.path.insert(0, r'{scripts_unc}')\n"
+            "try:\n"
+            "    import fukuincho_desktop_poke as p\n"
+            "    from pywinauto import Desktop\n"
+            "    from pywinauto.keyboard import send_keys\n"
+            "    import pyperclip\n"
+            "    win = Desktop(backend='uia').window(title_re=r'^Claude$')\n"
+            "    title = win.window_text()\n"
+            "    if p.refined_v5_guard(title):\n"
+            "        print(json.dumps({'status': 'v5_guard_block'}))\n"
+            "        sys.exit(0)\n"
+            "    cands = win.descendants(control_type='Edit')\n"
+            "    if not cands:\n"
+            "        print(json.dumps({'status': 'no_edit_candidates'}))\n"
+            "        sys.exit(0)\n"
+            "    # ★入力中ガード (副院長令 4346f3d2、Commander msg_143742)★:\n"
+            "    # 入力欄に1文字でもあれば投稿延期 (理事長/副院長 入力上書き防止)。\n"
+            "    # 空欄なら投稿、reverse_poll fix1 gate により skipped_user_typing は\n"
+            "    # mark せず retry 復活 → 空欄化後の次 poll で再評価。\n"
+            "    # ★cycle7 placeholder 除外 (gunshi cycle6 Codex axisD 真陽性確定、msg_145023)★:\n"
+            "    # runtime fixture で edit.window_text() が placeholder 'メッセージを入力\\u2026\\n'\n"
+            "    # (len=10, stripped 9) を返すことが実機立証された。既知 placeholder は空扱い\n"
+            "    # に正規化し poke 永久延期 (自己破壊) を回避する。\n"
+            "    _KNOWN_PLACEHOLDERS = ('\\u30e1\\u30c3\\u30bb\\u30fc\\u30b8\\u3092\\u5165\\u529b\\u2026', 'Message Claude...', 'How can I help you today?')\n"
+            "    try:\n"
+            "        _current_text = cands[0].window_text() or ''\n"
+            "    except Exception:\n"
+            "        _current_text = ''\n"
+            "    _stripped = _current_text.strip()\n"
+            "    if _stripped and _stripped not in _KNOWN_PLACEHOLDERS:\n"
+            "        print(json.dumps({'status': 'skipped_user_typing', 'reason': 'edit nonempty', 'edit_len': len(_current_text), 'is_placeholder': False}))\n"
+            "        sys.exit(0)\n"
+            "    cands[0].set_focus()\n"
+            "    def _send_enter():\n"
+            "        send_keys('^v'); time.sleep(0.1); send_keys('{ENTER}'); return True\n"
+            "    ok, restore = p.safe_clipboard_poke(\n"
+            "        payload=p.POKE_PAYLOAD,\n"
+            "        set_clip=pyperclip.copy,\n"
+            "        get_clip=pyperclip.paste,\n"
+            "        send_enter=_send_enter,\n"
+            f"        correlation_id='{correlation_id}',\n"
+            "    )\n"
+            "    print(json.dumps({'status': 'fired' if ok else 'failed', 'restore': restore}))\n"
+            "except Exception as e:\n"
+            "    print(json.dumps({'status': 'error', 'error_type': type(e).__name__, 'error': str(e)[:200]}))\n"
+        )
+
+        try:
+            proc = runner(
+                [win_python_path, "-c", poke_script],
+                capture_output=True,
+                text=True,
+                timeout=timeout_sec,
+            )
+            elapsed = time.time() - start
+            rc = getattr(proc, "returncode", 1)
+            stdout = (getattr(proc, "stdout", "") or "").strip()
+            stderr = (getattr(proc, "stderr", "") or "")
+
+            # poke_script stdout JSON parse
+            try:
+                data = json.loads(stdout) if stdout else {}
+                status = data.get("status", "error")
+            except (json.JSONDecodeError, ValueError):
+                status = "fired" if rc == 0 else "error"
+
+            # ★atomic 区間 (4): mark_poked を ★同一 flock 区間内★ で実行 (TOCTOU 完全排除)★
+            if status == "fired":
+                try:
+                    mark_poked(correlation_id, lock_dir=lock_dir)
+                except Exception as mp_err:
+                    emit_event(
+                        "fire_poke_local_mark_failed",
+                        correlation_id=correlation_id,
+                        error_type=type(mp_err).__name__,
+                    )
+
+            emit_event(
+                "fire_poke_local_result",
+                correlation_id=correlation_id,
+                status=status,
+                rc=rc,
+                elapsed_sec=round(elapsed, 3),
+            )
+            return {
+                "status": status,
+                "rc": rc,
+                "stdout_redacted": "[OK]" if status == "fired" else stdout[:200],
+                "stderr": stderr[:500],
+                "elapsed_sec": elapsed,
+            }
+        except subprocess.TimeoutExpired:
+            return {
+                "status": "error",
+                "rc": 124,
+                "stderr": "fire_poke_local timeout",
+                "elapsed_sec": time.time() - start,
+            }
+        except Exception as e:
+            return {
+                "status": "error",
+                "rc": 1,
+                "stderr": f"{type(e).__name__}: {e}",
+                "elapsed_sec": time.time() - start,
+            }
+    finally:
+        # ★atomic 区間 終端: flock 解放 (例外時も release 保証、run_bundle 同型)★
+        release_correlation_lock(fd)
+
+
+# ───────────────────────────────────────────────────────────
 # ack リトライ wiring (要件 §4 — ae8083dd N=30s/M=3/backoff)
 # ─ ★既存 fukuincho_desktop_poke.backoff_seconds 再利用★ ─
 # ─ ★新規 retry loop 不新設 (FKI-NO-DUP)★ ─

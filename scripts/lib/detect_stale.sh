@@ -254,7 +254,7 @@ except Exception: print("")' 2>/dev/null || echo "")
 detect_stale_enqueue() {
     local raw_id="$1"
     local recipient="${2:-fukuincho}"
-    local payload="${3:-確認して}"
+    local payload="${3:-確認依頼、コマンダーより}"
 
     local safe_id
     safe_id=$(_detect_stale_sanitize_corr_id "$raw_id") || {

@@ -116,7 +116,7 @@ def test_clipboard_normal_save_set_restore():
     def get_clip(): return clipboard['val']
     def set_clip(v): clipboard['val'] = v
     def send_enter_ok(): return True
-    ok, status = safe_clipboard_poke('確認して', set_clip, get_clip, send_enter_ok, 'cb-norm')
+    ok, status = safe_clipboard_poke('確認依頼、コマンダーより', set_clip, get_clip, send_enter_ok, 'cb-norm')
     assert ok is True
     assert status == 'restored', f'expected restored, got {status}'
     assert clipboard['val'] == 'commander_original_content'
@@ -130,7 +130,7 @@ def test_clipboard_finally_restore_on_enter_failure():
     def get_clip(): return clipboard['val']
     def set_clip(v): clipboard['val'] = v
     def send_enter_fail(): raise RuntimeError('Enter failed')
-    ok, status = safe_clipboard_poke('確認して', set_clip, get_clip, send_enter_fail, 'cb-fail')
+    ok, status = safe_clipboard_poke('確認依頼、コマンダーより', set_clip, get_clip, send_enter_fail, 'cb-fail')
     assert ok is False
     assert status == 'restored', f'expected restored after Enter failure, got {status}'
     assert clipboard['val'] == 'commander_original_content'
@@ -269,11 +269,11 @@ def test_clipboard_nontextlike_skips_restore():
         set_calls.append(v)
         state['val'] = v
     def send_enter(): return True
-    ok, status = safe_clipboard_poke('確認して', set_clip, get_clip, send_enter, 'nt-1')
+    ok, status = safe_clipboard_poke('確認依頼、コマンダーより', set_clip, get_clip, send_enter, 'nt-1')
     assert ok is True
     assert status == 'no_original_text', f'expected no_original_text, got {status}'
     # 非テキストゆえ restore skip — 最終状態は payload のまま
-    assert state['val'] == '確認して'
+    assert state['val'] == '確認依頼、コマンダーより'
 
 
 # ════════════════════════════════════════════════════════════
