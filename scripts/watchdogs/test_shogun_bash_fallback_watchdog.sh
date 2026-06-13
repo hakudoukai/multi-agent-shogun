@@ -141,6 +141,66 @@ else
   echo "(tmux 不在 — e2e skip)"
 fi
 
+# ─── MODE B child-TERM 証跡+検証 (cycle2 hardening, 誤TERM防止 real証跡) ───
+echo "════ 8. MODE B child-TERM 証跡+検証 (誤TERM防止) ════"
+SLEEP_BIN="$(command -v sleep)"
+BD="$TMP/termbin"; mkdir -p "$BD/claude_stack"
+# comm を制御する為 copy binary を使う (shebang script だと comm=interpreter になる)。
+# args への 'claude' 注入は実行 path 経由 (claude_stack/…) で valid sleep 引数を維持。
+for n in claude node doppler vite; do cp "$SLEEP_BIN" "$BD/$n"; done
+cp "$SLEEP_BIN" "$BD/claude_stack/node"
+cp "$SLEEP_BIN" "$BD/claude_stack/doppler"
+PIDF="$TMP/term_cpids"; : > "$PIDF"
+cat > "$TMP/term_parent.sh" <<EOF
+#!/usr/bin/env bash
+"$BD/claude" 60 &              echo "claude \$!"      >> "$PIDF"
+"$BD/node" 60 &               echo "node_gen \$!"    >> "$PIDF"
+"$BD/doppler" 60 &            echo "doppler_gen \$!" >> "$PIDF"
+"$BD/vite" 60 &               echo "vite \$!"        >> "$PIDF"
+"$BD/claude_stack/node" 60 &     echo "node_cl \$!"    >> "$PIDF"
+"$BD/claude_stack/doppler" 60 &  echo "doppler_cl \$!" >> "$PIDF"
+exec sleep 60
+EOF
+chmod +x "$TMP/term_parent.sh"
+"$TMP/term_parent.sh" &
+PARENT_PID=$!
+sleep 0.7
+gp() { awk -v k="$1" '$1==k{print $2}' "$PIDF"; }
+# alive = process 存在 かつ zombie でない (親=exec sleep は子を reap せぬ為、TERM 済子は
+# Z 状態で残り kill -0 を通す。stat で Z を死亡扱いにする)。
+av() {
+  local st
+  st=$(ps -o stat= -p "$1" 2>/dev/null | tr -d ' ')
+  if [ -z "$st" ]; then echo 0; return; fi
+  case "$st" in Z*) echo 0 ;; *) echo 1 ;; esac
+}
+
+# (8a) DRY probe: 証跡 + 検証 decision を log で確認 (実 kill 無)
+dprobe=$(SBW_NO_DB=1 SBW_DRY_RUN=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_LOG_DIR="$TMP/term_dry" SBW_MODE_B_TERM_PROBE_PID="$PARENT_PID" bash "$WD" 2>&1)
+t_grep "$dprobe" 'ps-evidence'                       "8a 事前 ps 証跡 header 出力"
+t_grep "$dprobe" 'ps|'                               "8a 証跡に直系子の ps 行列挙"
+t_grep "$dprobe" 'would SIGTERM verified child.*ppid=' "8a 検証 decision に ppid 記録"
+nterm=$(printf '%s\n' "$dprobe" | grep -c 'would SIGTERM verified child')
+nskip=$(printf '%s\n' "$dprobe" | grep -c 'MODE B skip')
+t_eq "$nterm" "3" "8a DRY: claude-stack 3件のみ TERM 対象 (claude+node/claude+doppler/claude)"
+t_eq "$nskip" "3" "8a DRY: generic 3件 skip (node/doppler/vite 誤TERM防止)"
+t_ngrep "$dprobe" '] SIGTERM verified child'   "8a DRY: 実 SIGTERM log 無 (would のみ)"
+
+# (8b) REAL probe: 検証を通った claude-stack だけ実 TERM、generic は生存 (real証跡)
+SBW_NO_DB=1 SBW_DRY_RUN=0 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_LOG_DIR="$TMP/term_real" SBW_MODE_B_TERM_PROBE_PID="$PARENT_PID" bash "$WD" >/dev/null 2>&1
+sleep 1
+t_eq "$(av "$(gp claude)")"      "0" "8b REAL: claude 本体 TERMed"
+t_eq "$(av "$(gp node_cl)")"     "0" "8b REAL: node(claude args) TERMed"
+t_eq "$(av "$(gp doppler_cl)")"  "0" "8b REAL: doppler(claude args) TERMed"
+t_eq "$(av "$(gp node_gen)")"    "1" "8b REAL: generic node SURVIVED (誤TERM防止 実証)"
+t_eq "$(av "$(gp doppler_gen)")" "1" "8b REAL: generic doppler SURVIVED"
+t_eq "$(av "$(gp vite)")"        "1" "8b REAL: generic vite SURVIVED"
+# cleanup (単一PID形 TERM、生存分のみ)
+kill -TERM "$PARENT_PID" 2>/dev/null || true
+for k in node_gen doppler_gen vite; do kill -TERM "$(gp "$k")" 2>/dev/null || true; done
+
 echo
 echo "════════════ RESULT: PASS=$PASS FAIL=$FAIL ════════════"
 if [ "$FAIL" -eq 0 ]; then echo "ALL GREEN"; exit 0; else echo "FAILURES PRESENT"; exit 1; fi

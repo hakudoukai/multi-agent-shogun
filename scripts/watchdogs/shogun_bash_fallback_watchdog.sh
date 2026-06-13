@@ -27,7 +27,9 @@
 #
 # ═══ 復旧 ═══
 #   ① @agent_id 取得 (永続) ② (B のみ) Claude を停止し pane 解放 (Esc→C-c→必要なら
-#      子 PID へ SIGTERM、★ローカルのみ・cross-PC kill 無 ∴ DD-169 guard 不要★)
+#      子 PID へ SIGTERM。★ローカルのみ・cross-PC kill 無★。誤 TERM 防止に cycle2 hardening:
+#      送出前に ①事前 ps 証跡 log ②PANE_PID 直系子孫 かつ claude stack の確定検証 →
+#      ③単一PID形 kill -TERM (mode_b_term_children 参照))
 #   ③ ★doppler env 付き relaunch★ (SBW_RELAUNCH_CMD 既定 = doppler run … claude
 #      --permission-mode auto。bare claude 禁 = env-gap 回避)
 #   ④ kickoff directive (自己識別→CLAUDE.md/instructions→停滞 task 再開) を boot 後送出
@@ -176,6 +178,58 @@ send_key_special() {
   tmux send-keys -t "$PANE_TARGET" "$1" 2>>"$LOG"
 }
 
+# ─── MODE B: stuck claude stack の child を 証跡付き・検証付きで SIGTERM (cycle2 hardening) ───
+# 由来: cycle2 fix (Codex 349d24df 実RED1件) = MODE B cleanup の SIGTERM が DD-169 discipline
+#       不足。pane shell 配下のローカル process のみ対象 (cross-PC kill 無 ∴ DD-169 例外) だが、
+#       generic な node/doppler を誤って TERM しない様、送出前に証跡+確定検証を課す:
+#   ① 事前 ps 証跡   : TERM 送出前に pane shell 直系子の full ps (pid/ppid/comm/args) を log。
+#   ② per-PID 確定検証: (a) PANE_PID 直系子孫の再確認 (TOCTOU で reparent された孤児を弾く)
+#                       (b) 期待 process か = comm が claude 本体、もしくは comm が node/doppler
+#                           かつ args が claude stack を指す (generic runtime/launcher の誤 TERM 防止)。
+#   ③ 単一PID形 TERM : 検証を通った PID のみ `kill -TERM <pid>` (DD-169 例外形)。DRY_RUN は尊重。
+mode_b_term_children() {
+  local pane_pid="$1"
+  [ -z "$pane_pid" ] && { log "MODE B term: empty pane_pid — skip"; return 0; }
+  # ① 事前 ps 証跡 (TERM 対象外含む全直系子を列挙 log)
+  log "MODE B ps-evidence (direct children of pane_pid=$pane_pid):"
+  local line
+  while IFS= read -r line; do
+    [ -n "$line" ] && log "  ps| $line"
+  done < <(ps -o pid=,ppid=,comm=,args= --ppid "$pane_pid" 2>/dev/null || true)
+  # ② per-PID 確定検証 → ③ 単一PID形 TERM
+  local child cppid cname cargs expected termed=0
+  for child in $(pgrep -P "$pane_pid" 2>/dev/null || true); do
+    cppid=$(ps -o ppid= -p "$child" 2>/dev/null | tr -d ' ')
+    cname=$(ps -o comm= -p "$child" 2>/dev/null || echo "")
+    cargs=$(ps -o args= -p "$child" 2>/dev/null || echo "")
+    # 検証(a): PANE_PID 直系子孫の確証
+    if [ "$cppid" != "$pane_pid" ]; then
+      log "MODE B skip pid=$child ($cname): ppid=$cppid != pane_pid=$pane_pid (not descendant)"
+      continue
+    fi
+    # 検証(b): 期待 process か (generic node/doppler の誤 TERM 防止)
+    expected=0
+    case "$cname" in
+      claude) expected=1 ;;
+      node|doppler) printf '%s' "$cargs" | grep -qi 'claude' && expected=1 ;;
+    esac
+    if [ "$expected" -ne 1 ]; then
+      log "MODE B skip pid=$child ($cname): not claude-stack (args=[$cargs]) — avoid generic TERM"
+      continue
+    fi
+    # ③ 単一PID形 TERM (検証済・証跡有・ローカル = DD-169 例外)
+    if [ "$DRY_RUN" = "1" ]; then
+      log "[DRY_RUN] would SIGTERM verified child pid=$child ($cname) ppid=$cppid args=[$cargs]"
+    else
+      log "SIGTERM verified child pid=$child ($cname) ppid=$cppid args=[$cargs]"
+      kill -TERM "$child" 2>>"$LOG" || true
+    fi
+    termed=$((termed+1))
+  done
+  log "MODE B term summary: verified_termed=$termed (pane_pid=$pane_pid)"
+  return 0
+}
+
 # ─── classification (capture-content 主, pane_cmd 副) ───
 # Claude TUI chrome (= Claude 稼働中の指標)
 CHROME_RE='esc to interrupt|bypass permissions|\? for shortcuts|context (used|left)|shift\+tab|⏵⏵|tab to (cycle|expand)|❯|│[[:space:]]*>'
@@ -209,6 +263,13 @@ fingerprint() {
   # 数字列を # に潰してから hash (= 進捗が止まれば同一 fp、進めば別 fp)。
   printf '%s' "$1" | grep -v '^[[:space:]]*$' | tail -8 | sed 's/[0-9]\+/#/g' | sha1sum | cut -d' ' -f1
 }
+
+# テストフック: MODE B child-TERM の証跡+検証ロジックだけを単体 probe して exit
+# (real tmux pane 無しで誤TERM防止ロジックを DoD 検証する為。DRY_RUN は呼出側が指定)
+if [ -n "${SBW_MODE_B_TERM_PROBE_PID:-}" ]; then
+  mode_b_term_children "$SBW_MODE_B_TERM_PROBE_PID"
+  exit 0
+fi
 
 # ════════════════════ main ════════════════════
 log "=== ${ROLE_NAME} bash-fallback watchdog cycle start (pane=$PANE_TARGET) ==="
@@ -327,15 +388,13 @@ if [ "$MODE" = "B" ]; then
   # pane が bash に戻ったか確認
   if [ -z "${SBW_CAPTURE_FILE:-}" ]; then
     CUR=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
-    if [ "$CUR" != "bash" ] && [ "$HARD_KILL" = "1" ] && [ "$DRY_RUN" != "1" ]; then
+    if [ "$CUR" != "bash" ] && [ "$HARD_KILL" = "1" ]; then
       PANE_PID=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_pid}' 2>/dev/null || echo "")
       if [ -n "$PANE_PID" ]; then
-        # pane shell の子孫 (claude/node/doppler) に SIGTERM (ローカルのみ)
-        for child in $(pgrep -P "$PANE_PID" 2>/dev/null || true); do
-          CNAME=$(ps -o comm= -p "$child" 2>/dev/null || echo "")
-          case "$CNAME" in claude|node|doppler) log "SIGTERM child pid=$child ($CNAME)"; kill -TERM "$child" 2>>"$LOG" || true ;; esac
-        done
-        sleep 3
+        # pane shell 配下の claude stack を 証跡付き・検証付きで TERM (cycle2 hardening)。
+        # DRY_RUN は helper 内で尊重 (would-SIGTERM log のみ、実 kill 無)。
+        mode_b_term_children "$PANE_PID"
+        [ "$DRY_RUN" != "1" ] && sleep 3
       fi
       CUR=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
     fi
