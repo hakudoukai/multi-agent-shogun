@@ -233,6 +233,7 @@ flag_present() { [ -f "$LD/restart_in_progress.flag" ] && echo y || echo n; }
 touch "$LD/restart_in_progress.flag"
 o1=$(nf 7000)
 t_grep "$o1" 'retry next cycle'  "7 run1 (free-fail 1/3) → retry"
+t_grep "$o1" 'caller: not-freed verdict=retry' "7 run1: ★caller が verdict=retry を受領★ (cycle6 RED① >/dev/null 破棄 pin)"
 t_eq "$(flag_present)" "n"       "7 run1: in-progress flag 解除 (無限抑止 cure)"
 t_ngrep "$o1" 'HALT'             "7 run1: cap 未満は escalate しない"
 # run2: free-fail 2/3 → retry (flag 再 touch しても解除される)
@@ -244,6 +245,7 @@ t_eq "$(flag_present)" "n"       "7 run2: flag 解除維持"
 # (★HALT★ log 自体が "human_required" 語を含む為、実 escalate は handshake INSERT 行で判定)
 o3=$(nf 7120)
 t_grep "$o3" 'HALT'                 "7 run3 (free-fail 3/3) → HALT"
+t_grep "$o3" 'caller: not-freed verdict=halt' "7 run3: ★caller が verdict=halt を受領★ (cycle6 RED① halt 状態を caller で扱う)"
 t_grep "$o3" 'pc_handshake INSERT'  "7 run3 → human_required handshake 発報"
 t_grep "$o3" '\[human_required\]'   "7 run3 → handshake topic=human_required"
 t_eq "$(wc -l < "$LD/freefails.log")" "3" "7 free-fail 3 件記録"
@@ -370,6 +372,32 @@ t_eq "$(av "$(ggp branch_gen)")"   "1" "9b REAL: generic 中間 doppler SURVIVED
 # cleanup (生存分のみ単一PID形 TERM)
 kill -TERM "$GC_PARENT_PID" 2>/dev/null || true
 for k in branch_gen node_gc_gen; do kill -TERM "$(ggp "$k")" 2>/dev/null || true; done
+
+# ─── cycle6: tail_b64 gating (S1) / ALLOW_UNSAFE 改行拒否 (S2) / history prune (B2) ───
+echo "════ 10. cycle6 medium 是正 (tail gating / ALLOW_UNSAFE newline / history prune) ════"
+# (10a) S1: pane 内容 (PHI 含み得る) は既定 log しない、SBW_DEBUG_TAIL=1 で opt-in のみ
+C6="$TMP/c6"
+out_def=$(SBW_NO_DB=1 SBW_DRY_RUN=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_CAPTURE_FILE="$TMP/cap_A.txt" SBW_PANE_CMD_OVERRIDE=bash SBW_LOG_DIR="$C6/def" bash "$WD" 2>&1)
+t_grep  "$out_def" 'tail_b64 gated'           "10a S1: 既定は pane 内容を log しない (tail_b64 gated)"
+t_ngrep "$out_def" 'tail_b64=[A-Za-z0-9+/]'   "10a S1: 既定 classify 行に base64 pane 内容が出ない"
+out_dbg=$(SBW_NO_DB=1 SBW_DRY_RUN=1 SBW_DEBUG_TAIL=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_CAPTURE_FILE="$TMP/cap_A.txt" SBW_PANE_CMD_OVERRIDE=bash SBW_LOG_DIR="$C6/dbg" bash "$WD" 2>&1)
+t_grep  "$out_dbg" 'tail_b64=[A-Za-z0-9+/]'   "10a S1: SBW_DEBUG_TAIL=1 で opt-in 出力 (debug 時のみ)"
+# (10b) S2: ALLOW_UNSAFE でも改行 (複数行注入) override は拒否→doppler-safe default に fallback
+nl_cmd=$'doppler run -- claude\nrm -rf /tmp/pwn'
+out_nl=$(rl c6nl "$nl_cmd" 1)
+t_grep "$out_nl" '改行を含む override は拒否'                  "10b S2: ALLOW_UNSAFE でも改行 override 拒否"
+t_grep "$(rline "$out_nl")" 'doppler run --project openhands'  "10b S2: 改行 override → doppler-safe default に fallback"
+t_ngrep "$(rline "$out_nl")" 'rm -rf'                          "10b S2: 改行注入 payload は relaunch されない"
+# (10c) B2: restart history の window 外 epoch を append 後 prune (無制限肥大防止)
+LD="$TMP/c6prune"; mkdir -p "$LD"; printf '%s\n' 1000 5000 > "$LD/restarts.log"
+pout=$(SBW_NO_DB=1 SBW_DRY_RUN=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_CAPTURE_FILE="$TMP/cap_A.txt" SBW_PANE_CMD_OVERRIDE=bash SBW_LOG_DIR="$LD" SBW_NOW_EPOCH=10000 \
+  SBW_RESTART_CAP=3 SBW_RESTART_WINDOW_MIN=60 bash "$WD" 2>&1)
+t_grep  "$pout" 'RELAUNCH'                          "10c B2: prune 前提の relaunch 実行"
+t_eq    "$(wc -l < "$LD/restarts.log")" "1"         "10c B2: window 外 epoch を prune (1000/5000 除去・10000 のみ残)"
+t_ngrep "$(cat "$LD/restarts.log")" '^1000$'        "10c B2: 古い 1000 epoch が prune された"
 
 echo
 echo "════════════ RESULT: PASS=$PASS FAIL=$FAIL ════════════"

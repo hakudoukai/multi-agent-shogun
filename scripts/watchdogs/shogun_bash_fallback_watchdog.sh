@@ -41,6 +41,7 @@
 #     (2026-05-05 SecondPC 暴走事件教訓 = enter_restart fire-cap と同型)
 #   - 手動停止 flag 尊重: ~/.openclaw/global_disable / <log_dir>/DISABLE があれば一切起動しない
 #   - 高頻度 heartbeat を DB に流さない (305 件 heartbeat 堆積教訓) = fire/escalate 時のみ INSERT
+#   - restart/freefail history は append 後に window 外を prune (無制限肥大防止、cycle6 MED B2)
 #   - 監査ログ終端理由を残す
 #
 # 終了コード: 0 = 通常完遂 (skip / fire / halt / escalate 含む)、2 = 必須 envvar 欠落
@@ -52,6 +53,8 @@
 #   SBW_CAPTURE_FILE=path tmux capture の代わりに file 内容を pane tail として読む
 #   SBW_PANE_CMD_OVERRIDE pane_current_command の代わりにこの値を使う
 #   SBW_NO_DB=1           Supabase INSERT を全 skip (fixture 用)
+#   SBW_DEBUG_TAIL=1      classify log に pane capture の base64 tail を出力 (既定 off。
+#                         pane 表示内容 = PHI 等を含み得る為 debug 時のみ opt-in。cycle6 MED S1)
 #   SBW_DRY_RUN=1         send-keys / kill を実行せず "would …" を log するのみ
 #   SBW_NOW_EPOCH         now() を固定 (cap / persistence の決定的テスト用)
 #   SBW_RELAUNCH_ALLOW_UNSAFE=1  RELAUNCH_CMD invariant 検証を bypass (test 無害 stand-in /
@@ -120,6 +123,22 @@ log() { printf '[%s] %s\n' "$(date -Is)" "$*" | tee -a "$LOG" >&2; }
 
 now_epoch() { echo "${SBW_NOW_EPOCH:-$(date +%s)}"; }
 
+# ─── history prune (cycle6 MED B2 — 長期運用での無制限肥大を防ぐ) ───
+# RESTART_HISTORY / FREEFAIL_HISTORY は append-only で cap 判定は window 内 epoch のみ数える。
+# ∴ window 外の古い行は cap 判定に二度と寄与しない = prune して file を bounded に保つ。
+# append 直後に呼び、window 内 (= now - RESTART_WINDOW_MIN 分) の epoch 行だけ残す。
+_sbw_prune_history() {
+  local f="$1" keep_from
+  [ -f "$f" ] || return 0
+  keep_from=$(( $(now_epoch) - RESTART_WINDOW_MIN * 60 ))
+  # 数値 epoch 行のみ + window 内のみ残す (不正行も同時に除去)。失敗時は原本温存。
+  if awk -v c="$keep_from" '/^[0-9]+$/ && ($1+0)>=c' "$f" > "$f.tmp" 2>/dev/null; then
+    mv "$f.tmp" "$f"
+  else
+    rm -f "$f.tmp"
+  fi
+}
+
 # ─── RELAUNCH_CMD invariant 検証 (cycle4 RED① + cycle5 RED① — env-gap / injection 防止) ───
 # 根因分析: bare claude 再起動 = doppler/ccflare env 欠落で API retry 滞留 (second 実例)。
 # ∴ relaunch は必ず `doppler run … claude` 形 (env 付き) でなければならない。
@@ -153,7 +172,18 @@ _sbw_relaunch_is_safe() {
 
 if [ -n "${SBW_RELAUNCH_CMD:-}" ]; then
   if [ "${SBW_RELAUNCH_ALLOW_UNSAFE:-0}" = "1" ]; then
-    log "RELAUNCH_CMD override honored via SBW_RELAUNCH_ALLOW_UNSAFE=1 (unsafe opt-in): [$RELAUNCH_CMD]"
+    # cycle6 MED S2: escape hatch でも ★改行 (複数行注入) だけは無条件拒否★。send-keys は
+    # text→Enter で 1 行を確定する流儀ゆえ、override に改行が混じると複数コマンドが連続確定する
+    # 最悪面が残る。それ以外の metachar は明示 opt-in 運用者の責任範囲とし honored。
+    case "$RELAUNCH_CMD" in
+      *$'\n'*)
+        log "WARN: SBW_RELAUNCH_ALLOW_UNSAFE=1 でも改行を含む override は拒否 (multi-line injection 面) — doppler-safe default に fallback"
+        RELAUNCH_CMD="$_SBW_DEFAULT_RELAUNCH"
+        ;;
+      *)
+        log "RELAUNCH_CMD override honored via SBW_RELAUNCH_ALLOW_UNSAFE=1 (unsafe opt-in, newline-rejected): [$RELAUNCH_CMD]"
+        ;;
+    esac
   elif _sbw_relaunch_is_safe "$RELAUNCH_CMD"; then
     log "RELAUNCH_CMD override validated (strict bare doppler-run-claude, no shell metachar): [$RELAUNCH_CMD]"
   else
@@ -169,7 +199,7 @@ db_audit_insert() {
   SBW_EVENT_TYPE_PY="$1" SBW_ACTION_PY="$2" SBW_RESULT_PY="$3" SBW_DETAIL_PY="$4" \
   SBW_TARGET_PC_PY="$TARGET_PC" \
   doppler run --project openhands --config dev -- \
-    "$PYTHON3_BIN" - <<'PYEOF' 2>>"$LOG" || true
+    "$PYTHON3_BIN" - <<'PYEOF' >>"$LOG" 2>&1 || true
 import os, json, urllib.request
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/shireiko_audit_log'
@@ -194,7 +224,7 @@ db_handshake_insert() {
   [ "$NO_DB" = "1" ] && { log "[NO_DB] skip pc_handshake INSERT ($1)"; return 0; }
   SBW_TOPIC_PY="$1" SBW_CONTENT_PY="$2" SBW_PRIORITY_PY="$3" SBW_FROM_PC_PY="$FROM_PC" \
   doppler run --project openhands --config dev -- \
-    "$PYTHON3_BIN" - <<'PYEOF' 2>>"$LOG" || true
+    "$PYTHON3_BIN" - <<'PYEOF' >>"$LOG" 2>&1 || true
 import os, json, urllib.request, uuid
 key = os.environ['SUPABASE_SERVICE_ROLE_KEY']
 url = os.environ['SUPABASE_URL'] + '/rest/v1/pc_handshake'
@@ -343,6 +373,7 @@ mode_b_handle_not_freed() {
   rm -f "$INPROGRESS_FLAG"
   # ② free 失敗回数を window 内で計上
   now_epoch >> "$FREEFAIL_HISTORY"
+  _sbw_prune_history "$FREEFAIL_HISTORY"   # cycle6 MED B2: 無制限肥大防止
   local ff_window ff_recent
   ff_window=$(( $(now_epoch) - RESTART_WINDOW_MIN * 60 ))
   ff_recent=$(awk -v c="$ff_window" 'BEGIN{n=0}{if($1+0>=c)n++}END{print n}' "$FREEFAIL_HISTORY" 2>/dev/null || echo 0)
@@ -362,6 +393,28 @@ mode_b_handle_not_freed() {
   fi
   log "WARN: MODE B pane not freed (current=$cur), free-fail ${ff_recent}/${RESTART_CAP} — in-progress flag 解除済・retry next cycle (抑止せず)"
   echo "retry"; return 0
+}
+
+# ─── MODE B: caller が not-freed verdict を明示受領し分岐 (cycle6 RED① — verdict を捨てない) ───
+# 由来: cycle6 fix (Codex e4e938a5 高 1件) = 旧 caller が `mode_b_handle_not_freed "$CUR" >/dev/null`
+#       で retry/halt verdict を ★破棄★ し、halt/retry の状態制御が caller 外側で不可視だった
+#       (標準 Codex 監査 = red)。本関数で verdict を受領→★明示 log で区別★し、caller が verdict
+#       を消費して動作する事を可視化・assert 可能にする。
+# 動作: いずれも本 cycle は relaunch せず (pane 未解放ゆえ)、次 cycle が再評価する。差分 =
+#       retry (cap 未満) は次 cycle で free 再試行 / halt (cap 到達) は escalate 済→operator 待ち。
+mode_b_on_not_freed_verdict() {
+  local v="$1"
+  case "$v" in
+    halt)
+      log "MODE B caller: not-freed verdict=halt — human_required escalate 済、本 cycle は relaunch せず停止 (次 cycle が operator 介入後に再評価)"
+      ;;
+    retry)
+      log "MODE B caller: not-freed verdict=retry — relaunch 見送り、次 cycle で pane 解放を再試行 (in-progress flag 解除済)"
+      ;;
+    *)
+      log "WARN: MODE B caller: not-freed 想定外 verdict=[$v] — 安全側 (no relaunch) で停止"
+      ;;
+  esac
 }
 
 # ─── classification (capture-content 主, pane_cmd 副) ───
@@ -431,7 +484,10 @@ fi
 # テストフック: pane-not-freed 処理 (cycle5 RED②) だけを単体 probe して exit
 # (real tmux 無しで「flag 抑止せず retry / cap で escalate」の DoD を機械検証する為)
 if [ -n "${SBW_NOT_FREED_PROBE:-}" ]; then
-  mode_b_handle_not_freed "$SBW_NOT_FREED_PROBE"
+  # cycle6 RED①: real caller (Step 5) と ★同一の 2 行配線★ — verdict を受領し分岐 (>/dev/null 廃止)。
+  # この probe が caller の verdict 消費を機械検証する (verdict 破棄回帰の pin)。
+  _nf_verdict=$(mode_b_handle_not_freed "$SBW_NOT_FREED_PROBE")
+  mode_b_on_not_freed_verdict "$_nf_verdict"
   exit 0
 fi
 
@@ -461,7 +517,13 @@ else
 fi
 
 MODE=$(classify "$PANE_TAIL" "$PANE_CMD")
-log "classify: mode=$MODE pane_cmd=$PANE_CMD tail_b64=$(printf '%s' "$PANE_TAIL" | tail -6 | base64 -w0)"
+# cycle6 MED S1: pane 表示内容 (PHI 等を含み得る) を ★既定では log に残さない★。
+# 障害解析時のみ SBW_DEBUG_TAIL=1 で base64 tail を opt-in 出力する (debug gating)。
+if [ "${SBW_DEBUG_TAIL:-0}" = "1" ]; then
+  log "classify: mode=$MODE pane_cmd=$PANE_CMD tail_b64=$(printf '%s' "$PANE_TAIL" | tail -6 | base64 -w0)"
+else
+  log "classify: mode=$MODE pane_cmd=$PANE_CMD (tail_b64 gated; set SBW_DEBUG_TAIL=1 to log pane content)"
+fi
 
 # テストフック: classification だけ確認して exit (persistence/relaunch を回さない)
 if [ "${SBW_CLASSIFY_ONLY:-0}" = "1" ]; then
@@ -563,8 +625,10 @@ if [ "$MODE" = "B" ]; then
       CUR=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
     fi
     if [ "$CUR" != "bash" ]; then
-      # cycle5 RED②: flag を残して TTL 抑止せず、解除→cap 未満は次 cycle 再試行・cap で escalate
-      mode_b_handle_not_freed "$CUR" >/dev/null
+      # cycle5 RED②: flag を残して TTL 抑止せず、解除→cap 未満は次 cycle 再試行・cap で escalate。
+      # cycle6 RED①: verdict を ★caller が明示受領して分岐★ (旧 >/dev/null 破棄を撤廃)。
+      NOT_FREED_VERDICT=$(mode_b_handle_not_freed "$CUR")
+      mode_b_on_not_freed_verdict "$NOT_FREED_VERDICT"
       exit 0
     fi
   fi
@@ -574,6 +638,7 @@ fi
 log "★RELAUNCH★ mode=$MODE cmd=$RELAUNCH_CMD"
 send_keys_line "$RELAUNCH_CMD"
 now_epoch >> "$RESTART_HISTORY"
+_sbw_prune_history "$RESTART_HISTORY"   # cycle6 MED B2: 無制限肥大防止
 
 # Step 7: incident 記録
 db_audit_insert "shogun_bash_fallback_relaunch" "relaunch_${MODE}" "success" \

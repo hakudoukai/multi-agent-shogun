@@ -95,6 +95,12 @@ SSH 手動 3 手 (doppler✗ / `claude -c`✗ / `claude` fresh✓) で復帰。e
 
 ## 関連 commit
 
-- (本 task の実装 commit hash は land 時に追記)
+- watchdog 実装 (PDCA cycle chain、Dual Green 監査駆動):
+  - `53c92f9` feat: watchdog 初版 (bash-fallback / stuck-retry 検知 + doppler relaunch)
+  - `5655570` cycle2: MODE B 子プロセス停止 hardening (証跡+確定検証)
+  - `de6329a` cycle3: 孫 claude-stack 再帰検出 + ancestry 確証
+  - `5a84954` cycle4: relaunch invariant 検証 / fingerprint 安定化 / tmux preflight SKIP=FAIL
+  - `5af5d9d` cycle5: RELAUNCH_CMD strict injection 遮断 / pane-not-freed 無限抑止 cure
+  - cycle6 (本 commit): not-freed verdict の caller 配線 / tail_b64 gating / ALLOW_UNSAFE 改行拒否 / history prune / deploy unit 検証
 - 関連既存: `enter_restart_common_watchdog.sh` (idle→Enter 系、本件とは別 failure mode・補完関係)
 - 過去事故: [docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](2026-05-05_secondpc_consumption_anomaly.md)
