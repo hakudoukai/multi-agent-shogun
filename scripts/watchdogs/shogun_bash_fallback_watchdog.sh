@@ -56,6 +56,9 @@
 #   SBW_NOW_EPOCH         now() を固定 (cap / persistence の決定的テスト用)
 #   SBW_RELAUNCH_ALLOW_UNSAFE=1  RELAUNCH_CMD invariant 検証を bypass (test 無害 stand-in /
 #                         運用者の意図的 override 用。既定は doppler-safe 強制 = cycle4 RED①)
+#   SBW_MODE_B_TERM_PROBE_PID=pid mode_b_term_children だけを probe して exit (誤TERM防止検証用)
+#   SBW_NOT_FREED_PROBE=cmd  mode_b_handle_not_freed だけを probe して exit (cycle5 RED②:
+#                         pane 解放失敗時に flag 抑止せず retry / cap で escalate する DoD 検証用)
 #
 # 安全 heredoc パターン (quoted <<'PYEOF' + os.environ + json.dumps) は
 # enter_restart_common_watchdog.sh の S1 (Python source injection) 根治系譜を踏襲。
@@ -107,6 +110,7 @@ KICKOFF_TEXT="${SBW_KICKOFF_TEXT:-【watchdog 再起動 directive】貴殿の Cl
 mkdir -p "$LOG_DIR"
 LOG="$LOG_DIR/$(date +%Y%m%d).log"
 RESTART_HISTORY="$LOG_DIR/restarts.log"
+FREEFAIL_HISTORY="$LOG_DIR/freefails.log"
 INPROGRESS_FLAG="$LOG_DIR/restart_in_progress.flag"
 STUCK_STATE="$LOG_DIR/stuck_state"
 DISABLE_LOCAL="$LOG_DIR/DISABLE"
@@ -116,19 +120,44 @@ log() { printf '[%s] %s\n' "$(date -Is)" "$*" | tee -a "$LOG" >&2; }
 
 now_epoch() { echo "${SBW_NOW_EPOCH:-$(date +%s)}"; }
 
-# ─── RELAUNCH_CMD invariant 検証 (cycle4 RED① — env-gap / 任意コマンド注入防止) ───
+# ─── RELAUNCH_CMD invariant 検証 (cycle4 RED① + cycle5 RED① — env-gap / injection 防止) ───
 # 根因分析: bare claude 再起動 = doppler/ccflare env 欠落で API retry 滞留 (second 実例)。
-# ∴ relaunch は必ず `doppler run … claude` 形 (env 付き) でなければならない。SBW_RELAUNCH_CMD
-# override が非該当 (bare claude / 任意 cmd) の場合は ★既定 (doppler-safe) に fallback + warn★ し
-# doppler invariant を守る (任意コマンド注入面も塞ぐ)。明示 SBW_RELAUNCH_ALLOW_UNSAFE=1 の時のみ
-# override を尊重 (test の無害 stand-in / 運用者の意図的 override)。default 採用時は検証不要。
+# ∴ relaunch は必ず `doppler run … claude` 形 (env 付き) でなければならない。
+#
+# cycle4 は「文字列が doppler run を含み claude を語として含む」★部分一致★ だった為、
+#   doppler run --project openhands --config dev -- claude; rm -rf / # PWNED
+# が validated 扱いとなり、send-keys で逐語 type→pane shell が実行する injection 面が残った
+# (cycle5 RED① Codex 9faac50c DRY_RUN 再現)。
+# cycle5 修復: override は ★素の (bare) `doppler run … claude` 形★ を anchored で要求し、
+#   shell の連鎖/置換/redirect/background を可能にする metachar
+#   — ; (separator) & (bg / &&) | (pipe / ||) < > (redirect) ` (backtick) $( (subshell) 改行 —
+#   を一切拒否する。連鎖を含む正当な前置 (export…&&cd…&&doppler) は ★既定 (code 定義・信頼)★
+#   側 (_SBW_DEFAULT_RELAUNCH) が担い、外部 override は素の doppler-run-claude に限定。
+#   それ以上を意図する運用者は明示 SBW_RELAUNCH_ALLOW_UNSAFE=1 で escape hatch を使う。
+_sbw_relaunch_is_safe() {
+  # rc=0 iff $1 は安全な bare `doppler run … claude` 形 (shell metachar/連鎖/改行 無)。
+  local cmd="$1"
+  # (1) 改行 (複数行注入) 拒否
+  case "$cmd" in *$'\n'*) return 1 ;; esac
+  # (2) shell metachar / 連鎖 / 置換 / redirect / background 拒否
+  #     ; (separator) & (bg / &&) | (pipe / ||) < > (redirect) ` (backtick) $ ($(…)/${…}/$VAR 展開)。
+  #     bare override に $ は不要 ($HOME/$PATH 前置は信頼 default 専用) ゆえ $ は一律拒否で
+  #     subshell/変数展開注入を最も単純かつ厳格に塞ぐ。
+  case "$cmd" in
+    *';'*|*'&'*|*'|'*|*'<'*|*'>'*|*'`'*|*'$'*) return 1 ;;
+  esac
+  # (3) anchored: 先頭 (空白許容) から doppler run … claude 形であること (末尾 junk 排除)
+  printf '%s' "$cmd" | grep -Eq '^[[:space:]]*doppler run[[:space:]].*[[:space:]]claude([[:space:]]|$)' || return 1
+  return 0
+}
+
 if [ -n "${SBW_RELAUNCH_CMD:-}" ]; then
   if [ "${SBW_RELAUNCH_ALLOW_UNSAFE:-0}" = "1" ]; then
     log "RELAUNCH_CMD override honored via SBW_RELAUNCH_ALLOW_UNSAFE=1 (unsafe opt-in): [$RELAUNCH_CMD]"
-  elif printf '%s' "$RELAUNCH_CMD" | grep -q 'doppler run' && printf '%s' "$RELAUNCH_CMD" | grep -qw 'claude'; then
-    log "RELAUNCH_CMD override validated (doppler env + claude): [$RELAUNCH_CMD]"
+  elif _sbw_relaunch_is_safe "$RELAUNCH_CMD"; then
+    log "RELAUNCH_CMD override validated (strict bare doppler-run-claude, no shell metachar): [$RELAUNCH_CMD]"
   else
-    log "WARN: SBW_RELAUNCH_CMD override [$RELAUNCH_CMD] is NOT a 'doppler run … claude' form (env-gap / injection risk) — fallback to doppler-safe default"
+    log "WARN: SBW_RELAUNCH_CMD override [$RELAUNCH_CMD] is NOT a strict 'doppler run … claude' form (shell metachar/chaining/newline or non-anchored = injection / env-gap risk) — fallback to doppler-safe default"
     RELAUNCH_CMD="$_SBW_DEFAULT_RELAUNCH"
   fi
 fi
@@ -298,6 +327,43 @@ mode_b_term_children() {
   return 0
 }
 
+# ─── MODE B: pane 解放失敗時の処理 (cycle5 RED② — 無限抑止しない) ───
+# 由来: cycle5 fix (Codex 9faac50c 実RED2件) = 旧版は free 失敗時 restart_in_progress flag を
+#       残したまま exit した為、次 cycle 以降 Step 1 が flag TTL (既定 150s) で skip し続け、
+#       stuck pane が ★再試行も escalate もされず★ 抑止された (flag による無限抑止)。
+# 修復方針: free 失敗を検知したら ①抑止源の in-progress flag を ★必ず解除★ (relaunch して
+#       いない ∴ boot grace は不要・次 cycle が再評価=再試行できるようにする) ②free 失敗回数を
+#       window 内で数え cap 未満は次 cycle 再試行・cap 到達で human_required escalate。
+#       SIGTERM の再試行は quota を消費しない (既存 stuck process への signal) ので 2026-05-05
+#       relaunch 暴走教訓には抵触せず、cap 到達後の DB escalate は ★初回 (== cap) のみ★ に
+#       絞り heartbeat spam (305 件教訓) も避ける。echo: "retry" | "halt"。
+mode_b_handle_not_freed() {
+  local cur="$1"
+  # ① 抑止源を除去 (★cycle5 RED② core cure★ — flag による無限抑止を断つ)
+  rm -f "$INPROGRESS_FLAG"
+  # ② free 失敗回数を window 内で計上
+  now_epoch >> "$FREEFAIL_HISTORY"
+  local ff_window ff_recent
+  ff_window=$(( $(now_epoch) - RESTART_WINDOW_MIN * 60 ))
+  ff_recent=$(awk -v c="$ff_window" 'BEGIN{n=0}{if($1+0>=c)n++}END{print n}' "$FREEFAIL_HISTORY" 2>/dev/null || echo 0)
+  if [ "$ff_recent" -ge "$RESTART_CAP" ]; then
+    log "★HALT★ MODE B pane free failed (current=$cur) ${ff_recent}x >= cap ${RESTART_CAP} in ${RESTART_WINDOW_MIN}min — escalate human_required (no suppression flag, 再試行は継続)"
+    if [ "$ff_recent" -eq "$RESTART_CAP" ]; then
+      # cap への初回到達のみ DB escalate (以降は quiet retry = heartbeat spam 防止)
+      db_audit_insert "shogun_bash_fallback_freefail_halt" "halted" "escalated" \
+        "${ROLE_NAME} MODE B stuck pane not freed (current=${cur}); free-fail cap ${ff_recent}/${RESTART_CAP} 到達。human_required。"
+      db_handshake_insert "[human_required] ${ROLE_NAME} stuck pane not freed (${ff_recent}x)" \
+        "${TARGET_PC} ${ROLE_NAME} pane=${PANE_TARGET}: stuck-retry 停止に ${ff_recent} 回失敗 (current_command=${cur})。自動解放を断念し人手介入要請。in-progress flag は抑止せず解除済。" \
+        "high"
+    else
+      log "free-fail ${ff_recent} は cap 超過済 (escalate 発報済) — quiet retry (DB spam 抑止)"
+    fi
+    echo "halt"; return 0
+  fi
+  log "WARN: MODE B pane not freed (current=$cur), free-fail ${ff_recent}/${RESTART_CAP} — in-progress flag 解除済・retry next cycle (抑止せず)"
+  echo "retry"; return 0
+}
+
 # ─── classification (capture-content 主, pane_cmd 副) ───
 # Claude TUI chrome (= Claude 稼働中の指標)
 CHROME_RE='esc to interrupt|bypass permissions|\? for shortcuts|context (used|left)|shift\+tab|⏵⏵|tab to (cycle|expand)|❯|│[[:space:]]*>'
@@ -359,6 +425,13 @@ fi
 # (real tmux pane 無しで誤TERM防止ロジックを DoD 検証する為。DRY_RUN は呼出側が指定)
 if [ -n "${SBW_MODE_B_TERM_PROBE_PID:-}" ]; then
   mode_b_term_children "$SBW_MODE_B_TERM_PROBE_PID"
+  exit 0
+fi
+
+# テストフック: pane-not-freed 処理 (cycle5 RED②) だけを単体 probe して exit
+# (real tmux 無しで「flag 抑止せず retry / cap で escalate」の DoD を機械検証する為)
+if [ -n "${SBW_NOT_FREED_PROBE:-}" ]; then
+  mode_b_handle_not_freed "$SBW_NOT_FREED_PROBE"
   exit 0
 fi
 
@@ -490,9 +563,8 @@ if [ "$MODE" = "B" ]; then
       CUR=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
     fi
     if [ "$CUR" != "bash" ]; then
-      log "WARN: pane not freed (current=$CUR) — escalate, leave flag to TTL"
-      db_handshake_insert "[human_required] ${ROLE_NAME} stuck pane not freed" \
-        "${TARGET_PC} ${ROLE_NAME} pane=${PANE_TARGET}: stuck-retry 停止に失敗 (current_command=${CUR})。人手介入が必要。" "high"
+      # cycle5 RED②: flag を残して TTL 抑止せず、解除→cap 未満は次 cycle 再試行・cap で escalate
+      mode_b_handle_not_freed "$CUR" >/dev/null
       exit 0
     fi
   fi
