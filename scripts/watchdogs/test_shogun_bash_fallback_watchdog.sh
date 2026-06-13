@@ -101,6 +101,62 @@ dr=$(SBW_NO_DB=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
   SBW_CAPTURE_FILE="$TMP/cap_A.txt" SBW_PANE_CMD_OVERRIDE=bash SBW_LOG_DIR="$LD" bash "$WD" 2>&1)
 t_grep "$dr" 'manual disable' "DISABLE flag halts watchdog"
 
+# ─── RELAUNCH_CMD invariant 検証 (cycle4 RED①: env-gap / 任意コマンド注入防止) ───
+echo "════ 5b. RELAUNCH_CMD invariant (doppler-safe 強制) ════"
+LD="$TMP/relaunch"
+# MODE A・DRY_RUN で resolved RELAUNCH_CMD を log から観測 (★RELAUNCH★ cmd=… 行)
+rl() { local allow=""; [ -n "${3:-}" ] && allow="SBW_RELAUNCH_ALLOW_UNSAFE=1"
+  env SBW_NO_DB=1 SBW_DRY_RUN=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_CAPTURE_FILE="$TMP/cap_A.txt" SBW_PANE_CMD_OVERRIDE=bash SBW_LOG_DIR="$LD/$1" \
+  SBW_RELAUNCH_CMD="$2" $allow bash "$WD" 2>&1; }
+# 実際に relaunch される cmd は ★RELAUNCH★ 行のみ (warn 行 'SBW_RELAUNCH_CMD…' は rejected
+# override を証跡で含むので 'RELAUNCH' 部分一致では誤拾い → ★RELAUNCH★ glyph で厳密に絞る)
+rline() { printf '%s\n' "$1" | grep '★RELAUNCH★'; }
+# (a) bare claude override (unsafe) → fallback to doppler-safe default + warn
+out_bare=$(rl bare "claude --permission-mode auto")
+t_grep "$out_bare" 'NOT a .*doppler run'        "5b bare claude override → warn"
+t_grep "$(rline "$out_bare")" 'doppler run'     "5b bare claude → fallback に doppler-safe default 採用"
+t_ngrep "$(rline "$out_bare")" 'cmd=claude --permission-mode auto$' "5b bare claude は relaunch されない"
+# (b) 任意コマンド override (注入面) → fallback
+out_inj=$(rl inj "rm -rf / # pwned")
+t_grep "$out_inj" 'NOT a .*doppler run'         "5b 任意コマンド override → warn"
+t_grep "$(rline "$out_inj")" 'doppler run'      "5b 任意コマンド → fallback (注入面遮断)"
+t_ngrep "$(rline "$out_inj")" 'rm -rf'          "5b 任意コマンドは relaunch されない"
+# (c) 正当な doppler … claude override → 尊重 (fallback しない)
+SAFE='cd /x && doppler run --project openhands --config dev -- claude --permission-mode auto'
+out_safe=$(rl safe "$SAFE")
+t_grep  "$out_safe" 'override validated'        "5b doppler+claude override → validated"
+t_ngrep "$out_safe" 'fallback to doppler-safe'  "5b 正当 override は fallback しない"
+# (d) 明示 SBW_RELAUNCH_ALLOW_UNSAFE=1 → unsafe でも尊重 (test/運用者意図 escape hatch)
+out_optin=$(rl optin "echo standin && cat" 1)
+t_grep "$out_optin" 'unsafe opt-in'             "5b ALLOW_UNSAFE=1 → unsafe override 尊重"
+t_grep "$out_optin" 'RELAUNCH.* cmd=echo standin && cat' "5b opt-in は override をそのまま使用"
+
+# ─── stuck fingerprint 安定性 (cycle4 RED②: spinner glyph/語/counter 不変化) ───
+echo "════ 5c. stuck fingerprint 安定性 (spinner 変動耐性) ════"
+fp() { SBW_FINGERPRINT_PROBE="$1" SBW_NO_DB=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x \
+  SBW_ROLE_NAME=t bash "$WD" 2>/dev/null; }
+# 同一 stuck 状態の 2 spinner フレーム: glyph アニメ・rotating gerund・経過秒・attempt 番号が
+# すべて変動するが進捗は 0。★同一 fingerprint★ でなければ persistence に到達できない。
+printf '⠋ Crunching… (12s · esc to interrupt)\n  ⎿ API Error: 529 overloaded_error · Retrying… attempt 4/10\n' > "$TMP/fp_f1.txt"
+printf '⠙ Zigzagging… (73s · esc to interrupt)\n  ⎿ API Error: 529 overloaded_error · Retrying… attempt 5/10\n' > "$TMP/fp_f2.txt"
+# 真の進捗 (assistant 実出力が変化) → fingerprint も変化 (timer reset = 誤発火防止)
+printf '⠹ Crunching… (90s · esc to interrupt)\n  ⎿ Read 200 lines from karte_visit_manager.py\n  Now editing line 123\n' > "$TMP/fp_prog.txt"
+t_eq "$(fp "$TMP/fp_f1.txt")" "$(fp "$TMP/fp_f2.txt")" "5c spinner 2 フレーム同一 stuck → 同一 fp (persistence 到達可)"
+if [ "$(fp "$TMP/fp_f1.txt")" != "$(fp "$TMP/fp_prog.txt")" ]; then
+  ok "5c 進捗あり → fp 変化 (timer reset = 誤発火防止、over-normalize でない)"
+else
+  ng "5c 進捗あっても fp 同一 (over-normalize 疑い)"
+fi
+# 実 persistence でも spinner 変動を跨いで発火する事を pin (frame 跨ぎ STUCK_STATE 永続)
+LD="$TMP/persist2"
+pr2() { SBW_NO_DB=1 SBW_DRY_RUN=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_RELAUNCH_ALLOW_UNSAFE=1 SBW_RELAUNCH_CMD='doppler run -- claude' \
+  SBW_CAPTURE_FILE="$1" SBW_PANE_CMD_OVERRIDE=node SBW_LOG_DIR="$LD" SBW_NOW_EPOCH="$2" bash "$WD" 2>&1; }
+t_grep "$(pr2 "$TMP/fp_f1.txt" 2000)" 'reset timer'        "5c frame1 first-sighting defer"
+t_grep "$(pr2 "$TMP/fp_f2.txt" 2120)" 'not yet persistent' "5c frame2 (spinner 変動) fp 不変→timer 継続"
+t_grep "$(pr2 "$TMP/fp_f2.txt" 2360)" 'RELAUNCH'           "5c +360s で発火 (spinner 変動を跨ぎ persistence 成立)"
+
 # ─── live tmux e2e ───
 e2e_one() {
   # $1=session $2=setup-cmd $3=role $4=marker $5=mode-label
@@ -113,7 +169,7 @@ e2e_one() {
   # 2 回 run: MODE B は persistence で 2 回目に発火 (MODE A は冪等 flag で 2 回目 skip)
   for _ in 1 2; do
     SBW_NO_DB=1 SBW_BOOT_DELAY_SEC=2 SBW_STUCK_MIN=0 \
-      SBW_RELAUNCH_CMD="echo $marker && cat" \
+      SBW_RELAUNCH_CMD="echo $marker && cat" SBW_RELAUNCH_ALLOW_UNSAFE=1 \
       SBW_KICKOFF_TEXT="KICK_$marker" \
       SBW_PANE_TARGET="$S":f.0 SBW_SESSION_NAME="$S" SBW_ROLE_NAME="$role" SBW_LOG_DIR="$LD" \
       bash "$WD" >/dev/null 2>&1
@@ -130,15 +186,25 @@ e2e_one() {
   fi
 }
 
-if command -v tmux >/dev/null 2>&1; then
-  echo "════ 6. live tmux e2e (A: bash-fallback) ════"
+echo "════ 6. tmux e2e preflight (cycle4 RED③: SKIP=FAIL, skip-as-pass 禁) ════"
+# negative test: tmux 不在を PATH 隠蔽で擬似再現 → preflight は ★fail を返さねばならない★
+# (前提を満たせない時を「成功」扱いにしない = SKIP=FAIL 原則の機械 pin)
+if ( PATH=/nonexistent-sbw; command -v tmux >/dev/null 2>&1 ); then
+  ng "negative: tmux 不在擬似で preflight が present 判定 (skip-as-pass 漏れ)"
+else
+  ok "negative: tmux 不在擬似で preflight=fail (SKIP=FAIL 順守)"
+fi
+# 本番 preflight: tmux 不在なら live e2e は ★実行不能=FAIL★ (旧版の skip-as-pass を撤廃)
+if ! command -v tmux >/dev/null 2>&1; then
+  ng "tmux preflight: tmux 不在ゆえ live e2e 実行不能 (前提未充足=FAIL、成功扱い禁)"
+else
+  ok "tmux preflight: tmux present → live e2e 実行"
+  echo "════ 6a. live tmux e2e (A: bash-fallback) ════"
   e2e_one sbwt_A "echo '[大将軍標準編成] 将軍-test / claude'; inbox3" t-a SBW_A_OK "MODE A"
-  echo "════ 7. live tmux e2e (B: stuck-retry → interrupt+relaunch) ════"
+  echo "════ 6b. live tmux e2e (B: stuck-retry → interrupt+relaunch) ════"
   e2e_one sbwt_B \
     $'printf \'\\u25cf model...\\n  Retrying\\u2026 attempt 4/10\\n \\u276f\\n  esc to interrupt\\n\'; sleep 600' \
     t-b SBW_B_OK "MODE B"
-else
-  echo "(tmux 不在 — e2e skip)"
 fi
 
 # ─── MODE B child-TERM 証跡+検証 (cycle2 hardening, 誤TERM防止 real証跡) ───

@@ -47,11 +47,15 @@
 #
 # テスト用フック (DoD fixture 再現に使用):
 #   SBW_CLASSIFY_ONLY=1   classification だけ実行し MODE を stdout に出して exit
+#   SBW_FINGERPRINT_PROBE=path その file 内容の stuck fingerprint を stdout に出して exit
+#                         (cycle4 RED②: spinner 不変性の DoD 検証用)
 #   SBW_CAPTURE_FILE=path tmux capture の代わりに file 内容を pane tail として読む
 #   SBW_PANE_CMD_OVERRIDE pane_current_command の代わりにこの値を使う
 #   SBW_NO_DB=1           Supabase INSERT を全 skip (fixture 用)
 #   SBW_DRY_RUN=1         send-keys / kill を実行せず "would …" を log するのみ
 #   SBW_NOW_EPOCH         now() を固定 (cap / persistence の決定的テスト用)
+#   SBW_RELAUNCH_ALLOW_UNSAFE=1  RELAUNCH_CMD invariant 検証を bypass (test 無害 stand-in /
+#                         運用者の意図的 override 用。既定は doppler-safe 強制 = cycle4 RED①)
 #
 # 安全 heredoc パターン (quoted <<'PYEOF' + os.environ + json.dumps) は
 # enter_restart_common_watchdog.sh の S1 (Python source injection) 根治系譜を踏襲。
@@ -111,6 +115,23 @@ DISABLE_GLOBAL="$HOME/.openclaw/global_disable"
 log() { printf '[%s] %s\n' "$(date -Is)" "$*" | tee -a "$LOG" >&2; }
 
 now_epoch() { echo "${SBW_NOW_EPOCH:-$(date +%s)}"; }
+
+# ─── RELAUNCH_CMD invariant 検証 (cycle4 RED① — env-gap / 任意コマンド注入防止) ───
+# 根因分析: bare claude 再起動 = doppler/ccflare env 欠落で API retry 滞留 (second 実例)。
+# ∴ relaunch は必ず `doppler run … claude` 形 (env 付き) でなければならない。SBW_RELAUNCH_CMD
+# override が非該当 (bare claude / 任意 cmd) の場合は ★既定 (doppler-safe) に fallback + warn★ し
+# doppler invariant を守る (任意コマンド注入面も塞ぐ)。明示 SBW_RELAUNCH_ALLOW_UNSAFE=1 の時のみ
+# override を尊重 (test の無害 stand-in / 運用者の意図的 override)。default 採用時は検証不要。
+if [ -n "${SBW_RELAUNCH_CMD:-}" ]; then
+  if [ "${SBW_RELAUNCH_ALLOW_UNSAFE:-0}" = "1" ]; then
+    log "RELAUNCH_CMD override honored via SBW_RELAUNCH_ALLOW_UNSAFE=1 (unsafe opt-in): [$RELAUNCH_CMD]"
+  elif printf '%s' "$RELAUNCH_CMD" | grep -q 'doppler run' && printf '%s' "$RELAUNCH_CMD" | grep -qw 'claude'; then
+    log "RELAUNCH_CMD override validated (doppler env + claude): [$RELAUNCH_CMD]"
+  else
+    log "WARN: SBW_RELAUNCH_CMD override [$RELAUNCH_CMD] is NOT a 'doppler run … claude' form (env-gap / injection risk) — fallback to doppler-safe default"
+    RELAUNCH_CMD="$_SBW_DEFAULT_RELAUNCH"
+  fi
+fi
 
 # ─── Supabase INSERT (fire/escalate 時のみ。安全 heredoc) ───
 db_audit_insert() {
@@ -305,11 +326,34 @@ classify() {
   echo "HEALTHY"
 }
 
+# Claude TUI spinner の rotating gerund 群 (フレーム毎に語が回る = 不変化対象)。
+# STUCK_RE の spinner 語を含む superset。stuck 中はこの語だけが変わり進捗 0 ゆえ正規化必須。
+SPINNER_WORD_RE='Crunching|Zigzagging|Reticulating|Hibernating|Marinating|Simmering|Pondering|Noodling|Percolating|Schlepping|Vibing|Channelling|Computing|Cogitating|Conjuring|Deliberating|Effecting|Finagling|Forging|Germinating|Honking|Imagining|Incubating|Mustering|Mulling|Musing|Processing|Puzzling|Ruminating|Shucking|Spinning|Stewing|Synthesizing|Transmuting|Wibbling|Wrangling|Baking|Brewing|Calculating|Cooking|Distilling|Generating|Grokking|Herding|Jamming|Moseying|Pixelating|Polishing|Tinkering|Whirring'
+
 fingerprint() {
-  # 直近の非空行から安定 fingerprint。spinner の「経過秒」等の可変部を除く為
-  # 数字列を # に潰してから hash (= 進捗が止まれば同一 fp、進めば別 fp)。
-  printf '%s' "$1" | grep -v '^[[:space:]]*$' | tail -8 | sed 's/[0-9]\+/#/g' | sha1sum | cut -d' ' -f1
+  # cycle4 RED②: 安定 fingerprint。spinner の可変部 — ①glyph アニメ (braille 等の非 ASCII
+  # 装飾) ②rotating gerund 語 ③経過秒 / attempt N/M 等の counter — を normalize し、
+  # 「進捗が真に止まっているか」を安定 signal (Retrying attempt #/# 等) で判定する。
+  # 旧版は数字潰しのみで glyph/語の変動に弱く、stuck 中も fp が毎フレーム変わり persistence
+  # に到達できなかった (= MODE B が発火しない回帰)。逆に assistant の実出力行は残すので、
+  # 真に進捗していれば fp は変化し timer reset = 誤発火しない。
+  printf '%s' "$1" \
+    | grep -v '^[[:space:]]*$' \
+    | tail -8 \
+    | LC_ALL=C sed -E \
+        -e 's/[^[:print:][:space:]]+/ /g' \
+        -e "s/\\b(${SPINNER_WORD_RE})\\b/SPIN/g" \
+        -e 's/[0-9]+/#/g' \
+        -e 's/[[:space:]]+/ /g' \
+        -e 's/^ //; s/ $//' \
+    | sha1sum | cut -d' ' -f1
 }
+
+# テストフック: fingerprint だけを probe して exit (cycle4 RED② spinner 不変性 DoD 検証用)
+if [ -n "${SBW_FINGERPRINT_PROBE:-}" ]; then
+  fingerprint "$(cat "$SBW_FINGERPRINT_PROBE" 2>/dev/null)"
+  exit 0
+fi
 
 # テストフック: MODE B child-TERM の証跡+検証ロジックだけを単体 probe して exit
 # (real tmux pane 無しで誤TERM防止ロジックを DoD 検証する為。DRY_RUN は呼出側が指定)
