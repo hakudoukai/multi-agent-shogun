@@ -27,9 +27,9 @@
 #
 # ═══ 復旧 ═══
 #   ① @agent_id 取得 (永続) ② (B のみ) Claude を停止し pane 解放 (Esc→C-c→必要なら
-#      子 PID へ SIGTERM。★ローカルのみ・cross-PC kill 無★。誤 TERM 防止に cycle2 hardening:
-#      送出前に ①事前 ps 証跡 log ②PANE_PID 直系子孫 かつ claude stack の確定検証 →
-#      ③単一PID形 kill -TERM (mode_b_term_children 参照))
+#      claude stack へ SIGTERM。★ローカルのみ・cross-PC kill 無★。誤 TERM 防止に cycle3 hardening:
+#      送出前に ①PANE_PID subtree 再帰列挙 + 事前 ps 証跡 log ②ancestry 確証 かつ claude stack の
+#      確定検証 (claude は doppler 配下の孫) → ③単一PID形 kill -TERM (mode_b_term_children 参照))
 #   ③ ★doppler env 付き relaunch★ (SBW_RELAUNCH_CMD 既定 = doppler run … claude
 #      --permission-mode auto。bare claude 禁 = env-gap 回避)
 #   ④ kickoff directive (自己識別→CLAUDE.md/instructions→停滞 task 再開) を boot 後送出
@@ -178,36 +178,76 @@ send_key_special() {
   tmux send-keys -t "$PANE_TARGET" "$1" 2>>"$LOG"
 }
 
-# ─── MODE B: stuck claude stack の child を 証跡付き・検証付きで SIGTERM (cycle2 hardening) ───
-# 由来: cycle2 fix (Codex 349d24df 実RED1件) = MODE B cleanup の SIGTERM が DD-169 discipline
-#       不足。pane shell 配下のローカル process のみ対象 (cross-PC kill 無 ∴ DD-169 例外) だが、
-#       generic な node/doppler を誤って TERM しない様、送出前に証跡+確定検証を課す:
-#   ① 事前 ps 証跡   : TERM 送出前に pane shell 直系子の full ps (pid/ppid/comm/args) を log。
-#   ② per-PID 確定検証: (a) PANE_PID 直系子孫の再確認 (TOCTOU で reparent された孤児を弾く)
-#                       (b) 期待 process か = comm が claude 本体、もしくは comm が node/doppler
-#                           かつ args が claude stack を指す (generic runtime/launcher の誤 TERM 防止)。
+# ─── MODE B: stuck claude stack を 証跡付き・検証付きで SIGTERM (cycle3 hardening) ───
+# 由来: cycle3 fix (Codex 1771c08f 実RED2件) = cycle2 の SIGTERM 対象が pane_pid 直系子限定
+#       (pgrep -P) で、launch wrapper=`doppler run … claude` ゆえ claude が ★孫プロセス★
+#       (pane shell→doppler→claude or →node→claude) になる構造を停止できなかった。
+#       cycle1=広すぎ / cycle2=狭すぎ (直系子のみ) の振れを是正し、PANE_PID subtree 全体を
+#       再帰列挙 + ancestry 確証 + claude-stack 確定検証 で過不足なく TERM する。
+#       pane shell 配下のローカル process のみ対象 (cross-PC kill 無 ∴ DD-169 例外):
+#   ① 事前 ps 証跡   : TERM 送出前に PANE_PID subtree 全 descendant の full ps を log。
+#   ② per-PID 確定検証: (a) ancestry — 発見 PID の親 chain に PANE_PID が含まれる事を確証
+#                           (他 pane 混入 / TOCTOU reparent 排除)
+#                       (b) claude-stack — comm が claude 本体、もしくは comm が node/doppler
+#                           かつ args が claude を指す (generic runtime/launcher の誤 TERM 防止)。
+#                       ★検証は TERM 前に一括実行 (verify-then-term)★ — 親(doppler)を先に
+#                       TERM して孫(claude)が reparent し ancestry 落ちする self-orphan を防ぐ。
 #   ③ 単一PID形 TERM : 検証を通った PID のみ `kill -TERM <pid>` (DD-169 例外形)。DRY_RUN は尊重。
+
+# PANE_PID subtree の全 descendant PID を再帰列挙 (直系子限定を撤廃 = cycle3)。
+_sbw_collect_descendants() {
+  local p="$1" kid
+  for kid in $(pgrep -P "$p" 2>/dev/null || true); do
+    echo "$kid"
+    _sbw_collect_descendants "$kid"
+  done
+}
+
+# 候補 PID の親 chain に root が含まれるか (ancestry 確証、他 pane 混入排除)。
+_sbw_has_ancestor() {
+  # $1=candidate pid $2=root pid ; rc=0 if root is an ancestor of candidate
+  local cur="$1" root="$2" guard=0 pp
+  while [ -n "$cur" ] && [ "$cur" != "1" ] && [ "$cur" != "0" ]; do
+    [ "$cur" = "$root" ] && return 0
+    pp=$(ps -o ppid= -p "$cur" 2>/dev/null | tr -d ' ')
+    [ -z "$pp" ] && return 1
+    cur="$pp"
+    guard=$((guard+1)); [ "$guard" -gt 64 ] && return 1
+  done
+  return 1
+}
+
 mode_b_term_children() {
   local pane_pid="$1"
   [ -z "$pane_pid" ] && { log "MODE B term: empty pane_pid — skip"; return 0; }
-  # ① 事前 ps 証跡 (TERM 対象外含む全直系子を列挙 log)
-  log "MODE B ps-evidence (direct children of pane_pid=$pane_pid):"
-  local line
-  while IFS= read -r line; do
-    [ -n "$line" ] && log "  ps| $line"
-  done < <(ps -o pid=,ppid=,comm=,args= --ppid "$pane_pid" 2>/dev/null || true)
-  # ② per-PID 確定検証 → ③ 単一PID形 TERM
-  local child cppid cname cargs expected termed=0
-  for child in $(pgrep -P "$pane_pid" 2>/dev/null || true); do
+  # cycle3: 直系子限定を撤廃し subtree 全体を再帰列挙 (claude は孫 pane→doppler→claude)
+  local descendants
+  descendants=$(_sbw_collect_descendants "$pane_pid")
+  if [ -z "$descendants" ]; then
+    log "MODE B ps-evidence (subtree of pane_pid=$pane_pid): (no descendants)"
+    log "MODE B term summary: verified_termed=0 (pane_pid=$pane_pid)"
+    return 0
+  fi
+  # ① 事前 ps 証跡 (subtree 全 descendant を pid/ppid/comm/args で log)
+  log "MODE B ps-evidence (subtree of pane_pid=$pane_pid):"
+  local d ev
+  for d in $descendants; do
+    ev=$(ps -o pid=,ppid=,comm=,args= -p "$d" 2>/dev/null | sed 's/^[[:space:]]*//')
+    [ -n "$ev" ] && log "  ps| $ev"
+  done
+  # ② per-PID 確定検証 → verified list 構築 (★TERM 前に一括確証 = self-orphan 防止★)
+  local child cppid cname cargs expected
+  local -a verified_pids=() verified_desc=()
+  for child in $descendants; do
     cppid=$(ps -o ppid= -p "$child" 2>/dev/null | tr -d ' ')
     cname=$(ps -o comm= -p "$child" 2>/dev/null || echo "")
     cargs=$(ps -o args= -p "$child" 2>/dev/null || echo "")
-    # 検証(a): PANE_PID 直系子孫の確証
-    if [ "$cppid" != "$pane_pid" ]; then
-      log "MODE B skip pid=$child ($cname): ppid=$cppid != pane_pid=$pane_pid (not descendant)"
+    # 検証(a): ancestry — 親 chain に pane_pid を含む事を確証 (他 pane 混入 / reparent 排除)
+    if ! _sbw_has_ancestor "$child" "$pane_pid"; then
+      log "MODE B skip pid=$child ($cname): pane_pid=$pane_pid not in ancestor chain (ppid=$cppid)"
       continue
     fi
-    # 検証(b): 期待 process か (generic node/doppler の誤 TERM 防止)
+    # 検証(b): claude-stack か (generic node/doppler の誤 TERM 防止)
     expected=0
     case "$cname" in
       claude) expected=1 ;;
@@ -217,15 +257,22 @@ mode_b_term_children() {
       log "MODE B skip pid=$child ($cname): not claude-stack (args=[$cargs]) — avoid generic TERM"
       continue
     fi
-    # ③ 単一PID形 TERM (検証済・証跡有・ローカル = DD-169 例外)
-    if [ "$DRY_RUN" = "1" ]; then
-      log "[DRY_RUN] would SIGTERM verified child pid=$child ($cname) ppid=$cppid args=[$cargs]"
-    else
-      log "SIGTERM verified child pid=$child ($cname) ppid=$cppid args=[$cargs]"
-      kill -TERM "$child" 2>>"$LOG" || true
-    fi
-    termed=$((termed+1))
+    verified_pids+=("$child")
+    verified_desc+=("pid=$child ($cname) ppid=$cppid args=[$cargs]")
   done
+  # ③ 単一PID形 TERM (検証済のみ。verify-then-term ゆえ親子同時でも取りこぼし無)
+  local i termed=0
+  if [ "${#verified_pids[@]}" -gt 0 ]; then
+    for i in "${!verified_pids[@]}"; do
+      if [ "$DRY_RUN" = "1" ]; then
+        log "[DRY_RUN] would SIGTERM verified child ${verified_desc[$i]}"
+      else
+        log "SIGTERM verified child ${verified_desc[$i]}"
+        kill -TERM "${verified_pids[$i]}" 2>>"$LOG" || true
+      fi
+      termed=$((termed+1))
+    done
+  fi
   log "MODE B term summary: verified_termed=$termed (pane_pid=$pane_pid)"
   return 0
 }

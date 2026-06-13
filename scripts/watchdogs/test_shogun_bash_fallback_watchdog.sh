@@ -201,6 +201,65 @@ t_eq "$(av "$(gp vite)")"        "1" "8b REAL: generic vite SURVIVED"
 kill -TERM "$PARENT_PID" 2>/dev/null || true
 for k in node_gen doppler_gen vite; do kill -TERM "$(gp "$k")" 2>/dev/null || true; done
 
+# ─── 孫 (grandchild) claude-stack 再帰検出+停止 (cycle3, doppler→claude 構造) ───
+# 由来: cycle3 (Codex 1771c08f) = launch wrapper `doppler run … claude` ゆえ claude は孫。
+#       cycle2 の pgrep -P 直系子限定では孫 claude を検出/停止できなかった回帰を pin する。
+# 構造: GC_PARENT → [中間 doppler(claude args)] → claude(孫=TERM対象)
+#                 → [中間 doppler(generic)]     → node(孫=生存)
+echo "════ 9. 孫 claude-stack 再帰検出+停止 (cycle3: pane→doppler→claude) ════"
+GBD="$TMP/gcbin"; mkdir -p "$GBD/claude_stack"
+for n in claude doppler node; do cp "$SLEEP_BIN" "$GBD/$n"; done
+cp "$SLEEP_BIN" "$GBD/claude_stack/doppler"   # 中間: comm=doppler, args に 'claude'
+GPIDF="$TMP/gc_pids"; : > "$GPIDF"
+# claude 枝: claude 孫を bg → exec で doppler(claude args) 中間に化ける
+cat > "$TMP/gc_branch_cl.sh" <<EOF
+#!/usr/bin/env bash
+"$GBD/claude" 60 &
+echo "claude_gc \$!" >> "$GPIDF"
+exec "$GBD/claude_stack/doppler" 60
+EOF
+# generic 枝: node 孫を bg → exec で doppler(generic) 中間に化ける
+cat > "$TMP/gc_branch_gen.sh" <<EOF
+#!/usr/bin/env bash
+"$GBD/node" 60 &
+echo "node_gc_gen \$!" >> "$GPIDF"
+exec "$GBD/doppler" 60
+EOF
+chmod +x "$TMP/gc_branch_cl.sh" "$TMP/gc_branch_gen.sh"
+cat > "$TMP/gc_parent.sh" <<EOF
+#!/usr/bin/env bash
+"$TMP/gc_branch_cl.sh" &
+echo "branch_cl \$!" >> "$GPIDF"
+"$TMP/gc_branch_gen.sh" &
+echo "branch_gen \$!" >> "$GPIDF"
+exec sleep 60
+EOF
+chmod +x "$TMP/gc_parent.sh"
+"$TMP/gc_parent.sh" &
+GC_PARENT_PID=$!
+sleep 0.9
+ggp() { awk -v k="$1" '$1==k{print $2}' "$GPIDF"; }
+GC_CLAUDE=$(ggp claude_gc)
+
+# (9a) DRY probe: 孫 claude が subtree 証跡に出て検証 TERM 対象になる + 直系子ではない事を pin
+gdry=$(SBW_NO_DB=1 SBW_DRY_RUN=1 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_LOG_DIR="$TMP/gc_dry" SBW_MODE_B_TERM_PROBE_PID="$GC_PARENT_PID" bash "$WD" 2>&1)
+t_grep  "$gdry" "subtree of pane_pid"                          "9a 証跡 header=subtree (直系子限定撤廃)"
+t_grep  "$gdry" "would SIGTERM verified child pid=$GC_CLAUDE "  "9a 孫 claude($GC_CLAUDE) が TERM 対象 (再帰検出)"
+t_ngrep "$(pgrep -P "$GC_PARENT_PID" 2>/dev/null)" "^$GC_CLAUDE\$" "9a 孫 claude は直系子でない (cycle2 pgrep -P では不可視)"
+
+# (9b) REAL probe: 孫 claude + claude-args 中間 doppler を TERM、generic 枝は生存
+SBW_NO_DB=1 SBW_DRY_RUN=0 SBW_PANE_TARGET=x:0.0 SBW_SESSION_NAME=x SBW_ROLE_NAME=t \
+  SBW_LOG_DIR="$TMP/gc_real" SBW_MODE_B_TERM_PROBE_PID="$GC_PARENT_PID" bash "$WD" >/dev/null 2>&1
+sleep 1
+t_eq "$(av "$(ggp claude_gc)")"    "0" "9b REAL: 孫 claude TERMed (再帰検出→停止)"
+t_eq "$(av "$(ggp branch_cl)")"    "0" "9b REAL: 中間 doppler(claude args) TERMed"
+t_eq "$(av "$(ggp node_gc_gen)")"  "1" "9b REAL: generic 孫 node SURVIVED (誤TERM防止)"
+t_eq "$(av "$(ggp branch_gen)")"   "1" "9b REAL: generic 中間 doppler SURVIVED"
+# cleanup (生存分のみ単一PID形 TERM)
+kill -TERM "$GC_PARENT_PID" 2>/dev/null || true
+for k in branch_gen node_gc_gen; do kill -TERM "$(ggp "$k")" 2>/dev/null || true; done
+
 echo
 echo "════════════ RESULT: PASS=$PASS FAIL=$FAIL ════════════"
 if [ "$FAIL" -eq 0 ]; then echo "ALL GREEN"; exit 0; else echo "FAILURES PRESENT"; exit 1; fi
