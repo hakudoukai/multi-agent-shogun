@@ -217,35 +217,26 @@ if [ "$ELAPSED_INT" -lt "$THRESHOLD_MIN" ]; then
 fi
 
 # Step 5: label 照合 (Claude TUI prompt + 非空 input buffer 検出)
-# β改修 cycle5 (CANON 残 regression #1 Layer D, α堅牢版):
-#   従来 last_non_footer_line は「footer 除外後の最下位行」を取るが、
-#   active pane で output 流入中は input 行 (❯ ...) が範囲内のどこに居るか不定で、
-#   ★output 末尾文字列が拾われ label_match=0 → 自動 send-keys 不発★ となる現象 (実機 12/12 cycle)。
-#   対策: ★prompt 行自体を PANE_TAIL 全体から grep 探索★ (旧 `│ > xxx │` / 新 `^❯ xxx`)
-#   tail -1 で最下位 prompt 行を取得。output 流入で押し上がっても prompt 行を確実に捕捉。
-#   既存 footer 除外 + NBSP 正規化はそのまま、PROMPT 行探索が cycle3 の last_non_footer_line を代替。
+# 副院長令 (commander dispatch 80c99b66, 正本 bcb514b9 残 regression 1 指針):
+#   cycle5c の border-anchored 照合 (──── 直後の ❯/│> 行のみ) は実機の active pane で
+#   prompt が border 直後に居ない race を取りこぼし、label_mismatch を量産していた
+#   (自動 Enter 不発火 → 自律稼働不全)。
+#   原状追随の最小 patch (新規増設禁):
+#     ① last_line 判定から footer (⏵⏵ bypass permissions on) と status 行 (N% context used)
+#        を FOOTER_PATTERN で除外
+#     ② 残った最下位行を PROMPT_LINE とし、label 形式
+#        `❯ 非空` と旧 `│ > 非空 │` を OR 照合
 LABEL_MATCH=0
 LABEL_REASON=""
 FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts|[0-9]+% context used|^─+[[:space:]]*$'
-# β改修 cycle5c (CANON 残 regression #1 Layer E, anchor 強化):
-#   cycle5 の単純な行頭 anchor では output 中の prompt-like plain text (例: Claude が
-#   過去 user message を「  ❯ inboxN」形式で再表示する、bash 出力に "│ > xxx │" 含む) を
-#   誤検知 → unintended Enter injection リスク (Codex cycle5b B1 high)。
-#   strict 化: ★PROMPT 行は ──── ボーダー直後の `❯` / `│ >` 行のみ★ を真の Claude TUI
-#   input box と判定。awk の prev_border state で行間関係を判定 (pipefail 影響なし)。
 if [ -n "$PANE_TAIL" ]; then
     LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
-    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | awk '
-        /^[[:space:]]*─+[[:space:]]*$/ { prev_border = 1; next }
-        prev_border && (/^[[:space:]]*❯/ || /^[[:space:]]*│[[:space:]]*>/) { last = $0 }
-        { prev_border = 0 }
-        END { if (last != "") print last }
-    ')
+    # 副院長令 80c99b66: last_line から footer + status 行を除外、残最下位行 = PROMPT_LINE
+    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
     log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
-    log "prompt_line (base64, border-anchored): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
+    log "prompt_line (base64, last_non_footer): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
     if [ -n "$PROMPT_LINE" ]; then
-        # β改修 cycle3 (CANON 残 regression #1 Layer B):
-        #   Claude Code TUI prompt 形式が `│ > xxx │` (旧) → `❯ xxx` (新、上下 ──── ボーダー間) に進化。
+        # 副院長令 80c99b66: label 形式 `❯ 非空` と旧 `│ > 非空 │` の OR 照合
         if printf '%s' "$PROMPT_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'; then
             LABEL_MATCH=1
             LABEL_REASON="claude_ui_with_nonempty_input_buffer"
@@ -255,7 +246,7 @@ if [ -n "$PANE_TAIL" ]; then
             LABEL_REASON="prompt_line_unclassifiable"
         fi
     else
-        LABEL_REASON="no_border_anchored_prompt_in_pane_tail"
+        LABEL_REASON="no_non_footer_line_in_pane_tail"
     fi
 else
     LABEL_REASON="empty_pane_tail"
