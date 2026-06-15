@@ -217,27 +217,36 @@ if [ "$ELAPSED_INT" -lt "$THRESHOLD_MIN" ]; then
 fi
 
 # Step 5: label 照合 (Claude TUI prompt + 非空 input buffer 検出)
-# 副院長令 (commander dispatch 80c99b66, 正本 bcb514b9 残 regression 1 指針):
-#   cycle5c の border-anchored 照合 (──── 直後の ❯/│> 行のみ) は実機の active pane で
-#   prompt が border 直後に居ない race を取りこぼし、label_mismatch を量産していた
-#   (自動 Enter 不発火 → 自律稼働不全)。
-#   原状追随の最小 patch (新規増設禁):
-#     ① last_line 判定から footer (⏵⏵ bypass permissions on) と status 行 (N% context used)
-#        を FOOTER_PATTERN で除外
-#     ② 残った最下位行を PROMPT_LINE とし、label 形式
-#        `❯ 非空` と旧 `│ > 非空 │` を OR 照合
+# 副院長令 (commander dispatch fa3eeac5, 正本 bcb514b9 / 引継書 09ded8ef / Hermes 86155a84):
+#   2026-06-04 commit 26ce0d9 (cycle5c) で確定済の border-anchored 形式へ原状回帰。
+#   94df2eb (last_non_footer_line 戻し) は cycle5c を撤回した regression ゆえ revert。
+#   ───── ボーダー直後の `❯` / `│ >` 行のみを真の Claude TUI input box と判定 (strict)。
+#   awk の prev_border state で行間関係を判定 (pipefail 影響なし)。
+# Hermes 86155a84 推奨の狭い追補 2 点を追加 (広い除外は禁・正規入力誤抑止防止):
+#   追補1: FOOTER_PATTERN に bracket-wrapped hint 行 (行全体 anchor + exact 形式) を追加。
+#          [0-9.]+k tokens 単独除外は禁 (会話本文の同語まで巻き込む副作用回避)。
+#   追補2: PROMPT_LINE が welcome placeholder `❯ Try "how do I log an error?"` の
+#          exact 全文一致なら suppress (fresh 起動の dim hint false-positive 防止)。
+#          Try / how do I の広域 guard は禁 (正規入力 `❯ Try ...` / `❯ how do I ...` の誤抑止回避)。
 LABEL_MATCH=0
 LABEL_REASON=""
-FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts|[0-9]+% context used|^─+[[:space:]]*$'
+FOOTER_PATTERN='⏵⏵ bypass permissions|esc to interrupt|shift\+tab to cycle|⏵ Plan mode|tab to expand|ctrl\+o to expand|\? for shortcuts|[0-9]+% context used|^─+[[:space:]]*$|^\[[[:space:]]*new task\? /clear to save [0-9.]+k tokens[[:space:]]*\]$'
+WELCOME_PLACEHOLDER_RE='^[[:space:]]*❯[[:space:]]+Try "how do I log an error\?"[[:space:]]*$'
 if [ -n "$PANE_TAIL" ]; then
     LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
-    # 副院長令 80c99b66: last_line から footer + status 行を除外、残最下位行 = PROMPT_LINE
-    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | grep -vE "$FOOTER_PATTERN" | awk 'NF{last=$0} END{print last}')
+    PROMPT_LINE=$(printf '%s\n' "$PANE_TAIL" | awk '
+        /^[[:space:]]*─+[[:space:]]*$/ { prev_border = 1; next }
+        prev_border && (/^[[:space:]]*❯/ || /^[[:space:]]*│[[:space:]]*>/) { last = $0 }
+        { prev_border = 0 }
+        END { if (last != "") print last }
+    ')
     log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
-    log "prompt_line (base64, last_non_footer): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
+    log "prompt_line (base64, border-anchored): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
     if [ -n "$PROMPT_LINE" ]; then
-        # 副院長令 80c99b66: label 形式 `❯ 非空` と旧 `│ > 非空 │` の OR 照合
-        if printf '%s' "$PROMPT_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'; then
+        # 追補2: welcome placeholder exact 全文一致 → suppress (FIRE 防止)
+        if printf '%s' "$PROMPT_LINE" | grep -qE "$WELCOME_PLACEHOLDER_RE"; then
+            LABEL_REASON="welcome_placeholder_exact_suppressed"
+        elif printf '%s' "$PROMPT_LINE" | grep -qE '│[[:space:]]*>[[:space:]]+[^[:space:]│]|^[[:space:]]*❯[[:space:]]+[^[:space:]]'; then
             LABEL_MATCH=1
             LABEL_REASON="claude_ui_with_nonempty_input_buffer"
         elif printf '%s' "$PROMPT_LINE" | grep -qE '│[[:space:]]*>[[:space:]]*│?[[:space:]]*$|^[[:space:]]*❯[[:space:]]*$'; then
@@ -246,7 +255,7 @@ if [ -n "$PANE_TAIL" ]; then
             LABEL_REASON="prompt_line_unclassifiable"
         fi
     else
-        LABEL_REASON="no_non_footer_line_in_pane_tail"
+        LABEL_REASON="no_border_anchored_prompt_in_pane_tail"
     fi
 else
     LABEL_REASON="empty_pane_tail"
