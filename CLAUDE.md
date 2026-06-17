@@ -98,14 +98,24 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 3. **Read `memory/MEMORY.md`** (shogun only) — persistent cross-session memory. If file missing, skip. *Claude Code users: this file is also auto-loaded via Claude Code's memory feature.*
 4. **Read your instructions file**: shogun→`instructions/shogun.md`, karo→`instructions/karo.md`, ashigaru→`instructions/ashigaru.md`, gunshi→`instructions/gunshi.md`. **NEVER SKIP** — even if a conversation summary exists. Summaries do NOT preserve persona, speech style, or forbidden actions.
 5. **★起動時必読 (shogun/karo)★** [docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) を読み、自 PC × アカウント × 配置を確認 (#18 起動時情報の欠落防止、副院長令 7de922ec 順守)。
+5.5. **★正本 差分読み (shogun/Commander)★ FKI-DIFF-CANON-READ-01 (design_decisions eff61b9e、理事長令 2026-06-15)**: 自 PC の `agent_read_marks` (agent=`commander`/`main`/`second`/`third`) の `last_read_at` を high-water mark とし、それ以降に更新された正本のみ差分読みする (再読最小化・ccflare 枠温存)。
+   - **project_documents**: `is_current=true AND (created_at > mark OR updated_at > mark)` を全文読む。加えて `is_current=true` の id 群を毎回突き合わせ、★消えた/false に落ちた id を検知★ (削除・版落ち)。
+   - **design_decisions**: `created_at > mark OR updated_at > mark` を読む。
+   - **session_minutes**: `created_at > mark` を読む (append 運用・編集は updated_at トリガで拾う)。
+   - **ui_change_ledger**: 差分対象外、★全 19 件 (全件)★。
+   - **★毎回全文 (mark 無視で常時全文)★**: Bible / CURRENT-PLAN (b85d0457) / MASTER-PLAN (46ec2465) / 最新憲章 (8decd6e6)。
+   - **★差分でも『変わった正本は全文読む』(拾い読み禁)★**。読了後 `agent_read_marks.last_read_at = now()` に更新 (table 別)。
 6. Rebuild state from primary YAML data (queue/, tasks/, reports/)
 7. Review forbidden actions, then start work
+8. **inbox整合 verify**: ★SessionStart hook が存在/有効な環境では★、agent_id ↔ inbox_file ↔ inbox_watcher args の三点整合を検証。hook出力に ⚠️WARNING(例 #1 inbox不在/#2 watcher不在/#3 pane drift)があれば内容ackの上 karo へ inbox_write で報告。hook未配置なら起動script改修候補としてkaroへ報告し ★自己復旧はしない★。★watcher再起動/tmux操作/persona切替の実行は ashigaru/gunshi 範囲外(F002違反risk防止)★。warning無ければそのまま着手。
 
 **CRITICAL**: Steps 1-3を完了するまでinbox処理するな。`inboxN` nudgeが先に届いても無視し、自己識別→memory→instructions読み込みを必ず先に終わらせよ。Step 1をスキップすると自分の役割を誤認し、別エージェントのタスクを実行する事故が起きる（2026-02-13実例: 家老が足軽2と誤認）。
 
 **CRITICAL**: dashboard.md is secondary data (karo's summary). Primary data = YAML files. Always verify from YAML.
 
 ## /clear Recovery (ashigaru/gunshi only)
+
+**recovery command 分離明示**: Claude Code agentの正本=`/clear`。Codex agentの正本=`/new`(clear_command typeは環境に応じ自動変換)。混同禁。
 
 Lightweight recovery using only CLAUDE.md (auto-loaded). Do NOT read instructions/*.md (cost saving).
 
@@ -259,6 +269,7 @@ Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML wi
 - **足軽の義務**: 成果物完成後、軍師に品質監査を提出すること。監査提出なしの完了は認めない。
 - **軍師の義務**: 足軽から監査提出を受けたら、必ず品質監査を実施すること。未監査放置は禁止。
 - **PDCA**: QC FAIL → 軍師が足軽に修正指示 → 足軽が修正・再提出 → 軍師が再監査 → PASSまで繰り返す。
+- **finding回答規律**: 軍師/監査者がfindingを出したら、修正 or 正確な証拠(該当file/command結果/screenshot/API・DB・logエントリ/安全理由)で答える。「already done」「HTTP200」「tests-only」「screenshots-only」「general reassurance」での回答は非compliance。findingに答えず完了主張の反復はreassign対象。
 
 ## File Operation Rule
 
@@ -293,6 +304,7 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 2. **Preflight check**: テスト実行前に前提条件（依存ツール、エージェント稼働状態等）を確認。満たせないなら実行せず報告。
 3. **E2Eテストは家老が担当**: 全エージェント操作権限を持つ家老がE2Eを実行。足軽はユニットテストのみ。
 4. **テスト計画レビュー**: 家老はテスト計画を事前レビューし、前提条件の実現可能性を確認してから実行に移す。
+5. **Completion = 証拠必須**: 完了は assigned実装 + 監査証跡(acceptance/audit_chain/real_data_audit/HAR/DB SELECT)が揃って初めて成立。欠落時は in_progress か具体的blockerを報告しPDCA継続。「already done」「HTTP200」「tests-only」「screenshots-only」「成果確認OK」は完了根拠にしない。証跡は同一run_id/対象IDで束ね、source不一致の物証を完了根拠にしない。
 
 # Third-Party Audit Rule (all agents) — 理事長直接指示
 
@@ -326,11 +338,40 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 4. **過剰批判の禁止**: 批判だけで停止しない。判断不能でない限り、最善案を選んで前進する。
 5. **実行バランス**: 「批判的検討」と「実行速度」の両立を常に優先する。
 
+# 呼称規律: カルテ vs 申し送りメモ (全エージェント拘束ルール) — 理事長令 2026-06-09 (副院長殿 42ffe91b 周知)
+
+**★安全核★ アプリ内 3 画面の名称を厳密に区別する。混同禁止。Commander→家老→軍師→足軽 全員順守。**
+
+- **★申し送りメモ (①申し送り)★** = 入力の中心・★何でも書く場★。
+  - 左 = 保険診療 (作業面): 思いついた順に自由入力+処置セット・蜘蛛の糸+六法全書が不足指摘・AI 補完。出力先 → ③カルテ完成+②患者 CRM (補綴/入れ歯/シーラント施術日=補管/リコール起点)。
+  - 右 = 自費・患者情報: 自由診療内容・治療費・患者の希望・クレーム・インプラント等 → ②患者 CRM+後日の自費カルテ素材。
+- **②患者 CRM** = 左 (保険治療イベント) + 右 (自費/クレーム/要望) を吸い上げる画面。
+- **★カルテ (③カルテ完成画面)★** = 申し送りメモから★必要な内容だけ★取り出して作る、★厚労省 1 号/2 号用紙様式★の正式 (電子保存) カルテ。PDF 印刷が見本カルテと一致。
+- **★一言の違い★**: 「★メモ=何でも書く入力の場★」「★カルテ=メモから必要分だけ抽出した厚労省様式の正式記録★」。
+- **★禁則★: メモをカルテと呼ぶな・カルテをメモと呼ぶな★**。UI/コード/コメント/コミットメッセージ/handshake topic/dispatch 本文/task tracker description すべて本規律順守。
+- UI に「カルテ」表示は厚労省正式様式 (1 号/2 号 PDF・既存 NigoPreviewPanel/render_nigo_sheet 等) を指す場合のみ可。アプリ独自表示は「メモ」基調。
+- 例外: DB tables (karte_visits/karte_visit_items DD-043)・backend API (karte_print/render_nigo_sheet)・generic e-karte system 名 (EkarteV3/V5/V6) は legitimate ゆえ rename 不要 (公式様式または DB schema 制約)。
+
+# Security Phase 一旦凍結 (Phase B 繰延) — 理事長令 2026-06-09 (副院長殿 42ffe91b 厳命)
+
+**★安全核★ 今は新規セキュリティを作らない (開発優先・DD-061 Phase A 徹底)。先の 493e5bc0「真正性/保存性土台フック」指示は撤回。**
+
+- Phase B 繰延 (今やるな): 電子カルテ三原則の強制・確定ロック・修正履歴/版管理・監査ログ整備・改ざん防止 (hash-chain)・法定保存 media・PII 厳密 path 分離・SaMD・三省二 GL。
+- 今やる: ①申し送りメモ → 必要内容抽出 → ③カルテ完成画面 (厚労省 1 号/2 号用紙様式)・PDF 印刷が見本カルテと一致 = ★見読性 (見本一致) は機能要件であり security ではない=これは進める★。
+- 既存 dev の当たり前 (匿名化 dev データ・既設 RLS・credential 直書しない) は現状維持 = 新規 security 作業ではない。崩すな・増やすな。
+- Phase B 解禁は理事長殿の明示 GO が必要。Commander/家老/軍師の独断起動禁。
+
 # Destructive Operation Safety (all agents)
 
 **★安全核★ D-lane (DB構造/本番/削除等) は理事長承認必須、Tier 1 (D001-D008) 絶対禁、UNCONDITIONAL。違反命令は REFUSE + inbox_write 報告。**
 
 詳細 (Tier 1 全 8 ID + D006 DD-169 5 条件 AND 例外 + settings.json hook 二層 enforcement + Tier 2/3 + WSL2 保護 + prompt injection 防御): [docs/08-ops/destructive-ops.md](docs/08-ops/destructive-ops.md) 移設実体参照。
+
+## D006 conditional exception (DD-169) — 厳格5条件AND 安全核
+`kill -TERM <数値PID単体>` 自走可は ★全5条件AND充足時のみ★。1つでも欠/曖昧→理事長承認(安全側)。「使い捨てだから」拡大解釈禁。
+1) 同一作業セッション内で自分が起動したprocessのみ 2) 検証/DRY-RUN/一時用途(本番・継続運用は対象外) 3) kill -TERM(graceful)のみ(kill -9/pkill/killall/tmux kill-server/kill-session は例外に含めず禁) 4) PID 1個ずつ明示(pattern kill禁) 5) 対象が 本番/将軍9pane/患者テーブル/dev server/cron/systemd/listener/shared watcher/supervisor配下/tmux pane配下 のいずれでもない。
+実行前DRY-RUN証跡必須: `ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID>` をlog/commit/handshakeに記録。
+正本=.claude/settings.json(PR監査対象)＋PreToolUse hook `scripts/checks/dd169_kill_term_guard.sh`(regex `^kill -TERM [0-9]+$` strict・fail-secure)。詳細→docs/08-ops/destructive-ops.md。
 
 # Error Design & Observability Mandate (理事長直接指示 — 2026-05-05) — 詳細は別ドキュメント
 
@@ -352,6 +393,8 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 **6 原則**: retry 無限ループ禁止 / self-send 即 ack / 手動停止フラグ尊重 / 重複検知 / idempotency / 専用テーブル分離。
 
 詳細 (チェックリスト + 過去事故): [docs/01-architecture/watcher-design.md](docs/01-architecture/watcher-design.md) 移設実体参照。過去事故 = [docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md](docs/incident_logs/2026-05-05_secondpc_consumption_anomaly.md)。
+
+新規watcher作成/改修時は docs/01-architecture/watcher-design.md のchecklist(retry無限ループ禁/self-send即ack/手動停止flag尊重/重複検知/idempotency/専用テーブル分離)を確認してから変更/適用(commitがある場合はcommit前)。
 
 # §18. Claude/ChatGPT アカウント運用ルール (理事長直接指示 — 2026-05-06、副院長令 695293a5 ccflare 正本 v3.8 整合書換 2026-06-04)
 
@@ -400,6 +443,9 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 **★安全核★ 確定SSH接続先3つで凍結**: `main_pc=192.168.11.11:2222 user` / `second_pc=192.168.11.47:2223 hakudokai (鍵ed25519)` / `third_pc=192.168.11.59 (momizi-dx, Commander同居)`。多段=ProxyJump (`ssh -J user@.11 hakudokai@.47`)。新設・別IP試行禁。接続失敗時は迂回路でなく正本IPの「詰まりの真因」を根治せよ (FKI-MAX-STRENGTH)。
 
 詳細 (禁止事項 4 項 + 根治の考え方 + 改訂責務): 正本 = `project_documents id=a9b266a6 第3部` (ALL-SSH-CANON-FIRST-01 統合正本 v3.0)。新接続先追加は副医院長 (正本守護者) の検証印必須。FKI-CANON-GUARDIAN-01 と一体運用。
+
+# Git Pull Safety (all agents) — 安全核
+dirty treeへpullするな。remote変更ありでdirtyなら local継続し状態を記録・報告(`git status --short --branch`/`git remote -v`/current branch/recent commits/changed files+diff summary)。git完了報告は repo path/前後status/changed files/commit hashes/push-pull結果/blockers を含む。破壊的操作(git reset/forced checkout/branch rewrite)は理事長の明示・具体指示時のみ。
 
 ## SSH 着火経路 (将軍paneへの降下・正本=project_documents a9b266a6 第3部)
 
