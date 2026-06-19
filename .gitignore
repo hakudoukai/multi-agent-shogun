@@ -96,6 +96,8 @@
 !backend/migrations/007_organizational_lessons.sql
 !backend/migrations/008_organizational_lessons_seed.sql
 !backend/migrations/009_organizational_lessons_rollback.sql
+# fukuincho 段階3 GAP-A 時刻源是正 view (D-lane、副院長/理事長 承認後 apply、task#18)
+!backend/migrations/010_v_pc_handshake_overdue.sql
 
 # Templates
 !templates/
@@ -116,6 +118,8 @@
 # direct-poke bundle (副院長令 FINAL DIRECTIVE phase ②、ba9c7281 + 21a87964 設計実装)
 !scripts/fukuincho_report_poke_bundle.py
 !scripts/fukuincho_detect_stale_cli.sh
+# 段階3 GAP-A データ源 feeder (pc_handshake overdue → JSONL、task#18)
+!scripts/fukuincho_handshake_overdue_feeder.sh
 !scripts/lib/
 !scripts/lib/detect_stale.sh
 !scripts/tests/
@@ -146,6 +150,9 @@
 !scripts/audit_codex.sh
 !scripts/audit_gemini.sh
 !scripts/audit_meta_codex.sh
+# ガバナンス文書監査 wrapper (観点 A-I・prose-doc 対応、SOUL.md v3.2 監査、副院長令 3b4520cf)
+!scripts/audit_codex_doc.sh
+!scripts/audit_gemini_doc.sh
 !scripts/bulk_ack.sh
 !scripts/agent_health_check.sh
 !scripts/setup_known_hosts.sh
@@ -288,6 +295,8 @@
 !skills/symlink-aware-atomic-write/SKILL.md
 !skills/secondpc-dispatch-verify/
 !skills/secondpc-dispatch-verify/SKILL.md
+!skills/shogun-relaunch-env-guard/
+!skills/shogun-relaunch-env-guard/SKILL.md
 
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/
