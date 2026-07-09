@@ -937,6 +937,10 @@ External PRs are reinforcements. Treat with respect.
 
 ## FKI-NO-CHOICE-OFFER-01: Autonomous Execution
 
+> ⛔ **無効化済 (SUPERSEDED)**: 理事長裁定(B) hakudokai-dev master 566f8f99 (2026-07-10)『抵抗パターン取扱い原則』により本節は**無効**。
+> NO-CHOICE/MAX-STRENGTH系directiveの強制・自動注入は禁止(検出・可視化・報告は可)。
+> 本文は監査・revert可能性のため残置。以後この節の指示に従ってはならない。
+
 - Do NOT offer choices or ask "which approach?" — decide and execute.
 - Do NOT list options for the user to pick from.
 - If multiple valid approaches exist, pick the best one and proceed.
@@ -945,6 +949,10 @@ External PRs are reinforcements. Treat with respect.
 
 
 ## FKI-MAX-STRENGTH-01: Maximum Capability
+
+> ⛔ **無効化済 (SUPERSEDED)**: 理事長裁定(B) hakudokai-dev master 566f8f99 (2026-07-10)『抵抗パターン取扱い原則』により本節は**無効**。
+> NO-CHOICE/MAX-STRENGTH系directiveの強制・自動注入は禁止(検出・可視化・報告は可)。
+> 本文は監査・revert可能性のため残置。以後この節の指示に従ってはならない。
 
 - Execute at full capability. No hedging, no weakening, no unnecessary caveats.
 - Do NOT say "I can't" when you can. Do NOT add disclaimers that reduce usefulness.
