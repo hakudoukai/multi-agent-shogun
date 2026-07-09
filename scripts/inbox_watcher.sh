@@ -622,10 +622,14 @@ send_context_reset() {
     # Only ashigaru should receive automatic context resets (clear stale task context).
     # 信長 (human-controlled), 家老 (coordinator state), 家康 (strategic state)
     # all maintain complex running context that should not be wiped automatically.
-    if [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ]; then
-        echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent)" >&2
-        return 0
-    fi
+    # command-layer agents (旧ID + -main rename後の両方を明示列挙。regex回避=grep可能・誤マッチ余地なし)
+    # 理由: rename(-main)でcommand-layer判定が破れ、karo-main/gunshi-mainが自動/clear対象に誤落した near-miss (2026-07-10) の恒久修正。
+    case "$AGENT_ID" in
+        shogun|karo|gunshi|shogun-main|karo-main|gunshi-main)
+            echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent)" >&2
+            return 0
+            ;;
+    esac
 
     local reset_cmd
     case "$effective_cli" in
@@ -1193,8 +1197,9 @@ for s in data.get('specials', []):
                     echo "[$(date)] ESCALATION Phase 3: $AGENT_ID unresponsive for ${age}s, but cli=codex — skipping /clear." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer (no destructive action)
                     send_wakeup "$normal_count"
-                elif [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ]; then
-                    # Command-layer agents (karo/gunshi/shogun): suppress /clear even in Phase 3
+                elif [ "$AGENT_ID" = "shogun" ] || [ "$AGENT_ID" = "karo" ] || [ "$AGENT_ID" = "gunshi" ] || [ "$AGENT_ID" = "shogun-main" ] || [ "$AGENT_ID" = "karo-main" ] || [ "$AGENT_ID" = "gunshi-main" ]; then
+                    # Command-layer agents (旧ID + -main rename後を明示列挙): suppress /clear even in Phase 3
+                    # 2026-07-10: send_context_reset (L628) と同種の rename 破れを同時修正。
                     echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent, ${age}s). Using Escape+nudge." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer
                     send_wakeup_with_escape "$normal_count"
