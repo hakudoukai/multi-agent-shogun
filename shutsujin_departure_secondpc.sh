@@ -2,7 +2,7 @@
 # shutsujin_departure_secondpc.sh — SecondPC 出陣スクリプト
 #
 # Phase 1 (2026-05-07): SecondPC tmux multiagent session を以下の構成で起動:
-#   pane 0 = maeda (前田利家、SecondPC 家老) — 新設
+#   pane 0 = maeda (SecondPC 家老) — 新設
 #   pane 1 = ashigaru5
 #   pane 2 = ashigaru6
 #   pane 3 = ashigaru7
@@ -41,7 +41,7 @@ if tmux has-session -t "$SESSION" 2>/dev/null; then
     exit 1
 fi
 
-log_war "🏯 SecondPC 出陣 — 前田利家 + ashigaru5/6/7 を構築中..."
+log_war "🏯 SecondPC 出陣 — SecondPC 家老 + ashigaru5/6/7 を構築中..."
 
 # ─── tmux session + window 作成 ───
 tmux new-session -d -s "$SESSION" -n "$WINDOW"
@@ -98,10 +98,10 @@ for pid in "${!PANE_AGENT[@]}"; do
     agent="${PANE_AGENT[$pid]}"
     case "$agent" in
         maeda)
-            prompt='拙者前田利家、SecondPC 家老として召喚さる。Session Start: ①tmux display-message で自己識別 → maeda ②mcp__memory__read_graph (失敗時 skip) ③instructions/maeda.md と instructions/karo.md (家老共通) を必読、persona と禁止事項を完全把握 ④queue/inbox/maeda.yaml + queue/tasks/maeda.yaml + queue/reports/maeda_report.yaml 確認 ⑤信長から SecondPC 配下 cmd が届いてれば即着手 ⑥配下 ashigaru5/6/7 の状態確認、idle なら次タスク発令 (= 自走 mandate)。本日 Phase 1 で新設の体制、SecondPC 専属、本丸越境禁止。'
+            prompt='当職、SecondPC 家老として召喚さる。Session Start: ①tmux display-message で自己識別 → maeda ②mcp__memory__read_graph (失敗時 skip) ③instructions/maeda.md と instructions/karo.md (家老共通) を必読、persona と禁止事項を完全把握 ④queue/inbox/maeda.yaml + queue/tasks/maeda.yaml + queue/reports/maeda_report.yaml 確認 ⑤将軍mainから SecondPC 配下 cmd が届いてれば即着手 ⑥配下 ashigaru5/6/7 の状態確認、idle なら次タスク発令 (= 自走 mandate)。本日 Phase 1 で新設の体制、SecondPC 専属、本丸越境禁止。'
             ;;
         ashigaru*)
-            prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md 必読 ③queue/tasks/${agent}.yaml + queue/inbox/${agent}.yaml 確認 ④tasks に assign があれば即着手、なければ家老 maeda の指示待ち。報告先は maeda (= SecondPC 家老 前田利家、Phase 1 新設)。"
+            prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md 必読 ③queue/tasks/${agent}.yaml + queue/inbox/${agent}.yaml 確認 ④tasks に assign があれば即着手、なければ家老 maeda の指示待ち。報告先は maeda (= SecondPC 家老、Phase 1 新設)。"
             ;;
     esac
     tmux send-keys -t "$pid" "$prompt"

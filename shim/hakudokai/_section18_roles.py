@@ -29,12 +29,12 @@ from __future__ import annotations
 
 
 # §18 MainPC 配置 (通常 5 体 + 非常時 1 体 + Phase 15 新設 takenaka)
-# Phase 15 (2026-05-08): takenaka (竹中半兵衛、信長直轄軍師) 追加。
+# Phase 15 (2026-05-08): takenaka (監査役、将軍直轄軍師) 追加。
 MAINPC_ROLES: tuple[str, ...] = (
-    "nobunaga",     # 信長 (= 旧 shogun)
-    "hideyoshi",    # 秀吉 (= 旧 karo)
-    "ieyasu",       # 家康 (= 旧 gunshi、Phase 5 で kuroda 置換予定)
-    "takenaka",     # 竹中半兵衛 — 信長直轄軍師、Phase 15 新設 (2026-05-08)
+    "nobunaga",     # 将軍 (= 旧 shogun)
+    "hideyoshi",    # 家老main (= 旧 karo)
+    "ieyasu",       # 軍師main (= 旧 gunshi、Phase 5 で kuroda 置換予定)
+    "takenaka",     # 監査役 — 将軍直轄軍師、Phase 15 新設 (2026-05-08)
     "ashigaru1",
     "ashigaru2",
     "ashigaru3",
@@ -42,7 +42,7 @@ MAINPC_ROLES: tuple[str, ...] = (
 
 # §18 SecondPC 配置 (Phase 1 2026-05-07 改訂: maeda 新設、通常 4 体 + 非常時 1 体)
 SECONDPC_ROLES: tuple[str, ...] = (
-    "maeda",       # SecondPC 家老 (前田利家) — Phase 1 新設
+    "maeda",       # SecondPC 家老 — Phase 1 新設
     "ashigaru5",
     "ashigaru6",
     "ashigaru7",

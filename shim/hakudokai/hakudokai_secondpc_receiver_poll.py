@@ -173,7 +173,7 @@ def detect_target(content, topic):
     バグ修正 2026-05-07: 旧コードは default=ashigaru2 で全配信が ashigaru2 に
     誤転送されていた (家老が ashigaru5/6/7 に発令しても全部 ashigaru2 へ)。
     バグ修正 2026-05-08: maeda (= SecondPC 家老、Phase 4-5 体制改編で新設)
-    が valid_secondpc に未登録のため、信長 → maeda 宛 msg が fallback で
+    が valid_secondpc に未登録のため、将軍main → maeda 宛 msg が fallback で
     全件 ashigaru5 に misroute されていた。maeda + 全 SecondPC 所属を
     AGENT_PANES と整合させた。default も ashigaru5 → maeda に変更
     (= 不明 msg は家老が一次受領、配下に裁量配信、誤配信抑止)。

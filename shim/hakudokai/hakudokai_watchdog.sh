@@ -241,7 +241,7 @@ restart_cap_exceeded() {
 
 # ─── ERR-WATCHDOG-002: exponential backoff revival after cap breach ─────
 # 旧版 (= cmd_phase2 cycle1) は cap 到達後 hard-block で永久 dead lock を引き起こし、
-# 全 watcher が 30s 周期で死亡 → 再起動拒否を繰り返す death loop が発生 (= 信長殿
+# 全 watcher が 30s 周期で死亡 → 再起動拒否を繰り返す death loop が発生 (= 将軍main殿
 # msg_134138 R1 統合命令の CRITICAL 案件、cmd_watchdog_health_root_cause_001)。
 # 本版は cap 到達後も指数バックオフ (5min → 10min → 20min → 40min → 80min → 60min cap)
 # で復活を試行、復活成功時は cap state を完全リセット。
