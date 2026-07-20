@@ -82,15 +82,15 @@ bash scripts/checks/pane_identity.sh
 
 ### 2026-05-07 21:14 — gunshi 重複作成事件
 
-拙者信長が「multiagent:agents.4 = gunshi」と pane 番号だけで判定し、`tmux split-window` で agents.4 に重複 gunshi pane を新設。実際は agents.3 = gunshi で生存中だった。
+拙者(将軍)が「multiagent:agents.4 = gunshi」と pane 番号だけで判定し、`tmux split-window` で agents.4 に重複 gunshi pane を新設。実際は agents.3 = gunshi で生存中だった。
 
 詳細: [docs/incident_logs/2026-05-07_pane_misidentification.md](../../docs/incident_logs/2026-05-07_pane_misidentification.md)
 
 教訓: **「pane index = agent 名」の暗黙マッピングを絶対に推測しない**。
 
-### 2026-05-08 dawn — 家康 nudge 不発 (= 夜討ち失敗主因)
+### 2026-05-08 dawn — 軍師main nudge 不発 (= 夜討ち失敗主因)
 
-家康への nudge が pane 認識ミスにより不発、夜討ち失敗の主因となった。pane mapping の SSoT が
+軍師mainへの nudge が pane 認識ミスにより不発、夜討ち失敗の主因となった。pane mapping の SSoT が
 複数箇所 (CLAUDE.md §18.1 / watcher_supervisor.sh / lib/_section18_roles.sh / 実 tmux) に
 散在し、相互 drift が発生していたことが根本原因。
 
@@ -166,7 +166,7 @@ drift 検出時は `/tmp/pane_identity_drift_<corr_id>.json` に dump 保存、
 
 | Phase | 範囲 | 担当 |
 |-------|------|------|
-| Phase 0 | incident log + 根本原因確定 | 信長 (完遂、HEAD f5534b0) |
+| Phase 0 | incident log + 根本原因確定 | 将軍 (完遂、HEAD f5534b0) |
 | **Phase 1** | **4-way audit + pane_registry 雛形 + advisory hook 提案** (= 本 cmd) | **足軽2** |
 | Phase 2 | watchdog 動的更新 + drift 通知化 (pane_registry auto-update) | 別 cmd 発令予定 |
 | Phase 3 | shutsujin_departure*.sh 改修 + §18.1 表 auto-gen 化 | 別 cmd (理事長専権部分含む) |

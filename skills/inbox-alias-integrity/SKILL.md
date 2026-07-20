@@ -19,7 +19,7 @@ queue/inbox/ で 3 つの旧名 alias が canonical へ正しく symlink され�
 
 2026-05-08 00:14-00:52 に発生した queue/inbox/ split-brain 事故の真因は、`scripts/inbox_write.sh` の atomic replace `os.replace(tmp_path, $INBOX)` が INBOX が symlink の場合 symlink 自体を tmp で置換し、Phase 3 で設置された alias を破断したことにあった。
 
-旧名 alias 経由で動作する agent (= 秀吉 AGENT_ID=karo, 家康 AGENT_ID=gunshi) と、新名 alias を直接書く agent (= 信長 inbox_write hideyoshi/ieyasu) の間で通信路が分裂し、約 37 分間「家老処理進まず」状態を引き起こした。
+旧名 alias 経由で動作する agent (= 家老main AGENT_ID=karo, 軍師main AGENT_ID=gunshi) と、新名 alias を直接書く agent (= 将軍(shogun) inbox_write hideyoshi/ieyasu) の間で通信路が分裂し、約 37 分間「家老処理進まず」状態を引き起こした。
 
 inbox_write.sh は dd706ad で恒久 fix 済 (= realpath 経由)。本 skill は再発検知の自動化を担う。
 

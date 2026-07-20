@@ -82,7 +82,7 @@ for i in $(seq 1 7); do
     bash scripts/switch_cli.sh ashigaru$i --type codex --model gpt-5.3-codex-spark
 done
 
-# 全エージェント（家老・家康含む）を再起動
+# 全エージェント（家老・軍師main含む）を再起動
 for agent in karo ashigaru1 ashigaru2 ashigaru3 ashigaru4 ashigaru5 ashigaru6 ashigaru7 gunshi; do
     bash scripts/switch_cli.sh "$agent"
 done
@@ -147,7 +147,7 @@ inbox_watcher が `cli_restart` type を検知し、switch_cli.sh を自動実�
 
 ## Constraints
 
-- **信長(shogun)ペインには送信しない**: switch_cli.sh は multiagent セッションのペインのみ対象
+- **将軍(shogun)ペインには送信しない**: switch_cli.sh は multiagent セッションのペインのみ対象
 - **実行中のエージェントに注意**: タスク実行中に切り替えるとデータ消失の可能性あり。idle確認してから実行
 - **Codex → Claude 切替時**: Codex の /exit が不安定な場合がある。Escape + Ctrl-C で確実に終了させる
 - **inbox_watcher との連携**: cli_restart 後、inbox_watcher の CLI_TYPE 変数も自動更新される
