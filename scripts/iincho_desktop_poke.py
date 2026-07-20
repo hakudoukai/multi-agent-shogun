@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-fukuincho_desktop_poke.py — 段階3 全自動ループ poke actuator (third_pc 本 repo canonical source)
+iincho_desktop_poke.py — 段階3 全自動ループ poke actuator (委員長席 retarget 版、third_pc 本 repo canonical source)
 
-設計章節正本: docs/08-ops/fukuincho-stage3-auto-loop-design.md
+★複製元 = scripts/fukuincho_desktop_poke.py (P0 修正2・理事長GO seq119215・parent_cmd=
+  cmd_thirdpc_P0_actuator_shusei2_poke_replicate_iincho_20260711)。
+★TARGET seat retarget★: 副院長席 → 委員長 (iincho) Claude Desktop 席。
+  根拠 = 元副院長席と同一物理窓 (理事長証言、2026-07-11)。ゆえ TARGET_WINDOW_TITLE_RE (window title 正規表現)
+  自体は複製元と不変 (同一窓を指すため)。busy 検知対象・human_required 通知の宛先文言のみ 委員長 へ retarget。
+★scope 限定★: 本 retarget は (a)(b)(c) のみ (複製/retarget/systemd unit 作成)。ライブ送信・実 poke 発火は禁
+  (leg2 監査+ライブ着弾テストは修正1 GREEN 待ちで別 task)。
+
+設計章節正本 (複製元由来、履歴の承認記録として保持・書換禁): docs/08-ops/fukuincho-stage3-auto-loop-design.md
   - commit f1c268d (SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b)
   - 副院長令 77bd5c6e P0 + 理事長殿 D-lane 承認 (2026-06-07)
   - parent_handshake: 副院長令 341654e4 (4 件全承認反映 — N=30s / main_pc paint / clipboard test / Boy-Scout)
@@ -32,14 +40,17 @@ fukuincho_desktop_poke.py — 段階3 全自動ループ poke actuator (third_pc
   - FKI-NO-DUP 第4条: 新規 transport / poller / retry loop ゼロ (orchestration 入れ子のみ)
 
 ★Note (透明性、e3c6baff 整合)★:
-  本 file = third_pc 本 repo canonical source。実 deploy = D-lane 別 task (理事長承認後 main_pc 反映)。
+  本 file = third_pc 本 repo canonical source (委員長席 retarget 版)。実 deploy = D-lane 別 task (理事長承認後 main_pc 反映)。
   third_pc 上で本 file を import すると pywinauto は ImportError になる (Windows native のみ) — これは仕様。
   syntax check (python -m py_compile) は third_pc 上で可能。
+  ★旧レーン scripts/iincho_desktop_actuator.py (§4.1 hybrid) は本 file と無関係=流用禁・凍結保管 (理事長裁定)★。
 """
 
 from __future__ import annotations
 
 import argparse
+import contextlib
+import copy
 import json
 import logging
 import os
@@ -73,7 +84,7 @@ V5_GUARD_TOKENS = ("v5", "handshake 8012f18c", "commander カルテ", "playwrigh
 # 構造化ログ (correlation_id 貫通、error-design §14 整合)
 # ★clipboard 実値・payload 実値はログ出力禁 (機密混入防止)★
 # ───────────────────────────────────────────────────────────
-def _build_logger(name: str = "fukuincho_desktop_poke") -> logging.Logger:
+def _build_logger(name: str = "iincho_desktop_poke") -> logging.Logger:
     logger = logging.getLogger(name)
     if logger.handlers:
         return logger
@@ -172,6 +183,204 @@ class SkipCounter:
 
 
 # ───────────────────────────────────────────────────────────
+# ★F2 是正 (leg2 fail-fix)★ 状態永続化 — DedupeWindow/SkipCounter を
+# systemd Type=oneshot timer の毎tick新規プロセス間で持続させる。
+#
+# 旧実装の根因は二重: (1) main() が dedupe/skip_counter を毎起動 in-memory 新規生成
+# (状態が tick 間で消滅)。(2) dedupe_key/skip キーが correlation_id 由来
+# (--correlation-id 未指定時は main() が `f"poke-{int(time.time())}-{os.getpid()}"` で
+# 毎回一意生成) だったため、★(1)を仮に永続化しても★キー自体が tick 毎に変わり
+# dedupe/skip_max は依然として実効化されない。
+# 本 fix は両方を是正: (a) キーを poke 対象 (本 actuator は単一 target=委員長席固定)
+# 単位の固定値 POKE_TARGET_KEY に変更、(b) 状態を JSON ファイルへ flock 経由で
+# atomic 永続化。flock パターンは scripts/fukuincho_report_poke_bundle.py の
+# _portable_lock_acquire/_release 系を本 file 専用に最小移植 (FKI-NO-DUP §4:
+# 新規 transport/poller/retry loop はゼロ、既存 orchestration 入れ子のみ)。
+# ───────────────────────────────────────────────────────────
+POKE_TARGET_KEY = "iincho_desktop_poke:iincho_seat"
+
+STATE_DIR_DEFAULT = os.path.expanduser("~/.local/share/iincho_desktop_poke")
+STATE_PATH_DEFAULT = os.path.join(STATE_DIR_DEFAULT, "state.json")
+
+try:
+    import fcntl  # POSIX only — third_pc systemd --user timer 実行環境は Linux
+except ImportError:  # pragma: no cover — Windows 側で本 CLI を直接叩く場合の fallback
+    fcntl = None  # type: ignore
+
+
+def _state_lock(fp, exclusive: bool) -> None:
+    if fcntl is None:
+        return
+    fcntl.flock(fp.fileno(), fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH)
+
+
+def _state_unlock(fp) -> None:
+    if fcntl is None:
+        return
+    fcntl.flock(fp.fileno(), fcntl.LOCK_UN)
+
+
+class StateCorruptionError(RuntimeError):
+    """state.json 破損 (デコード失敗/schema不正/IO失敗)。
+
+    ★F2 是正 (leg2 再々監査 seq119790 是正2)★: 旧実装はこれを握り潰して fresh
+    default へ fail-open していたが、それは dedupe/skip_counter 履歴の消失を
+    「今から再計測」で誤魔化すに等しく、履歴消失直後の再発火を許してしまう
+    (旧コメントの「fail-safe」表記は誤り)。呼出側 (main()) は本例外を捕捉し、
+    fire を拒否した上で human_required へ escalation すること。
+    """
+
+
+class PersistIOError(RuntimeError):
+    """state 永続化 I/O 失敗 (lock dir/lock open/flock/tmp write/flush/fsync/replace)。
+
+    ★F2-IO 是正 (leg2 seq120505 再監査 FAIL 是正)★: 旧実装は save_persisted_state
+    内の OSError を無変換のまま呼出側へ伝播させていた。main() は load 時の
+    StateCorruptionError しか捕捉していなかったため、save 側の I/O 失敗
+    (disk-full/permission/read-only fs/rename失敗等) は不可逆な Enter 送出の
+    ★後★に無捕捉例外として露出しうる欠陥があった。本例外は state_transaction()
+    (lock directory 作成/lock file open/flock 取得) と save_persisted_state()
+    (tmp書込/flush/fsync/os.replace/dir fsync) 双方の I/O 失敗を統一的に
+    fail-closed 信号化し、呼出側で human_required へ escalation させる
+    (fail-open で握り潰し・無捕捉例外のいずれも禁)。
+    """
+
+
+def _fsync_dir(dir_path: str) -> None:
+    """directory entry (rename 後の名前解決) を durable 化する。
+
+    os.replace() 直後でも、親 directory 自体の metadata が fsync されるまでは
+    突然の電源断/crash で rename が消失しうる (POSIX 既知の落とし穴)。
+    本 helper は directory を読取専用で open し fsync するのみ (書込は行わない)。
+    """
+    fd = os.open(dir_path, os.O_RDONLY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+@contextlib.contextmanager
+def state_transaction(path: str = STATE_PATH_DEFAULT):
+    """load→判定(poke_fire)→save を単一排他区間に閉じ込める (F2 是正: RMW非原子性の解消)。
+
+    旧実装は load 時に state file 自身への共有ロックを短時間だけ取り、save 時は
+    別の `.lock` ファイルへ排他ロックを取る、という 2 つの独立ロック区間だった
+    ため、load〜save の間隙で他プロセスが割込むと lost update が起き得た。
+    本 transaction は `.lock` ファイルへの排他ロックを load〜save 全体に渡って
+    保持し続けることで、並行起動時の read-modify-write を単一 critical section
+    にする。区間内の load_persisted_state/save_persisted_state は各々ロックを
+    取らない (同一プロセスで同一 lock file に対し flock を二重に取ると、BSD
+    flock は fd 単位管理のためデッドロックする — 二重ロック禁止)。
+
+    ★F2-IO 是正★: lock directory 作成 (os.makedirs)・lock file open・flock 取得
+    のいずれかが失敗した場合は PersistIOError を送出する (呼出側 main() は
+    human_required へ escalation すること。区間をスキップして fail-open で
+    先へ進んではならない)。
+    """
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+    except OSError as e:
+        raise PersistIOError(
+            f"state lock directory 作成失敗: {type(e).__name__}: {e}"
+        ) from e
+
+    lock_path = f"{path}.lock"
+    try:
+        lock_fp = open(lock_path, "a+", encoding="utf-8")
+    except OSError as e:
+        raise PersistIOError(
+            f"state lock file open 失敗: {type(e).__name__}: {e}"
+        ) from e
+
+    try:
+        try:
+            _state_lock(lock_fp, exclusive=True)
+        except OSError as e:
+            raise PersistIOError(
+                f"state lock (flock) 取得失敗: {type(e).__name__}: {e}"
+            ) from e
+        yield
+    finally:
+        _state_unlock(lock_fp)
+        lock_fp.close()
+
+
+def load_persisted_state(path: str = STATE_PATH_DEFAULT) -> tuple[DedupeWindow, SkipCounter]:
+    """state.json から DedupeWindow/SkipCounter を復元。
+
+    呼出側は state_transaction() の排他区間内で呼ぶこと (単独呼出は非atomic、
+    テスト等の単発検証用途に限る)。
+
+    ファイル未存在 (初回起動、正当な「履歴なし」) は fresh default を返す。
+    デコード失敗・schema不正・IO失敗は StateCorruptionError を送出する
+    (fail-open で握り潰さない — 呼出側で fire 拒否 + human_required とすること)。
+    """
+    dedupe = DedupeWindow()
+    skip_counter = SkipCounter()
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+    except FileNotFoundError:
+        return dedupe, skip_counter
+    except (OSError, json.JSONDecodeError) as e:
+        raise StateCorruptionError(
+            f"state.json 読取/デコード失敗: {type(e).__name__}: {e}"
+        ) from e
+
+    try:
+        if not isinstance(raw, dict):
+            raise ValueError("state.json top-level は object 必須")
+        dedupe.last_fire = {
+            tuple(json.loads(k)): float(v) for k, v in raw.get("last_fire", {}).items()
+        }
+        skip_counter.counts = {
+            str(k): int(v) for k, v in raw.get("skip_counts", {}).items()
+        }
+    except (ValueError, TypeError, AttributeError, json.JSONDecodeError) as e:
+        raise StateCorruptionError(
+            f"state.json schema不正: {type(e).__name__}: {e}"
+        ) from e
+
+    return dedupe, skip_counter
+
+
+def save_persisted_state(
+    dedupe: DedupeWindow,
+    skip_counter: SkipCounter,
+    path: str = STATE_PATH_DEFAULT,
+) -> None:
+    """DedupeWindow/SkipCounter を state.json へ durable atomic 保存 (tmp+fsync+rename+dir fsync)。
+
+    呼出側は state_transaction() の排他区間内で呼ぶこと (単独呼出は非atomic、
+    テスト等の単発検証用途に限る)。
+
+    ★F2-IO 是正★: tmp書込後の f.flush()/os.fsync() (ページキャッシュのみでなく
+    ディスクへ確実反映) と os.replace() 後の親 directory fsync (rename の
+    metadata durable 化) を追加。mkdir/open/write/flush/fsync/replace/dir-fsync
+    いずれの OSError も PersistIOError へ変換して呼出側に fail-closed 信号化する
+    (旧実装は無変換のまま伝播させ、main() 側で無捕捉例外化する欠陥があった)。
+    """
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        raw = {
+            "last_fire": {json.dumps(list(k)): v for k, v in dedupe.last_fire.items()},
+            "skip_counts": dict(skip_counter.counts),
+        }
+        tmp_path = f"{path}.tmp.{os.getpid()}"
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            json.dump(raw, f)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp_path, path)  # 同一 filesystem 上 atomic rename
+        _fsync_dir(os.path.dirname(path))
+    except OSError as e:
+        raise PersistIOError(
+            f"state.json 永続化失敗: {type(e).__name__}: {e}"
+        ) from e
+
+
+# ───────────────────────────────────────────────────────────
 # 応答中 skip 検出 (S1/S4 緩和、a3-3 mitigation_a/d)
 # editing 3条件AND: IME composition active ∧ Edit get_value() 非空 ∧ focused
 # submission inflight 3条件AND: submit button enabled ∧ spinner 非表示 ∧ progress indicator 非active
@@ -184,6 +393,17 @@ class BusyDetection:
     submit_enabled: bool = False
     spinner_hidden: bool = True
     progress_inactive: bool = True
+    # ★F1 是正 (leg2 fail-fix)★: 実 UI introspection で測定済みか否かを明示するフラグ。
+    # 旧実装は本フィールドが存在せず、call site が未測定のまま BusyDetection() を
+    # そのまま poke_fire() へ渡すと、全 default 値の組合せが is_busy()=True に評価される
+    # (is_ready_for_submission() 既定 False → is_submission_inflight()=True) にも関わらず
+    # main() 側コメントは「default = 非busy」と誤記していた。この結果、CLI 単発実行の
+    # --auto-poke は常に skipped_busy を繰返し、skip_max=5 到達で human_required
+    # (「委員長殿が長時間入力中」という★虚偽★alert) に陥っていた。
+    # measured=False の場合は poke_fire() 冒頭で skip_counter/human_required 系列を
+    # 汚染しない fail-closed 早期 return (skipped_unmeasured) を行う (既定値が busy を
+    # 偽装しない = 既定値 busy 偽装禁の要求充足)。
+    measured: bool = False
 
     def is_editing(self) -> bool:
         """3 条件 AND (OR 誤検知率回避、S1 mitigation_a)。"""
@@ -386,6 +606,7 @@ def poke_fire(
     dry_run: bool = True,
     diagnose: bool = False,
     payload: str = POKE_PAYLOAD,
+    state_path: str = STATE_PATH_DEFAULT,
 ) -> dict:
     """単発 poke 発火 (層② actuator)。
 
@@ -399,17 +620,35 @@ def poke_fire(
     # (実体は Windows API 経由で取得、ここでは call site から渡される想定)
     # 本 entrypoint は guard 結果を呼出側に依存させず conservative に進む。
 
+    # ── ★F1 是正★: 未測定 busy state は skip_counter/human_required 系列を汚染しない
+    # fail-closed 早期 return (skipped_unmeasured)。call site が実 UI introspection を
+    # 未配線のまま BusyDetection() の default 値を「非busy」の代用として使うと、
+    # 常時 busy 判定 (旧欠陥) または恒久 non-busy 誤認 (別の危険な欠陥) のいずれかを
+    # 偽装してしまう。本 fix は「未測定」を独立した第三の状態として扱い、それを
+    # 素直に skip (skip_max 非算入・human_required 誤警報なし) することで両欠陥を排除する。
+    if not busy.measured:
+        emit_event(
+            "busy_unmeasured_fail_closed",
+            correlation_id,
+            note="実測 busy state 未提供 (call site 未配線)。fail-closed skip、skip_max 非算入",
+        )
+        return {"status": "skipped_unmeasured", "reason": "busy_state_not_measured"}
+
     # ── 誤爆抑制: 応答中 skip ──
+    # ★F2 是正★: キーは correlation_id (毎起動一意採番) ではなく POKE_TARGET_KEY
+    # (本 actuator は単一 target=委員長席固定) を用いる。correlation_id をキーに使うと
+    # dedupe/skip_max の状態をファイル永続化しても、キー自体が tick 毎に変わるため
+    # 実効化されない (leg2 F2 根因の一部)。
     if busy.is_busy():
-        n = skip_counter.increment(correlation_id)
-        if skip_counter.exceeded(correlation_id):
+        n = skip_counter.increment(POKE_TARGET_KEY)
+        if skip_counter.exceeded(POKE_TARGET_KEY):
             emit_event(
                 "human_required",
                 correlation_id,
                 cause="skip_max_exceeded",
                 skip_count=n,
-                # ★副院長殿長時間入力中 skip 上限到達の可能性を併記 (Boy-Scout C1)★
-                hint="副院長殿が長時間入力中で応答中 skip が上限 (skip_max=5) に到達した可能性",
+                # ★委員長殿長時間入力中 skip 上限到達の可能性を併記 (Boy-Scout C1、iincho retarget 反映)★
+                hint="委員長殿が長時間入力中で応答中 skip が上限 (skip_max=5) に到達した可能性",
             )
             return {
                 "status": "human_required",
@@ -420,10 +659,11 @@ def poke_fire(
         return {"status": "skipped_busy", "skip_count": n}
 
     # 誤爆抑制 リセット (busy 解除 = 正常 poke 候補)
-    skip_counter.reset(correlation_id)
+    skip_counter.reset(POKE_TARGET_KEY)
 
     # ── 誤爆抑制: dedupe (last-fire TTL sliding window) ──
-    dedupe_key = (correlation_id, "fukuincho_desktop_poke")
+    # ★F2 是正★: 同上理由でキーは POKE_TARGET_KEY 固定 (correlation_id 不使用)。
+    dedupe_key = (POKE_TARGET_KEY,)
     now = time.time()
     if not dedupe.should_fire(dedupe_key, now=now):
         emit_event("skip_dedupe", correlation_id, ttl_sec=DEDUPE_T_SEC)
@@ -476,12 +716,26 @@ def poke_fire(
         )
         return {"status": "skipped_v5_guard", "reason": "v5_guard_block"}
 
-    # descendants(control_type=Edit) cands[0] 経路 (段階2 a3-3 実証済)
+    # descendants(control_type=Edit) 経路 (段階2 a3-3 実証済)
+    # ★F5 是正★: 0件は従来通り拒否、★複数件も拒否★ (window 同定を一意 identity に束縛。
+    # 旧実装は len(cands)>1 でも cands[0] を無条件採用しており、複数候補が返る window
+    # レイアウトでは誤った Edit control に貼付するリスクがあった。cands[0] の無条件採用は禁)。
     try:
         cands = win.descendants(control_type="Edit")
-        if not cands:
+        if len(cands) == 0:
             emit_event("no_edit_candidates", correlation_id)
             return {"status": "error", "reason": "no_edit_candidates"}
+        if len(cands) > 1:
+            emit_event(
+                "ambiguous_edit_candidates",
+                correlation_id,
+                candidate_count=len(cands),
+            )
+            return {
+                "status": "error",
+                "reason": "ambiguous_edit_candidates",
+                "candidate_count": len(cands),
+            }
         edit = cands[0]
         edit.set_focus()
     except Exception as e:
@@ -491,6 +745,33 @@ def poke_fire(
             error_type=type(e).__name__,
         )
         return {"status": "error", "reason": "edit_lookup_failed"}
+
+    # ★F2-IO 是正★: Enter (不可逆) 送出前に durable reservation を fsync 済で書込む。
+    # reservation 書込 (mkdir/lock/tmp書込/flush/fsync/replace/dir fsync のいずれか)
+    # に失敗した場合は Enter を一切送出せず human_required とする (fail-closed)。
+    # reservation 内容 = 「あたかも本 poke が成功した場合」の dedupe 状態
+    # (mark_fired 適用済) を予め持続化しておくことで、Enter 送出後に fsync 済
+    # ディスク上の抑止マークが既に存在する状態を作る。これにより送信後の
+    # finalization 永続化が失敗しても、reservation がそのまま重複抑止を継続する
+    # ため、追加のロールバック機構なしに保守的に安全側へ倒れる。
+    reservation_dedupe = copy.deepcopy(dedupe)
+    reservation_dedupe.mark_fired(dedupe_key, now=now)
+    try:
+        save_persisted_state(reservation_dedupe, skip_counter, path=state_path)
+    except PersistIOError as e:
+        emit_event(
+            "human_required",
+            correlation_id,
+            cause="reservation_persist_failed",
+            error=str(e),
+            hint=(
+                "Enter (不可逆) 送出前の durable reservation 書込に失敗したため、"
+                "Enter を一切送出せず拒否した (fail-closed)。人手による state.json/"
+                "state dir の書込可否確認を要する。"
+            ),
+        )
+        return {"status": "human_required", "reason": "reservation_persist_failed"}
+    dedupe.mark_fired(dedupe_key, now=now)
 
     # clipboard 経由 set + Enter (safe wrapper、save→set→Enter→restore)
     def _send_enter() -> bool:
@@ -510,7 +791,6 @@ def poke_fire(
     )
 
     if ok:
-        dedupe.mark_fired(dedupe_key, now=now)
         emit_event(
             "poke_fired",
             correlation_id,
@@ -530,11 +810,11 @@ def poke_fire(
 
 # ───────────────────────────────────────────────────────────
 # CLI entrypoint (--diagnose / --dry-run / --no-enter / --auto-poke)
-# ★本送信は --auto-poke flag + 副院長殿御差配 D-lane 承認下のみ★
+# ★本送信は --auto-poke flag + 理事長明示GO+委員長 D-lane 承認下のみ (iincho retarget)★
 # ───────────────────────────────────────────────────────────
 def main(argv: Optional[list] = None) -> int:
     parser = argparse.ArgumentParser(
-        description="fukuincho_desktop_poke 段階3 全自動ループ actuator"
+        description="iincho_desktop_poke 段階3 全自動ループ actuator (委員長席 retarget、複製元=fukuincho_desktop_poke)"
     )
     parser.add_argument(
         "--diagnose",
@@ -554,7 +834,7 @@ def main(argv: Optional[list] = None) -> int:
     parser.add_argument(
         "--auto-poke",
         action="store_true",
-        help="本送信モード (副院長殿御差配 D-lane 承認下のみ)",
+        help="本送信モード (理事長明示GO+委員長 D-lane 承認下のみ、iincho retarget)",
     )
     parser.add_argument(
         "--correlation-id",
@@ -578,27 +858,131 @@ def main(argv: Optional[list] = None) -> int:
         )
         return 2
 
-    # 段階3 単発実行 mode (cron が invoke する想定)
-    dedupe = DedupeWindow()
-    skip_counter = SkipCounter()
-    # busy detection は call site (main_pc 側 pywinauto introspection) から渡される想定。
-    # CLI 単発実行では default (非 busy) を使う。
-    busy = BusyDetection()
+    # ★F3 是正★: platform guard — auto-poke は Windows native (pywinauto) 専用。
+    # 実査結果 (leg2 fail-fix): 本 actuator の本番起動経路は third_pc Linux/WSL2 側から
+    # 直接 --auto-poke するのではなく、WSL2 interop 経由で Windows 側 python.exe を
+    # 起動する経路 (scripts/fukuincho_report_poke_bundle.py fire_poke_local()、
+    # 副院長令 6c4793fa/理事長承認/Commander msg_134241 で既承認済の前例)。
+    # systemd .service の ExecStart を将来 --dry-run→--auto-poke に単純書換すると
+    # Linux python3 上で pywinauto ImportError に落ちる欠陥があったため、
+    # busy/dedupe 等の状態を汚染する前に本 guard で即座に拒否する (fail-closed)。
+    if args.auto_poke and platform.system() != "Windows":
+        emit_event(
+            "platform_guard_block",
+            corr_id,
+            os_platform=platform.system(),
+            reason=(
+                "auto-poke は Windows native (pywinauto) 実行環境専用。third_pc の "
+                "systemd --user timer は Linux/WSL2 側で稼働するため本 CLI への直接 "
+                "--auto-poke 指定は禁。本番起動は WSL2 interop 経由 Windows python.exe "
+                "(fukuincho_report_poke_bundle.py fire_poke_local() 前例準拠) を要する。"
+            ),
+        )
+        return 2
 
-    result = poke_fire(
-        correlation_id=corr_id,
-        dedupe=dedupe,
-        skip_counter=skip_counter,
-        busy=busy,
-        dry_run=not args.auto_poke,
-        diagnose=args.diagnose,
-        payload=args.payload,
-    )
+    # 段階3 単発実行 mode (cron/timer が invoke する想定)
+    # ★F2 是正 (leg2 再々監査 seq119790 是正2)★: load→判定(poke_fire)→save 全体を
+    # state_transaction() の単一排他区間に閉じ込め、並行起動時の lost update を防ぐ。
+    # state.json 破損時は StateCorruptionError を fail-open で握り潰さず、
+    # fire 拒否 + human_required へ escalation する。
+    # ★F2-IO 是正★: state_transaction() 自体 (lock directory 作成/lock file open/
+    # flock 取得) の I/O 失敗は PersistIOError として送出される。fail-open で
+    # 区間をスキップせず human_required へ escalation する (outer try/except)。
+    try:
+        with state_transaction():
+            try:
+                dedupe, skip_counter = load_persisted_state()
+            except StateCorruptionError as e:
+                emit_event(
+                    "human_required",
+                    corr_id,
+                    cause="state_corrupted",
+                    error=str(e),
+                    hint=(
+                        "state.json 破損検出。fail-open で fresh default 復帰すると "
+                        "dedupe/skip_counter 履歴消失直後の再発火を許すため、実行を拒否し "
+                        "人手による state.json 復旧/隔離を要する (F2 是正、fail-open禁)。"
+                    ),
+                )
+                return 3
+
+            # ★F1 是正★: busy state は「実測」か「未測定 (fail-closed)」の二択のみを許す。
+            # 旧コメント「CLI 単発実行では default (非busy) を使う」は誤りだった —
+            # BusyDetection() の全 default 値は実際には常時 is_busy()=True と評価され、
+            # --dry-run/--diagnose も含め毎回 skipped_busy → 恒久 human_required 誤警報に
+            # 陥る欠陥があった (leg2 F1 根因)。
+            #
+            # --diagnose / --dry-run は window に一切触れない安全な rehearsal であり、実 UI
+            # introspection の有無に関わらず pipeline 到達性 (到達性テスト要件) を保証すべき
+            # ため、明示的な「測定済・非busy」状態を与えて busy/dedupe ゲートを実地検証する。
+            # --auto-poke (本送信) は call site (Windows native pywinauto introspection) が
+            # 未配線の限り測定不能であり、実測なしに fire してはならない (fail-closed)。
+            if args.diagnose or not args.auto_poke:
+                # rehearsal path (diagnose/dry-run): 測定済 + 非busy を明示 (submit_enabled=True
+                # は「送信可能=非 inflight」を表す。全項目を意図的に非busy側へ揃える)。
+                busy = BusyDetection(
+                    measured=True,
+                    ime_active=False,
+                    edit_nonempty=False,
+                    focused=False,
+                    submit_enabled=True,
+                    spinner_hidden=True,
+                    progress_inactive=True,
+                )
+            else:
+                # 本番 auto-poke: 実測配線なしの CLI 単発実行では fail-closed skip
+                # (poke_fire() 側の skipped_unmeasured へ委ねる。skip_max 非算入)。
+                busy = BusyDetection(measured=False)
+
+            result = poke_fire(
+                correlation_id=corr_id,
+                dedupe=dedupe,
+                skip_counter=skip_counter,
+                busy=busy,
+                dry_run=not args.auto_poke,
+                diagnose=args.diagnose,
+                payload=args.payload,
+            )
+
+            # ★F2 是正★: dedupe/skip_counter の変化 (mark_fired/increment/reset) を次tickへ
+            # 持ち越す。load〜save を同一 transaction 区間内で行うことで atomic にする。
+            # ★F2-IO 是正★: finalization 書込失敗時は保守的に reservation (poke_fire 内で
+            # 既に fsync 済で書込済) を維持したまま human_required へ escalation する
+            # (fail-open で握り潰し禁。次tickの再発火は reservation により抑止済)。
+            try:
+                save_persisted_state(dedupe, skip_counter)
+            except PersistIOError as e:
+                emit_event(
+                    "human_required",
+                    corr_id,
+                    cause="finalization_persist_failed",
+                    error=str(e),
+                    hint=(
+                        "actuation後の finalization 永続化に失敗した。Enter 送出前の "
+                        "durable reservation が既に fsync 済で残存しているため、次tickの "
+                        "再発火は抑止される (保守的 fail-closed)。人手による state.json/"
+                        "state dir の書込可否確認と reconciliation を要する。"
+                    ),
+                )
+                return 3
+    except PersistIOError as e:
+        emit_event(
+            "human_required",
+            corr_id,
+            cause="state_lock_unavailable",
+            error=str(e),
+            hint=(
+                "state_transaction() の lock directory 作成/lock file open/flock 取得に "
+                "失敗したため、実行を拒否した (fail-closed)。人手による state dir/lock "
+                "file の書込可否・権限確認を要する。"
+            ),
+        )
+        return 3
 
     status = result.get("status", "error")
     if status in ("fired", "diagnosed", "dry_run_only"):
         return 0
-    if status in ("skipped_dedupe", "skipped_busy", "skipped_v5_guard"):
+    if status in ("skipped_dedupe", "skipped_busy", "skipped_v5_guard", "skipped_unmeasured"):
         return 0
     if status == "human_required":
         return 3

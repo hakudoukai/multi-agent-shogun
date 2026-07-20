@@ -1,0 +1,27 @@
+[Unit]
+Description=iincho_desktop_poke — 委員長席 poke actuator oneshot (複製元=fukuincho-stage3-detect-stale.service パターン、P0修正2 seq119215)
+Documentation=file:%h/multi-agent-shogun/docs/08-ops/fukuincho-stage3-auto-loop-design.md
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/multi-agent-shogun
+# ★scope限定 (P0修正2 (a)(b)(c))★: --auto-poke は付与しない (既定 dry_run=True でライブ発火禁継続)。
+#
+# ★F3 是正 (leg2 fail-fix、subtask_thirdpc_P0_leg2_fail_fix_a3_7_20260711)★:
+# 旧コメント「ライブ発火解禁は...別 task で ExecStart 差し替え」は誤り (platform矛盾) だった。
+# 本 unit は third_pc の Linux/WSL2 側 systemd --user で稼働する。--auto-poke は
+# pywinauto/pyperclip 依存の Windows native 実行を要するため、この ExecStart を
+# 単純に --dry-run → --auto-poke へ書き換えても本 host 上では絶対に発火できない
+# (旧: pywinauto ImportError クラッシュ / 現在: main() の platform guard により
+# 即 exit 2 で fail-closed — いずれにせよ本 unit からの直接ライブ発火は不可能)。
+#
+# 実査確定した本番ライブ発火経路 (副院長令 6c4793fa / 理事長承認 / Commander msg_134241
+# 既承認前例、scripts/fukuincho_report_poke_bundle.py fire_poke_local() 準拠) は、
+# WSL2 interop 経由で Windows 側 python.exe を subprocess.run() 起動する構成。
+# ライブ発火解禁時は、本 ExecStart を --auto-poke へ差し替えるのではなく、
+# fire_poke_local() 相当の Windows python.exe 起動ラッパーへ差し替える必要がある
+# (human_GO 経由、STOP継続=enable/start/live poke 絶対禁は本 task 内では不変)。
+ExecStart=/usr/bin/python3 %h/multi-agent-shogun/scripts/iincho_desktop_poke.py --dry-run
+StandardOutput=append:%h/.local/share/iincho_desktop_poke/service.log
+StandardError=append:%h/.local/share/iincho_desktop_poke/service.err
+ExecStartPre=/bin/mkdir -p %h/.local/share/iincho_desktop_poke

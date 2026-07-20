@@ -1,0 +1,12 @@
+[Unit]
+Description=iincho_desktop_poke timer (60s polling、CRON_INTERVAL_SEC 準拠、複製元=fukuincho-stage3-detect-stale.timer)
+Documentation=file:%h/multi-agent-shogun/docs/08-ops/fukuincho-stage3-auto-loop-design.md
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=60s
+AccuracySec=1s
+Unit=iincho_desktop_poke.service
+
+[Install]
+WantedBy=timers.target

@@ -115,6 +115,8 @@
 !scripts/inbox_write.sh
 !scripts/inbox_watcher.sh
 !scripts/fukuincho_desktop_poke.py
+# iincho actuator 上り 修正2 (理事長GO seq119215・fukuincho_poke複製→委員長席retarget)
+!scripts/iincho_desktop_poke.py
 # direct-poke bundle (副院長令 FINAL DIRECTIVE phase ②、ba9c7281 + 21a87964 設計実装)
 !scripts/fukuincho_report_poke_bundle.py
 !scripts/fukuincho_detect_stale_cli.sh
