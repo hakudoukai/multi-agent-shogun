@@ -43,7 +43,7 @@ init_agent() {
     role="gunshi"; instructions="instructions/gunshi.md"; num=""
   fi
 
-  local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: ${instructions} を読む。その後 queue/inbox/${agent}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
+  local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: ${instructions} を読む。その後 queue/inbox/${agent}.yaml を読み、タスクがあれば実行開始。"
 
   echo "Initializing $agent ($pane)..."
   tmux_send_text "$pane" "$prompt"
