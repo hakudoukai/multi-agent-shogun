@@ -15,10 +15,10 @@ shell: bash
 cli:
   default: claude
   agents:
-    nobunaga: claude       # 信長 (= 旧 shogun)
-    hideyoshi: claude     # 秀吉 (= 旧 karo, MainPC)
-    ieyasu: claude         # 家康 (= 旧 gunshi)
-    maeda: claude         # SecondPC 家老 (前田利家) — Phase 1 新設
+    nobunaga: claude       # 技術キー(表示名=将軍main。戦国名は廃止・理事長令2026-07-19)
+    hideyoshi: claude     # 技術キー(表示名=家老main。戦国名は廃止)
+    ieyasu: claude         # 技術キー(表示名=軍師main。戦国名は廃止)
+    karo-second: claude         # SecondPC 家老 — Phase 1 新設
     ashigaru1: claude       # MainPC 通常
     ashigaru2: claude       # MainPC 通常
     ashigaru3: claude       # MainPC 非常時 +1
@@ -26,9 +26,52 @@ cli:
     ashigaru6: claude       # SecondPC 通常
     ashigaru7: claude       # SecondPC 通常
     ashigaru8: claude       # SecondPC 非常時 +1
+    # ── third_pc 艦隊 (工程1 GO-1 apply 2026-07-09・a3-3草案由来) ──
+    shogun-third: claude
+    karo-third: claude
+    ashigaru-third-1: claude
+    ashigaru-third-2: claude
+    ashigaru-third-3: claude
+    ashigaru-third-4: claude
+    ashigaru-third-5: claude
+    ashigaru-third-7: claude
+    gunshi-third: codex        # 第三者監査系統(cli≠claude)
+    commander-third: claude
+    # ── 管理職 (正本§4登場役職・pc配置は registry 参照) ──
+    iincho: claude
+    kenshu_kacho: claude
+    kenshu_bucho: claude
+    hermes2: claude
+    # ── mac_pc 艦隊 (b3bbc656 9/9着席・4th-PC正式canon化は別ゲート) ──
+    shogun-mac: claude
+    karo-mac: claude
+    ashigaru-mac-1: claude
+    ashigaru-mac-2: claude
+    ashigaru-mac-3: claude
+    ashigaru-mac-4: claude
+    ashigaru-mac-5: claude
+    ashigaru-mac-6: claude
+    ashigaru-mac-7: claude
+    gunshi-mac: claude
+    gakushu-bucho: codex       # ChatGPT版学習部長。modelは下記gpt-5.6-sol正本
   audit:
     primary: codex
     secondary: gemini   # cli_adapter.sh shim alias 経由 (Phase B精査予定)
+
+# 家老4席 Fable 5 テスト切替 (理事長GO・委員長発注 hs_230295aa seq115932・2026-07-10)
+# get_agent_model() 第2優先 lookup (models.{agent_id})。テスト終了時は本節削除で opus 既定へ復帰。
+models:
+  shogun: claude-fable-5
+  shogun-third: claude-fable-5
+  shogun-second: claude-fable-5
+  shogun-mac: claude-fable-5
+  nobunaga: claude-fable-5
+  gakushu-bucho: gpt-5.6-sol
+  karo-third: claude-fable-5
+  karo-second: claude-fable-5
+  karo-mac: claude-fable-5
+  hideyoshi: claude-fable-5   # MainPC 家老 (§18 旧名entry現存のため併記)
+  karo: claude-fable-5        # agent_id=karo 直参照 launcher 互換
 
 # 博道会shim統合 (DD-146 R1-R4)
 shim:
@@ -113,7 +156,7 @@ pc_mapping:
     is_local: true
     pc_id: main_pc
   second_pc:
-    agents: [maeda, ashigaru5, ashigaru6, ashigaru7, ashigaru8]
+    agents: [karo-second, ashigaru5, ashigaru6, ashigaru7, ashigaru8]
     supabase_bridge: true
     pc_id: second_pc
   kuro_desktop:
@@ -125,12 +168,29 @@ pc_mapping:
   #   resolve が target=fukuincho を解決可能化、cross-PC INSERT skip 防止 (phantom 恒久根治)。
   #   暫定回避策「fukuincho 宛は直接 curl 固定」が本登録で不要化される。
   #   commander/third_pc 配置の登録は別 task 起票要 (副医院長正本守護承認案件)。
-  #   (1b) 廃止 persona 名 (nobunaga/hideyoshi/ieyasu/maeda/kuro_desktop) の現行役職名是正
+  #   (1b) 廃止 persona 名 (nobunaga/hideyoshi/ieyasu/legacy-second-karo/kuro_desktop) の現行役職名是正
   #   は本 PR scope 外、副院長殿御差配仰ぐ正本守護承認案件として継続。
-  fukuincho_pc:
+  # ★Blocker B 根治 (副院長令 680484f0、理事長承認、push 凍結中ゆえ実機反映のみ commit なし)★:
+  #   key + pc_id を fukuincho_pc → fukuincho に変更。to_pc='fukuincho' (CHECK 制約 allowlist 既存値) で
+  #   bridge INSERT 成功化、HTTP 23514 / inbox_write 21s timeout 根治。
+  fukuincho:
     agents: [fukuincho]
     supabase_bridge: true
-    pc_id: fukuincho_pc
+    pc_id: fukuincho
+  third_pc:
+    agents: [shogun-third, karo-third, ashigaru-third-1, ashigaru-third-2,
+             ashigaru-third-3, ashigaru-third-4, ashigaru-third-5, ashigaru-third-7,
+             gunshi-third, commander-third,
+             iincho]
+    is_local: true
+    pc_id: third_pc
+  mac_pc:
+    agents: [shogun-mac, karo-mac, ashigaru-mac-1, ashigaru-mac-2, ashigaru-mac-3,
+             ashigaru-mac-4, ashigaru-mac-5, ashigaru-mac-6, ashigaru-mac-7,
+             gunshi-mac, gakushu-bucho]
+    supabase_bridge: false
+    ssh_direct: true
+    pc_id: mac_pc
 
 # tmux構成 (公式準拠)
 tmux:
@@ -139,3 +199,9 @@ tmux:
       windows: [main]
     - name: multiagent
       windows: [agents]
+    - name: shogun-third
+      windows: [shogun]
+    - name: multiagent-third
+      windows: [agents]
+    - name: commander-third
+      windows: [CommanderHermes]

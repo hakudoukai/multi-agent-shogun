@@ -17,12 +17,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "scripts/checks/pretooluse_bash_guard.sh",
+            "command": "${CLAUDE_PROJECT_DIR:+$CLAUDE_PROJECT_DIR/}scripts/checks/pretooluse_bash_guard.sh",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "bash scripts/checks/dd169_kill_term_guard.sh",
+            "command": "bash ${CLAUDE_PROJECT_DIR:+$CLAUDE_PROJECT_DIR/}scripts/checks/dd169_kill_term_guard.sh",
             "timeout": 5
           }
         ]
@@ -33,7 +33,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/checks/context_usage_warn.sh",
+            "command": "bash ${CLAUDE_PROJECT_DIR:+$CLAUDE_PROJECT_DIR/}scripts/checks/context_usage_warn.sh",
             "timeout": 5
           }
         ]
@@ -42,7 +42,9 @@
   },
   "permissions": {
     "allow": [
-      "Bash(kill -TERM:*)"
+      "Bash(kill -TERM:*)",
+      "Bash(sudo -n -u hermes *)",
+      "Bash(sudo -n /usr/local/bin/hermes-task*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -51,7 +53,6 @@
       "Bash(rm -rf /mnt/c/*)",
       "Bash(rm -rf /home/*)",
       "Bash(rm -rf ~*)",
-      "Bash(sudo *)",
       "Bash(su *)",
       "Bash(kill -9:*)",
       "Bash(killall *)",
@@ -529,7 +530,7 @@
       "手を焼いて食べ中",
       "腹を割れない",
       "足を洗って干し中",
-      "敵は本能寺に不在",
+      "待ち人来たらず",
       "是非もなし予算もなし",
       "人間五十年の延長戦",
       "天下布武のタイポ",
@@ -707,7 +708,7 @@
       "城の設計図に描かれてない部屋にいる",
       "合戦の記録に存在しない部隊名",
       "天下布武が天下布団",
-      "敵は本能寺にいない",
+      "応答まだ来ず",
       "三本の矢が2本しかない",
       "風林火山のWi-Fiパスワード",
       "一期一会のサブスク",
@@ -904,7 +905,7 @@
       "切腹のキャンセルポリシー",
       "合戦のレイトショー",
       "下克上のエスカレーター",
-      "本能寺のリノベーション",
+      "リポジトリのリノベーション",
       "辞世の句の下書き保存",
       "大将首のレシート",
       "出陣の稟議が17人目で止まり中",
@@ -986,7 +987,7 @@
       "武功をLinkedInに掲載中",
       "足軽をIndeedで募集中",
       "落武者がハローワーク",
-      "本能寺の変換ミス",
+      "変換ミスを検知",
       "武田シンゲン（真顔）",
       "織田ノブナガ（伸びながら）",
       "桶狭間のバーゲン",
