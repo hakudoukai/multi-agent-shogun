@@ -147,6 +147,204 @@ PYEOF
         || echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}" >&2
 }
 
+# ★hermes2 (環境部長) dead-drop producer guard★ (副委員長指令
+# hermes2-dead-drop-route-guard-work-order-20260721.md 起点 pc_handshake
+# seq131730/seq131740)。
+#
+# 真因: hermes2 は config/settings.yaml の全 pc_mapping[*].agents に不在
+# のため _cross_pc_bridge() は hermes2 宛では構造的に絶対起動しない。結果、
+# legacy queue/inbox/hermes2.yaml (consumer 不在) への無条件書込のみが常に
+# 成功し、未読が無期限蓄積していた (実績: 未読7件)。
+#
+# 対策: TARGET が "hermes2" に完全一致する場合のみ、legacy YAML 書込に
+# 進む前でこの関数が同期的に正規 pc_handshake へ INSERT する。成功時は
+# legacy 書込を完全 skip、失敗時は fail-closed (legacy へフォールバック
+# しない・明示エラーで exit 1) とする。相談役 (hermes / hermes-main) は
+# 完全一致でないため対象外 (誤変換防止、work order item 4)。
+_hermes2_deaddrop_guard() {
+    local content="$1"
+    local msg_type="$2"
+    local from="$3"
+
+    # 緊急停止フラグ: cross_pc_bridge 同様、hermes2 guard も無効化可能。
+    # フラグ存在時は curl を一切呼ばず fail-closed (legacy へは絶対に進まない)。
+    if [ -f "$HOME/.openclaw/disable_cross_pc_bridge" ]; then
+        echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard disabled via disable_cross_pc_bridge flag; refusing legacy fallback for hermes2" >&2
+        return 1
+    fi
+
+    # local_pc 解決 (_cross_pc_bridge と同じ pc_mapping lookup パターンを
+    # 独立実装。既存 _cross_pc_bridge の regression risk を避けるため共有
+    # 関数化はしない)。
+    local local_pc
+    local_pc=$("$SCRIPT_DIR/.venv/bin/python3" -c "
+import yaml, os
+try:
+    local_path = '$SCRIPT_DIR/config/settings_local.yaml'
+    main_path = '$SCRIPT_DIR/config/settings.yaml'
+    if os.path.exists(local_path):
+        with open(local_path) as f:
+            local_cfg = yaml.safe_load(f) or {}
+        pc_map = local_cfg.get('pc_mapping', {})
+    else:
+        pc_map = {}
+    if not pc_map:
+        with open(main_path) as f:
+            cfg = yaml.safe_load(f) or {}
+        pc_map = cfg.get('pc_mapping', {})
+    local_id = ''
+    for pc_name, pc_cfg in pc_map.items():
+        if pc_cfg.get('is_local'):
+            local_id = pc_cfg.get('pc_id', pc_name)
+    print(local_id)
+except Exception:
+    print('')
+" 2>/dev/null)
+
+    if [ -z "$local_pc" ]; then
+        echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard could not resolve local_pc from pc_mapping; refusing legacy fallback for hermes2" >&2
+        return 1
+    fi
+
+    # Supabase 資格情報
+    local sb_url sb_key
+    if [ -f "$HOME/.hakudokai/env" ]; then
+        sb_url=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+        sb_key=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+    fi
+    sb_url="${SUPABASE_URL:-$sb_url}"
+    sb_key="${SUPABASE_SERVICE_ROLE_KEY:-$sb_key}"
+
+    if [ -z "$sb_url" ] || [ -z "$sb_key" ]; then
+        echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard has no Supabase credentials; refusing legacy fallback for hermes2" >&2
+        return 1
+    fi
+
+    local truncated="${content:0:2000}"
+
+    # message_type を pc_handshake の CHECK allowlist へ正規化
+    # (request_permission grant_permission decline_permission status_update
+    #  urgent_stop question answer ack file_sync)。allowlist 外は
+    # status_update へ fallback、元の $TYPE は content prefix に保持する。
+    local payload
+    payload=$(python3 - "$truncated" "$local_pc" "hermes2" "$from" "$msg_type" <<'PYEOF'
+import json, sys
+content_truncated, local_pc, target_agent, from_agent, orig_type = sys.argv[1:6]
+ALLOWED = {"request_permission", "grant_permission", "decline_permission",
+           "status_update", "urgent_stop", "question", "answer", "ack", "file_sync"}
+normalized_type = orig_type if orig_type in ALLOWED else "status_update"
+print(json.dumps({
+    "message_type": normalized_type,
+    "from_pc": local_pc,
+    "to_pc": "hermes2",
+    "topic": f"hermes2_deaddrop_guard_{target_agent}",
+    "content": f"[{from_agent}→hermes2][{orig_type}] {content_truncated}",
+    "requires_response": False,
+    "priority": "normal",
+    "clinic_id": "hakudoukai_main",
+    "bypass_5round_limit": False,
+    "is_meta_only": False
+}, ensure_ascii=False))
+PYEOF
+)
+
+    # 同期 (非 background) INSERT。curl 自体の exit code だけでなく実
+    # HTTP status も検査する (_cross_pc_bridge より厳格・fail-closed 要件)。
+    local resp_file http_status curl_status
+    resp_file=$(mktemp)
+    http_status=$(SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS -o "$resp_file" -w '%{http_code}' -X POST \
+        "${sb_url}/rest/v1/pc_handshake" \
+        -H "Content-Type: application/json" \
+        -H "Prefer: return=minimal" \
+        --data-binary "$payload" \
+        2>/dev/null)
+    curl_status=$?
+
+    if [ "$curl_status" -eq 0 ] && echo "$http_status" | grep -qE '^2[0-9][0-9]$'; then
+        echo "[inbox_write] hermes2 dead-drop guard: canonical pc_handshake INSERT succeeded (http=${http_status}); legacy hermes2.yaml write skipped" >&2
+        rm -f "$resp_file"
+        return 0
+    else
+        echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard canonical pc_handshake INSERT failed (curl_status=${curl_status}, http=${http_status}, body=$(cat "$resp_file" 2>/dev/null | head -c 300)); refusing legacy fallback for hermes2" >&2
+        rm -f "$resp_file"
+        return 1
+    fi
+}
+
+# ★hermes2 (環境部長) alias/表示名 正規化 (G1 REDO cycle2 finding
+# H2-G1-ROLE-ALIAS-GUARD-MISSING-001 是正)★
+#
+# 正本: shim/hakudokai/hakudokai_fukuincho_reverse_poll.py の
+# _format_codex_sender() が唯一の技術ID↔表示名マッピング正本。そこでは
+# hermes2 → 環境部長 が確定しており、hermes / hermes-main → 相談役 は
+# 構造的に別エントリ (末尾に数字 "2" を含まない)。config/hermes-departments-registry.json
+# は department-head 専用サブセッション registry で hermes2 に一切言及が
+# なく対象外と確認済 (route matrix report 参照、anti-duplication rule 順守)。
+#
+# 分類は3段:
+#   (a) canonical  — "hermes2" / "環境部長" の完全一致、または大小文字・
+#       区切り文字 (-, _, space) のみが異なる ASCII 変種 (例: hermes-2,
+#       HERMES2, Hermes_2 等)。正規化は必ず「hermes」+ 区切り記号除去 +
+#       数字「2」」に厳密一致させる。相談役 (hermes/hermes-main) は数字
+#       "2" を含まないため、この正規化では絶対に一致しない (誤変換防止、
+#       work order item 4 / T-105・T-106 既存 negative test と整合)。
+#   (b) none       — 上記いずれにも該当しない、hermes2 と無関係な target。
+#       通常の legacy ルートへそのまま進む (挙動変更なし)。
+#   (c) near_miss  — "hermes" と "2" の両方を含むが (a) の完全一致セット
+#       に含まれない未知の類似名、または "環境部長" を部分文字列として
+#       含むが完全一致ではない名前。fail-closed (legacy へ絶対に進まない
+#       ・明示エラーで exit 1)。誤って新しい legacy alias ファイルが
+#       生成される事故を防ぐ。
+_hermes2_alias_kind() {
+    local raw="$1"
+    case "$raw" in
+        hermes2|環境部長|hermes-2|hermes_2|"hermes 2"|HERMES2|Hermes2|HERMES-2|Hermes-2|Hermes_2|"Hermes 2")
+            echo "canonical"
+            return 0
+            ;;
+    esac
+    local norm
+    norm=$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr -d ' _-')
+    if [ "$norm" = "hermes2" ]; then
+        echo "canonical"
+        return 0
+    fi
+    case "$norm" in
+        *hermes*2*)
+            echo "near_miss"
+            return 0
+            ;;
+    esac
+    case "$raw" in
+        *環境部長*)
+            echo "near_miss"
+            return 0
+            ;;
+    esac
+    echo "none"
+    return 0
+}
+
+# hermes2 (canonical alias/表示名含む) は legacy YAML dead-drop 経路から
+# 完全除外。正規 pc_handshake が成功すればここで exit 0 (legacy 書込に
+# 一切進まない)、失敗すれば exit 1 (fail-closed、legacy へのフォール
+# バックは絶対にしない)。near_miss は canonical guard を経由せず即
+# fail-closed (curl すら呼ばない、legacy 書込より前で確実に止める)。
+_H2_ALIAS_KIND=$(_hermes2_alias_kind "$TARGET")
+case "$_H2_ALIAS_KIND" in
+    canonical)
+        if _hermes2_deaddrop_guard "$CONTENT" "$TYPE" "$FROM"; then
+            exit 0
+        else
+            exit 1
+        fi
+        ;;
+    near_miss)
+        echo "[inbox_write] FAIL-CLOSED: TARGET='$TARGET' resembles hermes2/環境部長 but is not a recognized canonical alias; refusing legacy fallback (unknown near-miss, work order item 4 H2-G1-ROLE-ALIAS-GUARD-MISSING-001)" >&2
+        exit 1
+        ;;
+esac
+
 # Trigger cross-PC bridge (non-blocking, runs in background)
 # 緊急停止 2026-05-07 18:23: 連続 INSERT loop 発生中、source 不明
 # ~/.openclaw/disable_cross_pc_bridge flag 存在時は cross_pc_bridge を起動しない

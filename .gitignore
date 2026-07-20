@@ -124,6 +124,8 @@
 !scripts/fukuincho_handshake_overdue_feeder.sh
 !scripts/lib/
 !scripts/lib/detect_stale.sh
+# hermes2 dead-drop stale detector (GO seq131987執行の最小enabler・家老裁定06:13)
+!scripts/hermes2_deaddrop_stale_detector.sh
 !scripts/tests/
 !scripts/tests/test_fukuincho_desktop_poke.py
 # direct-poke bundle unit test ((i)-(v) verify SKIP=0)

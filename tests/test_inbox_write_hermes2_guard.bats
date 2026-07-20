@@ -1,0 +1,387 @@
+#!/usr/bin/env bats
+# test_inbox_write_hermes2_guard.bats
+#
+# hermes2 (環境部長) 宛 dead-drop producer guard — TDD テスト
+# 起点: 副委員長 work order hermes2-dead-drop-route-guard-work-order-20260721.md
+#
+# 目的: TARGET=="hermes2" の inbox_write.sh 呼び出しが、legacy
+# queue/inbox/hermes2.yaml (consumer 不在 = 無期限 dead-drop) へ絶対に
+# 書かず、正規 pc_handshake へ同期 INSERT するか、失敗時は fail-closed
+# (legacy へフォールバックしない) することを保証する。
+#
+# 相談役 (hermes / hermes-main) は完全一致でないため対象外 — 誤変換
+# negative test (T-105/T-106) で担保する。
+#
+# curl は stub に差し替え、実ネットワーク呼出は一切発生しない。
+
+setup_file() {
+    export PROJECT_ROOT="$(cd "$(dirname "$BATS_TEST_FILENAME")/.." && pwd)"
+    export INBOX_WRITE_SCRIPT="$PROJECT_ROOT/scripts/inbox_write.sh"
+    export VENV_PYTHON="$PROJECT_ROOT/.venv/bin/python3"
+    [ -f "$INBOX_WRITE_SCRIPT" ] || return 1
+    "$VENV_PYTHON" -c "import yaml" 2>/dev/null || return 1
+}
+
+setup() {
+    export TEST_TMPDIR="$(mktemp -d "$BATS_TMPDIR/inbox_write_h2_test.XXXXXX")"
+    export TEST_INBOX_DIR="$TEST_TMPDIR/queue/inbox"
+    mkdir -p "$TEST_INBOX_DIR"
+
+    export TEST_SCRIPT_DIR="$TEST_TMPDIR/scripts"
+    mkdir -p "$TEST_SCRIPT_DIR"
+    mkdir -p "$TEST_TMPDIR/shim/hakudokai/lib"
+    cp "$PROJECT_ROOT/shim/hakudokai/lib/sb_auth.sh" "$TEST_TMPDIR/shim/hakudokai/lib/sb_auth.sh"
+    sed "s|SCRIPT_DIR=\"\$(cd \"\$(dirname \"\${BASH_SOURCE\[0\]}\")/..*|SCRIPT_DIR=\"$TEST_TMPDIR\"|" \
+        "$PROJECT_ROOT/scripts/inbox_write.sh" > "$TEST_SCRIPT_DIR/inbox_write.sh"
+    chmod +x "$TEST_SCRIPT_DIR/inbox_write.sh"
+    ln -sf "$PROJECT_ROOT/.venv" "$TEST_TMPDIR/.venv"
+    export TEST_INBOX_WRITE="$TEST_SCRIPT_DIR/inbox_write.sh"
+
+    # Isolated pc_mapping config: single is_local PC "third_pc" (mirrors real
+    # config/settings.yaml third_pc entry shape, minimized for the test).
+    mkdir -p "$TEST_TMPDIR/config"
+    cat > "$TEST_TMPDIR/config/settings.yaml" <<'YAML'
+pc_mapping:
+  third_pc:
+    agents: [ashigaru-third-5, karo-third]
+    is_local: true
+    pc_id: third_pc
+  second_pc:
+    agents: [ashigaru5]
+    supabase_bridge: true
+    pc_id: second_pc
+YAML
+
+    # Isolate from the real operator's $HOME/.hakudokai/env and any real
+    # ~/.openclaw/disable_cross_pc_bridge flag — tests must never read
+    # production Supabase credentials or be affected by host-level flags.
+    export FAKE_HOME="$TEST_TMPDIR/fakehome"
+    mkdir -p "$FAKE_HOME"
+    export HOME="$FAKE_HOME"
+
+    # Deterministic fake Supabase credentials (never used for a real call —
+    # curl is stubbed below).
+    export SUPABASE_URL="https://stub.example.invalid"
+    export SUPABASE_SERVICE_ROLE_KEY="stub-key-not-real"
+
+    # curl stub: records call count + last payload, and answers according to
+    # $CURL_STUB_MODE (success | fail_http | fail_curl). Never touches the
+    # network.
+    export CURL_STUB_BIN="$TEST_TMPDIR/bin"
+    mkdir -p "$CURL_STUB_BIN"
+    export CURL_STUB_CALLS="$TEST_TMPDIR/curl_calls.count"
+    export CURL_STUB_PAYLOAD="$TEST_TMPDIR/curl_last_payload.json"
+    : > "$CURL_STUB_CALLS"
+    cat > "$CURL_STUB_BIN/curl" <<'STUB'
+#!/usr/bin/env bash
+echo -n "x" >> "$CURL_STUB_CALLS"
+
+out_file=""
+args=("$@")
+i=0
+while [ $i -lt ${#args[@]} ]; do
+    case "${args[$i]}" in
+        -o)
+            i=$((i + 1))
+            out_file="${args[$i]}"
+            ;;
+        --data-binary)
+            i=$((i + 1))
+            printf '%s' "${args[$i]}" > "$CURL_STUB_PAYLOAD"
+            ;;
+    esac
+    i=$((i + 1))
+done
+
+mode="${CURL_STUB_MODE:-success}"
+case "$mode" in
+    success)
+        [ -n "$out_file" ] && printf '' > "$out_file"
+        printf '201'
+        exit 0
+        ;;
+    fail_http)
+        [ -n "$out_file" ] && printf '{"message":"stub rejected"}' > "$out_file"
+        printf '400'
+        exit 0
+        ;;
+    fail_curl)
+        [ -n "$out_file" ] && printf '' > "$out_file"
+        printf '000'
+        exit 7
+        ;;
+esac
+STUB
+    chmod +x "$CURL_STUB_BIN/curl"
+    export PATH="$CURL_STUB_BIN:$PATH"
+    export CURL_STUB_MODE="success"
+}
+
+teardown() {
+    [ -n "$TEST_TMPDIR" ] && [ -d "$TEST_TMPDIR" ] && rm -rf "$TEST_TMPDIR"
+}
+
+# =============================================================================
+# T-101: canonical route success → legacy hermes2.yaml never created, exit 0
+# =============================================================================
+
+@test "T-101: target=hermes2 canonical INSERT succeeds → no legacy dead-drop file, exit 0" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes2" "テストメッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes2.yaml" ]
+    [[ "$output" == *"canonical pc_handshake"* ]]
+}
+
+# =============================================================================
+# T-102: canonical route rejected by server (HTTP 400) → fail-closed
+# =============================================================================
+
+@test "T-102: target=hermes2 canonical INSERT HTTP failure → fail-closed, no legacy write, exit 1" {
+    export CURL_STUB_MODE="fail_http"
+    run bash "$TEST_INBOX_WRITE" "hermes2" "テストメッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 1 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes2.yaml" ]
+    [[ "$output" == *"FAIL-CLOSED"* ]]
+}
+
+# =============================================================================
+# T-102b: canonical route unreachable (curl transport failure) → fail-closed
+# =============================================================================
+
+@test "T-102b: target=hermes2 curl transport failure → fail-closed, no legacy write, exit 1" {
+    export CURL_STUB_MODE="fail_curl"
+    run bash "$TEST_INBOX_WRITE" "hermes2" "テストメッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 1 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes2.yaml" ]
+    [[ "$output" == *"FAIL-CLOSED"* ]]
+}
+
+# =============================================================================
+# T-103: no Supabase credentials available → fail-closed (never silently
+# falls back to the legacy dead-drop file)
+# =============================================================================
+
+@test "T-103: target=hermes2 no Supabase env → fail-closed, no legacy write, exit 1" {
+    unset SUPABASE_URL
+    unset SUPABASE_SERVICE_ROLE_KEY
+    run bash "$TEST_INBOX_WRITE" "hermes2" "テストメッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 1 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes2.yaml" ]
+    [[ "$output" == *"FAIL-CLOSED"* ]]
+    # curl must never have been invoked without credentials
+    [ ! -s "$CURL_STUB_CALLS" ]
+}
+
+# =============================================================================
+# T-104: disable_cross_pc_bridge flag present → fail-closed, curl never called
+# =============================================================================
+
+@test "T-104: target=hermes2 disable_cross_pc_bridge flag set → fail-closed, no legacy write, curl not called" {
+    mkdir -p "$HOME/.openclaw"
+    : > "$HOME/.openclaw/disable_cross_pc_bridge"
+    run bash "$TEST_INBOX_WRITE" "hermes2" "テストメッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 1 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes2.yaml" ]
+    [[ "$output" == *"FAIL-CLOSED"* ]]
+    [ ! -s "$CURL_STUB_CALLS" ]
+}
+
+# =============================================================================
+# T-105 / T-106: negative tests — 相談役 (hermes / hermes-main) は完全一致
+# でないため guard の対象外。誤って canonical route へ吸われたり、legacy
+# write がブロックされたりしてはならない (役職混同防止の中核テスト)。
+# =============================================================================
+
+@test "T-105: target=hermes (相談役, NOT hermes2) → guard does not trigger, normal legacy write occurs" {
+    export CURL_STUB_MODE="fail_http"
+    run bash "$TEST_INBOX_WRITE" "hermes" "相談役宛メッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ -f "$TEST_INBOX_DIR/hermes.yaml" ]
+    [[ "$output" != *"FAIL-CLOSED"* ]]
+    # canonical INSERT path (curl) must not even be reached synchronously by
+    # the guard for this target — background _cross_pc_bridge may or may not
+    # fire depending on pc_mapping, but the foreground exit/legacy-write must
+    # not be affected by CURL_STUB_MODE=fail_http.
+}
+
+@test "T-106: target=hermes-main (相談役, NOT hermes2) → guard does not trigger, normal legacy write occurs" {
+    export CURL_STUB_MODE="fail_http"
+    run bash "$TEST_INBOX_WRITE" "hermes-main" "相談役宛メッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ -f "$TEST_INBOX_DIR/hermes-main.yaml" ]
+    [[ "$output" != *"FAIL-CLOSED"* ]]
+}
+
+# =============================================================================
+# T-107: dedupe / no double-insert — a single inbox_write.sh call for
+# target=hermes2 must synchronously INSERT exactly once (not once from the
+# guard AND once again from the generic background _cross_pc_bridge).
+# =============================================================================
+
+@test "T-107: target=hermes2 single call → canonical pc_handshake INSERT happens exactly once" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes2" "重複防止テスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    # background jobs from this bats `run` subshell have exited by the time
+    # `run` returns (bash waits for the script's own foreground execution;
+    # any stray backgrounded _cross_pc_bridge for a *different* code path
+    # would not apply here since the guard short-circuits before it).
+    sleep 0.3
+    calls=$(wc -c < "$CURL_STUB_CALLS")
+    [ "$calls" -eq 1 ]
+}
+
+# =============================================================================
+# T-108: payload correctness — to_pc=hermes2, message_type normalized to the
+# pc_handshake CHECK allowlist, content carries the original text.
+# =============================================================================
+
+@test "T-108: target=hermes2 payload → to_pc=hermes2, allowlisted message_type, content preserved" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes2" "ペイロード検証テスト" "custom_nonstandard_type" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ -f "$CURL_STUB_PAYLOAD" ]
+
+    "$VENV_PYTHON" <<EOF
+import json
+with open('$CURL_STUB_PAYLOAD') as f:
+    payload = json.load(f)
+
+assert payload['to_pc'] == 'hermes2', payload
+allowed = {"request_permission","grant_permission","decline_permission","status_update",
+           "urgent_stop","question","answer","ack","file_sync"}
+assert payload['message_type'] in allowed, payload['message_type']
+assert 'ペイロード検証テスト' in payload['content'], payload['content']
+assert 'hermes2' in payload['content'], payload['content']
+print('T-108: PASS')
+EOF
+}
+
+# =============================================================================
+# T-109: unrelated target unaffected by the guard's presence (regression
+# sanity check — normal legacy write path for a non-hermes2 target still
+# behaves exactly as before).
+# =============================================================================
+
+@test "T-109: target=some_other_agent (unrelated) → normal legacy write, unaffected by hermes2 guard code" {
+    export CURL_STUB_MODE="fail_curl"
+    run bash "$TEST_INBOX_WRITE" "some_other_agent" "無関係メッセージ" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ -f "$TEST_INBOX_DIR/some_other_agent.yaml" ]
+    [[ "$output" != *"FAIL-CLOSED"* ]]
+}
+
+# =============================================================================
+# T-110..T-115: alias/表示名 正規化 (G1 REDO cycle2 finding
+# H2-G1-ROLE-ALIAS-GUARD-MISSING-001) — 各 canonical alias について、
+# canonical pc_handshake INSERT が exactly 1 回発生し、legacy dead-drop
+# file (queue/inbox/<alias>.yaml) は 0 回 (=絶対に作られない) であることを
+# 保証する。正本 = shim/hakudokai/hakudokai_fukuincho_reverse_poll.py の
+# _format_codex_sender() (hermes2 → 環境部長 マッピング)。
+# =============================================================================
+
+@test "T-110: target=環境部長 (表示名) → canonical INSERT succeeds, no legacy dead-drop file under that name" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "環境部長" "表示名テスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ ! -f "$TEST_INBOX_DIR/環境部長.yaml" ]
+    [[ "$output" == *"canonical pc_handshake"* ]]
+    sleep 0.3
+    calls=$(wc -c < "$CURL_STUB_CALLS")
+    [ "$calls" -eq 1 ]
+}
+
+@test "T-111: target=hermes-2 (ASCII hyphen variant) → canonical INSERT succeeds, no legacy file" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes-2" "hyphen変種テスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes-2.yaml" ]
+    [[ "$output" == *"canonical pc_handshake"* ]]
+    sleep 0.3
+    calls=$(wc -c < "$CURL_STUB_CALLS")
+    [ "$calls" -eq 1 ]
+}
+
+@test "T-112: target=hermes_2 (ASCII underscore variant) → canonical INSERT succeeds, no legacy file" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes_2" "underscore変種テスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes_2.yaml" ]
+    [[ "$output" == *"canonical pc_handshake"* ]]
+    sleep 0.3
+    calls=$(wc -c < "$CURL_STUB_CALLS")
+    [ "$calls" -eq 1 ]
+}
+
+@test "T-113: target=HERMES2 (大文字変種) → canonical INSERT succeeds, no legacy file" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "HERMES2" "大文字変種テスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ ! -f "$TEST_INBOX_DIR/HERMES2.yaml" ]
+    [[ "$output" == *"canonical pc_handshake"* ]]
+    sleep 0.3
+    calls=$(wc -c < "$CURL_STUB_CALLS")
+    [ "$calls" -eq 1 ]
+}
+
+@test "T-114: target='hermes 2' (space区切り変種) → canonical INSERT succeeds, no legacy file" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes 2" "space変種テスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes 2.yaml" ]
+    [[ "$output" == *"canonical pc_handshake"* ]]
+    sleep 0.3
+    calls=$(wc -c < "$CURL_STUB_CALLS")
+    [ "$calls" -eq 1 ]
+}
+
+@test "T-115: alias route payload → to_pc always normalized to hermes2 regardless of which alias triggered it" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "環境部長" "ペイロード正規化テスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 0 ]
+    [ -f "$CURL_STUB_PAYLOAD" ]
+
+    "$VENV_PYTHON" <<EOF
+import json
+with open('$CURL_STUB_PAYLOAD') as f:
+    payload = json.load(f)
+assert payload['to_pc'] == 'hermes2', payload
+assert payload['topic'] == 'hermes2_deaddrop_guard_hermes2', payload['topic']
+print('T-115: PASS')
+EOF
+}
+
+# =============================================================================
+# T-116..T-118: near-miss unknown 名 — hermes2/環境部長 に類似するが完全
+#一致ではない名前は fail-closed (legacy へ絶対に進まない、curl も呼ばれ
+# ない) であることを保証する (誤って新たな legacy alias file が生成され
+# る事故の防止、work order item 4)。
+# =============================================================================
+
+@test "T-116: target=hermes22 (near-miss, NOT a recognized canonical alias) → fail-closed, no legacy file, curl not called" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes22" "near-missテスト" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 1 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes22.yaml" ]
+    [[ "$output" == *"FAIL-CLOSED"* ]]
+    [ ! -s "$CURL_STUB_CALLS" ]
+}
+
+@test "T-117: target=hermes-office2 (near-miss, NOT a recognized canonical alias) → fail-closed, no legacy file" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "hermes-office2" "near-missテスト2" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 1 ]
+    [ ! -f "$TEST_INBOX_DIR/hermes-office2.yaml" ]
+    [[ "$output" == *"FAIL-CLOSED"* ]]
+    [ ! -s "$CURL_STUB_CALLS" ]
+}
+
+@test "T-118: target=環境部長様 (near-miss partial match of 表示名) → fail-closed, no legacy file" {
+    export CURL_STUB_MODE="success"
+    run bash "$TEST_INBOX_WRITE" "環境部長様" "near-missテスト3" "status_update" "ashigaru-third-5"
+    [ "$status" -eq 1 ]
+    [ ! -f "$TEST_INBOX_DIR/環境部長様.yaml" ]
+    [[ "$output" == *"FAIL-CLOSED"* ]]
+    [ ! -s "$CURL_STUB_CALLS" ]
+}
