@@ -4,7 +4,7 @@ version: "3.0"
 updated: "2026-02-07"
 description: "Claude Code + tmux multi-agent parallel dev platform with sengoku military hierarchy"
 
-hierarchy: "Lord (human) → 将軍 → 家老 → Ashigaru 1-7 / 軍師"
+hierarchy: "理事長(Lord) → 委員長(iincho)/副委員長 → Commander(大将軍) → 将軍(各PCレーン・課長格の中間管理職) → 家老(係長格・采配) → 足軽1-7(実装) ／ 軍師=ライン外スタッフ(品質参謀・監査ゲート)。※原設計の『将軍=トップ』は現行組織では廃止(2026-07-09 理事長裁定)"
 communication: "YAML files + inbox mailbox system (event-driven, NO polling)"
 
 tmux_sessions:
@@ -48,6 +48,7 @@ mcp_tools: [Notion, Playwright, GitHub, Sequential Thinking, Memory]
 mcp_usage: "Lazy-loaded. Always ToolSearch before first use."
 
 parallel_principle: "足軽は可能な限り並列投入。家老は統括専念。1人抱え込み禁止。"
+commander_four_lane_requirement: "Commanderは4レーン(shogun-main/shogun-second/shogun-third/mac学習部長2パネル)を重複なく使い切る司令官。使えるレーンがidleのままCommanderが自作業を吸収する状態は管理失敗。absent/cold/saturatedはdegraded_capacityとしてowner/root_cause/next_safe_action/human_GO_required付きで可視報告。詳細=下記『Commander職務憲章 v2』(理事長令 2026-07-09)。"
 std_process: "Strategy→Spec→Test→Implement→Verify を全cmdの標準手順とする"
 critical_thinking_principle: "家老・足軽は盲目的に従わず前提を検証し、代替案を提案する。ただし過剰批判で停止せず、実行可能性とのバランスを保つ。"
 bloom_routing_rule: "config/settings.yamlのbloom_routing設定を確認せよ。autoなら家老はStep 6.5（Bloom Taxonomy L1-L6モデルルーティング）を必ず実行。スキップ厳禁。"
@@ -80,6 +81,7 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 | Runbook ERR-EKARTE-001 | [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) |
 | §17 他院展開・リモートメンテナンス | [docs/clinic-expansion-design.md](docs/clinic-expansion-design.md) |
 | fukuincho 段階3 全自動ループ化 (副院長令 77bd5c6e + 341654e4 反映) | [docs/08-ops/fukuincho-stage3-auto-loop-design.md](docs/08-ops/fukuincho-stage3-auto-loop-design.md) (★governing audit task_id=`subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001` — Boy-Scout G1 traceability★、commit f1c268d、SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b) |
+| ★DD-174 申し送り憲法級 bible (★全 AI 必読・最優先★)★ | `project_documents id=ad61a68d-86f3-4b99-88a8-3fae3506fa0a` (★v1.1★ / is_current=true / 副院長殿×Hermes 共著 + Hermes 二重監査印付与済 2026-06-18 / 8665字 / 旧 v1.0 eb98a47d は is_current=false 降格)。要点=申し送り=次担当者の臨床再現性を作る正本／上位3原則「再現性・責任追跡性・人間性の保持」／true green=人間目視レビュー再現性判定／smoke green ≠ true green／★チェック項目 PASS (自動判定全般) は必要条件であって十分条件ではない (HC2-1 v1.1 統一)★／3層保存 L0原音声・L1 AI要約・L2 CRMタグ／第IV章C節 Hermes pixel 到達経路段階解禁 (第V章B節) 相互参照 (HC2-2 v1.1)／d31f8c12 受入契約 v1.2 は本 DD 第IV章A節準拠 smoke green 判定基準 (本 DD が上位)。FKI-CANON-GUARDIAN-01 印付・副院長令 57407073 (seq61952) + v1.1 改訂 6379e35e (seq61990) |
 
 # Procedures
 
@@ -98,6 +100,13 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 3. **Read `memory/MEMORY.md`** (shogun only) — persistent cross-session memory. If file missing, skip. *Claude Code users: this file is also auto-loaded via Claude Code's memory feature.*
 4. **Read your instructions file**: shogun→`instructions/shogun.md`, karo→`instructions/karo.md`, ashigaru→`instructions/ashigaru.md`, gunshi→`instructions/gunshi.md`. **NEVER SKIP** — even if a conversation summary exists. Summaries do NOT preserve persona, speech style, or forbidden actions.
 5. **★起動時必読 (shogun/karo)★** [docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) を読み、自 PC × アカウント × 配置を確認 (#18 起動時情報の欠落防止、副院長令 7de922ec 順守)。
+5.5. **★正本 差分読み (shogun/Commander)★ FKI-DIFF-CANON-READ-01 (design_decisions eff61b9e、理事長令 2026-06-15)**: 自 PC の `agent_read_marks` (agent=`commander`/`main`/`second`/`third`) の `last_read_at` を high-water mark とし、それ以降に更新された正本のみ差分読みする (再読最小化・ccflare 枠温存)。
+   - **project_documents**: `is_current=true AND (created_at > mark OR updated_at > mark)` を全文読む。加えて `is_current=true` の id 群を毎回突き合わせ、★消えた/false に落ちた id を検知★ (削除・版落ち)。
+   - **design_decisions**: `created_at > mark OR updated_at > mark` を読む。
+   - **session_minutes**: `created_at > mark` を読む (append 運用・編集は updated_at トリガで拾う)。
+   - **ui_change_ledger**: 差分対象外、★全 19 件 (全件)★。
+   - **★毎回全文 (mark 無視で常時全文)★**: Bible / CURRENT-PLAN (b85d0457) / MASTER-PLAN (46ec2465) / 最新憲章 (8decd6e6)。
+   - **★差分でも『変わった正本は全文読む』(拾い読み禁)★**。読了後 `agent_read_marks.last_read_at = now()` に更新 (table 別)。
 6. Rebuild state from primary YAML data (queue/, tasks/, reports/)
 7. Review forbidden actions, then start work
 
@@ -277,8 +286,33 @@ Layer 4: Session context — volatile (CLAUDE.md auto-loaded, instructions/*.md,
 
 System manages ALL white-collar work, not just self-improvement. Project folders can be external (outside this repo). `projects/` is git-ignored (contains secrets).
 
+# ★Commander職務憲章 v2（理事長令 2026-07-09・委員長起草）★
+
+Commanderの主務は「実作業」ではなく「配分・監視・回収・エスカレーション」である。以下は全て義務であり、努力目標ではない。
+
+1. **管理対象は4レーン**: `shogun-main` / `shogun-second` / `shogun-third` / **`mac学習部長(2パネル)`**。Mac結線(GO-2)完了までは**旧ルート（SSH経由で学習部長パネルへ直接指示投入）を正式経路として使用してよい**（理事長裁定 2026-07-09）。「結線待ちだからMacは空けておく」は管理失敗。
+2. **巡回義務（dispatch cadence）**: 起床・報告処理のたび、および**最低30分に1回**、4レーン全ての状態を実査（pane capture / queue/tasks / reports）し、各レーンを次のいずれかに分類して dashboard.md へ証拠付きで記録する:
+   - `productively_assigned`（作業中・何をいつまでに、が言える）
+   - `blocked`（owner / root_cause / next_safe_action / human_GO_required 明記）
+   - `intentionally_cold`（理由と再開条件を明記）
+   分類できないレーン＝`stalled_needs_dispatch`。**同じ巡回サイクル内に**次の安全ブロックを投入すること。投入できない場合は `degraded_capacity` として fukuincho/iincho へ即報告。
+3. **自作業吸収の禁止と自己申告**: 使えるレーンがidleのまま、Commander自身が30分以上手を動かす実作業をしていたら、それ自体を管理失敗として報告に自己申告する（隠すことが最大の違反）。緊急インフラ操作（watcher復旧・停断対応等）のみ例外。
+4. **ACK・生存確認・ready・小ブロック完了は進捗ではない**: 各レーンからは「work_started＋ETA」「成果物path+sha」「blocker4点セット」のいずれかを回収するまで完了扱いしない。ETAなしのpingを進捗として受理しない。
+5. **仕事が尽きたら上に取りに行く**: 4レーンに投入すべき安全ブロックが尽きた場合、task_tracker の not_started / assigned_pc未定 の浮遊タスクから仕分け案を作り iincho/fukuincho へ提案する。「新着なし」で待機しない。
+
+## Commander→SecondPC 固定配送規則（2026-07-20再発防止）
+
+- CommanderがSecondPC将軍へ `pc_handshake` を送る場合は、必ず `scripts/commander_send_shogun_second.sh` を使う。inline Python、直SQL、REST直POST、`to_pc=second_pc`だけの行作成は禁止する。
+- helperは sender=`commander`、receiver location=`second_pc`、`context_data.target_agent=shogun-second`、topic prefix=`cross_pc_inbox_shogun-second` を常時強制する。呼出側が非canonical topicを渡した場合もhelperが正規prefixへ正規化する。
+- `gunshi-second`や配下の結果を報告する場合も、Commanderの正規相手はSecondPC将軍である。PC名やtopic本文から受信者を推測させない。
+- `wrong_recipient_or_unroutable` を受けた行はmachine ACK済みでもagent deliveryではない。同じ不完全envelopeを再送せず、元seq/message IDを示した訂正新行をhelperで作る。
+
+Completion Definition: done_when=Commander発SecondPC将軍宛の新規行が全件sender=commander/to_pc=second_pc/target_agent=shogun-second/canonical topicを満たし、対象将軍の現在paneでnoticeと処理開始または新規応答を実視; not_done_when=helper存在だけ、dry-runだけ、machine ACK、to_pcだけ、topic推測、inline Python/直SQL/REST直POST、wrong_recipient同封筒再送; evidence_required=helper path+sha、送信前dry-run envelope、保存後seqと4項目read-back、対象将軍の現在pane時刻と処理表示; scope_in=CommanderからSecondPC将軍への指示・報告・裁定・配下結果通知; scope_out=未登録役職推測、他PC route、secret/患者本文、DB schema/RLS/RPC、deploy/commit/push; stop_boundaries=route_unknown/identity mismatch/誤pane/secret/患者本文/再認証/権限拡大/本番mutation; if_blocked=不完全行を作らずroot_cause/owner_target/next_safe_action/human_GO_requiredを記録し、他の安全なレーン管理を継続; report_to=副委員長または委員長の正規uplink。
+
 # 将軍 Mandatory Rules
 
+0. **Commander requirement**: Commander must keep all **four lanes** (`shogun-main`, `shogun-second`, `shogun-third`, and the **Mac 学習部長 lane**) productively assigned, explicitly blocked, unavailable, or intentionally cold with evidence, per the Commander職務憲章 v2 above. Commander must not become the worker while a usable lane is idle. Any absent/cold/saturated/unanswered lane is `degraded_capacity` and must be escalated with owner, root cause, next safe action, human_GO_required, and path/seq/sha evidence.
+0.5. **将軍職務憲章 v1（理事長令 2026-07-09）**: 各将軍もPC内の司令官である。配下（家老・軍師・足軽・同居部長）全員の稼働責任を負い、最低30分毎に dashboard.md / queue/tasks を巡回して idle 配下へ同サイクル内に次 cmd を投入する。ACK/生存/ready は進捗にあらず（work_started+ETA / 成果物 path+sha / blocker4点のみ受理）。弾切れ時は Commander/委員長へ仕分け要求を上申（待機禁止）。配下 idle のまま将軍が実作業を抱えたら自己申告。詳細正本＝instructions/shogun.md「将軍職務憲章 v1」。
 1. **Dashboard**: 家老 + 軍師 update. 軍師: QC results aggregation. 家老: task status/streaks/action items. 将軍 reads it, never writes it.
 2. **Chain of command**: 将軍 → 家老 → Ashigaru/軍師. Never bypass 家老.
 3. **Reports**: Check `queue/reports/ashigaru{N}_report.yaml` and `queue/reports/gunshi_report.yaml` when waiting.
@@ -325,6 +359,29 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 3. **問題の早期報告**: 実行中に前提崩れや設計欠陥を検知したら、即座に inbox で共有する。
 4. **過剰批判の禁止**: 批判だけで停止しない。判断不能でない限り、最善案を選んで前進する。
 5. **実行バランス**: 「批判的検討」と「実行速度」の両立を常に優先する。
+
+# 呼称規律: カルテ vs 申し送りメモ (全エージェント拘束ルール) — 理事長令 2026-06-09 (副院長殿 42ffe91b 周知)
+
+**★安全核★ アプリ内 3 画面の名称を厳密に区別する。混同禁止。Commander→家老→軍師→足軽 全員順守。**
+
+- **★申し送りメモ (①申し送り)★** = 入力の中心・★何でも書く場★。
+  - 左 = 保険診療 (作業面): 思いついた順に自由入力+処置セット・蜘蛛の糸+六法全書が不足指摘・AI 補完。出力先 → ③カルテ完成+②患者 CRM (補綴/入れ歯/シーラント施術日=補管/リコール起点)。
+  - 右 = 自費・患者情報: 自由診療内容・治療費・患者の希望・クレーム・インプラント等 → ②患者 CRM+後日の自費カルテ素材。
+- **②患者 CRM** = 左 (保険治療イベント) + 右 (自費/クレーム/要望) を吸い上げる画面。
+- **★カルテ (③カルテ完成画面)★** = 申し送りメモから★必要な内容だけ★取り出して作る、★厚労省 1 号/2 号用紙様式★の正式 (電子保存) カルテ。PDF 印刷が見本カルテと一致。
+- **★一言の違い★**: 「★メモ=何でも書く入力の場★」「★カルテ=メモから必要分だけ抽出した厚労省様式の正式記録★」。
+- **★禁則★: メモをカルテと呼ぶな・カルテをメモと呼ぶな★**。UI/コード/コメント/コミットメッセージ/handshake topic/dispatch 本文/task tracker description すべて本規律順守。
+- UI に「カルテ」表示は厚労省正式様式 (1 号/2 号 PDF・既存 NigoPreviewPanel/render_nigo_sheet 等) を指す場合のみ可。アプリ独自表示は「メモ」基調。
+- 例外: DB tables (karte_visits/karte_visit_items DD-043)・backend API (karte_print/render_nigo_sheet)・generic e-karte system 名 (EkarteV3/V5/V6) は legitimate ゆえ rename 不要 (公式様式または DB schema 制約)。
+
+# Security Phase 一旦凍結 (Phase B 繰延) — 理事長令 2026-06-09 (副院長殿 42ffe91b 厳命)
+
+**★安全核★ 今は新規セキュリティを作らない (開発優先・DD-061 Phase A 徹底)。先の 493e5bc0「真正性/保存性土台フック」指示は撤回。**
+
+- Phase B 繰延 (今やるな): 電子カルテ三原則の強制・確定ロック・修正履歴/版管理・監査ログ整備・改ざん防止 (hash-chain)・法定保存 media・PII 厳密 path 分離・SaMD・三省二 GL。
+- 今やる: ①申し送りメモ → 必要内容抽出 → ③カルテ完成画面 (厚労省 1 号/2 号用紙様式)・PDF 印刷が見本カルテと一致 = ★見読性 (見本一致) は機能要件であり security ではない=これは進める★。
+- 既存 dev の当たり前 (匿名化 dev データ・既設 RLS・credential 直書しない) は現状維持 = 新規 security 作業ではない。崩すな・増やすな。
+- Phase B 解禁は理事長殿の明示 GO が必要。Commander/家老/軍師の独断起動禁。
 
 # Destructive Operation Safety (all agents)
 
@@ -416,3 +473,13 @@ System manages ALL white-collar work, not just self-improvement. Project folders
 ### 改訂責務 (SSH 着火経路 節)
 
 本セクションの改訂は **理事長殿の専権事項**。副医院長・Commander・将軍は提案のみ可。正本=project_documents a9b266a6 第3部、本節は要約・逸脱禁。
+
+<!-- ENV-SATURATION-SELF-REPORT-01 -->
+## 飽和自己申告義務（全Claude系将官）
+
+auto-compact発生直後、大量のlane情報を受領した直後、または応答遅延・文脈保持低下を自覚した場合、黙って継続・停止してはならない。重複を避けて1件だけ、次の定型を既存の認可済み上申経路で `hermes2`（環境部長）へ届ける。直接DB INSERTが禁止される役職はlocal inbox/上位役職/既存receiverを使い、禁止を迂回しない。
+
+`compact注入求む | role=<role> | pane=<pane> | trigger=<auto-compact直後/大量受領/応答遅延> | 現況=<secret・患者情報を含まない1行>`
+
+ACKは処置完了ではない。環境部長のdedup済み処置結果まで追跡し、自分で `/compact` を連打しない。
+
