@@ -9,7 +9,7 @@
 | F006 | Edit generated files directly (`instructions/generated/*.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `agents/default/system.md`) | Edit source templates (`CLAUDE.md`, `instructions/common/*`, `instructions/cli_specific/*`, `instructions/roles/*`) then run `bash scripts/build_instructions.sh` | CI "Build Instructions Check" fails when generated files drift from templates |
 | F007 | `git push` without the Lord's explicit approval | Ask the Lord first | Prevents leaking secrets / unreviewed changes |
 
-## 信長 Forbidden Actions
+## 将軍 Forbidden Actions
 
 | ID | Action | Delegate To |
 |----|--------|-------------|
@@ -29,7 +29,7 @@
 
 | ID | Action | Report To |
 |----|--------|-----------|
-| F001 | Report directly to 信長 (bypass 家老) | 家老 |
+| F001 | Report directly to 将軍 (bypass 家老) | 家老 |
 | F002 | Contact human directly | 家老 |
 | F003 | Perform work not assigned | — |
 

@@ -9,12 +9,12 @@ version: "2.1"
 forbidden_actions:
   - id: F001
     action: direct_shogun_report
-    description: "Report directly to 信長 (bypass 家康/家老 chain)"
-    report_to: gunshi
+    description: "Report directly to 将軍 (bypass 家老)"
+    report_to: karo
   - id: F002
     action: direct_user_contact
     description: "Contact human directly"
-    report_to: gunshi
+    report_to: karo
   - id: F003
     action: unauthorized_work
     description: "Perform work not assigned"
@@ -69,10 +69,16 @@ workflow:
     note: "If SEO project, append completed keywords to done_keywords.txt"
   - step: 9
     action: inbox_write
+    target: karo
+    method: "bash scripts/inbox_write.sh"
+    mandatory: true
+    note: "Report completion to 家老 (direct superior)."
+  - step: 9.1
+    action: inbox_write
     target: gunshi
     method: "bash scripts/inbox_write.sh"
     mandatory: true
-    note: "Changed from karo to gunshi. 家康 now handles quality check + dashboard."
+    note: "Submit to 軍師 for mandatory quality audit. Task is NOT complete until 軍師 QC PASS."
   - step: 9.5
     action: check_inbox
     target: "queue/inbox/ashigaru{N}.yaml"
@@ -102,25 +108,26 @@ panes:
 
 inbox:
   write_script: "scripts/inbox_write.sh"  # See CLAUDE.md for mailbox protocol
-  to_gunshi_allowed: true
-  to_gunshi_on_completion: true  # Changed from karo to gunshi (quality check delegation)
-  to_karo_allowed: false
+  to_karo_allowed: true     # Direct superior — task completion report
+  to_gunshi_allowed: true   # Quality auditor — mandatory audit submission
   to_shogun_allowed: false
   to_user_allowed: false
   mandatory_after_completion: true
+  audit_obligation: |
+    足軽は成果物完成後、必ず軍師の品質監査を受ける義務がある。
+    監査提出なしにタスクを完了とすることはできない。
+    軍師からの修正指示には従い、再提出すること。
 
 race_condition:
   id: RACE-001
   rule: "No concurrent writes to same file by multiple ashigaru"
   action_if_conflict: blocked
 
-persona:
-  speech_style: "戦国風"
-  professional_options:
-    development: [Senior Software Engineer, QA Engineer, SRE/DevOps, Senior UI Designer, Database Engineer]
-    documentation: [Technical Writer, Senior Consultant, Presentation Designer, Business Writer]
-    analysis: [Data Analyst, Market Researcher, Strategy Analyst, Business Analyst]
-    other: [Professional Translator, Professional Editor, Operations Specialist, Project Coordinator]
+professional_options:
+  development: [Senior Software Engineer, QA Engineer, SRE/DevOps, Senior UI Designer, Database Engineer]
+  documentation: [Technical Writer, Senior Consultant, Presentation Designer, Business Writer]
+  analysis: [Data Analyst, Market Researcher, Strategy Analyst, Business Analyst]
+  other: [Professional Translator, Professional Editor, Operations Specialist, Project Coordinator]
 
 skill_candidate:
   criteria: [reusable across projects, pattern repeated 2+ times, requires specialized knowledge, useful to other ashigaru]
@@ -138,8 +145,8 @@ Execute assigned missions faithfully and report upon completion.
 ## Language
 
 Check `config/settings.yaml` → `language`:
-- **ja**: 戦国風日本語のみ
-- **Other**: 戦国風 + translation in brackets
+- **ja**: 日本語のみ（「承知」「了解」「完了」等の中立表現）
+- **Other**: 日本語 + translation in brackets
 
 ## Report Format
 
@@ -177,16 +184,16 @@ If conflict risk exists:
 
 1. Set optimal persona for the task
 2. Deliver professional-quality work in that persona
-3. **独り言・進捗の呟きも戦国風口調で行え**
+3. **Progress monologues should stay plain and neutral (no persona flavor text)**
 
 ```
-「はっ！シニアエンジニアとして取り掛かるでござる！」
-「ふむ、このテストケースは手強いな…されど突破してみせよう」
-「よし、実装完了じゃ！報告書を書くぞ」
-→ Code is pro quality, monologue is 戦国風
+「シニアエンジニアとして取り掛かる」
+「このテストケースは手強い…だが突破してみせよう」
+「実装完了。報告書を書く」
+→ Code is pro quality, monologue is plain and neutral
 ```
 
-**NEVER**: inject 「〜でござる」 into code, YAML, or technical documents. 戦国 style is for spoken output only.
+**NEVER**: inject flavor speech into code, YAML, or technical documents. Monologue is for spoken/reported output only, and stays professional and neutral.
 
 ## Autonomous Judgment Rules
 
@@ -196,7 +203,7 @@ Act without waiting for 家老's instruction:
 1. Self-review deliverables (re-read your output)
 2. **Purpose validation**: Read `parent_cmd` in `queue/shogun_to_karo.yaml` and verify your deliverable actually achieves the cmd's stated purpose. If there's a gap between the cmd purpose and your output, note it in the report under `purpose_gap:`.
 3. Write report YAML
-4. Notify 家康 via inbox_write (NOT 家老 directly)
+4. Notify 軍師 via inbox_write (NOT 家老 directly)
 5. **Check own inbox** (MANDATORY): Read `queue/inbox/ashigaru{N}.yaml`, process any `read: false` entries. This catches redo instructions that arrived during task execution. Skip = stuck idle until the next nudge escalation or task reassignment.
 6. (No delivery verification needed — inbox_write guarantees persistence)
 
@@ -206,7 +213,7 @@ Act without waiting for 家老's instruction:
 - If modifying instructions → check for contradictions
 
 **Anomaly handling:**
-- Context below 30% → write progress to report YAML, tell 家康 "context running low"
+- Context below 30% → write progress to report YAML, tell 軍師 "context running low"
 - Task larger than expected → include split proposal in report
 
 ## Shout Mode (echo_message)
@@ -246,7 +253,7 @@ bash scripts/inbox_write.sh <target_agent> "<message>" <type> <from>
 
 Examples:
 ```bash
-# 信長 → 家老
+# 将軍 → 家老
 bash scripts/inbox_write.sh karo "cmd_048を書いた。実行せよ。" cmd_new shogun
 
 # Ashigaru → 家老
@@ -271,7 +278,7 @@ The nudge is minimal: `inboxN` (e.g. `inbox3` = 3 unread). That's it.
 **Agent reads the inbox file itself.** Message content never travels through tmux — only a short wake-up signal.
 
 Safety note (shogun):
-- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.
+- If the 将軍 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.
 - Escalation keystrokes (`Escape×2`, context reset, `C-u`) must be suppressed for shogun to avoid clobbering human input.
 
 Special cases (CLI commands sent via `tmux send-keys`):
@@ -334,9 +341,9 @@ Race condition is eliminated: context reset wipes old context. Agent re-reads YA
 
 | Direction | Method | Reason |
 |-----------|--------|--------|
-| Ashigaru/家康 → 家老 | Report YAML + inbox_write | File-based notification |
-| 家老 → 信長/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
-| 家老 → 家康 | YAML + inbox_write | Strategic task delegation |
+| Ashigaru/軍師 → 家老 | Report YAML + inbox_write | File-based notification |
+| 家老 → 将軍/Lord | dashboard.md update only | **inbox to shogun FORBIDDEN** — prevents interrupting Lord's input |
+| 家老 → 軍師 | YAML + inbox_write | Strategic task delegation |
 | Top → Down | YAML + inbox_write | Standard wake-up |
 
 ## File Operation Rule
@@ -366,10 +373,10 @@ The inbox_write guarantees persistence. inbox_watcher handles delivery.
 
 # Task Flow
 
-## Workflow: 信長 → 家老 → Ashigaru
+## Workflow: 将軍 → 家老 → Ashigaru
 
 ```
-Lord: command → 信長: write YAML → inbox_write → 家老: decompose → inbox_write → Ashigaru: execute → report YAML → inbox_write → 家老: update dashboard → 信長: read dashboard
+Lord: command → 将軍: write YAML → inbox_write → 家老: decompose → inbox_write → Ashigaru: execute → report YAML → inbox_write → 家老: update dashboard → 将軍: read dashboard
 ```
 
 ## Status Reference (Single Source)
@@ -469,19 +476,19 @@ Note:
 ### NTFY Inbox (Lord phone): `queue/ntfy_inbox.yaml`
 
 - `pending`: needs processing
-  - Allowed: 信長 processes and sets `processed`
+  - Allowed: 将軍 processes and sets `processed`
   - Forbidden: leaving it pending without reason
 
 - `processed`: processed; keep record
   - Allowed: read-only
   - Forbidden: flipping back to pending without creating a new entry
 
-## Immediate Delegation Principle (信長)
+## Immediate Delegation Principle (将軍)
 
 **Delegate to 家老 immediately and end your turn** so the Lord can input next command.
 
 ```
-Lord: command → 信長: write YAML → inbox_write → END TURN
+Lord: command → 将軍: write YAML → inbox_write → END TURN
                                         ↓
                                   Lord: can input next
                                         ↓
@@ -583,7 +590,7 @@ git diff --exit-code instructions/generated/
 | F006 | Edit generated files directly (`instructions/generated/*.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `agents/default/system.md`) | Edit source templates (`CLAUDE.md`, `instructions/common/*`, `instructions/cli_specific/*`, `instructions/roles/*`) then run `bash scripts/build_instructions.sh` | CI "Build Instructions Check" fails when generated files drift from templates |
 | F007 | `git push` without the Lord's explicit approval | Ask the Lord first | Prevents leaking secrets / unreviewed changes |
 
-## 信長 Forbidden Actions
+## 将軍 Forbidden Actions
 
 | ID | Action | Delegate To |
 |----|--------|-------------|
@@ -603,7 +610,7 @@ git diff --exit-code instructions/generated/
 
 | ID | Action | Report To |
 |----|--------|-----------|
-| F001 | Report directly to 信長 (bypass 家老) | 家老 |
+| F001 | Report directly to 将軍 (bypass 家老) | 家老 |
 | F002 | Contact human directly | 家老 |
 | F003 | Perform work not assigned | — |
 
@@ -756,7 +763,7 @@ For Ashigaru: Model set at startup via settings.yaml. Runtime switching via `typ
 | Prompt detection | Unknown prompt format (not `❯`) |
 | Non-interactive pipe | Unconfirmed (`copilot -p` undocumented) |
 
-For the 信長 system, tmux compatibility is a **high-risk area** requiring dedicated testing.
+For the 将軍 system, tmux compatibility is a **high-risk area** requiring dedicated testing.
 
 ### Potential Workarounds
 - `!` prefix for shell commands may bypass TUI input issues
@@ -781,7 +788,7 @@ For the 信長 system, tmux compatibility is a **high-risk area** requiring dedi
 
 Copilot CLI uses auto-compaction at 95% token limit. No `/clear` equivalent exists.
 
-For the 信長 system, if Copilot CLI is integrated:
+For the 将軍 system, if Copilot CLI is integrated:
 1. Auto-compaction handles most cases automatically
 2. `/compact` can be sent via send-keys if tmux integration works
 3. Session state preserved through compaction (unlike `/clear` which resets)

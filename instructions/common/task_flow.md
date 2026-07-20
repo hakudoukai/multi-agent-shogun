@@ -1,9 +1,9 @@
 # Task Flow
 
-## Workflow: 信長 → 家老 → Ashigaru
+## Workflow: 将軍 → 家老 → Ashigaru
 
 ```
-Lord: command → 信長: write YAML → inbox_write → 家老: decompose → inbox_write → Ashigaru: execute → report YAML → inbox_write → 家老: update dashboard → 信長: read dashboard
+Lord: command → 将軍: write YAML → inbox_write → 家老: decompose → inbox_write → Ashigaru: execute → report YAML → inbox_write → 家老: update dashboard → 将軍: read dashboard
 ```
 
 ## Status Reference (Single Source)
@@ -103,19 +103,19 @@ Note:
 ### NTFY Inbox (Lord phone): `queue/ntfy_inbox.yaml`
 
 - `pending`: needs processing
-  - Allowed: 信長 processes and sets `processed`
+  - Allowed: 将軍 processes and sets `processed`
   - Forbidden: leaving it pending without reason
 
 - `processed`: processed; keep record
   - Allowed: read-only
   - Forbidden: flipping back to pending without creating a new entry
 
-## Immediate Delegation Principle (信長)
+## Immediate Delegation Principle (将軍)
 
 **Delegate to 家老 immediately and end your turn** so the Lord can input next command.
 
 ```
-Lord: command → 信長: write YAML → inbox_write → END TURN
+Lord: command → 将軍: write YAML → inbox_write → END TURN
                                         ↓
                                   Lord: can input next
                                         ↓

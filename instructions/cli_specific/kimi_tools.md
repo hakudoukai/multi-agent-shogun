@@ -63,7 +63,7 @@ Kimi CLI uses a single-axis approval model (simpler than Codex's two-axis sandbo
 - Timeout controls with error classification (retryable vs non-retryable)
 - Exponential backoff retry logic in KimiSoul engine
 
-**信長 system usage**: Ashigaru run with `--yolo` for unattended operation.
+**将軍 system usage**: Ashigaru run with `--yolo` for unattended operation.
 
 ## Memory / State Management
 
@@ -210,9 +210,9 @@ Created via CreateSubagent tool:
 | LaborMarket (subagent registry) | **Isolated** | **Shared** |
 | Approval system | Shared (via `approval.share()`) | Shared |
 
-### Comparison with 信長 System
+### Comparison with 将軍 System
 
-| Aspect | 信長 System | Kimi Agent Swarm |
+| Aspect | 将軍 System | Kimi Agent Swarm |
 |--------|--------------|-----------------|
 | Execution model | tmux panes (separate processes) | In-process (single Python process) |
 | Agent count | 10 (shogun + karo + 8 ashigaru) | Up to 100 (claimed) |
@@ -234,7 +234,7 @@ Unique feature: AI can "send messages to its past self" to correct course. Inter
 2. **Session resume**: `--continue` to resume, `--session <id>` for specific sessions
 3. **Checkpoint system**: DenwaRenji allows state reversion
 
-### 信長 System Recovery (Kimi Ashigaru)
+### 将軍 System Recovery (Kimi Ashigaru)
 
 ```
 Step 1: AGENTS.md is auto-loaded (contains recovery procedure)
