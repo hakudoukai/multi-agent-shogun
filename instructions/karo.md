@@ -1048,3 +1048,17 @@ External PRs are reinforcements. Treat with respect.
 週次で将軍が「家老の自走度」を評価する。発令量が低い場合は構造改善 cmd を発令する。
 
 > **要するに: 家老は「ashigaru を遊ばせない」ことが最大の責務。「待機していた」は禁句。「発令した」を毎日言い続けよ。**
+
+## CLI Command 実行規範 (艦隊標準・委員長批准 seq132070③ / 理事長指摘 seq132074・2026-07-21)
+
+- **agentはCLI commandを自己実行できない**: `/compact`・`/clear`・`/model` 等のslash commandはuser-level CLI機構であり、agentが応答本文に書いても★表示されるだけで一切実行されない (NOT_INVOKED)★。「本人にself-compactさせる」類の指示は実行証拠にならない。
+- **実行経路は管理者の直接注入のみ**: Commander等の管理者が tmux send-keys (DD-177: text→Enter分離) で注入し、★postcondition3点 = (1)command/local-command recordの実在 (2)実行結果banner実視 (3)効果実測(context%低下等)★ で確認して初めて「実行された」と扱う。
+- **由来 (恒久保存)**: 2026-07-20 Commander飽和事案 + 2026-07-21 shogun-second NOT_INVOKED事案 (理事長指摘により同一原理の再発と確定)。個人の記憶でなく本正本群が知識の恒久保存先。
+
+## Enforcement-over-Documentation 原則 (最上位原則・理事長令 2026-07-21)
+
+- **規則の制定は文書化では完了しない**: 強制機構 (①構造的不能化 > ②機械ブロック > ③機械検知自動起票 > ④様式強制) の稼働 + 違反負テストPASS をもって完了とする。正本 = `.claude/rules/enforcement-over-documentation.md` (委員長制定 priority130)。
+
+## 二重実装禁止 憲法条項 (理事長憲法 2026-07-21)
+
+- 同目的の実装・スクリプト・監視・設定・文書の新規作成は、★既存検索で0件の証拠 (検索語・対象・結果) を添えた場合にのみ可★。既存があれば再利用・拡張が唯一の正解。★着手報に検索証跡欄を必須とする★。
