@@ -239,3 +239,215 @@ PYEOF
     [ "$status" -eq 1 ]
     [[ "$output" == *"GROWTH"* ]]
 }
+
+# =============================================================================
+# TC2: Codex cycle1 B2 detection test — H2-CODEX-B2-UNREAD-COUNT-GROWTH-001
+#
+# 背景: unread_ids は `m.get('id')` が真値のメッセージのみを集合化する
+# (id フィールド自体を持たないメッセージは常に集合から除外される)。その
+# ため D-004/D-010 のように★全メッセージが id を持つ★状況では、たとえ
+# count_growth 条件を取り除いても new_ids 差分だけで growth を検知できて
+# しまい、B2 (ID を持たない未読メッセージの増加を検知し損なう) の穴を
+# 実際には検証していない。
+#
+# TC2 は id フィールドを一切持たないメッセージ集合のみで unread 件数を
+# 増加させ、unread_ids 集合が両 cycle とも空集合のまま変化しない状況を
+# 作る → new_ids は常に空集合となるため、growth を検知できるのは
+# count_growth (unread > prev_unread) のみ、という B2 の穴を直接塞ぐ。
+# =============================================================================
+
+_write_inbox_no_id_n_unread() {
+    local n="$1"
+    local total="${2:-$n}"
+    "$VENV_PYTHON" - "$HERMES2_INBOX" "$n" "$total" <<'PYEOF'
+import sys, yaml
+path, n, total = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+n = min(n, total)
+msgs = []
+for i in range(total):
+    msgs.append({
+        # ★TC2 (Codex cycle1 B2)★: id フィールドを意図的に持たせない。
+        # unread_ids は id を持つメッセージのみを収集するため、id なし
+        # メッセージの増加は ID 集合差分だけでは検知不能。
+        "from": "some_producer",
+        "timestamp": "2026-07-21T00:00:00",
+        "type": "status_update",
+        "content": f"test message no-id {i}",
+        "read": i >= n,
+    })
+with open(path, "w") as f:
+    yaml.safe_dump({"messages": msgs}, f, allow_unicode=True)
+PYEOF
+}
+
+@test "TC2: ID-less unread messages growth (Codex cycle1 B2) → GROWTH detected via count_growth fallback, exit 1" {
+    _write_inbox_no_id_n_unread 5 5
+    run bash "$TEST_DETECTOR"
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"baseline"* ]]
+
+    # unread_ids は id 無しのため両 cycle とも空集合 (new_ids は常に空) —
+    # count_growth (unread 総数比較) だけが唯一の検知経路となる。
+    _write_inbox_no_id_n_unread 7 7
+    run bash "$TEST_DETECTOR"
+    [ "$status" -eq 1 ]
+    [[ "$output" == *"GROWTH"* ]]
+}
+
+# =============================================================================
+# TC3: Codex/gunshi T1 non-negative int contract test — fix-cycle3 追補
+# H2-G1-CODEX-T1-NONNEGATIVE-VALIDATION-001
+#
+# 背景: fix-cycle2 の T1 是正は isinstance(prev_unread_raw, int) のみで型検証
+# していたが、Python では bool は int のサブクラスのため True/False を整数と
+# して誤って受理してしまう。また負数も弾いていなかった。TC3 は state file を
+# 直接破損させ (bool/負数混入)、①bool・負数の prev_unread が「有効な前回値」
+# として扱われず baseline (安全側) にフォールバックすること ②bool・負数の
+# consecutive_clean_cycles が 0 にリセットされること ③unread_ids が非 list
+# または非 string 要素混入でもクラッシュせず安全にフォールバックすること、
+# を検証する。
+# =============================================================================
+
+_write_state_file() {
+    # $1=last_unread_count用Python literal, $2=consecutive_clean_cycles用Python literal,
+    # $3=unread_ids用Python literal (省略時 "[]")
+    local unread_val="$1"
+    local cycles_val="$2"
+    local ids_val="${3:-[]}"
+    "$VENV_PYTHON" - "$STALE_STATE_FILE" "$unread_val" "$cycles_val" "$ids_val" <<'PYEOF'
+import sys, yaml, ast
+path, unread_raw, cycles_raw, ids_raw = sys.argv[1:5]
+state = {
+    'last_checked_at': '2026-07-21T00:00:00',
+    'last_total_count': 5,
+    'last_unread_count': ast.literal_eval(unread_raw),
+    'consecutive_clean_cycles': ast.literal_eval(cycles_raw),
+    'unread_ids': ast.literal_eval(ids_raw),
+}
+with open(path, 'w') as f:
+    yaml.safe_dump(state, f, allow_unicode=True)
+PYEOF
+}
+
+@test "TC3a: corrupted state last_unread_count=bool(True) rejected → baseline fallback, not mis-treated as int 1" {
+    _write_inbox_n_unread 3 5
+    _write_state_file "True" "2" "[]"
+    run bash "$TEST_DETECTOR"
+    # 是正前: isinstance(True, int) は True のため prev_unread=1 として受理され、
+    # unread(3) > 1 で GROWTH (exit 1) を誤検知してしまう。
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"baseline"* ]]
+}
+
+@test "TC3b: corrupted state last_unread_count=-5 (negative) rejected → baseline fallback" {
+    _write_inbox_n_unread 3 5
+    _write_state_file "-5" "2" "[]"
+    run bash "$TEST_DETECTOR"
+    # 是正前: 負数も isinstance(int) を通過して受理され、unread(3) > -5 で
+    # GROWTH (exit 1) を誤検知してしまう。
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"baseline"* ]]
+}
+
+@test "TC3c: corrupted state consecutive_clean_cycles=-7 (negative) rejected → reset to 0 before increment" {
+    _write_inbox_n_unread 3 5
+    _write_state_file "3" "-7" "[\"msg_test_0\", \"msg_test_1\", \"msg_test_2\"]"
+    run bash "$TEST_DETECTOR"
+    [ "$status" -eq 0 ]
+    # 是正前: int(-7) がそのまま受理され、clean 判定時に -7+1=-6 という
+    # 意味不明な負のカウントが出力されてしまう。是正後は 0+1=1。
+    [[ "$output" == *"consecutive_clean_cycles=1)"* ]]
+}
+
+@test "TC3d: corrupted state consecutive_clean_cycles=bool(True) rejected → reset to 0 before increment" {
+    _write_inbox_n_unread 3 5
+    _write_state_file "3" "True" "[\"msg_test_0\", \"msg_test_1\", \"msg_test_2\"]"
+    run bash "$TEST_DETECTOR"
+    [ "$status" -eq 0 ]
+    # 是正前: int(True)=1 がそのまま受理され、clean 判定時に 1+1=2 になって
+    # しまう。是正後は bool 除外により 0+1=1。
+    [[ "$output" == *"consecutive_clean_cycles=1)"* ]]
+}
+
+@test "TC3e: corrupted state unread_ids is non-list (string, not a list) → safe empty-set fallback, no crash" {
+    _write_inbox_n_unread 3 5
+    _write_state_file "3" "2" "\"not_a_list\""
+    run bash "$TEST_DETECTOR"
+    # 非 list は空集合へフォールバック (安全側=既知IDなし扱い) → 今回の
+    # unread_ids 全件が「新規」とみなされ GROWTH。クラッシュしないことが本質。
+    [ "$status" -eq 1 ]
+    [[ "$output" == *"GROWTH"* ]]
+}
+
+@test "TC3f: corrupted state unread_ids contains non-string elements → non-string entries filtered, no crash" {
+    _write_inbox_n_unread 3 5
+    _write_state_file "3" "2" "[1, None, \"msg_test_0\", \"msg_test_1\", \"msg_test_2\"]"
+    run bash "$TEST_DETECTOR"
+    # 非 string 要素 (1, None) は除去され、残る文字列3件が現在の unread_ids と
+    # 完全一致するため growth なし (クラッシュしないことが本質)。
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"OK: no new stale accumulation"* ]]
+}
+
+# =============================================================================
+# TC4: Codex/gunshi B3 concurrency regression test — fix-cycle3 追補
+# H2-G1-CODEX-B3-CONCURRENCY-TEST-MISSING-002
+#
+# flock による read-modify-write 排他は静的レビューでは妥当に見えるが、実際に
+# 並行起動した際「更新消失 (lost update)」が起きないことを実証する自動試験が
+# 無ければ回帰を検知できない。同一 inbox/state を用いて複数プロセスを同時
+# 起動し、①全プロセスが exit 0 (静的 inbox のため growth は本来発生しない)
+# で終了する ②最終 state YAML が健全に parse できる ③consecutive_clean_cycles
+# が「直列実行した場合と厳密に一致する値」になっている (flock が真に排他制御
+# し、どの並行呼び出しも他の呼び出しの更新を踏み潰していないことの証明) こと
+# を検証する。lock 待ちは無期限 (timeout 無し、詳細は本体スクリプトのコメント
+# 参照) のため、本試験はタイムアウト由来の欠測ケースを想定しない。
+# =============================================================================
+
+@test "TC4: concurrent detector launches against shared state → all exit 0, state YAML intact, no lost updates (Codex/gunshi B3 concurrency)" {
+    _write_inbox_n_unread 3 5
+
+    # baseline を直列に1回確立 (consecutive_clean_cycles=1 から開始)。
+    run bash "$TEST_DETECTOR"
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"baseline"* ]]
+
+    local n=8
+    local pids=()
+    local i
+    for i in $(seq 1 "$n"); do
+        bash "$TEST_DETECTOR" >"$TEST_TMPDIR/concurrent_$i.log" 2>&1 &
+        pids+=("$!")
+    done
+
+    local exit_codes=()
+    local pid
+    for pid in "${pids[@]}"; do
+        wait "$pid"
+        exit_codes+=("$?")
+    done
+
+    # ①全プロセスが exit 0 (静的 inbox のため growth は起こり得ない)
+    local code
+    for code in "${exit_codes[@]}"; do
+        [ "$code" -eq 0 ]
+    done
+
+    # ②state YAML が健全 ③consecutive_clean_cycles が直列実行と厳密一致
+    # (baseline の1回 + 並行実行 n 回 = 1+n。flock が真に排他していなければ
+    # lost update により 1+n を下回るはず)。
+    run "$VENV_PYTHON" -c "
+import yaml
+with open('$STALE_STATE_FILE') as f:
+    d = yaml.safe_load(f)
+assert isinstance(d, dict)
+for k in ('last_checked_at', 'last_total_count', 'last_unread_count', 'consecutive_clean_cycles', 'unread_ids'):
+    assert k in d, k
+assert d['last_unread_count'] == 3, d['last_unread_count']
+assert d['last_total_count'] == 5, d['last_total_count']
+assert d['consecutive_clean_cycles'] == 1 + $n, d['consecutive_clean_cycles']
+print('OK')
+"
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"OK"* ]]
+}

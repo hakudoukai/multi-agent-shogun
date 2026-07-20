@@ -89,6 +89,9 @@
 !shim/hakudokai/
 !shim/hakudokai/*.py
 !shim/hakudokai/*.sh
+# hermes2 dead-drop guard: sb_curl secret-in-argv mitigation (Codex cycle1 audit, credential value never in argv)
+!shim/hakudokai/lib/
+!shim/hakudokai/lib/sb_auth.sh
 
 # cmd_root_resolution_001: organizational_lessons migration (Supabase 組織改革事例蓄積基盤、OSS 公開対象、no PII)
 !backend/

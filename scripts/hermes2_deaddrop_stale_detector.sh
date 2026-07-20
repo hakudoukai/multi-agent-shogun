@@ -32,9 +32,33 @@ STALE_STATE_FILE="${STALE_STATE_FILE:-$SCRIPT_DIR/queue/metrics/hermes2_deaddrop
 
 mkdir -p "$(dirname "$STALE_STATE_FILE")"
 
+# B3是正: state file の read-modify-write を flock で排他制御し、
+# 検知器の並行実行によるレースを防ぐ (lock は state file 専用の別ファイル)。
+STALE_LOCK_FILE="${STALE_STATE_FILE}.lock"
+
+# ★lock待ちtimeout方針 (fix-cycle3 追補、finding H2-G1-CODEX-B3-CONCURRENCY-TEST-MISSING-002)★:
+# `flock -x 200` に `-w <sec>` を付けず★無期限待機★とする。critical section は
+# 小さな state YAML の read+compute+atomic write のみで一瞬 (ms オーダー) で終わる
+# ため、timeout を設けて lock 取得を諦める設計は「更新消失を防ぐ」という B3 是正の
+# 目的そのものに反する (timeout 発火時に検知結果を欠測させるくらいなら、待つ方が
+# read-only 監視ツールとしての正確性を優先できる)。デッドロックの恐れは無い
+# (lock 保持者は必ず同一 critical section を抜けて自発的に解放する)。
 TIMESTAMP=$(date "+%Y-%m-%dT%H:%M:%S")
 
-RESULT=$("$VENV_PYTHON" - "$HERMES2_INBOX" "$STALE_STATE_FILE" "$TIMESTAMP" <<'PYEOF'
+# ★fix-cycle3 追補★ (TC4 が実地で検出した実挙動不具合):
+# `RESULT=$( flock -x 200; ... ) 200>"$STALE_LOCK_FILE"` は誤り —
+# `$( )` command substitution は word expansion の一部として先に評価され、
+# 末尾の `200>"$STALE_LOCK_FILE"` redirection は substitution 実行後にしか
+# 適用されないため、substitution 内部の `flock -x 200` 実行時点では fd 200 が
+# 未オープンで `flock: 200: Bad file descriptor` となり、lock は事実上
+# no-op だった (並行起動で更新消失、consecutive_clean_cycles が期待値より
+# 少なくなる実害を TC4 で確認)。正しくは fd を★親 shell 側で先に開いて
+# flock してから★ command substitution を実行する。
+exec 200>"$STALE_LOCK_FILE"
+flock -x 200
+
+RESULT=$(
+    "$VENV_PYTHON" - "$HERMES2_INBOX" "$STALE_STATE_FILE" "$TIMESTAMP" <<'PYEOF'
 import sys, yaml, os
 
 inbox_path, state_path, now_ts = sys.argv[1:4]
@@ -69,20 +93,53 @@ if os.path.exists(state_path):
     with open(state_path) as f:
         prev_state = yaml.safe_load(f) or {}
 
-prev_unread = prev_state.get('last_unread_count')
-prev_clean_cycles = int(prev_state.get('consecutive_clean_cycles', 0) or 0)
-prev_unread_ids = set(prev_state.get('unread_ids') or [])
+# T1是正 (fix-cycle3 追補): state file の値は書換・破損・旧形式混入の可能性が
+# あるため、型を検証してから使う (不正値は安全側=baseline相当へフォールバック)。
+# ★bool は Python では int のサブクラス★のため isinstance(x, int) だけでは
+# True/False を誤って整数として受理してしまう。bool を明示的に除外し、かつ
+# 負数も不正値として弾く (契約=非負整数のみ受理)。
+prev_unread_raw = prev_state.get('last_unread_count')
+if (
+    isinstance(prev_unread_raw, int)
+    and not isinstance(prev_unread_raw, bool)
+    and prev_unread_raw >= 0
+):
+    prev_unread = prev_unread_raw
+else:
+    prev_unread = None
+
+prev_clean_cycles_raw = prev_state.get('consecutive_clean_cycles', 0)
+if isinstance(prev_clean_cycles_raw, bool):
+    prev_clean_cycles = 0
+else:
+    try:
+        _prev_clean_cycles = int(prev_clean_cycles_raw)
+        prev_clean_cycles = _prev_clean_cycles if _prev_clean_cycles >= 0 else 0
+    except (TypeError, ValueError):
+        prev_clean_cycles = 0
+
+prev_unread_ids_raw = prev_state.get('unread_ids')
+if isinstance(prev_unread_ids_raw, list):
+    prev_unread_ids = {x for x in prev_unread_ids_raw if isinstance(x, str)}
+else:
+    prev_unread_ids = set()
 
 if prev_unread is None:
-    # 初回実行: 比較対象なし → baseline 確立、growth 扱いしない。
-    # baseline 自体を「1回目の clean 観測」として数える (2周期連続 clean
-    # 確認 = baseline 実行 + 次回 clean 実行の計2回、work order item 6)。
+    # 初回実行 (または state 破損によるフォールバック): 比較対象なし →
+    # baseline 確立、growth 扱いしない。baseline 自体を「1回目の clean
+    # 観測」として数える (2周期連続 clean 確認 = baseline 実行 + 次回
+    # clean 実行の計2回、work order item 6)。
     verdict = 'baseline'
     growth = False
     consecutive_clean_cycles = 1
 else:
     new_ids = set(unread_ids) - prev_unread_ids
-    if new_ids:
+    # B2是正 finding H2-CODEX-B2-UNREAD-COUNT-GROWTH-001:
+    # ID 集合差分だけでは、ID を持たない未読メッセージの増加 (unread 総数
+    # が増えているのに unread_ids には現れない) を検知できない。ID 差分に
+    # 加え、unread 総数そのものの増加も growth 条件とする。
+    count_growth = unread > prev_unread
+    if new_ids or count_growth:
         verdict = 'growth'
         growth = True
         consecutive_clean_cycles = 0
@@ -113,6 +170,9 @@ except Exception:
 print(f'verdict={verdict}|total={total}|unread={unread}|prev_unread={prev_unread if prev_unread is not None else "none"}|consecutive_clean_cycles={consecutive_clean_cycles}')
 PYEOF
 )
+
+# critical section 終了 → fd 200 を close して flock を解放。
+exec 200>&-
 
 VERDICT=$(echo "$RESULT" | sed -n 's/^verdict=\([a-z]*\).*/\1/p')
 TOTAL=$(echo "$RESULT" | sed -n 's/.*|total=\([0-9]*\)|.*/\1/p')

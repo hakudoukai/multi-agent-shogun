@@ -385,3 +385,91 @@ EOF
     [[ "$output" == *"FAIL-CLOSED"* ]]
     [ ! -s "$CURL_STUB_CALLS" ]
 }
+
+# =============================================================================
+# TC1: Codex cycle1 B1 detection tests — set -e 単独代入ハザードの分離立証
+#
+# 背景: T-101/T-102/T-102b は _hermes2_deaddrop_guard を常に
+# `if _hermes2_deaddrop_guard ...; then` という★testedコンテキスト★経由で
+# しか呼ばない (実運用の唯一の呼出し箇所と同じ形)。bash の仕様上、compound
+# command/function が if の条件式として評価される時、その呼出し全体の間
+# -e は無視される。そのため B1 (修正前の bare `http_status=$(cmd)` パター
+# ン) は★現行の唯一の呼出し経路では実際には中断を起こさない★ことが実証
+# 済み (T-102b は fix 前後で挙動不変)。既存テストのみでは B1 を検出でき
+# ない — TC1 はこの検出できない穴を、内部パターンを bare (if/&&/||/! の
+# いずれにも包まれない) コンテキストへ単離して直接埋める。
+#
+# TC1a: 現在のソース (scripts/inbox_write.sh) から該当ブロックを★sed/awk
+#       で機械抽出★し (手書き複製によるドリフト防止)、bare コンテキスト
+#       で実行 → curl transport failure でも中断せず到達点まで進むことを
+#       確認する (regression guard: 将来 if ラップが誤って剥がされたら
+#       このテストは fail する)。
+# TC1b: 修正前 diff で削除された行と同一パターンを再現し、同条件で実行
+#       → bare コンテキストでは set -e により到達点手前で中断すること
+#       を実証する (「pre-fix code に対して FAIL する」という karo-third
+#       指示の具体的充足、履歴的ハザードの直接立証)。
+# =============================================================================
+
+@test "TC1a: extracted current http_status capture block survives curl transport failure in a bare (non-if) set -e context" {
+    local extracted
+    extracted=$(awk '/local resp_file http_status curl_status/{p=1} p{print} p && /^    fi$/{exit}' "$INBOX_WRITE_SCRIPT")
+    [ -n "$extracted" ]
+    # 抽出ブロックが if でラップされていること自体も確認 (抽出失敗 = 別行を
+    # 拾ってしまった、等のテスト自身のフォールスポジティブを防止)。
+    [[ "$extracted" == *"if http_status=\$(SUPABASE_SERVICE_ROLE_KEY="* ]]
+
+    local harness="$TEST_TMPDIR/tc1a_harness.sh"
+    {
+        echo '#!/usr/bin/env bash'
+        echo 'set -e'
+        echo "source \"$PROJECT_ROOT/shim/hakudokai/lib/sb_auth.sh\""
+        echo 'sb_key="stub-key-not-real"'
+        echo 'sb_url="https://stub.example.invalid"'
+        echo 'payload="{\"stub\":true}"'
+        echo '_isolated_capture_postfix() {'
+        printf '%s\n' "$extracted"
+        echo '    echo "REACHED_AFTER_CAPTURE curl_status=[$curl_status] http_status=[$http_status]"'
+        echo '}'
+        echo '_isolated_capture_postfix'
+        echo 'echo "OUTER_SCRIPT_COMPLETED"'
+    } > "$harness"
+
+    export CURL_STUB_MODE="fail_curl"
+    run bash "$harness"
+    [[ "$output" == *"REACHED_AFTER_CAPTURE"* ]]
+    [[ "$output" == *"curl_status=[7]"* ]]
+    [[ "$output" == *"http_status=[]"* ]]
+    [[ "$output" == *"OUTER_SCRIPT_COMPLETED"* ]]
+}
+
+@test "TC1b: pre-fix bare capture pattern (Codex cycle1 B1, historical) aborts before reaching handler in bare set -e context" {
+    local harness="$TEST_TMPDIR/tc1b_harness.sh"
+    {
+        echo '#!/usr/bin/env bash'
+        echo 'set -e'
+        echo "source \"$PROJECT_ROOT/shim/hakudokai/lib/sb_auth.sh\""
+        echo 'sb_key="stub-key-not-real"'
+        echo 'sb_url="https://stub.example.invalid"'
+        echo 'payload="{\"stub\":true}"'
+        echo '_isolated_capture_prefix() {'
+        echo '    local resp_file http_status curl_status'
+        echo '    resp_file=$(mktemp)'
+        echo '    http_status=$(SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS -o "$resp_file" -w '"'"'%{http_code}'"'"' -X POST \'
+        echo '        "${sb_url}/rest/v1/pc_handshake" \'
+        echo '        -H "Content-Type: application/json" \'
+        echo '        -H "Prefer: return=minimal" \'
+        echo '        --data-binary "$payload" \'
+        echo '        2>/dev/null)'
+        echo '    curl_status=$?'
+        echo '    echo "REACHED_AFTER_CAPTURE curl_status=[$curl_status] http_status=[$http_status]"'
+        echo '}'
+        echo '_isolated_capture_prefix'
+        echo 'echo "OUTER_SCRIPT_COMPLETED"'
+    } > "$harness"
+
+    export CURL_STUB_MODE="fail_curl"
+    run bash "$harness"
+    [ "$status" -ne 0 ]
+    [[ "$output" != *"REACHED_AFTER_CAPTURE"* ]]
+    [[ "$output" != *"OUTER_SCRIPT_COMPLETED"* ]]
+}

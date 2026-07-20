@@ -252,20 +252,29 @@ PYEOF
     # HTTP status も検査する (_cross_pc_bridge より厳格・fail-closed 要件)。
     local resp_file http_status curl_status
     resp_file=$(mktemp)
-    http_status=$(SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS -o "$resp_file" -w '%{http_code}' -X POST \
+    # set -e 下では http_status=$(...) 単体の代入失敗が即シェル終了を招き
+    # FAIL-CLOSED 分岐へ到達しない (Codex監査 cycle1 B1)。if の条件式内で
+    # 代入することで curl の非0終了を確実に捕捉する。
+    if http_status=$(SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS -o "$resp_file" -w '%{http_code}' -X POST \
         "${sb_url}/rest/v1/pc_handshake" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
         --data-binary "$payload" \
-        2>/dev/null)
-    curl_status=$?
+        2>/dev/null); then
+        curl_status=0
+    else
+        curl_status=$?
+        http_status=""
+    fi
 
     if [ "$curl_status" -eq 0 ] && echo "$http_status" | grep -qE '^2[0-9][0-9]$'; then
         echo "[inbox_write] hermes2 dead-drop guard: canonical pc_handshake INSERT succeeded (http=${http_status}); legacy hermes2.yaml write skipped" >&2
         rm -f "$resp_file"
         return 0
     else
-        echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard canonical pc_handshake INSERT failed (curl_status=${curl_status}, http=${http_status}, body=$(cat "$resp_file" 2>/dev/null | head -c 300)); refusing legacy fallback for hermes2" >&2
+        # S1是正: レスポンス本文はstderrへ出力しない (内部詳細の漏洩懸念)。
+        # 判定に必要な curl_status/http_status のみ記録する。
+        echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard canonical pc_handshake INSERT failed (curl_status=${curl_status}, http=${http_status}); refusing legacy fallback for hermes2" >&2
         rm -f "$resp_file"
         return 1
     fi
