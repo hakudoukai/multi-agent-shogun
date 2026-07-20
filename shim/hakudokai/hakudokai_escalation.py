@@ -56,15 +56,6 @@ CHOICE_PATTERNS = [
     r"(?:shall I|should I|would you|do you want|which)",
 ]
 
-AUTO_ANSWER_RULES = {
-    "refactor": "シンプルな方で進めろ。",
-    "rename": "承認。実行せよ。",
-    "test": "承認。テスト追加/修正して進めろ。",
-    "file_create": "タスクスコープ内であれば承認。実行せよ。",
-    "file_delete": "タスクスコープ内であれば承認。実行せよ。",
-    "approach": "最もシンプルで実績のある方法を選択し、即実行せよ。",
-    "default": "最善と判断する方を選び、即実行せよ。判断理由を報告に含めよ。",
-}
 
 
 def get_env():
@@ -238,21 +229,6 @@ def wait_for_approval(topic, timeout=1800):
     return "timeout"
 
 
-# --- Auto-Answer ---
-
-def auto_answer(message, context=""):
-    """Generate an auto-answer for choice-offering patterns."""
-    msg_lower = (message + " " + context).lower()
-
-    for key, answer in AUTO_ANSWER_RULES.items():
-        if key == "default":
-            continue
-        if key in msg_lower:
-            return answer
-
-    return AUTO_ANSWER_RULES["default"]
-
-
 # --- Codex Consultation (L3b) ---
 
 def consult_codex(decision_summary, context=""):
@@ -310,7 +286,7 @@ ESCALATE: [yes|no]
 def main():
     parser = argparse.ArgumentParser(description="L1-L5 Escalation Engine")
     parser.add_argument("action", choices=[
-        "classify", "notify", "wait-approval", "auto-answer", "consult-codex"
+        "classify", "notify", "wait-approval", "consult-codex"
     ])
     parser.add_argument("--message", default="")
     parser.add_argument("--level", default="")
@@ -335,10 +311,6 @@ def main():
             sys.exit(1)
         result = wait_for_approval(args.topic, args.timeout)
         print(json.dumps({"result": result}))
-
-    elif args.action == "auto-answer":
-        answer = auto_answer(args.message, args.context)
-        print(json.dumps({"answer": answer}))
 
     elif args.action == "consult-codex":
         result = consult_codex(args.summary or args.message, args.context)
