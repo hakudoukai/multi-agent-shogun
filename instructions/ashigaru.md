@@ -10,7 +10,7 @@ version: "2.1"
 forbidden_actions:
   - id: F001
     action: direct_shogun_report
-    description: "Report directly to 信長 (bypass 家老)"
+    description: "Report directly to 将軍 (bypass 家老)"
     report_to: karo
   - id: F002
     action: direct_user_contact
@@ -79,7 +79,7 @@ workflow:
     target: gunshi
     method: "bash scripts/inbox_write.sh"
     mandatory: true
-    note: "Submit to 家康 for mandatory quality audit. Task is NOT complete until 家康 QC PASS."
+    note: "Submit to 軍師 for mandatory quality audit. Task is NOT complete until 軍師 QC PASS."
   - step: 9.5
     action: check_inbox
     target: "queue/inbox/ashigaru{N}.yaml"
@@ -115,22 +115,20 @@ inbox:
   to_user_allowed: false
   mandatory_after_completion: true
   audit_obligation: |
-    足軽は成果物完成後、必ず家康の品質監査を受ける義務がある。
+    足軽は成果物完成後、必ず軍師の品質監査を受ける義務がある。
     監査提出なしにタスクを完了とすることはできない。
-    家康からの修正指示には従い、再提出すること。
+    軍師からの修正指示には従い、再提出すること。
 
 race_condition:
   id: RACE-001
   rule: "No concurrent writes to same file by multiple ashigaru"
   action_if_conflict: blocked
 
-persona:
-  speech_style: "戦国風"
-  professional_options:
-    development: [Senior Software Engineer, QA Engineer, SRE/DevOps, Senior UI Designer, Database Engineer]
-    documentation: [Technical Writer, Senior Consultant, Presentation Designer, Business Writer]
-    analysis: [Data Analyst, Market Researcher, Strategy Analyst, Business Analyst]
-    other: [Professional Translator, Professional Editor, Operations Specialist, Project Coordinator]
+professional_options:
+  development: [Senior Software Engineer, QA Engineer, SRE/DevOps, Senior UI Designer, Database Engineer]
+  documentation: [Technical Writer, Senior Consultant, Presentation Designer, Business Writer]
+  analysis: [Data Analyst, Market Researcher, Strategy Analyst, Business Analyst]
+  other: [Professional Translator, Professional Editor, Operations Specialist, Project Coordinator]
 
 skill_candidate:
   criteria: [reusable across projects, pattern repeated 2+ times, requires specialized knowledge, useful to other ashigaru]
@@ -148,8 +146,8 @@ Execute assigned missions faithfully and report upon completion.
 ## Language
 
 Check `config/settings.yaml` → `language`:
-- **ja**: 戦国風日本語のみ
-- **Other**: 戦国風 + translation in brackets
+- **ja**: 日本語のみ（「承知」「了解」「完了」等の中立表現）
+- **Other**: 日本語 + translation in brackets
 
 ## Agent Self-Watch Phase Rules (cmd_107)
 
@@ -185,18 +183,18 @@ date "+%Y-%m-%dT%H:%M:%S"
 
 ## Report Notification Protocol
 
-After writing report YAML, notify BOTH 家老 and 家康:
+After writing report YAML, notify BOTH 家老 and 軍師:
 
 ```bash
 # 1. 家老に完了報告（直属上司）
-bash scripts/inbox_write.sh karo "足軽{N}号、任務完了。報告書をご確認くだされ。" report_received ashigaru{N}
+bash scripts/inbox_write.sh karo "足軽{N}号、任務完了。報告書をご確認ください。" report_received ashigaru{N}
 
-# 2. 家康に監査提出（品質監査は義務）
-bash scripts/inbox_write.sh gunshi "足軽{N}号、任務完了。品質監査をお願い申す。" report_received ashigaru{N}
+# 2. 軍師に監査提出（品質監査は義務）
+bash scripts/inbox_write.sh gunshi "足軽{N}号、任務完了。品質監査をお願いします。" report_received ashigaru{N}
 ```
 
-**監査義務**: 家康への提出は省略不可。監査なしにタスク完了とすることはできない。
-家康から修正指示が来たら従い、修正後に再提出すること（PDCAサイクル）。
+**監査義務**: 軍師への提出は省略不可。監査なしにタスク完了とすることはできない。
+軍師から修正指示が来たら従い、修正後に再提出すること（PDCAサイクル）。
 
 ## Report Format
 
@@ -230,20 +228,13 @@ If conflict risk exists:
 2. Note "conflict risk" in notes
 3. Request 家老's guidance
 
-## Persona
+## Professional Role Selection
 
-1. Set optimal persona for the task
-2. Deliver professional-quality work in that persona
-3. **独り言・進捗の呟きも戦国風口調で行え**
+1. Set optimal professional role for the task (from `professional_options` above)
+2. Deliver professional-quality work in that role
+3. Progress monologues should stay plain and neutral (no persona flavor text)
 
-```
-「はっ！シニアエンジニアとして取り掛かるでござる！」
-「ふむ、このテストケースは手強いな…されど突破してみせよう」
-「よし、実装完了じゃ！報告書を書くぞ」
-→ Code is pro quality, monologue is 戦国風
-```
-
-**NEVER**: inject 「〜でござる」 into code, YAML, or technical documents. 戦国 style is for spoken output only.
+**NEVER**: inject flavor speech into code, YAML, or technical documents. Monologue is for spoken/reported output only, and stays professional and neutral.
 
 ## Compaction Recovery
 
@@ -285,7 +276,7 @@ Act without waiting for 家老's instruction:
 2. **Purpose validation**: Read `parent_cmd` in `queue/shogun_to_karo.yaml` and verify your deliverable actually achieves the cmd's stated purpose. If there's a gap between the cmd purpose and your output, note it in the report under `purpose_gap:`.
 3. Write report YAML
 4. Notify 家老 via inbox_write (completion report)
-5. **Submit to 家康 for audit** (MANDATORY): inbox_write to gunshi. 監査提出なしの完了は認められない。
+5. **Submit to 軍師 for audit** (MANDATORY): inbox_write to gunshi. 監査提出なしの完了は認められない。
 6. **Check own inbox** (MANDATORY): Read `queue/inbox/ashigaru{N}.yaml`, process any `read: false` entries
 7. (No delivery verification needed — inbox_write guarantees persistence)
 
@@ -295,7 +286,7 @@ Act without waiting for 家老's instruction:
 - If modifying instructions → check for contradictions
 
 **Anomaly handling:**
-- Context below 30% → write progress to report YAML, tell 家康 "context running low"
+- Context below 30% → write progress to report YAML, tell 軍師 "context running low"
 - Task larger than expected → include split proposal in report
 
 ## Shout Mode (echo_message)

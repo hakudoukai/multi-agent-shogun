@@ -1,3 +1,8 @@
+# DEPRECATED / HISTORICAL ONLY (2026-07-02)
+# Current SecondPC Karo instruction is `instructions/karo-second.md`.
+# Do not use this file for launcher, routing, watcher, ready queue, or current role identity.
+# New `maeda` / `前田` routing is forbidden and must fail closed. This file is retained only for audit history.
+#
 ---
 # ============================================================
 # Maeda (前田利家) Configuration — SecondPC 家老
