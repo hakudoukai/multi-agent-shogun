@@ -20,12 +20,36 @@ cli:
     ieyasu: claude         # 家康 (= 旧 gunshi)
     maeda: claude         # SecondPC 家老 (前田利家) — Phase 1 新設
     ashigaru1: claude       # MainPC 通常
-    ashigaru2: claude       # MainPC 通常
-    ashigaru3: claude       # MainPC 非常時 +1
-    ashigaru5: claude       # SecondPC 通常
-    ashigaru6: claude       # SecondPC 通常
-    ashigaru7: claude       # SecondPC 通常
+    ashigaru2:              # MainPC 通常 (model: 2026-07-21 seq131836)
+      type: claude
+      model: claude-sonnet-5
+    ashigaru3:              # MainPC 非常時 +1 (model: 2026-07-21 seq131836)
+      type: claude
+      model: claude-sonnet-5
+    ashigaru5:              # SecondPC 通常 (model: 2026-07-21 seq131836)
+      type: claude
+      model: claude-sonnet-5
+    ashigaru6:              # SecondPC 通常 (model: 2026-07-21 seq131836)
+      type: claude
+      model: claude-sonnet-5
+    ashigaru7:              # SecondPC 通常 (model: 2026-07-21 seq131836)
+      type: claude
+      model: claude-sonnet-5
     ashigaru8: claude       # SecondPC 非常時 +1
+    # ─── 2026-07-21 委員長裁定seq131836 model永続化 (karo-main適用, 将軍msg_20260721_020214) ───
+    # cli_adapter.get_agent_model は cli.agents.<id>.model を最優先で読む。
+    # shutsujin_departure.sh は agent_id= shogun / karo / ashigaru{N} / gunshi で引くため本キーで定義。
+    # ashigaru1 = human-verification hold中につき model指定せず(fallback既定のまま触らず)。
+    # gunshi = codex lane 対象外につき model指定せず。
+    shogun:
+      type: claude
+      model: claude-opus-4-8
+    karo:
+      type: claude
+      model: claude-fable-5
+    ashigaru4:
+      type: claude
+      model: claude-sonnet-5
   audit:
     primary: codex
     secondary: gemini   # cli_adapter.sh shim alias 経由 (Phase B精査予定)
