@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""L1-L5 escalation engine + ntfy notification + auto-answer for choice patterns.
+"""L1-L5 escalation engine + ntfy notification.
 
 Usage:
   # Classify a message and take action
@@ -11,8 +11,6 @@ Usage:
   # Wait for L4 approval from Supabase
   python3 hakudokai_escalation.py wait-approval --topic "schema_change_xyz" --timeout 1800
 
-  # Auto-answer a choice-offering pattern
-  python3 hakudokai_escalation.py auto-answer --message "1.A 2.B 3.C" --context "file refactoring"
 """
 import argparse
 import json
@@ -111,7 +109,7 @@ def classify_message(message):
         if kw.lower() in msg_lower:
             return "L4", f"Approval-required keyword: {kw}"
 
-    # Choice pattern detection → L1 auto-answer
+    # Choice pattern detection → L1_CHOICE
     for pattern in CHOICE_PATTERNS:
         if re.search(pattern, message, re.IGNORECASE):
             return "L1_CHOICE", "Choice-offering pattern detected"
