@@ -20,23 +20,33 @@
 #   - skills/pane-identity-verify/SKILL.md (= 検証手順)
 
 pane_registry:
-  version: 2
-  last_updated: "2026-05-08T21:30:00+09:00"
+  version: 3
+  last_updated: "2026-06-30T14:10:00+09:00"
   pending_director_approval: |
-    2026-05-08 21:25 信長判断で実態合わせ修正:
+    2026-05-08 21:25 将軍判断で実態合わせ修正:
     - 0.3 ↔ 0.4 swap (実態 0.3=ieyasu/0.4=ashigaru3 反映、§18.1 改訂提案を上申)
     - honda 1.0 + sanada 2.0 追加 (= Phase 16 招聘の Codex Pro + 改革 lane)
     - persona_aliases に honda + sanada 追加
     本日 19:04 ESCALATION /clear 暴発の真因 (= registry 0.3=ashigaru3 だが実態 ieyasu) を解消。
+    2026-06-30 14:10 third_pc 領域追加 (subtask_thirdpc_pane_identity_drift_repair_001、
+    base_commit=6faedb79、ashigaru-third-3 作業、STEP4):
+    - third_pc tmux session 配置を canonical *-third 命名で記録 (DD-157 役職名のみ原則順守)。
+    - MainPC + SecondPC entries は不可侵 (本 task scope 外)。
+    - persona_aliases に *-third identity mapping を追加 (= 自分自身に解決、互換維持)。
+    - CLAUDE.md §18.1 への third_pc 配置記載は別 PR / 別 cmd 起票候補として上申。
   update_method: manual  # Phase 2 で auto に切替予定
-  source_of_truth: "CLAUDE.md §18.1"
+  source_of_truth: "CLAUDE.md §18.1 (MainPC + SecondPC) / 本 file (third_pc 配置補助)"
   notes: |
     ashigaru4 は欠番 (PC 境界の視覚的区切り、CLAUDE.md §18.1 番号体系の原則)。
-    SecondPC entries は前田殿主管領域、本 PC からの tmux 検証は不可ゆえ
+    SecondPC entries は karo-second 主管領域。本 PC からの tmux 検証は不可ゆえ
     advisory のみ (= 4-way audit の対象は MainPC を主軸とし、SecondPC は記録参考)。
+    third_pc entries は ashigaru-third-3 (本 task) 追加分。pane_identity.sh の
+    source B (queue/pane_registry.yaml) parser は現状 pc==MainPC のみ採用ゆえ
+    third_pc entry は parser 上 audit 対象外 (= 4-way audit drift 数には寄与しない)。
+    parser 拡張 / 別 audit 経路は Phase 2 動的 registry 更新で対応予定。
 
   panes:
-    # ─── MainPC: shogun (信長専用 session) ───
+    # ─── MainPC: shogun (将軍専用 session) ───
     - tmux_target: "shogun:0.0"
       agent_id: shogun
       persona: nobunaga
@@ -66,7 +76,7 @@ pane_registry:
       role: 足軽
       status: 通常運用
 
-    # 2026-05-08 21:25 信長判断で実態合わせ修正 (= 5/8 朝以降の運用実態を反映、§18.1 改訂提案 ま上申)
+    # 2026-05-08 21:25 将軍判断で実態合わせ修正 (= 5/8 朝以降の運用実態を反映、§18.1 改訂提案 ま上申)
     # 旧記載 0.3=ashigaru3 / 0.4=gunshi(ieyasu) は本日 19:04 ESCALATION /clear 暴発の真因
     - tmux_target: "multiagent:0.3"
       agent_id: gunshi
@@ -94,11 +104,11 @@ pane_registry:
       persona: takenaka
       cli: claude
       pc: MainPC
-      role: 信長直轄軍師
+      role: 将軍直轄軍師
       status: 持ち場準備中
       note: "Phase 15 (2026-05-08 commit 94833a6) で新設、招聘準備段階。"
 
-    # 2026-05-08 21:25 信長判断で追加 (= 5/8 Phase 16 招聘の本多 + 5/8 sanada 改革 lane)
+    # 2026-05-08 21:25 将軍判断で追加 (= 5/8 Phase 16 招聘の本多 + 5/8 sanada 改革 lane)
     - tmux_target: "multiagent:1.0"
       agent_id: honda
       persona: honda
@@ -117,16 +127,16 @@ pane_registry:
       status: 通常運用
       note: "2026-05-08 招聘、claude sonnet。改革 lane direct dispatch (F002 緩和)。"
 
-    # ─── SecondPC: multiagent session (= maeda + ashigaru5-8) ───
-    # SecondPC は前田殿主管領域、本 cmd では advisory record のみ。
+    # ─── SecondPC: multiagent-second session (= karo-second + ashigaru5-8) ───
+    # SecondPC は karo-second 主管領域、本 cmd では advisory record のみ。
     # 動的更新は Phase 2/3 で対応 (= cmd 別途発令予定)。
     - tmux_target: "multiagent:0.0"
-      agent_id: maeda
-      persona: maeda
+      agent_id: karo-second
+      persona: karo-second
       pc: SecondPC
       role: SecondPC 家老
       status: 通常運用
-      note: "Phase 1 (2026-05-07) で新設、SecondPC 家老 (前田利家)。"
+      note: "Phase 1 (2026-05-07) で新設、SecondPC 家老。"
 
     - tmux_target: "multiagent:0.1"
       agent_id: ashigaru5
@@ -157,6 +167,178 @@ pane_registry:
       status: 非常時 +1
       note: "通常運用時は不在。"
 
+    # ─── third_pc: multiagent-third session (= karo-third + ashigaru-third-1..7 + gunshi-third) ───
+    # 2026-06-30 ashigaru-third-3 追加 (subtask_thirdpc_pane_identity_drift_repair_001、
+    # base_commit=6faedb79、STEP4)。DD-157 役職名のみ原則順守、戦国 persona 名は不使用。
+    # 注意: pane_identity.sh source B parser は pc==MainPC のみ採用ゆえ、本 third_pc
+    # entry は audit drift 数に直接寄与しない (parser 拡張は Phase 2 で対応予定)。
+    - tmux_target: "multiagent-third:agents.0"
+      agent_id: karo-third
+      persona: karo-third
+      cli: claude
+      pc: third_pc
+      role: 家老 (third_pc)
+      status: 通常運用
+
+    - tmux_target: "multiagent-third:agents.1"
+      agent_id: ashigaru-third-1
+      persona: ashigaru-third-1
+      cli: claude
+      pc: third_pc
+      role: 足軽 (third_pc)
+      status: 通常運用
+
+    - tmux_target: "multiagent-third:agents.2"
+      agent_id: ashigaru-third-2
+      persona: ashigaru-third-2
+      cli: claude
+      pc: third_pc
+      role: 足軽 (third_pc)
+      status: 通常運用
+
+    - tmux_target: "multiagent-third:agents.3"
+      agent_id: ashigaru-third-3
+      persona: ashigaru-third-3
+      cli: claude
+      pc: third_pc
+      role: 足軽 (third_pc)
+      status: 通常運用
+
+    - tmux_target: "multiagent-third:agents.4"
+      agent_id: ashigaru-third-4
+      persona: ashigaru-third-4
+      cli: claude
+      pc: third_pc
+      role: 足軽 (third_pc)
+      status: 通常運用
+
+    - tmux_target: "multiagent-third:agents.5"
+      agent_id: ashigaru-third-5
+      persona: ashigaru-third-5
+      cli: claude
+      pc: third_pc
+      role: 足軽 (third_pc)
+      status: 通常運用
+
+    - tmux_target: "multiagent-third:agents.6"
+      agent_id: ashigaru-third-6
+      persona: ashigaru-third-6
+      cli: codex
+      pc: third_pc
+      role: abolished_or_stale_codex_ashigaru_slot (third_pc)
+      status: retired
+      note: |
+        2026-07-01 FUKUINCHO/Hermes: Codex Ashigaru slot retired.
+        Do not assign tasks, model-switch, start watcher, or count as active Ashigaru capacity.
+        Gunshi-third is a separate protected lane and must remain untouched.
+
+    - tmux_target: "multiagent-third:agents.7"
+      agent_id: ashigaru-third-7
+      persona: ashigaru-third-7
+      cli: claude
+      pc: third_pc
+      role: 足軽 (third_pc)
+      status: 通常運用
+
+    - tmux_target: "multiagent-third:agents.8"
+      agent_id: gunshi-third
+      persona: gunshi-third
+      cli: codex
+      pc: third_pc
+      role: 軍師 (third_pc)
+      status: 通常運用
+
+    # ─── third_pc: shogun-third session (= 将軍 third_pc 専用) ───
+    - tmux_target: "shogun-third:shogun.0"
+      agent_id: shogun-third
+      persona: shogun-third
+      cli: claude
+      pc: third_pc
+      role: 将軍 (third_pc)
+      status: 通常運用
+
+    # ─── third_pc: commander-third session (= Commander + Hermes 同居) ───
+    - tmux_target: "commander-third:CommanderHermes.0"
+      agent_id: commander-third
+      persona: commander-third
+      cli: claude
+      pc: third_pc
+      role: Commander (third_pc 指揮実務)
+      status: 通常運用
+
+    - tmux_target: "commander-third:CommanderHermes.1"
+      agent_id: hermes-third
+      persona: hermes-third
+      pc: third_pc
+      role: Hermes runtime (third_pc 同居、python3)
+      status: 通常運用
+      note: "python3 プロセス。CLI 種別非該当 (inbox watcher 対象外)。"
+
+    # ─── third_pc: Hermes 部門 sessions (= reserveimage / handoverdocs / bianalytics) ───
+    - tmux_target: "hermes-reserveimage:reserveimage.0"
+      agent_id: reserveimage
+      persona: reserveimage
+      pc: third_pc
+      role: Hermes 部門 (予約画像)
+      status: 通常運用
+      note: "python3 プロセス。inbox watcher 対象外。"
+
+    - tmux_target: "hermes-handoverdocs:handoverdocs.0"
+      agent_id: handoverdocs
+      persona: handoverdocs
+      pc: third_pc
+      role: Hermes 部門 (申し送り docs)
+      status: 通常運用
+      note: "python3 プロセス。inbox watcher 対象外。"
+
+    - tmux_target: "hermes-bianalytics:bianalytics.0"
+      agent_id: bianalytics
+      persona: bianalytics
+      pc: third_pc
+      role: Hermes 部門 (BI analytics)
+      status: 通常運用
+      note: "python3 プロセス。inbox watcher 対象外。"
+
+    # ─── third_pc: utility panes (= V6 dev backend/frontend + ad-hoc bash) ───
+    # 注意: @agent_id=shogun-third は tmux global option からの継承 (個別未設定)。
+    # watcher_supervisor_third.sh は multiagent-third:agents window 限定 lookup ゆえ
+    # 本 utility pane は nudge 対象外 (case B: pane-index routing で misroute 不発・cosmetic)。
+    # ashigaru-third-3 STEP2 結論 (subtask_thirdpc_pane_identity_drift_repair_001、STEP5 case B 採用)。
+    - tmux_target: "v6-backend-8000:doppler.0"
+      agent_id: shogun-third  # 注: global 継承、個別未設定 (cosmetic、書換不要)
+      persona: utility-backend
+      pc: third_pc
+      role: utility (V6 dev backend uvicorn)
+      status: utility (nudge 対象外)
+      note: |
+        tmux global option @agent_id=shogun-third を継承。
+        watcher_supervisor_third.sh は multiagent-third:agents window 限定検索ゆえ
+        nudge misroute 不発 (case B 診断結論)。書換不要。
+
+    - tmux_target: "v6-frontend-5177:npm.0"
+      agent_id: shogun-third  # 注: global 継承、個別未設定 (cosmetic、書換不要)
+      persona: utility-frontend
+      pc: third_pc
+      role: utility (V6 dev frontend npm)
+      status: utility (nudge 対象外)
+      note: "tmux global @agent_id 継承。case B 診断結論。書換不要。"
+
+    - tmux_target: "9:bash.0"
+      agent_id: shogun-third  # 注: global 継承、個別未設定 (cosmetic、書換不要)
+      persona: utility-bash
+      pc: third_pc
+      role: utility (ad-hoc bash session 9)
+      status: utility (nudge 対象外)
+      note: "tmux global @agent_id 継承。case B 診断結論。書換不要。"
+
+    - tmux_target: "10:bash.0"
+      agent_id: shogun-third  # 注: global 継承、個別未設定 (cosmetic、書換不要)
+      persona: utility-bash
+      pc: third_pc
+      role: utility (ad-hoc bash session 10)
+      status: utility (nudge 対象外)
+      note: "tmux global @agent_id 継承。case B 診断結論。書換不要。"
+
   # ─── 欠番 (= PC 境界の視覚的区切り) ───
   reserved_gaps:
     - agent_id: ashigaru4
@@ -171,7 +353,32 @@ pane_registry:
     nobunaga: nobunaga
     hideyoshi: hideyoshi
     ieyasu: ieyasu
-    maeda: maeda
+    karo-second: karo-second
     takenaka: takenaka
     honda: honda
     sanada: sanada
+    # ─── third_pc identity mapping (= self → self、互換維持) ───
+    # 2026-06-30 ashigaru-third-3 追加 (DD-157 役職名のみ原則、戦国 persona 名不使用)。
+    # 注: lib/_section18_roles.sh SECTION18_ROLE_ALIASES への追記は本 task scope 外
+    # (shim/* mirror 同期義務発生、別 PR 起票候補として上申)。
+    karo-third: karo-third
+    shogun-third: shogun-third
+    gunshi-third: gunshi-third
+    commander-third: commander-third
+    hermes-third: hermes-third
+    ashigaru-third-1: ashigaru-third-1
+    ashigaru-third-2: ashigaru-third-2
+    ashigaru-third-3: ashigaru-third-3
+    ashigaru-third-4: ashigaru-third-4
+    ashigaru-third-5: ashigaru-third-5
+    # ashigaru-third-6 retired 2026-07-01.
+    # Do not route work to this abolished/stale Codex Ashigaru slot.
+    # Rollback restores: ashigaru-third-6: ashigaru-third-6
+    ashigaru-third-7: ashigaru-third-7
+    # Hermes 部門 + utility (inbox watcher 対象外、参考記録)
+    reserveimage: reserveimage
+    handoverdocs: handoverdocs
+    bianalytics: bianalytics
+    utility-backend: utility-backend
+    utility-frontend: utility-frontend
+    utility-bash: utility-bash
