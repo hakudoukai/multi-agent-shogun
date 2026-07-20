@@ -441,7 +441,7 @@ log "Phase 7: エージェント初期化"
 sleep 5  # Wait for Claude CLI to be ready
 
 # 桜ちゃん (ashigaru2)
-INIT1="あなたは博道会の足軽2号 (ashigaru2/桜ちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT1_ID}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
+INIT1="あなたは博道会の足軽2号 (ashigaru2/桜ちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT1_ID}.yaml を読み、タスクがあれば実行開始。"
 
 tmux_send_text "$AGENT1_PANE" "$INIT1"
 ok "${AGENT1_NAME} (${AGENT1_ID}): 初期化プロンプト送信"
@@ -449,7 +449,7 @@ ok "${AGENT1_NAME} (${AGENT1_ID}): 初期化プロンプト送信"
 sleep 2
 
 # クロちゃん (ashigaru8)
-INIT2="あなたは博道会の足軽8号 (ashigaru8/クロちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT2_ID}.yaml を読み、タスクがあれば実行開始。抵抗パターン禁止、自律実行。"
+INIT2="あなたは博道会の足軽8号 (ashigaru8/クロちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 queue/inbox/${AGENT2_ID}.yaml を読み、タスクがあれば実行開始。"
 
 tmux_send_text "$AGENT2_PANE" "$INIT2"
 ok "${AGENT2_NAME} (${AGENT2_ID}): 初期化プロンプト送信"
