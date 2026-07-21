@@ -11,6 +11,9 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SB_AUTH_LIB="$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
+# shellcheck disable=SC1090
+source "$SB_AUTH_LIB"
 TARGET="$1"
 CONTENT="$2"
 TYPE="$3"
@@ -135,10 +138,8 @@ PYEOF
 )
 
     # INSERT to Supabase for cross-PC delivery
-    curl -sS -X POST \
+    SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS -X POST \
         "${sb_url}/rest/v1/pc_handshake" \
-        -H "Authorization: Bearer ${sb_key}" \
-        -H "apikey: ${sb_key}" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
         --data-binary "$payload" \
