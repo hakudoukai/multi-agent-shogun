@@ -465,7 +465,7 @@ try:
     tmp_fd, tmp_path = tempfile.mkstemp(dir=os.path.dirname(inbox_canonical), suffix='.tmp')
     try:
         with os.fdopen(tmp_fd, 'w') as f:
-            yaml.dump(data, f, default_flow_style=False, allow_unicode=True, indent=2)
+            yaml.safe_dump(data, f, default_flow_style=False, allow_unicode=True, indent=2, sort_keys=False)
         os.replace(tmp_path, inbox_canonical)
     except:
         os.unlink(tmp_path)
