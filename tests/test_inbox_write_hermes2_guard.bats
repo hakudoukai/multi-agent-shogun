@@ -637,3 +637,103 @@ print('T-121: PASS (both callers propagate the overridden _resolve_local_pc sent
     [ "$status" -eq 0 ]
     [[ "$output" == *"T-121: PASS"* ]]
 }
+
+# =============================================================================
+# T-122/T-123: cycle6 Codex 裁定是正 (家老 msg_20260721_160326_83ff7c4b、A案)
+#
+# cycle6 findings (S1 TOCTOU / B1 独立部分失敗) の根本原因は、
+# _cross_pc_bridge が target_pc を独自の python invocation で解決し、
+# local_pc を _resolve_local_pc() 経由の★別の★ python invocation で解決する
+# — つまり同一 config を2回、別プロセスで読む設計になっていたこと。
+#
+# 2回読みである限り: (a) 2回の読込間に settings.yaml/settings_local.yaml が
+# 書き換わればスナップショット不整合 (TOCTOU)、(b) 一方の invocation だけが
+# 例外で失敗する新たな部分障害モードが構造的に存在し得る。
+#
+# 是正 = target_pc + local_pc を単一 python invocation (単一 config 読込
+# snapshot) から同時に返す。これにより両 finding は「もう物理的に起こり得ない」
+# 形で解消される (individually-failing invocation が存在しない)。
+#
+# T-122 (RED→GREEN, 直接的): _cross_pc_bridge 1回の呼出しにつき、config を
+# 読む python subprocess の起動回数がちょうど1回であることを動的に検証する。
+# 現行 (2回読み) 実装ではこの assertion は必ず fail する (RED)。
+# =============================================================================
+
+@test "T-122: _cross_pc_bridge resolves target_pc+local_pc via exactly ONE python subprocess invocation (single config-read snapshot; eliminates TOCTOU S1 + independent partial-failure B1 from cycle6)" {
+    local rlp_start rlp_end cb_start cb_end
+    rlp_start=$(grep -n '^_resolve_local_pc() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    rlp_end=$(tail -n "+$((rlp_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    rlp_end=$((rlp_start + rlp_end))
+
+    cb_start=$(grep -n '^_cross_pc_bridge() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    cb_end=$(tail -n "+$((cb_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    cb_end=$((cb_start + cb_end))
+
+    {
+        sed -n "${rlp_start},${rlp_end}p" "$INBOX_WRITE_SCRIPT"
+        sed -n "${cb_start},${cb_end}p" "$INBOX_WRITE_SCRIPT"
+    } > "$TEST_TMPDIR/t122_funcs.sh"
+
+    # SCRIPT_DIR 独自 sandbox: "$SCRIPT_DIR/.venv/bin/python3" を counting
+    # wrapper に差し替え、実 python3 (VENV_PYTHON) へ委譲しつつ起動回数を記録。
+    local sandbox="$TEST_TMPDIR/t122_sandbox"
+    mkdir -p "$sandbox/.venv/bin" "$sandbox/config"
+    cp "$TEST_TMPDIR/config/settings.yaml" "$sandbox/config/settings.yaml"
+    local counter_file="$TEST_TMPDIR/t122_py_invoke_count"
+    : > "$counter_file"
+    cat > "$sandbox/.venv/bin/python3" <<EOF
+#!/usr/bin/env bash
+echo x >> "$counter_file"
+exec "$VENV_PYTHON" "\$@"
+EOF
+    chmod +x "$sandbox/.venv/bin/python3"
+
+    run bash -c "
+        set -e
+        SCRIPT_DIR='$sandbox'
+        HOME='$FAKE_HOME'
+        source '$TEST_TMPDIR/shim/hakudokai/lib/sb_auth.sh'
+        source '$TEST_TMPDIR/t122_funcs.sh'
+        _cross_pc_bridge 'ashigaru5' 'T-122 atomicity check' 'status_update' 'ashigaru-third-5'
+    "
+    [ "$status" -eq 0 ]
+
+    local invoke_count
+    invoke_count=$(wc -l < "$counter_file" | tr -d ' ')
+    [ "$invoke_count" -eq 1 ]
+}
+
+# T-123 (direct/positive-path correctness): _resolve_local_pc の新契約を直接
+# 検証する。引数なし → "local_pc|" (target_pc 部分は空)。引数あり (target
+# agent 名) → "local_pc|target_pc" が単一 snapshot から正しく解決される。
+# フォールバック契約 ("${local_pc:-main_pc}") 自体はここでは検証しない
+# (既存不変更、家老裁定により scope 外)。
+
+@test "T-123: _resolve_local_pc(target) returns atomic 'local_pc|target_pc' pair from a single config snapshot; no-arg call keeps hermes2_deaddrop_guard's bare local_pc contract intact" {
+    local rlp_start rlp_end
+    rlp_start=$(grep -n '^_resolve_local_pc() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    rlp_end=$(tail -n "+$((rlp_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    rlp_end=$((rlp_start + rlp_end))
+    sed -n "${rlp_start},${rlp_end}p" "$INBOX_WRITE_SCRIPT" > "$TEST_TMPDIR/t123_funcs.sh"
+
+    run bash -c "
+        set -e
+        SCRIPT_DIR='$TEST_TMPDIR'
+        source '$TEST_TMPDIR/t123_funcs.sh'
+        _resolve_local_pc 'ashigaru5'
+    "
+    [ "$status" -eq 0 ]
+    [ "$output" = "third_pc|second_pc" ]
+
+    run bash -c "
+        set -e
+        SCRIPT_DIR='$TEST_TMPDIR'
+        source '$TEST_TMPDIR/t123_funcs.sh'
+        _resolve_local_pc
+    "
+    [ "$status" -eq 0 ]
+    [ "$output" = "third_pc|" ]
+    # hermes2_deaddrop_guard の既存 parsing ("${local_pc%%|*}") を通しても
+    # bare local_pc が保たれることを確認 (contract 不変更の証跡)。
+    [ "${output%%|*}" = "third_pc" ]
+}

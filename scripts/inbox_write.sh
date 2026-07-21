@@ -53,17 +53,32 @@ fi
 # ★anti-dup fix (HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001 followup、
 # 軍師 Option B 設計回答 msg_20260721_140010_d713651b 採用)★
 #
-# local_pc (自 PC の pc_id) 解決の単一責務 helper。従来 _cross_pc_bridge() と
-# _hermes2_deaddrop_guard() がそれぞれ独立に同一の pc_mapping lookup パターン
-# を実装していた (重複)。本 helper に一本化し、両 caller はこれのみを呼ぶ
-# (_cross_pc_bridge / _hermes2_deaddrop_guard の直接相互呼出しは行わない)。
+# local_pc (自 PC の pc_id) + target_pc (宛先 PC、target agent 指定時のみ)
+# 解決の単一責務 helper。従来 _cross_pc_bridge() と _hermes2_deaddrop_guard()
+# がそれぞれ独立に同一の pc_mapping lookup パターンを実装していた (重複)。
+# さらにその後の anti-dup 是正で local_pc/target_pc を★別々の python
+# invocation★に分割した結果、cycle6 Codex 監査 (S1/B1) で指摘された通り
+# (a) 2回の config 読込間の TOCTOU、(b) 一方だけが独立に失敗し得る部分障害
+# モード、が新たに生じていた (家老裁定 msg_20260721_160326_83ff7c4b、A案)。
 #
-# stdout: 解決できた local pc_id (例: third_pc)。解決不可時は空文字列。
+# 本 helper は target_pc/local_pc を★単一 python invocation・単一 config
+# 読込 snapshot★から同時に解決することで、上記2種の不整合を構造的に排除する。
+# 両 caller はこれのみを呼ぶ (_cross_pc_bridge / _hermes2_deaddrop_guard の
+# 直接相互呼出しは行わない)。
+#
+# 引数: $1 = target agent 名 (省略可)。省略時は target_pc 部分は常に空。
+# stdout: "local_pc|target_pc" (pipe 区切り、常に1行)。
+#   - local_pc: 解決できた自 PC の pc_id。解決不可時は空文字列。
+#   - target_pc: target 指定時のみ、bridge 対象 PC の pc_id。対象外/未指定/
+#     解決不可時は空文字列。
+#   - 例外発生時は両方とも空 ("|") — 一方だけが成功した状態は返さない
+#     (cycle6 B1 の根絶: 部分成功を許さない)。
 # fail-closed 判定 (空文字列時にどう振る舞うか) は呼出し側の責務 — 両 caller
 # で contract が異なる (_cross_pc_bridge は "${local_pc:-main_pc}" フォール
 # バックで非 fail-closed、_hermes2_deaddrop_guard は fail-closed) ため、本
-# helper 自体はどちらの契約も強制しない。
+# helper 自体はどちらの契約も強制しない (既存契約は変更しない、家老裁定)。
 _resolve_local_pc() {
+    local target="${1:-}"
     "$SCRIPT_DIR/.venv/bin/python3" -c "
 import yaml, os
 try:
@@ -80,12 +95,17 @@ try:
             cfg = yaml.safe_load(f) or {}
         pc_map = cfg.get('pc_mapping', {})
     local_id = ''
+    target_pc = ''
     for pc_name, pc_cfg in pc_map.items():
         if pc_cfg.get('is_local'):
             local_id = pc_cfg.get('pc_id', pc_name)
-    print(local_id)
+            continue
+        agents = pc_cfg.get('agents', [])
+        if '$target' and '$target' in agents and pc_cfg.get('supabase_bridge'):
+            target_pc = pc_cfg.get('pc_id', pc_name)
+    print(f'{local_id}|{target_pc}')
 except Exception:
-    print('')
+    print('|')
 " 2>/dev/null
 }
 
@@ -96,44 +116,16 @@ _cross_pc_bridge() {
     local msg_type="$3"
     local from="$4"
 
-    # target_pc (bridge 要否・宛先 PC) 解決。local_pc 解決とは別責務のため
-    # ここに残す (anti-dup 対象は local_pc lookup の重複のみ)。
-    # settings_local.yaml overrides pc_mapping (SecondPC uses different is_local)
-    local target_pc
-    target_pc=$("$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, sys, os
-try:
-    local_path = '$SCRIPT_DIR/config/settings_local.yaml'
-    main_path = '$SCRIPT_DIR/config/settings.yaml'
-    if os.path.exists(local_path):
-        with open(local_path) as f:
-            local_cfg = yaml.safe_load(f) or {}
-        pc_map = local_cfg.get('pc_mapping', {})
-    else:
-        pc_map = {}
-    if not pc_map:
-        with open(main_path) as f:
-            cfg = yaml.safe_load(f) or {}
-        pc_map = cfg.get('pc_mapping', {})
-    for pc_name, pc_cfg in pc_map.items():
-        if pc_cfg.get('is_local'):
-            continue
-        agents = pc_cfg.get('agents', [])
-        if '$target' in agents and pc_cfg.get('supabase_bridge'):
-            print(pc_cfg.get('pc_id', pc_name))
-            sys.exit(0)
-    print('')
-except Exception:
-    print('')
-" 2>/dev/null)
+    # target_pc + local_pc を単一 snapshot から同時解決 (anti-dup 維持 +
+    # cycle6 TOCTOU/B1 是正、共有 helper _resolve_local_pc に一本化)。
+    local resolved local_pc target_pc
+    resolved=$(_resolve_local_pc "$target")
+    local_pc="${resolved%%|*}"
+    target_pc="${resolved#*|}"
 
     if [ -z "$target_pc" ]; then
         return 0  # Local agent, no bridge needed
     fi
-
-    # local_pc 解決は共有 helper に委譲 (anti-dup fix)。
-    local local_pc
-    local_pc=$(_resolve_local_pc)
 
     # Load Supabase env
     local sb_url sb_key
@@ -213,9 +205,12 @@ _hermes2_deaddrop_guard() {
     # local_pc 解決は共有 helper _resolve_local_pc() に委譲 (anti-dup fix、
     # HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001 followup、軍師 Option B
     # msg_20260721_140010_d713651b)。_cross_pc_bridge との直接相互呼出しは
-    # しない — 両者ともこの共有 helper のみを呼ぶ。
+    # しない — 両者ともこの共有 helper のみを呼ぶ。target 未指定呼出しのため
+    # 常に "local_pc|" 形式で返る ("%%|*" で bare local_pc を取り出す。既存
+    # fail-closed 契約自体は不変更、cycle6 是正で戻り値の形式のみ適応)。
     local local_pc
     local_pc=$(_resolve_local_pc)
+    local_pc="${local_pc%%|*}"
 
     if [ -z "$local_pc" ]; then
         echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard could not resolve local_pc from pc_mapping; refusing legacy fallback for hermes2" >&2
