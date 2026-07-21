@@ -30,7 +30,7 @@
 | 設計書（DD-XXX）変更 commit | 影響受けるコード全て | 家老が検知 → 家康に発令 |
 | DBスキーマ変更（migration） | RLS・型・参照整合性 | 家老が検知 → 家康に発令 |
 | セキュリティパッチ commit | 緊急監査（SLA: 30分） | 足軽 → 家康 inbox_write priority=critical |
-| cycle1 PASS後 mainブランチmerge前 | 最終確認（家康のみ、Codex/Gemini省略可） | 家老が判断 |
+| cycle1 PASS後 mainブランチmerge前 | 最終確認（家康のみ、Codex/Hermes省略可） | 家老が判断 |
 
 ### 1.2 ステート遷移
 
@@ -58,7 +58,7 @@ cycle1_in_progress  ← 初回監査
 | 家康受領→監査開始 | 家康 | 通知から15分以内 |
 | 家康レビュー | 家康 | 開始から30分以内 |
 | Codex監査呼出 | 家康 | 家康レビュー後5分以内 |
-| Gemini監査呼出 | 家康 | Codex後5分以内（並列可） |
+| Hermes監査呼出（pc_handshake dispatch） | 家康 | Codex後5分以内（並列可、応答は非同期のため別途待機） |
 | 家康最終判定→家老報告 | 家康 | 全監査完了から10分以内 |
 | 家老の次タスク発令（FAIL時） | 家老 | 家康報告から15分以内 |
 
@@ -122,7 +122,7 @@ task:
 
 ## 3. 家康（Claude）監査チェックリスト
 
-家康は Codex/Gemini に投げる前に**自ら以下を確認**する。家康の独立判断は不可欠。
+家康は Codex/Hermes に投げる前に**自ら以下を確認**する。家康の独立判断は不可欠。
 
 ### 3.1 構造監査（必須）
 
@@ -159,7 +159,7 @@ CLAUDE.md §Root Cause 4 Patterns 必須チェック：
 ### 3.5 家康判定基準
 
 - すべてPASS → Codex監査へ進む
-- 一つでもFAIL → 家康の判定で足軽に差戻し（Codex/Gemini呼出し前）。修正後再監査。
+- 一つでもFAIL → 家康の判定で足軽に差戻し（Codex/Hermes呼出し前）。修正後再監査。
   - 早期差戻しは無料（API料金節約）
   - 家康指摘の証跡は `audit.gunshi.findings` に記録
 
@@ -234,13 +234,17 @@ OpenAI API usage limit に達した場合：
 
 ---
 
-## 5. Gemini（ジェミちゃん）監査 — システム整合性審査（完成まで）
+## 5. Hermes（相談役）監査 — システム整合性審査（完成まで）
 
-> **【重要・理事長殿確定 2026-05-05】役割変更**:
-> 完成までの開発期間中、ジェミちゃんは **システム整合性・関連性審査** に専念する。
+> **【重要・理事長殿確定 2026-05-05、DD-192 2026-07 改訂】役割変更**:
+> Geminiは全面decommission済（DD-192）。以降の第三者監査二本目は相談役(Hermes)が担う。
+> 完成までの開発期間中、相談役は **システム整合性・関連性審査** に専念する。
 > 法令準拠・医療情報取扱い・個人情報保護は **全機能完成後の最終総合監査** に回す。
 > 理由: 稼働中のプログラム不整合トラブル防止が最優先（理事長殿御指示）。
 > デコポン（コードレベル6軸）と異なる **俯瞰視点** で同じ diff を審査する。
+> **【呼出し経路の相違・要注意】**: Geminiは家康と同一セッション内の同期ローカルCLI呼出しだったが、
+> 相談役(Hermes)は third PC 上の別セッション（pane `commander-third:0.1`）で稼働する常駐エージェントであり、
+> `pc_handshake` テーブル経由の非同期クロスPC中継でのみ到達可能（§5.2参照）。同期呼出しではない点を混同しないこと。
 
 ### 5.1 観点定義（開発期間中 = システム整合性版・8観点）
 
@@ -278,27 +282,42 @@ OpenAI API usage limit に達した場合：
 
 これらは開発期間中はスキップ（運用品質優先）。
 
-### 5.2 Gemini呼出しコマンド（標準化）
+### 5.2 相談役(Hermes)呼出し手順（pc_handshake dispatch・非同期）
+
+**前提確認（発注前必須）**: reverse watcher が生存しているか確認してから INSERT する。
+死んでいる場合、行を投げても届かない（dead-letter化）。
+
+```bash
+pgrep -f hermes_reverse_watcher || echo "★watcher不在★家老へエスカレーション"
+```
+
+**発注（pc_handshake INSERT）**: `queue/inbox/hermes.yaml` への `inbox_write` は**使用禁止**
+（watcher不在の死蔵letterbox・209日以上滞留実績あり）。正規経路は `pc_handshake` テーブルへの
+直接INSERTのみ。diffと審査観点は `content` に埋め込む。
 
 ```bash
 DIFF=$(git diff <base_commit>..<head_commit> -- <changed_paths>)
 SPEC_REF=$(cat context/<project>.md 2>/dev/null | head -200)
 
-cat <<EOF | gemini -p
+# pc_handshake へ INSERT（to_pc=hermes、topicにtask_id/cycleを含める）
+```
+
+```text
 あなたはシステム整合性審査専門のレビュアー（デコポンとは異なる俯瞰視点）。以下のdiffを審査せよ。
 法令観点は今回スキップ（完成後の最終監査で実施）。
 
 タスクID: <task_id>
 サイクル: <cycle>
 
-=== 審査観点（開発期間中・システム整合性版・7観点） ===
+=== 審査観点（開発期間中・システム整合性版・8観点） ===
 1. 仕様準拠: 設計書と乖離がないか
 2. システム関連性: 他モジュールへの影響範囲、API契約変更の呼出元影響
 3. 副作用・依存関係: watcher/trigger/hook連鎖、循環依存、レース
 4. 網羅性: エッジケース、リソースリーク
 5. データフロー整合: 入力→処理→保存→読出 経路、SSOT維持
 6. 拡張性: 将来の機能追加に耐えるか (新医院/新処置/新ロール/新書類/法令改定/新デバイス/多言語/DBスキーマ進化/API バージョニング)
-7. ドキュメント整合: コメント・型・README・設計書の同期
+7. 観察可能性・エラー処理: 構造化ログ・correlation_id・アラート・fallback・retry・ヘルスチェック
+8. ドキュメント整合: コメント・型・README・設計書の同期
 
 === 設計書抜粋 ===
 $SPEC_REF
@@ -323,12 +342,20 @@ $DIFF
   "overall_verdict": "pass|fail",
   "summary": "総括"
 }
-EOF
 ```
+
+**応答待機**: reverse watcher が pane `commander-third:0.1` を wake（実績: INSERT後30秒以内）、
+相談役が審査後 `pc_handshake` へ結果を書き戻す（書戻し側の実装パターンは
+`scripts/audit_write.py` を参照 — `--from-pc` を `hermes`/`hermes2` に限定した検証済みREST INSERT実装）。
+家康は自身が投げた行の `resolved`/`acknowledged_by=hermes` を確認してから §9 の `audit.hermes` へ転記する。
+
+**★現状の制約★**: Codex側の `scripts/audit_codex.sh` に相当する、発注～結果取得を一本化した
+`scripts/audit_hermes.sh` ラッパーは本改訂時点で未実装。上記INSERT〜待機は当面手動/半自動運用とする
+（将来ラッパー化する場合は本節を差し替えること。§15.2参照）。
 
 ### 5.3 法令該当時の必須化
 
-以下を扱う差分は Gemini 監査必須・省略禁止：
+以下を扱う差分は Hermes 監査必須・省略禁止：
 
 - 患者情報（氏名、生年月日、診療内容、画像）
 - 認証・認可（ログイン、権限、トークン）
@@ -345,7 +372,7 @@ EOF
 |--------|----------|
 | 家康 | 構造監査・既存資産活用・Root Cause 4P・テスト網羅 全PASS |
 | Codex | 6軸全PASS、Critical/High指摘0件 |
-| Gemini | 5観点全PASS、Critical/High指摘0件 |
+| Hermes | 8観点全PASS、Critical/High指摘0件 |
 
 Severity 定義：
 - **Critical**: セキュリティ脆弱性・データ破損・障害発生
@@ -358,7 +385,7 @@ Medium/Low は PASS だが `findings` に記録、後続改善タスクに回す
 ### 6.2 総合判定
 
 ```
-overall_pass = (gunshi == PASS) AND (codex == PASS) AND (gemini == PASS)
+overall_pass = (gunshi == PASS) AND (codex == PASS) AND (hermes == PASS)
 ```
 
 一つでも FAIL → cycleN+1 へ。
@@ -367,9 +394,9 @@ overall_pass = (gunshi == PASS) AND (codex == PASS) AND (gemini == PASS)
 
 | 状況 | 対応 |
 |------|------|
-| Codex PASS / Gemini FAIL | Gemini指摘を採用（より厳しい方） |
-| Codex FAIL / Gemini PASS | Codex指摘を採用 |
-| 家康 PASS / Codex or Gemini FAIL | 家康は再考、最終的に外部判定優先 |
+| Codex PASS / Hermes FAIL | Hermes指摘を採用（より厳しい方） |
+| Codex FAIL / Hermes PASS | Codex指摘を採用 |
+| 家康 PASS / Codex or Hermes FAIL | 家康は再考、最終的に外部判定優先 |
 | 三者で評価が割れた | 家老エスカレーション、理事長判断 |
 
 ---
@@ -408,8 +435,8 @@ cycle5 で FAIL → 家康から家老に escalation 報告
 |------|---------------|
 | Codex API usage limit | §4.3 のフォールバック条件下で家康が前cycle引用 |
 | Codex 一時的停止（504, タイムアウト） | 5分後に最大3回リトライ → ダメなら家康が前cycle引用 |
-| Gemini API停止 | 1時間待機 → ダメなら家老エスカレーション（法令該当差分は強制待機） |
-| 家康Claude停止 | Codex/Geminiは実行不可。家老が監視→Claude復旧待ち |
+| Hermes 不応答（pc_handshake未解決、watcher死活含む） | 1時間待機 → ダメなら家老エスカレーション（法令該当差分は強制待機） |
+| 家康Claude停止 | Codex/Hermesは実行不可。家老が監視→Claude復旧待ち |
 | 全監査者停止 | 家老が緊急停止指令、足軽の作業も一時停止 |
 
 ---
@@ -457,16 +484,20 @@ audit:
     fallback_reason: null  # usage limit時のみ
     summary: "..."
   
-  gemini:
+  hermes:
     verdict: pass|fail
-    invocation_log: "/tmp/gemini_audit_<task>_<cycle>.txt"
+    pc_handshake_seq: <int>  # 発注INSERT行のseq（dispatch証跡。ローカルCLIでないためファイルパスではない）
+    resolved_by: hermes|hermes2
     verified_by_reading: true_via_diff
-    categories:
+    categories:  # §5.1の8観点と一致させること（旧blockの5項目は非整合ゆえ廃止）
       spec_compliance: {verdict: pass, findings: []}
+      system_relations: {verdict: pass, findings: []}
+      side_effects: {verdict: pass, findings: []}
       completeness: {verdict: pass, findings: []}
-      legal_compliance: {verdict: pass, findings: []}
+      data_flow: {verdict: pass, findings: []}
+      extensibility: {verdict: pass, findings: []}
+      observability_error_handling: {verdict: pass, findings: []}
       documentation: {verdict: pass, findings: []}
-      ux: {verdict: pass, findings: []}
     summary: "..."
 
 qa_decision: pass|fail
@@ -494,11 +525,12 @@ next_action:
 - [ ] `audit.gunshi.verdict` 存在
 - [ ] `audit.codex.verdict` 存在
 - [ ] `audit.codex.verified_by_reading == true_via_diff` （フル走査でない証跡）
-- [ ] `audit.gemini.verdict` 存在
-- [ ] `audit.gemini.verified_by_reading == true_via_diff`
+- [ ] `audit.hermes.verdict` 存在
+- [ ] `audit.hermes.verified_by_reading == true_via_diff`
 - [ ] `audit.scope.base_commit` と `audit.scope.head_commit` 存在・有効ハッシュ
 - [ ] 三者全PASS （`overall_pass == true`）
-- [ ] PII/法令該当差分の場合、`audit.gemini.categories.legal_compliance == pass`
+- [ ] PII/法令該当差分の場合、§5.1bis の最終総合監査が別途予定されているか確認
+      （開発期間中の通常cycleでは legal_compliance 判定は対象外。§5.1bis参照）
 - [ ] cycle数 が 5以下
 
 ### 10.2 違反検知時の対応
@@ -519,7 +551,7 @@ next_action:
 | アラート | 検知条件 | クールダウン |
 |---------|---------|------------|
 | `audit_missing` | 完了報告から15分後も家康レポートなし | 30分 |
-| `audit_incomplete` | gunshi_report に codex/gemini フィールド欠落 | 30分 |
+| `audit_incomplete` | gunshi_report に codex/hermes フィールド欠落 | 30分 |
 | `audit_invalid_diff` | `verified_by_reading != true_via_diff` | 即時、再発しない |
 | `pdca_stalled` | 同一タスクで30分進展なし | 30分 |
 | `pdca_extended` | cycle3 超過 | 1時間 |
@@ -545,7 +577,7 @@ next_action:
       "auditors": {
         "gunshi": "pass",
         "codex": "pending",
-        "gemini": "pass"
+        "hermes": "pass"
       },
       "scope_validated": true,
       "alerts": ["pdca_extended"]
@@ -570,13 +602,13 @@ next_action:
 ### 13.2 リファクタリング（機能変更なし）
 
 - Codex Axis 4（テスト）のテスト変更不要を許容
-- Gemini 仕様準拠は「仕様変更なし」で PASS
+- Hermes 仕様準拠は「仕様変更なし」で PASS
 
 ### 13.3 ドキュメントのみの変更
 
 - Codex Axis 1-4 はスキップ可
 - Codex Axis 5（重複）と Axis 6（Git）は必須
-- Gemini ドキュメント整合のみ
+- Hermes ドキュメント整合のみ
 
 ### 13.4 自動生成コード（package-lock.json 等）
 
@@ -599,12 +631,13 @@ CLAUDE.md §OSS Pull Request Review に従う（既定済）。
 ### 14.2 監査者ローテーション（将来検討）
 
 - Codex モデル切替（GPT-4 → Claude → 他）
-- Gemini モデル切替（Pro → Ultra）
 - 同一 cycle での結果比較で精度向上を測定
+- **【DD-192改訂】** Hermes（相談役）は固定エージェント（常駐セッション）であり、Geminiのような
+  API model tier切替対象ではない。ローテーション対象は当面 Codex 側のモデル切替のみとする。
 
 ---
 
-## 15. 実装済みスクリプト（2026-05-05）
+## 15. 実装済みスクリプト（2026-05-05、DD-192改訂 2026-07-21）
 
 ### 15.1 `scripts/audit_codex.sh`
 
@@ -621,50 +654,13 @@ bash scripts/audit_codex.sh <task_id> <cycle> <base_commit> <head_commit> [<repo
 - 3回リトライ
 - 出力: `/tmp/codex_audit_<task_id>_cycle<N>.json`
 
-### 15.2 `scripts/audit_gemini.sh`
+> **【DD-192改訂・欠番注記】** 旧15.2（第三者監査AIの一角を担っていたスクリプト。当該AIはDD-192により
+> 全面decommission）と旧15.3（家老によるメタ監査自動化を意図していたが、実装コミットが一度も
+> 存在しなかった phantom canon — `find`/`git log --all`/`queue/reports/` grep で不在を実測確認済）は
+> 本改訂で削除。旧15.3が指していた自動化は過去一度も実装されておらず、§10.1 の9項目チェックリストを
+> 家老が手動で照合する運用が現行の実態である（下記15.3参照）。
 
-家康がGeminiに仕様準拠+法令監査を依頼する標準実装。
-
-```bash
-bash scripts/audit_gemini.sh <task_id> <cycle> <base_commit> <head_commit> [<repo_path>] [<spec_file>]
-```
-
-**特徴**:
-- diff抽出 + PII自動検知（patient/kanja/name/consent/doui/medical/karte等のキーワード）
-- 設計書(`context/<project>.md`先頭300行)を仕様準拠の判断材料として埋込
-- Markdown fence 内JSONを抽出する parser 内蔵
-- 出力: `/tmp/gemini_audit_<task_id>_cycle<N>.json`
-
-### 15.3 `scripts/audit_verify.sh`
-
-家老が家康の監査結果をメタ監査する標準実装。
-
-```bash
-bash scripts/audit_verify.sh <gunshi_report_path>
-```
-
-**10項目の機械チェック**:
-
-1. 必須トップレベルフィールド (task_id, ashigaru_task_id, cycle, audit, qa_decision)
-2. audit.scope の base_commit, head_commit, changed_paths 存在
-3. commit hash の正規表現検証 (7-40 hex)
-4. audit.gunshi.verdict の妥当性 (pass|fail)
-5. audit.codex.verdict 存在
-6. **audit.codex.verified_by_reading == "true_via_diff"** （フル走査検知）
-7. Codex 6軸 (axis1〜axis6) 全存在
-8. audit.gemini.verdict + verified_by_reading
-9. Gemini 5観点 (spec_compliance, completeness, legal_compliance, documentation, ux) 全存在
-10. PII該当時の legal_compliance 検証
-11. cycle 1〜5 範囲、3超過は警告
-12. qa_decision=pass の時、三者全PASS整合性
-
-**家老の使い方**:
-- `cmd完了処理時` に必ず実行
-- exit 0 → cmd を done にしてよし
-- exit 1 → 監査結果無効、家康に再監査指令
-- exit 2 → スクリプト引数エラー
-
-### 15.4 家康の標準フロー（厳守）
+### 15.2 家康の標準フロー（厳守）
 
 ```bash
 # 1. 家康レビュー（手作業、§3チェックリスト）
@@ -672,24 +668,21 @@ bash scripts/audit_verify.sh <gunshi_report_path>
 bash scripts/audit_codex.sh "$TASK_ID" "$CYCLE" "$BASE" "$HEAD" "$REPO"
 CODEX_VERDICT=$?
 
-# 3. Gemini監査
-bash scripts/audit_gemini.sh "$TASK_ID" "$CYCLE" "$BASE" "$HEAD" "$REPO"
-GEMINI_VERDICT=$?
+# 3. Hermes監査（pc_handshake dispatch・非同期、§5.2参照）
+#    pgrep -f hermes_reverse_watcher で生存確認 → pc_handshake INSERT → 応答待機
+#    （専用wrapperスクリプト未実装、現状は§5.2手順に従った手動/半自動投入）
 
 # 4. gunshi_report.yaml に三者結果を集約記録（§9 schema）
 # 5. 家老に inbox_write で qa_decision 報告
 ```
 
-### 15.5 家老の標準フロー（厳守）
+### 15.3 家老の標準フロー（厳守）
 
 ```bash
 # 1. 家康から完了通知受領
-# 2. メタ監査
-bash scripts/audit_verify.sh queue/reports/gunshi_report.yaml
-META_VERDICT=$?
-
-# 3. exit 0 なら cmd を完了化
-# 4. exit 1 なら家康に「再監査せよ。理由: <stdout>」と差戻
+# 2. メタ監査（§10.1の9項目チェックリストを手動照合。自動検証スクリプトは未実装 — 上記欠番注記参照）
+# 3. 全項目チェック済みなら cmd を完了化
+# 4. いずれか未達なら家康に「再監査せよ。理由: <具体的な未達項目>」と差戻
 ```
 
 ---
@@ -710,27 +703,11 @@ bash /mnt/c/Users/User/projects/multi-agent-shogun/scripts/audit_codex.sh \
 cat /tmp/codex_audit_test_task_cycle1.json | python3 -m json.tool
 ```
 
-### 16.2 audit_gemini.sh ドライラン
+### 16.2 三者監査エンドツーエンド試験
 
-```bash
-bash /mnt/c/Users/User/projects/multi-agent-shogun/scripts/audit_gemini.sh \
-  test_task 1 "$RECENT" "$HEAD" "$(pwd)"
-cat /tmp/gemini_audit_test_task_cycle1.json | python3 -m json.tool
-```
-
-### 16.3 audit_verify.sh ドライラン
-
-```bash
-# 既存の gunshi_report.yaml で試験
-bash /mnt/c/Users/User/projects/multi-agent-shogun/scripts/audit_verify.sh \
-  /mnt/c/Users/User/projects/multi-agent-shogun/queue/reports/gunshi_report.yaml
-echo "exit: $?"
-# 期待: exit 1 (旧フォーマットのため必須フィールドが足りない)
-```
-
-### 16.4 三者監査エンドツーエンド試験
-
-進行中の `cmd_sync_reverse_001` の三者監査を新スクリプトで実施し、`audit_verify.sh` でPASSを確認することが最初の実機試験。
+進行中のタスクの三者監査（家康 + Codex + Hermes、§9 schema）を実施し、§10.1 の9項目
+チェックリストを家老が手動で全項目チェック済にできることが実機試験の完了条件
+（自動検証スクリプトは未実装、§15欠番注記参照）。
 
 ---
 
@@ -739,9 +716,10 @@ echo "exit: $?"
 | 日付 | 改訂者 | 内容 |
 |------|--------|------|
 | 2026-05-05 13:50 | 信長 | 初版作成（理事長指示「緻密に・抜け漏れなく」） |
-| 2026-05-05 14:13 | 信長 | §15-16追加: 実装済みスクリプト3本（audit_codex.sh / audit_gemini.sh / audit_verify.sh）、ドライラン手順 |
+| 2026-05-05 14:13 | 信長 | §15-16追加: 実装済みスクリプト3本（audit_codex.sh / 旧第三者監査AI用script / 未実装だったメタ監査script）、ドライラン手順 |
+| 2026-07-21（branch提案・信長承認待ち） | ashigaru-third-3 | DD-192整合（委員長差配 seq8b099043）: 旧第三者監査AI（DD-192で全面decommission）関連の記述を相談役(Hermes)のpc_handshake非同期呼出しへ全面差替（§1/§3/§5-§9/§10.1/§11-§14）。§15.2/旧§15.3のphantom canon（一度も実装されなかったメタ監査自動化script言及）を削除し、家老手動照合が現行実態である旨を明記。§16のドライラン節を実態に整合。改訂後 grep 実測で運用上の旧AI参照・phantom script参照が0件であることを確認（DD-192決定の記録としての歴史的言及を除く）。 |
 
-信長以外による改訂は禁止。改訂提案は inbox_write で信長へ。
+信長以外による改訂は禁止。改訂提案は inbox_write で信長へ。本行は信長の最終承認まで「提案」段階。
 
 ---
 
