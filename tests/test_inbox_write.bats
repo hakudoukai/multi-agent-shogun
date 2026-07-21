@@ -37,6 +37,8 @@ setup() {
     # シンボリックリンクでテスト用ディレクトリを作成
     export TEST_SCRIPT_DIR="$TEST_TMPDIR/scripts"
     mkdir -p "$TEST_SCRIPT_DIR"
+    mkdir -p "$TEST_TMPDIR/shim/hakudokai/lib"
+    cp "$PROJECT_ROOT/shim/hakudokai/lib/sb_auth.sh" "$TEST_TMPDIR/shim/hakudokai/lib/sb_auth.sh"
 
     # 元のスクリプトをコピー（SCRIPT_DIRをテスト用に書き換える）
     sed "s|SCRIPT_DIR=\"\$(cd \"\$(dirname \"\${BASH_SOURCE\[0\]}\")/..*|SCRIPT_DIR=\"$TEST_TMPDIR\"|" \
