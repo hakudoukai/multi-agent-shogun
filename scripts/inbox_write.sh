@@ -50,19 +50,22 @@ if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
     exit 1
 fi
 
-# Cross-PC bridge: if target agent is on a different PC, also INSERT to Supabase
-_cross_pc_bridge() {
-    local target="$1"
-    local content="$2"
-    local msg_type="$3"
-    local from="$4"
-
-    # Check if cross-PC delivery is needed via settings.yaml
-    # settings_local.yaml overrides pc_mapping (SecondPC uses different is_local)
-    # Returns: "local_pc_id|target_pc_id" or empty if no bridge needed
-    local bridge_info local_pc target_pc
-    bridge_info=$("$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, sys, os
+# ★anti-dup fix (HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001 followup、
+# 軍師 Option B 設計回答 msg_20260721_140010_d713651b 採用)★
+#
+# local_pc (自 PC の pc_id) 解決の単一責務 helper。従来 _cross_pc_bridge() と
+# _hermes2_deaddrop_guard() がそれぞれ独立に同一の pc_mapping lookup パターン
+# を実装していた (重複)。本 helper に一本化し、両 caller はこれのみを呼ぶ
+# (_cross_pc_bridge / _hermes2_deaddrop_guard の直接相互呼出しは行わない)。
+#
+# stdout: 解決できた local pc_id (例: third_pc)。解決不可時は空文字列。
+# fail-closed 判定 (空文字列時にどう振る舞うか) は呼出し側の責務 — 両 caller
+# で contract が異なる (_cross_pc_bridge は "${local_pc:-main_pc}" フォール
+# バックで非 fail-closed、_hermes2_deaddrop_guard は fail-closed) ため、本
+# helper 自体はどちらの契約も強制しない。
+_resolve_local_pc() {
+    "$SCRIPT_DIR/.venv/bin/python3" -c "
+import yaml, os
 try:
     local_path = '$SCRIPT_DIR/config/settings_local.yaml'
     main_path = '$SCRIPT_DIR/config/settings.yaml'
@@ -80,24 +83,57 @@ try:
     for pc_name, pc_cfg in pc_map.items():
         if pc_cfg.get('is_local'):
             local_id = pc_cfg.get('pc_id', pc_name)
+    print(local_id)
+except Exception:
+    print('')
+" 2>/dev/null
+}
+
+# Cross-PC bridge: if target agent is on a different PC, also INSERT to Supabase
+_cross_pc_bridge() {
+    local target="$1"
+    local content="$2"
+    local msg_type="$3"
+    local from="$4"
+
+    # target_pc (bridge 要否・宛先 PC) 解決。local_pc 解決とは別責務のため
+    # ここに残す (anti-dup 対象は local_pc lookup の重複のみ)。
+    # settings_local.yaml overrides pc_mapping (SecondPC uses different is_local)
+    local target_pc
+    target_pc=$("$SCRIPT_DIR/.venv/bin/python3" -c "
+import yaml, sys, os
+try:
+    local_path = '$SCRIPT_DIR/config/settings_local.yaml'
+    main_path = '$SCRIPT_DIR/config/settings.yaml'
+    if os.path.exists(local_path):
+        with open(local_path) as f:
+            local_cfg = yaml.safe_load(f) or {}
+        pc_map = local_cfg.get('pc_mapping', {})
+    else:
+        pc_map = {}
+    if not pc_map:
+        with open(main_path) as f:
+            cfg = yaml.safe_load(f) or {}
+        pc_map = cfg.get('pc_mapping', {})
     for pc_name, pc_cfg in pc_map.items():
         if pc_cfg.get('is_local'):
             continue
         agents = pc_cfg.get('agents', [])
         if '$target' in agents and pc_cfg.get('supabase_bridge'):
-            print(f'{local_id}|{pc_cfg.get(\"pc_id\", pc_name)}')
+            print(pc_cfg.get('pc_id', pc_name))
             sys.exit(0)
     print('')
 except Exception:
     print('')
 " 2>/dev/null)
 
-    if [ -z "$bridge_info" ]; then
+    if [ -z "$target_pc" ]; then
         return 0  # Local agent, no bridge needed
     fi
 
-    local_pc="${bridge_info%%|*}"
-    target_pc="${bridge_info##*|}"
+    # local_pc 解決は共有 helper に委譲 (anti-dup fix)。
+    local local_pc
+    local_pc=$(_resolve_local_pc)
 
     # Load Supabase env
     local sb_url sb_key
@@ -174,33 +210,12 @@ _hermes2_deaddrop_guard() {
         return 1
     fi
 
-    # local_pc 解決 (_cross_pc_bridge と同じ pc_mapping lookup パターンを
-    # 独立実装。既存 _cross_pc_bridge の regression risk を避けるため共有
-    # 関数化はしない)。
+    # local_pc 解決は共有 helper _resolve_local_pc() に委譲 (anti-dup fix、
+    # HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001 followup、軍師 Option B
+    # msg_20260721_140010_d713651b)。_cross_pc_bridge との直接相互呼出しは
+    # しない — 両者ともこの共有 helper のみを呼ぶ。
     local local_pc
-    local_pc=$("$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, os
-try:
-    local_path = '$SCRIPT_DIR/config/settings_local.yaml'
-    main_path = '$SCRIPT_DIR/config/settings.yaml'
-    if os.path.exists(local_path):
-        with open(local_path) as f:
-            local_cfg = yaml.safe_load(f) or {}
-        pc_map = local_cfg.get('pc_mapping', {})
-    else:
-        pc_map = {}
-    if not pc_map:
-        with open(main_path) as f:
-            cfg = yaml.safe_load(f) or {}
-        pc_map = cfg.get('pc_mapping', {})
-    local_id = ''
-    for pc_name, pc_cfg in pc_map.items():
-        if pc_cfg.get('is_local'):
-            local_id = pc_cfg.get('pc_id', pc_name)
-    print(local_id)
-except Exception:
-    print('')
-" 2>/dev/null)
+    local_pc=$(_resolve_local_pc)
 
     if [ -z "$local_pc" ]; then
         echo "[inbox_write] FAIL-CLOSED: hermes2 dead-drop guard could not resolve local_pc from pc_mapping; refusing legacy fallback for hermes2" >&2
@@ -406,17 +421,63 @@ max_attempts=3
 while [ $attempt -lt $max_attempts ]; do
     if _acquire_lock; then
         INBOX_CONTENT="$CONTENT" "$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, sys, os
+import yaml, sys, os, shutil, time
 
 try:
+    def normalize_doc_as_message(doc, idx, now_ts):
+        if not isinstance(doc, dict):
+            doc = {'content': str(doc)}
+        msg = dict(doc)
+        msg.setdefault('id', f'recovered_orphan_{now_ts}_{idx}')
+        msg.setdefault('from', msg.get('sender', 'unknown'))
+        msg.setdefault('timestamp', msg.get('created_at', now_ts))
+        msg.setdefault('type', 'recovered_orphan_doc')
+        msg.setdefault('content', msg.get('body') or msg.get('subject') or str(doc))
+        msg.setdefault('read', False)
+        return msg
+
+    def load_inbox(path):
+        try:
+            with open(path) as f:
+                return yaml.safe_load(f)
+        except yaml.YAMLError as first_error:
+            # Autonomous repair: absorb historical top-level '---' append
+            # damage into the canonical messages array instead of failing
+            # every future write. Preserve the original file first.
+            backup = f'{path}.automerge_{int(time.time())}_{os.getpid()}'
+            shutil.copy2(path, backup)
+            try:
+                with open(path) as f:
+                    docs = [d for d in yaml.safe_load_all(f) if d is not None]
+            except Exception as second_error:
+                print(
+                    f'[inbox_write] WARN: quarantined unreadable inbox {path} -> {backup}: {second_error}',
+                    file=sys.stderr,
+                )
+                return {'messages': []}
+
+            merged = {'messages': []}
+            now_ts = '$TIMESTAMP'
+            for idx, doc in enumerate(docs):
+                if isinstance(doc, dict) and isinstance(doc.get('messages'), list):
+                    merged['messages'].extend(doc.get('messages') or [])
+                else:
+                    merged['messages'].append(normalize_doc_as_message(doc, idx, now_ts))
+            print(
+                f'[inbox_write] WARN: normalized multi-document inbox {path} -> messages; backup={backup}; docs={len(docs)}',
+                file=sys.stderr,
+            )
+            return merged
+
     # Load existing inbox
-    with open('$INBOX') as f:
-        data = yaml.safe_load(f)
+    data = load_inbox('$INBOX')
 
     # Initialize if needed
     if not data:
         data = {}
-    if not data.get('messages'):
+    if not isinstance(data, dict):
+        data = {'messages': [normalize_doc_as_message(data, 0, '$TIMESTAMP')]}
+    if not isinstance(data.get('messages'), list):
         data['messages'] = []
 
     # Add new message (content via env var to avoid quote injection)
@@ -430,13 +491,30 @@ try:
     }
     data['messages'].append(new_msg)
 
+    # ★Blocker C 恒久根治 (副院長令 3f178cd9 理事長 GO 「全 read 時 trim 恒久化」)★:
+    #   真因 = 既存 overflow protection logic は「全 message が read=false (=未読) の時」
+    #          に trim 不発 (unread + read[-30:] = unread + [] = 元の全件)、無限蓄積。
+    #          fukuincho は実体上 claude.ai chat 経由ゆえ msg を read=true にマークしない
+    #          → 15,477 件まで肥大 → yaml load 15.7s → inbox_write 10s timeout 連鎖。
+    #   恒久化 = 二段 trim:
+    #     (a) 既存 logic 維持 (unread + newest 30 read) — 殆どの caller で発火
+    #     (b) ★HARD CAP★ (500 件上限) — 全 unread 時でも物理的に件数制限し yaml load
+    #         を 0.1s 未満に維持。unread の最古を drop することは情報損失だが、
+    #         代替手段 (claude.ai 直接 desktop_poke) が機能している現状では許容。
+    #   設計判断: 500 件 = yaml load < 0.1s + unread 5 分溜まり想定の十分マージン。
     # Overflow protection: keep max 50 messages
+    HARD_CAP = 500
     if len(data['messages']) > 50:
         msgs = data['messages']
         unread = [m for m in msgs if not m.get('read', False)]
         read = [m for m in msgs if m.get('read', False)]
-        # Keep all unread + newest 30 read messages
+        # (a) 既存 logic: Keep all unread + newest 30 read messages
         data['messages'] = unread + read[-30:]
+        # (b) ★恒久化★ HARD CAP — 上限超過時は最古から drop (newest を保持)
+        if len(data['messages']) > HARD_CAP:
+            dropped = len(data['messages']) - HARD_CAP
+            data['messages'] = data['messages'][-HARD_CAP:]
+            print(f'[inbox_write] HARD_CAP triggered: dropped {dropped} oldest messages (kept {HARD_CAP})', file=sys.stderr)
 
     # Atomic write: tmp file + rename (prevents partial reads)
     # CRITICAL: dereference symlinks BEFORE atomic replace.
@@ -450,7 +528,7 @@ try:
     tmp_fd, tmp_path = tempfile.mkstemp(dir=os.path.dirname(inbox_canonical), suffix='.tmp')
     try:
         with os.fdopen(tmp_fd, 'w') as f:
-            yaml.dump(data, f, default_flow_style=False, allow_unicode=True, indent=2)
+            yaml.safe_dump(data, f, default_flow_style=False, allow_unicode=True, indent=2, sort_keys=False)
         os.replace(tmp_path, inbox_canonical)
     except:
         os.unlink(tmp_path)

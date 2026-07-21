@@ -521,3 +521,119 @@ EOF
     [[ "$output" != *"REACHED_AFTER_CAPTURE"* ]]
     [[ "$output" != *"OUTER_SCRIPT_COMPLETED"* ]]
 }
+
+# =============================================================================
+# T-120/T-121: anti-duplication fix verification —
+# HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001 followup、軍師 Option B 設計
+# 回答 (msg_20260721_140010_d713651b) 採用分の検証。
+#
+# 軍師指示: "_resolve_local_pc() を単一責務の共有 helper として新設し、
+# _cross_pc_bridge/_hermes2_deaddrop_guard 双方を置換。直接相互呼出しは禁止。
+# ... positive-path で両 caller が同 helper 結果を実際に使用したことを
+# assert し、設定欠落/不正mappingは現行 fail-closed 契約を維持。"
+#
+# T-120 (structural, T-119 の grep 手法を踏襲): 重複していた local_pc lookup
+# fingerprint がファイル中に厳密に1箇所のみ存在すること、両 caller の関数
+# body が実際に _resolve_local_pc を呼んでいること、両者が直接相互呼出しを
+# していないことを静的に検証する。
+#
+# T-121 (dynamic/positive-path): 単なる「出力値が一致する」assertion では
+# 「たまたま独立実装が同じ値を計算しているだけ」を排除できない (二重実装が
+# 残っていても設定が同一なら値は一致し得る)。そこで _resolve_local_pc を
+# sentinel 値で override した上で両 caller を実際に呼び出し、override した
+# 値がそのまま両者の payload (from_pc フィールド) に伝播することを確認する。
+# もし両 caller のどちらかが独自に local_pc を再計算していれば、override は
+# その caller の出力に影響せず、本テストは fail する。
+# =============================================================================
+
+@test "T-120: _resolve_local_pc is the sole local_pc lookup implementation; both callers invoke it; no direct mutual calls (anti-dup structural check, HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001 followup, gunshi Option B msg_20260721_140010_d713651b)" {
+    local def_count fingerprint_count
+    local rlp_start cb_start hg_start cb_end hg_end
+
+    def_count=$(grep -c '^_resolve_local_pc() {' "$INBOX_WRITE_SCRIPT")
+    [ "$def_count" -eq 1 ]
+
+    fingerprint_count=$(grep -c "local_id = pc_cfg.get('pc_id', pc_name)" "$INBOX_WRITE_SCRIPT")
+    [ "$fingerprint_count" -eq 1 ]
+
+    rlp_start=$(grep -n '^_resolve_local_pc() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    cb_start=$(grep -n '^_cross_pc_bridge() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    hg_start=$(grep -n '^_hermes2_deaddrop_guard() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    [ -n "$rlp_start" ]
+    [ -n "$cb_start" ]
+    [ -n "$hg_start" ]
+    [ "$rlp_start" -lt "$cb_start" ]
+    [ "$cb_start" -lt "$hg_start" ]
+
+    cb_end=$(tail -n "+$((cb_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    cb_end=$((cb_start + cb_end))
+    hg_end=$(tail -n "+$((hg_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    hg_end=$((hg_start + hg_end))
+
+    local cb_body hg_body
+    cb_body=$(sed -n "${cb_start},${cb_end}p" "$INBOX_WRITE_SCRIPT")
+    hg_body=$(sed -n "${hg_start},${hg_end}p" "$INBOX_WRITE_SCRIPT")
+
+    [[ "$cb_body" == *"_resolve_local_pc"* ]]
+    [[ "$hg_body" == *"_resolve_local_pc"* ]]
+
+    # 直接相互呼出し禁止 (軍師指示の明示条件) — コメント中の言及 (説明目的)
+    # は許容し、実際の呼出し文 (行頭で関数名を command として呼ぶ形) のみ
+    # を検査する。
+    run bash -c "grep -E '^[[:space:]]*_hermes2_deaddrop_guard\b' <<< \"\$1\"" _ "$cb_body"
+    [ "$status" -ne 0 ]
+    run bash -c "grep -E '^[[:space:]]*_cross_pc_bridge\b' <<< \"\$1\"" _ "$hg_body"
+    [ "$status" -ne 0 ]
+}
+
+@test "T-121: overriding _resolve_local_pc propagates identically into both _cross_pc_bridge and _hermes2_deaddrop_guard payloads (positive-path proof of shared helper usage)" {
+    local rlp_start rlp_end cb_start cb_end hg_start hg_end
+
+    rlp_start=$(grep -n '^_resolve_local_pc() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    rlp_end=$(tail -n "+$((rlp_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    rlp_end=$((rlp_start + rlp_end))
+
+    cb_start=$(grep -n '^_cross_pc_bridge() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    cb_end=$(tail -n "+$((cb_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    cb_end=$((cb_start + cb_end))
+
+    hg_start=$(grep -n '^_hermes2_deaddrop_guard() {' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    hg_end=$(tail -n "+$((hg_start + 1))" "$INBOX_WRITE_SCRIPT" | grep -n '^}$' | head -1 | cut -d: -f1)
+    hg_end=$((hg_start + hg_end))
+
+    {
+        sed -n "${rlp_start},${rlp_end}p" "$INBOX_WRITE_SCRIPT"
+        sed -n "${cb_start},${cb_end}p" "$INBOX_WRITE_SCRIPT"
+        sed -n "${hg_start},${hg_end}p" "$INBOX_WRITE_SCRIPT"
+    } > "$TEST_TMPDIR/t121_funcs.sh"
+
+    run bash -c "
+        set -e
+        SCRIPT_DIR='$TEST_TMPDIR'
+        HOME='$FAKE_HOME'
+        source '$TEST_TMPDIR/shim/hakudokai/lib/sb_auth.sh'
+        source '$TEST_TMPDIR/t121_funcs.sh'
+        _resolve_local_pc() { echo 'SENTINEL_PC_9f3e'; }
+        _cross_pc_bridge 'ashigaru5' 'T-121 positive path (cross_pc_bridge)' 'status_update' 'ashigaru-third-5'
+        cp '$CURL_STUB_PAYLOAD' '$TEST_TMPDIR/t121_cb_payload.json'
+        : > '$CURL_STUB_PAYLOAD'
+        _hermes2_deaddrop_guard 'T-121 positive path (hermes2_deaddrop_guard)' 'status_update' 'ashigaru-third-5' || true
+        cp '$CURL_STUB_PAYLOAD' '$TEST_TMPDIR/t121_hg_payload.json'
+    "
+    [ "$status" -eq 0 ]
+    [ -s "$TEST_TMPDIR/t121_cb_payload.json" ]
+    [ -s "$TEST_TMPDIR/t121_hg_payload.json" ]
+
+    run "$VENV_PYTHON" -c "
+import json
+with open('$TEST_TMPDIR/t121_cb_payload.json') as f:
+    cb = json.load(f)
+with open('$TEST_TMPDIR/t121_hg_payload.json') as f:
+    hg = json.load(f)
+assert cb['from_pc'] == 'SENTINEL_PC_9f3e', f'cross_pc_bridge from_pc={cb.get(\"from_pc\")!r}'
+assert hg['from_pc'] == 'SENTINEL_PC_9f3e', f'hermes2_deaddrop_guard from_pc={hg.get(\"from_pc\")!r}'
+print('T-121: PASS (both callers propagate the overridden _resolve_local_pc sentinel)')
+"
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"T-121: PASS"* ]]
+}
