@@ -387,6 +387,54 @@ EOF
 }
 
 # =============================================================================
+# T-119: sb_curl source/definition contract (Hermes authoritative audit
+# hermes_authoritative_audit_seq132056_93727abe, missing_guard item 2:
+# "Static/runtime assertion that sb_curl is defined after top-level
+# initialization"). This is a direct regression guard for
+# HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001: 93727abe added sb_curl
+# call sites and shim/hakudokai/lib/sb_auth.sh, but the committed blob of
+# scripts/inbox_write.sh never sourced it, so every canonical route failed
+# closed with curl_status=127. T-101/T-107 alone cannot catch this specific
+# defect class because they execute a per-test *copy* of the script
+# (regenerated fresh in setup() from $INBOX_WRITE_SCRIPT every run), which
+# would silently inherit a missing source line too, plus they only ever
+# observe curl-stub behavior, not the source→definition contract itself.
+#
+# Method: mechanically extract (grep/sed against the real committed file —
+# no hand copy, no drift) the "SB_AUTH_LIB=...; source "$SB_AUTH_LIB"" block
+# from $INBOX_WRITE_SCRIPT's own top-level init, source only that block in
+# isolation (with SCRIPT_DIR corrected for the fact that `source` gives the
+# sourced file's own BASH_SOURCE[0], not the real script's), and assert
+# sb_curl becomes a callable function strictly before the first sb_curl
+# call site's line number in the real file.
+# =============================================================================
+
+@test "T-119: scripts/inbox_write.sh sources sb_auth.sh and defines sb_curl before first call site (missing_guard: source/definition contract)" {
+    local scriptdir_line source_line first_call_line tail_start
+
+    scriptdir_line=$(grep -n '^SCRIPT_DIR=' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    [ -n "$scriptdir_line" ]
+
+    source_line=$(grep -n '^source "\$SB_AUTH_LIB"' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    [ -n "$source_line" ]
+
+    first_call_line=$(grep -n 'sb_curl' "$INBOX_WRITE_SCRIPT" | head -1 | cut -d: -f1)
+    [ -n "$first_call_line" ]
+    [ "$source_line" -lt "$first_call_line" ]
+
+    tail_start=$((scriptdir_line + 1))
+    {
+        echo 'set -e'
+        echo "SCRIPT_DIR=\"$PROJECT_ROOT\""
+        sed -n "${tail_start},${source_line}p" "$INBOX_WRITE_SCRIPT"
+    } > "$TEST_TMPDIR/t119_head_init.sh"
+
+    run bash -c "source '$TEST_TMPDIR/t119_head_init.sh' && type -t sb_curl"
+    [ "$status" -eq 0 ]
+    [ "$output" = "function" ]
+}
+
+# =============================================================================
 # TC1: Codex cycle1 B1 detection tests — set -e 単独代入ハザードの分離立証
 #
 # 背景: T-101/T-102/T-102b は _hermes2_deaddrop_guard を常に
