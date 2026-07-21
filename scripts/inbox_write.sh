@@ -421,63 +421,17 @@ max_attempts=3
 while [ $attempt -lt $max_attempts ]; do
     if _acquire_lock; then
         INBOX_CONTENT="$CONTENT" "$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, sys, os, shutil, time
+import yaml, sys, os
 
 try:
-    def normalize_doc_as_message(doc, idx, now_ts):
-        if not isinstance(doc, dict):
-            doc = {'content': str(doc)}
-        msg = dict(doc)
-        msg.setdefault('id', f'recovered_orphan_{now_ts}_{idx}')
-        msg.setdefault('from', msg.get('sender', 'unknown'))
-        msg.setdefault('timestamp', msg.get('created_at', now_ts))
-        msg.setdefault('type', 'recovered_orphan_doc')
-        msg.setdefault('content', msg.get('body') or msg.get('subject') or str(doc))
-        msg.setdefault('read', False)
-        return msg
-
-    def load_inbox(path):
-        try:
-            with open(path) as f:
-                return yaml.safe_load(f)
-        except yaml.YAMLError as first_error:
-            # Autonomous repair: absorb historical top-level '---' append
-            # damage into the canonical messages array instead of failing
-            # every future write. Preserve the original file first.
-            backup = f'{path}.automerge_{int(time.time())}_{os.getpid()}'
-            shutil.copy2(path, backup)
-            try:
-                with open(path) as f:
-                    docs = [d for d in yaml.safe_load_all(f) if d is not None]
-            except Exception as second_error:
-                print(
-                    f'[inbox_write] WARN: quarantined unreadable inbox {path} -> {backup}: {second_error}',
-                    file=sys.stderr,
-                )
-                return {'messages': []}
-
-            merged = {'messages': []}
-            now_ts = '$TIMESTAMP'
-            for idx, doc in enumerate(docs):
-                if isinstance(doc, dict) and isinstance(doc.get('messages'), list):
-                    merged['messages'].extend(doc.get('messages') or [])
-                else:
-                    merged['messages'].append(normalize_doc_as_message(doc, idx, now_ts))
-            print(
-                f'[inbox_write] WARN: normalized multi-document inbox {path} -> messages; backup={backup}; docs={len(docs)}',
-                file=sys.stderr,
-            )
-            return merged
-
     # Load existing inbox
-    data = load_inbox('$INBOX')
+    with open('$INBOX') as f:
+        data = yaml.safe_load(f)
 
     # Initialize if needed
     if not data:
         data = {}
-    if not isinstance(data, dict):
-        data = {'messages': [normalize_doc_as_message(data, 0, '$TIMESTAMP')]}
-    if not isinstance(data.get('messages'), list):
+    if not data.get('messages'):
         data['messages'] = []
 
     # Add new message (content via env var to avoid quote injection)
@@ -491,30 +445,13 @@ try:
     }
     data['messages'].append(new_msg)
 
-    # ★Blocker C 恒久根治 (副院長令 3f178cd9 理事長 GO 「全 read 時 trim 恒久化」)★:
-    #   真因 = 既存 overflow protection logic は「全 message が read=false (=未読) の時」
-    #          に trim 不発 (unread + read[-30:] = unread + [] = 元の全件)、無限蓄積。
-    #          fukuincho は実体上 claude.ai chat 経由ゆえ msg を read=true にマークしない
-    #          → 15,477 件まで肥大 → yaml load 15.7s → inbox_write 10s timeout 連鎖。
-    #   恒久化 = 二段 trim:
-    #     (a) 既存 logic 維持 (unread + newest 30 read) — 殆どの caller で発火
-    #     (b) ★HARD CAP★ (500 件上限) — 全 unread 時でも物理的に件数制限し yaml load
-    #         を 0.1s 未満に維持。unread の最古を drop することは情報損失だが、
-    #         代替手段 (claude.ai 直接 desktop_poke) が機能している現状では許容。
-    #   設計判断: 500 件 = yaml load < 0.1s + unread 5 分溜まり想定の十分マージン。
     # Overflow protection: keep max 50 messages
-    HARD_CAP = 500
     if len(data['messages']) > 50:
         msgs = data['messages']
         unread = [m for m in msgs if not m.get('read', False)]
         read = [m for m in msgs if m.get('read', False)]
-        # (a) 既存 logic: Keep all unread + newest 30 read messages
+        # Keep all unread + newest 30 read messages
         data['messages'] = unread + read[-30:]
-        # (b) ★恒久化★ HARD CAP — 上限超過時は最古から drop (newest を保持)
-        if len(data['messages']) > HARD_CAP:
-            dropped = len(data['messages']) - HARD_CAP
-            data['messages'] = data['messages'][-HARD_CAP:]
-            print(f'[inbox_write] HARD_CAP triggered: dropped {dropped} oldest messages (kept {HARD_CAP})', file=sys.stderr)
 
     # Atomic write: tmp file + rename (prevents partial reads)
     # CRITICAL: dereference symlinks BEFORE atomic replace.
@@ -528,7 +465,7 @@ try:
     tmp_fd, tmp_path = tempfile.mkstemp(dir=os.path.dirname(inbox_canonical), suffix='.tmp')
     try:
         with os.fdopen(tmp_fd, 'w') as f:
-            yaml.safe_dump(data, f, default_flow_style=False, allow_unicode=True, indent=2, sort_keys=False)
+            yaml.dump(data, f, default_flow_style=False, allow_unicode=True, indent=2)
         os.replace(tmp_path, inbox_canonical)
     except:
         os.unlink(tmp_path)
