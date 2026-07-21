@@ -295,11 +295,37 @@ pgrep -f hermes_reverse_watcher || echo "★watcher不在★家老へエスカ�
 （watcher不在の死蔵letterbox・209日以上滞留実績あり）。正規経路は `pc_handshake` テーブルへの
 直接INSERTのみ。diffと審査観点は `content` に埋め込む。
 
+**★open blocker（finding 004是正・発注側ラッパー不在）★**: Codex側 `scripts/audit_codex.sh` に
+相当する発注専用ラッパーは本改訂時点で存在しない。`scripts/audit_write.py` は**応答側専用**に
+設計されており（`--from-pc` を `hermes`/`hermes2` のみに限定する safeguard、副院長令
+seq69688・自作自演/spoof防止）、発注方向（家康/家老→Hermes）のINSERTには転用できない。
+発注専用ラッパー（`audit_hermes_dispatch.sh` 相当）の新規実装は本ドキュメント改訂の
+doc-only 授権外であり、別途実装授権を要する open blocker として明記する（finding 002の
+audit_gemini.sh decommission blocker と同一の「文書のみでは強制力を持たない」構造）。
+
+**発注envelope契約（ラッパー不在時の手順・`audit_write.py` の row 構造とフィールド整合させる
+こと。これにより将来ラッパー化する際も schema 差分なしで移行できる）**:
+
 ```bash
 DIFF=$(git diff <base_commit>..<head_commit> -- <changed_paths>)
 SPEC_REF=$(cat context/<project>.md 2>/dev/null | head -200)
+REQUEST_ID=$(uuidgen)
 
-# pc_handshake へ INSERT（to_pc=hermes、topicにtask_id/cycleを含める）
+# pc_handshake へ INSERT する行の必須フィールド（audit_write.py の row dict と同一契約）:
+#   id                = $REQUEST_ID          (生成し記録。read-back の検索キー)
+#   from_pc           = 発注元PC識別子        (例: third_pc)
+#   to_pc             = "hermes"
+#   topic             = "[Hermes監査] <task_id> cycle<N>"  (task_id/cycle必須)
+#   content           = 下記プロンプト（$SPEC_REF, $DIFF 埋込済み）
+#   priority          = "high"
+#   message_type      = "status_update"
+#   clinic_id         = "hakudoukai_main"
+#   requires_response = true
+
+# INSERT直後、read-backで永続化フィールドを確認する（envelope契約の完了条件・finding 004remediation）:
+#   SELECT id, from_pc, to_pc, topic, created_at FROM pc_handshake WHERE id = '$REQUEST_ID';
+# → 0件ならINSERT失敗（再試行 or 家老へエスカレーション）。1件なら id/created_at を
+#   §9 audit.hermes.pc_handshake_seq 相当の証跡として記録してから待機に入る。
 ```
 
 ```text
@@ -345,13 +371,36 @@ $DIFF
 ```
 
 **応答待機**: reverse watcher が pane `commander-third:0.1` を wake（実績: INSERT後30秒以内）、
-相談役が審査後 `pc_handshake` へ結果を書き戻す（書戻し側の実装パターンは
+相談役が審査後 `pc_handshake` へ**別行として**結果を書き戻す（書戻し側の実装パターンは
 `scripts/audit_write.py` を参照 — `--from-pc` を `hermes`/`hermes2` に限定した検証済みREST INSERT実装）。
-家康は自身が投げた行の `resolved`/`acknowledged_by=hermes` を確認してから §9 の `audit.hermes` へ転記する。
+
+**★完了確認の実装実態（finding 001是正・`resolved`/`acknowledged_by`列は存在しない）★**:
+`audit_write.py` は (a) 常に新規レスポンス行を `pc_handshake` へ INSERT し、(b) `--resolve-id`
+を指定した場合に限り元の発注行の `resolved_at` を UPDATE する。`acknowledged_by` という列への
+書込みはコード上どこにも存在せず、`resolved`（真偽値）という列も存在しない（実列名は
+`resolved_at` タイムスタンプ）。家康が §9 `audit.hermes` へ転記する前に確認すべきは、
+実装が実際に書き込む2フィールドのみである:
+
+- **レスポンス行の存在** — `from_pc IN ('hermes','hermes2')` かつ `topic`/`content` に
+  発注時の `task_id`/`cycle` が含まれる行を検索し、その `id`/`created_at` を証跡として
+  §9 `audit.hermes.pc_handshake_seq` へ記録する。
+- **元発注行の `resolved_at`** — `--resolve-id` 付きで書き戻された場合のみ non-null になる。
+  現状の暫定運用（発注側ラッパー未実装、上記envelope契約による手動INSERT）では
+  `--resolve-id` を伴わないことがあり、その場合 `resolved_at` は null のままで正常である
+  （未完了の兆候ではない）。
+
+**ネガティブケース（監査時に区別すること・fixture相当）**:
+
+| ケース | レスポンス行 | `resolved_at` | 判定 |
+|---|---|---|---|
+| 未着手/未到達 | 無し | null | 未完了（watcher生存確認からやり直し・要エスカレーション） |
+| 応答済・resolve未実行 | 有り | null | 完了（`--resolve-id`省略運用のため正常。null=異常ではない） |
+| 応答済・resolve実行済 | 有り | non-null | 完了（明示クローズ） |
 
 **★現状の制約★**: Codex側の `scripts/audit_codex.sh` に相当する、発注～結果取得を一本化した
-`scripts/audit_hermes.sh` ラッパーは本改訂時点で未実装。上記INSERT〜待機は当面手動/半自動運用とする
-（将来ラッパー化する場合は本節を差し替えること。§15.2参照）。
+`scripts/audit_hermes.sh` ラッパー（発注envelope契約 + 上記完了確認を自動化するもの）は
+本改訂時点で未実装。上記INSERT〜待機は当面手動/半自動運用とする（将来ラッパー化する場合は
+本節を差し替えること。§15.2参照）。
 
 ### 5.3 法令該当時の必須化
 
@@ -518,9 +567,17 @@ next_action:
 
 ## 10. 家老による監査検証（メタ監査）
 
-家老は家康の監査結果を**機械的に検証**する。以下のチェックを `cmd完了処理時` に実施：
+**★現状の実態（finding 003是正・機械検証ではない）★**: 家老は家康の監査結果を、以下の
+チェックリストに沿って**手動で目視照合**する。スキーマバリデータ・自動ブロック・
+「未達なら完了処理自体が失敗する」仕組みは本改訂時点で実装されていない
+（`cmd完了処理` は家老の目視判断に依存する暫定的な manual control であり、
+"機械的" という語は誤りである）。以下のチェックを `cmd完了処理時` に実施：
 
-### 10.1 必須チェックリスト
+**★open blocker★**: 上記チェックリストを自動検証するスキーマバリデータ／不備時に
+`cmd完了処理` 自体をブロックする enforcement gate は未実装であり、実装には別途authorization
+を要する（finding 002のaudit_gemini.sh decommissionと同様、doc-only改訂の授権外）。
+
+### 10.1 必須チェックリスト（手動照合・自動化ゲートなし）
 
 - [ ] `audit.gunshi.verdict` 存在
 - [ ] `audit.codex.verdict` 存在
@@ -659,6 +716,17 @@ bash scripts/audit_codex.sh <task_id> <cycle> <base_commit> <head_commit> [<repo
 > 存在しなかった phantom canon — `find`/`git log --all`/`queue/reports/` grep で不在を実測確認済）は
 > 本改訂で削除。旧15.3が指していた自動化は過去一度も実装されておらず、§10.1 の9項目チェックリストを
 > 家老が手動で照合する運用が現行の実態である（下記15.3参照）。
+>
+> **★open blocker（finding 002・decommission未強制）★**: 本ドキュメントは Gemini を三者監査の
+> 正規経路から除外したが、`scripts/audit_gemini.sh` は実行ファイルとして repo に現存し
+> （2026-07-21時点で存在確認済）、かつ上位正本 `AGENTS.md` は依然として「標準呼出しは
+> `scripts/audit_codex.sh` / `scripts/audit_gemini.sh` 経由」と両者を並記している。
+> これは文書（本canon）と実行系（script/AGENTS.md）が食い違う二重活性pathであり、
+> ドキュメント側の記述だけでは decommission は強制されない（Enforcement-over-Documentation
+> 原則違反）。`audit_gemini.sh` の機械的無効化・削除、および `AGENTS.md` の参照更新は
+> 本改訂（doc-only, `docs/audit-framework.md` 単一path）の授権範囲外であり、実装（削除/無効化 +
+> 呼出し不能であることの negative test + AGENTS.md 同時更新）には別途上位起票・承認を要する。
+> 解消するまで本 open blocker は撤回しない。
 
 ### 15.2 家康の標準フロー（厳守）
 
@@ -718,6 +786,7 @@ cat /tmp/codex_audit_test_task_cycle1.json | python3 -m json.tool
 | 2026-05-05 13:50 | 信長 | 初版作成（理事長指示「緻密に・抜け漏れなく」） |
 | 2026-05-05 14:13 | 信長 | §15-16追加: 実装済みスクリプト3本（audit_codex.sh / 旧第三者監査AI用script / 未実装だったメタ監査script）、ドライラン手順 |
 | 2026-07-21（branch提案・信長承認待ち） | ashigaru-third-3 | DD-192整合（委員長差配 seq8b099043）: 旧第三者監査AI（DD-192で全面decommission）関連の記述を相談役(Hermes)のpc_handshake非同期呼出しへ全面差替（§1/§3/§5-§9/§10.1/§11-§14）。§15.2/旧§15.3のphantom canon（一度も実装されなかったメタ監査自動化script言及）を削除し、家老手動照合が現行実態である旨を明記。§16のドライラン節を実態に整合。改訂後 grep 実測で運用上の旧AI参照・phantom script参照が0件であることを確認（DD-192決定の記録としての歴史的言及を除く）。 |
+| 2026-07-22（branch提案・信長承認待ち・cycle2） | ashigaru-third-3 | gunshi-third G1 cycle1 REDO（4findings）是正: (001)§5.2完了確認記述を`audit_write.py`実装実態へ書換（response行INSERT + `--resolve-id`時のみ`resolved_at`PATCH、`acknowledged_by`/`resolved`列は非実在と明記、negativeケース表追加）。(002)`audit_gemini.sh`実体残存+`AGENTS.md`参照の二重活性pathを§15 DD-192注記へopen blockerとして正直追記（decommission未強制・別途実装授権要、本doc-only改訂の授権外）。(003)§10「機械的に検証」を「手動で目視照合」へ是正しopen blocker（自動enforcement gate未実装）を明記。(004)§5.2 pc_handshake直INSERTのcomment placeholderを、発注envelope契約（id/from_pc/to_pc/topic/content/priority/message_type/clinic_id/requires_response必須フィールド+read-back SQL）に置換し、発注専用ラッパー不在をopen blockerとして明記（`audit_write.py`は応答専用でfrom_pc allowlistにより転用不可）。findings 001-004全件対応、doc-only・単一path・push保留維持。 |
 
 信長以外による改訂は禁止。改訂提案は inbox_write で信長へ。本行は信長の最終承認まで「提案」段階。
 
