@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "purpose": "Name-based routing registry for isolated Hermes department heads.",
+  "safety": {
+    "no_api_keys": true,
+    "no_anthropic_gateway": true,
+    "send_requires_agent_id_match": true,
+    "pc_handshake_routing_enabled": false
+  },
+  "roles": [
+    {
+      "role_id": "reserveimage",
+      "display_name": "予約画像Hermes",
+      "scope": "reservation_imaging_clinical_ops",
+      "session": "hermes-reserveimage",
+      "target_hint": "hermes-reserveimage:0.0",
+      "pane_id": "%12",
+      "hermes_home": "/home/hakudoukai/hermes-departments/reserveimage",
+      "provider": "openai-codex",
+      "model": "gpt-5.6-sol",
+      "auth_expected": "human_subscription_login_required",
+      "direct_pc_handshake_routing_enabled": false,
+      "updated_at_epoch": 1783809603
+    },
+    {
+      "role_id": "handoverdocs",
+      "display_name": "申し送り文書Hermes",
+      "scope": "handover_patient_documents_karte",
+      "session": "hermes-handoverdocs",
+      "target_hint": "hermes-handoverdocs:0.0",
+      "pane_id": "%13",
+      "hermes_home": "/home/hakudoukai/hermes-departments/handoverdocs",
+      "provider": "openai-codex",
+      "model": "gpt-5.6-sol",
+      "auth_expected": "human_subscription_login_required",
+      "direct_pc_handshake_routing_enabled": false,
+      "updated_at_epoch": 1783809603
+    },
+    {
+      "role_id": "bianalytics",
+      "display_name": "経営BIHermes",
+      "scope": "management_bi_sql_ddl",
+      "session": "hermes-bianalytics",
+      "target_hint": "hermes-bianalytics:0.0",
+      "pane_id": "%14",
+      "hermes_home": "/home/hakudoukai/hermes-departments/bianalytics",
+      "provider": "openai-codex",
+      "model": "gpt-5.6-sol",
+      "auth_expected": "human_subscription_login_required",
+      "direct_pc_handshake_routing_enabled": false,
+      "updated_at_epoch": 1783809603
+    }
+  ]
+}

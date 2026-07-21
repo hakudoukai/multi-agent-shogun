@@ -1,0 +1,18 @@
+version: 2026-07-12
+standard_model: gpt-5.6-sol
+standard_provider: openai-codex
+central_ccflare_url: http://192.168.11.59:8080
+retired:
+  models:
+    - gpt-5.5
+  endpoints:
+    - http://localhost:8082
+roles:
+  environment_director: openai-codex/gpt-5.6-sol
+  advisor_main: openai-codex/gpt-5.6-sol
+  reserveimage: openai-codex/gpt-5.6-sol
+  handoverdocs: openai-codex/gpt-5.6-sol
+  bianalytics: openai-codex/gpt-5.6-sol
+  training_chief_mainpc: gpt-5.6-sol
+  learning_director_chatgpt_mac: gpt-5.6-sol
+  learning_director_gemini_mac: gemini-3.5-flash

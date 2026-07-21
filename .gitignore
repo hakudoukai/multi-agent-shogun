@@ -83,6 +83,8 @@
 !config/ntfy_auth.env.sample
 # Hakudokai fork: settings.yaml has role mappings (no secrets)
 !config/settings.yaml
+!config/gpt56-runtime-canon.yaml
+!config/hermes-departments-registry.json
 
 # Hakudokai fork: shim/hakudokai (DD-146 R1-R4 modules, no PII)
 !shim/
@@ -164,6 +166,7 @@
 !scripts/agent_health_check.sh
 !scripts/setup_known_hosts.sh
 !scripts/karo_overload_monitor.sh
+!scripts/check-gpt56-runtime-canon.sh
 
 # Box CCG App + 3PC 視覚環境 (副院長裁定 4728acd7、2026-06-04)
 !scripts/box_setup.sh
