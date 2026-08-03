@@ -350,12 +350,12 @@ for msg in new_msgs:
 
         inbox_cmd = [
             "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
-            target, content[:500], (message_type or "task_assigned"), from_pc
+            target, content, (message_type or "task_assigned"), from_pc
         ]
         write_ok = False
         try:
             env = os.environ.copy()
-            env["INBOX_CONTENT"] = content[:500]
+            env["INBOX_CONTENT"] = content
             result = subprocess.run(inbox_cmd, capture_output=True, timeout=10, env=env)
             if result.returncode == 0:
                 write_ok = True
