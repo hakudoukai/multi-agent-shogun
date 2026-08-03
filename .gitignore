@@ -435,3 +435,6 @@ tests/specs/osato_lms_*
 !skills/
 !skills/codex-exec-sandbox-guard/
 !skills/codex-exec-sandbox-guard/*
+
+# 2026-08-03 委員長: karo-second→iincho uplink helperのwhitelist(同一commit同梱・裁定seq137679)
+!scripts/karo_second_send_iincho.sh
