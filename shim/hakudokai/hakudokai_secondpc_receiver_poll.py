@@ -85,25 +85,23 @@ def dead_letter_message(msg_id, last_error):
 
 retry_tracker = load_retry_tracker()
 
-# Agent pane mapping for nudge
+# Agent pane mapping for delivery metadata. Direct worker-pane send-keys is disabled by R2.
 AGENT_PANES = {
-    # §18 SecondPC 配置 (CLAUDE.md §18.1、2026-05-06 移行 + Phase 4-5 体制改編):
-    #   家老 1体: maeda = multiagent:agents.0 (旧 instructions/maeda.md §1)
-    #   通常 ashigaru 3体: ashigaru5/6/7 = multiagent:agents.0/1/2
-    #     ※ maeda と ashigaru5 は同 pane (multiagent:agents.0) に同居していない、
-    #     SecondPC tmux session の実 pane 構成は shutsujin_departure_secondpc.sh が決定。
-    #     旧期 receiver の pane 表は ashigaru5 を 0、ashigaru6 を 1 等としていたが、
-    #     maeda 新設 (Phase 4) で実体は maeda=0、ashigaru5=1、ashigaru6=2、ashigaru7=3 へ
-    #     再編されている可能性あり (= shutsujin script を SSoT として確認すべし)。
-    #   非常時 +1: ashigaru8 = multiagent:agents.4 (= 暫定、shutsujin で確定)
-    "maeda": "multiagent:agents.0",
-    "ashigaru5": "multiagent:agents.1",
-    "ashigaru6": "multiagent:agents.2",
-    "ashigaru7": "multiagent:agents.3",
-    "ashigaru8": "multiagent:agents.4",
-    # 旧体制 (廃止) — sakura(ashigaru2) は §18 で MainPC 所属に変更
-    # "ashigaru2": "secondpc:0.0",  # 削除済 (= MainPC 所属、SecondPC で受信すべきでない)
+    "karo-second": "multiagent-second:0.0",
+    "shogun-second": "shogun-second:0.0",
+    "ashigaru1": "multiagent-second:0.1",
+    "ashigaru2": "multiagent-second:0.2",
+    "ashigaru3": "multiagent-second:0.3",
+    "ashigaru4": "multiagent-second:0.4",
+    "ashigaru5": "multiagent-second:0.5",
+    "ashigaru6": "multiagent-second:0.6",
+    "ashigaru7": "multiagent-second:0.7",
+    # R2 (FUKUINCHO 裁定 seq96053): gunshi-second を 0.8 に swap (最終正本 map)。
+    "gunshi-second": "multiagent-second:0.8",
+    # 注: ashigaru1-7 の最終 pane (0.1-0.7) 反映は R3-R9 の各 swap 段で更新予定。
+    #     旧 ashigaru8@0.9 は登録撤回 (R0 seq96053) につき AGENT_PANES からも除外。
 }
+VALID_SECONDPC_TARGETS = frozenset(AGENT_PANES)
 
 def handle_file_sync(msg, script_dir):
     """Handle file_sync messages: write synced files to local filesystem.
@@ -163,79 +161,125 @@ def handle_file_sync(msg, script_dir):
     return written > 0
 
 
-def detect_target(content, topic):
-    """Detect target agent from topic/content (§18 PC配置準拠).
+def _target_from_json_content(content):
+    stripped = (content or "").strip()
+    if not stripped.startswith("{"):
+        return None
+    try:
+        payload = json.loads(stripped)
+    except (json.JSONDecodeError, TypeError):
+        return None
+    target = payload.get("target_agent")
+    return target if target in VALID_SECONDPC_TARGETS else None
 
-    旧体制 sakura/kuro hardcode 廃止。topic=cross_pc_inbox_<agent> から
-    正規表現で抽出し、SecondPC 所属 agent (§18 配置) のみ accept。
-    不明な場合は警告ログ + maeda フォールバック (= SecondPC 家老が一次受領)。
 
-    バグ修正 2026-05-07: 旧コードは default=ashigaru2 で全配信が ashigaru2 に
-    誤転送されていた (家老が ashigaru5/6/7 に発令しても全部 ashigaru2 へ)。
-    バグ修正 2026-05-08: maeda (= SecondPC 家老、Phase 4-5 体制改編で新設)
-    が valid_secondpc に未登録のため、将軍main → maeda 宛 msg が fallback で
-    全件 ashigaru5 に misroute されていた。maeda + 全 SecondPC 所属を
-    AGENT_PANES と整合させた。default も ashigaru5 → maeda に変更
-    (= 不明 msg は家老が一次受領、配下に裁量配信、誤配信抑止)。
+def _target_from_context_data(msg):
+    context_data = msg.get("context_data")
+    if not context_data:
+        return None
+    if isinstance(context_data, str):
+        try:
+            context_data = json.loads(context_data)
+        except (json.JSONDecodeError, TypeError):
+            return None
+    if not isinstance(context_data, dict):
+        return None
+    target = context_data.get("target_agent")
+    return target if target in VALID_SECONDPC_TARGETS else None
+
+
+def detect_target(msg):
+    """Resolve SecondPC target agent deterministically.
+
+    R2 rules:
+      - accept only structured target_agent or topic cross_pc_inbox_<agent>;
+      - support hyphenated role ids such as karo-second and shogun-second;
+      - never infer from free-text keyword substrings;
+      - never fall back to maeda/default agent.
     """
     import re
-    valid_secondpc = frozenset(["maeda", "ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"])
+    content = msg.get("content", "") or ""
+    topic = msg.get("topic", "") or ""
 
-    # Primary: parse topic (most reliable)
-    m = re.match(r'cross_pc_inbox_(\w+)', topic)
+    target = _target_from_context_data(msg)
+    if target:
+        return target
+
+    m = re.fullmatch(r"cross_pc_inbox_([\w-]+)", topic)
     if m:
         target = m.group(1)
-        if target in valid_secondpc:
+        if target in VALID_SECONDPC_TARGETS:
             return target
+        log(f"BLOCK: invalid cross_pc_inbox target={target} topic={topic}")
+        return None
 
-    # Secondary: parse content header [from→target]
-    m = re.search(r'\[(\w+)→(\w+)\]', content)
-    if m:
-        target = m.group(2)
-        if target in valid_secondpc:
-            return target
+    target = _target_from_json_content(content)
+    if target:
+        return target
 
-    # Fallback: keyword
-    text = (content + " " + topic).lower()
-    for agent in ("maeda", "ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"):
-        if agent in text:
-            return agent
-    if "kuro" in text or "クロ" in content:
-        return "ashigaru8"
+    log(f"BLOCK: missing structured target_agent for topic={topic}")
+    return None
 
-    # Default: maeda (= SecondPC 家老、不明 msg 一次受領 + 配下裁量配信)
-    log(f"WARN: target unknown for topic={topic}, falling back to maeda")
-    return "maeda"
+
+def append_dead_letter(msg, reason):
+    """Append unresolved message to local dead-letter YAML without ACK-as-progress semantics."""
+    path = pathlib.Path(script_dir) / "queue" / "inbox" / "_dead_letter_second.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    msg_id = msg.get("id", "")
+    existing = path.read_text(encoding="utf-8") if path.exists() else "messages:\n"
+    if msg_id and msg_id in existing:
+        return
+    content_head = (msg.get("content", "") or "")[:240].replace("\n", "\\n").replace('"', '\\"')
+    topic = (msg.get("topic", "") or "").replace('"', '\\"')
+    entry = (
+        f"  - id: dead_{int(time.time())}_{msg_id[:8]}\n"
+        f"    _handshake_id: {msg_id}\n"
+        f"    from: {msg.get('from_pc', 'unknown')}\n"
+        f"    type: unroutable\n"
+        f"    reason: {reason}\n"
+        f"    topic: \"{topic}\"\n"
+        f"    content_head: \"{content_head}\"\n"
+        f"    read: false\n"
+    )
+    if not existing.endswith("\n"):
+        existing += "\n"
+    path.write_text(existing + entry, encoding="utf-8")
+
+
+def escalate_unroutable(msg, reason):
+    """Escalate unresolved routing to FUKUINCHO/Commander once per handshake id."""
+    try:
+        import urllib.request
+        payload = json.dumps({
+            "message_type": "status_update",
+            "from_pc": "second_pc",
+            "to_pc": "fukuincho",
+            "topic": "wrong_recipient_or_unroutable",
+            "content": (
+                f"SecondPC receiver BLOCKED unroutable message. "
+                f"reason={reason}; source_id={msg.get('id','')}; "
+                f"topic={msg.get('topic','')}; no fallback/keyword/default routing used."
+            ),
+            "requires_response": False,
+            "priority": "high",
+            "clinic_id": "hakudoukai_main",
+        }, ensure_ascii=False).encode()
+        req = urllib.request.Request(f"{api_url}/pc_handshake", data=payload, method="POST")
+        req.add_header("Authorization", f"Bearer {api_key}")
+        req.add_header("apikey", api_key)
+        req.add_header("Content-Type", "application/json")
+        req.add_header("Prefer", "return=minimal")
+        with urllib.request.urlopen(req, timeout=10):
+            pass
+        log(f"ESCALATED unroutable {msg.get('id','')[:8]} reason={reason}")
+    except Exception as e:
+        log(f"ESCALATE failed for {msg.get('id','')[:8]}: {e}")
+
 
 def send_nudge(agent_id, count):
-    """Send minimal nudge (inboxN only, no content)."""
-    pane = AGENT_PANES.get(agent_id)
-    if not pane:
-        return
-    nudge = f"inbox{count}"
-    try:
-        # Check if agent is busy (has running process)
-        result = subprocess.run(
-            ["tmux", "display-message", "-t", pane, "-p", "#{pane_current_command}"],
-            capture_output=True, text=True, timeout=5
-        )
-        current_cmd = result.stdout.strip()
-        # Only nudge if at shell prompt (bash/zsh) or claude prompt
-        if current_cmd in ("bash", "zsh", "claude", "node"):
-            subprocess.run(
-                ["tmux", "send-keys", "-t", pane, nudge, ""],
-                capture_output=True, timeout=5
-            )
-            time.sleep(0.3)
-            subprocess.run(
-                ["tmux", "send-keys", "-t", pane, "Enter", ""],
-                capture_output=True, timeout=5
-            )
-            log(f"nudge sent to {agent_id} ({pane}): {nudge}")
-        else:
-            log(f"nudge deferred for {agent_id} (busy: {current_cmd})")
-    except Exception as e:
-        log(f"nudge failed for {agent_id}: {e}")
+    """R2: direct worker-pane send-keys disabled; watcher/inotify handles delivery."""
+    log(f"nudge disabled by R2 for {agent_id} count={count}")
+
 
 # Track per-agent delivery counts for nudge
 agent_deliveries = {}
@@ -277,13 +321,24 @@ for msg in new_msgs:
             # Determine target agent for nudge
             try:
                 payload = json.loads(content)
-                target = payload.get("target_agent", "ashigaru5")  # §18: default を ashigaru5 (旧 sakura 後継)
+                target = payload.get("target_agent")
             except (json.JSONDecodeError, TypeError):
-                target = detect_target(content, topic)
-            agent_deliveries[target] = agent_deliveries.get(target, 0) + 1
+                target = None
+            if target in VALID_SECONDPC_TARGETS:
+                agent_deliveries[target] = agent_deliveries.get(target, 0) + 1
     else:
         # --- Standard message: write to inbox ---
-        target = detect_target(content, topic)
+        target = detect_target(msg)
+        if not target:
+            reason = "missing_or_invalid_target_agent"
+            append_dead_letter(msg, reason)
+            escalate_unroutable(msg, reason)
+            with open(processed_file, "a") as f:
+                f.write(msg_id + "\n")
+            retry_tracker.pop(msg_id, None)
+            save_retry_tracker(retry_tracker)
+            log(f"BLOCKED unroutable message without ACK: {msg_id[:8]} {topic}")
+            continue
 
         inbox_cmd = [
             "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),

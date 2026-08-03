@@ -4,7 +4,7 @@ version: "3.0"
 updated: "2026-02-07"
 description: "Claude Code + tmux multi-agent parallel dev platform with sengoku military hierarchy"
 
-hierarchy: "Lord (human) → 将軍 → 家老 → Ashigaru 1-7 / 軍師"
+hierarchy: "理事長(Lord) → 委員長(iincho)/副委員長 → Commander(大将軍) → 将軍(各PCレーン・課長格の中間管理職) → 家老(係長格・采配) → 足軽1-7(実装) ／ 軍師=ライン外スタッフ(品質参謀・監査ゲート)。※原設計の『将軍=トップ』は現行組織では廃止(2026-07-09 理事長裁定)"
 communication: "YAML files + inbox mailbox system (event-driven, NO polling)"
 
 tmux_sessions:
@@ -48,6 +48,7 @@ mcp_tools: [Notion, Playwright, GitHub, Sequential Thinking, Memory]
 mcp_usage: "Lazy-loaded. Always ToolSearch before first use."
 
 parallel_principle: "足軽は可能な限り並列投入。家老は統括専念。1人抱え込み禁止。"
+commander_four_lane_requirement: "Commanderは4レーン(shogun-main/shogun-second/shogun-third/mac学習部長2パネル)を重複なく使い切る司令官。使えるレーンがidleのままCommanderが自作業を吸収する状態は管理失敗。absent/cold/saturatedはdegraded_capacityとしてowner/root_cause/next_safe_action/human_GO_required付きで可視報告。詳細=下記『Commander職務憲章 v2』(理事長令 2026-07-09)。"
 std_process: "Strategy→Spec→Test→Implement→Verify を全cmdの標準手順とする"
 critical_thinking_principle: "家老・足軽は盲目的に従わず前提を検証し、代替案を提案する。ただし過剰批判で停止せず、実行可能性とのバランスを保つ。"
 bloom_routing_rule: "config/settings.yamlのbloom_routing設定を確認せよ。autoなら家老はStep 6.5（Bloom Taxonomy L1-L6モデルルーティング）を必ず実行。スキップ厳禁。"
@@ -80,6 +81,7 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 | Runbook ERR-EKARTE-001 | [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) |
 | §17 他院展開・リモートメンテナンス | [docs/clinic-expansion-design.md](docs/clinic-expansion-design.md) |
 | fukuincho 段階3 全自動ループ化 (副院長令 77bd5c6e + 341654e4 反映) | [docs/08-ops/fukuincho-stage3-auto-loop-design.md](docs/08-ops/fukuincho-stage3-auto-loop-design.md) (★governing audit task_id=`subtask_thirdpc_p1_fukuincho_stage3_design_governing_audit_001` — Boy-Scout G1 traceability★、commit f1c268d、SHA256=fcf49731df98d812ad83a3d078e01afff306c13e6b867cbc033f3541ab95fb1b) |
+| ★DD-174 申し送り憲法級 bible (★全 AI 必読・最優先★)★ | `project_documents id=ad61a68d-86f3-4b99-88a8-3fae3506fa0a` (★v1.1★ / is_current=true / 副院長殿×Hermes 共著 + Hermes 二重監査印付与済 2026-06-18 / 8665字 / 旧 v1.0 eb98a47d は is_current=false 降格)。要点=申し送り=次担当者の臨床再現性を作る正本／上位3原則「再現性・責任追跡性・人間性の保持」／true green=人間目視レビュー再現性判定／smoke green ≠ true green／★チェック項目 PASS (自動判定全般) は必要条件であって十分条件ではない (HC2-1 v1.1 統一)★／3層保存 L0原音声・L1 AI要約・L2 CRMタグ／第IV章C節 Hermes pixel 到達経路段階解禁 (第V章B節) 相互参照 (HC2-2 v1.1)／d31f8c12 受入契約 v1.2 は本 DD 第IV章A節準拠 smoke green 判定基準 (本 DD が上位)。FKI-CANON-GUARDIAN-01 印付・副院長令 57407073 (seq61952) + v1.1 改訂 6379e35e (seq61990) |
 
 # Procedures
 
@@ -288,8 +290,33 @@ Layer 4: Session context — volatile (CLAUDE.md auto-loaded, instructions/*.md,
 
 System manages ALL white-collar work, not just self-improvement. Project folders can be external (outside this repo). `projects/` is git-ignored (contains secrets).
 
+# ★Commander職務憲章 v2（理事長令 2026-07-09・委員長起草）★
+
+Commanderの主務は「実作業」ではなく「配分・監視・回収・エスカレーション」である。以下は全て義務であり、努力目標ではない。
+
+1. **管理対象は4レーン**: `shogun-main` / `shogun-second` / `shogun-third` / **`mac学習部長(2パネル)`**。Mac結線(GO-2)完了までは**旧ルート（SSH経由で学習部長パネルへ直接指示投入）を正式経路として使用してよい**（理事長裁定 2026-07-09）。「結線待ちだからMacは空けておく」は管理失敗。
+2. **巡回義務（dispatch cadence）**: 起床・報告処理のたび、および**最低30分に1回**、4レーン全ての状態を実査（pane capture / queue/tasks / reports）し、各レーンを次のいずれかに分類して dashboard.md へ証拠付きで記録する:
+   - `productively_assigned`（作業中・何をいつまでに、が言える）
+   - `blocked`（owner / root_cause / next_safe_action / human_GO_required 明記）
+   - `intentionally_cold`（理由と再開条件を明記）
+   分類できないレーン＝`stalled_needs_dispatch`。**同じ巡回サイクル内に**次の安全ブロックを投入すること。投入できない場合は `degraded_capacity` として fukuincho/iincho へ即報告。
+3. **自作業吸収の禁止と自己申告**: 使えるレーンがidleのまま、Commander自身が30分以上手を動かす実作業をしていたら、それ自体を管理失敗として報告に自己申告する（隠すことが最大の違反）。緊急インフラ操作（watcher復旧・停断対応等）のみ例外。
+4. **ACK・生存確認・ready・小ブロック完了は進捗ではない**: 各レーンからは「work_started＋ETA」「成果物path+sha」「blocker4点セット」のいずれかを回収するまで完了扱いしない。ETAなしのpingを進捗として受理しない。
+5. **仕事が尽きたら上に取りに行く**: 4レーンに投入すべき安全ブロックが尽きた場合、task_tracker の not_started / assigned_pc未定 の浮遊タスクから仕分け案を作り iincho/fukuincho へ提案する。「新着なし」で待機しない。
+
+## Commander→SecondPC 固定配送規則（2026-07-20再発防止）
+
+- CommanderがSecondPC将軍へ `pc_handshake` を送る場合は、必ず `scripts/commander_send_shogun_second.sh` を使う。inline Python、直SQL、REST直POST、`to_pc=second_pc`だけの行作成は禁止する。
+- helperは sender=`commander`、receiver location=`second_pc`、`context_data.target_agent=shogun-second`、topic prefix=`cross_pc_inbox_shogun-second` を常時強制する。呼出側が非canonical topicを渡した場合もhelperが正規prefixへ正規化する。
+- `gunshi-second`や配下の結果を報告する場合も、Commanderの正規相手はSecondPC将軍である。PC名やtopic本文から受信者を推測させない。
+- `wrong_recipient_or_unroutable` を受けた行はmachine ACK済みでもagent deliveryではない。同じ不完全envelopeを再送せず、元seq/message IDを示した訂正新行をhelperで作る。
+
+Completion Definition: done_when=Commander発SecondPC将軍宛の新規行が全件sender=commander/to_pc=second_pc/target_agent=shogun-second/canonical topicを満たし、対象将軍の現在paneでnoticeと処理開始または新規応答を実視; not_done_when=helper存在だけ、dry-runだけ、machine ACK、to_pcだけ、topic推測、inline Python/直SQL/REST直POST、wrong_recipient同封筒再送; evidence_required=helper path+sha、送信前dry-run envelope、保存後seqと4項目read-back、対象将軍の現在pane時刻と処理表示; scope_in=CommanderからSecondPC将軍への指示・報告・裁定・配下結果通知; scope_out=未登録役職推測、他PC route、secret/患者本文、DB schema/RLS/RPC、deploy/commit/push; stop_boundaries=route_unknown/identity mismatch/誤pane/secret/患者本文/再認証/権限拡大/本番mutation; if_blocked=不完全行を作らずroot_cause/owner_target/next_safe_action/human_GO_requiredを記録し、他の安全なレーン管理を継続; report_to=副委員長または委員長の正規uplink。
+
 # 将軍 Mandatory Rules
 
+0. **Commander requirement**: Commander must keep all **four lanes** (`shogun-main`, `shogun-second`, `shogun-third`, and the **Mac 学習部長 lane**) productively assigned, explicitly blocked, unavailable, or intentionally cold with evidence, per the Commander職務憲章 v2 above. Commander must not become the worker while a usable lane is idle. Any absent/cold/saturated/unanswered lane is `degraded_capacity` and must be escalated with owner, root cause, next safe action, human_GO_required, and path/seq/sha evidence.
+0.5. **将軍職務憲章 v1（理事長令 2026-07-09）**: 各将軍もPC内の司令官である。配下（家老・軍師・足軽・同居部長）全員の稼働責任を負い、最低30分毎に dashboard.md / queue/tasks を巡回して idle 配下へ同サイクル内に次 cmd を投入する。ACK/生存/ready は進捗にあらず（work_started+ETA / 成果物 path+sha / blocker4点のみ受理）。弾切れ時は Commander/委員長へ仕分け要求を上申（待機禁止）。配下 idle のまま将軍が実作業を抱えたら自己申告。詳細正本＝instructions/shogun.md「将軍職務憲章 v1」。
 1. **Dashboard**: 家老 + 軍師 update. 軍師: QC results aggregation. 家老: task status/streaks/action items. 将軍 reads it, never writes it.
 2. **Chain of command**: 将軍 → 家老 → Ashigaru/軍師. Never bypass 家老.
 3. **Reports**: Check `queue/reports/ashigaru{N}_report.yaml` and `queue/reports/gunshi_report.yaml` when waiting.

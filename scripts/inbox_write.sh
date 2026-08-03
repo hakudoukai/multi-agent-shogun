@@ -74,9 +74,17 @@ try:
             cfg = yaml.safe_load(f) or {}
         pc_map = cfg.get('pc_mapping', {})
     local_id = ''
+    local_agents = []
     for pc_name, pc_cfg in pc_map.items():
         if pc_cfg.get('is_local'):
             local_id = pc_cfg.get('pc_id', pc_name)
+            local_agents = pc_cfg.get('agents', []) or []
+    # local-first (R0 seq96053/96064): target が local PC の agents に在れば bridge せず local 書込。
+    # 3PC 均等編成で同一 agent_id (例 ashigaru1-7) が複数 PC に併存しても、各 PC 内で local 解決される。
+    # remote-only agent (local に無い) の bridge 意味論は不変。
+    if '$target' in local_agents:
+        print('')
+        sys.exit(0)
     for pc_name, pc_cfg in pc_map.items():
         if pc_cfg.get('is_local'):
             continue
@@ -135,23 +143,35 @@ PYEOF
 )
 
     # INSERT to Supabase for cross-PC delivery
-    curl -sS -X POST \
+    if curl -sS -X POST \
         "${sb_url}/rest/v1/pc_handshake" \
         -H "Authorization: Bearer ${sb_key}" \
         -H "apikey: ${sb_key}" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
         --data-binary "$payload" \
-        2>/dev/null \
-        && echo "[inbox_write] cross-PC bridge: ${target} → ${target_pc} via Supabase" >&2 \
-        || echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}" >&2
+        2>/dev/null; then
+        echo "[inbox_write] cross-PC bridge: ${target} → ${target_pc} via Supabase" >&2
+        return 70
+    fi
+    echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}" >&2
+    return 71
 }
 
-# Trigger cross-PC bridge (non-blocking, runs in background)
-# 緊急停止 2026-05-07 18:23: 連続 INSERT loop 発生中、source 不明
-# ~/.openclaw/disable_cross_pc_bridge flag 存在時は cross_pc_bridge を起動しない
+# Trigger cross-PC bridge. If a cross-PC insert succeeds, do not also write a
+# local dead-letter inbox file. If insert fails, fail closed instead of silently
+# creating an unread local queue that no remote recipient reads.
 if [ ! -f "$HOME/.openclaw/disable_cross_pc_bridge" ]; then
-    _cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM" &
+    set +e
+    _cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM"
+    _BRIDGE_RC=$?
+    set -e
+    if [ "$_BRIDGE_RC" -eq 70 ]; then
+        exit 0
+    fi
+    if [ "$_BRIDGE_RC" -eq 71 ]; then
+        exit 71
+    fi
 fi
 
 # Initialize inbox if not exists
@@ -197,7 +217,7 @@ max_attempts=3
 
 while [ $attempt -lt $max_attempts ]; do
     if _acquire_lock; then
-        INBOX_CONTENT="$CONTENT" "$SCRIPT_DIR/.venv/bin/python3" -c "
+        INBOX_CONTENT="$CONTENT" INBOX_EXPIRES_AT="${INBOX_EXPIRES_AT:-}" INBOX_SUPERSEDES_ID="${INBOX_SUPERSEDES_ID:-}" "$SCRIPT_DIR/.venv/bin/python3" -c "
 import yaml, sys, os
 
 try:
@@ -212,13 +232,19 @@ try:
         data['messages'] = []
 
     # Add new message (content via env var to avoid quote injection)
+    # expires_at/supersedes: optional expiry/supersession schema fields, also
+    # routed via env var (not shell interpolation) to avoid injection. Absent
+    # by default (None) = fully backward compatible with existing readers,
+    # which never assumed these keys were present.
     new_msg = {
         'id': '$MSG_ID',
         'from': '$FROM',
         'timestamp': '$TIMESTAMP',
         'type': '$TYPE',
         'content': os.environ.get('INBOX_CONTENT', ''),
-        'read': False
+        'read': False,
+        'expires_at': os.environ.get('INBOX_EXPIRES_AT') or None,
+        'supersedes': os.environ.get('INBOX_SUPERSEDES_ID') or None
     }
     data['messages'].append(new_msg)
 
