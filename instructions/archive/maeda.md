@@ -1,3 +1,4 @@
+> 【廃止済 2026-08-03 委員長】DD-157補遺v1.8死亡名簿(2026-06-04理事長令)により本persona/旧canonは廃止。現行の正は instructions/shogun.md・karo.md・gunshi.md+PC別変種および fleet-composition-manifest。この記述で作業しないこと。
 ---
 # ============================================================
 # Maeda (前田利家) Configuration — SecondPC 家老
