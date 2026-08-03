@@ -421,3 +421,6 @@ tests/specs/osato_lms_*
 !docs/tier1_redundancy_layer_for_two_pc_integrity_design_2026-05-08.md
 !docs/tier1_v2_minimal_extension_design_2026-05-08.md
 !docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md
+
+# 2026-08-03 委員長: helper本体がwhitelist漏れでgit不可視だった穴の是正(裁定seq137615)
+!scripts/commander_send_shogun_second.sh
