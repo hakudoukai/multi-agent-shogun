@@ -142,19 +142,25 @@ print(json.dumps({
 PYEOF
 )
 
-    # INSERT to Supabase for cross-PC delivery
-    if curl -sS -X POST \
+    # INSERT to Supabase for cross-PC delivery. curl itself exits 0 for HTTP
+    # 4xx/5xx unless --fail is used, so require both curl success and an
+    # explicit 2xx response. Discard the response body to avoid logging it.
+    local http_status curl_rc
+    http_status=$(curl --fail-with-body -sS -o /dev/null -w '%{http_code}' -X POST \
+        --connect-timeout 10 --max-time 15 \
         "${sb_url}/rest/v1/pc_handshake" \
         -H "Authorization: Bearer ${sb_key}" \
         -H "apikey: ${sb_key}" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
         --data-binary "$payload" \
-        2>/dev/null; then
+        2>/dev/null)
+    curl_rc=$?
+    if [ "$curl_rc" -eq 0 ] && [[ "$http_status" =~ ^2[0-9][0-9]$ ]]; then
         echo "[inbox_write] cross-PC bridge: ${target} → ${target_pc} via Supabase" >&2
         return 70
     fi
-    echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}" >&2
+    echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-000}, curl_rc=$curl_rc)" >&2
     return 71
 }
 

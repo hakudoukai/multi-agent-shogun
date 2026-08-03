@@ -1,169 +1,187 @@
-# queue/pane_registry.yaml — tmux pane ↔ agent_id ↔ persona ↔ PC マッピング SSoT 雛形
-#
-# 用途:
-#   scripts/checks/pane_identity.sh の 4-way mapping audit が参照する SSoT 候補。
-#   現状は手動編集ベース (= update_method: manual)、Phase 2 で動的更新化を予定。
-#
-# 改訂責務:
-#   配置改訂は CLAUDE.md §18.1 の改訂と同期させる (= 理事長殿の専権事項)。
-#   本 YAML は §18.1 の machine-readable mirror として位置付け、
-#   §18.1 が SSoT、本 YAML は二次 source。drift 検出時は §18.1 を真とする。
-#
-# Phase 1 (本 cmd_phase1_pane_identity_4way_audit_001) では雛形のみ作成。
-# Phase 2 (cmd 別途発令予定) で watchdog 起動時自動更新 + drift 通知化。
-#
-# Reference:
-#   - CLAUDE.md §18.1 配置表 (= SSoT)
-#   - lib/_section18_roles.sh / shim/hakudokai/_section18_roles.py (= shell/python mirror)
-#   - scripts/watcher_supervisor.sh (= watchdog 配置)
-#   - docs/incident_logs/2026-05-08_pane_mapping_drift.md (= Phase 0 incident log)
-#   - skills/pane-identity-verify/SKILL.md (= 検証手順)
-
 pane_registry:
   version: 2
-  last_updated: "2026-05-08T21:30:00+09:00"
-  pending_director_approval: |
-    2026-05-08 21:25 信長判断で実態合わせ修正:
+  last_updated: '2026-07-02T16:10:00+09:00'
+  pending_director_approval: '2026-05-08 21:25 信長判断で実態合わせ修正:
+
     - 0.3 ↔ 0.4 swap (実態 0.3=ieyasu/0.4=ashigaru3 反映、§18.1 改訂提案を上申)
+
     - honda 1.0 + sanada 2.0 追加 (= Phase 16 招聘の Codex Pro + 改革 lane)
+
     - persona_aliases に honda + sanada 追加
+
     本日 19:04 ESCALATION /clear 暴発の真因 (= registry 0.3=ashigaru3 だが実態 ieyasu) を解消。
-  update_method: manual  # Phase 2 で auto に切替予定
-  source_of_truth: "CLAUDE.md §18.1"
-  notes: |
-    ashigaru4 は欠番 (PC 境界の視覚的区切り、CLAUDE.md §18.1 番号体系の原則)。
-    SecondPC entries は前田殿主管領域、本 PC からの tmux 検証は不可ゆえ
+
+    '
+  update_method: manual
+  source_of_truth: CLAUDE.md §18.1
+  notes: 'ashigaru4 は欠番 (PC 境界の視覚的区切り、CLAUDE.md §18.1 番号体系の原則)。
+
+    SecondPC entries は karo-second 主管領域。本 PC からの tmux 検証は不可ゆえ
+
     advisory のみ (= 4-way audit の対象は MainPC を主軸とし、SecondPC は記録参考)。
 
+    '
   panes:
-    # ─── MainPC: shogun (信長専用 session) ───
-    - tmux_target: "shogun:0.0"
-      agent_id: shogun
-      persona: nobunaga
-      pc: MainPC
-      role: 将軍
-      status: 通常運用
+  - tmux_target: shogun:0.0
+    agent_id: shogun
+    persona: nobunaga
+    pc: MainPC
+    role: 将軍
+    status: 通常運用
+  - tmux_target: multiagent:0.0
+    agent_id: karo
+    persona: hideyoshi
+    pc: MainPC
+    role: 家老
+    status: 通常運用
+  - tmux_target: multiagent:0.1
+    agent_id: ashigaru1
+    persona: ashigaru1
+    pc: MainPC
+    role: 足軽
+    status: 通常運用
+  - tmux_target: multiagent:0.2
+    agent_id: ashigaru2
+    persona: ashigaru2
+    pc: MainPC
+    role: 足軽
+    status: 通常運用
+  - tmux_target: multiagent:0.3
+    agent_id: gunshi
+    persona: ieyasu
+    cli: codex
+    pc: MainPC
+    role: 軍師
+    status: 通常運用
+    note: '実態合わせ修正 2026-05-08 21:25。Codex Pro 稼働、cli=codex。
 
-    # ─── MainPC: multiagent session (= karo + ashigaru1-3 + gunshi + takenaka) ───
-    - tmux_target: "multiagent:0.0"
-      agent_id: karo
-      persona: hideyoshi
-      pc: MainPC
-      role: 家老
-      status: 通常運用
+      旧記載 (= 0.3=ashigaru3) は本日 19:04 watcher_supervisor が ESCALATION /clear 暴発の真因。
 
-    - tmux_target: "multiagent:0.1"
-      agent_id: ashigaru1
-      persona: ashigaru1
-      pc: MainPC
-      role: 足軽
-      status: 通常運用
+      §18.1 改訂提案を理事長殿に上申。
 
-    - tmux_target: "multiagent:0.2"
-      agent_id: ashigaru2
-      persona: ashigaru2
-      pc: MainPC
-      role: 足軽
-      status: 通常運用
-
-    # 2026-05-08 21:25 信長判断で実態合わせ修正 (= 5/8 朝以降の運用実態を反映、§18.1 改訂提案 ま上申)
-    # 旧記載 0.3=ashigaru3 / 0.4=gunshi(ieyasu) は本日 19:04 ESCALATION /clear 暴発の真因
-    - tmux_target: "multiagent:0.3"
-      agent_id: gunshi
-      persona: ieyasu
-      cli: codex
-      pc: MainPC
-      role: 軍師
-      status: 通常運用
-      note: |
-        実態合わせ修正 2026-05-08 21:25。Codex Pro 稼働、cli=codex。
-        旧記載 (= 0.3=ashigaru3) は本日 19:04 watcher_supervisor が ESCALATION /clear 暴発の真因。
-        §18.1 改訂提案を理事長殿に上申。
-
-    - tmux_target: "multiagent:0.4"
-      agent_id: ashigaru3
-      persona: ashigaru3
-      cli: claude
-      pc: MainPC
-      role: 足軽
-      status: 非常時 +1
-      note: "実態合わせ修正 2026-05-08 21:25。通常運用時は不在 → 非常時 +1 として 0.4 配置。"
-
-    - tmux_target: "multiagent:0.5"
-      agent_id: takenaka
-      persona: takenaka
-      cli: claude
-      pc: MainPC
-      role: 信長直轄軍師
-      status: 持ち場準備中
-      note: "Phase 15 (2026-05-08 commit 94833a6) で新設、招聘準備段階。"
-
-    # 2026-05-08 21:25 信長判断で追加 (= 5/8 Phase 16 招聘の本多 + 5/8 sanada 改革 lane)
-    - tmux_target: "multiagent:1.0"
-      agent_id: honda
-      persona: honda
-      cli: codex
-      pc: MainPC
-      role: 重臣 (= Phase 16 招聘、Codex Pro retrospective + governance audit)
-      status: 通常運用
-      note: "Phase 16 (2026-05-08) 招聘、Codex Pro。pane 配置は理事長殿確認待ち。"
-
-    - tmux_target: "multiagent:2.0"
-      agent_id: sanada
-      persona: sanada
-      cli: claude
-      pc: MainPC
-      role: 改革 lane (= 本多直属、特命改革担当)
-      status: 通常運用
-      note: "2026-05-08 招聘、claude sonnet。改革 lane direct dispatch (F002 緩和)。"
-
-    # ─── SecondPC: multiagent session (= maeda + ashigaru5-8) ───
-    # SecondPC は前田殿主管領域、本 cmd では advisory record のみ。
-    # 動的更新は Phase 2/3 で対応 (= cmd 別途発令予定)。
-    - tmux_target: "multiagent:0.0"
-      agent_id: maeda
-      persona: maeda
-      pc: SecondPC
-      role: SecondPC 家老
-      status: 通常運用
-      note: "Phase 1 (2026-05-07) で新設、SecondPC 家老 (前田利家)。"
-
-    - tmux_target: "multiagent:0.1"
-      agent_id: ashigaru5
-      persona: ashigaru5
-      pc: SecondPC
-      role: 足軽
-      status: 通常運用
-
-    - tmux_target: "multiagent:0.2"
-      agent_id: ashigaru6
-      persona: ashigaru6
-      pc: SecondPC
-      role: 足軽
-      status: 通常運用
-
-    - tmux_target: "multiagent:0.3"
-      agent_id: ashigaru7
-      persona: ashigaru7
-      pc: SecondPC
-      role: 足軽
-      status: 通常運用
-
-    - tmux_target: "multiagent:0.4"
-      agent_id: ashigaru8
-      persona: ashigaru8
-      pc: SecondPC
-      role: 足軽
-      status: 非常時 +1
-      note: "通常運用時は不在。"
-
-  # ─── 欠番 (= PC 境界の視覚的区切り) ───
+      '
+  - tmux_target: multiagent:0.4
+    agent_id: ashigaru3
+    persona: ashigaru3
+    cli: claude
+    pc: MainPC
+    role: 足軽
+    status: 非常時 +1
+    note: 実態合わせ修正 2026-05-08 21:25。通常運用時は不在 → 非常時 +1 として 0.4 配置。
+  - tmux_target: multiagent:0.5
+    agent_id: takenaka
+    persona: takenaka
+    cli: claude
+    pc: MainPC
+    role: 信長直轄軍師
+    status: 持ち場準備中
+    note: Phase 15 (2026-05-08 commit 94833a6) で新設、招聘準備段階。
+  - tmux_target: multiagent:1.0
+    agent_id: honda
+    persona: honda
+    cli: codex
+    pc: MainPC
+    role: 重臣 (= Phase 16 招聘、Codex Pro retrospective + governance audit)
+    status: 通常運用
+    note: Phase 16 (2026-05-08) 招聘、Codex Pro。pane 配置は理事長殿確認待ち。
+  - tmux_target: multiagent:2.0
+    agent_id: sanada
+    persona: sanada
+    cli: claude
+    pc: MainPC
+    role: 改革 lane (= 本多直属、特命改革担当)
+    status: 通常運用
+    note: 2026-05-08 招聘、claude sonnet。改革 lane direct dispatch (F002 緩和)。
+  - tmux_target: shogun-second:0.0
+    agent_id: shogun-second
+    persona: shogun-second
+    pc: SecondPC
+    role: SecondPC 将軍
+    status: 通常運用
+    note: R2 receiver/materializer repair 2026-07-02 で current routing target として登録。
+  - tmux_target: multiagent-second:0.0
+    agent_id: karo-second
+    persona: karo-second
+    pc: SecondPC
+    role: SecondPC 家老
+    status: 通常運用
+    note: Phase 1 (2026-05-07) で新設、SecondPC 家老。
+  # ── SecondPC vessel 最終正本 map (FUKUINCHO 裁定 seq96053 / 改訂 R-series seq96064/96065) ──
+  #   0.0=karo-second / 0.1-0.7=ashigaru1-7 / 0.8=gunshi-second。a8 別枠 standby は廃止 (撤回)。
+  #   standby は a1-7 内の status 属性で表現 (canon 足軽7、1名 standby 可)。
+  #   id は MainPC と同一 (ashigaru1-7) だが router local-first (inbox_write.sh) で各 PC 内 local 解決。
+  #   ★移行表 (現況 live → 最終)★:
+  #     現況 (R1後): 0.1=a5 0.2=a6 0.3=a7 (live) / 0.4=gunshi-second (live) / 0.5-0.8=空 bash pane (spawn無)
+  #     最終 (R2+ 検収後 GO で reshuffle): 0.1-0.7=a1-7 / 0.8=gunshi-second。
+  #   本 map は最終正本。live 位置は R2+ swap 完了まで移行表の『現況』を参照。
+  - tmux_target: multiagent-second:0.1
+    agent_id: ashigaru1
+    persona: ashigaru1
+    pc: SecondPC
+    role: 足軽
+    status: 通常運用
+    migration_status: "★R6 完了 (2026-07-02): live 0.1 に spawn (claude pid 595560, Sonnet5, self-identify 確認)。★"
+    model: Sonnet5
+  - tmux_target: multiagent-second:0.2
+    agent_id: ashigaru2
+    persona: ashigaru2
+    pc: SecondPC
+    role: 足軽
+    status: 通常運用
+    migration_status: "★R7 完了 (2026-07-02): live 0.2 に spawn (claude pid 599210, Sonnet5, self-identify 確認)。★"
+    model: Sonnet5
+  - tmux_target: multiagent-second:0.3
+    agent_id: ashigaru3
+    persona: ashigaru3
+    pc: SecondPC
+    role: 足軽
+    status: 通常運用
+    migration_status: "★R8 完了 (2026-07-02): live 0.3 に spawn (claude pid 602422, Sonnet5, self-identify 確認)。★"
+    model: Sonnet5
+  - tmux_target: multiagent-second:0.4
+    agent_id: ashigaru4
+    persona: ashigaru4
+    pc: SecondPC
+    role: 足軽
+    status: 通常運用
+    migration_status: "★R9 完了 (2026-07-02): live 0.4 に spawn (claude pid 606209, Sonnet5, self-identify 確認)。足軽 7 slot 充足=canon 到達。★"
+    model: Sonnet5
+  - tmux_target: multiagent-second:0.5
+    agent_id: ashigaru5
+    persona: ashigaru5
+    pc: SecondPC
+    role: 足軽
+    status: 通常運用
+    migration_status: "★R3 完了 (2026-07-02): live 0.5 に到達 (swap-pane %1, claude pid 137125 不変)。★"
+  - tmux_target: multiagent-second:0.6
+    agent_id: ashigaru6
+    persona: ashigaru6
+    pc: SecondPC
+    role: 足軽
+    status: 通常運用
+    migration_status: "★R4 完了 (2026-07-02): live 0.6 に到達 (swap-pane %2, claude pid 137157 不変)。★"
+  - tmux_target: multiagent-second:0.7
+    agent_id: ashigaru7
+    persona: ashigaru7
+    pc: SecondPC
+    role: 足軽
+    status: 通常運用
+    migration_status: "★R5 完了 (2026-07-02): live 0.7 に到達 (swap-pane %3, claude pid 137251 不変)。★"
+  - tmux_target: multiagent-second:0.8
+    agent_id: gunshi-second
+    persona: gunshi-second
+    pc: SecondPC
+    role: SecondPC 軍師
+    model: Opus
+    cli: claude
+    status: 通常運用
+    migration_status: "★R2 完了 (2026-07-02): live 0.8 に到達 (swap-pane %5, claude pid 557053 不変)。★"
+    note: 'staged recovery seq95958 で新設 (Opus, 家老同格の監査役)。canon に gunshi model 明記なきため
+      shogun-second 裁定で Opus。R2 で 0.4→0.8 swap 完了。'
+  # a8 (旧 registered standby @0.9) 登録は撤回 (FUKUINCHO 裁定 seq96053)。standby は a1-7 内 status で表現。
   reserved_gaps:
-    - agent_id: ashigaru4
-      reason: "PC 境界の視覚的区切り (CLAUDE.md §18.1 番号体系原則)"
-
-  # ─── persona alias (= 旧名 → 新名) ───
-  # lib/_section18_roles.sh SECTION18_ROLE_ALIASES と同期する。
+  - agent_id: ashigaru4
+    reason: PC 境界の視覚的区切り (CLAUDE.md §18.1 番号体系原則)
   persona_aliases:
     shogun: nobunaga
     karo: hideyoshi
@@ -171,7 +189,8 @@ pane_registry:
     nobunaga: nobunaga
     hideyoshi: hideyoshi
     ieyasu: ieyasu
-    maeda: maeda
+    karo-second: karo-second
+    gunshi-second: gunshi-second
     takenaka: takenaka
     honda: honda
     sanada: sanada

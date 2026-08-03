@@ -98,7 +98,7 @@ CLAUDE.md は ★常時必須核★ のみ。各節の本体・チェックリ�
 1. Identify self: `tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}'`
 2. `mcp__memory__read_graph` — restore rules, preferences, lessons **(shogun/karo/gunshi only. ashigaru skip this step — task YAML is sufficient)**
 3. **Read `memory/MEMORY.md`** (shogun only) — persistent cross-session memory. If file missing, skip. *Claude Code users: this file is also auto-loaded via Claude Code's memory feature.*
-4. **Read your instructions file**: shogun→`instructions/shogun.md`, karo→`instructions/karo.md`, ashigaru→`instructions/ashigaru.md`, gunshi→`instructions/gunshi.md`. **NEVER SKIP** — even if a conversation summary exists. Summaries do NOT preserve persona, speech style, or forbidden actions.
+4. **Read your instructions file**: shogun→`instructions/shogun.md`, karo→`instructions/karo.md`（`@agent_id=karo-second` は `instructions/karo-second.md` も必読）, ashigaru→`instructions/ashigaru.md`, gunshi→`instructions/gunshi.md`. **NEVER SKIP** — even if a conversation summary exists. Summaries do NOT preserve persona, speech style, or forbidden actions.
 5. **★起動時必読 (shogun/karo)★** [docs/08-ops/pc-allocation.md](docs/08-ops/pc-allocation.md) を読み、自 PC × アカウント × 配置を確認 (#18 起動時情報の欠落防止、副院長令 7de922ec 順守)。
 5.5. **★正本 差分読み (shogun/Commander)★ FKI-DIFF-CANON-READ-01 (design_decisions eff61b9e、理事長令 2026-06-15)**: 自 PC の `agent_read_marks` (agent=`commander`/`main`/`second`/`third`) の `last_read_at` を high-water mark とし、それ以降に更新された正本のみ差分読みする (再読最小化・ccflare 枠温存)。
    - **project_documents**: `is_current=true AND (created_at > mark OR updated_at > mark)` を全文読む。加えて `is_current=true` の id 群を毎回突き合わせ、★消えた/false に落ちた id を検知★ (削除・版落ち)。
@@ -144,7 +144,7 @@ Always include: 1) Agent role (shogun/karo/ashigaru/gunshi) 2) Forbidden actions
 After compaction, the system instructs "Continue the conversation from where it left off." **This does NOT exempt you from re-reading your instructions file.** Compaction summaries do NOT preserve persona or speech style.
 
 **Mandatory**: After compaction, before resuming work, execute Session Start Step 4:
-- Read your instructions file (shogun→`instructions/shogun.md`, etc.)
+- Read your instructions file (shogun→`instructions/shogun.md`; karo-second→`instructions/karo-second.md` + `instructions/karo.md`; other roles→Session Start Step 4)
 - Restore persona and speech style (戦国口調 for shogun/karo)
 - Then resume the conversation naturally
 
@@ -489,3 +489,13 @@ dirty treeへpullするな。remote変更ありでdirtyなら local継続し状�
 ### 改訂責務 (SSH 着火経路 節)
 
 本セクションの改訂は **理事長殿の専権事項**。副医院長・Commander・将軍は提案のみ可。正本=project_documents a9b266a6 第3部、本節は要約・逸脱禁。
+
+<!-- ENV-SATURATION-SELF-REPORT-01 -->
+## 飽和自己申告義務（全Claude系将官）
+
+auto-compact発生直後、大量のlane情報を受領した直後、または応答遅延・文脈保持低下を自覚した場合、黙って継続・停止してはならない。重複を避けて1件だけ、次の定型を既存の認可済み上申経路で `hermes2`（環境部長）へ届ける。直接DB INSERTが禁止される役職はlocal inbox/上位役職/既存receiverを使い、禁止を迂回しない。
+
+`compact注入求む | role=<role> | pane=<pane> | trigger=<auto-compact直後/大量受領/応答遅延> | 現況=<secret・患者情報を含まない1行>`
+
+ACKは処置完了ではない。環境部長のdedup済み処置結果まで追跡し、自分で `/compact` を連打しない。
+

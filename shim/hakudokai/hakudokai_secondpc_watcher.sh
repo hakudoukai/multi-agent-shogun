@@ -7,6 +7,7 @@
 # Usage: bash shim/hakudokai/hakudokai_secondpc_watcher.sh [--interval 5]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
 POLL_SCRIPT="${SCRIPT_DIR}/shim/hakudokai/hakudokai_secondpc_watcher_poll.py"
 INTERVAL=5
 ONCE=false
@@ -34,9 +35,9 @@ if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
 fi
 
 SUPABASE_API="${SUPABASE_URL}/rest/v1"
-PROCESSED_FILE="/tmp/hakudokai_secondpc_watcher_processed.txt"
-RESPONSE_TMP="/tmp/hakudokai_secondpc_watcher_response.json"
-HEALTHCHECK_FILE="/tmp/hakudokai_secondpc_watcher.health"
+PROCESSED_FILE="${SECONDPC_WATCHER_PROCESSED_FILE:-/tmp/hakudokai_secondpc_watcher_processed.txt}"
+RESPONSE_TMP="${SECONDPC_WATCHER_RESPONSE_TMP:-/tmp/hakudokai_secondpc_watcher_response.json}"
+HEALTHCHECK_FILE="${SECONDPC_WATCHER_HEALTH_FILE:-/tmp/hakudokai_secondpc_watcher.health}"
 touch "$PROCESSED_FILE"
 
 POLL_COUNT=0
@@ -77,14 +78,12 @@ while true; do
 
   POLL_COUNT=$((POLL_COUNT + 1))
 
-  if curl -sS --connect-timeout 10 --max-time 15 \
+  if sb_curl -sS --connect-timeout 10 --max-time 15 \
     "${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.second_pc&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -o "$RESPONSE_TMP" 2>/dev/null; then
 
-    if python3 "$POLL_SCRIPT" "$RESPONSE_TMP" "$PROCESSED_FILE" "$SCRIPT_DIR" "$SUPABASE_API" "$SUPABASE_SERVICE_ROLE_KEY" 2>&1; then
+    if python3 "$POLL_SCRIPT" "$RESPONSE_TMP" "$PROCESSED_FILE" "$SCRIPT_DIR" "$SUPABASE_API" 2>&1; then
       CONSECUTIVE_FAILS=0
     else
       FAIL_COUNT=$((FAIL_COUNT + 1))

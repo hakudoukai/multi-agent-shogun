@@ -43,6 +43,7 @@
 #       HAKUDOKAI_PC_ROLE (= MainPC|SecondPC、未設定時 MainPC)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
 CHECK_INTERVAL="${2:-30}"
 MAX_RESTART_FAILS=3
 RESTART_CAP_PER_HOUR=5  # §15 SH6 limited self-restart cap (1h sliding window)
@@ -382,10 +383,8 @@ send_urgent_alert() {
   local target="$1"
   local msg="$2"
   TOTAL_ALERTS=$((TOTAL_ALERTS + 1))
-  curl -sS -X POST \
+  sb_curl -sS -X POST \
     "${SUPABASE_API}/pc_handshake" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -H "Prefer: return=minimal" \
     -d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
@@ -410,10 +409,8 @@ record_dev_lesson() {
 }
 EOJSON
 )
-  curl -sS -X POST \
+  sb_curl -sS -X POST \
     "${SUPABASE_API}/dev_lessons" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -H "Prefer: return=minimal" \
     -d "$payload" 2>/dev/null \
@@ -726,11 +723,9 @@ while true; do
   if [ ! -f "$HOME/.openclaw/disable_task_heartbeat" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -n "${SUPABASE_API:-}" ]; then
     HB_NOW=$(date -u '+%Y-%m-%dT%H:%M:%S.%3NZ')
     HB_RC=0
-    HB_HTTP=$(curl -sS -o /tmp/hakudokai_watchdog_heartbeat.body -w '%{http_code}' \
+    HB_HTTP=$(sb_curl -sS -o /tmp/hakudokai_watchdog_heartbeat.body -w '%{http_code}' \
       -X PATCH \
       "${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
-      -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
-      -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
       -H "Content-Type: application/json" \
       -H "Prefer: return=minimal" \
       --max-time 10 \
