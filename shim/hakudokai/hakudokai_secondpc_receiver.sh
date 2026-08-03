@@ -16,6 +16,7 @@
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
 POLL_INTERVAL="${2:-5}"
 PROCESSED_FILE="/tmp/hakudokai_secondpc_receiver_processed.txt"
 LOG="/tmp/hakudokai_secondpc_receiver.log"
@@ -60,10 +61,8 @@ while true; do
   POLL_COUNT=$((POLL_COUNT + 1))
 
   # Poll Supabase
-  RESPONSE=$(curl -sS --connect-timeout 10 --max-time 15 \
-    "${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
+  RESPONSE=$(sb_curl -sS --connect-timeout 10 --max-time 15 \
+    "${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,context_data,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
     -H "Content-Type: application/json" 2>/dev/null)
 
   if [ -z "$RESPONSE" ] || [ "$RESPONSE" = "[]" ]; then
@@ -83,7 +82,6 @@ while true; do
     "$PROCESSED_FILE" \
     "$SCRIPT_DIR" \
     "${SUPABASE_URL}/rest/v1" \
-    "${SUPABASE_SERVICE_ROLE_KEY}" \
     2>&1 | tee -a "$LOG"
 
   # Health file

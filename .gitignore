@@ -430,3 +430,8 @@ tests/specs/osato_lms_*
 !instructions/*.md
 !instructions/archive/
 !instructions/archive/*.md
+
+# 2026-08-03 委員長: guard skillのwhitelist漏れ是正(裁定seq137653)
+!skills/
+!skills/codex-exec-sandbox-guard/
+!skills/codex-exec-sandbox-guard/*

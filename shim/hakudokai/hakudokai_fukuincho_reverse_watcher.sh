@@ -36,6 +36,7 @@ trap '_watcher_graceful_exit SIGTERM' SIGTERM
 trap '_watcher_graceful_exit SIGINT' SIGINT
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
 POLL_INTERVAL="${2:-5}"
 PROCESSED_FILE="/tmp/hakudokai_fukuincho_reverse_processed.txt"
 HEALTH_FILE="/tmp/hakudokai_fukuincho_reverse_health.json"
@@ -94,10 +95,8 @@ while true; do
   POLL_COUNT=$((POLL_COUNT + 1))
 
   # Query: messages TO fukuincho that are not yet acknowledged
-  RESPONSE=$(curl -sS -w "\n%{http_code}" \
+  RESPONSE=$(sb_curl -sS -w "\n%{http_code}" \
     "${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" 2>/dev/null)
 
   HTTP_CODE=$(echo "$RESPONSE" | tail -1)
@@ -126,12 +125,12 @@ while true; do
   echo "$BODY" > "$TEMP_RESPONSE"
 
   # Process with Python
-  python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_fukuincho_reverse_poll.py" \
+  env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+    python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_fukuincho_reverse_poll.py" \
     "$TEMP_RESPONSE" \
     "$PROCESSED_FILE" \
     "$SCRIPT_DIR" \
     "${SUPABASE_URL}" \
-    "${SUPABASE_SERVICE_ROLE_KEY}" \
     "$FUKUINCHO_PANE"
 
   # ntfy notification for 理事長 (Desktop副医院長は自動受信できないため)

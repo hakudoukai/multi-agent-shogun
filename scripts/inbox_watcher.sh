@@ -132,6 +132,7 @@ LAST_NUDGE_COUNT=${LAST_NUDGE_COUNT:-""}
 NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
 # Codex は「思考中に入力が入ると即拾う」挙動があり、思考がループすることがあるため長めにする。
 NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+NUDGE_FINGERPRINT_FILE=${NUDGE_FINGERPRINT_FILE:-/tmp/inbox_watcher_nudge_fingerprint_${AGENT_ID:-unknown}}
 
 # ─── Context reset tracking ───
 # Tracks whether we've sent /new or /clear for the current task_assigned batch.
@@ -210,6 +211,22 @@ should_throttle_nudge() {
     local effective_cli
     effective_cli=$(get_effective_cli_type)
 
+    # Once a Claude nudge has been submitted for an unchanged inbox, do not
+    # submit it again merely because a time-based cooldown elapsed. API 503
+    # retries can leave Claude idle-looking while the same user message is
+    # already queued. Persist the inbox fingerprint across watcher restarts;
+    # any read/new-message mutation changes the SHA and permits a fresh nudge.
+    if [[ "$effective_cli" == "claude" ]] && [ -f "$INBOX" ]; then
+        local current_sha current_fingerprint previous_fingerprint
+        current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+        current_fingerprint="${unread_count}|${current_sha}"
+        previous_fingerprint=$(cat "$NUDGE_FINGERPRINT_FILE" 2>/dev/null || true)
+        if [ -n "$current_sha" ] && [ "$previous_fingerprint" = "$current_fingerprint" ]; then
+            echo "[$(date)] [SKIP] Unchanged inbox nudge already submitted for $AGENT_ID: inbox${unread_count}" >&2
+            return 0
+        fi
+    fi
+
     local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
     if [[ "$effective_cli" == "codex" ]]; then
         cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
@@ -231,6 +248,15 @@ should_throttle_nudge() {
     LAST_NUDGE_COUNT="$unread_count"
     LAST_NUDGE_TS="$now"
     return 1
+}
+
+record_nudge_fingerprint() {
+    local unread_count="${1:-0}"
+    [ -f "$INBOX" ] || return 0
+    local current_sha
+    current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+    [ -n "$current_sha" ] || return 0
+    ( umask 077; printf '%s\n' "${unread_count}|${current_sha}" > "$NUDGE_FINGERPRINT_FILE" )
 }
 
 is_valid_cli_type() {
@@ -799,6 +825,29 @@ agent_is_busy() {
     local effective_cli
     effective_cli=$(get_effective_cli_type)
     if [[ "$effective_cli" == "claude" ]]; then
+        # The idle flag is only a hint. It can remain stale while Claude is
+        # retrying an API error, and treating that stale flag as authoritative
+        # queues another inboxN every cooldown interval. Always honor the
+        # current pane's busy status and its queued-message indicator first.
+        local pane_state_rc
+        if agent_is_busy_check "$PANE_TARGET"; then
+            return 0
+        else
+            pane_state_rc=$?
+        fi
+        # A missing pane is not a safe target for keystroke injection.
+        if [ "$pane_state_rc" -eq 2 ]; then
+            return 0
+        fi
+        local pane_capture pane_tail
+        # Store the full capture first: command substitution strips trailing
+        # blank rows. Piping capture-pane directly to tail can otherwise make
+        # the visible queued-message hint fall outside the inspected window.
+        pane_capture=$(timeout 2 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null || true)
+        pane_tail=$(echo "$pane_capture" | tail -12)
+        if echo "$pane_tail" | grep -qF 'Press up to edit queued message'; then
+            return 0
+        fi
         # フラグファイル方式: フラグなし=busy(return 0)、あり=idle(return 1)
         [ ! -f "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" ]
     else
@@ -998,6 +1047,7 @@ send_wakeup() {
         # NOTE: アイドルフラグは削除しない。nudge送信≠エージェント起動確認。
         # フラグを消すと agent_is_busy()=true → 以降のnudge全スキップ → デッドロック。
         # フラグはエージェントが実際に作業開始した時に自然消滅する（stop_hook設計と整合）。
+        record_nudge_fingerprint "$unread_count"
         echo "[$(date)] Wake-up sent to $AGENT_ID (${unread_count} unread, attempt $((attempt+1)))" >&2
         return 0
     done

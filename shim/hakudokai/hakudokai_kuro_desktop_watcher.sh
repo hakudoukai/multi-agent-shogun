@@ -8,6 +8,7 @@
 # Usage: bash shim/hakudokai/hakudokai_kuro_desktop_watcher.sh [--interval 5]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
 POLL_INTERVAL="${2:-5}"
 LOG="/tmp/hakudokai_kuro_desktop_watcher.log"
 HEALTH_FILE="/tmp/hakudokai_kuro_desktop_watcher.health"
@@ -62,37 +63,33 @@ while true; do
 
   # === Direction 1: Desktop kuro → main_pc ===
   # Poll for messages FROM kuro_desktop TO main_pc/broadcast
-  if curl -sS --connect-timeout 10 --max-time 15 \
+  if sb_curl -sS --connect-timeout 10 --max-time 15 \
     "${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=10" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -o "$RESPONSE_INBOUND" 2>/dev/null; then
 
-    python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_kuro_desktop_poll.py" \
+    env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+      python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_kuro_desktop_poll.py" \
       "$RESPONSE_INBOUND" \
       "$PROCESSED_INBOUND" \
       "$SCRIPT_DIR" \
       "$SUPABASE_API" \
-      "$SUPABASE_SERVICE_ROLE_KEY" \
       "inbound" 2>&1 | tee -a "$LOG"
   fi
 
   # === Direction 2: main_pc → Desktop kuro ===
   # Poll for messages TO kuro_desktop that are unacknowledged
-  if curl -sS --connect-timeout 10 --max-time 15 \
+  if sb_curl -sS --connect-timeout 10 --max-time 15 \
     "${SUPABASE_API}/pc_handshake?to_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=5" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -o "$RESPONSE_OUTBOUND" 2>/dev/null; then
 
-    python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_kuro_desktop_poll.py" \
+    env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+      python3 "${SCRIPT_DIR}/shim/hakudokai/hakudokai_kuro_desktop_poll.py" \
       "$RESPONSE_OUTBOUND" \
       "$PROCESSED_OUTBOUND" \
       "$SCRIPT_DIR" \
       "$SUPABASE_API" \
-      "$SUPABASE_SERVICE_ROLE_KEY" \
       "outbound" 2>&1 | tee -a "$LOG"
   fi
 

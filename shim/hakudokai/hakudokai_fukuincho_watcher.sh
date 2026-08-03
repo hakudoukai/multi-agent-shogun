@@ -13,6 +13,7 @@
 # Usage: bash shim/hakudokai/hakudokai_fukuincho_watcher.sh [--once] [--interval 5]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
 POLL_SCRIPT="${SCRIPT_DIR}/shim/hakudokai/hakudokai_fukuincho_poll.py"
 INTERVAL=5
 ONCE=false
@@ -72,10 +73,8 @@ heartbeat() {
 send_alert() {
   local msg="$1"
   # Supabase urgent alert to fukuincho
-  curl -sS -X POST \
+  sb_curl -sS -X POST \
     "${SUPABASE_API}/pc_handshake" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -H "Prefer: return=minimal" \
     -d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
@@ -101,15 +100,14 @@ while true; do
   POLL_COUNT=$((POLL_COUNT + 1))
 
   # Curl with timeout
-  if curl -sS --connect-timeout 10 --max-time 15 \
+  if sb_curl -sS --connect-timeout 10 --max-time 15 \
     "${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.fukuincho&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -o "$RESPONSE_TMP" 2>/dev/null; then
 
     # Poll python script
-    if python3 "$POLL_SCRIPT" "$RESPONSE_TMP" "$PROCESSED_FILE" "$SCRIPT_DIR" "$SUPABASE_API" "$SUPABASE_SERVICE_ROLE_KEY" 2>&1; then
+    if env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+      python3 "$POLL_SCRIPT" "$RESPONSE_TMP" "$PROCESSED_FILE" "$SCRIPT_DIR" "$SUPABASE_API" 2>&1; then
       CONSECUTIVE_FAILS=0
     else
       FAIL_COUNT=$((FAIL_COUNT + 1))

@@ -87,7 +87,8 @@ for pid in "${!PANE_AGENT[@]}"; do
     tmux set-option -p -t "$pid" @agent_id "$agent"
     tmux set-option -p -t "$pid" @agent_cli "claude"
     case "$agent" in
-        karo-second|gunshi-second) tmux set-option -p -t "$pid" @model_name "Opus" 2>/dev/null || true ;;
+        karo-second) tmux set-option -p -t "$pid" @model_name "Fable5" 2>/dev/null || true ;;
+        gunshi-second) tmux set-option -p -t "$pid" @model_name "Opus" 2>/dev/null || true ;;
         ashigaru*) tmux set-option -p -t "$pid" @model_name "Sonnet5" 2>/dev/null || true ;;
         *) tmux set-option -p -t "$pid" @model_name "Sonnet5" 2>/dev/null || true ;;
     esac
@@ -98,7 +99,11 @@ done
 for pid in "${!PANE_AGENT[@]}"; do
     agent="${PANE_AGENT[$pid]}"
     case "$agent" in
-        karo-second|gunshi-second)
+        karo-second)
+            CMD="bash -lc 'claude --model claude-fable-5; rc=\$?; echo CLAUDE_EXIT:\$rc; exec bash'"
+            ;;
+        gunshi-second)
+            # 所見(v4.4編成時記録): 軍師は本令対象外ゆえ現状維持。現行運用のCodex化とは乖離あり(是正は別途裁可事項)。
             CMD="bash -lc 'claude --model opus; rc=\$?; echo CLAUDE_EXIT:\$rc; exec bash'"
             ;;
         ashigaru*)

@@ -13,6 +13,7 @@
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
 INTERVAL=2
 ONCE=false
 HEALTHCHECK_FILE="/tmp/hakudokai_reports_sync.health"
@@ -148,10 +149,8 @@ print(json.dumps(payload, ensure_ascii=False))
 
   # POST to Supabase
   local http_code
-  http_code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST \
+  http_code=$(sb_curl -sS -o /dev/null -w "%{http_code}" -X POST \
     "${SUPABASE_API}/pc_handshake" \
-    -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \
-    -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -H "Prefer: return=minimal" \
     -d "$payload" 2>/dev/null)

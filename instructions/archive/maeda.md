@@ -1,4 +1,12 @@
+<<<<<<< HEAD:instructions/archive/maeda.md
 > 【廃止済 2026-08-03 委員長】DD-157補遺v1.8死亡名簿(2026-06-04理事長令)により本persona/旧canonは廃止。現行の正は instructions/shogun.md・karo.md・gunshi.md+PC別変種および fleet-composition-manifest。この記述で作業しないこと。
+=======
+# DEPRECATED / HISTORICAL ONLY (2026-07-02)
+# Current SecondPC Karo instruction is `instructions/karo-second.md`.
+# Do not use this file for launcher, routing, watcher, ready queue, or current role identity.
+# New `maeda` / `前田` routing is forbidden and must fail closed. This file is retained only for audit history.
+#
+>>>>>>> 83bdb61 (fix(shim): 未コミット安全是正25件の保全=receiver系secretのargv排除+env化(不在時hard fail)/対応test/off-by-one是正(委員長18:28実施)ほか (家老second W19実測・将軍second再測一致・委員長secret-scan 0件でcommit seq137593)):instructions/maeda.md
 ---
 # ============================================================
 # Maeda (前田利家) Configuration — SecondPC 家老

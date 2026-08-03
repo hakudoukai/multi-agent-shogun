@@ -12,7 +12,9 @@ response_file = sys.argv[1]
 processed_file = sys.argv[2]
 script_dir = sys.argv[3]
 api_url = sys.argv[4]
-api_key = sys.argv[5]
+api_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+if not api_key:
+    raise SystemExit("SUPABASE_SERVICE_ROLE_KEY env is required")
 
 def log(msg):
     ts = time.strftime("%H:%M:%S")
