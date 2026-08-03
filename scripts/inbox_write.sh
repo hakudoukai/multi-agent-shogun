@@ -263,9 +263,9 @@ try:
         read = [m for m in msgs if m.get('read', False)]
         dropped = read[:-30]
         if dropped:
-            _adir = os.path.join(os.path.dirname('$INBOX'), '_archive')
+            _adir = os.path.join(os.path.dirname(os.path.realpath('$INBOX')), '_archive')  # realpath: alias/実体のarchive二重化防止(a6指摘)
             os.makedirs(_adir, exist_ok=True)
-            _abase = os.path.basename('$INBOX')
+            _abase = os.path.basename(os.path.realpath('$INBOX'))
             if _abase.endswith('.yaml'):
                 _abase = _abase[:-5]
             _apath = os.path.join(_adir, _abase + '_pruned.yaml')
