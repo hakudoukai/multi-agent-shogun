@@ -1,3 +1,5 @@
+> ★【一部廃止 2026-08-03 委員長(canon guardian)・起動時必読者への警告】本書の編成記述は陳腐化しており、以下を作業根拠にしてはならない: §18.1配置表(足軽5-8番号体系・SecondPC=足軽のみ3-4体・tmux session名)・A003/A004・PC別ccflareポート(8081等)。現行の正= ①編成: docs/rules/fleet-composition-manifest.yaml(hakudokai-dev repo)+各PCのqueue/pane_registry.yaml ②SecondPC現行正規編成= shogun-second + karo-second + gunshi-second + ashigaru1〜7(session=multiagent-second:0.x。「multiagent」はMainPCのsession名であり取り違え禁止) ③3PC均等編成(R0裁定seq96053)によりA003「SecondPCで指揮系統起動禁止」・A004「MainPCで足軽5-8起動禁止」は廃止 ④ccflare: DD-189=third_pc集中の単一8080のみ(旧8080/8081/8082のPC別分散は復元禁止)。アカウント契約・DD-164承認制の記述は理事長専権につき本注記の対象外(引き続き有効)。★
+
 # §18. Claude/ChatGPT アカウント運用ルール (ccflare 正本 v3.8 整合)
 
 **【枠の真実】Claude(Anthropic Max)の実体契約は 2 つだけ (sasebo系 / hakudoukai系)。各 PC の ccflare が両契約を集中管理し priority + auto-fallback で分配・共有する。「PC ごと別アカウント完全分離」=ccflare 導入前の旧モデルで誤り (v3.8、2026-06-04 理事長令確定)。ChatGPT 系 (codex/Hermes) のみ 1PC/1プロセス/1契約厳守 (v3.7)。**

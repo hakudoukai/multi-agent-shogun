@@ -180,6 +180,8 @@ CLAUDE.md §Root Cause 4 Patterns 必須チェック：
 
 ### 4.2 Codex呼出しコマンド（標準化）
 
+> ★【安全裁定 2026-07-21・現在有効】SecondPCのCodex leg(scripts/audit_codex.sh / npx @openai/codex exec)は全面停止中。本節のコマンドを実行してはならない。再開条件= scripts/checks/codex_exec_sandbox_guard.sh の実配線+負テストPASS+委員長GO。停止の間の三者監査は暫定二者制(軍師+Gemini二者全PASS+監査記録へ「Codex leg停止中(7/21事案)・監査モデル暫定」二重注記)で完了要件を満たす(委員長裁定 2026-08-03 seq137548系)。★
+
 ```bash
 # 家康が実行
 DIFF=$(git -C /mnt/c/Users/User/Documents/DentalBI \
@@ -411,6 +413,8 @@ cycle5 で FAIL → 家康から家老に escalation 報告
 | Gemini API停止 | 1時間待機 → ダメなら家老エスカレーション（法令該当差分は強制待機） |
 | 家康Claude停止 | Codex/Geminiは実行不可。家老が監視→Claude復旧待ち |
 | 全監査者停止 | 家老が緊急停止指令、足軽の作業も一時停止 |
+
+★【安全裁定による停止はリトライ対象外(2026-08-03 委員長追記)】上表「Codex一時的停止→5分後リトライ」は障害(504/タイムアウト)のみに適用する。安全裁定による停止(例: 2026-07-21 SecondPC Codex leg全面停止)はfail-closedであり、リトライ・自動再開・フォールバック再開を禁止する。解除は裁定発行者(委員長/理事長)の明示GOのみ。停止が障害か裁定か区別できない場合は裁定として扱う(fail-closed)。★
 
 ---
 
