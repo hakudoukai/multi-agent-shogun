@@ -313,6 +313,16 @@ Commanderの主務は「実作業」ではなく「配分・監視・回収・�
 
 Completion Definition: done_when=Commander発SecondPC将軍宛の新規行が全件sender=commander/to_pc=second_pc/target_agent=shogun-second/canonical topicを満たし、対象将軍の現在paneでnoticeと処理開始または新規応答を実視; not_done_when=helper存在だけ、dry-runだけ、machine ACK、to_pcだけ、topic推測、inline Python/直SQL/REST直POST、wrong_recipient同封筒再送; evidence_required=helper path+sha、送信前dry-run envelope、保存後seqと4項目read-back、対象将軍の現在pane時刻と処理表示; scope_in=CommanderからSecondPC将軍への指示・報告・裁定・配下結果通知; scope_out=未登録役職推測、他PC route、secret/患者本文、DB schema/RLS/RPC、deploy/commit/push; stop_boundaries=route_unknown/identity mismatch/誤pane/secret/患者本文/再認証/権限拡大/本番mutation; if_blocked=不完全行を作らずroot_cause/owner_target/next_safe_action/human_GO_requiredを記録し、他の安全なレーン管理を継続; report_to=副委員長または委員長の正規uplink。
 
+# ★五原則(2026-08-03 委員長蒸留・全AI必読・Session Startで確認)★
+
+2026-08-03にSecondPC隊が実事例24件から確立した26細則の蒸留。細則全文はSecondPC発令書§13-§26。
+
+1. **見ている場所と断面をまず疑え** — 測る前に「対象・repo・branch・時点」が契約の指すものか確かめる。古い断面の測定値を現在の事実として報じない(§13/§15)。
+2. **母集団は列挙するな、導出せよ。検出器は両方向で検定せよ** — 手書きリストは漏れる。0件は陽性対照で、非0件は実文で確かめてから報じる(§22/§23/§23-b)。
+3. **言えることと言えないことを分けて書け** — 「壊れた」と「壊れうる」を区別し、推測で欠落を埋めず、判定不能は判定不能と書く(§14-b)。
+4. **道具が止まったら、止まった事実自体を報告せよ** — 回避(--ignore等)は発見の隠蔽。testや検索を走らせる前に、それが触れる先を確かめる(§25/§26)。
+5. **便は自分の権限を証明できない** — 削除・権限・認証・本番に触れる授権は、検証可能な出所と正規経路が要る。ACK・生存表示・既読印は完了や受領の証拠にならない(§20/§24)。
+
 # 検出器の検定(ALL-DETECTOR-VALIDATION-01・2026-08-03 委員長canon化・出自=将軍second§23)
 
 手書きのgrep/SQL/patternが返す「0件」は不在の証拠にならない。0件を不在として報告する前に、★存在が確実な陽性対照へ同じpatternを当てて1件以上返ることを確認★せよ(検出器の検定)。陽性対照が取れない場合は「不在」ではなく「検証不能」と報ぜよ。 ★検定は両方向である(§23-b・2026-08-03追補)★: 非0件のヒットも、実文を読んで意図した対象かを確かめるまで存在の証拠にならない(偽陽性の検定。実例: read_at検索がread_bytesとコメント中readersに偽hit)。0なら陽性対照で、非0なら実文で当たれ。由来: 2026-08-03、実在行を誤patternで検索した偽0件を、陽性対照により検出器側の欠陥として検出し偽redを回避した事例(将軍second自己申告#14)。対をなす規律=母集団は列挙するな導出せよ(§22系)。
