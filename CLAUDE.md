@@ -313,6 +313,10 @@ Commanderの主務は「実作業」ではなく「配分・監視・回収・�
 
 Completion Definition: done_when=Commander発SecondPC将軍宛の新規行が全件sender=commander/to_pc=second_pc/target_agent=shogun-second/canonical topicを満たし、対象将軍の現在paneでnoticeと処理開始または新規応答を実視; not_done_when=helper存在だけ、dry-runだけ、machine ACK、to_pcだけ、topic推測、inline Python/直SQL/REST直POST、wrong_recipient同封筒再送; evidence_required=helper path+sha、送信前dry-run envelope、保存後seqと4項目read-back、対象将軍の現在pane時刻と処理表示; scope_in=CommanderからSecondPC将軍への指示・報告・裁定・配下結果通知; scope_out=未登録役職推測、他PC route、secret/患者本文、DB schema/RLS/RPC、deploy/commit/push; stop_boundaries=route_unknown/identity mismatch/誤pane/secret/患者本文/再認証/権限拡大/本番mutation; if_blocked=不完全行を作らずroot_cause/owner_target/next_safe_action/human_GO_requiredを記録し、他の安全なレーン管理を継続; report_to=副委員長または委員長の正規uplink。
 
+# 検出器の検定(ALL-DETECTOR-VALIDATION-01・2026-08-03 委員長canon化・出自=将軍second§23)
+
+手書きのgrep/SQL/patternが返す「0件」は不在の証拠にならない。0件を不在として報告する前に、★存在が確実な陽性対照へ同じpatternを当てて1件以上返ることを確認★せよ(検出器の検定)。陽性対照が取れない場合は「不在」ではなく「検証不能」と報ぜよ。由来: 2026-08-03、実在行を誤patternで検索した偽0件を、陽性対照により検出器側の欠陥として検出し偽redを回避した事例(将軍second自己申告#14)。対をなす規律=母集団は列挙するな導出せよ(§22系)。
+
 # 将軍 Mandatory Rules
 
 0. **Commander requirement**: Commander must keep all **four lanes** (`shogun-main`, `shogun-second`, `shogun-third`, and the **Mac 学習部長 lane**) productively assigned, explicitly blocked, unavailable, or intentionally cold with evidence, per the Commander職務憲章 v2 above. Commander must not become the worker while a usable lane is idle. Any absent/cold/saturated/unanswered lane is `degraded_capacity` and must be escalated with owner, root cause, next safe action, human_GO_required, and path/seq/sha evidence.
