@@ -383,8 +383,12 @@ no_idle_full_read() {
 }
 
 # summary-first: unread_count fast-path before full read
+# expiry/supersession-aware (read-only — no lock, no write; mirrors the
+# mutation predicate in get_unread_info() so the fast path never reports a
+# false-positive count for stale notices that get_unread_info would exclude).
 get_unread_count_fast() {
     INBOX_PATH="$INBOX" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+import datetime
 import json
 import os
 import yaml
@@ -394,7 +398,21 @@ try:
     with open(inbox, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
     messages = data.get("messages", []) or []
-    unread_count = sum(1 for m in messages if not m.get("read", False))
+    now_iso = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None).isoformat()
+    by_id = {m.get("id"): m for m in messages if m.get("id")}
+    superseded_ids = {m.get("supersedes") for m in messages if m.get("supersedes") in by_id}
+
+    def _effectively_unread(m):
+        if m.get("read", False):
+            return False
+        if m.get("id") in superseded_ids:
+            return False
+        expires_at = m.get("expires_at")
+        if expires_at and now_iso >= expires_at:
+            return False
+        return True
+
+    unread_count = sum(1 for m in messages if _effectively_unread(m))
     print(json.dumps({"count": unread_count}))
 except Exception:
     print(json.dumps({"count": 0}))
@@ -408,6 +426,7 @@ get_unread_info() {
     (
         if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 300 ] && break; done; trap "rmdir '$_ld' 2>/dev/null" EXIT; fi
         INBOX_PATH="$INBOX" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+import datetime
 import json
 import os
 import yaml
@@ -418,11 +437,34 @@ try:
         data = yaml.safe_load(f) or {}
 
     messages = data.get("messages", []) or []
+
+    # Auto-expire/auto-supersede (backward compatible: messages without
+    # expires_at/supersedes are unaffected). Expired or superseded messages
+    # are flipped to read=true HERE, before unread/specials/normal_count are
+    # computed, so they are transparently excluded from unread count, nudge,
+    # Escape, /clear, FIRST_UNREAD_SEEN timer reset, and stop-hook's
+    # `read: false` grep — with zero changes needed to the Phase-3 escalation
+    # branches themselves. expires_at uses the same "%Y-%m-%dT%H:%M:%S"
+    # format as inbox_write.sh's TIMESTAMP, compared lexicographically.
+    now_iso = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None).isoformat()
+    by_id = {m.get("id"): m for m in messages if m.get("id")}
+    superseded_ids = {m.get("supersedes") for m in messages if m.get("supersedes") in by_id}
+    expire_supersede_changed = False
+    for m in messages:
+        if m.get("read", False):
+            continue
+        is_superseded = m.get("id") in superseded_ids
+        expires_at = m.get("expires_at")
+        is_expired = bool(expires_at) and now_iso >= expires_at
+        if is_superseded or is_expired:
+            m["read"] = True
+            expire_supersede_changed = True
+
     unread = [m for m in messages if not m.get("read", False)]
     special_types = ("clear_command", "model_switch", "cli_restart")
     specials = [m for m in unread if m.get("type") in special_types]
 
-    if specials:
+    if specials or expire_supersede_changed:
         for m in messages:
             if not m.get("read", False) and m.get("type") in special_types:
                 m["read"] = True
@@ -574,6 +616,17 @@ send_cli_command() {
 # Waits for agent to become idle, then sends a startup prompt that includes
 # full recovery steps (identify, read task YAML, read inbox, start work).
 # Called from both send_cli_command (clear_command) and send_context_reset.
+is_no_auto_clear_agent() {
+    case "$AGENT_ID" in
+        shogun|shogun-second|shogun-third|karo|karo-second|karo-third|gunshi|gunshi-second|gunshi-third|ashigaru5|ashigaru6|ashigaru7|ashigaru8)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
 send_codex_startup_prompt() {
     # Poll until agent becomes idle (prompt ready) instead of fixed sleep.
     # Max 15s (3 attempts × 5s). If still busy after 15s, proceed anyway.
@@ -622,11 +675,8 @@ send_context_reset() {
     # Only ashigaru should receive automatic context resets (clear stale task context).
     # 信長 (human-controlled), 家老 (coordinator state), 家康 (strategic state)
     # all maintain complex running context that should not be wiped automatically.
-    # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): bare-name 完全一致 → 前方一致化。
-    # third_pc/main_pc/second_pc 等の suffix 付き id (shogun-third 等) も保護対象。
-    # 旧 bug: shogun-third が guard すり抜け → task_assigned 毎に /clear 発火 (実物理証跡 17:53/17:56/18:11)。
-    if [[ "$AGENT_ID" == "shogun"* ]] || [[ "$AGENT_ID" == "karo"* ]] || [[ "$AGENT_ID" == "gunshi"* ]]; then
-        echo "[$(date)] [SKIP] $AGENT_ID: suppressing context reset (command-layer agent, prefix-match)" >&2
+    if is_no_auto_clear_agent; then
+        echo "[$(date)] [SKIP] $AGENT_ID: suppressing automatic context reset during SecondPC role recovery" >&2
         return 0
     fi
 
@@ -702,6 +752,12 @@ send_context_reset() {
 # Check if the agent has an active inotifywait on its inbox.
 # If yes, the agent will self-wake — no nudge needed.
 agent_has_self_watch() {
+    # R2 recovery guard: command-layer role agents must be woken by the watcher.
+    # Treating another inotifywait as "self-watch" caused karo-second delivery stalls.
+    case "$AGENT_ID" in
+        shogun|shogun-*|karo|karo-*|gunshi|gunshi-*) return 1 ;;
+    esac
+
     # Codex/Copilot/Kimi CLIs cannot run self-watch. Only Claude Code agents can.
     local effective_cli
     effective_cli=$(get_effective_cli_type)
@@ -1077,6 +1133,10 @@ for s in data.get('specials', []):
             [ -n "$msg_type" ] || continue
             if [ "$msg_type" = "clear_command" ]; then
                 clear_seen=1
+                if is_no_auto_clear_agent; then
+                    echo "[$(date)] [SKIP] $AGENT_ID: suppressing clear_command during SecondPC role recovery" >&2
+                    continue
+                fi
                 # Busy guard: skip /clear if agent is currently processing.
                 # Sending /clear during active work destroys in-progress context.
                 if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
@@ -1256,10 +1316,9 @@ for s in data.get('specials', []):
                     echo "[$(date)] ESCALATION Phase 3: $AGENT_ID unresponsive for ${age}s, but cli=codex — skipping /clear." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer (no destructive action)
                     send_wakeup "$normal_count"
-                elif [[ "$AGENT_ID" == "shogun"* ]] || [[ "$AGENT_ID" == "karo"* ]] || [[ "$AGENT_ID" == "gunshi"* ]]; then
-                    # Command-layer agents (karo/gunshi/shogun + suffix variants): suppress /clear even in Phase 3
-                    # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): 前方一致化で shogun-third 等 suffix も保護
-                    echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent prefix-match, ${age}s). Using Escape+nudge." >&2
+                elif [[ "$AGENT_ID" == "shogun" || "$AGENT_ID" == shogun-* || "$AGENT_ID" == "karo" || "$AGENT_ID" == karo-* || "$AGENT_ID" == "gunshi" || "$AGENT_ID" == gunshi-* ]]; then
+                    # Command-layer agents (karo/gunshi/shogun, including PC-qualified ids): suppress /clear even in Phase 3
+                    echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent, ${age}s). Using Escape+nudge." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer
                     send_wakeup_with_escape "$normal_count"
                 else

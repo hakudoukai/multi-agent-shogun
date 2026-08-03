@@ -71,6 +71,7 @@ LAST_ACTION="startup"
 
 # §18 PC role (= MainPC | SecondPC、未設定時 MainPC)
 PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}"
+D3_FAIL_CLOSED_ON_REGISTRY_ERROR="${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}"
 
 # Registry SSoT (Phase 1 で雛形作成済、Phase 2 動的読込)
 REGISTRY_FILE="${SCRIPT_DIR}/queue/pane_registry.yaml"
@@ -352,6 +353,12 @@ get_active_agents() {
   if [ "$reg_rc" -eq 0 ] && [ -n "$registry_output" ]; then
     mapfile -t candidates <<< "$registry_output"
   else
+    if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+      log "registry: status=${REGISTRY_LOAD_STATUS}; fail-closed active, skipping LEGACY_INBOX_AGENTS fallback"
+      log_struct "ERROR" "registry_fail_closed_no_legacy_fallback" "watchdog" "{\"pc_role\":\"${PC_ROLE}\",\"status\":\"${REGISTRY_LOAD_STATUS}\"}"
+      ACTIVE_AGENTS=()
+      return 1
+    fi
     log "using LEGACY_INBOX_AGENTS fallback (= degraded mode, status=${REGISTRY_LOAD_STATUS})"
     # shellcheck disable=SC2206
     candidates=( $LEGACY_INBOX_AGENTS )
@@ -381,7 +388,7 @@ send_urgent_alert() {
     -H "apikey: ${SUPABASE_SERVICE_ROLE_KEY}" \
     -H "Content-Type: application/json" \
     -H "Prefer: return=minimal" \
-    -d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+    -d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
     2>/dev/null || log "ALERT SEND FAILED for ${target}"
   log "URGENT ALERT SENT: ${msg}"
 }

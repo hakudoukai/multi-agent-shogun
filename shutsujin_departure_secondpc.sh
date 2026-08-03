@@ -2,11 +2,13 @@
 # shutsujin_departure_secondpc.sh — SecondPC 出陣スクリプト
 #
 # Phase 1 (2026-05-07): SecondPC tmux multiagent session を以下の構成で起動:
-#   pane 0 = maeda (SecondPC 家老) — 新設
+#   pane 0 = karo-second (SecondPC 家老) — 新設
 #   pane 1 = ashigaru5
 #   pane 2 = ashigaru6
 #   pane 3 = ashigaru7
-#   pane 4 = ashigaru8 (非常時 +1、~/.openclaw/enable_ashigaru8 フラグで起動)
+#   pane 4 = gunshi-second (SecondPC 軍師、Opus) — staged recovery seq95958 で新設
+#   pane 5-8 = ashigaru1-4 : HOLD (agent_id 衝突ブロッカーで未実装、owner 裁定待ち)
+#   pane (末尾) = ashigaru8 (registered standby、~/.openclaw/enable_ashigaru8 フラグで起動)
 #
 # 前提:
 #   - WSL2 + Ubuntu 上で実行
@@ -21,8 +23,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-PERMISSION_FLAG="--dangerously-skip-permissions"
-SESSION="multiagent"
+PERMISSION_FLAG=""  # D4: no bypass for SecondPC worker agents
+SESSION="multiagent-second"
 WINDOW="agents"
 
 log_info() { echo "  [shutsujin-secondpc] $*"; }
@@ -41,12 +43,12 @@ if tmux has-session -t "$SESSION" 2>/dev/null; then
     exit 1
 fi
 
-log_war "🏯 SecondPC 出陣 — SecondPC 家老 + ashigaru5/6/7 を構築中..."
+log_war "🏯 SecondPC 出陣 — karo-second + gunshi-second + ashigaru5/6/7 を構築中..."
 
 # ─── tmux session + window 作成 ───
 tmux new-session -d -s "$SESSION" -n "$WINDOW"
 
-# pane 0 = maeda (= 初期 pane)
+# pane 0 = karo-second (= 初期 pane)
 PANE0=$(tmux display-message -t "$SESSION:$WINDOW" -p '#{pane_id}')
 
 # pane 1, 2, 3 = ashigaru5, 6, 7 を順次 split
@@ -54,12 +56,18 @@ PANE1=$(tmux split-window -v -t "$PANE0" -P -F '#{pane_id}')
 PANE2=$(tmux split-window -v -t "$PANE1" -P -F '#{pane_id}')
 PANE3=$(tmux split-window -v -t "$PANE2" -P -F '#{pane_id}')
 
-# 非常時 +1 (ashigaru8) フラグチェック
+# pane 4 = gunshi-second (SecondPC 軍師、Opus) — staged recovery seq95958
+PANE4=$(tmux split-window -v -t "$PANE3" -P -F '#{pane_id}')
+
+# HOLD: ashigaru1-4 (pane 5-8) は agent_id 衝突ブロッカーにより本スクリプトへ未追加。
+#   owner (shogun-second) の id namespacing 裁定後に個別 split で追加する。
+
+# registered standby (ashigaru8) フラグチェック — 末尾 pane
 ENABLE_A8=""
 if [[ -f "$HOME/.openclaw/enable_ashigaru8" ]]; then
-    PANE4=$(tmux split-window -v -t "$PANE3" -P -F '#{pane_id}')
+    PANE_A8=$(tmux split-window -v -t "$PANE4" -P -F '#{pane_id}')
     ENABLE_A8="yes"
-    log_info "非常時フラグ検知 → ashigaru8 を pane 4 に追加"
+    log_info "standby フラグ検知 → ashigaru8 を末尾 pane に追加"
 fi
 
 # layout を均等 vertical に
@@ -67,24 +75,39 @@ tmux select-layout -t "$SESSION:$WINDOW" even-vertical
 
 # ─── pane 識別属性設定 ───
 declare -A PANE_AGENT
-PANE_AGENT["$PANE0"]="maeda"
+PANE_AGENT["$PANE0"]="karo-second"
 PANE_AGENT["$PANE1"]="ashigaru5"
 PANE_AGENT["$PANE2"]="ashigaru6"
 PANE_AGENT["$PANE3"]="ashigaru7"
-[[ -n "$ENABLE_A8" ]] && PANE_AGENT["$PANE4"]="ashigaru8"
+PANE_AGENT["$PANE4"]="gunshi-second"
+[[ -n "$ENABLE_A8" ]] && PANE_AGENT["$PANE_A8"]="ashigaru8"
 
 for pid in "${!PANE_AGENT[@]}"; do
     agent="${PANE_AGENT[$pid]}"
     tmux set-option -p -t "$pid" @agent_id "$agent"
     tmux set-option -p -t "$pid" @agent_cli "claude"
-    tmux set-option -p -t "$pid" @model_name "Opus" 2>/dev/null || true
+    case "$agent" in
+        karo-second|gunshi-second) tmux set-option -p -t "$pid" @model_name "Opus" 2>/dev/null || true ;;
+        ashigaru*) tmux set-option -p -t "$pid" @model_name "Sonnet5" 2>/dev/null || true ;;
+        *) tmux set-option -p -t "$pid" @model_name "Sonnet5" 2>/dev/null || true ;;
+    esac
     log_info "  set @agent_id=$agent → $pid"
 done
 
 # ─── claude 起動 ───
-CMD="claude --model opus $PERMISSION_FLAG"
 for pid in "${!PANE_AGENT[@]}"; do
     agent="${PANE_AGENT[$pid]}"
+    case "$agent" in
+        karo-second|gunshi-second)
+            CMD="bash -lc 'claude --model opus; rc=\$?; echo CLAUDE_EXIT:\$rc; exec bash'"
+            ;;
+        ashigaru*)
+            CMD="bash -lc 'claude --model claude-sonnet-5; rc=\$?; echo CLAUDE_EXIT:\$rc; exec bash'"
+            ;;
+        *)
+            CMD="bash -lc 'claude --model claude-sonnet-5; rc=\$?; echo CLAUDE_EXIT:\$rc; exec bash'"
+            ;;
+    esac
     tmux send-keys -t "$pid" "$CMD" Enter
     log_info "  claude 起動: $agent ($pid)"
 done
@@ -97,11 +120,14 @@ sleep 12
 for pid in "${!PANE_AGENT[@]}"; do
     agent="${PANE_AGENT[$pid]}"
     case "$agent" in
-        maeda)
-            prompt='当職、SecondPC 家老として召喚さる。Session Start: ①tmux display-message で自己識別 → maeda ②mcp__memory__read_graph (失敗時 skip) ③instructions/maeda.md と instructions/karo.md (家老共通) を必読、persona と禁止事項を完全把握 ④queue/inbox/maeda.yaml + queue/tasks/maeda.yaml + queue/reports/maeda_report.yaml 確認 ⑤将軍mainから SecondPC 配下 cmd が届いてれば即着手 ⑥配下 ashigaru5/6/7 の状態確認、idle なら次タスク発令 (= 自走 mandate)。本日 Phase 1 で新設の体制、SecondPC 専属、本丸越境禁止。'
+        karo-second)
+            prompt='拙者SecondPC 家老として召喚さる。Session Start: ①tmux display-message で自己識別 → karo-second ②instructions/karo-second.md + instructions/karo.md + queue/pane_registry.yaml を必読 ③persona/禁止事項/SecondPC専属境界を確認 ④queue/inbox/karo-second.yaml + queue/tasks/karo-second.yaml + queue/reports/karo-second_report.yaml 確認 ⑤配下 ashigaru5/6/7 の @agent_id と各自 task/inbox 状態確認 ⑥未割当なら勝手に同一作業を重複発令せず、役割分担を明示してから発令。本丸越境禁止。'
+            ;;
+        gunshi-second)
+            prompt='拙者SecondPC 軍師として召喚さる。Session Start: ①tmux display-message で自己識別 → gunshi-second ②instructions/gunshi-second.md + instructions/gunshi.md + queue/pane_registry.yaml を必読 ③persona/禁止事項/SecondPC専属境界を確認 ④queue/inbox/gunshi-second.yaml + queue/tasks/gunshi-second.yaml 確認 ⑤役割=SecondPC の品質監査役 (足軽成果物の QC・PDCA)、新規タスク発令は禁 (F003)。報告先=shogun-second/karo-second。本丸越境禁止。'
             ;;
         ashigaru*)
-            prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md 必読 ③queue/tasks/${agent}.yaml + queue/inbox/${agent}.yaml 確認 ④tasks に assign があれば即着手、なければ家老 maeda の指示待ち。報告先は maeda (= SecondPC 家老、Phase 1 新設)。"
+            prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md + instructions/roles/ashigaru_role.md を必読 ③自分専用 queue/tasks/${agent}.yaml + queue/inbox/${agent}.yaml のみ確認 ④他足軽taskを読まない/同一作業を勝手に重複しない ⑤assign があれば自分の担当分だけ着手、なければ karo-second 指示待ち。報告先は karo-second。"
             ;;
     esac
     tmux send-keys -t "$pid" "$prompt"
@@ -133,4 +159,4 @@ log_war "🏯 SecondPC 出陣完了"
 tmux list-panes -t "$SESSION:$WINDOW" -F '  agents.#{pane_index}  @agent_id=#{@agent_id}  pid=#{pane_pid}'
 echo ""
 log_info "tmux attach -t $SESSION で確認可能"
-log_info "新体制 (= maeda + a5/a6/a7) で運用開始"
+log_info "新体制 (= karo-second + gunshi-second + a5/a6/a7 [+a8 standby]) で運用開始"
