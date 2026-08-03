@@ -254,12 +254,25 @@ try:
     }
     data['messages'].append(new_msg)
 
-    # Overflow protection: keep max 50 messages
+    # Overflow rotation (2026-08-03 委員長hotfix 裁定seq137748/137769):
+    # 旧仕様は50便超で既読便を黙って恒久破壊していた(同日17+19便消失の実害)。
+    # 破壊→回転: 溢れた既読便はper-agent archiveへ全量退避し、発動をstderrへlogする。
     if len(data['messages']) > 50:
         msgs = data['messages']
         unread = [m for m in msgs if not m.get('read', False)]
         read = [m for m in msgs if m.get('read', False)]
-        # Keep all unread + newest 30 read messages
+        dropped = read[:-30]
+        if dropped:
+            _adir = os.path.join(os.path.dirname('$INBOX'), '_archive')
+            os.makedirs(_adir, exist_ok=True)
+            _abase = os.path.basename('$INBOX')
+            if _abase.endswith('.yaml'):
+                _abase = _abase[:-5]
+            _apath = os.path.join(_adir, _abase + '_pruned.yaml')
+            with open(_apath, 'a', encoding='utf-8') as _af:
+                yaml.safe_dump({'pruned_at': '$TIMESTAMP', 'count': len(dropped), 'messages': dropped}, _af, allow_unicode=True, default_flow_style=False)
+                _af.write('---\n')
+            print('[inbox_write] CAP_ROTATED: ' + str(len(dropped)) + ' read messages moved to ' + _apath, file=sys.stderr)
         data['messages'] = unread + read[-30:]
 
     # Atomic write: tmp file + rename (prevents partial reads)
