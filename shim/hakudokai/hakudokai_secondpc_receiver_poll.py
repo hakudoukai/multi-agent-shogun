@@ -18,7 +18,9 @@ response_file = sys.argv[1]
 processed_file = sys.argv[2]
 script_dir = sys.argv[3]
 api_url = sys.argv[4]
-api_key = sys.argv[5]
+api_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+if not api_key:
+    raise SystemExit("SUPABASE_SERVICE_ROLE_KEY env is required")
 
 def log(msg):
     ts = time.strftime("%H:%M:%S")
@@ -46,7 +48,10 @@ fail_count = 0
 MAX_RETRY = 5
 
 # Retry tracking file (persistent across polls)
-RETRY_TRACKER_FILE = "/tmp/hakudokai_receiver_retry_tracker.json"
+RETRY_TRACKER_FILE = os.environ.get(
+    "SECONDPC_RECEIVER_RETRY_TRACKER_FILE",
+    "/tmp/hakudokai_receiver_retry_tracker.json",
+)
 
 def load_retry_tracker():
     try:
@@ -98,6 +103,9 @@ AGENT_PANES = {
     "ashigaru7": "multiagent-second:0.7",
     # R2 (FUKUINCHO 裁定 seq96053): gunshi-second を 0.8 に swap (最終正本 map)。
     "gunshi-second": "multiagent-second:0.8",
+    # 2026-08-03 委員長(canon guardian): 本部長を受信allowlistへ追加。未登録により委員長→本部長のDB配送が
+    #     missing_or_invalid_target_agent で構造的に全通落ちしていた(将軍second実測 seq137504)。
+    "honbucho": "hermes-honbucho:0.0",
     # 注: ashigaru1-7 の最終 pane (0.1-0.7) 反映は R3-R9 の各 swap 段で更新予定。
     #     旧 ashigaru8@0.9 は登録撤回 (R0 seq96053) につき AGENT_PANES からも除外。
 }
@@ -205,7 +213,7 @@ def detect_target(msg):
     if target:
         return target
 
-    m = re.fullmatch(r"cross_pc_inbox_([\w-]+)", topic)
+    m = re.match(r"cross_pc_inbox_([\w-]+)", topic)  # 2026-08-03 委員長: prefix許容(接尾辞で全落ちする欠陥是正・将軍second seq137513/CLAUDE.md規約はprefix)
     if m:
         target = m.group(1)
         if target in VALID_SECONDPC_TARGETS:
