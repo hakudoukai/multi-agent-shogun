@@ -6,14 +6,25 @@
 #       INBOX_WRITE_CONTENT_STDIN=1 bash scripts/inbox_write.sh <target> __VIA_STDIN__ <type> <from> < <(echo "$CONTENT")
 #       env INBOX_WRITE_CONTENT_STDIN=1 が立っている時は $2 を無視して stdin から content を読む。
 #       process inspection (ps/argv leak) で機密内容が見えるのを防ぐ用途 (fukuincho_report_poke_bundle.py で利用)。
+#   ★correlation_id 任意指定 (ae8083dd 着火ackリトライ再送エンジン対応)★:
+#       INBOX_WRITE_CORRELATION_ID=<id> bash scripts/inbox_write.sh <target> <content> <type> <from>
+#       未指定時は自動採番 (charset ^[A-Za-z0-9_-]+$ のみ許可、既存4位置引数APIは不変)。
+#       成功時 stdout に "MSG_ID=... CORRELATION_ID=..." を出力 (既存 caller は非捕捉、確認済)。
 # Example: bash scripts/inbox_write.sh karo "足軽5号、任務完了" report_received ashigaru5
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SB_AUTH_LIB="$SCRIPT_DIR/shim/hakudokai/lib/sb_auth.sh"
+COMPACT_DELIVERY_LEASE_LIB="$SCRIPT_DIR/scripts/lib/compact_delivery_lease_lib.sh"
 # shellcheck disable=SC1090
 source "$SB_AUTH_LIB"
+if [ ! -r "$COMPACT_DELIVERY_LEASE_LIB" ]; then
+    echo "[inbox_write] FAIL-CLOSED: missing compact delivery lease library: $COMPACT_DELIVERY_LEASE_LIB" >&2
+    exit 70
+fi
+# shellcheck disable=SC1090
+source "$COMPACT_DELIVERY_LEASE_LIB"
 TARGET="$1"
 CONTENT="$2"
 TYPE="$3"
@@ -24,6 +35,13 @@ FROM="$4"
 if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
     CONTENT="$(cat)"
 fi
+
+# ★ae8083dd 着火ackリトライ再送エンジン対応★: correlation_id 任意 env 受領。
+# INBOX_WRITE_CONTENT_STDIN と同じ env-var 拡張パターン (既存 4 位置引数 API
+# は不変・後方互換維持)。未指定時は下で自動採番 (§2.5 "correlation_id 非
+# null" 要件充足)。既存 pc_handshake.correlation_id と同一意味論を再利用
+# (家老裁定 msg_20220722_103826_d5452e76 の拘束— 新規 namespace 禁)。
+CORRELATION_ID="${INBOX_WRITE_CORRELATION_ID:-}"
 
 INBOX="$SCRIPT_DIR/queue/inbox/${TARGET}.yaml"
 LOCKFILE="${INBOX}.lock"
@@ -40,6 +58,14 @@ if [ "$FROM" = "$TARGET" ]; then
     exit 1
 fi
 
+# correlation_id charset guard (detect_stale.sh:_detect_stale_sanitize_corr_id
+# 踏襲— path-traversal/python文字列注入回避のため正規化せず即reject、MED-1
+# 教訓再利用)。空文字列は許可 (下で自動採番)。
+if [ -n "$CORRELATION_ID" ] && ! echo "$CORRELATION_ID" | grep -qE '^[A-Za-z0-9_-]+$'; then
+    echo "[inbox_write] REJECTED: unsafe correlation_id charset (must match ^[A-Za-z0-9_-]+\$): $CORRELATION_ID" >&2
+    exit 1
+fi
+
 # Amplification guard (2026-05-07 真因対策):
 # stop_hook block + claude bash 経由の自己増殖ループ防止。
 # content に「[<from>→<target>][<type>]」パターンが 3 回以上含まれていたら、
@@ -49,6 +75,62 @@ if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
     echo "[inbox_write] REJECTED: amplification loop detected (${_AMP_PATTERN_COUNT} embedded headers in content, threshold=3) target=$TARGET from=$FROM" >&2
     exit 1
 fi
+
+# Compact delivery fence (race cure, 2026-07-24):
+# Every delivery path takes the same per-target coordination lock used by
+# compact_delivery_lease.sh. The lease is checked while holding that lock,
+# before hermes2 routing, cross-PC bridge launch, or local inbox mutation.
+# This makes "lease publish" and "delivery permission" mutually exclusive.
+DELIVERY_COORDINATION_LOCKFILE="$(compact_delivery_lock_path "$SCRIPT_DIR" "$TARGET")" || {
+    echo "[inbox_write] FAIL-CLOSED: unable to derive compact delivery lock path target=$TARGET" >&2
+    exit 70
+}
+DELIVERY_COORDINATION_LEASEFILE="$(compact_delivery_lease_path "$SCRIPT_DIR" "$TARGET")" || {
+    echo "[inbox_write] FAIL-CLOSED: unable to derive compact delivery lease path target=$TARGET" >&2
+    exit 70
+}
+DELIVERY_COORDINATION_FALLBACK_DIR=""
+DELIVERY_COORDINATION_LOCK_HELD=0
+
+_acquire_delivery_coordination_lock() {
+    # Default is deliberately unbounded. A writer queued before a compact
+    # reservation must finish first; a writer queued after publication must
+    # observe the lease. An arbitrary timeout would silently drop valid work.
+    local timeout_seconds="${COMPACT_DELIVERY_LOCK_TIMEOUT_SECONDS:-}"
+    mkdir -p "$(dirname "$DELIVERY_COORDINATION_LOCKFILE")"
+
+    if command -v flock >/dev/null 2>&1; then
+        exec 199>"$DELIVERY_COORDINATION_LOCKFILE"
+        if [ -n "$timeout_seconds" ]; then
+            flock -w "$timeout_seconds" 199 || return 1
+        else
+            flock -x 199 || return 1
+        fi
+    else
+        DELIVERY_COORDINATION_FALLBACK_DIR="${DELIVERY_COORDINATION_LOCKFILE}.d"
+        local attempts=0
+        while ! mkdir "$DELIVERY_COORDINATION_FALLBACK_DIR" 2>/dev/null; do
+            attempts=$((attempts + 1))
+            if [ -n "$timeout_seconds" ] && [ "$attempts" -ge "$((timeout_seconds * 10))" ]; then
+                return 1
+            fi
+            sleep 0.1
+        done
+    fi
+    DELIVERY_COORDINATION_LOCK_HELD=1
+}
+
+_release_delivery_coordination_lock() {
+    [ "$DELIVERY_COORDINATION_LOCK_HELD" -eq 1 ] || return 0
+    if command -v flock >/dev/null 2>&1; then
+        flock -u 199 2>/dev/null || true
+        exec 199>&-
+    elif [ -n "$DELIVERY_COORDINATION_FALLBACK_DIR" ]; then
+        rmdir "$DELIVERY_COORDINATION_FALLBACK_DIR" 2>/dev/null || true
+        DELIVERY_COORDINATION_FALLBACK_DIR=""
+    fi
+    DELIVERY_COORDINATION_LOCK_HELD=0
+}
 
 # ★anti-dup fix (HERMES-AUTH-93727ABE-S1-HELPER-NOT-SOURCED-001 followup、
 # 軍師 Option B 設計回答 msg_20260721_140010_d713651b 採用)★
@@ -146,11 +228,19 @@ _cross_pc_bridge() {
 
     # JSON encode via python3 (heredoc + argv) — bash 文字列補間では改行/特殊文字が
     # JSON に直接埋め込まれて Supabase が「0x0a must be escaped」で reject していた。
+    # ★ae8083dd 着火ackリトライ再送エンジン (item⑤) 対応★: pc_handshake は
+    # 既存 correlation_id column を持つ (fukuincho_handshake_overdue_feeder.sh
+    # 参照実績あり) が本 bridge の INSERT payload は従来これを埋めていなかった
+    # ため、cross-PC Stage A/B 確認の grounding が不可能だった。$CORRELATION_ID
+    # (行37でresolve済、ack-retry engine 自身の呼出は必ず
+    # INBOX_WRITE_CORRELATION_ID を明示付与するため _cross_pc_bridge 起動時点
+    # (行391、autogen 前) でも値確定済) を追加するのみの最小加算的変更
+    # (既存 caller は corr未指定→null、挙動不変)。
     local payload
-    payload=$(python3 - "$truncated" "${local_pc:-main_pc}" "$target_pc" "$target" "$from" "$msg_type" <<'PYEOF'
+    payload=$(python3 - "$truncated" "${local_pc:-main_pc}" "$target_pc" "$target" "$from" "$msg_type" "$CORRELATION_ID" <<'PYEOF'
 import json, sys
-content_truncated, local_pc, target_pc, target_agent, from_agent, msg_type = sys.argv[1:7]
-print(json.dumps({
+content_truncated, local_pc, target_pc, target_agent, from_agent, msg_type, corr_id = sys.argv[1:8]
+out = {
     "message_type": msg_type,
     "from_pc": local_pc,
     "to_pc": target_pc,
@@ -161,12 +251,18 @@ print(json.dumps({
     "clinic_id": "hakudoukai_main",
     "bypass_5round_limit": False,
     "is_meta_only": False
-}, ensure_ascii=False))
+}
+if corr_id:
+    out["correlation_id"] = corr_id
+print(json.dumps(out, ensure_ascii=False))
 PYEOF
 )
 
     # INSERT to Supabase for cross-PC delivery
-    SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS -X POST \
+    SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS \
+        --connect-timeout "${COMPACT_DELIVERY_BRIDGE_CONNECT_TIMEOUT_SECONDS:-5}" \
+        --max-time "${COMPACT_DELIVERY_BRIDGE_MAX_SECONDS:-20}" \
+        -X POST \
         "${sb_url}/rest/v1/pc_handshake" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
@@ -266,7 +362,10 @@ PYEOF
     # set -e 下では http_status=$(...) 単体の代入失敗が即シェル終了を招き
     # FAIL-CLOSED 分岐へ到達しない (Codex監査 cycle1 B1)。if の条件式内で
     # 代入することで curl の非0終了を確実に捕捉する。
-    if http_status=$(SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS -o "$resp_file" -w '%{http_code}' -X POST \
+    if http_status=$(SUPABASE_SERVICE_ROLE_KEY="$sb_key" sb_curl -sS \
+        --connect-timeout "${COMPACT_DELIVERY_BRIDGE_CONNECT_TIMEOUT_SECONDS:-5}" \
+        --max-time "${COMPACT_DELIVERY_BRIDGE_MAX_SECONDS:-20}" \
+        -o "$resp_file" -w '%{http_code}' -X POST \
         "${sb_url}/rest/v1/pc_handshake" \
         -H "Content-Type: application/json" \
         -H "Prefer: return=minimal" \
@@ -350,6 +449,17 @@ _hermes2_alias_kind() {
 # 一切進まない)、失敗すれば exit 1 (fail-closed、legacy へのフォール
 # バックは絶対にしない)。near_miss は canonical guard を経由せず即
 # fail-closed (curl すら呼ばない、legacy 書込より前で確実に止める)。
+if ! _acquire_delivery_coordination_lock; then
+    echo "[inbox_write] FAIL-CLOSED: compact delivery coordination lock timeout target=$TARGET" >&2
+    exit 75
+fi
+trap _release_delivery_coordination_lock EXIT
+
+if [ -f "$DELIVERY_COORDINATION_LEASEFILE" ]; then
+    echo "DELIVERY_BLOCKED_COMPACT_LEASE target=$TARGET lease=$DELIVERY_COORDINATION_LEASEFILE" >&2
+    exit 75
+fi
+
 _H2_ALIAS_KIND=$(_hermes2_alias_kind "$TARGET")
 case "$_H2_ALIAS_KIND" in
     canonical)
@@ -365,11 +475,12 @@ case "$_H2_ALIAS_KIND" in
         ;;
 esac
 
-# Trigger cross-PC bridge (non-blocking, runs in background)
+# Trigger cross-PC bridge synchronously while the compact coordination lock is
+# held. A background bridge could POST after a lease had already published.
 # 緊急停止 2026-05-07 18:23: 連続 INSERT loop 発生中、source 不明
 # ~/.openclaw/disable_cross_pc_bridge flag 存在時は cross_pc_bridge を起動しない
 if [ ! -f "$HOME/.openclaw/disable_cross_pc_bridge" ]; then
-    _cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM" &
+    _cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM"
 fi
 
 # Initialize inbox if not exists
@@ -382,6 +493,16 @@ fi
 # Use `od` instead of `xxd` because `od` is available on both GNU/Linux and macOS runners by default.
 MSG_ID="msg_$(date +%Y%m%d_%H%M%S)_$(od -An -N4 -tx1 /dev/urandom | tr -d ' \n')"
 TIMESTAMP=$(date "+%Y-%m-%dT%H:%M:%S")
+
+# 未指定時の自動採番は opt-in 限定 (fb66b73b境界: G1受入前は既存無関係呼出への
+# 本番影響を回避、karo-third是正指示 msg_20260722_110357_7024877b 対応)。
+# ack-retry engine 自身の呼出のみ INBOX_WRITE_ENABLE_CORRELATION_AUTOGEN=1 を
+# 明示付与し auto採番を有効化する。無指定の既存呼出 (stop_hook_inbox.sh 等) は
+# 旧挙動 (correlation_id なし) を維持する。§2.5 correlation_id 非null要件は
+# G1受入・engine本番化後に auto-gen をデフォルト化して満たす想定 (暫定措置)。
+if [ -z "$CORRELATION_ID" ] && [ "${INBOX_WRITE_ENABLE_CORRELATION_AUTOGEN:-}" = "1" ]; then
+    CORRELATION_ID="corr_$(date +%Y%m%d_%H%M%S)_$(od -An -N4 -tx1 /dev/urandom | tr -d ' \n')"
+fi
 
 # Cross-platform lock: flock (Linux) or mkdir (macOS fallback)
 LOCK_DIR="${LOCKFILE}.d"
@@ -421,7 +542,42 @@ import yaml, sys, os
 try:
     # Load existing inbox
     with open('$INBOX') as f:
-        data = yaml.safe_load(f)
+        documents = list(yaml.safe_load_all(f))
+
+    # Repair legacy/orphan multi-document inboxes under the same write lock.
+    # Preserve the exact pre-repair bytes once, then normalize every document
+    # into the canonical top-level messages array before appending the new row.
+    if len(documents) > 1:
+        import datetime
+        import shutil
+        backup_suffix = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+        shutil.copy2('$INBOX', f'$INBOX.automerge_{backup_suffix}')
+        normalized_messages = []
+        for document in documents:
+            if not isinstance(document, dict):
+                continue
+            if isinstance(document.get('messages'), list):
+                normalized_messages.extend(document['messages'])
+                continue
+            orphan = dict(document)
+            orphan_content = orphan.pop('content', None)
+            if orphan_content is None:
+                body = orphan.pop('body', '')
+                subject = orphan.pop('subject', '')
+                orphan_content = body or subject
+            normalized_messages.append({
+                'id': orphan.get('id') or f'orphan_{len(normalized_messages) + 1}',
+                'from': orphan.get('from', 'unknown'),
+                'timestamp': orphan.get('timestamp', ''),
+                'type': orphan.get('type', 'legacy_orphan'),
+                'content': orphan_content,
+                'read': bool(orphan.get('read', False)),
+            })
+        data = {'messages': normalized_messages}
+    elif documents:
+        data = documents[0]
+    else:
+        data = None
 
     # Initialize if needed
     if not data:
@@ -436,16 +592,36 @@ try:
         'timestamp': '$TIMESTAMP',
         'type': '$TYPE',
         'content': os.environ.get('INBOX_CONTENT', ''),
-        'read': False
+        'read': False,
     }
+    corr_val = '$CORRELATION_ID'
+    if corr_val:
+        new_msg['correlation_id'] = corr_val
     data['messages'].append(new_msg)
 
-    # Overflow protection: keep max 50 messages
+    # Overflow rotation (2026-08-03 委員長hotfix 裁定seq137748/137769):
+    # 旧仕様は50便超で既読便を黙って恒久破壊していた(同日17+19便消失の実害)。
+    # 破壊→回転: 溢れた既読便はper-agent archiveへ全量退避し、発動をstderrへlogする。
     if len(data['messages']) > 50:
         msgs = data['messages']
         unread = [m for m in msgs if not m.get('read', False)]
         read = [m for m in msgs if m.get('read', False)]
-        # Keep all unread + newest 30 read messages
+        dropped = read[:-30]
+        if dropped:
+            _adir = os.path.join(os.path.dirname(os.path.realpath('$INBOX')), '_archive')  # realpath: alias/実体のarchive二重化防止(a6指摘)
+            os.makedirs(_adir, exist_ok=True)
+            _abase = os.path.basename(os.path.realpath('$INBOX'))
+            if _abase.endswith('.yaml'):
+                _abase = _abase[:-5]
+            _apath = os.path.join(_adir, _abase + '_pruned.yaml')
+            with open(_apath, 'a', encoding='utf-8') as _af:
+                yaml.safe_dump({'pruned_at': '$TIMESTAMP', 'count': len(dropped), 'messages': dropped}, _af, allow_unicode=True, default_flow_style=False)
+                _af.write('---\n')
+            print('[inbox_write] CAP_ROTATED: ' + str(len(dropped)) + ' read messages moved to ' + _apath, file=sys.stderr)
+            # 永続log (2026-08-03 W67・a6提起「stderrのみで一過性」を受け、append-only・cap無し・既存archiveと同一realpath配下)
+            _logpath = os.path.join(_adir, '_prune_events.log')
+            with open(_logpath, 'a', encoding='utf-8') as _lf:
+                _lf.write(f'$TIMESTAMP agent={_abase} pruned={len(dropped)} archive={_apath}\n')
         data['messages'] = unread + read[-30:]
 
     # Atomic write: tmp file + rename (prevents partial reads)
@@ -472,7 +648,13 @@ except Exception as e:
 "
         STATUS=$?
         _release_lock
-        [ $STATUS -eq 0 ] && exit 0
+        if [ $STATUS -eq 0 ]; then
+            # ★ae8083dd★: 既存 caller は stdout 非捕捉確認済 (grep -rn "\$(.*inbox_write\.sh"
+            # = 0件、27参照ファイル全て fire-and-forget 呼出し)。ack-retry engine の
+            # Stage A 確認用グラウンディング値として MSG_ID/CORRELATION_ID を出力。
+            echo "MSG_ID=$MSG_ID CORRELATION_ID=$CORRELATION_ID"
+            exit 0
+        fi
         attempt=$((attempt + 1))
         [ $attempt -lt $max_attempts ] && sleep 1
     else
