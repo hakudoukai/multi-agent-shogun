@@ -276,8 +276,7 @@ try:
             # 永続log (2026-08-03 W67・a6提起「stderrのみで一過性」を受け、append-only・cap無し・既存archiveと同一realpath配下)
             _logpath = os.path.join(_adir, '_prune_events.log')
             with open(_logpath, 'a', encoding='utf-8') as _lf:
-                _lf.write(f'$TIMESTAMP agent={_abase} pruned={len(dropped)} archive={_apath}
-')
+                _lf.write(f'$TIMESTAMP agent={_abase} pruned={len(dropped)} archive={_apath}' + chr(10))
         data['messages'] = unread + read[-30:]
 
     # Atomic write: tmp file + rename (prevents partial reads)
