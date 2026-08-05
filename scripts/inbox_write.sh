@@ -31,6 +31,23 @@ if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
     CONTENT="$(cat)"
 fi
 
+# ★sentinel fail-open guard (2026-08-06・karo-second 下命 msg_20260806_015105_56b09030
+# + 追補 msg_20260806_015237_f46ee54d・将軍second 逐語「拒否の瞬間は必ず人が見る所ゆえ、
+# 条を読ませる最良の時は条に触れた瞬間」)★:
+# INBOX_WRITE_CONTENT_STDIN=1 の付け忘れ時、第2引数の literal sentinel "__VIA_STDIN__"
+# がそのまま CONTENT として静かに書き込まれていた (fail-open)。stdin 経由でない状態で
+# CONTENT が sentinel に★完全一致★する便のみを拒む — 通常本文に同語が含まれるだけの
+# 物 (完全一致でない) は過剰に塞がず通す。
+# ★位置づけ (karo-second 追補)★: 本件は新規規則の制定ではなく、既に在る条
+# 「送信済の便は新id+supersedesで訂正せよ・便は消えず file は残る」を機構へ落とす
+# 作業 —— この guard が無ければ、壊れた便が一度書かれた後、誰かが同一 id を
+# 上書きして「直す」誘惑に晒される。stderr に条の名を併記し、拒否の瞬間そのものを
+# 条を読ませる機会とする。
+if [ "${INBOX_WRITE_CONTENT_STDIN:-}" != "1" ] && [ "$CONTENT" = "__VIA_STDIN__" ]; then
+    echo "[inbox_write] REJECTED: content equals sentinel __VIA_STDIN__ (env INBOX_WRITE_CONTENT_STDIN unset, caller likely forgot the env var — see usage comment at top of this script) —— 条: 送信済の便は新id+supersedesで訂正せよ／便は消えず file は残る" >&2
+    exit 1
+fi
+
 # Validate arguments
 if [ -z "$TARGET" ] || [ -z "$CONTENT" ] || [ -z "$TYPE" ] || [ -z "$FROM" ]; then
     echo "Usage: inbox_write.sh <target_agent> <content> <type> <from>" >&2
@@ -292,26 +309,37 @@ with open('$path', 'w') as f:
 # 次の dead-letter 事象が来て初めて再評価されるため)。これは「和名で名乗る者は
 # 不達を永久に知り得ない」を「差配者への通知そのものが同じ病に罹り得る」形で
 # 再生産する余地であり、根絶はしていない — 単発かつ稀な最終イベントについては
-# 残存する。止める者 = env INBOX_WRITE_DISPATCH_NOTICE_DISABLE (既定=1=無効・下記参照)
-# を明示 0 にする迄は誰も有効化せぬ。1に戻す/据え置くのみなら委員長/karo-second 権限を
-# 問わず誰でも安全側。
+# 残存する。止める者 = env INBOX_WRITE_DISPATCH_NOTICE_DISABLE (既定=0=有効・下記参照・
+# 2026-08-06 ashigaru3 決定で既定反転)。1を明示指定すれば誰でも即時無効化できる=
+# 無効化する方向は委員長/karo-second 権限を問わず誰でも安全側。
 #
 # ★測る側 (flush 判定=count/age) と 書く側 (_write_message 呼出) は本関数内で対を成す★。
 #
-# ★既定=無効 (2026-08-05T14:2x karo-second 令 msg_20260805_142047_b4a254cf・至急停止)★:
+# ★点検日到達 → 既定=有効 へ決着 (足軽3号 W-点検 20260806・karo-second 下命
+# msg_20260806_002057_77c916e6 に基づく決定・issued by ashigaru3)★:
+# 2026-08-05T14:2x karo-second 令 (msg_20260805_142047_b4a254cf) で既定=無効としたのは、
 # 足軽3号の【第五】出口の門 設計 (docs/incident_logs/2026-08-05_exit_gate_design_delivery_route_stabilization_a3.md
-# §4-4) が「alt-signal の記録先を inbox.yaml 自身にするな」との核心禁則を立て、本機構の
-# 書込先 (queue/inbox/shogun-second.yaml) と正面衝突した。実測: shogun-second.yaml は
-# 本機構と無関係な既存トラフィックのみで既に平均約37分周期で cap(50件)到達・退避を
-# 繰り返しており (queue/inbox/_archive/_prune_events.log 実測)、追加書込は退避頻度を
-# 早める。決着 (委員長裁定) まで既定を無効化し、以後の生産物 (dead-letter 発生) に対して
-# 本機構が実際に発火しないようにする。有効化は INBOX_WRITE_DISPATCH_NOTICE_DISABLE=0
-# を明示指定した時のみ (裁定が下り、既定を戻す判断が出るまでこの向きを保つ)。
+# §4-4「alt-signal の記録先を inbox.yaml 自身にするな」) との統合待ちであった。
+# ★点検日 (出口の門が軍師PASSを得た時=2026-08-05T14:40 もしくは 2026-08-08 の早い方) は
+# 既に到達済 (軍師second PASS: queue/reports/gunshi_second_exit_gate_design_delivery_route_stabilization_audit_20260805.md)。
+# ★決定=「出口の門への統合」ではなく「既定を0(有効)へ倒す」を選ぶ★。理由:
+#   (a) 出口の門は★設計のみ★で実装が一切開始していない (同 doc §4-7「稼働=0」)。実装開始の
+#       GO は委員長殿の専権であり、当職 (足軽3号) が統合先を先回りして作ることはその専権を
+#       侵す。統合すべき実装が存在せぬ以上、統合待ちを続けても収束しない。
+#   (b) §4-4 の核は「alt-signal の記録先を監視対象 inbox.yaml 自身にするな」であり、本機構が
+#       書く先 (shogun-second.yaml) は「出口の門が監視する対象」ではなく「委員長裁定 (FROM不明
+#       墓場落ちを差配者へ必ず1行報せる) の宛先」— 別の宛先・別の目的であり、同一問題の再発では
+#       ない。懸念の実体 (cap圧迫) は本機構自身の cap=5/interval=300s 束ねで既に測定済み
+#       (docs/incident_logs/2026-08-05_dispatch_notice_bundle_impl_a2.md §2: 9.3%流入増→
+#       周期37分→約34分・軍師second PASS: queue/reports/gunshi_second_dispatch_notice_bundle_impl_audit_20260805.md)。
+#   (c) 委員長殿の原下命 (FROM不明墓場落ちを差配者へ必ず1行報せる) が無期限に不履行のままに
+#       なるのは、統合先が存在しない設計待ちを理由にすべきではない。
+# 有効化は INBOX_WRITE_DISPATCH_NOTICE_DISABLE=0 が既定 (明示 1 指定で無効化=常に安全側)。
 _notify_pc_dispatcher_of_unroutable() {
     local dl_path="$1" target="$2" from="$3" reason="$4"
 
-    if [ "${INBOX_WRITE_DISPATCH_NOTICE_DISABLE:-1}" != "0" ]; then
-        echo "[inbox_write] DISPATCH_NOTICE_DISABLED: skipping dispatcher notice for $dl_path (default-disabled pending karo-second/委員長 decision on the ashigaru3 exit-gate conflict; set INBOX_WRITE_DISPATCH_NOTICE_DISABLE=0 to re-enable)" >&2
+    if [ "${INBOX_WRITE_DISPATCH_NOTICE_DISABLE:-0}" != "0" ]; then
+        echo "[inbox_write] DISPATCH_NOTICE_DISABLED: skipping dispatcher notice for $dl_path (explicitly disabled via INBOX_WRITE_DISPATCH_NOTICE_DISABLE=1; default is enabled as of 2026-08-06 ashigaru3 decision — see comment above _notify_pc_dispatcher_of_unroutable)" >&2
         return 0
     fi
 

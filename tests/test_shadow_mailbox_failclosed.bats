@@ -377,6 +377,83 @@ YAML
     [ ! -f "$TEST_INBOX_DIR/ashigaru1.yaml" ]
 }
 
+# =============================================================================
+# sentinel fail-open guard (2026-08-06・karo-second 下命 msg_20260806_015105_56b09030)
+#
+# 零 何が起きたか (実測): 足軽1号の便が本文一語「__VIA_STDIN__」で家老second へ届いた。
+# 因=INBOX_WRITE_CONTENT_STDIN=1 の付け忘れにて、第2引数の literal がそのまま本文と
+# 成った (fail-open — 壊れた便が静かに通る)。
+#
+# 契約: 本文が sentinel (__VIA_STDIN__) に★完全一致★する便は拒め (env 未設定時)。
+# 過剰に塞ぐな = 通常本文に __VIA_STDIN__ の語が★含まれるだけ★ (完全一致でない) は通せ。
+#
+# 負テスト三形 (⒜⒝⒞・karo-second 契約の逐語番号と対応):
+# ⒜ env未設定 + 本文=__VIA_STDIN__ → 拒む
+# ⒝ env=1 + stdin正常 → 通る
+# ⒞ 通常本文に語を含むのみ (完全一致でない) → 通る
+# =============================================================================
+
+@test "SFO-A: env unset, literal body exactly '__VIA_STDIN__' is rejected (sentinel fail-open guard)" {
+    run bash "$TEST_INBOX_WRITE" "ashigaru1" "__VIA_STDIN__" "notification" "shogun-second"
+    [ "$status" -ne 0 ]
+    [[ "$output" =~ REJECTED ]]
+    [[ "$output" =~ __VIA_STDIN__ ]]
+
+    # ★fail-open 実害の核心★: 宛先箱に sentinel そのものを本文とする便が
+    # 書き込まれてはならぬ (書かれてしまえば本テストの意味が無い)。
+    if [ -f "$TEST_INBOX_DIR/ashigaru1.yaml" ]; then
+        "$VENV_PYTHON" - << PY
+import yaml
+with open("$TEST_INBOX_DIR/ashigaru1.yaml") as f:
+    data = yaml.safe_load(f)
+msgs = (data or {}).get("messages") or []
+assert not any(m.get("content") == "__VIA_STDIN__" for m in msgs), msgs
+print("SFO-A (no-sentinel-written): PASS")
+PY
+    fi
+}
+
+@test "SFO-B: INBOX_WRITE_CONTENT_STDIN=1 with normal stdin content is delivered unchanged (positive control)" {
+    run bash -c "echo -n 'normal stdin body, no sentinel issue' | INBOX_WRITE_CONTENT_STDIN=1 bash \"$TEST_INBOX_WRITE\" ashigaru1 __VIA_STDIN__ notification shogun-second"
+    [ "$status" -eq 0 ]
+    [ -f "$TEST_INBOX_DIR/ashigaru1.yaml" ]
+
+    "$VENV_PYTHON" - << PY
+import yaml
+with open("$TEST_INBOX_DIR/ashigaru1.yaml") as f:
+    data = yaml.safe_load(f)
+msgs = data["messages"]
+assert any(m["content"] == "normal stdin body, no sentinel issue" for m in msgs), msgs
+print("SFO-B: PASS")
+PY
+}
+
+@test "SFO-C: normal body merely containing the sentinel word (not an exact match) is delivered unchanged" {
+    run bash "$TEST_INBOX_WRITE" "ashigaru1" "ログに __VIA_STDIN__ という語が現れた事象を報告する" "notification" "shogun-second"
+    [ "$status" -eq 0 ]
+    [ -f "$TEST_INBOX_DIR/ashigaru1.yaml" ]
+
+    "$VENV_PYTHON" - << PY
+import yaml
+with open("$TEST_INBOX_DIR/ashigaru1.yaml") as f:
+    data = yaml.safe_load(f)
+msgs = data["messages"]
+assert any(m["content"] == "ログに __VIA_STDIN__ という語が現れた事象を報告する" for m in msgs), msgs
+print("SFO-C: PASS")
+PY
+}
+
+# ⒟ 追補 (将軍second 逐語・msg_20260806_015237_f46ee54d): 拒否の瞬間は必ず人が見る所
+# ゆえ、条を読ませる最良の時は条に触れた瞬間 — 拒否時 stderr に該当条の名を現に出す事。
+@test "SFO-D: rejection stderr cites the governing rule name, not just REJECTED" {
+    run bash "$TEST_INBOX_WRITE" "ashigaru1" "__VIA_STDIN__" "notification" "shogun-second"
+    [ "$status" -ne 0 ]
+    [[ "$output" =~ REJECTED ]]
+    [[ "$output" =~ 条: ]]
+    [[ "$output" =~ 新id ]]
+    [[ "$output" =~ supersedes ]]
+}
+
 # SMFC-SCHEMA2: canon 判定は「真に override された registry の内容」で決まらねばならぬ
 # ——(i) real repo には存在せぬ新規名でも、正しい形 (pane_registry.panes[].agent_id) の
 # override に載っていれば受理される (= 実際にこの path から読んでいる証)。

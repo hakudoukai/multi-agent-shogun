@@ -253,6 +253,16 @@ PY
 # CASE 7 [normal new-unread delivery, exactly once — no regression]: specials
 # (clear_command) are still consumed exactly once, unaffected by the new
 # expire/supersede mutation pass sharing the same atomic-write block.
+#
+# SUPERSEDED (W201, ashigaru3, 2026-08-04, 委員長殿裁可 msg_20260804_191210_11930ef7):
+# This test asserts that get_unread_info() ALONE consumes (read=True) a
+# clear_command on first call. That was the root cause of W201: a
+# busy-guard-deferred clear_command was already committed read=True before
+# send_cli_command ever ran, so "deferred to next cycle" silently meant lost
+# forever. Left intentionally red (rule 9 — the failing test is the cost of
+# the fix, not a defect; see
+# docs/incident_logs/2026-08-04_w201_inbox_watcher_cure_a3.md §5).
+# Successor test (asserts the corrected contract): "LB-07b" below.
 # =============================================================================
 @test "LB-07: clear_command special is still consumed exactly once (no regression)" {
     cat > "$TEST_INBOX" << 'YAML'
@@ -281,6 +291,52 @@ p = json.loads(sys.argv[1])
 assert len(p["specials"]) == 0, p
 assert p["count"] == 0, p
 print("LB-07: PASS")
+PY
+}
+
+# =============================================================================
+# CASE 7b [W201 fix]: get_unread_info() alone must NOT consume a clear_command.
+# It survives repeated calls unread until mark_message_processed() commits it
+# — which process_unread() only calls after confirming actual execution.
+# =============================================================================
+@test "LB-07b: clear_command special survives repeated get_unread_info (W201 fix, no consume-on-extract)" {
+    cat > "$TEST_INBOX" << 'YAML'
+messages:
+  - id: msg_clear
+    from: karo
+    timestamp: "2026-07-15T10:00:00"
+    type: clear_command
+    content: /clear
+    read: false
+YAML
+    run bash -c "source '$TEST_HARNESS'; get_unread_info"
+    [ "$status" -eq 0 ]
+    "$VENV_PYTHON" - << 'PY' "$output"
+import json, sys
+p = json.loads(sys.argv[1])
+assert len(p["specials"]) == 1, p
+PY
+
+    # Second (and third) call: extraction alone is not consumption — the
+    # special must still be present, unlike the superseded LB-07 contract.
+    run bash -c "source '$TEST_HARNESS'; get_unread_info"
+    [ "$status" -eq 0 ]
+    "$VENV_PYTHON" - << 'PY' "$output"
+import json, sys
+p = json.loads(sys.argv[1])
+assert len(p["specials"]) == 1, p
+assert p["specials"][0]["id"] == "msg_clear", p
+PY
+
+    # Only mark_message_processed (post-execution commit) consumes it.
+    run bash -c "source '$TEST_HARNESS'; mark_message_processed msg_clear; get_unread_info"
+    [ "$status" -eq 0 ]
+    "$VENV_PYTHON" - << 'PY' "$output"
+import json, sys
+p = json.loads(sys.argv[1])
+assert len(p["specials"]) == 0, p
+assert p["count"] == 0, p
+print("LB-07b: PASS")
 PY
 }
 
