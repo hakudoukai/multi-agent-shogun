@@ -179,6 +179,20 @@ pane_registry:
     note: 'staged recovery seq95958 で新設 (Opus, 家老同格の監査役)。canon に gunshi model 明記なきため
       shogun-second 裁定で Opus。R2 で 0.4→0.8 swap 完了。'
   # a8 (旧 registered standby @0.9) 登録は撤回 (FUKUINCHO 裁定 seq96053)。standby は a1-7 内 status で表現。
+  - tmux_target: hermes-honbucho:0.0
+    agent_id: honbucho
+    persona: honbucho
+    cli: codex
+    pc: SecondPC
+    role: 未確認 (canon 文書 [CLAUDE.md / instructions/*.md] に役職名の記載無し・実在のみ証跡3点で確認、推測で埋めず)
+    status: 通常運用
+    note: '足軽4号 registry 全数棚卸し工区で追加 (2026-08-05T12:4x、出所=委員長殿裁可 msg_20260805_123141_5de6198b・
+      家老second下命 msg_20260805_123521_c513df51「実在証拠1行を添えよ／示せぬ名は加えるな」)。
+      証跡3点 (2026-08-05T12:4x 実測)= ①watcher process 実在 (pid 2006022、
+      /usr/bin/bash scripts/inbox_watcher.sh honbucho hermes-honbucho:0.0 codex)
+      ②tmux pane 実在 (hermes-honbucho:0.0、@agent_id=honbucho、pane_current_command=doppler)
+      ③queue/inbox/honbucho.yaml 実受信履歴 (24便・24既読・最終既読 2026-08-05T10:27:19、
+      docs/incident_logs/2026-08-05_canon_destination_read_arrival_ledger_a4.md §1 に実測記録済)。'
   reserved_gaps:
   - agent_id: ashigaru4
     reason: PC 境界の視覚的区切り (CLAUDE.md §18.1 番号体系原則)
