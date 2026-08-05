@@ -182,6 +182,18 @@ try:
     # Overflow rotation (2026-08-03 委員長hotfix 裁定seq137748/137769):
     # 旧仕様は50便超で既読便を黙って恒久破壊していた(同日17+19便消失の実害)。
     # 破壊→回転: 溢れた既読便はper-agent archiveへ全量退避し、発動をstderrへlogする。
+    #
+    # ★箱の主への通知 (2026-08-06 足軽3号・karo-second 下命 msg_20260806_021657_0b74da3e)★:
+    # 旧実装は CAP_ROTATED を「書込んだ者(呼び手)の stderr」にのみ出しており、箱の主
+    # (=target=このinboxの持ち主) は己の既読便が退避された事を知る術が無かった
+    # (2026-08-05/06 実例=軍師second・足軽4号・将軍second・足軽1号・足軽5号の便を
+    # 当職が偶々stderrを見て手で告げた事例が複数)。
+    # ★無限回転を避ける設計★: 別便を新規に _write_message() 経由で送信するのではなく、
+    # この同一 atomic write の中で target 自身の未読メッセージとして data['messages']
+    # へ直接埋め込む。新しい lock 取得/atomic write 呼び出しを一切増やさぬため、通知
+    # そのものが新たな回転を誘発する再帰は構造的に起き得ぬ (この event で
+    # data['messages'] に積まれるのは高々この通知1件のみ・次の rotation 判定は次回
+    # _write_message() 呼び出し時まで発生しない)。
     if len(data['messages']) > 50:
         msgs = data['messages']
         unread = [m for m in msgs if not m.get('read', False)]
@@ -203,6 +215,41 @@ try:
             _logpath = os.path.join(_adir, '_prune_events.log')
             with open(_logpath, 'a', encoding='utf-8') as _lf:
                 _lf.write(f'$timestamp agent={_abase} pruned={len(dropped)} archive={_apath}' + chr(10))
+
+            # ★契約⒜ + 追加⑴ (karo-second msg_20260806_022008_8725d1eb): 増分N(今回の
+            # rotation event で退避した件数)と累計M(archiveの★doc数★=これまでに起きた
+            # rotation eventの回数)を分けて書く。mtimeは最後の1回しか示さぬため出所に
+            # 使えぬ、と明示されたのに従い、safe_load_all()でarchive中のdocument数その
+            # 物を数える(messageの総数ではなくevent回数)。数え得ぬ時は0で埋めず
+            # ★'未測'★ を代入する(0と未測を混ぜぬ)。
+            _cum = 0
+            _cum_measured = True
+            try:
+                with open(_apath, encoding='utf-8') as _cf:
+                    for _doc in yaml.safe_load_all(_cf):
+                        if isinstance(_doc, dict):
+                            _cum += 1
+            except Exception:
+                _cum_measured = False
+            _cum_str = str(_cum) if _cum_measured else '未測'
+            _notify_id = 'msg_' + '$timestamp'.replace('-', '').replace(':', '').replace('T', '_') + '_cap_rotated'
+            _notify_msg = {
+                'id': _notify_id,
+                'from': 'inbox_write',
+                'timestamp': '$timestamp',
+                'type': 'cap_rotated_notice',
+                'content': (
+                    '[inbox_write→本人] 箱の容量上限(50件)超過につき既読便を退避いたし申した '
+                    f'(今回の退避件数N={len(dropped)}件・累計rotation回数M={_cum_str}件・退避先={_apath})。'
+                    '退避先はmulti-document YAMLゆえ yaml.safe_load() では読めず、'
+                    'yaml.safe_load_all() を用いよ (scripts/read_pruned_archive.sh 参照)。'
+                    'git 外 (queue/_archive は追跡対象外)。'
+                ),
+                'read': False,
+                'expires_at': None,
+                'supersedes': None,
+            }
+            unread = unread + [_notify_msg]
         data['messages'] = unread + read[-30:]
 
     # Atomic write: tmp file + rename (prevents partial reads)
