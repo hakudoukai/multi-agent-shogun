@@ -490,11 +490,15 @@ try:
     special_types = ("clear_command", "model_switch", "cli_restart")
     specials = [m for m in unread if m.get("type") in special_types]
 
-    if specials or expire_supersede_changed:
-        for m in messages:
-            if not m.get("read", False) and m.get("type") in special_types:
-                m["read"] = True
-
+    # W201 root-cause cure: specials are intentionally NOT marked read=True
+    # here (consume-before-commit removed). Marking at extraction time meant
+    # a busy-guard-deferred clear_command was already committed read=True in
+    # the file before the caller ever attempted to send it — the log said
+    # "deferred to next cycle" but the next cycle's `unread` filter above
+    # skips read=True messages forever, so the command was silently lost.
+    # Specials are now marked read only after the caller (process_unread)
+    # confirms actual successful execution, via mark_message_processed().
+    if expire_supersede_changed:
         # symlink保護: realpath経由で canonical 解決後に atomic replace
         # (2026-05-08 split-brain 事故対策、commit dd706ad と同型 fix)
         inbox_canonical = os.path.realpath(inbox)
@@ -515,7 +519,7 @@ try:
     payload = {
         "count": normal_count,
         "has_task_assigned": has_task_assigned,
-        "specials": [{"type": m.get("type", ""), "content": m.get("content", "")} for m in specials],
+        "specials": [{"id": m.get("id", ""), "from": m.get("from", ""), "type": m.get("type", ""), "content": m.get("content", "")} for m in specials],
     }
     print(json.dumps(payload))
 except Exception:
@@ -524,11 +528,140 @@ PY
     ) 200>"$LOCKFILE" 2>/dev/null
 }
 
+# ─── Mark a single special message read (post-execution commit only) ───
+# W201 root-cause cure (発注①): read=True for a special (clear_command/
+# model_switch/cli_restart) must be committed ONLY after the caller has
+# confirmed it was actually executed. Never call this speculatively.
+# Locked + scoped to one message id (by id, not a blanket sweep) so a
+# concurrent inbox_write.sh append from another agent is never clobbered.
+mark_message_processed() {
+    local msg_id="$1"
+    [ -n "$msg_id" ] || return 0
+    (
+        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 300 ] && break; done; trap "rmdir '$_ld' 2>/dev/null" EXIT; fi
+        INBOX_PATH="$INBOX" MSG_ID="$msg_id" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+import os
+import yaml
+
+inbox = os.environ.get("INBOX_PATH", "")
+msg_id = os.environ.get("MSG_ID", "")
+try:
+    with open(inbox, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    messages = data.get("messages", []) or []
+    changed = False
+    for m in messages:
+        if m.get("id") == msg_id and not m.get("read", False):
+            m["read"] = True
+            changed = True
+            break
+    if changed:
+        inbox_canonical = os.path.realpath(inbox)
+        tmp_path = f"{inbox_canonical}.tmp.{os.getpid()}"
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            yaml.safe_dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+        os.replace(tmp_path, inbox_canonical)
+except Exception:
+    pass
+PY
+    ) 200>"$LOCKFILE" 2>/dev/null
+}
+
+# ─── Return an undeliverable special message to its sender ───
+# W201 root-cause cure (発注③・W201追補②B-4 Return-Path): a special command
+# that could not be executed (unrecognized type/content, or send_cli_command
+# failure) must not vanish silently. It is consumed here (read=True — so it
+# is not retried forever under a stale definition of "processing") and a
+# failure notice is written back to the sender's own inbox via
+# inbox_write.sh.
+#
+# B-4 Return-Path (project_documents id=60d41aee-5128-427d-82ae-dc0946d94682
+# v1.1) requires more than "sent" — it requires arrival to be confirmed via
+# a SEPARATE channel before the warning obligation is discharged. What this
+# function does is a partial, honest step toward that: it re-reads the
+# sender's inbox FILE (a channel independent of inbox_write.sh's own exit
+# code) to confirm the notice actually landed on disk, and logs a distinct
+# WARNING if it did not — so a silent inbox_write.sh failure is not
+# mistaken for a delivered notice. This is NOT full B-4 compliance: it
+# confirms the write landed, not that the human/agent recipient has become
+# aware of it (that would require tracking read=true on this specific
+# notice in a later watcher cycle, which is out of scope for this cure —
+# see the portability/handoff note in the W201 report for why).
+return_message_to_sender() {
+    local msg_id="$1" msg_from="$2" msg_type="$3" reason="$4"
+    echo "[$(date)] [RETURN-TO-SENDER] $AGENT_ID: undeliverable ${msg_type} (id=${msg_id}) — ${reason}" >&2
+    if [ -n "$msg_from" ]; then
+        bash "$SCRIPT_DIR/scripts/inbox_write.sh" "$msg_from" \
+            "配送失敗通知: ${AGENT_ID} 宛 ${msg_type} (id=${msg_id}) を実行できませなんだ。理由=${reason}" \
+            "delivery_failed" "$AGENT_ID" 2>&1 | while IFS= read -r line; do
+            echo "[$(date)] [RETURN-TO-SENDER] $line" >&2
+        done
+        # Independent-channel landing check (not human-arrival confirmation —
+        # see comment above): re-read the sender's inbox file itself.
+        local sender_inbox="$SCRIPT_DIR/queue/inbox/${msg_from}.yaml"
+        if [ -f "$sender_inbox" ] && grep -qF "$msg_id" "$sender_inbox" 2>/dev/null; then
+            echo "[$(date)] [RETURN-TO-SENDER] landing confirmed via file re-read: ${sender_inbox} contains a reference to ${msg_id}" >&2
+        else
+            echo "[$(date)] [RETURN-TO-SENDER] WARNING: could not confirm delivery_failed notice landed in ${sender_inbox} (msg_id=${msg_id}) — inbox_write.sh may have failed silently" >&2
+        fi
+    else
+        echo "[$(date)] [RETURN-TO-SENDER] no 'from' field on message (id=${msg_id}) — cannot notify sender" >&2
+    fi
+    mark_message_processed "$msg_id"
+}
+
 # ─── Send CLI command via pty direct write ───
 # For /clear and /model only. These are CLI commands, not conversation messages.
 # CLI_TYPE別分岐: claude→そのまま, codex→/clear対応・/modelスキップ,
 #                  copilot→Ctrl-C+再起動・/modelスキップ
 # 実行時にtmux paneの @agent_cli を再確認し、ドリフト時はpane値を優先する。
+# ─── Send text+Enter to pane with delivery verification (W205 root cure) ───
+# Shared by send_cli_command()'s branches. Sends `text`, presses Enter, then
+# re-captures the pane to confirm `text` is no longer sitting unsent in the
+# input line — the same verify-by-absence check already used by the nudge
+# path (send_wakeup), reused here rather than reinvented (Anti-Duplication).
+# Retries up to 2x with C-u clear + resend on failure. Every send-keys call
+# on the command/Enter path is checked for its own exit status too — no
+# `|| true` on the keystrokes that carry the actual command, so a failed
+# injection surfaces as a real return 1 instead of being silently absorbed.
+# Returns 0 only on confirmed delivery, 1 if every attempt failed.
+send_keys_verified() {
+    local text="$1"
+    local enter_gap="${2:-0.3}"
+    local max_retries=2
+    local attempt=0
+    local rc=1
+    while [ $attempt -le $max_retries ]; do
+        timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null
+        sleep 0.2
+        if ! timeout 5 tmux send-keys -t "$PANE_TARGET" "$text" 2>/dev/null; then
+            echo "[$(date)] WARNING: send-keys text injection failed (attempt $((attempt+1))): $text" >&2
+            attempt=$((attempt+1))
+            continue
+        fi
+        sleep "$enter_gap"
+        if ! timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null; then
+            echo "[$(date)] WARNING: send-keys Enter injection failed (attempt $((attempt+1))): $text" >&2
+            attempt=$((attempt+1))
+            continue
+        fi
+        sleep 0.5
+        local pane_content
+        pane_content=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5)
+        if echo "$pane_content" | grep -qF -- "$text"; then
+            echo "[$(date)] WARNING: '$text' still visible unsent in pane after Enter, retrying (attempt $((attempt+1)))" >&2
+            attempt=$((attempt+1))
+            continue
+        fi
+        rc=0
+        break
+    done
+    if [ "$rc" -ne 0 ]; then
+        echo "[$(date)] ERROR: send_keys_verified exhausted $max_retries retries, Enter never confirmed landed: $text" >&2
+    fi
+    return "$rc"
+}
+
 send_cli_command() {
     local cmd="$1"
     local effective_cli
@@ -553,12 +686,23 @@ send_cli_command() {
         return 0
     fi
 
-    # Busy guard: never send /clear when agent is actively processing.
-    # clear_command inbox processor also checks busy, but this is a defense-in-depth guard.
-    # Sending /clear during Working destroys in-progress context and causes data loss.
-    if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
-        echo "[$(date)] [SKIP] Agent is busy — /clear deferred to next cycle (agent=$AGENT_ID)" >&2
-        return 0
+    # W205 root-cause cure: busy guard now covers EVERY command this function
+    # sends (/clear, /model, codex /new, copilot restart) — not just /clear.
+    # Typing into a pane mid-Working appends keystrokes to text the CLI is
+    # still composing/rendering; the previous code only guarded /clear,
+    # leaving /model and codex/copilot paths free to type during Working.
+    # Returns 2 (distinct from the 1 used for genuine injection/verification
+    # failure below) so callers can tell "busy, retry next cycle — leave the
+    # source message unread" apart from "actually failed to deliver, return
+    # to sender." Conflating the two here would reintroduce the exact
+    # consume-before-commit bug W201 fixed, just for model_switch/cli_restart
+    # instead of clear_command: process_unread()'s else-branch calls
+    # return_message_to_sender(), which marks the message read=True — a busy
+    # agent's queued /model would then be silently lost on the very next
+    # cycle instead of retried.
+    if agent_is_busy; then
+        echo "[$(date)] [SKIP] Agent $AGENT_ID is busy (Working) — CLI command deferred to next cycle: $cmd" >&2
+        return 2
     fi
 
     # CLI別コマンド変換
@@ -574,14 +718,15 @@ send_cli_command() {
                     return 0
                 fi
                 echo "[$(date)] [SEND-KEYS] Codex /clear→/new: starting new conversation for $AGENT_ID" >&2
-                # Dismiss suggestion UI first (typing "x" clears autocomplete prompt)
+                # Dismiss suggestion UI first (typing "x" clears autocomplete prompt).
+                # These two are best-effort UI resets, not the command itself —
+                # a failure here just means the dismiss/clear no-ops, harmless.
                 timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
                 sleep 0.3
-                timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
-                sleep 0.3
-                timeout 5 tmux send-keys -t "$PANE_TARGET" "/new" 2>/dev/null || true
-                sleep 0.3
-                timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+                if ! send_keys_verified "/new" 0.3; then
+                    echo "[$(date)] ERROR: Codex /new delivery not confirmed for $AGENT_ID" >&2
+                    return 1
+                fi
                 sleep 3
                 # Send startup prompt immediately (don't defer to context-reset cycle)
                 send_codex_startup_prompt
@@ -597,11 +742,15 @@ send_cli_command() {
             # Copilot: /clearはCtrl-C+再起動, /model非対応→スキップ
             if [[ "$cmd" == "/clear" ]]; then
                 echo "[$(date)] [SEND-KEYS] Copilot /clear: sending Ctrl-C + restart for $AGENT_ID" >&2
-                timeout 5 tmux send-keys -t "$PANE_TARGET" C-c 2>/dev/null || true
+                if ! timeout 5 tmux send-keys -t "$PANE_TARGET" C-c 2>/dev/null; then
+                    echo "[$(date)] ERROR: Copilot C-c injection failed for $AGENT_ID" >&2
+                    return 1
+                fi
                 sleep 2
-                timeout 5 tmux send-keys -t "$PANE_TARGET" "copilot --yolo" 2>/dev/null || true
-                sleep 0.3
-                timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+                if ! send_keys_verified "copilot --yolo" 0.3; then
+                    echo "[$(date)] ERROR: Copilot restart delivery not confirmed for $AGENT_ID" >&2
+                    return 1
+                fi
                 sleep 3
                 return 0
             fi
@@ -617,17 +766,20 @@ send_cli_command() {
     # Clear stale input first, then send command (text and Enter separated for Codex TUI)
     # Codex CLI: C-c when idle causes CLI to exit — skip it
     if [[ "$effective_cli" != "codex" ]]; then
-        timeout 5 tmux send-keys -t "$PANE_TARGET" C-c 2>/dev/null || true
+        if ! timeout 5 tmux send-keys -t "$PANE_TARGET" C-c 2>/dev/null; then
+            echo "[$(date)] WARNING: C-c pre-clear injection failed for $AGENT_ID (proceeding anyway)" >&2
+        fi
         sleep 0.5
     fi
-    timeout 5 tmux send-keys -t "$PANE_TARGET" "$actual_cmd" 2>/dev/null || true
     # /clear needs longer gap before Enter — CLI prompt may not be ready at 0.3s
+    local enter_gap=0.3
     if [[ "$actual_cmd" == "/clear" || "$actual_cmd" == "/new" ]]; then
-        sleep 1.0
-    else
-        sleep 0.3
+        enter_gap=1.0
     fi
-    timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+    if ! send_keys_verified "$actual_cmd" "$enter_gap"; then
+        echo "[$(date)] ERROR: CLI command delivery not confirmed for $AGENT_ID: $actual_cmd" >&2
+        return 1
+    fi
 
     # /clear needs extra wait time before follow-up
     if [[ "$actual_cmd" == "/clear" ]]; then
@@ -1170,34 +1322,56 @@ process_unread() {
 import sys, json
 data = json.load(sys.stdin)
 for s in data.get('specials', []):
+    mid = s.get('id', '') or ''
+    frm = s.get('from', '') or ''
     t = s.get('type', '')
     c = (s.get('content', '') or '').replace('\t', ' ').replace('\n', ' ').strip()
-    print(f'{t}\t{c}')
+    print(f'{mid}\t{frm}\t{t}\t{c}')
 " 2>/dev/null)
 
     local clear_seen=0
     local clear_sent=0  # tracks if /clear was actually sent (not just seen)
     if [ -n "$specials" ]; then
-        local msg_type msg_content cmd
-        while IFS=$'\t' read -r msg_type msg_content; do
+        local msg_id msg_from msg_type msg_content cmd
+        while IFS=$'\t' read -r msg_id msg_from msg_type msg_content; do
             [ -n "$msg_type" ] || continue
             if [ "$msg_type" = "clear_command" ]; then
                 clear_seen=1
                 if is_no_auto_clear_agent; then
-                    echo "[$(date)] [SKIP] $AGENT_ID: suppressing clear_command during SecondPC role recovery" >&2
+                    # W201: persistent suppression state, not a one-shot failure —
+                    # left unread so it is naturally retried once the state clears
+                    # (previously this branch inherited the eager read=True mark
+                    # from get_unread_info() and silently dropped the message).
+                    echo "[$(date)] [SKIP] $AGENT_ID: suppressing clear_command during SecondPC role recovery (id=${msg_id}, left unread)" >&2
                     continue
                 fi
                 # Busy guard: skip /clear if agent is currently processing.
                 # Sending /clear during active work destroys in-progress context.
+                # W201 root-cause cure (発注②): intentionally left unread here —
+                # "deferred to next cycle" must actually mean the next cycle's
+                # get_unread_info() sees it again, not that it was already
+                # consumed and will never be seen again.
                 if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
-                    echo "[$(date)] [SKIP] Agent $AGENT_ID is busy — /clear (clear_command) deferred to next cycle" >&2
+                    echo "[$(date)] [SKIP] Agent $AGENT_ID is busy — /clear (clear_command) deferred to next cycle (id=${msg_id}, left unread)" >&2
                     continue
                 fi
             fi
             cmd=$(normalize_special_command "$msg_type" "$msg_content")
             if [ -n "$cmd" ]; then
-                send_cli_command "$cmd"
-                [ "$msg_type" = "clear_command" ] && clear_sent=1
+                local send_rc=0
+                send_cli_command "$cmd" || send_rc=$?
+                if [ "$send_rc" -eq 0 ]; then
+                    mark_message_processed "$msg_id"
+                    [ "$msg_type" = "clear_command" ] && clear_sent=1
+                elif [ "$send_rc" -eq 2 ]; then
+                    # Busy-defer (W205): left unread, no notification — this
+                    # is routine, not a failure. Retried next cycle.
+                    echo "[$(date)] [SKIP] $AGENT_ID: ${msg_type} (id=${msg_id}) deferred — agent busy, left unread" >&2
+                else
+                    return_message_to_sender "$msg_id" "$msg_from" "$msg_type" "send_cli_command failed (rc=${send_rc})"
+                fi
+            else
+                return_message_to_sender "$msg_id" "$msg_from" "$msg_type" "normalize_special_command produced empty command (unrecognized type/content)"
             fi
         done <<< "$specials"
     fi
