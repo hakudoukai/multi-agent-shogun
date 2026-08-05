@@ -68,8 +68,17 @@ for agent in "${ALL_AGENTS[@]}"; do
     if [[ "$agent" == "shogun" ]]; then
         pane_target="shogun:main"
     else
+        # session_name が agent_id 自身と一致する pane を優先 (同一 @agent_id を持つ
+        # pane が複数在り得るため — 例: Hermes 側の借用 pane。session名まで見て一意化)
         pane_target=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
-            | awk -v a="$agent" '$2 == a {print $1}' | head -1)
+            | awk -v a="$agent" '
+                $2 == a {
+                    split($1, parts, ":")
+                    if (parts[1] == a) { print $1; found=1; exit }
+                    if (fallback == "") fallback = $1
+                }
+                END { if (!found && fallback != "") print fallback }
+            ')
     fi
 
     # Read pane metadata (fallback to cli_adapter)

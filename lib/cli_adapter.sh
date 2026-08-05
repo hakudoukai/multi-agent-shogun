@@ -1079,9 +1079,19 @@ except Exception:
     local candidate
     for candidate in $candidates; do
         # tmux pane ターゲットを @agent_id で逆引き
+        # 同一 @agent_id を持つ pane が複数在り得る (例: Hermes 側の借用 pane) ため、
+        # session_name が agent_id 自身と一致する pane を優先する (session名まで見て一意化)。
+        # 一致が無ければ従来通り先頭一致にフォールバックする。
         local pane_target
         pane_target=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
-            | awk -v agent="$candidate" '$2 == agent {print $1}' | head -1)
+            | awk -v agent="$candidate" '
+                $2 == agent {
+                    split($1, parts, ":")
+                    if (parts[1] == agent) { print $1; found=1; exit }
+                    if (fallback == "") fallback = $1
+                }
+                END { if (!found && fallback != "") print fallback }
+            ')
 
         if [[ -z "$pane_target" ]]; then
             # tmuxセッションが存在しない（ユニットテスト環境等）→ 候補をそのまま返す
@@ -1131,9 +1141,17 @@ except Exception:
             continue
         fi
 
+        # session_name が agent_id 自身と一致する pane を優先 (前段と同一の一意化技法)
         local fb_pane
         fb_pane=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
-            | awk -v agent="$fallback" '$2 == agent {print $1}' | head -1)
+            | awk -v agent="$fallback" '
+                $2 == agent {
+                    split($1, parts, ":")
+                    if (parts[1] == agent) { print $1; found=1; exit }
+                    if (fb_default == "") fb_default = $1
+                }
+                END { if (!found && fb_default != "") print fb_default }
+            ')
 
         if [[ -z "$fb_pane" ]]; then
             # tmuxセッションなし（テスト環境）→ フォールバック候補を返す
