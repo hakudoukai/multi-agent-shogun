@@ -78,8 +78,38 @@ $ grep -n "secondpc_dispatch" docs/incident_logs/2026-08-05_gitignore_silent_gat
    scripts/・shim/)では確認できなかった。
 2. .claude/settings.local.json等、settings.json以外のhook設定fileが存在するかは確認していない。
 
+## 追補 (2026-08-06T03:50:32+0900・将軍second殿の訂正を受けて)
+
+家老second殿のcommit 137f26cが4本を一括して「意図は在り結線が無い」と括ったのは言い過ぎであった
+(家老second殿の落度として明記・当職の票自体は正確であったと家老second殿より確認済)。三分する。
+
+【SUPERSEDED・以下は三分類版・下記四分類版に改訂済(将軍second裁・secondpc_dispatchを⒞と
+「同様」と括った点が誤りであった為)】
+~~- 真に結線を欠く(2本)=`inbox_alias_integrity.sh`・`symlink_aware_atomic_write.sh`。
+  「0件」の意味=呼ぶ側(PreToolUse hook登録)自体が存在しない。
+- 呼ぶ側が凍結ゆえ発火せぬ(1本)=`codex_exec_sandbox_guard.sh`。
+- 手動運用で未実行(1本)=`secondpc_dispatch.sh`。「0件」の意味=家老second殿ご自身の道具で
+  あり、家老second殿が一度も手で叩いていない事による——結線の欠落ではなく運用の欠落。~~
+
+### 四分類版(現在有効・各分類に処方を一行添える)
+
+- **⒜ 不要**=要らぬ物が在る。**該当なし(0本)**——分類を立てて空である事も情報として明記する。
+- **⒝ 結線漏れ(2本)**=`inbox_alias_integrity.sh`・`symlink_aware_atomic_write.sh`。機構が呼ぶ
+  設計なのに登録が無い(`.claude/settings.json`のPreToolUse hook一覧に不在)。
+  **処方=結線せよ(hookへの登録を検討する余地あり、実装は上位裁を要す)。**
+- **⒞ 凍結(1本)**=`codex_exec_sandbox_guard.sh`。呼ぶ側(`audit_codex.sh`)自体が信長SAFETY裁定
+  (2026-07-21・当職も独立確認済=memory `codex-audit-live-repo-write-risk`)で禁じられている。
+  門は正常・発火せぬのが正しい状態。**処方=放っておいてよい(呼ぶ側が解禁されれば自然に発火する)。**
+- **⒟ 未使用(1本)**=`secondpc_dispatch.sh`。呼び手は人(家老second殿)で、その人が呼んでいない。
+  結線は要らぬ(手動ツールゆえ)。**処方=決めねばならぬ(使うか廃するかを家老second殿ご自身が
+  決める必要あり)。放っておけば「在るが誰も使わぬ物」として残り続ける。**
+
+∴ ⒞と⒟は「0件」という外形は同じだが、処方が正反対(⒞=放置でよい・⒟=決定を要す)。
+これを「同様」と一括すれば、⒟へ「結線せよ」という誤った処方が出かねない——本日確立した
+「同型は検証を省かせる語」の実例が、この追補作成の過程そのものに現れた。
+
 ## 監査体制
 
 暫定二者制(軍師+Gemini)。Codex leg停止中(2026-07-21事案)。
 
-以上、呼出元見当たらぬ4本・設計意図の在否への応答。検査は一切実行していない。
+以上、呼出元見当たらぬ4本・設計意図の在否への応答(追補込み)。検査は一切実行していない。
