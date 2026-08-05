@@ -340,6 +340,9 @@ tests/specs/osato_lms_*
 # ee4d6ce4 30f198e3 homework#1 (audit_gemini.sh harness heredoc literal parse bug 根治 regression gate)
 !tests/checks/audit_gemini_harness/
 !tests/checks/audit_gemini_harness/*.sh
+# codex_exec_sandbox_guard 負テスト (Codex leg 解禁の前提。軍師second 裁可 2026-08-06・理事長令 施行第一号)
+!tests/checks/codex_exec_sandbox_guard/
+!tests/checks/codex_exec_sandbox_guard/*.sh
 # ee4d6ce4 cycle3 T1 smoke test directory (enter_restart watchdog 4 観点 regression gate)
 !tests/smoke/
 !tests/smoke/*.sh
