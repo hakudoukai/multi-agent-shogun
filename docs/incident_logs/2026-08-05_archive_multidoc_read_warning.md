@@ -1,0 +1,64 @@
+# queue/inbox/_archive/*_pruned.yaml は multi-document YAML である（読み方の警告・止血）
+
+作成 = 家老second / 測時 2026-08-05T19:50:32+09:00 前後（機械）
+出所 = 委員長殿 裁可（将軍second 経由 msg_20260805_195024_9a39ef99）下命①「新規 file へ同じ警告を置け・working tree 不触・即時」
+
+証拠は code fence の外・素の文字で記す（将軍second 下命 2026-08-05T18:23 前後）。
+
+## 一 警告（本題・これが失われた一行の内容）
+
+queue/inbox/_archive/*_pruned.yaml は multi-document YAML である。
+yaml.safe_load() では読めない（最初の doc しか返らない、または例外）。
+必ず yaml.safe_load_all() を用い、末尾の None 要素を除くこと。
+読取具は scripts/read_pruned_archive.sh に既存（足軽7号作。ただし .gitignore により git 不可視）。
+
+誤った読み方をすると「在るのに読めぬ」状態になり、**沈黙を「便が無い」と読み違える**。
+本日、家老second が現にこの罠を踏んだ。
+
+## 二 なぜ本 file が要るのか（＝失われた一行のこと）
+
+scripts/inbox_write.sh は回転のたび、archive の各 doc の前に上記警告を一行書き込んでいた
+（commit 59e7899 で保全）。**その一行が working tree から無断で削除されている。**
+
+- git には在る（HEAD:181）。**動かすと無い**（working tree）。
+- ∴ 削除以降の回転で積まれた doc には、警告が付いていない。
+
+削除時刻の窓（家老second 実測。各 archive の末尾 doc に警告行が在るかで二分）:
+
+- 在り = ashigaru7 14:38:30 / ashigaru1 14:45:29 / ashigaru5 15:48:48 / ashigaru2 15:54:42
+- 無し = ashigaru6 18:07:02 / ashigaru3 18:18:19 / gunshi-second 18:23:56 / ashigaru4 19:12:00 / karo-second 19:22:23 / shogun-second 19:23:29
+
+∴ **削除は 2026-08-05 15:54:42 と 18:07:02 の間（2時間13分の窓）**。
+
+## 三 本 file の性質（委員長殿 明示・必ず読むこと）
+
+⒜ **削除された一行は 未復旧である。** 本 file は代替であって復旧ではない。
+⒝ **特定は 足軽2号の復帰待ち**（＝実ユーザー殿の一打）。同人は権限 dialog により停止中で、
+   問いに答えられない。**答えぬ事を逃げと数えてはならない。**
+   なお diff は「誰が」を語らない（未 commit ゆえ blame も効かない）。
+   **同窓・同 file は「機会」を示すが「行為」を示さない。** 本 file は誰も名指ししない。
+⒞ **これは「増えておる未決」である。** 止まっている未決ではない ——
+   **罠は archive が読まれるたびに再生産される。** 裁定の遅れ自体が損害を生む。
+
+## 四 根治の形（★形のみ記す。発注はしていない★）
+
+註で覚えさせるのではなく、**archive を誤った読み方で読めば うるさく失敗する形**にするのが根治である。
+（例: 先頭 doc を、safe_load では必ず失敗するか、失敗と判る値を返す形にする 等）
+
+**今は発注しない** —— 00E／門の工区の射程外であり、委員長殿は射程を広げておられない。
+**安価さは越権の理由に成らない。** 形のみ、ここに残す。
+
+## 五 置き場について
+
+本 file（docs/incident_logs/）は .gitignore の whitelist に救われ、git で共有される＝**恒久側**。
+併せて queue/inbox/_archive/README.md にも同じ警告を置いた＝**罠と同じ場所**。
+
+**★当初「queue/ は git 外ゆえその PC 限り」と書いたが、これは誤りであった（家老second 実測で訂正）★**:
+`.gitignore:18` に `!README.md` があり、**README.md はどこに置かれても救われる**。
+`git status --porcelain` は `?? queue/inbox/_archive/README.md` を返す＝**追跡可能・共有可能**。
+
+判定の作法（本件で危うく誤るところだった）:
+- **判定は `git check-ignore -q` の終了コード**（0=ignored / 1=not）。本件は **1＝ignored ではない**
+- `git check-ignore -v` は**否定規則にも出力を出し、しかも終了 0 を返す**
+  （実際 `.gitignore:18:!README.md` と表示して 0 で終わった）。**-v を可否の判定に使ってはならない**
+- ∴ 「queue/ 配下だから git 外」という**一般則からの推論で書きかけた** —— 測ったら違った
