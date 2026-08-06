@@ -10,7 +10,7 @@
 ★引用先file自体に、起草者が後に撤回したfindingが一件含まれる (下記参照)。当隊は当該findingを主張していない★。
 
 引用先 `docs/incident_logs/2026-08-06_reserveimage_cycle2_patch_readonly_audit_a4.md`
-(118行 sha256=15001c10f598c409…・commit 7a48f22) の104/111行目に、「reschedule時、release→claim順ゆえ
+(118行 sha256=15001c10f598c409…・commit 7a48f22) の105/111行目に、「reschedule時、release→claim順ゆえ
 claim失敗時に旧claimが消失する」というfindingが記されているが、起草者 (足軽4号) は09:24にこれを撤回した
 (同人が`conn.rollback()`の作用範囲を突き合わせ直し「旧claimは復元される設計と読める」と訂正・確度の留保も
 明記。撤回の出所=`docs/incident_logs/2026-08-06_reserveimage_cycle2_gap_test_design_9_10_12_a4.md`
@@ -75,6 +75,17 @@ inventory (在る/無い/未測の列挙) に徹した。
 - **F1・F3は陽性対照でRED化できない (GREEN-onlyの性質)**。三件のうち「欠陥が在れば必ずRED」と言える
   陽性対照を構成できるのはF2のみ (足軽4号の実測・走行順12)。∴ F1・F3は試験で機械的に示し得ない——
   これを明記せねば「三件とも試験で示せる」と誤って読まれる。
+- **F1〜F3が互いにどう影響し合うか (複合的な効果) は検証していない**。本書は三件を独立の事実として
+  並べたのみであり、例えばF1 (staff側idempotency未配線) とF3 (idempotency_key未使用時の早期return) が
+  同一要求で重なった場合にどう振る舞うかは、当隊は測っていない。
+- **staff経路の呼出し元 (`appointments.py`) は未読**。全190行に対する`grep`は全数実行したが、目視読了は
+  1-40行のみ (足軽1号の境界申告)。
+- **`update_booking`の`conn.commit()`有無は未測**。実UPDATE以降の該当箇所はdiffの可視範囲外であり、
+  当隊はこれを確認していない。
+- **sqlite3の暗黙transaction (isolation_level) の挙動は未実行確認**。静的読解のみで判定しており、
+  実際にDBを走らせてisolation_levelの実効果を確かめてはいない。
+- **他PC・他branchの状態は未測**。本書の母集団はpatch本体・base file・当PCで到達可能な範囲に限られ、
+  他PCや他branch上の状態 (例えば同種のpatchが既に適用されているか等) は確認していない。
 
 ## §4 出自 (隠さず書く)
 
