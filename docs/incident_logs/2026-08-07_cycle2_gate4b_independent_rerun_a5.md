@@ -1,4 +1,4 @@
-# Cycle2 Gate4b: post-commit durability 5site crash tests 独立再走（足軽5号）
+# Cycle2 Gate4b（断面=`14cad3a4`）: post-commit durability 5site crash tests 独立再走（足軽5号）
 
 ## 下命
 
@@ -104,9 +104,61 @@ karo-second令に明記された一条「機構を呼んでおらぬは守られ
 - **本測りが確認したのは「commit 14cad3a断面での5サイトの挙動」のみ**——それ以前の断面(47bで直した1箇所や、
   他の未修正箇所が存在する可能性)は本工区の対象外(母集団はa1が明記した「残5箇所」に限定)。
 
+## 五点束ね（current_order_11_20260807_004400_GATE4B_FIVE_POINT_BUNDLE・再走不要・已に済んだ物の束ね）
+
+下命: karo-second msg_20260807_004624_51b6ee60 (2026-08-07T00:46:24)。本部長殿00:37:19裁定
+「Gate4bは★受入候補★であって正式閉鎖に非ず」を受け、既出の材料を五点として束ねる。
+**★最も重き一行★：以後「Gate4b PASS」と断面無しには書かぬ——正しくは「`14cad3a4`に対する Gate4b PASS」**
+（`14cad3a4`は最終targetではなく、足軽1号が三扉offset overlap実装で新commitを出した後、当職は
+その新target到着後に条件待ちでもう一度再走する。時刻でなく条件で待つ・家老secondより報せを待つ）。
+
+**① artifact path + full SHA**:
+`docs/incident_logs/2026-08-07_cycle2_gate4b_independent_rerun_a5.md`（本file自身。行数・SHAは
+本便末尾で最終値を確定する）
+
+**② exact command（逐語・省略0）**:
+```
+$ cd /tmp/resimg-verify5-gate4b-20260806
+$ python3 -m pytest backend/tests/test_post_commit_durability_5sites_a1.py -v -s
+```
+上記2行は当職が実際にterminalへ入力した文字列そのもの（要約・省略なし）。
+
+**③ test file の SHA**（2026-08-07T00:47:05+09:00再測・当初測定と同一値）:
+```
+52112ae523289e8f7a2511c18f757d1f511101a18fac0df896c670bdb48cf2ab  backend/tests/test_post_commit_durability_5sites_a1.py
+```
+
+**④ worktree clean の証**（2026-08-07T00:47:05+09:00測・`git status --porcelain`実行・両worktree）:
+```
+[a1 worktree・read-only対象: /tmp/resimg-cycle2-f123-clean-20260806]
+$ git status --porcelain
+(出力なし=clean)
+
+[当職の独立worktree: /tmp/resimg-verify5-gate4b-20260806]
+$ git status --porcelain
+(出力なし=clean)
+$ git log --oneline -1
+14cad3a test(reservation-cycle2): 真並行(thread+barrier)でcreate-with-claim concurrency invariantを実測 (Cycle2 ⑸)
+```
+
+**⑤ scope票（覆っておらぬ層）**: 上記「本測りが覆っていない層」節に既出——crash injection手法1種限定
+（`log_appointment_action`のSystemExit monkeypatchのみ）／timing 1点固定（core commit直後・log呼出
+直前）／並行実行は射程外（別test`test_booking_concurrency_root_f2_self_rollback.py`の範囲）／母集団は
+a1明記の「残5箇所」に限定（それ以前の断面・47bの1箇所は対象外）。
+
+## 台帳の分け（本部長殿厳命・混同禁）
+
+- **2026-08-07T00:11:49完了（`current_order_9`・LANE_A_IFACE_REMOVE）** = ★旧機構工区★
+  （本repo `multi-agent-shogun`側・`pending_notice_flush.sh`のfake clock interface完全除去・
+  commit `6e056da`）
+- **2026-08-07T00:28:26完了（Gate4b）** = ★製品検証★
+  （外部repo `hakudoukai/hakudokai-dev`側・5site crash tests独立再走・**断面=`14cad3a4`**）
+
+両者は担当repo・性質(機構修正 vs 製品検証)とも別物であり、本便以降も混ぜて書かない。
+
 ## 禁則遵守声明
 
 実装fix 0（`git status --porcelain`で当職の独立worktree・a1のworktree両方とも無変更確認済）・commit
 0・push 0・merge 0・既存resimg freeze 32件不触（本工区では触れていない）・新規機構工区0（既存の
 pytestを読み専用で実行したのみ）・当職の独立worktreeは`git worktree add`で新規作成し、a1の
-worktreeへは一切書込していない。
+worktreeへは一切書込していない・再走0（已に済んだ物の束ねのみ、本令の明記通り）。
