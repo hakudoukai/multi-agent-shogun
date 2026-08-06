@@ -14,27 +14,35 @@ cap=5/age=300s 束ね判定は「関数が呼ばれた時」にしか評価さ�
 を別に必須、単なるimport ERRORや件数PASSで閉じるな、との明示指摘。この追令は当職が最初のcommit(4ff4d91)
 提出「後」に着信していたため気付くのが遅れ、追加commit(e1c9c00)で反映した(下記§2参照)。
 
+**補修三令**: karo-second msg_20260806_221926_c656c7f8 (2026-08-06T22:19:26、本部長殿22:10:17判定の転記)。
+当職が§【この修正が新たに開ける穴】で自己申告した「fake clock env var名を本番実行時に誤設定すればage判定を
+偽装できる新規(小さな)面」を、本部長殿が**契約違反**と裁定——自己申告は加点(書かねば永久に露れなんだ)なれど、
+文書化のみで終わらせず実コード修正を要すとの由。⒜TEST_MODE gating（閾値固定でなくstartup拒否側で実装）
+⒝invalid/unset/negative/overflowのRED→GREEN追加 ⒞旧base mv REDに復元SHA+porcelain clean証拠化。
+追加commit(`c2bcf1d`)で反映(下記§6参照)。
+
 ## 回収材料
 
 - **owner**: 足軽5号
 - **branch**: `feat/pending-notice-periodic-flush`
 - **base**: `4061f26128a3c824061f941b746c1bfdff2b76fd`
 - **worktree**: `/tmp/hakudokai-worktrees/pending-notice-periodic-flush`（clean隔離・`git worktree add`・`/tmp`配下）
-- **commit**: `e1c9c00`（`4ff4d91`の直後子・local commitのみ・push/deploy/DB操作 悉く0）。`4ff4d91`=最初の実装、`e1c9c00`=RED gate仕様反映の追加commit。
-- **RED gate実走（契約本体）**: 下記§2参照（fake clock+isolated store・old-base自己判定・全11assertion PASS。entry script不在(旧base相当)を`mv`で模した際は正しくFAIL(exit1)になる事も確認済み）
+- **commit**: `c2bcf1d`（`e1c9c00`の直後子・`4ff4d91`が最初の実装・local commitのみ・push/deploy/DB操作 悉く0）。`4ff4d91`=最初の実装、`e1c9c00`=RED gate仕様反映、`c2bcf1d`=補修三令⒜⒝反映の追加commit。
+- **RED gate実走（契約本体）**: 下記§2参照（fake clock+isolated store・old-base自己判定・§2〜§10 全17assertion PASS。entry script不在(旧base相当)を`mv`で模した際は正しくFAIL(exit1)になる事も確認済み）
 - **構造的裏付け（RED seed）**: 下記§1参照（旧実装を機械抽出し実際に呼んで再現）
-- **artifact path＋SHA256**（`e1c9c00`断面）:
+- **補修三令⒜⒝⒞（契約違反是正）**: 下記§6参照（TEST_MODE gating・invalid/negative/overflow/no-test-mode拒否の5節追加・old-base mv REDの復元SHA+porcelain clean証拠化）
+- **artifact path＋SHA256**（`c2bcf1d`断面）:
 
 | path | 行数 | sha256 |
 |---|---|---|
-| `scripts/pending_notice_flush.sh` | 129 | `c74e2e03eab6a5f809b38e502359b1083ce9c5e281b701810eb6342029727ab5` |
-| `tests/pending_notice_flush_sandbox_test.sh` | 233 | `f4d6fe5b203097449ebae3924fa3e4bc5515bc08ce4259b0a2bdc58392f01900` |
+| `scripts/pending_notice_flush.sh` | 169 | `e34dcf9837adb053b7191d3a164c9d474985570acb651b0a95f757b4a935684b` |
+| `tests/pending_notice_flush_sandbox_test.sh` | 307 | `dd96fb6922ba3b9ae5824c050206a6ad9a5ebd521b625c828ffeae32a308d5e0` |
 | `scripts/pending_notice_flush_artifacts/README.md` | — | `eb712351d64f4bc616857b5702017ccd6be0bfbdebeb96646c043b93f522b073` |
 | `scripts/pending_notice_flush_artifacts/pending-notice-flush.service` | — | `a151eb5b5deb93220b117751ceb13bf50f5f9cda80c291078ffc8f074953a391` |
 | `scripts/pending_notice_flush_artifacts/pending-notice-flush.timer` | — | `8f7b3f183d7873c9412d85156077a4c0620b0fa184b6aaf526288a1b2be626d0` |
 | `scripts/pending_notice_flush_artifacts/crontab.example` | — | `6959a92bcf2737f184445c94d549984c64368071490e0a820efc2e2836f76c49` |
 
-測時=2026-08-06T21:57:47+09:00。本 doc 自体は主リポジトリ(`feat/dd169-d006-conditional-exception`)へ保全、実コードは上記隔離branchに存在（両者混同せぬ事）。
+測時=2026-08-06T23:27:22+09:00。本 doc 自体は主リポジトリ(`feat/dd169-d006-conditional-exception`)へ保全、実コードは上記隔離branchに存在（両者混同せぬ事）。
 
 ## 実装内容
 
@@ -99,7 +107,87 @@ snapshot: target(実装あり) — §2以降がRED gate契約に照らしGREEN�
 - 本 script 自体をsystemd/cronへ実際に装着していない現時点では、**この定期flushは誰かが手動で呼ばぬ限り作動しない**——設計上の欠陥は塞いだが、運用上の欠陥（誰も呼ばねば同じ穴が開いたまま）はまだ塞がっていない。装着判断は理事長殿の専権であり、当職の権限外。
 - 新script と旧反応的経路は同一lockを取るため相互排他は効くが、**両者が同一buffer上で極めて近接したタイミングで動いた場合の挙動（片方がlockを取っている間もう片方は最大5秒待ってから諦める）は sandbox 上の逐次実行でしか確認していない**——真の並行実行(同時プロセス2本)での競合は本試験の範囲外(未測)。
 - flush送信を`inbox_write.sh`のCLI経由(argv)で行うため、**cross-PC bridge の事前チェックを新たに経由する**(旧反応的経路は`_write_message`を直接呼びcross-PC bridgeをスキップしていた)。dispatcher(shogun-second)がローカル宛の場合は実質無害と判断したが、**pc_mapping設定次第で挙動が変わる可能性は実測していない**(未測、限界として明記)。
-- fake clock(`PENDING_NOTICE_FLUSH_NOW_EPOCH`)は本番実行時は未設定(=実clock使用)ゆえ本番挙動には影響せぬ設計だが、**この環境変数名を知る者が本番実行時に誤って設定すれば意図的にage判定を偽装できる**——新たな(小さな)攻撃面。値は非機密の整数epochのみで患者リスクは無いと判断したが、この面自体は旧実装には存在しなかった新規の追加。
+- ~~fake clock(`PENDING_NOTICE_FLUSH_NOW_EPOCH`)は本番実行時は未設定(=実clock使用)ゆえ本番挙動には影響せぬ設計だが、この環境変数名を知る者が本番実行時に誤って設定すれば意図的にage判定を偽装できる——新たな(小さな)攻撃面。~~
+  **→本部長殿22:10:17判定により契約違反と裁定・§6の補修三令で是正済**。`PENDING_NOTICE_FLUSH_TEST_MODE=1`との対設定を必須化し、片方だけの設定・不正値(非数値/負値/桁溢れ)は起動時exit 2で拒否する構造にした——production運用では`TEST_MODE`を立てぬ以上、この環境変数単体でage偽装は構造的に不能になった(§6参照)。残る面: `TEST_MODE=1`**かつ**当該env var名の**両方**を本番実行時に誤設定すれば依然偽装可能——但しこれは「1個の変数の誤設定」から「2個の変数を意図的に対で設定する」へ攻撃コストが上がっており、誤操作(片方だけの設定)では確実に拒否される。ゼロにはなっていない事を明記する。
+
+## §6 補修三令⒜⒝⒞（fake clock契約違反是正・commit `c2bcf1d`）
+
+本部長殿22:10:17判定「env varでage<300へ偽装可能ならば契約違反」を受けての是正。令④により「300」は
+本部長殿指定の閾値である旨、原文(msg_20260806_221926_c656c7f8)を実行の刻に確認した(下記§6コード引用参照)。
+
+**⒜ TEST_MODE gating**（`scripts/pending_notice_flush.sh` L50-77）: `PENDING_NOTICE_FLUSH_NOW_EPOCH`が
+設定されているのに`PENDING_NOTICE_FLUSH_TEST_MODE=1`が同時設定されていなければ、起動直後に`exit 2`で
+拒否しFATAL文言をstderrへ出す。値そのものも`^[0-9]+$`(非数値・負値を拒否)と`253402300799`(9999年UTC相当)
+上限の二重検証を行い、いずれの違反もexit 2で拒否する。「令の側を固定300以上とする」ではなく「startup で
+下限を拒否せよ」側で実装した(本部長殿の二択のうち後者を選択・理由=閾値そのものを固定するより、age判定の
+入力(now_epoch)を production では実clock強制にする方が、cap/interval設定の柔軟性を将来も保った上で
+偽装経路を塞げるため)。
+
+**⒝ invalid/unset/negative/overflowのRED→GREEN追加**（`tests/pending_notice_flush_sandbox_test.sh` §6-§10）:
+
+```
+=== §6 ★契約RED gate★: NOW_EPOCH設定・TEST_MODE非設定 → exit 2 で拒否(spoofing不能化の核心) ===
+ok: §6: TEST_MODE無しでNOW_EPOCH設定 → exit code=2
+ok: §6: stderrにFATAL明記
+ok: §6: 拒否時はdispatch 0(何も送信されぬ・偽装は起き得ぬ)
+
+=== §7 invalid: NOW_EPOCH非数値(TEST_MODE=1) → exit 2 ===
+ok: §7: NOW_EPOCH非数値 → exit code=2
+ok: §7: stderrにFATAL明記
+
+=== §8 negative: NOW_EPOCH負値(TEST_MODE=1) → exit 2 ===
+ok: §8: NOW_EPOCH負値 → exit code=2(正規表現^[0-9]+$が'-'を拒否)
+
+=== §9 overflow: NOW_EPOCH桁溢れ(TEST_MODE=1) → exit 2 ===
+ok: §9: NOW_EPOCH桁溢れ(9999年超・253402300799超) → exit code=2
+
+=== §10 sanity: TEST_MODE=1のみ(NOW_EPOCH未設定) → 正常動作(実clockを使うのみ・拒否されぬ事) ===
+ok: §10: TEST_MODE=1のみ(NOW_EPOCH未設定)は拒否されず exit 0
+
+=== 判定 ===
+snapshot: target(実装あり) — §2以降がRED gate契約に照らしGREENである事を確認する断面
+=== ALL PASS ===
+```
+
+§1〜§10全節、target断面で実行しALL PASS(exit 0)を確認済み(2026-08-06T23:26:26+09:00測)。
+
+**⒞ 旧base mv RED — 復元SHA + porcelain clean証拠化**:
+
+```
+$ git status --porcelain            # ①mv前: クリーン
+(出力なし)
+$ sha256sum scripts/pending_notice_flush.sh   # ②mv前SHA
+e34dcf9837adb053b7191d3a164c9d474985570acb651b0a95f757b4a935684b  scripts/pending_notice_flush.sh
+[2026-08-06T23:26:53+09:00]
+
+$ mv scripts/pending_notice_flush.sh /tmp/_lanea_moved_away.sh
+$ ls scripts/pending_notice_flush.sh
+ls: cannot access 'scripts/pending_notice_flush.sh': No such file or directory   # ③不在を確認
+
+$ bash tests/pending_notice_flush_sandbox_test.sh ; echo $?
+（§1〜§4はskip・§2の契約RED本体が正しくFAILを返す）
+=== 判定 ===
+snapshot: 旧base(実装なし) — 契約「flush entry一回→exactly1dispatch」を充足する手段が
+存在しない事自体をFAILとして記録する断面(★期待通りの結果★)
+=== FAIL(s) present ===
+1                                    # ④exit code=1・期待通りのRED
+
+$ mv /tmp/_lanea_moved_away.sh scripts/pending_notice_flush.sh
+$ sha256sum scripts/pending_notice_flush.sh   # ⑤復元後SHA
+e34dcf9837adb053b7191d3a164c9d474985570acb651b0a95f757b4a935684b  scripts/pending_notice_flush.sh
+[2026-08-06T23:27:05+09:00]
+                                     # ⑥②と⑤のSHA完全一致=復元確認
+$ git status --porcelain            # ⑦復元後: クリーン(mv/RED実験がworking treeに痕跡を残していない)
+(出力なし)
+
+$ bash tests/pending_notice_flush_sandbox_test.sh | tail -3   # ⑧sanity: target断面が再びGREENである事
+ok: §10: TEST_MODE=1のみ(NOW_EPOCH未設定)は拒否されず exit 0
+=== 判定 ===
+=== ALL PASS ===
+```
+
+①②⑤⑦は本便のため実際に打ち直したコマンド・出力の逐語(要約せず)。③mv直後の不在確認・④旧base側の
+exit code・⑥SHA一致・⑧復元後の再GREEN、悉く現物で確認済み(commit `c2bcf1d`断面に対して実施)。
 
 ## 己の手で為した事／己で直した誤り
 
@@ -109,6 +197,7 @@ snapshot: target(実装あり) — §2以降がRED gate契約に照らしGREEN�
 - RED再現の初稿は「旧関数を実際に呼ばず状態を手で作文する」形だったが、これでは同義反復(tautology)に留まり本当の旧実装の欠陥を実証していない事に気付き、`awk`による機械抽出＋実呼出へ書き直した。
 - 追令(RED gate仕様)着信に気付くのが遅れ、先の提出(commit 4ff4d91)は本部長殿仕様策定(21:23:26)前の形のまま送っていた——「18h45mの現物」を RED そのものと扱っていた誤りを、追令受領後に自ら是正し§2契約テストを追加(commit e1c9c00)。
 - fake clock導入前の初版は「buffer先頭epochを実`date +%s`から400秒差し引いて書き換える」形で age超過を模していたが、これは実clockに部分依存しており本部長殿仕様の「fake clock」要件を字義通り満たしていなかった事に気付き、`PENDING_NOTICE_FLUSH_NOW_EPOCH`による完全決定的な注入方式へ書き直した。
+- 【self-disclosure→escalation】§【この修正が新たに開ける穴】で己が自ら記した「fake clock env var名の誤設定で本番age判定を偽装できる」の一文を、当職自身は「文書化すれば足る小さな限界」と判じていたが、本部長殿はこれを**契約違反**と裁定し実コード修正を要すと判じられた。この裁定差自体が学びに御座る——自ら開けた穴の重さは、開けた本人の見立てが軽くとも、格上の判定を仰ぐまでは確定しない。§6のTEST_MODE gatingはこの裁定を受けての是正。
 
 ## 禁則遵守声明
 
