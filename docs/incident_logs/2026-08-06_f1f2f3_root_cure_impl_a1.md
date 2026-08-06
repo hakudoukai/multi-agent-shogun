@@ -117,4 +117,62 @@ appointment_grid._execute_cancelの二重実装自体(cancel_appointmentと別�
 ### 解除条件4点の現況
 ⑴Web F3 commit=完了(96aa31d) ⑵独立a4再走=足軽4号の担当・当職の関与外 ⑶二重入口根治=本commitで完了 ⑷pytest.skip閉鎖=当職の成果物には`pytest.skip`/`@pytest.mark.skip`=0件（実測）。他lane artifactの事案と判断し関与せず。
 
+---
+
+## 報告4（commit 596c87e・create-with-claim/idempotency統合・Web含む母集団裁定反映）
+
+本部長殿[Webを含むwriter母集団裁定]（Web booking_service.create_bookingはproduction writerであり除外せず・`_check_conflict`のSELECTはTOCTOU残でconcurrency invariant非成立・unit_id固定1も除外理由にならず）と[writer母集団の述語裁定]（母集団は件数でなく述語で定める。委譲先は4つ＝create-with-claim/idempotency・reschedule-sync・deactivate-release・reactivate-claim）を反映。
+
+⑴ lane owner=足軽1号(実装lane)
+⑵ worktree=/tmp/resimg-cycle2-f123-clean-20260806（両worktreeとも不触のまま）
+⑶ branch=stage1/reservation-cycle2-f123-idempotency-a1-20260806（HEAD=596c87e、親=9fe28d1→96aa31d→8b95464→16cd0c6→7d463ed）
+⑷ 修正前RED=Web側`create_booking`は本commit以前slot claim皆無（grep実測0件）。cross-entry(Web対Web真2接続/Web対Staff/offset overlap)は本commit以前は共通claim機構が無く概念上検証不可だった。
+⑸ 修正後GREEN=test_appointment_api.py(42)+web_reservation/test_phase2_2_booking.py(30)+test_appointment_grid_slot_sync.py(3)+test_create_with_claim_cross_entry.py(3・新規)+test_appointment_service.py(13)+test_booking_behavior.py+test_diagonal_appointment.py+test_prediction.py=合計129件全PASS(255.10s)
+⑹ local commit=596c87e7975673747cc4517d9509e0cbdabc7806（親9fe28d1。push一切せず）
+⑺ 成果path+commit内blob SHA256(64桁)=
+  - backend/services/appointment_lifecycle.py = 349dd169509457191bc6d5b3d8684e26a5dd8fe566d60fe646f27de3daae9982
+  - backend/services/appointment_service.py = 617026878c5820db1b44f6be1c3c0aa3d9a3bfce2c50a885810e2376971ccd22
+  - backend/services/web_reservation/booking_service.py = 3ac93622be9e10d68913395038de2903ceff3d3c247f835b2546486f633f4e49
+  - backend/tests/test_create_with_claim_cross_entry.py(新規) = 9eda8750e8b259cb759ec6ad6c99113372abf0734453ef76a4ff61a40539786f
+
+### 設計要旨
+`create_appointment_with_claim`（INSERT→claim→history→response生成→(idempotency complete)→commitを一単位・全rollback）を`appointment_lifecycle.py`へ追加。★acquire（replay検出）は本関数に含めず呼び手側（validate_booking等の業務検証より前段）に残す★——含めると、replay要求が業務状態変化により不当に再検証で落ちidempotency保証が壊れる為。staff `create_appointment`・web `create_booking`の双方をこれへ委譲した。
+
+### 陽性対照（裁定必須の3点、新規`test_create_with_claim_cross_entry.py`）
+① key無しWeb対Web★真の2接続★（独立sqlite3.Connection 2本・逐次呼出しでなくappointment_slot_claims UNIQUE制約自体が競合を止める事を実測）＝PASS
+② Web対Staff同枠cross-entry＝PASS
+③ offset overlap（部分重複）＝PASS
+
+### A/B台帳（初版・述語裁定準拠）
+
+**A＝entrypoint→domain command対応表**
+
+委譲済（11）＝
+- create-with-claim/idempotency ×2：`appointment_service.create_appointment` / `web_reservation.booking_service.create_booking`
+- deactivate-release ×5：`appointment_service.cancel_appointment` / `appointment_service.transition_status`(no_show枝) / `appointment_grid._execute_cancel` / `appointment_grid.change_appointment_status`(cancel枝) / `web_reservation.booking_service.cancel_booking`
+- reactivate-claim ×1：`appointment_grid.change_appointment_status`(cancelled→confirmed復元枝)
+- reschedule-sync ×3：`appointment_service.update_appointment` / `appointment_grid.move_appointment` / `web_reservation.booking_service.update_booking`
+
+除外（2）＝`prediction_service.py:299,386`（prediction_score/labelのみでoccupancy不変・裁定で明示除外）
+
+未着手（7箇所・6file、裁定通り黙って落とさず名指し）＝
+- `next_appointment.py:71`（INSERT）
+- `diagonal_service.py:117,146`（INSERT×2）
+- `diagonal_service.py:261,276`（UPDATE start/end＝枠移動 → reschedule-sync委譲候補）
+- `diagonal_service.py:317`（UPDATE status=cancelled → deactivate-release委譲候補）
+- `booking_manage.py:279`（UPDATE start/end＝枠移動 → reschedule-sync委譲候補）
+- `cancel_stats.py:105`（UPDATE status=cancelled → deactivate-release委譲候補）
+- `email_parser.py:109`（INSERT → create-with-claim委譲候補）
+
+**B＝unique mutation command/直接DB writer表**
+
+- create-with-claim/idempotency＝`appointment_lifecycle.create_appointment_with_claim`（呼び手2）
+- deactivate-release＝`appointment_lifecycle.deactivate_appointment`（呼び手5）
+- reactivate-claim＝`appointment_lifecycle.reactivate_appointment`（呼び手1）
+- reschedule-sync＝`appointment_lifecycle.move_appointment_slot`（呼び手3）
+- 直接writer（未委譲）＝7箇所・6file（上記未着手欄と同一）
+
+### 完了条件の現況
+完了条件②「occupancyを直接書くruntime実装が共通domain層外0件」は★未達★——上記7箇所が残存。当職の裁量で順序を選び本commitまで進めたが、これらは意図的に着手していない（黙って落としてはいない）。次工区として着手可能だが、範囲・優先順位の裁定を仰いでいる（当職の一存でこれ以上手を広げるべきか、一旦ここで区切り報告すべきか、家老second殿へ上申中）。
+
 提出先: 軍師second（監査義務）。karo-second収載。
