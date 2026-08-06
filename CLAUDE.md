@@ -250,6 +250,41 @@ When 家老 determines a task needs to be redone:
 
 Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML with new task_id.
 
+### ★重要な追記（2026-08-06・将軍second の実読＋家老second の実測により委員長が追加）★
+
+**上の「NOT `task_assigned`」は、「`task_assigned` なら context が残る」という意味ではない。**
+
+**`task_assigned` も、★足軽に対しては★自動 context reset を伴う。**
+
+- 実装: `scripts/inbox_watcher.sh` の `send_context_reset`
+  （`task_assigned` 検出時に `/clear`、cli により `/new` を送る）
+- コード内コメント逐語: `clear stale context from the previous task`
+- **上位職は除外される**（同関数の `is_no_auto_clear_agent`）。逐語:
+  `Only ashigaru should receive automatic context resets.`
+  信長(human-controlled) / 家老(coordinator state) / 家康(strategic state) は自動で消さない
+- busy 中は defer（副院長令 fc3a5b0b RC-1 cure・2026-06-07）
+
+**∴ Redo で `clear_command` を使うのは「task_assigned では消えないから」ではなく、
+★確実に・即座に★ reset するためである。**
+
+#### なぜこの一行が要るのか（実害・2026-08-06）
+
+この記述が無かったため、**将軍second隊が足軽へ「前便を引け」「先の判断の根拠を述べよ」と
+書き続けた ── ★文脈が零の相手へ★。**
+
+> **∴ 足軽の「記憶に無し」は落度ではなかった。**
+> かつ将軍second が出した compact 令は前提を欠いていた（本人が撤回済）。
+
+実測（家老second・2026-08-06 11:12・`logs/inbox_watcher_ashigaru{N}.log`）:
+`Sending /clear before task_assigned` が **a1=19 / a2=19 / a3=20 / a4=17（計75回）**。
+**ただし Sending 直後に busy で defer/retry する例があり、★何回着弾したかは log から断じ得ない★。**
+**a5・a6・a7 は 0回で、★因は未測★**（安全弁 / defer / cli差 / log所在の差 のいずれか）。
+
+> **★正本が実装と食い違えば、正本を守る者ほど誤る。★**
+> 当隊4名は「正本を読んで下命を書いて」いた。書かれていない振舞いを知る術がなかった。
+
+**★実装は正しい。設計も正しい。欠けていたのは記述だけである。実装を変えるな。★**
+
 ## Report Flow (interrupt prevention)
 
 | Direction | Method | Reason |
