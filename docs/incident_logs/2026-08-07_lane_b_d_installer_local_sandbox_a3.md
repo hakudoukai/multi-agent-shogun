@@ -110,9 +110,46 @@ worktree local commit ＝ `879334a37a6d4e9f3bd90549f53132e0ade0a644`（`feat/mor
 
 `current_order_11`（D案手順書・installerの手順を初めて文章化した票）・`current_order_12`（D案installer経路のsynthetic E2E・installer script自体ではなくbats helper関数で経路を先に実証した票・軍師second PASS済 01:22:18）。本票はその両方を実行可能なscriptへ落とし込み、かつ㈥で申告した設計gapを実装で塞いだ続き。
 
+## 追補（2026-08-07T01:4x〜・本部長殿 01:26:02 裁定 msg_20260807_013141_d9266ff4 への応答）
+
+本追補作成に伴い test file を20 test へ拡張（372行/sha256=e4f726570e070d0a9836590604a64b197cfbfeddb8167a76e9741441d9196484）。追加分含め **20/20 GREEN・2回独立実走**再確認済（装着0・real host不触も前後実測済、上記と同じ手順）。
+
+### ① checksum gate ＝ 使用時検問として受入（本部長殿裁定・成立条件を実測で満たす）
+
+成立条件（逐語）＝ oneshot 毎の ExecStartPre で inbox_write の missing／SHA drift を検出し、ExecStart を一度も起動せず nonzero ＋ journal／action log へ expected と actual を残す。
+
+先便までの実測は「ExecStartPre行を単独で実行して非0を確認」に留まり、★systemd の実際のgating（ExecStartPreが1つでも失敗すればExecStartは一度も呼ばれぬ）を chain として実測してはいなかった★。本追補で `run_unit_like_systemd()` ヘルパー（rendered unit の全 `ExecStartPre=` 行を順に実行し、いずれかが非0なら即座に打ち切り ExecStart 相当のマーカー touch を行わない、systemd semantics通りの模倣）を追加し、以下を実測:
+
+- test 8「GATE: ExecStart is NEVER invoked ... on drift」＝ drift時、chain が非0で止まり ExecStart 相当のmarkerが★一度も作られぬ★ことを実測（`[ ! -e "$MARKER" ]`）。
+- test 9「... on missing dependency」＝ 同上、missing時も同様。
+- test 11「GATE: ExecStart DOES run when ... passes」＝ 依存が正常な場合はmarkerが作られる（false-closed=無いことの確認）。
+- test 10「records expected vs actual」＝ ExecStartPre のsha256sum失敗後、expected値とactual値の双方が stderr（実運用ではjournal相当）へ残る形を実測。
+
+**★残る穴 ＝ 検知の遅れ（最大約24時間）のみ★**（timer の `OnCalendar=*-*-* 07:30:00` が唯一の発火点・oneshotゆえ常駐監視窓が無い）。実行の穴（drift状態で実際にsendされてしまう）はGATE test群で0と実測済。之は「実装せぬと決めた残余は票へ書いて初めて残余に成る」の令に従い、★本行にて明記する★:
+
+> **常時alerting（drift発生から検知までの遅延を24時間未満に縮める仕組み）は本工区で実装せず。ExecStartPreによる使用時検問（次回timer発火時=最大24時間後に必ず検出しfail-closedする）のみが現状の防御線。連続稼働監視が要るか否かは本部長殿裁定事項（低順位・residual）。**
+
+### ② unit SHA 正式採用（五点すべて実測で充足）
+
+旧値 `1ef384b9564019236396f3b0bdfad6724ecf12d430f68b3713defcd20cda1f52` は証拠から除外済（再現command不明・以後引用せず）。
+候補値 `a048d493e6372338bee312a73255930a040e883f6efd8d89af823e7a075f6622`（current_order_12時点でrenderer関数を直接呼出して得た値）も★正式採用しない★——本追補で原因を特定した: **current_order_12時点の設計にはまだ drift検査用 ExecStartPre 行が無く**、その後karo-second msg_20260807_011455 ㈢でこの行が追加されたため、**内容そのものが変わっていた**（diff で確認=当該1行のみの差分）。
+
+**正式採用値** ＝ `a5f37a95e3868331c916f4debd79cfe60da6c6ab0e08aebad2160a4d8f07559a`（64桁・test 12で実測）。五点:
+
+㈠ full 64桁SHA = 上記（python len()で64確認）
+㈡ 生成command = `MDS_INSTALL_INBOX_WRITE_REF` を unset（=production既定値のまま）にして `bash scripts/watchdogs/morning_digest_send_install_dplan.sh --apply --approval-ref=seq152416/id616c43a9-aef2-4a63-a706-d47ad7d7357a` を実行（`MDS_INSTALL_UNIT_DIR` のみ sandbox先へ overrideし他は既定=production挙動を保つ）
+㈢ rendered bytesのpath = installerが書いた `$MDS_INSTALL_UNIT_DIR/morning_digest_send.service`（renderer関数を直接呼んだ一時fileではなく★installerが実際に書いたfile★）
+㈣ 同一入力で二回一致 = test 12 で unit_dir のみ異なる2回の独立apply実行を行い、生成されたservice fileのSHAが完全一致することを実測
+㈤ installer sandbox applyで実際に書かれたservice のSHAと一致 = 定義上そのもの（本値自体が実際に書かれたfileのSHA）
+
+### ③④ 軍師second への令（本追補で対応）
+
+③「installed installer は要求せず」は本部長殿にて採用済（前便どおり・再掲省略）。
+④「renderer直接呼出だけでは足りぬ・sandbox applyの出力を独立にhashせよ」＝ 本追補②が正にこれ（installerの実際の`--apply`出力をhashした。renderer関数を直接呼んで得た旧a048d493とは出自が異なることを明記した）。軍師second独立監査でも同じ区別（renderer直接呼出 vs installer実apply出力）を確認されたし、と発注文に添える。
+
 ## 判じ得ぬ点（推して埋めず・以上）
 
-1. rendered_service_sha256／timer_sha256の「固定値」化＝実行毎にunit_dir絶対pathがsandbox tmpdir依存のため生成unit全体のSHAは環境非依存の固定値になり得ない（installed_script_sha256はsource依存のみのため固定値化できたが、unit側はpath文字列を含む限り原理的に無理）。本部長殿確認プロセスでこれをどう扱うか＝当職の裁定権外。
+1. ★訂正（追補にて自己訂正）★= 本欄に元々「rendered_service_sha256は環境非依存の固定値になり得ない」と書いたが★誤りであった★。誤りの理由＝当時 `MDS_INSTALL_INBOX_WRITE_REF` を sandbox絶対pathへ override した状態で計測しており、その override値自体がunit内容に埋め込まれるため固定値化できないように見えた。だが production既定値（`%h/...`という★symbolicな placeholder のまま★・unit_dir自体は絶対pathを持つがそれはfileの「置き場所」であって「内容」には現れぬ）を使えば、生成unitの内容は環境非依存で固定値になる（追補②・test 12で二回一致を実測=`a5f37a95e3868331c916f4debd79cfe60da6c6ab0e08aebad2160a4d8f07559a`）。★測る条件（override値の有無）を書かずに一般化し過ぎたのが誤りの根★。
 2. 実installerのapply/rollbackが「sandboxで動く」ことは本票で実測したが、実host（real systemctl・real unit dir）で実際にsystemd がこのExecStartPre構文を受理するか（bash -c構文のescapeがsystemd unit file syntax上正しいか）は`systemd-analyze verify`等での検証が本票の射程外——本部長殿ご確認プロセスでの検証が必要と当職は考える。
 
 ## 禁の遵守確認
