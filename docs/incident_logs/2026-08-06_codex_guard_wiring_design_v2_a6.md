@@ -67,8 +67,30 @@ retry loopを持つ事(v1のaudit_codex.shと同型)に気付き、loop外側1�
 2. 4箇所の呼出し前後で、既存のerror handling(exit code取得・ログ出力等)がguard導入により
    どう変わるべきかの詳細設計は、実装時に別途要する(本設計は「どこで・何を測るか」に留めた)。
 
+## 追補 (2026-08-06T09:12:40+0900・新穴①の実測)
+
+読取のみ(systemctl list-unit-files/list-timers・crontab -l・grep実施のみ)。再起動・停止・
+編集いずれも行っていない。HEAD=6a561fdc669a5ed9c47eb8e0fb2f3487ee9bc97f(不変)。
+
+$ systemctl --user list-unit-files --type=service --no-pager | grep -iE "audit|codex"
+codex-healthcheck.service static -
+(★別script=codex_state_healthcheck.shを指す物であり、audit_codex.sh/audit_meta_codex.sh/
+hakudokai_audit_scheduler.shとは無関係★)
+
+$ grep -rl "audit_codex.sh\|audit_meta_codex.sh\|hakudokai_audit_scheduler.sh" /home/hakudokai/.config/systemd/
+(該当なし・0件)
+
+$ crontab -l
+no crontab for hakudokai
+
+**∴ 当PC(SecondPC)には、4箇所の呼び手を起動するsystemd unit・crontabエントリはいずれも
+存在しない。∴ 新穴①(WorkingDirectory依存)は★当PC上では現時点で発現しない★
+(発現の前提となるsystemd/cron経由の起動自体が無い為)。★但し★=これは「穴が無い」の
+証明ではなく「当PC上のsystemd/crontabという限られた探索範囲では見つからなかった」
+に留まる——手動起動・他PC経由の起動・未発見の起動経路の可能性は排除できない。**
+
 ## 監査体制
 
 暫定二者制(軍師+Gemini)。Codex leg停止中(2026-07-21事案)。
 
-以上、codex_exec_sandbox_guard結線・再設計への応答。実装は一切行っていない。
+以上、codex_exec_sandbox_guard結線・再設計への応答(追補込み)。実装・再起動・停止いずれも行っていない。
