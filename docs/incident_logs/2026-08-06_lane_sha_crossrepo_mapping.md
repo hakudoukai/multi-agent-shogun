@@ -53,3 +53,50 @@ lane は **別 repository** (`hakudokai-dev`) の clone ゆえ、**本 repo に�
   **而して repo は同一**ゆえ射程は当職が決めない (狭めも広げもせず上げる)。
 
 Co-Authored-By: Claude <noreply@anthropic.com>
+
+---
+
+## ★訂正1 (2026-08-06 18:0x・家老second 自己申告)★ — 上の「8 commit」は **26** が正
+
+将軍second の実測により、上記「併せて測った事」の一行
+
+> `git log --branches --not --remotes` = **8 commit 悉く remote に無し**
+
+が **誤り**と判明した。**正しくは 26**。
+
+```
+$ git -C /tmp/resimg-stage1-runtime-20260806 log --branches --not --remotes --oneline | wc -l
+26      (a1系 6 / a4系 20)
+```
+
+**結論 (push 零) は不変。むしろ強まる — 露出は三倍。**
+
+### なぜ 8 と書いたか (因は道具でなく、己が道具に渡した引数)
+
+当職が走らせた命令は `... log --branches --not --remotes --oneline 2>&1 | ★head -8★`。
+**返り 8 行を「世の数」として報じた。その 8 は己が head に渡した引数だった。**
+
+> ### **★数を報ずる命令に `head` / `tail` を繋ぐな。★数と抜粋は別の命令★**
+
+**重いのは、同じ形を同じ日に二度踏んだ事** — memory `reader-side-truncation-looks-like-loss`
+に「`head -10` を世の数と報じた」が既に在り、**それを書いた当人が再び踏んだ**。
+∴ **「知っている」では止まらない。書式 (欄) に落ちねば止まらない。**
+
+### 書式として固定する (拘束)
+
+1. **数を出す命令は `| wc -l` で終える。** 抜粋が要るなら **別の命令**として走らせる。
+2. 抜粋を貼る時は **「抜粋 N / 全 M」**と明示する。M は 1 の命令から取る。
+3. **報ずる数には命令を丸ごと貼る** (貼れば `| head -N` が己の目に入る)。
+   ※ 本件はこの 3 を守っていたが**貼った先が上申文でなく作業ログ**で、己が読み返さなかった。
+   ∴ 3 は 1・2 の代替にならない。
+
+### 併せて — lane の母集団も過小だった
+
+上で「一 clone に複数 worktree」と書いたのは**この 3 本については正**
+(`git rev-parse --git-common-dir` が三本とも `/tmp/resimg-stage1-runtime-20260806/.git`)。
+**而して `/tmp` 直下の `.git` は 10 本在る** (列挙で確認)。
+∴ 「lane = 一 clone」は**当職が見た 3 本についての事実**であって、**lane 全体の事実ではない**。
+
+> ### **★見た範囲の事実を、範囲を書かずに一般の顔で書くな★**
+
+Co-Authored-By: Claude <noreply@anthropic.com>
