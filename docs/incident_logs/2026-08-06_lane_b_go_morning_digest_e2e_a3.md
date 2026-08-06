@@ -149,6 +149,46 @@ worktree に main repo と同一の gitignored ファイルを 2 つミラーし
 - systemd/cron 装着 = 0（本票冒頭の実測）。
 - log に書いたのは合成 error_code のみ（患者本文・実 path・token・鍵は一切書いていない）。
 
+## Lane B baseline（既存経路＝byte不変・前の断面）— 引継ぎ＋当職の独立確認（追記 2026-08-06T23:08 頃）
+
+★足軽1号が Cycle2 へ移ったため、将軍second 殿裁定により本 baseline 採取は当職の自採へ切替
+（家老second 23:04:59 便）。足軽1号が已に採っていた分をそのまま採用し、当職が独立に再測定して
+継続性（前/後の断面が途切れていないか）を確認した。
+
+### 足軽1号の「前」の断面（採用）
+
+`docs/incident_logs/2026-08-06_lane_b_baseline_freeze_existing_path_a1.md`
+（sha256=`64ff0cd0596571c29c39032741cbead55d276573054436ac25824a1fd844b42b`・130行）。
+測時 2026-08-06T23:00:33+09:00（当職の E2E 実装 22:23〜23:00・commit 前）。
+母集団＝2 file: `scripts/diagnose.sh`／`scripts/inbox_write.sh`。
+
+### 当職の独立測定（採用分と別に己の手で測定・date -Iseconds 実値・sha256 64 桁）
+
+測時 2026-08-06T23:05:26+09:00（当職の worktree local commit `b3f2146` 後）:
+
+| file | 主repo (HEAD `b5afecf9`) | worktree (HEAD `b3f2146`) |
+|---|---|---|
+| `scripts/diagnose.sh` | 10854 bytes, mtime=2026-05-07T23:30:52+0900, sha256=`0795192479a94c86127f3bf0799d219bc1225e9eb7809896dc290bef647f6307` | 同 sha256（一致） |
+| `scripts/inbox_write.sh` | 38703 bytes, mtime=2026-08-06T02:32:15+0900, sha256=`6060e9c1e8d358255e4809f25b6ac65f7455bf05d684f88d83ffc0d430df280d` | 同 sha256（一致） |
+
+→ 足軽1号の 23:00:33 測定と 4 値とも完全一致。
+
+### 「E2E に手を入れる前に採れ——後では取れぬ」への回答
+
+当職の E2E 実装期間（22:23〜23:00）および local commit（23:03 頃）の前後を通じ、上記 2 file の
+sha256 は一度も変化していない（足軽1号の 23:00:33 測定＝当職の commit 前、当職の 23:05:26 測定
+＝commit 後、共に同一値）。★「前」と「後」の断面に途切れは無く、両者は同一の断面を指している★
+——commit 後に採ったとしても失われてはいなかった、という結果になった。
+
+### 母集団の定義（最終・当職の見立て）
+
+㈠ `scripts/diagnose.sh`（digest の書き手・当職は read-only で参照のみ、一度も編集していない）
+㈡ `scripts/inbox_write.sh`（送信路・実 E2E が直に叩く対象）
+の 2 file。`docs/runbooks/err-ekarte-001.md` は対象外——令㈠により本工区で明示的に改変を命ぜ
+られた対象そのものであり、これを母集団に含めると「変わっていない」が自己矛盾する。
+★本判断は当職の見立てであり、家老second 殿の裁定を別途仰いだ（23:05 便）——裁定が下り次第、
+本節に追記する★。
+
 ## 己の手で為した事（この工区で実際に打った command の一覧・要約）
 
 - `git status --short --branch` / `git worktree list` / `git branch --list` で現況実測。
