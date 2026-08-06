@@ -258,6 +258,31 @@ path.write_text(existing + entry, encoding="utf-8")
 | `/tmp/resimg-cycle2-impl-20260806/...useWebBooking.ts` | 当repoの.gitignoreの対象外 (repo外)。当該worktree自身の`.gitignore`でも実測でignoreされず (rc=1) | — |
 | `.` (find起点) | find自体が.gitignoreを一切見ぬ経路ゆえ非該当 | — |
 
+**★訂正 (家老second指摘・11:49・当職己で終了コード引き直し済・測時2026-08-06T11:50:08+09:00・HEAD=13f1c064c906e009d68fa780d642639b0a649d0d)★**
+
+誤=上表「`queue/inbox/` (親`queue/`)…されず (rc=1)」——当職は★directory自体★を`git check-ignore`に
+掛けて「されず」と書いたが、これは配下の個別fileの扱いを示さない。
+正=`queue/inbox/karo-second.yaml` rc=0 (無視対象)・`queue/inbox/ashigaru5.yaml` rc=0 (無視対象)・
+`queue/reports/gunshi_report.yaml` rc=0 (無視対象、当職己で追加実測)。対照=
+`docs/incident_logs/2026-08-06_f3_compatibility_requirement_search_a5.md` rc=1 (無視されず)。
+出所=家老second指摘 (msg_20260806_114918_e3b74dd4・11:49)。
+
+因=`!queue/` は★directoryへの探索を許すのみ★であり、配下のfileを個別に打ち消す物ではない
+(`.gitignore:245`の`!queue/pane_registry.yaml`が個別打消しの実例として現に存在する事から、
+directory打消しだけでは不足する設計である事が読み取れる)。∴ **queue/inbox/配下のfileは実際にはgit-ignore
+対象**であり、当職の元記述「queue/inbox/はされず」は誤りであった。
+
+★然れど本節冒頭 (㈢) の結論「差分零」は崩れぬ★=F3探索は悉く絶対path指定の`/usr/bin/grep`を用いており、
+wrapper (裸grep→ugrep委譲) は端から関与していない為、gitignore判定の当否そのものが差分に影響しない。
+
+★正しい説明 (訂正)★=家老second指摘によれば、真の因は「ugrepがgitより甘い側に誤る (=無視対象のfileをも
+拾う)」事にある (出所=足軽3号の乖離票・足軽4号の追試、当職未読ゆえ伝聞として明記)。
+★この説明は当職自身の直接の実測とも整合する★=本節㈢で裸grep (ugrep委譲) と`/usr/bin/grep`を
+`docs/`・`queue/inbox/`検索で比較した際、両者は完全一致 (sorted diff=0) しており、`queue/inbox/`
+配下の実際にはgit-ignore対象のfile (本訂正で判明) も★裸grep側で漏れずに含まれていた★。
+∴ 「ugrepが除外し過ぎて見落とす」のではなく「ugrepが甘く判定し無視対象も拾う」向きである事を、
+当職自身の実測 (11:35頃実施) が裏書きしている。
+
 ### ㈢ 素の`/usr/bin/grep`での引き直し・差分 (実測・11:34-11:35)
 
 ```
