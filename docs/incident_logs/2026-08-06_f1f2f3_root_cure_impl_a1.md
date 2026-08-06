@@ -492,3 +492,115 @@ freeze開始時のHEADとして固定（受入は本部長殿・理事長殿・�
 213 passed（339.31s・lane commit a7c21a9直前に実行・広域回帰）。内訳＝既存210 + 本工区新設3
 （test_active_sql_index_drift_a1.py 2件 + test_diagonal_propagate_no_show_releases_linked_slot_claims
 1件。email_parser固定test 2件は別途カウント済＝報告4参照）。
+
+## ★未委譲の到達可能case 2件 — 着手順と受入の決定（家老second msg_20260806_191357_0d1c0338・freeze待ちの間・決めるのみ）
+
+★実装・test作成・pytestは一切為さず、決定のみを本節に記す。lane（hakudokai-dev由来worktree）へは
+一字も書いておらぬ・git命令も発しておらぬ（主repoの票への追記のみ）。★
+
+対象2件＝
+  ㈠ diagonal_service.py:propagate_status — case A（no_show→非active・linked側連動）。
+     裁定不要（ACTIVE_SQLから導出済）。
+  ㈡ appointment_detail.py:api_update_detail — case C（occupancy字段を含むdynamic UPDATE）。
+     設計票のみ・実装未着手。
+
+### ①順（どちらを先に・理由＝「易き順」ではなく「後の者が壊れ易い順」）
+
+★決定＝㈡（appointment_detail）を先、㈠（diagonal propagate_status）を後★
+
+理由：
+- ㈡は現時点で★未実装★＝現に開いた穴（occupancy drift）。unit_id/start_time/duration_minutes
+  を含むPATCHが来る度、appointment_slot_claimsが再同期されぬ状態が続く。放置期間が延びるほど、
+  「detailのPATCHはslotに触れぬ」という誤った前提が周辺コードに積み上がり、後で剥がす費えが増す。
+- ㈠は既にlane commit a7c21a9で実装・test済（test_diagonal_propagate_no_show_releases_linked_slot_claims、
+  213 passedの内数）。freeze解除後の残作業は「受理されるか否かの裁定」と、必要なら同一diffの
+  再適用のみ——閉じた小変更であり、後の者が新たに壊す余地が小さい。
+- ∴ 未解決かつ現に開いた穴（㈡）を先に塞ぎ、既に閉じている穴（㈠）は裁定待ちの機械的作業として後に回す。
+
+検討して却下した対案＝㈠を先とする案（「入口を通らぬ第二の遷移点」という表現の重さに引かれた案）。
+却下理由＝表現の重さと実際の未解決度は別の軸に御座る。㈠は既にtest済で閉じており後の者への
+fragility寄与は小さい。本決定は未解決度（実際に開いている穴か否か）を優先軸とした。
+
+### ②委譲先（既存の共通command名／新設するなら理由）
+
+㈡の委譲先＝★既存★ `move_appointment_slot`（F3前例・appointment_service.py:473-482と同一idiomの
+水平展開）。新設せず。理由＝本部長殿裁定の真の解（共通domain transition function）は本工区時点で
+未着手ゆえ、当面はF3が確立済の経路を水平展開すれば足りる。新設すれば「同じ不変条を二箇所で持つ」
+二重化（家老second 16:44便で既に禁じられた形）に該当する。
+
+㈠の委譲先＝★既存★ `release_appointment_slots`（lane commit a7c21a9で使用済）。新設なし。
+
+★但し★両者とも「入口を通らぬ手組みの分岐」である点は残る（本部長殿裁定＝「各入口が値を個別判定
+して手組みするな」に対し、当面の実装は経過措置に過ぎぬ）。共通transition function着手時には
+この2箇所も委譲し直す対象として台帳に残す要あり——本節では④で新たな穴として計上する。
+
+### ③受入（RED→GREENの対をどのharnessで／RED が真に旧欠陥を映すか）
+
+harness＝★F1/F2/F3と同一★（backend/tests配下の既存pytest harness・appointment PATCH系の
+fixtureセットアップを流用）。harness自体は新設せず、fixture差のみで新設する
+（家老second令「同一harness・fixture差のみ」に従う）。
+
+㈡ RED定義：unit_id/start_time/duration_minutesのいずれかを変更するPATCHを発行した後、
+対応するappointment_slot_claims行が旧unit/旧枠のまま残っている（再同期されていない）ことを
+assertする。
+㈡ RED が真に旧欠陥を映すか＝★判らぬ（要検証・実装着手時の最初の一手とする）★。現状の
+api_update_detail前後で他のguard（version楽観ロック・DB制約等）が偶然この状態を防いでいないかは、
+lane untouchedの本票時点では確認しておらぬ。本工区で「別のguardが覆いRED化しない」事が
+既に二度起きた実績（家老second 16:48便）があるゆえ、実装着手の最初の一手は「現状のPATCH経路で
+実際にslot_claimsが古いまま残ることをtestで確認する」ことに充て、確認前に本体実装へ進んでは
+ならぬ。
+
+㈠は既に対（RED＝release呼出なしでlinked slot claim残留・GREEN＝release_appointment_slots追加後に
+解消）が実測済と報告4に記載（lane commit a7c21a9・test_diagonal_propagate_no_show_releases_linked_slot_claims）。
+★但しこの対自体がfreeze対象lane内にのみ存在し、主repoでは実測ログを再確認できておらぬ★——
+受入の形式要件（同一harness・fixture差のみ）を満たすかも、freeze解除後の再確認事項として残す。
+
+### ④此の修正が新たに開ける穴は何か（空欄禁）
+
+㈡（SELECT拡張に伴う穴）＝現状はversionのみをSELECTしUPDATE前チェックに使っている。本設計は
+これをclinic_id/unit_id/start_time/duration_minutesまで拡張する必要がある
+（move_appointment_slotの引数に現在値が要る為）。この拡張SELECTと後続UPDATE/move_appointment_slot
+呼出が★同一transaction・同一lockの中で行われなければ★、読取った現在値と実際に書き込まれる値との
+間にTOCTOU（time-of-check-time-of-use）の窓が生まれ得る——これはF1が塞いだ種類の競合
+（idempotency/concurrency）が、detail-PATCH経路に限って再発する形の穴である。実装時は
+「SELECT拡張とUPDATEを同一transaction境界に収める」ことを受入条件に明記し、testで別途確認する要あり。
+
+㈠（委譲の暫定性に伴う穴）＝release_appointment_slots呼出はpropagate_status内に直接手組みされて
+おり、共通transition function未着手の間の経過措置に過ぎぬ。将来、共通transition functionが
+着手された際にこの呼出し箇所が「移行済」として認識されず重複して残ると、release_appointment_slots
+が二重に呼ばれる（二重解放）可能性がある。台帳に「要移行」の印を残す必要あり——本節でその印を
+初めて記す。
+
+### ⑤引き金三段（㈠引く者 ㈡条件が到来し得るか ㈢引く者が其の刻動けるか）
+
+㈡ appointment_detail.py:api_update_detail：
+  ㈠引く者＝PATCH /api/appointments/{appointment_id}/detail を呼ぶ経路（staff/webいずれの
+    呼び手かは★判らぬ★——本票の射程では未確認）。
+  ㈡条件到来し得るか＝然り。unit_id/start_time/duration_minutesの変更は診療枠の付け替え・
+    時間変更という通常業務で日常的に起こり得る操作である（既存のmove_appointment_slot経路が
+    F3で同種の操作に対応している事実から、同種の需要が存在する事は既に確立済）。
+  ㈢引く者が其の刻動けるか＝★判らぬ★（本endpointが現在デプロイ済で実user操作に晒されているか、
+    開発中のみかは、当票の範囲では確認せず）。
+
+㈠ diagonal_service.py:propagate_status：
+  ㈠引く者＝linked appointmentのstatusをno_showへ遷移させる既存の呼び手（status更新経路・
+    具体的な呼び手名は★判らぬ★——本票では未確認）。
+  ㈡条件到来し得るか＝然り。no_show自体が既存の業務状態であり、ACTIVE_SQLの定義に既に
+    組み込まれている（新規に作る条件ではない）。
+  ㈢引く者が其の刻動けるか＝lane commit a7c21a9でtest済（test_diagonal_propagate_no_show_releases_linked_slot_claims）
+    ゆえ、経路自体は少なくともtest環境では動作確認済——但しこれもfreeze対象lane内の事実であり
+    主repoでは未確認。
+
+### ⑥測れぬ事（推定で埋めない）
+
+- 両site共通：現在の本番デプロイ状態（この2経路が実user操作に晒されているか否か）＝判らぬ。
+- ㈡：既存guardが偶然この欠陥を隠していないか＝判らぬ（実装着手時の最初の一手として要確認・③参照）。
+- 次に着手する担当者・その着手可能刻＝判らぬ（freeze解除の裁定刻が未定の為）。
+- ㈠のRED（旧実装での残留）の実測ログ自体＝本票では確認しておらぬ（lane freeze中ゆえ再確認不可・
+  報告4記載の記述を引用したのみ）。
+
+提出先：軍師second。渡した刻＝下記札。
+
+★札★
+    date -Iseconds
+2026-08-06T19:17:32+09:00
