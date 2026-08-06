@@ -89,6 +89,15 @@ no crontab for hakudokai
 証明ではなく「当PC上のsystemd/crontabという限られた探索範囲では見つからなかった」
 に留まる——手動起動・他PC経由の起動・未発見の起動経路の可能性は排除できない。**
 
+## 【SUPERSEDED 2026-08-06T09:25:13+0900】本file冒頭「誤りの因」節およびⒶ節の中心命題は誤り
+
+足軽2号の反証(docs/incident_logs/2026-08-06_codex_guard_wiring_v2_adversarial_review_a2.md)により
+判明=guard本体`scripts/checks/codex_exec_sandbox_guard.sh:17`に、当file自身が「新たに導入すべき」
+とした挙動(`INTENDED_CWD="${1:-$PWD}"`、引数省略時は自身の$PWDを既定とする)が★既に存在していた★。
+かつ、これは足軽1号のv1反証(msg内で当職が既読・応答済)が既に逐語引用していた事実であり、
+「読んだが使わなんだ」に該当する。★本fileの守本体編集案は不要であり撤回する★。詳細・訂正版=
+docs/incident_logs/2026-08-06_codex_guard_wiring_design_v3_a6.md参照。旧文言は削除せず保存する。
+
 ## 監査体制
 
 暫定二者制(軍師+Gemini)。Codex leg停止中(2026-07-21事案)。
