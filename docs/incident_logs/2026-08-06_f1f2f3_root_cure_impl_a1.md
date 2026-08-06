@@ -274,31 +274,28 @@ create_appointment_with_claimへauto_commit(default True)を追加。Falseの時
 - claim_appointment_slots直接呼出 ×1：`next_appointment.book_next_appointment`（71）
   （create-with-claim全体ではなくprimitive単体を再利用＝history/idempotency概念を持たぬ経路の為）
 
-母集団訂正（9→8・当職実測による発見）＝
-`email_parser.py:109`は当初「素直な9」に含まれると報じられたが、実測（in-memory DBでの再現）により
-INSERT文がunit_id（appointments表NOT NULL制約・appointment_tables.py:81・default無し）を列挙しておらず、
-実行すれば必ずIntegrityErrorを送出し、呼び手側`except Exception as e: return None`で全例外を握り潰す
-構造と判明。この経路は現状コードで一度も成功していない可能性が高い（0行挿入を実測）。これは
-「layer外writer=slot-claim未配線」の型ではなく★別種の欠陥（挿入経路自体が死んでいる）★であり、
-機械的にclaim_appointment_slotsを足しても直らない（unit_idをどう決めるかは業務判断＝当職の裁量外）。
-本commitでは不触・裁定を仰ぐ。
+★母集団訂正案は却下（家老second再裁定 msg_20260806_174422_e972ed6b③・報告4参照）★＝
+当職は当初email_parser.py:109の欠陥発見を根拠に母集団を9→8へ縮めようと提案したが、
+却下された。理由＝「達成して縮んだ」（cancel_stats.py等の正しい委譲で分母が自然減する場合）と
+「壊れておって縮んだ」（対象を母集団から除いただけの場合）は数の上で同じ顔をする為。
+∴ 母集団は★9のまま維持★。email_parser.py:109は下記【欄】を付けて母集団に残す。詳細は報告4。
 
-除外（本部長殿裁定待ち・当職裁かず）＝`diagonal_service.py:375`（propagate_status）。target_statusの値
-（arrived=占有継続/no_show=解放が妥当か）次第でoccupancy要否が変わり、「UPDATE文がある→release呼べ」では
-済まぬ。条件分岐案は設計票（scratchpad提出・下記参照）に明記済だが実装は本部長殿裁定後。
+【欄】email_parser.py:109＝別種の欠陥（unit_id NOT NULL違反・本工区外）／委譲＝不可（到達せぬ）／
+出処＝a1 17:40実測／固定test＝backend/tests/test_email_parser_unit_id_defect_locked_a1.py
+（直った日にRED化して気付ける形＝台帳が己で声を上げる）
 
-設計票のみ・実装次工区（当職裁定範囲内＝上程不要）＝`appointment_detail.py:107`。動的field-list問題
-（PATCH型endpointでunit_id/start_time/duration_minutesが`data`に含まれるか静的に決め得ない）。
-F3前例（appointment_service.py:473-482の`if "start_time" in data or ...`条件分岐）と同一idiomの水平展開で
-解決可能と当職判定。次工区で実装（SELECT列拡張=version→version,clinic_id,unit_id,start_time,duration_minutes
-が前提として要る旨も設計票に明記）。
+設計票のみ・実装次工区（当職裁定範囲内＝上程不要・本部長殿裁定②で条件分岐自体は不要と確定＝報告4）＝
+`appointment_detail.py:107`。動的field-list問題（PATCH型endpointでunit_id/start_time/duration_minutesが
+`data`に含まれるか静的に決め得ない）。F3前例（appointment_service.py:473-482の
+`if "start_time" in data or ...`条件分岐）と同一idiomの水平展開で解決可能と当職判定。次工区で実装
+（SELECT列拡張=version→version,clinic_id,unit_id,start_time,duration_minutesが前提として要る旨も
+設計票に明記）。★本部長殿裁定（報告4②）により、真の解＝共通transition functionがbefore/afterから
+判定する形が望ましいが、当該functionは未着手ゆえ、当面はF3前例のidiom踏襲でよいと当職判定★。
 
-**完了条件②の現況（更新）**
-層外11箇所の内訳＝解決8・本部長殿裁定待ち1(375)・設計済次工区1(appointment_detail:107)・
-母集団訂正により別種欠陥と判明1(email_parser:109)。「層外writer=slot-claim未配線」型として機械的に
-委譲可能な箇所は本commitで★0件残存★（375/appointment_detail:107/email_parser:109の3件は、いずれも
-機械的委譲ではなく別途の判断・裁定・設計が要る性質と当職が判定した箇所であり、③に述べた「0件を健全と
-読むな」原則に従い、この3件の存在自体は完了条件②の未達要素として明記する）。
+**完了条件②の現況（本節時点・報告4でさらに更新）**
+層外9箇所の内訳＝解決8・設計済次工区1(appointment_detail:107)。diagonal_service.py:375は当初
+「本部長殿裁定待ち」と誤って報じたが、報告4で判明の通り裁定不要=既に解決8箇所に含まれる
+（本節時点のこの記述は訂正前の断面として残す）。email_parser.py:109は上記【欄】の通り母集団に残置。
 
 ### 新たに開けた穴の自己申告
 なし（既存共通command4種を呼ぶのみで新規ロジックは追加していない。diagonal_service.pyの双方向link設定
@@ -306,5 +303,192 @@ UPDATE・link clear UPDATEは4委譲先いずれにも属さぬdiagonal固有処
 
 提出先: 軍師second（監査義務・本節で新規提出）。karo-second収載待ち。
 
-設計票（㈧diagonal:375+㈨appointment_detail:107）はscratchpad
-`design_shi8_shi9.md`として別途提出（実装禁のため本ledgerには結論のみ引用・全文はscratchpad参照）。
+---
+
+## 報告4（commit afcc870・a8ea83a系＝:255 ACTIVE_SQL参照化 + diagonal:375委譲 + email_parser固定test）
+
+★家老second再裁定（msg_20260806_174422_e972ed6b）により、報告3の2件の判断が訂正された。
+訂正の経緯を隠さず明記する（黙って変えない）★:
+
+⑴ lane owner=足軽1号(実装lane)
+⑵ worktree=/tmp/resimg-cycle2-f123-clean-20260806
+⑶ branch=stage1/reservation-cycle2-f123-idempotency-a1-20260806（HEAD時点=afcc870、親=099288f。
+  diagonal:375委譲+email_parser固定testは本ledger更新と同時にcommit予定・後続sha別途追記）
+⑷ 修正前RED=
+  - :255 ACTIVE_SQL追随=backend/tests/test_active_sql_index_drift_a1.py
+    ::test_index_where_clause_follows_active_sql_when_changed。git stash往復で
+    直書き版=FAILED（monkeypatchでACTIVE_SQLを変えてもindex定義が旧述語のまま固定）。
+  - diagonal:375 no_show委譲=backend/tests/test_layer_outside_writer_delegation_a1.py
+    ::test_diagonal_propagate_no_show_releases_linked_slot_claims。git stash往復で
+    未委譲版=FAILED（DIAGONAL_NO_SHOW_PROPAGATE_REMAINING_CLAIMS=2・linkedのslot_claims残存）。
+⑸ 修正後GREEN=
+  - :255=同test PASSED（ACTIVE_SQL変更後、index定義がsqlite_master.sql上で新述語に追随）。
+  - diagonal:375=同test PASSED（DIAGONAL_NO_SHOW_PROPAGATE_REMAINING_CLAIMS=0）。
+  - 広域回帰: test_layer_outside_writer_delegation_a1.py 7/7 PASSED
+    （新設2test含む・母集団9箇所中7test・create系1testは2件同時createで1testに束ねられる為）。
+⑹ local commit=
+  - :255=afcc8703d085d66a9f51695dae52faaf12103e5d（`git rev-parse afcc870`機械出力・親=099288f）
+  - diagonal:375委譲+email_parser固定test=a7c21a9（親=afcc870。`git rev-parse a7c21a9`は下記⑺の
+    commit meta行と同一を指す）
+⑺ 成果path+完全SHA256(64桁・commit内blob由来・機械出力そのまま貼付)=
+  【afcc8703d085d66a9f51695dae52faaf12103e5d（:255単独）】
+  - backend/db/migrations/booking_concurrency_root.py = 21637e904ec62b511d160110c611f3ddf710004503aac6e76b34ffd5ca01d3dd
+  - backend/tests/test_active_sql_index_drift_a1.py = d6932c36bf2562bfc2511a6ba97813052ec2ec488c48bd6cea764b599f9fff1e
+  【a7c21a9 2026-08-06T18:14:38+09:00 ashigaru1-stage1（diagonal:375委譲+email_parser固定test）】
+  - backend/services/diagonal_service.py = 1f64bde18939bd67579db258b002617eaee9054001ad28459f882ff0ac4cd131
+  - backend/tests/test_email_parser_unit_id_defect_locked_a1.py = df1f59c2e4aeaf6257a8ff5476328f83326c0984d2bdab6833bc356cecf92a48
+  - backend/tests/test_layer_outside_writer_delegation_a1.py = 1e0b6bf03335e889150f3671d1c8cb8ef7146a956ab71710f4fd097c0cdf0c30
+
+### ① :255 の是正（家老second指摘=保守性の話ではなく「導出できる問いを裁定案件に化かす欠陥」）
+booking_concurrency_root.py内でACTIVE_SQL(L16)は61行目・285行目で参照されるが、
+apply_booking_concurrency_root内のUNIQUE INDEX DDL(旧255行目)だけは同じ述語を直書きしており、
+ACTIVE_SQLを改めてもこのindexだけ追随しない＝DBの一意性制約とアプリの占有判定が
+静かに食い違い得る「音の無い欠陥」だった。`"WHERE status NOT IN ('cancelled','no_show')"`の
+直書きを`f"WHERE {ACTIVE_SQL}"`へ修正。
+
+### ② diagonal_service.py:375 propagate_status（★訂正：裁定不要だった★）
+★当職の誤り（報告3で「本部長殿裁定待ち」と報じた事自体）★＝
+当職は「target_status値次第でoccupancy要否が変わる＝好みの問題ゆえ裁定要」と判断したが、
+家老second指摘により誤りと判明。ACTIVE_SQL="status NOT IN ('cancelled','no_show')"は
+既に no_show を非active（cancelledと同待遇）と定義済であり、これは既存の述語からの
+★導出★であって新規の業務判断ではない。∴
+  - `no_show`（非active集合入り）⇒ class A（release） ⇒ release_appointment_slots(linked_id)を追加
+  - `arrived`（active集合に留まる）⇒ class D（slot-op無し） ⇒ 変更不要（既存のまま）
+家老second指摘の通り、当職が自力で導けなかった因は①（:255の直書き）にある——直書きのままだと
+「no_showは非active」がACTIVE_SQL一箇所の事実でなく「二箇所が偶々一致しているだけ」に見えていた。
+①を先に是正した事で②の根が立った（順序＝①→②→③、家老second指示通り）。
+かつpropagate_statusはlinked行のstatusを入口を通らず直接書く「第二の遷移点」であり、
+これも母集団9箇所の1つ（未委譲の到達可能case）として正式に解決済へ計上する。
+
+### ③ email_parser.py:109（★訂正：母集団は縮めない★）
+当職は当初、この欠陥を根拠に母集団9→8を提案したが却下された（報告3該当節・却下理由は上記
+「母集団訂正案は却下」節参照）。対応＝backend/tests/test_email_parser_unit_id_defect_locked_a1.py
+を新設し、現状の恒常的IntegrityError発生をtestで固定（直った日にRED化する形で台帳の自己更新を促す）。
+
+### appointment_detail.py:107 設計票の正本収載（★scratchpadはgit外ゆえ本ledgerへ転記★）
+家老second指摘の通り、scratchpad（`design_shi8_shi9.md`）はgit管理外につき「無いに等しい」。
+結論のみ転記する（全文はscratchpad参照だが、正本としての効力は本節の記述を優先する）:
+- 対象: `api_update_detail`（PATCH `/api/appointments/{appointment_id}/detail`）。
+  現状は`req.model_dump(exclude_none=True, exclude={"version"})`で動的に組み立てたUPDATEを
+  実行するのみで、unit_id/start_time/duration_minutesが変わってもappointment_slot_claimsを
+  再同期しない。
+- 本部長殿裁定（下記逐語）により、真の解は「共通transition functionがbefore/afterから
+  A〜Eを判定し同一transactionで同期する」形だが、当該functionは本工区時点で未着手。
+  次工区までの当面の実装案＝F3前例（appointment_service.py:473-482の
+  `if "start_time" in data or "unit_id" in data or "duration_minutes" in data: ...
+  move_appointment_slot(...)`）と同一idiomの水平展開。
+- 前提として、現状`SELECT version FROM appointments ...`のみの行取得を
+  `SELECT version, clinic_id, unit_id, start_time, duration_minutes ...`へ拡張する必要がある
+  （move_appointment_slotの引数に現在値が要る為）。
+- 実装は次工区（本ledger本節では実装せず、設計のみ）。
+
+### 本部長殿裁定・逐語（2026-08-06T16:48:01・sha256先頭16=4ccfafb88deb31f7・715字・
+将軍second経由で家老second受領、当職へ転送された物をそのまま引用）
+> [本部長→将軍second][値依存occupancy射程] 文数にも値数にも固定しない。母集団の単位はruntime
+> mutation site＋到達可能transition class。各siteを一行の親IDとし、before/afterの正規化snapshot
+> から次を子caseで網羅: A active→inactive=release、B inactive→active=claim、C active→activeかつ
+> clinic/unit/start/end/duration変更=atomic reassign、D active→activeで占有字段不変=no slot-op、
+> E inactive→inactive=no slot-op。完了述語はsite数0でなく「未委譲の到達可能case=0」。diagonalの
+> 同一UPDATEはno_show case=Aで共通deactivate-releaseへ、arrived case=Dでslot no-op。ただし各入口が
+> 値を個別判定して手組みせず、共通domain transition functionがbefore/afterから判定し同一
+> transactionで同期する。appointment_detailのdynamic field-listも、占有字段を含むcaseだけC、
+> metadata-onlyはD/Eへ分類。到達不能caseはguard根拠＋陽性/陰性testを台帳に残す。11は上限とも
+> 確定分母とも呼ばず現断面のcandidate site数とし、台帳A/Bにsite ID・reachable cases・委譲先・
+> testを記す。
+
+### 語の改め（家老second指示・裁16:48）
+「11」は上限とも分母とも書かない。★現断面のcandidate site数★と書く。完了述語＝
+★「未委譲の到達可能case＝0」★（site数0ではない）。
+
+### 完了条件②の現況（報告4時点・最新）
+母集団の単位＝runtime mutation site × 到達可能transition class（本部長殿裁定準拠）。
+本工区の対象9 site中、到達可能caseとして解決済＝8（診断+実装+RED/GREEN実測済）。
+appointment_detail.py:107は設計済・実装は次工区（未委譲の到達可能caseとして残存・
+完了条件②は本ledger時点でなお未達）。email_parser.py:109は母集団に残置しつつ
+「別種の欠陥・委譲不可」の欄で固定（完了条件②のカウント対象外＝到達不能事由をtestで
+証明済につきguard根拠を満たす）。
+
+### 新たに開けた穴の自己申告
+なし（:255はACTIVE_SQL参照への置換のみ・diagonal:375はrelease_appointment_slots呼出を
+class A分岐にのみ追加しclass D分岐は不変のまま・新規ロジック無し）。
+
+提出先: 軍師second（監査義務・本節で新規提出）。karo-second収載待ち。
+
+---
+
+## ★freeze 通知（2026-08-06T18:12:18/18:16:16・本部長殿裁定・家老second転送）
+
+本部長殿裁定により、hakudokai-dev由来の全/tmp worktree（本ledgerの実装lane含む）が
+暫定停止となった。当職の対応・現況は queue/inbox/ashigaru1.yaml 内の報告便に記載
+（root_cause=禁令の射程未確定／human_GO_required=理事長殿又は委員長殿の裁）。
+
+lane HEAD停止断面=a7c21a9143d9ec45fb0e9cc7f544a408f32ecb77（2026-08-06T18:14:38+09:00・
+dirtyなし）。以後GOが下るまでlaneへの一切のコマンド発行を停止し、本ledger（主repo側）の
+更新のみ継続する。commit a7c21a9はstop order発令(18:12:18)後・当職未認知のまま行われた事を
+隠さず申告済（karo-secondへの別便参照）。
+
+### 四刻の記録（家老second指示・msg_20260806_182432_f04fc523⑤に従い本節へ起こす）
+
+★事実と判断を分けて書く（karo-second指摘④＝「射程内と理解」は判断であり事実ではない。
+下位の票に書いた理解は時を経て裁の顔を為すゆえ、事実のみ記す）★
+
+- 本部長殿裁定 発効（karo-second報告値）＝2026-08-06T18:07:21+09:00
+- 家老second発信（karo-second報告値・秒位不明分含む）＝2026-08-06T18:09:5x+09:00
+- 当職inbox着信（queue/inbox/ashigaru1.yaml記載timestamp・確実）＝
+  - 第一報 msg_20260806_181218_8ae6026b ＝ 2026-08-06T18:12:18+09:00
+  - 補足 msg_20260806_181616_b7c3d1a1 ＝ 2026-08-06T18:16:16+09:00
+- 当職読了＝正確な秒打刻は取得せず（不明）。当職自身のdate -Iseconds実測アンカー
+  （2026-08-06T18:15:52+09:00・第一報読了直後に打刻）と（2026-08-06T18:17:01+09:00・
+  補足便読了を含む一連の対応が完了した後に打刻）の間に在った事のみ判る。
+- 当職停止＝lane（/tmp/resimg-cycle2-f123-clean-20260806）への最終コマンド発行は
+  2026-08-06T18:15:52+09:00〜18:17:01+09:00の間（git remote -v／git status --short／
+  git log -1・-5の非変更確認コマンドのみ・git add/commit/stash/gc/git grepは為さず）。
+  以後、本ledger作成時点まで一切のlaneコマンドを発しておらぬ。
+- 参考（事実）＝当該worktreeのorigin remoteはgit@github.com:hakudoukai/hakudokai-dev.git
+  （clone である事は実測）。★禁令の射程（この事実がどの案件A/B/Cに該当するか）の判断は
+  当職の権限外＝本部長殿・理事長殿・委員長殿の裁定事項であり、当職はここで判じない★。
+
+### 追加の3列（家老second指示・msg_20260806_183334_95be0d4b②に従い追補・判らぬは「判らぬ」明記）
+
+- ㈠ wake通知（nudge）の試行と表示結果＝Stop hook feedback経由のテキスト表示
+  （「inbox未読1件あり。queue/inbox/ashigaru1.yamlを読んで処理せよ」）で気付いた事のみ確実。
+  ★正確な表示時刻・当職が画面上で気付いた時刻は打刻を取得せず＝不明★（推定もしない・
+  根拠になる実測が無いため）。
+- ㈡ pane busy の証＝当該窓（18:07:21〜18:15:52頃）当職は本工区の広域回帰pytest実行
+  （213 passed・339.31s）およびcommit a7c21a9作成作業（層外writer委譲・報告4の残作業）を
+  実行中であった。★pytest開始正確時刻は打刻を取得せず＝不明。推定するならば
+  推定18:09時頃開始（commit a7c21a9のtimestamp 18:14:38から339.31s＝約5分39秒遡った近傍。
+  ★commit操作自体の所要は含めておらず幅を持つ推定★）★。
+- ㈢ 最終mutation刻（commitに限らず、当職の木を最後に書き換えた刻）＝2026-08-06T18:14:38+09:00
+  （lane HEAD a7c21a9のtimestampと同一・当該commit直後dirtyなしを実測済ゆえ、
+  それ以降の書換えは無い＝最終commit時刻＝最終mutation時刻と確認できる）。
+  ★㈢は測りに非ず、母集団を引く道具（家老second指示・msg_20260806_183642_e9f7c8d1②）＝
+  令着の刻（第一報18:12:18）に手を持っておったかを㈢で引く。当職の最終mutation刻18:14:38は
+  令着18:12:18より後 ∴ 当職は令着時点で手が塞がっておった側と判別できる（本件限りの判別・
+  一般化ではない）。★
+
+### 主張の限定（家老second指示・msg_20260806_183334_95be0d4b③＝本部長殿裁定）
+
+★本部長殿裁定＝「停止令は構造的に遅れる」「人の不注意に非ず」という一般化・因果の主張は
+未証（選択母集団なし・対照なし・read刻未提示ゆえ）。当職はこの一般化を書かない。★
+
+本件に限定して書けば＝本件において、窓内（18:07:21〜18:15:52頃）に手が動いておった当職は、
+enqueue（18:12:18・18:16:16）後も一定時間（当職読了まで＝不明・上記アンカー参照）作業を
+続け申した、という事実のみを記す。これを以て一般則・機構変更提案には及ばない
+（★本節では機構変更の提案は書かない＝御下命により不要★）。
+
+### 位置（家老second指示④・不変の再確認）
+
+blocked（freeze・一律）不変。lane（/tmp/resimg-cycle2-f123-clean-20260806）へは
+一字も書いておらぬ（git命令も発せず）。lane HEAD `a7c21a9143d9ec45fb0e9cc7f544a408f32ecb77`＝
+freeze開始時のHEADとして固定（受入は本部長殿・理事長殿・委員長殿によるA/B/C裁定の後）。
+
+### 成果の記録（消えぬ形で残す・karo-second指示⑤・出処明示訂正済＝msg_20260806_183642_e9f7c8d1③）
+
+★213 passedは★lane（hakudokai-dev repo）側の数★＝lane sha `hakudokai-dev repo の a7c21a9`
+（143d9ec45fb0e9cc7f544a408f32ecb77）における実行結果。主repo（multi-agent-shogun）側では
+本件について解決した数値は無い（0）。以下は当該lane sha時点の内訳記録。★
+
+213 passed（339.31s・lane commit a7c21a9直前に実行・広域回帰）。内訳＝既存210 + 本工区新設3
+（test_active_sql_index_drift_a1.py 2件 + test_diagonal_propagate_no_show_releases_linked_slot_claims
+1件。email_parser固定test 2件は別途カウント済＝報告4参照）。
