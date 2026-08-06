@@ -85,4 +85,36 @@ appointment_grid._execute_cancelの二重実装自体(cancel_appointmentと別�
 
 当職はこれを受け、共通domain commandへの寄せを次工区として着手する（別途ETA報告）。
 
+---
+
+## 報告3（commit 9fe28d1・共通domain command統合・差戻し反映完了）
+
+⑴ lane owner=足軽1号(実装lane)
+⑵ worktree=/tmp/resimg-cycle2-f123-clean-20260806（既存nonce worktree/足軽4号worktreeとも不触のまま）
+⑶ branch=stage1/reservation-cycle2-f123-idempotency-a1-20260806（HEAD=9fe28d1、親=96aa31d→8b95464→16cd0c6→7d463ed）
+⑷ 修正前RED=move_appointment(grid drag)・change_appointment_status(cancel/復元枝)・web側create_booking/update_bookingは本commit以前slot操作を一切行っておらず(grep実測=0件)、機構的にRED相当だった事を実装差分で確認。test_appointment_grid_slot_sync.py(新規3件)・test_46/47(web)で実証。
+⑸ 修正後GREEN=test_appointment_api.py(42)+web_reservation/test_phase2_2_booking.py(30)+test_appointment_grid_slot_sync.py(3・新規)+test_appointment_service.py(13)+test_booking_behavior.py+test_diagonal_appointment.py+test_prediction.py=合計126件全PASS(204.73s)
+⑹ local commit=9fe28d192318847bf253b4f341732981d47615b1（親96aa31d。push一切せず）
+⑺ 成果path+commit内blob SHA256(64桁)=
+  - backend/api/appointment_grid.py = cd22814870d77941d648dd5d533aa4e2c71cc1f06daee90684587a1ff96eb34f
+  - backend/services/appointment_lifecycle.py(新規) = 8db360663be76a6082c84840d63620ab54d3440fcff71d361cfd6c0afc04fc92
+  - backend/services/appointment_service.py = c074d263dc06f336223956bc96efb6365ace9b1db5185da8e7178720b0c7a538
+  - backend/services/web_reservation/booking_service.py = 749f0f82ffb1c843d3dffcad4f399e005daf8cb37e14f2f0172f7aeb7b039be8
+  - backend/tests/test_appointment_grid_slot_sync.py(新規) = 650f28004c18b611a7a8551d900a7b843d17bf40b5f7f0bc1a36ea23d1eb6910
+  - backend/tests/web_reservation/test_phase2_2_booking.py = 88b57e9695a85ae3aefcdb6c762e8894aede4535bfa483bec4a4ad1c629af63c
+
+### 設計要旨
+`backend/services/appointment_lifecycle.py`を新設し、`deactivate_appointment`(status/cancel metadata/history/slot releaseを一単位)・`reactivate_appointment`(status/history/slot再claimを一単位)・`move_appointment_slot`(slot release→再claimのみ・statusのUPDATE自体は入口毎に列/validationが異なる為呼び手に残す=裁定「全面書換不要」に従いslot-sync部分のみ集約)の3関数を実装。全11 writer（create×2・inactivate×5・reactivate×1・move×3）をこの3関数経由へ統一した。
+
+### 副産物で見つけた欠陥（裁定通り字義通りの回帰で掘り当てた物）
+- `appointment_grid.change_appointment_status`のcancelled→復元枝は従来slotを一切再claimしていなかった（復元後に旧枠が空いたままになり得るバグ）。共通command化により是正。
+- `move_appointment`(grid drag)・web側`create_booking`/`update_booking`は従来slot claimを一切行っていなかった（grep実測=0件）。今回の統一で全writerに拡張。
+
+### 申告（裁定を要さぬ既存挙動の意図的維持点）
+- `_execute_cancel`の既存流儀（status常にcancelled固定・no_showはvisit_status側のみ）は変更せず保持。共通commandの`history_action`引数で上書きする形にとどめた。
+- `change_appointment_status`のcancel枝は元来visit_status=NULL明示だったが、共通commandはvisit_status未指定時に既存値を保持（COALESCE相当）する形へ僅かに変わった。ACTIVE_SQLはstatus列のみ参照する為inactivate自体には影響しない差分と判断（裁定を要さぬ範囲の実装判断として申告）。
+
+### 解除条件4点の現況
+⑴Web F3 commit=完了(96aa31d) ⑵独立a4再走=足軽4号の担当・当職の関与外 ⑶二重入口根治=本commitで完了 ⑷pytest.skip閉鎖=当職の成果物には`pytest.skip`/`@pytest.mark.skip`=0件（実測）。他lane artifactの事案と判断し関与せず。
+
 提出先: 軍師second（監査義務）。karo-second収載。
