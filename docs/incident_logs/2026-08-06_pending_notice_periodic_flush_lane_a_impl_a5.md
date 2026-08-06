@@ -27,25 +27,26 @@ cap=5/age=300s 束ね判定は「関数が呼ばれた時」にしか評価さ�
 - **branch**: `feat/pending-notice-periodic-flush`
 - **base**: `4061f26128a3c824061f941b746c1bfdff2b76fd`
 - **worktree**: `/tmp/hakudokai-worktrees/pending-notice-periodic-flush`（clean隔離・`git worktree add`・`/tmp`配下）
-- **commit**: `3c28377`（`c2bcf1d`の直後子・`e1c9c00`→`4ff4d91`が先行・local commitのみ・push/deploy/DB操作 悉く0）。`4ff4d91`=最初の実装、`e1c9c00`=RED gate仕様反映、`c2bcf1d`=補修三令⒜⒝反映、`3c28377`=残欄㈠(真並行競合実測)追加commit。
-- **RED gate実走（契約本体）**: 下記§2参照（fake clock+isolated store・old-base自己判定・§2〜§10 全17assertion PASS。entry script不在(旧base相当)を`mv`で模した際は正しくFAIL(exit1)になる事も確認済み）
+- **commit**: `6e056da`（`3c28377`の直後子・`c2bcf1d`→`e1c9c00`→`4ff4d91`が先行・local commitのみ・push/deploy/DB操作 悉く0）。`4ff4d91`=最初の実装、`e1c9c00`=RED gate仕様反映、`c2bcf1d`=補修三令⒜⒝(★後にsuperseded★)、`3c28377`=残欄㈠(真並行競合実測)、`6e056da`=interface完全除去(★最終形★)。
+- **RED gate実走（契約本体）**: 下記§2参照（buffer先頭epoch=実now-400直接書込・fake clock不要・old-base自己判定・§2〜§6 全19assertion PASS。entry script不在(旧base相当)を`mv`で模した際は正しくFAIL(exit1)になる事も確認済み）
 - **構造的裏付け（RED seed）**: 下記§1参照（旧実装を機械抽出し実際に呼んで再現）
-- **補修三令⒜⒝⒞（契約違反是正）**: 下記§6参照（TEST_MODE gating・invalid/negative/overflow/no-test-mode拒否の5節追加・old-base mv REDの復元SHA+porcelain clean証拠化）
-- **残欄㈠（真並行2本競合）**: 下記§7参照（no-lock変異体RED・実物GREEN・5回連続PASS）
-- **残欄㈡（TEST_MODE対設定の機械実測）**: 下記§8参照（★未閉鎖と明記・閉じたと書かず★）
-- **artifact path＋SHA256**（`3c28377`断面）:
+- **補修三令⒜⒝⒞（契約違反是正・superseded）**: 下記§6参照（TEST_MODE gating方式・後にinterface完全除去(§9)で上書き）
+- **残欄㈠（真並行2本競合）**: 下記§7参照（no-lock変異体RED・実物GREEN・5回連続PASS。§9改訂後も追随・再度5回連続PASS確認済）
+- **残欄㈡（TEST_MODE対設定の機械実測→interface除去で決着）**: 下記§8・§9参照
+- **§9 interface完全除去（★最終形・本部長殿00:01:58裁定★）**: 下記§9参照（RED=旧断面で現にflush／GREEN=除去後はFATAL拒否かつ実clockのみで正常動作・commit自己検証済）
+- **artifact path＋SHA256**（`6e056da`断面・`git show <commit>:<path>`でcommit自身から測定・working tree一致確認済）:
 
 | path | 行数 | sha256 |
 |---|---|---|
-| `scripts/pending_notice_flush.sh` | 169 | `e34dcf9837adb053b7191d3a164c9d474985570acb651b0a95f757b4a935684b` |
-| `tests/pending_notice_flush_sandbox_test.sh` | 307 | `dd96fb6922ba3b9ae5824c050206a6ad9a5ebd521b625c828ffeae32a308d5e0` |
-| `tests/pending_notice_flush_concurrency_race_test.sh` | 155 | `82ca6363080a24625149ec913e60792fd2c1d48e7e2eab8a37b7f959ac2c4084` |
+| `scripts/pending_notice_flush.sh` | 147 | `1da99c979494ca980b6474e72deff42112af32ae843dfb8e2bb66e4a2e7c1a91` |
+| `tests/pending_notice_flush_sandbox_test.sh` | 259 | `c4bd762d3789b41fcfbc9a38b0f40a78b66cee43571a9ec1fbfd7348efef7885` |
+| `tests/pending_notice_flush_concurrency_race_test.sh` | 159 | `42f2d30a518950caa307157e8efdb6da778930bddf1b2669cf91f116fc972095` |
 | `scripts/pending_notice_flush_artifacts/README.md` | — | `eb712351d64f4bc616857b5702017ccd6be0bfbdebeb96646c043b93f522b073` |
 | `scripts/pending_notice_flush_artifacts/pending-notice-flush.service` | — | `a151eb5b5deb93220b117751ceb13bf50f5f9cda80c291078ffc8f074953a391` |
 | `scripts/pending_notice_flush_artifacts/pending-notice-flush.timer` | — | `8f7b3f183d7873c9412d85156077a4c0620b0fa184b6aaf526288a1b2be626d0` |
 | `scripts/pending_notice_flush_artifacts/crontab.example` | — | `6959a92bcf2737f184445c94d549984c64368071490e0a820efc2e2836f76c49` |
 
-測時=2026-08-06T23:44:22+09:00。本 doc 自体は主リポジトリ(`feat/dd169-d006-conditional-exception`)へ保全、実コードは上記隔離branchに存在（両者混同せぬ事）。
+測時=2026-08-07T00:08:24+09:00。本 doc 自体は主リポジトリ(`feat/dd169-d006-conditional-exception`)へ保全、実コードは上記隔離branchに存在（両者混同せぬ事）。
 
 ## 実装内容
 
@@ -111,9 +112,13 @@ snapshot: target(実装あり) — §2以降がRED gate契約に照らしGREEN�
 - 新script と旧反応的経路は同一lockを取るため相互排他は効くが、**両者が同一buffer上で極めて近接したタイミングで動いた場合の挙動（片方がlockを取っている間もう片方は最大5秒待ってから諦める）は sandbox 上の逐次実行でしか確認していない**——真の並行実行(同時プロセス2本)での競合は本試験の範囲外(未測)。
 - flush送信を`inbox_write.sh`のCLI経由(argv)で行うため、**cross-PC bridge の事前チェックを新たに経由する**(旧反応的経路は`_write_message`を直接呼びcross-PC bridgeをスキップしていた)。dispatcher(shogun-second)がローカル宛の場合は実質無害と判断したが、**pc_mapping設定次第で挙動が変わる可能性は実測していない**(未測、限界として明記)。
 - ~~fake clock(`PENDING_NOTICE_FLUSH_NOW_EPOCH`)は本番実行時は未設定(=実clock使用)ゆえ本番挙動には影響せぬ設計だが、この環境変数名を知る者が本番実行時に誤って設定すれば意図的にage判定を偽装できる——新たな(小さな)攻撃面。~~
-  **→本部長殿22:10:17判定により契約違反と裁定・§6の補修三令で是正済**。`PENDING_NOTICE_FLUSH_TEST_MODE=1`との対設定を必須化し、片方だけの設定・不正値(非数値/負値/桁溢れ)は起動時exit 2で拒否する構造にした——production運用では`TEST_MODE`を立てぬ以上、この環境変数単体でage偽装は構造的に不能になった(§6参照)。残る面: `TEST_MODE=1`**かつ**当該env var名の**両方**を本番実行時に意図的に対設定すれば依然偽装可能——誤操作(片方だけの設定)は確実に拒否されるが、**意図的な対設定までは機械的に阻めない事を§8で実測確認済(★未閉鎖・残欄として明記★)**。ゼロにはなっていない。
+  **→本部長殿22:10:17判定により契約違反と裁定・§6の補修三令(TEST_MODE gating)で一次是正・その後§8で「意図的対設定は依然可能」と未閉鎖のまま実測報告・本部長殿2026-08-07T00:01:58の再裁定で「無効化でなくinterface不在」を命じられ§9で完全除去。**現状(§9反映後)は該当env varを読む行自体が存在せず、設定しても効果を持たずFATAL拒否される(§9参照)。この経路は今回で閉鎖と判断する。
 
-## §6 補修三令⒜⒝⒞（fake clock契約違反是正・commit `c2bcf1d`）
+## §6 補修三令⒜⒝⒞（fake clock契約違反是正・commit `c2bcf1d`）★2026-08-07 superseded★
+
+★本節(§6)のTEST_MODE gating方式は、本部長殿2026-08-07T00:01:58裁定により「無効化でなく不在とせよ」
+との、より強い形で上書きされた。interfaceそのものを完全除去した最終形は§9参照。本節は経緯の記録として
+残す（体裁を整えず原文のまま・削除しない）。★
 
 本部長殿22:10:17判定「env varでage<300へ偽装可能ならば契約違反」を受けての是正。令④により「300」は
 本部長殿指定の閾値である旨、原文(msg_20260806_221926_c656c7f8)を実行の刻に確認した(下記§6コード引用参照)。
@@ -267,6 +272,88 @@ CI限定フラグ等、いずれも未実装）。
 本§8はそれが実在する事を初めて機械的に実測で確認したもの(従来は推測、本便で実証に格上げ)。防ぐには
 実行主体の認証・呼び出し元制限・監査ログ等の追加機構が要るが、これは本補修三令の令④「300は本部長殿
 指定の閾値」の範囲を超える設計判断であり、当職の権限外(★閉じ得なんだ残欄として明記・上へ仰ぐ★)。
+
+## §9 interface完全除去（本部長殿2026-08-07T00:01:58裁定・commit `6e056da`）
+
+下命: karo-second msg_20260807_000158_624419e4。§8で「未閉鎖」と正直に書いた事を受け、本部長殿は
+当隊の案(「本番でTEST_MODE経路=0」=経路を**数える**形)より強い裁定を下した——
+「**interfaceを完全除去せよ**」(=物を**消す**形)。条：「無効化でなく不在——不在は設定で覆せぬ」。
+
+**実装（工区㈠㈡㈣）**: `scripts/pending_notice_flush.sh`から`PENDING_NOTICE_FLUSH_NOW_EPOCH`・
+`PENDING_NOTICE_FLUSH_TEST_MODE`を読む行を完全に削除した(§6のgatingロジック・§7-§10のinvalid値
+検証ロジック悉く削除)。`now_epoch`は常に`$(/usr/bin/date +%s)`(絶対path)のみから取得し、上書き
+経路そのものが存在しない。旧env varが設定されていた場合(誤操作・古い試験習慣の残存等)は、無視して
+黙って通すのではなく**起動直後にFATAL拒否**する(工区㈣「無視でなくFATAL拒否かinterface不在の検出」
+のうち前者を選択)。
+
+**㈤ RED（旧・commit `3c28377`断面）＝現に flush する現状の再実測**:
+
+```
+$ date -Iseconds
+2026-08-07T00:03:34+09:00
+$ real_now_epoch=1786028614  forged_now_epoch=1787028613
+$ PENDING_NOTICE_FLUSH_TEST_MODE=1 PENDING_NOTICE_FLUSH_NOW_EPOCH=1787028613 \
+    bash scripts/pending_notice_flush.sh   # commit 3c28377断面(§6 gating方式)
+[pending_notice_flush] PERIODIC_FLUSHED: 1 pending unroutable notice(s) sent to 'demo'
+[pending_notice_flush] done: buffers_checked=1 flushed=1
+rc=0
+DISPATCHED target=demo
+```
+
+**㈤ GREEN（新・commit `6e056da`断面）＝interface除去後の実測**:
+
+```
+$ PENDING_NOTICE_FLUSH_TEST_MODE=1 PENDING_NOTICE_FLUSH_NOW_EPOCH=1787028613 \
+    bash scripts/pending_notice_flush.sh   # commit 6e056da断面(interface完全除去後)
+[pending_notice_flush] FATAL: PENDING_NOTICE_FLUSH_NOW_EPOCH / PENDING_NOTICE_FLUSH_TEST_MODE は本
+script から完全除去済 (本部長殿 2026-08-07T00:01:58 裁定) — この interface はもはや存在せず設定して
+も効果を持たない。黙って無視すると『設定したのに効かなかった』という無音の誤解を生むため起動を拒否
+する。試験は tests/pending_notice_flush_sandbox_test.sh (buffer先頭epoch=実 now-400 方式・fake
+clock不要) を用いよ。
+rc=2
+
+$ REAL_NOW=$(/usr/bin/date +%s); OLD_EPOCH=$(( REAL_NOW - 400 ))
+$ echo "real_now=$REAL_NOW old_epoch(now-400)=$OLD_EPOCH"
+real_now=1786028729 old_epoch(now-400)=1786028329
+$ bash scripts/pending_notice_flush.sh   # env var一切設定せず・buffer先頭epoch=now-400を直接書込
+[pending_notice_flush] PERIODIC_FLUSHED: 1 pending unroutable notice(s) sent to 'demo'
+[pending_notice_flush] done: buffers_checked=1 flushed=1
+rc=0
+DISPATCHED target=demo
+```
+
+fake clock無しでも実clock基準の「now-400」書込だけでflushが正しく機能する事、かつenv var設定時は
+黙って通らずFATAL拒否される事、両方を実測確認した。
+
+**㈢ sandbox E2E全面改訂**: `tests/pending_notice_flush_sandbox_test.sh`をfake clock/sleep不要の
+「buffer先頭epoch=実`/usr/bin/date +%s`−400直接書込」方式へ全面改訂(§2/§4/§5)。新§6として
+interface不在の3ケース(NOW_EPOCHのみ／TEST_MODEのみ／両方対設定)悉くexit code=2・dispatch 0を
+確認する節を追加。3回連続実行でALL PASS(非決定性なし)。
+
+**残欄㈠(真並行競合)テストの追随**: `tests/pending_notice_flush_concurrency_race_test.sh`も
+fake clock依存を除去し、no-lock変異体・実物いずれもbuffer先頭epoch=実now-400方式へ改訂(no-lock
+変異体はcurrent sourceから機械抽出する為コード変更不要で自動追随)。5回連続実行でALL PASS。
+
+**commit自己検証（将軍second令2026-08-06T23:47:00・全工区適用）**:
+
+```
+$ git show 6e056da:scripts/pending_notice_flush.sh | sha256sum
+1da99c979494ca980b6474e72deff42112af32ae843dfb8e2bb66e4a2e7c1a91  -
+$ git show 6e056da:tests/pending_notice_flush_sandbox_test.sh | sha256sum
+c4bd762d3789b41fcfbc9a38b0f40a78b66cee43571a9ec1fbfd7348efef7885  -
+$ git show 6e056da:tests/pending_notice_flush_concurrency_race_test.sh | sha256sum
+42f2d30a518950caa307157e8efdb6da778930bddf1b2669cf91f116fc972095  -
+```
+
+上記3行はworking tree側のsha256sumと完全一致(食い違いなし・2026-08-07T00:08:24+09:00測)。
+
+**§8残欄㈡の決着**: interfaceが物として存在しなくなった以上、「意図的な対設定」自体が不可能になった
+——§8で未閉鎖と書いた残欄は、gatingの強化ではなく除去によって閉じた。
+
+**⒞ 条件付きGO(本工区の範囲外・明記のみ)**: 本部長殿令は上記PASS後に加え、synthetic
+exactly-once/parallel2/rollbackの後でuser-systemd timer装着GOとしている。本便は「上記PASS」まで
+であり、systemd timer装着は別工区として当職の作業範囲に含めていない(禁則「⒞は本工区に含まぬ」の
+先行版と同旨・本裁定でも同じ区切りを維持)。
 
 ## 己の手で為した事／己で直した誤り
 
