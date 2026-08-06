@@ -97,6 +97,53 @@ guard呼出し行が実際にexit 0を通し、後続のnpx呼出しへ処理が
    REPO_PATHの実際の値が一致するか)は、guard本体のコメント読解のみに基づき、実行しての
    確認はしていない(下命の禁=実装するな・走らせるな、に従った結果)。
 
+## 追補 (2026-08-06T09:00:23+0900・足軽1号の反証役レビューを受けて)
+
+★別file(追補)。既commit本体は不触。読取のみ。HEAD=e7436c36c7a752c1199e27da574d967eda55dec4
+(git rev-parse HEAD実行結果)。
+
+### ⒜ 呼び手の全数・当職の独立再列挙
+
+$ /usr/bin/grep -rn "npx @openai/codex exec" --include="*.sh" --include="*.py" scripts/ shim/ lib/
+scripts/audit_codex.sh:93
+scripts/audit_meta_codex.sh:263
+shim/hakudokai/hakudokai_audit_scheduler.sh:125
+shim/hakudokai/hakudokai_audit_scheduler.sh:176
+
+**∴ 当職の独立実測=4箇所。足軽1号の申告(4箇所、うち3箇所未結線)と★完全一致★——食い違いなし
+(食い違わなかった事もそのまま報ずる)。∴ 本設計は`scripts/audit_codex.sh`1箇所のみを対象とし、
+`shim/hakudokai/hakudokai_audit_scheduler.sh`2箇所・`scripts/audit_meta_codex.sh`1箇所が
+★未結線のまま残る★事を認める。母集団が狭かった事は当職の設計の瑕であり、家老second殿
+一人の申し送りの問題ではない(渡された言葉を検めずに母集団を確定した当職の側にも咎がある)。
+
+### ⒞ REPO_PATHは2026-07-21事故のroot causeを代表するか——設計者としての答
+
+**答=代表しない。当職の設計は誤っていた。**
+
+$ grep -n "REPO_PATH" scripts/audit_codex.sh
+20: REPO_PATH="${5:-/mnt/c/Users/User/Documents/DentalBI}"
+33: DIFF=$(cd "$REPO_PATH" && git diff ...)
+41: CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only ...)
+
+**∴ `cd "$REPO_PATH"`は★subshell `$(...)`の中でのみ★実行されており、親scriptの実際の
+作業ディレクトリを変えていない。∴ L93(`npx @openai/codex exec`)の時点での★実際のcwd★は、
+scriptが起動された時点のまま(REPO_PATHとは無関係たり得る)。★これが正に2026-07-21事故の
+root cause(invoker実cwd≠REPO_PATH)そのものである★——当職の設計案(REPO_PATHをそのまま
+guardへ渡す)は、この乖離を検知できない。guardが真に検めるべきは「L93実行時点の実際の
+`$(pwd)`」であり、設定変数REPO_PATHではない。**
+
+正しい設計への示唆(実装せず、案のみ)=guard呼出し直前に`$(pwd)`を取得しそれを渡すか、
+guard自身がscript内部で`pwd`を実行して自己診断する形にすべきであった。
+
+### 【本工区で己が直した誤り】
+
+初版の「母集団漏れの自己申告」②項で、当職は既に「REPO_PATHをそのまま渡す事の妥当性を
+実行しての確認はしていない」と自己申告していた——★これは単なる未検証の開示に留まり、
+実際に検証してみれば誤りだったという所まで踏み込んでいなかった★。足軽1号の反証を受けて
+初めて、この「未検証」が実は「検証すれば誤りと分かる」水準の欠陥であった事を確認した。
+自己申告した事自体は正しかったが、それだけでは設計の誤りを防げなかった、という事実を
+ここに残す。
+
 ## 監査体制
 
 暫定二者制(軍師+Gemini)。Codex leg停止中(2026-07-21事案)。
