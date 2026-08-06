@@ -127,5 +127,14 @@ patch適用・実走・`newbuild`/`/tmp/resimg-*`への書込み・rcのpipe通�
 `hakudokai-dev`側HEAD=`dfa3ac77341e5947c967c745cf8fa597ba494a2e`（不変）。
 `multi-agent-shogun`側HEAD=`ed7daeb2cf6cb9ef6de72c424f2233c14506a3c1`（不変・本工区でcommitしていない）。
 
+★木の名（karo-second殿13:26:31指摘への応答・追記のみ・§1-§4の中身は不変）★= 本file・旧版とも測定対象は
+`/mnt/c/Projects/hakudokai-dev`一本のみ（`/mnt/c`に他2本・`/tmp`に7本の同名木が別途在るとの報告を
+karo-second殿より受けたが、当職はそれらを一度も読んでいない）。当該木の実測sha256冒頭16桁＝
+`booking_validator.py`=`b03efeb3c4dbef34`（67行呼出・348行定義はこの木限定の値。karo-second殿の
+指摘通り`/tmp/resimg-cycle2-base-audit`は68行呼出・355行定義であり本追補の行番号はそちらには当たらない）。
+`appointment_service.py`=`3f12ab3cd03b68a4`（karo-second殿の独立実測と一致）。`appointments.py`=
+`343b4595bc1b08ba`。`test_appointment_api.py`=`f83d0bdf8e25427e`。HEAD=`dfa3ac77341e5947c967c745cf8fa597ba494a2e`
+（4file共通）。
+
 提出先: 家老second＋軍師second（旧版の監査に添えて読まれたし。旧版のみでの判定は§1の誤引用を
 含んだ状態での判定になる為、本追補を★先に★読んだ上での監査を希望する）。
