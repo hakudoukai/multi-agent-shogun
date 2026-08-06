@@ -172,7 +172,139 @@ appointment_grid._execute_cancelの二重実装自体(cancel_appointmentと別�
 - reschedule-sync＝`appointment_lifecycle.move_appointment_slot`（呼び手3）
 - 直接writer（未委譲）＝7箇所・6file（上記未着手欄と同一）
 
-### 完了条件の現況
+### 完了条件の現況（本節時点・後続節で更新）
 完了条件②「occupancyを直接書くruntime実装が共通domain層外0件」は★未達★——上記7箇所が残存。当職の裁量で順序を選び本commitまで進めたが、これらは意図的に着手していない（黙って落としてはいない）。次工区として着手可能だが、範囲・優先順位の裁定を仰いでいる（当職の一存でこれ以上手を広げるべきか、一旦ここで区切り報告すべきか、家老second殿へ上申中）。
 
 提出先: 軍師second（監査義務）。karo-second収載。
+
+---
+
+## 報告2（commit 2fe4ed9・47b根治=同transaction化・軍師second PASS済／git管理下正本への収載が本節で初）
+
+★karo-second指摘（msg_20260806_164457_1d58e31c④）どおり、47bの記録がgit管理外(worktree+回転するinbox)にしか
+無かった為、本節で正本へ収載する。以下は当職独立の`git show <sha> | sha256sum`再計算（karo-second実測とも一致・
+末尾1桁の写し違いのみ訂正=下記⑺参照）。★
+
+⑴ lane owner=足軽1号(実装lane)
+⑵ worktree=/tmp/resimg-cycle2-f123-clean-20260806
+⑶ branch=stage1/reservation-cycle2-f123-idempotency-a1-20260806（HEAD時点=2fe4ed9、親=55ba5a7→596c87e）
+⑷ 修正前RED=test_47b_same_transaction_crash_then_retry_produces_log（新設）。log_appointment_actionの
+  SystemExit注入をcreate_appointment_with_claimのcommit★後★に発生させると、retryはidempotency
+  state='completed'によりcached_responseを早期returnし、appointment_logsが恒久的に0のまま
+  （F47B_AUDIT_LOG_ROWS_AFTER_RETRY=0）。
+⑸ 修正後GREEN=同testが軍師second指摘の同一oracleでPASS。orphan appointments=0（crash試行が全rollback）、
+  appt_exists=1、log_rows>=1（同一transactionでaudit logが揃って生成）。81/81 passed・0 skipped
+  （軍師second実測と一致）。
+⑹ local commit=2fe4ed90b128eb3226f37465a7ef22c986ba0d79（親=55ba5a7。push一切せず）
+⑺ 成果path+完全SHA256(64桁・commit内blob由来・`git show --name-only --format='' <sha> | while read -r f; do
+  echo "$(git show <sha>:"$f" | sha256sum | cut -d' ' -f1)  $f"; done` の機械出力をそのまま貼付)=
+  - backend/services/appointment_lifecycle.py = cc6efda4e0a42f91319e20cdbbb6ad002bb6df423b1f22996065a53bc090461d
+  - backend/services/appointment_log_service.py = f60ae813491f6dc63db9265d658e4f434d6d0f499263dd061f9ceac33df0856f
+  - backend/services/appointment_service.py = c19c3c6a032b39d9c5eb66f14821720125244712b8c91998cc81085ed33426af
+  - backend/tests/test_appointment_log_same_transaction_47b.py = 4fb442ea1d94d8bee021195433f1f2d2bc8aedc72a187d27d90c1ef3316e7ab9
+
+### 根治の形（同transaction化）
+log_appointment_actionをcreate_appointment_with_claimのon_persistedフックとしてcommit★前★に呼ぶよう変更。
+
+### 新たに開けた穴の自己申告（家老second・軍師second双方が嘉賞・命じられる前に自ら発見）
+on_persistedがSystemExit等の"真の crash"を模す/実際に起こす場合、except節が従来Exceptionのみ捕捉だと
+BaseExceptionはrollbackされず、uncommitted transactionが取り残される（=同transaction化が防ぎたい欠落を
+「未rollbackの部分書込みが残る」という★別の穴★に変えてしまう）。except節をExceptionからBaseExceptionへ
+広げ、確実にrollbackしてからre-raiseする事で解消（F2修正で使った同一idiom=in_transaction guard付き
+rollbackを再利用・二重実装を避けた）。
+
+### :234 の別途問い（軍師second裁定=当corrupt箇所とは別境界・修正対象外）
+booking_concurrency_root.py:234のconn.commit()はSQLite foreign_keys pragmaがtransaction内でno-opになる為の
+別境界であり、旧F2欠陥の再発ではないと軍師second裁定済（本commitのdiffには当該fileを一切含めていない）。
+
+### 未着手5箇所（★層外writer台帳とは別の台帳・合算禁★＝log_appointment_action呼び手の同型欠落）
+log_appointment_actionの呼び手6箇所中、本commitで直したのはcreate経路(appointment_service.py:313)の1箇所のみ。
+残5箇所は同じpost-commit欠落の危険を持つ（test file docstringにも名指しで記載済＝成果物内に残す方が
+便より確実に残る）:
+- appointment_service.py:490（update経路）
+- appointment_service.py:584（cancel経路）
+- appointment_service.py:700（transition_status経路）
+- appointment_grid.py:629
+- appointment_grid.py:874
+
+提出先: 軍師second（監査済・逐語=「足軽4号 F2対票は PASS。根は test_41 同一 oracle の RED→GREEN 独立再測」
+「47bはPASS」）。本節はkaro-second指示による正本収載のみ（新規判断なし）。
+
+---
+
+## 報告3（commit 099288f・層外writer8箇所→共通command委譲・auto_commit契約変更含む）
+
+⑴ lane owner=足軽1号(実装lane)
+⑵ worktree=/tmp/resimg-cycle2-f123-clean-20260806
+⑶ branch=stage1/reservation-cycle2-f123-idempotency-a1-20260806（HEAD時点=099288f、親=2fe4ed9）
+⑷ 修正前RED=backend/tests/test_layer_outside_writer_delegation_a1.py（新設6test）。git stash往復で実装差分
+  (appointment_lifecycle.py/diagonal_service.py/booking_manage.py/cancel_stats.py/next_appointment.py)を退避し
+  再実行=6/6 FAILED（appointment_slot_claimsが0件のまま、または旧slot_startのまま残存＝layer外writerの実測）。
+⑸ 修正後GREEN=git stash pop後、同6test=6/6 PASSED。広域回帰（test_appointment_api.py/
+  test_appointment_grid_slot_sync.py/test_appointment_log_same_transaction_47b.py/test_appointment_models.py/
+  test_appointment_service.py/test_booking_behavior.py/test_booking_concurrency_root_f2_self_rollback.py/
+  test_diagonal_appointment.py/test_layer_outside_writer_delegation_a1.py/web_reservation/test_phase2_2_booking.py）
+  =208 passed（新設6件含む・既存202件は無回帰）。
+⑹ local commit=099288f410acb00791af29276da4d39f67da3fd5（`git rev-parse 099288f`機械出力・親=2fe4ed9。push一切せず）
+⑺ 成果path+完全SHA256(64桁・commit内blob由来・機械出力そのまま貼付)=
+  - backend/api/booking_manage.py = fe5a36e13f86eedd1e03e5f6f4746174037d99e5df14490c1d7074bf82594cd3
+  - backend/api/cancel_stats.py = 42e4b229e2f68ce98f81c6c1abab06a37f3af73f6a8db23690fa5e0c0582667f
+  - backend/routers/next_appointment.py = 89d2b4ee2f8f8c86e39e5a1ca61c497a63909ae3a5bd870d7f384c332f5934f6
+  - backend/services/appointment_lifecycle.py = 28445a1fe5b9002b7d6cb49b0ae1d21c7665eb84993725fc4e97b2f9946b4868
+  - backend/services/diagonal_service.py = eef3a398c7ceb79669225a4e6816690f6dbf5e5cfb71bbc0061a324cf90ad685
+  - backend/tests/test_layer_outside_writer_delegation_a1.py = e3aefca55f52af6cc93f8716798da3d880027e175dcb3071a83c9e33ac505d58
+
+### auto_commit契約変更（家老second裁定=専用2-record variantは不可・既存関数へcommit遅延の1軸を足す）
+create_appointment_with_claimへauto_commit(default True)を追加。Falseの時はconn.commit()を呼ばず呼び手が
+外側transactionでcommit境界を持つ。失敗時はauto_commitの値に関わらず必ずrollback（=2件目で落ちたら1件目も
+道連れで消える＝全rollback契約）。既存呼び手(staff/web)はauto_commit省略=Trueの為デフォルト挙動不変
+（既存202test無回帰で確認）。
+
+### A/B台帳（報告1の続き・述語裁定準拠）
+
+**A＝entrypoint→domain command対応表（更新）**
+
+新規委譲済（8）＝
+- create-with-claim/idempotency ×1（2レコード）：`diagonal_service.create_diagonal_appointment`
+  （auto_commit=False×2呼出+単一commit）
+- reschedule-sync ×2：`diagonal_service.update_linked_appointment`（261,276）/
+  `booking_manage.change_booking`（279）
+- deactivate-release ×2：`diagonal_service.cancel_linked_appointment`（317,cancel_both枝）/
+  `cancel_stats.api_cancel_with_reason`（105）
+- claim_appointment_slots直接呼出 ×1：`next_appointment.book_next_appointment`（71）
+  （create-with-claim全体ではなくprimitive単体を再利用＝history/idempotency概念を持たぬ経路の為）
+
+母集団訂正（9→8・当職実測による発見）＝
+`email_parser.py:109`は当初「素直な9」に含まれると報じられたが、実測（in-memory DBでの再現）により
+INSERT文がunit_id（appointments表NOT NULL制約・appointment_tables.py:81・default無し）を列挙しておらず、
+実行すれば必ずIntegrityErrorを送出し、呼び手側`except Exception as e: return None`で全例外を握り潰す
+構造と判明。この経路は現状コードで一度も成功していない可能性が高い（0行挿入を実測）。これは
+「layer外writer=slot-claim未配線」の型ではなく★別種の欠陥（挿入経路自体が死んでいる）★であり、
+機械的にclaim_appointment_slotsを足しても直らない（unit_idをどう決めるかは業務判断＝当職の裁量外）。
+本commitでは不触・裁定を仰ぐ。
+
+除外（本部長殿裁定待ち・当職裁かず）＝`diagonal_service.py:375`（propagate_status）。target_statusの値
+（arrived=占有継続/no_show=解放が妥当か）次第でoccupancy要否が変わり、「UPDATE文がある→release呼べ」では
+済まぬ。条件分岐案は設計票（scratchpad提出・下記参照）に明記済だが実装は本部長殿裁定後。
+
+設計票のみ・実装次工区（当職裁定範囲内＝上程不要）＝`appointment_detail.py:107`。動的field-list問題
+（PATCH型endpointでunit_id/start_time/duration_minutesが`data`に含まれるか静的に決め得ない）。
+F3前例（appointment_service.py:473-482の`if "start_time" in data or ...`条件分岐）と同一idiomの水平展開で
+解決可能と当職判定。次工区で実装（SELECT列拡張=version→version,clinic_id,unit_id,start_time,duration_minutes
+が前提として要る旨も設計票に明記）。
+
+**完了条件②の現況（更新）**
+層外11箇所の内訳＝解決8・本部長殿裁定待ち1(375)・設計済次工区1(appointment_detail:107)・
+母集団訂正により別種欠陥と判明1(email_parser:109)。「層外writer=slot-claim未配線」型として機械的に
+委譲可能な箇所は本commitで★0件残存★（375/appointment_detail:107/email_parser:109の3件は、いずれも
+機械的委譲ではなく別途の判断・裁定・設計が要る性質と当職が判定した箇所であり、③に述べた「0件を健全と
+読むな」原則に従い、この3件の存在自体は完了条件②の未達要素として明記する）。
+
+### 新たに開けた穴の自己申告
+なし（既存共通command4種を呼ぶのみで新規ロジックは追加していない。diagonal_service.pyの双方向link設定
+UPDATE・link clear UPDATEは4委譲先いずれにも属さぬdiagonal固有処理としてそのまま残置＝二重化していない）。
+
+提出先: 軍師second（監査義務・本節で新規提出）。karo-second収載待ち。
+
+設計票（㈧diagonal:375+㈨appointment_detail:107）はscratchpad
+`design_shi8_shi9.md`として別途提出（実装禁のため本ledgerには結論のみ引用・全文はscratchpad参照）。
