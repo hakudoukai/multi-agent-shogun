@@ -224,7 +224,126 @@ path.write_text(existing + entry, encoding="utf-8")
 
 暫定二者制 (軍師second + Gemini)。Codex leg は禁令 (2026-07-21事案・SAFETY裁定 seq132707) により停止中。
 
+## F3 探索の引き直し (wrapper 対 素の grep) — 家老second下命・11:35頃
+
+### 冒頭・当便に掛かる条
+
+「rc はパイプに通すな。判定に使う終了コードはパイプの前で受けよ」(出所=委員長殿自己申告
+`msg_20260806_075810_d7381ba4`)。本節の全コマンドは `cmd > file 2>&1; rc=$?` の形でrcをパイプ前に
+受けている。
+
+### 前提の確認
+
+`grep` (裸) はこの環境で shell 関数として `ugrep` (`--ignore-files --hidden`) へ委譲される事を実測で
+確認した (`type grep` 実行結果)。`/usr/bin/grep` は絶対pathゆえこの関数を経由しない。
+
+### ㈠ F3探索で引いたpath (当職自身のBash tool呼出し記録より・記憶からでなく引き直し)
+
+1. `find . -iname "*reserveimage-cycle2-concurrency-idempotency-evidence-and-root-design*"`
+   (repo root起点・find使用ゆえ.gitignoreの影響を受けぬ経路)
+2. `/usr/bin/grep -n "idempot|重複|再送|replay" /tmp/resimg-cycle2-impl-20260806/frontend/src/features/web-booking/hooks/useWebBooking.ts`
+   (当repo外・別worktree)
+3. `/usr/bin/grep -rl "既存予約...成功として返す|silent.replay|replay.*成功|重複予約.*返す" docs/ queue/inbox/`
+   (当repo内)
+
+★当職は当時、悉く `/usr/bin/grep` を明示使用しており、裸の `grep` (ugrep委譲) は一度も用いていない
+事を確認した (自身のtool呼出し記録を再確認)★。
+
+### ㈡ 各pathのwhitelist行の有無 (.gitignore実読)
+
+| path | whitelist行 | 実際にignoreされるか (`git check-ignore -q`終了コード) |
+|---|---|---|
+| `docs/` | 在り (`.gitignore:191` `!docs/`) | されず (rc=1) |
+| `queue/inbox/` (親`queue/`) | 在り (`.gitignore:244` `!queue/`) | されず (rc=1) |
+| `/tmp/resimg-cycle2-impl-20260806/...useWebBooking.ts` | 当repoの.gitignoreの対象外 (repo外)。当該worktree自身の`.gitignore`でも実測でignoreされず (rc=1) | — |
+| `.` (find起点) | find自体が.gitignoreを一切見ぬ経路ゆえ非該当 | — |
+
+### ㈢ 素の`/usr/bin/grep`での引き直し・差分 (実測・11:34-11:35)
+
+```
+① find (設計doc探索): rc=0 件数=0 (元の報告=0件・一致)
+② /usr/bin/grep (useWebBooking.ts): rc=1 件数=0 (元の報告=0件・一致)
+③ /usr/bin/grep -rl (docs/ queue/inbox/): rc=0 件数=7
+   (元の報告時点=当職自身の便のみ・現在=新規2file追加を含め7件)
+```
+
+★③の増加分の内訳を実測した★:
+- `docs/incident_logs/2026-08-06_f1_4point_oracle_positive_control_design_v2_a1.md`
+  (mtime=2026-08-06T10:47:13・当職のF3報告 (10:28:49) より★18分後に作成★)
+- `docs/incident_logs/2026-08-06_reserveimage_cycle2_go_trigger_runbook_a4.md`
+  (mtime=2026-08-06T11:12:13・F3報告より★44分後に作成★)
+- 残り5件は当職自身の便・報告への言及 (自己参照)
+
+∴ **③の増加分は当職の探索当時には存在しなかった新規fileであり、見落とし (偽陰性) ではなく
+断面が動いた (moving target) 結果**である。
+
+**裸grep (ugrep委譲) との直接比較**: `useWebBooking.ts`検索・`docs/`+`queue/inbox/`検索の両方を
+裸`grep`でも実行し、`/usr/bin/grep`の結果とsort後diffを取った所、★両者とも完全一致 (diff=0行)★
+であった (`docs/`+`queue/inbox/`は行順序のみ異なり、ファイル集合は同一)。
+
+### ㈣ 三値
+
+**差分零** (元の探索と、素のgrepでの引き直しとの間に、真の差分は無かった。③で見えた増加分は
+断面移動による物であり、grepの手法差による物ではない)。
+
+裁定は書かぬ (為すは当職と将軍second)。
+
+### この節で新たに開ける穴
+
+上記③で見つかった2件の新規file (`f1_4point_oracle_positive_control_design_v2_a1.md`・
+`go_trigger_runbook_a4.md`) の中身は当職は未読であり、F3の互換性要件に関する新たな材料を
+含んでいるか否かは★本節では判じていない★。
+
+## F3 断面の更新 (後発二件の中身) — 家老second下命・11:42頃
+
+### 冒頭
+
+本節は当職のF3報を検める工区ではない (当時正)。断面を更新するのみ。
+
+### ㈠ `2026-08-06_f1_4point_oracle_positive_control_design_v2_a1.md` — F3の材料に成るか
+
+**判定=成る**。
+
+逐語引用 (§0):
+> 「F3暫定受入（本部長殿が別裁定されれば差替）＝『key無し重複は409／同一key＋同一payloadのみ同一成功結果へreplay』。」
+
+**再検め方**=`docs/incident_logs/2026-08-06_f1_4point_oracle_positive_control_design_v2_a1.md` §0を
+`Read`し、同一文言が在るかを目視突合する。sha256=`7327fe4bafc5f07c81edfb64a2c9fa4e72e3eea2b6238630f38c22c427ee61cd`
+(go_trigger_runbook側参照表より、当職未実測につき伝聞値として明記)。
+
+### ㈠ `2026-08-06_reserveimage_cycle2_go_trigger_runbook_a4.md` — F3の材料に成るか
+
+**判定=成る (より重い)**。★本部長殿裁定の一次出所そのものを引用しており、原本を当職が独立に
+archive便で突合確認済★。
+
+逐語引用 (参照表F3行):
+> 「F3 (材のみ・裁定なし) | docs/incident_logs/2026-08-06_f3_compatibility_requirement_search_a5.md
+> | 117行 sha256=c9c5cc784b8d19f6c821347c344245abe35deed3e73609e9a76155c161031d97 |
+> 「key無しsilent replay」の独立先行要件は探索範囲で見つからず。既存コメント/新規testは本patch自身が
+> 書いた自己整合であり外部契約でないと明記。本部長暫定受入の材料」
+
+逐語引用 (§本部長殿裁定転記):
+> 「F3=独立の先行要件は見つからず、暫定受入=key無し重複は409／同一key+同一payloadのみ同一成功結果へreplay」
+
+**独立突合**=当職はgo_trigger_runbookの転記を鵜呑みにせず、一次出所 (`queue/inbox/karo-second.yaml`
+message id=`msg_20260806_103624_567e846c`) を`queue/inbox/_archive/karo-second_pruned.yaml`にて
+`safe_load_all`で直接引き当て、逐語一致を確認した。かつ本部長殿裁定が引く artifact のSHA
+(`c9c5cc784b8d19f6c821347c344245abe35deed3e73609e9a76155c161031d97`) は★当職自身のF3報告のSHAと
+完全一致★することを確認した (本節冒頭で言及した本census自身のF3報告参照ではなく、
+`2026-08-06_f3_compatibility_requirement_search_a5.md`本体のsha256が一致)。
+
+**再検め方**=`queue/inbox/_archive/karo-second_pruned.yaml`を`yaml.safe_load_all`で全読みし、
+id=`msg_20260806_103624_567e846c`を検索して本文を目視突合する。
+
+### 材が指す緊張点 (裁定に非ず・観測のみ)
+
+本部長殿の暫定受入文言「key無し重複は409」は、当職がF3報告で見た`booking_service.py`の実装
+(idempotency_key無しでも既存の同一内容予約があれば成功として返す=silent replay success)とは
+★文言上一致しない可能性がある★ように見える。★然れどこれが実際の齟齬か、当職の読み違いか、
+射程 (staff層のAPIか web層のbooking_serviceか) の違いによる整合かは、当職は判じていない (裁定は
+当職と将軍secondの物ではなく、本件では本部長殿・予約担当部長殿の物と理解する)★。
+
 ## 禁則遵守の申告
 
 読取のみ。適用の報が来るまで実走せず。newbuild・hakodoukai-dev いずれも一字も書いていない。
-稼働pidには一切手出ししていない。rcはpipe経由で判定していない。
+稼働pidには一切手出ししていない。rcはpipe経由で判定していない。probe file は作成していない。
