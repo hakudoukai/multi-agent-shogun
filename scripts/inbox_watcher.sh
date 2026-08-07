@@ -631,9 +631,19 @@ send_keys_verified() {
     local max_retries=2
     local attempt=0
     local rc=1
+    local skv_cli
+    skv_cli=$(get_effective_cli_type)
     while [ $attempt -le $max_retries ]; do
-        timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null
-        sleep 0.2
+        # ★送信前門★ (令25 ⑴) — codex 路のみ。claude 路は一字も変えぬ (既知の穴、票 §3-4)。
+        if [[ "$skv_cli" == "codex" ]]; then
+            if ! codex_presend_gate "$text" "$PANE_TARGET"; then
+                echo "[$(date)] [DEFER] send_keys_verified 見送り (presend=$CODEX_PRESEND_STATE): $text" >&2
+                return 1
+            fi
+        else
+            timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null
+            sleep 0.2
+        fi
         if ! timeout 5 tmux send-keys -t "$PANE_TARGET" "$text" 2>/dev/null; then
             echo "[$(date)] WARNING: send-keys text injection failed (attempt $((attempt+1))): $text" >&2
             attempt=$((attempt+1))
@@ -718,11 +728,22 @@ send_cli_command() {
                     return 0
                 fi
                 echo "[$(date)] [SEND-KEYS] Codex /clear→/new: starting new conversation for $AGENT_ID" >&2
+                # ★送信前門★ (令25 ⑴): "x" は それ自体が composer へ一文字書き込む。
+                #   ∴ 門は "x" の ★前★。書きかけが在れば "x" すら撃たぬ。
+                if ! codex_presend_gate "" "$PANE_TARGET"; then
+                    echo "[$(date)] [DEFER] Codex /new 見送り for $AGENT_ID (presend=$CODEX_PRESEND_STATE)" >&2
+                    return 1
+                fi
                 # Dismiss suggestion UI first (typing "x" clears autocomplete prompt).
                 # These two are best-effort UI resets, not the command itself —
                 # a failure here just means the dismiss/clear no-ops, harmless.
                 timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
                 sleep 0.3
+                # ★"x" を消してから send_keys_verified へ渡す★:
+                #   渡さねば 其の中の門が「"x" = 他者の draft」と誤読して永久に見送り申す
+                #   (旧実装は先頭の無条件 C-u が偶々此れを消して居た)。
+                timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+                sleep 0.2
                 if ! send_keys_verified "/new" 0.3; then
                     echo "[$(date)] ERROR: Codex /new delivery not confirmed for $AGENT_ID" >&2
                     return 1
@@ -829,6 +850,12 @@ send_codex_startup_prompt() {
         startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yaml. 3) Read queue/inbox/${AGENT_ID}.yaml, mark read:true. 4) Read context_files. 5) Execute the assigned task to completion — edit files, run commands, write reports. Keep working until done."
     fi
     echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+    # ★送信前門★ (令25 ⑴): 此処に「己の prefix」は無い ∴ 空 composer のみ通す。
+    #   書きかけが在れば startup prompt も送らぬ (混合便を作らぬ・draft を消さぬ)。
+    if ! codex_presend_gate "" "$PANE_TARGET"; then
+        echo "[$(date)] [DEFER] startup prompt 見送り for $AGENT_ID (presend=$CODEX_PRESEND_STATE) — STARTUP_PROMPT_SENT は立てぬ" >&2
+        return 1
+    fi
     # Dismiss suggestion UI, then send startup prompt
     timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
     sleep 0.3
@@ -881,6 +908,13 @@ send_context_reset() {
     # When called from clear_command path, NEW_CONTEXT_SENT=1 prevents reaching here.
     # When called for standalone task_assigned, this is the only /new send.
     if [[ "$effective_cli" == "codex" ]]; then
+        # ★送信前門★ (令25 ⑴): 書きかけが在れば /new も送らぬ。
+        #   /new は 会話を捨てる不可逆の令 ∴ 尚更 draft を跨いで撃ってはならぬ。
+        #   return 1 = caller へ「未送信・retry 要」を伝える (RC-1 契約と同じ)。
+        if ! codex_presend_gate "" "$PANE_TARGET"; then
+            echo "[$(date)] [DEFER] $AGENT_ID: context reset (/new) 見送り (presend=$CODEX_PRESEND_STATE)" >&2
+            return 1
+        fi
         # Dismiss suggestion UI + send /new
         timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
         sleep 0.3
@@ -1085,6 +1119,173 @@ is_user_typing() {
     return 0  # typing — defer nudge
 }
 
+# ─── Codex composer residue cleanup (工区1 ⒝① / 理事長令「通信経路恒久安定化」) ───
+# 症状: codex TUI (v0.19.0) は C-m で submit した後も本文を composer に残す。
+#       ∴ 残骸を「入力中」と誤読して以後の nudge を永久 skip する (is_user_typing)、
+#       また着弾済 nudge を「送信失敗」と誤読して再送する (旧 grep -qF on tail -5)。
+#       同型の実害は hermes 系 downlink watcher の docstring に実測記録あり
+#       (/home/hakudokai/bin/hermes_downlink_watcher.py: 「自分が配った便の残り文字を
+#        見て永久に処理中と誤判定する」)。
+#
+# ★掃除は「注入した prefix と composer 行が 完全一致」する時に限る★。
+#   一字でも違えば触れぬ = 人/agent の本物 draft を破壊せぬ為 (最大の損害はこちら)。
+#
+# interface 契約 (a4 の負テスト設計 C-1〜C-4 に対する回答):
+#   C-1: 掃除判定は本関数 ★一つ★ に閉じる。テストは本関数を直に呼ぶ事。
+#   C-2: 注入 prefix は ★第1引数★ で受け取る (pane は第2引数、既定 $PANE_TARGET)。
+#   C-3: 掃除の実行は `tmux send-keys ... C-u` として観測可能。
+#        加えて判定結果を大域 CODEX_RESIDUE_STATE に置く
+#        (cleaned / composer_mismatch / not_landed / no_composer / empty_prefix)。
+#   C-4: ★正規化規則 (逐語)★ ―― 判定前に composer 行へ次を順に施す:
+#        ⑴ NBSP (U+00A0) を通常空白へ変換
+#        ⑵ 行頭の空白を除去
+#        ⑶ 行頭の composer marker 一文字 (❯ U+276F または › U+203A) を除去
+#        ⑷ 続く行頭の空白を除去
+#        ⑸ ★行末の空白を除去★
+#        比較は上記正規化後の ★文字列完全一致 (部分一致に非ず)★。
+#        ⑸ の根拠 = 実測: `tmux capture-pane -p` は各行の行末空白を ★必ず落とす★
+#        (`-N` 付きでのみ保持される)。∴ 本経路では「末尾スペース一つの差」は
+#        ★観測channel上そもそも区別し得ぬ★。a4 票の ㈡ⓔ (`› inbox2 `) は
+#        本規則の下で ★完全一致扱い = 掃除が走る★ が期待値に御座る。
+#        (掃除を緩めたのではなく、capture が落とす物を測れぬと認めた形)
+#
+# ★判定は composer 行 ただ一行のみを見る★ (capture 全体を grep せぬ)。
+#   着弾した nudge は ★会話面にも★ 在るゆえ、全体 grep では常に一致し掃除が暴発する。
+# 着弾 (会話面に prefix 在り) を ★掃除の前提★ とする: 未着弾で消せば便が失われる。
+#
+# 返値: 0 = 掃除した / 1 = 掃除せず (理由は CODEX_RESIDUE_STATE)
+
+# ─── composer 行の抽出 + 正規化 (C-4 逐語規則の ★唯一の実装★) ───
+# 送信前門 (codex_presend_gate) と 送信後掃除 (codex_residue_cleanup) は
+# ★同一の正規化★ を見る事 (Anti-Duplication / 二つの測りが食い違わぬ為)。
+# ★結果は stdout ではなく 大域変数で返す★:
+#   COMPOSER_CONTENT … 正規化済 composer 内容 (空文字 = composer は空)
+#   COMPOSER_CAP     … capture 全文 / COMPOSER_LINENO … composer の行番号
+#   理由 = `x=$(composer_line_normalized …)` は ★副シェル★ を作り、
+#          其の中で置いた大域は呼び手へ戻らぬ。stdout 契約にすると
+#          呼び手が COMPOSER_CAP を空のまま使う (= 着弾判定が壊れる)。
+# 返値   : 0 = composer 行を得た / 1 = marker 不在 (capture 失敗を含む)
+# NOTE: pipeline に `|| true` を付すは set -euo pipefail 下で
+#       grep 不一致 (= marker 不在) が ★watcher daemon を殺す★ を防ぐ為。
+composer_line_normalized() {
+    local pane="${1:-$PANE_TARGET}"
+    COMPOSER_CAP=""
+    COMPOSER_LINENO=""
+    COMPOSER_CONTENT=""
+    COMPOSER_CAP=$(timeout 3 tmux capture-pane -t "$pane" -p 2>/dev/null || true)
+    # composer = ★最下段★ の marker 行 (履歴中の古い marker 行を拾わぬ)
+    COMPOSER_LINENO=$(printf '%s\n' "$COMPOSER_CAP" \
+        | grep -nE '^[[:space:]]*(❯|›)' | tail -1 | cut -d: -f1 || true)
+    if [ -z "$COMPOSER_LINENO" ]; then
+        return 1
+    fi
+    # C-4 の正規化 ⑴〜⑸
+    COMPOSER_CONTENT=$(printf '%s\n' "$COMPOSER_CAP" | sed -n "${COMPOSER_LINENO}p" \
+        | sed 's/\xc2\xa0/ /g' \
+        | sed 's/^[[:space:]]*//' \
+        | sed 's/^[❯›]//' \
+        | sed 's/^[[:space:]]*//' \
+        | sed 's/[[:space:]]*$//')
+    return 0
+}
+
+# ─── ★送信前の門★ (令25 ⑴ 根治) ───────────────────────────────
+# 出自: 令①の範囲外を ★将軍second 裁で工区1へ拡張★ (msg_20260807_204202_d4f658ab ■1)。
+#
+# 直す物: 注入の直前に置かれた ★無条件★ の `send-keys C-u`。
+#   C-u は composer 行を丸ごと消す。∴ 其の刹那に人/agent が書きかけの draft を
+#   抱えて居れば ★一字残らず消える★。実害は仮想に非ず ―― 本改修の起票時、
+#   hermes-honbucho:0.0 の composer は現に未送信の draft
+#   (`[本部長 downlink] pc_handshake seq=155925`) を抱えて居り申した (実測)。
+#
+# 望む結末 (令 ㈠ 逐語):
+#   ①本物の draft を一字も失わぬ ②混合便を作らぬ。
+#   ∴ 掃除 (C-u) が許されるは ★composer が空★ か ★己の注入 prefix と完全一致★ の時のみ。
+#   一字でも違えば ★触れず・注入も見送り★、後刻 retry+log の路とする。
+#   (dirty composer への注入は 己の文と他者の文が繋がった ★混合便★ を生むゆえ禁)
+#
+# ★門は "x" (suggestion 消し) より ★前★ に置く事★:
+#   "x" は それ自体が一文字を composer へ書き込む = draft を汚す。
+#   ∴ 門を "x" の後に置けば 門が守るべき物を門の手前で壊す事に成り申す。
+#
+# 状態 (CODEX_PRESEND_STATE):
+#   empty       … composer 空 → 掃除不要・注入可 (返値 0)
+#   cleaned_own … 己の prefix と完全一致 → C-u 掃除の上 注入可 (返値 0)
+#   dirty       … 他者の文在り → ★C-u も注入も為さぬ★ (返値 1)
+#   no_composer … marker 不在 (capture 失敗/画面遷移中) → 安全側に見送る (返値 1)
+#
+# ★no_composer を「見送り」とする代償 (明示)★: composer を永久に見失う pane では
+#   nudge が飢える。∴ 黙って落とさず ★毎回 log に出す★ (下記 [PRESEND] 行)。
+#   飢餓が実測されたなら 其は本門の緩和ではなく ★marker 検出の拡張★ で直すべし。
+#
+# ★log に composer の中身を出さぬ★: 他者の draft は患者本文・secret を含み得る。
+#   ∴ dirty 時は 長さ (len) のみを記す。
+#
+# 返値: 0 = 注入して良し / 1 = ★注入を見送れ (caller は送信せず defer せよ)★
+codex_presend_gate() {
+    local own_prefix="$1"
+    local pane="${2:-$PANE_TARGET}"
+    CODEX_PRESEND_STATE="unknown"
+
+    if ! composer_line_normalized "$pane"; then
+        CODEX_PRESEND_STATE="no_composer"
+        echo "[$(date)] [PRESEND] composer 不検出 — 掃除も注入も為さず見送る for ${AGENT_ID:-?} (pane=$pane)" >&2
+        return 1
+    fi
+    local content="$COMPOSER_CONTENT"
+
+    if [ -z "$content" ]; then
+        CODEX_PRESEND_STATE="empty"
+        return 0
+    fi
+
+    if [ -n "$own_prefix" ] && [ "$content" = "$own_prefix" ]; then
+        timeout 5 tmux send-keys -t "$pane" C-u 2>/dev/null || true
+        sleep 0.2
+        CODEX_PRESEND_STATE="cleaned_own"
+        echo "[$(date)] [PRESEND] composer=己の注入 prefix と完全一致 — 掃除して注入 for ${AGENT_ID:-?} (prefix='${own_prefix}')" >&2
+        return 0
+    fi
+
+    CODEX_PRESEND_STATE="dirty"
+    echo "[$(date)] [PRESEND] ★composer に他者の draft 在り — C-u も注入も為さず見送る★ for ${AGENT_ID:-?} (pane=$pane, len=${#content})" >&2
+    return 1
+}
+
+codex_residue_cleanup() {
+    local prefix="$1"
+    local pane="${2:-$PANE_TARGET}"
+    CODEX_RESIDUE_STATE="unknown"
+
+    if [ -z "$prefix" ]; then
+        CODEX_RESIDUE_STATE="empty_prefix"
+        return 1
+    fi
+
+    if ! composer_line_normalized "$pane"; then
+        CODEX_RESIDUE_STATE="no_composer"
+        return 1
+    fi
+    local content="$COMPOSER_CONTENT"
+
+    # ★完全一致★ でなければ触れぬ (本物 draft 保護)
+    if [ "$content" != "$prefix" ]; then
+        CODEX_RESIDUE_STATE="composer_mismatch"
+        return 1
+    fi
+
+    # 会話面着弾の確認 — composer 行を ★除いた★ 領域に prefix が在るか
+    if ! printf '%s\n' "$COMPOSER_CAP" | sed "${COMPOSER_LINENO}d" | grep -qF -- "$prefix"; then
+        CODEX_RESIDUE_STATE="not_landed"
+        return 1
+    fi
+
+    timeout 5 tmux send-keys -t "$pane" C-u 2>/dev/null || true
+    CODEX_RESIDUE_STATE="cleaned"
+    echo "[$(date)] [RESIDUE] codex composer residue cleaned for ${AGENT_ID:-?} (prefix='${prefix}')" >&2
+    return 0
+}
+
 send_wakeup() {
     local unread_count="$1"
     local nudge="inbox${unread_count}"
@@ -1162,6 +1363,12 @@ send_wakeup() {
     local effective_cli_for_nudge
     effective_cli_for_nudge=$(get_effective_cli_type)
     if [[ "$effective_cli_for_nudge" == "codex" ]]; then
+        # ★門は "x" の前★ — "x" は それ自体が composer へ一文字書き込むゆえ、
+        # 門を後ろに置けば 守るべき draft を門の手前で汚す事に成り申す。
+        if ! codex_presend_gate "$nudge" "$PANE_TARGET"; then
+            echo "[$(date)] [DEFER] nudge 見送り for $AGENT_ID (presend=$CODEX_PRESEND_STATE) — 次 cycle で再評価" >&2
+            return 0
+        fi
         timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
         sleep 0.3
         timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
@@ -1172,9 +1379,20 @@ send_wakeup() {
     local max_retries=2
     local attempt=0
     while [ $attempt -le $max_retries ]; do
-        # C-u で行をクリア
-        timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
-        sleep 0.3
+        # ★codex 路★: 再試行の度に門を通す。前回注入の nudge は「己の物」ゆえ掃除可、
+        #   其の間に人/agent が書き始めて居れば dirty → 触れず見送る。
+        # ★claude 路★: 従来の無条件 C-u を一字も変えぬ (稼働中 9本の watcher を壊さぬ為)。
+        #   ∴ claude 路は ★本改修で直っておらぬ既知の穴★ に御座る (票 §3-4 に明記)。
+        if [[ "$effective_cli_for_nudge" == "codex" ]]; then
+            if ! codex_presend_gate "$nudge" "$PANE_TARGET"; then
+                echo "[$(date)] [DEFER] codex nudge 見送り for $AGENT_ID (presend=$CODEX_PRESEND_STATE) — 次 cycle で再評価" >&2
+                return 0
+            fi
+        else
+            # C-u で行をクリア
+            timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+            sleep 0.3
+        fi
         # nudge 送信
         if ! timeout 5 tmux send-keys -t "$PANE_TARGET" "$nudge" 2>/dev/null; then
             echo "[$(date)] WARNING: send-keys nudge failed for $AGENT_ID (attempt $((attempt+1)))" >&2
@@ -1184,16 +1402,36 @@ send_wakeup() {
         sleep 0.3
         timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
         sleep 0.5
-        # 送信確認: capture-pane でプロンプトにnudgeテキストが残っていないか確認
-        local pane_content
-        pane_content=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
-        if echo "$pane_content" | grep -qF "$nudge"; then
-            # nudgeテキストが残存 → 送信失敗 → C-u クリアしてリトライ
-            echo "[$(date)] WARNING: nudge text still visible in pane, retrying (attempt $((attempt+1)))" >&2
-            timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
-            sleep 0.3
-            attempt=$((attempt+1))
-            continue
+        # 送信確認。
+        # ★codex 路 (工区1 ⒝①)★: 判定を composer 行 ただ一行に閉じる。
+        #   旧 `capture | tail -5 | grep -qF "$nudge"` は ★会話面着弾★ と
+        #   ★composer 残骸★ を区別できず、着弾成功を「失敗」と誤読して再送 →
+        #   二重配送 + 無条件 C-u で draft 破壊、を招いていた。
+        # ★claude 路★: 従来の判定を一字も変えぬ (稼働中 9本の watcher を壊さぬ為)。
+        if [[ "$effective_cli_for_nudge" == "codex" ]]; then
+            codex_residue_cleanup "$nudge" || true
+            if [ "$CODEX_RESIDUE_STATE" = "not_landed" ]; then
+                # composer が nudge を抱えたまま = Enter が効いて居らぬ → 再送
+                echo "[$(date)] WARNING: codex nudge not landed (composer still holds it), retrying (attempt $((attempt+1)))" >&2
+                attempt=$((attempt+1))
+                continue
+            fi
+            if [ "$CODEX_RESIDUE_STATE" != "cleaned" ]; then
+                # composer_mismatch / no_composer = ★他者の入力が在る かも知れぬ★。
+                # 触れず・再送もせず (retry cap 内で終端、watcher-design 原則①)。
+                echo "[$(date)] [RESIDUE] codex composer untouched for $AGENT_ID (state=$CODEX_RESIDUE_STATE)" >&2
+            fi
+        else
+            local pane_content
+            pane_content=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+            if echo "$pane_content" | grep -qF "$nudge"; then
+                # nudgeテキストが残存 → 送信失敗 → C-u クリアしてリトライ
+                echo "[$(date)] WARNING: nudge text still visible in pane, retrying (attempt $((attempt+1)))" >&2
+                timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+                sleep 0.3
+                attempt=$((attempt+1))
+                continue
+            fi
         fi
         # 送信成功
         # NOTE: アイドルフラグは削除しない。nudge送信≠エージェント起動確認。
@@ -1300,6 +1538,17 @@ process_unread() {
             # 信長: only clear input when pane is not active (Lord is away)
             if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
                 : # Lord may be typing — skip C-u
+            elif [[ "$(get_effective_cli_type)" == "codex" ]]; then
+                # ★令25 ⑴ 望む結末㈠ を此処へも及ぼす★ (足軽2号の裁量拡張・票 §3-5 に明示):
+                #   本 C-u は「送信前」に非ず「idle 時の掃除」なれど、
+                #   撃つ物は同じ C-u ＝ ★書きかけを一字残らず消す★ 事も同じに御座る。
+                #   agent_is_busy=false は「手が空いておる」だけで
+                #   「composer が空」の意に非ず (実測: hermes-honbucho は idle にして draft 保持)。
+                #   ∴ 門を通し、空の時のみ撃つ。空なら C-u は無害な空撃ちゆえ実質「撃たぬ」。
+                #   codex の残骸掃除は codex_residue_cleanup が別途担う ∴ 掃除力は落ちぬ。
+                if codex_presend_gate "" "$PANE_TARGET"; then
+                    timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+                fi
             else
                 timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
             fi
@@ -1574,6 +1823,17 @@ for s in data.get('specials', []):
             # 信長: only clear input when pane is not active (Lord is away)
             if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
                 : # Lord may be typing — skip C-u
+            elif [[ "$(get_effective_cli_type)" == "codex" ]]; then
+                # ★令25 ⑴ 望む結末㈠ を此処へも及ぼす★ (足軽2号の裁量拡張・票 §3-5 に明示):
+                #   本 C-u は「送信前」に非ず「idle 時の掃除」なれど、
+                #   撃つ物は同じ C-u ＝ ★書きかけを一字残らず消す★ 事も同じに御座る。
+                #   agent_is_busy=false は「手が空いておる」だけで
+                #   「composer が空」の意に非ず (実測: hermes-honbucho は idle にして draft 保持)。
+                #   ∴ 門を通し、空の時のみ撃つ。空なら C-u は無害な空撃ちゆえ実質「撃たぬ」。
+                #   codex の残骸掃除は codex_residue_cleanup が別途担う ∴ 掃除力は落ちぬ。
+                if codex_presend_gate "" "$PANE_TARGET"; then
+                    timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+                fi
             else
                 timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
             fi

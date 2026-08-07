@@ -235,6 +235,15 @@ PY
 }
 
 @test "TC-FR-009: special command compatibility for codex is preserved" {
+    # 令25 ⑴ (送信前門 codex_presend_gate) 導入に伴う mock の実態合わせ — 足軽2号 2026-08-07:
+    #   本 test の契約は「/clear→/new の★変換★と Enter が為される事」であって
+    #   「composer が読めぬ pane へ盲で撃つ事」ではない。
+    #   既定の MOCK_CAPTURE_PANE="" は marker 無し ＝ 生の codex/Hermes pane には
+    #   存在せぬ姿 (実測: hermes-honbucho / hermes-gunshi-second 双方が ❯ を描画)。
+    #   ∴ 空 composer を持つ現実の pane 描画を与える。門の safety 側 (dirty→撃たぬ) は
+    #   緩めておらず、其の証明は tests/test_codex_presend_gate.bats N13 に別途置く。
+    export MOCK_CAPTURE_PANE=" ─ ready │ gpt 5.6 sol
+ ❯"
     run bash -c "TEST_CLI_TYPE=codex; source '$TEST_HARNESS'; send_cli_command /clear"
     [ "$status" -eq 0 ]
     grep -q "send-keys -t test:0.0 /new" "$MOCK_LOG"
