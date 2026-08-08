@@ -817,7 +817,7 @@ send_cli_command() {
 # Called from both send_cli_command (clear_command) and send_context_reset.
 is_no_auto_clear_agent() {
     case "$AGENT_ID" in
-        shogun|shogun-second|shogun-third|karo|karo-second|karo-third|gunshi|gunshi-second|gunshi-third|ashigaru5|ashigaru6|ashigaru7|ashigaru8)
+        shogun|shogun-second|shogun-third|karo|karo-second|karo-third|gunshi|gunshi-second|gunshi-third|ashigaru1|ashigaru2|ashigaru3|ashigaru4|ashigaru5|ashigaru6|ashigaru7|ashigaru8)
             return 0
             ;;
         *)
@@ -1789,7 +1789,7 @@ for s in data.get('specials', []):
                     echo "[$(date)] ESCALATION Phase 3: $AGENT_ID unresponsive for ${age}s, but cli=codex — skipping /clear." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer (no destructive action)
                     send_wakeup "$normal_count"
-                elif [[ "$AGENT_ID" == "shogun" || "$AGENT_ID" == shogun-* || "$AGENT_ID" == "karo" || "$AGENT_ID" == karo-* || "$AGENT_ID" == "gunshi" || "$AGENT_ID" == gunshi-* ]]; then
+                elif is_no_auto_clear_agent; then
                     # Command-layer agents (karo/gunshi/shogun, including PC-qualified ids): suppress /clear even in Phase 3
                     echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent, ${age}s). Using Escape+nudge." >&2
                     FIRST_UNREAD_SEEN=$now  # Reset timer
