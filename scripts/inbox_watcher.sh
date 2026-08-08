@@ -266,6 +266,68 @@ is_valid_cli_type() {
     esac
 }
 
+# ─── CLI 解決の状態 (fail-closed 用・委員長令 seq160918) ───
+# ★get_effective_cli_type は $(...) の内で走る = 部分shell★ ゆえ、
+# 変数では状態が残らぬ。∴ 状態は ★file★ に置く。
+# 之が ⑵㋑「送信せず停止し 送り主と上位へ報せよ」の ★報の重複を抑える★ 唯一の器。
+CLI_UNRESOLVED_TOKEN="unresolved"   # ★is_valid_cli_type に載らぬ語★ = 全ての検めで偽に成る
+
+cli_state_file() {
+    echo "${IDLE_FLAG_DIR:-/tmp}/watcher_cli_state_${AGENT_ID}"
+}
+
+# 状態が変わった時のみ rc=0 (変わらねば rc=1)。変わった時は新しい state を書く。
+# ★flag が消えた時 (file 不在) は「変わった」と看做す★ ∴ 消せば ★再送が一度だけ★ 起きる。
+# watcher-design 原則 1 (retry 無限ループ禁) / 4 (重複検知) / 5 (idempotency) の充足器。
+cli_state_changed() {
+    local sig="$1" f prev
+    f="$(cli_state_file)"
+    prev=$(cat "$f" 2>/dev/null || true)
+    if [ "$prev" = "$sig" ]; then
+        return 1
+    fi
+    printf '%s\n' "$sig" > "$f" 2>/dev/null || true
+    return 0
+}
+
+# 上位 (家老) の宛先を ★live な PANE_TARGET / AGENT_ID から★ 導く。
+# 停まって居る名簿 (pane_registry.yaml) は用いぬ ―― 古びて居るゆえ。
+# 導けぬ・箱が無い時は ★黙って捨てず★ 際立つ WARN を吐く (無音の黒穴を作らぬ為)。
+cli_alert_target() {
+    if [ -n "${WATCHER_ALERT_TO:-}" ]; then
+        echo "${WATCHER_ALERT_TO}"
+        return 0
+    fi
+    case "${AGENT_ID}:${PANE_TARGET}" in
+        *-second*|*second:*) echo "karo-second" ;;
+        *-third*|*third:*)   echo "karo-third" ;;
+        *)                   echo "karo" ;;
+    esac
+}
+
+# ★CLI unresolved の上申★ (⑵㋑「送り主と上位へ報せよ」)。
+# ★状態変化時に一度だけ★ 呼ばれる (cli_state_changed が門)。
+cli_unresolved_report() {
+    local pane_cli="$1" arg_cli="$2"
+    local to inbox_file body
+    to="$(cli_alert_target)"
+    inbox_file="${SCRIPT_DIR:-}/queue/inbox/${to}.yaml"
+    if [ -z "${SCRIPT_DIR:-}" ] || [ ! -f "$inbox_file" ]; then
+        echo "[$(date)] [CLI-UNRESOLVED] WARNING: 上申先 '${to}' の箱が見当たらぬ (${inbox_file}) — ★上申は log のみ★ に留まり申す" >&2
+        return 0
+    fi
+    body="【CLI unresolved / fail-closed】watcher が ${AGENT_ID} (pane=${PANE_TARGET}) の CLI を判じられず、★送信を停止★ 致し申した。根拠: pane @agent_cli='${pane_cli}' / 起動引数 CLI_TYPE='${arg_cli}'。★codex-safe へ倒さず 一打も送って御座らぬ★。本報は ★状態変化時に一度だけ★ (state=$(cli_state_file))。"
+    bash "${SCRIPT_DIR}/scripts/inbox_write.sh" "$to" "$body" notification "$AGENT_ID" 2>&1 | while IFS= read -r line; do
+        echo "[$(date)] [CLI-UNRESOLVED] $line" >&2
+    done
+    # 着弾の検め (RETURN-TO-SENDER と同じ型・独立 channel = 箱 file の読み直し)
+    if grep -qF "CLI unresolved" "$inbox_file" 2>/dev/null; then
+        echo "[$(date)] [CLI-UNRESOLVED] 上申の着弾を確認 (${inbox_file})" >&2
+    else
+        echo "[$(date)] [CLI-UNRESOLVED] WARNING: 上申が ${inbox_file} に着いた証を得られ申さぬ — inbox_write.sh が黙って失敗した恐れ" >&2
+    fi
+}
+
 get_effective_cli_type() {
     local pane_cli_raw=""
     local pane_cli=""
@@ -277,6 +339,9 @@ get_effective_cli_type() {
         if is_valid_cli_type "${CLI_TYPE:-}" && [ "$pane_cli" != "${CLI_TYPE}" ]; then
             echo "[$(date)] [WARN] CLI drift detected for $AGENT_ID: arg=${CLI_TYPE}, pane=${pane_cli}. Using pane value." >&2
         fi
+        if cli_state_changed "pane|${pane_cli}|arg=${CLI_TYPE:-<empty>}"; then
+            echo "[$(date)] [CLI-RESOLVE] $AGENT_ID: cli=${pane_cli} ← ★根拠=pane option★ (tmux show-options -p -t '$PANE_TARGET' -v @agent_cli → '${pane_cli}')" >&2
+        fi
         echo "$pane_cli"
         return 0
     fi
@@ -285,13 +350,32 @@ get_effective_cli_type() {
         if [ -n "$pane_cli" ]; then
             echo "[$(date)] [WARN] Invalid pane @agent_cli for $AGENT_ID: '${pane_cli}'. Falling back to arg=${CLI_TYPE}." >&2
         fi
+        if cli_state_changed "arg|${CLI_TYPE}|pane=${pane_cli:-<empty>}"; then
+            echo "[$(date)] [CLI-RESOLVE] $AGENT_ID: cli=${CLI_TYPE} ← ★根拠=起動引数 第3★ (pane @agent_cli='${pane_cli:-<empty>}' は無効/空ゆえ採らず)" >&2
+        fi
         echo "${CLI_TYPE}"
         return 0
     fi
 
-    # Fail-closed: when CLI is unknown, take codex-safe path (no C-c, /clear->/new)
-    echo "[$(date)] [WARN] CLI unresolved for $AGENT_ID (pane='${pane_cli:-<empty>}', arg='${CLI_TYPE:-<empty>}'). Fallback=codex-safe." >&2
-    echo "codex"
+    # ★★fail-closed (委員長令 seq160918 ⑵㋑)★★
+    #   旧: echo "codex" ―― ★可用性の為の fallback が ★同一性★ を壊し申した★。
+    #       hermes pane へ codex 用 /new が誤射され ★会話消失の一歩手前★ に至る。
+    #       註 (旧 :293) は「Fail-closed」と称しながら 直後が codex ゆえ ★註の方が古びて御座った★。
+    #   新: ★何も判ぜず・何も送らせぬ★。is_valid_cli_type に載らぬ token を返し、
+    #       呼び手 (鍵を打つ路) は悉く之を検めて ★送信せず停止★ する。
+    #   ★rc は 0 の儘★ = set -euo pipefail の下で x=$(...) の非零は daemon を殺す (:1445 同旨)。
+    #       ∴ 停止は ★rc でなく token★ で伝える。
+    echo "[$(date)] [CLI-UNRESOLVED] $AGENT_ID: CLI を判じられ申さぬ ―― ★根拠★: pane('$PANE_TARGET') @agent_cli='${pane_cli:-<empty>}' (raw ${#pane_cli_raw} B) / 起動引数 CLI_TYPE='${CLI_TYPE:-<empty>}'。★fail-closed: codex へ倒さず 一打も送らぬ★" >&2
+    if cli_state_changed "unresolved|pane=${pane_cli:-<empty>}|arg=${CLI_TYPE:-<empty>}"; then
+        cli_unresolved_report "${pane_cli:-<empty>}" "${CLI_TYPE:-<empty>}"
+    fi
+    echo "$CLI_UNRESOLVED_TOKEN"
+}
+
+# ─── 打つ路の停止 (fail-closed の実行) ───
+# ★呼び手ごとに 何処で止めたかを名指しで log する★ (② 一意 marker)。
+cli_halt() {
+    echo "[$(date)] [CLI-HALT] $AGENT_ID: site=${1} — CLI unresolved ∴ ★送信せず停止★ ($PANE_TARGET へ 0 打)" >&2
 }
 
 normalize_special_command() {
@@ -633,6 +717,10 @@ send_keys_verified() {
     local rc=1
     local skv_cli
     skv_cli=$(get_effective_cli_type)
+    if ! is_valid_cli_type "$skv_cli"; then
+        cli_halt "send_keys_verified"
+        return 1
+    fi
     while [ $attempt -le $max_retries ]; do
         # ★送信前門★ (令25 ⑴) — codex 路のみ。claude 路は一字も変えぬ (既知の穴、票 §3-4)。
         if [[ "$skv_cli" == "codex" ]]; then
@@ -676,6 +764,12 @@ send_cli_command() {
     local cmd="$1"
     local effective_cli
     effective_cli=$(get_effective_cli_type)
+    if ! is_valid_cli_type "$effective_cli"; then
+        cli_halt "send_cli_command(cmd=${cmd})"
+        # ★rc=0 で返す★: 本関数は :1799 等で ★裸の文★ として呼ばれ、
+        # 非零は set -e で watcher daemon を殺す (:1445 同旨)。停止は log で伝える。
+        return 0
+    fi
 
     # cli_restart: delegate to switch_cli.sh (full /exit → relaunch cycle)
     if [[ "$cmd" == __CLI_RESTART__:* ]]; then
@@ -685,7 +779,17 @@ send_cli_command() {
             echo "[$(date)] [switch_cli] $line" >&2
         done
         # Update effective CLI type after restart
-        CLI_TYPE=$(tmux show-options -p -t "$PANE_TARGET" -v @agent_cli 2>/dev/null || echo "$CLI_TYPE")
+        # ★旧疵★: X=$(cmd || echo "$X") は ★cmd が成功して空を返した時★ || が発火せず、
+        #   グローバル CLI_TYPE が ★空★ に成り、以降の周回まで汚れ申した。
+        # ★新★: 一旦受けて ★有効な時のみ★ 代入する (空・無効なら ★元の値を保つ★)。
+        local _restart_cli
+        _restart_cli=$(timeout 2 tmux show-options -p -t "$PANE_TARGET" -v @agent_cli 2>/dev/null || true)
+        _restart_cli=$(echo "$_restart_cli" | tr -d '\r' | head -n1 | tr -d '[:space:]')
+        if is_valid_cli_type "$_restart_cli"; then
+            CLI_TYPE="$_restart_cli"
+        else
+            echo "[$(date)] [CLI-RESTART] $AGENT_ID: pane @agent_cli='${_restart_cli:-<empty>}' は無効/空 ∴ ★代入せず★ CLI_TYPE='${CLI_TYPE:-<empty>}' を保ち申す" >&2
+        fi
         return 0
     fi
 
@@ -875,6 +979,13 @@ send_codex_startup_prompt() {
 send_context_reset() {
     local effective_cli
     effective_cli=$(get_effective_cli_type)
+    if ! is_valid_cli_type "$effective_cli"; then
+        cli_halt "send_context_reset"
+        # ★rc=0★: 呼び手 (:1711 系) は 0=送信完了 として NEW_CONTEXT_SENT=1 を立て、
+        #   ★同じ cycle を無限に retry せぬ★ (watcher-design 原則 1)。
+        #   続く post-reset nudge も send_wakeup 側で同じく停止する ∴ 打鍵は 0。
+        return 0
+    fi
 
     # Safety: never auto-reset context for command-layer agents.
     # Only ashigaru should receive automatic context resets (clear stale task context).
@@ -899,7 +1010,10 @@ send_context_reset() {
         claude)   reset_cmd="/clear" ;;
         copilot)  reset_cmd="/clear" ;;
         kimi)     reset_cmd="/clear" ;;
-        *)        reset_cmd="/new" ;;  # safe default (codex-safe)
+        # ★旧: *) reset_cmd="/new" (codex-safe)★ ―― 之が hermes pane への /new 誤射の最後の口。
+        # ★新: 停止★。上の is_valid_cli_type 門を通った今、此処へ落ちるのは
+        #   is_valid_cli_type に載りながら case に無い ★将来の新種★ のみ ∴ ★判じられぬ物は送らぬ★。
+        *)        cli_halt "send_context_reset(case-default cli='${effective_cli}')" ; return 0 ;;
     esac
 
     echo "[$(date)] [CONTEXT-RESET] Sending $reset_cmd before task_assigned for $AGENT_ID ($effective_cli)" >&2
@@ -1362,6 +1476,10 @@ send_wakeup() {
     # Sequence: "x" (dismiss suggestion) → C-u (clear input) → nudge → Enter
     local effective_cli_for_nudge
     effective_cli_for_nudge=$(get_effective_cli_type)
+    if ! is_valid_cli_type "$effective_cli_for_nudge"; then
+        cli_halt "send_wakeup(nudge=${nudge})"
+        return 0
+    fi
     if [[ "$effective_cli_for_nudge" == "codex" ]]; then
         # ★門は "x" の前★ — "x" は それ自体が composer へ一文字書き込むゆえ、
         # 門を後ろに置けば 守るべき draft を門の手前で汚す事に成り申す。
@@ -1453,6 +1571,10 @@ send_wakeup_with_escape() {
     local nudge="inbox${unread_count}"
     local effective_cli
     effective_cli=$(get_effective_cli_type)
+    if ! is_valid_cli_type "$effective_cli"; then
+        cli_halt "send_wakeup_with_escape(nudge=${nudge})"
+        return 0
+    fi
     local c_ctrl_state="skipped"
 
     # Safety: never send Escape escalation to shogun. It can wipe the Lord's input.
@@ -1538,6 +1660,11 @@ process_unread() {
             # 信長: only clear input when pane is not active (Lord is away)
             if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
                 : # Lord may be typing — skip C-u
+            elif ! is_valid_cli_type "$(get_effective_cli_type)"; then
+                # ★隠れた口★: 此の形は関数の rc を捨てる ∴ 「rc=1 で返す」丈では止まらぬ。
+                # 之を欠けば unresolved が else へ落ち、★生の tmux send-keys C-u★ が
+                # hermes pane の draft を消し申す (send_keys_verified を経由せぬ路)。
+                cli_halt "idle-C-u-cleanup"
             elif [[ "$(get_effective_cli_type)" == "codex" ]]; then
                 # ★令25 ⑴ 望む結末㈠ を此処へも及ぼす★ (足軽2号の裁量拡張・票 §3-5 に明示):
                 #   本 C-u は「送信前」に非ず「idle 時の掃除」なれど、
@@ -1823,6 +1950,11 @@ for s in data.get('specials', []):
             # 信長: only clear input when pane is not active (Lord is away)
             if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
                 : # Lord may be typing — skip C-u
+            elif ! is_valid_cli_type "$(get_effective_cli_type)"; then
+                # ★隠れた口★: 此の形は関数の rc を捨てる ∴ 「rc=1 で返す」丈では止まらぬ。
+                # 之を欠けば unresolved が else へ落ち、★生の tmux send-keys C-u★ が
+                # hermes pane の draft を消し申す (send_keys_verified を経由せぬ路)。
+                cli_halt "idle-C-u-cleanup"
             elif [[ "$(get_effective_cli_type)" == "codex" ]]; then
                 # ★令25 ⑴ 望む結末㈠ を此処へも及ぼす★ (足軽2号の裁量拡張・票 §3-5 に明示):
                 #   本 C-u は「送信前」に非ず「idle 時の掃除」なれど、
