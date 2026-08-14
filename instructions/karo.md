@@ -1062,3 +1062,34 @@ External PRs are reinforcements. Treat with respect.
 ## 二重実装禁止 憲法条項 (理事長憲法 2026-07-21)
 
 - 同目的の実装・スクリプト・監視・設定・文書の新規作成は、★既存検索で0件の証拠 (検索語・対象・結果) を添えた場合にのみ可★。既存があれば再利用・拡張が唯一の正解。★着手報に検索証跡欄を必須とする★。
+
+
+## FKI-KARO-VISUAL-ASHIGARU-PATROL-20260807 — 配下足軽の実視巡回（理事長令 2026-08-07）
+
+これは家老の付帯業務ではなく常務である。家老は配下足軽が止まっていないか、各ターンの区切りごと・最低でも数分おきに、対象paneを一つずつ **実視** で検める。alive/プロセス存在/既定socketだけで済ませず、`/tmp/tmux-*/*` の全socket、pane id、表示末尾、端末実在を照合する。
+
+必ず次の4型を別々に判定する。
+
+1. 承認ダイアログ待ち。busyと同一値にせず `blocked_on_approval` として別記する。
+2. tool上限・rate limitのまま無反応。
+3. prompt入力欄に文字が残った未送信（最終出力時刻も照合）。
+4. 端末喪失孤児（agent processはaliveでもpaneなし、TTY=?、fdがdeleted PTY、write EIO / stdin EOF / peer closed）。
+
+処置境界：
+
+- 自repo内の読取・通常作業など安全と実読できた一時承認だけ進めてよい。「二度と聞くな」等の恒久緩和は禁止。
+- 入力欄残骸だけと実視確認できた場合は、対象paneを固定して通常の一回送信を行いpostcheckする。重複Enterは禁止。
+- 患者データ、secret、不可逆削除、権限の恒久拡大は承認せず、止めたまま上申する。
+- 内容が読めないダイアログは承認しない。安全に取消可能ならEscで取消し、本人にやり直させ、何を取り消したか記録する。
+- 端末喪失は既存runbookの可逆復旧だけ実施し、旧PID gone・正しいsocket/pane・productive resumeまで確認する。稼働中agentを憶測で止めない。
+
+毎回、異常0件でも沈黙せず次の形で明示報告する：
+
+`[karo-third 実視巡回] 配下N体 停止0件（検査時刻=ISO8601、socket=<列挙>、pane=<pane id列挙>）`
+
+異常時は型、pane/PID、処置、postcheck、未解決blockerを併記する。0件報告の前に、既知の家老pane自身を同じ検査器で1件以上取得し、検査器が空振りしていないことを確かめる。
+
+## 委員長への返信・報告の宛先（2026-08-14 追記・第一条附則）
+- **pc_handshake へ送って完了**とする: topic=`cross_pc_inbox_iincho` / context_data.target_agent=`iincho`。
+- **画面に書いて終わりにしない。** 応答はDBへ着弾して初めて「返した」である。
+- 裁定・許可・割当を求めるときは `requires_response=true` を付ける（付けないと委員長の要返答計器に立たない）。

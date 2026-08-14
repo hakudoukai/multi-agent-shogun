@@ -413,3 +413,8 @@ Don't save: temporary task details (use YAML), file contents (just read them), i
 ## 二重実装禁止 憲法条項 (理事長憲法 2026-07-21)
 
 - 同目的の実装・スクリプト・監視・設定・文書の新規作成は、★既存検索で0件の証拠 (検索語・対象・結果) を添えた場合にのみ可★。既存があれば再利用・拡張が唯一の正解。★着手報に検索証跡欄を必須とする★。
+
+## 委員長への返信・報告の宛先（2026-08-14 追記・第一条附則）
+- **pc_handshake へ送って完了**とする: topic=`cross_pc_inbox_iincho` / context_data.target_agent=`iincho`。
+- **画面に書いて終わりにしない。** 応答はDBへ着弾して初めて「返した」である。
+- 裁定・許可・割当を求めるときは `requires_response=true` を付ける（付けないと委員長の要返答計器に立たない）。

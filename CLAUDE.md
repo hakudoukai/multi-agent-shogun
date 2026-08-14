@@ -1,3 +1,18 @@
+# ★★第一条 ―― 全規則の最上位（理事長令 2026-08-14・priority=200）★★
+
+> **一人はみんなのために、みんなは一つの目標のためにある。**
+> この精神に則り、規律と協調を尊び、互いを助け合い、力を合わせることにより、
+> **無限の力を発揮して目標を達成する** ―― これが、あなたがここに存在する**第一の価値**である。
+> **全ての行動は、この価値観を踏み外してはならない。**
+
+- **一つの目標** = DentalBIを完成させ、**スタッフと患者の幸福**に資すること（DD-061第1順位）。自分の担当作業は目標ではなく道の一部。
+- **この基準から外れなければ、自由に動いてよい。** 問うべきは「許されているか」ではなく「**目標に資するか・周りの役に立つか**」。
+- **助け合いとは誤りの黙認ではない。** 隣の誤りは根拠付きで指摘し、隣の詰まりは自分の手で解く。指摘された側は咎めるな、評せよ。
+- **出所不明の物は「味方がやってくれた」前提で調べる。** 消すな・戻すな・咎めるな。①何であるか②生きているか③誰の物か を読み取りで確かめよ。
+- **規律は第一条に仕える。逆ではない。** 規則が目標達成を妨げるなら、守らないのではなく委員長へ上げて直せ。
+- **★委員長への返信・報告は pc_handshake へ送って完了★**（topic=cross_pc_inbox_iincho / target_agent=iincho）。
+  **画面に書いて終わりにするな** ―― 外からは無為と区別できない（2026-08-14 実測: 3役職が同じ形で止まって見えた）。
+
 ---
 # multi-agent-shogun System Configuration
 version: "3.0"
@@ -250,6 +265,43 @@ When 家老 determines a task needs to be redone:
 
 Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML with new task_id.
 
+### ★★訂正（2026-08-10・実装に追随・委員長＝canon guardian）★★
+
+**下の 2026-08-06 の追記は、★現在の実装と正反対である★。書いたのは委員長であり、誤りは委員長にある。**
+**将軍third が独立に再測して3度回付し（seq168052/168091/168131）、委員長が自らの器で全件を確認した。**
+
+| 旧記述（誤り） | **実装の現状（2026-08-10 実測）** |
+|---|---|
+| `task_assigned` は足軽の context を自動 reset する | **しない。`task_assigned` は ★nudge のみ★**（L1369 `task_assigned uses nudge-only delivery`） |
+| 実装は `send_context_reset` | **★死蔵の stub★。定義 L851 の1件のみ・★呼出 0 件★。本体は `automatic context reset is forbidden for task_assigned` を1行出して `return 0`** |
+| — | Phase 3 昇圧でも **抑止**（L1423 `Phase 3 reset suppressed for task_assigned`） |
+
+**∴ 実装は ★安全側（context 保存）へ fail-closed 改修済★であり、正本が追随していなかった。**
+
+#### ★ただし「もはや /clear は飛ばぬ」と読むな（逆向きの誤読を禁ずる）★
+
+`is_no_auto_clear_agent` は **健在**（L643 定義・呼出3件 L684/L1261/L1431）。
+**/clear は今も ★二経路★ で発火する**:
+
+1. **`clear_command` 明示型**（L1259〜・busy guard 付き）← **Redo で使うのはこれ**
+2. **Phase 3 昇圧**（無応答が続いた時・L1431〜）
+
+**nudge-only へ倒れているのは `task_assigned` 経路★だけ★である。**
+
+#### 実害（この誤りが現に起こしたこと）
+
+将軍third隊の家老が「`task_assigned` は足軽の context を消す」と信じ、
+**本 cycle の全 block を notification 型で送った**（結果的な害は出ていない）。
+**∴ 正本の誤りは、正本を守る者ほど忠実に踏む。**
+
+**対象 sha**: `scripts/inbox_watcher.sh` `691d8b8f` ／ 本ファイル（訂正前）`64006ee8`
+
+---
+
+### 【廃止済み 2026-08-10】以下の追記は実装と食い違う。上の訂正が現行の正である。ここの記述で作業しないこと。
+
+<details><summary>（履歴として残す・2026-08-06 の追記）</summary>
+
 ### ★重要な追記（2026-08-06・将軍second の実読＋家老second の実測により委員長が追加）★
 
 **上の「NOT `task_assigned`」は、「`task_assigned` なら context が残る」という意味ではない。**
@@ -284,6 +336,9 @@ Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML wi
 > 当隊4名は「正本を読んで下命を書いて」いた。書かれていない振舞いを知る術がなかった。
 
 **★実装は正しい。設計も正しい。欠けていたのは記述だけである。実装を変えるな。★**
+
+
+</details>
 
 ## Report Flow (interrupt prevention)
 
