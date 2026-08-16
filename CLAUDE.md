@@ -203,7 +203,9 @@ Examples:
 bash scripts/inbox_write.sh karo "cmd_048を書いた。実行せよ。" cmd_new shogun
 
 # Ashigaru → 軍師
-bash scripts/inbox_write.sh gunshi "足軽5号、任務完了。品質チェックを仰ぎたし。" report_received ashigaru5
+bash scripts/inbox_write.sh gunshi-third "足軽5号、任務完了。品質チェックを仰ぎたし。" report_received ashigaru5
+# ★宛先は gunshi-third / gunshi-main / gunshi-second / gunshi-mac を明示。裸の "gunshi" は旧名(2026-08-16 委員長修正:
+#  本例文が原因で足軽の監査提出が読手なき旧箱ieyasu.yamlへ落ちた実害2通=D25/D28)★
 
 # 家老 → Ashigaru
 bash scripts/inbox_write.sh ashigaru3 "タスクYAMLを読んで作業開始せよ。" task_assigned karo
@@ -573,3 +575,9 @@ auto-compact発生直後、大量のlane情報を受領した直後、または�
 
 ACKは処置完了ではない。環境部長のdedup済み処置結果まで追跡し、自分で `/compact` を連打しない。
 
+
+## ★DB送信の作法（2026-08-15 追記・夜間保守#8）★
+- **DB送信は配布済みhelperを使え**（sb-* / agent_letter / dept-upstream-send / audit_write）。
+  **インラインheredoc+networkコードは同意ゲートに掛かりハングする**（実測304.8秒・dev_qa #195）。
+- helperの宛先は `--to <役職>` で変えられる（宛先固定の旧型は退役済・dev_qa #194第5号）。
+- **返信は必ず context_data.parent_seq を付ける**（付けない返信は集計から漏れ「未返信」に数えられる）。
