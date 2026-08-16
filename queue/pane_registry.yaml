@@ -223,13 +223,15 @@ pane_registry:
     - tmux_target: "multiagent-third:agents.6"
       agent_id: ashigaru-third-6
       persona: ashigaru-third-6
-      cli: codex
+      cli: claude
       pc: third_pc
-      role: abolished_or_stale_codex_ashigaru_slot (third_pc)
-      status: retired
+      role: 足軽 (third_pc)
+      status: 通常運用
       note: |
-        2026-07-01 FUKUINCHO/Hermes: Codex Ashigaru slot retired.
-        Do not assign tasks, model-switch, start watcher, or count as active Ashigaru capacity.
+        2026-07-01にCodex slotとして退役したが、その後claude足軽として再配置済み。
+        2026-08-16 委員長実測: claude --model claude-sonnet-5 --name ashigaru-third-6 で稼働中
+        (pane multiagent-third:0.6・軍師third箱へ発信201件・census実務中)。発見者=将軍third。
+        registryだけがretiredのまま残る名簿と実態の食い違いを、実態側を正として修正(裁定㊀)。
         Gunshi-third is a separate protected lane and must remain untouched.
 
     - tmux_target: "multiagent-third:agents.7"
@@ -374,9 +376,7 @@ pane_registry:
     ashigaru-third-3: ashigaru-third-3
     ashigaru-third-4: ashigaru-third-4
     ashigaru-third-5: ashigaru-third-5
-    # ashigaru-third-6 retired 2026-07-01.
-    # Do not route work to this abolished/stale Codex Ashigaru slot.
-    # Rollback restores: ashigaru-third-6: ashigaru-third-6
+    ashigaru-third-6: ashigaru-third-6
     ashigaru-third-7: ashigaru-third-7
     # Hermes 部門 + utility (inbox watcher 対象外、参考記録)
     reserveimage: reserveimage
