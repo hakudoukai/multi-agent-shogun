@@ -240,10 +240,13 @@ pane_registry:
       role: 足軽 (third_pc)
       status: 通常運用
 
-    - tmux_target: "multiagent-third:agents.8"
+    # 2026-08-16 委員長修正: 旧記載 agents.8(実在しない座)+cli:codex は 8/4 Hermes移行前の残骸。
+    # 監査の関事故(dev_qa: half_migration/dual_inbox_split)の整理で発覚(家老third seq193367 ㊂)。
+    # 実体paneはHermes(gpt-5.6-terra)。起こし番=gunshi-third-inbox-watcher.service(claude型wake・最弱codex枝を廃止)。
+    - tmux_target: "hermes-gunshi-third:gunshi-third-hermes.0"
       agent_id: gunshi-third
       persona: gunshi-third
-      cli: codex
+      cli: claude
       pc: third_pc
       role: 軍師 (third_pc)
       status: 通常運用
