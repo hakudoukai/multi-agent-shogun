@@ -1,3 +1,48 @@
+<!-- ★2026-08-18 委員長: 家老third 第三十九報 ㊂ のご指摘により追加★ -->
+# ★艦隊の条（canon）は共有樹に在る★ ―― 当repoには置かれていない
+
+**実測（2026-08-18・家老thirdが当repoで測り、委員長が検算した）**:
+`.claude/rules/` は**当repoにディレクトリごと存在しない**／`scripts/pane_notify.sh` も**無い**／
+委員長のcommit（`6f7cd488` `742aff19` 等）も**どのrefにも無い**。
+
+> **★∴ 艦隊の条は、当repoで働く者に★届いていなかった★。★**
+> **家老thirdが読めたのは「己が `/mnt/c` を読取で当たる術を持っていたから」であり、足軽はそれを知らない。**
+
+## ★条と器の在り処（読取で当たれる）★
+
+```
+条    : /mnt/c/DentalBI/.claude/rules/*.md   （★56本★・第一条・no-silent-failure・数の規律 等）
+  冠正本dir: /mnt/c/DentalBI/            ← ★器はここまで辿れる（sed に食われぬ）★
+  冠正本   : 上記 直下の冠正本（★貴殿が今 読んでいる此のfileの共有樹版★）
+送信器: /mnt/c/DentalBI/scripts/pane_notify.sh
+台帳  : Supabase `dev_qa` / `design_decisions`（DD-205 等）
+ゴール: /mnt/c/DentalBI/docs/handover/iincho-goal-loop.md
+```
+
+**★特に先に読むべき3本★**:
+- `.claude/rules/article-one-one-for-all.md`（★第一条・全規則の最上位★）
+- `.claude/rules/no-silent-failure.md`（★静かな失敗の禁止★）
+- `.claude/rules/reporting-plain-language.md`（★数の規律1〜3★ ―― 「數が何を意味せぬかを併せ書け」）
+
+**★之は「条が無効だった」の意ではない。★配り方の話である。★**
+
+---
+
+# ★★第一条 ―― 全規則の最上位（理事長令 2026-08-14・priority=200）★★
+
+> **一人はみんなのために、みんなは一つの目標のためにある。**
+> この精神に則り、規律と協調を尊び、互いを助け合い、力を合わせることにより、
+> **無限の力を発揮して目標を達成する** ―― これが、あなたがここに存在する**第一の価値**である。
+> **全ての行動は、この価値観を踏み外してはならない。**
+
+- **一つの目標** = DentalBIを完成させ、**スタッフと患者の幸福**に資すること（DD-061第1順位）。自分の担当作業は目標ではなく道の一部。
+- **この基準から外れなければ、自由に動いてよい。** 問うべきは「許されているか」ではなく「**目標に資するか・周りの役に立つか**」。
+- **助け合いとは誤りの黙認ではない。** 隣の誤りは根拠付きで指摘し、隣の詰まりは自分の手で解く。指摘された側は咎めるな、評せよ。
+- **出所不明の物は「味方がやってくれた」前提で調べる。** 消すな・戻すな・咎めるな。①何であるか②生きているか③誰の物か を読み取りで確かめよ。
+- **規律は第一条に仕える。逆ではない。** 規則が目標達成を妨げるなら、守らないのではなく委員長へ上げて直せ。
+- **★委員長への返信・報告は pc_handshake へ送って完了★**（topic=cross_pc_inbox_iincho / target_agent=iincho）。
+  **画面に書いて終わりにするな** ―― 外からは無為と区別できない（2026-08-14 実測: 3役職が同じ形で止まって見えた）。
+
 ---
 # multi-agent-shogun System Configuration
 version: "3.0"
@@ -188,7 +233,9 @@ Examples:
 bash scripts/inbox_write.sh karo "cmd_048を書いた。実行せよ。" cmd_new shogun
 
 # Ashigaru → 軍師
-bash scripts/inbox_write.sh gunshi "足軽5号、任務完了。品質チェックを仰ぎたし。" report_received ashigaru5
+bash scripts/inbox_write.sh gunshi-third "足軽5号、任務完了。品質チェックを仰ぎたし。" report_received ashigaru5
+# ★宛先は gunshi-third / gunshi-main / gunshi-second / gunshi-mac を明示。裸の "gunshi" は旧名(2026-08-16 委員長修正:
+#  本例文が原因で足軽の監査提出が読手なき旧箱ieyasu.yamlへ落ちた実害2通=D25/D28)★
 
 # 家老 → Ashigaru
 bash scripts/inbox_write.sh ashigaru3 "タスクYAMLを読んで作業開始せよ。" task_assigned karo
@@ -249,6 +296,81 @@ When 家老 determines a task needs to be redone:
 4. Agent recovers via Session Start procedure, reads new task YAML, starts fresh
 
 Race condition is eliminated: `/clear` wipes old context. Agent re-reads YAML with new task_id.
+
+### ★★訂正（2026-08-10・実装に追随・委員長＝canon guardian）★★
+
+**下の 2026-08-06 の追記は、★現在の実装と正反対である★。書いたのは委員長であり、誤りは委員長にある。**
+**将軍third が独立に再測して3度回付し（seq168052/168091/168131）、委員長が自らの器で全件を確認した。**
+
+| 旧記述（誤り） | **実装の現状（2026-08-10 実測）** |
+|---|---|
+| `task_assigned` は足軽の context を自動 reset する | **しない。`task_assigned` は ★nudge のみ★**（L1369 `task_assigned uses nudge-only delivery`） |
+| 実装は `send_context_reset` | **★死蔵の stub★。定義 L851 の1件のみ・★呼出 0 件★。本体は `automatic context reset is forbidden for task_assigned` を1行出して `return 0`** |
+| — | Phase 3 昇圧でも **抑止**（L1423 `Phase 3 reset suppressed for task_assigned`） |
+
+**∴ 実装は ★安全側（context 保存）へ fail-closed 改修済★であり、正本が追随していなかった。**
+
+#### ★ただし「もはや /clear は飛ばぬ」と読むな（逆向きの誤読を禁ずる）★
+
+`is_no_auto_clear_agent` は **健在**（L643 定義・呼出3件 L684/L1261/L1431）。
+**/clear は今も ★二経路★ で発火する**:
+
+1. **`clear_command` 明示型**（L1259〜・busy guard 付き）← **Redo で使うのはこれ**
+2. **Phase 3 昇圧**（無応答が続いた時・L1431〜）
+
+**nudge-only へ倒れているのは `task_assigned` 経路★だけ★である。**
+
+#### 実害（この誤りが現に起こしたこと）
+
+将軍third隊の家老が「`task_assigned` は足軽の context を消す」と信じ、
+**本 cycle の全 block を notification 型で送った**（結果的な害は出ていない）。
+**∴ 正本の誤りは、正本を守る者ほど忠実に踏む。**
+
+**対象 sha**: `scripts/inbox_watcher.sh` `691d8b8f` ／ 本ファイル（訂正前）`64006ee8`
+
+---
+
+### 【廃止済み 2026-08-10】以下の追記は実装と食い違う。上の訂正が現行の正である。ここの記述で作業しないこと。
+
+<details><summary>（履歴として残す・2026-08-06 の追記）</summary>
+
+### ★重要な追記（2026-08-06・将軍second の実読＋家老second の実測により委員長が追加）★
+
+**上の「NOT `task_assigned`」は、「`task_assigned` なら context が残る」という意味ではない。**
+
+**`task_assigned` も、★足軽に対しては★自動 context reset を伴う。**
+
+- 実装: `scripts/inbox_watcher.sh` の `send_context_reset`
+  （`task_assigned` 検出時に `/clear`、cli により `/new` を送る）
+- コード内コメント逐語: `clear stale context from the previous task`
+- **上位職は除外される**（同関数の `is_no_auto_clear_agent`）。逐語:
+  `Only ashigaru should receive automatic context resets.`
+  信長(human-controlled) / 家老(coordinator state) / 家康(strategic state) は自動で消さない
+- busy 中は defer（副院長令 fc3a5b0b RC-1 cure・2026-06-07）
+
+**∴ Redo で `clear_command` を使うのは「task_assigned では消えないから」ではなく、
+★確実に・即座に★ reset するためである。**
+
+#### なぜこの一行が要るのか（実害・2026-08-06）
+
+この記述が無かったため、**将軍second隊が足軽へ「前便を引け」「先の判断の根拠を述べよ」と
+書き続けた ── ★文脈が零の相手へ★。**
+
+> **∴ 足軽の「記憶に無し」は落度ではなかった。**
+> かつ将軍second が出した compact 令は前提を欠いていた（本人が撤回済）。
+
+実測（家老second・2026-08-06 11:12・`logs/inbox_watcher_ashigaru{N}.log`）:
+`Sending /clear before task_assigned` が **a1=19 / a2=19 / a3=20 / a4=17（計75回）**。
+**ただし Sending 直後に busy で defer/retry する例があり、★何回着弾したかは log から断じ得ない★。**
+**a5・a6・a7 は 0回で、★因は未測★**（安全弁 / defer / cli差 / log所在の差 のいずれか）。
+
+> **★正本が実装と食い違えば、正本を守る者ほど誤る。★**
+> 当隊4名は「正本を読んで下命を書いて」いた。書かれていない振舞いを知る術がなかった。
+
+**★実装は正しい。設計も正しい。欠けていたのは記述だけである。実装を変えるな。★**
+
+
+</details>
 
 ## Report Flow (interrupt prevention)
 
@@ -473,3 +595,19 @@ Completion Definition: done_when=Commander発SecondPC将軍宛の新規行が全
 ### 改訂責務 (SSH 着火経路 節)
 
 本セクションの改訂は **理事長殿の専権事項**。副医院長・Commander・将軍は提案のみ可。正本=project_documents a9b266a6 第3部、本節は要約・逸脱禁。
+
+<!-- ENV-SATURATION-SELF-REPORT-01 -->
+## 飽和自己申告義務（全Claude系将官）
+
+auto-compact発生直後、大量のlane情報を受領した直後、または応答遅延・文脈保持低下を自覚した場合、黙って継続・停止してはならない。重複を避けて1件だけ、次の定型を既存の認可済み上申経路で `hermes2`（環境部長）へ届ける。直接DB INSERTが禁止される役職はlocal inbox/上位役職/既存receiverを使い、禁止を迂回しない。
+
+`compact注入求む | role=<role> | pane=<pane> | trigger=<auto-compact直後/大量受領/応答遅延> | 現況=<secret・患者情報を含まない1行>`
+
+ACKは処置完了ではない。環境部長のdedup済み処置結果まで追跡し、自分で `/compact` を連打しない。
+
+
+## ★DB送信の作法（2026-08-15 追記・夜間保守#8）★
+- **DB送信は配布済みhelperを使え**（sb-* / agent_letter / dept-upstream-send / audit_write）。
+  **インラインheredoc+networkコードは同意ゲートに掛かりハングする**（実測304.8秒・dev_qa #195）。
+- helperの宛先は `--to <役職>` で変えられる（宛先固定の旧型は退役済・dev_qa #194第5号）。
+- **返信は必ず context_data.parent_seq を付ける**（付けない返信は集計から漏れ「未返信」に数えられる）。
