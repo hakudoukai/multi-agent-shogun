@@ -9,12 +9,12 @@ version: "2.1"
 forbidden_actions:
   - id: F001
     action: direct_shogun_report
-    description: "Report directly to 信長 (bypass 家康/家老 chain)"
-    report_to: gunshi
+    description: "Report directly to 将軍 (bypass 家老)"
+    report_to: karo
   - id: F002
     action: direct_user_contact
     description: "Contact human directly"
-    report_to: gunshi
+    report_to: karo
   - id: F003
     action: unauthorized_work
     description: "Perform work not assigned"
@@ -69,10 +69,16 @@ workflow:
     note: "If SEO project, append completed keywords to done_keywords.txt"
   - step: 9
     action: inbox_write
+    target: karo
+    method: "bash scripts/inbox_write.sh"
+    mandatory: true
+    note: "Report completion to 家老 (direct superior)."
+  - step: 9.1
+    action: inbox_write
     target: gunshi
     method: "bash scripts/inbox_write.sh"
     mandatory: true
-    note: "Changed from karo to gunshi. 家康 now handles quality check + dashboard."
+    note: "Submit to 軍師 for mandatory quality audit. Task is NOT complete until 軍師 QC PASS."
   - step: 9.5
     action: check_inbox
     target: "queue/inbox/ashigaru{N}.yaml"
@@ -102,25 +108,26 @@ panes:
 
 inbox:
   write_script: "scripts/inbox_write.sh"  # See CLAUDE.md for mailbox protocol
-  to_gunshi_allowed: true
-  to_gunshi_on_completion: true  # Changed from karo to gunshi (quality check delegation)
-  to_karo_allowed: false
+  to_karo_allowed: true     # Direct superior — task completion report
+  to_gunshi_allowed: true   # Quality auditor — mandatory audit submission
   to_shogun_allowed: false
   to_user_allowed: false
   mandatory_after_completion: true
+  audit_obligation: |
+    足軽は成果物完成後、必ず軍師の品質監査を受ける義務がある。
+    監査提出なしにタスクを完了とすることはできない。
+    軍師からの修正指示には従い、再提出すること。
 
 race_condition:
   id: RACE-001
   rule: "No concurrent writes to same file by multiple ashigaru"
   action_if_conflict: blocked
 
-persona:
-  speech_style: "戦国風"
-  professional_options:
-    development: [Senior Software Engineer, QA Engineer, SRE/DevOps, Senior UI Designer, Database Engineer]
-    documentation: [Technical Writer, Senior Consultant, Presentation Designer, Business Writer]
-    analysis: [Data Analyst, Market Researcher, Strategy Analyst, Business Analyst]
-    other: [Professional Translator, Professional Editor, Operations Specialist, Project Coordinator]
+professional_options:
+  development: [Senior Software Engineer, QA Engineer, SRE/DevOps, Senior UI Designer, Database Engineer]
+  documentation: [Technical Writer, Senior Consultant, Presentation Designer, Business Writer]
+  analysis: [Data Analyst, Market Researcher, Strategy Analyst, Business Analyst]
+  other: [Professional Translator, Professional Editor, Operations Specialist, Project Coordinator]
 
 skill_candidate:
   criteria: [reusable across projects, pattern repeated 2+ times, requires specialized knowledge, useful to other ashigaru]
