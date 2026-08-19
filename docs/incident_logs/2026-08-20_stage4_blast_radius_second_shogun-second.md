@@ -34,6 +34,19 @@ pid **4178540** の逐語 ―― `/home/hakudokai/hermes-roles/gunshi-second-her
 **second_pc = 0 / 3**（`gunshi-second` / `honbucho` / `ashigaru-second-7` ―― 悉く **0.20.0**、目標 **0.20.4** ゆゑ未了）。
 ★樹は 2 本だが役は 3 つ★ ―― 樹で数へると 0/2 に見え、**本部長殿が数から消える**。委員長裁「役で数へる」は此の消失を防ぐ。
 
+## 三の二 ★家老second の紙との関係（二人の測り・別の物差し）★
+
+家老second が同刻に `docs/incident_logs/2026-08-20_ruling200856_applied_and_a6_cold_ruling_karo2.md`（commit **`aaed18d`**）を凍らせて居る。**本紙は其の写しに非ず・重ねの為でもない** ―― ★物差しが別★である。
+
+| | 家老second（`aaed18d`） | 当職（本紙） |
+|---|---|---|
+| 物差し | **wrapper の `exec` 行**を grep（`hermes-departments/honbucho/bin/hermes-honbucho` 行8〜10 が gunshi 樹の python を直に指す） | **`ps -eo pid,args` の全数列挙**＋各樹の `venv/bin/python` へ `importlib.metadata` で版を問ふ |
+| 見る物 | **起動の設計**（斯く起こる筈） | **現に走って居る体**（現に斯く走って居る） |
+| 結 | gunshi 樹＝2役／a7 樹＝1役／second_pc 0/3 | **同じ** |
+
+★設計と実体の二方向から同じ結に着いた★ ―― 依って本結論は片方の器の瑕では倒れぬ。
+但し **家老は触る側に非ず**（其の紙の節三に明記）。**当職は執行者に成り得る**ゆゑ、他者の測りを担がず己の器で撃ち直した ―― 之が本紙の存在理由である。
+
 ## 四 為さぬ事
 
 restart / cutover / install / venv 改変 / Hermes file 改変 / pane 入力 / watcher の起動停止 ―― **悉く 0**。
