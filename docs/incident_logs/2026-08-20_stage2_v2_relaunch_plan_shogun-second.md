@@ -74,3 +74,62 @@ install / npm 操作 ／ doppler で包む事（seq199833 未了・`ANTHROPIC_AP
 ## 七 待ち（Commander seq200579 順守）
 
 ★本紙を保存・commit(freeze) した上で **target confirmation を待つ**。確認が来るまで一指も動かさぬ。★
+
+**（追記 05:26:57）** 委員長 seq200592「第2段の実行を差配」＝①一体ずつ ②`--resume` 必須 ③一体ごとに検算 ④器＝`scripts/sweeps/audit_claude_version_v2.sh` ⑤詰まったら止めて報せよ ―― を **target confirmation と解し執行に入った**（委員長は Commander の上位・かつ後着 05:26:57 ＞ 05:21:04）。計画は commit `d0d08531ab6953ff63402541b5937a16c82324f9` にて凍結済。
+
+---
+
+# ★★八 訂 ―― 三節㊀「`(deleted)` 無し」は ★成立し得ぬ受入条件★ であった★★
+
+as_of 2026-08-20T05:31:41+09:00・実測にて判明。**本節は上の三節㊀㊁を上書きする。**
+
+## 八の一 何が誤りか
+
+`claude` の launcher は起動の度、実体を `…/@anthropic-ai/.claude-code-wTkEzMFd/bin/` へ **hard link** し、其処から exec し、直ちに其の名を unlink する。
+∴ **新旧いづれの体であっても `/proc/<pid>/exe` は必ず `…/.claude-code-wTkEzMFd/bin/claude.exe (deleted)` と出る。**
+
+| 物差し | 結 | 判 |
+|---|---|---|
+| `(deleted)` の有無 | 全体 常に `(deleted)` | ★誤り ―― 永久に不合格を返す★ |
+| inode 一致 | 05:30:52=44740 → 05:31:03=44750 → 05:31:27=17272 と**転々** | ★誤り ―― installed 側が起動の度に張り替はる★ |
+| **`/proc/<pid>/exe --version`** | 走行体の binary 自身が答へる | **★正★ ―― 之のみが版を判ずる** |
+| size（334,645,552 / 330,946,864） | 版と一対一 | 副の証として可 |
+
+## 八の二 之が齎した害
+
+- 当職の 02:10 の「8/8 NEW」も、05:21 の「8/8 OLD」も、**`(deleted)` を根拠にした部分は無効**。
+- 但し **結論は偶々正しかった**: 05:21 時点で 8 体は真に `2.1.235`（size 330,946,864 で裏取り可）。委員長 seq200577 の撤回は second についても**正しい**。
+- ★誤った物差しは「合格し得ぬ受入条件」を生み、canary を一度 FAIL と読ませた★（05:30:06）。実際は其の体は既に `2.1.236` であった。
+
+## 八の三 ④ の器について（誠実な開示）
+
+委員長が名指した `scripts/sweeps/audit_claude_version_v2.sh` は **当 PC の樹に不在**（`scripts/sweeps/` ディレクトリ自体が無し・`find` 0 件・実測）。
+∴ 当職は ④ を実行せず、**上表の「正」の物差し（`/proc/<pid>/exe --version`）で代替**した。器の不在は **UNMEASURED** として上申する。
+
+---
+
+# 九 執行実績（一体ずつ・委員長 seq200592 順守）
+
+installed = `2.1.236 (Claude Code)` / size 334,645,552。合格線 ＝ **`/proc/<新pid>/exe --version` == installed** ＋ `@agent_id` 不変 ＋ 起動一行不変 ＋ 会話継続。
+
+| 順 | pane | agent_id | 旧 pid → 新 pid | 旧版 → 新版 | 判 | 刻 |
+|---|---|---|---|---|---|---|
+| 1 | `multiagent-second:0.6` | ashigaru-second-6 | 3655376 → **43213** | 2.1.235 → **2.1.236** | **PASS** | 05:29:37–05:30:06 |
+| 2 | `multiagent-second:0.5` | ashigaru-second-5 | 3657843 → **54326** | 2.1.235 → **2.1.236** | **PASS** | 05:33:16–05:33:48 |
+| 3 | `multiagent-second:0.4` | ashigaru-second-4 | 3658974 → **56457** | 2.1.235 → **2.1.236** | **PASS** | 05:33:51–05:34:23 |
+| 4 | `multiagent-second:0.3` | ashigaru-second-3 | 3660072 → **58218** | 2.1.235 → **2.1.236** | **PASS** | 05:34:26–05:34:58 |
+| 5 | `multiagent-second:0.2` | ashigaru-second-2 | 3660796 → **59890** | 2.1.235 → **2.1.236** | **PASS** | 05:35:01–05:35:33 |
+| 6 | `multiagent-second:0.1` | ashigaru-second-1 | 3661563 → **61670** | 2.1.235 → **2.1.236** | **PASS** | 05:35:36–05:36:08 |
+| 7 | `multiagent-second:0.0` | karo-second | 3662641 → **63955** | 2.1.235 → **2.1.236** | **PASS** | 05:36:12–05:36:44 |
+| 8 | `shogun-second:0.0` | shogun-second（当職） | 3686358 → **（後述）** | 2.1.235 → ― | **未** | ― |
+
+**05:36:55 の一括再測 ＝ NEW 7 / 8。** 会話は 7 体とも復元（`auto mode on` ×6・`bypass permissions on` ×1・auto-compact 残 % も保存）。**`--resume` の uuid・model・`--permission-mode` は悉く旧の逐語をそのまま用ゐた（変更 0）。**
+
+## 九の一 守った枷
+
+**kill 0**（`/exit` の graceful のみ・D006/DD-169 に触れず）／ respawn 0 ／ tmux server・pane の生殺 0 ／ set-option 0 ／ `--permission-mode`・model 変更 0 ／ install・npm 一指 0 ／ **Hermes 一指 0**（a7・gunshi-second 不触）／ **未送信 composer の破壊 0**（一体毎に composer 行を検め、空でなければ止まる門を置いた。空の composer は U+00A0 で描かれる為、其れを除いて判ずる）／ doppler 変更 0。
+
+## 九の二 併せて観測した事
+
+- **`ashigaru-second-1` は auto-compact 残 1%**（a5=7%・a6=9%）。★飽和が近い★ ―― compact は器の持ち主が打つゆゑ、**観測として上げるに留める**。
+- installed exe の inode は起動の度に張り替はる（上記八の一）。**之は異常に非ず launcher の常態**と判ずるが、**「誰が 05:10:19 に 2.1.236 を入れたか」は猶 UNMEASURED**。
