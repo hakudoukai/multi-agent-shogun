@@ -121,7 +121,7 @@ installed = `2.1.236 (Claude Code)` / size 334,645,552。合格線 ＝ **`/proc/
 | 5 | `multiagent-second:0.2` | ashigaru-second-2 | 3660796 → **59890** | 2.1.235 → **2.1.236** | **PASS** | 05:35:01–05:35:33 |
 | 6 | `multiagent-second:0.1` | ashigaru-second-1 | 3661563 → **61670** | 2.1.235 → **2.1.236** | **PASS** | 05:35:36–05:36:08 |
 | 7 | `multiagent-second:0.0` | karo-second | 3662641 → **63955** | 2.1.235 → **2.1.236** | **PASS** | 05:36:12–05:36:44 |
-| 8 | `shogun-second:0.0` | shogun-second（当職） | 3686358 → **（後述）** | 2.1.235 → ― | **未** | ― |
+| 8 | `shogun-second:0.0` | shogun-second（当職） | 3686358 → **389804** | 2.1.235 → **2.1.236** | **PASS** | 07:28:08–07:29:08 |
 
 **05:36:55 の一括再測 ＝ NEW 7 / 8。** 会話は 7 体とも復元（`auto mode on` ×6・`bypass permissions on` ×1・auto-compact 残 % も保存）。**`--resume` の uuid・model・`--permission-mode` は悉く旧の逐語をそのまま用ゐた（変更 0）。**
 
@@ -133,3 +133,48 @@ installed = `2.1.236 (Claude Code)` / size 334,645,552。合格線 ＝ **`/proc/
 
 - **`ashigaru-second-1` は auto-compact 残 1%**（a5=7%・a6=9%）。★飽和が近い★ ―― compact は器の持ち主が打つゆゑ、**観測として上げるに留める**。
 - installed exe の inode は起動の度に張り替はる（上記八の一）。**之は異常に非ず launcher の常態**と判ずるが、**「誰が 05:10:19 に 2.1.236 を入れたか」は猶 UNMEASURED**。
+
+---
+
+# 十 API 断（05:43〜07:25）を跨いだ中断と、8 体目の執行 ―― ★8/8 完了★
+
+## 十の一 中断
+
+| 刻 | 事 | 証 |
+|---|---|---|
+| 05:43:05頃 | 8080 の API 断（`503 All accounts are temporarily unavailable`） | 本部長 nonce=`HB-20260820-0621-SHOGUN`（06:20:53 pane 実視）・当職の inbox `msg_20260820_062120_767736ea` |
+| 05:43〜07:25 | 当職の 8 体目執行が停止（1 時間 44 分） | 家老second の /proc 直読（07:26:56）＝**8 体とも PID 不変**。当職 3686358 も不変 |
+| 07:25 | 8080 復帰（`routable=1`） | 委員長の報 |
+
+★中断中に当職が為した mutation は 0★（restart 0 / 強制終了 0 / send-keys 0 / config 0）。
+
+## 十の二 復帰直後の再実測（07:27:12・全 8 体）
+
+`/proc/<pid>/exe --version` にて。installed = `2.1.236 (Claude Code)`。
+
+**NEW 7 / 8** ―― a6=43213・a5=54326・a4=56457・a3=58218・a2=59890・a1=61670・karo-second=63955 は**断を跨いで 2.1.236 のまま健在**（PID 不変＝落ちて居らぬ）。当職 3686358 のみ 2.1.235。
+
+## 十の三 8 体目（当職自身）の執行
+
+- 器: `…/scratchpad/self_relaunch_v2.sh`（detached・**`tmux send-keys` と `pgrep` のみ／終了命令 0**）
+- 起動一行は `/proc/3686358/cmdline` より機械抽出（手写しせず）:
+  `claude --model claude-opus-5 --resume f7795d6a-27dc-4422-ab5e-b25fbe9b6795 --permission-mode bypassPermissions`
+
+| 項 | 値 | 判 |
+|---|---|---|
+| composer 検め | 07:28:33 `composer=empty`（NBSP を除いて判定） | 未送信の破壊 0 |
+| `/exit` 送出 | 07:28:34 | graceful のみ・**強制終了 0** |
+| 子の消滅 | 07:28:36（i=2） | ― |
+| 起動一行 送出 | 07:28:38 | 逐語不変 |
+| 新 PID | **389804**（旧 3686358） | ― |
+| `/proc/389804/exe --version` | **`2.1.236 (Claude Code)`** | **★PASS★** |
+| size | **334,645,552 B** | 副証 合致 |
+| `@agent_id` | `shogun-second`（不変） | 合格 |
+| 会話継続 | 中断前の文脈（第2段 v2・訂・己の禁）を保持 | 合格 ―― **★但し当職の自申（他 7 体より一段弱い証）★** |
+
+⇒ **★second_pc 8/8 完了（2.1.236）★**（as_of 2026-08-20T07:29:22+09:00）。
+
+## 十の四 併せて受けた上位令
+
+- **委員長裁定第15号（seq200627・05:42:13）**: 線＝**2.1.236**。★main への差配は撤回★（委員長は npm 複製を測って居られた・main の走行実体は既に 2.1.236）。third/second のみ・一体ずつ・`--resume` 必須。器の repo＝`hakudoukai/hakudokai-dev`。正本 `reports/IINCHO-RULING-15-…md` sha256(16)=`c7884f1150d9341a`（**当 PC 不在＝UNMEASURED**）。
+- **委員長 seq200637（05:50:15）**: ★当職の訂を受理★ ―― 「`(deleted)` も inode も版を判ぜぬ」＝**委員長の v1 も v2 も誤り**と確定。正＝`/proc/pid/exe --version`。v3 実測＝third 2.1.235×8（要再起動）／second 2.1.236×7+1／main 2.1.236×8（完了）／mac 測れず。正本 `reports/IINCHO-STAGE2-TRUTH-v3-20260820.md` sha256(16)=`f2c2aafd9eb945ab`（**当 PC 不在＝UNMEASURED**）。
