@@ -1270,3 +1270,88 @@ CAUGHT pid=467935  ppid=63955   npm install @anthropic-ai/claude-code@2.1.238   
 ★撃ち **0**・`respawn` **0**・`restart` **0**・`send-keys` **0**・`kill` **0**★／★binary へ 一指 **0**★／★機構への案 **0**★／
 番は ★読取のみ（`stat`）★・★已に終了（`PROBE-END`）★・★新たに立てず★／
 `queue/tasks` 書込 **0**／`dashboard.md` **0**／`push` **0**・`fetch` **0**・`pull` **0**／`capture-pane` **0**／secret 値 不開。
+
+---
+
+## 二十二 ―― ★★名簿は 三つ在る ―― 配りは通り居れど 體の名が ずれ居る（#3 pane drift）★★（as_of **2026-08-21T08:44:17〜08:50:39 +09:00**）
+
+### 22-1 ★三つの器に 三つの名★（★悉く 実測★）
+
+| 軸 | 器（何に問うたか） | 得たる名 |
+|---|---|---|
+| ⑴ pane が名乗る名 | `tmux display-message -p '#{@agent_id}'`（`%20`〜`%15`） | ★`ashigaru-second-1` 〜 `ashigaru-second-6`★ |
+| ⑵ 配り手の引数 | `ps -eo args`（`inbox_watcher.sh` 六本・pid `2562232`〜`2562237`） | `ashigaru1` 〜 `ashigaru6` |
+| ⑶ 現に見張られ居る箱 | `/proc/<pid>/cmdline`（`inotifywait` 六本） | `queue/inbox/ashigaru1.yaml` 〜 `ashigaru6.yaml` |
+| ⑷ 名簿の記載 | `queue/pane_registry.yaml:121-161` | `agent_id: ashigaru1` 〜 `ashigaru6`（0.7 のみ `ashigaru-second-7`） |
+
+> ★⑵⑶⑷ は 三つとも 一致★。★ずれ居るは ⑴ pane の `@agent_id` ただ一つ★。
+> ★之ぞ CLAUDE.md 「Session Start Step 8」が 自ら名指す ★#3 pane drift★ に御座る★
+> （`agent_id` ↔ `inbox_file` ↔ `inbox_watcher args` の三点整合）。
+
+### 22-2 ★∴ 配りの経路は 正し ―― `seq202540` の周知は 履行済★
+
+`inotifywait` が現に見張り居るは `ashigaruN.yaml`（生きた箱）ゆゑ ―― ★家老second が入れたる逐語は 読まるる箱へ入り申した★。
+
+| 誰へ | 何処へ | 證 |
+|---|---|---|
+| 足軽1〜6 | `queue/inbox/ashigaru1..6.yaml` | ★`msg_20260820_013438_7e560843`・08-20 01:34・逐語（改変 0）・6/6★ |
+| 足軽7（Hermes `%26`） | `queue/inbox/ashigaru-second-7.yaml` | ★委員長令 第3号 6 hit★（mtime 08-21 05:34 ＝ 現に生きて居る） |
+
+> ★∴ `seq202540` 末文「第3号周知を足軽1-7へ本文そのままcopyされたい」は ―― ★家老second により 7/7 履行済★★。
+> ★當職の重ね送りは 要らず★（★同じ令を二度送るな★）。
+> ★併せて 裁定第9号も `msg_20260820_023751_4714abc0`（08-20 02:37）にて配達済★。
+> ★断り★: 之は ★「箱に本文が在る」の實測★ であって ★「體が読んだ」の證に非ず★。
+> 家老second 自ら「a1〜a5 は既に自ら読み申した」と申し居るが ―― ★之は 自己申告★。a6 は申告に無し。
+> ★`ashigaru7.yaml`（mtime 2026-08-11・十日 沈黙）の第3号 0 hit は ―― ★死箱ゆゑ 配り漏れに非ず★★。
+
+### 22-3 ★而して drift の実害は 推論に非ず ―― 一度は 現に 死箱が読まれ申した★
+
+```
+queue/inbox/ashigaru-second-1.yaml :: 380B  mtime=2026-08-13 08:22:34  ★read:true=1★  read:false=0
+queue/inbox/ashigaru-second-2..6   ::  13B  mtime=2026-08-03 16:17:24〜28  read:true=0  read:false=0
+queue/tasks/ashigaru-second-N.yaml :: ★一枚も 存在せず★（在るは ashigaru1..8.yaml のみ）
+```
+
+> ★`read: true` は 誰かが ★読みて 札を打ちたる★ 事を意味す★ ―― `13B` の空箱と違ひ、`ashigaru-second-1` は ★380 B・札 1 枚★。
+> ★∴ 08-13 08:22 に 或る體が 己を `ashigaru-second-1` と識り 死箱を開き申した★（★何れの體かは UNMEASURED★）。
+> ★之が 起こり得る形★（CLAUDE.md の手順に沿うて）:
+> - Session Start Step 1 → `@agent_id` ＝ ★`ashigaru-second-N`★ を得る
+> - Step 3（`/clear` 復帰）→ `queue/tasks/ashigaru-second-N.yaml` を読まんとす → ★不在★
+> - inbox 処理 → `queue/inbox/ashigaru-second-N.yaml` を読む → ★死箱（空 または 08-04 の古便）★
+> - ★而して nudge は `ashigaruN.yaml` の変化にて飛ぶ★ ⇒ ★起こされど 別の箱を見る★
+> ★之は 機構の形より起こした ★推論★ に御座る★ ―― 實測は「札 1 枚が 08-13 に打たれた」事のみ。
+
+### 22-4 ★★足軽6 に 未読 29 通 ―― 現に 滞り居る★★
+
+| 箱 | 寸 | 最終書込 | `read: true` | ★`read: false`★ |
+|---|---|---|---|---|
+| `ashigaru1` | `225,457 B` | 08-20 20:25:51 | 50 | `0` |
+| `ashigaru2` | `204,442 B` | 08-20 05:22:51 | 50 | `0` |
+| `ashigaru3` | `150,628 B` | 08-20 14:10:48 | 34 | `0` |
+| `ashigaru4` | `134,870 B` | 08-20 14:30:07 | 38 | `0` |
+| `ashigaru5` | `225,784 B` | 08-20 14:43:47 | 46 | ★`1`★ |
+| **`ashigaru6`** | `376,033 B` | 08-20 05:22:21 | 34 | ★★`29`★★ |
+
+> ★足軽6 は 29 通 を抱へ、★昨朝 05:22 より 札 一枚も動かず★（およそ 27 時間）★。
+> ★因は 断ぜず★ ―― 滞留の形は ⑴ 長き仕事の最中 ⑵ 飽和 ⑶ `/clear` の環 ⑷ 本節 22-3 の drift ―― ★何れも 説明し得る★。
+> ★`read: false` は 「未處」の證に非ず★（札を打たずに處した事も有り得る）―― ★併し 29 通は 数として重し★。
+> ★足軽5 の 1 通も 併せて 記す★。
+
+### 22-5 ★誰の分か ―― 當職の手に 之を直す術は 無し★
+
+| 事 | 直す手 | owner |
+|---|---|---|
+| pane の `@agent_id` を正す | `tmux set-option` | ★當職 0 を課し居り・且つ 機構への手入れ★ ⇒ ★委員長殿の許し無くば 為さず★ |
+| `pane_registry.yaml` の記載 | 書換 | ★當職 読取のみ★ |
+| 足軽6 の 29 通 | 采配・再割当 | ★家老second（采配の主）★ |
+| `queue/tasks/ashigaru-second-N` の不在 | 新設 or drift 解消 | ★委員長殿（機構）★ |
+
+> ★當職 為したるは 測りのみ★ ―― ★`set-option` 0・`send-keys` 0・箱への書込 0・代理既読札 0★。
+> ★家老second へ 一報（`status_update`）を上ぐ★。★委員長殿へは 「完了後まとめて1報」に含め 催促せず★。
+
+### 22-6 變ぜぬ物（本節の分）
+
+★撃ち **0**・`respawn` **0**・`restart` **0**・`send-keys` **0**・`kill` **0**・`set-option` **0**★／★binary へ 一指 **0**★／
+`capture-pane` ＝ ★本節にて 六 pane の末四行のみ（読取・入力 0）★／★機構への案 **0**★／
+`queue/tasks` 書込 **0**／`queue/inbox` 書込 **0**（★他者の箱は 読取のみ★）／`dashboard.md` **0**／
+`push` **0**・`fetch` **0**・`pull` **0**／`scripts/inbox_watcher.sh` ★本体 読取 0（`ps` の引数のみ）★／secret 値 不開。
