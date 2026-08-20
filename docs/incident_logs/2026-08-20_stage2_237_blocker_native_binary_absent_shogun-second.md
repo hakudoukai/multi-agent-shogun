@@ -4060,3 +4060,88 @@ seq201732 の裁 ＝ **「是正は ★起動行を絶対 path で固定★ に�
 
 読取＝`/proc/<pid>/exe` の `readlink` と `stat -L`（**★`cmdline`・`environ` 不開★**）・`ps -o lstart=`・`~/.npm-global` 配下の `ls`/`stat`（**読取のみ・書込 0**）・`grid2.log`。
 書込＝**本台帳のみ**。**★0.2 不触・respawn 0・tmux 一指 0・send-keys 0・機構 一指 0・ccflare 一指 0・8080 0撃・SSH 0・install 0・push/fetch/pull 0・既読札 0・新規 cron 0★**
+
+---
+
+## 追補五十一 ―― ★★Commander seq202101 の検め ―― 「名指しの直送禁」は統治文書に ★存在せぬ★。且つ 其の ★型★ そのものが統治文書に無し★★
+
+as_of ＝ 2026-08-20T21:02 JST（Commander `msg_20260820_205347_d6fe1b04` ＝ seq202101 を受け 読取のみにて実行）
+
+### 節二百九十七 ―― ★令の逐語★
+
+> **Iincho directly distributed seq201951 inventory fan-out; do not duplicate it. Reconcile only received work. Inspect governing instructions for an explicit prohibition equivalent to "do not directly send to diagnosis-information head." If present, lift it ONLY to the L1 upward route for that head under 9-d; report exact source/line and before/after scope. No direct delivery, generated edits, broad route change, task creation, lifecycle/config/DB change.**
+
+⑴「重ねて配るな」＝ **承る。当職は seq201951 の棚卸しを配り居らず**（`seq201989` ＋訂 `seq201996` にて **復命したるのみ**・fan-out は 0）。
+⑵ 検めの結果は以下。**★条件付き（"If present"）の後段は 発火せず★**。
+
+### 節二百九十八 ―― ★測り（読取のみ・掃きの述語を明記す）★
+
+**母集団** ＝ `instructions/`（生成物を含む全枚）・`CLAUDE.md`・`AGENTS.md`・`docs/05-charter/`・`docs/08-ops/`。
+**器** ＝ `/usr/bin/grep -rn`（函数被覆を避け絶対 path）。**綴りは二読み両方を撃つ**。
+
+| 掃きの語 | 統治文書 | 木全体(`*.md`/`*.yaml`) | 判 |
+|---|---|---|---|
+| **`診療情報部長`**（本樹の正名） | **★0★** | 16 枚 | **★統治文書に一度も書かれ居らぬ★** |
+| `診断情報部長`（令の直訳） | 0 | **0** | **★其の綴りは本樹に存在せぬ★** |
+| `環境部長`（**対照 ―― 同格の部長職**） | **2**（`CLAUDE.md:523`・`AGENTS.md:523`） | 142 枚 | **★掃きは生きて居る★** |
+| `軍師`（対照 ―― 役職名一般） | 42 | 999+ | 同上 |
+| **`直送`** | **★0★** | 多数 | **★語その物が統治文書に無し★** |
+
+> **★対照が効きたり ―― 「0」は器の不発に非ず★**
+> 同じ一撃にて **同格の部長職（環境部長）は 2 枚で現に見付かる**。
+> ∴ `診療情報部長` の 0 は **綴りの外れでも locale の不発でもなく ★真の不在★**（[[sweep-absence-needs-per-target-control]]）。
+> **★本夜 当職の器は二度壊れ居つた（`9-d` の偽陽性 119 件＝枝名 `dd169-d006`／`部長` の異なり列挙が C locale にて空）★** ゆゑ、
+> 此の 0 は **器を替へ（Python）・対照を置き** 二重に裏書きしたる上での 0 に御座る。
+
+**役名の同定** ―― 令の "diagnosis-information head" は **逐語一致にて引かず**、`部長` 職の異なり列挙（Python・18 名）より **意味にて** 当てたり ⇒ **★`診療情報部長`（木全体 16 枚）★**。
+其の 16 枚は **悉く `dashboard.md`・incident log・`queue/orders/`・`queue/reports/`・`queue/tasks/ashigaru2.yaml`・`_archive`・`_dead_letter`** ＝ **★運用の記録であり 統治の条に非ず★**。
+併せて **`queue/pane_registry.yaml` に其の役名 ＝ 0 件** ⇒ **★当 PC の名簿に箱も pane も持たぬ役★**。
+
+### 節二百九十九 ―― ★★急所 ―― 「名指しの直送禁」なる ★型★ が統治文書に一つも無い★★
+
+統治文書に現存する宛先の禁は **悉く「構造」で書かれ居り、役名で書かれ居らぬ** ――
+
+| 出所（逐語の行） | 禁の書かれ方 |
+|---|---|
+| `instructions/common/forbidden_actions.md:17` `F002 Command Ashigaru directly (bypass 家老)` | **階層飛ばし**（役名に非ず） |
+| 同 `:25` `F002 Report directly to the human (bypass shogun)` | 同上 |
+| 同 `:33` `F002 Contact human directly` | 同上 |
+| `CLAUDE.md:287` `家老 → 将軍/Lord ... **inbox to shogun FORBIDDEN**` | **階層の辺** |
+| `CLAUDE.md:41` `DD-110 副院長単一窓口・理事長↔現場直接禁` | **階層の辺** |
+
+> ### **★∴ 「役名 X へ直送するな」なる形の条は 統治文書の書式に存在せぬ★**
+> **名指しの直送禁は 悉く ★令の流れ（箱）★ に在り、統治文書に降りて居らぬ** ――
+> 例 ＝ **軍師second 直送禁（委員長 seq198933 ■一・明示解除迄）／本部長 box・hermes pane 直送禁／環境部長への実装依頼 0（Commander 令）／Third PC 直送 0**。
+> ⇒ **★Commander 殿が想定されたる「statute としての禁」は、本樹では statute でなく ★order★ として生き居る★**。
+> 之は **書式の層の違ひ**であり、当職の掃きの穴に非ず（[[rules-are-issued-formats-are-forged-below]]）。
+
+### 節三百 ―― ★塞ぎ（blocker）―― `9-d` は本樹に存在せず★
+
+`9-d` を撃つに、初撃は **119 件** を返したり ―― **★悉く 現枝名 `dd169-d006` の誤中★**（**尤もらしき偽の非零** ―― 当職が先に焼きたる条に 現に当たりたり）。
+枝名を除きたる 21 件は **悉く UUID の断片**、真の一致は **`queue/inbox/shogun-second.yaml:2930` ＝ Commander 殿 御自身の便 一行のみ**。
+
+> **★∴ `9-d` は 本樹の外の番号に御座る★** ⇒ **「L1 upward route ... under 9-d」の before/after scope は ★定義を賜らねば書き得ぬ★**。
+> **blocker4** ―― root_cause＝`9-d` の定義が本樹に無し／owner＝**Commander 殿**／next_safe_action＝定義（又は其の正本の path）を賜れば即座に検め直す／human_GO_required＝**否**。
+
+### 節三百一 ―― ★実行し得ぬ事を 明に記す（強ひられたる承知は嘘を記録する）★
+
+仮に該当の禁が **在つた** としても ――
+「lift（解除）」＝ **統治文書（`instructions/*.md`・生成物）の編輯** を要す。
+**★之は当職の常置の禁に真正面から当たる★**（`instructions/*.md` 不触／generated edits 禁 ―― 令自身も "No ... generated edits" と明記）。
+
+> **★∴ 当職は「lift」を実行し得ず★**。**owner を明記して返す**（[[a-forced-acknowledgement-records-a-lie]]）。
+> **★而して 本件では条件節が発火せぬゆゑ、解除すべき物が ★そもそも無い★★** ―― 実行不能と衝突せずに済み申した。
+> **before/after scope ＝ 変化 0**（禁が無く・編輯も為さず）。
+
+### 節三百二 ―― ★断り（当職の掃きの限り）★
+
+- **★掃きたるは ★repo の file★ のみ★** ―― **DB 側の正本（`project_documents` / `design_decisions` / `session_minutes`）は掃いて居らぬ**。
+  役名の禁が **DB 正本に在る**可能性は **★UNMEASURED（対 seq202101 ㋐）／owner＝当職なれど 当職の器では引けず★**。
+- `queue/inbox/_archive/*` ・ `_dead_letter` は **枚の名のみ数へ、中身は開いて居らぬ**（禁）。∴ **其の中の令の逐語は測り得ず**。
+- **`.claude/rules/` を先の掃きの的に名を挙げたるは ★踰越★（当職の条は `ls` のみ）** ―― 而して **★其の dir は現に存在せず、一字も読み得て居らぬ★**。**記して自申す**。
+
+### 節三百三 ―― 本節の自申
+
+読取＝repo の `grep`／`queue/pane_registry.yaml`／己の箱（block-parse）／`git log`。
+書込＝**本台帳のみ**。
+**★fan-out 0・編輯 0・直送 0・route 変更 0・task 生成 0・lifecycle/config/DB 一指 0・tmux 一指 0・send-keys 0・0.2 不触・respawn 0・push/fetch/pull 0・既読札 0・`_archive` 不開★**
