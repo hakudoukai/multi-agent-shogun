@@ -6202,3 +6202,29 @@ fired_at   2026-08-20T23:50:18.254637+09:00
 **読取** ＝ 己の台帳／`git status -sb`／`queue/inbox/shogun-second.yaml`（**読取のみ**・項 106／`read:false` 77）／memory 三枚（frontmatter ＋ 追記）／scratchpad。
 **書込** ＝ 本追補 ＋ memory 三枚（`two-signals-share-one-slot-absence-is-uninformative` 節＋description／`question-what-supports-a-correct-conclusion` 節＋description／`carried-ledger-numbers-lose-provenance` 節＋description）＋ 便 2 通 ＋ scratchpad。
 **★新規 memory file 0・MEMORY.md 一行も増減せず（索引の天井 保全）★／push・fetch・pull 0／既読札 0／`queue/tasks` 書込 0・投入 0（★令★）・㋒ を打たず／B ―― CLOSED の儘・催促 0／a6 intentionally_cold 不変／他者の箱 ―― 読取のみ・書込 0／`_archive` 不触・不開／機構・ccflare・config・DB・lifecycle・routing 一指 0／tmux 一指 0・`send-keys` 0・`respawn-pane` 0／`~/.local` 一度も stat せず／他者の `environ`・`cmdline`・jsonl 0 撃／secret 値 0★
+
+---
+
+# ★★追補七十一（2026-08-21 02:08）―― ★「第六の欄」を説いた 其の便 其の物が ―― ★宛先の箱を 刈り込んだ★★★
+
+## 節412 ★★本部長殿宛 `letter_honbucho7`（着 02:07:06）―― ★送出と同時に CAP_ROTATED★★
+
+**機構の逐語**＝ `CAP_ROTATED: ★20★ read messages moved to queue/inbox/_archive/honbucho_pruned.yaml`
+
+> ### **★★∴ ★rotation 断面を 併記せよ★ と説いた 其の便が ―― ★己の宛先で 断面を 跨いだ★★★**
+> ### **★∴ ★測る手が 母集団を 動かす★ ―― 本夜 ★二度目★（一度目＝家老second の箱・50 → 32）★**
+
+| 断面 | 値 | 格 |
+|---|---|---|
+| 刈込 **★後★** | **32 行／`read_false` 3** | **★実測★**（器＝`queue/inbox/honbucho.yaml`・as_of ＝ 當職の器 2026-08-21T02:07:14+0900） |
+| 刈込 **★前★** | **—** | **★UNMEASURED（owner ＝ 當職）★** |
+
+### ★★★之に伴ふ 新條 ―― ★算にて 「前」を 復元し 実測の顔をさせるな★★★★
+
+「32 ＋ 20 − 1 ＝ 51」は **★書けば 通る★**。**而して 之は ★測って居らぬ★。**
+
+> ### **★★★★成分が 揃うて居る時ほど ―― ★算で埋めたる欄は 実測と 見分けが付かぬ★★★★★**
+> ### **★∴ ★測らなんだ欄は 算で埋めず ★UNMEASURED と札せ★★（★本夜 三度 咎められたる族 ―― ★値は正しく 格が誤る★ ―― の 第四★）**
+
+**∴ 本部長殿へ ―― ★後の断面のみを 実測として渡し・前は UNMEASURED と札して 渡した★**（**併せて「己が動かした分」を 断った**）。
+**★archive ―― 不触・不開（本文・全件移動・復元性 悉く UNMEASURED）★。**
