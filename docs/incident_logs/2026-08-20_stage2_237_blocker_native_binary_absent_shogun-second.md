@@ -183,3 +183,75 @@ install / postinstall / npm / PATH の改変 / symlink の張替へ / restart / 
 **⇒ ★11:26 以前に second_pc にて素の grep で得た 0 件は猶 偽・以後は生く★。境は 11:26:39 と 11:32:33 の間。**（当職の memory `shell-function-shadows-grep-and-find` は此の刻を以て**過去形**に成るが、**窓が再来すれば再び効く**ゆゑ消さぬ。）
 
 上申済: 委員長 **seq201155**（訂・parent 201149）／Commander **seq201156**（訂・parent 201150）。
+
+---
+
+# ★追補四（2026-08-20 12:22 JST）―― 凍結は条件付きで解け、preflight は悉く PASS、而して ★執行の手が禁下★★
+
+## 二十一 上位の令（逐語・LIVE）
+
+- **委員長 seq201167（11:47:35・grant_permission）**: 「★凍結を★条件付きで解く★。preflight PASS を実測した PC のみ再開してよい(third=334,715,184B真ELF/second=11:36:23自力復旧/Commander再測PASS)。★因の訂正★=237は「壊れていた」のでなく★展開途中だった★(nativeが後から展開)。★但し★將軍second「★其の後も6度 install が走る★」=★install が静まるまで打つな★=①bin/claudeのbyteとmtimeを★2度測り不変★を確かめ②然る後 1体だけcanary③前後実視。★凍結遵守(打数0)を評す★。」
+- **Commander（11:48:58）**: 「You may prepare and execute **ONE role canary** only after your own immediate double preflight confirms unchanged bytes+mtime+SHA and 8080 health. **Preserve existing argv/--resume; one role/one UUID.** … **Stop on any drift/failure. No bulk action, install/update, or config/DB change.**」
+- **委員長 seq201193（12:02:10）**: 「★理事長ご指摘★=将軍システムの母数は★10★(将軍1・家老1・軍師1・足軽7)。★命★①★「8体中」と書くな★②数える時は★session を跨げ★③欠けている時は★「10体中N体」★と書く。」
+
+## 二十二 ★preflight 二度測り ―― 完全一致（条件①充足）★
+
+```
+preflight#1 12:15:59  |  preflight#2 12:17:29
+claude.exe : size=334715184 B   mtime=12:06:23   sha256(16)=73975167f0108693   （両点 完全一致）
+native dir : claude-code-linux-x64@2.1.237 (4 files, 334,715,770 B)  展開済
+$ claude --version → rc=0  "2.1.237 (Claude Code)"
+```
+
+**★註 ―― 「不変」は窓の外でのみ成立す★**: 再 install は同一内容を書き直すゆゑ **sha は不変、mtime のみ窓ごとに動く**（11:36:23 → 12:06:23）。∴ 二度測りは **★窓の外で・打つ直前に★** 撃たねば意味を成さぬ。
+
+## 二十三 ★8080 の門 ―― PASS。而して env は嘘を吐き居った★
+
+| 測り | 値 |
+|---|---|
+| process env | `ANTHROPIC_BASE_URL=http://localhost:8081` |
+| `ss -ltnp` 局所 8080/8081 | **★listener 無し★**（此の netns） |
+| `ss -tnp` の ESTAB | `172.25.35.244:53008 → 192.168.11.59:8080  users:(("claude",pid=389804,fd=11))`／pid 63955 も同断 |
+| `GET http://192.168.11.59:8080/health` | **200** `{"status":"ok","accounts":6,…,"strategy":"session"}` |
+
+**⇒ ★実効 gateway は `192.168.11.59:8080`★。env の申す 8081 は現に使はれ居らぬ。**
+**⇒ 教訓: 経路は ★env（申告）★ でなく ★確立済み socket（事実）★ で引け。**
+**UNMEASURED**: env を runtime で上書きし居る物の正体 ―― `.claude/settings*.json` は当職 **★読取禁★** ゆゑ **owner ＝ 環境部長**。
+
+## 二十四 ★母数 10 の census（委員長 seq201193 順守・session を跨いで数ふ）★
+
+**★10体中 8体★ が Claude 走行**（将軍1・家老1・足軽6）。欠ける2体 ＝ `gunshi-second`（**Hermes**）／`ashigaru-second-7`（Claude 走行無し・★意ある冷★ karo-second #466）。
+**★「8体中」と書くな★** ―― 其れは `multiagent-*` の pane 数に過ぎず、母数に非ず。
+
+走行 8 体は **悉く `334,645,552 B`・`nlink=0`・`.claude-code-wTkEzMFd/bin/claude.exe (deleted)`** ⇒ **一体落とせば其の image は二度と掴めぬ**。転じたるは「**新たな image が起動し得る**」の一点のみ。
+
+**捕捉済 argv／UUID（read-only）**: `claude --model claude-opus-5 --resume <uuid>`（shogun/karo）／`claude --model claude-sonnet-5 --resume <uuid>`（a1–a6）。UUID は 8 体分 悉く控へ、**手写しせず本紙にも載せず**（[[do-not-transcribe-a-value-the-vessel-holds]]）―― 正本は各 pid の `/proc/<pid>/cmdline`。
+
+## 二十五 ★而して当職は打ち申さず ―― 執行の手が禁下★
+
+| 条件 | 判 |
+|---|---|
+| ①二度測り不変 | **PASS**（節二十二） |
+| 8080 の健 | **PASS**（節二十三） |
+| ②一体のみ・argv/UUID 保存 | 段取り済（節二十四） |
+| ③前後実視 | 段取り済 |
+| **★執行の手★** | **★禁下★** |
+
+入替は **落とし ＋ send-keys** の二手を要す。而して ―― **落とし は D006/DD-169 の ★条件5（tmux pane 配下でない事）★ が canary にて成立せず ⇒ 理事長承認必須**。**send-keys は agent に禁**（CLAUDE.md「Agents NEVER call tmux send-keys」）。
+**⇒ ★執行者を明示されたし★** と上申: 委員長 **seq201223**（parent 201167）／Commander **seq201224**。**★打数 0★。**
+
+## 二十六 家老の申したる honbucho ―― ★己の器にて検め、退けた★
+
+家老second は「honbucho は走行 8 体の一にして (deleted) inode を掴む」と申されたが、**当職の実測にて否**: `hermes-honbucho:0.0` の走行体は **python3.12 の Hermes**、`@agent_id` は **★空★**。**claude を掴まず・deleted inode も掴まず。**
+**⇒ 家老の「免除表に `honbucho` 命中 0 ＝ 機構の穴」は ★正しく★、而して危害の中身は変ず** ―― 落つるは claude の会話に非ず **Hermes の会話**。**Hermes に `/clear` が効くか否かは UNMEASURED**。機構は当職の範外ゆゑ委員長へ上申（**seq201225**・環境部長へ差配を乞ふ形）。
+**教訓: ★伝聞は己の器で検めてから広めよ★**（[[relay-verify-bundle-content-not-just-claim]]）。
+
+## 二十七 安全帯（★推論・三点外挿★）
+
+窓 ＝ `11:03:22–11:06:23` / `11:33:26–11:36:23` / `12:03:22–12:06:23` ⇒ **周期 30 分・毎時 `:03` と `:33` 台**。
+**⇒ `12:07`〜`12:32` は窓の外。★12:33 頃に第四の窓が開く見込★。** 打つ時は必ず **窓の外 ＋ 打つ直前の二度測り ＋ 一体のみ ＋ 前後実視**。
+
+## 二十八 為さぬ事（追補四の窓）
+
+install 0 ／ npm 0 ／ postinstall 0 ／ PATH 改変 0 ／ symlink 張替 0 ／ restart 0 ／ cutover 0 ／ pane 入力 0 ／ send-keys 0 ／ 落とし 0 ／ 番人一指 0 ／ `systemctl` 0 ／ 他PC SSH 0 ／ 他者の紙への書込 0 ／ 代理既読札 0 ／ push 0（ahead 31）。
+本追補の測りは **`stat`・`ls`・`ps`・`ss`・`/proc` の読取・`--version` の一喝・`/health` の一喝** のみに御座る。
