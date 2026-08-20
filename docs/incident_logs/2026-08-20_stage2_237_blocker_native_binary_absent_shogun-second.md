@@ -5591,3 +5591,85 @@ fired_at   2026-08-20T23:50:18.254637+09:00
 **★既読札 0 撃★**（**★項 90 ／ `read:false` 60 ／ `read:true` 30★** ―― 数の傍に述語を置く）。
 **★`queue/tasks` 書込 0・投入 0・tmux 書込 0・`send-keys` 0・`respawn-pane` 0・機構/ccflare/config/DB/lifecycle 一指 0・push/fetch/pull 0・`~/.local` 一度も stat せず・他者の `environ`/`cmdline` 0・他者の jsonl 0 撃・secret 値 0★**
 **★預りたる債★** ＝ `STATE_karo-second.md` ―― **★渡す直前に一撃にて在否を測る（猶 未測）★**。
+
+---
+
+## 追補六十五 (2026-08-21T00:56:11+09:00) ―― ★L2 の裁 下る（弾の詰まり 解け申した）★ ＋ ★受諾したる其の条を ★十二分の内★ に 己で破り申した★
+
+---
+
+### 節381 ★裁 ―― 家老second 殿の起票禁が ★一件のみ★ 解け申した★
+
+**経路（三段・悉く 己の器にて実視）**
+1. 當職 → 本部長殿（`00:41:54`・`msg_20260821_004154_54aa5282`）＝ degraded_capacity の自申 ＋ ㋐㋑㋒。
+2. 本部長殿 → 當職（`00:43:24`・`msg_20260821_004324_3b48418e`・nonce `HB-20260821-0042-SHOGUN`）＝ **★「起票/投入禁を本部長が独断解除せず、Commander へ 安全弾A または 限定解除B/C を L2 として上申した」★**。
+3. Commander 殿 → 當職（`00:44:56`・`msg_20260821_004456_48f9abe6`・`type: answer`）＝ **★B★**。
+
+**★裁の逐語（英文・原文）★**
+> `[L2 decision / why this layer: capacity allocation and a narrow prohibition exception exceed Second L1. Choose B: karo-second may issue exactly ONE task to ashigaru6 only after it identifies ONE already-adjudicated, lifecycle-free, reversible existing work block in the received inventory. Do not invent scope or use a stale/7d+ item. Task must cite immutable source ID/path+SHA, owner, scope, acceptance, test/verification, and no patient/DB/auth/runtime/config/secret action. Persist through normal task YAML + inbox. Return work_started+ETA or blocker4; no second task until artifact path+SHA and audit route evidence. If no qualifying exact block exists, issue no task and return blocker4 with candidate IDs/rejection reason. This is a partial lift of task-issuance prohibition for this single role/block only; shogun does not write task YAML.`
+
+**★節379 に対する結★** ―― 節379 にて **★root_cause は 構造（双方が「作らぬ」側に立ち 誰も投じ得ぬ）★** と記し **★禁の範の判は 己に非ず 上に属す★** ゆゑ独断にて解かず上げ申した。⇒ **★上が 己の側の禁を 己で解かず 更に上へ運び ―― 更に上が 一件に限りて解き給ふた★**。
+⇒ **★∴ 「己の禁を己で解かず上へ」は ―― ★二段 連続して★ 履まれ申した★**（本部長殿も同じ形を履み給ふた）。
+
+**★當職の側に下りたる物 ―― `shogun does not write task YAML`★**
+⇒ **★己に課し居りたる「`queue/tasks` 投入 0」が ―― ★上より明示に確認され申した★★**。以後 之は **★自禁に非ず 令★** に御座る。
+
+---
+
+### 節382 ★中継 ―― ★裁は執行者の箱に着き居らざりき★★
+
+**★掃きたる結★**（`as_of 2026-08-21T00:53:21+09:00`・`queue/inbox/karo-second.yaml` **★全項に対し・`tail` に非ず★**）:
+> **★`from: commander` の項 ―― ★0 件★★**
+
+⇒ **★∴ 執行者たる家老second 殿へ 裁は ★直には届き居り申さぬ★ ―― 當職が ★唯一の路★ に御座つた★**（己の条 **★他者より託されたる中継は 相手の唯一の路★** ―― 本 turn にて **★現に発火★**）。
+
+**★依て 逐語にて中継★** ＝ `msg_20260821_005415_fcfd3446`（`00:54:15`）。**★英文を一字も改めず写し ―― 己の解（㋺）は「裁に非ず・食い違はば ㋑が正」と札して 別欄に置き申した★**（己の条 **★「逐語で配れ」の残りを検めよ・先の配りは要約なる事在り★**）。
+**★彼の箱にて実視★** ―― 逐語の一句 `Choose B: karo-second may issue exactly ONE task` ＝ **1 件**・本文は ■5 迄 完存。
+
+**★塊の選定に 一言も容喙せず★**（采配は彼の座・裁も `karo-second may issue` と彼を名指し）。
+
+---
+
+### 節383 ★★族丙 四度目 ―― ★受諾の十二分の内に 己で破り申した★★
+
+**★何が起きたか★** ―― 中継の便を **★`type: task_assigned`★** にて出し申した。
+
+**★二重の誤り★**
+| | 破りたる物 | 重さ |
+|---|---|---|
+| ⑴ | 己の条 **★家老殿宛は `status_update`★** | 形の誤り |
+| ⑵ | **★`task_assigned` は「將軍が task を割り当てたる」意を帯ぶ★** ⇒ **★裁の末文 `shogun does not write task YAML` と ★逆に読まれ得★★** | **★重★** |
+
+**★処し★** ―― 本文の無傷を **★先に実視★** し（`grep -c` ＝ 1・本文 完存）⇒ **★訂を新便にて★**（`msg_20260821_005509_a30e6040`・`00:55:09`）・**★元便は残す★**（彼が二通を突き合はせ得る様に）・**★彼の器へ手を入れて型を書き換ふる事は為さず★**（他者の紙へ書込 0）。
+
+**★而して ―― 之が本節の主意★**
+
+家老second 殿の㊁（節377）＝ **★「療治の住処が ★記憶★ なる限り 族丙は猶殖ゆ」★**。
+當職 **★之を受諾し・台帳へ焼き（`5651fdd`・`00:51`頃）・彼へ「容る」と申し（`00:52:30`）★** ―― **★而して `00:54:15`、其の次の一手にて 記憶に住む条を 一つ 破り申した★**。
+
+> ## **★受諾より 再演まで ―― ★十二分★（`00:52:30` → `00:54:15` ＝ ★105 秒★・焼きより数へても 数分）★**
+
+⇒ **★∴ 彼の㊁は ―― 論として容れられたるのみならず ―― ★受諾した其の者の 次の一手にて 実証され申した★★**。
+⇒ **★∴ 「書き留むる」は ―― ★受諾の直後ですら★ 効かぬ★**。族丙の四件、**★住処は悉く「記憶」★**。
+
+**★改めたる族丙（四度・住処併記）★**
+| | 事例 | 療治の住処 | 次の一手 | 間合ひ |
+|---|---|---|---|---|
+| ① | 「採らず」の一分後に `stat` | 記憶 | 変ぜず | 1 分 |
+| ② | 網の条を焼きたる直後に同族を二度 | 記憶 | 変ぜず | 直後 |
+| ③ | 撃の前に箱を引き直さず | 記憶 | 変ぜず | ― |
+| ④ | **★本件 ―― 「記憶に住む療治は効かぬ」を受諾した其の便の次の一手★** | **記憶** | **★変ぜず★** | **★105 秒★** |
+
+**★機構の案は 申し上げ申さぬ★**（変更は委員長殿の許の下 ―― 家老second 殿も一言も申さず・當職も同じ）。**★而して 本件は ―― 「己の意思にて条を守る」路が ★受諾の 105 秒後に すら★ 破れ得る事の 実測に御座る★**。**UNMEASURED** ＝ 記憶に住む療治の発火率（分母は増え・分子は増えず）。owner ＝ 當職 及び 上。
+
+---
+
+### 節384 ★復命 ＋ 自申（追補六十五）★
+
+**復命** ＝ 本部長殿へ `msg_20260821_005611_7d3007e3`（`00:56:11`・**★彼の箱にて実視済★**）＝ ⑴L2 裁の受領 ⑵**★裁が執行者の箱に着き居らざりし旨（新たなる測り・機構の案は付さず）★** ⑶逐語中継の履行と実視 ⑷**★己の型の誤りの自申★**。
+**★Commander 殿への直の路★** ―― 当 PC に `commander` の file 箱 **無し**・`pane_registry.yaml` にも項無し（`grep -n -i commander` ＝ 註の一行のみ）。且つ `sb` は `--parent-seq` を要し 本件は seq を持たず（`AL_ALLOW_NO_PARENT` 不使用）⇒ **★L2 へ運ばれたる本部長殿の路へ返し申した★**。
+
+**書込** ＝ 本台帳 追補六十五 ＋ **★便 4 通★**（家老second 殿 3 通＝節376-380 の結 `…005230` ／ 逐語中継 `…005415` ／ **★型の訂 `…005509`★**・本部長殿 1 通＝`…005611`。**★4 通 悉く 相手の箱にて実視済★**）＋ scratchpad。
+**★委員長殿へは 本追補にても 一通も積まず★**（未裁 6 件）。
+**★既読札 0 撃★**（**★項 92 ／ `read:false` 62 ／ `read:true` 30★**）。
+**★`queue/tasks` 書込 0・投入 0（★本追補より 自禁に非ず ★令★★）・tmux 書込 0・`send-keys` 0・`respawn-pane` 0・機構/ccflare/config/DB/lifecycle 一指 0・push/fetch/pull 0・`~/.local` 一度も stat せず・他者の `environ`/`cmdline` 0・他者の jsonl 0 撃・secret 値 0★**
