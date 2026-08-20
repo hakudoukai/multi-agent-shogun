@@ -900,3 +900,80 @@ preflight の一条「**install 系 process 0 本**」を、**語彙を広く採
 
 canary **0** ／ 落とし **0** ／ respawn **0** ／ `--resume` の打鍵 **0** ／ hook 迂回の企て **0** ／ 自動更新の停止 **0** ／ config 変更 **0** ／ `.claude/settings*.json` 読取 **0** ／ pane 入力 **0** ／ send-keys **0** ／ install **0** ／ npm **0** ／ 番人の停止・改変 **0** ／ SSH **0** ／ ccflare 一指 **0** ／ push **0**。
 本追補にて**新たに測りたる物 ―― 無し**（既測の再掲と、執る者の為の手順の整理のみ）。**★同じ読取の反復を避けたる旨 併せて申告す★**。
+
+---
+
+# 追補十三 ―― ★裁定11 を執らんとして preflight にて ★二つの停止条件★ に当たり申した★（as_of 2026-08-20T13:51:04+09:00・将軍second 実測）
+
+出所＝委員長殿 `pc_handshake seq201485`（13:44:18・当職宛）／`seq201487`（13:44:34・本部長殿宛）／本部長殿 `msg_20260820_134541_78ac61d5`（13:45:41）。**★裁定の中身は悉く受諾。手＝`respawn-pane`／禁＝kill系・`tmux kill-pane`／足軽 pane 限定／執行者＝当職 ―― 一つも争ひ申さぬ★**。**★停止は「裁への異」に非ず ―― preflight の実測が二箇所で門を落としたるに因る★**（Commander 殿 thaw 条件「Stop on any drift/failure」に従ふ）。
+
+## 七十八 ★停止条件 其の一 ―― 的の指定が 器と合致し申さぬ（両向きに実測）★
+
+裁定の逐語＝**「最初のcanary候補は足軽4 pane `multiagent-second:0.4`／現PID `58218`」**。
+**★当職の器にて 両向きより引くに、「足軽4／pane 0.4」と「PID 58218」は ★同じ体を指し申さぬ★★。**
+
+**★向き㋐ pane → 中の claude（`tmux list-panes` の `pane_pid` より子を列挙）★**
+
+| pane | `pane_id` | `pane_pid` | `@agent_id` | 中の claude |
+|---|---|---|---|---|
+| `multiagent-second:0.0` | `%13` | 1659821 | `karo-second` | **63955** |
+| `multiagent-second:0.1` | `%20` | 1659923 | `ashigaru-second-1` | **61670** |
+| `multiagent-second:0.2` | `%19` | 1659905 | `ashigaru-second-2` | **59890** |
+| **`multiagent-second:0.3`** | **`%18`** | **1659888** | **`ashigaru-second-3`** | **★58218★** |
+| **`multiagent-second:0.4`** | **`%17`** | **1659872** | **`ashigaru-second-4`** | **★56457★** |
+| `multiagent-second:0.5` | `%16` | 1659865 | `ashigaru-second-5` | **54326** |
+| `multiagent-second:0.6` | `%15` | 1659857 | `ashigaru-second-6` | **43213** |
+| `multiagent-second:0.7` | `%26` | 1156226 | `ashigaru-second-7` | **無し**（`doppler`・別系） |
+
+**★向き㋑ claude → 親 pane（`ps -o ppid=` を `pane_pid` に突合）★** ―― 8体悉く上表と一致。
+**`58218` の `ppid=1659888` ⇒ `%18` ⇒ `multiagent-second:0.3` ⇒ `ashigaru-second-3`。**
+
+**⇒ ★裁定の一句は内で割れて居り申す★** ―― 「足軽4」と「pane 0.4」は互ひに合ふ（共に **56457**）が、**`58218` は 足軽3／pane 0.3 の体に御座る**。
+**⇒ ★若し `-t multiagent-second:0.4` にて打てば ―― ★指名されたる 58218 は生き残り、名指されて居らぬ 足軽4（56457）の生きたる対話が消え申す★★。** 取り返し付き申さぬ。
+
+**★当職の見立て（★推論★・断じ申さず）★** ―― 撰びの**理**（記録 20.3 MB＝最小・約8時間沈黙）は当職と家老second が独立に**58218** に就き申し上げた物ゆゑ、**★正しきは「58218 ＝ pane `multiagent-second:0.3` ＝ 足軽3」、pane 名の方が写し崩れ★** と拝察。**★併し 推論にて不可逆の手は打ち申さぬ★** ―― **★委員長殿の一言（甲：58218／pane 0.3 ・ 乙：pane 0.4／56457）を仰ぎ申す★**。
+**★之は当職が節七十五 ⑤ に「uuid は器から取れ・手写しするな」と書きたる病が、PID と pane の対に及びたる物に御座る★**（[[do-not-transcribe-a-value-the-vessel-holds]]）。
+
+## 七十九 ★★停止条件 其の二 ―― 体が指す口（8081）に 聞く者が一人も居り申さぬ★★
+
+Commander 殿 thaw の条件「**8080 health** を確かめたる上で」を検めんとし、**★向き先を推さず 使ふ側の env より引き申した★**（節七十五 ④・[[probe-failure-cannot-tell-dead-from-wrong-endpoint]]）。
+
+- **6体悉く `ANTHROPIC_BASE_URL=http://localhost:8081`**（43213／54326／56457／58218／59890／61670 ―― `environ` より **★此の一鍵のみ★** 抽出、他は一字も印字せず）
+- `ss -ltn` ―― **★8080・8081 に listener 無し★**
+- `curl` 三様 ―― `localhost:8081` `127.0.0.1:8081` `[::1]:8081` `127.0.0.1:8080` **悉く rc=7**
+- **★対照（positive control）★** ―― 同じ curl・同じ loopback にて `127.0.0.1:18789` は **`http=200`**
+- 走り居る gateway は **`openclaw ... gateway --port 18789`**（pid 409）のみ。**★ccflare の体も 8081 の体も 8081 への tunnel も 一つも在らず★**（列挙にて確認・[[watcher-count-lies-enumerate-instead]]）
+
+**⇒ ★rc=7 は「己が誤つた口を撃った」に非ず ―― 対照が 200 を返す以上、8081 には現に 聞く者が居り申さぬ★**。
+**⇒ ★Commander 殿の thaw 条件（health 確認）は 満たし得申さぬ ―― 門は FAIL に御座る★**。
+
+**★更に 実験としての害★** ―― 此の儘 respawn すれば、**新しき 237 の体は 死したる口を指して起き申す**。然らば「戻らなんだ」時に **★版跨ぎの咎か 口の死の咎か 分かち得申さぬ★** ―― **★canary が交絡し、問ひに答へられぬ★**。**★即ち 今 打つは 体を一つ失ひ 答を得ぬ手に御座る★**。
+
+**★猶 測れて居らぬ事（UNMEASURED・owner 明記）★**
+- 8081 が此の6体の生涯の内に**在りし事が有るか**（点の測りにては言へ申さぬ）。owner＝理事長殿／環境部長。
+- 6体の約8時間の沈黙が**此れに因るか**（★推論に留め 断じ申さず★）。
+- 正しき向き先が **8081 を起こす事**か **18789 へ向け直す事**か。**★ccflare・gateway・account 配置は理事長殿の専管ゆゑ 当職は一指も触れ申さず・提案も為し申さず★**（§18・DD-164）。
+
+## 八十 通りたる門（記録に留む）
+
+| 門 | 結果 |
+|---|---|
+| ①弾道を其の場で引く | **通** 13:48:25 実測。8体の `lstart` より次弾 ―― 当職 `13:58:37`(+3〜4s)／58218 `14:04:29`／56457 `14:03:54`。**★静穏の余地 現に有り★** |
+| ②更新器を**固定文字列**にて列挙 | **通** `install --global @anthropic-ai/claude-code` ―― 13:49:25 **0**／13:51:04 **0**（★二度、述語を明記して★） |
+| ③disk 237 を二度読む | **通** `size=334,715,184` `ino=744009` `mtime=13:36:23.299` `sha256(16)=73975167f0108693` ―― **13:49:36.450 と 13:49:36.815 の両読みにて不変**（★両方の刻を記す★）。`--version` ＝ **`2.1.237 (Claude Code)`** |
+| ④口（health） | **★FAIL★**（節七十九） |
+| ⑤uuid を器より取る | **通** 58218＝`b40a02ee-97bd-4cf1-9336-d9b9c06e39f8`／56457＝`c251eaf0-e921-45db-b9e6-d8a7268eba0e`（**`/proc/<pid>/cmdline`** を NUL 区切りで直読・**★手写し 0★**）。両者とも **`argc=7`**＝`claude --model claude-sonnet-5 --resume <uuid> --permission-mode auto`・`cwd=/home/hakudokai/projects/multi-agent-shogun` |
+| ⑥的 | **★FAIL★**（節七十八 ―― 指定が割れ居る） |
+| ⑦退路 | **通** `/home/hakudokai/claude_recovery/claude-2.1.236-recovered-from-proc389804.exe`（`6c8818fa22187aa5`） |
+| ⑧止める前に sha | **通** 両候補の `/proc/<pid>/exe` ＝ **共に `6c8818fa22187aa5`**（＝走行体は 2.1.236・exe は `(deleted)`） |
+| ⑨**未送信 composer**（★理事長令の護る物★） | **通** `capture-pane` にて両 pane の前像を取得（各 49 行）。**★両者とも `❯` の後に一字も無し ―― 壊す composer 無し★**。且つ両者とも **`✔ Update installed · Restart to apply`** を表示し、**己の口にて「弾無し（冷）・待機継続」と申して居り申す** |
+
+## 八十一 為さぬ事・自ら申し立つる事（追補十三の窓）
+
+canary **0** ／ `respawn-pane` **0** ／ 落とし **0** ／ `kill` **0** ／ `tmux kill-pane` **0** ／ pane 入力 **0** ／ `send-keys` **0** ／ tmux の書換へ **0**（`list-panes`・`capture-pane` の**読取のみ**）／ gateway・ccflare 一指 **0** ／ 8081 を起こす企て **0** ／ config 変更 **0** ／ `.claude/settings*.json` 読取 **0** ／ install **0** ／ npm **0** ／ 番人 **0** ／ SSH **0** ／ push **0**。
+
+**★自ら申し立つる新たな読取 其の一★** ―― **`/proc/<pid>/environ` を 6体に就き開き申した**。**★抽出したるは `ANTHROPIC_BASE_URL` の一鍵のみ・他の変数は一字も印字せず・秘の値は読み申さず★**。従前「`environ` は猶 読まず」と申して居りたるを**改め申した** ―― 理＝**節七十五 ④ に当職自ら「向き先は使ふ側の env が正本」と書きたるゆゑ**（[[probe-failure-cannot-tell-dead-from-wrong-endpoint]]）。**★己の書きたる作法を己に当て申した旨、茲に開示す★**。
+
+**★自ら申し立つる新たな読取 其の二★** ―― **他者の pane 二枚（0.3／0.4）の前像を `capture-pane` にて取得し申した**。**理＝理事長令「未送信 composer を破壊しない」を打つ前に確かめる為**。**★jsonl は猶 一行も開かず★**。
+
+**★己の preflight の訂★** ―― 節七十五 ④ に「**third_pc の 8080 を撃て**」と書きたるは**粗漏**に御座った。**★正しくは「使ふ側の env に書かれたる口を撃て」―― 現に env は `localhost:8081` にして third_pc:8080 に非ず★**。茲に訂す。
