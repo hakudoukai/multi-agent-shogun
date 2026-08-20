@@ -435,3 +435,120 @@ secret 不開（`HERMES_RO_PASSWORD` 等の **env 名のみ** 見え申したが
 `tmux` 一指 **0**・send-keys **0**・pane 入力 **0**／hermes 系 file 改変 **0**／
 他者の `environ` **0**・secret 不開（`doppler`・`promote_supabase_rotation_key.sh` は ★存在のみ 記し 中身 不開★）／
 `queue/tasks` 書込 **0**／push **0**・fetch **0**・pull **0**。
+
+---
+
+## 十三 ―― ★§12-3 を 族へ 掃きたる★（★門は 一つに非ず 二つ★）／ **★而して 掃きの途上に ―― 現に 30 分毎に走り居る 見張りの 破れ 四つ を 見出し申した★**（as_of 2026-08-21T06:13:37 〜 06:17:51 +09:00）
+
+> ★本節は 悉く **読取と 負テスト** のみ ―― ★番人・門・probe を 一つも 走らせ申さず★★（唯一 撃ちたるは ★己の shell の中の 無意味語★ に御座る）。
+
+### 13-1 掃きの器と 母集団（★N は 下限★）
+
+- 器 ＝ `/usr/bin/find -L … -maxdepth 3 -type f \( -name '*.sh' -o -name '*.py' -o -name 'hermes-*' -o -name 'start-*' \)` ＋ `/usr/bin/grep -ln pgrep`（★`-L` にて symlink も辿る・函数を避け 絶対 path★）
+- 母集団 ＝ `~/hermes-roles` ＋ `~/hermes-departments` の **35 件** ⇒ 当たり **4 件**。
+- ★母集団は 此の二樹に限る ―― `~/bin`・`scripts/` は 本節の掃きの外（★N は 下限★）★。
+
+### 13-2 ★門は 一つに非ず ―― 二つの現役の役に ★逐語同一★ にて 座し居り申す★
+
+| file | 行/B | sha16 | inode | mtime | `:5` |
+|---|---|---|---|---|---|
+| `…/gunshi-second-hermes/bin/start-gunshi-second-hermes.sh` | 13 / 799 | `cfce29de3943f475` | `688761` | 2026-08-07 10:11:40 | ★同一★ |
+| **`…/ashigaru-second-7-hermes/bin/start-ashigaru-second-7-hermes.sh`** | 13 / 803 | `874ca0a6093e3cb1` | `1059949` | 2026-08-16 22:19:54 | ★同一★ |
+| （`.bak-continue-fix-20260813`・退役） | 13 / 900 | `d60aa4f009eebcda` | `1057831` | 2026-08-13 00:33:50 | ★同一★ |
+
+- 逐語 ＝ `if pgrep -f "$ROLE_HOME.*hermes --tui" >/dev/null 2>&1; then echo "singleton_guard_block" >&2; exit 75; fi`
+- ⇒ **★§12-3 の危険は ★二役★ に及び申す ―― 軍師second（R2）と 足軽second7（R3）★**。
+- ⇒ **★canary 順 `R1 → R3 → R2` の うち ★後ろ二段が 悉く 此の門の下★★**（R1 のみ 門を持たず ―― ★R1 が零リスクなる所以が 三重に 立ちたる★）。
+
+### 13-3 ★死したる probe ―― `fleet_supervisor_probe.py`（★瑕は在れど 走り居らぬ★）★
+
+- 31 行 3,613 B `sha16 4b62277252306b69`。`:7` ＝ `ROLES=['shogun-second','karo-second']+[f'ashigaru{i}' …]+['gunshi-second']`
+- **現に pane が名乗り居る名（實測 06:14:59）**: `ashigaru-second-1` … `-7` ／ `gunshi-second` ／ `karo-second` ／ `shogun-second`（★十件★）
+- ⇒ **★十役中 七役が `PANE_MISSING`★**。且つ 退役したる箱（`queue/inbox/ashigaru1..7.yaml` ＝ 127,871〜376,033 B）が **現に在る** ゆゑ `unread` は ★死したる器より もっともらしき数を返し申す★（★節486 の三例目★）。
+- **★然れど 之は 現に 害を為し居らぬ★**: `state/fleet_supervisor_state.json` の刻 ＝ **`2026-08-09 14:16:44`** ＝ **★齢 11 日 15 時間 58 分★** ⇒ ★11 日 走り居らぬ★。
+- **★而して 其の state が 語る事★**: 記録されたる十役は **`ashigaru1`〜`ashigaru7`**。probe は `:21` にて ★pane に在る役のみ★ を state へ書く（無き役は `continue`）⇒ **★Aug 9 の時点では pane が 現に `ashigaru1..7` と 名乗り居りたる★**。
+  ⇒ ★名の入替は 其れ以降に起き 而して probe は 追随せず 且つ 走らなく成りたる★。
+
+> ### ★★瑕を見付けたる時は ―― ★其れが 現に 走り居るか★ を 先に問へ★★
+> ★走り居らぬ器の瑕は 「危険」に非ず ―― 「★次に起こした時に牙を剥く罠★」に御座る★。
+> ★格が 全く異なる ⇒ 同じ紙に 並べて書くな★。
+
+### 13-4 ★★現に生きたる見張り ―― `second-fleet-sentinel`（★30 分毎・直近 05:58:27・次 06:28:27★）★★
+
+- unit ＝ `~/.config/systemd/user/second-fleet-sentinel.{service,timer}`（`Description=… (iincho 2026-08-07)`・`Type=oneshot`・`OnUnitActiveSec=30min`・`Persistent=true`）
+- 本体 ＝ `~/bin/second_fleet_sentinel.sh`（**24 行 1,558 B `sha16 3c7a7c65703c3761`**・mtime 2026-08-07 19:38:01）
+- 直近の出力 ＝ `OK fleet_sessions=3 panes=8`（`status=0/SUCCESS`・CPU 35ms）
+
+#### ★破れ㋐ ―― ★watcher が 全滅したる 其の唯一の時に限り 見張りが 黙す★（★負テストにて 実証★）★
+
+- `:9` ＝ `w=$(pgrep -c -f 'scripts/inbox_watcher.sh' || echo 0)` ／ `:10` ＝ `[ "${w:-0}" -lt 9 ] && missing="$missing watchers=$w/9(無音死の疑い)"`
+- **負テスト**（★述語を 部品より組み立て 己の cmdline に 現さず★ ―― 然もなくば 己が己を掬ふ）:
+
+| 場合 | `w` の生の値 | `[ … -lt 9 ]` | alert |
+|---|---|---|---|
+| **0 件**（無意味語にて） | **★`0\n0`（3 B・二行）★** | **`integer expression expected` ⇒ rc=2** | **★出ず★** |
+| 対照（現況） | `9`（一行） | 正しく評価 | 正常 |
+
+- 因 ＝ **★`pgrep -c` は 0 件にて `0` を刷り 且つ `rc=1` を返す★** ⇒ `|| echo 0` が **重ねて** `0` を刷る ⇒ `w` が二行に成る。
+  ★之は 本夜 節487 ㋑ にて 當職自身が 踏みたる罠と ★同一★ に御座る（`grep -c` も同じ）★。
+- **★精確に書く★**: ★一体でも生き残らば 一行にて返り 閾は 正しく効き申す★（`9 → 8` は 現に検知す）。
+  ⇒ **★沈黙するは 「全滅」の一点のみ ―― 即ち 番人は 己が最も要る刹那に限りて 黙す★**。
+
+#### ★破れ㋑ ―― ★観測者が 番人の数を 水増しす★（構造・★実証は §12-3 にて済み★）★
+
+- `pgrep -f 'scripts/inbox_watcher.sh'` は ★其の綴りを cmdline に含むだけの者★ を数へ申す。
+- ⇒ ★watcher が `8/9` に減じたる其の時 誰かが 其の綴りにて掃けば `9` に見え ―― ★alert が 出ぬ★★。
+- **★當職 之を 実演せず★**: 実演すれば ★現に生きたる警報を 汚す★（次の発火は 06:28:27）。
+  ★機構は §12-3 にて 已に実証済（`pgrep -f` が 當職の shell `187801` を掬ひたる）ゆゑ 形にて判じて足る★。
+
+> ### ★★同じ根（★綴りにて 族を括る★）より ―― 二つの誤りが 出づ★★
+> §12-3 の門 ＝ ★起動を塞ぐ（**安全側**）★ ／ 本節㋑ ＝ ★緑を偽る（**危険側**）★。
+> ★∴ 「綴りにて括る」瑕を見たらば ―― ★其の向きを 必ず問へ★★（★偽の緑と偽の赤は 同じ因より出づ★）。
+
+#### ★破れ㋒ ―― ★軍師second の session が 見張りの母集団の外★（實測 06:17:51）★
+
+| session | panes | 役 | 番人 `:2` の期待 |
+|---|---|---|---|
+| `shogun-second` | 1 | shogun-second | ★在り★ |
+| `multiagent-second` | 8 | karo-second ＋ ashigaru-second-1〜7 | ★在り（`-lt 8` ―― 余裕 0）★ |
+| `hermes-honbucho` | 1 | （`@agent_id` **空**） | ★在り★ |
+| **`hermes-gunshi-second`** | **1** | **gunshi-second（`%24`）** | **★無し★** |
+
+- ⇒ **★軍師second の session が 消えても `OK fleet_sessions=3` と刷り申す★**（★偽の緑★）。
+- ★之は canary の ★最終段（R2）★ の器に御座る ⇒ ★落として起こし直す其の枝にて 最も要る見張りが 現に 効き居らぬ★。
+
+#### ★破れ㋓ ―― ★`has-session` は 器を證し 中の者を證さず★★
+
+- `:4-6` は ★session の在否★ のみを問ふ。
+- 反例（本夜の実測）: `hermes-honbucho` の session は 続き居るに ―― 其の中の hermes 体 `4099497` は **本日 04:28:34 に起ち直り居る**（§12-1）。
+  ⇒ ★体が死して起ち直る間 番人は 一度も鳴かず★。
+- ★條: 「札(session)」は 稼働の證に非ず ―― ★中の者の齢を 併記せよ★★
+
+### 13-5 ★當職の為し得る事・為し得ぬ事★
+
+| | |
+|---|---|
+| 為したる | ★読取と 己の shell の中の 負テストのみ★ |
+| **為さぬ** | ★番人・門・probe を 一つも 走らせず★／★unit の enable/disable/restart/daemon-reload 悉く 0★／★`~/bin/*` 改変 0★／★hermes 系 file 改変 0★ |
+| 直しの権 | **★委員長殿★**（`Description=… (iincho 2026-08-07)`・且つ ★機構を直すは 先に許可★） |
+| 案（★判は上★） | ㋐ ＝ `w=$(pgrep -c -f … ); w=${w:-0}` の如く ★`||` を外し 既定は展開にて与ふ★／㋑ ＝ `pgrep -x` ＋ 引数照合、或は unit の `MainPID` 群にて数ふ／㋒ ＝ `:2` の期待に `hermes-gunshi-second` を加ふ／㋓ ＝ session の在否に加へ ★中の体の `etime`★ を見る |
+
+### 13-6 UNMEASURED（owner 明記）
+
+| # | 何 | owner |
+|---|---|---|
+| ㋐ | 番人 `:10` の閾 **9** が 何を数へたる 9 なるか（役は十・箱は三十一） | **委員長殿**（★制定者★） |
+| ㋑ | `hermes-honbucho` pane の `@agent_id` が 空なる事の 是非 | **本部長殿** |
+| ㋒ | `fleet_supervisor_probe.py` を 再び走らせる意向の有無（★走らせば 七役が `PANE_MISSING` と鳴る★） | **本部長殿** |
+
+### 13-7 變ぜぬ物（本節の分）
+
+読取のみ ―― `find`・`grep`・`stat`・`wc`・`sha256sum`・`cat -n`・`sed`・`awk`・`tmux list-panes`（★capture 0★）・`systemctl --user cat/status/list-timers/list-units`（★悉く 読取★）・`python3`（己の器にて json/yaml を読むのみ）。
+★番人 走らせず **0**★／★門（launcher）走らせず **0**★／★probe 走らせず **0**★／
+★`pgrep` は 撃ちたるが ―― ㋐ 無意味語（己の cmdline に現さず）・㋑ 部品組立にて watcher 数の対照 **1 回**のみ★／
+unit の enable/disable/restart/daemon-reload **0**・timer 改変 **0**・`systemctl` は ★読取のみ★／
+`~/bin/*` 改変 **0**／hermes 系 file 改変 **0**／
+撃ち **0**・kill **0**・restart **0**・respawn **0**・`--resume` **0**／
+`tmux` 一指 **0**・send-keys **0**・pane 入力 **0**／
+他者の `environ` **0**・secret 不開（`SUPABASE_SERVICE_ROLE_KEY` は ★unit 本文の env 名として見え申したが 値は 一つも読まず★）／
+`queue/tasks` 書込 **0**／push **0**・fetch **0**・pull **0**。
