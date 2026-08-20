@@ -119,6 +119,74 @@ push **0**・fetch **0**・**pull 0**（★令の "pull the active tree" に就�
 - **∴ pull は 為さず ―― 状態を 記して 上へ返す**（push 0・fetch 0）。
   ★之は 令への不服従に非ず ―― ★上位の 安全条が 先に立つ 一点を 名指して 返す★ に御座る。解禁 or stash の指図を 賜りたし★。
 
+---
+
+## 九 ―― ★訂（新節）★ 家老second `msg_20260821_052026_e8b180d2` を承け 己の器にて検め ―― **§三 の 帰属付けが 誤り**
+
+**as_of 2026-08-21T05:28:21+09:00 ／ 05:29:00+09:00**（名指しの 4 pid のみ・広域走査に非ず）
+
+### 9-1 ★`4099497` は 「軍師second の 二本目」に非ず ―― ★本部長殿の Hermes 本体★★
+
+```
+pid=4099497 ppid=4099483 etime=59:46  cwd=/home/hakudokai/hermes-departments/honbucho
+  /home/hakudokai/hermes-roles/gunshi-second-hermes/run/hermes-agent-v2026.8.3/venv/bin/python \
+  /home/hakudokai/hermes-roles/gunshi-second-hermes/run/hermes-agent-v2026.8.3/hermes --continue
+pid=4099483 ppid=1519165 (= tmux hermes-honbucho)
+```
+`/home/hakudokai/hermes-departments/honbucho/bin/hermes-honbucho`:
+
+| 行 | 内容 |
+|---|---|
+| 7 | `# 戻す手順: 下2行を /home/hakudokai/hermes-agent/venv/bin/hermes --continue "$@" へ戻す` |
+| 9-10 | `…/gunshi-second-hermes/run/hermes-agent-v2026.8.3/venv/bin/python …/hermes --continue "$@"` |
+
+- **⇒ ★R2（gunshi-second runtime）は ★二役★ の共有 ―― 軍師second ＋ ★本部長★★**。
+  **家老second の申す「gunshi 樹を触れば 二役 同時に動く」は ★正★**（伝聞にて受けず 己の器にて 裏書き済）。
+- ★§三 にて 之を「gunshi の agent 二本目・同居か遺骸か未測」と 記したるは **帰属の誤り**★。
+  > ### ★★數が 合ひ居ても ―― ★帰属★ を 誤れば ★爆風半径★ を 見誤り申す★★
+  > 「同じ runtime に 二本」までは 正しく 数へ申した。而して 「二本目は誰か」を 問はざりし為、**危ふきは 軍師second 一役** と 読み違へ申した。★数の正しさは 帰属の正しさを 保証せぬ★。
+- **且つ 7 行目が ★rollback path を 明文にて 持ち居る★** ―― 本部長の体に限れば、戻しは **此の 2 行を R0 へ戻す** に御座る（Commander の求むる rollback path の 実体・**★但し 之は 本部長殿の器ゆゑ 當職 触れず★**）。
+
+### 9-2 R0 の実相 ―― **本部長殿の ★配管★ が 現役**
+
+| 体 | runtime | 役 |
+|---|---|---|
+| `2492971`（親 `2492958`・etime **13日**） | **R0** `/home/hakudokai/hermes-agent/venv` | `honbucho_downlink_watcher.py` |
+| `bin/honbucho-uplink` 3 行 | **R0** 同上 | `honbucho_uplink.py` |
+| `bin/honbucho-local-inbox` 3 行 | **★第四の器★** `projects/multi-agent-shogun/.venv` | `honbucho_local_inbox.py` |
+
+- ∴ **本部長殿は ★三つの器に跨り居り申す★**（本体＝R2 ／ 上り下り＝R0 ／ 局内箱＝repo の `.venv`）。
+- ★R0 を「空殻」と記したる b43c1af §2-1 の訂は §2-1 に述べたる通り ―― 加へて **R0 は 13 日 連続稼働の 配管**に御座る★。
+
+### 9-3 ★canary の判は 變ぜず ―― 而して 順序が 定まり申した★
+
+| 単位 | 走行体 | 上ぐる時に 動く役 | 判 |
+|---|---|---|---|
+| **R1** 共有 | **0 体** | **0 役** | **★第一の canary（零リスク）★** |
+| **R2** | 5 体 | **2 役（軍師second ＋ 本部長）** | ★最後・且つ 本部長殿の同意 要★ |
+| **R3** | 4 体 | 1 役（足軽second7） | 二番手 |
+| **R0** | 1 体＋2 script | 1 役（本部長の配管） | ★第4段の的に 含むや否や 未定＝上の判★ |
+
+★Commander の「one resumed canary at a time」は **R1 → R3 → R2** の順にて 履め申す（R2 を先に触れば 二役 同時に落つる）★。
+
+### 9-4 家老second の 二問への 答（証拠付き・返書は別便）
+
+- **問㋐「a7 への便は file 箱か Hermes downlink か」** ⇒ **★file 箱★**。
+  `ashigaru_second_7_hermes_watcher.py:7` = `INBOX = ROOT / 'queue/inbox/ashigaru-second-7.yaml'`、:46 = `[A7 route notice] inbox=queue/inbox/ashigaru-second-7.yaml unread=…`。**生存 pid `1220779`**。
+  ∴ **file 箱が 正路・Hermes 側は ★報せ先★ に過ぎず** ―― 遺物に非ず。
+- **問㋑「`ashigaru7` 箱は 母集団か」** ⇒ **★否・退役★**。
+  項数 33／最新 `2026-08-11T12:45:42`（from=karo-second）／**`read:false` = 0**（＝置き去りに非ず 読み切って 止まりたる形）／mtime 08-11。
+  **且つ ★`ashigaru7` を見張る體は 一つも無し★** ―― `inbox_watcher.sh` 族 **9 本**（`honbucho` ＋ `shogun-second`・`karo-second`・`ashigaru1`〜`6`）に **含まれず**。
+  ∴ **★置けば「着荷の形」だけが立ち 読み手は 構造として 現れ申さぬ★** ―― **家老second が 配らず 7/7 と数へざりしは ★正★**（危惧に非ず ★證★ と成り申した）。
+  **⇒ 母集団 ＝ a1〜a6 ＋ `ashigaru-second-7` ＝ ★7★**。b43c1af の 7/7 は 立ち申す。
+- **問㋒「cmdline↔runtime の照合 ―― 枷の解除か 別の測り手か」** ⇒ **★㊁ 別の測り手＝當職★**。
+  **家老second の枷は 解かず**（★己の枷の及ぶ範囲を 己で裁かぬ★ 其の作法は 正しく、上が 解くべきに非ず **代りに測る** が 筋）。本節 9-1/9-2 が 其の測りに御座る。
+
+### 9-5 ★己の器の 破れ（三件目）★
+
+- `pgrep -af '_watcher.py'` の出力に **當職自身の bash（pid 87817）が 混じり申した** ―― ★物差しが 己の綴りを 数へ申した★。
+  本件は 出所が 明白ゆゑ 害無きも、★族を数ふる時は 己を除く一手を 常に置くべし★。
+
 ### 三行（本部長令）
 
 - ⓐ 出所 ＝ Commander `msg_20260821_050354_0d518366`（05:03:54 JST）／`msg_20260821_050718_1afcafc5`（05:07:18 JST）／委員長 `seq202540`（05:00:42 JST）―― 當職実読 05:17:07 JST。
