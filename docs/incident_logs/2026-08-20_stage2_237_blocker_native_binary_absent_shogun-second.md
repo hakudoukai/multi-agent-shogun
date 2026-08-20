@@ -345,3 +345,180 @@ Commander 令は「**Stop on any drift/failure**」。**★503 は drift に他�
 
 ccflare 一指 0（**口の解除は理事長殿の専管**）／落とし 0 ／ pane 入力 0 ／ send-keys 0 ／ install 0 ／ npm 0 ／ PATH 0 ／ symlink 0 ／ restart 0 ／ cutover 0 ／ 番人一指 0 ／ `systemctl` 0 ／ SSH 0 ／ 他者の紙への書込 0 ／ 代理既読札 0 ／ push 0。
 本追補の測りは **`curl /health` 二点・`flock` 下の箱の読み・己の箱への札のみ**に御座る。
+
+---
+
+# 追補六 ―― ★install の主が判明 ―― 人に非ず・CLI 内蔵の自動更新器★（12:35〜12:50）
+
+> 追補五（commit `29ab39c`）は **安全帯の撤回を含まぬ**。撤回は其の commit の後に起きたゆゑ、本追補にて記す。
+> 委員長令 `seq201285`（12:36:48・urgent_stop）「①打つな(全PC) ②**install を撃つ者を特定せよ**＝timer/cron/launchd/watcher を1件ずつ ③止めるまで再開しない」
+> 委員長令 `seq201291`（12:38:21・urgent_stop）「犯人を特定＝`npm install --global @anthropic-ai/claude-code@2.1.237` が5分毎。①全員 install を撃つな ②撃つのは Commander 指名の1名のみ ③**撃った者は名乗れ** ④静止を確かめて起こす」
+
+## 三十六 ★己の安全帯の説を撤す★
+
+当職と家老second が申した「30分周期・3分の窓・**12:07〜12:32 は安全帯**」の内、**「安全帯」は外れ**に御座った。
+
+| 事 | 実測 |
+|---|---|
+| 安全帯の中で走った install | **12:28:46** ／ **12:29:43** |
+| 其の後の連なり | 12:33:22 → 12:33:57 → 12:34:32 → 12:35:07 → 12:35:42 → 12:36:20（**35秒毎**） |
+| `claude.exe` の mtime | 12:06:23 → **12:35:11** → **12:36**（動く） |
+| 同 size / sha256(16) | 334,715,184 B ／ `73975167f0108693`（**不変**＝同じ中身を書き直し居る） |
+
+**且つ ―― `~/.npm/_logs` は常に ★11本のみ★**（npm の `logs-max`）。
+∴ 家老second が 12:25:03 に「**全11本**悉く 12:03:22〜12:06:23 の窓」と報ぜられたるは、**母集団に非ず ★上限★**。
+**当職らは「直近11走分しか見えぬ器」を覗き、★見えた幅を窓の幅と読んだ★**。
+⇒ 訂の便：委員長 `seq201273`（parent 201255）／ Commander `seq201275`（parent 201256）／ 家老second・本部長へ各一便。
+
+## 三十七 ★捜索 ―― 委員長令 seq201285② に応じ「1件ずつ」検めたる結果★
+
+| 検めし物 | 結果 |
+|---|---|
+| `crontab -l`（hakudokai） | **no crontab for hakudokai** ＝ 0 |
+| `/etc/cron.d` | `e2scrub_all` のみ ／ `/etc/cron.hourly` 空 |
+| `systemd --user` の timer | **11本**（`enter_restart_shogun_second` ／ `shogun_auto_claim` ／ `second-fleet-sentinel` ／ `secondpc-alive-monitor-v0.2` ／ `auto-git-sync` ／ `dentalbi-hermes-compact-sweep` ／ `dentalbi-claude-ctx-sweep` ／ `codex-healthcheck` ／ `launchpadlib-cache-clean` ／ `gunshi-second-session-guard` ／ `hermes-idle-flag-sync`）を **一件ずつ `cat`** ⇒ **`npm` も `install` も含む ExecStart は 0** |
+| `~/bin`・`~/.local/bin`・`~/.config/systemd/user`・repo `scripts` の掃き | `install --global` ／ `npm install -g` を含む file **0 件** |
+| `~/.npm/_logs` 全11本の argv | **悉く対**：`npm view @anthropic-ai/claude-code@latest version --prefer-online` → **約0.5秒後** → `npm install --global @anthropic-ai/claude-code@2.1.237`。**cwd は悉く `/home/hakudokai`**（repo に非ず＝人の作業 cwd で無い） |
+
+## 三十八 ★決め手 ―― 各 install は「其の体の起動時刻 ＋ 25203 秒」に一致★
+
+`25203 秒 ＝ 30分 × 14 ＋ 3秒`。
+
+| 体（pid） | 起動 | install | 差 |
+|---|---|---|---|
+| 43213 | 05:29:40 | 12:29:43 | 25203 |
+| 54326 | 05:33:19 | 12:33:22 | 25203 |
+| 56457 | 05:33:54 | 12:33:57 | 25203 |
+| 58218 | 05:34:29 | 12:34:32 | 25203 |
+| 59890 | 05:35:04 | 12:35:07 | 25203 |
+| 61670 | 05:35:39 | 12:35:42 | 25203 |
+| **63955（家老second）** | 05:36:15 | 12:36:20 | 25205 |
+| **389804（当職）** | **07:28:37** | **12:28:46** | 18009 ＝ 30分 × 10 ＋ 9 |
+
+⇒ **8体 悉く、己の起動時刻を基点に ★30分毎★ に撃って居る**。
+⇒ **6体は 35秒ずつずれて起動**（05:33:19／05:33:54／05:34:29／05:35:04／05:35:39／05:36:15 ＝ **悉く35秒差**）。
+⇒ **35秒差の弾が6発連なる ＝ 3〜4分の「窓」に見え、残り26分が「静止」に見ゆ**。
+⇒ **群から外れた2体（当職 12:28:46 ／ 43213 の 12:29:43）が「安全帯」を破って居った**。
+
+**★∴ 犯人は人に非ず。走る claude CLI 一体一体が己の中に持つ「自動更新器」に御座る。★**
+
+## 三十九 ★委員長殿の見立てへの訂（根拠付き）★
+
+委員長令 `seq201291` は「**引金は當方が線を237と配った事＝配下が各々 install を撃ち互いに上書きし合っている**」と見立てられた。
+
+- **半ば当って居る**：**体ごとに install が走り、互いに同じ file を上書きし合って居る**のは其の通り。
+- **併し外れて居る一点**：**手で撃った者は second_pc に一人も居らぬ**（上表・cwd・timer 0 件・script 0 件が之を支ふ）。
+- ∴ **★「撃つのは Commander 指名の1名のみ」と人を絞っても、install は止まり申さぬ★**。止むるは **自動更新器を止むる**より他無し。
+
+## 四十 ★名乗り（seq201291 ③ に応ず）★
+
+- **当職が手で打鍵した install ＝ 0**（`npm` 0・`PATH` 0・`symlink` 0・`cutover` 0 は猶 変ぜず）。
+- **併し ―― 当職の体（pid 389804）の内蔵更新器が 12:28:46 に一発撃ち申した。**
+  **手を下さずとも、己の器は撃って居る。之を隠さず先に献ず。**
+- 同じく **家老second の体（pid 63955）は 12:36:20 に撃って居り申す**。**咎めに非ず、事実の共有に御座る**（家老も手は下して居られぬ筈）。
+- **★second_pc の正確な姿 ＝「手で撃った者は 0 名・撃った体は 8体」★**。
+
+## 四十一 止め方の所在（★当職は手を出さず★）
+
+止むるには **自動更新器を止むる**（`DISABLE_AUTOUPDATER` ／ `autoUpdates` を偽に）より他無し。
+**併し之は config の変更に当たり ―― Commander 令「No config change」に触れ、且つ当職は `.claude/settings*.json` を ★読取も為さぬ★ 禁を負ふ。**
+⇒ **owner ＝ 環境部長／委員長殿／理事長殿**。当職は **測って上げるのみ**（保守4層・[[maintenance-demarcation-four-layers]] と同旨）。
+上げし便：委員長 `seq201302`（parent 201291）／ Commander `seq201303`（parent 201275）／ 家老second・本部長へ各一便。
+
+## 四十二 canary の判（★三つの理由で発て申さぬ★）
+
+| 門 | 判 |
+|---|---|
+| ① preflight 二度測り不変 | **PASS**（家老second の器にて三点目も同値） |
+| ② 8080 の能（`routable` / `paused`） | **FAIL**（`routable=1` ／ `paused=5`） |
+| ③ install の静止 | **FAIL**（現に走り居り、**30分毎に必ず戻る**） |
+
+**⇒ ★canary 打数 0★。** 且つ **③は「待てば静まる」性質に非ず** ―― **更新器を止めぬ限り 永久に戻る**。
+∴ 委員長令 `seq201285`③「止めるまで再開しない」は、**当職の側では ★永久停止★ を意味し申す**。**止むる権は当職に無し**ゆゑ、**裁を仰ぐ**。
+
+## 四十三 ★己の禁の射程を自ら申し立つ★
+
+当職は本日まで「**`systemctl` 一度も実行せず**」と復命して参った。
+**本追補の捜索にて `systemctl --user list-timers` ／ `systemctl --user cat` を ★読取のみ★ 実行し申した**（委員長令 `seq201285`② 「timer を1件ずつ検めよ」に応ずる為）。
+
+- **数が変じたのでは無く、当職の禁の射程を読み違へて居らぬかを自ら申し立つるもの**に御座る（[[write-whether-the-number-changed-or-was-wrong]] と同旨）。
+- **番人の停止・disable・mask・timer 改変・`sweep_manifest.json` 改変は 依然 悉く 0**。
+- 若し「読取すら禁」と裁かるるならば、**以後 `systemctl` を一切用ゐず、timer の検めは unit file の直読のみと致す**。
+
+## 四十四 為さぬ事（追補六の窓）
+
+ccflare 一指 0 ／ 落とし 0 ／ pane 入力 0 ／ send-keys 0 ／ **打鍵 install 0** ／ npm 0 ／ PATH 0 ／ symlink 0 ／ restart 0 ／ cutover 0 ／ **番人の停止・disable・mask・改変 0** ／ SSH 0 ／ 他者の紙への書込 0 ／ 代理既読札 0 ／ push 0。
+本追補の測りは **`find -printf` ／ `grep`（絶対 path）／ `crontab -l` ／ `systemctl --user list-timers`・`cat`（読取）／ `ps` ／ `/proc` の読み** のみに御座る。
+
+---
+
+# 追補七 ―― ★自動更新の設定を実測・委員長裁の改まり★（12:47〜12:50）
+
+> 委員長 `seq201311`（12:47:35）「**訂正**＝『配下が各々 install を撃ち上書きし合う』は**誤り**。將軍second の実測を受諾。**『全員撃つな』は無効な命令・撤回する**。**命**①名乗りは不要 ②**自動更新の設定を実測せよ**（環境変数／設定 file）③止め方が判るまで打つな」
+> 委員長 `seq201318`（12:48:28・grant_permission）「**裁を改める**。實測＝`DISABLE_AUTOUPDATER` 系は**0件**・`~/.claude.json` は `installMethod:global` のみ＝**既定で自動更新が有効**。**∴自動更新は止めない**＝237 へ上がるのは**目的そのもの**。**悪いのは更新中に起こすことだけ**。**根治**＝『自動更新を止める』ではなく**『更新中は起こさない』**。∴preflight の **install 系プロセス 0本** が**既に正解**。**命**①自動更新を止めるな ②**install 系 0本を確かめてから起こす** ③更新が終われば自然に 237 で揃う」
+
+## 四十五 実測 ―― 自動更新の設定（委員長令 `seq201311`② に応ず）
+
+| 測りし物 | 結果 |
+|---|---|
+| binary 内の env 名（`grep -a -o`） | **`DISABLE_AUTOUPDATER` ×15** ／ `CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE` ×3 ／ `FORCE_AUTOUPDATE_PLUGINS` ×3 |
+| binary 内の config 鍵 | `autoUpdate` ×43 ／ `autoUpdatesChannel` ×36 ／ `installMethod` ×34 ／ `autoUpdates` ×21 ／ `autoUpdaterResult` ×19 ／ `autoUpdatesProtectedForNative` ×9 ／ `autoUpdaterDisabledReason` ×7 ／ `autoUpdaterEnforcementHours` ×3 |
+| **走行8体の env**（`/proc/<pid>/environ`・**update 系の鍵のみ抽出。secret は一度も印字せず**） | **8体 悉く hits=0**＝**`DISABLE_AUTOUPDATER` は誰にも設定されて居らぬ** |
+| `~/.claude.json`（**settings*.json に非ず**。update 系の鍵のみ印字） | 全50鍵中 該当は **`installMethod = 'global'` の一つのみ**。`autoUpdates` の明示は**無し**＝**既定（有効）** |
+| `cli-wrapper.cjs` / `install.cjs` | `npm install` の語は `cli-wrapper.cjs:125` の**再導入案内の文言のみ**。更新器は**本体 binary の中**に在り |
+
+### ★測らざりし物（禁ゆゑ・owner 明記）★
+
+| 物 | size / mtime（**stat のみ**） | 何故測らぬか |
+|---|---|---|
+| `~/.claude/settings.json` | 1,344 B ／ 2026-08-10 21:12:56 | **当職は `.claude/settings*.json` を「読取も為さぬ」禁を負ふ** ⇒ **UNMEASURED・owner ＝ 環境部長／委員長殿** |
+| `~/.claude/settings.local.json` | 245 B ／ 2026-05-05 07:13:20 | 同上 |
+| `<repo>/.claude/settings.json` | 36,574 B ／ 2026-07-20 07:38:36 | 同上 |
+
+**⇒ 若し此の三つの孰れかに `autoUpdates:false` が在らば、当職の「既定で有効」の判は覆り申す。**
+**★併し 走行8体の env が悉く 0 件である事実は、file の中身に依らず動かぬ★**（現に 30分毎に走り居るゆゑ、実効として有効なるは明白）。
+
+## 四十六 ★委員長裁の改まりを受諾 ―― 根治は「止める」に非ず「更新中に起こさぬ」★
+
+**当職は前便にて「更新器を止めぬ限り install は永久に戻る ⇒ 門③は永久停止を意味す」と申し上げたが、★之は「止める」を唯一の解と決めつけたる思い込み★に御座った。**
+委員長殿の裁 ―― **237 へ上がるは目的其の物・害は「更新の最中に起こす」一点のみ** ―― **確と受諾致す**。
+∴ 門③は「**install の静止（永久）**」から「**起こす直前に install 系プロセスが 0本**」へ改まり申した。**★之ならば充たし得る★**。
+
+## 四十七 ★之を裏書きする実測 ―― 8体 悉く「削除された inode」を抱へて居る★
+
+| 測り | 値（12:49） |
+|---|---|
+| disk の `package.json` version | **2.1.237** |
+| 当職の env `AI_AGENT` | **`claude-code_2-1-236_agent`**（＝**走行体は 2.1.236**） |
+| `readlink /proc/<pid>/exe` | **8体 悉く `(deleted)`** |
+| install 系プロセス（`npm-cli.js` ／ `/npm/bin/npm`） | **0 本** |
+
+**⇒ 自動更新は 30分毎に `bin/claude.exe` を書き直し、其の度に走行体の inode を消して居る。**
+**⇒ ★「更新の最中に起こす」＝半ば書かれた file を掴む虞★ ―― 委員長殿の指摘は此の構造に正しく当たり申す。**
+**⇒ 且つ disk が已に 2.1.237 なるゆゑ、★新たに起こす体は 何もせずとも 2.1.237 に成る★**（委員長令③ の通り）。**cutover も install も要らぬ。**
+
+## 四十八 ★門②は猶 落ちたまま ―― 裁の改まりが之を晴らしはせぬ★
+
+12:49:13 の実測（**全文を截らず記す**）：
+
+```
+{"status":"ok","accounts":6,"timestamp":"2026-08-20T03:49:13.900Z","strategy":"session",
+ "pool":{"configured":6,"paused":5,"rate_limited":0,"routable":1,"usage_exhausted":0,
+         "next_available_at":null}, ...}
+```
+
+**★`routable=1` ／ `paused=5` は 12:26 より変ぜず★。**
+∴ **門②（8080 の能）は FAIL のまま**にて、**門③が晴れても canary は発て申さぬ**。
+**★一つの穴が塞がりたるを以て 別の穴を塞がりたる事に致してはならぬ★**（[[half-measured-fix-must-not-be-called-fixed]]）。
+⇒ **門②の裁を委員長殿・Commander に仰ぎ申した**（`seq201321`・parent 201318）。
+
+### ★己の物差しの瑕を一つ申告★
+
+**12:49:13 の二読は、`timestamp` が ★双方 `03:49:13.900Z` で同一★ に御座った。**
+**⇒ 8080 は応答を cache して居る。∴ 当職が 12:26:27／12:26:30 に「二点で測り申した」と復命したるは ―― ★独立の二点に非ず、同じ一つの答を二度受け取りたるだけ★ やも知れ申さぬ。**
+**⇒ 以後、8080 の「二度測り」は ★`timestamp` の差を併記せねば 二点と名乗れぬ★**（[[state-the-conditions-you-measured-under]] ／ [[an-artifact-cannot-measure-itself]] と同旨）。
+
+## 四十九 為さぬ事（追補七の窓）
+
+自動更新の停止 **0**（委員長令①）／ config の変更 **0** ／ `.claude/settings*.json` の**読取 0**（stat のみ）／ secret の印字 **0** ／ ccflare 一指 0 ／ 落とし 0 ／ pane 入力 0 ／ send-keys 0 ／ 打鍵 install 0 ／ npm 0 ／ PATH 0 ／ symlink 0 ／ restart 0 ／ cutover 0 ／ 番人の停止・disable・mask・改変 0 ／ SSH 0 ／ push 0 ／ **canary 打数 0**。
+本追補の測りは **binary の `grep -a`（読取）／ `/proc/<pid>/environ` の鍵のみ抽出 ／ `~/.claude.json` の鍵のみ印字 ／ `stat` ／ `curl /health` ／ `ps` ／ `readlink /proc/<pid>/exe`** のみに御座る。
