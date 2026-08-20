@@ -5765,3 +5765,95 @@ fired_at   2026-08-20T23:50:18.254637+09:00
 **★委員長殿へは 一通も積まず★**（未裁 6 件）。**★家老second 殿へ 催促 0★**。
 **★既読札 0 撃★**（**★項 93 ／ `read:false` 63 ／ `read:true` 30★**）。
 **★`queue/tasks` 書込 0・投入 0（★令★）・tmux 書込 0・`send-keys` 0・`respawn-pane` 0・機構/ccflare/config/DB/lifecycle 一指 0・push/fetch/pull 0・`~/.local` 一度も stat せず・他者の `environ`/`cmdline` 0・他者の jsonl 0 撃・★他者の scratchpad は `stat` のみ・中身 不開★・secret 値 0★**
+
+---
+
+## 追補六十七 (2026-08-21T01:14:30+09:00) ―― ★B 停止・不達は ★二度目＝型★★ ＋ ★★己の「住処」説が 反証され申した ―― 分かれ目は ★空欄が目に立つか否か★★★
+
+---
+
+### 節389 ★停止令 ―― ★B は 停まり申した★・而して ★又しても 執行者に着き居らず★★
+
+**★裁の逐語（Commander 殿 `msg_20260821_010600_fc93a32d`・`01:06:00`・`type: answer`・一字も改めず）★**
+> `[L2 correction: suspend B partial task-issuance lift] The material cited for ashigaru6 "ammo empty" is corrected: canonical task state is intentionally_cold with reopening condition=gunshi return / superior ruling / shogun next card. Therefore do NOT issue any a6 task under seq202363 until karo-second reconciles the current canonical task state, direct inbox/actionable inventory, and the received inventory source. Keep task YAML unchanged; no task creation, retry, lifecycle, DB/config/auth action. Return either (1) a qualified existing immutable block with evidence that it satisfies current reopen condition, or (2) blocker4. This correction supersedes the B relay only; does not alter unrelated work.`
+
+**★掃きの結（`queue/inbox/karo-second.yaml`・`as_of 2026-08-21T01:11:03`・★全項に対し・`tail` に非ず★・読取のみ）★**
+| 述語 | 値 |
+|---|---|
+| `from: commander` | **★0 件★** |
+| `suspend B partial task-issuance lift` | **★0 件★** |
+| `do NOT issue any a6 task` | **★0 件★** |
+| 項 ／ `read:false` ／ `read:true` | **46 ／ ★0★ ／ 46**（★彼は 悉く處する者★） |
+
+> ## **★∴ 二度とも ―― 裁は ★當職の箱にのみ★ 着き ★執行者の箱には着き申さぬ★★**
+> ## **★∴ 之は 一件の事故に非ず ―― ★型★ と讀み申す（★推論★・裁に非ず）★**
+
+**★危ふさの実態★** ―― 家老second 殿は `01:06:26` の便にて **★「塊の吟味に掛かり申す」★** と仰せられ居り申した。
+⇒ **★停止令が届かざれば ―― ★停められたる筈の発行が 現に起き得た★★**。空白 ＝ `01:06:00` → `01:12:35` ＝ **★6 分 35 秒★**。
+
+**★処し★** ―― 逐語中継 `msg_20260821_011235_11c0adbc`（`01:12:35`・**★`type: status_update`★** ―― **★今度は 履み申した★**）。彼の箱にて実視 ＝ 逐語二綴り着・**★本文末尾まで完存★**。
+**★上申★** ―― 本部長殿へ `msg_20260821_011352_eff9c084`（`01:13:52`・着弾実視済）＝ ⑴不達の **★型★** ⑵下記 節391 の詰まり。**★機構の案は 一切 申し上げ申さぬ ―― 測りのみ★**。
+
+---
+
+### 節390 ★★己の説が 反証され申した ―― 「住処」は 誤りに御座つた★★
+
+家老second 殿の㊁：**★當職が破りたる則（家老宛は `status_update`）は ―― ★記憶★ に非ず ★書式の則★ に住み居り申した★**（`inbox_write.sh` の `type` は **必須の引数**）。
+⇒ **★書式に住む療治が 現に 発火し損ね申した★** ⇒ **★「住処が記憶なるゆゑ効かぬ」は 本件を説明し得ぬ★**。
+
+> ## **★★真の分かれ目 ―― 「何処に住むか」に非ず ―― ★空欄が 目に立つか否か★★★**
+
+| | 族 | 例 | 効き |
+|---|---|---|---|
+| **㋐** | **★書式が 自ら吐く★**（**★空欄・欠落が 目に立つ★**） | 便の ■5「項 N／`read:false` N」・`sha` 欄 | **★毎便 発火★** |
+| **㋑** | **★書式が 定むるのみにて 吐かぬ★**（**★誤れる値も 形は正しく 通る★**） | **★`type` の択び★** | **★発火せず★** |
+| **㋒** | **記憶**（欄すら無し） | 「送る前に箱を引き直せ」 | 発火せず |
+
+> ## **★∴ ㋑は ―― ★書式の内に在るがゆゑに 却って安心を与へ★ 実の効きは ㋒と変らぬ★（★最も危ふき族★）**
+
+**★∴ 追補六十六 節387 の「住処を移す事」は ―― ★不完全★ に御座つた★** ―― **★移したる先が ㋐か㋑かを問はざりき★**。現に、`rule-author-…` へ焼きたる条は **file に在れど 発火の機構を持たぬ** ⇒ **★猶 ㋑乃至㋒★**。
+
+**★己の器へ当てたる訂★**
+| 器 | 訂 |
+|---|---|
+| `memory/rule-author-self-apply-immediately.md` | 三値の表 ＋ **★`description`（発火条件）を書換★**（「書式に落としたゆゑ効く」と数へる刹那に発火する様に） |
+| `memory/task-assigned-type-wipes-carried-content.md` | **★`type` は ㋑族の典型★**・「書式に在るゆゑ守られる」は偽 |
+
+**★訂の作法★** ―― 家老second 殿の条 **★「訂を出す前に 元の申告の根の器を 一度 開け」★**（**★「直す」といふ形は 己の検を済ませたる心地を与へ 検を飛ばさせ申す★**）を **履み申した**。
+
+---
+
+### 節391 ★★札の主は ―― ★當職★ に御座つた★★
+
+**器の逐語**（`queue/tasks/ashigaru6.yaml`・項 `cold状態_20260808_1306`・家老second 殿の読みたる物）
+> **`intentionally_cold（手空きに非ず・順番待ち）。再開条件＝㋐軍師返報 or ㋑上の裁 or ㋒将軍の次弾。`**
+> **出所欄 ＝ `将軍second cmd_new msg_20260808_130458 ⑷㋒`**
+
+> ## **★∴ 之は ―― ★當職の令が 産みたる札★ に御座つた。★而して 當職 自ら 気付き申さず★★**
+> ## **★∴ 他者（家老second 殿）の器読みにて ―― 初めて 判じ申した★**
+
+**★己の条の 四度目の発火★** ―― 「**★己が『未測』と札した物の答が 己の紙の中に既に在る事在り★**」。**★今度は 己の紙ですらなく ―― ★己の令が 他者の器に残した札★★**。⇒ **★条を広げ申す ―― ★己の令の 産みたる痕跡も 掃きの母集団に入れよ★★**。
+
+**★併せて 節386 への断り★** ―― 當職は `status: assigned` ＝ **0 件** と測りたるのみにて「弾切れ」とは書き申さず。**★而して 節386 は ★其の区別を 明示せず★★** ⇒ **★`assigned` 0 は 飢ゑの証に非ず ―― 器は「順番待ち」と申し居る★**（己の条 **★見送りに齢無くば拒絶★／★idle は意ある冷なる事在り★**）。
+
+**★構造の詰まり（節379 と ★同型★）★**
+・三条の内 **㋒ を打ち得るは ★當職のみ★**。而して當職は ⑴`shogun does not write task YAML` ⑵本部長殿「将軍 0 を維持」 ⑶本停止令 ―― **★三重に塞がる★**。
+⇒ **★家老second 殿の reconcile が「㋒しか路が無い」と出でたる折 ―― ★誰も打てぬ★★**。
+**★處し★** ―― **★己にて解かず・㋒を打たず★**。彼へは **blocker4 にて返す様**（owner ＝ 當職・當職も塞がれ居る旨明記）申し伝へ、**本部長殿へ上げ申した**。
+
+---
+
+### 節392 ★㊃ ―― ★軸の断り 容れ申した★★
+
+・**★「十日」（足軽7・`assigned_at`・枝＝task YAML）★** と **★「47.25 時間」（足軽6・便の途絶・枝＝inbox）★** とは **★軸も 枝も 別★** ⇒ **★台帳にて 並べ申さぬ★**（並ぶる折は 各々に **軸と枝**を添ふ）。
+・**★「飢ゑの齢」の語 ―― 撤し申す★** ⇒ 正しくは **★「便の途絶の齢」★**（器は順番待ちと申し居るゆゑ）。
+・**★彼の裏書き★** ―― `assigned_at` は器の**頂に非ず 内に在り**（彼 一度「欄無し」と読みかけ **★己で退け申した★**）⇒ **★當職の十日の値は 彼の器にても 現存★**。足軽8 に当該の綴り **0 件** ⇒ **★當職の UNMEASURED は 正★**。
+
+---
+
+### 節393 ★自申（追補六十七）★
+
+**書込** ＝ 本台帳 ＋ **memory 二枚（訂）** ＋ **★便 2 通★**（家老second 殿 ＝ **★停止令の逐語中継★** `…011235`／本部長殿 ＝ **★不達の型 ＋ ㋒の詰まり★** `…011352`。**★二通とも 相手の箱にて実視済★**）＋ scratchpad。
+**★委員長殿へは 猶 一通も積まず★**（未裁 6 件）。**★家老second 殿へ 催促 0・塊の選定に 一言も容喙せず★**。
+**★既読札 0 撃★**（**★項 96 ／ `read:false` 66 ／ `read:true` 30★**）。
+**★`queue/tasks` 書込 0・投入 0（★令★）・★㋒ を打たず★・tmux 書込 0・`send-keys` 0・`respawn-pane` 0・機構/ccflare/config/DB/lifecycle 一指 0・push/fetch/pull 0・`~/.local` 一度も stat せず・他者の `environ`/`cmdline` 0・他者の jsonl 0 撃・他者の紙へ書込 0・secret 値 0★**
