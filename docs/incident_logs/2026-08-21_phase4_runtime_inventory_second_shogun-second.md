@@ -296,3 +296,72 @@ pid=4099483 ppid=1519165 (= tmux hermes-honbucho)
 撃ち **0**（`npm` 一度も 走らせず）・respawn **0**・kill **0**・`tmux` **変更 0**（`list-panes` 読取のみ・`capture-pane` **0**・`send-keys` **0**・pane 入力 **0**）／
 hermes 系 file 改変 **0**／`~/.npm-global` 配下 **読取のみ**（`stat`・`grep`・`sha256sum` のみ・書込 **0**）／
 他者の `environ` **0**・secret 不開／`queue/tasks` 書込 **0**・他者の箱 読取のみ・札 **0**／push **0**・fetch **0**・pull **0**。
+
+---
+
+## 十一 ―― ★第4段の 母集団の 訂★ ―― R0 は **`0.19.0`** に御座り 且つ **其れを import する者が 一人も 居らぬ**（Commander 令「source/destination Python compatibility」への 前倒しの答・as_of 2026-08-21T05:56:28 / 05:56:52 / 05:57:27 +09:00）
+
+### 11-1 ★baseline は 一様に非ず★
+
+| runtime | **dist-info 版** | 入れ方 | python | pkgs | 樹 dev:inode |
+|---|---|---|---|---|---|
+| R1 共有 | `hermes_agent-0.20.0` | `__editable__` | 3.12 | 131 | `2096:690883` |
+| R2 軍師second | `hermes_agent-0.20.0` | `__editable__` | 3.12 | 196 | `2096:989169` |
+| R3 a7 | `hermes_agent-0.20.0` | `__editable__` | 3.12 | 196 | `2096:927039` |
+| **R0 `hermes-agent`** | **★`hermes_agent-0.19.0`★** | **★editable の印 掬へず ⇒ 素の install と見ゆ★** | 3.12 | **179** | `2096:417300`（venv `2096:417374`） |
+
+- 述語: `find $R0/venv/lib -maxdepth 3 -name 'hermes*dist-info' -o -name '__editable__*hermes*'` ⇒ ★dist-info 一件のみ・editable の印 **0 件**★。
+- **★Commander 令の前提「Second shared runtime remains 0.20.0」は ―― R1/R2/R3 にて 真・★R0 にて 偽★★**。
+- **python は R0〜R3 悉く `3.12`**（`venv/lib/python3.12` の dir 名＋`readlink -f venv/bin/python` ⇒ `/usr/bin/python3.12`・★実行せず 樹の形にて測る★）。
+  ⇒ ★Commander 令の source/destination Python 適合は ―― python の軸にては 四つとも 同一ゆゑ 障り無し★。★障るは 版と 入れ方の軸★。
+
+### 11-2 ★入り居る版は 走り居る版に非ず★（本節の芯）
+
+- R0 の 走行体は ただ一つ ―― `2492971`・`etime 13-05:57`・`Fri Aug 7 23:59:48 2026` 起（本部長殿の 下り watcher）。
+- **其の script（`…/honbucho/bin/honbucho_downlink_watcher.py`・290 行 13,070 B）の import は 悉く 之のみ**（`:23-25` 逐語）:
+  `hashlib, json, os, pathlib, subprocess, time, traceback` ／ `requests` ／ `psycopg2, psycopg2.extras`
+- **★`hermes_agent` を 一行も import せ申さぬ★**（`grep -n -i hermes` の当たりは `ROLE` path・`TARGET` tmux 名・`HERMES_RO_*` の env 名・註のみ ―― ★import に非ず★）。
+- ⇒ **★R0 の `0.19.0` は 「入り居る」が 「走り居らぬ」★**。R0 の venv が 現に果たし居る役は ―― ★python 3.12 ＋ `requests` ＋ `psycopg2` の 供給者★ に過ぎ申さぬ。
+
+> ### ★★入り居る版は 走り居る版に非ず ―― ★dist-info を数へず import を引け★★★
+> `dist-info` は **配られたる事** を言ひ、**使はれ居る事** を 一言も 言ひ申さぬ。
+> （★之は 已に本紙 §一 の「realpath は版を言はぬ」と 同じ形の 破れに御座る ―― ★同じ罠が 軸を替へて 三度目★★）
+
+### 11-3 ★∴ 第4段の 的から R0 を 外すべし（案・判は 上）★
+
+| 問 | 答 |
+|---|---|
+| R0 を `0.20.4` へ 上げて 得る物は | **★無し★** ―― 其の venv にて `hermes_agent` を import する者が 現に 0 |
+| R0 を 触りて 失ふ虞れある物は | **★本部長殿の 13 日 走り続けたる 下り配達★**（`requests`・`psycopg2` は 其の venv に在り） |
+| ⇒ 案 | **★R0 ＝ 第4段の 母集団の 外・不触★**（★判は 上に属す ―― 當職は 案のみ★） |
+
+> ### ★★母集団を「入り居る物」にて 括れば ―― 使はれ居らぬ物まで 掃き込み ★現役の配管を 巻き添へに す★★★
+> 「12 体を 0.20.4 へ」は **体（役）の数** にて括られ居り申すが、
+> ★版上げが 現に効くは ★`hermes_agent` を import する体★ のみ★。
+> ★∴ 的は 「入り居る runtime」に非ず ―― ★「import する体」★ にて 括るべし★。
+
+### 11-4 ★体と配管の 分かれ目★（本紙 §三 を 引きて ―― ★再測 0★）
+
+| 層 | 何を使ふか | 版上げの効き |
+|---|---|---|
+| **体（Hermes TUI）** | R2（軍師second ＋ 本部長）・R3（a7）／R1 は **0 体** | **★効く★** |
+| **配管（watcher）** | a7 の配達番 `1220779` ＝ **系の `/usr/bin/python3`**（venv 外）／本部長の下り `2492971` ＝ **R0** | **★効かぬ（`hermes_agent` を import せぬ）★** |
+
+- ⇒ ★canary 順 `R1 → R3 → R2` は 變ぜず★。**R0 は 順の外**（的に非ず）。
+- ⇒ ★R1 が 零リスクなる所以が 二重に 立ち申した★ ―― 走行体 0（§9-3）＋ 配管との縁 無し。
+
+### 11-5 UNMEASURED（owner 明記）
+
+1. **`0.20.4` の source lock** ―― owner ＝ **Main source custodian**（Commander 手配済・★之が着かねば 上げ得ぬ★）
+2. R2 の agent 二本（`836838`／`4099497`）が 現に分かち合ひ居るか 片方が遺骸か ―― owner ＝ 當職（★本夜 §9-1 にて 帰属は解けたるも 生死の別は 未測★）
+3. R0 を 的に含むや否や の **判** ―― owner ＝ **上**（當職は §11-3 の案のみ）
+4. 全12体の名簿 ―― owner ＝ **委員長殿**（★分母 12 は 當職の器にて 検算し得申さぬ★）
+
+### 11-6 變ぜぬ物（本節の分）
+
+読取のみ ―― `find`・`readlink`・`stat`・`wc`・`grep`・`ps -p`（★名指し 1 pid★）。
+★hermes 系 file 改変 **0**★／★venv の python を **実行せず**（版は dir 名と symlink にて取る）★／
+`pip` **0**・`npm` **0**・install **0**／撃ち **0**・kill **0**・restart **0**・respawn **0**／
+`tmux` 一指 **0**・send-keys **0**・pane 入力 **0**・capture **0**／
+secret 不開（`HERMES_RO_PASSWORD` 等の **env 名のみ** 見え申したが ★値は 一つも 読まず★）／
+他者の `environ` **0**／`queue/tasks` 書込 **0**／push **0**・fetch **0**・pull **0**。
