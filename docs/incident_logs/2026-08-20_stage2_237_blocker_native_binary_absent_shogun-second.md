@@ -3129,3 +3129,86 @@ canary **5**（足軽3・4・5・6・1）／**0.2 不触・`seq201804` 裁待ち
 **`git pull`／`fetch`／`merge`／`rebase` 0**（節二百二十七・blocker4 として上申）／**`read` の札 0（己の箱も 他者の箱も）**／**`mark`/`delete` の一括 0**／**task 起票 0**／**`lot` を閉ぢる事 0**／**runtime・lifecycle・config・DB 一指 0**／**`iincho486` 不触**／**足軽6 へ 便 0・促し 0・pane 入力 0**（**★読取のみ ―― 之が 裁定16 の問ひを 解き申した★**）／**足軽1 へ 便 0**／**0.2 猶 不触・催促 0**／**0.0 へ 入力 0**（**`capture-pane` の読取のみ**）／**tmux 書込操作 0**（`send-keys` 0・`set-option` 0・resize 0）／**他者の pane の compact 0**／**`_archive` 中身 不開**／**番人 一指 0**／**8080 へ 0 撃**／**`~/bin` 改変 0**／**`settings*.json` 読取 0**／**push 0・remote 通信 0**。
 
 **便 ―― 家老second へ 1 通（19:15・急）**。
+
+---
+
+### 節二百三十四 ―― ★附録: retained（live）68 件の ID 全数★（Commander `seq201951`「retained IDs+count」に応ず・`as_of 2026-08-20T19:12:26+0900`）
+
+**older>7d ＝ 0 件ゆゑ ★Iincho 送りの列は 空★**（絞りは 節二百二十九 の `_archive` 断り書きに同じ）。
+
+```
+as_of=2026-08-20T19:13:48+09:00
+== shogun-second
+2026-08-20T18:52:32 karo-second status_update msg_20260820_185232_02e36b8b
+2026-08-20T18:46:19 commander answer msg_20260820_184619_a1ea4ee1
+2026-08-20T18:37:13 karo-second status_update msg_20260820_183713_aec1fdce
+2026-08-20T18:34:11 karo-second status_update msg_20260820_183411_9c4828b2
+2026-08-20T18:24:01 karo-second status_update msg_20260820_182401_18c3ad62
+2026-08-20T18:18:42 karo-second status_update msg_20260820_181842_d0fa259d
+2026-08-20T18:08:44 karo-second status_update msg_20260820_180844_dd92556a
+2026-08-20T17:37:31 karo-second status_update msg_20260820_173731_0194af49
+2026-08-20T17:24:22 karo-second status_update msg_20260820_172422_87ed0dad
+2026-08-20T17:15:57 iincho status_update msg_20260820_171557_d12532c4
+2026-08-20T16:34:08 karo-second notification msg_20260820_163408_bc7546a8
+2026-08-20T16:20:00 karo-second status_update msg_20260820_162000_389bda1b
+2026-08-20T16:15:29 iincho answer msg_20260820_161529_f4d579df
+2026-08-20T16:07:56 karo-second status_update msg_20260820_160756_8c7162c5
+2026-08-20T15:58:28 karo-second status_update msg_20260820_155828_b9022e8f
+2026-08-20T15:53:20 iincho answer msg_20260820_155320_828fc552
+2026-08-20T15:27:42 karo-second status_update msg_20260820_152742_0b655a1e
+2026-08-20T15:25:52 iincho answer msg_20260820_152552_78979cee
+2026-08-20T15:12:13 karo-second status_update msg_20260820_151213_cebea81c
+2026-08-20T15:03:35 karo-second status_update msg_20260820_150335_6da8d699
+2026-08-20T14:54:59 karo-second status_update msg_20260820_145459_90865d16
+2026-08-20T14:47:37 karo-second status_update msg_20260820_144737_7038362a
+2026-08-20T14:45:41 karo-second status_update msg_20260820_144541_2c2ca997
+2026-08-20T14:36:35 honbucho notification msg_20260820_143635_8dfb47da
+2026-08-20T14:32:32 karo-second status_update msg_20260820_143232_2197ef3f
+2026-08-20T14:31:05 honbucho notification msg_20260820_143105_b78c33b6
+2026-08-20T14:20:34 honbucho notification msg_20260820_142034_bb5732b3
+2026-08-20T14:15:58 iincho answer msg_20260820_141558_6b703163
+2026-08-20T14:14:53 honbucho notification msg_20260820_141453_31482b7e
+2026-08-20T14:13:42 karo-second status_update msg_20260820_141342_4dc6db50
+2026-08-20T14:06:11 karo-second status_update msg_20260820_140611_5b3dd1e9
+2026-08-20T14:03:23 honbucho notification msg_20260820_140323_1727713c
+2026-08-20T14:02:41 iincho answer msg_20260820_140241_edd80c32
+2026-08-20T13:58:30 iincho answer msg_20260820_135830_97efd691
+2026-08-20T13:56:14 honbucho notification msg_20260820_135614_67545075
+2026-08-20T13:45:41 honbucho notification msg_20260820_134541_78ac61d5
+2026-08-20T13:44:54 karo-second status_update msg_20260820_134454_c08816bb
+2026-08-20T13:44:54 inbox_write cap_rotated_notice msg_20260820_134454_cap_rotated
+2026-08-20T13:44:21 iincho answer msg_20260820_134421_e616c21c
+== ashigaru6
+2026-08-20T05:22:21 karo-second status_update msg_20260820_052221_4d846105
+2026-08-20T02:37:52 karo-second status_update msg_20260820_023752_6175c27b
+2026-08-20T02:26:46 karo-second status_update msg_20260820_022646_93d0b7ee
+2026-08-20T01:34:39 karo-second status_update msg_20260820_013439_b08c7509
+2026-08-19T23:27:46 karo-second status_update msg_20260819_232746_21a4ce2e
+2026-08-19T23:11:13 karo-second status_update msg_20260819_231113_949bef1a
+2026-08-19T23:01:30 honbucho notification msg_20260819_230130_8c1a0d11
+2026-08-19T13:01:01 karo-second status_update msg_20260819_130101_772d744c
+2026-08-19T12:57:00 karo-second status_update msg_20260819_125700_16254ec6
+2026-08-19T12:38:35 karo-second task_assigned msg_20260819_123835_99183484
+2026-08-19T11:58:30 karo-second task_assigned msg_20260819_115830_10257a73
+2026-08-19T11:58:30 inbox_write cap_rotated_notice msg_20260819_115830_cap_rotated
+2026-08-19T11:13:42 karo-second task_assigned msg_20260819_111342_e66151b7
+2026-08-19T08:00:40 karo-second status_update msg_20260819_080040_7200c16e
+2026-08-19T07:51:17 karo-second status_update msg_20260819_075117_86d3d1c8
+2026-08-19T07:05:42 karo-second report_received msg_20260819_070542_9793be48
+2026-08-19T06:42:40 karo-second task_assigned msg_20260819_064240_3ad7cffa
+2026-08-19T06:30:40 karo-second report msg_20260819_063040_d07de8a5
+2026-08-19T06:08:41 karo-second task_assigned msg_20260819_060841_200d9f75
+2026-08-19T05:57:25 karo-second report msg_20260819_055725_c8416379
+2026-08-19T05:32:39 karo-second task_assigned msg_20260819_053239_4c6f2166
+2026-08-19T05:03:20 karo-second task_assigned msg_20260819_050320_aae95779
+2026-08-19T04:49:14 karo-second status_update msg_20260819_044914_cc567fc5
+2026-08-19T04:32:28 karo-second task_assigned msg_20260819_043228_4aa5893d
+2026-08-19T04:27:15 karo-second status_update msg_20260819_042715_2b552614
+2026-08-19T04:15:00 karo-second task_assigned msg_20260819_041500_773df8e8
+2026-08-19T03:32:36 karo-second status_update msg_20260819_033236_ee650056
+2026-08-19T03:15:39 karo-second status_update msg_20260819_031539_9551b0ab
+== ashigaru5
+2026-08-20T14:43:47 karo-second task_assigned msg_20260820_144347_f0ef1cac
+```
+
+**計 ＝ 68**（將軍second 39 ／ ashigaru6 28 ／ ashigaru5 1）。**★悉く `read:false` の儘 ―― 札 0・lot 閉ぢ 0★**。
