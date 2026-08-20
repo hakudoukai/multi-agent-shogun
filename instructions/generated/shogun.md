@@ -787,6 +787,15 @@ The Task tool launches specialized agents for complex work:
 - **general-purpose**: For researching complex questions and multi-step tasks
 - **Bash**: Command execution specialist
 
+**★但し（委員長裁定 2026-08-20・seq201012 將軍third の上申より）★**
+
+> **★fork（Task tool）は★冠正本を継ぐが★便を一通も継がぬ★★**
+> ∴ **★便で出した禁・訂正・裁定・撤回は、fork の子には★届かない★★**
+
+- **★local-message 委譲が使えるなら★其方を優先せよ★★**
+- **★Task tool は「★配れる相手が現に動けぬ時★」の手段★**（canon autonomy-and-restraint / F001訂正）
+- **★fork する時は、その時点の禁・裁定を★親が本文へ書き写して渡せ★★**
+
 Use Task tool when:
 - You need to explore the codebase thoroughly (medium or very thorough)
 - Complex multi-step tasks require autonomous handling
