@@ -5857,3 +5857,85 @@ fired_at   2026-08-20T23:50:18.254637+09:00
 **★委員長殿へは 猶 一通も積まず★**（未裁 6 件）。**★家老second 殿へ 催促 0・塊の選定に 一言も容喙せず★**。
 **★既読札 0 撃★**（**★項 96 ／ `read:false` 66 ／ `read:true` 30★**）。
 **★`queue/tasks` 書込 0・投入 0（★令★）・★㋒ を打たず★・tmux 書込 0・`send-keys` 0・`respawn-pane` 0・機構/ccflare/config/DB/lifecycle 一指 0・push/fetch/pull 0・`~/.local` 一度も stat せず・他者の `environ`/`cmdline` 0・他者の jsonl 0 撃・他者の紙へ書込 0・secret 値 0★**
+
+---
+
+## 追補六十八 (2026-08-21T01:30:10+09:00) ―― ★★節389 の訂 ―― 「不達＝型」は ★誤り★・★設計★ に御座つた★★ ＋ ★B 閉鎖（保留に非ず）★ ＋ ★㋒ の詰まり 解け申した★
+
+---
+
+### 節394 ★★★節389 は 誤り ―― ★測りは 設計の下でも 同じ値を出す★★★★
+
+**★経路の主の逐語（Commander 殿 `msg_20260821_011532_69dd656c`・`01:15:32`・`type: answer`・一字も改めず）★**
+> `[L2 clarification] The canonical Commander→shogun-second route is deliberately a superior relay, not a direct-to-karo delivery failure. Continue the normal shogun→karo local relay; direct Commander→karo is not required. B remains SUSPENDED: no a6 task or task-YAML write until reconciliation is complete. a6 stays intentionally_cold. Its "shogun next card" condition means a future card must be issued by shogun-second through normal command routing only after a qualified immutable, current, already-adjudicated block has been identified and the current reopen conditions are met. There is no such block currently proven. Return only either source/condition proof for L2 review or blocker4. Do not alter routing/config/DB/lifecycle.`
+
+| 節389 にて當職の申したる物 | 判 |
+|---|---|
+| 家老second の箱 `from: commander` ＝ **0 件**（00:53:21／01:11:03・二度） | **★正 ―― 測りは 生きて居る★** |
+| 逐語 ＝ **0 件**（全項・`tail` に非ず） | **★正★** |
+| **★「落ちた」「二度目＝型」「degraded_capacity」★** | **★★誤 ―― ★設計★ に御座つた★★** |
+
+> # **★★測りは ―― ★設計の下でも★ 同じ値を出す★★**
+> ## **★∴ ★反復は 「瑕」を証さぬ★ ―― 何度重ねても 「意図されたる姿」と 分かたれ申さぬ★**
+> ## **★∴ 「型」「瑕」「degraded」と断ずる前に ―― ★経路の主に ★設計★ を問へ★。★答は データの中に無く 器の主の手に在る★**
+
+**★併せて 二つ目の骨 ―― ★『★印を付けた』は 拡散を止め申さぬ★★**
+當職は 節389 に **★推論★印** を付し「裁に非ず」と断り申した。**★而して 焼く事・上げる事 其の物が 拡散★** ―― 本部長殿は之を **★L2 へ運び給ひ★**（`01:14:53`「二度目としてL2へ上申した」）、**★誤れる材が 上まで昇り申した★**。
+> **★∴ 印は ★読み手への断り★ にして ―― ★己への許し★ に非ず★。★裁を要する解は 焼く前に 問へ★**
+
+**★然れど 掃きは 捨て申さぬ★** ―― 掃かざれば **★停められたる筈の発行が 6 分 35 秒の窓にて 現に 起き得た★**。
+⇒ **★手続は残し 断のみ退く★**（**★器は健全・答が誤り★** ―― `instrument-unsound-does-not-void-the-reading` の**逆向き**）。
+**★己の器へも 同じ訂を当て申した★**（`memory/summary-says-unsent-check-the-recipient-box.md`・節を消さず**書き改め**・`description` 書換）。
+**★上へも 撤回を出し申した★**（本部長殿宛 `01:27` 台・着弾実視 ―― 逐語二綴り＋末尾標）。**★誤れる材を運ばせ申したは 當職の咎★**。
+
+---
+
+### 節395 ★B ―― ★閉ぢ申した（`CLOSED`・保留に非ず）★★
+
+**★家老second 殿の返し（`msg_20260821_012238_c8681d46`・`01:22:38`）―― reconcile 三器 了★**
+
+| 器 | 結 |
+|---|---|
+| ⑴canonical task state | `intentionally_cold`・逐語・出所 ＝ **将軍second cmd_new**（既報・変ぜず） |
+| ⑵直の inbox・actionable inventory | 行 **58**（`karo-second` 56／`inbox_write` 1／`honbucho` 1）⇒ **★軍師よりの行 0・将軍よりの行 0★**。未札 **28** |
+| ⑶受領済目録の出所 | **★該当 0 行★** ―― **★『受領済目録』なる物は 彼の箱に 一つも 届き居らず★** |
+
+> ## **★∴ 「該当無し」の理由は ―― ★吟味して落ちた★ に非ず ―― ★★吟味すべき母集団が 空★★**（**★別物ゆゑ 分けて記す★**）
+
+**★裁の逐語（Commander 殿 `msg_20260821_012519_cacf2adb`・`01:25:19`・一字も改めず）★**
+> `[L2 decision: retire the suspended B exception for a6] Reconciliation returned blocker4: candidate immutable blocks=0 and none of the three current reopen conditions is met. The prior B exception is therefore CLOSED, not pending: no a6 task, task-YAML change, or further candidate search under that exception. a6 remains intentionally_cold under its existing state. Reopen only on a NEW event satisfying one of its recorded conditions (gunshi response / superior ruling / shogun next card) and then follow normal routing. Correct age record: latest actual row 2026-08-20T05:22:21; as_of 01:19:04 = 71,803s (19h56m43s), not 47.25h. Report the closure via normal local superior chain. No routing/config/DB/lifecycle changes.`
+
+**★處し★** ―― 家老second 殿へ **逐語中継**（`01:26` 台・**★彼の箱にて実視 ―― 逐語二綴り＋末尾標・本文完存★**）＝ **★彼の探索の手を 止め申した★**。本部長殿へ **常の路にて復命**（仰せの `Report the closure via normal local superior chain` に従ふ）。
+
+---
+
+### 節396 ★㋒ の詰まり ―― ★解け申した★（節391 の始末）★
+
+節391 にて **★㋒ を打ち得るは當職のみ・而して三重に塞がる ⇒ 誰も打てぬ★** と上げ申し候。
+**★Commander 殿 `01:15:32` が 之に答へ給ひ申した★** ―― 次弾は **★資格ある不変・現行・既裁の塊★** が同定され 再開条件が満たされたる **後** に **常の routing** にて出す物。**★而して 現に 其の塊は 証されて居らぬ★**。
+
+> ## **★∴ ★詰まり（deadlock）に非ず ―― ★条件が未だ揃はぬのみ★★**
+> ## **★∴ 節379 と ★同型★ と讀みたるも ―― ★之も 亦 解の誤り★**（**★節394 と同じ疵 ―― 「己に打てぬ」を「誰にも打てぬ」と讀んだ★**）
+
+**★∴ 上げ直し申さぬ★**（**★二重上申 0★**）。
+
+---
+
+### 節397 ★家老second 殿の 第二の自申 ―― ★受領・條を頂戴★★
+
+・**★47.25 時間 は 誤り★** ⇒ 正 ＝ **★19 時間 56 分 43 秒（71,803 秒・断面 `01:19:04`）★**。**★Commander 殿の裁も 同じ値にて訂じ給ひ候★**（節395 逐語末）。
+・**因** ＝ **★『最も新しき ★札されたる★ 行』を 『最も新しき行』と讀みたる事★**。
+> ### **★條 ―― 『最も新しき ★札されたる★ 行』は 『最も新しき行』に非ず★**
+> ### **★且つ 此の誤りは ★一方にのみ倒れ★ ―― ★沈黙を 常に 長く 見せ★ 短く見せる事は 無し★ ⇒ ★此の型の数を見たる時は ★過大★ を疑へ★**
+
+・**★當職の側の始末★** ―― 追補六十七 節392 は「47.25 時間」を**軸の断り付きで**載せ居る ⇒ **★値は 上の通り 訂ず★**（**★節は消さず・書き改む★**）。**★軸と枝の断りは 猶 有効★**（足軽6・便の途絶・枝＝inbox）。
+・彼は **證 commit を検算せず `UNMEASURED` と札し 己の紙へ写さず** ―― **★正しき作法★**（**★己の紙は 己の寸を書けぬ★** の裏 ―― *他者の寸も 検めずして 写さぬ*）。
+
+---
+
+### 節398 ★自申（追補六十八）★
+
+**書込** ＝ 本台帳 ＋ **memory 三枚**（`summary-says-unsent-check-the-recipient-box`【**★節394 の訂 ―― 己が 15 分前に焼きたる断を 書き改む★**】／`a-retraction-is-an-assertion-and-skips-its-own-check`【四例目・**帰属をも誤る**】／※`rule-author-…` と `task-assigned-…` は追補六十七にて既了）＋ **★便 2 通★**（家老second ＝ **閉鎖の逐語中継**／本部長 ＝ **★撤回 ＋ 閉鎖の復命★**。**★二通とも 相手の箱にて実視済★**）＋ scratchpad。
+**★委員長殿へは 猶 一通も積まず★**（未裁 6 件）。**★家老second 殿へ 催促 0★**。
+**★既読札 0 撃★**（**★項 99 ／ `read:false` 69★**）。
+**★`queue/tasks` 書込 0・投入 0・★㋒ を打たず★・tmux 一指 0・`send-keys` 0・`respawn-pane` 0・機構/ccflare/config/DB/lifecycle/★routing★ 一指 0・push/fetch/pull 0・`~/.local` 一度も stat せず・他者の `environ`/`cmdline` 0・他者の jsonl 0 撃・他者の紙へ書込 0・secret 値 0★**
