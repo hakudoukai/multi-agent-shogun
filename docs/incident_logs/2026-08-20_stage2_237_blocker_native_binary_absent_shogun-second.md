@@ -255,3 +255,93 @@ $ claude --version → rc=0  "2.1.237 (Claude Code)"
 
 install 0 ／ npm 0 ／ postinstall 0 ／ PATH 改変 0 ／ symlink 張替 0 ／ restart 0 ／ cutover 0 ／ pane 入力 0 ／ send-keys 0 ／ 落とし 0 ／ 番人一指 0 ／ `systemctl` 0 ／ 他PC SSH 0 ／ 他者の紙への書込 0 ／ 代理既読札 0 ／ push 0（ahead 31）。
 本追補の測りは **`stat`・`ls`・`ps`・`ss`・`/proc` の読取・`--version` の一喝・`/health` の一喝** のみに御座る。
+
+---
+
+# ★追補五（2026-08-20 12:31 JST）―― ★門が一つ落ちた★：8080 は「形は ok・能は 1/6」／併せて ★箱の読みの陥穽★★
+
+## 二十九 ★訂 ―― 追補四 節二十三の「8080 PASS」は ★誤読★ に御座った★
+
+契機 ＝ **本部長 `msg_20260820_122321_bac19642`（12:23:21・nonce=HB-20260820-1223-SHOGUN）**:
+「12:22:36+09:00 pane%12 dead=0だが、**API Error: 503 All accounts are temporarily unavailable が実表示**。」
+
+之を承け **12:26:27 と 12:26:30 の二点**にて `GET http://192.168.11.59:8080/health` を測り直したるに ――
+
+| 欄 | 値（二点とも同じ） |
+|---|---|
+| `status` | `ok` |
+| `accounts` | `6` |
+| **`pool.configured`** | **6** |
+| **★`pool.routable`★** | **★1★** |
+| **★`pool.paused`★** | **★5★** |
+| `pool.rate_limited` / `usage_exhausted` | 0 / 0 |
+| `pool.next_available_at` | **`null`（＝戻る刻の予告 無し）** |
+
+**★当職が『accounts=6 ゆゑ PASS』と申したるは ―― 6 は `configured` にして `routable` に非ず★。**
+**⇒ ★`status:ok` は「形」にして「能」に非ず★**（[[static-signals-are-shape-not-proof]]／[[assumed-field-name-yields-silent-zero]]）。
+**⇒ 口は ★一つ★ のみ。其れが塞げば代りが無く、本部長の見たる 503 が出る。因は実在に御座った。**
+
+**★己の手落ちを併せ記す★**: 12:17 の preflight にて当職は `/health` の出力を **`{"status":"ok","accounts":6,…}` と ★截って★** 記し、`pool` を見ず・残さなんだ。**∴ `paused=5` が ★何時から★ 斯くあるかは ★UNMEASURED★**（[[state-the-conditions-you-measured-under]]／★出力を截るな★）。
+
+**訂の便**: 委員長 **seq201255**（parent 201223）／Commander **seq201256**（parent 201224）／本部長・家老second へ各一便。
+
+## 三十 ★之が canary の判に直に効く★
+
+現に走る体 **8**、口 **1**。此処へ **9 体目**を起こせば ―― **新客が唯一の口を奪ひ、現に走る 8 体の会話が細る**。
+Commander 令は「**Stop on any drift/failure**」。**★503 は drift に他ならず★。**
+
+| 門 | 判（12:31 現在） |
+|---|---|
+| ①preflight 二度測り不変 | **PASS**（且つ★家老second の器にて三点目★ 12:25:03 ＝ 同値。**12:15:59〜12:25:03 の 9 分間・二人の器にて不変**） |
+| ②8080 の健 | **★FAIL（routable=1／paused=5）★** |
+| ③一体のみ・argv/UUID 保存・前後実視 | 段取り済（未執行） |
+| 執行の手 | **★禁下★**（落とし＝D006 条件5 不成立／send-keys＝agent 禁） |
+
+**⇒ ★打数 猶 0★。窓の外なりとも・①が不変なりとも、★門の一つが落ちて居れば発たぬ★。**
+**★口の一時停止解除・優先度・認証再取得は理事長殿の専管★** ゆゑ、当職は ccflare へ **一指も触れ申さず**。
+
+## 三十一 家老second の報（12:27:15）―― ★二つの独立検算と、一つの潔き自白★
+
+㊀ **honbucho の件、家老は自ら訂された**（「箱の名から役を当て嵌めた・**測らずして書いた**」）。当職の実測と一致 ⇒ **機構の穴は真・危害の中身は Hermes の会話**。
+㊁ **母数 10・走行 8 は家老の器にても真** ―― claude 走行は 8 pid のみ（`43213 / 54326 / 56457 / 58218 / 59890 / 61670 / 63955 / 389804`）、**opus 2 体・sonnet 6 体**。欠くる 2 体（`gunshi-second`／`ashigaru-second-7`）は **孰れも Hermes**。
+㊂ **★pid 63955 ＝ 家老second 自身★**（`--resume` uuid が家老の session と一致）。**⇒ 8 体の (deleted) inode 保持者に家老自身が含まれ、canary の的に選ばれなば失はるるは本件の測りを積みたる其の会話。家老は之を★隠さず先に献じ★、忌避を願はず。**
+㊃ 家老の見立て「**損の軽きは sonnet 6 体の孰れか**」―― 当職も理に適ふと読む。**★併し裁は委員長殿・Commander に在り★**、当職の同意も亦 **見立て** に過ぎず。
+㊄ 別件（行動を求めず）: `tmp` の pytest 配下 python **25 本余・齢 11 日**。**当職も一指も触れず**（落としは D006）。owner ＝ 其の試験の主。
+
+## 三十二 ★箱の読みの陥穽 ―― 「清く parse できる不完全な箱」★（新出・機構へ上げる）
+
+本 turn にて `queue/inbox/shogun-second.yaml` を三度測りたるに ――
+
+| 刻 | 錠 | bytes | 項の頭 |
+|---|---|---|---|
+| 12:22:52 | 無し | **50,121** | 41 |
+| ≈12:30 | `LOCK_SH` | **★35,821★** | **43** |
+| 12:30:36 | `LOCK_EX` | **56,341** | 43 |
+
+**便は不変・追記のみ**なれば **bytes は単調に増ゆべし**。而して **50,121 → 35,821 と ★減じ★、項の頭は 41 → 43 と ★増えた★**。
+**⇒ ★35,821 の読みは「丸ごとの箱」に非ず★**（★推論★: 書き手の truncate＋serialize の最中を掴んだ）。**★而して其れは YAML として清く parse でき申した★** ―― **∴ parse の成功は「全部読めた」の証に非ず**（[[reader-side-truncation-looks-like-loss]]／[[truncate-before-serialize-destroys-the-file]]）。
+**★`LOCK_SH` は之を防が申さなんだ★** ⇒ 書き手が同じ錠を取り居らぬ公算（★但し `scripts/inbox_write.sh` は当職 ★読取禁★ ゆゑ中は開けず ―― **owner ＝ 環境部長／委員長**）。
+**害**: 斯かる断面より「未読 N」を数へなば **★便を黙って落とす★**。**当職は錠と ★bytes の差分 assert★ にて免れ申したるも、之は作法に依る免れであって機構の護りに非ず。**
+
+**⇒ 当職の作法（他の役職にも具申）**: ①`LOCK_EX` にて読め ②`parse できた` を以て足れりとせず **bytes と項数を併せ記せ** ③札を打つ時は **delta ＝ ちょうど −（打つ数）** を assert せよ。
+
+## 三十三 既読札（本 turn）
+
+**6 件**を `flock(LOCK_EX)` → **的の 1 byte のみ書換**（`read: false`→`read: true`）→ parse 検め → `write`＋`truncate`＋`fsync` にて打ち申した。**bytes 56,341 → 56,335（delta ＝ ★−6★・ちょうど打った数）**。
+**★悉く当職が実読し・実行に移した便のみ★**（assert `set(unread) ⊆ set(targets)` ―― 此の assert が **二度**、未読の新着を検知して当職を止め申した ＝ 機構でなく作法が救うた例）。
+
+**★本部長への訂★**: 「unread=4 ゆゑ inbox2/3 の処理が失敗」は否 ―― **`read:false` は「未だ札を打って居らぬ」の謂にして「処理して居らぬ」の謂に非ず**（[[read-false-means-not-yet-marked]]）。当該 4 件は悉く実読・実行済（証 ＝ seq201223／201224／201225・家老への返信・commit `e326f3b`）。**当職の作法は『読む→行ふ→然る後に札』に御座る。**
+
+## 三十四 UNMEASURED（owner 明記）
+
+- `paused=5` が **何時から**斯くあるか ―― 当職が 12:17 の出力を截りたるゆゑ履歴無し（**owner ＝ 己の手落ち**）。
+- 口の停止の因（quota／障り／人の手）・戻る刻 ―― `next_available_at` は `null`。**owner ＝ 理事長殿／環境部長**。
+- `ANTHROPIC_BASE_URL` を上書きし居る物 ―― `.claude/settings*.json` **読取禁** ⇒ **owner ＝ 環境部長**。
+- `inbox_write.sh` の書込が錠を取るか ―― **読取禁** ⇒ **owner ＝ 環境部長**（節三十二）。
+- `--resume` が会話を戻すか ―― 試すは執行 ⇒ 未測。
+- 第四の窓（12:33 頃）が現に開くか ―― 本紙起草の刻に**未だ至らず**（★三点外挿の推論★）。
+
+## 三十五 為さぬ事（追補五の窓）
+
+ccflare 一指 0（**口の解除は理事長殿の専管**）／落とし 0 ／ pane 入力 0 ／ send-keys 0 ／ install 0 ／ npm 0 ／ PATH 0 ／ symlink 0 ／ restart 0 ／ cutover 0 ／ 番人一指 0 ／ `systemctl` 0 ／ SSH 0 ／ 他者の紙への書込 0 ／ 代理既読札 0 ／ push 0。
+本追補の測りは **`curl /health` 二点・`flock` 下の箱の読み・己の箱への札のみ**に御座る。
