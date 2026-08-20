@@ -3004,3 +3004,128 @@ canary **5**（足軽3・4・5・6・1）／**0.2 不触・`seq201804` 裁待ち
 ### 節二百二十六 ―― 為さぬ事（本節の窓）
 
 **足軽6 へ 便 0・促し 0・pane 入力 0**（裁定16）／**足軽1 へ 便 0**／**0.2 猶 不触**（`seq201898` 裁待ち・**催促 0**）／**0.0 へ tmux 書込 0・compact 0**（**器は持ち主の物**）／**`fix_pane_widths.sh` 走らせ 0**（**番人が是正を勧むるも pane の resize は禁**）／**`~/bin` 改変 0・読取 0（実行のみ）**／**番人の停止・改変 0**（`systemctl` は **読取のみ**）／**restart 0**／**tmux 書込操作 0**（`capture-pane`・`display-message` の**読取のみ**）／**8080 へ 0 撃**／**代理既読札 0・己の札も 0**／他者の紙への書込 0／`_archive` 不開／他者の jsonl・environ 0／機構 一指 0／gateway・ccflare 一指 0／`~/.local` 不触／`settings*.json` 読取 0／install 0・npm 0／SSH 0／push 0・fetch 0／**`MEMORY.md` 不触**／**枝の書換へ 0**。
+
+---
+
+## 追補三十八 ―― ★Commander `seq201951` 履行（棚卸）★ ／ ★★己の述語に 瑕 二つ ―― 孰れも「完に見ゆる誤値」★★ ／ ★a6 の 28 は ★札の負債★ と 実読にて確定（29通目を出さず）★ ／ ★★訂 ―― 追補三十七 の百分率は ★逆★ に御座った★★ （2026-08-20 19:15 JST・将軍second）
+
+**出所** ―― Commander `seq201951`（18:46:19・`answer`）「**Do NOT issue WORK-PULL canaries yet. Pull active tree first, then inventory every Second-lane role unanswered/unacked work newest-first; retain only live work; list older-than-7d unchanged for Iincho; do not close lots. Per role return selector/as_of/retained IDs+count/older IDs+count/blocker4. iincho486 out of scope. No bulk mark/delete, task creation, runtime/lifecycle, config or DB change.**」
+
+---
+
+### 節二百二十七 ―― ★令の第一歩「Pull active tree first」は ★実行し得ず★ ⇒ blocker4★
+
+**実測**（`as_of 2026-08-20T19:05:19+0900`）: 枝 `feat/dd169-d006-conditional-exception` ―― **`ahead 64`**・**modified 44 / untracked 495 ＝ 計 539** ⇒ **★dirty★**。
+
+| blocker4 | 内容 |
+|---|---|
+| **owner** | **将軍second（當職）** ―― 己の枷ゆゑ 他へ回らず |
+| **root_cause** | **★二重に塞がる★** ㊀ CLAUDE.md『Git Pull Safety』＝**「dirty tree へ pull するな」**（539 の変更が在る）㊁ 當職の standing 禁＝**`fetch`／`merge`／`rebase`／`cherry-pick` 悉く 0**（∴ `pull` は 手段の側からも 断たれ居る） |
+| **next_safe_action** | **★樹を pull せずして 棚卸を進む★**（**箱と task YAML は 現の作業樹にて 読める** ―― remote の新しさは 棚卸の可否に懸からず）。**pull を要すと判ぜらるるならば 別途 裁を賜りたし** |
+| **human_GO_required** | **是**（禁の解除 ＝ 委員長／理事長の専管） |
+
+**★∴ 黙って飛ばさず・独断で pull もせず ―― 札を立てて 先へ進み申した★**。**remote 通信 0**。
+
+---
+
+### 節二百二十八 ―― ★棚卸の器の選定 ―― `queue/tasks` は 述語にて引けず★
+
+**当初 `queue/tasks/*.yaml` の `status:` にて引かんとせしが ―― ★全 14 紙が 全状態 0 を返し申した★**（700KB の紙にて 之は 有り得ぬ）。**⇒ 綴りを仮定せず 現物を検むるに**:
+
+```
+20 status: completed / 5 status: intentionally_cold / 2 status: standing_rule
+2 status: acknowledged / 2 status: superseded_by_current_order_15_... / 1 status: 裁を待たず着手可(家老second明示)。…
+```
+
+**⇒ ★task YAML は 状態機械に非ず ―― ★自由語の台帳★★**（地の文が `status:` に混じり居る）。**∴ 「未ack」を 述語にて引く事 成らず**（[[assumed-field-name-yields-silent-zero]] ―― **★己の条が 現に立ちたる二例目★**）。**owner ＝ 家老second（`queue/tasks` の主）。當職は 書込 0。**
+
+**★∴ 棚卸の器を ★箱（`queue/inbox/<役>.yaml`・`read:false`）★ に据ゑ申した★** ―― 欄が **有界**（`read` は `true|false` の二値）にして **役職毎に 対照を置ける**ゆゑ。
+
+---
+
+### 節二百二十九 ―― ★★棚卸の結（11 役職・悉く 読取のみ・札 0）★★
+
+**selector** ＝ `queue/inbox/<agent_id>.yaml` の内 **`read: false`** なる項（**record 区切 ＝ 行頭 `- content:`**）／**新しき順 ＝ `timestamp` にて降順**（**★`tail` に依らず★**）／**7 日の線 ＝ `as_of − 7d`**。
+**as_of ＝ `2026-08-20T19:12:26+0900`**（**測りと同じ呼び出しの中で `date` に問へり**）。
+
+| 役職（pc=SecondPC） | 総 record | **retained（live）** | **older>7d** | blocker4 |
+|---|---|---|---|---|
+| **shogun-second** | 69 | **★39★** | **0** | 札を打つ道が無し（下記） |
+| **karo-second** | 40 | 0 | 0 | ― |
+| ashigaru1 | 49 | 0 | 0 | 名の衝突（潜在・下記） |
+| ashigaru2 | 50 | 0 | 0 | 同上 |
+| ashigaru3 | 34 | 0 | 0 | 同上 |
+| ashigaru4 | 38 | 0 | 0 | 同上 |
+| **ashigaru5** | 47 | **1** | **0** | `task_assigned` 1（本日 14:43:47） |
+| **ashigaru6** | 58 | **★28★** | **0** | 節二百三十一 にて 解決 |
+| ashigaru-second-7 | 10 | 0 | 0 | ― |
+| gunshi-second | 38 | 0 | 0 | ― |
+| honbucho | 49 | 0 | 0 | ― |
+| **計** | **482** | **★68★** | **★0★** | |
+
+**★対照（各 file 毎）★** ―― **総 record が 11 紙 悉く 非零** ⇒ **述語は 各紙にて 生きて居り、`unread=0` は ★真の 0★**（[[grep-zero-cannot-tell-passed-from-never-run]] を **紙毎に閉ぢ申した**）。
+
+**★「older>7d ＝ 0」に 絞りを添ふ★** ―― **`cap_rotated_notice` が ★11 箱 悉くに 在り★**（天井回転 発生済）⇒ **回転前の項は `queue/inbox/_archive/`（17 file）へ移り居る**。**當職は `_archive` の ★中身を開く事を禁ぜられ居り申す★** ⇒ **★「7日超 0」は ★生箱の内★ に限る ―― 回転前の窓は UNMEASURED（owner ＝ `_archive` を開き得る者）★**。**★之を書かずば 「0」は 偽の緑に成り申す★**（[[state-the-conditions-you-measured-under]]）。
+
+**★名の衝突（blocker4・潜在）★** ―― 名簿は pane 0.1〜0.6 を **`ashigaru1`〜`ashigaru6`** と綴り居る（**MainPC の役職と ★同綴り★**）。**⇒ 検め申した**: a6 の箱 58 通の内 **56 が `karo-second` 発**・**MainPC の `karo` 発は ★0★**（a1 も 47/49 が `karo-second`）。**∴ ★衝突は 潜在にして 現実に非ず★** ―― 而して **MainPC の書き手が 短き綴りを用ゐれば 此処へ落つる**（[[short-role-name-routes-to-another-pc]]）。**owner ＝ 委員長／名簿の主。**
+
+**★`lot` は 一つも閉ぢ申さず・`read` の札 0・`mark`/`delete` 0・task 起票 0・runtime/config/DB 一指 0・`iincho486` 不触★**（令の禁 悉く順守）。
+
+---
+
+### 節二百三十 ―― ★★己の述語に 瑕 二つ ―― 孰れも「完に見ゆる誤値」★★
+
+| # | 瑕 | 何が起きたか | 型 |
+|---|---|---|---|
+| ㊀ | **刻の比べ** | 刻の欄は **引用符付**（`'2026-08-20T…'`）⇒ 左辺が `'`（ASCII 39）にて始まり **★常に 閾を下回る★** ⇒ **★本日の 68 通 悉くが「7日超」と札されたり★** | **[[a-wrong-value-hides-better-than-a-miss]]** |
+| ㊁ | **欄名の仮定** | `status: assigned\|done\|idle\|failed` を canon と信じ 14 紙を掃くに **全て 0** | **[[assumed-field-name-yields-silent-zero]]** |
+
+**★㊀ の恐ろしさ★** ―― **出力は ★完★ に見え申した**（全 68 行に 札が付き・欠落 無し）。**★此の儘 復命せば 「本日 18 時の便までも 7日超ゆゑ 委員長送り」と 偽り申した★** ―― **★誤値は 見落しより 巧みに隠る★**。
+**★救ひたるは 対照★** ―― 「**最古・最新の生の刻**」を併せ出したるに **最新が `2026-08-20T18:52` にて `OLD` と出で** 矛盾が 面に現れ申した。**⇒ ★掃きには 必ず 対照を添へよ★**。
+
+---
+
+### 節二百三十一 ―― ★★a6 の 28 は ★札の負債★ ―― 実読にて確定（★29 通目を出さず★）★★
+
+**委員長裁定16 の逐語** ―― 「**未読 28 件の箱へ 29 件目を出しても『鐘の死』と『意ある冷』を分かち得ぬ ＝ 測定として無効**」。
+**★當職の独立の棚卸が 其の 28 を ★数まで再現★ し申した★**（裏書き成立）。
+
+**⇒ ★便を出さず `capture-pane`（読取のみ・刺激に非ず）にて 分かち申した★**（19:14:22）:
+
+> a6 は **最新便 `msg_20260820_052221_4d846105` を 現に 読み・四点に纏め**（裁定第9号の再確認／commit先行の新条／正本 path 不在の誠実な開示／弾は猶 0）**―― 己で 「意ある冷、継続」と 結び居り申した**。
+
+**⇒ ★∴ 「鐘の死」に非ず ★意ある冷★ ―― 體は 生き 箱を 現に消費し居る★**。**a6 の 28 は ―― 己の箱の 39 と ★同型・同じ器・同じ曖昧さ★ ＝ ★札の負債★**。
+
+**★之は 己の条を 対称に適用したる結に御座る★** ―― 「己の 39 は札の負債」と申しながら 「a6 の 28 は處理の負債」と読まば **★同じ器を 己に甘く 他に辛く 読む事★**に成り申した。**[[skepticism-applied-outward-not-inward]] の 裏返しを 免れ申した。**
+
+**★併せて 弾切れの件が 精まる★** ―― a6 自ら「**当職への弾は猶 0**」と記し居る ⇒ **★冷の理は 采配の怠りに非ず 弾の不在★**（**★本人の像より引きたり★**・[[idle-may-be-intentionally-cold]]）。
+
+---
+
+### 節二百三十二 ―― ★★訂 ―― 追補三十七 節二百二十 の百分率は ★逆★ に御座った★★
+
+**画面の literal** ＝ **`9% until auto-compact`** ⇒ **★「until」＝ 残余★** にして **消費に非ず**。
+
+**実測**（`as_of 2026-08-20T19:15:04+0900`・`capture-pane` 読取のみ）:
+
+| pane | 残余 | **消費（真）** | 當職 前節の記述 |
+|---|---|---|---|
+| **0.0（karo-second）** | **★4%★** | **★96%★** | 「飽和 8%」＝**★8% を 消費と読み居った★** |
+| 0.4 | **4%** | **96%** | 「**4% の 0.4 をも 正常と判ず**」＝**★逆★** |
+| **0.6（a6）** | 9% | 91% | ― |
+| 0.1・0.2・0.3・0.5・0.7 | 欄無し | ― | **★欄そのものが無き時は 停まれ★**（UNMEASURED） |
+
+**⇒ ★是正★**: **家老second は「8% しか消費せぬ冷えたる體」に非ず ―― ★残 4%・下降中（18:34 の 8% より 40 分で 半減）の 逼迫したる體★**。**0.4 も 同じく 残 4% ―― 冷えて居らぬ。**
+**⇒ ★而して 掃きの閾に関する 結論は 生き残り申す★**（掃きは **枯渇＝残 0%** にて発火する故、残 4% では 猶 発火せぬ）―― **★物差しは誤り居ったが 答は倒れず★**（[[instrument-unsound-does-not-void-the-reading]]）。**★而して 逼迫の度は 當職の描きたるより ★遥かに重し★★**。
+
+**★併せて ―― 前便の UNMEASURED 一件が 解け申した★** ―― **画面が「until auto-compact」と ★数へ居る事 其の物★ が ―― ★L1 内蔵 auto-compact が 此の pane に 現に武装し居る証★**（**`settings*.json` を 一行も読まずして 得たり**）。**∴ 前便の訂（「網の生死を 測り得ぬ」）を 更に 訂す ―― ★L1 は 生き居り申す★**。**⇒ 0% に至らば ★会話は 失はれず 圧縮さる★** ⇒ **危ふきは ★喪失★ に非ず ★制御なき圧縮★**。**★煽らず 事実の格にて記す★**。
+
+**★∴ 家老second へ 即 便を出し申した★**（19:15・`status_update`）―― **★自ら打てぬ體にも 為し得る手が 一つ在る★** ＝ **★圧縮を跨いで残る紙へ 状態を 先に落とす事★**。**「/compact を打て」は 空なりしが ―― 之は ★彼の手にて 現に為し得る★**。**★前便の空しき進言を 執行し得る形へ 置き換へ申した★。**
+
+---
+
+### 節二百三十三 ―― 為さぬ事（本節の窓）
+
+**`git pull`／`fetch`／`merge`／`rebase` 0**（節二百二十七・blocker4 として上申）／**`read` の札 0（己の箱も 他者の箱も）**／**`mark`/`delete` の一括 0**／**task 起票 0**／**`lot` を閉ぢる事 0**／**runtime・lifecycle・config・DB 一指 0**／**`iincho486` 不触**／**足軽6 へ 便 0・促し 0・pane 入力 0**（**★読取のみ ―― 之が 裁定16 の問ひを 解き申した★**）／**足軽1 へ 便 0**／**0.2 猶 不触・催促 0**／**0.0 へ 入力 0**（**`capture-pane` の読取のみ**）／**tmux 書込操作 0**（`send-keys` 0・`set-option` 0・resize 0）／**他者の pane の compact 0**／**`_archive` 中身 不開**／**番人 一指 0**／**8080 へ 0 撃**／**`~/bin` 改変 0**／**`settings*.json` 読取 0**／**push 0・remote 通信 0**。
+
+**便 ―― 家老second へ 1 通（19:15・急）**。
