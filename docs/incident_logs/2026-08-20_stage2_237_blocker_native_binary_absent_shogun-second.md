@@ -1460,3 +1460,84 @@ canary **3**（★足軽3・足軽4・足軽5 のみ★）／残る三体（0.6�
 
 canary **3**（★足軽3・足軽4・足軽5 のみ★）／残る三体 respawn **0**／★家老second（0.0・2.1.236）は令の外ゆゑ不触・seq201557 未裁★／落とし **0**／`kill` **0**／pane 入力 **0**／`send-keys` **0**／★他者の pane の compact **0**★／代理既読札 **0**／他者の紙への書込 **0**／他者の jsonl **0**／npm・install **0**／`~/.bashrc` **0**／gateway 一指 **0**・案も出さず／config **0**／番人 **0**／SSH **0**／push **0**（ahead 47）。
 **★自申★** ―― 家老second の箱・己の箱を **読取のみ**にて検め申した。
+
+---
+
+# 追補二十一 ―― ★当職 追補二十の書き様を訂す ―― 「家老の錨は当職の門より良し」は ★軸を取り違へたる誤り★（as_of 2026-08-20T15:12+09:00・将軍second 実測）
+
+## 百二十二 ★★己の器にて実測 ―― `TMUX_PANE` の中身は %番 にして pane 索引に非ず★★
+
+家老second の 14:06:11 便（`msg_20260820_140611_5b3dd1e9`・当職 本刻 実読）に肝要の一行あり：
+
+> 「新体の `TMUX_PANE` が **`%18`** にて 旧 58218 と同じ ⇒ respawn は %番を保ち申す」
+
+**⇒ 当職 己の器にて検め申した（15:12・己の pane のみ・他者の environ 不開）**：
+
+| 測り | 値 |
+|---|---|
+| 己の shell の `$TMUX_PANE` | **`%12`** |
+| `tmux display-message '#{pane_id}'` | **`%12`** |
+| `tmux display-message '#{session}:#{window}.#{pane_index}'` | `shogun-second:0.0` |
+
+> **★`TMUX_PANE` == `pane_id` ―― 即ち `%番`。★pane 索引（`0.N`）は 其処に入って居らぬ★**
+
+## 百二十三 ★★然らば 錨は「連続性」を証して「選択」を証さぬ★★
+
+追補二十 節百十五 にて当職は家老second の錨を「**当職の門より良し**」と記した。**★之は 軸の上で誤りに御座る★** ―― 訂す。
+
+| 問ひ | 何が答ふるか |
+|---|---|
+| **㋐ 撃つべき体を正しく選び得たか**（＝委員長令の `0.6` は孰れの体か） | **★門 G1b のみ★**（`tmux list-panes` にて 索引↔`@agent_id` を **撃つ刻に** 実測） |
+| **㋑ 狙ひたる pane に現に当たり、其の pane が同一の器の儘か** | **★家老の錨★**（旧体・新体の `TMUX_PANE` を突き合はす） |
+
+> ### **★錨は 己が狙ひたる pane の 前後を較ぶるゆゑ ―― 狙ひ其の物が外れて居らば 前後は仲良く一致し 門は通り申す★**
+> **⇒ 現に壊れたる軸（索引↔体）を 家老の錨は 一片も護り申さぬ。当職を救うたるは G1b にして 錨に非ず。**
+
+**★二つは 上下に非ず ―― 別の問ひに答ふる 別の道具に御座る★**（[[two-supports-one-conclusion-unequal-strength]]）。
+**★「良き錨を得たゆゑ G1b は要らぬ」と読まるる事、断じて無き様 此処に記す★**（[[half-measured-fix-must-not-be-called-fixed]]）。
+
+## 百二十四 ★家老の「裁定を %番にて書く」案 ―― 危ふきを 一つ 移すのみに御座る★
+
+家老second は「respawn が %番を保つ ⇒ **裁定を %番にて書く案 本件にて実証**」と結び申した。**★実測は正しく・結論は一歩 踏み込み過ぎに御座る★**：
+
+- **委員長令 seq201550 は ★pane 索引の語★ にて書かれ居り申す**（`0.4→0.5→0.6→0.1→0.2`）。
+- 之を %番の語へ移すには **★索引↔%番 の対応表★が要る** ―― **★而して 其の対応表こそ 今回 壊れたる当の物★**。
+- 且つ 其の翻訳は **一度・早くに・一人が・古き断面より** 為される。**★撃つ刻に測り直す形より 弱し★**（[[carried-ledger-numbers-lose-provenance]]／[[relative-time-label-goes-stale-under-the-number.md]]）。
+
+> **⇒ ★語を %番へ移せば 危ふきは消えず ―― 翻訳の一段へ移り、しかも其処では一度しか検められぬ★**
+
+## 百二十五 ★然らば 撃つべき体は 何の鍵にて引くべきか★
+
+**当職の実測（15:12・`tmux list-panes -t multiagent-second:0`）**：
+
+| 索引 | %番 | `@agent_id` | 箱 |
+|---|---|---|---|
+| 0 | `%13` | `karo-second` | `karo-second.yaml` |
+| 1 | `%20` | `ashigaru-second-1` | `ashigaru1.yaml` |
+| 2 | `%19` | `ashigaru-second-2` | `ashigaru2.yaml` |
+| 3 | `%18` | `ashigaru-second-3` | `ashigaru3.yaml` |
+| 4 | `%17` | `ashigaru-second-4` | `ashigaru4.yaml` |
+| 5 | `%16` | `ashigaru-second-5` | `ashigaru5.yaml` |
+| 6 | `%15` | **`ashigaru-second-6`** | **`ashigaru6.yaml`** |
+| 7 | `%26` | `ashigaru-second-7` | `ashigaru-second-7.yaml`（★七体中 此の一体のみ 綴りが長し★） |
+
+- **索引** …… 委員長令の語。**★併し pane の抜き差しにて ずれ申す★**（[[watcher-pane-index-fixed-insertion-hazard]]）
+- **%番** …… respawn を跨ぎて保たる（家老の実測 n=1）。**★併し 令の語に非ず ⇒ 翻訳を要す★**
+- **`@agent_id`** …… **★体自身に貼られたる札にして 令の申す「足軽6」に最も近し★**。**★併し respawn が非正名の綴りを産む事あり★**（[[secondpc-respawn-noncanon-agent-id]]）
+
+> ### **★孰れの鍵も 単独にては足らず ―― ゆゑに 撃つ刻に 四鍵（索引・%番・`@agent_id`・箱の名）が悉く揃ふ事を課す★**
+> **0.6 の四鍵は 現に揃ひ居り申す** ―― 索引 `6` ／ `%15` ／ `ashigaru-second-6` ／ `ashigaru6.yaml`（旧 claude `43213`・2.1.236）。**★裁の下りたる後、撃つ刻に 改めて測り直す★**（[[an-artifact-cannot-measure-itself]]）。
+
+## 百二十六 ★己の箱の 50件上限 ―― 既読札を打てば 退避に化ける★
+
+`msg_20260820_134454_cap_rotated`（13:44:54・当職 本刻 実読）：
+
+> 「箱の容量上限(50件)超過につき **★既読便を退避★**いたし申した（今回 **N=19件**・累計 **M=206件**・退避先＝`queue/inbox/_archive/shogun-second_pruned.yaml`）」
+
+> **★即ち ―― `read: true` は「読んだ」の札に留まらず、★次の rotation にて 箱より消ゆる引金★ に御座る★**（[[inbox-retention-cap-silent-deletion]]／[[stale-field-can-be-an-execution-trigger]]）
+> ⇒ 退避先は multi-document YAML ゆゑ `yaml.safe_load()` にては読めず（`safe_load_all()` を要す）・**★git 追跡外★**。
+> ⇒ **★ゆゑに 札を打つ前に 「後に此の文を要すか」を問ふべし★**。当職 本刻の札は **己が全文を実読したる便に限る**。
+
+## 百二十七 為さぬ事（追補二十一の窓）
+
+canary **3**（★足軽3・足軽4・足軽5 のみ★）／残る三体 respawn **0**／★0.6 は委員長裁（seq201633）待ち ―― 打数 0★／★家老second（0.0・2.1.236）不触・seq201557 未裁★／落とし **0**／`kill` **0**／pane 入力 **0**／`send-keys` **0**／★他者の pane の compact **0**★／代理既読札 **0**／他者の紙への書込 **0**／★他者の `environ` 不開（本節の `TMUX_PANE` は ★己の shell の変数★ に御座る）★／他者の jsonl **0**／npm・install **0**／`~/.bashrc` **0**／gateway 一指 **0**・案も出さず／config **0**／番人 **0**／SSH **0**／push **0**。
