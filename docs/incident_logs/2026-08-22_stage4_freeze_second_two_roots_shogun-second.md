@@ -196,3 +196,105 @@ as_of=2026-08-21T23:18:29+09:00
 ★★本紙の測りは 悉く ―― ★read-only★★★: `ps`／`/proc/*/cmdline`／`tmux list-panes`（★`-F` の 読取のみ★）／`stat`／`sha256sum`／`grep`／`git status`・`git log`（★読取★）。
 
 ★★不可逆の手 ―― `0`★★: ★`pull` `0`・`reset` `0`・`stash` `0`・`checkout` `0`・`push` `0`・`fetch` `0`★／★respawn `0`・撃ち `0`・`send-keys` `0`・`set-option` `0`★／★hermes系 file 改変 `0`★／★`active-hermes-runtime` 改変 `0`★／★staging 樹 改変 `0`★／★現 root 二本 ―― ★一 byte も 触れず★★／★更新器 `0`・番人 `0`★／★`queue/tasks` 書込 `0`★／★足軽の箱へ 書込 `0`★／★札 `0`（`00:29:24` 以後）★／★`_archive` 不開★／★本部長殿へ 便 ―― ★本件に限り 出し申す★（★自禁は 「試しの為の便」に 掛かる物にて ―― ★上位よりの 名指しの照会への 復★ は 其の外★ と 判じ申した・★之を 隠さず 申し上ぐ★）★
+
+---
+
+## 八 ―― ★★★★★訂 其の二 ―― ★本紙 §四「a7 は pointer 一行にて可逆に切替へ得・己の手にて可」は ★誤り★★★★★（as_of `2026-08-22T05:29:27`〜`05:30:44+0900`・★本紙 commit `b668b47` の ★三分後★ に 己の器にて 見出し申した★）
+
+### ㊀ ★★現物 ―― ★三つの launcher は 悉く ★path を 焼き込み★ 居り申す★★★
+
+★述語 ―― ★launcher を ★逐語★ にて 読み申した★（★read-only・一字も 改めず★）
+
+| # | launcher | `size` | `sha256` | 焼き込みたる行（逐語） | 指す root |
+|---|---|---|---|---|---|
+| ㋐ | `/home/hakudokai/hermes-departments/honbucho/bin/hermes-honbucho` | `811` | `35abb87d9b8618c06d44fcc746aa2ef550ec1d8c79d4c2393ff8ee74c30a10bf` | `exec ... /home/hakudokai/hermes-roles/gunshi-second-hermes/run/hermes-agent-v2026.8.3/venv/bin/python \` ／ `  /home/hakudokai/hermes-roles/gunshi-second-hermes/run/hermes-agent-v2026.8.3/hermes --continue "$@"` | **gunshi root** |
+| ㋑ | `/home/hakudokai/hermes-roles/gunshi-second-hermes/bin/start-gunshi-second-hermes.sh` | `799` | `cfce29de3943f4757849c307284e4b8b3e9ace2930f8b6d9e3d6e05c37ccb9de` | `RT=$ROLE_HOME/run/hermes-agent-v2026.8.3` | **gunshi root** |
+| ㋒ | `/home/hakudokai/hermes-roles/ashigaru-second-7-hermes/bin/start-ashigaru-second-7-hermes.sh` | `803` | `874ca0a6093e3cb14b7ab5aed9946ee8c97a6af15428b0475ad79e2def72b751` | `RT=$ROLE_HOME/run/hermes-agent-v2026.8.3` | **a7 root** |
+
+★★∴ ★一つの root に 二つの launcher★（㋐㋑ が 同じ gunshi root を 指し申す）―― ★役ごとに 別の口★
+
+### ㊁ ★★★★`active-hermes-runtime` は ―― ★誰も 読み居り申さぬ★★★★
+
+| 述語 | 結果 |
+|---|---|
+| `grep -n 'active-hermes-runtime' <a7 launcher>` | **★hit `0`★** |
+| `grep -rl 'active-hermes-runtime' /home/hakudokai --include='*.sh' --include='*.py'` | **★★file `0`★★** |
+
+★★∴ ★彼の `81` B の 一行は ―― ★現に 誰の路にも 立ち居り申さぬ★★★
+⇒ **★★∴ ★之を 書換へたるとて ―― ★a7 の走る物は 一分も 変じ申さぬ★。★『成功したかに見ゆる書込』★ が 生ずるのみ★★**
+
+### ㊂ ★★★★而して ―― ★本部長殿は 之を ★二日前に 紙に書いて居られ申した★★★★★
+
+★`/home/hakudokai/hermes-departments/honbucho/reports/phase4-hermes-0204-secondpc-method-preflight-20260820.md:78`（★逐語★）★
+
+```
+- The a7 `run/active-hermes-runtime` file exists (81B, SHA-256 `56be6edf44c9c93829b64b5d664f4c78758c6079116420f1aa1994949ea9d90b`)
+  and names its current runtime, but it is not yet accepted as an active control-plane input.
+  Updating it alone is prohibited: it could produce a successful-looking pointer write
+  without changing a7's running executable.
+```
+
+★★∴ ★己が §四 にて 「可逆・己の手にて可」と 書きたる其の手は ―― ★本部長殿が 名指しで 禁じ 且つ ★其の失敗の形まで 書いて居られたる手★★ に御座る★★
+★★∴ ★己は ―― ★己が 指名した相手が 己の主張を 既に 反駁して居る紙★ を 読まずして ―― ★其の相手に 其の手を 具申し申した★★★
+
+### ㊃ ★★根 ―― ★同じ形 二度目・同じ夜のうちに★★
+
+| | 訂 其の一（§〇） | ★訂 其の二（本節）★ |
+|---|---|---|
+| 主張 | 「`0.20.4` は 在らぬ」 | 「a7 は pointer にて切替へ得」 |
+| 足 | ★四樹のみを 撃つた★ | ★★file の ★存在★ のみを 見た★★ |
+| 欠 | ★絞りが 狭かつた★ | ★★★其の file を ★現に 読む者★ を 数へなんだ★★★ |
+| 反証は何処に在つたか | ★己の `PROVENANCE.txt`★ | ★★本部長殿の `20260820` の紙★★ |
+| 根 | ★母集団を 先に置かず★ | ★★母集団を 先に置かず（＝ ★消費者★ の集合を 数へず）★★ |
+
+★★∴ ★第一の根 ―― ★六度目★★★（★一夜に 二度★）
+
+> ## **★★★★★★條 ―― ★『切替の口』と 名指す前に ―― ★其の口を ★現に 読む者★ を 数へよ★。★file の ★存在★ は ―― ★経路の證に あら申さぬ★★★★★★★**
+
+> ## **★★★★★條 ―― ★或る役に 手を 具申する前に ―― ★其の役が 其の件にて 既に 書いて居る紙★ を 先に 読め★。★己の紙より 先に 相手の紙★★★★★**
+
+### ㊄ ★★∴ 訂されたる 切替の姿 ―― ★二本の root は ★同じ形★ に御座つた★★
+
+| | 旧（§四・★誤★） | ★新（本節・実測）★ |
+|---|---|---|
+| a7 | ★pointer 一行・可逆・己の手にて可★ | **★launcher ㋒ の `RT=` 行の書換へ ―― ★hermes系 file 改変★★** |
+| gunshi | ★launcher に依ると ★推★★ | **★launcher ㋐㋑ ★二枚★ の書換へ ―― ★実測★★** |
+
+★★∴ ★二本は ★同じ枷★ に掛かり申す ―― ★己の「hermes系 file 改変禁」★★
+⇒ **★★∴ ★§六 の owner 分割の具申（「a7 は己が執行可」）は ―― ★悉く 取り下げ申す★★。★owner は ★三枚 悉く★ に 要り申す★★**
+
+### ㊅ ★★併せて 見出したる 二つ（受入条件に 直に関はり申す）★★
+
+**㋐ ★★a7 の 走る物は ―― ★現 launcher と ★既に 食ひ違ひ★ 居り申す★★★**
+
+| | 逐語 |
+|---|---|
+| ★現に走る a7（pid `1156226`）★ | `... /hermes ★--tui★`（★`--continue` ★無し★★） |
+| ★現 launcher ㋒（mtime `2026-08-16 22:19:54`）★ | `... "$RT/hermes" ★--tui --continue★` |
+| ★傍證★ | 同 dir に `start-ashigaru-second-7-hermes.sh.bak-continue-fix-20260813` |
+
+★★∴ ★a7 の走る proc は ★`2026-08-12 16:47:22` 起動★ ―― ★launcher の直しより ★前★★★
+⇒ ★★∴ ★a7 を 再起すれば ―― ★版のみならず 起動の形（`--continue`）も 同時に 変じ申す★★★ ⇒ ★★受入条件に ★argv の差★ を 明記せねば ―― ★版の効と 起動形の効を 分かち得申さぬ★★★
+
+**㋑ ★★三 launcher 悉く ★singleton guard★ を 持ち申す★★**
+
+```
+if pgrep -f "$ROLE_HOME.*hermes --tui" >/dev/null 2>&1; then echo "singleton_guard_block" >&2; exit 75; fi
+```
+
+★∴ ★再起は ―― ★先に 現 proc が 止まりて居らねば `exit 75` にて 弾かれ申す★★
+⇒ ★★∴ ★『止める手』が 必ず 先に立ち ―― ★之は 己の手に あら申さぬ★（理事長令・respawn `0`）★★
+★（註）㋐ の `hermes-honbucho` のみ guard 無し ―― ★`exec` 一行★
+
+### ㊆ ★★∴ 具申の 改め ―― ★安全なる切替の 形★★
+
+| | 案 |
+|---|---|
+| **★勧★** | ★新版を **★別の dir 名★**（例 `hermes-agent-v<新>`）にて 据ゑ ―― ★launcher 三枚の `RT=` 一行のみ を 書換ふ★ ⇒ **★rollback ＝ 一行を 戻すのみ・現 root は 一 byte も 触れず★** |
+| **★禁★** | ★`hermes-agent-v2026.8.3` の ★中身★ を 置換ふ ⇒ ★現に走る三 proc の足下を 抜き・rollback も 高く付き申す★ |
+
+★★∴ ★委員長 `seq200891` の「`copy`／`rsync` 不可」は ―― ★staging を `git archive` にて作りたるゆゑ 已に満たし申した★。★而して 据ゑ方（新 dir か 上書きか）は 別問 ―― ★上記 ★勧★ を 具申 申す★★★
+
+### ㊇ ★★變ぜぬ物（本節）★★
+
+★launcher 三枚 ―― ★読取のみ・一字も 改めず★／`active-hermes-runtime` ―― ★一指 `0`★／現 root 二本 ―― ★一 byte も 触れず★／staging ―― ★不触★／★撃ち `0`・respawn `0`・`pgrep` は ★己は 撃たず★（launcher の中の逐語を 引きたるのみ）★／★札 `0`★／★push `0`★
