@@ -163,6 +163,48 @@ staging にて hermes が自ら告げた（逐語・要旨）――
 
 ---
 
+## 十 ―― **`source_commit` の独立検証 ―― 閉ぢたる（追記 `2026-08-21T23:50:25+09:00`）**
+
+本部長殿 `23:36:40`（`nonce=HB-20260821-2337-STAGE4`）の逐語 ――
+
+> 「staging tree は **git metadata 無しゆゑ source_commit 6a3d50c の独立検証は未完**。」
+
+**御指摘は正しく、且つ 之は可逆にて解け申した**（令「resolve reversible blockers locally」に依り 御下知を待たず閉ぢた）。
+
+### 手（読取のみ・網 0・書込 0）
+
+`git archive` は `.git` を残さぬ ⇒ 樹の中に證が無い。**∴ 源の側の commit より blob の sha を引き、新地の file を `blob` header 付きの SHA-1 にて己で算じて突き合はせた**（`git hash-object` と同一の算法 ―― ★algorithm ＝ SHA-1 with `blob <len>\0` prefix★）。
+
+- 源: `/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3`（**読取のみ**）
+  - `HEAD` = `0957277f2f468bac22bbfcfa7c43029858c9597e`（＝役の走る `0.20.0`・本部長殿の実測と**合致**）
+  - `origin/main` = `6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f`（＝新地の源・`cat-file -t` にて `commit` と確認）
+- 新地: `/home/hakudokai/hermes-staging-0.20.4/hermes-agent`（`.git` 無し・`__pycache__` を除外）
+
+### 結（`as_of 2026-08-21T23:50:07`）
+
+| 項 | 数 |
+|---|---|
+| commit `6a3d50c` の blob | **9,738** |
+| **sha 一致** | **9,729** |
+| 不一致 | **9** |
+| **欠（commit に在り 新地に無し）** | **0** |
+| 余分（新地に在り commit に無し） | **6** |
+
+- **余分 6 は 悉く `hermes_agent.egg-info/` の下** ＝ ★`pip install -e` の副産物★。∴ **源に無き code は 一片も入つて居らぬ**。
+- **不一致 9 は 悉く `*.ps1`** ⇒ `.gitattributes` の eol 條に因る。**`CRLF→LF` に正規化して算じ直したるに ★9/9 悉く 一致★**（`crlf` の数 ＝ `4,834`／`788`／`323`… ⇒ 現に CRLF にて置かれ居る）。
+  - ∴ ★差は **中身の差に非ず 改行の宣言の差**★。`git archive` が `.gitattributes` に従ひ checkout 時に変換したる物。
+
+> **★判 ―― 新地は commit `6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f` と ★内容一致★（宣言されたる eol 変換を除き byte 一致）。欠 0・混入 0。★**
+> **⇒ 本部長殿の申されたる「独立検証 未完」は ―― ★本記にて 完★。**
+
+### 條（本節より得たる物）
+
+- **★條 ―― `.git` を持たぬ樹の来歴は 樹の中に無い。而して ★源の側の commit★ と ★己で算ずる blob sha★ にて 外から證し得る。★**
+- **★條 ―― sha の不一致は「中身の差」を意味せぬ。★宣言されたる正規化★（eol・`export-subst`）を先に疑へ。★**
+- **★條 ―― 「一致」を申す時は ★欠★ と ★余分★ を併せて数へよ。一致数のみでは 混入を捕へ得ぬ。★**
+
+---
+
 ## 九 ―― 變ぜぬ物（本記の間 悉く 0）
 
 共有樹書込 0／launcher・wrapper 書換 0／役 venv へ一指 0／`respawn` 0／`send-keys` 0／`kill` 系 0／既存 `~/.hermes` へ一指 0（HOME を逸らした）／push 0／pull 0／`queue/tasks` 書込 0／`dashboard.md` 0／`_archive` 不開／ccflare 一指 0／番人 0。
