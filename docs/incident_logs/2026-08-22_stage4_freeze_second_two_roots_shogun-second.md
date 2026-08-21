@@ -298,3 +298,110 @@ if pgrep -f "$ROLE_HOME.*hermes --tui" >/dev/null 2>&1; then echo "singleton_gua
 ### ㊇ ★★變ぜぬ物（本節）★★
 
 ★launcher 三枚 ―― ★読取のみ・一字も 改めず★／`active-hermes-runtime` ―― ★一指 `0`★／現 root 二本 ―― ★一 byte も 触れず★／staging ―― ★不触★／★撃ち `0`・respawn `0`・`pgrep` は ★己は 撃たず★（launcher の中の逐語を 引きたるのみ）★／★札 `0`★／★push `0`★
+
+---
+
+## 九 ―― ★★★★本部長殿の `20260820` preflight を 逐語にて 読み申した ―― ★之が Commander 御指しの runbook に御座る★。★己の紙に 足らざる物 四つ・★誤り 一つ★・★己の staging の 疵 一つ★★★★★（as_of `2026-08-22T05:32:56`〜`05:34:01+0900`）
+
+★正本 ―― `/home/hakudokai/hermes-departments/honbucho/reports/phase4-hermes-0204-secondpc-method-preflight-20260820.md`（`112` 行・`12,254` B・`observed_at 2026-08-20T08:53:41+09:00`・`status: METHOD-READY / EXECUTION-BLOCKED`）★
+★★Commander `seq203838` は「`Locate runbook/UNBLOCK via git ls-files after pull`」と命ぜられたが ―― ★樹は dirty にて pull 為し得ず（§五）★。★而して 現物は ★repo の外★・★本部長殿の `reports/` に 在り申した★★★
+> ## **★★★條 ―― ★『repo に 無し』は ―― ★存在せぬ★ を 意味し申さぬ★。★役の紙は 役の家に 在り★★★★**
+
+### ㊀ ★★★訂 其の三 ―― 己の §三「provenance blocker は ★已に 解け居り申す★」は ―― ★言ひ過ぎ★★★★
+
+★preflight §3 は ―― ★freeze manifest に ★六項★ を 要すと 定め申す★。★己の手持ちを 六項に 当てて 数へ直し申した★
+
+| # | 要求（逐語の要） | 己の手持ち | 判 |
+|---|---|---|---|
+| 1 | exact source Git commit or immutable tag | `6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f`（★源の repo にて 実在を確認・`2026-08-19 11:03:01 -0500`「fix(tui): allow the ESC byte in the SGR param matcher」★） | **★足る★** |
+| 2 | source `pyproject.toml` SHA-256 ＋ lockfile SHA-256 | `pyproject`＝`1f928b1560b0669291b3f7d562aa78c99ac4f927375939ca97fd3c3e7494cb91` ／ **`uv.lock`＝`8fd868b9da8b6bc2f4aa94a845e210eccdd5e31be7a0b404f0a8527ced0fddec`**（★本節にて 新たに 測り申した★） | **★足る★** |
+| 3 | target version `0.20.4` ＋ package/lock manifest | `hermes_agent-0.20.4.dist-info` ／ `full_install.log` の `Successfully installed` 一行（★全 `61` package 名と版を 逐語に 含み申す★） | **★足る★** |
+| 4 | reproducible Python 3.12 build command or approved procedure | ★venv ＝ `python3.12` ✓／而して ★log は 結果★ にて ―― ★命令の逐語★ を 己は 書き残し居ら申さぬ★ | **★半★** |
+| 5 | source/destination manifest SHA-256 | ★source 側 ✓（上記）／destination 側の manifest は ★未作★★ | **★半★** |
+| 6 | target runtime directory that is new and inactive | ★staging は 新・不活★ ✓ | **★足る★** |
+
+★★而して ―― ★之より 重き 一項が 別に 在り申した★★
+★preflight §3 逐語 ―― 「`The Chair's provenance ruling seq200898 identifies the approved main-PC source as /home/user/hermes-roles/training-director-a/run/hermes-agent-latest.`」★
+★★己の源は ―― ★`/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3`（SecondPC 内・read-only・git archive）★ ―― ★委員長殿の名指されたる path に あら申さぬ★★
+★裏書き ―― ★同じ upstream（`NousResearch/hermes-agent`）の 同じ樹にて ―― ★現 root の baseline `0957277f...`（`2026-08-06`）と `6a3d50c...`（`2026-08-19`）が ★同一 repo に 並び居り申す★★ ⇒ ★★『別物の樹』に あら申さぬ★★
+
+> ## **★★★★★∴ ★己は 「blocker は 解けたり」と 断ずる資格を 持ち申さぬ★ ―― ★『承認されたる源は 何処か』は ★委員長殿の裁★ にて ―― ★己の測りにて 代へ得ぬ★★。★己が 為し得たるは ―― ★六項中 四項を 満たし 二項を 半ばまで運びたる★ 事のみ★★★★★**
+
+★∴ ★§三 の 「已に 解け居り申す」を ―― ★『★4/6 ＋ 半 2・源の同一性は 委員長殿の裁を 要す★』に 改め申す★★
+★★∴ ★第一の根 ―― ★七度目★★（★己の器の 及ばぬ層＝★裁★ を ―― 己の測りにて 埋め申した★）
+
+### ㊁ ★★★★己の staging の 疵 ―― ★editable install に御座つた（罠 4-d を 己が 踏み申した）★★★★
+
+★`full_install.log` 冒頭 逐語 ―― 「`Obtaining file:///home/hakudokai/hermes-staging-0.20.4/hermes-agent`」「`Checking if build backend supports build_editable`」「`Preparing editable metadata (pyproject.toml)`」★
+★preflight §3 逐語 ―― 「`its executable package is py3-none-any, but editable metadata embeds an absolute path to the source tree (trap 4-d). The shared source therefore must not be copied as a virtual environment or editable tree.`」★
+
+★★∴ ★己の venv は ―― ★`/home/hakudokai/hermes-staging-0.20.4/hermes-agent` を ★絶対 path にて 抱き込み★ 居り申す★★★
+⇒ ★★∴ ★此の staging を ★其のまま 移して★ 新 runtime dir と 為す事は ―― ★成り申さぬ★★★
+⇒ ★★∴ ★据ゑ方は 二つに 一つ ―― ㋐★最終の path にて 建て直す★（＝ staging は ★予行★ と 位置付く）／㋑★非 editable にて 建て直す★★
+
+★★∴ ★之は 己の 昨夜の手の 疵に御座る★ ―― ★而して ★本部長殿が 二日前に 名を付けて 警めて居られた罠★ に 己が 落ちて居り申した★★
+★（註）★己は 昨夜 「解け申した」と 思ひ ―― ★其の紙を 読まずに 二夜を 越え申した★★
+
+### ㊂ ★★★番人 ―― ★第四の統制点★。★而して 測りたるに ―― ★己の §八 の勧に ★味方★ し申した★★★★
+
+★`/home/hakudokai/bin/sweep_manifest.json`（`sha256 = 6795fb9f0e06d4859fbf96192a8f8786c4fc1a9aae334cf18810c586f6ed1549` ―― ★preflight §5A の値と ★一致★★）★
+
+| 役 | `stop` | `start`（逐語の要） |
+|---|---|---|
+| honbucho | `{"kind": "kill_session", "session": "hermes-honbucho"}` | `tmux new-session -d -s hermes-honbucho ... ★/home/hakudokai/hermes-departments/honbucho/bin/hermes-honbucho★` |
+| gunshi-second | `{"kind": "kill_session", "session": "hermes-gunshi-second"}` | `tmux new-session -d -s hermes-gunshi-second ... ★/home/hakudokai/hermes-roles/gunshi-second-hermes/bin/start-gunshi-second-hermes.sh★` |
+| **a7** | ―― | **★★行 無し★★** |
+
+★★∴ ★番人が 起こすは ―― ★launcher ★其の物★★ にて ―― ★runtime path を 焼き込み居ら申さぬ★★★
+⇒ **★★∴ ★launcher の `RT=` 一行を 書換ふれば ―― ★番人の一巡は 新しき root にて 起こし申す★★。★preflight §5A の憂ひ（「a guard cycle can restore ... after an apparent cutover」）は ―― ★launcher を 書換ふる形に 限り ★生じ申さぬ★★★**
+★★∴ ★己の §八 ㊆ の勧は ―― ★番人の実測に 支へられ申した★（★推に非ず ―― `manifest` の逐語★）★★
+
+★★而して ―― ★同じ逐語が 三つ 教へ申した★★
+
+| # | |
+|---|---|
+| ㊀ | ★番人の `stop` は **★`tmux kill-session`★** ―― ★己の絶対禁の手に御座る★ ⇒ ★★『止める手』は ★己に非ず 番人に 在り★★★ |
+| ㊁ | **★a7 は 番人の名簿に 無し★** ⇒ ★★a7 の再起は ★人の手★ を 要し ―― ★其の owner は 未だ 定まり居ら申さぬ★★（preflight §5A 末と 一致） |
+| ㊂ | ★`threshold: 250000` ―― ★番人は 刻のみにて 起き申さぬ★（context の嵩を 見申す） ⇒ ★★『いつ起きるか』を 己は 約し得申さぬ★★ |
+
+### ㊃ ★★★★命の食ひ違ひ 一つ ―― ★`--continue` 対 `--resume <uuid>`★★★★
+
+| 出所 | 逐語 |
+|---|---|
+| **Commander `seq203838`** | `Approved per-role 0.20.4 one-by-one from frozen main source, ★--continue★, dist-info and evidence tuple ...` |
+| **preflight §4-5（`seq200856`／`seq200871` に依る）** | `Canary only the authorized role using ★--resume <existing-session-uuid>★; verify the resumed role's runtime by executable/package version and a productive pane response.` |
+
+★★∴ ★二つは 同じ物に あら申さぬ★ ―― ★`--resume <uuid>` は ★同一 session の 継続★ を 證の一項として要求し（§5 acceptance gates ―― 「`--resume identity continuity where a running session is relaunched`」）―― ★`--continue` は 其の uuid を 名指し申さぬ★★
+★★∴ ★而して 現 launcher 三枚は 悉く ★`--continue`（又は `--tui --continue`）★ を 焼き込み居り申す★ ⇒ ★★launcher を 其のまま用ゐて 再起すれば ―― ★§5 の `--resume` gate を 満たし得申さぬ★★★
+⇒ ★★∴ ★上へ 問ひ申す ―― ★㋐ `--continue` にて可（preflight §4-5 を 緩める）か ㋑ `--resume <uuid>` を 要するか（launcher を 更に 一段 改める要 有り）★★★
+
+### ㊄ ★★受入の窓 ―― ★己が 見落として居つた 二つの番人★★
+
+★preflight §5A 末 ―― 「`the acceptance criterion is event-based: after any authorized switch, observe the guard service complete a trigger whose trigger timestamp is later than the switch timestamp ... A normal-running 32-minute window (30 minutes plus the larger 2-minute accuracy margin) is a usable bound ... ★A green result immediately after switch is not PASS evidence.★`」★
+★preflight §5B ―― `dentalbi-claude-ctx-sweep.timer`（`OnUnitActiveUSec=30min`／`OnBootUSec=7min`／`AccuracyUSec=1min`）は ―― ★pane へ `/compact` を 打ち得申す★。★§5C ―― 現 `0.20.0` にて `compact` は `compress` の別名（`hermes_cli/commands.py:130-131`／`tui_gateway/methods_tools.py:953`）★ ⇒ ★★『無害ゆゑ捨て置く』は 成り申さぬ★★★
+
+★★∴ ★己の §六 の受入条件（tuple のみ）は ―― ★足り申さぬ★★★ ⇒ ★★下記を 加へ申す★★
+
+| # | 加ふべき受入条件 |
+|---|---|
+| ㊀ | ★切替の刻より ★後★ の trigger を 一つ 観るまで PASS と 為さず（目安 `32` 分）★ |
+| ㊁ | ★a7 は ★陰性対照★ ―― gunshi 側の canary の 前後にて ★変ぜぬ事★ を 測る（preflight §1-3）★ |
+| ㊂ | ★pane の ★幅★ と ★model/UI identity★ を 切替の直前・直後・番人一巡後 の 三度 捉ふ（§5B）★ |
+| ㊃ | ★footer の除外印は ★冗長度 0★ ―― 印 `1` は `PASS-PROVISIONAL` に止まる（§5B）★ |
+| ㊄ | ★rollback は `0.20.0` へ ―― ★`0.19.0`（`/home/hakudokai/hermes-agent/venv`）は ★禁★★（§2 末・§4-8） |
+
+### ㊅ ★★baseline の 補ひ（preflight §2 と 己の実測が 悉く 一致）★★
+
+| 項 | preflight §2 | 己の実測（`05:33:39`） | 一致 |
+|---|---|---|---|
+| baseline commit | `0957277f2f468bac22bbfcfa7c43029858c9597e` | ★源 repo に 実在・`2026-08-06 11:30:58 -0700`★ | ✓ |
+| `pyproject` sha | `b83b6f40...fe21` | 同（両 root） | ✓ |
+| `uv.lock` sha | `8bd2578e...b16` | 同（両 root） | ✓ |
+| launcher `hermes` sha | `6e1adae1...9417` | 同（★staging も 同一★） | ✓ |
+| `sweep_manifest.json` sha | `6795fb9f...1549` | 同 | ✓ |
+
+★★∴ ★二日を隔てた 二人の測りが ―― ★五項 悉く 一致★★★ ⇒ ★★之は ★己の物差しの 裏書き★ に御座る（★而して 上 ㊀㊁ の通り ―― ★物差しが 合ふ事は 窓が足りる事を 證し申さぬ★）★★
+
+### ㊆ ★★變ぜぬ物（本節）★★
+
+★preflight・`sweep_manifest.json`・launcher 三枚・`full_install.log` ―― ★悉く 読取のみ★／★timer への `enable`／`disable`／`start`／`stop` ―― ★`0`★（preflight §5A 末も 同じ禁を 置き申す）／★`sweep_manifest.json` 改変 `0`★／★staging 改変 `0`★／★現 root 二本 一 byte も 触れず★／★撃ち `0`・respawn `0`・`kill-session` `0`★／★札 `0`★／★push `0`★
