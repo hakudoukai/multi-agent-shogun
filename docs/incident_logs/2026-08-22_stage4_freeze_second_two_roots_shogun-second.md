@@ -951,3 +951,107 @@ if __name__ == "__main__":
 ### ㊃ ★★變ぜぬ物（本節）★★
 
 ★便 `400` 二度 ―― ★再送は ★三度目まで★ にて止め ★親を替へて 一度★ のみ★（★同じ壁を叩き続けず★）／★機構へ 一指 `0`★／★共有樹・役の樹・launcher・staging ―― 悉く 不触★／★網 `0`・`pip` `0`・撃ち `0`・札 `0`・push `0`★
+
+---
+
+## 十六 ―― ★★★訂の輪は 閉ぢ申した（`274` 秒）―― 而して ★新令は 「三つの役の樹」と申すが ―― ★現に在るは ★二本★★★★★（as_of `2026-08-22T06:08:58`〜`06:10:49+0900`）
+
+### ㊀ ★★輪の閉ぢ ―― 実測（悉く 己の箱の `timestamp` より）★★
+
+| 刻 | 事 | 差 |
+|---|---|---|
+| `05:56:01` | ★己の偽（§十三）★ | ― |
+| `05:57:29` | Commander `[Stage4 major correction]`（★偽の上に立つ★） | ＋`88`s |
+| `05:59:02` | ★己の訂の便 三通★ | ＋`93`s |
+| `06:00:26` | ★己 ―― 転達を乞ふ★ | ＋`84`s |
+| **★`06:01:35`★** | **★本部長殿 ―― 転達 ＋ ★己で 測り直し★★** | ＋`69`s |
+| **★`06:02:03`★** | **★★Commander `[Stage4 root correction final]`★★** | ＋`28`s |
+
+★★∴ ★★★偽が ★令の層★ に生き居つた刻 ＝ `05:57:29`→`06:02:03` ＝ ★★`274` 秒★★★★★
+★★∴ ★訂の便より 令の直りまで ＝ ★`181` 秒★★（★己 → 本部長 → Commander の 二段を 経て★）
+
+★新令 逐語★
+> `[Stage4 root correction final] Role-local RT packages win sys.path; shared tree is fallback only. Keep shared mutation0. Use ★three★ role-local non-editable final builds/cutovers after immutable source+lock/build proof; preserve preimage/rollback and per-role --continue/guard evidence.`
+
+★★∴ ★§十四 は ★上にて 容れられ申した★（`Role-local RT packages win sys.path; shared tree is fallback only` ＝ ★己の申したる通り★）★★
+
+### ㊁ ★★★本部長殿は ―― ★己と ★別の器★ にて 測り 同じ答を得申した★★★
+
+| | 己（§十四） | ★本部長殿（`06:01:35`）★ |
+|---|---|---|
+| 法 | ★★静★★ ―― `meta_path.append` の ★字を読み★／`sys.path[0]` を ★launcher の綴りより 導き★ | ★★動★★ ―― `role RT を path0 にした再測` にて ★`hermes_cli`／`agent` の `origin` を ★現に 引き出し★★ |
+| 答 | 「役の樹が先」 | ★`origin=各role-local RT` ―― ★同じ★★ |
+
+★★∴ ★★★己の足は ★推★ を含み申した（『`sys.path[0]` は斯くなる筈』）―― 本部長殿の足は ★現物の `origin`★ に御座る★★★
+★★∴ ★∴ ★本節以降 ―― 此の一点の典拠は ★本部長殿の測り★ を 一次と為し 己の静読を 二次と為し申す★★
+
+> ## **★★★★★條 ―― ★静に読みて得たる答と 動に走らせて得たる答が ★合ふ★ 時 ―― ★足は 二つに あら申さぬ ―― ★動が 一次★・静は ★其れを説く物★ に御座る★。★∴ 己が『器が無し』とて静に留まりたる時は ―― ★動を持つ者に 測らせよ★★★★★★**
+
+### ㊂ ★★★★★∴ 新令の 数 ―― ★『three role-local ... builds/cutovers』★ に対し ―― ★★現に在る役の樹は ★二本★★★★★★
+
+★実測（`06:09:42`／`06:10:03`／`06:10:17`）★
+
+| 樹 | `inode` | 之を名指す launcher | ★及ぶ役★ |
+|---|---|---|---|
+| **★A★** `hermes-roles/★gunshi-second-hermes★/run/hermes-agent-v2026.8.3` | `989169` | ㋐ `honbucho/bin/hermes-honbucho`:9-10（★逐語の絶対 path★）／㋑ `gunshi-second-hermes/bin/start-…`:4（`$ROLE_HOME` 経由） | **★★本部長 ＋ 軍師second ＝ `2`★★** |
+| **★B★** `hermes-roles/★ashigaru-second-7-hermes★/run/hermes-agent-v2026.8.3` | `927039` | ㋒ `ashigaru-second-7-hermes/bin/start-…`:4（`$ROLE_HOME` 経由） | ★a7 ＝ `1`★ |
+
+★`realpath` ―― ★両者 己自身を返し `symlink` に あら申さぬ★／`inode` ★相異なり★ ⇒ ★★別の実体 二本★★
+★㋐ の逐語（`hermes-honbucho`:9-10）★
+```
+  /home/hakudokai/hermes-roles/★gunshi-second-hermes★/run/hermes-agent-v2026.8.3/venv/bin/python \
+  /home/hakudokai/hermes-roles/★gunshi-second-hermes★/run/hermes-agent-v2026.8.3/hermes --continue "$@"
+```
+
+★★∴ ★★★★役 `3` ―― 樹 `2` ―― ★『三つの役ごとの build』は ★今 在る形の上には 載り申さぬ★★★★★★
+★★∴ ★更に 重き事 ―― ★★★樹 A を差し替ふるは ―― ★★二役 同時の code 変更★★ に御座る★★★
+★（★Commander は 共有樹に付き `three-role simultaneous code change prohibited` と 禁じ給ひ申した ―― ★★樹 A は ★同じ性の 危ふさを ★二★ の倍率にて 抱き居り申す★★★。★『role-local』は ★『role-exclusive』に あら申さぬ★）
+
+★（★註 ―― ★樹の共有 其の物★ は ★新しき見出しに あら申さぬ★。委員長殿 裁①（`08-20`）逐語 ―― 「★樹を共有する役職が在るゆえ(本部長は軍師secondの樹を借用)樹を触れば複数役が同時に動く=爆風★」。★己も `2026-08-20_stage4_blast_radius…` :5 に 記し置き申した★。★新しきは ―― ★之が `06:02:03` の新令の 数と 食ひ違ふ★ 其の一点★）
+
+★★∴ 裁を要する分れ道（★己は 択ばず 申し上ぐるのみ★）★
+
+| 案 | 形 | 害 |
+|---|---|---|
+| ㋐ ★build は `2` 本★（樹 A・樹 B） | 現の形のまま | ★樹 A の cutover にて ★本部長 ＋ 軍師second が 同時に 変ず★★ |
+| ㋑ ★先づ 樹を `3` 本に 割る★ | 本部長に 己の樹を 新設し ㋐ launcher の 二行を 其処へ向く | ★新樹の build ＋ launcher 書換 ―― ★孰れも 本部長殿の所管★★・★手数 増★ |
+
+### ㊃ ★★★★★blocker4 ㊄（新）―― ★本部長殿には ★正しき巻戻し先が 一つも 無し★★★★★
+
+★㋐ launcher `hermes-honbucho`:7 の 逐語★
+```
+# 戻す手順: 下2行を /home/hakudokai/hermes-agent/venv/bin/hermes --continue "$@" へ戻す
+```
+★而して ―― ★委員長殿 裁②（`08-20`・逐語）★
+> 「★巻戻し先~/hermes-agent/venvは0.19.0=★降格ゆえ使うな★★」
+
+★★∴ ★★★launcher に 現に書かれ居る ★唯一の巻戻し手順★ は ―― ★委員長殿が 名指しにて 禁じ給ひたる路★ に御座る★★★
+★★∴ ★∴ ★Commander 新令の `preserve preimage/rollback` は ―― ★本部長殿の役に於ては ★今 満たし得申さぬ★★★（★preimage は 取れ申す ―― ★戻る先が 無し★）
+★★∴ ★要（三の孰れか）―― ㋐ ★現 `0.20.0` の樹 A の断面を 別名にて 保つ（＝ 巻戻し先を 新たに 作る）★／㋑ ★`0.19.0` の禁を 解く（★委員長殿の裁を要す★）★／㋒ ★巻戻し無しにて進む事を 明示に容れ給ふ★
+
+★（★自申 ―― ★之は ★新しき測りに あら申さぬ★。己は `2026-08-20_stage4_provenance_and_tree_binding_shogun-second.md`:48 に ★已に 記し置き★ ―― ★而して 上へ ★blocker として 立て申さなんだ★★。★条「★己が為したる事も 記憶に非ず 紙より引け★」を 履み ―― 掘り返し申した★）
+
+### ㊄ ★★訂 ―― ★己は 此の禁の出所を ★取り違へ居り申した★★
+
+| | 己が抱き居つた物 | ★実（紙の逐語）★ |
+|---|---|---|
+| 「`0.19.0` は巻戻し先として禁」の ★主★ | ★本部長殿 preflight★ | **★委員長殿 裁②（`08-20`）★** |
+| repo 内の英文 `prohibited as a rollback target` | ★在ると思ひ居つた★ | **★repo 全域 hit `0`（`06:10:26` 実測）★** ―― ★己の英訳が 己の中で 逐語に化け居つた★ |
+
+★★∴ ★禁 其の物は ★立ち申す★（委員長殿の裁ゆゑ ―― ★寧ろ 重し★）―― ★倒れたるは ★出所の札★ のみ★★
+
+> ## **★★★★★條 ―― ★己が 他語に訳して 抱へ持ちたる令は ―― ★時を経て ★逐語の顔★ を し始め申す★。★引く時は ★訳を引かず 原の紙を引け★。★出所を誤れば ―― ★禁の重さ★ をも 誤り申す★★★★★★**
+
+### ㊅ ★★∴ blocker4 ―― ★今 五件★★
+
+| # | 件 | 宛 |
+|---|---|---|
+| ㋐ | 承認 source の同一性（己の源は SecondPC 内） | ★委員長殿（seq204018 にて 問ひ済）★ |
+| ㋑ | ★執行者 ―― 己は launcher 零枚★ | ★Commander／本部長殿★ |
+| ㋒ | a7 再起の owner（★機構に 再起の手 無し★） | ★本部長殿★ |
+| ㋓ | ★建直しの器 無し（`uv` 無し・wheelhouse `0` 枚・網 禁）★ ⇒ ★新令の `immutable source+lock/build proof` が ★原理的に 埋まらず★★ | ★Commander★ |
+| **★㋔（新）★** | **★役 `3` に対し 樹 `2` ―― 且つ 本部長殿に 巻戻し先 無し★** | ★Commander／委員長殿★ |
+
+### ㊆ ★★變ぜぬ物（本節）★★
+
+★launcher 三枚・両樹・共有樹・staging ―― ★悉く 読取のみ★／★己の箱を 読みたるのみ ―― ★札 `0`★★／★網 `0`・`pip` `0`・`uv` `0`★／★撃ち `0`・send-keys `0`・respawn `0`★／★`checkout`／`pull`／`fetch` `0`★／★push `0`★
