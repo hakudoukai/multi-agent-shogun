@@ -1502,3 +1502,106 @@ honbucho  total = ★34★   read = 33   unread = 1
 ### ㊃ ★★變ぜぬ物（本節）★★
 
 ★proc ―― 一指 `0`／launcher ―― 一字も改めず／`~/.local` ―― 開かず／tmux ―― `0`／札 `0`／網 `0`／build `0`／push `0`
+
+---
+
+## 二十二 ―― ★★★★★★本部長 root が `04:44:32` に起き直りたる機序 ―― ★★決し申した★★ ―― ★機構が 三十分毎に 役を 殺して 起こし居り申す★★★★★★（as_of `2026-08-22T06:39:42`〜`06:40:18+0900`）
+
+### ㊀ ★★journal の逐語 ―― ★窓 `04:43:30`〜`04:45:30`★★
+
+```
+04:44:27  Starting ★dentalbi-hermes-compact-sweep.service★ - DentalBI Hermes context compaction sweep (manifest-driven, idle-only)
+04:44:28  python3[86592]: honbucho: ★肥大かつidle→圧縮開始★ {"db": ".../honbucho/state.db", …}
+04:44:28  systemd: ★tmux-spawn-5bf4cb12-….scope: Consumed 5min 57.062s CPU time.★      ← ★★古き pane の scope 終る★★
+04:44:32  bash[2148791]: [PRESEND] composer 不検出 — 掃除も注入も為さず見送る for honbucho
+04:44:33  systemd: ★Started tmux-spawn-6e1c6dae-….scope - tmux child pane ★86872★ launched by process ★1519165★★  ← ★★新しき pane★★
+04:44:38  python3[86592]: honbucho: ★圧縮+会話継続復帰OK★(restore_seen)
+04:44:38  python3[86592]: SWEEP完了(second_pc): ★圧縮=1★ / busy見送り=0 / ★閾値未満=1★ / 効果小skip=0 / エラー=0
+04:44:38  Finished dentalbi-hermes-compact-sweep.service
+```
+
+★★∴ ★★★★★『誰が 本部長を 起こし直したるか』―― ★★機構に御座つた★★ ―― `dentalbi-hermes-compact-sweep.service`★★★★★
+
+### ㊁ ★★★機構の 逐語 ―― ★manifest★（`/home/hakudokai/bin/sweep_manifest.json`・`1,182` B・mtime `2026-08-08 12:31:50`）★★★
+
+```json
+"threshold": ★250000★,
+"compactor": "/home/hakudokai/bin/hermes_context_compactor.py",
+"roles": [
+  { "name": "★honbucho★",
+    "stop":  {"kind": "★kill_session★", "session": "hermes-honbucho"},
+    "start": {"kind": "cmd", "cmd": "tmux new-session -d -s hermes-honbucho … ★/home/hakudokai/hermes-departments/honbucho/bin/hermes-honbucho★"} },
+  { "name": "★gunshi-second★",
+    "stop":  {"kind": "★kill_session★", "session": "hermes-gunshi-second"},
+    "start": {"kind": "cmd", "cmd": "tmux new-session -d -s hermes-gunshi-second … ★…/bin/start-gunshi-second-hermes.sh★"} }
+]
+```
+
+| 問 | 答 |
+|---|---|
+| ★手に掛かる役★ | **★★`honbucho` と `gunshi-second` の ★二役★★★**（★★a7 は ★入つて居り申さぬ★★） |
+| ★停め方★ | **★`tmux kill-session`★**（★己に固く禁ぜられ居る手★） |
+| ★起こし方★ | ★`tmux new-session` ―― ★launcher の path を 名指して★★ |
+| ★閾★ | ★`250,000`★（★本部長は 超え・軍師second は 未満（`閾値未満=1`）★） |
+| ★周期★ | ★`OnBootSec=300` / `OnUnitActiveSec=★1800★`★ ＝ ★★三十分毎★★ |
+
+★★∴ ★§二十㊀ にて 己が ★推★ にて申したる「★launcher を経由し申した★」―― ★★今 manifest の逐語にて 確と成り申した★★★（★推 → 決★）
+
+### ㊂ ★★★★★∴ 之が Stage4 に 何を 為すか ―― ★三つ ―― 孰れも 重し★★★★★
+
+★★㋐ ★『procs unchanged』は ―― ★誰の自制にても 保ち得申さぬ★★★
+
+★Commander `06:20:14` 逐語 ―― `Keep shared roots/venv/console scripts/launcher/★procs★ unchanged.`★
+★★∴ ★然れど ―― ★三十分毎に 機構が 二役を 殺して 起こし得申す★★（★条件 ―― 肥大 ＋ idle★）
+★★∴ ★★『proc を 變ぜず』は ―― ★人の手を止むるだけでは 達し得ぬ約束★ に御座る★★
+
+★★㋑ ★★★再起は ―― ★其の時の launcher の紙★ を 起こし申す ⇒ ★§二十 の食ひ違ひは ★人を要せず★ 発火し得★★★★★
+
+★sweep の script の註（逐語・`:12`）★
+> `→ 再起動(cmd / systemd_user / send_keys。★launcherは--continue内蔵が前提=罠4-b★)`
+
+★★∴ ★機構は ★launcher に `--continue` が 在る事★ を ★前提★ と致し居り申す★★
+★★∴ ★而して a7 は manifest の外ゆゑ ―― ★a7 の食ひ違ひは 機構にては 発火せず★（★人が 起こす時のみ★）★★
+★★∴ ★★然れど 本部長・軍師second は 手の内★ ―― ★若し cutover にて launcher を 一字でも 書き換ふれば ―― ★次の三十分の内に 機構が 其の新しき紙を 撃ち得申す★★★（★人の決を 待たず★）
+
+★★㋒ ★★★★★`圧縮+会話継続復帰OK` は ―― ★★script 自らが 『偽 green』と 註し居り申す★★★★★★
+
+★sweep の script の註（逐語・`:256`）★
+> `★--continueが会話を復元できていなくても「圧縮+会話継続復帰OK」の偽greenを出す。★`
+
+★★∴ ★`04:44:38` の journal の `★圧縮+会話継続復帰OK★(restore_seen)` は ―― ★★本部長殿の会話が 復れる證に あら申さぬ★★★
+★★∴ ★之は ―― ★本部長殿 preflight の逐語「`A green result immediately after switch is not PASS evidence.`」の ―― ★★現物の一例★★★★
+
+> ## **★★★★★★條 ―― ★機構の吐く『OK』の中には ―― ★★其の機構の作者自らが 『偽 green』と 註したる物★★ が 御座る。★∴ green を 引く前に ―― ★其の green を 出す code の 註を 読め★★★★★★★★**
+
+### ㊃ ★★★推（★印）―― ★本部長殿の `06:21` の再照会と 繋がり得★★★
+
+★★推 ―― UNVERIFIED★★：`04:44:32` の圧縮にて 本部長殿の会話が 断たれたるならば ―― ★`06:21:10` の A1 再照会（家老へ「★直近2hの成果path commit★」を問ふ）は ★其の欠を 埋むる動き★ と 読め申す★
+★★然れど ―― ★己は 本部長殿の `state.db` を 開かず（他者の物）★・★圧縮の前後を 比べ居らず★ ⇒ ★★決し得ず（能に非ず ―― ★禁★）★★
+
+### ㊄ ★★併せて 潰したる 疑ひ ―― ★`auto-git-sync` は 己の樹に 手を出し申さぬ★★
+
+★`auto-git-sync.service`（★`5min` 毎・`commit/push/pull`★）を 読むに★
+```
+:26  REPO_ROOT="$HOME/projects/★multi-agent-shogun-newbuild★"
+:6   # F007 遵守 = git push は agent workflow + 陛下御差配が trust gate (= ★auto-push 禁★)
+```
+★★∴ ★己の樹（`$HOME/projects/multi-agent-shogun`）は ★手の外★★★ ⇒ ★己の `push 0` は ―― ★己の手のみならず 樹に於ても 保たれ居り申す★★
+★（★己は 之を 測るまで ★知らざりし★ ―― ★`5min` 毎の commit/push/pull が 己の freeze を 動かし得るは ★重き疑ひ★ に御座つた★）
+
+### ㊅ ★★∴ blocker4 ―― ★七件 ―― ㋒ の形 再び 變ず★★
+
+| # | 件 | 状 |
+|---|---|---|
+| ㋐ | 承認 source の同一性 | ★委員長殿 ―― 待★ |
+| ㋑ | 執行者 | ★待★ |
+| ㋒ | **再起の owner** | **★★形 變ず ―― ★本部長・軍師second ＝ ★機構が 三十分毎に 撃ち得（owner 不在の自動）★★／★a7 ＝ 機構の外（手 無し）★★★** |
+| ㋓ | 建直しの器 | ★半解★ |
+| ㋔ | 巻戻し | ★十一 file の SHA 凍結済★ |
+| ㊄ | `independent venv` | ★新規 venv 必須（GO 要）★ |
+| ㊅ | 本部長 launcher の特異（rotation promote・guard 無し） | ★立つ★ |
+| **★㊆（新）★** | **★★cutover の窓の内に ★機構の再起★ が 割り込み得 ―― ★之を 止むる権は 己に無し（`sweep_manifest.json` 改変 禁・timer 停止 禁）★★** | ★★新 ―― ★上の裁を 要す★★ |
+
+### ㊆ ★★變ぜぬ物（本節）★★
+
+★`sweep_manifest.json` ―― ★読みたるのみ・一字も改めず★／timer ―― ★enable/disable/start/stop `0`★／`hermes_context_sweep.py` ―― ★読みたるのみ・撃たず★／proc ―― 一指 `0`／launcher ―― 一字も改めず／tmux ―― `0`／札 `0`／網 `0`／push `0`
