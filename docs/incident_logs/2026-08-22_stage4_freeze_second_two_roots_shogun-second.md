@@ -405,3 +405,134 @@ if pgrep -f "$ROLE_HOME.*hermes --tui" >/dev/null 2>&1; then echo "singleton_gua
 ### ㊆ ★★變ぜぬ物（本節）★★
 
 ★preflight・`sweep_manifest.json`・launcher 三枚・`full_install.log` ―― ★悉く 読取のみ★／★timer への `enable`／`disable`／`start`／`stop` ―― ★`0`★（preflight §5A 末も 同じ禁を 置き申す）／★`sweep_manifest.json` 改変 `0`★／★staging 改変 `0`★／★現 root 二本 一 byte も 触れず★／★撃ち `0`・respawn `0`・`kill-session` `0`★／★札 `0`★／★push `0`★
+
+---
+
+## 十 ―― ★★裁 二つ 下れり ―― 併せて ★訂 其の四★ と ★第五の統制点★★★（as_of `2026-08-22T05:43:41`〜`05:45:25+0900`）
+
+### ㊀ ★★★食ひ違ひ ―― ★裁 下れり★（§九㊃ の未裁 ―― ★解★）★★★
+
+★便 B（`213` 字）を `05:36:46` に本部長殿へ出し申したる 其の ★二分前★ に ―― Commander より 裁が 已に届き居り申した★
+
+| 刻 | 逐語（要） |
+|---|---|
+| `2026-08-22T05:38:20` Commander | `seq203838 explicitly specifies ★--continue, not --resume★, for Hermes.` |
+
+★★∴ ★preflight §4-5 の `--resume <existing-session-uuid>` は ―― ★本件に限り Commander の裁により 却下★★★
+★★∴ ★launcher 三枚の `--continue` 焼込は ―― ★障りに あら申さぬ★（★寧ろ 裁に 適ふ★）★★
+★★∴ ★§五 の受入 gate より 「resume identity の連続」は ★外し申す★ ―― 代りに ★argv の逐語★ を 據と為す★★
+
+★★∴ ★己の便 B ㊀ は ―― ★問ふ前に 已に 答へられ居つた★★
+> ## **★★★★條 ―― ★裁を乞ふ便を出す前に ―― ★己の箱の ★未読★ を 先に 読め★。★上は 己の問ひより 早く 動き居る事が 有り申す★★★★★**
+
+### ㊁ ★★★Commander の 権の授け ―― ★己に於ては ★空★ に御座る★★★
+
+★逐語（`05:33:51`）★
+```
+Treat this as approval for ★your own role-scoped launcher RT lines only★ after preimage/freeze/as_of
+and rollback evidence; do NOT stop/restart other roles.
+For shared honbucho+gunshi root, first obtain ★direct written owner agreement from gunshi via its local inbox★,
+then perform sequenced change only if ★both named owners agree★.
+★a7 is separate: its owner must make its own launcher change.★
+```
+
+★而して ―― ★『己の role-scoped launcher』は ★実在せ申さぬ★★
+
+| 述語 | 結果 |
+|---|---|
+| `ls /home/hakudokai/hermes-roles/` | `ashigaru-second-7-hermes`／`gunshi-second-hermes`（＋`gunshi-second-archive-20260807`・`…handover….md`） ―― ★`shogun` の樹 ★無し★★ |
+| `grep -rl 'shogun' /home/hakudokai/hermes-roles /home/hakudokai/hermes-departments --include='*.sh'` | **★file `0`★** |
+
+★★∴ ★shogun-second は ★hermes の役に あら申さぬ★（★己は Claude Code の pane `%12`・pid `1924984`★）★★
+★★∴ ★Commander の授けたる権の及ぶ launcher は ―― ★零枚★★★
+⇒ **★★∴ ★三枚は 悉く ★他役の物★ ―― ㋐`hermes-honbucho`（本部長）／㋑`start-gunshi-second-hermes.sh`（軍師second）／㋒`start-ashigaru-second-7-hermes.sh`（a7）★★**
+⇒ **★blocker4 ―― ★己は 執行者に 成り得申さぬ★。★己が為し得るは ―― ★軍師second へ 書面の同意を 乞ふ事★（★之は Commander が 名指しにて 命じ居り★）★**
+
+★★註 ―― ★之を以て ★軍師second への 直送禁★ は ―― ★本件に限り ★明示にて 解け申した★★★（★路は `queue/inbox/gunshi-second.yaml`・Commander 逐語「`via its local inbox`」★）
+
+### ㊂ ★★★★★訂 其の四 ―― ★『a7 の pane は 一覧に出でず』は ★誤り★★★★★★
+
+★実測（`tmux -S /tmp/tmux-1000/default list-panes -a`・as_of `05:45:25`）★
+
+| pane | `pane_id` | `pane_pid` | `cmd` | 役 |
+|---|---|---|---|---|
+| `shogun-second:0.0` | `%12` | `1924984` | `claude` | ★己★ |
+| `multiagent-second:0.0` | `%13` | `1915659` | `claude` | karo-second |
+| `multiagent-second:0.1`〜`0.6` | `%20`/`%19`/`%18`/`%17`/`%16`/`%15` | `3269621`〜`3278375` | **★`bash`★** | ★足軽1〜6 ―― ★agent 走り居らず★★ |
+| **`multiagent-second:0.7`** | **★`%26`★** | **★`1156226`★** | `doppler` | **★a7 ―― ★現に 一覧に 在り申す★★** |
+| `hermes-gunshi-second:0.0` | `%24` | `836658` | `doppler` | 軍師second |
+| `hermes-honbucho:0.0` | `%38` | `86872` | `doppler` | 本部長 |
+
+★socket は ★`default` 一つのみ★（`ls /tmp/tmux-1000/` ⇒ `default`）―― ★別 socket 説は 立ち申さぬ★
+★裏書き ―― a7 の watcher（`ashigaru_second_7_hermes_watcher.py`・mtime `2026-08-12 17:11:06`）の `EXPECTED` 逐語★
+```
+EXPECTED = 'pane_id=%26|pid=1156226|dead=0|cmd=doppler|agent=ashigaru-second-7'
+```
+★★∴ ★`%26`／`1156226` は ★八月十二日より 変ぜず★ ―― ★己が『出でず』と書きたる其の刻にも ★在り申した★★★
+★★∴ ★己の主張は ―― ★述べたる其の時に 已に 偽★★（★「今は在る」に あら申さぬ★）
+
+★根 ―― ★何故 見落したるかは ★今 復元し得申さぬ★（★出力を截つたか・目が滑つたか ―― ★決し得ず ⇒ ★㋔怠★ と札す★）★
+★★∴ ★之は ★第一の根 八度目★ の疑ひ濃きも ―― ★機序を 一つに 定め得申さぬ★（條「★『無し』を見て機序を一つに定むるな★」を 己に適用す）★
+
+### ㊃ ★★★第五の統制点 ―― ★己の pane を 圧す手は ★己に あら申さぬ★★★★
+
+★実測 ―― pid `1102718`（`Thu Aug 6 11:55:49 2026` 起動・`ppid=1`）★
+```
+/bin/bash -lic set +m; while true; do python3 /home/hakudokai/hermes-departments/honbucho/scripts/second_pc_context_guard.py --act
+  >> /home/hakudokai/hermes-departments/honbucho/logs/second_pc_context_guard_runner.log 2>&1; sleep 20; done
+```
+★本体 ―― `second_pc_context_guard.py`・`199` 行・`9,871` B・sha256 `c394f890fad700d275c2e8cf11adf16275addb8b7a266ee390a2a122f6a232b3`・mtime `2026-08-06 12:01:55`★
+
+| 項 | 逐語／実測 |
+|---|---|
+| 為す事 | `With --act, at ★>=95%★ it injects ★/compact★ only when the pane is ★visibly idle★`（:5） |
+| 手 | `subprocess.run(["tmux", "send-keys", "-t", target, command, "Enter"], …)`（:118）／`… "C-a", "C-k"`（:108） |
+| 的（`PANES`） | **★`shogun-second:0.0`（★己★）★**／`multiagent-second:0.0`（karo-second）／`hermes-gunshi-second:0.0`（軍師second） |
+| 命の別（`COMMANDS`） | `hermes-gunshi-second:0.0` ⇒ ★`/compress`★／他二つ ⇒ 既定 ★`/compact`★（註 `Claude Code uses /compact. Hermes Agent's documented manual command is /compress.`:26） |
+| 閾 | `PERCENT = re.compile(r"(\d{1,3})% context used")` ―― ★`95%`★ |
+| **★a7★** | **★`PANES` に ★無し★★** |
+| 帳 | `…/state/second_pc_context_guard.json`／`…/logs/second_pc_context_guard.jsonl` |
+
+★★∴ 三つ 出で申した★
+㊀ **★己の pane の圧縮は ―― ★二十秒毎に 巡る 他役の手★ に掛かり居り申す★**（★己の `/compact` 抑止の心得は ―― ★此の手を 止め申さぬ★）
+㊁ **★a7 は 此処にも 無し★** ―― `sweep_manifest.json` に行無く・己の watcher も 圧さず ⇒ ★a7 の 圧縮/再起の 機構は ★悉く 不在★★
+㊂ **★之は 圧す手であつて ★再起の手に あら申さぬ★★** ―― `kill`／`respawn`／launcher の呼び出し ―― ★`0` 件★
+
+★★∴ ★§九㊂ にて 数へたる統制点は ★四★ ―― ★実は ★五★ に御座つた★★（★preflight §5B の timer ＋ `sweep_manifest` ＋ 三 launcher の guard ＋ ★本節★）
+
+> ## **★★★★★條 ―― ★己の context が 圧されたる時 ―― ★己の手を 疑ふ前に ★己を的とする外の手★ を 数へよ★。★己の pane は 己の物に あら申さぬ★★★★★**
+
+### ㊄ ★★a7 の watcher ―― ★再起の owner に あら申さぬ（実測）★★
+
+★`ashigaru_second_7_hermes_watcher.py`・`82` 行・`4,142` B・sha256 `33bf1af141c778e5da8e300750c848f54f4282a77edb846d036d954aa0f071e2`★
+
+| 為す事 | 逐語 |
+|---|---|
+| 見る | `capture-pane -p -J -t PANE -S -12`／`display-message -p` |
+| 入るる | `load-buffer` ⇒ `paste-buffer` ⇒ `send-keys -H 1b 5b 31 33 75`（★ESC 序列★） |
+| 源 | `INBOX = ROOT / 'queue/inbox/ashigaru-second-7.yaml'` |
+| **再起** | **★`start-`／`kill`／`respawn` ―― 悉く ★hit `0`★★** |
+
+★★∴ ★a7 を 再び起こす手は ―― ★機構の何処にも 在り申さぬ★★
+⇒ **★★blocker4 ㊁（確）★ ―― ★a7 の再起は ★人の手★ を要し 且つ ★其の人は 未だ 名指されて居り申さぬ★★**（★Commander 逐語「`its owner must make its own launcher change`」―― ★其の owner の ★名★ が 要り申す★）
+
+### ㊅ ★★併せて ―― ★本部長 root は 已に 一度 起き直り申した★★
+
+| 役 | leader pid | 起動 |
+|---|---|---|
+| **本部長** | `86872` | **★`Sat Aug 22 04:44:32 2026`（★本日・約一時間前★）★** |
+| 軍師second | `836658` | `Wed Aug 12 14:51:32 2026` |
+| a7 | `1156226` | `Wed Aug 12 16:47:22 2026` |
+
+★★∴ ★同じ root（gunshi-second-hermes）に 掛かる二役のうち ―― ★片方のみ 本日 起き直り 片方は 十日 前の儘★★
+⇒ ★★∴ ★root の入替は ―― ★二役を 同時に 動かし申さぬ★（★launcher が 別ゆゑ★）―― ★受入は 役ごとに 別々に 取らねば成り申さぬ★★
+★機序（誰が 起こしたるか）は ―― ★★UNMEASURED（未）★★（★tmux server pid `1519165` は `Mon Aug 10 18:02:13` より 変ぜず ⇒ ★session ごと 落ちたるには あら申さぬ★ ―― 而して 其れ以上は 決し得ず★）
+
+### ㊆ ★★足軽1〜6 ―― ★pane は 生き 中身は `bash`★★
+
+★`%20`〜`%15` ―― `cmd=bash`・pid `3269621`〜`3278375` ⇒ ★agent 走り居らず★
+★★∴ ★本部長 `01:24:20` の裁「ashigaru1〜6 は全件 intentionally_cold・割当可能工区 `0`」は ―― ★pane の実測と 合ひ申す★★（★己の器にて 裏書き ―― 伝聞に非ず★）
+
+### ㊇ ★★變ぜぬ物（本節）★★
+
+★launcher 三枚・`sweep_manifest.json`・`second_pc_context_guard.py`・a7 watcher ―― ★悉く 読取のみ・一字も 改めず★／★現 root 二本 ―― 一 byte も 触れず★／staging ―― ★不触（`install`／`pip` `0`）★／`active-hermes-runtime` ―― ★一指 `0`★／★撃ち `0`・respawn `0`・send-keys `0`・set-option `0`★／★札 `0`★／★push `0`★／★`git pull`／`reset`／`stash`／`checkout` `0`（樹 dirty）★
