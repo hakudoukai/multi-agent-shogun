@@ -1137,3 +1137,104 @@ from hermes_cli.main import main
 ### ㊆ ★★變ぜぬ物（本節）★★
 
 ★`pyproject.toml`・`pyvenv.cfg`・`venv/bin/*`・`RT/hermes` ―― ★悉く 読取のみ★／★`pip` `0`・`uv` `0`・網 `0`・build `0`★／★役の venv の python ―― ★実行せず★★／★shebang 一字も 書き換へず★／★撃ち `0`・send-keys `0`★／★push `0`・札 `0`★
+
+---
+
+## 十八 ―― ★★★新令 `06:14:52` への 回答 ―― ★独立せる 巻戻しの樹は ★無し★★ ―― 而して ★★cutover の触るる面は ★十一 file★ に過ぎ申さぬ★★★★★（as_of `2026-08-22T06:17:46`〜`06:19:09+0900`）
+
+★問（Commander `06:14:52` 逐語）★
+> `Before any cutover, identify and record ★exact 0.20.0 rollback artifact path+SHA+launch command★ plus approved final noneditable root. If ★no 0.20.0 rollback artifact exists★, return blocker4 with owner/root cause/next safe action; continue read-only provenance.`
+
+### ㊀ ★★候補の 悉くを 数へ申した（`~` 直下 深さ 1 ＋ `hermes-agent*` 深さ 4 ＋ `*.whl`/`*.tar.gz`）★★
+
+| # | 樹 | 版 | source file 数 | `hermes` 起動片 | 判 |
+|---|---|---|---|---|---|
+| ㋐ | `~/hermes-agent` | **★`0.19.0`★** | **★`0`★** | ★無し★ | ★★不可 ―― 委員長裁②の禁 ＋ ★そもそも source を持たぬ venv のみの殻★★ |
+| ㋑ | `~/hermes-runtimes/…v2026.8.3`（共有） | `0.20.0` | `8,769` | 有 | ★★不可（下記 ㊁）★★ |
+| ㋒ | 樹 A（gunshi root） | `0.20.0` | `17,404` | 有 | ★★不可 ―― ★己自身の巻戻し先には なり得申さぬ★★★ |
+| ㋓ | 樹 B（a7 root） | `0.20.0` | `17,405` | 有 | ★同上★ |
+| ㋔ | `~/hermes-staging-0.20.4/hermes-agent` | ★`0.20.4`★ | ― | ― | ★不可 ―― 版違ひ ＋ 三疵（§十一）★ |
+| ― | ★`*.whl`／`*.tar.gz`★ | ― | ― | ― | **★★`0` 件（`~` 深さ 6 まで）★★** |
+
+★★∴ ★★★★★答 ―― ★★用ゐ得る 独立の `0.20.0` 巻戻し樹は ★一本も 存在し申さぬ★★★★★★
+
+### ㊁ ★★★共有樹が 代替たり得ぬ 理由 ―― ★`node_modules` を 丸ごと 欠き居り申す★★★
+
+★file 数の内訳（★上位項 悉く 一致・差は ★一項のみ★★）★
+
+| 項 | 共有樹 | 樹 A |
+|---|---|---|
+| `tests`／`apps`／`website`／`ui-tui`／`skills`／`optional-skills`／`contributors`／`plugins`／`hermes_cli`／`agent`／`web`／`tools`／`gateway` | `2742`/`1560`/`766`/`678`/`545`/`534`/`442`/`339`/`262`/`180`/`169`/`135`/`90` | ★★悉く 同数★★ |
+| **★`node_modules`★** | **★★無し★★** | **★★`8,635` file（`122` package）★★** |
+| 計（venv 除く） | `8,769` | `17,404` ―― ★差 ＝ ★`8,635`★ ＝ ★`node_modules` 丁度★★ |
+| `du`（venv 除く） | `255M` | `515M` |
+
+★★∴ ★★共有樹 ＝ ★役の樹より `node_modules` を 抜いた物★★★ ⇒ ★★巻戻し先と為さば ★`ui-tui`／LSP の類が 欠け申す★★★
+★★∴ ★加へて ―― ★共有樹へ launcher を向くるは ★役を 共有樹の上に 載せる★ 事に御座る★（Commander `Keep shared mutation0` の 精神に 背き申す）
+
+### ㊂ ★★★然れど ―― ★source の巻戻しは ★そもそも 要り申さぬ★★★★
+
+| 樹 | `git HEAD` | 汚れ |
+|---|---|---|
+| 共有樹 | **`0957277f2f468bac22bbfcfa7c43029858c9597e`** | ★`0`（清し）★ |
+| 樹 A | **★同一★** | `1` ―― ★` M package-lock.json`★ |
+| 樹 B | **★同一★** | `2` ―― ★` M package-lock.json`／`?? hermes.guardwrapper-evidence-20260814`★ |
+
+★★∴ ★★★三樹 悉く ★同じ commit★ に御座り ―― ★汚れは `package-lock.json` と a7 の證物のみ★★★
+★★∴ ★而して ―― ★★非 editable 化は ★source tree に 一字も 書き申さぬ★★★（★書くは ★venv の中★ のみ★）
+★★∴ ★∴ ★★『樹を丸ごと控へる』要は 無く ―― ★委員長裁 `seq200891`「★copy/rsync 不可★」との 衝突も ★生じ申さぬ★★★★
+
+### ㊃ ★★★★★∴ ★cutover が 現に 触るる面 ＝ ★十一 file★ ―― ★悉く path ＋ SHA-256 を 此処に 記し申す★★★★★
+
+★所在 ―― `<RT>/venv/lib/python3.12/site-packages/`（`<RT>` ＝ 樹 A ／ 樹 B）★
+
+| # | file | size | **SHA-256** |
+|---|---|---|---|
+| 1 | `__editable__.hermes_agent-0.20.0.pth` | `97` | `e1fd939276ec31920549b50bba0122c8b1f213025befd1bf35403255a12b11dd` |
+| 2 | `__editable___hermes_agent_0_20_0_finder.py` | `8,195` | `9dbada97bace6544d6a6f5a5c290514e685786a48ee40e02c404552ed9e9c939` |
+| 3 | `hermes_agent-0.20.0.dist-info/METADATA` | ― | `7aabd29a8ef1b8e57c6d62e9d9b095de7463c0c7c2ab1fd94331130bbefb0c71` |
+| 4 | `hermes_agent-0.20.0.dist-info/RECORD` | ― | `454fe5699ae02dbff98badcf700a25c51b80ce7bfcff3bf5b42bd1e52088b193` |
+| 5 | `hermes_agent-0.20.0.dist-info/WHEEL` | ― | `2b6eb4118ce7cd7b09601406aa623c553c4476265836f0d9c16f5c061f7efcc0` |
+| 6 | `hermes_agent-0.20.0.dist-info/INSTALLER` | ― | `ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508` |
+| 7 | `hermes_agent-0.20.0.dist-info/REQUESTED` | `0` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`（★空 file の sha★） |
+| 8 | `hermes_agent-0.20.0.dist-info/direct_url.json` | ― | `cc9185fcdd5368e43e87bce868395758f9875c253f7fdbe78dd8f93d8adb3615` |
+| 9 | `hermes_agent-0.20.0.dist-info/entry_points.txt` | ― | `7c350e4a7ddc48a552560234fcfe1103a23fc3522e6837376aff49edd0dba17a` |
+| 10 | `hermes_agent-0.20.0.dist-info/top_level.txt` | ― | `a294a70fbc430e3e84aec872de8cd30ca1715d3b3bfe86222fa5286b3726dc45` |
+| 11 | `hermes_agent-0.20.0.dist-info/licenses/LICENSE` | ― | `821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6` |
+
+★★∴ ★★★★★十一 file 悉く ―― ★樹 A と 樹 B にて ★一 byte も 違ひ申さぬ★★★★★★
+
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+★★★★★註（★過剰に読むな★）―― ★此の同一は ★install の再現性の證に あら申さぬ★★。★§十七 にて 測りたる通り ―― ★両 venv は ★共有 venv の複製★ に御座る ⇒ ★同一なるは ★複製ゆゑ★ にて 説き尽き申す★★。★條「★整ふは證に非ず。分かつ物のみが證★」★
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+### ㊄ ★★起動の綴り（`launch command` ―― 逐語）★★
+
+| 役 | launcher | 撃つ綴り |
+|---|---|---|
+| 本部長 | `hermes-departments/honbucho/bin/hermes-honbucho`:9-10 | `<A>/venv/bin/python <A>/hermes ★--continue★ "$@"` |
+| 軍師second | `…/gunshi-second-hermes/bin/start-…sh` | `$RT/venv/bin/python $RT/hermes ★--tui --continue★`（`RT=$ROLE_HOME/run/hermes-agent-v2026.8.3`） |
+| a7 | `…/ashigaru-second-7-hermes/bin/start-…sh` | `$RT/venv/bin/python $RT/hermes ★--tui★`（★`--continue` 無し ―― §八 実測★） |
+
+### ㊅ ★★★∴ 具申 ―― ★複製を要せぬ 巻戻しの型★★★
+
+★★∴ ★★★巻戻し ＝ ★editable を 再 install し ―― ★㊃ の 十一 SHA と 照合する★★★★
+```
+<RT>/venv/bin/python -m pip install -e <RT> --no-build-isolation --no-deps --no-index
+   # 網 0 ―― 要求の setuptools==83.0.0 は 現に venv に在り（§十七㊅）
+   # 然る後 ―― 十一 file の sha256 を ㊃ の表と 突き合はす
+```
+★利 ―― ★複製 `0`（委員長裁と衝突せず）／網 `0`／依存を 一つも動かさず／★照合の物差しが 先に 紙に在る★★
+★★★UNVERIFIED（★重★）―― ★『再 install が ★同じ byte★ を生む』は ★測り居り申さぬ★★。★㊃ の同一は 複製にて説き尽き ―― ★再現性の證に あら申さぬ★（上記 註）。★∴ 此の型を採るならば ―― ★★先づ 一度 撃つて 十一 SHA を 検むる『空撃ち』が 要り申す★★（★execution GO の内★）
+
+### ㊆ ★★∴ blocker4 ㋔ の 更新 ―― ★『巻戻し先 無し』は ★依然 立ち申す★ ―― 然れど ★形が 変じ申した★★
+
+| 項 | 内容 |
+|---|---|
+| **root cause** | ★cutover 前の preimage が ★一度も 取られ居らず★／launcher に書かれたる唯一の巻戻し手順が ★`0.19.0`（禁）★／★独立の `0.20.0` 樹・wheel・tarball ―― ★悉く `0` 件★★ |
+| **owner** | ★樹 A ＝ 本部長殿 ＋ 軍師second（★両名の同意を要す ―― Commander `06:14:52`★）／樹 B ＝ a7 owner★ |
+| **next safe action（★己の具申★）** | ★㊃ の十一 SHA を ★先に 紙に凍らせ（★本 commit にて 済★）★ ―― 然る後 ★GO の下に 再 install の空撃ちを 一度★ 行ひ ★同一 byte を 実証★ してより cutover に入る★ |
+
+### ㊇ ★★變ぜぬ物（本節）★★
+
+★`find`／`git status`／`sha256sum`／`du` ―― ★悉く 読取★／★`git` の書く手 `0`（`checkout`／`pull`／`fetch` `0`）★／★`pip` `0`・`uv` `0`・網 `0`・build `0`★／★venv の中 一 byte も 改めず★／★staging 不触（證物）★／★撃ち `0`・send-keys `0`・respawn `0`★／★push `0`・札 `0`★
