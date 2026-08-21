@@ -1849,3 +1849,142 @@ TimeoutStartUSec=30min        ← （★周期と 同じ長さ★）
 ### ㊄ ★★變ぜぬ物（本節）★★
 
 ★`systemctl` ―― ★`show`／`list-timers` の ★読取のみ★★（★`start`／`stop`／`enable`／`disable`／`mask` ―― 悉く `0`★）／timer file ―― 一字も改めず／manifest ―― `0`／proc ―― `0`／札 `0`／網 `0`／push `0`
+
+---
+
+## 二十六 ―― ★★★★★★六十一周期を数へ ―― ★己の『閾を越ゆれば撃つ』が ★実測にて 倒れ申した★★（`414,250` chars ―― ★撃たれず★）★★★★★★（as_of `2026-08-22T06:57:21`〜`06:59:12+0900`）
+
+### ㊀ ★★★先づ 己の過ち ―― ★令が 已に 箱に在りしを 読まずして 便を出し申した★★★
+
+| 刻 | 事 |
+|---|---|
+| **★`06:46:28`★** | **★★Commander `[Stage4 sweep boundary]` ―― ★己の箱に 着★★★** |
+| `06:53:46` | ★己 §二十四 commit★（★未読のまま★） |
+| `06:54:31` | ★己 便 `#25` 発 ―― ★窓を cutover-safe path として 上申★★（★未読のまま★） |
+| `06:56:35` | ★己 便 `#26` 発★（★未読のまま★） |
+| **★`06:56:45`★** | **★★己 漸く 箱を読む★★** |
+
+★Commander `06:46:28` 逐語★
+> `[Stage4 sweep boundary] Preserve timer/service/manifest/launchers. Active compact-sweep can kill_session then relaunch honbucho+gunshi; ★do not schedule cutover in its window or attempt suppression.★ Treat ★timer owner/formal safe procedure + post-cutover guard acceptance★ as blocker4. Correction received: ★restore_seen is accepted only as conversation-fragment continuity evidence; unavailable capture must remain prompt_seen_restore_uncheckable.★`
+
+★★∴ ★★★★★己の條 ―― ★『裁を乞ふ便を出す前に 己の箱の未読を先に読め』★ ―― ★★己が 破り申した★★★★★★（★§十九 にて 己が 立てたる 其の條★）
+
+★★∴ ★而して ―― 令と 己の便は ★向きが 違ひ申す★★
+| | Commander `06:46:28` | 己の便 `#25`/`#26` |
+|---|---|---|
+| 窓 | ★`do not schedule cutover in its window`★ | ★『最も広き窓』として ★上申★★ |
+| 安全の出所 | ★★`timer owner / formal safe procedure`★★ | ★★己の 測り★★ |
+
+★★∴ ★★★★★★∴ ★己は ―― ★『安全の 出所』を ★人の裁★ から ★己の測り★ へ 移さんとし申した★★★★★★★
+★★∴ ★★之を 撤し申す ―― ★己の窓は ★測り★ に留め ★path として 献ぜず★★★★
+★（★本部長殿は 己より 正しく ―― `06:55:31` にて ★「実測上の静穏窓として ★限定受領★。★ただし保証でなく★」★ と 札を貼り 申した★）
+
+> ## **★★★★★★★★條 ―― ★己の測りが 精しく成る程 ―― ★『裁を 己で 代はれる』かの 心地★ が 生じ申す。★★測りは ★裁の材★ にして ★裁に 非ず★★。★『安全なる窓を 見出した』と ★『其処で 為してよい』★ の間には ―― ★★人の裁が 一つ 挟まり申す★★★★★★★★★★**
+
+### ㊁ ★★★次に ―― ★己の窓が 狭過ぎ申した★（`6` 周期 ⇒ ★`61` 周期★）★★★
+
+★★∴ 直近 `30.5` 時間・★`61` 周期★ の 全数★
+
+| 出口 | 数 | 割 |
+|---|---|---|
+| ★`busy見送り`★ | **★`32`★** | ★`52.5%`★ |
+| ★`閾値未満`（二役共）★ | `12` | `19.7%` |
+| ★`効果小skip`★ | **★`13`★** | ★`21.3%`★ |
+| **★`圧縮`（＝kill-session→再起）★** | **★★`4`★★** | **★★`6.6%`★★** |
+
+★★∴ ★圧縮の刻 ―― `08-21 04:28:39`／`08-21 21:38:38`／`08-21 23:38:37`／`08-22 04:44:38`★
+★★∴ ★己が §二十四 に「六周期に 一度」と申したるは ―― ★己が 窓を `04:00` に切りたる ゆゑの 数★★
+
+★★∴ ★併せて ―― ★周期の安定 ★実証★★ ―― ★`60` の gap 悉く ★`29.8`〜`31.0` 分★（★一つも 欠けず・一つも 33分を越えず★）★
+
+### ㊂ ★★★★★★★而して ―― ★己の説が 倒れ申した★★★★★★★
+
+★己の申したる事（便 `#23`・§二十二/二十四 の底）★
+> 「★閾を超ゆれば 人の決を待たず 撃ち申す★」
+
+★実測 ―― ★閾 `250,000` を 越え 乍ら ★撃たれざりし★ 断面★
+
+| 刻 | 役 | 肥大 | 出口 |
+|---|---|---|---|
+| `08-21 18:35:28` | honbucho | `351,333` | ★busy★ |
+| `08-21 19:05:58` | honbucho | `358,634` | ★busy★ |
+| `08-21 20:37:28` | honbucho | `340,837` | ★busy★ |
+| **★`08-22 00:40:28`★** | **honbucho** | **★★`414,250`★★** | **★★busy ―― ★撃たれず★★★** |
+| `08-22 00:09:28` | honbucho | `316,700`（freed見込 **★`0`★**） | ★効果小skip★ |
+
+★★∴ ★★★★★★閾の ★`1.66` 倍★・危険水準 `350,000` の ★`1.18` 倍★ ―― 而して ★★機構は 撃ち申さなんだ★★★★★★★
+
+★逐語 ―― ★busy の検めは 出口の ★最後★ に在り申す★
+```python
+453  if freed_est < min_gain and force_small_gain_when_frozen(frozen, freed_est): …強制
+456  elif freed_est < min_gain: …効果小skip
+475  if cap and BUSY_RE.search(cap) and ★not frozen★:
+476      log('%s: ★肥大(%s chars)だがbusy→次周期★'); skipped_busy += 1; continue
+```
+★★∴ ★★危険水準の escalation を 通り抜けて 尚 ―― ★busy ならば 見送り申す★★★
+
+> ## **★★★★★★★★★條 ―― ★『機構は 撃つ』と申す前に ―― ★★其の機構が ★現に 撃たなかつた 最大の値★★ を 探せ。★★閾は ★引き金の 位置★ を語り ―― ★★引かれなかつた 回数★★ を 語り申さぬ★★★★★★★★★★**
+
+### ㊃ ★★★★★★★★★併せて ―― ★軍師second の『十日 不変』の ★起点★ が 見え申した★★★★★★★★★
+
+★危険水準にて ★保護を薄めて刈る★ 道 ―― ★全数（`08-10` 以後）★
+```
+08-10 02:27:08  gunshi-second  386,156 → 保護2往復 (freed見込=126,516)
+08-10 08:28:48  honbucho       350,197 → 保護3往復 (freed見込=181,451)
+08-10 14:31:28  gunshi-second  424,305 → 保護1往復 (freed見込=128,684)
+★08-12 14:51:28  gunshi-second  435,975 → 保護1往復 (freed見込=121,912)★
+★08-21 23:38:28  honbucho       351,850 → 保護3往復 (freed見込= 66,092)★
+```
+
+★★∴ ★★★★★★`08-12 ★14:51:28★` ―― ★軍師second の proc 起動 ＝ `Aug 12 ★14:51:32★`★ ―― ★★★四秒 違ひ★★★★★★★★
+
+★★∴ ★★★★★★★∴ ★軍師second の pane が ★十日 不変★ なる 其の 起点は ―― ★★★此の機構が 危険水準（`435,975` chars）にて 保護を `6`→`1` 往復へ 薄めて刈り ―― kill-session → 再起 したる 其の刻★★★ に御座つた★★★★★★★
+
+★★∴ ★『十日 動いて居らぬ』は ―― ★『十日 誰も触れて居らぬ』に あら申さぬ★★ ―― ★★『十日前に 機構が 撃つた 其の proc が 今も 立つて居る』★★
+
+> ## **★★★★★★條 ―― ★『長く 変はらぬ』は ★安定の證★ に あら申さぬ。★其れは ★最後に 誰か（或いは 何か）が 触れた 其の刻★ を 指す ★遺物★ に御座る。★★『いつから』を測りたる時は ―― ★其の刻に 何が 起きたかを 併せて 掘れ★★★★★★★**
+
+### ㊄ ★★★機構は ★凍結を 目で 見て 居り申す★★★
+
+```python
+23  BUSY_RE = re.compile(r'Ctrl\+C to interrupt|esc to interrupt|msg=interrupt|ruminating|'
+24                       r'deliberating|Compacting|cogitating|synthesizing|preparing|'
+25                       r'formulating|computing|brainstorming|New message detected')
+27  ★DEAD_RE = re.compile(r'Context length exceeded|gateway exited|Traceback \(most recent')★
+91  def capture(mf, role, lines=8):
+92      … ['capture-pane', '-p', '-t', role['pane'], '-S', '-8']
+113 def force_small_gain_when_frozen(frozen, freed_est):
+114     """A frozen pane must not be left dead merely because the gain is under 15%."""
+115     return bool(frozen and ★freed_est > 0★)
+```
+
+★★∴ ★機構の申す『凍結』＝ ★pane 末尾 `8` 行に 右の三語の孰れかが 見ゆる事★★
+★★∴ ★凍結を見たならば ―― ★㋐効果小でも 強制圧縮★／★㋑busy 検めを 素通り（`and not frozen`）★★
+★★∴ ★★∴ ★★★『busy ゆゑ 撃たれぬ』は ―― ★凍結して居らぬ 間のみ の 守り★★★★
+
+★★∴ ★猶 ―― ★`freed_est > 0` の枷 有り★ ⇒ ★★凍結 且つ freed見込 `0` ならば ―― ★強制も 掛からず★★★（★`08-22 00:09:28` の honbucho は 現に `freed見込=0`★ ―― ★★但し 其の時 凍結して居らず★★）
+
+### ㊅ ★★∴ 己の『窓』の論 ―― 生きたる所・弱まりたる所★★
+
+| 主張 | 判 |
+|---|---|
+| ★周期は 約三十分・欠け無し★ | **★★生 ―― `61` 周期にて 実証★★** |
+| ★次撃ちは `07:15:06`（systemd の計算）★ | ★生★ |
+| ★撃ちは `oneshot`・重なり無し★ | ★生★ |
+| ★`Persistent=yes` ⇒ 遅らす道 無し★ | ★生★ |
+| ★危ふき長さ ＝ 圧縮時 `11` 秒★ | ★生★ |
+| ★閾を越ゆれば 撃つ★ | **★★倒 ―― `414,250` にて 撃たれず（busy）★★** |
+| ★閾の下ならば 無害★ | ★生（`below` は 素直に skip）★ |
+| ★窓を cutover-safe path として 用ゐ得★ | **★★撤 ―― Commander `06:46:28`「`do not schedule cutover in its window`」★★** |
+
+★★∴ ★★blocker4 ㊆ ―― ★Commander の枠にて 書き直し申す★★
+> ★★`timer owner` ＋ `formal safe procedure` ＋ `post-cutover guard acceptance`★★ ―― ★★己は 三つとも 持ち申さぬ★★
+
+### ㊆ ★★測り得ざりし物（本節・★禁／未★）★★
+
+★★禁★ ―― 二役の `state.db`（∴ ★窓の内に閾を越ゆるか★ 猶 測れ申さぬ）／`~/.local` の promote script
+★★未★ ―― `alert_iincho` の実体（★`/tmp/sweep_smallgain_alert_*` ―― ★`06:58:45` に ★存在 `0`★★ ⇒ ★危険水位の効果小 warning は 直近 未発★／★但し `/tmp` の保持に依る★）
+
+### ㊇ ★★變ぜぬ物（本節）★★
+
+★journal・script・manifest ―― ★悉く 読取のみ★／`sed`/`grep` にて 開きたるのみ・一字も改めず／timer ―― `start`/`stop`/`enable`/`mask` 悉く `0`／proc ―― `0`／tmux ―― ★`capture-pane` すら 撃たず★／札 `0`／網 `0`／push `0`
