@@ -1602,3 +1602,54 @@ pane に ★現に斯く映り居る★（逐語・患者語なし）:
 `tmux` ＝ ★`display-message` `list-panes` `capture-pane` の読取のみ・入力 **0**★／
 ★他者の箱へ書込 **0**・代理既読札 **0**★／★患者語 紙へ写さず★／`queue/tasks` 書込 **0**／`dashboard.md` **0**／
 `push` **0**・`fetch` **0**・`pull` **0**／★便 **0**（★4件の裁を待つ身ゆゑ 催促を打たず・本節は「完了後まとめて1報」の材とす）★
+
+---
+
+## 二十六 ―― ★★上げかけて 止まり申した ―― 今朝の刃が 己の箱に 当たった★★（as_of **2026-08-21T09:12:02 +09:00**）
+
+### 26-1 ★何を為さんとしたか★
+
+§25-4 にて六體悉く `intentionally_cold`・根因＝`work-pull` 未裁 と測り、
+憲章 v1「★弾切れ時は上へ仕分けを求めよ・待機禁止★」に従い ★Commander へ上げんとし申した★。
+
+### 26-2 ★★止めた物 ―― 己の箱に在りたる 令の逐語★★
+
+`queue/inbox/shogun-second.yaml`（`msg_20260820_184619_a1ea4ee1`・`from: commander`・`18:46:19`）:
+
+```
+[seq201951 / inventory before work-pull] ★Do NOT issue WORK-PULL canaries yet.★
+Pull active tree first, then inventory every Second-lane role unanswered/unacked work newest-first;
+retain only live work; list older-than-7d unchanged for Iincho; do not close lots.
+Per role return selector/as_of/retained IDs+count/older IDs+count/blocker4.
+iincho486 out of scope. No bulk mark/delete, task creation, runtime/lifecycle, config or DB change.
+```
+
+> ★∴ 六體の冷は ★管理の失に非ず ―― 令に従いたる姿★★。
+> ★∴ 上げれば ―― ★重複★（本部長台帳 `:1031` に「足軽1 blocked・待物＝work 解禁・owner＝將軍second」と已に在り）
+> ★且つ 解禁を促す形と成り ―― ★令に背く★★。★上げず★。
+
+**★§25-4 の格を訂す★**: 「`blocked` 四点セットに近し」→ ★誤★。正しくは **★`intentionally_cold`（明示の令による）★**。
+★憲章 v1 の「理由と再開条件を明記」を満たす★（再開条件＝㋐Commander の `work-pull` 解禁 ㋑樹の pull blocker の裁、★孰れか一つ★）。
+
+### 26-3 ★★併せて出でたる物 ―― 己の箱の `read:false` 二通は 履行済であった★★
+
+| 令 | 己の箱の札 | ★実は★ |
+|---|---|---|
+| `seq201951`（inventory） | ★`read: false`★ | ★`seq201989`（`shogun-second` → `commander`・08-20 **19:19:50**）にて復命済★ |
+| `seq202101`（直送禁の検分） | ★`read: false`★ | ★`seq202141`（同・**21:09:41**）にて復命済★（台帳 追補五十一・commit `574192d`） |
+
+`seq202141` の要（己が已に書きたる物）: ㋐明示禁＝統治文書 **0件**（対照＝環境部長は `CLAUDE.md:523` で検出⇒★器の不発でなく真の不在★）／
+㋓★`9-d` は本樹に存在せず★⇒`scope` 書けず＝`blocker` owner は Commander／㋔条件節不発ゆゑ ★解除対象無し・変化 0★。
+
+> ### **★★今朝 §24 にて書きたる刃が ―― 己の箱に そのまま当たり申した★★**
+> ### **★★`read:false` は 他者の怠りを言はぬ。★己の怠りも 言はぬ★★★**
+>
+> ★測らずに動いて居らば ―― ★履行済の令を二度回し★・★己を「12時間の不履行」と誤報し★・
+> ★且つ `Do NOT issue WORK-PULL canaries` に背いて 解禁を促す便を打って居った★。
+> ★三つの害が 一つの検めで 悉く消え申した★。
+
+### 26-4 變ぜぬ物（本節の分）
+
+★便 **0**（上げかけて止めた ＝ ★之が成果★）★／★撃ち 0・`respawn` 0・`set-option` 0・`send-keys` 0・`kill` 0★／
+★binary へ 一指 0★／★己の箱へも 札 0★（構造として打ち得ず・`seq202771` にて上申済・owner ＝ 委員長殿）／
+★他者の箱は読取のみ・書込 0★／`queue/tasks` 書込 0／`dashboard.md` 0／`push` 0・`fetch` 0・`pull` 0／★患者語 紙へ写さず★。
