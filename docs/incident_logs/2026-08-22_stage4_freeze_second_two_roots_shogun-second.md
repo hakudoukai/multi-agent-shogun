@@ -536,3 +536,126 @@ EXPECTED = 'pane_id=%26|pid=1156226|dead=0|cmd=doppler|agent=ashigaru-second-7'
 ### ㊇ ★★變ぜぬ物（本節）★★
 
 ★launcher 三枚・`sweep_manifest.json`・`second_pc_context_guard.py`・a7 watcher ―― ★悉く 読取のみ・一字も 改めず★／★現 root 二本 ―― 一 byte も 触れず★／staging ―― ★不触（`install`／`pip` `0`）★／`active-hermes-runtime` ―― ★一指 `0`★／★撃ち `0`・respawn `0`・send-keys `0`・set-option `0`★／★札 `0`★／★push `0`★／★`git pull`／`reset`／`stash`／`checkout` `0`（樹 dirty）★
+
+---
+
+## 十一 ―― ★★★訂 其の五 ―― 己の staging は ★三つの理由にて 使へ申さぬ★ ―― 併せて ★建直しの型★ と ★preimage/rollback★★★（as_of `2026-08-22T05:48:19`〜`05:48:44+0900`）
+
+### ㊀ ★★★★★訂 其の五 ―― `PROVENANCE.txt` の ★`network 0`★ は ―― ★抽出のみに 掛かり申す★★★★★
+
+★己が書きたる逐語（`2026-08-21T23:18:29`）★
+```
+extracted_from=/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3 (read-only, git archive, ★network 0★)
+```
+★★∴ ★之は ★源樹の抽出★ の話に御座る ―― ★依存の導入★ の話に あら申さぬ★★
+★而して ―― ★己は 之を 『build 全体が network 0』の意にて 用ゐ 委員長殿へも 其の含みにて 報じ申した★
+
+★実測 ―― `full_install.log`（`208` 行・sha256 `518dcefd8c7d8ac3bea07547866f950203ce9b95cc11396a1146d4a01949e970`）★
+
+| 述語 | 結果 |
+|---|---|
+| `grep -c '^Downloading '` | **★`7`★** |
+| `grep -c '^  Downloading '` | `7`（metadata 取得） |
+| `grep -c 'Using cached'` | `106` |
+| `grep -c 'require-hashes'` | **★`0`★** |
+| `grep -c 'no-index'` | **★`0`★** |
+| `grep -i 'uv.lock\|uv sync\|uv pip'` | **★hit `0`★** |
+
+★網より 取り来たりたる `7` 件（逐語）★
+```
+nemo_relay-0.7.3-cp311-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl   (9.0 MB)
+uvicorn-0.52.4-py3-none-any.whl / charset_normalizer-3.5.1-…whl / idna-3.19-…whl
+pygments-2.21.0-…whl / starlette-1.6.0-…whl / typing_inspection-0.4.4-…whl
+```
+
+★★∴ 三つ 出で申した★
+㊀ **★網へ 現に 出で申した★**（★己の台帳の「網へ出でたるは `0`」は ―― ★本 session に限る話★ にて ―― ★staging 建設の夜には 出で居り申した★）
+㊁ **★★`uv.lock` は ★用ゐられ居り申さぬ★★** ―― ★freeze 六項に 己が数へたる `uv.lock` の sha は ―― ★源樹に在る事の證にて 解決子の入力たる證に あら申さぬ★★
+㊂ **★hash 固定 `0`・offline 強制 `0`★** ―― ★同じ命を 明日撃ちても 同じ物が 建つ保證 無し★
+
+★併せて ―― log の尾に★
+```
+Attempting uninstall: hermes-agent
+  Found existing installation: hermes-agent 0.20.4
+```
+★★∴ ★此の log は ★二度目より 後★ の記録★ ―― ★venv の来歴は 一度きりに あら申さぬ★
+
+> ## **★★★★★條 ―― ★己の書きたる `PROVENANCE` の一語が ★何処までに 掛かるか★ を ―― ★引用する度に 検めよ★。★括弧の中の語は 括弧の外へ 伸び申さぬ★★★★★**
+
+### ㊁ ★★★自申 ―― ★己は 禁ぜられたる手を 撃ち居り申した★★★
+
+★preflight 逐語（`20260820`）★
+```
+prohibited until a separate execution GO: write to runtime, active-directory replacement, cutover,
+restart, relaunch, ★install★, ★pip★, npm, rsync, or ★GitHub/upstream retry★.
+```
+★己の手（実測 mtime）★: `venv` `2026-08-21 23:19:24`／`hermes-agent` `23:28:56`／`fakehome` `23:28:57` ―― ★`pip install` ＋ 網への取得★
+
+★★∴ ★『execution GO 無きに `install`／`pip`／網』を ★撃ち申した★★★
+★情状（★申し開きに非ず・事実のみ★）―― ★己が preflight を読みたるは 本日 `05:37` ―― ★撃ちたる後★★。★∴ 「知らざりき」は 真なるも ―― ★知らざる事は 撃ちてよき理由に あら申さぬ★（★不可逆に近き手を 紙を読まずして 撃つた★）★
+★救ひ（是も 事実のみ）―― ★撃ちたる先は ★新しき別樹★ のみ ―― ★現 root 二本・共有樹・launcher ―― 悉く 一 byte も 変ぜず★（本日 再測にて 確認済）★
+
+> ## **★★★★★條 ―― ★`install`・`pip`・`build` は ―― ★『新しき樹の中でならば無害』に あら申さぬ★。★網へ出る事 其の物が 手★ に御座る★★★★★**
+
+### ㊂ ★★∴ ★staging `hermes-staging-0.20.4` の裁 ―― ★用ゐ申さぬ★★（★三つの独立せる理由★）
+
+| # | 理由 | 現物 |
+|---|---|---|
+| ㋐ | **editable** | `venv/lib/python3.12/site-packages/★__editable__.hermes_agent-0.20.4.pth★` ＋ `__editable___hermes_agent_0_20_4_finder.py` ⇒ ★絶対 path を抱く★（preflight 罠 4-d） |
+| ㋑ | **★網にて解決・hash 固定無し★** | `Downloading` `7`／`require-hashes` `0`／`no-index` `0`／`uv.lock` 不使用 ⇒ ★再現性 無し★ |
+| ㋒ | **★上書き導入★** | `Found existing installation … Uninstalling` ⇒ ★清き標本に あら申さぬ★ |
+
+★★∴ ★㋐ のみならば「最終 path にて建直せば可」なれど ―― ★㋑㋒ を併せ見れば ★樹ごと 捨てて 建直す★ が 筋★★
+★（★然れど ★消さ申さぬ★ ―― ★證物ゆゑ 其の儘 保ち申す★。★消去は 別の裁★）
+
+> ## **★★★★條 ―― ★『清き標本』は 手順の性 ―― ★一つの疵を直せば清くなる★ とは 限り申さぬ★。★疵を 数へてから 直すか捨つるかを決せよ★★★★**
+
+### ㊃ ★★Commander 御要の三点のうち ★己が今 出し得る物★ ―― ★非 editable 建直しの型（★執行 `0`・紙のみ★）★★
+
+★逐語（`05:38:20`）★
+```
+Required to proceed: ★immutable approved source+lock★, ★non-editable final-build procedure/path★,
+and ★preimage/rollback★ plus ★exact launcher owners★.
+```
+
+**★型（案・未執行）★**
+
+| 段 | 為す事 | 検め（gate） |
+|---|---|---|
+| ㋐ | ★承認されたる immutable source★ より `git archive <commit>` にて 源樹を出す（★`cp`／`rsync` 禁・網 `0`★） | ★source path は ★委員長殿の裁 待ち★（`seq200898` は main-PC path・己の源は SecondPC 内）★ |
+| ㋑ | **★最終 path にて★** venv を建つ（`python3.12`・現 root と同版） | ★staging にて建てて 後に移す事 ―― ★禁★（罠 4-d）★ |
+| ㋒ | 依存を **★`--no-index` ＋ 局所 wheelhouse★** 又は **★`uv sync --frozen`（`uv.lock` を 現に用ゐる）★** にて入るる | ★log に `Downloading` が ★一行も出でぬ事★ を 受入条件と為す★ |
+| ㋓ | 本体を **★`-e` を用ゐず★** 導入 | ★`site-packages` に `__editable__*` が ★一件も 無き事★★ |
+| ㋔ | ★destination manifest★ を作る ―― 樹の全 file の `sha256` 一覧 ＋ `hermes` launcher ＋ `*.dist-info/RECORD` | ★freeze 六項の 残り一項 ―― 之にて 埋まり申す★ |
+| ㋕ | ★build command の逐語★ を 紙に残す | ★残り 一項 ―― 之にて 埋まり申す★ |
+
+★★∴ ★㋔㋕ は ★建てて後★ に しか 作り得申さぬ ⇒ ★freeze 六項の 二半は ―― ★execution GO の前には 原理的に 埋まり申さぬ★★★（★怠に非ず ―― ★順序★★）
+
+> ## **★★★★條 ―― ★『未だ埋まらぬ項』を 責むる前に ―― ★其れが 順序上 今 埋め得る物か★ を 分かて★。★禁・能・未・原理・怠 の ★原理★ が 之に当たり申す★★★★**
+
+### ㊄ ★★preimage ＋ rollback ―― ★三枚 悉く ★一行★ に御座る★★（as_of `2026-08-22T05:29`〜`05:30` 実測・本日 再測にて 不変）
+
+| # | launcher | `sha256`（preimage） | 現行 一行（逐語） | rollback |
+|---|---|---|---|---|
+| ㋐ | `hermes-departments/honbucho/bin/hermes-honbucho` | `35abb87d9b8618c06d44fcc746aa2ef550ec1d8c79d4c2393ff8ee74c30a10bf` | `exec … gunshi-second-hermes/run/★hermes-agent-v2026.8.3★/venv/bin/python …/hermes --continue "$@"`（★二箇所★） | ★二箇所を 旧名へ戻す★ |
+| ㋑ | `hermes-roles/gunshi-second-hermes/bin/start-gunshi-second-hermes.sh` | `cfce29de3943f4757849c307284e4b8b3e9ace2930f8b6d9e3d6e05c37ccb9de` | `RT=$ROLE_HOME/run/★hermes-agent-v2026.8.3★` | ★一箇所★ |
+| ㋒ | `hermes-roles/ashigaru-second-7-hermes/bin/start-ashigaru-second-7-hermes.sh` | `874ca0a6093e3cb14b7ab5aed9946ee8c97a6af15428b0475ad79e2def72b751` | `RT=$ROLE_HOME/run/★hermes-agent-v2026.8.3★` | ★一箇所★ |
+
+★★∴ ★新版を ★別 dir 名★ に据ゑ 上表の一行のみを書換ふる限り ―― ★rollback ＝ 一行を戻して 再起★ ―― ★現 root は 一 byte も 触れ申さぬ★★★
+★★∴ ★`sweep_manifest.json` の `start` は ★launcher 其の物★ を叩くゆゑ ―― ★書換へたる行は 番人の一巡を ★生き残り申す★★（§九㊂ 実測）
+
+### ㊅ ★★exact launcher owners（Commander 御要 第三点）★★
+
+| launcher | ★owner（役）★ | pane | leader pid | 現 argv 逐語 |
+|---|---|---|---|---|
+| ㋐ | **本部長** | `%38` `hermes-honbucho:0.0` | `86872`（★本日 `04:44:32` 起動★） | `… /hermes ★--continue★`（★`--tui` 無し★） |
+| ㋑ | **軍師second** | `%24` `hermes-gunshi-second:0.0` | `836658`（`Aug 12 14:51:32`） | `… /hermes ★--tui --continue★` |
+| ㋒ | **a7** | `%26` `multiagent-second:0.7` | `1156226`（`Aug 12 16:47:22`） | `… /hermes ★--tui★`（★`--continue` 無し★） |
+| ―― | **shogun-second（己）** | `%12` | `1924984` | ★hermes に あら申さぬ ―― ★launcher 零枚★★ |
+
+★★∴ ★㋐ と ㋑ は ★同じ root・別の launcher・別の argv★ ―― ★同時には 動き申さぬ★★
+★★∴ ★㋒ の argv は 現 launcher（`--tui --continue`）と ★既に 食ひ違ひ★ ―― ★再起せば 版と起動形が 同時に変ず★（§八㊅）★
+
+### ㊆ ★★變ぜぬ物（本節）★★
+
+★staging ―― ★読取のみ・一 file も 改めず・消さず★／launcher 三枚 ―― ★読取のみ★／現 root 二本 ―― ★一 byte も 触れず★／★網へ 出でたるは ★本 session `0`★（★前夜の `7` 件は 上に自申済★）★／★`install`／`pip`／`build` ―― ★本 session `0`★★／★撃ち `0`・respawn `0`・send-keys `0`★／★札 `0`★／★push `0`★
