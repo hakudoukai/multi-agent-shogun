@@ -659,3 +659,63 @@ and ★preimage/rollback★ plus ★exact launcher owners★.
 ### ㊆ ★★變ぜぬ物（本節）★★
 
 ★staging ―― ★読取のみ・一 file も 改めず・消さず★／launcher 三枚 ―― ★読取のみ★／現 root 二本 ―― ★一 byte も 触れず★／★網へ 出でたるは ★本 session `0`★（★前夜の `7` 件は 上に自申済★）★／★`install`／`pip`／`build` ―― ★本 session `0`★★／★撃ち `0`・respawn `0`・send-keys `0`★／★札 `0`★／★push `0`★
+
+---
+
+## 十二 ―― ★★★blocker4（要）―― ★『網 `0` ＋ 非 editable ＋ 再現可能』は ―― ★今の SecondPC にては ★成り立ち申さぬ★★★★（as_of `2026-08-22T05:51:38+0900`）
+
+### ㊀ ★★源樹の姿 ―― ★委員長殿の裁の 材★★
+
+★`/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3`★
+
+| 述語 | 実測 |
+|---|---|
+| `.git` | **★在り★**（git 樹に御座る） |
+| `rev-parse HEAD` | **★`0957277f2f468bac22bbfcfa7c43029858c9597e`★**（＝ preflight §2 の baseline） |
+| `status --porcelain` | **★空 ―― 清し★**（★一 file も 変じ居らず★） |
+| `log -1 6a3d50c…` | **★見ゆ★** ―― `6a3d50c fix(tui): allow the ESC byte in the SGR param matcher` |
+| `log -1 0957277…` | `0957277 refactor(skills): move polymarket to optional-skills/finance` |
+| mode | **★`drwxrwxr-x`・owner `hakudokai`★** |
+
+★★∴ 二つ★
+㊀ **★己の staging の源は ―― ★清き git 樹の 既知の commit★ より 出で申した★** ―― ★`6a3d50c` は 現に 此の樹の中に在り★（★別物の樹より持ち来たりたるに あら申さぬ★）
+㊁ **★★訂（小）―― `PROVENANCE` の ★`read-only`★ は ―― ★permission の話に あら申さぬ★★** ―― ★mode は 所有者に 書込を許し居り申す★。★己が申したるは 『己が 読取にのみ 用ゐたり』の意 ―― ★而して 其の語は 樹の性を述ぶるが如く 読め申す★
+> ## **★★★條 ―― ★`read-only` と書く時は ―― ★mode の話か 己の手の話か★ を 分かて★★★★**
+
+★★∴ ★委員長殿の裁に要るは ―― 『此の樹（SecondPC の清き git 樹・HEAD `0957277`・`6a3d50c` を含む）を ★承認されたる immutable source と 認め給ふや否や★』の 一点に 絞られ申した★★
+
+### ㊁ ★★★★★而して ―― ★建直しの器が ★無い★★★★★
+
+| 要る物 | 実測 | 判 |
+|---|---|---|
+| `uv`（`uv sync --frozen` の道） | **★`command -v uv` ⇒ ★無し★★** | ★★不可★★（★入るるには `install`＋網 ―― ★禁★） |
+| 局所 wheelhouse（`--no-index --find-links` の道） | `find /home/hakudokai -maxdepth 3 -type d -name 'wheelhouse*' -o -name 'wheels' …` ⇒ **★`/home/hakudokai/.cache/pip/wheels` ★のみ★★** | ★★不可★★ |
+| 同上 ―― 其の中身 | **★`*.whl` ―― ★`0` 件★★**（★之は 『建てたる wheel』の cache にて 依存の倉に あら申さぬ★） | ★★不可★★ |
+| `~/.cache/pip`（http cache） | 在り・`488M` | ★★半★★（★前夜 `106` 件が 之より出でたり ―― ★然れど 解決には 索引が要り 索引は 網★） |
+
+★★∴ ★★★『網 `0`』を守りつつ 非 editable にて 建て直す道は ―― ★今 此の機に 一本も 通じ居り申さぬ★★★★
+⇒ **★★blocker4（新・要）★ ―― ★三つのうち 一つを 上より 賜らねば 前へ進み得申さぬ★★**
+
+| 案 | 要る御裁／御手配 |
+|---|---|
+| ㋐ | **★build の間に限り 網を 明示にて 許し給ふ★**（★hash 固定 ＋ log 提出を 条件と為し得申す★） |
+| ㋑ | **★wheelhouse を 賜る★**（★他機にて作り 持ち来たる ―― 而して `copy`／`rsync` 禁との兼ね合ひ 御裁を要す★） |
+| ㋒ | **★`uv` を 賜る★**（★然らば `uv.lock` を 現に用ゐ `--frozen` にて 建て得申す★） |
+
+★★∴ ★己の §十一㋒ の型は ―― ★書きたる時には 立ち居つたが ★器を数へずして 書いた★★★
+> ## **★★★★★條 ―― ★手順を 紙に書く時は ―― ★其の各段が 現に 此の機にて 撃ち得るか★ を ★段ごとに 数へよ★。★型は 器を持たぬ限り 絵に御座る★★★★★**
+
+★★∴ ★之は §十一㊃ の ★五度目に非ず ―― 新しき形★ ―― ★『在る筈』を 数へなんだ★（★母集団に非ず ★可用性★★）
+
+### ㊂ ★★∴ 上へ 返す blocker4 ―― ★四件（整理）★★
+
+| # | 件 | 要る物 | 誰の裁 |
+|---|---|---|---|
+| ㋐ | ★承認 source の同一性★ | 「SecondPC の清き git 樹（HEAD `0957277`・`6a3d50c` を含む）を 認むるや」 | **委員長殿**（`seq200898` は main-PC path） |
+| ㋑ | ★執行者★ | ★己は launcher 零枚 ⇒ 執行権 無し★。三枚の owner は 本部長・軍師second・a7 | **Commander**（`05:33` 御命に従ひ 軍師second へ 書面同意を 乞ひ済） |
+| ㋒ | ★a7 の再起の手★ | ★機構に 一つも 無し（`sweep_manifest` 行無し／watcher 再起せず／guard の的に非ず）★ ⇒ ★人の名★ が要る | **Commander／委員長殿** |
+| ㋓ | **★建直しの器★** | **★`uv` 無し・wheelhouse 無し ⇒ 網 `0` にては 建て得申さぬ★** | **Commander**（㋐㋑㋒ の何れかを 賜りたし） |
+
+### ㊃ ★★變ぜぬ物（本節）★★
+
+★源樹 ―― ★`git status` を撃ちたるのみ・一 file も 改めず・`fetch`／`pull` `0`★／★`pip`／`install`／`uv` ―― ★撃たず（`command -v` にて 在否を見たるのみ）★★／★網へ 出でたるは 本 session `0`★／staging ―― 不触／launcher 三枚 ―― 不触／現 root 二本 ―― 不触／★札 `0`・push `0`★
