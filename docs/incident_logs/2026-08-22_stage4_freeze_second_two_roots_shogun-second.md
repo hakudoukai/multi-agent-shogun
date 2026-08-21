@@ -719,3 +719,93 @@ and ★preimage/rollback★ plus ★exact launcher owners★.
 ### ㊃ ★★變ぜぬ物（本節）★★
 
 ★源樹 ―― ★`git status` を撃ちたるのみ・一 file も 改めず・`fetch`／`pull` `0`★／★`pip`／`install`／`uv` ―― ★撃たず（`command -v` にて 在否を見たるのみ）★★／★網へ 出でたるは 本 session `0`★／staging ―― 不触／launcher 三枚 ―― 不触／現 root 二本 ―― 不触／★札 `0`・push `0`★
+
+---
+
+## 十三 ―― ★★★★★訂 其の六 ―― ★『共有 `~/hermes-runtimes` を参照する proc は 零』は ★誤り★ ―― ★現に走る三役 悉く 其処の code を 実行し居り申す★★★★★（as_of `2026-08-22T05:53:54`〜`05:54:07+0900`）
+
+### ㊀ ★★現物 ―― ★live root 二本の venv は ★editable★ にて ―― ★其の指す先が ★共有樹★★★★
+
+★実測 ―― ★両 root の `venv/lib/python3.12/site-packages` に `__editable__*` が ★各 `2` 件★★
+
+```
+__editable__.hermes_agent-0.20.0.pth
+  → import __editable___hermes_agent_0_20_0_finder; …install()
+__editable___hermes_agent_0_20_0_finder.py:9
+  MAPPING = {'acp_adapter': '★/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3★/acp_adapter',
+             'agent': '★…/hermes-runtimes/hermes-agent-v2026.8.3★/agent', … 'tui_gateway': …, 'utils': …}
+```
+
+| root | `MAPPING` の指す先 | 件数 |
+|---|---|---|
+| `gunshi-second-hermes/run/hermes-agent-v2026.8.3` | **★`/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3`★** | `26` package |
+| `ashigaru-second-7-hermes/run/hermes-agent-v2026.8.3` | **★同上 ―― ★一字も違はず★★** | `26` package |
+
+★★∴ ★★★role-local の `run/…` は ―― ★venv と `hermes` 起動片を持つ ★殻★ に御座つて ―― ★python の中身は ★悉く 共有樹より 読まれ居り申す★★★★★
+
+### ㊁ ★★★∴ 己の誤り ―― ★argv のみにて 『参照 `0`』と 断じ申した★★★
+
+| | 己の主張（§〇・commit `b668b47`／便にて 本部長殿へ報告済） | ★実★ |
+|---|---|---|
+| 述語 | 「共有 `~/hermes-runtimes` を参照する proc ＝ **`0`**」 | ★argv に 現れぬ ―― ★之は 真★★ |
+| 含み | 「∴ 共有樹は 現の実行に 与らず」 | **★偽 ―― ★三 proc 悉く 其処の `.py` を import し居り申す★★** |
+| 用ゐ方 | ★Commander「`Do not claim ~/hermes-runtimes`」の ★裏書き★ として 差し出した★ | ★★裏書きに あら申さぬ ―― ★別の事を 測つて 居つた★★ |
+
+★★∴ ★根 ―― ★★『実行して居る物』を ★起動の綴り★ にて 測り ―― ★import の路★ を 数へなんだ★★★
+★（★己は §八 にて 「★束ねは 名簿に非ず 起動の其の時の `argv` に在る★」と 條を立て申した ―― ★其の條が ★今度は 己を 誤らせ申した★★。★`argv` は ★起動★を語り ―― ★実行★を語り申さぬ★）
+
+> ## **★★★★★★條 ―― ★『何を実行し居るか』は ―― ★`argv` にて 決し得申さぬ★。★venv の `site-packages` を 開き ―― ★`.pth`／`MAPPING` の 指す先★ を 見よ★★★★★★**
+
+### ㊂ ★★★∴ 血の巡り（blast radius）の 描き直し ―― ★第三の辺★ が 在り申した★★
+
+| 辺 | 及ぶ役 | 典拠 |
+|---|---|---|
+| ㋐ `gunshi-second-hermes` root | 本部長 ＋ 軍師second（`2`） | launcher ㋐㋑（実測） |
+| ㋑ `ashigaru-second-7-hermes` root | a7（`1`） | launcher ㋒（実測） |
+| **★㋒ `~/hermes-runtimes/hermes-agent-v2026.8.3`（共有樹）★** | **★★本部長 ＋ 軍師second ＋ a7 ＝ ★三役 悉く★★★** | **★本節の `MAPPING`（実測）★** |
+
+★★∴ ★preflight §1 の blast radius（二辺）は ―― ★不足★ に御座る★（★責に非ず ―― ★己も 二日 気付き申さず★）
+★★∴ ★★★共有樹に 一字書けば ―― ★三役 同時に 変じ申す★。★而して 其れは ★launcher にも `sweep_manifest` にも 現れ申さぬ★★★★
+
+### ㊃ ★★★★★∴ ★最も 危ふき事 ―― ★己は 其の樹にて `git` を 撃ち申した★★★★★
+
+★己が §十二 にて 撃ちたる物（★実測・読取のみ★）★
+```
+git -C /home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3 rev-parse HEAD   → 0957277…
+git -C … status --porcelain                                                     → 空（清し）
+git -C … log --oneline -1 <sha>                                                 → 二件とも 見ゆ
+```
+★★∴ ★撃ちたる三つは 悉く ★読取★ ―― ★樹は 一 file も 変じ居らず★（`status` 空・本節の刻に 再測）★★
+★★而して ―― ★★★若し 己が 其処にて `git checkout`／`pull`／`switch` を 撃ちて居らば ―― ★三役の走る code が ★同時に 差し替はり申した★★★★★
+★★∴ ★己が 『immutable source』『read-only』と 呼び居つた樹は ―― ★★現に 三役が 実行し居る ★生きたる本番の樹★★★ に御座つた★★
+
+> ## **★★★★★★條 ―― ★『source』と『runtime』を ★同じ樹★ が 兼ぬる事が 有り申す★。★`git` を 撃つ前に ―― ★其の樹を import し居る venv が 幾つ在るか★ を 数へよ★★★★★★**
+
+★★∴ ★委員長殿・Commander への 具申 ―― ★★『承認 immutable source を 此の樹と為す』は ★勧め申さぬ★★★（§十二㊀ にて 己が問ひたる其の問ひを ―― ★己で 引き下げ申す★）
+★理由 ―― ★build の為に其処へ `git archive` を撃つは 読取ゆゑ 可なれど ―― ★『immutable』の名を与ふれば 何時か誰かが 其処にて `checkout` を撃ち申す★。★名が 手を招き申す★
+
+### ㊄ ★★併せて ―― ★staging の `MAPPING` は ★己の樹★ を指し ―― ★module が 一つ 増え居り申す★★
+
+| | `MAPPING` の指す先 | package 数 |
+|---|---|---|
+| live（`0.20.0`） | `…/hermes-runtimes/hermes-agent-v2026.8.3/…` | `26` |
+| staging（`0.20.4`） | `…/hermes-staging-0.20.4/hermes-agent/…` | **★`27`★** |
+
+★差分（逐語）―― ★`registration_lifecycle`★（★`0.20.4` にて 新設・`0.20.0` に 無し★）
+★★∴ ★版差は 名のみに あら申さず ―― ★module 一つの 増★ として 現に 測れ申した★（★條「★版は名にて判ぜず実体にて判ぜよ★」の 履行★）
+
+### ㊅ ★★★∴ 建て方の 描き直し ―― ★現の deploy は ★『共有 source ＋ 役ごとの薄き venv』★ の形★★★
+
+★★∴ ★Commander 御要の「★non-editable final-build★」は ―― ★現に走り居る形と ★異なる形★ に御座る★★
+★（★己は 之を 是非とも申さず ―― ★裁を仰ぎ申す★。★実測のみ 申し上ぐ★）
+
+| 案 | 形 | 利 | 害 |
+|---|---|---|---|
+| ㋐ ★現の形を踏襲★ | 新しき共有 source 樹 `…/hermes-agent-v<新>` ＋ 役ごとに 新 venv（editable にて 其処を指す） | ★現と同じ形ゆゑ 驚き少なし★ | ★共有樹が 再び 三役に跨る★ |
+| ㋑ ★Commander 御指しの形★ | 役ごとに ★非 editable★ にて 自前の source を持つ | ★役の独立★ | ★現と 形が変ず ―― ★受入の基準も 変ず★★ |
+
+★★∴ ★何れにせよ ―― ★『editable なるが故に staging は使へぬ』とのみ申したる §十一㊂㋐ は ―― ★言ひ足らず★★★。★正しくは ―― ★★『editable 其の物は 現の作法。使へぬのは ★指す先が staging の中★ なるゆゑ』★★
+
+### ㊆ ★★變ぜぬ物（本節）★★
+
+★両 root の venv ―― ★`find`／`cat`／`grep` の読取のみ・一 file も 改めず★／共有樹 ―― ★`git status`／`log`／`rev-parse` の読取のみ・★`checkout`／`switch`／`pull`／`fetch` ―― `0`★★／staging ―― 読取のみ／launcher 三枚 ―― 不触／★撃ち `0`・respawn `0`・send-keys `0`★／★網 `0`・`pip` `0`★／★札 `0`・push `0`★
