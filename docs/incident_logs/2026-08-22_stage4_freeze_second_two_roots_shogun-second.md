@@ -1055,3 +1055,85 @@ if __name__ == "__main__":
 ### ㊆ ★★變ぜぬ物（本節）★★
 
 ★launcher 三枚・両樹・共有樹・staging ―― ★悉く 読取のみ★／★己の箱を 読みたるのみ ―― ★札 `0`★★／★網 `0`・`pip` `0`・`uv` `0`★／★撃ち `0`・send-keys `0`・respawn `0`★／★`checkout`／`pull`／`fetch` `0`★／★push `0`★
+
+---
+
+## 十七 ―― ★★★★★役の venv は ★共有樹 venv の 複製★ に御座り ―― ★其の中に 共有樹へ通ずる ★生きた導線が 三本★ 眠り居り申す★★★★★（as_of `2026-08-22T06:14:27`〜`06:15:17+0900`）
+
+### ㊀ ★★決め手 其の一 ―― ★三つの `pyvenv.cfg` が ★同じ一行★ を抱き居り申す★★
+
+★逐語（★三つ 悉く 一字も違はず★）★
+```
+home = /usr/bin
+include-system-site-packages = false
+version = 3.12.3
+executable = /usr/bin/python3.12
+command = /usr/bin/python3 -m venv /home/hakudokai/★hermes-runtimes★/hermes-agent-v2026.8.3/venv
+```
+
+| venv | `command` の記す 生誕の地 |
+|---|---|
+| 共有樹 `hermes-runtimes/…/venv` | ★己自身★ |
+| **★樹 A（gunshi root）★** | **★★`hermes-runtimes/…/venv` ―― ★己の地に あら申さぬ★★★** |
+| **★樹 B（a7 root）★** | **★★同上★★** |
+
+★★∴ ★★★役の venv は ―― ★役の地にて `python -m venv` を撃ちて 生まれたる物に あら申さぬ★。★★共有樹の venv を ★複製★ したる物★★ に御座る★★★
+
+### ㊁ ★★決め手 其の二 ―― ★console script の `shebang` が ★共有樹を 指し居り申す★★★
+
+★`venv/bin/hermes`（★三つ 悉く sha256 ＝ `09a826ab6de904645b7dc9e95ee64d76bf714f08dda5ed93f58645e55b8995eb` ―― ★同一★★）★
+```python
+#!/home/hakudokai/★hermes-runtimes★/hermes-agent-v2026.8.3/venv/bin/python3
+import sys
+from hermes_cli.main import main
+```
+★同じ形の物が 各 root に ★三本★ ―― `hermes`(`217`B)／`hermes-agent`(`211`B)／`hermes-acp`(`219`B)★
+★`mtime` ―― ★三 root 悉く `Aug  7 10:04`★（★複製の刻★）
+
+★★∴ ★★★★役の root の中に ―― ★『撃てば 共有樹の venv にて 走り出す』器が ★三本★ 置かれ居り申す★★★★★
+
+### ㊂ ★★★∴ 何故 今 之が 効かぬか ―― ★launcher が 之を ★迂回★ し居るゆゑ★★★
+
+| 撃ち方 | `sys.prefix` | import の出所 |
+|---|---|---|
+| **★現（launcher）★** `<RT>/venv/bin/python <RT>/hermes` | ★役の venv★ | ★`sys.path[0]`＝`<RT>` ⇒ ★役の樹★★（§十四・本部長殿 `06:01:35` の動測） |
+| **★若し `<RT>/venv/bin/hermes` を撃たば★** | **★★共有樹の venv（shebang ゆゑ）★★** | ★`sys.path[0]`＝`<RT>/venv/bin`（★package 無し★）⇒ ★共有 venv の site-packages ⇒ ★editable finder ⇒ ★★共有樹★★★ |
+
+★★∴ ★★★★★『役の樹が勝つ』は ―― ★★launcher が `<RT>/hermes` を 名指す 其の一行★★ に ★悉く 懸かり居り申す★★★★★
+★（★役の venv の `python`／`python3` は ★`/usr/bin/python3` への symlink★ に過ぎ申さぬ ―― ★venv を決するは ★撃たれたる script の 在処★ と ★shebang★★）
+
+> ## **★★★★★★條 ―― ★『役ごとに 樹を持つ』は ★形★ に御座つて ★保證★ に あら申さぬ★。★複製にて生まれたる venv は ―― ★生誕の地の path を ★shebang と `pyvenv.cfg` の中に 抱き続け申す★★。★∴ 独立を申す前に ―― ★其の venv の中の ★他所を指す綴り★ を 数へよ★★★★★★**
+
+### ㊃ ★★★∴ ★己は 危ふき手を 具申する 一歩手前に 居り申した★★★
+
+★己は 本節の測りの ★直前★ に ―― ★『non-editable に建て直すには launcher を console script（`venv/bin/hermes`）へ向くれば 早し』★ と 案じ居り申した★
+★★∴ ★★★之は ―― ★★現に 共有樹へ 落ちる手★★ に御座つた★★★（★§十四 と ★寸分同じ形★ の誤り ―― ★機序を見出して 効を測らず★）
+★★∴ ★然れど 今度は ―― ★★案を 便に載する 前に 測り申した★★（★§十五 の條の 履行★）
+
+> ## **★★★★★條 ―― ★『早き道』を見出したる時 ―― ★其れが 早きは ★何かを 迂回するゆゑ★ に御座る★。★迂回された物の名を 先に言へ★★★★★**
+
+### ㊄ ★★∴ build/cutover への 帰結（★三件 ―― 悉く 上申済★）★★
+
+| # | 事 |
+|---|---|
+| ㋐ | ★non-editable に建て直すとも ―― ★launcher が `<RT>/hermes` を名指す限り ★`sys.path[0]` が 源の樹を 先に拾ひ申す★★ ⇒ **★『非 editable 化』のみにては 何も変じ申さぬ★** |
+| ㋑ | ★而して ★console script へ切替ゆるは ★共有樹へ落つる★★ ⇒ **★shebang を先に直さぬ限り 其の道は 塞がり居り申す★** |
+| ㋒ | ★∴ 真に要る手は ★三つ★ ―― ㊀非 editable install ㊁★console script の shebang を 役の venv へ書換★ ㊂★`<RT>` 直下の 源 package を 除くか launcher を console script へ向くる★ ―― ★★孰れも launcher/venv の所有者の手★★ |
+
+### ㊅ ★★★∴ 併せて ―― ★blocker4 ㋓（器無し）は ★半ば 解け申す★★★★
+
+| 問 | 実測 | 判 |
+|---|---|---|
+| `[build-system]` は何を要するか | `requires = ["setuptools==83.0.0"]`／`build-backend = "setuptools.build_meta"`（`pyproject.toml`:354-356） | ― |
+| 其の `setuptools` は 現に 在るか | ★★両 role venv に `setuptools-83.0.0.dist-info` ―― ★要求の版と ★寸分同じ★★★ | **★★在り★★** |
+| `pip` は | ★両者 `pip-26.2.1`★ | ★在り★ |
+| `wheel` は | ★★両者 ★無し★★ | ★`setuptools>=70.1` は `wheel` を要し申さぬ ⇒ ★障りに あら申さぬと ★推★★（★★UNVERIFIED ―― 撃たねば決し得申さぬ★★） |
+
+★★∴ ★★★`--no-build-isolation`（＝ 在る `setuptools 83.0.0` を用ゐ 網へ出ず）＋ `--no-deps --no-index`（＝ 依存を 一つも 動かさず）にて ―― ★★`hermes-agent` 一つだけを 非 editable に建て直す道が ★網 `0` にて 通り申す★★★★★
+★★∴ ★之は ―― ★『依存を 建て直さぬ』ゆゑ ★現に走り居る依存の閉包と ★bit まで同一★ を保ち申す★★（★`uv.lock` より建て直すより ―― ★cutover の危ふさは 小さし★）
+★★∴ ★∴ blocker4 ㋓ は ―― ★★『道が 一本も無し』より 『道は在り ―― GO を要す』へ 下がり申した★★★（★`uv`・wheelhouse・網 ―― ★孰れも 要らず★★）
+★（★★然れど ―― ★之は ★方法★ の申し立てに御座つて ★己が撃つ★ の謂に あら申さぬ★。★己は launcher 零枚 ―― ★執行者に あら申さぬ（blocker4 ㋑）★★）
+
+### ㊆ ★★變ぜぬ物（本節）★★
+
+★`pyproject.toml`・`pyvenv.cfg`・`venv/bin/*`・`RT/hermes` ―― ★悉く 読取のみ★／★`pip` `0`・`uv` `0`・網 `0`・build `0`★／★役の venv の python ―― ★実行せず★★／★shebang 一字も 書き換へず★／★撃ち `0`・send-keys `0`★／★push `0`・札 `0`★
