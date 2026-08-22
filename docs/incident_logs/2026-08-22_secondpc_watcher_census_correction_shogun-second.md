@@ -9090,3 +9090,175 @@ or auxiliary tools.★
 
 ### ■六 ★本節にて 為さざりし事★
 ★★`queue/inbox/ashigaru*` ―― ★`stat`／`open`／`grep`／`parse` 悉く `0`★★★／★★substitute measurement（`capture-pane`／`ls`／`find`／`wc`／人への問ひ）―― ★`0`★★★／★三箱への `os.stat()` ―― `0`★／★`_archive` ―― 不開★／★system の変更 ―― `0`★／★己の箱への札 ―― `0`★／★§62〜§77 の本文 ―― ★一字も動かさず★★／★`push` ―― `0`★
+
+---
+
+## §七十九 ―― ★★★★★委員長の裁 到来 ―― ★`HOLD conditional release`★★ ―― 而して ★★十一 SHA × 樹二本 ＝ 二十二 ―― ★悉く 一致★★★★★
+
+**as_of** `2026-08-22T17:45:01`〜`17:47:30+0900`／前節 `§七十八`（`d835f857` / `9,092` 行）
+
+---
+
+### ■一 ★★★上意 ―― Commander `17:42:14`（己の箱 idx `340`・`seq204693`）逐語★★★
+
+```
+[seq204693 — HOLD conditional release]
+★Iincho ruling: breach was read-only, so validity can recover only by
+ remeasuring every frozen-manifest SHA against current artifact.★
+★No cron rearm.★ You must:
+ (1) identify frozen manifest path + immutable SHA list;
+ (2) remeasure every listed current artifact;
+ (3) report manifest path/SHA, count matched/mismatched,
+     each mismatch path+expected/current SHA.
+★ALL match => HOLD released and Stage4 steps ③④ continue by explicit rerun;★
+★any mismatch => HOLD remains, preserve and blocker4.★
+Record late control-read as ★Grill2 real incident in existing A/B/C remediation; no new grill.★
+★No target inbox stat/open/grep/parse before result.★
+```
+
+★★∴ ★之は ★己が §七十八 にて『解く者は 委員長のみ』と書きたる ★其の裁★★★ ―― ★★十一分にて 到来★★
+
+---
+
+### ■二 ★★★直ちに 為したる事 ㊀ ―― ★cron の ★削除★★★★
+
+```
+★★上意 ―― ★『No cron rearm』★
+★★己の手許 ―― ★`a6b53445`（`19:57`・one-shot）が ★現に 装填されたる まま★★
+★★∴ ★★己は 之を ★削除★ 申した★★（`17:46` 台・`CronList` にて 現物を確め てより）
+★★★己の條 ㌌（後で 打たぬやうにする事）―― ★三度目の 履行★★★
+   ★（`c8b41bb2` → `0e9df75f` → `a6b53445` → ★★零★★）
+```
+
+---
+
+### ■三 ★★★(1) ―― ★frozen manifest の 同定★★★
+
+| 項 | 値 |
+|---|---|
+| **manifest path** | **`docs/incident_logs/2026-08-22_stage4_freeze_second_two_roots_shogun-second.md`** |
+| **SHA-256（file 全体）** | **`b561eb735e67576d17571b4f5b54f54413423d830a004a12abf82c36612bd43c`** |
+| 行 / B | `2,418` / `198,703` |
+| **SHA list の在処** | **§十八㊃** ―― 「★cutover が 現に 触るる面 ＝ ★十一 file★ ―― 悉く path ＋ SHA-256 を 此処に 記し申す★」 |
+
+★★★★★不変（`immutable`）の 足 ―― ★己の記憶に非ず ★git に問ひ申した★★★★★:
+```
+★★㊀ ★tracked ＝ ★yes★／`git status --porcelain` ＝ ★空（clean）★
+★★㊁ ★blob ―― ★`HEAD:<path>` ＝ `232bf64ce5a6c284b4b7d1bdc61bae7bc18ab488`★
+        ★`git hash-object <worktree>` ＝ ★同一★★ ⇒ ★★worktree は HEAD と 一 byte も 違はず★★
+★★★㊂ ★最後に触れたる commit ―― ★`2a8f326ac6418fa33266f22e98fe4c92199a3504`・`2026-08-22T07:23:32+09:00`★★
+★★★★∴ ★★★凍結の刻（`07:23:32`）は ―― ★破れの窓（`16:08:50`〜`17:05:41`）★ より ★★九時間 前★★★★★
+   ★∴ ★★『破れの間に manifest 其の物が 書き換へられ得たか』―― ★否★★★（★commit 刻 ＋ blob 同一 の二重★）
+★★★條 ㌓ ―― ★凍結の證は ★己の記憶★ に非ず ―― ★★git の blob と commit 刻★★ ―― ★殊に ★窓より前に commit されたる事★ が 不変の足★★★
+```
+
+★所在 ―― `<RT>/venv/lib/python3.12/site-packages/`★
+```
+★樹 A ＝ `/home/hakudokai/hermes-roles/gunshi-second-hermes/run/hermes-agent-v2026.8.3`★（★本部長 ＋ 軍師second ―― 二役 共有★）
+★樹 B ＝ `/home/hakudokai/hermes-roles/ashigaru-second-7-hermes/run/hermes-agent-v2026.8.3`★（★a7 のみ★）
+```
+
+---
+
+### ■四 ★★★★(2)(3) ―― ★remeasure ―― ★十一 file × 樹二本 ＝ ★二十二★★★★★★
+
+★手 ―― ★`hashlib.sha256`（`read-only`）★・★as_of `2026-08-22T17:47:30+0900`★（★測りと同じ呼び出しの中で `date` に問ひ申した★）
+
+| # | file | expected SHA-256 | 樹A | 樹B |
+|---|---|---|---|---|
+| 1 | `__editable__.hermes_agent-0.20.0.pth` | `e1fd9392…11dd` | ✓ | ✓ |
+| 2 | `__editable___hermes_agent_0_20_0_finder.py` | `9dbada97…c939` | ✓ | ✓ |
+| 3 | `hermes_agent-0.20.0.dist-info/METADATA` | `7aabd29a…0c71` | ✓ | ✓ |
+| 4 | `…/RECORD` | `454fe569…b193` | ✓ | ✓ |
+| 5 | `…/WHEEL` | `2b6eb411…fcc0` | ✓ | ✓ |
+| 6 | `…/INSTALLER` | `ceebae7b…1508` | ✓ | ✓ |
+| 7 | `…/REQUESTED` | `e3b0c442…b855`（★空 file★） | ✓ | ✓ |
+| 8 | `…/direct_url.json` | `cc9185fc…3615` | ✓ | ✓ |
+| 9 | `…/entry_points.txt` | `7c350e4a…a17a` | ✓ | ✓ |
+| 10 | `…/top_level.txt` | `a294a70f…dc45` | ✓ | ✓ |
+| 11 | `…/licenses/LICENSE` | `821556e6…5ab6` | ✓ | ✓ |
+
+★★★★★機構の 逐語 ―― `TOTAL=22  MATCHED=22  MISMATCHED=0  MISSING=0`★★★★★
+
+```
+★★★∴ ★mismatch ―― ★★零★★ ⇒ ★『each mismatch path+expected/current SHA』―― ★書くべき行 無し★★★
+★★★∴ ★missing ―― ★★零★★（★file の 消失も 亦 無し★）
+```
+
+---
+
+### ■五 ★★★∴ 上意の 条件節 ―― ★『ALL match』の枝★ に 落ち申した★★★
+
+```
+★★逐語 ―― ★『ALL match => HOLD released and Stage4 steps ③④ ★continue by explicit rerun★』★
+★★★∴ ★★『HOLD released』と ★『③④ を 今 撃つ事』★ は ★別★★★★
+★★∴ ★己は ★rerun を 己より 起こし申さぬ★★ ―― ★『explicit rerun』の令を 待つ★
+★★★條 ㌑ ―― ★★『無効の解除』は ★『実行の令』に 非ず★★★★（★★門が開くと 進むは 別★★）
+★★★併せて ―― ★③④ の前に ★blocker4 は 依然 立ち申す★★:
+   ★㊀ lot GO ―― ★ruling path 全樹に 不在・sha16 本文 未照合★（本部長 `07:41`）
+   ★㊁ 清き build 経路 ―― ★staging editable 失格／網 `11:37` 凍結／wheel `0`／`uv` 無し★（本部長 `05:54`）
+   ★㊂ a7 owner 受諾／Root A の 二役 順序ある受諾★
+★★★∴ ★★『HOLD released』は ―― ★blocker4 を 解き申さぬ★★★（★別の門★）
+```
+
+---
+
+### ■六 ★★★『Grill2 / existing A/B/C remediation』―― ★己の器に 一つも 無し★★★
+
+```
+★★上意 ―― ★『Record late control-read as ★Grill2 real incident★ in ★existing A/B/C remediation★; no new grill』★
+★★★己 器に問ひ申した（`grep -i` ―― `docs`・`queue`・★己の箱の全 372 通の parse★）★★:
+   ★`grill *2` / `grill2` ―― ★hit `0`★
+   ★`A/B/C remediation` ―― ★hit `0`★
+   ★`grill` を含む紙は 九枚 在れど ―― ★悉く `08-06`〜`08-10` の 別件★（`reserveimage_restart_grill_r2` 等）
+★★★∴ ★己は ★『existing』の指す 現物を ★同定し得申さぬ★★★
+★★∴ ★『no new grill』と 明に禁ぜられ居るゆゑ ―― ★★己が 新たに 起こす事も 為さず★★
+★★★∴ ★★條 ㌏（『決し得ず』は 終着に非ず ★宛先★）―― ★path を 上へ 問ひ申す★★★
+★★★條 ㌒ ―― ★上位が ★名を挙げたる遺物★ が 己の器に 一つも 無き時は ―― ★★『似た物』を 宛がふな・★作るな★ ―― ★逐語の path を 問へ★★★★★
+★★猶 ―― ★『late control-read』の 事実其の物は ★已に §七十五 に 逐語にて 録し済★（`e63cef60`）
+   ★∴ ★録の ★中身★ は 在り ―― ★欠くるは ★収むべき綴の名★ のみ★
+```
+
+---
+
+### ■七 ★★★併せて 問ふ ―― ★『HOLD released』は ★20:00 の 四 target stat★ にも 及び申すや★★★
+
+```
+★★上意 336（`17:31`）―― ★『20:00 frozen target stat ―― INVALID for execution』★
+★★上意 340（`17:42`）―― ★『HOLD released and ★Stage4 steps ③④★ continue』★
+★★★∴ ★340 の解除の 目的語は ★『Stage4 ③④』★ と 書かれ ―― ★『20:00 target stat』とは 書かれ居らず★★★
+★★∴ ★★己は ―― ★自ら 及ぶと 解し申さぬ★★★（★己の條『己の枷を 己で裁かず 上へ問へ』★）
+★★∴ ★足軽七箱への `stat`／`open`／`grep`／`parse` ―― ★引き続き ★零★★／★substitute measurement も ★零★★
+★★★∴ ★『及ぶや否や』を ―― ★本部長殿を経て 問ひ申す★★（★己が 解く事 ―― 断じて 為さず★）
+```
+
+---
+
+### ■八 ★★家老殿（idx `341`・`17:42:52`）―― ★己より 狭く 縛られ ―― 而して ★先に 告げ申した★★★
+
+```
+★★家老殿 曰く ―― 本部長 `17:31` の暫定境界（nonce `HB-20260822-1732-KARO`）:
+   ★『Commander の formal-valid 判定待ち中は ★当方から届く便の受領ACKだけ★ 継続可』★
+★★家老殿の読み ―― ★★『当方』＝本部長殿 と 安全側に 倒し★★
+   ⇒ ★★『★將軍の便への受領札は 打ち申さず★』★★
+★★★而して ―― ★★★『★己が黙して札を打たば 貴殿は「読まれず」と誤り申す ⇒ 故に 先に告ぐ』★★★★★
+★★∴ ★★己の條『★未読は 未処理を意味せぬ★』―― ★家老殿は 之を ★己の側から★ 塞ぎ申した★★★
+★★∴ ★以後 ―― ★家老箱の 既読の数を ★家老殿の実読の證★ と 為さず★（★P79 の述語も 之に縛らる★）
+★★★併せて ―― ★己が §七十八 にて草したる ★Commander 338 の写し★ は ―― ★猶 値有り★★
+   ★理 ―― ★家老殿が 現に 縛られ居るは ★本部長 17:31★・上意 338 は ★其れより 広し★
+   ★∴ ★★『解く』に非ず ★写して 本部長殿の確認を 待たれよ』と 添ふる★★（★條 ㌐★）
+```
+
+---
+
+### ■九 ★本節の 新條★
+```
+★★㌑ ―― ★『無効の解除』は ★『実行の令』に 非ず★★（★門が開くと 進むは 別 ―― `explicit rerun` を 待て★）
+★★㌒ ―― ★上位が 名を挙げたる遺物が 己の器に 一つも 無き時は ―― ★『似た物』を宛がふな・作るな ―― ★逐語の path を 問へ★★
+★★★㌓ ―― ★凍結の證は ★git の blob と commit 刻★ ―― ★★窓より 前に commit されたる事★★ が 不変の足★★★
+```
+
+---
+
+### ■十 ★本節にて 為さざりし事★
+★★`queue/inbox/ashigaru*` へ `stat`／`open`／`grep`／`parse` ―― ★`0`★★★（★上意 336 猶 立つと 解し★）／★substitute measurement ―― ★`0`★★／★三箱への `os.stat()` ―― `0`★／★`_archive` ―― ★不開★★／★hermes 系 file ―― ★`sha256` を 読みたるのみ・★一 byte も 改めず★★／★`pip`／`install`／網／build ―― ★`0`★★／★staging ―― 不触★／★`git` の書く手 ―― ★`add`＋`commit` のみ（★己の紙一枚★）・`push` `0`・`checkout`／`pull`／`reset` `0`★／★system の変更 ―― `0`★／★己の箱への札 ―― `0`★／★cron ―― ★装填 `0`（★削除のみ★）★／★§62〜§78 の本文 ―― ★一字も動かさず★★／★§十八㊃ の凍結せる表 ―― ★一字も動かさず（★読みて 当てたるのみ★）★
