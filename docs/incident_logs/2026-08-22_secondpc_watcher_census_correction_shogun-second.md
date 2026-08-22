@@ -11524,3 +11524,128 @@ def get_bundled_skills_dir(default: Path | None = None) -> Path:
    ―― ★説は 崩れず ★却つて 449-458 行の 註釈といふ 遥かに強き足を 得申した★★
    ―― ★★反例を探す手が 空振りたる時 ―― 其の空振りが 元の説の 足に成る★★
 
+
+---
+
+## §100 frozen source-dir 方式の最も脆き点（read-only）を己で突き申した ―― 樹への実行時書込は悉く.pyc、且つinvalidation-modeの択びが偽の緑に直結す
+
+as_of 2026-08-22T23:28:13〜23:29:47 JST／nonce 応答先 = HB-20260822-2320-FINALBUILD（idx 360）
+測りは悉く ★源樹は読取のみ★・験しは ★scratchpad の玩具の器のみ★（★hermes に一指も触れず・build 0★）
+
+### ■一 何故 本節を起こしたか
+
+idx 360（23:19:56）逐語 ―― 「★frozen source-dir方式の裁定到着までbuild=0★、a7 venv不変。
+wheel asset 522 file脱落は重大blockerのまま。」
+
+★★『frozen source-dir 方式』―― 己が §98 ■七 に凍らせ §99 ■八 に形を整へたる献策の名 其の物が
+　　★己の上申を待たず 上にて 合議に かかり居り申した★★★。
+
+∴ ★合議の最中にこそ 材が要る★。而して §99 ■八 にて己が挙げたる未検 5 点の内 ―― ★最も脆き ㊁★:
+
+> 2. ★read-only を 何の機序にて 与ふるか（chmod / 所有 / mount）―― ★未定★★
+
+★之を 己で 突き申した★（條「己が立てたる條は己が先に破る」の逆 ―― ★己が挙げたる弱点は 己が先に潰せ★）。
+
+### ■二 まづ実測 ―― ★現に走り居る源樹は 実行時に 書かれ居るか★
+
+as_of 2026-08-22T23:28:13〜23:28:36 JST。対象 `/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3`（★読取のみ★）。
+
+| 量 | 値 |
+|---|---|
+| `__pycache__` dir | ★331★ |
+| `.pyc` file | ★3,432★ |
+| checkout（2026-08-12 21:25）より後に書かれたる file | ★115★ |
+| ★其の内 `__pycache__` の外★ | ★★0 件★★ |
+| ★其の内 `.pyc` 以外★ | ★★0 件★★ |
+| 拡張子別内訳 | ★pyc 115（他 無し）★ |
+| 最新の書込 | 2026-08-20 01:04:43（`hermes_cli/__pycache__/sqlite_safe_read.cpython-312.pyc`） |
+| 上位 dir 別 | hermes_cli 67／plugins 34／agent 8／（root）4／providers 2 |
+
+★★∴ 源樹への実行時書込は ★悉く bytecode cache のみ★★ ―― ★★献策の脆点は
+　　『read-only が 走行を殺すか』から ★『cache を何処へ置くか』一点★ に 縮み申した★★。
+
+（★裏付 ―― `git status --porcelain` ＝ 0 行〔§99 ■四〕は `.gitignore` が `.pyc` を覆ふゆゑ。
+　 ★「清し」は「書かれ居らぬ」を意味せぬ★ ―― 故に本節にて `find -newermt` にて 別の尺より測り直し申した★）
+
+### ■三 玩具の器にて 三様を 験す（★scratchpad のみ・hermes 不触★）
+
+Python ＝ `/usr/bin/python3` 3.12.3（★役の venv と同版・役の venv には 一指も触れず★）
+
+| case | 形 | import | 樹への書込 |
+|---|---|---|---|
+| 1 | read-only・pyc 事前生成 ★無し★ | ★OK★ | ★.pyc 0 件★（★書けぬゆゑ 黙って諦む★） |
+| 2 | ★先に compileall → 然る後 read-only★ | ★OK★（事前の .pyc を用ゐる） | ★0★ |
+| 3 | read-only ＋ `PYTHONPYCACHEPREFIX` | ★OK★ | ★樹の中 0／樹の外 18★ |
+
+★★case 1 の落し穴 ―― `toymod.__cached__` は ★path を持ち居る★ ―― ★而して 実の .pyc は ★0 件★★★
+　 ⇒ ★★`__cached__` の有無は cache の有無を證せぬ★★（條「機構の告は機構の自白」の 又一例）
+　 ⇒ 実害は ★毎度 再 compile ＝ 起動の遅れ★ のみ（★壊れはせぬ★）
+
+★case 3 は成るが ―― ★env を要す★ ⇒ ★launcher の改変が要る★ ⇒ ★§99 P87 の衝突に 触る★。
+
+### ■四 ★★核心 ―― invalidation-mode の択びが 『偽の緑』に 直結し申す★★
+
+★験しの形★ ―― ㊀ 源 `VALUE="OLD"` にて compileall ㊁ ★源を `VALUE="NEW"` に書き換ふ（改竄を模す）★
+㊂ read-only に落す ㊃ import して 何を得るかを見る。
+
+| invalidation-mode | 源＝NEW に改めたる後の import | 判 |
+|---|---|---|
+| `unchecked-hash` | ★★OLD★★ | ★★改竄が 黙つて 通る ―― ★本件と 同じ形の 偽の緑★★★ |
+| `checked-hash` | ★★NEW★★ | ★源に従ふ・且つ read-only にて 正しく走る★ |
+
+★★∴ 判 ―― ★frozen source-dir には `checked-hash` を用ゐよ★★:
+- ★樹への実行時書込 0★（case2 と同じ利）
+- ★★且つ 誰かが 凍らせたる樹を 触りたる時 ―― ★黙つて古き code を走らせぬ★★★
+- ★env 不要★ ⇒ ★『launcher/pointer 不触』の令を ★保ち得★★
+
+★（`unchecked-hash` は 速きが ―― ★『改竄されても 気付かぬ』★ を 買ふ事に御座る。
+　 ★本件は 偽の緑を 断つ為の方式★ ゆゑ ―― ★同じ罠を 中に 埋め込むは 本末転倒★）
+
+### ■五 献策の精密化 ―― ★手順（順序が 効き申す）★
+
+```
+㊀ <final-root>/src ← git archive 6a3d50c | tar -x     ★共有樹の .git へ 書込 0★
+㊁ <final-root>/venv ← 61 束の wheelhouse より offline に依存を入れ
+   ★pip install --no-index -e <final-root>/src★        ★此の段にて egg-info 等が src に書かる★
+㊂ python -m compileall ★--invalidation-mode checked-hash★ <final-root>/src
+㊃ ★chmod -R a-w <final-root>/src★                      ★★必ず ㊁㊂ の 後★★
+㊄ 受入 ―― ★資産の実数 1,077★・import・pip check・★assets の実在を 尺に★
+```
+
+★★順序の要 ―― ㊃ を 先に打てば ㊁ が 落つる★★（editable install は 其の段にて src へ書く）。
+★∴ 「read-only」は ★build 後の 封★ であつて ★build 中の 制約に非ず★★。
+
+★猶 残る未検（★正直に★）★:
+1. ★hermes の実挙動が 起動時に src へ書くか ―― ★115/115 が .pyc なる事は 現 0.20.0 の断面★
+   ⇒ ★0.20.4 にて 同じとは 限らぬ★（★之は build 後にしか 測れぬ★）
+2. ★compileall が 1,077 の資産に 効かぬは 自明★（.py に非ず）―― ★資産は ただ在れば足る★
+3. ★read-only の強さ（chmod は root/所有者に効かず）★ ―― ★真の不変を要さば mount か 所有の分離★
+4. ★監査役 PASS の尺 ―― 未賜★
+
+### ■六 予言の更新
+
+- ★P87 更新★ ―― env の道（`HERMES_BUNDLED_SKILLS` 等）は ★launcher 衝突を招く★ が ―― ★本節にて
+  ★env を要さぬ道（checked-hash）が 在る事を 示し申した★ ⇒ ★P87 は「env の道を採らば」の条件付きに縮む★
+- ★P89（新）★ ―― 裁定が frozen source-dir を容るる場合 ―― ★受入条件に「src が read-only なる事」が入る★
+  ⇒ ★然らば ★㊃ の順序（build の後に封ず）★ が 実務の躓きと成り易し★
+- ★P90（新）★ ―― 若し `unchecked-hash`（既定の `timestamp` を含む）にて凍らせば ―― ★後日 誰かが src を触りたる時
+  ★古き code が 黙つて走る★ ―― ★★之は 本件の blocker と ★同型の 再発★★★
+
+### ■七 新條
+
+★★★條 ㌾ ―― ★己が「未検」と札したる点は ―― ★他人に問ふ前に 己で 潰せる分を 潰せ★★★
+　 ―― ★理 ―― 本節の脆点は ★玩具三つと 15 分★ にて 決し申した。
+　 ―― ★★「裁を待つ」と「手を止む」は 別★★ ―― ★裁を待つ間にも ★裁の材は 作れる★★
+
+★★★條 ㌿ ―― ★偽の緑を 断つ為の仕掛けの ★中に★ 偽の緑を 埋めるな★★★
+　 ―― ★理 ―― `unchecked-hash` は 速きが ★源と実体の乖離を 黙認する★。
+　 ―― ★★防具を 選ぶ時は ―― ★其の防具自身が 何を 黙認するか★ を 読め★★
+
+### ■八 本節にて 為さざりし事
+
+★build 0★／★網 0★／★hermes 樹 ―― 読取のみ・改変 0・`chmod` 0★／★役の venv ―― 一指も触れず（験しは `/usr/bin/python3`）★／
+★現 root 二本 不変★／★a7 半端 root 保存★／★軍師樹 着手 0★／★launcher/pointer/proc/timer/guard/canary/cutover 0★／
+★HERMES_NIX_BUILD を実の器に用ゐる事 0★／★tmux send-keys 0★／★production pane 入力 0★／★Commander 直送 0★／
+★足軽七箱・三箱 0★／★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／★§62〜§99 の本文 一字も動かさず★
+★玩具の器 ―― ★験しの後に 悉く 消し申した★（`rotest`／`rotest2`／`pycache-out` ―― rc=0）
+
