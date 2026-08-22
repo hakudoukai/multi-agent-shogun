@@ -9982,3 +9982,142 @@ FIRE ⟺
        ★機構は ★出た数（16）★ のみを告ぐ ―― ★★入れた数（既読）★ は 告げず★
        ⇒ ★★∴ ★式が当たりたるか 偶々合ひたるかを ★分かち得ぬ★★★
 ```
+
+---
+
+## §八十八 ―― ★★裁定を得て ★harness を 打ち申した★★ ―― ★★而して ★acceptance の器 其の物が ★七十九日 RED★★★★
+
+**as_of** `2026-08-22T20:52:53+0900`／前節 `§八十七`（`4d29797b` / `9,984` 行）
+
+---
+
+### ■一 ★★上意 逐語（本部長 `20:49`・己の箱 idx `346`・nonce `HB-20260822-2049-E4`）★★
+
+```
+本部長裁定 20:49 Grill3 E4 nonce=HB-20260822-2049-E4:
+  ★shared watchdog/script edit=0★。
+  owner provenance は ★Commander Third★ で、★four-PC shared change は owner 指定と Commander 経路が必要★。
+  ★既存 synthetic stub harness の実行のみは許可（production pane/input=0、source edit=0）★。
+  ★本部長が実行結果を独立確認し Commander へ上申する★。
+```
+```
+★★∴ ★己の乞ひ 二つ ―― ★㊀（script 改変）＝ ★却下★／㊁（harness 実行）＝ ★許可（絞り三つ付き）★★
+★★★而して ―― ★owner の足（`Commander Third`）は ★上に 容れられ申した★★★（★己の條 ㌞ ―― 通り申した★）
+```
+
+---
+
+### ■二 ★★★打つ前の 検め ―― ★網 三重★★★★（★己の條 ―― ★不可逆の手は 推論の上に打たぬ★★）
+
+| 重 | 網 | 検めたる現物 |
+|---|---|---|
+| ㊀ | ★PATH stub★ | 共通 script の tmux 呼出は ★悉く 無資格名★（`:129`／`:133`／`:197`／`:202`／`:275`）⇒ ★`PATH` 前置にて 覆はる★ |
+| ㊁ | ★★的の不在★★ | 験さるる包みの的 ＝ ★`commander-third:0.0`／`shogun-third:0.0`★ ―― ★★此の器の生存 session は `hermes-gunshi-second`／`hermes-honbucho`／`multiagent-second`／`shogun-second` の四つ★★ ⇒ ★的 二つとも 不在★ ⇒ stub 失せても `:129` の `has-session` にて skip |
+| ㊂ | ★己の fail-secure 網★ | `$SAFE/tmux` を ★stub の後・真 tmux の前★ に置き ―― ★`send-keys` を 拒み `exit 1`★ |
+
+```
+★★★∴ ★打ちたる後 ―― ★★己の網に 落ちたる物 ＝ `0`★★★
+   ⇒ ★★harness の stub が ★完全に 効きたる★ 證★★ ―― ★★∴ ★production input ＝ `0`★★★
+```
+
+---
+
+### ■三 ★★★★結果 ―― `PASS=5 / FAIL=1`★★★★（`20:51:42`・所要 `1` 秒未満）
+
+| 件 | 判 | 逐語 |
+|---|---|---|
+| (a) 空 buffer → Enter `0` | ★PASS★ | `send-keys Enter count=0` |
+| ★★(b) 非空 buffer ＋ idle 15min → Enter `1`★★ | ★★★FAIL★★★ | ★`Enter count=0 (expected 1)`★ |
+| (c) 15分内 fire 3 → cap halt | ★PASS★ | `cap halt 発動` |
+| (d) `ER_LOG_DIR` 未作成 → 自動作成 | ★PASS★ | `dir 作成済` |
+| (e) 必須 envvar 欠落 → `exit 2` | ★PASS★ | `rc=2` |
+| (f) wrapper → common へ envvar 伝播 | ★PASS★ | `log: 20260822.log` |
+
+```
+★★★∴ ★★★落ちたる一件は ―― ★★『番人が ★撃てる★ 事』を 証する ★唯一の件★★★★★
+```
+
+---
+
+### ■四 ★★★★★根因 ―― ★推に非ず ―― ★production の awk 逐語を fixture に 当てて 証す★★★★★
+
+★(b) の fixture（`:152` 逐語）★:
+```
+FAKE_PANE_TAIL=$'│ > hello world'      ★← 一行のみ・★`────` ボーダー 無し★★
+```
+★production の判定（`:238`〜`:243` の awk・★一字も違へず★ 己が走らせたる結果）★:
+
+| 入力 | `PROMPT_LINE` |
+|---|---|
+| ★`│ > hello world`（＝(b) の現 fixture）★ | ★★`(EMPTY)`★★ |
+| ★`│ > `（＝(a) の現 fixture）★ | ★★`(EMPTY)`★★ |
+| `────` ＋ `│ > hello world` | ★`│ > hello world`★ |
+| `────` ＋ `❯ hello world` | ★`❯ hello world`★ |
+
+```
+★★∴ ★(b) の落ちたる機序 ―― ★★確★★:
+   ★fixture に ★`────` ボーダー無き★ ⇒ `PROMPT_LINE` 空 ⇒ `:258` `no_border_anchored_prompt_in_pane_tail`
+   ⇒ `LABEL_MATCH=0` ⇒ `:288` の else へ落ち ★撃たず★ ⇒ `Enter count=0` ≠ 期待 `1`
+```
+
+★★★★★★時の証 ―― ★二つの commit★★★★★★:
+```
+★harness 最終改変 ＝ `819343e6`／★`2026-06-03T05:49:27+09:00`★／`Commander Third`
+★border anchor 投入 ＝ `26ce0d97`／★`2026-06-04T01:22:43+09:00`★／`Commander Third`
+   （subject ＝ `fix(ee4d6ce4 β改修 cycle5c): anchor 強化 (──── ボーダー隣接 check で false positive 根治)`）
+★★∴ ★harness は anchor より ★19 時間 33 分 16 秒★ 先行 ―― ★★而して 以後 ★一度も 追随せず★★★
+★★★★∴ ★★★acceptance の器は ★`2026-06-04` 以来 ―― ★七十九日★ RED★★★★★
+   ★harness 自身の header は 猶 ★『smoke 本体 stub 実行 ★6 PASS★』★ と 名乗り居る（`:3`）
+```
+
+---
+
+### ■五 ★★★★★★猶 重き一事 ―― ★(a) は ★誤れる機序にて 受かり居る★★★★★★★
+
+```
+★(a) の期待 ＝ ★『空 buffer ゆゑ 撃たぬ』★
+★★而して ―― ★上表の通り ★(a) の fixture も `PROMPT_LINE` 空★★
+   ⇒ ★★∴ ★(a) は ★『空 buffer と判じたる』ゆゑに非ず★ ―― ★★『ボーダー無きゆゑ prompt を 見出だせず』★ に 撃たざりし★★
+★★★∴ ★★★(a) は ★偽の緑★★★★ ―― ★★空 buffer の判定（`:252`）が ★丸ごと 壊れ居ても 猶 受かる★★★
+★★★★★∴ ★★合はせて ―― ★label 判定を験する件は ★二つとも 死し居る★★★★★★
+   ―― ★(b) ＝ ★露はに 落つ★／★(a) ＝ ★黙して 通る★★
+   ⇒ ★★★即ち ★現の synthetic harness は ★label 述語に就き ★何一つ 証し居らぬ★★★★★
+★★己の條 ―― ★正しき答を 誤れる機序にて 得たる時は ★答を残し 機序を書き換へよ★★ ―― ★現に 之★
+```
+
+---
+
+### ■六 ★★★★E4 への 含み ―― ★★順序が 逆★★★★★
+
+```
+★上意 E4 は ★四つの AND★（input anomaly ／ idle ／ UUID・resume ／ lease）を ★機構に 課せ★ と 命ず
+★★而して ―― ★★其の四つを ★験する器★ が ―― ★★現に 死し居る★★★
+   ★∴ ★今 四 AND を 実装しても ―― ★★『撃てる』も『撃たぬ』も ★証し得ぬ★★★
+★★★★∴ ★★己の献策 ―― ★★段を 二つに 分かて★★★★:
+   ★★㊀ ★先づ ★器を 直す★（fixture に ★`────` ボーダー★ を添へ ―― ★(a) を ★真の空 buffer 験★ に戻す★）
+      ⇒ ★★之にて ★79 日 RED★ が 緑に復し ―― ★label 述語が 初めて 験さるる★★
+   ★★㊁ ★然る後に ★四 AND★ を 課し ―― ★新条件 各々に 件を 添ふ★
+★★★★★而して ―― ★★㊀ も ㊁ も ★source edit★★ ―― ★★∴ ★上意 `20:49` の『edit=0』に 掛かる★★★★★
+   ⇒ ★★★己は ★一字も 書き申さず★ ―― ★★測りと 献策のみを 上げ 申す★★★★
+```
+
+---
+
+### ■七 ★本節にて 為さざりし事★
+★★watchdog script ―― ★改変 `0`★★★／★★harness ―― ★改変 `0`（★実行のみ・許可の内★）★★★／★★timer ―― `stop`／`disable`／`mask`／改変 `0`★★／★★`tmux send-keys` ―― ★己は 一度も 呼ばず（stub 越しの `0` 回・己の網の拒否 `0` 回）★★★／★★production pane ―― ★入力 `0`・`capture-pane` `0`★★★／★★己の pane（`shogun-second:0.0`）―― ★験に 一度も 用ゐず★★★／★★別 harness の新造 ―― ★為さず（★二重実装の禁★）★★★／★本部長の箱 ―― 開かず・数へず★／★網・`pip`・`install`・build ―― `0`★／★destination ―― `mkdir` `0`★／★源の樹 ―― 改変 `0`★／★現 root 二本 ―― 一 byte も改めず★／★launcher・pointer・proc・guard ―― `0`★／★cutover・canary ―― `0`★／★足軽七箱 ―― `stat`／`open`／`grep`／`parse` `0`★／★三箱への `os.stat()` `0`★／★己の箱への札 `0`★／★cron ―― 装填 `0`★／★§62〜§87 の本文 ―― ★一字も動かさず★★／★`push` ―― `0`★
+
+---
+
+### ■八 ★本節にて得たる條★
+
+```
+★★★★㌠ ―― ★『緑』の件を 信ずる前に ―― ★★『★何を 通つて★ 緑に成りたるか』を 問へ★★★★★
+   ―― ★現に ―― ★(a) は ★期待どほりの答★ を ★期待と 全く別の道★ より 得 居つた★
+   ―― ★★∴ ★緑の件は ★壊れたる述語を 匿ふ★ 事が 在る★★（★★偽の緑★★）
+★★★㌡ ―― ★守りを 堅くする commit は ―― ★其の守りを 験する件★ を ★同じ commit にて 直せ★★★
+   ―― ★現に ―― ★anchor 強化（`26ce0d97`）は ★偽陽性を 根治★ したれど ★己を験する件を 置き去りにし★
+   ―― ★★∴ ★七十九日 RED★ ―― ★★『根治』の commit が ★次の穴を 掘りたる★★★
+★★★★㌢ ―― ★機構の残せる作業場が `trap` にて 消ゆる時は ―― ★★『機構の逐語』を 諦むるに非ず★★
+   ―― ★★『機構と ★同じ code★』を ★己の場にて 走らせよ★★（★己が 走らせたるは ★production の awk 其の物★）
+   ―― ★★∴ ★之は ★推論★ に非ず ★実行★ ―― ★足の強さが 一段 違ふ★★★
+```
