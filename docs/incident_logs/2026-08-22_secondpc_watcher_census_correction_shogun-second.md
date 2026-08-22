@@ -6638,3 +6638,127 @@ yaml が fd に載り居る窓 ＝ ★一度目 t=3.484 ／ 二度目 t=3.992（
 ### 59.9 ―― 本節にて為さざりし事
 
 ★足軽七箱へ 触れ `0`（★fd は 本節の後に 裁の範囲にて 一回★）★／★己の箱への札 `0`（★新着 八通を読みたるも 悉く未読の儘★）★／★`_archive` 不開★／★`ctime` `0`★／★`capture-pane` `0`★／★凍結せる §44・`K` 群・P55・P55′′・P56 ―― 一字も動かさず★／★`push 0`★
+
+---
+
+## 六十 ―― ★足軽 fd 一回撃ち（裁 `15:20:09`）―― ★P58 當り★／★pid 推を 己で倒す★
+
+as_of `2026-08-22T15:40:33.186059856+0900`（FD_SNAPSHOT_START）
+前節 `ce38c87e6c208a2c9c060868e92c42e799127105`（§五十九・P58/P59 凍結・`6,640` 行）
+
+★裁の逐語（本部長 `15:20:09`・nonce `HB-20260822-1520-FD`）は §59.5 に記す★
+
+---
+
+### 60.1 ―― ★★実施 ―― ★一回の snapshot・幅 `25.8 ms`★★★
+
+```
+FD_SNAPSHOT_START ★2026-08-22T15:40:33.186059856+0900★
+FD_SNAPSHOT_END   ★2026-08-22T15:40:33.211877538+0900★
+   ―― ★幅 25.817682 ms★
+```
+
+★★root PID（`cmdline` 走査にて同定・★yaml に一切触れず★）★★:
+```
+ashigaru1 ★2562232★  bash scripts/inbox_watcher.sh ashigaru1 multiagent-second:agents.1 claude
+ashigaru2 ★2562233★  bash scripts/inbox_watcher.sh ashigaru2 multiagent-second:agents.2 claude
+ashigaru3 ★2562234★  bash scripts/inbox_watcher.sh ashigaru3 multiagent-second:agents.3 claude
+ashigaru4 ★2562235★  bash scripts/inbox_watcher.sh ashigaru4 multiagent-second:agents.4 claude
+ashigaru5 ★2562236★  bash scripts/inbox_watcher.sh ashigaru5 multiagent-second:agents.5 claude
+ashigaru6 ★2562237★  bash scripts/inbox_watcher.sh ashigaru6 multiagent-second:agents.6 claude
+```
+
+★★fd target（★六 lane 悉く 親＋孫の 二体のみ★）★★:
+```
+親（depth 0）  0→/dev/null  1→/tmp/iw_aN.log  2→/tmp/iw_aN.log
+              255→/home/hakudokai/projects/multi-agent-shogun/scripts/inbox_watcher.sh
+孫（depth 1）  inotifywait -q -t 30 -e modify -e close_write <ROOT>/queue/inbox/ashigaruN.yaml
+              0→/dev/null  1→/tmp/iw_aN.log  2→/dev/null  ★3→anon_inode:inotify★
+```
+★孫 PID★: `a4 2041168`／`a6 2041594`／`a1 2041725`／`a2 2041819`／`a3 2041935`／`a5 2042319`
+
+```
+★YAML/LOCK の fd hit ―― ★0★★
+★観測できなかった lane ―― ★0★（★六 lane 悉く root・子孫・fd を読めた★）
+```
+
+---
+
+### 60.2 ―― ★★P58 の采点 ―― ★當り★★★
+
+| 項 | 予言（`ce38c87e`・`15:39:55` 凍結） | 実測 | 判 |
+|---|---|---|---|
+| 六 lane 悉く yaml fd 無し | ★≈98.9 % で然り★ | ★0 hits★ | ★★當★★ |
+| 親の fd の姿 | `0→/dev/null 1,2→log 255→inbox_watcher.sh` | ★一字違はず★ | ★★當★★ |
+| 孫の fd の姿 | `0→/dev/null 1,2→log 3→anon_inode:inotify` | ★`2→/dev/null` のみ相違★ | ★★概ね當★★ |
+| 観測漏れ lane | （予期せず） | ★0★ | ― |
+
+★★∴ ★★『yaml fd 0』は ―― ★主体不在の證に非ず★★（★§56 にて `.venv/bin/python3 -` を現に捉へたる・條 ㊠）★★
+★★∴ ★★捕捉窓 ≈0.19 %／lane ゆゑ ―― ★之は ★事の前に予言したる通りの零★ に御座る★★★
+
+---
+
+### 60.3 ―― ★★親 PID は 交替して居り申さぬ ―― ★本部長 `13:32:18` への 訂★★★
+
+```
+§54（14:48 頃 実測） 足軽の親 ★2562232 〜 2562237★
+§60（15:40:33 実測） 足軽の親 ★2562232 〜 2562237★  ―― ★同一★
+```
+★本部長 `13:32:18` 逐語★: 「★現PIDは既に交替して同一区間の独立再現不可★」
+★★∴ ★★之は ★孫★ には当たり申す（孫は一巡毎に生まれ替はる・§56 実測）―― ★而して ★親★ には当たり申さぬ★★★
+★★∴ ★己の條「人の器の疵を告ぐる便は 己の疵を告ぐる便より一段高き足を要す」★ ⇒ ★足 ＝ ★同じ六つの数字が 二度の独立の測りにて一致★★
+
+---
+
+### 60.4 ―― ★★pid の幅より周期を推す試み ―― ★己で立て 己で倒し申した★★★
+
+★立てたる推★:
+```
+孫は一巡毎に生まれ替はる（§56）⇒ 任意の時点にて 六つの孫の齢は [0,T) に一様
+⇒ 六標本の幅の期待値 ＝ T × 5/7 ＝ 0.714 T
+実測の幅 ＝ 2042319 − 2041168 ＝ ★1151 pid★
+一標本の流速 ＝ ★43.3 pid/s★（10 秒窓）⇒ 幅 ＝ ★26.58 秒★ ⇒ T ＝ ★37.2 秒★
+```
+
+★★★而して ―― ★流速を 12 窓 × 5 秒 にて測るに★★★:
+```
+44.8  37.6  74.4  86.8  36.8  ★14.2★  41.6  38.8  48.8  73.0  42.8  ★13.0★
+★min 13.0  median 42.8  max 86.8  mean 46.0  sd 22.5  max/min ★6.68★★
+```
+★★∴ ★★流速は ★6.68 倍★ に揺れ ―― ★一標本の 43.3 は 代表値たり得ず★★★
+
+★★★而して ―― ★倒れたるは 揺らぎに非ず ★式そのもの★★★★:
+```
+ns_last_pid 2051539（15:43:45）に対し
+   己の孫 2044570（15:41:39 実測）  gap ★6969★ ⇒ 最速 86.8 を当てても 齢 ★≥ 80 秒★
+   足軽の孫                        gap 9220〜10371 ⇒ 齢 ★≥ 106 秒★
+★而して inotifywait -t 30 は ★30 秒で必ず返る★ ―― §56 にて ★19.817 秒で消ゆる★ を現に見たり★
+★∴ 齢 ≥ 80 秒 は ―― ★有り得ぬ★
+```
+
+★★★∴ ★★根 ―― ★`ns_last_pid` の増分は『系が生みたる process の数』に非ず★★★★
+★（★pid は 空きを探して飛び・短命の process の pid は再利用さる ⇒ ★増分は 生成数の 上限でも下限でもない★★）
+
+★★★條 ㊥ ―― ★`ns_last_pid` の増分を『生まれたる process の数』と読むな ―― ★pid は再利用され 飛ぶ★★★★
+★★條 ㊦ ―― ★『流速 × 時間 ＝ 個数』の型の推を立てたる時は ―― ★己の已に直測したる標本（§56 の 19.817 秒）を 其の式に当てて 先に自壊を試みよ★★★
+
+★★∴ ★★★足軽の周期 ―― ★猶 UNMEASURED★★★（★裁の「一回」は已に使ひ申した ⇒ ★再測せず★）
+
+---
+
+### 60.5 ―― ★確かに立ちたる物（本節）★
+
+```
+㊀ ★足軽 1-6 の watcher は 悉く 生存し ―― 親＋孫の 二体構成★
+㊁ ★孫は 己の lane と ★一字違はぬ★ argv（inotifywait -q -t 30 -e modify -e close_write <箱>）★
+㊂ ★孫の fd に yaml 無し ―― ★孫は 読み申さず★（六 lane 悉く・§54 と同じ）★
+㊃ ★親の fd に yaml 無し（§56 にて己の lane を 42 秒 全視したるも同じ）★
+㊄ ★親 PID は §54 より ★交替して居らぬ★★
+㊅ ★観測できなかった lane ―― ★0★★
+```
+
+---
+
+### 60.6 ―― 本節にて為さざりし事
+
+★足軽の箱へ open/stat/read `0`（★fd の readlink は procfs の symlink ―― 対象 inode を辿らず★）★／★fd 撃ちは ★一回★（裁の通り）★／★`strace` `0`・service/config/proc 操作 `0`★／★足軽の `/proc/<pid>/stat`（齢の直測）―― ★裁の範囲外ゆゑ 打たず★★／★己の箱への札 `0`★／★`_archive` 不開★／★`ctime` `0`★／★`capture-pane` `0`★／★凍結せる §44・`K` 群・P55・P55′′・P56・P59 ―― 一字も動かさず★／★`push 0`★
