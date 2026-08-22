@@ -13777,3 +13777,122 @@ b8cb175d は 01:43:30、incident paper 単独 narrow commit であることを�
 ★★P113 ―― ★監査が「canon の SHA を貼れ」と求むる時 ―― ★ignored 9 件には 貼るべき commit sha が ★原理的に★ 存せず★★★
 　★⇒ ★処方 ―― ★git 以外の凍結法（本紙の如き tracked incident artifact への sha256 記録）を 正規の器と 定めよ★★
 　★⇒ ★本節 ■五 の表が ―― ★其の最初の一枚★ に御座る★
+
+---
+
+## §115 ★★網の形 ―― ★allowlist 18 ／ ★tracked なれど ignored 2★ ／ untracked 且つ ignored 9★★★（★＋ `check-ignore` の判が 己を欺きたる次第★）
+
+★§114 は「9 件が git の外に在り」と申した。★然れど 之は 網の形の ★半分★ に過ぎ申さぬ★★
+★本節は ―― ★『生成器が ★新たに★ 吐く file は 網に掛かるか』★ を問はんとして ―― ★更に深き 非対称を 掘り当て申した★
+
+### ■一 ★★先づ 己の誤りを 申す ―― ★`check-ignore` の判を 二度 取り違へ申した★★★
+
+★誤り ㊀ ―― ★出力の有無を以て 判と為し申した★
+```
+r=$(git check-ignore -v "$f"); [ -n "$r" ] && echo IGNORED
+　⇒ ★誤★ ―― ★`-v` は ★否定（`!`）の行をも 印字す★★ ⇒ ★『規に当たつた』と『除かれた』は 別★
+```
+★誤り ㊁ ―― ★`-v` を添へたる儘 出口（exit code）を読み申した★
+```
+git check-ignore --no-index -v "$f"; rc=$?
+　⇒ ★誤★ ―― ★`-v` を添ふれば ★否定に当たりても `0` を返す★★
+　⇒ ★徴 ―― `AGENTS.md`（★tracked にして commit 済★）が ★`IGNORED`★ と出で ―― ★其の規が `!AGENTS.md`★ にて 己 露見す★
+```
+★★訂 ―― ★判は `-v` 無し（plain `-q`）にて取り ―― 規は `-v` にて取る ★二呼び出しに 分かつ★★★
+```
+git --no-optional-locks check-ignore --no-index -q  "$f"   # ★判 ―― 0=ignored / 1=not★
+git --no-optional-locks check-ignore --no-index -v  "$f"   # ★規 ―― 最後に当たりたる行★
+```
+★★∴ ★之は `rev-parse` の fallback（§113 前）と ★同じ轍★ ―― ★器が 失敗／否定を どう表すかを 先に知らずして 判に用ゐ申した★★★
+
+### ■二 ★猶 一つ ―― ★`check-ignore` は 既定にて ★tracked な path を 黙って飛ばす★★★
+
+★初手にて `AGENTS.md`／`.github/copilot-instructions.md`／`agents/default/system.md` の三つが ★無言★ を返し ―― 己は「規に当たらず」と読み申した★
+★★実は ―― ★`check-ignore` は index を見 ★tracked な物を 除く★★（★之を外すは `--no-index`★）★
+★★∴ ★『無言』は『網に掛からず』を意味せず ―― ★『既に git の中に在るゆゑ 問はれざりし』を意味し申した★★★
+
+### ■三 ★★★而して 露はに成りたる 網の形★★★（★as_of `2026-08-23T02:07:23+0900`★）
+
+| 類 | 件 | 規 | 内訳 |
+|---|---|---|---|
+| ★allowlist に護らる★ | ★`18`★ | `.gitignore:58 !instructions/generated/*.md`（16）／`:68 !AGENTS.md`（1）／`:54 !instructions/common/*.md`（1） | ★generated 16 ＋ `AGENTS.md` ＋ 源 `forbidden_actions.md`★ |
+| ★★tracked なれど ignored★★ | ★★`2`★★ | ★`.gitignore:7 *`★ | ★★`.github/copilot-instructions.md`／`agents/default/system.md`★★ |
+| ★untracked 且つ ignored★ | ★`9`★ | ★`.gitignore:7 *`★ | ★`shogun_charter_v1.md` 他 8（§114 ■五）★ |
+| ★計★ | `29` | | ★20（inventory）＋ 9（§114）★ |
+
+### ■四 ★★★核心 ―― ★`.gitignore` は 既に tracked な物を untrack せぬ★★★★
+
+★★∴ ★`.github/copilot-instructions.md` と `agents/default/system.md` は ―― ★★『規に護られて git に在る』のではなく ―― ★『既に git に在るがゆゑに 規を免れて居る』★★★★
+```
+★之が ―― ★己が §113/§114 にて 両者の HEAD blob を 取り得たる★ 理由に御座る
+★而して 同時に ―― ★両者は ★allowlist に 一行も 持たぬ★★
+```
+★★∴ ★若し 何者かが 一度 `git rm --cached` を打ち ―― もしくは ★新しき clone にて 生成器を走らせ★ ―― もしくは ★file を 消して 作り直せば★
+　★★両者は ★`??` にも `M` にも 現れず★ ―― ★沈黙のうちに git の外へ 落ちる★★★★
+★（★之は 既に `instructions/` の 9 件に 起きたる事★ ―― ★同じ機序が ★tool-level canon の 三分の二★ の上に 懸り居る★）
+
+### ■五 ★★『新たに吐かれる file は 網に掛かるか』―― ★場所ごとに 答が 割れ申した★★★
+
+| 仮の新出力 | 判 | 規 |
+|---|---|---|
+| `instructions/generated/NEWROLE.md` | ★`OK-track`★ | `:58 !instructions/generated/*.md` |
+| `instructions/generated/newcli-shogun.md` | ★`OK-track`★ | `:58`（★新 CLI を足しても 網は掛かる★） |
+| `instructions/common/NEWSRC.md` | ★`OK-track`★ | `:54` |
+| ★`instructions/NEWTOP.md`★ | ★★`IGNORED`★★ | ★`:7 *`★ |
+| ★`instructions/shogun-second.md`★ | ★★`IGNORED`★★ | ★`:7 *`★ |
+| ★`agents/default/NEWAGENT.md`★ | ★★`IGNORED`★★ | ★`:7 *`★ |
+| ★`.github/NEWTOOL-instructions.md`★ | ★★`IGNORED`★★ | ★`:7 *`★ |
+| ★`NEWCANON.md`（repo root）★ | ★★`IGNORED`★★ | ★`:7 *`★ |
+
+★★∴ ★Grill6 P2 への 直の帰結★★:
+```
+★㊀ ★role を 足すは 安全★ ―― `instructions/generated/*.md` は 括りにて allowlist さる
+★㊁ ★CLI を 足すも 安全★ ―― 同上（`newcli-shogun.md` は 掛かる）
+★★㊂ ★tool-level を 足すは ★危し★★ ―― ★root・`.github/`・`agents/` に 括りの allowlist 無し★
+　　⇒ ★新しき tool-level canon を 吐けば ―― ★git の外に 落ちる★（★9 件と 同じ末路★）★★
+★★㊃ ★instructions/ 直下に 役を足すも ★危し★★ ―― ★`shogun-second.md` は 作れば 即 ignored★
+　　⇒ ★之が ★`gunshi-second.md`／`karo-second.md` が 外に在る★ 機序の ★説明★ に御座る★★
+```
+
+### ■六 ★★§114 の P112 を ―― ★己の測りにて 半ば 訂す★★★
+
+★P112 は「generator-only then regenerate は 9 件に及ばず」と申した ―― ★之は 猶 立つ★
+★★然れど ―― ★『及ばぬ』理由が 一つでなく 二つ在り申した★★:
+```
+★理由 ㊀（P112 の申したる分）★ ―― ★9 件は 生成器の 出力目録に 載つて居らぬ★
+★★理由 ㊁（本節にて 新たに）★★ ―― ★★載せた所で ―― ★吐き先が `instructions/` 直下なれば `:7 *` に喰はる★★★
+　⇒ ★∴ ★『生成器に 一行 足す』のみにては 足らず ―― ★`.gitignore` の allowlist をも 併せて 改むる要あり★★
+　⇒ ★而して ★`.gitignore` は 己の不触に属す★ ⇒ ★★裁と 執行者の指名を 要す★★
+```
+
+### ■七 ★己が 為さざりし事★
+
+```
+★.gitignore ―― ★改変 0★・★本体の open/read 0★（★`check-ignore` を通し 機構自身に 問ひたるのみ★）
+★仮の path（NEWROLE.md 等）―― ★一つも 作らず★（`check-ignore` は 実在せぬ path をも 判ず）
+★generator 実行 0★／★source edit 0★／★rm --cached 0★／★add -f 0★／★push 0★
+★44 件・9 件 の中身 ―― ★一行も 読まず★
+★共有樹 測り 0★／★manifest r3 ―― 一 byte も 触れず★
+```
+
+### ■八 ★新條★
+
+★★★㍔ ―― ★器の『判』と『説明』を ★同じ呼び出しから★ 取るな★★★
+　―― ★理 ―― `git check-ignore` は ★`-v` を添ふれば 否定に当たりても `0` を返す★
+　―― ★∴ ★説明を求めたる事が ―― ★判其の物を 毀し申した★★
+　―― ★処方 ―― ★判は 素の呼び出し（`-q`）・説明は `-v` ―― ★二度 呼べ★★
+　―― ★（條 ㍍ の系 ―― ★`rev-parse` の fallback と 同じ轍★ ―― ★★『器が 否を どう表すか』を 先に知れ★★）
+
+★★★㍕ ―― ★`.gitignore` は ★既に tracked な物を untrack せぬ★ ⇒ ★『今 git に在る』は『護られ居る』を意味せぬ★★★
+　―― ★理 ―― `.github/copilot-instructions.md`／`agents/default/system.md` は ★tracked 且つ `:7 *` に喰はれ居る★
+　―― ★∴ ★両者を git に留め居るは ★規に非ず ★過去の一度の `add`★★★
+　―― ★処方 ―― ★canon の護りを問ふ時は ★`ls-files` と `check-ignore` の ★二軸★ にて 測れ★★（★片軸のみでは 此の類は 見えぬ★）
+
+### ■九 ★新予言★
+
+★★P114 ―― ★`.github/copilot-instructions.md` と `agents/default/system.md` は ―― ★一度 untrack さるれば 二度と `status` に現れず 沈黙のうちに 消ゆ★★★
+　★⇒ ★処方 ―― ★`.gitignore` に `!` の二行を 加ふる裁を 乞へ★（★己は `.gitignore` 不触ゆゑ ★案を出すに留む★）★
+
+★★P115 ―― ★『generator-only canon addition then regenerate』を 打ちて ★新しき tool-level 出力★ を 吐かば ―― ★其の file は 生まれた刹那に git の外に立つ★★★
+　★⇒ ★∴ ★P2 の順は ―― ★㊀出力 freeze（済・§114）→ ㊁`.gitignore` allowlist の裁 → ㊂生成器改 → ㊃再生成 → ㊄diff★★
+　★⇒ ★★㊁ を 飛ばせば ―― ★coverage は 生成の直後に 欠く★★★
