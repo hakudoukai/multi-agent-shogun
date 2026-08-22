@@ -12221,3 +12221,168 @@ git --no-optional-locks -C ★/home/hakudokai/hermes-runtimes/hermes-agent-v2026
 ★production pane 入力 0★／★Commander 直送 0★／★足軽七箱・三箱 ―― `stat`／`open`／`grep`／`parse` 0★／
 ★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／★§62〜§103 の本文 一字も動かさず★
 
+
+---
+
+## §105 BUILD GO 受領 ―― 第一段（archive export）を二役に施し欠0余0を実証 ／ 而して己の問㊁は令自身の中に答が在り申した ―― `--require-hashes` は pip が明文にて editable を排す
+
+as_of 2026-08-23T00:09:08〜00:14:42 JST／nonce ＝ `HB-20260823-0001-SOURCEDIR`（idx 363・364）
+便 hb_161（285 字）は `00:11:06` に送達済 ―― ★而して 其の問㊁ は ★本節にて 己で 解け申した★★
+
+### ■一 ★★裁定 降り申した ―― `source-dir` 方式 GO★★
+
+| idx | 刻 | nonce | 要 |
+|---|---|---|---|
+| 363 | `2026-08-23T00:00:29` | `HB-20260823-0001-SOURCEDIR` | ★委員長 seq205194 DB 正本により source-dir 型 build を開始★ |
+| ★364★ | ★`2026-08-23T00:01:32`★ | 同 | ★★後令 ―― `2 role` 共に 新 versioned dir★★ |
+
+★逐語（364）★:
+> `今から2 role run下の新versioned dirへgit archive export（空dir、全file manifest/SHA、asset522を含む全樹）`
+> `→source read-only化→role-local新venvを61-wheel offline --no-index --require-hashesで構築`
+> `→absolute python+entrypoint、source/venv混線0。`
+> `build後にhelp/version/522file数/rollback dry-run evidenceを提出。`
+> ★`env-dept receiptまでcanary/cutover/launcher/proc=0`★
+> ★`現a7 final dirは既存副産物の疑いがあるため触らず、同一手順で再生成して同一性を示すこと`★
+
+★★∴ ★§98〜§104 の献策が ―― ★方式として 容れられ申した★★★
+（★363 は「a7 は freeze して同報」、364 は「a7 も 同一手順で 再生成」―― ★後令 364 に従ふ★）
+
+★★併し ―― 令の中に ★己の実測と 食ひ違ふ点 二つ★ を 見出だし ―― `hb_161` にて 上へ 出し申した★:
+| # | 令の文言 | 己の実測 |
+|---|---|---|
+| ㊀ | ★`asset522を含む全樹`★ | ★★資産の全数 ＝ `1,077`★★（§101 の名寄せ 欠0余0） |
+| ㊁ | ★`source read-only化` → ★然る後★ venv★ | ★`pip install -e` は 源に egg-info を書く ⇒ 封が先なら 落つる★ |
+
+### ■二 ★★問㊁ は ―― ★令自身の中に 答が 在り申した★★（★己の手落ち★）
+
+★`--require-hashes` の性質を ★pip の逐語★ にて 引き申した★（pip `24.0`・`_internal/operations/prepare.py:685-690`）:
+
+```python
+    def prepare_editable_requirement(self, req):
+        ...
+        with indent_log():
+            if self.require_hashes:
+                raise InstallationError(
+                    f"The editable requirement {req} cannot be installed when "
+                    "requiring hashes, because there is no single file to hash."
+                )
+```
+
+★★∴ `--require-hashes` と `-e`（editable）は ―― ★pip が 明文にて 排す★★★
+
+⇒ ★★令の形（`--no-index --require-hashes` ＋ `absolute python+entrypoint`）は ―― ★端から editable に非ず★★★
+⇒ ★★源に install が 一字も 書かぬ★★ ⇒ ★★∴ `source read-only化` が ★先で 正しい★★★
+⇒ ★★己の問㊁ は ―― ★不要の問★ に御座つた★★
+
+★★∴ 己の手落ち★★ ―― 條 ㌾「★未検と札したる点は 他人に問ふ前に 己で潰せる分を潰せ★」を ★己が 破り申した★。
+★`pip` の逐語は ―― ★己の手の内に 在り（半端 root の venv に pip 24.0 現存）★ ―― ★問ふ前に 引くべきであつた★★。
+
+★★而して ―― ★之は 己の献策にとつて ★良い報せ★★★:
+- ★非 editable なるも ―― ★wheel install に非ず★★（★§98 の脱落は ★wheel 化の段★ の話★）
+- ★源は `PYTHONPATH`／`.pth`／entrypoint にて sys.path に載る★
+  ⇒ ★`hermes_cli.__file__` ＝ `<newroot>/src/hermes_cli/claw.py`★
+  ⇒ ★`PROJECT_ROOT` ＝ `<newroot>/src`★ ⇒ ★★資産 1,077 は 現に 見付かる★★
+- ★§103 の docstring `source checkouts and editable installs` の ★前者★ に 当たる★
+⇒ ★★∴ ★偽の緑 の危険は ―― ★令の形にて 已に 回避されて居り申す★★★
+
+### ■三 ★★第一段 実施 ―― `git archive` export（二役）★★
+
+★源の同定（記憶に非ず 源より起こす）★:
+| 量 | 値 |
+|---|---|
+| 樹 | ★`/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3`★（★6a3d50c を持つは 此の樹のみ ―― §104 ■二★） |
+| commit full | ★`6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f`★ |
+| committer | `2026-08-19T11:03:01-05:00` |
+| subject | `fix(tui): allow the ESC byte in the SGR param matcher` |
+| ★pyproject version★ | ★★`0.20.4`★★（name = `hermes-agent`） |
+| `ls-tree -r` entry | ★9,738★（★非 blob 型 ＝ `0`★） |
+
+★建てたる root（★二役・新 versioned dir・名は 半端 root と 衝突せず★）★:
+```
+/home/hakudokai/hermes-roles/ashigaru-second-7-hermes/run/hermes-agent-0.20.4-sourcedir-6a3d50c/src
+/home/hakudokai/hermes-roles/gunshi-second-hermes/run/hermes-agent-0.20.4-sourcedir-6a3d50c/src
+```
+（★取り出し先は ★空 dir★ ―― §101 ■七 ㋐ を 現に 履行（`find -mindepth 1` ＝ `0` を 取り出し前に 実測）★）
+
+★★受領証★★:
+| 量 | ashigaru-second-7 | gunshi-second |
+|---|---|---|
+| 取り出し file+symlink | ★9,738★ | ★9,738★ |
+| ★樹にのみ在る（欠）★ | ★★`0`★★ | ★★`0`★★ |
+| ★取出にのみ在る（余）★ | ★★`0`★★ | ★★`0`★★ |
+| skills / optional-skills / optional-mcps / locales | ★485／555／20／17★ | ★同★ |
+| ★資産 計★ | ★★1,077★★ | ★★1,077★★ |
+| manifest 行 | ★9,738★ | ★9,738★ |
+| ★manifest SHA256★ | ★★`f2fccb6fa8aaa5de0b4ebc3c052d691e3bd0004c1e1cdf0bed99dd865982885c`★★ | ★★同一★★ |
+| src 総 byte | ★153,612,202★ | ★同一★ |
+| 二役 manifest の `cmp` | ★★完全一致★★ | |
+
+★manifest の在処（★`src/` の外 ―― 源を汚さず★）★:
+```
+<root>/source-manifest-sha256.txt   （9,738 行・`sha256  相対path` 形式）
+```
+
+★★∴ §101 ■七 の受入尺 ㋐㋑ を ―― ★現に 履行し 通り申した★★
+
+### ■四 ★★61 束の preflight ―― ★令の SHA と 悉く 一致★／★直接 deps 完全被覆★★
+
+| 量 | 値 | 令の文言 |
+|---|---|---|
+| requirements | `requirements-cp312-linux-require-hashes-61.txt` | ― |
+| ★SHA256★ | ★`8f2acb7a1cf153ed40404e36b2620889d30053c4420a270ec22de9884014337d`★ | ★`requirements=8f2acb…` ―― ★一致★★ |
+| ★manifest-61 SHA256★ | ★`8da432485782518e2aabd64ca9972ea77e26ccbbd6390851582cdcf8ed349b3b`★ | ★`61束manifest=8da432…` ―― ★一致★★ |
+| 論理 requirement 数 | ★61★ | ― |
+| ★hash を欠く entry★ | ★★`0`★★（hash 総数 `623`） | ★`--require-hashes` の要件 ―― 満つ★ |
+| downloads 現物 | ★61★ | ― |
+| `setuptools==83.0.0` | ★現に載る（sdist・wheel 両 hash）★ | §102 の訂 ―― ★満つ★ |
+| ★`hermes-agent` 自身★ | ★★`0` ―― 含まれず★★ | ★源より入るゆゑ 正★ |
+
+★★直接 dependencies の 全数名寄せ（★PEP 503 正規化 ＋ marker を 見る★）★★:
+
+| 量 | 値 |
+|---|---|
+| pyproject 直接 deps | ★32★ |
+| 61 に在る | ★28★ |
+| ★61 に無き★ | ★4★ ―― ★★`tzdata` `pywinpty` `pywin32` `concurrent-log-handler`★★ |
+| ★其の 4 の marker★ | ★★悉く `sys_platform == 'win32'`★★ |
+
+★★∴ ★cp312/linux にては ★欠 `0`★ ―― 61 束は 直接依存を ★完全に 覆ふ★★★
+
+★★己の 一度目の測りは ★粗く★ 申した★ ―― ★正規化が `.`→`-` を欠き（`ruamel.yaml`）★／★marker を 見ず★
+　⇒ ★★『欠 5』と 出申した★★ ⇒ ★★測り直して 『欠 4・悉く win32』★★（★條 ㌼ の 又一つの形★）
+
+### ■五 ★★∴ 進む ―― 問は 撤回し 第二段へ★★
+
+| 段 | 状 |
+|---|---|
+| ㊀ 空 dir ＋ `git archive` export ＋ manifest/SHA ＋ 名寄せ | ★★済（■三）★★ |
+| ㊁ ★source read-only 化★ | ★★次 ―― ★令の順にて 正しい（■二）★★★ |
+| ㊂ role-local 新 venv（`--no-index --require-hashes` ＋ 61 束） | 材 悉く 揃ふ（■四） |
+| ㊃ absolute python ＋ entrypoint（source/venv 混線 0） | ― |
+| ㊄ 受入 ―― help／version／★資産 `1,077`★／rollback dry-run | ★★数は `522` に非ず `1,077`★★（■一 ㊀） |
+
+★★`canary`／`cutover`／`launcher`／`proc` ―― ★env-dept receipt まで `0`★★（令 364）
+
+### ■六 予言の更新
+
+- ★P98（新）★ ―― 非 editable ＋ `PYTHONPATH` 形にて 建てなば ―― ★`PROJECT_ROOT` は `<newroot>/src` に解け★
+  ⇒ ★★資産 1,077 は 悉く 見付かる★★（★§98 の blocker は ★消える★★）
+- ★P99（新）★ ―― 若し 誰かが `-e` を 加へて `--require-hashes` と 併せ打たば ―― ★★`InstallationError` にて 落つる★★
+  （★逐語 `cannot be installed when requiring hashes` ―― ■二★）⇒ ★★『落ちた』は 材の不備に非ず ★形の誤り★★
+
+### ■七 新條
+
+★★★條 ㍈ ―― ★己が 上へ 出さんとする問は ―― ★『其の答が 己の手の内の file に 書かれ居らぬか』★ を 先に 検めよ★★★
+　 ―― ★理 ―― 本節の問㊁ の答は ★pip 24.0 の `prepare.py` 685 行目★ ―― ★己の disk に 現に 在り申した★。
+　 ―― ★★人の手を 空しく 使はせぬは ―― ★己の器を 先に 尽くす事★★（★條 ㌾ の 実務形★）
+
+### ■八 本節にて 為さざりし事
+
+★★`canary`／`cutover`／`launcher`／`pointer`／`proc`／`timer`／`guard` ―― `0`★★／
+★★現 live の二 root ―― ★一 byte も 改めず★★★／★★a7 半端 final root（`…-final-6a3d50c`）―― ★不触・保存（読取のみ ―― pip の逐語を引くに用ゐたるのみ）★★★／
+★★役の樹（`…/run/hermes-agent-v2026.8.3`）―― ★一指も触れず★★★／★★役の venv（現 live）―― ★不触★★★／
+★★共有樹 ―― ★`--no-optional-locks` の 読取のみ・`archive` は `.git` へ 書込 0★★★／
+★★束（wheelhouse）―― ★読取のみ・一 byte も加へず★★★／★網 0★／★tmux send-keys 0★／★production pane 入力 0★／
+★Commander 直送 0★／★足軽七箱・三箱 0★／★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／
+★§62〜§104 の本文 一字も動かさず★
+
