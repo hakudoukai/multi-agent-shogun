@@ -13166,3 +13166,162 @@ python3 -m pip install --no-index --find-links …/downloads --require-hashes
 ★Commander 直送 `0`★／★本部長の箱 不開★／★足軽七箱・三箱 `0`★／★`_archive` 不開★／★己の箱への札 `0`★／
 ★cron `0`★／★push `0`★／★§62〜§109 の本文 ―― 一字も動かさず★
 
+
+---
+
+## §111 ★令 369 EXECUTE ―― `manifest-61.json` 第三版・`build_command` の逐語化（★P106／P107 決着★）★
+
+### ■一 ★令の逐語（`idx 369`・`2026-08-23T01:10:52`・nonce `HB-20260823-0109-MANIFEST`）★
+
+```
+S1 manifest corrective authorization nonce=HB-20260823-0109-MANIFEST.
+令205194のsource-dir型に合わせmanifest-61を再発行してよい。final_paths=sourcedirは維持。
+build_commandの旧57 req+then install source文言を廃し、各role-local venvへ
+requirements-cp312-linux-require-hashes-61.txt を --no-index --find-links downloads
+--require-hashes で導入し、source install=0、絶対venv/bin/python sourcedir/src/hermes で実行、
+と逐語化。created_at/revision/supersedesも更新し、新SHAを相談役/env-deptへ直送。旧a7 -finalは不触。
+```
+
+★★之は ―― 己が `hb_167`（`01:05:38`）にて 上へ出したる 三点（`build_command`／`created_at`／`supersedes`）に 対する 裁に御座る ―― ★十二分後★★★
+★★∴ ★己の訂が 令と成りたる 五例目★★（`hb_164`→367/368 が 16 分／`hb_161`→365 が 3 分／`hb_159`→362／`hb_156`→361）
+
+### ■二 ★箱の順を 疑ひ 救はれたる事★
+
+★便を発つ直前の検めにて ―― `total` `399→400`・`unread` `369→370`・`max_unread_idx` `368→369`★
+★然れど ★尾の六通は 悉く `08-20` の既読★★ ⇒ ★新着は ★尾に非ず 中に挿されたり★★
+★∴ 索引を捨て ★刻（`ts >= 2026-08-22T23`）にて 母集団を取り直し★ ―― 令 369 を 掴み申した★
+★★條「配列の順が時系列と一致すると仮定するな」―― ★本節にて 二度目の 働き★★★
+
+### ■三 ★書式の壊れを 事前に 封ずる★
+
+★前節（§110）は `json.dump` を避け 逐語置換にて 2 行に抑へたるが ―― 本節は ★`supersedes` が 塊ごと 変ずる★ ゆゑ 逐語置換は 脆し★
+★∴ ★先に『載せて 吐けば 元に戻るか』を 検め申した★★:
+
+| 検め | 結 |
+|---|---|
+| `json.dumps(d, ensure_ascii=False, indent=2) + chr(10)` ＝ 原文か | ★★一致★★ |
+| 原 bytes | `17,807` / 行 `471` |
+
+★★∴ ★書式は 完全に 決定的★ ⇒ ★再生成は byte 安全★★（★戻らざれば 逐語置換に 退く心算に御座つた★）
+★★∴ 新條 ㍍ ―― ★機械が吐きたる file を 書き換ふる前に ―― ★『載せて 吐けば 元に戻るか』を 問へ★★
+　―― ★理 ―― 戻るならば 再生成は 安全にして 塊の書換へも 恐るるに足らず ―― ★戻らざる時のみ 逐語置換の 手間を 払へばよい★★
+
+### ■四 ★関門と 退避★
+
+| 手 | 逐語 |
+|---|---|
+| ★書く前の 関門★ | `assert cur == a9b69f86…97df`（★他者が触れて居らば 此処で止まる★） |
+| ★退避★ | ★`S/manifest-61.r2.json`（★wheelhouse に `.bak` を置かず ―― 條 ㌿★）★ |
+| ★不変たるべき 8 鍵の assert★ | `schema, reason, approved_source, requirements, download, final_paths, rollback_roots, wheels` |
+| ★書込前の 妥当★ | `json.loads(out)` |
+
+### ■五 ★結果★
+
+| 量 | r2 | ★r3★ |
+|---|---|---|
+| ★SHA256★ | `a9b69f86c195836affe385dfeea080b01250c28e6b278323cdd3937e85cc97df` | ★★`dca4e1f5ff6923addd50ffbf8a147e7f3b459e608134df4c5558664cc0360f6a`★★ |
+| bytes | 17,807 | ★18,925（＋1,118）★ |
+| mtime | `01:00:52.237743597` | ★`01:19:44.250671572`★ |
+| 鍵数 | 11 | ★12★ |
+| path | ★`/home/hakudokai/hermes-wheelhouse-6a3d50c/manifest-61.json`（★同一・in-place★）★ |
+
+★★不変 `8` 鍵 ―― `schema, reason, approved_source, requirements, download, final_paths, rollback_roots, wheels`★★
+★★変じたる `3` 鍵 ―― `supersedes`, `build_command`, `created_at`★★／★★新設 `1` 鍵 ―― `revision`（＝`3`）★★
+★行の差 ―― `37`★
+
+### ■六 ★令 369 の 七項 検算 ―― ★悉く `True`★★
+
+| # | 項 | 結 |
+|---|---|---|
+| a | 旧 57 版 req 名を 廃したか | ★True★ |
+| b | `requirements-cp312-linux-require-hashes-61.txt` を 名指すか | ★True★ |
+| c | `--no-index` ＋ `--find-links` ＋ `--require-hashes` 三旗 揃ふか | ★True★ |
+| d | `source install = 0` と 明記したか | ★True★ |
+| e | 絶対 `R/venv/bin/python R/src/hermes` を 記したか | ★True★ |
+| f | `final_paths` ＝ sourcedir 維持 | ★True★ |
+| g | `rollback_roots` 不変 | ★True★ |
+
+★新 `build_command` 逐語★:
+```
+per final root R in final_paths: R/venv/bin/python -m pip install --no-index
+--find-links /home/hakudokai/hermes-wheelhouse-6a3d50c/downloads --require-hashes
+-r /home/hakudokai/hermes-wheelhouse-6a3d50c/requirements-cp312-linux-require-hashes-61.txt
+;; source install = 0 (the source artifact itself is never pip-installed; no -e, no PYTHONPATH)
+;; entrypoint = R/venv/bin/python R/src/hermes
+```
+
+### ■七 ★`supersedes` ―― 鎖の形に 改む★
+
+★旧は ★57 版ただ一つ★ を指し居つた ⇒ ★r1／r2 が 記録より 落ちて居つた★
+★新は ★己自身の 直前版（r2）を指し★ 且つ ★`chain` に r0／r1／r2 を 悉く 蔵む★
+
+| rev | path | 束 | SHA256 | 刻 | 変 |
+|---|---|---|---|---|---|
+| 0 | `manifest.json` | 57 | `54a57cb0…e242` | ― | ― |
+| 1 | `manifest-61.json` | 61 | `8da43248…9b3b` | `08-22T23:04:16` | 57→61（4 extras） |
+| 2 | `manifest-61.json` | 61 | `a9b69f86…97df` | ★`08-23T01:00:52`★ | `final_paths` → 両 sourcedir |
+| ★3★ | `manifest-61.json` | 61 | ★`dca4e1f5…0f6a`★ | ★`08-23T01:19:44`★ | ★`build_command` 逐語化 ＋ `revision` ＋ `supersedes` 鎖★ |
+
+★★r2 の `issued_at` は ★`created_at` の値に非ず ―― file の `mtime` より 取り★ ―― ★其の旨を `issued_at_source` に 明記し申した★★
+★★理 ―― ★r2 の `created_at` は r1 の値のまま 据ゑ置かれ居つた（＝P107 の 現物）★ ⇒ ★鎖に 偽の刻を 蔵めぬ為★★
+
+### ■八 ★測らざりし物 ―― ★敢へて 測らず★★
+
+★令 367／368 は wheel 61 束の 再照合を 命じ 己は 之を 履行し申した（§110 ―― 一致 61／不一致 0／欠 0／余 0）★
+★本節にては ★再照合を 打たず★★ ―― 理:
+
+| 足 | |
+|---|---|
+| ㊀ | ★`wheels` 鍵の 正規化 JSON SHA が ★r2 と 完全一致★ と assert 済★ ⇒ ★61 束の 名・`sha256`・`bytes` は 一 byte も 動かず★ |
+| ㊁ | ★`requirements` 鍵も 同じく 不変★（`path`・`entries` 61・`sha256` `8f2acb7a…337d`） |
+| ㊂ | ★令 366『以後追加source/stat測定なし』★ |
+
+★★∴ ★§110 の照合結果は ★そのまま 継承さる★★ ―― ★新たな測りを 足さぬ事 自体が 令への従順に御座る★★
+★（★條 ㍊「触れるな」と「測るな」は別の禁 ―― 本節は ★測らぬ側★ を選び申した★）
+
+### ■九 ★己が 為さざりし事（★令に文言 無き物★）★
+
+| 鍵 | 為 | 理 |
+|---|---|---|
+| `reason` | ★触れず★ | ★令 369 に文言 無し★（現文は 57→61 の由を述ぶ ―― r3 の由は 述べず ⇒ ★下に記す 瑕★） |
+| `download` | ★触れず★ | 同上 |
+| 旧 a7 `-final-6a3d50c` root | ★触れず★ | ★令 369「旧a7 -finalは不触」★ |
+
+★★己が見たる 瑕（★上へ 出す★）★★:
+★`chain` は r0〜r2 の『何が変じたか』を 蔵むが ―― ★r3 自身の『何が変じたか』を 蔵む鍵が 無し★★
+★`reason` は 猶 57→61 の由のまま ⇒ ★r3 のみ 由を 欠く★★
+★★己は `revision_reason` の如き 鍵を ★勝手に 建てず★★ ―― ★令 369 は「created_at/revision/supersedes」の 三を 名指し ★第四を 名指さず★★
+★★∴ ★之を建つべしと 賜らば 直ちに 打つ★★
+
+### ■十 ★直送 ―― ★己は 打てず★★
+
+★令 369「新SHAを相談役/env-deptへ直送」★
+★然れど ―― ㊀ ★`相談役`／`監査役` の canon 名は `queue/pane_registry.yaml` に ★在らず★★（既述）
+　　　　　　㊁ ★委員長 PC uplink は ★本部長の専管★（`13:54:44`）★
+　　　　　　㊂ ★令 368 自身が「★本部長が直送する★」と 明記し居る★
+★★∴ ★己は 新 SHA を 本部長へ 復命し ―― 直送は 本部長に 委ね申す★★（★己より 直送 ―― `0`★）
+
+### ■十一 ★予言の 決着★
+
+| # | 予言 | 結 |
+|---|---|---|
+| ★P106★ | ★`build_command` を 逐語で打たば ―― 4 extras 欠 venv ＋ 源への install（★生きたる 偽の緑の種★）★ | ★★中り ―― ★本発行にて 断つ★★ |
+| ★P107★ | ★`created_at` `23:04` のまま ゆゑ「以後不変」と 誤る者 在り得★ | ★★中り ―― ★r2 の `issued_at` を `mtime` より取り `issued_at_source` に 明記して 断つ★★ |
+
+★★∴ ★§110 の P101 と併せ ―― ★manifest に 巣食ひ居つた 偽の緑の種 三つ 悉く 断たれ申した★★★
+```
+P101 ―― final_paths が 空／半端を 指す        ⇒ §110 にて 断つ
+P106 ―― build_command が 誤れる手を 教ふ      ⇒ ★§111 にて 断つ★
+P107 ―― created_at が 古き刻を 名乗る          ⇒ ★§111 にて 断つ★
+```
+
+### ■十二 ★新條★
+
+★★★㍍ ―― ★機械が吐きたる file を 書き換ふる前に ―― ★『載せて 吐けば 元に戻るか』を 問へ★★★
+　―― ★理 ―― 戻るならば ★再生成は byte 安全★ にして 塊の書換へも 恐るるに足らず
+　―― ★戻らざる時のみ 逐語置換の 手間を 払へばよい★
+　―― ★処方 ―― `json.dumps(load(raw), indent=N) + tail == raw` を ★indent と 末尾改行の 総当たりにて★ 問へ★
+
+★★★㍎ ―― ★鎖（chain）に 刻を 蔵むる時 ―― ★file 自身の申告する刻を 疑へ★★★
+　―― ★理 ―― r2 の `created_at` は ★r1 の値のまま★ 据ゑ置かれ居つた ―― ★之を そのまま鎖に入るれば 偽の刻が 永久に残る★
+　―― ★処方 ―― ★`mtime` より取り ―― ★『何より取つたか』を 併せ書け★★（`issued_at_source`）
