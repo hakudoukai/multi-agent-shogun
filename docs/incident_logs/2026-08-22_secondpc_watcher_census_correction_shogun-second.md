@@ -10978,3 +10978,128 @@ status: passed
 
 ### ■四 ★本節にて 為さざりし事★
 ★★網・`pip`・`install`・`download` ―― `0`★★／★★wheelhouse ―― ★一 file も 改めず★（読取のみ）★★／★★final root ―― 建てず★★／★★root／launcher／pointer／proc／timer／guard／canary／cutover ―― `0`★★／★★hermes 樹 ―― 改変 `0`★★／★★harness・watchdog ―― 改変 `0`・実行 `0`★★／★★`tmux` ―― `0`★★／★★production pane への入力 ―― `0`★★／★★Commander へ 直送 ―― `0`★★／★本部長の箱 ―― ★開かず・数へず★★／★足軽七箱・三箱 ―― `0`★／★`_archive` ―― ★不開★（★`honbucho_pruned.yaml` の名を 門の告にて 知りたるのみ ―― ★開かず★）★／★己の箱への札 `0`★／★cron `0`★／★委員長 uplink 用ゐず★／★§62〜§95 の本文 ―― 一字も動かさず★／★`push` `0`★
+
+---
+
+## §九十七 ―― ★★穴の ★因★ ―― 判じ申した★★ ―― ★★`export` が ★extras を 剥ぎ落とし★ 居り ―― ★而して 其の二つは ★選りの依存に非ず ★基の依存★★★★★（★★∴ ★『要否』は 好みに非ず ―― ★源の 宣言 其の物★★★）
+
+**as_of** `2026-08-22T22:43:14+0900`／前節 `§九十六`（`a4073d0a` / `10,980` 行）
+
+---
+
+### ■一 ★予言 `P85` ―― ★五度 続けて 中り★／上意 逐語（idx `355`・`22:41:21`・nonce `HB-20260822-2239-WHEELHOUSE`）★
+
+```
+★予言（★事前★ ―― `22:38` に 言明）―― 「新着あらば idx `355`／total `386`／unread `356`／逆行点 `356`」
+★実測（`22:41:35`）―― ★total `386`／unread `356`／max_unread_idx `355`／reversal `[356]`★
+★★∴ ★四値 悉く 的中 ―― ★P81〜P85 ―― 五度 連続★★★
+```
+```
+本部長 22:39 wheelhouse gap受領 nonce=HB-20260822-2239-WHEELHOUSE。
+  ★94d5d2a1 を 再測★。★57 wheel manifest 一致/lock 内★、
+  ★しかし httptools/socksio/uvloop/watchfiles は downloads 不在★で
+  ★★現 role venv には 4/4 存在★★。★ネット一回後の補充は 裁定待ち★。環境receipt/build=0、追加network=0。
+```
+
+```
+★★∴ ★己の告 ―― ★独立に 裏書きされ★ ―― ★且つ ★強められ申した★★★
+   ―― ★己の尺 ＝ ★前夜の 実 install log（`61` 件）★（★遺物★）
+   ―― ★上の尺 ＝ ★★現 role venv に 4/4 存在★★（★★生きて 動き居る 器 其の物★★）
+   ―― ★★∴ ★『遺物』より『現物』の方が 強し★ ―― ★★己の條 ★『静と動が合ふ時 動が一次』★ ―― ★現に 効き申した★★★
+```
+
+---
+
+### ■二 ★★★★★★因 ―― ★`export` が ★extras を 剥ぎ落とし★ 居り申した★★★★★★
+
+★★㊀ ★源の 宣言（`pyproject.toml` @ `6a3d50c`・★`tomllib` にて 直に 解き申した★）★★
+
+```
+★`project.dependencies` ―― ★★『基の依存』★★ ―― ★全 `32` 件★
+★★其の中に ―― ★extras を 宣する物 ★三つ★★★:
+   ㊀ ★★`httpx[socks]==0.28.1`★★
+   ㊁ `PyJWT[crypto]==2.13.0`
+   ㊂ ★★`uvicorn[standard]>=0.24.0,<1`★★
+```
+
+★★㊁ ★而して ―― ★wheelhouse の requirements の 側★★
+```
+   `httpx==0.28.1`      ←★★`[socks]` ―― ★消え居り申す★★★
+   `uvicorn==0.41.0`    ←★★`[standard]` ―― ★消え居り申す★★★
+```
+
+★★★∴ ★★之は 『選りの群（optional-dependencies）を 採らざりし』の 事に あら申さぬ★★★
+   ―― ★★『★基の依存★ に 現に 書かれ居る extras を ★落とした★』の 事★★ に御座る
+
+★★㊂ ★lock の 側 ―― ★其の extras が 何を 齎すか（逐語）★★
+```
+httpx.socks     = [ socksio ]
+uvicorn.standard= [ colorama(marker: sys_platform == 'win32')／httptools／python-dotenv／pyyaml／
+                    uvloop(marker: platform_python_implementation != 'PyPy' and sys_platform != 'cygwin'
+                                   and sys_platform != 'win32')／watchfiles／websockets ]
+```
+
+★★★㊃ ★extras を 宣する 三件を ★悉く★ 突合したる 結果★★★
+
+| 基の依存 | extra | 齎す物 | ★wheelhouse に 不在★ |
+|---|---|---|---|
+| `httpx[socks]` | `socks` | `socksio` | ★★`socksio`★★ |
+| `PyJWT[crypto]` | `crypto` | `cryptography` | ★無し（★在り★ ―― 他より 引かれ居る）★ |
+| `uvicorn[standard]` | `standard` | `colorama`／`httptools`／`python-dotenv`／`pyyaml`／`uvloop`／`watchfiles`／`websockets` | ★★`httptools`／`uvloop`／`watchfiles`★★（`colorama` は 下記）／`python-dotenv`・`pyyaml`・`websockets` は ★在り★ |
+
+---
+
+### ■三 ★★★★己が ★第五の穴★ を 申さんとして ―― ★標（marker）にて 己より 却下し申した★★★★
+
+```
+★一度 己は ―― ★`colorama` を 加へて ★『穴 五つ』★ と 数へ申した★
+★★而して ―― ★己の條 ★『倒すべき説には 最も有利な値を当てて 倒せ』★ に従ひ ★lock の逐語★ を 引き申した★★:
+   `{ name = "colorama", marker = "★sys_platform == 'win32'★" }`
+★★★∴ ★本機は `linux`／`cp312` ―― ★★`colorama` は 標に 適はず★★ ⇒ ★★export が 落としたるは ★正当★★★★
+★★∴ ★真の穴 ―― ★★四★★（`httptools`／`socksio`／`uvloop`／`watchfiles`）★ ―― ★★己の初報・上の再測と ★寸分 違はず★★★
+★★裏書き ―― `uvloop` の標 `… != 'PyPy' and != 'cygwin' and != 'win32'` ―― ★★本機に 適ふ★★ ⇒ ★真の穴★
+```
+
+> ## **★★★★★★條 ㌷ ―― ★『欠け居る』を 数ふる時は ―― ★★必ず ★標（marker）★ を 併せ 読め★★★ ―― ★★★標に 適はざる物を 『欠』と 数ふるは ★偽陽性★★★ ―― ★★∴ ★『在るべき物』の 母集団は ★条件付き★ に御座る★★★★★★★**
+> ★★（★己の條 ★㌦『在処の層を分かて』★ の 兄弟 ―― ★『在る／無し』の前に ★『そもそも 要るか』★★）★★
+
+---
+
+### ■四 ★★★★★之にて 『要否』は ―― ★好みの問に あら申さぬ★★★★★
+
+★三筋 ―― ★別々の 器・別々の 質★ より ―― ★同じ 一点を 指し申した★:
+
+| # | 尺 | 質 | 出す物 |
+|---|---|---|---|
+| ㊀ | ★前夜の 実 install log（`61` 件）★ | ★経験（遺物）★ | ★四件 在り★ |
+| ㊁ | ★★現 role venv（上の再測）★★ | ★★経験（現に 動く器）★★ | ★★`4/4` 存在★★ |
+| ㊂ | ★★★`pyproject.project.dependencies`★★★ | ★★★規範（★源 自らの 宣言★）★★★ | ★★★`httpx[socks]`／`uvicorn[standard]` ―― ★基の依存★★★★ |
+
+```
+★★★∴ ★★㊂ が 決を 与へ申す★★ ―― ★★『四件は ★源が 自ら 要ると 宣したる物★』★★
+   ―― ★∴ ★『無くとも 動くか』の 験を 俟たずして ―― ★★『宣言に 対し 不足』★★ は ★★已に 確★★
+   ―― ★★而して 己は 猶 申さず ★『四件を欠きて 動かぬ』★ とは（★之は 験して居らぬ★ ―― ★UNMEASURED★）
+★★∴ ★裁の材として 申し上ぐるは ★次の一行★ に御座る★:
+   ★★『wheelhouse は ―― ★lock に 対しては 正しく★ ―― ★★源の 宣言に 対しては 不足★★』★★
+```
+
+---
+
+### ■五 ★本節にて 為さざりし事★
+★★網・`pip`・`install`・`download` ―― `0`★★／★★wheelhouse ―― ★一 file も 改めず・加へず・消さず★（読取のみ）★★／★★補充の撃ち ―― `0`（★裁定待ちと 上が 明示★）★★／★★final root ―― 建てず★★／★★root／launcher／pointer／proc／timer／guard／canary／cutover ―― `0`★★／★★hermes 樹 ―― 改変 `0`★★／★★harness・watchdog ―― 改変 `0`・実行 `0`★★／★★`tmux` ―― `0`★★／★★production pane への入力 ―― `0`★★／★★Commander へ 直送 ―― `0`★★／★本部長の箱 ―― 開かず・数へず★／★足軽七箱・三箱 ―― `0`★／★`_archive` ―― 不開★／★己の箱への札 `0`★／★cron `0`★／★委員長 uplink 用ゐず★／★§62〜§96 の本文 ―― 一字も動かさず★／★`push` `0`★
+
+---
+
+### ■六 ★本節にて得たる條★
+
+```
+★★★★★★㌷ ―― ★『欠』を 数ふる時は ★標（marker）★ を 併せ 読め ―― ★母集団は 条件付き★★★★★★
+★★★★★㌸ ―― ★★『経験の尺』が 二つ 揃ひたる時こそ ―― ★★『規範の尺』を 探せ★★★★★★
+   ―― ★理 ―― ★経験は 『現に 斯く在り』を 申す ―― ★而して 『★斯く在るべし★』は 申さぬ★
+   ―― ★本件 ―― ★install log と venv は ★『四件が 在つた』★ を申すのみ★
+   ―― ★★而して `pyproject` は ―― ★★『四件は ★要る★』★★ を 申し申した★★
+   ―― ★★∴ ★『補充すべきや』の 問は ―― ★★規範の尺を 得て 初めて 決し得★★★
+★★★★㌹ ―― ★★『Xに対し正し』と『Yに対し正し』を ★必ず 分かちて 書け★★★★
+   ―― ★本件 ―― ★★lock に対しては ★寸分 違はず 正し★★／★★源の宣言に対しては ★不足★★★
+   ―― ★★∴ ★『検証 PASS』の 報は ―― ★★何に 対する PASS か★★ を 書かねば ★人を 誤らす★★★
+```
