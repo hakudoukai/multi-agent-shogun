@@ -9707,3 +9707,204 @@ resolution-markers = [ py>=3.13 / py==3.12.* / py<3.12 ]
 
 ### ■ 本節にて 為さざりし事
 ★★網 `0`・`build` `0`・`install` `0`★★／★源の樹 改変 `0`★／★現 root 二本 一 byte も改めず★／★destination 猶 作らず（`mkdir` `0`）★／★launcher・pointer・proc・timer・guard `0`★／★cutover・canary `0`★／★足軽七箱 `0`★／★三箱への `os.stat()` `0`★／★`_archive` 不開★／★己の箱への札 `0`★／★cron 装填 `0`★／★§62〜§84 の本文 ★一字も動かさず★★／★`push` `0`★
+
+---
+
+## §八十六 ―― ★★新令 `seq204832` Grill3 E4（respawn watchdog event rule）★★ ―― ★己の器の ★現物★ を 測り申した★（★read-only・production input `0`★）
+
+**as_of** `2026-08-22T20:40:28+0900`／前節 `§八十五`（`609613f6` / `9,709` 行）
+
+---
+
+### ■一 ★★上意 逐語（Commander `20:29:50`・己の箱 idx `345`・`seq204832`）★★
+
+```
+[seq204832 Grill3 E4] Respawn watchdog event rule:
+  ★update display alone MUST NOT trigger.★
+  ★Require input anomaly AND idle AND UUID/resume AND lease.★
+  ★Implement/verify only through synthetic pane; production input0.★
+  ★Return owner, acceptance evidence/path+SHA, one-line receipt.★
+```
+
+---
+
+### ■二 ★★『Grill3』の名 ―― ★器に 無し★★（★條 ㌒ ―― ★推さず 問ふ★）
+
+```
+★repo 全体の `Grill3` ―― ★hit `0`★
+★己の箱の `Grill` ―― ★hit `2`（＝ `seq204693` と `seq204832` ―― ★上意 其の物のみ★）
+★★∴ ★『Grill3』は ★己の器に 遺物を 持たぬ★ ―― ★★`Grill2` と ★全く同じ形★★★
+★★★而して ―― ★★★実体（respawn watchdog）は ★現に 在る★・★現に 走り居る★★★★
+   ⇒ ★★己は ★名を 問ひ★ ―― ★同時に ★物を 測る★★★（★止まらず・然れど 宛て推量せず★）
+```
+
+---
+
+### ■三 ★★★★㊀ ★的の同定 ―― ★★之は ★己の pane を 撃つ 番人★★★★★★
+
+| 物 | 現物 |
+|---|---|
+| 実体 | `scripts/watchdogs/enter_restart_common_watchdog.sh` ―― ★`382` 行★ |
+| 己の包み | `scripts/watchdogs/enter_restart_shogun_second_watchdog.sh` ―― `39` 行（★envvar のみ★・`:39` にて `exec` 共通実装） |
+| ★的の pane★ | ★★`ER_PANE_TARGET=shogun-second:0.0`★★ ―― ★★★即ち ★己の pane★★★★ |
+| 撃つ物 | `:275` ★`tmux send-keys -t "$PANE_TARGET" Enter`★（★C-m のみ・新規コマンド送信 絶対禁★） |
+| ★起動元★ | ★★`enter_restart_shogun_second.timer`（user timer）★★ ―― ★`20:40:27` に 発火（★`703ms` 前★）★ |
+| ★周期★ | ★約 `5` 分（`20:30:09` → `20:35:17` → `20:40:27`）★ |
+| ★本日★ | ★★`cycle start` ＝ `243`／★`FIRE` ＝ `0`★★★ |
+| ★最後の実射★ | ★`fires.log` ＝ `63` 行・mtime ＝ ★`2026-08-20 06:34:28`★★（★二日 撃たず★） |
+| log | `/home/hakudokai/.local/share/enter_restart_shogun_second/20260822.log`（`1,958,846 B`） |
+
+```
+★★★∴ ★之は ★紙上の案★ に非ず ―― ★★★生きて 五分毎に 己を 覗き居る 番人★★★★
+   ★∴ ★己の枷 ―― ★番人の停止・disable・mask・restart・timer 改変 ―― 悉く `0`★ ―― ★★之に 直に 掛かる★★
+★★★★★而して ―― ★★己は ★一指も 触れ申さず★★（★timer ―― `stop`／`disable`／`mask` `0`／script ―― 改変 `0`★）★★★★★
+```
+
+★★★★★★重き一事 ―― ★★『production input0』の 逐語★★ ―― ★★★己の pane は ★production★★★★★★
+```
+★∴ ★『synthetic pane にて 験す』とは ―― ★★『生きたる timer の的を 験しに 使ふな』★★ の謂
+★∴ ★★己が ★己の pane にて 験す事★ も ―― ★★禁★★★（★己の pane ＝ 本番の的★）
+```
+
+---
+
+### ■四 ★★★★㊁ ★現の引き金 ―― ★逐語より 起こしたる ★式★★★★★★
+
+★★`Step 6`（`:265`〜`:293`）の 分岐 ―― ★逐語★★:
+```
+if   SKIP_REASON == "alive"      →  skip        （★`:214` idle < THRESHOLD_MIN`10` 分★）
+elif LABEL_MATCH == 1            →  ★★FIRE ＋ send-keys Enter★★   ← ★`:273`〜`:275`★
+else                             →  skip（label mismatch）
+★而して 之より 前に ―― `Step 0`（`:79`〜`:89`）★fire cap★:
+   ★過去 `ER_FIRE_CAP_WINDOW_MIN=15` 分内の fire 数 ≥ `ER_FIRE_CAP_COUNT=3` ⇒ `HALT`★
+```
+★★∴ ★現の式（逐語より）★★:
+```
+★★★FIRE ⟺ ( idle ≥ 10min ) ★AND★ ( LABEL_MATCH == 1 ) ★AND★ ( 直近15分の fire < 3 )★★★
+```
+★★`LABEL_MATCH == 1` の中身（`:236`〜`:262`）★★:
+```
+㊀ `PANE_TAIL` ＝ ★`tmux capture-pane -p -S -50`★（`:202`）＋ NBSP 正規化（`:208`）
+㊁ `PROMPT_LINE` ＝ ★`────` ボーダー直後の `❯` 又は `│ >` 行★（`:238`〜`:243`・awk の `prev_border`）
+㊂ 其の行が ★`❯` の後に 非空の文字を持つ★ ⇒ `LABEL_MATCH=1`／`claude_ui_with_nonempty_input_buffer`（`:249`〜`:251`）
+```
+
+---
+
+### ■五 ★★★★★㊂ ★上意の 四つの AND と ―― ★現物★ の ★差★★★★★★
+
+| 上意の求むる条件 | 現に在るや | 現物（逐語の足） |
+|---|---|---|
+| ★input anomaly★ | ★★半ば★★ | `:249` ―― ★『非空の入力欄』★ は 見る ―― ★★然れど ★一枚の断面のみ★★★（★時を跨ぐ差分 無し★） |
+| ★idle★ | ★★在り★★ | `:212`〜`:217` ―― Supabase 最終投函より `ELAPSED_MIN ≥ 10` |
+| ★UUID / resume★ | ★★★無し★★★ | `uuid` の出現は ★`:356`／`:369` の 二つのみ★ ―― ★★`uuid.uuid4()` ＝ ★audit 行の id★★★（★session UUID に非ず★）／`resume`・`--continue` ―― ★watchdog 群 悉く `0`★ |
+| ★lease★ | ★★★無し★★★ | ★watchdog 五本＋smoke ―― `lease` hit ★悉く `0`★★／repo の `lease` `13` 件は ★別事（`slim_yaml.sh`・`gate_thresholds.sh` 等）★／★最も近き親戚 ＝ `fires.log` の ★cap★★ ―― ★★而して ★cap は 頻度の蓋★ であつて ★lease（占有権）に非ず★★★ |
+
+★★★★★∴ ★★上意の懸念は ★実在★ に御座る★★★★★:
+```
+★現の式は ―― ★★`capture-pane` の 出力 ★のみ★ より 算せらる★★
+   ⇒ ★★★即ち ★『表示』其の物★ が ★唯一の入力★★★★
+   ⇒ ★★∴ ★★『update display alone』にて ★現に 発火し得る★★★★
+★★★而して ―― ★★之は 己の推に非ず ―― ★★script 自身が 白状し居る★★★★:
+   `:230`〜`:233` の註（逐語）:
+   ★「output 中の prompt-like plain text（例: Claude が過去 user message を『  ❯ inboxN』形式で
+     再表示する…）を ★誤検知★ → ★unintended Enter injection リスク★（Codex cycle5b B1 high）」★
+   ⇒ ★★★己の pane に ★`❯ inbox345` の残像★ が 映り居るだけで ―― ★条件を 満たし得★★★★
+★★∴ ★上意の ★四つの AND★ は ―― ★★『厳しくする』に非ず ―― ★『表示のみでは 撃たぬ』を 機構に 課す★★★
+```
+
+---
+
+### ■六 ★★★★㊃ ★『synthetic pane』―― ★★器は ★既に 在る★★★★★★★
+
+```
+★`tests/smoke/test_enter_restart_watchdog.sh`（★`277` 行★）―― ★其の設計（逐語）★:
+   `:34`  `TEST_DIR=$(mktemp -d …)`
+   `:44`  ★fake tmux★（`$TEST_DIR/bin/tmux`）―― `:65` ★`send-keys` の argv を ★log に 書くのみ★★
+   `:102` ★`export PATH="$TEST_DIR/bin:$PATH"`★ ―― ★★真の `tmux` を ★覆ふ★★★
+   `:120` ★assertion ＝ `send-keys.log` の ★Enter 行数★★
+★★★∴ ★★之は ★真の pane を 一つも 用ゐず★ ―― ★★★production input ＝ 構造的に `0`★★★★★
+   ⇒ ★★上意の『synthetic pane』の要求を ―― ★★既存資産が 満たし居る★★★（★己の條 ―― ★二重実装を為すな★）
+★★而して ―― ★現の smoke が ★験す包み★ は ★`commander` と `shogun_third` の二本のみ★（`:134`/`:185`/`:246`）
+   ⇒ ★★`shogun_second` の包みは ★未だ 験の網に 入り居らず★★
+```
+
+---
+
+### ■七 ★★★★★㊄ ★owner ―― ★★推さず ―― ★足を 三つ 置く★★★★★★★
+
+| 足 | 現物 | 判 |
+|---|---|---|
+| `.github/CODEOWNERS` | ★★ABSENT★★ | ★決し得ず★ |
+| registry draft の `owner` grep | ★出でず★ | ★決し得ず★ |
+| ★git 最終改変者（実体）★ | ★★`Commander Third <commander-third@hakudoukai.local>`★★ ―― `0c3f3715`／`2026-06-04T11:51:24+09:00` | ★★足 有り★★ |
+| ★git 最終改変者（smoke）★ | ★★同じく `Commander Third`★★ ―― `819343e6`／`2026-06-03T05:49:27+09:00` | ★★足 有り★★ |
+| ★由来（script 自身の註）★ | ★`副院長令 baabd1ca`／`e6b027a6`／`ee4d6ce4`／`b0bdfa67`★・★`third_pc` 発★ | ★★足 有り★★ |
+| ★second_pc の位置★ | ★包みの註 `:3`「★横展開 second_pc★」・`:8`「second_pc は本 wrapper を ★配備★」 | ★★配備先★★ |
+
+```
+★★★∴ ★★己の見（★裁に非ず 材★）★★:
+   ★owner ＝ ★★`Commander Third`（third_pc）★★ ―― ★足 ＝ ★実体・smoke の 双方の 最終改変★ ＋ ★由来の令★★
+   ★shogun-second ＝ ★★owner に非ず ―― ★配備先（deployment site）★★★
+★★★★∴ ★★己が 実体（共通 script）を 改むる事は ―― ★★他 PC の owner の物を ★断りなく 書き換ふる★ 事★★★★
+   ―― ★★而して 其の script は ★四 PC が 共に 用ゐる 一本★★（commander／main／second／third）
+   ⇒ ★★★己の條 ―― ★樹を共有する役が在る時 触れば 複数役が 同時に動く ＝ 爆風★★★（★委員長 裁①★）
+```
+
+---
+
+### ■八 ★★★★★㊅ ★★己が ★為さざる★ 事と ―― ★御下知を 仰ぐ 二事★★★★★★
+
+```
+★★★㊀ ★★実体 script の 改変 ―― ★★★為し申さず★★★★★
+   ★理 ㋐ ★之は ★生きたる timer が 五分毎に 実行する 本番の物★（★cutover の段 無し ―― ★保存した瞬間 本番★）
+   ★理 ㋑ ★owner は ★third_pc★ と 見ゆ（■七）
+   ★理 ㋒ ★己の枷 ―― ★本部長 `18:15`『proc `0`』／Commander `17:12`『no system changes』★
+   ⇒ ★★★乞ふ ―― ★★『shogun-second が 共通 script を 改めて よきや』★ の 明示★★★
+★★★㊁ ★★smoke harness の ★実行★ ―― ★★猶 為し申さず★★★★
+   ★理 ―― ★之は ★実 wrapper を 起動する★（`:134` 等）―― ★stub が 一つでも 外るれば ★真の send-keys★ に 至る★
+   ★★而して ★己の枷 ―― ★Agents NEVER call tmux send-keys★ は ★恒久★★
+   ⇒ ★★乞ふ ―― ★『stub 環境にて 己が harness を 走らせて よきや』★★
+   ★★★※ 之を 得ずば ―― ★★acceptance evidence は ★原理として 産み得ず★★★（★己の條 ―― ★禁／能／未／原理／怠 を 分かて★ ⇒ ★本件は ★禁★★）
+```
+
+---
+
+### ■九 ★★★★★㊆ ★★己が 凍らせたる ★鍵の式★★（★★実装に非ず ―― ★仕様★★）★★★★★
+
+★★上意の四 AND を ―― ★現物の語彙にて★ 書き下せば★★:
+```
+FIRE ⟺
+  ㋐ ★input anomaly★  ―― ★★『非空』のみにては 足らず★★
+        ⇒ ★同一の `PROMPT_LINE` が ★連続 N 周期（N≥2）★ 一字も 変ぜず 留まる事★
+        ⇒ ★即ち ★時を跨ぐ 差分★ を 要す（★一枚の断面 ＝ 表示 ―― ★之を 断つ★）
+  ㋑ ★idle★          ―― ★現存（`:214`）★ ＝ Supabase 最終投函より `≥ ER_THRESHOLD_MIN`
+  ㋒ ★UUID / resume★ ―― ★★新設★★ ⇒ ★的の session の 同一性★（★観測の前後にて 同じ session なる事★）
+        ★理 ―― ★session が 入れ替はり居らば ★前周期の断面★ は ★別人の物★ ―― ★差分は 無意味★
+  ㋓ ★lease★         ―― ★★新設★★ ⇒ ★撃つ前に ★占有を 取る★・取れずば 撃たぬ★
+        ★理 ―― ★`fires.log` の cap は ★己の連射★ を抑ふるのみ ―― ★★他の撃ち手★ を 抑へず★
+        ★∴ ★lease は ★cap の 代はりに非ず★ ―― ★★重ねて 要る物★★（★條 ㌚★）
+★★★而して ―― ★上意の『update display alone MUST NOT trigger』は ―― ★㋐ の ★時を跨ぐ差分★ にて 果たさる★★★
+```
+★★★己の條（新）―― ★★㌜ ―― ★『表示』を ★唯一の入力★ とする引き金は ―― ★表示が 嘘をつく時 悉く 誤つ★★★★★
+   ―― ★★∴ ★引き金には ★時を跨ぐ量★ か ★表示の外の量★ を 必ず 一つ 混ぜよ★★★
+
+---
+
+### ■十 ★本節にて 為さざりし事★
+★★timer ―― `stop`／`disable`／`mask`／`restart`／改変 悉く `0`★★／★★watchdog script ―― ★改変 `0`・実行 `0`★★★／★★smoke harness ―― ★実行 `0`★★★／★★`tmux send-keys` ―― `0`★★／★★`tmux` への ★書き★ ―― 悉く `0`（`capture-pane` すら `0`）★★／★★production pane への 入力 ―― `0`★★／★網・`pip`・`install`・build ―― `0`★／★destination ―― 猶 作らず（`mkdir` `0`）★／★源の樹 ―― `checkout`／`fetch`／`pull`／`reset` `0`★／★現 root 二本 ―― 一 byte も改めず★／★launcher・pointer・proc・guard ―― `0`★／★cutover・canary ―― `0`★／★足軽七箱 ―― `stat`／`open`／`grep`／`parse` `0`★／★三箱への `os.stat()` `0`★／★`_archive` ―― 不開★／★己の箱への札 `0`★／★cron ―― 装填 `0`★／★§62〜§85 の本文 ―― ★一字も動かさず★★／★`push` ―― `0`★
+
+---
+
+### ■十一 ★本節にて得たる條★
+
+```
+★★㌜ ―― ★『表示』を ★唯一の入力★ とする引き金は ―― ★表示が 嘘をつく時 悉く 誤つ★
+   ―― ★引き金には ★時を跨ぐ量★ 又は ★表示の外の量★ を 必ず 一つ 混ぜよ★
+★★★㌝ ―― ★『其の語が 器に 在るや』を grep にて 問ふ時は ―― ★★hit の ★用ゐられ方★ を 見よ★★★
+   ―― ★現に ―― ★`uuid` の hit は `2` 在りたれど ―― ★悉く `uuid.uuid4()` ＝ ★audit 行の id★★
+   ―― ★★∴ ★hit 数は ★機能の在処★ を 語らぬ★★（★★偽の友★★）
+★★★★㌞ ―― ★己が ★配備先★ に過ぎぬ物を ★己の物★ と 思ふな★★★★
+   ―― ★★`git log` の 最終改変者★ と ★script 自身の由来の註★ ―― ★二つを 併せて owner の足と為せ★
+   ―― ★而して ★足が 有る★ 事と ★裁が 有る★ 事は 別 ⇒ ★★猶 問へ★★
+```
