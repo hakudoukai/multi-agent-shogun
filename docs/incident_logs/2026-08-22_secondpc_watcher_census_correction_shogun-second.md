@@ -12575,3 +12575,145 @@ import os; var = 'SETUPTOOLS_USE_DISTUTILS'; enabled = os.environ.get(var, 'loca
 ★本部長の箱 ―― 開かず★／★足軽七箱・三箱 ―― `stat`／`open`／`grep`／`parse` `0`★／★`_archive` 不開★／
 ★己の箱への札 `0`★／★cron `0`★／★push `0`★／★§62〜§105 の本文 ―― 一字も動かさず★
 
+
+---
+
+## §107 納品 5 点 bundle の突合 ―― 束は 61/61 全数一致 ／ 而して `manifest-61.json` の `final_paths`・`build_command` は 令 365 以前の物にて 己の build と 食ひ違ふ ／ 併せて P97 解決と 己の條 ㍇ の訂
+
+as_of 2026-08-23T00:38:24〜00:39:49 JST／★悉く 読取のみ ―― 束・役の state・backup に 一 byte も 書かず★
+
+### ■一 ★★P97 解決 ―― 三樹の remote は ★同一★ にして ―― 役樹は `6a3d50c` を ★持たぬ★★★
+
+| 樹 | `origin` | ★`6a3d50c` を持つか★ |
+|---|---|---|
+| `hermes-runtimes/hermes-agent-v2026.8.3`（共有樹） | `https://github.com/NousResearch/hermes-agent.git` | ★★YES★★ |
+| `ashigaru-second-7-hermes/run/hermes-agent-v2026.8.3`（役樹） | ★同一 URL★ | ★★NO★★ |
+| `gunshi-second-hermes/run/hermes-agent-v2026.8.3`（役樹） | ★同一 URL★ | ★★NO★★ |
+
+★★∴ archive の源が 共有樹 ただ一つなる事 ―― ★今 初めて ★直接に★ 證し申した★★
+　（★前は `origin/main` の SHA の相違より ★推し★ 居つた ―― 今は ★object の有無を 直に 問うた★）
+
+**★★㊀ 而して ―― ★己の條 ㍇ の 例示は 誤り★ に御座つた★★**
+> 己は §104 にて 條 ㍇ を「★同じ commit を持つ複数の clone は ★同じ repo とは限らぬ★★」と立て
+> ―― 其の足に「`origin/main` が 三者三様」を 置き申した。
+> ★実測 ―― 三樹の `origin` URL は ★悉く 同一★★ ⇒ ★★『別の repo』では 無かつた★★。
+> ★真の機序 ―― ★同じ upstream の 別 clone にして ―― ★fetch の到達点が 異なる★★
+> ★★∴ 條 ㍇ を 次の形に 改む★★:
+> ★★★條 ㍇（改）―― ★同じ HEAD を持つ clone でも ―― ★持ちたる object の集合は 異なる★★
+> 　 ―― ★処方 ―― `origin/main` の SHA でなく ★`cat-file -e <sha>^{commit}` にて ★有無を 直に 問へ★★
+> 　 ―― ★理 ―― 『remote を見よ』は ★処方としては 正しかつた★ が ―― ★己が挙げた理由は 本件にて 成り立たず★★★
+> （★條「訂の足も足である」／「正しき答を誤れる機序にて得たる時は 答を残し 機序を書き換へよ」★ ―― ★正に 其の型★）
+
+### ■二 ★lock の同定（★disk に非ず `git show` より ―― 條 ㌖★）★
+
+| 量 | 実測 | 令 364 の文言 | 照合 |
+|---|---|---|---|
+| blob id | `4c160fe6cb6b23117493b98251d601842b000a62` | `lock blob=4c160fe6` | ★一致★ |
+| 内容 SHA256 | `8fd868b9da8b6bc2f4aa94a845e210eccdd5e31be7a0b404f0a8527ced0fddec` | 同値 | ★★完全一致★★ |
+
+### ■三 ★★束（wheelhouse）の 全数検証 ―― ★61/61★★★
+
+| # | 量 | 値 |
+|---|---|---|
+| ㋐ `manifest-61.json` schema | `secondpc-wheelhouse-manifest-v1`（`created_at 2026-08-22T23:04:16+0900`） |
+| ㋑ `approved_source` | `git_commit 6a3d50c6e0…`／`lock_git_blob 4c160fe6…`／`lock_sha256 8fd868b9…` ―― ★悉く 令と一致★ |
+| ㋒ `supersedes` | `manifest.json`（`wheel_count 57`・`sha256 54a57cb0…`）★57→61 の由来 明記★ |
+| ㋓ `reason` | `HB-20260822-2254-WHEELHOUSE / iincho seq205065: 4 lock-required extras dists added (57 -> 61)` |
+| ㋔ ★`sha256` ＋ `bytes` の 全数突合★ | ★★一致 `61`／不一致 `0`／欠 `0`★★ |
+| ㋕ ★disk にのみ在る（余）★ | ★★`0`★★（★條 ㍀ ―― 欠のみならず 余をも数へ申した★） |
+| ㋖ ★`in_approved_lock`★ | ★★`true` が `61`／`true` に非ざる物 `0`★★ |
+| ㋗ 総 byte | `38,380,648`（manifest の総和と 現物の総和 ―― 同値） |
+| ㋘ 種別 | ★`.whl` `61`／sdist `0`★ |
+| ㋙ `download.network_used_once` | `true`（★己は 本件にて 網 `0` ―― `--no-index` を 恒に 添へ 現に rc=0★） |
+
+★tag の分布★:
+```
+py3-none-any                                            41
+cp312-cp312-manylinux2014_x86_64.…manylinux_2_28_x86_64  5
+py2.py3-none-any                                         5
+cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64   3
+（他 cp312／cp311-abi3／cp36-abi3 各 1 ―― 計 7）
+```
+★★∴ ★cp312／linux 以外の tag は 一つも 無し★★（★役の python は 3.12.3 ―― 適合★）
+
+### ■四 ★★★食ひ違ひ ―― `manifest-61.json` は ★令 365 以前の物★★★★
+
+★★之は 納品の突合にて ★己の build が 弾かれ得る★ 点ゆゑ ―― ★先に 上へ 出す★★
+
+| # | manifest の記載 | ★己が 実に 打ちたる物★ | ★令 365 の文言★ |
+|---|---|---|---|
+| ㊀ `final_paths` | ★`…/hermes-agent-0.20.4-★final★-6a3d50c`（二役）★ | ★`…-★sourcedir★-6a3d50c`（二役）★ | `archive全樹をfinal source dirへ抽出` |
+| ㊁ `build_command` の requirements | ★`requirements-cp312-linux-require-hashes.txt`（★`-61` 無き 旧 57 版★）★ | ★`…-require-hashes-★61★.txt`★ | `61束を--no-index --require-hashes` |
+| ㊂ `build_command` の末 | ★★`then install approved source with --no-index --no-deps`★★ | ★★源へ install ―― ★一度も 打たず★★★ | ★★`source artifact自体へpip installしない`★★ |
+
+★manifest の `build_command` 逐語★:
+```
+python3 -m pip install --no-index --find-links /home/hakudokai/hermes-wheelhouse-6a3d50c/downloads
+  --require-hashes -r /home/hakudokai/hermes-wheelhouse-6a3d50c/requirements-cp312-linux-require-hashes.txt;
+  then install approved source with --no-index --no-deps
+```
+★己の log の逐語（`build-venv-install.log` 冒頭 ―― ★己が 自ら 記したる header★）★:
+```
+### as_of 2026-08-23T00:20:49+0900
+### cmd: <root>/venv/bin/pip install --no-index --find-links /home/hakudokai/hermes-wheelhouse-6a3d50c/downloads
+         --require-hashes -r /home/hakudokai/hermes-wheelhouse-6a3d50c/requirements-cp312-linux-require-hashes-61.txt
+Looking in links: /home/hakudokai/hermes-wheelhouse-6a3d50c/downloads
+```
+
+★★∴ 己の build は ★令 365 に 適合★ し ―― ★manifest（`23:04` 作成）は ★令 365（`00:14`）より 前の物★★★
+★★∴ 己は 束を ★改めず★（★己の物に非ず・読取のみ★）―― ★之を 上へ 出し 裁を 仰ぐ★★
+　（★條 ㍆ ―― ★見る者が 己より先に 見付けたる時 ★己の報の全体が 疑はる★★）
+
+★留意 ―― ★manifest の `rollback_roots` は `…/hermes-agent-v2026.8.3`（二役）★ ―― ★之は 現 live ゆゑ 正★
+　（★§106 ■七 にて 己が測りたる 切り戻しは ★新 root の削除★ ―― ★層が 異なる★）
+
+### ■五 ★納品 5 点 bundle の 現況★（本部長 `22:05:56`）
+
+| # | 令の文言 | 状 | 足 |
+|---|---|---|---|
+| ① `manifest+全wheel name/size/SHA/tag` | ★済★ | ■三（61/61 一致・余 0・tag 分布） |
+| ② `source/lock ref` | ★済★ | ■二（blob・SHA 完全一致）／§105（commit・version・9,738） |
+| ③ `offline command` | ★済★ | ■四（★己の log の header に 逐語で 現存★） |
+| ④ `final path+tags` | ★★食ひ違ひ 有り★★ | ■四 ㊀（★manifest は `-final-`／実は `-sourcedir-`★） |
+| ⑤ `backup/uuid freeze+restore dry-run` | ★★UNMEASURED（★未 ―― 定義 未賜★）★★ | 下 ■六 |
+
+### ■六 ★⑤ の在処 ―― 名のみ 掴み 中身は 開かず★
+
+```
+/home/hakudokai/private-backups/                          （dir）
+/home/hakudokai/secondpc_backup_20260511_002144.tar.gz
+/home/hakudokai/secondpc_oldpath_backup_20260511_002200.tar.gz
+役の state ―― <role>/state.db（a7 1,843,200 B／軍師 102,133,760 B）
+              <role>/verification_evidence.db（両 32,768 B）
+              <role>/projects.db（両 45,056 B）
+```
+★★己は 之を ★開かず★★ ―― 理 三つ:
+- ★`private-backups` は 名の通り ★私事の恐れ★（★理事長令 canon ―― `do not copy patient data`★）
+- ★役の `state.db` は ★現 live の物★ ―― ★sqlite を開けば `-wal`／`-shm` を 生じ得る★（★條「『読むだけ』の心算が書く」★）
+- ★★`restore dry-run` の ★何を どこへ 戻すかの定義★ が ―― ★猶 賜り居らぬ★★
+
+★★∴ ⑤ は ★『未（定義 未賜）』★ と 札す★★ ―― ★『怠』に非ず・『禁』に非ず★（★條「決し得ぬと札す時は 禁／能／未／原理／怠 の五を分かて」★）
+★★∴ 献策 ―― ★⑤ の尺を 賜りたし★（★㋐ 何を backup と見るか ㋑ uuid とは 何の uuid か ㋒ dry-run の受入尺★）
+
+### ■七 予言
+
+★★P101（新）★★ ―― ★納品の突合を 為す者は ―― ★`manifest-61.json` の `final_paths` を 先に 見る★
+　⇒ ★`-final-` を 探して 見付からず ―― 若しくは ★a7 の 半端 `-final-` root を 見付けて 之を 完成品と誤る★
+　⇒ ★★偽の緑 が 生じ得る★★（★己の建ては `-sourcedir-`・半端 root は `venv` のみ 8,470 file★）
+　⇒ ★★∴ ★本節を以て 先に 潰す★★（★條 ㌿ ―― 偽の緑を断つ仕掛けの中に 偽の緑を埋めるな★）
+
+★★P102（新）★★ ―― ★`manifest.json`（57 版）も 猶 disk に 在る★（`42,536 B`・`22:08`／`13,802 B`・`22:10`）
+　⇒ ★誰かが ★旧 57 版の requirements★ を 引かば ―― ★4 extras（`socksio`／`httptools`／`uvloop`／`watchfiles`）を 欠く★
+　⇒ ★★∴ 名の似たる二枚が 併存する事 其の物が 穽★★
+
+### ■八 本節にて 為さざりし事
+
+★★束（wheelhouse）―― ★読取のみ・一 byte も 改めず（`manifest-61.json` の 誤りも ★己は 直さず 上へ 出す★）★★★／
+★★`private-backups`／`*.tar.gz`／役の `state.db`・`verification_evidence.db`・`projects.db` ―― ★悉く 不開★★★／
+★★現 live の樹・venv・root ―― 一 byte も 改めず★★／★★a7 半端 final root ―― 不触★★／
+★★役樹・共有樹 ―― `--no-optional-locks` の 読取のみ★★／★網 `0`★／
+★★`canary`／`cutover`／`launcher`／`pointer`／`proc`／`timer`／`guard` ―― `0`★★／★`--tui --continue` の実走 `0`★／
+★`tmux send-keys` `0`★／★production pane 入力 `0`★／★Commander 直送 `0`★／★本部長の箱 不開★／
+★足軽七箱・三箱 ―― `stat`／`open`／`grep`／`parse` `0`★／★`_archive` 不開★／★己の箱への札 `0`★／
+★cron `0`★／★push `0`★／★§62〜§106 の本文 ―― 一字も動かさず★
+
