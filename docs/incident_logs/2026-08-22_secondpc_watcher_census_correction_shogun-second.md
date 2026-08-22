@@ -3931,3 +3931,177 @@ journal delivery_submitted ―― ★2026-08-21 05:34:32.246946★
 > ★★★㊁ ★『貴殿の結論は誤』と断ずるは ―― ★『貴殿の足は誤』より 一段 重き主張★★★
 >
 > ★★★㊂ ★『剛か 非剛か』は ―― 機構一般の性に非ず ―― ★主体の ★種★ の性★★★
+
+## §41 主体の同定 ―― 母集団の二度目の訂と、輪の直測
+
+### 41.1 §40 の誤り（二度目・同じ形）
+
+§40 で母集団を `list-timers` の九 timer から「走行中の user service 十六体」へ広げた。
+その節で自ら条を立てた ―― 「機構に候補を挙げよと問う時は、己が問うた**口**が
+何を含み何を含まぬかを先に書き下せ」。
+
+**その同じ節で、同じ形の誤りを重ねていた。**
+
+- 一度目の口: `systemctl --user list-timers` ⇒ **常駐 daemon を含まない**
+- 二度目の口: `systemctl --user list-units --type=service --state=running`
+  ⇒ **`Type=oneshot` / `RemainAfterExit=yes` の束ねを含まない**
+
+本部長 13:02:52 の逐語 `a1〜a6 inbox_watcherとdispatcher実在` を受けて
+`--all` で撃ち直した結果（読取のみ、as_of 2026-08-22T13:12:31+0900）:
+
+```
+second-inbox-watchers.service  loaded active exited
+  SecondPC inbox watchers (9 lanes, new layout 2026-08-07 iincho)
+Type=oneshot / RemainAfterExit=yes / MainPID=0 / NRestarts=0
+ExecStart=/usr/bin/bash /home/hakudokai/bin/second_inbox_watchers.sh
+ActiveEnterTimestamp=Sun 2026-08-09 05:01:09 JST
+```
+
+全 service 34 / running のみ 16 ⇒ **`--state=running` は十八体を落としていた。**
+
+### 41.2 主体 ―― cgroup の中身（読取のみ）
+
+`/sys/fs/cgroup/.../second-inbox-watchers.service/cgroup.procs` に pid 16。
+`/proc/<pid>/cmdline` を読むと（箱には一切触れていない）:
+
+| 親 pid | argv | 孫の的 |
+|---|---|---|
+| 2562230 | `bash scripts/inbox_watcher.sh shogun-second shogun-second:claude.0 claude` | `shogun-second.yaml` |
+| 2562231 | `bash scripts/inbox_watcher.sh karo-second multiagent-second:agents.0 claude` | `karo-second.yaml` |
+| 2562232 | `bash scripts/inbox_watcher.sh ashigaru1 multiagent-second:agents.1 claude` | `ashigaru1.yaml` |
+| 2562233 | `... ashigaru2 multiagent-second:agents.2 claude` | `ashigaru2.yaml` |
+| 2562234 | `... ashigaru3 multiagent-second:agents.3 claude` | `ashigaru3.yaml` |
+| 2562235 | `... ashigaru4 multiagent-second:agents.4 claude` | `ashigaru4.yaml` |
+| 2562236 | `... ashigaru5 multiagent-second:agents.5 claude` | `ashigaru5.yaml` |
+| 2562237 | `... ashigaru6 multiagent-second:agents.6 claude` | `ashigaru6.yaml` |
+
+孫はすべて
+
+```
+inotifywait -q -t 30 -e modify -e close_write \
+  /home/hakudokai/projects/multi-agent-shogun/queue/inbox/<lane>.yaml
+```
+
+**∴ §40 の「足軽1〜6 に専属 watcher 無し」は完全に誤り。**
+**∴ 第一候補と名指した `shogun_dispatcher` は、この件の主体ではない。**
+（己の条「己が第一候補と名指した者ほど疾く撃たれ得」―― 十三分後に発火した。）
+
+`scripts/inbox_watcher.sh` の本体は禁により開いていない。ここに書いたのは
+すべて **argv と cgroup** から外側で測った物である。
+
+### 41.3 「9 lanes」対 現に八体
+
+unit の Description は `9 lanes`、journal も `bash[2563333]: 9` と吐いている
+（2026-08-09 05:01:09.472255）。**cgroup に生き残る親は八体。**
+差の一体は ★未同定★ ―― `Restart=no` ゆえ、落ちても起き直らない。
+（`ashigaru-second-7` は別 unit で走っており、それを合わせて 9 と数えた可能性は
+★推★ にとどめる。）
+
+### 41.4 輪の周期の直測 ―― `30.5 ± 0.4` 秒
+
+`/proc/<pid>/stat` の field 22（starttime, clock tick）＋ `/proc/stat` の btime で
+絶対刻を復元。孫の `inotifywait` は輪ごとに新しく生まれるので、
+**同じ箱の連続する start の差が輪の周期そのもの。**
+
+| 箱 | 13:15 台 | 13:16 台 | 差（輪 2 回分） |
+|---|---|---|---|
+| ashigaru3 | 13:15:03.13 | 13:16:04.11 | **60.98** |
+| ashigaru6 | 13:15:05.67 | 13:16:07.46 | **61.79** |
+| ashigaru4 | 13:15:14.84 | 13:16:15.84 | **61.00** |
+| ashigaru5 | 13:15:17.70 | 13:16:19.28 | **61.58** |
+| ashigaru1 | 13:15:20.35 | 13:16:21.41 | **61.06** |
+| ashigaru2 | 13:15:20.96 | 13:16:21.99 | **61.03** |
+
+shogun-second / karo-second は輪 3 回分で 94.00 / 91.31（便が来て
+`inotifywait` が早く返るため位相が乱れる。採点対象外）。
+
+```
+輪 = 30.5 ± 0.4 秒 = inotifywait の timeout 30 秒 + 処理 約 0.5 秒
+```
+
+pid の刻の粒度は `CLK_TCK=100` ⇒ ±0.02 秒。**揺らぎ 0.4 秒は測定誤差ではない。**
+
+### 41.5 剛否 ―― §40 の条が、そのまま効いて逆の答を出す
+
+§40 で「剛否は主体の**種**の性」と立てた。その条を今回の現物に当てると:
+
+| 主体 | 現物 | 揺らぎ | 剛否 |
+|---|---|---|---|
+| systemd timer (Accuracy≥10s) | hermes journal 60/36/73/71 | 37 秒 | 非剛 |
+| python daemon (gunshi 専用) | 30.031251 / 30.030443 | **808 µs** | **剛** |
+| **bash watcher（本件の主体）** | **60.98〜61.79 の 2 周期** | **±0.4 秒** | **非剛** |
+
+**∴ 採点対象 a1/a3/a4/a5 の主体は bash watcher ＝ 非剛。**
+karo-second の閾 3 ms の **135 倍**。§39 で「剛は崩れず」を誤と断じ、
+§40 でそれを半ば撤回したが、**本件に限れば §39 の結論の側が正しかった** ――
+ただし §39 の足（予定の小数部の一致）は依然として誤りのままである。
+正しい足は今回の直測であって、あの足ではない。
+
+### 41.6 atime が動く機序 ―― inotify は atime を動かさない
+
+`inotify_add_watch` は VFS の `open` を経ないので **atime を更新しない**。
+∴ atime を動かすのは、**event 後に `inbox_watcher.sh` が YAML を現に読む**その刻。
+
+ここで `relatime`（既定）が全体を説明する ―― atime の更新は
+`atime < mtime` か `atime < ctime` か **atime が 24 時間より古い**時のみ。
+
+```
+足軽1〜6 は便 0 ⇒ event は来ない ⇒ 輪は 30.5 秒でただ回り続ける
+⇒ 読みは 30.5 秒ごとに起きるが、atime が動くのは 24 時間に一度だけ
+```
+
+**∴ 凍結した錨が互いに数時間隔たっていること、かつ日を跨いで値が変わることは、
+この機序で過不足なく説明される。**§10 以来の「86400 + w 秒後に打たれる」模型は
+**現物の機序と一致した。**
+
+そして `w` の正体が確定する:
+
+```
+w_i = a_new_i − a_old_i − 86400
+    = 24 時間の窓が開いてから、その箱の輪が次に読みに来るまでの待ち
+    ⇒ w_i ~ U[0, 30.5)  （箱ごとに独立 ―― 八体の輪の位相は現に互いにずれている）
+```
+
+**∴ §23 で立て §36 で己が退けた「w_i ~ U[0,T) 独立」こそが、現物の機序そのものであった。**
+§36 で「堅い縛りが柔らかい尤度に勝つ」と裁いた、その縛りの前提（w は箱に依らず同じ）は
+**bash watcher の下では成り立たない。**
+
+### 41.7 事の前に書き足す逆賭け（K 群）
+
+凍結した予言は一字も動かさない。誤った説の上に立つと分かった以上、
+**書き換えるのではなく、事の前に逆賭けを書き足す**（既存の条）。
+
+`T = 30.5`、`w_i ~ U[0,T)` 独立の下での式による予言:
+
+| # | 賭 | 確率 |
+|---|---|---|
+| **K1** | 三箱の `w_i` がすべて `[0, 31.5)` に入る | ≈ 1 |
+| **K2** | 三箱の `w` の**幅**が `1`〜`30` 秒 | ≈ 0.90 |
+| **K3** | `max(w) > 15` | 0.881 |
+| **K4** | `max(w) < 31.5`（＝ `T̂ = 2×幅` は過小推定になる） | ≈ 1 |
+| **K5** | 賭 `J1`・`H5`（三箱の w の互差 1 ms 以内）は**外れる** | 1 − 4.3e-9 |
+| **K6** | 賭 `H2`(4.520)・`H3`(9.877)・`H4`(w<2) は**外れる** | H2/H3 各 1−3.5e-5、H4 0.934 |
+| **K7** | 賭 `G`（`\|Δ−1967.4446\| ≤ 0.5`）は**外れる** | 0.968 |
+| **K8** | 賭 `H′`（`w < 20`、名は問わず）は**当たる** | 0.656 |
+| **K9** | `a1` の atime は 20:00 時点で `2026-08-21 20:25:59.983761504` のまま（窓が 20:26 で採点より後） | ≈ 1 |
+
+**K1〜K9 は 2026-08-22 13:1x の直測に基づく。採点は 20:00:00 JST、単回、手順は一字も変えない。**
+
+`T̂ = 2×幅` という §39 の主読みは、`T=30.5` の下で
+**期待値 15.25×2 = 30.5** ―― 一致する。ただし n=3 ゆえ分散は大きい（K4）。
+
+### 41.8 条
+
+- **機構に候補を問う口を広げた時は、広げた後の口が何を落とすかをもう一度問え。**
+  一度目は `list-timers` が daemon を落とし、二度目は `--state=running` が
+  `oneshot`/`exited` の束ねを落とした。**同じ形の誤りを二度犯した。**
+- **束ねは名簿にも unit にもない ―― cgroup の中の argv に在る。**
+- **`stat -c %y /proc/<pid>` は process の起動刻ではない。**
+  第一の測りでは五体が同刻 `13:13:02.722226522` に見えたが、
+  `/proc/<pid>/stat` の clock tick で撃ち直すと悉くばらばらだった。
+  己の条「己の観測が妙に綺麗な時は機構の必然を疑え」が現に働いた。
+- **`-t 30` は周期ではなく timeout である。**輪 = timeout + 処理。
+  event が来れば即座に返るので、便のある箱の輪は短く乱れる。
+- **inotify で見張ることと、file を読むことは別の手である。**
+  前者は atime を動かさず、後者が動かす。「見張っている」から
+  「atime が動く」を導いてはならない。
