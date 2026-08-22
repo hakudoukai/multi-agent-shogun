@@ -12717,3 +12717,122 @@ Looking in links: /home/hakudokai/hermes-wheelhouse-6a3d50c/downloads
 ★足軽七箱・三箱 ―― `stat`／`open`／`grep`／`parse` `0`★／★`_archive` 不開★／★己の箱への札 `0`★／
 ★cron `0`★／★push `0`★／★§62〜§106 の本文 ―― 一字も動かさず★
 
+
+---
+
+## §108 令 363「a7 exact final root を path/SHA で freeze し同報」を履行 ―― 而して 其の正体は ★旧 57 版にて建てられ 4 extras を欠く venv★ に御座つた（P102 は 仮説に非ず ★現物★）
+
+as_of 2026-08-23T00:43:24〜00:43:25 JST／★悉く 読取のみ ―― 令 365 の `a7 partial final rootは不触` を 現に 守り申した★
+
+### ■一 令の逐語（idx 363・猶 履行し居らざりし一条）
+
+> `a7 exact final rootは既存partial venvがあり「新dir」条件と衝突するため上書き/削除せず、`★`現状をpath/SHAでfreezeし同報`★`。`
+
+★★∴ 之を 本節にて 履行す★★（★§106 ■七 の rollback dry-run とは ★別の令★ ―― ★己は 之を 見落し居つた★）
+
+### ■二 ★★freeze ―― path ＋ SHA★★
+
+| 量 | 値 |
+|---|---|
+| ★path★ | ★`/home/hakudokai/hermes-roles/ashigaru-second-7-hermes/run/hermes-agent-0.20.4-final-6a3d50c`★ |
+| dir mtime | ★`2026-08-22 22:57:27.330058132 +0900`★ |
+| mode | `drwxrwxr-x` |
+| 総 file+symlink | ★`8,474`★ |
+| 総 byte | ★`139,085,598`★ |
+| manifest 行（`-type f` のみ） | ★`8,470`★ |
+| ★★manifest SHA256★★ | ★★`101e069c8fc640f5e8917925c8f434594a35192aeb26c47e8cd362e1c0168f68`★★ |
+| ★`23:10` 以降に触れられたる file★ | ★★`0`★★（★己が 一指も触れて居らぬ 證★） |
+
+★直下の構造 ―― ★`venv` ただ一つ★★:
+```
+d venv/bin   d venv/include   d venv/lib   l venv/lib64   f venv/pyvenv.cfg
+★src 系 dir ―― 無し★
+```
+★★∴ 『半端』の 実体 ＝ ★venv のみ 在りて 源が 無い★★
+
+### ■三 ★★★正体 ―― ★旧 57 版にて 建てられ 4 extras を 欠く★★★★
+
+| 量 | a7 半端 final | 軍師 sourcedir（本 build） |
+|---|---|---|
+| python | 3.12.3 | 3.12.3 |
+| pip | 24.0 | 24.0 |
+| ★installed dist 数★ | ★★`58`★★ | ★`62`★ |
+| hermes 系 dist | `0` | `0` |
+
+★`freeze` の `diff`（★逐語★）★:
+```
+> httptools==0.7.1
+> socksio==1.0.0
+> uvloop==0.22.1
+> watchfiles==1.1.1
+```
+★★∴ 欠くる 4 は ―― ★`manifest-61.json` の `reason` が言ふ 其の 4 に 寸分違はず★★:
+> `HB-20260822-2254-WHEELHOUSE / iincho seq205065: `★`4 lock-required extras dists added (57 -> 61)`★
+
+★★∴ ★`58` ＝ 旧 `57` 束 ＋ `pip` 自身★★ ⇒ ★★a7 半端 root は ★旧 57 版 requirements にて 建てられたる物★★★
+
+### ■四 ★★∴ P102 は ―― ★仮説に非ず 已に 現物★★★
+
+★§107 ■七 にて 己は 斯く 予言し申した★:
+> ★P102★ ―― 旧 57 版が 猶 disk に在り ⇒ ★誰かが 引かば 4 extras を 欠く★
+
+★★而して ―― ★其の『欠きたる物』が ★已に disk の上に 建つて居り申した★★★
+★★且つ ―― §107 ■七 の ★P101（突合者が `-final-` を探す）★ と ★合流する★★:
+
+```
+★manifest-61.json の final_paths ＝ …/hermes-agent-0.20.4-★final★-6a3d50c★
+★a7 の 其の path に ―― ★現に 物が 在る★★
+★而して 其れは ―― ★源を欠き・4 extras を欠く 半端★★
+⇒ ★★∴ 突合者が manifest の path を辿らば ―― ★半端を 完成品と 誤り得る★★
+⇒ ★★∴ 之ぞ ★偽の緑 の 完全な型★★（★條 ㌿ ―― 偽の緑を断つ仕掛けの中に 偽の緑を埋めるな★）
+```
+
+★★∴ ★己の建てたる `-sourcedir-` root と ★名が 一字も 重ならぬ★ 事が ―― ★却つて 幸ひ★★
+　（★若し 己が `-final-` に 建てて居らば ―― ★半端の上に 被せ 令 363 の『上書きせず』を 破り居つた★）
+
+### ■五 ★己の手落ち ―― 令の一条を 見落し居つた★
+
+★令 363 は 二つの事を 命じ居り申した★:
+| # | 文言 | 己の履行 |
+|---|---|---|
+| ㊀ `軍師final rootは空の新versioned dirとして…作成` | ★§105・§106 にて 済★ |
+| ㊁ ★`a7 exact final rootは…現状をpath/SHAでfreezeし同報`★ | ★★本節まで ★未履行★★★ |
+
+★★∴ 己は ㊁ を ―― ★`不触` の一語に 呑まれて 見落し申した★★
+　（★令 365 の `a7 partial final rootは不触` は ★『改めるな』の意★ にして ―― ★『測るな』の意に 非ず★）
+★★∴ 新條 ㍊ ―― ★『触れるな』と『測るな』は ★別の禁★★
+　 ―― ★理 ―― 本節の令は ★不触のまま 測れ★ と 命じ居つた。★己は 二つを 一つに潰し 一条を 落し申した★
+　 ―― ★処方 ―― ★禁の語を見たる時 ★其の禁が 読取に及ぶか 書込のみか★ を 恒に 分かて★★
+
+### ■六 予言の採点 ＋ 新予言
+
+| # | 予言 | 結 |
+|---|---|---|
+| ★P102★（§107 ■七・`00:42` 起草） | 旧 57 版が引かれ得る | ★★中り ―― ★1 分後に 現物を 見出だし申した★★★ |
+| ★P101★（同） | 突合者が `-final-` を辿り 半端を 完成品と誤り得る | ★★足が 強まりたる（`final_paths` の path に 現に 物が 在る）★★ |
+
+★★P103（新）★★ ―― ★a7 半端 root の venv は ★`hermes` 系 dist を 一つも 持たぬ★ ゆゑ
+　―― ★其の `venv/bin/python` に `hermes` を 打たば ―― ★`ModuleNotFoundError`★★
+　⇒ ★★『半端』は ★沈黙して 誤らせる★ のでなく ★明白に 落つる★★（★之は 幸ひ ―― 偽の緑に 成り難し★）
+　（★但し 検さぬ ―― ★不触の令に 従ひ 実走を 打たず★★）
+
+### ■七 ★機構の告 ―― `CAP_ROTATED`★
+
+★`hb_164`（`00:42:47`）を 送りたる折 ―― 機構が 斯く 告げ申した★:
+```
+[inbox_write] CAP_ROTATED: 19 read messages moved to queue/inbox/_archive/honbucho_pruned.yaml
+```
+★★∴ ★己の條「便を出す事は 受け手の箱を書き換ふる事」★ の ―― ★現物の裏書き★★
+★★∴ 且つ ★條「rotation は箱を書き直す」★ の 現物★ ―― ★己は `_archive` を 開かず★（★不開の禁 現に 生く★）
+
+### ■八 本節にて 為さざりし事
+
+★★a7 半端 final root ―― ★読取のみ・`23:10` 以降 触れられたる file `0` が 其の證★★★／
+★★其の venv への install／改変 ―― `0`★★／★★其の `python` に `hermes` を打つ事 ―― `0`（P103 は 未検のまま 置く）★★／
+★★現 live の樹・venv・root ―― 一 byte も 改めず★★／★★束（wheelhouse）―― 読取のみ★★／
+★★`private-backups`・`*.tar.gz`・役の `*.db` ―― 悉く 不開★★／★網 `0`★／
+★★`canary`／`cutover`／`launcher`／`pointer`／`proc`／`timer`／`guard` ―― `0`★★／
+★`tmux send-keys` `0`★／★production pane 入力 `0`★／★Commander 直送 `0`★／★本部長の箱 不開★／
+★足軽七箱・三箱 `0`★／★`_archive` 不開★／★己の箱への札 `0`★／★cron `0`★／★push `0`★／
+★§62〜§107 の本文 ―― 一字も動かさず★
+
