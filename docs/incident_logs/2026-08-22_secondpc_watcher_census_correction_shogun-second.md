@@ -13448,3 +13448,146 @@ instructions/common/forbidden_actions.md                                +164 /  
 　―― ★理 ―― 己は 起動時に `instructions/shogun.md` を 読み 従ひ居るが ―― ★其れは git の中の物に非ず★
 　―― ★∴ ★己が 引用する canon の逐語は ―― ★作業樹の逐語★ にして ★commit の逐語に非ず★★
 　―― ★処方 ―― ★canon を 論の足に据ゑる時は ―― ★blob sha を 併記せよ★★
+
+---
+
+## §113 ★★§112 の訂 ―― ★「手書き 1」と見えたる物は ★16 件の束の端★ に御座つた★★（★併せて 生成器を 同定す★）
+
+### ■一 ★★訂の要 ―― ★母集団を `instructions/` に限りたる事が 束を 切り申した★★★
+
+★§112 ■三 にて 己は 斯く 書き申した★:
+> `21:43:01.252858985  instructions/ashigaru.md （手書き 1）`
+
+★★之は 誤り★★。★母集団を repo 全体に開きて 数へ直せば★:
+
+| 刻 | ★§112 の数（instructions のみ）★ | ★★§113 の数（repo 全体）★★ |
+|---|---|---|
+| `2026-08-18 21:43:01` | ★1（「手書き」と断ず）★ | ★★`16`★★ |
+| `2026-08-18 21:45:53` | 3 | `3` |
+| `2026-08-18 22:25:42` | 3 | `3` |
+| `2026-08-18 22:50:00` | ★17★ | ★★`20`★★ |
+| `2026-08-19 22:59:47` | ― | ★`1`★ |
+| `2026-08-19 23:01:58` | ― | ★`1`★ |
+| ★★計★★ | ★24★ | ★★`44`★★ |
+
+★★行の隔たり ―― ★`+9,457 / −5,093`★（§112 の `+6,949 / −4,555` は ★instructions 分のみ★）★★
+
+★★∴ ★`21:43:01` は ★人の手に非ず★ ―― ★16 file が `.252858985` 〜 `.256859003`（★4 ms★）に 書かれ居る★★★
+
+### ■二 ★`21:43:01` の 16 件（★全名★）★
+
+```
+CLAUDE.md                                        ★己が 読取のみを許されたる紙★
+config/settings.yaml
+docs/03-workflows/watcher-trap-ledger.md         ★+1276 / −1 ―― 本節中 最大★
+instructions/ashigaru.md
+lib/_section18_roles.sh
+queue/pane_registry.yaml                         ★己が 宛先を引く名簿★
+scripts/bulk_ack.sh
+scripts/checks/context_usage_warn.sh
+★scripts/inbox_write.sh                          ＋94 / −2 ―― ★己が 毎便 用ゐ居る器★★
+scripts/switch_cli.sh
+shim/hakudokai/hakudokai_fukuincho_poll.py
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py
+shutsujin_departure.sh
+shutsujin_departure_secondpc.sh
+tests/unit/test_send_wakeup.bats
+```
+
+★★己自身への 帰結 ―― ★己が 便を出す度に 呼び居る `scripts/inbox_write.sh` は ―― ★git の中の物と `94` 行 異なる★★★
+★（★己は 本体の読取を 禁ぜられ居るゆゑ ―― ★何が変じたるかは ★UNMEASURED（禁）★★）
+
+### ■三 ★★`22:50:00` の 内実 ―― ★`.139` は 吐き出しの外に立つ★★★
+
+```
+.139783865  instructions/common/forbidden_actions.md   ← ★★340 ms 孤立★★
+────────────────────────────────────────── ★★吐き出し（連続 19 件・4〜8 ms 刻み）★★
+.479785422  instructions/generated/shogun.md
+.483〜.587  instructions/generated/ 残 15 件
+.591785934  ★AGENTS.md★
+.595785953  ★.github/copilot-instructions.md★
+.599785971  ★agents/default/system.md★
+```
+
+★★∴ ★吐き出し先は ★`instructions/generated/` に留まらず★ ―― ★repo root の 三つの canon にも 及ぶ★★★
+★★∴ ★`forbidden_actions.md` は ★出力に非ず 入力（もしくは 前段）★ の公算 大★★（★刻の隔たりが 束内の 40〜80 倍★）
+
+### ■四 ★三つの root canon は ―― ★生成物の写しに非ず★★
+
+★20 件の 作業樹 blob sha ―― ★悉く 相異なる（distinct ＝ `20`）★★
+★殊に `.github/copilot-instructions.md` と `agents/default/system.md` は ―― ★行の隔たり `+304 / −83` にて 同一★ なれど ★blob は別★★
+
+| file | blob（作業樹） |
+|---|---|
+| `AGENTS.md` | `81468274237aa181fc84a4565b0ea2001314fa6a` |
+| `.github/copilot-instructions.md` | `96fe1de712810229ddbf66e9ac7fa27da1a088c4` |
+| `agents/default/system.md` | `d338459d889824f8d675ed4d39429aa308fbea11` |
+
+★★∴ ★同じ型より 別の差し替へを経て 吐かれ居る★（★写しならば sha は一致すべし★）★★
+
+### ■五 ★★★生成器の 同定 ―― ★`scripts/build_instructions.sh`★★★★
+
+| 量 | 値 |
+|---|---|
+| ★作業樹 blob★ | ★`3cdcd1ff2803c3b2c40c3a18bd2a908c77706f7f`★ |
+| ★HEAD blob★ | ★`3cdcd1ff2803c3b2c40c3a18bd2a908c77706f7f`★ |
+| ★main blob★ | ★`3cdcd1ff2803c3b2c40c3a18bd2a908c77706f7f`★ |
+| `status` | ★★空 ＝ 清し★★ |
+| 最終 commit | `73e5623` `2026-02-21T13:38:50+09:00` |
+| 作業樹 mtime | `2026-05-04 09:05:34.473399540`（★條 ㍁ ―― mtime は出自を語らぬ★） |
+| 大きさ | `253` 行 / `10,133` B |
+| ★M 44 件の中に在るか★ | ★★`0` ―― 在らず★★ |
+
+★★∴ ★障りは ★器★ に非ず ―― ★器は git と 完全に一致し 清し★★★
+★★∴ ★障りは ★出力が 五日 一度も commit されて居らぬ事★ ただ其の一点★★
+
+### ■六 ★★Grill6 P2 への 帰結（★令 `seq205053` の逐語に 当てて★）★★
+
+| 令の逐語 | 本節の測りが与ふる物 |
+|---|---|
+| ★「generator-only canon addition then regenerate」★ | ★器 `scripts/build_instructions.sh` は 清し ⇒ ★器のみを改むる事は 現に 為し得る★★ |
+| ★「coverage ★role × injection target × SHA★」★ | ★★injection target は ★19 箇所・4 場所★（generated 16 ＋ root 3）★ ―― 本節にて 名と sha を 凍結★★ |
+| ★「audit review」★ | ★★審らるべき sha が ★git の中に 存せず★（作業樹にのみ在り）★★ |
+
+★★∴ ★再生成を 先に打てば ―― ㊀未 commit の差が 更に太る か ㊁現に走り居る役の枷が 予告無く変ず★★
+★★∴ ★∴ ★出力の commit（freeze）が ―― 再生成より ★先★ に立つ★★★（★委員長令「検証させる物は先に commit し as_of を併記せよ」に 一致★）
+
+### ■七 ★測り得ざりし物 ―― ★禁 と 明記す★★
+
+```
+★生成器の 再現性（今 走らせて 現の 19 件を 再現するか）★
+  ⇒ ★★禁★★ ―― ★実行すれば `instructions/*` へ 書き込む★（己は 改変を禁ぜられ居る）
+  ⇒ ★裁を持つ者ならば ―― ★別の clone にて 打てば 本 repo を汚さず 測り得る★★
+
+★`scripts/inbox_write.sh` の +94 行の中身★ ⇒ ★★禁★★（本体 読取禁）
+★44 件の 中身 悉く★              ⇒ ★己は 一行も 読まず★（名・刻・行数・blob sha のみ）
+```
+
+### ■八 ★己が 為さざりし事★
+
+```
+★git checkout / restore / stash / clean ―― 悉く 0★
+★instructions/* ・ 44 件 悉くへの 書込 ―― 0★
+★生成器の 実行 ―― 0★
+★共有樹（hermes）への 測り ―― 0★（令 371 遵守）
+★manifest r3 ―― 一 byte も 触れず★（令 371「keep r3 immutable」遵守）
+★咎め ―― 0★（第一条）
+```
+
+### ■九 ★新條★
+
+★★★㍑ ―― ★刻にて 束を取る時 ―― ★母集団を 一つの dir に 限るな★★★★
+　―― ★理 ―― §112 にて 己は `instructions/` のみを見 ―― `21:43:01` を ★「手書き 1」★ と 断じ申した
+　―― ★然れど repo 全体に開けば ★同刻 16 件・4 ms★ ―― ★紛れも無き 機械の走り★★
+　―― ★∴ ★束の端のみを 切り取れば ―― ★束は 単独の点に 化ける★★★
+　―― ★処方 ―― ★『同刻に 何が起きたか』を問ふ時は ★母集団を repo の根より取れ★★（★條 ㍏ の姉妹 ―― ㍏ は「名を貼れ」・㍑ は「切るな」★）
+
+### ■十 ★新予言★
+
+★★P110 ―― ★『生成器のみを改め 再生成せよ』を そのまま打てば ―― ★現に走り居る役の枷が 予告無く変ずる★★★
+　★⇒ ★理 ―― 器は清く 出力のみ 未 commit ゆゑ ―― 再生成は ★git の記録を 残さぬまま★ 19 件を 上書きす★
+　★⇒ ★処方 ―― ★㊀先に 出力を freeze（commit）し ㊁然る後に 器を改め ㊂再生成し ㊃差を diff にて 示せ★★
+
+★★P111 ―― ★`forbidden_actions.md`（`.139`）を 未 commit のまま 再生成の源とせば ―― ★出所が 未 commit の紙となり canon-guardian の要件を 満たさぬ★★★
+　★⇒ ★処方 ―― ★源（`.139` 群）を 先に commit し as_of を貼れ★★
