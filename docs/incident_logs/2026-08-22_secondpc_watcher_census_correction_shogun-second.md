@@ -9337,3 +9337,178 @@ Record late control-read as ★Grill2 real incident in existing A/B/C remediatio
 
 ### ■四 ★本節にて 為さざりし事★
 ★足軽七箱 ―― `0`★／★substitute measurement ―― `0`★／★三箱への `os.stat()` ―― `0`★／★家老箱の parse ―― `0`（★便の中身を読みたるのみ★）★／★己の箱への札 ―― `0`★／★cron ―― `0`★／★hermes 系・staging ―― 不触★／★rerun ―― ★起こさず★★／★§62〜§80 の本文 ―― ★一字も動かさず★★／★`push` ―― `0`★
+
+---
+
+## §八十二 ―― ★★★Stage4 `FINAL-BUILD` ―― ★源と lock を 凍結し申した★★★ ―― ★而して ★build の道 四つ 悉く 塞がる★ を ★測りにて★ 示し申した
+
+**as_of** `2026-08-22T18:06:26+0900`／前節 `§八十一`（`f0d5ee8a` / `9,339` 行）／上意 `HB-20260822-1756-FINALBUILD`
+
+---
+
+### ■一 ★★上意 逐語（本部長 `17:56:01`・己の箱 idx `343`）★★
+
+```
+Stage4 FINAL-BUILD assignment. Chair ruling seq204693 DB body says frozen 22/22 SHA match
+releases HOLD and allows Stage4 ③④.
+Implementer scope: ★build new inactive non-editable final roots from approved source 6a3d50c
+and its uv.lock★; ★preserve both current roots byte-for-byte★;
+★no launcher/pointer/proc/timer/guard change★; ★no cutover/canary★.
+Before output: ★freeze exact source/lock hashes, command, destination manifest and SHA,
+isolated-HOME standalone --help/version★.
+Report ★artifact path/SHA, final root paths, build command/result, and blockers★.
+★Do not use editable staging as final.★ ★Stop at final-build acceptance; await my canary authorization.★
+```
+
+★★∴ ★上意の命ずる順 ―― ★『Before output: freeze …』★ ゆゑ ―― ★★測りと凍結が 先・build は 後★★
+★★∴ ★己は ★測りより 入り★ ―― ★本節は 其の ★凍結の紙★★
+
+---
+
+### ■二 ★★★㊀ 源 ―― ★見出だし申した★★★（★`~` 直下 深さ1 には 非ず ―― ★一階 深し★）
+
+```
+★★源の樹 ＝ /home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3/.git★★
+   ★己の初手（17:56:41）は ★『hermes-runtimes : no .git』★ と出で申した ―― ★之は ★深さ1 のみ 見たる故★
+   ★∴ ★★誤に非ず ―― ★足らざりし★★（★★己の條 ―― 『零には絞りを添へよ』★ ―― 現に 効き申した★）
+
+★★★commit（full）＝ 6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f★★★  ―― `cat-file -t` ＝ ★commit★
+★committer date ＝ 2026-08-19T11:03:01-05:00
+★subject ＝ fix(tui): allow the ESC byte in the SGR param matcher
+★指す ref ―― ★refs/remotes/origin/main★ ＋ ★refs/remotes/origin/HEAD★（★二つとも 6a3d50c★）
+★pyproject（6a3d50c 内）―― name = hermes-agent／★version = 0.20.4★／requires-python = >=3.11,<3.14
+★build-system ―― requires = ["★setuptools==83.0.0★"]／build-backend = "setuptools.build_meta"
+```
+
+---
+
+### ■三 ★★★★★㊁ ★lock ―― ★★『其の uv.lock』は ★worktree に非ず commit より取れ★★★★★★★
+
+```
+★★★6a3d50c 内の uv.lock ―― ★★blob ＝ 4c160fe6cb6b23117493b98251d601842b000a62★★
+   ★size ＝ ★717,455 B★／★lines ＝ 5,019★／★content sha256 ＝ ★8fd868b9da8b6bc2f4aa94a845e210eccdd5e31be7a0b404f0a8527ced0fddec★★
+   ★★[[package]] の ★塊★ ＝ ★253★／★名（正規化）の ★異なり★ ＝ ★252★★
+   ★★差の一 ―― ★`scipy` が ★二度★ 現る（`1.17.1` と `1.18.0`）★★（★marker にて 分かるる故★）
+   ★★∴ ★己の初測『253』も 後の parse『252』も ★孰れも 誤に非ず★ ―― ★★数へ居る物が 別★★
+      ★★條 ―― ★『個数』を載する時は ★何を一つと数へたか★ を 併せ書け★★
+   ★★※ 下の ㋓ の突合は ★名の異なり（252）★ にて取り ―― ★`scipy` は ★後の一（1.18.0）★ を用ゐ申した★
+
+★★★而して ―― ★★★worktree の uv.lock は ★之と 異なる★★★★★
+   ★worktree の HEAD ＝ ★0957277f2f468bac22bbfcfa7c43029858c9597e★（★≠ 6a3d50c★）／porcelain ＝ ★0（clean）★
+   ★★worktree の uv.lock sha256 ＝ ★8bd2578e41ddcb61afff7f2c6869a299412bee20e9def4213daea0718a041b16★★
+   ★diff --name-status 6a3d50c HEAD -- uv.lock pyproject.toml ⇒ ★M uv.lock／M pyproject.toml★
+
+★★★∴ ★★★條 ㌖ ―― ★上意が『★source X ★と其の★ lock』★ と申したる時 ―― ★lock を ★disk より★ 取るな★
+      ―― ★★『X の中の lock』★ を `git show X:uv.lock` にて 取れ★★★★★
+   ★理 ―― ★樹の worktree は ★別の commit★ に在り得 ―― ★而して porcelain は `clean` と申す★
+   ★∴ ★『clean』は ★『上意の指す commit と同じ』を意味せぬ★★
+```
+
+---
+
+### ■四 ★★★★㊂ ★源の樹の 素性 ―― ★『ahead-1』に非ず ★二つの 孤立せる断面★★★★★
+
+```
+★★己は 既紙（08-21）の警 ★『素な checkout は 此の PC 固有の ahead-1 commit を落とす』★ を承け 検め申した
+★★測り ―― ★rev-list --count 6a3d50c..HEAD ＝ 1★／★HEAD..6a3d50c ＝ 1★
+★★★而して ―― ★★merge-base ＝ ★空★★★（★共通の祖 ★無し★）
+★★理 ―― ★★.git/shallow に ★graft 二つ★★:
+       ★0957277f…（HEAD）★／★6a3d50c…（origin/main）★
+   ★★両者とも ★parent ＝ 空★★ ⇒ ★★深さ1 の 二つの 独立せる断面★★
+★★★∴ ★『ahead-1』の語は ★正しからず★ ―― ★★『系譜は 繋がり居らぬ』★★ が 現物★
+★★★∴ ★★★條 ㌗ ―― ★shallow の樹にて ★『ahead』『behind』の数を 系譜の主張に用ゐるな★★★★★
+      ―― ★`rev-list --count` は ★graft の壁★ にて 截たれ ―― ★『1』は ★『一歩先』に非ず ★『其の断面の全て』★★
+★★∴ ★★然れど ―― ★build には 障り無し★★（★6a3d50c の ★tree は 完全★ ⇒ `git archive 6a3d50c` にて 全量 取り出し得★）
+```
+
+---
+
+### ■五 ★★★★★㊃ ★build の道 ―― ★四つ 悉く 塞がり居り申す（★測りにて★）★★★★★
+
+| | 道 | 現物 | 判 |
+|---|---|---|---|
+| ㋐ | **網（PyPI）** | `PIP_INDEX_URL`＝unset／`pip.conf`＝ABSENT／`http_proxy`＝unset | ★★preflight の禁（`install`／`pip`／網 ―― ★execution GO 要★）★★ ⇒ ★己の一存にて 打たず★ |
+| ㋑ | **wheelhouse** | ★`~` 深さ3 の `*.whl` ＝ ★0★★ | ★★死★★ |
+| ㋒ | **uv ＋ lock**（★上意の指す道★） | ★`uv` ―― PATH ★NONE★／`~` 深さ4 の `uv` file ★0★／`~/.cache/uv` ★ABSENT★★ | ★★器 無し★★ ―― ★uv を得るには ㋐ を要す★ |
+| ㋓ | **現 venv を offline の源と為す**（★己の案★） | ★lock 252 に対し ―― ★venv に ★無き物 162★・★版の違ふ物 34★★ | ★★死★★ |
+
+```
+★★㋓ の測り（逐語）―― ★lock_pkgs=252  installed_dist_info=91★
+   ★MISSING_from_venv=★162★  VERSION_MISMATCH=★34★
+   ★例 ―― aiohappyeyeballs 2.6.1→2.7.1／anyio 4.12.1→4.14.2／attrs 25.4.0→26.1.0／av 17.0.0→18.0.0
+   ★venv の hermes-agent ＝ ★0.20.0★（★lock は 0.20.4★）
+★★★∴ ★★現 root の venv は ★0.20.0 の器★★ ―― ★★0.20.4 の lock に 忠なる final の源には ★成り得ず★★★★
+★★★而して ―― ★setuptools ＝ ★venv 83.0.0 ＝ lock 83.0.0★★（★★backend のみは 揃ひ居る★★）
+   ★∴ ★『hermes-agent 其の物 一つだけ』を建つるは 能ふ★ ―― ★然れど ★依存 162 が 欠く★ ⇒ ★動く物には 成らず★
+   ★∴ ★★『建ちはする が 動かぬ物』を final と称するは ―― ★偽★★★ ⇒ ★己は 為さず★
+```
+
+★★★★★∴ ★★★blocker ―― ★『uv 無し』は ★手続の不足に非ず★ ―― ★★網 無くば 252 の釘の内 162 が 此の器に 存在せぬ★★★★★★
+★★★∴ ★★上意の『from approved source 6a3d50c and its uv.lock』を ★忠に★ 履むには ―― ★★㋐（網）の execution GO が ★必須★★★★
+
+---
+
+### ■六 ★★★㊄ ★凍結 ―― ★destination と build command（★実行せず・逐語のみ★）★★★
+
+```
+★★★destination（案・★未だ 作らず★）★★:
+   ★樹A' ＝ /home/hakudokai/hermes-roles/gunshi-second-hermes/run/★hermes-agent-0.20.4-final-6a3d50c★
+   ★樹B' ＝ /home/hakudokai/hermes-roles/ashigaru-second-7-hermes/run/★hermes-agent-0.20.4-final-6a3d50c★
+   ★★共に ★inactive★（★launcher・pointer 一指 0 ゆゑ ★何者も 之を指さず★）★★
+   ★★※ 名は ★案★ に御座る ―― ★樹A は 本部長＋軍師second の共有★ ゆゑ ★命名も 二役の受諾に属す★と心得 ★御下知を仰ぐ★
+
+★★★build command（★凍結・★一つも 実行し申さず★★）★★:
+   SRC=/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3
+   DEST=<上の 樹A' 又は 樹B'>
+   /usr/bin/mkdir -p "$DEST/src"
+   ★/usr/bin/git -C "$SRC" archive 6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f | /usr/bin/tar -x -C "$DEST/src"★
+      ★理 ―― ★`checkout` せず★ ⇒ ★源の樹の worktree（HEAD=0957277f）に ★一指も 触れず★★
+   /usr/bin/python3 -m venv "$DEST/venv"        ★（版 ―― /usr/bin/python3.12 ＝ 3.12.3・lock の >=3.11,<3.14 に適ふ）★
+   cd "$DEST/src" && ★UV_PROJECT_ENVIRONMENT="$DEST/venv" uv sync --frozen --no-editable★
+      ★★`--frozen` ―― ★lock を 解き直さず★／`--no-editable` ―― ★★上意『non-editable』★★
+   ★★※ 此の一行が ★uv を要す★ ―― ★現に 器に 無し★ ⇒ ★★blocker★★
+
+★★★isolated-HOME の験（★凍結・実行せず★）★★:
+   ISO=$(/usr/bin/mktemp -d)
+   ★/usr/bin/env -i HOME="$ISO" PATH=/usr/bin:/bin "$DEST/venv/bin/hermes" --version★
+   ★/usr/bin/env -i HOME="$ISO" PATH=/usr/bin:/bin "$DEST/venv/bin/hermes" --help★
+      ★理 ―― ★`env -i` にて ★己の HOME の設定を 一切 継がず★ ⇒ ★『standalone』の験★
+
+★★★destination manifest ＋ SHA ―― ★★得られ申さず★★★（★物が 無き故★）
+   ★型は 既に 在り ―― §十八㊃（frozen manifest）と ★同じ十一 file ＋ sha256★ を ★建ちたる後★ に 取る
+```
+
+---
+
+### ■七 ★★上意の六項 ―― ★履行の可否★★
+
+| # | 上意の求むる物 | 現況 |
+|---|---|---|
+| 1 | ★exact source hash★ | ★★済★★ ―― `6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f` |
+| 2 | ★exact lock hash★ | ★★済★★ ―― blob `4c160fe6…a62`／sha256 `8fd868b9…dec`／`717,455 B`／`5,019` 行／`252` pkg |
+| 3 | ★command★ | ★★済（凍結・未実行）★★ ―― ■六 |
+| 4 | ★destination manifest ＋ SHA★ | ★★不能★★ ―― ★build 未了ゆゑ 物が無し★ |
+| 5 | ★isolated-HOME --help/version★ | ★★不能★★ ―― ★同上★ |
+| 6 | ★report（artifact/root/command/blockers）★ | ★★本節 ＋ 便★★ |
+
+★★★∴ ★己は ★4・5 を ★『未測』と札し★ ―― ★★推さず・似せず・作らず★★★（★己の條 ―― ★測らざる数を 紙にも便にも 載せるな★）
+
+---
+
+### ■八 ★本節にて 為さざりし事★
+
+★★★build ―― ★一つも 打たず★★★／★★`pip`／`install`／網 ―― `0`★★／★★`uv` ―― 入れず・探したるのみ★★／★★源の樹 ―― ★`checkout`／`fetch`／`pull`／`reset` 悉く `0`★・★worktree porcelain 猶 `0`★★★／★★現 root 二本 ―― ★読取のみ（`ls`／`cat pyvenv.cfg`／`dist-info` の名）★・★一 byte も 改めず★★★／★★launcher・pointer・proc・timer・guard ―― ★一指 `0`★★★／★★cutover・canary ―― `0`★★／★★editable staging ―― ★不触・final に用ゐず★★★／★`queue/inbox/ashigaru*` ―― ★`stat`／`open`／`grep`／`parse` `0`★★／★三箱への `os.stat()` ―― `0`★／★substitute measurement ―― `0`★／★`_archive` ―― 不開★／★己の箱への札 ―― `0`★／★cron ―― 装填 `0`★／★§62〜§81 の本文 ―― ★一字も動かさず★★／★`push` ―― `0`★
+
+---
+
+### ■九 ★本節にて得たる條★
+
+```
+★★★㌖ ―― ★上位が『source X ★と其の★ lock』と申したる時 ―― ★lock を ★disk より★ 取るな★
+   ―― ★★`git show X:uv.lock` にて ★X の中の物★ を取れ★★
+   ★（★現に ―― worktree の lock は 6a3d50c の物と ★別物★ に御座つた★）
+★★★㌗ ―― ★shallow の樹にて ★`ahead`／`behind` の数★ を ★系譜の主張★ に用ゐるな★
+   ―― ★graft の壁にて 截たるる故 ―― ★『1』は『一歩先』に非ず『其の断面の全て』★★
+★★★㌘ ―― ★『器が 無し』と札す前に ―― ★★『網 無くして 為し得る道』を 悉く 数へ 潰せ★★
+   ―― ★★而して ★潰したる事を 数にて 示せ★★★（★162／34 ―― ★之が blocker の ★足★★）
+```
