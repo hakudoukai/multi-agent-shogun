@@ -14082,3 +14082,126 @@ if [ "$n" -le 300 ]; then ./scripts/inbox_write.sh ... ; else echo "★OVER ―�
 　★⇒ ★理 ―― 之は git にも `status` にも 現れず ―― ★器の源を 読まざる限り 存在すら 知れぬ★
 　★⇒ ★処方 ―― ★scope を `20` に改め ―― ★agent.yaml の凍結法（tracked artifact への sha256 記録）を 併せ 裁せよ★★
 　★⇒ ★本節 ■一 の表が ―― ★其の凍結の 一枚目★ に御座る★
+
+---
+
+## §118 ★★★★読み手の側から 測り直す ―― ★生きたる Claude の役は ★生成物を 一度も 読まぬ★★★★★（★＋ adapter の 8/16 が 実在せぬ path を指し ★test が 之を 緑にし居る★★）
+
+★§117 迄は ★『何が 書かれたか』★ を問ひ申した。★本節は ★『誰が 何を 読むか』★ を問ふ★
+★★而して ―― ★Grill6 P2 の 目的其の物に 触るる事実に 至り申した★★
+
+### ■一 ★★★Claude の役の 読み path ―― ★`instructions/{役}.md`★ にして ★`generated/` に非ず★★★★
+
+★`CLAUDE.md` の逐語（★作業樹 116 行 ／ HEAD 101 行 ―― ★両側に 在り★★）★:
+```
+4. Read your instructions file: shogun→instructions/shogun.md, karo→instructions/karo.md
+   (@agent_id=karo-second は instructions/karo-second.md も …)
+```
+★同 162 行 ／ HEAD 147 行★:
+```
+Read your instructions file (shogun→instructions/shogun.md;
+  ★karo-second→instructions/karo-second.md ＋ instructions/karo.md★; other roles→Session Start …)
+```
+
+★★★而して 決め手 ―― ★`CLAUDE.md` の中に ★`generated` の語は ★一度も 現れず（`0`）★★★★★
+
+| file | 行 / B |
+|---|---|
+| ★`instructions/shogun.md`（★己が 実際に読む物★）★ | ★`426` / 21,049★ |
+| `instructions/roles/shogun_role.md`（器の源） | `178` / 8,814 |
+| ★`instructions/generated/shogun.md`（器の出力）★ | ★`851` / 38,054★ |
+
+★★∴ ★同じ「shogun」の名を持つ 三つの紙は ★悉く 別物★★★
+★★∴ ★器の claude 版出力（`generated/shogun.md`）は ―― ★`CLAUDE.md` の指す読み path に 載つて居らぬ★★★
+
+★★★∴ ★★『generator-only canon addition then regenerate』を 打ちても ―― ★生きたる Claude の役が 読む `instructions/{役}.md` は ★一字も 変ぜぬ★★★★★★
+
+★（★★猶 ―― `CLAUDE.md` は ★器の 源★ にして ★出力に非ず★ ⇒ ★之を改むるは ★source edit★★ ―― ★現に 禁（owner 許可待ち）★★）
+
+### ■二 ★★★`lib/cli_adapter.sh:196-200` ―― ★16 の内 8 が 実在せぬ path を 指す★★★★
+
+★逐語（`get_instruction_file()`・行 179 に始まる）★:
+```
+196:  claude)  echo "instructions/${role}.md"                    ★実在★
+197:  codex)   echo "instructions/codex-${role}.md"              ★★実在せず★★
+198:  copilot) echo ".github/copilot-instructions-${role}.md"    ★★実在せず★★
+199:  kimi)    echo "instructions/generated/kimi-${role}.md"     ★実在★
+200:  *)       echo "instructions/${role}.md"
+```
+
+★実測（4 役 × 4 CLI ＝ 16）★:
+
+| CLI | adapter が指す形 | 実在 | ★器が 実際に書く名★ | 実在 |
+|---|---|---|---|---|
+| claude | `instructions/{役}.md` | ★4/4★ | （器の出力に非ず ―― 手書き canon） | ― |
+| ★codex★ | `instructions/codex-{役}.md` | ★★`0/4`★★ | ★`instructions/generated/codex-{役}.md`★ | ★4/4★ |
+| ★copilot★ | `.github/copilot-instructions-{役}.md` | ★★`0/4`★★ | ★`instructions/generated/copilot-{役}.md`★ | ★4/4★ |
+| kimi | `instructions/generated/kimi-{役}.md` | ★4/4★ | 同左 | ★4/4★ |
+
+★★∴ ★codex と copilot の 二列 ―― ★計 8 cell が ★`generated/` の一段を 落とし居る★★★★
+★（★`lib/cli_adapter.sh` は ★tracked 且つ `status` 空 ＝ 清し★ ―― ★即ち 之は 未 commit の乱れに非ず ★git に記録されたる姿★★）
+
+### ■三 ★★★而して ―― ★其の函数の呼び手は ★己の unit test のみ★★★★★
+
+★探索（★範囲を 明記す★ ―― repo 内・`docs`／`_archive`／`node_modules`／`private-backups` を除く）★:
+```
+./tests/unit/test_cli_adapter.bats:347  "get_instruction_file: ashigaru5 + codex → instructions/codex-ashigaru.md"
+./tests/unit/test_cli_adapter.bats:353  "get_instruction_file: ashigaru7 + copilot → .github/copilot-instructions-ashigaru.md"
+★他の呼び手 ―― 見出だせず★
+```
+★★∴ ★test は ―― ★実在せぬ path を ★正★ と assert し ―― ★緑を 出し居る★★★★
+★★∴ ★之は ★『存在』を検めず ★文字列の一致★ のみを検む test★ ―― ★★偽の緑★★★
+★（★條 ㌿「偽の緑を断つ仕掛けの中に 偽の緑を埋めるな」の ★実例★ に御座る★）
+
+★★UNMEASURED（★能 ―― 測り得るが 未だ測らず★）★★:
+```
+★repo の外（`~/bin`・launcher・shim）より `get_instruction_file` を 呼ぶ者が 在るか★
+　⇒ ★己は repo 内のみを 洗ひ申した ⇒ ★『production 呼び手 無し』は ★此の範囲に於て★★
+★8 cell の食ひ違ひが ★何時 生じたか★（`git log -L` にて測り得るも 未だ測らず）★
+```
+
+### ■四 ★★憲章 v1 に就きて ―― ★P113 の重みを 己より 減ず★★★
+
+```
+★`instructions/shogun_charter_v1.md` ―― ★git の外★（§114 の通り 不変）
+★★然れど ―― ★`CLAUDE.md`（★tracked・allowlist★）の 342 行（HEAD 319 行）に
+　　「0.5. 将軍職務憲章 v1（理事長令 2026-07-09）: 各将軍もPC内の司令官である。…」★
+　⇒ ★★同名の節が ★実体を伴ひ★ tracked な紙の中に 在り申す★★
+```
+★★∴ ★『憲章の内容が git より 失はれ居る』とまでは 申せ申さぬ★★ ―― ★§114 の断を 己より 弱む★
+★★UNMEASURED（能）★★ ―― ★二つの逐語が 一致するか（file 14 行 / 2,618 B 対 CLAUDE.md の一節）★
+
+★（★猶 ―― `instructions/shogun.md` の 行 80 は 作業樹・HEAD ★双方★ に `shogun_charter_v1` の名を持つ
+　　⇒ ★tracked な canon が ★git の外の紙★ を 名指し居る★ ―― ★之は 不変の事実として 残る★）
+
+### ■五 ★★★Grill6 P2 への 帰結（★令 `seq205053` の 目的に 直に 当てて★）★★★
+
+| 令の逐語 | 本節が示す物 |
+|---|---|
+| ★`generator-only canon addition then regenerate`★ | ★★之は ★codex・copilot・kimi の canon と tool-level 3 に 届く★ ―― ★然れど ★生きたる Claude の役（`instructions/{役}.md` を読む者）には ★届かぬ★★★★ |
+| ★`coverage role × injection target × SHA`★ | ★出力 20（§117）／護り三層（§115）／★読み path は 別体系★（本節）★ |
+| ★`audit review`★ | ★★adapter 8/16 が 実在せぬ path・★test が 之を 緑にし居る★★★ |
+
+★★∴ ★上申すべき 三択★★:
+```
+★甲 ―― 生きたる Claude の役にも 届かしむるならば ―― ★`CLAUDE.md` もしくは `instructions/{役}.md` を 改むる要あり★
+　　　 ⇒ ★★之は ★source edit★ ―― ★現に 禁（owner 許可待ち）★★
+★乙 ―― 生成器のみに留むるならば ―― ★効くは 他 CLI の役のみ★ と ★予め 明記すべし★
+★丙 ―― adapter の 8 cell を 直すならば ―― ★`lib/cli_adapter.sh` は ★己の担当外★ ⇒ ★owner の指名を要す★
+```
+
+### ■六 ★新條★
+
+★★★㍘ ―― ★『何が書かれたか』と『何が読まれるか』は ★別の測り★ ―― ★出力目録は 読み path を 証さぬ★★★★
+　―― ★理 ―― 器は `instructions/generated/shogun.md` を 851 行にて 吐き居るに ―― ★`CLAUDE.md` は 之を 一度も 指さず★
+　―― ★∴ ★『生成物の SHA を 悉く 凍結した』としても ―― ★生きた役が 其れを 読まねば coverage は 0★★
+　―― ★処方 ―― ★coverage を申す時は ★㊀器の書き先★ と ★㊁役の読み先★ を ★二つ 並べて 出せ★★
+
+### ■七 ★新予言★
+
+★★P118 ―― ★`generator-only canon addition then regenerate` を 打ち 緑を得ても ―― ★現に走り居る Claude の 12 役の挙動は 変ぜぬ★★★
+　★⇒ ★検め方 ―― 打ちたる後 `instructions/{役}.md` の blob が 変ずるか 見よ ―― ★変ぜずば P118 中り★★
+
+★★P119 ―― ★`tests/unit/test_cli_adapter.bats` を 走らせば ★緑★ が出る ―― ★8 個の path が 実在せぬに★★★
+　★⇒ ★理 ―― test は 文字列の一致のみを検め ★存在を 検めず★
+　★⇒ ★処方 ―― ★`[ -f "$result" ]` の一行を 加ふる裁を 乞へ★（★己は tests/ の担当外 ⇒ ★案に留む★）
