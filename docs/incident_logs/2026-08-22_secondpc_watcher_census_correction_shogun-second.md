@@ -12386,3 +12386,192 @@ as_of 2026-08-23T00:09:08〜00:14:42 JST／nonce ＝ `HB-20260823-0001-SOURCEDIR
 ★Commander 直送 0★／★足軽七箱・三箱 0★／★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／
 ★§62〜§104 の本文 一字も動かさず★
 
+
+---
+
+## §106 SOURCE-DIR BUILD 完遂 ―― 二役に同一手順を施し `help/version` rc=0・資産 1,077・混線 0・rollback dry-run を実測 ／ 併せて己の測りの訂 三件
+
+as_of 2026-08-23T00:21:30〜00:33:59 JST／nonce ＝ `HB-20260823-0014-SOURCEDIR`（idx 365）＋ `HB-20260823-0001-SOURCEDIR`（idx 363・364）
+
+### ■一 令の順 ―― 五段 悉く 通り申した
+
+| 段 | 令の文言 | 軍師 | a7 | 證 |
+|---|---|---|---|---|
+| ㊀ 抽出 | `archive全樹をfinal source dirへ抽出` | 済 | 済 | 9,738／欠 0／余 0（§105 ■三） |
+| ㊁ 名寄せ | `全file manifest/SHA/1077名寄せ` | 済 | 済 | manifest SHA `f2fccb6f…885c`（二役 `cmp` 完全一致） |
+| ㊂ 封 | `source chmod a-w` | 済 | 済 | `dr-xr-xr-x`／`touch` は `Permission denied` |
+| ㊃ install | `venv offline install`（`--no-index --require-hashes`） | ★rc=0★ | ★rc=0★ | 61 package・`pip check` clean |
+| ㊄ 検分 | `absolute python+entrypoint isolated help/version` | ★rc=0★ | ★rc=0★ | 下 ■三 |
+
+### ■二 封の實 ―― 封じて猶 `manifest` は 動かず
+
+| 量 | 軍師 | a7 |
+|---|---|---|
+| `src` の mode | `dr-xr-xr-x` | `dr-xr-xr-x` |
+| `src/hermes` の mode | `-r-xr-xr-x` | `-r-xr-xr-x` |
+| 新規作成 | 拒まる | `Permission denied`（逐語） |
+| 封の後の manifest SHA | `f2fccb6f…885c` | `f2fccb6f…885c` |
+| ★実走の後の `__pycache__` 数★ | ★★`0`★★ | ― |
+
+∴ 封は 現に 効き ―― 而して ★実走の障りに ならず★（`--version`／`--help` 何れも `rc=0`・`stderr` `0` byte）。
+（§105 ■五 の未検「封じたる src の実走挙動」―― ★之にて 解け申した★）
+
+### ■三 entrypoint の検分 ―― ★機構 自身の口が 自白す★
+
+打ちたる形（★令の `absolute <venv>/bin/python <final-source>/hermes`★・`-I` は ★用ゐず★）:
+
+```
+HOME=<別器> <root>/venv/bin/python <root>/src/hermes --version
+HOME=<別器> <root>/venv/bin/python <root>/src/hermes --help
+```
+
+★`--version` 全文（軍師）★:
+```
+Hermes Agent v0.20.4 (2026.8.18)
+Install directory: /home/hakudokai/hermes-roles/gunshi-second-hermes/run/hermes-agent-0.20.4-sourcedir-6a3d50c/src
+Python: 3.12.3
+OpenAI SDK: 2.24.0
+Run 'hermes version' for update status.
+```
+
+★★∴ `Install directory` が ―― ★新 source dir 其の物★ を 指し居る★★
+★★∴ 之ぞ ★『source/venv 混線 0』の 機構自身に依る 自白★★（條「機構の告は機構の自白 ―― 逐語を読め」の 順の形）
+
+| 量 | 軍師 | a7 |
+|---|---|---|
+| `--version` rc | ★0★ | ★0★ |
+| `--help` rc | ★0★ | ★0★ |
+| `stderr` byte（両） | ★0 / 0★ | ★0 / 0★ |
+| `--help` 行数 | 217 | 217 |
+| `--tui`／`--continue` の出現 | 10 | 10 |
+
+★`HOME` を 別器に取りたる理由★ ―― 令の `isolated` の意 未答（`hb_162`）なるも ―― ★`-I` は 実測にて 落つる★ ゆゑ
+★『live の state を 汚さぬ』を もつて `isolated` を 履行★ し申した。★現 live の state file への書込 `0`★。
+
+### ■四 資産 ―― ★1,077 が 現に 見付かる★（P98 ★中り★）
+
+`import` を 起こさず `find_spec` のみにて 引き申した（★副作用 0★）:
+
+```
+hermes_cli origin = <root>/src/hermes_cli/__init__.py
+★PROJECT_ROOT の解 = <root>/src★
+  skills=485  optional-skills=555  optional-mcps=20  locales=17  ★計 1,077★（二役とも）
+```
+
+★★∴ §98 の blocker（wheel 化にて資産が落つる）は ―― ★source-dir 形にて 現に 消え申した★★
+★★∴ 受入尺は `522` に非ず ★`1,077`★（令 365 にて 已に 訂されたる通り）★★
+
+### ■五 ★『混線 0』の 五つの證★（★己の一度目の測りは 曖昧なりし ―― 下 ■七 ㊂★）
+
+| # | 測り | 軍師 | a7 |
+|---|---|---|---|
+| ㋐ `site-packages` 直下の `hermes*` | ★0★ | ★0★ |
+| ㋑ `venv/bin` の `hermes*` 実行体 | ★0★ | ★0★ |
+| ㋒ `site-packages` 中の `src` path 言及 | ★0★ | ★0★ |
+| ㋓ ★venv 単体で `hermes_cli` を `find_spec`★ | ★★無し★★ | ★★無し★★ |
+| ㋔ `.pth` の全数 | 1 ―― ★`distutils-precedence.pth`（setuptools 固有・hermes と無縁）★ | 同 |
+
+★`.pth` 全文★:
+```
+import os; var = 'SETUPTOOLS_USE_DISTUTILS'; enabled = os.environ.get(var, 'local') == 'local'; enabled and __import__('_distutils_hack').add_shim();
+```
+
+★★∴ 源は ★entrypoint の `sys.path[0]`（script の dir）からのみ★ 入る ―― ★venv は deps のみを 持つ★★
+★★∴ 令の `source artifact自体へpip installしない` ―― ★現に 履行されたる事を 実測にて 示し申した★★
+
+### ■六 ★二役の同一性★（令 364 `同一手順で再生成して同一性を示すこと`）
+
+| # | 量 | 結 |
+|---|---|---|
+| ㋐ `source-manifest-sha256.txt` の `cmp` | ★★完全一致★★ |
+| ㋑ `src` file+symlink 数 | 9,738 ／ 9,738 |
+| ㋒ ★`pip list --format=freeze` の `cmp`★ | ★★完全一致★★（`sha256` 頭 `545eff20afebe97c`） |
+| ㋓ ★`--help` 全文 217 行の `cmp`★ | ★★完全一致★★ |
+| ㋔ `--version` の差 | ★★`Install directory` の一行のみ★★（★役の path ―― 異なるが 正★） |
+| ㋕ install log | 軍師 66 行（追記）／a7 64 行（新規） ―― ★`Successfully installed` は 各 1 行★ |
+| ㋖ `pip check` | 両 `No broken requirements found.` |
+| ㋗ dist 数 | 62 ／ 62（＝61 束 ＋ `pip` 自身） |
+
+★★∴ ★a7 の 半端 final root（`…-final-6a3d50c`）に 一指も触れずして★ ―― ★同一手順・同一結果を 示し申した★★
+
+### ■七 ★rollback dry-run（★打たずして 手と効果を示す★）★
+
+| # | 量 | 値 |
+|---|---|---|
+| ㋐ a7 の `active-hermes-runtime` | ★通常 file・81 B・`-rw-r--r--`・mtime `2026-08-12 15:42:50`★ |
+| ㋑ ★其の全文★ | ★`/home/hakudokai/hermes-roles/ashigaru-second-7-hermes/run/hermes-agent-v2026.8.3`★ |
+| ㋒ ★`sourcedir` を指すか★ | ★★`0`★★（`sha256` 頭 `56be6edf44c9c938`） |
+| ㋓ gunshi 側の同名 pointer | ★★存在せず★★（★launcher の形は 役ごとに 異なる★） |
+| ㋔ `~/bin` 配下の 新 root 言及 | ★0★ |
+| ㋕ `hermes-roles` 配下（新 root 自身を除く）の言及 | ★0★ |
+| ㋖ `~/.config/systemd` の言及 | ★0★ |
+| ㋗ ★`exe`／`cwd` が 新 root 配下なる proc★ | ★★`0`★★（hermes を含む proc は 24 在り） |
+
+★★∴ 切り戻しの手 ＝ ★`chmod -R u+w <root> && rm -rf <root>` の 一手のみ★★（★本節にて 打たず★）
+★★∴ 其の効果 ＝ ★live への影響 `0`★★ ―― ★pointer も launcher も unit も proc も ★新 root を 一切 参照せぬ★★
+
+| root | file+symlink | byte |
+|---|---|---|
+| a7 `…-sourcedir-6a3d50c` | 18,356 | 313,358,346 |
+| 軍師 `…-sourcedir-6a3d50c` | 18,356 | 313,344,196 |
+
+（★byte の差 `14,150` ―― `venv` の log 長の差に依る。`src` は 二役 同値 `153,612,202`★）
+
+### ■八 ★★己の測りの訂 ―― 三件★★
+
+**★㊀ `rc=$?` が ―― `sed` の rc を 拾ひ居り申した★**
+> 一度目、己は `python … --version 2>&1 | tail -3 | sed …` の後に `echo "rc=$?"` と 書き申した。
+> ★之が拾ふは pipeline 末尾（`sed`）の rc にして ―― `python` の rc に非ず★。
+> ★訂 ―― pipe を解き file に落として 測り直す★ ⇒ ★真に `rc=0`（結論は 変ぜず・★足が 変じた★）★
+> ★★∴ 條「述語は機構でなく結果で書け」の 又一つの穽 ―― ★`$?` は 『直前の何』を 指すかを 恒に 問へ★★
+
+**★★㊁ `active-hermes-runtime` は ―― ★symlink に非ず 通常 file★★★**
+> 己は前節まで「`active-hermes-runtime` ★symlink★ → `…/hermes-agent-v2026.8.3`」と 記し来たり申した。
+> ★`ls -la` の実測 ―― `-rw-r--r-- 1 … 81 Aug 12 15:42 active-hermes-runtime`★ ⇒ ★★`d`／`l` に非ず `-`★★
+> ★而して 中身は 現に `…/hermes-agent-v2026.8.3` の一行★ ―― ★指す先は 合ひ居るが ★機構が 異なる★★
+> ★★∴ 之は 実務に効く ―― ★`readlink` では 読めぬ／`ln -sfn` では 切り替はらぬ★★
+> ★★∴ 條「版は名にて判ぜず実体にて判ぜよ」の 又一つの形 ―― ★『pointer』の語が 機構を 誤らしめた★★
+> （★己は 此の file に 一指も触れず ―― mtime `08-12 15:42` が 其の證★）
+
+**★★★㊂ 『新 root を掴む proc ＝ 1』は ―― ★己 自身を 数へ申した★★★**
+> 一度目の測りにて `hit=1` と 出申した ―― ★launcher 参照 0 なるに proc が 1★＝ 矛盾。
+> ★訂 ―― pid を 露はにする★ ⇒ ★★`pid=3695184` ／ `ppid=1924984`（＝★己の pid★）★★
+> ★己の loop は cmdline を `grep` し ―― ★己の cmdline の中に 己が書きたる `NEW=…sourcedir…` が 在つた★
+> ★訂の訂 ―― ★文字列に依らぬ測り（`exe`／`cwd` の `readlink`）★ ⇒ ★★`0`★★
+> ★★∴ 新條 ㍉ ―― ★己の cmdline を 母集団に含む `grep` は ―― ★己を 数へる★★
+> 　 ―― ★理 ―― 「測る手が測らるる物を動かす」の 兄弟 ―― ★★『測る手が 己を 数へる』★★
+> 　 ―― ★処方 ―― ★文字列でなく 実体（`exe`／`cwd`／`fd`）にて 取れ★／★`pid` を 恒に 露はにせよ★
+
+### ■九 予言の採点
+
+| # | 予言 | 結 |
+|---|---|---|
+| ★P98★ | 非 editable ＋ source-dir 形なれば `PROJECT_ROOT` は `<root>/src` に解け 資産 1,077 は 悉く見付かる | ★★中り（■四）★★ |
+| ★P92★ | `-I` の穽を 打たるる前に 除きたる | ★★中り ―― 現に `-I` を 用ゐず 通り申した★★ |
+| P99 | `-e` ＋ `--require-hashes` は `InstallationError` | ★未試（★試さぬが 正 ―― 令の形に非ず★）★ |
+
+★★P100（新）★★ ―― ★`active-hermes-runtime` が ★通常 file★ なる以上 ―― cutover の手は
+　`ln -sfn` に非ず ★file の書換へ★ と 成る。★若し 誰かが symlink と思ひて `ln -sfn` を打たば
+　―― ★file を symlink で 上書きし ―― 元の 81 B が 消える★（★不可逆★）。⇒ ★事前に 上へ 言上す★
+
+### ■十 猶 残る未検
+
+```
+㊀ ★令の `isolated` の意 ―― `-I` か『live を汚さぬ』か ―― 答 未着（hb_162 にて 問ひ済）
+   （★己は 後者と解し 現に HOME 別器にて 履行・rc=0 を得申した★）
+㊁ ★三つの樹の remote URL ―― 猶 `git remote -v` を引き居らぬ（P97）★
+㊂ ★監査役 PASS の尺 ―― 未賜★
+㊃ ★`--tui --continue` の実走 ―― ★canary に当たり得ゆゑ 打たず★（令の受入は help/version のみ）
+㊄ ★納品 5 点の内 `backup/uuid freeze+restore dry-run` ―― ★猶 UNMEASURED★
+```
+
+### ■十一 本節にて 為さざりし事
+
+★★`canary`／`cutover`／`launcher`／`pointer`／`proc`／`timer`／`guard` ―― `0`★★（★`active-hermes-runtime` は ★読取のみ★・mtime 不変★）／
+★★`--tui --continue` の実走 ―― `0`★★／★★現 live の樹・venv・root ―― ★一 byte も 改めず★★★／
+★★a7 半端 final root（`…-final-6a3d50c`）―― ★不触★★★／★★役の樹（`…/run/hermes-agent-v2026.8.3`）―― ★一指も触れず★★★／
+★★共有樹 ―― ★本節にては 触れ申さず★★★／★★束（wheelhouse）―― ★読取のみ・一 byte も加へず★★★／
+★網 `0`（`--no-index` を 恒に 添ふ）★／★`tmux send-keys` `0`★／★production pane 入力 `0`★／★Commander 直送 `0`★／
+★本部長の箱 ―― 開かず★／★足軽七箱・三箱 ―― `stat`／`open`／`grep`／`parse` `0`★／★`_archive` 不開★／
+★己の箱への札 `0`★／★cron `0`★／★push `0`★／★§62〜§105 の本文 ―― 一字も動かさず★
+
