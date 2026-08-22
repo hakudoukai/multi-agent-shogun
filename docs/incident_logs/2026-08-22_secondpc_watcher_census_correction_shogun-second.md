@@ -11955,3 +11955,137 @@ build-backend = "setuptools.build_meta"
 ★己の箱への札 0★／★cron 0★／★push 0★／★§62〜§101 の本文 一字も動かさず★／
 ★玩具の器（`rostrength`）―― ★験しの後 消し申した（rc=0）★★
 
+
+---
+
+## §103 呼び手を悉く引き §99 の機序を訂す ―― 落つるは三段目に非ず二段目 ／ 而して源の docstring が「editable install」を名指しで支へ「even when missing」と自白し居る
+
+as_of 2026-08-22T23:51:19〜23:52:38 JST／便 hb_159（285 字・§102 の訂）は 23:50:40 に送達済
+測りは ★悉く 読取のみ★（対象＝scratchpad の `src6a3d50c/`＝6a3d50c の archive・★hermes 樹に一指も触れず★・build 0・網 0）
+
+### ■一 何故 本節を起こしたか ―― ★己の献策の 成否を決する 一点★
+
+§99 ■七 にて己は ★偽の緑の機序★ を `get_bundled_skills_dir` の三段にて 押さへ申した。
+★而して ―― ★己の方式（frozen source-dir ＋ editable）が 成るか否かは ―― ★呼び手が `default` を 渡すか★ に懸かる★★。
+★若し 誰も渡さずば ―― ★★己の方式も 亦 空しき path に 落つる★★。⇒ ★呼び手を 悉く 引き申した★。
+
+### ■二 ★呼び手の全数（`build/` `egg-info/` を除く）★
+
+| 函数 | 呼び手 | 渡す `default` |
+|---|---|---|
+| `get_bundled_skills_dir` | `tools/skills_sync.py:114` | `Path(__file__).parent.parent / "skills"` |
+| `get_optional_skills_dir` | `hermes_cli/claw.py:38` | `PROJECT_ROOT / "optional-skills"` |
+| 〃 | `hermes_cli/setup.py:2495` | `PROJECT_ROOT / "optional-skills"` |
+| 〃 | `tools/skills_sync.py:119` | `Path(__file__).parent.parent / "optional-skills"` |
+| 〃 | `tools/skills_hub.py:3342` | （同型） |
+| 〃 | `gateway/run.py:3474` | `repo_root / "optional-skills"` |
+| `get_optional_mcps_dir` | `hermes_cli/mcp_catalog.py:164` | `Path(__file__).parent.parent / "optional-mcps"` |
+| `get_bundled_locales_dir` | ★該当 函数 無し★ | ―（■四にて 別経路と判明） |
+
+★`PROJECT_ROOT` の実体（逐語）★:
+```
+hermes_cli/claw.py:35   PROJECT_ROOT = Path(__file__).parent.parent.resolve()
+hermes_cli/setup.py:31  PROJECT_ROOT = Path(__file__).parent.parent.resolve()
+gateway/run.py:3473     repo_root  = Path(__file__).resolve().parent.parent
+```
+
+★★∴ 悉く ★`__file__` の 二つ上★★ ―― ★『package の親』＝ ★install されたる場所の 根★★。
+
+### ■三 ★★機序の訂 ―― 落つるは ★三段目★ に非ず ★★二段目★★★★
+
+| 形 | `__file__` | `default` の解 | 資産 |
+|---|---|---|---|
+| ★源樹／editable★ | `<src>/hermes_cli/claw.py` | ★`<src>/optional-skills`★ | ★★在る★★ |
+| ★wheel（非 editable）★ | `site-packages/hermes_cli/claw.py` | ★`site-packages/optional-skills`★ | ★★在らぬ★★ |
+
+★★∴ §99 ■七 にて己が書きたる「①env 無し ②源樹 無し ⇒ ③の 空しき path を返す」は ★機序として 誤り★★:
+
+> ★呼び手は ★恒に `default` を 渡す★★ ⇒ ★★三段目（`<HERMES_HOME>/skills`）には ★到らぬ★★★
+> ★★二段目にて ★『在らぬ path』を そのまま 返して 終はる★★★
+
+★★結果（空）は 同じ ―― ★機序が 違ふ★★
+　（條「★正しき答を 誤れる機序にて 得たる時は ―― ★答を残し 機序を書き換へよ★★」―― ★本節は 其の履行★）
+
+★★而して ―― ★訂したる機序の方が ★悪い★★★:
+- 三段目に落つるならば ―― `<HERMES_HOME>/skills` は ★他の目的にて 存在し得★ ⇒ ★中身の混同★
+- ★二段目にて 止まるならば ―― ★`site-packages/skills` は ★決して 存在せぬ★★ ⇒ ★★恒に 空★★
+⇒ ★★『時々 動く』の望みすら 無い ―― ★wheel 方式は ★確定的に★ 資産を 失ふ★★★
+
+### ■四 ★★源 自身の 自白 ―― `agent/i18n.py` の docstring 逐語★★
+
+`locales` は 別経路（`agent/i18n.py:_locales_dir()`）に御座つた（`hermes_constants.py` に非ず）。
+★而して ―― ★其の逐語が 本件の ★最強の足★ に御座る★★:
+
+```python
+def _locales_dir() -> Path:
+    """Return the directory containing locale YAML files.
+
+    Resolution order, first existing wins:
+
+    1. ``HERMES_BUNDLED_LOCALES`` env var -- set by the Nix wrapper (or any
+       sealed-packaging system) to point at the installed catalog directory.
+    2. ``<repo-root>/locales`` -- ★source checkouts and editable installs★,
+       where the working tree sits next to ``agent/``.
+
+    ★Falling through to the source-style path (even when missing)★ keeps
+    ``_load_catalog`` error messages informative -- it logs the path it
+    looked at -- ★rather than raising★.
+    """
+    override = os.getenv("HERMES_BUNDLED_LOCALES", "").strip()
+    if override:
+        candidate = Path(override)
+        if candidate.is_dir():
+            return candidate
+        logger.warning(...)
+    # agent/i18n.py -> agent/ -> repo root (source checkout, editable install)
+    source_dir = Path(__file__).resolve().parent.parent / "locales"
+    return source_dir
+```
+
+★★之が 一度に 三事を 証し申す★★:
+
+| # | 逐語 | 証する事 |
+|---|---|---|
+| ㊀ | ★`source checkouts and editable installs`★ | ★★源は ★editable install を 名指しで 支ふる形★ と 明記★★ ⇒ ★己の方式は 源の設計の内★ |
+| ㊁ | ★`even when missing`★ | ★★源 自身が ★『無くても 素通りする』★ と ★明文にて 認め居る★★★ ⇒ ★偽の緑の 自白★ |
+| ㊂ | ★`rather than raising`★ | ★★『例外を投げぬ』は ★手落ちに非ず 意図★★★ ⇒ ★§99 ■七 の説の 源による 裏書き★ |
+
+★★∴ 己の「偽の緑」の説は ―― もはや ★推量でも 機序の読みでも 無く ―― ★★源の docstring に 書かれ居る★★★
+（★且つ ㊀ は ★『Nix wrapper (or any sealed-packaging system)』が env を要する★ とも 明記 ⇒
+　 ★★『封じたる包み』は ★env を 与へねば ならぬ★ と 源が 言ふ★★ ―― ★之が §98 の 522／1,077 の 正体★）
+
+### ■五 ★★献策への効 ―― 己の方式は「源が 支ふる 唯一の形」★★
+
+| 方式 | 源の支ふる形か | 資産 | env 要 | launcher 改変 |
+|---|---|---|---|---|
+| 非 editable wheel | ★否★ | ★★確定的に 0★★ | ★要★（4 種） | ★要★ ⇒ ★令に触る★ |
+| ★frozen source-dir ＋ editable★ | ★★是（docstring に 名指し）★★ | ★★1,077 悉く★★ | ★不要★ | ★不要★ |
+| 共有樹の checkout | 是 | 1,077 | 不要 | 不要 ★然れど 二役同時に変ず＝爆風★（令にて 禁） |
+
+★★∴ 三つの内 ―― ★令を 一つも 破らずに 成るは ★中の一つのみ★★★
+
+### ■六 予言の更新
+
+- ★P94（新）★ ―― 若し 非 editable wheel 方式を 採らば ―― ★資産は「時々 見付かる」に非ず ★恒に 0★★
+  ⇒ ★canary が 緑を出さば ―― ★其の緑は 資産を 使はぬ経路のみを 通つた事の 證★★（★＝偽の緑の 定義そのもの★）
+- ★P95（新）★ ―― 若し env 4 種（`HERMES_BUNDLED_SKILLS` 他）にて 補はんとせば ―― ★launcher の改変が 要り★
+  ⇒ ★★§99 P87 の衝突（launcher 不触の令）に 現に 触る★★
+
+### ■七 新條
+
+★★★條 ㍄ ―― ★源を読む時は ★『何を 為すか』のみならず ★『何を 敢へて 為さぬか』の 記述★ を 探せ★★★
+　 ―― ★理 ―― 本件の決め手は ★`even when missing`★ と ★`rather than raising`★ ―― ★★否定形の 二句★★。
+　 ―― ★★機構は 時に ★己の欠陥を docstring に 書き残す★★ ―― ★之を 見出だせば 推量が 引用に 変ず★
+
+★★★條 ㍅ ―― ★己の説の ★成否を決する前提★ を 名指しで 挙げ ―― ★其れを 先に 検めよ★★★
+　 ―― ★理 ―― 本節の問は「呼び手は `default` を渡すか」の一点 ―― ★★若し 渡さずば 己の献策 其の物が 倒れた★★。
+　 ―― ★★己の献策を 上へ 差し出す前に ―― ★其れが 倒れる条件★ を 己で 引き申すべきであつた★（★本節は 遅れたる履行★）
+
+### ■八 本節にて 為さざりし事
+
+★build 0★／★網 0★／★hermes 樹 ―― ★一指も触れず（本節の測りは 悉く scratchpad の archive 写し）★★／
+★役 venv 三つ 不触★／★束 不触★／★現 root 二本 不変★／★a7 半端 root 保存★／★軍師樹 着手 0★／
+★launcher/pointer/proc/timer/guard/canary/cutover 0★／★tmux send-keys 0★／★production pane 入力 0★／
+★Commander 直送 0★／★足軽七箱・三箱 0★／★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／
+★§62〜§102 の本文 一字も動かさず（★§99 ■七 の訂も ★本節にて 新たに 書く★ ―― ★元の本文は 動かさず★）★
+
