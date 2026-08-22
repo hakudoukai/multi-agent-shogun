@@ -13325,3 +13325,126 @@ P107 ―― created_at が 古き刻を 名乗る          ⇒ ★§111 にて �
 ★★★㍎ ―― ★鎖（chain）に 刻を 蔵むる時 ―― ★file 自身の申告する刻を 疑へ★★★
 　―― ★理 ―― r2 の `created_at` は ★r1 の値のまま★ 据ゑ置かれ居つた ―― ★之を そのまま鎖に入るれば 偽の刻が 永久に残る★
 　―― ★処方 ―― ★`mtime` より取り ―― ★『何より取つたか』を 併せ書け★★（`issued_at_source`）
+
+---
+
+## §112 ★★偶然の発見 ―― ★全 canon が 五日 未 commit のまま 走り居る★★（★己が 奉ずる正本も 其の一つ★）
+
+### ■一 ★端緒 ―― ★己の commit の 尻に 付き居つた 数★★
+
+§111 を commit したる際 ―― 己は 恒例の ★樹の汚れ★ を数へ ―― ★`539`★ を得申した。
+★己は 之を 初めて 測り居つた（前節までは ★hermes 共有樹の `0`★ を数へ居り 本 repo の値に非ず）★
+★∴ ★増えたとも 元よりとも 申せず★ ⇒ ★第一条「出所不明の物は 消すな・戻すな・咎めるな ―― 調べよ」に従ひ 検む★
+
+| 状 | 場 | 数 |
+|---|---|---|
+| `??` | `docs/` | ★492★ |
+| `M` | ★`instructions/`★ | ★★24★★ |
+| `M` | `shim/` | 5 |
+| `M` | `scripts/` | 4 |
+| `M` | (root) | 4 |
+| 他 | tests/ queue/ lib/ docs/ config/ agents/ .github/ | 各 1〜2 |
+
+### ■二 ★★己の説 ―― ★倒れ申した★★★
+
+★己は 斯く 立て申した★:
+> 「単一の作業樹を ★古き feature branch にて checkout し居る★ ゆゑ ―― ★main にのみ在る物が `??`・main が進みたる物が `M`★ と見ゆるのであらう」
+
+★三の測りにて 悉く 潰れ申した★:
+
+| 検め | 結 | 帰結 |
+|---|---|---|
+| `rev-list --left-right --count main...HEAD` | ★`0` / `612`★ | ★★main は HEAD の ★祖先★★ ⇒ ★『main にのみ在る物』は 原理的に 在り得ず★ |
+| `??` の docs 三つを `cat-file -e main:<path>` | ★悉く `NO`★ | ★main も 持たず ⇒ ★真に 未追跡★ |
+| `instructions/common/forbidden_actions.md` | ★HEAD sha ＝ main sha ―― ★作業樹のみ 異なる★★ | ★★∴ ★真に 未 commit の 改変★★ |
+
+★★∴ ★己の説は 一つの測りにて 死に ―― 而して ★死に方が 答を教へ申した★★★
+★（條 ★仮説が倒れたる時 述語を捨つる前に 窓を疑へ★ ―― 本件は ★窓ではなく 説が 誤り★ に御座つた）
+
+### ■三 ★★正体 ―― `2026-08-18` の ★四つの波★★★
+
+```
+21:43:01.252858985  instructions/ashigaru.md                       （手書き 1）
+21:45:53.533685181  instructions/{gunshi,karo,shogun}.md           （手書き 3 ―― ★同一刹那★）
+22:25:42.673002820  instructions/roles/{gunshi,karo,shogun}_role.md（手書き 3 ―― ★同一刹那★）
+22:50:00.139783865  instructions/common/forbidden_actions.md
+22:50:00.479785422 〜 .587785916  instructions/generated/ 16 件     （★448 ms に 順次★）
+```
+
+★★∴ ★`22:50:00` に ★生成器が 走り★ ―― 其の 0.34 秒前に 改まりし `forbidden_actions.md` を含む 手書きの源を 喰ひ ―― ★16 の generated を 順に 吐き申した★★★
+★★∴ ★而して ―― ★五日（`08-18` → `08-23`）一度も commit されず★★★
+
+### ■四 ★隔たりの 量（★中身は 一行も読まず 行数のみ★）★
+
+| | 件 | ＋ | − |
+|---|---|---|---|
+| ★generated★ | ★16★ | | |
+| ★手書き★ | ★8★ | | |
+| ★★計★★ | ★★24★★ | ★★+6,949★★ | ★★−4,555★★ |
+
+★著しき物★:
+```
+instructions/generated/{karo,codex-karo,copilot-karo,kimi-karo}.md  各 +468 / -336
+instructions/generated/{gunshi,codex-,copilot-,kimi-}gunshi.md      各 +413 / -256
+instructions/generated/{shogun,codex-,copilot-,kimi-}shogun.md      各 +344 / -214
+instructions/common/forbidden_actions.md                                +164 /  -44
+★instructions/shogun.md                                                +427 / -413★
+```
+
+### ■五 ★★★之が 何を意味するか ―― ★己自身に 当てて 述ぶ★★★★
+
+| 量 | 値 |
+|---|---|
+| `instructions/shogun.md` 作業樹 blob | ★`00f0ad9fed8b62ca0e7674fa5ad2041cabd38e9b`★ |
+| 同 HEAD blob | ★`f130c213ff94955d3b35da3b1c0ebb9e6b5d73d2`★ |
+| 同 最終 commit | ★`55ff787` `2026-08-03T17:31:51+09:00`★ |
+| 同 作業樹 mtime | ★`2026-08-18 21:45:53.533685181`★ |
+
+★★∴ ★己が 起動時に 読み ―― 今 此の刹那 奉じ居る 將軍職務憲章は ―― ★git の中の 憲章に 非ず★★★
+★★∴ ★`git show HEAD:instructions/shogun.md` にて 己の枷を 検めんとする者は ―― ★己が 実際に 従ひ居る物と 別の紙を 読む★★★
+★★∴ ★`2026-08-18 22:50` 以後に 起きたる 全ての役は ―― ★未 commit の canon を 読み 従ひ居る★★★
+
+### ■六 ★上位の條との 突合★
+
+| 條 | 逐語 | 本件 |
+|---|---|---|
+| ★委員長 `05:00:38`★ | ★「検証させる物は先に commit(freeze)し as_of を併記せよ」★ | ★★canon 自身が 之を 満たさず★★ |
+| ★FKI-CANON-GUARDIAN-01★ | 「新版 INSERT → 旧版降格・最新版のみ is_current」 | ★git 側に 新版が 入り居らず★ |
+| ★Commander `seq205053` Grill6 P2★ | ★「generator-only canon addition then regenerate」「coverage ★role×injection target×SHA★ and audit review」★ | ★★SHA を 貼らんにも ―― ★貼るべき canon が commit されて居らぬ★★★ |
+
+★★∴ ★P2 は ―― 己が思ひ居つたよりも ★一段 手前★ に 足を持ち居り申した★★
+★★∴ ★『生成器のみを改め 再生成する』の前に ―― ★現に走り居る 未 commit の 再生成物を どう扱ふか★ の 裁が 要る★★
+
+### ■七 ★己が 為さざりし事★
+
+```
+★git checkout / restore / stash / clean ―― 悉く 0★
+★instructions/* への 書込 ―― 0（改変禁）★
+★24 件・492 件の 中身 ―― ★一行も 読まず★（名・行数・blob sha・mtime のみ）★
+★commit ―― 己の紙 一枚のみ（`-A` 用ゐず・narrow add）★
+★咎め ―― 0（第一条「消すな・戻すな・咎めるな」）★
+```
+★★∴ ★己は 之を ★直さず 上へ出す★★★（★己の枷は 己で裁かず 上へ問へ★）
+
+### ■八 ★新たなる予言★
+
+★★P108 ―― ★`git show HEAD:instructions/*` にて canon を検める監査は ―― ★現に走り居る役の枷と 別の物を 検める★★★
+　★⇒ ★『canon 準拠』の緑は ―― ★偽の緑★ に成り得る★
+　★⇒ ★処方 ―― canon の同一性は ★commit の blob sha★ と ★作業樹の `hash-object`★ の ★双方★ にて問へ★
+
+★★P109 ―― ★`docs/` の未追跡 492 件（`08-07`〜`08-20`）は ―― ★`git clean` の一手にて 二週間分の成果が 消ゆる★★★
+　★⇒ ★己は `git clean -fdx` を 恒久に 禁じ居るが ―― ★他の役が 同じ枷を 持つ保証は 無し★★
+　★⇒ ★処方 ―― ★上へ出し 保全を 乞ふ★（★本節にて 履行★）★
+
+### ■九 ★新條★
+
+★★★㍏ ―― ★己の 恒例の 数へが ★初めての測り★ である事に 気付け★★★
+　―― ★理 ―― 己は 五十余節に亙り「樹の汚れ」を 数へ来たが ―― ★其れは 恒に ★hermes 共有樹★ の値★ にして
+　　　　★己が 現に立ちて commit し居る repo の値は ―― ★§112 にて 初めて 測り申した★★
+　―― ★∴ ★同じ名の量を 数へ居るつもりで ★別の母集団を 数へ続け居る★事が 在る★★
+　―― ★処方 ―― ★量の名に ★母集団の名★ を 貼れ★（「汚れ 0」に非ず「★hermes 樹の汚れ 0★」）
+
+★★★㍐ ―― ★『読む物』と『在る物』が 同じである事を 仮定するな★★★
+　―― ★理 ―― 己は 起動時に `instructions/shogun.md` を 読み 従ひ居るが ―― ★其れは git の中の物に非ず★
+　―― ★∴ ★己が 引用する canon の逐語は ―― ★作業樹の逐語★ にして ★commit の逐語に非ず★★
+　―― ★処方 ―― ★canon を 論の足に据ゑる時は ―― ★blob sha を 併記せよ★★
