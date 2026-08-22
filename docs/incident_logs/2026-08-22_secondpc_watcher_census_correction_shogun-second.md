@@ -10758,3 +10758,163 @@ stat -c %s probe                             → ★717455 B★
    ―― ★★而して ★一回★ ならば ―― ★誤れる command は ★唯一の 機会を 焼く★★★
    ―― ★★∴ ★『器が 無い』は ★己の側で 補ひ得★ ―― ★然れど ★『何を 撃つか』は 補ひ得ず★★★
 ```
+
+---
+
+## §九十五 ―― ★★wheelhouse ―― ★他者の手にて 成り★ ―― ★己 独立に 検収し ★悉く 通り★★★★ ―― ★★而して ★覆ひに 穴 四つ★ を 見出だし申した★★（★★`offline-verify` は ★原理上 之を 検め得ず★ ―― ★E4 の『偽の緑』と 同じ形★★★）
+
+**as_of** `2026-08-22T22:32:39+0900`／前節 `§九十四`（`de7e1914` / `10,760` 行）
+
+---
+
+### ■一 ★★二通 ―― ★己が 前検分を為し居る 其の最中に 届き居り申した★★★
+
+```
+★己の前検分 ―― `22:04:54` 〜 `22:06:32`
+★★而して ―― ★便 は `22:05:56` に 已に 届き居り申した★★（★己の検分の ★36 秒 前★★）
+★★∴ ★己が 『欠く』と 申したる ★四値の逐語★ は ―― ★★其の時 已に 己の箱の中に 在り申した★★★
+```
+
+> ## **★★★★★條 ㌲ ―― ★長き 検分の ★最中★ にも ―― ★箱は 動き居る★★★ ―― ★★∴ ★『欠く』を 上へ 告ぐる 直前に ★今 一度★ 箱を 読め★★★（★己の條 ㌃ は『便を出す前』と申せり ―― ★而して ★検分の結論が 固まる前★ にも 要る★）★★★★**
+
+★★上意 逐語 ㊀（idx `353`・`22:05:56`・`S1 wheelhouse EXECUTION GO`）★★
+```
+承認source=6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f、
+lock=commit内uv.lock blob 4c160fe6cb6b23117493b98251d601842b000a62 / SHA256=8fd868…fddec。
+専用空dirを新設し、★lock全hashを使ふ 一回限り download-only（--require-hashes 必須）★でwheelhouseを構築。
+★index/command/log を freeze し、以後 network 0★。
+納品5点bundle: manifest+全wheel name/size/SHA/tag、source/lock ref、offline command、final path+tags、
+backup/uuid freeze+restore dry-run。現root/launcher/pointer/proc/timer/guard/canary/cutover=0。
+```
+★★上意 逐語 ㊁（idx `354`・`22:11:28`・`nonce=HB-20260822-2211-WHEELHOUSE`）★★
+```
+本部長 22:11 wheelhouse完了。専用wheelhouse=/home/hakudokai/hermes-wheelhouse-6a3d50c、
+★57 wheels 全SHAが承認lock内★、★offline --no-index --require-hashes 検証PASS★。
+manifest SHA=54a57cb08f568b31c9d1f852a342fd3733a1bf29e8a934cb54aaea14c785e242。
+現段は★環境部長 read-only receipt 待ち★。final root/launcher/proc は 0 を維持。
+```
+
+```
+★★∴ ★己は ★実装担当★ と 名指されたるも ―― ★★一 byte も 撃たず★★ ―― ★他者の手にて 成り申した★
+★★∴ ★己の 為すべき事は ―― ★★『執行』より『検収』へ 転じ申した★★★
+   ―― ★己の條 ―― ★★伝聞は 己の器にて 検めてから 広めよ★★
+```
+
+---
+
+### ■二 ★★★★★独立検収 ―― ★七項 悉く 通り申した★★★★★（as_of `22:30:54`〜`22:31:49`・★読取のみ・網 `0`★）
+
+| # | 験す物 | 報告の側 | ★己の器の測り★ | 判 |
+|---|---|---|---|---|
+| ㊀ | wheel の数 | `57` | ★`downloads/` ＝ ★`57`★★ | **★一致★** |
+| ㊁ | ★★全 SHA が 承認 lock 内★★ | `true` | ★`57` の sha256 を ★己が 算し★ ―― lock の `sha256:` ★2,048★ の集合に 照合 ⇒ ★in_lock `57`／NOT_in_lock ★`0`★★★ | **★★一致★★** |
+| ㊂ | manifest SHA | `54a57cb0…e242` | ★`54a57cb08f568b31c9d1f852a342fd3733a1bf29e8a934cb54aaea14c785e242`★ | **★一致★** |
+| ㊃ | manifest の 57 entry | ― | ★`name`/`sha256`/`bytes` を 現物と 突合 ⇒ ★matching `57`／mismatch ★`0`★★★ | **★一致★** |
+| ㊄ | ★二写しの同一★ | ― | ★`downloads` と `offline-verify` ―― 名 `57`/`57` 共通・欠 `0`・余 `0`・★byte 同一 `57`／不同 `0`★★ | **★一致★** |
+| ㊅ | requirements の hash | ― | ★`--hash=sha256:` ★`526`★ ―― ★悉く lock の部分集合（outside ★`0`★）★／落ちたる 57 は 悉く 之に 覆はる★ | **★一致★** |
+| ㊆ | ★★承認 source／lock の 自證★★ | ― | ★manifest `approved_source` ＝ commit `6a3d50c6e05…b9f`／blob `4c160fe6…a62`／lock sha `8fd868…fddec` ―― ★§94 にて 己が 樹より 直に 測りたる値と 一致★★ | **★★一致★★** |
+
+```
+★★★∴ ★本部長殿の御報 ―― ★★己の器にて 独立に 裏書き 仕り候★★★★
+★★★而して ―― ★之は ★『lock に 対する 正しさ』★ に 御座る★★（★★下に 申す 穴は ★別の 問★★）
+★★註 ―― ★己が 一度 `whl=114` と 見たるは ★境の取り方★ に御座る★（★二写し ―― `downloads` ＋ `offline-verify`★）
+   ―― ★己の條 ★『数が割れたる時 境の取り方を露はにして 悉く測れ』★ ―― ★上へ告ぐる前に 己にて解け申した★
+```
+
+---
+
+### ■三 ★★★★★★★見出だしたる 一事 ―― ★覆ひの 穴 ★四★★ ―― ★★而して `offline-verify` は ★原理上★ 之を 検め得ず★★★★★★★
+
+★★㊀ ★`offline_verification` の逐語（manifest より）★★
+```
+pip download --no-index --find-links downloads --dest offline-verify --require-hashes
+             -r requirements-cp312-linux-require-hashes.txt
+status: passed
+```
+```
+★★★∴ ★之が 験し居る物は ―― ★★『downloads の中の wheel が ★同じ requirements★ を 満たす』★★★
+★★★而して ―― ★験し居らぬ物は ―― ★★『其の requirements が ★入るべき物を 覆ひ居るか★』★★★★
+★★∴ ★★★入力と 期待が ★同一の file★ ゆゑ ―― ★★恒に 通る★★★★（★★同語反復★★）
+★★★∴ ★★之は ―― ★己が E4 にて 見出だしたる ★『偽の緑』★ と ★★同じ形★★ に御座る★★★
+   ―― ★E4 の (a) ＝ 「空と判じたゆゑに非ず ★border 無くて そもそも 見出だせぬ★ ゆゑ 通りたる」
+   ―― ★本件 ＝ 「覆ひが 足りたるゆゑに非ず ★覆ひ 其の物を 尺と為したる★ ゆゑ 通りたる」
+```
+
+★★㊁ ★然らば 尺を ★外★ に取れ ―― ★前夜の ★現に成りたる 実 install★ を 尺と為し申した★★
+★尺 ―― `/home/hakudokai/hermes-staging-0.20.4/full_install.log` の `Successfully installed` 一行（★§九 にて 已に 逐語を 押さへ居る★）★
+
+| 側 | 数 |
+|---|---|
+| ★wheelhouse の requirements★ | ★`57`★ |
+| ★前夜 現に入りたる物★ | ★`61`★ |
+
+★★★差 ―― ★PEP 503 正規化の 後★★★:
+
+| 名 | 前夜 | wheelhouse | ★承認 lock の中★ | 判 |
+|---|---|---|---|---|
+| `hermes-agent` | ★在★ | ★無★ | ★在★ | ★★穴に非ず★★（★`build_command` に「then install approved source with `--no-index --no-deps`」と 明記★） |
+| ★`httptools`★ | ★在★ | ★★無★★ | ★★在★★ | **★★穴★★** |
+| ★`socksio`★ | ★在★ | ★★無★★ | ★★在★★ | **★★穴★★** |
+| ★`uvloop`★ | ★在★ | ★★無★★ | ★★在★★ | **★★穴★★** |
+| ★`watchfiles`★ | ★在★ | ★★無★★ | ★★在★★ | **★★穴★★** |
+| `setuptools` | 無 | ★在★ | ★在★ | ★余 ―― 害無しと見ゆ★ |
+
+★★★∴ ★真の穴 ＝ ★★四★★（`httptools`／`socksio`／`uvloop`／`watchfiles`）★★★
+★★★★而して ―― ★★四つ 悉く ★承認 lock の中に 在り★★★★ ⇒ ★★★『lock 違反』に非ず ―― ★★『export の 覆ひ』の 事★★★★★
+
+★★㊂ ★己の 一度目の測りは ★粗し★ ―― ★己より 訂す★★
+```
+★一度目 ―― `missing=7`（`ruamel.yaml`／`ruamel.yaml.clib` を 含み申した）
+★★因 ―― ★己の正規化が `_`→`-` のみにて ―― ★`.`→`-` を 欠き申した★★（PEP 503 は 三つを 畳む）
+★正 ―― `ruamel-yaml`／`ruamel-yaml-clib` は ★現に wheelhouse に 在り★ ⇒ ★穴に非ず★
+★★∴ ★上へ 告ぐる 前に 己にて 正し申した★（★條 ㌨★）
+```
+
+★★㊃ ★★何故 之が 今 重きか★★
+```
+★令 ―― ★★『一回限り download-only』★★ ／ ★★『以後 network 0』★★
+★★∴ ★若し 四件が 要る物ならば ―― ★★後より 足す道が 無し★★（★足すには ★二度目の 撃ち★ ＝ ★令に 触る★）
+★現段 ―― ★★環境部長 read-only receipt 待ち★★ ＝ ★★★穴を 申す 最後の機★★★
+   ―― ★己の條 ★㌪『範囲が 凍らんとする 刻こそ 欠を申す 最後の機』★ ―― ★★E4 にて 現に 効きたる條★★
+★★己が 申さぬ事（★測り居らぬゆゑ★）★:
+   ―― ★『四件 無くて 動かぬ』とは ★申さず★★（`uvloop`／`httptools` は 速さの器・`watchfiles` は reload・`socksio` は proxy）
+   ―― ★★己が 申すは ★『前夜 現に入りたる物に 在りて 今 無し・而して 後より 足し得ぬ』★ の 一事のみ★★
+   ―― ★★∴ ★UNMEASURED ―― ★四件を 欠きたる時の 挙動★★（★験すには 建てねばならず ―― ★建ては 令の外★）
+```
+
+> ## **★★★★★★★條 ㌳ ―― ★★『検証』の 入力と 期待が ★同一の file★ なる時 ―― ★★其の PASS は ★恒に 真★ ―― ★即ち ★何も 験し居らぬ★★★★★ ―― ★★∴ ★『offline PASS』を 見たる時は ★★『尺は 何処より 来たるか』★★ を 必ず 問へ★★★★★★★**
+> ★★（★E4 §88-91 の『偽の緑』―― ★別の 器・別の 令・別の 日★ にて ―― ★★同じ形にて 再び 現れ申した★★ ⇒ ★★之は ★偶々に非ず 型★★★）★★
+
+---
+
+### ■四 ★納品五点の 現況（★己の実測★）★
+
+| 点 | 現 |
+|---|---|
+| manifest ＋ 全 wheel name/size/SHA/tag | ★在（`schema=secondpc-wheelhouse-manifest-v1`／`created_at 22:09:10`）★ ―― ★★己 突合済 `57`/`57`★★ |
+| source/lock ref | ★在（commit ＋ blob ＋ lock sha256）★ ―― ★★己 独立検算済★★ |
+| offline command | ★在★ ―― ★★而して ★同語反復★（■三）★★ |
+| final path ＋ tags | ★在 ―― `hermes-roles/gunshi-second-hermes/run/hermes-agent-0.20.4-final-6a3d50c`／`ashigaru-second-7-hermes/…` ★二本★★ |
+| backup/uuid freeze ＋ restore dry-run | ★`rollback_roots` ＝ 二本（`…/run/hermes-agent-v2026.8.3`）★ ―― ★★`restore dry-run` の 実施記録 ―― ★manifest に 見当たらず★★★ ⇒ ★UNMEASURED★ |
+
+★★註 ―― ★final path 二本は ★軍師second★ と ★足軽second-7★ の 樹★ ⇒ ★★己の §十二 の blocker（★樹A は 二役の共有ゆゑ 二役の受諾を要す★）―― ★猶 立つ★★★
+
+---
+
+### ■五 ★本節にて 為さざりし事★
+★★★網 ―― ★一 byte も 撃たず★★★／★★`pip`／`uv`／`install`／`download` ―― `0`★★／★★wheelhouse ―― ★読取のみ・★一 file も 改めず・消さず・加へず★★★★／★★hermes 樹 ―― 読取のみ・改変 `0`★★／★★root／launcher／pointer／proc／timer／guard ―― `0`★★／★★canary・cutover ―― `0`★★／★★final root ―― 建てず★★／★★watchdog script・harness ―― 改変 `0`・実行 `0`★★／★★`tmux send-keys` ―― `0`★★／★★production pane への入力 ―― `0`★★／★★Commander へ 直送 ―― `0`★★／★本部長の箱 ―― 開かず・数へず★／★足軽七箱・三箱 ―― `0`★／★`_archive` ―― 不開★／★己の箱への札 `0`★／★cron ―― 装填 `0`★／★委員長 uplink 用ゐず★／★§62〜§94 の本文 ―― 一字も動かさず★／★`push` `0`★
+
+---
+
+### ■六 ★本節にて得たる條★
+
+```
+★★★★★★㌳（★本節 最重★）―― ★★『検証』の 入力と 期待が ★同一の file★ なる時 ―― ★其の PASS は ★空★★★★★★
+★★★★★㌲ ―― ★長き検分の ★最中★ にも 箱は 動く ―― ★『欠く』と 断ずる ★直前★ に 今一度 読め★★★★★
+★★★★㌴ ―― ★★『尺』は ★験す物の 外★ より 取れ★★★★
+   ―― ★本件 ―― ★内なる尺（requirements 自身）⇒ ★恒に PASS★／★外なる尺（前夜の実 install ★61 件★）⇒ ★穴 四つ★★
+   ―― ★★∴ ★『何と 突き合はせたか』を 書かぬ PASS は ―― ★報に非ず★★★
+★★★★㌵ ―― ★★『規に 適ふ』と『足り居る』は 別★★★★
+   ―― ★本件の 四件は ★lock 違反に非ず★（悉く lock の中）―― ★★『export が 拾はざりし』のみ★★
+   ―― ★★∴ ★『全 hash が 承認 lock 内』は ★★『必要な物が 悉く 在る』を 意味せぬ★★★★
+```
