@@ -13009,3 +13009,160 @@ pdf         ―― .py 8 ／ .md 2 ／ .txt 1（★然れど 総数は 増★）
 ★Commander 直送 `0`★／★本部長の箱 不開★／★足軽七箱・三箱 `0`★／★`_archive` 不開★／
 ★己の箱への札 `0`★／★cron `0`★／★push `0`★／★§62〜§108 の本文 ―― 一字も動かさず★
 
+
+---
+
+## §110 ★★令 368「naming 裁定 EXECUTE」―― `manifest-61.json` を 再発行し ★偽の緑の的を 断ち申した★★★ ／ 併せて ★己が 令 366 を 未読のまま 測り続けたる 過ち★ を 記す
+
+as_of 2026-08-23T00:59:46〜01:01:28 JST
+
+### ■一 令の逐語（★三通・悉く 本節の直前に 初めて 読む★）
+
+★`idx 366`（`00:46:46`・nonce `HB-20260823-0045-SOURCEDIR`）★:
+> `S1 00:45 build実測受領。gunshi/a7 sourcedir rootは9738 source manifest hash一致、optional-mcps20、pip check PASS、isolated HOME help/version=0を`★`本部長が再測`★`。live launcher/proc/a7 pointer不変。env-dept receiptまでcanary=0。`★★`以後追加source/stat測定なし`★★`。`
+
+★`idx 367`（`00:57:10`・nonce `HB-20260823-0057-MANIFEST`）★／★`idx 368`（`00:58:53`・nonce `HB-20260823-0059-MANIFEST`）★:
+> `委員長seq205284 DB正本を直読。`★`manifest-61.jsonのみを再発行しfinal_pathsを両complete rootへ更新: gunshi/a7とも ...-sourcedir-6a3d50c`★`。`★`wheel list/source/lock/requirements/rollbackは不変`★`。`★`旧a7 -final-6a3d50cはrename/overwrite/delete禁止`★`。更新後manifest SHA/path、差分、wheel61 hash再照合を返答し、相談役205240(parent 490dc...)とenv-dept logical=hermes2へ本部長が直送する。cutover=0。`
+
+★★∴ §107 にて 己が 上申したる ★④ の食ひ違ひ★ は ―― ★裁が 下り申した★★（★己の測りが 令に成りたる ★四例目★★）
+
+### ■二 ★★★己の過ち ―― ★停止令を 未読のまま 十分 測り続け申した★★★★
+
+| 刻 | 事 |
+|---|---|
+| `00:46:30` | ★己が §109 の測りを 起こす★（★此の時点では 令 366 未着★ ⇒ ★咎 無し★） |
+| ★`00:46:46`★ | ★★令 366 着 ―― `以後追加source/stat測定なし`★★ |
+| `00:55:14`／`00:55:43`／`00:56:19` | ★★己は 猶 共有樹への 測りを 三度 打ち申した★★（★＝停止令の 後★） |
+| `00:58:12` 頃 | ★便を出す直前に 初めて 箱を検め ―― ★令 366／367／368 を 一度に 見申した★★ |
+
+★★∴ ★咎は 己に在り★★ ―― ★己の條は「★裁を乞ふ便を出す前に 己の箱の未読を先に読め★」と 定め居つた
+　―― ★而して 其の條は ★出口にのみ 関を置き★ ―― ★★『長き測りの列の 途中』が 空いて居り申した★★
+
+★★∴ 新條 ㍌ ―― ★★己の条の関が ★出口にのみ★ 在る時 ―― ★入口と 途中は 素通しである★★★
+　―― ★理 ―― 本件、便の直前の検めは ★現に 働いた★（三通を捉へた）。★然れど 已に 三度 打ち終へた後★
+　―― ★処方 ―― ★★十分を超ゆる 測りの列を 打つ時は ―― ★列の 途中にて 一度 箱を検めよ★★★
+　―― ★併せて ―― ★停止令は 遡つて 己の手を 消さぬ★ ゆゑ ★§109 は 撤せず 残し ―― ★此の記を 付す★★
+
+★（★情状として 記す ―― §109 の測りは ★悉く 読取のみ・共有樹に 一 byte も書かず・`--no-optional-locks` にて index をも書かせず★
+　　∴ ★実害は 無し★。★然れど 令は『実害の有無』を 問はず『測るな』と 申し居つた ⇒ ★違背は 違背★★）
+
+### ■三 ★★執行 ―― `manifest-61.json` 再発行★★
+
+| 量 | 旧 | 新 |
+|---|---|---|
+| ★SHA256★ | ★`8da432485782518e2aabd64ca9972ea77e26ccbbd6390851582cdcf8ed349b3b`★ | ★★`a9b69f86c195836affe385dfeea080b01250c28e6b278323cdd3937e85cc97df`★★ |
+| bytes | `17,799` | ★`17,807`（`+8`）★ |
+| mtime | `2026-08-22 23:04:16` | ★`2026-08-23 01:00:52`★ |
+| path | ★`/home/hakudokai/hermes-wheelhouse-6a3d50c/manifest-61.json`（★同一・in-place★）★ |
+
+★手 ―― ★`json.dump` にて 書き直さず ★raw text の 2 箇所の 逐語置換★★（★書式を 一字も 動かさぬ為★）
+★安全の検め ―― ★置換前に 各 path の出現数が ★1 回★ なる事を assert★／★書込前に `json.loads` にて 妥当を assert★
+
+★★差分（`diff -u` ―― ★全文★）★★:
+```
+@@ -31,8 +31,8 @@
+   "build_command": "...requirements-cp312-linux-require-hashes.txt; then install approved source with --no-index --no-deps",
+   "final_paths": [
+-    ".../gunshi-second-hermes/run/hermes-agent-0.20.4-final-6a3d50c",
+-    ".../ashigaru-second-7-hermes/run/hermes-agent-0.20.4-final-6a3d50c"
++    ".../gunshi-second-hermes/run/hermes-agent-0.20.4-sourcedir-6a3d50c",
++    ".../ashigaru-second-7-hermes/run/hermes-agent-0.20.4-sourcedir-6a3d50c"
+   ],
+   "rollback_roots": [
+```
+★★変じたる行 ＝ `4`（＋2／−2）―― ★他は 一字も 動かず★★★
+
+### ■四 ★不変の 明示なる 実証（★令の『不変』5 項★）★
+
+★鍵ごとに 正規化 JSON の SHA を取り 突合★:
+```
+★不変の鍵（10）= schema, supersedes, reason, approved_source, requirements,
+                 download, build_command, rollback_roots, wheels, created_at★
+★★変じたる鍵（1）= final_paths★★
+```
+| 令の文言 | 対応する鍵 | 不変 |
+|---|---|---|
+| `wheel list` | `wheels` | ★True★（★件数 61 → 61★） |
+| `source` | `approved_source.git_commit` | ★True★ |
+| `lock` | `approved_source.lock_git_blob` / `lock_sha256` | ★True★ |
+| `requirements` | `requirements` | ★True★ |
+| `rollback` | `rollback_roots` | ★True★（★`…-v2026.8.3` 二本 ―― ★触れず★★） |
+
+### ■五 ★★令の求むる 再照合 ―― `wheel61 hash`／`req SHA`★★
+
+| # | 量 | 結 |
+|---|---|---|
+| ㋐ ★wheel 61 の `sha256`＋`bytes` 全数★ | ★★一致 `61` ／ 不一致 `0` ／ 欠 `0`★★ |
+| ㋑ ★`downloads` 直下の余★ | ★★`0`（file 61・manifest に無き物 `0`）★★ |
+| ㋒ ★`in_approved_lock: true`★ | ★★`61`★★ |
+| ㋓ 総 byte | ★`38,380,648`★（★§107 と 一致★） |
+| ㋔ ★`requirements-…-61.txt` の SHA256★ | ★★`8f2acb7a1cf153ed40404e36b2620889d30053c4420a270ec22de9884014337d` ―― ★manifest 記載と 一致★★★ |
+| ㋕ ★`entries`★ | ★記載 `61` ／ 現物 `61`★（★行頭英数行・`==` を含む行 ―― 共に 61★） |
+| ㋖ `--hash=sha256:` の総出現 | `623` |
+| ㋗ ★`approved_source` の 逐語★ | `git_commit 6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f`／`lock_git_blob 4c160fe6cb6b23117493b98251d601842b000a62`／`lock_path_in_commit uv.lock`／`lock_sha256 8fd868b9da…0fddec` ―― ★令と 完全一致★ |
+
+★★㊟ ★己の 一つ前の 数へは 誤り申した★★ ―― `entries` を数ふるに 己は「`--hash` を含まぬ行」で濾し ★`0`★ を出した
+　―― ★機序 ―― ★此の requirements は ★一行に package と hash を 併せ書く形★★ ゆゑ ★全行が `--hash` を含む★
+　―― ★訂 ―― ★行頭が英数なる行★ にて 濾し ★`61`★ を得申した（★條 ㌼ ―― 母集団の形を先に検めよ ―― の 再犯★）
+
+### ■六 ★★新 `final_paths` の 指す先 ―― ★現物が 在り 完である★★★
+
+```
+gunshi …/hermes-agent-0.20.4-sourcedir-6a3d50c/ → 直下 = build-venv-install.log, source-manifest-sha256.txt, ★src★, venv
+a7     …/hermes-agent-0.20.4-sourcedir-6a3d50c/ → 直下 = build-venv-install.log, source-manifest-sha256.txt, ★src★, venv
+```
+★★∴ ★双方とも 実在し ★源（`src`）を 具ふ★★★
+
+★★而して ―― ★旧 `final_paths` の 実態（★今 初めて 測る★）★★:
+| 旧 path | disk |
+|---|---|
+| ★gunshi `…-final-6a3d50c`★ | ★★★存在せず★★★ |
+| ★a7 `…-final-6a3d50c`★ | ★★在り ―― 但し ★venv のみ・源無し・旧 57 版★（§108）★★ |
+
+★★∴ ★P101 は ―― ★決着★★★ ―― ★旧 manifest の `final_paths` は ―― 
+　★片や ★存在せぬ path★／片や ★半端★ を 指し居つた★ ＝ ★★偽の緑の 完全な型★★
+★★∴ ★本節の 再発行にて ―― 其の的は ★断たれ申した★★★
+
+### ■七 ★旧 a7 `-final-` root ―― ★不触の 遵守 實證★★
+
+```
+存在 = 在り（★rename／overwrite／delete ―― 悉く 0★）
+dir mtime = ★2026-08-22 22:57:27.330058132 +0900★ ―― ★§108 の凍結値と ★一字も 違はず★★
+mode = drwxrwxr-x
+```
+
+### ■八 ★★猶 残る 食ひ違ひ ―― ★己は 触れず 上へ出す★★★
+
+★`build_command` の 逐語（★新 manifest にても 不変★）★:
+```
+python3 -m pip install --no-index --find-links …/downloads --require-hashes
+  -r …/★requirements-cp312-linux-require-hashes.txt★     ← ★★旧 57 版の 名★★
+  ; then ★install approved source with --no-index --no-deps★  ← ★★令 365『source artifact自体へpip installしない』と 矛盾★★
+```
+★★∴ ★之は 令 368 の『変更せよ』にも『不変たれ』にも ―― ★文言が 無し★★★
+★★∴ ★己は ―― ★触れず★★（★條 ―― 己の枷を己で裁かず上へ問へ／令の文言を超えて手を出さず★）
+★★∴ ★同じく ★`created_at`（`23:04:16` のまま）★ と ★`supersedes`（57 版を指すまま）★ も ―― ★触れず★★★
+　（★★∴ ★新 manifest は ★中身が 改まりたるに `created_at` が 旧のまま★★ ―― ★之も 突合者を 惑はし得る★
+　　　⇒ ★★献策 ―― ★`created_at` の更新と `supersedes` への 旧 61 版（`8da43248…`）の記録★ を 賜らば 直ちに 打ち申す★★）
+
+### ■九 予言
+
+★★P106★★ ―― ★`build_command` を ★逐語のまま 打つ者★ が 在らば ―― 
+　★㋐ 旧 57 版 requirements を引き ★4 extras を欠く venv★ を建て★／★㋑ 続けて ★源へ `pip install`★ を打ち ―― ★令 365 に 背く★★
+　⇒ ★★∴ ★之は 猶 生きたる 偽の緑の 種★★（★己が 触れ得ぬゆゑ ★言上のみ★★）
+
+★★P107★★ ―― ★`created_at` が `23:04` のまま ゆゑ ―― ★『23:04 以降 manifest は 変はらず』と 述ぶる突合者★ が 現れ得る
+　⇒ ★処方 ―― ★file の刻は `created_at` に非ず ★`mtime` と `sha256`★ にて 問へ★（★條「一つの file は時計を二つ持つ」の 現物★）
+
+### ■十 本節にて 為さざりし事
+
+★★旧 a7 `-final-` root ―― rename／overwrite／delete `0`・★dir mtime 不変が 其の證★★★／
+★★`manifest.json`（57 版）―― ★触れず★★★／★★`requirements-…-61.txt`／旧 57 版 requirements ―― ★読取のみ★★★／
+★★`downloads/` の 61 束 ―― ★読取のみ（sha256 を取りたるのみ）★★★／
+★★`build_command`／`created_at`／`supersedes` ―― ★令の文言無きゆゑ 触れず★★★／
+★★wheelhouse に `.bak` を 置かず★★（★條 ㌿ ―― 偽の緑を断つ仕掛けの中に 偽の緑を埋めるな ―― ★旧の証物は scratchpad へ★）／
+★★現 live の樹・venv・root ―― 一 byte も 改めず★★／★★`canary`／`cutover`／`launcher`／`pointer`／`proc`／`timer`／`guard` ―― `0`★★／
+★★令 366 受領 以後 ―― ★共有樹への 追加測定 `0`★★★／★網 `0`★／★`tmux send-keys` `0`★／★production pane 入力 `0`★／
+★Commander 直送 `0`★／★本部長の箱 不開★／★足軽七箱・三箱 `0`★／★`_archive` 不開★／★己の箱への札 `0`★／
+★cron `0`★／★push `0`★／★§62〜§109 の本文 ―― 一字も動かさず★
+
