@@ -12089,3 +12089,135 @@ def _locales_dir() -> Path:
 ★Commander 直送 0★／★足軽七箱・三箱 0★／★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／
 ★§62〜§102 の本文 一字も動かさず（★§99 ■七 の訂も ★本節にて 新たに 書く★ ―― ★元の本文は 動かさず★）★
 
+
+---
+
+## §104 己が上へ申したる「venv 二つ・code 一つ」の不完全を訂す ―― 役ごとにも完全な樹が在り申した ／ 而して MAPPING を機械にて引き直すに其の樹は import にも資産解決にも一切効かず＝死蔵 ⇒ 爆風の射程は変らず
+
+as_of 2026-08-22T23:57:33〜2026-08-23T00:06:38 JST／便 hb_160（297 字・§103）は 23:55:17 に送達済
+測りは ★悉く 読取のみ★（`--no-optional-locks` の git 読取・venv の file 読取・★改変 0・build 0・網 0★）
+
+### ■一 何故 本節を起こしたか ―― ★己の伝へが 不完全に御座つた★
+
+己は `hb_156`（前 segment）にて ★「venv 二つ・code 一つ」★ と 上へ 申し上げ申した。
+★而して ―― 其れは ★★本部長の再測を経て 令の文言と成り申した★★（idx 361・23:38:28）:
+
+> `active role venv二本のeditable finderは同一SHAでshared runtimeを指す。`★`shared checkout mutationは禁止`★
+
+★★∴ 己の説は ★已に 受け入れられ 令に成り居る★★ ―― ★條「★受け入れられた説ほど 早く訂せ★」の 的 其の物★。
+
+★而して §103 の測りの末に ―― ★己が 述べ居らなんだ事★ を 見出だし申した ――
+★★役ごとにも ―― `.git` を備へたる ★完全な樹★ が 現に 在り申す★★。
+
+### ■二 ★役ごとの樹 ―― 実測★
+
+| 対象 | `.git` | HEAD | ★`origin/main`★ | 資産(再帰) | 汚れ |
+|---|---|---|---|---|---|
+| `hermes-roles/ashigaru-second-7-hermes/run/hermes-agent-v2026.8.3` | ★在り★ | `0957277f…` | ★`5fffe560661c87d988c4ef2834df14bfb8acba55`★ | ★1,102★ | ★2 行★ |
+| `hermes-roles/gunshi-second-hermes/run/hermes-agent-v2026.8.3` | ★在り★ | `0957277f…` | ★`b102999d8013a77c555ba481829e97dc6232158b`★ | ★1,102★ | ★1 行★ |
+| `hermes-runtimes/hermes-agent-v2026.8.3`（★共有樹★） | 在り | `0957277f…` | ★★`6a3d50c…`（＝★承認源★）★★ | ★1,102★ | ★0 行★ |
+
+★汚れの逐語★:
+```
+ashigaru-second-7 :  M package-lock.json ／ ?? hermes.guardwrapper-evidence-20260814
+gunshi-second     :  M package-lock.json
+```
+
+★★∴ 第一の発見 ―― ★HEAD は 三つ 悉く 同一（`0957277f`＝0.20.0）★ ―― ★而して `origin/main` は ★三者三様★★★
+　⇒ ★三つの樹は ★別々に fetch されたる 別個の clone★★（★「同じ repo の 同じ checkout」に非ず★）
+　⇒ ★★★承認源 `6a3d50c` を 現に 持つは ―― ★共有樹 ただ一つ★★★★
+　⇒ ★★∴ §101 の `git archive 6a3d50c` は ―― ★共有樹より 取らねば ならぬ★★（★役樹では 取れぬ★）
+
+### ■三 ★★而して ―― 己は 訂の足を 先に 検め申した（條 ㍅）★★
+
+★★訂も 亦 一つの主張★★（條「★訂は それ自身 一つの主張★」「★訂の足は 元の主張の足より 強くあるべし★」）。
+⇒ ★「役樹が 在る」ならば ―― ★★『役樹を触れば 一役のみ動く』か★★ を 検めねば ならぬ★
+　（★若し 然らば ―― ★軍師樹の 二役受諾 blocker の 重みが 変り得る★★）
+
+**★測り ―― finder の `MAPPING` を ★AST にて★ 引き直す★**（★先の正規表現は 空振り ―― ★機械を 換へ申した★）
+
+| 対象 | pkg 数 | ★MAPPING の指す親（相異なる値の全数）★ |
+|---|---|---|
+| ashigaru-second-7 venv | ★27★ | ★★`/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3` ―― ★ただ一つ★★★ |
+| gunshi-second venv | ★27★ | ★★同一 ―― ★ただ一つ★★★ |
+
+★27 pkg 悉く★:
+```
+acp_adapter agent batch_runner cli cron gateway hermes_bootstrap hermes_cli hermes_constants
+hermes_logging hermes_state hermes_state_common hermes_state_portability hermes_state_schema
+hermes_state_search hermes_time mcp_serve model_tools plugins providers run_agent tools
+toolset_distributions toolsets trajectory_compressor tui_gateway utils
+```
+
+**★★決め手 ―― `PROJECT_ROOT` の解を 機械にて 起こす★★**（§103 ■二 ―― `PROJECT_ROOT = Path(__file__).parent.parent.resolve()`）
+
+```
+hermes_cli -> /home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3/hermes_cli   （★実在★）
+★∴ PROJECT_ROOT の解 = /home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3★
+   skills          : 実在=True  file=545
+   optional-skills : 実在=True  file=534
+   optional-mcps   : 実在=True  file=6
+   locales         : 実在=True  file=17
+```
+
+★★∴ ★役の器が 走る時 ―― ★code も 資産も 悉く ★共有樹★ より 取らる★★★
+★★∴ ★役樹の中の 1,102 の資産は ―― ★一つも 使はれぬ ＝ ★★死蔵（dead weight）★★★★
+
+### ■四 ★★∴ 訂の結び ―― ★爆風の射程は ★変らず★★★
+
+| 問 | 答 | 足 |
+|---|---|---|
+| 役ごとに 樹が 在るか | ★★在る★★（.git 付き・資産 1,102・HEAD 0957277f） | ■二 |
+| 己は 之を 上へ 述べたか | ★★述べ居らなんだ ―― ★伝への不完全★★★ | ★本節が 其の訂★ |
+| ★役樹を触れば 一役のみ 動くか★ | ★★否 ―― ★一役すら 動かぬ★★★ | ■三（MAPPING 27/27 が runtimes） |
+| ★∴ 爆風の射程は 変ずるか★ | ★★否 ―― ★共有樹が 唯一の的 のまま★★★ | 同 |
+| ★∴ 「shared checkout mutation は禁止」の令は★ | ★★猶 正しく ―― ★却つて 足が 強まり申した★★★ | 同 |
+| ★∴ 軍師樹の 二役受諾 blocker は★ | ★★軽くならず ―― ★猶 立つ★★★ | 同 |
+
+★★∴ 己の「venv 二つ・code 一つ」は ―― ★import の層でも 資産の層でも ★実質 正★★★。
+★★不完全なりしは ―― ★『disk には 樹が 三本 在る』の 一点のみ★★（★而して 其の二本は ★効かぬ★★）。
+
+★★併し ―― ★★之を 述べざりしは 己の 手落ち★★★ ―― ★理 ―― ★受け手は 「code 一つ」を
+★『disk に 一本』★ と 読み得★ ⇒ ★★若し 何者かが 役樹を 見付けなば ―― ★己の報が 誤りと 見ゆる★★★
+　（條「★述語は 機構でなく 結果で書け★」の 又一つの形 ―― ★★『code 一つ』は 結果の述語 ―― ★配置の述語に非ず★★）
+
+### ■五 ★献策への効 ―― ★二つ 加はり申した★★
+
+**㊀ ★archive の源は ★共有樹に 限る★★**（■二）――
+★役樹の `origin/main` は `5fffe560`／`b102999d` にて ★`6a3d50c` を 持たぬ★★
+⇒ ★★手順㊀ の path を ★明記すべし★★:
+```
+git --no-optional-locks -C ★/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3★ archive 6a3d50c | tar -x -C <final-root>/src
+```
+
+**㊁ ★役樹は 資産 1,102 ＝ 0.20.0 の数★** ⇒ ★★承認源 6a3d50c（0.20.4）に非ず★★
+⇒ ★「役樹を 写せば 早い」の道は ―― ★版が 違ふゆゑ 端から 無い★★（★archive は 矢張り 要る★）
+
+### ■六 予言の更新
+
+- ★P96（新）★ ―― 若し 何者かが 役樹（`hermes-roles/*/run/hermes-agent-v2026.8.3`）の 資産を 書き換へば ――
+  ★★役の挙動は ★一切 変ぜぬ★★（★MAPPING が runtimes を指すゆゑ★）
+  ⇒ ★★之は 危険な形の ★偽の緑★ ―― 『触つたのに 壊れぬ』は 『安全』に非ず ★『届いて居らぬ』★★★
+- ★P97（新）★ ―― 若し 三つの樹の `origin` の URL を 引かば ―― ★同一 URL にて `origin/main` のみ 相異なる★
+  （＝★fetch の刻の違ひ★）と 見込む ⇒ ★★未検（`git remote -v` を 猶 引き居らぬ）★★
+
+### ■七 新條
+
+★★★條 ㍆ ―― ★『効かぬ物が 在る』事は ―― ★『在る』と 同じく 報ずべし★★★
+　 ―― ★理 ―― 己は「code 一つ」と 申して ★役樹の存在を 落とし申した★。
+　 ―― ★★見る者が 其れを 見付けたる時 ―― ★己の報の 全体が 疑はる★★ ⇒ ★★『効かぬ』は
+　　　★省いてよい理由に非ず ―― 却つて ★『在るが 効かぬ』と 明記すべき理由★★★
+
+★★★條 ㍇ ―― ★同じ commit を 持つ 複数の clone は ―― ★同じ repo とは 限らぬ★★★
+　 ―― ★理 ―― 本節の三樹は ★HEAD 悉く `0957277f` にて 一致★ ―― ★而して `origin/main` は 三者三様★。
+　 ―― ★★∴ 『同じ HEAD』は 『同じ 供給元の 同じ状態』を 意味せぬ ―― ★remote を 見よ★★
+　 ―― ★★且つ ―― ★或る commit を 持つ樹★ と ★持たぬ樹★ が 混在し得 ⇒ ★★archive の源は 名指しせよ★★
+
+### ■八 本節にて 為さざりし事
+
+★build 0★／★網 0★／★hermes 樹（共有・役ごと 悉く）―― ★読取のみ・改変 0・`chmod` 0・`checkout` 0・`worktree add` 0・`fetch` 0・`--no-optional-locks` を 恒に 添ふ★★／
+★役 venv ―― ★file の 読取のみ・一指も触れず（`pip` 0・`import` の実行 0）★★／★束 不触★／★現 root 二本 不変★／
+★a7 半端 root 保存★／★軍師樹 着手 0★／★launcher/pointer/proc/timer/guard/canary/cutover 0★／★tmux send-keys 0★／
+★production pane 入力 0★／★Commander 直送 0★／★足軽七箱・三箱 ―― `stat`／`open`／`grep`／`parse` 0★／
+★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／★§62〜§103 の本文 一字も動かさず★
+
