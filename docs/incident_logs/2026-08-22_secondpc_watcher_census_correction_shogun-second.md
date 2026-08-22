@@ -11277,3 +11277,250 @@ pip download --no-deps --only-binary=:all: --require-hashes -r req4.txt -d <stag
 ㊂ ★軍師second の樹 ―― ★二役 共有ゆゑ ★受諾 二つ★ を 要すや★（§十二 blocker ―― 猶 未解）
 ㊃ ★`restore dry-run` の 記録 ―― ★manifest-61 にも 無し★ ⇒ ★UNMEASURED★
 ```
+
+---
+
+## §99 現root二本は「コードを共有」して居り申した ―― 爆風をimportの層にて実測／偽の緑の機序をsourceのcodeにて押さへ／落つる資産は522に非ず1,077
+
+as_of 2026-08-22T23:19〜23:22 JST（測りは悉く shogun-second の器・★読取のみ★）
+nonce 応答先 = HB-20260822-2301-CONTINUE（idx 359）／HB-20260822-2254-WHEELHOUSE（idx 358）
+
+### ■一 令の更新 ―― idx 359 逐語（2026-08-22T23:01:33）
+
+```
+S1継続令/即実行 nonce=HB-20260822-2301-CONTINUE。委員長seq205082 DB正本:
+61束→build→③canary→④cutover+guard→監査役PASSまで継続。今は205065の4必須extras補充DLが先。
+wheelのasset欠落実験は重大blockerとしてfreezeし、非editable finalを偽GREENにしない。
+承認lockからcp312-linuxの4件を--require-hashesで同一wheelhouseへ一回補充DLし、
+61件再hash/manifest/log/offline verifyを返答。buildは完全集合/receiptまで0。
+```
+
+受領事項:
+- ★己が §98 にて実測したる asset 欠落 ―― 「重大 blocker」として ★正式に freeze★★
+- ★「非 editable final を 偽 GREEN にしない」―― ★上の言葉として 立ち申した★★
+- ★build は ★完全集合/receipt まで 0★ ―― 己の現在地は ★build の門前★★
+- 4 件補充 DL・61 件再 hash・manifest・offline verify ―― ★悉く 履行済（§98）★・報 hb_155 送達 23:18:10
+
+### ■二 條 ㌺ ―― 初の適用にて 現に 効き申した
+
+§98 にて立てたる新條 ㌺（「箱を読む」を便の直前のみに結ぶな・不可逆の手の直前にも結べ）を
+本節の冒頭にて適用し、★便 hb_154 を送る直前に 箱を引き直し申した★。
+
+| 刻 | 事 |
+|---|---|
+| 23:01:33 | 上意 idx 359 が箱へ着く（★己は未だ知らず★） |
+| 23:09:30 | ★己 ―― 便を出す直前に 箱を引き直し ★idx 359 を発見★★ |
+| 23:17:16 | 便を idx 359 に合はせて引き直す（hb_154 → hb_155・297 字） |
+| 23:18:10 | 送達 |
+
+★★∴ 若し ㌺ を立てて居らねば ―― ★己は 一つ古き令に応ずる便を送り居つた★★。
+★§98 の疵（撤回を読まざる build）より起こしたる條が ―― ★次の一手にて 現に 一件 防ぎ申した★★。
+
+### ■三 本節の主眼 ―― ★現 root 二本は 別々の venv を持ちながら コードの実体は 一本★
+
+as_of 2026-08-22T23:19:09 JST。★読取のみ・改変 0★。
+
+| root | finder の sha256 | bytes | mtime |
+|---|---|---|---|
+| ashigaru-second-7-hermes | 9dbada97bace6544d6a6f5a5c290514e685786a48ee40e02c404552ed9e9c939 | 8195 | 2026-08-07 10:04:40.188715878 +0900 |
+| gunshi-second-hermes | ★同値★ | ★8195★ | ★同値（ナノ秒まで）★ |
+
+- 両 root とも `site-packages` に `__editable__.hermes_agent-0.20.0.pth` ＋ `__editable___hermes_agent_0_20_0_finder.py`
+- `.pth` 全文 ＝ `import __editable___hermes_agent_0_20_0_finder; __editable___hermes_agent_0_20_0_finder.install()`
+- finder 9 行目 `MAPPING` ―― ★27 の top-level package 悉くが★ 同一の親を指す:
+
+```
+/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3/<pkg>
+```
+
+★★∴ 二つの結論★★:
+1. ★mtime がナノ秒まで一致 ⇒ 二本は 各々 install されたるに非ず ―― ★一つを 写したる物★★
+2. ★★venv は 二つ・★import される code は 一つ★★ ―― 委員長 裁①「樹を共有する役職が在るゆゑ
+   樹を触れば複数役が同時に動く＝爆風」―― ★之を ★import の層にて 機構として 測り申した★★
+
+★留意 ―― finder は ★path のみを持ち 版を持たぬ★。∴ 共有樹の中身が入れ替はれば
+★二役の import する code は 其の刹那に 同時に 変ず★（再起動を要せぬ import すら在り得）。
+
+### ■四 共有樹の素性 ―― shallow・graft 二本・★承認源は已に手元に在り★
+
+as_of 2026-08-22T23:20:08〜23:20:28 JST。`--no-optional-locks` を用ゐ ★index を書かせぬ形★ にて測り申した。
+
+| 量 | 値 |
+|---|---|
+| path | /home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3 |
+| mode / mtime | drwxrwxr-x / 2026-08-12 21:24:35.256504461 +0900 |
+| `.git` | ★在り★（git checkout に御座る） |
+| `.git/shallow` | ★2 行★ = 0957277f… と 6a3d50c… ★両方が graft 根★ |
+| `refs/heads/main` | ★0957277f2f468bac22bbfcfa7c43029858c9597e★（version 0.20.0）★＝現に checkout され居る物★ |
+| `refs/remotes/origin/main`・`origin/HEAD` | ★★6a3d50c6e05ee9a3c1e5ecf2268524c5d0627b9f★★（version 0.20.4）★＝承認源★ |
+| HEAD の題 | refactor(skills): move polymarket to optional-skills/finance（committer 2026-08-06T11:30:58-07:00） |
+| 6a3d50c の題 | fix(tui): allow the ESC byte in the SGR param matcher（committer 2026-08-19T11:03:01-05:00） |
+| worktree の汚れ | ★0 行★（∴ 己の `git archive` は 樹を一字も汚し居らぬ） |
+| worktree pyproject sha256 | b83b6f40f05c8e4fab0d6d6d8a791d7216f712ae252787740057848ac704fe21 ＝ `HEAD:pyproject.toml` と一致 |
+| 己の凍結源 pyproject sha256 | 1f928b1560b0669291b3f7d562aa78c99ac4f927375939ca97fd3c3e7494cb91（★別物★） |
+
+★★己の誤りかけたる一件 ―― 記して置く★★:
+`rev-list --count HEAD..6a3d50c` ＝ 1、`6a3d50c..HEAD` ＝ 1 を得申した。
+之を素直に読めば「互ひに一つづつ隔たる兄弟」なれど ―― ★刻は 13 日 離れ居る★。
+★数を信ずる前に母集団を疑ひ★ `.git/shallow` を検めたるに ★graft 二本★ ―― ★「距離 1」は測りの artifact★ に御座つた。
+（條「母集団を疑へ」「予言が外れた時まづ式と式に入れた数を分けよ」―― ★現に 一件 救はれ申した★）
+
+★★∴ 実務に効く二事★★:
+- ㊀ ★承認源 6a3d50c の object は ★已に此の repo の中に在る★★ ⇒ ★源の materialize に ★網 不要★★
+- ㊁ ★★併し 其の樹にて `git checkout 6a3d50c` を打たば ―― ★二役 同時に 版が変ず★★★
+      ⇒ ★『共有樹の その場での入替』は ★爆風そのもの★ ―― ★採るべからず★★
+
+### ■五 §98 の説の裏取り ―― ★訂に非ず・却つて強まり申した★
+
+§98 にて己は「pyproject の packages.find.include にも package-data にも
+locales／skills／optional-mcps の名は一つも無し」と書き申した。
+本節にて `pyproject.toml` に `skills` が★六度★現るるを見、★己の説を疑ひ 引き直し申した★。
+
+| 行 | 中身 | 判 |
+|---|---|---|
+| 444-445 | `[tool.setuptools.packages.find]` include = agent, tools, hermes_cli, gateway, tui_gateway, cron, acp_adapter, plugins, providers（＋各 `.*`） | ★四つの資産名 悉く 無し★ |
+| 447-458 | `[tool.setuptools.package-data]` hermes_cli / gateway / plugins ★のみ★ | ★四つの資産名 悉く 無し★ |
+| 6 | description の文中 | 包みの指図に非ず |
+| 325-327 | ★註釈★（"Required by skills/media/youtube-content and optional-skills/…"） | 包みの指図に非ず |
+| 500-501 | ★ruff の per-file 除外★（`"skills/**" = ["PLW1514"]`） | 包みの指図に非ず |
+
+★★而して 449-458 行の註釈が 決定的に御座る★★ ―― 源自ら斯く書き居る:
+
+```
+# gateway/assets/ ships status_phrases.yaml and the Telegram BotFather
+# screenshot. Without this, sealed venvs (uv2nix) silently lose both — …
+# Bundled plugin discovery reads these manifests at runtime. Keep them in
+# sealed wheels with the plugin Python modules; without this declaration the
+# wheel contains adapters but discovery finds zero bundled plugins.
+```
+
+★∴ 源は ★sealed wheel に 入るべき物を 名指しで 宣言する作法を 現に 持ち★
+   ―― ★其の作法を 用ゐて 尚 四つの資産を 宣言せぬ★ ⇒ ★★脱落は 手落ちに非ず ―― ★意図★★★
+
+（★併せて一事 ―― setup.py の docstring は "plugin manifests" も落つるかの如く書くが、
+　 pyproject 458 行は plugins の manifest を ★現に宣言し居る★。★機構の自白すら 完全に非ず ―― 測りが正本★）
+
+### ■六 ★新事 ―― 落つる資産は 522 に非ず ★1,077★★
+
+★§98 の 522 は ★git より直に引き直しても同値★（抽出の artifact に非ず）★:
+
+| dir | 6a3d50c | 0957277f（現 checkout） | 実行時の override |
+|---|---|---|---|
+| locales | ★17★ | 17 | `HERMES_BUNDLED_LOCALES` |
+| skills | ★485★ | 545 | `HERMES_BUNDLED_SKILLS` |
+| optional-mcps | ★20★ | 6 | `HERMES_OPTIONAL_MCPS` |
+| ★optional-skills★ | ★★555★★ | 534 | ★`HERMES_OPTIONAL_SKILLS`★ |
+| web_dist / tui_dist | 0 / 0 | 0 / 0 | ★源樹に元より無し★（nix/build の産物） |
+| ★計★ | ★★1,077★★ | 1,102 | ― |
+
+- §98 の 522 ＝ setup.py の docstring が名指す三者のみ。
+- ★本節にて 己は ★docstring に頼らず 源の override 函数を 直に引き★ ―― ★第四の資産 optional-skills を 見出だし申した★
+- ★∴ 522 は ★誤り★ に非ず ―― ★狭かり申した★。★正しくは 1,077★（as_of 23:21:04 実測）
+- ★留意 ―― 現 checkout（0.20.0）と承認源（0.20.4）は ★資産の数すら違ふ★
+  （skills 545→485・optional-mcps 6→20）⇒ ★版の入替は 資産の入替でも御座る★
+
+### ■七 ★★偽の緑の機序を source の code にて押さへ申した★★
+
+`hermes_constants.py`（6a3d50c 正本・`build/lib/` の写しに非ず）より逐語:
+
+```python
+def get_bundled_skills_dir(default: Path | None = None) -> Path:
+    """Return the bundled skills directory for source and packaged installs.
+
+    Resolution order:
+        1. ``HERMES_BUNDLED_SKILLS`` env var (Nix wrapper / explicit override)
+        2. Caller-supplied ``default`` (typically the source-checkout path)
+        3. ``<HERMES_HOME>/skills`` last-resort
+    """
+    override = os.getenv("HERMES_BUNDLED_SKILLS", "").strip()
+    if override:
+        return Path(override)
+    if default is not None:
+        return default
+    return get_hermes_home() / "skills"
+```
+
+`get_optional_skills_dir` / `get_optional_mcps_dir` も同型（env → default → `<HERMES_HOME>/<name>`）。
+
+★★核心 ―― 此の三段の ★何処にも 例外が 無い★★:
+- wheel のみの器 ―― ①env 無し（nix wrapper 不在）②源樹 無し ⇒ ★③の 空しき path を 返す★
+- ★★戻り値は Path ゆゑ 呼び手は「在る」と思ひ ―― ★中身 0 のまま 走り出す★★★
+
+★★∴ 『偽の緑』は ★己の推量に非ず ―― ★源の分岐 其の物★★★。
+   ★§98 は「wheel の中に 0 file」を示し（★結果★）―― ★§99 は「然らば何が起こるか」を示し申した（★機序★）★
+   ―― ★條「機序の訂は二段」に倣ひ ★結果と機序を 分けて 積み申した★★
+
+### ■八 献策 ―― final root の形（§98 ■七 を承け 形を整ふ・★猶 未上申★）
+
+★上意「非 editable final を 偽 GREEN にしない」に応ずる 具体の形★:
+
+```
+<final-root>/
+  ├─ src/          ★6a3d50c を git archive にて取り出したる樹（read-only）★
+  └─ venv/         ★其の src を指す editable install★
+```
+
+★得（悉く 本節・§98 の実測に足を持つ）★:
+
+| # | 得 | 足 |
+|---|---|---|
+| ㊀ | ★源の支ふる形の内★（setup.py が名指す "source-checkout layout"） | §98 setup.py 逐語 |
+| ㊁ | ★資産 1,077 悉く 在り★ ⇒ 偽の緑を 構造的に 断つ | ■六・■七 |
+| ㊂ | ★★共有に非ず ―― 一役一樹★★ ⇒ ★爆風を 断つ★ | ■三（現状は 二役一樹） |
+| ㊃ | ★不変★（read-only ゆゑ「可変の staging を指す」に当たらず） | ― |
+| ㊄ | ★網 不要★（6a3d50c の object は已に手元） | ■四 |
+
+★★作法の要（★之を誤れば 爆風★）★★:
+- ★`git worktree add` は ★共有樹の .git に 管理 file を 書き込む★ ⇒ ★用ゐず★★
+- ★`git checkout` を 共有樹にて 打つ事 ―― ★断じて 為さず★（二役 同時に 変ずる）★
+- ★用ゆるは `git archive 6a3d50c | tar -x`（★読取のみ・樹を一字も変ぜず★・本節にて 現に status 0 行を確かめ申した）★
+
+★★正直に 未検の点を挙ぐ（★測らざる数を 献策に載せぬ★）★★:
+1. ★editable の finder が 新 src を指す事 ―― ★捨て器にては 現に成りたる（§98 rc=0）が ★final の形にては 未検★★
+2. ★read-only を 何の機序にて 与ふるか（chmod / 所有 / mount）―― ★未定★。★書込を防ぐ強さが 機序ごとに違ふ★
+3. ★`HERMES_*` の env を 立てる道★ を 採るならば ―― ★launcher の改変が 要る★
+   ⇒ ★「launcher/pointer 不触」の令と ★正面から 衝突す★★（★之は 裁を要する分岐★）
+4. ★57 束 → 61 束の venv が 0.20.4 の実挙動を満たすか ―― ★import 4 件のみ実測・全体は未検★
+5. ★監査役 PASS の尺 ―― 未賜★
+
+### ■九 予言（★事後の突合十度より 事前の予言一度★）
+
+- ★P86★ ―― final root の受入条件に ★「資産が final root 内に在る事」が 加はる★（数の形は問はず）。
+  ★反証 ―― 受入条件が 依然として import/--version のみで書かるれば 外れ★
+- ★P87★ ―― env（`HERMES_BUNDLED_SKILLS` 等）にて資産を外から与ふる道を採らば
+  ★「launcher 不触」の令と衝突し 新たな blocker として 立ち現る★
+- ★P88★ ―― 己の献策（frozen src + editable）を上申せば ★「editable は staging に非ずや」の問が 返り来る★
+  ⇒ ★故に 献策には ★read-only の機序★ を 併せ書かねば 通らぬ（■八 未検 2 を 先に潰すべし）
+- ★猶生く ―― P78／P79／P80★／★P81〜P85 ＝ 五度悉く中り★
+
+### ■十 本節にて 為さざりし事（★悉く 0★）
+
+★build 0（idx 359「buildは完全集合/receiptまで0」）★／★網 0（令の一回は §98 にて已に使ひ申した）★／
+★現 root 二本 ―― 一 byte も改めず（読取のみ・改変 0）★／★共有樹 ―― `checkout` 0・`worktree add` 0・`fetch` 0・
+`status` は `--no-optional-locks` にて index を書かせず・★汚れ 0 行を実測★★／
+★半端な a7 final root ―― 消さず触れず保存★／★軍師second の樹 ―― 着手 0★／
+★launcher／pointer／proc／timer／guard／canary／cutover 0★／★HERMES_NIX_BUILD を実の器に用ゐる事 0★／
+★watchdog script・harness 改変 0★／★tmux send-keys 0★／★production pane 入力 0★／
+★Commander 直送 0（Route through honbucho）★／★本部長の箱 開かず数へず★／
+★足軽七箱・三箱 stat/open/grep/parse 0★／★`_archive` 不開★／★己の箱への札 0★／★cron 装填 0★／
+★委員長 uplink 用ゐず★／★§62〜§98 の本文 一字も動かさず★／★push 0★
+
+### ■十一 UNMEASURED の更新
+
+- ★禁★ ―― （変ぜず）
+- ★未★ ―― ★1,077 file を欠きたる器の 実挙動★（★機序は ■七 にて押さへたるも ★現に走らせては 居らぬ★）／
+  ★read-only の機序の 強さ比べ★／★監査役 PASS の尺★／★seq205082・seq205065 の全文★／
+  ★restore dry-run の記録（manifest-61 にも無し）★
+- ★怠★ ―― 無し（本節の測りは悉く実施）
+
+### ■十二 新條
+
+★★★條 ㌼ ―― ★「同じ道具で測れる数」が 出たる時 ―― ★其の数が 依つて立つ 母集団の 形★ を 先に 検めよ★★★
+   ―― ★理 ―― `rev-list --count` は ★shallow の graft にて 静かに 截らる★ ―― ★数は 出る・意味が 変ず★
+   ―― ★★「エラーを出さぬ截断」こそ 最も欺く★★（★§98 の『偽の緑』と ★同じ形の 罠★ に御座る）
+
+★★★條 ㌽ ―― ★己の説を 支ふる証を 一つ得たる後 ―― ★同じ紙の中に 己の説に 反する見えの物を 探せ★★★
+   ―― ★理 ―― 本節にて `pyproject` に `skills` 六度を見て 己の §98 を疑ひ 引き直したるに
+   ―― ★説は 崩れず ★却つて 449-458 行の 註釈といふ 遥かに強き足を 得申した★★
+   ―― ★★反例を探す手が 空振りたる時 ―― 其の空振りが 元の説の 足に成る★★
+
