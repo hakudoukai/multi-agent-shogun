@@ -12836,3 +12836,176 @@ d venv/bin   d venv/include   d venv/lib   l venv/lib64   f venv/pyvenv.cfg
 ★足軽七箱・三箱 `0`★／★`_archive` 不開★／★己の箱への札 `0`★／★cron `0`★／★push `0`★／
 ★§62〜§107 の本文 ―― 一字も動かさず★
 
+
+---
+
+## §109 ★★canary の材 ―― 『現 live』と『承認源』の 隔たりを 初めて 測る★★ ―― 而して ★両者に 共通の祖先は 無く★・★消ゆる枠は 3 のみ★ に御座つた
+
+as_of 2026-08-23T00:46:30〜00:56:20 JST／★悉く 読取のみ・`--no-optional-locks` を 恒に添へ index を書かせず・網 `0`★
+
+### ■一 何故 之を 測るか
+
+★令 364 は `env-dept receiptまでcanary/cutover/launcher/proc=0` と 命じ居る★。
+★然れば ―― ★『canary を 打つべきか』の裁に 要る材★ は ―― ★打たずして 測り得る★
+★而して ―― ★『現 live が 走らす版』と『承認源 6a3d50c』が ★何処まで 隔たるか★★ を ―― ★誰も 未だ 測り居らぬ★
+★★∴ 之を 本節にて 測る ―― ★裁の材にして 裁に非ず★（條 ―― 測りは裁の材にして裁に非ず）★★
+
+### ■二 現 live が 実に 走らす code の 同定
+
+★§104 にて ―― 両役 venv の editable finder は ★共有樹 `/home/hakudokai/hermes-runtimes/hermes-agent-v2026.8.3`★ を指す と 実証済★
+
+| 量 | 値 |
+|---|---|
+| ★HEAD★ | ★`0957277f2f468bac22bbfcfa7c43029858c9597e`★ |
+| committer date | `2026-08-06T11:30:58-07:00` |
+| subject | `refactor(skills): move polymarket to optional-skills/finance` |
+| ★`pyproject` の version★ | ★★`0.20.0`★★ |
+| ★樹の汚れ★ | ★★`0`★★（作業 dir ＝ HEAD） |
+| ★作業 dir の 資産計★ | ★`1102`★（＝ HEAD の tree と 一致） |
+
+★★∴ ★現 live ＝ `0.20.0`／承認源 ＝ `0.20.4`★★ ―― ★★cutover は ★patch 三つ分の 上げ★★★
+
+### ■三 ★★★共通の祖先が ―― ★無い★★★★
+
+```
+merge-base HEAD 6a3d50c   → ★出力 0 byte・rc = 1★
+rev-list --max-parents=0 --count HEAD      → ★1★
+rev-list --max-parents=0 --count 6a3d50c   → ★1★
+rev-list --count HEAD                      → ★★1★★
+rev-list --count 6a3d50c                   → ★★1★★
+```
+
+★★∴ ★双方とも ★commit を たつた一つしか 持たぬ★★ ―― ★各々が 独立の root★★
+★★∴ 此の樹は ★upstream の歴史を 引いた物に非ず★ ―― ★★snapshot を squash して 取り込みたる樹★★★
+★★∴ 実務に効く 帰結 ―― ★★『何が変はつたか』を ★commit 列にて 辿る事 ―― 能はず★★★
+　　　　　　　　　　　―― ★★語り得るは ★`diff` ただ一つ★★★
+
+### ■四 `diff` の 総括（★之のみが 語り得る★）
+
+```
+git diff --shortstat 0957277f 6a3d50c
+  → ★3,389 files changed, 439,031 insertions(+), 91,519 deletions(-)★
+```
+★上位（`numstat` 降順）★:
+| file | ＋ | − |
+|---|---|---|
+| `tests/test_tui_gateway_server.py` | 13,002 | 9,415 |
+| `apps/desktop/src/plugins/hermes-bots/plugin.js` | 10,339 | 0 |
+| `apps/desktop/electron/main.ts` | 4,822 | 1,162 |
+| `hermes_cli/plugins.py` | 4,345 | 294 |
+| `gateway/run.py` | 4,331 | 687 |
+| `hermes_state.py` | 3,496 | 307 |
+| `cron/scheduler.py` | 3,000 | 253 |
+| `cli.py` | 2,587 | 375 |
+
+### ■五 ★★資産 `1102 → 1077` の 名寄せ★★
+
+★㋐ file（path）單位★:
+| 量 | 値 |
+|---|---|
+| HEAD の資産 file | ★1,102★ |
+| 6a3d50c の資産 file | ★1,077★ |
+| ★path が 全く同じ★ | ★963★ |
+| ★HEAD にのみ★ | ★139★ |
+| ★6a3d50c にのみ★ | ★114★ |
+
+★㋑ ★枠（`<category>/<unit>`）單位★ ―― ★★之が 正しき單位★★★:
+| 量 | 値 |
+|---|---|
+| HEAD の枠 | ★212★ |
+| 6a3d50c の枠 | ★242★ |
+| ★双方に在る★ | ★209★ |
+| ★★HEAD にのみ＝cutover にて 名ごと 消ゆ★★ | ★★`3`★★ |
+| ★6a3d50c にのみ＝加はる★ | ★★`33`★★ |
+
+★★∴ ★資産の数は `25` 減ずれど ―― ★枠は `30` 増ゆ★★★（★file が減じたるは ★生き残りたる枠の 中身が 痩せたる★ 為★）
+
+### ■六 ★★★己の訂 ―― 前の測りの 述語が 粗かつた★★★
+
+★己は 一つ前の呼び出しにて 斯く 出し申した★:
+> ★★真に 消ゆる（blob が 新側に 無し）＝ `133`★★
+
+★★之は ―― ★誤り★★。★機序 ―― ★file 單位の blob 比較★ は ―― 
+　★㋐『枠ごと 失せたる物』★ と ★㋑『枠は残り 中身のみ 改まりたる物』★ を ―― ★一つに 混ずる★
+★実 ―― `133` の内 ★`128` は `skills/productivity` 配下★ にして ―― ★其の枠は 悉く 6a3d50c にも 在る★
+
+★★∴ 新條 ㍋ ―― ★集合の差を測る時は ―― ★單位を 一段 上げて 測り直せ★★★
+　―― ★理 ―― ★『消滅』と『改訂』は ―― ★粗き單位でしか 分かれぬ★★
+　―― ★処方 ―― ★file の差を出したる後 ★必ず 枠（dir）の差をも 出し 二つを 並べよ★★
+　（★條「正しき答を誤れる機序にて得たる時は答を残し機序を書き換へよ」の 系★ ―― ★今度は ★答も 誤り居つた★★）
+
+### ■七 ★★cutover にて ★名ごと 失はるる 3 枠★★★（★実寸★）
+
+| 枠 | file | byte |
+|---|---|---|
+| ★`optional-mcps/blender`★ | 1 | 4,361 |
+| ★`optional-skills/creative/blender-mcp`★ | 4 | 23,044 |
+| ★`optional-skills/devops/cli`★ | 5 | 14,579 |
+
+★基名にて 6a3d50c の ★全樹（資産外も含む）★ を掃きたる結果★:
+```
+blender-mcp  → ★0 件（★真に 失す★）★
+blender/manifest.yaml → 20 件は ★他 vendor の manifest★（★blender 自身は 無し★）
+cli          → 116 件（悉く `tests/cli/*` 等 ―― ★skill の `cli` とは 別物★）
+```
+★★∴ ★此の 3 枠は ―― ★移動に非ず 削除★★★
+
+★新たに 加はる 33 枠（抜粋）★:
+```
+optional-mcps: airtable asana atlassian datadog hugging_face intercom netlify notion
+               paypal sentry square stripe supabase vercel webflow（★15★）
+skills:        autonomous-ai-agents/merge-reconciler devops/sdlc-review email/email-inbox-triage
+               github/github-issue-to-pr research/blocked-page-recovery research/competitor-news-monitor
+               productivity/{box,document-to-action-items,meeting-action-items,
+                             product-price-monitor,session-librarian,weekly-review-planning}
+optional-skills: creative/{draw-your-font,simple-english,social-media-content-calendar}
+               devops/inference-sh-cli software-development/ast-grep web-development/har-derived-api-client
+```
+
+### ■八 ★双方に在る 209 枠 ―― 半ば近くが 中身を改む★
+
+| 量 | 値 |
+|---|---|
+| ★tree SHA まで 同一（全く不変）★ | ★★`115`★★ |
+| ★中身の 改まりたる枠★ | ★★`94`★★ |
+
+### ■九 ★`skills/productivity` `151 → 83` の 正体★
+
+| 枠 | HEAD | 6a3d50c | 差 |
+|---|---|---|---|
+| ★`docx`★ | 61 | 12 | ★−49★ |
+| ★`powerpoint`★ | 56 | 8 | ★−48★ |
+| `pdf` | 12 | 17 | ＋5 |
+| `xlsx` | 4 | 11 | ＋7 |
+| `google-workspace` | 6 | 7 | ＋1 |
+| 他 7 枠 | ― | ― | ★±0★ |
+
+★落ちたる物の 拡張子★:
+```
+docx        ―― ★.xsd 39★ ／ .py 15 ／ .xml 5 ／ .txt 1
+powerpoint  ―― ★.xsd 39★ ／ .py 15 ／ .txt 1
+pdf         ―― .py 8 ／ .md 2 ／ .txt 1（★然れど 総数は 増★）
+```
+★★∴ ★減の主は ★OOXML の `.xsd` schema 78 枚★★ ―― ★機能の削りに非ず ★実装の作り替へ★ と 見ゆ★★
+　（★但し ★之は 見立て★ ―― ★`.py` の中身までは 読まず★ ⇒ ★UNMEASURED と札す★）
+
+### ■十 予言
+
+★★P104★★ ―― ★`blender` 系 2 枠 ＋ `optional-skills/devops/cli` を ★現に 用ゐ居る役が 在らば★
+　―― ★cutover にて ★其の機能を 失ふ★★（★★用ゐ居るか否かは ★未測★ ―― `.claude`/役の state を 開かねば 判らぬゆゑ 検さず★★）
+
+★★P105★★ ―― ★此の樹は ★commit を 一つしか 持たぬ★ ゆゑ
+　―― ★★`git log` にて『何が変はつたか』を 見んとする者は ―― ★『変更 1 件』しか 見えず★★★
+　―― ★★∴ ★『大した変更は無い』と 誤り得る★ ＝ ★P101 と 同じ族の 偽の緑★★★
+　―― ★処方 ―― ★★版の隔たりは 恒に `diff --shortstat` にて 出せ・`log` にて 出すな★★★
+
+### ■十一 本節にて 為さざりし事
+
+★★共有樹 ―― ★読取のみ・`--no-optional-locks` を 恒に添ふ★★★／★★役の樹 ―― 一指も触れず★★／
+★★a7 半端 final root ―― 不触★★／★★現 live の樹・venv・root ―― 一 byte も 改めず★★／
+★★`canary`／`cutover`／`launcher`／`pointer`／`proc`／`timer`／`guard` ―― `0`★★／
+★★`--tui --continue` の実走 ―― `0`★★／★★役の state・`.claude`・`*.db` ―― ★不開（P104 を 未測に 留めたる 理由★）★★／
+★★束 ―― 読取のみ★★／★網 `0`★／★`tmux send-keys` `0`★／★production pane 入力 `0`★／
+★Commander 直送 `0`★／★本部長の箱 不開★／★足軽七箱・三箱 `0`★／★`_archive` 不開★／
+★己の箱への札 `0`★／★cron `0`★／★push `0`★／★§62〜§108 の本文 ―― 一字も動かさず★
+
