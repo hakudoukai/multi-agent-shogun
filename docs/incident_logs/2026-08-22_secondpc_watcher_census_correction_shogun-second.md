@@ -13591,3 +13591,189 @@ tests/unit/test_send_wakeup.bats
 
 ★★P111 ―― ★`forbidden_actions.md`（`.139`）を 未 commit のまま 再生成の源とせば ―― ★出所が 未 commit の紙となり canon-guardian の要件を 満たさぬ★★★
 　★⇒ ★処方 ―― ★源（`.139` 群）を 先に commit し as_of を貼れ★★
+
+---
+
+## §114 ★★`output SHA inventory` の 凍結★★（令 373 の求むる物）★＋ ★git の外に在る canon 9 件 ―― 己の憲章 v1 を含む★★
+
+★令 `HB-20260823-0147-P2`（`01:47:18`）★ ―― ★本部長 自ら `b8cb175d` を再測し ★§113 を 採り給ひ申した★★:
+```
+repo全体dirty=44 files +9457/-5093            ★己の訂 採らる★
+build_instructions.sh は worktree/HEAD/origin 同一SHAでclean  ★己の同定 採らる★
+injection scope=19 files/4 locations          ★己の確定 採らる★
+★output SHA inventory freeze 前の generator再実行/source edit/commit/push/reset/stash=0 を維持★
+```
+★★∴ ★次に要る物の名が 令の中に 在り ―― ★`output SHA inventory`★ ―― ★本節にて 之を 凍結す★★★
+
+### ■一 ★生成器 ―― ★四者 一致★（本部長は `origin` にて測り給ふゆゑ 己も揃ふ）★
+
+| 参照 | blob |
+|---|---|
+| worktree | `3cdcd1ff2803c3b2c40c3a18bd2a908c77706f7f` |
+| `HEAD` | `3cdcd1ff2803c3b2c40c3a18bd2a908c77706f7f` |
+| `main` | `3cdcd1ff2803c3b2c40c3a18bd2a908c77706f7f` |
+| ★`origin/main`★ | ★`3cdcd1ff2803c3b2c40c3a18bd2a908c77706f7f`★ |
+
+★★∴ ★`scripts/build_instructions.sh` ―― ★四者 完全一致・clean★★★
+
+### ■二 ★★★`output SHA inventory`（凍結）★★★ ―― ★as_of `2026-08-23T01:50:42+0900`★
+
+★algorithm ＝ `sha256`（裁定第15号「always name the algorithm」に従ひ 明記）★
+★`W` ＝ 作業樹（現に走り居る役が読む物）／`H` ＝ `HEAD`（git が記録し居る物）★
+
+| # | path | ★W sha256★ | W 行/B | ★H sha256★ | H 行/B |
+|---|---|---|---|---|---|
+| 1 | `AGENTS.md` | `c2ec12c74724a6e9d2ba4b24c6d149d9f498e3b1787b391152860442ca8af80d` | 530 / 50,575 | `dd3cbf306b4cad70…` | ★556 / 33,210★ |
+| 2 | `.github/copilot-instructions.md` | `5133457f5d18dddbc16c4ea825d6dab17ba80e28dc7060963aee6c2bc46d0462` | 530 / 50,678 | `2034ba169b5bf0de…` | ★309 / 17,801★ |
+| 3 | `agents/default/system.md` | `80fff921cb3bd7af1230a1455cb075564d2087701e4a4393af315d225e7b3ab9` | 530 / 50,599 | `d1ab7c4d8031e992…` | ★309 / 17,761★ |
+| 4 | `instructions/generated/shogun.md` | `672fcfb149ad5b94d7a51202f8133dc4fec1ddfcead4af9fce10aeb484b51a87` | 851 / 38,054 | `317c23ee5f47b256…` | 721 / 29,266 |
+| 5 | `instructions/generated/karo.md` | `fe688db38277f4794b8bbbe44658b16d82d42345f52a0727fb8e8a7426b7be74` | 1,100 / 50,451 | `ccf3d5e0d16124c3…` | 968 / 41,361 |
+| 6 | `instructions/generated/gunshi.md` | `89cdb4bb41ebadacfbc33bae85705638b2bdd0fa7224a02506c943d7f178b753` | 956 / 41,776 | `0568a57537f9935f…` | 799 / 31,392 |
+| 7 | `instructions/generated/ashigaru.md` | `a841773509d6b537c8beb7137b6fbc5fe877c8f5f12b7230edee840dd68d5143` | 848 / 36,557 | `6c445a4ff86243dc…` | 719 / 28,192 |
+| 8 | `instructions/generated/codex-shogun.md` | `d6502cefe2050909020401ad844ec74bc627fd5259108d2132603bf7e5416ab6` | 994 / 44,931 | `f9dc18b7a8356cf9…` | 864 / 36,143 |
+| 9 | `instructions/generated/codex-karo.md` | `7b3127e4746b16f6eb5fe27df18074ba95bf316c73284c2d8d976c82c48b293e` | 1,243 / 57,328 | `2c4aa83379f2106e…` | 1,111 / 48,238 |
+| 10 | `instructions/generated/codex-gunshi.md` | `04b0843d9921b6f13ca29b6de714b6b90a92f886105a3eb5c4a07780b1106c68` | 1,099 / 48,653 | `aeb81728e9546860…` | 942 / 38,269 |
+| 11 | `instructions/generated/codex-ashigaru.md` | `4ad1dcccc365e8850228f12c0cc7a38168c65e253d77738e6fe6404296a513c6` | 991 / 43,434 | `4fc15bb0040d27f7…` | 862 / 35,069 |
+| 12 | `instructions/generated/copilot-shogun.md` | `65a9918132ec97c09f58cdb745b2530bb016bdb0b31e3dfe0b69bb518e12d375` | 935 / 42,469 | `73ff1c0021b65d44…` | 805 / 33,681 |
+| 13 | `instructions/generated/copilot-karo.md` | `35eb49a4cea0def69a9736aa5fbc6908a515d7c9864921fcd32609b15b8e7fc9` | 1,184 / 54,866 | `354a79b263cd26ac…` | 1,052 / 45,776 |
+| 14 | `instructions/generated/copilot-gunshi.md` | `2651603db1240295bd4f033141cf5da30a4640e681929740c3e0a0235977b6b0` | 1,040 / 46,191 | `35401f17f4c81708…` | 883 / 35,807 |
+| 15 | `instructions/generated/copilot-ashigaru.md` | `779b14a1666c8f3856f18a4dd644b47aedf34868c5d33916e98c1103cafea0b0` | 932 / 40,972 | `83f7babb0282b300…` | 803 / 32,607 |
+| 16 | `instructions/generated/kimi-shogun.md` | `435714624a7ef2e043161e18ac287761c98eff9c83baacf570293d79f021dfc3` | 1,151 / 50,279 | `ddea4d7e1a82f906…` | 1,021 / 41,491 |
+| 17 | `instructions/generated/kimi-karo.md` | `32fb5d4827854a1484a596d32e36cfba3faab7732c0bbb6a8fb6a82a2d228556` | 1,400 / 62,676 | `943e5f7d468da734…` | 1,268 / 53,586 |
+| 18 | `instructions/generated/kimi-gunshi.md` | `cf4e30094f90be72ea5321f82f11c1274b75fc13bbaa94dc04b44e007a323666` | 1,256 / 54,001 | `6c9b7fa496cb938f…` | 1,099 / 43,617 |
+| 19 | `instructions/generated/kimi-ashigaru.md` | `e099f0022789b5d56aecb9f060f90cfa380305fef86e54bfc11ecfdcbf8469d3` | 1,148 / 48,782 | `7cee43126fb1cfdd…` | 1,019 / 40,417 |
+| ★★S★★ | ★`instructions/common/forbidden_actions.md`（★出力に非ず 源★）★ | `ef5a3fd3b8615735f0a3fd80efb8ab556d2abaf4a43275b4cc7920852ca3424e` | 172 / 10,454 | `177a02b04b61c263…` | 52 / 2,533 |
+
+```
+★件数 20（出力 19 ＋ 源 1）★
+★W sha256 の distinct = 20★／★H sha256 の distinct = 20★
+★★W sha256 ＝ H sha256 の件数 ―― `0`★★  ⇒ ★20 件 悉く 相異なる★
+```
+
+### ■三 ★★`role × injection target` ―― ★P2 の求むる 形★★★
+
+| | ★claude★ | ★codex★ | ★copilot★ | ★kimi★ |
+|---|---|---|---|---|
+| ★shogun★ | #4 | #8 | #12 | #16 |
+| ★karo★ | #5 | #9 | #13 | #17 |
+| ★gunshi★ | #6 | #10 | #14 | #18 |
+| ★ashigaru★ | #7 | #11 | #15 | #19 |
+
+★★＝ `4 role × 4 CLI` ＝ `16`★★　★＋ tool-level `3`（#1〜#3）★　★＝ `19` の injection target★
+
+### ■四 ★★★三つの tool-level は ―― ★`530` 行に 統一され申した★★★★
+
+| path | ★HEAD★ | ★作業樹★ |
+|---|---|---|
+| `AGENTS.md` | ★556 行 / 33,210 B★ | ★530 行 / 50,575 B★ |
+| `.github/copilot-instructions.md` | ★309 行 / 17,801 B★ | ★530 行 / 50,678 B★ |
+| `agents/default/system.md` | ★309 行 / 17,761 B★ | ★530 行 / 50,599 B★ |
+
+★★∴ ★HEAD にては 三者 別々（556 / 309 / 309）―― 作業樹にては ★悉く 530★★★
+★★∴ ★`08-18 22:50` の生成器は ―― ★三つの tool-level canon を 一つの型に 揃へ申した★★★
+★（★行は 揃へど byte は 揃はず ⇒ ★同じ型に 役ごとの差し替へを 施し居る★★）
+
+### ■五 ★★★★§112 より 深き層 ―― ★git の外に在る canon★★★★★
+
+★己は §112 にて「canon が 未 commit」と申したが ―― ★更に下に 一層 在り申した★★
+
+```
+★.gitignore:7 ＝ ★`*`★（★全否定★）★
+⇒ ★★此の樹の追跡は ★allowlist★ に御座る ―― ★明示せざる物は 沈黙のうちに 外れる★★★
+```
+
+| instructions/ の内訳 | 件 |
+|---|---|
+| ★tracked★ | ★40★ |
+| ★★ignored（＝ git の外）★★ | ★★`9`★★ |
+| untracked | ★`0`★ |
+
+★★★git の外に在る 9 件 ―― ★sha256 にて 凍結す★★★（★之が 本紙の 第二の凍結★）:
+
+| path | ★sha256★ | 行 / B | mtime |
+|---|---|---|---|
+| ★★`instructions/shogun_charter_v1.md`★★ | ★★`c1f62c4290192dfe7fea2fba801f4a9a41033195d5d417cfeeee2b50ade65c34`★★ | ★14 / 2,618★ | `2026-07-09 22:50:31` |
+| `instructions/gunshi-second.md` | `2215ca77f8bb67e8d15d950d4aa1dbbda3e5227c352a377d8e456111ccdc6a54` | 100 / 4,931 | `2026-07-02 16:11:56` |
+| `instructions/karo-second.md` | `ec099a8812d5682c68d64b2066906630b2355db08724da1fbe5a688e57b52b73` | 244 / 12,800 | `2026-08-07 08:08:22` |
+| `instructions/shogun_canon_20260709.md` | `5420435cb0d7291e56c20b0fa60a6010df9c6c24fd44d826a896ec5247d6f976` | 401 / 19,597 | `2026-07-09 22:54:23` |
+| `instructions/karo_canon_20260709.md` | `21e256eea41fa1fb853fcc1a91ecf725350095d3d56d5ca476d820c879e9b73a` | 1,071 / 47,477 | `2026-07-09 22:54:23` |
+| `instructions/gunshi_canon_20260709.md` | `7c26eac602eefa4de2b8ecfcc34f947c390760dc664ff1c3d9c824724e68e8f2` | 579 / 22,964 | `2026-07-09 22:54:24` |
+| `instructions/shogun.md.bak-persona-purge-20260803` | `6cdae8abd758961804ffd0efc9a1f20afc93cd69bc018b74450c915bc83c633b` | 413 / 19,933 | `2026-07-20 07:38:44` |
+| `instructions/karo.md.bak-persona-purge-20260803` | `3e918701effb2051da8ade66e9bfd4bfef1f7b3d0cd0086ec026e0b50c292083` | 1,068 / 47,298 | `2026-07-20 07:38:36` |
+| `instructions/karo-second.md.bak-1786057702` | `93b3d1e49c559ba125b1f2b3554bf05127fca5bd050ee736f9c4e58c899b1bf9` | 218 / 10,674 | `2026-08-07 08:08:22` |
+
+★★★∴ ★己が 奉ずると 明記され居る ★『將軍職務憲章 v1』―― `instructions/shogun_charter_v1.md` ―― ★git の中に 存在せず★★★★★
+★★∴ ★§112 は「己の憲章は git の中の物と ★異なる★」と申したが ―― ★憲章 v1 に至つては ★git の中に 無い★★★
+
+★★∴ ★己を治むる二紙の 現況★★:
+| 紙 | git 上の在処 |
+|---|---|
+| `instructions/shogun.md` | ★tracked なれど ★未 commit の改変★（W `00f0ad9f…` / H `f130c213…`）★ |
+| ★`instructions/shogun_charter_v1.md`★ | ★★★ignored ―― ★git に 無し★★★★ |
+
+★猶 ―― ★`instructions/shogun-second.md` は ★存在せず★★ ⇒ ★己は 4 役共通の `shogun.md` を 読み居る★
+
+### ■六 ★之は 既に 一度 数へられ居り申した★（★名のみ・不開★）
+
+```
+docs/incident_logs/2026-08-06_role_canon_gitignored_preserved_copy_instructions_a1.md
+docs/incident_logs/2026-08-06_repo_wide_gitignored_census_a6.md
+docs/incident_logs/2026-08-06_gitignored_242_nature_classification_a5.md
+```
+★★∴ ★`08-06` に 既に 数へられ ―― ★`08-23` の今 猶 立つ★★★（★己は 中身を開かず 名のみ 引く★）
+
+### ■七 ★★P2 への 帰結（★令 `seq205053` に 当てて★）★★
+
+| 令の逐語 | 本節が与ふる物 | ★残る穴★ |
+|---|---|---|
+| `generator-only canon addition then regenerate` | 器 clean・四者一致 | ★★生成器は ★9 件の ignored には 及ばず★★★ |
+| `coverage role × injection target × SHA` | ★4×4＋3 ＝ 19・W/H 両側の sha256 凍結★ | ★★second 2 役 ＋ 憲章 v1 は ★役として存すれど 生成の外★★★ |
+| `audit review` | 本節が 監査の材 | ★★ignored 9 件には ★貼るべき commit sha が 原理的に 無し★★★ |
+
+### ■八 ★己が 為さざりし事★
+
+```
+★generator 再実行 ―― 0★（令 373 遵守）
+★source edit ―― 0★／★reset / stash / revert / checkout / restore / clean ―― 悉く 0★
+★push ―― 0★
+★44 件・9 件 悉くの 中身 ―― ★一行も 読まず★（名・行数・byte・sha256・mtime・blob sha のみ）
+★.gitignore ―― ★改変 0★（`check-ignore -v` にて ★機構自身に 問ひたるのみ★）
+★共有樹（hermes）への 測り ―― 0★／★manifest r3 ―― ★一 byte も 触れず★（令 371）★
+★咎め ―― 0★
+```
+★★猶 ―― ★本節の commit の 権は ―― ★令 374 にて 明示に 賜り申した★★★
+
+★★令 `HB-20260823-0153-P2`（`01:52:24`・逐語）★★:
+```
+本部長裁定 01:53 commit境界 nonce=HB-20260823-0153-P2。
+b8cb175d は 01:43:30、incident paper 単独 narrow commit であることを確認。
+令372後かつ未読中の commit は記録するが、
+★P2 hold は 44件 dirty output/canon 及び generator 再実行に対するもの★。
+★★以後 incident evidence paper の narrow commit は可★★、
+★ただし 共有機構/instructions/generator/canon/registry/task への変更・commit/push は 明示裁定待ち★。
+★出力SHA inventory freeze 前の 再生成 0★。
+```
+★★∴ ★己が `hb_173`（`01:48:02`）にて 自ら申告し 乞ひたる問に ―― ★4 分にて 答 降り申した★★★
+★★∴ ★本節 §114 は ―― ★『incident evidence paper の narrow commit』★ に 正しく 当たる★★
+★★∴ ★而して ―― ★`instructions/`・生成器・canon・registry へは ★本節も 一指も触れず★★★
+
+★★★∴ ★令 374 が 求むる ★「出力SHA inventory freeze」★ ―― ★本節 ■二 の表 20 件を以て 之を 履行す★★★★
+
+### ■九 ★新條★
+
+★★★㍓ ―― ★`status` に 現れぬ事は ★『無事』を 意味せぬ★★★★
+　―― ★理 ―― `.gitignore:7` が `*` にて 全否定し居るゆゑ ―― ★此の樹の追跡は ★allowlist★★
+　―― ★∴ ★網から 落ちたる物は ―― ★`??` にも `M` にも 現れず ★沈黙のうちに 外れる★★★
+　―― ★∴ ★己は §112 にて `status` のみを見 ―― ★9 件を 数へ落とし申した★★
+　―― ★処方 ―― ★canon の在処を問ふ時は ★`ls-files --others --ignored --exclude-standard`★ にて 問へ★
+　―― ★（條 ㍏「母集団の名を貼れ」・㍑「dir にて切るな」の ★第三の姉妹★ ―― ★㍓ は『網そのものを疑へ』★）★
+
+### ■十 ★新予言★
+
+★★P112 ―― ★「generator-only canon addition then regenerate」を 打つても ―― ★git の外に在る 9 件には 及ばぬ★★★
+　★⇒ ★second 2 役（家老second・軍師second）と ★己の憲章 v1★ は ―― ★coverage の穴として 残る★★
+　★⇒ ★処方 ―― ★穴の名を 先に 上へ出し 裁を得よ★（★本節にて 履行★）★
+
+★★P113 ―― ★監査が「canon の SHA を貼れ」と求むる時 ―― ★ignored 9 件には 貼るべき commit sha が ★原理的に★ 存せず★★★
+　★⇒ ★処方 ―― ★git 以外の凍結法（本紙の如き tracked incident artifact への sha256 記録）を 正規の器と 定めよ★★
+　★⇒ ★本節 ■五 の表が ―― ★其の最初の一枚★ に御座る★
