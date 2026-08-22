@@ -11827,3 +11827,131 @@ git ls-tree -r --name-only 6a3d50c | sort            → chk_tree.txt
 ★Commander 直送 0★／★足軽七箱・三箱 0★／★`_archive` 不開★／★己の箱への札 0★／★cron 0★／★push 0★／
 ★§62〜§100 の本文 一字も動かさず★／★残滓 `build/` `egg-info/` ―― ★消さず 保存★（★証物★）★
 
+
+---
+
+## §102 己の手順㊁ に穽を見出だし訂す ―― `--no-index` のみでは build backend の源が無い ／ 併せて封（read-only）の強さを実測し「事故は防ぐが意図は防がぬ」と定む
+
+as_of 2026-08-22T23:47:09〜23:48:12 JST／nonce 応答先 = HB-20260822-2338-FINALBUILD（idx 361）
+測りは ★悉く 読取のみ＋scratchpad の玩具★（hermes 樹 読取のみ・改変 0・build 0・網 0）
+
+### ■一 令の更新 ―― ★己の実測が 令の言葉に 成り申した★
+
+idx 361（23:38:28・`HB-20260822-2338-FINALBUILD`）逐語:
+
+> `fed1b61eを再測。active role venv二本のeditable finderは同一SHAでshared runtimeを指す。`
+> ★`shared checkout mutationは禁止`★`、承認source 6a3d50cは同repoにあり`★`git archiveで網なし抽出可`★`。`
+> ★`方式合議の明示裁定までbuild=0/a7 venv不変を維持`★
+
+★★∴ §99 ■三〜■四 の実測が ―― ★本部長の再測を経て 令の文言と成り申した★★
+　（★「shared checkout mutation は禁止」＝己の献策の核／「git archive で網なし抽出可」＝己の実測★）
+★而して ―― ★其の第二項に 足を付けたるが §101 ■三（全数名寄せ・欠 0）★ ―― ★時宜 相叶ひ申した★。
+
+★★併し ―― 猶 ★裁定は 降り居らぬ★★（`方式合議の明示裁定までbuild=0`）。∴ ★材を 作り続く（條 ㌾）★。
+
+### ■二 ★★己の手順㊁ に 穽 ―― `--no-index` のみでは ★build backend の 源が 無い★★★
+
+§100 ■五 にて己が書きたるは:
+
+```
+㊁ pip install --no-index -e <final-root>/src     ← ★之が 危ふい★
+```
+
+★理 ―― 6a3d50c の `[build-system]` 逐語★:
+
+```toml
+[build-system]
+requires = ["setuptools==83.0.0"]
+build-backend = "setuptools.build_meta"
+```
+
+★★`pip install -e` は ―― 既定にて ★build 隔離★ を行ひ ―― ★別の 仮の器を建てて `setuptools==83.0.0` を 入れる★★。
+★之は ★本体の依存解決とは 別の経路★★ に御座る。⇒ ★`--no-index` は ★網を塞ぐ★ が ★源を与へぬ★★
+　⇒ ★★`setuptools==83.0.0` が 何処にも 見付からず ―― 落つる★★（★若し `--no-index` を 忘れなば ★網へ 出る★★）。
+
+**★救ひ ―― 束の中に 現に 在り申した★**
+
+| 量 | 値 |
+|---|---|
+| 束の現物 | ★`setuptools-83.0.0-py3-none-any.whl`★／`1,008,090 B` |
+| ★実 sha256（現物より起こす）★ | ★`29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3`★ |
+| ★承認 lock の wheel hash★ | ★`29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3`★ ―― ★★一致★★ |
+| lock の wheel size | `1008090` ―― ★現物と 一致★ |
+| `requirements-…-61.txt` | ★`setuptools==83.0.0` を 現に 載す★（sdist・wheel 両 hash） |
+
+**★∴ 手順㊁ の訂（二通り ―― 悉く 網 不要）★**
+
+| 案 | 形 | 判 |
+|---|---|---|
+| ★甲★ | `pip install --no-index ★--find-links <wheelhouse>/downloads★ -e <src>` | ★★採る★★ ―― build 隔離を保つたまま ★pin 通りの 83.0.0★ を 束より取る |
+| 乙 | `pip install --no-index --no-build-isolation -e <src>` | ★不可ならず 然れど 脆★ ―― ★venv の setuptools の版に 依る★ |
+
+★乙を退くる理★ ―― ★★『偶々 版が合ふ』に依存する道は ―― 暗黙の依存＝★偽の緑の芽★★★（條 ㌿ の精神）。
+（★参考 ―― 現に 役 venv 二本 ＋ a7 半端 root の 三つ 悉く `setuptools-83.0.0.dist-info` を持つ ⇒ ★今日は 乙でも通る★
+　 ―― ★★而して 「今日 通る」は 「方式として 正しい」に非ず★★）
+
+### ■三 ★封（read-only）の強さ ―― 玩具の器にて 実測★（§100 ■五 未検 #3 を潰す）
+
+`chmod -R a-w` を打ちたる後、★己（uid `1000`・非 root）★にて 四つを試む:
+
+| 試み | 結 |
+|---|---|
+| ㊀ 既存 file への上書き | ★拒まる★ |
+| ㊁ dir への 新規 file 作成 | ★拒まる★（★＝`__pycache__` を作らせぬ★） |
+| ㊂ file の削除 | ★拒まる★ |
+| ㊃ ★所有者が `chmod u+w` にて 封を解く★ | ★★解けた★★ |
+| ㊄ 解いた後に書く | ★書けた★ |
+
+★★∴ 封の性質を ★言葉にて 確と 定む★★:
+
+> ★★`chmod a-w` は ―― ★『偶然の書込』を 防ぐ★ ―― ★『意図ある改変』は 防がぬ』★★
+> （★所有者は 一手にて 解け ―― root は 端より 効かず★）
+
+★★∴ 上へ 申す時の 述語は ★『不変（immutable）』に非ず★ ―― ★★『事故耐性（accident-proof）』★★★
+（條「述語は 機構でなく 結果で書け」―― ★★『read-only にすれば 誰も変へられぬ』は ★偽★★★）
+★真の不変を要さば ―― ★mount 単位（`ro` bind mount）か 所有の分離（別 uid）★ ―― ★★之は 権限を要し 令の外★★。
+
+### ■四 ★★手順の 確定形★★（§100 ■五 ＋ §101 ■七 ＋ 本節）
+
+```
+㊀ <final-root>/src ← git archive 6a3d50c | tar -x        ★空 dir へ★（§101 ■七 ㋐）
+   ★直後に 名寄せ ―― ls-tree 9,738 と突合し 欠 0 かつ 余 0★（§101 ■七 ㋑）
+㊁ <final-root>/venv を建て、61 束より offline に依存を入れ
+   ★pip install --no-index --find-links <wheelhouse>/downloads -e <final-root>/src★   ←★本節の訂★
+㊂ python -m compileall ★--invalidation-mode checked-hash★ <final-root>/src           （§100 ■四）
+㊃ ★chmod -R a-w <final-root>/src★                          ★必ず ㊁㊂ の後★（§100 ■五）
+㊄ 受入 ―― 資産の実数 ★1,077★・import・pip check・assets の実在
+```
+
+★猶 残る未検（★正直に★）★:
+1. ★0.20.4 の実挙動が src へ 何を書くか★ ―― ★build 後にしか 測れぬ★（★現 0.20.0 では 115/115 が .pyc★）
+2. ★監査役 PASS の尺 ―― 未賜★
+3. ★`--find-links` を加へたる形の 実走 ―― ★build=0 令ゆゑ 未験★★（★材は揃ひたるも 撃たず★）
+
+### ■五 予言の更新
+
+- ★P92（新）★ ―― 若し 手順㊁ を ★`--find-links` 無し★ にて 打たば ―― ★`setuptools==83.0.0` の解決にて 落つる★
+  （★或いは `--no-index` を落とせば ★網へ出て 令を破る★★）⇒ ★★本節の訂は ★実務の躓きを 一つ 先に 除く★★
+- ★P93（新）★ ―― 受入にて「read-only なる事」を尺とせば ―― ★其の尺は ★『事故耐性』しか 保証せぬ★★
+  ⇒ ★若し 監査役が「不変」を求むれば ―― ★mount か uid 分離が要り ★令の外に出る★★
+
+### ■六 新條
+
+★★★條 ㍂ ―― ★網を塞ぐ旗（`--no-index`）は ★源を与へる旗（`--find-links`）と 対にせよ★★★
+　 ―― ★理 ―― 塞ぐのみでは ★『何処にも無い』★ に成る。
+　 ―― ★★且つ ★build 隔離は 本体の依存解決とは 別の経路★★ ⇒ ★★『依存が offline に揃ふ』は
+　　　★『build backend が揃ふ』を 意味せぬ』★★（★本件は 幸ひ lock に載り居つた ―― ★偶然に非ず 検めたるゆゑ 判つた★）
+
+★★★條 ㍃ ―― ★封は 事故を防ぐ ―― 意図を防がぬ★★★
+　 ―― ★理 ―― `chmod a-w` は 所有者が 一手にて 解き得（実測 ㊃）、root には 端より 効かず。
+　 ―― ★★∴ 述語は ★『不変』でなく『事故耐性』★ と 書け★★（★過大な述語は 其れ自身 偽の緑★）
+
+### ■七 本節にて 為さざりし事
+
+★build 0★／★網 0★／★hermes 樹 読取のみ・改変 0・`chmod` 0・`checkout` 0・`worktree add` 0・`fetch` 0★／
+★役 venv 三つ ―― ★`ls` のみ・一指も触れず★★／★束（wheelhouse）―― ★`sha256` の読取のみ・一 byte も加へず★★／
+★現 root 二本 不変★／★a7 半端 root 保存★／★軍師樹 着手 0★／★launcher/pointer/proc/timer/guard/canary/cutover 0★／
+★tmux send-keys 0★／★production pane 入力 0★／★Commander 直送 0★／★足軽七箱・三箱 0★／★`_archive` 不開★／
+★己の箱への札 0★／★cron 0★／★push 0★／★§62〜§101 の本文 一字も動かさず★／
+★玩具の器（`rostrength`）―― ★験しの後 消し申した（rc=0）★★
+
