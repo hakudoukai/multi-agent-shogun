@@ -14306,3 +14306,111 @@ Read your instructions file (shogun→instructions/shogun.md;
 ★生成器の実行 0★／★`instructions/*` へ 書込 0★／★`.gitignore` 不触★／★push 0★
 ★本節は 便を 起こさず★ ―― ★★同趣旨の便を 二度 送らず ⇒ 次の実のある便に 併せ 申し上ぐ★★
 ```
+
+---
+
+## §120 ★★★己の予言 P120 を ★己で 倒す★★★（★測りたる範囲に 同種は 無し★）＋ ★★8 と 6 の 差 ―― ★gunshi の 二 cell は 固定されず★★★
+
+★§119 にて 己は P120 を立て申した ―― 『同じ形は ★此の樹の 他所にも 在る★』★
+★★本節は ―― ★之を 測り ―― ★★外れ★★ と 札す★★（★條 ―― ★予言は 外れたる時にこそ 値が有る★）
+
+### ■一 ★★測り ―― ★unit test の中の path 様の文字列 `12` 件 ―― ★実在を 一つづつ 検む★★★
+
+```
+★手 ―― tests/unit/*.bats より "（instructions|.github|agents|scripts|lib|queue）/…" を抜き 一意化し ―― ★[ -e ] にて 検む★
+```
+
+| # | path | 実在 |
+|---|---|---|
+| 1 | `instructions/shogun.md` | ★在★ |
+| 2 | `instructions/karo.md` | ★在★ |
+| 3 | `instructions/ashigaru.md` | ★在★ |
+| 4 | `instructions/generated/kimi-shogun.md` | ★在★ |
+| 5 | `instructions/generated/kimi-karo.md` | ★在★ |
+| 6 | `instructions/generated/kimi-ashigaru.md` | ★在★ |
+| 7 | ★`instructions/codex-shogun.md`★ | ★★不在★★ |
+| 8 | ★`instructions/codex-karo.md`★ | ★★不在★★ |
+| 9 | ★`instructions/codex-ashigaru.md`★ | ★★不在★★ |
+| 10 | ★`.github/copilot-instructions-shogun.md`★ | ★★不在★★ |
+| 11 | ★`.github/copilot-instructions-karo.md`★ | ★★不在★★ |
+| 12 | ★`.github/copilot-instructions-ashigaru.md`★ | ★★不在★★ |
+
+★★★∴ ★総数 `12` ／ 不在 `6` ―― ★而して 其の `6` は ★悉く `cli_adapter` 由来★★★★
+★★★∴ ★★P120 ―― ★外れ★★★ ―― ★測りたる範囲に ★他所の同種は 一件も 無し★★★
+
+★★★範囲を 明記す（★之を書かずば 倒したる事に成らぬ★）★★★:
+```
+★測りたるは ―― ★`tests/unit/*.bats` の中の ★path 様の 文字列 literal★ のみ★
+★★測り居らぬ ―― ★`lib/`／`scripts/` の函数 其の物★・★integration／e2e の test★・★変数にて組み立てられ literal に現れぬ path★★
+　⇒ ★★∴ P120 は ★『literal の範囲に於て 外れ』★ にして ―― ★『樹の全域に於て 外れ』に非ず★★
+```
+
+### ■二 ★★★而して ―― ★『形』の方は ★現に 在り申した★★★★
+
+★各 bats の ★実在検査（`[ -f ]`／`-e`／`-d`／`assert_file`）の行数★★:
+```
+★test_build_system.bats                 ★17★★   ← ★★樹は ★実在を検む術を 知り居る★★★
+ test_idle_flag.bats                     8
+ test_safe_nudge.bats                    5
+ test_stop_hook.bats                     4
+ …（他 8 件 いづれも 1〜3）
+★★test_cli_adapter.bats                  ★0★★★  ← ★★破れ 6 を 抱く当の紙★★
+★test_switch_cli.bats                    ★0★
+★test_switch_cli_resolve_pane_real.bats  ★0★
+★test_switch_cli_type_inference.bats     ★0★
+```
+
+★★∴ ★実在検査を 一行も持たぬ bats は ★`4` 件★★ ―― ★然れど ★其の内 誤りたる期待値を抱くは `cli_adapter` のみ★
+★★∴ ★★『形は 四つ 在れど ―― 実害は 一つ』★★ ―― ★之が P120 の 正確なる 死に様に御座る★
+
+★★★而して ★之が 進言を 強む★★★:
+```
+★`test_build_system.bats` は ★17 行の実在検査★ を 現に 持ち居り申す
+　⇒ ★★∴ 『path を返す test に ★[ -f ] を 添へよ★』は ―― ★新奇の要求に非ず★★
+　⇒ ★★★樹に 既に在る 作法を ★一つの紙に 及ぼす★ のみ★★★
+```
+
+### ■三 ★★★数を 研ぐ ―― ★函数の破れ `8` ／ test が固むる `6` ／ ★固定されざる `2`★★★★
+
+```
+★函数側（`lib/cli_adapter.sh:197-198`）―― ★4 役 × 2 CLI ＝ `8` cell★
+★test 側（`test_cli_adapter.bats`）―― ★覆ふ役は shogun・karo・ashigaru（1/3/5/7）★
+　　　　　　　　　　　　　　　　　　　★★gunshi ―― 覆はれ居らず★★
+　　　　　　　　　　　　　　　　　　⇒ ★3 役 × 2 CLI ＝ `6` assert★
+★★∴ 差 `2` ―― ★gunshi × codex ／ gunshi × copilot★★
+★（★猶 ―― `instructions/generated/codex-gunshi.md`／`copilot-gunshi.md` は ★両方 実在す★）
+```
+
+★★∴ ★之は ★二種の 破れ★ にして 一種に非ず★★:
+
+| 種 | 件 | 性 |
+|---|---|---|
+| ★test に 固定されたる破れ★ | ★`6`★ | ★直せば ★test が 赤に成る★★ ⇒ ★test も 併せ 直す要あり★ |
+| ★★固定されざる破れ★★ | ★★`2`★★ | ★★直しても ★何も 赤に成らぬ★★ ⇒ ★★誰も 気付かぬ★★★ |
+
+★★★∴ ★修の裁を乞ふ時は ―― ★『8 を直す』と 申すのみにては 足らず★ ―― ★★『6 は test と対にて・2 は test の外にて』★★ と 分けて 申すべし★★★
+
+### ■四 ★新條★
+
+★★★㍛ ―― ★予言を 倒す時は ★倒したる範囲★ を 予言と同じ紙に 書け★★★
+　―― ★理 ―― 己は P120 を『★此の樹の 他所★』と 広く立て ―― ★測りたるは `tests/unit/*.bats` の literal のみ★
+　―― ★∴ ★『外れ』と 札すは 正しけれど ―― ★範囲を 添へずば ★偽の安堵★ に成る★★
+　―― ★処方 ―― ★★『◯◯の範囲に於て 外れ／未測は △△』★★ の二段にて 書け ―― ★★倒したる主張より 倒したる範囲の方が 後の判に効く★★
+
+### ■五 ★予言の採点★
+
+```
+★★P120 ―― ★外れ★★（★tests/unit の literal 12 件の範囲に於て★）
+　　⇒ ★★己の予言 ―― 中り `P92 P98 P101 P102 P106 P107 P115` ／ ★外れ `P120`（初）★★★
+　　⇒ ★★∴ 之が 己の予言の ★最初の 外れ★ に御座る ―― ★★『外れ得る予言を 立て居りし』事の 證★★★
+★★P119 ―― 猶 立つ（★§119 にて 己より『弱き足』と 札し済★）
+★★P118 ―― 猶 立つ（★再生成 未打ゆゑ 判ぜず★）
+```
+
+### ■六 ★己が 為さざりし事★
+
+```
+★`tests/unit/*.bats` ―― ★改変 0★／★`bats` の実行 0★（★読取と `[ -e ]` のみ★）
+★不在と出でたる 6 件の path ―― ★★一つも 作らず★★（★仮の path を 実際に作る事 0 ―― 自禁 ㊜★）
+★`lib/cli_adapter.sh` ―― 改変 0／★生成器 実行 0★／★`instructions/*` 書込 0★／★`.gitignore` 不触★／★push 0★
+```
