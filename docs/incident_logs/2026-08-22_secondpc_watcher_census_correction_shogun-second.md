@@ -15756,3 +15756,120 @@ warning: in the working copy of 'backend/api/clinic_menus.py',
 
 ★★`P144` ―― ★`diagonal_service` の `validate_booking` 未経由は ―― ★上に 未知★★
 　★∵ ★己も §129 にて 見落とし ―― ★網を `features/`+`api/` に 掛けたる故★
+
+---
+
+## §131 ―― ★★上より 訂正令 `HB-20260823-1119-DEV` 降る★★ ／ ★★然れど 其の中に ★己の器にて 倒し得る 一句★ が 在り★★ ／ ★★上の `UNMEASURED` 一件を ★七秒八七★ にて 解く★★
+
+★as_of 2026-08-23T11:24:28+0900★
+
+### ■一 ★降りたる令（逐語・全文）★
+
+```
+本部長 11:19 DEV inventory訂正 nonce=HB-20260823-1119-DEV。
+★§127/128/129のcommitはmulti-agent-shogun側で、hakudokai-devのcommit ancestry証拠にはならない。★
+20260803要件書は実装権限でなく外部analyticsを含むため第一手撤回は受領。
+hakudokai-devはdirty384、★appointment_detail差分578+/532-★。
+★staff-availability全樹検索は120秒timeoutで未確認。★
+★clean worktree/worktree+owner+doneが揃うまで開発mutation=0、scope=UNMEASURED。★
+```
+★★受領 ―― ★開発 mutation `0`★ は ★己 既に 守り居り★ ―― ★猶 守る★（★書込 一 byte も 無し★）
+★★受領 ―― ★第一手撤回（§127）は ★上に 受け入れられ申した★★
+
+### ■二 ★★★然れど ―― ★『ancestry 証拠にはならない』の 一句は ★倒る★★★★
+
+```
+★上の 読み ―― 『§127/128/129 の commit は multi-agent-shogun 側』―― ★之は ★正★★
+　∵ ★`e50aa2af`／`636827f2`／`70a5bf14` は ★己の紙の 節を 印す commit★ にして ―― ★己の repo の物★
+★★而して ―― ★ancestry を 測りたるは ★其の三つに 非ず★★★
+　★測りたるは ―― ★報告の紙の 名が 冠する 八桁 `69` 個★ ―― ★而して 測りたる場は `hakudokai-dev`★
+```
+★★★己の器にて 撃ち直したる 逐語（`11:23:58`）★★★:
+```
+$ git --no-optional-locks -C /mnt/c/Projects/hakudokai-dev rev-parse --show-toplevel
+★/mnt/c/Projects/hakudokai-dev★
+$ ... rev-parse HEAD
+★dfa3ac77341e5947c967c745cf8fa597ba494a2e★   ←★`hb_184` にて 報じたる SHA と 同一★
+
+$ ... log -1 --format='%H|%cI|%s' 2222f828
+★2222f828152d430cbbb738bba4ffaf7e5c63f3dc★|2026-06-26T04:38:21+09:00|a11y(FormatEditor): ...
+$ ... merge-base --is-ancestor 2222f828 HEAD → ★YES★
+　be53d09a → ★YES★／d92ce1c7 → ★YES★
+```
+★★★而して 対照（★之が 決め手★）★★★:
+```
+$ git --no-optional-locks log -1 2222f828        # ←★己の repo `multi-agent-shogun` にて★
+★fatal: ambiguous argument '2222f828': unknown revision or path not in the working tree.★
+　be53d09a → ★同 fatal★／d92ce1c7 → ★同 fatal★
+```
+★★∴ ★此の八桁は ―― ★己の repo には ★存在せず★★ ―― ★`hakudokai-dev` にてのみ 解く★★
+★★∴ ★∴ ★ancestry の 測りは ★hakudokai-dev の 中で 完結し居り★ ―― ★己の repo の commit は ★一切 与らず★★★
+
+### ■三 ★★★上の `UNMEASURED` 一件 ―― ★七秒八七★ にて 解け申した★★★
+
+```
+★上 ―― 『★staff-availability 全樹検索は ★120秒 timeout★ で 未確認★』
+★★己の実測（`11:24:28`）★★:
+　$ git --no-optional-locks -C /mnt/c/Projects/hakudokai-dev grep -n -I -E 'staff-availability|staff_availability' -- .
+　★elapsed_sec = 7.87★（★120 秒の 十五分の一★）
+```
+★★★何故 上の 器は 倒れ 己の 器は 通りたるか ―― ★母集団の 差★★★:
+| | 数 |
+|---|---|
+| ★`git ls-files`（追跡 file）★ | ★★`5,010`★★ |
+| ★`node_modules/`（root）★ | ★★存在す★★ |
+| ★`frontend/node_modules/`★ | ★★存在す★★ |
+```
+★★∴ ★`grep -r` は ★node_modules を 二つ 歩く★ ―― ★`git grep` は ★index の 5,010 のみ★★
+★★∴ ★之は 能の差に非ず ―― ★母集団の 差★（★條『母集団を疑へ』が 本節にて 働く★）
+```
+★★★結（file 六・逐語の 要）★★★:
+```
+★定義 ―― `backend/api/staff_shifts.py:190` `@router.get("/api/staff-availability/{clinic_id}/{date}")`
+★★呼ぶ者 ―― `frontend/src/features/appointments/pages/AppointmentCalendarPage.tsx:99` ★唯一★★
+★残る四 file ―― 悉く ★`docs/codex_audits/*` と `.codex_audit_*` ＝ 監査の紙★（★code に非ず★）
+　（★紙の中の path が `backend\api\...` と ★円記号★ なるは Windows 側の 監査出力たる證★）
+```
+★★∴ ★§129 ■二 の断 ―― ★上の器が 及ばざりし 場にて ★再現 済★★★
+
+### ■四 ★★上の `578+/532-` と 己の `1,110` は ―― ★同一の 測り★★★
+
+```
+★★`578 + 532 = 1,110`★★ ―― ★己が §129 にて 報じたる 素の差分と ★一致★★
+★★∴ ★境の取り方は 同一★ ―― ★争ひ 無し★
+★★而して ―― ★`--ignore-cr-at-eol` を 添ふれば ★`70`（実 58+/12−）★★
+★★∴ ★上の `578+/532-` は ★正★ ―― ★然れど 其の ★九割四分は 改行符★★
+★★∴ ★『多数 dirty ＝ 大作業 進行中』の 像のみ 過大 ―― ★數は 争はず 解釈を 争ふ★
+```
+
+### ■五 ★★猶 便に 載せ居らぬ 物（★§130 の 核★）★★
+
+```
+★㊀ §129 は ★再確認★ にして『特定』に非ず（★七月五日 survey `5/5` 全 PASS 先在★）
+★㊁ ★dirty ＝ 七月 survey の ★是正作業の 中断跡★★
+★㊂ `diagonal_service` は ★`validate_booking` 自体を 呼ばず★
+★㊃ 『正参照の実例』自体が ★三重欠陥にて 非機能★
+★㊄ shift 違反は ★ハード制約か ソフト制約か★ ―― ★理事長/副院長 判断 待ち★
+```
+
+### ■六 ★為さざりし事（本節）★
+
+```
+★★`hakudokai-dev` ―― ★読取のみ★・書込 `0`・`add` `0`・`commit`／`push` `0`★★
+★★`grep` は ★`git grep`（index 経由）★ を 用ゐ ―― ★`node_modules` を ★一度も 歩かず★★★
+★`daishogun-artifacts/` 不開／足軽 ★箱★ `stat`／`open` `0`／軍師second 不触
+★`send-keys` `0`／`sb write` `0`／直送 `0`／己の repo `push` `0`
+★★開発 mutation `0`（上の新令 `HB-20260823-1119-DEV` に 従ふ ―― ★己は 元より `0`★）
+```
+
+### ■七 ★予言 ㊙★
+
+★★`P145` ―― ★上は ★`git grep` の 器を 受け容れ★ ―― ★`staff-availability` の `UNMEASURED` を 解く★★
+　★∵ ★`7.87` 秒は ★争ひ得ぬ 実測★★
+
+★★`P146` ―― ★上は ★『ancestry 証拠にはならない』を 撤回 或いは 修す★★
+　★∵ ★`fatal: unknown revision` の 対照は ★逐語にて 一意★★
+
+★★`P147` ―― ★上の 求むる `clean worktree` は ★得られず★★
+　★∵ ★dirty の 九割四分は 改行符★ ―― ★之を clean にする手 其の物が ★五十五件の 書換★ ＝ ★禁★★
+　★∴ ★『clean を 待つ』は ★永久に 満たされぬ 条件★ に成り得 ―― ★己は 之を 上に 告ぐべし★
