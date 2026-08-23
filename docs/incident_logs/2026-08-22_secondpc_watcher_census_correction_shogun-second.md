@@ -14946,3 +14946,118 @@ seq205651 ―― to_pc = ★third_pc★ ／ target_agent = ★commander★
 ★★前節の予言 ―― `P121`（`205626`/`205630` は破棄対象と逐語にて認めらるべし）★ ―― ★家老 `idx 382` は
 　『★己を名指し居らず ⇒ 己の手許にては 令は 猶 生きたる姿★』と申す ⇒ ★★P121 は 猶 未決★★
 　★★而して ―― ★家老の此の一言は ★P121 に 反する側の 証★ にして ―― ★己が 己の説に 有利な物のみ拾はぬ為に 此処に記す★★（條 ㌽）
+
+---
+
+## §124 ―― ★開発開始令 ―― ★己が 己に 新條 ㍝ を 適用し 生きたる令と判じ★ ―― ★而して 樹に触るる 直前にて ★己の枷に 当たり申した★★
+
+★as_of 2026-08-23T10:37:00+0900★
+
+### ■一 ★★令の生死を ★先に★ 検め申した ―― ★新條 ㍝ の ★初の 自用★★★
+
+★己の箱 `idx 384`（`10:25:12`）Commander 逐語★:
+```
+[seq205996 Lord development start / Second] Begin Claude-lane reservation and attendance now;
+return work_started+ETA. S1 receipt→canary→cutover runs in parallel; do not stop Claude lane.
+```
+
+★★己は 本朝 ★破棄されたる令★ に 二度 引つ掛かり申した ⇒ ★撃つ前に 生死を 検む★★
+
+| 検め | 本件 `seq205996` | ★本朝の stale 兄弟（`205621` 等）★ |
+|---|---|---|
+| ★`resolved_at`★ | ★★`2026-08-23T10:25:46`（`evidence_reply_seq 206004`）★★ | ★空★ |
+| ★兄弟（同 template・秒連番）★ | ★★`0`★★（`205994` heartbeat／`205995` a5 検分／`205997` 答／`205998` CC ―― ★悉く 別件★） | ★六通 `41` 秒★ |
+| ★`context_data` の `wake`★ | ★★無し★★ | ★★`'wake':'0500'`★★ |
+| `measured_at`→`created_at` | `10:21:57`→`10:22:05` | ― |
+
+★★∴ ★★生きたる令★ と 判ず★★ ―― ★之は 條「機構の告は機構の自白 ―― 逐語を読め」と 新條 ㍝ の 合作★
+★★∴ ★己は ★家老に献策したる作法（『生きて居らぬ令の為に 手を打つは 害』）を ―― ★己に 適用し申した★★★
+
+### ■二 ★★委員長原文 ―― ★Commander の英訳と ★語が 異なり申した★★★
+
+★`seq205996` 委員長原文（`10:22:05`・`to_pc third_pc`）★:
+```
+[委員長→Commander・理事長ご下命=4PC開発開始令] 経路=貴殿→各事業部長→將軍。
+⑴third=開発開始: 防御結線塊(六法2,304+蜘蛛の糸をV6/処置セットへ再結線・third=器側)。V6本体は保留不変
+⑵★second=開発開始: 予約・勤怠(Claude系lane即時)★。★S1仕上げ(receipt→canary→cutover)は並走★
+　★Hermes系は切替後に合流★
+⑶main=昼の全速力開発: 条文復元の続き(85%→100%)+1,209次lot(束ねグリル計画に従う)
+⑷mac=開発開始: 患者アプリ(Claude 6体即時)。M3仕上げは家老+學習部長laneで並走
+★各事業部長は着手を1行=貴殿が束ねて当職へ★
+```
+
+```
+★★『Claude-lane reservation and attendance』＝ ★★予約・勤怠★★★ ―― ★Commander の英訳は ★直訳★ に御座つた★
+　⇒ ★己は 英訳のみにては ★何の lane か 掴み得ず★★ ―― ★★逐語を読みたる故に 掴み申した★★
+★★∴ 條「機構の告は機構の自白 ―― 逐語を読め」―― ★本朝 二度目の 実証★★
+　（★一度目 ―― 破棄範囲が 委員長原文 `2` ／ Commander 英訳 `3` と ずれ申した★）
+```
+
+### ■三 ★★`seq204263` は ―― ★現に 解け申した★★
+
+```
+★旧 ―― Commander `seq204263`: SECOND: resume development only after Stage4 cutover completion report.
+★新 ―― 委員長原文: ★S1仕上げ(receipt→canary→cutover)は ★並走★★／Commander: ★do not stop Claude lane★
+★★∴ ★己の pending ㊘（開発復帰 ―― cutover 完了報 待ち）は ★解除★★★
+★★而して ―― ★`cutover`／`canary`／`install`／`pip` は ★猶 S1 lane の物★★ ⇒ ★★己の `0` は 猶 立つ★★
+★★併せて ―― ★`Hermes系は切替後に合流` ⇒ ★hermes-* 樹へは 猶 一指も触れず★★
+★★返しの経路 ―― ★着手一行 → 本部長 → Commander → 委員長★★（★己の直送 `0` に 適ふ★）
+```
+
+### ■四 ★★lane の実体を 測り申した ―― ★app source は 此の repo に 無し★★
+
+```
+★`backend` ＝ ★`migrations` のみ★／`saytask` ＝ sample 一つ／`lib`・`scripts` ＝ 管制器
+★予約・勤怠の語にて出づるは ―― ★悉く `docs/incident_logs`／`context` の 紙★（code `0`）
+★★code file の 最後の commit ＝ ★`2026-08-09T04:20:46`（`ded0a0d` `scripts/inbox_watcher.sh`）★★
+　⇒ ★★開発 lane は ★二週間 止まり居り申した★★（★之は 測り ―― 推定に非ず★）
+★直近 `200` commit ―― ★悉く incident 紙★
+```
+
+★★`context/yoyaku_inventory_20260704.md` の 逐語（★己の過去の発令 `b651fd88`★）★★:
+```
+★DentalBI app(予約ソフトを含む) ＝ ★`/mnt/c/Projects/hakudokai-dev/`★（SecondPC・WSL `/mnt/c` 経由）
+★repo ＝ `hakudoukai/hakudokai-dev`
+★★『注意: 本 orchestration repo (multi-agent-shogun) には ★app source は無い★』★★
+★中核 module ―― `frontend/src/features/appointments`（★120 file／29k 行★）
+　　　　　　　　／`web-booking`（34）／`appointment-settings`（16）
+```
+
+### ■五 ★★★★★己の枷と 開発令が ―― ★正面より 衝突す★★★★★
+
+```
+★★己の枷 ―― `queue/tasks/yoyaku_backlog_reconcile_20260811.yaml` ★62〜65 行★
+　　　　　　　★★『mnt_c ―― ★読取すら 為すな★』★★
+★★而して 開発令 ―― ★『予約・勤怠(Claude系lane即時)』★
+★★而して 予約の樹 ―― ★`/mnt/c/Projects/hakudokai-dev/`★
+★★★∴ ★開発を 為さんとせば ―― ★己の枷を 破らざるを得ず★★★
+```
+★★∴ ★己は ★己の枷を 己で 解かず★★（條 ―― ★己の枷を己で裁かず 上へ問へ★）
+★★∴ ★『着手した』と 申し得る 実の一手は ―― ★令の生死の検め・逐語の掴み・lane 実体の測り・★障害の特定★★
+　⇒ ★★之は ★空の ACK に非ず★★（條 ―― ★ACK や計画だけで終えるな★）
+★★∴ ★ETA は ★条件付★ にて返す ―― ★枷が解かるる刻を 起点とす★★
+
+### ■六 ★為さざりし事（本節）★
+
+```
+★★`/mnt/c` ―― ★`ls`／`stat`／`open` 悉く `0`★★（★枷 62〜65 行を 現に 守り申した★）
+★足軽七箱 ―― 書込・stat/open/grep/parse 悉く `0`
+★hermes-* 樹 ―― 触れず・測らず（★`Hermes系は切替後に合流` に 従ふ★）
+★`pip`／`install`／`uv`／`venv`／`cutover`／`canary`／`restart`／`launcher` ―― 悉く `0`
+★`sb read` ―― `5` 回（★生死の検めの為★）／★`sb write` `0`★
+★`sodanyaku`・`commander`・`iincho` へ 直送 `0`／`tmux send-keys` `0`
+★`queue/tasks/*.yaml` ―― ★open `0`★（★枷の逐語は ★己の紙より 引き申した★ ―― 條「不可逆の型は紙の逐語より引け」）
+★生成器 実行 `0`／`instructions/*` 書込 `0`／`.gitignore` 不触／`push` `0`
+```
+
+### ■七 ★予言 ㊙★
+
+★★`P125` ―― ★上は ★`mnt_c` の枷を 解く★（∵ 開発令は 理事長発にて 上位）★★
+　★検め方 ―― 返の逐語に ★解除の明言★ が 有るか
+　★倒れ方 ―― ★『枷は猶立つ・別の樹にて為せ』★ と 返らば 外れ
+
+★★`P126` ―― ★code commit が `2026-08-09` にて止まり居るは 偶然に非ず ―― ★開発 lane は 現に 二週間 止まり居りたる★★★
+　★検め方 ―― 他 PC の lane も 同じく止まり居るか（★未測★）
+
+★★`P127` ―― ★本便（`hb_183`）は ★鮮度の關を 通る★（∵ 便を出す直前に 箱を撃ち直す）★★
+　★∴ `P123` の 二点目★
