@@ -16863,3 +16863,108 @@ $ git ls-files --eol -- CLAUDE.md AGENTS.md
 
 ★★`P172` ―― ★`111` 日は ★owner 任命の 決め手★ と 為る★
 　★∵ ★中断者（`48` 日）すら 触れ居らぬ 地なる 事が ★数にて 示され申した★
+
+---
+
+## §140 ―― ★★箱が 動き申した ―― ★新着は 尾に 積まれず 中に 挿さる★★★（★index は 便の 同一性を 指さぬ★）／ ★★Commander `PASS` と 本部長 `BLOCK` は ★矛盾に非ず★★★／ ★★★條 ㍧『引用は在籍に非ず』の ★初の 実適用★ ―― 理事長 GO は ★己の箱に 原文 無し★★★★
+
+★as_of 2026-08-23T12:53:36+0900★
+
+### ■一 ★★箱が 動いた ―― ★配列の 中程に 挿さり 後続が 押し下げられ申した★★
+
+| 便 | ★前 turn（`12:21:47`）★ | ★本節（`12:52:16`）★ |
+|---|---|---|
+| 総通数 | `419` | ★★`421`★★ |
+| 家老second `…dca6b88f` | `idx 389` | ★★`idx 391`★★ |
+| iincho `…0c5daa06` | `idx 390` | ★★`idx 392`★★ |
+| ★新着 Commander `…d009a31c`★ | ―― | ★★`idx 389`★★ |
+| ★新着 本部長 `…8c72d2be`★ | ―― | ★★`idx 390`★★ |
+```
+★★∴ ★己は user 殿の『inbox390』に応じ 撃ちたるに ―― ★前 turn の 390 とは ★別の便★ が 出で申した★
+★★∴ ★四つの id を ★id 欄にて 照合★ せしに ―― ★四つ 悉く 猶 在籍★（★rotation に非ず★）
+★★∴ ★∴ 動きの 正体は ―― ★中程への 挿入★ にて ―― ★後続 悉く `+2` 押し下げ★
+★★∴ ★★新條 ㍨ ―― ★index は 便の 同一性を 指さぬ★ ―― ★便を 指すには 恒に `id` を 用ゐよ★★
+　　　★∵ ★同じ `idx 390` が ★三十分の 間に 二つの 別便★ を 指し申した★
+★★∴ 條『配列の順が時系列と一致すると仮定するな』に ★兄弟が 一つ 生れ申した★
+```
+
+### ■二 ★Commander `seq206289`（`12:42:10`・`type=report`・逐語）★
+
+```
+[S1 delegated receipt / seq206289] Commander read-only remeasure:
+gunshi/a7 sourcedir manifests each lines=9738 bytes=1102663
+SHA=f2fccb6fa8aaa5de0b4ebc3c052d691e3bd0004c1e1cdf0bed99dd865982885c; root775 src555.
+Scope exact, old partial untouched.
+★Receipt: PASS source-dir integrity; canary may proceed ★subject to your existing gates★.★
+```
+
+### ■三 ★本部長 `HB-20260823-1250-CANARY`（`12:49:56`・逐語）★
+
+```
+S1 ③canary preflight ★BLOCK★ nonce=HB-20260823-1250-CANARY:
+★Chair seq206293 GO 実読★。
+gunshi sourcedir canonical root は ★src/hermes のみ★ だが
+★launcher line6 は 存在しない $RT/hermes を 要求★、
+現 live --continue は ★v2026.8.3 / PID 636915・636935★・★gunshi 専用 tmux 不在★。
+★launcher/runtime/proc の 変更=0、canary/cutover=0★。委員長/Commander へ 証拠付き 上申済。
+```
+
+### ■四 ★★★二令は ―― ★矛盾に非ず★★★（★七分の 差にて 降り 一見 割れて 見ゆ★）
+
+```
+★★Commander ―― ★`canary may proceed` ★subject to your existing gates`★★
+★★本部長 ―― ★`BLOCK`★（launcher line6 が ★存在せぬ path★ を 要求）
+★★∴ ★Commander は ★gate を 本部長へ 委ね★ ―― ★本部長の gate が ★現に 働き申した★★
+★★∴ ★∴ 之は ★令の 割れに非ず★ ―― ★★委任の 通りに 動きたる 形★★
+★★∴ ★己が 之を 紙に 留むる 理 ―― ★『PASS』の 語のみ 見て 解禁と 読む 誤★ を 先に 摘む為
+★★∴ 條『機構の告は機構の自白 ―― 逐語を読め』―― ★但し書きこそが 本文に御座つた★
+```
+
+### ■五 ★★★★條 ㍧『引用は 在籍に非ず』―― ★家老second 殿より 賜り ★本節にて 初めて 現に 用ゐ申した★★★★★
+
+| seq | ★載る便の `from`★ | ★裁★ |
+|---|---|---|
+| ★`seq206289`★ | ★★`commander`★★ | ★★在籍★★（★原文 己の箱に 在り★） |
+| ★`seq206293`（★理事長 GO★）★ | ★★`honbucho` のみ★★ | ★★引用 ⇒ 伝聞★★（★原文 ★不在★★） |
+```
+★★∴ ★本部長殿は『Chair seq206293 GO ★実読★』と 仰す ―― ★上の 器にては 原文★
+★★∴ ★然れど ★己の 器にては ★御便の 本文が 引きたる 物★ のみ★
+★★∴ ★★∴ ★己は 理事長 GO を ★伝聞と 札す★★ ―― ★逐語も sha も 持たぬゆゑ ★内容の 検算 `0`★★
+★★∴ ★而して ★己の 手が `0` たる 根拠は 伝聞に 依らず★ ―― ★本部長の BLOCK と 己の 恒久の禁に 依る★
+　　　（★家老殿の ㊃ と ★同じ 作法★ ―― ★根拠を 混ぜず★）
+★★∴ ★素の grep なりせば ―― ★`seq206293` は `1` 件 出で ★在ると 誤らせ申した★★
+```
+
+### ■六 ★★己の 手 ―― ★変はらず `0`★★
+
+```
+★★`launcher`／`runtime`／`proc`／`pointer`／`timer`／`guard` ―― ★悉く `0`★（★恒久の禁★）
+★★`canary`／`cutover` ―― ★`0`★（★本部長 BLOCK 現に 立つ★）
+★★S1 は ★軍師／hermes lane★ ―― ★己の 領に非ず★・★軍師second 不触★
+★★己の 現の 任は ★`hakudokai-dev` の 四關★ ―― ★worktree／owner／done／shift 裁定 待ち★
+★★∴ ★本便 二通は ★己の 手を 一指も 動かさず★ ―― ★然れど 積み残し ㊊ を 一つ 解き申した★
+　　　★㊊（第4段 canary と『env-dept receipt まで canary 0』の 衝突）
+　　　⇒ ★receipt は ★PASS にて 降りたる★ も ★gate が BLOCK★ ゆゑ ★canary は 猶 `0`★
+```
+
+### ■七 ★為さざりし事（本節）★
+
+```
+★★`launcher` line6 ―― ★開かず★（★本部長の 逐語のみ 引く★）／`$RT/hermes` ―― ★stat すら 打たず★
+★★PID `636915`／`636935` ―― ★`ps` 撃たず・`/proc` 開かず★（★S1 は 己の 領に非ず★）
+★★`src/hermes` ―― ★不触★／★共有樹への 追加 測定 `0`★（本部長 idx 372）
+★★`hakudokai-dev` ―― ★本節にて 一度も 撃たず★／★開発 mutation `0`★
+★★己の箱 ―― ★読取のみ★・★`read` 札 `0`★（★裁 未着★）／★他者の箱 `0`★
+★★`send-keys` `0`／`sb write` `0`／直送 `0`／`worktree add` `0`
+```
+
+### ■八 ★予言 ㊙★
+
+★★`P173` ―― ★上は『二令は矛盾に非ず』の 読みを ★是と し給ふ★★
+　★∵ ★但し書き `subject to your existing gates` が ★逐語に 現に 在る★
+
+★★`P174` ―― ★理事長 GO の 原文は ★己の箱には 遂に 来ぬ★★
+　★∵ ★経路は Commander → 本部長 → 己 にて ―― ★Chair 便は 上流で 止まる 型★
+
+★★`P175` ―― ★新條 ㍨（index は 同一性を 指さぬ）は ★近く 再び 効く★★
+　★∵ ★未読 `391` 通・本日のみ `28` 通 ―― ★挿入は 続き 番は 動き続く★
