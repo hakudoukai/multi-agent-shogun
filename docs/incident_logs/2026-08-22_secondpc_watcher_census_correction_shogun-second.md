@@ -15407,3 +15407,115 @@ done=己の名を冠すa11y report七通が未commitのまま樹に在り。未�
 
 ★★`P136` ―― ★真の『未重複 scope 第一手』は ―― ★己の report 七通の commit★ に成る★★
 　★∵ ★己の過去成果にして 所有の争ひ無く ―― ★未追跡ゆゑ dirty に非ず★ ―― ★最も 低き 危うさ★★
+
+---
+
+## §128 ―― ★★★己の紙の名の 八桁は ★uuid に非ず ―― commit の sha★ に御座つた★★★ ／ ★己の lane の `done` は ★紙に非ず 樹にて 実証さる★★ ／ ★同じ turn の 二度目の訂★
+
+★as_of 2026-08-23T11:06:07+0900★
+
+### ■一 ★★發端 ―― ★『七通』を 検めんとして ★七十通★ を 見出だす★★
+
+```
+★己の紙（`/mnt/c/Projects/hakudokai-dev/reports/`）:
+　★`shogun-second-inbox1-*` ―― ★`68` 通★
+　★`shogun-lane1-inbox1-*` ―― ★`2` 通★
+　★★計 `70` 通 ―― ★悉く 未追跡（`??`）★★
+★`reports/` 全体 ―― `150` entry（★tracked は `4` のみ・★内 shogun 名 `0`★）
+```
+
+★★★數の割れ ―― `ls` `70` 対 `status` `71`★★★:
+```
+★境を露はにして `comm` にて 突合 ―― ★差は 二つ★
+　㊀ ★`daishogun-artifacts/`★ ―― ★★`dai` + `shogun` の 部分一致★★（★己の紙に非ず ★別人の函★ ⇒ 不開）
+　㊁ ★emoji を含む一通★ ―― `git` が `\360\237\223\236` と ★引用符付きで 出す★ ゆゑ 名が 一致せず
+★★∴ ★己の紙は ★`70` 通★ にて 確定 ―― ★`71` は 網の 誤り★★
+```
+★★∴ 條『數が割れたる時 境の取り方を露はにして測れ』―― ★現に 働き申した★★
+
+### ■二 ★★★發見 ―― ★名の 八桁は ★commit の 短 sha★★★★★
+
+★端緒 ―― 名に `COMMITTED-PUSHED` を 持つ ★三通★:
+```
+`...-2222f828-formateditor-undoredo-arialabel-COMMITTED-PUSHED-usable-plus1-2026-06-26-second_pc.md`
+`...-60a052c4-notemodal-focus-on-open-COMMITTED-PUSHED-...`
+`...-df4dba81-dailyreportview-escape-close-COMMITTED-PUSHED-...`
+```
+★樹の log を 撃つに★:
+```
+★`2222f828`|`2026-06-26T04:38:21`|`a11y(FormatEditor): name the icon-only undo/redo buttons via aria-label (WCAG 4.1.2)`
+★`be53d09a`|`2026-06-30T21:33:13`|`a11y(web-booking): announce slots-loading state via role=status (WCAG 4.1.3)`
+★`d92ce1c7`|`2026-06-30T21:02:07`|`a11y(ekarte): keyboard-operable expand row in TreatmentSetItemsPanel`
+```
+★★∴ ★紙の名の 八桁 ＝ ★其の紙が 報ずる commit の sha★★★（★主題まで 完全に 対応★）
+
+### ■三 ★★七十通 悉くを 解く★★
+
+| 検め | 数 |
+|---|---|
+| ★名の八桁が 樹の commit に 解けたる物★ | ★★`69`★★ |
+| ★解けざる物★ | ★`1`★ ―― `shogun-second-inbox1-perio-noop-abort.md`（★名に hex 無し ＝ ★何も為さず中止したる旨の紙★★） |
+| ★★`merge-base --is-ancestor <sha> HEAD`★★ | ★★`ANC` `69` ／ `ORPHAN` `0`★★ |
+| ★主題の頭★ | ★`a11y(...)` `68` ／ `test(a11y)` `1`★ |
+| ★刻の幅★ | ★`2026-06-18T11:12:30` 〜 `2026-06-30T21:33:13`（★十三日★）★ |
+
+★★∴ ★己の a11y 成果は ―― ★六十九件 悉く ★現 HEAD の 祖先★ として 樹に 落ち居り申した★★★
+★★∴ ★『成果物の sha は樹の同一を證せぬ』ゆゑ ―― ★`log` の当たりに止めず ★系統★ まで 撃ち申した★★
+
+### ■四 ★★予約・勤怠 lane の 取り分★★
+
+★`features/(appointments|web-booking|appointment-settings)/` ／ `api/(appointment|booking|staff)` に 触れたる commit★:
+```
+★行 `27`（★`b5907a83` は 二通の紙が 同一 commit を 指す★）⇒ ★★一意 `26` commit★★
+```
+★内 ―― 予約 lane の 主なる物（抄）★:
+```
+★`758e34de` AppointmentForm ―― name selects/inputs by visible label（WCAG 4.1.2）
+★`3e8dda09` SidePanelStaffSchedule ―― role=status（★勤怠 lane★）
+★`74f1f5c8` booking-manage slot-search ―― role=status
+★`ae883ffd` booking cancel-reason ―― radiogroup（WCAG 1.3.1）
+★`be53d09a` web-booking slots-loading ―― role=status（WCAG 4.1.3）
+★`d905c89a` booking-settings ―― name number inputs by visible label
+★`069d0340` web-booking-settings ―― 4 setting tables aria-label
+★`51ee771b` appointment-search ―― aria-sort ／ `fdf80897` UnitSettingsTab ―― scope=col
+```
+
+### ■五 ★★★∴ ★`hb_184` の `done` 行は ★誤り★★★★
+
+```
+★誤 ―― 『done=己の名を冠す a11y report 七通が ★未 commit のまま★ 樹に在り』
+★★正 ―― ★成果（code）は ★六十九件 悉く commit 済・HEAD の祖先★★
+　　　　　★未追跡なるは ―― ★報告の 紙 のみ（`70` 通）★★
+★★∴ ★己は ★『紙が未追跡』を『仕事が未了』と 読み替へ★ 居り申した★★
+```
+★★★∴ 新條 ―― ★成果の在処を 問はれたる時 ★紙の追跡状態を 成果の状態と 混ずるな★★★★
+　★∵ ★報告の紙は ★成果の 影★ にして ―― ★影が 未追跡なるは 本体の 未了を 意味せず★★
+　★∵ ★己は §126 にて ★`git status` の `??` のみを 見て★ ―― ★`log` を 撃たざりき★
+
+### ■六 ★★`P136` ―― ★半ば 倒る★★
+
+```
+★文 ―― 『真の未重複 scope 第一手は ★己の report 七通の commit★ に成る』
+★★倒したる範囲 ―― ★『七通』が 誤（実は `70` 通）★ にして ―― ★『commit が 未了』も 誤★
+★★猶 立つ範囲 ―― ★報告の紙 `70` 通 其の物は ★現に 未追跡★ にして ―― ★commit の 可否は 猶 問ふ値有り★
+★★∴ ★然れど ★危急の事に非ず★ ―― ★成果は 已に 樹に 在る★★
+```
+
+### ■七 ★為さざりし事（本節）★
+
+```
+★★app 樹 ―― ★read-only のみ★・★書込 `0`★・`source edit` `0`・`commit`／`push` `0`
+★★`git` は 恒に ★`--no-optional-locks`★（★`merge-base --is-ancestor` も 読取のみ★）
+★★`daishogun-artifacts/` ―― ★別人の函ゆゑ ★不開★★（★名の列挙のみ★）
+★足軽七箱 `0`／軍師second 不触／`send-keys` `0`／`sb write` `0`／直送 `0`／己の repo `push` `0`
+★GA4／Google 広告／Clarity ―― ★一指も触れず・案も出さず★
+```
+
+### ■八 ★予言 ㊙★
+
+★★`P137` ―― ★上は ★report 七十通の commit★ を ★急がず★ ―― ★code の done を 以て 足れりと 為す★★
+　★∵ 成果は 已に HEAD の祖先 ⇒ ★紙は 記録の整理に過ぎず★
+
+★★`P138` ―― ★真の『未重複 scope』は ―― ★己の 六十九件が 触れざりし 予約・勤怠の ★機能★★ に在る★★
+　★∵ 己の過去成果は 悉く ★a11y（表示・名付け・live region）★ にして ―― ★予約の ★筋★ には 触れ居らず★
+　★⇒ ★次に 測るべきは ★シフト×予約 4 経路 の 接続の 欠★★（`shift_yoyaku_survey_20260705` の 突合）
