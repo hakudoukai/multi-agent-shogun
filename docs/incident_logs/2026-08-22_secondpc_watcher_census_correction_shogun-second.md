@@ -16360,3 +16360,119 @@ $ git --no-optional-locks -C /mnt/c/Projects/hakudokai-dev status --porcelain=v1
 
 ★★`P159` ―― ★`01:08:33` の 六十ミリ秒は ★上に 響く★★
 　★∵ ★『放置されたる 残骸』と『一斉着手の 中断』は ―― ★扱ひが 全く 異なる★
+
+---
+
+## §136 ―― ★★`P147`／`P148` ―― ★中り★★（★上 ★clean 全樹待ちを 撤回★★）／ ★★★新關 `named isolated worktree／owner／done／path freeze` の うち ★`path freeze` を 今 差し出す★★★★ ／ ★★試す紙は ★既に 在り★ ―― ★`640` 行・`26` 試・`staff` `45`・★`shift` `0`★★★
+
+★as_of 2026-08-23T11:45:34+0900★
+
+### ■一 ★★降りたる 新令（逐語・全文）★★
+
+```
+本部長 11:41 DEV dirty-scope受領限定 nonce=HB-20260823-1141-DEV。★§132/133を再測★。
+hakudokai-devは★untracked327/reports145、tracked57★。★sync_file_list +16172/-49が大半★で、
+★予約/勤怠10file +255/-87は当方未再構成の自己申告★。appointment_detail +578/-532は不触。
+★★clean全樹待ちは撤回するが★★、★named isolated worktree/owner/done/path freezeまではmutation=0★。
+```
+
+### ■二 ★★予言の 決算★★
+
+| 予言 | 文 | ★判★ |
+|---|---|---|
+| ★`P147`★ | 上の求むる `clean worktree` は 得られず | ★★中り★★（★上 自ら 撤回★） |
+| ★`P148`★ | 上は lane を限りたる 塞ぎに 改む | ★★中り★★（★全樹→ named worktree に 改む★） |
+| `P141` | `384` の大半が改行符なるは上に未知にして驚きを以て迎へらる | ★★倒る★★（★上は 己より 先に 己の 誤を 見抜き 再測★） |
+```
+★★∴ ★上は ★己の §132/133 を ★独立に 再測★★ し ―― ★`327`／`57`／`sync_file_list` を ★悉く 追認★★
+★★∴ ★而して ★`10 file +255/−87` のみ ★未再構成★ と 札す★ ―― ★正しき 慎み★
+★★∴ ★∴ ★己は `hb_192`（`11:44:56`）にて ★再構成の 手順★ を 送り申した★
+　　　（★數を 送るのみに非ず ―― ★條『数を出すより検め得る形を出せ』★）
+★★∴ ★猶 一件 未達 ―― ★`reports` は `145` に非ず ★`146`★（§134・引用符の罠）★
+```
+
+### ■三 ★★★新關 四つ の うち ―― ★己が 為し得るは 一つ★★★
+
+| 關 | 己が 為し得るか | 由 |
+|---|---|---|
+| `named isolated worktree` | ★★否★★ | ★`git worktree add` ＝ mutation★ |
+| `owner` | ★★否★★ | ★人の 任★（★樹に owner 無き事は §132 ■六 にて 測り済★） |
+| `done` | ★半ば★ | ★a11y `69`（§128）／lane 一意 `26`★ ―― ★報告済★ |
+| ★★`path freeze`★★ | ★★★可★★★ | ★★読取のみにて 作れる★★ |
+```
+★★∴ ★★本節にて ★`path freeze` を 差し出す★★
+```
+
+### ■四 ★★★★★path freeze ―― ★書込 path（★悉く clean★）★★★★★
+
+| # | path | ★HEAD blob★ | 行 | 状 |
+|---|---|---|---|---|
+| ★㊀★ | ★`backend/services/booking_validator.py`★ | ★`1d48154b7ec373349a03da6334ca80ae112a1f27`★ | `693` | ★★clean★★ |
+| ★㊁★ | ★`tests/test_booking_validator.py`★ | ★`488e1b467b70e6549702a83f5ce906afc4caa063`★ | `640` | ★★clean★★ |
+
+★★読取のみ path★★:
+| # | path | ★HEAD blob★ | 状 |
+|---|---|---|---|
+| ㊂ | `backend/api/staff_shifts.py` | `f5bc30aecaf5811a251baa21e0a6cdd5b8756eed` | ★clean★ |
+
+★★★変更の 場 ―― 逐語★★★:
+```
+backend/services/booking_validator.py:★274★  def _check_staff_constraint(
+backend/services/booking_validator.py:★64★   _check_staff_constraint(conn, result, staff_id, unit_id, start_time, end_time, exclude_appointment_id)
+　　　　　　　　　　　　　　　　　　　　　↑★六段の 第三段★
+```
+
+### ■五 ★★★★★試す紙は ―― ★既に 在り★ ―― ★而して ★穴が 正に 其処に★★★★★★
+
+```
+★`tests/test_booking_validator.py` ―― ★`640` 行・★`def test_` `26`★★
+★★`staff` の語 ―― ★★`45`★★（★staff 制約は ★既に 試されて 居る★）
+★★`shift` の語 ―― ★★`0`★★（★勤怠の 次元は ★一つも 試されず★）
+★★`_check_*` を 直に 呼ぶ 試 ―― ★★`0`★★（★悉く ★公の `validate_booking` 越しに 試す★）
+```
+```
+★★★∴ ★試す骨組を ★作り直す 要 無し★★★ ―― ★`26` 試の 隣に 足すのみ★
+★★★∴ ★『器は既に在り 欠けたるは間の線一本』は ―― ★code のみならず ★試にも 当て嵌る★★★
+★★★∴ ★★受入の 形 ―― ★shift 違反の 予約が ★現に 弾かるる★ 試を 一つ 足し
+　　　　　　　　　　　　★既存 `26` 試が ★悉く 猶 通る★ を 示す★★★（★合成の 器 要らず★）
+```
+
+### ■六 ★★飛び火（★編集は 要さぬ が 影響下★）★★
+
+```
+$ git grep -l -E 'booking_validator|validate_booking' -- '*.py'
+　★backend/api/appointment_form.py        ―― ★★DIRTY (MM)★★
+　★backend/api/booking_manage.py          ―― ★★DIRTY (M )★★
+　　backend/api/appointment_grid.py        ―― clean
+　　backend/services/appointment_service.py ―― clean
+　　backend/services/booking_validator.py  ―― clean（★変更の場★）
+　　tests/test_booking_validator.py        ―― clean（★試す紙★）
+```
+```
+★★∴ ★呼び出し元 `2` が dirty ―― ★然れど ★署名は 変へず★ ⇒ ★編集 `0`★★
+★★∴ ★★書込 集合は ★悉く clean★★ ―― ★飛び火 集合に dirty `2` を 含むも ★手は 入れず★
+★★∴ ★之を 分けて 申すは ―― ★令『既存 dirty 領域への 書込 `0`』を ★字義通り 満たす★ 為
+★★∴ ★條『備へには 何を防ぐかの名を添へよ』―― ★此の 分けが 防ぐは ★中断者の 作業の 上書き★★
+```
+
+### ■七 ★為さざりし事（本節）★
+
+```
+★★`hakudokai-dev` ―― ★読取のみ★・書込 `0`・`add` `0`・`commit`／`push` `0`★★
+★★★`git worktree add` ―― ★撃たず★★★（★mutation ゆゑ ★上の 裁を 待つ★）
+★★`booking_validator.py` の 本文 ―― ★開かず★（★行番号と 語数のみ★）
+★★試す紙の 本文 ―― ★開かず★（★`def test_` の 数・語の 数のみ★）
+★`daishogun-artifacts/` 不開／足軽 ★箱★ `stat`／`open` `0`／軍師second 不触
+★`send-keys` `0`／`sb write` `0`／直送 `0`／己の repo `push` `0`／★開発 mutation `0`★
+```
+
+### ■八 ★予言 ㊙★
+
+★★`P160` ―― ★上は ★`path freeze` を 受領★ し ―― ★残る 關は `worktree` と `owner` に 絞らる★★
+　★∵ ★blob sha 三つは ★検め得る 形★ ―― ★『自己申告』の 札を 貼り得ず★
+
+★★`P161` ―― ★`shift` 語 `0` の 試す紙は ★上に 響く★★
+　★∵ ★『試が 無い』は 危うさ ―― ★然れど ★試の 骨組が 在る★ は 安さ★
+
+★★`P162` ―― ★`owner` は ★己に 降る★★
+　★∵ ★樹に active owner 無く（`35` 日）―― ★而して 現に 測り居るは 己 一人★
