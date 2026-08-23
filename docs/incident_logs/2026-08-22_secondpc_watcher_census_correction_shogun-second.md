@@ -16594,3 +16594,162 @@ backend/services/booking_validator.py:★64★      _check_staff_constraint(...)
 
 ★★`P165` ―― ★`4` 対 `2` が dirty の 境と 一致する 事は ★上に 響く★★
 　★∵ ★役の 分れを ★己が 主張★ するに非ず ―― ★★樹が 既に 引き居る★★ 形なる 故
+
+---
+
+## §138 ―― ★★上の『不存在』は ★前置き `backend/` の 差★ ―― 両側 逐語にて 示す★★ ／ ★★★己の `staff 45` は ★再現し得ず★ ―― ★六度目の 自訂★★★★ ／ ★★★★★★而して ―― ★己の scope 三 file は ★悉く `i/crlf` にして attr は `eol=lf`★★ ―― ★★次の `add` にて `1,591` 行が 化ける★★ ―― ★樹に 同病 ★`571`★★★★★★★
+
+★as_of 2026-08-23T12:13:30+0900★
+
+### ■一 ★★降りたる 令（逐語・全文）★★
+
+```
+本部長 12:10 DEV path freeze訂正 nonce=HB-20260823-1210-DEV:
+booking_validator/staff_shiftsのtracked blob+cleanは確認。
+★ただし指定backend/tests/test_booking_validator.pyはhakudokai-devに不存在★。
+★test path/26試はUNMEASUREDへ訂正★。mutation0、worktree/owner/done+shift裁定待ち。
+```
+
+### ■二 ★★★『不存在』の 裁 ―― ★両側を 同じ 器にて 撃つ★★★
+
+```
+$ git --no-optional-locks -C /mnt/c/Projects/hakudokai-dev ls-files -- ★backend/tests★/test_booking_validator.py
+　　★行数 = 0★
+$ ... rev-parse 'HEAD:backend/tests/test_booking_validator.py'
+　　★fatal: path 'backend/tests/test_booking_validator.py' does not exist in 'HEAD'★
+
+$ ... ls-files -- ★tests★/test_booking_validator.py
+　　★tests/test_booking_validator.py★（★行数 = 1★）
+$ ... rev-parse 'HEAD:tests/test_booking_validator.py'
+　　★488e1b467b70e6549702a83f5ce906afc4caa063★
+```
+★★全域を 洗ひて 一意なるを 示す★★:
+```
+$ ... ls-files -- '*test_booking_validator*'
+　　★tests/test_booking_validator.py★（★之 一つ のみ★）
+```
+```
+★★∴ ★上の 仰せは ★正しく★ ―― ★己の 申しも ★正し★★
+★★∴ ★差は ★前置き `backend/` の 有無★ ただ 一つ★
+★★∴ ★而して ★`backend/tests/` は ★現に 在り★（★tracked `126` 件★）★
+　　　⇒ ★★上が 其処を 探されたるは ★至極 尤も★★（★試の 紙は 普通 `backend/tests/` に 在る★）
+★★∴ ★己の 非 ―― ★便に ★根からの 相対★ と 明記せざりし事★
+★★∴ ★條『uuid・path・id 全般を 手写しするな』の 兄弟 ――
+　　　★★新條 ㍥ ―― ★path を 便に 載する 時は ★何処からの 相対か★ を 添へよ★★
+```
+
+### ■三 ★★★★★★己の `staff 45` は ―― ★再現し得ず★★★★★★
+
+| 器 | ★`staff`★ | ★`shift`★ |
+|---|---|---|
+| `grep -o -w`（語境） | ★★`5`★★ | ★`0`★ |
+| `grep -o`（素・部分一致） | ★★`32`★★ | ★`0`★ |
+| `grep -o -i`（大小 問はず） | ★★`58`★★ | ★`0`★ |
+| ★★己が §136 にて 申したる数★★ | ★★★`45`★★★ | `0` |
+```
+★★∴ ★★`45` は ★いづれの 器にても 出でず★★ ―― ★★★再現 不能★★★
+★★∴ ★★★之にて ★六度目の 自訂★★★ ―― ★上の 仰せ『UNMEASURED へ 訂正』は ★正しき 裁★
+★★∴ ★併せて `staff_id` は ★素 `7`／語境 `7`★（★一致★）―― ★之は 確たる 数★
+★★∴ ★★而して ―― ★載せたる 主張の 足は ★`shift = 0`★ に 在り★★
+　　　★★★`shift` は ★三器 悉く 零★★★ ―― ★★之は 微動だに せず★★
+★★∴ ★條『数が割れたる時 境の取り方を露はにして四通り悉く測れ』
+　　　―― ★己は §136 にて ★境を 露はにせず★ 一つの数を 載せ申した★
+```
+
+### ■四 ★★★★★★★★而して ―― ★上の『clean は 確認』の 裏に ★別の 病★ が 在り申した★★★★★★★★
+
+★★`git hash-object` が blob と 合はず★★:
+```
+　HEAD blob            = ★488e1b467b70e6549702a83f5ce906afc4caa063★
+　hash-object（素）    = ★fdf39152f89eff48a3e99d9df1b5265d28f830d3★
+　hash-object --path   = ★fdf39152f89eff48a3e99d9df1b5265d28f830d3★（★`--path` を 添へても 同じ★）
+```
+★★★然れど ―― ★大きさは ★寸分 違はず★★★★:
+| file | ★blob★ | ★作業樹★ | 一致 | ★LF 化せば★ | ★差★ |
+|---|---|---|---|---|---|
+| `tests/test_booking_validator.py` | `28,179` | `28,179` | ★YES★ | `27,539` | ★★`640`★★ |
+| `backend/services/booking_validator.py` | `29,324` | `29,324` | ★YES★ | `28,631` | ★★`693`★★ |
+| `backend/api/staff_shifts.py` | `9,409` | `9,409` | ★YES★ | `9,151` | ★★`258`★★ |
+```
+★★∴ ★差は ★悉く 行数と 一致★ ⇒ ★★一行 一つの CR★★ ⇒ ★★index も 作業樹も 共に CRLF★★
+★★∴ ★∴ ★`status` の clean は ★真★★（★§133 の『stat の 早合点』に非ず★）
+★★∴ ★而して ★`hash-object` が 合はざるは ―― ★★filter が LF に 均す★ 姿を 見せ居る★★
+```
+★★★★★★決め手 ―― `ls-files --eol` の 逐語★★★★★★:
+```
+★i/crlf  w/crlf  ★attr/text eol=lf★   tests/test_booking_validator.py
+★i/crlf  w/crlf  ★attr/text eol=lf★   backend/services/booking_validator.py
+★i/crlf  w/crlf  ★attr/text eol=lf★   backend/api/staff_shifts.py
+　　.gitattributes:4 ―― ★*.py text eol=lf★
+```
+```
+★★★∴ ★★index が CRLF を 抱き ―― ★掟は LF と 申す★★★
+★★★∴ ★★∴ ★誰かが 此の 三 file に ★`git add` を 打つ 其の 刻★ ――
+　　　　★★git は 掟に 従ひ LF に 均し ―― ★全行が 書き換はる★★★★
+```
+
+### ■五 ★★★★★★★★樹の 全体を 見れば ―― ★同病 `571`★★★★★★★★
+
+```
+$ awk '/^i\/crlf/ && /attr\/text eol=lf/' eol_all.txt | wc -l
+　　★★571★★
+$ ... | grep -c '\.py$'
+　　★★571★★（★★悉く `.py`★★）
+　　　　（★母数 ＝ `ls-files --eol` `5,010` 行★）
+```
+★★★∴ ★§133 の 訂を ―― ★己が 更に 訂す★★★:
+| 節 | 器 | 見たる物 | 数 |
+|---|---|---|---|
+| §133 | `i/…` 対 `w/…` の 食ひ違ひ | ★index 対 作業樹★ | ★`23`★ |
+| ★★§138★★ | ★`i/…` 対 ★`attr/…`★ の 食ひ違ひ★ | ★★index 対 掟★★ | ★★★`571`★★★ |
+```
+★★∴ ★★§133 の `23` は ★誤に非ず★ ―― ★★然れど ★見て居る 面が 違ふ★★★
+★★∴ ★★★`git add` の 及ぶ 範囲は ★`23` に非ず ―― ★`571`（.py 悉く）★★★★
+★★∴ ★★★∴ ★★『`add -A` を 打つな』の 禁は ―― ★★★是にて 三つ目の 理由を 得申した★★★★★:
+　　★理㊀（誤）―― 改行符 `55` 件（★§133 にて 倒る★）
+　　★理㊁（正）―― ★未追跡 `327` を 呑み 五 lane 他人の物を 巻き込む★
+　　★★理㊂（新・正）―― ★`.py` `571` 件を ★一斉に renormalize★ し ★樹の 半ばを 書き換ふ★★★
+★★∴ ★條『禁の理由の足を 結論の足と 別に 検めよ』―― ★検むる 度に ★禁は 強くなり申した★
+```
+
+### ■六 ★★★★★∴ ★`path freeze` に ★予言を 添ふ★★★★★（★條『避け得ぬ書込には予言を添へよ』★）
+
+```
+★★★己が `_check_staff_constraint` に ★十行 書き足したる とせよ★
+★★★其の commit の diff は ―― ★★十行に 非ず★★
+　　★`booking_validator.py`        ―― ★`693` 削除 ＋ 約 `703` 挿入★
+　　★`tests/test_booking_validator.py` ―― ★`640` 削除 ＋ 約 `660` 挿入★
+　　★★★計 ―― 約 ★`2,696`★ 行の 動き（★真の 改は 十数行★）★★★
+★★★∴ ★之を ★事前に 申し上げ置かねば★ ―― ★★上は 『全部 書き換へ居る』と 見給ふ★★
+★★∴ ★避くる 道は 二つ ―― ★上の 裁を 仰ぐべき 事★:
+　　★甲 ―― ★renormalize を 受け容れ★ ―― ★然れど 該 file は 以後 LF（掟に 適ふ）★
+　　★乙 ―― ★CRLF を 保つ★ ―― ★然れど `.gitattributes` に 逆らひ ★次の 誰かが 再び 踏む★
+★★∴ ★己の 見 ―― ★★甲★★（★掟が 既に `eol=lf` と 申す 以上 ★逆らふは 筋に非ず★）
+　　　★但し ―― ★該 commit を ★『renormalize のみ』と『真の改』の 二つに 分つ★ を 添ふ★
+　　　（★條『検収されたる紙は書き換へず 訂は新たな節にて』の 兄弟 ―― ★混ぜぬ★）
+```
+
+### ■七 ★為さざりし事（本節）★
+
+```
+★★`hakudokai-dev` ―― ★読取のみ★・書込 `0`・★`add` `0`★・`commit`／`push` `0`★★
+★★★`hash-object` は ★読取の 器★★★（★index も 樹も 一切 動かさず★）
+★★`ls-files --eol` ―― ★樹に 一度・残りは 局所の `eol_all.txt` にて★（★timeout の 教訓★）
+★★code 本文 ―― ★一行も 引き写さず★（★大きさ・行数・語数・`ls-files` の 札のみ★）
+★`worktree add` ★撃たず★／`daishogun-artifacts/` 不開／足軽 ★箱★ `stat`／`open` `0`
+★軍師second 不触／`send-keys` `0`／`sb write` `0`／直送 `0`／★開発 mutation `0`★
+```
+
+### ■八 ★予言 ㊙★
+
+★★`P166` ―― ★上は ★path を `tests/test_booking_validator.py`（根 相対）にて 受け直す★★
+　★∵ ★`ls-files` `1` 行 ＋ 全域洗ひ `1` 件 ―― ★否み得る 形が 無し★
+
+★★`P167` ―― ★★`571` の renormalize は ★上に 最も 強く 響く★★★
+　★∵ ★『`add -A` を 打つな』が ★己の 助言★ から ★樹の 事実★ に 変はる★
+
+★★`P168` ―― ★上は ★renormalize と 真の改を 分つ 二 commit の 案を 容る★★
+　★∵ ★審査の 費用が ★`2,696` 行 から 十数行に 落つる★
+
+★★`P169` ―― ★己は 猶 己を 訂す★（★七度目★）
+　★∵ ★本節にて ★六度目★ を 為し ―― ★而して ★測るほどに 出づる★ が 此の 樹の 性★
