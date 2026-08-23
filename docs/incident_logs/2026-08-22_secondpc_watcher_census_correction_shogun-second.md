@@ -15519,3 +15519,129 @@ done=己の名を冠すa11y report七通が未commitのまま樹に在り。未�
 ★★`P138` ―― ★真の『未重複 scope』は ―― ★己の 六十九件が 触れざりし 予約・勤怠の ★機能★★ に在る★★
 　★∵ 己の過去成果は 悉く ★a11y（表示・名付け・live region）★ にして ―― ★予約の ★筋★ には 触れ居らず★
 　★⇒ ★次に 測るべきは ★シフト×予約 4 経路 の 接続の 欠★★（`shift_yoyaku_survey_20260705` の 突合）
+
+---
+
+## §129 ―― ★★★『触れてよい未重複 scope』の ★真の答★ ―― ★勤怠は 予約 4 経路の ★可否判定に 一箇所も 繋がり居らず★★★★ ／ ★dirty の 正体 ＝ ★中断されたる 接続作業★★ ／ ★★`384` の 大半は ★改行符の 揺れ★★★
+
+★as_of 2026-08-23T11:10:36+0900★
+
+### ■一 ★★接続点 ―― ★勤怠 core の 公開する 唯一の join★★
+
+★`backend/api/staff_shifts.py`（`258` 行）の endpoint★:
+```
+GET  /api/staff-shift-patterns/{clinic_id}          ★設定の読み★
+PUT  /api/staff-shift-patterns/{clinic_id}          ★設定の書き★
+GET  /api/staff-shift-overrides/{clinic_id}         ★例外の読み★
+PUT  /api/staff-shift-overrides/{clinic_id}/{date}  ★例外の書き★
+★★GET  /api/staff-availability/{clinic_id}/{date}     ―― ★予約と 繋ぐべき 唯一の 口★★★
+```
+
+### ■二 ★★★測り ―― ★誰が 之を 引くか★★★
+
+★`staff-availability` を 引く file（★樹全体★・audit 紙を除く）★:
+```
+★★`frontend/src/features/appointments/pages/AppointmentCalendarPage.tsx:99`★★ ―― ★★唯一★★
+```
+★shift table を SQL にて 直に 引く file★:
+```
+★★`backend/api/appointment_detail.py`★★（`staff_shift_patterns` / `staff_shift_overrides`）―― ★唯一★
+　（★`_table_exists` の 護りを 添へ居る ＝ ★表が 無き場合を 想ふ 途中の 姿★）
+★`backend/api/staff_shifts.py` ―― ★己の DDL★（`CREATE TABLE IF NOT EXISTS`）
+```
+
+### ■三 ★★★★★4 経路の 接続 ―― ★悉く 断★★★★★
+
+| 経路 | 器 | 行 | ★shift 参照★ |
+|---|---|---|---|
+| ★① 予約作成★ | `backend/services/booking_validator.py` | `693` | ★★`shift` 語 `0` 件★★ |
+| ★② 予約移動★ | `appointment_grid.py` / `appointment_settings.py` | ― | ★無★ |
+| ★③ 空き検索★ | `SlotFinderModal.tsx` | ― | ★★`shift`／`availability` `0` 件★★ ―― ★`/api/staff`（担当者一覧）のみ★ |
+| ★④ Web予約★ | `backend/services/web_reservation/booking_service.py` | `352` | ★★`shift`／`staff` `0` 件★★ |
+| （表示） | `AppointmentCalendarPage.tsx` | ― | ★有（`staff-availability`）★ |
+| （詳細） | `appointment_detail.py` | ― | ★有（直 SQL・護り付き）★ |
+
+★`booking_validator.validate_booking` の 検め 五段★:
+```
+`_check_basic` → `_check_menu_fit` → ★`_check_staff_constraint`★ → `_check_double_booking`
+→ `_check_booking_rules`（max_per_slot / max_per_day / buffer_before / buffer_after
+　　/ min_interval_days / block_other_units）→ `_check_web_only`
+★★而して ―― `_check_staff_constraint` が 見るは ★`staff_master`（担当者の 存否・unit 制約）★★
+★★　　　　　―― ★`staff_shift_patterns`／`staff_shift_overrides`（★勤務の 有無★）は ★見ず★★★
+```
+
+★★★∴ ★勤怠は ★表示 と 詳細★ の 二箇所にのみ 繋がり ―― ★予約の 可否判定には ★一箇所も 繋がり居らず★★★★★
+★★∴ ★之こそ `seq103829`『既存部分実装の ★接続・完成★』の ―― ★未完の 実体★★★
+★★∴ ★『二重実装厳禁』も 現に 効く ―― ★shift の 器も 予約の 器も ★既に 在る★ ―― ★欠けたるは ★間の 線★ のみ★★★
+
+### ■四 ★★★dirty の 正体 ―― ★中断されたる 接続作業★★★
+
+★`appointment_detail.py` の 未 stage 差分★:
+```
+★差分中 `shift` 語 ―― ★`27` 行★
+★★其の内 ★追加行（`+`）―― `22` 行★★
+```
+★★∴ ★誰かが ★シフト×予約の 接続★ を ★現に 書き居りたる★ ―― ★而して ★一箇月半 前に 中断★★★
+★★∴ ★§126 の『放置されたる dirty』は ―― ★正しきのみならず ★何の作業の 残骸か★ まで 判じ申した★★
+★★∴ ★∴ ★己が 若し 此処へ 手を出さば ―― ★二重実装 其の物★★ ⇒ ★令『既存 dirty 領域への書込 0』は ★理に適ふ★★
+
+### ■五 ★★★★★`384` の 大半は ★改行符の 揺れ★★★★★（★己の §126 の 數への 絞り★）
+
+★端緒 ―― ★挿入と削除が 略 同数★ なるを 訝しむ（`1,236` insert / `1,169` delete）★
+
+| file | ★素の差分★ | ★`--ignore-cr-at-eol`★ | 判 |
+|---|---|---|---|
+| `appointment_detail.py` | `1,110` | ★★`70`（実 `58`+/`12`−）★★ | ★実の改 有り★ |
+| `appointment_settings.py` | `944` | ★`8`★ | ★殆ど churn★ |
+| ★`test_staff_api.py`★ | `318` | ★★`0` ―― ★一覧より 消ゆ★★★ | ★★純然たる CRLF churn★★ |
+| `booking_manage.py`（stage 済） | `803` | ★`103`★ | ★実の改 有り★ |
+| `appointment_form.py`（stage 済／未） | `577` ／ `33` | ★`15` ／ `33`★ | ★実の改 有り★ |
+| frontend 六件 | `93`+/`20`− | ―（非対称ゆゑ 素で 実） | ★実の改★ |
+
+★★`git` 自身の 告（逐語）★★:
+```
+warning: in the working copy of 'backend/api/clinic_menus.py',
+　★CRLF will be replaced by LF the next time Git touches it★
+（同様の 告 ―― `recall_patients.py`／`watcher_service.py`／`daily_summary.py`
+　　`daily_summary_engine.py`／`receipt_storage.py`／`test_daily_summary_api.py`
+　　`test_daily_summary_engine.py` ―― ★計 八件★）
+```
+★★★∴ ★危険 ―― ★此の樹にて `git add -A` を 撃たば ―― ★五十五件の 改行符を 書き換ふ★★★★
+　⇒ ★★己の report `70` 通を commit する時も ―― ★path を 名指しにて `add` すべし★★（★`-A` 恒久の禁 は 此処にも 効く★）
+
+★★∴ 條『數が割れたる時 境の取り方を露はにせよ』―― ★本節にて 二度 働き申した★★
+　★一度目 ―― `70` 対 `71`（`daishogun` の 部分一致）
+　★★二度目 ―― `1,110` 対 `70`（改行符の 揺れ）★★
+
+### ■六 ★★∴ ★『触れてよい未重複 scope』の 答（改）★★
+
+```
+★★㊀ ★真の欠 ＝ ★`booking_validator` ＋ 4 経路 が `/api/staff-availability` を 引かざる事★★
+　　　⇒ ★之が ★接続・完成★ の 本体★（★新規実装に非ず ―― ★線を 引くのみ★★）
+★★㊁ ★然れど ―― ★`appointment_detail.py` の dirty が ★正に 其の作業の 途中★★
+　　　⇒ ★★∴ ★令『既存 dirty 領域への書込 0』の下では ―― ★己は 此処へ 手を出し得ず★★★
+★★㊂ ★∴ 己が 令に触れずして 為し得るは ―― ★測りと 引継ぎの 紙★ のみ★
+　　　⇒ ★中断者の 意図（`+22` 行の shift）と 残る欠 を 露はにする 紙★
+★★㊃ ★己の report `70` 通の commit ―― ★危うさ 最も低し★（★未追跡・己の物・`-A` 禁を守れば 安全★）
+```
+
+### ■七 ★為さざりし事（本節）★
+
+```
+★★app 樹 ―― ★read-only のみ★・★書込 `0`★・`source edit` `0`・`commit`／`push` `0`
+★★`git add`／`git add -A` ―― ★hakudokai-dev にて `0`★★（★改行符を 書き換へぬ為★）
+★★`diff` は ★`--stat` と 語数の 計 のみ★ ―― ★中断者の code 本文を 引き写さず★
+★`daishogun-artifacts/` 不開／足軽七箱 `0`／軍師second 不触／`send-keys` `0`
+★`sb write` `0`／直送 `0`／己の repo `push` `0`／GA4・広告・Clarity 一指も触れず
+```
+
+### ■八 ★予言 ㊙★
+
+★★`P139` ―― ★上は ★`appointment_detail.py` の 中断者★ を 探させる（owner の再問）★★
+　★∵ ★`+22` 行の shift は ★誰かの 未完の 意図★ にして ―― ★之を 知らずして 線は 引けず★
+
+★★`P140` ―― ★上は 己に ★測りの 紙（引継ぎ書）★ を 命じ ―― ★code は 猶 命ぜず★★
+　★∵ ★dirty 領域と 欠の 領域が ★重なり居る★ ゆゑ
+
+★★`P141` ―― ★`384` の 大半が 改行符なる旨は ★上に 未知★ にして ―― ★驚きを 以て 迎へらる★★
+　★∵ 本部長は『★現worktreeは多数dirty★』を ★作業中の 徴★ として 用ゐ居られたり
