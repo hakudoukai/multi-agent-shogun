@@ -16238,3 +16238,125 @@ $ git --no-optional-locks -C /mnt/c/Projects/hakudokai-dev ls-files --eol      #
 
 ★★`P156` ―― ★己は 本 turn にて ★猶 一つ 己を 訂す★★
 　★∵ ★本 turn 既に 五度 ―― ★而して ★訂の 密度は 落ちず★★
+
+---
+
+## §135 ―― ★★★★★★中断跡は ★一 file に非ず ★四 file の 一斉作業★★ ―― ★三つの mtime が ★六十ミリ秒★ の 内に 並ぶ★★★★★★ ／ ★★★而して ―― ★本部長殿の 問『触れてよい 未重複 scope』の ★答が 定まり申した★★★★
+
+★as_of 2026-08-23T11:41:54+0900★
+
+### ■一 ★★★中断跡の 拡がり ―― ★語を 数へて 露はにす★★★（★code 本文は 引かず 数のみ★）
+
+| file | 追加行 | ★`shift`★ | ★`day_of_week`★ | ★`staff_id`★ | ★`table_exists`★ |
+|---|---|---|---|---|---|
+| ★★`backend/api/appointment_detail.py`★★ | `55` | ★★`32`★★ | ★`2`★ | ★`2`★ | ★★`4`★★ |
+| ★★`frontend/.../SlotFinderModal.tsx`★★ | `25` | `1` | `0` | ★★`4`★★ | `0` |
+| ★★`frontend/.../useWebBooking.ts`★★ | `18` | ★★`6`★★ | `0` | `0` | `0` |
+| ★★`frontend/.../api-calendar.ts`★★ | `2` | ★`1`★ | `0` | `0` | `0` |
+| `backend/api/booking_manage.py` | `55` | `0` | `1` | `0` | `0` |
+| `backend/api/appointment_form.py` | `37` | `0` | `0` | `0` | `0` |
+| `backend/api/appointment_settings.py` | `4` | `0` | `0` | `0` | `0` |
+| `MenuSettings.tsx`／`.test.tsx`／`useClinicMenus.ts` | `42` | `0` | `0` | `0` | `0` |
+```
+★★∴ ★中断跡は ★`appointment_detail.py` 一 file に非ず★ ―― ★★`4` file★★
+★★∴ ★残る `6` file は ★別件（menu／form／manage）★ ―― ★shift と 無縁★
+```
+
+### ■二 ★★★★★而して ―― ★其の 四 file は ★七月五日 survey の 名指したる 欠★ に ★一対一で 対応す★★★★★★
+
+```
+★★㊀ `appointment_detail.py` ―― ★a4 の ★三重欠陥 悉く★ が 手当てされ 掛け居る★
+　　　★`table_exists` `4`★  ⇒ ★欠陥(b)『テーブル未存在で 500』★ への 護り
+　　　★`staff_id` `2`★     ⇒ ★欠陥(c)『UI が staff_id 未送信』★ の 受け側
+　　　★`day_of_week` `2`★  ⇒ ★欠陥(d)『day_of_week 1日ズレ』★ の 統一
+　　　★`shift` `32`★       ⇒ ★接続 本体★
+
+★★㊁ `SlotFinderModal.tsx` ―― ★`staff_id` `4`★
+　　　⇒ ★欠陥(c) の ★送り手側★★（★a4 が『UI が staff_id を送らぬ』と 名指したる 其の UI★）
+
+★★㊂ `useWebBooking.ts` ―― ★`shift` `6`★
+　　　⇒ ★a5 の 経路④『Web予約に `staff_shift` `0` 件』★ への 手当て
+
+★★㊃ `api-calendar.ts` ―― `shift` `1` ⇒ ★配線★
+```
+★★★∴ ★之は ★散らばりたる 私的な 手入れ★ に非ず★
+　　　★★★七月五日 survey の 是正を ―― ★経路③④ に 亘りて 一斉に 着手したる 跡★★★★
+
+### ■三 ★★★★★★決め手 ―― ★mtime が ★六十ミリ秒★ の 内に 並ぶ★★★★★★
+
+```
+★`SlotFinderModal.tsx` ―― ★2026-07-06 01:08:33.193345600★
+★`useWebBooking.ts`    ―― ★2026-07-06 01:08:33.236416500★
+★`api-calendar.ts`     ―― ★2026-07-06 01:08:33.177076500★
+　　　　　　　　　　　　　　★★↑ 三つの 幅 ＝ ★0.0594 秒★★★
+
+★`appointment_detail.py` ―― ★2026-07-06 11:13:04.512007400★（★同日・十時間 後★）
+```
+```
+★★∴ ★三 file は ★人の指にて 順に 打ちたる 物に非ず★ ―― ★★一度の 書込み★★
+★★∴ ★★而して 其の日は ―― ★七月五日 survey の ★翌 未明★★★★
+★★∴ ★★∴ ★誰かが survey を 読み ―― ★其の 夜の うちに 着手し★ ―― ★★以後 四十八日 動かず★★★★
+★★∴ ★條『事の前に書いた予言が当たりたる時ほど 同じ節の他の断を疑へ』
+　　　―― ★己は §130 にて『中断跡』と 断じ ―― ★本節にて ★其の 規模を 六十ミリ秒まで 詰め申した★★
+```
+
+### ■四 ★★★★★★★而して ―― ★本部長殿の 問の 答★ が 出で申した★★★★★★★
+
+★★★負の主張を ★明示に 撃つ★（★條『零には絞りを添へよ』★）★★★:
+```
+$ git --no-optional-locks -C /mnt/c/Projects/hakudokai-dev status --porcelain=v1 -- <path>
+　★backend/services/booking_validator.py         ―― ★★clean★★（★出力 空★）
+　★backend/api/appointment_grid.py               ―― ★★clean★★
+　★backend/services/web_reservation/booking_service.py ―― ★★clean★★
+　★backend/api/staff_shifts.py                   ―― ★★clean★★
+```
+| file | HEAD の 行 | ★`shift`／`availability` 語★ |
+|---|---|---|
+| ★`booking_validator.py`★ | `693` | ★★`0`★★ |
+| `appointment_grid.py` | `898` | ★`0`★ |
+| `booking_service.py` | `352` | ★`0`★ |
+```
+★★∴ ★経路①②の 核は ―― ★★㊀ dirty に非ず ㊁ 誰も 手を 着けて居らず ㊂ 欠は 名指し済★★★
+```
+★★★★★∴ ★『触れてよい 未重複 scope』の 答 ―― ★★`backend/services/booking_validator.py` の
+　　　　`_check_staff_constraint`（経路①②）★★★★★★
+```
+★★理㊀ ―― ★★dirty 足跡 `0`★★ ⇒ ★令『既存 dirty 領域への 書込 `0`』に ★触れず★★
+★★理㊁ ―― ★中断者の 作業（経路③④）と ★重ならず★★ ⇒ ★二重実装厳禁に ★触れず★★
+★★理㊂ ―― ★a2 の 七月五日 逐語 ――『★ここに 1ステップ 追加すれば
+　　　　　6段階バリデーション経由の 経路①② は 塞げる★』⇒ ★上位が 既に 認めたる 欠★
+★★理㊃ ―― ★`seq103829`『既存部分実装の 接続・完成』に ★正面から 合ふ★★
+　　　　（★器 `staff_shifts.py` は 既に 在り ―― ★欠けたるは 間の 線 一本★）
+```
+
+### ■五 ★★然れど ―― ★己は 猶 打たず★★
+
+```
+★★上の令 `HB-20260823-1119-DEV` ――『★clean worktree／worktree+owner+done が 揃うまで
+　　開発 mutation `0`、scope=UNMEASURED★』
+★★∴ ★己は ★scope を 測り終へたる★ のみ ―― ★★着手は 上の 裁を 待つ★★
+★★∴ ★併せて 具申す ―― ★『樹 全体の clean』は ★別 lane 九割二分の 都合★ にて 決まり
+　　　　★予約・勤怠 lane の 安全とは ★別事★ に御座る★
+★★∴ ★∴ ★塞ぎを ★lane 単位★ に 改め給はば ―― ★本 scope は ★今 直ちに 着手し得★★
+```
+
+### ■六 ★為さざりし事（本節）★
+
+```
+★★`hakudokai-dev` ―― ★読取のみ★・書込 `0`・`add` `0`・`commit`／`push` `0`★★
+★★`diff` は ★`grep -c` の 数のみ★ ―― ★★中断者の code 本文 ★一行も 引き写さず★★★
+★★`stat` は ★app 樹の source file の mtime のみ★（★足軽の 箱に非ず★）
+★`daishogun-artifacts/` 不開／足軽 ★箱★ `stat`／`open` `0`／軍師second 不触
+★`send-keys` `0`／`sb write` `0`／直送 `0`／己の repo `push` `0`／★開発 mutation `0`★
+```
+
+### ■七 ★予言 ㊙★
+
+★★`P157` ―― ★上は ★`booking_validator._check_staff_constraint` を scope と 認む★★
+　★∵ ★dirty `0`・重複 `0`・欠は 名指し済 ―― ★三つ 揃ふ 場は 他に 無し★
+
+★★`P158` ―― ★然れど ★着手の 令は 今 turn には 降りず★★
+　★∵ ★上は『clean worktree』を 条件に 掲げたる ばかり ―― ★条件の 改は 一手 要す★
+
+★★`P159` ―― ★`01:08:33` の 六十ミリ秒は ★上に 響く★★
+　★∵ ★『放置されたる 残骸』と『一斉着手の 中断』は ―― ★扱ひが 全く 異なる★
