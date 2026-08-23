@@ -15061,3 +15061,119 @@ return work_started+ETA. S1 receipt→canary→cutover runs in parallel; do not 
 
 ★★`P127` ―― ★本便（`hb_183`）は ★鮮度の關を 通る★（∵ 便を出す直前に 箱を撃ち直す）★★
 　★∴ `P123` の 二点目★
+
+---
+
+## §125 ―― ★lane の実体を ★app 樹に一指も触れずして 測り申した★ ／ ★★第二の 正面衝突 ―― 令の実行者へ ★誰も 届き得ぬ★★★ ／ ★己の網の穴を 己が 先に 見出だす★
+
+★as_of 2026-08-23T10:43:33+0900★
+
+### ■一 ★★lane の頭数 ―― ★`pane_registry.yaml` の 読取のみにて★★
+
+| 役 | `cli` | 出典行 | ★開発令の 該当★ |
+|---|---|---|---|
+| ★`ashigaru-second-1`〜`7`★ | ★★`claude`（Sonnet5）★★ | `120..172`（pid 595560/599210/602422/606209/137125/137157/137251） | ★★『Claude系lane即時』★★ |
+| ★`gunshi-second`★ | ★★`hermes`★★ | `174..178`（standalone `hermes-gunshi-second:0.0`） | ★★『Hermes系は切替後に合流』★★ |
+| `shogun-second`（己）／`karo-second` | ★記載無し★ | `95..108` | ★Claude 系の公算（★未測★）★ |
+
+```
+★★∴ ★『Claude系lane即時』の 頭数 ＝ ★足軽second 七体 ＋ 家老second ＋ 己★★
+★★∴ ★『Hermes系は切替後に合流』の 該当 ＝ ★gunshi-second 唯一★★
+　⇒ ★★∴ ★己が 軍師second へ 手を出さぬは ―― ★令に 適ふ★★★
+```
+
+### ■二 ★★★★★第二の 正面衝突 ―― ★令の実行者へ ★誰も 届き得ぬ★★★★★
+
+```
+★令 ―― ★『予約・勤怠(Claude系lane即時)』★
+★実行者 ―― ★足軽second 1-7（七体・claude）★
+★★而して ―― ★己の枷★:
+　　★足軽七箱への 書込 `0`／`stat`／`open`／`grep`／`parse` `0`★（Commander `17:12`／`17:32` 系）
+★★而して ―― ★家老second の枷★:
+　　★『足軽・軍師・本部長の箱への触れ ★恒久の禁★』★（`HB-20260822-1729-KARO`）
+★★★∴ ★将軍も 家老も ―― ★足軽へ 令を 届け得ず★★★
+★★∴ ★命令系統『将軍→家老→足軽』が ―― ★現に 断たれ居り申す★★
+```
+★★∴ ★之は §124 の 樹の枷（`mnt_c` 読取禁）とは ★別の 第二の 塞ぎ★★
+★★∴ ★樹も 塞がり ―― 経路も 塞がる★ ⇒ ★★『即時』の令は ★現状 物理的に 動き得ず★★★
+
+### ■三 ★★lane の実体 ―― ★本 repo の 棚卸し正本より★（★app 樹 `/mnt/c` に 一指も触れず★）★★
+
+★`context/dentalbi-inventory.md`（棚卸し日 `2026-05-04`・47 module／約 145,000 行）★:
+
+| # | module | file | 行 | 概要 |
+|---|---|---|---|---|
+| ★2★ | ★`appointments`★ | `120` | ★`29,309`★ | 予約管理（カレンダー・フォーム・検索・スマートマッチ） |
+| ★7★ | `web-booking` | `34` | `4,261` | Web予約 |
+| ★8★ | `appointment-settings` | `16` | `3,012` | 予約設定 |
+| 6 | `patient-info` | `17` | `4,657` | ★7 タブ中に 予約タブ★ |
+
+```
+★component ―― `appointment_grid` 898 行／`appointment_detail` 532 行
+★service ―― `appointment_service` 740 行／`booking_validator` 693 行
+★DB table ―― ★`appointments`, `appointment_slots`★
+★★予約三 module 合計 ＝ ★`170` file／`36,582` 行★★
+★app 樹 ―― ★`/mnt/c/Projects/hakudokai-dev`★（GitHub `hakudoukai/hakudokai-dev`）
+★★紙の原則 ―― ★『コードを1行書く前に、このファイルで既存資産を確認せよ。
+　　　　　　　　　既存にあるものを新規で作った場合、★即座に作業停止→削除→既存拡張に切替★』★★
+```
+
+### ■四 ★★『勤怠』＝ ★スタッフシフト★ ―― ★語 其の物は 本 repo に `0`★★
+
+★`context/shift_yoyaku_survey_20260705.md` 逐語★:
+```
+★R-A 第1段: ★スタッフシフト×予約4経路 反映 survey★（read-only）― karo-second 指揮
+★出典 ―― Commander `seq103829`（★理事長/副院長直命・予約完成★）
+★★性質 ―― ★『既存部分実装の 接続・完成』＝ greenfield ★二重実装厳禁（Anti-Duplication）★』★★
+★4 経路 ―― ①予約作成 ②予約移動 ③空き検索 ④Web予約
+★分担 ―― a1=shift core 所在／a2=経路①／a3=経路②／a4=経路③／a5=経路④（web_reservation_server.py）／gunshi=監査
+```
+
+★★★而して ―― ★己の網に 穴 有り ―― ★己が 先に 見出だし申した★★★★:
+```
+★一度目の網 ―― 勤怠|勤務|出勤|退勤|打刻|シフト|スタッフ|職員|従業員|給与|staff|employee|timecard|attendance|payroll
+　　⇒ ★`context/dentalbi-inventory.md` 全体（202 行）にて ★`0` 件★★
+★★二度目の網（`context/` 全体）―― ★勤怠|打刻|timecard|attendance の ★四語のみ★★
+　　⇒ ★★己は ★`シフト`／`staff` を 落とし申した★★ ―― ★而して `shift_yoyaku_survey` は ★file 名に `shift` を 持つ★★
+★★∴ ★己は 零を告ぐる 直前に ★己の網の穴に 気付き★ ―― ★網を 広げ直し申した★★
+```
+★★∴ ★結論 ―― ★『勤怠』の語 其の物は 本 repo に `0`★ にして ―― ★実体は ★スタッフシフト★★★
+★★∴ ★絞り ―― ★測りたるは ★本 repo の紙のみ★ ―― ★app 樹 `/mnt/c` は 枷にて ★未測★★★
+
+### ■五 ★★予約 lane は ★白紙に非ず ―― 現に 積み上がり居り申した★★
+
+```
+★`queue/reports/` ―― ★総数 `10,431`★
+　★shift survey ―― `ashigaru1/2/3/4/5_shift_survey_20260705.md`（★五通★）
+　★監査 ―― `gunshi_audit_shift_survey_20260705.md`／`gunshi_audit_shift_path3_preblock_20260705.md`
+　★inventory ―― `ashigaru1-7_yoyaku_inventory_20260704.md`（★七通★）
+　★★`ashigaru6_yoyaku_backlog_reconcile_20260811.md` ＋ ★`.sha256`★★（★己の枷の task の 成果★）
+★最も新しき 予約系 incident ―― ★`2026-08-17`★
+　　★`double_booking_reservation_table_search_a4.md`★／`reservation_table_count_only_probe_a4.md`
+```
+★★∴ ★『二重実装厳禁』が 現に 効く ⇒ ★撃つ前に 過去の成果を 読むが 筋★★
+★★∴ ★之は ★空焚きに非ざる 実の一手★ にして ―― ★枷に 一指も触れず 為し得申した★★
+
+### ■六 ★為さざりし事（本節）★
+
+```
+★★`/mnt/c` ―― ★`ls`／`stat`／`open` 悉く `0`★★（★枷 62〜65 行を 現に 守り申した★）
+★★足軽七箱 ―― ★書込・`stat`／`open`／`grep`／`parse` 悉く `0`★★
+　（★猶 ―― `queue/reports/` の ★file 名の列挙★ は 為したるが ―― ★中身 open `0`★／★箱に非ず★）
+★軍師second ―― 触れず（★`hermes` ゆゑ『切替後に合流』に従ふ★）
+★家老へ 令を 下さず（★本部長の裁を 待つ★）／`tmux send-keys` `0`
+★`pip`／`install`／`cutover`／`canary`／`restart` 悉く `0`／`sb write` `0`／直送 `0`／`push` `0`
+★`queue/tasks/*.yaml` ―― ★open `0`★（枷の逐語は 己の紙より 引く）
+★`queue/reports/*` ―― ★書込 `0`★（★列挙のみ★）
+```
+
+### ■七 ★予言 ㊙★
+
+★★`P128` ―― ★上は ★足軽への 経路★ を ★家老に 戻す★（∵ 令の実行者が 足軽なる以上 他に道無し）★★
+　★倒れ方 ―― ★『将軍が直に足軽へ』★ と 返らば 外れ（★己の七箱禁が 解かるる事に成る★）
+
+★★`P129` ―― ★開発の第一手は ★新規 code に非ず★ ―― ★過去 survey の 突合★ に成る★★
+　★∵ ★二重実装厳禁★ が 明文にて 立ち ―― ★予約は 既に 36,582 行 在る★
+
+★★`P130` ―― ★『勤怠』の語は ★上の便にも 現れず★ ―― ★委員長は ★スタッフシフト★ の意にて 用ゐ居る★★
+　★検め方 ―― 返の逐語に ★シフト★ が 現るるか
