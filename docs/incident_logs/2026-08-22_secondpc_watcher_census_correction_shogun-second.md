@@ -15177,3 +15177,125 @@ return work_started+ETA. S1 receipt→canary→cutover runs in parallel; do not 
 
 ★★`P130` ―― ★『勤怠』の語は ★上の便にも 現れず★ ―― ★委員長は ★スタッフシフト★ の意にて 用ゐ居る★★
 　★検め方 ―― 返の逐語に ★シフト★ が 現るるか
+
+---
+
+## §126 ―― ★枷 解け ―― ★app 樹を 初めて 測り申した★ ／ ★★`active owner` は ★居らず★ ―― dirty は ★一箇月半 放置★★★ ／ ★★己の lane の 成果 七通が ★未 commit のまま★ 在り申した★★
+
+★as_of 2026-08-23T10:48:52+0900★
+
+### ■一 ★★裁 ―― ★己の枷が 現に 解け申した★★（`P125` ★中り★）
+
+★本部長 `idx 385`（`10:45:47`・nonce `HB-20260823-1044-DEV`）逐語★:
+```
+【本部長裁定・10:44 reservation/attendance 開発開始 nonce=HB-20260823-1044-DEV】
+委員長seq205996のsecond行をDB正本で直読。★Claude系laneは即時開始、S1はHOLD並走★。
+★/mnt/c/Projects/hakudokai-dev のread-only inventoryは本令のため許可する★。
+ただし★現worktreeは多数dirty★: 本turnは★git status/read-onlyで★既存予約・勤怠lane、★active owner★、
+★触れてよい未重複scope★だけを特定し、★path/SHA/owner/doneを返答★。
+★source edit、DB/auth/deploy/commit/push、既存dirty領域への書込=0★。
+```
+★★∴ ★`P125`（上は `mnt_c` の枷を解く）―― ★中り★★★
+★★∴ ★★併せて ―― ★關が 己を 止めたる ★五分★ の間に ―― ★此の裁が 現に 着き申した★★★★
+　⇒ ★★★`hb_184` を 出し居らば ―― ★裁を 知らずして 経路の裁を 乞ひ★ 居り申した★★★
+　⇒ ★★★`P123`／條 ㍞ ―― ★機械の關が ★現に 破戒を 阻み申した★★★★★（★★言ふのみの條が 現に 働きたる 初の一点★★）
+
+### ■二 ★★樹の姿（★read-only・`--no-optional-locks`★）★★
+
+```
+★樹 ―― `/mnt/c/Projects/hakudokai-dev`（GitHub `hakudoukai/hakudokai-dev`）
+★★HEAD ―― `dfa3ac77341e5947c967c745cf8fa597ba494a2e`★★
+★branch ―― `feat/lane1-playwright-daily-report-kanban-1f8ae1ea`
+★★dirty ―― ★`384` 件★★（未追跡 `327`／未 stage 改 `45`／stage 済 `12` ＝ `AM`6＋`MM`4＋`M `2）
+```
+
+### ■三 ★★予約 lane は ★三箇月半で 現に 育ち居り申した★★
+
+| lane | ★今 tracked★ | 棚卸し `2026-05-04` | ★差★ |
+|---|---|---|---|
+| `frontend/src/features/appointments` | ★`188` file／`34,341` 行★ | `120`／`29,309` | ★★`+68` file／`+5,032` 行★★ |
+| `frontend/src/features/web-booking` | `55`／`5,845` | `34`／`4,261` | `+21`／`+1,584` |
+| `frontend/src/features/appointment-settings` | `27`／`3,923` | `16`／`3,012` | `+11`／`+911` |
+| ★★計★★ | ★★`270` file／`44,109` 行★★ | `170`／`36,582` | ★★`+100` file／`+7,527` 行★★ |
+
+★★∴ ★§125 の 棚卸し（`2026-05-04`）は ★三箇月半 古き★ ―― ★己は 之を ★現物にて 更新し申した★★★
+
+### ■四 ★★勤怠 ＝ ★既に 実装 在り★ ―― ★『新規に非ず 接続・完成』の 令と 一致★★
+
+★`shift|staff|attendance|kintai` を含む tracked path ＝ ★`18` 件★★:
+```
+★backend ―― ★`backend/api/staff_shifts.py`（★`258` 行★）★／`backend/api/staff.py`
+　　　　　　　`backend/tests/test_staff_api.py`／`backend/scripts/create_staff_auth_users.py`
+★frontend ―― ★`appointments/pages/StaffShiftSettingsPage.tsx`（★`304` 行★）★（＋test）
+　　　　　　　★`appointments/components/SidePanelStaffSchedule.tsx`★（＋test 二）
+　　　　　　　`appointment-settings/tabs/StaffSettingsTab.tsx`（＋test 二）／`hooks/useStaffExtended.ts`
+```
+★★∴ ★`seq103829`『既存部分実装の 接続・完成＝二重実装厳禁』は ―― ★現物にて 裏付き申した★★★
+
+### ■五 ★★★★★`active owner` ―― ★測りたる範囲に於て ★居らず★★★★★
+
+| 測り | 値 | ★今（`10:48`）よりの 隔たり★ |
+|---|---|---|
+| ★author（直近 6 commit）★ | ★★悉く `DentalBI`★★（★単一 identity ―― 役の別 判ぜず★） | ― |
+| ★最後の commit（全体）★ | `dfa3ac77`・`2026-07-19T11:44:28` | ★★`1` 箇月 `5` 日★★ |
+| ★予約 lane の 最後の commit★ | `3fed1c43`・`2026-07-11T22:38:22` | ★★`1` 箇月 `12` 日★★ |
+| ★dirty の `mtime`★ | `2026-07-06`〜`2026-07-08` | ★★`1` 箇月半★★ |
+
+★★∴ ★『現に 作業中』に非ず ―― ★★放置されたる dirty★★★
+★★∴ ★絞り ―― ★author が 単一 identity `DentalBI` ゆゑ ★役の別は 判ぜず★★（★★役ごとの owner は `UNMEASURED（能）`★★）
+
+### ■六 ★★dirty の 重なり ―― ★予約・勤怠 lane に `22` 件★★
+
+★㊀ 追跡下の dirty ―― ★`11` 件★（★書込 `0` を 守るべき 領域★）★:
+```
+★backend ―― `appointment_detail.py`(M)／★`appointment_form.py`(MM)★／`appointment_settings.py`(M)
+　　　　　　　★`booking_manage.py`(M ＝ ★stage 済★)★／`test_staff_api.py`(M)
+★frontend ―― `appointments/api-calendar.ts`／`components/SlotFinderModal.tsx`
+　　　　　　　`components/settings/MenuSettings.tsx`（＋`__tests__`）
+　　　　　　　`web-booking/hooks/useClinicMenus.ts`／`useWebBooking.ts`
+```
+
+★㊁ ★★未追跡の 重なり ―― `11` 件 ―― ★其の 内 ★七通が 己の名を 冠す★★★★:
+```
+★★`reports/shogun-second-inbox1-069d0340-webbooking-tables-arialabel.md`
+★★`reports/shogun-second-inbox1-3a4d5d07-bookingbehavior-rolestatus.md`
+★★`reports/shogun-second-inbox1-3e8dda09-sidepanelstaff-rolestatus.md`
+★★`reports/shogun-second-inbox1-74f1f5c8-bookingmanage-slotsearch-rolestatus.md`
+★★`reports/shogun-second-inbox1-758e34de-appointmentform-controlnames.md`
+★★`reports/shogun-second-inbox1-ae883ffd-bookingmanage-radiogroup.md`
+★★`reports/shogun-second-inbox1-d905c89a-bookingsettings-controlname.md`
+★併せて ―― `reports/shogun-lane1-inbox1-be53d09a-webbooking-slotsloading-rolestatus-usable-plus1.md`
+★★★併せて ―― ★`docs/development-plans/dentalbi_booking_completion_conversion_requirement_20260803.md`★★★
+★併せて ―― `frontend/src/features/web-booking/__tests__/useClinicMenus.test.ts`／`useWebBooking.test.ts`
+```
+★★∴ ★★`done` の 答 ―― ★己の lane は 已に ★a11y（`role=status`／`aria-label`／control name／radiogroup）★ の 手を 打ち居り ―― ★★其の 成果 七通が ★未 commit のまま★ 樹に 残り居り申した★★★★★
+★★∴ ★併せて ―― ★未追跡 test 二通（`useClinicMenus`／`useWebBooking`）は ―― ★対応する hook が ★dirty(M)★★ ⇒ ★★対に成り居る★★
+
+### ■七 ★★『触れてよい 未重複 scope』―― ★己の見立て★★
+
+```
+★★㊀ ★`docs/development-plans/dentalbi_booking_completion_conversion_requirement_20260803.md`★
+　　　⇒ ★★★予約完成の ★要件書★ ―― ★之を 読むが 第一手★★★（`2026-08-03` ―― ★最も新しき 設計の紙★）
+★★㊁ ★己の名を冠する report 七通★ ―― ★己の過去成果ゆゑ ★所有の争ひ 無し★★
+★★㊂ ★未追跡 test 二通★ ―― ★然れど 対の hook が dirty ⇒ ★裁を仰ぐ迄 触れず★★
+★★㊃ ★追跡下 dirty 11 件★ ―― ★令『既存dirty領域への書込 0』ゆゑ ★触れず★★
+　　　★而して ―― ★一箇月半 放置★ なる旨を 併せて 告ぐ（★裁の材★）
+```
+
+### ■八 ★為さざりし事（本節）★
+
+```
+★★`source edit` `0`／`commit`／`push`（hakudokai-dev にて）`0`／`DB`／`auth`／`deploy` `0`★★
+★★既存 dirty 領域への 書込 `0`★★／★★hakudokai-dev への 書込 ―― ★一 byte も 無し★★★
+★`git` は 恒に ★`--no-optional-locks`★（★index を 書かせず★）
+★足軽七箱 `0`／軍師second 不触／`tmux send-keys` `0`／`sb write` `0`／直送 `0`
+★己の repo ―― 己の紙のみ・`push` `0`
+```
+
+### ■九 ★予言 ㊙★
+
+★★`P131` ―― ★上は ★要件書（`20260803`）を 第一手★ と 認む★★
+★★`P132` ―― ★己の名を冠する report 七通は ―― ★己が commit してよしと 裁が下る★★
+　★∵ ★己の過去成果にして 所有の争ひ 無く ―― ★未追跡ゆゑ dirty 領域に非ず★★
+★★`P133` ―― ★`active owner` の問に ★『居らず』★ と答へたるは ―― ★上の想定と 食ひ違ふ★★
+　★∵ 本部長は『現worktreeは多数dirty』と ★現在形★ にて 申されたるに ―― ★実は ★一箇月半 前の 残骸★★
