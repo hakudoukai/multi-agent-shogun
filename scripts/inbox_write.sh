@@ -30,6 +30,33 @@ CONTENT="$2"
 TYPE="$3"
 FROM="$4"
 
+# ===== ★DEAD-INBOX-GATE★ (理事長ご提案 2026-09-01「旧経路へ送ろうとしたら門が掛かって戻される仕組みに」) =====
+# 死んだ箱(DB直読役職・廃止名=既読が永久に付かない)への書込を、書く前に拒否して正しい経路を教える。
+# 死箱の実測根拠: probe_dead_inbox 2026-08-18 (court-bug-avoidance.md「死んだ箱」表)。
+# 上書き: IW_DEAD_LIST=空白区切りで差し替え(他PC展開用) / IW_ALLOW_DEAD=<理由10字以上>で通す(報告に書くこと)
+# テスト: IW_GATE_TEST=1 なら門判定のみで終了(実書込しない)
+IW_DEAD_DEFAULT="iincho fukuincho gunshi-third gunshi nobunaga shogun shogun-main shogun-second main takenaka"
+for _dead in ${IW_DEAD_LIST:-$IW_DEAD_DEFAULT}; do
+    if [ "$TARGET" = "$_dead" ]; then
+        if [ -n "${IW_ALLOW_DEAD:-}" ]; then
+            if [ "${#IW_ALLOW_DEAD}" -ge 10 ]; then
+                echo "[inbox_write] 註: ★死箱 '$TARGET' へ IW_ALLOW_DEAD により書く★ 理由: $IW_ALLOW_DEAD" >&2
+                break
+            fi
+            echo "[inbox_write] ★拒否★ IW_ALLOW_DEAD の理由が短い(10字以上を書け)" >&2
+            exit 65
+        fi
+        echo "[inbox_write] ★拒否★ '$TARGET' は★死んだ箱★(DB直読役職/廃止名——書けるが★永久に読まれない★)" >&2
+        echo "  ★正しい経路★: pc_handshake へ INSERT + ベル。例:" >&2
+        echo "    python3 scripts/post_and_ring.py --to third_pc --target $TARGET --subject <件名> --content-file <file>" >&2
+        echo "  (post_and_ring が無い座なら: DB INSERT 後 scripts/pane_notify.sh $TARGET <seq> <用件>)" >&2
+        echo "  ★どうしても書くなら IW_ALLOW_DEAD=<理由10字以上> ——理由を報告に書くこと★" >&2
+        exit 64
+    fi
+done
+if [ "${IW_GATE_TEST:-}" = "1" ]; then echo "GATE_PASS target=$TARGET"; exit 0; fi
+# ===== gate end =====
+
 # ★cycle2 S2 cure (med)★: stdin 経由 content 受領 (argv 露出 cure)
 # 既存 caller (positional argv) は env 未設定で従来動作、backward compatible
 if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
@@ -42,6 +69,35 @@ fi
 # null" 要件充足)。既存 pc_handshake.correlation_id と同一意味論を再利用
 # (家老裁定 msg_20220722_103826_d5452e76 の拘束— 新規 namespace 禁)。
 CORRELATION_ID="${INBOX_WRITE_CORRELATION_ID:-}"
+_THIRD_A7_LINEAGE_JSON=""
+
+
+# Third A7 formal-chain correlation inheritance.  Ordinary traffic is outside
+# this helper's scope (rc=10) and retains byte-for-byte legacy behavior.
+KARO_THIRD_ROUTE_CONTRACT="$SCRIPT_DIR/scripts/karo_third_route_contract.py"
+if _THIRD_A7_CORRELATION=$(printf '%s' "$CONTENT" | /usr/bin/python3 "$KARO_THIRD_ROUTE_CONTRACT" \
+    --sender "$FROM" --target "$TARGET" --declared "$CORRELATION_ID"); then
+    CORRELATION_ID="$_THIRD_A7_CORRELATION"
+else
+    _THIRD_A7_ROUTE_RC=$?
+    if [ "$_THIRD_A7_ROUTE_RC" -ne 10 ]; then
+        echo "[inbox_write] FAIL-CLOSED: Third A7 route correlation contract rc=$_THIRD_A7_ROUTE_RC" >&2
+        exit 1
+    fi
+fi
+
+# For the exact A7 -> Karo formal-chain pair, derive lineage from the unique
+# prior Karo -> A7 hop with the same correlation.  The reply body is purposely
+# only CHAIN_CANARY_OK + nonce, so inheritance must be mechanical.  Zero,
+# multiple, or malformed prior hops fail closed; every other pair is untouched.
+if [ "$FROM" = "ashigaru-third-7" ] && [ "$TARGET" = "karo-third" ] && [ -n "$CORRELATION_ID" ]; then
+    KARO_A7_LINEAGE_HELPER="$SCRIPT_DIR/scripts/karo_a7_lineage_inherit.py"
+    if ! _THIRD_A7_LINEAGE_JSON=$(/usr/bin/python3 "$KARO_A7_LINEAGE_HELPER" \
+        --sender "$FROM" --target "$TARGET" --correlation "$CORRELATION_ID"); then
+        echo "[inbox_write] FAIL-CLOSED: A7 -> Karo lineage inheritance failed" >&2
+        exit 1
+    fi
+fi
 
 INBOX="$SCRIPT_DIR/queue/inbox/${TARGET}.yaml"
 LOCKFILE="${INBOX}.lock"
@@ -475,11 +531,99 @@ case "$_H2_ALIAS_KIND" in
         ;;
 esac
 
+# ═══════════════════════════════════════════════════════════════════════════
+# ★工区4 (ii) 宛先不明 return-to-sender★ (task koku4-common-defects-20260807)
+#   従来の欠陥: 未知の TARGET でも下の "Initialize inbox if not exists" が
+#   queue/inbox/<任意文字列>.yaml を黙って新規作成し、誰も読まぬ dead drop に
+#   なっていた (実例: 無印 shogun 宛 = nobunaga dead drop)。
+#   是正: 書込前に宛先実在検査。未知なら (a) 書込まず (b) 送り主へ差戻し便。
+#   ★既存正常経路の挙動は 1bit も変えない★:
+#     - 既に inbox 実体がある宛先は fast path で即通過 (追加 process 起動 0)
+#     - registry が読めぬ等の異常時は ★fail-open★ = 従来動作のまま前進
+#     - 判定が実際に効くのは「従来 dead drop 化していた場合」だけ
+# ═══════════════════════════════════════════════════════════════════════════
+_recipient_is_known() {
+    # fast path: 既存 inbox 実体 (通常 file / symlink) あり = 既知
+    [ -f "$INBOX" ] && return 0
+    [ -L "$INBOX" ] && return 0
+    local _reg
+    _reg=$(python3 - "$SCRIPT_DIR" <<'PYEOF' 2>/dev/null
+import sys, os, glob
+try:
+    import yaml
+except Exception:
+    sys.exit(3)
+root = sys.argv[1]
+try:
+    with open(os.path.join(root, "config", "settings.yaml"), encoding="utf-8") as fh:
+        cfg = yaml.safe_load(fh) or {}
+except Exception:
+    sys.exit(3)
+names = set()
+cli_agents = (cfg.get("cli") or {}).get("agents")
+if isinstance(cli_agents, dict):
+    names.update(str(k) for k in cli_agents)
+for pc in (cfg.get("pc_mapping") or {}).values():
+    if isinstance(pc, dict):
+        for a in (pc.get("agents") or []):
+            names.add(str(a))
+for p in glob.glob(os.path.join(root, "queue", "inbox", "*.yaml")):
+    names.add(os.path.basename(p)[:-5])
+if not names:
+    sys.exit(3)
+print("\n".join(sorted(names)))
+PYEOF
+    ) || return 0   # ★fail-open★ registry 不読は従来動作へ (既存経路保護最優先)
+    [ -n "$_reg" ] || return 0
+    printf '%s\n' "$_reg" | grep -qxF "$TARGET"
+}
+
+if ! _recipient_is_known; then
+    _UNKNOWN_REASON="unknown_recipient: TARGET='${TARGET}' は settings.yaml の agents registry にも queue/inbox/ 実体にも存在せぬ (dead drop 化を阻止)"
+    echo "[inbox_write] REJECTED: $_UNKNOWN_REASON" >&2
+    if [ "${INBOX_WRITE_NO_BOUNCE:-}" = "1" ]; then
+        # 差戻し便自身が未知宛先だった場合 — 無限再帰を断つ
+        echo "[inbox_write] bounce suppressed (INBOX_WRITE_NO_BOUNCE=1): from='${FROM}' も未知ゆえ差戻さず" >&2
+        exit 78
+    fi
+    _ORIG_SUMMARY=$(printf '%s' "$CONTENT" | tr '\n' ' ' | cut -c1-200)
+    INBOX_WRITE_NO_BOUNCE=1 INBOX_WRITE_CONTENT_STDIN= INBOX_WRITE_CORRELATION_ID= \
+    bash "$SCRIPT_DIR/scripts/inbox_write.sh" "$FROM" \
+        "【配送不能・差戻し】宛先 '${TARGET}' は登録されておらぬ。書込を行わず差し戻す。理由=${_UNKNOWN_REASON} / 元type=${TYPE} / 元本文(先頭200字)=${_ORIG_SUMMARY}" \
+        delivery_failed inbox_write >&2 \
+        || echo "[inbox_write] WARN: return-to-sender bounce to '${FROM}' failed" >&2
+    exit 78
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ★工区4 (iii) telemetry 分離★ (task koku4-common-defects-20260807)
+#   応答不要・状態通知のみの便を queue/telemetry/{agent}.yaml へ振り分け、
+#   queue/inbox/ には書かぬ (∴ inbox_watcher の nudge も発火せぬ)。
+#   ★既存 type の意味は変えぬ★: 新 type "telemetry" の導入と、opt-in env
+#   INBOX_WRITE_TELEMETRY_TYPES (既定=空) による追加振分けのみ。既存呼出は
+#   env 未設定ゆえ従来動作。書込機構は既存 flock+python writer を ★そのまま
+#   再利用★ (Anti-Duplication: 新規 writer 新設禁)。
+# ═══════════════════════════════════════════════════════════════════════════
+_IS_TELEMETRY=0
+if [ "$TYPE" = "telemetry" ]; then
+    _IS_TELEMETRY=1
+else
+    for _tel_t in $(printf '%s' "${INBOX_WRITE_TELEMETRY_TYPES:-}" | tr ',' ' '); do
+        if [ "$TYPE" = "$_tel_t" ]; then _IS_TELEMETRY=1; break; fi
+    done
+fi
+if [ "$_IS_TELEMETRY" = "1" ]; then
+    INBOX="$SCRIPT_DIR/queue/telemetry/${TARGET}.yaml"
+    LOCKFILE="${INBOX}.lock"
+fi
+
 # Trigger cross-PC bridge synchronously while the compact coordination lock is
 # held. A background bridge could POST after a lease had already published.
 # 緊急停止 2026-05-07 18:23: 連続 INSERT loop 発生中、source 不明
 # ~/.openclaw/disable_cross_pc_bridge flag 存在時は cross_pc_bridge を起動しない
-if [ ! -f "$HOME/.openclaw/disable_cross_pc_bridge" ]; then
+# ★工区4 (iii)★: telemetry は局所の状態通知ゆえ cross-PC bridge へ流さぬ
+# (DB 側の再飽和防止)。
+if [ "$_IS_TELEMETRY" != "1" ] && [ ! -f "$HOME/.openclaw/disable_cross_pc_bridge" ]; then
     _cross_pc_bridge "$TARGET" "$CONTENT" "$TYPE" "$FROM"
 fi
 
@@ -536,8 +680,8 @@ max_attempts=3
 
 while [ $attempt -lt $max_attempts ]; do
     if _acquire_lock; then
-        INBOX_CONTENT="$CONTENT" "$SCRIPT_DIR/.venv/bin/python3" -c "
-import yaml, sys, os
+        INBOX_CONTENT="$CONTENT" INBOX_A7_LINEAGE_JSON="$_THIRD_A7_LINEAGE_JSON" "$SCRIPT_DIR/.venv/bin/python3" -c "
+import json, yaml, sys, os
 
 try:
     # Load existing inbox
@@ -597,6 +741,16 @@ try:
     corr_val = '$CORRELATION_ID'
     if corr_val:
         new_msg['correlation_id'] = corr_val
+    if '$TARGET' == 'karo-third':
+        new_msg['_read_helper'] = 'python3 scratch/k3_mark_read.py'
+        new_msg['_read_attest_bytes'] = len(new_msg['content'].encode('utf-8'))
+        new_msg['_direct_yaml_write_forbidden'] = True
+    lineage_raw = os.environ.get('INBOX_A7_LINEAGE_JSON', '')
+    if lineage_raw:
+        lineage = json.loads(lineage_raw)
+        if set(lineage) != {'root_parent_seq', 'root_parent_uuid', 'previous_hop_id'}:
+            raise ValueError('A7 lineage field set mismatch')
+        new_msg.update(lineage)
     data['messages'].append(new_msg)
 
     # Overflow rotation (2026-08-03 委員長hotfix 裁定seq137748/137769):
