@@ -1,0 +1,73 @@
+=== o137 順 11 ＝ 母の ★増え方★（順 10 の裏側）／as_of 2026-09-09 05:26:11 JST ===
+★走る前に申した『出ぬ物』★: 誰が足したかは出ぬ ／ 帳の無い物は刻の下限も置けぬ ／ ★点は出ぬ（範のみ）★
+母① ★帳★ = o112 345 本（刻 11:59:33・層 空/保つ/別刻）
+母② ★ref★ = o103 346 本（刻 10:20:05・`for-each-ref` の名簿）
+
+★③ 門（先に検める）★ 母①∩母② = 331 ／ 母①のみ 14 ／ 母②のみ 15
+   母① と 母② は ★同一集合か★ = ★違ふ★
+   ∴ ★『母 345 と当時の全 ref 数が同じか』は ★立たぬ★ ―― 走る前に申した通り。★
+   ∴ ★① 帳 と ② ref を ★別語★ で出し 足し引きせぬ★（混ぜれば 母の違ひが数に化ける）。
+   母①のみ（帳は在るが 当時 ref 名簿に無い） 14 本 ： refs/remotes/origin=11 / refs/heads=3
+   母②のみ（ref 名簿に在るが 帳が無い） 15 本 ： refs/tags=8 / refs/pull=3 / refs/remotes/origin=3 / refs/jinji=1
+
+★対照（home 樹・立たねば 数を出さぬ）★
+   home の 今の帳 = 78 本
+   陽性（母から実在 20 本 抜く）: 増分 20（20 を期す）／減分 0（0 を期す）
+   陰性（母に贋 20 本 足す）    : 増分 0（0 を期す）／減分 20（20 を期す）
+   対照 ★2/2 立つ★
+
+★① 帳（logs/refs）の増減 ―― 母 345（o112 11:59:33）と 今★
+   今の帳 = 445 本 ／ ★増えた 102★ ／ ★減つた 2★
+   増えた の前置き： refs/remotes/origin=93 / refs/heads=8 / refs/remotes/macpc=1
+   減つた の前置き： refs/remotes/origin=2
+     ＋帳 refs/heads/a1/handover-fe-papers-20260909 ／ mtime 2026-09-09 05:25:13
+     ＋帳 refs/heads/a1/palette-ipad-handcount-20260908 ／ mtime 2026-09-09 05:23:54
+     ＋帳 refs/heads/a3/bundle-fix4-skipif-20260908 ／ mtime 2026-09-08 20:10:25
+     ＋帳 refs/heads/dry/reserveimage-26028a82-fixed-tree-evidence ／ mtime 2026-09-08 12:24:08
+     ＋帳 refs/heads/env/board-create-20260908 ／ mtime 2026-09-08 13:16:39
+     ＋帳 refs/heads/fix/reserveimage-1215313e-annotation-save-exits ／ mtime 2026-09-08 16:49:39
+     ＋帳 refs/heads/fix/reserveimage-708ee714-red-pen-ink ／ mtime 2026-09-08 23:53:15
+     ＋帳 refs/heads/karo-third/a1-order150-a4print-20260908 ／ mtime 2026-09-08 13:32:00
+     ＋帳 refs/remotes/macpc/drm-aa832448 ／ mtime 2026-09-08 23:32:08
+     ＋帳 refs/remotes/origin/a1/annotation-ink-contract-test-20260908 ／ mtime 2026-09-08 19:37:33
+     ＋帳 refs/remotes/origin/a1/annotation-save-conflict-test-20260908 ／ mtime 2026-09-08 18:01:07
+     ＋帳 refs/remotes/origin/a1/annotation-save-retry-test-20260908 ／ mtime 2026-09-08 15:18:36
+     ＋帳 refs/remotes/origin/a1/b12-15-b5-capture-20260909 ／ mtime 2026-09-09 04:59:23
+     ＋帳 refs/remotes/origin/a1/handover-fe-papers-20260909 ／ mtime 2026-09-09 05:09:17
+     ＋帳 refs/remotes/origin/a1/handover-fe-reload-path-20260909 ／ mtime 2026-09-09 05:13:45
+     ＋帳 refs/remotes/origin/a1/night-handover-fe-evidence-20260909 ／ mtime 2026-09-09 03:46:38
+     ＋帳 refs/remotes/origin/a3/w2-riyuu-obi-20260909 ／ mtime 2026-09-09 05:07:33
+     ＋帳 refs/remotes/origin/docs/1215313e-verify-20260908 ／ mtime 2026-09-08 18:27:25
+     ＋帳 refs/remotes/origin/docs/1215313e-verify-full-20260908 ／ mtime 2026-09-08 18:40:12
+     ＋帳 refs/remotes/origin/docs/child5-apply-evidence-20260908 ／ mtime 2026-09-08 12:45:29
+
+★② ref（loose ∪ packed）の増減 ―― 母 346（o103 ★10:20:05★・★母①と刻が違ふ★）と 今★
+   今の ref = 460 本（loose 37 ／ packed 432）／ ★増えた 116★ ／ ★減つた 2★
+   増えた の前置き： refs/remotes/origin=104 / refs/heads=11 / refs/remotes/macpc=1
+   減つた の前置き： refs/remotes/origin=2
+     ＋ref refs/heads/a1/handover-fe-papers-20260909 ／ 在り処 loose
+     ＋ref refs/heads/a1/palette-ipad-handcount-20260908 ／ 在り処 両方
+     ＋ref refs/heads/a3/bundle-fix4-skipif-20260908 ／ 在り処 packed
+     ＋ref refs/heads/docs/cdc-rollback-truth-20260908 ／ 在り処 packed
+     ＋ref refs/heads/docs/ruling-precedents-20260908 ／ 在り処 packed
+     ＋ref refs/heads/docs/ruling-precedents-fix-20260908 ／ 在り処 packed
+     ＋ref refs/heads/dry/reserveimage-26028a82-fixed-tree-evidence ／ 在り処 packed
+     ＋ref refs/heads/env/board-create-20260908 ／ 在り処 packed
+     ＋ref refs/heads/fix/reserveimage-1215313e-annotation-save-exits ／ 在り処 packed
+     ＋ref refs/heads/fix/reserveimage-708ee714-red-pen-ink ／ 在り処 両方
+     ＋ref refs/heads/karo-third/a1-order150-a4print-20260908 ／ 在り処 packed
+     ＋ref refs/remotes/macpc/drm-aa832448 ／ 在り処 loose
+     ＋ref refs/remotes/origin/a1/annotation-ink-contract-test-20260908 ／ 在り処 packed
+     ＋ref refs/remotes/origin/a1/annotation-save-conflict-test-20260908 ／ 在り処 packed
+     ＋ref refs/remotes/origin/a1/annotation-save-retry-test-20260908 ／ 在り処 packed
+     ＋ref refs/remotes/origin/a1/b12-15-b5-capture-20260909 ／ 在り処 loose
+     ＋ref refs/remotes/origin/a1/handover-fe-papers-20260909 ／ 在り処 loose
+     ＋ref refs/remotes/origin/a1/handover-fe-reload-path-20260909 ／ 在り処 loose
+     ＋ref refs/remotes/origin/a1/night-handover-fe-evidence-20260909 ／ 在り処 loose
+     ＋ref refs/remotes/origin/a3/w2-riyuu-obi-20260909 ／ 在り処 loose
+
+★㋒ 範（★点ではなく 範★）★
+   左端 = 母① の生出力 mtime 2026-09-08 11:59:33 ／ 右端 = 本走の刻 2026-09-09 05:26:12 ／ 幅 17.44 時間
+   狭める手 = `packed-refs` の mtime 2026-09-08 21:04:05 ―― ★之は『最後の書き』ゆゑ 其れ以前に入つた公算あり＝★点に非ず★★
+
+★此の数が言はぬ事★: 誰が足したか ／ 何時 足したかの ★点★ ／ 帳と ref を足した『総数の増減』（★母が違ふ ∴ 足すな★）
