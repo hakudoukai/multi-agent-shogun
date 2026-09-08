@@ -53,6 +53,35 @@ RETRY_TRACKER_FILE = os.environ.get(
     "/tmp/hakudokai_receiver_retry_tracker.json",
 )
 
+# ff5c9068: unroutable 通知の一度性は ★此の file★ が持つ。
+# 之まで docstring は "once per handshake id" と名乗り乍ら 函の内に dedupe が無く、
+# 一度性は呼手の processed_file に頼つて居た (argv[2] にて外から渡る = 別 path を渡さるれば再び通知)。
+# 通知の store と 処理済の store を分けず一つに寄せる。
+UNROUTABLE_NOTIFIED_FILE = os.environ.get(
+    "SECONDPC_RECEIVER_UNROUTABLE_NOTIFIED_FILE",
+    os.path.join(script_dir, "queue", "inbox", "_unroutable_notified_second.txt"),
+)
+
+
+def load_unroutable_notified():
+    """Return the set of handshake ids whose unroutable notice already went out."""
+    try:
+        with open(UNROUTABLE_NOTIFIED_FILE, encoding="utf-8") as f:
+            return set(line.strip() for line in f if line.strip())
+    except (FileNotFoundError, NotADirectoryError):
+        return set()
+
+
+def record_unroutable_notified(msg_id):
+    """Record one handshake id as notified. Called ONLY after a confirmed POST."""
+    if not msg_id:
+        return
+    path = pathlib.Path(UNROUTABLE_NOTIFIED_FILE)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(msg_id + "\n")
+
+
 def load_retry_tracker():
     try:
         with open(RETRY_TRACKER_FILE) as f:
@@ -255,7 +284,19 @@ def append_dead_letter(msg, reason):
 
 
 def escalate_unroutable(msg, reason):
-    """Escalate unresolved routing to FUKUINCHO/Commander once per handshake id."""
+    """Escalate unresolved routing to FUKUINCHO/Commander once per handshake id.
+
+    ff5c9068: the once-per-id promise is now ENFORCED HERE (UNROUTABLE_NOTIFIED_FILE),
+    not assumed from the caller's processed_file.
+
+    Returns True when the recipient has the notice (sent now, or sent on an earlier
+    scan). Returns False when the POST failed — the caller must NOT record the
+    message as processed, so the bounce is retained and retried under MAX_RETRY.
+    """
+    msg_id = msg.get("id", "")
+    if msg_id and msg_id in load_unroutable_notified():
+        log(f"unroutable notice already sent for {msg_id[:8]} - dedupe, not resending")
+        return True
     try:
         import urllib.request
         payload = json.dumps({
@@ -279,9 +320,14 @@ def escalate_unroutable(msg, reason):
         req.add_header("Prefer", "return=minimal")
         with urllib.request.urlopen(req, timeout=10):
             pass
-        log(f"ESCALATED unroutable {msg.get('id','')[:8]} reason={reason}")
+        record_unroutable_notified(msg_id)
+        log(f"ESCALATED unroutable {msg_id[:8]} reason={reason}")
+        return True
     except Exception as e:
-        log(f"ESCALATE failed for {msg.get('id','')[:8]}: {e}")
+        # no-silent-failure: the notice did NOT land. Do not record it as sent,
+        # and tell the caller so the row is not buried as processed.
+        log(f"ESCALATE failed for {msg_id[:8]}: {e}")
+        return False
 
 
 def send_nudge(agent_id, count):
@@ -340,7 +386,15 @@ for msg in new_msgs:
         if not target:
             reason = "missing_or_invalid_target_agent"
             append_dead_letter(msg, reason)
-            escalate_unroutable(msg, reason)
+            if not escalate_unroutable(msg, reason):
+                # ff5c9068: notice failed -> keep the bounce. Recording it as
+                # processed here would bury the row with nobody told.
+                fail_count += 1
+                retry_tracker[msg_id] = retry_tracker.get(msg_id, 0) + 1
+                save_retry_tracker(retry_tracker)
+                log(f"BLOCKED unroutable {msg_id[:8]} and NOTICE FAILED - "
+                    f"not recorded as processed (retry {retry_tracker[msg_id]}/{MAX_RETRY})")
+                continue
             with open(processed_file, "a") as f:
                 f.write(msg_id + "\n")
             retry_tracker.pop(msg_id, None)
