@@ -96,3 +96,23 @@ ps -eo pid,pcpu,command | grep -E "playwright|chrome|dino-kit" | grep -v grep | 
 ```
 ★席 の捕り が動いて 居たら 8 段 は待つ★。急ぐ なら ★先 に席 へ告げ 席 の都合 を訊く★。
 ★捕り は 刻 を測る 仕事 で あり 台 の力 を奪はれると 落ちる★。
+
+## ★「main 樹 から走らせよ」は 曖昧 で ある(2026-09-08 追記)★
+
+★main は 二つ 在り得る★ ―― `refs/heads/main`(局所)と `refs/remotes/origin/main`。
+★局所 は 古い 事 が有る★。
+
+実測(2026-09-08・DentalBI):
+| ref | sha | `frontend/src/features/child-passport/` の file 数 |
+|---|---|---|
+| `refs/heads/main` | 6c37a6c9b | ★12★ |
+| `refs/remotes/origin/main` | 1e3a95b89 | ★176★ |
+
+★局所 main には story-engine が丸ごと無かつた★ ―― 器0 も schema も 話 json も。
+∴ 「main 起点で切れ」を局所 main と解いた者は ★命の掛かる物が無い樹★ で作業を始める。
+
+★書く時は ref を全部 書け★: 「main 樹」ではなく ★`origin/main` から切つた樹★ と書く。
+★git fetch を先に走らせよ★ ―― `origin/main` 自体も 読んだ刻 の写しである。
+
+之は ★席が家老の下命の前提を崩して見せた★ 事で判つた(専任1・291438 の中間報)。
+★下命の語が曖昧なら、正しく従つた者ほど深く嵌る★。

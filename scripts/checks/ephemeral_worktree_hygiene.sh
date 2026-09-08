@@ -49,7 +49,7 @@ if [ -n "${GATE_MAIN}" ]; then
   done
 fi
 if [ -n "${GATE_LOT}" ]; then
-  printf '%s' "${GATE_LOT}" | grep -q "sweep_own" ||     echo "[worktree-hygiene] ★註★ ★lot 枝★ の器 は 後始末 を持たぬ ―― ★lot 樹 から 8 段 を走らせると 樹 が残る★(main 樹 で走らせよ)"
+  printf '%s' "${GATE_LOT}" | grep -q "sweep_own" ||     echo "[worktree-hygiene] ★註★ ★lot 枝★ の器 は 後始末 を持たぬ ―― ★lot 樹 から 8 段 を走らせると 樹 が残る★(★origin/main★ から切つた樹 で走らせよ ―― ★局所 refs/heads/main は古い事が有る★)"
 fi
 GATE=""
 if [ -f "${GATE}" ]; then
