@@ -1,0 +1,27 @@
+# argv: bash scripts/sweeps/audit_disk_pressure.sh --growth scratch/ashigaru-third-2-fa06a3a1/o128_run1_raw.txt scratch/ashigaru-third-2-fa06a3a1/o128_run2_raw.txt scratch/ashigaru-third-2-fa06a3a1/o128_run3_raw.txt scratch/ashigaru-third-2-fa06a3a1/o128_run4_raw.txt scratch/ashigaru-third-2-fa06a3a1/o129_run1_3pc_20260908_184527.txt scratch/ashigaru-third-2-fa06a3a1/o133_run1_sample_20260909_040745.txt
+# rc=0
+# --- stdout ---
+DISKGROWTH_UNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/mnt/wsl why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH host=momizi-dx target=/ gib_per_day=8.936 gib_per_day_milli=8936 span_s=35511 n_points=15 granularity=gib_rounded prior_used_b=261993005056 cur_used_b=265937563648 delta_b=3944558592 exceeded=yes growth_max_gib_per_day=5 resolution_gib_per_day=2.433 as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/mnt/wslg why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_WITHHELD host=momizi-dx target=/init status=span_short span_s=12 delta_b=0 n_points=2 granularity=byte min_span_s=3600 note=★二点が短い(又は隔たり 0) ∴ 推し量つた増え方を出さぬ★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/run why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/run/lock why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/run/shm why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/mnt/wslg/doc why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/mnt/d why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/run/user/1001 why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/run/user/1000 why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/mnt/c-recovery why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKGROWTH_UNMEASURED host=momizi-dx target=/mnt/c why=no_prior_point note=★0 に足さぬ・別値★ as_of=2026-09-09T04:07:57+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-09T04:07:57+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-09T04:07:57+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-09T04:07:57+09:00
+# --- stderr ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-09T04:07:57+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★
+SELFTEST_GROWTH result=STANDS legs=positive_rate,negative_zero,short_withhold,span_zero growth_max_gib_per_day=5 min_span_s=3600 note=★合成値であり実測に非ず・閾から組んで在る★

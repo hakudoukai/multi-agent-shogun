@@ -1,0 +1,27 @@
+# argv: bash scripts/sweeps/audit_disk_pressure.sh --sample
+# rc=0
+# --- stdout ---
+DISKUNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-09T04:07:45+09:00
+DISKSAMPLE host=momizi-dx target=/ total_b=1081101176832 used_b=265936404480 epoch_s=1788894465 as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-09T04:07:45+09:00
+DISKSAMPLE host=momizi-dx target=/init total_b=16750100480 used_b=2838528 epoch_s=1788894465 as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1001 why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c-recovery why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-09T04:07:45+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-09T04:07:45+09:00
+# --- stderr ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-09T04:07:45+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★
+SELFTEST_GROWTH result=STANDS legs=positive_rate,negative_zero,short_withhold,span_zero growth_max_gib_per_day=5 min_span_s=3600 note=★合成値であり実測に非ず・閾から組んで在る★

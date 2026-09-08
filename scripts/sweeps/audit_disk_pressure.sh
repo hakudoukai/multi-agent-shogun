@@ -44,6 +44,19 @@
 #   (a) 当席が local に測れるのは ★己の PC 一台★。他 3 台は 経路が要り ―― ★経路は 打つ前に申す約束★ ゆゑ
 #       既定では ★打たぬ★。故に unmeasured=3（why=no_route_not_requested）と ★別値で★ 出る。
 #   (b) df は ★瞬間値★ である。圧の ★増え方★ は映さぬ。
+#   (b)★更め 2026-09-09 04:0x（order131・上の行は ★消さず★ 残す）★:
+#       ★『今しか言へぬ』を『日に何 GiB』へ延ばした★ ―― 但し ★器は今も file を一つも作らぬ★。
+#       ・--sample …… 今の一点を ★byte 精度★ で標準出力へ吐く（DISKSAMPLE 行）。
+#                      ★置き所は席が決める★（席が己の側で落とす）＝器は書かぬ・読取専は崩れて居らぬ。
+#       ・--growth F… 過去の点を ★讀むだけ★（DISKSAMPLE も 旧 DISKPRESS も可）＋今の一点で
+#                      ★(host,target) 毎に 増え方(GiB/日)★ を出す。
+#       ★増え方は『二点の差』でしか言へぬ ∴ 二点の質を 必ず併記する★:
+#         ・span_s（二点の隔たり）／n_points／granularity（byte か gib_rounded か）
+#         ・★span が DP_MIN_SPAN_S 未満なら 率を ★出さぬ★＝status=span_short（『短い』と書く）★
+#         ・★span が 0 なら 率は ★測れぬ★＝status=span_zero（0 と書かぬ・無限と書かぬ）★
+#         ・★過去の点が無い target は DISKGROWTH_UNMEASURED（★別値★・0 に足さぬ）★
+#       ★gib_rounded の点（旧 DISKPRESS は GiB 丸め）は ±1GiB の疵を持つ★ ゆゑ
+#       ★resolution_gib_per_day（其の疵が日率に幾ら化けるか）を 同じ行に併記する★。
 #   (c) vhdx は Windows 側の file であり、加へて /mnt/c は I/O error を返す事が在る。
 #       ∴ ★/mnt 配下は 触らず skip し unmeasured に数へる★（★触つて固まらぬ為でもある★）。
 #   (c)★更め 2026-09-08 18:09★（前の行は ★消さず★ 残す・下が今の実）:
@@ -79,15 +92,22 @@
 #   audit_disk_pressure.sh                 … 静かな時は黙る（閾値超と測り漏れのみ 1 行づつ）
 #   audit_disk_pressure.sh --report        … 母数の summary も出す
 #   audit_disk_pressure.sh --selftest-only … selftest だけ回して結果を述べる
+#   audit_disk_pressure.sh --sample        … 今の一点を byte 精度で吐く（DISKSAMPLE 行・器は書かぬ）
+#   audit_disk_pressure.sh --growth F [F…] … 過去の点 F を讀み 今の一点との 増え方(GiB/日) を出す
 # 閾値（env で上書き可）:
 #   DP_PCT_MAX=85     … 使用率(%) 之以上で 1 行
 #   DP_ABS_MAX_GIB=80 … 実消費(GiB) 之以上で 1 行（vhdx の様に率が低くても嵩む物の為）
+#   DP_GROWTH_MAX_GIB_PER_DAY=5 … 増え方(GiB/日) 之以上で exceeded=yes と印す
+#   DP_MIN_SPAN_S=3600          … 二点の隔たりが之未満なら ★率を出さぬ（span_short）★
 set -uo pipefail
 
 DP_PCT_MAX="${DP_PCT_MAX:-85}"
 DP_ABS_MAX_GIB="${DP_ABS_MAX_GIB:-80}"
+DP_GROWTH_MAX_GIB_PER_DAY="${DP_GROWTH_MAX_GIB_PER_DAY:-5}"
+DP_MIN_SPAN_S="${DP_MIN_SPAN_S:-3600}"
 GIB=$((1024*1024*1024))
 AS_OF="$(date -Is)"
+EPOCH="$(date +%s)"
 HOST="$(hostname 2>/dev/null || echo unknown)"
 
 # ── 判定核（★之だけが「閾値超か否か」を決める・selftest も実測も 同じ此処を通る★）──
@@ -102,6 +122,72 @@ judge() {
   [ -z "$reason" ] && return 1
   printf 'DISKPRESS host=%s target=%s total_gib=%s used_gib=%s pct=%s reason=%s as_of=%s\n' \
     "$HOST" "$target" "$(( total / GIB ))" "$(( used / GIB ))" "$pct" "$reason" "$AS_OF"
+  return 0
+}
+
+# ── 増え方の判定核（★之だけが「日に何 GiB か」を決める・selftest も実測も 同じ此処を通る★）──
+# 引数: prev_used_b prev_epoch cur_used_b cur_epoch
+# 出力(標準出力・空白区切): status span_s delta_b rate_milli_gib_per_day
+#   ok         … 率を出してよい（rate は ★千分の一 GiB/日★）
+#   span_short … ★二点が近すぎる ∴ 率を出さぬ（rate="-"）＝『短い』と書く★
+#   span_zero  … ★隔たり 0 ∴ 測れぬ（★0 とも 無限とも書かぬ★・rate="-"）★
+growth_rate() {
+  local pu="$1" pe="$2" cu="$3" ce="$4" span delta dg_milli rate
+  span=$(( ce - pe ))
+  delta=$(( cu - pu ))
+  if [ "$span" -le 0 ]; then printf 'span_zero %s %s -\n' "$span" "$delta"; return 0; fi
+  if [ "$span" -lt "$DP_MIN_SPAN_S" ]; then printf 'span_short %s %s -\n' "$span" "$delta"; return 0; fi
+  # ★溢れぬ順で割る★: 先に GiB(千分)へ落としてから 日へ延ばす
+  #   （delta*86400*1000 は 1TB 級で 64bit を溢れる ―― 順を違へると ★静かに嘘の数★ に成る）
+  dg_milli=$(( delta * 1000 / GIB ))
+  rate=$(( dg_milli * 86400 / span ))
+  printf 'ok %s %s %s\n' "$span" "$delta" "$rate"
+}
+
+# ── 増え方の対照（★条(十四)＝陽性と陰性を 同じ走に置く★・★閾から組む(条⒃)★）──
+selftest_growth() {
+  local day=86400 exp out st span delta rate half
+  if [ "$DP_MIN_SPAN_S" -lt 2 ]; then
+    printf 'SELFTEST_GROWTH result=FAILED_TO_STAND leg=short note=%s\n' \
+      '★DP_MIN_SPAN_S が小さすぎて「短い」の対照を組めぬ ∴ 率は出さぬ★' >&2
+    return 1
+  fi
+  # ㋐ 陽性(率) …… 閾+1 GiB を ちやうど一日で ⇒ rate は (閾+1)*1000 でなければならぬ
+  exp=$(( (DP_GROWTH_MAX_GIB_PER_DAY + 1) * 1000 ))
+  out="$(growth_rate 0 0 $(( (DP_GROWTH_MAX_GIB_PER_DAY + 1) * GIB )) "$day")"
+  read -r st span delta rate <<< "$out"
+  if [ "$st" != "ok" ] || [ "$rate" != "$exp" ]; then
+    printf 'SELFTEST_GROWTH result=FAILED_TO_STAND leg=positive_rate got=%s want_rate=%s note=%s\n' \
+      "$out" "$exp" '★閾から組んだ陽性が 期待の率に成らぬ ∴ 数は出さぬ★' >&2
+    return 1
+  fi
+  # ㋑ 陰性(増えて居らぬ) …… 同じ used を一日 ⇒ ok かつ rate=0（★測れぬ ではない★）
+  out="$(growth_rate $(( 7 * GIB )) 0 $(( 7 * GIB )) "$day")"
+  read -r st span delta rate <<< "$out"
+  if [ "$st" != "ok" ] || [ "$rate" != "0" ]; then
+    printf 'SELFTEST_GROWTH result=FAILED_TO_STAND leg=negative_zero got=%s note=%s\n' \
+      "$out" '★増えて居らぬ二点が rate=0 に成らぬ ∴ 数は出さぬ★' >&2
+    return 1
+  fi
+  # ㋒ 陽性(『短い』を止める機構) …… 閾の半分の隔たりで 大きな差 ⇒ ★率を出さぬ★
+  half=$(( DP_MIN_SPAN_S / 2 ))
+  out="$(growth_rate 0 0 $(( 1000 * GIB )) "$half")"
+  read -r st span delta rate <<< "$out"
+  if [ "$st" != "span_short" ] || [ "$rate" != "-" ]; then
+    printf 'SELFTEST_GROWTH result=FAILED_TO_STAND leg=short_withhold got=%s note=%s\n' \
+      "$out" '★短い二点から 率が出て了つた（推し量つた増え方）∴ 数は出さぬ★' >&2
+    return 1
+  fi
+  # ㋓ 陰性(隔たり 0) …… ★0 とも 無限とも書かず 測れぬ と出る事★
+  out="$(growth_rate 0 5 $(( 1000 * GIB )) 5)"
+  read -r st span delta rate <<< "$out"
+  if [ "$st" != "span_zero" ] || [ "$rate" != "-" ]; then
+    printf 'SELFTEST_GROWTH result=FAILED_TO_STAND leg=span_zero got=%s note=%s\n' \
+      "$out" '★隔たり 0 に率が付いた ∴ 数は出さぬ★' >&2
+    return 1
+  fi
+  printf 'SELFTEST_GROWTH result=STANDS legs=positive_rate,negative_zero,short_withhold,span_zero growth_max_gib_per_day=%s min_span_s=%s note=%s\n' \
+    "$DP_GROWTH_MAX_GIB_PER_DAY" "$DP_MIN_SPAN_S" '★合成値であり実測に非ず・閾から組んで在る★' >&2
   return 0
 }
 
@@ -147,6 +233,9 @@ selftest() {
 # ── local の測り（★讀取のみ★）──
 # /mnt 配下・drvfs・9p・tmpfs・overlay は ★測らず unmeasured に数へる★（触つて固まらぬ為）
 measure_local() {
+  # ★吐き方だけを替へる（judge=閾の判定 / sample=一点を byte で吐く）★
+  #   ―― ★df の濾し（/mnt・drvfs 等を除く）を 二本書かぬ為である（二重実装禁）★
+  local emit="${1:-judge}"
   local line src size used mnt fstype
   df -P -B1 -T 2>/dev/null | tail -n +2 | while read -r src fstype size used _avail _pct mnt; do
     case "$mnt" in
@@ -159,8 +248,91 @@ measure_local() {
         printf 'DISKUNMEASURED host=%s target=%s why=%s as_of=%s\n' \
           "$HOST" "$mnt" "skipped_fstype_${fstype}" "$AS_OF"; continue;;
     esac
-    judge "$mnt" "$size" "$used" || true
+    if [ "$emit" = "sample" ]; then
+      printf 'DISKSAMPLE host=%s target=%s total_b=%s used_b=%s epoch_s=%s as_of=%s\n' \
+        "$HOST" "$mnt" "$size" "$used" "$EPOCH" "$AS_OF"
+    else
+      judge "$mnt" "$size" "$used" || true
+    fi
   done
+}
+
+# ── 過去の点を ★讀むだけ★（DISKSAMPLE=byte 精度 / 旧 DISKPRESS=GiB 丸め）──
+prior_points() {
+  awk '
+    /^DISKSAMPLE / { h="";t="";u="";a="";
+      for(i=2;i<=NF;i++){ p=index($i,"="); k=substr($i,1,p-1); v=substr($i,p+1);
+        if(k=="host")h=v; else if(k=="target")t=v; else if(k=="used_b")u=v; else if(k=="as_of")a=v }
+      if(h!=""&&t!=""&&u!=""&&a!="") print h,t,u,a,"byte" }
+    /^DISKPRESS / { h="";t="";g="";a="";
+      for(i=2;i<=NF;i++){ p=index($i,"="); k=substr($i,1,p-1); v=substr($i,p+1);
+        if(k=="host")h=v; else if(k=="target")t=v; else if(k=="used_gib")g=v; else if(k=="as_of")a=v }
+      if(h!=""&&t!=""&&g!=""&&a!="") printf "%s %s %.0f %s %s\n", h, t, g*1073741824, a, "gib_rounded" }
+  ' "$1"
+}
+
+# ── 増え方の走り（★過去の点は讀むだけ・今の一点は己で採る★）──
+growth_mode() {
+  local f host tgt used aof gran epoch key
+  local cu ce pu pe pg pn out st span delta rate exceeded hum res
+  declare -A P_USED P_EPOCH P_GRAN P_N
+  if [ "$#" -eq 0 ]; then
+    printf 'DISKGROWTH_UNMEASURED host=%s target=- why=%s as_of=%s\n' "$HOST" "no_prior_file_given" "$AS_OF"
+    return 0
+  fi
+  for f in "$@"; do
+    if [ ! -r "$f" ]; then
+      printf 'DISKGROWTH_UNMEASURED host=%s target=- why=%s file=%s as_of=%s\n' \
+        "$HOST" "prior_file_unreadable" "$f" "$AS_OF"
+      continue
+    fi
+    while read -r host tgt used aof gran; do
+      epoch="$(date -d "$aof" +%s 2>/dev/null || true)"
+      if [ -z "$epoch" ]; then
+        printf 'DISKGROWTH_UNMEASURED host=%s target=%s why=%s as_of=%s\n' \
+          "$host" "$tgt" "unparsable_timestamp" "$AS_OF"
+        continue
+      fi
+      key="$host|$tgt"
+      P_N[$key]=$(( ${P_N[$key]:-0} + 1 ))
+      # ★最も古い点を採る＝二点の隔たりを 最大に採る（丸めの疵を小さくする為）★
+      if [ -z "${P_EPOCH[$key]:-}" ] || [ "$epoch" -lt "${P_EPOCH[$key]}" ]; then
+        P_USED[$key]="$used"; P_EPOCH[$key]="$epoch"; P_GRAN[$key]="$gran"
+      fi
+    done < <(prior_points "$f")
+  done
+  while read -r _tag host tgt _tb ub es _rest; do
+    [ -z "${host:-}" ] && continue
+    cu="${ub#used_b=}"; ce="${es#epoch_s=}"; host="${host#host=}"; tgt="${tgt#target=}"
+    key="$host|$tgt"
+    pe="${P_EPOCH[$key]:-}"
+    if [ -z "$pe" ]; then
+      printf 'DISKGROWTH_UNMEASURED host=%s target=%s why=%s note=%s as_of=%s\n' \
+        "$host" "$tgt" "no_prior_point" "★0 に足さぬ・別値★" "$AS_OF"
+      continue
+    fi
+    pu="${P_USED[$key]}"; pg="${P_GRAN[$key]}"; pn="${P_N[$key]}"
+    out="$(growth_rate "$pu" "$pe" "$cu" "$ce")"
+    read -r st span delta rate <<< "$out"
+    if [ "$st" != "ok" ]; then
+      printf 'DISKGROWTH_WITHHELD host=%s target=%s status=%s span_s=%s delta_b=%s n_points=%s granularity=%s min_span_s=%s note=%s as_of=%s\n' \
+        "$host" "$tgt" "$st" "$span" "$delta" "$(( pn + 1 ))" "$pg" "$DP_MIN_SPAN_S" \
+        '★二点が短い(又は隔たり 0) ∴ 推し量つた増え方を出さぬ★' "$AS_OF"
+      continue
+    fi
+    exceeded=no
+    [ "$rate" -ge $(( DP_GROWTH_MAX_GIB_PER_DAY * 1000 )) ] && exceeded=yes
+    hum="$(awk -v m="$rate" 'BEGIN{printf "%.3f", m/1000}')"
+    if [ "$pg" = "gib_rounded" ]; then
+      res="$(awk -v s="$span" 'BEGIN{printf "%.3f", 86400.0/s}')"
+    else
+      res="0.000"
+    fi
+    printf 'DISKGROWTH host=%s target=%s gib_per_day=%s gib_per_day_milli=%s span_s=%s n_points=%s granularity=%s prior_used_b=%s cur_used_b=%s delta_b=%s exceeded=%s growth_max_gib_per_day=%s resolution_gib_per_day=%s as_of=%s\n' \
+      "$host" "$tgt" "$hum" "$rate" "$span" "$(( pn + 1 ))" "$pg" "$pu" "$cu" "$delta" \
+      "$exceeded" "$DP_GROWTH_MAX_GIB_PER_DAY" "$res" "$AS_OF"
+  done < <(measure_local sample)
+  return 0
 }
 
 # ── 4PC の母数（★測れぬ 3 台を 0 と書かず unmeasured として出す★）──
@@ -177,11 +349,30 @@ remote_targets() {
 }
 
 MODE="${1:-}"
+[ "$#" -gt 0 ] && shift
 if ! selftest; then
   printf 'ABORT reason=selftest_did_not_stand note=%s\n' '★条(十四)＝動く筈の物が動かねば 数を出さぬ★' >&2
   exit 3
 fi
+if ! selftest_growth; then
+  printf 'ABORT reason=selftest_growth_did_not_stand note=%s\n' '★増え方の対照が立たぬ ∴ 率を一つも出さぬ★' >&2
+  exit 3
+fi
 [ "$MODE" = "--selftest-only" ] && exit 0
+
+# ★一点を吐く（器は file を作らぬ・置き所は席が決める）★
+if [ "$MODE" = "--sample" ]; then
+  measure_local sample
+  remote_targets
+  exit 0
+fi
+
+# ★過去の点(引数の file)＋今の一点 で 増え方を出す★
+if [ "$MODE" = "--growth" ]; then
+  growth_mode "$@"
+  remote_targets
+  exit 0
+fi
 
 OUT="$( { measure_local; remote_targets; } )"
 PRESS="$(printf '%s\n' "$OUT" | grep '^DISKPRESS ' || true)"

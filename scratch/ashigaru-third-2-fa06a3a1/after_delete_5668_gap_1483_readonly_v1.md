@@ -2452,3 +2452,89 @@ PC の母数＝4。mount の母数＝PC ごとに 15 / 14 / 17（★三台で 46
   其の時 ★先に書いた物を消して書き直すな★ ―― ★二つ並べれば 見えた物と裁かれた物の差が残る★。
 なほ家老は ★『不利の証が外れた』と申した事も正★ と裁いた（§35-5②）。
 及び ★『同じ名の数でも 立つ所が違へば別の数』（§35-2 の註）を 本日 最も効く註★ と採つた。
+
+## §36 order131 ―― ★「今」しか言へぬ器を「日に何 GiB」へ延ばした（走 2・2026-09-09 04:07）★
+
+### §36-1 ★先に「作らぬ理由」を数で立てた（二重実装禁）★
+`grep -rl 'growth|per_day|増え方' scripts/ shim/ lib/` ⇒ ★3 本★。内訳を開くと
+`hermes2_deaddrop_stale_detector.sh`＝★未読 ID の増え方★／`hakudokai_fukuincho_reverse_poll.py`＝別用途、
+∴ ★ディスク使用量の増え方を出す器は 0 本★。故に新しい器を作らず ★己の器 1 本を延ばした★。
+（★何を 1 と数へたか★＝「grep が名を挙げた file 1 本を 1」。中身を読んで用途を分けたのは己の目である。）
+
+### §36-2 ★器（改訂・repo 内 1 本）★
+`scripts/sweeps/audit_disk_pressure.sh` ★211 行 → 402 行★
+sha256(改訂後) `94fe338d2e1beafdcbd33faaa3e27cc90e451c2c5b243c4c857609b3e8071955`
+（改訂前＝凍結 commit `d43ea21f` に在る版 sha256 `fa0e3922b9d8534e6cc876df20e27ee067ebfb4e10807575cab68f610a1ac81e`）
+足した物 ―― `growth_rate()`／`selftest_growth()`（四脚）／`measure_local <judge|sample>`／`prior_points()`／
+`growth_mode()`／門 `--sample` `--growth`。頭註は ★旧行を消さず併記★。
+`bash -n` 通過（★構文検めは走に非ず★）・★実行行の ssh/scp/curl/wget/nc = 0★・
+★実行行の rm/mv/gzip/xz/fstrim/truncate/prune = 0★・★器は file を一つも作らぬ（吐くのは標準出力のみ）★。
+
+### §36-3 ★溢れと丸めへの手当（此処が本弾の芯）★
+① ★溢れ★: `delta*86400*1000` は 1TB 級で 64bit を溢れる ∴ ★先に GiB 千分へ落とし★
+   （`dg_milli = delta*1000/GIB`）★其の後 日へ延ばす★（`rate = dg_milli*86400/span`）。
+② ★丸め★: 過去の点は旧 `DISKPRESS`＝★GiB 丸め★ ∴ ±1 GiB。其れが日率に化ける量は `86400/span` GiB/日。
+   器は其れを ★同じ行に `resolution_gib_per_day` として併記★ する（後の者が数だけ抜いて誤らぬ様に）。
+
+### §36-4 ★走 1（`--sample`・04:07:45・rc=0）★
+生 `scratch/ashigaru-third-2-fa06a3a1/o133_run1_sample_20260909_040745.txt` 27 行
+sha256 `583975388f5917573e46cee412bb04b8dd4fb5a936bdfb4f2810e8b96663fbbc`
+今の一点＝`host=momizi-dx target=/ total_b=1081101176832 used_b=265936404480 epoch_s=1788894465`。
+
+### §36-5 ★走 2（`--growth` ＋ 凍結生出力 6 本・04:07:57・rc=0）★
+生 `scratch/ashigaru-third-2-fa06a3a1/o133_run2_growth_20260909_040757.txt` 27 行
+sha256 `5c1bf05a38bd643cefe195cd7584b6c197f5283f5eda7623221381bd1aabfee3`
+argv の材料＝`o128_run1..4_raw.txt`／`o129_run1_3pc_20260908_184527.txt`／`o133_run1_sample_...txt`（★6 本★・讀取のみ）。
+
+★数へ分け（何を 1 と数へたか＝出力 1 行を 1）★
+| 型 | 本数 |
+|---|---|
+| `DISKGROWTH`（率を出した） | ★1★ |
+| `DISKGROWTH_WITHHELD`（短い ∴ 出さぬ） | ★1★ |
+| `DISKGROWTH_UNMEASURED`（過去の点が無い） | ★15★ |
+
+★率が出た唯一の行（器の言葉・逐語）★
+```
+DISKGROWTH host=momizi-dx target=/ gib_per_day=8.936 gib_per_day_milli=8936 span_s=35511
+ n_points=15 granularity=gib_rounded prior_used_b=261993005056 cur_used_b=265937563648
+ delta_b=3944558592 exceeded=yes growth_max_gib_per_day=5 resolution_gib_per_day=2.433
+```
+∴ ★momizi-dx の `/` は 日に 8.936 GiB 増えて居る（閾 5 を超えた）★。
+★但し 過去の点は GiB 丸め ∴ 此の数は ±2.433 GiB/日 の幅を持つ★。
+（★己の引き算・器の出しに非ず★: 幅の下端 8.936−2.433＝★6.503★ で尚 閾 5 を上回る。★上の一行だけが器の数である★。）
+★隔たり★ span_s=35511＝★9 時間 51 分 51 秒★（2026-09-08 18:16:06 の点 → 2026-09-09 04:07:57 の点）。
+★最も古い点を採つた★＝隔たりを最大に採り 丸めの疵を小さくする為。
+
+★出さなんだ行（此れも成果である）★
+```
+DISKGROWTH_WITHHELD host=momizi-dx target=/init status=span_short span_s=12 delta_b=0
+ n_points=2 granularity=byte min_span_s=3600
+```
+`/init` は ★12 秒★ しか隔たりが無い（走 1 と走 2 の間）∴ ★率を出さぬ★。
+令の逐語「★二点の差が短ければ『短い』と書け（推し量つた増え方を出すな）★」を
+★人の筆でなく 機構で★ 守らせた ―― 而して ★其の機構自体に陽性対照を置いた★（§36-6 ㋒）。
+
+★測れなかつた 15 件は 0 に足して居らぬ★（`why=no_prior_point`）。
+`/mnt/c`・`/mnt/d`・`/run/*`・`/mnt/wsl*` 等は前回の走が拾つて居らぬ ∴ ★別値の儘★。
+
+### §36-6 ★対照を同じ走に置いた（条 十四）★
+`SELFTEST_GROWTH result=STANDS legs=positive_rate,negative_zero,short_withhold,span_zero`
+| 脚 | 組み方 | 期する | 出た |
+|---|---|---|---|
+| ㋐ positive_rate | 閾+1 GiB を ★丁度一日★ | rate==(閾+1)*1000 | ★合ふ★ |
+| ㋑ negative_zero | 同じ used を 一日 | ok かつ rate=0 | ★合ふ★ |
+| ㋒ short_withhold | `DP_MIN_SPAN_S/2` に 1000GiB | ★span_short・率 "-"★ | ★合ふ★ |
+| ㋓ span_zero | 隔たり 0 | ★span_zero・率 "-"★ | ★合ふ★ |
+★閾から組んで在る★（合成値であり実測に非ず・器が其の註を自ら吐く）。
+いづれか外れれば `ABORT reason=selftest_growth_did_not_stand` で ★率を一つも出さず exit 3★。
+`DP_MIN_SPAN_S -lt 2` なら ★対照を組めぬ ∴ FAILED_TO_STAND★（黙つて通さぬ）。
+
+### §36-7 ★食ひ違ひの開示★
+走 1 の `used_b=265936404480` と 走 2 の `cur_used_b=265937563648` は ★12 秒で 1,159,168 byte 違ふ★。
+★同じ数を二度書いて居ない★ ―― 走 2 は己で今を測り直して居る（走 1 の値を持ち回つて居らぬ）。
+★後の者へ★: 二つの走の「今」は ★別の今★ である。
+
+### §36-8 ★走の数と 動かさぬ物★
+★走 2★（`--sample` 1・`--growth` 1）。`bash -n` は走に非ず・git は器の走行に非ず。
+動かぬ＝push 0（★押しは家老★）・DB 0・SQL 0・消す/移す/圧す 0・hook 不触・D 樹不触・
+他 PC 0（本弾は ★己の台のみ★）・Commander の箱 0 打・Mac は ★探さぬ★・/tmp 0。
