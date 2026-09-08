@@ -1,0 +1,35 @@
+# argv 逐語: /usr/bin/python3 scratch/ashigaru-third-2-fa06a3a1/o134_birthmark_absence_probe.py
+# rc=0
+対照 pos_born_branch  印=印有り   因=器が付けぬ        望み(印有り/器が付けぬ) 立つ
+対照 pos_born_clone   印=印有り   因=器が付けぬ        望み(印有り/器が付けぬ) 立つ
+対照 neg_empty_msg    印=印無し   因=器が付けぬ        望み(印無し/器が付けぬ) 立つ
+対照 neg_trimmed      印=印無し   因=付けた後に消えた     望み(印無し/付けた後に消えた) 立つ
+対照 neg_zero_byte    印=讀めず   因=-（讀めず）       望み(讀めず/-（讀めず）) 立つ
+母数甲 帳の在る heads 128 ／ 母数乙 今 生きて居る heads 128 (packed 行 127) ／ 母数丙 o112 の heads 120
+甲に在り乙に無い(＝帳のみ残る) 0 ／ 乙に在り甲に無い(＝帳が無い＝元より対象外) 0
+★甲∪乙 128 本の印★ {'印有り': 63, '印無し': 19, '讀めず': 46}
+★母数丙(o112 の heads 120 本)に限つた印★ {'印有り': 59, '印無し': 15, '讀めず': 46}
+★己の定めで出た『母数丙 かつ 印無し』= 15 本（借りた数 15 と 一致）★
+（参考）母数甲∪乙 で 印無し = 19 本 ―― 母が違へば数も違ふ
+── 母数丙 かつ 印無し の各本（名 / 生年 / 生年の質 / 三択語 / entries / action 逐語）──
+  refs/heads/wp-a1-a3-3-20260723                             2026-08-08T10:47:02 別値(上限のみ)     付けた後に消えた       n=2129  commit: fix(罠23恒久対策+A/B uplink relay登録): claude launcherへダミー
+  refs/heads/drx-payment4-atomicity                          2026-09-06T16:37:12 測れた          器が付けぬ          n=10    fetch /tmp/drx-payment4-8a2f8422.bundle HEAD:refs/heads/drx-
+  refs/heads/dry/reserveimage-web-lifespan-clean-20260906    2026-09-06T17:39:28 測れた          器が付けぬ          n=1     (空 message)
+  refs/heads/drx/p1-7-cross-search-20260907                  2026-09-07T02:06:43 測れた          器が付けぬ          n=1     push
+  refs/heads/a2-14c8ec72-fixed                               2026-09-07T15:30:57 測れた          器が付けぬ          n=1     (空 message)
+  refs/heads/karo-third/a2-14c8ec72-fixed                    2026-09-07T15:34:41 測れた          器が付けぬ          n=1     (空 message)
+  refs/heads/dry/reserveimage-77a10783-audit-bundle          2026-09-07T16:58:00 測れた          器が付けぬ          n=3     (空 message)
+  refs/heads/dry/reserveimage-75c99606-raw-bundle            2026-09-07T21:04:31 測れた          器が付けぬ          n=1     (空 message)
+  refs/heads/dry/handover-p0-landing-20260908                2026-09-08T01:22:41 測れた          器が付けぬ          n=3     (空 message)
+  refs/heads/pr124                                           2026-09-08T01:24:24 測れた          器が付けぬ          n=1     fetch -q origin pull/124/head:pr124: storing ref
+  refs/heads/pr88r                                           2026-09-08T01:33:57 測れた          器が付けぬ          n=1     fetch -q scratch/pr88.bundle HEAD:refs/heads/pr88r: storing 
+  refs/heads/a38r                                            2026-09-08T01:43:50 測れた          器が付けぬ          n=1     fetch -q scratch/a38.bundle HEAD:refs/heads/a38r: storing re
+  refs/heads/a38b                                            2026-09-08T02:31:19 測れた          器が付けぬ          n=1     fetch -q scratch/a38b.bundle HEAD:refs/heads/a38b: storing r
+  refs/heads/a1/handover-seed-token-evidence-20260908        2026-09-08T04:45:59 測れた          器が付けぬ          n=2     (空 message)
+  refs/heads/dry/reserveimage-b2154da8-evidence-20260908     2026-09-08T09:48:46 測れた          器が付けぬ          n=1     (空 message)
+★三択語の数★ {'器が付けぬ': 14, '付けた後に消えた': 1}
+★生年の質★ {'測れた': 14, '別値(上限のみ)': 1} ―― ★測れぬ本を 0 と書かぬ★
+一覧: scratch/ashigaru-third-2-fa06a3a1/o134_birthmark_absence_20260909_042910.txt (129 行)
+# ---- stderr ----
+/home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-2-fa06a3a1/o134_birthmark_absence_probe.py:32: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  return datetime.datetime.utcfromtimestamp(int(ep) + 9 * 3600).strftime("%Y-%m-%dT%H:%M:%S")
