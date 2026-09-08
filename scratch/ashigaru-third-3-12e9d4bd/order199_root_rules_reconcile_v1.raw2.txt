@@ -1,0 +1,113 @@
+=== order199 raw2 ―― ★第六段(打ち直し + E4 決着)入り★ ===
+argv        : ['/usr/bin/python3', 'scratch/ashigaru-third-3-12e9d4bd/order199_root_rules_reconcile_v1.rule.py']
+cwd         : /home/hakudoukai/multi-agent-shogun
+host        : momizi-dx
+user        : hakudoukai (uid=1000)
+HEAD        : 1ad4edfbadc69191183a42113e9979c3f91b7dbf
+branch      : ashigaru-third-3/audit-framework-hermes-canon-revision-20260721
+porcelain   : 170 行
+rule sha256 : f710c2cb586ce14cf6da58f021890040002f58f10da7c6fae748539c6acd275a
+started     : 2026-09-09T04:52:38+0900
+finished    : 2026-09-09T04:52:38+0900
+elapsed_s   : 0.38
+exit_code   : 0
+=== 以下 stdout+stderr 逐語 ===
+== order199 第零段 ―― ★定めを 先に 字にした★ (数を一つも出す前) ==
+  規 = order199_root_rules_reconcile_v1.rule.py
+  sha16=f710c2cb586ce14c wc=244 split=245 bytes=15062
+
+== order199 第一段 ―― ㋒1 ★規の今日の sha16★ 対 ★紙が記した sha16★ ==
+  order183_frame_precision_v1.rule.py        今日=67b4d870d1d33e1d 紙=67b4d870d1d33e1d ★一致★ wc=399 split=400 bytes=23150
+  order181_vocab_window_both_v1.rule.py      今日=5f2d02e3118146e8 紙=5f2d02e3118146e8 ★一致★ wc=339 split=340 bytes=20778
+  order182_asym_and_two_bands_v1.rule.py     今日=95fb3a5571769e66 紙=95fb3a5571769e66 ★一致★ wc=346 split=347 bytes=21488
+  order180_window_widen_v1.rule.py           今日=559cf39038beee31 wc=324 split=325 bytes=21669 ★紙は sha を記さず★
+
+== order199 第二段 ―― ㋒2 ★規の註が書いた sha16★ 対 ★今日の sha16★ ==
+  -- order183_frame_precision_v1.rule.py が鎖で讀む規 --
+     order179_recall_and_toolfix_v1.rule.py       今日=2f816583fa7b0454 ★註に sha 無し★
+     order180_window_widen_v1.rule.py             今日=559cf39038beee31 ★註に sha 無し★
+     order181_vocab_window_both_v1.rule.py        今日=5f2d02e3118146e8 ★註に sha 無し★
+     order182_asym_and_two_bands_v1.rule.py       今日=95fb3a5571769e66 ★註に sha 無し★
+  -- order181_vocab_window_both_v1.rule.py が鎖で讀む規 --
+     order175_ken_element_census_v1.rule.py       今日=5463ac137aca2e8a 註=5463ac137aca2e8a ★一致★
+     order176_ken_element_widen_v1.rule.py        今日=6187690653725898 註=6187690653725898 ★一致★
+     order177_ken_attribution_human_v1.rule.py    今日=4254a3567433e66e 註=4254a3567433e66e ★一致★
+     order178_ken_positive_audit_v1.rule.py       今日=3cfd76e078bebaa3 註=3cfd76e078bebaa3 ★一致★
+     order179_recall_and_toolfix_v1.rule.py       今日=2f816583fa7b0454 註=2f816583fa7b0454 ★一致★
+     order180_window_widen_v1.rule.py             今日=559cf39038beee31 ★註に sha 無し★
+  -- order182_asym_and_two_bands_v1.rule.py が鎖で讀む規 --
+     order179_recall_and_toolfix_v1.rule.py       今日=2f816583fa7b0454 註=2f816583fa7b0454 ★一致★
+     order180_window_widen_v1.rule.py             今日=559cf39038beee31 註=559cf39038beee31 ★一致★
+     order181_vocab_window_both_v1.rule.py        今日=5f2d02e3118146e8 註=5f2d02e3118146e8 ★一致★
+  -- order180_window_widen_v1.rule.py が鎖で讀む規 --
+     order175_ken_element_census_v1.rule.py       今日=5463ac137aca2e8a ★註に sha 無し★
+     order176_ken_element_widen_v1.rule.py        今日=6187690653725898 ★註に sha 無し★
+     order177_ken_attribution_human_v1.rule.py    今日=4254a3567433e66e ★註に sha 無し★
+     order178_ken_positive_audit_v1.rule.py       今日=3cfd76e078bebaa3 ★註に sha 無し★
+     order179_recall_and_toolfix_v1.rule.py       今日=2f816583fa7b0454 ★註に sha 無し★
+  ⇒ 鎖の辺 = ★18★ / 一致 = ★8★ / 合はぬ = ★0★ / 註に sha 無し = ★10★
+
+== order199 第三段 ―― ㋓ ★A3 の得失を 規の中から★ 取る (E4) ==
+  order180 の規が持つ名 = ★26★ (先頭 20): CRITERION5, HERE, IU, JUDGE180, JUDGE180_SRC, MIKOMI180_ADJ, MIKOMI180_NUM, MIKOMI180_RAW, RANGE, WIN3, collections, elem3, hashlib, ledger, o7, o8, o9, occ_pos, os, q
+  ★MIKOMI180_ADJ★ = 4 項
+     A3 が名を取れた件(217 のうち)                                        : 190
+     得: 81 のうち A3 が名を取り ★かつ合ふ★                                  : 24
+     失: ㋐86 のうち A3 が ★別の名へ付け替へた★                                : 11
+     ㋑46 のうち A3 が ★正しい名へ★                                       : 3
+     (和 = 228)
+  ★MIKOMI180_RAW★ = 4 項
+     A3 が名を取れた件(217 のうち)                                        : 190
+     得: 81 のうち A3 が名を取り ★かつ合ふ★                                  : 30
+     失: ㋐86 のうち A3 が ★別の名へ付け替へた★                                : 5
+     ㋑46 のうち A3 が ★正しい名へ★                                       : 5
+     (和 = 230)
+
+== order199 第四段 ―― ㋒3 ★規の出す数★ 対 ★紙の数★ (A3 の得/失/差引) ==
+  ★得★ = 2 項 / 和 = ★54★
+     [MIKOMI180_ADJ] 得: 81 のうち A3 が名を取り ★かつ合ふ★                            : 24
+     [MIKOMI180_RAW] 得: 81 のうち A3 が名を取り ★かつ合ふ★                            : 30
+  ★失★ = 2 項 / 和 = ★16★
+     [MIKOMI180_ADJ] 失: ㋐86 のうち A3 が ★別の名へ付け替へた★                          : 11
+     [MIKOMI180_RAW] 失: ㋐86 のうち A3 が ★別の名へ付け替へた★                          : 5
+  ⇒ ★規から出た A3 の 得=54 / 失=16 / 差引=+38★
+  ⇒ o185 の紙 (源 order180 の L171/L181 を讀んだ) = 得 17 / 失 24 / 差引 ★−7★
+  ⇒ o182/o183 の紙が併記した = ★−9★
+  ⇒ ★規は +38 を出した★ ―― ★−7 とも −9 とも 合はぬ★
+  ⇒ ★E4 は 落ちず★ ―― ★何方が正か判らぬ★ (令の逐語)
+
+== order199 第五段 ―― ★紙の数を 機械で拾ふ★ (突合の相手) ==
+  o185 の A3 行        : 度数=★1★ [('order185_karo159_additivity_v1.md', 1)]
+  o185 の食ひ違ひ表        : 度数=★2★ [('order185_karo159_additivity_v1.md', 1), ('order189_falsepos_cure_v1.md', 1)]
+  o183 の四度の損         : 度数=★2★ [('order183_frame_precision_v1.md', 1), ('order189_falsepos_cure_v1.md', 1)]
+
+== order199 第六段 ―― ★第四段の打ち直し★ + E4 の決着 ==
+  ★第四段の +38 は 見込みの帳(MIKOMI180_*)を和した数 ∴ ★E4 の材に非ず★ (消さず併記)★
+  ★見込み(先に字にした)★ = o180 は 得 17 / 失 24 / 差引 −7 を出す
+
+  -- ㋐ 四本を ★一字も変へず★ 走らせる (條 o174) --
+     order180_window_widen_v1.rule.py           rc=0 出力 wc=81 split=82 bytes=6155
+     order181_vocab_window_both_v1.rule.py      rc=0 出力 wc=189 split=190 bytes=14395
+     order182_asym_and_two_bands_v1.rule.py     rc=0 出力 wc=119 split=120 bytes=8485
+     order183_frame_precision_v1.rule.py        rc=0 出力 wc=109 split=110 bytes=7553
+
+  -- ㋑ o180 の出力から ★得/失 合計★ を拾ふ (計算値) --
+     得 合計 = ★17★  (逐語: 得 合計 = 17 件)
+     失 合計 = ★24★  (逐語: 失 合計(真を刈る + 新たな偽陽性) = 24 件)
+
+  -- ㋒ −9 の literal 性を 機械で確かめる --
+     order182_asym_and_two_bands_v1.rule.py:246  ★A3 = -9 在り = 現に在る★ / 其の左に format 子 % = ★0 個★
+        逐語: print("    四度の差引: A2 = -6 / A3 = -9 / A4 = -7 / ★A5 = %+d★  (★三度の損の記録は消さぬ=併記★)" % d5)
+     order183_frame_precision_v1.rule.py:309  ★A3 = -9 在り = 現に在る★ / 其の左に format 子 % = ★0 個★
+        逐語: print("  ★受入③ 五度目の差引★ : A2 = -6 / A3 = -9 / A4 = -7 / A5 = -15 / ★A6 = %+d★"
+
+  -- ㋓ ★E4 の判じ★ --
+     ★規(o180)が 計算して 出した A3 = 得 17 / 失 24 / 差引 -7★
+     o185 の紙 = 得 17 / 失 24 / 差引 ★−7★  (源の紙 L171/L181 を ★讀んで★ 得た)
+     o182:246 / o183:309 = ★−9★  (★literal の写し★ ―― 計算に非ず)
+     ⇒ ★E4 は 落ちた★ ―― ★規の計算値は −7★ ∴ ★−7 が正★ / ★−9 は 写しの誤り★
+     ⇒ ★見込みは 当たつた★ (四度目にして 外れ ★ず★)
+
+  -- ㋔ ★E3 ―― 規の出す数 対 紙の数★ (o181/o182/o183 の受入③ 行) --
+     order181_vocab_window_both_v1.rule.py      拾へた数 = ★['-7']★
+     order182_asym_and_two_bands_v1.rule.py     拾へた数 = ★['-15']★
+     order183_frame_precision_v1.rule.py        拾へた数 = ★['-4']★
