@@ -1,6 +1,6 @@
 ---
 name: verify-state-before-asserting
-description: 「読んだ物の形」「枝の頭」「remote の実体」「母數」を ★断ずる前に 一 行 で確かめる★。2026-09-08 に家老mac が同型の誤りを 6 度 犯した(manifest の形式 3 度・枝の頭・stale ref・母數)。相手の紙を疑ふ前に 己の読み方を疑ふ為の手順。
+description: 「読んだ物の形」「枝の頭」「remote の実体」「母數」を ★断ずる前に 一 行 で確かめる★。2026-09-08 に家老mac が同型の誤りを 10 度 犯した(manifest の形式 3 度・枝の頭・stale ref・母數)。相手の紙を疑ふ前に 己の読み方を疑ふ為の手順。
 ---
 
 # 断ずる前 に 状態 を確かめる
@@ -48,9 +48,46 @@ git fetch -q origin && git rev-parse --short origin/main
 ```
 ★相手 と母數 が違へば 答 も違ふ ―― 相手 が誤つて 居るのでは無い★。
 
+
+### ⑸ inbox の id を拾ふ前(2026-09-08 追記・★五 度目 の同型★)
+```bash
+# ✗ 悪い: file の ★最後 の id★ を拾ふ(未読 とは限らぬ)
+grep 'id: msg_' queue/inbox/<me>.yaml | tail -1
+# ○ 良い: ★未読 の物 を名指す★
+python3 -c "import yaml;d=yaml.safe_load(open('queue/inbox/<me>.yaml'));m=d.get('messages',d);print([x['id'] for x in m if not x.get('read')])"
+```
+★家老 は `tail -1` で 「読んだ」と言ひ ―― `marked 0 unread 1` が返つた(=★何も 印 して 居らぬ★)。
+★器 が「0 件 に印 した」と言つて 居るのに 己 は「印 した」と思つて 居た★。
+★rc と 件数 を見ずに 次 へ進む のが 此 の型 の芯 で ある。★
+
+
+### ⑹ 器 が「出来なかつた」と言つた 時(2026-09-08 追記・★三 度目 の「言はれたのに読まぬ」★)
+```bash
+# ✗ 悪い: cp の警告 を跨いで 次 へ進む
+cp -r "$S/"* "$D/"        # → "cp: .../raw is a directory (not copied)"
+# ○ 良い: ★写した 数 を数へて 突き合はせる★
+rsync -a "$S/" "$D/" && [ "$(find "$S" -type f|wc -l)" = "$(find "$D" -type f|wc -l)" ] || echo "★数 が合はぬ★"
+```
+★本日 の三 度★: ⑴`marked 0 unread 1` を読まず「読んだ」と言ふ ⑵時間切れ の commit を「した」と思ふ
+⑶`cp: ... (not copied)` を跨ぎ ★manifest だけ の写し★ を押す。
+★何れ も 器 は はつきり 言つて 居た★。★聞かなかつた のは 己★ で ある。
+
+
+### ⑺ ★紙 を main へ載せる 前(2026-09-08 追記・十 件目)★
+```bash
+# ★載せる 前 に 指し先 の生死 を数へる★(載せて から 数へては 遅い)
+grep -oE '`[^`]+\.(ts|tsx|py|sh|json|md)`' <paper> | tr -d '`' | sort -u | while read f; do
+  git ls-tree -r --name-only origin/main | grep -q "$f" || echo "★main に無い★ $f"
+done
+```
+★家老 は B7-27 を main へ載せ、其 の一 時間 後 に 專任2 の監査 が ★死んだ 指し先★ を見付けた★。
+★載せる 順 が逆★ で あつた ―― ★検 は 出す 前 に走らせる 物★。
+(死んだ 指し先= `dino-kit-actor-frames.spec.ts`= ★commit せぬ と己 で命じた 物 を path で指した★)
+★∴ 「promotion は 指し先 の検 の後」★ を掟 と する。
+
 ## 過去事例
 
-- 2026-09-08 家老mac が ★同型 の誤り を 6 度★(門書 6 通 に自記)。
+- 2026-09-08 家老mac が ★同型 の誤り を 10 度★(門書 6 通 に自記)。
   詳細: docs/incident_logs/2026-09-08_mac_disk_full_worktree_sprawl.md(併記)
   教訓: ★相手 の紙 を疑ふ 前 に 己 の読み方 を疑へ★。
   ★己 の器 の落ち を 門書 に書く 事 は 恥 では無く 器 の校正 で ある★。
