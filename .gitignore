@@ -165,6 +165,7 @@
 # Pre-action check scripts (§19 Post-Incident Lessons Capture)
 !scripts/checks/
 !scripts/checks/*.sh
+!scripts/checks/karo_mac_manifest_verify.py
 
 # Redundancy fallback watchers (本多 v3 HND-T1V3-004)
 !scripts/redundancy/
