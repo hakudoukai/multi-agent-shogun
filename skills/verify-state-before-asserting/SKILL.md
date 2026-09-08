@@ -1,6 +1,6 @@
 ---
 name: verify-state-before-asserting
-description: 「読んだ物の形」「枝の頭」「remote の実体」「母數」を ★断ずる前に 一 行 で確かめる★。2026-09-08 に家老mac が同型の誤りを 8 度 犯した(manifest の形式 3 度・枝の頭・stale ref・母數)。相手の紙を疑ふ前に 己の読み方を疑ふ為の手順。
+description: 「読んだ物の形」「枝の頭」「remote の実体」「母數」を ★断ずる前に 一 行 で確かめる★。2026-09-08 に家老mac が同型の誤りを 10 度 犯した(manifest の形式 3 度・枝の頭・stale ref・母數)。相手の紙を疑ふ前に 己の読み方を疑ふ為の手順。
 ---
 
 # 断ずる前 に 状態 を確かめる
@@ -72,9 +72,22 @@ rsync -a "$S/" "$D/" && [ "$(find "$S" -type f|wc -l)" = "$(find "$D" -type f|wc
 ⑶`cp: ... (not copied)` を跨ぎ ★manifest だけ の写し★ を押す。
 ★何れ も 器 は はつきり 言つて 居た★。★聞かなかつた のは 己★ で ある。
 
+
+### ⑺ ★紙 を main へ載せる 前(2026-09-08 追記・十 件目)★
+```bash
+# ★載せる 前 に 指し先 の生死 を数へる★(載せて から 数へては 遅い)
+grep -oE '`[^`]+\.(ts|tsx|py|sh|json|md)`' <paper> | tr -d '`' | sort -u | while read f; do
+  git ls-tree -r --name-only origin/main | grep -q "$f" || echo "★main に無い★ $f"
+done
+```
+★家老 は B7-27 を main へ載せ、其 の一 時間 後 に 專任2 の監査 が ★死んだ 指し先★ を見付けた★。
+★載せる 順 が逆★ で あつた ―― ★検 は 出す 前 に走らせる 物★。
+(死んだ 指し先= `dino-kit-actor-frames.spec.ts`= ★commit せぬ と己 で命じた 物 を path で指した★)
+★∴ 「promotion は 指し先 の検 の後」★ を掟 と する。
+
 ## 過去事例
 
-- 2026-09-08 家老mac が ★同型 の誤り を 8 度★(門書 6 通 に自記)。
+- 2026-09-08 家老mac が ★同型 の誤り を 10 度★(門書 6 通 に自記)。
   詳細: docs/incident_logs/2026-09-08_mac_disk_full_worktree_sprawl.md(併記)
   教訓: ★相手 の紙 を疑ふ 前 に 己 の読み方 を疑へ★。
   ★己 の器 の落ち を 門書 に書く 事 は 恥 では無く 器 の校正 で ある★。
