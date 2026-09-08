@@ -3,6 +3,7 @@
 # 使ひ方: verify_state_before_asserting.sh manifest <path>
 #         verify_state_before_asserting.sh push <asked-sha> <branch> [repo]
 #         verify_state_before_asserting.sh remote [repo]
+#         verify_state_before_asserting.sh letter <file>   ← ★便 を出す前 に己 を斬る★
 set -uo pipefail
 mode="${1:-}"; shift || true
 
@@ -16,6 +17,26 @@ case "${mode}" in
     if grep -qE '^[0-9a-f]{12}[^0-9a-f]' "${m}"; then
       echo "[verify] ★註★ 12 桁 の頭 が在る ―― 64 桁 で grep すると 見付からぬ"
     fi
+    ;;
+  letter)
+    # ★本日 十三度 同型 を踏んだ 故 に 器 に させる(2026-09-08)★
+    # 「書くだけでは直らぬ」を 己 で証した ―― 之 は其 の機構 で ある。止めぬ・警告 のみ。
+    f="${1:-}"; [ -f "${f}" ] || { echo "[verify] 便 無し: ${f}"; exit 0; }
+    t="$(cat "${f}")"; hit=0
+    # ⑴ 未 push・残り を言ふ なら fetch を先 に走らせたか
+    if printf '%s' "${t}" | grep -qE '未 ?push|残り|待ち|pending'; then
+      last="$(find "${TMPDIR:-/tmp}" -maxdepth 1 -name '.vsba_fetch_*' -newermt '-10 minutes' 2>/dev/null | head -1)"
+      [ -n "${last}" ] || { echo "[verify] ★止まれ★ 便 が「未 push/残り」を言ふ ―― ★10 分 内 の fetch の跡 が無い★"; echo "         → git fetch -q origin && touch \"${TMPDIR:-/tmp}/.vsba_fetch_$$\" を先 に"; hit=1; }
+    fi
+    # ⑵ 数 を言ふ なら 母數 を併せ書いたか
+    if printf '%s' "${t}" | grep -qE '[0-9]+ ?(件|本|紙|file|行)'; then
+      printf '%s' "${t}" | grep -qE '母數|母数|中|/[0-9]+|分母' || { echo "[verify] ★註★ 数 を言うて 居るが ★母數 が無い★(『67 紙』が実 73・内 1 は器 自身 で 72 で あつた)"; hit=1; }
+    fi
+    # ⑶ 0 を言ふ なら rc を添へたか
+    if printf '%s' "${t}" | grep -qE '(^|[^0-9])0 ?(件|本|行)|該当 ?無|無一致'; then
+      printf '%s' "${t}" | grep -qE 'rc ?=' || { echo "[verify] ★註★ 0 を言うて 居るが ★rc が無い★(0/0 は 数 に非ず 器 の不調 の報せ)"; hit=1; }
+    fi
+    [ "${hit}" = 0 ] && echo "[verify] 便 ―― 三 つ の常 の穴(fetch・母數・rc)は 見当らぬ"
     ;;
   push)
     a="${1:-}"; b="${2:-}"; r="${3:-$PWD}"
