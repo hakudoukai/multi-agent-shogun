@@ -1,0 +1,40 @@
+# argv=python3 /home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd/order194_gap_fill2_v1.rule.py
+# cwd=/home/hakudoukai/multi-agent-shogun
+# host=momizi-dx user=hakudoukai uid=1000
+# target_tree=/home/hakudoukai/a3/wt-bundle-fix4
+# git_tip=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b
+# git_status_porcelain_lines=6
+# started=2026-09-08T21:39:27 finished=2026-09-08T21:39:45
+# exit_code=0
+# ----------------------------------------------------------------------
+## (1) 拡張子の ★全★ 内訳（絞り無し・第一走）
+walked=16972 readable=15632 unreadable=1340
+  .png               751
+  .pdf               258
+  .xlsx              173
+  (拡張子なし)             41
+  .webm               24
+  .docx               21
+  .zip                20
+  .txt                15
+  .csv                14
+  .jpeg                7
+  .xml                 4
+  .md                  3
+  .jpg                 2
+  .uke                 2
+  .doc                 1
+  .gz                  1
+  .log                 1
+  .tar                 1
+  .ttf                 1
+ext_kinds=19  ext_sum=1340  (母数 1340 と一致=True)
+
+## (2) 二度測り（同じ走の中・器を一字も変へず）
+walked: 1st=16972 2nd=16972  同じ=True
+readable: 1st=15632 2nd=15632  差=0
+1st_only=0 2nd_only=0
+
+## (3) 讀めなんだ集合の ★指紋★（次回比較の種・名は紙へ写さぬ）
+unreadable_set_sha256=98ea6880df4aca4454c194c2e207b8c8f56386715b826ddb71497c287bf5496f  n=1340
+readable_set_sha256=87d7df477eb766f8bdcd11fac49ab3cc67a95c27b035f3ee57fb58a15abb0435  n=15632
