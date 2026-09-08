@@ -1,0 +1,29 @@
+# argv 逐語: /usr/bin/python3 scratch/ashigaru-third-2-fa06a3a1/o136_shrink_probe.py
+# rc=3 as_of=20260909_050311 host=momizi-dx user=hakudoukai cwd=/home/hakudoukai/multi-agent-shogun
+# 走 3 の因: 手 2 の前提(dir mtime は entry の出入で動く)を ★消す動詞 0 の儘★ 検める対照③ を足した。申告 msg_20260909_050227_f1d558b9
+対照 陽性(home の実在 20 本 → ref 在り 20) ／ 陰性(贋の名 20 本 → ref 無し 20)
+対照 2/2 立つ
+★母★ o112 の一覧 345 本（保つ 88 ／ 別刻 145 ／ 空 112）
+★㋐ 幾つ減つた★ 帳(logs)が無い 2 本 ／ ref(loose|packed)が無い 2 本 ／ 両方無い 2 本（母 345）
+   ※ 『帳が無い』と『ref が無い』は ★別語★ ―― 帳だけ消える事も ref だけ消える事も在り得る
+★㋑ どの層から★ 帳が無い: 保つ 2
+            ref が無い: 保つ 2
+★㋑' 何処から★ 帳が無い: refs/remotes/origin 2
+            ref が無い: refs/remotes/origin 2
+★㋒ 何時より後か（範）★ 左端 = o116 の生出力 mtime 2026-09-08 12:49:39（帯 200 本が悉く測れた刻）
+                        右端 = 本走 2026-09-09 05:03:11 ／ 範の幅 16.23 時間
+   packed-refs の mtime = 2026-09-08 21:04:05 ―― 範の中に在る（範を狭め得る）
+   ★点は出ぬ★（消えた file に mtime は無い）／★誰が消したかも出ぬ★
+── ★範を狭める二手（走 2 で足した）★ ──
+   手 1 refs/remotes/origin/pr-71-review ―― o116(09-08 12:49) の packed 順 = 183 ⇒ ★当時 packed に在つた★
+   手 1 refs/remotes/origin/pr69 ―― o116(09-08 12:49) の packed 順 = 184 ⇒ ★当時 packed に在つた★
+   ⇒ ★右端を 2026-09-08 21:04:05（packed-refs が ★最後に書かれた刻★）まで狭められる★
+     ★但し★ 21:04 の書きは ★最後の書き★ である ∴ 消えたのは『其の書きか ★其れ以前の書き★』＝★点ではなく なほ範★
+   手 2 dir $GIT/logs/refs/remotes/origin の mtime = 2026-09-08 19:20:00 （★範の中 ∴ 帳が消えた刻の ★上限★ を此処まで寄せられる★）
+   ★なほ言へぬ事★= ①点（何秒に消えたか）②誰が消したか ③一度に消えたか二度に分けてか
+── ★対照③ 手 2 の前提（dir mtime は entry の出入りで動くか）★ ──
+   陽性（entry を足す）: dir mtime ★動かず★ ⇒ ★立たず★
+   陰性（中身だけ書換）: dir mtime 動かず ⇒ ★立つ★
+   ★此の対照の限界★= 鳴らしたのは scratch/ashigaru-third-2-fa06a3a1（ext4）／測つた樹は /mnt/c/DentalBI/.git（★drvfs＝別の fs★）
+     ∴ ★手 2 の刻は『此の fs では前提が立つ』止まり ―― 測つた樹で鳴らしては居らぬ★
+ABORT reason=control3_positive_did_not_stand

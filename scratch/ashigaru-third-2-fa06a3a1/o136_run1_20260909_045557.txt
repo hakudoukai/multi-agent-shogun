@@ -1,0 +1,17 @@
+# argv 逐語: /usr/bin/python3 scratch/ashigaru-third-2-fa06a3a1/o136_shrink_probe.py
+# rc=0 as_of=20260909_045557 host=momizi-dx user=hakudoukai cwd=/home/hakudoukai/multi-agent-shogun
+対照 陽性(home の実在 20 本 → ref 在り 20) ／ 陰性(贋の名 20 本 → ref 無し 20)
+対照 2/2 立つ
+★母★ o112 の一覧 345 本（保つ 88 ／ 別刻 145 ／ 空 112）
+★㋐ 幾つ減つた★ 帳(logs)が無い 2 本 ／ ref(loose|packed)が無い 2 本 ／ 両方無い 2 本（母 345）
+   ※ 『帳が無い』と『ref が無い』は ★別語★ ―― 帳だけ消える事も ref だけ消える事も在り得る
+★㋑ どの層から★ 帳が無い: 保つ 2
+            ref が無い: 保つ 2
+★㋑' 何処から★ 帳が無い: refs/remotes/origin 2
+            ref が無い: refs/remotes/origin 2
+★㋒ 何時より後か（範）★ 左端 = o116 の生出力 mtime 2026-09-08 12:49:39（帯 200 本が悉く測れた刻）
+                        右端 = 本走 2026-09-09 04:55:57 ／ 範の幅 16.10 時間
+   packed-refs の mtime = 2026-09-08 21:04:05 ―― 範の中に在る（範を狭め得る）
+   ★点は出ぬ★（消えた file に mtime は無い）／★誰が消したかも出ぬ★
+★当ての検め★ 当ては『remotes/origin に偏り 2 本では止まらぬ』であつた ⇒ 帳が無い 2 本中 origin 2 本 ＝ ★半ば（偏りは当たり・本数は 2 本止まり）★
+一覧: scratch/ashigaru-third-2-fa06a3a1/o136_shrink_20260909_045546.txt
