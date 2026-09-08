@@ -119,26 +119,122 @@ def dead_letter_message(msg_id, last_error):
 
 retry_tracker = load_retry_tracker()
 
-# Agent pane mapping for delivery metadata. Direct worker-pane send-keys is disabled by R2.
+# Receiver routing identity.  Do not pin roles to a physical pane index: the live
+# fleet can be reshuffled and an old index can point at a different worker.  The
+# @agent_id form is resolved from the pane title only for diagnostic metadata;
+# R2 keeps direct send-keys disabled.
 AGENT_PANES = {
-    "karo-second": "multiagent-second:0.0",
-    "shogun-second": "shogun-second:0.0",
-    "ashigaru1": "multiagent-second:0.1",
-    "ashigaru2": "multiagent-second:0.2",
-    "ashigaru3": "multiagent-second:0.3",
-    "ashigaru4": "multiagent-second:0.4",
-    "ashigaru5": "multiagent-second:0.5",
-    "ashigaru6": "multiagent-second:0.6",
-    "ashigaru7": "multiagent-second:0.7",
-    # R2 (FUKUINCHO 裁定 seq96053): gunshi-second を 0.8 に swap (最終正本 map)。
-    "gunshi-second": "multiagent-second:0.8",
-    # 2026-08-03 委員長(canon guardian): 本部長を受信allowlistへ追加。未登録により委員長→本部長のDB配送が
-    #     missing_or_invalid_target_agent で構造的に全通落ちしていた(将軍second実測 seq137504)。
-    "honbucho": "hermes-honbucho:0.0",
-    # 注: ashigaru1-7 の最終 pane (0.1-0.7) 反映は R3-R9 の各 swap 段で更新予定。
-    #     旧 ashigaru8@0.9 は登録撤回 (R0 seq96053) につき AGENT_PANES からも除外。
+    "karo-second": "@karo-second",
+    # Current tmux user options are the receiver's live identity source; their
+    # names are intentionally independent of the legacy ashigaru1-7 aliases.
+    "ashigaru1": "@ashigaru-second-1",
+    "ashigaru2": "@ashigaru-second-2",
+    "ashigaru3": "@ashigaru-second-3",
 }
-VALID_SECONDPC_TARGETS = frozenset(AGENT_PANES)
+# These seats own their own downlink.  The generic receiver must neither write
+# their inbox nor change any acknowledgement field: doing so creates a false
+# read mark when their dedicated pane/receiver is unavailable.
+DOWNLINK_OWNED_TARGETS = frozenset({"gunshi-second", "honbucho", "dr-s"})
+VALID_SECONDPC_TARGETS = frozenset(AGENT_PANES) | DOWNLINK_OWNED_TARGETS
+
+DELIVERY_STATE_FILE = os.environ.get(
+    "SECONDPC_RECEIVER_DELIVERY_STATE_FILE",
+    os.path.join(script_dir, "queue", "inbox", "_delivery_state_second.yaml"),
+)
+DELIVERY_STATE_NOTIFIED_FILE = os.environ.get(
+    "SECONDPC_RECEIVER_DELIVERY_STATE_NOTIFIED_FILE",
+    os.path.join(script_dir, "queue", "inbox", "_delivery_state_notified_second.txt"),
+)
+
+def resolve_agent_pane(agent_id, pane_lines=None):
+    """Resolve a worker by its current @agent_id identity, never a pane index.
+
+    This is diagnostic-only while R2 disables direct worker-pane send-keys.
+    ``pane_lines`` is injectable so the contract can be tested without tmux.
+    """
+    identity = AGENT_PANES.get(agent_id)
+    if not identity:
+        return None
+    if pane_lines is None:
+        try:
+            result = subprocess.run(
+                ["tmux", "list-panes", "-a", "-F", "#{session_name}:#{window_index}.#{pane_index}|#{@agent_id}"],
+                capture_output=True, text=True, timeout=5,
+            )
+        except (OSError, subprocess.SubprocessError):
+            return None
+        if result.returncode != 0:
+            return None
+        pane_lines = result.stdout.splitlines()
+    role = identity[1:]
+    for line in pane_lines:
+        target, sep, agent_id = line.partition("|")
+        if sep and agent_id.strip() == role:
+            return target
+    return None
+
+def _already_delivery_notified(msg_id):
+    try:
+        with open(DELIVERY_STATE_NOTIFIED_FILE, encoding="utf-8") as f:
+            return msg_id in {line.strip() for line in f if line.strip()}
+    except FileNotFoundError:
+        return False
+
+def record_delivery_state(msg, state, reason):
+    """Preserve a failed delivery locally without mutating handshake ACK fields."""
+    path = pathlib.Path(DELIVERY_STATE_FILE)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    msg_id = str(msg.get("id", ""))
+    existing = path.read_text(encoding="utf-8") if path.exists() else "messages:\n"
+    if msg_id and f"_handshake_id: {msg_id}\n" in existing:
+        return
+    entry = (
+        f"  - _handshake_id: {msg_id}\n"
+        f"    delivery_state: {state}\n"
+        f"    reason: {json.dumps(reason, ensure_ascii=False)}\n"
+        f"    from_pc: {json.dumps(str(msg.get('from_pc', 'unknown')), ensure_ascii=False)}\n"
+        f"    target_agent: {json.dumps(str(detect_target(msg) or ''), ensure_ascii=False)}\n"
+        "    acknowledged_mutation: false\n"
+    )
+    path.write_text(existing.rstrip("\n") + "\n" + entry, encoding="utf-8")
+
+def notify_delivery_failure(msg, reason):
+    """Return a single failure notice to the sender; never PATCH the original row."""
+    msg_id = str(msg.get("id", ""))
+    if not msg_id or _already_delivery_notified(msg_id):
+        return True
+    sender = str(msg.get("from_pc", "") or "")
+    if not sender or sender == "second_pc":
+        return False
+    try:
+        import urllib.request
+        payload = json.dumps({
+            "message_type": "status_update", "from_pc": "second_pc", "to_pc": sender,
+            "topic": "receiver_delivery_failed",
+            "content": f"SecondPC receiver delivery pending: source_id={msg_id}; reason={reason}; original ACK unchanged.",
+            "requires_response": False, "priority": "high", "clinic_id": "hakudoukai_main",
+        }, ensure_ascii=False).encode()
+        req = urllib.request.Request(f"{api_url}/pc_handshake", data=payload, method="POST")
+        req.add_header("Authorization", f"Bearer {api_key}")
+        req.add_header("apikey", api_key)
+        req.add_header("Content-Type", "application/json")
+        req.add_header("Prefer", "return=minimal")
+        with urllib.request.urlopen(req, timeout=10):
+            pass
+        pathlib.Path(DELIVERY_STATE_NOTIFIED_FILE).parent.mkdir(parents=True, exist_ok=True)
+        with open(DELIVERY_STATE_NOTIFIED_FILE, "a", encoding="utf-8") as f:
+            f.write(msg_id + "\n")
+        return True
+    except Exception as exc:
+        log(f"delivery failure notice failed for {msg_id[:8]}: {exc}")
+        return False
+
+def preserve_delivery_failure(msg, reason):
+    record_delivery_state(msg, "delivery_failed", reason)
+    notify_delivery_failure(msg, reason)
+    log(f"delivery pending without ACK mutation: {msg.get('id', '')[:8]} reason={reason}")
+
+VALID_SECONDPC_TARGETS = frozenset(AGENT_PANES) | DOWNLINK_OWNED_TARGETS
 
 def handle_file_sync(msg, script_dir):
     """Handle file_sync messages: write synced files to local filesystem.
@@ -356,16 +452,14 @@ for msg in new_msgs:
             f.write(msg_id + "\n")
         continue
 
-    # Retry cap enforcement
+    # Retry cap must not fabricate a recipient read. Preserve failure locally and
+    # notify the sender; the original handshake row stays unacknowledged.
     retry_count = retry_tracker.get(msg_id, 0)
     if retry_count >= MAX_RETRY:
-        log(f"RETRY CAP exceeded ({retry_count}/{MAX_RETRY}): {msg_id[:8]} — dead-lettering")
-        if dead_letter_message(msg_id, f"max_retry_exceeded_after_{retry_count}_attempts"):
-            with open(processed_file, "a") as f:
-                f.write(msg_id + "\n")
-            # Clean up tracker entry
-            retry_tracker.pop(msg_id, None)
-            save_retry_tracker(retry_tracker)
+        reason = f"max_retry_exceeded_after_{retry_count}_attempts"
+        preserve_delivery_failure(msg, reason)
+        retry_tracker.pop(msg_id, None)
+        save_retry_tracker(retry_tracker)
         continue
 
     # --- file_sync: write files to local filesystem (no inbox_write needed) ---
@@ -383,12 +477,19 @@ for msg in new_msgs:
     else:
         # --- Standard message: write to inbox ---
         target = detect_target(msg)
+        if target in DOWNLINK_OWNED_TARGETS:
+            # Dedicated downlink owns its recipient ACK.  The generic receiver
+            # must not write, retry, or mutate this source row.
+            preserve_delivery_failure(msg, "target_owned_by_dedicated_downlink")
+            continue
         if not target:
+            # Preserve an invalid target locally without mutating the original
+            # recipient ACK.  Keep the established one-time escalation so the
+            # sender-side control plane sees the fault; only the source row is
+            # never PATCHed as read/dead_letter.
             reason = "missing_or_invalid_target_agent"
             append_dead_letter(msg, reason)
             if not escalate_unroutable(msg, reason):
-                # ff5c9068: notice failed -> keep the bounce. Recording it as
-                # processed here would bury the row with nobody told.
                 fail_count += 1
                 retry_tracker[msg_id] = retry_tracker.get(msg_id, 0) + 1
                 save_retry_tracker(retry_tracker)
@@ -399,7 +500,7 @@ for msg in new_msgs:
                 f.write(msg_id + "\n")
             retry_tracker.pop(msg_id, None)
             save_retry_tracker(retry_tracker)
-            log(f"BLOCKED unroutable message without ACK: {msg_id[:8]} {topic}")
+            log(f"LOCAL DEAD-LETTER without ACK mutation: {msg_id[:8]} {topic}")
             continue
 
         inbox_cmd = [

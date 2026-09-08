@@ -117,7 +117,7 @@ class TestSecondpcReceiverRetry:
                 "id": msg_id,
                 "from_pc": "main_pc",
                 "to_pc": "second_pc",
-                "topic": "test",
+                "topic": "cross_pc_inbox_karo-second",
                 "content": "hello",
                 "message_type": "status_update",
             }], f)
@@ -135,6 +135,11 @@ class TestSecondpcReceiverRetry:
             'RETRY_TRACKER_FILE = "/tmp/hakudokai_receiver_retry_tracker.json"',
             f'RETRY_TRACKER_FILE = "{tracker_file}"'
         )
+        source = source.replace(
+            'retry_tracker = load_retry_tracker()',
+            'retry_tracker = {"test-retry-cap-001": 5}',
+            1,
+        )
 
         with patch("sys.argv", [
             "test", response_file, processed_file, script_dir,
@@ -151,17 +156,12 @@ class TestSecondpcReceiverRetry:
                 except SystemExit:
                     pass
 
-        # Should be recorded as processed (dead-lettered)
+        # ebb0e8ad: retry cap preserves the original handshake ACK.
         with open(processed_file) as f:
             processed = set(line.strip() for line in f if line.strip())
-        assert msg_id in processed
-
-        # urlopen should have been called with dead_letter ACK
-        assert mock_urlopen.called
-        req = mock_urlopen.call_args[0][0]
-        body = json.loads(req.data.decode())
-        assert body["acknowledged_by"] == "dead_letter"
-        assert "max_retry_exceeded" in body["context_data"]
+        assert msg_id not in processed
+        # No ACK/dead-letter PATCH is permitted for the source row.
+        assert not mock_urlopen.called
 
     def test_self_send_detection(self, tmp_path):
         """from_pc == to_pc → immediate dead-letter without retry."""
