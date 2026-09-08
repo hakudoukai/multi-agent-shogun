@@ -1,5 +1,5 @@
 #!/bin/bash
-# karo_mac_gate4.sh ―― 家老mac の門(四條)を ★落ちた時 に止まる★ 形 で当てる。
+# karo_mac_gate4.sh ―― 家老mac の門(五條)を ★落ちた時 に止まる★ 形 で当てる。
 #
 # 由来: 2026-09-09。家老 が `git diff --cached --check && echo 通; git commit …` と繋いだ為、
 #       ★check が 4 行 の末尾空白 を吐いたのに 後段 の commit/push が走つた★。
@@ -11,7 +11,7 @@
 set -u
 W="${1:?usage: karo_mac_gate4.sh <worktree> <path...>}"; shift
 [ $# -ge 1 ] || { echo "★path が無い★" >&2; exit 2; }
-cd "$W" || { echo "★樹 が無い: $W★" >&2; exit 2; }
+cd "$W" || { echo "★樹 が無い: ${W}★" >&2; exit 2; }
 
 fail=0
 say(){ printf '%s\n' "$*" >&2; }
@@ -45,10 +45,44 @@ else
   fail=1
 fi
 
+# ―― 條⑤ 寸法(2026-09-09 追加。家老 が 225.6 MB を測らず に押し GitHub が GH001 を警めた故)
+#     ★門 に無い條 は 門 が捕へぬ。捕へなんだ物 は 世 に残る。★
+#     ★閾 の根拠(裁 294493⑸: 固定値 を焼き込むな・実測 と as_of を註 で残せ)★
+#       as_of      = 2026-09-09
+#       出典       = a1 B12-17(紙 sha256 6dd975a65d73ce806d1f848a5047a44df363cf1060c9c1a05189f466b1231f3c)
+#                    + 家老 の再現(門票 ..._B12_17_20260909_karo_gate.txt)
+#       実測       = a1 の生 1592 本 / 257.2 MB。★上位 4 本 で 81.8%★・100KB 未満 1536 本(96.5%)で 4.7%。
+#                    2KB 超 の行 が寸法 の 89.9% を占め、其の ★97.5% が .log/.md★。
+#                    source(.py/.sh/.sql/.yaml/.js/.ps1/.tsv・母數 115 本)の 2KB 超 行= ★0 本★(陽性対照 .md=2)。
+#       50MB の出所 = GitHub の推奨 上限(GH001 が実際 に警めた値・78.90MB / 56.53MB)。
+#       100MB の出所= 上記 の分布 ―― 100KB 未満 の 1536 本 が 12.0MB に収まる故、
+#                    ★一 札 の生 が 100MB を越えるのは「逐語 を写した」時 に限る★(実測)。
+#       ★物差 は byte 和★(du の塊 では無い)―― GH001 が byte で警める故(裁 294493 と同日 家老 定む)。
+#       ⑷ の裁= ★file 種 で分けず byte 一律 の閾 で見る★(97.5% が .log/.md ゆゑ 種 別 は要らぬ)。
+#     ★此の閾 は 上記 の実測 から引いた物 で あり、母數 が変れば 引き直せ。★
+MAXF="${GATE4_MAX_FILE_MB:-50}"; MAXT="${GATE4_MAX_TOTAL_MB:-100}"
+big=0; total=0
+while IFS= read -r f; do
+  [ -f "$f" ] || continue
+  sz=$(wc -c < "$f" | tr -d ' ')
+  total=$((total + sz))
+  mb=$((sz / 1048576))
+  if [ "$mb" -ge "$MAXF" ]; then say "★條⑤ 単 file が ${mb} MB(上限 ${MAXF})―― ${f}★"; big=1; fi
+done < <(git diff --cached --name-only -- "$@")
+tmb=$((total / 1048576))
+if [ "$big" -ne 0 ] || [ "$tmb" -ge "$MAXT" ]; then
+  [ "$tmb" -ge "$MAXT" ] && say "★條⑤ 総和 が ${tmb} MB(上限 ${MAXT})★"
+  say "  ―― 生 を痩せさせるか 上 の裁 を請へ。env GATE4_MAX_FILE_MB / GATE4_MAX_TOTAL_MB で明示 して 超えてよい"
+  say "     (★超える時 は 何故 超えるか を門票 に書け★)"
+  fail=1
+else
+  say "條⑤ 寸法 = 単 file 上限 ${MAXF} MB 以下 / 総和 ${tmb} MB(上限 ${MAXT})"
+fi
+
 if [ $fail -ne 0 ]; then
   say ""
   say "★門 が落ちた。押すな。★"
   exit 1
 fi
-say "★門 四條 通。押してよい。★"
+say "★門 五條 通。押してよい。★"
 exit 0
