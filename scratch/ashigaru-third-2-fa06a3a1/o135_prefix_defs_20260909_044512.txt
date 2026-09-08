@@ -1,0 +1,37 @@
+# o135 定義別（母＝帯 198 本・隣接 197 対）as_of 20260909_044512
+# 定義	B	P	E	O	比	判	註
+D2 ★主★ 末尾一節除去＋前置は同族	19	23	2.22	7	3.16	★棄てぬ★	★走る前に決めた★
+D1 末尾一節除去（o117 の元）	19	48	4.63	14	3.02	★棄てぬ★	打ち直しの比べ元
+D3 器（heads/remotes+遠隔名）	19	3	0.29	2	6.91	★棄てぬ★	§24-3 の上三節
+D4 上二節（refs/heads・refs/remotes）	19	1	0.10	1	10.37	★棄てぬ★	§24-3 の上二節
+D5 席（heads の第三節迄）	19	86	8.29	17	2.05	★棄てぬ★	席が決めたなら此処で切れる筈
+D6 第一節（refs のみ）	19	0	0.00	0	測れず	測れず(別値・P=0 ゆゑ E=0 ∴ 比を作れぬ)	★粗くする極★
+# D1 で数へ D2 で数へぬ対（位置	左	右	札も入替るか）
+2	refs/heads/a33-k3mag243-20260820	refs/heads/ashigaru-third-5/p1_blue_book_11_reproduction	入替る
+20	refs/heads/drx/phase0-final	refs/heads/drx-552-553	入替らぬ
+34	refs/heads/drx-phase2-current	refs/heads/dry/reserveimage-web-lifespan-20260906	入替らぬ
+37	refs/heads/dry/reserveimage-web-lifespan-revise-274921-20260906	refs/heads/feat_shogun_autonomy_canon	入替る
+39	refs/heads/feat_shogun_seishon_v3_save	refs/heads/iincho/case-sweep-repo-and-view	入替らぬ
+59	refs/heads/iincho/tracked-ignored-cleanup	refs/heads/issue7-test-fix-a3-1-20260723	入替らぬ
+62	refs/heads/master	refs/heads/rescue/bulk-sync-from-p1-cycle9-branch	入替らぬ
+63	refs/heads/rescue/bulk-sync-from-p1-cycle9-branch	refs/heads/scanner-lower-bound-guard-a3-3-20260721	入替らぬ
+73	refs/remotes/origin/HEAD	refs/remotes/origin/a3-3/greentruth-4e54f890-basename-fix	入替らぬ
+119	refs/remotes/origin/ashigaru-third-7/sub_ekv3_modeB_and_handover-batch1	refs/remotes/origin/bi-m00-rebased-20260816	入替る
+120	refs/remotes/origin/bi-m00-rebased-20260816	refs/remotes/origin/codex/4pc-business-director-rename-20260825	入替らぬ
+137	refs/remotes/origin/drx/p1-7-cross-search-20260907	refs/remotes/origin/drx-hub-phase0-v4	入替らぬ
+138	refs/remotes/origin/drx-hub-phase0-v4	refs/remotes/origin/dry/reserveimage-web-lifespan-clean-20260906	入替らぬ
+150	refs/remotes/origin/feat/teriha-passport-cf0da9be-age-visas-xp-77b36d5a	refs/remotes/origin/feat_shogun_seishon_v3_save	入替らぬ
+151	refs/remotes/origin/feat_shogun_seishon_v3_save	refs/remotes/origin/feature/hooks-dr-7-5-6-8	入替らぬ
+153	refs/remotes/origin/fix/m5-staged-sets-toolbar-color	refs/remotes/origin/gazo-p0-main-landing	入替らぬ
+154	refs/remotes/origin/gazo-p0-main-landing	refs/remotes/origin/handover/old-codex-transition-20260523	入替る
+155	refs/remotes/origin/handover/old-codex-transition-20260523	refs/remotes/origin/image-p0-edited-copy-ctx-214424	入替る
+156	refs/remotes/origin/image-p0-edited-copy-ctx-214424	refs/remotes/origin/jinji/dd209-67member-20260907	入替らぬ
+177	refs/remotes/origin/mac/patient-app-e2e-p2	refs/remotes/origin/mac-kikaku-rescue-20260815	入替らぬ
+183	refs/remotes/origin/mainpc-inv-detached-preserve-20260804	refs/remotes/origin/rescue/ekarte-ab-input	入替る
+185	refs/remotes/origin/rescue/karte-visit-writeback	refs/remotes/origin/scanner-lower-bound-guard-a3-3-20260721	入替る
+186	refs/remotes/origin/scanner-lower-bound-guard-a3-3-20260721	refs/remotes/origin/stage1/reservation-cycle1-canonical-flow	入替らぬ
+187	refs/remotes/origin/stage1/reservation-cycle1-canonical-flow	refs/remotes/origin/sub1	入替らぬ
+196	refs/remotes/origin/worktree-iincho-admin-charter-mirror	refs/remotes/pr59	入替らぬ
+# 測れなくなつた本 2（組	名	理由）― o116 では 200 本悉く測れて居た
+保つ	refs/remotes/origin/pr-71-review	stat-2
+保つ	refs/remotes/origin/pr69	stat-2
