@@ -1,0 +1,87 @@
+# order194 raw — 前後を blob で数へ直す（走行 0・讀取のみ）
+# argv=python3 scratch/ashigaru-third-3-12e9d4bd/order194_before_after_blob_v1.rule.py
+# cwd=/home/hakudoukai/multi-agent-shogun
+# host=momizi-dx user=hakudoukai uid=1000
+# started=2026-09-08T20:00:28 finished=2026-09-08T20:00:29
+# exit_code=0
+tree=/home/hakudoukai/a3/wt-bundle-fix4
+git_tip=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b
+git_branch=karo-third/a3-bundle-fix4-pin-20260908
+note=前=git show <tip>:<rel> の blob / 後=working tree の file（未 commit）
+
+## tests/test_step_r_ui.py
+  before: sha256(blob text)=69919b607a7178db8d4c422d4c9c05aa295411a401857c54c7999929f63ef219 wc=311 split=312
+  after : sha256(file)     =75d1ef72622d3a24a22932fb6d297fb131f7da67842fea67abf49d7827fa992d wc=314 split=315
+  before: skip_units=1 skipif_units=0 skip_tests=1 skipif_tests=0
+  after : skip_units=0 skipif_units=1 skip_tests=0 skipif_tests=1
+  --- before rows (line|kind|name|tests) ---
+    282|skip|test_17_empty_state|1
+  --- after rows (line|kind|name|tests) ---
+    282|skipif|test_17_empty_state|1
+
+## tests/test_step_a4_handover_sheet.py
+  before: sha256(blob text)=4c127bdbf13effebb8eea38deb0e57ee3837a4dec7e1083bfbff80ee6c53af15 wc=560 split=561
+  after : sha256(file)     =a5a0716d943b72aa205ad2781cac7d7f8857bce094196e84d755578d6c32e0a4 wc=563 split=564
+  before: skip_units=1 skipif_units=0 skip_tests=1 skipif_tests=0
+  after : skip_units=0 skipif_units=1 skip_tests=0 skipif_tests=1
+  --- before rows (line|kind|name|tests) ---
+    377|skip|test_10_pagination_fits_a4|1
+  --- after rows (line|kind|name|tests) ---
+    377|skipif|test_10_pagination_fits_a4|1
+
+## tests/test_step_q.py
+  before: sha256(blob text)=59e711f7ab7a4e3271c9d859c5f859a2969f4e69658efd34846aa28422b8727c wc=491 split=492
+  after : sha256(file)     =140b46d474f8e42ebb8f1255d3bbb3b227a78db5b2d176ce2e70bcd1d4b9d00c wc=494 split=495
+  before: skip_units=1 skipif_units=0 skip_tests=1 skipif_tests=0
+  after : skip_units=0 skipif_units=1 skip_tests=0 skipif_tests=1
+  --- before rows (line|kind|name|tests) ---
+    461|skip|test_16_components_exist|1
+  --- after rows (line|kind|name|tests) ---
+    461|skipif|test_16_components_exist|1
+
+## tests/test_step_s3.py
+  before: sha256(blob text)=353459c033c4ef60411cd3e02d46dc7bf0a6cbdc1f934130ea1f7cffbcc6344b wc=734 split=735
+  after : sha256(file)     =9c38c4dc0e218dd02db40592bc3aaf742426566b1679d0467573395371eaa086 wc=752 split=753
+  before: skip_units=6 skipif_units=0 skip_tests=6 skipif_tests=0
+  after : skip_units=0 skipif_units=6 skip_tests=0 skipif_tests=6
+  --- before rows (line|kind|name|tests) ---
+    664|skip|TestF07CheckoutModal|1
+    678|skip|TestF08ComplaintForm|1
+    692|skip|TestF09ComplaintSubmit|1
+    703|skip|TestF10ProductivitySection|1
+    715|skip|TestF11ProductivityByStaffTable|1
+    726|skip|TestF12ProductivityByDifficultyTable|1
+  --- after rows (line|kind|name|tests) ---
+    664|skipif|TestF07CheckoutModal|1
+    681|skipif|TestF08ComplaintForm|1
+    698|skipif|TestF09ComplaintSubmit|1
+    712|skipif|TestF10ProductivitySection|1
+    727|skipif|TestF11ProductivityByStaffTable|1
+    741|skipif|TestF12ProductivityByDifficultyTable|1
+
+## tests/test_step_s4.py
+  before: sha256(blob text)=5cc4f2eb904e6049395aacdda50f9c2c7f8c66575174e834e3cdbcdb9d2a1a58 wc=1442 split=1443
+  after : sha256(file)     =669ee12d62868e6aaa0e71c87db4634fd3b8ccb998aa5afa762e079d317315eb wc=1459 split=1460
+  before: skip_units=2 skipif_units=0 skip_tests=4 skipif_tests=0
+  after : skip_units=0 skipif_units=2 skip_tests=0 skipif_tests=4
+  --- before rows (line|kind|name|tests) ---
+    742|skip|TestF16QualityBarInitial|2
+    758|skip|TestF17QualityBar100|2
+  --- after rows (line|kind|name|tests) ---
+    753|skipif|TestF16QualityBarInitial|2
+    772|skipif|TestF17QualityBar100|2
+
+## backend/tests/test_cmd004_cross_cutting_integration.py
+  before: sha256(blob text)=d2556011e95a5d0e90aa349dc298494258d6e5150de50af9be1678939a39ff7a wc=110 split=111
+  after : sha256(file)     =15a602e4ddd0836b1c12777b3fb67fca6e4d6327ff931a8165764798ef91de50 wc=116 split=117
+  before: skip_units=1 skipif_units=0 skip_tests=7 skipif_tests=0
+  after : skip_units=0 skipif_units=1 skip_tests=0 skipif_tests=7
+  --- before rows (line|kind|name|tests) ---
+    24|skip(pytestmark)|<module>|7
+  --- after rows (line|kind|name|tests) ---
+    28|skipif(pytestmark)|<module>|7
+
+## TOTAL (6 枚のみ・collect_ignore は別勘定ゆゑ含まぬ)
+before: skip_units=12 skip_tests=20 skipif_units=0 skipif_tests=0
+after : skip_units=0 skip_tests=0 skipif_units=12 skipif_tests=20
+delta : skip_units=-12 skip_tests=-20 skipif_units=+12 skipif_tests=+20
