@@ -1,0 +1,212 @@
+# order196_magazine_v1 raw
+argv=['python3', 'scratch/ashigaru-third-3-12e9d4bd/order196_magazine_v1.rule.py']
+cwd=/home/hakudoukai/multi-agent-shogun
+host=momizi-dx user=hakudoukai uid=1000
+rule_sha256=d08e03de86c77afb741098cd07ca8019c511cac064492e67fd252a66f1b78065
+HEAD=1ad4edfbadc69191183a42113e9979c3f91b7dbf branch=ashigaru-third-3/audit-framework-hermes-canon-revision-20260721 porcelain_lines=170
+started=2026-09-09T04:08:19 finished=2026-09-09T04:08:19 exit_code=0
+-----
+## §零 母集団
+紙 = 20 枚（名が order18x/19x の .md・名で判ず）
+
+| 紙 | sha256 | wc | split | byte | as_of |
+|---|---|---:|---:|---:|---|
+| order180_window_widen_v1.md | c1d4ad4831c31e43eee8131fa0c805e2180dffdbc8b900189143cec8e31c8d14 | 324 | 325 | 26517 | (無) |
+| order181_vocab_window_both_v1.md | ed816887764cc209eb72bf05ea55557b7127137d33af77f1cb19b732d2e64b52 | 303 | 304 | 19221 | (無) |
+| order182_asym_and_two_bands_v1.md | 30a28e6aa122e17cc97304d0cf02b972b0c6ac1dbf76a1a5e7f9c80d44637af7 | 258 | 259 | 14944 | (無) |
+| order183_frame_precision_v1.md | 9988b83de27905d3f9aa6e5b91cf77ed3d696b56db394f774c5149e8f8bd0bfd | 232 | 233 | 16201 | 2026-09-08T14:40:57+09:00 |
+| order184_rule_number_ledger_v1.md | d1ecb110538d8ae8694698b1b2ac02ebed86826a9bf7cfdbadc4e4cc7f5bcb4b | 123 | 124 | 9500 | 2026-09-08T14:47:58+09:00 |
+| order185_karo159_additivity_v1.md | 5f2bad7b71784f6e214b867a5e1de1e37b78801921ef554159e3a32e68e0880c | 214 | 215 | 11983 | 2026-09-08T15:03:38+09:00 |
+| order186_my_rule_wording_v1.md | d9e9dd441d908372c9810b188286d2981c371e4e4bcab5252f366bb92bee1f3e | 200 | 201 | 13036 | (無) |
+| order187_second_pair_and_source_v1.md | d4bafa800efb81da8872484cf0d24f92980b30850c901e9d5035575f45bde828 | 198 | 199 | 11823 | (無) |
+| order188_split_sixteen_v1.md | 209295934b8824dbaceac541f6f9a1661e1abbc04a88c339e2ee971df3e5478b | 152 | 153 | 9916 | (無) |
+| order189_falsepos_cure_v1.md | c6dc861770ac8e1e4d97208105fc48aeb65f4e2ad596a9524a9e9b8e5d0d0119 | 164 | 165 | 10894 | (無) |
+| order190_seventeen_sources_v1.md | 7a37557cc60338768c8712b40061184f399dfd7c4bb113458c786b6f8ca622e8 | 169 | 170 | 11036 | (無) |
+| order191_lot_self_close_v1.md | ec08bed899a8e45252d9a7686eae04ed706eafa8182c369b373d71ce77b2b2bd | 159 | 160 | 12801 | (無) |
+| order192_test_escape_census_v1.md | 5dd92e57a983d59af3ef9659d3ded249d4207357e9d910f308e3cca042beb82c | 172 | 173 | 11663 | (無) |
+| order193_escape_surface_fix_v1.md | 6f13a9c107523fc5e6784829f542fa61f81c8ef27eb5cb79313a6ba2d9e9daeb | 170 | 171 | 12778 | 2026-09-08T18:54:31+09:00 |
+| order194_before_run_and_correction_v1.md | 8c371d61e630c3ee063b7c558f18f4cf42e4139aafa1604c8a30e2c0298e8011 | 177 | 178 | 9604 | 2026-09-08T20:20:22+0900 |
+| order194_gap_fill2_v1.md | a65a2d44c7b3084628dd606bba28277f5287079d4b3d6ac94a0bd6befd423829 | 125 | 126 | 7342 | 2026-09-08T21:39:59+0900 |
+| order194_gap_fill3_v1.md | c0a22b7ef9df7748fa7ee105de343b0096c426b2b55a9cce04367f403b8b625f | 100 | 101 | 6691 | 2026-09-08T21:43:52+0900 |
+| order194_gap_fill_v1.md | a107bc859a3a3e77b54ef3af26e78bdef3018036918306cb39e599169e15fcf7 | 163 | 164 | 11912 | 2026-09-08T21:35:57+0900 |
+| order194_source_docs_evidence_packet_v1.md | c83e67116835b9f65ff3d305e8b5881d8011ac890918ffc87cf1595961697f0a | 532 | 533 | 38266 | 2026-09-08T20:13:48+0900 |
+| order195_typed_reproof_v1.md | ae0cbf89b6c17770fa7fce6a40d2162de877e254418a109285f6d4e3b4c1cf56 | 220 | 221 | 15529 | 2026-09-08T19:55:09+0900 |
+
+## §一 ★未測★ の悉皆（語ごと・逐語）
+
+### order180_window_widen_v1.md（2 行）
+  order180_window_widen_v1.md:278 | 測定不能 | | 判ぜぬ 3 件(G184・G230・G319)の合否 | ★測定不能★ (人が元素を讀めなんだ) |
+  order180_window_widen_v1.md:279 | 測定不能 | | 器A3 を『良い器』と呼べるか | ★測定不能★ (何れの誤りを厭ふかを先に決めねば定まらぬ) |
+
+### order181_vocab_window_both_v1.md（1 行）
+  order181_vocab_window_both_v1.md:293 | 測定不能 | - ★同距離(前優先)を後優先へ替へた時の効き★ ―― ★測定不能★ (本弾では測つて居らぬ・③ へ回した)。
+
+### order182_asym_and_two_bands_v1.md（1 行）
+  order182_asym_and_two_bands_v1.md:223 | 数へて居らぬ | ★自訴 三★: 本紙 §七 (第三段) は ★実測を見た後★ に書いた ∴ 見込みの当否には数へて居らぬ。
+
+### order183_frame_precision_v1.md（4 行）
+  order183_frame_precision_v1.md:16 | 数へて居らぬ | ―― ★此の sha を刷つた刻、器A6 の得失は ★一つも数へて居らぬ★★
+  order183_frame_precision_v1.md:21 | 数へて居らぬ | 1. ★受入②★ ―― ★「A6 の得失は 一つも数へて居らぬ」を 第一段の刻に 紙にも書く★。第一段
+  order183_frame_precision_v1.md:33 | 数へて居らぬ | >  見て動かすな★★ ②★『A6 の得失は一つも数へて居らぬ』を ★紙にも★ 書け★ ③★五度目の差引が
+  order183_frame_precision_v1.md:40 | 数へて居らぬ | | ② 得失は一つも数へて居らぬ を紙に | §一 自訴 1 | §一 |
+
+### order184_rule_number_ledger_v1.md（3 行）
+  order184_rule_number_ledger_v1.md:46 | 測定不能 | 別に使はれて居るか否かを ★己では当たれぬ★ = ★測定不能★)。
+  order184_rule_number_ledger_v1.md:62 | 測定不能 | ★測定不能★ではなく ★未測★である(材は在る・弾を当てて居らぬだけ)。
+  order184_rule_number_ledger_v1.md:103 | 測定不能 | 3. A3 の百六十・百六十六が家老の台帳と衝突するか ―― ★測定不能★(家老の台帳を己では讀めぬ)
+
+### order185_karo159_additivity_v1.md（3 行）
+  order185_karo159_additivity_v1.md:25 | 数へて居らぬ | ★受入②の自訴★: 第一段を刷つた刻、当席は ★A7 の 得・失・分子を 一つも数へて居らぬ★。
+  order185_karo159_additivity_v1.md:152 | 数へて居らぬ | ⇒ A2 = −6 に就ては、o179 の紙は ★得失の枠で数へて居らぬ★
+  order185_karo159_additivity_v1.md:154 | 測定不能 | ∴ ★−6 の出所は 当席の紙の中に ★現に無い★★ (測定不能に非ず ―― ★探して 無かつた★)。
+
+### order186_my_rule_wording_v1.md（5 行）
+  order186_my_rule_wording_v1.md:24 | 数へて居らぬ | ★第一段の刻に 己は ―― 形の判じ・材の観測数・源の添付の数を ★一つも数へて居らぬ★★
+  order186_my_rule_wording_v1.md:25 | 数へて居らぬ | (第一段の出力に ★「形の判じ・材の観測数・源の添付の数は 一つも数へて居らぬ」★ と刷つて在る)
+  order186_my_rule_wording_v1.md:109 | 数へて居らぬ | 字にして居らぬ。★定めた刻に 己は未だ一行も数へて居らぬが、之は ★己の申立に過ぎぬ★★)
+  order186_my_rule_wording_v1.md:159 | 測定不能 | 4. 百六十 / 百六十六 / 百六十七 / 百六十八 が ★二度目の対で立つか否か★ ―― ★測定不能★ (二度目の対を未だ立てて居らぬ)
+  order186_my_rule_wording_v1.md:161 | 測定不能 | 6. 源を欠く 52 行の悉くが「写し」である事 ―― ★測定不能★ (己の新測が混じり得る ∴ 52 は上限)
+
+### order187_second_pair_and_source_v1.md（6 行）
+  order187_second_pair_and_source_v1.md:14 | 測定不能 | ★今 現に其の値である事は 測定不能★ である (作法 六条目・九条目)。
+  order187_second_pair_and_source_v1.md:28 | 数へて居らぬ | ★第一段の刻に 己は ―― 行方の数・合ふ/合はぬ・源の当たりを ★一つも数へて居らぬ★★
+  order187_second_pair_and_source_v1.md:162 | 測定不能 | 3. 條166 が ★普く立つ★ 事 ―― ★測定不能★ (二度立つただけ・三度目の対を立てて居らぬ)
+  order187_second_pair_and_source_v1.md:165 | 測定不能 | 6. 其の 16 行の数が ★誤つて居る★ か否か ―― ★測定不能★ (他席の紙は己の材の外)
+  order187_second_pair_and_source_v1.md:171 | 測定不能 | | 樹 / HEAD / tree | ★測定不能★ (床の急報ゆゑ git を一度も打たず・§零 に写しと明記) |
+  order187_second_pair_and_source_v1.md:191 | 測定不能 | 2. ★合はぬ 16 行の内 14 行★ は他席の紙を指す ―― 家老を通せば源に当たれるか (己の権では測定不能)
+
+### order188_split_sixteen_v1.md（4 行）
+  order188_split_sixteen_v1.md:9 | 測定不能 | - 樹 / HEAD / tree = ★測定不能★ ―― 家老の急報「/mnt/c が I/O error・★床を触るな★」に従ひ
+  order188_split_sixteen_v1.md:102 | 分けて居らぬ | ⇒ 因 = ★己の器が 『器の名 A3』と『席の名 A3』を 分けて居らぬ★ (床⑶「型名だけで母集団を語るな」と同じ疵)
+  order188_split_sixteen_v1.md:120 | 測定不能 | 6. 偽陽性を除いた後の 源欠の写しの ★真の数★ ―― ★測定不能★ (未だ測り直して居らぬ)
+  order188_split_sixteen_v1.md:126 | 測定不能 | | 樹 / HEAD / tree | ★測定不能★ (床の急報ゆゑ git 0) |
+
+### order189_falsepos_cure_v1.md（5 行）
+  order189_falsepos_cure_v1.md:9 | 測定不能 | - 樹 / HEAD / tree = ★測定不能★ ―― 床の急報「/mnt/c が I/O error・床を触るな」に従ひ ★git を一度も打つて居らぬ★
+  order189_falsepos_cure_v1.md:38 | 分けて居らぬ | | 形2 ★席の名 A3★ | `RE_KEN = A[2-7]` | ★器の名 A3★ と ★席の名 A3★ を ★分けて居らぬ★ |
+  order189_falsepos_cure_v1.md:132 | 測定不能 | 5. 生き残つた 31 行の ★得失の数が 正しいか否か★ ―― ★測定不能★ (源が同じ行に無いゆゑ)
+  order189_falsepos_cure_v1.md:133 | 測定不能 | 6. 本弾の直しが ★他席の器★ にも要るか否か ―― ★測定不能★ (他席の器を測る権を持たぬ)
+  order189_falsepos_cure_v1.md:139 | 測定不能 | | 樹 / HEAD / tree | ★測定不能★ (床の急報ゆゑ git 0) |
+
+### order190_seventeen_sources_v1.md（5 行）
+  order190_seventeen_sources_v1.md:9 | 測定不能 | - 樹 / HEAD / tree = ★測定不能★ ―― 床の急報に従ひ ★git を一度も打つて居らぬ★
+  order190_seventeen_sources_v1.md:138 | 測定不能 | 6. 規が ★現に其の数を出した★ か否か ―― ★測定不能★ (規を走らせて突合して居らぬ)
+  order190_seventeen_sources_v1.md:144 | 測定不能 | | 樹 / HEAD / tree | ★測定不能★ (床の急報ゆゑ git 0) |
+  order190_seventeen_sources_v1.md:155 | 測定不能 | ／ ⑻ 三択語 (§十) ／ ⑽ 逐語併記 (§二) ／ ⑾ 一時 file 0 ／ ⒀ ★値(零)と 測定不能を分けた★
+  order190_seventeen_sources_v1.md:162 | 測定不能 | 2. ★根の 3 本の規を 走らせて 数が現に出るかを突合する★ (§十-6 の測定不能を 値に落とす)
+
+### order191_lot_self_close_v1.md（6 行）
+  order191_lot_self_close_v1.md:10 | 測定不能 | - 樹の HEAD / tree: ★測定不能★ ―― 床の急報 (「/mnt/c が I/O error ∴ 床を触るな」) に依り git を一度も打つて居らぬ。
+  order191_lot_self_close_v1.md:30 | 測定不能 | - 箱三「判じ得ぬ物」= ★測定不能★ と ★未測★ を分けて書く。
+  order191_lot_self_close_v1.md:80 | 測定不能 | ## §五 箱三 ―― 判じ得ぬ物 (★8 件★・測定不能 4 / 未測 4)
+  order191_lot_self_close_v1.md:82 | 測定不能 | ### ㋩ 測定不能 (4 件) ―― ★己の権・己の器では届かぬ★
+  order191_lot_self_close_v1.md:132 | 測定不能 | 前者を「無い」と書かず ★測定不能★ と書くのが 本 lot の得た形である。
+  order191_lot_self_close_v1.md:141 | 測定不能 | - 生き残つた 31 行の数の是非・他席の紙の偽陽性・樹の HEAD/tree は ★測定不能★。
+
+### order192_test_escape_census_v1.md（7 行）
+  order192_test_escape_census_v1.md:9 | 測定不能 | - git: ★一度も打つて居らぬ★ (床の急報)。∴ 樹の HEAD / tree は ★測定不能★ ―― 15:15 の写しを當て直して居らぬ (作法 六条目)。
+  order192_test_escape_census_v1.md:17 | 数へて居らぬ | - ★除外 (名指し・床⑼)★: ①node_modules 配下 ②非 py (js/ts の `it.skip`・`test.skip` ―― ★別母集団★・本弾では数へて居らぬ)
+  order192_test_escape_census_v1.md:23 | 測定不能 | - A・C・D・G は ★条件が実行時に決まる★ ∴ 走 0 では ★測定不能★ ―― ★「隠して居らぬ」の意に非ず★。
+  order192_test_escape_census_v1.md:114 | 測定不能 | | ★隠し得る (走 0 では測定不能)★ | ★107 行 / file 56★ | A 3・C 20・D 40・E 9・F 5・G 30 |
+  order192_test_escape_census_v1.md:116 | 測定不能 | - ★測定不能 は「隠して居らぬ」の意に非ず★ ―― 条件が床 (OS/env/flag/依存の在否) で決まる ∴ 走らねば判じ得ぬ。
+  order192_test_escape_census_v1.md:148 | 測定不能 | - ★定めが先・器が後★ の順である。足す前の数は取つて居らぬ ∴ ★足した事に依る差は 測定不能★。
+  order192_test_escape_census_v1.md:154 | 測定不能 | - A・C・D・G の 107 行が現に隠して居るか否かは ★測定不能★ (走 0)。
+
+### order193_escape_surface_fix_v1.md（5 行）
+  order193_escape_surface_fix_v1.md:22 | 測定不能 | - ∴ **HEAD / tree は測定不能**。以下の印は悉く **作業樹の実 file の sha256 頭16**（釘83）。
+  order193_escape_surface_fix_v1.md:123 | 測定不能 | ★直す前の sha を取つて居らぬ★ ∴ **前後の印の併記は測定不能**（自訴・§十二）。製品 code には一字も書いて居らぬ（触れたは試験 file 6 枚のみ）。
+  order193_escape_surface_fix_v1.md:128 | 測定不能 | 之等は条件が床（env・依存の在否・実行時の分岐）で決まる ∴ **走 0 では測定不能**である。
+  order193_escape_surface_fix_v1.md:141 | 測定不能 | 1. 直す前の file の sha を取らずに直した ∴ §九 の前後併記が測定不能に成つた。次に紙を直す弾が在れば、先に印を取る。
+  order193_escape_surface_fix_v1.md:168 | 測定不能 | **判定は軍師third に仰ぐ**（己では判定語を書かぬ）。三択語で結ぶ ―― 現に隠して居る単位は **24 から 12 へ**、覆はれた試験は **31 本から 11 本へ**。残る 11 本は **出来ぬ**（理由は §六 に一本づつ）。107 行は **測定不能**。
+
+### order194_before_run_and_correction_v1.md（3 行）
+  order194_before_run_and_correction_v1.md:132 | 測れて居らぬ | **意味せぬ事**: ★直しの効きは 之では測れて居らぬ★。
+  order194_before_run_and_correction_v1.md:168 | 測定不能 | | collect の数で直しの效きは測れたか | **測定不能**（器が `skip` と `skipif` を分けぬ） |
+  order194_before_run_and_correction_v1.md:169 | 測定不能 | | 実行段での效き | **測定不能**（走の帳が尽きた） |
+
+### order194_gap_fill2_v1.md（5 行）
+  order194_gap_fill2_v1.md:37 | 測れなかつた | - ∴ 前紙 §五 の「測れなかつた拡張子の残 9」は **閉ぢた**（`.jpg`2 `.uke`2 `.doc`1 `.gz`1 `.log`1 `.tar`1 `.ttf`1 = 9）。
+  order194_gap_fill2_v1.md:84 | 測れなかつた | ## §五 母数と 測れなかつた数（別値）
+  order194_gap_fill2_v1.md:92 | 測定不能 | | ★測れなかつた★ 分〜時の桁での揺れ | 測定不能（本走は秒の桁のみ） |
+  order194_gap_fill2_v1.md:93 | 測定不能 | | ★測れなかつた★ 差 20 の file 名 | 測定不能（前走の集合を保つて居らぬ ∴ 今回 指紋を残した） |
+  order194_gap_fill2_v1.md:118 | 測定不能 | - 差 20 の因が「時の差」である事 ―― **測定不能**（候補に留まる。前紙の断定を弱めた）
+
+### order194_gap_fill_v1.md（10 行）
+  order194_gap_fill_v1.md:8 | 数へて居らぬ | - 自訴1 = `reports/` 82 行の内訳を ★数へて居らぬ★
+  order194_gap_fill_v1.md:9 | 分けて居らぬ | - 自訴2 = walk 漏れ 1,360 の内訳を ★分けて居らぬ★
+  order194_gap_fill_v1.md:45 | 測定不能 | ∴ 「拡張子の全内訳」は 本走では **測定不能**。型の内訳（1,340 悉く UnicodeDecodeError）は **現に在る**。
+  order194_gap_fill_v1.md:116 | 測れなかつた | ## §五 母数と 測れなかつた数（別値）
+  order194_gap_fill_v1.md:125 | 測定不能 | | ★測れなかつた★ 拡張子の残 | 9（上位 12 種のみ刷つた ∴ 残 9 枚の拡張子は測定不能） |
+  order194_gap_fill_v1.md:126 | 測定不能 | | ★測れなかつた★ 動いた 20 枚の名 | 測定不能（本走は前後の file 名を保つて居らぬ） |
+  order194_gap_fill_v1.md:143 | 測れて居らぬ | 1. 拡張子の内訳は ★上位 12 種のみ★ 刷つた ∴ 残 9 枚は測れて居らぬ。器の print を絞つたのは己である。
+  order194_gap_fill_v1.md:144 | 測定不能 | 2. 差 20 の「動いた 20 枚」の ★名を保つて居らぬ★。因の型（時の差）は当てたが、file 名は測定不能。
+  order194_gap_fill_v1.md:155 | 測定不能 | - 差 20 が ★何の file か★ ―― **測定不能**
+  order194_gap_fill_v1.md:156 | 測定不能 | - 拡張子の全内訳 ―― **測定不能**（上位 12 種のみ）
+
+### order194_source_docs_evidence_packet_v1.md（11 行）
+  order194_source_docs_evidence_packet_v1.md:354 | 測定不能 | 之により order195 §七-㋺ の「直す前の姿＝測定不能」は **測定可能へ改まつた**（家老 條 百九十七に従ひ 遡つて打ち直す）。
+  order194_source_docs_evidence_packet_v1.md:407 | 測れなかつた | | ⑧ | 母数と測れなかつた数を別値 | §十 |
+  order194_source_docs_evidence_packet_v1.md:436 | 測れなかつた | ## §十 ⑧ 母数と ★測れなかつた数★ を別欄
+  order194_source_docs_evidence_packet_v1.md:449 | 測定不能 | ### ★測れなかつた（測定不能）★
+  order194_source_docs_evidence_packet_v1.md:453 | 分けて居らぬ | | walk できなかつた 1,360 file | 16,972 − 15,612。binary/権限/decode 失敗の内訳を ★分けて居らぬ★ |
+  order194_source_docs_evidence_packet_v1.md:455 | 測定不能 | | DB 側に匿名 row が在るか否か | 令④「DB は読まず」ゆゑ 打鍵 0。repo の字だけでは 測定不能 |
+  order194_source_docs_evidence_packet_v1.md:457 | 数へて居らぬ | | `reports/` 82 行の実質 | 写しの山ゆゑ母数から名指しで外した。★外した事自体は失に非ず・但し数へて居らぬ★ |
+  order194_source_docs_evidence_packet_v1.md:504 | 数へて居らぬ | 1. `reports/` 82 行を母数から ★名指しで外した★。外す旨は書いたが、外した 82 行の中身は数へて居らぬ。
+  order194_source_docs_evidence_packet_v1.md:505 | 分けて居らぬ | 2. walk できなかつた 1,360 file の内訳（binary / 権限 / decode）を ★分けて居らぬ★。
+  order194_source_docs_evidence_packet_v1.md:522 | 測定不能 | | DB 側の匿名 row の在否 | **測定不能**（令④により DB 打鍵 0） |
+  order194_source_docs_evidence_packet_v1.md:523 | 測定不能 | | walk 漏れ 1,360 の内訳 | **測定不能**（本走では分けて居らぬ） |
+
+### order195_typed_reproof_v1.md（10 行）
+  order195_typed_reproof_v1.md:10 | 測定不能 | - 樹の HEAD / tree: ★測定不能★ — `.git` は `gitdir: /mnt/c/DentalBI/.git/worktrees/wt-bundle-fix4` を指す。床の急報（/mnt/c が I/O error ∴ 触るな・git を一度も打たぬ）ゆゑ HEAD を讀んで居らぬ。gitdir の一行は a3 側の平 file を 
+  order195_typed_reproof_v1.md:24 | 測れなかつた | | ⑧ | 母数と測れなかつた数を別値 | §七 |
+  order195_typed_reproof_v1.md:164 | 測れなかつた | ## §七 ⑧ 母数 と 測れなかつた数 — ★別値★
+  order195_typed_reproof_v1.md:175 | 測れなかつた | ### 七-㋺ 測れなかつた数（★母数と別値で置く★）
+  order195_typed_reproof_v1.md:179 | 測定不能 | | 直す前の 6 枚の姿（sha・skip 単位数） | ★測定不能★ | 直す前に sha を取らず上書きした。前の姿は git blob に在る筈だが `.git` が `/mnt/c` を指し、床の急報ゆゑ触れて居らぬ |
+  order195_typed_reproof_v1.md:181 | 測定不能 | | 樹の HEAD / tree | ★測定不能★ | 同上（`/mnt/c` に触れぬ） |
+  order195_typed_reproof_v1.md:182 | 測定不能 | | 「隠し得る 107 行」の実効 | ★測定不能★ | 走 0 ゆゑ。★「隠して居らぬ」の意に非ず★（order193 の語をそのまま持ち越す） |
+  order195_typed_reproof_v1.md:191 | 測定不能 | | ③ 残 11 本 phase5 Pass と 107 行 UNMEASURED は全母集団/正負対照の導出不足 | 母集団を ★464 枚 / 6,078 本★ で名指し、正 20・負 11・残余 0 を ★同じ一走★ で出した。107 行は 走 0 ゆゑ ★測定不能★ のまま置き、母数と別欄にした | ★現に在る★（107 行のみ ★測定不能★） |
+  order195_typed_reproof_v1.md:196 | 測定不能 | 2. ★直す前の sha を取らずに直した★（前紙 §十二 で既に自訴した物・本紙でも消さずに持ち越す）。ゆゑに前後の印の併記が ★測定不能★ に成つて居る
+  order195_typed_reproof_v1.md:206 | 測定不能 | - 隠し得る 107 行の実効・直す前の姿・樹の HEAD = ★測定不能★
+
+## §二 語ごとの度数
+  測定不能         66 行
+  測れなかつた        8 行
+  測れて居らぬ        2 行
+  数へて居らぬ       15 行
+  分けて居らぬ        5 行
+  保つて居らぬ        0 行
+  合計 96 行
+
+## §三 『繰越』節の項目（見出しの下の番号行）
+
+### order191_lot_self_close_v1.md（5 項）
+  order191_lot_self_close_v1.md:145 | 1. 根の規 3 本 (`order183_frame_precision_v1.rule.py` `67b4d870d1d33e1d` / `order181_vocab_window_both_v1.rule.py`
+  order191_lot_self_close_v1.md:147 | 2. order185 の A3=-7 と order182/183 の A3=-9 の食ひ違ひを 根の規で判ずる。
+  order191_lot_self_close_v1.md:148 | 3. order188 ㋓ の 2 行の源を ★家老を通して★ 索く (己の権では届かぬ)。
+  order191_lot_self_close_v1.md:149 | 4. 同距離 (前優先) の件数と 向き替への効き ―― ★九度目★。
+  order191_lot_self_close_v1.md:150 | 5. A7 の分子・適合・再現を 同じ分母 202 で数へる。
+
+### order192_test_escape_census_v1.md（5 項）
+  order192_test_escape_census_v1.md:159 | 1. E/F の xfail が ★strict か否か★ を config と行で判ずる (strict なら「直つた事」は赤に成る)。
+  order192_test_escape_census_v1.md:160 | 2. C 20 行の条件が ★何の床★ を見て居るか (env 名・version・flag) を形で分ける。
+  order192_test_escape_census_v1.md:161 | 3. D 40 行が ★assert の前か後か★ を ast で判ずる (半端な検めの量)。
+  order192_test_escape_census_v1.md:162 | 4. 非 py (js/ts) の `it.skip`・`test.skip` を ★別母集団★ として同じ形で数へる。
+  order192_test_escape_census_v1.md:163 | 5. B 23 行の reason が言ふ 197 件を ★己の手で★ 数へ直す (写した数を実測に変へる ―― 作法 四条④)。
+
+### order193_escape_surface_fix_v1.md（5 項）
+  order193_escape_surface_fix_v1.md:148 | 1. #12 を試験ごとの条件へ割る（的の在る `teriha_passport_engine.py` 1 本のみが起きる ―― 走が要る）。
+  order193_escape_surface_fix_v1.md:149 | 2. #10 の条件語を `assignedDr` から「右ペインに移つた事」を測る形へ寄せる（`SheetRightPanel.tsx` の中を測る）。
+  order193_escape_surface_fix_v1.md:150 | 3. phase5 11 本を「試験の姿をした予定表」として別の帳へ移すか否か ―― 之は席の裁を超える。
+  order193_escape_surface_fix_v1.md:151 | 4. 隠し得る 107 行の内、C 20 行の条件が何の床を見て居るかを形で分ける（order192 §十一 の繰越）。
+  order193_escape_surface_fix_v1.md:152 | 5. 飾りの言ふ 197 件を己の手で数へ直す。
+
+### order194_gap_fill2_v1.md（3 項）
+  order194_gap_fill2_v1.md:123 | 1. 分〜時の桁で指紋を当て直す（§三 の二つの sha と比べるのみ・走 0）
+  order194_gap_fill2_v1.md:124 | 2. 「匿名」の定めが令と合ふか否か ―― ★席の裁を超える（家老へ）★
+  order194_gap_fill2_v1.md:125 | 3. 直しの效きを実行段で見る一発（`--collect-only` を外す）―― ★己で請はぬ★
+
+### order194_gap_fill_v1.md（4 項）
+  order194_gap_fill_v1.md:160 | 1. 動いた 20 枚の名（前後の file 名 + sha を保つ器を足せば測れる・走 0 で足る）
+  order194_gap_fill_v1.md:161 | 2. 拡張子の全内訳（print の絞りを外すのみ）
+  order194_gap_fill_v1.md:162 | 3. 「匿名」の定めが令と合ふか否か ―― ★席の裁を超える（家老へ）★
+  order194_gap_fill_v1.md:163 | 4. 直しの效きを実行段で見る一発（`--collect-only` を外す）―― ★己で請はぬ★
