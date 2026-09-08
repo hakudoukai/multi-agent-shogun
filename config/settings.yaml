@@ -145,5 +145,14 @@ tmux:
 
 # 家老4席 Fable 5 テスト切替 (理事長GO hs_230295aa 2026-07-10, Commander編集)
 models:
-  karo: claude-fable-5
-  karo-second: claude-fable-5
+  karo: claude-opus-5   # 理事長令 2026-08-10
+  karo-second: claude-opus-5   # 理事長ご下命 2026-09-07 21:1x 4PC家老=Opus 5（Fable 5.1 は usage-credits dialog で停止 dev_qa#925）
+  shogun-second: claude-opus-5   # 理事長令 2026-08-10
+  commander: claude-opus-5   # 理事長令 2026-08-10
+  ashigaru1: claude-opus-5   # 理事長ご下命 2026-09-06 専任Opus5
+  ashigaru2: claude-opus-5   # 理事長ご下命 2026-09-06 専任Opus5
+  ashigaru3: claude-opus-5   # 理事長ご下命 2026-09-06 専任Opus5
+  ashigaru4: claude-sonnet-5
+  ashigaru5: claude-sonnet-5
+  ashigaru6: claude-sonnet-5
+  ashigaru7: claude-sonnet-5
