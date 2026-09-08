@@ -1,0 +1,47 @@
+# order197_head_reproof_v1 raw
+argv=['python3', 'scratch/ashigaru-third-3-12e9d4bd/order197_head_reproof_v1.rule.py']
+cwd=/home/hakudoukai/multi-agent-shogun
+host=momizi-dx user=hakudoukai uid=1000
+rule_sha256=dfb5f5ca9c65fc54ecde996d32f9c8ff0347f76a7e3371713ac8fe2a367461dc
+repo_HEAD=1ad4edfbadc69191183a42113e9979c3f91b7dbf branch=ashigaru-third-3/audit-framework-hermes-canon-revision-20260721 porcelain_lines=170
+started=2026-09-09T04:16:27 finished=2026-09-09T04:16:30 exit_code=0
+-----
+## 甲 三樹の今の HEAD / tree / 枝 / porcelain / reflog 最新
+  wt-bundle-fix4   rc=0 HEAD=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b
+    argv_echo_check(引けなんだか) = 引けた
+    tree=3d6c08c41f83cfc0885b3e00c229dc7fe94f3899  branch=karo-third/a3-bundle-fix4-pin-20260908  porcelain=6 行
+    reflog最新: 47c8bc3b8 HEAD@{2026-09-08 10:54:36 +0900}: commit: docs(evidence): 束の紙の指しを被引用側から1巡で當て直す (order173・A3 測り/規・家老third 代行置き)
+  wt-index-fix3    rc=0 HEAD=b4cd30c47006a3cc9aabc260833bffea66f919fb
+    argv_echo_check(引けなんだか) = 引けた
+    tree=5c0393ee296d08ad4c2e505aaa2ee7390ba441b1  branch=a3/evidence-index-fix3-20260908  porcelain=0 行
+    reflog最新: b4cd30c47 HEAD@{2026-09-08 08:58:18 +0900}: commit: docs(evidence): INDEX 行 4/23/25 に 引用元・刻・commit を入れる (order164・樹の名に頼らぬ形へ・家老third 代行)
+  wt-pin-trace     rc=0 HEAD=3143bb3af9642b4c81f0527203b2be7c07284110
+    argv_echo_check(引けなんだか) = 引けた
+    tree=8f57a88eb4d52fb62103bdc340ed936c3cb2b48b  branch=HEAD  porcelain=0 行
+    reflog最新: 3143bb3af HEAD@{2026-09-08 05:54:55 +0900}:
+
+## 乙 8 枚の紙 ―― as_of / 樹の名指し / HEAD の写しの在否
+  order187_second_pair_and_source_v1       as_of=2026-09-08T15:30:43
+      樹の名指し=wt-bundle-fix4 / HEAD写し=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b / 測つた path 種=0
+  order188_split_sixteen_v1                as_of=2026-09-08T15:44:59
+      樹の名指し=★無★ / HEAD写し=★無★ / 測つた path 種=0
+  order189_falsepos_cure_v1                as_of=2026-09-08T15:52:28
+      樹の名指し=★無★ / HEAD写し=★無★ / 測つた path 種=0
+  order190_seventeen_sources_v1            as_of=2026-09-08T15:58:32
+      樹の名指し=★無★ / HEAD写し=★無★ / 測つた path 種=0
+  order191_lot_self_close_v1               as_of=2026-09-08T18:16:47
+      樹の名指し=wt-bundle-fix4 / HEAD写し=47c8bc3b86613d7b / 測つた path 種=0
+  order192_test_escape_census_v1           as_of=2026-09-08T18:29:20
+      樹の名指し=wt-bundle-fix4 / HEAD写し=★無★ / 測つた path 種=48
+  order193_escape_surface_fix_v1           as_of=2026-09-08T18:54:31
+      樹の名指し=wt-bundle-fix4 / HEAD写し=★無★ / 測つた path 種=9
+  order195_typed_reproof_v1                as_of=2026-09-08T19:55:09
+      樹の名指し=wt-bundle-fix4 / HEAD写し=★無★ / 測つた path 種=19
+
+## 丙 wt-bundle-fix4 の porcelain の中身（作業樹が HEAD からずれた枚数）
+  M backend/tests/test_cmd004_cross_cutting_integration.py
+   M tests/test_step_a4_handover_sheet.py
+   M tests/test_step_q.py
+   M tests/test_step_r_ui.py
+   M tests/test_step_s3.py
+   M tests/test_step_s4.py
