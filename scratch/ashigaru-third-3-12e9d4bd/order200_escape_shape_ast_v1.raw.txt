@@ -1,0 +1,178 @@
+=== order200 raw ===
+argv        = ['/usr/bin/python3', '/home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd/order200_escape_shape_ast_v1.rule.py']
+cwd         = /home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd
+host        = momizi-dx
+user        = hakudoukai
+uid         = 1000
+repo HEAD   = 1ad4edfbadc69191183a42113e9979c3f91b7dbf
+repo branch = ashigaru-third-3/audit-framework-hermes-canon-revision-20260721
+repo porcelain = 170 行
+rule sha256 = 52b4c793404954fb1d23c40de410a30cc68e8ea4659e604e8351ceb8a4dce3e4
+started     = 2026-09-09T05:09:32+0900
+finished    = 2026-09-09T05:09:38+0900
+elapsed     = 5.16s
+exit_code   = 0
+=== 以下 出力 ===
+== order200 第零段 ―― ★定めを 先に 字にした★ ==
+  規 sha16=52b4c793404954fb wc=236 split=237 bytes=13676
+  的の樹 = /home/hakudoukai/a3/wt-bundle-fix4
+  ★E6 C 20 + E7 D 40 = 60 (型へ) / E5 E 9 + F 5 = 14 (色の判じ) ―― ★別の物★★
+
+== order200 第一段 ―― ★樹の頭★ (條 百七十三) ==
+  HEAD = 47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b  ★引けた=是★
+  branch = karo-third/a3-bundle-fix4-pin-20260908
+  porcelain = ★6 行★
+     M backend/tests/test_cmd004_cross_cutting_integration.py
+      M tests/test_step_a4_handover_sheet.py
+      M tests/test_step_q.py
+      M tests/test_step_r_ui.py
+      M tests/test_step_s3.py
+      M tests/test_step_s4.py
+  *.py 悉皆 = ★1484★ (除外 dir: node_modules/.git/.venv/venv/__pycache__)
+
+== order200 第二段 ―― ★正の対照★ o192 の 8 種を 今日 数へ直す (條 o174) ==
+  A importorskip             今日 行=★  3★ file=  3 / o192 の紙=  3 ★一致★
+  B mark.skip (無条件)          今日 行=★ 11★ file=  9 / o192 の紙= 23 ★合はぬ★
+  C mark.skipif (条件付)        今日 行=★ 32★ file= 15 / o192 の紙= 20 ★合はぬ★
+  D pytest.skip( (実行時)       今日 行=★ 40★ file= 20 / o192 の紙= 40 ★一致★
+  E mark.xfail               今日 行=★  9★ file=  3 / o192 の紙=  9 ★一致★
+  F pytest.xfail(            今日 行=★  5★ file=  2 / o192 の紙=  5 ★一致★
+  G except ImportError       今日 行=★ 30★ file= 25 / o192 の紙= 30 ★一致★
+  H collect_ignore           今日 行=★  1★ file=  1 / o192 の紙=  1 ★一致★
+
+== order200 第三段 ―― ★E5 xfail が strict か★ ==
+  -- ㋐ 床 (config) を 悉皆で --
+     pytest.ini       ★現に在る★ wc=2  xfail_strict=★0 件★
+        逐語: [pytest]
+        逐語: addopts = --ignore=reports
+     setup.cfg        ★現に無い★
+     pyproject.toml   ★現に無い★
+     tox.ini          ★現に無い★
+     conftest.py      ★現に無い★
+  -- ㋑ 樹の悉皆で xfail_strict を (陽性対照 xfail も 同じ打で) --
+     xfail_strict = ★0 件 / file 0★
+     xfail        = ★20 件 / file 5★  ← ★陽性対照★ (條 o178)
+  -- ㋒ 行ごとの strict= keyword を ast で --
+     ast が見た xfail の Call = ★13★
+        strict 無し      : ★5★
+        strict=False   : ★4★
+        strict=True    : ★4★
+     (先頭 8 行の在処)
+        backend/tests/test_patient_members_list_red.py:285  strict=False
+        backend/tests/test_patient_members_list_red.py:321  strict=False
+        backend/tests/test_patient_members_list_red.py:341  strict=False
+        backend/tests/test_selection_http_matrix.py:340  strict=False
+        backend/tests/test_selection_http_matrix.py:367  strict 無し
+        backend/tests/test_selection_http_matrix.py:402  strict 無し
+        backend/tests/test_selection_http_matrix_live.py:190  strict 無し
+        backend/tests/test_selection_http_matrix_live.py:147  strict 無し
+  -- ㋓ ★判じ★ --
+     床 `xfail_strict` は ★現に無い★ (樹の悉皆 0 件・陽性対照 xfail は 20 件で効いて居る)
+     ∴ ★pytest の既定 = strict False★ が効く
+
+== order200 第四段 ―― ★E6 C mark.skipif 20 行が 何の床を見るか★ (ast) ==
+  ast が見た skipif の Call = ★32★ (o192 の紙 = 20)
+  ★床の軸★ (★一つの条件が 二軸に掛かる事が在る ∴ 和は Call 数を超え得る★ ―― 床(30))
+     その他        : ★31★
+     env        : ★1★
+  ★内訳 (悉皆・条件式を unparse して逐語)★
+     backend/tests/test_ba965236_real_auth_probe_dev.py:24 [env]  os.environ.get('BA965236_RUN_DEV_REAL_AUTH') != '1'
+     backend/tests/test_cmd004_cross_cutting_integration.py:28 [その他]  not all((p.exists() for p in _CMD004_REQUIRED))
+     backend/tests/test_safe_open.py:41 [その他]  os.name == 'nt'
+     backend/tests/test_safe_open.py:58 [その他]  os.name == 'nt'
+     backend/tests/test_safe_open.py:74 [その他]  os.name == 'nt'
+     backend/tests/test_safe_open.py:114 [その他]  os.name == 'nt'
+     tests/test_step_a4_handover_sheet.py:377 [その他]  not (FRONTEND_DIR / 'hooks' / 'useSheetPagination.ts').exists()
+     tests/test_step_e.py:224 [その他]  not SHAHO_FULL.exists()
+     tests/test_step_e.py:239 [その他]  not KOKUHO_FULL.exists()
+     tests/test_step_f.py:186 [その他]  not FULL_FILE.exists()
+     tests/test_step_g.py:314 [その他]  not KARTE_FULL.exists()
+     tests/test_step_i.py:863 [その他]  not (FIXTURES_DIR / 'test_shaho.uke').exists()
+     tests/test_step_i.py:919 [その他]  not (FIXTURES_DIR / 'test_karte_tab.txt').exists()
+     tests/test_step_o_pipeline_integration.py:42 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:77 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:94 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:123 [その他]  not KARTE_TAB_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:155 [その他]  not KARTE_TAB_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:188 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_p_supabase_live.py:34 [その他]  not SUPABASE_URL or not SUPABASE_SERVICE_KEY
+     tests/test_step_q.py:461 [その他]  not (Path(__file__).resolve().parent.parent / 'frontend' / 'src' / 'hooks' / 'useBilling
+     tests/test_step_r_ui.py:282 [その他]  not (FRONTEND_ROOT / 'components' / 'shared' / 'EmptyState.tsx').exists()
+     tests/test_step_s3.py:664 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'kanban' / 'CheckoutModal.tsx').exists()
+     tests/test_step_s3.py:681 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'kanban' / 'ComplaintForm.tsx').exists()
+     tests/test_step_s3.py:698 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'kanban' / 'ComplaintForm.tsx').exists()
+     tests/test_step_s3.py:712 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'dashboard' / 'ProductivitySection.tsx').e
+     tests/test_step_s3.py:727 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'dashboard' / 'ProductivitySection.tsx').e
+     tests/test_step_s3.py:741 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'dashboard' / 'ProductivitySection.tsx').e
+     tests/test_step_s4.py:753 [その他]  not _has_text(ROOT / 'frontend' / 'src' / 'features' / 'handover-sheet' / 'SheetHeader.t
+     tests/test_step_s4.py:772 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'handover-sheet' / 'SheetPrintView.tsx').e
+     tests/test_video_processor.py:45 [その他]  not _ffmpeg_installed
+     tests/test_video_processor.py:63 [その他]  not _ffmpeg_installed
+
+== order200 第五段 ―― ★E7 D pytest.skip( 40 が assert の前か後か★ (ast) ==
+  ast が見た pytest.skip の Call = ★40★ (o192 の紙 = 40)
+  ★但し 之は ★関数体の中★ に在る物のみ★ ―― module 直下 / conftest の物は ast.FunctionDef の外ゆゑ落ちる
+     assert の ★前★ (検め前に降りる)           : ★25★
+     assert 無し (検め 0)                 : ★13★
+     assert の ★後★ (検め了へて降りる)          : ★2★
+  ★内訳 (悉皆)★
+     backend/tests/test_document_generator.py:310  def test_generate_standard_document  [assert の ★前★ (検め前に降りる)] assert数=3
+     backend/tests/test_handover_hub_phase0_db_probe.py:53  def test_local_postgres_probe_rejects_cross_clinic_and_duplicate_sequence  [assert の ★前★ (検め前に降りる)] assert数=1
+     backend/tests/test_loan_csv_parser.py:130  def test_fixture_file  [assert の ★前★ (検め前に降りる)] assert数=2
+     backend/tests/test_loan_csv_parser.py:171  def test_fixture_file  [assert の ★前★ (検め前に降りる)] assert数=2
+     backend/tests/test_meisai_receipt.py:465  def test_render_returns_pdf_bytes  [assert の ★後★ (検め了へて降りる)] assert数=2
+     backend/tests/test_meisai_receipt.py:480  def test_render_with_no_visit  [assert の ★後★ (検め了へて降りる)] assert数=1
+     backend/tests/test_meisai_receipt.py:511  def test_endpoint_returns_pdf  [assert の ★前★ (検め前に降りる)] assert数=3
+     backend/tests/test_meisai_receipt.py:508  def test_endpoint_returns_pdf  [assert の ★前★ (検め前に降りる)] assert数=3
+     backend/tests/test_receipt_mailer_stamp.py:55  def _skip_if_no_stamp  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/conftest.py:52  def pg_dsn  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/conftest.py:55  def pg_dsn  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_5b_column.py:18  def test_5b_memory_sync_action_diff_blocked  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_5b_column.py:36  def test_5b_memory_sync_acknowledged_at_main_allowed  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/integration/phase5/test_5c_archive_delete.py:16  def test_5c_reference_book_cases_archive_delete_blocked  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_5e_violation_log.py:23  def test_5e_violation_log_direct_insert_blocked  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_wp_d1_karte_visits_cas_rpc_integration.py:38  def _require_migration_050  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_wp_d1_karte_visits_cas_rpc_integration.py:44  def _require_migration_051  [assert 無し (検め 0)] assert数=0
+     tests/test_appointment_e2e.py:253  def test_different_unit_same_time_ok  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:72  def test_change_status_returns_200  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:84  def test_booked_to_arrived  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:96  def test_arrived_to_in_tx  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:114  def test_billing_to_done  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:140  def test_reverse_transition_allowed  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:161  def test_invalid_status_returns_422  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_booking_validator.py:325  def test_11_max_concurrent_units_exceeded  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_booking_validator.py:353  def test_12_max_concurrent_units_ok  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_booking_validator.py:393  def test_14_different_unit_same_time_ok  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_booking_validator.py:419  def test_15_max_new_patient_per_slot  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_image_api_integration.py:95  def test_missing_column_detected  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_knowledge_importer.py:162  def prod_db  [assert 無し (検め 0)] assert数=0
+     tests/test_knowledge_importer.py:170  def prod_db  [assert 無し (検め 0)] assert数=0
+     tests/test_nigo_sheet_renderer.py:70  def test_empty_output_items  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_nigo_sheet_renderer.py:89  def test_basic_render  [assert の ★前★ (検め前に降りる)] assert数=3
+     tests/test_scoring_rules.py:57  def live_db  [assert 無し (検め 0)] assert数=0
+     tests/test_scoring_rules.py:65  def live_db  [assert 無し (検め 0)] assert数=0
+     tests/test_scoring_rules.py:86  def _skip_if_empty  [assert 無し (検め 0)] assert数=0
+     tests/test_step_p.py:419  def test_16_typescript_no_errors  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_step_p_supabase_live.py:87  def test_05_rls_blocks_without_key  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_step_p_supabase_live.py:96  def test_05_rls_blocks_without_key  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_step_s4.py:309  def test_update_allergies  [assert の ★前★ (検め前に降りる)] assert数=1
+
+== order200 第六段 ―― ★o199 の打ち直し★ (家老 條 百九十七) ==
+  ★order199 で A3 = ★−7 が正★ と定まつた (o180 が len() から計算) ∴ −9 を持つ紙に條 百九十七 が掛かる★
+  ★前紙は 一字も 書き換へぬ★ ―― 此処に ★併記表★ を置くのみ (令の逐語)
+  [o183 形] 「A3 = ★-9★」 ―― 度数 ★4★ / 物 ★4★
+     order183_frame_precision_v1.md                 ×1
+     order189_falsepos_cure_v1.md                   ×1
+     order199_root_rules_reconcile_v1.rule.py       ×1
+     order200_escape_shape_ast_v1.rule.py           ×1
+  [規の literal 形] 「A3 = -9」 ―― 度数 ★15★ / 物 ★5★
+     order199_root_rules_reconcile_v1.md            ×6
+     order182_asym_and_two_bands_v1.rule.py         ×1
+     order183_frame_precision_v1.rule.py            ×1
+     order199_root_rules_reconcile_v1.rule.py       ×6
+     order200_escape_shape_ast_v1.rule.py           ×1
+  [o185 の食ひ違ひ表] 「| A3 | −7 | −7 | −9 |」 ―― 度数 ★4★ / 物 ★4★
+     order185_karo159_additivity_v1.md              ×1
+     order189_falsepos_cure_v1.md                   ×1
+     order199_root_rules_reconcile_v1.rule.py       ×1
+     order200_escape_shape_ast_v1.rule.py           ×1

@@ -1,0 +1,378 @@
+=== order200 raw2 (第七段 入り) ===
+argv        = ['/usr/bin/python3', '/home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd/order200_escape_shape_ast_v1.rule.py']
+cwd         = /home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd
+host        = momizi-dx
+user        = hakudoukai
+uid         = 1000
+repo HEAD   = 1ad4edfbadc69191183a42113e9979c3f91b7dbf
+repo branch = ashigaru-third-3/audit-framework-hermes-canon-revision-20260721
+repo porcelain = 170 行
+rule sha256 = d3d17be571fc35030dcecae6cf74cf50f10f4640db32cc91f8fd46aa9ef27a8d
+started     = 2026-09-09T05:10:51+0900
+finished    = 2026-09-09T05:11:17+0900
+elapsed     = 25.85s
+exit_code   = 0
+=== 以下 出力 ===
+== order200 第零段 ―― ★定めを 先に 字にした★ ==
+  規 sha16=d3d17be571fc3503 wc=287 split=288 bytes=17044
+  的の樹 = /home/hakudoukai/a3/wt-bundle-fix4
+  ★E6 C 20 + E7 D 40 = 60 (型へ) / E5 E 9 + F 5 = 14 (色の判じ) ―― ★別の物★★
+
+== order200 第一段 ―― ★樹の頭★ (條 百七十三) ==
+  HEAD = 47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b  ★引けた=是★
+  branch = karo-third/a3-bundle-fix4-pin-20260908
+  porcelain = ★6 行★
+     M backend/tests/test_cmd004_cross_cutting_integration.py
+      M tests/test_step_a4_handover_sheet.py
+      M tests/test_step_q.py
+      M tests/test_step_r_ui.py
+      M tests/test_step_s3.py
+      M tests/test_step_s4.py
+  *.py 悉皆 = ★1484★ (除外 dir: node_modules/.git/.venv/venv/__pycache__)
+
+== order200 第二段 ―― ★正の対照★ o192 の 8 種を 今日 数へ直す (條 o174) ==
+  A importorskip             今日 行=★  3★ file=  3 / o192 の紙=  3 ★一致★
+  B mark.skip (無条件)          今日 行=★ 11★ file=  9 / o192 の紙= 23 ★合はぬ★
+  C mark.skipif (条件付)        今日 行=★ 32★ file= 15 / o192 の紙= 20 ★合はぬ★
+  D pytest.skip( (実行時)       今日 行=★ 40★ file= 20 / o192 の紙= 40 ★一致★
+  E mark.xfail               今日 行=★  9★ file=  3 / o192 の紙=  9 ★一致★
+  F pytest.xfail(            今日 行=★  5★ file=  2 / o192 の紙=  5 ★一致★
+  G except ImportError       今日 行=★ 30★ file= 25 / o192 の紙= 30 ★一致★
+  H collect_ignore           今日 行=★  1★ file=  1 / o192 の紙=  1 ★一致★
+
+== order200 第三段 ―― ★E5 xfail が strict か★ ==
+  -- ㋐ 床 (config) を 悉皆で --
+     pytest.ini       ★現に在る★ wc=2  xfail_strict=★0 件★
+        逐語: [pytest]
+        逐語: addopts = --ignore=reports
+     setup.cfg        ★現に無い★
+     pyproject.toml   ★現に無い★
+     tox.ini          ★現に無い★
+     conftest.py      ★現に無い★
+  -- ㋑ 樹の悉皆で xfail_strict を (陽性対照 xfail も 同じ打で) --
+     xfail_strict = ★0 件 / file 0★
+     xfail        = ★20 件 / file 5★  ← ★陽性対照★ (條 o178)
+  -- ㋒ 行ごとの strict= keyword を ast で --
+     ast が見た xfail の Call = ★13★
+        strict 無し      : ★5★
+        strict=False   : ★4★
+        strict=True    : ★4★
+     (先頭 8 行の在処)
+        backend/tests/test_patient_members_list_red.py:285  strict=False
+        backend/tests/test_patient_members_list_red.py:321  strict=False
+        backend/tests/test_patient_members_list_red.py:341  strict=False
+        backend/tests/test_selection_http_matrix.py:340  strict=False
+        backend/tests/test_selection_http_matrix.py:367  strict 無し
+        backend/tests/test_selection_http_matrix.py:402  strict 無し
+        backend/tests/test_selection_http_matrix_live.py:190  strict 無し
+        backend/tests/test_selection_http_matrix_live.py:147  strict 無し
+  -- ㋓ ★判じ★ --
+     床 `xfail_strict` は ★現に無い★ (樹の悉皆 0 件・陽性対照 xfail は 20 件で効いて居る)
+     ∴ ★pytest の既定 = strict False★ が効く
+
+== order200 第四段 ―― ★E6 C mark.skipif 20 行が 何の床を見るか★ (ast) ==
+  ast が見た skipif の Call = ★32★ (o192 の紙 = 20)
+  ★床の軸★ (★一つの条件が 二軸に掛かる事が在る ∴ 和は Call 数を超え得る★ ―― 床(30))
+     その他        : ★31★
+     env        : ★1★
+  ★内訳 (悉皆・条件式を unparse して逐語)★
+     backend/tests/test_ba965236_real_auth_probe_dev.py:24 [env]  os.environ.get('BA965236_RUN_DEV_REAL_AUTH') != '1'
+     backend/tests/test_cmd004_cross_cutting_integration.py:28 [その他]  not all((p.exists() for p in _CMD004_REQUIRED))
+     backend/tests/test_safe_open.py:41 [その他]  os.name == 'nt'
+     backend/tests/test_safe_open.py:58 [その他]  os.name == 'nt'
+     backend/tests/test_safe_open.py:74 [その他]  os.name == 'nt'
+     backend/tests/test_safe_open.py:114 [その他]  os.name == 'nt'
+     tests/test_step_a4_handover_sheet.py:377 [その他]  not (FRONTEND_DIR / 'hooks' / 'useSheetPagination.ts').exists()
+     tests/test_step_e.py:224 [その他]  not SHAHO_FULL.exists()
+     tests/test_step_e.py:239 [その他]  not KOKUHO_FULL.exists()
+     tests/test_step_f.py:186 [その他]  not FULL_FILE.exists()
+     tests/test_step_g.py:314 [その他]  not KARTE_FULL.exists()
+     tests/test_step_i.py:863 [その他]  not (FIXTURES_DIR / 'test_shaho.uke').exists()
+     tests/test_step_i.py:919 [その他]  not (FIXTURES_DIR / 'test_karte_tab.txt').exists()
+     tests/test_step_o_pipeline_integration.py:42 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:77 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:94 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:123 [その他]  not KARTE_TAB_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:155 [その他]  not KARTE_TAB_FIXTURE.exists()
+     tests/test_step_o_pipeline_integration.py:188 [その他]  not SHAHO_FIXTURE.exists()
+     tests/test_step_p_supabase_live.py:34 [その他]  not SUPABASE_URL or not SUPABASE_SERVICE_KEY
+     tests/test_step_q.py:461 [その他]  not (Path(__file__).resolve().parent.parent / 'frontend' / 'src' / 'hooks' / 'useBilling
+     tests/test_step_r_ui.py:282 [その他]  not (FRONTEND_ROOT / 'components' / 'shared' / 'EmptyState.tsx').exists()
+     tests/test_step_s3.py:664 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'kanban' / 'CheckoutModal.tsx').exists()
+     tests/test_step_s3.py:681 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'kanban' / 'ComplaintForm.tsx').exists()
+     tests/test_step_s3.py:698 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'kanban' / 'ComplaintForm.tsx').exists()
+     tests/test_step_s3.py:712 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'dashboard' / 'ProductivitySection.tsx').e
+     tests/test_step_s3.py:727 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'dashboard' / 'ProductivitySection.tsx').e
+     tests/test_step_s3.py:741 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'dashboard' / 'ProductivitySection.tsx').e
+     tests/test_step_s4.py:753 [その他]  not _has_text(ROOT / 'frontend' / 'src' / 'features' / 'handover-sheet' / 'SheetHeader.t
+     tests/test_step_s4.py:772 [その他]  not (ROOT / 'frontend' / 'src' / 'features' / 'handover-sheet' / 'SheetPrintView.tsx').e
+     tests/test_video_processor.py:45 [その他]  not _ffmpeg_installed
+     tests/test_video_processor.py:63 [その他]  not _ffmpeg_installed
+
+== order200 第五段 ―― ★E7 D pytest.skip( 40 が assert の前か後か★ (ast) ==
+  ast が見た pytest.skip の Call = ★40★ (o192 の紙 = 40)
+  ★但し 之は ★関数体の中★ に在る物のみ★ ―― module 直下 / conftest の物は ast.FunctionDef の外ゆゑ落ちる
+     assert の ★前★ (検め前に降りる)           : ★25★
+     assert 無し (検め 0)                 : ★13★
+     assert の ★後★ (検め了へて降りる)          : ★2★
+  ★内訳 (悉皆)★
+     backend/tests/test_document_generator.py:310  def test_generate_standard_document  [assert の ★前★ (検め前に降りる)] assert数=3
+     backend/tests/test_handover_hub_phase0_db_probe.py:53  def test_local_postgres_probe_rejects_cross_clinic_and_duplicate_sequence  [assert の ★前★ (検め前に降りる)] assert数=1
+     backend/tests/test_loan_csv_parser.py:130  def test_fixture_file  [assert の ★前★ (検め前に降りる)] assert数=2
+     backend/tests/test_loan_csv_parser.py:171  def test_fixture_file  [assert の ★前★ (検め前に降りる)] assert数=2
+     backend/tests/test_meisai_receipt.py:465  def test_render_returns_pdf_bytes  [assert の ★後★ (検め了へて降りる)] assert数=2
+     backend/tests/test_meisai_receipt.py:480  def test_render_with_no_visit  [assert の ★後★ (検め了へて降りる)] assert数=1
+     backend/tests/test_meisai_receipt.py:511  def test_endpoint_returns_pdf  [assert の ★前★ (検め前に降りる)] assert数=3
+     backend/tests/test_meisai_receipt.py:508  def test_endpoint_returns_pdf  [assert の ★前★ (検め前に降りる)] assert数=3
+     backend/tests/test_receipt_mailer_stamp.py:55  def _skip_if_no_stamp  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/conftest.py:52  def pg_dsn  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/conftest.py:55  def pg_dsn  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_5b_column.py:18  def test_5b_memory_sync_action_diff_blocked  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_5b_column.py:36  def test_5b_memory_sync_acknowledged_at_main_allowed  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/integration/phase5/test_5c_archive_delete.py:16  def test_5c_reference_book_cases_archive_delete_blocked  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_5e_violation_log.py:23  def test_5e_violation_log_direct_insert_blocked  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_wp_d1_karte_visits_cas_rpc_integration.py:38  def _require_migration_050  [assert 無し (検め 0)] assert数=0
+     tests/integration/phase5/test_wp_d1_karte_visits_cas_rpc_integration.py:44  def _require_migration_051  [assert 無し (検め 0)] assert数=0
+     tests/test_appointment_e2e.py:253  def test_different_unit_same_time_ok  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:72  def test_change_status_returns_200  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:84  def test_booked_to_arrived  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:96  def test_arrived_to_in_tx  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:114  def test_billing_to_done  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:140  def test_reverse_transition_allowed  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_appointment_status_api.py:161  def test_invalid_status_returns_422  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_booking_validator.py:325  def test_11_max_concurrent_units_exceeded  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_booking_validator.py:353  def test_12_max_concurrent_units_ok  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_booking_validator.py:393  def test_14_different_unit_same_time_ok  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_booking_validator.py:419  def test_15_max_new_patient_per_slot  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_image_api_integration.py:95  def test_missing_column_detected  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_knowledge_importer.py:162  def prod_db  [assert 無し (検め 0)] assert数=0
+     tests/test_knowledge_importer.py:170  def prod_db  [assert 無し (検め 0)] assert数=0
+     tests/test_nigo_sheet_renderer.py:70  def test_empty_output_items  [assert の ★前★ (検め前に降りる)] assert数=2
+     tests/test_nigo_sheet_renderer.py:89  def test_basic_render  [assert の ★前★ (検め前に降りる)] assert数=3
+     tests/test_scoring_rules.py:57  def live_db  [assert 無し (検め 0)] assert数=0
+     tests/test_scoring_rules.py:65  def live_db  [assert 無し (検め 0)] assert数=0
+     tests/test_scoring_rules.py:86  def _skip_if_empty  [assert 無し (検め 0)] assert数=0
+     tests/test_step_p.py:419  def test_16_typescript_no_errors  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_step_p_supabase_live.py:87  def test_05_rls_blocks_without_key  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_step_p_supabase_live.py:96  def test_05_rls_blocks_without_key  [assert の ★前★ (検め前に降りる)] assert数=1
+     tests/test_step_s4.py:309  def test_update_allergies  [assert の ★前★ (検め前に降りる)] assert数=1
+
+== order200 第六段 ―― ★o199 の打ち直し★ (家老 條 百九十七) ==
+  ★order199 で A3 = ★−7 が正★ と定まつた (o180 が len() から計算) ∴ −9 を持つ紙に條 百九十七 が掛かる★
+  ★前紙は 一字も 書き換へぬ★ ―― 此処に ★併記表★ を置くのみ (令の逐語)
+  [o183 形] 「A3 = ★-9★」 ―― 度数 ★4★ / 物 ★4★
+     order183_frame_precision_v1.md                 ×1
+     order189_falsepos_cure_v1.md                   ×1
+     order199_root_rules_reconcile_v1.rule.py       ×1
+     order200_escape_shape_ast_v1.rule.py           ×1
+  [規の literal 形] 「A3 = -9」 ―― 度数 ★15★ / 物 ★5★
+     order199_root_rules_reconcile_v1.md            ×6
+     order182_asym_and_two_bands_v1.rule.py         ×1
+     order183_frame_precision_v1.rule.py            ×1
+     order199_root_rules_reconcile_v1.rule.py       ×6
+     order200_escape_shape_ast_v1.rule.py           ×1
+  [o185 の食ひ違ひ表] 「| A3 | −7 | −7 | −9 |」 ―― 度数 ★4★ / 物 ★4★
+     order185_karo159_additivity_v1.md              ×1
+     order189_falsepos_cure_v1.md                   ×1
+     order199_root_rules_reconcile_v1.rule.py       ×1
+     order200_escape_shape_ast_v1.rule.py           ×1
+
+== order200 第七段 ―― ★己の写し 対 o192 の規 其の物★ (條 o174 / o178) ==
+  o192 規 sha16=0b2cee9e453d8ed6 wc=219 split=220
+  o192 の ROOT 逐語 = /home/hakudoukai/a3/wt-bundle-fix4   己の ROOT = /home/hakudoukai/a3/wt-bundle-fix4   ★同じ★
+  -- ㋐ 己が写した正規 と o192 の正規 を 逐語で 突合 --
+     己=mark\.skip\s*[\(\)]|mark\.skip$    o192 に ★現に在る★
+     己=mark\.skipif                       o192 に ★現に在る★
+     o192:11 逐語: (u"A importorskip",        re.compile(r"importorskip")),
+     o192:12 逐語: (u"B mark.skip (無条件)",  re.compile(r"mark\.skip\s*[\(\)]|mark\.skip$")),
+     o192:13 逐語: (u"C mark.skipif (条件付)", re.compile(r"mark\.skipif")),
+     o192:14 逐語: (u"D pytest.skip( (実行時)", re.compile(r"(?<![a-zA-Z0-9_.])pytest\.skip\s*\(")),
+     o192:15 逐語: (u"E mark.xfail",          re.compile(r"mark\.xfail")),
+     o192:16 逐語: (u"F pytest.xfail(",       re.compile(r"(?<![a-zA-Z0-9_.])pytest\.xfail\s*\(")),
+     o192:17 逐語: (u"G except ImportError",  re.compile(r"except\s+.*ImportError")),
+     o192:18 逐語: (u"H collect_ignore",      re.compile(r"collect_ignore")),
+     o192:182 逐語: rx = re.compile(u"(?:残|全)([0-9]+)件")
+  -- ㋑ o192 の規 其の物を 走らせる --
+     exit_code = 0 / 出力 wc = 310
+     o192 出力: [母集団] 樹中の *.py ★悉皆★ (node_modules/.git/.venv/venv/__pycache__ を除く)。
+     o192 出力: [数へる形 8 種] A importorskip / B mark.skip(無条件) / C mark.skipif(条件付) /
+     o192 出力:     D pytest.skip((実行時) / E mark.xfail / F pytest.xfail( / G except ImportError / H collect_ignore
+     o192 出力:     ★現に隠して居る★ = ★走らずに定まる★物のみ = B 無条件 skip / H collect_ignore の名。
+     o192 出力: [見込み2] A (importorskip) は ★悉く★ 条件付ゆゑ 走 0 では測定不能に落ちる (現に隠す欄は 0)。
+     o192 出力: == 第二段 悉皆 (母集団 py 1484 枚) ==
+     o192 出力: -- A importorskip : 行 3 / file 3 --
+     o192 出力:    backend/tests/test_qr_processor.py:19 | pytest.importorskip("qrcode", reason="qrcode パッケージ未インストール")
+     o192 出力:    tests/integration/phase5/test_wp_d1_karte_visits_cas_rpc_integration.py:21 | pytest.importorskip("psycopg2")
+     o192 出力:    tests/test_step2.py:32 | pytest.importorskip("sqlparse")
+     o192 出力: -- B mark.skip (無条件) : 行 11 / file 9 --
+     o192 出力:    tests/integration/phase5/test_5a_immutable.py:33 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残28件 (各テーブル UPDATE+DELETE = 14×2)")
+     o192 出力:    tests/integration/phase5/test_5a_immutable.py:40 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残14件")
+     o192 出力:    tests/integration/phase5/test_5b_column.py:46 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残18件 (4本×5 - 上記2件)")
+     o192 出力:    tests/integration/phase5/test_5c_archive_delete.py:24 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残51件 (archive 52本のうち上記1件以外)")
+     o192 出力:    tests/integration/phase5/test_5d_pii_gated_view.py:19 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残61件 (31本×2 - 上記1件)")
+     o192 出力:    tests/integration/phase5/test_5e_violation_log.py:28 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残2件 (UPDATE/TRUNCATE self-guard)")
+     o192 出力:    tests/integration/phase5/test_5f_override.py:30 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残8件 (begin成功/end成功/二重begin/二重end冪等等)")
+     o192 出力:    tests/integration/phase5/test_5g_schema_guard.py:19 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残4件 (CREATE/DROP protected + non-protected A
+     o192 出力:    tests/integration/phase5/test_phase_a_continuity.py:10 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 全9件 (clinic_scope越境阻止等)")
+     o192 出力:    tests/integration/phase5/test_v21d_self_patch.py:22 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残2件 (T193 ack UPDATE / T194 全 5-B 棚卸し)")
+     o192 出力:    tests/integration/phase5/test_v21d_self_patch.py:28 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: §14.4.3 全 5-B 対象テーブル GENERATED 列棚卸し")
+     o192 出力: -- C mark.skipif (条件付) : 行 32 / file 15 --
+     o192 出力:    backend/tests/test_ba965236_real_auth_probe_dev.py:24 | pytestmark = pytest.mark.skipif(
+     o192 出力:    backend/tests/test_cmd004_cross_cutting_integration.py:28 | pytestmark = pytest.mark.skipif(
+     o192 出力:    backend/tests/test_safe_open.py:41 | @pytest.mark.skipif(os.name == "nt", reason="Windows symlink作成には開発者モード/権限が必要")
+     o192 出力:    backend/tests/test_safe_open.py:58 | @pytest.mark.skipif(os.name == "nt", reason="Windows symlink作成には開発者モード/権限が必要")
+     o192 出力:    backend/tests/test_safe_open.py:74 | @pytest.mark.skipif(os.name == "nt", reason="Windowsはopen中fileのunlinkを許可しない")
+     o192 出力:    backend/tests/test_safe_open.py:114 | @pytest.mark.skipif(os.name == "nt", reason="Windows Pythonにはos.mkfifoがない")
+     o192 出力:    tests/test_step_a4_handover_sheet.py:377 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_e.py:224 | @pytest.mark.skipif(not SHAHO_FULL.exists(), reason="社保UKE実ファイルなし")
+     o192 出力:    tests/test_step_e.py:239 | @pytest.mark.skipif(not KOKUHO_FULL.exists(), reason="国保UKE実ファイルなし")
+     o192 出力:    tests/test_step_f.py:186 | @pytest.mark.skipif(not FULL_FILE.exists(), reason="カルテTAB実ファイルなし")
+     o192 出力:    tests/test_step_g.py:314 | @pytest.mark.skipif(not KARTE_FULL.exists(), reason="カルテTAB実ファイルなし")
+     o192 出力:    tests/test_step_i.py:863 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_i.py:919 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_o_pipeline_integration.py:42 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_o_pipeline_integration.py:77 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_o_pipeline_integration.py:94 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_o_pipeline_integration.py:123 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_o_pipeline_integration.py:155 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_o_pipeline_integration.py:188 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_p_supabase_live.py:34 | pytestmark = pytest.mark.skipif(
+     o192 出力:    tests/test_step_q.py:461 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_r_ui.py:282 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s3.py:664 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s3.py:681 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s3.py:698 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s3.py:712 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s3.py:727 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s3.py:741 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s4.py:753 | @pytest.mark.skipif(
+     o192 出力:    tests/test_step_s4.py:772 | @pytest.mark.skipif(
+     o192 出力:    tests/test_video_processor.py:45 | @pytest.mark.skipif(not _ffmpeg_installed, reason="ffmpeg未インストール")
+     o192 出力:    tests/test_video_processor.py:63 | @pytest.mark.skipif(not _ffmpeg_installed, reason="ffmpeg未インストール")
+     o192 出力: -- D pytest.skip( (実行時) : 行 40 / file 20 --
+     o192 出力:    backend/tests/test_document_generator.py:310 | pytest.skip(f"{form_type}: テンプレートオーバーレイ専用（テンプレートPDF未配置環境では実行不可）")
+     o192 出力:    backend/tests/test_handover_hub_phase0_db_probe.py:53 | pytest.skip(unavailable_reason)
+     o192 出力:    backend/tests/test_loan_csv_parser.py:130 | pytest.skip("fixture file not found")
+     o192 出力:    backend/tests/test_loan_csv_parser.py:171 | pytest.skip("fixture file not found")
+     o192 出力:    backend/tests/test_meisai_receipt.py:465 | pytest.skip("テンプレートPDF(明細入領収証.pdf)が存在しません")
+     o192 出力:    backend/tests/test_meisai_receipt.py:480 | pytest.skip("テンプレートPDF(明細入領収証.pdf)が存在しません")
+     o192 出力:    backend/tests/test_meisai_receipt.py:508 | pytest.skip("テンプレートPDFが存在しません")
+     o192 出力:    backend/tests/test_meisai_receipt.py:511 | pytest.skip("テンプレートPDFが存在しません")
+     o192 出力:    backend/tests/test_receipt_mailer_stamp.py:55 | pytest.skip(
+     o192 出力:    tests/integration/phase5/conftest.py:52 | pytest.skip("psycopg2 not installed; install with: pip install psycopg2-binary")
+     o192 出力:    tests/integration/phase5/conftest.py:55 | pytest.skip(
+     o192 出力:    tests/integration/phase5/test_5b_column.py:18 | pytest.skip("memory_sync は空、fixture INSERT が Phase 2 で必要")
+     o192 出力:    tests/integration/phase5/test_5b_column.py:36 | pytest.skip("memory_sync は空、fixture INSERT が Phase 2 で必要")
+     o192 出力:    tests/integration/phase5/test_5c_archive_delete.py:16 | pytest.skip("reference_book_cases_archive は空")
+     o192 出力:    tests/integration/phase5/test_5e_violation_log.py:23 | pytest.skip("postgres SUPERUSER は RLS バイパス、実環境では deny される")
+     o192 出力:    tests/integration/phase5/test_wp_d1_karte_visits_cas_rpc_integration.py:38 | pytest.skip("migration 050 (root_visit_id chain guard) 未適用")
+     o192 出力:    tests/integration/phase5/test_wp_d1_karte_visits_cas_rpc_integration.py:44 | pytest.skip("migration 051 (draft-CAS/confirm RPC) 未適用")
+     o192 出力:    tests/test_appointment_e2e.py:253 | pytest.skip("Only 1 unit available")
+     o192 出力:    tests/test_appointment_status_api.py:72 | pytest.skip("テスト用予約データなし")
+     o192 出力:    tests/test_appointment_status_api.py:84 | pytest.skip("テスト用予約データなし")
+     o192 出力:    tests/test_appointment_status_api.py:96 | pytest.skip("テスト用予約データなし")
+     o192 出力:    tests/test_appointment_status_api.py:114 | pytest.skip("テスト用予約データなし")
+     o192 出力:    tests/test_appointment_status_api.py:140 | pytest.skip("テスト用予約データなし")
+     o192 出力:    tests/test_appointment_status_api.py:161 | pytest.skip("テスト用予約データなし")
+     o192 出力:    tests/test_booking_validator.py:325 | pytest.skip("2ユニット必要")
+     o192 出力:    tests/test_booking_validator.py:353 | pytest.skip("2ユニット必要")
+     o192 出力:    tests/test_booking_validator.py:393 | pytest.skip("2ユニット必要")
+     o192 出力:    tests/test_booking_validator.py:419 | pytest.skip("2ユニット必要")
+     o192 出力:    tests/test_image_api_integration.py:95 | pytest.skip("SQLite version does not support DROP COLUMN")
+     o192 出力:    tests/test_knowledge_importer.py:162 | pytest.skip(f"DB not found: {DB_PATH}")
+     o192 出力:    tests/test_knowledge_importer.py:170 | pytest.skip("reference_booksローカル0件(Supabase移行済み・投入データ検査対象なし)")
+     o192 出力:    tests/test_nigo_sheet_renderer.py:70 | pytest.skip("テンプレートPDF未配置")
+     o192 出力:    tests/test_nigo_sheet_renderer.py:89 | pytest.skip("テンプレートPDF未配置")
+     o192 出力:    tests/test_scoring_rules.py:57 | pytest.skip("dentalbi_local.db が存在しません")
+     o192 出力:    tests/test_scoring_rules.py:65 | pytest.skip("scoring_rules テーブルが存在しません")
+     o192 出力:    tests/test_scoring_rules.py:86 | pytest.skip("scoring_rulesローカル0件(Supabase移行済み・投入データ検査対象なし)")
+     o192 出力:    tests/test_step_p.py:419 | pytest.skip("frontend/tsconfig.json not found")
+     o192 出力:    tests/test_step_p_supabase_live.py:87 | pytest.skip("SUPABASE_ANON_KEY not configured")
+     o192 出力:    tests/test_step_p_supabase_live.py:96 | pytest.skip("SUPABASE_ANON_KEYがrotate済みでこの環境では無効(RLS検証は鍵更新後に実施)")
+     o192 出力:    tests/test_step_s4.py:309 | pytest.skip("テスト患者 06_000001 が存在しません")
+     o192 出力: -- E mark.xfail : 行 9 / file 3 --
+     o192 出力:    backend/tests/test_patient_members_list_red.py:285 | @pytest.mark.xfail(strict=False, reason="k55-1: 総監督 283493=CI(Windows)で赤・Mac(karo-mac 10:09)では緑=
+     o192 出力:    backend/tests/test_patient_members_list_red.py:321 | @pytest.mark.xfail(strict=False, reason="k55-1: 総監督 283493=CI(Windows)で赤・Mac(karo-mac 10:09)では緑=
+     o192 出力:    backend/tests/test_patient_members_list_red.py:341 | @pytest.mark.xfail(strict=False, reason="k55-1: 総監督 283493=CI(Windows)で赤・Mac(karo-mac 10:09)では緑=
+     o192 出力:    backend/tests/test_selection_http_matrix.py:340 | @pytest.mark.xfail(strict=False, reason="k55-1: 総監督 283493=CI(Windows)で赤・Mac(karo-mac 10:09)では緑=
+     o192 出力:    backend/tests/test_v6_root_fix_fail_fixtures.py:4 | pytest.mark.xfail(strict=True) によりスイートは green を維持しつつ、
+     o192 出力:    backend/tests/test_v6_root_fix_fail_fixtures.py:132 | @pytest.mark.xfail(
+     o192 出力:    backend/tests/test_v6_root_fix_fail_fixtures.py:163 | @pytest.mark.xfail(
+     o192 出力:    backend/tests/test_v6_root_fix_fail_fixtures.py:181 | @pytest.mark.xfail(
+     o192 出力:    backend/tests/test_v6_root_fix_fail_fixtures.py:198 | @pytest.mark.xfail(
+     o192 出力: -- F pytest.xfail( : 行 5 / file 2 --
+     o192 出力:    backend/tests/test_selection_http_matrix.py:367 | pytest.xfail(f"未測(完全 app が此の interpreter で import 不能): {exc}")
+     o192 出力:    backend/tests/test_selection_http_matrix.py:402 | pytest.xfail(f"未測(完全 app が此の interpreter で import 不能): {exc}")
+     o192 出力:    backend/tests/test_selection_http_matrix_live.py:147 | pytest.xfail(f"未測(MATRIX_LIVE_APP=full だが完全 app が import 不能): {reason}")
+     o192 出力:    backend/tests/test_selection_http_matrix_live.py:183 | pytest.xfail(f"未測(uvicorn が起きなかつた rc={proc.returncode}): {out[-900:]}")
+     o192 出力:    backend/tests/test_selection_http_matrix_live.py:190 | pytest.xfail(f"未測(uvicorn が {_BOOT_TIMEOUT_S} 秒で応へず)")
+     o192 出力: -- G except ImportError : 行 30 / file 25 --
+     o192 出力:    backend/api/documents.py:712 | except ImportError:
+     o192 出力:    backend/api/image_router.py:827 | except ImportError:
+     o192 出力:    backend/exc_gate/reconcile_cli.py:31 | except ImportError as exc:
+     o192 出力:    backend/pdf/tooth_chart_pdf.py:18 | except ImportError:
+     o192 出力:    backend/receipt_mailer/extractor.py:84 | except ImportError as exc:
+     o192 出力:    backend/scripts/migrate_sqlite_patients_to_supabase.py:56 | except ImportError:
+     o192 出力:    backend/services/crm_processor.py:260 | except (ImportError, ValueError) as e:
+     o192 出力:    backend/services/karte_disease_claude.py:135 | except (ImportError, ValueError) as e:
+     o192 出力:    backend/services/perio_ocr.py:15 | except ImportError:
+     o192 出力:    backend/services/perio_report_pdf.py:23 | except ImportError:
+     o192 出力:    backend/services/scheduler.py:53 | except ImportError:
+     o192 出力:    backend/tests/_patient_images_scope_fixtures.py:28 | except ImportError as exc:  # pragma: no cover - RED 期間の唯一の経路
+     o192 出力:    backend/tests/test_patient_members_list_red.py:69 | except ImportError as exc:  # pragma: no cover - RED 期間の唯一の経路
+     o192 出力:    backend/tests/test_patient_members_list_red.py:182 | except ImportError as exc:  # pragma: no cover - RED 期間の唯一の経路
+     o192 出力:    backend/tests/test_require_patient_auth_selection.py:154 | except ImportError as exc:
+     o192 出力:    backend/tests/test_selection_http_matrix.py:336 | except ImportError as exc:  # pragma: no cover - 環境差の記録用
+     o192 出力:    backend/tests/test_selection_token.py:62 | except ImportError as exc:
+     o192 出力:    reports/_scratch/fukuincho-uplink-repair-20260825/hakudokai_fukuincho_reverse_poll.py:275 | except ImportError:
+     o192 出力:    scripts/desktop_chat_notification_watcher.py:17 | except ImportError:  # Windows unit tests only; production watcher is WSL/Linux.
+     o192 出力:    scripts/export_supabase_migrations.py:23 | except ImportError:  # Offline --input-json validation remains usable.
+     o192 出力:    scripts/hakudokai_fast_payment.py:33 | except ImportError:
+     o192 出力:    scripts/hakudokai_tc_counseling.py:34 | except ImportError:
+     o192 出力:    scripts/hakudokai_treatment_plan_draft.py:34 | except ImportError:
+     o192 出力:    scripts/teriha_wp_draft_upload.py:32 | except ImportError:
+     o192 出力:    scripts/teriha_wp_draft_upload.py:38 | except ImportError:
+     o192 出力:    scripts/teriha_wp_draft_upload.py:44 | except ImportError:
+     o192 出力:    tests/integration/phase5/conftest.py:18 | except ImportError:
+     o192 出力:    tools/midorihon_extractor.py:24 | except ImportError:
+     o192 出力:    tools/midorihon_extractor.py:29 | except ImportError:
+     o192 出力:    tools/midorihon_extractor.py:34 | except ImportError:
+     o192 出力: -- H collect_ignore : 行 1 / file 1 --
+     o192 出力:    tests/conftest.py:1 | collect_ignore_glob = ["fixtures/*"]
+     o192 出力:    [H] tests/conftest.py:1 | collect_ignore_glob = ["fixtures/*"]
+     o192 出力:    [B] tests/integration/phase5/test_5a_immutable.py:33 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残28件 (各テーブル UPDATE+DELETE = 14×2)")
+     o192 出力:    [B] tests/integration/phase5/test_5a_immutable.py:40 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残14件")
+     o192 出力:    [B] tests/integration/phase5/test_5b_column.py:46 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残18件 (4本×5 - 上記2件)")
+     o192 出力:    [B] tests/integration/phase5/test_5c_archive_delete.py:24 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残51件 (archive 52本のうち上記1件以外)")
+     o192 出力:    [B] tests/integration/phase5/test_5d_pii_gated_view.py:19 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残61件 (31本×2 - 上記1件)")
+     o192 出力:    [B] tests/integration/phase5/test_5e_violation_log.py:28 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残2件 (UPDATE/TRUNCATE self-guard)")
+     o192 出力:    [B] tests/integration/phase5/test_5f_override.py:30 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残8件 (begin成功/end成功/二重begin/二重end冪等等)")
+     o192 出力:    [B] tests/integration/phase5/test_5g_schema_guard.py:19 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残4件 (CREATE/DROP protected + non-protected A
+     o192 出力:    [B] tests/integration/phase5/test_phase_a_continuity.py:10 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 全9件 (clinic_scope越境阻止等)")
+     o192 出力:    [B] tests/integration/phase5/test_v21d_self_patch.py:22 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: 残2件 (T193 ack UPDATE / T194 全 5-B 棚卸し)")
+     o192 出力:    [B] tests/integration/phase5/test_v21d_self_patch.py:28 | @pytest.mark.skip(reason="Phase 6 Step 6-2 Phase 2: §14.4.3 全 5-B 対象テーブル GENERATED 列棚卸し")
+     o192 出力:    A importorskip : 3 行 / file 3
+     o192 出力:    C mark.skipif (条件付) : 32 行 / file 15
+     o192 出力:    D pytest.skip( (実行時) : 40 行 / file 20
+     o192 出力:    E mark.xfail : 9 行 / file 3
+     o192 出力:    F pytest.xfail( : 5 行 / file 2
+     o192 出力:    G except ImportError : 30 行 / file 25
+     o192 出力: A importorskip : 依存が入つて居らぬ時 ★試験ごと★ 飛ぶ ⇒ 其の依存に係る回帰が 緑の中で見えぬ。
+     o192 出力: B mark.skip(無条件) : ★常に★ 飛ぶ ⇒ 其の試験が守つて居た筈の振舞が ★誰も見て居らぬ★ まま残る。
+     o192 出力: C mark.skipif : 条件 (OS/env/version/flag) が真の床でのみ飛ぶ ⇒ ★或る床でのみ★ 緑が嘘に成る。
+     o192 出力: D pytest.skip( : 試験の途中で飛ぶ ⇒ ★assert に達する前★ に緑 ―― 半端な検めが全検めに見える。
+     o192 出力: G except ImportError : 取込の失敗を握り潰す ⇒ 版差・欠落が ★試験の外★ へ逃げ 別の形 (fallback) で通る。
+     o192 出力: H collect_ignore : file ごと ★集める前に★ 落ちる ⇒ 数へた試験数そのものが減り 誰も減つた事に気付かぬ。
+     o192 出力: == 第六段 名指し (形ごと path:行 ―― 悉皆) ==
+     o192 出力: [A importorskip] 行 3 / file 3
+     o192 出力: [B mark.skip (無条件)] 行 11 / file 9
+     o192 出力: [C mark.skipif (条件付)] 行 32 / file 15
+     o192 出力: [D pytest.skip( (実行時)] 行 40 / file 20
+     o192 出力: [E mark.xfail] 行 9 / file 3
+     o192 出力: [F pytest.xfail(] 行 5 / file 2
+     o192 出力: [G except ImportError] 行 30 / file 25
+     o192 出力: [H collect_ignore] 行 1 / file 1
+  -- ㋒ 前窓の己の数 (xfail = 51 file) を 打ち直す --
+     今日 os.walk (除外 node_modules/.git/.venv/venv/__pycache__) = ★file 5★
+     /usr/bin/grep -rl (除外 ★無し★) = ★file 51★ / 内 *.py = ★5★ / 内 除外 dir 配下 = ★0★
+     ⇒ ★前窓の 51 は 『除外を掛けぬ grep が 見た file 数』であり 母数が違ふ★ (床(4))
