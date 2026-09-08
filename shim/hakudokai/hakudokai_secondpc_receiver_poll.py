@@ -106,6 +106,9 @@ AGENT_PANES = {
     # 2026-08-03 委員長(canon guardian): 本部長を受信allowlistへ追加。未登録により委員長→本部長のDB配送が
     #     missing_or_invalid_target_agent で構造的に全通落ちしていた(将軍second実測 seq137504)。
     "honbucho": "hermes-honbucho:0.0",
+    # seq293070/293078: Dr-S is a distinct canonical receiver target.
+    # The mapping is delivery metadata only; direct pane send-keys remains disabled by R2.
+    "dr-s": "hermes-drs:0.0",
     # 注: ashigaru1-7 の最終 pane (0.1-0.7) 反映は R3-R9 の各 swap 段で更新予定。
     #     旧 ashigaru8@0.9 は登録撤回 (R0 seq96053) につき AGENT_PANES からも除外。
 }
