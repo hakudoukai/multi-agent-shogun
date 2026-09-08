@@ -1,6 +1,6 @@
 ---
 name: verify-state-before-asserting
-description: 「読んだ物の形」「枝の頭」「remote の実体」「母數」を ★断ずる前に 一 行 で確かめる★。2026-09-08 に家老mac が同型の誤りを 6 度 犯した(manifest の形式 3 度・枝の頭・stale ref・母數)。相手の紙を疑ふ前に 己の読み方を疑ふ為の手順。
+description: 「読んだ物の形」「枝の頭」「remote の実体」「母數」を ★断ずる前に 一 行 で確かめる★。2026-09-08 に家老mac が同型の誤りを 7 度 犯した(manifest の形式 3 度・枝の頭・stale ref・母數)。相手の紙を疑ふ前に 己の読み方を疑ふ為の手順。
 ---
 
 # 断ずる前 に 状態 を確かめる
@@ -48,9 +48,21 @@ git fetch -q origin && git rev-parse --short origin/main
 ```
 ★相手 と母數 が違へば 答 も違ふ ―― 相手 が誤つて 居るのでは無い★。
 
+
+### ⑸ inbox の id を拾ふ前(2026-09-08 追記・★五 度目 の同型★)
+```bash
+# ✗ 悪い: file の ★最後 の id★ を拾ふ(未読 とは限らぬ)
+grep 'id: msg_' queue/inbox/<me>.yaml | tail -1
+# ○ 良い: ★未読 の物 を名指す★
+python3 -c "import yaml;d=yaml.safe_load(open('queue/inbox/<me>.yaml'));m=d.get('messages',d);print([x['id'] for x in m if not x.get('read')])"
+```
+★家老 は `tail -1` で 「読んだ」と言ひ ―― `marked 0 unread 1` が返つた(=★何も 印 して 居らぬ★)。
+★器 が「0 件 に印 した」と言つて 居るのに 己 は「印 した」と思つて 居た★。
+★rc と 件数 を見ずに 次 へ進む のが 此 の型 の芯 で ある。★
+
 ## 過去事例
 
-- 2026-09-08 家老mac が ★同型 の誤り を 6 度★(門書 6 通 に自記)。
+- 2026-09-08 家老mac が ★同型 の誤り を 7 度★(門書 6 通 に自記)。
   詳細: docs/incident_logs/2026-09-08_mac_disk_full_worktree_sprawl.md(併記)
   教訓: ★相手 の紙 を疑ふ 前 に 己 の読み方 を疑へ★。
   ★己 の器 の落ち を 門書 に書く 事 は 恥 では無く 器 の校正 で ある★。
