@@ -38,7 +38,20 @@ if [ "${SWEEPABLE}" -gt 10 ]; then
 fi
 
 # 器 の側: 後始末 が在るか
-GATE="${REPO}/.claude/worktrees/dino-story-engine/frontend/scripts/dino-check-clean.sh"
+# ★2026-09-08 15:2x★: 後始末 は ★main へ merge 済(PR#212)★。lot 枝 の copy は ★未だ 古い★ ゆゑ
+# ★どちら を見るか を選べる★ やう に した(既定= main の物 を git show で見る)。
+# ★lot 枝 の樹 から 8 段 を走らせると 後始末 が効かぬ★ ―― 之 を検 が言へる やうに する。
+GATE_MAIN="$(git -C "${REPO}" show origin/main:frontend/scripts/dino-check-clean.sh 2>/dev/null)"
+GATE_LOT="$(git -C "${REPO}" show origin/mac/dino-story-engine:frontend/scripts/dino-check-clean.sh 2>/dev/null)"
+if [ -n "${GATE_MAIN}" ]; then
+  for k in "sweep_own" "DINO_CLEAN_KEEP" "tmp-dino-clean-"; do
+    printf '%s' "${GATE_MAIN}" | grep -q "${k}" || { echo "[worktree-hygiene] ★警告★ ★main★ の器 に「${k}」が無い"; warn=1; }
+  done
+fi
+if [ -n "${GATE_LOT}" ]; then
+  printf '%s' "${GATE_LOT}" | grep -q "sweep_own" ||     echo "[worktree-hygiene] ★註★ ★lot 枝★ の器 は 後始末 を持たぬ ―― ★lot 樹 から 8 段 を走らせると 樹 が残る★(main 樹 で走らせよ)"
+fi
+GATE=""
 if [ -f "${GATE}" ]; then
   for k in "worktree remove" "KEEP" "tmp-dino-clean-"; do
     grep -q "${k}" "${GATE}" || { echo "[worktree-hygiene] ★警告★ ${GATE##*/} に「${k}」が無い=後始末/上限/名 の限り の何れか が欠ける"; warn=1; }
