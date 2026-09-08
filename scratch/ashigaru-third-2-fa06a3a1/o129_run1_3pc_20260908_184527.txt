@@ -1,0 +1,82 @@
+======================================================================
+### PC=main  rc=0  as_of_local=20260908_184527
+--- stdout ---
+DISKPRESS host=USER-0T4SR8MIQA target=/ total_gib=1006 used_gib=155 pct=15 reason=abs as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED_SUMMARY host=USER-0T4SR8MIQA pc_unmeasured=3 local_skipped=13 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/usr/lib/modules/6.6.87.2-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/run why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=pc:main why=no_route_not_requested as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=pc:second why=no_route_not_requested as_of=2026-09-08T18:45:28+09:00
+DISKUNMEASURED host=USER-0T4SR8MIQA target=pc:mac why=no_route_not_requested as_of=2026-09-08T18:45:28+09:00
+SUMMARY as_of=2026-09-08T18:45:28+09:00 host=USER-0T4SR8MIQA pc_targets_total=4 pc_measured=1 pc_unmeasured=3 local_mounts_seen=15 exceeded=1 unmeasured_lines=16
+NOTE 母数は二つ在り 足し合はせて居らぬ: ★PC の母数(4)★ と ★此の PC の mount の母数(15)★。
+NOTE ★measured=1 は「此の PC のみ」の意であり 残 3 台は unmeasured である（0 ではない）★
+--- stderr ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=USER-0T4SR8MIQA,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-08T18:45:28+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★
+======================================================================
+### PC=second  rc=0  as_of_local=20260908_184527
+--- stdout ---
+DISKPRESS host=USER-O6AK917NTU target=/ total_gib=1006 used_gib=91 pct=9 reason=abs as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED_SUMMARY host=USER-O6AK917NTU pc_unmeasured=3 local_skipped=12 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/usr/lib/modules/6.6.87.2-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/run why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=pc:main why=no_route_not_requested as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=pc:second why=no_route_not_requested as_of=2026-09-08T18:45:29+09:00
+DISKUNMEASURED host=USER-O6AK917NTU target=pc:mac why=no_route_not_requested as_of=2026-09-08T18:45:29+09:00
+SUMMARY as_of=2026-09-08T18:45:29+09:00 host=USER-O6AK917NTU pc_targets_total=4 pc_measured=1 pc_unmeasured=3 local_mounts_seen=14 exceeded=1 unmeasured_lines=15
+NOTE 母数は二つ在り 足し合はせて居らぬ: ★PC の母数(4)★ と ★此の PC の mount の母数(14)★。
+NOTE ★measured=1 は「此の PC のみ」の意であり 残 3 台は unmeasured である（0 ではない）★
+--- stderr ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=USER-O6AK917NTU,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-08T18:45:29+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★
+======================================================================
+### PC=third  rc=0  as_of_local=20260908_184527
+--- stdout ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/run why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1001 why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c-recovery why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-08T18:45:27+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-08T18:45:27+09:00
+SUMMARY as_of=2026-09-08T18:45:27+09:00 host=momizi-dx pc_targets_total=4 pc_measured=1 pc_unmeasured=3 local_mounts_seen=17 exceeded=1 unmeasured_lines=18
+NOTE 母数は二つ在り 足し合はせて居らぬ: ★PC の母数(4)★ と ★此の PC の mount の母数(17)★。
+NOTE ★measured=1 は「此の PC のみ」の意であり 残 3 台は unmeasured である（0 ではない）★
+--- stderr ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-08T18:45:27+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★

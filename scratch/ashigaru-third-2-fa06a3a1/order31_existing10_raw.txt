@@ -1,0 +1,23 @@
+$ cd /home/hakudoukai/a2/wt-fa06a3a1-o31 && python3 -m pytest tests/test_sync_source_cache.py -v -p no:cacheprovider
+--- stdout ---
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+rootdir: /home/hakudoukai/a2/wt-fa06a3a1-o31
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collecting ... collected 10 items
+
+tests/test_sync_source_cache.py::test_changed_only_subset_must_not_mark_unchanged_as_stale PASSED [ 10%]
+tests/test_sync_source_cache.py::test_deleted_file_is_still_detected_as_stale PASSED [ 20%]
+tests/test_sync_source_cache.py::test_non_include_pattern_paths_are_never_deleted PASSED [ 30%]
+tests/test_sync_source_cache.py::test_transient_503_recovers_with_bounded_retry PASSED [ 40%]
+tests/test_sync_source_cache.py::test_persistent_503_classified_transient_not_poison PASSED [ 50%]
+tests/test_sync_source_cache.py::test_persistent_503_no_per_row_fanout_50rows PASSED [ 60%]
+tests/test_sync_source_cache.py::test_http_400_still_classified_as_poison PASSED [ 70%]
+tests/test_sync_source_cache.py::test_errors_cause_nonzero_exit PASSED   [ 80%]
+tests/test_sync_source_cache.py::test_success_returns_zero_exit PASSED   [ 90%]
+tests/test_sync_source_cache.py::test_main_calls_cleanup_with_full_collect_files PASSED [100%]
+
+============================== 10 passed in 1.70s ==============================
+--- stderr ---
+--- rc=0 ---

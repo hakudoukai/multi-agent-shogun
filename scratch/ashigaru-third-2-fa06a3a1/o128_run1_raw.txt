@@ -1,0 +1,60 @@
+# o128 生出力 as_of=2026-09-08T18:16:06
+# 器=scripts/sweeps/audit_disk_pressure.sh (163 行 e8cfd4340ecb4419)
+# ★走の数へ方★: 器 1 本の走行＝走 1。下は ★走 2★（走A=selftest-only／走B=実測）。
+
+=== 走A --selftest-only / rc=0 ===
+--- stdout (0 行) ---
+(★空★=黙つた)
+--- stderr (1 行) ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=225,used_gib=99,pct=44,reason=abs,as_of=2026-09-08T18:16:06+09:00 negative=silent note=★合成値であり実測に非ず★
+
+=== 走B --report / rc=0 ===
+--- stdout (22 行) ---
+DISKUNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-08T18:16:06+09:00
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1001 why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c-recovery why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-08T18:16:06+09:00
+SUMMARY as_of=2026-09-08T18:16:06+09:00 host=momizi-dx pc_targets_total=4 pc_measured=1 pc_unmeasured=3 local_mounts_seen=17 exceeded=1 unmeasured_lines=18
+NOTE 母数は二つ在り 足し合はせて居らぬ: ★PC の母数(4)★ と ★此の PC の mount の母数(17)★。
+NOTE ★measured=1 は「此の PC のみ」の意であり 残 3 台は unmeasured である（0 ではない）★
+--- stderr (1 行) ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=225,used_gib=99,pct=44,reason=abs,as_of=2026-09-08T18:16:06+09:00 negative=silent note=★合成値であり実測に非ず★
+
+=== 走C 引数なし（静かさの検め） / rc=0 ===
+--- stdout (19 行) ---
+DISKUNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-08T18:16:06+09:00
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1001 why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c-recovery why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-08T18:16:06+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-08T18:16:06+09:00
+--- stderr (1 行) ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=225,used_gib=99,pct=44,reason=abs,as_of=2026-09-08T18:16:06+09:00 negative=silent note=★合成値であり実測に非ず★

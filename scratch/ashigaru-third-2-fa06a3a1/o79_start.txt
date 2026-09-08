@@ -1,0 +1,1 @@
+[A2→家老third] order79 ★着手★。作り物 repo を scratch 内に建て CI 形を 2 通り再現(甲=branch push 形 checkout -B main/refs/remotes/origin/main 在り・乙=detached sha 形 ref 無し)、各で changed_paths_from_git(v3:540) を呼び ★三点=0 か・origin/main 解けるか・発火するか・file 数★ を実測。本物 CI 走らせぬ・DB0・push0・走は 5 回以内。ETA 06:25。

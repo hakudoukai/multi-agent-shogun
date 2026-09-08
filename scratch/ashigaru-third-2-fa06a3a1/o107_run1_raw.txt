@@ -1,0 +1,45 @@
+== 窓（本弾は右端を ★一枚目の刻★ に取る ―― 比べる相手が 334→346 ゆゑ）==
+左端 2026-09-08T09:18:54+09:00（代用・o98 の器 mtime）/ 右端 2026-09-08T10:20:05+09:00（一枚目 mtime）
+
+== ★測る前に置く（値切り）★ ==
+・窓の内に生れて ★窓の内に消えた★ ref は 名が残らぬ ∴ 本器には掛からぬ。
+・同じく ★窓の左端に在つて 一枚目より前に消えた★ ref も 名が残らぬ（＝下の D）。
+・∴ ★復元率 100 でなければ 同集合の証にはならぬ★ ―― 数が合うても『合うた』としか書かぬ。
+・左端は今も ★代用★（o98 が生出力を残さなんだ）。
+
+== 一枚目 ==
+ref 346 本 / file o103_refs_20260908_102005.txt
+packed-refs mtime 2026-09-08T08:44:30+09:00 / 載る ref 330 本
+
+== 分け（一枚目 346 本）==
+窓の内に生れた   : 12 本
+窓より前から在つた: 334 本
+★何れの器でも決まらぬ★: 0 本
+合計 346 ＝ 一枚目 346（★足して合ふ事を確かめた★）
+刻の出所: reflog 212 / loose 2 / packed(前と決まる) 132
+
+== 窓の内に生れた ref の名 ==
+  refs/heads/docs/gitattributes-audits-whitespace-20260908                 reflog
+  refs/heads/drx/18583b160-tip-evidence-20260908                           reflog
+  refs/heads/drx/5188309a-packet-revise-20260908                           reflog
+  refs/heads/dry/reserveimage-b2154da8-evidence-20260908                   loose
+  refs/heads/karo-third/a3-bundle-fix4-pin-20260908                        reflog
+  refs/remotes/origin/docs/dino-b5-21-evidence-20260908                    reflog
+  refs/remotes/origin/docs/gitattributes-audits-whitespace-20260908        reflog
+  refs/remotes/origin/drs/s6-fixed-evidence                                reflog
+  refs/remotes/origin/dry/reserveimage-b2154da8-evidence-20260908          reflog
+  refs/remotes/origin/karo-main/47a5c156-warning-v6-wiring-on-main         reflog
+  refs/remotes/origin/karo-main/a2ad06aa-selected-codes-nonempty-on-main   reflog
+  refs/remotes/origin/karo-third/a3-bundle-fix4-pin-20260908               reflog
+
+== 引き（本弾＝前弾の 12 と）==
+本弾(右端 2026-09-08T10:20:05+09:00) 12 本 / 前弾(右端 2026-09-08T10:05:38+09:00) 12 本
+両方に在る 12 / 本弾のみ 0 / 前弾のみ 0
+
+== 334 との突き合はせ ==
+窓の左端に在つて 一枚目迄 生き残つた ref S = 346 - 12 = 334
+o98 が数へた 334 との差 D = 334 - S = 0  … ★窓の左端に在つて 一枚目より前に消えた ref の数★
+（D は数のみ ―― ★名は残らぬ★。D が 0 でなければ『増えた 12 本＝生れた 12 本』とは言へぬ）
+
+名の一覧: o107_born_20260908_110009.txt / 14 行 / eba42e26e0d35059
+決まらぬ 0 本（在れば名を下に）

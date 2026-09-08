@@ -1,0 +1,25 @@
+rc=1
+..............................F...                                       [100%]
+=================================== FAILURES ===================================
+__________ test_shallow_depth1_on_tip_stops_instead_of_returning_zero __________
+
+mod = <module 'sync_source_cache_under_test' from '/home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-2-fa06a3a1/o84_mutation/scripts/sync_source_cache.py'>
+tmp_path = PosixPath('/tmp/pytest-of-hakudoukai/pytest-17/test_shallow_depth1_on_tip_sto0')
+capsys = <_pytest.capture.CaptureFixture object at 0x7782193df6e0>
+
+    def test_shallow_depth1_on_tip_stops_instead_of_returning_zero(mod, tmp_path, capsys):
+        """★陽性★: 親を持つ HEAD を depth=1 で clone → 第一親が解けぬ → 0 本を返さず止まる。"""
+        up = _upstream(tmp_path, "up_tip", [
+            ("base", "scripts/base.py", "b = 1\n"),
+            ("second", "scripts/second.py", "s = 1\n"),
+        ])
+        ws = _clone(tmp_path, up, "ws_tip_d1", 1)
+>       with pytest.raises(SystemExit) as ei:
+E       Failed: DID NOT RAISE <class 'SystemExit'>
+
+tests/test_sync_source_cache.py:679: Failed
+=========================== short test summary info ============================
+FAILED tests/test_sync_source_cache.py::test_shallow_depth1_on_tip_stops_instead_of_returning_zero
+1 failed, 33 passed in 0.97s
+
+--- STDERR ---

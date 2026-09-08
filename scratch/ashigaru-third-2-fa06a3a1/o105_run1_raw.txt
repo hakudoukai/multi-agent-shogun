@@ -1,0 +1,36 @@
+== 窓 ==
+左端 = 2026-09-08T09:18:54+09:00 ★代用（o98 の器 mtime ―― o98 は生出力を残さなんだ＝己の疵）★
+右端 = 2026-09-08T10:05:38+09:00 ★o102 の生出力 mtime（前回は便の刻 10:03 頃を使つた ―― 今回 切り直した）★
+差 = 46.7 分（前回の窓は およそ 44 分・今回 46.7 分）
+
+== 現 ref = 353 本（二枚目 o103_refs_20260908_102945.txt を正とする） ==
+== (1) reflog の内訳（★落とした物も名で刷る★） ==
+初出刻を讀めた = ★219★ / 空(0byte) = ★112★ / 一行目に tab 無し = ★7★ / file 其の物が無い = ★15★ / 其の他の例外 = ★0★
+  合計 353 ＝ 現 ref 353（★足して合ふ事を確かめた★）
+  -- 空(0byte) の名（先頭 8）: refs/heads/ashigaru-third-5/p1_blue_book_11_reproduction, refs/heads/ashigaru-third-5/p1_dinosaur_app_audit_docs_dr3, refs/heads/ashigaru-third-5/p1_evidence_cycle9_regression, refs/heads/ashigaru-third-5/p1_seed_repro_11patients, refs/heads/ashigaru-third-5/p2_ekartev6_step8_9_handover_spec, refs/heads/ashigaru-third-5/sub_tc_events_phase1, refs/heads/ashigaru-third-6/sub_ekv3_b_region_state_wiring, refs/heads/ashigaru-third-6/sub_ekv3_modeA_input_screen …他 104
+  -- tab 無し の名（先頭 8）: refs/heads/a1/handover-seed-token-evidence-20260908, refs/heads/a2-14c8ec72-fixed, refs/heads/dry/handover-p0-landing-20260908, refs/heads/dry/reserveimage-75c99606-raw-bundle, refs/heads/dry/reserveimage-77a10783-audit-bundle, refs/heads/dry/reserveimage-b2154da8-evidence-20260908, refs/heads/karo-third/a2-14c8ec72-fixed
+  -- file 無し の名（先頭 8）: refs/jinji/dd209-standalone, refs/pull/59/head, refs/pull/68/head, refs/pull/69/head, refs/remotes/origin/feature/desktop-rescue-20260427, refs/remotes/origin/feature/image-management-p2, refs/remotes/origin/feature/second-pc-work-history-20260427, refs/tags/archive/ashigaru-third-5-p1-evidence-cycle9-regression …他 7
+
+== (2) reflog の初出刻で 窓に入る ref = ★11 本★ ==
+   refs/remotes/origin/karo-main/47a5c156-warning-v6-wiring-on-main  (2026-09-08T09:29:21+09:00)
+   refs/heads/docs/gitattributes-audits-whitespace-20260908  (2026-09-08T09:29:33+09:00)
+   refs/remotes/origin/docs/gitattributes-audits-whitespace-20260908  (2026-09-08T09:30:20+09:00)
+   refs/remotes/origin/drs/s6-fixed-evidence  (2026-09-08T09:34:51+09:00)
+   refs/remotes/origin/karo-main/a2ad06aa-selected-codes-nonempty-on-main  (2026-09-08T09:34:51+09:00)
+   refs/heads/karo-third/a3-bundle-fix4-pin-20260908  (2026-09-08T09:36:31+09:00)
+   refs/heads/drx/5188309a-packet-revise-20260908  (2026-09-08T09:38:35+09:00)
+   refs/heads/drx/18583b160-tip-evidence-20260908  (2026-09-08T09:45:03+09:00)
+   refs/remotes/origin/karo-third/a3-bundle-fix4-pin-20260908  (2026-09-08T09:47:36+09:00)
+   refs/remotes/origin/dry/reserveimage-b2154da8-evidence-20260908  (2026-09-08T09:52:21+09:00)
+   refs/remotes/origin/docs/dino-b5-21-evidence-20260908  (2026-09-08T10:03:20+09:00)
+
+== (3) 刻を持たぬ 134 本を loose file の mtime で当て直す ==
+loose file が在り刻を当てられた = ★2★ / packed 等で loose file が無く ★何れの器でも刻を持たぬ★ = ★132★
+うち 窓に入る = ★1 本★
+   refs/heads/dry/reserveimage-b2154da8-evidence-20260908  (loose mtime 2026-09-08T09:48:46+09:00)
+★註★ mtime は ★書かれた刻★ ―― 上書きでも動く ∴ 『生れた刻』の ★代用★ である。
+
+== 答 ==
+前回（o104）= ★12 本★（窓の右端＝便の刻・reflog のみ・空 log は黙つて落ちた）
+今回（o105）= reflog 由来 ★11 本★ ＋ loose mtime 由来 ★1 本★ ＝ ★12 本★
+★何れの器でも刻を持たぬ ref が 132 本 在る ∴ 本数は なほ ★下振れ★ である。★

@@ -1,0 +1,26 @@
+$ git rev-parse a2-fa06a3a1-sync-rewrite-v2
+d4760d0556a4da05351c5dab361862a8b056a7bc
+(rc=0)
+$ git branch --contains d4760d055
++ a2-fa06a3a1-sync-rewrite-v2
+(rc=0)
+$ git worktree list
+/mnt/c/DentalBI                           59ef7ecd0 [wp-a1-a3-3-20260723]
+/home/hakudoukai/a1/wt-f1-backend         50f9b54d5 (detached HEAD)
+/home/hakudoukai/a1/wt-handover-fe        9c7bea4a8 [a1-handover-fe-e9aa24a8]
+/home/hakudoukai/a2/wt-964a06d0-d3adf65b  d3adf65b9 (detached HEAD)
+/home/hakudoukai/a2/wt-fa06a3a1-o31       d4760d055 [a2-fa06a3a1-sync-rewrite-v2]
+/home/hakudoukai/jinji/wt-name-package    eec5e0a1d (detached HEAD)
+(rc=0)
+$ git worktree remove /home/hakudoukai/a2/wt-fa06a3a1-o31
+(rc=0)
+$ git worktree list
+/mnt/c/DentalBI                           59ef7ecd0 [wp-a1-a3-3-20260723]
+/home/hakudoukai/a1/wt-f1-backend         50f9b54d5 (detached HEAD)
+/home/hakudoukai/a1/wt-handover-fe        9c7bea4a8 [a1-handover-fe-e9aa24a8]
+/home/hakudoukai/a2/wt-964a06d0-d3adf65b  d3adf65b9 (detached HEAD)
+/home/hakudoukai/jinji/wt-name-package    eec5e0a1d (detached HEAD)
+(rc=0)
+$ git rev-parse a2-fa06a3a1-sync-rewrite-v2
+d4760d0556a4da05351c5dab361862a8b056a7bc
+(rc=0)

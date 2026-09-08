@@ -1,0 +1,62 @@
+# o128 生出力 其の二 as_of=2026-09-08T18:17:45
+# 器=scripts/sweeps/audit_disk_pressure.sh (181 行 13ed8bd8163bc5b3)  ※其の一(60 行 f0efab257a47ebc1)は ★書き換へず★ 残す
+# ★走の数へ方★: 器 1 本の走行＝走 1。此の紙は ★走 6★（D,E と 閾値の掃き 4 本）。
+# ★通算★: 走A/B/C（其の一）＋走D..I（此処）＝ ★走 9★。
+
+=== 走D 既定（食ひ違ひ①の手当の後） / rc=0 / env=(既定) ===
+--- stdout 2 行 ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:17:45+09:00
+--- stderr 1 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=225,used_gib=99,pct=44,reason=abs,as_of=2026-09-08T18:17:45+09:00 negative=silent note=★合成値であり実測に非ず★
+
+=== 走E --report（内訳も） / rc=0 / env=(既定) ===
+--- stdout 23 行 ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1001 why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c-recovery why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-08T18:17:45+09:00
+SUMMARY as_of=2026-09-08T18:17:45+09:00 host=momizi-dx pc_targets_total=4 pc_measured=1 pc_unmeasured=3 local_mounts_seen=17 exceeded=1 unmeasured_lines=18
+NOTE 母数は二つ在り 足し合はせて居らぬ: ★PC の母数(4)★ と ★此の PC の mount の母数(17)★。
+NOTE ★measured=1 は「此の PC のみ」の意であり 残 3 台は unmeasured である（0 ではない）★
+--- stderr 1 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=225,used_gib=99,pct=44,reason=abs,as_of=2026-09-08T18:17:45+09:00 negative=silent note=★合成値であり実測に非ず★
+
+=== 走 閾abs=80GiB / rc=0 / env={'DP_ABS_MAX_GIB': '80'} ===
+--- stdout 2 行 ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:17:45+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:17:45+09:00
+
+=== 走 閾abs=100GiB / rc=3 / env={'DP_ABS_MAX_GIB': '100'} ===
+--- stdout 0 行 ---
+(★空★=黙つた)
+
+=== 走 閾abs=200GiB / rc=3 / env={'DP_ABS_MAX_GIB': '200'} ===
+--- stdout 0 行 ---
+(★空★=黙つた)
+
+=== 走 閾abs=300GiB / rc=3 / env={'DP_ABS_MAX_GIB': '300'} ===
+--- stdout 0 行 ---
+(★空★=黙つた)
+
+# ★閾値の掃きの読み（数のみ・判ずるは軍師third）★
+#   此の床の / は total 1006GiB / used 244GiB / pct 24。
+#   ∴ 既定 abs=80GiB では ★常に當たる★ ⇒ 『静かな時は黙る』が此の床では成立たぬ。
+#   ★『當たつた＝圧が高い』ではない★ ―― 當たつたのは ★閾の据ゑ方★ の帰結である。
+#   ★己は既定を動かさぬ★（都合で閾を動かせば 何とでも書ける）。並べて渡すのみ。

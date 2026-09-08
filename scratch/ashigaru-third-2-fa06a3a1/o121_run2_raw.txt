@@ -1,0 +1,76 @@
+★見込み（走る前に便で送つた・実測より先に刷る）★ 帯を含む dir のうち ★『前』が 0.80★ ―― ★実測はこの下★
+★『立つ』側の判定は置かぬ★（(d)の限り ―― 立つても ㋐ は落ちぬ。結びに再掲）
+母数(引継) 345 ／ 帯 200 ／ 別刻 145
+★門（§18-4 と同じ母数）★ 空 112 本 ／ 幅 0.641497 秒
+掃きの帯（分類に使ふ）: 09-07 10:39:53.007238 〜 09-07 10:39:53.658297 ／ 幅 0.6511 秒 ／ 取れた 198 ／ ★取れぬ 2 本 ['refs/remotes/origin/pr-71-review', 'refs/remotes/origin/pr69']★
+dir 総数（logs/refs 以下）60 ／ 帯を含む dir 37 ／ 含まぬ dir 23
+★帯を含む dir★ dir 37 ―― 前 0 ／ 中 20 ／ 後 17 ＝ 前の率 0.0000
+   refs/heads                         本 30  09-08 13:15:51.689899  ★後★
+   refs/heads/ashigaru-third-5        本  6  09-07 10:39:53.033827  ★中★
+   refs/heads/ashigaru-third-6        本  2  09-07 10:39:53.039826  ★中★
+   refs/heads/claude                  本  3  09-07 10:39:53.048374  ★中★
+   refs/heads/codex                   本  2  09-07 10:39:53.055436  ★中★
+   refs/heads/docs                    本  1  09-08 10:27:45.590443  ★後★
+   refs/heads/drm                     本  1  09-07 10:39:53.062439  ★中★
+   refs/heads/drx                     本  3  09-08 09:45:03.748757  ★後★
+   refs/heads/dry                     本  3  09-08 12:22:38.979738  ★後★
+   refs/heads/iincho                  本 20  09-07 16:29:30.371381  ★後★
+   refs/heads/rescue                  本  1  09-07 10:39:53.191175  ★中★
+   refs/remotes                       本  1  09-07 18:02:29.368226  ★後★
+   refs/remotes/macrepo               本  1  09-07 10:39:53.236816  ★中★
+   refs/remotes/origin                本 24  09-08 14:19:10.887350  ★後★
+   refs/remotes/origin/a3-3           本  1  09-07 10:39:53.245330  ★中★
+   refs/remotes/origin/ashigaru-third-1 本 10  09-07 10:39:53.270513  ★中★
+   refs/remotes/origin/ashigaru-third-2 本  3  09-07 10:39:53.278160  ★中★
+   refs/remotes/origin/ashigaru-third-3 本  7  09-07 10:39:53.295980  ★中★
+   refs/remotes/origin/ashigaru-third-4 本  8  09-07 10:39:53.317103  ★中★
+   refs/remotes/origin/ashigaru-third-5 本  7  09-07 10:39:53.337051  ★中★
+   refs/remotes/origin/ashigaru-third-6 本  5  09-07 10:39:53.352389  ★中★
+   refs/remotes/origin/ashigaru-third-7 本  5  09-07 10:39:53.365976  ★中★
+   refs/remotes/origin/codex          本  3  09-07 10:39:53.379153  ★中★
+   refs/remotes/origin/docs           本  1  09-08 14:29:50.762194  ★後★
+   refs/remotes/origin/drm            本  1  09-08 12:58:50.951308  ★後★
+   refs/remotes/origin/drs            本 10  09-08 12:20:54.691810  ★後★
+   refs/remotes/origin/drx            本  2  09-08 07:43:51.312387  ★後★
+   refs/remotes/origin/dry            本  2  09-08 12:27:20.487180  ★後★
+   refs/remotes/origin/feat           本 10  09-08 01:27:10.972636  ★後★
+   refs/remotes/origin/feature        本  1  09-07 10:39:53.480931  ★中★
+   refs/remotes/origin/fix            本  1  09-08 14:33:24.642514  ★後★
+   refs/remotes/origin/handover       本  1  09-07 10:39:53.491277  ★中★
+   refs/remotes/origin/jinji          本  3  09-08 03:59:08.640730  ★後★
+   refs/remotes/origin/karo-main      本 14  09-08 14:19:10.886348  ★後★
+   refs/remotes/origin/mac            本  4  09-08 12:38:08.461873  ★後★
+   refs/remotes/origin/rescue         本  2  09-07 10:39:53.613003  ★中★
+   refs/remotes/origin/stage1         本  1  09-07 10:39:53.619522  ★中★
+★帯を含まぬ dir（対照・走る前に足した）★ dir 23 ―― 前 0 ／ 中 0 ／ 後 23 ＝ 前の率 0.0000
+   refs                               本  1  09-08 04:29:59.264765  ★後★
+   refs/heads/a1                      本  6  09-08 08:04:49.544773  ★後★
+   refs/heads/a2                      本  5  09-08 07:45:32.660189  ★後★
+   refs/heads/a3                      本  4  09-08 08:41:56.946477  ★後★
+   refs/heads/env                     本  0  09-08 13:15:51.692901  ★後★
+   refs/heads/jinji                   本  3  09-08 03:46:38.234098  ★後★
+   refs/heads/karo-third              本  2  09-08 12:41:28.090376  ★後★
+   refs/remotes/origin/a1             本  6  09-08 08:12:56.718299  ★後★
+   refs/remotes/origin/a2             本  5  09-08 07:50:29.760423  ★後★
+   refs/remotes/origin/a3             本  4  09-08 08:44:36.578999  ★後★
+   refs/remotes/origin/chore          本  2  09-08 07:55:57.188399  ★後★
+   refs/remotes/origin/iincho         本  1  09-07 16:38:49.621406  ★後★
+   refs/remotes/origin/integ          本  1  09-08 09:04:10.347192  ★後★
+   refs/remotes/origin/karo-third     本  2  09-08 13:34:46.312419  ★後★
+   refs/remotes/origin/lot127         本  1  09-08 06:58:15.489769  ★後★
+   refs/remotes/origin/lot130         本  1  09-08 10:38:58.543547  ★後★
+   refs/remotes/origin/lot137         本  0  09-08 14:19:10.887350  ★後★
+   refs/remotes/origin/lot137-130-66  本  0  09-08 12:06:38.670125  ★後★
+   refs/remotes/origin/lot137c        本  1  09-08 10:38:58.545548  ★後★
+   refs/remotes/origin/lot137d        本  1  09-08 10:38:58.547561  ★後★
+   refs/remotes/origin/lot66          本  1  09-08 10:38:58.548602  ★後★
+   refs/remotes/origin/test           本  1  09-08 11:52:45.713402  ★後★
+   refs/remotes/xrecut                本  1  09-07 18:02:29.370738  ★後★
+★外れる形の判定★ 『中』か『後』が 37 ／ 過半 19 ―― ★当て落ち★
+   ［見込 0.80 ／ 実測 0.0000 ／ 差 -0.8000］
+★対照との差★ 帯 dir の前の率 0.0000 ／ 対照 0.0000 ／ ★差 +0.0000★
+★三択語★ ①降ろす ②保留の儘 ③濃くする ―― 本弾は ★①降ろす（外れる形に當たつた）★
+★結び(b)★ 誤りの向きは ★『後』へ偏る側のみ★ ∴ ★『前』は 誤りに逆らつて出た数★（家老の条・弱い証と強い証を分ける）
+★結び(d)★ 立つ側は弱い ―― ★㋐（掃いた者が readdir を辿つた）を落とさぬ★
+★㋑-2（truncate）が落ちなかつたのは ★弱いから★ ではなく ★試が届かぬから★★
+名の一覧: scratch/ashigaru-third-2-fa06a3a1/o121_dirmtime_20260908_143420.txt (61 行)

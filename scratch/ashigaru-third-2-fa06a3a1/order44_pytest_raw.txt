@@ -1,0 +1,7 @@
+$ cd /home/hakudoukai/a2/wt-v3-main
+$ python3 -m pytest tests/test_sync_source_cache.py -p no:cacheprovider --basetemp=<自席 scratch>/pytest_o44 -rsxX -q
+...........................                                              [100%]
+27 passed in 0.80s
+pytest rc=0
+# 註: 走は 1 度のみ。本 file は其の 1 走の出力を写した物であり、2 度目は走らせて居らぬ。
+# -rsxX 指定ゆゑ skip/xfail が在れば 1 行づつ出る ―― 出て居らぬ ∴ skip 0・fail 0・error 0。

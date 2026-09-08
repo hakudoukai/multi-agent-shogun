@@ -1,0 +1,88 @@
+# o128 生出力 其の四（★之が 判定に供する最終の走★） as_of=2026-09-08T18:21:43
+# 器=scripts/sweeps/audit_disk_pressure.sh (211 行 fa0e3922b9d8534e)
+# ※其の一 f0efab257a47ebc1 ／其の二 c1af8c93096470e7 ／其の三 7ba2b7c973270690 は ★書き換へず★ 残す
+# ★問ひ★: 対照が ★在り得る値★ に成つた後も 閾を動かして器は死なぬか・pct>total が消えたか。
+# ★外れる形★: 何れかで rc≠0 ／ used_gib>total_gib が一つでも残れば ★立たず★ と書く。
+# ★此の紙は 走 6★。★通算★: 3+6+6+6 ＝ ★走 21★。
+
+=== 走 既定 / rc=0 ===
+--- stdout 2 行 ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:21:43+09:00
+--- stderr 2 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-08T18:21:43+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★
+
+=== 走 abs=100 / rc=0 ===
+--- stdout 2 行 ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:21:43+09:00
+--- stderr 2 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=200,used_gib=200,pct=100,reason=pct+abs,as_of=2026-09-08T18:21:43+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=SILENT abs_max_gib=100 pct_max=85 note=★令の指定値は今の閾では當たらぬ(閾が99GiBより上)・exitは止めぬ・開示済★
+
+=== 走 abs=300 / rc=0 ===
+--- stdout 1 行 ---
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:21:43+09:00
+--- stderr 2 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=400,used_gib=400,pct=100,reason=pct+abs,as_of=2026-09-08T18:21:43+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=SILENT abs_max_gib=300 pct_max=85 note=★令の指定値は今の閾では當たらぬ(閾が99GiBより上)・exitは止めぬ・開示済★
+
+=== 走 abs=9000 pct=99 / rc=0 ===
+--- stdout 1 行 ---
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:21:43+09:00
+--- stderr 2 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=9100,used_gib=9100,pct=100,reason=pct+abs,as_of=2026-09-08T18:21:43+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=SILENT abs_max_gib=9000 pct_max=99 note=★令の指定値は今の閾では當たらぬ(閾が99GiBより上)・exitは止めぬ・開示済★
+
+=== 走 pct=101（在り得ぬ閾） / rc=0 ===
+--- stdout 2 行 ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:21:43+09:00
+--- stderr 2 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=abs,as_of=2026-09-08T18:21:43+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=101 note=★令の指定値は今の閾で當たる★
+
+=== 走 --report / rc=0 ===
+--- stdout 23 行 ---
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=244 pct=24 reason=abs as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=15 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/run why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1001 why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c-recovery why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-08T18:21:43+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-08T18:21:43+09:00
+SUMMARY as_of=2026-09-08T18:21:43+09:00 host=momizi-dx pc_targets_total=4 pc_measured=1 pc_unmeasured=3 local_mounts_seen=17 exceeded=1 unmeasured_lines=18
+NOTE 母数は二つ在り 足し合はせて居らぬ: ★PC の母数(4)★ と ★此の PC の mount の母数(17)★。
+NOTE ★measured=1 は「此の PC のみ」の意であり 残 3 台は unmeasured である（0 ではない）★
+--- stderr 2 行 ---
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-08T18:21:43+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★
+
+# ★答★
+#   rc = {'既定': 0, 'abs=100': 0, 'abs=300': 0, 'abs=9000 pct=99': 0, 'pct=101（在り得ぬ閾）': 0, '--report': 0} ⇒ ★rc≠0 は 0 本★
+#   used_gib>total_gib の當たり ＝ ★0 件★ (無し)
+#   ⇒ ★立つた★
+#
+# ★之で示せた事／示せて居らぬ事（分けて書く）★
+#   示せた …… ①判定核は 陽性で行を出し 陰性で黙る（閾を動かしても・在り得る値で）
+#              ②母数を二つに分けて出す（PC の母数 4／此の PC の mount の母数 17）
+#              ③測れなかつたを ★0 と書かず★ unmeasured として別に出す（pc 3／local 15）
+#              ④third の実測は ★母数の 1/4★（pc_measured=1 / pc_targets_total=4）
+#   示せて居らぬ … ㋐★4PC の圧の実態★（3 台は経路を打つて居らぬ ∴ ★数が無い★・0 ではない）
+#              ㋑★閾の値が正しいか★（80GiB は此の床の / に常時當たる ―― 選ぶは判ずる者）
+#              ㋒★second vhdx の実測★（Windows 側 file ゆゑ 当席は讀めぬ・225/99 は ★合成値★）
+#              ㋓★圧の増え方★（df は瞬間値）

@@ -1,0 +1,8 @@
+$ cd /home/hakudoukai/a2/wt-v3-1fbd0aa0 (branch a2-fa06a3a1-sync-rewrite-v3 @ 3155e8dc0893f3ff40eb809d9fcae0c08f97875c)
+$ python3 -m pytest tests/test_sync_source_cache.py -p no:cacheprovider --basetemp=/home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-2-fa06a3a1/pytest-basetemp -rsxX -q
+[rc=0]
+--- stdout ---
+...........................                                              [100%]
+27 passed in 0.66s
+
+--- stderr ---

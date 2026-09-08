@@ -1,0 +1,8 @@
+INSERT INTO source_code_cache (file_path, content, line_count, file_size, commit_hash, updated_at)
+VALUES ('.claude/agents/audit-verify.md', '---
+name: audit-verify
+model: claude-opus-4-6
+description: |
+  Use this agent AFTER implementation is reported as complete.
+  Trigger when: verifying completed work, checking for stubs or incomplete code,
+  running post-completion audits, or when DN-E4 preve

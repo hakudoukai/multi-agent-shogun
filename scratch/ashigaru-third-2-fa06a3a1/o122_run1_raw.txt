@@ -1,0 +1,7 @@
+★見込み（走る前に便で送つた・実測より先に刷る）★ (ア)0.35 ／ (イ)0.05 以下 ／ truncate 群 不動 0.95 ／ 再作成群 移動 0.80 ―― ★実測はこの下★
+作つた本数 200 ／ reflog file 201
+Traceback (most recent call last):
+  File "/home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-2-fa06a3a1/o122_ext4_control_probe.py", line 59, in <module>
+    assert len(created) == 200 and len(made) == 200, "★門: 200 本でない ―― 止まる★"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ★門: 200 本でない ―― 止まる★

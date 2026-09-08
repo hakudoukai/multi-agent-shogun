@@ -1,0 +1,32 @@
+$ git -C /mnt/c/DentalBI rev-parse HEAD
+59ef7ecd087e51788a04d6d1a6dda29233b05dc0
+rc=0
+
+$ git log --oneline 8daf47ad..HEAD -- scripts/sync_source_cache.py tests/test_sync_source_cache.py
+rc=0
+
+$ git rev-list --count 8daf47ad..HEAD
+17
+rc=0
+
+$ git merge-base --is-ancestor 254dd9cfb HEAD
+rc=0
+
+$ git apply --check -v <patch v2>  (in wt-o34-applycheck)
+Checking patch scripts/sync_source_cache.py...
+Checking patch tests/test_sync_source_cache.py...
+rc=0
+
+$ git apply --stat <patch v2>
+ scripts/sync_source_cache.py    |  223 +++++++++++++++++++++++++++++++++++++-
+ tests/test_sync_source_cache.py |  227 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 440 insertions(+), 10 deletions(-)
+rc=0
+
+$ git status --porcelain (apply 後)
+rc=0
+
+$ git rev-parse HEAD (wt)
+59ef7ecd087e51788a04d6d1a6dda29233b05dc0
+rc=0
+

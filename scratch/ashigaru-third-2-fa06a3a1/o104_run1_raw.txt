@@ -1,0 +1,49 @@
+== (A) 二枚目を落とす（o103 の器を再走） ==
+落とした file 名 = o103_refs_20260908_102945.txt
+本数 = ★353 本★ / 行数 = 356（頭の註 3 行を含む） / sha256:16 = e9b274c45956dc58
+前置き別: refs/remotes/origin=217, refs/heads=120, refs/tags=8, refs/pull=3, refs/jinji=1, refs/remotes/macrepo=1, refs/remotes/pr59=1, refs/remotes/xrecut=1, refs/stash=1
+★本器は名を落とすのみ ―― 増減の判定は為して居らぬ（比べる相手が無い＝之が一枚目ゆゑ）。★
+一枚目 = o103_refs_20260908_102005.txt / 二枚目 = o103_refs_20260908_102945.txt
+間隔 = 9.7 分
+
+== (B) 紙 §10-2 の三つを逐語で実走 ==
+-- ㋑ 増えた ref の名 : rc=0 / ★7 件★
+   refs/heads/docs/cdc-rollback-truth-20260908
+   refs/heads/docs/ruling-precedents-20260908
+   refs/heads/docs/ruling-precedents-fix-20260908
+   refs/remotes/origin/docs/cdc-rollback-truth-20260908
+   refs/remotes/origin/docs/ruling-precedents-20260908
+   refs/remotes/origin/docs/ruling-precedents-fix-20260908
+   refs/remotes/origin/karo-main/64b06723-ko2-hindo-uke-on-main
+-- ㋺ 消えた ref の名 : rc=0 / ★0 件★（0 件）
+-- ㋩ 名は同じで先が動いた ref : rc=0 / ★3 件★
+   refs/remotes/origin/HEAD  a8806a494 -> f3aa6cd31
+   refs/remotes/origin/mac/dino-story-engine  10f61f68f -> 84330cf24
+   refs/remotes/origin/main  a8806a494 -> f3aa6cd31
+
+== (C) 12 本の名は ①/②/③ の何れか ―― reflog の初出刻で測る ==
+o98 の刻（代用＝器の mtime）= 2026-09-08T09:18:54+09:00
+現 ref = 353 本 / reflog 初出を讀めた = 226 / reflog 無し = ★127★
+o98 の刻より ★後に生れた★ ref = ★19 本★
+   refs/remotes/origin/karo-main/47a5c156-warning-v6-wiring-on-main  (初出 2026-09-08T09:29:21+09:00)
+   refs/heads/docs/gitattributes-audits-whitespace-20260908  (初出 2026-09-08T09:29:33+09:00)
+   refs/remotes/origin/docs/gitattributes-audits-whitespace-20260908  (初出 2026-09-08T09:30:20+09:00)
+   refs/remotes/origin/drs/s6-fixed-evidence  (初出 2026-09-08T09:34:51+09:00)
+   refs/remotes/origin/karo-main/a2ad06aa-selected-codes-nonempty-on-main  (初出 2026-09-08T09:34:51+09:00)
+   refs/heads/karo-third/a3-bundle-fix4-pin-20260908  (初出 2026-09-08T09:36:31+09:00)
+   refs/heads/drx/5188309a-packet-revise-20260908  (初出 2026-09-08T09:38:35+09:00)
+   refs/heads/drx/18583b160-tip-evidence-20260908  (初出 2026-09-08T09:45:03+09:00)
+   refs/remotes/origin/karo-third/a3-bundle-fix4-pin-20260908  (初出 2026-09-08T09:47:36+09:00)
+   refs/heads/dry/reserveimage-b2154da8-evidence-20260908  (初出 2026-09-08T09:48:46+09:00)
+   refs/remotes/origin/dry/reserveimage-b2154da8-evidence-20260908  (初出 2026-09-08T09:52:21+09:00)
+   refs/remotes/origin/docs/dino-b5-21-evidence-20260908  (初出 2026-09-08T10:03:20+09:00)
+   refs/heads/docs/ruling-precedents-20260908  (初出 2026-09-08T10:20:23+09:00)
+   refs/remotes/origin/docs/ruling-precedents-20260908  (初出 2026-09-08T10:20:52+09:00)
+   refs/heads/docs/ruling-precedents-fix-20260908  (初出 2026-09-08T10:21:25+09:00)
+   refs/remotes/origin/docs/ruling-precedents-fix-20260908  (初出 2026-09-08T10:21:57+09:00)
+   refs/remotes/origin/karo-main/64b06723-ko2-hindo-uke-on-main  (初出 2026-09-08T10:27:16+09:00)
+   refs/heads/docs/cdc-rollback-truth-20260908  (初出 2026-09-08T10:27:45+09:00)
+   refs/remotes/origin/docs/cdc-rollback-truth-20260908  (初出 2026-09-08T10:28:13+09:00)
+o98 の刻より前から在つた ref = 207 本
+★註★ 本測は ★今 在る ref★ しか見ぬ ―― o98 以後に生れて ★既に消えた★ ref は reflog ごと失せ、名を挙げられぬ（下振れ）。
+★註★ reflog 無き 127 本は 初出刻を持たぬゆゑ ★何れとも決まらぬ★（判定不能）。
