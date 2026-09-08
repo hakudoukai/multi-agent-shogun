@@ -2538,3 +2538,15 @@ DISKGROWTH_WITHHELD host=momizi-dx target=/init status=span_short span_s=12 delt
 ★走 2★（`--sample` 1・`--growth` 1）。`bash -n` は走に非ず・git は器の走行に非ず。
 動かぬ＝push 0（★押しは家老★）・DB 0・SQL 0・消す/移す/圧す 0・hook 不触・D 樹不触・
 他 PC 0（本弾は ★己の台のみ★）・Commander の箱 0 打・Mac は ★探さぬ★・/tmp 0。
+
+### §36-9 ★己の疵を開示する ―― 一度目の commit が ★名指されぬ物を掃き込んだ★★
+凍らせる時 当席は `glob` で `scratch/ashigaru-third-2-fa06a3a1/*` を悉く index へ入れた。
+出来た commit ＝ `dba938e6208c2c578cbeab2b9622695d3da5f58a`（★42 file・401,381 行の追加★）。
+内 ★393,779 行★ が `o61_candidates_export.csv` 一本 ―― ★本弾の令が名指して居らぬ 前弾の中間物★ である。
+★之は「秘を出した」でも「他席の物」でもない（悉く当席の scratch）★。
+★併し 押すのは家老である★ ∴ ★名指されぬ 39 本を家老の押しに乗せる★ のは ★令の外★ と読んだ。
+∴ ★枝を親へ戻し 令の名指す 6 file のみで commit し直した★ ―― 新 tip `d236695ffc05c3e8b0ac09764bcef0935e2081b7`（★6 file・487 行★）。
+★書き直したのは ★己が一分前に作り 未だ誰にも報せて居らぬ ref★ のみ★（紙は一行も消して居らぬ・本段が其の証）。
+★後の者へ★: ★`git add` に glob を使ふな ―― 令の名指す file を ★一本づつ★ 書け★。
+ ★glob は「今 其処に在る物」を拾ふ ∴ ★令の範ではなく 樹の履歴を拾ふ★★。
+★確かめて居らぬ★＝`dba938e6…` の object は当席の `.git` に残つて居る（★到達 ref は無い★・掃除は打つて居らぬ＝消す手に触れぬ床）。
