@@ -141,7 +141,12 @@ class TestSecondpcReceiverRetry:
             1,
         )
 
-        with patch("sys.argv", [
+        # Isolate both local delivery-state files: a pre-existing notifier marker
+        # must not suppress this fixture's sender-facing failure notice.
+        with patch.dict(os.environ, {
+            "SECONDPC_RECEIVER_DELIVERY_STATE_FILE": str(tmp_path / "delivery_state.yaml"),
+            "SECONDPC_RECEIVER_DELIVERY_STATE_NOTIFIED_FILE": str(tmp_path / "delivery_notified.txt"),
+        }, clear=False), patch("sys.argv", [
             "test", response_file, processed_file, script_dir,
             "http://localhost:54321/rest/v1", "fake_key"
         ]):
@@ -156,12 +161,16 @@ class TestSecondpcReceiverRetry:
                 except SystemExit:
                     pass
 
-        # ebb0e8ad: retry cap preserves the original handshake ACK.
+        # ebb0e8ad: retry cap preserves the original handshake ACK, while a
+        # separate sender-facing failure notice is emitted exactly once.
         with open(processed_file) as f:
             processed = set(line.strip() for line in f if line.strip())
         assert msg_id not in processed
-        # No ACK/dead-letter PATCH is permitted for the source row.
-        assert not mock_urlopen.called
+        assert mock_urlopen.called
+        request = mock_urlopen.call_args[0][0]
+        payload = json.loads(request.data.decode())
+        assert payload["topic"] == "receiver_delivery_failed"
+        assert "acknowledged_by" not in payload
 
     def test_self_send_detection(self, tmp_path):
         """from_pc == to_pc → immediate dead-letter without retry."""
