@@ -1,5 +1,5 @@
 #!/bin/bash
-# karo_mac_gate4.sh ―― 家老mac の門(四條)を ★落ちた時 に止まる★ 形 で当てる。
+# karo_mac_gate4.sh ―― 家老mac の門(五條)を ★落ちた時 に止まる★ 形 で当てる。
 #
 # 由来: 2026-09-09。家老 が `git diff --cached --check && echo 通; git commit …` と繋いだ為、
 #       ★check が 4 行 の末尾空白 を吐いたのに 後段 の commit/push が走つた★。
@@ -11,7 +11,7 @@
 set -u
 W="${1:?usage: karo_mac_gate4.sh <worktree> <path...>}"; shift
 [ $# -ge 1 ] || { echo "★path が無い★" >&2; exit 2; }
-cd "$W" || { echo "★樹 が無い: $W★" >&2; exit 2; }
+cd "$W" || { echo "★樹 が無い: ${W}★" >&2; exit 2; }
 
 fail=0
 say(){ printf '%s\n' "$*" >&2; }
@@ -45,10 +45,31 @@ else
   fail=1
 fi
 
+# ―― 條⑤ 寸法(2026-09-09 追加。家老 が 225.6 MB を測らず に押し GitHub が GH001 を警めた故)
+#     ★門 に無い條 は 門 が捕へぬ。捕へなんだ物 は 世 に残る。★
+MAXF="${GATE4_MAX_FILE_MB:-50}"; MAXT="${GATE4_MAX_TOTAL_MB:-100}"
+big=0; total=0
+while IFS= read -r f; do
+  [ -f "$f" ] || continue
+  sz=$(wc -c < "$f" | tr -d ' ')
+  total=$((total + sz))
+  mb=$((sz / 1048576))
+  if [ "$mb" -ge "$MAXF" ]; then say "★條⑤ 単 file が ${mb} MB(上限 ${MAXF})―― ${f}★"; big=1; fi
+done < <(git diff --cached --name-only -- "$@")
+tmb=$((total / 1048576))
+if [ "$big" -ne 0 ] || [ "$tmb" -ge "$MAXT" ]; then
+  [ "$tmb" -ge "$MAXT" ] && say "★條⑤ 総和 が ${tmb} MB(上限 ${MAXT})★"
+  say "  ―― 生 を痩せさせるか 上 の裁 を請へ。env GATE4_MAX_FILE_MB / GATE4_MAX_TOTAL_MB で明示 して 超えてよい"
+  say "     (★超える時 は 何故 超えるか を門票 に書け★)"
+  fail=1
+else
+  say "條⑤ 寸法 = 単 file 上限 ${MAXF} MB 以下 / 総和 ${tmb} MB(上限 ${MAXT})"
+fi
+
 if [ $fail -ne 0 ]; then
   say ""
   say "★門 が落ちた。押すな。★"
   exit 1
 fi
-say "★門 四條 通。押してよい。★"
+say "★門 五條 通。押してよい。★"
 exit 0
