@@ -1,0 +1,87 @@
+# order198 ★対照★ raw ―― o189 の器を ★一字も変へず★ 今日 二度目 (條 o174)
+# argv     = ['python3', 'scratch/ashigaru-third-3-12e9d4bd/order189_falsepos_cure_v1.rule.py']
+# cwd      = /home/hakudoukai/multi-agent-shogun
+# host     = momizi-dx
+# user     = hakudoukai
+# uid      = 1000
+# 器sha256 = f9942d97c39c1fe62e6e25bd8d37df618092ea6f687999b2a13b1bd3a4da6c70
+# HEAD     = 1ad4edfbadc69191183a42113e9979c3f91b7dbf
+# branch   = ashigaru-third-3/audit-framework-hermes-canon-revision-20260721
+# porcelain= 170 行
+# started  = 2026-09-09T04:31:01.528703
+# finished = 2026-09-09T04:31:07.094553
+# exit_code= 0
+# ---- ここから 器の出力 (一字も加へず) ----
+
+== order189 第二段 ―― ★新旧併記★ (同じ走り・同じ紙・器だけ違ふ) ==
+  今日の紙 = ★271 本★ (order186 の刻 255 / order187 の刻 256 / order188 の刻 257)
+  旧器 写した数の行=★99★ / 源在り(186 の定め)=★42★ / 源在り(187 の定め)=★40★
+  ★新器★ 写した数の行=★57★ / 源在り(186 の定め)=★22★ / 源在り(187 の定め)=★22★
+
+== order189 第三段 ―― order187 の鎖(合ふ/合はぬ・写し/新測)を 新旧で ==
+  旧器 合ふ=★21★ / 合はぬ=★19★ ‖ 源無し=★59★ の内 写し=★33★ / 己の新測=★26★
+  ★新器★ 合ふ=★20★ / 合はぬ=★2★ ‖ 源無し=★35★ の内 写し=★23★ / 己の新測=★12★
+
+== order189 第四段 ―― ★直3(手)★ 新器を生き延びた行を 人が讀む材 ==
+  生き残つた行 = ★57 行★ (之を ★席の名か 器の名か★ で人が分ける)
+    order185_karo159_additivity_v1.md              20 行
+    order190_seventeen_sources_v1.md               20 行
+    order183_frame_precision_v1.md                 4 行
+    order181_vocab_window_both_v1.md               3 行
+    order182_asym_and_two_bands_v1.md              3 行
+    order189_falsepos_cure_v1.md                   3 行
+  -- 逐語 (先頭 8 本・各 58 字まで) --
+    [('A2', '2')] | | 器A2 | 67.2%(★+4.0 点★) | 40.6%(★-2.0 点★) |
+    [('A2', '0')] | | ㋐ | o179 A2 真の巻添へ | 3 | 4 | −0.2500 | order179 MIKOMI_A2
+    [('A2', '14'), ('A2', '4')] | | A2 単独(語彙のみ) | −14 | −4 |
+    [('A4', '7')] | - ★A4 の直しが 器A に対し 差引で得である★ ―― ★現に無い★ (得 16 / 失 23 / 差引 −7)
+    [('A4', '0')] | | 産 | A4 名を取れた | 152 | 158 | −0.0380 |
+    [('A5', '15')] | ∴ A5 の数の悪化 ★−15★ は ★悉く 器の変更 (後窓の 行/鍵 を捨てた事) に因る★。
+    [('A5', '15')] | | 器A5 の差引が 損でなくなつたか | ★現に無い★ (−15・四度とも損) |
+    [('A2', '15'), ('A2', '6')] | ★四度の損の記録(消さぬ・併記)★ : A2 = ★-6★ ／ A3 = ★-9★ ／ A4 = ★-7★ ／ A5
+
+== order189 第五段 ―― ★家老 140★ 偽陽性を刈れば ★真も刈れる★ を 己で測る ==
+  旧器 ★99★ → 新器 ★57★ ∴ ★刈つた行 = 42★
+  -- 刈つた行の逐語 (先頭 10 本・各 56 字) ★真が混じつて居らぬかを 人が讀む★ --
+    2. **C3(SQL RPC)の`v_rule ->> 'field'`がNULLの時の挙動は、逐語(SQL 
+    `backend/api/treatment_validation.py::_evaluate_register
+    | (丙)戻り値に`unchecked_count`等を追加 | L134-138の`jsonb_build_o
+    **A3所見(決定ではなく利害整理のみ)**: (甲)のみが§三-3(二重計上)の実測に使へる永続計器であり、(
+    **ERR-DQ-004仮番**(`git grep -n "ERR-DQ-004" HEAD`実測0件・衝突無
+    - **陰性対照**: `surface_anesthesia_drug`(A2がfrontend限定の限界付き
+    讀取のみ・DB0・走行0・commit/push0・DDL0。一時file **0件**(`>`/`>>`/`t
+    | S2 | supabase/migrations/20260414090145_dd034_step4_dr
+    | S4(local) | scratch/ashigaru-third-2-12e9d4bd/b2_2b4_r
+    | S5(local) | scratch/ashigaru-third-4-12e9d4bd/b1d_mand
+
+  -- 生き残つた 31 行の ★器ごと★ --
+    A2 : 32 対
+    A3 : 42 対
+    A4 : 18 対
+    A5 : 15 対
+    A6 : 17 対
+    A7 : 7 対
+
+  -- ★A3 を含む行 (席の名か 器の名かを 人が讀む) = 22 行★ --
+    order183_frame_precision_v1.md           | ★四度の損の記録(消さぬ・併記)★ : A2 = ★-6★ ／ A3 = ★-9★ ／ A4 = ★-7
+    order185_karo159_additivity_v1.md        | | A3 | 17 | 16 + 1 | 24 | 8 + 16 | −7 | 0 |
+    order185_karo159_additivity_v1.md        | 本弾の A2 = −3 / A3 = −7 は、過去の紙が併記して来た ★A2 = −6 / A3 = 
+    order185_karo159_additivity_v1.md        | | A3 | −7 | −7 | −9 | ★食ひ違ふ★ |
+    order185_karo159_additivity_v1.md        | ⇒ 源の紙の A3 = 得 17 / 失 24 / 差引 ★−7★ ―― ★本弾の −7 と 合ふ★。
+    order185_karo159_additivity_v1.md        | ⇒ ★而して o182 / o183 の紙が併記して来た A3 = −9 は 源の紙と 食ひ違ふ★。
+
+== order189 第六段 ―― ★真の巻添へ★ を 機械で名指す (家老 140 の検め) ==
+  刈つた ★42 行★ の内 ―― ★真の負号 U+2212 を持つ行 = 0 行★
+    ★零★ ―― 刈つた行に ★真の負号は 一つも無かつた★
+  刈つた因の内訳: ★器名の境界で落ちた = 0 行★ / ★負号の徴で落ちた = 42 行★
+
+== order189 第七段 ―― ★真の巻添への 上限★ (床(13) 上限が測れる時は上限を書け) ==
+  ★確かに偽陽性★ = 直前が 英数字/_ (日付・席名・dir 名・L134-138 等)
+  ★曖昧★ = 直前が 英数字でも NEG_OK でもない字 (漢字・｜・。等) ―― ★真の負号かも知れぬ★
+  刈つた ★42 行★ の内 ★曖昧 = 12 行★ ∴ ★真の巻添への上限 = 12★ / ★下限 = 0★
+    直前字[零] b1c_prime_design_v1.md         | 2. **C3(SQL RPC)の`v_rule ->> 'field'`がNULLの時
+    直前字[三] b1cprime_gamma_sql_rpc_instrum | **A3所見(決定ではなく利害整理のみ)**: (甲)のみが§三-3(二重計上)の実測に
+    直前字[零] b2_2b2_recount_and_backend_sca | - **陰性対照**: `surface_anesthesia_drug`(A2がfro
+    直前字[七] depth2to4_attribute_calls_rece | - 由来: 事業部長差配 265657 (12e9d4bd 第2塊)・A3 紙 attr
+    直前字[五] order188_split_sixteen_v1.md   | - 行 (逐語): 「∴ **A3 対比一枚 `f9afb2e11742c15e` §五
+    直前字[六] required_fields_element_shape_ | origin : A3 前紙 §六-1(実行時の要素の形は DB 未読で測定不能)・A1
