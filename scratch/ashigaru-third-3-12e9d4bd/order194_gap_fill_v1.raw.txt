@@ -1,0 +1,134 @@
+# argv=python3 /home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd/order194_gap_fill_v1.rule.py
+# cwd=/home/hakudoukai/multi-agent-shogun
+# host=momizi-dx user=hakudoukai uid=1000
+# target_tree=/home/hakudoukai/a3/wt-bundle-fix4
+# git_tip=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b
+# git_status_porcelain_lines=6
+# started=2026-09-08T21:26:03 finished=2026-09-08T21:26:19
+# exit_code=0
+# ----------------------------------------------------------------------
+## ㋺ walk 漏れの内訳
+walked_files=16972
+scanned_text_files=15632
+unreadable_files=1340
+
+### 例外の型ごと（★器が返した型★・推し量りに非ず）
+  UnicodeDecodeError = 1340 枚
+      .png             751
+      .pdf             258
+      .xlsx            173
+      (拡張子なし)          41
+      .webm            24
+      .docx            21
+      .zip             20
+      .txt             15
+      .csv             14
+      .jpeg            7
+      .xml             4
+      .md              3
+
+## ㋑ reports/ の内訳（前紙で ★名指しで外した★ 物）
+reports_files=15  reports_lines=82
+
+### file ごと（rel | sha256-64 | wc | split | hit_lines | bounded | unbounded）
+  reports/_tmp_touyaku_t3_v4/treatment_validation.py | cebe5c0097ffc0503cc5e6e483f89070de9baa351a5e8fb0c0fb35ea58c22c8c | 5545 | 5546 | 1 | 1 | 0
+  reports/_tmp_touyaku_t3_v5/backend/api/treatment_validation.py | 65fad6b31b777ebebcf94b23ce8462b80a99482cb237c3011eb11e4b56b19dba | 5568 | 5569 | 1 | 1 | 0
+  reports/v6-calculation-engine-redesign-visit-context-plan-20260628.md | cafbbd467b9ab4cc515a03f7d1cf0a341efe8a15f29f318819a5065791ec1ce9 | 495 | 496 | 3 | 3 | 0
+  reports/v6-ce-browser-positive-debug-20260629.json | b034678e97f530ecd04bd6b84f49288d735aab045377f35671bcc07b7cbc0fb4 | 288 | 289 | 1 | 1 | 0
+  reports/v6-ce-requirements-gate-preflight-20260629.json | 20dc45a378ff39ee0dd54e8137616c96549533d67cc9bb37d8b6b551ccd89b5b | 938 | 939 | 4 | 4 | 0
+  reports/v6-ce-requirements-gate-preflight-20260629.md | 8cf32cbfe88db92cd9b1824473b4b88008a137086280d8525ab9736b1774d4b7 | 636 | 637 | 1 | 1 | 0
+  reports/v6-core-build-up-direct-resin-ui-save-payload-db-e2e-20260628.json | c7bc63a8af1c73dbee3e424776247bd415f64d059d7fa7cf84496d5726111e65 | 1221 | 1222 | 6 | 6 | 0
+  reports/v6-core-build-up-ui-save-payload-db-e2e-20260628.json | 2d39d6fd87712770421a5b1fd74ef4b8766a68306206ba040413bea03f5ab464 | 737 | 738 | 1 | 1 | 0
+  reports/v6-nigo-fact-rule-row-contract-20260628.md | bd76f801c9ba3ef9fb62df2dfbe56cd3725f24954b3b84d268621b5e0a480ed9 | 119 | 120 | 3 | 3 | 0
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md | edfed1ad7f8af4eaf876d7ef3f0334e10bfbabef9755e0137586853594c2c9d5 | 1127 | 1128 | 19 | 19 | 0
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md | 7241dbfeba307360d31ace412bb6aa6ad456d48b3333ea2a92504fc186d5f4a8 | 862 | 863 | 23 | 23 | 0
+  reports/v6-phase2d2-nigo-api-response-shape-20260628.json | 3de7e1df3a66e763d2d59e1f0a03b6d43e0e6b155c629813f71e1687a0965bb8 | 70 | 71 | 1 | 1 | 0
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json | 2beee0a833ad3194fdbf74d37226e2da6d1ad47671249a7f7b8592a25100f68b | 1213 | 1214 | 12 | 12 | 0
+  reports/v6-saho-debug-20260629.json | 553d90cbbe9bc34f124d942c8bec66258e44c4c7fff3ca26470947c18d161a04 | 219 | 220 | 1 | 1 | 0
+  reports/v6-srp-master-backed-save-e2e-20260629.json | c9b3f513dd702d74f4e5829dad20db17b7336b5d3db3a3dbb5dea8a8360e9b50 | 696 | 697 | 5 | 5 | 0
+
+bounded_total=82 unbounded_total=0
+
+### 逐語（rel:line | bounded | 行の字）
+  reports/_tmp_touyaku_t3_v4/treatment_validation.py:5371 | BOUNDED | source_evidence_ids=billing_engine_preview.get("source_evidence_ids"),
+  reports/_tmp_touyaku_t3_v5/backend/api/treatment_validation.py:5394 | BOUNDED | source_evidence_ids=billing_engine_preview.get("source_evidence_ids"),
+  reports/v6-calculation-engine-redesign-visit-context-plan-20260628.md:420 | BOUNDED | - `source_evidence_ids[]`
+  reports/v6-calculation-engine-redesign-visit-context-plan-20260628.md:446 | BOUNDED | - emits `rule_eval_id`, `rule_set_version`, `result`, `reason_code`, `source_evidence_ids[]`, `documentation_requirements[]`.
+  reports/v6-calculation-engine-redesign-visit-context-plan-20260628.md:475 | BOUNDED | - carries `fact_bundle_id`, `rule_eval_id`, `source_evidence_ids[]`
+  reports/v6-ce-browser-positive-debug-20260629.json:66 | BOUNDED | "source_evidence_ids": [
+  reports/v6-ce-requirements-gate-preflight-20260629.json:207 | BOUNDED | "text": "source_evidence_ids=billing_engine_preview.get(\"source_evidence_ids\"),"
+  reports/v6-ce-requirements-gate-preflight-20260629.json:437 | BOUNDED | "text": "source_evidence_ids = ["
+  reports/v6-ce-requirements-gate-preflight-20260629.json:457 | BOUNDED | "text": "\"source_evidence_ids\": source_evidence_ids,"
+  reports/v6-ce-requirements-gate-preflight-20260629.json:462 | BOUNDED | "text": "\"source_evidence_ids\": source_evidence_ids,"
+  reports/v6-ce-requirements-gate-preflight-20260629.md:416 | BOUNDED | "text": "source_evidence_ids=billing_engine_preview.get(\"source_evidence_ids\"),"
+  reports/v6-core-build-up-direct-resin-ui-save-payload-db-e2e-20260628.json:349 | BOUNDED | "source_evidence_ids": [
+  reports/v6-core-build-up-direct-resin-ui-save-payload-db-e2e-20260628.json:440 | BOUNDED | "source_evidence_ids": [
+  reports/v6-core-build-up-direct-resin-ui-save-payload-db-e2e-20260628.json:473 | BOUNDED | "source_evidence_ids": [
+  reports/v6-core-build-up-direct-resin-ui-save-payload-db-e2e-20260628.json:955 | BOUNDED | "source_evidence_ids": [
+  reports/v6-core-build-up-direct-resin-ui-save-payload-db-e2e-20260628.json:1046 | BOUNDED | "source_evidence_ids": [
+  reports/v6-core-build-up-direct-resin-ui-save-payload-db-e2e-20260628.json:1079 | BOUNDED | "source_evidence_ids": [
+  reports/v6-core-build-up-ui-save-payload-db-e2e-20260628.json:660 | BOUNDED | "body": "{\"success\":true,\"message\":\"処置を保存しました\",\"updated_teeth\":[{\"fdi\":46,\"role\":\"root_fill\"}],\"chain_info\":null,\"karte_inserted\":[{\"line_number\":1,\"item_name\":\"デンタルX-Ray（術前確認）\
+  reports/v6-nigo-fact-rule-row-contract-20260628.md:38 | BOUNDED | - `source_evidence_ids[]`
+  reports/v6-nigo-fact-rule-row-contract-20260628.md:66 | BOUNDED | - emits `rule_eval_id`, `rule_set_version`, `result`, `reason_code`, `source_evidence_ids[]`, `documentation_requirements[]`.
+  reports/v6-nigo-fact-rule-row-contract-20260628.md:72 | BOUNDED | - adds `row_contract_version`, `display_row_id`, `billing_line_id`, `source_item_ids[]`, `fact_bundle_id`, `rule_eval_id`, `source_evidence_ids[]`, `points_source=delegated`, and fail-closed render bl
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:84 | BOUNDED | source_evidence_ids: list[str] | None,
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:93 | BOUNDED | source_ids = list(dict.fromkeys(source_evidence_ids or []))
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:129 | BOUNDED | "source_evidence_ids": source_ids,
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:153 | BOUNDED | if is_billing and not row.get("source_evidence_ids"):
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:168 | BOUNDED | "billing_rows_have_source_evidence": all(bool(r.get("source_evidence_ids")) for r in rows if r.get("row_kind", "billing") == "billing"),
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:180 | BOUNDED | source_ids = sorted({str(src) for r in rows for src in (r.get("source_evidence_ids") or [])})
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:192 | BOUNDED | "source_evidence_ids": source_ids,
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:282 | BOUNDED | "source_evidence_ids",
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:652 | BOUNDED | 1853:         source_evidence_ids=billing_engine_preview.get("source_evidence_ids"),
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:726 | BOUNDED | source_evidence_ids=["src_request", "src_points"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:751 | BOUNDED | "source_evidence_ids": ["src_request", "src_points"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:769 | BOUNDED | source_evidence_ids=["src_request", "src_points", "src_request"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:791 | BOUNDED | source_evidence_ids=[],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:811 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:827 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:846 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:865 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:882 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d-code-evidence-for-hermes-20260628.md:908 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:182 | BOUNDED | source_evidence_ids: list[str] | None,
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:191 | BOUNDED | source_ids = list(dict.fromkeys(source_evidence_ids or []))
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:227 | BOUNDED | "source_evidence_ids": source_ids,
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:251 | BOUNDED | if is_billing and not row.get("source_evidence_ids"):
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:276 | BOUNDED | "billing_rows_have_source_evidence": all(bool(r.get("source_evidence_ids")) for r in rows if r.get("row_kind", "billing") == "billing"),
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:293 | BOUNDED | source_ids = sorted({str(src) for r in rows for src in (r.get("source_evidence_ids") or [])})
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:306 | BOUNDED | "source_evidence_ids": source_ids,
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:410 | BOUNDED | source_evidence_ids=["src_request", "src_points"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:435 | BOUNDED | "source_evidence_ids": ["src_request", "src_points"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:453 | BOUNDED | source_evidence_ids=["src_request", "src_points", "src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:475 | BOUNDED | source_evidence_ids=[],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:495 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:511 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:530 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:549 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:566 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:584 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:608 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:627 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:650 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:689 | BOUNDED | "source_evidence_ids",
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:739 | BOUNDED | source_evidence_ids=["src_request"],
+  reports/v6-phase2d2-clean-evidence-packet-20260628.md:833 | BOUNDED | "source_evidence_ids": [
+  reports/v6-phase2d2-nigo-api-response-shape-20260628.json:50 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:374 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:455 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:496 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:537 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:578 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:619 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:660 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:701 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:742 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:783 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:824 | BOUNDED | "source_evidence_ids": [
+  reports/v6-r8-init-visit-save-temporal-probe-20260629.json:857 | BOUNDED | "source_evidence_ids": [
+  reports/v6-saho-debug-20260629.json:95 | BOUNDED | "source_evidence_ids": [
+  reports/v6-srp-master-backed-save-e2e-20260629.json:308 | BOUNDED | "source_evidence_ids": [
+  reports/v6-srp-master-backed-save-e2e-20260629.json:392 | BOUNDED | "source_evidence_ids": [
+  reports/v6-srp-master-backed-save-e2e-20260629.json:433 | BOUNDED | "source_evidence_ids": [
+  reports/v6-srp-master-backed-save-e2e-20260629.json:474 | BOUNDED | "source_evidence_ids": [
+  reports/v6-srp-master-backed-save-e2e-20260629.json:507 | BOUNDED | "source_evidence_ids": [
