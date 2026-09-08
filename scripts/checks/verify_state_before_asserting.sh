@@ -4,6 +4,7 @@
 #         verify_state_before_asserting.sh push <asked-sha> <branch> [repo]
 #         verify_state_before_asserting.sh remote [repo]
 #         verify_state_before_asserting.sh letter <file>   ← ★便 を出す前 に己 を斬る★
+#         verify_state_before_asserting.sh paper  <file>   ← ★測つた 紙 に『版』が在るか★
 set -uo pipefail
 mode="${1:-}"; shift || true
 
@@ -16,6 +17,27 @@ case "${mode}" in
     fi
     if grep -qE '^[0-9a-f]{12}[^0-9a-f]' "${m}"; then
       echo "[verify] ★註★ 12 桁 の頭 が在る ―― 64 桁 で grep すると 見付からぬ"
+    fi
+    ;;
+  paper)
+    # ★2026-09-08 B0-15★: 家老 の門 の四点⑴ は「紙 の commit」を記すが
+    # ★測つた 製品 の版★ を記す 欄 が無かつた。故 に B5-15 の「1 話 101.9 秒」が
+    # ★何 の版 の秒 か 辿れず★、後 で 8 行 版 の秒 と判つた(今 は 14 行)。
+    # ★秒・fps・字数 は 台本 の版 に付く★ ―― 版 の無い 測定 は 後 で引けぬ。
+    f="${1:-}"; [ -f "${f}" ] || { echo "[verify] 紙 無し: ${f}"; exit 0; }
+    t="$(cat "${f}")"
+    if printf '%s' "${t}" | grep -qE '[0-9]+(\.[0-9]+)? ?(秒|ms|fps|字/秒)'; then
+      # ★此 の器 は「版 が在るか」を判ぜぬ★ ―― 三 度 試みて 三 度 とも 判ぜなんだ:
+      #   ⑴ hex 7-40 桁 → ★板 の番号★ に当つた(48235904 / 8c2d7119)
+      #   ⑵ sha256 を除く → 紙 の sha と 製品 の commit が ★同 じ形★
+      #   ⑶ 『commit』の語 + hex → B5-15 は 語 を 1 度 持つ が ★版 を留めて 居らぬ★
+      # ∴ ★判ずる 振り を せぬ★。★測定 が在る 事 だけ を告げ、判 は 人 に返す★。
+      echo "[verify] ★測定 が在る(秒/fps/字/秒)★ ―― ★問へ: 此 の数 は ★何 の版★ の数 か★"
+      echo "         ★秒 は台本 の版 に付く★(B0-15: 『1 話 101.9 秒』は ★8 行 版★ の秒・今 は 14 行)"
+      echo "         ★此 の器 は版 の有無 を判ぜぬ(hex も 語 も 版 と紛れる)★ ―― ★人 が見よ★"
+      hit=1
+    else
+      echo "[verify] 紙 ―― 秒/fps の主張 は見当らぬ(版 の検 は課さず)"
     fi
     ;;
   letter)
