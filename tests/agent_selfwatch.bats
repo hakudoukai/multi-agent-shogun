@@ -96,6 +96,8 @@ teardown() {
 # docs/incident_logs/2026-08-04_w201_inbox_watcher_cure_a3.md §5).
 # Successor test (asserts the corrected contract): "TC-FR-003b" below.
 @test "TC-FR-003: get_unread_info routes task/special messages correctly" {
+    # seq293394 (総監督): superseded by TC-FR-003b / W201; exclude from this PR.
+    skip "SUPERSEDED by TC-FR-003b (W201): extraction must not consume specials"
     cat > "$TEST_INBOX" << 'YAML'
 messages:
   - id: msg_task
@@ -354,6 +356,10 @@ PY
     grep -q "no_idle_full_read" "$WATCHER_SCRIPT"
 }
 
-@test "TC-NFR-008: test file itself has no skip directives (SKIP=0 guard)" {
-    ! grep -Eq '^[[:space:]]*skip([[:space:]]|$)' "$BATS_TEST_FILENAME"
+@test "TC-NFR-008: test file has no unapproved skip directives" {
+    # seq293394 authorizes exactly TC-FR-003 because W201 superseded it with 003b.
+    local skips
+    skips=$(grep -En '^[[:space:]]*skip([[:space:]]|$)' "$BATS_TEST_FILENAME" || true)
+    [ "$(printf '%s\n' "$skips" | sed '/^$/d' | wc -l)" -eq 1 ]
+    printf '%s\n' "$skips" | grep -Eq '^[0-9]+:[[:space:]]*skip .*SUPERSEDED by TC-FR-003b \(W201\)'
 }
