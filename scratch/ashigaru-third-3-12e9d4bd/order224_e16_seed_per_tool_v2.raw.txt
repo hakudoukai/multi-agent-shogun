@@ -1,0 +1,60 @@
+=== order224 / E16 芯 ―― 器ごとに『其の器の網』×『其の器の母』で数へる ===
+※★己の一族(order224_*)は 母から除く★（條 二百六十四・v3 で紙にも掛かると判つた故）
+
+--- ㊁-1 unmeasurable26_status_triage_v1.rule.py:12 ―― m=re.search(r'as_of[:：]?\s*(20\S+)',open(D+f).read()) ---
+  網(逐語) = as_of[:：]?\s*(20\S+)
+  母 = MD=sorted(f for f in os.listdir(D) if f.endswith('.md')) ＝ .md 悉く ＝ 302 件
+  当たり 0 = 41 / 1 = 248 / ★2 件以上 = 13★
+    ★2 件以上★ classdef_10_file_wide_v1.md = 2 件
+    ★2 件以上★ closure_audit_submission_receipt_v1.md = 2 件
+    ★2 件以上★ conditions_for_request_source_v1.md = 2 件
+    ★2 件以上★ derive_required_item_conditions_body_v1.md = 2 件
+    ★2 件以上★ file_wide_inventory_index_v7.md = 3 件
+    ★2 件以上★ order183_frame_precision_v1.md = 2 件
+    ★2 件以上★ order184_rule_number_ledger_v1.md = 2 件
+    ★2 件以上★ order194_gap_fill2_v1.md = 2 件
+    ★2 件以上★ order220_e11_fingerprint_minute_v1.md = 3 件
+    ★2 件以上★ order220_e11_forecast_pre.md = 2 件
+    ★2 件以上★ order221_e12_before_blob_v1.md = 2 件
+    ★2 件以上★ order222_e13_narrow_wide_v1.md = 2 件
+    ★2 件以上★ raise_non_httpexception_68_v1.md = 2 件
+  ⇒ ★現に立つ★
+
+--- ㊁-2 order196_magazine_v1.rule.py:24 ―― m = re.search(u"as_of[:：]?\\s*`?([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:+]+)", t) ---
+  網(逐語) = as_of[:：]?\s*`?([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:+]+)
+  母 = names = order18x/19x の .md（PAT で名で判ず） ＝ 0 件
+  当たり 0 = 0 / 1 = 0 / ★2 件以上 = 0★
+  ⇒ ★測定不能★（★母が空★ ―― 空の母から『立たぬ』は言へぬ）
+
+--- ㊁-3 order197_head_reproof_v1.rule.py:42 ―― m = re.search(u"as_of[^0-9]*([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:]+)", s) ---
+  網(逐語) = as_of[^0-9]*([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:]+)
+  母 = PAPERS ＝ 名指しの 8 枚 ＝ 8 件
+  当たり 0 = 0 / 1 = 8 / ★2 件以上 = 0★
+  ⇒ ★現に立たぬ（今の母では）★
+
+--- ㊂-1 order184_rule_number_ledger_v1.rule.py:28 ―― frm = re.search(r"from: (\\S+)", b) ---
+  網(逐語) = from: (\S+)
+  母 = 己の箱の便 block ＝ 34 件
+  当たり 0 = 0 / 1 = 34 / ★2 件以上 = 0★
+  ⇒ ★現に立たぬ（今の母では）★
+
+--- ㊂-2 order200_escape_shape_ast_v1.rule.py:251 ―― m = re.search(r"ROOT\\s*=\\s*u?[\"']([^\"']+)", t) ---
+  網(逐語) = ROOT\s*=\s*u?["']([^"']+)
+  母 = fp = order192_test_escape_census_v1.rule.py ★一枚のみ★ ＝ 1 件
+  当たり 0 = 0 / 1 = 1 / ★2 件以上 = 0★
+  ⇒ ★現に立たぬ（今の母では）★
+
+=== 締め ===
+★器 5 本を当てた★：現に立つ = 1 本 / 現に立たぬ = 3 本 / ★測定不能(母が空) = 1 本★
+※★之は『器の本数』であつて『枚数』ではない★ ―― v1 は此の二つを足して誤つた。
+※★之は『疵が n 件』の意に非ず★ ―― 立つとは『最初の当たりで決めると 別の当たりを取り落し得る母が 現に在る』の意である。
+
+--- 負の対照 ---
+★現に無い網★ を 同じ形で当てる（0 が出る口が在るかを見る）
+--- 負-1 現に無い網 ―― （作り物） ---
+  網(逐語) = zzzz_no_such_pattern_o224_[0-9]{9}
+  母 = .md 悉く（己の一族を除く） ＝ 302 件
+  当たり 0 = 302 / 1 = 0 / ★2 件以上 = 0★
+  ⇒ ★現に立たぬ（今の母では）★
+
+★己の一族を除いた母である事の証★ = 除いた枚数 1 枚

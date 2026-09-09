@@ -1,0 +1,132 @@
+=== order224 / E16 ―― 『最初の当たりで決める』箇所を 一つづつ判ずる ===
+母 = 本席 dir の .py 悉く = 81 枚
+網 = ★ast★（re.search / re.match / .find / next の Call 節点）※字の網ではない
+
+--- §A 一つづつ（★逐語を併記★・床⑽） ---
+  boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:39 [next] ㋐値を取る(Assign)
+      逐語: j=next((k for k in range(i+1,len(L)) if L[k].startswith('## ')),len(L));return L[i:j]
+  boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:40 [re.match] ㋒一行が母(comprehension)
+      逐語: one=[l.strip() for f,h in ((D+'file_wide_inventory_index_v3.md','## 六 母数別'),(D+'file_wide_inventory_index_v4.md','## 六 母…
+  boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:23 [next] ㋐値を取る(Call:Counter)
+      逐語: print('位置(0起点)',C.Counter(next(i for i,v in enumerate(g.values) if v is PA[id(c)]) for c,g in B).most_common())
+  bundle8_staleness_v1.rule.py:40 [re.search] ㋒一行が母(comprehension)
+      逐語: kinds = sum(1 for base in md if re.search(r'sha1:|sha256:|sha256 \u982d', blobs[base].decode('utf-8')))
+  index_fix_all_six_v1.rule.py:25 [next] ㋐値を取る(Assign)
+      逐語: pos=next(i for i,x in enumerate(L) if not x.lstrip().startswith('#'))  # 頭の註釈帯の直後へ挿す
+  kensu_reconcile_v1.rule.py:19 [re.search] ㋐値を取る(Call:any)
+      逐語: def hit(s, ps): return any(re.search(p, s) for p in ps)
+  kensu_reconcile_v1.rule.py:53 [re.search] ㋑在否を問ふ(Call:bool)
+      逐語: h = bool(re.search(HITO, s)); hito.append((os.path.basename(n), h))
+  kensu_reconcile_v1.rule.py:52 [re.search] ㋒一行が母(comprehension)
+      逐語: ln = sum(1 for l in s.split("\n") if re.search(KEN, l)); tot += w
+  kensu_reconcile_v1.rule.py:33 [re.search] ㋐値を取る(Call:any)
+      逐語: und = [f for f in out if not any(re.search(p,l) for l in txt[f].split("\n") for p in DECL)]
+  kensu_reconcile_v1.rule.py:46 [re.search] ㋑在否を問ふ(IfExp.test)
+      逐語: len(re.findall(KEN, txt[f])), "在り" if re.search(HITO, txt[f]) else "無し"))
+  kugi68_dedup_close_v1.rule.py:8 [next] ㋐値を取る(Assign)
+      逐語: j=next((k for k in range(i+1,len(L)) if L[k].startswith('## ')),len(L));return L[i:j]
+  kugi68_dedup_close_v1.rule.py:14 [re.match] ㋐値を取る(Assign)
+      逐語: m=re.match(r'^([0-9]+) (.+)$',l.strip())
+  kugi68_dedup_close_v1.rule.py:32 [re.search] ㋒一行が母(comprehension)
+      逐語: l=[x.strip() for x in open(D+f,encoding='utf-8') if '累積' in x and re.search(r'(?<![0-9])%d(?![0-9])'%b,x)]
+  order184_rule_number_ledger_v1.rule.py:28 [re.search] ㋐値を取る(Assign)
+      逐語: frm = re.search(r"from: (\S+)", b)
+  order184_rule_number_ledger_v1.rule.py:100 [.find] ㋐値を取る(Assign)
+      逐語: k = seg.find("百五十九")
+  order189_falsepos_cure_v1.rule.py:201 [re.match] ㋑在否を問ふ(If.test)
+      逐語: if re.match(r"[A-Za-z0-9_]", c): continue
+  order195_typed_reproof_v1.rule.py:98 [re.search] ㋑在否を問ふ(If.test)
+      逐語: if re.search(r"collect_ignore", l):
+  order196_magazine_v1.rule.py:24 [re.search] ㋐値を取る(Assign)
+      逐語: m = re.search(u"as_of[:：]?\\s*`?([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:+]+)", t)
+  order196_magazine_v1.rule.py:63 [re.match] ㋑在否を問ふ(If.test)
+      逐語: if inx and re.match(u"^\\s*[0-9]+[.)]\\s*\\S", l):
+  order197_head_reproof_v1.rule.py:42 [re.search] ㋐値を取る(Assign)
+      逐語: m = re.search(u"as_of[^0-9]*([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:]+)", s)
+  order198_falsepos_true_count_v1.rule.py:154 [re.match] ㋑在否を問ふ(If.test)
+      逐語: if re.match(r"[A-Za-z0-9_]", c): continue
+  order200_escape_shape_ast_v1.rule.py:251 [re.search] ㋐値を取る(Assign)
+      逐語: m = re.search(r"ROOT\s*=\s*u?[\"']([^\"']+)", t)
+  order200_escape_shape_ast_v1.rule.py:269 [re.search] ㋑在否を問ふ(If.test)
+      逐語: if re.search(r"(importorskip|mark\.skip|pytest\.skip|mark\.xfail|pytest\.xfail|ImportError|collect_ignore|合計|母数|悉皆)", ln…
+  order223_e14_relabel_v1.rule.py:170 [re.search] ㋐値を取る(Assign)
+      逐語: m = re.search(pat, prev)
+  otsu_runtime_probe_v1.rule.py:97 [next] ㋐値を取る(Call:type)
+      逐語: if isinstance(a,dict) and a: fa[type(next(iter(a.values()))).__name__]+=1
+  own_gaps_close_v1.rule.py:38 [re.search] ㋑在否を問ふ(If.test)
+      逐語: if re.search(KEY[i],l):
+  own_gaps_close_v1.rule.py:62 [re.search] ㋑在否を問ふ(If.test)
+      逐語: if re.search(KEY[i],l):
+  population_tracer_v1.rule.py:19 [re.search] ㋑在否を問ふ(not)
+      逐語: if ctx and not re.search(ctx,ln):continue
+  three_nets_outside_v1.rule.py:86 [re.search] ㋒一行が母(comprehension)
+      逐語: t_yes=[f for f in OUT if re.search(T1,txt[f])]
+  three_nets_outside_v1.rule.py:18 [re.search] ㋐値を取る(Call:any)
+      逐語: def hit(s,pats): return any(re.search(p,s) for p in pats)
+  three_nets_outside_v1.rule.py:30 [re.search] ㋒一行が母(comprehension)
+      逐語: hs=[p for p in WIDE if re.search(p,txt[f])]
+  three_nets_outside_v1.rule.py:100 [re.search] ㋒一行が母(comprehension)
+      逐語: h=[f for f in OUT if re.search(pat,txt[f])]
+  three_nets_outside_v1.rule.py:102 [re.search] ㋒一行が母(comprehension)
+      逐語: both=[f for f in OUT if re.search(r'treatment_validation',txt[f]) or re.search(r'3143bb3a',txt[f])]
+  three_nets_outside_v1.rule.py:102 [re.search] ㋒一行が母(comprehension)
+      逐語: both=[f for f in OUT if re.search(r'treatment_validation',txt[f]) or re.search(r'3143bb3a',txt[f])]
+  three_nets_outside_v1.rule.py:39 [re.search] ㋐値を取る(Call:any)
+      逐語: ls=[l.strip() for l in txt[f].split('\n') if any(re.search(p,l) for p in DECL)]
+  three_nets_outside_v1.rule.py:61 [re.search] ㋐値を取る(Call:any)
+      逐語: if t and any(re.search(p,t) for p in KEY): picks.append(t[:120])
+  unmeasurable26_census_v1.rule.py:12 [re.match] ㋐値を取る(Assign)
+      逐語: m=re.match(r'^([0-9]) (.+?) ―― ',l)
+  unmeasurable26_census_v1.rule.py:22 [re.match] ㋐値を取る(Assign)
+      逐語: m=re.match(r'^\s+([1-6]) (.+)',l)
+  unmeasurable26_status_triage_v1.rule.py:12 [re.search] ㋐値を取る(Assign)
+      逐語: m=re.search(r'as_of[:：]?\s*(20\S+)',open(D+f,encoding='utf-8').read())
+  unmeasurable26_status_triage_v1.rule.py:53 [re.match] ㋐値を取る(Assign)
+      逐語: m=re.match(r'^([0-9]{1,2}) (.+?) ―― ',l)
+  unmeasurable26_status_triage_v1.rule.py:36 [re.search] ㋑在否を問ふ(If.test)
+      逐語: if re.search(K[i],l):
+
+--- §B 種ごとの和 ---
+  ㋐値を取る = 21
+  ㋑在否を問ふ = 11
+  ㋒一行が母 = 9
+★ast で拾つた和 = 41 箇所（母 81 枚・讀めなんだ 0 / ast が解せなんだ 0）★
+
+--- §C ★條 二百六十三 が現に掛かるは ㋐ のみ★ ---
+㋐ = 21 箇所 ―― ★此処が『当たりの数を先に数へよ』の掛かり先★
+  ★要検★ boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:39 [next]
+  ★要検★ boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:23 [next]
+  ★要検★ index_fix_all_six_v1.rule.py:25 [next]
+  ★要検★ kensu_reconcile_v1.rule.py:19 [re.search]
+  ★要検★ kensu_reconcile_v1.rule.py:33 [re.search]
+  ★要検★ kugi68_dedup_close_v1.rule.py:8 [next]
+  ★要検★ kugi68_dedup_close_v1.rule.py:14 [re.match]
+  ★要検★ order184_rule_number_ledger_v1.rule.py:28 [re.search]
+  ★要検★ order184_rule_number_ledger_v1.rule.py:100 [.find]
+  ★要検★ order196_magazine_v1.rule.py:24 [re.search]
+  ★要検★ order197_head_reproof_v1.rule.py:42 [re.search]
+  ★要検★ order200_escape_shape_ast_v1.rule.py:251 [re.search]
+  ★要検★ order223_e14_relabel_v1.rule.py:170 [re.search]
+  ★要検★ otsu_runtime_probe_v1.rule.py:97 [next]
+  ★要検★ three_nets_outside_v1.rule.py:18 [re.search]
+  ★要検★ three_nets_outside_v1.rule.py:39 [re.search]
+  ★要検★ three_nets_outside_v1.rule.py:61 [re.search]
+  ★要検★ unmeasurable26_census_v1.rule.py:12 [re.match]
+  ★要検★ unmeasurable26_census_v1.rule.py:22 [re.match]
+  ★要検★ unmeasurable26_status_triage_v1.rule.py:12 [re.search]
+  ★要検★ unmeasurable26_status_triage_v1.rule.py:53 [re.match]
+
+※★但し ㋐ の悉くが 疵ではない★ ―― 当たりが 2 件以上 ★立ち得る母★ に当てて居る物のみが疵である。
+※其の別は ★母（食はせる text）を一つづつ読まねば決まらぬ★ ゆゑ 本弾では ★測定不能★。
+
+--- §D 字の網（v2・53 箇所）との差 ---
+字の網の和 = 53 / ast の和 = 41
+★差 = 12★ ―― 因は ①字の網が ★己の網の定義行(PATS)★ を拾ふ
+  ②`head -1` `grep -m1` は ★python の Call に非ず★（shell の字）ゆゑ ast に映らぬ
+  ③字の網は 註釈・文字列の中の名も拾ふ
+★∴ 53 と 41 は ★別の物を数へた数★ である ―― 足すな・引いて疵と呼ぶな★
+
+--- §E 負の対照 ---
+作り物（値を取る 1 ＋ 在否を問ふ 1）を食はせた結果 = ['㋐値を取る', '㋑在否を問ふ']
+★器は ㋐ と ㋑ の双方を出す口を現に持つ★（家老 165）
+現に無い path: exists=False
