@@ -1,0 +1,88 @@
+=== order225 / E17 追ひ ―― ㋒『一行が母』の 母を 現に測る ===
+母(本席 dir の .py 悉く) = 87 枚
+網・分け = ★E16 器 L21-L72 の逐語の写し（一字も変へず）★
+
+--- §A ㋒ と判じた箇所の ★母★（一つづつ・逐語は切らぬ） ---
+㋒ = 9 箇所
+
+  ● boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:40 [re.match] 決め手=comprehension
+      当たりの逐語 : re.match(r'^[0-9]+ ',l)
+      ★網を当てる相手★ : 形=Name / 名=['l']
+      comprehension の target : l  名=['l']
+      comprehension の iter   : SEC(f,h)
+      ★相手と target が名を共有するか★ = ['l']
+
+  ● bundle8_staleness_v1.rule.py:40 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(r'sha1:|sha256:|sha256 \u982d', blobs[base].decode('utf-8'))
+      ★網を当てる相手★ : 形=Call / 名=['base', 'blobs']
+      comprehension の target : base  名=['base']
+      comprehension の iter   : md
+      ★相手と target が名を共有するか★ = ['base']
+
+  ● kensu_reconcile_v1.rule.py:52 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(KEN, l)
+      ★網を当てる相手★ : 形=Name / 名=['l']
+      comprehension の target : l  名=['l']
+      comprehension の iter   : s.split("\n")
+      ★相手と target が名を共有するか★ = ['l']
+
+  ● kugi68_dedup_close_v1.rule.py:32 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(r'(?<![0-9])%d(?![0-9])'%b,x)
+      ★網を当てる相手★ : 形=Name / 名=['x']
+      comprehension の target : x  名=['x']
+      comprehension の iter   : open(D+f,encoding='utf-8')
+      ★相手と target が名を共有するか★ = ['x']
+
+  ● three_nets_outside_v1.rule.py:86 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(T1,txt[f])
+      ★網を当てる相手★ : 形=Subscript / 名=['f', 'txt']
+      comprehension の target : f  名=['f']
+      comprehension の iter   : OUT
+      ★相手と target が名を共有するか★ = ['f']
+
+  ● three_nets_outside_v1.rule.py:30 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(p,txt[f])
+      ★網を当てる相手★ : 形=Subscript / 名=['f', 'txt']
+      comprehension の target : p  名=['p']
+      comprehension の iter   : WIDE
+      ★相手と target が名を共有するか★ = ★せぬ★
+
+  ● three_nets_outside_v1.rule.py:100 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(pat,txt[f])
+      ★網を当てる相手★ : 形=Subscript / 名=['f', 'txt']
+      comprehension の target : f  名=['f']
+      comprehension の iter   : OUT
+      ★相手と target が名を共有するか★ = ['f']
+
+  ● three_nets_outside_v1.rule.py:102 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(r'treatment_validation',txt[f])
+      ★網を当てる相手★ : 形=Subscript / 名=['f', 'txt']
+      comprehension の target : f  名=['f']
+      comprehension の iter   : OUT
+      ★相手と target が名を共有するか★ = ['f']
+
+  ● three_nets_outside_v1.rule.py:102 [re.search] 決め手=comprehension
+      当たりの逐語 : re.search(r'3143bb3a',txt[f])
+      ★網を当てる相手★ : 形=Subscript / 名=['f', 'txt']
+      comprehension の target : f  名=['f']
+      comprehension の iter   : OUT
+      ★相手と target が名を共有するか★ = ['f']
+
+--- §B 形ごとの和（★判ではなく 数★） ---
+  網を当てる相手の形 Call = 1 箇所
+  網を当てる相手の形 Name = 3 箇所
+  網を当てる相手の形 Subscript = 5 箇所
+
+  ※★『相手が Name』は 母が iter の一要素である事を ★示唆する★ に留まる★
+  ※★『相手が Subscript』は 母が ★別の入れ物の中身★ である事を示唆する★
+  ※★何れも『一行か否か』を ★断ずるには iter の中身を讀まねばならぬ★★ ―― 判は紙で己が書く
+
+--- §C 負の対照（★器が 二つの形を現に分ける口を持つか★・家老 165） ---
+  作り物 ⇒ ('㋒一行が母', 'Name', ['l'], ['l'], ['l'])
+  作り物 ⇒ ('㋒一行が母', 'Subscript', ['f', 'txt'], ['f'], ['f'])
+★Name(共有 有り) と Subscript(共有 有り) の双方が現に出る★
+現に無い path: exists=False
+
+--- §D ★網・分けの逐語が E16 と差 0★（條 二百七十一） ---
+E16 器 L21-L72 が 本器に ★逐語で含まれるか★ = True
+其の長さ = 1916 字 / sha256 頭16 = 0b543b129bde93d0

@@ -1,0 +1,123 @@
+=== order225 / E17 ―― ㋑ と ㋒ を 一つづつ讀み直す ===
+母(含む 己の一族) = 86 枚 ／ 母(除く) = 85 枚
+★己の一族 = 1 枚★ ―― ['order225_e17_shape_recheck_v1.rule.py']
+網・分け = ★E16 器 L21-L72 の逐語の写し（一字も変へず）★
+
+--- §零 和（★含む／除く の二欄★） ---
+  ㋐値を取る ―― 含む 21 / 除く 21
+  ㋑在否を問ふ ―― 含む 11 / 除く 11
+  ㋒一行が母 ―― 含む 9 / 除く 9
+  和 ―― 含む 41 / 除く 41
+  讀めなんだ 0 / ast が解せなんだ 0
+
+--- §A ㋑在否を問ふ を 一つづつ ---
+㋑ = 11 箇所（母 含む 86 枚）
+
+  kensu_reconcile_v1.rule.py:53 [re.search] 決め手=Call:bool
+      親鎖: Call
+      値の徴: ★無し★
+      逐語: h = bool(re.search(HITO, s)); hito.append((os.path.basename(n), h))
+  kensu_reconcile_v1.rule.py:46 [re.search] 決め手=IfExp.test
+      親鎖: IfExp
+      値の徴: ★無し★
+      逐語: len(re.findall(KEN, txt[f])), "在り" if re.search(HITO, txt[f]) else "無し"))
+  order189_falsepos_cure_v1.rule.py:201 [re.match] 決め手=If.test
+      親鎖: If
+      値の徴: ★無し★
+      逐語: if re.match(r"[A-Za-z0-9_]", c): continue
+  order195_typed_reproof_v1.rule.py:98 [re.search] 決め手=If.test
+      親鎖: If
+      値の徴: ★無し★
+      逐語: if re.search(r"collect_ignore", l):
+  order196_magazine_v1.rule.py:63 [re.match] 決め手=If.test
+      親鎖: BoolOp -> If
+      値の徴: ★無し★
+      逐語: if inx and re.match(u"^\\s*[0-9]+[.)]\\s*\\S", l):
+  order198_falsepos_true_count_v1.rule.py:154 [re.match] 決め手=If.test
+      親鎖: If
+      値の徴: ★無し★
+      逐語: if re.match(r"[A-Za-z0-9_]", c): continue
+  order200_escape_shape_ast_v1.rule.py:269 [re.search] 決め手=If.test
+      親鎖: If
+      値の徴: ★無し★
+      逐語: if re.search(r"(importorskip|mark\.skip|pytest\.skip|mark\.xfail|pytest\.xfail|ImportError|collect_ignore|合計|母数|悉皆)", ln…
+  own_gaps_close_v1.rule.py:38 [re.search] 決め手=If.test
+      親鎖: If
+      値の徴: ★無し★
+      逐語: if re.search(KEY[i],l):
+  own_gaps_close_v1.rule.py:62 [re.search] 決め手=If.test
+      親鎖: If
+      値の徴: ★無し★
+      逐語: if re.search(KEY[i],l):
+  population_tracer_v1.rule.py:19 [re.search] 決め手=not
+      親鎖: UnaryOp
+      値の徴: ★無し★
+      逐語: if ctx and not re.search(ctx,ln):continue
+  unmeasurable26_status_triage_v1.rule.py:36 [re.search] 決め手=If.test
+      親鎖: If
+      値の徴: ★無し★
+      逐語: if re.search(K[i],l):
+
+★㋑ の内 ★値の徴が現に在る★ = 0 箇所★
+
+--- §B ㋒一行が母 を 一つづつ ---
+㋒ = 9 箇所（母 含む 86 枚）
+
+  boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:40 [re.match] 決め手=comprehension
+      親鎖: comprehension
+      値の徴: ★無し★
+      逐語: one=[l.strip() for f,h in ((D+'file_wide_inventory_index_v3.md','## 六 母数別'),(D+'file_wide_inventory_index_v4.md','## 六 母…
+  bundle8_staleness_v1.rule.py:40 [re.search] 決め手=comprehension
+      親鎖: comprehension
+      値の徴: ★無し★
+      逐語: kinds = sum(1 for base in md if re.search(r'sha1:|sha256:|sha256 \u982d', blobs[base].decode('utf-8')))
+  kensu_reconcile_v1.rule.py:52 [re.search] 決め手=comprehension
+      親鎖: comprehension
+      値の徴: ★無し★
+      逐語: ln = sum(1 for l in s.split("\n") if re.search(KEN, l)); tot += w
+  kugi68_dedup_close_v1.rule.py:32 [re.search] 決め手=comprehension
+      親鎖: BoolOp -> comprehension
+      値の徴: ★無し★
+      逐語: l=[x.strip() for x in open(D+f,encoding='utf-8') if '累積' in x and re.search(r'(?<![0-9])%d(?![0-9])'%b,x)]
+  three_nets_outside_v1.rule.py:86 [re.search] 決め手=comprehension
+      親鎖: comprehension
+      値の徴: ★無し★
+      逐語: t_yes=[f for f in OUT if re.search(T1,txt[f])]
+  three_nets_outside_v1.rule.py:30 [re.search] 決め手=comprehension
+      親鎖: comprehension
+      値の徴: ★無し★
+      逐語: hs=[p for p in WIDE if re.search(p,txt[f])]
+  three_nets_outside_v1.rule.py:100 [re.search] 決め手=comprehension
+      親鎖: comprehension
+      値の徴: ★無し★
+      逐語: h=[f for f in OUT if re.search(pat,txt[f])]
+  three_nets_outside_v1.rule.py:102 [re.search] 決め手=comprehension
+      親鎖: BoolOp -> comprehension
+      値の徴: ★無し★
+      逐語: both=[f for f in OUT if re.search(r'treatment_validation',txt[f]) or re.search(r'3143bb3a',txt[f])]
+  three_nets_outside_v1.rule.py:102 [re.search] 決め手=comprehension
+      親鎖: BoolOp -> comprehension
+      値の徴: ★無し★
+      逐語: both=[f for f in OUT if re.search(r'treatment_validation',txt[f]) or re.search(r'3143bb3a',txt[f])]
+
+★㋒ の内 ★決め手が『上限まで辿つた』★（＝12 段辿つても決まらず for が在つたゆゑ ㋒ に落ちた）= 0 箇所★
+
+--- §C ㋓判じ得ず（分けの粗さが最も出る所） ---
+㋓ = 0 箇所
+
+--- §D 負の対照（★器が『値の徴』を現に出す口を持つか★・家老 165） ---
+  作り物 ⇒ ('㋑在否を問ふ', 'If.test', [])
+  作り物 ⇒ ('㋒一行が母', 'comprehension', [])
+  作り物 ⇒ ('㋐値を取る', 'Call:group', ['Attribute:group'])
+★立つ／立たぬ の双方が現に出得る事を 上の三行が示す★
+  ―― ㋑ で値の徴が ★在る★ 物と ★無い★ 物、㋒ の物が 各 1 件づつ出て居るか を讀め
+現に無い path: exists=False
+
+--- §E E16 の数との突合（★母が動いた分を名指す★） ---
+E16 の生に刷つた数 = ㋐ 21 / ㋑ 11 / ㋒ 9 / 和 41（母 83 枚・as_of 2026-09-09T11:17:30+09:00）
+本弾(含む) = ㋐ 21 / ㋑ 11 / ㋒ 9 / 和 41（母 86 枚）
+★母は 3 枚 増えた ―― 増やしたは ★己★（order225 の器）★
+
+--- §F ★網・分けの逐語が E16 と差 0 である事を 器自身に言はせる★（條 二百七十一） ---
+E16 器 L21-L72 が 本器に ★逐語で含まれるか★ = True
+其の長さ = 1916 字 / sha256 頭16 = 0b543b129bde93d0
