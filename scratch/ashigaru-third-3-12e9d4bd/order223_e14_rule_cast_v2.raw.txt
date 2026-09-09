@@ -1,0 +1,56 @@
+=== order223 後継 v2 ―― 條 二百六十三 の掛かり先（本席の器の悉皆） ===
+★v2 の由★: v1 は ①負の対照が 1 と出た（因=★母に 己(器)自身を含み 器が其の字を持つ★）
+           ②★字の網が 己の網の定義行(PATS)を拾ふ★ ゆゑ 本器の当たりが 6 形 全てに立つた。
+★何れも 数が誤つたのではなく 母と網の説きが足りなんだ ―― v2 で 己を含む/除くを 欄で分ける★
+條: ★『最初の当たり』で決める網は 当たりの数を先に数へよ★（家老が下した語）
+
+母 = 本席 dir の .py 悉く = 80 枚
+網 = ['re.search(', 're.match(', '.find(', 'next(', 'head -1', 'grep -m1'] ※★字の網ゆゑ 註釈・文字列も拾ふ（棲家は分けて居らぬ）★
+
+--- §A 当たつた file（一枚づつ） ---
+  boolop39_genexp3_shape_and_ledger_audit_v1.rule.py : next(=2, re.match(=1
+  bundle8_staleness_v1.rule.py : re.search(=1
+  index_fix_all_six_v1.rule.py : next(=1
+  kensu_reconcile_v1.rule.py : re.search(=5
+  kugi68_dedup_close_v1.rule.py : next(=1, re.match(=1, re.search(=1
+  order184_rule_number_ledger_v1.rule.py : .find(=1, re.search(=1
+  order189_falsepos_cure_v1.rule.py : re.match(=1
+  order195_typed_reproof_v1.rule.py : re.search(=1
+  order196_magazine_v1.rule.py : re.match(=1, re.search(=1
+  order197_head_reproof_v1.rule.py : re.search(=1
+  order198_falsepos_true_count_v1.rule.py : re.match(=1
+  order199_root_rules_reconcile_v1.rule.py : re.search(=2
+  order200_escape_shape_ast_v1.rule.py : re.search(=2
+  order223_e14_relabel_v1.rule.py : re.search(=1
+  order223_e14_rule_cast_v1.rule.py : .find(=2, grep -m1=1, head -1=1, next(=2, re.match(=2, re.search(=2
+  order223_e14_rule_cast_v2.rule.py : .find(=2, grep -m1=1, head -1=1, next(=2, re.match(=2, re.search(=2
+  otsu_runtime_probe_v1.rule.py : next(=1
+  own_gaps_close_v1.rule.py : re.search(=2
+  population_tracer_v1.rule.py : re.search(=1
+  three_nets_outside_v1.rule.py : re.search(=8
+  unmeasurable26_census_v1.rule.py : re.match(=2
+  unmeasurable26_status_triage_v1.rule.py : re.match(=1, re.search(=2
+当たつた file = 22 / 讀めなんだ = 0
+
+--- §B 形ごとの和 ---
+  .find( = 5
+  grep -m1 = 2
+  head -1 = 2
+  next( = 9
+  re.match( = 12
+  re.search( = 33
+★和 = 63 箇所（母 80 枚・当たつた file 22 枚）★
+※★之は『疵の数』に非ず★ ―― 当たりが 2 件以上 立ち得る形のみが疵である。
+※★一つづつ読んで判ずるは 次弾（E16）★。本弾では 其の別は 測定不能。
+
+--- §C 負の対照 ---
+現に無い字 zzz_no_such_token_o223( の和（★己(器)を含む母★） = 2
+現に無い字 zzz_no_such_token_o223( の和（★己(器)を除く母★） = 1 ―― ★器は 0 を出す口を現に持つ★
+★差 1 = 器自身が 其の字を持つ分（母に己を含めた故）★
+現に無い path を讀まうとした結果: exists=False
+
+--- §D ★己自身に掛ける★（條 百七十九） ---
+本器の当たり（★網の定義行を含む★） = [('.find(', 2), ('grep -m1', 1), ('head -1', 1), ('next(', 2), ('re.match(', 2), ('re.search(', 2)]
+本器の当たり（★網の定義行を除く★） = [('.find(', 1), ('next(', 1), ('re.match(', 1), ('re.search(', 1)]
+★本器が 現に用ゐて居る『最初の当たり』形 = ['.find(', 'next(', 're.match(', 're.search(']★
+※`.count(` と `for` の悉皆走査は ★最初の当たりで決めて居らぬ★ ゆゑ 條 二百六十三 の外である。
