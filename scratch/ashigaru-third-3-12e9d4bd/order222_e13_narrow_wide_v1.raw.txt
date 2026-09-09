@@ -1,0 +1,71 @@
+=== order222 / E13 三網の並べ ===
+TREE=/home/hakudoukai/a3/wt-bundle-fix4
+PIN=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b
+母 = porcelain の 6 枚（前=blob / 今=作業樹）
+
+--- §A 12 本（と其の前身）を 一本づつ 悉くに ---
+side | # | file | line | name | 棲家 | 持ち主
+前 | 1 | backend/tests/test_cmd004_cross_cutting_integration.py | 24 | skip | assign_module_pytestmark | pytestmark
+前 | 小計 | backend/tests/test_cmd004_cross_cutting_integration.py | N1狭 skip=0 skipif=0 | N2広 skip=1 skipif=0 | N3ast=1
+今 | 1 | backend/tests/test_cmd004_cross_cutting_integration.py | 28 | skipif | assign_module_pytestmark | pytestmark
+今 | 小計 | backend/tests/test_cmd004_cross_cutting_integration.py | N1狭 skip=0 skipif=0 | N2広 skip=0 skipif=1 | N3ast=1
+前 | 1 | tests/test_step_a4_handover_sheet.py | 377 | skip | decorator_func | test_10_pagination_fits_a4
+前 | 小計 | tests/test_step_a4_handover_sheet.py | N1狭 skip=1 skipif=0 | N2広 skip=1 skipif=0 | N3ast=1
+今 | 1 | tests/test_step_a4_handover_sheet.py | 377 | skipif | decorator_func | test_10_pagination_fits_a4
+今 | 小計 | tests/test_step_a4_handover_sheet.py | N1狭 skip=0 skipif=1 | N2広 skip=0 skipif=1 | N3ast=1
+前 | 1 | tests/test_step_q.py | 461 | skip | decorator_func | test_16_components_exist
+前 | 小計 | tests/test_step_q.py | N1狭 skip=1 skipif=0 | N2広 skip=1 skipif=0 | N3ast=1
+今 | 1 | tests/test_step_q.py | 461 | skipif | decorator_func | test_16_components_exist
+今 | 小計 | tests/test_step_q.py | N1狭 skip=0 skipif=1 | N2広 skip=0 skipif=1 | N3ast=1
+前 | 1 | tests/test_step_r_ui.py | 282 | skip | decorator_func | test_17_empty_state
+前 | 小計 | tests/test_step_r_ui.py | N1狭 skip=1 skipif=0 | N2広 skip=1 skipif=0 | N3ast=1
+今 | 1 | tests/test_step_r_ui.py | 282 | skipif | decorator_func | test_17_empty_state
+今 | 小計 | tests/test_step_r_ui.py | N1狭 skip=0 skipif=1 | N2広 skip=0 skipif=1 | N3ast=1
+前 | 1 | tests/test_step_s3.py | 664 | skip | decorator_class | TestF07CheckoutModal
+前 | 2 | tests/test_step_s3.py | 678 | skip | decorator_class | TestF08ComplaintForm
+前 | 3 | tests/test_step_s3.py | 692 | skip | decorator_class | TestF09ComplaintSubmit
+前 | 4 | tests/test_step_s3.py | 703 | skip | decorator_class | TestF10ProductivitySection
+前 | 5 | tests/test_step_s3.py | 715 | skip | decorator_class | TestF11ProductivityByStaffTable
+前 | 6 | tests/test_step_s3.py | 726 | skip | decorator_class | TestF12ProductivityByDifficultyTable
+前 | 小計 | tests/test_step_s3.py | N1狭 skip=6 skipif=0 | N2広 skip=6 skipif=0 | N3ast=6
+今 | 1 | tests/test_step_s3.py | 664 | skipif | decorator_class | TestF07CheckoutModal
+今 | 2 | tests/test_step_s3.py | 681 | skipif | decorator_class | TestF08ComplaintForm
+今 | 3 | tests/test_step_s3.py | 698 | skipif | decorator_class | TestF09ComplaintSubmit
+今 | 4 | tests/test_step_s3.py | 712 | skipif | decorator_class | TestF10ProductivitySection
+今 | 5 | tests/test_step_s3.py | 727 | skipif | decorator_class | TestF11ProductivityByStaffTable
+今 | 6 | tests/test_step_s3.py | 741 | skipif | decorator_class | TestF12ProductivityByDifficultyTable
+今 | 小計 | tests/test_step_s3.py | N1狭 skip=0 skipif=6 | N2広 skip=0 skipif=6 | N3ast=6
+前 | 1 | tests/test_step_s4.py | 742 | skip | decorator_class | TestF16QualityBarInitial
+前 | 2 | tests/test_step_s4.py | 758 | skip | decorator_class | TestF17QualityBar100
+前 | 小計 | tests/test_step_s4.py | N1狭 skip=2 skipif=0 | N2広 skip=2 skipif=0 | N3ast=2
+今 | 1 | tests/test_step_s4.py | 753 | skipif | decorator_class | TestF16QualityBarInitial
+今 | 2 | tests/test_step_s4.py | 772 | skipif | decorator_class | TestF17QualityBar100
+今 | 小計 | tests/test_step_s4.py | N1狭 skip=0 skipif=2 | N2広 skip=0 skipif=2 | N3ast=2
+
+--- §B 三網の和（母 = 6 枚） ---
+前: N1狭 skip=11 skipif=0 和=11
+前: N2広 skip=12 skipif=0 和=12
+前: N3ast 和=12 棲家別=[('assign_module_pytestmark', 1), ('decorator_class', 8), ('decorator_func', 3)]
+今: N1狭 skip=0 skipif=11 和=11
+今: N2広 skip=0 skipif=12 和=12
+今: N3ast 和=12 棲家別=[('assign_module_pytestmark', 1), ('decorator_class', 8), ('decorator_func', 3)]
+
+★N1 と N3 の差★: 前=1 今=1
+★N2 と N3 の差★: 前=0 今=0
+
+--- §C 12 本の外（★別母★ = 的の樹の追跡下 .py 悉く・今の姿のみ） ---
+別母 N(追跡下 .py) = 1484
+当たつた file 数 = 24 / 呼び出し数 = 43
+棲家別 = [('assign_module_pytestmark', 3), ('decorator_class', 13), ('decorator_func', 27)]
+讀めなんだ = 0 / ast が解せなんだ = 0
+★代入形（狭網が落とす形）の在処★ = 3 件
+  代入形: backend/tests/test_ba965236_real_auth_probe_dev.py:24 skipif assign_module_pytestmark
+  代入形: backend/tests/test_cmd004_cross_cutting_integration.py:28 skipif assign_module_pytestmark
+  代入形: tests/test_step_p_supabase_live.py:34 skipif assign_module_pytestmark
+
+--- §D 負の対照 ---
+作り物に当てた ast網 = [(2, 'skip', 'assign_module_pytestmark', 'pytestmark'), (3, 'skipif', 'decorator_func', 'f')] / err=None
+作り物の N1狭 = skip 0 skipif 1 / N2広 = skip 1 skipif 1
+★作り物で 狭網が 代入形を落とす事が 現に出る★（N1狭 skip=0 だが N3ast に assign が在る）
+現に無い path の rc = 128
+
