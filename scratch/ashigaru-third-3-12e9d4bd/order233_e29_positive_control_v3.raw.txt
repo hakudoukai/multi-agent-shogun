@@ -1,0 +1,30 @@
+== coinage cut ==
+  paper = order228_e24_caller_outside_dir_v1.md
+  mtime = 2026-09-09T12:21:25
+  papers older than cut = 306 / newer or equal = 5
+
+== the 53 candidates split by the cut ==
+  before coinage (cannot be the class) = 49
+    U+32D0 : 9
+    U+32D1 : 10
+    U+32D2 : 15
+    U+32D3 : 15
+  at/after coinage (may be the class)  = 4
+    U+32D0 : 0
+    U+32D1 : 0
+    U+32D2 : 4
+    U+32D3 : 0
+  -- the at/after ones, one by one --
+    order228_e24_caller_outside_dir_v1.md                    :277   U+32D2
+    order228_e24_caller_outside_dir_v1.md                    :290   U+32D2
+    order228_e24_caller_outside_dir_v1.md                    :291   U+32D2
+    order229_e25_zeta_backlog_order_v1.md                    :35    U+32D2
+
+== HIT lines by era ==
+  before coinage = 1335
+  at/after       = 47
+
+== cost of hand-labelling the 53 ==
+  distinct papers = 39
+  lines to read at window 3 (7 lines each, no overlap merge) = 371
+  max per paper = 3

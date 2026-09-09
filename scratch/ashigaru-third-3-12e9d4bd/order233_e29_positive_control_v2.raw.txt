@@ -1,0 +1,67 @@
+== marker lines in corpus ==
+  lines containing any marker      = 1796
+  of which within 3 lines of HIT   = 269
+  of which NOT near HIT (generic)  = 1527
+
+== candidates (window=3, home filtered) ==
+  total = 53
+  U+32D0 : anchored=0  bare=9
+  U+32D1 : anchored=0  bare=10
+  U+32D2 : anchored=0  bare=19
+  U+32D3 : anchored=0  bare=15
+  anchored total = 0 / bare total = 53
+
+== candidate list ==
+  attach_projection_metadata_12_callsites_v1.md            :194   U+32D1 anc=0 kajou
+  boolop_values_call584_non_get174_callee_file_wide_v1.md  :52    U+32D2 anc=0 kajou
+  composer4_code_constant_conditions_v1.md                 :282   U+32D1 anc=0 kajou
+  composer4_code_constant_conditions_v1.md                 :309   U+32D0 anc=0 jinobun
+  defs_without_return_7_file_wide_v1.md                    :60    U+32D2 anc=0 kajou
+  defs_without_return_7_file_wide_v1.md                    :61    U+32D2 anc=0 kajou
+  depth1_attribute_calls_306_receiver_classification_v1.md :157   U+32D3 anc=0 midashi
+  depth1_attribute_calls_306_receiver_classification_v1.md :160   U+32D3 anc=0 kajou
+  depth3_plus_sources_of_17_names_v1.md                    :83    U+32D1 anc=0 kajou
+  escape_paths_l5229_and_external_v1.md                    :329   U+32D0 anc=0 kajou
+  file_wide_inventory_index_v6.md                          :23    U+32D2 anc=0 kajou
+  file_wide_inventory_index_v6.md                          :54    U+32D2 anc=0 kajou
+  for_13445_band_v1.md                                     :148   U+32D0 anc=0 kajou
+  isinstance329_arg_census_close_v1.md                     :29    U+32D3 anc=0 kajou
+  isinstance329_unmeasured238_and_call6_subscript1_v1.md   :39    U+32D1 anc=0 kajou
+  isinstance91_second_arg_type_census_file_wide_v1.md      :37    U+32D1 anc=0 kajou
+  lambda_recipients_3_identity_v1.md                       :109   U+32D2 anc=0 kajou
+  order167_fix_text_v1.md                                  :53    U+32D3 anc=0 kajou
+  order171_placed_staleness_census_v1.md                   :154   U+32D1 anc=0 kajou
+  order171_placed_staleness_census_v1.md                   :162   U+32D1 anc=0 kajou
+  order174_placed_staleness_census2_v1.md                  :101   U+32D1 anc=0 kajou
+  order175_ken_element_census_v1.md                        :114   U+32D2 anc=0 kajou
+  order175_ken_element_census_v1.md                        :116   U+32D2 anc=0 kajou
+  order177_ken_attribution_human_v1.md                     :87    U+32D2 anc=0 kajou
+  order188_split_sixteen_v1.md                             :120   U+32D2 anc=0 kajou
+  order190_seventeen_sources_v1.md                         :162   U+32D3 anc=0 kajou
+  order193_escape_surface_fix_v1.md                        :128   U+32D3 anc=0 jinobun
+  order198_falsepos_true_count_v1.md                       :135   U+32D3 anc=0 jinobun
+  order204_diff62_12_breakdown_v1.md                       :180   U+32D0 anc=0 jinobun
+  order204_diff62_12_breakdown_v1.md                       :181   U+32D0 anc=0 kajou
+  order210_eighth_class_probe_v1.md                        :189   U+32D1 anc=0 jinobun
+  order210_eighth_class_probe_v1.md                        :262   U+32D0 anc=0 kajou
+  order217_correction_census_v1.md                         :130   U+32D2 anc=0 kajou
+  order225_e17_mother_of_shape_v1.md                       :93    U+32D2 anc=0 jinobun
+  order228_e24_caller_outside_dir_v1.md                    :277   U+32D2 anc=0 kajou
+  order228_e24_caller_outside_dir_v1.md                    :290   U+32D2 anc=0 kajou
+  order228_e24_caller_outside_dir_v1.md                    :291   U+32D2 anc=0 kajou
+  order229_e25_zeta_backlog_order_v1.md                    :35    U+32D2 anc=0 jinobun
+  order9_carryover_v1.md                                   :85    U+32D3 anc=0 kajou
+  route_vs_handler_overlap_matrix_file_wide_v1.md          :60    U+32D0 anc=0 jinobun
+  save_depth5_terminal_and_two_handlers_final_sheet_v1.md  :211   U+32D1 anc=0 kajou
+  save_depth5_terminal_and_two_handlers_final_sheet_v1.md  :221   U+32D2 anc=0 jinobun
+  save_depth5_terminal_and_two_handlers_final_sheet_v1.md  :223   U+32D2 anc=0 midashi
+  save_nest_def3_depth1_calls_v1.md                        :159   U+32D0 anc=0 kajou
+  six_routes_depth1_implicit_sources_and_try_coverage_v1.md :166   U+32D0 anc=0 kajou
+  t_handler_raise_types_and_try_coverage_v1.md             :151   U+32D3 anc=0 kajou
+  t_remaining_six_routes_raise_and_try_coverage_v1.md      :93    U+32D3 anc=0 jinobun
+  t_remaining_six_routes_raise_and_try_coverage_v1.md      :150   U+32D3 anc=0 kajou
+  t_remaining_six_routes_raise_and_try_coverage_v1.md      :153   U+32D3 anc=0 kajou
+  unmeasurable26_census_v1.md                              :40    U+32D2 anc=0 kajou
+  validate_depth4_19defs_raise_census_and_chain_closure_table_v1.md :116   U+32D3 anc=0 jinobun
+  validate_uncovered134_callee_depth2_raise_types_v1.md    :232   U+32D3 anc=0 kajou
+  validate_vs_save_contrast_sheet_closure_v1.md            :112   U+32D3 anc=0 midashi

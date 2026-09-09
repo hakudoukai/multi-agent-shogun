@@ -1,0 +1,68 @@
+== corpus ==
+md files      = 311
+hit lines     = 1394
+outside lot   = 1382
+
+== self-labeled  window=0 ==
+  one(cheap)  = 61
+  multi       = 43
+  none(costly)= 1278
+  U+32D0 : 13
+  U+32D1 : 18
+  U+32D2 : 19
+  U+32D3 : 11
+
+== self-labeled  window=3 ==
+  one(cheap)  = 70
+  multi       = 179
+  none(costly)= 1133
+  U+32D0 : 10
+  U+32D1 : 20
+  U+32D2 : 25
+  U+32D3 : 15
+
+== self-labeled  window=5 ==
+  one(cheap)  = 98
+  multi       = 239
+  none(costly)= 1045
+  U+32D0 : 21
+  U+32D1 : 25
+  U+32D2 : 30
+  U+32D3 : 22
+
+== cheap ones by home  window=3 ==
+  kajou      39
+  hyou       16
+  jinobun    11
+  midashi    3
+  inyou      1
+  -- top papers --
+  composer4_code_constant_conditions_v1.md             6
+  order210_eighth_class_probe_v1.md                    5
+  order175_ken_element_census_v1.md                    4
+  order228_e24_caller_outside_dir_v1.md                3
+  save_depth5_terminal_and_two_handlers_final_sheet_v1.md 3
+  t_remaining_six_routes_raise_and_try_coverage_v1.md  3
+  defs_without_return_7_file_wide_v1.md                2
+  depth1_attribute_calls_306_receiver_classification_v1.md 2
+  file_wide_inventory_index_v6.md                      2
+  order171_placed_staleness_census_v1.md               2
+
+== per-class cheap ones, by home  window=3 ==
+  U+32D0  total=10  kajou:6 jinobun:3 hyou:1
+  U+32D1  total=20  hyou:10 kajou:9 jinobun:1
+  U+32D2  total=25  kajou:15 hyou:5 jinobun:3 inyou:1 midashi:1
+  U+32D3  total=15  kajou:9 jinobun:4 midashi:2
+
+== cheap ones excluding hyou+kinotai+inyou  window=3 ==
+  total = 53
+  U+32D0 : 9
+  U+32D1 : 10
+  U+32D2 : 19
+  U+32D3 : 15
+
+== the existing 12 (lot papers) ==
+  lot hit lines = 12
+  labels_in_window=0 : 3
+  labels_in_window=1 : 8
+  labels_in_window=2 : 1
