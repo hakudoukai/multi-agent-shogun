@@ -1,0 +1,53 @@
+=== order227 / E22 ★門の外は 真に回らぬのか★ ===
+★的一行★ = E21 が「包む輪が無い」と断じた件は 真に回らぬか ★輪が呼手に居る★ か
+分け = E16 器 L21-L72 の逐語 / 輪の辿り = order226 v2 の逐語（★双方 一字も変へず★）
+
+--- §零 ★母★ ---
+母(本席 dir の .py 悉く) = 90 枚 / ★己の一族 = 10 枚★ / ★一族を外した母 = 80 枚★
+一族の名: order224_e16_first_hit_triage_v1.rule.py, order224_e16_seed_per_tool_v1.rule.py, order224_e16_seed_per_tool_v2.rule.py, order224_e16_seed_probe_v2.rule.py, order224_e16_seed_probe_v3.rule.py, order225_e17_mother_of_comprehension_v1.rule.py, order225_e17_shape_recheck_v1.rule.py, order226_e21_gate_and_power_v1.rule.py, order226_e21_gate_and_power_v2.rule.py, order227_e22_loop_in_caller_v1.rule.py
+
+--- §一 ★E23 一族を外した時の数★（分けも輪の辿りも一字も変へず・動かすは母のみ） ---
+  一族を含む: 母=90枚 / ㋐値を取る=21件 / 門=17件 / 門外=4件
+      門の内訳: ★双方が回る★ 2, 何れも回らぬ 5, 母が回る 6, 網が回る 4
+  ★一族を外した★: 母=80枚 / ㋐値を取る=21件 / 門=17件 / 門外=4件
+      門の内訳: ★双方が回る★ 2, 何れも回らぬ 5, 母が回る 6, 網が回る 4
+
+--- §二 ★検出力★（呼手の辿りが 現に出分けるか） ---
+  作り物 => ('def の外に居る', '(無し)', 0, 0)
+  作り物 => ('★呼手が回る★', 'f1', 1, 1)
+  作り物 => ('呼手も回らぬ', 'f2', 1, 0)
+  作り物 => ('同 file に呼手が無い', 'f3', 0, 0)
+  作り物 => ('★呼手が回る★', 'f4', 1, 1)
+  作り物 => ('lambda ゆゑ名で呼手を引けぬ', '(lambda)', 0, 0)
+★出分けた種 = ['def の外に居る', 'lambda ゆゑ名で呼手を引けぬ', '★呼手が回る★', '同 file に呼手が無い', '呼手も回らぬ']（5 種）★
+現に無い path: exists=False
+
+--- §三 ★門★（母が足るか） ---
+㋐値を取る = 21 件 / ★内 包む輪が無い = 4 件★ ―― ★之が本問ひの母★
+門(母 >= 1) = True / 検出力(種 >= 3) = True（現に出分けた種 = 5）
+★∴ 門を通つた ―― 下 §四 で 本測に進む★
+
+--- §四 本測 ―― 門外 4 件を 一つづつ ---
+  ★★呼手が回る★ = 2 件★
+  ★呼手も回らぬ = 2 件★
+
+  ● boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:39 [next] 分け=㋐値を取る(Assign)
+      ★輪は呼手に居るか★ = ★呼手が回る★
+      包む def = SEC / 同 file の呼手 = 1 本 / 内 輪の中 = 1 本
+      逐語: next((k for k in range(i+1,len(L)) if L[k].startswith('## ')),len(L))
+
+  ● kugi68_dedup_close_v1.rule.py:8 [next] 分け=㋐値を取る(Assign)
+      ★輪は呼手に居るか★ = ★呼手が回る★
+      包む def = SEC / 同 file の呼手 = 2 本 / 内 輪の中 = 1 本
+      逐語: next((k for k in range(i+1,len(L)) if L[k].startswith('## ')),len(L))
+
+  ● order200_escape_shape_ast_v1.rule.py:251 [re.search] 分け=㋐値を取る(Assign)
+      ★輪は呼手に居るか★ = 呼手も回らぬ
+      包む def = stage7 / 同 file の呼手 = 1 本 / 内 輪の中 = 0 本
+      逐語: re.search(r"ROOT\s*=\s*u?[\"']([^\"']+)", t)
+
+  ● order223_e14_relabel_v1.rule.py:170 [re.search] 分け=㋐値を取る(Assign)
+      ★輪は呼手に居るか★ = 呼手も回らぬ
+      包む def = pick / 同 file の呼手 = 9 本 / 内 輪の中 = 0 本
+      逐語: re.search(pat, prev)
+
