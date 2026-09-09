@@ -1,0 +1,36 @@
+== corpus now ==
+  papers = 312
+  hit lines = 1403  (outside lot = 1391)
+  candidates = 53
+
+== gate, each term ==
+  B 床        lines=1635   papers=288   (U+5E8A)
+  B 讀取のみ     lines=391    papers=242   (U+8B80+53D6+306E+307F)
+  B 禁        lines=80     papers=55    (U+7981)
+  B 触れぬ      lines=15     papers=12    (U+89E6+308C+306C)
+  B 諮る       lines=22     papers=16    (U+8AEE+308B)
+  D 書き方      lines=18     papers=13    (U+66F8+304D+65B9)
+  D 記法       lines=7      papers=6     (U+8A18+6CD5)
+  D 己の筆      lines=1      papers=1     (U+5DF1+306E+7B46)
+  D 曖昧       lines=4      papers=2     (U+66D6+6627)
+  D 書き損      lines=0      papers=0     (U+66F8+304D+640D)
+
+== proxy on the 53 (window=3), corrected ==
+  none   35
+  B      18
+  marker U+32D0 : B:5 none:4
+  marker U+32D1 : none:7 B:3
+  marker U+32D2 : none:14 B:5
+  marker U+32D3 : none:10 B:5
+
+== term-by-term hits inside the 53 windows ==
+  B 床        13
+  B 讀取のみ     5
+  B 禁        2
+  B 触れぬ      0
+  B 諮る       1
+  D 書き方      0
+  D 記法       0
+  D 己の筆      0
+  D 曖昧       0
+  D 書き損      0

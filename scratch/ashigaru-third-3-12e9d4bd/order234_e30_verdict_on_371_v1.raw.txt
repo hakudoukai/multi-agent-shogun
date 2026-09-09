@@ -1,0 +1,47 @@
+== cost : lines actually to be read ==
+  window=3  naive=371  merged=329  saved=42  papers=39  chars=17363
+  window=5  naive=583  merged=498  saved=85  papers=39  chars=25908
+
+== gain : how far the control reaches ==
+  mother rows (outside lot)   = 1391
+  control now  12 -> 0.86% of mother
+  control then 65 -> 4.67% of mother
+  papers  now = 2   then = 41
+  -- home spread --
+     now (12) : all from 2 lot papers
+     then(53) : kajou:39 jinobun:11 midashi:3
+  -- order band spread of the 53 --
+     non-order    31
+     order0x      1
+     order160x    1
+     order170x    6
+     order180x    1
+     order190x    3
+     order200x    2
+     order210x    3
+     order220x    5
+
+== gate of the proxy vocabulary (measure BEFORE applying) ==
+  B-proxy  床              lines=1635   papers=288
+  B-proxy  讀取のみ           lines=391    papers=242
+  B-proxy  禁              lines=80     papers=55
+  B-proxy  触れぬ            lines=15     papers=12
+  B-proxy  諡る             lines=0      papers=0
+  D-proxy  書き方            lines=18     papers=13
+  D-proxy  記法             lines=7      papers=6
+  D-proxy  己の筆            lines=1      papers=1
+  D-proxy  曖昧             lines=4      papers=2
+  D-proxy  書き損            lines=0      papers=0
+
+== proxy applied to the 53 (window=3) ==
+  B-proxy only = 18
+  D-proxy only = 0
+  both         = 0
+  neither      = 35
+  marker U+32D0 : B:5 none:4
+  marker U+32D1 : none:7 B:3
+  marker U+32D2 : none:14 B:5
+  marker U+32D3 : none:10 B:5
+
+== proxy on the known 12 (positive control of the proxy itself) ==
+  lot rows = 12  ->  none:12
