@@ -1,0 +1,40 @@
+## §A 的の樹と pin
+TREE=/home/hakudoukai/a3/wt-bundle-fix4
+HEAD_now=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b  PIN=47c8bc3b86613d7bd55cdfc062a46dccf8d81d1b  同じ=True
+porcelain_rc=0  porcelain_lines=6
+
+## §B porcelain の 6 行（状態符 と path）
+  code=' M'  path=backend/tests/test_cmd004_cross_cutting_integration.py
+  code=' M'  path=tests/test_step_a4_handover_sheet.py
+  code=' M'  path=tests/test_step_q.py
+  code=' M'  path=tests/test_step_r_ui.py
+  code=' M'  path=tests/test_step_s3.py
+  code=' M'  path=tests/test_step_s4.py
+
+## §C 前（blob@47c8bc3b）と 今（作業樹）の併記
+| # | path | 前 読めた | 前 sha256 | 前 wc/split | 前 skip/skipif/ci | 今 読めた | 今 sha256 | 今 wc/split | 今 skip/skipif/ci | CRLF |
+| 1 | backend/tests/test_cmd004_cross_cutting_integration.py | 現に在る | d2556011e95a5d0e | 110/111 | 0/0/0 | 現に在る | 15a602e4ddd0836b | 116/117 | 0/0/0 | 0 |
+| 2 | tests/test_step_a4_handover_sheet.py | 現に在る | 4c127bdbf13effeb | 560/561 | 1/0/0 | 現に在る | a5a0716d943b72aa | 563/564 | 0/1/0 | 0 |
+| 3 | tests/test_step_q.py | 現に在る | 59e711f7ab7a4e32 | 491/492 | 1/0/0 | 現に在る | 140b46d474f8e42e | 494/495 | 0/1/0 | 0 |
+| 4 | tests/test_step_r_ui.py | 現に在る | 69919b607a7178db | 311/312 | 1/0/0 | 現に在る | 75d1ef72622d3a24 | 314/315 | 0/1/0 | 0 |
+| 5 | tests/test_step_s3.py | 現に在る | 353459c033c4ef60 | 734/735 | 6/0/0 | 現に在る | 9c38c4dc0e218dd0 | 752/753 | 0/6/0 | 0 |
+| 6 | tests/test_step_s4.py | 現に在る | 5cc4f2eb904e6049 | 1442/1443 | 2/0/0 | 現に在る | 669ee12d62868e6a | 1459/1460 | 0/2/0 | 0 |
+
+## §D 別値（令③: 現に読める物と読めぬ物を別値で）
+porcelain 母数=6
+前(blob) 読めた=6  読めなんだ=0
+今(作業樹) 読めた=6  読めなんだ=0
+
+## §E 単位の和（★本弾の母 = porcelain の 6 枚のみ★・464 枚の母とは別）
+前: skip=11  skipif=0  collect_ignore=0
+今: skip=0  skipif=11  collect_ignore=0
+差: skip=-11  skipif=11  collect_ignore=0
+
+## §F 負の対照（差が出得る口・器が同じ物を返す形ではない事）
+前後の sha が ★同じ★ 枚数=0  ★別★ 枚数=6
+存在せぬ path を show した時の rc=128（0 でない事が『読めぬ』を判ずる口の証）
+
+## §G 測れぬ物（令②）
+- o193 が言ふ『24 単位 / 12 単位』は ★母集団 464 枚★ から数へた数 ∴ 本弾（母 = porcelain の枚数）では ★再現せぬ★＝別の母。
+- porcelain に挙がらぬ file の前後は 本弾では ★測定不能★（網は porcelain の行のみ）。
+- 『覆ふ試験本数』は 走らねば定まらぬ ∴ 本弾では ★測定不能★（製品走 0）。
