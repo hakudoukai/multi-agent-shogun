@@ -1,0 +1,72 @@
+=== order231 / E26 ===
+母 = /home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd/*.md 309 枚
+当たり行 = 1377
+内 本 lot(order226/227) = 12 / その外 = 1365
+含む紙 = 298 枚
+
+--- §一 検出力（陽性対照 = 本 lot 12 行） ---
+  征 0 : order226_e21_zero_by_instrument_v1.md:23 want=㋐
+  征 0 : order226_e21_zero_by_instrument_v1.md:132 want=㋒
+  征 0 : order226_e21_zero_by_instrument_v1.md:144 want=㋒
+  征 0 : order226_e21_zero_by_instrument_v1.md:146 want=㋒
+  征 0 : order226_e21_zero_by_instrument_v1.md:151 want=文言
+  征 0 : order226_e21_zero_by_instrument_v1.md:193 want=㋒
+  征 0 : order226_e21_zero_by_instrument_v1.md:194 want=㋒
+  征 0 : order226_e21_zero_by_instrument_v1.md:195 want=㋒
+  征 0 : order227_e22_loop_in_caller_v1.md:119 want=㋒
+  征 0 : order227_e22_loop_in_caller_v1.md:129 want=文言
+  征 0 : order227_e22_loop_in_caller_v1.md:176 want=㋒
+  征 0 : order227_e22_loop_in_caller_v1.md:179 want=㋒
+  陽性対照 12 行 : 当たり=0 / 征 0=12 / 違=0
+
+--- §二 本 lot の外 1365 行の征 ---
+  (征 0) = 1067
+  ㋑ = 129
+  文言 = 115
+  文言+㋑ = 30
+  ㋐ = 11
+  ㋒ = 6
+  ㋓ = 3
+  文言+㋐+㋑ = 1
+  文言+㋐+㋑+㋒ = 1
+  ㋐+㋒ = 1
+  ㋐+㋑ = 1
+
+--- §三 棲家ごと ---
+  箇条 = 760
+  表 = 318
+  地の文 = 183
+  見出し = 80
+  引用 = 15
+  器の帯 = 9
+
+--- §四 人が読む欄（各征 3 例） ---
+  [(征 0)] _aef5d233_full.md:5 | - ★発見★ `treatment_set_conditions` に **`updated_at` 列は存在しない**（b4d-A の updated_month は測定不能＝列不在）。`created_at` のみ。
+  [(征 0)] all_raise_in_t_closure_v1.md:6 | 刷つた runtime: python 3.12.3 (ast の刷り手)。走らせる runtime は測定不能。
+  [(征 0)] all_raise_in_t_closure_v1.md:53 | 実行時に何が飛ぶかは走らせて居らぬゆゑ ★測定不能★。
+  [㋑] annotation1285_depth_distribution_v1.md:154 | 8. 此の註釈が実行時に検査されるか否か ―― **測定不能** (走行を要する)。
+  [㋑] annotation_root944_without26_v1.md:146 | - 註釈が実行時に何の型で満たされるかは、本 file の讀取のみでは **測定不能**（走行 0 ゆゑ）。
+  [文言] assign_92_v1.md:225 | **受け手の型は測定不能** (床) ―― `client.rpc` の `client` が何であるかは代入元を辿れば本 file 内に在るが、`Attribute` 15 件の受け手の**実行時の型**は本 file
+  [㋑] assign_census_file_wide_v1.md:68 | - 測定不能: 実行時に何回代入が起きるか (走行 0 ゆゑ)・同名の左辺が同一の物を指すか (束縛は静的に追つて居らぬ)・右辺の `Call` が何を返すか。
+  [文言] assign_rhs_noncall_9_v1.md:7 | 凡例: 「現に在る」「現に無い」「測定不能」の三択語のみで結ぶ。判定語は書かぬ。
+  [文言] attribute_append191_receiver_host_file_wide_v1.md:55 | 三択語で結ぶ ―― 現に在る: append 191 の悉くが Call.func・根が悉く Name・Expr.value 191・Dict 86。現に無い: 値渡し 0・method host 0・module 直下
+  [文言+㋑] b1_entity_1a_vs_1c_v1.md:62 | 讀取のみ・code走行0・DB0・commit/push0(git showは讀取専用サブコマンド、作業樹に変更を生じない)。三択語(同一/包含/別機構、現に在る/現に無い/測定不能)のみ使用、PASS/緑/合格等の評語
+  [文言+㋑] b1c_prime_design_v1.md:94 | 讀取のみ・code走行0・patch0・DB0・commit/push0。三択語(現に在る/現に無い/測定不能)のみ使用、PASS/緑/合格等の評語は0(自己grep確認)。secret/患者本文/PII=0字。
+  [文言+㋑] b1cprime_gamma_sql_rpc_instrument_design_v1.md:113 | **既存precedent確認**: `backend/tests`内に`validate_treatment_entry`を直接呼ぶpytestは現に無い(`git grep -n "validate_treatmen
+  [㋓] c2_guard_branch_vs_required_fields_fragments_v1.md:52 | **object要素の扱ひ**: `rule.fields`の要素が(型注釈に反して実データが)object型だつた場合、JSのbracket記法`panelData[f]`はobjectを暗黙に文字列化(`String
+  [㋓] cited_file_set_extraction_reproducible_v1.md:151 | - **path の形をせぬ指示**: 「T」「C2 側」「migration」「あの紙」等の**指示語・略号のみで file を指す書き方**は、いづれの pattern も拾はぬ。**∴ §六-7 は測定不能** ―
+  [㋐] d3_binding_reference_v1.md:51 | ㋐ 束縛の 14 形を悉皆に採る事 ―― 現に在る (3096・形の内訳を出した) / ㋑ 実行時に名が差し替はる形 ―― ★測定不能★ (字だけでは届かぬ)
+  [㋒] file_wide_inventory_index_v4.md:17 | 的 = order107〜115 の 9 本を畳む索引。主数値: 表 9 本・v2 §五 未測 8 は 8 悉く測つた・測定不能 4 は不触・v2 §四 閉ぢぬ 12 = 閉ぢた1+閉ぢぬ4+触れず6+未だ1・母数別 足
+  [㋐] gap44_diff1_cause_two_axes_v1.md:168 | 11. 紙17 の器の内側 (何の式で 55 を得たか) は **測定不能** (本席の手の届かぬ所)。
+  [㋐] gap68_attribute_receivers_v1.md:77 | - **但し之は「届かぬ」の証では現に無い** ―― 局所名が抱へる物の属性が、更に何処かで同 file の def を指す形は本器では判じ得ぬ。**測定不能**の儘である。
+  [㋒] index_l13_l14_postwrite_v1.md:25 | - 書き換への後の 3 数と 19/5 = ★測定不能★ ―― 未だ置かれて居らぬ (置かれた後に九条目で當て直す)
+  [㋒] order175_ken_element_census_v1.md:114 | 1. **窓の外の元素** ―― 前 46 字・後ろ 30 字 の外に名が在る場合。㋒ 44 箇所は ★『紙が名指して居らぬ』と『窓より遠くに名が在る』の二つを未だ分けられて居らぬ★ = 測定不能。
+  [文言+㋐+㋑] order228_e24_caller_outside_dir_v1.md:9 | > ★次弾＝★残 2 の『dir 外の呼手』を測る道が在るか を先に一行(走 0)★★=①道が在るなら何を讀めば足るか ②★無ければ『測れぬ(器が及ばぬ)』か『床に依り測らぬ』かを分けて名指せ★(本日 A2 が鋳た六つ目
+  [文言+㋐+㋑+㋒] order228_e24_caller_outside_dir_v1.md:241 | - ★二百八十五★ ―― **★「測定不能」には三つの別が在る★** ―― ㋐器が及ばぬ（原理的）／㋑床に依り測らぬ（器は在るが禁）／㋒未だ器を作つて居らぬ（作れば及ぶ）。**三者を一語で書くな。**
+  [㋓] order230_e25b_ko_three_v1.md:199 | - ★二百九十七★「★『測定不能』の内には『己の記法の疵』が混じる★ ―― ㋐㋑㋒ の三分の外に ★㋓己の書き方が悪かつた★ が現に在つた（E15）。★四つ目の別として名指す★。」
+  [㋐+㋒] population_tracer_v1.md:67 | - 21434 を union へ加算する術 ―― ★測定不能★ (器を作つても届かぬ・定めが先に要る)
+  [㋐+㋑] str288_arg_boolop_values_types_file_wide_v1.md:56 | - 測定不能: getattr・uuid4 の出所 / get が何を返すか / 空文字列が実行時に選ばれるか否か (走行 0)。
+
+--- §五 器の限 ---
+  本器は ★断定せぬ★ ―― 語の在否を数へるのみ。
+  征 0 の行は 「別が無い」の意に非ず、「語では分からぬ」の意である。

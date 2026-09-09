@@ -1,0 +1,48 @@
+=== order231 / E26 v2 窓を広げる ===
+母 = *.md 309 枚 / 当たり行 = 1377
+本 lot = 12 / その外 = 1365
+
+--- §一 窓の幅ごとの検出力（陽性対照 12 行） ---
+  幅 | 当たり | 征 0 | 違 | 征が 2 以上
+   0 |      6 |    6 |  0 |      0
+   1 |      9 |    3 |  0 |      0
+   2 |     10 |    1 |  1 |      1
+   3 |     10 |    1 |  1 |      4
+   5 |     11 |    0 |  1 |      9
+   8 |     11 |    0 |  1 |     11
+
+--- §二 陽性対照 12 行の内訳（幅 3） ---
+  order226_e21_zero_by_instrument_v1: 23 want=㋐ got=文言
+  order226_e21_zero_by_instrument_v1:132 want=㋒ got=文言+㋒
+  order226_e21_zero_by_instrument_v1:144 want=㋒ got=㋒
+  order226_e21_zero_by_instrument_v1:146 want=㋒ got=文言+㋒
+  order226_e21_zero_by_instrument_v1:151 want=文言 got=文言
+  order226_e21_zero_by_instrument_v1:193 want=㋒ got=文言+㋒
+  order226_e21_zero_by_instrument_v1:194 want=㋒ got=㋒
+  order226_e21_zero_by_instrument_v1:195 want=㋒ got=㋒
+  order227_e22_loop_in_caller_v1.md:119 want=㋒ got=㋒
+  order227_e22_loop_in_caller_v1.md:129 want=文言 got=(0)
+  order227_e22_loop_in_caller_v1.md:176 want=㋒ got=文言+㋒
+  order227_e22_loop_in_caller_v1.md:179 want=㋒ got=㋒
+
+--- §三 母 1365 行へ当てる（幅 3） ---
+  (征 0) = 752
+  ㋑ = 185
+  文言 = 151
+  ㋒ = 107
+  文言+㋑ = 44
+  ㋑+㋒ = 35
+  文言+㋒ = 29
+  ㋐ = 28
+  ㋐+㋑ = 9
+  ㋐+㋒ = 9
+  ㋓ = 5
+  文言+㋐ = 4
+  ㋐+㋑+㋒ = 3
+  文言+㋑+㋒ = 2
+  文言+㋐+㋑+㋒ = 1
+  ㋒+㋓ = 1
+
+--- §四 器の限 ---
+  窓を広げると 征が重なる ―― 当たりが増へても ★一つに絞れぬ★。
+  本器は ★断定せぬ★。人が読む欄を残す。
