@@ -1,0 +1,125 @@
+=== order226 / E21 ★門と検出力を先に測る★（答を出す器ではない） ===
+母(本席 dir の .py 悉く) = 89 枚
+網・分け = ★E16 器 L21-L72 の逐語の写し（一字も変へず・條 二百七十一）★
+★包む輪を探す辿りは 分けの外に置いた★（條 二百七十三）
+
+--- §一 ★門★（母が足るか） ---
+㋐値を取る = 21 件
+★内 包む輪(for / comprehension)が現に在る = 17 件★ ―― ★之が本問ひの母★
+★包む輪が無い = 4 件★ ―― 網も母も回らぬ ゆゑ 本問ひの外
+
+包む輪の種ごと:
+  For = 10 件
+  For+For = 1 件
+  GeneratorExp = 3 件
+  GeneratorExp+For+For = 1 件
+  GeneratorExp+GeneratorExp+comprehension+ListComp = 1 件
+  GeneratorExp+comprehension+ListComp+For = 1 件
+
+--- §二 ★検出力★（三つが現に出分けるか） ---
+  作り物 ⇒ ('㋐値を取る', '網が回る', ['p'], [])
+  作り物 ⇒ ('㋐値を取る', '母が回る', [], ['l'])
+  作り物 ⇒ ('㋐値を取る', '何れも回らぬ', [], [])
+  作り物 ⇒ ('㋐値を取る', '★双方が回る★', ['q'], ['q'])
+  作り物 ⇒ ('㋐値を取る', '網が回る', ['p2'], [])
+  作り物 ⇒ ('㋐値を取る', '★双方が回る★', ['p3'], ['x'])
+★出分けた種 = ['★双方が回る★', '何れも回らぬ', '母が回る', '網が回る']（4 種）★
+★之が 1 種しか出ぬなら 器に口が無い ―― 撃つても 0 しか出ぬ★（條 二百七十三）
+現に無い path: exists=False
+
+--- §三 ★門を通つたか★ ---
+門(母 >= 1) = True（母 = 17 件）
+検出力(種 >= 3) = True（現に出分けた種 = 4）
+★∴ 門を通つた ―― 下 §四 で 本測に進む★
+
+--- §四 本測 ―― ㋐ の内 包む輪が在る 17 件を 一つづつ ---
+  ★★双方が回る★ = 2 件★
+  ★何れも回らぬ = 5 件★
+  ★母が回る = 6 件★
+  ★網が回る = 4 件★
+
+  ● boolop39_genexp3_shape_and_ledger_audit_v1.rule.py:23 [next] 分け=㋐値を取る(Call:Counter)
+      ★何が回るか★ = 網が回る / 網に回る名=['c', 'g'] / 母に回る名=[]
+      包む輪 = GeneratorExp
+      逐語: next(i for i,v in enumerate(g.values) if v is PA[id(c)])
+
+  ● index_fix_all_six_v1.rule.py:25 [next] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 何れも回らぬ / 網に回る名=[] / 母に回る名=[]
+      包む輪 = For
+      逐語: next(i for i,x in enumerate(L) if not x.lstrip().startswith('#'))
+
+  ● kensu_reconcile_v1.rule.py:19 [re.search] 分け=㋐値を取る(Call:any)
+      ★何が回るか★ = 網が回る / 網に回る名=['p'] / 母に回る名=[]
+      包む輪 = GeneratorExp
+      逐語: re.search(p, s)
+
+  ● kensu_reconcile_v1.rule.py:33 [re.search] 分け=㋐値を取る(Call:any)
+      ★何が回るか★ = ★双方が回る★ / 網に回る名=['p'] / 母に回る名=['l']
+      包む輪 = GeneratorExp+GeneratorExp+comprehension+ListComp
+      逐語: re.search(p,l)
+
+  ● kugi68_dedup_close_v1.rule.py:14 [re.match] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 母が回る / 網に回る名=[] / 母に回る名=['l']
+      包む輪 = For+For
+      逐語: re.match(r'^([0-9]+) (.+)$',l.strip())
+
+  ● order184_rule_number_ledger_v1.rule.py:28 [re.search] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 母が回る / 網に回る名=[] / 母に回る名=['b']
+      包む輪 = For
+      逐語: re.search(r"from: (\S+)", b)
+
+  ● order184_rule_number_ledger_v1.rule.py:100 [.find] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 何れも回らぬ / 網に回る名=[] / 母に回る名=[]
+      包む輪 = For
+      逐語: seg.find("百五十九")
+
+  ● order196_magazine_v1.rule.py:24 [re.search] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 何れも回らぬ / 網に回る名=[] / 母に回る名=[]
+      包む輪 = For
+      逐語: re.search(u"as_of[:：]?\\s*`?([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:+]+)", t)
+
+  ● order197_head_reproof_v1.rule.py:42 [re.search] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 何れも回らぬ / 網に回る名=[] / 母に回る名=[]
+      包む輪 = For
+      逐語: re.search(u"as_of[^0-9]*([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:]+)", s)
+
+  ● otsu_runtime_probe_v1.rule.py:97 [next] 分け=㋐値を取る(Call:type)
+      ★何が回るか★ = 何れも回らぬ / 網に回る名=[] / 母に回る名=[]
+      包む輪 = For
+      逐語: next(iter(a.values()))
+
+  ● three_nets_outside_v1.rule.py:18 [re.search] 分け=㋐値を取る(Call:any)
+      ★何が回るか★ = 網が回る / 網に回る名=['p'] / 母に回る名=[]
+      包む輪 = GeneratorExp
+      逐語: re.search(p,s)
+
+  ● three_nets_outside_v1.rule.py:39 [re.search] 分け=㋐値を取る(Call:any)
+      ★何が回るか★ = ★双方が回る★ / 網に回る名=['p'] / 母に回る名=['l']
+      包む輪 = GeneratorExp+comprehension+ListComp+For
+      逐語: re.search(p,l)
+
+  ● three_nets_outside_v1.rule.py:61 [re.search] 分け=㋐値を取る(Call:any)
+      ★何が回るか★ = 網が回る / 網に回る名=['p'] / 母に回る名=[]
+      包む輪 = GeneratorExp+For+For
+      逐語: re.search(p,t)
+
+  ● unmeasurable26_census_v1.rule.py:12 [re.match] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 母が回る / 網に回る名=[] / 母に回る名=['l']
+      包む輪 = For
+      逐語: re.match(r'^([0-9]) (.+?) ―― ',l)
+
+  ● unmeasurable26_census_v1.rule.py:22 [re.match] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 母が回る / 網に回る名=[] / 母に回る名=['l']
+      包む輪 = For
+      逐語: re.match(r'^\s+([1-6]) (.+)',l)
+
+  ● unmeasurable26_status_triage_v1.rule.py:12 [re.search] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 母が回る / 網に回る名=[] / 母に回る名=['f']
+      包む輪 = For
+      逐語: re.search(r'as_of[:：]?\s*(20\S+)',open(D+f,encoding='utf-8').read())
+
+  ● unmeasurable26_status_triage_v1.rule.py:53 [re.match] 分け=㋐値を取る(Assign)
+      ★何が回るか★ = 母が回る / 網に回る名=[] / 母に回る名=['l']
+      包む輪 = For
+      逐語: re.match(r'^([0-9]{1,2}) (.+?) ―― ',l)
+
