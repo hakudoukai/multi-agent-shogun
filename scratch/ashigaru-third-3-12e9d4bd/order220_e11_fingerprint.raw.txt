@@ -1,0 +1,44 @@
+## §A 切り出した走査本体（★o194 の source から逐語★）
+src_path=order194_gap_fill2_v1.rule.py
+src_lines_split=52
+seg_lines=5..21 (1 始まり)  seg_split=17
+seg_sha256=1f368e4d264c826470c0900d6e98600ea00e10aff44c88348a94b22fc4c67f70
+seg_head='import os, io, hashlib'
+seg_tail='    return walked, ok, bad'
+TREE=/home/hakudoukai/a3/wt-bundle-fix4
+SKIPD_n=5
+
+## §B 走査（同じ走の中で二度・o194 と同じ形）
+walked: 1st=16972 2nd=16972  同じ=True
+readable: 1st=15632 2nd=15632
+unreadable: 1st=1340 2nd=1340
+秒の桁の揺れ: 1st_only=0 2nd_only=0
+
+## §C 指紋（o194 §三 と同じ算き方）
+unreadable_set_sha256=98ea6880df4aca4454c194c2e207b8c8f56386715b826ddb71497c287bf5496f  n=1340
+readable_set_sha256=87d7df477eb766f8bdcd11fac49ab3cc67a95c27b035f3ee57fb58a15abb0435  n=15632
+
+## §D 前の刻との突合（★分〜時の桁★）
+prev_as_of=2026-09-08T21:39:59+0900
+now=2026-09-09T10:10:13+0900
+gap_seconds=45014  gap_minutes=750  gap_hours=12
+gap は 分の桁を越えたか=True  時の桁を越えたか=True
+unreadable 指紋 同じ=True
+readable   指紋 同じ=True
+unreadable n: prev=1340 now=1340 差=0
+readable   n: prev=15632 now=15632 差=0
+walked     n: prev=16972 now=16972 差=0
+★二つ共に同じ=True★
+
+## §E 負の対照（差が出得る口が現に在る事）
+本器は 指紋が食ひ違へば 下の §F へ 出入りの数を刷る口を持つ。
+空集合の指紋=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  (前の二つと同じ=False)
+∴ 突合は ★何を入れても True を返す形ではない★。
+
+## §F 差の中身（名は刷らぬ・数と拡張子の別のみ）
+差 現に無し ∴ 刷る物 無し。
+
+## §G 母数と測れなかつた数
+母数(walked)=16972
+讀めた=15632  讀めなんだ=1340  和=16972  母と一致=True
+降らなんだ dir(5 種)の中の枚数は ★数へて居らぬ★ ∴ 測定不能。
