@@ -1,0 +1,135 @@
+order267 raw  (A3 / order267 : nokoru 40 no katachi + 21 no dedokoro + N3)
+as_of 2026-09-10T14:00:55+09:00
+
+[0] taku = 3/3 (o267_forty 1 / o252 1 / o266_net_wide 1) ; hashiri = 0
+
+[1] ka : order267_forty.rule.py no nama no kaeri (chikugo, sec 0-2 / 5-6)
+== 0 haha ==
+  files order*.md = 109 ; lines(wc) = 22482
+== 1 of the 61, how many does the WIDE net now catch ==
+  caught = 21 ; rest = 40
+  caught list = 181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201
+  rest list   = 202,203,204,205,206,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,
+                235,236,237,238,239,240,241,242,243,244,245,246,247,248,263,272,273,274,275
+== 2 the 40 by FORM (order264 kitei-tanni) ==
+  F2 midashi (jou-go ari, wide net no soto) n=13 nums=219,225,226,228,229,234,235,237,238,239,244,246,263
+  F6 kajou no bun-chuu                  n=8 nums=202,203,204,205,206,220,224,245
+  F7 ji-no-bun                          n=6 nums=227,230,232,236,240,275
+  G handan shi-enu                     n=13 nums=221,222,223,231,233,241,242,243,247,248,272,273,274
+  sum = 40
+== 5 POSCTRL (one each of F2/F6/F7 must have >=1 mention) ==
+  F2 n=219 hits=2 / F6 n=202 hits=2 / F7 n=227 hits=6
+  POSCTRL tootta (3/3)
+== 6 NEGCTRL (oki-naoshi : han-gai / katachi-kuzure) ==
+  han-gai 4keta                ### (hoshi)A3 no JOU 千五百(hoshi) -> none
+  katachi space nashi          ### (hoshi)A3noJOU 四百三十八(hoshi) -> none
+  katachi hyphen space nashi   -(hoshi)四百三十八(hoshi)        -> none
+  katachi hoshi ippon          - *四百三十八*                  -> none
+  NEGCTRL tootta (4/4)
+  (o266 boundary NEGCTRL-a was 4/4 ; not re-run in this ki)
+  chuu : (hoshi) wa raw de tsubushita (jitsubutsu wa kuro-hoshi U+2605)
+
+[2] ka-2 : the 40, ikken ichigyou  (chikugo no gyou wa 30ji de kiru = raw no tsugou)
+  yomi : n / katachi / hits(gensei no kazu) / file:gyou
+  n=202 F6 2 order206_b_reason_residual_counts_v1.md:344
+  n=203 F6 1 order206_b_reason_residual_counts_v1.md:347
+  n=204 F6 1 order206_b_reason_residual_counts_v1.md:350
+  n=205 F6 1 order206_b_reason_residual_counts_v1.md:353
+  n=206 F6 2 order206_b_reason_residual_counts_v1.md:356
+  n=219 F2 2 order209_wording_overreach_census_v1.md:231
+  n=220 F6 4 order209_wording_overreach_census_v1.md:234
+  n=221 G1 3 order209_wording_overreach_census_v1.md:235
+  n=222 G1 2 order209_wording_overreach_census_v1.md:236
+  n=223 G1 2 order209_wording_overreach_census_v1.md:237
+  n=224 F6 3 order209_wording_overreach_census_v1.md:238
+  n=225 F2 7 order210_eighth_class_probe_v1.md:283
+  n=226 F2 9 order214_outside_net_sample_v1.md:86
+  n=227 F7 6 order210_eighth_class_probe_v1.md:338
+  n=228 F2 5 order210_eighth_class_probe_v1.md:283
+  n=229 F2 4 order211_third_distinction_type_v1.md:197
+  n=230 F7 5 order212_a1_crosswalk_v1.md:57
+  n=231 G2 3 order212_a1_crosswalk_v1.md:212
+  n=232 F7 3 order216_e10_a7_same_denominator_v1.md:139
+  n=233 G2 1 order214_outside_net_sample_v1.md:222
+  n=234 F2 7 order216_e10_a7_same_denominator_v1.md:31
+  n=235 F2 4 order216_e10_a7_same_denominator_v1.md:20
+  n=236 F7 2 order218_correction_applied_v1.md:39
+  n=237 F2 1 order216_e10_a7_same_denominator_v1.md:182
+  n=238 F2 4 order216_e10_a7_same_denominator_v1.md:188
+  n=239 F2 1 order216_e10_a7_same_denominator_v1.md:194
+  n=240 F7 5 order218_correction_applied_v1.md:128
+  n=241 G2 1 order217_correction_census_v1.md:212
+  n=242 G2 1 order217_correction_census_v1.md:213
+  n=243 G2 1 order218_correction_applied_v1.md:175
+  n=244 F2 10 order219_run2_same_value_v1.md:164
+  n=245 F6 1 order218_correction_applied_v1.md:177
+  n=246 F2 13 order220_e11_fingerprint_minute_v1.md:49
+  n=247 G2 1 order219_run2_same_value_v1.md:167
+  n=248 G2 1 order219_run2_same_value_v1.md:168
+  n=263 F2 10 order223_e14_rule_cast_v1.md:20
+  n=272 G2 1 order225_e17_mother_of_shape_v1.md:150
+  n=273 G2 1 order225_e17_mother_of_shape_v1.md:151
+  n=274 G2 1 order225_e17_mother_of_shape_v1.md:152
+  n=275 F7 5 order225_e17_mother_of_shape_v1.md:127
+  chuu : G no uchiwake = G1 kuro-hoshi-2 ga 3 (221,222,223) / G2 hoshi2-kuro ga 10
+         (231,233,241,242,243,247,248,272,273,274) = order264 no 13 to ichiji mo chigawanu
+
+[3] ki : 21 (181..201) no dedokoro to koku  (yomi nomi, taku 0 de wa naku o267_forty no dou-kidou nai)
+  n=181..184 order201_negative_control_design_v1.md:292/299/306/336
+  n=185..187 order202_o192_bc_reconcile_v1.md:232/239/246
+  n=188..191 order203_o192_all8_groups_v1.md:237/244/250/256
+  n=192..196 order204_diff62_12_breakdown_v1.md:239/247/253/259/343
+  n=197..201 order205_condition_targets_existence_v1.md:203/209/215/222/228
+  koku (as_of gyou = mtime to ichi-chi, 5 ken tomo):
+    order201_negative_control_design_v1.md      as_of 2026-09-09T05:36:12+09:00 wc=399 sha16=04ee5ed78d201d95
+    order202_o192_bc_reconcile_v1.md            as_of 2026-09-09T05:50:17+09:00 wc=326 sha16=21af5569099f4253
+    order203_o192_all8_groups_v1.md             as_of 2026-09-09T06:01:42+09:00 wc=336 sha16=2fc4a75b9716bd11
+    order204_diff62_12_breakdown_v1.md          as_of 2026-09-09T06:19:25+09:00 wc=370 sha16=caec276c99ec79a4
+    order205_condition_targets_existence_v1.md  as_of 2026-09-09T06:31:46+09:00 wc=304 sha16=b31ef0b01736bc76
+  obi no haba : saiko 2026-09-09T05:36:12 / saishin 2026-09-09T06:31:46 = 55 fun 34 byou
+  katachi : 21 hon tomo ### (hoshi)A3 no JOU <kansuuji>(hoshi) = kou2 ippon
+
+[4] ko : o252_e48.rule.py wo kyou atenaoshita (kidou nomi, ichiji mo kaezu)
+  sha16 of o252_e48.rule.py = c72a6cc02c471469 (wc=69 B=3529 ; 2026-09-09 to onaji)
+== 1 stamps ==
+  scratch/ashigaru-third-2-fa06a3a1/o97_handover_index_v1.md wc=1317 split=1318 sha16=70e94928e4d818b6 B=548804
+  scratch/ashigaru-third-2-fa06a3a1/o257_order66_classify.py wc=229 split=230 sha16=dad94249c3b1cdaf B=16330
+  scratch/karo-third-12e9d4bd/reboot_checkpoint_20260906_1431.md wc=2398 split=2399 sha16=c606128ae765fa9d B=1034216
+  queue/inbox/ashigaru-third-3.yaml wc=356 split=357 sha16=d40c6bb8d4aabe68 B=25719
+== 2 unitA denominator (E46 was 158/17/20=195) ==
+  A3=208 A2=29 karo=20 total=257
+  new A3 jou 388-395 present = 8/8
+  chuu : koko no A3=208 wa o252 ga motsu FURUI ami (mi-kou) ; o266 no hiroi ami de wa nai
+  chuu : A2=29 wa kono ki ga A2 no kami he ateta kazu (A2 jishin no ami de wa nai)
+  chuu : te 5 (dan 21-25) wa IMA wa iranu = A2 hyou no gyou-suu 29, saidai-ban 29
+
+[5] jou(r) yon-do-me : o266 no ki wo ICHIJI MO KAEZU futatabi hakatta (jou 174)
+  o266 ki sha16 = 5848c26253a2cab5 (fuhen)
+  haha  : 108 mai 22246 gyou (09-10 13:4x)  ->  109 mai 22482 gyou (09-10 ima)
+  A3 hiroi ami : 244 -> 249 (+5)
+  fueta 5 = 453,454,455,456,457 = onore ga o266 no kami de itta jou
+  span 169..420 inside = 212 (fuhen) / outside = 32 -> 37
+  POSCTRL 438-447 = 10/10 tootta ; NEGCTRL-a 4/4 tootta ; NEGCTRL-b 3/4 (taishou no kizu, o266 to onaji)
+
+[6] N no koku-goto no hyou (kakikaezu heiki)
+  N  (09-09) = 197 jissoku + 45 utsushi + 11 te = 253   [fudou]
+  N2 (09-10 13:4x) = 244 jissoku + 45 utsushi          = 289
+  N3 (09-10 ima, sanbun kotogotoku jissoku) = A3 244 + karo 20 + A2 29 + te 0 = 293
+  N3' (haha 109 mai no ima no jissoku)      = A3 249 + karo 20 + A2 29 + te 0 = 298
+  chuu : 244 wa 108 mai no koku no kazu / 249 wa 109 mai no koku no kazu (jou 452)
+
+[7] yonda mono (stamp)
+  scratch/k3_orders/order267_a3.txt wc=13 B=3162 sha16=b156738e0b4d6762
+  scratch/ashigaru-third-3-12e9d4bd/order264_fixedboundary.rule.py wc=130 B=4856 sha16=063ce02193484856
+  scratch/ashigaru-third-3-12e9d4bd/order266_net_wide.rule.py wc=118 B=4887 sha16=5848c26253a2cab5
+  scratch/ashigaru-third-3-12e9d4bd/order266_net_wide_v1.md wc=236 B=18810 sha16=030142e9ab46ae6f
+  scratch/ashigaru-third-3-12e9d4bd/o252_e48.rule.py wc=69 B=3529 sha16=c72a6cc02c471469
+  scratch/ashigaru-third-3-12e9d4bd/order267_forty.rule.py wc=153 B=6227 sha16=de1991556b9b4257
+  scratch/karo-third-12e9d4bd/reboot_checkpoint_20260906_1431.md wc=2398 B=1034216 sha16=c606128ae765fa9d
+  scratch/ashigaru-third-2-fa06a3a1/o97_handover_index_v1.md wc=1317 B=548804 sha16=70e94928e4d818b6
+
+[8] atama
+  HEAD = 1ad4edfbadc69191183a42113e9979c3f91b7dbf (fudou)
+  HEAD tree = d856e28815b149db4423b686926e5a42060c89c2
+  git status --porcelain = 170 gyou (fuhen)
+  BASE = de15ee21bc8faef642b52ecdc0e5e60e8471829d (a3/order266-net-wide-20260910 no tip)
