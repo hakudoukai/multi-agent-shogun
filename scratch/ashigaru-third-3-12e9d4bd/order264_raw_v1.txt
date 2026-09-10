@@ -1,0 +1,72 @@
+order264 raw (A3 / third_pc) -- nama no kaeri
+as_of 2026-09-10T13:08:24+09:00
+HEAD 1ad4edfbadc69191183a42113e9979c3f91b7dbf  porcelain=170
+taki 1 = order264_declmention.rule.py   (boundary FLAWED)
+taki 2 = order264_fixedboundary.rule.py (boundary REPAIRED)  <- kore ga sei
+
+=== RULE (fixed BEFORE application; not bent afterwards) ===
+per LINE:
+  DECL  = line starts with '#' AND carries JOU/JO AND the next non-empty line is NOT a heading
+  UNDEC = line starts with '#' but lacks JOU/JO, OR its next non-empty line IS a heading
+  MENT  = line does not start with '#'
+per NUMBER (aggregation): any DECL -> DECL ; else any MENT -> MENT ; else UNDEC
+
+=== BOUNDARY (taki 1, FLAWED) ===
+  prev char in DIGSET -> reject
+  next char == TEN(十) -> reject
+  (next char in 一..九 NOT rejected)  <- KIZU
+
+=== BOUNDARY (taki 2, REPAIRED) ===
+  DIGSET = 一二三四五六七八九十百
+  prev char in DIGSET -> reject
+  next char in DIGSET -> reject
+
+=== NEGCTRL (taki 2 / must NOT match) ===
+K(190)=百九十 inside K(197)=百九十七 -> matched=False (want False)
+K(200)=二百 inside K(201)=二百一 -> matched=False (want False)
+K(220)=二百二十 inside K(225)=二百二十五 -> matched=False (want False)
+K(240)=二百四十 inside K(244)=二百四十四 -> matched=False (want False)
+NEGCTRL tootta
+
+=== POSCTRL (taki 2 / F2 F6 F7 each one) ===
+F2 n=181 hits=7
+F6 n=200 hits=6
+F7 n=184 hits=7
+POSCTRL tootta
+
+=== THREE KINDS (taki 2, boundary repaired) ===
+CAUGHT = 0 nums=[]
+JUMP = 0 nums=[]
+NETFAULT = 48 nums=[181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,219,220,224,225,226,227,228,229,230,232,234,235,236,237,238,239,240,244,245,246,263,275]
+UNDECIDABLE = 13 nums=[221,222,223,231,233,241,242,243,247,248,272,273,274]
+(taki 1 to taki 2 de KONO YOTSU wa ICHIJI mo ugokanu)
+
+=== DECL / MENT / UNDEC ===
+taki 1 (FLAWED)  : DECL=37 MENT=11 UNDEC=0 total=48
+taki 2 (REPAIRED): DECL=34 MENT=14 UNDEC=0 total=48
+ugoita 3 ken = 220, 230, 240   (subete FLAWED boundary no atari wo DECL to yonde ita)
+
+MENT no 14 = 202,203,204,205,206,220,224,227,230,232,236,240,245,275
+
+=== UNDECIDABLE 13 no katachi ===
+G1 kuro-hoshi-2  `- <BLACKSTAR><BLACKSTAR>K<BLACKSTAR><BLACKSTAR>`  = 3  nums=[221,222,223]
+G2 hoshi2-kuro   `- **<BLACKSTAR>K<BLACKSTAR>**`                    = 10 nums=[231,233,241,242,243,247,248,272,273,274]
+13/13 subete kajou no sengen-kei (MENT demo hyou no masu demo ji no bun demo nai)
+
+=== N (keisan nomi / N wa kakikaete inai) ===
+span 169..420 = 252
+o258: mizukara no ami 191 + mihosoku 61 = 252 (kensan tatsu)
+kono dan: mihosoku 61 = DECL 34 / MENT 14 / UNDEC 13
+suji1 (N no ami == mizukara no sankei no ami) -> 253+34=287 ; +13 -> 300
+suji2 (N no ami == ban no tsuranari shikkai)  -> ugokanu
+suji3 (N no ami == karo no betsu no ami)      -> ashihiki dekinu (jou 399)
+musubi: N wo kazoeru ki no ami no katachi wo hakatte inai -> sokutei funou -> N=253 no mama
+jougen no meyasu: 191+34=225 (191 ga subete sengen ka wa hakatte inai yue JOUGEN)
+
+=== KIKU no chou ===
+order264_declmention.rule.py    wc=96  B=3836 sha16=93283d838a5cf6ad
+order264_fixedboundary.rule.py  wc=130 B=4856 sha16=063ce02193484856
+
+=== hashiri / taki ===
+hashiri 0 (soto no sekai wo hakaru command wa ippon mo utanu) -- karo rei264 maru-2 no sadame ni yoru
+taki 2/3 (nokori 1 pon wa mochiiru rei ga naku onzon)
