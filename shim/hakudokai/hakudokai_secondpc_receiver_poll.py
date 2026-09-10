@@ -321,6 +321,33 @@ def _target_from_context_data(msg):
     return target if target in VALID_SECONDPC_TARGETS else None
 
 
+def _sender_agent_from_context_data(msg):
+    """Return the declared sending role, or None when identity is absent/ambiguous."""
+    context_data = msg.get("context_data")
+    if isinstance(context_data, str):
+        try:
+            context_data = json.loads(context_data)
+        except (json.JSONDecodeError, TypeError):
+            return None
+    if not isinstance(context_data, dict):
+        return None
+    sender = context_data.get("sender_agent")
+    return sender if isinstance(sender, str) and sender else None
+
+
+def is_same_agent_send(msg):
+    """Reject only a same-PC row whose declared sender equals its resolved target.
+
+    Same-PC delivery between different canonical roles is valid.  If the sender
+    role is missing, fail closed because equality cannot be established safely.
+    """
+    if msg.get("from_pc") != msg.get("to_pc"):
+        return False
+    sender = _sender_agent_from_context_data(msg)
+    target = detect_target(msg)
+    return sender is None or target is None or sender == target
+
+
 def detect_target(msg):
     """Resolve SecondPC target agent deterministically.
 
@@ -444,8 +471,9 @@ for msg in new_msgs:
 
     log(f"NEW: {msg_id[:8]} type={message_type} topic={topic} from {from_pc}")
 
-    # Self-send detection: from_pc == to_pc → immediate dead-letter
-    if from_pc == to_pc:
+    # Same-PC delivery is valid across distinct roles.  Reject only a proven
+    # same-role send; missing/invalid sender identity fails closed.
+    if is_same_agent_send(msg):
         log(f"SELF-SEND detected: {msg_id[:8]} from={from_pc} to={to_pc} — dead-lettering")
         dead_letter_message(msg_id, "self_send_rejected")
         with open(processed_file, "a") as f:
