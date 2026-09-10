@@ -1,0 +1,44 @@
+=== RUN1 df -B1 / /mnt/c /mnt/d ===
+Filesystem         1B-blocks         Used    Available Use% Mounted on
+/dev/sdd       1081101176832 294207733760 731901087744  29% /
+C:\             510294749184 243265970176 267028779008  48% /mnt/c
+D:\            1024191361024 393653628928 630537732096  39% /mnt/d
+rc1=0
+=== RUN2 ls -l /mnt/d/WSL/*/*/ext4.vhdx ===
+ls: cannot access '/mnt/d/WSL/*/*/ext4.vhdx': No such file or directory
+rc2=2
+=== BURN1 o263_uncaught61.rule.py ===
+files=105 lines=21505
+kan_sample 169=百六十九 206=二百六 263=二百六十三 420=四百二十
+POSCTRL 255=1 286=1 323=1 370=1   (assert all>=1 passed)
+=== THREE KINDS ===
+CAUGHT = 0  nums=[]
+JUMP = 0  nums=[]
+NETFAULT = 48  nums=[181..206, 219, 220, 224..230, 232, 234..240, 244, 245, 246, 263, 275]
+UNDECIDABLE = 13  nums=[221, 222, 223, 231, 233, 241, 242, 243, 247, 248, 272, 273, 274]
+(sum==61 asserted)
+=== REPRESENTATIVE (one line each) ===
+CAUGHT : none
+NETFAULT n=181 order184_rule_number_ledger_v1.md:73 | | ★令★ | 第…令 | 第百四十九令 / 第百五十令 / 第百八十一令 / 第百八十四令 |
+UNDECIDABLE n=221 order209_wording_overreach_census_v1.md:235 | - ★★二百二十一★★ ★★己が立てた候補の中で一つに絞つた時は ...
+=== BURN2 o263_faultforms.rule.py ===
+=== NETFAULT FORM CENSUS (n=48) ===
+F2 midashi-no = 25
+F6 kajou = 11
+F7 jibun = 12
+form_total=48
+=== ONE LINE PER FORM ===
+F2 midashi-no | n=181 order201_negative_control_design_v1.md:292 | ### ★A3 の條 百八十一★
+F6 kajou | n=200 order197_head_reproof_v1.md:42 | - **家老 條 二百 の検め**: rev-parse HEAD ...
+F7 jibun | n=184 order201_negative_control_design_v1.md:330 | ★1 行は §十 の條 百八十四 の本文★★。...
+=== UNDECIDABLE sample (no jou/jo on the line) ===
+n=221 cnt=1 order209_wording_overreach_census_v1.md:235
+n=222 cnt=1 order209_wording_overreach_census_v1.md:236
+n=223 cnt=1 order209_wording_overreach_census_v1.md:237
+n=231 cnt=1 order212_a1_crosswalk_v1.md:212
+UD_with_zero_mention=0
+# derived (no run):
+393514844160 - 294207733760 = 99307110400 B = 92.49 GiB  (prev band 91.99-92.99 GiB : lands inside)
+393653628928 - 393514844160 = 138784768 B = 132.4 MiB  (prev shot said 'about 0.5 GiB, indistinguishable from 0' -- corrected)
+# NOT measured: depth>=4 for vhdx; declaration-vs-mention split of the 48; forms of 9 of the 13 undecidable
+# vhdx size 393514844160 B is COPIED from order262 run6, not re-measured this shot
