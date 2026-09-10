@@ -1,0 +1,96 @@
+order265 raw (A3 / third_pc) -- nama no kaeri
+as_of 2026-09-10T13:26:55+09:00
+HEAD 1ad4edfbadc69191183a42113e9979c3f91b7dbf  porcelain=170
+taki 1 = order265_net191.rule.py   (taki 2/3 wa nokoshita ; (A) wa taki 0 = yomu nomi)
+
+=== (A) N=253 wo kazoeta ki -- yonda dake ===
+o261d_series.rule.py  wc=33  B=1660 sha16=81cf4d3db72900b9
+  L2: o261d -- N series (rei258 no oi) and what the otsu road (waiting) would cost. reads no file.
+  L7: SER = [("E46", 158, 195), ("E48", 166, 206), ("o258", 191, 236), ("o261", 197, 242)]
+  -> kono ki wa file wo hitotsu mo yomanu. kazu wa te de uchikomareta literal.
+
+o261c_sweep40.rule.py wc=79  B=3300 sha16=f965ebd4f1070dc4
+  L17: KAN = u"[ichi..hyaku]+"        (donyoku na katamari toshite NUKIDASU)
+  L18: kou  ^#+ .*A3 [JOU|JO] (KAN+)
+  L19: otsu ^- **(KAN+)**
+  L20: hei  ^- <BLACKSTAR>(KAN+)<BLACKSTAR>
+  L34: bo = order*.md nomi
+  L40: 100 <= v <= 999 nomi
+  L42: print("known jou from order*.md = %d" % len(known))
+  -> kyoukai no ki wa "ichiji" demo "shuugou" demo nai. NUKIDASHI yue jou443 no kizu wa nai.
+
+N=253 no mitsu no dedokoro:
+  A3     197  <- jissoku (o261c)
+  A2      25  <- utsushita (mizukara wa kazoete inai)
+  karo    20  <- utsushita (mizukara wa kazoete inai)
+  shoukei 242
+  + o261 ga ita shinjou 5   <- TE de tashita
+  + o262 ga ita shinjou 6   <- TE de tashita
+  N = 253
+
+=== (A) tsuzuki -- onaji ami wo kyou atenaoshita (honban no ki) ===
+order*.md = 107 ; lines = 22058
+known jou from order*.md = 208
+of which inside span 169..420 = 191
+outside span = [421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437]
+  -> span nai 191 = o258/o263/o264 no "mizukara no ami 191" to ITCHI (jou 174)
+  -> 197 -> 208 no sa 11 = 427..437 = te de tashita 5+6 to onaji 11
+  -> 438..447 (o263 5 hon + o264 5 hon) wa AMI NI NAI
+     riyuu: kou-katachi wa "A3 JOU" wo yokyuu / mizukara no kami wa "A3 no JOU" to kaita
+            = F2 no kizu (jou 439) ga jibun no chokuzen no nikami de genkouhan
+
+=== (B) span 169..420 : mizukara no ami 191 wo rei264 no ki de sanbetsu (magezu) ===
+CAUGHT = 191 ; UNCAUGHT = 61 ; total = 252
+DECL  = 48
+MENT  = 143
+UNDEC = 0
+UNDEC nums = []
+
+-- cross: hirotta katachi x ki no hanji --
+  form=hei            rule=DECL  n=19
+  form=hei            rule=MENT  n=100
+  form=hei,kou        rule=DECL  n=1
+  form=kou            rule=DECL  n=12
+  form=otsu           rule=DECL  n=16
+  form=otsu           rule=MENT  n=43
+  -> MENT 143 no subete ga kajou-katachi (hei 100 + otsu 43)
+
+=== NEGCTRL (must NOT match) ===
+K(190) inside K(197) -> matched=False (want False)
+K(200) inside K(201) -> matched=False (want False)
+K(220) inside K(225) -> matched=False (want False)
+K(240) inside K(244) -> matched=False (want False)
+NEGCTRL tootta
+
+=== POSCTRL (F2 / F6 / F7 each one) ===
+F2 n=181 hits=10
+F6 n=200 hits=10
+F7 n=184 hits=9
+POSCTRL tootta
+
+=== TANI no kuichigai ===
+ami-tani (N no ki)  : span 169..420 de 191
+ki-tani  (rei264)   : span 169..420 de 48
+  -> rei264 no "sengen 34" wo N e JIKA ni tasu no wa TANI-CHIGAI
+
+=== ami-tani de 61 wo kazoenaosu (keisan nomi) ===
+  sengen 34 (F2 kou-katachi no hen'i)        -> hirou   34
+  handzi-enu 13 (G1/G2 = otsu/hei no hen'i)  -> hirou   13
+  genkyu 14 (F6 kajou-bun / F7 ji-no-bun)    -> hirowanu 0
+  kei 47
+
+=== musubi (N wa kakikaete inai) ===
+suji1 (N no ami == mizukara no sankei no ami) -> TATSU (A3 no bun ni kagiru)
+suji2 (ban no tsuranari shikkai)              -> tatanu (208 de tomari 438..447 wo otoshite iru)
+suji3 (karo no betsu no ami)                  -> tatanu (A3 bun wa mizukara no ki de aru)
+N no san ichigyou: N = 253 + 47 = 300  (tadashi A3 no bun ni nomi kiku ; A2 25 / karo 20 no ami wa hakatte inai)
+ami wo naoseba sarani 438..447 no 10 ga kuwawari 310 -- kore wa "jou ga fueru" no de wa naku
+"mizukara no chou ga mizukara no kami ni oitsuku" no de aru.
+N = 253 no mama. karo no sabaki wo matsu.
+
+=== ki no chou ===
+order265_net191.rule.py wc=145 B=5793 sha16=5213b06d8ca2b6e0
+
+=== hashiri / taki ===
+hashiri 0 (soto no sekai wo hakaru command wa ippon mo utanu)
+taki 1/3 (kaeri (A) wa yomu nomi de owatta yue 2 pon nokoshita)
