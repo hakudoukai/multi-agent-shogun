@@ -1,0 +1,107 @@
+[order268 raw] A3 / ban 12e9d4bd / as_of 2026-09-10T14:27:08+0900
+[0] taki / hashiri
+  hashiri = 0 (soto no sekai wo hakaru command = 0)
+  taki    = 3/3  (v1 x1 , v2 x2)
+  ki  = scratch/ashigaru-third-3-12e9d4bd/order268_f2_and_g13.rule.py
+        v1 : 144 wc / 145 split / sha16 8159123e1af6dba0  (taki 1)
+        v2 : 148 wc / 149 split / sha16 c7a3077f469e6c8e  (taki 2, 3)
+        v1 -> v2 no chigai = nums_in ni SEN (sen no kurai) wo kuwaeta dake.
+        ami (KOU / OTSU / HEI / NEWF / G1 / G2) no DIGSET wa ichi-ji mo ugokashite inai.
+
+[1] taki 1 (v1) nama no kaeri : NEGCTRL dake ga chigau
+  == 7 NEGCTRL (han-gai / katachi-kuzure) ==
+    han-gai 4keta -> False ; G1 space nashi -> True ; G2 hoshi ippon -> True
+    NEGCTRL TOORANU (2/3)
+  in = nums_in ni SEN ga naku, 1500 (sen go hyaku) wo 500 to yonda.
+       ami ga hazureta no de wa nai. monosashi ga hazureta.
+
+[2] taki 2 / 3 (v2) nama no kaeri (zenbun)
+  == 0 haha ==
+    files order*.md = 110 ; lines(wc) = 22713
+  == 1 ka : F2 13 wo mittsu ni waru (jou461 wo ki ni otosu) ==
+    JOU    jou no midashi (ban hitotsu)       n=10 nums=219,226,229,235,237,238,239,244,246,263
+    OBI    obi no midashi (ban futatsu ijou)  n=3 nums=225,228,234
+    SONOTA sonota (ban zero)                  n=0 nums=
+    sum = 13
+    v2 chuu : monosashi (nums_in ni SEN) wo ugokashita ga KA no wari wa 10/3/0 no mama (assert)
+  == 2 ka-2 : ban no kazu to gyou no kazu wo betsu ran ni (jou461) ==
+    n=219 JOU    ban=1 [219] order209_wording_overreach_census_v1.md:231 (midashi-gensei 1)
+    n=225 OBI    ban=2 [225, 228] order210_eighth_class_probe_v1.md:283 (midashi-gensei 1)
+    n=226 JOU    ban=1 [226] order214_outside_net_sample_v1.md:86 (midashi-gensei 2)
+    n=228 OBI    ban=2 [225, 228] order210_eighth_class_probe_v1.md:283 (midashi-gensei 1)
+    n=229 JOU    ban=1 [229] order211_third_distinction_type_v1.md:197 (midashi-gensei 1)
+    n=234 OBI    ban=2 [226, 234] order216_e10_a7_same_denominator_v1.md:31 (midashi-gensei 1)
+    n=235 JOU    ban=1 [235] order216_e10_a7_same_denominator_v1.md:20 (midashi-gensei 2)
+    n=237 JOU    ban=1 [237] order216_e10_a7_same_denominator_v1.md:182 (midashi-gensei 1)
+    n=238 JOU    ban=1 [238] order216_e10_a7_same_denominator_v1.md:188 (midashi-gensei 2)
+    n=239 JOU    ban=1 [239] order216_e10_a7_same_denominator_v1.md:194 (midashi-gensei 1)
+    n=244 JOU    ban=1 [244] order219_run2_same_value_v1.md:164 (midashi-gensei 1)
+    n=246 JOU    ban=1 [246] order220_e11_fingerprint_minute_v1.md:49 (midashi-gensei 6)
+    n=263 JOU    ban=1 [263] order223_e14_rule_cast_v1.md:20 (midashi-gensei 2)
+    hon no kazu = 13 ; gyou no kazu (soui naru) = 12 ; ban no kazu (gou) = 16
+  == 3 ka-3 : onaji gyou wo futatsu no hon ga motsu rei ==
+    order210_eighth_class_probe_v1.md:283 <- n=225,228
+  == 4 ki : G13 (kitei he wa IRENU ; katachi wa betsu kansuu de ateru) ==
+    wide net (fuhen) = 254
+    wide + G forms   = 285
+    MIKOMI : fueru hon = 31
+    fueru ban = 219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,240,
+                241,242,243,244,245,246,247,248,272,273,274,275
+    uchi G13 ni fukumareru = 13 ; G13 no soto = 18
+    chuu : kono kazu wa MIKOMI (kitei wa kaete inai ; betsu kansuu de ateta dake)
+  == 5 ki-2 : G13 ichiken ichigyou ==
+    n=221 G1 hits=3 order209_wording_overreach_census_v1.md:235
+    n=222 G1 hits=2 order209_wording_overreach_census_v1.md:236
+    n=223 G1 hits=2 order209_wording_overreach_census_v1.md:237
+    n=231 G2 hits=3 order212_a1_crosswalk_v1.md:212
+    n=233 G2 hits=1 order214_outside_net_sample_v1.md:222
+    n=241 G2 hits=1 order217_correction_census_v1.md:212
+    n=242 G2 hits=1 order217_correction_census_v1.md:213
+    n=243 G2 hits=1 order218_correction_applied_v1.md:175
+    n=247 G2 hits=1 order219_run2_same_value_v1.md:167
+    n=248 G2 hits=1 order219_run2_same_value_v1.md:168
+    n=272 G2 hits=1 order225_e17_mother_of_shape_v1.md:150
+    n=273 G2 hits=1 order225_e17_mother_of_shape_v1.md:151
+    n=274 G2 hits=1 order225_e17_mother_of_shape_v1.md:152
+  == 6 POSCTRL ==
+    obi(2 ban) -> True ; jou(1 ban) -> True
+    POSCTRL tootta (2/2)
+  == 7 NEGCTRL (han-gai / katachi-kuzure) ==
+    han-gai 4keta -> True ; G1 space nashi -> True ; G2 hoshi ippon -> True
+    NEGCTRL tootta (3/3)
+
+[3] G13 no katachi (kitei he wa IRENU ; chikugo no katachi dake)
+  G1 = gyou no atama ga  - kuro-boshi kuro-boshi <kansuuji> kuro-boshi kuro-boshi
+  G2 = gyou no atama ga  - hoshi hoshi kuro-boshi <kansuuji> kuro-boshi
+  G1 n=3  : 221 222 223   (mittsu tomo order209_wording_overreach_census_v1.md no 235-237)
+  G2 n=10 : 231 233 241 242 243 247 248 272 273 274
+
+[4] N no hyou (jou268 ki-3 ; ikou no dan wa kono hyou he gyou wo tasu)
+  toki                 | haha        | ami no na        | utsushi no fuda | te | N
+  2026-09-09           | (hakatte-inai) | kou/otsu/hei (3 kei) | 45 (utsushi)  | 11 | 253
+  2026-09-10 13:4x     | 108 mai 22246 | 4 kei             | 45 (ami mi-soku)| 0  | 289
+  2026-09-10 o267      | 108 mai      | 4 kei (244)       | 0 (karo20+A2 29 jissoku) | 0 | 293
+  2026-09-10 o267 haha | 109 mai 22482 | 4 kei (249)      | 0 (karo20+A2 29 jissoku) | 0 | 298
+  2026-09-10 o268 (kon)| 110 mai 22713 | 4 kei (254)      | 0 (karo20+A2 29 jissoku) | 0 | 303
+  nani wo ikken to kazoeta ka :
+    2026-09-09 no 253 = A3 no jou hitotsu wo ikken (utsushi 45 to te 11 wo fukumu)
+    289/293/298/303   = A3 no jou hitotsu + karo no jou hitotsu + A2 no hyou no ichi-gyou
+
+[5] jou(r) itsutsu-me
+  o267 no toki : haha 109 mai 22482 gyou / A3 wide net = 249
+  o268 no toki : haha 110 mai 22713 gyou / A3 wide net = 254
+  fueta 1 mai = order267_forty_and_n3_v1.md (231 gyou) = onore no kami
+  fueta 5 hon = 458 459 460 461 462 = onore ga o267 no kami de ita jou
+  22482 + 231 = 22713 (au)
+
+[6] atama no fuda
+  HEAD      = 1ad4edfbadc69191183a42113e9979c3f91b7dbf (fudou)
+  HEAD tree = d856e28815b149db4423b686926e5a42060c89c2
+  porcelain = 170 (fuhen)
+  BASE      = 9b40c6bc1ad1ae020d4f57031ed2f0e03bc63cf0 (o267 no tip)
+  eda       = a3/order268-f2-thirteen-and-n-table-20260910
+
+[7] yonda mono (kono dan)
+  scratch/k3_orders/order268_a3.txt  11 wc / 12 split / 2527 B / sha16 09acb49c82a38b6b
+  queue/inbox/ashigaru-third-3.yaml  entries 50 / midoku 0
+  haha = scratch/ashigaru-third-3-12e9d4bd/order*.md  110 mai
