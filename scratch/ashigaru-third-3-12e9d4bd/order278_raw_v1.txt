@@ -1,0 +1,12 @@
+# order278 raw ―― git apply --check 1 走（当てては居らぬ）
+as_of: 2026-09-10T18:37:36+0900
+cwd_of_git: /
+argv: git -C / apply --check -p1 --unsafe-paths /home/hakudoukai/multi-agent-shogun/scratch/ashigaru-third-3-12e9d4bd/order271_extend.patch
+rc: 0
+stdout_bytes: 0
+stderr_bytes: 0
+--- stdout ---
+
+--- stderr ---
+
+--- end ---
