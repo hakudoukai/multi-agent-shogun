@@ -1,0 +1,91 @@
+# order271 raw v1 ashigaru-third-3 (12e9d4bd) third_pc momizi-dx
+# as_of = 2026-09-10T17:19:32+0900
+# HEAD = 1ad4edfbadc69191183a42113e9979c3f91b7dbf
+# 註: 本 file は生の出のみを収む。判定は軍師third。
+
+[1] 走 6 / 6 ・ 焚 1 / 2
+  走1 systemd user unit dir 一覧 + unit 5 枚 + 器 3 本 の悉皆讀み
+  走2 置き物からの取り出し
+  走3 /mnt/c 紙 2 本の頭 + manifest 周辺 + order262 一覧
+  走4 persist-org-changes.md 全文
+  走5 order262 五節 + df -B1 三点 + glob 三本
+  走6 cdrive_autoguard.sh 頭 34 行 + manifest L528-534 + CR 数
+  焚1 order271_gauge.rule.py rc=0
+
+[2] 讀んだ物の寸（悉く讀取のみ・書込 0）
+  path                                                              wc   kata      B  sha16
+  ~/.config/systemd/user/dentalbi-cdrive-monitor.service              6      7    287  ba04cf65c08ca16b
+  ~/.config/systemd/user/dentalbi-cdrive-monitor.timer               10     11    161  53a9864f4d43fe93
+  ~/.config/systemd/user/dentalbi-cdrive-monitor.service.d/override.conf  3   4    194  121caad08c222c86
+  ~/.config/systemd/user/dentalbi-cdrive-autoguard.service             5      6    145  cff1c80b261695a5
+  ~/.config/systemd/user/dentalbi-cdrive-autoguard.timer               8      9    145  839c66fb17f9682f
+  ~/bin/cdrive_autoguard.sh                                          124    125   6466  d175e32a71aec0a8   CR=0
+  ~/bin/repo_copy_tripwire.sh                                         20     21   2080  79cfad60119712dd
+  /mnt/c/DentalBI/scripts/cdrive_free_monitor.ps1                    163    164   8162  fba77e5e4be96b1f
+  /mnt/c/DentalBI/.claude/rules/persist-org-changes.md               157      -  11197  ea6fca1a905eef60
+  /mnt/c/DentalBI/docs/rules/fleet-composition-manifest.yaml        2492      - 363080  36d70d34f4274231   CR=0
+  /mnt/c/DentalBI/docs/rules/boot-auto-resume.md                     180      -  13376  0481b124482b89af
+  scratch/ashigaru-third-3-12e9d4bd/order262_disk_pressure_third_v1.md 264    -  20525  35f28ac9aea63f60
+
+[3] df -B1 の生（走5・単位 byte）
+  Filesystem      1B-blocks           Used      Available  Use%  Mounted on
+  /dev/sdd    1081101176832   299242942464   726865879040   30%  /
+  C:           510294749184   240851673088   269443076096   48%  /mnt/c
+  D:          1024191361024   396707082240   627484278784   39%  /mnt/d
+
+[4] 固定深さ glob の生（走5）
+  /mnt/c/Users/*/AppData/Local/Packages/*/LocalState/*.vhdx   n=0
+  /mnt/d/*/*.vhdx                                             n=0   <- 深さ 2（外した網）
+  /mnt/d/*/*/*.vhdx                                           n=1   /mnt/d/WSL/Ubuntu-24.04/ext4.vhdx
+  ∴ vhdx_kind = d_wsl
+
+[5] 己の樹の讀取（走に数へず・條 四百三十六 の申告）
+  git ls-files | grep -iE 'cdrive|autoguard|tripwire|gauge|disk|vhdx'   = 0 件
+  git rev-parse HEAD = 1ad4edfbadc69191183a42113e9979c3f91b7dbf
+  git status --porcelain | wc -l = 170
+
+[6] patch の検（当てて居らぬ）
+  cmd: git -C / apply --check -p1 --unsafe-paths <abs patch>
+  rc = 0
+  cmd: git -C / apply --stat -p1 <abs patch>
+  out: 2 files changed, 71 insertions(+)
+       home/hakudoukai/bin/cdrive_autoguard.sh                      | 63 +++
+       mnt/c/DentalBI/docs/rules/fleet-composition-manifest.yaml     |  8 ++
+  註: 根 = / ・剥がし = -p1 ・--unsafe-paths（新條 四百九十三）
+
+[7] 検算器の出（焚 1・逐語・器の刷りは romaji 混じり = 作法外と自訴）
+  patch sha16 = 85f010d0cf9538e0  B = 5143
+  kou hunk no + gyou = 63
+  kinshi Optimize-VHD = 0 / diskpart = 0 / wsl --shutdown = 0 / rm -rf = 0 / Compact-VHD = 0
+  chuu 3 hon = genni aru
+  selftest rc = 0
+  out| # selftest: 以下の行は 合成値 であり 実測ではない
+  out| gousei<TAB>gousei-pc<TAB>2000-01-01T00:00:00+0900<TAB>1<TAB>2<TAB>3<TAB>4<TAB>5<TAB>6<TAB>7<TAB>8<TAB>9<TAB>none<TAB>
+  retsu suu = 14
+  jissoku TSV = genni nashi
+  hedda ran suu = 14
+  KEKKA: mon itsutsu = genni aru (subete tootta)
+  rc_taki = 0
+  ---- 上の逐語を日本語へ写す（家老 15:14 の裁）----
+  patch sha16 = 85f010d0cf9538e0 ・ 5143 B
+  甲 hunk の挿入行 = 63
+  禁の command 五語 = 悉く 0 件
+  三つの註 = 現に在る
+  selftest の rc = 0 ・ 出 2 行 ・ 列 14
+  実測 TSV = 現に無い（書込 0）
+  頭の欄名 = 14
+  門 五つ = 悉く通つた
+
+[8] harness の置き物（消して居らぬ・床に依り記す）
+  /home/hakudoukai/.claude/projects/-home-hakudoukai-multi-agent-shogun/f1588e31-d0a6-45ba-8e96-192df867cd08/tool-results/bak7913pg.txt
+  刻 2026-09-10T15:14:36 ・ 30216 B ・ sha16 43e762a3ba27d99d
+
+[9] 4 欄（persist-org-changes L98-101 の欄名に当てた・4 行）
+  PERSISTENCE:      systemd --user(dentalbi-cdrive-autoguard.service + .timer) 既存への相乗り・新 unit 0 本
+  LINGER/RUNATLOAD: 有（推し・loginctl は打つて居らぬ）
+  REBOOT_PROOF:     未実施（席は systemd 操作を持たぬ）
+  MANIFEST_UPDATED: 未（patch 乙 hunk に鋳た・当てて居らぬ）
+
+[10] 新條 六本 = 四百九十 / 四百九十一 / 四百九十二 / 四百九十三 / 四百九十四 / 四百九十五
+
+[11] 母（紙を書く前に測つた）= 113 枚 / 23359 行 / N=268 / 幅 169-484

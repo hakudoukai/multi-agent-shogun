@@ -1,0 +1,86 @@
+diff --git a/home/hakudoukai/bin/cdrive_autoguard.sh b/home/hakudoukai/bin/cdrive_autoguard.sh
+--- a/home/hakudoukai/bin/cdrive_autoguard.sh
++++ b/home/hakudoukai/bin/cdrive_autoguard.sh
+@@ -26,4 +26,67 @@
+ 
+ free_gb() { df -BG /mnt/c 2>/dev/null | tail -1 | grep -oE '[0-9]+G' | sed -n '3p' | tr -d G; }
+ 
++# ==== order271 拡張: 空き計（測るのみ・一日一行 TSV・総監督 GO 298453 五 条件4 hs_03004043）====
++# 註: 本節は測るだけである。掃除・削除・vhdx 圧縮は一切行わない（圧縮は理事長の管理者 PowerShell 専管）。
++# 註: kind=none は「下記二本の網の何れにも当たらなかった」の意であり、
++#     「vhdx が現に無い」の意ではない。網の答であって世の答ではない（A3 條 百七十七）。
++# 註: mode 列 gousei の行は合成値であり 実測ではない（陽性対照・order128 の型）。
++GAUGE_TSV=/home/hakudoukai/.local/share/dentalbi/cdrive_gauge.tsv
++GAUGE_TAB="	"
++GAUGE_GLOB_C=/mnt/c/Users/*/AppData/Local/Packages/*/LocalState/*.vhdx
++GAUGE_GLOB_D=/mnt/d/*/*/*.vhdx
++
++gauge_df3() {
++  df -B1 "$1" 2>/dev/null | tail -1 | awk -v t="	" 'NF>=4 {print $2 t $3 t $4}'
++}
++
++gauge_probe() {
++  local f
++  for f in $GAUGE_GLOB_C; do
++    if [ -f "$f" ]; then echo "c_default${GAUGE_TAB}$(stat -c %s "$f")"; return 0; fi
++  done
++  for f in $GAUGE_GLOB_D; do
++    if [ -f "$f" ]; then echo "d_wsl${GAUGE_TAB}$(stat -c %s "$f")"; return 0; fi
++  done
++  echo "none${GAUGE_TAB}"
++}
++
++gauge_line() {
++  local mode="$1" pc as_of r c d kd
++  if [ "$mode" = "gousei" ]; then
++    pc=gousei-pc; as_of=2000-01-01T00:00:00+0900
++    r="1${GAUGE_TAB}2${GAUGE_TAB}3"; c="4${GAUGE_TAB}5${GAUGE_TAB}6"; d="7${GAUGE_TAB}8${GAUGE_TAB}9"
++    kd="none${GAUGE_TAB}"
++  else
++    pc="$(hostname)"; as_of="$(TZ=Asia/Tokyo date +%Y-%m-%dT%H:%M:%S%z)"
++    r="$(gauge_df3 /)"; c="$(gauge_df3 /mnt/c)"; d="$(gauge_df3 /mnt/d)"; kd="$(gauge_probe)"
++    [ -n "$r" ] || r="${GAUGE_TAB}${GAUGE_TAB}"
++    [ -n "$c" ] || c="${GAUGE_TAB}${GAUGE_TAB}"
++    [ -n "$d" ] || d="${GAUGE_TAB}${GAUGE_TAB}"
++  fi
++  echo "${mode}${GAUGE_TAB}${pc}${GAUGE_TAB}${as_of}${GAUGE_TAB}${r}${GAUGE_TAB}${c}${GAUGE_TAB}${d}${GAUGE_TAB}${kd}"
++}
++
++gauge_daily() {
++  local today
++  today="$(TZ=Asia/Tokyo date +%F)"
++  mkdir -p "$(dirname "$GAUGE_TSV")" 2>/dev/null
++  if [ ! -f "$GAUGE_TSV" ]; then
++    echo "# dentalbi cdrive gauge (order271) 測るのみ・一日一行・単位は byte" >> "$GAUGE_TSV"
++    echo "# 註: kind=none は網二本の何れにも当たらなかった意であり vhdx が現に無い意ではない" >> "$GAUGE_TSV"
++    echo "# 註: mode=gousei の行は合成値であり 実測ではない" >> "$GAUGE_TSV"
++    echo "#mode${GAUGE_TAB}pc${GAUGE_TAB}as_of${GAUGE_TAB}root_size_b${GAUGE_TAB}root_used_b${GAUGE_TAB}root_avail_b${GAUGE_TAB}c_size_b${GAUGE_TAB}c_used_b${GAUGE_TAB}c_avail_b${GAUGE_TAB}d_size_b${GAUGE_TAB}d_used_b${GAUGE_TAB}d_avail_b${GAUGE_TAB}vhdx_kind${GAUGE_TAB}vhdx_bytes" >> "$GAUGE_TSV"
++  fi
++  if grep -q "${GAUGE_TAB}${today}T" "$GAUGE_TSV" 2>/dev/null; then return 0; fi
++  gauge_line jissoku >> "$GAUGE_TSV"
++}
++
++if [ "${1:-}" = "--gauge-selftest" ]; then
++  echo "# selftest: 以下の行は 合成値 であり 実測ではない"
++  gauge_line gousei
++  exit 0
++fi
++
++gauge_daily
++
+ BEFORE=$(free_gb)
+diff --git a/mnt/c/DentalBI/docs/rules/fleet-composition-manifest.yaml b/mnt/c/DentalBI/docs/rules/fleet-composition-manifest.yaml
+--- a/mnt/c/DentalBI/docs/rules/fleet-composition-manifest.yaml
++++ b/mnt/c/DentalBI/docs/rules/fleet-composition-manifest.yaml
+@@ -530,3 +530,11 @@
+ 
+ delivery_routes:
++  cdrive_gauge_daily_tsv_20260910:
++    path: "third WSL: ~/bin/cdrive_autoguard.sh の gauge_daily()（既存器の拡張・新器なし）→ ~/.local/share/dentalbi/cdrive_gauge.tsv（一日一行 TSV）"
++    host: "third_pc WSL (hakudoukai・linger 有)"
++    direction: "df -B1 / , /mnt/c , /mnt/d ＋ 固定深さ glob 二本（C: 既定 / D: WSL）→ TSV 一行（測るのみ・書込は当該 TSV のみ）"
++    what: "2026-09-10 総監督 GO 298453 五 常設器・条件4(hs_03004043)。ALL-SEARCH-BEFORE-CREATE により既存三器を先讀し、同目的の dentalbi-cdrive-autoguard へ拡張として畳んだ（owner=A3・判定=軍師third）"
++    why: "既存三器は C: しか測らず・D: も kind 列も一日一行 TSV も無かった。vhdx 圧縮そのものは理事長の管理者 PowerShell 専管ゆゑ器は測るだけとする"
++    proof: "kind 列の実測 2026-09-10: C: 既定 glob n=0 / D: WSL glob n=1(/mnt/d/WSL/Ubuntu-24.04/ext4.vhdx)=d_wsl。df -B1 三点も同刻に取得（紙 order271_cdrive_gauge_extend_v1.md 三）"
++    gap: "⑴timer は既存 dentalbi-cdrive-autoguard.timer(3600s) に相乗り＝新 timer 0・enable/start/daemon-reload は未実施（席は systemd 操作を持たぬ＝総監督の手） ⑵REBOOT_PROOF 未実施 ⑶本 patch は当てて居らぬ（apply --check のみ） ⑷kind=none の註は TSV の頭にのみ在り、読手が頭を飛ばせば誤読し得る"
+   inbox_write_letter_length_gate_20260902:
