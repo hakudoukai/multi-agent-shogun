@@ -1,0 +1,100 @@
+[0] taki / hashiri no chou
+  taki = 1 / 1  (shin-ki order269_route.rule.py no kidou 1 do / rc=0 / assert kotogotoku tootta)
+  seihin-hashiri = 0  (rei265-269 no waku de mo 0 ; nokori 1 wa te wo tsukezu)
+  ki : scratch/ashigaru-third-3-12e9d4bd/order269_route.rule.py  151 wc / 152 split / sha16 9ffc55ebf74704c1
+  hashiraseta basho : /home/hakudoukai/multi-agent-shogun no cwd de python3 (rei no san-jou 'ki ni doko de hashiraseru ka wo kaki-soeyo')
+  ssh 0 / find 0 / DB 0 / soushin 0 / settei henkou 0 / tmux send-keys 0 / handoverdocs e kakikomi 0
+
+[1] ki no nama no kaeri (zenbun ; kidou 1 do me)
+== 1 sou-hyou : yakushoku-mei sono mama de atatta san-taku ==
+  name                  tmux_pane sb_wrappe inbox_jit route_dai registry_ settings_ mainpc_pa
+  training-main             NASHI     NASHI     NASHI       ARU     NASHI     NASHI      FUNO
+  kenshu-b                  NASHI     NASHI     NASHI     NASHI     NASHI     NASHI      FUNO
+  kenshu_bucho              NASHI     NASHI     NASHI       ARU     NASHI       ARU      FUNO
+  handoverdocs              NASHI     NASHI     NASHI       ARU       ARU     NASHI      FUNO
+  hermes-handoverdocs         ARU     NASHI       ARU     NASHI     NASHI     NASHI      FUNO
+  gunshi-third              NASHI     NASHI       ARU      FUNO     NASHI      FUNO      FUNO
+  zzz-nonexistent           NASHI     NASHI     NASHI     NASHI     NASHI     NASHI      FUNO
+== 2 san-taku no dosuu (7 gyou x 7 hashira = 49 masu) ==
+  ARU=8  NASHI=32  FUNO=9  gou=49
+== 3 soutatsu-kanou jouken (7 jou) ==
+  J1 inbox no jittai (file mata wa link) ga aru
+  J2 settings.yaml no cli.agents ni sono na ga aru
+  J3 shibako ichiran (IW-DEAD-DEFAULT) ni fukumarenu
+  J4 nudge no atesaki to naru tmux pane ga aru
+  J5 route daichou ni haisen-zumi no route ga aru
+  J6 registry.json ni role_id ga aru
+  J7 main PC gawa no pane ga jitsuzai suru
+== 4 jouken no atehame (mitasu jou no kazu / kakikomi-ka / yomare-uru) ==
+  training-main          mitasu=2/7 kakikomi-ka=TOORANU yomare-uru=TOORANU | route wa aru ga to_role de naku from-gun no ichiin ; ate saki wa hermes2
+  kenshu-b               mitasu=1/7 kakikomi-ka=TOORANU yomare-uru=TOORANU | kono tsuzuri wa config scripts lib ni 0 ken ; daichou wa kenshu-underscore-bucho
+  kenshu_bucho           mitasu=2/7 kakikomi-ka=tootta yomare-uru=TOORANU | route 2 hon tomo mihaisen (poll process 0 ken to daichou ga iu)
+  handoverdocs           mitasu=3/7 kakikomi-ka=TOORANU yomare-uru=TOORANU | registry no role_id to shite aru ga hako no na wa hermes- tsuki
+  hermes-handoverdocs    mitasu=3/7 kakikomi-ka=tootta yomare-uru=tootta | POSCTRL : pane mo hako mo gen ni aru
+  gunshi-third           mitasu=1/7 kakikomi-ka=TOORANU yomare-uru=TOORANU | NEGCTRL2 : hako wa gen ni aru ga shibako ichiran ni aru
+  zzz-nonexistent        mitasu=1/7 kakikomi-ka=TOORANU yomare-uru=TOORANU | NEGCTRL1 : ari-enu na
+== 5 taishou ==
+  POSCTRL hermes-handoverdocs : kakikomi-ka mo yomare-uru mo tootta (2/2)
+  NEGCTRL1 zzz-nonexistent : kakikomi-ka TOORANU (nozomi doori)
+  NEGCTRL2 gunshi-third : hako wa ARU nagara J3 ga kamu yue kakikomi-ka TOORANU
+  yue J3 (shibako mon) wa gen ni kiite oru ; J1 dake de wa kimaranu
+== 6 sanmato no kotae (order269 ka-ro ga tou 3 mei) ==
+  training-main    seki no hako = NASHI / tmux pane = NASHI / sb wrapper = NASHI / mainpc pane = FUNO
+  kenshu-b         seki no hako = NASHI / tmux pane = NASHI / sb wrapper = NASHI / mainpc pane = FUNO
+  kenshu_bucho     seki no hako = NASHI / tmux pane = NASHI / sb wrapper = NASHI / mainpc pane = FUNO
+== 7 haha no ami (N no gyou wo tasu) ==
+  haha = 111 mai / 22903 gyou (order*.md ; kono kami wa mada nai)
+  ami (yon-kei) = 258 hon
+  N = 307  (chuu : 49 = order268 ji no 303 - 254 ; utsushi 0 te 0)
+== 8 shimai ==
+  rc = 0
+
+[2] yonda mono no kanzen sha256 (64 keta ; onore ga sutta)
+  1 /home/hakudoukai/hermes-departments/handoverdocs/reports/b5948fd8-mandatory-grill-currentness-20260907T0310+0900.md
+      25 wc / 26 split / 1692 B / 4f72a21a42cb2736f3da82159cb9d77508836ac49795700a2f1c0f2de4f95ae5
+      mtime 2026-09-07 03:10:51.678817386 +0900   (karo shinkoku 14:37 to ichi ji tagawazu icchi)
+  2 config/delivery_routes.yaml
+      1493 wc / 1494 split / 107408 B / 7c7e86f041cf7f63f2bcf467faec8fadf0b26f40529d2be451eb0e843b3ce62f
+  3 scripts/inbox_write.sh
+      883 wc / 884 split / fd967df2626ec79def310ec2a027d60c2ebc8bbfb2c604d903c5d82bb1ea7011
+  4 /home/hakudoukai/hermes-departments/registry.json
+      69 wc / 70 split / 2505 B / fb21367318df82f3d59ba57e37c3a28d1f3240eefb40456a16070acd6fd00c00
+  5 /home/hakudoukai/hermes-departments/handoverdocs/reports/b5948fd8-official-knowledge-adoption-draft-20260904T1958+0900.md
+      38 wc / 39 split / 4368 B / 5ca2c3059796d4df564bbefc40dda20fa2f192d6a5b6654bf5dccb7ed580bb02
+      mtime 2026-09-04 19:57:58 +0900
+  6 queue/inbox/gunshi-third.yaml
+      42719 wc / 42720 split / 21e4138610becec0c3c13ac7fd5fd41096198b2602fd3c353a9ff06064a4c998
+
+[3] zenshi b5948fd8 (2026-09-07 03:10) to no sa
+  (1) draft sha256 5ca2c305...  -> onaji                      sa nashi
+  (2) training-main:0.0 pane    -> gen ni nai                  sa nashi
+  (3) kenshu-b:0.0 pane         -> gen ni nai                  sa nashi
+  (4) sb-* 3 hon absent         -> 3 hon tomo gen ni nai       sa nashi
+  (5) gunshi-third.yaml 21e413..-> onaji                       sa nashi
+  sa gou = 0 (mikka kan / go kou kotogotoku fuhen)
+  honsoku ga atarashiku hakatta mono (zenshi ni ichi gyou mo nai) = route daichou / registry.json /
+    settings cli.agents / seki no hako ichiran 33 ken / shibako mon  = 5 kou
+
+[4] N no hyou (roku gyou me wo tashita ; kikan yon-gyou wa kakikaezu)
+  2026-09-09            haha hakatte oranu   san-kei  jissoku 197  utsushi 45  te 11  N=253
+  2026-09-10 13:4x      108 mai 22246 gyou   yon-kei  jissoku 244  utsushi 45  te  0  N=289
+  2026-09-10 rei267     108 mai              yon-kei  jissoku 244  utsushi  0  te  0  N=293
+  2026-09-10 rei267b    109 mai 22482 gyou   yon-kei  jissoku 249  utsushi  0  te  0  N=298
+  2026-09-10 rei268     110 mai 22713 gyou   yon-kei  jissoku 254  utsushi  0  te  0  N=303
+  2026-09-10 rei269     111 mai 22903 gyou   yon-kei  jissoku 258  utsushi  0  te  0  N=307
+  jou(r) roku do me : haha +1 mai (= order268 no kami 190 gyou) / ami +4 hon (= jou 463-466)
+  22713 + 190 = 22903  (au)
+
+[5] atama no fuda
+  HEAD        1ad4edfbadc69191183a42113e9979c3f91b7dbf  (fudou)
+  HEAD tree   d856e28815b149db4423b686926e5a42060c89c2
+  porcelain   170 (fuhen)
+  BASE (oya)  352f058c360a30345959f6123c81e93a2b8397af  (= order268 no tip)
+  eda         a3/order269-grill-route-20260910
+  seki no hako  31 entries / midoku 0
+
+[6] preflight no mon (2) ni tsuite
+  kami no L67 (inbox_write.sh L160 no chikugo) ni chuu-kakko ga aru tame mon (2) ga natta.
+  Kore wa .format() no nokori de wa naku jitsubutsu no chikugo yue, yuka(10) ni shitagai nokoshita.
+  mon (1) rc=1 / mon (3) rc=1 / mon (4) backslash 0.
+
