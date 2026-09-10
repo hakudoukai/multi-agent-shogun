@@ -1,0 +1,37 @@
+--- a/backend/api/treatment_validation.py
++++ b/backend/api/treatment_validation.py
+@@ -12413,6 +12413,34 @@
+         or billing == "no_separate_claim"
+         or condition_rule.get("inline_comment_required") is True
+     )
++
++
++def _resolve_comment_documentation_field_id(
++    client, set_code: str, field_name: Optional[str] = None
++) -> Optional[str]:
++    """set_code の active な記載必須項目行を一意に解決し id を返す。
++
++    treatment_set_documentation は set_code 単位で複数行を持ち得るため、
++    field_name が与えられた場合はそれで絞り込む。絞り込み後に残った
++    active 行が 1 件ならその id、0 件なら None、2 件以上なら 409 を返す。
++    """
++    query = (
++        client.table("treatment_set_documentation")
++        .select("id,field_name,doc_order")
++        .eq("set_code", set_code)
++        .eq("is_active", True)
++    )
++    if field_name is not None:
++        query = query.eq("field_name", field_name)
++    rows = getattr(query.execute(), "data", None) or []
++    if not rows:
++        return None
++    if len(rows) > 1:
++        raise HTTPException(
++            status_code=409,
++            detail="documentation field is ambiguous for set_code=" + str(set_code),
++        )
++    return rows[0].get("id")
+ 
+ 
+ def _select_comment_template_key(
