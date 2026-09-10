@@ -1,0 +1,40 @@
+# order262 raw -- third_pc disk pressure (read-only). as_of 2026-09-10T12:35:45+09:00
+# HEAD 1ad4edfbadc69191183a42113e9979c3f91b7dbf / porcelain 170
+# runs = 6 of 6 allowed (command 1 = 1 run; pipe = 1 run)
+
+=== RUN1 df -h /mnt/c /mnt/d ===
+Filesystem      Size  Used Avail Use% Mounted on
+C:\             476G  228G  248G  48% /mnt/c
+D:\             954G  367G  588G  39% /mnt/d
+rc1=0
+
+=== RUN2 ls -l /mnt/c/Users/*/AppData/Local/Packages/*/LocalState/ext4.vhdx ===
+ls: cannot access '/mnt/c/Users/*/AppData/Local/Packages/*/LocalState/ext4.vhdx': No such file or directory
+rc2=2
+
+=== RUN3 df -h / ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdd       1007G  274G  682G  29% /
+rc3=0
+
+=== RUN4 ls /mnt/c | head -3 ===
+$GetCurrent
+$Recycle.Bin
+$WINRE_BACKUP_PARTITION.MARKER
+rc4=0
+
+=== RUN5 ls -1 /mnt/d | head -30 ===
+$RECYCLE.BIN
+System Volume Information
+WSL
+rc5=0
+
+=== RUN6 ls -l /mnt/d/WSL/*/ext4.vhdx /mnt/d/WSL/*/*/ext4.vhdx ===
+ls: cannot access '/mnt/d/WSL/*/*/ext4.vhdx': No such file or directory
+-rwxrwxrwx 1 hakudoukai hakudoukai 393514844160 Sep 10 12:30 /mnt/d/WSL/Ubuntu-24.04/ext4.vhdx
+rc6=2
+
+# derived (no run): 393514844160 B = 366.49 GiB = 393.51 GB
+# derived (no run): C used 228G < root used 274G  =>  vhdx cannot reside on C:
+# derived (no run): 366.49 - 274 = 92.5 GiB (estimate; band 91.99-92.99 GiB at 0.5 GiB rounding)
+# NOT measured: df -B1 (exact bytes); compaction never executed; other 3 PCs out of scope
