@@ -1,0 +1,75 @@
+# order266 raw -- nama no kaeri (as_of 2026-09-10T13:42:06+09:00)
+# taki 1/3 : python3 scratch/ashigaru-third-3-12e9d4bd/order266_net_wide.rule.py
+# hashiri 0 . yomitori nomi . kaki-komi wa jiseki dir nomi.
+
+=== [1] kanaderu (verbatim stdout) ===
+== 0 haha ==
+  files order*.md = 108 ; lines(wc) = 22246
+== 1 old net (o261c form, unchanged) ==
+  old total = 208
+== 2 wide net (old + A3 no JOU) ==
+  new total = 244
+  assert old subset of new = tootta (old=208 all inside new)
+  newly caught n = 36 ; list = 181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452
+== 3 span 169..420 (wide net) ==
+  inside = 212 ; outside = 32 ; total = 244
+  outside list = 421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452
+  (old net inside span = 191)
+== 4 POSCTRL 438..447 must be 10/10 in wide net ==
+  hit = 10/10 ; miss = none
+  POSCTRL tootta
+  form of 438 = kou2
+  form of 447 = kou2
+== 5 NEGCTRL-a (order264 boundary 4, verbatim) ==
+  K(190)=百九十 inside K(197)=百九十七 -> matched=False (want False)
+  K(200)=二百 inside K(201)=二百一 -> matched=False (want False)
+  K(220)=二百二十 inside K(225)=二百二十五 -> matched=False (want False)
+  K(240)=二百四十 inside K(244)=二百四十四 -> matched=False (want False)
+  NEGCTRL-a tootta (4/4)
+== 6 NEGCTRL-b (wide net must not catch these 4 synthetic lines) ==
+  ### ★A3 の條 九百九十九★ -> kou2
+  A3 の條 四百三十八 ha ji-no-bun -> none
+  ### ★A3 の條★ -> none
+  - 四百三十八 (no star, no bold) -> none
+  NEGCTRL-b TOORANU (3/4)
+== 7 N2 (jissoku, koku 2026-09-10) ==
+  A3 wide net = 244 ; utsushi = 45 (A2 25 / karo 20 ; ami mi-soku) ; N2 = 289
+  N (2026-09-09) = 253 (fudou)
+  mikomi 310 - N2 = 21
+== 8 self ==
+  self sha16 = 5848c26253a2cab5
+
+=== [2] NEGCTRL-b no kizu (jiso) ===
+  line 1 no shuutai wa 100<=v<=999 no han-nai de katachi mo tadashii.
+  yotte kou2 ni ataru no ga sei. inseitaishou no sekkei ga ayamari.
+  ami no kizu de wa nai. (order265 raw to onaji katachi de jiso suru)
+  jissai no bo ni 999 wa nai (outside list no saidai = 452).
+
+=== [3] yonda mono (stamp) ===
+  scratch/ashigaru-third-3-12e9d4bd/order252_e48_fill_denominator_v1.md 347wc 25709B b5a17b05f275df13
+  scratch/ashigaru-third-3-12e9d4bd/o252_e48.rule.py 69wc 3529B c72a6cc02c471469
+  scratch/ashigaru-third-2-fa06a3a1/o97_handover_index_v1.md 1317wc 548804B 70e94928e4d818b6
+  scratch/ashigaru-third-3-12e9d4bd/order261_buckets_and_nets_v1.md 262wc 15972B 8424ecb43df33b49
+  scratch/ashigaru-third-3-12e9d4bd/order265_net191.rule.py 145wc 5793B 5213b06d8ca2b6e0
+  scratch/ashigaru-third-3-12e9d4bd/order265_n_net_form_v1.md 295wc 18504B 3d6d6ac416a527a8
+  scratch/k3_orders/order266_a3.txt 14wc 3545B 81f80b1e25867b43
+  queue/inbox/ashigaru-third-3.yaml 348wc 25042B fa0dabc2b3dd111c
+
+=== [4] karo 20 no ami (E48 no ki o yonda . taki 0) ===
+  o252_e48.rule.py L30 chikugo:
+  kj = set(re.findall(u'作法(家老)★(' + KAN + u')条目★', rd(KARO)))
+  bo = KARO = scratch/karo-third-12e9d4bd/reboot_checkpoint_20260906_1431.md (1 file zenbun)
+  katachi = ichi-kei nomi . midashi ni kagirazu zen-gyou findall . han no filter nashi.
+
+=== [5] A2 25 no de-dokoro ===
+  kami = scratch/ashigaru-third-2-fa06a3a1/o97_handover_index_v1.md
+  o252_e48.rule.py L29 chikugo:
+  a2 = [l for l in rd(A2IDX).split(chr(10)) if re.match(u'^| d+ |', l)]  # (kigou wa raw de tsubushita)
+  = A2 jishin no ami de wa naku, ki ga ateta ami. 20 -> +5 (dan21-25) wa te de tashita.
+
+=== [6] HEAD / tree ===
+  HEAD = 1ad4edfbadc69191183a42113e9979c3f91b7dbf (fudou)
+  HEAD tree = d856e28815b149db4423b686926e5a42060c89c2
+  porcelain = 170
+  BASE = 77b88f9857de89a23d41342b58c469efaeabd075 (order265 tip)
+
