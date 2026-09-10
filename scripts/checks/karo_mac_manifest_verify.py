@@ -17,8 +17,18 @@
 基点は複数試す(repo が跨る為・a2 の B5-3 が実例)。
 
 usage: karo_mac_manifest_verify.py <manifest> [base ...]
-出力  : 一致/相違/実体無 の数と、相違・実体無の名
-rc    : 0=全件一致 / 1=相違または実体無 / 2=器の誤り
+出力  : 一致/相違/実体無/読めぬ行 の数と、その名
+rc    : 0=全件一致 / 1=相違・実体無・読めぬ行 のいずれか / 2=器の誤り
+
+★2026-09-10 是正(総監督 裁 seq298712 ②)★:
+    旧版は ★path 候補が一つも取れぬ行★ を「実体無」に数へた。
+    然れど「実体無」は『path は読めたが disk に物が無い』の意であり、
+    『行そのものが読めぬ』とは別事である ―― ★診立てが人を誤らせる。★
+    実害: 2026-09-10 家老mac が自作の台帳を ★裸の file 名★ で書き、
+          「一致 0 / 実体無 3」と出た。真因は『行が読めぬ』であつたに
+          もかかはらず、家老は disk を疑ひ 半刻を費した。
+    ∴ ★読めぬ行★ を第四の数として分けた。器は path 候補を
+      「'/' を含む語」でしか取らぬ ―― 裸の file 名は ./ を冠して書け。
 """
 import hashlib
 import os
@@ -55,7 +65,7 @@ def main(argv):
         print(f"★台帳が無い: {man}★", file=sys.stderr)
         return 2
 
-    ok = ng = miss = 0
+    ok = ng = miss = unreadable = 0
     bad = []
     for raw in open(man, encoding="utf-8", errors="replace"):
         line = raw.strip()
@@ -65,8 +75,15 @@ def main(argv):
         if not m:
             continue
         want = m.group(1)
+        cands = paths_of(line)
+        if not cands:
+            # ★「実体無」と混ぜるな★ ―― path 候補が一本も取れて居らぬ。
+            #   disk を疑ふ前に ★台帳の行の書き方★ を疑へ。
+            unreadable += 1
+            bad.append(("読めぬ行", line[:100]))
+            continue
         found = None
-        for p in paths_of(line):
+        for p in cands:
             for b in bases:
                 cand = os.path.join(b, p) if b else p
                 if os.path.isfile(cand):
@@ -76,7 +93,7 @@ def main(argv):
                 break
         if not found:
             miss += 1
-            bad.append(("実体無", line.split()[0][:100]))
+            bad.append(("実体無", cands[0][:100]))
             continue
         p, cand = found
         got = hashlib.sha256(open(cand, "rb").read()).hexdigest()
@@ -87,10 +104,23 @@ def main(argv):
             bad.append(("相違", p))
 
     print(f"台帳 {man}")
-    print(f"  一致 ★{ok}★ / 相違 {ng} / 実体無 {miss}  (母數 {ok + ng + miss})")
+    print(f"  一致 ★{ok}★ / 相違 {ng} / 実体無 {miss} / 読めぬ行 {unreadable}"
+          f"  (母數 {ok + ng + miss + unreadable})")
+    if unreadable:
+        print("  ★註★ ★読めぬ行★ は ★実体無 とは別事★ ―― ★disk を疑ふな。行を疑へ。★")
+        print("       器が path と看做すは ★'/' を含む語★ のみ。裸の file 名は取れぬ。")
+        print("       直し方: 台帳の path に ★./ を冠す★ か、基点を第二引数で渡せ。")
+    if ng:
+        # ★相違 は「疵」とは限らぬ ―― 版 が違ふ丈 の事 が在る(2026-09-09 実例)。
+        #   a2 の B5-5 で 家老 が 枝 の樹 で当て 相違 1 を得たが、
+        #   a2 が紙 に名指した版(bcc1d3626)で当てれば ★逐語 一致★ で あつた。
+        #   ★台帳 は「何處 の物 か」を持つが「何時 の版 か」は 器 が知らぬ。★
+        print("  ★註★ 相違 は ★疵 とは限らぬ★ ―― ★測る樹 の版 が 台帳 を作つた時 と違ふ★ 事 が在る。")
+        print("       断ずる前 に ⑴紙 に書かれた版 を読み ⑵其の版 で当て直せ。")
+        print("       例: git show <版>:<path> | shasum -a 256")
     for kind, name in bad[:20]:
         print(f"    ★{kind}★ {name}")
-    return 0 if (ng == 0 and miss == 0 and ok > 0) else 1
+    return 0 if (ng == 0 and miss == 0 and unreadable == 0 and ok > 0) else 1
 
 
 if __name__ == "__main__":
