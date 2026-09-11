@@ -11,7 +11,8 @@
 #   bash scripts/bulk_ack.sh <agent_id> --force  # 重要 type も含めて強制 ack (危険)
 #
 # Default exclude types (= 保護対象、ack されない):
-#   task_assigned, qc_fail, cmd_new, directive, redo, urgent_stop, request_permission
+#   task_assigned, qc_fail, cmd_new, directive, redo, urgent_stop, request_permission,
+#   ruling, answer, question, grant_permission  (2026-09-11: 裁定の写し5通が bulk_ack で未読→既読に落ちた=家老second seq305999)
 #
 # Default include types (= ack OK):
 #   notification, report_received, status_update, audit_missing, idle_alert, info
@@ -21,7 +22,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # ─── default exclude types (= 保護される、ack しない) ───
-DEFAULT_EXCLUDE="task_assigned,qc_fail,cmd_new,directive,redo,urgent_stop,request_permission"
+DEFAULT_EXCLUDE="task_assigned,qc_fail,cmd_new,directive,redo,urgent_stop,request_permission,ruling,answer,question,grant_permission"
 
 EXCLUDE_TYPES="$DEFAULT_EXCLUDE"
 DRY_RUN=false
