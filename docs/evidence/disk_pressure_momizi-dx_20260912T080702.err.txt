@@ -1,0 +1,3 @@
+SELFTEST result=STANDS positive_line=DISKPRESS,host=momizi-dx,target=selftest-positive,total_gib=180,used_gib=180,pct=100,reason=pct+abs,as_of=2026-09-12T08:07:02+09:00 negative=silent note=★合成値であり実測に非ず★
+SELFTEST_CANON leg=vhdx_225_99 result=FIRES abs_max_gib=80 pct_max=85 note=★令の指定値は今の閾で當たる★
+SELFTEST_GROWTH result=STANDS legs=positive_rate,negative_zero,short_withhold,span_zero growth_max_gib_per_day=5 min_span_s=3600 note=★合成値であり実測に非ず・閾から組んで在る★
