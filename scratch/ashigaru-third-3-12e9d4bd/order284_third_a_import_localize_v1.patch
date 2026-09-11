@@ -1,0 +1,24 @@
+--- a/backend/tests/test_c1_dml_migration_pkg_isolated_harness.py
++++ b/backend/tests/test_c1_dml_migration_pkg_isolated_harness.py
+@@ -83,10 +83,6 @@
+ if str(REPO_ROOT) not in sys.path:
+     sys.path.insert(0, str(REPO_ROOT))
+ 
+-from backend.api.treatment_validation import (  # noqa: E402  (path setup above is required first)
+-    _resolve_comment_documentation_field_id,
+-)
+-
+ PG_BIN_CANDIDATES = [
+     "/usr/lib/postgresql/17/bin",
+     "/usr/lib/postgresql/16/bin",
+@@ -637,6 +633,10 @@
+     直接importし、実際のKENSA comment 2件 (画活指導内容/P検査所見・治療方針、
+     いずれもdocumentation_field_name未設定=field_name=Noneで呼ばれる) が
+     409を出さず、移行後の唯一のactive行idへ一意に解決されること。"""
++    from backend.api.treatment_validation import (
++        _resolve_comment_documentation_field_id,
++    )
++
+     fake_client = _FakeSupabaseClient(conn)
+     resolved_id_1 = _resolve_comment_documentation_field_id(fake_client, "TS_P_KENSA")
+     resolved_id_2 = _resolve_comment_documentation_field_id(fake_client, "TS_P_KENSA", None)
