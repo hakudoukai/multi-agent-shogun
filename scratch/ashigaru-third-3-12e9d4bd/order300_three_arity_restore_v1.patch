@@ -1,0 +1,98 @@
+--- a/backend/api/treatment_validation.py
++++ b/backend/api/treatment_validation.py
+@@ -12412,6 +12412,95 @@
+         soap == "SP"
+         or billing == "no_separate_claim"
+         or condition_rule.get("inline_comment_required") is True
++    )
++
++
++def _resolve_comment_documentation_field_id(
++    client: Any, set_code: Optional[str], field_name: Optional[str] = None
++) -> Optional[str]:
++    """R8根治 (G1 cycle1 REDO Finding1/2是正): comment行のtreatment_set_documentation
++    帰属先idを解決する (D1b/karte_visit_items.documentation_field_id)。
++
++    doc_order先頭を無条件でownerとみなす推測契約 (Finding1) と、lookup失敗/複数該当を
++    Noneへ握り潰すfail-open契約 (Finding2) を撤回し、以下のfail-closed契約へ置換する:
++
++    - set_code未指定 → None (identity要求経路にすら乗らない)。
++    - set_code配下にtreatment_set_documentation行が1件も無い (例: 現行TS_P_KENSA=
++      過去含め0件) → その業務objectには元々記載義務が定義されていない、という
++      legitimateな状態なのでNone。
++    - 行は存在するがactiveが0件 (例: 実測TS_HOME_INIT/TS_HOME_SPT=configuredだが
++      全行非active) → 記載義務が定義されていたのに解決不能というdata整合性リスク
++      なのでfail-closed (HTTPException 409)。0件を「未整備」と「配置後に全滅」で
++      区別しないと後者を握り潰してしまう (Finding2の核心)。
++    - active行が2件以上あり、呼び出し側からfield_name (condition_rule由来の
++      per-item識別子) が渡っていない → 曖昧なため409 (Finding1: 先頭行推測の撤回)。
++    - field_nameが渡された場合はactive行をfield_nameで絞り込み、ちょうど1件で
++      なければ409 (0件=識別子誤り、複数件=マスタ側の(set_code,field_name)一意性
++      前提が崩れている異常系)。
++    - active行がちょうど1件のみ (曖昧性なし) → 推測ではなく一意解として返す。
++    - DB lookup例外はfail-open化せず、そのまま呼び出し元へ伝播させる
++      (このファイルの try/except は外側の保存トランザクション境界のみで捕捉し、
++      HTTPException 500として顧客可視化する — _guard_touyaku_save_boundary等の
++      既存409直raiseと同じ慣習)。
++    """
++    if not set_code:
++        return None
++    resp = (
++        client.table("treatment_set_documentation")
++        .select("id,field_name,is_active")
++        .eq("set_code", set_code)
++        .order("doc_order")
++        .execute()
++    )
++    rows = resp.data or []
++    if not rows:
++        return None
++    active_rows = [r for r in rows if r.get("is_active")]
++    if not active_rows:
++        raise HTTPException(
++            status_code=409,
++            detail={
++                "message": (
++                    f"set_code={set_code} は記載義務項目が定義されていますが、"
++                    "現在activeな行が0件のため帰属先を解決できません。"
++                    "マスタ (treatment_set_documentation) を確認してください。"
++                ),
++                "condition": "comment_documentation_no_active_row",
++                "set_code": set_code,
++                "configured_row_count": len(rows),
++            },
++        )
++    if field_name:
++        matches = [r for r in active_rows if r.get("field_name") == field_name]
++        if len(matches) == 1:
++            return matches[0].get("id")
++        raise HTTPException(
++            status_code=409,
++            detail={
++                "message": (
++                    f"set_code={set_code} field_name={field_name!r} の記載義務項目が"
++                    f"{len(matches)}件解決されました (期待=1件)。"
++                ),
++                "condition": "comment_documentation_identity_mismatch",
++                "set_code": set_code,
++                "field_name": field_name,
++                "resolved_count": len(matches),
++            },
++        )
++    if len(active_rows) == 1:
++        return active_rows[0].get("id")
++    raise HTTPException(
++        status_code=409,
++        detail={
++            "message": (
++                f"set_code={set_code} には記載義務項目が{len(active_rows)}件あり、"
++                "どの項目に帰属させるか一意に決まりません。"
++                "condition_rule.documentation_field_name で対象項目名を明示してください。"
++            ),
++            "condition": "comment_documentation_identity_ambiguous",
++            "set_code": set_code,
++            "active_field_count": len(active_rows),
++        },
+     )
+ 
+ 
