@@ -1,0 +1,68 @@
+[0] taki / hashiri
+  taki = 0 (rule.py wo ichi-hon mo itte inai)
+  hashiri = 2/2
+    (1) cd <ki> && python -m pytest backend/tests/test_abbreviation_rules_coalesce.py -q  -> RC=127
+        > /bin/bash: line 2: python: command not found
+    (2) cd <ki> && python3 -m pytest backend/tests/test_abbreviation_rules_coalesce.py -q -> RC=0
+        > ..........                                                               [100%]
+        > 10 passed in 0.25s
+
+[1] diff no jissoku (utsushi vs shin-migration ; anchor = CREATE OR REPLACE FUNCTION ; count==1 wo tashikameta)
+  teigi bubun: utsushi = 40 hen ; migration = 40 hen
+  sagai: minus = 6 / plus = 6
+    -     'official', (
+    -     ),
+    -     'corrections', (
+    -     ),
+    -     'detail_required', (
+    -     )
+    +     'official', COALESCE((
+    +     ), '[]'::jsonb),
+    +     'corrections', COALESCE((
+    +     ), '[]'::jsonb),
+    +     'detail_required', COALESCE((
+    +     ), '[]'::jsonb)
+  tsui: hiraki(COALESCE(() = 3 ; tojii(, '[]'::jsonb)) = 3
+  COALESCE wo hagashite teigi ga ichiji suru ka: tootta
+  chuu no gyou: utsushi = 4 ; migration = 10
+
+[1b] anchor wo mijikaku totta toki no kizu (sutete aru)
+  anchor = CREATE OR REPLACE (chuu no san-gyou-me ni atatta)
+  -> utsushi 42 hen / migration 40 hen ; minus 7 / plus 6 ; hagashite ichiji = TOORANU
+  -> jou 484 no moto
+
+[2] shiken no ate no kensan (shin-migration ni tsuite ; yonde tashikameta)
+  split(atama no hitotsu, 1) no hen = 2
+  official        : marker=True COALESCE(=True '[]'::jsonb=True ; ichi = 357 moji-me / mado 400 -> yohaku 43
+  corrections     : marker=True COALESCE(=True '[]'::jsonb=True ; ichi = 380 moji-me / mado 400 -> yohaku 20
+  detail-required : marker=True COALESCE(=True '[]'::jsonb=True ; ichi = 217 moji-me / mado 400 -> yohaku 183
+  L146 no furui ate (mu-hikisuu signature) in sql = False
+  shin signature in sql = True
+
+[3] yonda mono no kanzen sha256
+  scratch/iincho/get_abbreviation_rules_current_20260910.sql
+    43 gyou / 1836 B / 00fd1a16fa92b2539cb07db6a2ae6a4b5df520d16a1605aea1dc761501a4d919
+  <ki>/supabase/migrations/20260909183000_fix_get_abbreviation_rules_coalesce.sql (mae)
+    91 gyou / 4627 B / atama16 d172d02775975a09
+  <ki>/backend/tests/test_abbreviation_rules_coalesce.py (mae)
+    208 gyou / 6701 B / atama16 fe98ccb853d61e45
+
+[4] ki no atama
+  ki   = /home/hakudoukai/a3/wt-abbrev-coalesce-20260910
+  eda  = dry/a3-abbrev-coalesce-20260909
+  HEAD (kaku mae)   = 2a4291af276080a48804dedc1619d8fb600eb03b
+  HEAD (commit ato) = c9c25390e1a37ccf70793d90f001a7b5d57198da
+  porcelain (commit ato) = 0
+  git show --stat: 2 files changed, 54 insertions, 91 deletions
+  hon-repo HEAD = 1ad4edfbadc69191183a42113e9979c3f91b7dbf
+
+[5] commit no ori ni hook ga surita ichi-gyou (onore no go de wa nai)
+  > Supabase secret scan PASS: no tracked secret values detected.
+
+[6] haha no ami (kaku mae ni hakatta)
+  haha  = 112 mai / 23131 gyou
+  ami   = 265 hon (kou / kou2 / otsu / hei no yon-kei ; mon 100-999)
+  N     = 263 (ai-kotonaru ban no kazu ; haba 169-471)
+  chuui = order269 no N=307 to wa ki ga chigau yue kurabete inai (jou o174)
+
+[7] as_of = 2026-09-10T15:10:09+0900
