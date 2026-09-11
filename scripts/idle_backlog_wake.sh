@@ -101,8 +101,8 @@ fukuincho|hermes-kantoku:0.0|hermes|third_pc|fukuincho" ;;
 training-main|training-consult-main:0.0|hermes|main_pc|training-main" ;;
   second) DEF="honbucho|hermes-honbucho:0.0|hermes|second_pc|honbucho
 ashigaru-second-1|multiagent-second:0.0|claude|second_pc|ashigaru-second-1
-ashigaru-second-3|multiagent-second:0.1|claude|second_pc|ashigaru-second-3
-ashigaru-second-2|multiagent-second:0.2|claude|second_pc|ashigaru-second-2" ;;
+ashigaru-second-2|multiagent-second:0.1|claude|second_pc|ashigaru-second-2
+ashigaru-second-3|multiagent-second:0.2|claude|second_pc|ashigaru-second-3" ;;
   mac)    DEF="shogun-mac|shogun-mac:0.0|claude|mac_pc|shogun-mac
 gakushu-bucho|gakushu-bucho:0.0|hermes|mac_pc|gakushu-bucho" ;;
   *) DEF="" ;;
