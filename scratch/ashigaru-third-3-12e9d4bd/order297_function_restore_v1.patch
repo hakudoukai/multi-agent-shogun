@@ -1,0 +1,43 @@
+--- a/backend/api/treatment_validation.py
++++ b/backend/api/treatment_validation.py
+@@ -12413,6 +12413,40 @@
+         or billing == "no_separate_claim"
+         or condition_rule.get("inline_comment_required") is True
+     )
++
++
++def _resolve_comment_documentation_field_id(
++    client: Any, set_code: Optional[str]
++) -> Optional[str]:
++    """R8: comment行のtreatment_set_documentation帰属先idを解決する (D1b/karte_visit_items.documentation_field_id)。
++
++    set_code単位のカルテ記載義務項目 (treatment_set_documentation) からactive行を
++    doc_order昇順で引き、先頭 (=当該setの主帰属先) のidを返す。該当行が未整備のset
++    (例: 現行TS_P_KENSA) はNone=帰属なしのまま (既存のset_codeのみ記録する挙動を保つ)。
++    """
++    if not set_code:
++        return None
++    try:
++        resp = (
++            client.table("treatment_set_documentation")
++            .select("id")
++            .eq("set_code", set_code)
++            .eq("is_active", True)
++            .order("doc_order")
++            .limit(1)
++            .execute()
++        )
++    except Exception as exc:  # pragma: no cover - defensive logging only
++        logger.warning(
++            "save: treatment_set_documentation lookup failed for set_code=%s: %s",
++            set_code, exc,
++        )
++        return None
++    rows = resp.data or []
++    if not rows:
++        return None
++    return rows[0].get("id")
++
+ 
+ 
+ def _select_comment_template_key(
