@@ -1,0 +1,32 @@
+diff --git a/backend/utils/abbreviation_checker.py b/backend/utils/abbreviation_checker.py
+--- a/backend/utils/abbreviation_checker.py
++++ b/backend/utils/abbreviation_checker.py
+@@ -165,7 +165,7 @@
+     if _cache is None:
+         return []
+ 
+-    corrections = _cache.get("corrections", [])
++    corrections = _cache.get("corrections") or []
+     results: list[dict[str, str]] = []
+ 
+     for entry in corrections:
+@@ -214,7 +214,7 @@
+     if _cache is None:
+         return []
+ 
+-    detail_required = _cache.get("detail_required", [])
++    detail_required = _cache.get("detail_required") or []
+     results: list[dict[str, str]] = []
+ 
+     for abbr in detail_required:
+@@ -243,7 +243,7 @@
+     if isinstance(data, dict):
+         return {
+-            "official": data.get("official", []),
+-            "corrections": data.get("corrections", []),
+-            "detail_required": data.get("detail_required", []),
++            "official": data.get("official") or [],
++            "corrections": data.get("corrections") or [],
++            "detail_required": data.get("detail_required") or [],
+         }
+     # 配列で返った場合（単一行RPC）
