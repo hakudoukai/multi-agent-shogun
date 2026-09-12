@@ -1,0 +1,10 @@
+--- a/backend/api/treatment_validation.py
++++ b/backend/api/treatment_validation.py
+@@ -4105,6 +4105,7 @@
+     "expand_data",
+     "visit_episode_link_id",
+     "logical_item_id",
++    "documentation_field_id",
+     "validation_state",
+     "validation_issue_codes",
+     "validation_messages",
