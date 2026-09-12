@@ -1,0 +1,48 @@
+diff --git a/supabase/migrations/20260912150000_get_abbreviation_rules_coalesce.sql b/supabase/migrations/20260912150000_get_abbreviation_rules_coalesce.sql
+new file mode 100644
+--- /dev/null
++++ b/supabase/migrations/20260912150000_get_abbreviation_rules_coalesce.sql
+@@ -0,0 +1,43 @@
++-- get_abbreviation_rules(date) : 3鍵の jsonb_agg を COALESCE で包む
++-- 板 354dc26f 受入 = 3鍵に COALESCE
++-- 依存 = 20260909170000_snapshot_live_public_functions.sql の着地後に適用する事
++-- 形 = CREATE OR REPLACE（postgres は函の本体を部分置換出来ぬ ゆゑ丸ごと置き直す）
++CREATE OR REPLACE FUNCTION public.get_abbreviation_rules(p_diagnosis_date date DEFAULT CURRENT_DATE)
++ RETURNS jsonb
++ LANGUAGE plpgsql
++ STABLE
++ SET search_path TO 'public'
++AS $function$
++BEGIN
++  RETURN jsonb_build_object(
++    'official', COALESCE((
++      SELECT jsonb_agg(jsonb_build_object(
++        'abbreviation', abbreviation,
++        'official_name', official_name,
++        'category', category,
++        'requires_detail', requires_detail
++      ))
++      FROM official_abbreviations
++      WHERE is_active = true
++        AND in_revision_scope(valid_from, valid_to, p_diagnosis_date)
++    ), '[]'::jsonb),
++    'corrections', COALESCE((
++      SELECT jsonb_agg(jsonb_build_object(
++        'unofficial', unofficial,
++        'official_abbreviation', official_abbreviation,
++        'official_name', official_name,
++        'correction_type', correction_type
++      ))
++      FROM abbreviation_corrections
++      WHERE is_active = true
++        AND in_revision_scope(valid_from, valid_to, p_diagnosis_date)
++    ), '[]'::jsonb),
++    'detail_required', COALESCE((
++      SELECT jsonb_agg(abbreviation)
++      FROM official_abbreviations
++      WHERE requires_detail = true AND is_active = true
++        AND in_revision_scope(valid_from, valid_to, p_diagnosis_date)
++    ), '[]'::jsonb)
++  );
++END;
++$function$;
