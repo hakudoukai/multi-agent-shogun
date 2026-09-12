@@ -1,0 +1,14 @@
+--- a/supabase/migrations/20260726014452_v6_amendment_exact_clone_carry_forward_20260726.sql
++++ b/supabase/migrations/20260726014452_v6_amendment_exact_clone_carry_forward_20260726.sql
+@@ -197,4 +197,5 @@
+         visit_episode_link_id uuid,
+         logical_item_id uuid,
++        documentation_field_id uuid,
+         validation_state text,
+         validation_issue_codes text[],
+@@ -356,4 +356,5 @@
+       visit_episode_link_id uuid,
+       logical_item_id uuid,
++      documentation_field_id uuid,
+       validation_state text
+     )

@@ -1,0 +1,20 @@
+--- a/supabase/migrations/20260726014452_v6_amendment_exact_clone_carry_forward_20260726.sql
++++ b/supabase/migrations/20260726014452_v6_amendment_exact_clone_carry_forward_20260726.sql
+@@ -155,4 +155,5 @@
+     SELECT 1
+     FROM jsonb_to_recordset(p_items) AS item(
++      documentation_field_id uuid,
+       validation_state text,
+       validation_issue_codes text[]
+@@ -278,4 +278,5 @@
+       FROM jsonb_to_recordset(p_items) AS input(
+         logical_item_id uuid,
++        documentation_field_id uuid,
+         validation_state text
+       )
+@@ -442,4 +442,5 @@
+     FROM jsonb_to_recordset(p_items) AS input(
+       logical_item_id uuid,
++      documentation_field_id uuid,
+       validation_state text
+     )
