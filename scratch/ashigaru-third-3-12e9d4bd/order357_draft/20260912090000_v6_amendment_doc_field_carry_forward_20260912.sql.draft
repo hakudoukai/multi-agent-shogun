@@ -1,0 +1,608 @@
+-- 062 (DRAFT, NOT APPLIED): re-install the two-stage public RPC so that the
+-- per-item documentation field identifier is carried through every path.
+--
+-- This draft adds a NEW migration instead of editing 20260726014452 in place.
+-- Reason: an applied migration is history; rewriting its body would publish two
+-- different contents under one stamp and break reproducibility.
+--
+-- The function body below is an exact clone of the body in 20260726014452 as of
+-- the fixed tree, with only the leading CREATE turned into CREATE OR REPLACE.
+-- Verify the clone with order357_clone_diff.py before any apply.
+
+BEGIN;
+
+SET LOCAL lock_timeout = '5s';
+SET LOCAL statement_timeout = '120s';
+SET LOCAL search_path = public, extensions, pg_temp;
+
+CREATE OR REPLACE FUNCTION public.save_v6_draft_treatment_set(
+  p_clinic_id integer,
+  p_patient_no varchar,
+  p_root_visit_id uuid,
+  p_source_version_id uuid,
+  p_source_revision integer,
+  p_expected_draft_revision integer,
+  p_client_mutation_id text,
+  p_items jsonb
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY INVOKER
+SET search_path = public, extensions, pg_temp
+AS $function$
+DECLARE
+  v_draft public.karte_visits%ROWTYPE;
+  v_previous public.karte_visits%ROWTYPE;
+  v_current_unavailable_count integer;
+  v_input_unavailable_count integer;
+  v_expected_clone_count integer;
+  v_partition_match_count integer;
+  v_partition_distinct_count integer;
+  v_input_revalidated_count integer;
+  v_exact_clone_count integer;
+  v_has_receipt boolean;
+  v_is_receipt_replay boolean := false;
+  v_effective_items jsonb;
+BEGIN
+  IF p_items IS NULL OR jsonb_typeof(p_items) <> 'array' THEN
+    RAISE EXCEPTION 'items must be a JSON array'
+      USING ERRCODE = '22023';
+  END IF;
+
+  SELECT *
+  INTO v_draft
+  FROM public.karte_visits
+  WHERE id = p_source_version_id
+    AND root_visit_id = p_root_visit_id
+    AND source_revision = p_source_revision
+    AND clinic_id = p_clinic_id
+    AND patient_no = p_patient_no;
+
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'draft source identity mismatch'
+      USING ERRCODE = 'P0002';
+  END IF;
+
+  SELECT count(*)::integer
+  INTO v_current_unavailable_count
+  FROM public.karte_visit_items
+  WHERE visit_id = p_source_version_id
+    AND validation_state = 'validation_unavailable';
+
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.v6_draft_mutation_receipts
+    WHERE source_version_id = p_source_version_id
+      AND client_mutation_id = p_client_mutation_id
+  )
+  INTO v_has_receipt;
+
+  SELECT count(*)::integer
+  INTO v_input_unavailable_count
+  FROM jsonb_array_elements(p_items) AS item(value)
+  WHERE item.value ->> 'validation_state' = 'validation_unavailable';
+
+  -- No unavailable row means the original strict 053 contract applies.
+  IF v_current_unavailable_count = 0 AND v_input_unavailable_count = 0 THEN
+    RETURN public.save_v6_draft_treatment_set_strict_v053(
+      p_clinic_id,
+      p_patient_no,
+      p_root_visit_id,
+      p_source_version_id,
+      p_source_revision,
+      p_expected_draft_revision,
+      p_client_mutation_id,
+      p_items
+    );
+  END IF;
+
+  -- validation_unavailable is never accepted on a normal draft.
+  IF v_draft.previous_version_id IS NULL
+     OR p_source_revision <= 1 THEN
+    RAISE EXCEPTION 'non-amendment validation_unavailable is not carry-forward eligible'
+      USING ERRCODE = '22023';
+  END IF;
+
+  IF v_has_receipt AND v_input_unavailable_count > 0 THEN
+    -- Receipt replay must remain stable after later edits.  Reconstruct C from
+    -- the immutable previous version and original input, then let strict v053
+    -- accept only the exact stored request hash/identity.
+    v_is_receipt_replay := true;
+    v_expected_clone_count := v_input_unavailable_count;
+  END IF;
+
+  -- Both the current draft row and the submitted row must carry exactly the
+  -- single amendment issue.  Arbitrary unavailable rows are never elevated.
+  IF EXISTS (
+    SELECT 1
+    FROM public.karte_visit_items AS current_item
+    WHERE NOT v_is_receipt_replay
+      AND current_item.visit_id = p_source_version_id
+      AND current_item.validation_state = 'validation_unavailable'
+      AND (
+        cardinality(current_item.validation_issue_codes) <> 1
+        OR current_item.validation_issue_codes[1]
+             IS DISTINCT FROM 'AMENDMENT_REVALIDATION_REQUIRED'
+      )
+  ) OR EXISTS (
+    SELECT 1
+    FROM jsonb_to_recordset(p_items) AS item(
+      documentation_field_id uuid,
+      validation_state text,
+      validation_issue_codes text[]
+    )
+    WHERE item.validation_state = 'validation_unavailable'
+      AND (
+        cardinality(validation_issue_codes) <> 1
+        OR validation_issue_codes[1]
+             IS DISTINCT FROM 'AMENDMENT_REVALIDATION_REQUIRED'
+      )
+  ) THEN
+    RAISE EXCEPTION 'validation_unavailable issue is not amendment-only'
+      USING ERRCODE = '22023';
+  END IF;
+
+  IF v_is_receipt_replay THEN
+    NULL;
+  ELSIF v_current_unavailable_count > 0 THEN
+    -- E is the exact set of current unavailable logical identities.  A
+    -- service-authored request must assign every E row exactly once to either:
+    --   C: unchanged validation_unavailable exact carry-forward; or
+    --   R: current-revision valid/needs_correction server validation.
+    -- The function is executable only by service_role, and the API constructs
+    -- R from the server engine rather than accepting UI validation metadata.
+    -- The database additionally binds every R row to the current canonical E
+    -- row and requires complete current-revision validation provenance.
+    WITH input AS (
+      SELECT *
+      FROM jsonb_to_recordset(p_items) AS item(
+        line_number smallint,
+        item_name text,
+        item_type text,
+        resolved_points integer,
+        tooth text,
+        shinryo_code text,
+        receipt_kubun text,
+        quantity numeric,
+        unit text,
+        comment_value text,
+        expand_data jsonb,
+        source_set_code text,
+        visit_episode_link_id uuid,
+        logical_item_id uuid,
+        documentation_field_id uuid,
+        validation_state text,
+        validation_issue_codes text[],
+        validation_messages text[],
+        validated_at timestamptz,
+        rule_revision text,
+        master_revision text,
+        validated_source_revision integer,
+        validation_input_digest text
+      )
+    ),
+    exact_partition AS (
+      SELECT input.logical_item_id, input.validation_state
+      FROM input
+      JOIN public.karte_visit_items AS current_item
+        ON current_item.visit_id = p_source_version_id
+       AND current_item.validation_state = 'validation_unavailable'
+       AND current_item.logical_item_id = input.logical_item_id
+      WHERE input.line_number IS NOT DISTINCT FROM current_item.line_number
+        AND input.item_name IS NOT DISTINCT FROM current_item.item_name
+        AND input.item_type IS NOT DISTINCT FROM current_item.item_type
+        AND input.resolved_points
+              IS NOT DISTINCT FROM current_item.resolved_points
+        AND input.tooth IS NOT DISTINCT FROM current_item.tooth
+        AND input.shinryo_code IS NOT DISTINCT FROM current_item.shinryo_code
+        AND input.receipt_kubun
+              IS NOT DISTINCT FROM current_item.receipt_kubun
+        AND input.quantity IS NOT DISTINCT FROM current_item.quantity
+        AND input.unit IS NOT DISTINCT FROM current_item.unit
+        AND input.comment_value IS NOT DISTINCT FROM current_item.comment_value
+        AND COALESCE(input.expand_data, '{}'::jsonb)
+              IS NOT DISTINCT FROM COALESCE(
+                current_item.expand_data,
+                '{}'::jsonb
+              )
+        AND input.source_set_code IS NOT DISTINCT FROM current_item.set_code
+        AND input.visit_episode_link_id
+              IS NOT DISTINCT FROM current_item.visit_episode_link_id
+        AND (
+          (
+            input.validation_state = 'validation_unavailable'
+            AND cardinality(input.validation_issue_codes) = 1
+            AND input.validation_issue_codes[1]
+                  IS NOT DISTINCT FROM 'AMENDMENT_REVALIDATION_REQUIRED'
+          )
+          OR (
+            input.validation_state IN ('valid', 'needs_correction')
+            AND (
+              input.validation_state <> 'valid'
+              OR (
+                COALESCE(cardinality(input.validation_issue_codes), 0) = 0
+                AND COALESCE(cardinality(input.validation_messages), 0) = 0
+              )
+            )
+            AND (
+              input.validation_state <> 'needs_correction'
+              OR COALESCE(cardinality(input.validation_messages), 0) > 0
+            )
+            AND input.validated_at IS NOT NULL
+            AND NULLIF(BTRIM(input.rule_revision), '') IS NOT NULL
+            AND NULLIF(BTRIM(input.master_revision), '') IS NOT NULL
+            AND input.validated_source_revision = p_source_revision
+            AND input.validation_input_digest ~ '^[0-9a-f]{64}$'
+          )
+        )
+    )
+    SELECT
+      count(*)::integer,
+      count(DISTINCT logical_item_id)::integer,
+      count(*) FILTER (
+        WHERE validation_state IN ('valid', 'needs_correction')
+      )::integer
+    INTO
+      v_partition_match_count,
+      v_partition_distinct_count,
+      v_input_revalidated_count
+    FROM exact_partition;
+
+    IF EXISTS (
+      SELECT 1
+      FROM jsonb_to_recordset(p_items) AS input(
+        logical_item_id uuid,
+        documentation_field_id uuid,
+        validation_state text
+      )
+      LEFT JOIN public.karte_visit_items AS current_item
+        ON current_item.visit_id = p_source_version_id
+       AND current_item.validation_state = 'validation_unavailable'
+       AND current_item.logical_item_id = input.logical_item_id
+      WHERE input.validation_state = 'validation_unavailable'
+        AND current_item.id IS NULL
+    ) THEN
+      RAISE EXCEPTION 'amendment carry input is outside current E set'
+        USING ERRCODE = '22023';
+    END IF;
+
+    IF v_partition_match_count <> v_current_unavailable_count
+       OR v_partition_distinct_count <> v_current_unavailable_count
+       OR v_current_unavailable_count <>
+            v_input_unavailable_count + v_input_revalidated_count THEN
+      RAISE EXCEPTION 'amendment E=C union R partition is incomplete or duplicated'
+        USING ERRCODE = '22023';
+    END IF;
+
+    -- Only C rows need previous-version carry-forward.  R rows stay untouched
+    -- and proceed as current-revision server validation through strict v053.
+    v_expected_clone_count := v_input_unavailable_count;
+    IF v_expected_clone_count = 0 THEN
+      RETURN public.save_v6_draft_treatment_set_strict_v053(
+        p_clinic_id,
+        p_patient_no,
+        p_root_visit_id,
+        p_source_version_id,
+        p_source_revision,
+        p_expected_draft_revision,
+        p_client_mutation_id,
+        p_items
+      );
+    END IF;
+  ELSE
+    RAISE EXCEPTION 'non-amendment or unreceipted validation_unavailable is not carry-forward eligible'
+      USING ERRCODE = '22023';
+  END IF;
+
+  SELECT *
+  INTO v_previous
+  FROM public.karte_visits
+  WHERE id = v_draft.previous_version_id
+    AND root_visit_id = p_root_visit_id
+    AND source_revision = p_source_revision - 1
+    AND clinic_id = p_clinic_id
+    AND patient_no = p_patient_no
+    AND status IN ('confirmed', 'locked');
+
+  IF NOT FOUND
+     OR v_previous.id IS DISTINCT FROM v_draft.previous_version_id
+     OR v_previous.source_revision <> p_source_revision - 1
+     OR v_draft.amendment_created_at IS NULL THEN
+    RAISE EXCEPTION 'amendment root/previous/revision continuity mismatch'
+      USING ERRCODE = '22023';
+  END IF;
+
+  -- Match input -> current clone -> immediately previous immutable source.
+  -- line_number is part of the canonical identity, so order drift is rejected.
+  WITH input AS (
+    SELECT *
+    FROM jsonb_to_recordset(p_items) AS item(
+      line_number smallint,
+      item_name text,
+      item_type text,
+      resolved_points integer,
+      tooth text,
+      shinryo_code text,
+      receipt_kubun text,
+      quantity numeric,
+      unit text,
+      comment_value text,
+      expand_data jsonb,
+      source_set_code text,
+      visit_episode_link_id uuid,
+      logical_item_id uuid,
+      documentation_field_id uuid,
+      validation_state text
+    )
+    WHERE item.validation_state = 'validation_unavailable'
+  )
+  SELECT count(*)::integer
+  INTO v_exact_clone_count
+  FROM input
+  LEFT JOIN public.karte_visit_items AS current_item
+    ON current_item.visit_id = p_source_version_id
+   AND current_item.logical_item_id = input.logical_item_id
+  JOIN public.karte_visit_items AS previous_item
+    ON previous_item.visit_id = v_previous.id
+   AND previous_item.logical_item_id = input.logical_item_id
+  WHERE (
+    v_is_receipt_replay
+    AND input.line_number IS NOT DISTINCT FROM previous_item.line_number
+    AND input.item_name IS NOT DISTINCT FROM previous_item.item_name
+    AND input.item_type IS NOT DISTINCT FROM previous_item.item_type
+    AND input.resolved_points IS NOT DISTINCT FROM previous_item.resolved_points
+    AND input.tooth IS NOT DISTINCT FROM previous_item.tooth
+    AND input.shinryo_code IS NOT DISTINCT FROM previous_item.shinryo_code
+    AND input.receipt_kubun IS NOT DISTINCT FROM previous_item.receipt_kubun
+    AND input.quantity IS NOT DISTINCT FROM previous_item.quantity
+    AND input.unit IS NOT DISTINCT FROM previous_item.unit
+    AND input.comment_value IS NOT DISTINCT FROM previous_item.comment_value
+    AND COALESCE(input.expand_data, '{}'::jsonb)
+          IS NOT DISTINCT FROM COALESCE(previous_item.expand_data, '{}'::jsonb)
+    AND input.source_set_code IS NOT DISTINCT FROM previous_item.set_code
+    AND (
+      input.visit_episode_link_id
+        IS NOT DISTINCT FROM previous_item.visit_episode_link_id
+      OR input.visit_episode_link_id IS NULL
+    )
+  ) OR (
+    NOT v_is_receipt_replay
+    AND input.line_number IS NOT DISTINCT FROM current_item.line_number
+    AND input.item_name IS NOT DISTINCT FROM current_item.item_name
+    AND input.item_type IS NOT DISTINCT FROM current_item.item_type
+    AND input.resolved_points IS NOT DISTINCT FROM current_item.resolved_points
+    AND input.tooth IS NOT DISTINCT FROM current_item.tooth
+    AND input.shinryo_code IS NOT DISTINCT FROM current_item.shinryo_code
+    AND input.receipt_kubun IS NOT DISTINCT FROM current_item.receipt_kubun
+    AND input.quantity IS NOT DISTINCT FROM current_item.quantity
+    AND input.unit IS NOT DISTINCT FROM current_item.unit
+    AND input.comment_value IS NOT DISTINCT FROM current_item.comment_value
+    AND COALESCE(input.expand_data, '{}'::jsonb)
+          IS NOT DISTINCT FROM COALESCE(current_item.expand_data, '{}'::jsonb)
+    AND input.source_set_code IS NOT DISTINCT FROM current_item.set_code
+    AND input.visit_episode_link_id
+          IS NOT DISTINCT FROM current_item.visit_episode_link_id
+    AND current_item.line_number IS NOT DISTINCT FROM previous_item.line_number
+    AND current_item.item_name IS NOT DISTINCT FROM previous_item.item_name
+    AND current_item.item_type IS NOT DISTINCT FROM previous_item.item_type
+    AND current_item.resolved_points
+          IS NOT DISTINCT FROM previous_item.resolved_points
+    AND current_item.tooth IS NOT DISTINCT FROM previous_item.tooth
+    AND current_item.shinryo_code IS NOT DISTINCT FROM previous_item.shinryo_code
+    AND current_item.receipt_kubun
+          IS NOT DISTINCT FROM previous_item.receipt_kubun
+    AND current_item.quantity IS NOT DISTINCT FROM previous_item.quantity
+    AND current_item.unit IS NOT DISTINCT FROM previous_item.unit
+    AND current_item.comment_value
+          IS NOT DISTINCT FROM previous_item.comment_value
+    AND COALESCE(current_item.expand_data, '{}'::jsonb)
+          IS NOT DISTINCT FROM COALESCE(previous_item.expand_data, '{}'::jsonb)
+    AND current_item.set_code IS NOT DISTINCT FROM previous_item.set_code
+    -- Migration 052 deliberately clears the episode link on an amendment
+    -- clone.  Input must exactly match current.  Against previous, the only
+    -- permitted difference is that explicit non-null -> null reset.
+    AND (
+      current_item.visit_episode_link_id
+        IS NOT DISTINCT FROM previous_item.visit_episode_link_id
+      OR current_item.visit_episode_link_id IS NULL
+    )
+  );
+
+  IF v_exact_clone_count <> v_expected_clone_count THEN
+    RAISE EXCEPTION 'amendment exact clone mismatch'
+      USING ERRCODE = '22023';
+  END IF;
+
+  -- Previous provenance must be complete and bound to the previous revision.
+  IF EXISTS (
+    SELECT 1
+    FROM jsonb_to_recordset(p_items) AS input(
+      logical_item_id uuid,
+      documentation_field_id uuid,
+      validation_state text
+    )
+    LEFT JOIN public.karte_visit_items AS previous_item
+      ON previous_item.visit_id = v_previous.id
+     AND previous_item.logical_item_id = input.logical_item_id
+    WHERE input.validation_state = 'validation_unavailable'
+      AND (
+        previous_item.id IS NULL
+        OR previous_item.validation_state NOT IN ('valid', 'needs_correction')
+        OR (
+          previous_item.validation_state = 'valid'
+          AND (
+            COALESCE(
+              cardinality(previous_item.validation_issue_codes),
+              0
+            ) <> 0
+            OR COALESCE(
+              cardinality(previous_item.validation_messages),
+              0
+            ) <> 0
+          )
+        )
+        OR (
+          previous_item.validation_state = 'needs_correction'
+          AND COALESCE(
+            cardinality(previous_item.validation_messages),
+            0
+          ) = 0
+        )
+        OR previous_item.validated_at IS NULL
+        OR NULLIF(BTRIM(previous_item.rule_revision), '') IS NULL
+        OR NULLIF(BTRIM(previous_item.master_revision), '') IS NULL
+        OR previous_item.validated_source_revision
+             IS DISTINCT FROM v_previous.source_revision
+        OR previous_item.validation_input_digest !~ '^[0-9a-f]{64}$'
+      )
+  ) THEN
+    RAISE EXCEPTION 'previous validation provenance is incomplete'
+      USING ERRCODE = '22023';
+  END IF;
+
+  -- Deterministic policy rebinding.  Previous master provenance is retained,
+  -- but current evidence is never fabricated by copying a prior timestamp,
+  -- rule revision, or digest.  The amendment timestamp and a new digest bind
+  -- the exact canonical row + both version identities + policy + previous
+  -- evidence into the current needs_correction decision.
+  SELECT jsonb_agg(
+    CASE
+      WHEN item.value ->> 'validation_state' = 'validation_unavailable'
+      THEN item.value || jsonb_build_object(
+        'validation_state', 'needs_correction',
+        'validation_issue_codes', to_jsonb(
+          CASE
+            WHEN 'AMENDMENT_REVALIDATION_REQUIRED' = ANY(
+              COALESCE(previous_item.validation_issue_codes, ARRAY[]::text[])
+            )
+            THEN COALESCE(
+              previous_item.validation_issue_codes,
+              ARRAY[]::text[]
+            )
+            ELSE COALESCE(
+              previous_item.validation_issue_codes,
+              ARRAY[]::text[]
+            ) || ARRAY['AMENDMENT_REVALIDATION_REQUIRED']::text[]
+          END
+        ),
+        'validation_messages', to_jsonb(
+          CASE
+            WHEN '訂正版の同一行を前版証拠へ再束縛しました。処置セットで再確認してください。'
+                 = ANY(
+                   COALESCE(
+                     previous_item.validation_messages,
+                     ARRAY[]::text[]
+                   )
+                 )
+            THEN COALESCE(
+              previous_item.validation_messages,
+              ARRAY[]::text[]
+            )
+            ELSE COALESCE(
+              previous_item.validation_messages,
+              ARRAY[]::text[]
+            ) || ARRAY[
+              '訂正版の同一行を前版証拠へ再束縛しました。処置セットで再確認してください。'
+            ]::text[]
+          END
+        ),
+        'validated_at', to_jsonb(v_draft.amendment_created_at),
+        'rule_revision', 'amendment-exact-clone-carry-forward-v1',
+        'master_revision', previous_item.master_revision,
+        'validated_source_revision', p_source_revision,
+        'validation_input_digest',
+          encode(
+            digest(
+              convert_to(
+                jsonb_build_object(
+                  'policy', 'amendment-exact-clone-carry-forward-v1',
+                  'root_visit_id', p_root_visit_id,
+                  'previous_version_id', v_previous.id,
+                  'previous_source_revision', v_previous.source_revision,
+                  'source_version_id', p_source_version_id,
+                  'source_revision', p_source_revision,
+                  'canonical_row', jsonb_build_object(
+                    'logical_item_id', item.value -> 'logical_item_id',
+                    'line_number', item.value -> 'line_number',
+                    'item_name', item.value -> 'item_name',
+                    'item_type', item.value -> 'item_type',
+                    'resolved_points', item.value -> 'resolved_points',
+                    'tooth', item.value -> 'tooth',
+                    'shinryo_code', item.value -> 'shinryo_code',
+                    'receipt_kubun', item.value -> 'receipt_kubun',
+                    'quantity', item.value -> 'quantity',
+                    'unit', item.value -> 'unit',
+                    'comment_value', item.value -> 'comment_value',
+                    'expand_data', COALESCE(
+                      item.value -> 'expand_data',
+                      '{}'::jsonb
+                    ),
+                    'source_set_code', item.value -> 'source_set_code',
+                    'visit_episode_link_id',
+                      item.value -> 'visit_episode_link_id'
+                  ),
+                  'previous_evidence', jsonb_build_object(
+                    'validated_at', previous_item.validated_at,
+                    'rule_revision', previous_item.rule_revision,
+                    'master_revision', previous_item.master_revision,
+                    'validated_source_revision',
+                      previous_item.validated_source_revision,
+                    'validation_input_digest',
+                      previous_item.validation_input_digest,
+                    'validation_issue_codes',
+                      to_jsonb(previous_item.validation_issue_codes),
+                    'validation_messages',
+                      to_jsonb(previous_item.validation_messages)
+                  )
+                )::text,
+                'UTF8'
+              ),
+              'sha256'
+            ),
+            'hex'
+          )
+      )
+      ELSE item.value
+    END
+    ORDER BY item.ordinality
+  )
+  INTO v_effective_items
+  FROM jsonb_array_elements(p_items) WITH ORDINALITY AS item(value, ordinality)
+  LEFT JOIN public.karte_visit_items AS previous_item
+    ON previous_item.visit_id = v_previous.id
+   AND previous_item.logical_item_id =
+       CASE
+         WHEN item.value ->> 'logical_item_id' ~
+              '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+         THEN (item.value ->> 'logical_item_id')::uuid
+         ELSE NULL
+       END;
+
+  RETURN public.save_v6_draft_treatment_set_strict_v053(
+    p_clinic_id,
+    p_patient_no,
+    p_root_visit_id,
+    p_source_version_id,
+    p_source_revision,
+    p_expected_draft_revision,
+    p_client_mutation_id,
+    v_effective_items
+  );
+END
+$function$;
+
+REVOKE ALL ON FUNCTION public.save_v6_draft_treatment_set(
+  integer, varchar, uuid, uuid, integer, integer, text, jsonb
+) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.save_v6_draft_treatment_set(
+  integer, varchar, uuid, uuid, integer, integer, text, jsonb
+) TO service_role;
+
+COMMENT ON FUNCTION public.save_v6_draft_treatment_set(
+  integer, varchar, uuid, uuid, integer, integer, text, jsonb
+) IS
+  'Two-stage atomic V6 draft save: strict v053 validation plus amendment-only exact-clone needs_correction carry-forward. Never promotes unavailable rows to valid.';
+
+NOTIFY pgrst, 'reload schema';
+
+COMMIT;
