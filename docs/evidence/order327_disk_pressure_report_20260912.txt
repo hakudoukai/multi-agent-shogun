@@ -1,0 +1,24 @@
+DISKPRESS host=momizi-dx target=/ total_gib=1006 used_gib=283 pct=28 reason=abs as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED_SUMMARY host=momizi-dx pc_unmeasured=3 local_skipped=16 note=★別の母数ゆゑ足して居らぬ・内訳は--report★ as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/modules/6.6.114.1-microsoft-standard-WSL2 why=skipped_fstype_overlay as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wsl why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/drivers why=skipped_fstype_9p as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/usr/lib/wsl/lib why=skipped_fstype_overlay as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/run why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/run/lock why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/run/shm why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/versions.txt why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/wslg/doc why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/c why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/mnt/d why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1001 why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1000 why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/0 why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=/run/user/1002 why=skipped_not_local_or_volatile as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=pc:main why=no_route_not_requested as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=pc:second why=no_route_not_requested as_of=2026-09-12T09:47:11+09:00
+DISKUNMEASURED host=momizi-dx target=pc:mac why=no_route_not_requested as_of=2026-09-12T09:47:11+09:00
+SUMMARY as_of=2026-09-12T09:47:11+09:00 host=momizi-dx pc_targets_total=4 pc_measured=1 pc_unmeasured=3 local_mounts_seen=18 exceeded=1 unmeasured_lines=19
+NOTE 母数は二つ在り 足し合はせて居らぬ: ★PC の母数(4)★ と ★此の PC の mount の母数(18)★。
+NOTE ★measured=1 は「此の PC のみ」の意であり 残 3 台は unmeasured である（0 ではない）★
