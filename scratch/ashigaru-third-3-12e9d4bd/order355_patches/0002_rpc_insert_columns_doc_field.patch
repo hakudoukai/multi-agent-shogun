@@ -1,0 +1,12 @@
+--- a/supabase/migrations/20260724235805_v6_save_draft_treatment_set_rpc_20260724.sql
++++ b/supabase/migrations/20260724235805_v6_save_draft_treatment_set_rpc_20260724.sql
+@@ -355,3 +355,3 @@
+     comment_value, expand_data, set_code, client_mutation_id,
+-    visit_episode_link_id, logical_item_id, validation_state,
++    visit_episode_link_id, logical_item_id, documentation_field_id, validation_state,
+     validation_issue_codes, validation_messages, validated_at,
+@@ -364,3 +364,3 @@
+     comment_value, COALESCE(expand_data, '{}'::jsonb), source_set_code,
+-    p_client_mutation_id, visit_episode_link_id, logical_item_id,
++    p_client_mutation_id, visit_episode_link_id, logical_item_id, documentation_field_id,
+     validation_state, COALESCE(validation_issue_codes, ARRAY[]::text[]),
