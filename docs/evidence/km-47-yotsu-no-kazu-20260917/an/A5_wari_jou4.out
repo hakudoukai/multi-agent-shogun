@@ -1,0 +1,83 @@
+= 門の log docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_gate.txt
+= ★條④(0byte)で鳴つた★ 56 本
+= 束 docs/evidence/km-46-yomite-no-kizu-20260917 (repo 根からの相對 docs/evidence/km-46-yomite-no-kizu-20260917)
+= 束の器の ★書く文★ 17 本
+
+-- ★解けた dir 定数★(器ごと) --
+  59_kaki.py         B=docs/evidence/km-46-yomite-no-kizu-20260917 ROOT=(repo根)
+  60_ji.py           B=docs/evidence/km-46-yomite-no-kizu-20260917 ROOT=(repo根)
+  61_ate.py          B=docs/evidence/km-46-yomite-no-kizu-20260917 ROOT=(repo根)
+  62_seme.py         AN=docs/evidence/km-46-yomite-no-kizu-20260917/an APPEND=scripts/checks/karo_mac_manifest_append.py B=docs/evidence/km-46-yomite-no-kizu-20260917 MAN=docs/evidence/km-46-yomite-no-kizu-20260917/an/man MON=docs/evidence/km-46-yomite-no-kizu-20260917/an/mon R=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata ROOT=(repo根) VA=docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py VB=docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_BEFORE.py
+  63_damatte.py      AN=docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte APPEND=scripts/checks/karo_mac_manifest_append.py B=docs/evidence/km-46-yomite-no-kizu-20260917 D=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte ROOT=(repo根) VA=docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py VB=docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_BEFORE.py
+  64_shizukari.py    AN=docs/evidence/km-46-yomite-no-kizu-20260917/an B=docs/evidence/km-46-yomite-no-kizu-20260917 NAWA=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nawa OUT=docs/evidence/km-46-yomite-no-kizu-20260917/an/shizukari ROOT=(repo根) VB=docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_BEFORE.py
+  65_koushin.py      AN=docs/evidence/km-46-yomite-no-kizu-20260917/an B=docs/evidence/km-46-yomite-no-kizu-20260917 ICHI=docs/evidence/km-46-yomite-no-kizu-20260917/raw/daichou_ichiran.txt ROOT=(repo根) VA=docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py VB=docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_BEFORE.py
+  66_kyuusan.py      B=docs/evidence/km-46-yomite-no-kizu-20260917 ROOT=(repo根)
+  67_nokori.py       B=docs/evidence/km-46-yomite-no-kizu-20260917 FX=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nokori ROOT=(repo根) T=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nokori/kakite
+
+★⑴器の産物★ 52 本
+★⑵故意の fixture★ 0 本
+★⑶辿れぬ★ 4 本
+★和★ 56 (= 鳴つた 56)
+
+kubun	bytes	path	根拠(器:行 逐語)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.AFTER.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.AFTER.kaki.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.BEFORE.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.BEFORE.kaki.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.AFTER.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.AFTER.kaki.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.BEFORE.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.BEFORE.kaki.err	63_damatte.py:33  io.open(os.path.join(AN, na + ".err"), "w", encoding="utf-8", newline="").write(r.stderr)
+⑶辿れぬ	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/km45.AFTER.err	★束の器の中に書いた文が見当らぬ★
+⑶辿れぬ	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/km45.BEFORE.err	★束の器の中に書いた文が見当らぬ★
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A01_kiyoi.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A01_kiyoi.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A02_hankaku.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A02_hankaku.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A03_tab.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A03_tab.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A04_zenkaku.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A04_zenkaku.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A05_nbsp.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A05_nbsp.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A06_u2028.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A06_u2028.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A07_zwsp.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A07_zwsp.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A08_u205f.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A08_u205f.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A09_sha8.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A09_sha8.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A10_sha64.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A10_sha64.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A11_ikoru.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A11_ikoru.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A12_koron.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A12_koron.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A13_hyphen.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A13_hyphen.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A14_chodai.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A14_chodai.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A15_matsubi.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A15_matsubi.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A16_atama.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A16_atama.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A17_sharp.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A17_sharp.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A18_path_ikoru.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A18_path_ikoru.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B01_futae.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B01_futae.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B02_hitoe.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B02_hitoe.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B03_lf.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B03_lf.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B04_cr.after.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑴器の産物	0	docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B04_cr.before.err	62_seme.py:140  io.open(os.path.join(MON, u"%s.%s.err" % (fuda, nm)), "w", encoding="utf-8", newline="").write(r.stderr)
+⑶辿れぬ	0	docs/evidence/km-46-yomite-no-kizu-20260917/raw/chakushu_send.err	★束の器の中に書いた文が見当らぬ★
+⑶辿れぬ	0	docs/evidence/km-46-yomite-no-kizu-20260917/raw/chakushu_send.out	★束の器の中に書いた文が見当らぬ★
+
+== ★機の陽性対照★ ―― 「生で書く」形が 0byte を産む事を、器自身に實演させる ==
+  ★生書き★ bytes=0 ―― 62_seme.py:140 / 63_damatte.py:33 と同じ形
+  ★70_kaki を通す★ bytes=202 ―― 裁 seq310228⑶ の「空である旨の一行」
+  ∴ ★0byte は「空であつた」の証ではなく、★書き手が生で書いた事★ の証である。★
