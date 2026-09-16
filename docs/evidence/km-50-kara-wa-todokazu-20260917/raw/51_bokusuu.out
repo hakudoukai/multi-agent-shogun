@@ -1,0 +1,422 @@
+刻 = 2026-09-17T03:47:57
+歩き根 = /Users/momizimac/multi-agent-shogun
+深さ = ★無制限★(followlinks=False) / 名で除いた dir = ★無し(.git も queue/ も歩いた)★
+開かぬ物 = ⑴常なる file でない物 ⑵1048576 byte 超の file ―― 下の「測れぬ」欄に數と名を出す
+印 = 定義本形 'is_num(){' / 定義方言 'is_num ()' / 粗い印 'is_num'
+
+― 歩いた數 ―
+  歩いた file = 38834 / 開いた file = 38600
+  測れぬ(常なる file でない) = 109 本
+  測れぬ(1048576 byte 超ゆゑ開かぬ) = 124 本
+  測れぬ(開けなんだ) = 1 本
+      queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p10_reg_noread :: open: [Errno 13] Permission denied: '/Users/momizimac/multi-agent-shogun/queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p10_reg_noread'
+  ★上の「測れぬ」は母數から外して居らぬ ―― 歩いたが開かなんだ物として數へて在る。★
+
+― ★定義本形 is_num(){ ―― 一本一行として數へる★ ―
+  ★總計 = 64 行 / 55 本(file)★
+  内訳 = 束の外 61 行 ／ ★己の束(docs/evidence/km-50-kara-wa-todokazu-20260917)の中 3 行★
+  ★己の束を除かぬ ―― 下に分けて出す。器は己を數へた事を隠さぬ。★
+
+  【束の外】61 行
+    .git/km_isnum_lines.txt:1
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_isnum_lines.txt:2
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_isnum_lines.txt:3
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_isnum_lines.txt:4
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_isnum_lines.txt:5
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_shikii2/f1a.frag:4
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_shikii2/f2.frag:4
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_shikii2/f3.frag:6
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_shikii2/f4.frag:8
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    .git/km_shikii2/f5.frag:3
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_gate_BEFORE.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    docs/evidence/karo-mac-gate-hook-fix-20260916/raw/01_gate_AFTER.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    docs/evidence/karo-mac-gate-hook-fix-20260916/raw/02_diff_gate.patch:8
+      逐語 =  is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 3e673d745f121717 / sha16(改行有) = 46a1b9be6077840e / 76 byte
+    docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh:27
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913.md:89
+      逐語 = | 1 fail-open(條②③④⑤) | L30 `ws_n=$(grep -cE $'[ \t]+$' "$f" 2>/dev/null \|\| true)` / L31 `if [ "${ws_n:-0}" -gt 0 ]; then` / L37-38 同形 cr_n / L44 `sz=$(wc -c < "$f" \| tr -d ' ')` / L49 `last1=$(tail -c1 "$f" \| xxd -p)` / L103 同形 sz | L29 `is_num(){ … }` / L44 `ws_n=$(grep -cE $'[ \t]+\r?$' "$f" 2>/dev/null); ws_rc=$?` / L45 `if [ "$ws_rc" -ge 2 ] \|\| ! is_num "$ws_n"; then` / L46 `say "★條② 測れぬ(grep rc=${ws_rc}・出目「${ws_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"` / L54-56 條③ 同形 / L64-66 條④ 寸法 / L73-75 末尾一字 / L138-140 條⑤ | ★変る★ | 讀めぬ file(mode 000): 甲 = 札 2「★EOF改行が無い(0)★」+ 結語(條②③は ★黙る★・條④は tail が空を返した為 ★別の理由で★鳴つた)/ 乙 = 札 5(條②③④⑤ 測れぬ 各 1 + 結語)。★rc は両方 1★ ∴ 此の fixture では偽の青にならず「理由が違ふ・數を少なく言ふ」。 |
+      sha16(改行無) = 78d92588ef338b81 / sha16(改行有) = a16bfee23cb18ed6 / 985 byte
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/13_diff_head_disk.diff:14
+      逐語 = +is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 7e3a35a5e82cb302 / sha16(改行有) = 4bfdc8df88c1550c / 76 byte
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/16_diff_failopen_to_jou2.diff:14
+      逐語 = +is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 7e3a35a5e82cb302 / sha16(改行有) = 4bfdc8df88c1550c / 76 byte
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/19_lines.txt:15
+      逐語 = 29:is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9511e15198a07b72 / sha16(改行有) = 38484713bc8f444c / 78 byte
+    queue/reports/ashigaru-mac-1_km-42-kensu-mono-to-nasu-mono-ga-onaji-atai-wo-mite-iru-ka-20260913_evidence/raw/21_lines/b_karo_mac_dasumae_gate.sh.txt:4
+      逐語 = L  29 [argv,default,検:form] is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 29f509bece4c80f7 / sha16(改行有) = 6e26a3fd75299ba5 / 105 byte
+    queue/reports/ashigaru-mac-1_km-43-yobareru-keiro-wo-motsu-bannin-wa-ikutsu-ka-20260913_evidence/raw/41_lines.first/b_karo_mac_dasumae_gate.sh.txt:49
+      逐語 =   非0 L  29 is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = c0737692e96c2aee / sha16(改行有) = 1cabbc3520b09c23 / 88 byte
+    queue/reports/ashigaru-mac-1_km-43-yobareru-keiro-wo-motsu-bannin-wa-ikutsu-ka-20260913_evidence/raw/41_lines/b_karo_mac_dasumae_gate.sh.txt:49
+      逐語 =   非0 L  29 is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = c0737692e96c2aee / sha16(改行有) = 1cabbc3520b09c23 / 88 byte
+    queue/reports/ashigaru-mac-1_km-63-mon-no-ooi-no-ana-800-hon-wo-wake-jou6-no-kikime-no-bunbo-wo-hakare-yomitori-nomi-20260917_evidence/raw/fx/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-1_km-mon-wa-nanbon-watasareta-toki-no-kotae-ka_20260912_evidence/raw/05_gate_src.txt:23
+      逐語 = +is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 7e3a35a5e82cb302 / sha16(改行有) = 4bfdc8df88c1550c / 76 byte
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/25_gate_copy/an.diff:6
+      逐語 =  is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 3e673d745f121717 / sha16(改行有) = 46a1b9be6077840e / 76 byte
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/25_gate_copy/gate_an.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/25_gate_copy/gate_utsushi.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw/60_suwe/gate.hikae:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw/60_suwe/gate.sunaba:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-2_km-48-michibikeru-mono-to-michibikenu-mono-wo-wakete-taba-wo-yasesaseyo-jou5-no-sai-20260917_evidence/raw/60_yaseta/moto_evidence/raw/60_suwe/gate.hikae:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-2_km-48-michibikeru-mono-to-michibikenu-mono-wo-wakete-taba-wo-yasesaseyo-jou5-no-sai-20260917_evidence/raw/60_yaseta/moto_evidence/raw/60_suwe/gate.sunaba:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/u02_karo_mac_dasumae_gate_an02.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-35-atai-ga-kotogotoku-tadashii-toki-na-no-ayamari-wa-ikanishite-arawareruka-20260913_evidence/seihon/mon_gate_utsushi.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:13
+      逐語 =   is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 662724a401e56f3a / sha16(改行有) = 331e36496b15d0f0 / 77 byte
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:33
+      逐語 = +is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 7e3a35a5e82cb302 / sha16(改行有) = 4bfdc8df88c1550c / 76 byte
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:45
+      逐語 = +is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 7e3a35a5e82cb302 / sha16(改行有) = 4bfdc8df88c1550c / 76 byte
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:70
+      逐語 = +is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 7e3a35a5e82cb302 / sha16(改行有) = 4bfdc8df88c1550c / 76 byte
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:83
+      逐語 = +is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 7e3a35a5e82cb302 / sha16(改行有) = 4bfdc8df88c1550c / 76 byte
+    queue/reports/ashigaru-mac-3_km-44-mon-sonomono-no-kizu-wo-jissi-de-hakari-taba-no-naka-de-naosu-20260917_evidence/patch/gate_AFTER.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-44-mon-sonomono-no-kizu-wo-jissi-de-hakari-taba-no-naka-de-naosu-20260917_evidence/patch/gate_BEFORE.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an2_shinki/kasane/scripts/checks/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_AFTER.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_AFTER2.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_BASE2.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_BEFORE.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/scratch/scripts/checks/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/scratch2/scripts/checks/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-hakare-nu-to-kizu-wo-wakachi-kake-20260913_evidence/kou/10_deguchi_chushutsu.txt:4
+      逐語 = L29   return 1       | is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 98fef2d390f27390 / sha16(改行有) = 43ad74abfc1efa7f / 98 byte
+    queue/reports/ashigaru-mac-3_km-hitotsu-no-kazu-ga-yotsu-no-atai-wo-toru-toki_20260912_evidence/han/sweep/ban2/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-hitotsu-no-kazu-ga-yotsu-no-atai-wo-toru-toki_20260912_evidence/han/sweep/ban3/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/fusho_taishou/scripts_mitate/checks/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-soto-ikari-no-hifukuritsu-to-mon-wo-toranu-shirui-no-shitsuryou-20260913_evidence/sunaba/honmono/queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/fusho_taishou/scripts_mitate/checks/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/ashigaru-mac-3_km-soto-ikari-no-hifukuritsu-to-mon-wo-toranu-shirui-no-shitsuryou-20260913_evidence/sunaba/nise/queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/fusho_taishou/scripts_mitate/checks/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    queue/reports/karo-mac_shiketsu-jou2-crlf-20260912_evidence/bak/karo_mac_dasumae_gate.sh.bak-20260912-shiketsu-jou2:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/agent_health_check.sh:88
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/checks/context_usage_warn.sh:35
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/checks/karo_mac_dasumae_gate.sh:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216:29
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/checks/karo_mac_gate4.sh:63
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/inbox_watcher.sh:131
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/redundancy/shogun_report_watcher.sh:31
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    scripts/watchdogs/enter_restart_common_watchdog.sh:80
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+  【己の束の中】3 行
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/05_ki.sh:7
+      逐語 = is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+      sha16(改行無) = 9ebb7840f743508b / sha16(改行有) = 4ec3d60221976dc3 / 75 byte
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:19
+      逐語 = TEI = b'is_num(){'         # ★定義の印(本形)★
+      sha16(改行無) = f44ccf7c10aee063 / sha16(改行有) = f3237137dc70ed04 / 55 byte
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:82
+      逐語 =     w('\n― ★定義本形 is_num(){ ―― 一本一行として數へる★ ―\n')
+      sha16(改行無) = 0583d75a2eb0b515 / sha16(改行有) = 0c55e38a93816983 / 87 byte
+
+― 字句の同一 ―
+  sha16=9ebb7840f743508b ―― 46 行
+      .git/km_isnum_lines.txt:1
+      .git/km_isnum_lines.txt:2
+      .git/km_isnum_lines.txt:3
+      .git/km_isnum_lines.txt:4
+      .git/km_isnum_lines.txt:5
+      .git/km_shikii2/f1a.frag:4
+      .git/km_shikii2/f2.frag:4
+      .git/km_shikii2/f3.frag:6
+      .git/km_shikii2/f4.frag:8
+      .git/km_shikii2/f5.frag:3
+      docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_gate_BEFORE.sh:29
+      docs/evidence/karo-mac-gate-hook-fix-20260916/raw/01_gate_AFTER.sh:29
+      docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh:27
+      docs/evidence/km-50-kara-wa-todokazu-20260917/raw/05_ki.sh:7
+      queue/reports/ashigaru-mac-1_km-63-mon-no-ooi-no-ana-800-hon-wo-wake-jou6-no-kikime-no-bunbo-wo-hakare-yomitori-nomi-20260917_evidence/raw/fx/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/25_gate_copy/gate_an.sh:29
+      queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/25_gate_copy/gate_utsushi.sh:29
+      queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw/60_suwe/gate.hikae:29
+      queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw/60_suwe/gate.sunaba:29
+      queue/reports/ashigaru-mac-2_km-48-michibikeru-mono-to-michibikenu-mono-wo-wakete-taba-wo-yasesaseyo-jou5-no-sai-20260917_evidence/raw/60_yaseta/moto_evidence/raw/60_suwe/gate.hikae:29
+      queue/reports/ashigaru-mac-2_km-48-michibikeru-mono-to-michibikenu-mono-wo-wakete-taba-wo-yasesaseyo-jou5-no-sai-20260917_evidence/raw/60_yaseta/moto_evidence/raw/60_suwe/gate.sunaba:29
+      queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/u02_karo_mac_dasumae_gate_an02.sh:29
+      queue/reports/ashigaru-mac-3_km-35-atai-ga-kotogotoku-tadashii-toki-na-no-ayamari-wa-ikanishite-arawareruka-20260913_evidence/seihon/mon_gate_utsushi.sh:29
+      queue/reports/ashigaru-mac-3_km-44-mon-sonomono-no-kizu-wo-jissi-de-hakari-taba-no-naka-de-naosu-20260917_evidence/patch/gate_AFTER.sh:29
+      queue/reports/ashigaru-mac-3_km-44-mon-sonomono-no-kizu-wo-jissi-de-hakari-taba-no-naka-de-naosu-20260917_evidence/patch/gate_BEFORE.sh:29
+      queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an2_shinki/kasane/scripts/checks/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_AFTER.sh:29
+      queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_AFTER2.sh:29
+      queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_BASE2.sh:29
+      queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/gate_BEFORE.sh:29
+      queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/scratch/scripts/checks/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/scratch2/scripts/checks/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-3_km-hitotsu-no-kazu-ga-yotsu-no-atai-wo-toru-toki_20260912_evidence/han/sweep/ban2/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-3_km-hitotsu-no-kazu-ga-yotsu-no-atai-wo-toru-toki_20260912_evidence/han/sweep/ban3/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/fusho_taishou/scripts_mitate/checks/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-3_km-soto-ikari-no-hifukuritsu-to-mon-wo-toranu-shirui-no-shitsuryou-20260913_evidence/sunaba/honmono/queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/fusho_taishou/scripts_mitate/checks/karo_mac_dasumae_gate.sh:29
+      queue/reports/ashigaru-mac-3_km-soto-ikari-no-hifukuritsu-to-mon-wo-toranu-shirui-no-shitsuryou-20260913_evidence/sunaba/nise/queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/fusho_taishou/scripts_mitate/checks/karo_mac_dasumae_gate.sh:29
+      queue/reports/karo-mac_shiketsu-jou2-crlf-20260912_evidence/bak/karo_mac_dasumae_gate.sh.bak-20260912-shiketsu-jou2:29
+      scripts/agent_health_check.sh:88
+      scripts/checks/context_usage_warn.sh:35
+      scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216:29
+      scripts/checks/karo_mac_dasumae_gate.sh:29
+      scripts/checks/karo_mac_gate4.sh:63
+      scripts/inbox_watcher.sh:131
+      scripts/redundancy/shogun_report_watcher.sh:31
+      scripts/watchdogs/enter_restart_common_watchdog.sh:80
+  sha16=7e3a35a5e82cb302 ―― 7 行
+      queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/13_diff_head_disk.diff:14
+      queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/16_diff_failopen_to_jou2.diff:14
+      queue/reports/ashigaru-mac-1_km-mon-wa-nanbon-watasareta-toki-no-kotae-ka_20260912_evidence/raw/05_gate_src.txt:23
+      queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:33
+      queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:45
+      queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:70
+      queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:83
+  sha16=3e673d745f121717 ―― 2 行
+      docs/evidence/karo-mac-gate-hook-fix-20260916/raw/02_diff_gate.patch:8
+      queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/25_gate_copy/an.diff:6
+  sha16=c0737692e96c2aee ―― 2 行
+      queue/reports/ashigaru-mac-1_km-43-yobareru-keiro-wo-motsu-bannin-wa-ikutsu-ka-20260913_evidence/raw/41_lines.first/b_karo_mac_dasumae_gate.sh.txt:49
+      queue/reports/ashigaru-mac-1_km-43-yobareru-keiro-wo-motsu-bannin-wa-ikutsu-ka-20260913_evidence/raw/41_lines/b_karo_mac_dasumae_gate.sh.txt:49
+  sha16=f44ccf7c10aee063 ―― 1 行
+      docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:19
+  sha16=0583d75a2eb0b515 ―― 1 行
+      docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:82
+  sha16=78d92588ef338b81 ―― 1 行
+      queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913.md:89
+  sha16=29f509bece4c80f7 ―― 1 行
+      queue/reports/ashigaru-mac-1_km-42-kensu-mono-to-nasu-mono-ga-onaji-atai-wo-mite-iru-ka-20260913_evidence/raw/21_lines/b_karo_mac_dasumae_gate.sh.txt:4
+  sha16=9511e15198a07b72 ―― 1 行
+      queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/19_lines.txt:15
+  sha16=98fef2d390f27390 ―― 1 行
+      queue/reports/ashigaru-mac-3_km-hakare-nu-to-kizu-wo-wakachi-kake-20260913_evidence/kou/10_deguchi_chushutsu.txt:4
+  sha16=662724a401e56f3a ―― 1 行
+      queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/kou/80_naoshi.diff.txt:13
+  ★家老が下さつた sha16 = 9ebb7840f743508b ―― 上に在るか: ★在る★★
+
+― 定義方言 is_num () ―
+  2 行
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:20 TEI2 = b'is_num ()'        # 方言(空白を挟む形) ―― 在るか否かも測る
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:111     w('\n― 定義方言 is_num () ―\n')
+
+― ★言及のみ(is_num を含むが定義行を持たぬ file)★ ―
+  103 本
+    .git/km_100ji_raw.txt
+    .git/km_a2_fuda.bak-20260917T0253-pre-dai
+    .git/km_a2_fuda.bak-20260917T033418
+    .git/km_a3_fuda.bak-20260917T0243
+    .git/km_a3_fuda.bak-20260917T034202
+    .git/km_an_c.tmp
+    .git/km_inbox.bak-20260917T030129
+    .git/km_inbox.bak-20260917T0310
+    .git/km_inbox.bak-20260917T0328
+    .git/km_inbox.bak-20260917T034409
+    .git/km_inbox_hikae_20260917T021001.yaml
+    .git/km_inbox_karo_mac.bak-20260917T0237
+    .git/km_rb63.txt
+    .git/km_rb63b.txt
+    .git/km_rb64.txt
+    .git/km_rb_322088.txt
+    .git/km_rb_322212.txt
+    .git/km_rb_322217.txt
+    .git/km_shikii2/f1b.frag
+    .git/km_ue2.txt
+    .git/km_ue2a.txt
+    .git/km_ue4.txt
+    .git/km_ue5.txt
+    .venv/lib/python3.9/site-packages/_pytest/python_api.py
+    .venv/lib/python3.9/site-packages/pygments/lexers/_php_builtins.py
+    .venv/lib/python3.9/site-packages/pygments/lexers/dsls.py
+    .venv/lib/python3.9/site-packages/pygments/lexers/erlang.py
+    docs/evidence/karo-mac-manifest-verify-inyoufu-kin-20260916/karo-mac-inbox-before-markread.yaml.hikae
+    docs/evidence/karo-mac_100ji-saimu-20260917/README.md
+    docs/evidence/km-49-buzai-shikii-20260917/km-49-buzai-shikii-20260917.md
+    docs/evidence/km-49-buzai-shikii-20260917/raw/01_nori.txt
+    docs/evidence/km-49-buzai-shikii-20260917/raw/11_jiku_doitsu.out
+    docs/evidence/km-49-buzai-shikii-20260917/raw/11_jiku_doitsu.py
+    docs/evidence/km-49-buzai-shikii-20260917/raw/50_hisuu.sh
+    docs/evidence/km-49-buzai-shikii-20260917/raw/51_hisuu.out
+    docs/evidence/km-49-buzai-shikii-20260917/raw/51_hisuu_taoreta.out
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/10_kara.sh
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/11_kara.out
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/20_rei.sh
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/21_rei.out
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/30_taishou.sh
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/31_taishou.out
+    queue/inbox/ashigaru-mac-2.yaml
+    queue/inbox/ashigaru-mac-3.yaml
+    queue/inbox/karo-mac.yaml
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/16_diff_jou2_to_disk.diff
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/21_entries.json
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/21_entries.json.first
+    queue/reports/ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/62_report_body.txt
+    queue/reports/ashigaru-mac-1_km-mon-wa-nanbon-watasareta-toki-no-kotae-ka_20260912_evidence/raw/04c_karo_256.txt
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913.md
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/05_tei_kensaku.out
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/05_tei_kensaku.py
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/20_kou_nise_ao.out
+    queue/reports/ashigaru-mac-1_km-nise-no-ao-wo-hiraku-joken-wo-kazoe_20260913_evidence/raw/20_kou_nise_ao.py
+    queue/reports/ashigaru-mac-1_km-todoku-heno-keiro-wo-tanaoroshi-hitei-kisoku-to-bin-ga-kami-no-kawari-ni-natte-iru-do-20260913_evidence/raw/31_seqs_full.txt
+    queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913.md
+    queue/reports/ashigaru-mac-2_km-45-gunshi-PASS-tadorezu-14-wo-herasu-to-inyoufu-kin-no-uragaki-20260916_evidence/raw/32_walk_0fc.raw.txt
+    queue/reports/ashigaru-mac-2_km-jou5-no-todatsu-wo-sanchi-de-hakare-kuchi13-wa-doko-de-kieru_20260913_evidence/taisho/30_karo_taba.txt
+    queue/reports/ashigaru-mac-3_km-30-seikou-no-inji-wo-onore-no-dougu-de-kazoe-20260913_evidence/kou/10_kizu_wo_naosu.txt
+    queue/reports/ashigaru-mac-3_km-31-deme-wo-kaesanu-utsuwa-wo-kazoeru-20260913_hoshi_01_an-wa-kami-ni-oku.md
+    queue/reports/ashigaru-mac-3_km-33-hakarenu-wa-wa-no-dochira-gawa-ka-20260913_evidence/kou/40_hakarenu_gyou.txt
+    queue/reports/ashigaru-mac-3_km-33-hakarenu-wa-wa-no-dochira-gawa-ka-20260913_evidence/kou/42_hakarenu_v2_gyou.txt
+    queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/kou/20_sweep.out
+    queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/kou/25_kouho.out
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916.md
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/ki/20_kaiheiku.py
+    queue/reports/ashigaru-mac-3_km-40-shikii-wo-kazoe-ugoku-mono-wo-oe-soshite-karo-no-anaba-wo-sabake-20260916_evidence/ki/__pycache__/20_kaiheiku.cpython-314.pyc
+    queue/reports/ashigaru-mac-3_km-44-mon-sonomono-no-kizu-wo-jissi-de-hakari-taba-no-naka-de-naosu-20260917.md
+    queue/reports/ashigaru-mac-3_km-44-mon-sonomono-no-kizu-wo-jissi-de-hakari-taba-no-naka-de-naosu-20260917_evidence/hyou/90_imi_senu_koto.txt
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917.md
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an2_shinki/letter.txt
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an2_shinki/paper_new.txt
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an2_shinki/paper_new2.txt
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/jou5_maxb_failopen.patch
+    queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/patch/jou5_maxb_failopen_v2.patch
+    queue/reports/ashigaru-mac-3_km-hakare-nu-to-kizu-wo-wakachi-kake-20260913_evidence/kou/16_deguchi_hyou.txt
+    queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913.md
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p04_sym_chr_null.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p05_sock.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p06_dir.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p07_sym_loop_a.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p08_sym_deep_40.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p09_sym_broken.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p10_reg_noread.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p11_reg_zero.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p12_reg_clean.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kou/50x_p14_fuzai_kore_wa_nai.xtrace.txt
+    queue/reports/ashigaru-mac-3_km-mutsutsume-no-kuchi-wa-NUL-wo-gyoumatsu-to-miru_20260912.md
+    queue/reports/ashigaru-mac-3_km-mutsutsume-no-kuchi-wa-NUL-wo-gyoumatsu-to-miru_20260912_evidence/otsu/30_kuchi_hyou.md
+    queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou/20a_go_de_waketa_ayamari.txt
+    queue/reports/ashigaru-mac-3_km-soto-ikari-no-hifukuritsu-to-mon-wo-toranu-shirui-no-shitsuryou-20260913_evidence/sunaba/honmono/queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913.md
+    queue/reports/ashigaru-mac-3_km-soto-ikari-no-hifukuritsu-to-mon-wo-toranu-shirui-no-shitsuryou-20260913_evidence/sunaba/nise/queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913.md
+    queue/reports/karo-mac_box_before_20260913_0428.yaml
+    queue/reports/karo-mac_joushin_an_20260913/JOUSHIN_AN_ICHIRAN.md
+    queue/reports/karo-mac_kenbun_100ji_to_87ji_20260913/shiryo/seq_310732.txt
+    queue/reports/karo-mac_kenbun_jou5_failopen_20260913/KENBUN_JOU5_FAILOPEN.md
+    queue/reports/karo-mac_seigo23_20260913/SENT_IINCHO_FULL.txt
+    queue/reports/karo-mac_shiketsu-jou2-crlf-20260912.md
+    queue/reports/karo-mac_shiketsu-jou2-crlf-20260912_evidence/mae/00_mimoto_mae.txt
+    queue/reports/karo-mac_shiketsu-jou2-crlf-20260912_gate.txt
+    queue/reports/karo-mac_shiketsu-mon-fail-open-20260912.md
+    queue/tasks/ashigaru-mac-2.yaml
+
+― 対照(★同じ檢出子を通した★) ―
+  陽性対照 docs/evidence/km-50-kara-wa-todokazu-20260917/raw/05_ki.sh ―― 定義行 在り(★在るべし★)
+  陰性対照 docs/evidence/km-50-kara-wa-todokazu-20260917/raw/00_koku.txt ―― 定義行 無し(★無かるべし★)
+  ★対照 = 通(器として使へる)★
+
+― 測れぬの名(1048576 byte 超・上位10) ―
+    queue/reports/ashigaru-mac-3_km-nijuuhon-wa-onaji-koto-o-iu-ka_20260912_evidence/raw/tmp_cs.txt (13209403393 byte)
+    queue/reports/ashigaru-mac-3_km-yobidashi-zero-ni-sen-o-tsunagu_20260911_evidence/raw/06_ref_index.txt (143966384 byte)
+    queue/reports/ashigaru-mac-1_B12_16_20260909_evidence/raw/c_kami_cwin.txt (82730041 byte)
+    queue/reports/ashigaru-mac-1_B12_16_20260909_evidence/raw/c_other_cwin.txt (59278201 byte)
+    queue/reports/ashigaru-mac-1_B12_16_20260909_evidence/raw/c_other_users.txt (41651986 byte)
+    queue/reports/ashigaru-mac-1_B12_16_20260909_evidence/raw/c_kami_users.txt (37065823 byte)
+    .git/objects/pack/pack-3c54265eacdc1fcf23dedfc16ea648b1db9fee52.pack (36021357 byte)
+    .claude/worktrees/karo-mac-a1/android/release/multi-agent-shogun.apk (32539962 byte)
+    android/release/multi-agent-shogun.apk (32539962 byte)
+    queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/hyouhon/m_1353_kabe_no_saki.txt (29037738 byte)
+  ★是等は「is_num を含まぬ」と申して居らぬ。★開かなんだ★ のである。★
+
+走り = 3.51 秒 / rc = 0
