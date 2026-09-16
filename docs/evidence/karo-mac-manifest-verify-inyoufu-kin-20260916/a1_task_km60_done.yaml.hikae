@@ -1,0 +1,51 @@
+task_id: km-60-B2-B4-no-ikari-wo-sagashita-ue-de-tatezu-to-iu-yomitori-nomi-20260916
+status: done
+done_at: "2026-09-17T00:06:30"
+done_note: "門 2026-09-17T00:06:09(起 2026-09-16T23:46:54・宣 起+45分=09-17 00:31:54)/ 紙 8bb404a926eb8fdc 27423B 133行(grep) / 臺帳 cc7150e1becd68f3 項39 / 門控 60_gate_top.r60 / 着手便 1 + 便 5 + 監査提出 1 + 追ひ便 7(64・根の外 _after/) / ★両基準: 席 19.2分 宣−實 +25.8(＋過大)・家老 assigned_at 2026-09-16T23:42:50(札に無し=家老の便の刻)→done_at 2026-09-17T00:06:30 = 23.7分 宣−實 +25.4(＋過大)★ / 答=立てられず 16 件を探した上での立てられずへ(席の錨 B2 15 JSON・B4 effects 10・B1-d local+控 / 探した上で立てられず = B1-d origin ref・乙 5 本 git・板の欄 / 紙の語 16 本 其の儘走つて 16 一致)"
+assigned_to: ashigaru-mac-1
+assigned_by: karo-mac
+priority: high
+project: lot48235904-provenance
+karo_maebumi: |
+  第59弾 納め、★家老が己の手で検分した★。紙 ba5a9891b5056410 / 39280B / 162行 ―― 貴殿の宣と一字一句合うた。
+  臺帳 97349beddf702110（58行 − 註23 = ★35項★、貴殿の宣と一致）。門 rc=0 二走、條①・②③④・⑤(和 184844 / 53431、閾 10485760)。
+  ★家老の側の疵 三つ（同刻・貴殿の落度に非ず）★
+  ⑴ 家老の器が臺帳の欄を `sha=` で数へて ★0★ を出した。真の欄名は `sha256=`。
+     ―― ★欄名の食ひ違ひは「零」の顔をして出る。★ 貴殿の臺帳は 裁320321⑶ の四欄(path=/sha256=/bytes=/lines=)で正しい。
+  ⑵ 家老が門の後の書込を ns の精で数へて 26 と出し、貴殿の宣「0」と食ひ違うた。
+     分けてみれば 25 は門・便の己の産物、残り 1 は `62_report_body.txt`＝便の胴そのもの。
+     ★己の産物でない物 = 0。貴殿の宣が正しい。★ 誤つて居たのは家老の篩である。
+  ⑶ 家老が zsh で `M=queue/…/*_manifest.txt` と置いて `"$M"` を渡し、器が死んだ。
+     ★zsh は変数の中の glob を展開せぬ。★ `M=$(ls <glob> | head -1)` で解いて `[ -f "$M" ]` で分岐せよ。
+  ★貴殿の 16 件の「立てられず」は、落度ではなく ★測つた結果★ である。本弾は其れを一段深める。★
+本文: |
+  ■ 為す事 ―― 第59弾で ★「立てられず」と書いた 16 件★ を、
+    ★「探した上での立てられず」★ へ格上げする。読取のみ。
+
+  ㋐ 16 件を ★一件一行★ で挙げよ（塊 B2 が 7、B4 が 7、残り 2 も漏らすな。★母數を先に宣言せよ★）。
+     各行に: 候補名 / 今 手元に在る物(local 枝 or blob or 紙のみ) / ★何が在れば錨が立つか★（一つの語で）
+
+  ㋑ ★取りに行け★ ―― 錨は git の中だけに在るとは限らぬ。次を ★読取で★ 当たり、当たつた物は錨として書け:
+     ・`git for-each-ref --format='%(refname) %(objectname)'`（remote-tracking も含め全て）
+     ・`git cat-file -p <blob>` / `git ls-tree -r <tree>`
+     ・`git log --all --oneline -- <path>`（★--all を付けねば枝を見落とす★）
+     ・repo の外: docs/evidence/ 配下の控・queue/reports/ の既出の紙（path + 行番号 + 逐語）
+     ★「当たらぬ」では「無い」にならぬ。★ 無いと言ふなら ★其れを示した器と其の陽性対照★ を添へよ。
+
+  ㋒ 対照を ★零を一つも書く前に★ 置け:
+     陽性 = 必ず錨が立つ既知の一本（B1 の従属物などで可） / 陰性一 = 在らぬ rev `qzx9r7^{commit}` /
+     陰性二 = 在らぬ path。★陽性が落ちたら、零を一つも書かずに止まれ。★
+
+  ㋓ 比べる器は ★一致 / 不一致 / ★測れず★ の三つ目★ を持ち、判定の傍に ★比べた字数★ を刷り、
+     ★字数が零なら「測れず」へ分岐★せよ。刷るだけで分岐せぬのは偽通である（家老が本日二度踏んだ）。
+
+  ㋔ ★此の表が意味せぬ事★ を三行以上（「錨が立つた＝候補が正しい、を意味せぬ」を必ず含めよ）。
+  ㋕ 残つた不足を ★owner 別★ に畳め。「不明」と書いてよい。★owner に家老を書いてよい。★
+
+  ■ 禁 ―― fetch / checkout / commit / push / branch 作成削除 / worktree add|prune / 板書き / DB 書き /
+    .gitignore / settings.json / instructions/ / ~/bin/ の変更。他席の札・箱に触るな。
+    pid 52496 / 52544 に触るな。git は for-each-ref / rev-parse / cat-file / ls-tree / log / show / show-ref /
+    merge-base --is-ancestor / reflog show のみ。sb は読取のみ。★reflog は新しい順、head -1 が最新★。
+
+  ■ 出す物 ―― 紙 queue/reports/ashigaru-mac-1_km-60-…-20260916.md（★門を通し臺帳(四欄)を添へよ★）。
+    着手時 = work_started + ★宣ETA★ 一便。完了時 = path + sha16 + bytes + 行 一便。

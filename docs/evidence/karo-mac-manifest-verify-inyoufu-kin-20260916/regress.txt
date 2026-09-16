@@ -1,0 +1,29 @@
+★原版(.before) と 新版 を実物の臺帳で突き合はせた★
+  母數 = 60 本（引用符有 40 / 無 20 ―― 種 20260917 の無作為抽出）
+  ★rc と四つの数が悉く同じ = 53 本 / 違つた = 7 本★
+    ・queue/reports/ashigaru-mac-3_k61_20260906_manifest.txt
+        原=(1, ('0', '0', '2', '5'))
+        新=(1, ('2', '0', '0', '5'))
+    ・queue/reports/ashigaru-mac-2_km-30-utsuwa-ga-damaru-wo-narasu-katachi-to-onore-no-kizu-no-saihatsu-wo-kazoe-20260913_evidence/hyouhon/ashigaru-mac-3_km-tootta-katachi-wo-mon-wo-rc0-he_20260913_manifest.txt
+        原=(1, ('0', '0', '25', '0'))
+        新=(0, ('25', '0', '0', '0'))
+    ・queue/reports/ashigaru-mac-1_km-sukuu-te-o-uttara_20260912_evidence/raw/decl_copies/karo-mac-j1-j3-20260909__dasumae_gate_saiteishutsu_20260910__karo_mac_dasumae_gate_manifest.txt
+        原=(1, ('0', '0', '1', '0'))
+        新=(1, ('0', '1', '0', '0'))
+    ・queue/reports/ashigaru-mac-2_km-tootta-katachi-wo-wagami-ni-atete-mon-wo-rc0-he_20260913_manifest.txt
+        原=(1, ('0', '0', '18', '0'))
+        新=(0, ('18', '0', '0', '0'))
+    ・queue/reports/hashira_okoshi_ashigaru-mac-1_20260904_manifest.txt
+        原=(1, ('0', '0', '1', '0'))
+        新=(0, ('1', '0', '0', '0'))
+    ・queue/reports/ashigaru-mac-2_B5_4_15eps_axis2_20260909_manifest.txt
+        原=(1, ('18', '0', '1', '0'))
+        新=(0, ('19', '0', '0', '0'))
+    ・queue/reports/ashigaru-mac-1_km-45-omote-no-kao-wa-semai-ka-20260913_evidence/raw/50_manifest.first.txt
+        原=(1, ('0', '0', '41', '0'))
+        新=(1, ('37', '4', '0', '0'))
+  ★陽性対照★ 己で拵へた乙(引用符)を新版が旧形と数へるか:
+      旧形 = 1 行（1 が正）/ rc=0（0 が正）
+  ★陰性対照★ 甲(引用符無):
+      旧形 = 0 行（0 が正）/ rc=0（0 が正）
+  ★此の数が意味せぬ事★ 60本は 4445本の一部である。全本の同一は測つて居らぬ。

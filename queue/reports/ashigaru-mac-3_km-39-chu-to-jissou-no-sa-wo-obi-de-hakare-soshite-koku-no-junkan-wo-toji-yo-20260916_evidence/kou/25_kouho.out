@@ -1,0 +1,274 @@
+【裁く材】 生きた本の候補 = ★18 本★(控 24 本は写しゆゑ除いた ―― ★歩いては居る★)
+  刷るは 註の行 + 其の後 12 行。★裁は此処に書かぬ。紙に書く。★
+
+══ scripts/checks/ephemeral_worktree_hygiene.sh:12 ══
+  註→ L12   | # 読まれなく成る(= 常に鳴る 検 は 鳴らぬ 検 と 同じ)。
+      L13   | # ⑴掃ける= 中身 が commit 済(porcelain 0)★かつ★ 24 時 触られて 居らぬ
+      L14   | # ⑵持主 の言 が要る= 中身 が在る(未追跡/変更)
+      L15   | # ⑶生きて 居る= 24 時 以内 に触られた
+      L16   | SWEEPABLE=0; OWNED=0; LIVE=0
+      L17   | for d in "${WT_DIR}"/tmp-*; do
+      L18   |   [ -d "${d}" ] || continue
+      L19   |   dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+      L20   |   recent="$(find "${d}" -maxdepth 0 -newermt '-24 hours' 2>/dev/null | wc -l | tr -d ' ')"
+      L21   |   if [ "${dirty}" != "0" ]; then OWNED=$((OWNED+1))
+      L22   |   elif [ "${recent}" != "0" ]; then LIVE=$((LIVE+1))
+      L23   |   else SWEEPABLE=$((SWEEPABLE+1)); fi
+      L24   | done
+
+══ scripts/checks/karo_mac_dasumae_gate.sh:42 ══
+  註→ L42   |   #   ★偽の青は作れぬ★ ―― 條②を隠す紙は必ず條③を鳴らす故、此の疵は「數を少なく言ふ」疵である。
+      L43   |   #   可逆: 下行の $'[ \t]+\r?$' を $'[ \t]+$' へ戻せば旧挙動。
+      L44   |   ws_n=$(grep -cE $'[ \t]+\r?$' "$f" 2>/dev/null); ws_rc=$?
+      L45   |   if [ "$ws_rc" -ge 2 ] || ! is_num "$ws_n"; then
+      L46   |     say "★條② 測れぬ(grep rc=${ws_rc}・出目「${ws_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+      L47   |     fail=1
+      L48   |   elif [ "$ws_n" -gt 0 ]; then
+      L49   |     say "★末尾空白 ―― ${f} に ${ws_n} 行★"
+      L50   |     fail=1
+      L51   |   fi
+      L52   |
+      L53   |   local cr_n cr_rc
+      L54   |   cr_n=$(grep -c $'\r' "$f" 2>/dev/null); cr_rc=$?
+
+══ scripts/checks/karo_mac_gate4.sh:61 ══
+  註→ L61   | #       ⑷ の裁= ★file 種 で分けず byte 一律 の閾 で見る★(97.5% が .log/.md ゆゑ 種 別 は要らぬ)。
+      L62   | #     ★此の閾 は 上記 の実測 から引いた物 で あり、母數 が変れば 引き直せ。★
+      L63   | MAXF="${GATE4_MAX_FILE_MB:-50}"; MAXT="${GATE4_MAX_TOTAL_MB:-100}"
+      L64   | big=0; total=0
+      L65   | while IFS= read -r f; do
+      L66   |   [ -f "$f" ] || continue
+      L67   |   sz=$(wc -c < "$f" | tr -d ' ')
+      L68   |   total=$((total + sz))
+      L69   |   mb=$((sz / 1048576))
+      L70   |   if [ "$mb" -ge "$MAXF" ]; then say "★條⑤ 単 file が ${mb} MB(上限 ${MAXF})―― ${f}★"; big=1; fi
+      L71   | done < <(git diff --cached --name-only -- "$@")
+      L72   | tmb=$((total / 1048576))
+      L73   | if [ "$big" -ne 0 ] || [ "$tmb" -ge "$MAXT" ]; then
+
+══ scripts/commander_send_shogun_second.sh:69 ══
+  註→ L69   | # PREFLIGHT (fail-closed): Commander→SecondPC は常に役職とcanonical topicを明示する。
+      L70   | ta = (msg.get("context_data") or {}).get("target_agent")
+      L71   | if msg.get("from_pc") != "commander":
+      L72   |     raise SystemExit("PREFLIGHT FAIL: from_pc!=commander")
+      L73   | if msg.get("to_pc") != "second_pc":
+      L74   |     raise SystemExit("PREFLIGHT FAIL: to_pc!=second_pc")
+      L75   | if ta != "shogun-second":
+      L76   |     raise SystemExit("PREFLIGHT FAIL: target_agent!=shogun-second")
+      L77   | if not topic.startswith("cross_pc_inbox_shogun-second"):
+      L78   |     raise SystemExit("PREFLIGHT FAIL: noncanonical topic")
+      L79   | print(json.dumps(msg, ensure_ascii=False))
+      L80   | PYEOF
+      L81   | )
+
+══ scripts/fukuincho_desktop_poke.py:331 ══
+  註→ L331  |         # ★finally で必ず復元 試行 (§5.1 #13)、結果を final_restore_status に反映★
+      L332  |         # ★cycle3 fix5 (MED-3 cure)★: set 失敗時は restore 成否に関わらず set_failed を保持
+      L333  |         #   (旧 impl は restore 成功で "set_failed" を "restored" に上書き → Enter 未実行を hide
+      L334  |         #    する設計欠陥。新 impl は set 失敗を顕在化、両 fail 時は set_failed_restore_failed)。
+      L335  |         if saved_textlike and original is not None:
+      L336  |             try:
+      L337  |                 set_clip(original)
+      L338  |                 emit_event("clipboard_restored", correlation_id)
+      L339  |                 if set_failed:
+      L340  |                     # set 失敗 ∧ restore 成功 → set_failed 保持 (Enter 未実行を顕在化)
+      L341  |                     final_restore_status = "set_failed"
+      L342  |                 else:
+      L343  |                     # 正常系 (set 成功) → restore 成功で restored 確定
+
+══ scripts/inbox_watcher.sh:57 ══
+  註→ L57   |     # doesn't false-busy deadlock waiting for a stop_hook that never fires.
+      L58   |     if [[ "$CLI_TYPE" == "claude" ]]; then
+      L59   |         touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+      L60   |         echo "[$(date)] Created initial idle flag for $AGENT_ID (CLI starts idle)" >&2
+      L61   |     fi
+      L62   |
+      L63   |     # Source cli_adapter for get_startup_prompt() (Codex needs startup prompt after /new)
+      L64   |     _cli_adapter="${SCRIPT_DIR}/lib/cli_adapter.sh"
+      L65   |     if [ -f "$_cli_adapter" ]; then
+      L66   |         source "$_cli_adapter"
+      L67   |         echo "[$(date)] cli_adapter.sh loaded (get_startup_prompt available)" >&2
+      L68   |     fi
+      L69   |
+
+══ scripts/inbox_watcher.sh:561 ══
+  註→ L561  |     # Safety: never inject CLI commands into the shogun pane.
+      L562  |     # 信長 is controlled by the Lord; keystroke injection can clobber human input.
+      L563  |     if [ "$AGENT_ID" = "shogun" ]; then
+      L564  |         echo "[$(date)] [SKIP] shogun: suppressing CLI command injection ($cmd)" >&2
+      L565  |         return 0
+      L566  |     fi
+      L567  |
+      L568  |     # Busy guard: never send /clear when agent is actively processing.
+      L569  |     # clear_command inbox processor also checks busy, but this is a defense-in-depth guard.
+      L570  |     # Sending /clear during Working destroys in-progress context and causes data loss.
+      L571  |     if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
+      L572  |         echo "[$(date)] [SKIP] Agent is busy — /clear deferred to next cycle (agent=$AGENT_ID)" >&2
+      L573  |         return 0
+
+══ scripts/inbox_watcher.sh:568 ══
+  註→ L568  |     # Busy guard: never send /clear when agent is actively processing.
+      L569  |     # clear_command inbox processor also checks busy, but this is a defense-in-depth guard.
+      L570  |     # Sending /clear during Working destroys in-progress context and causes data loss.
+      L571  |     if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
+      L572  |         echo "[$(date)] [SKIP] Agent is busy — /clear deferred to next cycle (agent=$AGENT_ID)" >&2
+      L573  |         return 0
+      L574  |     fi
+      L575  |
+      L576  |     # CLI別コマンド変換
+      L577  |     local actual_cmd="$cmd"
+      L578  |     case "$effective_cli" in
+      L579  |         codex)
+      L580  |             # Codex: /clear不存在→/newで新規会話開始, /model非対応→スキップ
+
+══ scripts/inbox_watcher.sh:712 ══
+  註→ L712  |     # Safety: never auto-reset context for command-layer agents.
+      L713  |     # Only ashigaru should receive automatic context resets (clear stale task context).
+      L714  |     # 信長 (human-controlled), 家老 (coordinator state), 家康 (strategic state)
+      L715  |     # all maintain complex running context that should not be wiped automatically.
+      L716  |     if is_no_auto_clear_agent; then
+      L717  |         echo "[$(date)] [SKIP] $AGENT_ID: suppressing automatic context reset during SecondPC role recovery" >&2
+      L718  |         return 0
+      L719  |     fi
+      L720  |
+      L721  |     # 副院長令 fc3a5b0b RC-1 cure (2026-06-07): busy 中は /clear を送らず defer。
+      L722  |     # 旧 bug: busy 中でも /clear 貫通 (L681 proceeding anyway) → a3-3 の思考途中で割込み消失。
+      L723  |     # busy 解除後の次 cycle で再評価。return 1 = caller に "未送信 retry 必要" を伝える。
+      L724  |     if agent_is_busy; then
+
+══ scripts/inbox_watcher.sh:841 ══
+  註→ L841  |     # Notify once per cooldown; never choose or inject a key into the dialog.
+      L842  |     local now alert_file msg
+      L843  |     now=$(date +%s)
+      L844  |     alert_file="${APPROVAL_ALERT_FILE:-/tmp/inbox_watcher_approval_${AGENT_ID}}"
+      L845  |     if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
+      L846  |         && [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
+      L847  |         return 0
+      L848  |     fi
+      L849  |     LAST_APPROVAL_ALERT_TS=$now
+      L850  |     printf '%s\n' "$now" > "$alert_file"
+      L851  |     msg="[blocked_on_approval] ${AGENT_ID} ${PANE_TARGET}: Do you want to proceed?/1. Yes/Esc to cancel。人の判断待ち（自動押下なし）。"
+      L852  |     bash "$SCRIPT_DIR/scripts/inbox_write.sh" karo-mac "$msg" notification inbox_watcher 2>/dev/null || true
+      L853  |     bash "$SCRIPT_DIR/scripts/inbox_write.sh" iincho "$msg" notification inbox_watcher 2>/dev/null || true
+
+══ scripts/inbox_watcher.sh:1028 ══
+  註→ L1028 |     # Exception: shogun — ntfy must be delivered immediately regardless of busy state.
+      L1029 |     if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+      L1030 |         local busy_cli_wakeup
+      L1031 |         busy_cli_wakeup=$(get_effective_cli_type)
+      L1032 |         if [[ "$busy_cli_wakeup" == "claude" ]]; then
+      L1033 |             echo "[$(date)] [SKIP] Agent $AGENT_ID is busy (claude) — Stop hook will deliver, no nudge" >&2
+      L1034 |         else
+      L1035 |             echo "[$(date)] [SKIP] Agent $AGENT_ID is busy ($busy_cli_wakeup), deferring nudge" >&2
+      L1036 |         fi
+      L1037 |         return 0
+      L1038 |     fi
+      L1039 |
+      L1040 |     if should_throttle_nudge "$unread_count"; then
+
+══ scripts/inbox_watcher.sh:1111 ══
+  註→ L1111 |     # Safety: never send Escape escalation to shogun. It can wipe the Lord's input.
+      L1112 |     if [ "$AGENT_ID" = "shogun" ]; then
+      L1113 |         echo "[$(date)] [SKIP] shogun: suppressing Escape escalation; sending plain nudge" >&2
+      L1114 |         send_wakeup "$unread_count"
+      L1115 |         return 0
+      L1116 |     fi
+      L1117 |
+      L1118 |     # Codex CLI: ESC は「中断」になりやすく、人間操作中の事故も多い。
+      L1119 |     # Phase 2 の Escape エスカレーションは無効化し、通常 nudge のみに落とす。
+      L1120 |     if [[ "$effective_cli" == "codex" ]]; then
+      L1121 |         echo "[$(date)] [SKIP] codex: suppressing Escape escalation for $AGENT_ID; sending plain nudge" >&2
+      L1122 |         send_wakeup "$unread_count"
+      L1123 |         return 0
+
+══ scripts/inbox_watcher.sh:1323 ══
+  註→ L1323 |                     # activate if the stop hook never fires.
+      L1324 |                     if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+      L1325 |                         FIRST_UNREAD_SEEN=$now
+      L1326 |                     fi
+      L1327 |                     echo "[$(date)] $normal_count unread for $AGENT_ID but agent is busy (claude) — Stop hook will deliver" >&2
+      L1328 |                 else
+      L1329 |                     # Codex/Copilot/Kimi: No Stop hook. Pause escalation timer while busy.
+      L1330 |                     FIRST_UNREAD_SEEN=$now
+      L1331 |                     echo "[$(date)] $normal_count unread for $AGENT_ID but agent is busy ($busy_cli) — pausing escalation timer" >&2
+      L1332 |                 fi
+      L1333 |                 return 0
+      L1334 |             fi
+      L1335 |         fi
+
+══ scripts/inbox_watcher.sh:1543 ══
+  註→ L1543 |     # death-restart loop. Guard with `|| true` so a single bad cycle never
+      L1544 |     # terminates the long-lived loop. Errors still surface via stderr logs.
+      L1545 |     if [ "$rc" -eq 2 ]; then
+      L1546 |         if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+      L1547 |             process_unread "timeout" || true
+      L1548 |         fi
+      L1549 |     else
+      L1550 |         process_unread "event" || true
+      L1551 |     fi
+      L1552 |
+      L1553 |     # Token 飽和警告機構 (2026-05-07 制定):
+      L1554 |     # claude pane に「/clear to save XXXk tokens」が表示されたら、
+      L1555 |     # 200k 超の場合に agent の inbox に context size 警告を送付する。
+
+══ scripts/karo_overload_monitor.sh:487 ══
+  註→ L487  |     # dump file は hit 時必ず保存 (= 監査証跡)
+      L488  |     local dump_path
+      L489  |     dump_path=$(write_dump "$hits_csv" "$m1" "$m2" "$m3" "$m4" "$m5" "$cooldown_skip" "$cap_skip")
+      L490  |     [ -n "$dump_path" ] && echo "  📝 dump: $dump_path"
+      L491  |
+      L492  |     if [ "$cooldown_skip" = "true" ] || [ "$cap_skip" = "true" ]; then
+      L493  |         write_health "skipped" "$CURRENT_ALERT_COUNT_1H"
+      L494  |         # state はそのまま保持 (= last_alert_at 上書きしない、history 加算しない)
+      L495  |         save_state "$STATE_LAST_ALERT_AT" "$STATE_ALERT_HISTORY" "$hits_csv"
+      L496  |         return 0
+      L497  |     fi
+      L498  |
+      L499  |     # alert 送信
+
+══ scripts/ratelimit_check.sh:335 ══
+  註→ L335  |         # Context: read from status bar (always visible, no /status needed)
+      L336  |         ctx=$(tmux capture-pane -t "$pane" -p -S -5 2>/dev/null \
+      L337  |             | grep -oE '[0-9]+% left' | tail -1 \
+      L338  |             | grep -oE '[0-9]+' || echo "?")
+      L339  |         [[ -z "$ctx" ]] && ctx="?"
+      L340  |         CODEX_CONTEXT["$agent"]="$ctx"
+      L341  |
+      L342  |         # Quota: capture the latest /status block from a zoomed pane so narrow tiled panes do not
+      L343  |         # truncate "% left" and reset timestamps.
+      L344  |         if ! $_rl_quota_done; then
+      L345  |             _status_out=$(capture_tmux_pane_zoomed "$pane" -80)
+      L346  |             _status_block=$(extract_latest_codex_status_block "$_status_out")
+      L347  |
+
+══ scripts/stop_hook_inbox.sh:71 ══
+  註→ L71   |     # Agent is going idle (exit 0) regardless of unread count.
+      L72   |     # ALWAYS create the idle flag so inbox_watcher knows the agent is idle
+      L73   |     # and can send nudges. Previously, removing the flag here when unread > 0
+      L74   |     # caused a deadlock: agent idle but watcher thinks busy → no nudge → stuck.
+      L75   |     FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+      L76   |     touch "$FLAG"
+      L77   |     # stop_hook_active=True 時も inotifywait 待機（連続処理ループ対応）
+      L78   |     # タイムアウト(55秒)でexit 0 → ループは有限回で終了
+      L79   |     WATCH_TARGETS_ACTIVE=("$INBOX")
+      L80   |     if [ "$AGENT_ID" = "shogun" ]; then
+      L81   |         WATCH_TARGETS_ACTIVE+=("$SCRIPT_DIR/dashboard.md")
+      L82   |     fi
+      L83   |     # timeout: 55→10 (副院長令83d84fa0 / Commander seq30274 — turn終端応答性回復)
+
+══ scripts/stop_hook_inbox.sh:72 ══
+  註→ L72   |     # ALWAYS create the idle flag so inbox_watcher knows the agent is idle
+      L73   |     # and can send nudges. Previously, removing the flag here when unread > 0
+      L74   |     # caused a deadlock: agent idle but watcher thinks busy → no nudge → stuck.
+      L75   |     FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+      L76   |     touch "$FLAG"
+      L77   |     # stop_hook_active=True 時も inotifywait 待機（連続処理ループ対応）
+      L78   |     # タイムアウト(55秒)でexit 0 → ループは有限回で終了
+      L79   |     WATCH_TARGETS_ACTIVE=("$INBOX")
+      L80   |     if [ "$AGENT_ID" = "shogun" ]; then
+      L81   |         WATCH_TARGETS_ACTIVE+=("$SCRIPT_DIR/dashboard.md")
+      L82   |     fi
+      L83   |     # timeout: 55→10 (副院長令83d84fa0 / Commander seq30274 — turn終端応答性回復)
+      L84   |     if command -v inotifywait &>/dev/null; then
+
+★無かつた file = 0★
