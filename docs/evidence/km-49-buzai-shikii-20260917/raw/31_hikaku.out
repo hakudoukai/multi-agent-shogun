@@ -1,0 +1,41 @@
+根 = queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw / 常なる file = 96 本 / byte和 = 10938664 / 部材閾 = 1048576
+
+―― 定義一 ★一本の file★(本器が採る)
+   閾超 = 4 本 / 和 = 10532919(束の 96.3%)
+        2634088  13_hashiri3_shimon.tsv
+        2632945  15_taishou_kuzushi.tsv
+        2632943  13_hashiri1_shimon.tsv
+        2632943  13_hashiri2_shimon.tsv
+   閾直下の最大 = 91479 / 閾超の最小 = 2632943 ―― ★不感帯 = 91480〜2632943(広さ 28.8 倍)★
+
+―― 定義二 ★一つの dir★(段ごと・累積の二形を出す ―― 属し方が一意でない證)
+   dir の數 = 6
+     段    10909517  .
+     段       26962  60_suwe
+     段        1161  20_taishou/nedan
+     段         650  20_taishou
+     累積  10909517  .
+     累積     27210  60_suwe
+     累積      1811  20_taishou
+     累積      1161  20_taishou/nedan
+   ★段の和 = 10938664 / 累積の和 = 10940073 ―― 同じ束で二つの數が出る(二重に数へる)★
+
+―― 定義三 ★一つの拡張子★
+       10532919  .tsv
+         237773  .out
+          58136  .py
+          43486  .txt
+   ★.tsv の和 = 10532919 ―― 誰が重いかは出ぬ。二重拡張子(.tsv.json)は .json に数へた★
+
+―― 定義四 ★同内容の群(sha 一致)★
+     群(2 本) 戻せる 2632943 byte : 13_hashiri1_shimon.tsv / 13_hashiri2_shimon.tsv
+     群(20 本) 戻せる 2318 byte : 14_hashiri1_kudou.err / 14_hashiri2_kudou.err / 14_hashiri3_kudou.err / 15_shimon_sa.diff / 21_koku.err / 32_rui.err / 35_kousa.err / 39_kou9.err / 3B_kou9_haba.err / 41_kakite.err / 44_kakite2.err / 46_ikite.err / 47_bin.err / 51_kurinuki.err / 61_modoshi.err / 62_taishou.err / 65_nanbon.err / 70_kaki.err / 71_kaki2.err / 72_kaki3.err
+     群(2 本) 戻せる 11502 byte : 60_suwe/gate.hikae / 60_suwe/gate.sunaba
+     群(2 本) 戻せる 3549 byte : 60_suwe/kakite_mon.py / kakite_mon.py
+   ★sha 一致の群 = 4 組 / 戻せる和 = 2650312 byte★
+
+―― ㋑ ★7,896,856 を出せる定義は在るか★(頭 4096 byte の一致で括る = 近似重複)
+     近似群(3 本) 群和 7899974 / 最大一本 2634088 / ★群和−最大 = 5265886★
+           2634088  13_hashiri3_shimon.tsv
+           2632943  13_hashiri1_shimon.tsv
+           2632943  13_hashiri2_shimon.tsv

@@ -1,0 +1,107 @@
+甲 = 96 本 / 10938664 byte
+乙 = 0 本 / 0 byte(内 moto_evidence/raw 下 = 0 本 0 byte・其の外 = 0 本 0 byte)
+★甲−乙 = 10938664 byte★
+
+―― 落ちた本(甲に在り乙に無し) = 96 本 / 和 10938664 byte
+             25  00_koku.txt
+           2782  00_r46_gisei2_utsushi.py
+           6976  10_meisashi.py
+           1864  11_hashiri1_yousi.out
+           1864  11_hashiri2_yousi.out
+           1865  11_hashiri3_yousi.out
+          16694  12_hashiri1_meisashi.out
+          16694  12_hashiri2_meisashi.out
+          17814  12_hashiri3_meisashi.out
+        2632943  13_hashiri1_shimon.tsv
+        2632943  13_hashiri2_shimon.tsv
+        2634088  13_hashiri3_shimon.tsv
+            122  14_hashiri1_kudou.err
+           2343  14_hashiri1_kudou.out
+            122  14_hashiri2_kudou.err
+           2343  14_hashiri2_kudou.out
+            122  14_hashiri3_kudou.err
+           2344  14_hashiri3_kudou.out
+            122  15_shimon_sa.diff
+        2632945  15_taishou_kuzushi.tsv
+            270  15_taishou_sa.diff
+            377  16_hashiri1tai2.out
+           4631  20_koku.py
+              3  20_taishou/nedan/a b.txt
+            293  20_taishou/nedan/m_乙-括り有_今の形.txt
+            291  20_taishou/nedan/m_乙-括り無_直した形.txt
+            288  20_taishou/nedan/m_甲-括り有_今の形.txt
+            286  20_taishou/nedan/m_甲-括り無_直した形.txt
+            650  20_taishou/shikake_manifest.txt
+            122  21_koku.err
+           2039  21_koku.out
+           4674  30_rui.py
+          14774  31_rui.json
+            122  32_rui.err
+           5309  32_rui.out
+           3563  33_kousa.py
+          20585  34_kousa.json
+            122  35_kousa.err
+           7958  35_kousa.out
+           4844  36_nedan.py
+           3857  37_nedan.err
+           1733  37_nedan.out
+           1570  38_kou9.py
+            122  39_kou9.err
+           1431  39_kou9.out
+           2361  3A_kou9_haba.py
+            122  3B_kou9_haba.err
+           1925  3B_kou9_haba.out
+           3288  40_kakite.py
+            122  41_kakite.err
+          91479  41_kakite.out
+           4205  42_kakite2.py
+          25734  43_kakite_ichiran.txt
+            122  44_kakite2.err
+           6527  44_kakite2.out
+           1797  45_ikite.py
+            122  46_ikite.err
+            822  46_ikite.out
+            122  47_bin.err
+           1385  47_bin.out
+           3553  50_kurinuki.py
+            122  51_kurinuki.err
+            714  51_kurinuki.out
+            409  60_suwe/60_kumi.out
+          11502  60_suwe/gate.hikae
+          11502  60_suwe/gate.sunaba
+           3549  60_suwe/kakite_mon.py
+            122  60_suwe/tai/kiyoshi.txt
+            126  60_suwe/tai/yogore.txt
+            122  61_modoshi.err
+            679  61_modoshi.out
+            122  62_taishou.err
+            553  62_taishou.out
+           2666  63_nanbon.py
+          15542  64_ochiru_ichiran.txt
+            122  65_nanbon.err
+            406  65_nanbon.out
+            122  70_kaki.err
+          30650  70_kaki.out
+            122  71_kaki2.err
+            771  71_kaki2.out
+            122  72_kaki3.err
+           1812  72_kaki3.out
+              0  80_daichou.err
+           9419  80_daichou.out
+           2798  80_daichou.py
+           1420  90_mon.err
+           5237  90_mon.out
+             20  90_taishou/kiyoshi.txt
+             40  90_taishou/nishin.txt
+             18  90_taishou/nishin_a.txt
+             25  90_taishou/nishin_b.txt
+             23  90_taishou/yogore.txt
+           2313  91_todoke.out
+           1330  kaki.py
+           3549  kakite_mon.py
+―― 湧いた本(乙の中の同じ階に在り甲に無し) = 0 本 / 和 0 byte
+―― 寸が変つた本 = 0 本
+―― moto_evidence/raw の外に置かれた本 = 0 本 / 和 0 byte
+
+★式 ―― 落ちた 10938664 − 湧いた 0 − 外に置いた 0 = 10938664★
+   甲−乙 = 10938664 ―― 一致 ○

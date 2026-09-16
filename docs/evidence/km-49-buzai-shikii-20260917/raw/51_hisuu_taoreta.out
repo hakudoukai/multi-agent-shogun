@@ -1,0 +1,73 @@
+刻 = 2026-09-17T03:07:43
+餌 = 0 byte 一本 と 100 byte 一本(★既定の閾 1048576 の下では必ず黙る餌★ ∴ 鳴つたら閾の所為)
+
+影武者 = is_num の検めを ★一行だけ★ 抜いた写し(差 = 1 行)
+
+―― ① 空(設定して空) : BUZAI_MAX_BYTES=''
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 1048576)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ①' 未設定 : env -u BUZAI_MAX_BYTES
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 1048576)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ② 全角數字 : BUZAI_MAX_BYTES=１０４８５７６
+     ★閾 BUZAI_MAX_BYTES が數でない(「１０４８５７６」) ―― 既定 1048576 へ倒す(fail-closed)★
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 1048576)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ③ 1e9 : BUZAI_MAX_BYTES=1e9
+     ★閾 BUZAI_MAX_BYTES が數でない(「1e9」) ―― 既定 1048576 へ倒す(fail-closed)★
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 1048576)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ④ 0x10 : BUZAI_MAX_BYTES=0x10
+     ★閾 BUZAI_MAX_BYTES が數でない(「0x10」) ―― 既定 1048576 へ倒す(fail-closed)★
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 1048576)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ⑤ 負 : BUZAI_MAX_BYTES=-1
+     ★閾 BUZAI_MAX_BYTES が數でない(「-1」) ―― 既定 1048576 へ倒す(fail-closed)★
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 1048576)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ⑥ 零 : BUZAI_MAX_BYTES=0
+     ★部材 閾超 ―― docs/evidence/km-49-buzai-shikii-20260917/sunaba2/rei.txt(0 byte・閾 0 以上)★
+     ★部材 閾超 ―― docs/evidence/km-49-buzai-shikii-20260917/sunaba2/chiisai.txt(100 byte・閾 0 以上)★
+     ★部材 閾超 ―― docs/evidence/km-49-buzai-shikii-20260917/sunaba2/argv.nul(179 byte・閾 0 以上)★
+     部材級 = 母數 3 本 / ★閾超 3 本★ / 閾超の和 279 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 0)
+     ★部材級が鳴つた ―― 閾超 3 本。束の和が閾未満でも ★中身は健かでない★。★
+     ★出目 = ⑴鳴る(rc=1)★
+
+════ 影武者(門を外した写し)に同じ物を食はせる ════
+―― ④影 0x10 : BUZAI_MAX_BYTES=0x10
+     docs/evidence/km-49-buzai-shikii-20260917/sunaba2/kage_mon.sh: line 91: [: 0x10: integer expression expected
+     docs/evidence/km-49-buzai-shikii-20260917/sunaba2/kage_mon.sh: line 91: [: 0x10: integer expression expected
+     docs/evidence/km-49-buzai-shikii-20260917/sunaba2/kage_mon.sh: line 91: [: 0x10: integer expression expected
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 0x10)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ②影 全角數字 : BUZAI_MAX_BYTES=１０４８５７６
+     docs/evidence/km-49-buzai-shikii-20260917/sunaba2/kage_mon.sh: line 91: [: １０４８５７６: integer expression expected
+     docs/evidence/km-49-buzai-shikii-20260917/sunaba2/kage_mon.sh: line 91: [: １０４８５７６: integer expression expected
+     docs/evidence/km-49-buzai-shikii-20260917/sunaba2/kage_mon.sh: line 91: [: １０４８５７６: integer expression expected
+     部材級 = 母數 3 本 / ★閾超 0 本★ / 閾超の和 0 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 １０４８５７６)
+     ★部材級 通 ―― 閾以上の部材は一本も無い。★
+     ★出目 = ⑵黙る(rc=0)★
+
+―― ⑤影 負 : BUZAI_MAX_BYTES=-1
+     ★部材 閾超 ―― docs/evidence/km-49-buzai-shikii-20260917/sunaba2/rei.txt(0 byte・閾 -1 以上)★
+     ★部材 閾超 ―― docs/evidence/km-49-buzai-shikii-20260917/sunaba2/chiisai.txt(100 byte・閾 -1 以上)★
+     ★部材 閾超 ―― docs/evidence/km-49-buzai-shikii-20260917/sunaba2/argv.nul(179 byte・閾 -1 以上)★
+     部材級 = 母數 3 本 / ★閾超 3 本★ / 閾超の和 279 byte / 測れぬ 0 本 / 束の和 279 byte(部材閾 -1)
+     ★部材級が鳴つた ―― 閾超 3 本。束の和が閾未満でも ★中身は健かでない★。★
+     ★出目 = ⑴鳴る(rc=1)★
+
+砂場 = 畳んだ
