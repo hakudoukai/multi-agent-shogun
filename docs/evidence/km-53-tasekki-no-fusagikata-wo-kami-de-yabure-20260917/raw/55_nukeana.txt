@@ -1,0 +1,53 @@
+=== ㋑-1 ★case に `*)` 腕が有るか★(逐語で数へる) ===
+gate_base.sh     case 無し(env_state を用ゐぬ=現行門)
+gate_an_i.sh     腕=empty|blank/value/unset  ★`*)` = ★無★★
+gate_an_ro.sh    腕=value/empty|blank/unset  ★`*)` = ★無★★
+
+※ env_state は unset/empty/blank/value の四語しか刷らぬ ∴ 今日は届かぬ。
+  然し ★現行門は if/else の二分岐で「必ずどちらかを通る」★ ―― 二案は其の保證を捨てた。
+  第五の語が一語増えた刹那、set -u + local vrc 未代入 で ★門其の物が死ぬ★。實證↓
+
+=== ㋑-2 ★第五の語★ を足した探り写し(prove_5th.sh)で實證 ===
+rc=1
+  1| 閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  2| 閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  3| /Users/momizimac/multi-agent-shogun/docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/utsushi/prove_5th.sh: line 210: [: -eq: unary operator expected
+  4| ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+  5| 條⑤ 寸法 = byte和 38(閾 10485760未満)
+  6|
+  7| ★出す前 門が落ちた。出すな。★
+  8|
+★unbound variable を含むか= 無★
+
+=== ㋑-3 陰性対照: 同じ第五の語を ★現行門★ へ当てる ===
+rc=0  unbound=★無★  行=8
+∴ ★現行門は死なぬ。二案のみ死ぬ。★ 是れ ★二案が持ち込む退歩★ である。
+
+=== ㋒-1 全角空白 U+3000 の落先は locale に依るか ===
+LC_ALL=C            U+3000 全角空白      tr 後の byte=3 → value(残る)
+LC_ALL=C            U+0020 半角空白      tr 後の byte=0 → blank(消えた)
+LC_ALL=C            U+00A0 NBSP      tr 後の byte=2 → value(残る)
+LC_ALL=C            U+2003 EM SPACE  tr 後の byte=3 → value(残る)
+LC_ALL=ja_JP.UTF-8  U+3000 全角空白      tr 後の byte=0 → blank(消えた)
+LC_ALL=ja_JP.UTF-8  U+0020 半角空白      tr 後の byte=0 → blank(消えた)
+LC_ALL=ja_JP.UTF-8  U+00A0 NBSP      tr 後の byte=0 → blank(消えた)
+LC_ALL=ja_JP.UTF-8  U+2003 EM SPACE  tr 後の byte=0 → blank(消えた)
+LC_ALL=en_US.UTF-8  U+3000 全角空白      tr 後の byte=0 → blank(消えた)
+LC_ALL=en_US.UTF-8  U+0020 半角空白      tr 後の byte=0 → blank(消えた)
+LC_ALL=en_US.UTF-8  U+00A0 NBSP      tr 後の byte=0 → blank(消えた)
+LC_ALL=en_US.UTF-8  U+2003 EM SPACE  tr 後の byte=0 → blank(消えた)
+
+※ ∴ 專任1 §2⑶「全角空白のみ ―― value として verify へ渡る」は ★實測と合はぬ★。
+  上表の通り、當機では locale に依らず U+3000 は [:space:] に含まれ ★blank★ へ落ちる。
+
+=== ㋒-2 案ロ の刷りは stdout か stderr か(分けて測る) ===
+01 未設定       rc=1  「基点」を含む行: stderr=1本 / ★stdout=3本★
+        stderr| 條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+02 空文字       rc=1  「基点」を含む行: stderr=1本 / ★stdout=3本★
+        stderr| ★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(empty) ―― 既定(repo 根)へ倒す(★倒した事を刷る★・cwd 相対には★せぬ★)★
+11 全角空白      rc=1  「基点」を含む行: stderr=1本 / ★stdout=3本★
+        stderr| ★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― 既定(repo 根)へ倒す(★倒した事を刷る★・cwd 相対には★せぬ★)★
+05 絶対fx      rc=0  「基点」を含む行: stderr=1本 / ★stdout=1本★
+        stderr| 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi-agent-shogun/docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/fx)
+∴ 案ロ の「必ず刷る」は ★悉く stderr★(say() = printf >&2, L22)。
+  stdout だけを取る呼手には ★一字も届かぬ★。

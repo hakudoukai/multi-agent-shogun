@@ -1,0 +1,10 @@
+★己の疵 丙 ―― 0byte の紙 三本(裁 seq310228⑸ 違反)★
+裁⑸「空は 0byte でなく『空である旨の一行』」に反し、下記三本が 0byte で残つた。
+因: ki/05_chakushu.sh が `> out 2> err` の形で先に器を作り、書く物が無かつた為
+    (redirect の的は command の走る前に出来る)。
+⑺「倒れた走を消すな」に従ひ ★書き換へず・消さず★ 残す。
+★臺帳には入れぬ★ ―― 條④(EOF 改行)が鳴る故。★除いた事を此處に宣する。★
+  raw/05_send.out    0byte  ―― inbox_write.sh の stdout(何も刷らなんだ)
+  raw/05_send.err    0byte  ―― 同 stderr(何も刷らなんだ)
+  raw/05b/05_send.out 0byte ―― 二便目の stdout(同断)
+★「0byte」と「刷る物が無かつた」は同じではない。★ 後者が實であり、前者は器の書き方の疵である。

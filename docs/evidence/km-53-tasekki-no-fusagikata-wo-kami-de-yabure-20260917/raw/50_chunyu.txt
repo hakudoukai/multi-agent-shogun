@@ -1,0 +1,36 @@
+=== ㋓-1 ★器の疵 申告★ ===
+40_hashiru.py の「偽行」欄は l.strip()==GENUINE の完全一致で数へた。
+形10 は say の末尾 ")" が偽行に付く為 完全一致に成らず ★0★ と出た ―― 注入は成立して居た(stderr 行 8→9)。
+∴ 本器(50)で ⑴行数の増 ⑵完全一致 の二欄に分けて数へ直す。
+
+=== ㋓-2 形10 / 形12 × 写し三本 ===
+#colspec	器	形	rc	stderr行	完全一致の偽行	「一致」を名乗る行の総数
+gate_base.sh	形10 余り括弧	1	8	0	0
+gate_base.sh	形12 括弧食ひ	1	8	0	0
+gate_an_i.sh	形10 余り括弧	1	9	0	1
+gate_an_i.sh	形12 括弧食ひ	1	9	1	1
+gate_an_ro.sh	形10 余り括弧	1	9	0	1
+gate_an_ro.sh	形12 括弧食ひ	1	9	1	1
+
+=== ㋓-3 逐字(gate_an_i × 形12 の stderr 全文) ===
+  1| 閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  2| 閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  3| 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi-agent-shogun/docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/fx
+  4| 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  5| ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+  6| 條⑤ 寸法 = byte和 38(閾 10485760未満)
+  7|
+  8| ★出す前 門が落ちた。出すな。★
+  9|
+rc=1  stdout字=668
+
+=== ㋓-4 陰性対照(現行門 gate_base × 形12)の逐字 ===
+  1| 閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  2| 閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  3| 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+  4| ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+  5| 條⑤ 寸法 = byte和 38(閾 10485760未満)
+  6|
+  7| ★出す前 門が落ちた。出すな。★
+  8|
+rc=1  stdout字=668

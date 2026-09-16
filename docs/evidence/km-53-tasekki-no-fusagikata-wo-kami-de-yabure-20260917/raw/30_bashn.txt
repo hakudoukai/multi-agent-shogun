@@ -1,0 +1,6 @@
+=== ㋐-5 bash -n(写し三本) ===
+gate_base.sh	rc=0	（出目なし）
+gate_an_i.sh	rc=0	（出目なし）
+gate_an_ro.sh	rc=0	（出目なし）
+=== 陽性対照: わざと壊した写しに鳴るか ===
+gate_an_i.sh+壊し	rc=2	/var/folders/z0/bdbk65zj0gjg80g3784jhmvc0000gn/T/km53bad.yI8ePiRM1v.sh: line 316: syntax error: unexpected end of file

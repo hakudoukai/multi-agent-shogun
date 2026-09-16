@@ -1,0 +1,13 @@
+=== 写しの素(生器・讀取のみ) ===
+scripts/checks/karo_mac_dasumae_gate.sh	sha16=e11f0d0142549086	bytes=15100
+scripts/checks/karo_mac_manifest_verify.py	sha16=a507c998c7bd6485	bytes=10965
+★紙(742972a4f88885db)が対象とした版と一致 ―― 二案の diff は当たる。★
+
+=== 置換 ―― ★count を assert★ ===
+OLD 塊の出現数 = 1 (1 でなければ止める)
+gate_an_i.sh	sha16=ac65e247eea8d71e	bytes=15363	行差=+4
+gate_an_ro.sh	sha16=78373d91adc015aa	bytes=15453	行差=+5
+
+=== 生器 不触の検め(前後で sha が動かぬ事) ===
+scripts/checks/karo_mac_dasumae_gate.sh	sha16=e11f0d0142549086
+scripts/checks/karo_mac_manifest_verify.py	sha16=a507c998c7bd6485

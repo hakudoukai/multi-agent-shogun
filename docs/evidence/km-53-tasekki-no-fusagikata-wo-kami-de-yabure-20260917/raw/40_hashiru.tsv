@@ -1,0 +1,67 @@
+#colspec	器	臺帳	形札	形名	rc	偽行	stderr行	stdout字	條①の札
+gate_base.sh	taba	01	未設定	1	0	8	490	條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	02	空文字	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	03	空白のみ(ASCII)	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	04	点(cwd 相対の明示)	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	05	絶対(束の fx)	0	1	8	275	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_base.sh	taba	06	絶対(repo 根)	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	07	★零倒★ 0	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	08	★極倒★ 2^63 超	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	09	★八進★ 010	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	10	★行注入★ 改行+偽行	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	taba	11	全角空白のみ	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	01	未設定	1	0	8	641	條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	02	空文字	0	1	8	274	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_base.sh	kyu	03	空白のみ(ASCII)	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	04	点(cwd 相対の明示)	0	1	8	274	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_base.sh	kyu	05	絶対(束の fx)	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	06	絶対(repo 根)	0	1	8	274	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_base.sh	kyu	07	★零倒★ 0	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	08	★極倒★ 2^63 超	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	09	★八進★ 010	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	10	★行注入★ 改行+偽行	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_base.sh	kyu	11	全角空白のみ	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	01	未設定	1	0	8	490	條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	02	空文字	1	0	8	0	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(empty) ―― cwd 相対は許さぬ。絶対 / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	03	空白のみ(ASCII)	1	0	8	0	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― cwd 相対は許さぬ。絶対 / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	04	点(cwd 相対の明示)	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=.) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	05	絶対(束の fx)	0	1	8	275	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_an_i.sh	taba	06	絶対(repo 根)	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	07	★零倒★ 0	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=0) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	08	★極倒★ 2^63 超	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=99999999999999999999) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	09	★八進★ 010	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=010) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	10	★行注入★ 改行+偽行	1	0	9	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	taba	11	全角空白のみ	1	0	8	0	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― cwd 相対は許さぬ。絶対 / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	01	未設定	1	0	8	641	條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	02	空文字	1	0	8	0	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(empty) ―― cwd 相対は許さぬ。絶対 / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	03	空白のみ(ASCII)	1	0	8	0	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― cwd 相対は許さぬ。絶対 / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	04	点(cwd 相対の明示)	0	1	8	274	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=.) / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_an_i.sh	kyu	05	絶対(束の fx)	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	06	絶対(repo 根)	0	1	8	274	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_an_i.sh	kyu	07	★零倒★ 0	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=0) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	08	★極倒★ 2^63 超	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=99999999999999999999) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	09	★八進★ 010	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=010) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	10	★行注入★ 改行+偽行	1	0	9	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_i.sh	kyu	11	全角空白のみ	1	0	8	0	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― cwd 相対は許さぬ。絶対 / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	01	未設定	1	0	8	490	條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	02	空文字	1	0	8	490	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(empty) ―― 既定(repo 根)へ倒す / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	03	空白のみ(ASCII)	1	0	8	490	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― 既定(repo 根)へ倒す / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	04	点(cwd 相対の明示)	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=.) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	05	絶対(束の fx)	0	1	8	275	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_an_ro.sh	taba	06	絶対(repo 根)	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	07	★零倒★ 0	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=0) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	08	★極倒★ 2^63 超	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=99999999999999999999) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	09	★八進★ 010	1	0	8	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=010) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	10	★行注入★ 改行+偽行	1	0	9	412	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	taba	11	全角空白のみ	1	0	8	490	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― 既定(repo 根)へ倒す / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	01	未設定	1	0	8	641	條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	02	空文字	1	0	8	641	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(empty) ―― 既定(repo 根)へ倒す / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	03	空白のみ(ASCII)	1	0	8	641	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― 既定(repo 根)へ倒す / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	04	点(cwd 相対の明示)	0	1	8	274	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=.) / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_an_ro.sh	kyu	05	絶対(束の fx)	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	06	絶対(repo 根)	0	1	8	274	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+gate_an_ro.sh	kyu	07	★零倒★ 0	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=0) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	08	★極倒★ 2^63 超	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=99999999999999999999) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	09	★八進★ 010	1	0	8	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=010) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	10	★行注入★ 改行+偽行	1	0	9	563	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE=/Users/momizimac/multi / 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)) / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+gate_an_ro.sh	kyu	11	全角空白のみ	1	0	8	641	★條① 基点 KM_GATE_MANIFEST_BASE が空/空白(blank) ―― 既定(repo 根)へ倒す / ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
