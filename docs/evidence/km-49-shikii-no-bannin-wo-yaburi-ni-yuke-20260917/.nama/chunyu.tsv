@@ -1,0 +1,6 @@
+# 門票への行注入 ―― 閾の値が門票へ一行書き込めるか
+# 走り根 /Users/momizimac/.km49_kari_ki
+門	㋓門の rc	偽の「通」行	真の「落ち」行	門票
+dasumae	1	1	1	chunyu_dasumae.txt
+gate4	1	1	1	chunyu_gate4.txt
+# 判 = 門の rc は正(落ちて居る)が、門票には ★偽の「通」の行★ が立つ

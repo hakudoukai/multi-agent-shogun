@@ -1,0 +1,7 @@
+# 値は ★U+3000(全角空白) 一つ★ = byte e3 80 80 ―― 一つの値・一つの番人
+LC_ALL	㋑env_state	tr 後の byte 数	門票に出る文言
+C.UTF-8	blank	0	★閾 … が空白のみ ―― 既定へ倒す(fail-closed)★
+C	value	3	★閾 … が比較器で扱へぬ(「　」) ―― 既定へ倒す(fail-closed)★
+en_US.UTF-8	blank	0	★閾 … が空白のみ ―― 既定へ倒す(fail-closed)★
+ja_JP.UTF-8	blank	0	★閾 … が空白のみ ―― 既定へ倒す(fail-closed)★
+# 判 = ★同じ値・同じ番人で ㋑ の出目が二つに割れる★(判は両方とも既定へ倒す故 実害は無い)

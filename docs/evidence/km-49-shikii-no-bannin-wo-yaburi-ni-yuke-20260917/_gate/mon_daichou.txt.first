@@ -1,0 +1,80 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+台帳 _manifest.txt
+  cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917
+  基点 引数(明示)
+  一致 ★34★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 34)
+  ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★file が無い: .nama/ban.tsv
+.nama/ban.tsv.first
+.nama/ban_log.txt
+.nama/chunyu.tsv
+.nama/chunyu_dasumae.txt
+.nama/chunyu_gate4.txt
+.nama/e1
+.nama/e2
+.nama/e3
+.nama/e4
+.nama/fn_gate4.sh
+.nama/futatabi.tsv
+.nama/hyou.md
+.nama/inject_g4.txt
+.nama/inject_raw.txt
+.nama/jigen.tsv
+.nama/kami_a.txt
+.nama/kami_b.txt
+.nama/locale.tsv
+.nama/mon_dasumae_max.tsv
+.nama/mon_dasumae_tmo.tsv
+.nama/mon_gate4_maxf.tsv
+.nama/mon_gate4_maxt.tsv
+ashigaru-mac-3_km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917.md
+ki/90_kaki.py
+ki/91_ichi.sh
+ki/92_ban.py
+ki/93_mon.py
+ki/94_kari_ki.sh
+ki/95_futatabi.py
+ki/96_chunyu.sh
+ki/97_jigen.sh
+ki/98_locale.sh
+ki/99_hyou.py★
+★條⑤ 測れぬ(寸法が取れぬ) ―― .nama/ban.tsv
+.nama/ban.tsv.first
+.nama/ban_log.txt
+.nama/chunyu.tsv
+.nama/chunyu_dasumae.txt
+.nama/chunyu_gate4.txt
+.nama/e1
+.nama/e2
+.nama/e3
+.nama/e4
+.nama/fn_gate4.sh
+.nama/futatabi.tsv
+.nama/hyou.md
+.nama/inject_g4.txt
+.nama/inject_raw.txt
+.nama/jigen.tsv
+.nama/kami_a.txt
+.nama/kami_b.txt
+.nama/locale.tsv
+.nama/mon_dasumae_max.tsv
+.nama/mon_dasumae_tmo.tsv
+.nama/mon_gate4_maxf.tsv
+.nama/mon_gate4_maxt.tsv
+ashigaru-mac-3_km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917.md
+ki/90_kaki.py
+ki/91_ichi.sh
+ki/92_ban.py
+ki/93_mon.py
+ki/94_kari_ki.sh
+ki/95_futatabi.py
+ki/96_chunyu.sh
+ki/97_jigen.sh
+ki/98_locale.sh
+ki/99_hyou.py★ ★測れぬは通さぬ(default-deny)★
+條⑤ 寸法 = byte和 0(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

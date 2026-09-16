@@ -1,0 +1,7 @@
+# env に同名を二度 ―― 讀む器で値が違ふか
+# 置いた environ = KM49_V=1 / KM49_V=99999 (此の順・生の execve)
+讀む器	出た値	註
+bash ${KM49_V}	99999	★門は bash ―― 門が見るのは此方★
+printenv(getenv)	1	★C の getenv は先頭を取る★
+env(environ 全覧)	KM49_V=1 | KM49_V=99999 | PATH=/usr/bin:/bin	二本とも残つて居る
+# 判 = ★同じ env が讀む器で二つの値を持つ★
