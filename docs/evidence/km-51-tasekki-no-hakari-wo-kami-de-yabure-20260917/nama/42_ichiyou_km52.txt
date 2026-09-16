@@ -1,0 +1,39 @@
+#=== ①段 ―― 四器で番人の body は一様か ===
+#器	段sha16	段行
+inbox_watcher.sh	c8b30368d6beb292	21
+agent_health_check.sh	c8b30368d6beb292	21
+context_usage_warn.sh	c8b30368d6beb292	21
+enter_restart_common_watchdog.sh	c8b30368d6beb292	21
+判①	★段は一様(四器で sha16 同一)★ ―― 專任2 の申し立ては此処では★破れなんだ★
+
+#=== ①対照 ―― 檢出子は差を見附けられるか ===
+陽性対照(段を一字変へた偽器)	55967fbfa588a8b2	★差を検出した(対照成立)★
+陰性対照(同じ中身を写しただけ)	c8b30368d6beb292	★同一と出た(対照成立)★
+
+#=== ②口 ―― 倒した事を何処へ言ふか ===
+#器	_th_say の定義	行先	冠
+inbox_watcher.sh	_th_say(){ printf '%s\n' "[watcher] $*" >&2; }	stderr	[watcher]
+agent_health_check.sh	_th_say(){ printf '%s\n' "[health_check] $*" >&2; }	stderr	[health_check]
+context_usage_warn.sh	_th_say(){ echo "[context_warn] $*" >&2; }	stderr	[context_warn]
+enter_restart_common_watchdog.sh	_th_say(){ log "$*"; }	★LOG file(stderr に非ず)★	★冠無し★
+
+#=== ③受け皿・④残存 ―― 閾ごと ===
+#閾名	器	受け皿	受け皿は己か	残存${NAME:-}_件	判
+ESCALATE_PHASE1	inbox_watcher.sh	ESCALATE_PHASE1	★己へ書戻す(子も清まる)★	0	OK
+ESCALATE_PHASE2	inbox_watcher.sh	ESCALATE_PHASE2	★己へ書戻す(子も清まる)★	0	OK
+ESCALATE_COOLDOWN	inbox_watcher.sh	ESCALATE_COOLDOWN	★己へ書戻す(子も清まる)★	0	OK
+NUDGE_COOLDOWN_SEC	inbox_watcher.sh	NUDGE_COOLDOWN_SEC	★己へ書戻す(子も清まる)★	2	★残存既定 2件★
+NUDGE_COOLDOWN_SEC_CODEX	inbox_watcher.sh	NUDGE_COOLDOWN_SEC_CODEX	★己へ書戻す(子も清まる)★	2	★残存既定 2件★
+NUDGE_COOLDOWN_SEC_CLAUDE	inbox_watcher.sh	NUDGE_COOLDOWN_SEC_CLAUDE	★己へ書戻す(子も清まる)★	1	★残存既定 1件★
+ASW_PHASE	inbox_watcher.sh	ASW_PHASE	★己へ書戻す(子も清まる)★	1	★残存既定 1件★
+APPROVAL_ALERT_COOLDOWN	inbox_watcher.sh	APPROVAL_ALERT_COOLDOWN	★己へ書戻す(子も清まる)★	1	★残存既定 1件★
+MAX_TYPING_SKIP	inbox_watcher.sh	MAX_TYPING_SKIP	★己へ書戻す(子も清まる)★	1	★残存既定 1件★
+INOTIFY_TIMEOUT	inbox_watcher.sh	INOTIFY_TIMEOUT	★己へ書戻す(子も清まる)★	1	★残存既定 1件★
+HEALTH_CHECK_COOLDOWN_SEC	agent_health_check.sh	ALERT_COOLDOWN_SEC	★別名(ALERT_COOLDOWN_SEC) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★
+HEALTH_CHECK_TOKEN_WARN	agent_health_check.sh	TOKEN_WARN_THRESHOLD	★別名(TOKEN_WARN_THRESHOLD) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★
+HEALTH_CHECK_TOKEN_CRIT	agent_health_check.sh	TOKEN_CRIT_THRESHOLD	★別名(TOKEN_CRIT_THRESHOLD) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★
+CONTEXT_WARN_BYTES	context_usage_warn.sh	WARN_BYTES	★別名(WARN_BYTES) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★
+CONTEXT_DANGER_BYTES	context_usage_warn.sh	DANGER_BYTES	★別名(DANGER_BYTES) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★
+ER_THRESHOLD_MIN	enter_restart_common_watchdog.sh	THRESHOLD_MIN	★別名(THRESHOLD_MIN) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★
+ER_FIRE_CAP_COUNT	enter_restart_common_watchdog.sh	FIRE_CAP_COUNT	★別名(FIRE_CAP_COUNT) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★
+ER_FIRE_CAP_WINDOW_MIN	enter_restart_common_watchdog.sh	FIRE_CAP_WINDOW_MIN	★別名(FIRE_CAP_WINDOW_MIN) ―― 環境の毒は其の儘・子へ継ぐ★	0	OK/★受け皿が別名★

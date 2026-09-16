@@ -1,0 +1,32 @@
+閾名	器	受け皿	行	讀手	使用箇所の逐語
+APPROVAL_ALERT_COOLDOWN	watcher	APPROVAL_ALERT_COOLDOWN	892	test[ ]+残存既定${:-}	&& [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
+ASW_PHASE	watcher	ASW_PHASE	208	残存既定${:-}	ASW_PHASE=${ASW_PHASE:-2}
+ASW_PHASE	watcher	ASW_PHASE	209	test[ ]	ASW_DISABLE_NORMAL_NUDGE=${ASW_DISABLE_NORMAL_NUDGE:-$([ "${ASW_PHASE}" -ge 2 ] && echo 1 || echo 0)}
+ASW_PHASE	watcher	ASW_PHASE	210	test[ ]	ASW_FINAL_ESCALATION_ONLY=${ASW_FINAL_ESCALATION_ONLY:-$([ "${ASW_PHASE}" -ge 3 ] && echo 1 || echo 0)}
+ESCALATE_COOLDOWN	watcher	ESCALATE_COOLDOWN	1466	算術$(( ))	if [ "$LAST_CLEAR_TS" -lt "$((now - ESCALATE_COOLDOWN))" ]; then
+ESCALATE_PHASE1	watcher	ESCALATE_PHASE1	1452	test[ ]	if [ "$age" -lt "$ESCALATE_PHASE1" ]; then
+ESCALATE_PHASE2	watcher	ESCALATE_PHASE2	1460	test[ ]	elif [ "$age" -lt "$ESCALATE_PHASE2" ]; then
+INOTIFY_TIMEOUT	watcher	INOTIFY_TIMEOUT	1528	残存既定${:-}	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+INOTIFY_TIMEOUT	watcher	INOTIFY_TIMEOUT	1548	外器	gtimeout "$INOTIFY_TIMEOUT" fswatch -1 --event Updated --event Renamed "$INBOX" 2>/dev/null
+INOTIFY_TIMEOUT	watcher	INOTIFY_TIMEOUT	1557	test[ ]	while [ "$WAITED" -lt "$INOTIFY_TIMEOUT" ] && kill -0 "$FSWATCH_PID" 2>/dev/null; do
+INOTIFY_TIMEOUT	watcher	INOTIFY_TIMEOUT	1572	外器	inotifywait -q -t "$INOTIFY_TIMEOUT" -e modify -e close_write "$INBOX" 2>/dev/null
+MAX_TYPING_SKIP	watcher	MAX_TYPING_SKIP	1060	残存既定${:-}	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+MAX_TYPING_SKIP	watcher	MAX_TYPING_SKIP	1061	test[ ]	if [ "$skip_count" -le "$max_typing_skip" ]; then
+NUDGE_COOLDOWN_SEC	watcher	NUDGE_COOLDOWN_SEC	190	残存既定${:-}	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+NUDGE_COOLDOWN_SEC	watcher	NUDGE_COOLDOWN_SEC	288	残存既定${:-}	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+NUDGE_COOLDOWN_SEC	watcher	NUDGE_COOLDOWN_SEC	300	test[ ]	if [ "$age" -lt "${cooldown_sec}" ]; then
+NUDGE_COOLDOWN_SEC_CLAUDE	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	294	残存既定${:-}	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+NUDGE_COOLDOWN_SEC_CODEX	watcher	NUDGE_COOLDOWN_SEC_CODEX	192	残存既定${:-}	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+NUDGE_COOLDOWN_SEC_CODEX	watcher	NUDGE_COOLDOWN_SEC_CODEX	290	残存既定${:-}	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+HEALTH_CHECK_COOLDOWN_SEC	health	ALERT_COOLDOWN_SEC	137	test[ ]	if [ "$elapsed" -lt "$ALERT_COOLDOWN_SEC" ]; then
+HEALTH_CHECK_TOKEN_CRIT	health	TOKEN_CRIT_THRESHOLD	371	test[ ]	if [ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]; then
+HEALTH_CHECK_TOKEN_WARN	health	TOKEN_WARN_THRESHOLD	384	test[ ]	elif [ "$max_tokens" -ge "$TOKEN_WARN_THRESHOLD" ]; then
+CONTEXT_DANGER_BYTES	context	DANGER_BYTES	84	test[ ]	if [ "$SZ" -ge "$DANGER_BYTES" ]; then
+CONTEXT_DANGER_BYTES	context	DANGER_BYTES	85	算術$(( ))	echo "★context_danger★ session jsonl=${KB}KB (>=$(($DANGER_BYTES / 1024))KB ≒ 95% heuristic) — ★即 /compact 入力推奨★" >&2
+CONTEXT_WARN_BYTES	context	WARN_BYTES	86	test[ ]	elif [ "$SZ" -ge "$WARN_BYTES" ]; then
+CONTEXT_WARN_BYTES	context	WARN_BYTES	87	算術$(( ))	echo "★context_warn★ session jsonl=${KB}KB (>=$(($WARN_BYTES / 1024))KB ≒ 80% heuristic) — /compact 入力を検討" >&2
+ER_FIRE_CAP_COUNT	enter	FIRE_CAP_COUNT	128	test[ ]	if [ "$RECENT_FIRES" -ge "$FIRE_CAP_COUNT" ]; then
+ER_FIRE_CAP_WINDOW_MIN	enter	FIRE_CAP_WINDOW_MIN	122	算術$(( ))	WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))
+ER_THRESHOLD_MIN	enter	THRESHOLD_MIN	254	test[ ]	if [ "$ELAPSED_INT" -lt "$THRESHOLD_MIN" ]; then
+
+閾_件	18
