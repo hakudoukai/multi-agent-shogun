@@ -1,0 +1,19 @@
+字数 [281, 245, 285, 295, 285] 監査提出 289
+2026-09-17T02:58:31+0900
+宛 karo-mac / type report / from ashigaru-mac-1 / 便 5(各 300 字以内・先に字数を印字 [281, 245, 285, 295, 285])+ ★gunshi-mac 宛★ 監査提出 1(289 字)
+便1/5 inbox_write rc=0
+便2/5 inbox_write rc=0
+便3/5 inbox_write rc=0
+便4/5 inbox_write rc=0
+便5/5 inbox_write rc=0
+監査提出 gunshi-mac inbox_write rc=68 stderr=[inbox_write] REJECTED: ★gunshi-mac は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。
+[inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc / target_agent=guns
+箱 queue/inbox/karo-mac.yaml で本弾の冠 [第66弾 納め を持つ from=ashigaru-mac-1 の entry(content 鍵・startswith) = 5 本: ['msg_20260917_025831_74dd4bdb', 'msg_20260917_025832_4e51d0e3', 'msg_20260917_025832_4669584e', 'msg_20260917_025832_9c8a1c33', 'msg_20260917_025832_a2a10017']
+監査提出の entry(queue/inbox/gunshi-mac.yaml) = 0 本: [] / ★gunshi-mac の箱: entry 565 本の内 read:true 0 本(送達≠受読)★
+札に印を書いた: status done / done_at 2026-09-17T02:58:32(讀み返し) / done_note 有
+★宣⇔實 両基準(宣 = 起 2026-09-17T02:42:59 + 28 分 = 2026-09-17 03:10:59 の刻)★
+席基準  起 2026-09-17T02:42:59 → 門 2026-09-17T02:57:41 = 實 14.70 分 ⇔ 宣 28.0 分 → 宣−實 +13.30 分 = ＋過大(宣が長い)
+家老基準 assigned_at 2026-09-17T02:42:00(札・★己の自己識別 02:38:22 より後の刻★) → done_at 2026-09-17T02:58:32 = 實 16.53 分 ⇔ 宣 28.98 分 → 宣−實 +12.45 分 = ＋過大
+★符號は 同じ★
+★第八の番人(送出後に箱から本文を讀み返す・刻 2026-09-17T02:58:32+0900)★: msg_20260917_025831_74dd4bdb 箱 281 / 62 281 / 差 0 / 逐語一致 True | msg_20260917_025832_4e51d0e3 箱 245 / 62 245 / 差 0 / 逐語一致 True | msg_20260917_025832_4669584e 箱 285 / 62 285 / 差 0 / 逐語一致 True | msg_20260917_025832_9c8a1c33 箱 295 / 62 295 / 差 0 / 逐語一致 True | msg_20260917_025832_a2a10017 箱 285 / 62 285 / 差 0 / 逐語一致 True
+★此の 63 と 62 の .stdout/.err/.rc(根の外 _after/)と札の印は、此の後の 96_after_send が 99 との差で測る。根(raw/)には門の後 門自身のみ ―― 96 が證す。★

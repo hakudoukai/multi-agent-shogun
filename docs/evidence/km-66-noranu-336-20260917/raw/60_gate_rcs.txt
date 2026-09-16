@@ -1,0 +1,6 @@
+刻 2026-09-17T02:57:40+0900 / 門 sha16 3eaa5cc6b1aa0fd5 / 照合器 sha16 a507c998c7bd6485 / 臺帳の項 55 / 臺帳 sha16 d832288c49247002 / 紙 sha16 529059cc9624968e / cwd /Users/momizimac/multi-agent-shogun
+selftest | 渡した 0 | rc 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+main | 渡した 2 | rc 0 | 札 0 | 條① ('55', '0', '0', '0', '55') | 條⑤ byte和 36829 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 ad120b232e249db2
+all | 渡した 55 | rc 0 | 札 0 | 條① ('55', '0', '0', '0', '55') | 條⑤ byte和 242478 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 e9d5b21d8e7c458d
+臺帳自身(別器・門は argv[1] を條②③④⑤に掛けぬ) | bytes 10403 | 実体行 55 | 括つた行 0 | 末尾 2 byte 330a(0a 一つ = True) | CR 0 | 行末空白 0 行 | sha16 d832288c49247002
+禁域へ 0 byte | 前(00_start)と今の sha16: scripts/checks/karo_mac_dasumae_gate.sh 3eaa5cc6b1aa0fd5 / scripts/checks/karo_mac_manifest_verify.py a507c998c7bd6485 / scripts/checks/karo_mac_manifest_append.py f5ea5e1e85d64936 / .gitignore 3ccfcf1c05e82b58 / .claude/settings.json b135e8f17b3be9d5 | main .git/index mtime 2026-09-17T02:57:40 / worktree index mtime 2026-09-16T21:35:04

@@ -1,0 +1,23 @@
+起 2026-09-17T02:42:59+0900 (date ―― 家老の clear_command 02:38:05 → 自己識別 02:38:22(date) → 札を讀む → 前弾の紙・器・8c9fb3d を讀む(02:39〜02:41)→ 束を建て 02:41 → 此の file は手で書いた(器 00 ではない・kaki 経由)。★札の assigned_at は 02:42:00 で、己の自己識別 02:38:22 より ★後★ である ―― 家老基準の起点は札の刻をそのまま用ゐ、此の逆順を紙に書く★)
+task sha16 3194389eb1cfad17 (札 queue/tasks/ashigaru-mac-1.yaml・4921 B・51 行 grep -c '')/ 家老の宣 3194389eb1cfad17・4921B・51行 → 三つとも一致
+束の在處 = worktree /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-66-noranu-336-20260917(枝 karo-mac/a1-r56・HEAD 8c9fb3d・共有樹を汚さぬ為・裁 seq320577/320321)。紙 = ashigaru-mac-1_km-66-noranu-336-20260917.md / 臺帳 = 同名 _manifest.txt(★karo_mac_manifest_append.py f5ea5e1e85d64936 のみで建てる・手書き 0★)/ 門控 = 同名 _gate.txt(員外)/ raw/ = 器と出目 / _after/ = 門の後の出目(根の外)。置くのみ・git add -f のみ・commit/push は家老。
+禁域の前の sha16: karo_mac_dasumae_gate.sh 3eaa5cc6b1aa0fd5 / karo_mac_manifest_verify.py a507c998c7bd6485 / karo_mac_manifest_append.py f5ea5e1e85d64936 / .gitignore 3ccfcf1c05e82b58 / .claude/settings.json b135e8f17b3be9d5 ―― 悉く讀む・走らせるのみ。
+歩き根 = /Users/momizimac/multi-agent-shogun/queue/reports(絶対・main 樹)。母數の器 = 前弾 21_jou1_besho.py(9d6855d781719346・讀み込みのみ)の 40 本の臺帳 + 其の tsv(6dfd34436f505a8a)。載らぬの定義 = 前弾 26 と同一(<紙>_evidence 配下 os.walk・lstat・S_ISREG・臺帳自身を除く・臺帳の一致項(宣 sha = 実 sha)が指す realpath に無い file)。★336 は 02:11:54 の数 ―― 本弾の刻で引き直し、動いたら動いたと書く。★
+★宣ETA(端点を先に定める)★: 席基準 = 此の 起 2026-09-17T02:42:59 〜 門控の刻(60_gate_top.r66 の 刻)/ 家老基準 = 札 assigned_at 02:42:00 〜 札の done_at。宣 = 起 + 28 分 = 03:10:59 に門。織り込み = 新しい器 4 本(30 三山/31 何故/32 1byte/33 己)× 4 分 = 16 + 紙 6 + 凍結・門・便 6 = 28。前弾は宣 30 で實 17.4(+12.6 過大)・前々弾 宣 22 で實 16.7・第63弾 宣 30 で實 18.4。三弾とも過大ゆゑ本弾は ★實績 17〜18 に +10 のみ★。過小に振れたら過小と書く(宣は二方向に外れる)。
+★則(測る前に書く ―― 後から作れば何とでも分けられる)★ 載らぬ file 一本ごとに、下の順で ★最初に当たつた山★ へ入れる(排他・順序が則の一部):
+  甲1 門の出目: 相対 path が (^|/)mon/ に在る、又は basename が gate|gatelog|_mon\d を含む、又は basename が mon\d*[_.].*\.(out|err|rc)$ に合ふ ―― 門は凍結の後に走る故、載せぬのが正。
+  甲2 臺帳の器の出目: basename が manifest|daichou を含む(臺帳の版・写し・建てる器の .out/.err/.rc)―― 己を載せる臺帳は無い(紙は己を含む臺帳の數を書けぬ)。
+  甲3 __pycache__: path に /__pycache__/ を含む ―― python が門の後に産む。
+  甲4 宣で員外: 臺帳の非項行(# 行・sha256 を含まぬ行)又は同名の紙(.md)に、其の file の相對 path(又は其の親 dir の相對 path)が逐語で在り、★同じ行★ に 員外|ingai|門の後|載せぬ|門控 の何れかが在る。
+  乙1 届かぬ: 臺帳に ★同じ sha256★ の項が在る(path が実体へ届いて居らぬ = dir 省略・基点違ひ)。載せるべき物が載つて居る形で載つて居らぬ ∴ 疵。
+  丙1 同名別 sha: 臺帳に同じ basename の項が在るが sha が違ふ ―― 紙が後から変つたのか臺帳が誤りかは ★此の器では決められぬ★。
+  乙2 名が器を破る: 相對 path に " ' 改行 復帰 を含む(追記器なら rc=3・讀み手なら切り落す)。空白のみは括れば讀める故 ★乙2 でなく註★。
+  丙2 同秒: file の mtime(秒)が 臺帳の mtime(秒)と ★同じ秒★ ―― 門の前か後か決められぬ。
+  乙3 門の後に生れた: file の mtime(秒)> 臺帳の mtime(秒)(甲1〜3 でない物が凍結の後に根へ書かれた = 追ひ便 7 と同じ疵)。
+  乙4 器へ渡さなかつた: 上の何れにも当たらぬ(臺帳より前に在り・名は清く・sha も名も臺帳に無い)= 書き手が渡さなかつた。
+  丙0 測れぬ: 臺帳の mtime が取れぬ / file を開けぬ(sha が出せぬ)/ 2MB 超で開かぬ ―― 決められぬ。
+  ★甲 = 甲1+甲2+甲3+甲4 / 乙 = 乙1+乙2+乙3+乙4 / 丙 = 丙0+丙1+丙2。総和 = 載らぬ の全数(差 0 を器が印字)。各山に 本数・byte 和・代表名。★
+  ★丙が零なら則が緩い ―― 丙2 の「同秒」を「同分」へ締めて測り直し、両方を紙に書く。★
+  ★己(㋔)★: 己の束は 40 の外(sibling _manifest 形 = 別所でない)。除いた本数 = 己の km-64/65 の _evidence 配下の通常 file を数へて紙に書く。加へて門の後に ★同じ則★ を己の束(docs/evidence/km-66…)へ掛け、己の器・己の log が何の山へ入るかを _after/ に出す(甲1 門の出目 / 乙3 門の後 が出れば追ひ便 7 の再犯)。
+  ★相違 1(㋓)★: …soukantoku291437_1r_20260908.md 宣 sha 5229… bytes 22046 / 実 24e7… 22047。器 32: ①実の 22047 B から一 byte を抜いた 22047 通りの sha256 を悉く計り、宣 sha に当たる位置と其の byte を出す ②当たらねば「一 byte の挿入ではない」③mtime・ctime・birthtime を stat で取り、臺帳の mtime と並べる(ctime > 臺帳 mtime なら紙が後から触られた)④git は queue/reports が untracked ゆゑ履歴無し = 其れも書く。
+作法: 便の器(05/62/64)は臺帳より先に書く / 字数の器は鎖の前(62 は assert の前に印字・DRY で先に走らせる)/ 鎖の守りは尾まで(走らせ器 10 で一つづつ rc を採る・&& の尾に置かぬ)/ ad-hoc python は -B / raw への本文は悉く kaki / 門控の名 = 60_gate_top.r66 / 門の後に根へ 0 字(96/99 で秒>秒 を測る)/ 非通常 file は S_ISREG で除き本数を宣す / rc は pipe に通さぬ / grep -c 零は rc=1 ―― 器の中で python が数へる。

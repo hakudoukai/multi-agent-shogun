@@ -1,0 +1,34 @@
+# 三山 30 / 刻 2026-09-17T02:45:45+0900 / 母數 = 前弾 21 の臺帳 40 本 / 歩き根 /Users/momizimac/multi-agent-shogun/queue/reports(絶対)/ 配下 = <紙>_evidence(os.walk・lstat・S_ISREG・臺帳自身を除く・非通常 4 本除く)/ 則 = 00_start(順序が則の一部・最初に当たつた山)
+## 配下の通常 file 計 1532 / ★載らぬ 343★(前弾 02:11:54 は 1532 / 336 → ★動いた★ 差 file 0 / 載らぬ 7)
+## ★追記器 karo_mac_manifest_append.py の生 2026-09-17T01:40:42(birthtime)より後の mtime を持つ臺帳 = 0/40 ∴ 「追記器が拒んだ(rc=3)」の実測は 0 本の臺帳でしか起こり得ぬ ―― 乙2 は「器なら拒む名(rc=3 相当・togame)」である★
+## 山ごと(本数 / byte 和 / 代表 3):
+  甲1 門の出目: 269 本 / 450875 B / 代表 ashigaru-mac-2_km-43-lot48235904-no-gunshi-P:mon_20260916_225011.gatelog ; ashigaru-mac-2_soukantoku291437_1_20260908.m:09_8stage_gate_originmain_run.log ; ashigaru-mac-2_soukantoku291437_1_20260908.m:08_8stage_gate_main_run.log
+  甲2 臺帳の器の出目: 5 本 / 11164 B / 代表 ashigaru-mac-2_soukantoku291437_1_20260908.m:manifest.txt ; ashigaru-mac-3_km-38-kanou-to-itta-fudou-wo-:kou/70_daichou_build.out ; ashigaru-mac-3_km-38-kanou-to-itta-fudou-wo-:kou/70_daichou_build.err
+  甲3 __pycache__: 2 本 / 16085 B / 代表 ashigaru-mac-3_km-35-atai-ga-kotogotoku-tada:ki/__pycache__/k01_na_wo_hakaru.cpython-314.pyc ; ashigaru-mac-3_km-42-betsuwaku-54-hon-no-kiz:ki/__pycache__/59_kaki.cpython-314.pyc
+  甲4 宣で員外: 9 本 / 11800 B / 代表 ashigaru-mac-3_km-34-touketsu-to-kotogotoku-:ki/92_soejou.py ; ashigaru-mac-3_km-38-kanou-to-itta-fudou-wo-:jikken/build.err ; ashigaru-mac-3_km-38-kanou-to-itta-fudou-wo-:jikken/build2.err
+  乙1 届かぬ(同sha項あり): 23 本 / 232936 B / 代表 ashigaru-mac-2_B2_30_20260907.md:raw/09_stage2_e2eb83_GREEN_full.txt ; ashigaru-mac-2_B2_30_20260907.md:raw/01_propose_line_splits_idempotency_check.txt ; ashigaru-mac-2_B2_30_20260907.md:raw/02_const_fix_patch_saved_for_reapply.diff
+  丙1 同名別sha: 0 本 / 0 B / 代表 -
+  乙2 名が器を破る: 0 本 / 0 B / 代表 -
+  丙2 同秒(門の前後 決められぬ): 2 本 / 15495 B / 代表 ashigaru-mac-3_km-34-touketsu-to-kotogotoku-:sunaba/argv34_182851.lst ; ashigaru-mac-3_km-sengen-shita-hashira-wo-mo:argv.txt
+  乙3 門の後に生れた: 6 本 / 5942 B / 代表 ashigaru-mac-3_km-34-touketsu-to-kotogotoku-:sunaba/ato_ids.txt ; ashigaru-mac-3_km-34-touketsu-to-kotogotoku-:sunaba/mae_ids.txt ; ashigaru-mac-3_km-34-touketsu-to-kotogotoku-:sunaba/97_yomikaeshi.out
+  乙4 器へ渡さなかつた: 20 本 / 308797 B / 代表 ashigaru-mac-2_B0_axis2_20260908.md:desktop/pixel_diffs.json ; ashigaru-mac-2_B0_axis2_20260908.md:desktop/walkthrough.webm ; ashigaru-mac-2_B0_axis2_20260908.md:desktop/summary_table.md
+  丙0 測れぬ: 7 本 / 234364104 B / 代表 ashigaru-mac-1_B12_16_20260909.md:raw/c_kami_users.txt ; ashigaru-mac-1_B12_16_20260909.md:raw/c_other_cwin.txt ; ashigaru-mac-1_B12_16_20260909.md:raw/c_kami_cwin.txt
+  ★甲(載せぬのが正) 285 本 489924 B / 乙(疵) 49 本 547675 B / 丙(決められぬ) 9 本 234379599 B / 総和 343 = 載らぬ 343 差 0★
+## 臺帳ごと(紙 配下 載らぬ 甲 乙 丙 細目):
+  ashigaru-mac-1_B12_16_20260909.md	26	6	0	0	6	丙0=6
+  ashigaru-mac-2_B0_axis2_20260908.md	18	12	0	12	0	乙4=12
+  ashigaru-mac-2_B2_30_20260907.md	10	10	0	10	0	乙1=10
+  ashigaru-mac-2_B2_31_20260907.md	9	9	0	9	0	乙1=9
+  ashigaru-mac-2_km-43-lot48235904-no-gunshi-P	38	1	1	0	0	甲1=1
+  ashigaru-mac-2_soukantoku291437_1_20260908.m	6	6	3	3	0	乙4=3 甲1=2 甲2=1
+  ashigaru-mac-3_km-33-hakarenu-wa-wa-no-dochi	310	209	209	0	0	甲1=209
+  ashigaru-mac-3_km-34-touketsu-to-kotogotoku-	67	18	9	8	1	丙2=1 乙3=6 乙4=2 甲1=8 甲4=1
+  ashigaru-mac-3_km-35-atai-ga-kotogotoku-tada	64	11	11	0	0	甲1=10 甲3=1
+  ashigaru-mac-3_km-36-mon-no-byte-wa-ga-fudou	65	15	14	1	0	乙4=1 甲1=14
+  ashigaru-mac-3_km-37-daichougai-wo-ingai-to-	68	2	2	0	0	甲1=2
+  ashigaru-mac-3_km-38-kanou-to-itta-fudou-wo-	205	15	15	0	0	甲1=6 甲2=2 甲4=7
+  ashigaru-mac-3_km-42-betsuwaku-54-hon-no-kiz	65	8	8	0	0	甲1=6 甲2=1 甲3=1
+  ashigaru-mac-3_km-43-hanzezu-32-hon-wo-yomit	125	10	10	0	0	甲1=9 甲2=1
+  ashigaru-mac-3_km-sengen-shita-hashira-wo-mo	71	6	2	2	2	丙0=1 丙2=1 乙4=2 甲1=1 甲4=1
+  karo_mac_B0_10_kizai_hozen_20260908.md	5	5	1	4	0	乙1=4 甲1=1
+## ★㋒ 丙2 を「同秒」から「同分」へ締めた時★: 丙2 2 → 4 本 / 乙3 6 → 6 / 乙4 20 → 18 / 丙計 9 → 11

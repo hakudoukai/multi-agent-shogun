@@ -1,0 +1,12 @@
+# 相違 1 の決着 32 / 刻 2026-09-17T02:45:46+0900 / 紙 /Users/momizimac/multi-agent-shogun/queue/reports/ashigaru-mac-2_soukantoku291437_1r_20260908.md / 臺帳 /Users/momizimac/multi-agent-shogun/queue/reports/ashigaru-mac-2_soukantoku291437_1_20260908_evidence/manifest_v2origin.txt
+臺帳の行(逐語): queue/reports/ashigaru-mac-2_soukantoku291437_1r_20260908.md sha256=52294846fba63c151a095353675f626993a2a49346931730e22eb16b9d683330 bytes=22046 lines=354
+宣 sha256 52294846fba63c151a095353675f626993a2a49346931730e22eb16b9d683330 bytes 22046 / 実 sha256 24e7b6ee21ad13f55fec4ba8a28c0e360e67d68f0ce65e83f71db7820af5f0d6 bytes 22047 / 差 1 B
+★① 一 byte を抜いて宣 sha に当たる位置 = 2 箇所★(試した 22047 通り)
+  位置 22045(0 起点)/ byte 0x0a = 改行 LF / 行 354(その行の 91 字目・行長 91 B)/ 末尾からの距離 1 / 其の行(逐語・先頭 120B): b'- \xe5\xae\xb6\xe8\x80\x81mac\xe4\xbe\xbf: `msg_20260908_201449_245ef46e`(20:14:49\xe3\x83\xbb3\xe7\xb3\xbb\xe7\xb5\xb1\xe5\x8f\x8e\xe6\x9d\x9f\xe7\xa2\xba\xe5\xae\x9a+\xe5\xbe\x85\xe3\x81\xa4\xe5\xae\xa3\xe8\xa8\x80)'
+  位置 22046(0 起点)/ byte 0x0a = 改行 LF / 行 355(その行の 0 字目・行長 0 B)/ 末尾からの距離 0 / 其の行(逐語・先頭 120B): b''
+  ★同じ byte の連(0x0a×2)の何れを抜いても同じ ―― 「連の何処か」までしか決まらぬが、byte の正体は決まる★
+③ 紙: birth 2026-09-08T20:19:01.658234 / mtime 2026-09-08T20:19:01.658385 / ctime 2026-09-08T20:19:01.658618 ; 臺帳: birth 2026-09-08T20:19:20.812753 / mtime 2026-09-08T20:19:20.812864 / ctime 2026-09-08T20:19:20.813278
+   紙 mtime < 臺帳 mtime = True / ★紙 ctime > 臺帳 mtime = False★(真なら紙は臺帳の後に inode が触られた ―― cp -p は mtime を保ち ctime は保たぬ)/ 紙 birth < 臺帳 mtime
+④ git ls-files rc=1(untracked ―― 履歴無し・原本は git に無い)
+   実の中身の blob sha1 b68e2d24f2862b6d8365d856b36745c9652a294f → git cat-file -e rc=1(無い)
+⑤ 同名の写し(queue/reports・docs/evidence を歩いた・己を除く)= 0 本
