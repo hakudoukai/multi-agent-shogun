@@ -1,0 +1,12 @@
+宣 sha16 = 9ebb7840f743508b(家老裁 322099/322214)
+file                                                 行      sha16(改行無)         sha16(改行有)
+scripts/agent_health_check.sh                        L88    9ebb7840f743508b   4ec3d60221976dc3
+scripts/inbox_watcher.sh                             L131   9ebb7840f743508b   4ec3d60221976dc3
+scripts/checks/context_usage_warn.sh                 L35    9ebb7840f743508b   4ec3d60221976dc3
+scripts/redundancy/shogun_report_watcher.sh          L31    9ebb7840f743508b   4ec3d60221976dc3
+scripts/checks/karo_mac_gate4.sh                     L63    9ebb7840f743508b   4ec3d60221976dc3
+scripts/checks/karo_mac_dasumae_gate.sh              L29    9ebb7840f743508b   4ec3d60221976dc3
+scripts/watchdogs/enter_restart_common_watchdog.sh   L80    9ebb7840f743508b   4ec3d60221976dc3
+docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh L24    9ebb7840f743508b   4ec3d60221976dc3
+―― 見付けた `is_num` の行 = 8 / 宣 sha16 に一致 = 8 / 母數(当たつた file) = 8
+★宣の sha16 は ★末尾改行を含めぬ★ 和である(含めれば 4ec3d60221976dc3)。同じ「sha16」の名で二つが動く。★
