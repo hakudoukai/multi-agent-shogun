@@ -1,0 +1,44 @@
+A01_kiyoi    元より rc=0 ―― 囮を試さぬ
+A02_hankaku  元より rc=0 ―― 囮を試さぬ
+A03_tab      元より rc=0 ―― 囮を試さぬ
+A04_zenkaku    ★黙り得る(最悪)★
+    囮前 rc=1 一致 0 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+    囮後 rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+    囮 docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A04/a  ←胴は docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a b.txt の写し
+    ★囮は縄張り docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nawa の下に建て、測り了へて除いた★
+A05_nbsp       ★黙り得る(最悪)★
+    囮前 rc=1 一致 0 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+    囮後 rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+    囮 docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a  ←胴は docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a b.txt の写し
+    ★囮は縄張り docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nawa の下に建て、測り了へて除いた★
+A06_u2028      ★黙り得る(最悪)★
+    囮前 rc=1 一致 0 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+    囮後 rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+    囮 docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A06/a  ←胴は docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a b.txt の写し
+    ★囮は縄張り docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nawa の下に建て、測り了へて除いた★
+A07_zwsp     元より rc=0 ―― 囮を試さぬ
+A08_u205f      ★黙り得る(最悪)★
+    囮前 rc=1 一致 0 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+    囮後 rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+    囮 docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A08/a  ←胴は docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a b.txt の写し
+    ★囮は縄張り docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nawa の下に建て、測り了へて除いた★
+A09_sha8       ★黙り得る(最悪)★
+    囮前 rc=1 一致 0 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+    囮後 rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+    囮 "docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A09/a  ←胴は docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a b.txt の写し
+    ★囮は縄張り docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nawa の下に建て、測り了へて除いた★
+A10_sha64    ★測れぬ(録された sha を持つ物が束に無い)★
+A11_ikoru    元より rc=0 ―― 囮を試さぬ
+A12_koron    元より rc=0 ―― 囮を試さぬ
+A13_hyphen   元より rc=0 ―― 囮を試さぬ
+A14_chodai   元より rc=0 ―― 囮を試さぬ
+A15_matsubi  元より rc=0 ―― 囮を試さぬ
+A16_atama    元より rc=0 ―― 囮を試さぬ
+A17_sharp    元より rc=0 ―― 囮を試さぬ
+A18_path_ikoru 元より rc=0 ―― 囮を試さぬ
+B01_futae    元より rc=0 ―― 囮を試さぬ
+B02_hitoe    元より rc=0 ―― 囮を試さぬ
+B03_lf       ★候補零 ―― 囮の置き所が無い★
+B04_cr       ★候補零 ―― 囮の置き所が無い★
+
+= 締 黙り得る 5 / 鳴るに留まる 0 / 囮を建てられぬ 2 / 元より正 14

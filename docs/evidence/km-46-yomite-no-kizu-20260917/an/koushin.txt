@@ -1,0 +1,188 @@
+= ①行の段(disk を触らぬ) =
+  臺帳 1094 本 / 讀めぬ臺帳 0 本 / 行 計 50037
+  候補列 ★同じ★ 49949 行  ―― 出目は disk を見ずとも ★不変★ と断ぜられる
+  候補列 ★違ふ★ 88 行  ―― 之だけ ②へ送る
+
+= ②候補列が違つた臺帳に 現物の器を当てる(時限 180 秒) =
+  該当 臺帳 22 本
+  不変 ./queue/reports/ashigaru-mac-1_B4_20_20260908_manifest.txt
+      BEFORE rc=1 一致 34 / 相違 0 / 実体無 2 / 読めぬ行 0  (母數 36)
+      AFTER  rc=1 一致 34 / 相違 0 / 実体無 2 / 読めぬ行 0  (母數 36)
+      行: path=frontend/tests/e2e/child-passport/kit/dino-kit-walkthrough-video-humanpace.spec.ts @fda05c76c sha256=37e8
+        BEFORE候補 ['frontend/tests/e2e/child-passport/kit/dino-kit-walkthrough-video-humanpace.spec.ts']
+        AFTER 候補 ['frontend/tests/e2e/child-passport/kit/dino-kit-walkthrough-video-humanpace.spec.ts @fda05c76c', 'frontend/tests/e2e/child-passport/kit/dino-kit-walk
+      行: path=frontend/tests/e2e/child-passport/kit/dino-kit-sweep.ts @fda05c76c sha256=3661a404a64658a111e40962ba1ba73
+        BEFORE候補 ['frontend/tests/e2e/child-passport/kit/dino-kit-sweep.ts']
+        AFTER 候補 ['frontend/tests/e2e/child-passport/kit/dino-kit-sweep.ts @fda05c76c', 'frontend/tests/e2e/child-passport/kit/dino-kit-sweep.ts']
+  不変 ./queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_manifest.txt
+      BEFORE rc=0 一致 39 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 39)
+      AFTER  rc=0 一致 39 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 39)
+      行: #   path=queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazo
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_evidence/raw/fx/na']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_evidence/raw/fx/na me.txt', 'queue/r
+  不変 ./queue/reports/ashigaru-mac-1_km-41-kotae-ga-saki-ni-atta-ka-atoni-kita-ka-wo-toki-no-muki-de-kazoe-20260913_evidence/raw/fx/ochi/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_manifest.txt
+      BEFORE rc=0 一致 39 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 39)
+      AFTER  rc=0 一致 39 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 39)
+      行: #   path=queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazo
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_evidence/raw/fx/na']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_evidence/raw/fx/na me.txt', 'queue/r
+  不変 ./queue/reports/ashigaru-mac-1_km-41-kotae-ga-saki-ni-atta-ka-atoni-kita-ka-wo-toki-no-muki-de-kazoe-20260913_evidence/raw/fx/ochi/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_manifest.txt
+      BEFORE rc=0 一致 96 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 96)
+      AFTER  rc=0 一致 96 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 96)
+      行: #   path=queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp ace_var.
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp ace_var.txt', 'queue/reports/ashigaru-mac-1_km-ichi-no-
+  不変 ./queue/reports/ashigaru-mac-1_km-41-kotae-ga-saki-ni-atta-ka-atoni-kita-ka-wo-toki-no-muki-de-kazoe-20260913_evidence/raw/fx/ochi/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_manifest.txt
+      BEFORE rc=0 一致 156 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 156)
+      AFTER  rc=0 一致 156 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 156)
+      行: #   path=queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1 sp ace
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1 sp ace.txt', 'queue/reports/ashigaru-mac-1_km-utsuwa-
+  不変 ./queue/reports/ashigaru-mac-1_km-57-daichou-no-hougen-wo-sen-kara-yome-utsuwa-ga-damatte-machigaeru-tokoro-wo-sagase-20260916_manifest.txt
+      BEFORE rc=0 一致 56 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 56)
+      AFTER  rc=0 一致 56 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 56)
+      行: #   path=queue/reports/ashigaru-mac-1_km-57-daichou-no-hougen-wo-sen-kara-yome-utsuwa-ga-damatte-machigaeru-to
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-57-daichou-no-hougen-wo-sen-kara-yome-utsuwa-ga-damatte-machigaeru-tokoro-wo-sagase-20260916_evidence/raw/fx/pre/a']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-57-daichou-no-hougen-wo-sen-kara-yome-utsuwa-ga-damatte-machigaeru-tokoro-wo-sagase-20260916_evidence/raw/fx/pre/a b
+      行: #   path=queue/reports/ashigaru-mac-1_km-57-daichou-no-hougen-wo-sen-kara-yome-utsuwa-ga-damatte-machigaeru-to
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-57-daichou-no-hougen-wo-sen-kara-yome-utsuwa-ga-damatte-machigaeru-tokoro-wo-sagase-20260916_evidence/raw/fx/sp/a']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-57-daichou-no-hougen-wo-sen-kara-yome-utsuwa-ga-damatte-machigaeru-tokoro-wo-sagase-20260916_evidence/raw/fx/sp/a b.
+  不変 ./queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_manifest.txt
+      BEFORE rc=0 一致 96 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 96)
+      AFTER  rc=0 一致 96 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 96)
+      行: #   path=queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp ace_var.
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp ace_var.txt', 'queue/reports/ashigaru-mac-1_km-ichi-no-
+  不変 ./queue/reports/ashigaru-mac-1_km-ippon-bashiri-de-gyou-wo-sutero-na-ga-gyou-wo-waru_20260912_manifest.txt
+      BEFORE rc=0 一致 29 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 29)
+      AFTER  rc=0 一致 29 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 29)
+      行: #   path=queue/reports/ashigaru-mac-1_km-ippon-bashiri-de-gyou-wo-sutero-na-ga-gyou-wo-waru_20260912_evidence/
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-ippon-bashiri-de-gyou-wo-sutero-na-ga-gyou-wo-waru_20260912_evidence/raw/20_fx/d★⏎★末尾空白', 'queue/reports/ashigaru-ma
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-ippon-bashiri-de-gyou-wo-sutero-na-ga-gyou-wo-waru_20260912_evidence/raw/20_fx/d★⏎★末尾空白 ―― queue/reports/ashigaru-ma
+  不変 ./queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_manifest.txt
+      BEFORE rc=0 一致 156 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 156)
+      AFTER  rc=0 一致 156 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 156)
+      行: #   path=queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1 sp ace
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1 sp ace.txt', 'queue/reports/ashigaru-mac-1_km-utsuwa-
+  不変 ./queue/reports/ashigaru-mac-2_B4_11_20260908_manifest.txt
+      BEFORE rc=1 一致 1 / 相違 0 / 実体無 11 / 読めぬ行 0  (母數 12)
+      AFTER  rc=1 一致 1 / 相違 0 / 実体無 11 / 読めぬ行 0  (母數 12)
+      行: path=queue/reports/ashigaru-mac-2_B4_11_20260908.md | sha256=2a7af0b35ee30eee50a4872f352e016a6fdb967d55413776e
+        BEFORE候補 ['queue/reports/ashigaru-mac-2_B4_11_20260908.md']
+        AFTER 候補 ['queue/reports/ashigaru-mac-2_B4_11_20260908.md |', 'queue/reports/ashigaru-mac-2_B4_11_20260908.md']
+      行: path=frontend/src/features/child-passport/story-engine/EffectVisual.tsx | sha256=269856200fb9de1117d7cea521994
+        BEFORE候補 ['frontend/src/features/child-passport/story-engine/EffectVisual.tsx']
+        AFTER 候補 ['frontend/src/features/child-passport/story-engine/EffectVisual.tsx |', 'frontend/src/features/child-passport/story-engine/EffectVisual.tsx']
+      行: path=frontend/src/features/child-passport/story-engine/__tests__/EffectVisual.test.tsx | sha256=5ff860a6ce72c8
+        BEFORE候補 ['frontend/src/features/child-passport/story-engine/__tests__/EffectVisual.test.tsx']
+        AFTER 候補 ['frontend/src/features/child-passport/story-engine/__tests__/EffectVisual.test.tsx |', 'frontend/src/features/child-passport/story-engine/__tests__/E
+  不変 ./queue/reports/ashigaru-mac-2_B4_12_20260908_manifest.txt
+      BEFORE rc=1 一致 1 / 相違 0 / 実体無 19 / 読めぬ行 0  (母數 20)
+      AFTER  rc=1 一致 1 / 相違 0 / 実体無 19 / 読めぬ行 0  (母數 20)
+      行: path=queue/reports/ashigaru-mac-2_B4_12_20260908.md | sha256=5f3513dba6577a4851d0e135bdd37b99b62a7e72a4c04b256
+        BEFORE候補 ['queue/reports/ashigaru-mac-2_B4_12_20260908.md']
+        AFTER 候補 ['queue/reports/ashigaru-mac-2_B4_12_20260908.md |', 'queue/reports/ashigaru-mac-2_B4_12_20260908.md']
+      行: path=00_HEAD_sha.txt | sha256=1a6a3dbb5132010dd93f0c92982da9d81e7038db09afeaaa827e5961502d4da7 | bytes=173 | l
+        BEFORE候補 ['00_HEAD_sha.txt']
+        AFTER 候補 ['00_HEAD_sha.txt |', '00_HEAD_sha.txt']
+      行: path=raw_00_ffprobe_duration.txt | sha256=f995bd0e47706cb0b3dbc8e5ae0df04726f1b3e85128cc482e5f79496facaeee | b
+        BEFORE候補 ['raw_00_ffprobe_duration.txt']
+        AFTER 候補 ['raw_00_ffprobe_duration.txt |', 'raw_00_ffprobe_duration.txt']
+  不変 ./queue/reports/ashigaru-mac-2_B5_19_20260908_manifest.txt
+      BEFORE rc=1 一致 7 / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 8)
+      AFTER  rc=1 一致 7 / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 8)
+      行: path=queue/reports/ashigaru-mac-2_B5_19_20260908.md | sha256=6e8de8e60824e7254744127fd480c79f20d7f7195a9787504
+        BEFORE候補 ['queue/reports/ashigaru-mac-2_B5_19_20260908.md']
+        AFTER 候補 ['queue/reports/ashigaru-mac-2_B5_19_20260908.md |', 'queue/reports/ashigaru-mac-2_B5_19_20260908.md']
+      行: path=queue/reports/ashigaru-mac-1_B4_10_20260908/raw_03_motion.txt | sha256=db0a10dee13b66137d3486d44237cbd6b1
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_B4_10_20260908/raw_03_motion.txt']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_B4_10_20260908/raw_03_motion.txt |', 'queue/reports/ashigaru-mac-1_B4_10_20260908/raw_03_motion.txt']
+      行: path=queue/reports/ashigaru-mac-1_B4_13_20260908.md | sha256=f19b4d2cfd8506403b4068260a4aa244f5d7d6c8d663ea8a7
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_B4_13_20260908.md']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_B4_13_20260908.md |', 'queue/reports/ashigaru-mac-1_B4_13_20260908.md']
+  不変 ./queue/reports/ashigaru-mac-2_B7_19_20260908_manifest.txt
+      BEFORE rc=1 一致 1 / 相違 0 / 実体無 18 / 読めぬ行 0  (母數 19)
+      AFTER  rc=1 一致 1 / 相違 0 / 実体無 18 / 読めぬ行 0  (母數 19)
+      行: path=queue/reports/ashigaru-mac-2_B7_19_20260908.md | sha256=c78b150b3caf7b8c72e2317bec639947e6888a9c7ddc1e020
+        BEFORE候補 ['queue/reports/ashigaru-mac-2_B7_19_20260908.md']
+        AFTER 候補 ['queue/reports/ashigaru-mac-2_B7_19_20260908.md |', 'queue/reports/ashigaru-mac-2_B7_19_20260908.md']
+      行: path=evidence/00_before_dino_assets_check.txt | sha256=e82d3cdd77fe630f251e9a4975aa42113de0893283d896ceb77fe21
+        BEFORE候補 ['evidence/00_before_dino_assets_check.txt']
+        AFTER 候補 ['evidence/00_before_dino_assets_check.txt |', 'evidence/00_before_dino_assets_check.txt']
+      行: path=evidence/01_before_dino_assets_check_after_reset.txt | sha256=fe61014c7b9e6f988ffb53ed9e4ac35c80917d3c124
+        BEFORE候補 ['evidence/01_before_dino_assets_check_after_reset.txt']
+        AFTER 候補 ['evidence/01_before_dino_assets_check_after_reset.txt |', 'evidence/01_before_dino_assets_check_after_reset.txt']
+  不変 ./queue/reports/ashigaru-mac-2_B7_20_20260908_manifest.txt
+      BEFORE rc=1 一致 1 / 相違 0 / 実体無 7 / 読めぬ行 0  (母數 8)
+      AFTER  rc=1 一致 1 / 相違 0 / 実体無 7 / 読めぬ行 0  (母數 8)
+      行: path=queue/reports/ashigaru-mac-2_B7_20_20260908.md | sha256=687448ce79d930b69d803a7e2f5bd6cfaff1da3de445698ff
+        BEFORE候補 ['queue/reports/ashigaru-mac-2_B7_20_20260908.md']
+        AFTER 候補 ['queue/reports/ashigaru-mac-2_B7_20_20260908.md |', 'queue/reports/ashigaru-mac-2_B7_20_20260908.md']
+      行: path=evidence/00_vitest_targeted_4files.txt | sha256=a7c85d8ce672880c1821b5a22117c3ad40b648e076df84be86d92ca0a
+        BEFORE候補 ['evidence/00_vitest_targeted_4files.txt']
+        AFTER 候補 ['evidence/00_vitest_targeted_4files.txt |', 'evidence/00_vitest_targeted_4files.txt']
+      行: path=evidence/01_dino_check_8stage_gate.txt | sha256=91cf23241a1079c765ee3f47c2bd0b1475d434f005b95966137572a3f
+        BEFORE候補 ['evidence/01_dino_check_8stage_gate.txt']
+        AFTER 候補 ['evidence/01_dino_check_8stage_gate.txt |', 'evidence/01_dino_check_8stage_gate.txt']
+  不変 ./queue/reports/ashigaru-mac-2_km-30-utsuwa-ga-damaru-wo-narasu-katachi-to-onore-no-kizu-no-saihatsu-wo-kazoe-20260913_evidence/hyouhon/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_manifest.txt
+      BEFORE rc=0 一致 39 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 39)
+      AFTER  rc=0 一致 39 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 39)
+      行: #   path=queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazo
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_evidence/raw/fx/na']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-29-oya-no-hashira-ga-400-wo-hiku-wo-hakare-to-hougen-no-nibun-wo-kazoe-20260913_evidence/raw/fx/na me.txt', 'queue/r
+  不変 ./queue/reports/ashigaru-mac-2_km-30-utsuwa-ga-damaru-wo-narasu-katachi-to-onore-no-kizu-no-saihatsu-wo-kazoe-20260913_evidence/hyouhon/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_manifest.txt
+      BEFORE rc=0 一致 96 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 96)
+      AFTER  rc=0 一致 96 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 96)
+      行: #   path=queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp ace_var.
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_sp ace_var.txt', 'queue/reports/ashigaru-mac-1_km-ichi-no-
+  不変 ./queue/reports/ashigaru-mac-2_km-30-utsuwa-ga-damaru-wo-narasu-katachi-to-onore-no-kizu-no-saihatsu-wo-kazoe-20260913_evidence/hyouhon/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_manifest.txt
+      BEFORE rc=0 一致 156 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 156)
+      AFTER  rc=0 一致 156 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 156)
+      行: #   path=queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1 sp ace
+        BEFORE候補 ['queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1']
+        AFTER 候補 ['queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c1 sp ace.txt', 'queue/reports/ashigaru-mac-1_km-utsuwa-
+  ★変つた★ ./queue/reports/ashigaru-mac-2_km-46-kakite-gawa-no-kin-wo-taba-no-naka-ni-tateru-giyousei-to-modoshikata-20260917_manifest.txt
+      BEFORE rc=1 一致 120 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 121)
+      AFTER  rc=0 一致 121 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 121)
+      行: path=queue/reports/ashigaru-mac-2_km-46-kakite-gawa-no-kin-wo-taba-no-naka-ni-tateru-giyousei-to-modoshikata-2
+        BEFORE候補 ['queue/reports/ashigaru-mac-2_km-46-kakite-gawa-no-kin-wo-taba-no-naka-ni-tateru-giyousei-to-modoshikata-20260917_evidence/raw/40_yomite_no_wareme/sh
+        AFTER 候補 ['queue/reports/ashigaru-mac-2_km-46-kakite-gawa-no-kin-wo-taba-no-naka-ni-tateru-giyousei-to-modoshikata-20260917_evidence/raw/40_yomite_no_wareme/sh
+  ★変つた★ ./queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chigau-basho_20260912_manifest.txt
+      BEFORE rc=1 一致 340 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 341)
+      AFTER  rc=0 一致 341 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 341)
+      行: path=queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chigau-basho_20260912_evidence/fixtures/が の 紙.txt sha256=b10
+        BEFORE候補 ['queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chigau-basho_20260912_evidence/fixtures/が']
+        AFTER 候補 ['queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chigau-basho_20260912_evidence/fixtures/が の 紙.txt', 'queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chiga
+  ★変つた★ ./queue/reports/ashigaru-mac-3_km-41-mon-wa-futatsu-no-bogen-wo-motsu-watashita-kazu-wo-daichou-no-kazu-to-narabete-kake-20260916_manifest.txt
+      BEFORE rc=1 一致 89 / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 90)
+      AFTER  rc=0 一致 90 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 90)
+      行: path=queue/reports/ashigaru-mac-3_km-41-mon-wa-futatsu-no-bogen-wo-motsu-watashita-kazu-wo-daichou-no-kazu-to-
+        BEFORE候補 ['queue/reports/ashigaru-mac-3_km-41-mon-wa-futatsu-no-bogen-wo-motsu-watashita-kazu-wo-daichou-no-kazu-to-narabete-kake-20260916_evidence/hougen/ne/n
+        AFTER 候補 ['queue/reports/ashigaru-mac-3_km-41-mon-wa-futatsu-no-bogen-wo-motsu-watashita-kazu-wo-daichou-no-kazu-to-narabete-kake-20260916_evidence/hougen/ne/n
+  ★変つた★ ./queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_manifest.txt
+      BEFORE rc=1 一致 349 / 相違 0 / 実体無 3 / 読めぬ行 0  (母數 352)
+      AFTER  rc=0 一致 352 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 352)
+      行: path="queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de
+        BEFORE候補 ['"queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/a']
+        AFTER 候補 ['queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/a sha256=d
+      行: path="queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de
+        BEFORE候補 ['"queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/rel/a']
+        AFTER 候補 ['queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/rel/a sha2
+      行: path="queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de
+        BEFORE候補 ['"queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme2/mono/a']
+        AFTER 候補 ['queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme2/mono/a sh
+  不変 ./queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou/shiryou/T04_hougen_manifest.txt
+      BEFORE rc=0 一致 5 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 5)
+      AFTER  rc=0 一致 5 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 5)
+      行: path=queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou
+        BEFORE候補 ['queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou/shiryou/F01_seijou.txt']
+        AFTER 候補 ['queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou/shiryou/F01_seijou.txt |', 'queue/reports/
+
+= 締 =
+  ★陰性対照★ 現物 1094 本 50037 行 の内、出目が変つた臺帳 = 4 本
+    変つた: ./queue/reports/ashigaru-mac-2_km-46-kakite-gawa-no-kin-wo-taba-no-naka-ni-tateru-giyousei-to-modoshikata-20260917_manifest.txt
+    変つた: ./queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chigau-basho_20260912_manifest.txt
+    変つた: ./queue/reports/ashigaru-mac-3_km-41-mon-wa-futatsu-no-bogen-wo-motsu-watashita-kazu-wo-daichou-no-kazu-to-narabete-kake-20260916_manifest.txt
+    変つた: ./queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_manifest.txt
