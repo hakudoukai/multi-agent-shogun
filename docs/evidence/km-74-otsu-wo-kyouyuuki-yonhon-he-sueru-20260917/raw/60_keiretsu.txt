@@ -1,0 +1,27 @@
+★㋑ 三度目の測り(當初=zsh 語分割疑ひ→実は ★$r: の zsh 置換修飾★ が :path を食つて居た)★  刻=2026-09-17 08:35:11
+  疵の形: git rev-parse "$r:scripts/inbox_watcher.sh" が ★commit sha★ を返した(blob でなく)
+  直し  : "${r}:scripts/inbox_watcher.sh" と括る
+  母數=ref 25 本
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-1/a1-jishu-kuumoji-kiten-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-1/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-1/km-71-kuumoji-wa-atai-toshite-furumau-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-1/km-71b-fusagikata-ni-an-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-2/km-51-usage-wo-yomazu-ni-yonda-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-2/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-3/km-48-nise-no-tsuuka-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-3/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917
+    ・他の版(6dcfc02c55419e9a) ashigaru-mac-3/km-50-yabure-hachikei-no-fusagikata-20260917
+    ・他の版(6dcfc02c55419e9a) karo-mac/a1-r56
+    ・他の版(6dcfc02c55419e9a) karo-mac/a3-r39-fix-20260917
+    ・他の版(6dcfc02c55419e9a) karo-mac/daiko-teishutsu-20260916
+    ・他の版(6dcfc02c55419e9a) karo-mac/gate-hook-fix-20260916
+    ・他の版(6dcfc02c55419e9a) karo-mac/hantei-saiteishutsu-20260917
+    ・他の版(6dcfc02c55419e9a) karo-mac/km-50-47-20260917
+    ★当弾の前(cac867f8)★ karo-mac/km-73-otsu-dash-ichido-no-kane-20260917
+    ・他の版(6dcfc02c55419e9a) karo-mac/km-gate-kou-otsu-20260917
+    ・他の版(6dcfc02c55419e9a) karo-mac/km-gate4-kou-otsu-20260917
+    ・他の版(6dcfc02c55419e9a) main
+  ★当弾の前=1 本 / 陽性対照(BASE 5ff53f30)=6 本 / 他=18 本 / 引けぬ=0 本  和=25★
+
+★∴ 98行(BASE→当弾の前)は km-73=638807f が既に据ゑ、総監督が代行push済(裁 seq323895)★
+  ∴ 当弾の親は ★ab2a1f1 でなく 638807f★ とする ―― さもなくば同じ98行を二度据ゑる事に成る。

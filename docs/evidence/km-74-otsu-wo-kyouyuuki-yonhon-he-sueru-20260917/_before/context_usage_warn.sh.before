@@ -45,10 +45,7 @@ env_state(){
   else printf 'value\n'; fi
 }
 # 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
-#   ★乙′(裁 seq323687⑵ 提起 → ★裁 seq323895㋐ にて『hook は黙る儘で据えよ』と定まつた★)★:
-#   裁の逐語=「理由=warn は異常でない・prompt毎に別process ゆえ『processに一度』は本器に当たらぬ・
-#   刻印file は副作用を負う。異常三形が鳴れば足りる」。∴ 以下は★請ひ★でなく★定め★である。
-#   本器は ★UserPromptSubmit hook＝prompt 毎に別 process★
+#   ★乙′(裁 seq323687⑵ ―― 本器のみ据ゑ置き・裁を請ふ)★: 本器は ★UserPromptSubmit hook＝prompt 毎に別 process★
 #   ゆゑ「process に一度」＝「prompt 毎に一度」＝★毎回★に成り、裁の趣旨「鳴りすぎる鐘」に真向から当たる。
 #   ∴ 未設定は★黙る★儘に据ゑ置き、他三器(watcher/watchdog/health)にのみ一度刷る形を入れた。
 #   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
@@ -61,14 +58,7 @@ fix_threshold(){
     blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
   esac
   if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
-  # ★行注入の封じ(裁 seq323980⑵)★ 値は env 由来ゆゑ改行を含み得、偽の log 行を一本生む。
-  #   乙=可視印へ置換(UTF-8 正・fork 無し・bash 3.2 で可)。甲(tr 0xB6)は UTF-8 不正ゆゑ採らず。
-  #   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
-  case "$_ft_v" in
-    *␊*|*␍*|*␉*) _th_say "★閾 ${_ft_n} が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 ${_ft_d} へ倒す(fail-closed・裁 seq323980⑵)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
-  esac
-  _ft_vp="${_ft_v//$'\n'/␊}"; _ft_vp="${_ft_vp//$'\r'/␍}"; _ft_vp="${_ft_vp//$'\t'/␉}"
-  _th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+  _th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_v}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
   eval "$_ft_o=\$_ft_d"
 }
 # 此の器が黙ると CLAUDE.md 三層機構の L2 が丸ごと抜ける。然も本体は exit 0 を強ひられて居る

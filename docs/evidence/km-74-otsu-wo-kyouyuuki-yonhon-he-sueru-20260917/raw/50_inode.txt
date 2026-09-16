@@ -1,0 +1,24 @@
+★稼働中の器と inode(裁 seq323062⑷「稼働中watcherは触らず次respawnで反映」)★  刻=2026-09-17 08:28:41
+── disk の inode(置換後)
+22062561 scripts/agent_health_check.sh
+22062562 scripts/checks/context_usage_warn.sh
+22062559 scripts/inbox_watcher.sh
+22062560 scripts/watchdogs/enter_restart_common_watchdog.sh
+── 走つて居る process(名で引く・読取のみ)
+9826 bash scripts/inbox_watcher.sh ashigaru-mac-1 multiagent-mac:0.1 claude
+9838 bash scripts/inbox_watcher.sh ashigaru-mac-2 multiagent-mac:0.2 claude
+9859 bash scripts/inbox_watcher.sh ashigaru-mac-3 multiagent-mac:0.3 claude
+  ★pgrep rc=0★
+── 走つて居る inbox_watcher が開いて居る file の inode(lsof・読取のみ)
+  pid=9826
+bash    9826 momizimac    1w   REG   1,14  4621981            13925799 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-1.log
+bash    9826 momizimac    2w   REG   1,14  4621981            13925799 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-1.log
+bash    9826 momizimac  255r   REG   1,14    74274            20564860 /Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh
+  pid=9838
+bash    9838 momizimac    1w   REG   1,14  4173007            13925818 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-2.log
+bash    9838 momizimac    2w   REG   1,14  4173007            13925818 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-2.log
+bash    9838 momizimac  255r   REG   1,14    74274            20564860 /Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh
+  pid=9859
+bash    9859 momizimac    1w   REG   1,14  1341933            13925830 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-3.log
+bash    9859 momizimac    2w   REG   1,14  1341933            13925830 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-3.log
+bash    9859 momizimac  255r   REG   1,14    74274            20564860 /Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh

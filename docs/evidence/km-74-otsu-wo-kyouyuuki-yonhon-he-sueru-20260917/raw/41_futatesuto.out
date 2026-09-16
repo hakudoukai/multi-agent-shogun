@@ -1,0 +1,85 @@
+BASH_VERSION=3.2.57(1)-release  刻=2026-09-17 08:28:40
+
+【形一 行注入】値=「9x」+改行+「★閾 偽の行…★」 ―― 期待=1行に収まり、値は既定へ倒れる
+── 甲  器=scripts/inbox_watcher.sh  閾=NUDGE_COOLDOWN_SEC(既定 60)  抜いた行 125〜166
+     [watcher] ★閾 NUDGE_COOLDOWN_SEC を比較器が扱へぬ(「9x␊★閾 偽の行 ―― 既定へ倒す(fail-closed)★」) ―― 既定 60 へ倒す(fail-closed)★
+     rc=0
+     値=60
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 乙  器=scripts/watchdogs/enter_restart_common_watchdog.sh  閾=ER_THRESHOLD_MIN(既定 10)  抜いた行 76〜117
+     [stub_log] ★閾 ER_THRESHOLD_MIN を比較器が扱へぬ(「9x␊★閾 偽の行 ―― 既定へ倒す(fail-closed)★」) ―― 既定 10 へ倒す(fail-closed)★
+     rc=0
+     値=10
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 丙  器=scripts/agent_health_check.sh  閾=HEALTH_CHECK_TOKEN_WARN(既定 200000)  抜いた行 86〜127
+     [health_check] ★閾 HEALTH_CHECK_TOKEN_WARN を比較器が扱へぬ(「9x␊★閾 偽の行 ―― 既定へ倒す(fail-closed)★」) ―― 既定 200000 へ倒す(fail-closed)★
+     rc=0
+     値=200000
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 丁  器=scripts/checks/context_usage_warn.sh  閾=CONTEXT_WARN_BYTES(既定 1600000)  抜いた行 32〜73
+     [context_warn] ★閾 CONTEXT_WARN_BYTES を比較器が扱へぬ(「9x␊★閾 偽の行 ―― 既定へ倒す(fail-closed)★」) ―― 既定 1600000 へ倒す(fail-closed)★
+     rc=0
+     値=1600000
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+
+【形二 印既在】値=「9x␊偽」 ―― 期待=値を刷らず既定へ倒す(裁 seq323980⑵ の fail-closed)
+── 甲  器=scripts/inbox_watcher.sh  閾=NUDGE_COOLDOWN_SEC(既定 60)  抜いた行 125〜166
+     [watcher] ★閾 NUDGE_COOLDOWN_SEC が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 60 へ倒す(fail-closed・裁 seq323980⑵)★
+     rc=0
+     値=60
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 乙  器=scripts/watchdogs/enter_restart_common_watchdog.sh  閾=ER_THRESHOLD_MIN(既定 10)  抜いた行 76〜117
+     [stub_log] ★閾 ER_THRESHOLD_MIN が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 10 へ倒す(fail-closed・裁 seq323980⑵)★
+     rc=0
+     値=10
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 丙  器=scripts/agent_health_check.sh  閾=HEALTH_CHECK_TOKEN_WARN(既定 200000)  抜いた行 86〜127
+     [health_check] ★閾 HEALTH_CHECK_TOKEN_WARN が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 200000 へ倒す(fail-closed・裁 seq323980⑵)★
+     rc=0
+     値=200000
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 丁  器=scripts/checks/context_usage_warn.sh  閾=CONTEXT_WARN_BYTES(既定 1600000)  抜いた行 32〜73
+     [context_warn] ★閾 CONTEXT_WARN_BYTES が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 1600000 へ倒す(fail-closed・裁 seq323980⑵)★
+     rc=0
+     値=1600000
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+
+【形三 陰性=正しい数】値=「42」 ―― 期待=★log 0 行(黙る)★・値は 42 そのまま(直しが happy path を壊して居らぬ証)
+── 甲  器=scripts/inbox_watcher.sh  閾=NUDGE_COOLDOWN_SEC(既定 60)  抜いた行 125〜166
+     rc=0
+     値=42
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=0★
+── 乙  器=scripts/watchdogs/enter_restart_common_watchdog.sh  閾=ER_THRESHOLD_MIN(既定 10)  抜いた行 76〜117
+     rc=0
+     値=42
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=0★
+── 丙  器=scripts/agent_health_check.sh  閾=HEALTH_CHECK_TOKEN_WARN(既定 200000)  抜いた行 86〜127
+     rc=0
+     値=42
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=0★
+── 丁  器=scripts/checks/context_usage_warn.sh  閾=CONTEXT_WARN_BYTES(既定 1600000)  抜いた行 32〜73
+     rc=0
+     値=42
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=0★
+
+【形四 陰性=空文字】値=「」 ―― 期待=★「空文字」の1行★(乙 322952 の既存枝・印の枝に食はれて居らぬ証)・既定へ
+── 甲  器=scripts/inbox_watcher.sh  閾=NUDGE_COOLDOWN_SEC(既定 60)  抜いた行 125〜166
+     [watcher] ★閾 NUDGE_COOLDOWN_SEC が空文字 ―― 既定 60 へ倒す(fail-closed)★
+     rc=0
+     値=60
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 乙  器=scripts/watchdogs/enter_restart_common_watchdog.sh  閾=ER_THRESHOLD_MIN(既定 10)  抜いた行 76〜117
+     [stub_log] ★閾 ER_THRESHOLD_MIN が空文字 ―― 既定 10 へ倒す(fail-closed)★
+     rc=0
+     値=10
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 丙  器=scripts/agent_health_check.sh  閾=HEALTH_CHECK_TOKEN_WARN(既定 200000)  抜いた行 86〜127
+     [health_check] ★閾 HEALTH_CHECK_TOKEN_WARN が空文字 ―― 既定 200000 へ倒す(fail-closed)★
+     rc=0
+     値=200000
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
+── 丁  器=scripts/checks/context_usage_warn.sh  閾=CONTEXT_WARN_BYTES(既定 1600000)  抜いた行 32〜73
+     [context_warn] ★閾 CONTEXT_WARN_BYTES が空文字 ―― 既定 1600000 へ倒す(fail-closed)★
+     rc=0
+     値=1600000
+     ★刷つた log 行数(rc=/値= は除く・1 でなければ注入が通つた)=1★
