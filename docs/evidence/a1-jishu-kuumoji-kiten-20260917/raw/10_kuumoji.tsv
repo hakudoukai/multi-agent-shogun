@@ -1,0 +1,17 @@
+器	基点	cwd	rc	母數	一致	相違	実体無	読めぬ	基点の札	cwd依存	期待通り
+verify	unset	repo	1	139	0	0	139	0	既定(器の在處から導いた repo 根 /Users/mom	不依存	True
+verify	unset	taba	1	139	0	0	139	0	既定(器の在處から導いた repo 根 /Users/mom	不依存	True
+verify	meiji	repo	0	139	139	0	0	0	引数(明示)	不依存	True
+verify	meiji	taba	0	139	139	0	0	0	引数(明示)	不依存	True
+verify	kuu	repo	1	139	0	0	139	0	引数(明示)	cwd依存★	True
+verify	kuu	taba	0	139	139	0	0	0	引数(明示)	cwd依存★	True
+verify	kuuhaku	repo	1	139	0	0	139	0	引数(明示)	不依存	True
+verify	kuuhaku	taba	1	139	0	0	139	0	引数(明示)	不依存	True
+gate	unset	repo	1	139	0	0	139	0	既定(器の在處から導いた repo 根 /Users/mom	不依存	True
+gate	unset	taba	1	139	0	0	139	0	既定(器の在處から導いた repo 根 /Users/mom	不依存	True
+gate	meiji	repo	0	139	139	0	0	0	引数(明示)	不依存	True
+gate	meiji	taba	0	139	139	0	0	0	引数(明示)	不依存	True
+gate	kuu	repo	1	139	0	0	139	0	引数(明示)	cwd依存★	True
+gate	kuu	taba	0	139	139	0	0	0	引数(明示)	cwd依存★	True
+gate	kuuhaku	repo	1	139	0	0	139	0	引数(明示)	不依存	True
+gate	kuuhaku	taba	1	139	0	0	139	0	引数(明示)	不依存	True

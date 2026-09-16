@@ -1,0 +1,25 @@
+# 10 空文字基点の測り / 刻 2026-09-17T06:35:55+0900 / 門 sha16 e11f0d0142549086 / 照合器 sha16 a507c998c7bd6485 / 臺帳 docs/evidence/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917/ashigaru-mac-1_km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917_manifest.txt sha16 d444a828b6fc4bcd / km-70 束の印 ('c063d827d172f2ad', 197)
+# 基点四態: unset=環境変数を落とす / meiji=束の根(絶対) / kuu=空文字 "" / kuuhaku=空白一つ " " ―― 門は KM_GATE_MANIFEST_BASE で、verify 直は argv[2] で同じ値を渡す(unset は argv[2] 無し)
+# 期待(讀んだ逐語から): kuu は札「引数(明示)」の儘 cwd 相対 ∴ cwd=repo根 → 実体無 139 rc1 / cwd=束の根 → 一致 139 rc0。kuuhaku は os.path.join(" ", p)=" /…" ∴ 両 cwd で実体無 139 rc1・札「明示」。unset は既定(repo 根)で実体無 139 rc1。meiji は両 cwd で一致 139 rc0
+| 器 | 基点 | cwd | rc | 母數 | 一致 | 相違 | 実体無 | 読めぬ | 基点の札 | cwd依存 | 期待通り |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| verify | unset | repo | 1 | 139 | 0 | 0 | 139 | 0 | 既定(器の在處から導いた repo 根 /Users/mom | 不依存 | True |
+| verify | unset | taba | 1 | 139 | 0 | 0 | 139 | 0 | 既定(器の在處から導いた repo 根 /Users/mom | 不依存 | True |
+| verify | meiji | repo | 0 | 139 | 139 | 0 | 0 | 0 | 引数(明示) | 不依存 | True |
+| verify | meiji | taba | 0 | 139 | 139 | 0 | 0 | 0 | 引数(明示) | 不依存 | True |
+| verify | kuu | repo | 1 | 139 | 0 | 0 | 139 | 0 | 引数(明示) | cwd依存★ | True |
+| verify | kuu | taba | 0 | 139 | 139 | 0 | 0 | 0 | 引数(明示) | cwd依存★ | True |
+| verify | kuuhaku | repo | 1 | 139 | 0 | 0 | 139 | 0 | 引数(明示) | 不依存 | True |
+| verify | kuuhaku | taba | 1 | 139 | 0 | 0 | 139 | 0 | 引数(明示) | 不依存 | True |
+| gate | unset | repo | 1 | 139 | 0 | 0 | 139 | 0 | 既定(器の在處から導いた repo 根 /Users/mom | 不依存 | True |
+| gate | unset | taba | 1 | 139 | 0 | 0 | 139 | 0 | 既定(器の在處から導いた repo 根 /Users/mom | 不依存 | True |
+| gate | meiji | repo | 0 | 139 | 139 | 0 | 0 | 0 | 引数(明示) | 不依存 | True |
+| gate | meiji | taba | 0 | 139 | 139 | 0 | 0 | 0 | 引数(明示) | 不依存 | True |
+| gate | kuu | repo | 1 | 139 | 0 | 0 | 139 | 0 | 引数(明示) | cwd依存★ | True |
+| gate | kuu | taba | 0 | 139 | 139 | 0 | 0 | 0 | 引数(明示) | cwd依存★ | True |
+| gate | kuuhaku | repo | 1 | 139 | 0 | 0 | 139 | 0 | 引数(明示) | 不依存 | True |
+| gate | kuuhaku | taba | 1 | 139 | 0 | 0 | 139 | 0 | 引数(明示) | 不依存 | True |
+外れ 0 行 / 母數 16 走
+門 kuu cwd=repo: 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★出す前 門が落ちた。出すな。★
+門 kuu cwd=taba: 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) / ★出す前 門 通。出してよい。★
+禁域と km-70 束 前⇔後: 門 e11f0d0142549086→e11f0d0142549086 同 / 照合器 a507c998c7bd6485→a507c998c7bd6485 同 / km-70 印 ('c063d827d172f2ad', 197)→('c063d827d172f2ad', 197) 同

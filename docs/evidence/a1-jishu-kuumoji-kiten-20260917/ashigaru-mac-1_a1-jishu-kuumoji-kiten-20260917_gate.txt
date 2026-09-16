@@ -1,0 +1,26 @@
+# 自主束 門控(名 = 60_gate_top.rjishu) # 三走 ―― 「all」(渡した 86 本 = 臺帳の項 悉く / byte和 91910 / rc 0)・「main」(渡した 2 本 = 紙 + 臺帳 / byte和 19113 / rc 0)は ★KM_GATE_MANIFEST_BASE=束の根★ / 「nobase」(main と同じ argv・環境変数 unset / rc 1)は ★既定基点(repo 根)では束内相対の臺帳が悉く実体無で落ちる事の證★ ―― argv _after/61_gate_argv_*.txt・stderr _after/60_gate_*.err / 錠 raw/ 0555/0444 は門の前・歩哨 _after/00_hosho.txt mtime_ns 1789594834263666166
+# 刻 2026-09-17T06:40:36+0900 / 門 sha16 e11f0d0142549086 / 臺帳 sha16 1d334a32b3d6ef0b / 紙 sha16 b6927a2961000b49 / 基点 /Users/momizimac/multi-agent-shogun/docs/evidence/a1-jishu-kuumoji-kiten-20260917
+## 走り all(stderr 逐語・基点明示)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(86本)通
+條⑤ 寸法 = byte和 91910(閾 10485760未満)
+★出す前 門 通。出してよい。★
+## 走り main(stderr 逐語・基点明示)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(2本)通
+條⑤ 寸法 = byte和 19113(閾 10485760未満)
+★出す前 門 通。出してよい。★
+## 走り nobase(stderr 逐語・基点無し ―― 落ちて正)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+條⑤ 寸法 = byte和 19113(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★
