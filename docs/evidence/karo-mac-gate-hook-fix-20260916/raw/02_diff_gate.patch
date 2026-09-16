@@ -1,0 +1,81 @@
+# ★註★ 本 patch は ★末尾空白を除いた★ 形である(unified diff は空文脈行を「空白一つ」で表す為、門 條② が鳴る)。
+#        ∴ 之は ★読む為の物★ であり、其の儘 patch(1) へ食はせる物ではない。
+#        正本は raw/00_*_BEFORE.sh と raw/01_*_AFTER.sh（臺帳に sha 有り）である。
+--- docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_gate_BEFORE.sh	2026-09-16 21:17:19
++++ scripts/checks/karo_mac_dasumae_gate.sh	2026-09-16 21:18:01
+@@ -28,6 +28,41 @@
+ #   可逆: 控(…bak-20260912-shiketsu-failopen)へ戻せば旧挙動。
+ is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+
++# ★2026-09-16 裁 seq320321⑴(313209/314012) ―― 「止」を通さぬ(家老mac 自席の器・可逆・事後1便)★
++#   由来: 門には第三の出目「止」が在る ―― FIFO/device を `wc -c` が永久に待ち、rc も出ぬ。
++#   ★實測(家老mac 2026-09-16)★: `timeout 3 wc -c < "$fifo"` は ★120秒 戻らなんだ★(背に回して止めた)。
++#     因 = `<` 再向は ★shell が open() する★ ゆゑ、timeout が exec される ★前に★ 止まる。
++#     ∴ 裁の文言「全 read に timeout(10s)」は ★此の形(< 再向)では効かぬ★。上へ申し上げた。
++#   ∴ 本形は「時限を付ける」でなく ★開かぬ★ を第一とする:
++#     ①-L で符を見(開かぬ) ②実体を readlink -f で確かめ ③/dev/* を拒み
++#     ④常なる file でなければ拒み ⑤寸法は ★stat(開かぬ)★ で取り ⑥其れでも時限を被せる。
++#   出目が數でなければ ★既存の is_num → 「測れぬは通さぬ(default-deny)」★ へ落ちる。
++#   ―― ★新しい落ち枝を作らぬ。既に在る枝へ合流させる。★
++#   可逆: 呼出二箇所を `wc -c < "$f"` へ戻せば旧挙動(控 = docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_gate_BEFORE.sh)。
++TIMEOUT_BIN="$(command -v timeout 2>/dev/null || command -v gtimeout 2>/dev/null || true)"
++SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
++# ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
++is_num "$SAFE_SIZE_TMO" || SAFE_SIZE_TMO=10
++
++safe_size(){
++  local f="${1:-}" r
++  [ -n "$f" ] || { printf 'NOPATH'; return 0; }
++  if [ -L "$f" ]; then
++    r="$(readlink -f -- "$f" 2>/dev/null || true)"
++    [ -n "$r" ] || { printf 'DANGLING'; return 0; }
++  else
++    r="$f"
++  fi
++  case "$r" in (/dev/*) printf 'DEVICE'; return 0 ;; esac
++  [ -e "$r" ] || { printf 'DANGLING'; return 0; }
++  [ -f "$r" ] || { printf 'NOTREG'; return 0; }
++  if [ -n "$TIMEOUT_BIN" ]; then
++    "$TIMEOUT_BIN" "$SAFE_SIZE_TMO" stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
++  else
++    stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
++  fi
++}
++
+ check_one_file(){
+   # $1=file → stdout: "PASS|FAIL <条名> <詳細>" の行を複数出す。rc=0(全PASS)/1(何か落ちた)
+   local f="$1" fail=0
+@@ -61,7 +96,7 @@
+   fi
+
+   local sz last1 last2
+-  sz=$(wc -c < "$f" 2>/dev/null | tr -d ' ')
++  sz=$(safe_size "$f")
+   if ! is_num "$sz"; then
+     say "★條④ 測れぬ(寸法が取れぬ・出目「${sz}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+     return 1
+@@ -94,6 +129,15 @@
+
+ run_gate(){
+   # $1=manifest|-- ; shift ; $@=files
++  # ★2026-09-16 裁 seq320321⑵(311933) ―― :97 の shift 欠陥を直す(家老mac 自席・可逆)★
++  #   旧: `local man="$1"; shift` は $# = 0 の時 ★man が空★ になり shift は rc=1。
++  #       set -u 下でも local 代入中の "$1" は落ちず、門は ★台帳も file も無いまま最後まで歩いた★。
++  #       (現状の呼び手 三本は悉く2本以上渡して居る ∴ 之は ★潜在★ の疵であり、実害は未だ出て居らぬ。)
++  #   本形: 受けた數を先に測り、足らねば ★何も測らずに落とす(default-deny)★。
++  if [ "$#" -lt 2 ]; then
++    say "★引数不足 ―― 受けた數 $# / 要 2 以上(<manifest|--> <file...>)★ ★測る物が無い。測れぬは通さぬ(default-deny)★"
++    return 1
++  fi
+   local man="$1"; shift
+   local files=("$@")
+   local fail=0
+@@ -135,7 +179,7 @@
+   local total=0
+   for f in "${files[@]}"; do
+     local sz
+-    sz=$(wc -c < "$f" 2>/dev/null | tr -d ' ')
++    sz=$(safe_size "$f")
+     if ! is_num "$sz"; then
+       say "★條⑤ 測れぬ(寸法が取れぬ) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+       fail=1
