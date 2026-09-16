@@ -1,0 +1,156 @@
+【母數の宣り】
+  歩いた根 = scripts/ (再帰・regular file のみ・symlink は除く)
+  母數(本) = ★96★  内 讀めた=96 / 讀めぬ=0
+  内 名に 'bak' を含む(控) = 8 本 ―― ★歩いて居る。除いて居らぬ。★
+  窓 K = 註の行から 後ろ 10 行 / 前 3 行 ―― ★恣意である★
+  辞書(絶対を宣る語) 21 語 = regardless / always / ALWAYS / never / NEVER / unconditional / every time / in all cases / no matter / 必ず / 常に / 全て / すべて / いかなる / 拘らず / かかわらず / 問わず / 関係なく / 一律 / 例外なく / 無条件
+
+【対照】
+  陽性対照 = scripts/stop_hook_inbox.sh L71 が候補に在るか
+    → ★在り(器は見えて居る)★
+  陰性対照 = 在らざる語 'zunbero39nonexistent' の當たり = 0 本 (0 で在るべし)
+
+【候補】 歩いた行(延べ)=23727 / ★候補=42 本★
+  ── scripts/checks/ephemeral_worktree_hygiene.sh:12  語=常に
+     註 | # 読まれなく成る(= 常に鳴る 検 は 鳴らぬ 検 と 同じ)。
+     枝 | L21 if [ "${dirty}" != "0" ]; then OWNED=$((OWNED+1))
+  ── scripts/checks/karo_mac_dasumae_gate.sh:42  語=必ず
+     註 | #   ★偽の青は作れぬ★ ―― 條②を隠す紙は必ず條③を鳴らす故、此の疵は「數を少なく言ふ」疵である。
+     枝 | L45 if [ "$ws_rc" -ge 2 ] || ! is_num "$ws_n"; then
+  ── scripts/checks/karo_mac_gate4.sh:61  語=一律
+     註 | #       ⑷ の裁= ★file 種 で分けず byte 一律 の閾 で見る★(97.5% が .log/.md ゆゑ 種 別 は要らぬ)。
+     枝 | L70 if [ "$mb" -ge "$MAXF" ]; then say "★條⑤ 単 file が ${mb} MB(上限 ${MAXF})―― ${f}★"; big=1; fi
+  ── scripts/commander_send_shogun_second.sh:69  語=常に
+     註 | # PREFLIGHT (fail-closed): Commander→SecondPC は常に役職とcanonical topicを明示する。
+     枝 | L71 if msg.get("from_pc") != "commander":
+  ── scripts/fukuincho_desktop_poke.py:331  語=必ず
+     註 | # ★finally で必ず復元 試行 (§5.1 #13)、結果を final_restore_status に反映★
+     枝 | L335 if saved_textlike and original is not None:
+  ── scripts/inbox_watcher.sh:57  語=never
+     註 | # doesn't false-busy deadlock waiting for a stop_hook that never fires.
+     枝 | L58 if [[ "$CLI_TYPE" == "claude" ]]; then
+  ── scripts/inbox_watcher.sh:561  語=never
+     註 | # Safety: never inject CLI commands into the shogun pane.
+     枝 | L563 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh:568  語=never
+     註 | # Busy guard: never send /clear when agent is actively processing.
+     枝 | L571 if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
+  ── scripts/inbox_watcher.sh:712  語=never
+     註 | # Safety: never auto-reset context for command-layer agents.
+     枝 | L716 if is_no_auto_clear_agent; then
+  ── scripts/inbox_watcher.sh:841  語=never
+     註 | # Notify once per cooldown; never choose or inject a key into the dialog.
+     枝 | L845 if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
+  ── scripts/inbox_watcher.sh:1028  語=regardless
+     註 | # Exception: shogun — ntfy must be delivered immediately regardless of busy state.
+     枝 | L1029 if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+  ── scripts/inbox_watcher.sh:1111  語=never
+     註 | # Safety: never send Escape escalation to shogun. It can wipe the Lord's input.
+     枝 | L1112 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh:1323  語=never
+     註 | # activate if the stop hook never fires.
+     枝 | L1324 if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+  ── scripts/inbox_watcher.sh:1543  語=never
+     註 | # death-restart loop. Guard with `|| true` so a single bad cycle never
+     枝 | L1545 if [ "$rc" -eq 2 ]; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:57  語=never
+     註 | # doesn't false-busy deadlock waiting for a stop_hook that never fires.
+     枝 | L58 if [[ "$CLI_TYPE" == "claude" ]]; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:561  語=never
+     註 | # Safety: never inject CLI commands into the shogun pane.
+     枝 | L563 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:568  語=never
+     註 | # Busy guard: never send /clear when agent is actively processing.
+     枝 | L571 if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:712  語=never
+     註 | # Safety: never auto-reset context for command-layer agents.
+     枝 | L716 if is_no_auto_clear_agent; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:997  語=regardless
+     註 | # Exception: shogun — ntfy must be delivered immediately regardless of busy state.
+     枝 | L998 if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:1080  語=never
+     註 | # Safety: never send Escape escalation to shogun. It can wipe the Lord's input.
+     枝 | L1081 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:1276  語=never
+     註 | # activate if the stop hook never fires.
+     枝 | L1277 if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+  ── scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:1496  語=never
+     註 | # death-restart loop. Guard with `|| true` so a single bad cycle never
+     枝 | L1498 if [ "$rc" -eq 2 ]; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:57  語=never
+     註 | # doesn't false-busy deadlock waiting for a stop_hook that never fires.
+     枝 | L58 if [[ "$CLI_TYPE" == "claude" ]]; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:561  語=never
+     註 | # Safety: never inject CLI commands into the shogun pane.
+     枝 | L563 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:568  語=never
+     註 | # Busy guard: never send /clear when agent is actively processing.
+     枝 | L571 if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:712  語=never
+     註 | # Safety: never auto-reset context for command-layer agents.
+     枝 | L716 if is_no_auto_clear_agent; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:997  語=regardless
+     註 | # Exception: shogun — ntfy must be delivered immediately regardless of busy state.
+     枝 | L998 if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:1080  語=never
+     註 | # Safety: never send Escape escalation to shogun. It can wipe the Lord's input.
+     枝 | L1081 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:1276  語=never
+     註 | # activate if the stop hook never fires.
+     枝 | L1277 if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+  ── scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:1496  語=never
+     註 | # death-restart loop. Guard with `|| true` so a single bad cycle never
+     枝 | L1498 if [ "$rc" -eq 2 ]; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:57  語=never
+     註 | # doesn't false-busy deadlock waiting for a stop_hook that never fires.
+     枝 | L58 if [[ "$CLI_TYPE" == "claude" ]]; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:561  語=never
+     註 | # Safety: never inject CLI commands into the shogun pane.
+     枝 | L563 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:568  語=never
+     註 | # Busy guard: never send /clear when agent is actively processing.
+     枝 | L571 if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:712  語=never
+     註 | # Safety: never auto-reset context for command-layer agents.
+     枝 | L716 if is_no_auto_clear_agent; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:997  語=regardless
+     註 | # Exception: shogun — ntfy must be delivered immediately regardless of busy state.
+     枝 | L998 if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:1080  語=never
+     註 | # Safety: never send Escape escalation to shogun. It can wipe the Lord's input.
+     枝 | L1081 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:1276  語=never
+     註 | # activate if the stop hook never fires.
+     枝 | L1277 if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+  ── scripts/inbox_watcher.sh.bak-noautoclear-20260910:1496  語=never
+     註 | # death-restart loop. Guard with `|| true` so a single bad cycle never
+     枝 | L1498 if [ "$rc" -eq 2 ]; then
+  ── scripts/karo_overload_monitor.sh:487  語=必ず
+     註 | # dump file は hit 時必ず保存 (= 監査証跡)
+     枝 | L492 if [ "$cooldown_skip" = "true" ] || [ "$cap_skip" = "true" ]; then
+  ── scripts/ratelimit_check.sh:335  語=always
+     註 | # Context: read from status bar (always visible, no /status needed)
+     枝 | L344 if ! $_rl_quota_done; then
+  ── scripts/stop_hook_inbox.sh:71  語=regardless
+     註 | # Agent is going idle (exit 0) regardless of unread count.
+     枝 | L80 if [ "$AGENT_ID" = "shogun" ]; then
+  ── scripts/stop_hook_inbox.sh:72  語=ALWAYS
+     註 | # ALWAYS create the idle flag so inbox_watcher knows the agent is idle
+     枝 | L80 if [ "$AGENT_ID" = "shogun" ]; then
+
+【file 別】
+    9  scripts/inbox_watcher.sh
+    8  scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear  ★控★
+    8  scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac  ★控★
+    8  scripts/inbox_watcher.sh.bak-noautoclear-20260910  ★控★
+    2  scripts/stop_hook_inbox.sh
+    1  scripts/checks/ephemeral_worktree_hygiene.sh
+    1  scripts/checks/karo_mac_dasumae_gate.sh
+    1  scripts/checks/karo_mac_gate4.sh
+    1  scripts/commander_send_shogun_second.sh
+    1  scripts/fukuincho_desktop_poke.py
+    1  scripts/karo_overload_monitor.sh
+    1  scripts/ratelimit_check.sh
+
+★此の數は『矛盾の數』ではない。『候補の數』である。★
+★裁くのは人である ―― 紙で一本づつ当たり、確/否/未判 に分ける。★
