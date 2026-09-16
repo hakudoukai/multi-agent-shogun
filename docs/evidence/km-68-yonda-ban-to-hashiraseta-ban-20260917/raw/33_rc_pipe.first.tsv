@@ -1,0 +1,13 @@
+検出子	path	行	逐語	札
+乙 pipe→$?	docs/evidence/km-67-mon-no-ato-20260917/ashigaru-mac-1_km-67-mon-no-ato-20260917.md	143	3. 45 の rc を `| head` の後の `$?` で讀んだ(pipe 越し)―― 45_km66.rc(10_run 直採)が正。	本
+乙 pipe→$?	docs/evidence/km-67-mon-no-ato-20260917/raw/70_paper.py	102	3. 45 の rc を `| head` の後の `$?` で讀んだ(pipe 越し)―― 45_km66.rc(10_run 直採)が正。	本
+甲 shell=True+|	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/00_start.py	27	'㋒ rc が管を渡る箇所 33_rc_pipe.py: 母數 = km-67 と km-68 の束の ★全 file★(.py .sh .txt .md .tsv …・非通常は除き数へる)。検出子 = ⑴ python: shell=True の cmd 文字列に | / os.system( / os.popen(	本
+甲 system/popen/getoutput	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/00_start.py	27	'㋒ rc が管を渡る箇所 33_rc_pipe.py: 母數 = km-67 と km-68 の束の ★全 file★(.py .sh .txt .md .tsv …・非通常は除き数へる)。検出子 = ⑴ python: shell=True の cmd 文字列に | / os.system( / os.popen(	本
+甲 shell=True+|	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/33_rc_pipe.py	16	K.kaku(FX + '/33_positive.py', '# 33 の陽性対照(甲)―― shell=True の cmd に | が在る形。此の file は鳴らねばならぬ。\nimport subprocess\np = subprocess.run("false | true", shell=True)\n	己
+甲 shell=True+|	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/33_rc_pipe.py	35	if 'subprocess' in L[i] or 'shell' in L[i] or 'Popen' in L[i] or 'run(' in L[i]: bun = L[i]; j = i while bun.count('(') > bun.count(')') and j + 1 < len(L) and 	己
+甲 system/popen/getoutput	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/33_rc_pipe.py	4	甲 python: 同じ文(括弧が閉ぢるまで ≤8 行)に shell=True と、文字列の中の | が在る / os.system( / os.popen( / subprocess.getoutput( / getstatusoutput(	己
+乙 pipe→$?	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/33_rc_pipe.py	15	K.kaku(FX + '/33_positive.sh', '#!/bin/bash\n# 33 の陽性対照(乙)―― pipe の後の $? を讀む形。此の file は鳴らねばならぬ。\nls /nonexistent | head -1\nrc=$?\necho "rc=$rc"\n')	己
+乙 pipe→$?	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/33_rc_pipe.py	17	K.kaku(FX + '/33_negative.sh', '#!/bin/bash\n# 33 の陰性対照 ―― pipefail 有・$? は pipe の無い行。此の file は鳴つてはならぬ。\nset -o pipefail\nout=$(ls /nonexistent)\nrc=$?\necho "$o	己
+乙 pipe→$?	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/33_rc_pipe.py	58	out.append('## ★此の器が数へぬ物★: 對話(shell の入力)で打つた `cmd | head; echo $?` は束に写らぬ限り母數に無い ―― 第67弾 §7-3 の疵は其の形であつた(束の器には無く、席の手に在つた)。∴ 本弾の 0 は「束の器に無い」であつて「席の手に無い」ではない。')	己
+甲 shell=True+|	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/fixture/33_positive.py	3	p = subprocess.run("false | true", shell=True)	対照
+乙 pipe→$?	docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/fixture/33_positive.sh	3	ls /nonexistent | head -1 ⏎ rc=$?	対照

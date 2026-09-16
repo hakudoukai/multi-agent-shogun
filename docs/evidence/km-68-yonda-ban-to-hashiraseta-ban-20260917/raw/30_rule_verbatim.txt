@@ -1,0 +1,7 @@
+# ㋑⑶ 変更前後の則を逐語で並べる / 刻 2026-09-17T04:06:17+0900
+## 前(則一)= 第67弾 raw/00_start.txt の則行(測る前に書いた・逐語):
+    後 = file の mtime_ns > 刻 ★又は★ birth(生れた刻・stat -f %FB)> 刻。同 = mtime_ns == 刻(決められぬ・数へる)。前 = 何れも < 刻。ctime は使はぬ(chmod/rename/cp -p が動かし、中身の書込みと区別できぬ)。歩く = os.walk・lstat・S_ISREG のみ(非通常は数へて宣す)。母數 0 なら rc 2(★歩いて居らぬ = 通でも鳴でもない★)。後 ∧ 宣に無い ≥ 1 なら rc 1(鳴)。後 ∧ 宣に在る のみなら rc 0。宣 = fnmatch(brace {a,b} は展開)。
+## 後(則二)= 第67弾 raw/40_mon_no_ato.py の docstring(測つた後に変へた・逐語):
+  ★則を一つ変へた(一走目の後・42 P6 が黙つた故)★: 一走目は ctime を使はなかつた(chmod/rename が動かす故)。然し macOS は utime で mtime を birth より前へ戻すと birth も其処へ締める ∴ 前へ戻された新 file は mtime/birth では見えず、ctime(utime も今へ動かす)でしか見えぬ。∴ ctime を足し、錠(chmod)は歩哨の ★前★ に掛ける順へ変へた(錠が後なら錠自身が鳴る = L1 一走目の形)。一走目の出目は *.first.* に残す。
+## 器の差 = raw/30_rule_diff.txt(diff -u)/ 差の核 = `later = mns > A or bns > A or cns > A` → `later = mns > A or bns > A`(一行)+ 頭註の名札 2 箇所
+## 40 sha16 4bc8f1dfafd9ee9a / 41 sha16 9557faffb9cac3a3

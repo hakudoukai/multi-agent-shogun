@@ -1,0 +1,14 @@
+# 33 ㋒ rc が管を渡る箇所 / 刻 2026-09-17T04:08:20+0900 / 歩き根 2(km-67・km-68)/ 母數 通常 file 316(非通常 0)/ 検出子 甲(python)乙(pipe→$?)丙(.sh の pipefail 無)
+## 陽性対照: 33_positive.sh(乙) 鳴つた / 33_positive.py(甲) 鳴つた / 陰性対照 33_negative.sh 黙つた
+## 当たり(対照と己と己の産物を除く) 4 箇所 = km-67 2 / km-68 2 ‖ 己(33 自身・字面で除かず path で札) 6 ‖ 己の産物(33_rc_pipe.* ―― 一走目・二走目の出目が己の当たりを逐語で含む) 153 ‖ 対照 2 ‖ 和 165 = 全当たり 165
+  [文(紙)] 乙 pipe→$? docs/evidence/km-67-mon-no-ato-20260917/ashigaru-mac-1_km-67-mon-no-ato-20260917.md:143  3. 45 の rc を `| head` の後の `$?` で讀んだ(pipe 越し)―― 45_km66.rc(10_run 直採)が正。
+  [文] 乙 pipe→$? docs/evidence/km-67-mon-no-ato-20260917/raw/70_paper.py:102  3. 45 の rc を `| head` の後の `$?` で讀んだ(pipe 越し)―― 45_km66.rc(10_run 直採)が正。
+  [文] 甲 shell=True+| docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/00_start.py:27  '㋒ rc が管を渡る箇所 33_rc_pipe.py: 母數 = km-67 と km-68 の束の ★全 file★(.py .sh .txt .md .tsv …・非通常は除き数へる)。検出子 = ⑴ python: shell=True の cmd 文字列に | / os.system( / os.popen(
+  [文] 甲 system/popen/getoutput docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/00_start.py:27  '㋒ rc が管を渡る箇所 33_rc_pipe.py: 母數 = km-67 と km-68 の束の ★全 file★(.py .sh .txt .md .tsv …・非通常は除き数へる)。検出子 = ⑴ python: shell=True の cmd 文字列に | / os.system( / os.popen(
+## 当たりの内 ★実行★(rc が実際に管を渡る) 0 / 文(紙・則・註・文字列の中で管を語る) 4 ―― 文は「rc が管を渡る箇所」ではない。字面で除かず、tokenize の STRING/COMMENT と file の種で割つた(二走目で足した札・一走目 .first は札無し)
+## 丙 .sh の file 単位(pipefail 無 = pipe の rc が隠れる器): 母數 2
+  pipefail 有 docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/fixture/33_negative.sh (対照)
+  ★pipefail 無★ docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/fixture/33_positive.sh (対照)
+## 直した本数 = km-68 の ★実行★ の当たり 0 本 / 直さぬ = km-68 の文 2 本(則の記述・測る前に書いた文ゆゑ触らぬ)+ km-67 の 2 本(錠の下・凍つた束・讀むのみ)
+## ★此の器が数へぬ物★: 對話(shell の入力)で打つた `cmd | head; echo $?` は束に写らぬ限り母數に無い ―― 第67弾 §7-3 の疵は其の形であつた(束の器には無く、席の手に在つた)。∴ 本弾の 0 は「束の器に無い」であつて「席の手に無い」ではない。
+# 結 33: 対照 3/3 期待通り / 本の当たり 4 = 実行 0 + 文 4

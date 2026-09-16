@@ -1,0 +1,20 @@
+# 21 ㋐ 第67弾 ㋓ の引き直し(版刻器 20 越し) / 刻 2026-09-17T04:06:13+0900 / 的 mini 臺帳 26 本(km-67 raw/otsu1/lines/・讀むのみ)/ 第67弾の tsv docs/evidence/km-67-mon-no-ato-20260917/raw/otsu1_genbutsu.tsv(讀むのみ)
+★版刻(走らせる直前)★ realpath /Users/momizimac/multi-agent-shogun/scripts/checks/karo_mac_manifest_verify.py
+  sha16 a507c998c7bd6485 / 総行数 198 / mtime 2026-09-17T00:01:41 / git blob ebfc4c0ecc080c0f vs HEAD b19ec9ea259653d9 → ★違ふ=汚れて居る(disk ≠ HEAD)★ 枝 main 根 /Users/momizimac/multi-agent-shogun
+  L133:             continue
+  L139:             unreadable += 1
+  L152:             miss += 1
+  L158:             ok += 1
+  L160:             ng += 1
+版札v1 sha16=a507c998c7bd6485 lines=198 blob=ebfc4c0ecc080c0f head=b19ec9ea259653d9 行=133,139,152,158,160 封=3bbd1e2233956044
+--against(別の版) /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_manifest_verify.py sha16 bbde471f70848fc8 / 総行数 127 / 同じ=commit 済 枝 karo-mac/a1-r56 根 /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1
+  L133: ★違ふ★ | 別の版: ★133 行目は無い(総行数 127)★
+  L139: ★違ふ★ | 別の版: ★139 行目は無い(総行数 127)★
+  L152: ★違ふ★ | 別の版: ★152 行目は無い(総行数 127)★
+  L158: ★違ふ★ | 別の版: ★158 行目は無い(総行数 127)★
+  L160: ★違ふ★ | 別の版: ★160 行目は無い(総行数 127)★
+## 行番号→本文 の検め(走らせた bytes で): 悉く合ふ ―― L133='continue' / L139='unreadable += 1' / L152='miss += 1' / L158='ok += 1' / L160='ng += 1'
+## 落ちる行の本数 A 基点 ""(cwd main 樹): 第67弾 乙1→133: 4 本 / 乙1→139: 19 本 / 乙5→152: 3 本 ‖ 本弾(20 越し) 乙1→133: 4 本 / 乙1→139: 19 本 / 乙5→152: 3 本
+## 落ちる行の本数 B 基点 <紙>_evidence/: 第67弾 乙1→133: 4 本 / 乙1→139: 19 本 / 乙5→158: 3 本 ‖ 本弾(20 越し) 乙1→133: 4 本 / 乙1→139: 19 本 / 乙5→158: 3 本
+## 一本づつ A/B/C 悉く同じ 26 / 違ふ 0 / 母數 26
+## 結: 乙1 139 = 19 / 乙1 133 = 4 / 乙5 152(A) = 3 / 乙5 158(B) = 3 ―― 第67弾は 19/4/3/3。★同じ数で出た★。同じ数が出た事も「器を通して初めて言へる」―― 第67弾の二走目は行番号を手(cat -n)で置き、本弾は走らせた bytes から引いた(版札の封が其れを縛る)。

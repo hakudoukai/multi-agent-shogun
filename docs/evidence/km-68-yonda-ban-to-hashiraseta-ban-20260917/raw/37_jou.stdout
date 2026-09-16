@@ -1,0 +1,41 @@
+# 37 ㋔ 錠は本当に塞いだのか / 刻 2026-09-17T04:07:25+0900 / uid 501 / 己 pid 45819
+## ⑴ hook(settings.json)母數 6 / 刻 2026-09-17T04:07:25+0900
+  Stop bash scripts/stop_hook_inbox.sh → scripts/stop_hook_inbox.sh / docs/evidence を含む行 1(実行かつ書き語有 0)
+     :51 註/書き語無 #   可逆: 下の塊を `INPUT=$(cat)` 一行へ戻せば旧挙動(控 = docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_hook_BEFORE.sh)
+  Stop python3 scripts/goal_stop_hook.py → scripts/goal_stop_hook.py / docs/evidence を含む行 0(実行かつ書き語有 0)
+  PreToolUse scripts/checks/pretooluse_bash_guard.sh → scripts/checks/pretooluse_bash_guard.sh / docs/evidence を含む行 0(実行かつ書き語有 0)
+  PreToolUse bash scripts/checks/dd169_kill_term_guard.sh → scripts/checks/dd169_kill_term_guard.sh / docs/evidence を含む行 0(実行かつ書き語有 0)
+  UserPromptSubmit bash scripts/checks/context_usage_warn.sh → scripts/checks/context_usage_warn.sh / docs/evidence を含む行 0(実行かつ書き語有 0)
+  StopFailure python3 scripts/goal_stopfailure_hook.py → scripts/goal_stopfailure_hook.py / docs/evidence を含む行 0(実行かつ書き語有 0)
+  ∴ hook が docs/evidence へ書く実行行 = 0(rc 0・根 settings.json・深さ hooks[*].hooks[*].command → scripts/ の file 一段)
+## ⑵ process(ps -U 501 -o pid=,command=)母數 447 / rc 0 / 己+祖先 5(pid [35957, 45811, 45818, 45819, 93163]・除いた)/ argv に docs/evidence か km-68 を持つ物(己を除く) 0 / 刻 2026-09-17T04:07:25+0900
+  稼働中の watcher 系 3: 9826 bash scripts/inbox_watcher.sh ashigaru-mac-1 multiagent-mac:0.1 c | 9838 bash scripts/inbox_watcher.sh ashigaru-mac-2 multiagent-mac:0.2 c | 9859 bash scripts/inbox_watcher.sh ashigaru-mac-3 multiagent-mac:0.3 c
+## ⑶ scripts/ の器 母數 80(.sh .py)/ docs/evidence を含む file 3 / 其の行で 実行かつ書き語有 0 / 刻 2026-09-17T04:07:25+0900
+  scripts/checks/karo_mac_dasumae_gate.sh: 行 1
+     :41 註/書き語無 #   可逆: 呼出二箇所を `wc -c < "$f"` へ戻せば旧挙動(控 = docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_gate_BEFORE.sh)
+  scripts/checks/karo_mac_manifest_verify.py: 行 1
+     :125 註/書き語無 #   ★戻し方(一手)★ cp -p docs/evidence/karo-mac-manifest-verify-inyoufu-kin-20260916/\
+  scripts/stop_hook_inbox.sh: 行 1
+     :51 註/書き語無 #   可逆: 下の塊を `INPUT=$(cat)` 一行へ戻せば旧挙動(控 = docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_hook_BEFORE.sh)
+## ⑷ launchd plist 母數 16(根 /Users/momizimac/Library/LaunchAgents・深さ 1)/ multi-agent-shogun か docs/evidence を指す物 0: [] / crontab: crontab: no crontab for momizimac / 刻 2026-09-17T04:07:25+0900
+## ⑸ git fixture /var/folders/z0/bdbk65zj0gjg80g3784jhmvc0000gn/T/km68_jou_50kzpatk(d/ 0555・d/f.txt 0444・d/untracked.txt 0444・枝 main=v1 / b=v2)/ 刻 2026-09-17T04:07:25+0900
+  讀 add -f d/: rc 0 / stdout '' / stderr ''
+  讀 hash-object: rc 0 / stdout '626799f0f85326a8c1fc522db584e86cdfccd51f' / stderr ''
+  讀 status: rc 0 / stdout 'A  d/untracked.txt' / stderr ''
+  讀 diff b: rc 0 / stdout 'd/f.txt         | 2 +-\n d/untracked.txt | 1 +\n 2 files changed, 2 insertions(+),' / stderr ''
+  書 checkout b(f.txt を v2 に書き換へる): rc 0 / stdout 'M\td/f.txt\nA\td/untracked.txt' / stderr "error: unable to unlink old 'd/f.txt': Permission denied\nSwitched to branch 'b'"
+  書 rm -f d/f.txt(unlink): rc 128 / stdout "rm 'd/f.txt'" / stderr "fatal: git rm: 'd/f.txt': Permission denied"
+  書 clean -f d/(untracked を unlink): rc 0 / stdout '' / stderr ''
+  書 restore --source=b d/f.txt: rc 255 / stdout '' / stderr "error: unable to unlink old 'd/f.txt': Permission denied"
+  書 checkout b 再(直前の失敗後の状態): rc 0 / stdout 'M\td/f.txt\nA\td/untracked.txt' / stderr "Already on 'b'"
+  後の状態: d/f.txt = 'v1' / untracked 在る True / 枝 b / d mode 0o555
+  生 read open: ★通つた★
+  生 write open(w): PermissionError(13)
+  生 create open(new): PermissionError(13)
+  生 unlink: PermissionError(13)
+  生 rename: PermissionError(13)
+  生 mkdir: PermissionError(13)
+## ⑹ 同 uid の chmod(錠を外す): rc 0 / d mode 0o755 ―― 外せる。外せば ctime が動き 40(則二)が鳴る(第67弾 L3・本弾 30 L1a)。∴ 錠は「同 uid の者が黙つて書く」を防がぬ ―― 防ぐのは「錠を外さずに書く」だけであり、外した痕は捕へ器が數へる。
+## ⑺ root: id -u = 501 ―― 己は root でない。root は錠を無視して書ける(測れぬ・宣言)。
+## 第67弾の錠の今(家老の git add -f・commit f955bc3 の後): raw/ mode 0o555 / 通常 file 165 / 0444・0555 でない物 0 ―― 錠は讀みを妨げず、家老の add -f の後も掛かつた儘。
+# 結 37: 束の外から raw/ へ「錠を外さずに」書ける経路 = hook 0 + scripts 実行書き行 0 + process(argv に的) 0 + launchd 0 + git 書き系(⑸ の rc≠0 を讀め)= ★0★(rc 0・根 settings.json/scripts//pgrep/LaunchAgents・深さ 1〜2・刻 2026-09-17T04:07:26+0900)。★錠が塞いだのは「門の後に書く病」の内 ★己の器が黙つて書く★ 経路であり、同 uid の chmod と root は塞がぬ ―― 其の二つは 40 の ctime が痕で數へる(root は測れぬ)。★

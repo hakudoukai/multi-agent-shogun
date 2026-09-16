@@ -1,0 +1,24 @@
+# 96 門の後の實走 / 刻 2026-09-17T04:14:30+0900 / 歩哨 /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/_after/00_hosho.txt mtime_ns 1789586056728695711
+## ⑴ 根 raw/(宣 無・--probe): rc 0 / 母數 129 / 後 0 / ★疵 0★ / P0 根へ 1 byte 書けぬ = PermissionError(13) ★出来なく なつて居る★ / 出目 _after/96_raw.txt
+## ⑵ 根 束全体(宣 = raw/50_sengen.txt): rc 0 / 母數 154 / 後 18(宣に在る 18)/ ★疵 0★ / 出目 _after/96_bundle.txt
+   後・宣 _after/60_gate_selftest.err 274B mtime 04:14:16.797820965(+69.125ms) birth 04:14:16.797749175(FB) ctime 04:14:16.797820965 何で後=mbc 宣=60_gate_selftest.err
+   後・宣 _after/60_gate_selftest.out 85B mtime 04:14:16.797908673(+69.213ms) birth 04:14:16.797873590(FB) ctime 04:14:16.797908673 何で後=mbc 宣=60_gate_selftest.out
+   後・宣 _after/60_gate_selftest.rc 2B mtime 04:14:16.797968630(+69.273ms) birth 04:14:16.797938464(FB) ctime 04:14:16.797968630 何で後=mbc 宣=60_gate_selftest.rc
+   後・宣 _after/61_gate_argv_main.txt 382B mtime 04:14:16.798044296(+69.349ms) birth 04:14:16.798015505(FB) ctime 04:14:16.798044296 何で後=mbc 宣=61_gate_argv_main.txt
+   後・宣 _after/60_gate_main.err 236B mtime 04:14:16.880122104(+151.426ms) birth 04:14:16.879948815(FB) ctime 04:14:16.880122104 何で後=mbc 宣=60_gate_main.err
+   後・宣 _after/60_gate_main.out 535B mtime 04:14:16.880533349(+151.838ms) birth 04:14:16.880249228(FB) ctime 04:14:16.880533349 何で後=mbc 宣=60_gate_main.out
+   後・宣 _after/60_gate_main.rc 2B mtime 04:14:16.880630640(+151.935ms) birth 04:14:16.880589182(FB) ctime 04:14:16.880630640 何で後=mbc 宣=60_gate_main.rc
+   後・宣 _after/61_gate_argv_all.txt 13759B mtime 04:14:16.880957636(+152.262ms) birth 04:14:16.880906178(FB) ctime 04:14:16.880957636 何で後=mbc 宣=61_gate_argv_all.txt
+   後・宣 _after/60_gate_all.err 239B mtime 04:14:19.181817643(+2453.122ms) birth 04:14:19.181714519(FB) ctime 04:14:19.181817643 何で後=mbc 宣=60_gate_all.err
+   後・宣 _after/60_gate_all.out 535B mtime 04:14:19.181950266(+2453.255ms) birth 04:14:19.181913142(FB) ctime 04:14:19.181950266 何で後=mbc 宣=60_gate_all.out
+   後・宣 _after/60_gate_all.rc 2B mtime 04:14:19.182011557(+2453.316ms) birth 04:14:19.181979516(FB) ctime 04:14:19.182011557 何で後=mbc 宣=60_gate_all.rc
+   後・宣 _after/60_gate_rcs.txt 1482B mtime 04:14:19.182397803(+2453.702ms) birth 04:14:19.182363386(FB) ctime 04:14:19.182397803 何で後=mbc 宣=60_gate_rcs.txt
+   後・宣 ashigaru-mac-1_km-68-yonda-ban-to-hashiraseta-ban-20260917_gate.txt 1141B mtime 04:14:19.182796798(+2454.101ms) birth 04:14:19.182754840(FB) ctime 04:14:19.182796798 何で後=mbc 宣=*_gate.txt
+   後・宣 _after/60_gate_top.r68.txt 1141B mtime 04:14:19.182865797(+2454.170ms) birth 04:14:19.182824506(FB) ctime 04:14:19.182865797 何で後=mbc 宣=60_gate_top.r68.txt
+   後・宣 _after/60_gate_run.stdout 1711B mtime 04:14:19.186230215(+2457.535ms) birth 04:14:19.186159758(FB) ctime 04:14:19.186230215 何で後=mbc 宣=60_gate_run.stdout
+   後・宣 _after/60_gate_run.err 85B mtime 04:14:19.186295256(+2457.600ms) birth 04:14:19.186264965(FB) ctime 04:14:19.186295256 何で後=mbc 宣=60_gate_run.err
+   後・宣 _after/60_gate_run.rc 2B mtime 04:14:19.186347880(+2457.652ms) birth 04:14:19.186321964(FB) ctime 04:14:19.186347880 何で後=mbc 宣=60_gate_run.rc
+   後・宣 _after/96_raw.txt 1133B mtime 04:14:30.106815380(+13378.120ms) birth 04:14:30.106742589(FB) ctime 04:14:30.106815380 何で後=mbc 宣=96_raw.txt
+## ⑶ 臺帳を照合器で(基点 ""・cwd main 樹): rc 0 / 一致 126 / 相違 0 / 実体無 0 / 読めぬ行 0 (母數 126)
+## ⑷ 錠: raw/ 配下 通常 file 129 / 0444・0555 でない物 0
+# 結 96: ★通 ―― 門の後に raw/ へ書いた物 0・書けもせぬ(EACCES)・束全体の後は悉く宣に在る・臺帳 照合 rc 0・錠 悉く★

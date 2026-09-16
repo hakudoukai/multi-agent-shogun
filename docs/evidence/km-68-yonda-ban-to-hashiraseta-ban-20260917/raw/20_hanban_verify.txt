@@ -1,0 +1,14 @@
+★版刻(走らせる直前)★ realpath /Users/momizimac/multi-agent-shogun/scripts/checks/karo_mac_manifest_verify.py
+  sha16 a507c998c7bd6485 / 総行数 198 / mtime 2026-09-17T00:01:41 / git blob ebfc4c0ecc080c0f vs HEAD b19ec9ea259653d9 → ★違ふ=汚れて居る(disk ≠ HEAD)★ 枝 main 根 /Users/momizimac/multi-agent-shogun
+  L133:             continue
+  L139:             unreadable += 1
+  L152:             miss += 1
+  L158:             ok += 1
+  L160:             ng += 1
+版札v1 sha16=a507c998c7bd6485 lines=198 blob=ebfc4c0ecc080c0f head=b19ec9ea259653d9 行=133,139,152,158,160 封=3bbd1e2233956044
+--against(別の版) /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_manifest_verify.py sha16 bbde471f70848fc8 / 総行数 127 / 同じ=commit 済 枝 karo-mac/a1-r56 根 /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1
+  L133: ★違ふ★ | 別の版: ★133 行目は無い(総行数 127)★
+  L139: ★違ふ★ | 別の版: ★139 行目は無い(総行数 127)★
+  L152: ★違ふ★ | 別の版: ★152 行目は無い(総行数 127)★
+  L158: ★違ふ★ | 別の版: ★158 行目は無い(総行数 127)★
+  L160: ★違ふ★ | 別の版: ★160 行目は無い(総行数 127)★

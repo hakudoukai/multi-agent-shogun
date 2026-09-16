@@ -1,0 +1,14 @@
+★版刻(走らせる直前)★ realpath /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_manifest_verify.py
+  sha16 bbde471f70848fc8 / 総行数 127 / mtime 2026-09-16T21:34:43 / git blob b19ec9ea259653d9 vs HEAD b19ec9ea259653d9 → 同じ=commit 済 枝 karo-mac/a1-r56 根 /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1
+  L76:             continue
+  L82:             unreadable += 1
+  L95:             miss += 1
+  L101:             ok += 1
+  L103:             ng += 1
+版札v1 sha16=bbde471f70848fc8 lines=127 blob=b19ec9ea259653d9 head=b19ec9ea259653d9 行=76,82,95,101,103 封=c329345698fec007
+--against(別の版) /Users/momizimac/multi-agent-shogun/scripts/checks/karo_mac_manifest_verify.py sha16 a507c998c7bd6485 / 総行数 198 / ★違ふ=汚れて居る(disk ≠ HEAD)★ 枝 main 根 /Users/momizimac/multi-agent-shogun
+  L76: ★違ふ★ | 別の版:         if tok.startswith("sha256=") or tok.startswith("bytes=") or tok.startswith("lines="):
+  L82: ★違ふ★ | 別の版:     return out
+  L95: ★違ふ★ | 別の版:     #   引数で基点を渡した時は其れを尊ぶ(従来通り・明示は cwd 相対で宜しい)。
+  L101: ★違ふ★ | 別の版:         _root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+  L103: ★違ふ★ | 別の版:                  os.path.join(_root, "queue", "reports") + os.sep,

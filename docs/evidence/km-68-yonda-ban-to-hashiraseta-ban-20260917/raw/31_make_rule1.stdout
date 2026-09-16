@@ -1,0 +1,35 @@
+# diff -u 40(則二) 41(則一の再現) / rc 1(1 = 差が在る・期待)/ 刻 2026-09-17T04:06:17+0900
+--- /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/40_mon_no_ato.py	2026-09-17 03:58:30
++++ /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/raw/41_mon_no_ato_rule1.py	2026-09-17 04:06:17
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-"""捕へ器 40(第67弾・㋐)―― 門の後に根へ生れた/触られた物を ★ns の刻★ で捕へる。
++"""捕へ器 41 = ★則一の再現★(第68弾 ㋑・40 から `or cns > A` を一つ外した物・31_make_rule1.py が作る)―― 元: 捕へ器 40(第67弾・㋐)―― 門の後に根へ生れた/触られた物を ★ns の刻★ で捕へる。
+ argv = <歩き根> <歩哨file> <宣file or -> <出力dir> <名> [--probe]
+ 刻 = 歩哨 file の st_mtime_ns(os.stat・kernel の値・stat -f %Fm と同じ ―― 両方を印字して一致を示す)。
+ 後 = mtime_ns > 刻 ★又は★ birth_ns(stat -f %FB・生れた刻)> 刻 ★又は★ ctime_ns > 刻 / 同 = mtime_ns == 刻 / 前 = 其の他。
+@@ -54,14 +54,14 @@
+ for p, st in reg:
+     rel = os.path.relpath(p, root); mns = st.st_mtime_ns; bns = births.get(p); bsrc = 'FB'
+     if bns is None: bns = int(round(getattr(st, 'st_birthtime', st.st_mtime) * 1e9)); bsrc = 'py~'
+-    cns = st.st_ctime_ns; later = mns > A or bns > A or cns > A; same = (not later) and mns == A
++    cns = st.st_ctime_ns; later = mns > A or bns > A; same = (not later) and mns == A
+     k = '後' if later else ('同' if same else '前'); dec = declared(p) if later else None
+     rows.append((rel, st.st_size, mns, bns, bsrc, k, dec, cns))
+ ato = [r for r in rows if r[5] == '後']; ato_in = [r for r in ato if r[6]]; ato_out = [r for r in ato if not r[6]]; same = [r for r in rows if r[5] == '同']; mae = [r for r in rows if r[5] == '前']
+ sec_after = [r for r in rows if r[2] // 10**9 > A // 10**9]
+ hidden = [r for r in ato if r[2] // 10**9 <= A // 10**9]
+ def T(ns): return time.strftime('%H:%M:%S', time.localtime(ns / 1e9)) + '.%09d' % (ns % 10**9)
+-out = [f'# 40 捕へ器(二走目・mtime|birth|ctime) / {name} / 刻 {now} / 歩き根 {root} / 歩哨 {hosho} / 刻(歩哨 mtime_ns) {A} = {T(A)} / stat -f %Fm {fm} → 一致 {A_stat == A} / 宣 {sengen}(型 {len(pats)}) / probe {PROBE}',
++out = [f'# 41 捕へ器(則一の再現・mtime|birth・ctime 無) / {name} / 刻 {now} / 歩き根 {root} / 歩哨 {hosho} / 刻(歩哨 mtime_ns) {A} = {T(A)} / stat -f %Fm {fm} → 一致 {A_stat == A} / 宣 {sengen}(型 {len(pats)}) / probe {PROBE}',
+        f'## 母數 通常 file {len(reg)}(歩いた {walked}・非通常 {nonreg})/ byte 和 {sum(r[1] for r in rows)} / birth の出處 FB {sum(1 for r in rows if r[4] == "FB")} py~ {sum(1 for r in rows if r[4] == "py~")}',
+        f'## 後 {len(ato)} 本 {sum(r[1] for r in ato)} B = 後∧宣に在る {len(ato_in)} 本 {sum(r[1] for r in ato_in)} B + ★後∧宣に無い(疵) {len(ato_out)} 本 {sum(r[1] for r in ato_out)} B★ / 同 {len(same)} / 前 {len(mae)} / 和 {len(ato) + len(same) + len(mae)} = 母數 {len(reg)} 差 {len(reg) - len(ato) - len(same) - len(mae)}',
+        f'## 比較・秒>秒(66 の定義)なら 後 {len(sec_after)} 本 {sum(r[1] for r in sec_after)} B ―― ns が捕へて 秒>秒 が隠す物 {len(hidden)} 本 {sum(r[1] for r in hidden)} B: {[r[0] for r in hidden]}']
+
+# ㋑⑶ 変更前後の則を逐語で並べる / 刻 2026-09-17T04:06:17+0900
+## 前(則一)= 第67弾 raw/00_start.txt の則行(測る前に書いた・逐語):
+    後 = file の mtime_ns > 刻 ★又は★ birth(生れた刻・stat -f %FB)> 刻。同 = mtime_ns == 刻(決められぬ・数へる)。前 = 何れも < 刻。ctime は使はぬ(chmod/rename/cp -p が動かし、中身の書込みと区別できぬ)。歩く = os.walk・lstat・S_ISREG のみ(非通常は数へて宣す)。母數 0 なら rc 2(★歩いて居らぬ = 通でも鳴でもない★)。後 ∧ 宣に無い ≥ 1 なら rc 1(鳴)。後 ∧ 宣に在る のみなら rc 0。宣 = fnmatch(brace {a,b} は展開)。
+## 後(則二)= 第67弾 raw/40_mon_no_ato.py の docstring(測つた後に変へた・逐語):
+  ★則を一つ変へた(一走目の後・42 P6 が黙つた故)★: 一走目は ctime を使はなかつた(chmod/rename が動かす故)。然し macOS は utime で mtime を birth より前へ戻すと birth も其処へ締める ∴ 前へ戻された新 file は mtime/birth では見えず、ctime(utime も今へ動かす)でしか見えぬ。∴ ctime を足し、錠(chmod)は歩哨の ★前★ に掛ける順へ変へた(錠が後なら錠自身が鳴る = L1 一走目の形)。一走目の出目は *.first.* に残す。
+## 器の差 = raw/30_rule_diff.txt(diff -u)/ 差の核 = `later = mns > A or bns > A or cns > A` → `later = mns > A or bns > A`(一行)+ 頭註の名札 2 箇所
+## 40 sha16 4bc8f1dfafd9ee9a / 41 sha16 9557faffb9cac3a3

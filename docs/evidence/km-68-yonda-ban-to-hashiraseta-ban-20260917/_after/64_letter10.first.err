@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-68-yonda-ban-to-hashiraseta-ban-20260917/_after/64_letter10.py", line 17, in <module>
+    n = len(body); print('字数', n); assert n <= 300, n
+                                            ^^^^^^^^
+AssertionError: 321
