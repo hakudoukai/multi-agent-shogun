@@ -1,0 +1,28 @@
+# 31_r55_now 鎖の一段(日付込み・31)/ 刻 2026-09-16T21:07:21+0900 / 歩き根 queue/reports/ashigaru-mac-1_km-55-daichou-no-chu-ga-noru-ingai-no-kata-wo-hokaseki-ni-kubareru-ichigyou-ni-seyo-20260913_evidence / 出力 dir queue/reports/ashigaru-mac-1_km-56-mon-no-ato-no-22-hon-wo-sabaki-na-ni-yorazu-aruku-utsuwa-wo-tateyo-20260916_evidence/raw / lstat 通常 file 105 / byte 和 192257 / ★此の器の己の出目 4 本(31_r55_now.txt・31_r55_now.stdout/.err/.rc)は此の表に無い(出力 dir が根の外なら根にも無い)★
+## 前段 無(鎖の一段目)
+## 臺帳 ashigaru-mac-1_km-55-daichou-no-chu-ga-noru-ingai-no-kata-wo-hokaseki-ni-kubareru-ichigyou-ni-seyo-20260913_manifest.txt を照合器で: rc 0 / 一致 ★44★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 44)
+## 門控 ashigaru-mac-1_km-55-daichou-no-chu-ga-noru-ingai-no-kata-wo-hokaseki-ni-kubareru-ichigyou-ni-seyo-20260913_gate.txt の刻 2026-09-16T17:21:25 より後の mtime(★日付込み・秒 > 秒★): 23 本 / byte 和 41310 ―― ★門の後に此の根へ書いた byte(此の段が見えた分・己の 4 本は外)★
+## 同じ刻を ns > 秒.000 で比べると(第55弾 97 の定義): 31 本 / byte 和 47126 ―― 差 = 門控と同じ秒に生れた 8 本 / 5816 B: ['raw/60_gate_all.err', 'raw/60_gate_all.out', 'raw/60_gate_all.rc', 'raw/60_gate_rcs.txt', 'raw/60_gate_run.err', 'raw/60_gate_run.rc', 'raw/60_gate_run.stdout', 'raw/60_gate_top.r55.txt'] ★秒の粒度は門自身の産物を隠す ∴ 二定義を併記する(二走目で足した・一走目は秒のみ = .first)★
+  後 raw/62_letters.err 85B 2026-09-16T17:21:35
+  後 raw/62_letters.rc 2B 2026-09-16T17:21:35
+  後 raw/62_letters.stdout 2273B 2026-09-16T17:21:35
+  後 raw/62_report_body.txt 3392B 2026-09-16T17:21:34
+  後 raw/63_sent.txt 2223B 2026-09-16T17:21:35
+  後 raw/63b_sent.txt 1504B 2026-09-16T17:23:33
+  後 raw/65_letter7b.err 85B 2026-09-16T17:23:33
+  後 raw/65_letter7b.py 4498B 2026-09-16T17:23:32
+  後 raw/65_letter7b.rc 2B 2026-09-16T17:23:33
+  後 raw/65_letter7b.stdout 1522B 2026-09-16T17:23:33
+  後 raw/96_after_send.err 85B 2026-09-16T17:22:18
+  後 raw/96_after_send.rc 2B 2026-09-16T17:22:18
+  後 raw/96_after_send.stdout 3078B 2026-09-16T17:22:18
+  後 raw/96_after_send.txt 7943B 2026-09-16T17:22:18
+  後 raw/97_after_send_dated.err 85B 2026-09-16T17:22:18
+  後 raw/97_after_send_dated.py 2264B 2026-09-16T17:22:18
+  後 raw/97_after_send_dated.rc 2B 2026-09-16T17:22:18
+  後 raw/97_after_send_dated.stdout 1666B 2026-09-16T17:22:18
+  後 raw/97_after_send_dated.txt 1666B 2026-09-16T17:22:18
+  後 raw/99_after_gate.err 85B 2026-09-16T17:21:34
+  後 raw/99_after_gate.rc 2B 2026-09-16T17:21:34
+  後 raw/99_after_gate.stdout 2228B 2026-09-16T17:21:34
+  後 raw/99_after_gate.txt 6618B 2026-09-16T17:21:34

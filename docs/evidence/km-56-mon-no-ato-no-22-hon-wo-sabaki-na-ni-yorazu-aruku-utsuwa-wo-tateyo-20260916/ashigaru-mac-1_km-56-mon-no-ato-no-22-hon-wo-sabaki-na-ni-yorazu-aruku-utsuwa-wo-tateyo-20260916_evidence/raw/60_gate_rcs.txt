@@ -1,0 +1,7 @@
+刻 2026-09-16T21:16:30+0900 / 門 sha16 8df3d070fb4f9a3e / 照合器 sha16 1f001531b681d1bf / 臺帳の項 50 / 臺帳 sha16 98f9b3f879a52ead / 紙 sha16 14d0c2b56a680371 / 渡した = argv[1](臺帳)を除く本数
+selftest | 渡した 0 | rc 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+main | 渡した 2 | rc 0 | 札 0 | 條① ('50', '0', '0', '0', '50') | 條⑤ byte和 54175 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 f67d8c8b0e8b98e8
+all | 渡した 50 | rc 0 | 札 0 | 條① ('50', '0', '0', '0', '50') | 條⑤ byte和 160264 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 90136a9f418a5265
+臺帳の方言(五形) | 実体行 50 | 空白のみの行(第39弾 §3⑵ の境・本弾 ㊂ で己の器 32 も同じ数を印字する) 0 | A 引用符付 ^path="…" 合致 0 / B 素形 ^path=<裸> 合致 50 / D 三欄 引用符付 合致 0 / E 三欄 素形 合致 0 / C 鍵無し ^<path> … 合致 0 | ★排他性: 合致した形の種数 = 1 ['B 素形 ^path=<裸>']★ | 五形の外の実体行 0 | 緩い錨 'path=' の語 = 98(註を含む・語で数へた數)⇔ 行頭錨 50
+臺帳自身(別器・門は argv[1] を條②③④⑤に掛けぬ) | bytes 27893 | 末尾 2 byte 300a(0a 一つ = True) | CR 0 | 行末空白 0 行 | 制御・不可視 無 | sha16 98f9b3f879a52ead
+禁域(門 scripts/checks/ を含む)へ 0 byte | 前(00_start)と今の sha16: scripts/checks/karo_mac_dasumae_gate.sh 8df3d070fb4f9a3e / scripts/checks/karo_mac_manifest_verify.py 1f001531b681d1bf / .gitignore 3ccfcf1c05e82b58 / .claude/settings.json b135e8f17b3be9d5 | git status(scripts/ .gitignore instructions/ .claude/settings.json)の行 31(本弾の前から在る worktree 差・本弾は触れて居らぬ: 00_start の sha16 と一致で示す) | .git/index mtime 2026-09-10T19:55:51

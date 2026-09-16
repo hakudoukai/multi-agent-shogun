@@ -1,0 +1,12 @@
+# 第56弾 門控(名 = 60_gate_top.r56・毎回別) # 門控の写し = 走り「all」(渡した 50 本 = 臺帳の項 悉く / byte和 160264 / rc 0)を上に・走り「main」(渡した 2 本 = 紙 + 臺帳 / byte和 54175 / rc 0)を下に ―― ★上端に置いたのは広い方である★(argv の列 raw/61_gate_argv_all.txt / raw/61_gate_argv_main.txt・stderr の写し raw/60_gate_all.err / raw/60_gate_main.err)
+# 刻 2026-09-16T21:16:31+0900 / 門 sha16 8df3d070fb4f9a3e / 臺帳 sha16 98f9b3f879a52ead / 紙 sha16 14d0c2b56a680371
+## 走り all(stderr 逐語)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(50本)通
+條⑤ 寸法 = byte和 160264(閾 10485760未満)
+★出す前 門 通。出してよい。★
+## 走り main(stderr 逐語)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(2本)通
+條⑤ 寸法 = byte和 54175(閾 10485760未満)
+★出す前 門 通。出してよい。★

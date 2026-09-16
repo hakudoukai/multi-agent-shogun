@@ -1,0 +1,30 @@
+# 20 問一 裁き(裁 seq310228⑵)/ 的 = 第55弾 raw/97 が刷つた 後 22 本 / 36096 B(母數 = 此の 22 本)/ 門控の刻 2026-09-16 17:21:25(秒・<束>_gate.txt 二行目)
+類	名	byte(97 の宣)	byte(今)	門控の刻からの隔たり ms(st_mtime_ns)	根拠
+㋐1	raw/60_gate_all.err	238	238	+333.7	門(gate.sh)の stderr/stdout/rc を 60_gate_run.py L88-89 が subprocess で受け kaki で置いた ―― 中身は門の口から出た物(下の逐語検め)
+㋐1	raw/60_gate_all.out	378	378	+333.8	門(gate.sh)の stderr/stdout/rc を 60_gate_run.py L88-89 が subprocess で受け kaki で置いた ―― 中身は門の口から出た物(下の逐語検め)
+㋐1	raw/60_gate_all.rc	2	2	+333.9	門(gate.sh)の stderr/stdout/rc を 60_gate_run.py L88-89 が subprocess で受け kaki で置いた ―― 中身は門の口から出た物(下の逐語検め)
+㋐3	raw/60_gate_rcs.txt	1921	1921	+357.1	門を走らせた器 60_gate_run.py L108 の要約(門の出目ではなく駆動の記録)
+㋐3	raw/60_gate_run.err	85	85	+360.8	駆動器 10_run.py L11 が 60_gate_run.py の stdout/stderr/rc を置いた(門から二段 離れる)
+㋐3	raw/60_gate_run.rc	2	2	+360.9	駆動器 10_run.py L11 が 60_gate_run.py の stdout/stderr/rc を置いた(門から二段 離れる)
+㋐3	raw/60_gate_run.stdout	2107	2107	+360.7	駆動器 10_run.py L11 が 60_gate_run.py の stdout/stderr/rc を置いた(門から二段 離れる)
+㋐2	raw/60_gate_top.r55.txt	1083	1083	+357.5	門控 = 門の stderr の写し + 二行の頭(60_gate_run.py L116-120)―― 裁 310228⑵ の「門自身の一行」の当弾の形(<束>_gate.txt と byte 同一・下の sha 検め)
+㋑	raw/62_letters.err	85	85	+10730.9	便の器 62_letters.py の出目(本文・id の列・駆動器の写し)―― 門と無縁
+㋑	raw/62_letters.rc	2	2	+10730.9	便の器 62_letters.py の出目(本文・id の列・駆動器の写し)―― 門と無縁
+㋑	raw/62_letters.stdout	2273	2273	+10730.8	便の器 62_letters.py の出目(本文・id の列・駆動器の写し)―― 門と無縁
+㋑	raw/62_report_body.txt	3392	3392	+9918.4	便の器 62_letters.py の出目(本文・id の列・駆動器の写し)―― 門と無縁
+㋑	raw/63_sent.txt	2223	2223	+10726.7	便の器 62_letters.py の出目(本文・id の列・駆動器の写し)―― 門と無縁
+㋑	raw/96_after_send.err	85	85	+53393.9	門の後の二段目の歩き 30_kusari.py(96_after_send の名)の出目
+㋑	raw/96_after_send.rc	2	2	+53394.0	門の後の二段目の歩き 30_kusari.py(96_after_send の名)の出目
+㋑	raw/96_after_send.stdout	3078	3078	+53393.9	門の後の二段目の歩き 30_kusari.py(96_after_send の名)の出目
+㋑	raw/96_after_send.txt	7943	7943	+53390.6	門の後の二段目の歩き 30_kusari.py(96_after_send の名)の出目
+㋑	raw/97_after_send_dated.py	2264	2264	+53399.3	門の後に足した未宣の器 97 の .py(手で書いた・便 8 で申告済)
+㋑	raw/99_after_gate.err	85	85	+9855.5	門の後の歩き 30_kusari.py(99_after_gate の名)の出目 ―― 門でも門の駆動器でもない
+㋑	raw/99_after_gate.rc	2	2	+9855.5	門の後の歩き 30_kusari.py(99_after_gate の名)の出目 ―― 門でも門の駆動器でもない
+㋑	raw/99_after_gate.stdout	2228	2228	+9855.3	門の後の歩き 30_kusari.py(99_after_gate の名)の出目 ―― 門でも門の駆動器でもない
+㋑	raw/99_after_gate.txt	6618	6618	+9852.0	門の後の歩き 30_kusari.py(99_after_gate の名)の出目 ―― 門でも門の駆動器でもない
+## 和: ㋐1 3 本 618 B / ㋐2 1 本 1083 B / ㋐3 4 本 4115 B / ㋑ 14 本 30280 B → 計 22 本 36096 B ⇔ 97 の宣 22 本 36096 B(97 の行の和 36096)→ 閉ぢる
+## 厳しい讀み(門自身 = ㋐1+㋐2 のみ): 禁の外 4 本 1701 B / ★禁に触れる 18 本 34395 B★ ―― 緩い讀み(㋐3 も門の側): 禁の外 8 本 5816 B / ★禁に触れる 14 本 30280 B★。★何れの讀みでも ㋑ 14 本 30280 B は触れる。繕はぬ。★
+## 中身の検め: 60_gate_all.err の行 4 ⇔ 門控「走り all」節の行 4 → 逐語一致 True / raw/60_gate_top.r55.txt sha16 e5dde98ab05db05a ⇔ <束>_gate.txt e5dde98ab05db05a → 同一 / 60_gate_rcs.txt が刷つた門の生 stderr sha16 7cd93b08c2de3b22 ⇔ 60_gate_all.err(kaki 正規化後)sha16 7cd93b08c2de3b22 → 同一
+## 門控の刻と同じ秒に生れた物 8 本: ['raw/60_gate_all.err', 'raw/60_gate_all.out', 'raw/60_gate_all.rc', 'raw/60_gate_rcs.txt', 'raw/60_gate_run.err', 'raw/60_gate_run.rc', 'raw/60_gate_run.stdout', 'raw/60_gate_top.r55.txt'] ―― 門控の刻(60_gate_run.py L117 の strftime)は門控を書く★前★に採る ∴ 門控自身と門の出目が「刻より後」に落ちる(秒の下の差・上の ms 欄)。
+## 22 本に入らなかつた門の産物(門控の刻以前・門の走り main/selftest と argv の列): 60_gate_main.err -280ms / 60_gate_main.out -279ms / 60_gate_main.rc -279ms / 60_gate_selftest.err -331ms / 60_gate_selftest.out -331ms / 60_gate_selftest.rc -331ms / 61_gate_argv_all.txt -279ms / 61_gate_argv_main.txt -331ms
+## ∴ 答: 22 本の内 門自身と言へるのは 厳しく 4 本(㋐1 3 + ㋐2 1)・緩く 8 本(+㋐3 4)。残り 14 本(99/62/63/96/97)は ★禁に触れる★ ―― 之は第55弾の紙 §3 の道 ㋑(門控と便の記録を根の外へ)を採らなかつた席の選びの結果であり、本弾は根の外 _after/ へ置く形で手を変へる(後段 31 で證す)。
