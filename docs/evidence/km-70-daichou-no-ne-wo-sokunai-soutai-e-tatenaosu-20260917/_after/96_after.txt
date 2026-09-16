@@ -1,0 +1,5 @@
+# 96 門の後 / 刻 2026-09-17T05:46:32+0900
+⑴ 根 raw/: 臺帳の項 139 / disk 通常 147(非通常 0) / 後 9 / ★疵 9★ ['raw/50_build_manifest.err', 'raw/50_build_manifest.out', 'raw/50_build_manifest.rc', 'raw/50_build_manifest.stdout', 'raw/50_sengen.txt'] / P0 根へ 1 byte 書けぬ = PermissionError(13)
+⑵ 臺帳を照合器で(基点=束の根・cwd main 樹): rc 0 / 一致 139 / 相違 0 / 実体無 0 / 読めぬ行 0 (母數 139)
+⑵ 臺帳を照合器で(基点無し・既定 repo 根): rc 1 / 一致 0 / 相違 0 / 実体無 139 / 読めぬ行 0 (母數 139) ―― 束内相対ゆゑ落ちて正
+⑶ 既成束の印 前⇔今: km-47 cf7365ab4ceb8235→cf7365ab4ceb8235 / km-50 3f6ec2665646f716→3f6ec2665646f716 / 印 前後 同

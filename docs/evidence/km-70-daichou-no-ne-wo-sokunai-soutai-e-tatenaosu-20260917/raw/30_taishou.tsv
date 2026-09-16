@@ -1,0 +1,21 @@
+束	對照	器	渡した	rc	母數	一致	相違	実体無	讀めぬ	旧形	基点の文言	期待通り
+km-47	㋐明示基点=束の根	verify	docs/evidence/km-47-yotsu-no-kazu-20260917	0	22	22	0	0	0	1	引数(明示)	True
+km-47	㋑基点無し(既定=repo根)	verify	(無)	1	22	0	0	22	0	1	既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★	True
+km-47	㋒出鱈目	verify	/detarame/naki/ne	1	22	0	0	22	0	1	引数(明示)	True
+km-47	㋓参考 基点""・cwd=束の根	verify	""	0	22	22	0	0	0	1	引数(明示)	True
+km-47	㋐明示基点=束の根	門 min	1	0	22	22	0	0	0	1	引数(明示)	True
+km-47	㋐明示基点=束の根	門 all	22	0	22	22	0	0	0	1	引数(明示)	True
+km-47	㋑基点無し(unset・既定=repo根)	門 min	1	1	22	0	0	22	0	1	既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★	True
+km-47	㋑基点無し(unset・既定=repo根)	門 all	22	1	22	0	0	22	0	1	既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★	True
+km-47	㋒出鱈目	門 min	1	1	22	0	0	22	0	1	引数(明示)	True
+km-47	㋒出鱈目	門 all	22	1	22	0	0	22	0	1	引数(明示)	True
+km-50	㋐明示基点=束の根	verify	docs/evidence/km-50-kara-wa-todokazu-20260917	0	39	39	0	0	0	0	引数(明示)	True
+km-50	㋑基点無し(既定=repo根)	verify	(無)	1	39	0	0	39	0	0	既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★	True
+km-50	㋒出鱈目	verify	/detarame/naki/ne	1	39	0	0	39	0	0	引数(明示)	True
+km-50	㋓参考 基点""・cwd=束の根	verify	""	0	39	39	0	0	0	0	引数(明示)	True
+km-50	㋐明示基点=束の根	門 min	1	0	39	39	0	0	0	0	引数(明示)	True
+km-50	㋐明示基点=束の根	門 all	39	0	39	39	0	0	0	0	引数(明示)	True
+km-50	㋑基点無し(unset・既定=repo根)	門 min	1	1	39	0	0	39	0	0	既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★	True
+km-50	㋑基点無し(unset・既定=repo根)	門 all	39	1	39	0	0	39	0	0	既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★	True
+km-50	㋒出鱈目	門 min	1	1	39	0	0	39	0	0	引数(明示)	True
+km-50	㋒出鱈目	門 all	39	1	39	0	0	39	0	0	引数(明示)	True

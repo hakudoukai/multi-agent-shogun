@@ -1,0 +1,15 @@
+# 20 建て直し / 刻 2026-09-17T05:37:36+0900 / append.py sha16 f5ea5e1e85d64936 / verify.py(paths_of を借りる・讀むのみ) sha16 a507c998c7bd6485
+## km-47-yotsu-no-kazu-20260917
+既成の臺帳 ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_manifest.txt sha16 0bfdf2ff8b0092c2 bytes 3858 行 24 / 項(sha256= 有・path 讀めた) 22 / 讀めぬ 0 / ★頭が docs/evidence/km-47-yotsu-no-kazu-20260917/ でない行 0★ [] / ★束に無い名 0★ []
+append.py(cwd = /Users/momizimac/multi-agent-shogun/docs/evidence/km-47-yotsu-no-kazu-20260917) rc 0 / stdout 頭 '書いた=22 行 / 母數=22 / ★括つた(空白名ゆゑ必須)=1★ / 臺帳=/Users/momizimac/multi-agent-shogun/docs/evidence/km-70-daichou-no-ne'
+新臺帳 raw/saiken/km-47-yotsu-no-kazu-20260917_manifest.txt ★封 sha256 15e3c8f328fbbc802c35921c3e7ac0b23af6820cbefb2de77a74f5ed6f6e307a★ sha16 15e3c8f328fbbc80 bytes 2912 行 24 / 項 22 / 括つた(空白名) 1 / 一行目 'path=an/A1_jikenme.err sha256=eaf1849054a8c0f72e19e6d547167e133294736c'
+新旧の対: 母數(旧の項) 22 / 対一致(同じ相対名・同じ sha256) 22 / 相違 0 / 旧のみ 0 [] / 新のみ 0 []
+員外(束の disk に在つて臺帳に無い通常 file) 8 本 / disk 通常 file 30 / 非通常 0: ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_manifest.txt raw/kansa_send.err raw/kansa_send.out raw/osame_send.err raw/osame_send.out raw/tsuiichi_send.err raw/tsuiichi_send.out
+判 ★建て直せた★
+## km-50-kara-wa-todokazu-20260917
+既成の臺帳 km-50-kara-wa-todokazu-20260917_manifest.txt sha16 ef413641b00e550a bytes 6502 行 41 / 項(sha256= 有・path 讀めた) 39 / 讀めぬ 0 / ★頭が docs/evidence/km-50-kara-wa-todokazu-20260917/ でない行 0★ [] / ★束に無い名 0★ []
+append.py(cwd = /Users/momizimac/multi-agent-shogun/docs/evidence/km-50-kara-wa-todokazu-20260917) rc 0 / stdout 頭 '書いた=39 行 / 母數=39 / ★括つた(空白名ゆゑ必須)=0★ / 臺帳=/Users/momizimac/multi-agent-shogun/docs/evidence/km-70-daichou-no-ne'
+新臺帳 raw/saiken/km-50-kara-wa-todokazu-20260917_manifest.txt ★封 sha256 43c8f0d73e13fd9ddfc51840189c5fa97ba13b7a66cac8c74102cf4684714d77★ sha16 43c8f0d73e13fd9d bytes 4708 行 41 / 項 39 / 括つた(空白名) 0 / 一行目 'path=km-50-kara-wa-todokazu-20260917.md sha256=a66d02cbe91ac41e17c3c37'
+新旧の対: 母數(旧の項) 39 / 対一致(同じ相対名・同じ sha256) 39 / 相違 0 / 旧のみ 0 [] / 新のみ 0 []
+員外(束の disk に在つて臺帳に無い通常 file) 8 本 / disk 通常 file 47 / 非通常 0: km-50-kara-wa-todokazu-20260917_gate_hashiri1.txt km-50-kara-wa-todokazu-20260917_gate_hashiri2.txt km-50-kara-wa-todokazu-20260917_manifest.txt raw/98_argv.txt raw/98_argv2.txt raw/99_mon_hashiri1.err raw/99_mon_hashiri2.err raw/A0_fumi.txt
+判 ★建て直せた★

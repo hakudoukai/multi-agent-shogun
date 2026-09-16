@@ -1,0 +1,6 @@
+# 05 着手便の器(第70弾)/ 刻 2026-09-17T05:35:14+0900 / 札 sei / dry=True swap=False / 宛先(門へ) 'karo-mac' / 胴(門へ) 字数 300 頭 '★着手★ 第70弾 km-70 臺帳を束内相対へ work_started=20'
+名簿(queue/inbox/*.yaml・_ で始まる物を除く) 19 本: ashigaru-mac-1 ashigaru-mac-2 ashigaru-mac-3 ashigaru-mac-4 ashigaru-mac-5 ashigaru-mac-6 ashigaru-mac-7 dr-m fukuincho gakushu-bucho gunshi gunshi-mac hermes-gunshi-mac hermes3 karo karo-mac karo-mac,gunshi-mac kikaku-bucho shogun-mac
+門 通(0 鳴)
+★送らぬ★(--dry・封筒のみ)
+封筒: bash scripts/inbox_write.sh 'karo-mac' <胴 300 字> report ashigaru-mac-1
+胴: ★着手★ 第70弾 km-70 臺帳を束内相対へ work_started=2026-09-17T05:35 宣ETA=06:17(端点=納め便1本目の inbox_write 直前の date 刻・起点=本便・宣=10器×2.78分/器×1.5=42分)。km-47/50 の臺帳を cd 束+append.py で建て直し新束へ。對照㋐明示基点→一致N/実体無0 ㋑既定→実体無N/rc1 ㋒出鱈目→rc1 を verify+門で。在處=main樹 docs/evidence/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917/

@@ -1,0 +1,11 @@
+刻 2026-09-17T05:46:29+0900 / 門 sha16 e11f0d0142549086 / 照合器 sha16 a507c998c7bd6485 / 臺帳の項 139 / 臺帳 sha16 d444a828b6fc4bcd / 紙 sha16 0ced45aab6be0907 / cwd /Users/momizimac/multi-agent-shogun / 基点 KM_GATE_MANIFEST_BASE=/Users/momizimac/multi-agent-shogun/docs/evidence/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917
+① 錠 05:46:29 / raw/ 配下 通常 file 147 → 0444 / dir 2(raw 含む)→ 0555 / raw の mode 0o555 / __pycache__ 0
+② 歩哨 _after/00_hosho.txt / mtime_ns 1789591589409425109
+③ selftest | 渡した 0 | rc 0 | 札 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+③ main | 渡した 2 | rc 0 | 札 0 | 條① ('139', '0', '0', '0', '139') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 32856 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 f8a0e4a607a182ab
+③ all | 渡した 139 | rc 0 | 札 0 | 條① ('139', '0', '0', '0', '139') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 185034 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 1f2ec1f696a5ecbe
+③ nobase | 渡した 2 | rc 1 | 札 1 | 條① ('0', '0', '139', '0', '139') | 基点 條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★ | 條⑤ byte和 32856 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 260bd6c16555dd87
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+④ 臺帳自身(別器・門は argv[1] を條②③④⑤に掛けぬ) | bytes 17002 | 実体行 139 | 括つた行 0 | 末尾 2 byte 310a(0a 一つ = True) | CR 0 | 行末空白 0 行 | sha16 d444a828b6fc4bcd
+⑤ 禁域へ 0 byte | 前(00_start)⇔今: scripts/checks/karo_mac_dasumae_gate.sh e11f0d0142549086→e11f0d0142549086 同 / scripts/checks/karo_mac_manifest_verify.py a507c998c7bd6485→a507c998c7bd6485 同 / scripts/checks/karo_mac_manifest_append.py f5ea5e1e85d64936→f5ea5e1e85d64936 同 / .gitignore 3ccfcf1c05e82b58→3ccfcf1c05e82b58 同 / .claude/settings.json b135e8f17b3be9d5→b135e8f17b3be9d5 同 / scripts/inbox_write.sh 96a1e2355d5acf09→96a1e2355d5acf09 同
+⑥ 既成束へ 0 字 | 印 前(00_start)⇔今: km-47 cf7365ab4ceb8235→cf7365ab4ceb8235(30 file) 同 / km-50 3f6ec2665646f716→3f6ec2665646f716(47 file) 同

@@ -1,0 +1,6 @@
+# 66 staged の差(67 宣 193 ⇔ 今 192)の申し開き / 刻 2026-09-17T06:05:58+0900
+① 名の対照: 67_git_add.txt の「  A 」行 192 本 ⇔ git diff --cached --name-only 192 本 ―― comm 両方向 0(名は悉く同じ・/tmp/km70_67_list.txt vs /tmp/km70_now_list.txt・06:04 實測)。
+② 宣 193 の因(raw/67_git_add.py 逐語): st = ....stdout.split('\n') は末尾に空文字 '' を一つ持つ。staged = [l for l in st if l[:1] in 'AM'] の l[:1] は空文字で '' と成り、★'' in 'AM' は True★(部分文字列の判定は空文字を常に含む)。∴ 192 + 1(空要素) = 193。同じ器の下段 ['  ' + l for l in st if l] は if l で空を落とす故 192 本と書いた ―― 一つの器が同じ列を二つの數で書いた。
+③ 陽性対照(同じ式を ['A  x', 'AM y', '', '?? z'] へ): 67 の式 → 3 本 ['A  x', 'AM y', ''](空文字が数へられる) / if l and l[0] in 'AM' → 2 本 ['A  x', 'AM y']。
+④ AM 1 = _after/67_git_add.txt 自身。67 は git add -f の★後に★己の出目 file を書く故、staged 版(空)と disk 版(本文)が違ひ AM に成る ―― 67 の四走(first/second/third/本走)とも同じ形。疵ではなく順の性質。本 66 の後に git add -f で本文の版を staged にする。
+⑤ 意味せぬ事: 「192 が正しい staged 数」は git diff --cached の數であつて commit 後の樹の數ではない(commit は家老の手)。67 の 185/189/191/193 の増分は四走の間に生れた自產物(62b/63/64/67)であり、数の増減は疵ではない。
