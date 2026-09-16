@@ -1,0 +1,49 @@
+--- a/karo_mac_dasumae_gate.sh
++++ b/karo_mac_dasumae_gate.sh
+@@ -34,6 +34,19 @@
+ #   形: DASUMAE_MAX_BYTES=99999999999999999999 → is_num=通 / [ -ge ]=rc2 → 條⑤ が黙つて通つた。
+ #   ∴ `[ "$v" -ge 0 ]` を空打ちし、rc<=1 の時のみ「使へる閾」とする。
+ num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
++# ★案乙(第50弾)★ 後段の語法が別 ―― DASUMAE_READ_TIMEOUT の後段は [ -ge ] に非ず ★timeout(1)★。
++#   故に [ -ge ] で検めると ⑴timeout が受ける 10m を拒み ⑵timeout が拒む「 50 」を通す。
++#   ★検め器を後段の器 其の物に替へる。★ 加へて 數として讀める時のみ 床1/天86400 を課す
++#   (timeout 0 は ★時限を掛けぬ★ の意ゆゑ ―― 實測 .nama/20_moto.tsv)。
++tmo_ok(){ # $1=値 ―― timeout(1) が受けるか
++  if [ "${1:-}" -ge 0 ] 2>/dev/null; then
++    [ "${1:-}" -ge 1 ] 2>/dev/null || return 1
++    [ "${1:-}" -le 86400 ] 2>/dev/null || return 1
++  fi
++  [ -n "${TIMEOUT_BIN:-}" ] || return 0
++  "$TIMEOUT_BIN" "${1:-}" true >/dev/null 2>&1
++  [ $? -ne 125 ]
++}
+
+ # ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+ #   註: 「空白のみ」は ASCII の空白類のみを見る(全角空白は value 側へ落ち、比較器が拒む)。
+@@ -47,7 +60,7 @@
+
+ # 閾を一本の道で定める ―― $1=変数名 $2=既定 $3=受け皿の変数名
+ fix_threshold(){
+-  local name="$1" dflt="$2" out="$3" st raw
++  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+   st="$(env_state "$name")"
+   eval "raw=\"\${$name-}\""
+   case "$st" in
+@@ -55,7 +68,7 @@
+     empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+     blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+   esac
+-  if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
++  if "$chk" "$raw"; then eval "$out=\$raw"; return 0; fi
+   say "★閾 ${name} が比較器で扱へぬ(「${raw}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+   eval "$out=\$dflt"
+ }
+@@ -74,7 +87,7 @@
+ TIMEOUT_BIN="$(command -v timeout 2>/dev/null || command -v gtimeout 2>/dev/null || true)"
+ SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+ # ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
+-fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO
++fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO tmo_ok
+ # ★同じ病が同じ file の L20 に残つて居た ―― 閾 MAXB は素のままであつた(專任3 第40弾 実測・家老 021211 再測)★
+ #   實測(直す前): DASUMAE_MAX_BYTES=abc → L190 の [ ] が rc=2 → if が偽 → ★「條⑤ 寸法 = byte和 6(閾 abc未満)」を刷り rc=0★。
+ #   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。

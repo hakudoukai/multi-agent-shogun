@@ -1,0 +1,24 @@
+札	閾	門	的	族	陽陰	生:rc	生:裁	単:rc	単:裁	合:rc	合:裁	注入行 生/単/合	讀手の欺き 生/単/合	測れぬ 生/単/合	★宣(何が正しいか)★
+㋕06 -1	GATE4_MAX_FILE_MB	gate4	kiyoi	甲	陽	鳴 rc=1	受	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	0/0/0	拒み既定50へ倒し 清い file を通すべし
+㋕06 -1	DASUMAE_MAX_BYTES	dasumae	kiyoi	甲	陽	鳴 rc=1	受	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	0/0/0	拒み既定へ倒し 通すべし
+㋕06 -1	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	乙	陽	鳴 rc=1	受	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	2/0/0	拒み既定10へ倒し 通すべし
+㋕07 -0	GATE4_MAX_FILE_MB	gate4	kiyoi	甲	陽	鳴 rc=1	受	鳴 rc=1	受	鳴 rc=1	受	0/0/0	―/―/―	0/0/0	拒み既定50へ倒すべし
+㋕07 -0	DASUMAE_MAX_BYTES	dasumae	kiyoi	甲	陽	鳴 rc=1	受	鳴 rc=1	受	鳴 rc=1	受	0/0/0	―/―/―	0/0/0	拒み既定へ倒すべし
+㋕07 -0	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	乙	陽	鳴 rc=1	受	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	2/0/0	拒み既定10へ倒すべし
+㋕08 0	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	乙	陽	通 rc=0	受	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	0/0/0	拒み既定10へ倒すべし(0=時限無し)
+㋕10 「 50 」	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	乙	陽	鳴 rc=1	受	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	2/0/0	拒み既定10へ倒すべし(timeout が拒む語)
+㋕18 2^63-1	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	乙	陽	通 rc=0	受	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	0/0/0	拒み既定10へ倒すべし(事実上無限)
+㋕21 10m	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	乙	陽	通 rc=0	倒	通 rc=0	受	通 rc=0	受	0/0/0	―/―/―	0/0/0	★受くべし★(timeout の正しい語法)
+㋕11 改行(末)	DASUMAE_READ_TIMEOUT	dasumae	kegare	丙	陽	鳴 rc=1	倒	鳴 rc=1	倒	鳴 rc=1	倒	1/0/0	★欺★/―/―	0/0/0	★落ちる走★で門票へ偽の行を残させぬ事
+㋕11 改行(末)	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	丙	陽	通 rc=0	倒	通 rc=0	倒	通 rc=0	倒	1/0/0	―/―/―	0/0/0	通る走でも注入行を残させぬ事
+㋕12 改行(中)	GATE4_MAX_FILE_MB	gate4	kegare	丙	陽	鳴 rc=1	倒	鳴 rc=1	倒	鳴 rc=1	倒	0/0/0	★欺★/―/―	0/0/0	★落ちる走★で門票へ偽の行を残させぬ事
+㋕12 改行(中)	GATE4_MAX_FILE_MB	gate4	kiyoi	丙	陽	通 rc=0	倒	通 rc=0	倒	通 rc=0	倒	0/0/0	―/―/―	0/0/0	通る走でも注入行を残させぬ事
+㋑a 未設定	GATE4_MAX_FILE_MB	gate4	kiyoi	―	陰	通 rc=0	倒	(当てず)	―	通 rc=0	倒	0/-1/0	―/―/―	0/-1/0	既定へ倒し 通す(生器と同じ)
+㋑a 未設定	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	―	陰	通 rc=0	倒	(当てず)	―	通 rc=0	倒	0/-1/0	―/―/―	0/-1/0	既定へ倒し 通す(生器と同じ)
+㋑b 50	GATE4_MAX_FILE_MB	gate4	kiyoi	―	陰	通 rc=0	受	(当てず)	―	通 rc=0	受	0/-1/0	―/―/―	0/-1/0	50 と讀み 黙つて受け 通す
+㋑b 50	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	―	陰	通 rc=0	受	(当てず)	―	通 rc=0	受	0/-1/0	―/―/―	0/-1/0	50 と讀み 黙つて受け 通す
+㋑c +50	GATE4_MAX_FILE_MB	gate4	kiyoi	―	陰	通 rc=0	受	(当てず)	―	通 rc=0	受	0/-1/0	―/―/―	0/-1/0	50 と讀み 黙つて受け 通す
+㋑c +50	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	―	陰	通 rc=0	受	(当てず)	―	通 rc=0	受	0/-1/0	―/―/―	0/-1/0	50 と讀み 黙つて受け 通す
+㋑d 007	DASUMAE_MAX_BYTES	dasumae	kiyoi	―	陰	鳴 rc=1	受	(当てず)	―	鳴 rc=1	受	0/-1/0	―/―/―	0/-1/0	7 と讀む ―― 16>7 で ★鳴るのが正★
+㋑e 空文字	DASUMAE_READ_TIMEOUT	dasumae	kiyoi	―	陰	通 rc=0	倒	(当てず)	―	通 rc=0	倒	0/-1/0	―/―/―	0/-1/0	既定へ倒し 通す(生器と同じ)
+㋑f 空白のみ	GATE4_MAX_TOTAL_MB	gate4	kiyoi	―	陰	通 rc=0	倒	(当てず)	―	通 rc=0	倒	0/-1/0	―/―/―	0/-1/0	既定へ倒し 通す(生器と同じ)

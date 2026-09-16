@@ -1,0 +1,22 @@
+札	閾	門	族	陽陰	生器	案 単独	案 合	偽「通」行 生/単/合	測れぬ 生/単/合	★宣(何が正しいか)★
+㋐06 -1	GATE4_MAX_FILE_MB	gate4	甲	陽	鳴 rc=1	通 rc=0	通 rc=0	0/0/0	0/0/0	拒み既定50へ倒し 清い file を通すべし
+㋐06 -1	DASUMAE_MAX_BYTES	dasumae	甲	陽	鳴 rc=1	通 rc=0	通 rc=0	0/1/1	0/0/0	拒み既定へ倒し 通すべし
+㋐06 -1	DASUMAE_READ_TIMEOUT	dasumae	乙	陽	鳴 rc=1	通 rc=0	通 rc=0	0/1/1	2/0/0	拒み既定10へ倒し 通すべし
+㋐07 -0	GATE4_MAX_FILE_MB	gate4	甲	陽	鳴 rc=1	鳴 rc=1	鳴 rc=1	0/0/0	0/0/0	拒み既定50へ倒し 通すべし
+㋐07 -0	DASUMAE_MAX_BYTES	dasumae	甲	陽	鳴 rc=1	鳴 rc=1	鳴 rc=1	0/0/0	0/0/0	拒み既定へ倒し 通すべし
+㋐07 -0	DASUMAE_READ_TIMEOUT	dasumae	乙	陽	鳴 rc=1	通 rc=0	通 rc=0	0/1/1	2/0/0	拒み既定10へ倒し 通すべし
+㋐08 0(時限)	DASUMAE_READ_TIMEOUT	dasumae	乙	陽	通 rc=0	通 rc=0	通 rc=0	1/1/1	0/0/0	拒み既定10へ倒すべし(0=時限無し)
+㋐10 「 50 」	DASUMAE_READ_TIMEOUT	dasumae	乙	陽	鳴 rc=1	通 rc=0	通 rc=0	0/1/1	2/0/0	拒み既定10へ倒し 通すべし
+㋐18 2^63-1	DASUMAE_READ_TIMEOUT	dasumae	乙	陽	通 rc=0	通 rc=0	通 rc=0	1/1/1	0/0/0	拒み既定10へ倒すべし(事実上無限)
+㋐21 10m	DASUMAE_READ_TIMEOUT	dasumae	乙	陽	通 rc=0	通 rc=0	通 rc=0	1/1/1	0/0/0	★受くべし★(timeout の正しい語法)
+㋐11 改行(末)	DASUMAE_READ_TIMEOUT	dasumae	丙	陽	通 rc=0	通 rc=0	通 rc=0	2/1/1	0/0/0	門票へ偽の行を書かせぬ事
+㋐12 改行(中)	GATE4_MAX_FILE_MB	gate4	丙	陽	通 rc=0	通 rc=0	通 rc=0	1/0/0	0/0/0	門票へ偽の行を書かせぬ事
+㋑a 未設定	GATE4_MAX_FILE_MB	gate4	―	陰	通 rc=0	(当てず)	通 rc=0	0/0/0	0/0/0	既定へ倒し 通す(生器と同じ)
+㋑a 未設定	DASUMAE_READ_TIMEOUT	dasumae	―	陰	通 rc=0	(当てず)	通 rc=0	1/0/1	0/0/0	既定へ倒し 通す(生器と同じ)
+㋑b 50	GATE4_MAX_FILE_MB	gate4	―	陰	通 rc=0	(当てず)	通 rc=0	0/0/0	0/0/0	50 と讀み 通す
+㋑b 50	DASUMAE_READ_TIMEOUT	dasumae	―	陰	通 rc=0	(当てず)	通 rc=0	1/0/1	0/0/0	50 と讀み 通す
+㋑c +50	GATE4_MAX_FILE_MB	gate4	―	陰	通 rc=0	(当てず)	通 rc=0	0/0/0	0/0/0	50 と讀み 通す
+㋑c +50	DASUMAE_READ_TIMEOUT	dasumae	―	陰	通 rc=0	(当てず)	通 rc=0	1/0/1	0/0/0	50 と讀み 通す
+㋑d 007	DASUMAE_MAX_BYTES	dasumae	―	陰	鳴 rc=1	(当てず)	鳴 rc=1	0/0/0	0/0/0	7 と讀む ―― 16>7 で ★鳴るのが正★
+㋑e 空文字	DASUMAE_READ_TIMEOUT	dasumae	―	陰	通 rc=0	(当てず)	通 rc=0	1/0/1	0/0/0	既定へ倒し 通す(生器と同じ)
+㋑f 空白のみ	GATE4_MAX_TOTAL_MB	gate4	―	陰	通 rc=0	(当てず)	通 rc=0	0/0/0	0/0/0	既定へ倒し 通す(生器と同じ)

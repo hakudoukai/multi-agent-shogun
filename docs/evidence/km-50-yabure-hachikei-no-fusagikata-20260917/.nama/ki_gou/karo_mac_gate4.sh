@@ -1,0 +1,152 @@
+#!/bin/bash
+# karo_mac_gate4.sh ―― 家老mac の門(五條)を ★落ちた時 に止まる★ 形 で当てる。
+#
+# 由来: 2026-09-09。家老 が `git diff --cached --check && echo 通; git commit …` と繋いだ為、
+#       ★check が 4 行 の末尾空白 を吐いたのに 後段 の commit/push が走つた★。
+#       ―― ★門 は「当てた」だけ では 門 に成らぬ。落ちた時 に 止まる 形 で書かねば 門 では無い。★
+#
+# usage: bash scripts/checks/karo_mac_gate4.sh <worktree> <path...>
+#   rc=0 : 四條 悉く 満つ(押してよい)
+#   rc!=0: 何處 が落ちたか を stderr へ出して ★止まる★
+set -u
+W="${1:?usage: karo_mac_gate4.sh <worktree> <path...>}"; shift
+[ $# -ge 1 ] || { echo "★path が無い★" >&2; exit 2; }
+cd "$W" || { echo "★樹 が無い: ${W}★" >&2; exit 2; }
+
+fail=0
+say(){ printf '%s\n' "$*" >&2; }
+
+# ―― 條④ diff --check(末尾空白・空白のみ の行・CRLF)
+out=$(git diff --cached --check -- "$@" 2>&1); rc=$?
+if [ $rc -ne 0 ] || [ -n "$out" ]; then
+  n=$(printf '%s\n' "$out" | grep -c .)
+  say "★條④ diff --check が落ちた ―― $n 行★"
+  printf '%s\n' "$out" | head -20 | sed 's/^/    /' >&2
+  fail=1
+else
+  say "條④ diff --check = 0"
+fi
+
+# ―― staged が空 で無い事(空 commit を「通」と読まぬ)
+n_staged=$(git diff --cached --name-only -- "$@" | grep -c .)
+if [ "$n_staged" -eq 0 ]; then
+  say "★staged が 0 file ―― 押す物 が無い(之 を『通』と読むな)★"
+  fail=1
+else
+  say "staged = $n_staged file"
+fi
+
+# ―― 條① 押し先 が origin に在るか(枝 の追跡)
+br=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+if git rev-parse --verify -q "refs/remotes/origin/$br" >/dev/null; then
+  say "條① 遠 の枝 refs/remotes/origin/$br 在り"
+else
+  say "★條① 遠 に枝 origin/$br が無い ―― 押し先 を確かめよ★"
+  fail=1
+fi
+
+# ―― 條⑤ 寸法(2026-09-09 追加。家老 が 225.6 MB を測らず に押し GitHub が GH001 を警めた故)
+#     ★門 に無い條 は 門 が捕へぬ。捕へなんだ物 は 世 に残る。★
+#     ★閾 の根拠(裁 294493⑸: 固定値 を焼き込むな・実測 と as_of を註 で残せ)★
+#       as_of      = 2026-09-09
+#       出典       = a1 B12-17(紙 sha256 6dd975a65d73ce806d1f848a5047a44df363cf1060c9c1a05189f466b1231f3c)
+#                    + 家老 の再現(門票 ..._B12_17_20260909_karo_gate.txt)
+#       実測       = a1 の生 1592 本 / 257.2 MB。★上位 4 本 で 81.8%★・100KB 未満 1536 本(96.5%)で 4.7%。
+#                    2KB 超 の行 が寸法 の 89.9% を占め、其の ★97.5% が .log/.md★。
+#                    source(.py/.sh/.sql/.yaml/.js/.ps1/.tsv・母數 115 本)の 2KB 超 行= ★0 本★(陽性対照 .md=2)。
+#       50MB の出所 = GitHub の推奨 上限(GH001 が実際 に警めた値・78.90MB / 56.53MB)。
+#       100MB の出所= 上記 の分布 ―― 100KB 未満 の 1536 本 が 12.0MB に収まる故、
+#                    ★一 札 の生 が 100MB を越えるのは「逐語 を写した」時 に限る★(実測)。
+#       ★物差 は byte 和★(du の塊 では無い)―― GH001 が byte で警める故(裁 294493 と同日 家老 定む)。
+#       ⑷ の裁= ★file 種 で分けず byte 一律 の閾 で見る★(97.5% が .log/.md ゆゑ 種 別 は要らぬ)。
+#     ★此の閾 は 上記 の実測 から引いた物 で あり、母數 が変れば 引き直せ。★
+# ★甲(裁 seq322952)★ 閾は ★後段の比較に使ふのと同じ演算子★ で先に検める。
+#   旧形 is_num(case glob) は 2^63 以上の十進をも「數」と讀むが、後段の `[ -ge ]` は
+#   ★rc=2 で倒れ else へ落ちて通す(fail-open)★ ―― 二つの器が別の答を出す。
+#   形: GATE4_MAX_FILE_MB=99999999999999999999 → is_num=通 / [ -ge ]=rc2 → 條⑤ が黙つて通る。
+#   ∴ is_num は捨て、`[ "$v" -ge 0 ]` を空打ちし rc<=1 の時のみ「使へる閾」とする。
+num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+#   しか問うて居らぬ([ $? -le 1 ] が 偽(rc=1) をも可とする)。∴ 負値・零・天井無しが素通りする。
+#   ★後段と同じ演算子の儘、床と天を課す。★ rc=2(讀めぬ)も || で 1 へ落ちる ―― fail-closed。
+num_in_range(){ # $1=値 $2=床 $3=天
+  [ "${1:-}" -ge "${2:-0}" ] 2>/dev/null || return 1
+  [ "${1:-}" -le "${3:-9223372036854775806}" ] 2>/dev/null || return 1
+}
+# ★案乙(第50弾)★ 後段の語法が別 ―― DASUMAE_READ_TIMEOUT の後段は [ -ge ] に非ず ★timeout(1)★。
+#   故に [ -ge ] で検めると ⑴timeout が受ける 10m を拒み ⑵timeout が拒む「 50 」を通す。
+#   ★検め器を後段の器 其の物に替へる。★ 加へて 數として讀める時のみ 床1/天86400 を課す
+#   (timeout 0 は ★時限を掛けぬ★ の意ゆゑ ―― 實測 .nama/20_moto.tsv)。
+tmo_ok(){ # $1=値 ―― timeout(1) が受けるか
+  if [ "${1:-}" -ge 0 ] 2>/dev/null; then
+    [ "${1:-}" -ge 1 ] 2>/dev/null || return 1
+    [ "${1:-}" -le 86400 ] 2>/dev/null || return 1
+  fi
+  [ -n "${TIMEOUT_BIN:-}" ] || return 0
+  "$TIMEOUT_BIN" "${1:-}" true >/dev/null 2>&1
+  [ $? -ne 125 ]
+}
+# ★案丙(第50弾)★ 門票への行注入 ―― 拒んだ値を ★逐語で★ 刷る故、値が門票を一行 書く。
+#   ★形だけ刷り、生は刷らぬ。★ LC_ALL=C の [:print:] は 改行も和字も印字可に非ず
+#   ∴ 「門 通。出してよい。」の語も潰れる(實測 .nama/20_moto.tsv koshi_C_locale)。
+#   生の byte 数を併記する ―― 截つた事を黙らぬ為。
+safe_show(){
+  local s="${1:-}" n
+  n=$(printf '%s' "$s" | wc -c | tr -d ' ')
+  printf '%s' "$s" | LC_ALL=C tr -c '[:print:]' '?' | cut -c1-40
+  printf '(生 %s byte)' "$n"
+}
+
+# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+#   旧形の `${VAR:-50}` は ★未設定と空文字を一つに混ぜ、黙つて既定へ倒して居た★。
+#   註: 「空白のみ」は ASCII の空白類のみを見る(全角空白は value 側へ落ち、比較器が拒む)。
+env_state(){
+  eval "_es_set=\"\${$1+set}\"; _es_v=\"\${$1-}\""
+  if [ -z "${_es_set}" ]; then printf 'unset\n'
+  elif [ -z "${_es_v}" ]; then printf 'empty\n'
+  elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+  else printf 'value\n'; fi
+}
+
+# 閾を一本の道で定める ―― $1=変数名 $2=既定 $3=受け皿の変数名
+fix_threshold(){
+  local name="$1" dflt="$2" out="$3" chk="${4:-num_in_range}" lo="${5:-0}" hi="${6:-1048576}" st raw
+  st="$(env_state "$name")"
+  eval "raw=\"\${$name-}\""
+  case "$st" in
+    unset) say "閾 ${name} = 未設定 ―― 既定 ${dflt} を用ゐる(★倒した事を刷る★)"; eval "$out=\$dflt"; return 0 ;;
+    empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+    blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+  esac
+  if "$chk" "$raw" "$lo" "$hi"; then eval "$out=\$raw"; return 0; fi
+  say "★閾 ${name} が比較器で扱へぬ か 範囲外(「$(safe_show "$raw")」・許 ${lo}..${hi}) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+  eval "$out=\$dflt"
+}
+
+fix_threshold GATE4_MAX_FILE_MB 50 MAXF num_in_range 0 1048576
+fix_threshold GATE4_MAX_TOTAL_MB 100 MAXT num_in_range 0 1048576
+big=0; total=0
+while IFS= read -r f; do
+  [ -f "$f" ] || continue
+  sz=$(wc -c < "$f" | tr -d ' ')
+  total=$((total + sz))
+  mb=$((sz / 1048576))
+  if [ "$mb" -ge "$MAXF" ]; then say "★條⑤ 単 file が ${mb} MB(上限 ${MAXF})―― ${f}★"; big=1; fi
+done < <(git diff --cached --name-only -- "$@")
+tmb=$((total / 1048576))
+if [ "$big" -ne 0 ] || [ "$tmb" -ge "$MAXT" ]; then
+  [ "$tmb" -ge "$MAXT" ] && say "★條⑤ 総和 が ${tmb} MB(上限 ${MAXT})★"
+  say "  ―― 生 を痩せさせるか 上 の裁 を請へ。env GATE4_MAX_FILE_MB / GATE4_MAX_TOTAL_MB で明示 して 超えてよい"
+  say "     (★超える時 は 何故 超えるか を門票 に書け★)"
+  fail=1
+else
+  say "條⑤ 寸法 = 単 file 上限 ${MAXF} MB 以下 / 総和 ${tmb} MB(上限 ${MAXT})"
+fi
+
+if [ $fail -ne 0 ]; then
+  say ""
+  say "★門 が落ちた。押すな。★"
+  exit 1
+fi
+say "★門 五條 通。押してよい。★"
+exit 0

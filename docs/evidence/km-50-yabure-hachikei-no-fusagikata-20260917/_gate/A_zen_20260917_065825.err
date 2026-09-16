@@ -1,0 +1,10 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★末尾空白 ―― .nama/hyou51_gate4_GATE4_MAX_FILE_MB_㋐12_kegare.gou.txt に 1 行★
+★末尾空白 ―― .nama/hyou51_gate4_GATE4_MAX_FILE_MB_㋐12_kegare.sei.txt に 1 行★
+★末尾空白 ―― .nama/hyou51_gate4_GATE4_MAX_FILE_MB_㋐12_kegare.tan.txt に 1 行★
+條⑤ 寸法 = byte和 246834(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

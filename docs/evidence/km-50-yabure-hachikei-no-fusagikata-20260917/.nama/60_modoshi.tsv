@@ -1,0 +1,14 @@
+★戻し方を測る★ ―― 案を当て、sha が動き、逆に当てて sha が生器へ戻るか
+(生器そのものへは一字も書かぬ。当てる先は 束外の写しである)
+
+案	門	生器 sha16	当て rc	当て後 sha16	動いたか	逆当て rc	戻り sha16	★戻つたか★
+甲 num_in_range	gate4	95b027ea5e4f0fc5	0	b09e15435635cff7	○	0	95b027ea5e4f0fc5	○ 完全に戻る
+甲 num_in_range	dasumae	e11f0d0142549086	0	8c65a6267ab4235e	○	0	e11f0d0142549086	○ 完全に戻る
+乙 tmo_ok	dasumae	e11f0d0142549086	0	4162c62dcbc8855a	○	0	e11f0d0142549086	○ 完全に戻る
+丙 safe_show	gate4	95b027ea5e4f0fc5	0	297abece1065aab3	○	0	95b027ea5e4f0fc5	○ 完全に戻る
+丙 safe_show	dasumae	e11f0d0142549086	0	dc11d31ca49a3fba	○	0	e11f0d0142549086	○ 完全に戻る
+合 甲乙丙 一度に	gate4	95b027ea5e4f0fc5	0	f114f2f34187df4d	○	0	95b027ea5e4f0fc5	○ 完全に戻る
+合 甲乙丙 一度に	dasumae	e11f0d0142549086	0	ddaade594801f14e	○	0	e11f0d0142549086	○ 完全に戻る
+
+★生器 sha16 は上表で悉く同じ値である事を見よ ―― 測りの間も生器は動いて居らぬ★
+不良 = 0 件(★空である旨の一行★)
