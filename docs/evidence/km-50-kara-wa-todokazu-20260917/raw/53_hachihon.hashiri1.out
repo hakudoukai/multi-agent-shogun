@@ -1,0 +1,128 @@
+刻 = 2026-09-17T03:52:01
+歩き根 = /Users/momizimac/multi-agent-shogun
+印 = 'is_num(){' / 母集合 = 51 と同じ 131 行
+
+― 境ごとの數 ―
+  甲 歩き根の一切(除外無し)                                 本= 57 行=131
+  乙 甲 から .git/ を除く                               本= 51 行=121
+  丙 乙 から queue/reports/(舊束) を除く                  本= 16 行= 82
+  丁 丙 から docs/evidence/(舊束) を除く                  本=  8 行=  8 ←★八★
+  戊 ★scripts/ の下のみ(.bak も數へる)★                   本=  8 行=  8 ←★八★
+  己 ★scripts/ の下で .bak を除く(生器のみ)★                本=  7 行=  7
+  庚 己 + ★己の束の器 05_ki.sh★(km-49 が採つた境)            本=  8 行=  8 ←★八★
+
+  ★「八本」を生む境は ★二つ★ 在る。數が同じでも ★中身が違ふ★。★
+
+― 戊(8本) ―
+    scripts/agent_health_check.sh
+    scripts/checks/context_usage_warn.sh
+    scripts/checks/karo_mac_dasumae_gate.sh
+    scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216
+    scripts/checks/karo_mac_gate4.sh
+    scripts/inbox_watcher.sh
+    scripts/redundancy/shogun_report_watcher.sh
+    scripts/watchdogs/enter_restart_common_watchdog.sh
+― 庚(8本) ―
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/05_ki.sh
+    scripts/agent_health_check.sh
+    scripts/checks/context_usage_warn.sh
+    scripts/checks/karo_mac_dasumae_gate.sh
+    scripts/checks/karo_mac_gate4.sh
+    scripts/inbox_watcher.sh
+    scripts/redundancy/shogun_report_watcher.sh
+    scripts/watchdogs/enter_restart_common_watchdog.sh
+
+― ★二つの八本の差★ ―
+  戊にのみ在る = ['scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216']
+  庚にのみ在る = ['docs/evidence/km-50-kara-wa-todokazu-20260917/raw/05_ki.sh']
+  共有 = 7 本
+  ★∴ 「八本」と申しても ★同じ八本ではない★。一方は .bak(死んだ寫し)を數へ、
+    他方は己の束の器を數へる。★數が合ふ事は、集合が合ふ事を意味せぬ。★
+
+― 生器(己=7本)の現況 ―― ★字句が今も同一か★ ―
+  家老の下されし sha16 = 9ebb7840f743508b
+  ★同一★ scripts/agent_health_check.sh:88 sha16=9ebb7840f743508b 75byte
+  ★同一★ scripts/checks/context_usage_warn.sh:35 sha16=9ebb7840f743508b 75byte
+  ★同一★ scripts/checks/karo_mac_dasumae_gate.sh:29 sha16=9ebb7840f743508b 75byte
+  ★同一★ scripts/checks/karo_mac_gate4.sh:63 sha16=9ebb7840f743508b 75byte
+  ★同一★ scripts/inbox_watcher.sh:131 sha16=9ebb7840f743508b 75byte
+  ★同一★ scripts/redundancy/shogun_report_watcher.sh:31 sha16=9ebb7840f743508b 75byte
+  ★同一★ scripts/watchdogs/enter_restart_common_watchdog.sh:80 sha16=9ebb7840f743508b 75byte
+  ★相違 = 0 本 ―― 即ち生器 7本は悉く同一字句・同一 sha16 である。★
+  (參考) .bak scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216:29 sha16=9ebb7840f743508b ―― ★死んだ寫しも字句は同一★
+
+― ★己の器を隠さぬ★ ―
+  本弾の己の束の定義行:
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/05_ki.sh:7 sha16=9ebb7840f743508b
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:19 sha16=f44ccf7c10aee063
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/50_bokusuu.py:82 sha16=0583d75a2eb0b515
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:5 sha16=bf302bb5c84d5469
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:15 sha16=a159a2061c11fc7f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:22 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:25 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:28 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:31 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:34 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:37 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:40 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:43 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:46 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:49 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:52 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:55 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:58 sha16=c849dc4705339eb5
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:61 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:64 sha16=e23fdb414fa29ef6
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:67 sha16=e8ba5bf62be682f1
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:70 sha16=e8ba5bf62be682f1
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:73 sha16=e8230216124eedf2
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:76 sha16=edfacf163de8db6c
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:79 sha16=b4aef3a73f5a14ab
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:82 sha16=b4aef3a73f5a14ab
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:85 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:88 sha16=e8ba5bf62be682f1
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:91 sha16=c849dc4705339eb5
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:94 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:97 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:100 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:103 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:106 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:109 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:112 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:115 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:118 sha16=20aa5cbba9641e51
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:121 sha16=e8ba5bf62be682f1
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:124 sha16=e8ba5bf62be682f1
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:127 sha16=e8ba5bf62be682f1
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:130 sha16=e8ba5bf62be682f1
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:133 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:136 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:139 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:142 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:145 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:148 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:151 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:154 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:157 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:160 sha16=18bbf374af0f1515
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:163 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:166 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:169 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:172 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:175 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:178 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:181 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:184 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:187 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:190 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:193 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:196 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:199 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:202 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:206 sha16=6c5860cf1078b87f
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:209 sha16=9b844b818e4cd2fd
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/51_bokusuu.out:212 sha16=701f90954a1cb295
+    docs/evidence/km-50-kara-wa-todokazu-20260917/raw/52_hachihon.py:14 sha16=7f4ae24194b21be8
+  ★己も母數に入る。入れぬなら「入れなんだ」と書く ―― 黙つて外すな。★
+
+rc = 0 / 刻 = 2026-09-17T03:52:02
