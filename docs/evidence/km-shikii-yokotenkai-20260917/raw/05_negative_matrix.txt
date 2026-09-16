@@ -1,0 +1,58 @@
+★負テスト ―― 四器 × 四形(甲1・乙3) + 陽性対照2。旧器=is_num(字面判定)／新器=num_same_op+env_state+fix_threshold★
+刻=2026-09-17 05:43:57  舊器の逐語出所=scripts/redundancy/shogun_report_watcher.sh L31(未patch の同型器)
+
+== watcher : scripts/inbox_watcher.sh L124-165  閾=ESCALATE_PHASE1(既定 120 → ESCALATE_PHASE1) ==
+  old | 甲20桁 | 鳴=0 | RESULT ESCALATE_PHASE1=[99999999999999999999]
+  new | 甲20桁 | 鳴=1 | RESULT ESCALATE_PHASE1=[120]
+  old | 乙空文字 | 鳴=0 | RESULT ESCALATE_PHASE1=[120]
+  new | 乙空文字 | 鳴=1 | RESULT ESCALATE_PHASE1=[120]
+  old | 乙空白 | 鳴=1 | RESULT ESCALATE_PHASE1=[120]
+  new | 乙空白 | 鳴=1 | RESULT ESCALATE_PHASE1=[120]
+  old | 乙未設定 | 鳴=0 | RESULT ESCALATE_PHASE1=[120]
+  new | 乙未設定 | 鳴=0 | RESULT ESCALATE_PHASE1=[120]
+  old | 陽性正 | 鳴=0 | RESULT ESCALATE_PHASE1=[7]
+  new | 陽性正 | 鳴=0 | RESULT ESCALATE_PHASE1=[7]
+  old | 陽性負値 | 鳴=1 | RESULT ESCALATE_PHASE1=[120]
+  new | 陽性負値 | 鳴=1 | RESULT ESCALATE_PHASE1=[120]
+
+== watchdog : scripts/watchdogs/enter_restart_common_watchdog.sh L75-110  閾=ER_FIRE_CAP_COUNT(既定 3 → FIRE_CAP_COUNT) ==
+  old | 甲20桁 | 鳴=0 | RESULT FIRE_CAP_COUNT=[99999999999999999999]
+  new | 甲20桁 | 鳴=1 | RESULT FIRE_CAP_COUNT=[3]
+  old | 乙空文字 | 鳴=0 | RESULT FIRE_CAP_COUNT=[3]
+  new | 乙空文字 | 鳴=1 | RESULT FIRE_CAP_COUNT=[3]
+  old | 乙空白 | 鳴=1 | RESULT FIRE_CAP_COUNT=[3]
+  new | 乙空白 | 鳴=1 | RESULT FIRE_CAP_COUNT=[3]
+  old | 乙未設定 | 鳴=0 | RESULT FIRE_CAP_COUNT=[3]
+  new | 乙未設定 | 鳴=0 | RESULT FIRE_CAP_COUNT=[3]
+  old | 陽性正 | 鳴=0 | RESULT FIRE_CAP_COUNT=[7]
+  new | 陽性正 | 鳴=0 | RESULT FIRE_CAP_COUNT=[7]
+  old | 陽性負値 | 鳴=1 | RESULT FIRE_CAP_COUNT=[3]
+  new | 陽性負値 | 鳴=1 | RESULT FIRE_CAP_COUNT=[3]
+
+== health : scripts/agent_health_check.sh L85-117  閾=HEALTH_CHECK_COOLDOWN_SEC(既定 300 → ALERT_COOLDOWN_SEC) ==
+  old | 甲20桁 | 鳴=0 | RESULT ALERT_COOLDOWN_SEC=[99999999999999999999]
+  new | 甲20桁 | 鳴=1 | RESULT ALERT_COOLDOWN_SEC=[300]
+  old | 乙空文字 | 鳴=0 | RESULT ALERT_COOLDOWN_SEC=[300]
+  new | 乙空文字 | 鳴=1 | RESULT ALERT_COOLDOWN_SEC=[300]
+  old | 乙空白 | 鳴=1 | RESULT ALERT_COOLDOWN_SEC=[300]
+  new | 乙空白 | 鳴=1 | RESULT ALERT_COOLDOWN_SEC=[300]
+  old | 乙未設定 | 鳴=0 | RESULT ALERT_COOLDOWN_SEC=[300]
+  new | 乙未設定 | 鳴=0 | RESULT ALERT_COOLDOWN_SEC=[300]
+  old | 陽性正 | 鳴=0 | RESULT ALERT_COOLDOWN_SEC=[7]
+  new | 陽性正 | 鳴=0 | RESULT ALERT_COOLDOWN_SEC=[7]
+  old | 陽性負値 | 鳴=1 | RESULT ALERT_COOLDOWN_SEC=[300]
+  new | 陽性負値 | 鳴=1 | RESULT ALERT_COOLDOWN_SEC=[300]
+
+== warn : scripts/checks/context_usage_warn.sh L31-65  閾=CONTEXT_DANGER_BYTES(既定 2000000 → DANGER_BYTES) ==
+  old | 甲20桁 | 鳴=0 | RESULT DANGER_BYTES=[99999999999999999999]
+  new | 甲20桁 | 鳴=1 | RESULT DANGER_BYTES=[2000000]
+  old | 乙空文字 | 鳴=0 | RESULT DANGER_BYTES=[2000000]
+  new | 乙空文字 | 鳴=1 | RESULT DANGER_BYTES=[2000000]
+  old | 乙空白 | 鳴=1 | RESULT DANGER_BYTES=[2000000]
+  new | 乙空白 | 鳴=1 | RESULT DANGER_BYTES=[2000000]
+  old | 乙未設定 | 鳴=0 | RESULT DANGER_BYTES=[2000000]
+  new | 乙未設定 | 鳴=0 | RESULT DANGER_BYTES=[2000000]
+  old | 陽性正 | 鳴=0 | RESULT DANGER_BYTES=[7]
+  new | 陽性正 | 鳴=0 | RESULT DANGER_BYTES=[7]
+  old | 陽性負値 | 鳴=1 | RESULT DANGER_BYTES=[2000000]
+  new | 陽性負値 | 鳴=1 | RESULT DANGER_BYTES=[2000000]

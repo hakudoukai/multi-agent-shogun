@@ -1,0 +1,41 @@
+# 08 ―― 一時 index で ★己の hunk だけ★ を載せた記録
+刻(書いた時)=2026-09-17 05:56:26 JST
+枝=karo-mac/km-shikii-yokotenkai-20260917  基=a6587c02ae87a8a737b2d1daf1ed2a1fc6d8fe91
+
+## 何故 git add / git commit --only を使はぬか
+作業樹には★他席の未commit★が乗つて居る(下表)。add も --only も file 単位ゆゑ、
+其れらを巻き込む。∴ hunk 単位で選び、共有の index と作業樹に一切触れぬ
+一時 index(GIT_INDEX_FILE=/tmp/kmyoko.idx)へ載せて commit した。
+
+## hunk の仕分(git diff HEAD の @@ 見出しで数へた)
+器 | 全hunk | 己の帯 | 他席の帯 | 他席の帯の中身(讀んで判じた)
+scripts/inbox_watcher.sh | 6 | @@ -121 | @@ -644,-811,-1135,-1245,-1372 | 承認dialog検知・mac席名・Phase3 の /clear 停止(委員長裁 seq232016)
+scripts/watchdogs/enter_restart_common_watchdog.sh | 2 | @@ -56,-74 | 無 | ―
+scripts/agent_health_check.sh | 2 | @@ -82,-307 | 無 | ―
+scripts/checks/context_usage_warn.sh | 2 | @@ -28 | @@ -43 | BSD stat -f '%z' 退避(裁定 seq233904①)
+
+己の帯 計6 / 他席の帯 計6 / 全12
+抜いた patch=/tmp/kmyoko/mine.patch  sha256:16=689ba20cf4b8ee10  行=235
+
+## 手順(そのまま走らせた)
+export GIT_INDEX_FILE=/tmp/kmyoko.idx; rm -f "$GIT_INDEX_FILE"
+git read-tree HEAD            # rc=0
+git apply --cached /tmp/kmyoko/mine.patch   # rc=0
+git add -f docs/evidence/km-shikii-yokotenkai-20260917   # rc=0 (.gitignore:7 の * 故 -f)
+git write-tree / commit-tree -p HEAD / update-ref refs/heads/<枝>
+
+## ★commit した物 ≠ 走つて居る作業樹★(明記して置く)
+inbox_watcher と context_usage_warn は、commit 版に他席の手当が入つて居らぬ。
+作業樹は元の儘で、他席の手当は未commit の儘残る(當席は触つて居らぬ)。
+merge の際は★他席の帯が先に入る事★を見越して、當席の帯だけの patch として扱はれたし。
+
+## 載せた物の検め(一時 index の blob を直に讀んで測つた)
+scripts/inbox_watcher.sh                             blob=00cd905d sha16=5ff53f30cd274956 行=1607 bash -n rc=0 fix_threshold=2 is_num(全)=1 is_num(実行)=0
+scripts/watchdogs/enter_restart_common_watchdog.sh   blob=ebc3a240 sha16=31956e6427ade32f 行=417 bash -n rc=0 fix_threshold=5 is_num(全)=1 is_num(実行)=0
+scripts/agent_health_check.sh                        blob=c4921984 sha16=e5bd6ab3e28f1f9c 行=476 bash -n rc=0 fix_threshold=4 is_num(全)=1 is_num(実行)=0
+scripts/checks/context_usage_warn.sh                 blob=66cb8e37 sha16=82e15f7f6e77eccd 行=88 bash -n rc=0 fix_threshold=3 is_num(全)=1 is_num(実行)=0
+
+## 他席の帯が commit 版に★入つて居らぬ★事の實測(陰性対照)
+inbox_watcher: send_cli_command "/clear" の出現=1 (HEAD 版と同じ=他席の停止手当は未収載)
+inbox_watcher: 作業樹での同出現=0
+warn: stat -f '%z' の出現 commit版=0 / 作業樹=1

@@ -121,9 +121,62 @@ fi
 # Time-based escalation: track how long unread messages have been waiting
 FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
 LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
-ESCALATE_PHASE1=${ESCALATE_PHASE1:-120}
-ESCALATE_PHASE2=${ESCALATE_PHASE2:-240}
-ESCALATE_COOLDOWN=${ESCALATE_COOLDOWN:-300}
+# ─── 閾の番人(甲/乙) ───
+_th_say(){ printf '%s\n' "[watcher] $*" >&2; }
+# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+#   舊 is_num は case の字面判定ゆゑ 99999999999999999999 を「數」と呼ぶ。然し後段の
+#   [ "$x" -ge "$閾" ] は其の値で ★rc=2★ に倒れ、if も elif も偽＝★黙つて既定の枝へ落ちる★。
+#   ∴ 検める器と使ふ器を同じ演算子に揃へる。
+num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+# ★乙 ―― 未設定/空文字/空白のみ を分けて名指す(裁 seq322952)★
+#   ${x+set} は空文字でも set を返す ∴ 未設定と空文字は此処でのみ分かれる。
+env_state(){
+  eval "_es_set=\"\${$1+set}\"; _es_v=\"\${$1-}\""
+  if [ -z "${_es_set}" ]; then printf 'unset\n'
+  elif [ -z "${_es_v}" ]; then printf 'empty\n'
+  elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+  else printf 'value\n'; fi
+}
+# 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
+#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+#   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
+#   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
+fix_threshold(){
+  _ft_n="$1"; _ft_d="$2"; _ft_o="$3"; _ft_s="$(env_state "$_ft_n")"; eval "_ft_v=\"\${$_ft_n-}\""
+  case "$_ft_s" in
+    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
+    empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+    blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+  esac
+  if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+  _th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_v}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+  eval "$_ft_o=\$_ft_d"
+}
+# ★此の器だけは「黙る」形が0本、出目は悉く ★暴発★ か ★氾濫★ である(專任3 第40弾・裁 322099)。
+#   殊に ESCALATE_PHASE1/2 が比較器で扱へぬと if も elif も偽 → ★else = Phase3★ へ落ち、
+#   齢0秒の席へ ★暴発★ する(実測: [ 0 -lt 99999999999999999999 ] は rc=2 ―― if も elif も偽)。
+#   ★何が飛ぶかは版で違ふ★: HEAD 版の Phase3 は /clear、当作業樹は seq232016 の手当で
+#   Escape+nudge(送る物は軽いが、齢0秒で段を上げ timer を潰す事自体が疵)。
+#   ★∴ 上の ${NAME:-既定} を此処へ集約した(乙: 未設定/空文字を分ける為、先に倒してはならぬ)★
+for _t in ESCALATE_PHASE1:120 ESCALATE_PHASE2:240 ESCALATE_COOLDOWN:300 \
+          NUDGE_COOLDOWN_SEC:60 NUDGE_COOLDOWN_SEC_CODEX:300 NUDGE_COOLDOWN_SEC_CLAUDE:60 \
+          ASW_PHASE:2 APPROVAL_ALERT_COOLDOWN:300 MAX_TYPING_SKIP:5 INOTIFY_TIMEOUT:30; do
+  _n="${_t%%:*}"; _d="${_t##*:}"
+  fix_threshold "$_n" "$_d" "$_n"
+done
+unset _t _n _d _ft_n _ft_d _ft_o _ft_s _ft_v _es_set _es_v
+# ★tk5st138 alert-only化★: Phase 3 (ROUTE-B) no longer sends /clear. These two
+# timestamps replace LAST_CLEAR_TS for this path — LAST_CLEAR_TS stays reserved
+# for "a real /clear was sent" (agent_is_busy() 30s window at line ~821 depends
+# on that meaning; do not repurpose it — tk5st136 measurement showed 66.5%
+# ROUTE-A chain-refire when state was conflated).
+# LAST_B_ALERT_TS: throttles the lightweight log-only alert (~4min cadence,
+#   same ESCALATE_COOLDOWN as before) and doubles as the "ROUTE-B just fired"
+#   signal ROUTE-A reads to selectively suppress its own chained /clear.
+LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+# LAST_KARO_ALERT_TS: throttles the heavier real inbox delivery to karo-mac
+#   (30min cadence — see send_alert_to_karo()).
+LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
 
 # ─── Nudge throttle ───
 # Avoid spamming the same "inboxN" into the pane every timeout tick.
