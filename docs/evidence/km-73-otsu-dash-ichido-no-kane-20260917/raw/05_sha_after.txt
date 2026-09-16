@@ -1,0 +1,6 @@
+# 据ゑた後 ―― 生器四本の sha256 / 刻=2026-09-17T07:26:30+0900
+cac867f8b94d5be4db1eb08237aa0f811dc325e452ebd588e806d6559dfc0fe6  scripts/inbox_watcher.sh
+b224557e96e54c8c0d583804f73b28c852c31bfa7f241f063ebf5b26f1057ec9  scripts/watchdogs/enter_restart_common_watchdog.sh
+6493c1d72a1e3a39d6ed06413e6e6885e5796ebec866535d629c453e81bc72bc  scripts/agent_health_check.sh
+897412b069d0a6201e388baccdf852d2b84e9125e869c44608f2e205c9726eb8  scripts/checks/context_usage_warn.sh
+# bash -n: inbox_watcher.sh=rc0 enter_restart_common_watchdog.sh=rc0 agent_health_check.sh=rc0 context_usage_warn.sh=rc0

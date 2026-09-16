@@ -1,0 +1,54 @@
+★乙′ 三形の鳴り ―― 生器四本・閾は實際の呼び出しから取つた★
+
+== watcher : scripts/inbox_watcher.sh L125-159 閾=10本 (ESCALATE_PHASE1,ESCALATE_PHASE2,ESCALATE_COOLDOWN,NUDGE_COOLDOWN_SEC,NUDGE_COOLDOWN_SEC_CODEX,NUDGE_COOLDOWN_SEC_CLAUDE,ASW_PHASE,APPROVAL_ALERT_COOLDOWN,MAX_TYPING_SKIP,INOTIFY_TIMEOUT) ==
+  形A 裁322952の字義=毎回刷る           未設定悉く → 鳴=10 rc=0
+  形B ab2a1f1=未設定は黙る            未設定悉く → 鳴=0 rc=0
+  形C 裁323687⑵=一度だけ             未設定悉く → 鳴=1 rc=0
+      逐語: [watcher] ★閾 未設定 ―― 既定へ倒す(ESCALATE_PHASE1=120) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★
+  形C 負 乙空文字         ESCALATE_PHASE1='' → 鳴=2 RESULT ESCALATE_PHASE1=[120]
+  形C 負 乙空白のみ        ESCALATE_PHASE1='   ' → 鳴=2 RESULT ESCALATE_PHASE1=[120]
+  形C 負 甲20桁         ESCALATE_PHASE1=99999999999999999999 → 鳴=2 RESULT ESCALATE_PHASE1=[120]
+  形C 陽性 正しい値        ESCALATE_PHASE1=7 → 鳴=1 RESULT ESCALATE_PHASE1=[7]
+
+== watchdog : scripts/watchdogs/enter_restart_common_watchdog.sh L76-110 閾=3本 (ER_THRESHOLD_MIN,ER_FIRE_CAP_COUNT,ER_FIRE_CAP_WINDOW_MIN) ==
+  形A 裁322952の字義=毎回刷る           未設定悉く → 鳴=3 rc=0
+  形B ab2a1f1=未設定は黙る            未設定悉く → 鳴=0 rc=0
+  形C 裁323687⑵=一度だけ             未設定悉く → 鳴=1 rc=0
+      逐語: ★閾 未設定 ―― 既定へ倒す(ER_THRESHOLD_MIN=10) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★
+  形C 負 乙空文字         ER_THRESHOLD_MIN='' → 鳴=2 RESULT ER_THRESHOLD_MIN=[10]
+  形C 負 乙空白のみ        ER_THRESHOLD_MIN='   ' → 鳴=2 RESULT ER_THRESHOLD_MIN=[10]
+  形C 負 甲20桁         ER_THRESHOLD_MIN=99999999999999999999 → 鳴=2 RESULT ER_THRESHOLD_MIN=[10]
+  形C 陽性 正しい値        ER_THRESHOLD_MIN=7 → 鳴=1 RESULT ER_THRESHOLD_MIN=[7]
+
+== health : scripts/agent_health_check.sh L86-120 閾=3本 (HEALTH_CHECK_COOLDOWN_SEC,HEALTH_CHECK_TOKEN_WARN,HEALTH_CHECK_TOKEN_CRIT) ==
+  形A 裁322952の字義=毎回刷る           未設定悉く → 鳴=3 rc=0
+  形B ab2a1f1=未設定は黙る            未設定悉く → 鳴=0 rc=0
+  形C 裁323687⑵=一度だけ             未設定悉く → 鳴=1 rc=0
+      逐語: [health_check] ★閾 未設定 ―― 既定へ倒す(HEALTH_CHECK_COOLDOWN_SEC=300) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★
+  形C 負 乙空文字         HEALTH_CHECK_COOLDOWN_SEC='' → 鳴=2 RESULT HEALTH_CHECK_COOLDOWN_SEC=[300]
+  形C 負 乙空白のみ        HEALTH_CHECK_COOLDOWN_SEC='   ' → 鳴=2 RESULT HEALTH_CHECK_COOLDOWN_SEC=[300]
+  形C 負 甲20桁         HEALTH_CHECK_COOLDOWN_SEC=99999999999999999999 → 鳴=2 RESULT HEALTH_CHECK_COOLDOWN_SEC=[300]
+  形C 陽性 正しい値        HEALTH_CHECK_COOLDOWN_SEC=7 → 鳴=1 RESULT HEALTH_CHECK_COOLDOWN_SEC=[7]
+
+== warn : scripts/checks/context_usage_warn.sh L32-63 閾=2本 (CONTEXT_WARN_BYTES,CONTEXT_DANGER_BYTES) ==
+  形A 裁322952の字義=毎回刷る           未設定悉く → 鳴=0 rc=0
+  形B ab2a1f1=未設定は黙る            未設定悉く → 鳴=0 rc=0
+  形C 裁323687⑵=一度だけ             未設定悉く → 鳴=0 rc=0
+  形C 負 乙空文字         CONTEXT_WARN_BYTES='' → 鳴=1 RESULT CONTEXT_WARN_BYTES=[1600000]
+  形C 負 乙空白のみ        CONTEXT_WARN_BYTES='   ' → 鳴=1 RESULT CONTEXT_WARN_BYTES=[1600000]
+  形C 負 甲20桁         CONTEXT_WARN_BYTES=99999999999999999999 → 鳴=1 RESULT CONTEXT_WARN_BYTES=[1600000]
+  形C 陽性 正しい値        CONTEXT_WARN_BYTES=7 → 鳴=0 RESULT CONTEXT_WARN_BYTES=[7]
+
+────────────────────────────────────────────────────────────
+★註 ―― warn の段で 形A/形B/形C が同じ 0 に出る理由(器の限界であり、實測の否定ではない)★
+本器は生器から 閾の番人 の塊を引き、★字面の置換★で三形を建てる:
+  形A = 「if [ "${_th_unset_told:-0}" -eq 0 ]; then」→「if [ 1 -eq 1 ]; then」(＝毎回刷る)
+  形B = unset の枝を「黙る一行」へ差し替へ
+  形C = 生器の儘(＝process に一度)
+warn は★裁を請ふ★故に生器を形B(黙る)へ据ゑ置いた。∴ 形A の置換の錨が生器に無く空振りし、
+三形とも同じ「黙る」塊を走らせて悉く 鳴=0 と出る。
+  實測: warn 生器の '_th_unset_told' 出現=0行 ／ 黙る一行の出現=1行
+  ∴ warn の段で意味が在るのは ★負の三形(鳴=1)と 陽性(鳴=0)★ の四行のみ。三形の比べは他三器の段で読め。
+  (warn へ一度刷る形を入れて測つた實績は raw/04_warn_wa_ichido_ni_naranu.txt ―― 未設定 鳴=1／起動毎＝prompt 毎)
+★當職の誤測一件(紙に残す)★: 此の裏付を最初 `grep -cF "unset) eval "$_ft_o=$_ft_d"…"` と★双引用で★書き、
+  shell が $_ft_o/$_ft_d を空へ展開した故 0行 と出た。単引用で括り直して 1行。★括りを違へると「無い」と出る★。

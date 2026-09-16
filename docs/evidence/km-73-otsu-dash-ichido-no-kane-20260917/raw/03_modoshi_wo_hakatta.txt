@@ -1,0 +1,6 @@
+★据ゑる前 ⇔ 据ゑた後 ⇔ 逆当て後 の三点★  不良=0 を要す
+  scripts/inbox_watcher.sh                             前=6f6954b455ce 後=cac867f8b94d 逆=6f6954b455ce 動いた=True 戻つた=True 逆当て数=1/1/1
+  scripts/watchdogs/enter_restart_common_watchdog.sh   前=31956e6427ad 後=b224557e96e5 逆=31956e6427ad 動いた=True 戻つた=True 逆当て数=1/1/1
+  scripts/agent_health_check.sh                        前=e5bd6ab3e28f 後=6493c1d72a1e 逆=e5bd6ab3e28f 動いた=True 戻つた=True 逆当て数=1/1/1
+  scripts/checks/context_usage_warn.sh                 前=be4b1b210f81 後=df5b5467279a 逆=be4b1b210f81 動いた=True 戻つた=True 逆当て数=1/1/1
+★不良=0★ (0 なら可逆が★測れた★)

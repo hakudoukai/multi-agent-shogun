@@ -89,13 +89,18 @@ env_state(){
   else printf 'value\n'; fi
 }
 # 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
-#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
-#   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
+#   ★乙′(裁 seq323687⑵ ―― 可)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ、★本 process に一度だけ★刷る。
+#   閾の数だけ逐回鳴らせば★鳴りすぎる鐘★(裁の逐語)ゆゑ一度に纏める。★異常の三形★
 #   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
 fix_threshold(){
   _ft_n="$1"; _ft_d="$2"; _ft_o="$3"; _ft_s="$(env_state "$_ft_n")"; eval "_ft_v=\"\${$_ft_n-}\""
   case "$_ft_s" in
-    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
+    unset)
+      if [ "${_th_unset_told:-0}" -eq 0 ]; then
+        _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+        _th_unset_told=1
+      fi
+      eval "$_ft_o=\$_ft_d"; return 0 ;;
     empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
     blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
   esac

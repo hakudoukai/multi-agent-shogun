@@ -1,0 +1,201 @@
+# ★此の紙は 證 であつて patch の種では無い★ ―― unified diff は空の文脈行を「空白一字」で刷る故、
+# 其の行の末尾空白を剥いだ。∴ git apply には掛けられぬ。差を讀む為の紙である。
+# ★測り方★: git diff ab2a1f1 -- <四本>  ＝ ★起点(BASE)⇔作業樹★。
+#   當初 `git diff -- <四本>` と書いて居た ―― 之は ★共有索引⇔作業樹★ で 353行 と出た(前 sha16=ca3ed29aa822e47a)。
+#   詳しくは raw/07_futatsu_no_sa.txt。
+diff --git a/scripts/agent_health_check.sh b/scripts/agent_health_check.sh
+index c492198..3ea4fa3 100644
+--- a/scripts/agent_health_check.sh
++++ b/scripts/agent_health_check.sh
+@@ -99,13 +99,18 @@ env_state(){
+   else printf 'value\n'; fi
+ }
+ # 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
+-#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+-#   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
++#   ★乙′(裁 seq323687⑵ ―― 可)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ、★本 process に一度だけ★刷る。
++#   閾の数だけ逐回鳴らせば★鳴りすぎる鐘★(裁の逐語)ゆゑ一度に纏める。★異常の三形★
+ #   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
+ fix_threshold(){
+   _ft_n="$1"; _ft_d="$2"; _ft_o="$3"; _ft_s="$(env_state "$_ft_n")"; eval "_ft_v=\"\${$_ft_n-}\""
+   case "$_ft_s" in
+-    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
++    unset)
++      if [ "${_th_unset_told:-0}" -eq 0 ]; then
++        _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
++        _th_unset_told=1
++      fi
++      eval "$_ft_o=\$_ft_d"; return 0 ;;
+     empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+     blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+   esac
+diff --git a/scripts/checks/context_usage_warn.sh b/scripts/checks/context_usage_warn.sh
+index 66cb8e3..d195076 100755
+--- a/scripts/checks/context_usage_warn.sh
++++ b/scripts/checks/context_usage_warn.sh
+@@ -45,7 +45,9 @@ env_state(){
+   else printf 'value\n'; fi
+ }
+ # 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
+-#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
++#   ★乙′(裁 seq323687⑵ ―― 本器のみ据ゑ置き・裁を請ふ)★: 本器は ★UserPromptSubmit hook＝prompt 毎に別 process★
++#   ゆゑ「process に一度」＝「prompt 毎に一度」＝★毎回★に成り、裁の趣旨「鳴りすぎる鐘」に真向から当たる。
++#   ∴ 未設定は★黙る★儘に据ゑ置き、他三器(watcher/watchdog/health)にのみ一度刷る形を入れた。
+ #   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
+ #   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
+ fix_threshold(){
+@@ -76,7 +78,7 @@ if [ -z "$SESSION_ID" ] || [ ! -f "$JSONL_PATH" ]; then
+     exit 0
+ fi
+
+-SZ=$(stat -c '%s' "$JSONL_PATH" 2>/dev/null || echo 0)
++SZ=$(stat -c '%s' "$JSONL_PATH" 2>/dev/null || stat -f '%z' "$JSONL_PATH" 2>/dev/null || echo 0)  # BSD(mac)互換: GNU stat -c 不在時は -f '%z' へ退避 (裁定seq233904①)
+ KB=$((SZ / 1024))
+
+ if [ "$SZ" -ge "$DANGER_BYTES" ]; then
+diff --git a/scripts/inbox_watcher.sh b/scripts/inbox_watcher.sh
+index 00cd905..084a6eb 100755
+--- a/scripts/inbox_watcher.sh
++++ b/scripts/inbox_watcher.sh
+@@ -138,13 +138,18 @@ env_state(){
+   else printf 'value\n'; fi
+ }
+ # 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
+-#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+-#   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
++#   ★乙′(裁 seq323687⑵ ―― 可)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ、★本 process に一度だけ★刷る。
++#   閾の数だけ逐回鳴らせば★鳴りすぎる鐘★(裁の逐語)ゆゑ一度に纏める。★異常の三形★
+ #   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
+ fix_threshold(){
+   _ft_n="$1"; _ft_d="$2"; _ft_o="$3"; _ft_s="$(env_state "$_ft_n")"; eval "_ft_v=\"\${$_ft_n-}\""
+   case "$_ft_s" in
+-    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
++    unset)
++      if [ "${_th_unset_told:-0}" -eq 0 ]; then
++        _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
++        _th_unset_told=1
++      fi
++      eval "$_ft_o=\$_ft_d"; return 0 ;;
+     empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+     blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+   esac
+@@ -697,7 +702,7 @@ send_cli_command() {
+ # Called from both send_cli_command (clear_command) and send_context_reset.
+ is_no_auto_clear_agent() {
+     case "$AGENT_ID" in
+-        shogun|shogun-second|shogun-third|karo|karo-second|karo-third|gunshi|gunshi-second|gunshi-third|ashigaru5|ashigaru6|ashigaru7|ashigaru8)
++        shogun|shogun-second|shogun-third|karo|karo-second|karo-third|gunshi|gunshi-second|gunshi-third|ashigaru5|ashigaru6|ashigaru7|ashigaru8|karo-mac|ashigaru-mac-1|ashigaru-mac-2|ashigaru-mac-3)
+             return 0
+             ;;
+         *)
+@@ -864,6 +869,37 @@ agent_has_self_watch() {
+ # Sending nudge during Working causes text to queue but Enter to be lost.
+ # Returns 0 (true) if agent is busy, 1 if idle.
+ # Implementation: delegates to lib/agent_status.sh (shared library).
++approval_blocked_on_dialog() {
++    # Approval dialogs are neither idle nor working. They need a human decision,
++    # so do not defer their unread delivery to Claude's Stop hook.
++    local pane_capture pane_tail
++    pane_capture=$(timeout 2 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null || true)
++    pane_tail=$(printf '%s\n' "$pane_capture" | tail -80)
++    if printf '%s\n' "$pane_tail" | grep -qF 'Do you want to proceed?' \
++        && printf '%s\n' "$pane_tail" | grep -qF '1. Yes' \
++        && printf '%s\n' "$pane_tail" | grep -qF 'Esc to cancel'; then
++        return 0
++    fi
++    return 1
++}
++
++alert_blocked_on_approval() {
++    # Notify once per cooldown; never choose or inject a key into the dialog.
++    local now alert_file msg
++    now=$(date +%s)
++    alert_file="${APPROVAL_ALERT_FILE:-/tmp/inbox_watcher_approval_${AGENT_ID}}"
++    if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
++        && [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
++        return 0
++    fi
++    LAST_APPROVAL_ALERT_TS=$now
++    printf '%s\n' "$now" > "$alert_file"
++    msg="[blocked_on_approval] ${AGENT_ID} ${PANE_TARGET}: Do you want to proceed?/1. Yes/Esc to cancel。人の判断待ち（自動押下なし）。"
++    bash "$SCRIPT_DIR/scripts/inbox_write.sh" karo-mac "$msg" notification inbox_watcher 2>/dev/null || true
++    bash "$SCRIPT_DIR/scripts/inbox_write.sh" iincho "$msg" notification inbox_watcher 2>/dev/null || true
++    echo "[$(date)] [APPROVAL-BLOCK] $AGENT_ID blocked_on_approval; alerted karo-mac and iincho" >&2
++}
++
+ agent_is_busy() {
+     # /clear cooldown: treat agent as busy for 30s after /clear was sent.
+     # Claude Code's /clear takes 10-30s (CLAUDE.md reload + context init).
+@@ -1188,6 +1224,15 @@ process_unread() {
+     local fast_count
+     fast_count=$(echo "$fast_info" | "$SCRIPT_DIR/.venv/bin/python3" -c "import sys,json; print(json.load(sys.stdin).get('count',0))" 2>/dev/null)
+
++    # An approval dialog is an independent blocked state. It must be detected
++    # even when the inbox is empty, because there may be no later unread event
++    # to wake the stop-hook delivery path.
++    if approval_blocked_on_dialog; then
++        alert_blocked_on_approval
++        echo "[$(date)] [APPROVAL-BLOCK] $AGENT_ID: blocked_on_approval; no key injection" >&2
++        return 0
++    fi
++
+     if no_idle_full_read "$trigger" && [ "$fast_count" -eq 0 ] 2>/dev/null; then
+         # no_idle_full_read guard: unread=0 and timeout path → no full inbox read
+         if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+@@ -1298,6 +1343,13 @@ for s in data.get('specials', []):
+         # Safety net: if busy detection persists for >5 min, assume false-busy (stale flag)
+         # and force-create idle flag to allow nudge delivery.
+         # 副院長令 fc3a5b0b RC-2 cure (2026-06-07): shogun 例外も前方一致化 (shogun-third/main/second)。
++        if approval_blocked_on_dialog; then
++            alert_blocked_on_approval
++            FIRST_UNREAD_SEEN=$now
++            echo "[$(date)] $normal_count unread for $AGENT_ID — blocked_on_approval; human alert sent, no key injection" >&2
++            return 0
++        fi
++
+         if agent_is_busy && [[ "$AGENT_ID" != shogun* ]]; then
+             local busy_cli
+             busy_cli=$(get_effective_cli_type)
+@@ -1425,11 +1477,11 @@ for s in data.get('specials', []):
+                     FIRST_UNREAD_SEEN=$now  # Reset timer
+                     send_wakeup_with_escape "$normal_count"
+                 else
+-                    echo "[$(date)] ESCALATION Phase 3: Agent $AGENT_ID unresponsive for ${age}s. Sending /clear." >&2
+-                    send_cli_command "/clear"
+-                    LAST_CLEAR_TS=$now
+-                    FIRST_UNREAD_SEEN=0  # Reset — will re-detect on next cycle
+-                    NEW_CONTEXT_SENT=0
++                    # iincho seq232016 (2026-09-01): Phase 3 auto /clear injection disabled.
++                    # Treated the same as the command-layer branch above (no new design).
++                    echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (auto /clear disabled by iincho seq232016, ${age}s). Using Escape+nudge." >&2
++                    FIRST_UNREAD_SEEN=$now  # Reset timer (no destructive action)
++                    send_wakeup_with_escape "$normal_count"
+                 fi
+             else
+                 # Cooldown active — fall back to Escape+nudge
+diff --git a/scripts/watchdogs/enter_restart_common_watchdog.sh b/scripts/watchdogs/enter_restart_common_watchdog.sh
+index ebc3a24..c7d1890 100755
+--- a/scripts/watchdogs/enter_restart_common_watchdog.sh
++++ b/scripts/watchdogs/enter_restart_common_watchdog.sh
+@@ -89,13 +89,18 @@ env_state(){
+   else printf 'value\n'; fi
+ }
+ # 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
+-#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+-#   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
++#   ★乙′(裁 seq323687⑵ ―― 可)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ、★本 process に一度だけ★刷る。
++#   閾の数だけ逐回鳴らせば★鳴りすぎる鐘★(裁の逐語)ゆゑ一度に纏める。★異常の三形★
+ #   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
+ fix_threshold(){
+   _ft_n="$1"; _ft_d="$2"; _ft_o="$3"; _ft_s="$(env_state "$_ft_n")"; eval "_ft_v=\"\${$_ft_n-}\""
+   case "$_ft_s" in
+-    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
++    unset)
++      if [ "${_th_unset_told:-0}" -eq 0 ]; then
++        _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
++        _th_unset_told=1
++      fi
++      eval "$_ft_o=\$_ft_d"; return 0 ;;
+     empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+     blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+   esac

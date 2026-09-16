@@ -1,0 +1,17 @@
+# 據ゑる前の註と unset 枝 ―― 四本
+--- scripts/inbox_watcher.sh
+141:#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+147:    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
+    閾の数(fix_threshold 呼び行)=1
+--- scripts/watchdogs/enter_restart_common_watchdog.sh
+92:#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+98:    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
+    閾の数(fix_threshold 呼び行)=4
+--- scripts/agent_health_check.sh
+102:#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+108:    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
+    閾の数(fix_threshold 呼び行)=3
+--- scripts/checks/context_usage_warn.sh
+48:#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+54:    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
+    閾の数(fix_threshold 呼び行)=2

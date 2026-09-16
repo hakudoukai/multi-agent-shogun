@@ -45,7 +45,9 @@ env_state(){
   else printf 'value\n'; fi
 }
 # 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
-#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+#   ★乙′(裁 seq323687⑵ ―― 本器のみ据ゑ置き・裁を請ふ)★: 本器は ★UserPromptSubmit hook＝prompt 毎に別 process★
+#   ゆゑ「process に一度」＝「prompt 毎に一度」＝★毎回★に成り、裁の趣旨「鳴りすぎる鐘」に真向から当たる。
+#   ∴ 未設定は★黙る★儘に据ゑ置き、他三器(watcher/watchdog/health)にのみ一度刷る形を入れた。
 #   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
 #   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
 fix_threshold(){
@@ -76,7 +78,7 @@ if [ -z "$SESSION_ID" ] || [ ! -f "$JSONL_PATH" ]; then
     exit 0
 fi
 
-SZ=$(stat -c '%s' "$JSONL_PATH" 2>/dev/null || echo 0)
+SZ=$(stat -c '%s' "$JSONL_PATH" 2>/dev/null || stat -f '%z' "$JSONL_PATH" 2>/dev/null || echo 0)  # BSD(mac)互換: GNU stat -c 不在時は -f '%z' へ退避 (裁定seq233904①)
 KB=$((SZ / 1024))
 
 if [ "$SZ" -ge "$DANGER_BYTES" ]; then
