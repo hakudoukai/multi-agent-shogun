@@ -1,0 +1,8 @@
+# 40 捕へ器(二走目・mtime|birth|ctime) / 40_N3 / 刻 2026-09-17T03:26:50+0900 / 歩き根 /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-67-mon-no-ato-20260917/raw/taishou/N3/root / 歩哨 /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-67-mon-no-ato-20260917/raw/taishou/N3/hosho.txt / 刻(歩哨 mtime_ns) 1789583210365833928 = 03:26:50.365833928 / stat -f %Fm 1789583210.365833928 → 一致 True / 宣 /Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1/docs/evidence/km-67-mon-no-ato-20260917/raw/taishou/N3/sengen.txt(型 2) / probe False
+## 母數 通常 file 3(歩いた 3・非通常 0)/ byte 和 6 / birth の出處 FB 3 py~ 0
+## 後 2 本 4 B = 後∧宣に在る 2 本 4 B + ★後∧宣に無い(疵) 0 本 0 B★ / 同 0 / 前 1 / 和 3 = 母數 3 差 0
+## 比較・秒>秒(66 の定義)なら 後 0 本 0 B ―― ns が捕へて 秒>秒 が隠す物 2 本 4 B: ['g_mon.txt', 'mon/m.out']
+## 宣の型: mon/ | root/g_*.txt
+  後・宣 g_mon.txt 2B mtime 03:26:50.365901052(+0.067ms) birth 03:26:50.365869886(FB) ctime 03:26:50.365901052 何で後=mbc 宣=root/g_*.txt
+  後・宣 mon/m.out 2B mtime 03:26:50.365978594(+0.145ms) birth 03:26:50.365956052(FB) ctime 03:26:50.365978594 何で後=mbc 宣=mon/
+# 結 40_N3: rc 0 = 通 ―― 後 2 は悉く宣に在る・疵 0
