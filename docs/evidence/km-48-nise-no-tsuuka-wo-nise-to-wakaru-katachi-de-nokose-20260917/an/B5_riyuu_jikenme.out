@@ -1,0 +1,44 @@
+
+==== 陰性甲: ★真の通過★(素の名・臺帳の sha 欄を崩せば鳴る) ==== (望む rc=0)
+★本走の五数★ 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 封=3e7896216201f1fd (rc=0)
+★崩した走の五数★ 五数札v1 母數=1 一致=0 相違=1 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 封=e523d30e20f4fca1 (rc=1)
+★崩★ 鳴 ―― 崩せば五数が変つた(固定を見て居る)
+★出所★ 原 ―― 元=M_kou.txt
+★正準文字列★ 理由札v1|五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0)|器=karo_mac_manifest_verify.py:a507c998c7bd6485|臺帳=M_kou.txt:cb0d0ca283eed0af|基点=/Users/momizimac/multi-agent-shogun/|固定=臺帳のsha欄が現物に一致|崩=鳴|出所=原
+理由札v1 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 器=karo_mac_manifest_verify.py:a507c998c7bd6485 臺帳=M_kou.txt:cb0d0ca283eed0af 基点=/Users/momizimac/multi-agent-shogun/ 固定=臺帳のsha欄が現物に一致 崩=鳴 出所=原 封=1056a3fc6f9f0293
+★rc=0 ―― ★本物の通過★。五数清し・崩せば鳴る・元の臺帳の上
+---- 出た rc=0 / 望む rc=0 ―― 合ふ
+
+==== 陽性甲: ★偽の通過★(名の中に己の sha ―― 崩しても黙る) ==== (望む rc=1)
+★本走の五数★ 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 封=3e7896216201f1fd (rc=0)
+★崩した走の五数★ 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 封=3e7896216201f1fd (rc=0)
+★崩★ 黙 ―― ★崩しても五数が一指も動かぬ。此の通過は固定を一度も見て居らぬ★
+★出所★ 原 ―― 元=M_otsu.txt
+★正準文字列★ 理由札v1|五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0)|器=karo_mac_manifest_verify.py:a507c998c7bd6485|臺帳=M_otsu.txt:d5f89ff151c731dc|基点=/Users/momizimac/multi-agent-shogun/|固定=臺帳のsha欄が現物に一致|崩=黙|出所=原
+理由札v1 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 器=karo_mac_manifest_verify.py:a507c998c7bd6485 臺帳=M_otsu.txt:d5f89ff151c731dc 基点=/Users/momizimac/multi-agent-shogun/ 固定=臺帳のsha欄が現物に一致 崩=黙 出所=原 封=766dd569edf1308c
+★rc=1 ―― ★偽の通過★。通つては居るが、固定を崩しても鳴らぬ
+---- 出た rc=1 / 望む rc=1 ―― 合ふ
+
+==== 陽性乙: ★崩しを渡さぬ走★(理由の書けぬ通過は青にせぬ) ==== (望む rc=1)
+★本走の五数★ 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 封=3e7896216201f1fd (rc=0)
+★崩★ 測らず ―― 崩した臺帳を渡されて居らぬ(★宣言した空白である★)
+★出所★ 原 ―― 元=M_kou.txt
+★正準文字列★ 理由札v1|五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0)|器=karo_mac_manifest_verify.py:a507c998c7bd6485|臺帳=M_kou.txt:cb0d0ca283eed0af|基点=/Users/momizimac/multi-agent-shogun/|固定=臺帳のsha欄が現物に一致|崩=測らず|出所=原
+理由札v1 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 器=karo_mac_manifest_verify.py:a507c998c7bd6485 臺帳=M_kou.txt:cb0d0ca283eed0af 基点=/Users/momizimac/multi-agent-shogun/ 固定=臺帳のsha欄が現物に一致 崩=測らず 出所=原 封=ce52fccecec72143
+★rc=1 ―― 理由の欄が埋まつて居らぬ。★理由の書けぬ通過を青にせぬ★
+---- 出た rc=1 / 望む rc=1 ―― 合ふ
+
+==== 陽性丙: ★元を渡さぬ走★(出所不明は青にせぬ) ==== (望む rc=1)
+★本走の五数★ 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 封=3e7896216201f1fd (rc=0)
+★崩した走の五数★ 五数札v1 母數=1 一致=0 相違=1 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 封=e523d30e20f4fca1 (rc=1)
+★崩★ 鳴 ―― 崩せば五数が変つた(固定を見て居る)
+★出所★ 不明 ―― 元の臺帳を渡されて居らぬ
+★正準文字列★ 理由札v1|五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0)|器=karo_mac_manifest_verify.py:a507c998c7bd6485|臺帳=M_kou.txt:cb0d0ca283eed0af|基点=/Users/momizimac/multi-agent-shogun/|固定=臺帳のsha欄が現物に一致|崩=鳴|出所=不明
+理由札v1 五数札v1 母數=1 一致=1 相違=0 実体無=0 讀めぬ行=0 跳=1(甲1/乙0) 器=karo_mac_manifest_verify.py:a507c998c7bd6485 臺帳=M_kou.txt:cb0d0ca283eed0af 基点=/Users/momizimac/multi-agent-shogun/ 固定=臺帳のsha欄が現物に一致 崩=鳴 出所=不明 封=7f411598afa564bc
+★rc=1 ―― 理由の欄が埋まつて居らぬ。★理由の書けぬ通過を青にせぬ★
+---- 出た rc=1 / 望む rc=1 ―― 合ふ
+
+★自検め★ 4/4 合ふ
+
+★走の rc★ 0
+★走らせた★ /opt/homebrew/bin/python3 -B ki/82_riyuu.py --jikenme /Users/momizimac/multi-agent-shogun

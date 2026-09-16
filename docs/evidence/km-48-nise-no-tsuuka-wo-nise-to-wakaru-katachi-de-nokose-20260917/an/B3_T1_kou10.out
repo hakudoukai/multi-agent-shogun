@@ -1,0 +1,15 @@
+★走らせた★ /opt/homebrew/opt/python@3.14/bin/python3.14 -B /Users/momizimac/multi-agent-shogun/docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py fixture/tobi/T1_kou10.txt /Users/momizimac/multi-agent-shogun/
+★器の rc★ 1
+★器の四数行(逐語)★ 一致 ★229★ / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 230)
+★器の SHA 綴り(器の源から取つた)★ sha256=([0-9a-f]{64})
+★臺帳を器と同じ形で回した★ 全行=242 跳甲(空/註)=12 跳乙(sha欄無)=0 歩いた=230
+★正準文字列★ 五数札v1|母數=230|一致=229|相違=1|実体無=0|讀めぬ行=0|跳=12
+五数札v1 母數=230 一致=229 相違=1 実体無=0 讀めぬ行=0 跳=12(甲12/乙0) 和検=和=230=母數・跳和=12=甲12+乙0 封=d39f63475e0c07e1
+    跳甲 # dialect: path= sha256= bytes= lines=  ―― 裁 seq320321⑶「4欄(lines=有)を本形」
+    跳甲 # ★此の臺帳へ行を足すのは karo_mac_manifest_append.py のみ★(案一・裁 seq321856)
+    跳甲 (空行)
+    … 他 9 行(跳甲は ★宣言済★ ゆゑ赤にせぬ)
+★rc=1 ―― 相違/実体無/讀めぬ行 の何れかが立つ(または一致0)★
+
+★走の rc★ 1
+★走らせた★ /opt/homebrew/bin/python3 -B ki/83_yotsu5.py fuda --kikai /Users/momizimac/multi-agent-shogun/docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py fixture/tobi/T1_kou10.txt /Users/momizimac/multi-agent-shogun/

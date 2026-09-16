@@ -1,0 +1,18 @@
+★現物★
+  甲(素の名) docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/fixture/nise/honmono/sunao.txt
+  乙(名の中に己の sha) docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/fixture/nise/nise/na_ni_sha256=340b76e2e6054c6e5931019a7bd78d5b83d997ebb48ae7f32590205856e9fbfe_owari.txt
+  二本とも中身は同一 ―― sha256=340b76e2e6054c6e5931019a7bd78d5b83d997ebb48ae7f32590205856e9fbfe bytes=137
+  ★名に空白は無い★ 甲=9字 乙=87字
+★臺帳 四枚★
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/fixture/nise/M_kou.txt (bytes=334)
+    ★書いた fixture/nise/M_kou.txt bytes=334 行=2 末尾改行=1 空=0★
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/fixture/nise/M_kou_kuzushi.txt (bytes=334)
+    ★書いた fixture/nise/M_kou_kuzushi.txt bytes=334 行=2 末尾改行=1 空=0★
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/fixture/nise/M_otsu.txt (bytes=409)
+    ★書いた fixture/nise/M_otsu.txt bytes=409 行=2 末尾改行=1 空=0★
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/fixture/nise/M_otsu_kuzushi.txt (bytes=409)
+    ★書いた fixture/nise/M_otsu_kuzushi.txt bytes=409 行=2 末尾改行=1 空=0★
+★崩し★ 臺帳の sha 欄を 0000000000000000… へ替へた丈 ―― 現物にも名にも一字も触れて居らぬ
+
+★走の rc★ 0
+★走らせた★ /opt/homebrew/bin/python3 -B ki/85_nise_fixture.py fixture/nise /Users/momizimac/multi-agent-shogun

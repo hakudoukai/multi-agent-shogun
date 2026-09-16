@@ -1,0 +1,10 @@
+★本走の五数★ 五数札v1 母數=230 一致=230 相違=0 実体無=0 讀めぬ行=0 跳=2(甲2/乙0) 封=93096b2726b3cf2c (rc=0)
+★崩した走の五数★ 五数札v1 母數=230 一致=229 相違=1 実体無=0 讀めぬ行=0 跳=2(甲2/乙0) 封=f5999e3f3b44db9e (rc=1)
+★崩★ 鳴 ―― 崩せば五数が変つた(固定を見て居る)
+★出所★ 対照(元との差2行) ―― 元=ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt
+★正準文字列★ 理由札v1|五数札v1 母數=230 一致=230 相違=0 実体無=0 讀めぬ行=0 跳=2(甲2/乙0)|器=verify_AFTER.py:bafeca60fa67744c|臺帳=taishou_manifest.txt:86170c160ebde5fb|基点=/Users/momizimac/multi-agent-shogun/|固定=臺帳のA10行が名の中に64hexを持たぬ写しを指す|崩=鳴|出所=対照(元との差2行)
+理由札v1 五数札v1 母數=230 一致=230 相違=0 実体無=0 讀めぬ行=0 跳=2(甲2/乙0) 器=verify_AFTER.py:bafeca60fa67744c 臺帳=taishou_manifest.txt:86170c160ebde5fb 基点=/Users/momizimac/multi-agent-shogun/ 固定=臺帳のA10行が名の中に64hexを持たぬ写しを指す 崩=鳴 出所=対照(元との差2行) 封=6352bb66be2d26d7
+★rc=1 ―― ★偽の通過★。通つたのは ★元とは別の臺帳★ の上である
+
+★走の rc★ 1
+★走らせた★ /opt/homebrew/bin/python3 -B ki/82_riyuu.py --kikai /Users/momizimac/multi-agent-shogun/docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py --kotei 臺帳のA10行が名の中に64hexを持たぬ写しを指す --kuzushi /Users/momizimac/multi-agent-shogun/docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt --moto /Users/momizimac/multi-agent-shogun/docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt /Users/momizimac/multi-agent-shogun/docs/evidence/km-47-yotsu-no-kazu-20260917/an/seigyo/taishou_manifest.txt /Users/momizimac/multi-agent-shogun/

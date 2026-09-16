@@ -1,0 +1,44 @@
+★歩いた紙★
+  an/A1_jikenme.out bytes=6591 sha16=b38fa7ee05cfb418
+  an/A2_arai_km46_osame.out bytes=1193 sha16=8e19bb80434a57ba
+  an/A3_fuda_km46_BEFORE.out bytes=699 sha16=f526e389e2174981
+  an/A4_fuda_km46_AFTER.out bytes=686 sha16=4619dcc3020bc215
+  an/A5_wari_jou4.out bytes=14472 sha16=2826029e59a6dffd
+  an/A6_seigyo_souisa0.out bytes=2797 sha16=51589c36abcbcadb
+  an/A7_arai_kono_kami.out bytes=13984 sha16=197c0d5a0c4be6ab
+  ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt bytes=1007 sha16=c047f92fc4ca524b
+
+★族ごとの判★ (通/不通/測れぬ)
+  甲 自検判  判=  7  通=  7  不通=  0  測れぬ=  0
+  乙 器判  判= 11  通=  4  不通=  7  測れぬ=  0
+  丙 門判  判=  3  通=  1  不通=  0  測れぬ=  2
+  丁 臺帳行判  判= 22  通= 22  不通=  0  測れぬ=  0
+  戊 結語判  判=  1  通=  1  不通=  0  測れぬ=  0
+
+★排他性★ 二族に当たつた行 = 0 ―― 族は重なつて居らぬ
+★母數★ 判 = 44   ―― 内 ★通 = 35★ / 不通 = 7 / ★測れぬ = 2★
+★恒等★ 通+不通+測れぬ = 44 = 母數 44
+  ★測れぬ★ ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt:9  條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  ★測れぬ★ ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt:11  條⑤ 寸法 = byte和 141818(閾 10485760未満)
+★丁の出所(逐語)★ ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt:4  一致 ★22★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 22)
+
+★通つた判 悉く(逐語)★ ―― 丁は行単位ゆゑ 1 行に畳む
+   1. [甲 自検判] an/A1_jikenme.out:17  ---- 出た rc=1 / 望む rc=1 ―― 合ふ
+   2. [甲 自検判] an/A1_jikenme.out:34  ---- 出た rc=1 / 望む rc=1 ―― 合ふ
+   3. [甲 自検判] an/A1_jikenme.out:51  ---- 出た rc=1 / 望む rc=1 ―― 合ふ
+   4. [甲 自検判] an/A1_jikenme.out:65  ---- 出た rc=1 / 望む rc=1 ―― 合ふ
+   5. [乙 器判] an/A1_jikenme.out:77  ★rc=0 ―― 出目を述べる span は悉く ★覆ひの下★(完全な札 1 本 / 註 0 本)★
+   6. [甲 自検判] an/A1_jikenme.out:78  ---- 出た rc=0 / 望む rc=0 ―― 合ふ
+   7. [乙 器判] an/A1_jikenme.out:86  ★rc=0 ―― 出目を述べる span が一つも無い(便が照合に触れて居らぬ)★
+   8. [甲 自検判] an/A1_jikenme.out:87  ---- 出た rc=0 / 望む rc=0 ―― 合ふ
+   9. [乙 器判] an/A1_jikenme.out:113  ★rc=0 ―― 出目を述べる span は悉く ★覆ひの下★(完全な札 1 本 / 註 2 本)★
+  10. [甲 自検判] an/A1_jikenme.out:114  ---- 出た rc=0 / 望む rc=0 ―― 合ふ
+  11. [乙 器判] an/A7_arai_kono_kami.out:252  ★rc=0 ―― 出目を述べる span は悉く ★覆ひの下★(完全な札 5 本 / 註 32 本)★
+  12. [丙 門判] ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt:10  條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(22本)通
+  13. [戊 結語判] ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt:12  ★出す前 門 通。出してよい。★
+  14. [丁 臺帳行判] ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_gate.txt ―― ★臺帳 22 行が一致した(一行に一判)★
+
+通過母數v1 母數=44 通=35 不通=7 測れぬ=2 重なり=0 封=aeccbe16af642030
+
+★走の rc★ 0
+★走らせた★ /opt/homebrew/bin/python3 -B ki/81_tsuuka.py /Users/momizimac/multi-agent-shogun/docs/evidence/km-47-yotsu-no-kazu-20260917
