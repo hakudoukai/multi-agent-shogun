@@ -1,0 +1,5 @@
+# 負 fixture 臺帳(4欄)。★束の中で自己完結★=軍師が樹の中で再走できる
+# 期待: 一致1(fx_A_same) / 相違1(fx_B_tampered=一字足した) / 実体無1(fx_C_absent=置いて居らぬ)
+path=docs/evidence/lot48235904-provenance-20260916/raw/neg/fx_A_same.md sha256=1b339c3ec6fd4da6467165d9e99a203b6910279ed1c67f740f7814fa7c1dbbcd bytes=9001 lines=119
+path=docs/evidence/lot48235904-provenance-20260916/raw/neg/fx_B_tampered.md sha256=1b339c3ec6fd4da6467165d9e99a203b6910279ed1c67f740f7814fa7c1dbbcd bytes=9001 lines=119
+path=docs/evidence/lot48235904-provenance-20260916/raw/neg/fx_C_absent.md sha256=0000000000000000000000000000000000000000000000000000000000000000 bytes=0 lines=0
