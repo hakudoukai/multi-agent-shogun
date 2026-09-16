@@ -1,0 +1,56 @@
+=== 直しの直し ―― ★据ゑず紙の上で★ 甲(紙の儘) と 乙(當席案) を同じ台で比べる ===
+甲 逐語: _ft_vp="$(printf '%s' "${_ft_v}" | tr '\n\r\t' '\266\215\211')"  # ★行注入封じ: 改行/復帰/TAB を可視印へ均す(判定不変・表示のみ)★
+乙 逐語: _ft_vp="${_ft_v//$'\n'/␊}"; _ft_vp="${_ft_vp//$'\r'/␍}"; _ft_vp="${_ft_vp//$'\t'/␉}"  # ★行注入封じ(乙)★: bash の置換ゆゑ多byteの可視印が置ける・fork 無し・判定不変
+
+#colspec	生器	案	形	鳴り行数	OUT	札のUTF-8	bash -n rc	走 rc
+scripts/inbox_watcher.sh	現行	甲 行注入(★陽性★)	2	99	★正★	0	0
+scripts/inbox_watcher.sh	現行	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/inbox_watcher.sh	現行	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/inbox_watcher.sh	現行	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/inbox_watcher.sh	紙(甲)	甲 行注入(★陽性★)	1	99	不正0xB6	0	0
+scripts/inbox_watcher.sh	紙(甲)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/inbox_watcher.sh	紙(甲)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/inbox_watcher.sh	紙(甲)	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/inbox_watcher.sh	乙(當席案)	甲 行注入(★陽性★)	1	99	★正★	0	0
+scripts/inbox_watcher.sh	乙(當席案)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/inbox_watcher.sh	乙(當席案)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/inbox_watcher.sh	乙(當席案)	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	甲 行注入(★陽性★)	2	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	紙(甲)	甲 行注入(★陽性★)	1	99	不正0xB6	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	紙(甲)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	紙(甲)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	紙(甲)	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙(當席案)	甲 行注入(★陽性★)	1	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙(當席案)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙(當席案)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙(當席案)	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/agent_health_check.sh	現行	甲 行注入(★陽性★)	2	99	★正★	0	0
+scripts/agent_health_check.sh	現行	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/agent_health_check.sh	現行	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/agent_health_check.sh	現行	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/agent_health_check.sh	紙(甲)	甲 行注入(★陽性★)	1	99	不正0xB6	0	0
+scripts/agent_health_check.sh	紙(甲)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/agent_health_check.sh	紙(甲)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/agent_health_check.sh	紙(甲)	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/agent_health_check.sh	乙(當席案)	甲 行注入(★陽性★)	1	99	★正★	0	0
+scripts/agent_health_check.sh	乙(當席案)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/agent_health_check.sh	乙(當席案)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/agent_health_check.sh	乙(當席案)	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	現行	甲 行注入(★陽性★)	2	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	現行	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	現行	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/checks/context_usage_warn.sh	現行	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	紙(甲)	甲 行注入(★陽性★)	1	99	不正0xB6	0	0
+scripts/checks/context_usage_warn.sh	紙(甲)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	紙(甲)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/checks/context_usage_warn.sh	紙(甲)	丁 ★負3★ 空文字	1	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	乙(當席案)	甲 行注入(★陽性★)	1	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	乙(當席案)	乙 ★負1★ 清い非数	1	99	★正★	0	0
+scripts/checks/context_usage_warn.sh	乙(當席案)	丙 ★負2★ 正しい数	0	777	★正★	0	0
+scripts/checks/context_usage_warn.sh	乙(當席案)	丁 ★負3★ 空文字	1	99	★正★	0	0
+
+★読み★: 甲・乙 とも 陽性で 2行→1行(改行を封ず)・OUT 不変・負三形は現行と同一。
+       ★分れ目は札の UTF-8★ ―― 甲は 0xB6 で不正、乙は正。∴ ★乙を推す★(据ゑるは家老の下知を待つ)。

@@ -1,0 +1,11 @@
+=== ㋐ 可逆の實測(★案乙★・當席案) ―― 束外の写しへ当て、逆当てで同じ sha へ戻る事 ===
+写し置場: /Users/momizimac/km53b-utsushi-20260917
+
+#colspec	生器	①元sha16	②当後sha16	①≠②	③逆当後sha16	★①=③★	bash -n rc(当後)	当	逆
+scripts/inbox_watcher.sh	cac867f8b94d5be4	91b1b3b2f6786ac3	★動いた★	cac867f8b94d5be4	★戻つた★	0	1	1
+scripts/watchdogs/enter_restart_common_watchdog.sh	b224557e96e54c8c	7f901ddbd2d7f47b	★動いた★	b224557e96e54c8c	★戻つた★	0	1	1
+scripts/agent_health_check.sh	6493c1d72a1e3a39	8834828a18e67d51	★動いた★	6493c1d72a1e3a39	★戻つた★	0	1	1
+scripts/checks/context_usage_warn.sh	897412b069d0a620	47b2753fb2037aa5	★動いた★	897412b069d0a620	★戻つた★	0	1	1
+
+★生器への書込★: 0 字
+★判★: 四本悉く可逆

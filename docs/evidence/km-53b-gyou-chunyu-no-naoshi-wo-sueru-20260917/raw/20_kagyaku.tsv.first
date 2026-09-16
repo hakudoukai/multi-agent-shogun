@@ -1,0 +1,11 @@
+=== ㋐ 可逆の實測 ―― 束外の写しへ当て、逆当てで同じ sha へ戻る事 ===
+写し置場(★束外★・生器でも束でもない): /Users/momizimac/km53b-utsushi-20260917
+
+#colspec	生器	①元sha16	②当後sha16	①≠②	③逆当後sha16	★①=③★	bash -n rc(当後)	当てた箇所数	逆当ての箇所数
+scripts/inbox_watcher.sh	cac867f8b94d5be4	ee535b84a2201dd8	★動いた★	cac867f8b94d5be4	★戻つた★	0	1	1
+scripts/watchdogs/enter_restart_common_watchdog.sh	b224557e96e54c8c	209fbe4bb2870d8a	★動いた★	b224557e96e54c8c	★戻つた★	0	1	1
+scripts/agent_health_check.sh	6493c1d72a1e3a39	476b96b0d2c69f6d	★動いた★	6493c1d72a1e3a39	★戻つた★	0	1	1
+scripts/checks/context_usage_warn.sh	897412b069d0a620	fc540b474a1e39d5	★動いた★	897412b069d0a620	★戻つた★	0	1	1
+
+★生器への書込★: 0 字(上の路は src を open(rb) で讀み shutil.copyfile で写すのみ)
+★判★: 四本悉く 可逆(sha が動き・逆当てで元の sha へ戻り・bash -n rc=0)

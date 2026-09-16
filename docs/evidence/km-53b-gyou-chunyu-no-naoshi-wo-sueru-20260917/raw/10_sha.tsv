@@ -1,0 +1,9 @@
+=== 生器四本 ―― 今の版 と km-52 の写し ===
+#colspec	生器	今のsha16	写しのsha16	同じか	直す行の本数(今)
+scripts/inbox_watcher.sh	cac867f8b94d5be4	6f6954b455cecf4e	★異★	1
+scripts/watchdogs/enter_restart_common_watchdog.sh	b224557e96e54c8c	31956e6427ade32f	★異★	1
+scripts/agent_health_check.sh	6493c1d72a1e3a39	e5bd6ab3e28f1f9c	★異★	1
+scripts/checks/context_usage_warn.sh	897412b069d0a620	be4b1b210f815f0d	★異★	1
+
+※ 直す行は 四本 悉く ★byte 一致の一行★(直し紙⑴の宣)。上表の最終欄で再確認した。
+★版の動き★: ★動いた本が在る ―― 当てる前に引き直せ★

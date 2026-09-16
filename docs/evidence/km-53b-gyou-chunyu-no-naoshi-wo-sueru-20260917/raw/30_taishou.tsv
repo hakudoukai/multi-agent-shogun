@@ -1,0 +1,28 @@
+=== ㋒ 陽性一形 ＋ ★負テスト三形★ ―― 前(現行)と 後(直し当て)を同じ台で ===
+台 = 各生器の今の版から ★助器四本(_th_say/num_same_op/env_state/fix_threshold)の定義だけ★ を抜き、駆動一行を足した物(束外 /Users/momizimac/km53b-utsushi-20260917)
+  ―― preflight は一行も含めぬ。初走は頭から切つて preflight で死に、四本中三本が札を一度も出さなんだ(raw/30_taishou.tsv.first に残す)
+
+#colspec	生器	形	前:鳴り行数	後:鳴り行数	前:OUT	後:OUT	倒す先不変	前:改行が札に入つたか	後:改行が札に入つたか	前rc	後rc	前:札のUTF-8	後:札のUTF-8
+scripts/inbox_watcher.sh	甲 行注入(★陽性★)	2	1	99	99	★同★	★入つた★	無	0	0	★正★	★不正 byte 0xB6★
+scripts/inbox_watcher.sh	乙 ★負1★ 清い非数	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+scripts/inbox_watcher.sh	丙 ★負2★ 正しい数	0	0	777	777	★同★	無	無	0	0	★正★	★正★
+scripts/inbox_watcher.sh	丁 ★負3★ 空文字	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+scripts/watchdogs/enter_restart_common_watchdog.sh	甲 行注入(★陽性★)	2	1	99	99	★同★	★入つた★	無	0	0	★正★	★不正 byte 0xB6★
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙 ★負1★ 清い非数	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+scripts/watchdogs/enter_restart_common_watchdog.sh	丙 ★負2★ 正しい数	0	0	777	777	★同★	無	無	0	0	★正★	★正★
+scripts/watchdogs/enter_restart_common_watchdog.sh	丁 ★負3★ 空文字	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+scripts/agent_health_check.sh	甲 行注入(★陽性★)	2	1	99	99	★同★	★入つた★	無	0	0	★正★	★不正 byte 0xB6★
+scripts/agent_health_check.sh	乙 ★負1★ 清い非数	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+scripts/agent_health_check.sh	丙 ★負2★ 正しい数	0	0	777	777	★同★	無	無	0	0	★正★	★正★
+scripts/agent_health_check.sh	丁 ★負3★ 空文字	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+scripts/checks/context_usage_warn.sh	甲 行注入(★陽性★)	2	1	99	99	★同★	★入つた★	無	0	0	★正★	★不正 byte 0xB6★
+scripts/checks/context_usage_warn.sh	乙 ★負1★ 清い非数	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+scripts/checks/context_usage_warn.sh	丙 ★負2★ 正しい数	0	0	777	777	★同★	無	無	0	0	★正★	★正★
+scripts/checks/context_usage_warn.sh	丁 ★負3★ 空文字	1	1	99	99	★同★	無	無	0	0	★正★	★正★
+
+★負テストの読み★: 乙丙丁 は 前後で 鳴り行数・OUT・rc が悉く同じ ―― ★直しは清い値に一切触れぬ★。
+★陽性の読み★: 甲 のみ 前=2行 / 後=1行 ―― ★割れて居た札が一行に戻る★。OUT は前後同じ(★判定不変★)。
+★疵★: 直しの置換先 \266 \215 \211 は ★生 byte 0xB6/0x8D/0x89★ ―― 紙は「可視印」と称するが
+      UTF-8 としては ★不正 byte★ である。改行は確かに消えるが、札を UTF-8 で讀む下流は decode で死ぬ
+      (實測: 本器が text=True で受けた初走が UnicodeDecodeError で倒れた)。
+★判★: 落ち無し
