@@ -1,0 +1,293 @@
+束	file	種	行	形	危	逐語
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	48	D	low	DRY
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	23	D	low	not m
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	24	D	low	m.group(2)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	26	E	low	'通' if '★三本とも期待通り' in T30 else '★外れ★'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	43	D	low	re.fullmatch(r'[a-z0-9_-]+', x)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	8	D	low	os.path.isfile(p)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	9	D	low	os.path.isfile(p)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	11	D	low	m
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	47	C	low	naru or '通(0 鳴)'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	69	E	low	0 if all('rc=0' in r for r in rcs_l) and len(ids) == len(letters) and
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	13	D	low	l.startswith('path=')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	38	D	low	not os.path.basename(p).startswith('_')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	48	D	low	naru
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	48	E	low	1 if naru else 0
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	30	D	low	os.path.isfile(B + '.md')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	30	E	low	os.path.getsize(B + '.md') if os.path.isfile(B + '.md') else 0
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	54	D	low	p.stderr.strip()
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	54	E	low	f' stderr={p.stderr.strip()[:140]}' if p.stderr.strip() else ''
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	67	E	low	"＋過大" if d_k > 0 else "−過少"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	67	E	low	"同じ" if (d_seki > 0) == (d_k > 0) else "★分かれた★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/62b_letters.py	現物	66	E	low	"＋過大(宣が長い)" if d_seki > 0 else "−過少(宣が短い)"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/64_letter7.py	現物	14	D	low	re.fullmatch(r'[a-z0-9_-]+', body)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/64_letter7.py	現物	19	D	low	naru
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/64_letter7.py	現物	7	D	low	m
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/64_letter7.py	現物	18	C	low	naru or '通(0 鳴)'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/64_letter7.py	現物	22	E	low	0 if p.returncode == 0 and len(hit) == 1 else 3
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/64_letter7.py	現物	11	D	low	not os.path.basename(p).startswith('_')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	36	D	low	re.fullmatch(r'[a-z0-9_-]+', body)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	43	D	low	naru
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	13	D	low	mine
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	13	E	low	mine[0][1]['timestamp'] if mine else '-'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	13	D	low	mine
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	13	E	low	mine[-1][1]['timestamp'] if mine else '-'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	24	D	low	hits
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	24	D	low	clk
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	24	E	low	clk.group(1) if clk else '-'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	29	D	low	m67
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	29	E	low	m67.group(1) if m67 else '-'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	42	C	low	naru or '通(0 鳴)'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	46	E	low	0 if p.returncode == 0 and len(hit) == 1 else 3
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	27	D	low	l.strip()
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	33	D	low	not os.path.basename(p).startswith('_')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/65_letter8.py	現物	41	C	low	naru or "通(0 鳴)"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/96b_after.py	現物	16	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/96b_after.py	現物	20	D	low	re.match(r'raw/(50_|59_)', r)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/96b_after.py	現物	24	E	low	0 if not ato and len(jisan) == len(mae) else 1
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/96b_after.py	現物	22	E	low	"★門の後 0・門の前は悉く自產物 ―― 疵 0★" if not ato and len(jisan) == len(mae) else
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/kaki.py	現物	12	D	low	not lines
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/kaki.py	現物	19	D	low	header
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	_after/kaki.py	現物	10	B	low	lines[-1] == ""
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/00_start.py	現物	18	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	12	D	low	pos
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	12	E	low	pos[0] if pos else ''
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	22	D	low	not re.fullmatch(r'[a-z0-9][a-z0-9_-]{1,31}', to or '')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	31	D	low	os.path.isfile(dg)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	36	D	low	SWAP
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	10	D	low	not a.startswith('--')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	51	E	low	0 if p.returncode == 0 and len(hit) == 1 else 3
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	19	D	low	not os.path.basename(p).startswith('_')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	42	D	low	naru
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	42	E	low	1 if naru else 0
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	22	C	low	to or ''
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	26	C	low	body or ''
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	41	D	low	naru
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	41	E	low	'(門が鳴つた)' if naru else '(--dry・封筒のみ)'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	38	C	low	TAG or "本走"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	39	D	low	naru
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	39	E	low	"★鳴 " + str(len(naru)) + "★" if naru else "通(0 鳴)"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/05_chakushu.py	現物	42	C	low	TAG or "x"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	32	D	low	os.path.exists(NEW)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	24	D	low	not m
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	26	D	low	not c
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	28	D	low	not p.startswith(pre)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	36	D	low	os.path.isfile(NEW)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	36	E	low	open(NEW, 'rb').read() if os.path.isfile(NEW) else b''
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	44	D	low	s.startswith('path="')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	63	D	low	allok
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	63	E	low	0 if allok else 1
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	17	D	low	f.endswith('_manifest.txt')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	30	D	low	not os.path.isfile(os.path.join(BD, r))
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	52	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	62	D	low	ok
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/20_tatenaoshi.py	現物	62	E	low	"★建て直せた★" if ok else "★建て直せて居らぬ★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	45	D	low	allok
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	45	E	low	0 if allok else 1
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	17	D	low	j
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	17	D	low	k
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	17	E	low	k.group(1).strip()[:60] if k else '?'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	17	D	low	q
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	17	E	low	q.group(1) if q else '?'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	44	D	low	allok
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	44	E	low	'★三本とも期待通り ―― 明示基点で 一致 N / 実体無 0 / rc 0、既定基点と出鱈目で 実体無 N / rc 1。建て直せて居る
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	43	D	low	l.startswith('★')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	29	C	low	' '.join(a.replace(M + '/', '') or '""' for a in argv[1:]) or '(無)'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	37	D	low	re.match(r'★?條[②③④]', l)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	37	D	low	l.startswith('★出す前')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	30	E	low	"束の根" if cwd == BD else "main 樹"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	30	D	low	ok
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	30	E	low	"通" if ok else "★外れ★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	38	D	low	l.startswith('★')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	D	low	j1_ochi
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	E	low	"★落★" if j1_ochi else "通"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	D	low	any("基点" in l for l in j1)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	E	low	[l for l in j1 if "基点" in l][0][:48] if any("基点" in l for l in j1) els
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	D	low	j5_ochi
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	D	low	ketsu
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	E	low	ketsu[0] if ketsu else "?"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	E	low	"・條①で判ず" if fl == "all" else ""
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	D	low	ok
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	E	low	"通" if ok else "★外れ★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	29	C	low	a.replace(M + '/', '') or '""'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	D	low	re.search(r"byte和 (\d+)", se)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/30_taishou.py	現物	41	E	low	re.search(r"byte和 (\d+)", se).group(1) if re.search(r"byte和 (\d+)", se
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/50_build_manifest.py	現物	12	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/50_build_manifest.py	現物	17	D	low	l.startswith('path=')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/50_build_manifest.py	現物	18	D	low	rows
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/50_build_manifest.py	現物	18	E	low	rows[0][:60] if rows else "-"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/50_build_manifest.py	現物	18	D	low	l.startswith(chr(112) + "ath=" + chr(34))
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/59_prescan.py	現物	8	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/59_prescan.py	現物	12	D	low	any(l.endswith((b' ', b'\t')) for l in b.split(b'\n'))
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/59_prescan.py	現物	15	D	low	bad
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/59_prescan.py	現物	15	E	low	1 if bad else 0
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	20	D	low	stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	65	E	low	0 if rcs['main'] == 0 and rcs['all'] == 0 and rcs['nobase'] == 1 else
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	36	D	low	l.startswith('條① 基点')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	51	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	59	D	low	a
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	59	E	low	a.group(1) if a else '−'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	59	D	low	b
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	59	E	low	b.group(1) if b else '−'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	27	D	low	x.startswith('★自己検め')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	37	D	low	j1
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	37	E	low	j1.groups() if j1 else '−'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	37	D	low	kt
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	37	E	low	kt[0][:40] if kt else '−'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	37	D	low	tot
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	37	E	low	tot.group(1) if tot else '−'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	30	E	low	base if base is not None else "(unset)"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	37	D	low	l.startswith('★出す前')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	41	D	low	l.startswith('path=' + chr(34))
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	41	D	low	l.endswith((b' ', b'\t'))
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	45	E	low	"同" if mae.get(p_) == ima[p_] else "★違★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/60_gate_run.py	現物	55	E	low	"同" if mae_in.get(d.split("/")[-1][:5]) == taba_in(d)[0] else "★違★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	48	D	low	DRY
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	23	D	low	not m
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	24	D	low	m.group(2)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	26	E	low	'通' if '★三本とも期待通り' in T30 else '★外れ★'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	43	D	low	re.fullmatch(r'[a-z0-9_-]+', x)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	8	D	low	os.path.isfile(p)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	9	D	low	os.path.isfile(p)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	11	D	low	m
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	47	C	low	naru or '通(0 鳴)'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	69	E	low	0 if all('rc=0' in r for r in rcs_l) and len(ids) == len(letters) and
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	13	D	low	l.startswith('path=')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	38	D	low	not os.path.basename(p).startswith('_')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	48	D	low	naru
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	48	E	low	1 if naru else 0
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	30	D	low	os.path.isfile(B + '.md')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	30	E	low	os.path.getsize(B + '.md') if os.path.isfile(B + '.md') else 0
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	54	D	low	p.stderr.strip()
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	54	E	low	f' stderr={p.stderr.strip()[:140]}' if p.stderr.strip() else ''
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	67	E	low	"＋過大" if d_k > 0 else "−過少"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	67	E	low	"同じ" if (d_seki > 0) == (d_k > 0) else "★分かれた★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/62_letters.py	現物	66	E	low	"＋過大(宣が長い)" if d_seki > 0 else "−過少(宣が短い)"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/67_git_add.py	現物	8	A	high	l[:1] in 'AM'
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/67_git_add.py	現物	10	D	low	l
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/67_git_add.py	現物	9	D	low	p.stderr.strip()
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/67_git_add.py	現物	9	E	low	f' stderr {p.stderr.strip()[:200]}' if p.stderr.strip() else ''
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/70_paper.py	現物	7	D	low	m
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/70_paper.py	現物	30	E	low	"同じ" if gsha == gsha00 else "★違ふ★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/96_after.py	現物	14	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/96_after.py	現物	21	D	low	j
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/96_after.py	現物	35	E	low	0 if not kizu and p0 != '★書けた★' and onaji else 1
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/96_after.py	現物	16	D	low	not x.endswith('.first')
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/96_after.py	現物	27	D	low	stat.S_ISREG(os.lstat(q).st_mode)
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/96_after.py	現物	34	D	low	onaji
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/96_after.py	現物	34	E	low	"同" if onaji else "★違★"
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/kaki.py	現物	12	D	low	not lines
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/kaki.py	現物	19	D	low	header
+km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917	raw/kaki.py	現物	10	B	low	lines[-1] == ""
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	24	D	low	naru
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	27	E	low	0 if p.returncode == 0 and len(hit) == 1 else 3
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	16	D	low	not os.path.basename(p).startswith('_')
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	11	D	low	bd.stdout
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	11	E	low	bd.stdout.splitlines()[0] if bd.stdout else "-"
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	13	D	low	has
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	13	E	low	"在" if has else "無"
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	13	D	low	has
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	13	E	low	"有" if has else "無"
+a1-jishu-kuumoji-kiten-20260917	raw/05_seikyu.py	現物	22	C	low	naru or "通(0 鳴)"
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	43	E	low	'cwd依存★' if (a[0], a[1]) != (b[0], b[1]) else '不依存'
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	58	E	low	0 if not hazure and mae == ato else 1
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	37	D	low	fuda
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	37	E	low	fuda.group(1).strip()[:30] if fuda else '−'
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	38	D	low	j
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	56	E	low	"同" if mae["gate"]==ato["gate"] else "★違★"
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	56	E	low	"同" if mae["verify"]==ato["verify"] else "★違★"
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	56	E	low	"同" if mae["km70"]==ato["km70"] else "★違★"
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	46	D	low	ok
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	46	E	low	'True' if ok else '★外れ★'
+a1-jishu-kuumoji-kiten-20260917	raw/10_kuumoji.py	現物	36	E	low	repr(bv) if tool=="gate" else "(argv)"
+a1-jishu-kuumoji-kiten-20260917	raw/15_normalize.py	現物	8	E	low	' (0byte → 空である旨の一行)' if b0 == 0 else ''
+a1-jishu-kuumoji-kiten-20260917	raw/50_build_manifest.py	現物	12	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+a1-jishu-kuumoji-kiten-20260917	raw/50_build_manifest.py	現物	17	D	low	l.startswith('path=')
+a1-jishu-kuumoji-kiten-20260917	raw/50_build_manifest.py	現物	18	D	low	rows
+a1-jishu-kuumoji-kiten-20260917	raw/50_build_manifest.py	現物	18	E	low	rows[0][:60] if rows else "-"
+a1-jishu-kuumoji-kiten-20260917	raw/50_build_manifest.py	現物	18	D	low	l.startswith(chr(112) + "ath=" + chr(34))
+a1-jishu-kuumoji-kiten-20260917	raw/59_prescan.py	現物	8	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+a1-jishu-kuumoji-kiten-20260917	raw/59_prescan.py	現物	12	D	low	any(l.endswith((b' ', b'\t')) for l in b.split(b'\n'))
+a1-jishu-kuumoji-kiten-20260917	raw/59_prescan.py	現物	15	D	low	bad
+a1-jishu-kuumoji-kiten-20260917	raw/59_prescan.py	現物	15	E	low	1 if bad else 0
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	20	D	low	stat.S_ISREG(os.lstat(q).st_mode)
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	64	E	low	0 if rcs['main'] == 0 and rcs['all'] == 0 and rcs['nobase'] == 1 else
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	36	D	low	l.startswith('條① 基点')
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	58	D	low	a
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	58	E	low	a.group(1) if a else '−'
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	58	D	low	b
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	58	E	low	b.group(1) if b else '−'
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	54	E	low	"同" if (m70.group(1), int(m70.group(2))) == i70 else "★違★"
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	27	D	low	x.startswith('★自己検め')
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	37	D	low	j1
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	37	E	low	j1.groups() if j1 else '−'
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	37	D	low	kt
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	37	E	low	kt[0][:40] if kt else '−'
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	37	D	low	tot
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	37	E	low	tot.group(1) if tot else '−'
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	30	E	low	base if base is not None else "(unset)"
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	37	D	low	l.startswith('★出す前')
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	41	D	low	l.startswith('path=' + chr(34))
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	41	D	low	l.endswith((b' ', b'\t'))
+a1-jishu-kuumoji-kiten-20260917	raw/60_gate_run.py	現物	45	E	low	"(前 無)" if p_ not in mae else "★違★"
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	11	D	low	os.path.isfile(B + '.md')
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	11	E	low	os.path.getsize(B + '.md') if os.path.isfile(B + '.md') else 0
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	8	D	low	os.path.isfile(p)
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	9	D	low	os.path.isfile(p)
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	10	D	low	m
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	18	D	low	m
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	33	C	low	naru or '通(0 鳴)'
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	43	D	low	all(len(h) == 1 for h in hits)
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	43	E	low	0 if all(len(h) == 1 for h in hits) else 3
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	12	D	low	l.startswith('path=')
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	26	D	low	not os.path.basename(p).startswith('_')
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	35	D	low	naru
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	35	E	low	1 if naru else 0
+a1-jishu-kuumoji-kiten-20260917	raw/62_letters.py	現物	35	C	low	naru or "通"
+a1-jishu-kuumoji-kiten-20260917	raw/67_git_add.py	現物	8	D	low	l
+a1-jishu-kuumoji-kiten-20260917	raw/67_git_add.py	現物	9	D	low	l
+a1-jishu-kuumoji-kiten-20260917	raw/67_git_add.py	現物	9	A	low	l[0] in 'AM'
+a1-jishu-kuumoji-kiten-20260917	raw/67_git_add.py	現物	10	D	low	p.stderr.strip()
+a1-jishu-kuumoji-kiten-20260917	raw/67_git_add.py	現物	10	E	low	f' stderr {p.stderr.strip()[:200]}' if p.stderr.strip() else ''
+a1-jishu-kuumoji-kiten-20260917	raw/70_paper.py	現物	7	D	low	re.search(pat, txt)
+a1-jishu-kuumoji-kiten-20260917	raw/70_paper.py	現物	8	D	low	l.startswith('|')
+a1-jishu-kuumoji-kiten-20260917	raw/70_paper.py	現物	10	D	low	l.startswith('門 kuu')
+a1-jishu-kuumoji-kiten-20260917	raw/70_paper.py	現物	10	D	low	l.startswith('禁域と km-70')
+a1-jishu-kuumoji-kiten-20260917	raw/70_paper.py	現物	21	D	low	kin
+a1-jishu-kuumoji-kiten-20260917	raw/70_paper.py	現物	21	E	low	kin[0] if kin else "(10 の末尾行)"
+a1-jishu-kuumoji-kiten-20260917	raw/kaki.py	現物	12	D	low	not lines
+a1-jishu-kuumoji-kiten-20260917	raw/kaki.py	現物	19	D	low	header
+a1-jishu-kuumoji-kiten-20260917	raw/kaki.py	現物	10	B	low	lines[-1] == ""
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/05_chakushu.py	現物	16	D	low	naru
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/05_chakushu.py	現物	15	C	low	naru or '通(0 鳴)'
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/05_chakushu.py	現物	20	E	low	0 if p.returncode == 0 and len(hit) == 1 else 3
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/05_chakushu.py	現物	9	D	low	not os.path.basename(p).startswith('_')
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	17	D	low	isinstance(n, ast.Compare)
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	65	E	low	0 if (pos_ok and neg_ok) else 1
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	11	B	low	n.value == ''
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	39	D	low	not stat.S_ISREG(os.lstat(q).st_mode)
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	40	D	low	not f.endswith('.py')
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	22	D	low	isinstance(n, (ast.If, ast.While, ast.IfExp))
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	24	D	low	bare(tt)
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	26	D	low	isinstance(n, ast.comprehension)
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	41	E	low	'自身' if os.path.abspath(q) == SELF else '現物'
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	61	D	low	pos_ok
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	61	E	low	"★悉く拾つた★" if pos_ok else "★拾へぬ形あり★"
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	61	D	low	neg_ok
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	61	E	low	"★一つも拾はず★" if neg_ok else "★誤つて拾つた★"
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	62	D	low	pos_ok
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	62	E	low	"通" if pos_ok else "落"
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	62	E	low	0 if (pos_ok and neg_ok) else 1
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	15	C	low	ast.get_source_segment(src, n) or ''
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	29	D	low	bare(tt)
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/20_bosu.py	自身	19	E	low	'high' if isinstance(n.left, ast.Subscript) and isinstance(n.left.slic
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/kaki.py	現物	12	D	low	not lines
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/kaki.py	現物	19	D	low	header
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/kaki.py	現物	10	B	low	lines[-1] == ""
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/fixture/pos.py	fixture	6	D	low	s
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/fixture/pos.py	fixture	3	A	high	s[:1] in 'AM'
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/fixture/pos.py	fixture	4	B	low	s == ''
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/fixture/pos.py	fixture	5	C	low	st or 'default'
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/fixture/pos.py	fixture	8	D	low	m
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/fixture/pos.py	fixture	8	E	low	m.group(1) if m else '?'
+km-71-kuumoji-wa-atai-toshite-furumau-20260917	raw/fixture/pos.py	fixture	9	F	high	s.startswith('')

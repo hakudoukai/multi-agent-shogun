@@ -1,0 +1,43 @@
+# 20 母數 / 刻 2026-09-17T06:44:24+0900 / 檢出子 sha16 d228cd8796d8c742 / python 3.14.6
+## 数へ方: 歩き根 = docs/evidence/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / docs/evidence/a1-jishu-kuumoji-kiten-20260917 / docs/evidence/km-71-kuumoji-wa-atai-toshite-furumau-20260917 / 深さ 無限(os.walk・__pycache__ は降りぬ)/ 規約 = S_ISREG かつ名が .py で終はる / 非通常(symlink 等)と非 .py は別に数へ母數に入れぬ / fixture/ 配下は同じ路で歩き現物と分ける / 己(20_bosu.py)は path 一致で「自身」と札し現物から外す
+## ★N(器・現物)= 30 本★(自身 1 本・fixture 2 本は別) / 非通常 0 / 非 .py 291 / parse 失敗 0 []
+## ★M(長さ0の文字列が判定に効き得る箇所・現物)= 266 箇所★(自身 19 箇所は別)
+## 束別 N / M(現物): km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 N 18 M 180 / a1-jishu-kuumoji-kiten-20260917 N 10 M 79 / km-71-kuumoji-wa-atai-toshite-furumau-20260917 N 2 M 7
+## 形別 M(現物): A 2 / B 4 / C 15 / D 156 / E 89 / F 0 / 内 危=high(形A の左が slice・形F) 1
+## 形の名: A 包含 in(右が str 定数)/ B 等価 ==,!= と '' / C 既定落ち x or 定数 / D 真偽 if x, if not x(裸)/ E 三項 … if m else 定数 / F startswith|endswith('')
+## ★陽性対照 fixture/pos.py★ 形別 拾つた数 {'A': 1, 'B': 1, 'C': 1, 'D': 2, 'E': 1, 'F': 1} → ★悉く拾つた★ / ★陰性対照 fixture/neg.py★ 形別 {'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0} → ★一つも拾はず★
+## 零の札: 陽性対照 通 / 根と深さ 上記 / rc 0 / 刻 上記
+## file 別(束 / 種 / file / 箇所):
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / _after/62b_letters.py / 21
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / _after/64_letter7.py / 6
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / _after/65_letter8.py / 16
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / _after/96b_after.py / 4
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / _after/kaki.py / 3
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/00_start.py / 1
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/05_chakushu.py / 18
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/10_run.py / 0
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/20_tatenaoshi.py / 14
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/30_taishou.py / 30
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/50_build_manifest.py / 5
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/59_prescan.py / 4
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/60_gate_run.py / 21
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/62_letters.py / 21
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/67_git_add.py / 4
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/70_paper.py / 2
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/96_after.py / 7
+  km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 / 現物 / raw/kaki.py / 3
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/05_seikyu.py / 10
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/10_kuumoji.py / 11
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/15_normalize.py / 1
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/50_build_manifest.py / 5
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/59_prescan.py / 4
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/60_gate_run.py / 20
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/62_letters.py / 14
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/67_git_add.py / 5
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/70_paper.py / 6
+  a1-jishu-kuumoji-kiten-20260917 / 現物 / raw/kaki.py / 3
+  km-71-kuumoji-wa-atai-toshite-furumau-20260917 / 現物 / raw/05_chakushu.py / 4
+  km-71-kuumoji-wa-atai-toshite-furumau-20260917 / 自身 / raw/20_bosu.py / 19
+  km-71-kuumoji-wa-atai-toshite-furumau-20260917 / 現物 / raw/kaki.py / 3
+  km-71-kuumoji-wa-atai-toshite-furumau-20260917 / fixture / raw/fixture/neg.py / 0
+  km-71-kuumoji-wa-atai-toshite-furumau-20260917 / fixture / raw/fixture/pos.py / 7

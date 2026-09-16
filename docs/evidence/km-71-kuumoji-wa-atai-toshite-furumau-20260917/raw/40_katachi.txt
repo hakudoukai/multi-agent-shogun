@@ -1,0 +1,18 @@
+# 40 形と「空文字が通す判定」/ 刻 2026-09-17T06:45:55+0900 / 各形を 陽性 ''(空文字)と 陰性 'A' で評価(python 3.14.6)
+| 形 | 名 | 式 | 空文字 '' の出目 | 'A' の出目 | 空文字が通す判定(一行) |
+|---|---|---|---|---|---|
+| A | 包含 in(右が str 定数) | `s[:1] in 'AM'` | `True` | `True` | 空文字は如何なる文字列にも含まれる('' in x は常に True)∴ 空要素が『A か M』として通る |
+| B | 等価 == と '' | `s == ''` | `True` | `False` | 空文字を番兵に使ふ判定は、値の欠と『空といふ値』を見分けぬ(None と '' が別の意味でも同じ枝へ) |
+| C | 既定落ち x or 定数 | `s or 'default'` | `'default'` | `'A'` | 空文字は falsy ゆゑ既定へ黙つて落ちる ―― 『空と測れた』が『既定と同じ』に化ける |
+| D | 真偽 if x / if not x(裸) | `bool(s)` | `False` | `True` | 空文字は False ―― 『無い』と『空である』が同じ枝へ(0byte と「空である旨の一行」の別が消える) |
+| E | 三項 … if m else 定数 | `s if s else '?'` | `'?'` | `'A'` | 空文字は else へ落ち定数(例 '?')に化ける ―― 測れた空が『引けぬ』の顔を着る |
+| F | startswith('') / endswith('') | `s.startswith('')` | `True` | `True` | 空文字の接頭辞は全てに合ふ(常に True)∴ 篩が篩でなくなる |
+## 現物の 形A・形B・危=high の行(20_bosu.tsv から・6 行): 束 / file / 行 / 形 / 危 / 逐語
+  km-70-da / _after/kaki.py / L10 / B / low / lines[-1] == ""
+  km-70-da / raw/67_git_add.py / L8 / A / high / l[:1] in 'AM'
+  km-70-da / raw/kaki.py / L10 / B / low / lines[-1] == ""
+  a1-jishu / raw/67_git_add.py / L9 / A / low / l[0] in 'AM'
+  a1-jishu / raw/kaki.py / L10 / B / low / lines[-1] == ""
+  km-71-ku / raw/kaki.py / L10 / B / low / lines[-1] == ""
+## 形別 M(現物・20 と同じ tsv から数へ直し): A 2 / B 4 / C 15 / D 156 / E 89 / F 0 / 計 266
+## 註: M は「効き得る箇所」であつて疵の数ではない。D/E の多くは欠を扱ふ設計(m が None なら…)であり、空文字が★其處へ来るか★は器では判ぜぬ(値の来歴は静的に決まらぬ)。∴ M は上界。危=high は「左が slice(空を産む)」か F(常に真)で、来歴に依らず空が通る形。
