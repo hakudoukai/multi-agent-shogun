@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# 53 — ★四つの讀手を、番人が受けた七形へ同時に当てる★
+#   讀手① [ ] test(1)  ②$(( )) bash算術  ③python3 int()  ④gtimeout(1)
+#   ③④は器が別ゆゑ「値」ではなく「振舞」で測る。②は set -u 下で死ぬ事が在る=rc を刷る。
+set -u
+printf '#colspec\t形札\t逐語\t①test\t②算術\t③python\t④gtimeout\n'
+one(){
+  tag="$1"; v="$2"
+  # ① test(1): 己の演算子で候補に当てる(printf は別の讀手ゆゑ使はぬ)
+  t1='?'
+  for c in 0 7 8 10 30 50 9223372036854775807; do  # ★30=陰性対照。初版は之を欠き対照が「?」と出た(疵)★
+    if [ "$v" -eq "$c" ] 2>/dev/null; then t1="$c"; break; fi
+  done
+  # ② $(( )): rc ごと捕へる(set -u と非数で死ぬ形が在る)
+  t2="$( (set -u; printf '%s' "$(( v ))") 2>&1 )"; rc2=$?
+  [ "$rc2" -ne 0 ] && t2="★死 rc=$rc2★"
+  # ③ python3 int()
+  t3="$(python3 -c 'import sys;
+try: print(int(sys.argv[1]))
+except Exception as e: print("★拒 "+type(e).__name__+"★")' "$v" 2>&1)"
+  # ④ gtimeout: 値は刷れぬ。受否のみ(rc=125=拒)
+  gtimeout "$v" true >/dev/null 2>&1; rc4=$?
+  [ "$rc4" -eq 125 ] && t4='★拒★' || t4="受(rc=$rc4)"
+  printf '%s\t[%s]\t%s\t%s\t%s\t%s\n' "$tag" "$v" "$t1" "$t2" "$t3" "$t4"
+}
+one 07 "-0"; one 08 "0"; one 09 "+50"; one 10 " 50 "
+one 16 "007"; one 17 "010"; one 18 "9223372036854775807"
+one 30 "30"

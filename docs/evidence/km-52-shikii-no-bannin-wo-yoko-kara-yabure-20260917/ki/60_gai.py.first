@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""60_gai.py — ★塞がつて居らぬ組を名指し、後段で何が起きるかを分ける★(㋑)
+
+欄の出所を必ず分ける:
+  實測 = 30_ate.tsv(番人の出目396組)・51/52/53(讀手の振舞)
+  讀取 = 後段の逐語行から導いた分類 ―― ★測つたのではない★
+測れぬ = inotifywait(此の環境に不在)
+"""
+import csv, sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from importlib import import_module
+S = import_module('20_shikii')
+
+# 番人が通した七形(30_ate.tsv 實測)
+TOOSHITA = {
+ '07':'-0', '08':'0', '09':'+50', '10':' 50 ',
+ '16':'007', '17':'010', '18':'9223372036854775807',
+}
+# 讀手の出目(53_yomite.tsv 實測)
+YOMITE = {
+ '07':dict(test='0',   ari='0',   py='0',   gt='拒125'),
+ '08':dict(test='0',   ari='0',   py='0',   gt='受'),
+ '09':dict(test='50',  ari='50',  py='50',  gt='受'),
+ '10':dict(test='50',  ari='50',  py='50',  gt='拒125'),
+ '16':dict(test='7',   ari='7',   py='7',   gt='受'),
+ '17':dict(test='10',  ari='8',   py='10',  gt='受'),
+ '18':dict(test='2^63-1', ari='2^63-1', py='2^63-1', gt='受(setitimer拒→限り張られず)'),
+}
+
+# 後段の別(讀取): 閾名 -> (器, 後段の逐語, 讀手, 零の意味, 極大の意味)
+GO = {
+ 'ESCALATE_PHASE1':      ('watcher','L1447 [ "$age" -lt "$ESCALATE_PHASE1" ]','test',
+                          '零=第一段が一度も鳴らぬ(-lt 0 は恒偽)','極大=age 悉く「未だ」→第一段で止まり昇圧せぬ'),
+ 'ESCALATE_PHASE2':      ('watcher','L1455 [ "$age" -lt "$ESCALATE_PHASE2" ]','test',
+                          '零=第二段が一度も鳴らぬ','極大=第三段(/clear)へ永久に進まぬ'),
+ 'ESCALATE_COOLDOWN':    ('watcher','L1461 [ "$LAST_CLEAR_TS" -lt "$((now - ESCALATE_COOLDOWN))" ]','test+★算術★',
+                          '零=冷却無し→/clear 連発','極大=now-極大 が負→恒偽→/clear 永久に出ぬ'),
+ 'NUDGE_COOLDOWN_SEC':   ('watcher','冷却比較','test','零=nudge 洪水','極大=nudge 永久に出ぬ'),
+ 'NUDGE_COOLDOWN_SEC_CODEX':('watcher','冷却比較','test','零=nudge 洪水','極大=nudge 永久に出ぬ'),
+ 'NUDGE_COOLDOWN_SEC_CLAUDE':('watcher','冷却比較','test','零=nudge 洪水','極大=nudge 永久に出ぬ'),
+ 'ASW_PHASE':            ('watcher','段の番号','test','零=段が消える','極大=該当段無し'),
+ 'APPROVAL_ALERT_COOLDOWN':('watcher','冷却比較','test','零=警報洪水','極大=警報永久に出ぬ'),
+ 'MAX_TYPING_SKIP':      ('watcher','打鍵中の見送り上限','test','零=見送り零→打鍵中へ割込む','極大=永久に見送る=届かぬ'),
+ 'INOTIFY_TIMEOUT':      ('watcher','★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★','test+★gtimeout★+測れぬ',
+                          '★零=gtimeout 0 は「限り無し」(實測51)→fswatch が返らねば環が永久に止まる★',
+                          '★極大=setitimer 拒(實測50)→限りが張られず同じく止まる★'),
+ 'ER_THRESHOLD_MIN':     ('enter','L249 [ "$ELAPSED_INT" -lt "$THRESHOLD_MIN" ]','test',
+                          '零=常に「十分経つた」→毎巡 Enter 再投入','極大=永久に「未だ」→再投入せぬ'),
+ 'ER_FIRE_CAP_COUNT':    ('enter','L123 [ "$RECENT_FIRES" -ge "$FIRE_CAP_COUNT" ]','test',
+                          '零=恒真→常に頭打ち→★番犬が一度も撃たぬ★','極大=恒偽→★上限が消える★'),
+ 'ER_FIRE_CAP_WINDOW_MIN':('enter','★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★','★算術★',
+                          '零=窓が今此の一点→RECENT_FIRES=0→★上限が消える★','極大=窓が未来から→分母膨張'),
+ 'ALERT_COOLDOWN_SEC':   ('health','L132 [ "$elapsed" -lt "$ALERT_COOLDOWN_SEC" ]','test',
+                          '零=警報洪水','極大=警報永久に出ぬ'),
+ 'TOKEN_CRIT_THRESHOLD': ('health','L366 [ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]','test',
+                          '零=恒真→常に危険','極大=恒偽→★危険が一度も鳴らぬ★'),
+ 'TOKEN_WARN_THRESHOLD': ('health','L379 -ge "$TOKEN_WARN_THRESHOLD"','test',
+                          '零=恒真→常に警告','極大=恒偽→★警告が一度も鳴らぬ★'),
+ 'CONTEXT_WARN_BYTES':   ('context','L84 [ "$SZ" -ge "$WARN_BYTES" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★','test+★算術(文言)★',
+                          '零=恒真→毎回警告','極大=恒偽→★警告が一度も鳴らぬ★'),
+ 'CONTEXT_DANGER_BYTES': ('context','L82 [ "$SZ" -ge "$DANGER_BYTES" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★','test+★算術(文言)★',
+                          '零=恒真→毎回危険','極大=恒偽→★危険が一度も鳴らぬ★'),
+}
+
+rows=[]
+for ki, env, dflt, sink, line in S.SHIKII:
+    g = GO[env]
+    for tag in sorted(TOOSHITA):
+        v=TOOSHITE=TOOSHITA[tag]; y=YOMITE[tag]
+        gai='―'; kubun='無害(既定と同義に讀まれる)'
+        if tag in ('07','08'):
+            gai=g[3]; kubun='★零へ倒れる★'
+        elif tag=='18':
+            gai=g[4]; kubun='★極大へ倒れる★'
+        elif tag=='17' and '算術' in g[2]:
+            gai=f'算術だけ 8 と讀む(他三讀手は 10) → {env} が {g[2]} 経路で 2 割 短く成る'
+            kubun='★讀手の割れ★'
+        elif tag=='10' and 'gtimeout' in g[2]:
+            gai='gtimeout が rc=125「invalid time interval」→ 其の呼出が即死'; kubun='★外器が拒む★'
+        elif tag=='07' :
+            pass
+        if tag=='07' and 'gtimeout' in g[2]:
+            gai='★gtimeout が「-0」を ★option★ と讀み rc=125★ ―― 値ですらない'; kubun='★外器が拒む★'
+        rows.append((ki, env, dflt, tag, v, y['test'], y['ari'], y['gt'], kubun, gai, g[1]))
+
+out=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','raw','60_gai.tsv')
+with open(out,'w',encoding='utf-8',newline='') as f:
+    w=csv.writer(f,delimiter='\t',quoting=csv.QUOTE_MINIMAL,lineterminator='\n')
+    w.writerow(['#colspec','器','閾名','既定','形札','逐語(實測)','①test','②算術','④gtimeout','区分','後段で起きる事(讀取)','後段の逐語(讀取)'])
+    for r in rows: w.writerow(['']+list(r))
+print(f'組数={len(rows)}  (18閾 × 7形)')
+assert len(rows)==126, len(rows)
+from collections import Counter
+c=Counter(r[8] for r in rows)
+for k,v in sorted(c.items(), key=lambda x:-x[1]): print(f'  {v:3d}  {k}')

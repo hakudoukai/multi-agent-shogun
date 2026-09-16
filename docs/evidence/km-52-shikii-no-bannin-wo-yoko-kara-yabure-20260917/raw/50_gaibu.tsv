@@ -1,0 +1,10 @@
+#colspec	形札	逐語	gtimeout_rc	gtimeout_stderr	意味
+07	[-0]	125	/opt/homebrew/bin/gtimeout: invalid option -- '0' Try '/opt/	番人は受けた
+08	[0]	0		番人は受けた
+09	[+50]	0		番人は受けた
+10	[ 50 ]	125	gtimeout: invalid time interval ‘ 50 ’ Try '/opt/homebrew/bi	番人は受けた
+16	[007]	0		番人は受けた
+17	[010]	0		番人は受けた
+18	[9223372036854775807]	0	gtimeout: warning: setitimer: Invalid argument	番人は受けた
+21	[10m]	0		★番人は拒んだ★
+30	[30]	0		既定(陰性対照)

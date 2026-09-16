@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# 70 — ★行注入は四器悉くで起きるか。偽の一行は「作れる」か★(㋓)
+#   番人が値を拒む時、逐語で "${_ft_v}" を鳴らし口へ挿す。
+#   値に改行が在れば、一本の意図した行が★二本★に成る。二本目を偽の記録に仕立てられるか。
+set -u
+say_watcher(){ printf '%s\n' "[watcher] $*" >&2; }
+say_health(){  printf '%s\n' "[health_check] $*" >&2; }
+say_context(){ echo "[context_warn] $*" >&2; }
+LOG="$(mktemp)"; say_enter(){ printf '[%s] %s\n' "FIXED_TS" "$*" | tee -a "$LOG" >/dev/null; }
+# 番人の拒否文言(四器で本文同一・冠のみ違ふ)を、注入値で鳴らす
+inject(){  # $1=器名 $2=注入値 $3=鳴らし関数
+  msg="★閾 INOTIFY_TIMEOUT を比較器が扱へぬ(「$2」) ―― 既定 30 へ倒す(fail-closed)★"
+  n="$("$3" "$msg" 2>&1 >/dev/null; :)"
+  cnt="$("$3" "$msg" 2>&1 >/dev/null | wc -l | tr -d ' ')"
+  printf '%s\t注入値=%s\t出力行数=%s\n' "$1" "$(printf '%s' "$2" | tr '\n' '/' )" "$cnt"
+}
+echo "=== 素の拒否(改行無し)=陰性対照 ==="
+inject watcher "abc" say_watcher
+inject health  "abc" say_health
+inject context "abc" say_context
+inject enter   "abc" say_enter
+echo "=== 形12: 値='50<改行>9999' ==="
+V="$(printf '50\n9999')"
+inject watcher "$V" say_watcher
+inject health  "$V" say_health
+inject context "$V" say_context
+inject enter   "$V" say_enter
+echo "=== ★偽の一行を仕立てる★: 値に完結した偽記録を仕込む ==="
+FORGE="$(printf '30 ―― 既定へ倒す(fail-closed)★\n[watcher] ★閾 INOTIFY_TIMEOUT 正常 ―― 値 9999 を受理(fail-open を隠す偽行)★')"
+echo "--- watcher の実際の出力(stderr) ---"
+say_watcher "★閾 INOTIFY_TIMEOUT を比較器が扱へぬ(「$FORGE」) ―― 既定 30 へ倒す(fail-closed)★" 2>&1 1>/dev/null

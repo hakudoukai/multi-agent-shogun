@@ -1,0 +1,127 @@
+#colspec	器	閾名	既定	形札	逐語(實測)	①test	②算術	④gtimeout	区分	後段で起きる事(讀取)	後段の逐語(讀取)
+	watcher	ESCALATE_PHASE1	120	07	-0	0	0	拒125	★零へ倒れる★	零=第一段が一度も鳴らぬ(-lt 0 は恒偽)	"L1447 [ ""$age"" -lt ""$ESCALATE_PHASE1"" ]"
+	watcher	ESCALATE_PHASE1	120	08	0	0	0	受	★零へ倒れる★	零=第一段が一度も鳴らぬ(-lt 0 は恒偽)	"L1447 [ ""$age"" -lt ""$ESCALATE_PHASE1"" ]"
+	watcher	ESCALATE_PHASE1	120	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L1447 [ ""$age"" -lt ""$ESCALATE_PHASE1"" ]"
+	watcher	ESCALATE_PHASE1	120	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L1447 [ ""$age"" -lt ""$ESCALATE_PHASE1"" ]"
+	watcher	ESCALATE_PHASE1	120	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L1447 [ ""$age"" -lt ""$ESCALATE_PHASE1"" ]"
+	watcher	ESCALATE_PHASE1	120	17	010	10	8	受	無害(既定と同義に讀まれる)	―	"L1447 [ ""$age"" -lt ""$ESCALATE_PHASE1"" ]"
+	watcher	ESCALATE_PHASE1	120	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=age 悉く「未だ」→第一段で止まり昇圧せぬ	"L1447 [ ""$age"" -lt ""$ESCALATE_PHASE1"" ]"
+	watcher	ESCALATE_PHASE2	240	07	-0	0	0	拒125	★零へ倒れる★	零=第二段が一度も鳴らぬ	"L1455 [ ""$age"" -lt ""$ESCALATE_PHASE2"" ]"
+	watcher	ESCALATE_PHASE2	240	08	0	0	0	受	★零へ倒れる★	零=第二段が一度も鳴らぬ	"L1455 [ ""$age"" -lt ""$ESCALATE_PHASE2"" ]"
+	watcher	ESCALATE_PHASE2	240	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L1455 [ ""$age"" -lt ""$ESCALATE_PHASE2"" ]"
+	watcher	ESCALATE_PHASE2	240	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L1455 [ ""$age"" -lt ""$ESCALATE_PHASE2"" ]"
+	watcher	ESCALATE_PHASE2	240	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L1455 [ ""$age"" -lt ""$ESCALATE_PHASE2"" ]"
+	watcher	ESCALATE_PHASE2	240	17	010	10	8	受	無害(既定と同義に讀まれる)	―	"L1455 [ ""$age"" -lt ""$ESCALATE_PHASE2"" ]"
+	watcher	ESCALATE_PHASE2	240	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=第三段(/clear)へ永久に進まぬ	"L1455 [ ""$age"" -lt ""$ESCALATE_PHASE2"" ]"
+	watcher	ESCALATE_COOLDOWN	300	07	-0	0	0	拒125	★零へ倒れる★	零=冷却無し→/clear 連発	"L1461 [ ""$LAST_CLEAR_TS"" -lt ""$((now - ESCALATE_COOLDOWN))"" ]"
+	watcher	ESCALATE_COOLDOWN	300	08	0	0	0	受	★零へ倒れる★	零=冷却無し→/clear 連発	"L1461 [ ""$LAST_CLEAR_TS"" -lt ""$((now - ESCALATE_COOLDOWN))"" ]"
+	watcher	ESCALATE_COOLDOWN	300	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L1461 [ ""$LAST_CLEAR_TS"" -lt ""$((now - ESCALATE_COOLDOWN))"" ]"
+	watcher	ESCALATE_COOLDOWN	300	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L1461 [ ""$LAST_CLEAR_TS"" -lt ""$((now - ESCALATE_COOLDOWN))"" ]"
+	watcher	ESCALATE_COOLDOWN	300	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L1461 [ ""$LAST_CLEAR_TS"" -lt ""$((now - ESCALATE_COOLDOWN))"" ]"
+	watcher	ESCALATE_COOLDOWN	300	17	010	10	8	受	★讀手の割れ★	算術だけ 8 と讀む(他三讀手は 10) → ESCALATE_COOLDOWN が test+★算術★ 経路で 2 割 短く成る	"L1461 [ ""$LAST_CLEAR_TS"" -lt ""$((now - ESCALATE_COOLDOWN))"" ]"
+	watcher	ESCALATE_COOLDOWN	300	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=now-極大 が負→恒偽→/clear 永久に出ぬ	"L1461 [ ""$LAST_CLEAR_TS"" -lt ""$((now - ESCALATE_COOLDOWN))"" ]"
+	watcher	NUDGE_COOLDOWN_SEC	60	07	-0	0	0	拒125	★零へ倒れる★	零=nudge 洪水	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC	60	08	0	0	0	受	★零へ倒れる★	零=nudge 洪水	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC	60	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC	60	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC	60	16	007	7	7	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC	60	17	010	10	8	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC	60	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=nudge 永久に出ぬ	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CODEX	300	07	-0	0	0	拒125	★零へ倒れる★	零=nudge 洪水	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CODEX	300	08	0	0	0	受	★零へ倒れる★	零=nudge 洪水	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CODEX	300	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CODEX	300	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CODEX	300	16	007	7	7	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CODEX	300	17	010	10	8	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CODEX	300	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=nudge 永久に出ぬ	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60	07	-0	0	0	拒125	★零へ倒れる★	零=nudge 洪水	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60	08	0	0	0	受	★零へ倒れる★	零=nudge 洪水	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60	16	007	7	7	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60	17	010	10	8	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=nudge 永久に出ぬ	冷却比較
+	watcher	ASW_PHASE	2	07	-0	0	0	拒125	★零へ倒れる★	零=段が消える	段の番号
+	watcher	ASW_PHASE	2	08	0	0	0	受	★零へ倒れる★	零=段が消える	段の番号
+	watcher	ASW_PHASE	2	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	段の番号
+	watcher	ASW_PHASE	2	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	段の番号
+	watcher	ASW_PHASE	2	16	007	7	7	受	無害(既定と同義に讀まれる)	―	段の番号
+	watcher	ASW_PHASE	2	17	010	10	8	受	無害(既定と同義に讀まれる)	―	段の番号
+	watcher	ASW_PHASE	2	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=該当段無し	段の番号
+	watcher	APPROVAL_ALERT_COOLDOWN	300	07	-0	0	0	拒125	★零へ倒れる★	零=警報洪水	冷却比較
+	watcher	APPROVAL_ALERT_COOLDOWN	300	08	0	0	0	受	★零へ倒れる★	零=警報洪水	冷却比較
+	watcher	APPROVAL_ALERT_COOLDOWN	300	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	APPROVAL_ALERT_COOLDOWN	300	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	APPROVAL_ALERT_COOLDOWN	300	16	007	7	7	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	APPROVAL_ALERT_COOLDOWN	300	17	010	10	8	受	無害(既定と同義に讀まれる)	―	冷却比較
+	watcher	APPROVAL_ALERT_COOLDOWN	300	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=警報永久に出ぬ	冷却比較
+	watcher	MAX_TYPING_SKIP	5	07	-0	0	0	拒125	★零へ倒れる★	零=見送り零→打鍵中へ割込む	打鍵中の見送り上限
+	watcher	MAX_TYPING_SKIP	5	08	0	0	0	受	★零へ倒れる★	零=見送り零→打鍵中へ割込む	打鍵中の見送り上限
+	watcher	MAX_TYPING_SKIP	5	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	打鍵中の見送り上限
+	watcher	MAX_TYPING_SKIP	5	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	打鍵中の見送り上限
+	watcher	MAX_TYPING_SKIP	5	16	007	7	7	受	無害(既定と同義に讀まれる)	―	打鍵中の見送り上限
+	watcher	MAX_TYPING_SKIP	5	17	010	10	8	受	無害(既定と同義に讀まれる)	―	打鍵中の見送り上限
+	watcher	MAX_TYPING_SKIP	5	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=永久に見送る=届かぬ	打鍵中の見送り上限
+	watcher	INOTIFY_TIMEOUT	30	07	-0	0	0	拒125	★外器が拒む★	★gtimeout が「-0」を ★option★ と讀み rc=125★ ―― 値ですらない	★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★
+	watcher	INOTIFY_TIMEOUT	30	08	0	0	0	受	★零へ倒れる★	★零=gtimeout 0 は「限り無し」(實測51)→fswatch が返らねば環が永久に止まる★	★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★
+	watcher	INOTIFY_TIMEOUT	30	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★
+	watcher	INOTIFY_TIMEOUT	30	10	 50 	50	50	拒125	★外器が拒む★	gtimeout が rc=125「invalid time interval」→ 其の呼出が即死	★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★
+	watcher	INOTIFY_TIMEOUT	30	16	007	7	7	受	無害(既定と同義に讀まれる)	―	★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★
+	watcher	INOTIFY_TIMEOUT	30	17	010	10	8	受	無害(既定と同義に讀まれる)	―	★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★
+	watcher	INOTIFY_TIMEOUT	30	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	★極大=setitimer 拒(實測50)→限りが張られず同じく止まる★	★L1543 gtimeout / L1552 [ -lt ] / L1567 inotifywait -t ―― ★三つ★★
+	enter	ER_THRESHOLD_MIN	10	07	-0	0	0	拒125	★零へ倒れる★	零=常に「十分経つた」→毎巡 Enter 再投入	"L249 [ ""$ELAPSED_INT"" -lt ""$THRESHOLD_MIN"" ]"
+	enter	ER_THRESHOLD_MIN	10	08	0	0	0	受	★零へ倒れる★	零=常に「十分経つた」→毎巡 Enter 再投入	"L249 [ ""$ELAPSED_INT"" -lt ""$THRESHOLD_MIN"" ]"
+	enter	ER_THRESHOLD_MIN	10	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L249 [ ""$ELAPSED_INT"" -lt ""$THRESHOLD_MIN"" ]"
+	enter	ER_THRESHOLD_MIN	10	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L249 [ ""$ELAPSED_INT"" -lt ""$THRESHOLD_MIN"" ]"
+	enter	ER_THRESHOLD_MIN	10	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L249 [ ""$ELAPSED_INT"" -lt ""$THRESHOLD_MIN"" ]"
+	enter	ER_THRESHOLD_MIN	10	17	010	10	8	受	無害(既定と同義に讀まれる)	―	"L249 [ ""$ELAPSED_INT"" -lt ""$THRESHOLD_MIN"" ]"
+	enter	ER_THRESHOLD_MIN	10	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=永久に「未だ」→再投入せぬ	"L249 [ ""$ELAPSED_INT"" -lt ""$THRESHOLD_MIN"" ]"
+	enter	ER_FIRE_CAP_COUNT	3	07	-0	0	0	拒125	★零へ倒れる★	零=恒真→常に頭打ち→★番犬が一度も撃たぬ★	"L123 [ ""$RECENT_FIRES"" -ge ""$FIRE_CAP_COUNT"" ]"
+	enter	ER_FIRE_CAP_COUNT	3	08	0	0	0	受	★零へ倒れる★	零=恒真→常に頭打ち→★番犬が一度も撃たぬ★	"L123 [ ""$RECENT_FIRES"" -ge ""$FIRE_CAP_COUNT"" ]"
+	enter	ER_FIRE_CAP_COUNT	3	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L123 [ ""$RECENT_FIRES"" -ge ""$FIRE_CAP_COUNT"" ]"
+	enter	ER_FIRE_CAP_COUNT	3	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L123 [ ""$RECENT_FIRES"" -ge ""$FIRE_CAP_COUNT"" ]"
+	enter	ER_FIRE_CAP_COUNT	3	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L123 [ ""$RECENT_FIRES"" -ge ""$FIRE_CAP_COUNT"" ]"
+	enter	ER_FIRE_CAP_COUNT	3	17	010	10	8	受	無害(既定と同義に讀まれる)	―	"L123 [ ""$RECENT_FIRES"" -ge ""$FIRE_CAP_COUNT"" ]"
+	enter	ER_FIRE_CAP_COUNT	3	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=恒偽→★上限が消える★	"L123 [ ""$RECENT_FIRES"" -ge ""$FIRE_CAP_COUNT"" ]"
+	enter	ER_FIRE_CAP_WINDOW_MIN	15	07	-0	0	0	拒125	★零へ倒れる★	零=窓が今此の一点→RECENT_FIRES=0→★上限が消える★	★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★
+	enter	ER_FIRE_CAP_WINDOW_MIN	15	08	0	0	0	受	★零へ倒れる★	零=窓が今此の一点→RECENT_FIRES=0→★上限が消える★	★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★
+	enter	ER_FIRE_CAP_WINDOW_MIN	15	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★
+	enter	ER_FIRE_CAP_WINDOW_MIN	15	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★
+	enter	ER_FIRE_CAP_WINDOW_MIN	15	16	007	7	7	受	無害(既定と同義に讀まれる)	―	★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★
+	enter	ER_FIRE_CAP_WINDOW_MIN	15	17	010	10	8	受	★讀手の割れ★	算術だけ 8 と讀む(他三讀手は 10) → ER_FIRE_CAP_WINDOW_MIN が ★算術★ 経路で 2 割 短く成る	★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★
+	enter	ER_FIRE_CAP_WINDOW_MIN	15	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=窓が未来から→分母膨張	★L117 WINDOW_EPOCH=$((NOW_EPOCH - FIRE_CAP_WINDOW_MIN * 60))★
+	health	HEALTH_CHECK_COOLDOWN_SEC	300	07	-0	0	0	拒125	★零へ倒れる★	零=警報洪水	"L132 [ ""$elapsed"" -lt ""$HEALTH_CHECK_COOLDOWN_SEC"" ]"
+	health	HEALTH_CHECK_COOLDOWN_SEC	300	08	0	0	0	受	★零へ倒れる★	零=警報洪水	"L132 [ ""$elapsed"" -lt ""$HEALTH_CHECK_COOLDOWN_SEC"" ]"
+	health	HEALTH_CHECK_COOLDOWN_SEC	300	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L132 [ ""$elapsed"" -lt ""$HEALTH_CHECK_COOLDOWN_SEC"" ]"
+	health	HEALTH_CHECK_COOLDOWN_SEC	300	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L132 [ ""$elapsed"" -lt ""$HEALTH_CHECK_COOLDOWN_SEC"" ]"
+	health	HEALTH_CHECK_COOLDOWN_SEC	300	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L132 [ ""$elapsed"" -lt ""$HEALTH_CHECK_COOLDOWN_SEC"" ]"
+	health	HEALTH_CHECK_COOLDOWN_SEC	300	17	010	10	8	受	無害(既定と同義に讀まれる)	―	"L132 [ ""$elapsed"" -lt ""$HEALTH_CHECK_COOLDOWN_SEC"" ]"
+	health	HEALTH_CHECK_COOLDOWN_SEC	300	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=警報永久に出ぬ	"L132 [ ""$elapsed"" -lt ""$HEALTH_CHECK_COOLDOWN_SEC"" ]"
+	health	HEALTH_CHECK_TOKEN_WARN	200000	07	-0	0	0	拒125	★零へ倒れる★	零=恒真→常に警告	"L379 -ge ""$HEALTH_CHECK_TOKEN_WARN"""
+	health	HEALTH_CHECK_TOKEN_WARN	200000	08	0	0	0	受	★零へ倒れる★	零=恒真→常に警告	"L379 -ge ""$HEALTH_CHECK_TOKEN_WARN"""
+	health	HEALTH_CHECK_TOKEN_WARN	200000	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L379 -ge ""$HEALTH_CHECK_TOKEN_WARN"""
+	health	HEALTH_CHECK_TOKEN_WARN	200000	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L379 -ge ""$HEALTH_CHECK_TOKEN_WARN"""
+	health	HEALTH_CHECK_TOKEN_WARN	200000	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L379 -ge ""$HEALTH_CHECK_TOKEN_WARN"""
+	health	HEALTH_CHECK_TOKEN_WARN	200000	17	010	10	8	受	無害(既定と同義に讀まれる)	―	"L379 -ge ""$HEALTH_CHECK_TOKEN_WARN"""
+	health	HEALTH_CHECK_TOKEN_WARN	200000	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=恒偽→★警告が一度も鳴らぬ★	"L379 -ge ""$HEALTH_CHECK_TOKEN_WARN"""
+	health	HEALTH_CHECK_TOKEN_CRIT	240000	07	-0	0	0	拒125	★零へ倒れる★	零=恒真→常に危険	"L366 [ ""$max_tokens"" -ge ""$HEALTH_CHECK_TOKEN_CRIT"" ]"
+	health	HEALTH_CHECK_TOKEN_CRIT	240000	08	0	0	0	受	★零へ倒れる★	零=恒真→常に危険	"L366 [ ""$max_tokens"" -ge ""$HEALTH_CHECK_TOKEN_CRIT"" ]"
+	health	HEALTH_CHECK_TOKEN_CRIT	240000	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L366 [ ""$max_tokens"" -ge ""$HEALTH_CHECK_TOKEN_CRIT"" ]"
+	health	HEALTH_CHECK_TOKEN_CRIT	240000	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L366 [ ""$max_tokens"" -ge ""$HEALTH_CHECK_TOKEN_CRIT"" ]"
+	health	HEALTH_CHECK_TOKEN_CRIT	240000	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L366 [ ""$max_tokens"" -ge ""$HEALTH_CHECK_TOKEN_CRIT"" ]"
+	health	HEALTH_CHECK_TOKEN_CRIT	240000	17	010	10	8	受	無害(既定と同義に讀まれる)	―	"L366 [ ""$max_tokens"" -ge ""$HEALTH_CHECK_TOKEN_CRIT"" ]"
+	health	HEALTH_CHECK_TOKEN_CRIT	240000	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=恒偽→★危険が一度も鳴らぬ★	"L366 [ ""$max_tokens"" -ge ""$HEALTH_CHECK_TOKEN_CRIT"" ]"
+	context	CONTEXT_WARN_BYTES	1600000	07	-0	0	0	拒125	★零へ倒れる★	零=恒真→毎回警告	"L84 [ ""$SZ"" -ge ""$WARN_BYTES"" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_WARN_BYTES	1600000	08	0	0	0	受	★零へ倒れる★	零=恒真→毎回警告	"L84 [ ""$SZ"" -ge ""$WARN_BYTES"" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_WARN_BYTES	1600000	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L84 [ ""$SZ"" -ge ""$WARN_BYTES"" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_WARN_BYTES	1600000	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L84 [ ""$SZ"" -ge ""$WARN_BYTES"" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_WARN_BYTES	1600000	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L84 [ ""$SZ"" -ge ""$WARN_BYTES"" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_WARN_BYTES	1600000	17	010	10	8	受	★讀手の割れ★	算術だけ 8 と讀む(他三讀手は 10) → CONTEXT_WARN_BYTES が test+★算術(文言)★ 経路で 2 割 短く成る	"L84 [ ""$SZ"" -ge ""$WARN_BYTES"" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_WARN_BYTES	1600000	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=恒偽→★警告が一度も鳴らぬ★	"L84 [ ""$SZ"" -ge ""$WARN_BYTES"" ] / ★L85 $(($WARN_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_DANGER_BYTES	2000000	07	-0	0	0	拒125	★零へ倒れる★	零=恒真→毎回危険	"L82 [ ""$SZ"" -ge ""$DANGER_BYTES"" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_DANGER_BYTES	2000000	08	0	0	0	受	★零へ倒れる★	零=恒真→毎回危険	"L82 [ ""$SZ"" -ge ""$DANGER_BYTES"" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_DANGER_BYTES	2000000	09	+50	50	50	受	無害(既定と同義に讀まれる)	―	"L82 [ ""$SZ"" -ge ""$DANGER_BYTES"" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_DANGER_BYTES	2000000	10	 50 	50	50	拒125	無害(既定と同義に讀まれる)	―	"L82 [ ""$SZ"" -ge ""$DANGER_BYTES"" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_DANGER_BYTES	2000000	16	007	7	7	受	無害(既定と同義に讀まれる)	―	"L82 [ ""$SZ"" -ge ""$DANGER_BYTES"" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_DANGER_BYTES	2000000	17	010	10	8	受	★讀手の割れ★	算術だけ 8 と讀む(他三讀手は 10) → CONTEXT_DANGER_BYTES が test+★算術(文言)★ 経路で 2 割 短く成る	"L82 [ ""$SZ"" -ge ""$DANGER_BYTES"" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★"
+	context	CONTEXT_DANGER_BYTES	2000000	18	9223372036854775807	2^63-1	2^63-1	受(setitimer拒→限り張られず)	★極大へ倒れる★	極大=恒偽→★危険が一度も鳴らぬ★	"L82 [ ""$SZ"" -ge ""$DANGER_BYTES"" ] / ★L83 $(($DANGER_BYTES/1024)) は文言のみ★"
