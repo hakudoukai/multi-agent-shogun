@@ -1,0 +1,13 @@
+#被験shell	/bin/bash	3.2.57(1)-release
+#形	ge0_rc	test==8	test==10	arith	python	gtimeout
+010	0	n	y	8	10	rc=0
+007	0	n	n	7	7	rc=0
+0x32	2	n	n	50	拒	rc=0
+0o62	2	n	n	拒	拒	rc=125
++50	0	n	n	50	50	rc=0
+␠50␠	0	n	n	50	50	rc=125
+-0	0	n	n	0	0	rc=125
+0	0	n	n	0	0	rc=0
+50	0	n	n	50	50	rc=0
+2	0	n	n	2	2	rc=0
+9223372036854775807	0	n	n	9223372036854775807	9223372036854775807	rc=0

@@ -1,0 +1,11 @@
+#土地	出byte列	UTF-8	判
+en_US.UTF-8	35 30 c2 b6 39 39 39 39	妥当|'50¶9999'	OK
+C	35 30 b6 39 39 39 39	★不当★|'utf-8' codec can't decode byte 0xb6 in position 2: invalid start byte	★此の土地では不当 UTF-8 を吐く★
+POSIX	35 30 b6 39 39 39 39	★不当★|'utf-8' codec can't decode byte 0xb6 in position 2: invalid start byte	★此の土地では不当 UTF-8 を吐く★
+ja_JP.UTF-8	35 30 c2 b6 39 39 39 39	妥当|'50¶9999'	OK
+#―― 常駐器が実際に置かれる土地 ――
+launchd/cron 既定	LANG/LC_ALL 未設定 → C 相当	―	上の C 行を見よ
+現シェル	LANG=C.UTF-8 LC_ALL=★未設定★	―	―
+#対照
+陰性(改行無 30)	en_US.UTF-8	33 30	土地に依らず不変
+陰性(改行無 30)	C	33 30	土地に依らず不変
