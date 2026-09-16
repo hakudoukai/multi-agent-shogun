@@ -1,0 +1,78 @@
+的 path=scripts/stop_hook_inbox.sh sha256=0fb2e72891d65297a9b1be35fd0d009d7b8850c6da968cab324ac82132c06867 bytes=10865 lines=221
+測り方 = ★開いて字を讀んだのみ。走らせて居らぬ。★ ∴ 下の出目は ★模型★ である。
+
+【㊀ ㋐ 註が宣る条件 ―― 逐語】
+  L66  | # ─── Infinite loop prevention ───
+  L67  | # When stop_hook_active=true, the agent is already continuing from a
+  L68  | # previous Stop hook block. Allow it to stop this time to prevent loops.
+  L71  |     # Agent is going idle (exit 0) regardless of unread count.
+  L72  |     # ALWAYS create the idle flag so inbox_watcher knows the agent is idle
+  L73  |     # and can send nudges. Previously, removing the flag here when unread > 0
+  L74  |     # caused a deadlock: agent idle but watcher thinks busy → no nudge → stuck.
+  L97  |     # 未読あり → fall through to block response (but still from active state)
+  ★註の内で ★宣★ に当たるは L71 の一文★ ―― 「regardless of unread count」。
+  ★同じ file の L97 は ★逆★ を宣る ―― 「未読あり → fall through to block response」。
+  ∴ 食ひ違ふは ★註 ⇔ 實装★ のみに非ず。★註 ⇔ 註★ でもある(L71 ⇔ L97)。
+
+【㊀ ㋑ 實装が分岐する条件 ―― 逐語】
+  L70  | if [ "$STOP_HOOK_ACTIVE" = "True" ]; then
+  L93  |     UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L94  |     if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+  L95  |         exit 0
+  L96  |     fi
+  L99  | fi
+  L140 | UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L146 | MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+  L147 | if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+  L150 |     echo "[stop_hook] $AGENT_ID has ${UNREAD_COUNT} unread (> ${MASS_UNREAD_THRESHOLD}) — refusing to block (loop防止). bulk ack 推奨。" >&2
+  L151 |     exit 0
+  L155 | if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+  L173 |     UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L174 |     if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+  L175 |         exit 0
+  L178 | fi
+  L220 | print(json.dumps({'decision': 'block', 'reason': reason}, ensure_ascii=False))
+
+【㊀ ㋓ 閾 MASS_UNREAD_THRESHOLD】
+  L146 逐語 : MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+  既定値    = 5 ―― `${VAR:-5}` ゆゑ ★未設定でも空文字でも 5★ に倒れる
+  env 上書き= ★可★。hook は Claude Code が起こす子 process ゆゑ、
+              親の環境に MASS_UNREAD_THRESHOLD が在れば其れが勝つ。
+  ★註★ 非數(例 'abc')を入れた時の振舞ひは ★別の器で測る(20_)★ ―― 此処では宣らぬ。
+
+【㊀ ㋒ 帯 ―― 未讀數 n に對する 註の宣 ⇔ 實装の出目】
+  ★模型の前提(三つ。崩れれば出目も崩れる)★
+   前提1: stop_hook_active=True の枝に入つて居る(L70 が真)。L71 の宣は此の枝の物ゆゑ。
+   前提2: L93 で數へた n と L140 で數へ直した n が ★同じ★。
+          ★箱は測る間にも育つ(法「The box grows while you measure it」)★ ∴ 之は前提であつて事実ではない。
+          食ひ違へば出目は ★L140 の値★ に従ふ。
+   前提3: 中途で exit する枝(L132 `[ ! -f $INBOX ]` 等)に落ちて居らぬ。
+
+  n(未讀)    | 註 L71 の宣                   | 實装の出目(行で示す)                        | 一致/★食ひ違ひ★
+  --------------------------------------------------------------------------------------
+  0        | exit 0(idle へ)             | L94 真 → L95                        | 一致
+  1        | exit 0(idle へ)             | L94 偽 → 落ちて L147 偽 → L155 偽 → L220 | ★食ひ違ひ★
+  2        | exit 0(idle へ)             | L94 偽 → 落ちて L147 偽 → L155 偽 → L220 | ★食ひ違ひ★
+  3        | exit 0(idle へ)             | L94 偽 → 落ちて L147 偽 → L155 偽 → L220 | ★食ひ違ひ★
+  4        | exit 0(idle へ)             | L94 偽 → 落ちて L147 偽 → L155 偽 → L220 | ★食ひ違ひ★
+  5        | exit 0(idle へ)             | L94 偽 → 落ちて L147 偽 → L155 偽 → L220 | ★食ひ違ひ★
+  6        | exit 0(idle へ)             | L94 偽 → 落ちて L147 ★真★ → L151        | 一致
+  7        | exit 0(idle へ)             | L94 偽 → 落ちて L147 ★真★ → L151        | 一致
+  8        | exit 0(idle へ)             | L94 偽 → 落ちて L147 ★真★ → L151        | 一致
+
+  ★一致する n★     = {0} ∪ {6,7,8,…} ―― 測つた範囲では [0, 6, 7, 8]
+  ★食ひ違ふ n★     = [1, 2, 3, 4, 5] ―― ★閉區間 [1,5]★
+  ★∴ 註と實装が食ひ違ふのは ★帯 1〜5 のみ★。0 でも 6 以上でも食ひ違はぬ。★
+  ★∴ 「未讀 1 件で ★無限に★ 塞がれる」は ★言ひ過ぎ★ ―― 塞がるのは帯である(家老の裁が正)。★
+  ★然れど 6 以上で一致するのは ★同じ理由で★ ではない★ ――
+      n=0 は L71 の宣ふ通りの道(同じ枝)、n>=6 は ★別の番人(L147 mass-unread guard)★ が
+      偶々同じ出目へ倒した物。★出目が同じでも理由が違ふ ∴ 片方が消えれば食ひ違ひは 6 以上へ延びる。★
+
+【㊀ 付 ―― 帯 1〜5 に落ちた時、此の席では ★間が空かぬ★】
+  L84/L164 `command -v inotifywait` ―― 此の機(darwin)での在否 = ★無し★ (which rc=1)
+  ∴ L85-88 と L165-167 の ★10 秒の待ち★ は ★一度も起きぬ★。
+  ∴ 帯 1〜5 で block → 再発火 → また block の輪は ★待ち無しで回る★。
+  ★註★ 之は『輪が無限』の証ではない ―― 席が未讀を落とせば輪は止む。
+      測つたのは ★輪一周に間が無い★ 事のみ。
+
+★此の器の出目は模型である。實行の觀測ではない。★ 的 sha256=0fb2e72891d65297a9b1be35fd0d009d7b8850c6da968cab324ac82132c06867

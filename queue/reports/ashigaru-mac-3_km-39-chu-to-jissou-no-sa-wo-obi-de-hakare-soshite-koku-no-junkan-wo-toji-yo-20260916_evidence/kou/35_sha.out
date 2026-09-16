@@ -1,0 +1,32 @@
+【歩き根】 queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence
+  母數 = ★32 本★(symlink 除く・__pycache__ 除く ―― ★除いた物は歩いて居らぬ★)
+  讀めた 32 / ★讀めぬ 0★
+
+【対照】
+  陰性(f×64)   当たり = ★0 本★
+  陽性(00198d1151c6317d…) 当たり = ★1 本★
+  ★対照 二本 通つた★
+
+【甲 ―― 同じ sha の file が二本在るか】
+  相異なる sha = ★31★ / file = ★32★ ∴ 重なり = ★1 本★
+  ★二本以上を指す sha = 1 個★
+    e3b0c44298fc1c14… → 2 本
+        kou/35_sha.err (0 byte)
+        kou/35_sha.out (0 byte)
+  ∴ ★sha は単射でない★ ―― sha で歩いて当たつても『何本目か』は決まらぬ。
+    因は ★裁 seq310228⑶「空は 0byte でなく空である旨の一行を書け」★ ――
+    空の流れは ★同じ一行★ に成る故、byte が一致するのは ★設計通り★ である。
+
+【乙 ―― 束の外に在る物に sha は届くか】
+  queue/tasks/ashigaru-mac-3.yaml      sha c218c46993b7e94a… 束の中の当たり = ★0 本★
+  scripts/stop_hook_inbox.sh           sha 0fb2e72891d65297… 束の中の当たり = ★0 本★
+  ∴ ★『当たり 0』は『在らぬ』ではない ―― 『此の根の下に在らぬ』である。★
+    sha で歩く器は ★歩き根を宣らねば★ 名で探す器と同じ誤を犯す。
+
+【丙 ―― 大きすぎて歩けぬ時(代償を byte で言ふ)】
+  queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence            164 KB =       0.2 MB
+  queue/reports                       ? KB =        ★測れぬ★
+  queue                               ? KB =        ★測れぬ★
+  scripts                          1200 KB =       1.2 MB
+  ★sha で歩く代償は ★全 byte を讀む★ 事である ―― 名で探す代償は stat のみ。★
+  ∴ 根が大きい程 sha は高く付く。★13 GB を歩けと言ふ器は、実質『歩かぬ』器である。★
