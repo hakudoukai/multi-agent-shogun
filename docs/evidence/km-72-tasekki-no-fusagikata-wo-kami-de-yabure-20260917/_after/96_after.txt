@@ -1,0 +1,7 @@
+# 96 門の後 / 刻 2026-09-17T07:40:32+0900
+kaki 通し 60_run.stdout: 4756 → 4756 bytes
+kaki 通し 60_run.err: 0 → 85 bytes (0byte → 空である旨の一行)
+kaki 通し 60_run.rc: 2 → 2 bytes
+臺帳の項 105(紙 1 + raw/ 104) / raw/ disk 通常 108 / 員外 4 ['raw/50_build_manifest.err', 'raw/50_build_manifest.out', 'raw/50_sengen.txt', 'raw/59_prescan.txt'] ―― 50 の自產物(臺帳の後に書かれる)なら疵 0
+判: ★員外は悉く 50/59 の自產物(臺帳の後に書かれる・59 は刻入りゆゑ臺帳の前に消して建てた)―― 疵 0★
+git add -f(96 の後・rc 0) / porcelain A 183 AM 0 他 0 / 本 96 の出目は此の後に書かれる故 未 staged に残る

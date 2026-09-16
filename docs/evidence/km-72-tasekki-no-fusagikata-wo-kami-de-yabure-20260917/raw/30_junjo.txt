@@ -1,0 +1,11 @@
+# 30 順序 / 刻 2026-09-17T07:17:47+0900
+karo_mac_dasumae_gate.sh 順 kou→otsu→hei: kou rc0[] → otsu rc1[] → hei rc1[] / rej ['karo_mac_dasumae_gate.sh.rej'] / 建つた物 sha16 8c65a6267ab4235e ⇔ 合 ddaade594801f14e 違 / bash -n rc 0
+karo_mac_dasumae_gate.sh 順 kou→hei→otsu: kou rc0[] → hei rc1[] → otsu rc1[] / rej ['karo_mac_dasumae_gate.sh.rej'] / 建つた物 sha16 8c65a6267ab4235e ⇔ 合 ddaade594801f14e 違 / bash -n rc 0
+karo_mac_dasumae_gate.sh 順 otsu→kou→hei: otsu rc0[] → kou rc1[] → hei rc1[] / rej ['karo_mac_dasumae_gate.sh.rej'] / 建つた物 sha16 4162c62dcbc8855a ⇔ 合 ddaade594801f14e 違 / bash -n rc 0
+karo_mac_dasumae_gate.sh 順 otsu→hei→kou: otsu rc0[] → hei rc1[] → kou rc1[] / rej ['karo_mac_dasumae_gate.sh.rej'] / 建つた物 sha16 4162c62dcbc8855a ⇔ 合 ddaade594801f14e 違 / bash -n rc 0
+karo_mac_dasumae_gate.sh 順 hei→kou→otsu: hei rc0[] → kou rc1[] → otsu rc1[] / rej ['karo_mac_dasumae_gate.sh.rej'] / 建つた物 sha16 21e2b88f39370349 ⇔ 合 ddaade594801f14e 違 / bash -n rc 0
+karo_mac_dasumae_gate.sh 順 hei→otsu→kou: hei rc0[] → otsu rc1[] → kou rc1[] / rej ['karo_mac_dasumae_gate.sh.rej'] / 建つた物 sha16 8e77085a8ba4ea08 ⇔ 合 ddaade594801f14e 違 / bash -n rc 0
+★karo_mac_dasumae_gate.sh: 6 順の内 合と同じ物が建つたのは 0 順★
+karo_mac_gate4.sh 順 kou→hei: kou rc0[] → hei rc1[] / rej ['karo_mac_gate4.sh.rej'] / 建つた物 sha16 b09e15435635cff7 ⇔ 合 f114f2f34187df4d 違 / bash -n rc 0
+karo_mac_gate4.sh 順 hei→kou: hei rc0[] → kou rc1[] / rej ['karo_mac_gate4.sh.rej'] / 建つた物 sha16 bed3e1a74bd926f2 ⇔ 合 f114f2f34187df4d 違 / bash -n rc 0
+★karo_mac_gate4.sh: 2 順の内 合と同じ物が建つたのは 0 順★

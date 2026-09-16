@@ -1,0 +1,41 @@
+gate	var	vid	val	rc	sai	n_lines	條⑤の行(esc)	行末空白の行	空行	門票を門に掛けた rc	鳴つた條
+dasumae	nama	n1	\n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾 	1	1	1
+dasumae	nama	n3	\n\n\n5	1	受	10	★條⑤ 寸法 ―― byte和 64(閾 	1	3	1
+dasumae	nama	sn	 \n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾  	1	1	1
+dasumae	nama	n1000	\n1000	0	受	7	條⑤ 寸法 = byte和 64(閾 	1	0	1
+dasumae	nama	t1	\t1000	0	受	6	條⑤ 寸法 = byte和 64(閾 \t1000未満)	0	0	0
+dasumae	kou	n1	\n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾 	1	1	1
+dasumae	kou	n3	\n\n\n5	1	受	10	★條⑤ 寸法 ―― byte和 64(閾 	1	3	1
+dasumae	kou	sn	 \n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾  	1	1	1
+dasumae	kou	n1000	\n1000	0	受	7	條⑤ 寸法 = byte和 64(閾 	1	0	1
+dasumae	kou	t1	\t1000	0	受	6	條⑤ 寸法 = byte和 64(閾 \t1000未満)	0	0	0
+dasumae	hei	n1	\n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾 	1	1	1
+dasumae	hei	n3	\n\n\n5	1	受	10	★條⑤ 寸法 ―― byte和 64(閾 	1	3	1
+dasumae	hei	sn	 \n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾  	1	1	1
+dasumae	hei	n1000	\n1000	0	受	7	條⑤ 寸法 = byte和 64(閾 	1	0	1
+dasumae	hei	t1	\t1000	0	受	6	條⑤ 寸法 = byte和 64(閾 \t1000未満)	0	0	0
+dasumae	gou	n1	\n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾 	1	1	1
+dasumae	gou	n3	\n\n\n5	1	受	10	★條⑤ 寸法 ―― byte和 64(閾 	1	3	1
+dasumae	gou	sn	 \n5	1	受	8	★條⑤ 寸法 ―― byte和 64(閾  	1	1	1
+dasumae	gou	n1000	\n1000	0	受	7	條⑤ 寸法 = byte和 64(閾 	1	0	1
+dasumae	gou	t1	\t1000	0	受	6	條⑤ 寸法 = byte和 64(閾 \t1000未満)	0	0	0
+gate4	nama	n1	\n5	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	nama	n3	\n\n\n5	0	受	9	條⑤ 寸法 = 単 file 上限 	1	2	1
+gate4	nama	sn	 \n5	0	受	7	條⑤ 寸法 = 単 file 上限  	1	0	1
+gate4	nama	n1000	\n1000	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	nama	t1	\t1000	0	受	6	條⑤ 寸法 = 単 file 上限 \t1000 MB 以下 / 総和 0 MB(上限 100)	0	0	0
+gate4	kou	n1	\n5	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	kou	n3	\n\n\n5	0	受	9	條⑤ 寸法 = 単 file 上限 	1	2	1
+gate4	kou	sn	 \n5	0	受	7	條⑤ 寸法 = 単 file 上限  	1	0	1
+gate4	kou	n1000	\n1000	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	kou	t1	\t1000	0	受	6	條⑤ 寸法 = 単 file 上限 \t1000 MB 以下 / 総和 0 MB(上限 100)	0	0	0
+gate4	hei	n1	\n5	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	hei	n3	\n\n\n5	0	受	9	條⑤ 寸法 = 単 file 上限 	1	2	1
+gate4	hei	sn	 \n5	0	受	7	條⑤ 寸法 = 単 file 上限  	1	0	1
+gate4	hei	n1000	\n1000	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	hei	t1	\t1000	0	受	6	條⑤ 寸法 = 単 file 上限 \t1000 MB 以下 / 総和 0 MB(上限 100)	0	0	0
+gate4	gou	n1	\n5	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	gou	n3	\n\n\n5	0	受	9	條⑤ 寸法 = 単 file 上限 	1	2	1
+gate4	gou	sn	 \n5	0	受	7	條⑤ 寸法 = 単 file 上限  	1	0	1
+gate4	gou	n1000	\n1000	0	受	7	條⑤ 寸法 = 単 file 上限 	1	0	1
+gate4	gou	t1	\t1000	0	受	6	條⑤ 寸法 = 単 file 上限 \t1000 MB 以下 / 総和 0 MB(上限 100)	0	0	0

@@ -1,0 +1,15 @@
+# 45 cut / 刻 2026-09-17T07:23:00+0900 / cut = /usr/bin/cut / uname Darwin 25.5.0
+n_in	cut_out_bytes	cut_ends_LF	cut_LF_count	tr_out_bytes	tr_ends_LF
+3	3	False	0	3	False
+39	39	False	0	39	False
+40	41	True	1	40	False
+41	41	True	1	41	False
+60	41	True	1	60	False
+## safe_show("x"×60) を $( ) で受けた物の od -c(先頭)と wc -l
+0000000    x   x   x   x   x   x   x   x   x   x   x   x   x   x   x   x
+*
+0000040    x   x   x   x   x   x   x   x  \n   (  生  **  **       6   0
+0000060        b   y   t   e   )
+0000066
+
+       1

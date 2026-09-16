@@ -1,0 +1,462 @@
+# 40 纏め / 刻 2026-09-17T07:21:37+0900 / 行 1012
+
+## dasumae / DASUMAE_READ_TIMEOUT ―― rc/裁(既=既定(未設定)・倒・受) / test_ge0 / 行数 / eff(條⑤の閾字面) / gi / after_ku / odd
+vid	label	ge0	nama	kou	otsu	hei	gou	gou_x	gou_y	n_lines(nama..)	eff(nama|gou)	gi(nama|gou)	after_ku(nama|gou)	odd(nama|gou)
+u00	未設定	-	0/既	0/既	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v01	空文字	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v02	空白	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v03	tab	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v04	改行のみ	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v05	全角空白	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v06	NBSP	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v07	5	0	0/既	0/既	0/既	0/既	0/既	0/既	0/倒	6/6/6/6/6/6/8	10485760|10485760	0|0	0|0	0|0
+v08	「 5 」	0	1/既	1/既	0/倒	1/既	0/倒	0/倒	0/倒	8/8/7/8/7/7/8	10485760|10485760	0|0	-1|0	1|0
+v09	5+改行	2	0/受	0/受	0/受	0/倒	0/倒	0/倒	0/倒	8/8/8/7/7/7/8	10485760|10485760	0|0	0|0	1|0
+v10	改行5改行改行	2	0/受	0/受	0/受	0/倒	0/倒	0/倒	0/倒	10/10/10/7/7/7/8	10485760|10485760	0|0	0|0	3|0
+v11	5+空白	0	1/既	1/既	0/倒	1/既	0/倒	0/倒	0/倒	8/8/7/8/7/7/8	10485760|10485760	0|0	-1|0	1|0
+v12	5+tab	0	1/既	1/既	0/倒	1/既	0/倒	0/倒	0/倒	8/8/7/8/7/7/8	10485760|10485760	0|0	-1|0	1|0
+v13	010	0	0/既	0/既	0/既	0/既	0/既	0/既	0/倒	6/6/6/6/6/6/8	10485760|10485760	0|0	0|0	0|0
+v14	0x10	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v15	+5	0	0/既	0/既	0/既	0/既	0/既	0/既	0/倒	6/6/6/6/6/6/8	10485760|10485760	0|0	0|0	0|0
+v16	+0	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v17	-0	0	1/既	0/倒	0/倒	1/既	0/倒	0/倒	0/倒	8/7/7/8/7/7/8	10485760|10485760	0|0	-1|0	1|0
+v18	-5	1	1/既	0/倒	0/倒	1/既	0/倒	0/倒	0/倒	8/7/7/8/7/7/8	10485760|10485760	0|0	-1|0	1|0
+v19	0	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v20	全角０	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/8	10485760|10485760	0|0	0|0	0|0
+v21	1	0	0/既	0/既	0/既	0/既	0/既	0/既	0/倒	6/6/6/6/6/6/8	10485760|10485760	0|0	0|0	0|0
+v22	10m	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v23	0m	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v24	0.0	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v25	0.5	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v26	1e9	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v27	99999d	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v28	--help	2	0/倒	0/倒	1/既	0/倒	1/既	1/既	0/倒	7/7/8/7/8/8/8	10485760|10485760	0|0	0|-1	0|1
+v29	--version	2	0/倒	0/倒	1/既	0/倒	1/既	1/既	0/倒	7/7/8/7/8/8/8	10485760|10485760	0|0	0|-1	0|1
+v30	-v	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/8	10485760|10485760	0|0	0|0	0|0
+v31	abc	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/8	10485760|10485760	0|0	0|0	0|0
+v32	?????	2	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	0/倒	7/7/7/7/7/7/8	10485760|10485760	0|0	0|0	0|0
+v33	x×60	2	0/倒	0/倒	0/倒	0/受	0/受	0/受	0/受	7/7/7/8/8/8/9	10485760|10485760	0|0	0|0	0|1
+v34	2^63-2	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v35	2^63-1	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v36	2^63	2	0/倒	0/倒	0/既	0/倒	0/既	0/既	0/倒	7/7/6/7/6/6/8	10485760|10485760	0|0	0|0	0|0
+v37	1048576	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v38	1048577	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v39	1000000	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v40	86400	0	0/既	0/既	0/既	0/既	0/既	0/既	0/倒	6/6/6/6/6/6/8	10485760|10485760	0|0	0|0	0|0
+v41	86401	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v42	5+改行+偽結語	2	0/受	0/受	0/受	0/受	0/受	0/受	0/受	8/8/8/8/8/8/9	10485760|10485760	0|0	0|0	0|1
+v43	5+改行+偽結語+改行9999	2	0/受	0/受	0/受	0/受	0/受	0/受	0/受	9/9/9/8/8/8/9	10485760|10485760	0|0	0|0	1|1
+v44	1099511627776	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+v45	1099511627777	0	0/既	0/倒	0/倒	0/既	0/倒	0/倒	0/倒	6/7/7/6/7/7/8	10485760|10485760	0|0	0|0	0|0
+
+## dasumae / DASUMAE_MAX_BYTES ―― rc/裁(既=既定(未設定)・倒・受) / test_ge0 / 行数 / eff(條⑤の閾字面) / gi / after_ku / odd
+vid	label	ge0	nama	kou	otsu	hei	gou	n_lines(nama..)	eff(nama|gou)	gi(nama|gou)	after_ku(nama|gou)	odd(nama|gou)
+u00	未設定	-	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v01	空文字	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v02	空白	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v03	tab	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v04	改行のみ	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v05	全角空白	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v06	NBSP	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v07	5	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	5|5	0|0	-1|-1	1|1
+v08	「 5 」	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	 5 | 5 	0|0	-1|-1	1|1
+v09	5+改行	2	0/既	0/既	0/既	0/既	0/既	8/8/8/7/7	10485760|10485760	0|0	0|0	1|0
+v10	改行5改行改行	2	0/既	0/既	0/既	0/既	0/既	10/10/10/7/7	10485760|10485760	0|0	0|0	3|0
+v11	5+空白	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	5 |5 	0|0	-1|-1	1|1
+v12	5+tab	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	5\t|5\t	0|0	-1|-1	1|1
+v13	010	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	010|010	0|0	-1|-1	1|1
+v14	0x10	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v15	+5	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	+5|+5	0|0	-1|-1	1|1
+v16	+0	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	+0|+0	0|0	-1|-1	1|1
+v17	-0	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	-0|-0	0|0	-1|-1	1|1
+v18	-5	1	1/既	0/既	1/既	1/既	0/既	7/7/7/7/7	-5|10485760	0|0	-1|0	1|0
+v19	0	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	0|0	0|0	-1|-1	1|1
+v20	全角０	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v21	1	0	1/既	1/既	1/既	1/既	1/既	7/7/7/7/7	1|1	0|0	-1|-1	1|1
+v22	10m	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v23	0m	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v24	0.0	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v25	0.5	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v26	1e9	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v27	99999d	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v28	--help	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v29	--version	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v30	-v	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v31	abc	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v32	?????	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v33	x×60	2	0/既	0/既	0/既	0/既	0/既	7/7/7/8/8	10485760|10485760	0|0	0|0	0|1
+v34	2^63-2	0	0/既	0/既	0/既	0/既	0/既	6/7/6/6/7	9223372036854775806|10485760	0|0	0|0	0|0
+v35	2^63-1	0	0/既	0/既	0/既	0/既	0/既	6/7/6/6/7	9223372036854775807|10485760	0|0	0|0	0|0
+v36	2^63	2	0/既	0/既	0/既	0/既	0/既	7/7/7/7/7	10485760|10485760	0|0	0|0	0|0
+v37	1048576	0	0/既	0/既	0/既	0/既	0/既	6/6/6/6/6	1048576|1048576	0|0	0|0	0|0
+v38	1048577	0	0/既	0/既	0/既	0/既	0/既	6/6/6/6/6	1048577|1048577	0|0	0|0	0|0
+v39	1000000	0	0/既	0/既	0/既	0/既	0/既	6/6/6/6/6	1000000|1000000	0|0	0|0	0|0
+v40	86400	0	0/既	0/既	0/既	0/既	0/既	6/6/6/6/6	86400|86400	0|0	0|0	0|0
+v41	86401	0	0/既	0/既	0/既	0/既	0/既	6/6/6/6/6	86401|86401	0|0	0|0	0|0
+v42	5+改行+偽結語	2	0/既	0/既	0/既	0/既	0/既	8/8/8/8/8	10485760|10485760	0|0	0|0	0|1
+v43	5+改行+偽結語+改行9999	2	0/既	0/既	0/既	0/既	0/既	9/9/9/8/8	10485760|10485760	0|0	0|0	1|1
+v44	1099511627776	0	0/既	0/既	0/既	0/既	0/既	6/6/6/6/6	1099511627776|1099511627776	0|0	0|0	0|0
+v45	1099511627777	0	0/既	0/既	0/既	0/既	0/既	6/7/6/6/7	1099511627777|10485760	0|0	0|0	0|0
+
+## gate4 / GATE4_MAX_FILE_MB ―― rc/裁(既=既定(未設定)・倒・受) / test_ge0 / 行数 / eff(條⑤の閾字面) / gi / after_ku / odd
+vid	label	ge0	nama	kou	hei	gou	n_lines(nama..)	eff(nama|gou)	gi(nama|gou)	after_ku(nama|gou)	odd(nama|gou)
+u00	未設定	-	0/既	0/既	0/既	0/既	7/7/7/7	50|50	0|0	0|0	0|0
+v01	空文字	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v02	空白	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v03	tab	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v04	改行のみ	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v05	全角空白	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v06	NBSP	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v07	5	0	0/既	0/既	0/既	0/既	6/6/6/6	5|5	0|0	0|0	0|0
+v08	「 5 」	0	0/既	0/既	0/既	0/既	6/6/6/6	 5 | 5 	0|0	0|0	0|0
+v09	5+改行	2	0/受	0/受	0/倒	0/倒	8/8/7/7	50|50	0|0	0|0	1|0
+v10	改行5改行改行	2	0/受	0/受	0/倒	0/倒	10/10/7/7	50|50	0|0	0|0	3|0
+v11	5+空白	0	0/既	0/既	0/既	0/既	6/6/6/6	5 |5 	0|0	0|0	0|0
+v12	5+tab	0	0/既	0/既	0/既	0/既	6/6/6/6	5\t|5\t	0|0	0|0	0|0
+v13	010	0	0/既	0/既	0/既	0/既	6/6/6/6	010|010	0|0	0|0	0|0
+v14	0x10	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v15	+5	0	0/既	0/既	0/既	0/既	6/6/6/6	+5|+5	0|0	0|0	0|0
+v16	+0	0	1/既	1/既	1/既	1/既	9/9/9/9	+0|+0	0|0	-1|-1	1|1
+v17	-0	0	1/既	1/既	1/既	1/既	9/9/9/9	-0|-0	0|0	-1|-1	1|1
+v18	-5	1	1/既	0/倒	1/既	0/倒	9/7/9/7	-5|50	0|0	-1|0	1|0
+v19	0	0	1/既	1/既	1/既	1/既	9/9/9/9	0|0	0|0	-1|-1	1|1
+v20	全角０	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v21	1	0	0/既	0/既	0/既	0/既	6/6/6/6	1|1	0|0	0|0	0|0
+v22	10m	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v23	0m	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v24	0.0	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v25	0.5	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v26	1e9	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v27	99999d	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v28	--help	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v29	--version	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v30	-v	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v31	abc	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v32	?????	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v33	x×60	2	0/倒	0/倒	0/受	0/受	7/7/8/8	50|50	0|0	0|0	0|1
+v34	2^63-2	0	0/既	0/倒	0/既	0/倒	6/7/6/7	9223372036854775806|50	0|0	0|0	0|0
+v35	2^63-1	0	0/既	0/倒	0/既	0/倒	6/7/6/7	9223372036854775807|50	0|0	0|0	0|0
+v36	2^63	2	0/倒	0/倒	0/倒	0/倒	7/7/7/7	50|50	0|0	0|0	0|0
+v37	1048576	0	0/既	0/既	0/既	0/既	6/6/6/6	1048576|1048576	0|0	0|0	0|0
+v38	1048577	0	0/既	0/倒	0/既	0/倒	6/7/6/7	1048577|50	0|0	0|0	0|0
+v39	1000000	0	0/既	0/既	0/既	0/既	6/6/6/6	1000000|1000000	0|0	0|0	0|0
+v40	86400	0	0/既	0/既	0/既	0/既	6/6/6/6	86400|86400	0|0	0|0	0|0
+v41	86401	0	0/既	0/既	0/既	0/既	6/6/6/6	86401|86401	0|0	0|0	0|0
+v42	5+改行+偽結語	2	0/受	0/受	0/受	0/受	8/8/8/8	50|50	0|0	0|0	1|1
+v43	5+改行+偽結語+改行9999	2	0/受	0/受	0/受	0/受	9/9/8/8	50|50	0|0	0|0	2|1
+v44	1099511627776	0	0/既	0/倒	0/既	0/倒	6/7/6/7	1099511627776|50	0|0	0|0	0|0
+v45	1099511627777	0	0/既	0/倒	0/既	0/倒	6/7/6/7	1099511627777|50	0|0	0|0	0|0
+
+## gate4 / GATE4_MAX_TOTAL_MB ―― rc/裁(既=既定(未設定)・倒・受) / test_ge0 / 行数 / eff(條⑤の閾字面) / gi / after_ku / odd
+vid	label	ge0	nama	kou	hei	gou	n_lines(nama..)	eff(nama|gou)	gi(nama|gou)	after_ku(nama|gou)	odd(nama|gou)
+u00	未設定	-	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v01	空文字	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v02	空白	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v03	tab	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v04	改行のみ	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v05	全角空白	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v06	NBSP	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v07	5	0	0/既	0/既	0/既	0/既	6/6/6/6	5|5	0|0	0|0	0|0
+v08	「 5 」	0	0/既	0/既	0/既	0/既	6/6/6/6	 5 | 5 	0|0	0|0	0|0
+v09	5+改行	2	0/既	0/既	0/既	0/既	8/8/7/7	100|100	0|0	0|0	1|0
+v10	改行5改行改行	2	0/既	0/既	0/既	0/既	10/10/7/7	100|100	0|0	0|0	3|0
+v11	5+空白	0	0/既	0/既	0/既	0/既	6/6/6/6	5 |5 	0|0	0|0	0|0
+v12	5+tab	0	0/既	0/既	0/既	0/既	6/6/6/6	5\t|5\t	0|0	0|0	0|0
+v13	010	0	0/既	0/既	0/既	0/既	6/6/6/6	010|010	0|0	0|0	0|0
+v14	0x10	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v15	+5	0	0/既	0/既	0/既	0/既	6/6/6/6	+5|+5	0|0	0|0	0|0
+v16	+0	0	1/既	1/既	1/既	1/既	9/9/9/9	+0|+0	0|0	-1|-1	1|1
+v17	-0	0	1/既	1/既	1/既	1/既	9/9/9/9	-0|-0	0|0	-1|-1	1|1
+v18	-5	1	1/既	0/既	1/既	0/既	9/7/9/7	-5|100	0|0	-1|0	1|0
+v19	0	0	1/既	1/既	1/既	1/既	9/9/9/9	0|0	0|0	-1|-1	1|1
+v20	全角０	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v21	1	0	0/既	0/既	0/既	0/既	6/6/6/6	1|1	0|0	0|0	0|0
+v22	10m	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v23	0m	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v24	0.0	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v25	0.5	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v26	1e9	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v27	99999d	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v28	--help	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v29	--version	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v30	-v	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v31	abc	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v32	?????	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v33	x×60	2	0/既	0/既	0/既	0/既	7/7/8/8	100|100	0|0	0|0	0|1
+v34	2^63-2	0	0/既	0/既	0/既	0/既	6/7/6/7	9223372036854775806|100	0|0	0|0	0|0
+v35	2^63-1	0	0/既	0/既	0/既	0/既	6/7/6/7	9223372036854775807|100	0|0	0|0	0|0
+v36	2^63	2	0/既	0/既	0/既	0/既	7/7/7/7	100|100	0|0	0|0	0|0
+v37	1048576	0	0/既	0/既	0/既	0/既	6/6/6/6	1048576|1048576	0|0	0|0	0|0
+v38	1048577	0	0/既	0/既	0/既	0/既	6/7/6/7	1048577|100	0|0	0|0	0|0
+v39	1000000	0	0/既	0/既	0/既	0/既	6/6/6/6	1000000|1000000	0|0	0|0	0|0
+v40	86400	0	0/既	0/既	0/既	0/既	6/6/6/6	86400|86400	0|0	0|0	0|0
+v41	86401	0	0/既	0/既	0/既	0/既	6/6/6/6	86401|86401	0|0	0|0	0|0
+v42	5+改行+偽結語	2	0/既	0/既	0/既	0/既	8/8/8/8	100|100	0|0	0|0	1|1
+v43	5+改行+偽結語+改行9999	2	0/既	0/既	0/既	0/既	9/9/8/8	100|100	0|0	0|0	2|1
+v44	1099511627776	0	0/既	0/既	0/既	0/既	6/7/6/7	1099511627776|100	0|0	0|0	0|0
+v45	1099511627777	0	0/既	0/既	0/既	0/既	6/7/6/7	1099511627777|100	0|0	0|0	0|0
+
+## ㋑ 単 vs 合 ―― (rc,裁) が 合 と 単(甲/乙/丙) で違ふ組(dasumae は甲乙丙・gate4 は甲丙)
+  DASUMAE_READ_TIMEOUT v08 「 5 」: 合 (0, '倒') ⇔ kou(1, '既定(未設定)') otsu(0, '倒') hei(1, '既定(未設定)') → 合に一致する単 ['otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「 5 (生 3 byte)」・許 1..86400) ―― 」
+  DASUMAE_READ_TIMEOUT v09 5+改行: 合 (0, '倒') ⇔ kou(0, '受') otsu(0, '受') hei(0, '倒') → 合に一致する単 ['hei'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5?(生 2 byte)」・許 1..86400) ―― 既」
+  DASUMAE_READ_TIMEOUT v10 改行5改行改行: 合 (0, '倒') ⇔ kou(0, '受') otsu(0, '受') hei(0, '倒') → 合に一致する単 ['hei'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「?5??(生 4 byte)」・許 1..86400) ――」
+  DASUMAE_READ_TIMEOUT v11 5+空白: 合 (0, '倒') ⇔ kou(1, '既定(未設定)') otsu(0, '倒') hei(1, '既定(未設定)') → 合に一致する単 ['otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5 (生 2 byte)」・許 1..86400) ―― 既」
+  DASUMAE_READ_TIMEOUT v12 5+tab: 合 (0, '倒') ⇔ kou(1, '既定(未設定)') otsu(0, '倒') hei(1, '既定(未設定)') → 合に一致する単 ['otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5?(生 2 byte)」・許 1..86400) ―― 既」
+  DASUMAE_READ_TIMEOUT v14 0x10: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v16 +0: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「+0(生 2 byte)」・許 1..86400) ―― 既」
+  DASUMAE_READ_TIMEOUT v17 -0: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(1, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-0(生 2 byte)」・許 1..86400) ―― 既」
+  DASUMAE_READ_TIMEOUT v18 -5: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(1, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-5(生 2 byte)」・許 1..86400) ―― 既」
+  DASUMAE_READ_TIMEOUT v19 0: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「0(生 1 byte)」・許 1..86400) ―― 既定」
+  DASUMAE_READ_TIMEOUT v22 10m: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v23 0m: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v24 0.0: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v25 0.5: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v26 1e9: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v27 99999d: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v28 --help: 合 (1, '既定(未設定)') ⇔ kou(0, '倒') otsu(1, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v29 --version: 合 (1, '既定(未設定)') ⇔ kou(0, '倒') otsu(1, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v33 x×60: 合 (0, '受') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '受') → 合に一致する単 ['hei'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx」
+  DASUMAE_READ_TIMEOUT v34 2^63-2: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「9223372036854775806(生 19 byte)」
+  DASUMAE_READ_TIMEOUT v35 2^63-1: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「9223372036854775807(生 19 byte)」
+  DASUMAE_READ_TIMEOUT v36 2^63: 合 (0, '既定(未設定)') ⇔ kou(0, '倒') otsu(0, '既定(未設定)') hei(0, '倒') → 合に一致する単 ['otsu'] / 合の札「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_READ_TIMEOUT v37 1048576: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1048576(生 7 byte)」・許 1..86400)」
+  DASUMAE_READ_TIMEOUT v38 1048577: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1048577(生 7 byte)」・許 1..86400)」
+  DASUMAE_READ_TIMEOUT v39 1000000: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1000000(生 7 byte)」・許 1..86400)」
+  DASUMAE_READ_TIMEOUT v41 86401: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「86401(生 5 byte)」・許 1..86400) ―」
+  DASUMAE_READ_TIMEOUT v44 1099511627776: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1099511627776(生 13 byte)」・許 1.」
+  DASUMAE_READ_TIMEOUT v45 1099511627777: 合 (0, '倒') ⇔ kou(0, '倒') otsu(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou', 'otsu'] / 合の札「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1099511627777(生 13 byte)」・許 1.」
+  DASUMAE_READ_TIMEOUT: 値 46 の内 全単と一致 18 / 一部一致 28 / 無一致 0
+  DASUMAE_MAX_BYTES v18 -5: 合 (0, '既定(未設定)') ⇔ kou(0, '既定(未設定)') otsu(1, '既定(未設定)') hei(1, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)」
+  DASUMAE_MAX_BYTES: 値 46 の内 全単と一致 45 / 一部一致 1 / 無一致 0
+  GATE4_MAX_FILE_MB v09 5+改行: 合 (0, '倒') ⇔ kou(0, '受') hei(0, '倒') → 合に一致する単 ['hei'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「5?(生 2 byte)」・許 0..1048576) ―― 既定」
+  GATE4_MAX_FILE_MB v10 改行5改行改行: 合 (0, '倒') ⇔ kou(0, '受') hei(0, '倒') → 合に一致する単 ['hei'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「?5??(生 4 byte)」・許 0..1048576) ―― 」
+  GATE4_MAX_FILE_MB v18 -5: 合 (0, '倒') ⇔ kou(0, '倒') hei(1, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「-5(生 2 byte)」・許 0..1048576) ―― 既定」
+  GATE4_MAX_FILE_MB v33 x×60: 合 (0, '受') ⇔ kou(0, '倒') hei(0, '受') → 合に一致する単 ['hei'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx」
+  GATE4_MAX_FILE_MB v34 2^63-2: 合 (0, '倒') ⇔ kou(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「9223372036854775806(生 19 byte)」・許」
+  GATE4_MAX_FILE_MB v35 2^63-1: 合 (0, '倒') ⇔ kou(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「9223372036854775807(生 19 byte)」・許」
+  GATE4_MAX_FILE_MB v38 1048577: 合 (0, '倒') ⇔ kou(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「1048577(生 7 byte)」・許 0..1048576) 」
+  GATE4_MAX_FILE_MB v44 1099511627776: 合 (0, '倒') ⇔ kou(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「1099511627776(生 13 byte)」・許 0..10」
+  GATE4_MAX_FILE_MB v45 1099511627777: 合 (0, '倒') ⇔ kou(0, '倒') hei(0, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ か 範囲外(「1099511627777(生 13 byte)」・許 0..10」
+  GATE4_MAX_FILE_MB: 値 46 の内 全単と一致 37 / 一部一致 9 / 無一致 0
+  GATE4_MAX_TOTAL_MB v18 -5: 合 (0, '既定(未設定)') ⇔ kou(0, '既定(未設定)') hei(1, '既定(未設定)') → 合に一致する単 ['kou'] / 合の札「閾 GATE4_MAX_FILE_MB = 未設定 ―― 既定 50 を用ゐる(★倒した事を刷る★)」
+  GATE4_MAX_TOTAL_MB: 値 46 の内 全単と一致 45 / 一部一致 1 / 無一致 0
+
+## 合x(呼び口の床天 5..60)/ 合y(chk を無い名 tmo_okk) ⇔ 合 ―― TIMEOUT で (rc,裁,札) が違ふ組
+  gou_x v08 「 5 」: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「 5 (生 3 byte)」・許 1..」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「 5 (生 3 byte)」・許 5..60) ―― 既定 10 へ倒す(fai」 odd 0「」
+  gou_x v09 5+改行: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5?(生 2 byte)」・許 1..8」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5?(生 2 byte)」・許 5..60) ―― 既定 10 へ倒す(fail」 odd 0「」
+  gou_x v10 改行5改行改行: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「?5??(生 4 byte)」・許 1.」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「?5??(生 4 byte)」・許 5..60) ―― 既定 10 へ倒す(fa」 odd 0「」
+  gou_x v11 5+空白: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5 (生 2 byte)」・許 1..8」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5 (生 2 byte)」・許 5..60) ―― 既定 10 へ倒す(fail」 odd 0「」
+  gou_x v12 5+tab: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5?(生 2 byte)」・許 1..8」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5?(生 2 byte)」・許 5..60) ―― 既定 10 へ倒す(fail」 odd 0「」
+  gou_x v16 +0: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「+0(生 2 byte)」・許 1..8」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「+0(生 2 byte)」・許 5..60) ―― 既定 10 へ倒す(fail」 odd 0「」
+  gou_x v17 -0: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-0(生 2 byte)」・許 1..8」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-0(生 2 byte)」・許 5..60) ―― 既定 10 へ倒す(fail」 odd 0「」
+  gou_x v18 -5: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-5(生 2 byte)」・許 1..8」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-5(生 2 byte)」・許 5..60) ―― 既定 10 へ倒す(fail」 odd 0「」
+  gou_x v19 0: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「0(生 1 byte)」・許 1..86」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「0(生 1 byte)」・許 5..60) ―― 既定 10 へ倒す(fail-」 odd 0「」
+  gou_x v20 全角０: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「???(生 3 byte)」・許 1..」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「???(生 3 byte)」・許 5..60) ―― 既定 10 へ倒す(fai」 odd 0「」
+  gou_x v30 -v: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-v(生 2 byte)」・許 1..8」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「-v(生 2 byte)」・許 5..60) ―― 既定 10 へ倒す(fail」 odd 0「」
+  gou_x v31 abc: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「abc(生 3 byte)」・許 1..」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「abc(生 3 byte)」・許 5..60) ―― 既定 10 へ倒す(fai」 odd 0「」
+  gou_x v32 ?????: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「?????(生 5 byte)」・許 1」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「?????(生 5 byte)」・許 5..60) ―― 既定 10 へ倒す(f」 odd 0「」
+  gou_x v34 2^63-2: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「9223372036854775806(」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「9223372036854775806(生 19 byte)」・許 5..60)」 odd 0「」
+  gou_x v35 2^63-1: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「9223372036854775807(」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「9223372036854775807(生 19 byte)」・許 5..60)」 odd 0「」
+  gou_x v37 1048576: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1048576(生 7 byte)」・許」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1048576(生 7 byte)」・許 5..60) ―― 既定 10 へ倒す」 odd 0「」
+  gou_x v38 1048577: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1048577(生 7 byte)」・許」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1048577(生 7 byte)」・許 5..60) ―― 既定 10 へ倒す」 odd 0「」
+  gou_x v39 1000000: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1000000(生 7 byte)」・許」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1000000(生 7 byte)」・許 5..60) ―― 既定 10 へ倒す」 odd 0「」
+  gou_x v41 86401: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「86401(生 5 byte)」・許 1」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「86401(生 5 byte)」・許 5..60) ―― 既定 10 へ倒す(f」 odd 0「」
+  gou_x v44 1099511627776: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1099511627776(生 13 b」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1099511627776(生 13 byte)」・許 5..60) ―― 既定」 odd 0「」
+  gou_x v45 1099511627777: 合 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1099511627777(生 13 b」 ⇔ gou_x 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1099511627777(生 13 byte)」・許 5..60) ―― 既定」 odd 0「」
+  gou_y v07 5: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「5(生 1 byte)」・許 1..86400) ―― 既定 10 へ倒す(fa」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v13 010: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「010(生 3 byte)」・許 1..86400) ―― 既定 10 へ倒す(」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v14 0x10: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「0x10(生 4 byte)」・許 1..86400) ―― 既定 10 へ倒す」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v15 +5: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「+5(生 2 byte)」・許 1..86400) ―― 既定 10 へ倒す(f」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v21 1: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1(生 1 byte)」・許 1..86400) ―― 既定 10 へ倒す(fa」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v22 10m: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「10m(生 3 byte)」・許 1..86400) ―― 既定 10 へ倒す(」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v23 0m: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「0m(生 2 byte)」・許 1..86400) ―― 既定 10 へ倒す(f」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v24 0.0: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「0.0(生 3 byte)」・許 1..86400) ―― 既定 10 へ倒す(」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v25 0.5: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「0.5(生 3 byte)」・許 1..86400) ―― 既定 10 へ倒す(」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v26 1e9: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「1e9(生 3 byte)」・許 1..86400) ―― 既定 10 へ倒す(」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v27 99999d: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「99999d(生 6 byte)」・許 1..86400) ―― 既定 10 へ」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v28 --help: 合 1/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「--help(生 6 byte)」・許 1..86400) ―― 既定 10 へ」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v29 --version: 合 1/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「--version(生 9 byte)」・許 1..86400) ―― 既定 1」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v36 2^63: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「9223372036854775808(生 19 byte)」・許 1..864」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+  gou_y v40 86400: 合 0/既定(未設定)「閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)」 ⇔ gou_y 0/倒「★閾 DASUMAE_READ_TIMEOUT が比較器で扱へぬ か 範囲外(「86400(生 5 byte)」・許 1..86400) ―― 既定 10 へ倒」 odd 1「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo」
+
+## 受けた讀めぬ値 ―― [ -ge 0 ] rc=2 なのに 裁=受(番人が數でない物を通した)
+  dasumae nama DASUMAE_READ_TIMEOUT v09 5+改行: rc 0 / eff「10485760」/ 行数 8 / odd 1「」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae nama DASUMAE_READ_TIMEOUT v10 改行5改行改行: rc 0 / eff「10485760」/ 行数 10 / odd 3「5||」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae nama DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 / eff「10485760」/ 行数 8 / odd 0「」
+  dasumae nama DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 / eff「10485760」/ 行数 9 / odd 1「9999」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae kou DASUMAE_READ_TIMEOUT v09 5+改行: rc 0 / eff「10485760」/ 行数 8 / odd 1「」・許 1..86400) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae kou DASUMAE_READ_TIMEOUT v10 改行5改行改行: rc 0 / eff「10485760」/ 行数 10 / odd 3「5||」・許 1..86400) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae kou DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 / eff「10485760」/ 行数 8 / odd 0「」
+  dasumae kou DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 / eff「10485760」/ 行数 9 / odd 1「9999」・許 1..86400) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae otsu DASUMAE_READ_TIMEOUT v09 5+改行: rc 0 / eff「10485760」/ 行数 8 / odd 1「」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae otsu DASUMAE_READ_TIMEOUT v10 改行5改行改行: rc 0 / eff「10485760」/ 行数 10 / odd 3「5||」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae otsu DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 / eff「10485760」/ 行数 8 / odd 0「」
+  dasumae otsu DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 / eff「10485760」/ 行数 9 / odd 1「9999」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae hei DASUMAE_READ_TIMEOUT v33 x×60: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 60 byte)」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae hei DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 46 byte)」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae hei DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 51 byte)」) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae gou DASUMAE_READ_TIMEOUT v33 x×60: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 60 byte)」・許 1..86400) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae gou DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 46 byte)」・許 1..86400) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae gou DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 51 byte)」・許 1..86400) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae gou_x DASUMAE_READ_TIMEOUT v33 x×60: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 60 byte)」・許 5..60) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae gou_x DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 46 byte)」・許 5..60) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae gou_x DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 / eff「10485760」/ 行数 8 / odd 1「(生 51 byte)」・許 5..60) ―― 既定 10 へ倒す(fail-closed)★」
+  dasumae gou_y DASUMAE_READ_TIMEOUT v33 x×60: rc 0 / eff「10485760」/ 行数 9 / odd 2「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-2026」
+  dasumae gou_y DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 / eff「10485760」/ 行数 9 / odd 2「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-2026」
+  dasumae gou_y DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 / eff「10485760」/ 行数 9 / odd 2「/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-2026」
+  gate4 nama GATE4_MAX_FILE_MB v09 5+改行: rc 0 / eff「50」/ 行数 8 / odd 1「」) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 nama GATE4_MAX_FILE_MB v10 改行5改行改行: rc 0 / eff「50」/ 行数 10 / odd 3「5||」) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 nama GATE4_MAX_FILE_MB v42 5+改行+偽結語: rc 0 / eff「50」/ 行数 8 / odd 1「★出す前 門 通。出してよい。★」) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 nama GATE4_MAX_FILE_MB v43 5+改行+偽結語+改行9999: rc 0 / eff「50」/ 行数 9 / odd 2「★出す前 門 通。出してよい。★|9999」) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 kou GATE4_MAX_FILE_MB v09 5+改行: rc 0 / eff「50」/ 行数 8 / odd 1「」・許 0..1048576) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 kou GATE4_MAX_FILE_MB v10 改行5改行改行: rc 0 / eff「50」/ 行数 10 / odd 3「5||」・許 0..1048576) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 kou GATE4_MAX_FILE_MB v42 5+改行+偽結語: rc 0 / eff「50」/ 行数 8 / odd 1「★出す前 門 通。出してよい。★」・許 0..1048576) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 kou GATE4_MAX_FILE_MB v43 5+改行+偽結語+改行9999: rc 0 / eff「50」/ 行数 9 / odd 2「★出す前 門 通。出してよい。★|9999」・許 0..1048576) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 hei GATE4_MAX_FILE_MB v33 x×60: rc 0 / eff「50」/ 行数 8 / odd 1「(生 60 byte)」) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 hei GATE4_MAX_FILE_MB v42 5+改行+偽結語: rc 0 / eff「50」/ 行数 8 / odd 1「(生 46 byte)」) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 hei GATE4_MAX_FILE_MB v43 5+改行+偽結語+改行9999: rc 0 / eff「50」/ 行数 8 / odd 1「(生 51 byte)」) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 gou GATE4_MAX_FILE_MB v33 x×60: rc 0 / eff「50」/ 行数 8 / odd 1「(生 60 byte)」・許 0..1048576) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 gou GATE4_MAX_FILE_MB v42 5+改行+偽結語: rc 0 / eff「50」/ 行数 8 / odd 1「(生 46 byte)」・許 0..1048576) ―― 既定 50 へ倒す(fail-closed)★」
+  gate4 gou GATE4_MAX_FILE_MB v43 5+改行+偽結語+改行9999: rc 0 / eff「50」/ 行数 8 / odd 1「(生 51 byte)」・許 0..1048576) ―― 既定 50 へ倒す(fail-closed)★」
+
+## 受ける路の注入 ―― 裁=受 で 條⑤の閾字面(eff)に 改行/空白 が残る(丙が守らぬ路)
+
+## 札の語 ―― 「扱へぬ か 範囲外」を刷つた走を test_ge0 で割る(讀めぬ=2 / 負=1 / 非負=0)
+  gou ge0=0: 19 / gou ge0=1: 2 / gou ge0=2: 28 / gou_x ge0=0: 14 / gou_x ge0=1: 1 / gou_x ge0=2: 9 / gou_y ge0=0: 19 / gou_y ge0=1: 1 / gou_y ge0=2: 19 / kou ge0=0: 16 / kou ge0=1: 2 / kou ge0=2: 38
+
+## 欺き(rc≠0 なのに通句)/ 通句の行数≠1 / 結語の後に行 ―― 形ごとに数へる
+  gi: 0
+  ku_n≠1: ('gou', 'dasumae') 12 / ('gou', 'gate4') 6 / ('gou_x', 'dasumae') 12 / ('gou_y', 'dasumae') 10 / ('hei', 'dasumae') 16 / ('hei', 'gate4') 8 / ('kou', 'dasumae') 17 / ('kou', 'gate4') 6 / ('nama', 'dasumae') 20 / ('nama', 'gate4') 8 / ('otsu', 'dasumae') 17
+  after_ku>0: 0
+  dasumae nama DASUMAE_READ_TIMEOUT v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_READ_TIMEOUT v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_READ_TIMEOUT v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_READ_TIMEOUT v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_READ_TIMEOUT v18 -5: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 ku_n 2 after 0 gi 0
+  dasumae nama DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 ku_n 2 after 0 gi 0
+  dasumae kou DASUMAE_READ_TIMEOUT v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_READ_TIMEOUT v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_READ_TIMEOUT v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 ku_n 2 after 0 gi 0
+  dasumae kou DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 ku_n 2 after 0 gi 0
+  dasumae otsu DASUMAE_READ_TIMEOUT v28 --help: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_READ_TIMEOUT v29 --version: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_READ_TIMEOUT v42 5+改行+偽結語: rc 0 ku_n 2 after 0 gi 0
+  dasumae otsu DASUMAE_READ_TIMEOUT v43 5+改行+偽結語+改行9999: rc 0 ku_n 2 after 0 gi 0
+  dasumae hei DASUMAE_READ_TIMEOUT v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_READ_TIMEOUT v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_READ_TIMEOUT v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_READ_TIMEOUT v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_READ_TIMEOUT v18 -5: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_READ_TIMEOUT v28 --help: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_READ_TIMEOUT v29 --version: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_READ_TIMEOUT v28 --help: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_READ_TIMEOUT v29 --version: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v07 5: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v13 010: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v15 +5: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v16 +0: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v18 -5: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v19 0: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v21 1: rc 1 ku_n 0 after -1 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v42 5+改行+偽結語: rc 0 ku_n 2 after 0 gi 0
+  dasumae nama DASUMAE_MAX_BYTES v43 5+改行+偽結語+改行9999: rc 0 ku_n 2 after 0 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v07 5: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v13 010: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v15 +5: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v16 +0: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v19 0: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v21 1: rc 1 ku_n 0 after -1 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v42 5+改行+偽結語: rc 0 ku_n 2 after 0 gi 0
+  dasumae kou DASUMAE_MAX_BYTES v43 5+改行+偽結語+改行9999: rc 0 ku_n 2 after 0 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v07 5: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v13 010: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v15 +5: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v16 +0: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v18 -5: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v19 0: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v21 1: rc 1 ku_n 0 after -1 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v42 5+改行+偽結語: rc 0 ku_n 2 after 0 gi 0
+  dasumae otsu DASUMAE_MAX_BYTES v43 5+改行+偽結語+改行9999: rc 0 ku_n 2 after 0 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v07 5: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v13 010: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v15 +5: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v16 +0: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v18 -5: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v19 0: rc 1 ku_n 0 after -1 gi 0
+  dasumae hei DASUMAE_MAX_BYTES v21 1: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v07 5: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v13 010: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v15 +5: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v16 +0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v19 0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou DASUMAE_MAX_BYTES v21 1: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v07 5: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v13 010: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v15 +5: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v16 +0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v19 0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_x DASUMAE_MAX_BYTES v21 1: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v07 5: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v08 「 5 」: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v11 5+空白: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v12 5+tab: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v13 010: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v15 +5: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v16 +0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v17 -0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v19 0: rc 1 ku_n 0 after -1 gi 0
+  dasumae gou_y DASUMAE_MAX_BYTES v21 1: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_FILE_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_FILE_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_FILE_MB v18 -5: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_FILE_MB v19 0: rc 1 ku_n 0 after -1 gi 0
+  gate4 kou GATE4_MAX_FILE_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 kou GATE4_MAX_FILE_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 kou GATE4_MAX_FILE_MB v19 0: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_FILE_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_FILE_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_FILE_MB v18 -5: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_FILE_MB v19 0: rc 1 ku_n 0 after -1 gi 0
+  gate4 gou GATE4_MAX_FILE_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 gou GATE4_MAX_FILE_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 gou GATE4_MAX_FILE_MB v19 0: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_TOTAL_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_TOTAL_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_TOTAL_MB v18 -5: rc 1 ku_n 0 after -1 gi 0
+  gate4 nama GATE4_MAX_TOTAL_MB v19 0: rc 1 ku_n 0 after -1 gi 0
+  gate4 kou GATE4_MAX_TOTAL_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 kou GATE4_MAX_TOTAL_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 kou GATE4_MAX_TOTAL_MB v19 0: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_TOTAL_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_TOTAL_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_TOTAL_MB v18 -5: rc 1 ku_n 0 after -1 gi 0
+  gate4 hei GATE4_MAX_TOTAL_MB v19 0: rc 1 ku_n 0 after -1 gi 0
+  gate4 gou GATE4_MAX_TOTAL_MB v16 +0: rc 1 ku_n 0 after -1 gi 0
+  gate4 gou GATE4_MAX_TOTAL_MB v17 -0: rc 1 ku_n 0 after -1 gi 0
+  gate4 gou GATE4_MAX_TOTAL_MB v19 0: rc 1 ku_n 0 after -1 gi 0

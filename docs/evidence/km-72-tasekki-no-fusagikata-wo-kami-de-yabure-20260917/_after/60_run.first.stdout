@@ -1,0 +1,32 @@
+刻 2026-09-17T07:35:10+0900 / 門 sha16 e11f0d0142549086 / 照合器 sha16 a507c998c7bd6485 / 臺帳の項 106 / 臺帳 sha16 c9b52f853894f325 / 紙 sha16 c79841d1d87aaaf5 / cwd /Users/momizimac/multi-agent-shogun / 基点 KM_GATE_MANIFEST_BASE=/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917
+① 錠 07:35:10 / raw/ 配下 通常 file 108 → 0444 / dir 20(raw 含む)→ 0555 / raw の mode 0o555 / __pycache__ 0
+② 歩哨 _after/00_hosho.txt / mtime_ns 1789598110972874764
+③ selftest | 渡した 0 | rc 0 | 札 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+③ main | 渡した 2 | rc 1 | 札 1 | 條① ('105', '1', '0', '0', '106') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 31673 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 abe807797a98406d
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+③ all | 渡した 106 | rc 1 | 札 16 | 條① ('105', '1', '0', '0', '106') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 2099325 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 561b3695efb7a967
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+    ★末尾空白 ―― raw/fx/kegare.txt に 1 行★
+    ★末尾空白 ―― raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.rej に 2 行★
+    ★末尾空白 ―― raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej に 2 行★
+    ★末尾空白 ―― raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 2 行★
+    ★末尾空白 ―― raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej に 4 行★
+    ★末尾空白 ―― raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 1 行★
+    ★末尾空白 ―― raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.rej に 1 行★
+    ★末尾空白 ―― raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej に 2 行★
+    ★末尾空白 ―― raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 1 行★
+    ★末尾空白 ―― raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej に 1 行★
+    ★末尾空白 ―― raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 2 行★
+    ★末尾空白 ―― raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej に 4 行★
+    ★末尾空白 ―― raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 1 行★
+    ★末尾空白 ―― raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej に 1 行★
+    ★末尾空白 ―― raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 4 行★
+③ all_kiyoi | 渡した 91 | rc 1 | 札 1 | 條① ('105', '1', '0', '0', '106') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 2066610 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 778ce1f9da961364
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+③ nobase | 渡した 2 | rc 1 | 札 1 | 條① ('0', '0', '106', '0', '106') | 基点 條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★ | 條⑤ byte和 31673 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 0bf95cfc9d564ebd
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+③' 宣した行末空白 fixture 15 本(.rej 8 / .rej.orig 6 / kegare.txt 1) ⇔ all で 條② に名指された 0 本 → ★不一致: 宣に無い [] / 鳴らなんだ ['raw/fx/kegare.txt', 'raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.rej', 'raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej', 'raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig', 'raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej', 'raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig', 'raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.rej', 'raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej', 'raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig', 'raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej', 'raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig', 'raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej', 'raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig', 'raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej', 'raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig']
+④ 臺帳自身(別器・門は argv[1] を條②③④⑤に掛けぬ) | bytes 14119 | 実体行 106 | 括つた行 0 | 末尾 2 byte 380a(0a 一つ = True) | CR 0 | 行末空白 0 行 | sha16 c9b52f853894f325
+⑤ 禁域へ 0 byte | 前(00_start・無い物は 今 のみ)⇔今: scripts/checks/karo_mac_dasumae_gate.sh e11f0d0142549086→e11f0d0142549086 同 / scripts/checks/karo_mac_gate4.sh 95b027ea5e4f0fc5→95b027ea5e4f0fc5 同 / scripts/checks/karo_mac_manifest_verify.py a507c998c7bd6485→a507c998c7bd6485 同 / scripts/checks/karo_mac_manifest_append.py f5ea5e1e85d64936→f5ea5e1e85d64936 同 / .gitignore −→3ccfcf1c05e82b58 (前 無) / .claude/settings.json −→b135e8f17b3be9d5 (前 無) / scripts/inbox_write.sh −→96a1e2355d5acf09 (前 無)
+⑥ 讀んだ四束(專任3 km-50 二束・km-71・km-71b)へ 0 字 | 印 前(00_start)⇔今: km-50y 99b1adc67c468e11(191)→99b1adc67c468e11(191) 同 / km-50k 3f6ec2665646f716(47)→3f6ec2665646f716(47) 同 / km-71 8caba6c148d72645(132)→8caba6c148d72645(132) 同 / km-71b 038667813a1b372e(85)→038667813a1b372e(85) 同
+門控: /Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/ashigaru-mac-1_km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917_gate.txt + _after/60_gate_top.r72.txt

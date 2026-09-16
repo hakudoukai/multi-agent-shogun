@@ -1,0 +1,29 @@
+# 10 写し / 刻 2026-09-17T07:14:59+0900 / 的 a9bb89a / patch patch 2.0-12u11-Apple
+nama: karo_mac_dasumae_gate.sh e11f0d0142549086(生 e11f0d0142549086) / karo_mac_gate4.sh 95b027ea5e4f0fc5(生 95b027ea5e4f0fc5) / karo_mac_manifest_verify.py a507c998c7bd6485(生 a507c998c7bd6485)
+diff kou_dasumae: 50 行 / hunk 4 / +定義 ['num_in_range'] / +呼び口 2 / sha16 7c1048763be52c4f disk と 同
+diff kou_gate4: 43 行 / hunk 3 / +定義 ['num_in_range'] / +呼び口 2 / sha16 1faeb44fd704b882 disk と 同
+diff otsu_dasumae: 49 行 / hunk 4 / +定義 ['tmo_ok'] / +呼び口 1 / sha16 e1bddb858c88edc8 disk と 同
+diff hei_dasumae: 27 行 / hunk 2 / +定義 ['safe_show'] / +呼び口 0 / sha16 2b176b8569befacc disk と 同
+diff hei_gate4: 27 行 / hunk 2 / +定義 ['safe_show'] / +呼び口 0 / sha16 26bbe1db7b64c988 disk と 同
+diff gou_dasumae: 73 行 / hunk 4 / +定義 ['num_in_range', 'tmo_ok', 'safe_show'] / +呼び口 2 / sha16 b57cd8f8935e9fd1 disk と 同
+diff gou_gate4: 66 行 / hunk 3 / +定義 ['num_in_range', 'tmo_ok', 'safe_show'] / +呼び口 2 / sha16 f81e8894bd9c3ef6 disk と 同
+★母數★ diff 7 本 / 行 335 / hunk 22 / 新たに定義した関数 ['num_in_range', 'safe_show', 'tmo_ok'](3) / 変へた関数 fix_threshold(2 file) / 変へた呼び口 9(甲 4・乙 1・合 4)/ 的の生器 2 本 + 照合器 1 本(呼ばれるのみ)
+kou ← kou_dasumae: rc 0 / patching file karo_mac_dasumae_gate.sh
+kou ← kou_gate4: rc 0 / patching file karo_mac_gate4.sh
+  kou/karo_mac_dasumae_gate.sh sha16 8c65a6267ab4235e ⇔ 專任3 .nama/ki_kou/karo_mac_dasumae_gate.sh 8c65a6267ab4235e ★同★
+  kou/karo_mac_gate4.sh sha16 b09e15435635cff7 ⇔ 專任3 .nama/ki_kou/karo_mac_gate4.sh b09e15435635cff7 ★同★
+otsu ← otsu_dasumae: rc 0 / patching file karo_mac_dasumae_gate.sh
+  otsu/karo_mac_dasumae_gate.sh sha16 4162c62dcbc8855a ⇔ 專任3 .nama/ki_otsu/karo_mac_dasumae_gate.sh 4162c62dcbc8855a ★同★
+  otsu/karo_mac_gate4.sh sha16 95b027ea5e4f0fc5 ⇔ 專任3 .nama/ki_otsu/karo_mac_gate4.sh (無) (彼の束に無し・乙は gate4 に diff 無し)
+hei ← hei_dasumae: rc 0 / patching file karo_mac_dasumae_gate.sh
+hei ← hei_gate4: rc 0 / patching file karo_mac_gate4.sh
+  hei/karo_mac_dasumae_gate.sh sha16 dc11d31ca49a3fba ⇔ 專任3 .nama/ki_hei/karo_mac_dasumae_gate.sh dc11d31ca49a3fba ★同★
+  hei/karo_mac_gate4.sh sha16 297abece1065aab3 ⇔ 專任3 .nama/ki_hei/karo_mac_gate4.sh 297abece1065aab3 ★同★
+gou ← gou_dasumae: rc 0 / patching file karo_mac_dasumae_gate.sh
+gou ← gou_gate4: rc 0 / patching file karo_mac_gate4.sh
+  gou/karo_mac_dasumae_gate.sh sha16 ddaade594801f14e ⇔ 專任3 .nama/ki_gou/karo_mac_dasumae_gate.sh ddaade594801f14e ★同★
+  gou/karo_mac_gate4.sh sha16 f114f2f34187df4d ⇔ 專任3 .nama/ki_gou/karo_mac_gate4.sh f114f2f34187df4d ★同★
+gou_x: 合 の dasumae の呼び口一行を替へた(count 1 を assert)「fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO tmo_ok 1 86400」→「fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO tmo_ok 5 60」 sha16 327c5e0735128ca6
+gou_y: 合 の dasumae の呼び口一行を替へた(count 1 を assert)「fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO tmo_ok 1 86400」→「fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO tmo_okk 1 86400」 sha16 aec308b9122cbdbb
+bash -n: 七形 × 二本 = 14 本 悉く rc 0(文法)
+★生器 sha16(此の後)★ karo_mac_dasumae_gate.sh e11f0d0142549086 / karo_mac_gate4.sh 95b027ea5e4f0fc5 / karo_mac_manifest_verify.py a507c998c7bd6485

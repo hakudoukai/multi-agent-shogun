@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/60_gate_run.py", line 42, in <module>
+    out.append(f"③' 宣した行末空白 fixture {len(DECL)} 本(.rej {sum(1 for p_ in DECL if p_.endswith('.rej'))} / .rej.orig {sum(1 for p_ in DECL if p_.endswith('.rej.orig'))} / kegare.txt {sum(1 for p_ in DECL if p_.endswith('kegare.txt'))}) ⇔ all で 條② に名指された {len(named)} 本 → {'★一致★' if named == decl_rel else '★不一致: 宣に無い ' + str(sorted(set(named) - set(decl_rel))) + ' / 鳴らなんだ ' + str(sorted(set(decl_rel) - set(named)))}")
+                                                                                                                                                                                                                                                                                                                   ^^^^^^^^
+NameError: name 'decl_rel' is not defined

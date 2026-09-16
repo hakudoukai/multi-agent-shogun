@@ -1,0 +1,25 @@
+@@ -34,6 +34,13 @@
+ #   形: DASUMAE_MAX_BYTES=99999999999999999999 → is_num=通 / [ -ge ]=rc2 → 條⑤ が黙つて通つた。
+ #   ∴ `[ "$v" -ge 0 ]` を空打ちし、rc<=1 の時のみ「使へる閾」とする。
+ num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
++# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
++#   しか問うて居らぬ([ $? -le 1 ] が 偽(rc=1) をも可とする)。∴ 負値・零・天井無しが素通りする。
++#   ★後段と同じ演算子の儘、床と天を課す。★ rc=2(讀めぬ)も || で 1 へ落ちる ―― fail-closed。
++num_in_range(){ # $1=値 $2=床 $3=天
++  [ "${1:-}" -ge "${2:-0}" ] 2>/dev/null || return 1
++  [ "${1:-}" -le "${3:-9223372036854775806}" ] 2>/dev/null || return 1
++}
+ 
+ # ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+ #   註: 「空白のみ」は ASCII の空白類のみを見る(全角空白は value 側へ落ち、比較器が拒む)。
+@@ -65,8 +72,8 @@
+     empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+     blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+   esac
+-  if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
+-  say "★閾 ${name} が比較器で扱へぬ(「${raw}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
++  if num_in_range "$raw" "$lo" "$hi"; then eval "$out=\$raw"; return 0; fi
++  say "★閾 ${name} が比較器で扱へぬ か 範囲外(「${raw}」・許 ${lo}..${hi}) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+   eval "$out=\$dflt"
+ }
+ 
