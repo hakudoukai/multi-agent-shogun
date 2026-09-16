@@ -1,0 +1,27 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★file が無い: docs/evidence/lot48235904-provenance-20260916/MANIFEST.txt
+docs/evidence/lot48235904-provenance-20260916/karo-48235904-provenance-20260916-ho1.md
+docs/evidence/lot48235904-provenance-20260916/karo-48235904-provenance-20260916.md
+docs/evidence/lot48235904-provenance-20260916/raw/01_pos.out
+docs/evidence/lot48235904-provenance-20260916/raw/01_pos.rc
+docs/evidence/lot48235904-provenance-20260916/raw/02_neg.out
+docs/evidence/lot48235904-provenance-20260916/raw/02_neg.rc
+docs/evidence/lot48235904-provenance-20260916/raw/neg/fx_A_same.md
+docs/evidence/lot48235904-provenance-20260916/raw/neg/fx_B_tampered.md
+docs/evidence/lot48235904-provenance-20260916/raw/neg/neg_manifest.txt★
+★條⑤ 測れぬ(寸法が取れぬ) ―― docs/evidence/lot48235904-provenance-20260916/MANIFEST.txt
+docs/evidence/lot48235904-provenance-20260916/karo-48235904-provenance-20260916-ho1.md
+docs/evidence/lot48235904-provenance-20260916/karo-48235904-provenance-20260916.md
+docs/evidence/lot48235904-provenance-20260916/raw/01_pos.out
+docs/evidence/lot48235904-provenance-20260916/raw/01_pos.rc
+docs/evidence/lot48235904-provenance-20260916/raw/02_neg.out
+docs/evidence/lot48235904-provenance-20260916/raw/02_neg.rc
+docs/evidence/lot48235904-provenance-20260916/raw/neg/fx_A_same.md
+docs/evidence/lot48235904-provenance-20260916/raw/neg/fx_B_tampered.md
+docs/evidence/lot48235904-provenance-20260916/raw/neg/neg_manifest.txt★ ★測れぬは通さぬ(default-deny)★
+條⑤ 寸法 = byte和 0(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★
