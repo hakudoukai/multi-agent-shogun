@@ -1,0 +1,15 @@
+=== git apply --check -p0 --unsafe-paths(四形) ===
+b0_63.moto.diff        rc=0 出目=(空 ―― 一字も出さなんだ)
+b1_63.kezuri.diff      rc=0 出目=(空 ―― 一字も出さなんだ)
+b0_66.moto.diff        rc=0 出目=(空 ―― 一字も出さなんだ)
+b1_66.kezuri.diff      rc=0 出目=(空 ―― 一字も出さなんだ)
+
+=== 源の写しへ當てて sha を比べる(決めの対照) ===
+63 moto   sha16=dc49fc442939cb2f 期待(62_mon_ato.sh)=dc49fc442939cb2f ★一致★
+63 kezuri sha16=dc49fc442939cb2f 期待(62_mon_ato.sh)=dc49fc442939cb2f ★一致★
+66 moto   sha16=e11f0d0142549086 期待(65_mon_ima.sh)=e11f0d0142549086 ★一致★
+66 kezuri sha16=e11f0d0142549086 期待(65_mon_ima.sh)=e11f0d0142549086 ★一致★
+
+=== 弱い対照(先に走らせた物・記録として残す) ===
+patch -p0 --dry-run は原形・削形とも rc=0 だが出目は Reversed (or previously applied)
+★既に當たつて居る先へ當てた★ ゆゑ「正しく當たる」は言へぬ。∴ 上の sha 比べへ建て直した。

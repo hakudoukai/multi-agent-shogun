@@ -1,0 +1,20 @@
+raw/81_kaki2.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+raw/82_kaki3.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/81_kaki2.err :: 空→一行 :: 行 []
+  raw/82_kaki3.err :: 空→一行 :: 行 []
+raw/81_kaki2.out
+    before bytes=283 CR=0 -> after bytes=283 CR=0
+raw/81_kaki2.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+raw/82_kaki3.out
+    before bytes=264 CR=0 -> after bytes=264 CR=0
+raw/82_kaki3.err
+    before bytes=122 CR=0 -> after bytes=122 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/81_kaki2.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/81_kaki2.err :: 空→一行 :: 行 []
+  raw/82_kaki3.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/82_kaki3.err :: 末尾空白を削つた行 0 :: 行 []

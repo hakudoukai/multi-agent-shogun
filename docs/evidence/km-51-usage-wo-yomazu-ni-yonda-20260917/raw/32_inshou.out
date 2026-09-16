@@ -1,0 +1,7 @@
+=== 陰性(正形) ===
+[素通し] sb  (家の器/usage行)  包みゆゑ判ぜず ―― 下の器の契約で判ずる(包み sb が `write` を食ひ、★['karo-mac', 'mac_pc']★ を前置して agent_letter.py へ渡す)
+    呼び : sb write letter 胴の文 --to gunshi-mac --parent-seq 321131
+    契約 : sb read seq|inbox|qa ... / sb write letter \"本文\"" >&2; exit 2;;
+[合] agent_letter.py(包みの下)  (家の器/usage行)  位置引数 4 / 契約 4 ／ 包み sb が `write` を食ひ、★['karo-mac', 'mac_pc']★ を前置して agent_letter.py へ渡す
+    呼び : karo-mac mac_pc letter 胴の文 --to gunshi-mac --parent-seq 321131
+    契約 : agent_letter.py <role> <from_pc> letter "<本文>" [--to <target-role>] [--urgent] [--parent-seq N] [--requires-response]

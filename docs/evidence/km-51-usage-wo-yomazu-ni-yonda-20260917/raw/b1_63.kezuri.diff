@@ -1,0 +1,38 @@
+--- /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/61_mon_saki.sh	2026-09-17 05:04:24
++++ /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/62_mon_ato.sh	2026-09-17 05:04:24
+@@ -47,6 +47,16 @@
+ #   實測(直す前): DASUMAE_MAX_BYTES=abc → L190 の [ ] が rc=2 → if が偽 → ★「條⑤ 寸法 = byte和 6(閾 abc未満)」を刷り rc=0★。
+ #   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。
+ is_num "$MAXB" || { printf '%s\n' "★閾 DASUMAE_MAX_BYTES が數でない(「${MAXB}」) ―― 既定 10485760 へ倒す(fail-closed)★" >&2; MAXB=10485760; }
++# ★改め 乙(第50弾 提案 → 第51弾 で現物化)★ ―― ★倒した事を言へ★
++#   由来: L20 `${DASUMAE_MAX_BYTES:-10485760}` は ★未設定★ も ★空文字★ も黙つて食ふ。
++#         値は正しく既定へ倒れる。★然し一言も言はぬ★ ―― 「検めて通した」と同じ顔をする(第50弾 毒4)。
++#   本形は ★言葉だけを足す★。MAXB の値には一指も触れて居らぬ(∴ 閾の意味は不変)。
++#   可逆: 下の if 一塊(5行)を消せば旧挙動。
++if [ -z "${DASUMAE_MAX_BYTES+SET}" ]; then
++  say "條⑤ 閾 = 既定 ${MAXB}(DASUMAE_MAX_BYTES ★未設定★)"
++elif [ -z "${DASUMAE_MAX_BYTES-}" ]; then
++  say "★閾 DASUMAE_MAX_BYTES が ★空文字★(設定は在るが値が無い) ―― 既定 ${MAXB} を用ゐる(fail-closed)★"
++fi
+
+ safe_size(){
+   local f="${1:-}" r
+@@ -191,6 +201,18 @@
+     fi
+     total=$((total + sz))
+   done
++  # ★改め 甲(第50弾 提案 → 第51弾 で現物化)★ ―― 比べる前に ★同じ `[ ]` で★ 閾を検める
++  #   由来: MAXB が 2^63 以上だと `[ -ge ]` が ★rc=2(器の誤り)★ で落ち、if が其れを ★偽★ と受けて ★通した★。
++  #         (第50弾 毒2: `line 194: [: 9223372036854775808: integer expression expected` を刷りつつ ★門 通 rc=0★)
++  #   ★rc=1(偽)は捕へぬ★ ―― 負の閾は旧来通り「總て鳴る」(fail-closed)の儘。捕へるのは ★rc>=2 だけ★。
++  #   ∴ 出目が変るのは ★旧版が器の誤りを刷つて居た態★ に限られる(下の㋔-⑷ 不変表)。
++  #   可逆: 下の 6 行を `if [ "$total" -ge "$MAXB" ]; then` 一行へ戻せば旧挙動。
++  local maxb_rc
++  [ "$MAXB" -ge 0 ] 2>/dev/null; maxb_rc=$?
++  if [ "$maxb_rc" -ge 2 ]; then
++    say "★閾 DASUMAE_MAX_BYTES が 「[ ]」 で比べられぬ(「${MAXB}」・rc=${maxb_rc}) ―― 既定 10485760 へ倒す(fail-closed)★"
++    MAXB=10485760
++  fi
+   if [ "$total" -ge "$MAXB" ]; then
+     say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)超★"
+     fail=1

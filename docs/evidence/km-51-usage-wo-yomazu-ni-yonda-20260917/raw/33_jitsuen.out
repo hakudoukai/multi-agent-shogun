@@ -1,0 +1,22 @@
+--- 陽性: 家老の誤形(宛先を胴の位置に置く) ---
+★DRY-RUN（★送信しない★）★
+   to_pc         = third_pc
+   topic         = cross_pc_inbox_iincho
+   message_type  = answer
+   priority      = normal
+   target_agent  = iincho
+   sender_agent  = karo-mac
+   reply_to_topic= cross_pc_inbox_karo-mac
+   parent_message_id= None
+rc=0
+--- 陰性: 正形(--to で名指す) ---
+★DRY-RUN（★送信しない★）★
+   to_pc         = mac_pc
+   topic         = cross_pc_inbox_gunshi-mac
+   message_type  = answer
+   priority      = normal
+   target_agent  = gunshi-mac
+   sender_agent  = karo-mac
+   reply_to_topic= cross_pc_inbox_karo-mac
+   parent_message_id= None
+rc=0

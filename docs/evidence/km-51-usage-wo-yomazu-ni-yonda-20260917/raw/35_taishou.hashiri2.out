@@ -1,0 +1,22 @@
+=== ㋒-1 陽性対照: 家老の誤形(宛先を胴の位置へ) ===
+[素通し] sb  (家の器/usage行)  包みゆゑ判ぜず ―― 下の器の契約で判ずる(包み sb が `write` を食ひ、★['karo-mac', 'mac_pc']★ を前置して agent_letter.py へ渡す)
+    呼び : sb write letter gunshi-mac 胴の文 --parent-seq 321131
+    契約 : sb read seq|inbox|qa ... / sb write letter \"本文\""
+[否] agent_letter.py(包みの下)  (家の器/usage行)  位置引数 5 / 契約 4 ★1 本余る ―― 余りは黙つて捨てられる★ ／ 包み sb が `write` を食ひ、★['karo-mac', 'mac_pc']★ を前置して agent_letter.py へ渡す
+    呼び : karo-mac mac_pc letter gunshi-mac 胴の文 --parent-seq 321131
+    契約 : agent_letter.py <role> <from_pc> letter "<本文>" [--to <target-role>] [--urgent] [--parent-seq N] [--requires-response]
+=== ㋒-2 陰性対照: 正形(--to で名指す) ===
+[素通し] sb  (家の器/usage行)  包みゆゑ判ぜず ―― 下の器の契約で判ずる(包み sb が `write` を食ひ、★['karo-mac', 'mac_pc']★ を前置して agent_letter.py へ渡す)
+    呼び : sb write letter 胴の文 --to gunshi-mac --parent-seq 321131
+    契約 : sb read seq|inbox|qa ... / sb write letter \"本文\""
+[合] agent_letter.py(包みの下)  (家の器/usage行)  位置引数 4 / 契約 4 ／ 包み sb が `write` を食ひ、★['karo-mac', 'mac_pc']★ を前置して agent_letter.py へ渡す
+    呼び : karo-mac mac_pc letter 胴の文 --to gunshi-mac --parent-seq 321131
+    契約 : agent_letter.py <role> <from_pc> letter "<本文>" [--to <target-role>] [--urgent] [--parent-seq N] [--requires-response]
+=== ㋒-3 陽性対照(家の器): inbox_write.sh へ引数を一つ欠いて渡す ===
+[否] scripts/inbox_write.sh  (家の器/usage行(多行))  位置引数 3 / 契約 4 ★足らぬ★ ／ 形 2 通の何れにも合はず(最寄 「bash scripts/inbox_write.sh <target_agent> <content> <type> <from>」)
+    呼び : bash scripts/inbox_write.sh karo-mac 胴 report_received
+    契約 : bash scripts/inbox_write.sh <target_agent> <content> <type> <from>
+=== ㋒-4 陰性対照(家の器): 正形 ===
+[合] scripts/inbox_write.sh  (家の器/usage行(多行))  位置引数 4 / 契約 4 ／ 形 2 通の内 「bash scripts/inbox_write.sh <target_agent> <content> <type> <from>」 に合
+    呼び : bash scripts/inbox_write.sh karo-mac 胴 report_received ashigaru-mac-2
+    契約 : bash scripts/inbox_write.sh <target_agent> <content> <type> <from>

@@ -1,0 +1,406 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""契約照合器(keiyaku) ―― ★呼ぶ前に、器の usage を引いて argv の数と位置を照らす★
+
+第51弾 ㋑ の答。据ゑて居らぬ(束の中の器)。生器へ一字も書かぬ。
+
+使ひ方:
+    python3 20_keiyaku.py --cmd '<command 文字列>'      … 一本を照らす
+    python3 20_keiyaku.py --corpus <jsonl...>          … session 記録の全 Bash 呼びを照らす
+出目の三態: 合 / 否 / 引けぬ(器が usage を持たぬ)。★rc=0 でも否は否★。
+"""
+import json, os, re, shlex, sys
+
+HOME = os.path.expanduser("~")
+REPO = "/Users/momizimac/multi-agent-shogun"
+
+# ---- ⑴ command 文字列 → 呼びの列 -------------------------------------------------
+OPS = {"|", "||", "&&", ";", "&", "(", ")", "{", "}", "|&"}
+KEYWORD = {"if", "then", "else", "elif", "fi", "for", "do", "done", "while", "until",
+           "case", "esac", "in", "function", "time", "!", "[[", "]]", "{", "}"}
+HEREDOC = re.compile(r"<<-?\s*[\'\"]?([A-Za-z_][A-Za-z0-9_]*)[\'\"]?")
+NAME_OK = re.compile(r"^[A-Za-z0-9_./~$@:+-]+$")
+REDIR = {">", ">>", "<", "<<", "<<<", ">&", "&>", "<&", "&>>", "2>", "2>>"}
+HD_COUNT = [0]
+
+def strip_heredoc(cmd):
+    """★則の追補二★: heredoc の胴は ★別の言葉(python 等)★ であり shell の呼びではない。
+    走一は之を数へ、`print` `len` `。` 迄「器」に数へた(raw/41_boshu.hashiri1.out に残す)。"""
+    out, lines, i = [], cmd.split("\n"), 0
+    while i < len(lines):
+        ln = lines[i]; out.append(ln)
+        m = HEREDOC.search(ln)
+        if m:
+            term = m.group(1); i += 1
+            while i < len(lines) and lines[i].strip() != term:
+                HD_COUNT[0] += 1; i += 1
+            i += 1 if i < len(lines) else 0
+            continue
+        i += 1
+    return "\n".join(out)
+
+ASSIGN = re.compile(r"(?:^|[;&|\s])([A-Za-z_][A-Za-z0-9_]*)=([^\s;&|]+)")
+def expand_vars(cmd):
+    """★同じ command の中で立てた変数のみ★ 展開する。
+    前の Bash 呼出で立てた変数は ★辿れぬ★(session を跨ぐ shell 状態は記録に無い) ―― 宣する。"""
+    env = {}
+    for m in ASSIGN.finditer(cmd):
+        v = m.group(2).strip("'\"")
+        for k2, v2 in env.items():
+            v = v.replace("$" + k2, v2).replace("${" + k2 + "}", v2)
+        env[m.group(1)] = v
+    def sub(t):
+        for k, v in sorted(env.items(), key=lambda x: -len(x[0])):
+            t = t.replace("${" + k + "}", v).replace("$" + k, v)
+        return t
+    return sub, env
+
+def find_calls(cmd):
+    cmd = strip_heredoc(cmd)
+    sub, _env = expand_vars(cmd)
+    """則: `|` `;` `&&` `||` `$()` の後も命令の頭。引用の中は頭に非ず。"""
+    try:
+        lex = shlex.shlex(cmd, posix=True, punctuation_chars=True)
+        lex.whitespace_split = True
+        toks = list(lex)
+    except ValueError:
+        return []            # 閉ぢて居らぬ引用 ―― 讀めぬ呼びとして別に数へる
+    calls, cur, head, skip = [], [], True, False
+    for t in toks:
+        if skip:                     # ★疵51-E★ 向け替への先(file名)は引数に非ず
+            skip = False; continue
+        if t in REDIR:               # ★疵51-E★ `>` `>>` `2>` 等は器の引数に非ず
+            if cur and re.fullmatch(r"[0-9]", cur[-1]): cur.pop()   # 直前の fd 番号も落とす
+            skip = True; continue
+        if t in OPS or set(t) <= {"|", "&", ";"}:
+            if cur: calls.append(cur)
+            cur, head = [], True
+            continue
+        if head and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*=.*", t):
+            continue          # 頭の env 代入は器に非ず
+        if head and "$" in t: t = sub(t)
+        if head and (t in KEYWORD or not NAME_OK.match(t)):
+            head = False       # shell の予約語・器の名に成り得ぬ字は器に数へぬ
+            continue
+        cur.append(sub(t) if "$" in t else t); head = False
+    if cur: calls.append(cur)
+    return calls
+
+# ---- ⑵ 器の名 → 実体の path ------------------------------------------------------
+def resolve(name, cwd=None):
+    if name in ("python3", "/opt/homebrew/bin/python3", "/usr/bin/python3", "python", "bash", "sh", "env"):
+        return None          # 起動器。次の語が本体
+    if name.startswith("/"): p = name
+    elif name.startswith("~/"): p = os.path.join(HOME, name[2:])
+    elif name.startswith("$HOME/"): p = os.path.join(HOME, name[6:])
+    elif "/" in name:
+        # ★疵51-G★ 呼びの cwd は jsonl の `cwd` 欄に在る(推に非ず實測)。cwd → repo の順で解く
+        p = os.path.join(cwd or REPO, name)
+        if not os.path.exists(p): p = os.path.join(REPO, name)
+    else:
+        for d in (os.path.join(HOME, "bin"), os.path.join(REPO, "scripts")):
+            q = os.path.join(d, name)
+            if os.path.exists(q): return q
+        return None
+    if not os.path.exists(p): return None
+    # ★器の資格★: 走る物のみ。data の file(.yaml/.txt/.out/.md)は器に非ず
+    if p.endswith((".sh", ".py")) or os.access(p, os.X_OK) and os.path.isfile(p): return p
+    return None
+
+def classify(path, name):
+    if path is None: return "外の器"
+    if path.startswith(os.path.join(HOME, "bin")): return "家の器"
+    if "/docs/evidence/" in path or path.startswith("raw/") or name.startswith("raw/"): return "束の器"
+    if path.startswith(REPO): return "家の器"
+    return "外の器"
+
+def peel(argv, cwd=None):
+    """python3 X / bash X / env … の皮を剥ぎ、本体の (path, name, args) を返す"""
+    i = 0
+    while i < len(argv):
+        b = os.path.basename(argv[i])
+        if b in ("env",):
+            i += 1
+            while i < len(argv) and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*=.*", argv[i]): i += 1
+            continue
+        if b.startswith("python") or b in ("bash", "sh", "zsh"):
+            i += 1
+            while i < len(argv) and argv[i].startswith("-") and argv[i] not in ("-",): i += 1
+            continue
+        break
+    if i >= len(argv): return None, None, []
+    name = argv[i]
+    return resolve(name, cwd), name, argv[i+1:]
+
+
+# ---- ⑵' 包みの器(wrapper)を開く --------------------------------------------------
+#  ★之が本弾の要★: `sb` は己の argv の頭を落とし、下の器へ ★己の語を二つ前置して★ 渡す。
+#  上の器の usage を読んでも、下の器の位置は判らぬ。∴ 包みは開いてから照らす。
+WRAP = re.compile(r'^\s*([A-Za-z0-9_|]+)\)\s*exec\s+(.+?)\s*;;', re.M)
+def unwrap(path, args):
+    """返り: (下の器のpath, 下の器へ渡る argv, 何をしたかの語) / 包みでなければ (None,None,'')"""
+    if path is None or not path.endswith(("sb",)) and not os.path.basename(path) in ("sb",):
+        if path is None or not os.path.exists(path): return None, None, ""
+        try: src = open(path, encoding="utf-8", errors="replace").read()
+        except OSError: return None, None, ""
+        if "exec" not in src or 'case "$c"' not in src and 'case "$1"' not in src:
+            return None, None, ""
+    else:
+        src = open(path, encoding="utf-8", errors="replace").read()
+    shifted = bool(re.search(r'shift', src))
+    if not args: return None, None, ""
+    sub = args[0]
+    for m in WRAP.finditer(src):
+        names, rest = m.group(1).split("|"), m.group(2)
+        if sub not in names: continue
+        toks = shlex.split(rest.replace('"$@"', ""), posix=True)
+        dp, dname, pre = peel(toks)
+        if dp is None:
+            cand = [t for t in toks if t.endswith((".py", ".sh"))]
+            dp = resolve(cand[0].replace("$HOME", HOME)) if cand else None
+            pre = toks[toks.index(cand[0]) + 1:] if cand else []
+        down = list(pre) + (args[1:] if shifted else args)
+        return dp, down, f"包み {os.path.basename(path)} が `{sub}` を食ひ、★{pre}★ を前置して {os.path.basename(dp) if dp else '?'} へ渡す"
+    return None, None, ""
+
+# ---- ⑶ 器 → 契約(usage) ----------------------------------------------------------
+USAGE_PAT = re.compile(r"(使ひ方|使い方|Usage|usage)\s*[（(]?[^:：]*[)）]?\s*[:：]\s*(.*)")
+def contract(path):
+    """返り: dict(kind, line, req_pos, flags{flag:arity}, subcmds) / kind='引けぬ' なら契約無し"""
+    if path is None or not os.path.exists(path): return {"kind": "引けぬ", "line": "(器の実体を辿れぬ)"}
+    try: src = open(path, encoding="utf-8", errors="replace").read()
+    except OSError as e: return {"kind": "引けぬ", "line": f"(開けぬ: {e})"}
+    hl = src.splitlines()[:60]
+    for i, ln in enumerate(hl):
+        m = USAGE_PAT.search(ln)
+        if not m: continue
+        rest = m.group(2).strip()
+        if "<" in rest or "[" in rest or "|" in rest:
+            return parse_usage(rest, "usage行")
+        # ★己の疵 51-C★: `使ひ方:` だけの行の ★次の行★ に形が在る器(manifest_append)を
+        #   走二迄 ★引けぬ★ と誤つて数へた。多行の使ひ方を拾ふ。
+        forms = []
+        for nx in hl[i+1:i+6]:
+            if not nx.strip(): break
+            if "<" in nx or "[" in nx:
+                c = re.sub(r"^\s*#\s?", "", nx).strip()          # 註の `#` を剥ぐ
+                k = c.find("<")
+                if ":" in c[:k] or "：" in c[:k]:                   # 「通常 (argv 経由): bash …」の頭を落とす
+                    c = re.split(r"[:：]", c[:k])[-1] + c[k:]
+                forms.append(parse_usage(c.strip(), "usage行(多行)"))
+        if forms:
+            # ★己の疵 51-I★ 器は ★一つの usage に複数の形★ を書く(己の器がさうであつた)。
+            #   一形だけ見て否と言へば嘘に成る。全形を持ち、どれかに合へば合とする。
+            f0 = dict(forms[0]); f0["forms"] = forms; f0["n_forms"] = len(forms)
+            return f0
+    m = re.search('(?:print\\(|echo )[\\"\']?\\s*usage: (.+)$', src, re.I | re.M)
+    if m:
+        # ★己の疵 51-B★: 初版は行末の shell の殻(`" >&2; exit 2;;`)迄 usage と讀み、
+        #   契約を 10 位置と数へた。殻を落としてから解く。
+        u = re.split(r'"\s*>&2|";|\\"\s*>&2', m.group(1))[0]
+        return parse_usage(u, "usage刷り")
+    if "argparse" in src:
+        req = len(re.findall(r'add_argument\(\s*["\'][^-]', src))
+        fl = {f: 1 for f in re.findall(r'add_argument\(\s*["\'](--[a-z0-9-]+)', src)}
+        return {"kind": "argparse", "line": "(argparse)", "req_pos": req, "flags": fl, "subcmds": {}}
+    m = re.search(r'sys\.argv\[1:\]', src)
+    if m:
+        n = re.findall(r'args\[(\d+)\]', src)
+        if n: return {"kind": "argv直讀", "line": "(argv を直に開く ―― usage は無し)",
+                      "req_pos": max(int(x) for x in n) + 1, "flags": {}, "subcmds": {}}
+    return {"kind": "引けぬ", "line": "(usage も docstring も argparse も無し)"}
+
+def parse_usage(line, kind):
+    """usage の一行 → 契約 dict。★走三迄の形は言葉の註迄 位置に数へた(疵 51-D)★ ―― 註を切る。"""
+    line = re.split(r'>&2|;;|\s;\s|　', line)[0].strip()
+    # 註(全角の言葉・二つ以上の空白の後の言葉)を切る
+    line = re.split(r'\s{2,}(?=\S)|(?<=[\]>])\s+(?=[^\-<\[])', line)[0].strip()
+    toks, i = [], 0
+    pat = re.compile(r"\[[^\]]*\]\.{0,3}|<[^>]*>\.{0,3}|'[^']*'|\"[^\"]*\"|\S+")
+    for m in pat.finditer(line):
+        toks.append(m.group(0))
+    req, flags, subs, variadic = 0, {}, {}, False
+    seen_prog = False
+    j = 0
+    while j < len(toks):
+        t = toks[j]
+        if not seen_prog:
+            b = t.strip('"\'')
+            if b.endswith((".py", ".sh")) or "/" in b:
+                seen_prog = True; j += 1; continue
+            if re.fullmatch(r"(bash|sh|zsh|python3?|env|[a-z_]{1,4})", b):
+                j += 1
+                if b in ("bash", "sh", "zsh", "python", "python3", "env"): continue
+                seen_prog = True; continue
+            seen_prog = True; j += 1; continue
+        if t.endswith("...") or t.endswith("…") or "..." in t or "…" in t:
+            variadic = True
+            if t.startswith("<"): req += 1
+            j += 1; continue
+        if t.startswith("[") and "--" in t:
+            inner = t.strip("[]")
+            parts = inner.split()
+            flags[parts[0]] = 1 if len(parts) > 1 else 0
+            j += 1; continue
+        if t.startswith("--"):
+            # ★疵51-H★ `--cmd '<command 文字列>'` の如く、旗の次に値の置かれる形が在る
+            nxt = toks[j + 1] if j + 1 < len(toks) else ""
+            takes = 1 if re.match(r"^['\"<]|^[A-Z][A-Z_]*$", nxt) else 0
+            if takes and ("..." in nxt or "…" in nxt): variadic = True   # ★疵51-J★ 旗の値が可変長
+            flags[t] = takes; j += 1 + takes; continue
+        if t.startswith("["):
+            variadic = True; j += 1; continue
+        if t.startswith("<"):
+            body = t.strip("<>")
+            if "|" in body: subs[body] = body.split("|")
+            req += 1; j += 1; continue
+        req += 1; j += 1; continue        # literal(例: `letter`)も位置の一つ
+    return {"kind": kind, "line": line, "req_pos": req, "flags": flags,
+            "subcmds": subs, "variadic": variadic}
+
+# ---- ⑷ 照らす --------------------------------------------------------------------
+def judge(args, c):
+    """★多形★: usage が複数の形を書く器は、どれか一形に合へば合(疵 51-I)。"""
+    forms = c.get("forms")
+    if forms and len(forms) > 1:
+        best = None
+        for f in forms:
+            v, why = judge_one(args, f)
+            if v == "合": return "合", why + f" ／ 形 {len(forms)} 通の内 「{f['line']}」 に合"
+            if best is None: best = (v, why, f)
+        v, why, f = best
+        return v, why + f" ／ 形 {len(forms)} 通の何れにも合はず(最寄 「{f['line']}」)"
+    return judge_one(args, c)
+
+def judge_one(args, c):
+    if c["kind"] == "引けぬ": return "引けぬ", c["line"]
+    flags, pos, unknown, i = c.get("flags", {}), [], [], 0
+    while i < len(args):
+        a = args[i]
+        if a.startswith("--"):
+            if a in flags:
+                i += 1 + flags[a]; continue
+            unknown.append(a); i += 1; continue
+        pos.append(a); i += 1
+    req = c.get("req_pos", 0)
+    why = f"位置引数 {len(pos)} / 契約 {req}"
+    if unknown: return "否", why + f" ／ ★契約に無い旗 {unknown}★"
+    if len(pos) > req:
+        if c.get("variadic"): return "合", why + "(可変長)"
+        return "否", why + f" ★{len(pos)-req} 本余る ―― 余りは黙つて捨てられる★"
+    if len(pos) < req: return "否", why + " ★足らぬ★"
+    return "合", why
+
+def check_cmd(cmd, cwd=None):
+    out = []
+    for argv in find_calls(cmd):
+        p, name, args = peel(argv, cwd)
+        if name is None: continue
+        c = contract(p)
+        v, why = judge(args, c)
+        out.append({"器": name, "path": p, "族": classify(p, name), "契約の出所": c["kind"],
+                    "契約": c.get("line", ""), "判": v, "由": why, "呼び": " ".join(argv)[:300]})
+        dp, down, note = unwrap(p, args)
+        if dp:
+            # ★包みの器は、己の usage で下の契約を宣して居らぬ★ ―― 判ぜず「素通し」と記す(則の追補)
+            out[-1]["判"] = "素通し"
+            out[-1]["由"] = "包みゆゑ判ぜず ―― 下の器の契約で判ずる(" + note + ")"
+            dc = contract(dp)
+            dv, dwhy = judge(down, dc)
+            out.append({"器": os.path.basename(dp) + "(包みの下)", "path": dp,
+                        "族": classify(dp, dp), "契約の出所": dc["kind"], "契約": dc.get("line", ""),
+                        "判": dv, "由": dwhy + " ／ " + note, "呼び": " ".join(down)[:300]})
+    return out
+
+def main():
+    if "--cmd" in sys.argv:
+        for r in check_cmd(sys.argv[sys.argv.index("--cmd") + 1]):
+            print(f"[{r['判']}] {r['器']}  ({r['族']}/{r['契約の出所']})  {r['由']}")
+            print(f"    呼び : {r['呼び']}")
+            print(f"    契約 : {r['契約']}")
+        return 0
+    if "--corpus" in sys.argv:
+        files = sys.argv[sys.argv.index("--corpus") + 1:]
+        cmds, bad, reads = [], 0, []
+        for f in files:
+            for line in open(f, encoding="utf-8", errors="replace"):
+                try: o = json.loads(line)
+                except Exception: continue
+                msg = o.get("message") or {}
+                for blk in (msg.get("content") or []) if isinstance(msg.get("content"), list) else []:
+                    if isinstance(blk, dict) and blk.get("type") == "tool_use" and blk.get("name") == "Bash":
+                        cmds.append((os.path.basename(f)[:8], blk["input"].get("command", ""),
+                                     o.get("cwd") or REPO))
+                    if isinstance(blk, dict) and blk.get("type") == "tool_use" and blk.get("name") in ("Read", "Edit", "Write", "NotebookRead"):
+                        fp = (blk.get("input") or {}).get("file_path")
+                        if fp: reads.append((len(cmds), os.path.realpath(fp)))
+        import time
+        print("★母數を取つた刻★ " + time.strftime("%Y-%m-%d %H:%M:%S") +
+              " ／ 各 session の大きさ(bytes): " +
+              " ".join(f"{os.path.basename(f)[:8]}={os.path.getsize(f)}" for f in files))
+        print("★註★ 此の三本の内 一本は ★今 測つて居る session 其の物★。走る毎に育つ(215→217→…)。")
+        print(f"★母數★ session {len(files)} 本 / Bash 呼出 {len(cmds)} 回")
+        tally, rows = {}, []
+        cwds = {}
+        for _s, _c, w in cmds: cwds[w] = cwds.get(w, 0) + 1
+        print("★呼びの cwd(jsonl の cwd 欄・實測)★ " +
+              " ／ ".join(f"{os.path.relpath(w, REPO)}={n}" for w, n in sorted(cwds.items(), key=lambda x: -x[1])))
+        for sid, cmd, cwd in cmds:
+            rs = check_cmd(cmd, cwd)
+            if not rs and cmd.strip(): bad += 1
+            for r in rs:
+                key = (r["器"], r["族"], r["契約の出所"], r["判"])
+                tally[key] = tally.get(key, 0) + 1
+                rows.append((sid, r))
+        print(f"★呼びの箇所★ {sum(tally.values())} ／ 讀めなんだ command {bad}"
+              f" ／ heredoc の胴で数へ ★ぬ★ 行 {HD_COUNT[0]}")
+        print("\n--- 器別(器 / 族 / 契約の出所 / 判 / 回数) ---")
+        for k, v in sorted(tally.items(), key=lambda x: (-x[1], x[0])):
+            print(f"  {v:4d}  {k[0]:32s} {k[1]:6s} {k[2]:8s} {k[3]}")
+        # ---- ★㋐★ 「讀まずに呼んだか」――  呼びより前に其の器を開いた記録が在るか ----
+        READV = {"cat", "head", "tail", "sed", "grep", "less", "awk", "nl", "od", "diff",
+                 "wc", "shasum", "md5", "strings", "more", "bat"}
+        opened, yomi = {}, []
+        idx = 0
+        rd = sorted(reads)
+        ri = 0
+        for sid, cmd, cwd in cmds:
+            while ri < len(rd) and rd[ri][0] <= idx:
+                opened.setdefault(rd[ri][1], idx); ri += 1
+            for argv in find_calls(cmd):
+                pp, nn, aa = peel(argv, cwd)
+                if pp is None: continue
+                if classify(pp, nn) == "外の器": continue
+                rp = os.path.realpath(pp)
+                c = contract(pp); v, why = judge(aa, c)
+                yomi.append((sid, nn, rp in opened, v, c.get("kind"), " ".join(argv)[:160]))
+            # 此の command 自身の中の「讀む呼び」を、次の呼びから有効にする
+            for argv in find_calls(cmd):
+                if argv and os.path.basename(argv[0]) in READV:
+                    for a in argv[1:]:
+                        q = a if a.startswith("/") else os.path.join(cwd, a)
+                        if os.path.exists(q): opened.setdefault(os.path.realpath(q), idx)
+            idx += 1
+        yy = sum(1 for r in yomi if r[2]); nn_ = len(yomi) - yy
+        print("\n--- ★㋐★ 家/束の器の呼び ―― 呼ぶ前に其の器を開いて居たか ---")
+        print(f"  ★讀んで呼んだ {yy} ／ 讀まずに呼んだ {nn_}★ (母數 {len(yomi)})")
+        print("  註: 「開いた」= 同 session の其の呼びより ★前★ に Read/Edit/Write 道具、"
+              "又は cat/head/sed/grep 等で其の file を開いた記録が在る事。")
+        for i, (sid, nm, op, v, k, call) in enumerate(yomi, 1):
+            print(f"{i:3d}. [{'讀' if op else '★未讀★'}][{v}] {nm} (契約の出所 {k}) sess={sid}")
+            print(f"      呼び : {call}")
+        print("\n--- ★否★ と ★引けぬ★ の家/束の器のみ 一件毎 ---")
+        n = 0
+        for sid, r in rows:
+            if r["族"] == "外の器" or r["判"] == "合": continue
+            n += 1
+            print(f"{n:3d}. [{r['判']}] {r['器']} ({r['族']}/{r['契約の出所']}) sess={sid}")
+            print(f"     呼び : {r['呼び']}")
+            print(f"     契約 : {r['契約']}")
+            print(f"     由   : {r['由']}")
+        print(f"\n★家/束の器で 合 でない呼び = {n}★")
+        return 0
+    print(__doc__); return 2
+
+if __name__ == "__main__":
+    sys.exit(main())

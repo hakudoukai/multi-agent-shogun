@@ -1,0 +1,164 @@
+★母數を取つた刻★ 2026-09-17 04:49:09 ／ 各 session の大きさ(bytes): 86520980=2194522 13ac0f13=2770008 8515d3e0=1505117
+★註★ 此の三本の内 一本は ★今 測つて居る session 其の物★。走る毎に育つ(215→217→…)。
+★母數★ session 3 本 / Bash 呼出 220 回
+★呼びの cwd(jsonl の cwd 欄・實測)★ .=188 ／ docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917=31 ／ docs/evidence/km-50-kara-wa-todokazu-20260917=1
+★呼びの箇所★ 890 ／ 讀めなんだ command 0 ／ heredoc の胴で数へ ★ぬ★ 行 3930
+
+--- 器別(器 / 族 / 契約の出所 / 判 / 回数) ---
+   196  echo                             外の器    引けぬ      引けぬ
+   171  cd                               外の器    引けぬ      引けぬ
+    81  cat                              外の器    引けぬ      引けぬ
+    69  head                             外の器    引けぬ      引けぬ
+    68  grep                             外の器    引けぬ      引けぬ
+    52  sed                              外の器    引けぬ      引けぬ
+    30  ls                               外の器    引けぬ      引けぬ
+    28  -                                外の器    引けぬ      引けぬ
+    21  tail                             外の器    引けぬ      引けぬ
+    18  raw/20_keiyaku.py                束の器    usage行(多行) 合
+    17  wc                               外の器    引けぬ      引けぬ
+    13  find                             外の器    引けぬ      引けぬ
+    13  mv                               外の器    引けぬ      引けぬ
+     7  date                             外の器    引けぬ      引けぬ
+     7  printf                           外の器    引けぬ      引けぬ
+     7  tee                              外の器    引けぬ      引けぬ
+     6  cp                               外の器    引けぬ      引けぬ
+     6  sort                             外の器    引けぬ      引けぬ
+     6  tmux                             外の器    引けぬ      引けぬ
+     5  cut                              外の器    引けぬ      引けぬ
+     5  shasum                           外の器    引けぬ      引けぬ
+     4  docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py 束の器    引けぬ      引けぬ
+     4  f                                外の器    引けぬ      引けぬ
+     4  rm                               外の器    引けぬ      引けぬ
+     4  tr                               外の器    引けぬ      引けぬ
+     3  D=~/.claude/projects/-Users-momizimac-multi-agent-shogun 外の器    引けぬ      引けぬ
+     3  awk                              外の器    引けぬ      引けぬ
+     3  docs/evidence/km-49-buzai-shikii-20260917/raw/32_bunkai.py 束の器    引けぬ      引けぬ
+     2  d                                外の器    引けぬ      引けぬ
+     2  docs/evidence/km-49-buzai-shikii-20260917/km-49-buzai-shikii-20260917_manifest.txt 外の器    引けぬ      引けぬ
+     2  docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh 束の器    usage行   否
+     2  docs/evidence/km-49-buzai-shikii-20260917/raw/22_taihi.sh 束の器    usage行   合
+     2  git                              外の器    引けぬ      引けぬ
+     2  mkdir                            外の器    引けぬ      引けぬ
+     2  scripts/inbox_write.sh           家の器    usage行(多行) 合
+     1
+import hashlib,io
+for l in io.open('docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh',encoding='utf-8'):
+    if l.startswith('is_num(){'): print('sha16(改行含めず)=',hashlib.sha256(l.rstrip('\n').encode()).hexdigest()[:16]) 外の器    引けぬ      引けぬ
+     1
+import json,sys,collections
+for f in ['86520980-31ef-4114-b435-fc17d92c5ec7','13ac0f13-5509-40c5-a798-305bf71b8ebb','8515d3e0-f9f7-4097-8dd8-4ad2f832ff30']:
+    c=collections.Counter()
+    for line in open('~/.claude/projects/-Users-momizimac-multi-agent-shogun/'+f+'.jsonl',encoding='utf-8',errors='replace'):
+        try:o=json.loads(line)
+        except Exception:continue
+        if 'cwd' in o: c[o['cwd']]+=1
+    print(f[:8], dict(c))
+ 外の器    引けぬ      引けぬ
+     1
+import os
+bad=[]
+for dp,dn,fn in os.walk('docs/evidence/km-49-buzai-shikii-20260917'):
+    for f in fn:
+        p=os.path.join(dp,f)
+        if p.endswith('.nul'): continue
+        b=open(p,'rb').read()
+        if not b.endswith(b'\n') or b.endswith(b'\n\n') or b'\r' in b: bad.append(p)
+print('  違反 =',len(bad)); [print('   ',x) for x in bad] 外の器    引けぬ      引けぬ
+     1
+import re,io
+for l in io.open('docs/evidence/km-49-buzai-shikii-20260917/raw/81_kaki2.out',encoding='utf-8'):
+    m=re.search(r'before bytes=(\d+) CR=(\d+) -> after bytes=(\d+) CR=(\d+)',l)
+    if m and (m.group(1)!=m.group(3) or m.group(2)!=m.group(4)): print('  動いた',l.strip())
+ 外の器    引けぬ      引けぬ
+     1
+import shlex
+for s in ['bash a.sh X Y > o.out 2> e.err','python3 k.py f.err >> a.out 2>> b.err','cmd a 2>&1 | grep x','x; > z.out']:
+    lex=shlex.shlex(s,posix=True,punctuation_chars=True); lex.whitespace_split=True
+    print(list(lex))
+ 外の器    引けぬ      引けぬ
+     1
+import sys
+n=sys.stdin.buffer.read().split(b'\0')[:-1]
+bad=[x for x in n if any(c in x for c in b' \t\n')]
+print('  含む =',len(bad),'/ 母數',len(n)) 外の器    引けぬ      引けぬ
+     1
+import yaml,io
+d=yaml.safe_load(open('queue/inbox/ashigaru-mac-2.yaml'))
+ms=d.get('messages') or []
+print('total',len(ms))
+for m in ms:
+    if not m.get('read'):
+        print('---')
+        for k,v in m.items():
+            print(k,':',str(v)[:600])
+ 外の器    引けぬ      引けぬ
+     1  $(shasum                         外の器    引けぬ      引けぬ
+     1  [                                外の器    引けぬ      引けぬ
+     1  a=$                              外の器    引けぬ      引けぬ
+     1  docs/evidence/km-49-buzai-shikii-20260917/km-49-buzai-shikii-20260917.md 外の器    引けぬ      引けぬ
+     1  docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh 束の器    usage行   合
+     1  docs/evidence/km-49-buzai-shikii-20260917/raw/20_hikae.py 束の器    引けぬ      引けぬ
+     1  docs/evidence/km-49-buzai-shikii-20260917/raw/30_hikaku.py 束の器    引けぬ      引けぬ
+     1  docs/evidence/km-49-buzai-shikii-20260917/raw/80_kaki.out 外の器    引けぬ      引けぬ
+     1  docs/evidence/km-50-kara-wa-todokazu-20260917/raw/kaki.py 束の器    引けぬ      引けぬ
+     1  du                               外の器    引けぬ      引けぬ
+     1  f=$                              外の器    引けぬ      引けぬ
+     1  import sys;s=sys.stdin.read();print("字数:",len(s)) 外の器    引けぬ      引けぬ
+     1  import sys;s=sys.stdin.read();print("字数:",len(s));print("bytes:",len(s.encode())) 外の器    引けぬ      引けぬ
+     1  mktemp                           外の器    引けぬ      引けぬ
+     1  od                               外の器    引けぬ      引けぬ
+     1  paste                            外の器    引けぬ      引けぬ
+     1  queue/inbox/ashigaru-mac-2.yaml  外の器    引けぬ      引けぬ
+     1  scripts/checks/karo_mac_manifest_append.py 家の器    usage行(多行) 合
+
+--- ★否★ と ★引けぬ★ の家/束の器のみ 一件毎 ---
+  1. [否] docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh (束の器/usage行) sess=86520980
+     呼び : bash docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh
+     契約 : bash 10_buzai_mon.sh <file...>
+     由   : 位置引数 0 / 契約 1 ★足らぬ★
+  2. [否] docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh (束の器/usage行) sess=86520980
+     呼び : bash docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh --from0
+     契約 : bash 10_buzai_mon.sh <file...>
+     由   : 位置引数 0 / 契約 1 ／ ★契約に無い旗 ['--from0']★
+  3. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/20_hikae.py (束の器/引けぬ) sess=86520980
+     呼び : python3 docs/evidence/km-49-buzai-shikii-20260917/raw/20_hikae.py docs/evidence/km-49-buzai-shikii-20260917/raw/21_hikae.tsv queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw queue/reports/ashigaru-mac-2_km-48-michibikeru-mo
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+  4. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/30_hikaku.py (束の器/引けぬ) sess=86520980
+     呼び : python3 docs/evidence/km-49-buzai-shikii-20260917/raw/30_hikaku.py queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw 1048576
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+  5. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/32_bunkai.py (束の器/引けぬ) sess=86520980
+     呼び : python3 docs/evidence/km-49-buzai-shikii-20260917/raw/32_bunkai.py queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw queue/reports/ashigaru-mac-2_km-48-chou-wo-kotaeyo-fukuramu-shoumei-wo-yasesaseyo-20260917_evidence/raw/60_
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+  6. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/32_bunkai.py (束の器/引けぬ) sess=86520980
+     呼び : python3 docs/evidence/km-49-buzai-shikii-20260917/raw/32_bunkai.py queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw queue/reports/ashigaru-mac-2_km-48-michibikeru-mono-to-michibikenu-mono-wo-wakete-taba-wo-yasesaseyo-jou5-n
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+  7. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/32_bunkai.py (束の器/引けぬ) sess=86520980
+     呼び : python3 docs/evidence/km-49-buzai-shikii-20260917/raw/32_bunkai.py queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw /no/such/root
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+  8. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py (束の器/引けぬ) sess=86520980
+     呼び : python3 -B docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py docs/evidence/km-49-buzai-shikii-20260917/raw/80_kaki.out docs/evidence/km-49-buzai-shikii-20260917/raw/80_kaki.err
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+  9. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py (束の器/引けぬ) sess=86520980
+     呼び : python3 -B docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py $(cat docs/evidence/km-49-buzai-shikii-20260917/raw/80_kaki.out docs/evidence/km-49-buzai-shikii-20260917/raw/80_kaki.err docs/evidence/km-49-buzai-shikii-20260917/raw/81_kaki2.err
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+ 10. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py (束の器/引けぬ) sess=86520980
+     呼び : python3 -B docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py docs/evidence/km-49-buzai-shikii-20260917/km-49-buzai-shikii-20260917.md
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+ 11. [引けぬ] docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py (束の器/引けぬ) sess=86520980
+     呼び : python3 -B docs/evidence/km-49-buzai-shikii-20260917/raw/kaki.py docs/evidence/km-49-buzai-shikii-20260917/raw/90_daichou.err
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+ 12. [引けぬ] docs/evidence/km-50-kara-wa-todokazu-20260917/raw/kaki.py (束の器/引けぬ) sess=13ac0f13
+     呼び : python3 -B docs/evidence/km-50-kara-wa-todokazu-20260917/raw/kaki.py docs/evidence/km-50-kara-wa-todokazu-20260917/km-50-kara-wa-todokazu-20260917.md
+     契約 : (usage も docstring も argparse も無し)
+     由   : (usage も docstring も argparse も無し)
+
+★家/束の器で 合 でない呼び = 12★

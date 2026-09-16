@@ -1,0 +1,7 @@
+63_naoshi.diff
+    before bytes=2886 CR=0 -> after bytes=2885 CR=0
+66_ima.diff
+    before bytes=5869 CR=0 -> after bytes=5867 CR=0
+--- 削つた場所(隠さず控へる) ---
+  63_naoshi.diff :: 末尾空白を削つた行 1 :: 行 [17]
+  66_ima.diff :: 末尾空白を削つた行 2 :: 行 [6, 53]

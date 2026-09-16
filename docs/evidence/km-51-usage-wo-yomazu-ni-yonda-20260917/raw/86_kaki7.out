@@ -1,0 +1,17 @@
+raw/92_daichou3.out
+    before bytes=117 CR=0 -> after bytes=117 CR=0
+raw/92_daichou3.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+raw/93_argv_no_moto.txt
+    before bytes=2082 CR=0 -> after bytes=2082 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/92_daichou3.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/92_daichou3.err :: 空→一行 :: 行 []
+  raw/93_argv_no_moto.txt :: 末尾空白を削つた行 0 :: 行 []
+raw/86_kaki7.out
+    before bytes=440 CR=0 -> after bytes=440 CR=0
+raw/86_kaki7.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/86_kaki7.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/86_kaki7.err :: 空→一行 :: 行 []

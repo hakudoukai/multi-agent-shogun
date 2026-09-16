@@ -1,0 +1,30 @@
+★則 ―― 数へる前に書く(第50弾 50-F の轍を踏まぬ為)★
+
+【母數の根】
+根一 己の席 = ashigaru-mac-2。己の束 = km-49 / km-50 / km-51(本弾)。
+     km-46 / km-47 は席3の束ゆゑ母數外(席の行を實測して除いた)。
+根二 「呼び」の控が在る場所は二つ。
+     甲 束の中の紙(raw/*.sh ・ raw/*.py の中に書いた呼び)
+     乙 ★端末で打つた呼び★ ―― 之は束に無い。控は Claude Code の session 記録
+        (~/.claude/projects/-Users-momizimac-multi-agent-shogun/<uuid>.jsonl)に在る。
+     ★乙を数へねば母數は嘘に成る。第50弾の 50-G(門へ紙を渡した)は乙の側で起きた。★
+根三 己の session の見分けは ★己が打つた `tmux display-message ... @agent_id` の出目★ で取る。
+     path の名でも mtime でもない(推に成る故)。
+
+【器の定義】
+器 = 「呼べば走る外の物」。三つに割る。
+  家の器  : repo `scripts/` 配下 ・ `$HOME/bin/` 配下。★usage/docstring を持ち得る★。
+  束の器  : 己が其の弾の束の中に建てた `raw/*.py` `raw/*.sh`。
+  外の器  : 系の道具(grep sed awk find shasum wc git tmux python3 date ls cat 等)。man を持つ。
+  ★harness の道具(Read/Edit/Write/Bash 其の物)は器に数へぬ★ ―― argv を持たぬ故。数へぬ事を宣する。
+
+【呼びの数へ方】
+一呼び = 「器の名が command 文字列の中で ★命令の頭★ に立つた箇所」一つ。
+  `|` `;` `&&` `||` `$( )` の後も頭と見る。同じ command の中に二度立てば二呼び。
+  引用の中(例: grep の pattern の中の "grep")は頭に非ず ―― 数へぬ。
+  ★此の則で漏れる物: heredoc の中に書いた器の名。漏れる事を宣する。★
+
+【合/否/引けぬ の定義】
+合   : 呼んだ形の argv の ★数と位置★ が、其の器の usage/docstring/argparse の宣ずる契約に収まる。
+否   : 収まらぬ。★rc が 0 でも否は否★。
+引けぬ: 其の器が usage も docstring も argparse も持たぬ。★「引けぬ」も答であり、合でも否でもない。★

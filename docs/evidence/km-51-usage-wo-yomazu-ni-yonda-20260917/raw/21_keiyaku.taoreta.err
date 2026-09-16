@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/20_keiyaku.py", line 238, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/20_keiyaku.py", line 195, in main
+    for r in check_cmd(sys.argv[sys.argv.index("--cmd") + 1]):
+             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/20_keiyaku.py", line 180, in check_cmd
+    c = contract(p)
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/20_keiyaku.py", line 121, in contract
+    return parse_usage(m.group(2).strip(), "usage行")
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/20_keiyaku.py", line 138, in parse_usage
+    toks = shlex.split(line.replace("…", " ").replace("...", " "), posix=True)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shlex.py", line 312, in split
+    return list(lex)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shlex.py", line 299, in __next__
+    token = self.get_token()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shlex.py", line 107, in get_token
+    raw = self.read_token()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shlex.py", line 189, in read_token
+    raise ValueError("No closing quotation")
+ValueError: No closing quotation

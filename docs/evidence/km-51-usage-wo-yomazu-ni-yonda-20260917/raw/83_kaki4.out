@@ -1,0 +1,20 @@
+raw/90_daichou.out
+    before bytes=115 CR=0 -> after bytes=115 CR=0
+raw/90_daichou.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+raw/95_mon_hashiri1.out
+    before bytes=1532 CR=0 -> after bytes=1532 CR=0
+raw/95_mon_hashiri1.err
+    before bytes=661 CR=0 -> after bytes=661 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/90_daichou.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/90_daichou.err :: 空→一行 :: 行 []
+  raw/95_mon_hashiri1.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/95_mon_hashiri1.err :: 末尾空白を削つた行 0 :: 行 []
+raw/83_kaki4.out
+    before bytes=579 CR=0 -> after bytes=579 CR=0
+raw/83_kaki4.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/83_kaki4.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/83_kaki4.err :: 空→一行 :: 行 []

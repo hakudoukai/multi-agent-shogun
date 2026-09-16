@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/kaki.py", line 14, in <module>
+    lines = b.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n").split("\n")
+            ~~~~~~~~^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe3 in position 33: invalid continuation byte

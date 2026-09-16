@@ -1,0 +1,7 @@
+raw/80_kaki.out
+    before bytes=10787 CR=0 -> after bytes=10787 CR=0
+raw/80_kaki.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/80_kaki.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/80_kaki.err :: 空→一行 :: 行 []

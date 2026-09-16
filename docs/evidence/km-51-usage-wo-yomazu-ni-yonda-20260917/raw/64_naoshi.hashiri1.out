@@ -1,0 +1,165 @@
+=== 0. 基点と生器 ===
+  生器 = /Users/momizimac/multi-agent-shogun/scripts/checks/karo_mac_dasumae_gate.sh
+  生器 sha256 = 3eaa5cc6b1aa0fd58439cd14cb4e8e61adf99f804a36746601a9751a67c3ba68
+  生器 行数   = 261
+  写し(前) = raw/61_mon_saki.sh  sha256 = 3eaa5cc6b1aa0fd58439cd14cb4e8e61adf99f804a36746601a9751a67c3ba68
+  ★写した直後の sha が生器と一致するか★ = 一致
+
+=== 1. 改めを写しへ当てる(python・見つからねば落とす) ===
+  当て終り: raw/62_mon_ato.sh を書いた
+  python rc=0
+  写し(後) sha256 = dc49fc442939cb2ff12528371825b4c0a6e0e6ec446def2856638c48a0e09ff2  行数 = 283
+  ★生器は触れて居らぬか★ 生器 sha256(再測) = 3eaa5cc6b1aa0fd58439cd14cb4e8e61adf99f804a36746601a9751a67c3ba68
+
+=== 2. ⑴ 逐語 前/後(diff -u) ===
+  diff rc=1(1=差在り が正)  → raw/63_naoshi.diff  行数 = 38
+--- /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/61_mon_saki.sh	2026-09-17 05:03:50
++++ /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/62_mon_ato.sh	2026-09-17 05:03:50
+@@ -47,6 +47,16 @@
+ #   實測(直す前): DASUMAE_MAX_BYTES=abc → L190 の [ ] が rc=2 → if が偽 → ★「條⑤ 寸法 = byte和 6(閾 abc未満)」を刷り rc=0★。
+ #   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。
+ is_num "$MAXB" || { printf '%s\n' "★閾 DASUMAE_MAX_BYTES が數でない(「${MAXB}」) ―― 既定 10485760 へ倒す(fail-closed)★" >&2; MAXB=10485760; }
++# ★改め 乙(第50弾 提案 → 第51弾 で現物化)★ ―― ★倒した事を言へ★
++#   由来: L20 `${DASUMAE_MAX_BYTES:-10485760}` は ★未設定★ も ★空文字★ も黙つて食ふ。
++#         値は正しく既定へ倒れる。★然し一言も言はぬ★ ―― 「検めて通した」と同じ顔をする(第50弾 毒4)。
++#   本形は ★言葉だけを足す★。MAXB の値には一指も触れて居らぬ(∴ 閾の意味は不変)。
++#   可逆: 下の if 一塊(5行)を消せば旧挙動。
++if [ -z "${DASUMAE_MAX_BYTES+SET}" ]; then
++  say "條⑤ 閾 = 既定 ${MAXB}(DASUMAE_MAX_BYTES ★未設定★)"
++elif [ -z "${DASUMAE_MAX_BYTES-}" ]; then
++  say "★閾 DASUMAE_MAX_BYTES が ★空文字★(設定は在るが値が無い) ―― 既定 ${MAXB} を用ゐる(fail-closed)★"
++fi
+
+ safe_size(){
+   local f="${1:-}" r
+@@ -191,6 +201,18 @@
+     fi
+     total=$((total + sz))
+   done
++  # ★改め 甲(第50弾 提案 → 第51弾 で現物化)★ ―― 比べる前に ★同じ `[ ]` で★ 閾を検める
++  #   由来: MAXB が 2^63 以上だと `[ -ge ]` が ★rc=2(器の誤り)★ で落ち、if が其れを ★偽★ と受けて ★通した★。
++  #         (第50弾 毒2: `line 194: [: 9223372036854775808: integer expression expected` を刷りつつ ★門 通 rc=0★)
++  #   ★rc=1(偽)は捕へぬ★ ―― 負の閾は旧来通り「總て鳴る」(fail-closed)の儘。捕へるのは ★rc>=2 だけ★。
++  #   ∴ 出目が変るのは ★旧版が器の誤りを刷つて居た態★ に限られる(下の㋔-⑷ 不変表)。
++  #   可逆: 下の 6 行を `if [ "$total" -ge "$MAXB" ]; then` 一行へ戻せば旧挙動。
++  local maxb_rc
++  [ "$MAXB" -ge 0 ] 2>/dev/null; maxb_rc=$?
++  if [ "$maxb_rc" -ge 2 ]; then
++    say "★閾 DASUMAE_MAX_BYTES が 「[ ]」 で比べられぬ(「${MAXB}」・rc=${maxb_rc}) ―― 既定 10485760 へ倒す(fail-closed)★"
++    MAXB=10485760
++  fi
+   if [ "$total" -ge "$MAXB" ]; then
+     say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)超★"
+     fail=1
+
+=== 3. ⑵ bash -n(構文検め) ===
+  bash -n 61_mon_saki.sh  rc=0  出目=「(空)」
+  bash -n 62_mon_ato.sh  rc=0  出目=「(空)」
+  bash -n karo_mac_dasumae_gate.sh  rc=0  出目=「(空)」
+
+=== 4. 對照の前拵へ(束の中に 36byte の紙を作る) ===
+  /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/.taishou_36.txt  寸法=37 byte  末尾=0a
+
+=== 5. ⑶ 對照 甲 ―― 閾 2^63(第50弾 毒2 の形)／紙 36byte ===
+  ★陽性(誤形)★ 閾=9223372036854775808
+  [陽性前] 61_mon_saki.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 9223372036854775808未満)」
+      閾に就いて口を利いた行 = 1 行
+      ／ /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/61_mon_saki.sh: line 194: [: 9223372036854775808: integer expression expected
+      ／ ★出す前 門 通。出してよい。★
+  [陽性後] 62_mon_ato.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 10485760未満)」
+      閾に就いて口を利いた行 = 1 行
+      ／ ★閾 DASUMAE_MAX_BYTES が 「[ ]」 で比べられぬ(「9223372036854775808」・rc=2) ―― 既定 10485760 へ倒す(fail-closed)★
+      ／ ★出す前 門 通。出してよい。★
+  ★陰性(正形)★ 閾=10485760(既定と同値)
+  [陰性前] 61_mon_saki.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 10485760未満)」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門 通。出してよい。★
+  [陰性後] 62_mon_ato.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 10485760未満)」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門 通。出してよい。★
+
+=== 6. ⑶ 對照 甲(現物で ★鳴らす★) ―― byte和 が閾を超える紙で、fail-open を目に見せる ===
+  拵へた紙 /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/.taishou_10mb.txt 寸法=10485762 byte(閾 10485760 を超える)
+  ★之が要である★: 閾=2^63 の時 前の門は ★byte和が幾らでも鳴かぬ★。後の門は既定へ倒れて ★鳴る★。
+  [陽性前・大] 61_mon_saki.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 10485762(閾 9223372036854775808未満)」
+      閾に就いて口を利いた行 = 1 行
+      ／ /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/61_mon_saki.sh: line 194: [: 9223372036854775808: integer expression expected
+      ／ ★出す前 門 通。出してよい。★
+  [陽性後・大] 62_mon_ato.sh rc=1
+      條⑤ 行 = 「★條⑤ 寸法 ―― byte和 10485762(閾 10485760・裁294493)超★」
+      閾に就いて口を利いた行 = 1 行
+      ／ ★閾 DASUMAE_MAX_BYTES が 「[ ]」 で比べられぬ(「9223372036854775808」・rc=2) ―― 既定 10485760 へ倒す(fail-closed)★
+      ／ ★出す前 門が落ちた。出すな。★
+  ★陰性(正形・大)★ 閾=10485760 ―― 前も後も同じく鳴らねばならぬ
+  [陰性前・大] 61_mon_saki.sh rc=1
+      條⑤ 行 = 「★條⑤ 寸法 ―― byte和 10485762(閾 10485760・裁294493)超★」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門が落ちた。出すな。★
+  [陰性後・大] 62_mon_ato.sh rc=1
+      條⑤ 行 = 「★條⑤ 寸法 ―― byte和 10485762(閾 10485760・裁294493)超★」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門が落ちた。出すな。★
+  (10MB の紙は消した ―― 束へ残さぬ。拵へ方は本 script の中に在る)
+
+=== 7. ⑶ 對照 乙 ―― 空の閾の黙り(第50弾 毒4 の形)／紙 36byte ===
+  ★陽性(空文字)★
+  [陽性前] 61_mon_saki.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 10485760未満)」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門 通。出してよい。★
+  [陽性後] 62_mon_ato.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 10485760未満)」
+      閾に就いて口を利いた行 = 1 行
+      ／ ★閾 DASUMAE_MAX_BYTES が ★空文字★(設定は在るが値が無い) ―― 既定 10485760 を用ゐる(fail-closed)★
+      ／ ★出す前 門 通。出してよい。★
+  ★陽性(未設定)★
+  [陽性前] 61_mon_saki.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 10485760未満)」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門 通。出してよい。★
+  [陽性後] 62_mon_ato.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 10485760未満)」
+      閾に就いて口を利いた行 = 1 行
+      ／ 條⑤ 閾 = 既定 10485760(DASUMAE_MAX_BYTES ★未設定★)
+      ／ ★出す前 門 通。出してよい。★
+  ★陰性(値在り 4096)★ ―― 新しい行が出ては ならぬ
+  [陰性前] 61_mon_saki.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 4096未満)」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門 通。出してよい。★
+  [陰性後] 62_mon_ato.sh rc=0
+      條⑤ 行 = 「條⑤ 寸法 = byte和 37(閾 4096未満)」
+      閾に就いて口を利いた行 = 0 行
+      ／ ★出す前 門 通。出してよい。★
+
+=== 8. ⑷ ★閾の意味が変つて居らぬ★ 證 ―― 態 十通を前後で当て、出目を並べる ===
+  態                    | 前rc | 後rc | 前の條⑤                           | 後の條⑤
+  -----------------------+------+------+----------------------------------------+---------------------------
+  一 未設定          | 0    | 0    | 閾 10485760未満)                    | 閾 = 既定 10485760(DASUMAE_MAX_BYTES ★未設定★)
+  二 空文字          | 0    | 0    | 閾 10485760未満)                    | 閾 DASUMAE_MAX_BYTES が ★空文字★(設定は在るが値が無い)
+  三 空白のみ SP    | 0    | 0    | 閾 DASUMAE_MAX_BYTES が數でない(「 」) | 閾 DASUMAE_MAX_BYTES が數でない(「 」)
+  四 空白のみ TAB   | 0    | 0    | 閾 DASUMAE_MAX_BYTES が數でない(「	」) | 閾 DASUMAE_MAX_BYTES が數でない(「	」)
+  五 全角空白       | 0    | 0    | 閾 DASUMAE_MAX_BYTES が數でない(「　」) | 閾 DASUMAE_MAX_BYTES が數でない(「　」)
+  六 4096               | 0    | 0    | 閾 4096未満)                        | 閾 4096未満)
+  七 abc                | 0    | 0    | 閾 DASUMAE_MAX_BYTES が數でない(「abc」) | 閾 DASUMAE_MAX_BYTES が數でない(「abc」)
+  八 0                  | 1    | 1    | 閾 0・裁294493)                     | 閾 0・裁294493)
+  九 2^63-1             | 0    | 0    | 閾 9223372036854775807未満)         | 閾 9223372036854775807未満)
+  十 2^63               | 0    | 0    | 閾 9223372036854775808未満)         | 閾 DASUMAE_MAX_BYTES が 「[ ]」 で比べられぬ(「9223372036854775808」・rc=2)
+
+  ★讀み★ 六〜九(=「[ ]」 が比べられる値)の rc と 條⑤ の字は ★前後で同じ★。
+        一二(未設定・空文字)は rc も條⑤も同じで、★増えたのは言葉だけ★(乙)。
+        三四五七(數でない)は L49 の旧来の枝が先に食ふ ∴ 不変。
+        ★変つたのは 十(2^63) だけ★ ―― 其処だけが旧版で ★器の誤りを刷りつつ通して居た★ 態である。
+
+=== 9. ⑸ 一行で戻す ===
+  甲: sed -i '' -e '/★改め 甲(第50弾 提案 → 第51弾 で現物化)★/,/^  fi$/d' <gate> ―― は ★勧めぬ★(範囲が脆い)。
+  ★勧める一行★(甲乙とも一度に戻す・控から): cp docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/61_mon_saki.sh scripts/checks/karo_mac_dasumae_gate.sh
+  ―― 61_mon_saki.sh は ★据ゑる前の生器の逐語の写し★(上 sha256 一致を示した)。之が最も短く、最も確かな戻し方である。
+
+=== 10. 終 ―― 生器 sha256(最終再測) ===
+  3eaa5cc6b1aa0fd58439cd14cb4e8e61adf99f804a36746601a9751a67c3ba68  /Users/momizimac/multi-agent-shogun/scripts/checks/karo_mac_dasumae_gate.sh

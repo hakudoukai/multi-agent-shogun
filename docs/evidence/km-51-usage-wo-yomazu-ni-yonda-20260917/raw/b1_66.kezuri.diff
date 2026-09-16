@@ -1,0 +1,81 @@
+--- /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/61_mon_saki.sh	2026-09-17 05:04:24
++++ /Users/momizimac/multi-agent-shogun/docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/65_mon_ima.sh	2026-09-17 05:14:45
+@@ -28,6 +28,38 @@
+ #   可逆: 控(…bak-20260912-shiketsu-failopen)へ戻せば旧挙動。
+ is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+
++# ★甲(裁 seq322952)★ 閾は ★後段の比較に使ふのと同じ演算子★ で先に検める。
++#   is_num(case glob) は 2^63 以上の十進をも「數」と讀むが、後段の `[ -ge ]` は
++#   ★rc=2 で倒れ else へ落ちて通す(fail-open)★ ―― 二つの器が別の答を出す。
++#   形: DASUMAE_MAX_BYTES=99999999999999999999 → is_num=通 / [ -ge ]=rc2 → 條⑤ が黙つて通つた。
++#   ∴ `[ "$v" -ge 0 ]` を空打ちし、rc<=1 の時のみ「使へる閾」とする。
++num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
++
++# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
++#   註: 「空白のみ」は ASCII の空白類のみを見る(全角空白は value 側へ落ち、比較器が拒む)。
++env_state(){
++  eval "_es_set=\"\${$1+set}\"; _es_v=\"\${$1-}\""
++  if [ -z "${_es_set}" ]; then printf 'unset\n'
++  elif [ -z "${_es_v}" ]; then printf 'empty\n'
++  elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
++  else printf 'value\n'; fi
++}
++
++# 閾を一本の道で定める ―― $1=変数名 $2=既定 $3=受け皿の変数名
++fix_threshold(){
++  local name="$1" dflt="$2" out="$3" st raw
++  st="$(env_state "$name")"
++  eval "raw=\"\${$name-}\""
++  case "$st" in
++    unset) say "閾 ${name} = 未設定 ―― 既定 ${dflt} を用ゐる(★倒した事を刷る★)"; eval "$out=\$dflt"; return 0 ;;
++    empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
++    blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
++  esac
++  if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
++  say "★閾 ${name} が比較器で扱へぬ(「${raw}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
++  eval "$out=\$dflt"
++}
++
+ # ★2026-09-16 裁 seq320321⑴(313209/314012) ―― 「止」を通さぬ(家老mac 自席の器・可逆・事後1便)★
+ #   由来: 門には第三の出目「止」が在る ―― FIFO/device を `wc -c` が永久に待ち、rc も出ぬ。
+ #   ★實測(家老mac 2026-09-16)★: `timeout 3 wc -c < "$fifo"` は ★120秒 戻らなんだ★(背に回して止めた)。
+@@ -42,11 +74,11 @@
+ TIMEOUT_BIN="$(command -v timeout 2>/dev/null || command -v gtimeout 2>/dev/null || true)"
+ SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+ # ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
+-is_num "$SAFE_SIZE_TMO" || { printf '%s\n' "★閾 DASUMAE_READ_TIMEOUT が數でない(「${SAFE_SIZE_TMO}」) ―― 既定 10 へ倒す(fail-closed)★" >&2; SAFE_SIZE_TMO=10; }
++fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO
+ # ★同じ病が同じ file の L20 に残つて居た ―― 閾 MAXB は素のままであつた(專任3 第40弾 実測・家老 021211 再測)★
+ #   實測(直す前): DASUMAE_MAX_BYTES=abc → L190 の [ ] が rc=2 → if が偽 → ★「條⑤ 寸法 = byte和 6(閾 abc未満)」を刷り rc=0★。
+ #   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。
+-is_num "$MAXB" || { printf '%s\n' "★閾 DASUMAE_MAX_BYTES が數でない(「${MAXB}」) ―― 既定 10485760 へ倒す(fail-closed)★" >&2; MAXB=10485760; }
++fix_threshold DASUMAE_MAX_BYTES 10485760 MAXB
+
+ safe_size(){
+   local f="${1:-}" r
+@@ -154,7 +186,24 @@
+     #   實測(此の止血の後も残つて居た): 同じ臺帳・同じ file・同じ刻で repo 根 rc=1 / ba_A 配下 rc=0。
+     #   ∴ 基点を ★渡さぬ★。照合器の「器の在處から導いた repo 根」既定(cwd に依らぬ)へ委ねる。
+     #   可逆: 下行の末尾へ ' ""' を戻せば旧挙動。
+-    if python3 "$(dirname "$0")/karo_mac_manifest_verify.py" "$man"; then
++    # ★2026-09-17 基点の口 を足す(裁 seq322949)★
++    #   束内相対の臺帳(裁322699)は ★既定基点=repo 根★ では悉く「実体無」で落ちる。
++    #   實測: 專任1 _after/98_rel_test.txt(既定→実体無2/2・基点明示→一致2/2)／專任3 が同じ L157 を名指した。
++    #   ∴ 呼ぶ側が基点を渡せる口を足す。★既定は従前の儘(渡さぬ)★ ――
++    #   環境変数 KM_GATE_MANIFEST_BASE が ★set されて居る時のみ★ 渡す
++    #   (空文字も「cwd 相対」の明示として通る ―― ${x+set} は空でも set を返す故)。
++    #   可逆: 下の if/else を `python3 ... "$man"` の一行へ戻せば旧挙動。
++    local vrc
++    if [ -n "${KM_GATE_MANIFEST_BASE+set}" ]; then
++      python3 "$(dirname "$0")/karo_mac_manifest_verify.py" "$man" "$KM_GATE_MANIFEST_BASE"
++      vrc=$?
++      say "條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)"
++    else
++      python3 "$(dirname "$0")/karo_mac_manifest_verify.py" "$man"
++      vrc=$?
++      say "條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★"
++    fi
++    if [ $vrc -eq 0 ]; then
+       say "條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)"
+     else
+       say "★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★"

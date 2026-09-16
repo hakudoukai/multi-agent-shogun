@@ -1,0 +1,11 @@
+raw/91_daichou2.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/91_daichou2.err :: 空→一行 :: 行 []
+raw/85_kaki6.out
+    before bytes=160 CR=0 -> after bytes=160 CR=0
+raw/85_kaki6.err
+    before bytes=0 CR=0 -> after bytes=122 CR=0
+--- 削つた場所(隠さず控へる) ---
+  raw/85_kaki6.out :: 末尾空白を削つた行 0 :: 行 []
+  raw/85_kaki6.err :: 空→一行 :: 行 []
