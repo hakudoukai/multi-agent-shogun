@@ -1,0 +1,87 @@
+台帳 docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt
+  cwd  /Users/momizimac/multi-agent-shogun
+  基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+  一致 ★222★ / 相違 2 / 実体無 6 / 読めぬ行 0  (母數 230)
+  ★旧形(引用符を含む行)★ 6 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+  ★註★ 旧形は ★通した★ ―― 上の 母數 に含まれ、rc を赤にせぬ。
+       ★新規に書く行では引用符を用ゐるな★(頭註の條)。既存行の書き換へは求めぬ。
+    ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A02/a b.txt" sha256=a0a466f728880be9b
+    ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A03/a	b.txt" sha256=a0a466f728880be9b
+    ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A09/a sha256=deadbeef b.txt" sha256=a
+    ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A10/a sha256=bbbbbbbbbbbbbbbbbbbbbbbb
+    ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A15/matsubi .txt" sha256=a0a466f72888
+    … 他 1 行(母數 6)
+  ★註★ ★実体無★ は ★『disk に物が無い』とは限らぬ★ ―― ★基点(場所)が違ふ★ 事が在る。
+       上の『基点』行を先に読み、次に ★臺帳を作つた樹の根★ で当て直せ。
+  ★註★ 相違 は ★疵 とは限らぬ★ ―― ★測る樹 の版 が 台帳 を作つた時 と違ふ★ 事 が在る。
+       断ずる前 に ⑴紙 に書かれた版 を読み ⑵其の版 で当て直せ。
+       例: git show <版>:<path> | shasum -a 256
+    ★相違★ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/HEI_chigau_dou/a
+    ★相違★ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/KOU_onaji_dou/a
+    ★実体無★ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A04/a
+    ★実体無★ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a
+    ★実体無★ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A06/a
+    ★実体無★ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A08/a
+    ★実体無★ "docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A09/a
+    ★実体無★ "docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A10/a
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.AFTER.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.AFTER.kaki.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.BEFORE.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.BEFORE.kaki.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.AFTER.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.AFTER.kaki.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.BEFORE.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.BEFORE.kaki.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/km45.AFTER.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/km45.BEFORE.err は空file(0byte)★
+★CR混入 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/man/B04_cr.one.txt に 1 行★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A01_kiyoi.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A01_kiyoi.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A02_hankaku.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A02_hankaku.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A03_tab.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A03_tab.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A04_zenkaku.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A04_zenkaku.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A05_nbsp.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A05_nbsp.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A06_u2028.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A06_u2028.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A07_zwsp.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A07_zwsp.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A08_u205f.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A08_u205f.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A09_sha8.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A09_sha8.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A10_sha64.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A10_sha64.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A11_ikoru.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A11_ikoru.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A12_koron.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A12_koron.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A13_hyphen.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A13_hyphen.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A14_chodai.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A14_chodai.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A15_matsubi.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A15_matsubi.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A16_atama.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A16_atama.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A17_sharp.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A17_sharp.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A18_path_ikoru.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/A18_path_ikoru.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B01_futae.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B01_futae.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B02_hitoe.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B02_hitoe.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B03_lf.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B03_lf.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B04_cr.after.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/an/mon/B04_cr.before.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/raw/chakushu_send.err は空file(0byte)★
+★EOF改行 ―― docs/evidence/km-46-yomite-no-kizu-20260917/raw/chakushu_send.out は空file(0byte)★
+條⑤ 寸法 = byte和 353804(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★
