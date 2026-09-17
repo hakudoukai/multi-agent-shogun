@@ -1,0 +1,34 @@
+porcelain 前  本数=1017  (stderr 行=1 ―― 之は數に入れぬ)
+  stderr 逐語: warning: could not open directory 'queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n13_noaccess_dir/': Permission denied
+  束が porcelain に出て居るか: 1 行
+
+GIT_INDEX_FILE=/tmp/km91_idx_Di31vX  (存在=無)
+read-tree rc=0  (親 main=363d5fb060845171338c067ef42bfcbef8ad9188)
+blob=15d8906f046017df9212deae497ec23000d05a82  (元=/Users/momizimac/multi-agent-shogun/docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/20_fixed_full.sh)
+update-index rc=0
+tree=737405059969773179e273d1b67b301106eb9b32  write-tree rc=0
+commit=eb6cf51de16fd06b76eaf1cf36c47d535e2d5373  commit-tree rc=0
+update-ref rc=0  枝=refs/heads/ashigaru-mac-3/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917
+GIT_INDEX_FILE 解除後の設定有無: 無し
+
+## 據ゑた commit
+sha=eb6cf51de16fd06b76eaf1cf36c47d535e2d5373
+parent=363d5fb060845171338c067ef42bfcbef8ad9188
+tree=737405059969773179e273d1b67b301106eb9b32
+subject=fix(stop_hook): 比較器が★負と0を通す★fail-open を塞ぐ ―― 專任3 第56弾(裁 seq324588⑴)
+## 其の commit が触る file（親 main との差の file 一覧）
+scripts/stop_hook_inbox.sh
+→ file 数=1
+## 束の外を触つて居らぬか（scripts/stop_hook_inbox.sh 以外が在れば★違反★）
+束外(＝的の一本以外) file 数=0  ★0=可★
+## 據ゑた blob は写しと一致するか
+commit 内 blob sha256 = 9dd41120d80cc5cc
+写し      sha256      = 9dd41120d80cc5cc
+
+porcelain 後  本数=1017
+★前後の本数 1017 → 1017  差=0  ★不動=可★
+★中身の差 diff rc=0  差分行=0  (0 行=中身も不動)
+
+## worktree の生 file は動いて居らぬか
+worktree blob = 8bcea32981614611053393ac0b73cbc2947ea0df  (測る前=8bcea32981614611053393ac0b73cbc2947ea0df)
+worktree sha256 = f1b49820e234a1ee  (凍結時=f1b49820e234a1ee)

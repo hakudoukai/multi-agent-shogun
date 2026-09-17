@@ -1,0 +1,16 @@
+# bash=GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)  供給する JSON は 26 字
+# 註: -d '' ゆゑ NUL 迄讀む＝JSON に NUL は無い故 rc≠0(EOF)が正常。★見るべきは rc でなく『讀めた字数』★
+read -t 10             供給=pipe      rc=1   讀めた字数=26  stderr=
+read -t 10             供給=file      rc=1   讀めた字数=26  stderr=
+read -t 1              供給=pipe      rc=1   讀めた字数=26  stderr=
+read -t 1              供給=file      rc=1   讀めた字数=26  stderr=
+read -t 0              供給=pipe      rc=1   讀めた字数=0   stderr=
+read -t 0              供給=file      rc=1   讀めた字数=0   stderr=
+read -t -1             供給=pipe      rc=1   讀めた字数=0   stderr=docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/12_read_t_probe.sh: line 11: read: -1: invalid timeout specification|
+read -t -1             供給=file      rc=1   讀めた字数=0   stderr=docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/12_read_t_probe.sh: line 12: read: -1: invalid timeout specification|
+read -t -5             供給=pipe      rc=1   讀めた字数=0   stderr=docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/12_read_t_probe.sh: line 11: read: -5: invalid timeout specification|
+read -t -5             供給=file      rc=1   讀めた字数=0   stderr=docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/12_read_t_probe.sh: line 12: read: -5: invalid timeout specification|
+read -t 010            供給=pipe      rc=1   讀めた字数=26  stderr=
+read -t 010            供給=file      rc=1   讀めた字数=26  stderr=
+read -t 0 (遅れて来る) 供給=slowpipe  rc=1   讀めた字数=0   stderr=
+read -t 10 (遅れて来る) 供給=slowpipe  rc=1   讀めた字数=26  stderr=

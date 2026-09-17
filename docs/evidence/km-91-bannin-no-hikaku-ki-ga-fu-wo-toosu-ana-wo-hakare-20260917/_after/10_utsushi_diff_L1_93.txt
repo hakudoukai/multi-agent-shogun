@@ -1,0 +1,6 @@
+# km-91 _after/10 ―― 写し(_after/10_utsushi.sh)の L1-93 が 生器 scripts/stop_hook_inbox.sh の L1-93 と一字も違はぬ事
+# 器: diff -u <(sed -n '1,93p' scripts/stop_hook_inbox.sh) <(sed -n '1,93p' _after/10_utsushi.sh)
+# 刻: 2026-09-17 13:14:45 JST   生器 sha256(16)=f1b49820e234a1ee   写し sha256(16)=703c7aebaf8d1095
+# ★出目★: diff rc=0  差分行数=0  → ★差 無し★
+# ★空 stream を 0byte で残さぬ★(己の條: 空も一行で書く。0byte は門 條④ が鳴る上、
+#   「器が走つて空だつた」と「器が走らなかつた」を区別できぬ)。以下が diff の本体(空)である。

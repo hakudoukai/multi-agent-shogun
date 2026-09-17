@@ -1,0 +1,14 @@
+## 時限が生きて居るか ―― 口を閉ぢぬ供給(FIFO・3秒居座る)・timeout=1 ⇒ ★hook は約1秒で戻る筈★
+生器の写し(治前)    timeout=1    rc=0 ★hook 自身の壁時計=1.09s★
+    ##KM91 timeout_used=1 read_rc=1 elapsed=1 input_len=0 stop_hook_active=False bannin=★効かぬ★
+    stderr| [stop_hook] ★stdin 時限切れ(1秒経過・rc=1) — 讀めた 0 字で続行★
+治した写し(治後)    timeout=1    rc=0 ★hook 自身の壁時計=1.08s★
+    ##KM91 timeout_used=1 read_rc=1 elapsed=1 input_len=0 stop_hook_active=False bannin=★効かぬ★
+    stderr| [stop_hook] ★stdin 時限切れ(1秒経過・rc=1) — 讀めた 0 字で続行★
+
+## 上の境 ―― `read -t` の實受容上限は 4294967295(實測 _after/13)
+値          裸 read -t 字数 治前 番人          治後 番人
+86400        7                  bannin=効く          bannin=効く
+86401        7                  bannin=効く          bannin=効く
+4294967295   7                  bannin=効く          bannin=効く
+4294967296   0                  bannin=★効かぬ★ bannin=効く

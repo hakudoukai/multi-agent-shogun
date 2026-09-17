@@ -1,0 +1,9 @@
+# 02 走らせる殻 ―― 2026-09-17T12:54:43+0900
+command -v bash = /bin/bash
+bash --version   = GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+/bin/bash        = GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+/opt/homebrew/bin/bash = ★不在★
+/usr/local/bin/bash    = ★不在★
+env bash         = GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+→ shebang は #!/usr/bin/env bash だが、此の機では ★bash 3.2.57 一択★(L87-88 の註と一致)
+uname -srm       = Darwin 25.5.0 arm64

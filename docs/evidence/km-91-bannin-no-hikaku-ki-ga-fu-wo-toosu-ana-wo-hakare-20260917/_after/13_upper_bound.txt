@@ -1,0 +1,10 @@
+# 13 上の境 ―― 「`[ -ge ]` が扱へる最大」と「`read -t` が受ける最大」は同じか
+# bash=GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+
+1                      [ -ge 1 ] rc=0  read -t → rc=1 字数=7  stderr=
+2147483647             [ -ge 1 ] rc=0  read -t → rc=1 字数=7  stderr=
+9223372036854775807    [ -ge 1 ] rc=0  read -t → rc=1 字数=0  stderr=_: line 4: read: 9223372036854775807: invalid timeout specification|
+9223372036854775808    [ -ge 1 ] rc=2  read -t → rc=1 字数=0  stderr=_: line 4: read: 9223372036854775808: invalid timeout specification|
+99999999999999999999   [ -ge 1 ] rc=2  read -t → rc=1 字数=0  stderr=_: line 4: read: 99999999999999999999: invalid timeout specification|
+
+→ 判読は下の 14 に書く

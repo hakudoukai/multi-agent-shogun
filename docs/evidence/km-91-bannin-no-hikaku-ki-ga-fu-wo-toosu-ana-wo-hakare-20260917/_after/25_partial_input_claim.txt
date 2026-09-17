@@ -1,0 +1,10 @@
+# bash=GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+# 供給: JSON 26字を先に流し、口は閉ぢず N 秒居座る。timeout=1 で時限を必ず踏ませる。
+
+  read -d ""            → rc=1:len=0:[]
+  read なし(改行区切) → rc=1:len=0:[]
+
+## 対照: 口が閉ぢる(EOF)場合 ―― 時限は踏まぬ
+  EOF 有り read -d "" -t 1 → rc=1:len=26
+
+## man bash 3.2 の当該文言(此の機の man より)

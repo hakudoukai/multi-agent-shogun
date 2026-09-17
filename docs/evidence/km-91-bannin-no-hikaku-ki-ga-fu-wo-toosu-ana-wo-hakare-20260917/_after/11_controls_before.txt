@@ -1,0 +1,56 @@
+# 対象写し = docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/10_utsushi.sh  sha16=703c7aebaf8d1095
+# stdin(陽性対照) = {"stop_hook_active": true, "session_id": "km91", "hook_event_name": "Stop"}
+# bash = GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+# 判読: 番人「効く」= 無限ループ防ぎが生きて居る／「★効かぬ★」= 消えて居る
+
+════ 陰性(守る筈) ════
+── 陰性 10
+   rc=0  壁時計経過=0.06s  stderr行数=0
+   ##KM91 timeout_used=10 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| (空)
+── 陰性 0
+   rc=0  壁時計経過=0.07s  stderr行数=1
+   ##KM91 timeout_used=0 read_rc=1 elapsed=0 input_len=0 stop_hook_active=False bannin=★効かぬ★
+   stderr| [stop_hook] ★stdin 時限切れ(0秒経過・rc=1) — 讀めた 0 字で続行★
+── 陰性 既定(未設定)
+   rc=0  壁時計経過=0.06s  stderr行数=0
+   ##KM91 timeout_used=10 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| (空)
+
+════ 陽性(開く筈) ════
+── 陽性 -5
+   rc=0  壁時計経過=0.07s  stderr行数=2
+   ##KM91 timeout_used=-5 read_rc=1 elapsed=0 input_len=0 stop_hook_active=False bannin=★効かぬ★
+   stderr| docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/10_utsushi.sh: line 78: read: -5: invalid timeout specification
+   stderr| [stop_hook] ★stdin 時限切れ(-5秒経過・rc=1) — 讀めた 0 字で続行★
+── 陽性 -1
+   rc=0  壁時計経過=0.07s  stderr行数=2
+   ##KM91 timeout_used=-1 read_rc=1 elapsed=0 input_len=0 stop_hook_active=False bannin=★効かぬ★
+   stderr| docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/10_utsushi.sh: line 78: read: -1: invalid timeout specification
+   stderr| [stop_hook] ★stdin 時限切れ(-1秒経過・rc=1) — 讀めた 0 字で続行★
+
+════ 境 ════
+── 境 空文字
+   rc=0  壁時計経過=0.06s  stderr行数=1
+   ##KM91 timeout_used=10 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が空文字 — 既定 10 へ倒す(fail-closed)★
+── 境 空白のみ
+   rc=0  壁時計経過=0.06s  stderr行数=1
+   ##KM91 timeout_used=10 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「 」) — 既定 10 へ倒す(fail-closed)★
+── 境 非数 abc
+   rc=0  壁時計経過=0.06s  stderr行数=1
+   ##KM91 timeout_used=10 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「abc」) — 既定 10 へ倒す(fail-closed)★
+── 境 010
+   rc=0  壁時計経過=0.06s  stderr行数=0
+   ##KM91 timeout_used=010 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| (空)
+── 境 2^63超(20桁)
+   rc=0  壁時計経過=0.06s  stderr行数=1
+   ##KM91 timeout_used=10 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「99999999999999999999」) — 既定 10 へ倒す(fail-closed)★
+── 境 可視印␊既在
+   rc=0  壁時計経過=0.06s  stderr行数=1
+   ##KM91 timeout_used=10 read_rc=1 elapsed=0 input_len=75 stop_hook_active=True bannin=効く
+   stderr| [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が可視印(␊␍␉)を既に含む — 値を刷らず既定 10 へ倒す(fail-closed・裁 seq323980⑵)★

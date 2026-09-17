@@ -1,0 +1,38 @@
+--- scripts/stop_hook_inbox.sh	2026-09-17 09:59:44
++++ docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/20_fixed_full.sh	2026-09-17 12:59:37
+@@ -55,21 +55,32 @@
+ #   加へて `read -t <20桁>` は bash に ★拒まれ(invalid timeout specification)★ ―― 實測(當席 2026-09-17):
+ #   rc=1・★讀めた字数 0★ ∴ hook 入力 JSON を ★丸ごと落として先へ進む★。而して上の rc=2 ゆゑ ★其の事を報せぬ★。
+ #   裁 seq324588⑴(最重)。兄弟器 scripts/redundancy/shogun_report_watcher.sh L63-69 と同形。
+-num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
++# ★裁 seq324588⑴ の治 ―― 當席(ashigaru-mac-3) 2026-09-17 實測★
++#   舊 `num_same_op` は「`-ge` が扱へるか」しか問はず、rc=1(＝0 と負)を ★通して居た★。
++#   實測(docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/11,12,13):
++#     -5 / -1 → `read -t` が `invalid timeout specification` で摳ね ★即 rc=1・讀めた字数 0★
++#     0      → ★stderr 一行も出さず★ 一字も讀まぬ(regular file 供給でも同じ ∴ 競合に非ず)
++#   孰れも INPUT="" → L120 の json.load が倒れ stop_hook_active が常に False
++#   → ★無限ループ防ぎが消える★。「赤が青に成る」ではなく ★番人が居らぬ事に誰も気付かぬ★ 形。
++#   ∴ 「演算子が扱へるか」ではなく ★下流の二口が共に食へる範囲か★ を問ふ。
++#   上限 86400(1日): `read -t` の實受容上限は此の bash 3.2 で 4294967295 (2^32-1)
++#   だが(實測 _after/13)、其れは版に依る故、運用上有り得ぬ大きさで手前に切る。
++#   甲(裁 seq322952): 下流 `[ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]` と ★同じ -ge★ で検む。
++num_in_range() { [ "${1:-}" -ge 1 ] 2>/dev/null && [ "${1:-}" -le 86400 ] 2>/dev/null; }
+ # ★空文字は `:-` が黙つて呑む★ ―― 裁 seq322952 乙「未設定/空文字/空白のみを分け、既定へ倒す時は必ず刷る」
+ #   に依り、`:-` の前で「在るが空」を分けて刷る(未設定のみ黙る = 裁 seq323687⑵ 乙′・高頻度器の許し)。
+ if [ -n "${STOP_HOOK_STDIN_TIMEOUT+x}" ] && [ -z "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+     echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が空文字 — 既定 10 へ倒す(fail-closed)★" >&2
+ fi
+ STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"
+-if ! num_same_op "$STOP_HOOK_STDIN_TIMEOUT"; then
++if ! num_in_range "$STOP_HOOK_STDIN_TIMEOUT"; then
+     # ★乙(裁 seq323980⑵)★ 値を己の判定路へ刷る時、改行で ★偽の報せ行★ を生やさせぬ
+     case "$STOP_HOOK_STDIN_TIMEOUT" in
+         *␊*|*␍*|*␉*)
+             echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が可視印(␊␍␉)を既に含む — 値を刷らず既定 10 へ倒す(fail-closed・裁 seq323980⑵)★" >&2 ;;
+         *)
+             __th_vp="${STOP_HOOK_STDIN_TIMEOUT//$'\n'/␊}"; __th_vp="${__th_vp//$'\r'/␍}"; __th_vp="${__th_vp//$'\t'/␉}"
+-            echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「${__th_vp}」) — 既定 10 へ倒す(fail-closed)★" >&2 ;;
++            echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が 1〜86400 の整数に非ず(「${__th_vp}」) — 既定 10 へ倒す(fail-closed)★" >&2 ;;
+     esac
+     STOP_HOOK_STDIN_TIMEOUT=10
+ fi

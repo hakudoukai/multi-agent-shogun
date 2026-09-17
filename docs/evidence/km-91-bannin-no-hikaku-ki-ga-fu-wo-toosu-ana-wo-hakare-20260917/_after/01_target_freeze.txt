@@ -1,0 +1,21 @@
+# 01 的の固定 ―― 當席(ashigaru-mac-3)が己で引いた値 2026-09-17T12:54:30+0900
+target=scripts/stop_hook_inbox.sh
+sha256=f1b49820e234a1ee57a4dd4345cf97cdece53ddd1f702188825a92c24f4e9a62
+sha16=f1b49820e234a1ee
+lines(grep -c '')=288
+bytes=16434
+git_head=0039e1321654e52c15c3bec4998b96282b05667f
+git_status_porcelain_本数(据ゑる前)=1016  (註: git は queue/reports 配下の一 dir を Permission denied で読めぬ旨を stderr に吐く ―― 此の警告は本数に含まぬ)
+
+## 札の固定(家老が告げた値と己の値)
+card=queue/tasks/ashigaru-mac-3.yaml sha16=9c0abe25a2a57cb9 lines=49 bytes=4090
+家老の宣=sha16 9c0abe25a2a57cb9・49行4090B → ★一致★
+
+## 比較器の逐語と行番 ―― ★己で引いた★
+58:num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+65:if ! num_same_op "$STOP_HOOK_STDIN_TIMEOUT"; then
+
+## 裁 seq324588⑴ が指す「:70」の現物
+L70 逐語(可視化 cat -v -e):         *)$
+→ ★case の既定枝 `*)` に過ぎぬ★。比較器は L58 に在る。∴ 行番で追ふな ―― 逐語で引け。
+  (家老の宣「行番で追ふな(裁の:70 は版が動いた)」と ★一致★)

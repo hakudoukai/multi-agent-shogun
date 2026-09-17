@@ -1,0 +1,45 @@
+# km-91 _after/31 ―― ★的の版が git の何處に在るか★（據ゑる前に測る）
+刻: 2026-09-17 13:10:40 JST
+
+## 一 三つの版の blob
+main (363d5fb)                     229c05571ada187b16e2c506aef19be0e6be6138
+HEAD (0039e13)                     229c05571ada187b16e2c506aef19be0e6be6138
+worktree(當席が測つた現物)                 8bcea32981614611053393ac0b73cbc2947ea0df
+
+## 二 worktree の blob は object DB に在るか
+cat-file -e rc=0  (0=在る / 1=無い)
+
+## 三 其の blob を含む ref は在るか
+歩いた ref 総数=80
+★一致★ refs/heads/karo-mac/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917
+一致した ref 数=1
+
+## 四 ∴ 何が言へるか
+★當席の訂(上の歩きが出た後に書き直した)★
+・裁 seq324588⑴ が指す比較器 num_same_op は ★main にも HEAD にも無い★。
+  main / HEAD の該当箇所は今も逐語 `INPUT=$(cat)`(行221・10865B)。
+・但し ★ref には一本在る★ ―― refs/heads/karo-mac/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917
+  が worktree と ★同じ blob 8bcea329★ を持つ。∴「何れの ref にも無い」は ★偽★。歩く前に書かなんだ。
+・整理すると: 穴在る版は ★家老mac の自枝に commit 済・main へは未合流・共有 worktree に展開済★。
+・而して hook が實際に走らせるのは worktree の file ∴ ★穴は現に到達可能★(裁の「到達可能」と合ふ)。
+・∴ ★main だけを讀む者には見えぬ★。之も本件の一部として報せる。
+
+## 五 據ゑ方への含意（當席の判断）
+・札は `commit-tree -p main` と指す。★從ふ★。
+・但し親が main である以上、據ゑる blob には ★家老mac の km-81 分（read -t 塊・MASS_UNREAD_THRESHOLD 塊）
+  が土臺として含まれる★ ―― commit の差分は 68+38 行に膨れ、當席の手が何處かが読み取れぬ。
+  當席の手は其の上の ★三置換のみ★(= _after/21_fix_diff.txt の38行)。
+・∴ commit 文と紙に ★土臺は karo-mac/km-81・當席の差分は 21_fix_diff.txt の38行★ と明記して據ゑる。
+  (他席の仕事を己の commit に呑む形に成る故、黙つて據ゑぬ)
+・★併せて家老mac へ告げる案★: 親を main でなく
+  `refs/heads/karo-mac/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917` に取れば
+  差分は ★當席の38行だけ★ に成る。一手で替はる:
+    `git commit-tree <同じ tree> -p karo-mac/km-81-... -m <同じ文>` → `git update-ref <同じ枝> <新sha>`
+  ★札は main と指して居る故、當席は勝手に替へぬ。家老の指図を請ふ。★
+
+## 六 main と worktree の差（當席の手が入る前）
+diff rc=1
+差分 行数=85  追加行=68  削除行=1
+（追加行の計へ方: '^+[^+]' は ★追加された空行を落とす★ ゆゑ 空行込は下に別掲）
+追加行(空行込)=68
+削除行(空行込)=1
