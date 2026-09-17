@@ -1,0 +1,15 @@
+# 第78弾 門控(main・走毎に一本・員外・名= mon_km84_20260917T111205_main) / 刻 2026-09-17T11:12:06+0900 / 渡した 49 / rc 0 / 結語 ['★出す前 門 通。出してよい。★']
+## stderr 逐語
+  閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+  條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(49本)通
+  條⑤ 寸法 = byte和 226011(閾 10485760未満)
+  ★出す前 門 通。出してよい。★
+## stdout 逐語
+  台帳 /Users/momizimac/multi-agent-shogun/docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917/MANIFEST.txt
+    cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917
+    基点 引数(明示)
+    一致 ★49★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 49)
+    ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)

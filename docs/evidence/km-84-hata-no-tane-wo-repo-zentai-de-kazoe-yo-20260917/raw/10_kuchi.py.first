@@ -1,0 +1,124 @@
+# -*- coding: utf-8 -*-
+"""10 ㋐ 母數(第78弾 km-84)―― 母數の file(00 と同じ則: git 追跡・.sh/.bash/.py + shebang・docs/evidence/ を除く)を歩き、
+★env から受ける口★ を引き、其の内 ★宣が 0|1 を意味する物★(=旗)を file:行+逐語+旗名 で挙げる。
+口の形: A `${N:-d}`/`${N-d}`/`${N:=d}`/`${N=d}`(shell) / B os.environ.get|os.getenv|os.environ[](python) / C fix_flag N d(番人口・km-82) / D 裸 `$N` を 0|1 と比べ・file 内で代入無し(裸の口)。
+宣の根拠: i 既定が 0|1 / ii 註に N=0|1 / iii 下流が 0|1 の literal と比べる。名は ★大文字の env 名★ のみ(小文字・位置引数は員外に数へる)。
+陽性対照= scripts/inbox_watcher.sh の ASW_DISABLE_ESCALATION(必ず出る)/ 陰性対照= ZZ_KM84_NEG(0 件・rc)。器は己の束(docs/evidence)を歩かぬ。"""
+import os, sys, re, time, subprocess, collections
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; M = '/Users/momizimac/multi-agent-shogun'
+ls = subprocess.run(['git', 'ls-files', '-z'], capture_output=True, text=True, cwd=M).stdout
+def shebang(p):
+    try:
+        with open(p, 'rb') as fh: h = fh.readline(128)
+    except OSError: return ''
+    return h.decode('utf-8', 'replace') if h.startswith(b'#!') else ''
+FILES = []
+for f in sorted(x for x in ls.split('\0') if x):
+    if f.startswith('docs/evidence/'): continue
+    p = M + '/' + f
+    if not os.path.isfile(p): continue
+    if f.endswith(('.sh', '.bash')): FILES.append((f, 'sh'))
+    elif f.endswith('.py'): FILES.append((f, 'py'))
+    else:
+        b = shebang(p)
+        if b and 'python' in b: FILES.append((f, 'py'))
+        elif b and ('bash' in b or b.rstrip().endswith('/sh') or 'zsh' in b): FILES.append((f, 'sh'))
+ENV = re.compile(r'^[A-Z][A-Z0-9_]+$')
+PORT = re.compile(r'\$\{([A-Za-z_][A-Za-z0-9_]*)(:-|:=|:\+|-|=)([^}]*)\}')
+FIX = re.compile(r'^\s*fix_flag\s+([A-Za-z_][A-Za-z0-9_]*)\s+(\S+)\s+')
+PYPORT = re.compile(r'os\.(?:environ\.get|getenv)\(\s*([\'"])([A-Za-z_][A-Za-z0-9_]*)\1\s*(?:,\s*([^)]*))?\)')
+PYIDX = re.compile(r'os\.environ\[\s*([\'"])([A-Za-z_][A-Za-z0-9_]*)\1\s*\]')
+PYALIAS = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(?:str\(|int\()?os\.(?:environ\.get|getenv|environ\[)')
+def is_comment(l): return l.lstrip().startswith('#')
+def strip_q(s): s = s.strip(); return s[1:-1] if len(s) >= 2 and s[0] == s[-1] and s[0] in '\'"' else s
+def ref_sh(N, l): return re.search(r'\$\{?' + re.escape(N) + r'(?![A-Za-z0-9_])', l) is not None
+def cmp01_sh(N, l):  # iii: 同じ行で 0|1 の literal と比べる
+    if not ref_sh(N, l): return None
+    m = re.search(r'(==|!=|=)\s*["\']?([01])["\']?(?=[\s\]\)]|$)', l) or re.search(r'-(eq|ne)\s+["\']?([01])["\']?(?=[\s\]\)]|$)', l)
+    return m.group(0) if m else None
+def cmp01_py(names, l):
+    if not any(re.search(r'(?<![A-Za-z0-9_])' + re.escape(n) + r'(?![A-Za-z0-9_])', l) for n in names): return None
+    m = re.search(r'(==|!=)\s*[\'"]([01])[\'"]', l) or re.search(r'in\s*[\(\[]\s*[\'"]([01])[\'"]', l) or re.search(r'(==|!=)\s*([01])(?![0-9.])', l)
+    return m.group(0) if m else None
+rows = []; ports_all = 0; ports_env = 0; lower = 0; lower01 = 0; names_env = set(); nonflag = collections.Counter(); percls = collections.Counter(); walked = 0; lines_total = 0
+for f, kind in FILES:
+    walked += 1; L = open(M + '/' + f, encoding='utf-8', errors='replace').read().split('\n'); lines_total += len(L)
+    ports = collections.defaultdict(list)   # N -> [(line, form, default, verbatim)]
+    aliases = collections.defaultdict(set)  # python: N -> {alias}
+    for i, l in enumerate(L, 1):
+        if is_comment(l): continue
+        if kind == 'sh':
+            for m in PORT.finditer(l):
+                N, op, d = m.group(1), m.group(2), m.group(3); ports_all += 1
+                if not ENV.match(N):
+                    lower += 1; lower01 += (strip_q(d) in ('0', '1')); continue
+                ports_env += 1; ports[N].append((i, 'A' + op, d, l.strip()))
+            m = FIX.match(l)
+            if m and ENV.match(m.group(1)): ports_env += 1; ports[m.group(1)].append((i, 'C fix_flag', m.group(2), l.strip()))
+        else:
+            for m in PYPORT.finditer(l):
+                N, d = m.group(2), (m.group(3) or '(無)'); ports_all += 1
+                if not ENV.match(N): lower += 1; continue
+                ports_env += 1; ports[N].append((i, 'B get', d, l.strip()))
+                a = PYALIAS.match(l)
+                if a: aliases[N].add(a.group(1))
+            for m in PYIDX.finditer(l):
+                N = m.group(2); ports_all += 1
+                if not ENV.match(N): lower += 1; continue
+                ports_env += 1; ports[N].append((i, 'B []', '(必須)', l.strip()))
+                a = PYALIAS.match(l)
+                if a: aliases[N].add(a.group(1))
+    # D 裸の口(shell のみ): $N を 0|1 と比べ、file 内に N= の代入(port 以外)が無い
+    if kind == 'sh':
+        for i, l in enumerate(L, 1):
+            if is_comment(l): continue
+            for m in re.finditer(r'\$\{?([A-Z][A-Z0-9_]+)\}?', l):
+                N = m.group(1)
+                if N in ports or N in ('BASH_VERSION', 'BASH_VERSINFO', 'HOME', 'PATH', 'PWD', 'USER', 'SHELL', 'TERM', 'LANG', 'LC_ALL', 'TMUX', 'TMUX_PANE', 'PPID', 'RANDOM', 'SECONDS', 'LINENO', 'IFS', 'OLDPWD', 'EUID', 'UID', 'HOSTNAME', 'OSTYPE', 'REPLY', 'PIPESTATUS', 'FUNCNAME', 'BASH_SOURCE'): continue
+                if not cmp01_sh(N, l): continue
+                assigned = any(re.match(r'^\s*(local |export |readonly |declare [-a-z]* )?' + re.escape(N) + r'=', x) and ('${' + N) not in x for x in L)
+                if assigned: nonflag['D除外(file内で代入=内部旗)'] += 1; continue
+                if not any(r[0] == i for r in ports[N]): ports[N].append((i, 'D 裸', '(既定無)', l.strip()))
+    # 旗か否か
+    for N, pl in sorted(ports.items()):
+        names_env.add(N); konkyo = []
+        d01 = [p for p in pl if strip_q(p[2]) in ('0', '1')]
+        if d01: konkyo.append('i 既定 ' + '/'.join(sorted({strip_q(p[2]) for p in d01})))
+        for i, l in enumerate(L, 1):
+            if is_comment(l) or ('#' in l and re.search(r'#.*\b' + re.escape(N) + r'=[01]\b', l)):
+                if re.search(r'\b' + re.escape(N) + r'=([01])\b', l): konkyo.append(f'ii 註 L{i}'); break
+        for i, l in enumerate(L, 1):
+            if is_comment(l): continue
+            c = cmp01_sh(N, l) if kind == 'sh' else cmp01_py({N} | aliases.get(N, set()), l)
+            if c: konkyo.append(f'iii 比較 L{i} `{c.strip()}`'); break
+        if not konkyo:
+            dd = {strip_q(p[2]) for p in pl}
+            key = '数' if all(re.fullmatch(r'[0-9]+', x) for x in dd) else ('真偽語' if dd & {'true', 'false', 'yes', 'no', 'True', 'False'} else ('空/無' if dd <= {'', '(無)', '(必須)', '(既定無)'} else '名/他'))
+            nonflag['非旗:' + key] += 1; continue
+        percls[kind] += 1
+        for (i, form, d, v) in pl:
+            rows.append((f, i, N, form, d if d else '(空)', ' / '.join(konkyo), v))
+rows.sort(key=lambda r: (r[0], r[1]))
+K.kaku_tsv(D + '/raw/10_kuchi.tsv', rows, header=('file', 'line', 'flag', 'form', 'default', 'konkyo', 'verbatim'))
+flags = sorted({(r[0], r[2]) for r in rows}); files_hit = sorted({r[0] for r in rows})
+# 対照
+pos = [r for r in rows if r[0] == 'scripts/inbox_watcher.sh' and r[2] == 'ASW_DISABLE_ESCALATION']
+neg = [r for r in rows if r[2] == 'ZZ_KM84_NEG']
+g = subprocess.run(['git', 'grep', '-c', 'ZZ_KM84_NEG', '--', '*.sh', '*.py'], capture_output=True, text=True, cwd=M)
+self_hit = [r for r in rows if r[0].startswith('docs/evidence/')]
+forms = collections.Counter(r[3].split(' ')[0] for r in rows)
+out = [f'# 10 ㋐ 母數 / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / 根= repo 根 {M} / 深さ= 無制限 / 集合= git 追跡 file・.sh/.bash/.py + shebang・docs/evidence/ を除く',
+       f'歩いた file {walked} 本(shell {sum(1 for _, k in FILES if k == "sh")} / python {sum(1 for _, k in FILES if k == "py")})・行 {lines_total}',
+       f'口の則(逐語 regex): A shell PORT={PORT.pattern} / B python PYPORT={PYPORT.pattern} ・ PYIDX={PYIDX.pattern} / C FIX={FIX.pattern} / D 裸= $N を 0|1 と比べ file 内に N= 代入無し / 名の則 ENV={ENV.pattern}(小文字・位置引数は員外)',
+       f'旗の則: i 既定が 0|1 / ii 註に N=0|1 / iii 同じ行で 0|1 の literal と比べる(= == != -eq -ne・python == != in)。★一つでも満たせば旗★。註行(# 起し)は iii に数へぬ(己の註を除く)。',
+       f'★口の總數 {ports_all}(内 env 名 {ports_env}・小文字/位置引数 {lower}(其の内 既定 0|1 {lower01}・員外))・env 名の異なり {len(names_env)}★',
+       f'★旗の口 {len(rows)} 行 / 旗 {len(flags)} 本(file×名) / file {len(files_hit)} 本(shell {percls["sh"]} 名・python {percls["py"]} 名)★ / 口の形の内訳 ' + ' / '.join(f'{k} {v}' for k, v in sorted(forms.items())),
+       '非旗(env 名の口だが宣が 0|1 でない・員外): ' + (' / '.join(f'{k} {v} 名' for k, v in sorted(nonflag.items())) or '0'),
+       f'陽性対照 scripts/inbox_watcher.sh ASW_DISABLE_ESCALATION = {len(pos)} 行 → ' + ('★出た(器は生きて居る)★' if pos else '★出ぬ(器が死んで居る)★'),
+       f'陰性対照 ZZ_KM84_NEG = {len(neg)} 行 / git grep -c rc {g.returncode}(1 = 0 件が正・出目「{g.stdout.strip()[:60]}」)',
+       f'己を測る疵の検め: docs/evidence/ 配下の行 = {len(self_hit)}(0 が正)',
+       '## file 別(旗の本數)']
+out += [f'  {f}\t{sum(1 for x in flags if x[0] == f)} 本\t' + ' '.join(sorted({x[1] for x in flags if x[0] == f})) for f in files_hit]
+out.append('## 旗の口 全行(file:行 形 既定 根拠 | 逐語)')
+out += [f'  {r[0]}:{r[1]}\t{r[2]}\t{r[3]}\t既定 {r[4]}\t{r[5]}\t| {r[6][:160]}' for r in rows]
+K.kaku(D + '/raw/10_kuchi.txt', '\n'.join(out)); print('\n'.join(out[:12])); print(f'... 全行は raw/10_kuchi.txt({len(out)} 行)')

@@ -1,0 +1,10 @@
+label	harness	value	rc	branch	utsuwa_lines	soto_lines	stderr_head	expect
+★陽性A(報せ欄・番人付き・値2)★	raw/40_h/A_bannin_ASW_PROCESS_TIMEOUT.sh	2	0	then	1	0	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「2」) ―― 既定 1 へ倒す(fail-closed)★	報せ1・声0・then(既定1へ倒す)
+陰性A1(番人付き・値1)	raw/40_h/A_bannin_ASW_PROCESS_TIMEOUT.sh	1	0	then	0	0		報せ0・声0・then
+陰性A0(番人付き・値0)	raw/40_h/A_bannin_ASW_PROCESS_TIMEOUT.sh	0	0	else	0	0		報せ0・声0・else
+裸形(30 の写し器・値2)	raw/30_h/04_ASW_PROCESS_TIMEOUT_L1633.sh	2	0	else	0	0		報せ0・声0・else= 黙つて 0側(害の形)
+陰性A1′(裸形・値1)	raw/30_h/04_ASW_PROCESS_TIMEOUT_L1633.sh	1	0	then	0	0		報せ0・声0・then
+陰性A0′(裸形・値0)	raw/30_h/04_ASW_PROCESS_TIMEOUT_L1633.sh	0	0	else	0	0		報せ0・声0・else
+★陽性B(声欄・乙 -eq 1・値abc)★	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh	abc	0	else	0	1	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh: line 5: [: abc: integer expression expected	声1・報せ0・else
+陰性B1(乙・値1)	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh	1	0	then	0	0		報せ0・声0・then
+陰性B0(乙・値0)	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh	0	0	else	0	0		報せ0・声0・else

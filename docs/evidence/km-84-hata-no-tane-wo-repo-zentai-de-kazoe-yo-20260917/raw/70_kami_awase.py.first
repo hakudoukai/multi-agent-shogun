@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+"""70 紙⇔器 の照合(第78弾 km-84)―― 紙(README.md)に書いた數を、器の出目(raw/*.txt)から regex で抽いた數と突き合はせる。
+一件= (札, 紙の regex, 器の file, 器の regex)。紙側は ★全ての当たりが同じ値★ でなければ ×(同じ數を二度違へて書く事を封じる)。rc 0= 悉く ○。己(70)の出目は照合の外(循環)。"""
+import sys, re, time
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K
+P = open(D + '/README.md', encoding='utf-8').read(); T = {n: open(D + f'/raw/{n}.txt', encoding='utf-8').read() for n in ('00_start', '01_letter', '10_kuchi', '20_bunrui', '30_tally', '40_taishou')}
+C = [
+ ('札 sha16', r'sha16 (68844633f05a3cec) 47 行', '00_start', r'sha16 (\S+) \d+行'), ('札 行', r'sha16 68844633f05a3cec (\d+) 行', '00_start', r'sha16 \S+ (\d+)行'),
+ ('追跡 file', r'追跡 (\d+) file', '00_start', r'追跡 file (\d+) 本'), ('入口 shell', r'入口 shell (\d+) 本', '00_start', r'shell (\d+) 本\(拡張子'), ('入口 python', r'入口 shell \d+ 本\+python (\d+) 本', '00_start', r'python (\d+) 本\(\.py'),
+ ('docs/evidence 除外', r'docs/evidence/ (\d+) 本を除き', '00_start', r'配下の追跡 shell/python = (\d+) 本'), ('母數 file', r'除き ★(\d+) 本\(shell', '00_start', r'除いた後の母數 file = (\d+) 本'),
+ ('歩いた file', r'除き ★(\d+) 本\(shell', '10_kuchi', r'歩いた file (\d+) 本'), ('歩いた shell', r'本\(shell (\d+) / python \d+・', '10_kuchi', r'\(shell (\d+) / python'), ('歩いた python', r'本\(shell \d+ / python (\d+)・', '10_kuchi', r'/ python (\d+)\)'), ('行', r'python \d+・(\d+) 行', '10_kuchi', r'・行 (\d+)'),
+ ('口 總數', r'口の總數 (\d+)', '10_kuchi', r'口の總數 (\d+)'), ('env 名', r'env 名 (\d+)・異なり', '10_kuchi', r'内 env 名 (\d+)'), ('異なり', r'異なり (\d+)', '10_kuchi', r'異なり (\d+)'), ('小文字', r'小文字/位置引数 (\d+) は員外', '10_kuchi', r'小文字/位置引数 (\d+)\('),
+ ('旗の口', r'旗= 口 (\d+) 行', '10_kuchi', r'旗の口 (\d+) 行'), ('旗', r'旗 (\d+) 本\(file×名\)', '10_kuchi', r'旗 (\d+) 本\(file×名\)'), ('file', r'file×名\)/ file (\d+) 本', '10_kuchi', r'/ file (\d+) 本\(shell'), ('shell 名', r'file \d+ 本\(shell (\d+) 名', '10_kuchi', r'\(shell (\d+) 名'), ('python 名', r'python (\d+) 名\)', '10_kuchi', r'python (\d+) 名\)'),
+ ('形 A', r'`\$\{N:-d\}` (\d+) / python', '10_kuchi', r'A:- (\d+)'), ('形 B', r'`os\.environ\.get` (\d+) /', '10_kuchi', r'/ B (\d+) /'), ('形 C', r'`fix_flag`\(番人口\)(\d+)', '10_kuchi', r'/ C (\d+)'),
+ ('候補', r'候補のみ (\d+) 名', '10_kuchi', r'候補のみ\(i[^)]*\) (\d+) 名'), ('名/他', r'名/他 (\d+)・数', '10_kuchi', r'非旗:名/他 (\d+) 名'), ('数', r'・数 (\d+)・真偽語', '10_kuchi', r'非旗:数 (\d+) 名'), ('真偽語', r'真偽語 (\d+)・空/無', '10_kuchi', r'非旗:真偽語 (\d+) 名'), ('空/無', r'空/無 (\d+)・file 内', '10_kuchi', r'非旗:空/無 (\d+) 名'), ('内部旗', r'内部旗 (\d+)\。', '10_kuchi', r'D除外\(file内で代入=内部旗\) (\d+) 名'),
+ ('陽性 行', r'`ASW_DISABLE_ESCALATION` (\d+) 行', '10_kuchi', r'ASW_DISABLE_ESCALATION = (\d+) 行'), ('陰性 行', r'`ZZ_KM84_NEG` (\d+) 行', '10_kuchi', r'ZZ_KM84_NEG = (\d+) 行'), ('陰性 rc', r'ZZ_KM84_NEG` \d+ 行(?:・`git grep -c`)? rc (\d)', '10_kuchi', r'git grep -c rc (\d)'), ('己の束', r'己の束 (\d+) 行', '10_kuchi', r'docs/evidence/ 配下の行 = (\d+)'),
+ ('参照 行', r'参照 (\d+) 行の内', '20_bunrui', r'参照行 (\d+)\('), ('讀手 行', r'讀手 (\d+) 行= 甲', '20_bunrui', r'讀手\(甲乙丙外\)の行 (\d+)'), ('甲', r'讀手 \d+ 行= 甲 (\d+) /', '20_bunrui', r'甲 (\d+) /'), ('乙', r'讀手 \d+ 行= 甲 \d+ / 乙 (\d+) /', '20_bunrui', r'/ 乙 (\d+) /'), ('丙', r'/ 丙 (\d+) / 外', '20_bunrui', r'/ 丙 (\d+) /'), ('外', r'/ 丙 \d+ / 外 (\d+)★', '20_bunrui', r'/ 外 (\d+)★'),
+ ('伝', r'伝 (\d+)・口 \d+・他', '20_bunrui', r'伝 (\d+) /'), ('口', r'伝 \d+・口 (\d+)・他', '20_bunrui', r'/ 口 (\d+) /'), ('他', r'・他 (\d+)・派生', '20_bunrui', r'/ 他 (\d+) /'), ('派生', r'・派生 (\d+)\。排他性', '20_bunrui', r'/ 派生 (\d+)'), ('重なり', r'当たつた行 ★(\d+)★', '20_bunrui', r'当たつた行 = (\d+)'),
+ ('旗ごと 甲', r'旗ごとの類= 甲 (\d+) 本', '20_bunrui', r'組合せ\(旗の本數\): .*?甲 (\d+)'), ('旗ごと 乙', r'旗ごとの類= 甲 \d+ 本・乙 (\d+) 本', '20_bunrui', r'組合せ\(旗の本數\): 乙 (\d+)'), ('旗ごと 外', r'・外 (\d+) 本・讀手 0', '20_bunrui', r'/ 外 (\d+) /'), ('讀手0', r'讀手 0\(伝のみ= 子器へ env 渡し\)(\d+) 本', '20_bunrui', r'讀手0\(伝/口のみ\) (\d+)'),
+ ('写し器', r'写し器 (\d+) 本 × 9 値', '30_tally', r'写せた (\d+)'), ('走', r'9 値\(8 \+ 補 未設定\)= (\d+) 走', '30_tally', r'/ 走 (\d+) /'), ('甲 本', r'★甲 (\d+) 本 × 毒 6 値= 78 走', '30_tally', r'★甲 讀手 (\d+) 本'), ('甲 走', r'甲 \d+ 本 × 毒 6 値= (\d+) 走', '30_tally', r'甲 讀手 \d+ 本 × 毒 6 値 = (\d+) 走'),
+ ('甲 0側', r'0側 (\d+) / 黙つて 1側', '30_tally', r'甲 讀手.*?黙つて 0側 (\d+)'), ('甲 1側', r'黙つて 0側 \d+ / 黙つて 1側 (\d+)★', '30_tally', r'甲 讀手.*?黙つて 1側 (\d+)'),
+ ('乙 走', r'乙 3 本 × 6= (\d+) 走', '30_tally', r'乙 讀手 \d+ 本 × 毒 6 値 = (\d+) 走'), ('乙 鳴0', r'鳴つて 0側 (\d+) / 鳴つて 1側', '30_tally', r'乙 讀手.*?鳴つて 0側 (\d+)'), ('乙 鳴1', r'鳴つて 1側 (\d+) / 黙つて 0側', '30_tally', r'乙 讀手.*?鳴つて 1側 (\d+)'), ('乙 黙0', r'鳴つて 1側 \d+ / 黙つて 0側 (\d+)', '30_tally', r'乙 讀手.*?黙つて 0側 (\d+)'), ('乙 黙1', r'黙つて 0側 \d+ / 黙つて 1側 (\d+)\。乙は', '30_tally', r'乙 讀手.*?黙つて 1側 (\d+)'), ('丙 本', r'丙\(case\)は (\d+) 本', '30_tally', r'丙 讀手 (\d+) 本'),
+ ('対照 ○', r'○ (\d)/5', '40_taishou', r'○=(\d)/'), ('対照 走', r'判 通 ○ 5/(\d)', '40_taishou', r'○=\d/(\d)'), ('番人 sha16', r'sha16 (494c8c788d50d724)', '40_taishou', r'sha16 (\S+)\(讀むのみ'),
+ ('着手便 id', r'着手便 (msg_20260917_105450_49e27a79)', '01_letter', r"\('(msg_\S+)', '"), ('着手便 刻', r'着手便 msg_\S+\((\d\d:\d\d:\d\d)', '01_letter', r"', '\S+T(\d\d:\d\d:\d\d)'\)"),
+ ('疵 數', r'疵 (\d+)\(㊇\)', 'README', r'^- ★?疵'),
+]
+rows = []; ng = 0
+for label, pr, tf, tr in C:
+    if tf == 'README': kami = re.findall(pr, P); utsu = [str(len(re.findall(tr, P, re.M)))]
+    else: kami = re.findall(pr, P); utsu = re.findall(tr, T[tf], re.S)
+    ok = bool(kami) and bool(utsu) and len(set(kami)) == 1 and kami[0] == utsu[0]
+    ng += (not ok); rows.append(('○' if ok else '×', label, '/'.join(kami) or '(紙に無)', utsu[0] if utsu else '(器に無)', tf, len(kami)))
+out = [f'# 70 紙⇔器 の照合 / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / 母數 {len(C)} / ○ {len(C) - ng} / × {ng} / rc {1 if ng else 0}', '判\t札\t紙の値(当たり全て同値か)\t器の値\t器\t紙の当たり數'] + ['\t'.join(str(x) for x in r) for r in rows]
+K.kaku(D + '/raw/70_kami_awase.txt', '\n'.join(out)); print('\n'.join(out)); sys.exit(1 if ng else 0)

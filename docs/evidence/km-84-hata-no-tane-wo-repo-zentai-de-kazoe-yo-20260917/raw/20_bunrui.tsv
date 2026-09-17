@@ -1,0 +1,38 @@
+file	line	flag	class	all_matches	verbatim
+scripts/agent_health_check.sh	195	TEST_MODE	外	外	if [ -n "${TEST_MODE:-}" ]; then
+scripts/inbox_watcher.sh	254	ASW_DISABLE_ESCALATION	口	口	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	甲	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	247	ASW_DISABLE_NORMAL_NUDGE	口	口	ASW_DISABLE_NORMAL_NUDGE=${ASW_DISABLE_NORMAL_NUDGE:-$([ "${ASW_PHASE}" -ge 2 ] && echo 1 || echo 0)}
+scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	甲	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+scripts/inbox_watcher.sh	250	ASW_NO_IDLE_FULL_READ	口	口	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	甲	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	甲	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+scripts/inbox_watcher.sh	249	FINAL_ESCALATION_ONLY	口	口	FINAL_ESCALATION_ONLY=${FINAL_ESCALATION_ONLY:-$ASW_FINAL_ESCALATION_ONLY}
+scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	甲	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	甲	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	甲	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	236	NEW_CONTEXT_SENT	口	口	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	乙	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	乙	if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+scripts/inbox_watcher.sh	239	STARTUP_PROMPT_SENT	口	口	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	乙	if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	甲	if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	甲	if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	甲	if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	甲	if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+scripts/pane_enter_watcher.py	12	LIVE	他	他	LIVE / DRY-RUN 切替:
+scripts/pane_enter_watcher.py	13	LIVE	他	他	- env LIVE=1 で実 Enter 送出 (本番)
+scripts/pane_enter_watcher.py	14	LIVE	他	他	- env LIVE 不在 or LIVE=0 で DRY-RUN (ログのみ、誤爆ゼロ実証)
+scripts/pane_enter_watcher.py	104	LIVE	他	他	"""Enter 送出 (LIVE / DRY-RUN 切替).
+scripts/pane_enter_watcher.py	117	LIVE	伝	伝	logger.info("[LIVE] Enter sent to %s", target)
+scripts/pane_enter_watcher.py	119	LIVE	伝	伝	logger.warning("[LIVE] send-keys failed rc=%d stderr=%s", r.returncode, r.stderr)
+scripts/pane_enter_watcher.py	122	LIVE	伝	伝	logger.error("[LIVE] send-keys exception: %s", e)
+scripts/pane_enter_watcher.py	138	LIVE	甲	甲	live = os.environ.get("LIVE", "0") == "1"
+scripts/pane_enter_watcher.py	141	LIVE	伝	伝	logger.info("  target=%s stale_sec=%d poll_sec=%d LIVE=%s",
+scripts/pane_enter_watcher.py	142	LIVE	派生	派生	args.target, args.stale_sec, args.poll_sec, live)
+scripts/pane_enter_watcher.py	184	LIVE	派生	派生	if send_enter(args.target, dry_run=not live, logger=logger):
+scripts/pane_enter_watcher_supervisor.sh	36	LIVE	伝	伝	log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+scripts/pane_enter_watcher_supervisor.sh	50	LIVE	伝	伝	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+scripts/pane_enter_watcher_supervisor.sh	52	LIVE	口	口	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+shim/hakudokai/hakudokai_watchdog.sh	75	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	口	口	D3_FAIL_CLOSED_ON_REGISTRY_ERROR="${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}"
+shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	甲	if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then

@@ -1,0 +1,22 @@
+# 第78弾 門控(員外・名= mon_km84_20260917T111110) / 刻 2026-09-17T11:11:10+0900 / 門 sha16 2b8449bccd608a1a / 照合器 sha16 a507c998c7bd6485 / 臺帳 sha16 e7d6f93b1c35ddcf / 紙 sha16 8abc5be913a1971b / 臺帳の項 49 / 基点 /Users/momizimac/multi-agent-shogun/docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917(束内相対・KM_GATE_MANIFEST_BASE=.)
+① 錠 11:11:10 / raw/ 通常 file 52 → 0444 / dir 3 → 0555
+② 歩哨 _after/00_hosho.txt
+③ selftest | 渡した 0 | rc 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+④ main | 渡した 49 | rc 0 | 結語 ['★出す前 門 通。出してよい。★']
+④′ nobase(基点無し・落ちて正) | 渡した 49 | rc 1 | 結語 ['★出す前 門が落ちた。出すな。★']
+## 走り main(stderr 逐語)
+  閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+  條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(49本)通
+  條⑤ 寸法 = byte和 226011(閾 10485760未満)
+  ★出す前 門 通。出してよい。★
+## 走り nobase(stderr 逐語・基点無し)
+  閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+  ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+  條⑤ 寸法 = byte和 226011(閾 10485760未満)
+  ★出す前 門が落ちた。出すな。★
+## 此の門が意味せぬ事: rc0 は形(空白/CR/EOF/寸法/臺帳との一致)のみ。門は箱・logs・scripts の中身を讀まぬ。門控と _after は員外(臺帳の後)。

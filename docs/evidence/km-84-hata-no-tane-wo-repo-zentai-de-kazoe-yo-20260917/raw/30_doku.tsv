@@ -1,0 +1,145 @@
+idx	file	line	flag	class	value	rc	branch	side	utsuwa_lines	soto_lines	stderr_head	verbatim
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	0	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	1	0	then	1側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	2	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	01	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	+1	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	(空文字)	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	␠	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	␊1	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+1	scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	甲	(未設定)	0	else	0側	0	0		if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	0	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	1	0	else	1側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	2	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	01	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	+1	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	(空文字)	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	␠	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	␊1	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+2	scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	甲	(未設定)	0	then	0側	0	0		if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	0	0	else	0側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	1	0	then	1側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	2	0	else	0側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	01	0	else	0側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	+1	0	else	0側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	(空文字)	0	then	1側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	␠	0	else	0側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	␊1	0	else	0側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+3	scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	甲	(未設定)	0	then	1側	0	0		[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	0	0	else	0側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	1	0	then	1側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	2	0	else	0側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	01	0	else	0側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	+1	0	else	0側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	(空文字)	0	then	1側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	␠	0	else	0側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	␊1	0	else	0側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+4	scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	甲	(未設定)	0	then	1側	0	0		if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	0	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	1	0	then	1側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	2	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	01	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	+1	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	(空文字)	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	␠	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	␊1	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+5	scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	甲	(未設定)	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	0	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	1	0	then	1側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	2	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	01	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	+1	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	(空文字)	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	␠	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	␊1	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+6	scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	甲	(未設定)	0	else	0側	0	0		if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	0	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	1	0	then	1側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	2	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	01	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	+1	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	(空文字)	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	␠	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	␊1	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+7	scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	(未設定)	0	else	0側	0	0		if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	0	0	else	0側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	1	0	then	1側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	2	0	else	0側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	01	0	then	1側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	+1	0	then	1側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	(空文字)	0	else	0側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	␠	0	else	0側	0	1	raw/30_h/08_NEW_CONTEXT_SENT_L671.sh: line 5: [:  : integer expression expected	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	␊1	0	then	1側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+8	scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	乙	(未設定)	0	else	0側	0	0		if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	0	0	then	0側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	1	0	else	1側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	2	0	else	1側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	01	0	else	1側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	+1	0	else	1側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	(空文字)	0	then	0側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	␠	0	else	1側	0	1	raw/30_h/09_NEW_CONTEXT_SENT_L1429.sh: line 5: [:  : integer expression expected	if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	␊1	0	else	1側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+9	scripts/inbox_watcher.sh	1429	NEW_CONTEXT_SENT	乙	(未設定)	0	then	0側	0	0		if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	0	0	else	0側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	1	0	then	1側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	2	0	else	0側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	01	0	then	1側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	+1	0	then	1側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	(空文字)	0	else	0側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	␠	0	else	0側	0	1	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh: line 5: [:  : integer expression expected	if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	␊1	0	then	1側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+10	scripts/inbox_watcher.sh	1469	STARTUP_PROMPT_SENT	乙	(未設定)	0	else	0側	0	0		if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	0	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	1	0	then	1側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	2	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	01	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	+1	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	(空文字)	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	␠	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	␊1	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+11	scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	甲	(未設定)	0	else	0側	0	0		if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	0	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	1	0	else	1側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	2	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	01	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	+1	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	(空文字)	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	␠	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	␊1	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+12	scripts/inbox_write.sh	67	IW_DEAD_ALLOW	甲	(未設定)	0	then	0側	0	0		if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	0	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	1	0	then	1側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	2	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	01	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	+1	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	(空文字)	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	␠	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	␊1	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+13	scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	甲	(未設定)	0	else	0側	0	0		if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	0	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	1	0	then	1側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	2	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	01	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	+1	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	(空文字)	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	␠	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	␊1	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+14	scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	甲	(未設定)	0	else	0側	0	0		if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	0	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	1	0	then	1側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	2	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	01	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	+1	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	(空文字)	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	␠	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	␊1	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+15	scripts/pane_enter_watcher.py	138	LIVE	甲	(未設定)	0	else	0側	0	0		live = os.environ.get("LIVE", "0") == "1"
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	0	0	else	0側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	1	0	then	1側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	2	0	else	0側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	01	0	else	0側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	+1	0	else	0側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	(空文字)	0	then	1側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	␠	0	else	0側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	␊1	0	else	0側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+16	shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	(未設定)	0	then	1側	0	0		if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then

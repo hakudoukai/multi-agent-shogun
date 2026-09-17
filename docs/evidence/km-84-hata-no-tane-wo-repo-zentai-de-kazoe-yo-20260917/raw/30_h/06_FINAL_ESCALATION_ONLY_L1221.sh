@@ -1,0 +1,6 @@
+#!/bin/bash
+# 写し器 6 ―― scripts/inbox_watcher.sh:1221 旗 FINAL_ESCALATION_ONLY 類 甲 / 口= FINAL_ESCALATION_ONLY=${FINAL_ESCALATION_ONLY:-$ASW_FINAL_ESCALATION_ONLY}
+
+ASW_FINAL_ESCALATION_ONLY=0  # 補: 既定の中で引く他の変数を 0 に据ゑる(宣)
+FINAL_ESCALATION_ONLY=${FINAL_ESCALATION_ONLY:-$ASW_FINAL_ESCALATION_ONLY}
+if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then printf 'BRANCH=then\n'; else printf 'BRANCH=else\n'; fi

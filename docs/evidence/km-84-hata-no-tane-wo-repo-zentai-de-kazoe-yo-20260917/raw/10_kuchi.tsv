@@ -1,0 +1,27 @@
+file	line	flag	form	default	konkyo	verbatim
+scripts/agent_health_check.sh	195	TEST_MODE	A:-	(空)	ii 註 L22 `(TEST_MODE=1 で send_shogun_inbox_alert を suppress、`	if [ -n "${TEST_MODE:-}" ]; then
+scripts/inbox_watcher.sh	236	NEW_CONTEXT_SENT	A:-	0	i 既定 0 / ii 註 L828 `When called from clear_command path, NEW_CONTEXT_S` / iii 乙(-eq/-ne 1 ∧ 既定 0|1) L671 `"${NEW_CONTEXT_SENT:-0}" -eq 1`	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+scripts/inbox_watcher.sh	239	STARTUP_PROMPT_SENT	A:-	0	i 既定 0 / iii 乙(-eq/-ne 1 ∧ 既定 0|1) L1469 `"$STARTUP_PROMPT_SENT" -eq 1`	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+scripts/inbox_watcher.sh	247	ASW_DISABLE_NORMAL_NUDGE	A:-	$([ "${ASW_PHASE	i 既定 0 / iii 甲 L295 `"${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1"`	ASW_DISABLE_NORMAL_NUDGE=${ASW_DISABLE_NORMAL_NUDGE:-$([ "${ASW_PHASE}" -ge 2 ] && echo 1 || echo 0)}
+scripts/inbox_watcher.sh	249	FINAL_ESCALATION_ONLY	A:-	$ASW_FINAL_ESCALATION_ONLY	i 既定 0 / iii 甲 L1070 `"${FINAL_ESCALATION_ONLY:-0}" = "1"`	FINAL_ESCALATION_ONLY=${FINAL_ESCALATION_ONLY:-$ASW_FINAL_ESCALATION_ONLY}
+scripts/inbox_watcher.sh	250	ASW_NO_IDLE_FULL_READ	A:-	1	i 既定 1 / iii 甲 L504 `"${ASW_NO_IDLE_FULL_READ:-1}" = "1"`	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+scripts/inbox_watcher.sh	254	ASW_DISABLE_ESCALATION	A:-	0	i 既定 0 / ii 註 L252 `- ASW_DISABLE_ESCALATION=1: disable phase2/phase3 ` / iii 甲 L1481 `"${ASW_DISABLE_ESCALATION:-0}" = "1"`	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+scripts/inbox_watcher.sh	258	ASW_PROCESS_TIMEOUT	C fix_flag	1	i 既定 1 / ii 註 L253 `- ASW_PROCESS_TIMEOUT=0: do not process unread on ` / iii 甲 L1633 `"${ASW_PROCESS_TIMEOUT:-1}" = "1"`	fix_flag ASW_PROCESS_TIMEOUT 1 ASW_PROCESS_TIMEOUT
+scripts/inbox_watcher.sh	295	ASW_DISABLE_NORMAL_NUDGE	A:-	0	i 既定 0 / iii 甲 L295 `"${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1"`	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+scripts/inbox_watcher.sh	504	ASW_NO_IDLE_FULL_READ	A:-	1	i 既定 1 / iii 甲 L504 `"${ASW_NO_IDLE_FULL_READ:-1}" = "1"`	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+scripts/inbox_watcher.sh	671	NEW_CONTEXT_SENT	A:-	0	i 既定 0 / ii 註 L828 `When called from clear_command path, NEW_CONTEXT_S` / iii 乙(-eq/-ne 1 ∧ 既定 0|1) L671 `"${NEW_CONTEXT_SENT:-0}" -eq 1`	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh	1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	A:-	0	i 既定 0 / ii 註 L1028 `Bypass flag (緊急時): INBOX_WATCHER_DISABLE_TYPING_CH` / iii 甲 L1032 `"${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1"`	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1070	FINAL_ESCALATION_ONLY	A:-	0	i 既定 0 / iii 甲 L1070 `"${FINAL_ESCALATION_ONLY:-0}" = "1"`	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1221	FINAL_ESCALATION_ONLY	A:-	0	i 既定 0 / iii 甲 L1070 `"${FINAL_ESCALATION_ONLY:-0}" = "1"`	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1481	ASW_DISABLE_ESCALATION	A:-	0	i 既定 0 / ii 註 L252 `- ASW_DISABLE_ESCALATION=1: disable phase2/phase3 ` / iii 甲 L1481 `"${ASW_DISABLE_ESCALATION:-0}" = "1"`	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1633	ASW_PROCESS_TIMEOUT	A:-	1	i 既定 1 / ii 註 L253 `- ASW_PROCESS_TIMEOUT=0: do not process unread on ` / iii 甲 L1633 `"${ASW_PROCESS_TIMEOUT:-1}" = "1"`	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+scripts/inbox_write.sh	21	INBOX_WRITE_CONTENT_STDIN	A:-	(空)	ii 註 L6 `INBOX_WRITE_CONTENT_STDIN=1 bash scripts/inbox_wri` / iii 甲 L21 `"${INBOX_WRITE_CONTENT_STDIN:-}" = "1"`	if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+scripts/inbox_write.sh	48	IW_DEFERRAL_TEST_ONLY	A:-	(空)	iii 甲 L48 `"${IW_DEFERRAL_TEST_ONLY:-}" = "1"`	if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+scripts/inbox_write.sh	67	IW_DEAD_ALLOW	A:-	(空)	ii 註 L63 `名簿は消えず既定 gunshi-mac が残る。門を開けたいなら IW_DEAD_ALLOW=1 を` / iii 甲 L67 `"${IW_DEAD_ALLOW:-}" != "1"`	if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+scripts/inbox_write.sh	81	IW_DEAD_TEST_ONLY	A:-	(空)	iii 甲 L81 `"${IW_DEAD_TEST_ONLY:-}" = "1"`	if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+scripts/pane_enter_watcher.py	138	LIVE	B get	"0"	i 既定 0 / iii 甲 L138 `== "1"`	live = os.environ.get("LIVE", "0") == "1"
+scripts/pane_enter_watcher_supervisor.sh	36	LIVE	A:-	0	i 既定 0 / ii 註 L11 `LIVE=1 -> 実 Enter 送出 (本番)`	log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+scripts/pane_enter_watcher_supervisor.sh	50	LIVE	A:-	0	i 既定 0 / ii 註 L11 `LIVE=1 -> 実 Enter 送出 (本番)`	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+scripts/pane_enter_watcher_supervisor.sh	52	LIVE	A:-	0	i 既定 0 / ii 註 L11 `LIVE=1 -> 実 Enter 送出 (本番)`	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+shim/hakudokai/hakudokai_watchdog.sh	75	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	A:-	1	i 既定 1 / iii 甲 L357 `"${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1"`	D3_FAIL_CLOSED_ON_REGISTRY_ERROR="${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}"
+shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	A:-	1	i 既定 1 / iii 甲 L357 `"${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1"`	if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then

@@ -1,0 +1,28 @@
+# 30 ㋒ 毒表 / 刻 2026-09-17T11:02:08+0900 / 讀手 17(甲 13 乙 4 丙 0)/ 写せた 16 / 写せぬ 1 / 値 9(8 + 補 未設定)/ 走 144 / 写し器= raw/30_h/ / bash= /bin/bash
+則: 毒 6 値(2・01・+1・空文字・空白・␊1)。「黙つて」= 器の報せ 0 行 ∧ 外の声 0 行。側= 値1 の枝= 1側・値0 の枝= 0側。宣の値(0・1)と補(未設定)は集計の外(表には載す)。
+★甲 讀手 13 本 × 毒 6 値 = 78 走: 黙つて 0側 75 / 黙つて 1側 3★
+★乙 讀手 3 本 × 毒 6 値 = 18 走: 鳴つて 0側 2 / 鳴つて 1側 1 / 黙つて 0側 5 / 黙つて 1側 10★
+★丙 讀手 0 本 × 毒 6 値 = 0 走: (0 本)★
+## 讀手ごと(idx file:行 旗 類 | 値1→枝 値0→枝 | 毒 6 値の倒れ先(値=枝/報せ/声) | 未設定→枝)
+  01 scripts/inbox_watcher.sh:1481	ASW_DISABLE_ESCALATION	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+  03 scripts/inbox_watcher.sh:295	ASW_DISABLE_NORMAL_NUDGE	甲	1→else 0→then	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→then rc0	| if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+  04 scripts/inbox_watcher.sh:504	ASW_NO_IDLE_FULL_READ	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=1側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→then rc0	| [ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+  05 scripts/inbox_watcher.sh:1633	ASW_PROCESS_TIMEOUT	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=1側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→then rc0	| if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+  06 scripts/inbox_watcher.sh:1070	FINAL_ESCALATION_ONLY	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+  07 scripts/inbox_watcher.sh:1221	FINAL_ESCALATION_ONLY	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+  08 scripts/inbox_watcher.sh:1032	INBOX_WATCHER_DISABLE_TYPING_CHECK	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+  09 scripts/inbox_watcher.sh:671	NEW_CONTEXT_SENT	乙	1→then 0→else	2=0側/0/0 01=1側/0/0 +1=1側/0/0 (空文字)=0側/0/0 ␠=0側/0/1 ␊1=1側/0/0	未設定→else rc0	| if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+  10 scripts/inbox_watcher.sh:1429	NEW_CONTEXT_SENT	乙	1→else 0→then	2=1側/0/0 01=1側/0/0 +1=1側/0/0 (空文字)=0側/0/0 ␠=1側/0/1 ␊1=1側/0/0	未設定→then rc0	| if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq
+  11 scripts/inbox_watcher.sh:1469	STARTUP_PROMPT_SENT	乙	1→then 0→else	2=0側/0/0 01=1側/0/0 +1=1側/0/0 (空文字)=0側/0/0 ␠=0側/0/1 ␊1=1側/0/0	未設定→else rc0	| if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+  12 scripts/inbox_write.sh:21	INBOX_WRITE_CONTENT_STDIN	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+  13 scripts/inbox_write.sh:67	IW_DEAD_ALLOW	甲	1→else 0→then	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→then rc0	| if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+  14 scripts/inbox_write.sh:81	IW_DEAD_TEST_ONLY	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0;
+  15 scripts/inbox_write.sh:48	IW_DEFERRAL_TEST_ONLY	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+  16 scripts/pane_enter_watcher.py:138	LIVE	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=0側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→else rc0	| live = os.environ.get("LIVE", "0") == "1"
+  17 shim/hakudokai/hakudokai_watchdog.sh:357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	甲	1→then 0→else	2=0側/0/0 01=0側/0/0 +1=0側/0/0 (空文字)=1側/0/0 ␠=0側/0/0 ␊1=0側/0/0	未設定→then rc0	| if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+## 写せぬ讀手(写し器を建てられなんだ・宣)
+  scripts/inbox_watcher.sh:247 ASW_DISABLE_NORMAL_NUDGE | ASW_DISABLE_NORMAL_NUDGE=${ASW_DISABLE_NORMAL_NUDGE:-$([ "${ASW_PHASE}" -ge 2 ] && echo 1 || echo 0)}
+## 外の声の頭(鳴つた走のみ)
+  09 NEW_CONTEXT_SENT 値 ␠ rc0 枝 else 声 1 報せ 0 | /Users/momizimac/multi-agent-shogun/docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917/raw/3
+  10 NEW_CONTEXT_SENT 値 ␠ rc0 枝 else 声 1 報せ 0 | /Users/momizimac/multi-agent-shogun/docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917/raw/3
+  11 STARTUP_PROMPT_SENT 値 ␠ rc0 枝 else 声 1 報せ 0 | /Users/momizimac/multi-agent-shogun/docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917/raw/3

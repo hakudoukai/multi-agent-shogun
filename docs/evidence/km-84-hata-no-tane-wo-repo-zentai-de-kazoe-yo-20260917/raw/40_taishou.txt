@@ -1,0 +1,18 @@
+# 40 ㋓ 両対照 / 刻 2026-09-17T11:03:43+0900 / 路= raw/lib_run.py run()(30 と同じ)/ 番人の定義三本= disk scripts/inbox_watcher.sh sha16 494c8c788d50d724(讀むのみ)/ 走 9
+対照	写し器	値	rc	枝	報せ	声	期待	頭
+★陽性A(報せ欄・番人付き・値2)★	raw/40_h/A_bannin_ASW_PROCESS_TIMEOUT.sh	2	0	then	1	0	報せ1・声0・then(既定1へ倒す)	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「2」) ―― 既定 1 へ倒す(fail-closed
+陰性A1(番人付き・値1)	raw/40_h/A_bannin_ASW_PROCESS_TIMEOUT.sh	1	0	then	0	0	報せ0・声0・then
+陰性A0(番人付き・値0)	raw/40_h/A_bannin_ASW_PROCESS_TIMEOUT.sh	0	0	else	0	0	報せ0・声0・else
+裸形(30 の写し器・値2)	raw/30_h/04_ASW_PROCESS_TIMEOUT_L1633.sh	2	0	else	0	0	報せ0・声0・else= 黙つて 0側(害の形)
+陰性A1′(裸形・値1)	raw/30_h/04_ASW_PROCESS_TIMEOUT_L1633.sh	1	0	then	0	0	報せ0・声0・then
+陰性A0′(裸形・値0)	raw/30_h/04_ASW_PROCESS_TIMEOUT_L1633.sh	0	0	else	0	0	報せ0・声0・else
+★陽性B(声欄・乙 -eq 1・値abc)★	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh	abc	0	else	0	1	声1・報せ0・else	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh: line 5: [: abc: integer expr
+陰性B1(乙・値1)	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh	1	0	then	0	0	報せ0・声0・then
+陰性B0(乙・値0)	raw/30_h/10_STARTUP_PROMPT_SENT_L1469.sh	0	0	else	0	0	報せ0・声0・else
+○ 陽性A 鳴つた(報せ≥1 ∧ then)
+○ 陽性B 鳴つた(声≥1 ∧ else)
+○ 陰性A 番人付きと裸形が同挙動(1→then/0→else・報せ0・声0)
+○ 陰性B 黙つて宣どほり
+○ 裸形の値2 = 黙つて 0側(害)
+判= 通(○=5/5)
+対照の証: 同じ路で 陽性A は報せ欄に・陽性B は声欄に鳴る ⇒ 30 の甲 78 走の「報せ0・声0」は ★器の死ではなく器の判断★ である。

@@ -1,0 +1,74 @@
+# -*- coding: utf-8 -*-
+"""20 ㋑ 下流の讀み方(第78弾 km-84)―― 10 が挙げた旗(file×名)ごとに、同 file の ★註でない行★ で旗を参照する行を悉く拾ひ、
+甲=字面比較(= == != ・python == != in) / 乙=算術(-eq -ne -gt -ge -lt -le・(( ))・$(( ))) / 丙=case で絞る / 外=真偽(-n -z・裸・if $N・python truthiness) / 伝=表示・export・子器へ env 渡し(讀まぬ) / 口=受ける口そのもの(比較を含まぬ) に分ける。
+★己の註を除く★(# 起しの行・行内 # の後)。排他性= 一行に二類以上が当たつた數を刷り、当たれば 丙>甲>乙>外>伝 の順で一類に落とす(落とした事も刷る)。python の派生(比較済の bool の別名)は讀手に数へぬ。"""
+import os, sys, re, time, collections
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; M = '/Users/momizimac/multi-agent-shogun'
+rows10 = [l.split('\t') for l in open(D + '/raw/10_kuchi.tsv', encoding='utf-8').read().split('\n')[1:] if l]
+flags = sorted({(r[0], r[2]) for r in rows10}); port_lines = collections.defaultdict(set)
+for r in rows10: port_lines[(r[0], r[2])].add(int(r[1]))
+LEFT = lambda N: r'["\']?\$\{?' + re.escape(N) + r'(?::?[-=+][^}${\["]*)?\}?["\']?\s*'  # ★二走: 既定の中に $ { [ " を許さぬ(初走は L247 の $([ "${ASW_PHASE}" -ge 2 ] を旗の乙讀手と誤つた)
+def strip_comment(l):  # 行内 # の後を落とす(引用の中の # は粗いが、旗名を含む註を除く方向へ倒す)
+    return re.sub(r'\s#.*$', '', l) if not l.lstrip().startswith('#') else ''
+def classes_sh(N, l):
+    c = set(); s = strip_comment(l)
+    if not re.search(r'\$\{?' + re.escape(N) + r'(?![A-Za-z0-9_])', s): return c, s
+    if re.search(r'\bcase\s+' + LEFT(N) + r'\s*in\b', s): c.add('丙')
+    if re.search(LEFT(N) + r'(==|!=|=)\s*("[^"]*"|\'[^\']*\'|[^\s\]\)]+)', s) and re.search(r'(^|[\s;(&|])(\[\[?|test)\s', s): c.add('甲')
+    if re.search(LEFT(N) + r'-(eq|ne|gt|ge|lt|le)\s', s) or re.search(r'\(\([^)]*' + re.escape(N) + r'[^)]*\)\)', s): c.add('乙')
+    if re.search(r'-[nz]\s+' + LEFT(N), s) or re.search(r'\[\s+' + LEFT(N) + r'\]', s) or re.search(r'\bif\s+\$\{?' + re.escape(N) + r'\}?\s*;', s): c.add('外')
+    if not c:
+        if re.search(r'^\s*' + re.escape(N) + r'=\$\{' + re.escape(N), s) or re.search(r'^\s*fix_flag\s+' + re.escape(N), s) or re.search(r'^\s*' + re.escape(N) + r'="\$\{' + re.escape(N), s): c.add('口')
+        elif re.search(r'^\s*(export|local|readonly)\s+' + re.escape(N), s) or re.search(r'\b(echo|printf|log|say|log_struct|_th_say|_log|logger)\b', s) or re.search(r'^\s*' + re.escape(N) + r'="?\$\{' + re.escape(N) + r'[^}]*\}"?\s+\S', s): c.add('伝')
+        else: c.add('他')
+    return c, s
+def classes_py(N, alias, l):
+    c = set(); s = l.split('#', 1)[0] if not l.lstrip().startswith('#') else ''
+    names = [N] + sorted(alias)
+    if not any(re.search(r'(?<![A-Za-z0-9_])' + re.escape(n) + r'(?![A-Za-z0-9_])', s) for n in names): return c, s
+    if re.search(r'(==|!=)\s*[\'"]', s) or re.search(r'\bin\s*[\(\[]\s*[\'"]', s): c.add('甲')
+    if re.search(r'\bint\(', s) or re.search(r'(==|!=|<|>|<=|>=)\s*\d', s): c.add('乙')
+    if re.search(r'^\s*match\s', s): c.add('丙')
+    if re.search(r'^\s*(if|elif|while)\s+(not\s+)?(' + '|'.join(map(re.escape, names)) + r')\s*:', s): c.add('外')
+    if not c:
+        if re.search(r'os\.(environ|getenv)', s): c.add('口')
+        elif re.search(r'\b(logger\.\w+|print|log)\(', s): c.add('伝')
+        elif alias and not re.search(r'(?<![A-Za-z0-9_])' + re.escape(N) + r'(?![A-Za-z0-9_])', s): c.add('派生')
+        else: c.add('他')
+    return c, s
+PRI = ['丙', '甲', '乙', '外', '伝', '口', '派生', '他']
+rows = []; kasanari = 0; hasei = 0; per_flag = {}
+for f, N in flags:
+    kind = 'py' if f.endswith('.py') else 'sh'; L = open(M + '/' + f, encoding='utf-8', errors='replace').read().split('\n')
+    alias = set()
+    if kind == 'py':
+        for l in L:
+            a = re.match(r'^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*.*os\.(?:environ\.get|getenv)\(\s*[\'"]' + re.escape(N) + r'[\'"]', l)
+            if a: alias.add(a.group(1))
+    cls_set = collections.Counter()
+    for i, l in enumerate(L, 1):
+        c, s = (classes_sh(N, l) if kind == 'sh' else classes_py(N, alias, l))
+        if not c: continue
+        if kind == 'py' and (c == {'派生'} or (c == {'外'} and not re.search(r'(?<![A-Za-z0-9_])' + re.escape(N) + r'(?![A-Za-z0-9_])', s))): hasei += 1; rows.append((f, i, N, '派生', '+'.join(sorted(c)), s.strip())); continue
+        one = next(p for p in PRI if p in c)
+        if len(c - {'口'}) > 1: kasanari += 1
+        rows.append((f, i, N, one, '+'.join(sorted(c, key=PRI.index)), s.strip())); cls_set[one] += 1
+    per_flag[(f, N)] = cls_set
+K.kaku_tsv(D + '/raw/20_bunrui.tsv', rows, header=('file', 'line', 'flag', 'class', 'all_matches', 'verbatim'))
+tot = collections.Counter(r[3] for r in rows); readers = [r for r in rows if r[3] in ('甲', '乙', '丙', '外')]
+fl_cls = collections.Counter()
+for k, cs in per_flag.items():
+    rd = {x for x in cs if x in ('甲', '乙', '丙', '外')}
+    fl_cls['+'.join(sorted(rd, key=PRI.index)) if rd else '讀手0(伝/口のみ)'] += 1
+out = [f'# 20 ㋑ 下流の讀み方 / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / 旗 {len(flags)} 本(10_kuchi.tsv)/ 参照行 {len(rows)}(註を除く・派生 {hasei} を含む)',
+       '則: 甲= test の中で 左項=旗 を literal と = == != / 乙= 左項=旗 を -eq -ne -gt -ge -lt -le・(( )) / 丙= case "$旗" in / 外= -n -z・裸 [ "$旗" ]・if $旗・python truthiness / 伝= echo/log/printf の中・export・子器へ env 渡し / 口= 受ける口のみ(比較無) / 派生= python で比較済の bool の別名を讀む行 / 他= 上のどれでもない参照(python の docstring 等)',
+       f'★讀手(甲乙丙外)の行 {len(readers)}: 甲 {tot["甲"]} / 乙 {tot["乙"]} / 丙 {tot["丙"]} / 外 {tot["外"]}★ ／ 讀まぬ参照: 伝 {tot["伝"]} / 口 {tot["口"]} / 他 {tot["他"]} / 派生 {tot["派生"]}',
+       f'排他性: 一行に二類以上(口を除く)が当たつた行 = {kasanari}(0 なら一行一類・>0 なら 丙>甲>乙>外 の順で一類へ落とした)',
+       '旗ごとの讀手の類の組合せ(旗の本數): ' + ' / '.join(f'{k} {v}' for k, v in sorted(fl_cls.items())),
+       '## 旗ごと(file 名 | 讀手の類と行)']
+for (f, N), cs in sorted(per_flag.items()):
+    rl = [r for r in rows if r[0] == f and r[2] == N and r[3] in ('甲', '乙', '丙', '外')]
+    out.append(f'  {f}\t{N}\t讀手 {len(rl)}\t' + ' '.join(f'{r[3]}L{r[1]}' for r in rl) + '\t伝 ' + str(cs['伝']) + ' 口 ' + str(cs['口']) + ' 他 ' + str(cs['他']))
+out.append('## 全参照行(file:行 旗 類 当たつた類 | 逐語)')
+out += [f'  {r[0]}:{r[1]}\t{r[2]}\t{r[3]}\t{r[4]}\t| {r[5][:150]}' for r in rows]
+K.kaku(D + '/raw/20_bunrui.txt', '\n'.join(out)); print('\n'.join(out[:6 + len(per_flag)]))
