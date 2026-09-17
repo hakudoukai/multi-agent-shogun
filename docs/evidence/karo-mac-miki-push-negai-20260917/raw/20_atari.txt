@@ -1,0 +1,28 @@
+刻=2026-09-17T15:22:47+09:00
+根=/Users/momizimac/multi-agent-shogun
+幹=363d5fb06084 基=4be3ee19e1c5
+
+㋐ file の素性 ―― 幹が触れたか / blob は基と同じか
+
+  SECURITY.md                                    幹が触れた=False blob 幹==基=★同★ (rc 0/0)
+  tests/test_karo_second_send_iincho.bats        幹が触れた=False blob 幹==基=★同★ (rc 0/0)
+  tests/unit/test_ntfy_auth.bats                 幹が触れた=False blob 幹==基=★同★ (rc 0/0)
+
+  ★幹が触れた file は 0 本・blob は悉く基と同一 ∴ 当り6件は PR が足す物に非ず★
+
+㋑ 値の素性 ―― 厳密形は幾つ鳴つたか
+
+  SECURITY.md:47 鍵=TOKEN 厳密形=★無★ 値=<伏:20字>(桁20 英大0 英小9 数10 記号1)
+  tests/test_karo_second_send_iincho.bats:123 鍵=SERVICE_ROLE_KEY 厳密形=★無★ 値=<伏:41字>(桁41 英大0 英小32 数3 記号6)
+  tests/test_karo_second_send_iincho.bats:138 鍵=SERVICE_ROLE_KEY 厳密形=★無★ 値=<伏:23字>(桁23 英大0 英小19 数0 記号4)
+  tests/test_karo_second_send_iincho.bats:162 鍵=SERVICE_ROLE_KEY 厳密形=★無★ 値=<伏:25字>(桁25 英大0 英小21 数0 記号4)
+  tests/test_karo_second_send_iincho.bats:231 鍵=SERVICE_ROLE_KEY 厳密形=★無★ 値=<伏:23字>(桁23 英大0 英小19 数0 記号4)
+  tests/unit/test_ntfy_auth.bats:50 鍵=TOKEN 厳密形=★無★ 値=<伏:23字>(桁23 英大0 英小12 数10 記号1)
+
+  ★厳密形の当り = 0 件 / 緩形 = 6 件★
+  緩形は「鍵名 = 20字以上の字」に当たるだけで、本物の鍵の形には当たらぬ。
+  ∴ 6件は悉く「鍵名を書いた行」であつて、鍵の形をした値では無い。
+
+★數が意味せぬ事★: 之は「6件が贋である」の証明に非ず。
+  示したのは⑴幹が之を足して居らぬ事(blob 同一)と⑵値が既知の鍵の形に当たらぬ事の二つのみ。
+  基 origin/main に既に在る物の是非は★別件★であり、本 PR の可否とは切り離して上申する。

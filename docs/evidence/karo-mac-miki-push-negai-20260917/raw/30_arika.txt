@@ -1,0 +1,23 @@
+刻=2026-09-17T15:22:47+09:00
+根=/Users/momizimac/multi-agent-shogun
+
+一 版
+  枝 karo-mac/km-gate-kou-otsu-20260917 = 363d5fb06084 (rc=0)
+  手許 refs/heads/main                  = 363d5fb06084 (rc=0)
+  origin/main                           = 4be3ee19e1c5 (rc=0)
+  ★枝==手許main★ = True   ★枝==紙の宣 363d5fb06084★ = True
+
+二 PR の形
+  origin/main は幹の祖先か(早送り可か) = ★否★ (is-ancestor rc=1)
+  幹は origin/main の祖先か            = 否 (rc=1)
+  分岐点(merge-base) = 6e9d40600a80
+  幹が進んだ = 16 commit / origin/main が進んだ = 21 commit
+  ★両者が別々に進んで居る ∴ 早送りは効かず merge commit が要る(裁326093①と合ふ)★
+  三点 diff の file = 464 本
+
+三 數の意味
+  「16 commit」= rev-list --count 4be3ee19..363d5fb0 = 16 ―― ★幹の側だけ★
+  対称差(両側の和) = 37 ―― ★之を16と混ぜるな★
+  「464 file」= diff --name-only ★三点(...)★ ―― 二点(..)なら 475 と出る(分岐後の基の動きを混ぜる故)
+
+★數が意味せぬ事★: 464 は「幹が変へた file 数」であつて、PR が世に出す file の総数(tree 967本)ではない。
