@@ -1,0 +1,6 @@
+=== 疵: 44_kou_12kei.out(旧・改行が届かぬ器) ⇔ 47_kou_12kei_v2.out(新) の差 ===
+15c15
+< 改行入り 0     枝: LIVE=True → 実 Enter 送出    (無)
+---
+> 改行入り 0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+diff_rc=1

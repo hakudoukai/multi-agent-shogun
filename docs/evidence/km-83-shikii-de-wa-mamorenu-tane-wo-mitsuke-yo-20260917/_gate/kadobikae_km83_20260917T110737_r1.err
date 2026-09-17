@@ -1,0 +1,133 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★EOF改行 ―― ./10_kuchi/10_kuchi_all.err は空file(0byte)★
+★EOF改行 ―― ./10_kuchi/11_selftest.err は空file(0byte)★
+★EOF改行 ―― ./10_kuchi/12_heredoc.out は空file(0byte)★
+★EOF改行 ―― ./10_kuchi/13_kuchi_jitsu.err は空file(0byte)★
+★EOF改行 ―― ./20_bunrui/20_bunrui_wa.err は空file(0byte)★
+★末尾空白 ―― ./20_bunrui/20_bunrui_wa.out に 1 行★
+★EOF改行 ―― ./30_karyuu/30_trace.err は空file(0byte)★
+★末尾空白 ―― ./30_karyuu/30_trace.out に 1 行★
+★EOF改行 ―― ./40_doku/40_kou.out は空file(0byte)★
+★EOF改行 ―― ./40_doku/41_na.err は空file(0byte)★
+★末尾空白 ―― ./40_doku/41_na.out に 4 行★
+★EOF改行 ―― ./40_doku/44_kou_12kei.err は空file(0byte)★
+★EOF改行が複数(末尾に空行) ―― ./40_doku/44_kou_12kei.out★
+★EOF改行 ―― ./40_doku/47_kou_12kei_v2.err は空file(0byte)★
+★EOF改行が複数(末尾に空行) ―― ./40_doku/47_kou_12kei_v2.out★
+★EOF改行 ―― ./40_doku/51_otsu_12kei.err は空file(0byte)★
+★EOF改行が複数(末尾に空行) ―― ./40_doku/51_otsu_12kei.out★
+★EOF改行 ―― ./40_doku/52_otsu_na.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/54_hei_12kei.err は空file(0byte)★
+★EOF改行が複数(末尾に空行) ―― ./40_doku/54_hei_12kei.out★
+★EOF改行 ―― ./40_doku/55_hei_na.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_02.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_03.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_11.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_LOG_12.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_02.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_03.err は空file(0byte)★
+★末尾空白 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_03.out に 1 行★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_11.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_12.err は空file(0byte)★
+★EOF改行が複数(末尾に空行) ―― ./40_doku/_cell/DETECT_STALE_STALE_SEC_12.out★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_02.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_03.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_11.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_PANE_TARGET_12.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_02.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_03.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_11.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/ER_THRESHOLD_MIN_12.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_02.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_03.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_11.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/LIVE_12.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_02.out は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_03.out は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_11.out は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/POLL_SEC_12.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_02.out は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_03.out は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_11.out は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/STALE_SEC_12.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_01.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_02.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_03.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_04.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_05.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_06.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_07.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_08.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_09.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_10.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_11.err は空file(0byte)★
+★EOF改行 ―― ./40_doku/_cell/TESTVAR_12.err は空file(0byte)★
+★EOF改行 ―― ./60_inode/60_kadou_inode.err は空file(0byte)★
+★EOF改行 ―― ./60_inode/61_kadou_hashiru.err は空file(0byte)★
+★末尾空白 ―― ./60_inode/61_kadou_hashiru.out に 5 行★
+★末尾空白 ―― ./60_inode/62_hougen_kizu.out に 1 行★
+★EOF改行が複数(末尾に空行) ―― ./70_denpa/71_denpa.out★
+★EOF改行 ―― ./70_denpa/ba/sv.lock は空file(0byte)★
+★EOF改行 ―― ./80_daichou/80_argv_bogen.err は空file(0byte)★
+條⑤ 寸法 = byte和 186014(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

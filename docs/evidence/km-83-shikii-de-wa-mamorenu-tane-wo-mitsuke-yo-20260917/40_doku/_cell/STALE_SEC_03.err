@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/40_doku/kou_env_parse.py", line 15, in <module>
+    v = int(os.environ.get("STALE_SEC", DEFAULT_STALE_SEC))     # ← L131 逐語
+ValueError: invalid literal for int() with base 10: ' '

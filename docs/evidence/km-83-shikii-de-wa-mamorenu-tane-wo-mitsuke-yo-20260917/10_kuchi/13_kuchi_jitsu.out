@@ -1,0 +1,47 @@
+########## _utsushi/kou_supervisor.sh (行=67) ##########
+--- 実(code)の口 ―― 之のみが ★現に開く口★ ---
+  L36   LIVE                             既定='0'
+  L50   LIVE                             既定='0'
+  L50   STALE_SEC                        既定='300'
+  L50   POLL_SEC                         既定='10'
+  L52   LIVE                             既定='0'
+  L52   STALE_SEC                        既定='300'
+  L52   POLL_SEC                         既定='10'
+--- 註(comment)の口 ―― ★口に非ず★(散文) ---
+==> 実_名=3 実_出現=7 / 註_名=0 註_出現=0
+
+########## _utsushi/otsu_detect_stale.sh (行=293) ##########
+--- 実(code)の口 ―― 之のみが ★現に開く口★ ---
+  L26   __FUKUINCHO_DETECT_STALE_LIB_LOADED 既定=''
+  L31   DETECT_STALE_LOG                 既定='/tmp/fukuincho_detect_stale.log'
+  L32   DETECT_STALE_INFLIGHT_DIR        既定='/tmp/fukuincho_inflight'
+  L33   DETECT_STALE_STALE_SEC           既定='120'
+  L34   DETECT_STALE_LOCK_FILE           既定='/tmp/fukuincho_detect_stale.lock'
+  L256  2                                既定='fukuincho'
+  L257  3                                既定='確認依頼、コマンダーより'
+--- 註(comment)の口 ―― ★口に非ず★(散文) ---
+==> 実_名=7 実_出現=7 / 註_名=0 註_出現=0
+
+########## _utsushi/hei_watchdog.sh (行=40) ##########
+--- 実(code)の口 ―― 之のみが ★現に開く口★ ---
+  L24   ER_PANE_TARGET                   既定='commander-third:0.0'
+  L25   ER_SESSION_NAME                  既定='commander-third'
+  L26   ER_FROM_PC_FILTER                既定='commander'
+  L27   ER_LOG_DIR                       既定='/home/hakudoukai/.local/share/enter_restart_commander'
+  L28   ER_EVENT_TYPE                    既定='enter_restart_commander_fire'
+  L29   ER_ROLE_NAME                     既定='Commander'
+  L30   ER_HEARTBEAT_FROM_PC             既定='commander'
+  L31   ER_HEARTBEAT_TOPIC_PREFIX        既定='[enter_restart] commander alive'
+  L32   ER_CYCLE_LOG_PREFIX              既定='enter_restart_commander'
+  L35   ER_THRESHOLD_MIN                 既定='2'
+--- 註(comment)の口 ―― ★口に非ず★(散文) ---
+  L23   VAR                              既定='default'
+         逐語: # ★cycle4 Q1 fix: ${VAR:-default} 形で外部 override 可能化 (smoke test stub 用)★
+==> 実_名=10 実_出現=10 / 註_名=1 註_出現=1
+
+########## 合計 ##########
+  kou_supervisor.sh                        実_名=3   実_出現=7   註_出現=0
+  otsu_detect_stale.sh                     実_名=7   実_出現=7   註_出現=0
+  hei_watchdog.sh                          実_名=10  実_出現=10  註_出現=1
+★口(実・名で数ふ)= 20 ★   註中の幻 = 1
+註: 家老の見立 21 = 実 20 + 註中の幻 1

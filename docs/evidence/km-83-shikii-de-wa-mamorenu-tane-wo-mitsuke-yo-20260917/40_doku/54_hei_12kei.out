@@ -1,0 +1,31 @@
+########## 丙 口= ER_THRESHOLD_MIN  (子=写しの stub) ##########
+毒形   rc    内(器の報せ・一行目)          外(interpreter の悲鳴・一行目)
+----------------------------------------------------------------------------------------------
+未設定 0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+空文字 0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+空白のみ 0     子が受けた ER_THRESHOLD_MIN=' '   (無)
+0        0     子が受けた ER_THRESHOLD_MIN='0'   (無)
+1        0     子が受けた ER_THRESHOLD_MIN='1'   (無)
+2        0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+01       0     子が受けた ER_THRESHOLD_MIN='01'  (無)
++1       0     子が受けた ER_THRESHOLD_MIN='+1'  (無)
+-1       0     子が受けた ER_THRESHOLD_MIN='-1'  (無)
+20桁    0     子が受けた ER_THRESHOLD_MIN='99999999999999999999' (無)
+非數   0     子が受けた ER_THRESHOLD_MIN='abc' (無)
+改行入り 0     子が受けた ER_THRESHOLD_MIN='1\n' (無)
+
+########## 丙 口= ER_PANE_TARGET  (子=写しの stub) ##########
+毒形   rc    内(器の報せ・一行目)          外(interpreter の悲鳴・一行目)
+----------------------------------------------------------------------------------------------
+未設定 0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+空文字 0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+空白のみ 0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+0        0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+1        0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+2        0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+01       0     子が受けた ER_THRESHOLD_MIN='2'   (無)
++1       0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+-1       0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+20桁    0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+非數   0     子が受けた ER_THRESHOLD_MIN='2'   (無)
+改行入り 0     子が受けた ER_THRESHOLD_MIN='2'   (無)

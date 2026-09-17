@@ -1,0 +1,259 @@
+=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ===
+刻=2026-09-17T10:53:37+09:00  host=MomiziMac-mini.local  uname=Darwin
+
+--- disk 側 (inode / 大きさ / sha16) ---
+scripts/pane_enter_watcher_supervisor.sh                   inode=1238424      bytes=2455    sha16=60b61cf3f07d92e7
+scripts/lib/detect_stale.sh                                inode=1238419      bytes=13005   sha16=de4fefbdadb2be63
+scripts/watchdogs/enter_restart_commander_watchdog.sh      inode=1238445      bytes=2298    sha16=f878608bfcca4f5d
+
+--- 走つて居るか (pgrep -fl・★己の系譜は除く★) ---
+[pat=pane_enter_watcher_supervisor]
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+[pat=pane_enter_watcher.py]
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+[pat=detect_stale]
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+[pat=enter_restart_commander_watchdog]
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+[pat=enter_restart_common_watchdog]
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+  mkdir -p 60_inode
+  {
+  echo "=== ㋔ 稼働の inode ―― disk と走つてる物が同じか ==="
+  echo "刻=$(date -Iseconds)  host=$(hostname)  uname=$(uname -s)"
+  echo
+  echo "--- disk 側 (inode / 大きさ / sha16) ---"
+  for f in scripts/pane_enter_watcher_supervisor.sh scripts/lib/detect_stale.sh scripts/watchdogs/enter_restart_commander_watchdog.sh; do
+    p="../../../$f"
+    ino=$(stat -f '"'"'%i'"'"' "$p" 2>/dev/null || echo 測れず)
+    sz=$(stat -f '"'"'%z'"'"' "$p" 2>/dev/null || echo 測れず)
+    sha=$(shasum -a 256 "$p" 2>/dev/null | cut -c1-16)
+    printf '"'"'%-58s inode=%-12s bytes=%-7s sha16=%s
+  '"'"' "$f" "$ino" "$sz" "$sha"
+  done
+  echo
+  SELF=$$
+  for pat in pane_enter_watcher_supervisor pane_enter_watcher.py detect_stale enter_restart_commander_watchdog enter_restart_common_watchdog; do
+    echo "[pat=$pat]"
+    rc_h=$?
+  done
+  echo
+  } > 60_inode/60_kadou_inode.out 2> 60_inode/60_kadou_inode.err
+  echo "rc=$?" > 60_inode/60_kadou_inode.rc
+  cat 60_inode/60_kadou_inode.out' < /dev/null && pwd -P >| /tmp/claude-4511-cwd
+
+--- 陽性対照: pgrep 自体が生きて居るか (必ず在る物を引く) ---
+48861 /opt/homebrew/bin/tmux attach -t gakushu-bucho
+66490 /opt/homebrew/bin/tmux attach -t =hermes-drm
+  rc=0

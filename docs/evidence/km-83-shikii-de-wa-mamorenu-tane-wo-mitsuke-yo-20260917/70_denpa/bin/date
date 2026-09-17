@@ -1,0 +1,4 @@
+#!/bin/bash
+# ★代器★ BSD date は -Is を拒む。GNU の -Is = -Iseconds へ読み替へるのみ。
+if [ "$1" = "-Is" ]; then shift; exec /bin/date -Iseconds "$@"; fi
+exec /bin/date "$@"

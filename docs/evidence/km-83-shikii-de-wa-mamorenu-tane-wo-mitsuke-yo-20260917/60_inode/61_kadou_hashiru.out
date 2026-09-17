@@ -1,0 +1,40 @@
+=== ㋔ 稼働の有無 (祖先鎖で己を除く) ===
+刻=2026-09-17T10:53:56+09:00
+除く系譜 PID=[ 3661 3657 86656 35957 ]
+[pat=pane_enter_watcher_supervisor]
+  ★走らず★ (系譜除外後 0件)
+[pat=pane_enter_watcher.py]
+  ★走らず★ (系譜除外後 0件)
+[pat=detect_stale]
+  ★走らず★ (系譜除外後 0件)
+[pat=enter_restart_commander_watchdog]
+  ★走らず★ (系譜除外後 0件)
+[pat=enter_restart_common_watchdog]
+  ★走らず★ (系譜除外後 0件)
+
+--- 陽性対照: 同じ器が『在る物』を引けるか ---
+  pid=48861 /opt/homebrew/bin/tmux attach -t gakushu-bucho
+  pid=66490 /opt/homebrew/bin/tmux attach -t =hermes-drm
+  pid=83564 /bin/zsh -c source /Users/momizimac/.claude/shell-snapshots/snapshot-zsh-1789017590078-2iweja.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && eval 'cd /Users/momizimac/multi-agent-shogun
+  pid=declare -A prev; declare -A idlec
+  pid=for p in 1 2 3; do prev[$p]="init"; idlec[$p]=0; done
+  pid=while true; do
+  pid=for p in 1 2 3; do
+  pid=t=$(tmux capture-pane -t multiagent-mac:0.$p -p 2>/dev/null | tail -8)
+  pid=if [[ "$t" == *"esc to interrupt"* ]]; then st="working"; idlec[$p]=0
+  pid=elif [[ "$t" == *"All accounts are temporarily unavailable"* ]]; then st="DOWN_503"
+  pid=elif [[ "$t" == *"check your network"* ]]; then st="RETRY_NET"
+  pid=elif [[ "$t" == *"API Error"* ]]; then st="API_ERROR"
+  pid=else
+  pid=idlec[$p]=$(( idlec[$p] + 1 ))
+  pid=if [ "${idlec[$p]}" -ge 2 ]; then st="IDLE_PROMPT"; else st="${prev[$p]}"; fi
+  pid=fi
+  pid=if [ "$st" != "${prev[$p]}" ]; then
+  pid=[ "${prev[$p]}" = "init" ] && [ "$st" = "working" ] || \
+  pid=echo "[$(date '"'"'+%H:%M:%S'"'"')] 専任$p: ${prev[$p]} -> ★$st★"
+  pid=prev[$p]="$st"
+  pid=fi
+  pid=done
+  pid=sleep 60
+  pid=done' < /dev/null && pwd -P >| /tmp/claude-2cbb-cwd
+  tmux 件數=24 (>0 なら器は生きて居る)

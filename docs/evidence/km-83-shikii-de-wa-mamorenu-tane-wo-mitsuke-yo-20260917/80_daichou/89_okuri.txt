@@ -1,0 +1,58 @@
+# 89_okuri ―― 納め便の着弾と、束縛⑹(監査提出)の実測
+
+## 一、納め便(束縛⑸ 300字が條)
+測り= python len で ★送る前に★ 測つた = 271 字 (條300 → 通)。
+  ※ 先に草した物は 375 字で ★條を超えて居た★ ―― 送らずに削つた(疵として紙にも記す)。
+送り= bash scripts/inbox_write.sh karo-mac "<胴>" report_received ashigaru-mac-2 → rc=0
+刻  = 2026-09-17T11:18:09+0900 (送る前に date で取つた刻・送つた後も同秒)
+着弾= queue/inbox/karo-mac.yaml を ★鍵で★ 引いて確かめた(尾では引けぬ)
+  id= msg_20260917_111809_458a400b / timestamp= 2026-09-17T11:18:09
+  type= report_received / from= ashigaru-mac-2 / read= False
+  胴の字数(箱から讀み返した実物)= 271 ―― 送つた物と ★逐語一致★
+  ★箱は回転して居り、末尾3項は 07:02/07:08/07:11 であつた★。
+  ∴「尾を見て無し」と言へば ★偽★ になつた。鍵(messages→id)で引いたゆゑ当たつた。
+  母數(箱)= messages 鍵 106 項 / '^- content:' 起し 106 ―― 二つの数へ方が一致
+
+## 二、束縛⑹ 監査提出(pc_handshake・to_pc=mac_pc・target_agent=gunshi-mac)
+★己の手では出せぬ。器が其れを逐語で申した。★
+
+實測⑴ 局所箱: bash scripts/inbox_write.sh gunshi-mac "..." report_received ashigaru-mac-2
+  → ★rc=68★。出目(逐語):
+    [inbox_write] REJECTED: ★gunshi-mac は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。
+    [inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc / target_agent=gunshi-mac / parent_seq=元便)。
+    [inbox_write]   足軽席は DB の sender を持たぬ ―― ★家老mac へ回せ。家老が代送する。★
+  根(scripts/inbox_write.sh L58-78): 死箱名簿 _IW_DEAD_LIST="${IW_DEAD_LIST:-gunshi-mac}"。
+  註 L59 逐語:「實測 2026-09-17: queue/inbox/gunshi-mac.yaml 母數565通・read:true 0通」。
+  ※ IW_DEAD_ALLOW=1 で門は開く。★開けなかつた★ ―― 開けても讀手が居らぬ事は上の註が示す。
+     「出せた」形だけ作るのは ★沈黙の縮退★ そのものゆゑ、此の任の題に背く。
+
+實測⑵ DB の手: ~/bin/ に sb / sb-gunshi-mac / sb-karo-mac / sb-shogun-mac が在る。
+  sb-gunshi-mac 逐語: exec python3 agent_letter.py ★gunshi-mac★ mac_pc "$@"
+  sb           逐語: exec python3 agent_letter.py ★karo-mac★  mac_pc "$@"
+  ∴ 此等は ★其の役として★ 出す入口である。ashigaru-mac-2 の入口は ★無い★。
+  己が sb-gunshi-mac を叩けば「軍師mac が自ら監査を出した」形の行が建つ = ★名の詐り★。
+  ★ゆゑに叩かぬ。★(叩けば出せた、は「出せた」ではない)
+
+裁: 束縛⑹ は ★家老mac 代送★ で果たす。器の拒否文が示した正路と同じである。
+  己が為すべきは「封筒の中身を家老が其の儘貼れる形で渡す」事。追ひ便にて渡す。
+  ★果たせて居らぬ物を果たしたと書かぬ★ ―― 代送が済むまで、監査提出は ★未了★ と数へよ。
+
+## 三、此の紙が在る理由(紙に書けぬ物が在る)
+90_kami/kami.md は ★己を含む臺帳の sha と項數★ を書けぬ(書けば其の瞬間 sha が変はる)。
+同じく ★納め便の着弾★ と ★⑹の実測★ は納め便を送つた後に生じた事ゆゑ紙より後である。
+∴ 此の 89_okuri が其の二つを受ける。臺帳と門は此の紙を含めて ★建て直す★(r5)。
+
+## 四、後産(r5 で見えた三本)―― 疵11 の再発である
+r4 の臺帳(315項)に無く、r5 の歩きで出た物が ★3本★ 在つた。名指しで挙げる:
+  + 80_daichou/88_bin.txt   ―― 納め便の胴。r4 の門を通した ★後★ に書いた物
+  + 80_daichou/89_okuri.txt ―― 此の紙。同じく門の後
+  + 80_daichou/argv.nul     ―― ★r4 の歩き器が己で産んだ物★(歩いた後に書く)
+「減」は 0 本。∴ 増だけであり、r4 の 315 は ★其の刻には正しかつた★。
+
+argv.nul の始末: 中身は NUL 区切りゆゑ ★末尾が改行でない★ = 門の條④に鳴る。
+  直すのではなく ★員外へ退けた★: 80_daichou/argv.nul → _gate/argv_r4_stale.nul
+  以後の歩き器は argv を ★_gate/ の中へ★ 書く(_gate は初めから員外ゆゑ後産を生まぬ)。
+  ★「消した」ではない。_gate に残して居る。★
+
+∴ 「門を通した後に紙を足すと臺帳が古びる」は ★構造であつて事故ではない★。
+  ゆゑに走の毎に名を変へ(束縛⑷)、最も刻の遅い一本を本判とする。本弾の本判は r5 である。

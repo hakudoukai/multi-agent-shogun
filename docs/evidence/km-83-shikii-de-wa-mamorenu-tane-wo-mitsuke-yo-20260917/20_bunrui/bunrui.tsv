@@ -1,0 +1,21 @@
+#file	行	口名	分類	下流の演算子(実証)	証の在處
+甲	L36	LIVE	旗	子 py L138 `os.environ.get("LIVE","0") == "1"`	30_karyuu/30_trace.out, 40_doku/43_chokugo.txt
+甲	L50	STALE_SEC	閾	子 py L131 `int(os.environ.get("STALE_SEC",...))`	40_doku/47_kou_12kei_v2.out
+甲	L50	POLL_SEC	閾	子 py L134 `int(os.environ.get("POLL_SEC",...))`	40_doku/47_kou_12kei_v2.out
+乙	L26	__FUKUINCHO_DETECT_STALE_LIB_LOADED	旗	自file L26 `[ -n "${…:-}" ]` = 在否の二値	_utsushi/otsu_detect_stale.sh L26
+乙	L31	DETECT_STALE_LOG	名	`>> "$DETECT_STALE_LOG"` = path として open	40_doku/52_otsu_na.out
+乙	L32	DETECT_STALE_INFLIGHT_DIR	名	`mkdir -p` / `[ -f ]` = path	30_karyuu/30_trace.out
+乙	L33	DETECT_STALE_STALE_SEC	閾	★讀手無し★ (repo 全体で宣の一度のみ)	30_karyuu/30_trace.out, 40_doku/51_otsu_12kei.out
+乙	L34	DETECT_STALE_LOCK_FILE	名	flock 対象 path	30_karyuu/30_trace.out
+乙	L256	(位置引数2) recipient	名	字面として payload へ差し込む	_utsushi/otsu_detect_stale.sh L256
+乙	L257	(位置引数3) payload	名	字面として送る本文	_utsushi/otsu_detect_stale.sh L257
+丙	L24	ER_PANE_TARGET	名	子 L52 `PANE_TARGET="$ER_PANE_TARGET"` → tmux -t	40_doku/55_hei_na.out, 40_doku/41_na.out
+丙	L25	ER_SESSION_NAME	名	子 が session 名として使ふ	40_doku/54_hei_12kei.out
+丙	L26	ER_FROM_PC_FILTER	名	字面の絞り	40_doku/54_hei_12kei.out
+丙	L27	ER_LOG_DIR	名	`mkdir -p "$LOG_DIR"` = path	子 L54
+丙	L28	ER_EVENT_TYPE	名	字面 (event 名)	40_doku/54_hei_12kei.out
+丙	L29	ER_ROLE_NAME	名	字面 (log 中の役名)	子 L262
+丙	L30	ER_HEARTBEAT_FROM_PC	名	字面	40_doku/54_hei_12kei.out
+丙	L31	ER_HEARTBEAT_TOPIC_PREFIX	名	字面 (topic 冠)	40_doku/54_hei_12kei.out
+丙	L32	ER_CYCLE_LOG_PREFIX	名	字面 (log 冠)	子 L125
+丙	L35	ER_THRESHOLD_MIN	閾	子 L120 `fix_threshold` → L261 `[ "$ELAPSED_INT" -lt "$THRESHOLD_MIN" ]`	子 L120/L261

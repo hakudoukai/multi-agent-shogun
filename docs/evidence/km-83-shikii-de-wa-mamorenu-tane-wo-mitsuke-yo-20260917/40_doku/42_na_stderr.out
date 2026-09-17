@@ -1,0 +1,9 @@
+=== stderr も見る(親 甲 L40 は 2>&1 で捨てて居る) ===
+的=km83-nonexistent-pane-zzz:0.0    rc=0 out=(空)      stderr=(無)
+的=multiagent-mac:99.99             rc=0 out=%8       stderr=(無)
+的=%99999                           rc=0 out=(空)      stderr=(無)
+的=(空)                              rc=0 out=%8       stderr=(無)
+
+=== 陽性対照(讀取のみ): tmux が rc!=0 を返し得る事 = 器の死ではない証 ===
+  list-panes(不在 session) rc=1
+  list-panes(実在 session) rc=0

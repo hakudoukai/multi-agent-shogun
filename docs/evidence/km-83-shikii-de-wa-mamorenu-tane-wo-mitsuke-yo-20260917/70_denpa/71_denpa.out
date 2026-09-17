@@ -1,0 +1,51 @@
+=== ㋓ 甲 L52 の伝播 ―― 親の毒は子へ渡るか ===
+刻=2026-09-17T10:56:16+09:00
+宣⑴ 親=_utsushi/kou_supervisor.sh の★二行差★写し(LOCKFILE/LOGFILE を束内へ・70_delta.out で証)
+宣⑵ 子=70_denpa/pane_enter_watcher.py の stub。生の scripts/pane_enter_watcher.py は呼ばず
+宣⑶ 代器=70_denpa/bin/{flock,date} (此の host に欠ける GNU 器の補ひ・逐語は束内)
+宣⑷ 親の rc=143 は stub が親へ送る SIGTERM (無限環を断つ為)
+
+---------- 親へ入れた口= LIVE ----------
+毒形         子が受けた三つ
+未設定        子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+空文字        子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+空白のみ       子が受けた LIVE=' '|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+0          子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+1          子が受けた LIVE='1'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+2          子が受けた LIVE='2'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+01         子が受けた LIVE='01'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
++1         子が受けた LIVE='+1'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+-1         子が受けた LIVE='-1'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+20桁        子が受けた LIVE='99999999999999999999'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+非數         子が受けた LIVE='abc'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+改行入り       子が受けた LIVE='1\n'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+
+---------- 親へ入れた口= STALE_SEC ----------
+毒形         子が受けた三つ
+未設定        子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+空文字        子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+空白のみ       子が受けた LIVE='0'|子が受けた STALE_SEC=' '|子が受けた POLL_SEC='10'| sv_rc=143
+0          子が受けた LIVE='0'|子が受けた STALE_SEC='0'|子が受けた POLL_SEC='10'| sv_rc=143
+1          子が受けた LIVE='0'|子が受けた STALE_SEC='1'|子が受けた POLL_SEC='10'| sv_rc=143
+2          子が受けた LIVE='0'|子が受けた STALE_SEC='2'|子が受けた POLL_SEC='10'| sv_rc=143
+01         子が受けた LIVE='0'|子が受けた STALE_SEC='01'|子が受けた POLL_SEC='10'| sv_rc=143
++1         子が受けた LIVE='0'|子が受けた STALE_SEC='+1'|子が受けた POLL_SEC='10'| sv_rc=143
+-1         子が受けた LIVE='0'|子が受けた STALE_SEC='-1'|子が受けた POLL_SEC='10'| sv_rc=143
+20桁        子が受けた LIVE='0'|子が受けた STALE_SEC='99999999999999999999'|子が受けた POLL_SEC='10'| sv_rc=143
+非數         子が受けた LIVE='0'|子が受けた STALE_SEC='abc'|子が受けた POLL_SEC='10'| sv_rc=143
+改行入り       子が受けた LIVE='0'|子が受けた STALE_SEC='1\n'|子が受けた POLL_SEC='10'| sv_rc=143
+
+---------- 親へ入れた口= POLL_SEC ----------
+毒形         子が受けた三つ
+未設定        子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+空文字        子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='10'| sv_rc=143
+空白のみ       子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC=' '| sv_rc=143
+0          子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='0'| sv_rc=143
+1          子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='1'| sv_rc=143
+2          子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='2'| sv_rc=143
+01         子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='01'| sv_rc=143
++1         子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='+1'| sv_rc=143
+-1         子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='-1'| sv_rc=143
+20桁        子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='99999999999999999999'| sv_rc=143
+非數         子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='abc'| sv_rc=143
+改行入り       子が受けた LIVE='0'|子が受けた STALE_SEC='300'|子が受けた POLL_SEC='1\n'| sv_rc=143

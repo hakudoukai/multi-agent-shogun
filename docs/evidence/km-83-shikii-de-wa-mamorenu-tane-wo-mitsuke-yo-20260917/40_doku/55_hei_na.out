@@ -1,0 +1,15 @@
+=== 丙 口= ER_PANE_TARGET ―― 子へ何が渡つたか (該当行のみ) ===
+毒形         rc   子が受けた ER_PANE_TARGET
+----------------------------------------------------------------------
+未設定        0    ER_PANE_TARGET='commander-third:0.0'
+空文字        0    ER_PANE_TARGET='commander-third:0.0'
+空白のみ       0    ER_PANE_TARGET=' '
+0          0    ER_PANE_TARGET='0'
+1          0    ER_PANE_TARGET='1'
+2          0    ER_PANE_TARGET='2'
+01         0    ER_PANE_TARGET='01'
++1         0    ER_PANE_TARGET='+1'
+-1         0    ER_PANE_TARGET='-1'
+20桁        0    ER_PANE_TARGET='99999999999999999999'
+非數         0    ER_PANE_TARGET='abc'
+改行入り       0    ER_PANE_TARGET='1\n'

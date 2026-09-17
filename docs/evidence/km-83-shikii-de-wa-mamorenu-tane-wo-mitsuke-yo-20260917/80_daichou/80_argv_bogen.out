@@ -1,0 +1,14 @@
+=== 臺帳の argv を建てる ―― 母數の宣 ===
+歩いた根= '/Users/momizimac/multi-agent-shogun/docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917' (束の頂) / 深さ= 無制限 / lstat で正則を検む
+
+★母數(disk)★  歩いて見えた file 全= 301
+  内 非正則(FIFO/socket 等)= 0  []
+  内 ★臺帳に表せぬ(名に改行)★ = 2  ['./1\n', './40_doku/otsu_suna/1\n']
+  内 ★員外(宣して除く)★     = 0  []
+★母數(argv)★  臺帳へ渡す本数= 299
+
+★和の検め★ 299(持) + 2(表せぬ) + 0(員外) + 0(非正則) = 301 / 全= 301 / 差= 0
+
+★空白を含む名(括り必須)= 2★ ['./ ', './40_doku/otsu_suna/ ']
+
+argv.nul へ書いた= 299 本 (NUL 区切・行単位の器を通さぬ)

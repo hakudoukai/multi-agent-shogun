@@ -1,0 +1,7 @@
+[2026-09-17T10:56:18+09:00] === supervisor start (LIVE=0) ===
+[2026-09-17T10:56:18+09:00] starting watcher (LIVE=0 STALE_SEC=300 POLL_SEC=1
+)
+子が受けた LIVE='0'
+子が受けた STALE_SEC='300'
+子が受けた POLL_SEC='1\n'
+argv=['--target', 'commander-third:0.0']

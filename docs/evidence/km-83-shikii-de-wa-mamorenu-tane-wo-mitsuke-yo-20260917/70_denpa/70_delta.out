@@ -1,0 +1,11 @@
+=== 伝播用 写し の差 ―― ★宣: LOCKFILE と LOGFILE の二行のみ★ ===
+27,28c27,28
+< LOCKFILE="/tmp/pane_enter_watcher_supervisor_v2.lock"
+< LOGFILE="/tmp/pane_enter_watcher_supervisor.log"
+---
+> LOCKFILE="/Users/momizimac/multi-agent-shogun/docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/70_denpa/ba/sv.lock"
+> LOGFILE="/Users/momizimac/multi-agent-shogun/docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/70_denpa/ba/sv.log"
+diff_rc=1
+
+足した行=2  引いた行=2
+行數 元=66  写=66

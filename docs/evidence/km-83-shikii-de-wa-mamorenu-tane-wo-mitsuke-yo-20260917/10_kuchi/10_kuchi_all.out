@@ -1,0 +1,124 @@
+########## _utsushi/kou_supervisor.sh (行=67) ##########
+--- 定義乙: ${NAME:-既定} の出現箇所 一覧(行番/名/演算子/既定/逐語) ---
+L36   LIVE                               op=:- 既定='0'
+        逐語: log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+L50   LIVE                               op=:- 既定='0'
+        逐語: log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+L50   STALE_SEC                          op=:- 既定='300'
+        逐語: log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+L50   POLL_SEC                           op=:- 既定='10'
+        逐語: log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+L52   LIVE                               op=:- 既定='0'
+        逐語: LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+L52   STALE_SEC                          op=:- 既定='300'
+        逐語: LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+L52   POLL_SEC                           op=:- 既定='10'
+        逐語: LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+--- 定義丙: 展開される相異なる名(既定の有無を問はず) ---
+  *                                    出現行=30
+  ?                                    出現行=56
+  BASH_SOURCE                          出現行=18
+  LIVE                                 出現行=36,50,52
+  LOCKFILE                             出現行=33
+  LOGFILE                              出現行=30,55
+  POLL_SEC                             出現行=50,52
+  SCRIPT_DIR                           出現行=19
+  STALE_SEC                            出現行=50,52
+  TARGET_PANE                          出現行=40,46,53
+  WATCHER_PY                           出現行=53
+  rc                                   出現行=57
+==> kuchi_name_with_default=3  kuchi_occ_with_default=7  kuchi_name_all_expand=12  kuchi_occ_all_expand=19
+
+########## _utsushi/otsu_detect_stale.sh (行=293) ##########
+--- 定義乙: ${NAME:-既定} の出現箇所 一覧(行番/名/演算子/既定/逐語) ---
+L26   __FUKUINCHO_DETECT_STALE_LIB_LOADED op=:- 既定=''
+        逐語: if [ -n "${__FUKUINCHO_DETECT_STALE_LIB_LOADED:-}" ]; then
+L31   DETECT_STALE_LOG                   op=:- 既定='/tmp/fukuincho_detect_stale.log'
+        逐語: DETECT_STALE_LOG="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+L32   DETECT_STALE_INFLIGHT_DIR          op=:- 既定='/tmp/fukuincho_inflight'
+        逐語: DETECT_STALE_INFLIGHT_DIR="${DETECT_STALE_INFLIGHT_DIR:-/tmp/fukuincho_inflight}"
+L33   DETECT_STALE_STALE_SEC             op=:- 既定='120'
+        逐語: DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+L34   DETECT_STALE_LOCK_FILE             op=:- 既定='/tmp/fukuincho_detect_stale.lock'
+        逐語: DETECT_STALE_LOCK_FILE="${DETECT_STALE_LOCK_FILE:-/tmp/fukuincho_detect_stale.lock}"
+L256  2                                  op=:- 既定='fukuincho'
+        逐語: local recipient="${2:-fukuincho}"
+L257  3                                  op=:- 既定='確認依頼、コマンダーより'
+        逐語: local payload="${3:-確認依頼、コマンダーより}"
+--- 定義丙: 展開される相異なる名(既定の有無を問はず) ---
+  *                                    出現行=63
+  1                                    出現行=62,68,83,99,107,115,131,152,179,255
+  2                                    出現行=256
+  3                                    出現行=257
+  ?                                    出現行=145,195,267
+  DETECT_STALE_INFLIGHT_DIR            出現行=32,102,103,110,111,118,134,139,142
+  DETECT_STALE_LOCK_FILE               出現行=34,144
+  DETECT_STALE_LOG                     出現行=31,63
+  DETECT_STALE_STALE_SEC               出現行=33
+  _DETECT_STALE_ALLOWLIST_MATRIX       出現行=167
+  __FUKUINCHO_DETECT_STALE_LIB_LOADED  出現行=26
+  allowed                              出現行=168
+  corr_id                              出現行=20
+  corr_id_raw                          出現行=211,216
+  deadline_epoch                       出現行=231,235
+  from                                 出現行=165
+  key                                  出現行=168,172
+  lvl                                  出現行=63
+  mark_rc                              出現行=268,283
+  now                                  出現行=235
+  payload                              出現行=20
+  raw                                  出現行=84,89,90,93
+  raw_id                               出現行=101,109,117,133,260,266
+  rc                                   出現行=196,200
+  recipient                            出現行=20,165,290
+  response_by_time                     出現行=225,230,232,236
+  row_json                             出現行=19,154,157,160,182,185,188,206
+  safe_id                              出現行=103,111,118,139,142,226,232,236,241,242,246,271,279,283,290
+  status                               出現行=194,197,201
+  type_val                             出現行=165
+==> kuchi_name_with_default=7  kuchi_occ_with_default=7  kuchi_name_all_expand=30  kuchi_occ_all_expand=92
+
+########## _utsushi/hei_watchdog.sh (行=40) ##########
+--- 定義乙: ${NAME:-既定} の出現箇所 一覧(行番/名/演算子/既定/逐語) ---
+L23   VAR                                op=:- 既定='default'
+        逐語: # ★cycle4 Q1 fix: ${VAR:-default} 形で外部 override 可能化 (smoke test stub 用)★
+L24   ER_PANE_TARGET                     op=:- 既定='commander-third:0.0'
+        逐語: export ER_PANE_TARGET="${ER_PANE_TARGET:-commander-third:0.0}"
+L25   ER_SESSION_NAME                    op=:- 既定='commander-third'
+        逐語: export ER_SESSION_NAME="${ER_SESSION_NAME:-commander-third}"
+L26   ER_FROM_PC_FILTER                  op=:- 既定='commander'
+        逐語: export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-commander}"
+L27   ER_LOG_DIR                         op=:- 既定='/home/hakudoukai/.local/share/enter_restart_commander'
+        逐語: export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_commander}"
+L28   ER_EVENT_TYPE                      op=:- 既定='enter_restart_commander_fire'
+        逐語: export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_commander_fire}"
+L29   ER_ROLE_NAME                       op=:- 既定='Commander'
+        逐語: export ER_ROLE_NAME="${ER_ROLE_NAME:-Commander}"
+L30   ER_HEARTBEAT_FROM_PC               op=:- 既定='commander'
+        逐語: export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-commander}"
+L31   ER_HEARTBEAT_TOPIC_PREFIX          op=:- 既定='[enter_restart] commander alive'
+        逐語: export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] commander alive}"
+L32   ER_CYCLE_LOG_PREFIX                op=:- 既定='enter_restart_commander'
+        逐語: export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_commander}"
+L35   ER_THRESHOLD_MIN                   op=:- 既定='2'
+        逐語: export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+--- 定義丙: 展開される相異なる名(既定の有無を問はず) ---
+  BASH_SOURCE                          出現行=39
+  ER_CYCLE_LOG_PREFIX                  出現行=32
+  ER_EVENT_TYPE                        出現行=28
+  ER_FROM_PC_FILTER                    出現行=26
+  ER_HEARTBEAT_FROM_PC                 出現行=30
+  ER_HEARTBEAT_TOPIC_PREFIX            出現行=31
+  ER_LOG_DIR                           出現行=27
+  ER_PANE_TARGET                       出現行=24
+  ER_ROLE_NAME                         出現行=29
+  ER_SESSION_NAME                      出現行=25
+  ER_THRESHOLD_MIN                     出現行=35
+  VAR                                  出現行=23
+==> kuchi_name_with_default=11  kuchi_occ_with_default=11  kuchi_name_all_expand=12  kuchi_occ_all_expand=12
+
+########## 三file 合計 ##########
+定義甲 kuchi_name_with_default = 21   ← ★家老の「口」に最も近い★
+定義乙 kuchi_occ_with_default  = 25
+定義丙 kuchi_name_all_expand   = 54   (註: file 毎の和ゆゑ file 跨ぎの同名は重複計上)
+定義丁 kuchi_occ_all_expand    = 123

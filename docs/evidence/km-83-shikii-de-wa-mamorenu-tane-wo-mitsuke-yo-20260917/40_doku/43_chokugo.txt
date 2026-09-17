@@ -1,0 +1,3 @@
+131:                        default=int(os.environ.get("STALE_SEC", DEFAULT_STALE_SEC)),
+134:                        default=int(os.environ.get("POLL_SEC", DEFAULT_POLL_SEC)),
+138:    live = os.environ.get("LIVE", "0") == "1"

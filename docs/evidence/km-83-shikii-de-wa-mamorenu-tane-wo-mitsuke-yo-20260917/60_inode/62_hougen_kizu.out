@@ -1,0 +1,20 @@
+=== ★破り7・8★ 甲 は此の host(Darwin) で子を起こせぬ ===
+刻=2026-09-17T10:55:40+09:00
+
+-- ⑴ flock の有無 (甲 L34 が依る) --
+  command -v rc=1  ← 0以外=不在
+  甲 L34 逐語: flock -n 200 || { log "another supervisor instance running, exit"; exit 0; }
+  ∴ flock が無い → rc=127 → || が発火 → log『another supervisor instance running』→ exit 0
+  ★此の報せは偽である★ (㋔ で走る物は 0件と実測済)
+
+-- ⑵ date -Is の可否 (甲 L30 log() が依る) --
+date: invalid argument 's' for -I
+  rc=1  ← ★管を通さぬ直値(zsh は PIPESTATUS を持たぬ)★
+  陰性対照(此の器は生きて居る): date -Iseconds = 2026-09-17T10:55:40+09:00 rc=0
+  ∴ log 行の刻が空 → [] となる (実測 sv.log 参照)
+
+-- ⑶ 乙 も同型 (date -d = GNU方言) → 50_otsu_date_hougen.out 参照
+
+★宣・範囲★: 甲の TARGET_PANE=commander-third:0.0 / 丙の ER_LOG_DIR=/home/hakudoukai/…
+  ∴ 三file の想定 host は Linux(third-pc) であり、此の三疵は★host 相対★である。
+  Linux 上では発火せぬ。然し★此の Mac 上では確実に発火し、然も rc=0 で黙る★。

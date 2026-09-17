@@ -1,0 +1,47 @@
+########## 甲 口= LIVE ##########
+毒形   rc    内(器の報せ・一行目)          外(interpreter の悲鳴・一行目)
+----------------------------------------------------------------------------------------------
+未設定 0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+空文字 0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+空白のみ 0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+0        0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+1        0     枝: LIVE=True → 実 Enter 送出    (無)
+2        0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+01       0     枝: LIVE=False → DRY-RUN(縮退)    (無)
++1       0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+-1       0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+20桁    0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+非數   0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+改行入り 0     枝: LIVE=False → DRY-RUN(縮退)    (無)
+
+########## 甲 口= STALE_SEC ##########
+毒形   rc    内(器の報せ・一行目)          外(interpreter の悲鳴・一行目)
+----------------------------------------------------------------------------------------------
+未設定 0     枝: stale_sec=300                     (無)
+空文字 1     (無)                                  ValueError: invalid literal for int() with base 10: ''
+空白のみ 1     (無)                                  ValueError: invalid literal for int() with base 10: ' '
+0        0     枝: stale_sec=0                       (無)
+1        0     枝: stale_sec=1                       (無)
+2        0     枝: stale_sec=2                       (無)
+01       0     枝: stale_sec=1                       (無)
++1       0     枝: stale_sec=1                       (無)
+-1       0     枝: stale_sec=-1                      (無)
+20桁    0     枝: stale_sec=99999999999999999999    (無)
+非數   1     (無)                                  ValueError: invalid literal for int() with base 10: 'abc'
+改行入り 0     枝: stale_sec=1                       (無)
+
+########## 甲 口= POLL_SEC ##########
+毒形   rc    内(器の報せ・一行目)          外(interpreter の悲鳴・一行目)
+----------------------------------------------------------------------------------------------
+未設定 0     枝: poll_sec=10                       (無)
+空文字 1     (無)                                  ValueError: invalid literal for int() with base 10: ''
+空白のみ 1     (無)                                  ValueError: invalid literal for int() with base 10: ' '
+0        0     枝: poll_sec=0                        (無)
+1        0     枝: poll_sec=1                        (無)
+2        0     枝: poll_sec=2                        (無)
+01       0     枝: poll_sec=1                        (無)
++1       0     枝: poll_sec=1                        (無)
+-1       0     枝: poll_sec=-1                       (無)
+20桁    0     枝: poll_sec=99999999999999999999     (無)
+非數   1     (無)                                  ValueError: invalid literal for int() with base 10: 'abc'
+改行入り 0     枝: poll_sec=1                        (無)

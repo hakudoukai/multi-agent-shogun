@@ -1,0 +1,21 @@
+# 56 ★名が option に化ける★ ―― tail を三様の stdin で当てる
+刻= 2026-09-17T11:27:49+0900
+tail の実体= /usr/bin/tail  版= tail: unrecognized option `--version'
+
+名          stdin                  rc     出目         註
++1         /dev/null              0      ★空★        ★測れぬ★
++1         pipe(中身ZZ)             0      ★空★        ★別の口を読んだ★
++1         /dev/null + --         0      0a         通
++1         /dev/null + ./冠        0      0a         通
+-1         /dev/null              0      ★空★        ★測れぬ★
+-1         pipe(中身ZZ)             0      ★空★        ★別の口を読んだ★
+-1         /dev/null + --         0      0a         通
+-1         /dev/null + ./冠        0      0a         通
+0          /dev/null              0      0a         通
+0          pipe(中身ZZ)             0      0a         通
+0          /dev/null + --         0      0a         通
+0          /dev/null + ./冠        0      0a         通
+tsune.txt  /dev/null              0      0a         通
+tsune.txt  pipe(中身ZZ)             0      0a         通
+tsune.txt  /dev/null + --         0      0a         通
+tsune.txt  /dev/null + ./冠        0      0a         通

@@ -1,0 +1,13 @@
+=== date -d の可否 (乙 L230 が依る器) ===
+-- which date --
+/bin/date
+-rwxr-xr-x  1 root  wheel  135392 Jun 25 11:29 /bin/date
+-- 陰性対照: 此の器が生きて居るか (BSD 書式) --
+1577804400
+  rc=0
+-- 陽性対照: 乙 が呼ぶ字面 そのもの --
+  rc=1
+-- 乙 L230 逐語 --
+230:    deadline_epoch=$(date -d "$response_by_time" +%s 2>/dev/null || echo "0")
+
+=== ∴ 此の host では deadline_epoch は必ず 0 → rc=2 ANOMALY へ落ちる ===

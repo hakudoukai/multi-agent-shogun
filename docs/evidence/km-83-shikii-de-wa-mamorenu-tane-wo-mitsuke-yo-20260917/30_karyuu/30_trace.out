@@ -1,0 +1,354 @@
+==============================================================================
+★口★ LIVE   (宣= scripts/pane_enter_watcher_supervisor.sh L36 / 子器= scripts/pane_enter_watcher.py)
+--- (一) 自file 内の 宣以外の讀み: 4 行 (grep_rc=0) ---
+    L11   (其の他/展開のみ)                   #   LIVE=1 -> 実 Enter 送出 (本番)
+    L12   (其の他/展開のみ)                   #   LIVE=0 or 不在 -> DRY-RUN (誤爆ゼロ実証用)
+    L50   字面(=)                        log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+    L52   字面(=)/宣(代入)                  LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+--- (二) 子器 scripts/pane_enter_watcher.py の讀み: 9 行 (grep_rc=0) ---
+    L12   (其の他/展開のみ)                   LIVE / DRY-RUN 切替:
+    L13   (其の他/展開のみ)                   - env LIVE=1 で実 Enter 送出 (本番)
+    L14   (其の他/展開のみ)                   - env LIVE 不在 or LIVE=0 で DRY-RUN (ログのみ、誤爆ゼロ実証)
+    L104  (其の他/展開のみ)                   """Enter 送出 (LIVE / DRY-RUN 切替).
+    L117  (其の他/展開のみ)                   logger.info("[LIVE] Enter sent to %s", target)
+    L119  (其の他/展開のみ)                   logger.warning("[LIVE] send-keys failed rc=%d stderr=%s", r.returncode, r.stderr)
+    L122  (其の他/展開のみ)                   logger.error("[LIVE] send-keys exception: %s", e)
+    L138  (其の他/展開のみ)                   live = os.environ.get("LIVE", "0") == "1"
+    L141  (其の他/展開のみ)                   logger.info("  target=%s stale_sec=%d poll_sec=%d LIVE=%s",
+--- (三) scripts/ 全体の出現: 23 行 (grep_rc=0) ---
+    scripts/pane_enter_watcher_supervisor.sh:11  #   LIVE=1 -> 実 Enter 送出 (本番)
+    scripts/pane_enter_watcher_supervisor.sh:12  #   LIVE=0 or 不在 -> DRY-RUN (誤爆ゼロ実証用)
+    scripts/pane_enter_watcher_supervisor.sh:36  log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+    scripts/pane_enter_watcher_supervisor.sh:50  log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${PO
+    scripts/pane_enter_watcher_supervisor.sh:52  LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+    scripts/checks/ephemeral_worktree_hygiene.sh:16  SWEEPABLE=0; OWNED=0; LIVE=0
+    scripts/checks/ephemeral_worktree_hygiene.sh:22  elif [ "${recent}" != "0" ]; then LIVE=$((LIVE+1))
+    scripts/checks/ephemeral_worktree_hygiene.sh:26  echo "[worktree-hygiene] free=${FREE_GI:-?}Gi 一時樹=${TMP_N}(掃ける=${SWEEPABLE} / 持主
+    scripts/checks/ephemeral_worktree_hygiene.sh:36  echo "[worktree-hygiene]   (中身 在り ${OWNED} は ★持主 の言 が要る★・生きて 居る ${LIVE} は ★触れぬ★)
+    scripts/tests/test_fukuincho_report_poke_bundle.py:1041  content_payload = "STDIN_DELIVERED_CONTENT_marker_XYZ"
+    scripts/karo_second_send_iincho.sh:159  fatal "LIVE POST returned http_code=${HTTP_CODE} but no row id in response (retu
+    scripts/karo_second_send_iincho.sh:161  echo "LIVE POST OK: http_code=${HTTP_CODE} id=${ROW_ID}"
+    scripts/karo_second_send_iincho.sh:164  fatal "LIVE POST failed: http_code=${HTTP_CODE:-<empty>} curl_stderr=${CURL_ERR:
+    scripts/karo_standby_dashboard.sh:118  printf "    %-11s: ${GRN}ALIVE${R} pid %s\n" "$a" "$w"
+    scripts/pane_enter_watcher.py:12  LIVE / DRY-RUN 切替:
+    scripts/pane_enter_watcher.py:13  - env LIVE=1 で実 Enter 送出 (本番)
+    scripts/pane_enter_watcher.py:14  - env LIVE 不在 or LIVE=0 で DRY-RUN (ログのみ、誤爆ゼロ実証)
+    scripts/pane_enter_watcher.py:104  """Enter 送出 (LIVE / DRY-RUN 切替).
+    scripts/pane_enter_watcher.py:117  logger.info("[LIVE] Enter sent to %s", target)
+    scripts/pane_enter_watcher.py:119  logger.warning("[LIVE] send-keys failed rc=%d stderr=%s", r.returncode, r.stderr
+    scripts/pane_enter_watcher.py:122  logger.error("[LIVE] send-keys exception: %s", e)
+    scripts/pane_enter_watcher.py:138  live = os.environ.get("LIVE", "0") == "1"
+    scripts/pane_enter_watcher.py:141  logger.info("  target=%s stale_sec=%d poll_sec=%d LIVE=%s",
+
+==============================================================================
+★口★ STALE_SEC   (宣= scripts/pane_enter_watcher_supervisor.sh L50 / 子器= scripts/pane_enter_watcher.py)
+--- (一) 自file 内の 宣以外の讀み: 2 行 (grep_rc=0) ---
+    L13   (其の他/展開のみ)                   #   STALE_SEC=300 (既定 5分)
+    L52   字面(=)                        LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+--- (二) 子器 scripts/pane_enter_watcher.py の讀み: 3 行 (grep_rc=0) ---
+    L28   (其の他/展開のみ)                   DEFAULT_STALE_SEC = 300  # 既定 5 分
+    L131  (其の他/展開のみ)                   default=int(os.environ.get("STALE_SEC", DEFAULT_STALE_SEC)),
+    L132  (其の他/展開のみ)                   help=f"未送信テキスト stale 判定秒 (既定 {DEFAULT_STALE_SEC})")
+--- (三) scripts/ 全体の出現: 7 行 (grep_rc=0) ---
+    scripts/pane_enter_watcher_supervisor.sh:13  #   STALE_SEC=300 (既定 5分)
+    scripts/pane_enter_watcher_supervisor.sh:50  log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${PO
+    scripts/pane_enter_watcher_supervisor.sh:52  LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+    scripts/pane_enter_watcher.py:28  DEFAULT_STALE_SEC = 300  # 既定 5 分
+    scripts/pane_enter_watcher.py:131  default=int(os.environ.get("STALE_SEC", DEFAULT_STALE_SEC)),
+    scripts/pane_enter_watcher.py:132  help=f"未送信テキスト stale 判定秒 (既定 {DEFAULT_STALE_SEC})")
+    scripts/lib/detect_stale.sh:33  DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+
+==============================================================================
+★口★ POLL_SEC   (宣= scripts/pane_enter_watcher_supervisor.sh L50 / 子器= scripts/pane_enter_watcher.py)
+--- (一) 自file 内の 宣以外の讀み: 2 行 (grep_rc=0) ---
+    L14   (其の他/展開のみ)                   #   POLL_SEC=10 (既定 10秒)
+    L52   字面(=)                        LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+--- (二) 子器 scripts/pane_enter_watcher.py の讀み: 3 行 (grep_rc=0) ---
+    L29   (其の他/展開のみ)                   DEFAULT_POLL_SEC = 10    # 10秒 poll
+    L134  (其の他/展開のみ)                   default=int(os.environ.get("POLL_SEC", DEFAULT_POLL_SEC)),
+    L135  (其の他/展開のみ)                   help=f"poll 間隔秒 (既定 {DEFAULT_POLL_SEC})")
+--- (三) scripts/ 全体の出現: 6 行 (grep_rc=0) ---
+    scripts/pane_enter_watcher_supervisor.sh:14  #   POLL_SEC=10 (既定 10秒)
+    scripts/pane_enter_watcher_supervisor.sh:50  log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${PO
+    scripts/pane_enter_watcher_supervisor.sh:52  LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+    scripts/pane_enter_watcher.py:29  DEFAULT_POLL_SEC = 10    # 10秒 poll
+    scripts/pane_enter_watcher.py:134  default=int(os.environ.get("POLL_SEC", DEFAULT_POLL_SEC)),
+    scripts/pane_enter_watcher.py:135  help=f"poll 間隔秒 (既定 {DEFAULT_POLL_SEC})")
+
+==============================================================================
+★口★ __FUKUINCHO_DETECT_STALE_LIB_LOADED   (宣= scripts/lib/detect_stale.sh L26 / 子器= -)
+--- (一) 自file 内の 宣以外の讀み: 1 行 (grep_rc=0) ---
+    L29   宣(代入)                        __FUKUINCHO_DETECT_STALE_LIB_LOADED=1
+--- (三) scripts/ 全体の出現: 2 行 (grep_rc=0) ---
+    scripts/lib/detect_stale.sh:26  if [ -n "${__FUKUINCHO_DETECT_STALE_LIB_LOADED:-}" ]; then
+    scripts/lib/detect_stale.sh:29  __FUKUINCHO_DETECT_STALE_LIB_LOADED=1
+
+==============================================================================
+★口★ DETECT_STALE_LOG   (宣= scripts/lib/detect_stale.sh L31 / 子器= -)
+--- (一) 自file 内の 宣以外の讀み: 1 行 (grep_rc=0) ---
+    L63   path として open                printf '%s [%s] %s\n' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/dev/null || true
+--- (三) scripts/ 全体の出現: 11 行 (grep_rc=0) ---
+    scripts/agent_health_check.sh:419  #   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+    scripts/agent_health_check.sh:448  _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    scripts/tests/test_detect_stale.sh:29  export DETECT_STALE_LOG="$(mktemp -t fukuincho_detect_stale_test.XXXXXX.log)"
+    scripts/tests/test_detect_stale.sh:467  rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:38  DETECT_STALE_LOG="$(mktemp -t fukuincho_cli_test.XXXXXX.log)"
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:41  export DETECT_STALE_LOG DETECT_STALE_INFLIGHT_DIR DETECT_STALE_LOCK_FILE
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:45  rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:58  done_line=$(grep -E '\[INVOKE\].*fukuincho_detect_stale_cli done' "$DETECT_STALE
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:70  grep -cE "\[${pattern}\]" "$DETECT_STALE_LOG" 2>/dev/null || echo 0
+    scripts/lib/detect_stale.sh:31  DETECT_STALE_LOG="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    scripts/lib/detect_stale.sh:63  printf '%s [%s] %s\n' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/
+
+==============================================================================
+★口★ DETECT_STALE_INFLIGHT_DIR   (宣= scripts/lib/detect_stale.sh L32 / 子器= -)
+--- (一) 自file 内の 宣以外の讀み: 8 行 (grep_rc=0) ---
+    L102  (其の他/展開のみ)                   mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    L103  path として open                [ -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" ]
+    L110  (其の他/展開のみ)                   mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    L111  path として open                : > "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight"
+    L118  path として open                rm -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" 2>/dev/null
+    L134  (其の他/展開のみ)                   mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    L139  path として open                if [ -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" ]; then
+    L142  path として open                : > "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight"
+--- (三) scripts/ 全体の出現: 17 行 (grep_rc=0) ---
+    scripts/tests/test_detect_stale.sh:28  export DETECT_STALE_INFLIGHT_DIR="$(mktemp -d -t fukuincho_inflight_test.XXXXXX)
+    scripts/tests/test_detect_stale.sh:180  if find "$DETECT_STALE_INFLIGHT_DIR" -name "*passwd*" -o -name "..*" 2>/dev/null
+    scripts/tests/test_detect_stale.sh:466  rm -rf "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:39  DETECT_STALE_INFLIGHT_DIR="$(mktemp -d -t fukuincho_cli_inflight.XXXXXX)"
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:41  export DETECT_STALE_LOG DETECT_STALE_INFLIGHT_DIR DETECT_STALE_LOCK_FILE
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:46  rm -rf "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:170  mkdir -p "$DETECT_STALE_INFLIGHT_DIR"
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:171  : > "${DETECT_STALE_INFLIGHT_DIR}/${cid}.inflight"
+    scripts/lib/detect_stale.sh:32  DETECT_STALE_INFLIGHT_DIR="${DETECT_STALE_INFLIGHT_DIR:-/tmp/fukuincho_inflight}
+    scripts/lib/detect_stale.sh:102  mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    scripts/lib/detect_stale.sh:103  [ -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" ]
+    scripts/lib/detect_stale.sh:110  mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    scripts/lib/detect_stale.sh:111  : > "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight"
+    scripts/lib/detect_stale.sh:118  rm -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" 2>/dev/null
+    scripts/lib/detect_stale.sh:134  mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+    scripts/lib/detect_stale.sh:139  if [ -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" ]; then
+    scripts/lib/detect_stale.sh:142  : > "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight"
+
+==============================================================================
+★口★ DETECT_STALE_STALE_SEC   (宣= scripts/lib/detect_stale.sh L33 / 子器= -)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (三) scripts/ 全体の出現: 1 行 (grep_rc=0) ---
+    scripts/lib/detect_stale.sh:33  DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+★★ 讀まれぬ口(宣のみ) ★★ ―― 番人を立てても ★一つの枝も守らぬ★
+
+==============================================================================
+★口★ DETECT_STALE_LOCK_FILE   (宣= scripts/lib/detect_stale.sh L34 / 子器= -)
+--- (一) 自file 内の 宣以外の讀み: 1 行 (grep_rc=0) ---
+    L144  path として open                ) 9>"$DETECT_STALE_LOCK_FILE"
+--- (三) scripts/ 全体の出現: 5 行 (grep_rc=0) ---
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:40  DETECT_STALE_LOCK_FILE="$(mktemp -t fukuincho_cli_lock.XXXXXX)"
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:41  export DETECT_STALE_LOG DETECT_STALE_INFLIGHT_DIR DETECT_STALE_LOCK_FILE
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:47  rm -f "$DETECT_STALE_LOCK_FILE" 2>/dev/null
+    scripts/lib/detect_stale.sh:34  DETECT_STALE_LOCK_FILE="${DETECT_STALE_LOCK_FILE:-/tmp/fukuincho_detect_stale.lo
+    scripts/lib/detect_stale.sh:144  ) 9>"$DETECT_STALE_LOCK_FILE"
+
+==============================================================================
+★口★ ER_PANE_TARGET   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L24 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 3 行 (grep_rc=0) ---
+    L15   (其の他/展開のみ)                   #   ER_PANE_TARGET             tmux pane (例 commander-third:0.0)
+    L44   (其の他/展開のみ)                   for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_TYPE \
+    L52   字面(=)                        PANE_TARGET="$ER_PANE_TARGET"
+--- (三) scripts/ 全体の出現: 7 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:23  export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-second:0.0}"
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:28  export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-third:0.0}"
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:24  export ER_PANE_TARGET="${ER_PANE_TARGET:-commander-third:0.0}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:15  #   ER_PANE_TARGET             tmux pane (例 commander-third:0.0)
+    scripts/watchdogs/enter_restart_common_watchdog.sh:44  for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_
+    scripts/watchdogs/enter_restart_common_watchdog.sh:52  PANE_TARGET="$ER_PANE_TARGET"
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:23  export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-main:shogun.0}"
+
+==============================================================================
+★口★ ER_SESSION_NAME   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L25 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 3 行 (grep_rc=0) ---
+    L16   (其の他/展開のみ)                   #   ER_SESSION_NAME            tmux session (has-session 用、例 commander-third)
+    L44   (其の他/展開のみ)                   for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_TYPE \
+    L53   字面(=)                        SESSION_NAME="$ER_SESSION_NAME"
+--- (三) scripts/ 全体の出現: 7 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:24  export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-second}"
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:29  export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-third}"
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:25  export ER_SESSION_NAME="${ER_SESSION_NAME:-commander-third}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:16  #   ER_SESSION_NAME            tmux session (has-session 用、例 commander-third)
+    scripts/watchdogs/enter_restart_common_watchdog.sh:44  for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_
+    scripts/watchdogs/enter_restart_common_watchdog.sh:53  SESSION_NAME="$ER_SESSION_NAME"
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:24  export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-main}"
+
+==============================================================================
+★口★ ER_FROM_PC_FILTER   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L26 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 6 行 (grep_rc=0) ---
+    L17   (其の他/展開のみ)                   #   ER_FROM_PC_FILTER          pc_handshake.from_pc 値 (例 commander / third_pc)
+    L44   (其の他/展開のみ)                   for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_TYPE \
+    L54   字面(=)                        FROM_PC_FILTER="$ER_FROM_PC_FILTER"
+    L191  (其の他/展開のみ)                   # 旧版 `ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" LAST_INFO=$(...)` は両方が
+    L196  (其の他/展開のみ)                   LAST_INFO=$(ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" doppler run --project openhands --config dev
+    L202  (其の他/展開のみ)                   from_pc_filter = os.environ.get('ER_FROM_PC_FILTER_PY', '')
+--- (三) scripts/ 全体の出現: 10 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:25  export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-second_pc}"
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:30  export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-third_pc}"
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:26  export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-commander}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:17  #   ER_FROM_PC_FILTER          pc_handshake.from_pc 値 (例 commander / third_pc)
+    scripts/watchdogs/enter_restart_common_watchdog.sh:44  for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_
+    scripts/watchdogs/enter_restart_common_watchdog.sh:54  FROM_PC_FILTER="$ER_FROM_PC_FILTER"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:191  # 旧版 `ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" LAST_INFO=$(...)` は両方が
+    scripts/watchdogs/enter_restart_common_watchdog.sh:196  LAST_INFO=$(ER_FROM_PC_FILTER_PY="$FROM_PC_FILTER" doppler run --project openhan
+    scripts/watchdogs/enter_restart_common_watchdog.sh:202  from_pc_filter = os.environ.get('ER_FROM_PC_FILTER_PY', '')
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:25  export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-main_pc}"
+
+==============================================================================
+★口★ ER_LOG_DIR   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L27 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 3 行 (grep_rc=0) ---
+    L18   (其の他/展開のみ)                   #   ER_LOG_DIR                 ログ・fires.log 配置先 (例 ~/.local/share/enter_restart_<name>)
+    L44   (其の他/展開のみ)                   for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_TYPE \
+    L55   字面(=)                        LOG_DIR="$ER_LOG_DIR"
+--- (三) scripts/ 全体の出現: 7 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:26  export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudokai/.local/share/enter_restart_shog
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:31  export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_sho
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:27  export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_com
+    scripts/watchdogs/enter_restart_common_watchdog.sh:18  #   ER_LOG_DIR                 ログ・fires.log 配置先 (例 ~/.local/share/enter_restart_
+    scripts/watchdogs/enter_restart_common_watchdog.sh:44  for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_
+    scripts/watchdogs/enter_restart_common_watchdog.sh:55  LOG_DIR="$ER_LOG_DIR"
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:26  export ER_LOG_DIR="${ER_LOG_DIR:-/home/user/.local/share/enter_restart_shogun_ma
+
+==============================================================================
+★口★ ER_EVENT_TYPE   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L28 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 7 行 (grep_rc=0) ---
+    L19   (其の他/展開のみ)                   #   ER_EVENT_TYPE              shireiko_audit_log.event_type (例 enter_restart_commander_fire)
+    L44   (其の他/展開のみ)                   for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_TYPE \
+    L67   字面(=)                        EVENT_TYPE="$ER_EVENT_TYPE"
+    L143  (其の他/展開のみ)                   ER_EVENT_TYPE_PY="$EVENT_TYPE" \
+    L153  (其の他/展開のみ)                   event_type = os.environ.get('ER_EVENT_TYPE_PY', '')
+    L353  (其の他/展開のみ)                   ER_EVENT_TYPE_PY="$EVENT_TYPE" \
+    L366  (其の他/展開のみ)                   event_type = os.environ.get('ER_EVENT_TYPE_PY', '')
+--- (三) scripts/ 全体の出現: 11 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:27  export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_second_fire}"
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:32  export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_third_fire}"
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:28  export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_commander_fire}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:19  #   ER_EVENT_TYPE              shireiko_audit_log.event_type (例 enter_restart_co
+    scripts/watchdogs/enter_restart_common_watchdog.sh:44  for var in ER_PANE_TARGET ER_SESSION_NAME ER_FROM_PC_FILTER ER_LOG_DIR ER_EVENT_
+    scripts/watchdogs/enter_restart_common_watchdog.sh:67  EVENT_TYPE="$ER_EVENT_TYPE"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:143  ER_EVENT_TYPE_PY="$EVENT_TYPE" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:153  event_type = os.environ.get('ER_EVENT_TYPE_PY', '')
+    scripts/watchdogs/enter_restart_common_watchdog.sh:353  ER_EVENT_TYPE_PY="$EVENT_TYPE" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:366  event_type = os.environ.get('ER_EVENT_TYPE_PY', '')
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:27  export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_main_fire}"
+
+==============================================================================
+★口★ ER_ROLE_NAME   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L29 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 7 行 (grep_rc=0) ---
+    L20   (其の他/展開のみ)                   #   ER_ROLE_NAME               log 表示用役職名 (例 Commander / shogun-third)
+    L45   (其の他/展開のみ)                   ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX; do
+    L68   字面(=)                        ROLE_NAME="$ER_ROLE_NAME"
+    L354  (其の他/展開のみ)                   ER_ROLE_NAME_PY="$ROLE_NAME" \
+    L367  (其の他/展開のみ)                   role_name = os.environ.get('ER_ROLE_NAME_PY', '')
+    L394  (其の他/展開のみ)                   ER_ROLE_NAME_PY="$ROLE_NAME" \
+    L408  (其の他/展開のみ)                   role_name = os.environ.get('ER_ROLE_NAME_PY', '')
+--- (三) scripts/ 全体の出現: 11 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:28  export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-second}"
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:33  export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-third}"
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:29  export ER_ROLE_NAME="${ER_ROLE_NAME:-Commander}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:20  #   ER_ROLE_NAME               log 表示用役職名 (例 Commander / shogun-third)
+    scripts/watchdogs/enter_restart_common_watchdog.sh:45  ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX;
+    scripts/watchdogs/enter_restart_common_watchdog.sh:68  ROLE_NAME="$ER_ROLE_NAME"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:354  ER_ROLE_NAME_PY="$ROLE_NAME" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:367  role_name = os.environ.get('ER_ROLE_NAME_PY', '')
+    scripts/watchdogs/enter_restart_common_watchdog.sh:394  ER_ROLE_NAME_PY="$ROLE_NAME" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:408  role_name = os.environ.get('ER_ROLE_NAME_PY', '')
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:28  export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-main}"
+
+==============================================================================
+★口★ ER_HEARTBEAT_FROM_PC   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L30 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 5 行 (grep_rc=0) ---
+    L21   (其の他/展開のみ)                   #   ER_HEARTBEAT_FROM_PC       heartbeat INSERT 用 pc_handshake.from_pc 値
+    L45   (其の他/展開のみ)                   ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX; do
+    L69   字面(=)                        HEARTBEAT_FROM_PC="$ER_HEARTBEAT_FROM_PC"
+    L392  (其の他/展開のみ)                   ER_HEARTBEAT_FROM_PC_PY="$HEARTBEAT_FROM_PC" \
+    L406  (其の他/展開のみ)                   heartbeat_from_pc = os.environ.get('ER_HEARTBEAT_FROM_PC_PY', '')
+--- (三) scripts/ 全体の出現: 9 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:29  export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-second_pc}"
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:34  export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-third_pc}"
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:30  export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-commander}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:21  #   ER_HEARTBEAT_FROM_PC       heartbeat INSERT 用 pc_handshake.from_pc 値
+    scripts/watchdogs/enter_restart_common_watchdog.sh:45  ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX;
+    scripts/watchdogs/enter_restart_common_watchdog.sh:69  HEARTBEAT_FROM_PC="$ER_HEARTBEAT_FROM_PC"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:392  ER_HEARTBEAT_FROM_PC_PY="$HEARTBEAT_FROM_PC" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:406  heartbeat_from_pc = os.environ.get('ER_HEARTBEAT_FROM_PC_PY', '')
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:29  export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-main_pc}"
+
+==============================================================================
+★口★ ER_HEARTBEAT_TOPIC_PREFIX   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L31 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 5 行 (grep_rc=0) ---
+    L22   (其の他/展開のみ)                   #   ER_HEARTBEAT_TOPIC_PREFIX  heartbeat topic 接頭辞 (例 "[enter_restart] commander alive")
+    L45   (其の他/展開のみ)                   ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX; do
+    L70   字面(=)                        HEARTBEAT_TOPIC_PREFIX="$ER_HEARTBEAT_TOPIC_PREFIX"
+    L393  (其の他/展開のみ)                   ER_HEARTBEAT_TOPIC_PREFIX_PY="$HEARTBEAT_TOPIC_PREFIX" \
+    L407  (其の他/展開のみ)                   heartbeat_topic_prefix = os.environ.get('ER_HEARTBEAT_TOPIC_PREFIX_PY', '')
+--- (三) scripts/ 全体の出現: 9 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:30  export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] s
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:35  export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] s
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:31  export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] c
+    scripts/watchdogs/enter_restart_common_watchdog.sh:22  #   ER_HEARTBEAT_TOPIC_PREFIX  heartbeat topic 接頭辞 (例 "[enter_restart] commander
+    scripts/watchdogs/enter_restart_common_watchdog.sh:45  ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX;
+    scripts/watchdogs/enter_restart_common_watchdog.sh:70  HEARTBEAT_TOPIC_PREFIX="$ER_HEARTBEAT_TOPIC_PREFIX"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:393  ER_HEARTBEAT_TOPIC_PREFIX_PY="$HEARTBEAT_TOPIC_PREFIX" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:407  heartbeat_topic_prefix = os.environ.get('ER_HEARTBEAT_TOPIC_PREFIX_PY', '')
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:30  export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] s
+
+==============================================================================
+★口★ ER_CYCLE_LOG_PREFIX   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L32 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 5 行 (grep_rc=0) ---
+    L23   (其の他/展開のみ)                   #   ER_CYCLE_LOG_PREFIX        cycle start/complete log 接頭辞 (例 enter_restart_commander)
+    L45   (其の他/展開のみ)                   ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX; do
+    L71   字面(=)                        CYCLE_LOG_PREFIX="$ER_CYCLE_LOG_PREFIX"
+    L400  (其の他/展開のみ)                   ER_CYCLE_LOG_PREFIX_PY="$CYCLE_LOG_PREFIX" \
+    L414  (其の他/展開のみ)                   cycle_log_prefix = os.environ.get('ER_CYCLE_LOG_PREFIX_PY', '')
+--- (三) scripts/ 全体の出現: 9 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:31  export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_second}"
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:36  export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_third}"
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:32  export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_commander}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:23  #   ER_CYCLE_LOG_PREFIX        cycle start/complete log 接頭辞 (例 enter_restart_com
+    scripts/watchdogs/enter_restart_common_watchdog.sh:45  ER_ROLE_NAME ER_HEARTBEAT_FROM_PC ER_HEARTBEAT_TOPIC_PREFIX ER_CYCLE_LOG_PREFIX;
+    scripts/watchdogs/enter_restart_common_watchdog.sh:71  CYCLE_LOG_PREFIX="$ER_CYCLE_LOG_PREFIX"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:400  ER_CYCLE_LOG_PREFIX_PY="$CYCLE_LOG_PREFIX" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:414  cycle_log_prefix = os.environ.get('ER_CYCLE_LOG_PREFIX_PY', '')
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:31  export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_main}"
+
+==============================================================================
+★口★ ER_THRESHOLD_MIN   (宣= scripts/watchdogs/enter_restart_commander_watchdog.sh L35 / 子器= scripts/watchdogs/enter_restart_common_watchdog.sh)
+--- (一) 自file 内の 宣以外の讀み: 0 行 (grep_rc=0) ---
+--- (二) 子器 scripts/watchdogs/enter_restart_common_watchdog.sh の讀み: 7 行 (grep_rc=0) ---
+    L10   (其の他/展開のみ)                   # 役割: 指定 PC の指定 pane の Claude TUI が ER_THRESHOLD_MIN 分 idle 時、★既入力
+    L26   (其の他/展開のみ)                   #   ER_THRESHOLD_MIN=10        idle 判定閾値 (分)
+    L120  (其の他/展開のみ)                   fix_threshold ER_THRESHOLD_MIN 10 THRESHOLD_MIN
+    L356  (其の他/展開のみ)                   ER_THRESHOLD_MIN_PY="$THRESHOLD_MIN" \
+    L369  (其の他/展開のみ)                   threshold_min = os.environ.get('ER_THRESHOLD_MIN_PY', '')
+    L397  (其の他/展開のみ)                   ER_THRESHOLD_MIN_PY="$THRESHOLD_MIN" \
+    L411  (其の他/展開のみ)                   threshold_min = os.environ.get('ER_THRESHOLD_MIN_PY', '')
+--- (三) scripts/ 全体の出現: 11 行 (grep_rc=0) ---
+    scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:37  #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+    scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:38  #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+    scripts/watchdogs/enter_restart_commander_watchdog.sh:35  export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+    scripts/watchdogs/enter_restart_common_watchdog.sh:10  # 役割: 指定 PC の指定 pane の Claude TUI が ER_THRESHOLD_MIN 分 idle 時、★既入力
+    scripts/watchdogs/enter_restart_common_watchdog.sh:26  #   ER_THRESHOLD_MIN=10        idle 判定閾値 (分)
+    scripts/watchdogs/enter_restart_common_watchdog.sh:120  fix_threshold ER_THRESHOLD_MIN 10 THRESHOLD_MIN
+    scripts/watchdogs/enter_restart_common_watchdog.sh:356  ER_THRESHOLD_MIN_PY="$THRESHOLD_MIN" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:369  threshold_min = os.environ.get('ER_THRESHOLD_MIN_PY', '')
+    scripts/watchdogs/enter_restart_common_watchdog.sh:397  ER_THRESHOLD_MIN_PY="$THRESHOLD_MIN" \
+    scripts/watchdogs/enter_restart_common_watchdog.sh:411  threshold_min = os.environ.get('ER_THRESHOLD_MIN_PY', '')
+    scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:38  #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+
+##############################################################################
+★讀まれぬ口(宣のみで使はれぬ)= 1 本: DETECT_STALE_STALE_SEC
