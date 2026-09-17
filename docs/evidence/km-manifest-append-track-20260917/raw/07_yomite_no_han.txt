@@ -1,0 +1,35 @@
+刻 = 2026-09-17T16:41:25+0900
+根 = /Users/momizimac/multi-agent-shogun
+問 = 書き手は同一なのに出目が違ふ ―― ★讀み手は何版か★
+
+甲 二つの版
+  旧 blob=b19ec9ea259653d9e65d052459128c635a44e93f 行=127
+  直 blob=ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579 行=198
+  働き木 = ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579 行=198  ★直つた版と同一か= 然り★
+  origin/main = b19ec9ea259653d9e65d052459128c635a44e93f
+  PR#22 の枝(61a9fe1c) = b19ec9ea259653d9e65d052459128c635a44e93f
+
+乙 69本の ref を歩いた(母數の宣: refs/heads + refs/remotes 悉く)
+  ref 母數 = 69
+  当該 path 在り = 68 / 無し = 1
+  ―― 版の分布 ――
+  67     b19ec9ea2596 127行
+   1     ebfc4c0ecc08 198行
+  ―― ★直つた版を持つ ref(名を悉く)★ ――
+    refs/heads/karo-mac/hantei-saiteishutsu-20260917
+
+  対照(器の生死): 既知の一本 origin/main:scripts/checks/karo_mac_manifest_verify.py を引けるか = rc=0
+  ★己の疵★: 初めの歩きは 0 本を返した。因は zsh が★裸の変数を語分割せぬ★事で、
+            for r in $refs が 69 行を一語として回した。rc も數も見ずに「0本」と読んで居れば偽であつた。
+
+丙 直つた版を生んだ commit
+  cefe23496630835ecd951a7c28380ef61135142d  2026-09-17 00:45:32 +0900  evidence(hantei): 軍師mac REVISE seq321373 の四疵を癒す ―― 丙・r39・乙を★樹の中へ★
+  含む ref = refs/heads/karo-mac/hantei-saiteishutsu-20260917
+  上流に在るか = 0138ae57c377f4f0b3675d10706b5267eaa83e12
+
+★結 ―― selftest が働き木で通つたのは、直つた讀み手が當席の働き木にだけ在つた故★
+  ∴ 疵の本体は「commit した枝が、己の書き手に見合ふ讀み手を連れて居らぬ」事である。
+
+數が意味せぬ事:
+  ・「67本が旧」は「67本が壊れて居る」の意ではない(空白名を書かねば害は出ぬ)。器の話であつて害の話ではない。
+  ・「直つた版 1 本」は「其の枝が merge された」の意ではない。上流に在るのみである。
