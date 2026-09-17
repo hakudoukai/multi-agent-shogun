@@ -1,0 +1,38 @@
+
+─ 形1 ─
+rc=0
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形2 ─
+rc=0
+[srw_test] ★閾 SRW_TEST_THRESH が空文字 ―― 既定 60 へ倒す(fail-closed)★
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形3 ─
+rc=0
+[srw_test] ★閾 SRW_TEST_THRESH が空白のみ ―― 既定 60 へ倒す(fail-closed)★
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形4 ─
+rc=0
+[srw_test] ★閾 SRW_TEST_THRESH を比較器が扱へぬ(「99999999999999999999」) ―― 既定 60 へ倒す(fail-closed)★
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形5 ─
+rc=0
+RESULT COOLDOWN_SEC=〔7〕
+
+─ 形6 ─
+rc=0
+[srw_test] ★閾 SRW_TEST_THRESH を比較器が扱へぬ(「-5」) ―― 既定 60 へ倒す(fail-closed)★
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形7 ─
+rc=0
+[srw_test] ★閾 SRW_TEST_THRESH を比較器が扱へぬ(「60␊[shogun_report_watcher] ★偽の行★」) ―― 既定 60 へ倒す(fail-closed)★
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形8 ─
+rc=0
+[srw_test] ★閾 SRW_TEST_THRESH が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 60 へ倒す(fail-closed・裁 seq323980⑵)★
+RESULT COOLDOWN_SEC=〔60〕

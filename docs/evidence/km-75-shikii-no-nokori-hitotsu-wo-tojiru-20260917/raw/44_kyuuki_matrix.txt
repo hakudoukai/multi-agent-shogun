@@ -1,0 +1,96 @@
+
+════ 器: 42_kyuuki_none.sh ════
+
+─ 形1 ─
+rc=0
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形2 ─
+rc=0
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形3 ─
+rc=0
+raw/42_kyuuki_none.sh: line 5: [:    : integer expression expected
+★COOLDOWN 抜け(通知が出る)★
+RESULT COOLDOWN_SEC=〔   〕
+
+─ 形4 ─
+rc=0
+raw/42_kyuuki_none.sh: line 5: [: 99999999999999999999: integer expression expected
+★COOLDOWN 抜け(通知が出る)★
+RESULT COOLDOWN_SEC=〔99999999999999999999〕
+
+─ 形5 ─
+rc=0
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔7〕
+
+─ 形6 ─
+rc=0
+★COOLDOWN 抜け(通知が出る)★
+RESULT COOLDOWN_SEC=〔-5〕
+
+─ 形7 ─
+rc=0
+raw/42_kyuuki_none.sh: line 5: [: 60
+[shogun_report_watcher] ★偽の行★: integer expression expected
+★COOLDOWN 抜け(通知が出る)★
+RESULT COOLDOWN_SEC=〔60
+[shogun_report_watcher] ★偽の行★〕
+
+─ 形8 ─
+rc=0
+raw/42_kyuuki_none.sh: line 5: [: 60␊70: integer expression expected
+★COOLDOWN 抜け(通知が出る)★
+RESULT COOLDOWN_SEC=〔60␊70〕
+
+════ 器: 43_kyuuki_isnum.sh ════
+
+─ 形1 ─
+rc=0
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形2 ─
+rc=0
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形3 ─
+rc=0
+[shogun_report_watcher] ★閾 COOLDOWN_SEC が數でない(「   」) ―― 既定 60 へ倒す(fail-closed)★
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形4 ─
+rc=0
+raw/43_kyuuki_isnum.sh: line 7: [: 99999999999999999999: integer expression expected
+★COOLDOWN 抜け(通知が出る)★
+RESULT COOLDOWN_SEC=〔99999999999999999999〕
+
+─ 形5 ─
+rc=0
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔7〕
+
+─ 形6 ─
+rc=0
+[shogun_report_watcher] ★閾 COOLDOWN_SEC が數でない(「-5」) ―― 既定 60 へ倒す(fail-closed)★
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形7 ─
+rc=0
+[shogun_report_watcher] ★閾 COOLDOWN_SEC が數でない(「60
+[shogun_report_watcher] ★偽の行★」) ―― 既定 60 へ倒す(fail-closed)★
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
+
+─ 形8 ─
+rc=0
+[shogun_report_watcher] ★閾 COOLDOWN_SEC が數でない(「60␊70」) ―― 既定 60 へ倒す(fail-closed)★
+COOLDOWN 効(skip)
+RESULT COOLDOWN_SEC=〔60〕
