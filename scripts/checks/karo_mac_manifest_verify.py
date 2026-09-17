@@ -64,13 +64,27 @@ def paths_of(line: str):
 
     out = []
     line = line.replace("\r", "")          # ★照合の前に \r を剥ぐ★(CRLF の臺帳を LF と同じに読む)
-    m = re.search(r'(?:^|\s)path=([^\s"\']+)', line)        # ①本形(★引用符を用ゐぬ★・裁321353⑵)
-    if not m:
-        m = re.search(r"(?:^|\s)path=(.+?)[ \t]+sha256=", line)  # ②非貪欲(素の空白名)
-    if not m:
-        m = re.search(r"(?:^|\s)path=(\S+)", line)           # ③従来形(sha256 が前に在る等)
-    if m:
-        out.append(_dequote(m.group(1)))
+    #   ★2026-09-17 直し(委員長裁 seq327306 ⑵「fixture 固定再現 rc1→直す」)★:
+    #       旧は ``if not m`` の連鎖 ―― ①が當れば ②③ を試さぬ。
+    #       然るに ★①は空白を含む名にも必ず當る★ ―― ``path=c d.txt`` から ``c`` を捕る。
+    #       ∴ ②(2026-09-12 の止血が ★空白名の為に★ 書いた則)は
+    #       ★己が書かれた当の場合に限つて到達不能★ であつた。
+    #       (實測 2026-09-17: 127行版・origin/main 版・worktree 版 ★三版悉く★
+    #        ``path=c d.txt`` で rc=1「実体無 1」。捕つて居たのは ``c`` であつた。)
+    #       ★直しの形★: 順を入れ替へず、★悉くを候補として列ねる★。
+    #       使ひ手(下の main)は候補を順に disk へ問ひ、★在る物だけが昇る★。
+    #       ∴ ①の正しい出目は先頭に居る儘ゆゑ ★決して奪はれぬ★ ――
+    #       ②③が生む偽の候補は、disk に無ければ黙つて落ちるのみである。
+    #       ★舊形の扱ひは一分も動かさぬ★(_dequote は其の儘・裁321353⑴「既存行は拒まぬ」)。
+    #       可逆: 此の for を旧の if-not-m 連鎖へ戻せば旧挙動。
+    for _pat in (r'(?:^|\s)path=([^\s"\']+)',  # ①本形(★引用符を用ゐぬ★・裁321353⑵)
+                 r"(?:^|\s)path=(.+?)[ \t]+sha256=",   # ②非貪欲(素の空白名)
+                 r"(?:^|\s)path=(\S+)"):  # ③従来形(sha256 が前に在る等)
+        m = re.search(_pat, line)
+        if m:
+            _t = _dequote(m.group(1))
+            if _t and _t not in out:
+                out.append(_t)
     # '=' の右・sha256 でない・'/' を含む語
     for tok in line.split():
         if tok.startswith("sha256=") or tok.startswith("bytes=") or tok.startswith("lines="):
