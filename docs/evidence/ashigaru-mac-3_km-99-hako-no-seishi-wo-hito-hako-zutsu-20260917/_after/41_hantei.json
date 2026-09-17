@@ -1,0 +1,354 @@
+{
+ "shikii": {
+  "A_sec": 600,
+  "B_sec": 86400
+ },
+ "measured_at": "2026-09-17T14:21:35.248034+09:00",
+ "pane_set": [
+  "ashigaru-mac-1",
+  "ashigaru-mac-2",
+  "ashigaru-mac-3",
+  "dr-m",
+  "gakushu-bucho",
+  "gunshi-mac",
+  "karo-mac"
+ ],
+ "white": [
+  "ashigaru-mac-1",
+  "ashigaru-mac-2",
+  "ashigaru-mac-3",
+  "ashigaru-mac-4",
+  "ashigaru-mac-5",
+  "ashigaru-mac-6",
+  "ashigaru-mac-7",
+  "dr-m",
+  "fukuincho",
+  "gakushu-bucho",
+  "gunshi",
+  "gunshi-mac",
+  "hermes-gunshi-mac",
+  "hermes3",
+  "karo",
+  "karo-mac",
+  "kikaku-bucho",
+  "shogun-mac"
+ ],
+ "white_n": 18,
+ "bogen": 19,
+ "rows": [
+  {
+   "name": "ashigaru-mac-1",
+   "file": "ashigaru-mac-1.yaml",
+   "kou": 37,
+   "mikou": 0,
+   "last": "2026-09-17T14:17:20+09:00",
+   "mtime": "2026-09-17T14:17:44.748253+09:00",
+   "dA": 24.748253,
+   "dA_tag": "整合",
+   "han": "甲",
+   "age_sec": 255.248034,
+   "in_white": true
+  },
+  {
+   "name": "ashigaru-mac-2",
+   "file": "ashigaru-mac-2.yaml",
+   "kou": 51,
+   "mikou": 0,
+   "last": "2026-09-17T14:17:20+09:00",
+   "mtime": "2026-09-17T14:18:01.838246+09:00",
+   "dA": 41.838246,
+   "dA_tag": "整合",
+   "han": "甲",
+   "age_sec": 255.248034,
+   "in_white": true
+  },
+  {
+   "name": "ashigaru-mac-3",
+   "file": "ashigaru-mac-3.yaml",
+   "kou": 41,
+   "mikou": 0,
+   "last": "2026-09-17T14:17:21+09:00",
+   "mtime": "2026-09-17T14:20:04.138742+09:00",
+   "dA": 163.138742,
+   "dA_tag": "整合",
+   "han": "甲",
+   "age_sec": 254.248034,
+   "in_white": true
+  },
+  {
+   "name": "ashigaru-mac-4",
+   "file": "ashigaru-mac-4.yaml",
+   "kou": 45,
+   "mikou": 1,
+   "last": "2026-09-17T14:09:21+09:00",
+   "mtime": "2026-09-17T14:09:22.068893+09:00",
+   "dA": 1.068893,
+   "dA_tag": "整合",
+   "han": "乙",
+   "age_sec": 734.248034,
+   "in_white": true
+  },
+  {
+   "name": "ashigaru-mac-5",
+   "file": "ashigaru-mac-5.yaml",
+   "kou": 35,
+   "mikou": 0,
+   "last": "2026-09-03T20:27:51+09:00",
+   "mtime": "2026-09-03T20:27:59.848869+09:00",
+   "dA": 8.848869,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 1187624.248034,
+   "in_white": true
+  },
+  {
+   "name": "ashigaru-mac-6",
+   "file": "ashigaru-mac-6.yaml",
+   "kou": 36,
+   "mikou": 0,
+   "last": "2026-09-03T16:35:26+09:00",
+   "mtime": "2026-09-03T16:35:46.545419+09:00",
+   "dA": 20.545419,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 1201569.248034,
+   "in_white": true
+  },
+  {
+   "name": "ashigaru-mac-7",
+   "file": "ashigaru-mac-7.yaml",
+   "kou": 32,
+   "mikou": 0,
+   "last": "2026-09-03T08:30:29+09:00",
+   "mtime": "2026-09-11T07:22:57.417729+09:00",
+   "dA": 687148.417729,
+   "dA_tag": "★食違・後触(mtime が 687148 秒 後)★",
+   "han": "丙",
+   "age_sec": 1230666.248034,
+   "in_white": true
+  },
+  {
+   "name": "dr-m",
+   "file": "dr-m.yaml",
+   "kou": 3,
+   "mikou": 3,
+   "last": "2026-09-08T14:44:13+09:00",
+   "mtime": "2026-09-08T14:44:13.833344+09:00",
+   "dA": 0.833344,
+   "dA_tag": "整合",
+   "han": "甲",
+   "age_sec": 776242.248034,
+   "in_white": true
+  },
+  {
+   "name": "fukuincho",
+   "file": "fukuincho.yaml",
+   "kou": 1,
+   "mikou": 1,
+   "last": "2026-08-29T15:28:26+09:00",
+   "mtime": "2026-08-29T15:28:26.249263+09:00",
+   "dA": 0.249263,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 1637589.248034,
+   "in_white": true
+  },
+  {
+   "name": "gakushu-bucho",
+   "file": "gakushu-bucho.yaml",
+   "kou": 42,
+   "mikou": 42,
+   "last": "2026-09-07T07:27:53+09:00",
+   "mtime": "2026-09-07T07:27:54.067779+09:00",
+   "dA": 1.067779,
+   "dA_tag": "整合",
+   "han": "甲",
+   "age_sec": 888822.248034,
+   "in_white": true
+  },
+  {
+   "name": "gunshi-mac",
+   "file": "gunshi-mac.yaml",
+   "kou": 565,
+   "mikou": 565,
+   "last": "2026-09-17T02:44:31+09:00",
+   "mtime": "2026-09-17T02:44:32.141479+09:00",
+   "dA": 1.141479,
+   "dA_tag": "整合",
+   "han": "甲",
+   "age_sec": 41824.248034,
+   "in_white": true
+  },
+  {
+   "name": "gunshi",
+   "file": "gunshi.yaml",
+   "kou": 7,
+   "mikou": 7,
+   "last": "2026-08-25T02:00:53+09:00",
+   "mtime": "2026-08-25T02:00:53.237148+09:00",
+   "dA": 0.237148,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 2031642.248034,
+   "in_white": true
+  },
+  {
+   "name": "hermes-gunshi-mac",
+   "file": "hermes-gunshi-mac.yaml",
+   "kou": 1,
+   "mikou": 1,
+   "last": "2026-08-16T23:10:02+09:00",
+   "mtime": "2026-08-16T23:10:02.261668+09:00",
+   "dA": 0.261668,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 2733093.248034,
+   "in_white": true
+  },
+  {
+   "name": "hermes3",
+   "file": "hermes3.yaml",
+   "kou": 5,
+   "mikou": 5,
+   "last": "2026-08-24T08:31:49+09:00",
+   "mtime": "2026-08-24T08:31:49.222211+09:00",
+   "dA": 0.222211,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 2094586.248034,
+   "in_white": true
+  },
+  {
+   "name": "karo-mac,gunshi-mac",
+   "file": "karo-mac,gunshi-mac.yaml",
+   "kou": 1,
+   "mikou": 1,
+   "last": "2026-08-19T23:24:07+09:00",
+   "mtime": "2026-08-19T23:24:07.477913+09:00",
+   "dA": 0.477913,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 2473048.248034,
+   "in_white": false
+  },
+  {
+   "name": "karo-mac",
+   "file": "karo-mac.yaml",
+   "kou": 46,
+   "mikou": 14,
+   "last": "2026-09-17T14:19:45+09:00",
+   "mtime": "2026-09-17T14:19:45.343515+09:00",
+   "dA": 0.343515,
+   "dA_tag": "整合",
+   "han": "甲",
+   "age_sec": 110.248034,
+   "in_white": true
+  },
+  {
+   "name": "karo",
+   "file": "karo.yaml",
+   "kou": 659,
+   "mikou": 659,
+   "last": "2026-09-17T13:57:17+09:00",
+   "mtime": "2026-09-17T13:57:18.084160+09:00",
+   "dA": 1.08416,
+   "dA_tag": "整合",
+   "han": "乙",
+   "age_sec": 1458.248034,
+   "in_white": true
+  },
+  {
+   "name": "kikaku-bucho",
+   "file": "kikaku-bucho.yaml",
+   "kou": 43,
+   "mikou": 41,
+   "last": "2026-09-03T04:05:30+09:00",
+   "mtime": "2026-09-03T04:05:30.892316+09:00",
+   "dA": 0.892316,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 1246565.248034,
+   "in_white": true
+  },
+  {
+   "name": "shogun-mac",
+   "file": "shogun-mac.yaml",
+   "kou": 207,
+   "mikou": 177,
+   "last": "2026-09-09T04:42:42+09:00",
+   "mtime": "2026-09-09T04:42:42.839589+09:00",
+   "dA": 0.839589,
+   "dA_tag": "整合",
+   "han": "丙",
+   "age_sec": 725933.248034,
+   "in_white": true
+  }
+ ],
+ "mismatch": [
+  [
+   "ashigaru-mac-5",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "ashigaru-mac-6",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "ashigaru-mac-7",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "fukuincho",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "gunshi-mac",
+   "死箱の宣 有・併し生 pane 有(甲) ―― 宣と判が正面から食ひ違ふ"
+  ],
+  [
+   "gunshi-mac",
+   "死箱の宣 有・併し白名簿に居る ―― 門は通し dead-gate が rc=68 で落とす二段"
+  ],
+  [
+   "gunshi",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "hermes-gunshi-mac",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "hermes3",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "kikaku-bucho",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ],
+  [
+   "shogun-mac",
+   "丙(pane 無・着信古)・併し白名簿に居る ―― 宣 無き死箱の疑ひ"
+  ]
+ ],
+ "pane_only": [],
+ "box_only": [
+  "ashigaru-mac-4",
+  "ashigaru-mac-5",
+  "ashigaru-mac-6",
+  "ashigaru-mac-7",
+  "fukuincho",
+  "gunshi",
+  "hermes-gunshi-mac",
+  "hermes3",
+  "karo-mac,gunshi-mac",
+  "karo",
+  "kikaku-bucho",
+  "shogun-mac"
+ ],
+ "tally": {
+  "甲": 7,
+  "乙": 2,
+  "丙": 10
+ },
+ "kuichigai_n": 1
+}

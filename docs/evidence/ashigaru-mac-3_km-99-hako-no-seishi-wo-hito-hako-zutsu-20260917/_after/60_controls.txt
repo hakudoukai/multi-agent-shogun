@@ -1,0 +1,31 @@
+## 環境に IW_* が在るか(此の測り自身の前提)
+(IW_ で始まる環境変数 無し ―― rc=1)
+
+## 陽性/陰性対照 ―― 止まり木(TEST_ONLY)で箱へ一字も書かずに門だけ通す
+--- [DEAD] target=gunshi-mac rc=68  (死箱の宣 有 → rc=68 を期す)
+      [inbox_write] REJECTED: ★gunshi-mac は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。
+      [inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc / target_agent=gunshi-mac / parent_seq=元便)。
+      [inbox_write]   足軽席は DB の sender を持たぬ ―― ★家老mac へ回せ。家老が代送する。★
+      [inbox_write]   承知の上で書くなら IW_DEAD_ALLOW=1 を付けよ。
+--- [DEAD] target=ashigaru-mac-7 rc=0  (裁 seq302248 で死箱とされた名・併し宣に無し → 通れば疵)
+      DEAD_INBOX_PASS target=ashigaru-mac-7
+--- [DEAD] target=karo-mac rc=0  (生きた宛先 → 通るのが正(陰性対照))
+      DEAD_INBOX_PASS target=karo-mac
+--- [NAME] target=karo-mac,gunshi-mac rc=69  (異名(読点) → rc=69 を期す)
+      [inbox_write] REJECTED: ★宛名に読点/空白★ (target=karo-mac,gunshi-mac) ―― 二名を一字で渡した跡。
+      [inbox_write]   一名づつ二度書け。此の形は IW_ALLOW_NAME でも通らぬ。
+--- [NAME] target=karo-mac rc=0  (正名 → NAME_PASS を期す(陰性対照))
+      NAME_PASS target=karo-mac
+--- [NAME] target=zzz-hako-no-nai-na rc=69  (白名簿に無い名 → rc=69 を期す)
+      [inbox_write] REJECTED: ★未知の宛名★ 'zzz-hako-no-nai-na' ―― 箱を生ませぬ(fail-closed)。
+      [inbox_write]   ★許可名(實測)★:
+      [inbox_write]     ashigaru-mac-1
+      [inbox_write]     ashigaru-mac-2
+      [inbox_write]     ashigaru-mac-3
+      [inbox_write]     ashigaru-mac-4
+      [inbox_write]     ashigaru-mac-5
+      [inbox_write]     ashigaru-mac-6
+      [inbox_write]     ashigaru-mac-7
+      [inbox_write]     dr-m
+      [inbox_write]     fukuincho
+      [inbox_write]     gakushu-bucho
