@@ -1,0 +1,53 @@
+# 臺帳 ―― km-55 第55弾(專任2 / ashigaru-mac-2)
+# path は ★束内相対★(裁 seq322699)。基点 = docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/
+# ★丙③ 宣★ 締めた後に書き換はる紙は臺帳の母數の外に置く ―― 入れれば門が己の出目で臺帳を古びさせ不動点を持たぬ(第54弾 實測 508⇔795 異 / 丙③ 28⇔28 同)。
+# 母數の外(★名指し★): _manifest.txt / _gate/*(門控 .err .out .rc) / raw/92_daichou.{out,err,rc}(臺帳を建てる走り己の控) / raw/93_ingai.{tsv,err,rc}(員外器 門前の控) / raw/99_ingai_ato.{tsv,err,rc}(員外器 門後の控)
+# 之は「捨てる」の意に非ず ―― 束に残り commit される。★臺帳の母數から外すのみ。★ 員外の數は raw/93_ingai.tsv(門前)と raw/99_ingai_ato.tsv(門後)に器で作る。
+path=_bin/01_chakushu_1.txt sha256=d86244affb07bae040604b4d9baf6dd5ca787b31faae230bdbb58c9d225a6030 bytes=390 lines=3
+path=_bin/01_chakushu_1.txt.first sha256=62cd4585dfb22e364f12e66ce24ff845407436397f9341469022ba8d21485d0d bytes=567 lines=4
+path=_bin/01_chakushu_2.txt sha256=d2584cf17dcfbe7420834f120dce02ae27479aa8a17619c5dbaa8e71e06b757b bytes=397 lines=3
+path=_bin/90_osame_1.txt sha256=39c494220f2e7808e2e59b979d0ae15e6349d628e38e98c181d29bd8b013ced8 bytes=361 lines=1
+path=_bin/90_osame_2.txt sha256=dc63968e0ab612bbcbfb0fe978b673ccdb30116cd1ba0ed95bec088072ff22d7 bytes=405 lines=1
+path=_bin/90_osame_3.txt sha256=48e964b1d11520c18222e36ce0b8e339ab4e33c4c912a041916f9022cca3e210 bytes=355 lines=1
+path=_bin/90_osame_4.txt sha256=3ccb0bd430daa4dda456056ca3feb0c4bdf291eb08b07f194c78530e4f7bb727 bytes=420 lines=1
+path=_bin/90_osame_5.txt sha256=ab4c74221b2f840e18dd2bb7bc69000553dcedc7dbb5b8295fc7d77240f6dbff bytes=426 lines=1
+path=_bin/90_osame_6.txt sha256=b2f67fb20765b721ea2e11e3d927133a19ca611247e8139f8be5332469fc4be7 bytes=408 lines=1
+path=_bin/90_osame_7.txt sha256=68fee5ea5cf74e3449b221a2d464e3942a8431f521665591cddcb35225ccd42d bytes=688 lines=1
+path=ki/01_hakaru.sh sha256=e4d62212cf4116fcc40ea97caeb2728f0b1ac4fcb3063e41738d6c0e3ad22b03 bytes=933 lines=19
+path=ki/02_okuru.sh sha256=8f435e905f46d395f4d856c401a938ac602d0dcc92a16f06af3f22c1da3ff94a bytes=1311 lines=26
+path=ki/10_byte_giri.py sha256=2f6fa4bfe9aa105f14438b15e0afe6b200ef950d560caf73acdf8e4826a80a4c bytes=7637 lines=167
+path=ki/10_byte_giri.py.first sha256=14df5661e7ca86a4162ffdee662cca8dd173cbabcbb1e1a47a2890261f22bec4 bytes=6928 lines=160
+path=ki/12_yomite_file.py sha256=7934900e04bfc03c218f292d39aeb38198de324588dd5d6f4ae07e4f399f277a bytes=2798 lines=59
+path=ki/13_hakikuchi.py sha256=6d850656357084be80cf198a66465a08d62202d771fe790997d4c7e53447de01 bytes=3254 lines=75
+path=paper_byte_giri_wa_shimo_ni_nai.md sha256=43ab9ab36d0585057e2489c10ff3e94f1e9a2f4797d84c2548b9e2588116b4eb bytes=7973 lines=97
+path=raw/01_hakaru_chakushu.tsv sha256=23f3c3b4b5ab6e38a78b1c7c9e14dca430bd89a2f1d7829c9cd34264d6044efc bytes=186 lines=2
+path=raw/02_okuru_taisho_you.err sha256=283f4fe18e98246f061ddb6ab213870d1f43403e852bdccea6bd4c44724baf30 bytes=66 lines=1
+path=raw/02_okuru_taisho_you.out sha256=1d0cbebf65088db04cc750a889cb3c2d647d21efc734b8f3e833ce3b29d23011 bytes=175 lines=1
+path=raw/02_okuru_taisho_you.rc sha256=cc2201b3616ff2ab88ee01449d6552404dbf0c8a30680af5da20325cf2db1e70 bytes=5 lines=1
+path=raw/03_hako_mae.txt sha256=1d7594f818000c1bdf7d7406ab5c47d3673fa476ce46b4bc1f01c162d3948415 bytes=31 lines=1
+path=raw/04_koku_sou_mae.txt sha256=f4b98857ec8baed071bd21fed4c8827575e47757b7b65bbaa4941077bdfdb26a bytes=39 lines=1
+path=raw/05_okuru_chakushu.out sha256=a91d4550488bf18d6f98765e0558b2cda584169ae406e9b89a62313b96ca85de bytes=188 lines=2
+path=raw/06_hako_ato.txt sha256=2b7621fb43746afe9c9223aa5d65dd7551b75f16ded5d073b01de4630ebf25bf bytes=407 lines=6
+path=raw/10_namaki.tsv sha256=1c36f3611e2c66c1cfc97bdbe3336d55a09e14073ea3e46115b4ba3cb3c24d7c bytes=636 lines=15
+path=raw/10_run.err sha256=711e5d0e7f01d50e4236db3a742f07569f2b55c1efb5b1497b60f5098632eb73 bytes=78 lines=1
+path=raw/11_yomite.tsv sha256=421800ba73e22f6dd10dd10a5935c0e82ccd321e5c84bfa56ffd8c9d08e58d8b bytes=56423 lines=319
+path=raw/12_run.err sha256=e8dcea447d6ac16e8c574bce3029672872973bbdf8c8c2e92a39010dab190e03 bytes=36 lines=1
+path=raw/12_yomite_file.tsv sha256=73b8cea7515ad90fe609bcc12f07a479e9603b2a3e0db845228c96536c0ee444 bytes=789 lines=10
+path=raw/13_hakikuchi.tsv sha256=dfc8090e287b565c27b001bf1982016dc701c71dc69e73f2da617bfb5c35fb3b bytes=7220 lines=100
+path=raw/13_run.err sha256=fa8d1e31f877f34c6ca3c1ef414ac1b27fdfa90845642904cdf8cbabfdf328cb bytes=43 lines=1
+path=raw/90_hakaru_osame.err sha256=304c842138df4be0d8ddec8507b732b6af7252afd7413a21d921a509c40546db bytes=147 lines=1
+path=raw/90_hakaru_osame.rc sha256=93ff7811a209e2a8479230bbb9b6bc19f7f311d3af383ec350c1db2a7e7d5494 bytes=5 lines=1
+path=raw/90_hakaru_osame.tsv sha256=06339ab75751b56dc1d0d36b5e3734bbaa2cce741cd22e1ef92a6a4dfd3a500f bytes=168 lines=7
+path=raw/91_argv.txt sha256=5d81cc61290ceb2082b00ef9fae05bef2c350f9a79ed802640428dfff9b1bdf6 bytes=1069 lines=48
+path=raw/taisho/00_taisho_sen.txt sha256=cb12c5c52b81aafc3002b747aba1c87c833ffbbcde516152e133c3075590172f bytes=483 lines=5
+path=raw/taisho/10_namaki.tsv sha256=1194745c83524dc980c27c64c3bbbe1b590691e4f773aa405456412d4409d86f bytes=1471 lines=20
+path=raw/taisho/10_namaki.tsv.first sha256=c3720d802d8fabdd2f9bd5a08c063fbfd8bb4a29aad0e4865fe90dd2b4b34cf6 bytes=1146 lines=17
+path=raw/taisho/10_namaki.tsv.second sha256=bfed8fcc4a95936b08d2b9ebac2a3a40e4767ac4db6437c707a23f7df71e944c bytes=1462 lines=20
+path=raw/taisho/11_yomite.tsv sha256=3b53164752a024f1f5c7d91572d6cb7bc56a4545cc9d0be6ff2237fa3f8157e4 bytes=196 lines=7
+path=raw/taisho/11_yomite.tsv.first sha256=3b53164752a024f1f5c7d91572d6cb7bc56a4545cc9d0be6ff2237fa3f8157e4 bytes=196 lines=7
+path=raw/taisho/in.sh sha256=389d915a7bf5574a1385ecbc594bdab82a9690283e39feb7c831e3c4667652ab bytes=186 lines=5
+path=raw/taisho/run.err sha256=17f1d9e22ffd4d8ab006d54f4e90db7c1d1f4512c694b1bdf4f5ce5e999d9402 bytes=72 lines=1
+path=raw/taisho/run.err.first sha256=e1bede626afe831016d5edc66713497527475cce8a0e22ec4ef41094cdba9666 bytes=72 lines=1
+path=raw/taisho/you.sh sha256=3ba89b590303187d99ce4f1391686361f0d4f35aa1f96077bcdf207b0a5deb44 bytes=556 lines=11
+path=report.md sha256=8017d38310ce1a3ff1221210bbd4b9f5005c1ba69807fea2288e835ebd5e4098 bytes=7962 lines=109
+path=sahou_mon_hikae_wo_ingai_e.md sha256=3fc3b097d4fa605aef685305872d790382927e0ae4ad2e2ccc90fe699cc9c5ff bytes=6567 lines=85

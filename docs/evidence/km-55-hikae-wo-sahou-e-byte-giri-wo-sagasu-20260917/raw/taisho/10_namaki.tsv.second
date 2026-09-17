@@ -1,0 +1,20 @@
+#colspec	生器	sha16	行數(grep -c "")
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	3ba89b590303187d	11
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/in.sh	389d915a7bf5574a	5
+
+母數A(生器四本の全行)=16
+byte切り 当り 總數=9
+
+#colspec	器	行	形	逐語	被演算子	印の下流か
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	3	cut_b	cut -b	-	非
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	4	cut_c	cut -c	-	非
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	5	bash_sl	${v:0:40}	v	非
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	6	bash_sl	${_ft_vp:0:40}	_ft_vp	★下流★
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	7	pf_prec	printf '%.40s	-	非
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	8	head_c	head -c	-	非
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	9	dd_bs	dd bs=	-	非
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	10	awk_sub	substr(	-	非
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/taisho/you.sh	11	cut_b	cut -b	-	非
+
+母數B(印の下流の byte 切り)=1
+形の排他性: 同じ逐語が二形以上に当つた件數=0

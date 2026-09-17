@@ -1,0 +1,15 @@
+#colspec	生器	sha16	行數(grep -c "")
+scripts/inbox_watcher.sh	15ac9f97f473245d	1666
+scripts/watchdogs/enter_restart_common_watchdog.sh	f92cd54e09736a4e	429
+scripts/agent_health_check.sh	7d11ba9f852ac759	488
+scripts/checks/context_usage_warn.sh	3010defd413a3479	100
+
+母數A(生器四本の全行)=2683
+byte切り 当り 總數=2
+
+#colspec	器	行	形	逐語	被演算子	印の下流か
+scripts/inbox_watcher.sh	744	bash_sl	${startup_prompt:0:80}	startup_prompt	非
+scripts/agent_health_check.sh	361	bash_sl	${sid:0:8}	sid	非
+
+母數B(印の下流の byte 切り)=0
+形の排他性: 同じ逐語が二形以上に当つた件數=0

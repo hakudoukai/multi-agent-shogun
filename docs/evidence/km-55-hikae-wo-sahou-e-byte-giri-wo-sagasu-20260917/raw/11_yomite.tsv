@@ -1,0 +1,319 @@
+#colspec	讀手file	行	逐語(160字迄)	同行のbyte切り形
+母數C(歩いた file)=622  跳ばした=5
+四本の名を呼ぶ行=307
+其の内 同行に byte 切りが在る行=0
+
+.claude/settings.json	41	"command": "bash scripts/checks/context_usage_warn.sh",	-
+.claude/worktrees/karo-mac-a1/.claude/settings.json	36	"command": "bash scripts/checks/context_usage_warn.sh",	-
+.claude/worktrees/karo-mac-a1/.github/copilot-instructions.md	131	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/.github/copilot-instructions.md	138	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/.gitignore	116	!scripts/inbox_watcher.sh	-
+.claude/worktrees/karo-mac-a1/.gitignore	152	!scripts/agent_health_check.sh	-
+.claude/worktrees/karo-mac-a1/.gitignore	408	!scripts/archive/inbox_watcher.sh.archived_2026-05-08	-
+.claude/worktrees/karo-mac-a1/AGENTS.md	131	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/AGENTS.md	138	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/CLAUDE.md	161	- `scripts/checks/context_usage_warn.sh` が session jsonl size を観測。	-
+.claude/worktrees/karo-mac-a1/CLAUDE.md	200	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/CLAUDE.md	207	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/CONTRIBUTING.md	55	│   ├── inbox_watcher.sh  # Event-driven delivery via inotifywait	-
+.claude/worktrees/karo-mac-a1/README.md	615	│ inbox_write.sh       │           │ inbox_watcher.sh         │	-
+.claude/worktrees/karo-mac-a1/README.md	660	Or set the default directly in `scripts/inbox_watcher.sh` (`ASW_PHASE` variable). Restart inbox_watcher processes after changing.	-
+.claude/worktrees/karo-mac-a1/README.md	1567	│   ├── inbox_watcher.sh      # Watch inbox changes via inotifywait	-
+.claude/worktrees/karo-mac-a1/README_ja.md	619	│ inbox_write.sh       │           │ inbox_watcher.sh         │	-
+.claude/worktrees/karo-mac-a1/README_ja.md	665	または `scripts/inbox_watcher.sh` の `ASW_PHASE` 変数を直接変更。変更後はinbox_watcherプロセスの再起動が必要。	-
+.claude/worktrees/karo-mac-a1/README_ja.md	1511	│   ├── inbox_watcher.sh      # inotifywaitでinbox変更を監視	-
+.claude/worktrees/karo-mac-a1/agents/default/system.md	131	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/agents/default/system.md	138	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	19	| 既存実装 `scripts/inbox_watcher.sh` (実機) | 受領側 wake-up + escalation。`ESCALATE_PHASE1=120` (Escape×2+nudge) / `ESCALATE_PHASE2=240` (/clear)、Working-busy guard、sto	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	30	- 既存 `inbox_watcher.sh` は ★受領側 session の wake-up★ (nudge/Escape/clear) は担うが、	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	184	2. **受領側 wake**: 既存 `inbox_watcher.sh` escalation に ★委譲★ (本案は独自 nudge を新設しない)。	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	1	# 自動 /clear 止血 案 E — 三重改修統合設計 (CLAUDE.md + inbox_watcher.sh + agent_health_check.sh)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	5	> base_commit: `2d0a1e48175854c0f3b5114947b4be454b90485e` (実機照合 HEAD=`8d923785`、差分は本 docs 追加のみ→inbox_watcher.sh の line number は base と同一)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	6	> ★D-lane 警告: 本書は ★設計文書 + diff 草案のみ★。実 script (CLAUDE.md / inbox_watcher.sh / agent_health_check.sh) の改変は理事長承認後の ★別 task★。本 task で 3 file は一切 touch しない★	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	8	> 前身: `docs/08-ops/auto-clear-hemostasis-proposal.md` (既出 7 changes、inbox_watcher.sh 単一 file)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	14	本 task description は三重改修対象として `scripts/watchdogs/agent_health_check.sh` の「L488 busy guard」を挙げるが、実機照合の結果 ★2 件の事実誤認★ を検出した。仮 green / phantom diff を撃たぬため (FKI-AUDI	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	18	| E0-1 | `scripts/watchdogs/agent_health_check.sh` | 当該 path ★不在★。実在は `scripts/agent_health_check.sh` (389 行)。`scripts/watchdogs/` は enter_restart 系 watchdog のみ	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	19	| E0-2 | 「L488 busy guard」が agent_health_check.sh にある | agent_health_check.sh は 389 行で ★L488 不在★、`busy` 文字列 0 件、`/clear` actuator ★皆無★ (monitor/alerter)。「busy g	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	21	### E0-3 agent_health_check.sh の auto-clear への ★実際の★ 関与 (read 確認、touch 禁)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	29	→ ★結論★: agent_health_check.sh は ★busy guard を持たず、自動 /clear も idle 強制もしない★。task が想定する「agent_health_check.sh の busy 判定が busy>300s を stale-busy→idle 強制」は ★誤り★ — その	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	35	### A-1 既出 7 changes verbatim quote + line range (実機 inbox_watcher.sh、1384 行)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	62	| **inbox_watcher.sh** 自動 reset / Phase 3 /clear (RC-1+RC-2+補助) | C1-C7 で ★完全 cover★ | **subset (= 既出が内包)** |	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	63	| **inbox_watcher.sh** L488 busy guard 真因 (`send_cli_command` shogun-guard suffix-blind) | ★未 cover★ (既出は send_context_reset / Phase 3 のみ。L483 send_cli_command 	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	65	| **agent_health_check.sh** | ★該当機能なし★ (busy guard / /clear 不在、E0-2/E0-3 参照) | **vacuous (改修対象は実在せず)** |	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	67	→ ★総合判定★: 既出 7 changes は 案 E が要求する inbox_watcher.sh hemostasis の ★真部分集合 (proper subset)★。案 E は既出を ★継承 (重複設計禁)★ し、(i) Change 8 (L488 真因)、(ii) Doc-R (CLAUDE.md 改訂	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	72	2. **inbox_watcher.sh:483-494 (L488 busy guard 真因)**: `send_cli_command` の shogun-guard (L483) が ★bare 名一致★ → shogun-third が manual `clear_command` 経路で /clear 注	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	73	3. **agent_health_check.sh**: 改修対象機能が ★実在しない★ → 改修なし。E0-3 の事実認定 + L224 unanchored grep の Boy-Scout flag のみ。	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	104	> ★不変条件★ (本表は `scripts/inbox_watcher.sh` の suffix-aware 化と一体):	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	110	### B-2 (File 2) scripts/inbox_watcher.sh — 既出 7 継承 + 案 E 追加 Change 8	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	139	@@ scripts/inbox_watcher.sh:483 (send_cli_command 冒頭の shogun guard)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	168	### B-3 (File 3) scripts/agent_health_check.sh — ★改修なし (温存) + 事実認定 + Boy-Scout flag★	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	172	- **温存 (改修対象外)**: Phase F (L303-356) の token-pressure advisory (ERR-TOKEN-WARN/CRITICAL-001) は ★人間判断の助言通知★ であり、自動 /clear ではない → 正常動作、無改変。「busy>300s→idle 強制」は本 f	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	175	> ★案 E の三重改修の正体★: 「3 file を全部 diff る」のではなく、(File1=CLAUDE.md doc 改訂) + (File2=inbox_watcher.sh の既出7+Change8) + (File3=agent_health_check.sh は ★事実認定により改修不要と確定させる★	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	179	- **不変条件 Phase 1 (RC-2 根治)**: command-layer (shogun/karo/gunshi、任意 PC suffix) は ★自動 /clear を一切受けない★。担保 = inbox_watcher.sh C2 (L625) + C6 (L1223) + Change 8 (L48	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	180	- **不変条件 Phase 2 (RC-1 根治)**: busy 中は ★自動 /clear せず Escape+nudge に降格★。担保 = inbox_watcher.sh C3 (send_context_reset busy-defer) + C4 (caller 尊重) + C7 (Phase 3 bu	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	181	- **不変条件 Phase 3 (補助根治)**: stale-busy net (inbox_watcher.sh:1126) が busy>300s を「false-busy」と断じて idle flag を立てても、★Phase 3 が /clear 直前に実 busy を再検査して非破壊降格する★。担保 = 	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	182	- **不変条件 Phase 4 (kill switch 温存)**: 明示 `clear_command` (inbox_watcher.sh の clear_command dispatch、L1063-1075) は manual_override path として ★温存★。ただし shogun (任意 su	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	188	本書は ★doc 起草★ ゆえ監査 head = 本 doc commit。実 script (CLAUDE.md/inbox_watcher.sh/agent_health_check の確定) diff の dual audit は ★理事長承認後の適用 task で別途★。	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	214	→ 実適用 task 起票 (CLAUDE.md Doc-R 反映 + inbox_watcher.sh C1-C7+Change8 適用)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	227	| SE3 | agent_health_check.sh を「改修不要」と確定したことで、将来真の busy 監視を足す余地を閉じる懸念 | なし | none | 本書は ★現時点で busy guard が実在しない★ 事実認定のみ。将来要件は別途設計 (本 task scope は既存 hemostasis) 	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	249	- **doc 整合 test**: CLAUDE.md Doc-R 表の不変条件 1-3 が inbox_watcher.sh の C2/C6/Change8/C3/C4/C7 と ★一対一対応★ することを適用 task の review checklist で確認。	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	261	| 安全網 | 変更は CLAUDE.md (doc) + inbox_watcher.sh (helper 流用 + 条件式置換) のみ。agent_health_check.sh は ★無改変★ ゆえ blast radius さらに局所、data migration なし → 無損失 revert |	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	267	本 doc (止血 ★案 E★) の提案レベル改訂は本職 (gunshi-third) 可。★実 script (CLAUDE.md/inbox_watcher.sh) 適用判断は理事長殿の専権 (D-lane)★。CLAUDE.md Escalation 表 (Doc-R) は ★CLAUDE.md「Communic	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	13	| `scripts/inbox_watcher.sh` (実機, 1384 行) | 自動 /clear の唯一の発火元。2 経路: **CONTEXT-RESET** (`send_context_reset` L617-684, 呼出 L1157-1173) と **Phase 3 escalation** (L	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	60	対象 file は `scripts/inbox_watcher.sh` ★単一★。新規 transport / 新規 poller を作らない (ae8083dd 再利用、FKI-NO-DUP)。	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	92	@@ scripts/inbox_watcher.sh:625 (send_context_reset)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	105	@@ scripts/inbox_watcher.sh:628-630 (send_context_reset, command-layer guard の直後)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	124	@@ scripts/inbox_watcher.sh:1157-1173 (Context reset before new task)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	157	@@ scripts/inbox_watcher.sh:1122	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	167	@@ scripts/inbox_watcher.sh:1223 (Phase 3 escalation)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	180	@@ scripts/inbox_watcher.sh:1228-1233 (Phase 3 else branch, ashigaru /clear)	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	247	| steps | `git revert <適用 commit>` で inbox_watcher.sh を base_commit 2d0a1e4 状態へ即時復帰 → `scripts/watcher_supervisor_third.sh` (or 該当 supervisor) で watcher 再起動して旧挙	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/fukuincho-stage3-auto-loop-design.md	277	- ★本書 = 設計 + 監査のみ。scripts/inbox_watcher.sh + scripts/stop_hook_inbox.sh + fukuincho_desktop_poke.py	-
+.claude/worktrees/karo-mac-a1/docs/08-ops/fukuincho-stage3-supabase-jsonl-bridge-design.md	116	- ★止血B (commit e0e98b7) 保護範囲 touch 0★: 本 bridge は ★`scripts/inbox_watcher.sh` を一切 import/改変しない★。	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase2_watchdog_registry_draft.md	100	実装: `pkill -f "inbox_watcher.sh ${agent}"` の対象を INBOX_AGENTS で列挙された agent_id 限定 (= 現状動作だが文書化、ashigaru2 の補完 watcher 等が誤 kill されない保証)。	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase3_shutsujin_dynamic_pane_draft.md	66	- `inbox_watcher.sh` が agent_id 引数を受領後、registry or tmux env で pane 解決	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase3_shutsujin_dynamic_pane_draft.md	87	| `scripts/inbox_watcher.sh` | pane 引数を agent_id のみに簡略化、動的解決 |	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase3_shutsujin_dynamic_pane_draft.md	119	- inbox_watcher.sh を agent_id 引数のみに簡略化、registry → tmux env の優先順位	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase5_codex_personas_immediate_001_draft.md	75	- `scripts/agent_health_check.sh` に追加 logic:	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase5_codex_personas_immediate_001_draft.md	97	- 🔄 agent_health_check.sh = 家康/本多 cmd 監視追加 (= ERR-PERSONA-CLI-001)	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase5_codex_personas_immediate_001_draft.md	125	- γ-3 = ashigaru2 (= agent_health_check.sh 強化)	-
+.claude/worktrees/karo-mac-a1/docs/cmd_phase5_codex_personas_immediate_001_draft.md	140	- scripts/agent_health_check.sh (= 強化対象)	-
+.claude/worktrees/karo-mac-a1/docs/cmd_root_resolution_001_draft.md	76	- scripts/agent_health_check.sh 強化 (= 既存 file)	-
+.claude/worktrees/karo-mac-a1/docs/directive_audit_pregate_diffstat_check_001_draft.md	438	| `c571d7d` | 21:03:55 | feat (observability) | `scripts/agent_health_check.sh` 等 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	16	本日 16:43-17:14 の 30 分間で inbox_watcher.sh が **3 度全死亡** (各 ~13 分 / 13 分 / 1 分)。	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	37	| 現状 | scripts/inbox_watcher.sh は inotifywait -q -t 30 でタイムアウト機能を持つが、while ループでの再 invocation が確実でない。 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	91	| 現状 | CLAUDE.md §Watcher Design Principles で禁止されている無限ループ。inbox_watcher.sh のコード内で retry cap が一部のみ実装。 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	101	| 真因 | heartbeat 設計が CLAUDE.md §Error Design では明示されているが、inbox_watcher.sh では未実装。 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	109	| 現状 | scripts/inbox_watcher.sh に flock 多用、cleanup 不備で stale lock 残存可能性。LOCKFILE.d ディレクトリ + sleep loop 経路もあり。 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	118	| 現状 | scripts/inbox_watcher.sh が macOS (fswatch) と Linux (inotifywait) で経路分岐 + sleep fallback も持つ。1 ファイルに 3 経路混在で複雑化。 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	163	| 現状 | 過去事故 (2026-05-05 SecondPC 暴走) で self-send 検出時の即 ack ロジックがなく、無限 retry。本日 inbox_watcher.sh では一部実装、全件未網羅。 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	204	### u) bulk_ack.sh / inbox_write.sh / inbox_watcher.sh 三者間の inbox path 想定不一致	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	300	| Boy Scout Rule §14 | △ | 既存 inbox_watcher.sh は廃止 (cutover) ゆえ Boy Scout 整備対象外。新 system は §14 順守必須。 |	-
+.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	303	| Root Cause 4 Patterns | ⚠ 旧版 (inbox_watcher.sh) と新版 (message_delivery_v2/) の併存 risk | cutover 完遂後に旧版 archive で対処 |	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_inbox_split_brain.md	128	4. `scripts/inbox_watcher.sh` 等の他 inbox 操作 script に同型 (atomic replace) パターンが無いか走査	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_pane_mapping_drift.md	157	`scripts/inbox_watcher.sh` / `scripts/inbox_write.sh` 実行前に `pane_identity.sh` を advisory check:	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_secondpc_wrong_watcher_names.md	5	SecondPC で **MainPC の agent 名 (= ashigaru1, ashigaru2, ashigaru3, shogun, karo)** で `inbox_watcher.sh` が複数起動しており、本来必要な **maeda + ashigaru5/6/7 の watcher が不在**だっ	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_secondpc_wrong_watcher_names.md	30	| 3 | なぜ `inbox_watcher.sh` 自身がチェックしない? | 引数で渡された agent を無条件信用、`pane_registry.yaml` SSoT 未照合 |	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_secondpc_wrong_watcher_names.md	32	| **5 (真因)** | **なぜ watcher 起動チェック未整備?** | **Phase 1 (2026-05-07) SecondPC 拡張時に watcher 起動側の PC guard 実装が漏れた。元設計が 1-PC 想定、SecondPC 拡張時に inbox_watcher.sh + start	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_secondpc_wrong_watcher_names.md	51	nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" > "/tmp/inbox_watcher_${agent}.log" 2>&1 &	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_secondpc_wrong_watcher_names.md	65	- inbox_watcher.sh 起動時の agent×PC 妥当性検証手順を AI に指示	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_secondpc_wrong_watcher_names.md	70	- 全 inbox_watcher.sh process を ps で取得 → agent name 抽出 → settings_local.yaml + pane_registry.yaml で valid agent set 抽出 → 不一致を stderr 警告	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_secondpc_wrong_watcher_names.md	76	- `inbox_watcher.sh` 自身が pane_registry SSoT を照合する mechanism 追加	-
+.claude/worktrees/karo-mac-a1/docs/incident_logs/cmd_watcher_hotfix_001b_close.md	23	| 入力中の hook 暴発 | `inbox_watcher.sh` に `is_user_typing` 検出ロジック追加で入力中保護 |	-
+.claude/worktrees/karo-mac-a1/docs/message_delivery_v2_design_2026-05-08.md	15	過去の inbox_watcher.sh は「いかに壊れないか」前提で設計された。新 system `message_delivery_v2` は **「壊れた時に必ず気付き、自動で立ち直り、人手介入が要る場合は明確に呼ぶ」** へ思想転換する。	-
+.claude/worktrees/karo-mac-a1/docs/message_delivery_v2_design_2026-05-08.md	468	| Stage E: archive old | 旧 inbox/ + inbox_watcher.sh を scripts/archive/ + queue/archive/ に移動、symlink 排除 | **archive window** (instant) | rollback path 確保 |	-
+.claude/worktrees/karo-mac-a1/docs/message_delivery_v2_design_2026-05-08.md	490	- Stage E 失敗時: scripts/archive/ から scripts/inbox_watcher.sh 復元、queue/archive/ から旧 inbox 復元	-
+.claude/worktrees/karo-mac-a1/docs/message_delivery_v2_design_2026-05-08.md	589	| Phase 4 cutover | 月曜 (2026-05-11) 18:00 | 信長 cutover + 家康監査 | scripts/archive/inbox_watcher.sh |	-
+.claude/worktrees/karo-mac-a1/docs/pane_communication_compound_resolution_2026-05-08.md	52	| 16:43 | 旧 inbox_watcher.sh 6 本起動 (= 信長手動 nohup) |	-
+.claude/worktrees/karo-mac-a1/docs/pane_communication_compound_resolution_2026-05-08.md	59	| 18:01 | 家康 watcher (旧 inbox_watcher.sh ieyasu) 起動 → CLI drift WARN → /clear 誤発火 → **家康 context リセット** |	-
+.claude/worktrees/karo-mac-a1/docs/pane_communication_compound_resolution_2026-05-08.md	72	[C] 旧 inbox_watcher.sh が誤った agent 用 send-keys 発火	-
+.claude/worktrees/karo-mac-a1/docs/pane_communication_compound_resolution_2026-05-08.md	83	[H] 旧 inbox_watcher.sh の silent death (= 反省点 a〜w で別途記録) と並行発生 → 連鎖悪化	-
+.claude/worktrees/karo-mac-a1/docs/restart-and-mcp.md	454	nohup bash scripts/inbox_watcher.sh karo multiagent:0.0 claude >> /tmp/inbox_watcher_karo.log 2>&1 </dev/null &	-
+.claude/worktrees/karo-mac-a1/docs/restart-and-mcp.md	456	nohup bash scripts/inbox_watcher.sh ashigaru1 multiagent:0.1 claude >> /tmp/inbox_watcher_ashigaru1.log 2>&1 </dev/null &	-
+.claude/worktrees/karo-mac-a1/docs/runbooks/ERR-INFRA-001.md	81	nohup bash scripts/inbox_watcher.sh > /tmp/hakudokai_inbox_watcher.log 2>&1 </dev/null &	-
+.claude/worktrees/karo-mac-a1/docs/runbooks/ERR-WATCHER-001.md	94	nohup bash scripts/inbox_watcher.sh > /tmp/hakudokai_inbox_watcher.log 2>&1 </dev/null &	-
+.claude/worktrees/karo-mac-a1/docs/runbooks/pending_security_cases_enter_restart.md	18	| current_implementation | `scripts/watchdogs/enter_restart_common_watchdog.sh` L143 (cycle3 D1 統合後の共通実装) |	-
+.claude/worktrees/karo-mac-a1/docs/runbooks/pending_security_cases_enter_restart.md	22	| restoration_action | (1) `enter_restart_common_watchdog.sh` Step 3 の `printf '%s' "$PANE_TAIL" | base64 -w0` 記録を撤廃、(2) `label_match=0/1` + `label_reason` のみ記録	-
+.claude/worktrees/karo-mac-a1/docs/runbooks/pending_security_cases_enter_restart.md	32	| current_implementation | `scripts/watchdogs/enter_restart_common_watchdog.sh` L143 (cycle3 D1 統合後の共通実装、entry-001 と同箇所) |	-
+.claude/worktrees/karo-mac-a1/docs/sanada_secondpc_reconciliation_2026-05-08.md	110	nohup bash scripts/inbox_watcher.sh maeda multiagent:0.0 claude > /tmp/inbox_watcher_maeda.log 2>&1 &	-
+.claude/worktrees/karo-mac-a1/docs/sanada_secondpc_reconciliation_2026-05-08.md	111	nohup bash scripts/inbox_watcher.sh ashigaru5 multiagent:0.1 claude > /tmp/inbox_watcher_ashigaru5.log 2>&1 &	-
+.claude/worktrees/karo-mac-a1/docs/sanada_secondpc_reconciliation_2026-05-08.md	112	nohup bash scripts/inbox_watcher.sh ashigaru6 multiagent:0.2 claude > /tmp/inbox_watcher_ashigaru6.log 2>&1 &	-
+.claude/worktrees/karo-mac-a1/docs/sanada_secondpc_reconciliation_2026-05-08.md	113	nohup bash scripts/inbox_watcher.sh ashigaru7 multiagent:0.3 claude > /tmp/inbox_watcher_ashigaru7.log 2>&1 &	-
+.claude/worktrees/karo-mac-a1/docs/tier1_redundancy_layer_for_two_pc_integrity_design_2026-05-08.md	27	| 旧 inbox_watcher.sh の bug 修正のみ | ❌ 不整合耐性なし | 部分採用 (Tier 0) |	-
+.claude/worktrees/karo-mac-a1/docs/tier1_redundancy_layer_for_two_pc_integrity_design_2026-05-08.md	71	│  hakudokai_watchdog.sh / inbox_watcher.sh / inbox_write.sh     │	-
+.claude/worktrees/karo-mac-a1/docs/tier1_redundancy_layer_for_two_pc_integrity_design_2026-05-08.md	284	| MDV2-C2-B1 (watcher schema validation 全未実装) | inbox_watcher.sh に schema gate hook 追加 (= Tier 1 schema_validate.sh 呼出)、failure 時 dead_letter |	-
+.claude/worktrees/karo-mac-a1/docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md	195	│  - inbox_watcher.sh × 9 + 各種 daemon                          │	-
+.claude/worktrees/karo-mac-a1/instructions/archive/ieyasu.md	53	- ③ 稼働中監視: scripts/agent_health_check.sh で cmd 監視	-
+.claude/worktrees/karo-mac-a1/instructions/archive/karo_canon_20260709.md	267	# No sleep needed. All messages guaranteed delivered by inbox_watcher.sh	-
+.claude/worktrees/karo-mac-a1/instructions/archive/karo_canon_20260709.md	378	**Why no background monitor**: inbox_watcher.sh detects gunshi's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CPU 	-
+.claude/worktrees/karo-mac-a1/instructions/cli_specific/codex_tools.md	168	- inbox_watcher.sh sends nudge text (e.g., `inbox3`) via tmux send-keys	-
+.claude/worktrees/karo-mac-a1/instructions/common/protocol.md	23	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/common/protocol.md	30	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/common/protocol.md	38	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/common/task_flow.md	139	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md	259	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md	266	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md	274	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md	505	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md	259	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md	266	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md	274	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md	505	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md	795	- inbox_watcher.sh sends nudge text (e.g., `inbox3`) via tmux send-keys	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md	339	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md	346	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md	354	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md	585	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md	875	- inbox_watcher.sh sends nudge text (e.g., `inbox3`) via tmux send-keys	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md	508	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md	515	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md	523	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md	754	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md	1044	- inbox_watcher.sh sends nudge text (e.g., `inbox3`) via tmux send-keys	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md	261	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md	268	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md	276	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md	507	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md	797	- inbox_watcher.sh sends nudge text (e.g., `inbox3`) via tmux send-keys	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md	259	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md	266	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md	274	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md	505	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md	339	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md	346	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md	354	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md	585	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md	508	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md	515	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md	523	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md	754	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md	261	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md	268	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md	276	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md	507	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md	339	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md	346	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md	354	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md	585	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/karo.md	508	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/karo.md	515	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/karo.md	523	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/karo.md	754	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md	259	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md	266	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md	274	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md	505	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md	339	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md	346	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md	354	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md	585	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md	508	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md	515	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md	523	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md	754	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md	261	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md	268	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md	276	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md	507	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/generated/shogun.md	261	Delivery is handled by `inbox_watcher.sh` (infrastructure layer).	-
+.claude/worktrees/karo-mac-a1/instructions/generated/shogun.md	268	2. **Wake-up signal**: `inbox_watcher.sh` detects file change via `inotifywait` → wakes agent:	-
+.claude/worktrees/karo-mac-a1/instructions/generated/shogun.md	276	- If the 信長 pane is active (the Lord is typing), `inbox_watcher.sh` must not inject keystrokes. It should use tmux `display-message` only.	-
+.claude/worktrees/karo-mac-a1/instructions/generated/shogun.md	507	**Why no background monitor**: inbox_watcher.sh detects ashigaru's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CP	-
+.claude/worktrees/karo-mac-a1/instructions/honda.md	50	- ③ 稼働中監視: scripts/agent_health_check.sh で cmd 監視	-
+.claude/worktrees/karo-mac-a1/instructions/karo.md	255	# No sleep needed. All messages guaranteed delivered by inbox_watcher.sh	-
+.claude/worktrees/karo-mac-a1/instructions/karo.md	366	**Why no background monitor**: inbox_watcher.sh detects gunshi's inbox_write to karo and sends a nudge. This is true event-driven. No sleep, no polling, no CPU 	-
+.claude/worktrees/karo-mac-a1/reports/requirements_dynamic_model_routing.md	159	- [ ] model_switchの既存inbox_watcher.sh処理が正常動作する	-
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	2	# agent_health_check.sh — multi-agent-shogun 健康診断 + 異常時 ntfy/shogun-inbox 通知	-
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	35	#   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... bash scripts/agent_health_check.sh [--quiet]	-
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	374	#   (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在 (grep)	-
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	394	# (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在確認	-
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	395	_inbox_watcher_script="$SCRIPT_DIR/scripts/inbox_watcher.sh"	-
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	398	ALERTS+=("ERR-FUKUINCHO-HEALTH-001: inbox_watcher.sh detect_stale_evaluate_row 関数 不在")	-
+.claude/worktrees/karo-mac-a1/scripts/checks/context_usage_warn.sh	2	# context_usage_warn.sh — Claude Code UserPromptSubmit hook (STEP1-C 副院長令)	-
+.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	33	- 止血B (commit e0e98b7) 保護範囲 touch 0 通算維持確約 (本 file 新規、inbox_watcher.sh 触接 0)	-
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	3	# inbox_watcher.sh — メールボックス監視＆起動シグナル配信	-
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	4	# Usage: bash scripts/inbox_watcher.sh <agent_id> <pane_target> [cli_type]	-
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	5	# Example: bash scripts/inbox_watcher.sh karo multiagent:0.0 claude	-
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	39	echo "Usage: inbox_watcher.sh <agent_id> <pane_target> [cli_type]" >&2	-
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1543	# ★絶対前提★: 本 reference は inbox_watcher.sh の既存 main loop (L1-L1411) と完全独立。	-
+.claude/worktrees/karo-mac-a1/scripts/lib/detect_stale.sh	12	#     (前 impl 4f1f82b1 では scripts/inbox_watcher.sh の while-true main loop L1320	-
+.claude/worktrees/karo-mac-a1/scripts/setup_known_hosts.sh	5	#   agent_health_check.sh 等で StrictHostKeyChecking=yes 強制するため、	-
+.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	29	#     (scripts/inbox_watcher.sh 末尾) は本 hook を呼出さない (単一責務分離)。	-
+.claude/worktrees/karo-mac-a1/scripts/switch_cli.sh	127	# Python ソースへ展開 → Python コード注入の余地 (enter_restart_common_watchdog.sh	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_commander_watchdog.sh	8	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_commander_watchdog.sh	18	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_commander_watchdog.sh	39	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	7	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	17	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	40	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	7	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	17	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	39	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	8	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	18	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	40	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+.claude/worktrees/karo-mac-a1/scripts/watcher_supervisor.sh	52	if pgrep -f "scripts/inbox_watcher.sh ${agent} " >/dev/null 2>&1; then	-
+.claude/worktrees/karo-mac-a1/scripts/watcher_supervisor.sh	57	nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" >> "$log_file" 2>&1 &	-
+.claude/worktrees/karo-mac-a1/scripts/watcher_supervisor_third.sh	63	if pgrep -f "scripts/inbox_watcher.sh ${agent} " >/dev/null 2>&1; then	-
+.claude/worktrees/karo-mac-a1/scripts/watcher_supervisor_third.sh	68	setsid nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" >> "$log_file" 2>&1 < /dev/null &	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_inbox_watcher.py	5	shogun (yohey-w v4.6.0) の scripts/inbox_watcher.sh の Supabase 化版。	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	369	pkill -f "inbox_watcher.sh ${AGENT1_ID}" 2>/dev/null || true	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	370	pkill -f "inbox_watcher.sh ${AGENT2_ID}" 2>/dev/null || true	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	380	nohup bash "${SCRIPT_DIR}/scripts/inbox_watcher.sh" "$agent_id" "$pane" claude \	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	384	if pgrep -f "inbox_watcher.sh ${agent_id}" > /dev/null 2>&1; then	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	385	ok "inbox_watcher[${agent_id}]: PID=$(pgrep -f "inbox_watcher.sh ${agent_id}" | head -1)"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	471	echo "    inbox_watcher[${AGENT1_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT1_ID}" | head -1 || echo 'NOT RUNNING')"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	472	echo "    inbox_watcher[${AGENT2_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT2_ID}" | head -1 || echo 'NOT RUNNING')"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	487	echo "    pkill -f 'inbox_watcher.sh ${AGENT1_ID}'"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	488	echo "    pkill -f 'inbox_watcher.sh ${AGENT2_ID}'"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	8	#   2. inbox_watcher.sh × 3 (karo, ashigaru1, gunshi)	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	57	pkill -f "inbox_watcher.sh ${agent}" 2>/dev/null || true	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	73	# 2. Start inbox_watcher.sh per agent (including shogun)	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	79	nohup bash "${SCRIPT_DIR}/scripts/inbox_watcher.sh" "$agent" "$pane" claude \	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	86	if pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	185	log "inbox_watcher[karo]: $(pgrep -f 'inbox_watcher.sh karo' | head -1 || echo DEAD)"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	186	log "inbox_watcher[ashigaru1]: $(pgrep -f 'inbox_watcher.sh ashigaru1' | head -1 || echo DEAD)"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	187	log "inbox_watcher[gunshi]: $(pgrep -f 'inbox_watcher.sh gunshi' | head -1 || echo DEAD)"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	188	log "inbox_watcher[shogun]: $(pgrep -f 'inbox_watcher.sh shogun' | head -1 || echo DEAD)"	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	8	#   3. inbox_watcher.sh per agent (= queue/pane_registry.yaml driven、legacy hardcode fallback)	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	444	nohup bash "${SCRIPT_DIR}/scripts/inbox_watcher.sh" "$agent" "$pane" claude \	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	530	if ! pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	566	if pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then	-
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	624	pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1 && alive="true"	-
+.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	34	# inbox_write.sh, inbox_watcher.sh, cli_adapter.sh が .venv/bin/python3 に依存。	-
+.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	971	pkill -f "inbox_watcher.sh" 2>/dev/null || true	-
+.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	980	bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" shogun "shogun:main" "$_shogun_watcher_cli" \	-
+.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	986	nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" karo "multiagent:agents.${PANE_BASE}" "$_karo_watcher_cli" \	-
+.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	994	nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" "ashigaru${i}" "multiagent:agents.${p}" "$_ashi_watcher_cli" \	-
+.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	1002	nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" "gunshi" "multiagent:agents.${p}" "$_gunshi_watcher_cli" \	-
+.claude/worktrees/karo-mac-a1/shutsujin_departure_secondpc.sh	148	nohup bash "$SCRIPT_DIR/scripts/inbox_watcher.sh" "$agent" "$pane_target" "claude" \	-
+.claude/worktrees/karo-mac-a1/skills/codex-cli-required-persona/SKILL.md	78	- scripts/agent_health_check.sh (= 稼働中監視、Phase γ-3)	-
+.claude/worktrees/karo-mac-a1/skills/shogun-model-switch/SKILL.md	145	| `scripts/inbox_watcher.sh` | `cli_restart` type ハンドリング |	-
+.claude/worktrees/karo-mac-a1/tests/checks/enter_restart_footer_immune/smoke_test.sh	3	# enter_restart_common_watchdog.sh β改修 footer 耐性 + cycle1-5c 累積 regression smoke test	-
+.claude/worktrees/karo-mac-a1/tests/checks/enter_restart_footer_immune/smoke_test.sh	21	WATCHDOG="$REPO_ROOT/scripts/watchdogs/enter_restart_common_watchdog.sh"	-
+.claude/worktrees/karo-mac-a1/tests/smoke/test_enter_restart_watchdog.sh	227	bash "$REPO_ROOT/scripts/watchdogs/enter_restart_common_watchdog.sh" >/dev/null 2>&1 || rc=$?	-
+.claude/worktrees/karo-mac-a1/tests/specs/agent_selfwatch_spec.md	198	| Step 2: 家老/足軽の監視プロセスが稼働中 | `pgrep -af \"inbox_watcher.sh|inotifywait\"` を実行する。 | 監視プロセスが確認できる。 | 監視が見えない場合は watcher 再起動後、`logs/` の直近エラーを確認。 | `tests/results/e	-
+/Users/momizimac/bin/orphan_inbox_trap.py	57	watcher = "yes" if (f"inbox_watcher.sh {agent} " in ps_out) else "NO"	-
+scripts/agent_health_check.sh	2	# agent_health_check.sh — multi-agent-shogun 健康診断 + 異常時 ntfy/shogun-inbox 通知	-
+scripts/agent_health_check.sh	35	#   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... bash scripts/agent_health_check.sh [--quiet]	-
+scripts/agent_health_check.sh	418	#   (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在 (grep)	-
+scripts/agent_health_check.sh	438	# (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在確認	-
+scripts/agent_health_check.sh	439	_inbox_watcher_script="$SCRIPT_DIR/scripts/inbox_watcher.sh"	-
+scripts/agent_health_check.sh	442	ALERTS+=("ERR-FUKUINCHO-HEALTH-001: inbox_watcher.sh detect_stale_evaluate_row 関数 不在")	-
+scripts/checks/context_usage_warn.sh	2	# context_usage_warn.sh — Claude Code UserPromptSubmit hook (STEP1-C 副院長令)	-
+scripts/fukuincho_report_poke_bundle.py	33	- 止血B (commit e0e98b7) 保護範囲 touch 0 通算維持確約 (本 file 新規、inbox_watcher.sh 触接 0)	-
+scripts/inbox_watcher.sh	3	# inbox_watcher.sh — メールボックス監視＆起動シグナル配信	-
+scripts/inbox_watcher.sh	4	# Usage: bash scripts/inbox_watcher.sh <agent_id> <pane_target> [cli_type]	-
+scripts/inbox_watcher.sh	5	# Example: bash scripts/inbox_watcher.sh karo multiagent:0.0 claude	-
+scripts/inbox_watcher.sh	39	echo "Usage: inbox_watcher.sh <agent_id> <pane_target> [cli_type]" >&2	-
+scripts/inbox_watcher.sh	1655	# ★絶対前提★: 本 reference は inbox_watcher.sh の既存 main loop (L1-L1411) と完全独立。	-
+scripts/karo_standby_dashboard.sh	12	#   3. watcher プロセス(inbox_watcher.sh)の生死	-
+scripts/karo_standby_dashboard.sh	60	pgrep -f "inbox_watcher.sh $1" 2>/dev/null | head -1	-
+scripts/karo_standby_dashboard.sh	113	printf "  ${CYN}▎Watcher 健全性 (inbox_watcher.sh)${R}\n"	-
+scripts/lib/detect_stale.sh	12	#     (前 impl 4f1f82b1 では scripts/inbox_watcher.sh の while-true main loop L1320	-
+scripts/setup_known_hosts.sh	5	#   agent_health_check.sh 等で StrictHostKeyChecking=yes 強制するため、	-
+scripts/stop_hook_inbox.sh	29	#     (scripts/inbox_watcher.sh 末尾) は本 hook を呼出さない (単一責務分離)。	-
+scripts/switch_cli.sh	127	# Python ソースへ展開 → Python コード注入の余地 (enter_restart_common_watchdog.sh	-
+scripts/watchdogs/enter_restart_commander_watchdog.sh	8	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+scripts/watchdogs/enter_restart_commander_watchdog.sh	18	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+scripts/watchdogs/enter_restart_commander_watchdog.sh	39	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	7	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	17	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	40	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	7	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	17	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	39	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	8	#       (enter_restart_common_watchdog.sh) に統合、本書は envvar 設定のみ	-
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	18	#   - これらは共通実装 enter_restart_common_watchdog.sh に集約済	-
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	40	exec /bin/bash "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/enter_restart_common_watchdog.sh"	-
+scripts/watcher_supervisor.sh	52	if pgrep -f "scripts/inbox_watcher.sh ${agent} " >/dev/null 2>&1; then	-
+scripts/watcher_supervisor.sh	57	nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" >> "$log_file" 2>&1 &	-
+scripts/watcher_supervisor_third.sh	63	if pgrep -f "scripts/inbox_watcher.sh ${agent} " >/dev/null 2>&1; then	-
+scripts/watcher_supervisor_third.sh	68	setsid nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" >> "$log_file" 2>&1 < /dev/null &	-
+
+#跳ばした
+.claude/worktrees/karo-mac-a1/android/app/src/main/res/raw/shogun_ashigirls.mp3	2MB超
+.claude/worktrees/karo-mac-a1/android/app/src/main/res/raw/shogun.mp3	2MB超
+.claude/worktrees/karo-mac-a1/android/app/src/main/res/raw/shogun_reiwa.mp3	2MB超
+.claude/worktrees/karo-mac-a1/android/release/multi-agent-shogun.apk	2MB超
+/Users/momizimac/bin/karo_mac_gate7.sh	通常fileに非ず

@@ -1,0 +1,10 @@
+#colspec	讀手file	行	形	逐語(140字迄)
+七形の逐語が 10_byte_giri.py と同一か=★同一★
+母數(四本の名を呼ぶ行を持つ file)=104
+file 全体で当つた byte 切り=5
+
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	317	bash_sl	sid_short="${sid:0:8}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	679	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/agent_health_check.sh	361	bash_sl	sid_short="${sid:0:8}"
+scripts/inbox_watcher.sh	744	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/karo_standby_dashboard.sh	66	dd_bs	hex="$(printf '%s' "$title" | dd bs=1 count=3 2>/dev/null | xxd -p 2>/dev/null)"

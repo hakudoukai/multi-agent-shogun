@@ -1,0 +1,100 @@
+刻=2026-09-17T08:59:24
+語=ER_LOG_DIR enter_restart context_warn watcher] health_check
+根(逐語)=scripts .claude config /Users/momizimac/bin /Users/momizimac/Library/LaunchAgents
+歩いた深さ=無限(os.walk・symlink 辿らず・通常fileのみ・2MB超は跳ぶ)
+母數(歩いた file)=1569  跳ばした=5
+語を含む file=77
+其の file 群の中の byte 切り=12
+
+#colspec	語を含むfile	当り行數
+.claude/worktrees/karo-mac-a1/.gitignore	5
+.claude/worktrees/karo-mac-a1/CLAUDE.md	2
+.claude/worktrees/karo-mac-a1/backend/migrations/008_organizational_lessons_seed.sql	1
+.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	17
+.claude/worktrees/karo-mac-a1/docs/08-ops/fki-no-dup-4-poke-vs-ccflare-cron.md	1
+.claude/worktrees/karo-mac-a1/docs/clinic-expansion-design.md	2
+.claude/worktrees/karo-mac-a1/docs/cmd_phase3_shutsujin_dynamic_pane_draft.md	1
+.claude/worktrees/karo-mac-a1/docs/cmd_phase5_codex_personas_immediate_001_draft.md	5
+.claude/worktrees/karo-mac-a1/docs/cmd_root_resolution_001_draft.md	1
+.claude/worktrees/karo-mac-a1/docs/directive_audit_pregate_diffstat_check_001_draft.md	1
+.claude/worktrees/karo-mac-a1/docs/honda_initial_proposals_2026-05-08.md	2
+.claude/worktrees/karo-mac-a1/docs/runbooks/enter_restart_shogun_reference.md	34
+.claude/worktrees/karo-mac-a1/docs/runbooks/pending_security_cases_enter_restart.md	8
+.claude/worktrees/karo-mac-a1/instructions/archive/ieyasu.md	1
+.claude/worktrees/karo-mac-a1/instructions/honda.md	1
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	24
+.claude/worktrees/karo-mac-a1/scripts/checks/context_usage_warn.sh	2
+.claude/worktrees/karo-mac-a1/scripts/diagnose.sh	2
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	3
+.claude/worktrees/karo-mac-a1/scripts/redundancy/shogun_report_watcher.sh	1
+.claude/worktrees/karo-mac-a1/scripts/setup_known_hosts.sh	2
+.claude/worktrees/karo-mac-a1/scripts/switch_cli.sh	1
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_commander.service	4
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_commander.timer	2
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_commander_watchdog.sh	9
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	12
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_main.service	4
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_main.timer	2
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	9
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_second.service	4
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_second.timer	2
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	9
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_third.service	4
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_third.timer	2
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	9
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_poll.py	1
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	3
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	2
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_watcher.sh	2
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_inbox_watcher.py	14
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_watcher.sh	2
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_watcher_poll.py	1
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	1
+.claude/worktrees/karo-mac-a1/skills/codex-cli-required-persona/SKILL.md	2
+.claude/worktrees/karo-mac-a1/tests/checks/enter_restart_footer_immune/smoke_test.sh	4
+.claude/worktrees/karo-mac-a1/tests/checks/test_agent_health_check.bats	9
+.claude/worktrees/karo-mac-a1/tests/e2e/e2e_clear_recovery.bats	2
+.claude/worktrees/karo-mac-a1/tests/e2e/e2e_escalation.bats	2
+.claude/worktrees/karo-mac-a1/tests/smoke/test_enter_restart_watchdog.sh	23
+scripts/agent_health_check.sh	25
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	24
+scripts/checks/context_usage_warn.sh	3
+scripts/checks/context_usage_warn.sh.bak-shikii-zoku-20260917T021216	2
+scripts/diagnose.sh	2
+scripts/inbox_watcher.sh	4
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	3
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	3
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	3
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	3
+scripts/redundancy/shogun_report_watcher.sh	2
+scripts/redundancy/shogun_report_watcher.sh.bak-shikii-zoku2-20260917T022513	1
+scripts/setup_known_hosts.sh	2
+scripts/switch_cli.sh	1
+scripts/watchdogs/enter_restart_commander.service	4
+scripts/watchdogs/enter_restart_commander.timer	2
+scripts/watchdogs/enter_restart_commander_watchdog.sh	9
+scripts/watchdogs/enter_restart_common_watchdog.sh	12
+scripts/watchdogs/enter_restart_common_watchdog.sh.bak-shikii-zoku2-20260917T022513	12
+scripts/watchdogs/enter_restart_shogun_main.service	4
+scripts/watchdogs/enter_restart_shogun_main.timer	2
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	9
+scripts/watchdogs/enter_restart_shogun_second.service	4
+scripts/watchdogs/enter_restart_shogun_second.timer	2
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	9
+scripts/watchdogs/enter_restart_shogun_third.service	4
+scripts/watchdogs/enter_restart_shogun_third.timer	2
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	9
+
+#colspec	byte切り	行	形	逐語
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	317	bash_sl	sid_short="${sid:0:8}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	679	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+.claude/worktrees/karo-mac-a1/scripts/redundancy/shogun_report_watcher.sh	104	awk_sub	sha256sum "$f" | awk '{print substr($1,1,8)}'
+scripts/agent_health_check.sh	361	bash_sl	sid_short="${sid:0:8}"
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	317	bash_sl	sid_short="${sid:0:8}"
+scripts/inbox_watcher.sh	744	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	691	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	691	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	691	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	691	bash_sl	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/redundancy/shogun_report_watcher.sh	107	awk_sub	sha256sum "$f" | awk '{print substr($1,1,8)}'
+scripts/redundancy/shogun_report_watcher.sh.bak-shikii-zoku2-20260917T022513	104	awk_sub	sha256sum "$f" | awk '{print substr($1,1,8)}'
