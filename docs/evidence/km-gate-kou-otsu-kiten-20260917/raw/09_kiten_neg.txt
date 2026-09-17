@@ -1,0 +1,16 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+台帳 manifest.txt
+  cwd  /private/var/folders/z0/bdbk65zj0gjg80g3784jhmvc0000gn/T/tmp.P7iVP2pyu8/bundle
+  基点 引数(明示)
+  一致 ★0★ / 相違 0 / 実体無 2 / 読めぬ行 0  (母數 2)
+  ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+  ★註★ ★実体無★ は ★『disk に物が無い』とは限らぬ★ ―― ★基点(場所)が違ふ★ 事が在る。
+       上の『基点』行を先に読み、次に ★臺帳を作つた樹の根★ で当て直せ。
+    ★実体無★ raw/a.txt
+    ★実体無★ raw/b.txt
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+條⑤ 寸法 = byte和 32(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

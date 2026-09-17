@@ -1,0 +1,38 @@
+刻 = 2026-09-17T03:59:15
+着手 = 2026-09-17T03:37:38 (epoch 1789583858)
+
+― 零 ★陽性対照 ―― 同じ檢出子が「動いた物」を見付けられるか★ ―
+  己の束 docs/evidence/km-50-kara-wa-todokazu-20260917 : 歩き 29 本 / ★着手以後に動いた = 29 本★
+  例(三本): kaki.py 2026-09-17T03:38:52 / 00_koku.txt 2026-09-17T03:38:52 / 01_kizu_no_nori.txt 2026-09-17T03:39:49
+  ★対照 通 ―― 檢出子は動きを見る。∴ 下の零は「見えなんだ」ではなく「無い」である。★
+
+― 一 ★札が名指した生器 四箇★ ―
+  scripts/           根=/Users/momizimac/multi-agent-shogun/scripts
+                     歩き   108 本 / 讀めぬ 0 / ★着手以後に動いた = 0 本★
+  ~/bin              根=/Users/momizimac/bin
+                     歩き    84 本 / 讀めぬ 0 / ★着手以後に動いた = 0 本★
+  hook/settings(束)   /Users/momizimac/multi-agent-shogun/.claude/settings.json
+                     mtime=2026-08-30T23:21:51  37170 byte  ★着手より前 ∴ 動いて居らぬ★
+  settings(家)        /Users/momizimac/.claude/settings.json
+                     mtime=2026-09-11T19:00:47  367 byte  ★着手より前 ∴ 動いて居らぬ★
+
+  ★生器四箇で動いた總計 = 0 本★
+    ★∴ 據ゑ零。生器へは一字も入れて居らぬ。★
+
+― 一.五 ★周り ―― 動いたが、己の手ではない物★ ―
+  ★之を「生器が動いた」と書けば偽り、黙れば隠蔽である。∴ 別欄に數と持主を出す。★
+  束 .claude/(他席の worktree を含む)       歩き   976 本 / ★動いた 79 本★
+      他席の worktree(karo-mac-a1)                 79 本  例= .claude/worktrees/karo-mac-a1/docs/evidence/km-67-mon-no-ato-20260917/ashigaru-mac-1_km-67-mon-no-ato-20260917_manifest.txt
+  ~/.claude/(走時の log)                歩き 15673 本 / ★動いた 23 本★
+      走時の log(Claude Code 自身が書く物)               23 本  例= ../.claude/history.jsonl
+  ★己の手で据ゑた物は此の中に一本も無い ―― 但し ★mtime は持主を言はぬ★。
+    持主は ★path の名★(他席の束名 km-67/km-68)と ★己が走らせた器の一覧★ から読んだ。之は推である。★
+
+― 二 ★此の零が意味せぬ事★ ―
+  ⑴ mtime は ★内容が変つた事★ ではなく ★書かれた事★ を言ふ。同じ字を書き直しても動く。
+     逆に ★mtime を戻せば見えぬ★ ―― 本器は「戻す手」を見て居らぬ。
+  ⑵ 歩きから .git/ を除いた ―― ★除いた事を宣する★。git の内部を据ゑても本器は黙る。
+  ⑶ hook は settings の中の ★字★ である。file が動かずとも、外の settings が指す先が変れば効きは変る。
+  ⑷ ~/bin が無い機ならば「零」は ★歩いて居らぬ零★ である(上に dir 無しと出す)。
+
+rc = 0

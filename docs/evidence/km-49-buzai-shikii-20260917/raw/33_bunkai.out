@@ -1,0 +1,18 @@
+甲 = 96 本 / 10938664 byte
+乙 = 97 本 / 3041808 byte(内 moto_evidence/raw 下 = 97 本 3041808 byte・其の外 = 0 本 0 byte)
+★甲−乙 = 7896856 byte★
+
+―― 落ちた本(甲に在り乙に無し) = 3 本 / 和 7899976 byte
+        2632943  13_hashiri2_shimon.tsv
+        2634088  13_hashiri3_shimon.tsv
+        2632945  15_taishou_kuzushi.tsv
+―― 湧いた本(乙の中の同じ階に在り甲に無し) = 4 本 / 和 3120 byte
+           1085  98_fukugen.py
+            223  99_sabun_13_hashiri2_shimon.tsv.json
+           1438  99_sabun_13_hashiri3_shimon.tsv.json
+            374  99_sabun_15_taishou_kuzushi.tsv.json
+―― 寸が変つた本 = 0 本
+―― moto_evidence/raw の外に置かれた本 = 0 本 / 和 0 byte
+
+★式 ―― 落ちた 7899976 − 湧いた 3120 − 外に置いた 0 = 7896856★
+   甲−乙 = 7896856 ―― 一致 ○

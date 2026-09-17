@@ -1,0 +1,13 @@
+= KOU_onaji_dou (囮の胴が狙ひと ★同じ★ / 書き手は括つたか=False)
+  狙ひ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/KOU_onaji_dou/a　b.txt
+  囮   docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/KOU_onaji_dou/a
+  臺帳 path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/KOU_onaji_dou/a　b.txt sha256=73b785ab92aec59086be357f7a942cfbd1155164f921d273b97e53d1
+  ⑴臺帳の直後   BEFORE rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)   |   AFTER rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+  ⑵狙ひを書換後 BEFORE rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)   |   AFTER rc=1 一致 0 / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 1)
+
+= HEI_chigau_dou (囮の胴が狙ひと ★違ふ★ / 書き手は括つたか=False)
+  狙ひ docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/HEI_chigau_dou/a　b.txt
+  囮   docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/HEI_chigau_dou/a
+  臺帳 path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/HEI_chigau_dou/a　b.txt sha256=73b785ab92aec59086be357f7a942cfbd1155164f921d273b97e53d
+  ⑴臺帳の直後   BEFORE rc=1 一致 0 / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 1)   |   AFTER rc=0 一致 1 / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+  ⑵狙ひを書換後 BEFORE rc=1 一致 0 / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 1)   |   AFTER rc=1 一致 0 / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 1)

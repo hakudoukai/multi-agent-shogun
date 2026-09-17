@@ -1,0 +1,16 @@
+★的から写した形★
+  L37 : set -euo pipefail
+  L147: if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+★未讀 n は 3 に固定★(帯 1〜5 の中)。動かすは ★閾のみ★。
+
+閾=未設定  rc=0   出目=枝=block_へ落ちる|到達=比較の後
+閾='5'        rc=0   出目=枝=block_へ落ちる|到達=比較の後
+閾=''(空)    rc=0   出目=枝=block_へ落ちる|到達=比較の後
+閾='abc'      rc=0   出目=bash: line 1: [: abc: integer expression expected|枝=block_へ落ちる|到達=比較の後
+閾='0'        rc=0   出目=枝=exit0(mass_guard)|到達=比較の後
+閾='-1'       rc=0   出目=枝=exit0(mass_guard)|到達=比較の後
+閾='5 '(尾空白) rc=0   出目=枝=block_へ落ちる|到達=比較の後
+
+★器の自己検め(陽性対照)★ ―― 出目が ★悉く同じ★ なら「閾を渡せて居らぬ」疑ひ(15_ の形)。
+  rc の相異なる値の數 = 1
+  ★悉く同じ ―― 此の器は閾を渡せて居らぬ。數を讀むな。★
