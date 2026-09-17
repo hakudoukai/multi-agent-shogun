@@ -1,0 +1,8543 @@
+{
+ "root": "/Users/momizimac/multi-agent-shogun",
+ "mode": "tracked",
+ "files_all": 1979,
+ "files_shell": 198,
+ "files_with_hits": 113,
+ "kasho": 576,
+ "gyou": 862,
+ "dropped_comment_lines": 8418,
+ "err": [],
+ "rows": [
+  {
+   "file": "docs/evidence/km-49-buzai-shikii-20260917/raw/10_buzai_mon.sh",
+   "env": "BUZAI_MAX_BYTES",
+   "proxies": [
+    "BUZAI_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    18
+   ],
+   "cmp_lines": [
+    92
+   ]
+  },
+  {
+   "file": "docs/evidence/km-49-buzai-shikii-20260917/raw/40_taishou.sh",
+   "env": "BUZAI_MAX_BYTES",
+   "proxies": [
+    "BUZAI_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    8
+   ],
+   "cmp_lines": [
+    13,
+    22,
+    24,
+    45,
+    47
+   ]
+  },
+  {
+   "file": "docs/evidence/km-49-buzai-shikii-20260917/raw/40_taishou.sh",
+   "env": "kitai",
+   "proxies": [
+    "kitai"
+   ],
+   "read_lines": [
+    38
+   ],
+   "cmp_lines": [
+    40,
+    41
+   ]
+  },
+  {
+   "file": "docs/evidence/km-49-buzai-shikii-20260917/raw/50_hisuu.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    29
+   ],
+   "cmp_lines": [
+    29,
+    30
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/10_kara.sh",
+   "env": "X",
+   "proxies": [
+    "X"
+   ],
+   "read_lines": [
+    16,
+    57
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/10_kara.sh",
+   "env": "rc",
+   "proxies": [
+    "KOU_RC",
+    "OTSU_RC",
+    "rc"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    16,
+    36
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/10_kara.sh",
+   "env": "v",
+   "proxies": [
+    "v"
+   ],
+   "read_lines": [
+    14
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/20_rei.sh",
+   "env": "MAXB",
+   "proxies": [
+    "MAXB"
+   ],
+   "read_lines": [
+    11
+   ],
+   "cmp_lines": [
+    11
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/20_rei.sh",
+   "env": "t",
+   "proxies": [
+    "a",
+    "kazu",
+    "t"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    17
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/20_rei.sh",
+   "env": "total",
+   "proxies": [
+    "total"
+   ],
+   "read_lines": [
+    11
+   ],
+   "cmp_lines": [
+    11
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/30_taishou.sh",
+   "env": "DOKU",
+   "proxies": [
+    "DOKU"
+   ],
+   "read_lines": [
+    113
+   ],
+   "cmp_lines": [
+    31,
+    52,
+    81
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/30_taishou.sh",
+   "env": "HOKA",
+   "proxies": [
+    "HOKA"
+   ],
+   "read_lines": [
+    113
+   ],
+   "cmp_lines": [
+    31,
+    52,
+    81
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/30_taishou.sh",
+   "env": "INN",
+   "proxies": [
+    "INN"
+   ],
+   "read_lines": [
+    113
+   ],
+   "cmp_lines": [
+    31,
+    52,
+    81
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/30_taishou.sh",
+   "env": "YOU",
+   "proxies": [
+    "YOU"
+   ],
+   "read_lines": [
+    113
+   ],
+   "cmp_lines": [
+    31,
+    52,
+    81
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/30_taishou.sh",
+   "env": "kitai",
+   "proxies": [
+    "kitai"
+   ],
+   "read_lines": [
+    29
+   ],
+   "cmp_lines": [
+    32,
+    53,
+    82
+   ]
+  },
+  {
+   "file": "docs/evidence/km-50-kara-wa-todokazu-20260917/raw/30_taishou.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    29
+   ],
+   "cmp_lines": [
+    32,
+    53,
+    82
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/40_ichiyou.sh",
+   "env": "f",
+   "proxies": [
+    "d",
+    "f",
+    "han",
+    "kan",
+    "ki",
+    "onaji",
+    "s",
+    "zan"
+   ],
+   "read_lines": [
+    26
+   ],
+   "cmp_lines": [
+    30,
+    74
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/40_ichiyou.sh",
+   "env": "na",
+   "proxies": [
+    "han",
+    "na",
+    "zan"
+   ],
+   "read_lines": [
+    69
+   ],
+   "cmp_lines": [
+    74
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/50_nul.sh",
+   "env": "T_NUL",
+   "proxies": [
+    "T_NUL"
+   ],
+   "read_lines": [
+    37
+   ],
+   "cmp_lines": [
+    40
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/50_nul.sh",
+   "env": "WD",
+   "proxies": [
+    "IFS",
+    "KATA",
+    "T_NUL",
+    "WD",
+    "nari",
+    "v2",
+    "v6"
+   ],
+   "read_lines": [
+    7
+   ],
+   "cmp_lines": [
+    40
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/95_sha_ato.sh",
+   "env": "f",
+   "proxies": [
+    "ato",
+    "f",
+    "hd",
+    "idx",
+    "mae",
+    "tou"
+   ],
+   "read_lines": [
+    12
+   ],
+   "cmp_lines": [
+    17
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/95_sha_ato.sh",
+   "env": "z",
+   "proxies": [
+    "z"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    17
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/97_hyoteki.sh",
+   "env": "p",
+   "proxies": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "n",
+    "p"
+   ],
+   "read_lines": [
+    13
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/bannin_kata_watcher.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    28
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/bannin_kata_watcher.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    28
+   ],
+   "cmp_lines": [
+    28
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "ALERT_COOLDOWN_SEC",
+   "proxies": [
+    "ALERT_COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    132
+   ],
+   "cmp_lines": [
+    132
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "SCRIPT_DIR",
+    "_fukuincho_script",
+    "_inbox_watcher_script",
+    "inbox",
+    "n"
+   ],
+   "read_lines": [
+    52
+   ],
+   "cmp_lines": [
+    241,
+    258
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "DETECT_STALE_LOG",
+   "proxies": [
+    "DETECT_STALE_LOG",
+    "_detect_stale_age_min",
+    "_detect_stale_log_file"
+   ],
+   "read_lines": [
+    436
+   ],
+   "cmp_lines": [
+    439,
+    440
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_COOLDOWN_DIR",
+   "proxies": [
+    "ALERT_COOLDOWN_DIR",
+    "HEALTH_CHECK_COOLDOWN_DIR",
+    "cf",
+    "last"
+   ],
+   "read_lines": [
+    83
+   ],
+   "cmp_lines": [
+    131
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_COOLDOWN_SEC",
+   "proxies": [
+    "ALERT_COOLDOWN_SEC",
+    "HEALTH_CHECK_COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    117
+   ],
+   "cmp_lines": [
+    132
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_CRIT",
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_CRIT",
+    "TOKEN_CRIT_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    343
+   ],
+   "cmp_lines": [
+    366
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_WARN",
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_WARN",
+    "TOKEN_WARN_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    342
+   ],
+   "cmp_lines": [
+    379
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "INSERT_COUNT",
+   "proxies": [
+    "INSERT_COUNT"
+   ],
+   "read_lines": [
+    218,
+    219
+   ],
+   "cmp_lines": [
+    219
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "TOKEN_CRIT_THRESHOLD",
+   "proxies": [
+    "TOKEN_CRIT_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    366
+   ],
+   "cmp_lines": [
+    366
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "TOKEN_WARN_THRESHOLD",
+   "proxies": [
+    "TOKEN_WARN_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    379
+   ],
+   "cmp_lines": [
+    379
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    108
+   ],
+   "cmp_lines": [
+    112
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    112
+   ],
+   "cmp_lines": [
+    112
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "a",
+   "proxies": [
+    "a",
+    "inbox",
+    "n"
+   ],
+   "read_lines": [
+    237
+   ],
+   "cmp_lines": [
+    241,
+    258
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "jsonl_path",
+   "proxies": [
+    "cool_key",
+    "jsonl_path",
+    "max_tokens",
+    "msg",
+    "sid",
+    "sid_short"
+   ],
+   "read_lines": [
+    347
+   ],
+   "cmp_lines": [
+    366,
+    379
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "last",
+   "proxies": [
+    "last"
+   ],
+   "read_lines": [
+    130
+   ],
+   "cmp_lines": [
+    131
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "max_tokens",
+   "proxies": [
+    "max_tokens",
+    "msg"
+   ],
+   "read_lines": [
+    365
+   ],
+   "cmp_lines": [
+    366,
+    379
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "message",
+   "proxies": [
+    "message",
+    "payload"
+   ],
+   "read_lines": [
+    146
+   ],
+   "cmp_lines": [
+    356
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh",
+   "env": "n",
+   "proxies": [
+    "n"
+   ],
+   "read_lines": [
+    241,
+    258
+   ],
+   "cmp_lines": [
+    241,
+    258
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "CLAUDE_CODE_SESSION_ID",
+   "proxies": [
+    "CLAUDE_CODE_SESSION_ID",
+    "JSONL_PATH",
+    "SESSION_ID",
+    "SZ"
+   ],
+   "read_lines": [
+    67
+   ],
+   "cmp_lines": [
+    80,
+    82,
+    84
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "CLAUDE_PROJECT_DIR",
+   "proxies": [
+    "CLAUDE_PROJECT_DIR",
+    "JSONL_PATH",
+    "PROJECT_DIR",
+    "PROJECT_SLUG",
+    "SZ"
+   ],
+   "read_lines": [
+    68
+   ],
+   "cmp_lines": [
+    80,
+    82,
+    84
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "CONTEXT_DANGER_BYTES",
+   "proxies": [
+    "CONTEXT_DANGER_BYTES",
+    "DANGER_BYTES"
+   ],
+   "read_lines": [
+    65
+   ],
+   "cmp_lines": [
+    82,
+    83
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "CONTEXT_WARN_BYTES",
+   "proxies": [
+    "CONTEXT_WARN_BYTES",
+    "WARN_BYTES"
+   ],
+   "read_lines": [
+    64
+   ],
+   "cmp_lines": [
+    84,
+    85
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "DANGER_BYTES",
+   "proxies": [
+    "DANGER_BYTES"
+   ],
+   "read_lines": [
+    82
+   ],
+   "cmp_lines": [
+    82,
+    83
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "HOME",
+   "proxies": [
+    "HOME",
+    "JSONL_PATH",
+    "PROJECT_DIR",
+    "PROJECT_SLUG",
+    "SZ"
+   ],
+   "read_lines": [
+    68
+   ],
+   "cmp_lines": [
+    80,
+    82,
+    84
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "WARN_BYTES",
+   "proxies": [
+    "WARN_BYTES"
+   ],
+   "read_lines": [
+    84
+   ],
+   "cmp_lines": [
+    84,
+    85
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    54
+   ],
+   "cmp_lines": [
+    58
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    58
+   ],
+   "cmp_lines": [
+    58
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_COUNT",
+   "proxies": [
+    "ER_FIRE_CAP_COUNT",
+    "ER_FIRE_CAP_COUNT_PY",
+    "FIRE_CAP_COUNT"
+   ],
+   "read_lines": [
+    109
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_WINDOW_MIN",
+   "proxies": [
+    "ER_FIRE_CAP_WINDOW_MIN",
+    "ER_FIRE_CAP_WINDOW_MIN_PY",
+    "FIRE_CAP_WINDOW_MIN"
+   ],
+   "read_lines": [
+    110
+   ],
+   "cmp_lines": [
+    117
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "ER_FROM_PC_FILTER",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ELAPSED_INT",
+    "ELAPSED_MIN",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_ELAPSED_MIN_PY",
+    "ER_FROM_PC_FILTER",
+    "FROM_PC_FILTER",
+    "LAST_AT",
+    "LAST_INFO",
+    "LAST_TOPIC"
+   ],
+   "read_lines": [
+    54
+   ],
+   "cmp_lines": [
+    249
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "ER_LOG_DIR",
+   "proxies": [
+    "ER_LOG_DIR",
+    "ER_RECENT_FIRES_PY",
+    "FIRE_HISTORY",
+    "LOG",
+    "LOG_DIR",
+    "RECENT_FIRES"
+   ],
+   "read_lines": [
+    55
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "ER_THRESHOLD_MIN",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_THRESHOLD_MIN",
+    "ER_THRESHOLD_MIN_PY",
+    "THRESHOLD_MIN"
+   ],
+   "read_lines": [
+    108
+   ],
+   "cmp_lines": [
+    249
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "FIRE_CAP_COUNT",
+   "proxies": [
+    "ER_FIRE_CAP_COUNT_PY",
+    "FIRE_CAP_COUNT"
+   ],
+   "read_lines": [
+    122
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "FIRE_CAP_WINDOW_MIN",
+   "proxies": [
+    "ER_FIRE_CAP_WINDOW_MIN_PY",
+    "FIRE_CAP_WINDOW_MIN"
+   ],
+   "read_lines": [
+    122
+   ],
+   "cmp_lines": [
+    117
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "THRESHOLD_MIN",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_THRESHOLD_MIN_PY",
+    "THRESHOLD_MIN"
+   ],
+   "read_lines": [
+    249
+   ],
+   "cmp_lines": [
+    249
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    98
+   ],
+   "cmp_lines": [
+    102
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    102
+   ],
+   "cmp_lines": [
+    102
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "AGENT_ID",
+   "proxies": [
+    "AGENT_ID",
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "NUDGE_FINGERPRINT_FILE",
+    "WATCHER_DISABLE_FLAG",
+    "alert_file",
+    "current_fingerprint",
+    "current_sha",
+    "msg",
+    "previous_fingerprint",
+    "read_bytes",
+    "skip_count",
+    "skip_state_file",
+    "startup_prompt"
+   ],
+   "read_lines": [
+    188,
+    219,
+    237
+   ],
+   "cmp_lines": [
+    375,
+    506,
+    1052,
+    1056,
+    1112,
+    1135,
+    1356
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "APPROVAL_ALERT_COOLDOWN",
+   "proxies": [
+    "APPROVAL_ALERT_COOLDOWN"
+   ],
+   "read_lines": [
+    887
+   ],
+   "cmp_lines": [
+    887
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "ASW_DISABLE_NORMAL_NUDGE",
+   "proxies": [
+    "ASW_DISABLE_NORMAL_NUDGE"
+   ],
+   "read_lines": [
+    204,
+    249
+   ],
+   "cmp_lines": [
+    204
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "ASW_FINAL_ESCALATION_ONLY",
+   "proxies": [
+    "ASW_FINAL_ESCALATION_ONLY",
+    "FINAL_ESCALATION_ONLY"
+   ],
+   "read_lines": [
+    205
+   ],
+   "cmp_lines": [
+    205
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "ASW_PHASE",
+   "proxies": [
+    "ASW_DISABLE_NORMAL_NUDGE",
+    "ASW_FINAL_ESCALATION_ONLY",
+    "ASW_PHASE",
+    "FINAL_ESCALATION_ONLY"
+   ],
+   "read_lines": [
+    203
+   ],
+   "cmp_lines": [
+    204,
+    205
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "SCRIPT_DIR",
+    "_agent_status_lib",
+    "_cli_adapter",
+    "current_fingerprint",
+    "current_sha",
+    "fast_count",
+    "has_task_assigned",
+    "normal_count",
+    "read_bytes",
+    "specials"
+   ],
+   "read_lines": [
+    30
+   ],
+   "cmp_lines": [
+    375,
+    506,
+    1231,
+    1330,
+    1356,
+    1383
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE1",
+   "proxies": [
+    "ESCALATE_PHASE1"
+   ],
+   "read_lines": [
+    1447
+   ],
+   "cmp_lines": [
+    1447
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE2",
+   "proxies": [
+    "ESCALATE_PHASE2"
+   ],
+   "read_lines": [
+    1455
+   ],
+   "cmp_lines": [
+    1455
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "ESTIMATED_TOKENS_TOTAL",
+   "proxies": [
+    "ESTIMATED_TOKENS_TOTAL"
+   ],
+   "read_lines": [
+    218
+   ],
+   "cmp_lines": [
+    228
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "FIRST_UNREAD_SEEN",
+   "proxies": [
+    "FIRST_UNREAD_SEEN"
+   ],
+   "read_lines": [
+    122,
+    460,
+    1355,
+    1365
+   ],
+   "cmp_lines": [
+    231,
+    232,
+    460,
+    1233,
+    1355,
+    1356,
+    1365,
+    1431,
+    1445,
+    1489
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "INOTIFY_TIMEOUT",
+   "proxies": [
+    "INOTIFY_TIMEOUT"
+   ],
+   "read_lines": [
+    1523
+   ],
+   "cmp_lines": [
+    1552
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "LAST_APPROVAL_ALERT_TS",
+   "proxies": [
+    "LAST_APPROVAL_ALERT_TS"
+   ],
+   "read_lines": [
+    886
+   ],
+   "cmp_lines": [
+    886,
+    887
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "LAST_CLEAR_TS",
+   "proxies": [
+    "LAST_CLEAR_TS"
+   ],
+   "read_lines": [
+    123,
+    905,
+    1033
+   ],
+   "cmp_lines": [
+    905,
+    1461
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "LAST_NUDGE_COUNT",
+   "proxies": [
+    "LAST_NUDGE_COUNT"
+   ],
+   "read_lines": [
+    184,
+    293
+   ],
+   "cmp_lines": [
+    293
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "LAST_NUDGE_TS",
+   "proxies": [
+    "LAST_NUDGE_TS"
+   ],
+   "read_lines": [
+    183,
+    293
+   ],
+   "cmp_lines": [
+    293,
+    294
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "LAST_TOKEN_WARN_TS",
+   "proxies": [
+    "LAST_TOKEN_WARN_TS"
+   ],
+   "read_lines": [
+    1602
+   ],
+   "cmp_lines": [
+    1602
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "MAX_TYPING_SKIP",
+   "proxies": [
+    "MAX_TYPING_SKIP",
+    "max_typing_skip"
+   ],
+   "read_lines": [
+    1055
+   ],
+   "cmp_lines": [
+    1056
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "NEW_CONTEXT_SENT",
+   "proxies": [
+    "NEW_CONTEXT_SENT"
+   ],
+   "read_lines": [
+    193,
+    625
+   ],
+   "cmp_lines": [
+    625,
+    1383
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    185,
+    283
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CLAUDE",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    289
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CODEX",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CODEX",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    187,
+    285
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "READ_BYTES_TOTAL",
+   "proxies": [
+    "READ_BYTES_TOTAL"
+   ],
+   "read_lines": [
+    217
+   ],
+   "cmp_lines": [
+    227
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "READ_COUNT",
+   "proxies": [
+    "READ_COUNT"
+   ],
+   "read_lines": [
+    216
+   ],
+   "cmp_lines": [
+    226
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "SCRIPT_DIR",
+   "proxies": [
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "SCRIPT_DIR",
+    "_agent_status_lib",
+    "_cli_adapter",
+    "current_fingerprint",
+    "current_sha",
+    "fast_count",
+    "has_task_assigned",
+    "normal_count",
+    "read_bytes",
+    "specials"
+   ],
+   "read_lines": [
+    219
+   ],
+   "cmp_lines": [
+    375,
+    506,
+    1231,
+    1330,
+    1356,
+    1383
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "STARTUP_PROMPT_SENT",
+   "proxies": [
+    "STARTUP_PROMPT_SENT"
+   ],
+   "read_lines": [
+    196
+   ],
+   "cmp_lines": [
+    1423
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    147
+   ],
+   "cmp_lines": [
+    151
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    151
+   ],
+   "cmp_lines": [
+    151
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "_i",
+   "proxies": [
+    "_i"
+   ],
+   "read_lines": [
+    375
+   ],
+   "cmp_lines": [
+    375,
+    506
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "_ld",
+   "proxies": [
+    "_ld"
+   ],
+   "read_lines": [
+    375
+   ],
+   "cmp_lines": [
+    375,
+    506
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh",
+   "env": "_token_int",
+   "proxies": [
+    "_token_int"
+   ],
+   "read_lines": [
+    1610
+   ],
+   "cmp_lines": [
+    1610
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "ALERT_COOLDOWN_SEC",
+   "proxies": [
+    "ALERT_COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    137
+   ],
+   "cmp_lines": [
+    137
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "SCRIPT_DIR",
+    "_fukuincho_script",
+    "_inbox_watcher_script",
+    "inbox",
+    "n"
+   ],
+   "read_lines": [
+    52
+   ],
+   "cmp_lines": [
+    246,
+    263
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "DETECT_STALE_LOG",
+   "proxies": [
+    "DETECT_STALE_LOG",
+    "_detect_stale_age_min",
+    "_detect_stale_log_file"
+   ],
+   "read_lines": [
+    441
+   ],
+   "cmp_lines": [
+    444,
+    445
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_COOLDOWN_DIR",
+   "proxies": [
+    "ALERT_COOLDOWN_DIR",
+    "HEALTH_CHECK_COOLDOWN_DIR",
+    "cf",
+    "last"
+   ],
+   "read_lines": [
+    83
+   ],
+   "cmp_lines": [
+    136
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_COOLDOWN_SEC",
+   "proxies": [
+    "ALERT_COOLDOWN_SEC",
+    "HEALTH_CHECK_COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    122
+   ],
+   "cmp_lines": [
+    137
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_CRIT",
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_CRIT",
+    "TOKEN_CRIT_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    348
+   ],
+   "cmp_lines": [
+    371
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_WARN",
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_WARN",
+    "TOKEN_WARN_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    347
+   ],
+   "cmp_lines": [
+    384
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "INSERT_COUNT",
+   "proxies": [
+    "INSERT_COUNT"
+   ],
+   "read_lines": [
+    223,
+    224
+   ],
+   "cmp_lines": [
+    224
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "TOKEN_CRIT_THRESHOLD",
+   "proxies": [
+    "TOKEN_CRIT_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    371
+   ],
+   "cmp_lines": [
+    371
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "TOKEN_WARN_THRESHOLD",
+   "proxies": [
+    "TOKEN_WARN_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    384
+   ],
+   "cmp_lines": [
+    384
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    113
+   ],
+   "cmp_lines": [
+    117
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    117
+   ],
+   "cmp_lines": [
+    117
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    109
+   ],
+   "cmp_lines": [
+    109
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "a",
+   "proxies": [
+    "a",
+    "inbox",
+    "n"
+   ],
+   "read_lines": [
+    242
+   ],
+   "cmp_lines": [
+    246,
+    263
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "jsonl_path",
+   "proxies": [
+    "cool_key",
+    "jsonl_path",
+    "max_tokens",
+    "msg",
+    "sid",
+    "sid_short"
+   ],
+   "read_lines": [
+    352
+   ],
+   "cmp_lines": [
+    371,
+    384
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "last",
+   "proxies": [
+    "last"
+   ],
+   "read_lines": [
+    135
+   ],
+   "cmp_lines": [
+    136
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "max_tokens",
+   "proxies": [
+    "max_tokens",
+    "msg"
+   ],
+   "read_lines": [
+    370
+   ],
+   "cmp_lines": [
+    371,
+    384
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "message",
+   "proxies": [
+    "message",
+    "payload"
+   ],
+   "read_lines": [
+    151
+   ],
+   "cmp_lines": [
+    361
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh",
+   "env": "n",
+   "proxies": [
+    "n"
+   ],
+   "read_lines": [
+    246,
+    263
+   ],
+   "cmp_lines": [
+    246,
+    263
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "CLAUDE_CODE_SESSION_ID",
+   "proxies": [
+    "CLAUDE_CODE_SESSION_ID",
+    "JSONL_PATH",
+    "SESSION_ID",
+    "SZ"
+   ],
+   "read_lines": [
+    69
+   ],
+   "cmp_lines": [
+    82,
+    84,
+    86
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "CLAUDE_PROJECT_DIR",
+   "proxies": [
+    "CLAUDE_PROJECT_DIR",
+    "JSONL_PATH",
+    "PROJECT_DIR",
+    "PROJECT_SLUG",
+    "SZ"
+   ],
+   "read_lines": [
+    70
+   ],
+   "cmp_lines": [
+    82,
+    84,
+    86
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "CONTEXT_DANGER_BYTES",
+   "proxies": [
+    "CONTEXT_DANGER_BYTES",
+    "DANGER_BYTES"
+   ],
+   "read_lines": [
+    67
+   ],
+   "cmp_lines": [
+    84,
+    85
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "CONTEXT_WARN_BYTES",
+   "proxies": [
+    "CONTEXT_WARN_BYTES",
+    "WARN_BYTES"
+   ],
+   "read_lines": [
+    66
+   ],
+   "cmp_lines": [
+    86,
+    87
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "DANGER_BYTES",
+   "proxies": [
+    "DANGER_BYTES"
+   ],
+   "read_lines": [
+    84
+   ],
+   "cmp_lines": [
+    84,
+    85
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "HOME",
+   "proxies": [
+    "HOME",
+    "JSONL_PATH",
+    "PROJECT_DIR",
+    "PROJECT_SLUG",
+    "SZ"
+   ],
+   "read_lines": [
+    70
+   ],
+   "cmp_lines": [
+    82,
+    84,
+    86
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "WARN_BYTES",
+   "proxies": [
+    "WARN_BYTES"
+   ],
+   "read_lines": [
+    86
+   ],
+   "cmp_lines": [
+    86,
+    87
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    56
+   ],
+   "cmp_lines": [
+    60
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    60
+   ],
+   "cmp_lines": [
+    60
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_COUNT",
+   "proxies": [
+    "ER_FIRE_CAP_COUNT",
+    "ER_FIRE_CAP_COUNT_PY",
+    "FIRE_CAP_COUNT"
+   ],
+   "read_lines": [
+    114
+   ],
+   "cmp_lines": [
+    128
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_WINDOW_MIN",
+   "proxies": [
+    "ER_FIRE_CAP_WINDOW_MIN",
+    "ER_FIRE_CAP_WINDOW_MIN_PY",
+    "FIRE_CAP_WINDOW_MIN"
+   ],
+   "read_lines": [
+    115
+   ],
+   "cmp_lines": [
+    122
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "ER_FROM_PC_FILTER",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ELAPSED_INT",
+    "ELAPSED_MIN",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_ELAPSED_MIN_PY",
+    "ER_FROM_PC_FILTER",
+    "FROM_PC_FILTER",
+    "LAST_AT",
+    "LAST_INFO",
+    "LAST_TOPIC"
+   ],
+   "read_lines": [
+    54
+   ],
+   "cmp_lines": [
+    254
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "ER_LOG_DIR",
+   "proxies": [
+    "ER_LOG_DIR",
+    "ER_RECENT_FIRES_PY",
+    "FIRE_HISTORY",
+    "LOG",
+    "LOG_DIR",
+    "RECENT_FIRES"
+   ],
+   "read_lines": [
+    55
+   ],
+   "cmp_lines": [
+    128
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "ER_THRESHOLD_MIN",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_THRESHOLD_MIN",
+    "ER_THRESHOLD_MIN_PY",
+    "THRESHOLD_MIN"
+   ],
+   "read_lines": [
+    113
+   ],
+   "cmp_lines": [
+    254
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "FIRE_CAP_COUNT",
+   "proxies": [
+    "ER_FIRE_CAP_COUNT_PY",
+    "FIRE_CAP_COUNT"
+   ],
+   "read_lines": [
+    127
+   ],
+   "cmp_lines": [
+    128
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "FIRE_CAP_WINDOW_MIN",
+   "proxies": [
+    "ER_FIRE_CAP_WINDOW_MIN_PY",
+    "FIRE_CAP_WINDOW_MIN"
+   ],
+   "read_lines": [
+    127
+   ],
+   "cmp_lines": [
+    122
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "THRESHOLD_MIN",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_THRESHOLD_MIN_PY",
+    "THRESHOLD_MIN"
+   ],
+   "read_lines": [
+    254
+   ],
+   "cmp_lines": [
+    254
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    103
+   ],
+   "cmp_lines": [
+    107
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    107
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    99
+   ],
+   "cmp_lines": [
+    99
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "AGENT_ID",
+   "proxies": [
+    "AGENT_ID",
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "NUDGE_FINGERPRINT_FILE",
+    "WATCHER_DISABLE_FLAG",
+    "alert_file",
+    "current_fingerprint",
+    "current_sha",
+    "msg",
+    "previous_fingerprint",
+    "read_bytes",
+    "skip_count",
+    "skip_state_file",
+    "startup_prompt"
+   ],
+   "read_lines": [
+    193,
+    224,
+    242
+   ],
+   "cmp_lines": [
+    380,
+    511,
+    1057,
+    1061,
+    1117,
+    1140,
+    1361
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "APPROVAL_ALERT_COOLDOWN",
+   "proxies": [
+    "APPROVAL_ALERT_COOLDOWN"
+   ],
+   "read_lines": [
+    892
+   ],
+   "cmp_lines": [
+    892
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "ASW_DISABLE_NORMAL_NUDGE",
+   "proxies": [
+    "ASW_DISABLE_NORMAL_NUDGE"
+   ],
+   "read_lines": [
+    209,
+    254
+   ],
+   "cmp_lines": [
+    209
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "ASW_FINAL_ESCALATION_ONLY",
+   "proxies": [
+    "ASW_FINAL_ESCALATION_ONLY",
+    "FINAL_ESCALATION_ONLY"
+   ],
+   "read_lines": [
+    210
+   ],
+   "cmp_lines": [
+    210
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "ASW_PHASE",
+   "proxies": [
+    "ASW_DISABLE_NORMAL_NUDGE",
+    "ASW_FINAL_ESCALATION_ONLY",
+    "ASW_PHASE",
+    "FINAL_ESCALATION_ONLY"
+   ],
+   "read_lines": [
+    208
+   ],
+   "cmp_lines": [
+    209,
+    210
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "SCRIPT_DIR",
+    "_agent_status_lib",
+    "_cli_adapter",
+    "current_fingerprint",
+    "current_sha",
+    "fast_count",
+    "has_task_assigned",
+    "normal_count",
+    "read_bytes",
+    "specials"
+   ],
+   "read_lines": [
+    30
+   ],
+   "cmp_lines": [
+    380,
+    511,
+    1236,
+    1335,
+    1361,
+    1388
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE1",
+   "proxies": [
+    "ESCALATE_PHASE1"
+   ],
+   "read_lines": [
+    1452
+   ],
+   "cmp_lines": [
+    1452
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE2",
+   "proxies": [
+    "ESCALATE_PHASE2"
+   ],
+   "read_lines": [
+    1460
+   ],
+   "cmp_lines": [
+    1460
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "ESTIMATED_TOKENS_TOTAL",
+   "proxies": [
+    "ESTIMATED_TOKENS_TOTAL"
+   ],
+   "read_lines": [
+    223
+   ],
+   "cmp_lines": [
+    233
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "FIRST_UNREAD_SEEN",
+   "proxies": [
+    "FIRST_UNREAD_SEEN"
+   ],
+   "read_lines": [
+    122,
+    465,
+    1360,
+    1370
+   ],
+   "cmp_lines": [
+    236,
+    237,
+    465,
+    1238,
+    1360,
+    1361,
+    1370,
+    1436,
+    1450,
+    1494
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "INOTIFY_TIMEOUT",
+   "proxies": [
+    "INOTIFY_TIMEOUT"
+   ],
+   "read_lines": [
+    1528
+   ],
+   "cmp_lines": [
+    1557
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "LAST_APPROVAL_ALERT_TS",
+   "proxies": [
+    "LAST_APPROVAL_ALERT_TS"
+   ],
+   "read_lines": [
+    891
+   ],
+   "cmp_lines": [
+    891,
+    892
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "LAST_CLEAR_TS",
+   "proxies": [
+    "LAST_CLEAR_TS"
+   ],
+   "read_lines": [
+    123,
+    910,
+    1038
+   ],
+   "cmp_lines": [
+    910,
+    1466
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "LAST_NUDGE_COUNT",
+   "proxies": [
+    "LAST_NUDGE_COUNT"
+   ],
+   "read_lines": [
+    189,
+    298
+   ],
+   "cmp_lines": [
+    298
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "LAST_NUDGE_TS",
+   "proxies": [
+    "LAST_NUDGE_TS"
+   ],
+   "read_lines": [
+    188,
+    298
+   ],
+   "cmp_lines": [
+    298,
+    299
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "LAST_TOKEN_WARN_TS",
+   "proxies": [
+    "LAST_TOKEN_WARN_TS"
+   ],
+   "read_lines": [
+    1607
+   ],
+   "cmp_lines": [
+    1607
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "MAX_TYPING_SKIP",
+   "proxies": [
+    "MAX_TYPING_SKIP",
+    "max_typing_skip"
+   ],
+   "read_lines": [
+    1060
+   ],
+   "cmp_lines": [
+    1061
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "NEW_CONTEXT_SENT",
+   "proxies": [
+    "NEW_CONTEXT_SENT"
+   ],
+   "read_lines": [
+    198,
+    630
+   ],
+   "cmp_lines": [
+    630,
+    1388
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    190,
+    288
+   ],
+   "cmp_lines": [
+    300
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CLAUDE",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    294
+   ],
+   "cmp_lines": [
+    300
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CODEX",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CODEX",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    192,
+    290
+   ],
+   "cmp_lines": [
+    300
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "READ_BYTES_TOTAL",
+   "proxies": [
+    "READ_BYTES_TOTAL"
+   ],
+   "read_lines": [
+    222
+   ],
+   "cmp_lines": [
+    232
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "READ_COUNT",
+   "proxies": [
+    "READ_COUNT"
+   ],
+   "read_lines": [
+    221
+   ],
+   "cmp_lines": [
+    231
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "SCRIPT_DIR",
+   "proxies": [
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "SCRIPT_DIR",
+    "_agent_status_lib",
+    "_cli_adapter",
+    "current_fingerprint",
+    "current_sha",
+    "fast_count",
+    "has_task_assigned",
+    "normal_count",
+    "read_bytes",
+    "specials"
+   ],
+   "read_lines": [
+    224
+   ],
+   "cmp_lines": [
+    380,
+    511,
+    1236,
+    1335,
+    1361,
+    1388
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "STARTUP_PROMPT_SENT",
+   "proxies": [
+    "STARTUP_PROMPT_SENT"
+   ],
+   "read_lines": [
+    201
+   ],
+   "cmp_lines": [
+    1428
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    152
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    156
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "_i",
+   "proxies": [
+    "_i"
+   ],
+   "read_lines": [
+    380
+   ],
+   "cmp_lines": [
+    380,
+    511
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "_ld",
+   "proxies": [
+    "_ld"
+   ],
+   "read_lines": [
+    380
+   ],
+   "cmp_lines": [
+    380,
+    511
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    148
+   ],
+   "cmp_lines": [
+    148
+   ]
+  },
+  {
+   "file": "docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh",
+   "env": "_token_int",
+   "proxies": [
+    "_token_int"
+   ],
+   "read_lines": [
+    1615
+   ],
+   "cmp_lines": [
+    1615
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    106
+   ],
+   "cmp_lines": [
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    117,
+    118
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    114
+   ],
+   "cmp_lines": [
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    117
+   ],
+   "cmp_lines": [
+    117,
+    118
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    110
+   ],
+   "cmp_lines": [
+    112,
+    113,
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.orig",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    106
+   ],
+   "cmp_lines": [
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.orig",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    117,
+    118
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.orig",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    114
+   ],
+   "cmp_lines": [
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.orig",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    117
+   ],
+   "cmp_lines": [
+    117,
+    118
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.orig",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    110
+   ],
+   "cmp_lines": [
+    112,
+    113,
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    91
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    136
+   ],
+   "cmp_lines": [
+    136
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    233
+   ],
+   "cmp_lines": [
+    233
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    292
+   ],
+   "cmp_lines": [
+    292
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    283
+   ],
+   "cmp_lines": [
+    283
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    126
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    91
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    136
+   ],
+   "cmp_lines": [
+    136
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    233
+   ],
+   "cmp_lines": [
+    233
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    292
+   ],
+   "cmp_lines": [
+    292
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    283
+   ],
+   "cmp_lines": [
+    283
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    126
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    91
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    136
+   ],
+   "cmp_lines": [
+    136
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    233
+   ],
+   "cmp_lines": [
+    233
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    292
+   ],
+   "cmp_lines": [
+    292
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    283
+   ],
+   "cmp_lines": [
+    283
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    126
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    91
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    136
+   ],
+   "cmp_lines": [
+    136
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    233
+   ],
+   "cmp_lines": [
+    233
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    292
+   ],
+   "cmp_lines": [
+    292
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    283
+   ],
+   "cmp_lines": [
+    283
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    126
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    103
+   ],
+   "cmp_lines": [
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    104
+   ],
+   "cmp_lines": [
+    114,
+    115
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    111
+   ],
+   "cmp_lines": [
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    114
+   ],
+   "cmp_lines": [
+    114,
+    115
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    109,
+    110,
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    103
+   ],
+   "cmp_lines": [
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    104
+   ],
+   "cmp_lines": [
+    114,
+    115
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    111
+   ],
+   "cmp_lines": [
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    114
+   ],
+   "cmp_lines": [
+    114,
+    115
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    109,
+    110,
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    88
+   ],
+   "cmp_lines": [
+    250
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    133
+   ],
+   "cmp_lines": [
+    133
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    230
+   ],
+   "cmp_lines": [
+    230
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    289
+   ],
+   "cmp_lines": [
+    289
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    280
+   ],
+   "cmp_lines": [
+    280
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    123
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    88
+   ],
+   "cmp_lines": [
+    250
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    133
+   ],
+   "cmp_lines": [
+    133
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    230
+   ],
+   "cmp_lines": [
+    230
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    289
+   ],
+   "cmp_lines": [
+    289
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    280
+   ],
+   "cmp_lines": [
+    280
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    123
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    88
+   ],
+   "cmp_lines": [
+    250
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    133
+   ],
+   "cmp_lines": [
+    133
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    230
+   ],
+   "cmp_lines": [
+    230
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    289
+   ],
+   "cmp_lines": [
+    289
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    280
+   ],
+   "cmp_lines": [
+    280
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    123
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    88
+   ],
+   "cmp_lines": [
+    250
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    133
+   ],
+   "cmp_lines": [
+    133
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    230
+   ],
+   "cmp_lines": [
+    230
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    289
+   ],
+   "cmp_lines": [
+    289
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    280
+   ],
+   "cmp_lines": [
+    280
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    123
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    94
+   ],
+   "cmp_lines": [
+    256
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    139
+   ],
+   "cmp_lines": [
+    139
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    236
+   ],
+   "cmp_lines": [
+    236
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    295
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    286
+   ],
+   "cmp_lines": [
+    286
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    129
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    94
+   ],
+   "cmp_lines": [
+    256
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    139
+   ],
+   "cmp_lines": [
+    139
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    236
+   ],
+   "cmp_lines": [
+    236
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    295
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    286
+   ],
+   "cmp_lines": [
+    286
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    129
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    94
+   ],
+   "cmp_lines": [
+    256
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    139
+   ],
+   "cmp_lines": [
+    139
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    236
+   ],
+   "cmp_lines": [
+    236
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    295
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    286
+   ],
+   "cmp_lines": [
+    286
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    129
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    94
+   ],
+   "cmp_lines": [
+    256
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    139
+   ],
+   "cmp_lines": [
+    139
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    236
+   ],
+   "cmp_lines": [
+    236
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    295
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    286
+   ],
+   "cmp_lines": [
+    286
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    129
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    111
+   ],
+   "cmp_lines": [
+    273
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    156
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    253
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    312
+   ],
+   "cmp_lines": [
+    312
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    303
+   ],
+   "cmp_lines": [
+    303
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    146
+   ],
+   "cmp_lines": [
+    146
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    127
+   ],
+   "cmp_lines": [
+    137,
+    138
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    134
+   ],
+   "cmp_lines": [
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    137
+   ],
+   "cmp_lines": [
+    137,
+    138
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    130
+   ],
+   "cmp_lines": [
+    132,
+    133,
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    111
+   ],
+   "cmp_lines": [
+    273
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    156
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    253
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    312
+   ],
+   "cmp_lines": [
+    312
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    303
+   ],
+   "cmp_lines": [
+    303
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    146
+   ],
+   "cmp_lines": [
+    146
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    127
+   ],
+   "cmp_lines": [
+    137,
+    138
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    134
+   ],
+   "cmp_lines": [
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    137
+   ],
+   "cmp_lines": [
+    137,
+    138
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    130
+   ],
+   "cmp_lines": [
+    132,
+    133,
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    111
+   ],
+   "cmp_lines": [
+    273
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    156
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    253
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    312
+   ],
+   "cmp_lines": [
+    312
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    303
+   ],
+   "cmp_lines": [
+    303
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    146
+   ],
+   "cmp_lines": [
+    146
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    127
+   ],
+   "cmp_lines": [
+    137,
+    138
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    134
+   ],
+   "cmp_lines": [
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    137
+   ],
+   "cmp_lines": [
+    137,
+    138
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    130
+   ],
+   "cmp_lines": [
+    132,
+    133,
+    134
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    91
+   ],
+   "cmp_lines": [
+    253
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    136
+   ],
+   "cmp_lines": [
+    136
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    233
+   ],
+   "cmp_lines": [
+    233
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    292
+   ],
+   "cmp_lines": [
+    292
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    283
+   ],
+   "cmp_lines": [
+    283
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    126
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    106
+   ],
+   "cmp_lines": [
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    117,
+    118
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    114
+   ],
+   "cmp_lines": [
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    117
+   ],
+   "cmp_lines": [
+    117,
+    118
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    110
+   ],
+   "cmp_lines": [
+    112,
+    113,
+    114
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    88
+   ],
+   "cmp_lines": [
+    250
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    133
+   ],
+   "cmp_lines": [
+    133
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    230
+   ],
+   "cmp_lines": [
+    230
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    289
+   ],
+   "cmp_lines": [
+    289
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    280
+   ],
+   "cmp_lines": [
+    280
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    123
+   ],
+   "cmp_lines": [
+    123
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    103
+   ],
+   "cmp_lines": [
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    104
+   ],
+   "cmp_lines": [
+    114,
+    115
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    111
+   ],
+   "cmp_lines": [
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    114
+   ],
+   "cmp_lines": [
+    114,
+    115
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    109,
+    110,
+    111
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    81
+   ],
+   "cmp_lines": [
+    243
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    126
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    223
+   ],
+   "cmp_lines": [
+    223
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    282
+   ],
+   "cmp_lines": [
+    282
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    273
+   ],
+   "cmp_lines": [
+    273
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    116
+   ],
+   "cmp_lines": [
+    116
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    96
+   ],
+   "cmp_lines": [
+    104
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    97
+   ],
+   "cmp_lines": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    104
+   ],
+   "cmp_lines": [
+    104
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    100
+   ],
+   "cmp_lines": [
+    102,
+    103,
+    104
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    94
+   ],
+   "cmp_lines": [
+    256
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    139
+   ],
+   "cmp_lines": [
+    139
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    236
+   ],
+   "cmp_lines": [
+    236
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    295
+   ],
+   "cmp_lines": [
+    295
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    286
+   ],
+   "cmp_lines": [
+    286
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    129
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    96
+   ],
+   "cmp_lines": [
+    104
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    97
+   ],
+   "cmp_lines": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    104
+   ],
+   "cmp_lines": [
+    104
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    100
+   ],
+   "cmp_lines": [
+    102,
+    103,
+    104
+   ]
+  },
+  {
+   "file": "docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙1_pctq.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙1_pctq.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙2_base64.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙2_base64.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙3_数のみ.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙3_数のみ.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙4_刷らぬ.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙4_刷らぬ.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__乙.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__乙.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__乙′.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__乙′.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__現行.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__現行.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__甲.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__甲.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙′.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙′.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙′.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__現行.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__現行.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__現行.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__甲.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__甲.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__甲.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙′.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙′.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙′.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__現行.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__現行.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__現行.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__甲.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__甲.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__甲.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙1_pctq.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙1_pctq.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙1_pctq.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙2_base64.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙2_base64.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙2_base64.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙3_数のみ.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙3_数のみ.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙3_数のみ.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙4_刷らぬ.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙4_刷らぬ.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙4_刷らぬ.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙′.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙′.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙′.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__現行.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__現行.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__現行.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__甲.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    20
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__甲.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    24
+   ],
+   "cmp_lines": [
+    24
+   ]
+  },
+  {
+   "file": "docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__甲.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    16
+   ],
+   "cmp_lines": [
+    16
+   ]
+  },
+  {
+   "file": "first_setup.sh",
+   "env": "BASH_VERSINFO",
+   "proxies": [
+    "BASH_VERSINFO"
+   ],
+   "read_lines": [
+    359
+   ],
+   "cmp_lines": [
+    359
+   ]
+  },
+  {
+   "file": "first_setup.sh",
+   "env": "cols",
+   "proxies": [
+    "CSM_FUNC",
+    "CSS_FUNC",
+    "cols"
+   ],
+   "read_lines": [
+    798
+   ],
+   "cmp_lines": [
+    798,
+    799
+   ]
+  },
+  {
+   "file": "first_setup.sh",
+   "env": "s",
+   "proxies": [
+    "CSM_FUNC",
+    "CSS_FUNC",
+    "s"
+   ],
+   "read_lines": [
+    798
+   ],
+   "cmp_lines": [
+    798,
+    799
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/00_run.sh",
+   "env": "e",
+   "proxies": [
+    "LC_ALL",
+    "e",
+    "wse"
+   ],
+   "read_lines": [
+    13
+   ],
+   "cmp_lines": [
+    22
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/15_hi_suu_no_shikii.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "proxies": [
+    "MASS_UNREAD_THRESHOLD",
+    "out"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    11,
+    16
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/15_hi_suu_no_shikii.sh",
+   "env": "UNREAD_COUNT",
+   "proxies": [
+    "UNREAD_COUNT"
+   ],
+   "read_lines": [
+    11,
+    16
+   ],
+   "cmp_lines": [
+    11,
+    16
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/16_hi_suu_no_shikii_v2.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "proxies": [
+    "FORM",
+    "MASS_UNREAD_THRESHOLD",
+    "out"
+   ],
+   "read_lines": [
+    8
+   ],
+   "cmp_lines": [
+    9,
+    12
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/16_hi_suu_no_shikii_v2.sh",
+   "env": "UNREAD_COUNT",
+   "proxies": [
+    "UNREAD_COUNT"
+   ],
+   "read_lines": [
+    9,
+    12
+   ],
+   "cmp_lines": [
+    9,
+    12
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/17_hi_suu_no_shikii_v3.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "proxies": [
+    "FORM",
+    "MASS_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    9
+   ],
+   "cmp_lines": [
+    10
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/17_hi_suu_no_shikii_v3.sh",
+   "env": "UNREAD_COUNT",
+   "proxies": [
+    "UNREAD_COUNT"
+   ],
+   "read_lines": [
+    10
+   ],
+   "cmp_lines": [
+    10
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "ALERT_COOLDOWN_SEC",
+   "proxies": [
+    "ALERT_COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    144
+   ],
+   "cmp_lines": [
+    144
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "SCRIPT_DIR",
+    "_fukuincho_script",
+    "_inbox_watcher_script",
+    "inbox",
+    "n"
+   ],
+   "read_lines": [
+    52
+   ],
+   "cmp_lines": [
+    253,
+    270
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "DETECT_STALE_LOG",
+   "proxies": [
+    "DETECT_STALE_LOG",
+    "_detect_stale_age_min",
+    "_detect_stale_log_file"
+   ],
+   "read_lines": [
+    448
+   ],
+   "cmp_lines": [
+    451,
+    452
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "HEALTH_CHECK_COOLDOWN_DIR",
+   "proxies": [
+    "ALERT_COOLDOWN_DIR",
+    "HEALTH_CHECK_COOLDOWN_DIR",
+    "cf",
+    "last"
+   ],
+   "read_lines": [
+    83
+   ],
+   "cmp_lines": [
+    143
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "HEALTH_CHECK_COOLDOWN_SEC",
+   "proxies": [
+    "ALERT_COOLDOWN_SEC",
+    "HEALTH_CHECK_COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    129
+   ],
+   "cmp_lines": [
+    144
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_CRIT",
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_CRIT",
+    "TOKEN_CRIT_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    355
+   ],
+   "cmp_lines": [
+    378
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_WARN",
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_WARN",
+    "TOKEN_WARN_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    354
+   ],
+   "cmp_lines": [
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "INSERT_COUNT",
+   "proxies": [
+    "INSERT_COUNT"
+   ],
+   "read_lines": [
+    230,
+    231
+   ],
+   "cmp_lines": [
+    231
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "TOKEN_CRIT_THRESHOLD",
+   "proxies": [
+    "TOKEN_CRIT_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    378
+   ],
+   "cmp_lines": [
+    378
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "TOKEN_WARN_THRESHOLD",
+   "proxies": [
+    "TOKEN_WARN_THRESHOLD",
+    "msg"
+   ],
+   "read_lines": [
+    391
+   ],
+   "cmp_lines": [
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    113
+   ],
+   "cmp_lines": [
+    117
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    117
+   ],
+   "cmp_lines": [
+    117
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    109
+   ],
+   "cmp_lines": [
+    109
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "a",
+   "proxies": [
+    "a",
+    "inbox",
+    "n"
+   ],
+   "read_lines": [
+    249
+   ],
+   "cmp_lines": [
+    253,
+    270
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "jsonl_path",
+   "proxies": [
+    "cool_key",
+    "jsonl_path",
+    "max_tokens",
+    "msg",
+    "sid",
+    "sid_short"
+   ],
+   "read_lines": [
+    359
+   ],
+   "cmp_lines": [
+    378,
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "last",
+   "proxies": [
+    "last"
+   ],
+   "read_lines": [
+    142
+   ],
+   "cmp_lines": [
+    143
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "max_tokens",
+   "proxies": [
+    "max_tokens",
+    "msg"
+   ],
+   "read_lines": [
+    377
+   ],
+   "cmp_lines": [
+    378,
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "message",
+   "proxies": [
+    "message",
+    "payload"
+   ],
+   "read_lines": [
+    158
+   ],
+   "cmp_lines": [
+    368
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "n",
+   "proxies": [
+    "n"
+   ],
+   "read_lines": [
+    253,
+    270
+   ],
+   "cmp_lines": [
+    253,
+    270
+   ]
+  },
+  {
+   "file": "scripts/agent_periodic_push.sh",
+   "env": "HOME",
+   "proxies": [
+    "HOME",
+    "JSONL_DIR",
+    "LATEST_JSONL",
+    "jsonl_age"
+   ],
+   "read_lines": [
+    34
+   ],
+   "cmp_lines": [
+    38,
+    39
+   ]
+  },
+  {
+   "file": "scripts/agent_periodic_push.sh",
+   "env": "sp_age",
+   "proxies": [
+    "sp_age"
+   ],
+   "read_lines": [
+    64
+   ],
+   "cmp_lines": [
+    65
+   ]
+  },
+  {
+   "file": "scripts/agent_status.sh",
+   "env": "i",
+   "proxies": [
+    "agent",
+    "i"
+   ],
+   "read_lines": [
+    268
+   ],
+   "cmp_lines": [
+    269
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "COOLDOWN_FILE",
+    "_GUARD_DIR",
+    "_GUARD_PROJECT_ROOT",
+    "last_epoch"
+   ],
+   "read_lines": [
+    32
+   ],
+   "cmp_lines": [
+    91
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh",
+   "env": "non_empty_lines",
+   "proxies": [
+    "non_empty_lines"
+   ],
+   "read_lines": [
+    64
+   ],
+   "cmp_lines": [
+    64
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh",
+   "env": "WATCHER_STARTED_AT",
+   "proxies": [
+    "WATCHER_STARTED_AT",
+    "started_at",
+    "started_epoch"
+   ],
+   "read_lines": [
+    30
+   ],
+   "cmp_lines": [
+    38
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "COOLDOWN_FILE",
+    "LOG_DIR",
+    "LOG_FILE",
+    "SESSION_HEALTH_DIR",
+    "_NUDGE_DIR",
+    "_NUDGE_PROJECT_ROOT",
+    "last_epoch"
+   ],
+   "read_lines": [
+    37
+   ],
+   "cmp_lines": [
+    101
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/supervisor.sh",
+   "env": "LAST_RESTART_AT",
+   "proxies": [
+    "LAST_RESTART_AT",
+    "last"
+   ],
+   "read_lines": [
+    179
+   ],
+   "cmp_lines": [
+    180,
+    187
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/supervisor.sh",
+   "env": "RESTART_COUNT",
+   "proxies": [
+    "RESTART_COUNT"
+   ],
+   "read_lines": [
+    185
+   ],
+   "cmp_lines": [
+    185,
+    204,
+    209
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh",
+   "env": "LAST_RESTART_AT",
+   "proxies": [
+    "LAST_RESTART_AT",
+    "last"
+   ],
+   "read_lines": [
+    140
+   ],
+   "cmp_lines": [
+    141,
+    146
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh",
+   "env": "RESTART_COUNT",
+   "proxies": [
+    "RESTART_COUNT"
+   ],
+   "read_lines": [
+    145
+   ],
+   "cmp_lines": [
+    145,
+    160,
+    164
+   ]
+  },
+  {
+   "file": "scripts/audit_meta_codex.sh",
+   "env": "COUNT",
+   "proxies": [
+    "COUNT"
+   ],
+   "read_lines": [
+    108
+   ],
+   "cmp_lines": [
+    108
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "CLAUDE_CODE_SESSION_ID",
+   "proxies": [
+    "CLAUDE_CODE_SESSION_ID",
+    "JSONL_PATH",
+    "SESSION_ID",
+    "SZ"
+   ],
+   "read_lines": [
+    79
+   ],
+   "cmp_lines": [
+    92,
+    94,
+    96
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "CLAUDE_PROJECT_DIR",
+   "proxies": [
+    "CLAUDE_PROJECT_DIR",
+    "JSONL_PATH",
+    "PROJECT_DIR",
+    "PROJECT_SLUG",
+    "SZ"
+   ],
+   "read_lines": [
+    80
+   ],
+   "cmp_lines": [
+    92,
+    94,
+    96
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "CONTEXT_DANGER_BYTES",
+   "proxies": [
+    "CONTEXT_DANGER_BYTES",
+    "DANGER_BYTES"
+   ],
+   "read_lines": [
+    77
+   ],
+   "cmp_lines": [
+    94,
+    95
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "CONTEXT_WARN_BYTES",
+   "proxies": [
+    "CONTEXT_WARN_BYTES",
+    "WARN_BYTES"
+   ],
+   "read_lines": [
+    76
+   ],
+   "cmp_lines": [
+    96,
+    97
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "DANGER_BYTES",
+   "proxies": [
+    "DANGER_BYTES"
+   ],
+   "read_lines": [
+    94
+   ],
+   "cmp_lines": [
+    94,
+    95
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "HOME",
+   "proxies": [
+    "HOME",
+    "JSONL_PATH",
+    "PROJECT_DIR",
+    "PROJECT_SLUG",
+    "SZ"
+   ],
+   "read_lines": [
+    80
+   ],
+   "cmp_lines": [
+    92,
+    94,
+    96
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "WARN_BYTES",
+   "proxies": [
+    "WARN_BYTES"
+   ],
+   "read_lines": [
+    96
+   ],
+   "cmp_lines": [
+    96,
+    97
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    59
+   ],
+   "cmp_lines": [
+    63
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    63
+   ],
+   "cmp_lines": [
+    63
+   ]
+  },
+  {
+   "file": "scripts/checks/ephemeral_worktree_hygiene.sh",
+   "env": "FREE_GI",
+   "proxies": [
+    "FREE_GI"
+   ],
+   "read_lines": [
+    26,
+    29
+   ],
+   "cmp_lines": [
+    29
+   ]
+  },
+  {
+   "file": "scripts/checks/ephemeral_worktree_hygiene.sh",
+   "env": "LIVE",
+   "proxies": [
+    "LIVE"
+   ],
+   "read_lines": [
+    26
+   ],
+   "cmp_lines": [
+    22
+   ]
+  },
+  {
+   "file": "scripts/checks/ephemeral_worktree_hygiene.sh",
+   "env": "OWNED",
+   "proxies": [
+    "OWNED"
+   ],
+   "read_lines": [
+    26
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "scripts/checks/ephemeral_worktree_hygiene.sh",
+   "env": "d",
+   "proxies": [
+    "d",
+    "dirty",
+    "recent"
+   ],
+   "read_lines": [
+    18
+   ],
+   "cmp_lines": [
+    21,
+    22
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    81
+   ],
+   "cmp_lines": [
+    243
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "env": "cr_rc",
+   "proxies": [
+    "cr_rc"
+   ],
+   "read_lines": [
+    126
+   ],
+   "cmp_lines": [
+    126
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    223
+   ],
+   "cmp_lines": [
+    223
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "env": "rc_neg",
+   "proxies": [
+    "rc_neg"
+   ],
+   "read_lines": [
+    282
+   ],
+   "cmp_lines": [
+    282
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "env": "rc_pos",
+   "proxies": [
+    "rc_pos"
+   ],
+   "read_lines": [
+    273
+   ],
+   "cmp_lines": [
+    273
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "env": "ws_rc",
+   "proxies": [
+    "ws_rc"
+   ],
+   "read_lines": [
+    116
+   ],
+   "cmp_lines": [
+    116
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    96
+   ],
+   "cmp_lines": [
+    104
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    97
+   ],
+   "cmp_lines": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "MAXF",
+   "proxies": [
+    "MAXF"
+   ],
+   "read_lines": [
+    104
+   ],
+   "cmp_lines": [
+    104
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "MAXT",
+   "proxies": [
+    "MAXT"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "f",
+   "proxies": [
+    "f",
+    "sz"
+   ],
+   "read_lines": [
+    100
+   ],
+   "cmp_lines": [
+    102,
+    103,
+    104
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "rc",
+   "proxies": [
+    "rc"
+   ],
+   "read_lines": [
+    21
+   ],
+   "cmp_lines": [
+    21
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate7.sh",
+   "env": "c3",
+   "proxies": [
+    "c3"
+   ],
+   "read_lines": [
+    18
+   ],
+   "cmp_lines": [
+    18
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate7.sh",
+   "env": "c5",
+   "proxies": [
+    "c5",
+    "tt"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate7.sh",
+   "env": "c6",
+   "proxies": [
+    "c6",
+    "tt"
+   ],
+   "read_lines": [
+    19
+   ],
+   "cmp_lines": [
+    19
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate7.sh",
+   "env": "f",
+   "proxies": [
+    "body",
+    "c2",
+    "c3a",
+    "c3k",
+    "c4",
+    "f",
+    "kou",
+    "numc",
+    "rcst",
+    "selfref",
+    "t",
+    "tab",
+    "tt",
+    "zl"
+   ],
+   "read_lines": [
+    6
+   ],
+   "cmp_lines": [
+    7,
+    8,
+    11,
+    14,
+    15,
+    18,
+    19
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate7.sh",
+   "env": "hei",
+   "proxies": [
+    "hei"
+   ],
+   "read_lines": [
+    18
+   ],
+   "cmp_lines": [
+    18
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate7.sh",
+   "env": "otsu",
+   "proxies": [
+    "otsu"
+   ],
+   "read_lines": [
+    18
+   ],
+   "cmp_lines": [
+    18
+   ]
+  },
+  {
+   "file": "scripts/checks/pretooluse_bash_guard.sh",
+   "env": "CLAUDE_TOOL_INPUT",
+   "proxies": [
+    "CLAUDE_TOOL_INPUT",
+    "COMMAND"
+   ],
+   "read_lines": [
+    43
+   ],
+   "cmp_lines": [
+    42
+   ]
+  },
+  {
+   "file": "scripts/checks/secondpc_dispatch.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "SCRIPT_DIR",
+    "TASK_AGE",
+    "TASK_FILE"
+   ],
+   "read_lines": [
+    23
+   ],
+   "cmp_lines": [
+    29,
+    42,
+    43,
+    50
+   ]
+  },
+  {
+   "file": "scripts/checks/symlink_aware_atomic_write.sh",
+   "env": "line",
+   "proxies": [
+    "context",
+    "end",
+    "file",
+    "line",
+    "lineno",
+    "match",
+    "rest"
+   ],
+   "read_lines": [
+    31
+   ],
+   "cmp_lines": [
+    44,
+    79
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "AGENT_ID",
+   "proxies": [
+    "AGENT_ID",
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "NUDGE_FINGERPRINT_FILE",
+    "WATCHER_DISABLE_FLAG",
+    "alert_file",
+    "current_fingerprint",
+    "current_sha",
+    "msg",
+    "previous_fingerprint",
+    "read_bytes",
+    "skip_count",
+    "skip_state_file",
+    "startup_prompt"
+   ],
+   "read_lines": [
+    200,
+    231,
+    249
+   ],
+   "cmp_lines": [
+    387,
+    518,
+    1064,
+    1068,
+    1124,
+    1147,
+    1368
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "APPROVAL_ALERT_COOLDOWN",
+   "proxies": [
+    "APPROVAL_ALERT_COOLDOWN"
+   ],
+   "read_lines": [
+    899
+   ],
+   "cmp_lines": [
+    899
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ASW_DISABLE_NORMAL_NUDGE",
+   "proxies": [
+    "ASW_DISABLE_NORMAL_NUDGE"
+   ],
+   "read_lines": [
+    216,
+    261
+   ],
+   "cmp_lines": [
+    216
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ASW_FINAL_ESCALATION_ONLY",
+   "proxies": [
+    "ASW_FINAL_ESCALATION_ONLY",
+    "FINAL_ESCALATION_ONLY"
+   ],
+   "read_lines": [
+    217
+   ],
+   "cmp_lines": [
+    217
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ASW_PHASE",
+   "proxies": [
+    "ASW_DISABLE_NORMAL_NUDGE",
+    "ASW_FINAL_ESCALATION_ONLY",
+    "ASW_PHASE",
+    "FINAL_ESCALATION_ONLY"
+   ],
+   "read_lines": [
+    215
+   ],
+   "cmp_lines": [
+    216,
+    217
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "SCRIPT_DIR",
+    "_agent_status_lib",
+    "_cli_adapter",
+    "current_fingerprint",
+    "current_sha",
+    "fast_count",
+    "has_task_assigned",
+    "normal_count",
+    "read_bytes",
+    "specials"
+   ],
+   "read_lines": [
+    30
+   ],
+   "cmp_lines": [
+    387,
+    518,
+    1243,
+    1342,
+    1368,
+    1395
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE1",
+   "proxies": [
+    "ESCALATE_PHASE1"
+   ],
+   "read_lines": [
+    1459
+   ],
+   "cmp_lines": [
+    1459
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE2",
+   "proxies": [
+    "ESCALATE_PHASE2"
+   ],
+   "read_lines": [
+    1467
+   ],
+   "cmp_lines": [
+    1467
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ESTIMATED_TOKENS_TOTAL",
+   "proxies": [
+    "ESTIMATED_TOKENS_TOTAL"
+   ],
+   "read_lines": [
+    230
+   ],
+   "cmp_lines": [
+    240
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "FIRST_UNREAD_SEEN",
+   "proxies": [
+    "FIRST_UNREAD_SEEN"
+   ],
+   "read_lines": [
+    122,
+    472,
+    1367,
+    1377
+   ],
+   "cmp_lines": [
+    243,
+    244,
+    472,
+    1245,
+    1367,
+    1368,
+    1377,
+    1443,
+    1457,
+    1501
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "INOTIFY_TIMEOUT",
+   "proxies": [
+    "INOTIFY_TIMEOUT"
+   ],
+   "read_lines": [
+    1535
+   ],
+   "cmp_lines": [
+    1564
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_APPROVAL_ALERT_TS",
+   "proxies": [
+    "LAST_APPROVAL_ALERT_TS"
+   ],
+   "read_lines": [
+    898
+   ],
+   "cmp_lines": [
+    898,
+    899
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_CLEAR_TS",
+   "proxies": [
+    "LAST_CLEAR_TS"
+   ],
+   "read_lines": [
+    123,
+    917,
+    1045
+   ],
+   "cmp_lines": [
+    917,
+    1473
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_NUDGE_COUNT",
+   "proxies": [
+    "LAST_NUDGE_COUNT"
+   ],
+   "read_lines": [
+    196,
+    305
+   ],
+   "cmp_lines": [
+    305
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_NUDGE_TS",
+   "proxies": [
+    "LAST_NUDGE_TS"
+   ],
+   "read_lines": [
+    195,
+    305
+   ],
+   "cmp_lines": [
+    305,
+    306
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_TOKEN_WARN_TS",
+   "proxies": [
+    "LAST_TOKEN_WARN_TS"
+   ],
+   "read_lines": [
+    1614
+   ],
+   "cmp_lines": [
+    1614
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "MAX_TYPING_SKIP",
+   "proxies": [
+    "MAX_TYPING_SKIP",
+    "max_typing_skip"
+   ],
+   "read_lines": [
+    1067
+   ],
+   "cmp_lines": [
+    1068
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NEW_CONTEXT_SENT",
+   "proxies": [
+    "NEW_CONTEXT_SENT"
+   ],
+   "read_lines": [
+    205,
+    637
+   ],
+   "cmp_lines": [
+    637,
+    1395
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    197,
+    295
+   ],
+   "cmp_lines": [
+    307
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CLAUDE",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    301
+   ],
+   "cmp_lines": [
+    307
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CODEX",
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CODEX",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    199,
+    297
+   ],
+   "cmp_lines": [
+    307
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "READ_BYTES_TOTAL",
+   "proxies": [
+    "READ_BYTES_TOTAL"
+   ],
+   "read_lines": [
+    229
+   ],
+   "cmp_lines": [
+    239
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "READ_COUNT",
+   "proxies": [
+    "READ_COUNT"
+   ],
+   "read_lines": [
+    228
+   ],
+   "cmp_lines": [
+    238
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "SCRIPT_DIR",
+   "proxies": [
+    "INBOX",
+    "INBOX_PATH",
+    "LOCKFILE",
+    "METRICS_FILE",
+    "SCRIPT_DIR",
+    "_agent_status_lib",
+    "_cli_adapter",
+    "current_fingerprint",
+    "current_sha",
+    "fast_count",
+    "has_task_assigned",
+    "normal_count",
+    "read_bytes",
+    "specials"
+   ],
+   "read_lines": [
+    231
+   ],
+   "cmp_lines": [
+    387,
+    518,
+    1243,
+    1342,
+    1368,
+    1395
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "STARTUP_PROMPT_SENT",
+   "proxies": [
+    "STARTUP_PROMPT_SENT"
+   ],
+   "read_lines": [
+    208
+   ],
+   "cmp_lines": [
+    1435
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    152
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    156
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_i",
+   "proxies": [
+    "_i"
+   ],
+   "read_lines": [
+    387
+   ],
+   "cmp_lines": [
+    387,
+    518
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_ld",
+   "proxies": [
+    "_ld"
+   ],
+   "read_lines": [
+    387
+   ],
+   "cmp_lines": [
+    387,
+    518
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    148
+   ],
+   "cmp_lines": [
+    148
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_token_int",
+   "proxies": [
+    "_token_int"
+   ],
+   "read_lines": [
+    1622
+   ],
+   "cmp_lines": [
+    1622
+   ]
+  },
+  {
+   "file": "scripts/inbox_write.sh",
+   "env": "_AMP_PATTERN_COUNT",
+   "proxies": [
+    "_AMP_PATTERN_COUNT"
+   ],
+   "read_lines": [
+    88
+   ],
+   "cmp_lines": [
+    88
+   ]
+  },
+  {
+   "file": "scripts/inbox_write.sh",
+   "env": "http_status",
+   "proxies": [
+    "http_status"
+   ],
+   "read_lines": [
+    209
+   ],
+   "cmp_lines": [
+    205
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "ALERT_CAP_PER_HOUR",
+   "proxies": [
+    "ALERT_CAP_PER_HOUR"
+   ],
+   "read_lines": [
+    79
+   ],
+   "cmp_lines": [
+    481
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "COOLDOWN_SEC",
+   "proxies": [
+    "COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    78
+   ],
+   "cmp_lines": [
+    472
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "DISPATCH_LATENCY_THRESHOLD_SEC",
+   "proxies": [
+    "DISPATCH_LATENCY_THRESHOLD_SEC"
+   ],
+   "read_lines": [
+    73
+   ],
+   "cmp_lines": [
+    440
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "KARO_LATENCY_THRESHOLD_SEC",
+   "proxies": [
+    "KARO_LATENCY_THRESHOLD_SEC"
+   ],
+   "read_lines": [
+    72
+   ],
+   "cmp_lines": [
+    439
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "KARO_UNREAD_THRESHOLD",
+   "proxies": [
+    "KARO_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    71
+   ],
+   "cmp_lines": [
+    438
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "PARALLEL_CMD_NEW_THRESHOLD",
+   "proxies": [
+    "PARALLEL_CMD_NEW_THRESHOLD"
+   ],
+   "read_lines": [
+    74
+   ],
+   "cmp_lines": [
+    441
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "STATE_FILE",
+   "proxies": [
+    "STATE_ALERT_HISTORY",
+    "STATE_FILE",
+    "STATE_LAST_ALERT_AT",
+    "new_history",
+    "out",
+    "tmp_state"
+   ],
+   "read_lines": [
+    64
+   ],
+   "cmp_lines": [
+    470,
+    471
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "UNSTARTED_SUBPHASE_THRESHOLD",
+   "proxies": [
+    "UNSTARTED_SUBPHASE_THRESHOLD"
+   ],
+   "read_lines": [
+    75
+   ],
+   "cmp_lines": [
+    442
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m1",
+   "proxies": [
+    "content",
+    "dump_path",
+    "m1"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    438
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m2",
+   "proxies": [
+    "content",
+    "dump_path",
+    "m2"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    439
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m3",
+   "proxies": [
+    "content",
+    "dump_path",
+    "m3"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    440
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m4",
+   "proxies": [
+    "content",
+    "dump_path",
+    "m4"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    441
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m5",
+   "proxies": [
+    "content",
+    "dump_path",
+    "m5"
+   ],
+   "read_lines": [
+    427
+   ],
+   "cmp_lines": [
+    442
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "ts",
+   "proxies": [
+    "filtered",
+    "hist_json",
+    "ts"
+   ],
+   "read_lines": [
+    179
+   ],
+   "cmp_lines": [
+    180,
+    452
+   ]
+  },
+  {
+   "file": "scripts/ntfy_listener.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "CORRUPT_DIR",
+    "INBOX",
+    "LOCKFILE",
+    "NTFY_CORRUPT_DIR",
+    "NTFY_INBOX_PATH",
+    "SCRIPT_DIR",
+    "SETTINGS",
+    "TOPIC",
+    "_ld"
+   ],
+   "read_lines": [
+    9
+   ],
+   "cmp_lines": [
+    58
+   ]
+  },
+  {
+   "file": "scripts/ntfy_listener.sh",
+   "env": "_i",
+   "proxies": [
+    "_i"
+   ],
+   "read_lines": [
+    58
+   ],
+   "cmp_lines": [
+    58
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "AGENT_PANE",
+   "proxies": [
+    "AGENT_PANE",
+    "CODEX_ACCT_5H_LEFT",
+    "CODEX_ACCT_5H_RESET",
+    "CODEX_ACCT_7D_LEFT",
+    "CODEX_ACCT_7D_RESET",
+    "CODEX_MODEL_5H_LEFT",
+    "CODEX_MODEL_5H_RESET",
+    "CODEX_MODEL_7D_LEFT",
+    "CODEX_MODEL_7D_RESET",
+    "CODEX_MODEL_LABEL",
+    "CODEX_WARNINGS",
+    "_5h_lines",
+    "_line",
+    "_status_block",
+    "_status_out",
+    "_wk_lines",
+    "ctx",
+    "pane"
+   ],
+   "read_lines": [
+    333
+   ],
+   "cmp_lines": [
+    397,
+    400,
+    528,
+    530
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "CLAUDE_5H_RESET",
+    "CLAUDE_5H_UTIL",
+    "CLAUDE_7D_OPUS_UTIL",
+    "CLAUDE_7D_RESET",
+    "CLAUDE_7D_SONNET_UTIL",
+    "CLAUDE_7D_UTIL",
+    "CLAUDE_DATA_DATE",
+    "CLAUDE_EXTRA_ENABLED",
+    "CLAUDE_MESSAGES",
+    "CLAUDE_SESSIONS",
+    "CLAUDE_STATUS",
+    "CLAUDE_TODAY_TOTAL",
+    "PYTHON",
+    "SCRIPT_DIR",
+    "claude_data",
+    "fh_int",
+    "oauth_data",
+    "sd_int"
+   ],
+   "read_lines": [
+    10
+   ],
+   "cmp_lines": [
+    191,
+    244,
+    462,
+    470,
+    490
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "CODEX_CONTEXT",
+   "proxies": [
+    "CODEX_CONTEXT",
+    "ctx"
+   ],
+   "read_lines": [
+    523
+   ],
+   "cmp_lines": [
+    397,
+    400,
+    528,
+    530
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "CODEX_LIMIT_HITS",
+   "proxies": [
+    "CODEX_LIMIT_HITS",
+    "CODEX_WARNINGS"
+   ],
+   "read_lines": [
+    417
+   ],
+   "cmp_lines": [
+    422
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "HOME",
+   "proxies": [
+    "CLAUDE_CREDS",
+    "CLAUDE_STATS",
+    "CODEX_LIMIT_HITS",
+    "CODEX_LOG",
+    "CODEX_WARNINGS",
+    "HOME"
+   ],
+   "read_lines": [
+    35
+   ],
+   "cmp_lines": [
+    191,
+    244,
+    412,
+    422
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "agent",
+   "proxies": [
+    "CODEX_ACCT_5H_LEFT",
+    "CODEX_ACCT_5H_RESET",
+    "CODEX_ACCT_7D_LEFT",
+    "CODEX_ACCT_7D_RESET",
+    "CODEX_MODEL_5H_LEFT",
+    "CODEX_MODEL_5H_RESET",
+    "CODEX_MODEL_7D_LEFT",
+    "CODEX_MODEL_7D_RESET",
+    "CODEX_MODEL_LABEL",
+    "CODEX_WARNINGS",
+    "_5h_lines",
+    "_line",
+    "_status_block",
+    "_status_out",
+    "_wk_lines",
+    "agent",
+    "agent_list",
+    "cli",
+    "ctx",
+    "model",
+    "num",
+    "pane"
+   ],
+   "read_lines": [
+    68
+   ],
+   "cmp_lines": [
+    397,
+    400,
+    528,
+    530
+   ]
+  },
+  {
+   "file": "scripts/redundancy/shogun_report_watcher.sh",
+   "env": "SHOGUN_REPORT_WATCHER_COOLDOWN",
+   "proxies": [
+    "COOLDOWN_SEC",
+    "SHOGUN_REPORT_WATCHER_COOLDOWN"
+   ],
+   "read_lines": [
+    29
+   ],
+   "cmp_lines": [
+    281
+   ]
+  },
+  {
+   "file": "scripts/redundancy/shogun_report_watcher.sh",
+   "env": "last_ts",
+   "proxies": [
+    "last_ts"
+   ],
+   "read_lines": [
+    279
+   ],
+   "cmp_lines": [
+    279,
+    280
+   ]
+  },
+  {
+   "file": "scripts/slim_yaml.sh",
+   "env": "_i",
+   "proxies": [
+    "_i"
+   ],
+   "read_lines": [
+    28
+   ],
+   "cmp_lines": [
+    27,
+    28
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "BASH_SOURCE",
+   "proxies": [
+    "BASH_SOURCE",
+    "INBOX",
+    "SCRIPT_DIR",
+    "UNREAD_COUNT",
+    "WATCH_TARGETS",
+    "WATCH_TARGETS_ACTIVE",
+    "__STOP_HOOK_INBOX",
+    "__STOP_HOOK_UNREAD_COUNT"
+   ],
+   "read_lines": [
+    39
+   ],
+   "cmp_lines": [
+    125,
+    194,
+    202,
+    221
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "proxies": [
+    "MASS_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    177
+   ],
+   "cmp_lines": [
+    194
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "SECONDS",
+   "proxies": [
+    "SECONDS",
+    "__stdin_t0"
+   ],
+   "read_lines": [
+    59
+   ],
+   "cmp_lines": [
+    64
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "STOP_HOOK_STDIN_TIMEOUT",
+   "proxies": [
+    "STOP_HOOK_STDIN_TIMEOUT"
+   ],
+   "read_lines": [
+    52
+   ],
+   "cmp_lines": [
+    70
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "TMUX_PANE",
+   "proxies": [
+    "AGENT_ID",
+    "FLAG",
+    "INBOX",
+    "NOTIFY_CONTENT",
+    "TMUX_PANE",
+    "UNREAD_COUNT",
+    "WATCH_TARGETS",
+    "WATCH_TARGETS_ACTIVE",
+    "__STOP_HOOK_INBOX",
+    "__STOP_HOOK_UNREAD_COUNT"
+   ],
+   "read_lines": [
+    78
+   ],
+   "cmp_lines": [
+    125,
+    194,
+    202,
+    221
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "UNREAD_COUNT",
+   "proxies": [
+    "UNREAD_COUNT",
+    "__STOP_HOOK_UNREAD_COUNT"
+   ],
+   "read_lines": [
+    125,
+    189,
+    191,
+    194,
+    202,
+    221
+   ],
+   "cmp_lines": [
+    125,
+    194,
+    202,
+    221
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "__STOP_HOOK_AGENT_ID",
+   "proxies": [
+    "AGENT_ID",
+    "FLAG",
+    "INBOX",
+    "NOTIFY_CONTENT",
+    "UNREAD_COUNT",
+    "WATCH_TARGETS",
+    "WATCH_TARGETS_ACTIVE",
+    "__STOP_HOOK_AGENT_ID",
+    "__STOP_HOOK_INBOX",
+    "__STOP_HOOK_UNREAD_COUNT"
+   ],
+   "read_lines": [
+    76
+   ],
+   "cmp_lines": [
+    125,
+    194,
+    202,
+    221
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "__STOP_HOOK_SCRIPT_DIR",
+   "proxies": [
+    "INBOX",
+    "SCRIPT_DIR",
+    "UNREAD_COUNT",
+    "WATCH_TARGETS",
+    "WATCH_TARGETS_ACTIVE",
+    "__STOP_HOOK_INBOX",
+    "__STOP_HOOK_SCRIPT_DIR",
+    "__STOP_HOOK_UNREAD_COUNT"
+   ],
+   "read_lines": [
+    39
+   ],
+   "cmp_lines": [
+    125,
+    194,
+    202,
+    221
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_COUNT",
+   "proxies": [
+    "ER_FIRE_CAP_COUNT",
+    "ER_FIRE_CAP_COUNT_PY",
+    "FIRE_CAP_COUNT"
+   ],
+   "read_lines": [
+    121
+   ],
+   "cmp_lines": [
+    135
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_WINDOW_MIN",
+   "proxies": [
+    "ER_FIRE_CAP_WINDOW_MIN",
+    "ER_FIRE_CAP_WINDOW_MIN_PY",
+    "FIRE_CAP_WINDOW_MIN"
+   ],
+   "read_lines": [
+    122
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_FROM_PC_FILTER",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ELAPSED_INT",
+    "ELAPSED_MIN",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_ELAPSED_MIN_PY",
+    "ER_FROM_PC_FILTER",
+    "FROM_PC_FILTER",
+    "LAST_AT",
+    "LAST_INFO",
+    "LAST_TOPIC"
+   ],
+   "read_lines": [
+    54
+   ],
+   "cmp_lines": [
+    261
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_LOG_DIR",
+   "proxies": [
+    "ER_LOG_DIR",
+    "ER_RECENT_FIRES_PY",
+    "FIRE_HISTORY",
+    "LOG",
+    "LOG_DIR",
+    "RECENT_FIRES"
+   ],
+   "read_lines": [
+    55
+   ],
+   "cmp_lines": [
+    135
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_THRESHOLD_MIN",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_THRESHOLD_MIN",
+    "ER_THRESHOLD_MIN_PY",
+    "THRESHOLD_MIN"
+   ],
+   "read_lines": [
+    120
+   ],
+   "cmp_lines": [
+    261
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "FIRE_CAP_COUNT",
+   "proxies": [
+    "ER_FIRE_CAP_COUNT_PY",
+    "FIRE_CAP_COUNT"
+   ],
+   "read_lines": [
+    134
+   ],
+   "cmp_lines": [
+    135
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "FIRE_CAP_WINDOW_MIN",
+   "proxies": [
+    "ER_FIRE_CAP_WINDOW_MIN_PY",
+    "FIRE_CAP_WINDOW_MIN"
+   ],
+   "read_lines": [
+    134
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "THRESHOLD_MIN",
+   "proxies": [
+    "DETAIL_EXTRA",
+    "ER_DETAIL_EXTRA_PY",
+    "ER_THRESHOLD_MIN_PY",
+    "THRESHOLD_MIN"
+   ],
+   "read_lines": [
+    261
+   ],
+   "cmp_lines": [
+    261
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "_ft_o",
+   "proxies": [
+    "_ft_o"
+   ],
+   "read_lines": [
+    103
+   ],
+   "cmp_lines": [
+    107
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "_ft_v",
+   "proxies": [
+    "_ft_v",
+    "_ft_vp"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    107
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "_th_unset_told",
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    99
+   ],
+   "cmp_lines": [
+    99
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_activity_monitor.sh",
+   "env": "AUDIT_CHECK_INTERVAL",
+   "proxies": [
+    "AUDIT_CHECK_INTERVAL"
+   ],
+   "read_lines": [
+    166
+   ],
+   "cmp_lines": [
+    200
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_activity_monitor.sh",
+   "env": "IDLE_THRESHOLD",
+   "proxies": [
+    "IDLE_THRESHOLD"
+   ],
+   "read_lines": [
+    29
+   ],
+   "cmp_lines": [
+    112
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_activity_monitor.sh",
+   "env": "sp_entry",
+   "proxies": [
+    "entries",
+    "idle_sec",
+    "result",
+    "sp_agent",
+    "sp_entry",
+    "sp_pane"
+   ],
+   "read_lines": [
+    363
+   ],
+   "cmp_lines": [
+    368
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_reports_sync.sh",
+   "env": "f_path",
+   "proxies": [
+    "f_path",
+    "fsize"
+   ],
+   "read_lines": [
+    99
+   ],
+   "cmp_lines": [
+    102
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_watchdog.sh",
+   "env": "RESTART_FAIL_COUNT",
+   "proxies": [
+    "RESTART_FAIL_COUNT",
+    "processes"
+   ],
+   "read_lines": [
+    324
+   ],
+   "cmp_lines": [
+    490,
+    491,
+    512,
+    513,
+    592,
+    593
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_watchdog.sh",
+   "env": "entry",
+   "proxies": [
+    "LAST_ACTION",
+    "agent",
+    "breach_n",
+    "cap_flag",
+    "entry",
+    "hourly",
+    "logfile",
+    "pane",
+    "processes",
+    "prolonged_flag"
+   ],
+   "read_lines": [
+    371
+   ],
+   "cmp_lines": [
+    560,
+    561,
+    575,
+    592,
+    593
+   ]
+  },
+  {
+   "file": "shutsujin_departure.sh",
+   "env": "_split_i",
+   "proxies": [
+    "_split_i"
+   ],
+   "read_lines": [
+    634
+   ],
+   "cmp_lines": [
+    632
+   ]
+  },
+  {
+   "file": "shutsujin_departure.sh",
+   "env": "i",
+   "proxies": [
+    "PROMPT_STR",
+    "_agent",
+    "_ashi_cli_type",
+    "_ashi_cmd",
+    "_gunshi_cmd",
+    "_startup_prompt",
+    "i",
+    "pid"
+   ],
+   "read_lines": [
+    396
+   ],
+   "cmp_lines": [
+    799,
+    824,
+    996
+   ]
+  },
+  {
+   "file": "tests/e2e/helpers/assertions.bash",
+   "env": "expected",
+   "proxies": [
+    "expected"
+   ],
+   "read_lines": [
+    27
+   ],
+   "cmp_lines": [
+    63
+   ]
+  },
+  {
+   "file": "tests/e2e/helpers/assertions.bash",
+   "env": "timeout",
+   "proxies": [
+    "timeout"
+   ],
+   "read_lines": [
+    40
+   ],
+   "cmp_lines": [
+    40,
+    76,
+    91
+   ]
+  },
+  {
+   "file": "tests/e2e/helpers/setup.bash",
+   "env": "i",
+   "proxies": [
+    "agent_id",
+    "i",
+    "log_file"
+   ],
+   "read_lines": [
+    78
+   ],
+   "cmp_lines": [
+    70,
+    77,
+    83
+   ]
+  },
+  {
+   "file": "tests/e2e/helpers/tmux_helpers.bash",
+   "env": "timeout",
+   "proxies": [
+    "timeout"
+   ],
+   "read_lines": [
+    53
+   ],
+   "cmp_lines": [
+    53
+   ]
+  },
+  {
+   "file": "tests/e2e/mock_cli.sh",
+   "env": "MOCK_AGENT_ID",
+   "proxies": [
+    "INBOX_FILE",
+    "MOCK_AGENT_ID",
+    "TASK_FILE",
+    "sp_status",
+    "startup_status",
+    "status",
+    "unread_count"
+   ],
+   "read_lines": [
+    29
+   ],
+   "cmp_lines": [
+    127
+   ]
+  },
+  {
+   "file": "tests/e2e/mock_cli.sh",
+   "env": "MOCK_PROCESSING_DELAY",
+   "proxies": [
+    "MOCK_PROCESSING_DELAY"
+   ],
+   "read_lines": [
+    28
+   ],
+   "cmp_lines": [
+    84
+   ]
+  },
+  {
+   "file": "tests/e2e/mock_cli.sh",
+   "env": "MOCK_PROJECT_ROOT",
+   "proxies": [
+    "INBOX_FILE",
+    "MOCK_PROJECT_ROOT",
+    "REPORT_DIR",
+    "SCRIPT_DIR",
+    "TASK_FILE",
+    "cmd_description",
+    "cmd_file",
+    "cmd_id",
+    "inbox_write_script",
+    "sp_status",
+    "startup_status",
+    "status",
+    "subtask_file",
+    "subtask_id",
+    "unread_count"
+   ],
+   "read_lines": [
+    30
+   ],
+   "cmp_lines": [
+    127
+   ]
+  },
+  {
+   "file": "tests/e2e/mock_cli.sh",
+   "env": "hold_time",
+   "proxies": [
+    "hold_time"
+   ],
+   "read_lines": [
+    303
+   ],
+   "cmp_lines": [
+    306
+   ]
+  },
+  {
+   "file": "tests/test_shogun_report_watcher.sh",
+   "env": "fail_calls",
+   "proxies": [
+    "fail_calls"
+   ],
+   "read_lines": [
+    422
+   ],
+   "cmp_lines": [
+    422
+   ]
+  },
+  {
+   "file": "tests/test_shogun_report_watcher.sh",
+   "env": "n",
+   "proxies": [
+    "n"
+   ],
+   "read_lines": [
+    128
+   ],
+   "cmp_lines": [
+    167
+   ]
+  }
+ ]
+}

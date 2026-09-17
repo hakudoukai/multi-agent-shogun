@@ -1,0 +1,13 @@
+★條④(EOF改行丁度1)で鳴つた 6本の 正す前後★
+因 = 生の > 捕獲が ki/10_kaki.py を通つて居らなんだ(memory「Raw > capture bypasses normalization」の実例)。
+正し方 = 中身は一字も書き換へず ki/10_kaki.py へ通しただけ(行末空白の除去と EOF改行1本)。
+―― ★倒れた走 nama/20_bosuu.first.raw も消して居らぬ★(作法⑺)。
+―― 疵N: 第一走は zsh が $BAD を語分割せぬ故 一本も当たらなんだ(無傷を確認して配列で引き直した)。
+
+file                       前sha16             後sha16                前bytes    後bytes
+nama/20_bosuu.first.raw    c31f131bef6ffe89   575a553a3f286bbb      150275    150276
+nama/21_bosuu2.raw         9f34865cce9a2017   5a6175ab6544a854       19709     19710
+nama/22_bosuu3.raw         6ece2ebc897f54fe   8bf10f44454f9264       21138     21139
+nama/23_bosuu4.raw         b3ac55782303da78   bcae1958df8f83c3       22193     22194
+nama/31_kessai2.json       bedbb56d098f1d85   f81553855712af66        8905      8906
+nama/32_kessai3.json       4b00382a17a1c343   b06471632ff78612       10191     10192

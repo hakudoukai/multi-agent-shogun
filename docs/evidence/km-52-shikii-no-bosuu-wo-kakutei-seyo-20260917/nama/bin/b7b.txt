@@ -1,0 +1,1 @@
+納め6/11。㋑下甲(素で比べる側の名指し)。karo_overload_monitor.sh:438 KARO_UNREAD_THRESHOLD←2^63超で★rc=2、警報を出さぬ側へ黙つて落ちる★。:472 COOLDOWN_SEC←空文字でrc=2。:481 ALERT_CAP_PER_HOUR←全角数字でrc=2。inbox_watcher.sh:243 FIRST_UNREAD_SEEN←未設定でrc=2。agent_health_check.sh:378 max_tokens←2^63超でrc=2。

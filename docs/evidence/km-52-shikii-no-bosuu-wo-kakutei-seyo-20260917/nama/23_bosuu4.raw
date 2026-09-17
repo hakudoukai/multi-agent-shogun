@@ -1,0 +1,1554 @@
+{
+ "root": "/Users/momizimac/multi-agent-shogun",
+ "walk_root": "git ls-files ∧ ¬docs/evidence/",
+ "files_tracked": 1979,
+ "files_shell": 198,
+ "files_walked": 114,
+ "files_excluded_shell": 84,
+ "files_excluded_all": 1419,
+ "kasho": 91,
+ "gyou": 134,
+ "files_with_hits": 28,
+ "dropped_proxy_names": 11,
+ "excluded_kasho": 163,
+ "excluded_files_with_hits": 67,
+ "rows": [
+  {
+   "file": "first_setup.sh",
+   "env": "BASH_VERSINFO",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "BASH_VERSINFO"
+   ],
+   "read_lines": [
+    359
+   ],
+   "cmp_lines": [
+    359
+   ]
+  },
+  {
+   "file": "lib/cli_adapter.sh",
+   "env": "cg",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "cg"
+   ],
+   "read_lines": [
+    575
+   ],
+   "cmp_lines": [
+    575
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/15_hi_suu_no_shikii.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "MASS_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    15
+   ],
+   "cmp_lines": [
+    11,
+    16
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/15_hi_suu_no_shikii.sh",
+   "env": "UNREAD_COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "UNREAD_COUNT"
+   ],
+   "read_lines": [
+    11,
+    16
+   ],
+   "cmp_lines": [
+    11,
+    16
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/16_hi_suu_no_shikii_v2.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "MASS_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    8
+   ],
+   "cmp_lines": [
+    9,
+    12
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/16_hi_suu_no_shikii_v2.sh",
+   "env": "UNREAD_COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "UNREAD_COUNT"
+   ],
+   "read_lines": [
+    9,
+    12
+   ],
+   "cmp_lines": [
+    9,
+    12
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/17_hi_suu_no_shikii_v3.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "MASS_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    9
+   ],
+   "cmp_lines": [
+    10
+   ]
+  },
+  {
+   "file": "queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/17_hi_suu_no_shikii_v3.sh",
+   "env": "UNREAD_COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "UNREAD_COUNT"
+   ],
+   "read_lines": [
+    10
+   ],
+   "cmp_lines": [
+    10
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "HEALTH_CHECK_COOLDOWN_SEC",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "ALERT_COOLDOWN_SEC",
+    "HEALTH_CHECK_COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    129
+   ],
+   "cmp_lines": [
+    144
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_CRIT",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_CRIT",
+    "TOKEN_CRIT_THRESHOLD"
+   ],
+   "read_lines": [
+    355
+   ],
+   "cmp_lines": [
+    378
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "HEALTH_CHECK_TOKEN_WARN",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "HEALTH_CHECK_TOKEN_WARN",
+    "TOKEN_WARN_THRESHOLD"
+   ],
+   "read_lines": [
+    354
+   ],
+   "cmp_lines": [
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "INSERT_COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "INSERT_COUNT"
+   ],
+   "read_lines": [
+    230,
+    231
+   ],
+   "cmp_lines": [
+    231
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "_ft_v",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    117
+   ],
+   "cmp_lines": [
+    117
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "_th_unset_told",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    109
+   ],
+   "cmp_lines": [
+    109
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "last",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "last"
+   ],
+   "read_lines": [
+    142
+   ],
+   "cmp_lines": [
+    143
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "max_tokens",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "max_tokens"
+   ],
+   "read_lines": [
+    377
+   ],
+   "cmp_lines": [
+    378,
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "env": "n",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "n"
+   ],
+   "read_lines": [
+    253,
+    270
+   ],
+   "cmp_lines": [
+    253,
+    270
+   ]
+  },
+  {
+   "file": "scripts/agent_periodic_push.sh",
+   "env": "sp_age",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "sp_age"
+   ],
+   "read_lines": [
+    64
+   ],
+   "cmp_lines": [
+    65
+   ]
+  },
+  {
+   "file": "scripts/agent_status.sh",
+   "env": "width",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "width"
+   ],
+   "read_lines": [
+    82
+   ],
+   "cmp_lines": [
+    82
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh",
+   "env": "non_empty_lines",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "non_empty_lines"
+   ],
+   "read_lines": [
+    64
+   ],
+   "cmp_lines": [
+    64
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/supervisor.sh",
+   "env": "RESTART_COUNT",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "RESTART_COUNT"
+   ],
+   "read_lines": [
+    185
+   ],
+   "cmp_lines": [
+    185,
+    204,
+    209
+   ]
+  },
+  {
+   "file": "scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh",
+   "env": "RESTART_COUNT",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "RESTART_COUNT"
+   ],
+   "read_lines": [
+    145
+   ],
+   "cmp_lines": [
+    145,
+    160,
+    164
+   ]
+  },
+  {
+   "file": "scripts/audit_meta_codex.sh",
+   "env": "COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "COUNT"
+   ],
+   "read_lines": [
+    108
+   ],
+   "cmp_lines": [
+    108
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "CONTEXT_DANGER_BYTES",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "CONTEXT_DANGER_BYTES",
+    "DANGER_BYTES"
+   ],
+   "read_lines": [
+    77
+   ],
+   "cmp_lines": [
+    94,
+    95
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "CONTEXT_WARN_BYTES",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "CONTEXT_WARN_BYTES",
+    "WARN_BYTES"
+   ],
+   "read_lines": [
+    76
+   ],
+   "cmp_lines": [
+    96,
+    97
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "env": "_ft_v",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    63
+   ],
+   "cmp_lines": [
+    63
+   ]
+  },
+  {
+   "file": "scripts/checks/ephemeral_worktree_hygiene.sh",
+   "env": "FREE_GI",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "FREE_GI"
+   ],
+   "read_lines": [
+    26,
+    29
+   ],
+   "cmp_lines": [
+    29
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "env": "DASUMAE_MAX_BYTES",
+   "via": [
+    "default",
+    "fixth"
+   ],
+   "proxies": [
+    "DASUMAE_MAX_BYTES",
+    "MAXB"
+   ],
+   "read_lines": [
+    20,
+    81
+   ],
+   "cmp_lines": [
+    243
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_FILE_MB",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "GATE4_MAX_FILE_MB",
+    "MAXF"
+   ],
+   "read_lines": [
+    96
+   ],
+   "cmp_lines": [
+    104
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "env": "GATE4_MAX_TOTAL_MB",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "GATE4_MAX_TOTAL_MB",
+    "MAXT"
+   ],
+   "read_lines": [
+    97
+   ],
+   "cmp_lines": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "APPROVAL_ALERT_COOLDOWN",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "APPROVAL_ALERT_COOLDOWN"
+   ],
+   "read_lines": [
+    899
+   ],
+   "cmp_lines": [
+    899
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ASW_PHASE",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "ASW_PHASE"
+   ],
+   "read_lines": [
+    215
+   ],
+   "cmp_lines": [
+    216,
+    217
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ESCALATE_COOLDOWN",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "ESCALATE_COOLDOWN"
+   ],
+   "read_lines": [
+    1473
+   ],
+   "cmp_lines": [
+    1473
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE1",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "ESCALATE_PHASE1"
+   ],
+   "read_lines": [
+    1459
+   ],
+   "cmp_lines": [
+    1459
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "ESCALATE_PHASE2",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "ESCALATE_PHASE2"
+   ],
+   "read_lines": [
+    1467
+   ],
+   "cmp_lines": [
+    1467
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "FIRST_UNREAD_SEEN",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "FIRST_UNREAD_SEEN"
+   ],
+   "read_lines": [
+    122,
+    472,
+    1367,
+    1377
+   ],
+   "cmp_lines": [
+    243,
+    244,
+    472,
+    1245,
+    1367,
+    1368,
+    1377,
+    1443,
+    1457,
+    1501
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "INOTIFY_TIMEOUT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "INOTIFY_TIMEOUT"
+   ],
+   "read_lines": [
+    1535
+   ],
+   "cmp_lines": [
+    1564
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_APPROVAL_ALERT_TS",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "LAST_APPROVAL_ALERT_TS"
+   ],
+   "read_lines": [
+    898
+   ],
+   "cmp_lines": [
+    898,
+    899
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_CLEAR_TS",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "LAST_CLEAR_TS"
+   ],
+   "read_lines": [
+    123,
+    917,
+    1045
+   ],
+   "cmp_lines": [
+    917,
+    1473
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_NUDGE_TS",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "LAST_NUDGE_TS"
+   ],
+   "read_lines": [
+    195,
+    305
+   ],
+   "cmp_lines": [
+    305,
+    306
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "LAST_TOKEN_WARN_TS",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "LAST_TOKEN_WARN_TS"
+   ],
+   "read_lines": [
+    1614
+   ],
+   "cmp_lines": [
+    1614
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "MAX_TYPING_SKIP",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "MAX_TYPING_SKIP",
+    "max_typing_skip"
+   ],
+   "read_lines": [
+    1067
+   ],
+   "cmp_lines": [
+    1068
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NEW_CONTEXT_SENT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "NEW_CONTEXT_SENT"
+   ],
+   "read_lines": [
+    205,
+    637
+   ],
+   "cmp_lines": [
+    637,
+    1395
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    197,
+    295
+   ],
+   "cmp_lines": [
+    307
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CLAUDE",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    301
+   ],
+   "cmp_lines": [
+    307
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "NUDGE_COOLDOWN_SEC_CODEX",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "NUDGE_COOLDOWN_SEC_CODEX",
+    "cooldown_sec"
+   ],
+   "read_lines": [
+    199,
+    297
+   ],
+   "cmp_lines": [
+    307
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "READ_BYTES_TOTAL",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "READ_BYTES_TOTAL"
+   ],
+   "read_lines": [
+    229
+   ],
+   "cmp_lines": [
+    239
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "READ_COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "READ_COUNT"
+   ],
+   "read_lines": [
+    228
+   ],
+   "cmp_lines": [
+    238
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "STARTUP_PROMPT_SENT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "STARTUP_PROMPT_SENT"
+   ],
+   "read_lines": [
+    208
+   ],
+   "cmp_lines": [
+    1435
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_ft_v",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    156
+   ],
+   "cmp_lines": [
+    156
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_th_unset_told",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    148
+   ],
+   "cmp_lines": [
+    148
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "env": "_token_int",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "_token_int"
+   ],
+   "read_lines": [
+    1622
+   ],
+   "cmp_lines": [
+    1622
+   ]
+  },
+  {
+   "file": "scripts/inbox_write.sh",
+   "env": "_AMP_PATTERN_COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "_AMP_PATTERN_COUNT"
+   ],
+   "read_lines": [
+    88
+   ],
+   "cmp_lines": [
+    88
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "ALERT_CAP_PER_HOUR",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "ALERT_CAP_PER_HOUR"
+   ],
+   "read_lines": [
+    79
+   ],
+   "cmp_lines": [
+    481
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "COOLDOWN_SEC",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "COOLDOWN_SEC"
+   ],
+   "read_lines": [
+    78
+   ],
+   "cmp_lines": [
+    472
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "DISPATCH_LATENCY_THRESHOLD_SEC",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "DISPATCH_LATENCY_THRESHOLD_SEC"
+   ],
+   "read_lines": [
+    73
+   ],
+   "cmp_lines": [
+    440
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "KARO_LATENCY_THRESHOLD_SEC",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "KARO_LATENCY_THRESHOLD_SEC"
+   ],
+   "read_lines": [
+    72
+   ],
+   "cmp_lines": [
+    439
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "KARO_UNREAD_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "KARO_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    71
+   ],
+   "cmp_lines": [
+    438
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "PARALLEL_CMD_NEW_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "PARALLEL_CMD_NEW_THRESHOLD"
+   ],
+   "read_lines": [
+    74
+   ],
+   "cmp_lines": [
+    441
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "UNSTARTED_SUBPHASE_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "UNSTARTED_SUBPHASE_THRESHOLD"
+   ],
+   "read_lines": [
+    75
+   ],
+   "cmp_lines": [
+    442
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m1",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "m1"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    438
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m2",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "m2"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    439
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m3",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "m3"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    440
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m4",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "m4"
+   ],
+   "read_lines": [
+    424
+   ],
+   "cmp_lines": [
+    441
+   ]
+  },
+  {
+   "file": "scripts/karo_overload_monitor.sh",
+   "env": "m5",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "m5"
+   ],
+   "read_lines": [
+    427
+   ],
+   "cmp_lines": [
+    442
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "CODEX_AGENTS",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "CODEX_AGENTS"
+   ],
+   "read_lines": [
+    332
+   ],
+   "cmp_lines": [
+    329,
+    412,
+    507,
+    536
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "CODEX_LIMIT_HITS",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "CODEX_LIMIT_HITS"
+   ],
+   "read_lines": [
+    417
+   ],
+   "cmp_lines": [
+    422
+   ]
+  },
+  {
+   "file": "scripts/ratelimit_check.sh",
+   "env": "OTHER_AGENTS",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "OTHER_AGENTS"
+   ],
+   "read_lines": [
+    575
+   ],
+   "cmp_lines": [
+    573
+   ]
+  },
+  {
+   "file": "scripts/redundancy/shogun_report_watcher.sh",
+   "env": "SHOGUN_REPORT_WATCHER_COOLDOWN",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "COOLDOWN_SEC",
+    "SHOGUN_REPORT_WATCHER_COOLDOWN"
+   ],
+   "read_lines": [
+    78
+   ],
+   "cmp_lines": [
+    328
+   ]
+  },
+  {
+   "file": "scripts/redundancy/shogun_report_watcher.sh",
+   "env": "_ft_v",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    61
+   ],
+   "cmp_lines": [
+    61
+   ]
+  },
+  {
+   "file": "scripts/redundancy/shogun_report_watcher.sh",
+   "env": "_th_unset_told",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    53
+   ],
+   "cmp_lines": [
+    53
+   ]
+  },
+  {
+   "file": "scripts/redundancy/shogun_report_watcher.sh",
+   "env": "last_ts",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "last_ts"
+   ],
+   "read_lines": [
+    326
+   ],
+   "cmp_lines": [
+    326,
+    327
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "MASS_UNREAD_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "MASS_UNREAD_THRESHOLD"
+   ],
+   "read_lines": [
+    177
+   ],
+   "cmp_lines": [
+    194
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "SECONDS",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "SECONDS",
+    "__stdin_t0"
+   ],
+   "read_lines": [
+    59
+   ],
+   "cmp_lines": [
+    64
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "STOP_HOOK_STDIN_TIMEOUT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "STOP_HOOK_STDIN_TIMEOUT"
+   ],
+   "read_lines": [
+    52
+   ],
+   "cmp_lines": [
+    70
+   ]
+  },
+  {
+   "file": "scripts/stop_hook_inbox.sh",
+   "env": "UNREAD_COUNT",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "UNREAD_COUNT"
+   ],
+   "read_lines": [
+    125,
+    189,
+    191,
+    194,
+    202,
+    221
+   ],
+   "cmp_lines": [
+    125,
+    194,
+    202,
+    221
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_COUNT",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "ER_FIRE_CAP_COUNT",
+    "FIRE_CAP_COUNT"
+   ],
+   "read_lines": [
+    121
+   ],
+   "cmp_lines": [
+    135
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_FIRE_CAP_WINDOW_MIN",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "ER_FIRE_CAP_WINDOW_MIN",
+    "FIRE_CAP_WINDOW_MIN"
+   ],
+   "read_lines": [
+    122
+   ],
+   "cmp_lines": [
+    129
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "ER_THRESHOLD_MIN",
+   "via": [
+    "fixth"
+   ],
+   "proxies": [
+    "ER_THRESHOLD_MIN",
+    "THRESHOLD_MIN"
+   ],
+   "read_lines": [
+    120
+   ],
+   "cmp_lines": [
+    261
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "_ft_v",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "_ft_v"
+   ],
+   "read_lines": [
+    107
+   ],
+   "cmp_lines": [
+    107
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "env": "_th_unset_told",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "_th_unset_told"
+   ],
+   "read_lines": [
+    99
+   ],
+   "cmp_lines": [
+    99
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_activity_monitor.sh",
+   "env": "AUDIT_CHECK_INTERVAL",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "AUDIT_CHECK_INTERVAL"
+   ],
+   "read_lines": [
+    166
+   ],
+   "cmp_lines": [
+    200
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_activity_monitor.sh",
+   "env": "IDLE_THRESHOLD",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "IDLE_THRESHOLD"
+   ],
+   "read_lines": [
+    29
+   ],
+   "cmp_lines": [
+    112
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_watchdog.sh",
+   "env": "RESTART_FAIL_COUNT",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "RESTART_FAIL_COUNT"
+   ],
+   "read_lines": [
+    324
+   ],
+   "cmp_lines": [
+    490,
+    491,
+    512,
+    513,
+    592,
+    593
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_watchdog.sh",
+   "env": "fukuincho",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "fukuincho"
+   ],
+   "read_lines": [
+    512
+   ],
+   "cmp_lines": [
+    512,
+    513
+   ]
+  },
+  {
+   "file": "shim/hakudokai/hakudokai_watchdog.sh",
+   "env": "fukuincho_reverse",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "fukuincho_reverse"
+   ],
+   "read_lines": [
+    490
+   ],
+   "cmp_lines": [
+    490,
+    491
+   ]
+  },
+  {
+   "file": "tests/e2e/helpers/assertions.bash",
+   "env": "expected",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "expected"
+   ],
+   "read_lines": [
+    27
+   ],
+   "cmp_lines": [
+    63
+   ]
+  },
+  {
+   "file": "tests/e2e/helpers/assertions.bash",
+   "env": "timeout",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "timeout"
+   ],
+   "read_lines": [
+    40
+   ],
+   "cmp_lines": [
+    40,
+    76,
+    91
+   ]
+  },
+  {
+   "file": "tests/e2e/helpers/tmux_helpers.bash",
+   "env": "timeout",
+   "via": [
+    "bare"
+   ],
+   "proxies": [
+    "timeout"
+   ],
+   "read_lines": [
+    53
+   ],
+   "cmp_lines": [
+    53
+   ]
+  },
+  {
+   "file": "tests/e2e/mock_cli.sh",
+   "env": "MOCK_PROCESSING_DELAY",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "MOCK_PROCESSING_DELAY"
+   ],
+   "read_lines": [
+    28
+   ],
+   "cmp_lines": [
+    84
+   ]
+  },
+  {
+   "file": "tests/e2e/mock_cli.sh",
+   "env": "hold_time",
+   "via": [
+    "default"
+   ],
+   "proxies": [
+    "hold_time"
+   ],
+   "read_lines": [
+    303
+   ],
+   "cmp_lines": [
+    306
+   ]
+  }
+ ]
+}

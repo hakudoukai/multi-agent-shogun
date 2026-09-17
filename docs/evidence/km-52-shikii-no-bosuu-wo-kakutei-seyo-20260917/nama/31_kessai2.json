@@ -1,0 +1,490 @@
+{
+ "freeze": [
+  {
+   "file": "scripts/agent_health_check.sh",
+   "decl": 129,
+   "name": "HEALTH_CHECK_COOLDOWN_SEC",
+   "def": "300",
+   "recv": "ALERT_COOLDOWN_SEC",
+   "kata": "literal",
+   "cmp": [
+    144
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "decl": 354,
+   "name": "HEALTH_CHECK_TOKEN_WARN",
+   "def": "200000",
+   "recv": "TOKEN_WARN_THRESHOLD",
+   "kata": "literal",
+   "cmp": [
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "decl": 355,
+   "name": "HEALTH_CHECK_TOKEN_CRIT",
+   "def": "240000",
+   "recv": "TOKEN_CRIT_THRESHOLD",
+   "kata": "literal",
+   "cmp": [
+    378
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "decl": 76,
+   "name": "CONTEXT_WARN_BYTES",
+   "def": "1600000",
+   "recv": "WARN_BYTES",
+   "kata": "literal",
+   "cmp": [
+    96,
+    97
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "decl": 77,
+   "name": "CONTEXT_DANGER_BYTES",
+   "def": "2000000",
+   "recv": "DANGER_BYTES",
+   "kata": "literal",
+   "cmp": [
+    94,
+    95
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "decl": 77,
+   "name": "DASUMAE_READ_TIMEOUT",
+   "def": "10",
+   "recv": "SAFE_SIZE_TMO",
+   "kata": "literal",
+   "cmp": []
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "decl": 81,
+   "name": "DASUMAE_MAX_BYTES",
+   "def": "10485760",
+   "recv": "MAXB",
+   "kata": "literal",
+   "cmp": [
+    243
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "decl": 96,
+   "name": "GATE4_MAX_FILE_MB",
+   "def": "50",
+   "recv": "MAXF",
+   "kata": "literal",
+   "cmp": [
+    104
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "decl": 97,
+   "name": "GATE4_MAX_TOTAL_MB",
+   "def": "100",
+   "recv": "MAXT",
+   "kata": "literal",
+   "cmp": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ESCALATE_PHASE1",
+   "def": "120",
+   "recv": "ESCALATE_PHASE1",
+   "kata": "loop",
+   "cmp": [
+    1459
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ESCALATE_PHASE2",
+   "def": "240",
+   "recv": "ESCALATE_PHASE2",
+   "kata": "loop",
+   "cmp": [
+    1467
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ESCALATE_COOLDOWN",
+   "def": "300",
+   "recv": "ESCALATE_COOLDOWN",
+   "kata": "loop",
+   "cmp": [
+    1473
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "NUDGE_COOLDOWN_SEC",
+   "def": "60",
+   "recv": "NUDGE_COOLDOWN_SEC",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "NUDGE_COOLDOWN_SEC_CODEX",
+   "def": "300",
+   "recv": "NUDGE_COOLDOWN_SEC_CODEX",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "def": "60",
+   "recv": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ASW_PHASE",
+   "def": "2",
+   "recv": "ASW_PHASE",
+   "kata": "loop",
+   "cmp": [
+    216,
+    217
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "APPROVAL_ALERT_COOLDOWN",
+   "def": "300",
+   "recv": "APPROVAL_ALERT_COOLDOWN",
+   "kata": "loop",
+   "cmp": [
+    899
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "MAX_TYPING_SKIP",
+   "def": "5",
+   "recv": "MAX_TYPING_SKIP",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "INOTIFY_TIMEOUT",
+   "def": "30",
+   "recv": "INOTIFY_TIMEOUT",
+   "kata": "loop",
+   "cmp": [
+    1564
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "decl": 120,
+   "name": "ER_THRESHOLD_MIN",
+   "def": "10",
+   "recv": "THRESHOLD_MIN",
+   "kata": "literal",
+   "cmp": [
+    261
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "decl": 121,
+   "name": "ER_FIRE_CAP_COUNT",
+   "def": "3",
+   "recv": "FIRE_CAP_COUNT",
+   "kata": "literal",
+   "cmp": [
+    135
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "decl": 122,
+   "name": "ER_FIRE_CAP_WINDOW_MIN",
+   "def": "15",
+   "recv": "FIRE_CAP_WINDOW_MIN",
+   "kata": "literal",
+   "cmp": [
+    129
+   ]
+  }
+ ],
+ "disk": [
+  {
+   "file": "scripts/agent_health_check.sh",
+   "decl": 129,
+   "name": "HEALTH_CHECK_COOLDOWN_SEC",
+   "def": "300",
+   "recv": "ALERT_COOLDOWN_SEC",
+   "kata": "literal",
+   "cmp": [
+    144
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "decl": 354,
+   "name": "HEALTH_CHECK_TOKEN_WARN",
+   "def": "200000",
+   "recv": "TOKEN_WARN_THRESHOLD",
+   "kata": "literal",
+   "cmp": [
+    391
+   ]
+  },
+  {
+   "file": "scripts/agent_health_check.sh",
+   "decl": 355,
+   "name": "HEALTH_CHECK_TOKEN_CRIT",
+   "def": "240000",
+   "recv": "TOKEN_CRIT_THRESHOLD",
+   "kata": "literal",
+   "cmp": [
+    378
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "decl": 76,
+   "name": "CONTEXT_WARN_BYTES",
+   "def": "1600000",
+   "recv": "WARN_BYTES",
+   "kata": "literal",
+   "cmp": [
+    96,
+    97
+   ]
+  },
+  {
+   "file": "scripts/checks/context_usage_warn.sh",
+   "decl": 77,
+   "name": "CONTEXT_DANGER_BYTES",
+   "def": "2000000",
+   "recv": "DANGER_BYTES",
+   "kata": "literal",
+   "cmp": [
+    94,
+    95
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "decl": 77,
+   "name": "DASUMAE_READ_TIMEOUT",
+   "def": "10",
+   "recv": "SAFE_SIZE_TMO",
+   "kata": "literal",
+   "cmp": []
+  },
+  {
+   "file": "scripts/checks/karo_mac_dasumae_gate.sh",
+   "decl": 81,
+   "name": "DASUMAE_MAX_BYTES",
+   "def": "10485760",
+   "recv": "MAXB",
+   "kata": "literal",
+   "cmp": [
+    243
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "decl": 96,
+   "name": "GATE4_MAX_FILE_MB",
+   "def": "50",
+   "recv": "MAXF",
+   "kata": "literal",
+   "cmp": [
+    104
+   ]
+  },
+  {
+   "file": "scripts/checks/karo_mac_gate4.sh",
+   "decl": 97,
+   "name": "GATE4_MAX_TOTAL_MB",
+   "def": "100",
+   "recv": "MAXT",
+   "kata": "literal",
+   "cmp": [
+    107,
+    108
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ESCALATE_PHASE1",
+   "def": "120",
+   "recv": "ESCALATE_PHASE1",
+   "kata": "loop",
+   "cmp": [
+    1459
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ESCALATE_PHASE2",
+   "def": "240",
+   "recv": "ESCALATE_PHASE2",
+   "kata": "loop",
+   "cmp": [
+    1467
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ESCALATE_COOLDOWN",
+   "def": "300",
+   "recv": "ESCALATE_COOLDOWN",
+   "kata": "loop",
+   "cmp": [
+    1473
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "NUDGE_COOLDOWN_SEC",
+   "def": "60",
+   "recv": "NUDGE_COOLDOWN_SEC",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "NUDGE_COOLDOWN_SEC_CODEX",
+   "def": "300",
+   "recv": "NUDGE_COOLDOWN_SEC_CODEX",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "def": "60",
+   "recv": "NUDGE_COOLDOWN_SEC_CLAUDE",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "ASW_PHASE",
+   "def": "2",
+   "recv": "ASW_PHASE",
+   "kata": "loop",
+   "cmp": [
+    216,
+    217
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "APPROVAL_ALERT_COOLDOWN",
+   "def": "300",
+   "recv": "APPROVAL_ALERT_COOLDOWN",
+   "kata": "loop",
+   "cmp": [
+    899
+   ]
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "MAX_TYPING_SKIP",
+   "def": "5",
+   "recv": "MAX_TYPING_SKIP",
+   "kata": "loop",
+   "cmp": []
+  },
+  {
+   "file": "scripts/inbox_watcher.sh",
+   "decl": 177,
+   "name": "INOTIFY_TIMEOUT",
+   "def": "30",
+   "recv": "INOTIFY_TIMEOUT",
+   "kata": "loop",
+   "cmp": [
+    1564
+   ]
+  },
+  {
+   "file": "scripts/redundancy/shogun_report_watcher.sh",
+   "decl": 78,
+   "name": "SHOGUN_REPORT_WATCHER_COOLDOWN",
+   "def": "60",
+   "recv": "COOLDOWN_SEC",
+   "kata": "literal",
+   "cmp": [
+    73,
+    328
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "decl": 120,
+   "name": "ER_THRESHOLD_MIN",
+   "def": "10",
+   "recv": "THRESHOLD_MIN",
+   "kata": "literal",
+   "cmp": [
+    261
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "decl": 121,
+   "name": "ER_FIRE_CAP_COUNT",
+   "def": "3",
+   "recv": "FIRE_CAP_COUNT",
+   "kata": "literal",
+   "cmp": [
+    135
+   ]
+  },
+  {
+   "file": "scripts/watchdogs/enter_restart_common_watchdog.sh",
+   "decl": 122,
+   "name": "ER_FIRE_CAP_WINDOW_MIN",
+   "def": "15",
+   "recv": "FIRE_CAP_WINDOW_MIN",
+   "kata": "literal",
+   "cmp": [
+    129
+   ]
+  }
+ ]
+}

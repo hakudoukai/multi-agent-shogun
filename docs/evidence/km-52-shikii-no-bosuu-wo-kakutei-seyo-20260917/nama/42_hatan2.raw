@@ -1,0 +1,291 @@
+★第52弾 ㋑ ―― fail-open に成る入力を、★實際に当てた★ 記録★
+凍結点=6dbe09e6 ／ 器=ki/42_hatan2.py ／ guard の写し=ki/41_guard_utsushi.sh
+毒の六形: 未設定 / 空文字 / 空白のみ / 全角数字 / 2^63超 / 先頭空白
+
+━━ 甲 ★guard(fix_threshold)を通る 22 本★ ―― 毒を guard へ通した結果 ━━
+  scripts/agent_health_check.sh:129 HEALTH_CHECK_COOLDOWN_SEC
+     毒=未設定        → 閾='300'                  鳴=0
+     毒=空文字        → 閾='300'                  鳴=1 [context_warn] ★閾 HEALTH_CHECK_COOLDOWN_SEC が空文字 ―― 既定 300 へ
+     毒=空白のみ       → 閾='300'                  鳴=1 [context_warn] ★閾 HEALTH_CHECK_COOLDOWN_SEC が空白のみ ―― 既定 300
+     毒=全角数字       → 閾='300'                  鳴=1 [context_warn] ★閾 HEALTH_CHECK_COOLDOWN_SEC を比較器が扱へぬ(「１２０」)
+     毒=2^63超      → 閾='300'                  鳴=1 [context_warn] ★閾 HEALTH_CHECK_COOLDOWN_SEC を比較器が扱へぬ(「999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/agent_health_check.sh:354 HEALTH_CHECK_TOKEN_WARN
+     毒=未設定        → 閾='200000'               鳴=0
+     毒=空文字        → 閾='200000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_WARN が空文字 ―― 既定 200000
+     毒=空白のみ       → 閾='200000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_WARN が空白のみ ―― 既定 200000
+     毒=全角数字       → 閾='200000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_WARN を比較器が扱へぬ(「１２０」) ――
+     毒=2^63超      → 閾='200000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_WARN を比較器が扱へぬ(「99999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/agent_health_check.sh:355 HEALTH_CHECK_TOKEN_CRIT
+     毒=未設定        → 閾='240000'               鳴=0
+     毒=空文字        → 閾='240000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_CRIT が空文字 ―― 既定 240000
+     毒=空白のみ       → 閾='240000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_CRIT が空白のみ ―― 既定 240000
+     毒=全角数字       → 閾='240000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_CRIT を比較器が扱へぬ(「１２０」) ――
+     毒=2^63超      → 閾='240000'               鳴=1 [context_warn] ★閾 HEALTH_CHECK_TOKEN_CRIT を比較器が扱へぬ(「99999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/checks/context_usage_warn.sh:76 CONTEXT_WARN_BYTES
+     毒=未設定        → 閾='1600000'              鳴=0
+     毒=空文字        → 閾='1600000'              鳴=1 [context_warn] ★閾 CONTEXT_WARN_BYTES が空文字 ―― 既定 1600000 へ倒す(
+     毒=空白のみ       → 閾='1600000'              鳴=1 [context_warn] ★閾 CONTEXT_WARN_BYTES が空白のみ ―― 既定 1600000 へ倒す
+     毒=全角数字       → 閾='1600000'              鳴=1 [context_warn] ★閾 CONTEXT_WARN_BYTES を比較器が扱へぬ(「１２０」) ―― 既定 1
+     毒=2^63超      → 閾='1600000'              鳴=1 [context_warn] ★閾 CONTEXT_WARN_BYTES を比較器が扱へぬ(「9999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/checks/context_usage_warn.sh:77 CONTEXT_DANGER_BYTES
+     毒=未設定        → 閾='2000000'              鳴=0
+     毒=空文字        → 閾='2000000'              鳴=1 [context_warn] ★閾 CONTEXT_DANGER_BYTES が空文字 ―― 既定 2000000 へ倒
+     毒=空白のみ       → 閾='2000000'              鳴=1 [context_warn] ★閾 CONTEXT_DANGER_BYTES が空白のみ ―― 既定 2000000 へ
+     毒=全角数字       → 閾='2000000'              鳴=1 [context_warn] ★閾 CONTEXT_DANGER_BYTES を比較器が扱へぬ(「１２０」) ―― 既定
+     毒=2^63超      → 閾='2000000'              鳴=1 [context_warn] ★閾 CONTEXT_DANGER_BYTES を比較器が扱へぬ(「99999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/checks/karo_mac_dasumae_gate.sh:77 DASUMAE_READ_TIMEOUT
+     毒=未設定        → 閾='10'                   鳴=0
+     毒=空文字        → 閾='10'                   鳴=1 [context_warn] ★閾 DASUMAE_READ_TIMEOUT が空文字 ―― 既定 10 へ倒す(fai
+     毒=空白のみ       → 閾='10'                   鳴=1 [context_warn] ★閾 DASUMAE_READ_TIMEOUT が空白のみ ―― 既定 10 へ倒す(fa
+     毒=全角数字       → 閾='10'                   鳴=1 [context_warn] ★閾 DASUMAE_READ_TIMEOUT を比較器が扱へぬ(「１２０」) ―― 既定
+     毒=2^63超      → 閾='10'                   鳴=1 [context_warn] ★閾 DASUMAE_READ_TIMEOUT を比較器が扱へぬ(「99999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/checks/karo_mac_dasumae_gate.sh:81 DASUMAE_MAX_BYTES
+     毒=未設定        → 閾='10485760'             鳴=0
+     毒=空文字        → 閾='10485760'             鳴=1 [context_warn] ★閾 DASUMAE_MAX_BYTES が空文字 ―― 既定 10485760 へ倒す(
+     毒=空白のみ       → 閾='10485760'             鳴=1 [context_warn] ★閾 DASUMAE_MAX_BYTES が空白のみ ―― 既定 10485760 へ倒す
+     毒=全角数字       → 閾='10485760'             鳴=1 [context_warn] ★閾 DASUMAE_MAX_BYTES を比較器が扱へぬ(「１２０」) ―― 既定 10
+     毒=2^63超      → 閾='10485760'             鳴=1 [context_warn] ★閾 DASUMAE_MAX_BYTES を比較器が扱へぬ(「99999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/checks/karo_mac_gate4.sh:96 GATE4_MAX_FILE_MB
+     毒=未設定        → 閾='50'                   鳴=0
+     毒=空文字        → 閾='50'                   鳴=1 [context_warn] ★閾 GATE4_MAX_FILE_MB が空文字 ―― 既定 50 へ倒す(fail-c
+     毒=空白のみ       → 閾='50'                   鳴=1 [context_warn] ★閾 GATE4_MAX_FILE_MB が空白のみ ―― 既定 50 へ倒す(fail-
+     毒=全角数字       → 閾='50'                   鳴=1 [context_warn] ★閾 GATE4_MAX_FILE_MB を比較器が扱へぬ(「１２０」) ―― 既定 50
+     毒=2^63超      → 閾='50'                   鳴=1 [context_warn] ★閾 GATE4_MAX_FILE_MB を比較器が扱へぬ(「99999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/checks/karo_mac_gate4.sh:97 GATE4_MAX_TOTAL_MB
+     毒=未設定        → 閾='100'                  鳴=0
+     毒=空文字        → 閾='100'                  鳴=1 [context_warn] ★閾 GATE4_MAX_TOTAL_MB が空文字 ―― 既定 100 へ倒す(fail
+     毒=空白のみ       → 閾='100'                  鳴=1 [context_warn] ★閾 GATE4_MAX_TOTAL_MB が空白のみ ―― 既定 100 へ倒す(fai
+     毒=全角数字       → 閾='100'                  鳴=1 [context_warn] ★閾 GATE4_MAX_TOTAL_MB を比較器が扱へぬ(「１２０」) ―― 既定 1
+     毒=2^63超      → 閾='100'                  鳴=1 [context_warn] ★閾 GATE4_MAX_TOTAL_MB を比較器が扱へぬ(「9999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 ESCALATE_PHASE1
+     毒=未設定        → 閾='120'                  鳴=0
+     毒=空文字        → 閾='120'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE1 が空文字 ―― 既定 120 へ倒す(fail-cl
+     毒=空白のみ       → 閾='120'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE1 が空白のみ ―― 既定 120 へ倒す(fail-c
+     毒=全角数字       → 閾='120'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE1 を比較器が扱へぬ(「１２０」) ―― 既定 120
+     毒=2^63超      → 閾='120'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE1 を比較器が扱へぬ(「9999999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 ESCALATE_PHASE2
+     毒=未設定        → 閾='240'                  鳴=0
+     毒=空文字        → 閾='240'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE2 が空文字 ―― 既定 240 へ倒す(fail-cl
+     毒=空白のみ       → 閾='240'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE2 が空白のみ ―― 既定 240 へ倒す(fail-c
+     毒=全角数字       → 閾='240'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE2 を比較器が扱へぬ(「１２０」) ―― 既定 240
+     毒=2^63超      → 閾='240'                  鳴=1 [context_warn] ★閾 ESCALATE_PHASE2 を比較器が扱へぬ(「9999999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 ESCALATE_COOLDOWN
+     毒=未設定        → 閾='300'                  鳴=0
+     毒=空文字        → 閾='300'                  鳴=1 [context_warn] ★閾 ESCALATE_COOLDOWN が空文字 ―― 既定 300 へ倒す(fail-
+     毒=空白のみ       → 閾='300'                  鳴=1 [context_warn] ★閾 ESCALATE_COOLDOWN が空白のみ ―― 既定 300 へ倒す(fail
+     毒=全角数字       → 閾='300'                  鳴=1 [context_warn] ★閾 ESCALATE_COOLDOWN を比較器が扱へぬ(「１２０」) ―― 既定 30
+     毒=2^63超      → 閾='300'                  鳴=1 [context_warn] ★閾 ESCALATE_COOLDOWN を比較器が扱へぬ(「99999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 NUDGE_COOLDOWN_SEC
+     毒=未設定        → 閾='60'                   鳴=0
+     毒=空文字        → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC が空文字 ―― 既定 60 へ倒す(fail-
+     毒=空白のみ       → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC が空白のみ ―― 既定 60 へ倒す(fail
+     毒=全角数字       → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC を比較器が扱へぬ(「１２０」) ―― 既定 6
+     毒=2^63超      → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC を比較器が扱へぬ(「9999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 NUDGE_COOLDOWN_SEC_CODEX
+     毒=未設定        → 閾='300'                  鳴=0
+     毒=空文字        → 閾='300'                  鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CODEX が空文字 ―― 既定 300 へ倒
+     毒=空白のみ       → 閾='300'                  鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CODEX が空白のみ ―― 既定 300 へ
+     毒=全角数字       → 閾='300'                  鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CODEX を比較器が扱へぬ(「１２０」) ―
+     毒=2^63超      → 閾='300'                  鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CODEX を比較器が扱へぬ(「9999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 NUDGE_COOLDOWN_SEC_CLAUDE
+     毒=未設定        → 閾='60'                   鳴=0
+     毒=空文字        → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CLAUDE が空文字 ―― 既定 60 へ倒
+     毒=空白のみ       → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CLAUDE が空白のみ ―― 既定 60 へ
+     毒=全角数字       → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CLAUDE を比較器が扱へぬ(「１２０」)
+     毒=2^63超      → 閾='60'                   鳴=1 [context_warn] ★閾 NUDGE_COOLDOWN_SEC_CLAUDE を比較器が扱へぬ(「999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 ASW_PHASE
+     毒=未設定        → 閾='2'                    鳴=0
+     毒=空文字        → 閾='2'                    鳴=1 [context_warn] ★閾 ASW_PHASE が空文字 ―― 既定 2 へ倒す(fail-closed)★
+     毒=空白のみ       → 閾='2'                    鳴=1 [context_warn] ★閾 ASW_PHASE が空白のみ ―― 既定 2 へ倒す(fail-closed)★
+     毒=全角数字       → 閾='2'                    鳴=1 [context_warn] ★閾 ASW_PHASE を比較器が扱へぬ(「１２０」) ―― 既定 2 へ倒す(fail
+     毒=2^63超      → 閾='2'                    鳴=1 [context_warn] ★閾 ASW_PHASE を比較器が扱へぬ(「99999999999999999999」)
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 APPROVAL_ALERT_COOLDOWN
+     毒=未設定        → 閾='300'                  鳴=0
+     毒=空文字        → 閾='300'                  鳴=1 [context_warn] ★閾 APPROVAL_ALERT_COOLDOWN が空文字 ―― 既定 300 へ倒す
+     毒=空白のみ       → 閾='300'                  鳴=1 [context_warn] ★閾 APPROVAL_ALERT_COOLDOWN が空白のみ ―― 既定 300 へ倒
+     毒=全角数字       → 閾='300'                  鳴=1 [context_warn] ★閾 APPROVAL_ALERT_COOLDOWN を比較器が扱へぬ(「１２０」) ――
+     毒=2^63超      → 閾='300'                  鳴=1 [context_warn] ★閾 APPROVAL_ALERT_COOLDOWN を比較器が扱へぬ(「99999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 MAX_TYPING_SKIP
+     毒=未設定        → 閾='5'                    鳴=0
+     毒=空文字        → 閾='5'                    鳴=1 [context_warn] ★閾 MAX_TYPING_SKIP が空文字 ―― 既定 5 へ倒す(fail-clos
+     毒=空白のみ       → 閾='5'                    鳴=1 [context_warn] ★閾 MAX_TYPING_SKIP が空白のみ ―― 既定 5 へ倒す(fail-clo
+     毒=全角数字       → 閾='5'                    鳴=1 [context_warn] ★閾 MAX_TYPING_SKIP を比較器が扱へぬ(「１２０」) ―― 既定 5 へ倒
+     毒=2^63超      → 閾='5'                    鳴=1 [context_warn] ★閾 MAX_TYPING_SKIP を比較器が扱へぬ(「9999999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/inbox_watcher.sh:177 INOTIFY_TIMEOUT
+     毒=未設定        → 閾='30'                   鳴=0
+     毒=空文字        → 閾='30'                   鳴=1 [context_warn] ★閾 INOTIFY_TIMEOUT が空文字 ―― 既定 30 へ倒す(fail-clo
+     毒=空白のみ       → 閾='30'                   鳴=1 [context_warn] ★閾 INOTIFY_TIMEOUT が空白のみ ―― 既定 30 へ倒す(fail-cl
+     毒=全角数字       → 閾='30'                   鳴=1 [context_warn] ★閾 INOTIFY_TIMEOUT を比較器が扱へぬ(「１２０」) ―― 既定 30 へ
+     毒=2^63超      → 閾='30'                   鳴=1 [context_warn] ★閾 INOTIFY_TIMEOUT を比較器が扱へぬ(「9999999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/watchdogs/enter_restart_common_watchdog.sh:120 ER_THRESHOLD_MIN
+     毒=未設定        → 閾='10'                   鳴=0
+     毒=空文字        → 閾='10'                   鳴=1 [context_warn] ★閾 ER_THRESHOLD_MIN が空文字 ―― 既定 10 へ倒す(fail-cl
+     毒=空白のみ       → 閾='10'                   鳴=1 [context_warn] ★閾 ER_THRESHOLD_MIN が空白のみ ―― 既定 10 へ倒す(fail-c
+     毒=全角数字       → 閾='10'                   鳴=1 [context_warn] ★閾 ER_THRESHOLD_MIN を比較器が扱へぬ(「１２０」) ―― 既定 10
+     毒=2^63超      → 閾='10'                   鳴=1 [context_warn] ★閾 ER_THRESHOLD_MIN を比較器が扱へぬ(「999999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/watchdogs/enter_restart_common_watchdog.sh:121 ER_FIRE_CAP_COUNT
+     毒=未設定        → 閾='3'                    鳴=0
+     毒=空文字        → 閾='3'                    鳴=1 [context_warn] ★閾 ER_FIRE_CAP_COUNT が空文字 ―― 既定 3 へ倒す(fail-cl
+     毒=空白のみ       → 閾='3'                    鳴=1 [context_warn] ★閾 ER_FIRE_CAP_COUNT が空白のみ ―― 既定 3 へ倒す(fail-c
+     毒=全角数字       → 閾='3'                    鳴=1 [context_warn] ★閾 ER_FIRE_CAP_COUNT を比較器が扱へぬ(「１２０」) ―― 既定 3
+     毒=2^63超      → 閾='3'                    鳴=1 [context_warn] ★閾 ER_FIRE_CAP_COUNT を比較器が扱へぬ(「99999999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+  scripts/watchdogs/enter_restart_common_watchdog.sh:122 ER_FIRE_CAP_WINDOW_MIN
+     毒=未設定        → 閾='15'                   鳴=0
+     毒=空文字        → 閾='15'                   鳴=1 [context_warn] ★閾 ER_FIRE_CAP_WINDOW_MIN が空文字 ―― 既定 15 へ倒す(f
+     毒=空白のみ       → 閾='15'                   鳴=1 [context_warn] ★閾 ER_FIRE_CAP_WINDOW_MIN が空白のみ ―― 既定 15 へ倒す(
+     毒=全角数字       → 閾='15'                   鳴=1 [context_warn] ★閾 ER_FIRE_CAP_WINDOW_MIN を比較器が扱へぬ(「１２０」) ――
+     毒=2^63超      → 閾='15'                   鳴=1 [context_warn] ★閾 ER_FIRE_CAP_WINDOW_MIN を比較器が扱へぬ(「999999999
+     毒=先頭空白       → 閾=' 120'                 鳴=0
+     ⇒ ★毒六形 悉く 数へ倒れた(fail-closed)★
+
+━━ 乙 ★素で比べる箇所★ ―― 毒を比較器へ直に当てた結果(rc=2 が fail-open) ━━
+  first_setup.sh:359 BASH_VERSINFO                  式=[ "${BASH_VERSINFO[0]}" -lt 4 ]
+     未設定:rc0 空文字:rc-1 空白のみ:rc-1 全角数字:rc-1 2^63超:rc-1 先頭空白:rc-1   ⇒ ★fail-open(rc=2)に成る毒= 無し★
+  queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/15_hi_suu_no_shikii.sh:11 MASS_UNREAD_THRESHOLD          式=[ \"\${UNREAD_COUNT:-0}\" -gt \"\$MASS_UNREAD_THRESHOLD\" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc2   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超・先頭空白★
+  queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/15_hi_suu_no_shikii.sh:11 UNREAD_COUNT                   式=[ \"\${UNREAD_COUNT:-0}\" -gt \"\$MASS_UNREAD_THRESHOLD\" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc2   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超・先頭空白★
+  queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/16_hi_suu_no_shikii_v2.sh:9 MASS_UNREAD_THRESHOLD          式=[ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/16_hi_suu_no_shikii_v2.sh:9 UNREAD_COUNT                   式=[ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/17_hi_suu_no_shikii_v3.sh:10 MASS_UNREAD_THRESHOLD          式=[ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence/ki/17_hi_suu_no_shikii_v3.sh:10 UNREAD_COUNT                   式=[ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/agent_health_check.sh:231 INSERT_COUNT                   式=[ "${INSERT_COUNT:-0}" -gt 5 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/agent_health_check.sh:117 _ft_v                          式=[ "$_ft_v" -ge 0 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/agent_health_check.sh:109 _th_unset_told                 式=[ "${_th_unset_told:-0}" -eq 0 ]
+     未設定:rc0 空文字:rc0 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/agent_health_check.sh:378 max_tokens                     式=[ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/agent_health_check.sh:253 n                              式=[ "${n:-0}" -gt 10 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/agent_periodic_push.sh:65 sp_age                         式=[ "$sp_age" -gt 0 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh:64 non_empty_lines                式=[ "${non_empty_lines:-0}" -lt 2 ]
+     未設定:rc0 空文字:rc0 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/archive/message_delivery_v2_full_20260508/supervisor.sh:185 RESTART_COUNT                  式=[ ${RESTART_COUNT[$agent]} -ge $MAX_RESTART_COUNT ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh:145 RESTART_COUNT                  式=[ ${RESTART_COUNT[$agent]} -ge $MAX_RESTART_COUNT ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/audit_meta_codex.sh:108 COUNT                          式=[ "${COUNT:-0}" -ge "$SH6_CAP" ]
+     未設定:rc0 空文字:rc0 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/checks/context_usage_warn.sh:63 _ft_v                          式=[ "$_ft_v" -ge 0 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/checks/ephemeral_worktree_hygiene.sh:29 FREE_GI                        式=[ "${FREE_GI}" -lt 20 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:243 FIRST_UNREAD_SEEN              式=[ "$FIRST_UNREAD_SEEN" -gt 0 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:898 LAST_APPROVAL_ALERT_TS         式=[ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:917 LAST_CLEAR_TS                  式=[ "${LAST_CLEAR_TS:-0}" -gt 0 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:305 LAST_NUDGE_TS                  式=[ "${LAST_NUDGE_TS:-0}" -gt 0 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:1614 LAST_TOKEN_WARN_TS             式=[ ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]
+     未設定:rc-1 空文字:rc-1 空白のみ:rc-1 全角数字:rc-1 2^63超:rc-1 先頭空白:rc-1   ⇒ ★fail-open(rc=2)に成る毒= 無し★
+  scripts/inbox_watcher.sh:637 NEW_CONTEXT_SENT               式=[ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:1435 STARTUP_PROMPT_SENT            式=[ "$STARTUP_PROMPT_SENT" -eq 1 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:156 _ft_v                          式=[ "$_ft_v" -ge 0 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:148 _th_unset_told                 式=[ "${_th_unset_told:-0}" -eq 0 ]
+     未設定:rc0 空文字:rc0 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/inbox_watcher.sh:1622 _token_int                     式=[ "${_token_int:-0}" -ge 200 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/inbox_write.sh:88 _AMP_PATTERN_COUNT             式=[ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]
+     未設定:rc1 空文字:rc1 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:481 ALERT_CAP_PER_HOUR             式=[ "$CURRENT_ALERT_COUNT_1H" -ge "$ALERT_CAP_PER_HOUR" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:472 COOLDOWN_SEC                   式=[ "$since_last" -lt "$COOLDOWN_SEC" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:440 DISPATCH_LATENCY_THRESHOLD_SEC 式=[ "$m3" -ge "$DISPATCH_LATENCY_THRESHOLD_SEC" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:439 KARO_LATENCY_THRESHOLD_SEC     式=[ "$m2" -ge "$KARO_LATENCY_THRESHOLD_SEC" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:438 KARO_UNREAD_THRESHOLD          式=[ "$m1" -ge "$KARO_UNREAD_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:441 PARALLEL_CMD_NEW_THRESHOLD     式=[ "$m4" -ge "$PARALLEL_CMD_NEW_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:442 UNSTARTED_SUBPHASE_THRESHOLD   式=[ "$m5" -ge "$UNSTARTED_SUBPHASE_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:438 m1                             式=[ "$m1" -ge "$KARO_UNREAD_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:439 m2                             式=[ "$m2" -ge "$KARO_LATENCY_THRESHOLD_SEC" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:440 m3                             式=[ "$m3" -ge "$DISPATCH_LATENCY_THRESHOLD_SEC" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:441 m4                             式=[ "$m4" -ge "$PARALLEL_CMD_NEW_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/karo_overload_monitor.sh:442 m5                             式=[ "$m5" -ge "$UNSTARTED_SUBPHASE_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/ratelimit_check.sh:422 CODEX_LIMIT_HITS               式=[ "$CODEX_LIMIT_HITS" -ge "$CODEX_LIMIT_HITS_WARN" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/watchdogs/enter_restart_common_watchdog.sh:107 _ft_v                          式=[ "$_ft_v" -ge 0 ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  scripts/watchdogs/enter_restart_common_watchdog.sh:99 _th_unset_told                 式=[ "${_th_unset_told:-0}" -eq 0 ]
+     未設定:rc0 空文字:rc0 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 空白のみ・全角数字・2^63超★
+  shim/hakudokai/hakudokai_activity_monitor.sh:200 AUDIT_CHECK_INTERVAL           式=[ LAST_AUDIT_CHECK)) -lt "$AUDIT_CHECK_INTERVAL" ]
+     未設定:rc-1 空文字:rc-1 空白のみ:rc-1 全角数字:rc-1 2^63超:rc-1 先頭空白:rc-1   ⇒ ★fail-open(rc=2)に成る毒= 無し★
+  shim/hakudokai/hakudokai_activity_monitor.sh:112 IDLE_THRESHOLD                 式=[ "$idle_seconds" -ge "$IDLE_THRESHOLD" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc1   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  tests/e2e/helpers/assertions.bash:63 expected                       式=[ "$actual" -ne "$expected" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  tests/e2e/helpers/assertions.bash:40 timeout                        式=[ "$elapsed" -lt "$timeout" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  tests/e2e/helpers/tmux_helpers.bash:53 timeout                        式=[ "$elapsed" -lt "$timeout" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  tests/e2e/mock_cli.sh:84 MOCK_PROCESSING_DELAY          式=[ "$elapsed" -lt "$MOCK_PROCESSING_DELAY" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+  tests/e2e/mock_cli.sh:306 hold_time                      式=[ "$held" -lt "$hold_time" ]
+     未設定:rc2 空文字:rc2 空白のみ:rc2 全角数字:rc2 2^63超:rc2 先頭空白:rc0   ⇒ ★fail-open(rc=2)に成る毒= 未設定・空文字・空白のみ・全角数字・2^63超★
+
+━━ 結 ━━
+  甲 guard 22本 ―― 毒六形を悉く当てた。★閾が非数の儘 残つた本数= 0★
+  乙 素の箇所 ―― 式を取れた 52 本に毒六形を当てた(取れなんだ物は式が比較器の形でない)。

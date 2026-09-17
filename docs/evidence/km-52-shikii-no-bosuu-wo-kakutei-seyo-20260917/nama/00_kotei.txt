@@ -1,0 +1,12 @@
+★凍結★ 第52弾 一手目 ―― 版を凍結し、冠に書く(下知「凍結点=commit 6dbe09e6」)
+刻=2026-09-17T08:58:13+0900
+凍結点 commit = 6dbe09e67c045da1a86c59cd023460bb125d461e (6dbe09e6)
+當席 HEAD = 6ba8fcb2402c0487ccfe4b60d910050807ac5007 枝=ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+註: 6dbe09e6 は當席 HEAD の祖に非ず(git merge-base --is-ancestor rc=1)。別枝 karo-mac/km-74 の tip。
+∴ 本弾は ★git show 6dbe09e6:<path> と disk の両方を引き、同一である事を先に示して★ から disk を読む。
+
+―― 共有器四本 sha16(git show 6dbe09e6 ⇔ disk) ――
+scripts/inbox_watcher.sh git=15ac9f97f473245d disk=15ac9f97f473245d 同一
+scripts/watchdogs/enter_restart_common_watchdog.sh git=f92cd54e09736a4e disk=f92cd54e09736a4e 同一
+scripts/agent_health_check.sh git=7d11ba9f852ac759 disk=7d11ba9f852ac759 同一
+scripts/checks/context_usage_warn.sh git=3010defd413a3479 disk=3010defd413a3479 同一

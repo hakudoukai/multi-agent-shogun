@@ -1,0 +1,69 @@
+★第52弾 ㋐ 決算 ―― guard(fix_threshold)を通る閾の母數★
+凍結点=6dbe09e6 ／ 器=ki/31_kessai2.py ／ 單位=(file, 環境変数名)
+
+━━ 凍結点の樹 (6dbe09e6) ━━
+  ★宣言(乙)= 22 箇所 / 6 file★   ★内 比較器に立つ(丙)= 17 箇所★   立たぬ= 5
+  ── scripts/agent_health_check.sh  (3)
+     scripts/agent_health_check.sh:129  HEALTH_CHECK_COOLDOWN_SEC    既定=300        受皿=ALERT_COOLDOWN_SEC     比較行=144
+     scripts/agent_health_check.sh:354  HEALTH_CHECK_TOKEN_WARN      既定=200000     受皿=TOKEN_WARN_THRESHOLD   比較行=391
+     scripts/agent_health_check.sh:355  HEALTH_CHECK_TOKEN_CRIT      既定=240000     受皿=TOKEN_CRIT_THRESHOLD   比較行=378
+  ── scripts/checks/context_usage_warn.sh  (2)
+     scripts/checks/context_usage_warn.sh:76  CONTEXT_WARN_BYTES           既定=1600000    受皿=WARN_BYTES             比較行=96,97
+     scripts/checks/context_usage_warn.sh:77  CONTEXT_DANGER_BYTES         既定=2000000    受皿=DANGER_BYTES           比較行=94,95
+  ── scripts/checks/karo_mac_dasumae_gate.sh  (2)
+     scripts/checks/karo_mac_dasumae_gate.sh:77  DASUMAE_READ_TIMEOUT         既定=10         受皿=SAFE_SIZE_TMO          比較行=★比較器に立たぬ★
+     scripts/checks/karo_mac_dasumae_gate.sh:81  DASUMAE_MAX_BYTES            既定=10485760   受皿=MAXB                   比較行=243
+  ── scripts/checks/karo_mac_gate4.sh  (2)
+     scripts/checks/karo_mac_gate4.sh:96  GATE4_MAX_FILE_MB            既定=50         受皿=MAXF                   比較行=104
+     scripts/checks/karo_mac_gate4.sh:97  GATE4_MAX_TOTAL_MB           既定=100        受皿=MAXT                   比較行=107,108
+  ── scripts/inbox_watcher.sh  (10)
+     scripts/inbox_watcher.sh:177  ESCALATE_PHASE1              既定=120        受皿=ESCALATE_PHASE1        比較行=1459
+     scripts/inbox_watcher.sh:177  ESCALATE_PHASE2              既定=240        受皿=ESCALATE_PHASE2        比較行=1467
+     scripts/inbox_watcher.sh:177  ESCALATE_COOLDOWN            既定=300        受皿=ESCALATE_COOLDOWN      比較行=1473
+     scripts/inbox_watcher.sh:177  NUDGE_COOLDOWN_SEC           既定=60         受皿=NUDGE_COOLDOWN_SEC     比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  NUDGE_COOLDOWN_SEC_CODEX     既定=300        受皿=NUDGE_COOLDOWN_SEC_CODEX 比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  NUDGE_COOLDOWN_SEC_CLAUDE    既定=60         受皿=NUDGE_COOLDOWN_SEC_CLAUDE 比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  ASW_PHASE                    既定=2          受皿=ASW_PHASE              比較行=216,217
+     scripts/inbox_watcher.sh:177  APPROVAL_ALERT_COOLDOWN      既定=300        受皿=APPROVAL_ALERT_COOLDOWN 比較行=899
+     scripts/inbox_watcher.sh:177  MAX_TYPING_SKIP              既定=5          受皿=MAX_TYPING_SKIP        比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  INOTIFY_TIMEOUT              既定=30         受皿=INOTIFY_TIMEOUT        比較行=1564
+  ── scripts/watchdogs/enter_restart_common_watchdog.sh  (3)
+     scripts/watchdogs/enter_restart_common_watchdog.sh:120  ER_THRESHOLD_MIN             既定=10         受皿=THRESHOLD_MIN          比較行=261
+     scripts/watchdogs/enter_restart_common_watchdog.sh:121  ER_FIRE_CAP_COUNT            既定=3          受皿=FIRE_CAP_COUNT         比較行=135
+     scripts/watchdogs/enter_restart_common_watchdog.sh:122  ER_FIRE_CAP_WINDOW_MIN       既定=15         受皿=FIRE_CAP_WINDOW_MIN    比較行=129
+
+━━ disk(HEAD 作業樹) (DISK) ━━
+  ★宣言(乙)= 23 箇所 / 7 file★   ★内 比較器に立つ(丙)= 18 箇所★   立たぬ= 5
+  ── scripts/agent_health_check.sh  (3)
+     scripts/agent_health_check.sh:129  HEALTH_CHECK_COOLDOWN_SEC    既定=300        受皿=ALERT_COOLDOWN_SEC     比較行=144
+     scripts/agent_health_check.sh:354  HEALTH_CHECK_TOKEN_WARN      既定=200000     受皿=TOKEN_WARN_THRESHOLD   比較行=391
+     scripts/agent_health_check.sh:355  HEALTH_CHECK_TOKEN_CRIT      既定=240000     受皿=TOKEN_CRIT_THRESHOLD   比較行=378
+  ── scripts/checks/context_usage_warn.sh  (2)
+     scripts/checks/context_usage_warn.sh:76  CONTEXT_WARN_BYTES           既定=1600000    受皿=WARN_BYTES             比較行=96,97
+     scripts/checks/context_usage_warn.sh:77  CONTEXT_DANGER_BYTES         既定=2000000    受皿=DANGER_BYTES           比較行=94,95
+  ── scripts/checks/karo_mac_dasumae_gate.sh  (2)
+     scripts/checks/karo_mac_dasumae_gate.sh:77  DASUMAE_READ_TIMEOUT         既定=10         受皿=SAFE_SIZE_TMO          比較行=★比較器に立たぬ★
+     scripts/checks/karo_mac_dasumae_gate.sh:81  DASUMAE_MAX_BYTES            既定=10485760   受皿=MAXB                   比較行=243
+  ── scripts/checks/karo_mac_gate4.sh  (2)
+     scripts/checks/karo_mac_gate4.sh:96  GATE4_MAX_FILE_MB            既定=50         受皿=MAXF                   比較行=104
+     scripts/checks/karo_mac_gate4.sh:97  GATE4_MAX_TOTAL_MB           既定=100        受皿=MAXT                   比較行=107,108
+  ── scripts/inbox_watcher.sh  (10)
+     scripts/inbox_watcher.sh:177  ESCALATE_PHASE1              既定=120        受皿=ESCALATE_PHASE1        比較行=1459
+     scripts/inbox_watcher.sh:177  ESCALATE_PHASE2              既定=240        受皿=ESCALATE_PHASE2        比較行=1467
+     scripts/inbox_watcher.sh:177  ESCALATE_COOLDOWN            既定=300        受皿=ESCALATE_COOLDOWN      比較行=1473
+     scripts/inbox_watcher.sh:177  NUDGE_COOLDOWN_SEC           既定=60         受皿=NUDGE_COOLDOWN_SEC     比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  NUDGE_COOLDOWN_SEC_CODEX     既定=300        受皿=NUDGE_COOLDOWN_SEC_CODEX 比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  NUDGE_COOLDOWN_SEC_CLAUDE    既定=60         受皿=NUDGE_COOLDOWN_SEC_CLAUDE 比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  ASW_PHASE                    既定=2          受皿=ASW_PHASE              比較行=216,217
+     scripts/inbox_watcher.sh:177  APPROVAL_ALERT_COOLDOWN      既定=300        受皿=APPROVAL_ALERT_COOLDOWN 比較行=899
+     scripts/inbox_watcher.sh:177  MAX_TYPING_SKIP              既定=5          受皿=MAX_TYPING_SKIP        比較行=★比較器に立たぬ★
+     scripts/inbox_watcher.sh:177  INOTIFY_TIMEOUT              既定=30         受皿=INOTIFY_TIMEOUT        比較行=1564
+  ── scripts/redundancy/shogun_report_watcher.sh  (1)
+     scripts/redundancy/shogun_report_watcher.sh:78  SHOGUN_REPORT_WATCHER_COOLDOWN 既定=60         受皿=COOLDOWN_SEC           比較行=73,328
+  ── scripts/watchdogs/enter_restart_common_watchdog.sh  (3)
+     scripts/watchdogs/enter_restart_common_watchdog.sh:120  ER_THRESHOLD_MIN             既定=10         受皿=THRESHOLD_MIN          比較行=261
+     scripts/watchdogs/enter_restart_common_watchdog.sh:121  ER_FIRE_CAP_COUNT            既定=3          受皿=FIRE_CAP_COUNT         比較行=135
+     scripts/watchdogs/enter_restart_common_watchdog.sh:122  ER_FIRE_CAP_WINDOW_MIN       既定=15         受皿=FIRE_CAP_WINDOW_MIN    比較行=129
+
+━━ 凍結点 ⇔ disk の差 ━━
+  ＋disk のみ: scripts/redundancy/shogun_report_watcher.sh  SHOGUN_REPORT_WATCHER_COOLDOWN
