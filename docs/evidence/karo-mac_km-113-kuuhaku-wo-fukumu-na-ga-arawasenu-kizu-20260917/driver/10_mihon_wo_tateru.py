@@ -16,7 +16,7 @@ def main(argv):
         print("usage: 10_mihon_wo_tateru.py <建てる先>", file=sys.stderr)
         return 2
     fx = argv[1]
-    for d in ("s_A", "s_B", "s_C", "s_D"):
+    for d in ("s_A", "s_B", "s_C", "s_D", "s_E", "s_F", "s_G"):
         os.makedirs(os.path.join(fx, d), exist_ok=True)
 
     def put(d, name, data):
@@ -38,7 +38,23 @@ def main(argv):
     # s_D ★陽性対照★ ―― 実体の無い名。★直した後も必ず鳴らねばならぬ★。
     #     「候補を足す」直しが門を fail-open へ開いて居らぬ事を、之だけが示す。
     man("s_D", "path=nai.txt sha256=%s bytes=4 lines=1" % ("0" * 64))
-    print("見本 四本 建てた: %s" % fx)
+    # ★s_E 共存(軍師mac REVISE seq327560 の見本)★ ―― ``a`` と ``a b.txt`` が★共に実在★。
+    #     臺帳が主張するのは full の ``a b.txt``。短縮 ``a`` が先に昇れば sha が食ひ違ひ
+    #     ★正しい物が rc=1 で鳴る(偽陰性)★。第二版は full を選ぶ故 rc=0 でなければならぬ。
+    put("s_E", "a", b"AAA\n")                      # ★短縮の名が実在する★
+    h, b, l = put("s_E", "a b.txt", b"jkl\n")
+    man("s_E", "path=a b.txt sha256=%s bytes=%d lines=%d" % (h, b, l))
+    # ★s_F 家老の穴(自訴 seq327562 の見本)★ ―― 臺帳の主張 ``README.md bak`` は★不在★、
+    #     prefix ``README.md`` は★実在★し、其の sha が臺帳の sha と一致する。
+    #     短縮が昇れば ★誤つた物が rc=0 で通る(偽陽性=fail-open)★。
+    #     ★第二版は rc≠0 で鳴らねばならぬ ―― 之が委員長裁 seq327582「不在は rc≠0」。★
+    h, b, l = put("s_F", "README.md", b"mno\n")
+    man("s_F", "path=README.md bak sha256=%s bytes=%d lines=%d" % (h, b, l))
+    # ★s_G 誤 hash(軍師mac「誤hash 負1は維持」)★ ―― 名は正しく、sha だけ誤る。
+    #     直しても ★必ず rc=1 で鳴らねばならぬ★(相違を見落さぬ事の證)。
+    h, b, l = put("s_G", "g.txt", b"pqr\n")
+    man("s_G", "path=g.txt sha256=%s bytes=%d lines=%d" % ("1" * 64, b, l))
+    print("見本 七本 建てた: %s" % fx)
     return 0
 
 if __name__ == "__main__":
