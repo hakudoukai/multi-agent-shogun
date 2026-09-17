@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+"""00 起(第77弾 km-81b)―― 刻・枝・HEAD・的(scripts/ratelimit_check.sh)の disk/HEAD/main の sha・寸法・inode、
+此の PC で shebang `#!/usr/bin/env bash` が解ける bash と其の版(declare -A が通るか)、source する三本と閾の口の前提 file の在否(在否のみ・中身は讀まぬ)。読取のみ・repo へ 0 字。"""
+import os, sys, time, hashlib, subprocess, shutil
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; M = '/Users/momizimac/multi-agent-shogun'; T = 'scripts/ratelimit_check.sh'
+def git(*a): p = subprocess.run(['git', *a], capture_output=True, text=True, cwd=M); return p.stdout.strip(), p.returncode
+def sh(*a, **k): p = subprocess.run(list(a), capture_output=True, text=True, **k); return (p.stdout + p.stderr).strip(), p.returncode
+koku = time.strftime('%Y-%m-%dT%H:%M:%S%z'); head, _ = git('rev-parse', 'HEAD'); br, _ = git('branch', '--show-current')
+st = os.stat(M + '/' + T); dsha = hashlib.sha256(open(M + '/' + T, 'rb').read()).hexdigest()
+out = [f'# 00 起 / 刻 {koku} / 枝 {br} / HEAD {head[:12]} / 的= {T} 一本(裁 324588 ⑵⑶ と重ならぬ一本・家老札 km-81b)']
+out.append(f'disk: inode {st.st_ino} / bytes {st.st_size} / lines {open(M + "/" + T, "rb").read().count(b"\n")} / mtime {time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(st.st_mtime))} / sha256 {dsha[:16]}')
+for ref in ('HEAD', 'main'):
+    hsha, _ = git('rev-parse', ref + ':' + T); hsize, _ = git('cat-file', '-s', ref + ':' + T); body, _ = git('show', ref + ':' + T)
+    csha = hashlib.sha256((body + '\n').encode('utf-8')).hexdigest()
+    out.append(f'{ref}: blob {hsha[:12]} / bytes {hsize} / 中身 sha256 {csha[:16]} → ' + ('disk と★同一★' if csha == dsha else '★disk と違ふ★'))
+diff, rc = git('diff', '--name-only', 'HEAD', '--', T); out.append(f'git diff --name-only HEAD -- {T} (rc {rc}) = {len(diff.splitlines())} 本 → ' + ('★未 commit の差あり★' if diff else '差 0(disk = HEAD = main)'))
+# 写し器の bash
+wb = shutil.which('bash'); vb, _ = sh(wb, '-c', 'echo $BASH_VERSION'); da, drc = sh(wb, '-c', 'declare -A x')
+out.append(f'shebang `#!/usr/bin/env bash` が此の PC で解く bash= {wb} / 版 {vb} / `declare -A x` の rc {drc}(逐語: {da[:80]})' + ' → ★的の L64/L314 `declare -A` は此の bash では通らぬ ∴ 的は此の PC では L64 で止まる(set -e)★' if drc else '')
+for c in ('/opt/homebrew/bin/bash', '/usr/local/bin/bash'): out.append(f'  他の bash {c}: ' + ('在' if os.path.exists(c) else '無'))
+out.append('source する三本(L28-30)の在否: ' + ' / '.join(f'{x} ' + ('在' if os.path.exists(M + '/scripts/lib/' + x) else '★無★') for x in ('agent_status.sh', 'cli_adapter.sh', '_section18_roles.sh')))
+H = os.path.expanduser('~')
+out.append('閾の口へ値を運ぶ前提 file の在否(在否のみ): ' + ' / '.join(f'{x} ' + ('在' if os.path.exists(p) else '無') for x, p in (('~/.claude/.credentials.json(L190)', H + '/.claude/.credentials.json'), ('~/.claude/stats-cache.json(L35)', H + '/.claude/stats-cache.json'), ('~/.codex/log/codex-tui.log(L36)', H + '/.codex/log/codex-tui.log'), ('.venv/bin/python3(L32)', M + '/.venv/bin/python3'))))
+out.append('生器へ 0 字(scripts/ ~/bin/ は讀むのみ)/ 稼働 process 不觸(裁 323062⑷)/ 毒は束内の写し器へ当てる / 直し形は紙のみ(据ゑず)。')
+K.kaku(D + '/raw/00_start.txt', '\n'.join(out)); print('\n'.join(out))

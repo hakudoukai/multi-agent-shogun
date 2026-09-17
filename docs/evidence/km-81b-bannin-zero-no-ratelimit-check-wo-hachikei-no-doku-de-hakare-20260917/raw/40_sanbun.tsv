@@ -1,0 +1,49 @@
+名	定義(甲/乙/甲∩乙)	類	數比較器の左項に立つ(毒が届く)	根拠(比較器表の行番号: 左項 演算子 右項)
+2	甲	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CLAUDE_5H_RESET	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CLAUDE_5H_UTIL	乙	状態変数(其の他・process 内で更新)	-	L458 "$CLAUDE_5H_UTIL" -n -; L458 "$CLAUDE_5H_UTIL" != "?"
+CLAUDE_7D_OPUS_UTIL	乙	状態変数(其の他・process 内で更新)	-	L480 "$CLAUDE_7D_OPUS_UTIL" != "-"; L480 "$CLAUDE_7D_OPUS_UTIL" -n -
+CLAUDE_7D_RESET	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CLAUDE_7D_SONNET_UTIL	乙	状態変数(其の他・process 内で更新)	-	L477 "$CLAUDE_7D_SONNET_UTIL" != "-"; L477 "$CLAUDE_7D_SONNET_UTIL" -n -
+CLAUDE_7D_UTIL	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CLAUDE_CREDS	乙	状態変数(其の他・process 内で更新)	-	L191 "$CLAUDE_CREDS" -f -
+CLAUDE_DATA_DATE	甲∩乙	状態変数(其の他・process 内で更新)	-	L492 "${CLAUDE_DATA_DATE:-$TODAY}" != "$TODAY"
+CLAUDE_EXTRA_ENABLED	乙	旗(二値で比べる)	-	L484 "$CLAUDE_EXTRA_ENABLED" == "True"
+CLAUDE_MESSAGES	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CLAUDE_SESSIONS	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CLAUDE_STATS	乙	状態変数(其の他・process 内で更新)	-	L244 "$CLAUDE_STATS" -f -
+CLAUDE_TODAY_DETAIL	乙	状態変数(其の他・process 内で更新)	-	L302 "$CLAUDE_TODAY_DETAIL" -n -; L497 "$CLAUDE_TODAY_DETAIL" -n -
+CLAUDE_TODAY_TOTAL	乙	状態変数(其の他・process 内で更新)	★立つ★	L490 "$CLAUDE_TODAY_TOTAL" -gt 0
+CODEX_ACCT_5H_LEFT	乙	状態変数(其の他・process 内で更新)	-	L392 "$CODEX_ACCT_5H_LEFT" -n -; L544 "$CODEX_ACCT_5H_LEFT" -n -
+CODEX_ACCT_5H_RESET	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CODEX_ACCT_7D_LEFT	乙	状態変数(其の他・process 内で更新)	-	L549 "$CODEX_ACCT_7D_LEFT" -n -
+CODEX_ACCT_7D_RESET	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CODEX_LIMIT_HITS	甲∩乙	状態変数(其の他・process 内で更新)	★立つ★	L420 "$CODEX_LIMIT_HITS" =~ ^[0-9]+$; L422 "$CODEX_LIMIT_HITS" -ge "$CODEX_LIMIT_HITS_WARN"
+CODEX_LOG	乙	状態変数(其の他・process 内で更新)	-	L412 "$CODEX_LOG" -f -
+CODEX_MODEL_5H_LEFT	乙	状態変数(其の他・process 内で更新)	-	L555 "$CODEX_MODEL_5H_LEFT" -n -
+CODEX_MODEL_5H_RESET	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CODEX_MODEL_7D_LEFT	乙	状態変数(其の他・process 内で更新)	-	L558 "$CODEX_MODEL_7D_LEFT" -n -
+CODEX_MODEL_7D_RESET	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+CODEX_MODEL_LABEL	甲∩乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+LANG_MODE	乙	状態変数(其の他・process 内で更新)	-	L435 "$LANG_MODE" == "en"; L515 "$LANG_MODE" == "en"
+SCRIPT_DIR	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+TODAY	乙	状態変数(其の他・process 内で更新)	-	L492 "${CLAUDE_DATA_DATE:-$TODAY}" != "$TODAY"
+_5h_lines	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+_ashigaru_ids_str	乙	状態変数(其の他・process 内で更新)	-	L49 "$_ashigaru_ids_str" -z -
+_line	乙	状態変数(其の他・process 内で更新)	-	L361 "$_line" -n -; L368 "$_line" -n -; L378 "$_line" -n -; L385 "$_line" -n -
+_status_block	乙	状態変数(其の他・process 内で更新)	-	L353 "$_status_block" -n -
+_status_out	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+_wk_lines	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+claude_data	乙	状態変数(其の他・process 内で更新)	-	L291 "$claude_data" -n -
+cli	乙	状態変数(其の他・process 内で更新)	-	L77 "$cli" -z -
+codex_model	甲	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+ctx	乙	状態変数(其の他・process 内で更新)	★立つ★	L339 "$ctx" -z -; L396 "$ctx" != "?"; L397 "$ctx" -lt "$CODEX_CONTEXT_CRIT"; L400 "$ctx" -lt "$CODEX_CONTEXT_WARN"; L527 "$ctx" != "?"; L528 "$ctx" -lt "$CODEX_CONTEXT_CRIT"; L530 "$ctx" -lt "$CODEX_CONTEXT_WARN"
+current_hour	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+line	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+model	乙	状態変数(其の他・process 内で更新)	-	L82 "$model" -z -
+model_name	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+model_val	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+oauth_data	乙	状態変数(其の他・process 内で更新)	-	L226 "$oauth_data" -n -
+out	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+pane_target	乙	状態変数(其の他・process 内で更新)	-	(比較器に立たぬ)
+was_zoomed	乙	旗(二値で比べる)	-	L114 "$was_zoomed" != "1"; L136 "$was_zoomed" != "1"

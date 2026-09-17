@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+"""46(第77弾 km-81b)―― 此の checkout で的を其の儘一度起こし(bash scripts/ratelimit_check.sh・引数無し・repo へ 0 字・tmux へは L28 で止まるゆゑ届かぬ)、何処で・どう止まるかを rc と stderr で測る。
+陽性対照= 同じ呼び方で `--help`(L19-22・source の前に exit 0 する筈)。"""
+import sys, time, subprocess
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; M = '/Users/momizimac/multi-agent-shogun'; T = 'scripts/ratelimit_check.sh'
+out = [f'# 46 此の checkout で起こす / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / 的 {T} / cwd {M}']
+for label, args in (('本走(引数無し)', []), ('陽性対照 --help(L19-22・source L28 より前に exit 0)', ['--help'])):
+    p = subprocess.run(['bash', T] + args, capture_output=True, cwd=M, timeout=30); so = p.stdout.decode('utf-8', 'replace').strip(); se = p.stderr.decode('utf-8', 'replace').strip()
+    out.append(f'{label}: rc {p.returncode} / stdout {so.count(chr(10)) + 1 if so else 0} 行「{so.replace(chr(10), "␊")[:120]}」/ stderr {se.count(chr(10)) + 1 if se else 0} 行「{se.replace(M + "/", "").replace(chr(10), "␊")[:200]}」')
+import re
+m = re.search(r'(\S+): line (\d+): (\S+): unbound variable', se); m2 = re.search(r'No such file', se)
+if p.returncode != 0 and se: out.append(f'讀み(測りから): 本走は rc {p.returncode}・stderr 有= ★鳴つて止まる★(黙らぬ)。止まつた所= ' + (f'source 先 {m.group(1)} の {m.group(2)} 行目で `{m.group(3)}` が set -u に触れた(L30 の source の中)' if m else ('source 先が無い' if m2 else '逐語を讀め')) + '。∴ 此の checkout では毒は L397 以降の比較器へ届く前に止まる(L64 declare -A にも届かぬ)。')
+else: out.append(f'讀み(測りから): rc {p.returncode}・stderr {se.count(chr(10)) + 1 if se else 0} 行 ―― 止まらなんだ/黙つた。')
+out.append('疵: .first は測る前に「L28 で file 無し」と讀みを書いた(誤り・SCRIPT_DIR は repo 根ゆゑ lib/ は在る)。此の版は讀みを stderr の逐語から導く。')
+K.kaku(D + '/raw/46_run_here.txt', '\n'.join(out)); print('\n'.join(out))

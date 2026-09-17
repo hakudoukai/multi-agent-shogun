@@ -1,0 +1,12 @@
+# 00 起 / 刻 2026-09-17T10:40:37+0900 / 枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 / HEAD 6ba8fcb2402c / 的= scripts/ratelimit_check.sh 一本(裁 324588 ⑵⑶ と重ならぬ一本・家老札 km-81b)
+disk: inode 1238425 / bytes 22145 / lines 582 / mtime 2026-07-11T20:05:51 / sha256 7f1e031114966744
+HEAD: blob 239d531676d4 / bytes 22145 / 中身 sha256 7f1e031114966744 → disk と★同一★
+main: blob 239d531676d4 / bytes 22145 / 中身 sha256 7f1e031114966744 → disk と★同一★
+git diff --name-only HEAD -- scripts/ratelimit_check.sh (rc 0) = 0 本 → 差 0(disk = HEAD = main)
+shebang `#!/usr/bin/env bash` が此の PC で解く bash= /bin/bash / 版 3.2.57(1)-release / `declare -A x` の rc 2(逐語: /bin/bash: line 0: declare: -A: invalid option
+declare: usage: declare [-afFirtx) → ★的の L64/L314 `declare -A` は此の bash では通らぬ ∴ 的は此の PC では L64 で止まる(set -e)★
+  他の bash /opt/homebrew/bin/bash: 無
+  他の bash /usr/local/bin/bash: 無
+L10 SCRIPT_DIR を的の式で解く= /Users/momizimac/multi-agent-shogun(= repo 根・scripts/ ではない)。source する三本(L28-30)= $SCRIPT_DIR/lib/*.sh の在否: lib/agent_status.sh 在 / lib/cli_adapter.sh 在 / lib/_section18_roles.sh 在 (疵: 初走 .first は scripts/lib/ と誤つて解き「三本無し」と書いた)
+閾の口へ値を運ぶ前提 file の在否(在否のみ): ~/.claude/.credentials.json(L190) 無 / ~/.claude/stats-cache.json(L35) 無 / ~/.codex/log/codex-tui.log(L36) 無 / .venv/bin/python3(L32) 在
+生器へ 0 字(scripts/ ~/bin/ は讀むのみ)/ 稼働 process 不觸(裁 323062⑷)/ 毒は束内の写し器へ当てる / 直し形は紙のみ(据ゑず)。

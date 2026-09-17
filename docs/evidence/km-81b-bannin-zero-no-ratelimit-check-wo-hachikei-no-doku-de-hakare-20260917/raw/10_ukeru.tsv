@@ -1,0 +1,133 @@
+版	定義	行	名	出所の種	逐語
+disk	甲 ${NAME:-既定}	108	2	位置引数(既定 -80)	local start="${2:--80}"
+disk	甲 ${NAME:-既定}	417	CODEX_LIMIT_HITS	内部状態変数(既定 0)	CODEX_LIMIT_HITS="${CODEX_LIMIT_HITS:-0}"
+disk	甲 ${NAME:-既定}	492	CLAUDE_DATA_DATE	内部状態変数(既定 $TODAY)	if [[ "${CLAUDE_DATA_DATE:-$TODAY}" != "$TODAY" ]]; then
+disk	甲 ${NAME:-既定}	543	codex_model	内部状態変数(既定 gpt-5.3-codex)	printf "  Quota (%s)\n" "${codex_model:-gpt-5.3-codex}"
+disk	甲 ${NAME:-既定}	556	CODEX_MODEL_LABEL	内部状態変数(既定 Model)	printf "  %s:\n" "${CODEX_MODEL_LABEL:-Model}"
+disk	乙 外から値が入る変数	228	CLAUDE_5H_RESET	命令置換 $( )	CLAUDE_5H_RESET=$(echo "$oauth_data" | grep '^5H_RESET=' | cut -d= -f2)
+disk	乙 外から値が入る変数	227	CLAUDE_5H_UTIL	命令置換 $( )	CLAUDE_5H_UTIL=$(echo "$oauth_data" | grep '^5H_UTIL=' | cut -d= -f2)
+disk	乙 外から値が入る変数	232	CLAUDE_7D_OPUS_UTIL	命令置換 $( )	CLAUDE_7D_OPUS_UTIL=$(echo "$oauth_data" | grep '^7D_OPUS=' | cut -d= -f2)
+disk	乙 外から値が入る変数	230	CLAUDE_7D_RESET	命令置換 $( )	CLAUDE_7D_RESET=$(echo "$oauth_data" | grep '^7D_RESET=' | cut -d= -f2)
+disk	乙 外から値が入る変数	231	CLAUDE_7D_SONNET_UTIL	命令置換 $( )	CLAUDE_7D_SONNET_UTIL=$(echo "$oauth_data" | grep '^7D_SONNET=' | cut -d= -f2)
+disk	乙 外から値が入る変数	229	CLAUDE_7D_UTIL	命令置換 $( )	CLAUDE_7D_UTIL=$(echo "$oauth_data" | grep '^7D_UTIL=' | cut -d= -f2)
+disk	乙 外から値が入る変数	190	CLAUDE_CREDS	env $HOME	CLAUDE_CREDS="$HOME/.claude/.credentials.json"
+disk	乙 外から値が入る変数	293	CLAUDE_DATA_DATE	命令置換 $( )	CLAUDE_DATA_DATE=$(echo "$claude_data" | grep '^DATE=' | cut -d= -f2)
+disk	乙 外から値が入る変数	233	CLAUDE_EXTRA_ENABLED	命令置換 $( )	CLAUDE_EXTRA_ENABLED=$(echo "$oauth_data" | grep '^EXTRA=' | cut -d= -f2)
+disk	乙 外から値が入る変数	295	CLAUDE_MESSAGES	命令置換 $( )	CLAUDE_MESSAGES=$(echo "$claude_data" | grep '^MESSAGES=' | cut -d= -f2)
+disk	乙 外から値が入る変数	294	CLAUDE_SESSIONS	命令置換 $( )	CLAUDE_SESSIONS=$(echo "$claude_data" | grep '^SESSIONS=' | cut -d= -f2)
+disk	乙 外から値が入る変数	35	CLAUDE_STATS	env $HOME	CLAUDE_STATS="$HOME/.claude/stats-cache.json"
+disk	乙 外から値が入る変数	303	CLAUDE_TODAY_DETAIL	命令置換 $( )	CLAUDE_TODAY_DETAIL="${CLAUDE_TODAY_DETAIL} | ${model_name}: $(printf "%'d" "$model_val")"
+disk	乙 外から値が入る変数	305	CLAUDE_TODAY_DETAIL	命令置換 $( )	CLAUDE_TODAY_DETAIL="${model_name}: $(printf "%'d" "$model_val")"
+disk	乙 外から値が入る変数	292	CLAUDE_TODAY_TOTAL	命令置換 $( )	CLAUDE_TODAY_TOTAL=$(echo "$claude_data" | grep '^TOTAL=' | cut -d= -f2)
+disk	乙 外から値が入る変数	362	CODEX_ACCT_5H_LEFT	命令置換 $( )	CODEX_ACCT_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+disk	乙 外から値が入る変数	363	CODEX_ACCT_5H_RESET	命令置換 $( )	CODEX_ACCT_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+disk	乙 外から値が入る変数	369	CODEX_ACCT_7D_LEFT	命令置換 $( )	CODEX_ACCT_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+disk	乙 外から値が入る変数	370	CODEX_ACCT_7D_RESET	命令置換 $( )	CODEX_ACCT_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+disk	乙 外から値が入る変数	414	CODEX_LIMIT_HITS	命令置換 $( )	CODEX_LIMIT_HITS=$(tail -5000 "$CODEX_LOG" 2>/dev/null \
+disk	乙 外から値が入る変数	419	CODEX_LIMIT_HITS	命令置換 $( )	CODEX_LIMIT_HITS=$(echo "$CODEX_LIMIT_HITS" | tr -d '[:space:]')
+disk	乙 外から値が入る変数	36	CODEX_LOG	env $HOME	CODEX_LOG="$HOME/.codex/log/codex-tui.log"
+disk	乙 外から値が入る変数	379	CODEX_MODEL_5H_LEFT	命令置換 $( )	CODEX_MODEL_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+disk	乙 外から値が入る変数	380	CODEX_MODEL_5H_RESET	命令置換 $( )	CODEX_MODEL_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+disk	乙 外から値が入る変数	386	CODEX_MODEL_7D_LEFT	命令置換 $( )	CODEX_MODEL_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+disk	乙 外から値が入る変数	387	CODEX_MODEL_7D_RESET	命令置換 $( )	CODEX_MODEL_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+disk	乙 外から値が入る変数	374	CODEX_MODEL_LABEL	命令置換 $( )	CODEX_MODEL_LABEL=$(printf '%s\n' "$_status_block" | grep -oE 'GPT-[^:]+ limit:' | head -1 | sed 's/ limit:$//' || true)
+disk	乙 外から値が入る変数	18	LANG_MODE	argv	--lang)  LANG_MODE="$2"; shift 2 ;;
+disk	乙 外から値が入る変数	10	SCRIPT_DIR	命令置換 $( )	SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+disk	乙 外から値が入る変数	37	TODAY	命令置換 $( )	TODAY=$(date +%Y-%m-%d)
+disk	乙 外から値が入る変数	356	_5h_lines	命令置換 $( )	_5h_lines=$(printf '%s\n' "$_status_block" | grep '5h limit:' || true)
+disk	乙 外から値が入る変数	48	_ashigaru_ids_str	命令置換 $( )	_ashigaru_ids_str=$(get_ashigaru_ids 2>/dev/null || true)
+disk	乙 外から値が入る変数	360	_line	命令置換 $( )	_line=$(printf '%s\n' "$_5h_lines" | head -1 || true)
+disk	乙 外から値が入る変数	367	_line	命令置換 $( )	_line=$(printf '%s\n' "$_wk_lines" | head -1 || true)
+disk	乙 外から値が入る変数	377	_line	命令置換 $( )	_line=$(printf '%s\n' "$_5h_lines" | sed -n '2p' || true)
+disk	乙 外から値が入る変数	384	_line	命令置換 $( )	_line=$(printf '%s\n' "$_wk_lines" | sed -n '2p' || true)
+disk	乙 外から値が入る変数	346	_status_block	命令置換 $( )	_status_block=$(extract_latest_codex_status_block "$_status_out")
+disk	乙 外から値が入る変数	350	_status_block	命令置換 $( )	_status_block=$(extract_latest_codex_status_block "$_status_out")
+disk	乙 外から値が入る変数	345	_status_out	命令置換 $( )	_status_out=$(capture_tmux_pane_zoomed "$pane" -80)
+disk	乙 外から値が入る変数	349	_status_out	命令置換 $( )	_status_out=$(capture_codex_status_snapshot "$pane")
+disk	乙 外から値が入る変数	357	_wk_lines	命令置換 $( )	_wk_lines=$(printf '%s\n' "$_status_block" | grep 'Weekly limit:' || true)
+disk	乙 外から値が入る変数	245	claude_data	命令置換 $( )	claude_data=$("$PYTHON" -c "
+disk	乙 外から値が入る変数	76	cli	命令置換 $( )	cli=$(timeout 2 tmux display-message -t "$pane_target" -p '#{@agent_cli}' 2>/dev/null || echo "")
+disk	乙 外から値が入る変数	78	cli	命令置換 $( )	cli=$(get_cli_type "$agent" 2>/dev/null || echo "?")
+disk	乙 外から値が入る変数	336	ctx	命令置換 $( )	ctx=$(tmux capture-pane -t "$pane" -p -S -5 2>/dev/null \
+disk	乙 外から値が入る変数	413	current_hour	命令置換 $( )	current_hour=$(date -u +%Y-%m-%dT%H)
+disk	乙 外から値が入る変数	299	line	read(process substitution)	while IFS= read -r line; do
+disk	乙 外から値が入る変数	81	model	命令置換 $( )	model=$(timeout 2 tmux display-message -t "$pane_target" -p '#{@model_name}' 2>/dev/null || echo "")
+disk	乙 外から値が入る変数	83	model	命令置換 $( )	model=$(get_agent_model "$agent" 2>/dev/null || echo "?")
+disk	乙 外から値が入る変数	86	model	命令置換 $( )	model=$(echo "$model" | sed -E 's/[Cc]laude-?//g; s/-20[0-9]{6}//g; s/-[0-9]+-[0-9]+$//; s/^-//')
+disk	乙 外から値が入る変数	300	model_name	命令置換 $( )	model_name=$(echo "$line" | sed 's/^MODEL_//' | cut -d= -f1)
+disk	乙 外から値が入る変数	301	model_val	命令置換 $( )	model_val=$(echo "$line" | cut -d= -f2)
+disk	乙 外から値が入る変数	192	oauth_data	命令置換 $( )	oauth_data=$("$PYTHON" -c "
+disk	乙 外から値が入る変数	120	out	命令置換 $( )	out=$(tmux capture-pane -t "$pane" -p -J -S "$start" 2>/dev/null || echo "")
+disk	乙 外から値が入る変数	147	out	命令置換 $( )	out=$(tmux capture-pane -t "$pane" -p -J -S -80 2>/dev/null || echo "")
+disk	乙 外から値が入る変数	71	pane_target	命令置換 $( )	pane_target=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
+disk	乙 外から値が入る変数	113	was_zoomed	命令置換 $( )	was_zoomed=$(timeout 2 tmux display-message -t "$pane" -p '#{window_zoomed_flag}' 2>/dev/null || echo "0")
+disk	乙 外から値が入る変数	135	was_zoomed	命令置換 $( )	was_zoomed=$(timeout 2 tmux display-message -t "$pane" -p '#{window_zoomed_flag}' 2>/dev/null || echo "0")
+disk	丙 函数引数(乙に数へぬ)	107	pane	函数引数(内部から渡る)	local pane="$1"
+disk	丙 函数引数(乙に数へぬ)	130	pane	函数引数(内部から渡る)	local pane="$1"
+disk	丙 函数引数(乙に数へぬ)	108	start	函数引数(内部から渡る)	local start="${2:--80}"
+HEAD	甲 ${NAME:-既定}	108	2	位置引数(既定 -80)	local start="${2:--80}"
+HEAD	甲 ${NAME:-既定}	417	CODEX_LIMIT_HITS	内部状態変数(既定 0)	CODEX_LIMIT_HITS="${CODEX_LIMIT_HITS:-0}"
+HEAD	甲 ${NAME:-既定}	492	CLAUDE_DATA_DATE	内部状態変数(既定 $TODAY)	if [[ "${CLAUDE_DATA_DATE:-$TODAY}" != "$TODAY" ]]; then
+HEAD	甲 ${NAME:-既定}	543	codex_model	内部状態変数(既定 gpt-5.3-codex)	printf "  Quota (%s)\n" "${codex_model:-gpt-5.3-codex}"
+HEAD	甲 ${NAME:-既定}	556	CODEX_MODEL_LABEL	内部状態変数(既定 Model)	printf "  %s:\n" "${CODEX_MODEL_LABEL:-Model}"
+HEAD	乙 外から値が入る変数	228	CLAUDE_5H_RESET	命令置換 $( )	CLAUDE_5H_RESET=$(echo "$oauth_data" | grep '^5H_RESET=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	227	CLAUDE_5H_UTIL	命令置換 $( )	CLAUDE_5H_UTIL=$(echo "$oauth_data" | grep '^5H_UTIL=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	232	CLAUDE_7D_OPUS_UTIL	命令置換 $( )	CLAUDE_7D_OPUS_UTIL=$(echo "$oauth_data" | grep '^7D_OPUS=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	230	CLAUDE_7D_RESET	命令置換 $( )	CLAUDE_7D_RESET=$(echo "$oauth_data" | grep '^7D_RESET=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	231	CLAUDE_7D_SONNET_UTIL	命令置換 $( )	CLAUDE_7D_SONNET_UTIL=$(echo "$oauth_data" | grep '^7D_SONNET=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	229	CLAUDE_7D_UTIL	命令置換 $( )	CLAUDE_7D_UTIL=$(echo "$oauth_data" | grep '^7D_UTIL=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	190	CLAUDE_CREDS	env $HOME	CLAUDE_CREDS="$HOME/.claude/.credentials.json"
+HEAD	乙 外から値が入る変数	293	CLAUDE_DATA_DATE	命令置換 $( )	CLAUDE_DATA_DATE=$(echo "$claude_data" | grep '^DATE=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	233	CLAUDE_EXTRA_ENABLED	命令置換 $( )	CLAUDE_EXTRA_ENABLED=$(echo "$oauth_data" | grep '^EXTRA=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	295	CLAUDE_MESSAGES	命令置換 $( )	CLAUDE_MESSAGES=$(echo "$claude_data" | grep '^MESSAGES=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	294	CLAUDE_SESSIONS	命令置換 $( )	CLAUDE_SESSIONS=$(echo "$claude_data" | grep '^SESSIONS=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	35	CLAUDE_STATS	env $HOME	CLAUDE_STATS="$HOME/.claude/stats-cache.json"
+HEAD	乙 外から値が入る変数	303	CLAUDE_TODAY_DETAIL	命令置換 $( )	CLAUDE_TODAY_DETAIL="${CLAUDE_TODAY_DETAIL} | ${model_name}: $(printf "%'d" "$model_val")"
+HEAD	乙 外から値が入る変数	305	CLAUDE_TODAY_DETAIL	命令置換 $( )	CLAUDE_TODAY_DETAIL="${model_name}: $(printf "%'d" "$model_val")"
+HEAD	乙 外から値が入る変数	292	CLAUDE_TODAY_TOTAL	命令置換 $( )	CLAUDE_TODAY_TOTAL=$(echo "$claude_data" | grep '^TOTAL=' | cut -d= -f2)
+HEAD	乙 外から値が入る変数	362	CODEX_ACCT_5H_LEFT	命令置換 $( )	CODEX_ACCT_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+HEAD	乙 外から値が入る変数	363	CODEX_ACCT_5H_RESET	命令置換 $( )	CODEX_ACCT_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+HEAD	乙 外から値が入る変数	369	CODEX_ACCT_7D_LEFT	命令置換 $( )	CODEX_ACCT_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+HEAD	乙 外から値が入る変数	370	CODEX_ACCT_7D_RESET	命令置換 $( )	CODEX_ACCT_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+HEAD	乙 外から値が入る変数	414	CODEX_LIMIT_HITS	命令置換 $( )	CODEX_LIMIT_HITS=$(tail -5000 "$CODEX_LOG" 2>/dev/null \
+HEAD	乙 外から値が入る変数	419	CODEX_LIMIT_HITS	命令置換 $( )	CODEX_LIMIT_HITS=$(echo "$CODEX_LIMIT_HITS" | tr -d '[:space:]')
+HEAD	乙 外から値が入る変数	36	CODEX_LOG	env $HOME	CODEX_LOG="$HOME/.codex/log/codex-tui.log"
+HEAD	乙 外から値が入る変数	379	CODEX_MODEL_5H_LEFT	命令置換 $( )	CODEX_MODEL_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+HEAD	乙 外から値が入る変数	380	CODEX_MODEL_5H_RESET	命令置換 $( )	CODEX_MODEL_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+HEAD	乙 外から値が入る変数	386	CODEX_MODEL_7D_LEFT	命令置換 $( )	CODEX_MODEL_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+HEAD	乙 外から値が入る変数	387	CODEX_MODEL_7D_RESET	命令置換 $( )	CODEX_MODEL_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+HEAD	乙 外から値が入る変数	374	CODEX_MODEL_LABEL	命令置換 $( )	CODEX_MODEL_LABEL=$(printf '%s\n' "$_status_block" | grep -oE 'GPT-[^:]+ limit:' | head -1 | sed 's/ limit:$//' || true)
+HEAD	乙 外から値が入る変数	18	LANG_MODE	argv	--lang)  LANG_MODE="$2"; shift 2 ;;
+HEAD	乙 外から値が入る変数	10	SCRIPT_DIR	命令置換 $( )	SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+HEAD	乙 外から値が入る変数	37	TODAY	命令置換 $( )	TODAY=$(date +%Y-%m-%d)
+HEAD	乙 外から値が入る変数	356	_5h_lines	命令置換 $( )	_5h_lines=$(printf '%s\n' "$_status_block" | grep '5h limit:' || true)
+HEAD	乙 外から値が入る変数	48	_ashigaru_ids_str	命令置換 $( )	_ashigaru_ids_str=$(get_ashigaru_ids 2>/dev/null || true)
+HEAD	乙 外から値が入る変数	360	_line	命令置換 $( )	_line=$(printf '%s\n' "$_5h_lines" | head -1 || true)
+HEAD	乙 外から値が入る変数	367	_line	命令置換 $( )	_line=$(printf '%s\n' "$_wk_lines" | head -1 || true)
+HEAD	乙 外から値が入る変数	377	_line	命令置換 $( )	_line=$(printf '%s\n' "$_5h_lines" | sed -n '2p' || true)
+HEAD	乙 外から値が入る変数	384	_line	命令置換 $( )	_line=$(printf '%s\n' "$_wk_lines" | sed -n '2p' || true)
+HEAD	乙 外から値が入る変数	346	_status_block	命令置換 $( )	_status_block=$(extract_latest_codex_status_block "$_status_out")
+HEAD	乙 外から値が入る変数	350	_status_block	命令置換 $( )	_status_block=$(extract_latest_codex_status_block "$_status_out")
+HEAD	乙 外から値が入る変数	345	_status_out	命令置換 $( )	_status_out=$(capture_tmux_pane_zoomed "$pane" -80)
+HEAD	乙 外から値が入る変数	349	_status_out	命令置換 $( )	_status_out=$(capture_codex_status_snapshot "$pane")
+HEAD	乙 外から値が入る変数	357	_wk_lines	命令置換 $( )	_wk_lines=$(printf '%s\n' "$_status_block" | grep 'Weekly limit:' || true)
+HEAD	乙 外から値が入る変数	245	claude_data	命令置換 $( )	claude_data=$("$PYTHON" -c "
+HEAD	乙 外から値が入る変数	76	cli	命令置換 $( )	cli=$(timeout 2 tmux display-message -t "$pane_target" -p '#{@agent_cli}' 2>/dev/null || echo "")
+HEAD	乙 外から値が入る変数	78	cli	命令置換 $( )	cli=$(get_cli_type "$agent" 2>/dev/null || echo "?")
+HEAD	乙 外から値が入る変数	336	ctx	命令置換 $( )	ctx=$(tmux capture-pane -t "$pane" -p -S -5 2>/dev/null \
+HEAD	乙 外から値が入る変数	413	current_hour	命令置換 $( )	current_hour=$(date -u +%Y-%m-%dT%H)
+HEAD	乙 外から値が入る変数	299	line	read(process substitution)	while IFS= read -r line; do
+HEAD	乙 外から値が入る変数	81	model	命令置換 $( )	model=$(timeout 2 tmux display-message -t "$pane_target" -p '#{@model_name}' 2>/dev/null || echo "")
+HEAD	乙 外から値が入る変数	83	model	命令置換 $( )	model=$(get_agent_model "$agent" 2>/dev/null || echo "?")
+HEAD	乙 外から値が入る変数	86	model	命令置換 $( )	model=$(echo "$model" | sed -E 's/[Cc]laude-?//g; s/-20[0-9]{6}//g; s/-[0-9]+-[0-9]+$//; s/^-//')
+HEAD	乙 外から値が入る変数	300	model_name	命令置換 $( )	model_name=$(echo "$line" | sed 's/^MODEL_//' | cut -d= -f1)
+HEAD	乙 外から値が入る変数	301	model_val	命令置換 $( )	model_val=$(echo "$line" | cut -d= -f2)
+HEAD	乙 外から値が入る変数	192	oauth_data	命令置換 $( )	oauth_data=$("$PYTHON" -c "
+HEAD	乙 外から値が入る変数	120	out	命令置換 $( )	out=$(tmux capture-pane -t "$pane" -p -J -S "$start" 2>/dev/null || echo "")
+HEAD	乙 外から値が入る変数	147	out	命令置換 $( )	out=$(tmux capture-pane -t "$pane" -p -J -S -80 2>/dev/null || echo "")
+HEAD	乙 外から値が入る変数	71	pane_target	命令置換 $( )	pane_target=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
+HEAD	乙 外から値が入る変数	113	was_zoomed	命令置換 $( )	was_zoomed=$(timeout 2 tmux display-message -t "$pane" -p '#{window_zoomed_flag}' 2>/dev/null || echo "0")
+HEAD	乙 外から値が入る変数	135	was_zoomed	命令置換 $( )	was_zoomed=$(timeout 2 tmux display-message -t "$pane" -p '#{window_zoomed_flag}' 2>/dev/null || echo "0")
+HEAD	丙 函数引数(乙に数へぬ)	107	pane	函数引数(内部から渡る)	local pane="$1"
+HEAD	丙 函数引数(乙に数へぬ)	130	pane	函数引数(内部から渡る)	local pane="$1"
+HEAD	丙 函数引数(乙に数へぬ)	108	start	函数引数(内部から渡る)	local start="${2:--80}"

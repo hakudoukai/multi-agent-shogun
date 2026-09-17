@@ -1,0 +1,101 @@
+口	形	値(写し)	rc	stdout(頭 90 字)	stderr 行数	stderr 逐語(頭 110 字・改行は␊)	枝	倒れ先
+P1	正常値 50	50	0	STATUS=OK WARN=[] VALUE=[50]	0		OK	陰性対照・黙つて通る(宣どおり)
+P1	陽性対照 5(<CRIT 10)	5	0	STATUS=CRITICAL WARN=[ ashigaru9(5%)!!] VALUE=[5]	0		CRITICAL	陽性対照・枝が変はる(器は生きて居る)
+P1	陽性対照 15(<WARN 20)	15	0	STATUS=WARNING WARN=[ ashigaru9(15%)!] VALUE=[15]	0		WARNING	陽性対照・枝が変はる(器は生きて居る)
+P1	未設定	<unset>	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P1	空文字	<empty>	0	STATUS=OK WARN=[] VALUE=[?]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P1	空白(半角)	<SP>	0	STATUS=CRITICAL WARN=[ ashigaru9( %)!!] VALUE=[ ]	0		CRITICAL	★黙つて別枝★
+P1	空白(全角 U+3000)	<U+3000>	0	STATUS=OK WARN=[] VALUE=[　]	2	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	OK	黙つて通る(正常と同じ枝)
+P1	20桁(2^63超)	99999999999999999999	0	STATUS=OK WARN=[] VALUE=[99999999999999999999]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P1	負数 -5	-5	0	STATUS=CRITICAL WARN=[ ashigaru9(-5%)!!] VALUE=[-5]	0		CRITICAL	★黙つて別枝★
+P1	域外の十進 2	2	0	STATUS=CRITICAL WARN=[ ashigaru9(2%)!!] VALUE=[2]	0		CRITICAL	★黙つて別枝★
+P1	域外の十進 01	01	0	STATUS=CRITICAL WARN=[ ashigaru9(01%)!!] VALUE=[01]	0		CRITICAL	★黙つて別枝★
+P1	域外の十進 +1	+1	0	STATUS=CRITICAL WARN=[ ashigaru9(+1%)!!] VALUE=[+1]	0		CRITICAL	★黙つて別枝★
+P1	先頭改行付き ␊1	␊1	0	STATUS=CRITICAL WARN=[ ashigaru9(␊1%)!!] VALUE=[␊1]	0		CRITICAL	★黙つて別枝★
+P1	補 非数 abc	abc	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P1	補 域外 101(百分率超)	101	0	STATUS=OK WARN=[] VALUE=[101]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	正常値 0	0	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	陰性対照・黙つて通る(宣どおり)
+P2	陽性対照 3(=WARN 3)	3	0	STATUS=WARNING WARN=[ limit_hits=3/h] VALUE=[3]	0		WARNING	陽性対照・枝が変はる(器は生きて居る)
+P2	未設定	<unset>	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	空文字	<empty>	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	空白(半角)	<SP>	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	空白(全角 U+3000)	<U+3000>	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	20桁(2^63超)	99999999999999999999	0	STATUS=WARNING WARN=[ limit_hits=99999999999999999999/h] VALUE=[99999999999999999999]	0		WARNING	★黙つて別枝★
+P2	負数 -5	-5	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	域外の十進 2	2	0	STATUS=OK WARN=[] VALUE=[2]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	域外の十進 01	01	0	STATUS=OK WARN=[] VALUE=[01]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	域外の十進 +1	+1	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	先頭改行付き ␊1	␊1	0	STATUS=OK WARN=[] VALUE=[1]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	補 非数 abc	abc	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P2	補 空白(全角)を LC_ALL=C で(tr [:space:] の locale 差)	<U+3000>	0	STATUS=OK WARN=[] VALUE=[0]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	正常値 10.0	10.0	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS	0		OK	陰性対照・黙つて通る(宣どおり)
+P3	陽性対照 85.5(>=80)	85.5	0	── Quota ──␊  5h window:  85.5% used ⚠️  (resets )␊  7d window:  10.0% used  (resets )␊STA	0		⚠️ WARNING	陽性対照・枝が変はる(器は生きて居る)
+P3	未設定	<unset>	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P3	空文字	<empty>	0	STATUS=OK VALUE=[]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	空白(半角)	<SP>	0	── Quota ──␊  5h window:   % used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=OK	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	空白(全角 U+3000)	<U+3000>	0	── Quota ──␊  5h window:  　% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=OK	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	OK	黙つて通る(正常と同じ枝)
+P3	20桁(2^63超)	99999999999999999999	0	── Quota ──␊  5h window:  99999999999999999999% used ⚠️  (resets )␊  7d window:  10.0% use	0		⚠️ WARNING	★黙つて別枝★
+P3	負数 -5	-5	0	── Quota ──␊  5h window:  -5% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	域外の十進 2	2	0	── Quota ──␊  5h window:  2% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=OK	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	域外の十進 01	01	0	── Quota ──␊  5h window:  01% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	域外の十進 +1	+1	0	── Quota ──␊  5h window:  +1% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	先頭改行付き ␊1	␊1	0	── Quota ──␊  5h window:  ␊1% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P3	補 非数 abc	abc	1	── Quota ──	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P3	補 域外 101	101	0	── Quota ──␊  5h window:  101% used ⚠️  (resets )␊  7d window:  10.0% used  (resets )␊STAT	0		⚠️ WARNING	★黙つて別枝★
+P3	補 1e3	1e3	0	── Quota ──␊  5h window:  1e3% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS=	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	OK	黙つて通る(正常と同じ枝)
+P3	補 None(python の null)	None	1	── Quota ──	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P3	補 ?(python の既定)	?	0	STATUS=OK VALUE=[?]	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	正常値 10.0	10.0	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  10.0% used  (resets )␊STATUS	0		OK	陰性対照・黙つて通る(宣どおり)
+P4	陽性対照 85.5(>=80)	85.5	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  85.5% used ⚠️  (resets )␊STA	0		⚠️ WARNING	陽性対照・枝が変はる(器は生きて居る)
+P4	未設定	<unset>	1	── Quota ──␊  5h window:  10.0% used  (resets )	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P4	空文字	<empty>	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  % used  (resets )␊STATUS=OK 	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	空白(半角)	<SP>	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:   % used  (resets )␊STATUS=OK	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	空白(全角 U+3000)	<U+3000>	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  　% used  (resets )␊STATUS=OK	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	OK	黙つて通る(正常と同じ枝)
+P4	20桁(2^63超)	99999999999999999999	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  99999999999999999999% used ⚠	0		⚠️ WARNING	★黙つて別枝★
+P4	負数 -5	-5	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  -5% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	域外の十進 2	2	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  2% used  (resets )␊STATUS=OK	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	域外の十進 01	01	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  01% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	域外の十進 +1	+1	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  +1% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	先頭改行付き ␊1	␊1	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  ␊1% used  (resets )␊STATUS=O	0		OK	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P4	補 非数 abc	abc	1	── Quota ──␊  5h window:  10.0% used  (resets )	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P4	補 域外 101	101	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  101% used ⚠️  (resets )␊STAT	0		⚠️ WARNING	★黙つて別枝★
+P4	補 1e3	1e3	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  1e3% used  (resets )␊STATUS=	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	OK	黙つて通る(正常と同じ枝)
+P4	補 None(python の null)	None	1	── Quota ──␊  5h window:  10.0% used  (resets )	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	?	★鳴つて止まる(rc≠0・stderr 有)★
+P4	補 ?(python の既定)	?	0	── Quota ──␊  5h window:  10.0% used  (resets )␊  7d window:  ?% used  (resets )␊STATUS=OK	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	OK	黙つて通る(正常と同じ枝)
+P5	正常値 0	0	0	VALUE=[0]	0		Tokens 刷らず	陰性対照・黙つて通る(宣どおり)
+P5	陽性対照 123456	123456	0	── Tokens ──␊  Today: 123456 tokens␊  Sessions:  | Messages: ␊VALUE=[123456]	0		Tokens 刷る	陽性対照・枝が変はる(器は生きて居る)
+P5	未設定	<unset>	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	Tokens 刷らず	★鳴つて止まる(rc≠0・stderr 有)★
+P5	空文字	<empty>	0	VALUE=[]	0		Tokens 刷らず	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P5	空白(半角)	<SP>	0	VALUE=[ ]	0		Tokens 刷らず	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P5	空白(全角 U+3000)	<U+3000>	0	VALUE=[　]	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	Tokens 刷らず	黙つて通る(正常と同じ枝)
+P5	20桁(2^63超)	99999999999999999999	0	── Tokens ──␊  Today: 9223372036854775807 tokens␊  Sessions:  | Messages: ␊VALUE=[99999999	1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	Tokens 刷る	刷つて別枝
+P5	負数 -5	-5	0	VALUE=[-5]	0		Tokens 刷らず	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P5	域外の十進 2	2	0	── Tokens ──␊  Today: 2 tokens␊  Sessions:  | Messages: ␊VALUE=[2]	0		Tokens 刷る	★黙つて別枝★
+P5	域外の十進 01	01	0	── Tokens ──␊  Today: 1 tokens␊  Sessions:  | Messages: ␊VALUE=[01]	0		Tokens 刷る	★黙つて別枝★
+P5	域外の十進 +1	+1	0	── Tokens ──␊  Today: 1 tokens␊  Sessions:  | Messages: ␊VALUE=[+1]	0		Tokens 刷る	★黙つて別枝★
+P5	先頭改行付き ␊1	␊1	0	── Tokens ──␊  Today: 1 tokens␊  Sessions:  | Messages: ␊VALUE=[␊1]	0		Tokens 刷る	★黙つて別枝★
+P5	補 非数 abc	abc	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	Tokens 刷らず	★鳴つて止まる(rc≠0・stderr 有)★
+P5	補 abc	abc	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	Tokens 刷らず	★鳴つて止まる(rc≠0・stderr 有)★
+P6	正常値 ja	ja	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[ja]	0		ja 見出し	陰性対照・黙つて通る(宣どおり)
+P6	陽性対照 en	en	0	══ Rate Limit Status (2026-09-17) ══␊VALUE=[en]	0		en 見出し	陽性対照・枝が変はる(器は生きて居る)
+P6	未設定	<unset>	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	見出し無し	★鳴つて止まる(rc≠0・stderr 有)★
+P6	空文字	<empty>	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	空白(半角)	<SP>	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[ ]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	空白(全角 U+3000)	<U+3000>	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[　]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	20桁(2^63超)	99999999999999999999	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[99999999999999999999]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	負数 -5	-5	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[-5]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	域外の十進 2	2	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[2]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	域外の十進 01	01	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[01]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	域外の十進 +1	+1	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[+1]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	先頭改行付き ␊1	␊1	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[␊1]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	補 非数 abc	abc	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[abc]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	補 域外 xx	xx	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[xx]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P6	補 EN(大文字)	EN	0	══ レートリミット状況 (2026-09-17) ══␊VALUE=[EN]	0		ja 見出し	黙つて通る(正常と同じ枝) ★毒が見えぬ★
+P7	正常値 (引数無し)	(無)	0	VALUE=[ja]	0		VALUE=ja	陰性対照・黙つて通る(宣どおり)
+P7	陽性対照 --lang en	--lang en	0	VALUE=[en]	0		VALUE=en	陽性対照・枝が変はる(器は生きて居る)
+P7	--lang のみ(値が無い)	--lang	1		1	/Users/momizimac/multi-agent-shogun/docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de	止(VALUE 無し)	★鳴つて止まる(rc≠0・stderr 有)★
+P7	--lang 空文字	--lang <empty>	0	VALUE=[]	0		VALUE=<empty>	★黙つて別枝★
+P7	--lang 空白	--lang <SP>	0	VALUE=[ ]	0		VALUE=<SP>	★黙つて別枝★
+P7	--lang 域外 xx	--lang xx	0	VALUE=[xx]	0		VALUE=xx	★黙つて別枝★
+P7	--lang 先頭改行 ␊en	--lang ␊en	0	VALUE=[␊en]	0		VALUE=␊en	★黙つて別枝★
+P7	未知の旗 --bogus	--bogus	1	Unknown option: --bogus	0		止(VALUE 無し)・stdout: Unknown option: --bogus	★黙つて止まる(rc≠0・stderr 0)★

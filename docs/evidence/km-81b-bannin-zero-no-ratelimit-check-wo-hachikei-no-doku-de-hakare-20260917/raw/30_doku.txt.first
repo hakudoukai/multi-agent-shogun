@@ -1,0 +1,11 @@
+# 30 ㋒ / 刻 2026-09-17T10:35:01+0900 / 的 scripts/ratelimit_check.sh(disk = HEAD・sha16 7f1e0311)/ 写し器= /bin/bash 3.2.57(1)-release / 頭= L8 `set -euo pipefail` + 閾 L40-42 逐語 / env LANG=C.UTF-8 LC_ALL=(無)
+P1 ctx(tmux 由来・L339 番人+L396-406): 区画 L339,L396-406 → 写し器 raw/30_P1.sh(20 行)
+P2 CODEX_LIMIT_HITS(grep -c 由来・L417-427): 区画 L417-427 → 写し器 raw/30_P2.sh(18 行)
+P3 CLAUDE_5H_UTIL(OAuth API 由来・L458-475): 区画 L458-475 → 写し器 raw/30_P3.sh(25 行)
+P4 CLAUDE_7D_UTIL(OAuth API 由来・L468-475・番人無し): 区画 L468-475 → 写し器 raw/30_P4.sh(25 行)
+P5 CLAUDE_TODAY_TOTAL(python sum 由来・L490-501): 区画 L490-501 → 写し器 raw/30_P5.sh(19 行)
+P6 LANG_MODE(argv 由来・L435-439・字面 ==): 区画 L435-439 → 写し器 raw/30_P6.sh(8 行)
+P7 argv --lang(L13-25・case 字面): 写し器 raw/30_P7.sh
+枝の讀み方: P1/P2= CODEX_STATUS(OK/WARNING/CRITICAL)/ P3/P4= ⚠️ の有無+CLAUDE_STATUS / P5= Tokens 段の有無 / P6= 見出しの言語 / P7= LANG_MODE の値。
+倒れ先の語: 「黙つて通る ★毒が見えぬ★」= 毒が正常と同じ枝を踏み rc0・stderr 0 / 「黙つて別枝」= 毒が別の枝を踏み rc0・stderr 0(偽の警報 or 警報の抜け)/ 「鳴つて止まる」= rc≠0 で stderr に理由(set -u 等)/ 「黙つて止まる」= rc≠0 で stderr 0。
+此の器が意味せぬ事: 写し器は bash 3.2.57(此の PC の唯一の bash)。的が走る筈の Linux(bash 5.x)での [[ ]] 算術評価の差は測つて居らぬ。P1-P5 は「値が口まで届いた後」の挙動であり、此の checkout では L28 で止まるゆゑ届かぬ(45)。

@@ -1,0 +1,11 @@
+# -*- coding: utf-8 -*-
+"""46(第77弾 km-81b)―― 此の checkout で的を其の儘一度起こし(bash scripts/ratelimit_check.sh・引数無し・repo へ 0 字・tmux へは L28 で止まるゆゑ届かぬ)、何処で・どう止まるかを rc と stderr で測る。
+陽性対照= 同じ呼び方で `--help`(L19-22・source の前に exit 0 する筈)。"""
+import sys, time, subprocess
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; M = '/Users/momizimac/multi-agent-shogun'; T = 'scripts/ratelimit_check.sh'
+out = [f'# 46 此の checkout で起こす / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / 的 {T} / cwd {M}']
+for label, args in (('本走(引数無し)', []), ('陽性対照 --help(L19-22・source L28 より前に exit 0)', ['--help'])):
+    p = subprocess.run(['bash', T] + args, capture_output=True, cwd=M, timeout=30); so = p.stdout.decode('utf-8', 'replace').strip(); se = p.stderr.decode('utf-8', 'replace').strip()
+    out.append(f'{label}: rc {p.returncode} / stdout {so.count(chr(10)) + 1 if so else 0} 行「{so.replace(chr(10), "␊")[:120]}」/ stderr {se.count(chr(10)) + 1 if se else 0} 行「{se.replace(M + "/", "").replace(chr(10), "␊")[:200]}」')
+out.append('讀み: 本走は L28 `source "$SCRIPT_DIR/lib/agent_status.sh"` で file 無しを bash が刷り set -e で止まる(★鳴つて止まる★・黙らぬ)。∴ 此の checkout では毒は L397 以降の比較器へ届く前に止まる。')
+K.kaku(D + '/raw/46_run_here.txt', '\n'.join(out)); print('\n'.join(out))

@@ -1,0 +1,19 @@
+# 45 ㋔ / 刻 2026-09-17T10:34:52+0900 / 的 scripts/ratelimit_check.sh / 読取のみ・process へ信号 0
+lsof -- 的: 0 行 rc 1(lsof は 0 件で rc 1)
+陽性対照(初走・path で引く) lsof -- scripts/inbox_watcher.sh: 0 行 rc 1 ―― ★倒れた★: 稼働 watcher が開くのは置換前の inode(km-80: 20564860)ゆゑ、今の path(inode 22062559)を開く者は 0。path で引く lsof は「今の inode を開く者」しか見えぬ。
+★陽性対照(直し・pid で引く)★ watcher pid ['9826', '9838', '9859'] → lsof -p で scripts/inbox_watcher.sh を名で当てる: 3 行= pid 9826 fd 255r inode 20564860 bytes 74274 / pid 9838 fd 255r inode 20564860 bytes 74274 / pid 9859 fd 255r inode 20564860 bytes 74274 → 器は稼働 file を見つける(inode は disk と別= 置換前の版)
+的(直し・全 process の lsof -n を名 ratelimit_check で当てる・己の系譜を pid で除く): 0 行 rc 0(lsof -n の全行 14943)
+ps 語 ratelimit_check: 1 行= 己の系譜(pid 鎖 [1, 22905, 35957, 82269, 82274]…) 1 + ★残り 0★
+disk: inode 1238425 / bytes 22145 / mtime 2026-07-11T20:05:51 / sha16 7f1e031114966744
+HEAD: blob 239d531676d4 bytes 22145 = disk 寸法
+main: blob 239d531676d4 bytes 22145 = disk 寸法
+git log -- 的: 6 commit・最新 ff30760 2026-05-07 19:50:29 +0900
+呼び手: grep -rn -F ratelimit_check(scripts/ config/ instructions/ ~/bin・.bak と的自身を除く) 0 行 / launchd plist 0 本 / crontab 行 0(crontab -l rc 1)
+source する三本(L28-30):
+  scripts/lib/agent_status.sh: disk ★無★ / git ls-files 0 / 全 ref の履歴 ★0 commit★ / check-ignore rc 0: .gitignore:7:*	scripts/lib/agent_status.sh
+  scripts/lib/cli_adapter.sh: disk ★無★ / git ls-files 0 / 全 ref の履歴 ★0 commit★ / check-ignore rc 0: .gitignore:7:*	scripts/lib/cli_adapter.sh
+  scripts/lib/_section18_roles.sh: disk ★無★ / git ls-files 0 / 全 ref の履歴 ★0 commit★ / check-ignore rc 0: .gitignore:7:*	scripts/lib/_section18_roles.sh
+同じ三本を source する他の器(scripts/・.bak 除く): 3 本= scripts/agent_status.sh scripts/ratelimit_check.sh scripts/inbox_watcher.sh
+補: inbox_watcher.sh は同じ lib を L71-73 で `if [ -f ]` の番人付きで source する(無ければ黙つて跳ぶ)ゆゑ稼働 3 本は生きて居る。的 L28-30 は番人無しの source ∴ 無ければ set -e で止まる。
+∴ 此の checkout では的は L28 の source で止まる(set -e)ゆゑ、数比較器(L397 以降)へは何の値も届かぬ。稼働 0・呼び手 0・source 三本は git の何処にも無い(.gitignore 行7 `*` の allowlist に載らず)。
+此の器が意味せぬ事: 他 PC(Linux・bash 5)の disk に三本が在るか、其処で的が走るかは測れぬ(SSH は本弾の外)。lsof 0 件は「今」の一瞬(one-shot CLI ゆゑ走り終へた痕は残らぬ)。

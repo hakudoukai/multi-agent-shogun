@@ -1,0 +1,5 @@
+# 46 此の checkout で起こす / 刻 2026-09-17T10:40:38+0900 / 的 scripts/ratelimit_check.sh / cwd /Users/momizimac/multi-agent-shogun
+本走(引数無し): rc 1 / stdout 0 行「」/ stderr 1 行「lib/_section18_roles.sh: line 108: shogun: unbound variable」
+陽性対照 --help(L19-22・source L28 より前に exit 0): rc 0 / stdout 1 行「Usage: ratelimit_check.sh [--lang en|ja]」/ stderr 0 行「」
+讀み(測りから): rc 0・stderr 0 行 ―― 止まらなんだ/黙つた。
+疵: .first は測る前に「L28 で file 無し」と讀みを書いた(誤り・SCRIPT_DIR は repo 根ゆゑ lib/ は在る)。此の版は讀みを stderr の逐語から導く。

@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+"""45 ㋔(第77弾 km-81b)―― 稼働中の process が的 scripts/ratelimit_check.sh を開いて居るか(lsof・読取のみ・信号 0)、ps の語一致から ★己の系譜を pid の鎖で除き★ 残りも刷る、
+disk inode/寸法 ⇔ HEAD/main の blob、陽性対照= 同じ lsof を inbox_watcher.sh へ(稼働 3 本で鳴る筈)、呼び手(scripts/ ~/bin config/ instructions/ launchd plist crontab)、
+source する三本 scripts/lib/*.sh の在否と git 追跡(check-ignore)。"""
+import os, sys, re, time, subprocess, hashlib, glob
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; M = '/Users/momizimac/multi-agent-shogun'; T = 'scripts/ratelimit_check.sh'; CTRL = 'scripts/inbox_watcher.sh'
+def sh(*a, **k): p = subprocess.run(list(a), capture_output=True, text=True, cwd=M, **k); return p.stdout, p.returncode
+koku = time.strftime('%Y-%m-%dT%H:%M:%S%z'); out = [f'# 45 ㋔ / 刻 {koku} / 的 {T} / 読取のみ・process へ信号 0']
+lo, lrc = sh('lsof', '--', M + '/' + T); rows = [x for x in lo.split('\n')[1:] if x.strip()]
+out.append(f'lsof -- 的: {len(rows)} 行 rc {lrc}(lsof は 0 件で rc 1)')
+lc, lcrc = sh('lsof', '--', M + '/' + CTRL); crows = [x for x in lc.split('\n')[1:] if x.strip()]
+out.append(f'★陽性対照★ lsof -- {CTRL}: {len(crows)} 行 rc {lcrc}= pid ' + ' '.join(sorted({x.split()[1] for x in crows})) + ' → 器は稼働 file を見つける')
+# ps ―― 己の系譜を pid の鎖で除く
+ps, prc = sh('ps', '-axo', 'pid=,ppid=,lstart=,command='); tbl = {}
+for l in ps.split('\n'):
+    m = re.match(r'^\s*(\d+)\s+(\d+)\s+(.{24})\s+(.*)$', l)
+    if m: tbl[int(m.group(1))] = (int(m.group(2)), m.group(3).strip(), m.group(4))
+anc = set(); p = os.getpid()
+while p in tbl and p not in anc: anc.add(p); p = tbl[p][0]
+hit = [(pid, v) for pid, v in tbl.items() if 'ratelimit_check' in v[2]]; own = [(pid, v) for pid, v in hit if pid in anc]; rest = [(pid, v) for pid, v in hit if pid not in anc]
+out.append(f'ps 語 ratelimit_check: {len(hit)} 行= 己の系譜(pid 鎖 {sorted(anc)[:6]}…) {len(own)} + ★残り {len(rest)}★')
+for pid, v in rest: out.append(f'  残り: pid {pid} ppid {v[0]} {v[1]} {v[2][:140]}')
+st = os.stat(M + '/' + T); dsha = hashlib.sha256(open(M + '/' + T, 'rb').read()).hexdigest()[:16]
+out.append(f'disk: inode {st.st_ino} / bytes {st.st_size} / mtime {time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(st.st_mtime))} / sha16 {dsha}')
+for ref in ('HEAD', 'main'):
+    b, _ = sh('git', 'rev-parse', ref + ':' + T); s, _ = sh('git', 'cat-file', '-s', ref + ':' + T); out.append(f'{ref}: blob {b.strip()[:12]} bytes {s.strip()}' + (' = disk 寸法' if s.strip() == str(st.st_size) else ' ★≠ disk★'))
+log, _ = sh('git', 'log', '--format=%h %ci', '--', T); out.append(f'git log -- 的: {len(log.split())//3 if log.strip() else 0} commit・最新 ' + (log.split('\n')[0] if log.strip() else '無'))
+# 呼び手
+callers = []
+for root in ('scripts', 'config', 'instructions', os.path.expanduser('~/bin')):
+    g, grc = sh('grep', '-rn', '-F', 'ratelimit_check', root)
+    for l in g.split('\n'):
+        if l.strip() and '.bak' not in l.split(':')[0] and not l.startswith(T + ':') and not l.startswith(M + '/' + T + ':'): callers.append(l[:160])
+plist = [p for p in glob.glob(os.path.expanduser('~/Library/LaunchAgents/*.plist')) if 'ratelimit' in open(p, errors='replace').read()]
+cron, crc = sh('crontab', '-l'); cron_hit = [l for l in cron.split('\n') if 'ratelimit' in l]
+out.append(f'呼び手: grep -rn -F ratelimit_check(scripts/ config/ instructions/ ~/bin・.bak と的自身を除く) {len(callers)} 行 / launchd plist {len(plist)} 本 / crontab 行 {len(cron_hit)}(crontab -l rc {crc})')
+for l in callers[:12]: out.append('  ' + l)
+# source 三本
+out.append('source する三本(L28-30):')
+for x in ('agent_status.sh', 'cli_adapter.sh', '_section18_roles.sh'):
+    p = 'scripts/lib/' + x; ex = os.path.exists(M + '/' + p); lf, lrc2 = sh('git', 'ls-files', '--', p); al, _ = sh('git', 'log', '--all', '--format=%h', '-1', '--', p); ci, circ = sh('git', 'check-ignore', '-v', p)
+    out.append(f'  {p}: disk ' + ('在' if ex else '★無★') + f' / git ls-files {len(lf.split())} / 全 ref の履歴 ' + (al.strip() or '★0 commit★') + f' / check-ignore rc {circ}: {ci.strip()[:80] or "(無し)"}')
+others, _ = sh('grep', '-rl', '-F', 'lib/agent_status.sh', 'scripts'); others = [o for o in others.split() if '.bak' not in o]
+out.append(f'同じ三本を source する他の器(scripts/・.bak 除く): {len(others)} 本= ' + ' '.join(others))
+out.append('∴ 此の checkout では的は L28 の source で止まる(set -e)ゆゑ、数比較器(L397 以降)へは何の値も届かぬ。稼働 0・呼び手 0・source 三本は git の何処にも無い(.gitignore 行7 `*` の allowlist に載らず)。')
+out.append('此の器が意味せぬ事: 他 PC(Linux・bash 5)の disk に三本が在るか、其処で的が走るかは測れぬ(SSH は本弾の外)。lsof 0 件は「今」の一瞬(one-shot CLI ゆゑ走り終へた痕は残らぬ)。')
+K.kaku(D + '/raw/45_inode.txt', '\n'.join(out)); print('\n'.join(out))

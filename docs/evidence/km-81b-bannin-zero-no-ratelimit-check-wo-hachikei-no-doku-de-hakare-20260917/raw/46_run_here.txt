@@ -1,0 +1,6 @@
+# 46 此の checkout で起こす / 刻 2026-09-17T10:42:01+0900 / 的 scripts/ratelimit_check.sh / cwd /Users/momizimac/multi-agent-shogun
+本走(引数無し): rc 1 / stdout 0 行「」/ stderr 1 行「lib/_section18_roles.sh: line 108: shogun: unbound variable」
+陽性対照 --help(L19-22・source L28 より前に exit 0): rc 0 / stdout 1 行「Usage: ratelimit_check.sh [--lang en|ja]」/ stderr 0 行「」
+讀み(測りから): 本走は rc 1・stderr 有= ★鳴つて止まる★(黙らぬ)。止まつた所= source 先 /Users/momizimac/multi-agent-shogun/lib/_section18_roles.sh の 108 行目で `shogun` が set -u に触れた(L30 の source の中)。∴ 此の checkout では毒は L397 以降の比較器へ届く前に止まる(L64 declare -A にも届かぬ)。
+補(讀み): lib/_section18_roles.sh L108 は `declare -A SECTION18_ROLE_ALIASES=( [shogun]=… )`。bash 3.2 に連想配列は無く、`[shogun]` が算術の添字と讀まれ `shogun` が set -u に触れる ―― ∴ 止めたのは ★此の Mac の bash 3.2★ であり file の有無ではない(00 の declare -A rc2 と同根)。
+疵: .first は測る前に「L28 で file 無し」と讀みを書いた(誤り・SCRIPT_DIR は repo 根ゆゑ lib/ は在る)。.second は讀みを loop の最後の走(--help)から取り「止まらなんだ」と書いた(loop 外の index は n-1)。此の版は本走の結果を名指して導く。

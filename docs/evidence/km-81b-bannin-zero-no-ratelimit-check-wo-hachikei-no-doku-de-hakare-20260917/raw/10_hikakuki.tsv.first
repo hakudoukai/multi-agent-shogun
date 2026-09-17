@@ -1,0 +1,133 @@
+版	行	左項	演算子	右項	演算子の種	逐語
+disk	16	$#	-gt	0	數([[ ]] 内・算術評価)	while [[ $# -gt 0 ]]; do
+disk	17	"$1"	case	(pattern)	case 字面	case "$1" in
+disk	49	"$_ashigaru_ids_str"	-z	-	単項(-n/-z/-f/-x)	if [[ -z "$_ashigaru_ids_str" ]]; then
+disk	52	"$_aid"	==	ashigaru*	字面	if [[ "$_aid" == ashigaru* ]]; then
+disk	68	"$agent"	==	"shogun"	字面	if [[ "$agent" == "shogun" ]]; then
+disk	77	"$cli"	-z	-	単項(-n/-z/-f/-x)	if [[ -z "$cli" ]]; then
+disk	82	"$model"	-z	-	単項(-n/-z/-f/-x)	if [[ -z "$model" ]]; then
+disk	99	"${AGENT_CLI[$agent]}"	case	(pattern)	case 字面	case "${AGENT_CLI[$agent]}" in
+disk	114	"$was_zoomed"	!=	"1"	字面	if [[ "$was_zoomed" != "1" ]]; then
+disk	122	$restore_zoom	(exec)	-	変数を命令として実行(true/false)	if $restore_zoom; then
+disk	136	"$was_zoomed"	!=	"1"	字面	if [[ "$was_zoomed" != "1" ]]; then
+disk	149	$restore_zoom	(exec)	-	変数を命令として実行(true/false)	if $restore_zoom; then
+disk	191	${#CLAUDE_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_CREDS" ]] && [[ -x "$PYTHON" ]]; then
+disk	191	"$CLAUDE_CREDS"	-f	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_CREDS" ]] && [[ -x "$PYTHON" ]]; then
+disk	191	"$PYTHON"	-x	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_CREDS" ]] && [[ -x "$PYTHON" ]]; then
+disk	226	"$oauth_data"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$oauth_data" ]]; then
+disk	244	${#CLAUDE_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_STATS" ]] && [[ -x "$PYTHON" ]]; then
+disk	244	"$CLAUDE_STATS"	-f	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_STATS" ]] && [[ -x "$PYTHON" ]]; then
+disk	244	"$PYTHON"	-x	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_STATS" ]] && [[ -x "$PYTHON" ]]; then
+disk	291	"$claude_data"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$claude_data" ]]; then
+disk	302	"$CLAUDE_TODAY_DETAIL"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CLAUDE_TODAY_DETAIL" ]]; then
+disk	329	${#CODEX_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]]; then
+disk	339	"$ctx"	-z	-	単項(-n/-z/-f/-x)	[[ -z "$ctx" ]] && ctx="?"
+disk	344	$_rl_quota_done	(exec)	-	変数を命令として実行(true/false)	if ! $_rl_quota_done; then
+disk	353	"$_status_block"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_status_block" ]]; then
+disk	361	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+disk	368	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+disk	378	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+disk	385	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+disk	392	"$CODEX_ACCT_5H_LEFT"	-n	-	単項(-n/-z/-f/-x)	[[ -n "$CODEX_ACCT_5H_LEFT" ]] && _rl_quota_done=true
+disk	396	"$ctx"	!=	"?"	字面	if [[ "$ctx" != "?" ]]; then
+disk	397	"$ctx"	-lt	"$CODEX_CONTEXT_CRIT"	數([[ ]] 内・算術評価)	if [[ "$ctx" -lt "$CODEX_CONTEXT_CRIT" ]]; then
+disk	400	"$ctx"	-lt	"$CODEX_CONTEXT_WARN"	數([[ ]] 内・算術評価)	elif [[ "$ctx" -lt "$CODEX_CONTEXT_WARN" ]]; then
+disk	402	"$CODEX_STATUS"	!=	"CRITICAL"	字面	if [[ "$CODEX_STATUS" != "CRITICAL" ]]; then
+disk	412	${#CODEX_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]] && [[ -f "$CODEX_LOG" ]]; then
+disk	412	"$CODEX_LOG"	-f	-	単項(-n/-z/-f/-x)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]] && [[ -f "$CODEX_LOG" ]]; then
+disk	420	"$CODEX_LIMIT_HITS"	=~	^[0-9]+$	正規 =~	[[ "$CODEX_LIMIT_HITS" =~ ^[0-9]+$ ]] || CODEX_LIMIT_HITS=0
+disk	422	"$CODEX_LIMIT_HITS"	-ge	"$CODEX_LIMIT_HITS_WARN"	數([[ ]] 内・算術評価)	if [[ "$CODEX_LIMIT_HITS" -ge "$CODEX_LIMIT_HITS_WARN" ]]; then
+disk	423	"$CODEX_STATUS"	==	"OK"	字面	if [[ "$CODEX_STATUS" == "OK" ]]; then
+disk	435	"$LANG_MODE"	==	"en"	字面	if [[ "$LANG_MODE" == "en" ]]; then
+disk	442	${#CLAUDE_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]]; then
+disk	449	"$agent_list"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$agent_list" ]]; then
+disk	458	"$CLAUDE_5H_UTIL"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CLAUDE_5H_UTIL" && "$CLAUDE_5H_UTIL" != "?" ]]; then
+disk	458	"$CLAUDE_5H_UTIL"	!=	"?"	字面	if [[ -n "$CLAUDE_5H_UTIL" && "$CLAUDE_5H_UTIL" != "?" ]]; then
+disk	462	"$fh_int"	-ge	80	數([[ ]] 内・算術評価)	if [[ "$fh_int" -ge 80 ]]; then
+disk	470	"$sd_int"	-ge	80	數([[ ]] 内・算術評価)	if [[ "$sd_int" -ge 80 ]]; then
+disk	477	"$CLAUDE_7D_SONNET_UTIL"	!=	"-"	字面	if [[ "$CLAUDE_7D_SONNET_UTIL" != "-" && -n "$CLAUDE_7D_SONNET_UTIL" ]]; then
+disk	477	"$CLAUDE_7D_SONNET_UTIL"	-n	-	単項(-n/-z/-f/-x)	if [[ "$CLAUDE_7D_SONNET_UTIL" != "-" && -n "$CLAUDE_7D_SONNET_UTIL" ]]; then
+disk	480	"$CLAUDE_7D_OPUS_UTIL"	!=	"-"	字面	if [[ "$CLAUDE_7D_OPUS_UTIL" != "-" && -n "$CLAUDE_7D_OPUS_UTIL" ]]; then
+disk	480	"$CLAUDE_7D_OPUS_UTIL"	-n	-	単項(-n/-z/-f/-x)	if [[ "$CLAUDE_7D_OPUS_UTIL" != "-" && -n "$CLAUDE_7D_OPUS_UTIL" ]]; then
+disk	484	"$CLAUDE_EXTRA_ENABLED"	==	"True"	字面	if [[ "$CLAUDE_EXTRA_ENABLED" == "True" ]]; then
+disk	490	"$CLAUDE_TODAY_TOTAL"	-gt	0	數([[ ]] 内・算術評価)	if [[ "$CLAUDE_TODAY_TOTAL" -gt 0 ]]; then
+disk	492	"${CLAUDE_DATA_DATE:-$TODAY}"	!=	"$TODAY"	字面	if [[ "${CLAUDE_DATA_DATE:-$TODAY}" != "$TODAY" ]]; then
+disk	497	"$CLAUDE_TODAY_DETAIL"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CLAUDE_TODAY_DETAIL" ]]; then
+disk	507	${#CODEX_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]]; then
+disk	515	"$LANG_MODE"	==	"en"	字面	if [[ "$LANG_MODE" == "en" ]]; then
+disk	527	"$ctx"	!=	"?"	字面	if [[ "$ctx" != "?" ]]; then
+disk	528	"$ctx"	-lt	"$CODEX_CONTEXT_CRIT"	數([[ ]] 内・算術評価)	if [[ "$ctx" -lt "$CODEX_CONTEXT_CRIT" ]]; then
+disk	530	"$ctx"	-lt	"$CODEX_CONTEXT_WARN"	數([[ ]] 内・算術評価)	elif [[ "$ctx" -lt "$CODEX_CONTEXT_WARN" ]]; then
+disk	536	$count	-lt	${#CODEX_AGENTS[@]}	數([[ ]] 内・算術評価)	if [[ $((count % 4)) -eq 0 ]] && [[ $count -lt ${#CODEX_AGENTS[@]} ]]; then
+disk	544	"$CODEX_ACCT_5H_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_ACCT_5H_LEFT" ]]; then
+disk	549	"$CODEX_ACCT_7D_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_ACCT_7D_LEFT" ]]; then
+disk	555	"$CODEX_MODEL_5H_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_MODEL_5H_LEFT" ]]; then
+disk	558	"$CODEX_MODEL_7D_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_MODEL_7D_LEFT" ]]; then
+disk	565	"$CODEX_STATUS"	!=	"OK"	字面	if [[ "$CODEX_STATUS" != "OK" ]]; then
+disk	573	${#OTHER_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#OTHER_AGENTS[@]} -gt 0 ]]; then
+HEAD	16	$#	-gt	0	數([[ ]] 内・算術評価)	while [[ $# -gt 0 ]]; do
+HEAD	17	"$1"	case	(pattern)	case 字面	case "$1" in
+HEAD	49	"$_ashigaru_ids_str"	-z	-	単項(-n/-z/-f/-x)	if [[ -z "$_ashigaru_ids_str" ]]; then
+HEAD	52	"$_aid"	==	ashigaru*	字面	if [[ "$_aid" == ashigaru* ]]; then
+HEAD	68	"$agent"	==	"shogun"	字面	if [[ "$agent" == "shogun" ]]; then
+HEAD	77	"$cli"	-z	-	単項(-n/-z/-f/-x)	if [[ -z "$cli" ]]; then
+HEAD	82	"$model"	-z	-	単項(-n/-z/-f/-x)	if [[ -z "$model" ]]; then
+HEAD	99	"${AGENT_CLI[$agent]}"	case	(pattern)	case 字面	case "${AGENT_CLI[$agent]}" in
+HEAD	114	"$was_zoomed"	!=	"1"	字面	if [[ "$was_zoomed" != "1" ]]; then
+HEAD	122	$restore_zoom	(exec)	-	変数を命令として実行(true/false)	if $restore_zoom; then
+HEAD	136	"$was_zoomed"	!=	"1"	字面	if [[ "$was_zoomed" != "1" ]]; then
+HEAD	149	$restore_zoom	(exec)	-	変数を命令として実行(true/false)	if $restore_zoom; then
+HEAD	191	${#CLAUDE_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_CREDS" ]] && [[ -x "$PYTHON" ]]; then
+HEAD	191	"$CLAUDE_CREDS"	-f	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_CREDS" ]] && [[ -x "$PYTHON" ]]; then
+HEAD	191	"$PYTHON"	-x	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_CREDS" ]] && [[ -x "$PYTHON" ]]; then
+HEAD	226	"$oauth_data"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$oauth_data" ]]; then
+HEAD	244	${#CLAUDE_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_STATS" ]] && [[ -x "$PYTHON" ]]; then
+HEAD	244	"$CLAUDE_STATS"	-f	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_STATS" ]] && [[ -x "$PYTHON" ]]; then
+HEAD	244	"$PYTHON"	-x	-	単項(-n/-z/-f/-x)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]] && [[ -f "$CLAUDE_STATS" ]] && [[ -x "$PYTHON" ]]; then
+HEAD	291	"$claude_data"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$claude_data" ]]; then
+HEAD	302	"$CLAUDE_TODAY_DETAIL"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CLAUDE_TODAY_DETAIL" ]]; then
+HEAD	329	${#CODEX_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]]; then
+HEAD	339	"$ctx"	-z	-	単項(-n/-z/-f/-x)	[[ -z "$ctx" ]] && ctx="?"
+HEAD	344	$_rl_quota_done	(exec)	-	変数を命令として実行(true/false)	if ! $_rl_quota_done; then
+HEAD	353	"$_status_block"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_status_block" ]]; then
+HEAD	361	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+HEAD	368	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+HEAD	378	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+HEAD	385	"$_line"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$_line" ]]; then
+HEAD	392	"$CODEX_ACCT_5H_LEFT"	-n	-	単項(-n/-z/-f/-x)	[[ -n "$CODEX_ACCT_5H_LEFT" ]] && _rl_quota_done=true
+HEAD	396	"$ctx"	!=	"?"	字面	if [[ "$ctx" != "?" ]]; then
+HEAD	397	"$ctx"	-lt	"$CODEX_CONTEXT_CRIT"	數([[ ]] 内・算術評価)	if [[ "$ctx" -lt "$CODEX_CONTEXT_CRIT" ]]; then
+HEAD	400	"$ctx"	-lt	"$CODEX_CONTEXT_WARN"	數([[ ]] 内・算術評価)	elif [[ "$ctx" -lt "$CODEX_CONTEXT_WARN" ]]; then
+HEAD	402	"$CODEX_STATUS"	!=	"CRITICAL"	字面	if [[ "$CODEX_STATUS" != "CRITICAL" ]]; then
+HEAD	412	${#CODEX_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]] && [[ -f "$CODEX_LOG" ]]; then
+HEAD	412	"$CODEX_LOG"	-f	-	単項(-n/-z/-f/-x)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]] && [[ -f "$CODEX_LOG" ]]; then
+HEAD	420	"$CODEX_LIMIT_HITS"	=~	^[0-9]+$	正規 =~	[[ "$CODEX_LIMIT_HITS" =~ ^[0-9]+$ ]] || CODEX_LIMIT_HITS=0
+HEAD	422	"$CODEX_LIMIT_HITS"	-ge	"$CODEX_LIMIT_HITS_WARN"	數([[ ]] 内・算術評価)	if [[ "$CODEX_LIMIT_HITS" -ge "$CODEX_LIMIT_HITS_WARN" ]]; then
+HEAD	423	"$CODEX_STATUS"	==	"OK"	字面	if [[ "$CODEX_STATUS" == "OK" ]]; then
+HEAD	435	"$LANG_MODE"	==	"en"	字面	if [[ "$LANG_MODE" == "en" ]]; then
+HEAD	442	${#CLAUDE_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CLAUDE_AGENTS[@]} -gt 0 ]]; then
+HEAD	449	"$agent_list"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$agent_list" ]]; then
+HEAD	458	"$CLAUDE_5H_UTIL"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CLAUDE_5H_UTIL" && "$CLAUDE_5H_UTIL" != "?" ]]; then
+HEAD	458	"$CLAUDE_5H_UTIL"	!=	"?"	字面	if [[ -n "$CLAUDE_5H_UTIL" && "$CLAUDE_5H_UTIL" != "?" ]]; then
+HEAD	462	"$fh_int"	-ge	80	數([[ ]] 内・算術評価)	if [[ "$fh_int" -ge 80 ]]; then
+HEAD	470	"$sd_int"	-ge	80	數([[ ]] 内・算術評価)	if [[ "$sd_int" -ge 80 ]]; then
+HEAD	477	"$CLAUDE_7D_SONNET_UTIL"	!=	"-"	字面	if [[ "$CLAUDE_7D_SONNET_UTIL" != "-" && -n "$CLAUDE_7D_SONNET_UTIL" ]]; then
+HEAD	477	"$CLAUDE_7D_SONNET_UTIL"	-n	-	単項(-n/-z/-f/-x)	if [[ "$CLAUDE_7D_SONNET_UTIL" != "-" && -n "$CLAUDE_7D_SONNET_UTIL" ]]; then
+HEAD	480	"$CLAUDE_7D_OPUS_UTIL"	!=	"-"	字面	if [[ "$CLAUDE_7D_OPUS_UTIL" != "-" && -n "$CLAUDE_7D_OPUS_UTIL" ]]; then
+HEAD	480	"$CLAUDE_7D_OPUS_UTIL"	-n	-	単項(-n/-z/-f/-x)	if [[ "$CLAUDE_7D_OPUS_UTIL" != "-" && -n "$CLAUDE_7D_OPUS_UTIL" ]]; then
+HEAD	484	"$CLAUDE_EXTRA_ENABLED"	==	"True"	字面	if [[ "$CLAUDE_EXTRA_ENABLED" == "True" ]]; then
+HEAD	490	"$CLAUDE_TODAY_TOTAL"	-gt	0	數([[ ]] 内・算術評価)	if [[ "$CLAUDE_TODAY_TOTAL" -gt 0 ]]; then
+HEAD	492	"${CLAUDE_DATA_DATE:-$TODAY}"	!=	"$TODAY"	字面	if [[ "${CLAUDE_DATA_DATE:-$TODAY}" != "$TODAY" ]]; then
+HEAD	497	"$CLAUDE_TODAY_DETAIL"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CLAUDE_TODAY_DETAIL" ]]; then
+HEAD	507	${#CODEX_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#CODEX_AGENTS[@]} -gt 0 ]]; then
+HEAD	515	"$LANG_MODE"	==	"en"	字面	if [[ "$LANG_MODE" == "en" ]]; then
+HEAD	527	"$ctx"	!=	"?"	字面	if [[ "$ctx" != "?" ]]; then
+HEAD	528	"$ctx"	-lt	"$CODEX_CONTEXT_CRIT"	數([[ ]] 内・算術評価)	if [[ "$ctx" -lt "$CODEX_CONTEXT_CRIT" ]]; then
+HEAD	530	"$ctx"	-lt	"$CODEX_CONTEXT_WARN"	數([[ ]] 内・算術評価)	elif [[ "$ctx" -lt "$CODEX_CONTEXT_WARN" ]]; then
+HEAD	536	$count	-lt	${#CODEX_AGENTS[@]}	數([[ ]] 内・算術評価)	if [[ $((count % 4)) -eq 0 ]] && [[ $count -lt ${#CODEX_AGENTS[@]} ]]; then
+HEAD	544	"$CODEX_ACCT_5H_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_ACCT_5H_LEFT" ]]; then
+HEAD	549	"$CODEX_ACCT_7D_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_ACCT_7D_LEFT" ]]; then
+HEAD	555	"$CODEX_MODEL_5H_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_MODEL_5H_LEFT" ]]; then
+HEAD	558	"$CODEX_MODEL_7D_LEFT"	-n	-	単項(-n/-z/-f/-x)	if [[ -n "$CODEX_MODEL_7D_LEFT" ]]; then
+HEAD	565	"$CODEX_STATUS"	!=	"OK"	字面	if [[ "$CODEX_STATUS" != "OK" ]]; then
+HEAD	573	${#OTHER_AGENTS[@]}	-gt	0	數([[ ]] 内・算術評価)	if [[ ${#OTHER_AGENTS[@]} -gt 0 ]]; then

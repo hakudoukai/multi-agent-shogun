@@ -1,0 +1,9 @@
+# 40 ㋓ / 刻 2026-09-17T10:36:53+0900 / 的 scripts/ratelimit_check.sh / 母數= 甲 5 ∪ 乙 46 = 48 名(重なり 3: CLAUDE_DATA_DATE CODEX_LIMIT_HITS CODEX_MODEL_LABEL)/ 丙(函数引数・母數の外) 2 名
+  閾(數比較器の右項): 0 名
+  旗(二値で比べる): 2 名 = CLAUDE_EXTRA_ENABLED was_zoomed
+  状態変数(其の他・process 内で更新): 46 名
+★排他性★: 各名は丁度一つの類(assert)・三類の和 48 = 母數 48 ★一致★
+母數の外「受けぬ閾」(literal で定まり `${NAME:-}` の口を持たぬ): 名 3(L40 CODEX_CONTEXT_WARN=20 / L41 CODEX_CONTEXT_CRIT=10 / L42 CODEX_LIMIT_HITS_WARN=3) + 裸の 80 ×2(L462,470) ―― ∴ ★閾の類が 0 名なのは「閾が無い」のではなく「閾が口を持たぬ」から★。
+數比較器の左項に立つ名(毒が届く所) 10= $# ${#CLAUDE_AGENTS[@]} ${#CODEX_AGENTS[@]} ${#OTHER_AGENTS[@]} CLAUDE_TODAY_TOTAL CODEX_LIMIT_HITS count ctx fh_int sd_int / 内 母數に在る 3(CLAUDE_TODAY_TOTAL CODEX_LIMIT_HITS ctx)・母數の外の派生/内部 7($# ${#CLAUDE_AGENTS[@]} ${#CODEX_AGENTS[@]} ${#OTHER_AGENTS[@]} count fh_int sd_int: fh_int/sd_int は乙 CLAUDE_5H/7D_UTIL の `%.*` 派生・count/#/配列長は内部)
+分類の則(器が決める): 閾= 數比較器の右項に立つ / 旗= 立つ比較器が悉く二値 literal(0|1・true|false・True|False)との字面比較か `if $名` の実行 / 状態変数= 残り。單項(-n/-z/-f/-x)は類の根拠にせぬ。
+此の器が意味せぬ事: 「状態変数」は「毒が効かぬ」の意ではない(30 の P1-P5 の左項は悉く状態変数の類)。類は「番人の形」を決める為の分類であり(閾→數の番人・旗→case の番人・状態→出所の番人)、害の有無は 30 で測る。
