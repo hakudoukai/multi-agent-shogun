@@ -39,7 +39,69 @@ set -euo pipefail
 SCRIPT_DIR="${__STOP_HOOK_SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 
 # ─── Read stdin (hook input JSON) ───
-INPUT=$(cat)
+# ★2026-09-16 裁 seq320321⑴(313209/314012) ―― stdin を時限読みへ(家老mac 自席の器・可逆・事後1便)★
+#   旧: `INPUT=$(cat)` は ★EOF が来る迄 永久に待つ★。呼び手が口を閉ぢ損ねれば席は永久に塞がる。
+#   本形: bash の `read -t` を使ふ ―― 之は ★内で select(2) を待つ★ ゆゑ裁の文言其の儘。
+#         `-d ''` は NUL 迄読む＝JSON に NUL は無い故、常に「EOF か時限」で戻る(rc≠0 が正常)。
+#         ★時限切れでも bash は讀めた分を変数へ入れる★(man bash: saves any partial input)。
+#   ★註(家老mac 實測 2026-09-16)★: 同じ裁の「全 read に timeout(10s)」は ★`cmd < "$f"` の形では効かぬ★。
+#     `<` 再向は shell が open() する故、timeout が exec される前に止まる(FIFO で 120 秒 戻らなんだ)。
+#     ∴ 門側は「時限」でなく ★開かぬ(stat)★ で直した。此處は fd が既に開いて居る故 時限が効く。
+#   下流は json.load の失敗時に既定へ倒れる形が既に在る ∴ 空・欠けでも新しい落ち枝は要らぬ。
+#   可逆: 下の塊を `INPUT=$(cat)` 一行へ戻せば旧挙動(控 = docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_hook_BEFORE.sh)。
+# ★甲(裁 seq322952)★ 閾は ★後で比べる時と同じ演算子★ で検めよ ―― 旧形の glob `*[!0-9]*` は
+#   20桁の十進を「數」として通すが、下の `[ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]` は
+#   2^63 超で rc=2 を返し ★黙つて else(時限切れを見ぬ側)へ落つる★。
+#   加へて `read -t <20桁>` は bash に ★拒まれ(invalid timeout specification)★ ―― 實測(當席 2026-09-17):
+#   rc=1・★讀めた字数 0★ ∴ hook 入力 JSON を ★丸ごと落として先へ進む★。而して上の rc=2 ゆゑ ★其の事を報せぬ★。
+#   裁 seq324588⑴(最重)。兄弟器 scripts/redundancy/shogun_report_watcher.sh L63-69 と同形。
+# ★裁 seq324588⑴ の治 ―― 當席(ashigaru-mac-3) 2026-09-17 實測★
+#   舊 `num_same_op` は「`-ge` が扱へるか」しか問はず、rc=1(＝0 と負)を ★通して居た★。
+#   實測(docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/_after/11,12,13):
+#     -5 / -1 → `read -t` が `invalid timeout specification` で摳ね ★即 rc=1・讀めた字数 0★
+#     0      → ★stderr 一行も出さず★ 一字も讀まぬ(regular file 供給でも同じ ∴ 競合に非ず)
+#   孰れも INPUT="" → L120 の json.load が倒れ stop_hook_active が常に False
+#   → ★無限ループ防ぎが消える★。「赤が青に成る」ではなく ★番人が居らぬ事に誰も気付かぬ★ 形。
+#   ∴ 「演算子が扱へるか」ではなく ★下流の二口が共に食へる範囲か★ を問ふ。
+#   上限 86400(1日): `read -t` の實受容上限は此の bash 3.2 で 4294967295 (2^32-1)
+#   だが(實測 _after/13)、其れは版に依る故、運用上有り得ぬ大きさで手前に切る。
+#   甲(裁 seq322952): 下流 `[ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]` と ★同じ -ge★ で検む。
+num_in_range() { [ "${1:-}" -ge 1 ] 2>/dev/null && [ "${1:-}" -le 86400 ] 2>/dev/null; }
+# ★空文字は `:-` が黙つて呑む★ ―― 裁 seq322952 乙「未設定/空文字/空白のみを分け、既定へ倒す時は必ず刷る」
+#   に依り、`:-` の前で「在るが空」を分けて刷る(未設定のみ黙る = 裁 seq323687⑵ 乙′・高頻度器の許し)。
+if [ -n "${STOP_HOOK_STDIN_TIMEOUT+x}" ] && [ -z "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+    echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が空文字 — 既定 10 へ倒す(fail-closed)★" >&2
+fi
+STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"
+if ! num_in_range "$STOP_HOOK_STDIN_TIMEOUT"; then
+    # ★乙(裁 seq323980⑵)★ 値を己の判定路へ刷る時、改行で ★偽の報せ行★ を生やさせぬ
+    case "$STOP_HOOK_STDIN_TIMEOUT" in
+        *␊*|*␍*|*␉*)
+            echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が可視印(␊␍␉)を既に含む — 値を刷らず既定 10 へ倒す(fail-closed・裁 seq323980⑵)★" >&2 ;;
+        *)
+            __th_vp="${STOP_HOOK_STDIN_TIMEOUT//$'\n'/␊}"; __th_vp="${__th_vp//$'\r'/␍}"; __th_vp="${__th_vp//$'\t'/␉}"
+            echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が 1〜86400 の整数に非ず(「${__th_vp}」) — 既定 10 へ倒す(fail-closed)★" >&2 ;;
+    esac
+    STOP_HOOK_STDIN_TIMEOUT=10
+fi
+INPUT=""
+__stdin_t0=$SECONDS
+if IFS= read -r -d '' -t "$STOP_HOOK_STDIN_TIMEOUT" INPUT; then
+    :
+else
+    __read_rc=$?
+    __stdin_el=$(( SECONDS - __stdin_t0 ))
+    # ★実測(家老mac 2026-09-16)★: 此の Mac の /bin/bash は 3.2 ゆゑ
+    #   `read -t` は★時限切れでも rc=1★ を返す(EOF と同じ出目)。
+    #   rc>128 は bash 4 以降の形であり、shebang は env bash(=brew bash 5)だが
+    #   呼び手が `/bin/bash <script>` なら 3.2 で走る ―― ★両方在り得る★。
+#   ★訂(當席 2026-09-17 實測)★: 此の Mac に bash 5 は ★無い★(command -v bash=/bin/bash 3.2.57・
+#   /opt/homebrew/bin/bash 不在) ∴ `env bash` も 3.2 へ解ける。上の「brew bash 5」は此の機では偽。
+    #   ∴ rc だけに頼らず、★経過秒★ でも分ける。
+    if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+        echo "[stop_hook] ★stdin 時限切れ(${STOP_HOOK_STDIN_TIMEOUT}秒経過・rc=${__read_rc}) — 讀めた ${#INPUT} 字で続行★" >&2
+    fi
+fi
 
 # ─── Identify agent ───
 if [ -n "${__STOP_HOOK_AGENT_ID+x}" ]; then
@@ -144,6 +206,22 @@ UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
 # その bash 実行で inbox_write 連鎖 → 自己増殖ループに陥る (5/7 18:00頃の事故)。
 # >5件は block せず、idle に戻して bulk ack を agent or human に委ねる。
 MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+# ★2026-09-16 非數の閾を塞ぐ(専任3 第39弾 の指摘・家老mac が code を讀んで確かめた)★
+#   旧: 閾が數でないと `[ n -gt 非數 ]` は rc=2 を返し、`if` は之を「偽」と讀む。
+#       `set -e` は if の條件には掛からぬ ∴ ★器は死なず、番人だけが黙る★。
+#       結果 塞ぐ帯が [1,5] から ★[1,∞)★ へ開き、5/7 の自己増殖ループの防ぎが消える。
+#       ―― 之は「赤が青に成る」でなく「番人が居らぬ事に誰も気付かぬ」形の疵である。
+#   本形: 閾も數も先に検め、數でなければ ★既定へ倒して其の旨を言ふ(fail-closed・黙らぬ)★。
+case "$MASS_UNREAD_THRESHOLD" in
+    ''|*[!0-9]*)
+        echo "[stop_hook] ★MASS_UNREAD_THRESHOLD が數でない(「${MASS_UNREAD_THRESHOLD}」) — 既定 5 へ倒す(fail-closed)★" >&2
+        MASS_UNREAD_THRESHOLD=5 ;;
+esac
+case "${UNREAD_COUNT:-0}" in
+    ''|*[!0-9]*)
+        echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+        UNREAD_COUNT=0 ;;
+esac
 if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
     FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
     touch "$FLAG"
