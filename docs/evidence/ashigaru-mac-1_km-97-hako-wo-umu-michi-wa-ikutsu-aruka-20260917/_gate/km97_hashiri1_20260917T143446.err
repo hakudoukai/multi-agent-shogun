@@ -1,0 +1,31 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★末尾空白 ―― raw/10_R1_files.nul に 2 行★
+★EOF改行が無い(0) ―― raw/10_R1_files.nul★
+★EOF改行 ―― raw/10_R1_hits.err は空file(0byte)★
+★EOF改行が無い(0) ―― raw/10_R2_files.nul★
+★EOF改行 ―― raw/10_R2_hits.err は空file(0byte)★
+★EOF改行が無い(0) ―― raw/10_R3_files.nul★
+★EOF改行 ―― raw/10_R3_hits.err は空file(0byte)★
+★EOF改行が無い(0) ―― raw/10_R4_files.nul★
+★EOF改行 ―― raw/10_R4_hits.err は空file(0byte)★
+★EOF改行 ―― raw/10_R4_hits.txt は空file(0byte)★
+★EOF改行が無い(0) ―― raw/15_R5_files.nul★
+★EOF改行 ―― raw/15_R5_hits.err は空file(0byte)★
+★末尾空白 ―― raw/20_ps_all.txt に 8 行★
+★末尾空白 ―― raw/30_gyou_all.txt に 1 行★
+★CR混入 ―― raw/30_gyou_all.txt に 112 行★
+★EOF改行が複数(末尾に空行) ―― raw/32_tsuiho_chikugo.txt★
+★EOF改行が無い(0) ―― raw/35_files.nul★
+★末尾空白 ―― raw/40_hako_jinkou.tsv に 19 行★
+★EOF改行 ―― raw/50_1_touten.out は空file(0byte)★
+★EOF改行 ―― raw/50_2_kuuhaku.out は空file(0byte)★
+★EOF改行 ―― raw/50_3_michi.out は空file(0byte)★
+★EOF改行 ―― raw/50_4_pane.err は空file(0byte)★
+★EOF改行 ―― raw/50_5_hako_nomi.err は空file(0byte)★
+★EOF改行 ―― raw/50_7_shibako.err は空file(0byte)★
+★條⑤ 寸法 ―― byte和 31467545(閾 10485760・裁294493)超★
+
+★出す前 門が落ちた。出すな。★

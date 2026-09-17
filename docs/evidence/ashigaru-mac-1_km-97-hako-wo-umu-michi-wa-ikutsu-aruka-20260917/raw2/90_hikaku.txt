@@ -1,0 +1,66 @@
+項	前(raw)	後(raw2)	差(後−前)
+10 R1 files	10060	11092	1032
+10 R1 hits	1005	1117	112
+10 R1 grep_rc	0	0	0
+10 R2 files	78	79	1
+10 R2 hits	7	7	0
+10 R2 grep_rc	0	0	0
+10 R3 files	7175	7175	0
+10 R3 hits	3591	3591	0
+10 R3 grep_rc	0	0	0
+10 R4 files	25	25	0
+10 R4 hits	0	0	0
+10 R4 grep_rc	1	1	0
+10 R1 陽性対照(門 自身 行)	8	8	0
+15 R5 files	185557	185592	35
+15 R5 hits	713	718	5
+20 ps 母數	755	751	-4
+20 ps hits	17	17	0
+30 gyou files(###)	68	68	0
+30 gyou lines	778	778	0
+30 gyou ★実体無★	0	0	0
+35 files	253	254	1
+35 any	121	121	0
+35 first	45	45	0
+35 tei_kouho	76	76	0
+40 箱数	19	19	0
+40 生pane数	7	7	0
+40 正名(pane有)	7	7	0
+40 異名:未知(pane無)	11	11	0
+40 異名:読点/空白	1	1	0
+50 1_touten rc	69	69	0
+50 2_kuuhaku rc	69	69	0
+50 3_michi rc	69	69	0
+50 4_pane rc	0	0	0
+50 5_hako_nomi rc	0	0	0
+50 6_allow rc	0	0	0
+50 7_shibako rc	0	0	0
+50 箱の名列 本数(前)	19	19	0
+50 箱の名列 同(前後)	yes	yes	-
+50 門sha16	d2265a07e232eb0b	d2265a07e232eb0b	-
+60 R1 合計	1005	1117	112
+60 R1 器	35	35	0
+60 R1 控	310	310	0
+60 R1 紙	631	743	112
+60 R1 試	29	29	0
+60 R2 合計	7	7	0
+60 R2 器	6	6	0
+60 R2 控	1	1	0
+60 R2 紙	0	0	0
+60 R2 試	0	0	0
+60 R3 合計	3591	3591	0
+60 R3 器	0	0	0
+60 R3 控	3590	3590	0
+60 R3 紙	1	1	0
+60 R3 試	0	0	0
+60 R4 合計	0	0	0
+60 R4 器	0	0	0
+60 R4 控	0	0	0
+60 R4 紙	0	0	0
+60 R4 試	0	0	0
+60 R5 合計	713	718	5
+60 R5 器	1	1	0
+60 R5 控	646	649	3
+60 R5 紙	66	68	2
+60 R5 試	0	0	0
+# 行=64 測れぬ=0 前=docs/evidence/ashigaru-mac-1_km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917/raw 後=docs/evidence/ashigaru-mac-1_km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917/raw2

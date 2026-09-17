@@ -1,0 +1,343 @@
+## inbox_watcher.sh 28-48
+    set -euo pipefail
+
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+    AGENT_ID="$1"
+    PANE_TARGET="$2"
+    CLI_TYPE="${3:-claude}"  # CLI種別（claude/codex/copilot）。未指定→claude（後方互換）
+
+    INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+    LOCKFILE="${INBOX}.lock"
+
+    if [ -z "$AGENT_ID" ] || [ -z "$PANE_TARGET" ]; then
+        echo "Usage: inbox_watcher.sh <agent_id> <pane_target> [cli_type]" >&2
+        exit 1
+    fi
+
+    # Initialize inbox if not exists
+    if [ ! -f "$INBOX" ]; then
+        mkdir -p "$(dirname "$INBOX")"
+        echo "messages: []" > "$INBOX"
+    fi
+
+## inbox_watcher.sh 418-445
+
+enqueue_recovery_task_assigned() {
+    (
+        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 300 ] && break; done; trap "rmdir '$_ld' 2>/dev/null" EXIT; fi
+        INBOX_PATH="$INBOX" AGENT_ID="$AGENT_ID" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+import datetime
+import os
+import uuid
+import yaml
+
+inbox = os.environ.get("INBOX_PATH", "")
+agent_id = os.environ.get("AGENT_ID", "agent")
+
+try:
+    with open(inbox, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+
+    messages = data.get("messages", []) or []
+
+    # Dedup guard: keep only one pending auto-recovery hint at a time.
+    for m in reversed(messages):
+        if (
+            m.get("from") == "inbox_watcher"
+            and m.get("type") == "task_assigned"
+            and m.get("read", False) is False
+            and "[auto-recovery]" in (m.get("content") or "")
+        ):
+            print("SKIP_DUPLICATE")
+## inbox_watcher.sh 512-535
+# mutation predicate in get_unread_info() so the fast path never reports a
+# false-positive count for stale notices that get_unread_info would exclude).
+get_unread_count_fast() {
+    INBOX_PATH="$INBOX" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+import datetime
+import json
+import os
+import yaml
+
+inbox = os.environ.get("INBOX_PATH", "")
+try:
+    with open(inbox, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    messages = data.get("messages", []) or []
+    now_iso = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None).isoformat()
+    by_id = {m.get("id"): m for m in messages if m.get("id")}
+    superseded_ids = {m.get("supersedes") for m in messages if m.get("supersedes") in by_id}
+
+    def _effectively_unread(m):
+        if m.get("read", False):
+            return False
+        if m.get("id") in superseded_ids:
+            return False
+        expires_at = m.get("expires_at")
+## inbox_watcher.sh 550-575
+get_unread_info() {
+    (
+        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 300 ] && break; done; trap "rmdir '$_ld' 2>/dev/null" EXIT; fi
+        INBOX_PATH="$INBOX" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+import datetime
+import json
+import os
+import yaml
+
+inbox = os.environ.get("INBOX_PATH", "")
+try:
+    with open(inbox, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+
+    messages = data.get("messages", []) or []
+
+    # Auto-expire/auto-supersede (backward compatible: messages without
+    # expires_at/supersedes are unaffected). Expired or superseded messages
+    # are flipped to read=true HERE, before unread/specials/normal_count are
+    # computed, so they are transparently excluded from unread count, nudge,
+    # Escape, /clear, FIRST_UNREAD_SEEN timer reset, and stop-hook's
+    # `read: false` grep — with zero changes needed to the Phase-3 escalation
+    # branches themselves. expires_at uses the same "%Y-%m-%dT%H:%M:%S"
+    # format as inbox_write.sh's TIMESTAMP, compared lexicographically.
+    now_iso = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None).isoformat()
+    by_id = {m.get("id"): m for m in messages if m.get("id")}
+## inbox_watcher.sh 1650-1665
+            # `|| true`: under `set -o pipefail`, a no-match grep returns 1 and would
+            # kill the daemon via `set -e` (ee4d6ce4 Step0 death-restart root-cure).
+            _token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1 || true)
+            if [ -n "$_token_match" ]; then
+                _token_num=$(echo "$_token_match" | grep -oE '[0-9]+(\.[0-9]+)?' || true)
+                _token_int=${_token_num%.*}
+                if [ "${_token_int:-0}" -ge 200 ]; then
+                    echo "[$(date)] [TOKEN-WARN] $AGENT_ID context size ${_token_match} (>= 200k) — sending warning to inbox" >&2
+                    bash "$SCRIPT_DIR/scripts/inbox_write.sh" "$AGENT_ID" \
+                        "【context size 警告】貴殿の claude session は ${_token_match} 消費中。200k 超で減速の可能性。区切りの良い所で /clear で context リセット推奨 (進捗 commit 後)。" \
+                        notification shogun 2>/dev/null || true
+                    LAST_TOKEN_WARN_TS=$_now_token
+                fi
+            fi
+        fi
+    fi
+## watcher_supervisor.sh 10-30
+#     非常時 +1: 足軽3 (本 supervisor は通常 5体のみ管理、足軽3 は手動起動)
+#   足軽4: 欠番 (PC 境界の視覚的区切り)
+#   SecondPC: 足軽5/6/7/8 (本 supervisor 管理外、SecondPC 側で別 supervisor 起動)
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$SCRIPT_DIR"
+
+mkdir -p logs queue/inbox
+
+# Manual disable flags (Watcher Design Principles 必須項目)
+GLOBAL_DISABLE="$HOME/.openclaw/global_disable"
+SUPERVISOR_DISABLE="$HOME/.openclaw/disable_watcher_supervisor"
+
+ensure_inbox_file() {
+    local agent="$1"
+    if [ ! -f "queue/inbox/${agent}.yaml" ]; then
+        printf 'messages: []\n' > "queue/inbox/${agent}.yaml"
+    fi
+}
+
+pane_exists() {
+## shutsujin_departure.sh 436-448 / 966-978
+status: idle
+result: null
+EOF
+
+    # ntfy inbox リセット
+    echo "inbox:" > ./queue/ntfy_inbox.yaml
+
+    # agent inbox リセット
+    for agent in nobunaga hideyoshi $_ASHIGARU_IDS_STR ieyasu; do
+        echo "messages:" > "./queue/inbox/${agent}.yaml"
+    done
+
+    log_success "✅ 陣払い完了"
+    log_info "📬 メールボックス監視を起動中..."
+
+    # inbox ディレクトリ初期化（シンボリックリンク先のLinux FSに作成）
+    mkdir -p "$SCRIPT_DIR/logs"
+    for agent in nobunaga hideyoshi $_ASHIGARU_IDS_STR ieyasu; do
+        [ -f "$SCRIPT_DIR/queue/inbox/${agent}.yaml" ] || echo "messages:" > "$SCRIPT_DIR/queue/inbox/${agent}.yaml"
+    done
+
+    # 既存のwatcherと孤児inotifywait/fswatchをkill
+    pkill -f "inbox_watcher.sh" 2>/dev/null || true
+    pkill -f "inotifywait.*queue/inbox" 2>/dev/null || true
+    pkill -f "fswatch.*queue/inbox" 2>/dev/null || true
+    sleep 1
+## bulk_ack.sh 78-120
+TOTAL_PROTECTED=0
+
+for AGENT in $AGENTS; do
+    INBOX="$SCRIPT_DIR/queue/inbox/${AGENT}.yaml"
+    if [ ! -f "$INBOX" ]; then
+        continue
+    fi
+
+    # backup
+    if [ "$DRY_RUN" != "true" ]; then
+        cp "$INBOX" "${INBOX}.bak.$(date '+%Y%m%d_%H%M%S')_bulkack"
+    fi
+
+    # process via python (yaml safe)
+    EXCLUDE="$EXCLUDE_TYPES" DRY_RUN="$DRY_RUN" \
+    python3 - "$INBOX" "$AGENT" <<'PYEOF'
+import yaml, sys, os
+inbox_path, agent_id = sys.argv[1], sys.argv[2]
+exclude_types = set(t.strip() for t in os.environ.get('EXCLUDE','').split(',') if t.strip())
+dry_run = os.environ.get('DRY_RUN','') == 'true'
+
+with open(inbox_path) as f:
+    data = yaml.safe_load(f) or {}
+msgs = data.get('messages', []) or []
+
+acked = 0
+protected = 0
+for m in msgs:
+    if m.get('read', True):
+        continue
+    msg_type = m.get('type', '')
+    if msg_type in exclude_types:
+        protected += 1
+        continue
+    if not dry_run:
+        m['read'] = True
+    acked += 1
+
+if not dry_run and acked > 0:
+    with open(inbox_path, 'w') as f:
+        yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False)
+
+prefix = "[DRY-RUN] " if dry_run else ""
+## inbox_mark_read.py 25-80
+    return m.group(1) if m else None
+
+def blocks(s): return re.split(r'\n(?=- )', s)
+
+# ★2026-09-04 追加(將軍mac 自過失の治め)★
+# 舊實装は錠を取らず read-modify-write してゐた ∴ inbox_write.sh と競合し
+#  ・當方の既讀印が黙つて戻る(實測: msg_20260904_022655 が read:false へ復歸)
+#  ・逆向きに★書込中に着いた便を消し得る★(同じ競合の、より危險な側)
+# 本機は flock 缺(實測) ∴ inbox_write.sh の實經路は mkdir("<inbox>.lock.d")。
+# ★共有器は不觸★。同じ約束を★此方が守る★だけである。取れねば★印を打たぬ(fail-closed)★。
+import os, time
+class InboxLock:
+    def __init__(self, path, timeout=5.0):
+        self.d = path + '.lock.d'; self.timeout = timeout; self.held = False
+    def __enter__(self):
+        t0 = time.time()
+        while True:
+            try:
+                os.mkdir(self.d); self.held = True; return self
+            except FileExistsError:
+                if time.time() - t0 > self.timeout:
+                    raise TimeoutError('lock 取得できず: ' + self.d)
+                time.sleep(0.05)
+    def __exit__(self, *a):
+        if self.held:
+            try: os.rmdir(self.d)
+            except OSError: pass
+        return False
+
+def main():
+    if len(sys.argv) < 3:
+        sys.stderr.write(__doc__); return 2
+    path, args = sys.argv[1], sys.argv[2:]
+    if args[0] == '--list-unread':
+        s = open(path, encoding='utf-8').read()
+        for b in blocks(s):
+            if 'read: false' in b:
+                i = block_id(b); t = re.search(r"^  timestamp: '([^']+)'", b, re.M)
+                print(i or '?', t.group(1) if t else '?')
+        return 0
+    want, hit, out = set(args), set(), []
+    try:
+        with InboxLock(path):
+            # ★錠を取つた後に讀む★(取る前に讀んだ物で書けば、待つた意味が無い)
+            s = open(path, encoding='utf-8').read()
+            for b in blocks(s):
+                i = block_id(b)
+                if i and i in want and 'read: false' in b:
+                    b = b.replace('read: false', 'read: true', 1); hit.add(i)
+                out.append(b)
+            open(path, 'w', encoding='utf-8').write('\n'.join(out))
+    except TimeoutError as e:
+        sys.stderr.write('★印を打たず終る(fail-closed)★: %s\n' % e); return 6
+    miss = want - hit
+    print('marked=%d %s' % (len(hit), ' '.join(sorted(hit))))
+    if miss:
+## karo_mac_mark.py
+#!/usr/bin/env python3
+# karo-mac private instrument: mark inbox entries read under the SAME lock inbox_write.sh uses
+# (mkdir "<inbox>.lock.d", 5 s wait). Read only after the lock is held. If the lock is not
+# acquired: write nothing, print UNMARKED (fail-closed). Never touches inbox_write.sh.
+import os, sys, time
+p = sys.argv[1]; ids = sys.argv[2:]
+lock = p + ".lock.d"; got = False
+for _ in range(50):
+    try:
+        os.mkdir(lock); got = True; break
+    except FileExistsError:
+        time.sleep(0.1)
+if not got:
+    print("UNMARKED lock_not_acquired", p); sys.exit(2)
+try:
+    with open(p, "r", encoding="utf-8") as f: t = f.read()
+    n = t
+    for i in ids: n = n.replace(f"  id: {i}\n  read: false", f"  id: {i}\n  read: true")
+    if n != t:
+        tmp = p + ".karo_tmp"
+        with open(tmp, "w", encoding="utf-8") as f: f.write(n)
+        os.replace(tmp, p)
+    print("marked", sum(1 for i in ids if f"  id: {i}\n  read: false" in t), "unread", n.count("read: false"))
+finally:
+    os.rmdir(lock)
+## orphan_inbox_trap.py 15-60
+
+try:
+    import yaml
+except ImportError:
+    print("YAML_MODULE_MISSING")
+    sys.exit(2)
+
+base = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser("~/multi-agent-shogun")
+inbox = os.path.join(base, "queue/inbox")
+if not os.path.isdir(inbox):
+    print(f"NO_INBOX_DIR\t{inbox}")
+    sys.exit(0)
+
+now = time.time()
+try:
+    ps_out = subprocess.run(["pgrep", "-af", "inbox_watcher"],
+                            capture_output=True, text=True, timeout=10).stdout
+except Exception:
+    ps_out = ""
+
+flagged = 0
+boxes = 0
+print("agent\ttotal\tunread\tnewest_unread\twatcher\tflag\tmtime_h\tverdict")
+for f in sorted(glob.glob(inbox + "/*.yaml")):
+    agent = os.path.basename(f)[:-5]
+    if agent.startswith("_"):
+        continue
+    if os.path.islink(f):
+        # 別名(symlink)は実体側で数える。別名自体をverdict対象にすると
+        # 監視下の箱への別名が永久に偽陽性を出す(2026-08-16 gunshi/karoで実測)
+        print(f"{agent}\t(alias)\t→{os.readlink(f)}\t\t\t\t\talias")
+        continue
+    boxes += 1
+    try:
+        d = yaml.safe_load(open(f, encoding="utf-8")) or {}
+    except Exception as e:
+        print(f"{agent}\tPARSE_ERR\t{str(e)[:40]}\t\t\t\t\t★読めない箱★")
+        flagged += 1
+        continue
+    msgs = d.get("messages") or []
+    unread = [m for m in msgs if isinstance(m, dict) and not m.get("read")]
+    newest_unread = max((str(m.get("timestamp", "")) for m in unread), default="")
+    watcher = "yes" if (f"inbox_watcher.sh {agent} " in ps_out) else "NO"
+    flag_paths = glob.glob(os.path.expanduser(f"~/.openclaw/disable_inbox_watcher_{agent}"))
+    flag = "FLAG" if flag_paths else "-"
+    mtime_h = (now - os.path.getmtime(f)) / 3600

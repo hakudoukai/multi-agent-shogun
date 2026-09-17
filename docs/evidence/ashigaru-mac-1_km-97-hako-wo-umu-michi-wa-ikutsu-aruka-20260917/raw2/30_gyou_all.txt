@@ -1,0 +1,778 @@
+### ./.claude/settings.json (hit行=2)
+63:    "Bash(bash scripts/inbox_write.sh:*)",
+64:    "Bash(cd /Users/momizimac/multi-agent-shogun && bash scripts/inbox_write.sh:*)",
+### ./config/settings.yaml (hit行=4)
+62:    - hakudokai_inbox_write.py
+102:# agent が所属するPCを定義。別PCのagentへの inbox_write は Supabase経由で配信。
+117:    # 同一 agent_id が main_pc と併存するが、router local-first (inbox_write.sh) で各 PC 内 local 解決。
+127:  #   fukuincho_pc を pc_mapping に新規追加。これで inbox_write.sh の cross-PC bridge
+### ./lib/cli_adapter.sh (hit行=1)
+351:            echo "Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message -t \"\$TMUX_PANE\" -p '#{@agent_id}' to identify yourself. 2) Read queue/tasks/${agent_id}.yaml. 3) Read queue/
+### ./scripts/agent_health_check.sh (hit行=12)
+188:# 信長 inbox への alert 配信 (= scripts/inbox_write.sh 経由、self-send/amplification guard 通過)。
+192:#   bats test 等で TEST_MODE=1 が設定されていれば実 inbox_write を抑制し、
+193:#   TEST_INBOX_WRITE_LOG が指定されていれば呼出記録のみ残す (= production 動作影響なし)。
+196:        if [ -n "${TEST_INBOX_WRITE_LOG:-}" ]; then
+197:            printf 'shogun\t%s\t%s\n' "${2:-task_assigned}" "$1" >> "$TEST_INBOX_WRITE_LOG" 2>/dev/null || true
+202:    [ -x "$SCRIPT_DIR/scripts/inbox_write.sh" ] || return 0
+203:    bash "$SCRIPT_DIR/scripts/inbox_write.sh" shogun "$content" "$type" health_check 2>>"$LOG" || \
+204:        echo "[health_check][${CORR_ID}] shogun inbox_write failed" >> "$LOG"
+249:    inbox="$SCRIPT_DIR/queue/inbox/${a}.yaml"
+254:        ALERTS+=("ERR-INBOX-OVERFLOW: ${a} unread=${n} (threshold=10, loop の前兆)")
+268:            "grep -c 'read: false' ~/projects/multi-agent-shogun/queue/inbox/${a}.yaml 2>/dev/null || echo 0" 2>/dev/null)
+271:            ALERTS+=("ERR-INBOX-OVERFLOW: SecondPC ${a} unread=${n}")
+### ./scripts/agent_periodic_push.sh (hit行=3)
+13:#   4. 家老に「全体前進催促」inbox_write
+108:if [ -x "$SCRIPT_DIR/scripts/inbox_write.sh" ]; then
+109:    bash "$SCRIPT_DIR/scripts/inbox_write.sh" karo "$MSG" status_update shogun >>"$LOG" 2>&1 || true
+### ./scripts/agent_status.sh (hit行=1)
+199:    local inbox_file="$SCRIPT_DIR/queue/inbox/${agent_id}.yaml"
+### ./scripts/bulk_ack.sh (hit行=7)
+81:    INBOX="$SCRIPT_DIR/queue/inbox/${AGENT}.yaml"
+82:    if [ ! -f "$INBOX" ]; then
+88:        cp "$INBOX" "${INBOX}.bak.$(date '+%Y%m%d_%H%M%S')_bulkack"
+93:    python3 - "$INBOX" "$AGENT" <<'PYEOF'
+95:inbox_path, agent_id = sys.argv[1], sys.argv[2]
+99:with open(inbox_path) as f:
+117:    with open(inbox_path, 'w') as f:
+### ./scripts/checks/inbox_alias_integrity.sh (hit行=5)
+2:# inbox_alias_integrity.sh — queue/inbox/ alias↔canonical symlink integrity audit
+18:# Timeout: 5秒上限を想定 (= queue/inbox/ は小さい想定)。
+27:  "queue/inbox/shogun.yaml:queue/inbox/nobunaga.yaml"
+28:  "queue/inbox/karo.yaml:queue/inbox/hideyoshi.yaml"
+29:  "queue/inbox/gunshi.yaml:queue/inbox/ieyasu.yaml"
+### ./scripts/checks/secondpc_dispatch.sh (hit行=9)
+32:SP_INBOX_AGE=$(ssh -o ConnectTimeout=5 -o BatchMode=yes hakudokai@192.168.11.47 \
+33:    "stat -c %Y ~/projects/multi-agent-shogun/queue/inbox/${TARGET}.yaml 2>/dev/null" 2>/dev/null)
+34:SP_INBOX_AGE=${SP_INBOX_AGE:-0}
+35:SP_INBOX_AGE_DIFF=$(( $(date +%s) - SP_INBOX_AGE ))
+39:echo "  SecondPC inbox 最終書込: ${SP_INBOX_AGE_DIFF}s 前"
+42:if [ "$SP_INBOX_AGE_DIFF" -gt "$TASK_AGE" ]; then
+43:    diff_min=$(( (SP_INBOX_AGE_DIFF - TASK_AGE) / 60 ))
+45:    echo "     対処: bash scripts/inbox_write.sh $TARGET '<task content>' task_assigned karo" >&2
+50:if [ "$TASK_AGE" -lt 300 ] && [ "$SP_INBOX_AGE_DIFF" -lt "$TASK_AGE" ]; then
+### ./scripts/checks/symlink_aware_atomic_write.sh (hit行=1)
+95:  echo "[symlink_aware_atomic_write]   - 例: scripts/inbox_write.sh L222- (commit dd706ad) を参考" >&2
+### ./scripts/fukuincho_report_poke_bundle.py (hit行=25)
+15:  - 報告 INSERT 経路 = ★scripts/inbox_write.sh 再利用★ (新規 writer 新設禁)
+23:  2. 報告 INSERT (inbox_write.sh shell out、Supabase pc_handshake cross-PC bridge 自動同梱)
+329:# 報告 INSERT 実行 (要件 §2 — INSERT 経路は inbox_write.sh 再利用)
+341:# inbox_write.sh に content を stdin で渡すための placeholder + env (S2 cure)
+342:_INBOX_WRITE_STDIN_PLACEHOLDER = "__VIA_STDIN__"
+343:_INBOX_WRITE_STDIN_ENV = "INBOX_WRITE_CONTENT_STDIN"
+346:def report_insert_via_inbox_write(
+351:    inbox_write_path: Optional[str] = None,
+355:    """既存 inbox_write.sh 経由で報告 INSERT を実行 (FKI-NO-DUP 順守)。
+362:        inbox_write_path: scripts/inbox_write.sh への absolute path (省略時=本 file と同 dir)
+368:        rc=0 → INSERT 成功 (Supabase cross-PC bridge は inbox_write.sh 内 background 実行)
+371:    ★FKI-NO-DUP★: 直接 Supabase REST 叩かない。inbox_write.sh が唯一の正規 writer。
+374:       露出 cure)。env INBOX_WRITE_CONTENT_STDIN=1 で inbox_write.sh が stdin を受領、$2
+377:    if inbox_write_path is None:
+378:        inbox_write_path = os.path.join(HERE, "inbox_write.sh")
+384:    env[_INBOX_WRITE_STDIN_ENV] = "1"
+390:                "bash", inbox_write_path,
+392:                _INBOX_WRITE_STDIN_PLACEHOLDER,  # $2 はダミー placeholder、bash が stdin で上書き
+410:            stderr="inbox_write.sh timeout",
+906:    inbox_write_path: Optional[str] = None,
+921:        inbox_write_path: inbox_write.sh path (省略時=本 file 同 dir)
+933:      3. inbox_write.sh で報告 INSERT
+971:        # 報告 INSERT (FKI-NO-DUP: inbox_write.sh 再利用)
+972:        insert_result = report_insert_via_inbox_write(
+977:            inbox_write_path=inbox_write_path,
+### ./scripts/inbox_watcher.sh (hit行=33)
+24:# When __INBOX_WATCHER_TESTING__=1, only function definitions are loaded.
+26:# Test code sets variables (AGENT_ID, PANE_TARGET, CLI_TYPE, INBOX) externally.
+27:if [ "${__INBOX_WATCHER_TESTING__:-}" != "1" ]; then
+35:    INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+36:    LOCKFILE="${INBOX}.lock"
+44:    if [ ! -f "$INBOX" ]; then
+45:        mkdir -p "$(dirname "$INBOX")"
+46:        echo "messages: []" > "$INBOX"
+77:    INBOX_WATCHER_OS="$(uname -s)"
+78:    if [ "$INBOX_WATCHER_OS" = "Darwin" ]; then
+318:    if [[ "$effective_cli" == "claude" ]] && [ -f "$INBOX" ]; then
+320:        current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+354:    [ -f "$INBOX" ] || return 0
+356:    current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+422:        INBOX_PATH="$INBOX" AGENT_ID="$AGENT_ID" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+428:inbox = os.environ.get("INBOX_PATH", "")
+515:    INBOX_PATH="$INBOX" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+521:inbox = os.environ.get("INBOX_PATH", "")
+553:        INBOX_PATH="$INBOX" "$SCRIPT_DIR/.venv/bin/python3" - << 'PY'
+559:inbox = os.environ.get("INBOX_PATH", "")
+573:    # format as inbox_write.sh's TIMESTAMP, compared lexicographically.
+776:        startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yaml. 3) Read queue/inbox/${AGENT_ID}.yaml, mark re
+939:    bash "$SCRIPT_DIR/scripts/inbox_write.sh" karo-mac "$msg" notification inbox_watcher 2>/dev/null || true
+940:    bash "$SCRIPT_DIR/scripts/inbox_write.sh" iincho "$msg" notification inbox_watcher 2>/dev/null || true
+1028:# Bypass flag (緊急時): INBOX_WATCHER_DISABLE_TYPING_CHECK=1 で typing 検出全体を無効化可。
+1032:    if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+1301:    if [ -f "$INBOX" ]; then
+1302:        read_bytes=$(wc -c < "$INBOX" 2>/dev/null || echo 0)
+1561:if [ "${__INBOX_WATCHER_TESTING__:-}" != "1" ]; then
+1589:            gtimeout "$INOTIFY_TIMEOUT" fswatch -1 --event Updated --event Renamed "$INBOX" 2>/dev/null
+1595:            fswatch -1 --event Updated --event Renamed "$INBOX" &>/dev/null &
+1613:        inotifywait -q -t "$INOTIFY_TIMEOUT" -e modify -e close_write "$INBOX" 2>/dev/null
+1658:                    bash "$SCRIPT_DIR/scripts/inbox_write.sh" "$AGENT_ID" \
+### ./scripts/inbox_write.sh (hit行=51)
+2:# inbox_write.sh — メールボックスへのメッセージ書き込み（排他ロック付き）
+4:#   通常 (argv 経由): bash scripts/inbox_write.sh <target_agent> <content> <type> <from>
+6:#       INBOX_WRITE_CONTENT_STDIN=1 bash scripts/inbox_write.sh <target> __VIA_STDIN__ <type> <from> < <(echo "$CONTENT")
+7:#       env INBOX_WRITE_CONTENT_STDIN=1 が立っている時は $2 を無視して stdin から content を読む。
+9:# Example: bash scripts/inbox_write.sh karo "足軽5号、任務完了" report_received ashigaru5
+21:if [ "${INBOX_WRITE_CONTENT_STDIN:-}" = "1" ]; then
+25:INBOX="$SCRIPT_DIR/queue/inbox/${TARGET}.yaml"
+26:LOCKFILE="${INBOX}.lock"
+30:    echo "Usage: inbox_write.sh <target_agent> <content> <type> <from>" >&2
+39:# 白名簿は★焼かず實測で作る★: ⑴生きた pane の @agent_id ⑵既存の正名箱(queue/inbox/*.yaml)。
+47:        ls -1 "$SCRIPT_DIR/queue/inbox" 2>/dev/null | sed -n 's/\.yaml$//p'
+51:    echo "[inbox_write] REJECTED: ★宛名に読点/空白★ (target=$TARGET) ―― 二名を一字で渡した跡。" >&2
+52:    echo "[inbox_write]   一名づつ二度書け。此の形は IW_ALLOW_NAME でも通らぬ。" >&2
+57:    echo "[inbox_write] REJECTED: ★白名簿が空★(pane も箱も讀めぬ) ―― 名を検められぬ故 書かぬ(fail-closed)。" >&2
+63:        echo "[inbox_write] ★註★ 未知の名 '$TARGET' を IW_ALLOW_NAME で通した ―― 理由=${IW_ALLOW_NAME}" >&2
+64:        echo "[inbox_write]   ★新しい箱が生れる★。報告に此の理由を書け(裁 seq325654③)。" >&2
+66:        echo "[inbox_write] REJECTED: ★未知の宛名★ '$TARGET' ―― 箱を生ませぬ(fail-closed)。" >&2
+67:        echo "[inbox_write]   ★許可名(實測)★:" >&2
+68:        printf '%s\n' "$_IW_NAMES" | sed 's/^/[inbox_write]     /' >&2
+69:        echo "[inbox_write]   綴りが違ふなら直せ。真に新しい席なら IW_ALLOW_NAME=<理由 10字超> を付けよ。" >&2
+85:        echo "[inbox_write] $_DG_OUT" >&2
+89:    echo "[inbox_write] WARN: deferral_gate.py missing; content not checked" >&2
+96:    echo "[inbox_write] REJECTED: self-send detected (from=$FROM, target=$TARGET)" >&2
+100:# ===== DEAD-INBOX-GATE (総監督裁 seq322250・2026-09-17) =====
+102:# (實測 2026-09-17: queue/inbox/gunshi-mac.yaml 母數565通・read:true 0通)。
+113:            echo "[inbox_write] REJECTED: ★${TARGET} は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。" >&2
+114:            echo "[inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc / target_agent=${TARGET} / parent_seq=元便)。" >&2
+115:            echo "[inbox_write]   足軽席は DB の sender を持たぬ ―― ★家老mac へ回せ。家老が代送する。★" >&2
+116:            echo "[inbox_write]   承知の上で書くなら IW_DEAD_ALLOW=1 を付けよ。" >&2
+124:if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
+132:    echo "[inbox_write] REJECTED: amplification loop detected (${_AMP_PATTERN_COUNT} embedded headers in content, threshold=3) target=$TARGET from=$FROM" >&2
+203:        echo "[inbox_write] WARN: cross-PC bridge skipped (no Supabase env)" >&2
+217:# 旗優先で立てる。環境変数 INBOX_REQUIRES_RESPONSE=1/true/yes の時のみ True。語の求語表は持たぬ(旗のみ)。
+218:_rr = os.environ.get("INBOX_REQUIRES_RESPONSE", "").strip().lower() in ("1", "true", "yes")
+249:        echo "[inbox_write] cross-PC bridge: ${target} → ${target_pc} via Supabase" >&2
+252:    echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-000}, curl_rc=$curl_rc)" >&2
+273:if [ ! -f "$INBOX" ]; then
+274:    mkdir -p "$(dirname "$INBOX")"
+275:    echo "messages: []" > "$INBOX"
+315:        INBOX_CONTENT="$CONTENT" INBOX_EXPIRES_AT="${INBOX_EXPIRES_AT:-}" INBOX_SUPERSEDES_ID="${INBOX_SUPERSEDES_ID:-}" "$SCRIPT_DIR/.venv/bin/python3" -c "
+320:    with open('$INBOX') as f:
+339:        'content': os.environ.get('INBOX_CONTENT', ''),
+341:        'expires_at': os.environ.get('INBOX_EXPIRES_AT') or None,
+342:        'supersedes': os.environ.get('INBOX_SUPERSEDES_ID') or None
+355:            _adir = os.path.join(os.path.dirname(os.path.realpath('$INBOX')), '_archive')  # realpath: alias/実体のarchive二重化防止(a6指摘)
+357:            _abase = os.path.basename(os.path.realpath('$INBOX'))
+364:            print('[inbox_write] CAP_ROTATED: ' + str(len(dropped)) + ' read messages moved to ' + _apath, file=sys.stderr)
+373:    # 2026-05-08 incident: queue/inbox/ split-brain. When INBOX was a symlink
+379:    inbox_canonical = os.path.realpath('$INBOX')
+402:            echo "[inbox_write] Lock timeout for $INBOX (attempt $attempt/$max_attempts), retrying..." >&2
+405:            echo "[inbox_write] Failed to acquire lock after $max_attempts attempts for $INBOX" >&2
+### ./scripts/karo_overload_monitor.sh (hit行=14)
+59:: "${KARO_INBOX:=$REPO_ROOT/queue/inbox/karo.yaml}"
+61:: "${TAKENAKA_INBOX:=$REPO_ROOT/queue/inbox/takenaka.yaml}"
+62:: "${SHOGUN_INBOX:=$REPO_ROOT/queue/inbox/shogun.yaml}"
+63:: "${INBOX_WRITE_CMD:=$SCRIPT_DIR/inbox_write.sh}"
+226:    if [ ! -f "$KARO_INBOX" ]; then
+227:        log_json WARN "karo_inbox_missing" "\"file\":\"$KARO_INBOX\""
+231:    python3 - "$KARO_INBOX" "$NOW_EPOCH" <<'PYEOF' 2>/dev/null || echo "0|0|0|0|parse_error"
+345:    # inbox_write.sh 経由 (= D006 違反なし、self-send guard あり)
+350:    if [ -x "$INBOX_WRITE_CMD" ] || [ -f "$INBOX_WRITE_CMD" ]; then
+351:        if bash "$INBOX_WRITE_CMD" takenaka "$content" assist_request nobunaga >/dev/null 2>&1; then
+354:            log_json ERROR "takenaka_inbox_write_failed" "\"err_code\":\"ERR-INFRA-OVERLOAD-001\""
+359:        if bash "$INBOX_WRITE_CMD" shogun "$shogun_content" karo_overload_alert nobunaga >/dev/null 2>&1; then
+362:            log_json ERROR "shogun_inbox_write_failed" "\"err_code\":\"ERR-INFRA-OVERLOAD-002\""
+365:        log_json ERROR "inbox_write_cmd_unavailable" "\"path\":\"$INBOX_WRITE_CMD\""
+### ./scripts/karo_standby_dashboard.sh (hit行=5)
+7:#   ローカル queue/inbox の未読・watcher プロセス・tmux fleet pane 状態のみ参照。
+26:INBOX_DIR="$ROOT/queue/inbox"
+52:  local f="$INBOX_DIR/$1.yaml" n
+144:  if [[ -f "$INBOX_DIR/$SELF.yaml" ]]; then
+156:      }' "$INBOX_DIR/$SELF.yaml"
+### ./scripts/lib/detect_stale.sh (hit行=1)
+250:# enqueue (層③ omni engine 呼出 — 既存 inbox_write.sh 経路を wrap)
+### ./scripts/lib/inbox_path.sh (hit行=26)
+2:# scripts/lib/inbox_path.sh — inbox path SSoT 解決ライブラリ
+4:# Phase 0 反省点 u (= bulk_ack/inbox_write/inbox_watcher 三者間の path 想定不一致) への対応。
+8:#   source scripts/lib/inbox_path.sh
+9:#   inbox_path=$(get_inbox_path "hideyoshi")
+12:#   - v1 path: queue/inbox/<agent>.yaml (旧、symlink risk あり)
+13:#   - v2 path: queue/inbox_v2/<agent>.yaml (新、workspace 内固定、symlink 廃止)
+14:#   - migration 期間: v1 + v2 両方の存在を確認、INBOX_VERSION 環境変数で切替
+23:_INBOX_PATH_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+24:_INBOX_PATH_PROJECT_ROOT="$(cd "${_INBOX_PATH_LIB_DIR}/../.." && pwd)"
+27:INBOX_VERSION="${INBOX_VERSION:-v1}"
+29:# get_inbox_path <agent_id>
+31:get_inbox_path() {
+34:        echo "[inbox_path.sh] ERROR: agent_id required" >&2
+37:    case "$INBOX_VERSION" in
+39:            echo "${_INBOX_PATH_PROJECT_ROOT}/queue/inbox/${agent}.yaml"
+42:            echo "${_INBOX_PATH_PROJECT_ROOT}/queue/inbox_v2/${agent}.yaml"
+45:            echo "[inbox_path.sh] ERROR: unknown INBOX_VERSION=$INBOX_VERSION" >&2
+54:    case "$INBOX_VERSION" in
+56:            echo "${_INBOX_PATH_PROJECT_ROOT}/queue/inbox"
+59:            echo "${_INBOX_PATH_PROJECT_ROOT}/queue/inbox_v2"
+68:    echo "${_INBOX_PATH_PROJECT_ROOT}/queue/watchers/${agent}.health"
+75:    echo "${_INBOX_PATH_PROJECT_ROOT}/queue/dead_letter/${agent}"
+82:    echo "${_INBOX_PATH_PROJECT_ROOT}/queue/session_health/${agent}.yaml"
+93:        "${_INBOX_PATH_PROJECT_ROOT}"*)
+107:    path=$(get_inbox_path "$agent")
+111:        echo "[inbox_path.sh] WARN: $path not within workspace, Codex sandbox may block" >&2
+### ./scripts/ntfy_listener.sh (hit行=7)
+12:INBOX="$SCRIPT_DIR/queue/ntfy_inbox.yaml"
+13:LOCKFILE="${INBOX}.lock"
+29:if [ ! -f "$INBOX" ]; then
+30:    echo "inbox:" > "$INBOX"
+61:        NTFY_INBOX_PATH="$INBOX" \
+74:path = os.environ["NTFY_INBOX_PATH"]
+171:        bash "$SCRIPT_DIR/scripts/inbox_write.sh" shogun \
+### ./scripts/redundancy/shogun_report_watcher.sh (hit行=8)
+80:INBOX_WRITE="$SCRIPT_DIR/scripts/inbox_write.sh"
+104:if [ ! -x "$INBOX_WRITE" ] && [ ! -f "$INBOX_WRITE" ]; then
+105:  echo "$LOG_PREFIX ERROR: inbox_write.sh not found at $INBOX_WRITE" >&2
+283:  if [ -x "$INBOX_WRITE" ]; then
+284:    "$INBOX_WRITE" shogun "$content" notification shogun_report_watcher \
+285:      || echo "$LOG_PREFIX WARN: inbox_write failed for $report_name" >&2
+287:    bash "$INBOX_WRITE" shogun "$content" notification shogun_report_watcher \
+288:      || echo "$LOG_PREFIX WARN: inbox_write failed for $report_name" >&2
+### ./scripts/slim_yaml.sh (hit行=1)
+8:# ensuring no concurrent modifications to YAML files (same pattern as inbox_write.sh).
+### ./scripts/stop_hook_inbox.sh (hit行=15)
+8:#   2. Auto-notifies karo via inbox_write (background, non-blocking)
+115:INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+130:    WATCH_TARGETS_ACTIVE=("$INBOX")
+144:    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+174:        bash "$SCRIPT_DIR/scripts/inbox_write.sh" karo \
+181:INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+183:if [ ! -f "$INBOX" ]; then
+191:UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+195:# その bash 実行で inbox_write 連鎖 → 自己増殖ループに陥る (5/7 18:00頃の事故)。
+226:    WATCH_TARGETS=("$INBOX")
+240:    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+261:__STOP_HOOK_INBOX="$INBOX" __STOP_HOOK_AGENT_ID_OUT="$AGENT_ID" \
+266:inbox = os.environ['__STOP_HOOK_INBOX']
+286:reason = f'inbox未読{count}件あり。queue/inbox/{agent_id}.yamlを読んで処理せよ。内容: {summary}'
+288:" 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+### ./scripts/tests/test_fukuincho_report_poke_bundle.py (hit行=43)
+45:    report_insert_via_inbox_write,
+54:    _INBOX_WRITE_STDIN_PLACEHOLDER,
+55:    _INBOX_WRITE_STDIN_ENV,
+213:def test_report_insert_via_inbox_write_uses_runner():
+214:    """inbox_write.sh を subprocess.run 互換 runner で叩くことを確認 (FKI-NO-DUP evidence)。
+230:    result = report_insert_via_inbox_write(
+235:        inbox_write_path="/tmp/fake_inbox_write.sh",
+241:    assert captured["cmd"][1] == "/tmp/fake_inbox_write.sh"
+244:    assert captured["cmd"][3] == _INBOX_WRITE_STDIN_PLACEHOLDER
+254:    # ★S2 cure verify★: env に INBOX_WRITE_CONTENT_STDIN=1
+256:    assert env.get(_INBOX_WRITE_STDIN_ENV) == "1", \
+257:        f"env must enable stdin mode, got {env.get(_INBOX_WRITE_STDIN_ENV)!r}"
+267:    result = report_insert_via_inbox_write(
+269:        inbox_write_path="/tmp/fake.sh",
+482:            inbox_write_path="/tmp/fake.sh",
+532:            inbox_write_path="/tmp/fake.sh",
+560:            inbox_write_path="/tmp/fake.sh",
+577:            inbox_write_path="/tmp/fake.sh",
+606:            inbox_write_path="/tmp/fake.sh",
+650:            inbox_write_path="/tmp/fake.sh",
+870:            inbox_write_path="/tmp/fake.sh",
+893:            inbox_write_path="/tmp/fake.sh",
+1026:# 17. ★cycle2 fix5 (S2)★: inbox_write.sh real stdin path verify (process inspection cure)
+1029:def test_inbox_write_sh_stdin_path_real_subprocess():
+1030:    """★S2 cure verify★: 実 inbox_write.sh script を起動して stdin 経路 content
+1034:    inbox_write = os.path.join(os.path.dirname(HERE), "inbox_write.sh")
+1035:    if not os.path.exists(inbox_write):
+1037:        raise AssertionError(f"inbox_write.sh not found at {inbox_write}")
+1040:    env[_INBOX_WRITE_STDIN_ENV] = "1"
+1046:            "bash", inbox_write,
+1048:            _INBOX_WRITE_STDIN_PLACEHOLDER,
+1061:    # 「Usage: inbox_write.sh」(空 validate fail) は出てはならない
+1062:    assert "Usage: inbox_write.sh" not in proc.stderr, \
+1066:def test_inbox_write_sh_stdin_env_unset_keeps_argv_compat():
+1069:    inbox_write = os.path.join(os.path.dirname(HERE), "inbox_write.sh")
+1071:    env.pop(_INBOX_WRITE_STDIN_ENV, None)
+1075:            "bash", inbox_write,
+1085:    assert "Usage: inbox_write.sh" not in proc.stderr
+1106:    ("(i) report_insert uses runner (FKI-NO-DUP)", test_report_insert_via_inbox_write_uses_runner),
+1171:    ("cycle2 fix5 (S2): inbox_write.sh real stdin path",
+1172:     test_inbox_write_sh_stdin_path_real_subprocess),
+1173:    ("cycle2 fix5 (S2): inbox_write.sh argv backward compat",
+1174:     test_inbox_write_sh_stdin_env_unset_keeps_argv_compat),
+### ./scripts/watcher_supervisor.sh (hit行=3)
+17:mkdir -p logs queue/inbox
+25:    if [ ! -f "queue/inbox/${agent}.yaml" ]; then
+26:        printf 'messages: []\n' > "queue/inbox/${agent}.yaml"
+### ./scripts/watcher_supervisor_third.sh (hit行=3)
+16:mkdir -p logs queue/inbox
+23:    if [ ! -f "queue/inbox/${agent}.yaml" ]; then
+24:        printf 'messages: []\n' > "queue/inbox/${agent}.yaml"
+### ./shim/hakudokai/hakudokai_activity_monitor.sh (hit行=3)
+13:#   - 将軍mainの inbox に idle_alert を書き込み（inbox_write.sh 経由）
+155:    bash "${SCRIPT_DIR}/scripts/inbox_write.sh" shogun \
+188:  bash "${SCRIPT_DIR}/scripts/inbox_write.sh" shogun \
+### ./shim/hakudokai/hakudokai_fukuincho_poll.py (hit行=8)
+5:  - inbox_write後の read-back verify (書込確認)
+125:            "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
+136:        "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
+144:        log(f"inbox_write FAILED: exit={e.returncode} stderr={e.stderr.decode()[:200]}")
+146:        log(f"inbox_write FAILED: {e}")
+150:        inbox_path = os.path.join(script_dir, "queue", "inbox", "shogun.yaml")
+152:            with open(inbox_path) as f:
+164:            log(f"VERIFY FAILED: shogun.yaml not found at {inbox_path}")
+### ./shim/hakudokai/hakudokai_fukuincho_reverse_poll.py (hit行=4)
+149:    # Write to fukuincho inbox via inbox_write.sh
+151:        "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
+159:        log(f"inbox_write FAILED: exit={e.returncode} stderr={e.stderr.decode()[:200]}")
+161:        log(f"inbox_write FAILED: {e}")
+### ./shim/hakudokai/hakudokai_inbox_write.py (hit行=17)
+3:hakudokai_inbox_write.py — Supabase pc_handshake INSERT wrapper.
+5:shogun (yohey-w/multi-agent-shogun v4.6.0、MIT) の scripts/inbox_write.sh の
+11:    hakudokai_inbox_write.py <to_role> <content> [--type TYPE] [--from FROM]
+30:Reference: shogun upstream commit 20af6b53, scripts/inbox_write.sh
+46:        "[hakudokai_inbox_write] supabase-py not installed. "
+59:        f"[hakudokai_inbox_write] FATAL: hakudokai_pii_detector.py missing: {_pii_imp_err}\n"
+101:            f"[hakudokai_inbox_write] unknown role '{role}'. "
+118:        "[hakudokai_inbox_write] cannot resolve from_pc. "
+131:            "[hakudokai_inbox_write] SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY env missing."
+144:            f"[hakudokai_inbox_write] self-send rejected at role level: "
+150:            f"[hakudokai_inbox_write] invalid shogun_kind '{args.shogun_kind}'. "
+156:            f"[hakudokai_inbox_write] invalid priority '{priority}'. "
+250:                f"[hakudokai_inbox_write] PII detected, INSERT aborted. "
+257:                    "thread_title": "hakudokai_inbox_write PII guard activated",
+272:                sys.stderr.write(f"[hakudokai_inbox_write] dev_lessons INSERT failed (non-fatal): {audit_exc}\n")
+298:        sys.stderr.write(f"[hakudokai_inbox_write] INSERT error: {exc}\n")
+303:        sys.stderr.write(f"[hakudokai_inbox_write] INSERT failed: {res}\n")
+### ./shim/hakudokai/hakudokai_init_agents.sh (hit行=1)
+46:  local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: ${instructions} を
+### ./shim/hakudokai/hakudokai_pii_detector.py (hit行=1)
+15:caller integration (hakudokai_inbox_write.py):
+### ./shim/hakudokai/hakudokai_secondpc_receiver.sh (hit行=1)
+11:#   - inbox_write 失敗時はACKしない（メッセージ消失防止）
+### ./shim/hakudokai/hakudokai_secondpc_receiver_poll.py (hit行=7)
+10:  - inbox_write 失敗時はACKしない（メッセージ消失防止）
+12:  - content は環境変数経由で inbox_write に渡す（quote injection防止）
+325:    # --- file_sync: write files to local filesystem (no inbox_write needed) ---
+352:            "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
+358:            env["INBOX_CONTENT"] = content
+363:                log(f"inbox_write FAILED for {target}: exit={result.returncode} stderr={result.stderr.decode()[:200]}")
+365:            log(f"inbox_write FAILED for {target}: {e}")
+### ./shim/hakudokai/hakudokai_secondpc_setup.sh (hit行=6)
+325:INBOX_DIR="$SCRIPT_DIR/queue/inbox"
+326:mkdir -p "$INBOX_DIR"
+329:  if [ ! -f "$INBOX_DIR/${AGENT_ID}.yaml" ]; then
+330:    echo "messages: []" > "$INBOX_DIR/${AGENT_ID}.yaml"
+444:INIT1="あなたは博道会の足軽2号 (ashigaru2/桜ちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後 q
+452:INIT2="あなたは博道会の足軽8号 (ashigaru8/クロちゃん) として multi-agent-shogun システム内で稼働する。clinic_id: hakudoukai_main。CLAUDE.md の Session Start 手順を実行せよ。Step 1: tmux display-message で agent_id確認。Step 4: instructions/ashigaru.md を読む。その後
+### ./shim/hakudokai/hakudokai_secondpc_watcher_poll.py (hit行=4)
+192:    inbox_write.sh sets topic as 'cross_pc_inbox_{target_agent}'.
+282:        "bash", os.path.join(script_dir, "scripts", "inbox_write.sh"),
+290:        log(f"inbox_write FAILED: exit={e.returncode} stderr={e.stderr.decode()[:200]}")
+292:        log(f"inbox_write FAILED: {e}")
+### ./shutsujin_departure.sh (hit行=15)
+34:# inbox_write.sh, inbox_watcher.sh, cli_adapter.sh が .venv/bin/python3 に依存。
+380:    INBOX_LINUX_DIR="$HOME/.local/share/multi-agent-shogun/inbox"
+381:    if [ ! -L ./queue/inbox ]; then
+382:        mkdir -p "$INBOX_LINUX_DIR"
+383:        [ -d ./queue/inbox ] && cp ./queue/inbox/*.yaml "$INBOX_LINUX_DIR/" 2>/dev/null && rm -rf ./queue/inbox
+384:        ln -sf "$INBOX_LINUX_DIR" ./queue/inbox
+385:        log_info "  └─ inbox → Linux FS ($INBOX_LINUX_DIR) にシンボリックリンク作成"
+388:    [ -d ./queue/inbox ] || mkdir -p ./queue/inbox
+445:        echo "messages:" > "./queue/inbox/${agent}.yaml"
+971:        [ -f "$SCRIPT_DIR/queue/inbox/${agent}.yaml" ] || echo "messages:" > "$SCRIPT_DIR/queue/inbox/${agent}.yaml"
+976:    pkill -f "inotifywait.*queue/inbox" 2>/dev/null || true
+977:    pkill -f "fswatch.*queue/inbox" 2>/dev/null || true
+1026:INBOX = './queue/ntfy_inbox.yaml'
+1030:with open(INBOX) as f:
+1066:with open(INBOX, 'w') as f:
+### ./shutsujin_departure.sh.karo-mac-bak-20260820T000340 (hit行=15)
+34:# inbox_write.sh, inbox_watcher.sh, cli_adapter.sh が .venv/bin/python3 に依存。
+380:    INBOX_LINUX_DIR="$HOME/.local/share/multi-agent-shogun/inbox"
+381:    if [ ! -L ./queue/inbox ]; then
+382:        mkdir -p "$INBOX_LINUX_DIR"
+383:        [ -d ./queue/inbox ] && cp ./queue/inbox/*.yaml "$INBOX_LINUX_DIR/" 2>/dev/null && rm -rf ./queue/inbox
+384:        ln -sf "$INBOX_LINUX_DIR" ./queue/inbox
+385:        log_info "  └─ inbox → Linux FS ($INBOX_LINUX_DIR) にシンボリックリンク作成"
+388:    [ -d ./queue/inbox ] || mkdir -p ./queue/inbox
+445:        echo "messages:" > "./queue/inbox/${agent}.yaml"
+971:        [ -f "$SCRIPT_DIR/queue/inbox/${agent}.yaml" ] || echo "messages:" > "$SCRIPT_DIR/queue/inbox/${agent}.yaml"
+976:    pkill -f "inotifywait.*queue/inbox" 2>/dev/null || true
+977:    pkill -f "fswatch.*queue/inbox" 2>/dev/null || true
+1026:INBOX = './queue/ntfy_inbox.yaml'
+1030:with open(INBOX) as f:
+1066:with open(INBOX, 'w') as f:
+### ./shutsujin_departure_secondpc.sh (hit行=3)
+129:            prompt='拙者SecondPC 家老として召喚さる。Session Start: ①tmux display-message で自己識別 → karo-second ②instructions/karo-second.md + instructions/karo.md + queue/pane_registry.yaml を必読 ③persona/禁止事項/SecondPC専属境界を確認 ④queu
+132:            prompt='拙者SecondPC 軍師として召喚さる。Session Start: ①tmux display-message で自己識別 → gunshi-second ②instructions/gunshi-second.md + instructions/gunshi.md + queue/pane_registry.yaml を必読 ③persona/禁止事項/SecondPC専属境界を確認
+135:            prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md + instructions/roles/ashigaru_role.md を必読 ③自分専用 queue/tasks/${agent}.yaml + queue/inbox/${agent}
+### ./tests/agent_selfwatch.bats (hit行=16)
+18:    export INBOX_WRITE_SCRIPT="$PROJECT_ROOT/scripts/inbox_write.sh"
+22:    [ -f "$INBOX_WRITE_SCRIPT" ] || return 1
+31:    export TEST_INBOX="$TEST_TMPDIR/test_agent.yaml"
+32:    cat > "$TEST_INBOX" << 'YAML'
+45:INBOX="$TEST_INBOX"
+46:LOCKFILE="${INBOX}.lock"
+66:export __INBOX_WATCHER_TESTING__=1
+83:    grep -F -q 'inotifywait -q -t "$INOTIFY_TIMEOUT" -e modify -e close_write "$INBOX"' "$WATCHER_SCRIPT"
+87:    cat > "$TEST_INBOX" << 'YAML'
+112:    "$VENV_PYTHON" - << 'PY' "$output" "$TEST_INBOX"
+115:inbox_path = sys.argv[2]
+119:with open(inbox_path) as f:
+175:@test "TC-FR-014 + TC-NFR-002: inbox_write IF and schema remain backward compatible" {
+176:    run bash "$INBOX_WRITE_SCRIPT" test_agent "compat-check" task_assigned karo
+179:    "$VENV_PYTHON" - << 'PY' "$PROJECT_ROOT/queue/inbox/test_agent.yaml"
+194:    rm -f "$PROJECT_ROOT/queue/inbox/test_agent.yaml" "$PROJECT_ROOT/queue/inbox/test_agent.yaml.lock"
+### ./tests/bloom_classification_accuracy.sh (hit行=3)
+92:    # Gunshiへinbox_write（テスト実行中はシミュレート）
+93:    # 実際のVPS E2Eではここでinbox_writeを呼んで回答待ちになる
+97:    # inbox_cmd = f"bash {project_root}/scripts/inbox_write.sh gunshi 'bloom_test_{task_id} の判定を実施せよ' task_assigned karo"
+### ./tests/checks/test_agent_health_check.bats (hit行=15)
+23:#   H-010 TEST_MODE=1 で send_shogun_inbox_alert が真の inbox_write を抑制
+50:    # TEST_INBOX_WRITE_LOG に呼出記録を残し、test 内で抑制を検証可能にする。
+52:    export TEST_INBOX_WRITE_LOG="$BATS_TMPDIR_TEST/test_inbox_write.log"
+53:    : > "$TEST_INBOX_WRITE_LOG"
+244:    # TEST_MODE=1 ゆえ inbox_write は呼ばれない (本 case では alert 自体ないが二重保証)
+245:    [ ! -s "$TEST_INBOX_WRITE_LOG" ]
+248:# ─── H-010: cycle2 fix — TEST_MODE=1 で inbox_write 漏出抑制 ─────────────
+249:@test "H-010: TEST_MODE=1 で send_shogun_inbox_alert が真の inbox_write を抑制 (cycle2 fix)" {
+251:    # 真の inbox_write.sh が呼ばれず、TEST_INBOX_WRITE_LOG に呼出記録のみ残ることを確認。
+258:    # setup() で TEST_MODE=1 / TEST_INBOX_WRITE_LOG=空ファイル 設定済
+263:    grep -q "shogun" "$TEST_INBOX_WRITE_LOG"
+264:    grep -q "ERR-PERSONA-CLI-001" "$TEST_INBOX_WRITE_LOG"
+265:    # 真の signal: queue/inbox/shogun.yaml は touch されない (= 漏出ゼロ)
+266:    # (本 fixture は HOME 隔離済ゆえ間接的検証のみ可能、TEST_INBOX_WRITE_LOG に
+267:    #  記録ありかつ実 inbox_write.sh が呼ばれていないことが gate の核心保証)
+### ./tests/checks/test_karo_overload_monitor.bats (hit行=23)
+29:    export FAKE_INBOX_DIR="$BATS_TMPDIR_TEST/inbox"
+31:    mkdir -p "$FAKE_INBOX_DIR" "$FAKE_TASKS_DIR"
+33:    export KARO_INBOX="$FAKE_INBOX_DIR/karo.yaml"
+34:    export TAKENAKA_INBOX="$FAKE_INBOX_DIR/takenaka.yaml"
+35:    export SHOGUN_INBOX="$FAKE_INBOX_DIR/shogun.yaml"
+43:    # inbox_write を no-op stub (= alert 送付経路は別 stub で監視)
+44:    export INBOX_WRITE_LOG="$BATS_TMPDIR_TEST/inbox_write.log"
+45:    export INBOX_WRITE_CMD="$BATS_TMPDIR_TEST/inbox_write_stub.sh"
+46:    cat > "$INBOX_WRITE_CMD" <<'STUB'
+49:echo "$1|$3|$4" >> "${INBOX_WRITE_LOG:-/tmp/inbox_write_stub.log}"
+52:    chmod +x "$INBOX_WRITE_CMD"
+55:    cat > "$KARO_INBOX" <<'YAML'
+64:    : > "$TAKENAKA_INBOX"
+65:    : > "$SHOGUN_INBOX"
+95:    } > "$KARO_INBOX"
+162:    # inbox_write stub に takenaka + shogun が呼ばれたか
+163:    [ -f "$INBOX_WRITE_LOG" ]
+164:    grep -q "^takenaka|" "$INBOX_WRITE_LOG"
+165:    grep -q "^shogun|" "$INBOX_WRITE_LOG"
+209:    # cap_skip 表示時は alert は送られない (= inbox_write 呼ばれない) — cooldown_skip でも同じ
+210:    if [ -f "$INBOX_WRITE_LOG" ]; then
+228:    # inbox_write stub 呼ばれていない
+229:    [ ! -s "$INBOX_WRITE_LOG" ] || ! grep -q "^takenaka|" "$INBOX_WRITE_LOG"
+### ./tests/dim_d_quality_comparison.sh (hit行=1)
+58:【案B】イベント駆動方式: 足軽がタスク完了時にinbox_writeで「完了通知」を送り、
+### ./tests/e2e/e2e_basic_flow.bats (hit行=6)
+58:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+80:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" 0
+94:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "karo" \
+112:    run assert_inbox_message_exists "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" "karo" "task_assigned"
+130:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "karo" \
+154:    run assert_inbox_message_exists "$E2E_QUEUE/queue/inbox/karo.yaml" "ashigaru1" "report_received"
+### ./tests/e2e/e2e_blocked_by.bats (hit行=3)
+62:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+87:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru2" \
+115:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru2" \
+### ./tests/e2e/e2e_busy_clear_guard.bats (hit行=2)
+79:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+117:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+### ./tests/e2e/e2e_clear_recovery.bats (hit行=1)
+112:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+### ./tests/e2e/e2e_codex_startup.bats (hit行=10)
+73:    # 3. Send task_assigned message via inbox_write
+74:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+130:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+184:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+234:    # 3. Send clear_command via inbox_write (simulates karo sending /clear)
+235:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+302:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+304:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+306:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+380:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+### ./tests/e2e/e2e_escalation.bats (hit行=1)
+56:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+### ./tests/e2e/e2e_idle_flag_recovery.bats (hit行=2)
+85:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+116:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+### ./tests/e2e/e2e_inbox_delivery.bats (hit行=25)
+6:#   1. inbox_write.sh correctly writes messages to YAML
+12:# Tests inbox_write.sh → (nudge) → mock_cli processes → read: true
+46:# E2E-002-A: inbox_write.sh writes message to YAML correctly
+49:@test "E2E-002-A: inbox_write.sh creates message with correct fields" {
+51:    run bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+56:    [ -f "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" ]
+59:    run assert_inbox_message_exists "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" "karo" "task_assigned"
+63:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" 1
+77:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+81:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" 1
+94:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" 0
+104:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+106:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+108:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+112:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" 3
+124:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" 0
+129:# E2E-002-D: inbox_write.sh to different agents are isolated
+134:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "karo" \
+136:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+140:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/karo.yaml" 1
+142:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru1.yaml" 1
+146:    run assert_inbox_unread_count "$E2E_QUEUE/queue/inbox/ashigaru2.yaml" 0
+160:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+171:    # 4. Wait a moment for inbox_write to complete
+175:    run assert_inbox_message_exists "$E2E_QUEUE/queue/inbox/karo.yaml" "ashigaru1" "report_received"
+### ./tests/e2e/e2e_parallel_tasks.bats (hit行=5)
+56:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+58:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru2" \
+97:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+99:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru2" \
+119:with open('$E2E_QUEUE/queue/inbox/ashigaru1.yaml') as f:
+### ./tests/e2e/e2e_redo.bats (hit行=2)
+60:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+115:    bash "$E2E_QUEUE/scripts/inbox_write.sh" "ashigaru1" \
+### ./tests/e2e/helpers/setup.bash (hit行=5)
+22:    # inbox_write.sh resolves SCRIPT_DIR to parent of scripts/, then uses queue/inbox/
+29:    cp "$PROJECT_ROOT/scripts/inbox_write.sh" "$E2E_QUEUE/scripts/"
+31:    chmod +x "$E2E_QUEUE/scripts/inbox_write.sh"
+62:        echo "messages:" > "$E2E_QUEUE/queue/inbox/${agent}.yaml"
+109:        echo "messages:" > "$E2E_QUEUE/queue/inbox/${agent}.yaml"
+### ./tests/e2e/mock_cli.sh (hit行=17)
+43:INBOX_FILE="$MOCK_PROJECT_ROOT/queue/inbox/${MOCK_AGENT_ID}.yaml"
+98:    # 5. Notify via inbox_write (prefer test copy, fallback to project's real script)
+99:    local inbox_write_script="$MOCK_PROJECT_ROOT/scripts/inbox_write.sh"
+100:    if [ ! -f "$inbox_write_script" ]; then
+101:        inbox_write_script="$MOCK_SCRIPT_DIR/../../scripts/inbox_write.sh"
+103:    if [ -f "$inbox_write_script" ]; then
+109:        SCRIPT_DIR="$MOCK_PROJECT_ROOT" bash "$inbox_write_script" "$report_target" \
+120:    if [ ! -f "$INBOX_FILE" ]; then
+125:    unread_count=$(inbox_unread_count "$INBOX_FILE")
+139:    with open('$INBOX_FILE') as f:
+150:    inbox_mark_all_read "$INBOX_FILE"
+225:    # Send task_assigned to ashigaru1 via inbox_write
+226:    local inbox_write_script="$MOCK_PROJECT_ROOT/scripts/inbox_write.sh"
+227:    if [ ! -f "$inbox_write_script" ]; then
+228:        inbox_write_script="$MOCK_SCRIPT_DIR/../../scripts/inbox_write.sh"
+230:    if [ -f "$inbox_write_script" ]; then
+231:        bash "$inbox_write_script" "ashigaru1" \
+### ./tests/test_inbox_expiry_supersession.bats (hit行=33)
+10:# Fix: optional expires_at/supersedes fields (scripts/inbox_write.sh new_msg) are
+31:    export INBOX_WRITE_SCRIPT="${LANEB_INBOX_WRITE_SCRIPT:-$PROJECT_ROOT/scripts/inbox_write.sh}"
+34:    [ -f "$INBOX_WRITE_SCRIPT" ] || return 1
+42:    export TEST_INBOX="$TEST_TMPDIR/test_agent.yaml"
+43:    cat > "$TEST_INBOX" << 'YAML'
+53:INBOX="$TEST_INBOX"
+54:LOCKFILE="${INBOX}.lock"
+57:export __INBOX_WATCHER_TESTING__=1
+62:    # inbox_write.sh integration tests need a SCRIPT_DIR-relative wrapper
+63:    # (same technique as tests/test_inbox_write.bats), pointed at TEST_TMPDIR
+64:    # so writes never touch the real queue/inbox/.
+68:        "$INBOX_WRITE_SCRIPT" > "$TEST_WRITE_DIR/inbox_write.sh"
+69:    chmod +x "$TEST_WRITE_DIR/inbox_write.sh"
+71:    mkdir -p "$TEST_TMPDIR/queue/inbox"
+72:    export TEST_INBOX_WRITE="$TEST_WRITE_DIR/inbox_write.sh"
+73:    export TEST_INBOX_DIR="$TEST_TMPDIR/queue/inbox"
+86:    cat > "$TEST_INBOX" << 'YAML'
+110:    cat > "$TEST_INBOX" << 'YAML'
+131:    "$VENV_PYTHON" - << 'PY' "$output" "$TEST_INBOX"
+147:    cat > "$TEST_INBOX" << 'YAML'
+165:    "$VENV_PYTHON" - << 'PY' "$output" "$TEST_INBOX"
+182:    cat > "$TEST_INBOX" << 'YAML'
+207:    cat > "$TEST_INBOX" << 'YAML'
+233:    cat > "$TEST_INBOX" << 'YAML'
+258:    cat > "$TEST_INBOX" << 'YAML'
+293:    cat > "$TEST_INBOX" << 'YAML'
+306:    run grep -c 'read: false' "$TEST_INBOX"
+312:# CASE 9 [inbox_write.sh integration]: INBOX_EXPIRES_AT / INBOX_SUPERSEDES_ID
+316:@test "LB-09 [inbox_write integration]: expires_at/supersedes env vars round-trip; absent by default" {
+317:    run bash "$TEST_INBOX_WRITE" "test_agent" "no expiry" "task_assigned" "karo"
+320:    INBOX_EXPIRES_AT="2099-01-01T00:00:00" INBOX_SUPERSEDES_ID="msg_dummy" \
+321:        run bash "$TEST_INBOX_WRITE" "test_agent" "with expiry \$(whoami) \`id\`" "task_assigned" "karo"
+324:    "$VENV_PYTHON" - << 'PY' "$TEST_INBOX_DIR/test_agent.yaml"
+### ./tests/test_inbox_write.bats (hit行=48)
+2:# test_inbox_write.bats — inbox_write.sh ユニットテスト
+19:    export INBOX_WRITE_SCRIPT="$PROJECT_ROOT/scripts/inbox_write.sh"
+23:    [ -f "$INBOX_WRITE_SCRIPT" ] || return 1
+31:    export TEST_TMPDIR="$(mktemp -d "$BATS_TMPDIR/inbox_write_test.XXXXXX")"
+32:    export TEST_INBOX_DIR="$TEST_TMPDIR/queue/inbox"
+33:    mkdir -p "$TEST_INBOX_DIR"
+35:    # inbox_write.shが参照するSCRIPT_DIRをtmpに向けるため、wrapper scriptを作成
+36:    # inbox_write.shはSCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"で解決するため、
+43:        "$PROJECT_ROOT/scripts/inbox_write.sh" > "$TEST_SCRIPT_DIR/inbox_write.sh"
+44:    chmod +x "$TEST_SCRIPT_DIR/inbox_write.sh"
+46:    # .venvをプロジェクトルートからシンボリックリンク（inbox_write.shが$SCRIPT_DIR/.venv/bin/python3を参照）
+49:    export TEST_INBOX_WRITE="$TEST_SCRIPT_DIR/inbox_write.sh"
+62:    run bash "$TEST_INBOX_WRITE"
+72:    run bash "$TEST_INBOX_WRITE" "test_agent"
+82:    run bash "$TEST_INBOX_WRITE" "test_agent" "content only"
+92:    run bash "$TEST_INBOX_WRITE" "karo" "self message" "cmd_new" "karo"
+102:    run bash "$TEST_INBOX_WRITE" "test_agent" "テストメッセージ" "cmd_new" "shogun"
+106:    [ -f "$TEST_INBOX_DIR/test_agent.yaml" ]
+112:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+143:    bash "$TEST_INBOX_WRITE" "test_agent" "メッセージ1" "type1" "sender1"
+146:    run bash "$TEST_INBOX_WRITE" "test_agent" "メッセージ2" "type2" "sender2"
+153:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+172:    bash "$TEST_INBOX_WRITE" "test_agent" "メッセージA" "test_type" "sender_a"
+173:    bash "$TEST_INBOX_WRITE" "test_agent" "メッセージB" "test_type" "sender_b"
+179:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+198:    run bash "$TEST_INBOX_WRITE" "test_agent" "デフォルトテスト"
+208:    run bash "$TEST_INBOX_WRITE" "test_agent" "カスタムメッセージ" "custom_type" "custom_sender"
+215:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+249:with open('$TEST_INBOX_DIR/test_agent.yaml', 'w') as f:
+254:    run bash "$TEST_INBOX_WRITE" "test_agent" "新規メッセージ" "test_type" "other_sender"
+261:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+309:with open('$TEST_INBOX_DIR/test_agent.yaml', 'w') as f:
+314:    run bash "$TEST_INBOX_WRITE" "test_agent" "新規未読" "test_type" "other_sender"
+321:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+345:INBOX_WRITE="$1"
+348:bash "$INBOX_WRITE" "$AGENT" "並行メッセージ $ID" "concurrent" "writer_$ID" 2>/dev/null
+354:        "$TEST_TMPDIR/parallel_write.sh" "$TEST_INBOX_WRITE" "test_agent" "$i" &
+364:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+389:    run bash "$TEST_INBOX_WRITE" "test_agent" "$SPECIAL_CONTENT" "test_type" "other_sender"
+396:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+417:@test "T-012: auto-create inbox directory → missing queue/inbox/ directory is created" {
+418:    # queue/inbox/ ディレクトリを削除
+419:    rm -rf "$TEST_INBOX_DIR"
+422:    [ ! -d "$TEST_INBOX_DIR" ]
+425:    run bash "$TEST_INBOX_WRITE" "test_agent" "自動作成テスト" "test_type" "other_sender"
+429:    [ -d "$TEST_INBOX_DIR" ]
+430:    [ -f "$TEST_INBOX_DIR/test_agent.yaml" ]
+436:with open('$TEST_INBOX_DIR/test_agent.yaml') as f:
+### ./tests/test_shogun_report_watcher.sh (hit行=15)
+12:#   T7 inbox_write.sh failure: log + watcher continues
+30:# Per-test tempdir + mock inbox_write
+34:  cat > "$tmpdir/scripts/inbox_write.sh" <<'EOF'
+36:# Mock inbox_write — records call args to $MOCK_LOG.
+37:echo "INBOX|target=$1|content=$2|type=$3|from=$4" >> "$MOCK_LOG"
+40:  chmod +x "$tmpdir/scripts/inbox_write.sh"
+83:    grep -c "^INBOX|" "$mock_log" 2>/dev/null || echo 0
+279:  # inbox_write + watcher fallback fires" — under same content, watcher
+392:T7_inbox_write_failure() {
+399:  cat > "$tmp/scripts/inbox_write.sh" <<'EOF'
+401:echo "INBOX_FAIL|args=$*" >> "$MOCK_LOG"
+404:  chmod +x "$tmp/scripts/inbox_write.sh"
+408:  # Trigger event — watcher should call inbox_write (fails) but continue running
+419:  local fail_calls; fail_calls=$(grep -c "^INBOX_FAIL|" "$log" 2>/dev/null || echo 0)
+445:run_test "T7 inbox_write failure resilience" T7_inbox_write_failure
+### ./tests/unit/test_dead_letter.bats (hit行=4)
+29:        "$TEST_PROJECT_ROOT/queue/inbox" \
+32:    # stub inbox_write.sh — 引数を escalation_log に追記
+35:    cat > "$TEST_PROJECT_ROOT/scripts/inbox_write.sh" <<EOF
+39:    chmod +x "$TEST_PROJECT_ROOT/scripts/inbox_write.sh"
+### ./tests/unit/test_idle_flag.bats (hit行=11)
+33:    # Mock inbox_write.sh
+35:    cat > "$TEST_HOOK_TMP/scripts/inbox_write.sh" << 'MOCK'
+37:echo "$@" >> "$(dirname "$0")/../inbox_write_calls.log"
+39:    chmod +x "$TEST_HOOK_TMP/scripts/inbox_write.sh"
+41:    mkdir -p "$TEST_HOOK_TMP/queue/inbox"
+63:INBOX="$TEST_HOOK_TMP/queue/inbox/test_idle_agent.yaml"
+64:LOCKFILE="\${INBOX}.lock"
+96:export __INBOX_WATCHER_TESTING__=1
+120:    cat > "$TEST_HOOK_TMP/queue/inbox/test_idle_agent.yaml" << 'YAML'
+144:    cat > "$TEST_HOOK_TMP/queue/inbox/test_idle_agent.yaml" << 'YAML'
+212:    cat > "$TEST_HOOK_TMP/queue/inbox/test_idle_agent.yaml" << 'YAML'
+### ./tests/unit/test_ntfy_ack.bats (hit行=31)
+6:#   T-ACK-001: 正常メッセージ → inbox_write to shogun (auto-ACK removed)
+9:#   T-ACK-004: ACK送信失敗 → inbox_write継続
+12:#   T-ACK-007: append_ntfy_inbox失敗 → ACK・inbox_write両方スキップ
+13:#   T-ACK-008: 特殊文字がinbox_writeに保持される
+25:    export INBOX_LOG="$TEST_TMPDIR/inbox.log"
+75:    # mock inbox_write.sh
+76:    cat > "$MOCK_PROJECT/scripts/inbox_write.sh" << 'INBOX_MOCK'
+78:echo "$@" >> "$INBOX_LOG"
+79:INBOX_MOCK
+80:    chmod +x "$MOCK_PROJECT/scripts/inbox_write.sh"
+89:    touch "$ACK_LOG" "$INBOX_LOG"
+111:# T-ACK-001: Normal message triggers inbox_write to shogun (ACK removed, shogun replies directly)
+114:@test "T-ACK-001: Normal message triggers inbox_write to shogun" {
+120:    # Verify inbox_write to shogun was called instead.
+121:    [ -s "$INBOX_LOG" ]
+122:    grep -q "shogun" "$INBOX_LOG"
+148:    # But inbox_write to shogun should still fire
+149:    [ -s "$INBOX_LOG" ]
+153:# T-ACK-004: ACK failure does not block inbox_write
+156:@test "T-ACK-004: ACK failure does not block inbox_write" {
+162:    [ -s "$INBOX_LOG" ]
+163:    grep -q "shogun" "$INBOX_LOG"
+191:# T-ACK-007: append_ntfy_inbox failure skips both ACK and inbox_write
+194:@test "T-ACK-007: append_ntfy_inbox failure skips both ACK and inbox_write" {
+201:    # Both ACK and inbox_write should be skipped (L159 continue)
+203:    [ ! -s "$INBOX_LOG" ]
+209:# T-ACK-008: Special characters in message preserved in inbox_write
+212:@test "T-ACK-008: Special characters in message preserved in inbox_write" {
+217:    # Auto-ACK removed — verify inbox_write still fires for special characters
+219:    [ -s "$INBOX_LOG" ]
+220:    grep -q "shogun" "$INBOX_LOG"
+### ./tests/unit/test_send_wakeup.bats (hit行=24)
+3:# Sources the REAL inbox_watcher.sh with __INBOX_WATCHER_TESTING__=1
+85:    export TEST_INBOX_DIR="$TEST_TMPDIR/queue/inbox"
+86:    mkdir -p "$TEST_INBOX_DIR"
+96:    # __INBOX_WATCHER_TESTING__=1 skips arg parsing, inotifywait check, and main loop.
+105:INBOX="$TEST_INBOX_DIR/test_agent.yaml"
+106:LOCKFILE="\${INBOX}.lock"
+144:export __INBOX_WATCHER_TESTING__=1
+639:        cat > "$INBOX" << "YAML"
+649:        "$VENV_PYTHON" - << "PY" "$INBOX"
+653:inbox_path = sys.argv[1]
+654:with open(inbox_path, "r", encoding="utf-8") as f:
+686:        cat > "$INBOX" << "YAML"
+697:        "$VENV_PYTHON" - << "PY" "$INBOX" "$r1" "$r2"
+701:inbox_path, r1, r2 = sys.argv[1], sys.argv[2], sys.argv[3]
+702:with open(inbox_path, "r", encoding="utf-8") as f:
+728:        echo "messages: []" > "$INBOX"
+730:        mkdir -p "$(dirname "$INBOX")/../tasks"
+731:        cat > "$(dirname "$INBOX")/../tasks/test_agent.yaml" << "YAML"
+749:        echo "messages: []" > "$INBOX"
+750:        mkdir -p "$(dirname "$INBOX")/../tasks"
+751:        cat > "$(dirname "$INBOX")/../tasks/test_agent.yaml" << "YAML"
+768:        echo "messages: []" > "$INBOX"
+769:        mkdir -p "$(dirname "$INBOX")/../tasks"
+770:        cat > "$(dirname "$INBOX")/../tasks/test_agent.yaml" << "YAML"
+### ./tests/unit/test_stop_hook.bats (hit行=29)
+12:#   T-HOOK-004: 完了メッセージ → inbox_writeが呼ばれる (report_completed)
+13:#   T-HOOK-005: エラーメッセージ → inbox_writeが呼ばれる (error_report)
+14:#   T-HOOK-006: 中立メッセージ → inbox_write呼ばれない
+15:#   T-HOOK-007: last_assistant_message空 → inbox_write呼ばれない
+26:    mkdir -p "$TEST_TMP/queue/inbox"
+28:    # Mock inbox_write.sh — logs arguments to file
+29:    cat > "$TEST_TMP/scripts/inbox_write.sh" << 'MOCK'
+31:echo "$@" >> "$(dirname "$0")/../inbox_write_calls.log"
+33:    chmod +x "$TEST_TMP/scripts/inbox_write.sh"
+75:@test "T-HOOK-004: completion message triggers inbox_write to karo" {
+78:    [ -f "$TEST_TMP/inbox_write_calls.log" ]
+79:    grep -q "karo" "$TEST_TMP/inbox_write_calls.log"
+80:    grep -q "report_completed" "$TEST_TMP/inbox_write_calls.log"
+81:    grep -q "ashigaru1" "$TEST_TMP/inbox_write_calls.log"
+84:@test "T-HOOK-005: error message triggers inbox_write to karo" {
+87:    [ -f "$TEST_TMP/inbox_write_calls.log" ]
+88:    grep -q "karo" "$TEST_TMP/inbox_write_calls.log"
+89:    grep -q "error_report" "$TEST_TMP/inbox_write_calls.log"
+92:@test "T-HOOK-006: neutral message does not trigger inbox_write" {
+95:    [ ! -f "$TEST_TMP/inbox_write_calls.log" ]
+98:@test "T-HOOK-007: empty last_assistant_message does not trigger inbox_write" {
+101:    [ ! -f "$TEST_TMP/inbox_write_calls.log" ]
+105:    cat > "$TEST_TMP/queue/inbox/ashigaru1.yaml" << 'YAML'
+120:    cat > "$TEST_TMP/queue/inbox/ashigaru1.yaml" << 'YAML'
+131:    [ -f "$TEST_TMP/inbox_write_calls.log" ]
+132:    grep -q "report_completed" "$TEST_TMP/inbox_write_calls.log"
+136:    cat > "$TEST_TMP/queue/inbox/ashigaru1.yaml" << 'YAML'
+147:    [ -f "$TEST_TMP/inbox_write_calls.log" ]
+148:    grep -q "report_completed" "$TEST_TMP/inbox_write_calls.log"
+### /Users/momizimac/bin/mac_send.py (hit行=5)
+9:  mac_send.py verify <bodyfile> <mark> [--inbox queue/inbox/karo-mac.yaml]
+77:    inbox = opt['inbox'] or ('queue/inbox/%s.yaml' % opt['to'])
+81:    print('送る前 相手未讀=%d  自未讀=%d' % (unread(inbox), unread('queue/inbox/shogun-mac.yaml')))
+85:    r = subprocess.run(['bash', 'scripts/inbox_write.sh', opt['to'], body, opt['type'], opt['from']],
+88:        sys.stderr.write('inbox_write rc=%d %s\n' % (r.returncode, r.stderr[:300])); return 4
+### /Users/momizimac/bin/karo_mac_mark.py (hit行=2)
+2:# karo-mac private instrument: mark inbox entries read under the SAME lock inbox_write.sh uses
+4:# acquired: write nothing, print UNMARKED (fail-closed). Never touches inbox_write.sh.
+### /Users/momizimac/bin/karo_mac_template.sh (hit行=1)
+6:iw(){ bash /Users/momizimac/multi-agent-shogun/scripts/inbox_write.sh "$1" "$(cat "$2")" notification karo-mac; }
+### /Users/momizimac/bin/inbox_mark_read.py (hit行=2)
+30:# 舊實装は錠を取らず read-modify-write してゐた ∴ inbox_write.sh と競合し
+33:# 本機は flock 缺(實測) ∴ inbox_write.sh の實經路は mkdir("<inbox>.lock.d")。
+### /Users/momizimac/bin/karo_mac_unread.py (hit行=1)
+4:p=sys.argv[1] if len(sys.argv)>1 else 'queue/inbox/karo-mac.yaml'
+### /Users/momizimac/bin/orphan_inbox_trap.py (hit行=2)
+23:inbox = os.path.join(base, "queue/inbox")
+25:    print(f"NO_INBOX_DIR\t{inbox}")

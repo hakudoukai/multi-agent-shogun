@@ -1,0 +1,12 @@
+# 根=R2 入力=['docs/evidence/ashigaru-mac-1_km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917/raw/10_R2_hits.txt'] 合計=7 器=6 控=1 紙=0 試=0
+## 器 (6)
+~/bin/mac_send.py
+~/bin/karo_mac_mark.py
+~/bin/karo_mac_template.sh
+~/bin/inbox_mark_read.py
+~/bin/karo_mac_unread.py
+~/bin/orphan_inbox_trap.py
+## 試 (0)
+## 控 (1)
+~/bin/karo_mac_template.sh.bak_031122
+## 紙 (0)

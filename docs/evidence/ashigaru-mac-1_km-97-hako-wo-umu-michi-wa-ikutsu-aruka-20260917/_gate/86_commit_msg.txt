@@ -1,0 +1,21 @@
+evidence(km-97): ★箱を生む路は幾つ在るか★ ―― 專任1 第83弾 + REVISE の治し(束を commit の中へ据ゑる)
+
+軍師mac の REVISE 三点 ⑴束 untracked ⑵固定 commit/tree に束が無い ⑶到達 ref 無し は
+「束が commit の中に無い」一事から出て居る(家老mac msg_20260917_160308_ac0b6553 の筋・PR#20 と同形)。
+
+治し① 頭を固定して器を再走(driver/85_saisou.sh → raw2/・提出済 raw/ は不触・76/76 sha 不動 cmp rc=0)
+  歩いた disk の HEAD=260f2a06 / 據ゑる親=4be3ee19(origin/main) / untracked 37 / 変更 998
+  R1 hits 1005→1117(+112 は悉く紙・器 35=35・己の束 2→36) / R5 713→718(器 1=1) / 箱 19=19 / 門実走 rc 69,69,69,0,0,0,0 同
+  ∴ README の結(甲14器・門外5器6行・箱19・穴三つ)は動かぬ。比較表 64 行・測れぬ 0(driver/87_hikaku.py・自己対照 差0)
+治し② 臺帳は append のみ 92→195 行(+103)・既存 92 行 cmp rc=0(_gate/90_append4_20260917T161655.cmp)
+治し③ 仮 index の plumbing で新枝 ashigaru-mac-1/km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917 を
+  origin/main 4be3ee19 の直上に据ゑる(driver/86_sueru.sh・update-ref 旧値=零40=新設專用・共有 HEAD/index 不触)
+治し④ push は總監督の代行が正路 ―― 當席は commit まで
+
+門(出す前) 第五走 rc=0(_gate/km97_hashiri5_20260917T161731): 條① 臺帳 193 行 一致 / 條②③④ 145 本 通
+  (宣して除いた 49 = .nul/.nul.gz + 0byte) / 條⑤ byte和 2693842 / gate7 は README 胴に既済(rc=0)
+己の疵も書く: 第四走は driver/__pycache__/*.pyc(87 の構文検めに py_compile を使つた己の産物・-B は効かぬ)で
+  條②③④ が落ちた。除いて第五走(_gate/97_pycache_nozoki_20260917T161731.txt)。
+CI は要件外(dev_qa#1099・裁 seq326349)。
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>

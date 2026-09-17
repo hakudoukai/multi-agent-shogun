@@ -1,0 +1,154 @@
+### /Users/momizimac/bin/agent_letter.py (inbox行=2 / cross_pc_inbox 以外=0)
+### /Users/momizimac/bin/fleet_liveness_check.sh (inbox行=1 / cross_pc_inbox 以外=0)
+### /Users/momizimac/bin/hermes_context_sweep.py (inbox行=1 / cross_pc_inbox 以外=0)
+### /Users/momizimac/bin/hermes_idle_flag_sync.sh (inbox行=1 / cross_pc_inbox 以外=1)
+2:# hermes_idle_flag_sync.sh — HermesにはClaudeのStop hookが無く、inbox_watcherの
+### /Users/momizimac/bin/idle_backlog_wake.sh (inbox行=1 / cross_pc_inbox 以外=0)
+### /Users/momizimac/bin/karo_mac_read.py (inbox行=4 / cross_pc_inbox 以外=3)
+16:  karo_mac_read.py inbox [N]      # 家老mac宛の直近N件（topic∪target_agent）
+132:    elif cmd == "inbox":
+223:        die(f"未知のコマンド: {cmd}（seq / inbox / qa / qa-one / board / board-one / pcid / seqs）")
+### /Users/momizimac/bin/karo_mac_write.py (inbox行=2 / cross_pc_inbox 以外=0)
+### /Users/momizimac/bin/sb (inbox行=1 / cross_pc_inbox 以外=1)
+10:  *) echo "usage: sb read seq|inbox|qa ... / sb write letter \"本文\"" >&2; exit 2;;
+### /Users/momizimac/hermes-departments-mac/ashigaru-mac-7/bin/mac_a7_downlink_watcher.py (inbox行=2 / cross_pc_inbox 以外=0)
+### /Users/momizimac/hermes-departments-mac/gakushu-bucho/bin/mac_downlink_watcher.py (inbox行=2 / cross_pc_inbox 以外=0)
+### /Users/momizimac/hermes-departments-mac/gunshi-mac/bin/mac_downlink_watcher.py (inbox行=2 / cross_pc_inbox 以外=0)
+### /Users/momizimac/hermes-departments-mac/kikaku-bucho/bin/kikaku_bell.py (inbox行=2 / cross_pc_inbox 以外=0)
+### scripts/audit_meta_codex.sh (inbox行=3 / cross_pc_inbox 以外=3)
+6:# 仕組み・効率・責務・改善の 4 軸で完了 task を横断的に評価し、信長 inbox に進言する。
+319:# === M3 violation alert (= F001-F005 違反検出 → 信長 inbox CRITICAL trigger source) ===
+332:  log_json "CRITICAL" "m3_violation" "F001-F005 responsibility violation detected, dump=$VIOLATION_DUMP, shogun inbox notification recommended"
+### scripts/commander_send_shogun_second.sh (inbox行=4 / cross_pc_inbox 以外=0)
+### scripts/karo_second_send_iincho.sh (inbox行=2 / cross_pc_inbox 以外=0)
+### scripts/relay_kikaku_w0.py (inbox行=2 / cross_pc_inbox 以外=0)
+### scripts/slim_yaml.py (inbox行=21 / cross_pc_inbox 以外=21)
+7:- For all agents: Archives read: true messages from inbox files.
+193:def slim_inbox(agent_id, dry_run=False):
+194:    """Archive read: true messages from inbox file."""
+197:    inbox_file = queue_dir / 'inbox' / f'{agent_id}.yaml'
+199:    if not inbox_file.exists():
+200:        # Inbox doesn't exist yet - that's fine
+203:    data = load_yaml(inbox_file)
+228:    archive_file = archive_dir / f'inbox_{agent_id}_{archive_timestamp}.yaml'
+231:        print(f"[DRY-RUN] would archive: {inbox_file}")
+242:    if not save_yaml(inbox_file, data):
+243:        print(f"Error: Failed to update {inbox_file}, but archive was created", file=sys.stderr)
+305:def slim_all_inboxes(dry_run=False):
+307:    inbox_dir = queue_dir / 'inbox'
+308:    if not inbox_dir.exists():
+311:    for filepath in sorted(inbox_dir.glob('*.yaml')):
+314:            print(f"[DRY-RUN] processing inbox file: {filepath}")
+315:        if not slim_inbox(agent_id, dry_run=dry_run):
+318:            print(f"[DRY-RUN] finished inbox file: {filepath}")
+378:        if not slim_all_inboxes(dry_run):
+381:    # Process inbox for all agents
+382:    if not slim_inbox(agent_id, dry_run):
+### scripts/watchdogs/enter_restart_common_watchdog.sh (inbox行=1 / cross_pc_inbox 以外=1)
+279:#   過去 user message を「  ❯ inboxN」形式で再表示する、bash 出力に "│ > xxx │" 含む) を
+### shim/hakudokai/_section18_roles.py (inbox行=1 / cross_pc_inbox 以外=1)
+55:# role → 所属 PC マッピング (inbox_watcher の _build_role_to_pc 等で利用)
+### shim/hakudokai/hakudokai_departure.sh (inbox行=4 / cross_pc_inbox 以外=4)
+5:# inbox_watcher をバックグラウンド起動。最後に動作 verbatim 出力で running 状態を表示。
+152:# --- inbox_watcher background 起動 ---
+153:WATCHER="$SCRIPT_DIR/hakudokai_inbox_watcher.py"
+155:echo "[departure] starting inbox_watcher (interval=${INTERVAL}s, log=$WATCHER_LOG)"
+### shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh (inbox行=1 / cross_pc_inbox 以外=1)
+5:# 副医院長 (fukuincho) CLI の inbox に配信し、tmux nudge で起こす。
+### shim/hakudokai/hakudokai_fukuincho_watcher.sh (inbox行=1 / cross_pc_inbox 以外=1)
+5:# を5秒間隔でSELECTし、未読メッセージを shogun inbox に転記。
+### shim/hakudokai/hakudokai_heartbeat_check.py (inbox行=1 / cross_pc_inbox 以外=1)
+182:        f"last_seen={last} elapsed={elapsed}. 該当 role の inbox_watcher / "
+### shim/hakudokai/hakudokai_inbox_watcher.py (inbox行=21 / cross_pc_inbox 以外=21)
+3:hakudokai_inbox_watcher.py — Supabase pc_handshake polling watcher.
+5:shogun (yohey-w v4.6.0) の scripts/inbox_watcher.sh の Supabase 化版。
+10:  Phase 1: 自身の inbox poll (5sec)、unread あれば標準出力に notify。
+28:    hakudokai_inbox_watcher.py [--once] [--interval 5] [--max-events 50]
+45:        "[inbox_watcher] supabase-py not installed. pip install 'supabase>=2.0.0'\n"
+74:        "[inbox_watcher] cannot resolve role. "
+123:        sys.stderr.write(f"[inbox_watcher] DB cache load failed (fallback empty): {exc}\n")
+162:        sys.stderr.write(f"[inbox_watcher] legacy import failed (non-fatal): {exc}\n")
+197:        sys.stderr.write(f"[inbox_watcher] notified_cache upsert failed: {exc}\n")
+224:        raise SystemExit("[inbox_watcher] SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY env missing.")
+252:    head = f"[hakudokai_inbox][{role}] unread {item.get('priority','?')} {item.get('message_type','?')} kind={kind}"
+284:    sys.stdout.write("HAKUDOKAI_INBOX_NOTIFY=" + json.dumps(payload, ensure_ascii=False) + "\n")
+289:    parser = argparse.ArgumentParser(description="hakudokai inbox watcher (Supabase polling).")
+302:        raise SystemExit(f"[inbox_watcher] unknown role '{role}'. valid: {sorted(ROLE_TO_PC)}")
+309:        sys.stderr.write(f"[inbox_watcher] legacy file cache imported {imported} ids → Supabase\n")
+314:            f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+322:            sys.stderr.write(f"[inbox_watcher] disabled: {reason}; sleeping\n")
+330:                sys.stderr.write(f"[inbox_watcher] role busy (no idle flag), suppressing notify\n")
+335:                sys.stderr.write(f"[inbox_watcher] fetch error: {exc}\n")
+355:                    sys.stderr.write(f"[inbox_watcher] race precheck failed (non-fatal): {exc}\n")
+374:                    f"[inbox_watcher] {len(items)} unread items already notified (suppressed)\n"
+### shim/hakudokai/hakudokai_kuro_desktop_watcher.sh (inbox行=1 / cross_pc_inbox 以外=1)
+5:#   1. Desktop kuro → main_pc: from_pc=kuro_desktop のメッセージを将軍main inboxに転記
+### shim/hakudokai/hakudokai_minimal_install.sh (inbox行=6 / cross_pc_inbox 以外=6)
+16:#   5. .claude/hooks/stop_hook_inbox.sh 配置 (実行権限付与)
+109:HOOK_SRC="$REPO_ROOT/.claude/hooks/stop_hook_inbox.sh"
+112:  echo "[install] stop_hook_inbox.sh executable: $HOOK_SRC"
+129:          { "type": "command", "command": "<repo_root>/.claude/hooks/stop_hook_inbox.sh" }
+145:  HAKUDOKAI_ROLE="$ROLE" python3 "$REPO_ROOT/scripts/hakudokai_inbox_watcher.py" --once --quiet \
+155:echo "  - Run: HAKUDOKAI_ROLE=$ROLE python3 $REPO_ROOT/scripts/hakudokai_inbox_watcher.py --once"
+### shim/hakudokai/hakudokai_patient_notification.py (inbox行=5 / cross_pc_inbox 以外=5)
+5:メール / SMS / LINE / push / app_inbox 統合配信、DD-044 (Quartetto 連携 + 領収書 PDF) との
+54:VALID_CHANNELS = ("email", "sms", "line", "push", "app_inbox")
+184:    # opt-in 確認 (push / app_inbox は notify_push に集約 simplification)
+185:    settings_channel = "push" if args.channel in ("push", "app_inbox") else args.channel
+285:    args.channel = args.channel or "app_inbox"
+### shim/hakudokai/hakudokai_secondpc_watcher.sh (inbox行=1 / cross_pc_inbox 以外=1)
+5:# を5秒間隔でSELECTし、宛先エージェントのinboxに転記。
+### shim/hakudokai/hakudokai_start_watchers.sh (inbox行=14 / cross_pc_inbox 以外=14)
+7:#   1. hakudokai_fukuincho_watcher.sh (Supabase→shogun inbox)
+8:#   2. inbox_watcher.sh × 3 (karo, ashigaru1, gunshi)
+57:  pkill -f "inbox_watcher.sh ${agent}" 2>/dev/null || true
+73:# 2. Start inbox_watcher.sh per agent (including shogun)
+77:  logfile="/tmp/inbox_watcher_${agent}.log"
+78:  log "Starting inbox_watcher[$agent]..."
+79:  nohup bash "${SCRIPT_DIR}/scripts/inbox_watcher.sh" "$agent" "$pane" claude \
+86:  if pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then
+87:    log "inbox_watcher[$agent]: OK"
+89:    log "inbox_watcher[$agent]: FAILED"
+185:log "inbox_watcher[karo]: $(pgrep -f 'inbox_watcher.sh karo' | head -1 || echo DEAD)"
+186:log "inbox_watcher[ashigaru1]: $(pgrep -f 'inbox_watcher.sh ashigaru1' | head -1 || echo DEAD)"
+187:log "inbox_watcher[gunshi]: $(pgrep -f 'inbox_watcher.sh gunshi' | head -1 || echo DEAD)"
+188:log "inbox_watcher[shogun]: $(pgrep -f 'inbox_watcher.sh shogun' | head -1 || echo DEAD)"
+### shim/hakudokai/hakudokai_watchdog.sh (inbox行=38 / cross_pc_inbox 以外=38)
+6:#   1. hakudokai_fukuincho_watcher.sh (Supabase→shogun inbox)
+8:#   3. inbox_watcher.sh per agent (= queue/pane_registry.yaml driven、legacy hardcode fallback)
+11:#   - INBOX_AGENTS hardcode → queue/pane_registry.yaml 動的読込 (flock + python yaml)
+16:#   - dual-write: registry 失敗時 LEGACY_INBOX_AGENTS 配列 fallback (cycle1 段階1)
+39:#   - ~/.openclaw/disable_inbox_watcher_<agent>: 個別停止
+88:LEGACY_INBOX_AGENTS="karo:multiagent:0.0 ashigaru1:multiagent:0.1 gunshi:multiagent:0.8 shogun:shogun:0.0"
+151:load_inbox_agents_from_registry() {
+334:#   3. On failure → fall back to LEGACY_INBOX_AGENTS (degraded mode)
+345:  registry_output=$(load_inbox_agents_from_registry)
+358:      log "registry: status=${REGISTRY_LOAD_STATUS}; fail-closed active, skipping LEGACY_INBOX_AGENTS fallback"
+363:    log "using LEGACY_INBOX_AGENTS fallback (= degraded mode, status=${REGISTRY_LOAD_STATUS})"
+365:    candidates=( $LEGACY_INBOX_AGENTS )
+439:start_inbox_watcher() {
+442:  local logfile="/tmp/inbox_watcher_${agent}.log"
+443:  log "Starting inbox_watcher for $agent ($pane)..."
+444:  nohup bash "${SCRIPT_DIR}/scripts/inbox_watcher.sh" "$agent" "$pane" claude \
+449:    log "inbox_watcher[$agent] STARTED (PID=$pid)"
+454:    log "inbox_watcher[$agent] FAILED TO START"
+525:check_and_restart_inbox() {
+530:  if ! pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then
+532:      log "inbox_watcher[$agent] DEAD — MANUAL MODE (skipping restart)"
+535:    if [ -f "$HOME/.openclaw/disable_inbox_watcher_${agent}" ]; then
+536:      log "inbox_watcher[$agent] DEAD — DISABLED by flag (skipping restart)"
+546:        send_urgent_alert "$agent" "[ERR-WATCHDOG-001] inbox_watcher[${agent}] exceeded ${RESTART_CAP_PER_HOUR} restarts/hour. Backoff revival enabled (5→10→20→40→80→60min cap)."
+564:      if start_inbox_watcher "$agent" "$pane"; then
+566:        if pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1; then
+578:            send_urgent_alert "$agent" "[ERR-WATCHDOG-002] inbox_watcher[${agent}] prolonged death loop (${breach_n} backoff breaches). Manual investigation required."
+589:    log "ALERT: inbox_watcher[$agent] DEAD — restarting (fail_count=${RESTART_FAIL_COUNT[$agent]}, hourly=$(restart_count_window "$agent"))"
+591:    if ! start_inbox_watcher "$agent" "$pane"; then
+595:        send_urgent_alert "$agent" "inbox_watcher[${agent}]: ${MAX_RESTART_FAILS} consecutive restart failures. Entering MANUAL MODE. PID=$$ requires human intervention."
+597:          "inbox_watcher_${agent}_restart_failure_x${MAX_RESTART_FAILS}" \
+598:          "inbox_watcher for ${agent} dies immediately after restart ${MAX_RESTART_FAILS} times" \
+624:    pgrep -f "inbox_watcher.sh ${agent}" > /dev/null 2>&1 && alive="true"
+626:    processes="${processes},\"inbox_watcher_${agent}\":{\"alive\":${alive},\"manual_mode\":${MANUAL_MODE[$agent]},\"restart_fails\":${RESTART_FAIL_COUNT[$agent]},\"hourly_restart_count\":${hourly}
+664:# Phase 2: registry 動的読込 → ACTIVE_AGENTS 解決 (= 旧 INBOX_AGENTS hardcode 廃止)
+678:  check_and_restart_inbox "$agent" "$pane"
+707:    LAST_ACTION="check_inbox_${agent}"
+708:    check_and_restart_inbox "$agent" "$pane"

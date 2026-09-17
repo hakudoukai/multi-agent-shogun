@@ -1,0 +1,223 @@
+## inbox_watcher.sh 446-470
+            raise SystemExit(0)
+
+    # Task YAML status guard: skip auto-recovery if task is cancelled or idle.
+    # This prevents restarting a task that 家老 intentionally cancelled via clear_command.
+    task_yaml_path = os.path.join(
+        os.path.dirname(os.path.dirname(inbox)), "tasks", f"{agent_id}.yaml"
+    )
+    if os.path.exists(task_yaml_path):
+        try:
+            with open(task_yaml_path, "r", encoding="utf-8") as tf:
+                task_data = yaml.safe_load(tf) or {}
+            task_status = str(task_data.get("status") or "").strip().strip("'\"")
+            if task_status in ("cancelled", "idle"):
+                print(f"SKIP_CANCELLED:{task_status}")
+                raise SystemExit(0)
+        except SystemExit:
+            raise
+        except Exception:
+            pass  # If task YAML is unreadable, proceed with auto-recovery as safety net
+
+    now = datetime.datetime.now(datetime.timezone.utc).astimezone()
+    msg = {
+        "content": (
+            f"[auto-recovery] /clear 後の再着手通知。"
+            f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+## inbox_watcher.sh 596-640
+
+        # symlink保護: realpath経由で canonical 解決後に atomic replace
+        # (2026-05-08 split-brain 事故対策、commit dd706ad と同型 fix)
+        inbox_canonical = os.path.realpath(inbox)
+        tmp_path = f"{inbox_canonical}.tmp.{os.getpid()}"
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            yaml.safe_dump(
+                data,
+                f,
+                default_flow_style=False,
+                allow_unicode=True,
+                sort_keys=False,
+            )
+        os.replace(tmp_path, inbox_canonical)
+
+    normal_count = len(unread) - len(specials)
+    normal_msgs = [m for m in unread if m.get("type") not in special_types]
+    has_task_assigned = any(m.get("type") == "task_assigned" for m in normal_msgs)
+    payload = {
+        "count": normal_count,
+        "has_task_assigned": has_task_assigned,
+        "specials": [{"type": m.get("type", ""), "content": m.get("content", "")} for m in specials],
+    }
+    print(json.dumps(payload))
+except Exception:
+    print(json.dumps({"count": 0, "specials": []}))
+PY
+    ) 200>"$LOCKFILE" 2>/dev/null
+}
+
+# ─── Send CLI command via pty direct write ───
+# For /clear and /model only. These are CLI commands, not conversation messages.
+# CLI_TYPE別分岐: claude→そのまま, codex→/clear対応・/modelスキップ,
+#                  copilot→Ctrl-C+再起動・/modelスキップ
+# 実行時にtmux paneの @agent_cli を再確認し、ドリフト時はpane値を優先する。
+send_cli_command() {
+    local cmd="$1"
+    local effective_cli
+    effective_cli=$(get_effective_cli_type)
+
+    # cli_restart: delegate to switch_cli.sh (full /exit → relaunch cycle)
+    if [[ "$cmd" == __CLI_RESTART__:* ]]; then
+        local restart_args="${cmd#__CLI_RESTART__:}"
+        echo "[$(date)] [CLI-RESTART] Delegating to switch_cli.sh for $AGENT_ID: ${restart_args}" >&2
+        bash "${SCRIPT_DIR}/scripts/switch_cli.sh" "$AGENT_ID" $restart_args 2>&1 | while IFS= read -r line; do  # SCRIPT_DIR=project_root
+## launchers of inbox_watcher.sh (mac)
+/Users/momizimac/hermes-departments-mac/bin/boot-mac-fleet.sh:113:  pgrep -f "inbox_watcher.sh $ag " >/dev/null 2>&1 && continue
+/Users/momizimac/hermes-departments-mac/bin/boot-mac-fleet.sh:122:    nohup bash "$REPO/scripts/inbox_watcher.sh" "$ag" "$tgt" claude > "/tmp/inbox_watcher_$ag.log" 2>&1 &
+scripts/agent_health_check.sh:418:#   (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在 (grep)
+scripts/agent_health_check.sh:438:    # (2) inbox_watcher.sh detect_stale_handshake_extension 関数群 存在確認
+scripts/agent_health_check.sh:439:    _inbox_watcher_script="$SCRIPT_DIR/scripts/inbox_watcher.sh"
+scripts/agent_health_check.sh:442:            ALERTS+=("ERR-FUKUINCHO-HEALTH-001: inbox_watcher.sh detect_stale_evaluate_row 関数 不在")
+scripts/karo_standby_dashboard.sh:12:#   3. watcher プロセス(inbox_watcher.sh)の生死
+scripts/karo_standby_dashboard.sh:60:  pgrep -f "inbox_watcher.sh $1" 2>/dev/null | head -1
+scripts/karo_standby_dashboard.sh:113:  printf "  ${CYN}▎Watcher 健全性 (inbox_watcher.sh)${R}\n"
+scripts/stop_hook_inbox.sh:29:#     (scripts/inbox_watcher.sh 末尾) は本 hook を呼出さない (単一責務分離)。
+scripts/watcher_supervisor.sh:41:    # Per-agent disable flag (ex: ~/.openclaw/disable_inbox_watcher_shogun)
+scripts/watcher_supervisor.sh:52:    if pgrep -f "scripts/inbox_watcher.sh ${agent} " >/dev/null 2>&1; then
+scripts/watcher_supervisor.sh:57:    nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" >> "$log_file" 2>&1 &
+scripts/watcher_supervisor.sh:68:    start_watcher_if_missing "shogun"    "shogun:main.0"        "logs/inbox_watcher_shogun.log"
+scripts/watcher_supervisor_third.sh:63:    if pgrep -f "scripts/inbox_watcher.sh ${agent} " >/dev/null 2>&1; then
+scripts/watcher_supervisor_third.sh:68:    setsid nohup bash scripts/inbox_watcher.sh "$agent" "$pane" "$cli" >> "$log_file" 2>&1 < /dev/null &
+## symlinks
+symlink 無 (ls|grep ^l rc=1)
+## ashigaru-mac-4 last entry
+msg_20260917_140921_9398b2d0 2026-09-17T14:09:21 karo-mac notification False [家老mac→足軽mac4号] tk4st48 復命(msg_20260819_232407_dacd802e)は宛名が読点二名『karo-mac,gunshi-mac』の為 誰の箱にも入らず 29日 未讀であつた。落度は貴殿に非ず・器に宛
+## slim_yaml.py 193-245
+def slim_inbox(agent_id, dry_run=False):
+    """Archive read: true messages from inbox file."""
+    queue_dir = get_queue_dir()
+    archive_dir = queue_dir / 'archive'
+    inbox_file = queue_dir / 'inbox' / f'{agent_id}.yaml'
+
+    if not inbox_file.exists():
+        # Inbox doesn't exist yet - that's fine
+        return True
+
+    data = load_yaml(inbox_file)
+    if not data or 'messages' not in data:
+        return True
+
+    messages = data.get('messages', [])
+    if not isinstance(messages, list):
+        print("Error: messages is not a list", file=sys.stderr)
+        return False
+
+    # Separate unread and archived messages
+    unread = []
+    archived = []
+
+    for msg in messages:
+        is_read = msg.get('read', False)
+        if is_read:
+            archived.append(msg)
+        else:
+            unread.append(msg)
+
+    # If nothing to archive, return success without writing
+    if not archived:
+        return True
+
+    archive_timestamp = get_timestamp()
+    archive_file = archive_dir / f'inbox_{agent_id}_{archive_timestamp}.yaml'
+
+    if dry_run:
+        print(f"[DRY-RUN] would archive: {inbox_file}")
+        print(f"[DRY-RUN] would move to: {archive_file}")
+        return True
+
+    # Write archived messages to timestamped file
+    archive_data = {'messages': archived}
+    if not save_yaml(archive_file, archive_data):
+        return False
+
+    # Update main file with unread messages only
+    data['messages'] = unread
+    if not save_yaml(inbox_file, data):
+        print(f"Error: Failed to update {inbox_file}, but archive was created", file=sys.stderr)
+        return False
+
+## stop_hook_inbox.sh 95-120
+# ─── Identify agent ───
+if [ -n "${__STOP_HOOK_AGENT_ID+x}" ]; then
+    AGENT_ID="$__STOP_HOOK_AGENT_ID"
+elif [ -n "${TMUX_PANE:-}" ]; then
+    AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}' 2>/dev/null || true)
+else
+    AGENT_ID=""
+fi
+
+# If we can't identify the agent, approve (exit 0 with no output = approve)
+if [ -z "$AGENT_ID" ]; then
+    exit 0
+fi
+
+# 信長 is the Lord's conversation pane — skip stop hook entirely
+if [ "$AGENT_ID" = "shogun" ]; then
+    exit 0
+fi
+
+# ─── Define inbox path early (used in multiple places below) ───
+INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+
+# ─── Infinite loop prevention ───
+# When stop_hook_active=true, the agent is already continuing from a
+# previous Stop hook block. Allow it to stop this time to prevent loops.
+STOP_HOOK_ACTIVE=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('stop_hook_active', False))" 2>/dev/null || echo "False")
+## .claude/settings.json 1-20
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/stop_hook_inbox.sh",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/goal_stop_hook.py",
+            "timeout": 330
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+## ~/.claude/settings.json hooks
+## agent_selfwatch.bats 170-196
+
+@test "TC-FR-011 [RED]: send-keys is restricted to final escalation only" {
+    grep -q "FINAL_ESCALATION_ONLY" "$WATCHER_SCRIPT"
+}
+
+@test "TC-FR-014 + TC-NFR-002: inbox_write IF and schema remain backward compatible" {
+    run bash "$INBOX_WRITE_SCRIPT" test_agent "compat-check" task_assigned karo
+    [ "$status" -eq 0 ]
+
+    "$VENV_PYTHON" - << 'PY' "$PROJECT_ROOT/queue/inbox/test_agent.yaml"
+import sys, yaml
+p = sys.argv[1]
+with open(p) as f:
+    data = yaml.safe_load(f)
+assert "messages" in data and isinstance(data["messages"], list)
+msg = data["messages"][-1]
+for k in ("id", "from", "timestamp", "type", "content", "read"):
+    assert k in msg
+assert msg["type"] == "task_assigned"
+assert msg["from"] == "karo"
+print("OK")
+PY
+
+    # cleanup test artifact written to real queue path by production script
+    rm -f "$PROJECT_ROOT/queue/inbox/test_agent.yaml" "$PROJECT_ROOT/queue/inbox/test_agent.yaml.lock"
+}

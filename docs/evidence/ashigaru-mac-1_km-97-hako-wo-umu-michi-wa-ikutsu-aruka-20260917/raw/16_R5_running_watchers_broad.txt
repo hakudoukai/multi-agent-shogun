@@ -1,0 +1,43 @@
+## /Users/momizimac/hermes-departments-mac/gunshi-mac/bin/mac_downlink_watcher.py      247行 sha=7f6f9f65bcae5efc
+22:import subprocess
+33:TOPIC = 'cross_pc_inbox_gunshi-mac'
+49:    with LOG.open('a', encoding='utf-8') as f:
+62:    with urllib.request.urlopen(req, timeout=20) as r:
+103:    return subprocess.run(['tmux', 'capture-pane', '-p', '-t', TARGET, '-S', '-60'],
+153:            '返信=cross_pc_inbox_{reply}へparent_seq={seq}。'
+168:        subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-a'], timeout=5)
+169:        subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-k'], timeout=5)
+186:    subprocess.run(['tmux', 'load-buffer', '-b', 'mac-downlink', '-'],
+188:    subprocess.run(['tmux', 'paste-buffer', '-p', '-d', '-b', 'mac-downlink', '-t', TARGET],
+191:    subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-m'], check=True, timeout=8)
+## /Users/momizimac/hermes-departments-mac/gakushu-bucho/bin/mac_downlink_watcher.py      286行 sha=f127e8cccda4d0f5
+23:import subprocess
+34:TOPIC = 'cross_pc_inbox_gakushu-bucho'
+51:    with LOG.open('a', encoding='utf-8') as f:
+64:    with urllib.request.urlopen(req, timeout=20) as r:
+105:    return subprocess.run(['tmux', 'capture-pane', '-p', '-t', TARGET, '-S', '-60'],
+158:            '返信=cross_pc_inbox_{reply}へparent_seq={seq}。'
+173:        subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-a'], timeout=5)
+174:        subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-k'], timeout=5)
+191:    subprocess.run(['tmux', 'load-buffer', '-b', 'mac-downlink', '-'],
+193:    subprocess.run(['tmux', 'paste-buffer', '-p', '-d', '-b', 'mac-downlink', '-t', TARGET],
+196:    subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-m'], check=True, timeout=8)
+223:                    subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-a'], timeout=5)
+224:                    subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-k'], timeout=5)
+246:_lock_handle = LOCK.open('a+')
+## /Users/momizimac/hermes-departments-mac/ashigaru-mac-7/bin/mac_a7_downlink_watcher.py      308行 sha=96b417963ff8786a
+23:import subprocess
+34:TOPIC = 'cross_pc_inbox_dr-m'  # 2026-09-04 stage2 ドクターM
+51:    with LOG.open('a', encoding='utf-8') as f:
+64:    with urllib.request.urlopen(req, timeout=20) as r:
+105:    return subprocess.run(['tmux', 'capture-pane', '-p', '-t', TARGET, '-S', '-60'],
+116:    out = subprocess.run(['tmux', 'list-panes', '-a', '-F', fmt],
+178:            '返信=cross_pc_inbox_{reply}へparent_seq={seq}。'
+195:        subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-a'], timeout=5)
+196:        subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-k'], timeout=5)
+213:    subprocess.run(['tmux', 'load-buffer', '-b', 'mac-downlink', '-'],
+215:    subprocess.run(['tmux', 'paste-buffer', '-p', '-d', '-b', 'mac-downlink', '-t', TARGET],
+218:    subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-m'], check=True, timeout=8)
+245:                    subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-a'], timeout=5)
+246:                    subprocess.run(['tmux', 'send-keys', '-t', TARGET, 'C-k'], timeout=5)
+268:_lock_handle = LOCK.open('a+')

@@ -1,0 +1,7 @@
+刻=2026-09-17T16:10:09+0900
+HEAD(歩いた disk の頭)=260f2a066007136e7084a1e411f8555b3f12c9c1 branch=ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+基点(據ゑる親)=4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1 origin/main=4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1 同=yes
+untracked(git status --porcelain ^??)=37
+tracked_changed(^?? 以外)=998
+門 scripts/inbox_write.sh sha16=d2265a07e232eb0b lines=409 mtime=Sep 17 14:04:14 2026
+註: 歩くのは disk であつて commit ではない。disk = HEAD の tree + untracked 37 口 + 変更 998 口。∴ 出目は HEAD 一つに縛れぬ。

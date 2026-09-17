@@ -1,0 +1,9 @@
+1_touten	rc=69	stdout=	stderr1=[inbox_write] REJECTED: ★宛名に読点/空白★ (target=karo-mac,gunshi-mac) ―― 二名を一字で渡した跡。
+2_kuuhaku	rc=69	stdout=	stderr1=[inbox_write] REJECTED: ★宛名に読点/空白★ (target=karo mac) ―― 二名を一字で渡した跡。
+3_michi	rc=69	stdout=	stderr1=[inbox_write] REJECTED: ★未知の宛名★ 'km97-michinai-na' ―― 箱を生ませぬ(fail-closed)。
+4_pane	rc=0	stdout=NAME_PASS target=karo-mac	stderr1=
+5_hako_nomi	rc=0	stdout=NAME_PASS target=karo	stderr1=
+6_allow	rc=0	stdout=NAME_PASS target=km97-michinai-na	stderr1=[inbox_write] ★註★ 未知の名 'km97-michinai-na' を IW_ALLOW_NAME で通した ―― 理由=km97 実走対照・箱は書かぬ
+7_shibako	rc=0	stdout=NAME_PASS target=gunshi-mac	stderr1=
+箱の名列 sha16 前=0bf25935a4c61422(19本) 後=0bf25935a4c61422(19本) 同=yes
+刻=2026-09-17T14:26:08+0900 門sha=d2265a07e232eb0b
