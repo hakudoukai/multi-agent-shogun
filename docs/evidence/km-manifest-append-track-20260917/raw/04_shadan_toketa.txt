@@ -1,0 +1,6 @@
+# 刻 2026-09-17 16:20:17 +0900
+# 器 別所に新 .gitignore を置き -f 無しの git add を走らせる
+  karo_mac_manifest_append.py  add_rc=0  index=1
+  karo_mac_manifest_verify.py  add_rc=0  index=1
+  DAREMO_YURUSANU_NEGATIVE_CONTROL.py  add_rc=1  index=0
+  期待= 本題1 / 陽性対照(verify.py)1 / ★陰性対照0★
