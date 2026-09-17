@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+# fleet_liveness_check.sh — 「居るはずの役職が居ない」を機械が見つける（2026-08-08・委員長）
+#
+# ★由来（委員長の落度・本日3件目の同型）★
+#   13:4x 委員長が公式config反映のため軍師secondを kill-session → 再作成したが★起動に失敗★。
+#   検証出力が空だったのを見落とし、そのまま放置。watcherは「居ない相手」へ配り続け、
+#   ★pane_identity 警報が55回連続で鳴った★。それでも委員長は気づかず、
+#   予約担当部長のESCALATE → Commander中継 → ようやく発覚した（約20分）。
+#
+#   sweepには「復帰未確認なら委員長へurgent発報」を装着済だが、
+#   ★委員長が手で再起動した分はその機構を通らない★。本件は「機構の外で起きた失敗」である。
+#   ∴ 手順に頼らず、★居るべき役職が居るか★を独立に定期確認する。
+#
+# 使い方:
+#   bash fleet_liveness_check.sh <manifest.json> [--alert]   # --alert で不在時に委員長へ発報
+# 終了コード: 0=全員在り / 1=不在あり
+
+set -uo pipefail
+MF="${1:-}"; ALERT=0
+[ "${2:-}" = "--alert" ] && ALERT=1
+[ -n "$MF" ] || { echo "usage: fleet_liveness_check.sh <manifest.json> [--alert]" >&2; exit 2; }
+
+HOST=$(python3 -c "import json;print(json.load(open('$MF')).get('host','?'))")
+TMUX_BIN=$(python3 -c "import json;print(json.load(open('$MF')).get('tmux','tmux'))")
+NOW=$(TZ=Asia/Tokyo date '+%Y-%m-%dT%H:%M:%S')
+
+missing=""; ok=0; narrow=""
+MIN_WIDTH="${FLEET_MIN_PANE_WIDTH:-80}"
+# ★閾は族である(專任3 第40弾・監督裁 322099)★ ―― L42 の [ ] は 2>/dev/null ゆゑ
+#   ★閾の誤りの声まで消して居た★。∴ 検めは再向の外(此処)に置く。
+is_num(){ case "${1:-}" in (''|*[!0-9]*) return 1 ;; (*) return 0 ;; esac }
+is_num "${MIN_WIDTH}" || { printf '%s\n' "[fleet_liveness] ★閾 MIN_WIDTH が數でない(「${MIN_WIDTH}」) ―― 既定 80 へ倒す(fail-closed)★" >&2; MIN_WIDTH=80; }
+while IFS='|' read -r name pane sudo_user socket; do
+  [ -n "$name" ] || continue
+  T=(); [ -n "$sudo_user" ] && T=(sudo -n -u "$sudo_user")
+  T+=("$TMUX_BIN"); [ -n "$socket" ] && T+=(-S "$socket")
+  # paneが実在し、かつ死んでいないこと
+  st=$("${T[@]}" display-message -p -t "$pane" '#{pane_dead}' 2>/dev/null)
+  if [ "$st" = "0" ]; then
+    ok=$((ok+1))
+    # ★pane幅の下限監視（2026-08-08追加）★
+    #   由来: 家老secondのcompactが3回効かず、調べたら pane が★24桁×10行★だった。
+    #   TUIは80桁前提で描画するため、この幅では表示も入力も壊れる（公式Issue#57393と同族）。
+    #   艦隊全域を測ると27paneが80桁未満で、足軽thirdは★20桁★だった。
+    w=$("${T[@]}" display-message -p -t "$pane" '#{pane_width}' 2>/dev/null)
+    if [ -n "$w" ] && [ "$w" -lt "$MIN_WIDTH" ] 2>/dev/null; then
+      narrow="$narrow $name(${w}桁)"
+    fi
+  else
+    missing="$missing $name($pane)"
+  fi
+done < <(python3 -c "
+import json
+mf=json.load(open('$MF'))
+for r in mf['roles']:
+    print('%s|%s|%s|%s'%(r['name'], r.get('pane',''), r.get('sudo_user',''), r.get('socket','')))
+")
+
+if [ -z "$missing" ] && [ -z "$narrow" ]; then
+  echo "[$NOW] LIVENESS OK host=$HOST 在り=$ok / 不在=0 / 狭pane=0（検査実施済）"
+  exit 0
+fi
+if [ -z "$missing" ] && [ -n "$narrow" ]; then
+  # paneは在るが幅が足りない＝TUIが壊れる恐れ。落ちてはいないので警告扱い
+  echo "[$NOW] ★LIVENESS 狭いpaneあり★ host=$HOST 在り=$ok 狭pane:$narrow"
+  echo "  → bash fix_pane_widths.sh --apply --width 340 --height 70 で是正できる"
+  exit 1
+fi
+
+echo "[$NOW] ★LIVENESS 不在あり★ host=$HOST 在り=$ok 不在=$missing"
+if [ "$ALERT" = "1" ]; then
+  BODY="[liveness→委員長][★役職paneが不在★ host=$HOST] 不在:$missing
+在り=$ok。居るはずの役職のpaneが見つからない。再起動に失敗したまま放置されている恐れがある
+（委員長が手で再起動して失敗を見落とした実例あり=2026-08-08 軍師second・警報55回でも気づかず）。
+paneを実視し、正規launcherで復旧すること。"
+  python3 - "$HOST" "$BODY" <<'PY' || echo "  ☆委員長への通知に失敗＝ログのみ☆"
+import json,os,sys,urllib.request
+host, body = sys.argv[1], sys.argv[2]
+b=os.environ.get("SUPABASE_URL","").rstrip("/")
+k=os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("SUPABASE_KEY","")
+assert b and k, "supabase_env_missing"
+payload=json.dumps({"from_pc":host if host!="?" else "third_pc","to_pc":"iincho",
+ "topic":"cross_pc_inbox_iincho","message_type":"urgent_stop","priority":"urgent",
+ "requires_response":True,"content":body,"clinic_id":"hakudoukai_main",
+ "context_data":{"sender_agent":"fleet-liveness","target_agent":"iincho",
+                 "lane":"maintenance","host":host}}, ensure_ascii=False)
+r=urllib.request.Request(b+"/rest/v1/pc_handshake",data=payload.encode(),method="POST",
+  headers={"apikey":k,"Authorization":"Bearer "+k,"Content-Type":"application/json"})
+urllib.request.urlopen(r,timeout=20).read()
+print("  ★不在を委員長へ通知した★")
+PY
+fi
+exit 1

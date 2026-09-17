@@ -1,0 +1,47 @@
+
+─ 形1 ─
+rc=0
+[fleet_liveness] ★閾 未設定 ―― 既定へ倒す(FLEET_MIN_PANE_WIDTH=80) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形2 ─
+rc=0
+[fleet_liveness] ★閾 FLEET_MIN_PANE_WIDTH が空文字 ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形3 ─
+rc=0
+[fleet_liveness] ★閾 FLEET_MIN_PANE_WIDTH が空白のみ ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形4 ─
+rc=0
+[fleet_liveness] ★閾 FLEET_MIN_PANE_WIDTH を比較器が扱へぬ(「99999999999999999999」) ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形5 ─
+rc=0
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔120〕
+
+─ 形6 ─
+rc=0
+[fleet_liveness] ★閾 FLEET_MIN_PANE_WIDTH を比較器が扱へぬ(「-5」) ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形7 ─
+rc=0
+[fleet_liveness] ★閾 FLEET_MIN_PANE_WIDTH を比較器が扱へぬ(「80␊[fleet_liveness] ★偽の行★」) ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形8 ─
+rc=0
+[fleet_liveness] ★閾 FLEET_MIN_PANE_WIDTH が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 80 へ倒す(fail-closed・裁 seq323980⑵)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕

@@ -1,0 +1,45 @@
+
+─ 形1 ─
+rc=0
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形2 ─
+rc=0
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形3 ─
+rc=0
+[fleet_liveness] ★閾 MIN_WIDTH が數でない(「   」) ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形4 ─
+rc=0
+★報せ落ち(狹い pane が見逃された)★
+RESULT MIN_WIDTH=〔99999999999999999999〕
+
+─ 形5 ─
+rc=0
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔120〕
+
+─ 形6 ─
+rc=0
+[fleet_liveness] ★閾 MIN_WIDTH が數でない(「-5」) ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形7 ─
+rc=0
+[fleet_liveness] ★閾 MIN_WIDTH が數でない(「80
+[fleet_liveness] ★偽の行★」) ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
+
+─ 形8 ─
+rc=0
+[fleet_liveness] ★閾 MIN_WIDTH が數でない(「80␊90」) ―― 既定 80 へ倒す(fail-closed)★
+狹い pane を報せた(正)
+RESULT MIN_WIDTH=〔80〕
