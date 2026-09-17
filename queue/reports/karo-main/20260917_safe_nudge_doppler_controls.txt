@@ -30,7 +30,7 @@ rc=0
 +++ b/scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh	2026-09-17 15:50:48.630995076 +0900
 @@ -80,14 +80,14 @@
  fi
- 
+
  # 3. Claude pane の場合の pane identity verify (= 反省点 n)
 -if [[ "$CLI_TYPE" == "claude" ]]; then
 +if [[ "$CLI_TYPE" =~ ^(claude|doppler)$ ]]; then

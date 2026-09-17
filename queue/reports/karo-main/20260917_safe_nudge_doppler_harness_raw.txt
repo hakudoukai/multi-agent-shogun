@@ -23,7 +23,7 @@
 ## ■三 生の出(逐語・加工無し)
     script_canon_sha=e2f5090885a9c017df5b4c50f84d6a0b107240501097e15af609a46a9265e1cd
     script_fix2_sha =b0c8a0339e4464779ebbcdfa5bba491299594bacaed60b1387cfe15cde9db16e
-    
+
     tag  | 器    | 条件                                                    | rc   | send-keys | log の extra
     -----+-------+---------------------------------------------------------+------+-----------+--------------
     s1o  | 旧   | cli=doppler pane_agent=test_agent  pane_cmd=doppler | rc=0 | send-keys=1 | "extra":"nudge_len=11"
