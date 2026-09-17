@@ -1,0 +1,63 @@
+task_id: km-101-eda-yonjuugo-no-chakuchi-shiwake-karo-zen-20260917
+assigned_to: ashigaru-mac-2
+assigned_by: karo-mac
+status: assigned
+priority: high
+bloom_level: L5
+issued_at: '2026-09-17T14:50:09+0900'
+assigned_at: '2026-09-17T14:50:09'
+parent_ruling: '委員長裁 seq325884(親 325872) ―― 枝削除は★不可逆削除＝理事長専管★ゆゑ★消さない★。要点は main 取込 1/60。残45本を「着地させる(PR)／捨てる(理事長裁を待つ)」へ仕分けよ。PR 起票は監督 lot・判定は軍師mac。'
+
+teki: |
+  ★的は「此の枝を着地させるか、捨てるか」一件のみ★。
+  origin に mac の枝は 60 本在る。其の内 ★origin/main(4be3ee19e1c5)に取り込まれて居るのは 1 本のみ★。
+  15 本は「不要(tip が他枝の祖先)」と既に名指した(臺帳 17d7dbf7)ゆゑ ★触れるな★。
+  残 45 本を三席で分けた。貴殿の組 = ★karo-mac の枝 前半 13 本 (13 本)★。
+  ★消す事ではない。着地の道を測る事である。★枝は一本も消すな。
+
+toi: |
+  ㋐ 母數を宣せ。割当の枝を逐語で列べ、full sha を書け。
+     ★手許に物が在るか★を `git cat-file -e <sha>^{commit}` で一本づつ検め、rc を書け。
+  ㋑ ★二つの差分を測り分けよ(混ぜたら其れ自体が疵)★:
+     ⑴ 対 origin/main の差分 file 数 = `git diff --name-only 4be3ee19e1c5...<sha>` の行数
+     ⑵ ★自前★の差分 file 数 = 60 本の mac 枝 tip の内、其の枝の★真の祖先★である tip を悉く挙げ、
+        `git rev-list --count B..X` が最小の B を選び、`git diff --name-only B..X` の行数
+     ★⑴は「此の枝が変へた file 数」では★ない★。★origin/main が何 file 遅れて居るか★である。
+     ★數が何を意味せぬかを紙に書け(数の規律3)。★祖先 tip が一本も無い枝は ⑵=測れぬ と書き、其の旨を宣せ。
+  ㋒ commit 数(`git rev-list --count 4be3ee19e1c5..<sha>`)と、触る top-level 領域を列べよ。
+  ㋓ 仕分けよ。甲=★着地させる(PR)★ / 乙=★捨てる(理事長裁を待つ)★ / 丙=★測れぬ★。
+     ★判ずる拠り所を先に宣してから使へ。★(例: 器を据ゑる変更を含むか／紙のみか／他枝が悉く含むか)
+     各々に理由を一行。丙が在るなら「何を測れば判ずるか」を書け。
+  ㋔ 甲(着地候補)には ★受入条件★ を書け ―― 何を満たせば PR として通せるか。
+     (門 rc=0 か／臺帳が束内相対か／対照が在るか／他枝と同じ file を触つて衝突するか)
+  ㋕ 重なりを測れ。割当群の中で tip が他の tip の★祖先★に成つて居る対を悉く名指し、鎖(chain)を描け。
+     ★鎖の末端のみ着地させれば足りるか否か★を、理由付きで言へ。
+
+kin: |
+  ★枝を一本も消すな★(裁 325884 = ★消さない★・不可逆削除は理事長専管・破壊7線)。
+  ★checkout / merge / rebase / cherry-pick / push / fetch / refs 書換 悉く禁 ―― ★読取のみ★。
+  ★PR を起票するな★(起票は監督 lot・判定は軍師mac)。★他席の pane を覗くな。★
+  ★工作樹を汚すな★(`git diff` は ref 同士で取れ・checkout 不要)。
+
+osame: |
+  紙 = docs/evidence/<席名>_<件名>-20260917/ の下に README.md + driver + raw + MANIFEST.txt。
+  臺帳は ★束内相対★(cd 束 してから scripts/checks/karo_mac_manifest_append.py を呼べ・裁 seq322699)。
+  門控 = 出す前門を `KM_GATE_MANIFEST_BASE=.` 付きで通し、rc と母數と條①の数を紙の一行目に書け。
+  ★raw に ⑴⑵の生の数を TSV で残せ(枝・sha・⑴・⑵・commit・領域・甲乙丙・理由)。★
+  納め便は家老mac へ(★300字が條★・python3 の len で測り其の数を紙に焼け)。
+  軍師mac は死箱ゆゑ監査は家老mac が代送する。
+
+eda_warimochi: |
+  86ae87367c59a483b3248938569d01f484176d2d  karo-mac/a1-r56
+  5a12887f953d1e45c8793ab046b16fc0616bfbac  karo-mac/daiko-teishutsu-20260916
+  0138ae57c377f4f0b3675d10706b5267eaa83e12  karo-mac/hantei-saiteishutsu-20260917
+  c03203385131e5bb0c38e88997b849959e58f603  karo-mac/km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917
+  ec2c39a9a98e76105f7029c014dbcd516988c9dc  karo-mac/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917
+  0cf5633ffa87d9af5f91621720830a52ca2a748f  karo-mac/km-54-naoshi-wo-sue-kadobikae-wo-ingai-e-20260917
+  b4b338baa0ef7a258362ef04310d8acbc3d9c3b7  karo-mac/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917
+  9916cbad7ff7308271341a518b06070122754328  karo-mac/km-73-mieru-shirushi-ga-hiraku-ana-20260917
+  f9c4649d328a99249284f934815cd2caae9a3f34  karo-mac/km-74-shirushi-no-kawashimo-wo-hakare-20260917
+  7098cdcba65246c01cd8dcacd730ca462dd4deb5  karo-mac/km-76-repogai-no-ichikasho-wo-nushi-he-watasu-20260917
+  cfaa7c7f8572dc7b945d1974924784bc0a635d6b  karo-mac/km-77-shikii-no-bosuu-wo-yotsu-no-teigi-de-kakutei-seyo-20260917
+  078bb83b5b0b62d08227f043da87b2bf4f5b21b1  karo-mac/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917
+  157a9736fd1783ef2301ad2fa4b2f04fc9c47324  karo-mac/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917
