@@ -1,0 +1,82 @@
+#file	行	当たつた詞	逐語
+scripts/agent_health_check.sh	9	防	#     (= ps aux 経由の secret 漏洩防止、家康殿 audit msg_20260507_223206)
+scripts/agent_health_check.sh	16	防	#   - 5min cooldown (連投防止) + Supabase error_log INSERT + 信長 inbox alert
+scripts/agent_health_check.sh	87	検め	# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+scripts/agent_health_check.sh	89	倒れ	#   [ "$x" -ge "$閾" ] は其の値で ★rc=2★ に倒れ、if も elif も偽＝★黙つて既定の枝へ落ちる★。
+scripts/agent_health_check.sh	90	検め	#   ∴ 検める器と使ふ器を同じ演算子に揃へる。
+scripts/agent_health_check.sh	120	fail-closed|倒す	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+scripts/agent_health_check.sh	297	防	# pane 不在は skip (= 配置変動時の noise 防止、advisory のみ)。
+scripts/agent_health_check.sh	309	防	# pane_current_command='node' を返すケースが頻出ゆえ ERR-PERSONA-CLI-001 誤検知防止。
+scripts/agent_health_check.sh	348	防	# 約 200k+ で WARN / 240k+ で CRITICAL、5min cooldown で連投防止。
+scripts/inbox_watcher.sh	126	検め	# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+scripts/inbox_watcher.sh	128	倒れ	#   [ "$x" -ge "$閾" ] は其の値で ★rc=2★ に倒れ、if も elif も偽＝★黙つて既定の枝へ落ちる★。
+scripts/inbox_watcher.sh	129	検め	#   ∴ 検める器と使ふ器を同じ演算子に揃へる。
+scripts/inbox_watcher.sh	159	fail-closed|倒す	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+scripts/inbox_watcher.sh	172	検め|數として	#   ∴ 旗は「數として妥当か」ではなく ★0|1 の字面か★ で検める。0|1 の外は悉く既定へ倒し刷る。
+scripts/inbox_watcher.sh	190	fail-closed|倒す	# ★行注入の封じ(乙・裁 seq323980⑵)★ 印が既在なら値を刷らず倒す(fail-closed)
+scripts/inbox_watcher.sh	1019	防	# 連続 N 回 typing で skip された場合、強制 nudge (緊急メッセージが届かない事故防止)。
+scripts/inbox_watcher.sh	1024	永久	#   誤認 → system-wide typing false-positive で nudge 永久 skip (a3-1/a3-7 で実証)。
+scripts/inbox_watcher.sh	1075	防	# /clear+nudge 連結バグ防止 (2026-05-07 真因対策):
+scripts/inbox_watcher.sh	1100	防	# 上限到達 (default 5 = 約 2.5分) で強制 nudge を許可 (緊急メッセージ事故防止)
+scripts/inbox_watcher.sh	1206	落と	# Phase 2 の Escape エスカレーションは無効化し、通常 nudge のみに落とす。
+scripts/inbox_watcher.sh	1214	落と	# Escape送信は処理中のturnを中断させるため有害。Phase 2は通常nudgeに落とす。
+scripts/inbox_watcher.sh	1344	防	# /clear は Codex で /new へ変換される。再起動直後の取りこぼし防止として
+scripts/inbox_watcher.sh	1511	倒す	# Codex /clear -> /new は会話を切ってしまうため、安全側に倒す。
+scripts/inbox_watcher.sh	1643	防	# 自動 /clear はせず、agent 自身の判断に委ねる (= 進捗ロスト防止)。
+scripts/inbox_watcher.sh	1644	防	# 重複送付防止のため LAST_TOKEN_WARN_TS で 30 分間隔に制限。
+scripts/inbox_watcher.sh	1683	永久	#   通常実行で永久未到達 dead code、かつ CLI dispatcher が comment のみで実 code 不在。
+scripts/inbox_watcher.sh	1687	防	#         path traversal 防御は lib 側で corr_id sanitize (basename + regex、RED-2 cure)。
+scripts/inbox_watcher.sh	1696	防	#   - _detect_stale_sanitize_corr_id()  RED-2 cure (path traversal 防御)
+scripts/stop_hook_inbox.sh	43	永久|塞|閉ぢ	#   旧: `INPUT=$(cat)` は ★EOF が来る迄 永久に待つ★。呼び手が口を閉ぢ損ねれば席は永久に塞がる。
+scripts/stop_hook_inbox.sh	50	倒れ	#   下流は json.load の失敗時に既定へ倒れる形が既に在る ∴ 空・欠けでも新しい落ち枝は要らぬ。
+scripts/stop_hook_inbox.sh	52	検め	# ★甲(裁 seq322952)★ 閾は ★後で比べる時と同じ演算子★ で検めよ ―― 旧形の glob `*[!0-9]*` は
+scripts/stop_hook_inbox.sh	55	拒	#   加へて `read -t <20桁>` は bash に ★拒まれ(invalid timeout specification)★ ―― 實測(當席 2026-09-17):
+scripts/stop_hook_inbox.sh	56	落と	#   rc=1・★讀めた字数 0★ ∴ hook 入力 JSON を ★丸ごと落として先へ進む★。而して上の rc=2 ゆゑ ★其の事を報せぬ★。
+scripts/stop_hook_inbox.sh	59	倒す	# ★空文字は `:-` が黙つて呑む★ ―― 裁 seq322952 乙「未設定/空文字/空白のみを分け、既定へ倒す時は必ず刷る」
+scripts/stop_hook_inbox.sh	198	塞	# ★2026-09-16 非數の閾を塞ぐ(専任3 第39弾 の指摘・家老mac が code を讀んで確かめた)★
+scripts/stop_hook_inbox.sh	201	塞|防	#       結果 塞ぐ帯が [1,5] から ★[1,∞)★ へ開き、5/7 の自己増殖ループの防ぎが消える。
+scripts/stop_hook_inbox.sh	203	fail-closed|検め	#   本形: 閾も數も先に検め、數でなければ ★既定へ倒して其の旨を言ふ(fail-closed・黙らぬ)★。
+scripts/checks/karo_mac_gate4.sh	49	捕	#     ★門 に無い條 は 門 が捕へぬ。捕へなんだ物 は 世 に残る。★
+scripts/checks/karo_mac_gate4.sh	63	検め	# ★甲(裁 seq322952)★ 閾は ★後段の比較に使ふのと同じ演算子★ で先に検める。
+scripts/checks/karo_mac_gate4.sh	65	倒れ	#   ★rc=2 で倒れ else へ落ちて通す(fail-open)★ ―― 二つの器が別の答を出す。
+scripts/checks/karo_mac_gate4.sh	70	倒す	# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+scripts/checks/karo_mac_gate4.sh	98	fail-closed|倒す	#   ★印の曖昧性★=値が元から印を含めば注入と區別できぬ ∴ 其の時は ★刷らずに★ 倒す(fail-closed)。
+scripts/checks/context_usage_warn.sh	33	検め	# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+scripts/checks/context_usage_warn.sh	35	倒れ	#   [ "$x" -ge "$閾" ] は其の値で ★rc=2★ に倒れ、if も elif も偽＝★黙つて既定の枝へ落ちる★。
+scripts/checks/context_usage_warn.sh	36	検め	#   ∴ 検める器と使ふ器を同じ演算子に揃へる。
+scripts/checks/context_usage_warn.sh	66	fail-closed|倒す	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+scripts/checks/karo_mac_dasumae_gate.sh	5	落と	#       ★1コマンドへ落とす★ ―― a1「七問を増やしても使はねば零」を実行に移す。
+scripts/checks/karo_mac_dasumae_gate.sh	15	検め	# usage(自己検め): bash scripts/checks/karo_mac_dasumae_gate.sh --selftest
+scripts/checks/karo_mac_dasumae_gate.sh	25	倒れ	#   旧版は 數 を取る口に ★|| true★ を置き、器が落ちても ${n:-0} で ★0(=通)★ に倒れた。
+scripts/checks/karo_mac_dasumae_gate.sh	27	落と	#   本止血: 數が ★十進の數でない★ か ★grep の rc が 2 以上(器の誤り)★ なら ★落とす★。
+scripts/checks/karo_mac_dasumae_gate.sh	31	検め	# ★甲(裁 seq322952)★ 閾は ★後段の比較に使ふのと同じ演算子★ で先に検める。
+scripts/checks/karo_mac_dasumae_gate.sh	33	倒れ	#   ★rc=2 で倒れ else へ落ちて通す(fail-open)★ ―― 二つの器が別の答を出す。
+scripts/checks/karo_mac_dasumae_gate.sh	38	倒す	# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+scripts/checks/karo_mac_dasumae_gate.sh	65	fail-closed|倒す	#   ★印の曖昧性★=値が元から印を含めば注入と區別できぬ ∴ 其の時は ★刷らずに★ 倒す(fail-closed)。
+scripts/checks/karo_mac_dasumae_gate.sh	74	通さ	# ★2026-09-16 裁 seq320321⑴(313209/314012) ―― 「止」を通さぬ(家老mac 自席の器・可逆・事後1便)★
+scripts/checks/karo_mac_dasumae_gate.sh	75	永久	#   由来: 門には第三の出目「止」が在る ―― FIFO/device を `wc -c` が永久に待ち、rc も出ぬ。
+scripts/checks/karo_mac_dasumae_gate.sh	80	拒	#     ①-L で符を見(開かぬ) ②実体を readlink -f で確かめ ③/dev/* を拒み
+scripts/checks/karo_mac_dasumae_gate.sh	81	拒	#     ④常なる file でなければ拒み ⑤寸法は ★stat(開かぬ)★ で取り ⑥其れでも時限を被せる。
+scripts/checks/karo_mac_dasumae_gate.sh	82	通さ	#   出目が數でなければ ★既存の is_num → 「測れぬは通さぬ(default-deny)」★ へ落ちる。
+scripts/checks/karo_mac_dasumae_gate.sh	87	fail-closed|倒す	# ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
+scripts/checks/karo_mac_dasumae_gate.sh	91	倒す	#   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。
+scripts/checks/karo_mac_dasumae_gate.sh	183	落と	#   本形: 受けた數を先に測り、足らねば ★何も測らずに落とす(default-deny)★。
+scripts/watchdogs/enter_restart_common_watchdog.sh	12	防	#       send-keys -l 不使用、label-match strict (false positive 防止)。
+scripts/watchdogs/enter_restart_common_watchdog.sh	37	守	# Watcher Design Principles 順守: oneshot cycle ゆえ無限 retry 不発生、INSERT 失敗時
+scripts/watchdogs/enter_restart_common_watchdog.sh	39	防	# 2026-05-05 SecondPC 異常消費事件教訓: ER_FIRE_CAP_COUNT 上限で暴走防止。
+scripts/watchdogs/enter_restart_common_watchdog.sh	59	倒す	# ★閾三本は log() の後の fix_threshold で定める(乙: 此処で ${ER_…:-既定} に倒すと未設定と空文字が混ざる)★
+scripts/watchdogs/enter_restart_common_watchdog.sh	77	検め	# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+scripts/watchdogs/enter_restart_common_watchdog.sh	79	倒れ	#   [ "$x" -ge "$閾" ] は其の値で ★rc=2★ に倒れ、if も elif も偽＝★黙つて既定の枝へ落ちる★。
+scripts/watchdogs/enter_restart_common_watchdog.sh	80	検め	#   ∴ 検める器と使ふ器を同じ演算子に揃へる。
+scripts/watchdogs/enter_restart_common_watchdog.sh	110	fail-closed|倒す	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+scripts/watchdogs/enter_restart_common_watchdog.sh	142	守	# (= homework#1 audit_gemini.sh と同型根治、FKI-DEV-ROOT-CURE-FIRST 順守)
+scripts/watchdogs/enter_restart_common_watchdog.sh	272	捕	#   tail -1 で最下位 prompt 行を取得。output 流入で押し上がっても prompt 行を確実に捕捉。
+scripts/redundancy/shogun_report_watcher.sh	17	防	#       次 event 時に cooldown 経過していれば後送通知 (= 通知漏れ fallback の漏れ防止)
+scripts/redundancy/shogun_report_watcher.sh	18	防	#   - SRW-C2 (cycle2): flock singleton lock — 多重起動禁止、二重通知防止
+scripts/redundancy/shogun_report_watcher.sh	19	守	#   - F004 順守: sleep polling 禁止、inotifywait のみ
+scripts/redundancy/shogun_report_watcher.sh	31	検め	# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+scripts/redundancy/shogun_report_watcher.sh	33	倒れ	#   [ "$x" -ge "$閾" ] は其の値で ★rc=2★ に倒れ、if も elif も偽＝★黙つて既定の枝へ落ちる★。
+scripts/redundancy/shogun_report_watcher.sh	34	検め	#   ∴ 検める器と使ふ器を同じ演算子に揃へる。
+scripts/redundancy/shogun_report_watcher.sh	64	fail-closed|倒す	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+scripts/redundancy/shogun_report_watcher.sh	74	倒れ	#   ★cooldown を素通り = 通知が毎 event 出る(氾濫)★ に倒れる。實測(km-75 raw/44)=
+scripts/redundancy/shogun_report_watcher.sh	330	永久	# last_notified_* untouched → fixes cycle1 永久 skip bug.

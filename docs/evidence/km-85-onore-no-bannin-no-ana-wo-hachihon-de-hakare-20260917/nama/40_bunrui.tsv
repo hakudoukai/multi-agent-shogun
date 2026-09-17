@@ -1,0 +1,9 @@
+#生器	呼び手行	型	sha16	通す閾の本數	呼び行(逐語)	通す閾の名(既定)→受け皿
+scripts/agent_health_check.sh	117	甲	7d11ba9f852ac759	3	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi	HEALTH_CHECK_COOLDOWN_SEC(既定300)→ALERT_COOLDOWN_SEC HEALTH_CHECK_TOKEN_WARN(既定200000)→TOKEN_WARN_THRESHOLD HEALTH_CHECK_TOKEN_CRIT(既定240000)→TOKEN_CRIT_THRESHOLD
+scripts/checks/context_usage_warn.sh	63	甲	3010defd413a3479	2	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi	CONTEXT_WARN_BYTES(既定1600000)→WARN_BYTES CONTEXT_DANGER_BYTES(既定2000000)→DANGER_BYTES
+scripts/checks/karo_mac_dasumae_gate.sh	60	乙	2b8449bccd608a1a	2	if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi	DASUMAE_READ_TIMEOUT(既定10)→SAFE_SIZE_TMO DASUMAE_MAX_BYTES(既定10485760)→MAXB
+scripts/checks/karo_mac_gate4.sh	93	乙	59cf051d3595fd97	2	if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi	GATE4_MAX_FILE_MB(既定50)→MAXF GATE4_MAX_TOTAL_MB(既定100)→MAXT
+scripts/inbox_watcher.sh	156	甲	494c8c788d50d724	1	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi	$_n(既定$_d)→$_n
+scripts/redundancy/shogun_report_watcher.sh	61	甲	a82e877eced423ad	1	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi	SHOGUN_REPORT_WATCHER_COOLDOWN(既定60)→COOLDOWN_SEC
+scripts/stop_hook_inbox.sh	65	乙	f1b49820e234a1ee	1	if ! num_same_op "$STOP_HOOK_STDIN_TIMEOUT"; then	STOP_HOOK_STDIN_TIMEOUT(直呼び・fix_threshold を経ぬ)
+scripts/watchdogs/enter_restart_common_watchdog.sh	107	甲	f92cd54e09736a4e	3	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi	ER_THRESHOLD_MIN(既定10)→THRESHOLD_MIN ER_FIRE_CAP_COUNT(既定3)→FIRE_CAP_COUNT ER_FIRE_CAP_WINDOW_MIN(既定15)→FIRE_CAP_WINDOW_MIN

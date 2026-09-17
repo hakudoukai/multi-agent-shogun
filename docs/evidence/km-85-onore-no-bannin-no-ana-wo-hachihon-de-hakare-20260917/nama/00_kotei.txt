@@ -1,0 +1,16 @@
+★km-85 版凍結★ 刻=2026-09-17T11:14:37+0900
+HEAD=0039e1321654e52c15c3bec4998b96282b05667f
+母數の根=/Users/momizimac/multi-agent-shogun (生器は札 scope_in の 8本)
+
+file	sha16	bytes	行(\n 数へ)	定義行(家老宣)	呼び手行(家老宣)
+scripts/agent_health_check.sh	7d11ba9f852ac759	25953	488	91	117
+scripts/inbox_watcher.sh	494c8c788d50d724	83319	1700	130	156
+scripts/stop_hook_inbox.sh	f1b49820e234a1ee	16434	288	58	65
+scripts/checks/karo_mac_gate4.sh	59cf051d3595fd97	7793	133	68	93
+scripts/checks/context_usage_warn.sh	3010defd413a3479	6709	100	37	63
+scripts/checks/karo_mac_dasumae_gate.sh	2b8449bccd608a1a	16261	321	36	60
+scripts/watchdogs/enter_restart_common_watchdog.sh	f92cd54e09736a4e	23336	429	81	107
+scripts/redundancy/shogun_report_watcher.sh	a82e877eced423ad	17136	395	35	61
+
+★実体無=0★
+註: 家老 第52弾 便の「今の sha16 15ac9f97f473245d」は本 8本の何れにも当たらぬ(後述 30 で全 repo を歩いて確かめる)。

@@ -1,0 +1,65 @@
+#寫し器	型	毒値	路	①rc(器)	①rc(read)	受け皿の値	②枝	③器の報せ(己の声)	③外の声(interpreter)	④下流で何に成るか
+kou_health	甲	0	在り(stdin に物)	0	―	0	通した / 下流の枝=NOTTAKEN(報せを出す)	0 行: ★黙つた★	0 行: ―	冷却 0 秒として [ 0 -lt 0 ] を引く ／ 経過 0.01 秒
+kou_health	甲	-0	在り(stdin に物)	0	―	-0	通した / 下流の枝=NOTTAKEN(報せを出す)	0 行: ★黙つた★	0 行: ―	冷却 -0 秒として [ 0 -lt -0 ] を引く ／ 経過 0.01 秒
+kou_health	甲	-5	在り(stdin に物)	0	―	300	★既定へ倒れた★ / 下流の枝=TAKEN(冷却中=報せを抑へる)	1 行: [health_check] ★閾 HEALTH_CHECK_COOLDOWN_SEC を比較器が扱へぬ(「-5」) ―― 既定 300 へ倒す(fail-closed)★	0 行: ―	冷却 300 秒として [ 0 -lt 300 ] を引く ／ 経過 0.00 秒
+kou_health	甲	4294967295	在り(stdin に物)	0	―	4294967295	通した / 下流の枝=TAKEN(冷却中=報せを抑へる)	0 行: ★黙つた★	0 行: ―	冷却 4294967295 秒として [ 0 -lt 4294967295 ] を引く ／ 経過 0.00 秒
+kou_health	甲	4294967296	在り(stdin に物)	0	―	4294967296	通した / 下流の枝=TAKEN(冷却中=報せを抑へる)	0 行: ★黙つた★	0 行: ―	冷却 4294967296 秒として [ 0 -lt 4294967296 ] を引く ／ 経過 0.01 秒
+kou_health	甲	9223372036854775807	在り(stdin に物)	0	―	9223372036854775807	通した / 下流の枝=TAKEN(冷却中=報せを抑へる)	0 行: ★黙つた★	0 行: ―	冷却 9223372036854775807 秒として [ 0 -lt 9223372036854775807 ] を引く ／ 経過 0.01 秒
+kou_health	甲	9223372036854775808	在り(stdin に物)	0	―	300	★既定へ倒れた★ / 下流の枝=TAKEN(冷却中=報せを抑へる)	1 行: [health_check] ★閾 HEALTH_CHECK_COOLDOWN_SEC を比較器が扱へぬ(「9223372036854775808」) ―― 既定 300 へ倒す(fail-closed)★	0 行: ―	冷却 300 秒として [ 0 -lt 300 ] を引く ／ 経過 0.01 秒
+kou_health	甲	020	在り(stdin に物)	0	―	020	通した / 下流の枝=TAKEN(冷却中=報せを抑へる)	0 行: ★黙つた★	0 行: ―	冷却 020 秒として [ 0 -lt 020 ] を引く ／ 経過 0.01 秒
+kou_health	甲	空文字	在り(stdin に物)	0	―	300	★既定へ倒れた★ / 下流の枝=TAKEN(冷却中=報せを抑へる)	1 行: [health_check] ★閾 HEALTH_CHECK_COOLDOWN_SEC が空文字 ―― 既定 300 へ倒す(fail-closed)★	0 行: ―	冷却 300 秒として [ 0 -lt 300 ] を引く ／ 経過 0.00 秒
+kou_health	甲	+10	在り(stdin に物)	0	―	+10	通した / 下流の枝=TAKEN(冷却中=報せを抑へる)	0 行: ★黙つた★	0 行: ―	冷却 +10 秒として [ 0 -lt +10 ] を引く ／ 経過 0.00 秒
+kou_health	甲	陽性対照 7	在り(stdin に物)	0	―	7	通した / 下流の枝=TAKEN(冷却中=報せを抑へる)	0 行: ★黙つた★	0 行: ―	冷却 7 秒として [ 0 -lt 7 ] を引く ／ 経過 0.01 秒
+kou_health	甲	陰性対照 abc	在り(stdin に物)	0	―	300	★既定へ倒れた★ / 下流の枝=TAKEN(冷却中=報せを抑へる)	1 行: [health_check] ★閾 HEALTH_CHECK_COOLDOWN_SEC を比較器が扱へぬ(「abc」) ―― 既定 300 へ倒す(fail-closed)★	0 行: ―	冷却 300 秒として [ 0 -lt 300 ] を引く ／ 経過 0.01 秒
+kou_health	甲	未設定	在り(stdin に物)	0	―	300	★既定へ倒れた★ / 下流の枝=TAKEN(冷却中=報せを抑へる)	1 行: [health_check] ★閾 未設定 ―― 既定へ倒す(HEALTH_CHECK_COOLDOWN_SEC=300) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★	0 行: ―	冷却 300 秒として [ 0 -lt 300 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	0	在り(stdin に物)	0	―	0	通した / 下流の枝=TAKEN(條⑤鳴る)	1 行: ★條⑤ 単 file が 1 MB(上限 0)―― __nise_no_file__★	0 行: ―	單 file の上限 0 MB として [ 1 -ge 0 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	-0	在り(stdin に物)	0	―	-0	通した / 下流の枝=TAKEN(條⑤鳴る)	1 行: ★條⑤ 単 file が 1 MB(上限 -0)―― __nise_no_file__★	0 行: ―	單 file の上限 -0 MB として [ 1 -ge -0 ] を引く ／ 経過 0.01 秒
+otsu_gate4	乙	-5	在り(stdin に物)	0	―	-5	通した / 下流の枝=TAKEN(條⑤鳴る)	1 行: ★條⑤ 単 file が 1 MB(上限 -5)―― __nise_no_file__★	0 行: ―	單 file の上限 -5 MB として [ 1 -ge -5 ] を引く ／ 経過 0.01 秒
+otsu_gate4	乙	4294967295	在り(stdin に物)	0	―	4294967295	通した / 下流の枝=NOTTAKEN(條⑤黙る)	0 行: ★黙つた★	0 行: ―	單 file の上限 4294967295 MB として [ 1 -ge 4294967295 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	4294967296	在り(stdin に物)	0	―	4294967296	通した / 下流の枝=NOTTAKEN(條⑤黙る)	0 行: ★黙つた★	0 行: ―	單 file の上限 4294967296 MB として [ 1 -ge 4294967296 ] を引く ／ 経過 0.01 秒
+otsu_gate4	乙	9223372036854775807	在り(stdin に物)	0	―	9223372036854775807	通した / 下流の枝=NOTTAKEN(條⑤黙る)	0 行: ★黙つた★	0 行: ―	單 file の上限 9223372036854775807 MB として [ 1 -ge 9223372036854775807 ] を引く ／ 経過 0.01 秒
+otsu_gate4	乙	9223372036854775808	在り(stdin に物)	0	―	50	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: ★閾 GATE4_MAX_FILE_MB を比較器が扱へぬ(「9223372036854775808」) ―― 既定 50 へ倒す(fail-closed)★	0 行: ―	單 file の上限 50 MB として [ 1 -ge 50 ] を引く ／ 経過 0.01 秒
+otsu_gate4	乙	020	在り(stdin に物)	0	―	020	通した / 下流の枝=NOTTAKEN(條⑤黙る)	0 行: ★黙つた★	0 行: ―	單 file の上限 020 MB として [ 1 -ge 020 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	空文字	在り(stdin に物)	0	―	50	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: ★閾 GATE4_MAX_FILE_MB が空文字 ―― 既定 50 へ倒す(fail-closed)★	0 行: ―	單 file の上限 50 MB として [ 1 -ge 50 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	+10	在り(stdin に物)	0	―	+10	通した / 下流の枝=NOTTAKEN(條⑤黙る)	0 行: ★黙つた★	0 行: ―	單 file の上限 +10 MB として [ 1 -ge +10 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	陽性対照 7	在り(stdin に物)	0	―	7	通した / 下流の枝=NOTTAKEN(條⑤黙る)	0 行: ★黙つた★	0 行: ―	單 file の上限 7 MB として [ 1 -ge 7 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	陰性対照 abc	在り(stdin に物)	0	―	50	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: ★閾 GATE4_MAX_FILE_MB を比較器が扱へぬ(「abc」) ―― 既定 50 へ倒す(fail-closed)★	0 行: ―	單 file の上限 50 MB として [ 1 -ge 50 ] を引く ／ 経過 0.00 秒
+otsu_gate4	乙	未設定	在り(stdin に物)	0	―	50	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: 閾 GATE4_MAX_FILE_MB = 未設定 ―― 既定 50 を用ゐる(★倒した事を刷る★)	0 行: ―	單 file の上限 50 MB として [ 1 -ge 50 ] を引く ／ 経過 0.00 秒
+otsu_dasumae	乙	0	在り(stdin に物)	0	―	0	通した / 下流の枝=TAKEN(條⑤鳴る)	1 行: ★條⑤ 寸法 ―― byte和 6(閾 0・裁294493)超★	0 行: ―	byte和の上限 0 byte として [ 6 -ge 0 ] を引く ／ 経過 0.01 秒
+otsu_dasumae	乙	-0	在り(stdin に物)	0	―	-0	通した / 下流の枝=TAKEN(條⑤鳴る)	1 行: ★條⑤ 寸法 ―― byte和 6(閾 -0・裁294493)超★	0 行: ―	byte和の上限 -0 byte として [ 6 -ge -0 ] を引く ／ 経過 0.01 秒
+otsu_dasumae	乙	-5	在り(stdin に物)	0	―	-5	通した / 下流の枝=TAKEN(條⑤鳴る)	1 行: ★條⑤ 寸法 ―― byte和 6(閾 -5・裁294493)超★	0 行: ―	byte和の上限 -5 byte として [ 6 -ge -5 ] を引く ／ 経過 0.01 秒
+otsu_dasumae	乙	4294967295	在り(stdin に物)	0	―	4294967295	通した / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: 條⑤ 寸法 = byte和 6(閾 4294967295未満)	0 行: ―	byte和の上限 4294967295 byte として [ 6 -ge 4294967295 ] を引く ／ 経過 0.00 秒
+otsu_dasumae	乙	4294967296	在り(stdin に物)	0	―	4294967296	通した / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: 條⑤ 寸法 = byte和 6(閾 4294967296未満)	0 行: ―	byte和の上限 4294967296 byte として [ 6 -ge 4294967296 ] を引く ／ 経過 0.00 秒
+otsu_dasumae	乙	9223372036854775807	在り(stdin に物)	0	―	9223372036854775807	通した / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: 條⑤ 寸法 = byte和 6(閾 9223372036854775807未満)	0 行: ―	byte和の上限 9223372036854775807 byte として [ 6 -ge 9223372036854775807 ] を引く ／ 経過 0.01 秒
+otsu_dasumae	乙	9223372036854775808	在り(stdin に物)	0	―	10485760	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	2 行: ★閾 DASUMAE_MAX_BYTES を比較器が扱へぬ(「9223372036854775808」) ―― 既定 10485760 へ倒す(fail-closed)★ ▫ 條⑤ 寸法 = byte和 6(閾 10485760未満)	0 行: ―	byte和の上限 10485760 byte として [ 6 -ge 10485760 ] を引く ／ 経過 0.01 秒
+otsu_dasumae	乙	020	在り(stdin に物)	0	―	020	通した / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: 條⑤ 寸法 = byte和 6(閾 020未満)	0 行: ―	byte和の上限 020 byte として [ 6 -ge 020 ] を引く ／ 経過 0.01 秒
+otsu_dasumae	乙	空文字	在り(stdin に物)	0	―	10485760	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	2 行: ★閾 DASUMAE_MAX_BYTES が空文字 ―― 既定 10485760 へ倒す(fail-closed)★ ▫ 條⑤ 寸法 = byte和 6(閾 10485760未満)	0 行: ―	byte和の上限 10485760 byte として [ 6 -ge 10485760 ] を引く ／ 経過 0.00 秒
+otsu_dasumae	乙	+10	在り(stdin に物)	0	―	+10	通した / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: 條⑤ 寸法 = byte和 6(閾 +10未満)	0 行: ―	byte和の上限 +10 byte として [ 6 -ge +10 ] を引く ／ 経過 0.00 秒
+otsu_dasumae	乙	陽性対照 7	在り(stdin に物)	0	―	7	通した / 下流の枝=NOTTAKEN(條⑤黙る)	1 行: 條⑤ 寸法 = byte和 6(閾 7未満)	0 行: ―	byte和の上限 7 byte として [ 6 -ge 7 ] を引く ／ 経過 0.00 秒
+otsu_dasumae	乙	陰性対照 abc	在り(stdin に物)	0	―	10485760	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	2 行: ★閾 DASUMAE_MAX_BYTES を比較器が扱へぬ(「abc」) ―― 既定 10485760 へ倒す(fail-closed)★ ▫ 條⑤ 寸法 = byte和 6(閾 10485760未満)	0 行: ―	byte和の上限 10485760 byte として [ 6 -ge 10485760 ] を引く ／ 経過 0.00 秒
+otsu_dasumae	乙	未設定	在り(stdin に物)	0	―	10485760	★既定へ倒れた★ / 下流の枝=NOTTAKEN(條⑤黙る)	2 行: 閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★) ▫ 條⑤ 寸法 = byte和 6(閾 10485760未満)	0 行: ―	byte和の上限 10485760 byte として [ 6 -ge 10485760 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	0	在り(stdin に物)	0	1	0	通した / 下流の枝=讀めた字数=0	1 行: [stop_hook] ★stdin 時限切れ(0秒経過・rc=1) — 讀めた 0 字で続行★	0 行: ―	read -t 0 秒として stdin を待ち [ 経過 -ge 0 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	-0	在り(stdin に物)	0	1	-0	通した / 下流の枝=讀めた字数=0	1 行: [stop_hook] ★stdin 時限切れ(-0秒経過・rc=1) — 讀めた 0 字で続行★	0 行: ―	read -t -0 秒として stdin を待ち [ 経過 -ge -0 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	-5	在り(stdin に物)	0	1	-5	通した / 下流の枝=讀めた字数=0	1 行: [stop_hook] ★stdin 時限切れ(-5秒経過・rc=1) — 讀めた 0 字で続行★	1 行: /Users/momizimac/multi-agent-shogun/docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/utsushi/otsu_hook.sh: line 33: read: -5: invalid timeout specification	read -t -5 秒として stdin を待ち [ 経過 -ge -5 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	4294967295	在り(stdin に物)	0	―	4294967295	通した / 下流の枝=讀めた字数=1	0 行: ★黙つた★	0 行: ―	read -t 4294967295 秒として stdin を待ち [ 経過 -ge 4294967295 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	4294967296	在り(stdin に物)	0	1	4294967296	通した / 下流の枝=讀めた字数=0	0 行: ★黙つた★	1 行: /Users/momizimac/multi-agent-shogun/docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/utsushi/otsu_hook.sh: line 33: read: 4294967296: invalid timeout specification	read -t 4294967296 秒として stdin を待ち [ 経過 -ge 4294967296 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	9223372036854775807	在り(stdin に物)	0	1	9223372036854775807	通した / 下流の枝=讀めた字数=0	0 行: ★黙つた★	1 行: /Users/momizimac/multi-agent-shogun/docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/utsushi/otsu_hook.sh: line 33: read: 9223372036854775807: invalid timeout specification	read -t 9223372036854775807 秒として stdin を待ち [ 経過 -ge 9223372036854775807 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	9223372036854775808	在り(stdin に物)	0	―	10	★既定へ倒れた★ / 下流の枝=讀めた字数=1	1 行: [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「9223372036854775808」) — 既定 10 へ倒す(fail-closed)★	0 行: ―	read -t 10 秒として stdin を待ち [ 経過 -ge 10 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	020	在り(stdin に物)	0	―	020	通した / 下流の枝=讀めた字数=1	0 行: ★黙つた★	0 行: ―	read -t 020 秒として stdin を待ち [ 経過 -ge 020 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	空文字	在り(stdin に物)	0	―	10	★既定へ倒れた★ / 下流の枝=讀めた字数=1	1 行: [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が空文字 — 既定 10 へ倒す(fail-closed)★	0 行: ―	read -t 10 秒として stdin を待ち [ 経過 -ge 10 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	+10	在り(stdin に物)	0	―	+10	通した / 下流の枝=讀めた字数=1	0 行: ★黙つた★	0 行: ―	read -t +10 秒として stdin を待ち [ 経過 -ge +10 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	陽性対照 7	在り(stdin に物)	0	―	7	通した / 下流の枝=讀めた字数=1	0 行: ★黙つた★	0 行: ―	read -t 7 秒として stdin を待ち [ 経過 -ge 7 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	陰性対照 abc	在り(stdin に物)	0	―	10	★既定へ倒れた★ / 下流の枝=讀めた字数=1	1 行: [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「abc」) — 既定 10 へ倒す(fail-closed)★	0 行: ―	read -t 10 秒として stdin を待ち [ 経過 -ge 10 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	未設定	在り(stdin に物)	0	―	10	★既定へ倒れた★ / 下流の枝=讀めた字数=1	0 行: ★黙つた★	0 行: ―	read -t 10 秒として stdin を待ち [ 経過 -ge 10 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	0	無し(stdin 開いた儘・何も書かず・3秒で打切)	0	1	0	通した / 下流の枝=讀めた字数=0	1 行: [stop_hook] ★stdin 時限切れ(0秒経過・rc=1) — 讀めた 0 字で続行★	0 行: ―	read -t 0 秒として stdin を待ち [ 経過 -ge 0 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	-0	無し(stdin 開いた儘・何も書かず・3秒で打切)	0	1	-0	通した / 下流の枝=讀めた字数=0	1 行: [stop_hook] ★stdin 時限切れ(-0秒経過・rc=1) — 讀めた 0 字で続行★	0 行: ―	read -t -0 秒として stdin を待ち [ 経過 -ge -0 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	-5	無し(stdin 開いた儘・何も書かず・3秒で打切)	0	1	-5	通した / 下流の枝=讀めた字数=0	1 行: [stop_hook] ★stdin 時限切れ(-5秒経過・rc=1) — 讀めた 0 字で続行★	1 行: /Users/momizimac/multi-agent-shogun/docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/utsushi/otsu_hook.sh: line 33: read: -5: invalid timeout specification	read -t -5 秒として stdin を待ち [ 経過 -ge -5 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	4294967295	無し(stdin 開いた儘・何も書かず・3秒で打切)	打切(3.0s)	―	(RESULT 無)	通した / 下流の枝=(RESULT 無)	0 行: ★黙つた★	0 行: ―	閾=4294967295 を受理し、物の来ぬ口で★待ち続けた★(受け皿は打切ゆゑ printf へ到達せず) ／ 経過 3.00 秒(★3秒で打ち切り=待つ★)
+otsu_hook	乙	4294967296	無し(stdin 開いた儘・何も書かず・3秒で打切)	0	1	4294967296	通した / 下流の枝=讀めた字数=0	0 行: ★黙つた★	1 行: /Users/momizimac/multi-agent-shogun/docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/utsushi/otsu_hook.sh: line 33: read: 4294967296: invalid timeout specification	read -t 4294967296 秒として stdin を待ち [ 経過 -ge 4294967296 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	9223372036854775807	無し(stdin 開いた儘・何も書かず・3秒で打切)	0	1	9223372036854775807	通した / 下流の枝=讀めた字数=0	0 行: ★黙つた★	1 行: /Users/momizimac/multi-agent-shogun/docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/utsushi/otsu_hook.sh: line 33: read: 9223372036854775807: invalid timeout specification	read -t 9223372036854775807 秒として stdin を待ち [ 経過 -ge 9223372036854775807 ] を引く ／ 経過 0.00 秒
+otsu_hook	乙	9223372036854775808	無し(stdin 開いた儘・何も書かず・3秒で打切)	打切(3.0s)	―	(RESULT 無)	通した / 下流の枝=(RESULT 無)	1 行: [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「9223372036854775808」) — 既定 10 へ倒す(fail-closed)★	0 行: ―	閾=9223372036854775808 を受理し、物の来ぬ口で★待ち続けた★(受け皿は打切ゆゑ printf へ到達せず) ／ 経過 3.00 秒(★3秒で打ち切り=待つ★)
+otsu_hook	乙	020	無し(stdin 開いた儘・何も書かず・3秒で打切)	打切(3.0s)	―	(RESULT 無)	通した / 下流の枝=(RESULT 無)	0 行: ★黙つた★	0 行: ―	閾=020 を受理し、物の来ぬ口で★待ち続けた★(受け皿は打切ゆゑ printf へ到達せず) ／ 経過 3.00 秒(★3秒で打ち切り=待つ★)
+otsu_hook	乙	空文字	無し(stdin 開いた儘・何も書かず・3秒で打切)	打切(3.0s)	―	(RESULT 無)	通した / 下流の枝=(RESULT 無)	1 行: [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が空文字 — 既定 10 へ倒す(fail-closed)★	0 行: ―	閾=空文字 を受理し、物の来ぬ口で★待ち続けた★(受け皿は打切ゆゑ printf へ到達せず) ／ 経過 3.00 秒(★3秒で打ち切り=待つ★)
+otsu_hook	乙	+10	無し(stdin 開いた儘・何も書かず・3秒で打切)	打切(3.0s)	―	(RESULT 無)	通した / 下流の枝=(RESULT 無)	0 行: ★黙つた★	0 行: ―	閾=+10 を受理し、物の来ぬ口で★待ち続けた★(受け皿は打切ゆゑ printf へ到達せず) ／ 経過 3.00 秒(★3秒で打ち切り=待つ★)
+otsu_hook	乙	陽性対照 7	無し(stdin 開いた儘・何も書かず・3秒で打切)	打切(3.0s)	―	(RESULT 無)	通した / 下流の枝=(RESULT 無)	0 行: ★黙つた★	0 行: ―	閾=7 を受理し、物の来ぬ口で★待ち続けた★(受け皿は打切ゆゑ printf へ到達せず) ／ 経過 3.00 秒(★3秒で打ち切り=待つ★)
+otsu_hook	乙	陰性対照 abc	無し(stdin 開いた儘・何も書かず・3秒で打切)	打切(3.0s)	―	(RESULT 無)	通した / 下流の枝=(RESULT 無)	1 行: [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「abc」) — 既定 10 へ倒す(fail-closed)★	0 行: ―	閾=abc を受理し、物の来ぬ口で★待ち続けた★(受け皿は打切ゆゑ printf へ到達せず) ／ 経過 3.00 秒(★3秒で打ち切り=待つ★)

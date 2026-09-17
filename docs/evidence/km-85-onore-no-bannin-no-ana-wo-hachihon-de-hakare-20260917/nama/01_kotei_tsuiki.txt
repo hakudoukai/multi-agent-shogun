@@ -1,0 +1,48 @@
+= 21 追記 ―― 家老便の sha16 15ac9f97... の在り処を歩いて閉ぢる =
+刻(始)=2026-09-17T11:21:57+0900  経過=13.0 秒  rc=0
+歩き根=/Users/momizimac/multi-agent-shogun  深さ=無限  除外=.git のみ(宣す)
+歩いた項=41493 / 常体=41384 / 非常体=109 / 讀めぬ=1
+
+★当たり行 = 30 行 / 27 file★
+
+-- 当たり(file:行 逐語・先頭 200 字) --
+docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/nama/00_kotei.txt:16	註: 家老 第52弾 便の「今の sha16 15ac9f97f473245d」は本 8本の何れにも当たらぬ(後述 30 で全 repo を歩いて確かめる)。
+docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/nama/30_bosuu.txt:50	★家老 第52弾 便の sha16 15ac9f97f473245d の捜索(全 repo・同じ路)= 27 行★
+docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/20_kotei.py:46	out.append(u'註: 家老 第52弾 便の「今の sha16 15ac9f97f473245d」は本 8本の何れにも当たらぬ(後述 30 で全 repo を歩いて確かめる)。')
+docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/21_tsuiki.py:2	"""21 ―― 00_kotei.txt が残した一つの不審(家老便の sha16 15ac9f97f473245d が
+docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/21_tsuiki.py:85	L.append(u"★15ac9f97f473245d は scripts/inbox_watcher.sh の★km-55 時点★の姿である。★")
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/report.md:12	| `scripts/inbox_watcher.sh` | `15ac9f97f473245d` | 1666 |
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/10_namaki.tsv:2	scripts/inbox_watcher.sh	15ac9f97f473245d	1666
+docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/_bin/90_osame_1.txt:1	第55弾 納め 1/6 ―― ★当てて居らぬ★。四本を測るのみ。独立に引いた sha16 は 15ac9f97f473245d / f92cd54e09736a4e / 7d11ba9f852ac759 / 3010defd413a3479 ―― ★下知の四つと悉く一致★。∴ 6dbe09e6 が現に載つて居る。前弾で当席が刷つた cac867f8 等は ★古びた★ ゆゑ本便で差し替へる。
+docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/README.md:5	- 刻: 紙を書いた刻 2026-09-17T10:04 / 着手便 msg_20260917_100022_ae3cd5d4(10:00:22・宣ETA 12 分・起点= 着手便 timestamp・端点= 納め最終便 timestamp)/ 凍結点 HEAD 6ba8fcb2 ―― 但し ★的の file は disk と HEAD で違ふ(`00`: disk sha16 15ac9f97f
+docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/45_inode.txt:3	disk: inode 22062559 / bytes 80724 / mtime 2026-09-17T08:25:48 / sha16 15ac9f97f473245d
+docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/00_start.txt:2	disk: inode 22062559 / bytes 80724 / mtime 2026-09-17T08:25:48 / sha256 15ac9f97f473245d
+docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/MANIFEST.txt:4	path=_before/inbox_watcher.sh.snapshot sha256=15ac9f97f473245d36eabd83b9a1965bb9207957b4ad172fa0e9ad6b9668b87b bytes=80724 lines=1666
+docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/README.md:36	| 控(`_before/inbox_watcher.sh.snapshot`) | 1666 | `15ac9f97f473245d` | (据ゑ前の写し) |
+docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/README.md:204	- 控は `_before/inbox_watcher.sh.snapshot`(1666行 `15ac9f97f473245d`)に在り、**byte 一致で復せる**。
+docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/raw/61_kami_awase.tsv:3	二	控 sha16	15ac9f97f473245d	15ac9f97f473245d	○
+docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/raw/60_kami_awase.py:53	cmp('二','控 sha16', '15ac9f97f473245d' if '15ac9f97f473245d' in s2 else None, sha16(hik))
+docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/utsushi/bannin_harness.sh:2	# ★写し★ scripts/inbox_watcher.sh 125-178 逐語(sha16 15ac9f97f473245d・268行中)
+docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo_summary.txt.first:94	scripts/inbox_watcher.sh 15ac9f97f473245d 1666行 → 15ac9f97f473245d 1666行  不変
+docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo_summary.txt.second:104	scripts/inbox_watcher.sh 15ac9f97f473245d 1666行 → 15ac9f97f473245d 1666行  不変
+docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/00_start.txt:4	15ac9f97f473245d	1666行	scripts/inbox_watcher.sh
+docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo_summary.txt:88	scripts/inbox_watcher.sh 15ac9f97f473245d 1666行 → 15ac9f97f473245d 1666行  不変
+docs/evidence/km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917/km52_report.md:48	(sha16: inbox_watcher=15ac9f97f473245d / agent_health_check=7d11ba9f852ac759 /
+docs/evidence/km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917/nama/00_kotei.txt:9	scripts/inbox_watcher.sh git=15ac9f97f473245d disk=15ac9f97f473245d 同一
+docs/evidence/km-74-shirushi-no-kawashimo-wo-hakare-20260917/raw/00_start.txt:3	watcher   scripts/inbox_watcher.sh 凍結 15ac9f97f473245d disk 15ac9f97f473245d 一致
+docs/evidence/km-74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917/karo-km74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917.md:43	| `scripts/inbox_watcher.sh` | `cac867f8b94d5be4` | 1659 | `15ac9f97f473245d` | 1666 | rc=0 |
+queue/inbox/ashigaru-mac-1.yaml:6	∴ scripts/ の四器は ★版が動いた★。今の sha16 = inbox_watcher.sh 15ac9f97f473245d / watchdogs/enter_restart_common_watchdog.sh\
+queue/inbox/karo-mac.yaml:4	凍結=commit 6dbe09e6。一手目に共有器四本の sha16 を git show⇔disk で両引きし、四本悉く同一を冠へ固定(15ac9f97f473245d/f92cd54e09736a4e/7d11ba9f852ac759/3010defd413a3479=貴席の宣と一致)。
+queue/inbox/karo-mac.yaml:92	- content: 第55弾 納め 1/6 ―― ★当てて居らぬ★。四本を測るのみ。独立に引いた sha16 は 15ac9f97f473245d / f92cd54e09736a4e
+queue/inbox/ashigaru-mac-2.yaml:431	∴ ★貴席は当てるな★。二度当てれば str.replace の當りが0に成り「直つた顔で何もせぬ」形に落ちる。\n四本の今の sha16 = 15ac9f97f473245d\
+queue/inbox/ashigaru-mac-3.yaml:362	今の sha16 = 15ac9f97f473245d / f92cd54e09736a4e / 7d11ba9f852ac759 / 3010defd413a3479。旧版を引いた紙は其の旨を註せよ(書き換へず、註で足せ\
+
+-- 今の scripts/inbox_watcher.sh --
+sha16=494c8c788d50d724  byte=83319  行=1700
+
+-- 判 --
+★15ac9f97f473245d は scripts/inbox_watcher.sh の★km-55 時点★の姿である。★
+  根拠 docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/10_namaki.tsv:2 逐語 = scripts/inbox_watcher.sh	15ac9f97f473245d	1666
+  其の行の行數欄 = 1666。今は 1700 行・sha16=494c8c788d50d724。
+  ∴ 家老の名は★誤りでは無い★。器が動いたのである(便と本弾の固定の間に版が進んだ)。
+  ∴ 00_kotei.txt 末尾の註「何れにも当たらぬ」は★当たらぬ理由まで書いて居らぬ★ ―― 本追記で補ふ。

@@ -1,0 +1,30 @@
+= 62 ―― ㋕ 案丙 の裏付け ―― `read -t <値>` の空打ち =
+刻=2026-09-17T11:50:40+0900  走らせた器=/bin/bash (BASH_VERSION=3.2.57(1)-release)
+打つた形(逐語) = /bin/bash -c 'read -t "$1" _ < /dev/null' _ <値>
+★/dev/null ゆゑ待たぬ ―― 測るのは『bash が其の時限指定を受けるか』のみ★
+
+  値                      rc    stderr stderr 逐語(有る時)
+  0                      1     0      ―
+  -0                     1     0      ―
+  -5                     1     51     _: line 0: read: -5: invalid timeout specification
+  4294967295             1     0      ―
+  4294967296             1     59     _: line 0: read: 4294967296: invalid timeout specification
+  9223372036854775807    1     68     _: line 0: read: 9223372036854775807: invalid timeout specification
+  9223372036854775808    1     68     _: line 0: read: 9223372036854775808: invalid timeout specification
+  020                    1     0      ―
+  空文字                    1     49     _: line 0: read: : invalid timeout specification
+  +10                    1     0      ―
+  7                      1     0      ―
+  abc                    1     52     _: line 0: read: abc: invalid timeout specification
+  10                     1     0      ―
+  300                    1     0      ―
+  2                      1     0      ―
+  60                     1     0      ―
+
+★rc の異なり = 1 種 [1] ―― ∴ ★rc では分けられぬ★
+★bash が受けた値 = 10 : 0 / -0 / 4294967295 / 020 / +10 / 7 / 10 / 300 / 2 / 60★
+★bash が拒んだ値 = 6 : -5 / 4294967296 / 9223372036854775807 / 9223372036854775808 / 空文字 / abc★
+
+★案丙 が閉ぢる★ = 拒んだ 6 値。★案丙 が閉ぢぬ★ = 受けた 10 値 ―― 内 4294967295 は約136年待つ。
+★現用の値(repo 内に実在する物)を名指して測る = 10:○受けた / 60:○受けた / 2:○受けた / 300:○受けた★
+  ∴ 案丙 の誤鳴り = 0 件(測つた上での數。見込みではない)

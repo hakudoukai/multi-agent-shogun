@@ -1,0 +1,188 @@
+層	file	行	逐語
+紙寫	docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/utsushi/gate_an_i.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/utsushi/gate_an_ro.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/utsushi/gate_base.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/utsushi/prove_5th.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/utsushi/prove_5th_base.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-75-shikii-no-nokori-hitotsu-wo-tojiru-20260917/raw/40_setE_harness.sh	10	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-75-shikii-no-nokori-hitotsu-wo-tojiru-20260917/raw/45_shinki_harness.sh	10	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/ashigaru-mac-3_km-50-yabure-hachikei-no-fusagikata-20260917.md	31	番人 `num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }` は
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_gou/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_gou/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_hei/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_hei/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_otsu/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_kou/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_kou/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/gou_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/gou_gate4.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/hei_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/hei_gate4.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/kou_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/kou_gate4.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/otsu_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/ki/30_an.py	30	T_NUM   = 'num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }'
+紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/README.md	218	58:num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/utsushi/u2_shin_in.sh	6	num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/utsushi/u2_shin_you.sh	6	num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/nama/42_hitaisho.txt	6	58:num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ashigaru-mac-3_km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917.md	33	- `num_same_op` = L68..L68 ―― `num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }`
+紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/fn_gate4.sh	1	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/kami_a.txt	33	- `num_same_op` = L68..L68 ―― `num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }`
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/bannin_kata_watcher.sh	7	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh	91	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/context_usage_warn.sh	37	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/enter_restart_common_watchdog.sh	81	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/inbox_watcher.sh	130	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh	91	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/context_usage_warn.sh	37	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/enter_restart_common_watchdog.sh	81	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/inbox_watcher.sh	130	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/README.md	110	num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }          # ★甲★ 後で比べる演算子で検める
+紙寫	docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/README.md	124	(始= `STOP_HOOK_STDIN_TIMEOUT="${…:-10}"`(直し形は直上の `num_same_op()`)／終= `if IFS= read` 以後 最初の行頭 `fi`)。
+紙寫	docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/raw/10_slice.py	5	始= `STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"`(直し形は其の上の num_same_op() から)
+紙寫	docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/raw/30_naoshikei_dai.sh	4	num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_H2.sh	2	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_H3.sh	2	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917/raw/40_h/A_bannin_ASW_PROCESS_TIMEOUT.sh	8	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-76-repogai-no-ichikasho-wo-nushi-he-watasu-20260917/README.md	50	| seq322952 甲 | `num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }` ―― **後段と同じ演算子**で先に検める(字面判定をやめる) |
+紙寫	docs/evidence/km-76-repogai-no-ichikasho-wo-nushi-he-watasu-20260917/raw/30_naoshikei.sh	12	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-76-repogai-no-ichikasho-wo-nushi-he-watasu-20260917/raw/45_naoshikei_harness.sh	10	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-shikii-yokotenkai-20260917/README.md	13	|新|`num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }`|`env_state` が四状態を名指し、`fix_threshold` が一本の道で定める|
+紙寫	docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/_before/inbox_watcher.sh.snapshot	130	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/raw/06_main_vs_hikae.diff	12	> num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/raw/13_harness_genkei.sh	8	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/raw/13_harness_naoshi.sh	8	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/raw/slice_genkei_bannin.sh	7	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/raw/slice_naoshi_bannin.sh	7	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.orig	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.orig	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.rej	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/nama/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/gou_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/gou_gate4.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/hei_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/hei_gate4.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/kou_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/kou_gate4.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/otsu_dasumae.diff	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/hei/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/utsushi/scripts_agent_health_check.sh	91	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/utsushi/scripts_checks_context_usage_warn.sh	37	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/utsushi/scripts_inbox_watcher.sh	130	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/utsushi/scripts_watchdogs_enter_restart_common_watchdog.sh	81	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/80_taisho.sh	8	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/80_taisho.sh.first	8	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/91_guard_patched.sh	1	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/guard_agent_health_check.sh	1	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/guard_context_usage_warn.sh	1	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/guard_enter_restart_common_watchdog.sh	1	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/guard_inbox_watcher.sh	1	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/stub_context.sh	5	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/stub_enter.sh	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/stub_health.sh	5	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/stub_watcher.sh	5	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/utsushi/bannin_harness.sh	10	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/utsushi/bannin_loop_verbatim.txt	6	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/utsushi/kou_new_harness.sh	7	num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/utsushi/kou_new_verbatim.txt	1	num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo.tsv.first	5	scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	91	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo.tsv.first	21	scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	91	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo.tsv.second	5	scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	91	川下	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo.tsv.second	22	scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	91	川下	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo_summary.txt.first	15	91: num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/56_kawashimo_summary.txt.second	15	91: num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/57_jouretsu.tsv.first	3	2	scripts/agent_health_check.sh	n	内生(命令の出目)	2	一致	★抜ける★	四形	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }	# ★乙 ―― 未設定/空文字/空白のみ を分けて名指す(裁 seq322952)★
+紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/57_jouretsu_summary.txt.first	11	比較器 : num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/README.md	57	台 = `raw/10_slice.py` が `num_same_op(){` の行から **最初の `fix_threshold <NAME>` 呼出の直前** までを切る。
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/_before/karo_mac_dasumae_gate.sh.snapshot	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/_before/karo_mac_gate4.sh.snapshot	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/10_slice.py	11	beg = [i for i, l in enumerate(src) if l.startswith("num_same_op(){")]
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/11_genkei_dai_dasumae_gate.sh	5	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/11_genkei_dai_gate4.sh	5	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/30_naoshikei_dai_dasumae_gate.sh	5	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/30_naoshikei_dai_gate4.sh	5	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙1_pctq.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙2_base64.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙3_数のみ.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__丙4_刷らぬ.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__乙.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__乙′.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__現行.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__甲.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙′.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__現行.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__甲.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙′.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__現行.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__甲.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙1_pctq.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙2_base64.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙3_数のみ.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙4_刷らぬ.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙′.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__現行.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__甲.sh	4	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917/ki/41_guard_utsushi.sh	8	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/km-51-usage-wo-yomazu-ni-yonda-20260917.md	254	+ num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/65_mon_ima.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/66_ima.diff	12	+num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/66_ima.diff.hashiri1	12	+num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/b0_66.moto.diff	12	+num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/b1_66.kezuri.diff	12	+num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/b2_66_kezuri.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/b2_66_moto.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917/_before/agent_health_check.sh.before	91	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917/_before/context_usage_warn.sh.before	37	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917/_before/enter_restart_common_watchdog.sh.before	81	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+紙寫	docs/evidence/km-74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917/_before/inbox_watcher.sh.before	130	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/agent_health_check.sh	91	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/inbox_watcher.sh	130	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/stop_hook_inbox.sh	58	num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/checks/context_usage_warn.sh	37	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/checks/karo_mac_dasumae_gate.sh	36	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/checks/karo_mac_gate4.sh	68	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/watchdogs/enter_restart_common_watchdog.sh	81	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+生器	scripts/redundancy/shogun_report_watcher.sh	35	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }

@@ -1,0 +1,173 @@
+★㋐ 母數 ―― 一本の歩き根★
+刻(始)=2026-09-17T11:17:03+0900  刻(終)=2026-09-17T11:17:25+0900  経過=21.9 秒  rc=0(本器は最後まで走つた)
+歩き根=/Users/momizimac/multi-agent-shogun  深さ=無限(最大 13 段)  ★除外宣言=0★
+歩いた項=42695 / 常体(S_ISREG)=42586 / 非常体=109(読まぬ・名指す) / 讀めぬ=1 / 読んだ byte=14448215680
+
+★零の四札★ 陽性対照・根と深さ・rc・刻 ―― 四つ悉く上に在る。
+陽性対照 = scripts/agent_health_check.sh ―― 同じ路で当たり ★2 行★(0 なら器が盲)
+陰性対照 = 走時組立の語(disk に literal 無し) ―― 当たり ★0 行★(0 が正)
+
+★員内(己の束を除く)の当たり行 = 497★
+    定義 = 187
+    呼び手 = 154
+    註 = 41
+    文 = 115
+★員外(己の束 docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917 の中)= 5 行★ ―― 除いたのではない。歩き、名指し、別に数へた。
+    員外 docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/30_bosuu.py:7
+    員外 docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/30_bosuu.py:18
+    員外 docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/30_bosuu.py:37
+    員外 docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/30_bosuu.py:38
+    員外 docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/30_bosuu.py:61
+
+★層別(員内)★  層\区分  定義 / 呼び手 / 註 / 文
+    生器	8	8	0	0
+    紙寫	179	146	41	104
+    別樹	0	0	0	0
+    便	0	0	0	11
+    記	0	0	0	0
+    控	0	0	0	0
+    他	0	0	0	0
+
+★生器(scripts/)の定義 file = 8 本★(札 scope_in の宣 = 8)
+    定義 scripts/agent_health_check.sh:91  num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+    定義 scripts/checks/context_usage_warn.sh:37  num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+    定義 scripts/checks/karo_mac_dasumae_gate.sh:36  num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+    定義 scripts/checks/karo_mac_gate4.sh:68  num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+    定義 scripts/inbox_watcher.sh:130  num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+    定義 scripts/redundancy/shogun_report_watcher.sh:35  num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+    定義 scripts/stop_hook_inbox.sh:58  num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+    定義 scripts/watchdogs/enter_restart_common_watchdog.sh:81  num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+★生器(scripts/)の呼び手 file = 8 本★
+    呼手 scripts/agent_health_check.sh:117  if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+    呼手 scripts/checks/context_usage_warn.sh:63  if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+    呼手 scripts/checks/karo_mac_dasumae_gate.sh:60  if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
+    呼手 scripts/checks/karo_mac_gate4.sh:93  if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
+    呼手 scripts/inbox_watcher.sh:156  if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+    呼手 scripts/redundancy/shogun_report_watcher.sh:61  if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+    呼手 scripts/stop_hook_inbox.sh:65  if ! num_same_op "$STOP_HOOK_STDIN_TIMEOUT"; then
+    呼手 scripts/watchdogs/enter_restart_common_watchdog.sh:107  if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+
+★家老 第52弾 便の sha16 15ac9f97f473245d の捜索(全 repo・同じ路)= 27 行★
+    docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/nama/00_kotei.txt:16
+    docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/ki/20_kotei.py:46
+    docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/report.md:12
+    docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/raw/10_namaki.tsv:2
+    docs/evidence/km-55-hikae-wo-sahou-e-byte-giri-wo-sagasu-20260917/_bin/90_osame_1.txt:1
+    docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/README.md:5
+    docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/00_start.txt:2
+    docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/45_inode.txt:3
+    docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/MANIFEST.txt:4
+    docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/README.md:36
+
+★非常体 = 109 項(S_ISREG に非ず ∴ 開かぬ)★
+    非常体 .venv/bin/python (S_IFMT=0o120000)
+    非常体 .venv/bin/python3 (S_IFMT=0o120000)
+    非常体 .venv/bin/python3.9 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/otsu/shiryou/C_kowareta_sym (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/otsu/shiryou/E_ikita_sym (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou/shiryou/L01_ikiteru_sym.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou/shiryou/L02_kowareta_sym.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-1_km-ippon-bashiri-de-gyou-wo-sutero-na-ga-gyou-wo-waru_20260912_evidence/raw/10_fx/eda_link_dangling (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-1_km-ippon-bashiri-de-gyou-wo-sutero-na-ga-gyou-wo-waru_20260912_evidence/raw/10_fx/eda_link_ok (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_nashi/grep (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_nashi/tail (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_nashi/tr (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_nashi/wc (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_ari/grep (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_ari/mktemp (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_ari/rm (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_ari/tail (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_ari/tr (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_ari/wc (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_ari/xxd (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_nashi/grep (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_nashi/rm (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_nashi/tail (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_nashi/tr (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_nashi/wc (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_mktemp_nashi/xxd (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_ari/grep (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_ari/tail (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_ari/tr (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_ari/wc (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-nari-no-ne-wo-tatsu-to-kasane-wo-sadamu-20260913_evidence/utsushi/kari_bin_xxd_ari/xxd (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-1_km-jou5-wo-argv-kara-taba-he-genri-de-utsuse_20260913_evidence/raw/10_fx/m4_symlink_evidence/raw/link_to_big (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-damari-no-daichou-jou1-to-jou5_20260913_evidence/kou/J1E3/kowareta.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-damari-no-daichou-jou1-to-jou5_20260913_evidence/kou/J1E2/link.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-damari-no-daichou-jou1-to-jou5_20260913_evidence/kou/J5/link_sei.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-sahou-wa-hito-no-te-de-hashiru-ka_20260912_evidence/fixtures/ana/jiko_ruupu (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-sahou-wa-hito-no-te-de-hashiru-ka_20260912_evidence/fixtures/ana/nai_saki (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-sahou-wa-hito-no-te-de-hashiru-ka_20260912_evidence/fixtures/bo/fukuhon/soutai_link (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-sahou-wa-hito-no-te-de-hashiru-ka_20260912_evidence/fixtures/bo/fukuhon/zettai_link (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-sahou-wa-hito-no-te-de-hashiru-ka_20260912_evidence/fixtures/bo/moto/soutai_link (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-sahou-wa-hito-no-te-de-hashiru-ka_20260912_evidence/fixtures/bo/moto/zettai_link (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/fixture/kata/symlink_chuuduri (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/fixture/kata/symlink_dev (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/fixture/kata/symlink_ikiru (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n08_symlink.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n09_broken_symlink.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n12_fifo (S_IFMT=0o10000)
+    非常体 queue/reports/ashigaru-mac-2_km-mienu-mi-otoshi-wo-hakare-to-monosashi-ni-na-wo-tsuke-20260913_evidence/taisho/t10_link_ni_naru (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-18tai16-wa-toki-to-arukine-de-awasaru_20260912_evidence/fixtures/LN_AD.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-2_km-hiku-sahou-wa-kakeru-ka_20260912_evidence/sahou/fixtures/cmp_shiken_link.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p01_fifo_nowriter (S_IFMT=0o10000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p02_fifo_withwriter (S_IFMT=0o10000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p03_sym_chr_zero (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p04_sym_chr_null (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p05_sock (S_IFMT=0o140000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p07_sym_loop_a (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p07_sym_loop_b (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_01 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_02 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_03 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_04 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_05 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_06 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_07 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_08 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_09 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_10 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_11 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_12 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_13 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_14 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_15 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_16 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_17 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_18 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_19 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_20 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_21 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_22 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_23 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_24 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_25 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_26 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_27 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_28 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_29 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_30 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_31 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_32 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_33 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_34 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_35 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_36 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_37 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_38 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_39 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p08_sym_deep_40 (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p09_sym_broken (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p13_sym_to_fifo (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c4_link_broken.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c4_link_clean.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-1_km-utsuwa-no-jutsugo-wo-kakikudase_20260913_evidence/raw/20_fx/c5_link.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-hakare-nu-to-kizu-wo-wakachi-kake-20260913_evidence/kou/shiryou/K09_kowareta_symlink.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/tomari/daichou_manifest_no_kuchi.txt (S_IFMT=0o10000)
+    非常体 queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/tomari/manifest_socket.sock (S_IFMT=0o140000)
+    非常体 queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/tomari/manifest_sym_to_devnull.txt (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/gojou/C_kowareta_sym (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/gojou/E_ikita_sym (S_IFMT=0o120000)
+    非常体 queue/reports/ashigaru-mac-3_km-itsutsu-no-sugata-ga-daichou-ni-noru-ka-wo-hakare-20260913_evidence/shiryou/gojou/G_fifo (S_IFMT=0o10000)
+★讀めぬ = 1 項★
+    讀めぬ queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/shiryou/tomari24/p10_reg_noread (open errno=13)

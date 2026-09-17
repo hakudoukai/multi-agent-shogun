@@ -1,0 +1,17 @@
+#値	rc	stderr byte	判	stderr 逐語
+0	1	0	○受けた	―
+-0	1	0	○受けた	―
+-5	1	51	×拒んだ	_: line 0: read: -5: invalid timeout specification
+4294967295	1	0	○受けた	―
+4294967296	1	59	×拒んだ	_: line 0: read: 4294967296: invalid timeout specification
+9223372036854775807	1	68	×拒んだ	_: line 0: read: 9223372036854775807: invalid timeout specification
+9223372036854775808	1	68	×拒んだ	_: line 0: read: 9223372036854775808: invalid timeout specification
+020	1	0	○受けた	―
+空文字	1	49	×拒んだ	_: line 0: read: : invalid timeout specification
++10	1	0	○受けた	―
+7	1	0	○受けた	―
+abc	1	52	×拒んだ	_: line 0: read: abc: invalid timeout specification
+10	1	0	○受けた	―
+300	1	0	○受けた	―
+2	1	0	○受けた	―
+60	1	0	○受けた	―

@@ -1,0 +1,157 @@
+区分	層	file	行	逐語
+文	紙寫	docs/evidence/km-75-shikii-no-nokori-hitotsu-wo-tojiru-20260917/README.md	101	| 番人の位置 | L29(註) / L35 `num_same_op` / L38 `env_state` / L49 `fix_threshold(){` / **L78 呼出 1本** |
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/ashigaru-mac-3_km-50-yabure-hachikei-no-fusagikata-20260917.md	116	+  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+註	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_gou/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_gou/karo_mac_gate4.sh	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_otsu/karo_mac_dasumae_gate.sh	63	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+註	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_kou/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/.nama/ki_kou/karo_mac_gate4.sh	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/gou_dasumae.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/gou_gate4.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/kou_dasumae.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/kou_gate4.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/an/otsu_dasumae.diff	28	+  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+註	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/ki/30_an.py	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-50-yabure-hachikei-no-fusagikata-20260917/ki/30_an.py	63	OTSU_LOCAL = '  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw'
+文	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/README.md	239	甲は `num_same_op`(=`[ x -ge 0 ]` の rc を見る)で閾を検め、20桁なら既定 10 へ倒す。乙は `case` の glob `*[!0-9]*` で検める ―― ★20桁の十進は悉く數字ゆゑ glob に当たらず、既定へ倒れぬ儘 `-gt` へ渡る★。∴ rc=2 ⇒ `else` ⇒ `:218 exit 0`(loop 防止)を ★見ぬ★。
+文	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/README.md	251	- 甲 num_same_op を通す閾= 1 口
+註	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/nama/40_inyou_shin_in.txt	9	# 番人の形= 新形(num_same_op ―― 比べる時と同じ演算子で検む)
+註	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/nama/40_inyou_shin_you.txt	9	# 番人の形= 新形(num_same_op ―― 比べる時と同じ演算子で検む)
+文	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/nama/42_hitaisho.txt	35	甲 num_same_op を通す閾= 1 口
+註	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/ki/40_inyou.py	15	#   ⑴番人域 = 「num_same_op()」を含む行 ∨ 「STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-」を
+文	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/ki/40_inyou.py	46	i_num = find(u'num_same_op()')
+文	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/ki/40_inyou.py	75	w(u'★測れぬ: 字面が見付からぬ(num_same_op=%d :-定義=%d read=%d 判定=%d ―― 1起点で -1 は不在)★\n'
+文	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/ki/40_inyou.py	89	kata = u'新形(num_same_op ―― 比べる時と同じ演算子で検む)' if i_num >= 0 else u'旧形(case の glob *[!0-9]* ―― 字面で検む)'
+文	紙寫	docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/ki/60_kami.py	307	w(u'甲は `num_same_op`(=`[ x -ge 0 ]` の rc を見る)で閾を検め、20桁なら既定 10 へ倒す。'
+文	紙寫	docs/evidence/km-gate4-kou-otsu-20260917/README.md	25	1. **甲** `num_same_op()` ―― `[ "$v" -ge 0 ]` を空打ちし rc<=1 の時のみ「使へる閾」とする。
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ashigaru-mac-3_km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917.md	7	★問ひ★(下命 逐語) ―― 「此の二つ(`num_same_op` と `env_state`)を擦り抜けて なほ後段の比較を誤らせる閾の値が在るか。」
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ashigaru-mac-3_km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917.md	39	## 三 ★表 ―― 各形の ㋐入れた値 / ㋑env_state / ㋒num_same_op の rc / ㋓門が鳴つたか / ㋔正しく鳴るべきだつたか★
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ashigaru-mac-3_km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917.md	194	1. ★`num_same_op` は `[ $? -le 1 ]` を ★`[ $? -eq 0 ]`★ とせよ。★ 「読めたか」ではなく「★0 以上か★」を問ふ事になり、`-1` / `-0` が落ちる。零を許さぬ閾(時限)には別に `-ge 1` を置け。
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/ban.tsv	2	# 抜いた num_same_op = L68..L68
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/ban.tsv	6	形	㋐逐語	㋐byte列	㋑env_state	㋒num_same_op rc	㋒判	註
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/ban_log.txt	2	# 抜いた num_same_op = L68..L68
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/ban_log.txt	6	形	㋐逐語	㋐byte列	㋑env_state	㋒num_same_op rc	㋒判	註
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/bin.txt	4	第49弾 納め04/18 ★根★ num_same_op は「[ "$1" -ge 0 ] 2>/dev/null; [ $? -le 1 ]」。[ -ge ] の rc は 0=真／1=偽／2=読めぬ。-le 1 は★0も1も可とする★。
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/kami_a.txt	7	★問ひ★(下命 逐語) ―― 「此の二つ(`num_same_op` と `env_state`)を擦り抜けて なほ後段の比較を誤らせる閾の値が在るか。」
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/kami_a.txt	39	## 三 ★表 ―― 各形の ㋐入れた値 / ㋑env_state / ㋒num_same_op の rc / ㋓門が鳴つたか / ㋔正しく鳴るべきだつたか★
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/kami_b.txt	123	1. ★`num_same_op` は `[ $? -le 1 ]` を ★`[ $? -eq 0 ]`★ とせよ。★ 「読めたか」ではなく「★0 以上か★」を問ふ事になり、`-1` / `-0` が落ちる。零を許さぬ閾(時限)には別に `-ge 1` を置け。
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/91_ichi.sh	5	#   stdout: <env_state の出目>\t<num_same_op の rc>\t<num_same_op の判>
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/92_ban.py	3	# 92_ban.py ―― ★閾の番人 二人(env_state / num_same_op)を、生器から逐語で抜いて当てる。★
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/92_ban.py	6	#   ⑴ 生器(karo_mac_gate4.sh 等)から env_state と num_same_op の定義を ★逐語で抜く★。
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/92_ban.py	9	#   ⑶ ㋐逐語と byte 列 ㋑env_state の出目 ㋒num_same_op の rc を TSV で出す。
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/92_ban.py	20	u"""生器から env_state / num_same_op を ★逐語★ で抜く。行番号は字面で当てる(焼き込まぬ)。"""
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/92_ban.py	24	if l.startswith(u'num_same_op()'):
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/92_ban.py	25	out.append(l); ranges.append((u'num_same_op', i + 1, i + 1))
+文	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/92_ban.py	116	rows.append(u'\t'.join([u'形', u'㋐逐語', u'㋐byte列', u'㋑env_state', u'㋒num_same_op rc', u'㋒判', u'註']))
+註	紙寫	docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/ki/93_mon.py	5	#   92_ban.py は番人二人(env_state / num_same_op)だけを当てた。
+文	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/km51_report.md	244	| 器 path @ `a4cafdf` | `fix_threshold` | `_th_say` | `num_same_op` | 判 |
+文	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52_paper_naoshi_gyou_chunyu.md	38	num_same_op / [ "$_ft_v" -ge 0 ] / eval "$_ft_o=\$_ft_d"
+註	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/nama/97_hyoteki.txt	4	#器path	fix_threshold_件	_th_say_件	num_same_op_件	行	判
+註	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/40_ichiyou.sh	5	#     ①段    : fix_threshold / num_same_op / env_state の sha16 ―― 四器で同じか
+文	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/40_ichiyou.sh	18	awk '/^(fix_threshold|num_same_op|env_state)\(\)/{p=1} p{print} /^}$/{p=0}' "$1" | shasum -a 256 | cut -c1-16
+文	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/40_ichiyou.sh	20	dan_gyou() { awk '/^(fix_threshold|num_same_op|env_state)\(\)/{p=1} p{n++} /^}$/{p=0} END{print n+0}' "$1"; }
+文	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/41_ukezara.sh	9	. "$KATA"                                   # 番人(_th_say/env_state/num_same_op/fix_threshold)を読む
+文	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/97_hyoteki.sh	11	printf '#器path\tfix_threshold_件\t_th_say_件\tnum_same_op_件\t行\t判\n'
+文	紙寫	docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/ki/97_hyoteki.sh	19	d=$(printf '%s\n' "$b" | grep -cE 'num_same_op')
+文	紙寫	docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/README.md	26	直した塊 = 今の器の **L52-74**(`num_same_op()`=L58／空文字の分けめ=L61-63／`:-`=L64／乙の印替へ=L67-73)。
+註	紙寫	docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/raw/10_slice.py	15	# 直し形: 直上に num_same_op() が在れば其処から取る
+文	紙寫	docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/raw/10_slice.py	18	if L[n].startswith("num_same_op()"):
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/README.md	56	切り出し(行番号は器が引いた): 受 L224・比 L1599・_th_say L125・num_same_op L130・env_state L133-139・fix_threshold L144-166。的の `set` 行= L28 `set -euo pipefail`(函数内)・L1582 `set -e`。
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/README.md	85	- ★穴(新規・本弾の外・別口)★: `[ "$v" -ge 0 ]` は先頭の空白類(改行含む)を読み飛ばすゆゑ、num_same_op が「␊1」を數と呼び、値は ★改行付きの儘★ 受け皿へ入る。數比較の道では 1 として働く(fail-open に非ず)が、其の値を log 行へ挟む器へは改行が渡る ―― 裁 seq323980⑵ の行注入の封じは「扱へぬ値」の枝(L157-165)にしか無い。同じ函数は共有器四本(裁 323062⑷)に写されて居るゆゑ穴も四本に在ると推せる(本弾では的一本しか測つて居らぬ)。
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.py	2	"""30 ㋒㋓ 毒を實際に当てる(第76弾 km-80)―― 的 file から ★逐語で★ 受ける行・比較器の行・番人四函数(_th_say/num_same_op/env_state/fix_threshold)を錨で切り出し、束内の写し器(bash 3.2 /bin/bash)へ毒を当てる。repo へ 0 字・稼働 process 不觸。
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.py	16	for nm in ('_th_say', 'num_same_op', 'env_state', 'fix_threshold'):
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.py	17	if nm in ('_th_say', 'num_same_op'):
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.py	47	out.append('H2 の要(陽性対照の新しい穴): 先頭改行付き十進「␊1」を fix_threshold が ★黙つて通す★(FT_RC 0・stderr 0 行・VALUE=[␊1])―― [ "$v" -ge 0 ] は先頭の空白類を読み飛ばすゆゑ num_same_op が「數」と呼ぶ。數比較の道では正しく 1 として働くが、値を log 行へ挟む器へは改行が其の儘渡る(裁 seq323980⑵ の行注入の封じは「扱へぬ値」の枝にしか無い)。1弾=1file ゆゑ本弾は測るのみ・別口として立てる。')
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.py.first	2	"""30 ㋒㋓ 毒を實際に当てる(第76弾 km-80)―― 的 file から ★逐語で★ 受ける行・比較器の行・番人四函数(_th_say/num_same_op/env_state/fix_threshold)を錨で切り出し、束内の写し器(bash 3.2 /bin/bash)へ毒を当てる。repo へ 0 字・稼働 process 不觸。
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.py.first	16	for nm in ('_th_say', 'num_same_op', 'env_state', 'fix_threshold'):
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.py.first	17	if nm in ('_th_say', 'num_same_op'):
+註	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.txt	1	# 30 ㋒㋓ / 刻 2026-09-17T10:01:54+0900 / 的 scripts/inbox_watcher.sh(disk)/ 受ける行 L224 / 比較器 L1599 / 番人 _th_say L125-125 num_same_op L130-130 env_state L133-139 fix_threshold L144-166 / 的の set 行 [(28, '    set -euo pipefail'), (1582, '    set -e')] / 写し器= /bin/bash 3.2.57(1)-release
+文	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.txt	4	H2 の要(陽性対照の新しい穴): 先頭改行付き十進「␊1」を fix_threshold が ★黙つて通す★(FT_RC 0・stderr 0 行・VALUE=[␊1])―― [ "$v" -ge 0 ] は先頭の空白類を読み飛ばすゆゑ num_same_op が「數」と呼ぶ。數比較の道では正しく 1 として働くが、値を log 行へ挟む器へは改行が其の儘渡る(裁 seq323980⑵ の行注入の封じは「扱へぬ値」の枝にしか無い)。1弾=1file ゆゑ本弾は測るのみ・別口として立てる。
+註	紙寫	docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/30_doku.txt.first	1	# 30 ㋒㋓ / 刻 2026-09-17T10:01:02+0900 / 的 scripts/inbox_watcher.sh(disk)/ 受ける行 L224 / 比較器 L1599 / 番人 _th_say L125-125 num_same_op L130-130 env_state L133-139 fix_threshold L144-166 / 的の set 行 [(28, '    set -euo pipefail'), (1582, '    set -e')] / 写し器= /bin/bash 3.2.57(1)-release
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/README.md	11	1. ★㋐ 受ける口は二定義で別々に数へた: 甲 `${NAME:-既定}` の字面 5 口(L108・417・492・543・556)/ 乙「外から値が入る変数」58 口 46 名 / 丙 函数内で `$1/$2` を受ける local 2 名(母數の外)。守る表(fix_threshold/env_state/num_same_op/_th_say/`for _t in`)は ★0 行★ ―― 零の四札: 陽性対照= 同じ語を inbox_watcher.sh に当てて 22 行 rc0 / 陰性対照= ZZ_KM81B_NEG 0 行 rc1(両 file)/ 根= 的 file 一本 全 582 行・深さ 0 / 刻 10:34:25(`10`)。★閾 3 名(L40-42)と裸の 80 ×2(L462・470)は literal で定まり `${NAME:-}` の口を持たぬ ∴ 毒は閾へは届かず、★數比較器の左項(外来の値)★ へ落ちる。★
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/README.md	39	| 的(disk) 語 `fix_threshold\|env_state\|num_same_op\|_th_say\|^for _t in ` | ★0 行・rc 1★(grep -c は 0 の時 rc1 = 器が「無い」と言ふ) |
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/raw/10_uke.py	4	守る表(fix_threshold/env_state/num_same_op/_th_say/`for _t in`)が ★無い★ 事を零の四札(陽性対照= inbox_watcher.sh で鳴る・陰性対照= ZZ_KM81B_NEG・根と深さ・rc・刻)で示す。disk と HEAD の二版。行番号は己の器で引く。"""
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/raw/10_uke.py	66	PAT = r'fix_threshold|env_state|num_same_op|_th_say|^for _t in '
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/raw/10_uke.py.first	4	守る表(fix_threshold/env_state/num_same_op/_th_say/`for _t in`)が ★無い★ 事を零の四札(陽性対照= inbox_watcher.sh で鳴る・陰性対照= ZZ_KM81B_NEG・根と深さ・rc・刻)で示す。disk と HEAD の二版。行番号は己の器で引く。"""
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/raw/10_uke.py.first	59	PAT = r'fix_threshold|env_state|num_same_op|_th_say|^for _t in '
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/raw/10_uke.txt	12	守る表(語 fix_threshold|env_state|num_same_op|_th_say|^for _t in ): 的 disk 0 行 rc 1 / 的 HEAD 0 行(python re) / ★陽性対照★ scripts/inbox_watcher.sh(disk) 22 行 rc 0 / ★陰性対照★ ZZ_KM81B_NEG 的 0 行 rc 1・scripts/inbox_watcher.sh 0 行 rc 1 / 根= 的 file 一本 全 582 行(再帰無し・深さ 0) / 刻 2026-09-17T10:34:25+0900
+文	紙寫	docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/raw/10_uke.txt.first	10	守る表(語 fix_threshold|env_state|num_same_op|_th_say|^for _t in ): 的 disk 0 行 rc 1 / 的 HEAD 0 行(python re) / ★陽性対照★ scripts/inbox_watcher.sh(disk) 22 行 rc 0 / ★陰性対照★ ZZ_KM81B_NEG 的 0 行 rc 1・scripts/inbox_watcher.sh 0 行 rc 1 / 根= 的 file 一本 全 582 行(再帰無し・深さ 0) / 刻 2026-09-17T10:30:44+0900
+文	紙寫	docs/evidence/km-53b-gyou-chunyu-no-naoshi-wo-sueru-20260917/report.md	54	台 = 各生器の今の版から ★助器四本(`_th_say`/`num_same_op`/`env_state`/`fix_threshold`)の定義だけ★ を抜いた物。
+文	紙寫	docs/evidence/km-53b-gyou-chunyu-no-naoshi-wo-sueru-20260917/ki/30_taishou.py	38	for nm in ('_th_say', 'num_same_op', 'env_state', 'fix_threshold'):
+文	紙寫	docs/evidence/km-53b-gyou-chunyu-no-naoshi-wo-sueru-20260917/ki/30_taishou.py	54	'台 = 各生器の今の版から ★助器四本(_th_say/num_same_op/env_state/fix_threshold)の定義だけ★ を抜き、駆動一行を足した物(束外 %s)' % S,
+文	紙寫	docs/evidence/km-53b-gyou-chunyu-no-naoshi-wo-sueru-20260917/raw/30_taishou.tsv	2	台 = 各生器の今の版から ★助器四本(_th_say/num_same_op/env_state/fix_threshold)の定義だけ★ を抜き、駆動一行を足した物(束外 /Users/momizimac/km53b-utsushi-20260917)
+文	紙寫	docs/evidence/km-shikii-yokotenkai-20260917/README.md	66	3. **負値も倒す**。`num_same_op` は `-5` を「比較器で扱へる」と見る(rc=1)。然し本18閾は悉く
+文	紙寫	docs/evidence/km-shikii-yokotenkai-20260917/raw/05_negative_matrix.txt	1	★負テスト ―― 四器 × 四形(甲1・乙3) + 陽性対照2。旧器=is_num(字面判定)／新器=num_same_op+env_state+fix_threshold★
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/48_lead_nl.py	2	"""48 前の改行(第72弾)―― 46 で `[` が「前の改行は許し 後の改行は拒む」と出た。∴ 「\\n5」「\\n\\n\\n5」は 甲(num_in_range)も生(num_same_op)も★受け★、受けた路(條⑤ の行)で生の儘 刷られる ―― 丙(safe_show)は拒む路しか守らぬ。
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.orig	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.orig	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig	26	+  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh	63	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.orig	63	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej	5	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej	26	+  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig	5	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh	63	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.orig	63	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig	5	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh	60	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.orig	60	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej	5	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.orig	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej	26	+  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.rej	5	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou/karo_mac_gate4.sh	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/gou_dasumae.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/gou_gate4.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/kou_dasumae.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/kou_gate4.diff	7	+# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/an/otsu_dasumae.diff	28	+  local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+文	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/otsu/karo_mac_dasumae_gate.sh	63	local name="$1" dflt="$2" out="$3" chk="${4:-num_same_op}" st raw
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_y/karo_mac_gate4.sh	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/gou_x/karo_mac_gate4.sh	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_dasumae_gate.sh	37	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+註	紙寫	docs/evidence/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/ki/kou/karo_mac_gate4.sh	69	# ★案甲(第50弾)★ 幅が広過ぎる ―― 上の num_same_op は「0以上か」でなく「數として讀めたか」
+文	紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/paper_naoshi_gyou_chunyu.md	38	num_same_op / [ "$_ft_v" -ge 0 ] / eval "$_ft_o=\$_ft_d"
+註	紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/80_taisho.sh	6	# 写しから num_same_op..fix_threshold と _th_say を取り出す(頭〜fix_threshold 閉ぢ迄)
+註	紙寫	docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/80_taisho.sh.first	6	# 写しから num_same_op..fix_threshold と _th_say を取り出す(頭〜fix_threshold 閉ぢ迄)
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/paper_km78_bannin_naki_kuchi.md	112	新版は `num_same_op` を閾に当て、★㋐の八形を悉く塞いだ★(`raw/54_kou_new.tsv` 形1-8:
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/paper_km78_bannin_naki_kuchi.md	115	然れど `num_same_op` は ★2^63 未満を悉く「數」と呼ぶ★ ∴ 領一と領二は素通りする:
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/ki/55_yomi_kagiri.py	50	sm.append('  num_same_op は 2^63 未満を悉く「數」と呼ぶ ∴ ★此の穴を塞がぬ★。')
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/ki/70_kami.py	135	A('新版は `num_same_op` を閾に当て、★㋐の八形を悉く塞いだ★(`raw/54_kou_new.tsv` 形1-8:')
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/ki/70_kami.py	138	A('然れど `num_same_op` は ★2^63 未満を悉く「數」と呼ぶ★ ∴ 領一と領二は素通りする:')
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/ki/74_bin.py	11	'★走行中に当てられた直しは八形を悉く塞いだ(善)。然れど num_same_op は2^63未満を皆「數」と呼ぶ★ ∴ 4294967295=136年待つ・4294967296=即返る・-5=0秒で「時限切れ(-5秒経過)」と★偽の報せ★。且つ註釈は「永久に待つ」と書くが二十桁は待たぬ。塞いで居らぬ穴の名を書いて居る。',
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/55_yomi_kagiri_summary.txt	10	num_same_op は 2^63 未満を悉く「數」と呼ぶ ∴ ★此の穴を塞がぬ★。
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/55_yomi_kagiri_summary.txt.first	10	num_same_op は 2^63 未満を悉く「數」と呼ぶ ∴ ★此の穴を塞がぬ★。
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/raw/74_bin.txt	6	4/6  166字  納め4/6 ★走行中に当てられた直しは八形を悉く塞いだ(善)。然れど num_same_op は2^63未満を皆「數」と呼ぶ★ ∴ 4294967295=136年待つ・4294967296=即返る・-5=0秒で「時限切れ(-5秒経過)」と★偽の報せ★。且つ註釈は「永久に待つ」と書くが二十桁は待たぬ。塞いで居らぬ穴の名を書いて居る。
+文	紙寫	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/_bin/04.txt	1	納め4/6 ★走行中に当てられた直しは八形を悉く塞いだ(善)。然れど num_same_op は2^63未満を皆「數」と呼ぶ★ ∴ 4294967295=136年待つ・4294967296=即返る・-5=0秒で「時限切れ(-5秒経過)」と★偽の報せ★。且つ註釈は「永久に待つ」と書くが二十桁は待たぬ。塞いで居らぬ穴の名を書いて居る。
+文	紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/README.md	14	両器とも **甲(`num_same_op`)は既に在つた**。欠けて居たのは **乙の後半=行注入の封じ** である。
+文	紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/README.md	23	**甲(`num_same_op`)と乙前半(`env_state`/`fix_threshold`)は worktree にのみ在つて commit されて居らなんだ**(當席の前弾の仕事)。
+註	紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/10_slice.py	4	#   切り出しの範囲 = say() の一行 ＋ `num_same_op(){` の行から
+註	紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/10_slice.py	5	#   ★最初の `fix_threshold <NAME>` 呼出の直前★ まで(=num_same_op/env_state/fix_threshold の三器と其の註)。
+文	紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/10_slice.py	13	assert len(beg) == 1, "num_same_op が %d 本" % len(beg)
+文	紙寫	docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/raw/10_slice.py	20	sys.stderr.write("切出 %d行 (num_same_op L%d → 呼出 L%d の前)\n" % (len(body), beg[0]+1, end[0]+1))
+文	紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/ashigaru-mac-1_km-73-mieru-shirushi-ga-hiraku-ana-20260917.md	17	⑴ 台 = 生器から助器四本(_th_say/num_same_op/env_state/fix_threshold)を抜き 駆動一行を足した物 ―― 生器本体は一度も走らせて居らぬ(preflight の向う側)
+文	紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/10_saigen.py	39	'  ⑴ 台 = 生器から助器四本(_th_say/num_same_op/env_state/fix_threshold)を抜き 駆動一行を足した物 ―― 生器本体は一度も走らせて居らぬ(preflight の向う側)',
+文	紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/10_saigen.txt	6	⑴ 台 = 生器から助器四本(_th_say/num_same_op/env_state/fix_threshold)を抜き 駆動一行を足した物 ―― 生器本体は一度も走らせて居らぬ(preflight の向う側)
+文	紙寫	docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai73.py	37	body = ''.join(kiru(b, n) for n in ('_th_say', 'num_same_op', 'env_state', 'fix_threshold'))
+文	紙寫	docs/evidence/km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917/km52_report.md	187	★疵I★ guard の寫しを `num_same_op` から切つた故 ★`_th_say` を落とし★、
+文	紙寫	docs/evidence/km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917/ki/40_hatan.py	73	lo = next(i for i,l in enumerate(t) if l.startswith('num_same_op'))
+註	紙寫	docs/evidence/km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917/ki/42_hatan2.py	4	# ★40_hatan.py の疵I★ guard の写しを `num_same_op` から切つた故、其の手前に在る ★`_th_say` を落とした★。
+文	紙寫	docs/evidence/km-gate-kou-otsu-kiten-20260917/README.md	11	1. **甲(裁322952)** `num_same_op` ―― 閾を ★後段の比較と同じ演算子★ `[ "$v" -ge 0 ]` で先に検める。
+文	便	queue/tasks/ashigaru-mac-3.yaml	8	★家老mac 自身が書いた番人 num_same_op に穴が在る★(專任2 第56弾 km-78 が測つた)。
+文	便	queue/tasks/ashigaru-mac-3.yaml	14	num_same_op を抱へる★生器 8本★(2026-09-17 11:08 家老が disk を直に歩いて測つた):
+文	便	queue/tasks/ashigaru-mac-3.yaml	31	㋑呼び方を三分類し file:行で名指せ ―― 甲=`num_same_op v && [ v -ge 0 ]`(二重に見る)
+文	便	queue/tasks/ashigaru-mac-3.yaml	32	乙=`num_same_op v` 単独(=★範囲を見ぬ★) 丙=其の他。乙が何本かが本弾の要。
+文	便	queue/inbox/ashigaru-mac-2.yaml	471	のみ死口)。當席の見立の誤りを器で覆した事を高く見る。★num_same_op の穴は當席の疵である★=2^63未満を皆『數』と呼び 4294967295=136年待つ・-5で『時限切れ(-5秒経過)』の偽の報せ・註釈は『永久に待つ』と書くが二十桁は待たぬ。弾⑷
+文	便	queue/inbox/ashigaru-mac-3.yaml	306	num_same_op(「[ v -ge 0 ]」の空打ち・rc<=1 で可とする)と env_state(未設定/空文字/空白のみ/値)である。★問ひ★=此の二つを擦り抜けて
+文	便	queue/inbox/ashigaru-mac-3.yaml	308	に同名を二度。各形につき ㋐入れた値(逐語と byte 列) ㋑env_state の出目 ㋒num_same_op の rc ㋓門が鳴つたか ㋔★正しく鳴るべきだつたか★
+文	便	queue/inbox/ashigaru-mac-3.yaml	389	6ea1fe05d941e98c)を讀んで着手せよ。題=★家老の番人 num_same_op の穴を生器8本で測れ★(2^63未満を皆「數」と呼ぶ・-5で偽の報せ・註が塞いで居らぬ穴の名を書く)。當席の疵ゆゑ遠慮無用。生器へ0字・寫しへ毒十値。第53弾の検分は別便で返す。監査は出せ、★PASSは待つな★(8083断)。着手便に宣ETAを幅で。'
+文	便	queue/inbox/karo-mac.yaml	484	- content: 納め4/6 ★走行中に当てられた直しは八形を悉く塞いだ(善)。然れど num_same_op は2^63未満を皆「數」と呼ぶ★ ∴ 4294967295=136年待つ・4294967296=即返る・-5=0秒で「時限切れ(-5秒経過)」と★偽の報せ★。且つ註釈は「永久に待つ」と書くが二十桁は待たぬ。塞いで居らぬ穴の名を書いて居る。
+文	便	queue/inbox/_archive/karo-mac_pruned.yaml	168472	- content: 第49弾 納め04/18 ★根★ num_same_op は「[ "$1" -ge 0 ] 2>/dev/null; [ $? -le 1 ]」。[
+文	便	queue/inbox/_archive/karo-mac_pruned.yaml	169439	■㋕ (令に無き一件・要判断) 的として名指された a4cafdf は★四本悉く番人の字(fix_threshold/num_same_op/_th_say)を

@@ -1,0 +1,55 @@
+= 40 ―― ㋑ 呼び方の三分類(甲 / 乙 / 丙) =
+刻=2026-09-17T11:25:14+0900  経過=0.00 秒  rc=0
+歩き根=/Users/momizimac/multi-agent-shogun  的=nama/31_teigi.tsv の内 scripts/ のみ(★札の宣ではなく 30 の実測から引いた★)
+的 file = 8 本  呼び口 = 8 口
+
+-- 分けの式(宣・此の器の字面其の物) --
+  条件部の抜き: ^\s*if\s+(.*?)\s*;\s*then\b  ―― 抜けぬ行は行全体を条件と見做す
+  甲: ^!?\s*num_same_op\s+"?\$?\{?[A-Za-z0-9_]+\}?"?\s*&&\s*\[\s*"?\$?\{?[A-Za-z0-9_]+\}?"?\s+-ge\s+[^]]*\]\s*$
+  乙: ^!?\s*num_same_op\s+"?\$?\{?[A-Za-z0-9_]+\}?"?\s*$
+  丙: 右の二つに当たらぬ物
+  ★排他性★: 一口は必ず一型にのみ入る(甲→乙→丙 の順に当てる)。甲∧乙 の重なりは構造上生ぜぬ
+    ―― 甲は条件の末に `] ` を要し、乙は num_same_op の引数で条件が尽きる事を要する。
+
+★甲 = 5 本 / 乙 = 3 本 / 丙 = 0 本★  (和 8 = 呼び口 8)
+★本弾の要 ―― 乙 = 3 本★
+  家老の見立 = 三本(stop_hook_inbox:65 / karo_mac_gate4:93 / karo_mac_dasumae_gate:60)
+  当席の測り = scripts/checks/karo_mac_dasumae_gate.sh:60 / scripts/checks/karo_mac_gate4.sh:93 / scripts/stop_hook_inbox.sh:65
+  ★見立⇔測り = 一致★
+
+-- 型別の口(file:行 逐語) --
+[甲] 5 口
+  scripts/agent_health_check.sh:117	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+      通す閾 3 本 = HEALTH_CHECK_COOLDOWN_SEC(既定300)→ALERT_COOLDOWN_SEC HEALTH_CHECK_TOKEN_WARN(既定200000)→TOKEN_WARN_THRESHOLD HEALTH_CHECK_TOKEN_CRIT(既定240000)→TOKEN_CRIT_THRESHOLD
+  scripts/checks/context_usage_warn.sh:63	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+      通す閾 2 本 = CONTEXT_WARN_BYTES(既定1600000)→WARN_BYTES CONTEXT_DANGER_BYTES(既定2000000)→DANGER_BYTES
+  scripts/inbox_watcher.sh:156	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+      通す閾 1 本 = $_n(既定$_d)→$_n
+  scripts/redundancy/shogun_report_watcher.sh:61	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+      通す閾 1 本 = SHOGUN_REPORT_WATCHER_COOLDOWN(既定60)→COOLDOWN_SEC
+  scripts/watchdogs/enter_restart_common_watchdog.sh:107	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+      通す閾 3 本 = ER_THRESHOLD_MIN(既定10)→THRESHOLD_MIN ER_FIRE_CAP_COUNT(既定3)→FIRE_CAP_COUNT ER_FIRE_CAP_WINDOW_MIN(既定15)→FIRE_CAP_WINDOW_MIN
+[乙] 3 口
+  scripts/checks/karo_mac_dasumae_gate.sh:60	if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
+      通す閾 2 本 = DASUMAE_READ_TIMEOUT(既定10)→SAFE_SIZE_TMO DASUMAE_MAX_BYTES(既定10485760)→MAXB
+  scripts/checks/karo_mac_gate4.sh:93	if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
+      通す閾 2 本 = GATE4_MAX_FILE_MB(既定50)→MAXF GATE4_MAX_TOTAL_MB(既定100)→MAXT
+  scripts/stop_hook_inbox.sh:65	if ! num_same_op "$STOP_HOOK_STDIN_TIMEOUT"; then
+      通す閾 1 本 = STOP_HOOK_STDIN_TIMEOUT(直呼び・fix_threshold を経ぬ)
+[丙] 0 口
+
+-- 何が違ふのか(字面から言へる事のみ) --
+  甲: num_same_op が通した後、★同じ演算子 [ -ge ] で 0 以上か★を重ねて見る。
+      ∴ 負(-5 等)は第二の関で落ちる。★但し 2^63 未満の巨大値は両関とも通る。★
+  乙: num_same_op 単独。num_same_op は [ v -ge 0 ] の rc が 0 でも 1 でも通す形ゆゑ、
+      ★「0 以上か」を見て居らぬ ―― 見たのは「比較器が扱へるか」だけ★。
+      ∴ 負も 2^63 未満の巨大値も素通りして下流へ入る。
+  ★両型に共通の穴★: 上限が無い。9223372036854775807 は甲でも乙でも通る。
+
+-- 母數の別(同じ「本」で二つを数へぬ為) --
+  呼び口(if 一行)  = 8 口 ―― 札の宣と同じ数へ方
+  通す閾(値の本数) = 15 本 ―― 一口が何本の閾を通すかは器ごとに違ふ
+    内 甲を通る閾 = 10 本 / ★乙を通る閾 = 5 本★
+  ★但し上の「本」は fix_threshold ★呼び手行★ の数である ―― 輪で回す口が在る★
+    scripts/inbox_watcher.sh:204 は for の輪で 10 個の名を回す = ESCALATE_PHASE1:120 ESCALATE_PHASE2:240 ESCALATE_COOLDOWN:300 NUDGE_COOLDOWN_SEC:60 NUDGE_COOLDOWN_SEC_CODEX:300 NUDGE_COOLDOWN_SEC_CLAUDE:60 ASW_PHASE:2 APPROVAL_ALERT_COOLDOWN:300 MAX_TYPING_SKIP:5 INOTIFY_TIMEOUT:30
+    ∴ ★値の本数で数へ直せば 15 + 9 = 24 本★(内 甲 19 / 乙 5)

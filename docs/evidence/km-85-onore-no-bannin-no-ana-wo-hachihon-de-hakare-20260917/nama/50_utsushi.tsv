@@ -1,0 +1,5 @@
+#寫し器	型	生器	切り出した行域	生器切片 sha16	寫し部 sha16	突合	寫し器 byte
+kou_health	甲	scripts/agent_health_check.sh	85-129	e93cc40e383978d6	e93cc40e383978d6	○同一	4613
+otsu_gate4	乙	scripts/checks/karo_mac_gate4.sh	17-17 63-107	75c84bbb3ba26b52	75c84bbb3ba26b52	○同一	4471
+otsu_dasumae	乙	scripts/checks/karo_mac_dasumae_gate.sh	22-22 36-72 92-92	27a2787d3a05221d	27a2787d3a05221d	○同一	3922
+otsu_hook	乙	scripts/stop_hook_inbox.sh	52-93	7e7238faf59e8516	7e7238faf59e8516	○同一	4040
