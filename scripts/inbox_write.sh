@@ -31,11 +31,54 @@ if [ -z "$TARGET" ] || [ -z "$CONTENT" ] || [ -z "$TYPE" ] || [ -z "$FROM" ]; th
     exit 1
 fi
 
+# ===== DEFERRAL-GATE =====
+# rc=67 for deferral; fixed protocol message types are excluded.
+_DG="$HOME/bin/deferral_gate.py"
+case "$TYPE" in clear_command|model_switch) _DG="";; esac
+if [ -n "$_DG" ] && [ -r "$_DG" ]; then
+    _DG_RC=0
+    _DG_OUT=$(printf '%s' "$CONTENT" | ALLOW_DEFER="${IW_ALLOW_DEFER:-}" python3 "$_DG" 2>&1) || _DG_RC=$?
+    if [ "$_DG_RC" -eq 10 ]; then
+        echo "[inbox_write] $_DG_OUT" >&2
+        exit 67
+    fi
+elif [ -n "$_DG" ]; then
+    echo "[inbox_write] WARN: deferral_gate.py missing; content not checked" >&2
+fi
+if [ "${IW_DEFERRAL_TEST_ONLY:-}" = "1" ]; then echo "DEFERRAL_PASS"; exit 0; fi
+# ===== gate end =====
+
 # Self-send guard: reject messages where sender == target
 if [ "$FROM" = "$TARGET" ]; then
     echo "[inbox_write] REJECTED: self-send detected (from=$FROM, target=$TARGET)" >&2
     exit 1
 fi
+
+# ===== DEAD-INBOX-GATE (総監督裁 seq322250・2026-09-17) =====
+# 讀手の居ない箱へ落とすのを止める。gunshi-mac は DB直読の席で局所箱を讀まない
+# (實測 2026-09-17: queue/inbox/gunshi-mac.yaml 母數565通・read:true 0通)。
+# ★書けてしまふ事が、届いたと誤らせる。★ ゆゑ書かせず、正しい経路を出す。
+# 名簿は env で差し替へ可: IW_DEAD_LIST="gunshi-mac another-dead-box"
+# ★空は「無指定」と同じ＝既定へ倒す(fail-closed)★ ―― `:-` ゆゑ IW_DEAD_LIST="" では
+#   名簿は消えず既定 gunshi-mac が残る。門を開けたいなら IW_DEAD_ALLOW=1 を使へ。
+#   (2026-09-17 陰性④ が此處で落ち、器でなく★宣の側★を安全側へ直した。)
+# 抜け道は IW_DEAD_ALLOW=1 (棚卸し・移送の様な、讀まれぬ事を承知の書込み用)。
+_IW_DEAD_LIST="${IW_DEAD_LIST:-gunshi-mac}"
+if [ "${IW_DEAD_ALLOW:-}" != "1" ]; then
+    for _d in $_IW_DEAD_LIST; do
+        if [ "$_d" = "$TARGET" ]; then
+            echo "[inbox_write] REJECTED: ★${TARGET} は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。" >&2
+            echo "[inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc / target_agent=${TARGET} / parent_seq=元便)。" >&2
+            echo "[inbox_write]   足軽席は DB の sender を持たぬ ―― ★家老mac へ回せ。家老が代送する。★" >&2
+            echo "[inbox_write]   承知の上で書くなら IW_DEAD_ALLOW=1 を付けよ。" >&2
+            exit 68
+        fi
+    done
+fi
+# ===== dead-inbox gate end =====
+# ★門を通つた事を測る為の止まり木★ ―― 既存 IW_DEFERRAL_TEST_ONLY の exit は
+# 此の門より★手前★に在り、其れでは陰性対照が門に一度も届かぬ(零長の比較=偽の通過)。
+if [ "${IW_DEAD_TEST_ONLY:-}" = "1" ]; then echo "DEAD_INBOX_PASS target=$TARGET"; exit 0; fi
 
 # Amplification guard (2026-05-07 真因対策):
 # stop_hook block + claude bash 経由の自己増殖ループ防止。
@@ -125,15 +168,18 @@ except Exception:
     # JSON に直接埋め込まれて Supabase が「0x0a must be escaped」で reject していた。
     local payload
     payload=$(python3 - "$truncated" "${local_pc:-main_pc}" "$target_pc" "$target" "$from" "$msg_type" <<'PYEOF'
-import json, sys
+import json, sys, os
 content_truncated, local_pc, target_pc, target_agent, from_agent, msg_type = sys.argv[1:7]
+# 2026-09-03 karo-mac (總監督裁 seq238052 L1・可逆): requires_response は無条件 False 焼込を止め、
+# 旗優先で立てる。環境変数 INBOX_REQUIRES_RESPONSE=1/true/yes の時のみ True。語の求語表は持たぬ(旗のみ)。
+_rr = os.environ.get("INBOX_REQUIRES_RESPONSE", "").strip().lower() in ("1", "true", "yes")
 print(json.dumps({
     "message_type": msg_type,
     "from_pc": local_pc,
     "to_pc": target_pc,
     "topic": f"cross_pc_inbox_{target_agent}",
     "content": f"[{from_agent}→{target_agent}][{msg_type}] {content_truncated}",
-    "requires_response": False,
+    "requires_response": _rr,
     "priority": "normal",
     "clinic_id": "hakudoukai_main",
     "bypass_5round_limit": False,
