@@ -1,0 +1,30 @@
+# 22_disk_totals ―― disk 定義A の集計(km-107 ㋐㋑)
+刻(始)=2026-09-17T16:46:48+0900
+刻(終)=2026-09-17T16:46:58+0900
+歩き根=/Users/momizimac/multi-agent-shogun
+grep(器乙)=/usr/bin/grep
+入=raw/10_disk_A.nul NUL 區切 本數=4869
+非正規(open せず)=0
+定義A(regular)=4869
+定義B(A ∧ .txt)=1351
+定義C(A ∧ path行>=1)=1681
+己の束(docs/evidence/ashigaru-mac-1_km-107-…)に當たつた本數=0
+行總[python b'\n']=106372
+行數 食ひ違ひ(python≠grep)の紙=0
+註=14008 讀めぬ=47397 path行=44967
+★甲(括つた空白名)行=40★ 紙=20
+★乙(括らぬ空白名)行=1221★ 紙=105
+丙(括つた・空白無=旧形)行=11737
+平(括らぬ・空白無=本形)行=31969
+丁(' ' '\t' 以外の unicode 空白を名に含む path行)=12
+
+## 上位 dir 別: dir	A	C	甲	乙
+.claude	33	6	0	0
+.venv	1	0	0	0
+android	1	0	0	0
+docs	196	115	23	1
+queue	4598	1546	17	1220
+reports	34	13	0	0
+scripts	6	1	0	0
+
+## 非正規: rel	mode

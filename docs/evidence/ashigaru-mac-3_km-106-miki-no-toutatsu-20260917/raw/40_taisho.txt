@@ -1,0 +1,22 @@
+刻 = 2026-09-17T16:42:18+0900
+根 = /Users/momizimac/multi-agent-shogun
+
+―― 甲 --contains の二対照(★數と rc を並べる★) ――
+  註 40 字 hex を陰性に使ふ: deaddeaddeaddeaddeaddeaddeaddeaddeaddead
+  陰性の不在の證: cat-file -e rc=1 / rev-parse --verify rc=128 → ★在らぬ(対照に使へる)★
+  陽性(在る頭 0bb92e2b800c)       refs/heads    = 1 本 (rc=0)
+  陽性(在る頭 0bb92e2b800c)       refs/remotes  = 0 本 (rc=0)
+  陰性(在らぬ頭)                   refs/heads    = 0 本 (rc=129) ★rc≠0 ∴ 此の 0 は「無い」ではなく「測れぬ」★
+  陰性(在らぬ頭)                   refs/remotes  = 0 本 (rc=129) ★rc≠0 ∴ 此の 0 は「無い」ではなく「測れぬ」★
+
+  ★此の二行が示す事★: 陽性 refs/heads=1(rc=0) と 陰性 refs/heads=0(rc=129) は
+    ★共に「0 か 1」の數を出すが、rc が別★である。rc を落として數だけ読めば、
+    「在らぬ頭を問うた」を「含む ref が無い」と読み違へる。
+
+―― 乙 ls-tree の根の対照(pathspec は cwd 相対) ――
+  `git -C <根> ls-tree -r -z --full-tree --name-only <頭> -- docs/evidence/karo-mac-miki-push-negai-20260917/`
+    出目 = 17 本 (rc=0) ―― 既知の一本 MANIFEST.txt の出現回数 = 1 回 → ★丁度一度=器は生きて居る★
+  同じ引数を ★束の中(cwd=docs/evidence/karo-mac-miki-push-negai-20260917)★ から呼ぶと = 17 本 (rc=0)
+    → ★0 本に成らなんだ(17 本)★
+
+⑷刻 = 2026-09-17T16:42:18+0900

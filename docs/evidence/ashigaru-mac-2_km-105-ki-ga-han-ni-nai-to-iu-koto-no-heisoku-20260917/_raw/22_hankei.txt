@@ -1,0 +1,23 @@
+刻 = 2026-09-17T16:44:40+0900
+
+【一】rc 反転の被害半径 ―― 現物の臺帳に「引用符を含む path 行」は幾つ在るか
+  歩き根 = docs/evidence/*/MANIFEST.txt / 深さ=1 / 見つけた臺帳 = ★37本★
+  path= 行 總計 = 3256 / ★旧形(引用符)を持つ臺帳 = 1本★
+       2行  docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917
+  ∴ 幹の127行版が呼ばれた時、此の ★1本★ の束は 條① で ★実体無★ と判じられ 門が ★落ちる★。
+
+【二】★丙★ ―― 閉包が系(OS)に委ねて居る器と、其の方言
+  閉包が呼ぶ系の器 = ★6種★
+    file     3箇所  例 karo_mac_manifest_verify.py:34
+    grep     5箇所  例 karo_mac_dasumae_gate.sh:126
+    printf   13箇所  例 karo_mac_dasumae_gate.sh:22
+    shasum   1箇所  例 karo_mac_manifest_verify.py:191
+    stat     2箇所  例 karo_mac_dasumae_gate.sh:107
+    tr       5箇所  例 karo_mac_dasumae_gate.sh:46
+
+  ★方言が判じを変へる實例(本機で實測)★:
+    BSD tr が U+3000 を [:space:] と讀むか → 残 0 byte (rc=0)
+      ∴ 本機(BSD)では全角空白は ★空白側★ へ落ちる。GNU coreutils の tr は C locale で
+        U+3000 を空白と讀まぬ ∴ ★同じ臺帳・同じ file でも 條② の判じが系で変り得る★。
+      ★之は repo の中に版が無い★(tr は系が供給する)∴ ★PR では治らぬ★。
+    本機の bash = 3.2.57(1)-release (門は bash script ∴ 3.2 と 5.x の別も同じ丙の族)

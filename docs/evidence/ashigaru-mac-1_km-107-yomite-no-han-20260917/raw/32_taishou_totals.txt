@@ -1,0 +1,27 @@
+# 32_taishou_totals ―― ㋒ 對照(km-107)
+刻(始)=2026-09-17T16:48:49+0900
+讀み手 旧=blob b19ec9ea259653d9e65d052459128c635a44e93f (cat-file rc=0, 5649 bytes)
+讀み手 直=disk /Users/momizimac/multi-agent-shogun/scripts/checks/karo_mac_manifest_verify.py blob=ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579
+
+## 己の檢出子 對照: 紙	甲	乙	期待	判	行[python b'\n']	行[grep -c '']	splitlines()	刻
+yousei_kou.txt	1	0	(1, 0)	通	3	3	3	2026-09-17T16:48:49+0900
+yousei_otsu.txt	0	1	(0, 1)	通	2	2	2	2026-09-17T16:48:49+0900
+insei.txt	0	0	(0, 0)	通	4	4	4	2026-09-17T16:48:49+0900
+u2028.txt	0	0	(0, 0)	通	1	1	2	2026-09-17T16:48:49+0900
+對照 rc=0 (0=四紙悉く期待通り)
+
+## 讀み手 二版 × 對照の行: 行	名	旧[0]	直[0]	旧判	直判
+path="a b/c.txt" sha256=	'a b/c.txt'	'"a'	'a b/c.txt'	誤	正
+path=a b/c.txt sha256=00	'a b/c.txt'	'a'	'a'	誤	誤
+path=a/b.txt sha256=0000	'a/b.txt'	'a/b.txt'	'a/b.txt'	正	正
+
+## 現に在る害行 × 二版の讀み手 (raw/21_disk_kizu_rows.tsv → raw/31_disk_yomite.tsv): 種	版	判	行
+乙	旧	誤	1221
+乙	直	誤	1221
+甲	旧	誤	40
+甲	直	正	40
+
+## 現に在る害行 × 二版の讀み手 (raw/28_refs_union_kizu_rows.tsv → raw/31_refs_yomite.tsv): 種	版	判	行
+甲	旧	誤	23
+甲	直	正	23
+刻(終)=2026-09-17T16:48:49+0900

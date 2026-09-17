@@ -1,0 +1,52 @@
+刻 = 2026-09-17T16:42:07+0900
+
+【一】幹PR#20 0bb92e2b800c が運ぶ版 と 手許 の差
+  ■ scripts/checks/karo_mac_dasumae_gate.sh [閉包]
+     幹 310行 / 手許 321行 / ★差 +14 -3★
+       -#   註: 「空白のみ」は ASCII の空白類のみを見る(全角空白は value 側へ落ち、比較器が拒む)。
+       +#   註: 「空白のみ」は tr -d '[:space:]' で見る。★此の註は先に誤つて居た★ ――
+       +#   「全角空白(U+3000)は value 側へ落ちる」と書いて在つたが、BSD tr は之を空白と讀む。
+       +#   實測(km-79): printf '　' | tr -d '[:space:]' → ★空★ ∴ ④全角空白は ★blank 側★ へ落ちる。
+       -  local name="$1" dflt="$2" out="$3" st raw
+       +  local name="$1" dflt="$2" out="$3" st raw vp
+       …(以下 11行 略・全文は _raw/13 の後段)
+  ■ scripts/checks/karo_mac_manifest_verify.py [閉包]
+     幹 127行 / 手許 198行 / ★差 +76 -5★
+       +
+       +    ★台帳の書き手への條(委員長裁 seq321127⑵ / 321257)★
+       +      ・★宣は要★ ―― どの本形で書いたかを臺帳の頭に明示せよ(落ち防止ではなく読み手の判別用)
+       +      ・★引用符は禁(新規に書く行のみ)★ ―― 一重も二重も禁(C形は3器全損の実測)
+       +      ・★既存行は拒まぬ★ ―― 引用符を含む既存行は ★旧形★ として通し、件数のみ報せる
+       +        (委員長裁 seq321353⑴ 逐語:「引用符禁は★新規に書く行★にのみ適用＝既存行は拒否せず
+       …(以下 75行 略・全文は _raw/13 の後段)
+  ■ scripts/checks/context_usage_warn.sh [★丁★]
+     幹 55行 / 手許 100行 / ★差 +48 -3★
+       -WARN_BYTES="${CONTEXT_WARN_BYTES:-1600000}"   # ~1.6 MB ≒ 80% (heuristic)
+       -DANGER_BYTES="${CONTEXT_DANGER_BYTES:-2000000}" # ~2.0 MB ≒ 95% (heuristic)
+       +# ─── 閾の番人(甲/乙) ───
+       +_th_say(){ echo "[context_warn] $*" >&2; }
+       +# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+       +#   舊 is_num は case の字面判定ゆゑ 99999999999999999999 を「數」と呼ぶ。然し後段の
+       …(以下 45行 略・全文は _raw/13 の後段)
+
+【二】家老の枝 61a9fe1c の刻
+  61a9fe1c18beffddef6b40503766ba726b8b0a05
+    著者刻 2026-09-17 16:18:13 +0900
+    commit刻 2026-09-17 16:18:13 +0900
+    題 feat(checks): 臺帳 を建てる器 を ★repo の中へ★ ―― karo_mac_manifest_append.py(裁 326512 可)
+  (札 issued_at = 2026-09-17T16:10:00+0900 / km-104 の裁は其の前)
+
+【三】宣外9辺に ★repo 外★ が混じるか(丙の候補を探す)
+  02_yobidashi.tsv = 12行(冠含む)
+    scripts/checks/karo_mac_manifest_append.py	23	import	hashlib	―	宣外(系/標準)	import hashlib
+    scripts/checks/karo_mac_manifest_append.py	24	import	os	―	宣外(系/標準)	import os
+    scripts/checks/karo_mac_manifest_append.py	25	import	sys	―	宣外(系/標準)	import sys
+    scripts/checks/karo_mac_manifest_append.py	26	import	tempfile	―	宣外(系/標準)	import tempfile
+    scripts/checks/karo_mac_manifest_append.py	144	import	importlib	―	宣外(系/標準)	import importlib.util
+    scripts/checks/karo_mac_manifest_verify.py	40	import	hashlib	―	宣外(系/標準)	import hashlib
+    scripts/checks/karo_mac_manifest_verify.py	41	import	os	―	宣外(系/標準)	import os
+    scripts/checks/karo_mac_manifest_verify.py	42	import	re	―	宣外(系/標準)	import re
+    scripts/checks/karo_mac_manifest_verify.py	43	import	sys	―	宣外(系/標準)	import sys
+  ★repo 外を指す辺 = 0本★
+  ∴ 閉包3本は悉く /Users/momizimac/multi-agent-shogun の下 ∴ ★丙(repo 外ゆゑ PR で治らぬ)は閉包の中に ★0本★★
+    但し「0本」は ★宣した閉包の中での0★ である。宣の外(便の器・hook・~/bin)は測つて居らぬ。

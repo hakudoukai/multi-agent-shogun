@@ -1,0 +1,47 @@
+刻 = 2026-09-17T16:46:30+0900
+今の頭 = 0bb92e2b800c1b434c8a660d38f6feea7d450124 (tree 17 本・rc=0)
+前走の頭 = 68b6e07ba6ef9c765c29a95f8d42ad6cbedb7328 (tree 12 本・rc=0)
+disk(今) = 17 本
+
+―― 甲 今の tree 17 本の全名(★前走の tree に在つたか★を併記) ――
+   1 MANIFEST.txt
+   2 README.md
+   3 driver/10_secret_kenzan.py
+   4 driver/20_atari_no_sujou.py
+   5 driver/30_miki_no_arika.py
+   6 driver/40_atarashii_atama.py
+   7 driver/50_ref_toutatsu.py  ★前走の tree に無し★  ←前走の紙が「不到達」と名指した一本
+   8 gate_dasumae_20260917T151122.log
+   9 gate_dasumae_20260917T152438.log
+  10 gate_dasumae_20260917T155336.log  ★前走の tree に無し★
+  11 raw/10_secret.txt
+  12 raw/20_atari.txt
+  13 raw/30_arika.txt
+  14 raw/40_atama.txt
+  15 raw/50_atama_head68b6e07b.txt  ★前走の tree に無し★  ←前走の紙が「不到達」と名指した一本
+  16 raw/51_toutatsu.txt  ★前走の tree に無し★  ←前走の紙が「不到達」と名指した一本
+  17 tsuiroku_saiso_20260917.md  ★前走の tree に無し★  ←前走の紙が「不到達」と名指した一本
+
+―― 乙 増減 ――
+  前走 tree = 12 本 / 今 tree = 17 本 ―― ★増 5 本★
+    増: driver/50_ref_toutatsu.py
+    増: gate_dasumae_20260917T155336.log
+    増: raw/50_atama_head68b6e07b.txt
+    増: raw/51_toutatsu.txt
+    増: tsuiroku_saiso_20260917.md
+  ★消えた本 = 0★
+
+―― 丙 前走の紙が名指した「不到達 4 本」は今どうか ――
+  driver/50_ref_toutatsu.py          今の tree に 在 / disk に 在
+  raw/50_atama_head68b6e07b.txt      今の tree に 在 / disk に 在
+  raw/51_toutatsu.txt                今の tree に 在 / disk に 在
+  tsuiroku_saiso_20260917.md         今の tree に 在 / disk に 在
+
+―― 丁 札の期待 16/16 と實測 17/17 の差 ――
+  ★母數が違ふ★: 札は前走の disk 16 本を念頭に「16/16」と書かれた。
+  然れど前走(15:52)の後・commit(15:54)の前に 門の控が一本生れ、
+  其れも 0bb92e2 に収められた ∴ 今の母數は 17 である。
+  ★到達率は 16/16 でも 17/17 でも「悉く」である ―― 分母が動いただけで、穴は塞がつて居る。★
+  ★然れど「16/16 であつた」とは書かぬ。實測は 17/17 である。★
+
+⑷刻 = 2026-09-17T16:46:30+0900

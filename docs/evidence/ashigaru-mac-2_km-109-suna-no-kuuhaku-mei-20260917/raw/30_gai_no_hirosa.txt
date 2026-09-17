@@ -1,0 +1,77 @@
+# ㋓ 害の広さ ―― 素の空白名の行を disk と樹の二欄で數へる(專任2 km-109)
+
+刻(數へ了へた時) 2026-09-17T17:24:24+0900
+根              /Users/momizimac/multi-agent-shogun
+深さ            限り無し(`.git/` のみ除く・常体 S_ISREG のみ)
+rc              此の器は最後まで走り rc=0 で終へた(下の『測れぬ』が 0 でない時は其れを讀め)
+
+## 定義(逐語・上の docstring と同一)
+  臺帳らしき紙 = b"sha256=" を含む常体 file(★名では判ぜぬ★)
+  甲(広) = 則①当たり・則②当たり・剥ぎ後の出目が ★違ふ★ 行
+  乙(狭) = 甲の内、①と②の差にある語が悉く「語=」形でない 行(★真に空白名と疑へる★)
+  丙(對照) = 則②当たり・則①外れ(= ★括つた★ 空白名。正規の書き手の形)
+  測れぬ = 一行が 200000 byte を超えた行 / 讀めなんだ file
+  則①逐語 '(?:^|\\s)path=([^\\s"\\\']+)'
+  則②逐語 '(?:^|\\s)path=(.+?)[ \\t]+sha256='
+
+## 陽性対照(★檢出子 其の物で・測る路に乗せて★)
+  path=a b.txt sha256=<64> bytes=6 lines=1       → 乙
+  path=x.txt bytes=6 sha256=<64>                 → 甲
+  path="a b.txt" sha256=<64>                     → 丙
+  path=kiyoi.txt sha256=<64>                     → ―
+
+## disk 欄(己の束を除いた ―― ★歩いた上で分けた★)
+  歩いた常体 file      46015
+  臺帳らしき紙         5067
+  讀めなんだ file      1
+  ★甲(広)★            1239 行
+  ★乙(狭・真の空白名)★ 376 行
+  丙(括つた空白名)     34867 行
+  測れぬ               220 行
+
+## disk 欄・★當席の束(陽性対照の實物)★
+  甲 0 / 乙 10 / 丙 2 / 測れぬ 0
+  ★之は本弾で當席が作つた試験臺帳である。現物の害に足すな。★
+
+### disk の例(乙・最大5)
+  dashboard.md :: - path=`queue/reports/ashigaru-mac-3_tk3st230_monosashi-no-fusoroi-20260824.md` 宣言 sha256=fe93ce172c2bfdd11b5517100ccd5c6571d403319cc6fa96d74a323ad1b8
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt :: path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/HEI_chigau_dou/a　b.txt sha256=b548a2fe75bd67dcd389bd42296f173c2979e4de42584c79a596dab
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt :: path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/KOU_onaji_dou/a　b.txt sha256=b548a2fe75bd67dcd389bd42296f173c2979e4de42584c79a596dabd
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt :: path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A04/a　b.txt sha256=a0a466f728880be9bd11ee1df95366cc000421d2bc05cf882e2052b72f3ff7f4 byte
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt :: path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A05/a b.txt sha256=a0a466f728880be9bd11ee1df95366cc000421d2bc05cf882e2052b72f3ff7f4 byte
+### disk の例(甲・最大5)
+  queue/reports/ashigaru-mac-1_km-61-daichou-no-kakite-wo-arai-inyoufu-no-kin-wo-doko-ni-oku-ka-yomitori-nomi-20260917.md :: | queue/reports/ashigaru-mac-3_km-mokei-wo-karo-no-tadashii-katachi-de-ateru_20260912_evidence/kikai/burn_kadobikae.sh | f7950c2a39e8bb5a | 29 | 書かぬ |
+  queue/reports/ashigaru-mac-1_km-61-daichou-no-kakite-wo-arai-inyoufu-no-kin-wo-doko-ni-oku-ka-yomitori-nomi-20260917.md :: | queue/reports/ashigaru-mac-3_km-mokei-wo-karo-no-tadashii-katachi-de-ateru_20260912_evidence/kikai/run_gate.sh | 4688b093dd5e3759 | 12 | 書かぬ | 書かぬ(読
+  queue/reports/ashigaru-mac-3_km-mokei-wo-karo-no-tadashii-katachi-de-ateru_20260912_evidence/kikai/burn_kadobikae.sh :: path=\"*) p="${line#path=\"}"; p="${p%%\" sha256=*}"; files+=("$p");;
+  queue/reports/ashigaru-mac-3_km-mokei-wo-karo-no-tadashii-katachi-de-ateru_20260912_evidence/kikai/run_gate.sh :: path=\"*) p="${line#path=\"}"; p="${p%%\" sha256=*}"; files+=("$p");;
+  queue/reports/ashigaru-mac-3_km-33-hakarenu-wa-wa-no-dochira-gawa-ka-20260913_evidence/kou/60_kao_gyou.txt :: kao path=queue/reports/ashigaru-mac-3_km-NUL-to-CR-no-kika-wo-hakari-kiri_20260912.md L=271 atai=74501 byte shuu_byte=0 bun=path="…_evidence/kikai/00_
+### disk の例(丙・最大5)
+  docs/evidence/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917/raw/saiken/km-47-yotsu-no-kazu-20260917_manifest.txt :: path="fixture/naoshita/A10/a sha256_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb c.txt" sha256=a0a466f728880be9bd11ee1df95366cc000
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_gate.txt :: ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A02/a b.txt" sha256=a0a466f728880be9b
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_gate.txt :: ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A03/a	b.txt" sha256=a0a466f728880be9b
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_gate.txt :: ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A09/a sha256=deadbeef b.txt" sha256=a
+  docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_gate.txt :: ★旧形★ path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A10/a sha256=bbbbbbbbbbbbbbbbbbbbbbbb
+
+## 樹 欄
+
+### origin/main (= 4f591fc021947b9f477b676c96e36a1dc4437500)
+  樹に在る file        534
+  臺帳らしき blob      8
+  ★甲(広)★            0 行
+  ★乙(狭・真の空白名)★ 0 行
+  丙(括つた空白名)     0 行
+  測れぬ               0 行
+  例(乙): (一本も無し)
+  例(甲): (一本も無し)
+  例(丙): (一本も無し)
+
+### HEAD (= 75aa92f28929e79496935f2549f3037f6fc79cba)
+  樹に在る file        1291
+  臺帳らしき blob      115
+  ★甲(広)★            0 行
+  ★乙(狭・真の空白名)★ 46 行
+  丙(括つた空白名)     50 行
+  測れぬ               0 行
+  例(乙): docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/HEI_chigau_dou.man.txt :: path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/HEI_chigau_dou/a　b.txt sha256=73b785ab92aec59086be357f7a942cfbd1155164f921d273b97e53d; docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/KOU_onaji_dou.man.txt :: path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/KOU_onaji_dou/a　b.txt sha256=73b785ab92aec59086be357f7a942cfbd1155164f921d273b97e53d1; docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/damatte.txt :: 臺帳 path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/KOU_onaji_dou/a　b.txt sha256=73b785ab92aec59086be357f7a942cfbd1155164f921d273b97e5; docs/evidence/km-46-yomite-no-kizu-20260917/an/damatte/damatte.txt :: 臺帳 path=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/damatte/HEI_chigau_dou/a　b.txt sha256=73b785ab92aec59086be357f7a942cfbd1155164f921d273b97e; docs/evidence/km-46-yomite-no-kizu-20260917/an/koushin.txt :: 行: path=frontend/tests/e2e/child-passport/kit/dino-kit-walkthrough-video-humanpace.spec.ts @fda05c76c sha256=37e8
+  例(甲): (一本も無し)
+  例(丙): docs/evidence/km-46-yomite-no-kizu-20260917/an/man/A02_hankaku.kaki.txt :: path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A02/a b.txt" sha256=a0a466f728880be9bd11ee1df95366cc000421d2bc05cf882e2052b72f3ff7f4 by; docs/evidence/km-46-yomite-no-kizu-20260917/an/man/A02_hankaku.one.txt :: path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A02/a b.txt" sha256=a0a466f728880be9bd11ee1df95366cc000421d2bc05cf882e2052b72f3ff7f4 by; docs/evidence/km-46-yomite-no-kizu-20260917/an/man/A03_tab.kaki.txt :: path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A03/a	b.txt" sha256=a0a466f728880be9bd11ee1df95366cc000421d2bc05cf882e2052b72f3ff7f4 by; docs/evidence/km-46-yomite-no-kizu-20260917/an/man/A03_tab.one.txt :: path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A03/a	b.txt" sha256=a0a466f728880be9bd11ee1df95366cc000421d2bc05cf882e2052b72f3ff7f4 by; docs/evidence/km-46-yomite-no-kizu-20260917/an/man/A09_sha8.kaki.txt :: path="docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A09/a sha256=deadbeef b.txt" sha256=a0a466f728880be9bd11ee1df95366cc000421d2bc05cf882e2

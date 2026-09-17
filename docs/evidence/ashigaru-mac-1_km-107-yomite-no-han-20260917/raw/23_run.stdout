@@ -1,0 +1,242 @@
+# 23_disk_sou ―― 甲/乙 の層(入=raw/21_disk_kizu_rows.tsv)
+## 種×拡張子: 行
+乙	md	1
+乙	out	1020
+乙	tsv	51
+乙	txt	149
+甲	manifest	1
+甲	txt	39
+
+## 層: 行	紙
+甲-現物	20	9
+甲-對照	20	11
+乙-表	126	9
+乙-写	1025	72
+乙-殘	70	26
+
+## 乙-殘 全行: path	行番	inner
+docs/evidence/ashigaru-mac-2_km-105-ki-ga-han-ni-nai-to-iu-koto-no-heisoku-20260917/_fixture/s_A/MANIFEST.txt	2	'c d.txt'
+queue/reports/ashigaru-mac-2_k67_2_merge_packet_20260906_manifest.txt	11	'1. ashigaru-mac-2_k67_2_patch_1_eb2aebc4b.patch'
+queue/reports/ashigaru-mac-2_k67_2_merge_packet_20260906_manifest.txt	12	'2. ashigaru-mac-2_k67_2_patch_2_02e2805ed.patch'
+queue/reports/ashigaru-mac-2_k67_2_merge_packet_20260906_manifest.txt	13	'3. ashigaru-mac-2_k67_2_patch_3_76b89e763.patch'
+queue/reports/ashigaru-mac-2_k67_2_merge_packet_20260906_manifest.txt	14	'4. ashigaru-mac-2_k67_2_patch_4_7298796cb.patch'
+queue/reports/ashigaru-mac-2_k67_2_merge_packet_20260906_manifest.txt	15	'5. ashigaru-mac-2_k67_2_patch_5_b060eb335.patch'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	16	'- 各commit乾走: queue/reports/ashigaru-mac-3_k62_1_mergetree_percommit_raw.txt'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	17	'- 枝全体乾走: queue/reports/ashigaru-mac-3_k62_1_mergetree_branch_raw.txt'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	20	'- N1 d0ec3ebf:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	21	'- N2 e8b999ca:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	22	'- N3 952a5cb8:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	23	'- N4 14a38596:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	24	'- N5 d3adf65b:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	25	'- N6 ef266d13:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	26	'- N7 993fea7b:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	27	'- N8 89db2f75:'
+queue/reports/ashigaru-mac-3_k62_1_merge_packet_v2_20260906_manifest.txt	28	'- N9 091c08c9:'
+queue/reports/ashigaru-mac-2_k65_2_cherry_pick_dryrun_20260906_manifest.txt	9	'1. ashigaru-mac-2_k65_2_raw_apply_check_6c37a6c9b_20260906.txt'
+queue/reports/ashigaru-mac-2_B12_10_20260907_manifest.txt	2	'frontend/scripts/dino-judge-index.py (実枝, commit 4885c55f6)'
+queue/reports/ashigaru-mac-2_B12_10_20260907_manifest.txt	3	'reports/mac/20260906/JUDGE_INDEX.md (working tree・未commit・家老commit対象)'
+queue/reports/ashigaru-mac-2_k64_2_raw_manifest_20260906.txt	14	'1. ashigaru-mac-2_k64_2_raw_vitest_full_01137369_20260906.txt'
+queue/reports/ashigaru-mac-2_k64_2_raw_manifest_20260906.txt	15	'2. ashigaru-mac-2_k64_2_raw_vitest_4_01137369_20260906.txt'
+queue/reports/ashigaru-mac-2_k64_2_raw_manifest_20260906.txt	16	'3. ashigaru-mac-2_k64_2_raw_pw_01137369_20260906.txt'
+queue/reports/ashigaru-mac-2_k64_2_raw_manifest_20260906.txt	17	'4. ashigaru-mac-2_k64_2_raw_tsc_01137369_20260906.txt'
+queue/reports/ashigaru-mac-2_k61_2_e2e_guidance_20260906_manifest.txt	5	'1. ashigaru-mac-2_k61_2_raw_pw_9fed2171.txt'
+queue/reports/ashigaru-mac-2_k61_2_e2e_guidance_20260906_manifest.txt	6	'2. ashigaru-mac-2_k61_2_raw_pw_baseline_20260906.txt'
+queue/reports/ashigaru-mac-2_k61_2_e2e_guidance_20260906_manifest.txt	7	'3. ashigaru-mac-2_k61_2_raw_pw_mutant_20260906.txt'
+queue/reports/ashigaru-mac-2_k61_2_e2e_guidance_20260906_manifest.txt	8	'4. ashigaru-mac-2_k61_2_raw_tsc_app_20260906.txt'
+queue/reports/ashigaru-mac-2_k61_2_e2e_guidance_20260906_manifest.txt	9	'5. ashigaru-mac-2_k61_2_raw_tsc_teriha_20260906.txt'
+queue/reports/ashigaru-mac-2_k68_2_session_lookup_red_20260906_manifest.txt	8	'1. ashigaru-mac-2_k68_2_raw_test_run_20260906.txt'
+queue/reports/inbox_watcher_uncommitted_diff_manifest_20260903.md	4	'- HEAD=9b8c89b5722d6f06b985797eb619719cd16153b8 / 原本 working'
+queue/reports/ashigaru-mac-2_k21_ninsho_iriguchi_handoff_impl_20260906.manifest.txt	16	'- backend/services/web_reservation/identity_handoff.py (new,'
+queue/reports/ashigaru-mac-2_k21_ninsho_iriguchi_handoff_impl_20260906.manifest.txt	17	'- backend/api/web_reservation/dependencies.py (modified,'
+queue/reports/ashigaru-mac-2_k21_ninsho_iriguchi_handoff_impl_20260906.manifest.txt	18	'- backend/tests/web_reservation/test_identity_handoff.py (new,'
+queue/reports/ashigaru-mac-2_k65_2_cherry_pick_dryrun_3rd_20260906_manifest.txt	10	'1. ashigaru-mac-2_k65_2_raw_merge_tree_3rd_19a6113a.txt'
+queue/reports/ashigaru-mac-3_km-41-mon-wa-futatsu-no-bogen-wo-motsu-watashita-kazu-wo-daichou-no-kazu-to-narabete-kake-20260916_manifest.txt	29	'queue/reports/ashigaru-mac-3_km-41-mon-wa-futatsu-no-bogen-wo-motsu-watashita-kazu-wo-daichou-no-kazu-to-narabete-kake-20260916_evidence/hougen/ne/na ni kuuhaku.txt'
+queue/reports/ashigaru-mac-2_B4_4_20260907_manifest.txt	2	'[訂正・append-only] queue/reports/ashigaru-mac-2_B4_4_20260907.md 紙 新'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	1	'frontend/scripts/dino-judge-index.py (DentalBI:mac/dino-story-engine, commit 8d09b0202)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	2	'frontend/README.md (DentalBI:mac/dino-story-engine, commit 8d09b0202)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	3	'queue/reports/ashigaru-mac-2_B12_10r_20260907_raw/01_pycompile.log (将軍repo:multi-agent-shogun)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	4	'queue/reports/ashigaru-mac-2_B12_10r_20260907_raw/02_selfrun_root_only.log (将軍repo:multi-agent-shogun)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	5	'queue/reports/ashigaru-mac-2_B12_10r_20260907_raw/03_selfrun_with_second_root.log (将軍repo:multi-agent-shogun)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	6	'queue/reports/ashigaru-mac-2_B12_10r_20260907_raw/04_ls_la_sha_dentalbi_repo.log (将軍repo:multi-agent-shogun)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	7	'queue/reports/ashigaru-mac-2_B12_10r_20260907_raw/05_ls_la_sha_shogun_repo.log (将軍repo:multi-agent-shogun)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	8	'queue/reports/ashigaru-mac-2_B12_10r_20260907_raw/06_diff_and_datebug_fix_evidence.log (将軍repo:multi-agent-shogun)'
+queue/reports/ashigaru-mac-2_B12_10r_20260907_manifest.txt	10	'queue/reports/ashigaru-mac-2_B12_10r_20260907.md (将軍repo:multi-agent-shogun・自紙)'
+queue/reports/ashigaru-mac-2_km-46-kakite-gawa-no-kin-wo-taba-no-naka-ni-tateru-giyousei-to-modoshikata-20260917_manifest.txt	107	'queue/reports/ashigaru-mac-2_km-46-kakite-gawa-no-kin-wo-taba-no-naka-ni-tateru-giyousei-to-modoshikata-20260917_evidence/raw/40_yomite_no_wareme/shiryou/a b.txt'
+queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chigau-basho_20260912_manifest.txt	305	'queue/reports/ashigaru-mac-2_km-onaji-utsuwa-chigau-basho_20260912_evidence/fixtures/が の 紙.txt'
+queue/reports/ashigaru-mac-2_k60_2_unregistered_guidance_20260906_manifest.txt	5	'1. ashigaru-mac-2_k60_2_raw_vitest_20260906.txt'
+queue/reports/ashigaru-mac-2_k60_2_unregistered_guidance_20260906_manifest.txt	6	'2. ashigaru-mac-2_k60_2_raw_tsc_app_20260906.txt'
+queue/reports/ashigaru-mac-2_k60_2_unregistered_guidance_20260906_manifest.txt	7	'3. ashigaru-mac-2_k60_2_raw_tsc_teriha_20260906.txt'
+queue/reports/ashigaru-mac-2_k63_2_no_url_patientno_red_20260906_manifest.txt	9	'1. ashigaru-mac-2_k63_2_raw_vitest_20260906.txt'
+queue/reports/ashigaru-mac-2_k63_2_no_url_patientno_red_20260906_manifest.txt	10	'2. ashigaru-mac-2_k63_2_raw_tsc_app_20260906.txt'
+queue/reports/ashigaru-mac-2_k63_2_no_url_patientno_red_20260906_manifest.txt	11	'3. ashigaru-mac-2_k63_2_raw_tsc_teriha_20260906.txt'
+queue/reports/ashigaru-mac-1_B2_26_20260907_ho1_manifest.txt	12	'親 manifest'
+queue/reports/ashigaru-mac-1_km-koku-wa-monogatari-to-au-ka_20260912_evidence/raw/07d_unreadable_manifest_lines.tsv	180	'frontend/tests/e2e/child-passport/kit/dino-kit-sweep.ts @fda05c76c'
+queue/reports/ashigaru-mac-1_km-koku-wa-monogatari-to-au-ka_20260912_evidence/raw/07d_unreadable_manifest_lines.tsv	425	'ashigaru-mac-2_B12_10_20260907\tfrontend/scripts/dino-judge-index.py (実枝, commit 4885c55f6)'
+queue/reports/ashigaru-mac-1_km-koku-wa-monogatari-to-au-ka_20260912_evidence/raw/07d_unreadable_manifest_lines.tsv	426	'ashigaru-mac-2_B12_10_20260907\treports/mac/20260906/JUDGE_INDEX.md (working tree・未commit・家老commit対象)'
+queue/reports/ashigaru-mac-1_km-koku-wa-monogatari-to-au-ka_20260912_evidence/raw/07d_unreadable_manifest_lines.tsv	489	'ashigaru-mac-2_B7_17_20260907\tfrontend/tests/e2e/child-passport/kit/README.md (実枝, commit b8a468213)'
+queue/reports/ashigaru-mac-1_B2_14_20260907_manifest.txt	32	'README(commit 後の實測)'
+queue/reports/ashigaru-mac-2_k65_2_cherry_pick_dryrun_2nd_20260906_manifest.txt	8	'1. ashigaru-mac-2_k65_2_raw_merge_tree_19a6113a.txt'
+queue/reports/ashigaru-mac-3_k61_20260906_manifest.txt	16	'- gauge.py:'
+queue/reports/ashigaru-mac-3_k61_20260906_manifest.txt	17	'- test_gauge.py:'
+queue/reports/ashigaru-mac-3_k61_20260906_manifest.txt	18	'- README:'
+queue/reports/ashigaru-mac-3_k61_20260906_manifest.txt	21	'- RED: queue/reports/ashigaru-mac-3_k61_pytest_red_raw.txt'
+queue/reports/ashigaru-mac-3_k61_20260906_manifest.txt	22	'- GREEN: queue/reports/ashigaru-mac-3_k61_pytest_green_raw.txt'
+queue/reports/ashigaru-mac-2_B7_17_20260907_manifest.txt	2	'frontend/tests/e2e/child-passport/kit/README.md (実枝, commit b8a468213)'
+queue/reports/ashigaru-mac-1_B4_20_20260908_manifest.txt	97	'frontend/tests/e2e/child-passport/kit/dino-kit-walkthrough-video-humanpace.spec.ts @fda05c76c'
+queue/reports/ashigaru-mac-1_B4_20_20260908_manifest.txt	98	'frontend/tests/e2e/child-passport/kit/dino-kit-sweep.ts @fda05c76c'
+queue/reports/ashigaru-mac-2_k70_2_e2e_nourl_red_20260906_manifest.txt	8	'1. ashigaru-mac-2_k70_2_raw_pw_59efe00b.txt'
+
+## 甲-現物 全行: path	行番	inner
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	194	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A02/a b.txt'
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	195	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A03/a\tb.txt'
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	207	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A15/matsubi .txt'
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	208	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A16/ atama.txt'
+docs/evidence/km-47-yotsu-no-kazu-20260917/ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_manifest.txt	19	'docs/evidence/km-47-yotsu-no-kazu-20260917/fixture/naoshita/A10/a sha256_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb c.txt'
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/MANIFEST.txt	3	' '
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/MANIFEST.txt	270	'40_doku/otsu_suna/ '
+queue/reports/ashigaru-mac-2_km-hiku-sahou-wa-kakeru-ka_20260912_manifest.txt	31	'queue/reports/ashigaru-mac-2_km-hiku-sahou-wa-kakeru-ka_20260912_evidence/sahou/fixtures/ saki_ni_kuuhaku.txt'
+queue/reports/ashigaru-mac-2_km-hiku-sahou-wa-kakeru-ka_20260912_manifest.txt	33	'queue/reports/ashigaru-mac-2_km-hiku-sahou-wa-kakeru-ka_20260912_evidence/sahou/fixtures/ato_ni_kuuhaku .txt'
+queue/reports/ashigaru-mac-2_km-hiku-sahou-wa-kakeru-ka_20260912_manifest.txt	36	'queue/reports/ashigaru-mac-2_km-hiku-sahou-wa-kakeru-ka_20260912_evidence/sahou/fixtures/ma  futatsu.txt'
+queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_manifest.txt	209	'queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n03 空白の在る名.txt'
+queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_manifest.txt	211	'queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n07_末尾空白 '
+queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_manifest.txt	7	'queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/  mae_ushiro  .txt'
+queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_manifest.txt	71	'queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/a\tb.txt'
+queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_manifest.txt	72	'queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/a b.txt'
+queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_manifest.txt	77	'queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme/rel/a b.txt'
+queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_manifest.txt	132	'queue/reports/ashigaru-mac-3_km-45-mon-no-fail-open-wo-kotogotoku-arai-jou5-no-shikii-wo-taba-no-naka-de-naose-20260917_evidence/an1/seme2/mono/a b.txt'
+queue/reports/karo-mac_shiketsu-mon-fail-open-20260912_manifest.txt	44	'queue/reports/karo-mac_shiketsu-mon-fail-open-20260912_evidence/mae/kuuhaku/ga no kami.txt'
+queue/reports/ashigaru-mac-2_km-18tai16-wa-toki-to-arukine-de-awasaru_20260912_manifest.txt	11	'queue/reports/ashigaru-mac-2_km-18tai16-wa-toki-to-arukine-de-awasaru_20260912_evidence/fixtures/kizu_ha_に 9 行_aru.txt'
+queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_manifest.txt	32	'queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw/20_taishou/nedan/a b.txt'
+
+## 甲-對照 の紙:
+docs/evidence/km-47-yotsu-no-kazu-20260917/an/seigyo/taishou_manifest.txt
+docs/evidence/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917/raw/saiken/km-47-yotsu-no-kazu-20260917_manifest.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r1.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r2.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r3.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r4.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r5.txt
+queue/reports/ashigaru-mac-1_km-ichi-no-mokuroku-wo-tatero_20260913_evidence/raw/10_fx/j0_space.manifest
+queue/reports/ashigaru-mac-2_km-45-gunshi-PASS-tadorezu-14-wo-herasu-to-inyoufu-kin-no-uragaki-20260916_evidence/raw/70_youseitaishou_fixture/manifest_ascii_quote.txt
+queue/reports/ashigaru-mac-2_km-47-gikyousei-59-hon-wo-ichimei-ichigyou-de-wakete-sueru-nedan-wo-hakare-20260917_evidence/raw/20_taishou/shikake_manifest.txt
+queue/reports/ashigaru-mac-2_km-48-michibikeru-mono-to-michibikenu-mono-wo-wakete-taba-wo-yasesaseyo-jou5-no-sai-20260917_evidence/raw/60_yaseta/moto_evidence/raw/20_taishou/shikake_manifest.txt
+
+## 乙-表 の紙:
+queue/reports/ashigaru-mac-1_km-koku-wa-monogatari-to-au-ka_20260912_evidence/raw/07d_unreadable_manifest_lines.tsv
+queue/reports/ashigaru-mac-2_B4_11_20260908_manifest.txt
+queue/reports/ashigaru-mac-2_B4_12_20260908_manifest.txt
+queue/reports/ashigaru-mac-2_B5_19_20260908_manifest.txt
+queue/reports/ashigaru-mac-2_B7_19_20260908_manifest.txt
+queue/reports/ashigaru-mac-2_B7_20_20260908_manifest.txt
+queue/reports/ashigaru-mac-3_B4-3_20260907_manifest.txt
+queue/reports/ashigaru-mac-3_B6-1_20260907_manifest.txt
+queue/reports/ashigaru-mac-3_km-sengen-shita-hashira-wo-mon-ga-mite-oranu-wo-hakare-20260913_evidence/kou/shiryou/T04_hougen_manifest.txt
+
+## 乙-写 の紙:
+queue/reports/ashigaru-mac-1_B2_14_20260907_manifest.txt
+queue/reports/ashigaru-mac-1_km-jou-ichi-ga-tooru-michi_20260912_evidence/raw/sweep_out/dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_shogun_root.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/A_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_a_dentalbi_root.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_b2_ledger_dir.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_c_docs_evidence.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_d_shogun_queue_reports.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_f_wt_dino_story_engine.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_g_wt_tmp_b420.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_h_tmp_b420.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_h_tmp_b421.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_h_tmp_b422.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_DentalBI-drm.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_DentalBI-pr63-rebase.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_DentalBI-pr69.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_b1218.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_b1220.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_b1223.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_b3poc.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_chair70-b811.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-39945c80-b3-jwt-raw.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-583483bf-help.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-72e12038-m3-portable.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-8ebd75b6-ep2-guardian.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-8ebd75b6-main-verify.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-aa832448-bundle.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-ba965236-auth-probe-test.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-ba965236-layer3-strict.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-ba965236-parent-layers.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-ba965236-product-fix.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-dab31d95-g1-worktree.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-dab31d95-g2-v2.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-dab31d95-g3-worktree.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-dab31d95-g4-worktree.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-dab31d95-m2-evidence.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-dab31d95-m3-docs.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-f311bbdb.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-hr-p2-gap-audit.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-m1-m8-mount-20260907.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-m1-m8-runtime-revise.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-pr190-mergecheck.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_drm-verify-2ef516.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_gakushu-designer-brief-290973.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_karo-mac-hadakana28.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_karo-mac-held9.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_standing77-b811.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_standing80-b56.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_standing93-pngfix.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-a2-evidence-dir-20260910.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b1-10-2c2ca1f5.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b1-10b-41993085.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b1-9-4477a902.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b111.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b2-30-f8a2ad50.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b2-32-9a41c6.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b7-17-delivery-rehearsal-a5fa3ddc.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b7-18-assets-accept-4ef0847e.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b7-19-assets-accept-f76f259a.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b7-23-actors-84330cf2.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b8-15-parent-rehearsal-5bd60d27.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-b8-16-03a05a9b.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_tmp-pr102-check.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_pair_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_w_worktree-check-difference-a0ace3.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/B_sweep_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__e_shogun_root.out
+queue/reports/ashigaru-mac-1_km-sengen-ichigyou_20260912_evidence/raw/run_out/C_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__shogun_root.out
+queue/reports/ashigaru-mac-1_km-sukuu-te-o-uttara_20260912_evidence/raw/run_out/A_save_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt.out
+queue/reports/ashigaru-mac-1_km-sukuu-te-o-uttara_20260912_evidence/raw/run_out/B_save_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt.out
+queue/reports/ashigaru-mac-1_km-sukuu-te-o-uttara_20260912_evidence/raw/run_out/G_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__shogun_root.out
+queue/reports/ashigaru-mac-1_km-sukuu-te-o-uttara_20260912_evidence/raw/run_out/V_dino-b4-21-20260908__ashigaru-mac-1_B4_21_20260908_manifest.txt__shogun_root.out
+queue/reports/ashigaru-mac-2_B7_27_20260908/manifest.txt
+queue/reports/ashigaru-mac-2_B7_29_20260908_evidence/manifest.txt
+queue/reports/ashigaru-mac-3_k59_3_members_select_consume_20260906_manifest.txt
+
+# 24_refs_sou ―― 甲/乙 の層(入=raw/28_refs_union_kizu_rows.tsv)
+## 種×拡張子: 行
+甲	txt	23
+
+## 層: 行	紙
+甲-現物	7	3
+甲-對照	16	7
+乙-表	0	0
+乙-写	0	0
+乙-殘	0	0
+
+## 乙-殘 全行: path	行番	inner
+
+## 甲-現物 全行: path	行番	inner
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	194	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A02/a b.txt'
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	195	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A03/a\tb.txt'
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	207	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A15/matsubi .txt'
+docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt	208	'docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A16/ atama.txt'
+docs/evidence/km-47-yotsu-no-kazu-20260917/ashigaru-mac-3_km-47-yotsu-no-kazu-20260917_manifest.txt	19	'docs/evidence/km-47-yotsu-no-kazu-20260917/fixture/naoshita/A10/a sha256_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb c.txt'
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/MANIFEST.txt	3	' '
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/MANIFEST.txt	270	'40_doku/otsu_suna/ '
+
+## 甲-對照 の紙:
+docs/evidence/km-47-yotsu-no-kazu-20260917/an/seigyo/taishou_manifest.txt
+docs/evidence/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917/raw/saiken/km-47-yotsu-no-kazu-20260917_manifest.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r1.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r2.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r3.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r4.txt
+docs/evidence/km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/_gate/MANIFEST_r5.txt
+
+## 乙-表 の紙:
+
+## 乙-写 の紙:

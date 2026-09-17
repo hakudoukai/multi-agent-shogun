@@ -1,0 +1,31 @@
+刻 = 2026-09-17T16:43:37+0900
+21_shizuka.py ―― 「在るのに違ふ」に ★出目の差が實際に出るか★。
+幹の verify.py は127行・手許は198行。差が ★判じに出ぬ★ なら「違ふ」は紙の上の話に留まる。
+出るなら ★静かな欠★ である。判じの分かれ易い試料で突く:
+  試料A 空白を含む path (裁 seq321353⑵ の回帰域)
+  試料B 引用符で括つた既存行 (裁 seq321127⑵/321353⑴ の旧形)
+★同じ臺帳・同じ file を、二つの verify.py に食はせ、rc と出目を並べる★。
+
+■ 試料A 空白を含む path  臺帳の行: path=c d.txt …
+   幹PR#20 127行 → ★rc=1★
+        | 台帳 MANIFEST.txt
+        |   一致 ★0★ / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+        |     ★実体無★ c
+   手許   198行 → ★rc=1★
+        | 台帳 MANIFEST.txt
+        |   cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-2_km-105-ki-ga-han-ni-nai-to-iu-koto-no-heisoku-20260917/_fixture/s_A
+        |   基点 引数(明示)
+        |   一致 ★0★ / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+        |   ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+
+■ 試料B 引用符で括つた行  臺帳の行: path="e.txt" …
+   幹PR#20 127行 → ★rc=1★
+        | 台帳 MANIFEST.txt
+        |   一致 ★0★ / 相違 0 / 実体無 1 / 読めぬ行 0  (母數 1)
+        |     ★実体無★ "e.txt"
+   手許   198行 → ★rc=0★
+        | 台帳 MANIFEST.txt
+        |   cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-2_km-105-ki-ga-han-ni-nai-to-iu-koto-no-heisoku-20260917/_fixture/s_B
+        |   基点 引数(明示)
+        |   一致 ★1★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 1)
+        |   ★旧形(引用符を含む行)★ 1 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)

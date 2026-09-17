@@ -1,0 +1,58 @@
+刻 = 2026-09-17T16:45:43+0900
+23_hei.py ―― ★22 の治し★。丙(系が供給する器)を、偽陽性を除いて数へ直す。
+★22 の疵(逐語で残す)★:
+  ⑴ 緩い規が ★和文の散文★ を拾つた ―― verify.py:34「裸の file 名」/ :179 同/ append 同。
+     「file」は英語の器名であると同時に ★本文の語★ である(memory: 語は path にも本文にも現れる)。
+  ⑵ print の中の字 ―― verify.py:191 `例: git show <版>:<path> | shasum -a 256` は
+     ★助言の文★ であつて ★走る器★ ではない。
+  ⑶ 規の網から ★xxd / tail / timeout / head / cut★ を落して居た(TOOLS に無かつた)。
+  ∴ 疵の形 = 「網が粗く、かつ狭い」。★偽陽性と偽陰性は同時に起きる★。
+治し: ⑴註行を除く ⑵引用符の中を除く ⑶網を広げる ⑷★拾つた行を悉く逐語で刷り、目で検められる形にする★。
+
+★治した網で拾つた 系の器★ = 8種
+  ■ file      2箇所
+       karo_mac_manifest_verify.py:34  実害: 2026-09-10 家老mac が自作の台帳を ★裸の file 名★ で書き、
+       karo_mac_manifest_verify.py:38  「'/' を含む語」でしか取らぬ ―― 裸の file 名は ./ を冠して書け。
+  ■ grep      2箇所
+       karo_mac_dasumae_gate.sh:126  ws_n=$(grep -cE $'[ \t]+\r?$' "$f" 2>/dev/null); ws_rc=$?
+       karo_mac_dasumae_gate.sh:136  cr_n=$(grep -c $'\r' "$f" 2>/dev/null); cr_rc=$?
+  ■ mktemp    1箇所
+       karo_mac_dasumae_gate.sh:272  tdir=$(mktemp -d) || { say "★mktempが失敗★"; return 2; }
+  ■ printf    13箇所
+       karo_mac_dasumae_gate.sh:22  say(){ printf '%s\n' "$*" >&2; }
+       karo_mac_dasumae_gate.sh:44  if [ -z "${_es_set}" ]; then printf 'unset\n'
+       karo_mac_dasumae_gate.sh:45  elif [ -z "${_es_v}" ]; then printf 'empty\n'
+       karo_mac_dasumae_gate.sh:46  elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+       karo_mac_dasumae_gate.sh:47  else printf 'value\n'; fi
+       karo_mac_dasumae_gate.sh:96  [ -n "$f" ] || { printf 'NOPATH'; return 0; }
+       karo_mac_dasumae_gate.sh:99  [ -n "$r" ] || { printf 'DANGLING'; return 0; }
+       karo_mac_dasumae_gate.sh:103  case "$r" in (/dev/*) printf 'DEVICE'; return 0 ;; esac
+       karo_mac_dasumae_gate.sh:104  [ -e "$r" ] || { printf 'DANGLING'; return 0; }
+       karo_mac_dasumae_gate.sh:105  [ -f "$r" ] || { printf 'NOTREG'; return 0; }
+       karo_mac_dasumae_gate.sh:235  printf '%s\n' "$out" >&2
+       karo_mac_dasumae_gate.sh:277  printf '見出し行 \r\n本文行(末尾空白)   \r\n最終行。\n\n' > "$pos"
+       karo_mac_dasumae_gate.sh:280  printf '見出し行\n本文行\n最終行。\n' > "$neg"
+  ■ stat      2箇所
+       karo_mac_dasumae_gate.sh:107  "$TIMEOUT_BIN" "$SAFE_SIZE_TMO" stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
+       karo_mac_dasumae_gate.sh:109  stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
+  ■ tail      2箇所
+       karo_mac_dasumae_gate.sh:155  last1=$(tail -c1 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+       karo_mac_dasumae_gate.sh:163  last2=$(tail -c2 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+  ■ tr        4箇所
+       karo_mac_dasumae_gate.sh:107  "$TIMEOUT_BIN" "$SAFE_SIZE_TMO" stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
+       karo_mac_dasumae_gate.sh:109  stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
+       karo_mac_dasumae_gate.sh:155  last1=$(tail -c1 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+       karo_mac_dasumae_gate.sh:163  last2=$(tail -c2 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+  ■ xxd       2箇所
+       karo_mac_dasumae_gate.sh:155  last1=$(tail -c1 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+       karo_mac_dasumae_gate.sh:163  last2=$(tail -c2 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+
+【丙 の判じ】―― repo に版が無く、★方言で判じが変り得る★ 物のみを丙とする
+  丙 stat     箇所=2 ―― BSD は `stat -f %z` / GNU は `stat -c %s` ―― ★書式が非互換★。gate.sh:107,109 は `-f %z` を用ゐる ∴ GNU 系では ★寸法が取れず 條⑤ が倒れる★
+  丙 tr       箇所=4 ―― BSD tr は U+3000 を [:space:] と讀む(本機で實測・残0byte)。GNU tr は C locale で讀まぬ ∴ ★同じ値が blank と非blank に分かれる★
+  丙 xxd      箇所=2 ―― xxd は vim 同梱 ―― ★coreutils では無い★。無い系では 條④(EOF改行)が ★無言で空を返す★
+  丙 timeout  箇所=0 ―― stock macOS に `timeout` は無い(coreutils の gtimeout)。gate.sh は TIMEOUT_BIN で倒すが、★倒した先の振舞ひは系で変る★
+  ★丙 = 4種★(閉包の器そのものは repo 内 ∴ 丙は「器」では無く「器が踏む地面」である)
+    本機實測 stat -f %z(BSD書式)      → rc=0 出目=213
+    本機實測 xxd の在否                → rc=0 出目=/usr/bin/xxd
+    本機實測 timeout の在否            → rc=0 出目=/opt/homebrew/bin/timeout

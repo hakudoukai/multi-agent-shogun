@@ -1,0 +1,19 @@
+# 26_tree_totals ―― git の樹の母數(km-107 ㋐㋑)・disk とは別欄
+刻(始)=2026-09-17T16:46:59+0900 刻(終)=2026-09-17T16:47:00+0900
+HEAD=75aa92f28929e79496935f2549f3037f6fc79cba (ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917) ls-tree_rc=0 cat-file_rc=0 定義A ent=15
+## (i) HEAD の樹
+重複無き blob=15  B(.txt)=13  C(path行>=1)=13
+行總=1035 註=52 讀めぬ=148 path行=835
+★甲 行=10★ blob=3 / ★乙 行=0★ blob=0 / 丙=0 平=825 丁=12
+
+ref 總=93 ls-tree rc≠0 の ref=0 [] cat-file_rc=0 定義A ent(延べ)=887
+## (ii) 全 ref の和(重複無き blob)
+重複無き blob=157  B(.txt)=97  C(path行>=1)=100
+行總=16726 註=663 讀めぬ=5829 path行=10234
+★甲 行=23★ blob=10 / ★乙 行=0★ blob=0 / 丙=60 平=10151 丁=12
+
+## (iii) 讀み手 scripts/checks/karo_mac_manifest_verify.py の版 (ref 數)
+disk(作業樹)の blob=ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579
+b19ec9ea259653d9e65d052459128c635a44e93f	67
+ABSENT	25
+ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579	1

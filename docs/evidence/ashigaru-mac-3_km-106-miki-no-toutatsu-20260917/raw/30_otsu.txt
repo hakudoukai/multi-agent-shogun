@@ -1,0 +1,20 @@
+刻 = 2026-09-17T16:41:34+0900
+根 = /Users/momizimac/multi-agent-shogun
+頭 = 0bb92e2b800c1b434c8a660d38f6feea7d450124
+本札の枝 = karo-mac/km-gate-kou-otsu-20260917 (PR#20)
+
+―― A欄 手許 for-each-ref(★fetch せねば古びる★) ――
+  A refs/heads     --contains 頭 = 1 本 (rc=0) refs/heads/karo-mac/km-gate-kou-otsu-20260917
+  A refs/remotes   --contains 頭 = 0 本 (rc=0) ―
+  A 手許が最後に上流を聞いた刻(.git/FETCH_HEAD の mtime) = 2026-09-17T09:03:51+0900 (在=rc=0)
+
+―― B欄 上流 ls-remote(★今 上流へ問ふ★) ――
+  B ls-remote origin 全 ref = 336 本 (rc=0)
+  B 本札の枝 refs/heads/karo-mac/km-gate-kou-otsu-20260917 = 1 本
+     上流の sha = 0bb92e2b800c1b434c8a660d38f6feea7d450124 ―― 頭と ★一致★
+
+  ★B欄が答へられぬ事★: ls-remote は ref 名と sha を返すのみで、
+    「其の ref が頭を★含む★か」は答へぬ(含有は手許の object を辿らねば判らぬ)。
+    ∴ A欄=含有の數 / B欄=上流の存否 ―― ★同じ「到達」の語で別の物を数へて居る★。
+
+⑷刻 = 2026-09-17T16:41:35+0900

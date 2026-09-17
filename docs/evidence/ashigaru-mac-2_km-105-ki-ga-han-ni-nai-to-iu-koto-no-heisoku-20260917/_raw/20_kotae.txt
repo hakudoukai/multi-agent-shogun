@@ -1,0 +1,50 @@
+刻 = 2026-09-17T16:43:06+0900
+20_kotae.py ―― ★的に實際に答へる★: 「此の機が一つ失せた時、臺帳は建ち、門は鳴るか」。
+推さず、★幹PR#20 が運ぶ版だけを取り出して★ 己の束の中で走らせる。
+★追記(12→13→本紙)★: 00 の追跡器は append.py:142 `_yomite()` の
+  importlib.util.spec_from_file_location による ★path 直読み★ を辺として拾へなんだ。
+  顔触れ(3本)は変らぬが ★辺は2本でなく3本★。追跡器の盲点として名指す。
+
+【一】幹PR#20 0bb92e2b800c から閉包3本を取り出す(己の束の中へ)
+  karo_mac_dasumae_gate.sh         = ★在★ rc=0 / 15100 byte
+  karo_mac_manifest_verify.py      = ★在★ rc=0 / 5649 byte
+  karo_mac_manifest_append.py      = ★無★ rc=128 / stderr=fatal: path 'scripts/checks/karo_mac_manifest_append.py' exists on disk, but not
+
+【二】試料の束を作る(己の束の中・2本)
+  docs/evidence/ashigaru-mac-2_km-105-ki-ga-han-ni-nai-to-iu-koto-no-heisoku-20260917/_fixture/taba に a.txt / b.txt
+
+【三】★臺帳は建つか★
+  甲 幹の append.py で建てる:
+     → ★器が幹に無い★ ∴ ★建たぬ★(rc 以前に呼ぶ物が無い)
+       零の四札: 陽性対照=下の乙が同じ路で建つ / 根=0bb92e2b800c 深さ=1 / rc=128(git show) / 刻=上記
+  乙 手許の append.py で建てる(★陽性対照★):
+     rc=0 / stdout 60字 / stderr 0字
+     MANIFEST.txt = ★建つた★ 393 byte
+       | # dialect: path= sha256= bytes= lines=  ―― 裁 seq320321⑶「4欄(lines=有)を本形」
+       | # ★此の臺帳へ行を足すのは karo_mac_manifest_append.py のみ★(案一・裁 seq321856)
+       | path=a.txt sha256=7589c50dcc90a9be456502ec1ebf077ed6c882f7ebe475a0fd6cb3a07f6b066c bytes=4 lines=1
+       | path=b.txt sha256=d7d75b8c747529fa466c1edd6209ce3ecba924d70b1883525ddde333e065fd38 bytes=4 lines=1
+
+【四】★門は鳴るか★(臺帳は乙で建てた物を使ふ ―― 幹には建てる器が無い故)
+  ■ 幹PR#20 の gate.sh
+     rc=0 / stdout 57字 / ★stderr 280字(門の出目は悉く stderr)★
+       | 閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+       | 閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+       | 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+       | 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+       | 條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(2本)通
+       | 條⑤ 寸法 = byte和 8(閾 10485760未満)
+       | ★出す前 門 通。出してよい。★
+  ■ 手許の gate.sh
+     rc=0 / stdout 256字 / ★stderr 280字(門の出目は悉く stderr)★
+       | 閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+       | 閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+       | 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+       | 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+       | 條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(2本)通
+       | 條⑤ 寸法 = byte和 8(閾 10485760未満)
+       | ★出す前 門 通。出してよい。★
+
+【五】幹の gate.sh は ★どの verify.py を呼ぶか★
+  幹 gate.sh は `$(dirname "$0")/karo_mac_manifest_verify.py` を呼ぶ ∴ ★己の隣★。
+  上の走りでは docs/evidence/ashigaru-mac-2_km-105-ki-ga-han-ni-nai-to-iu-koto-no-heisoku-20260917/_inst/miki の隣 = 幹の 127行版 が呼ばれた(手許 198行版では無い)。

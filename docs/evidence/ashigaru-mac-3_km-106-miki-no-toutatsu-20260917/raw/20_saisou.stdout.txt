@@ -1,0 +1,23 @@
+刻 = 2026-09-17T16:40:46+0900
+根 = /Users/momizimac/multi-agent-shogun
+束 = docs/evidence/karo-mac-miki-push-negai-20260917
+
+頭 = 0bb92e2b800c1b434c8a660d38f6feea7d450124 (引数=0bb92e2)
+
+甲 紙の到達 ―― 束の file 悉くが <頭>:<path> で引けるか
+  ⑴対照 在る筈=到達(rc=0) / 在らぬ筈=不到達(rc=128)  ★器は生きて居る★
+  ⑴-乙 ls-tree 対照 MANIFEST.txt が出目に在るか = 在(★器は生きて居る★) (出目 17 本・rc=0)
+  ⑵根と深さ disk を歩いた本(file・__pycache__除)= 17 / 頭の tree に在る本 = 17 (ls-tree rc=0)
+  ★到達 17 本 / 不到達 0 本★
+  ⑶rc 中身まで照した本 = 17 / ★disk と頭で異なる本 = 0★
+
+乙 ref の到達 ―― 頭を含む ref は何本か
+  手許(refs/heads)     = 1 本 (rc=0) refs/heads/karo-mac/km-gate-kou-otsu-20260917
+  遠隔(refs/remotes)   = 0 本 (rc=0) ―
+  前の PR 頭 363d5fb0   = 前の PR 頭 363d5fb0 は頭の祖先か: 然り (rc=0)  sha=363d5fb06084
+  基 origin/main      = 基 origin/main は頭の祖先か: 否 (rc=1)  sha=4be3ee19e1c5
+
+⑷刻 = 2026-09-17T16:40:46+0900
+★數が意味せぬ事★: 乙の「遠隔 0 本」は★未 push★を意味するのみで、疵では無い
+  (push は総監督の代行が正路ゆゑ、當席は commit で止める)。
+  甲の「不到達 N 本」は★本走の後に生れる紙★(此の紙自身・臺帳・門の控)を含む ―― 名を悉く上へ列べた。

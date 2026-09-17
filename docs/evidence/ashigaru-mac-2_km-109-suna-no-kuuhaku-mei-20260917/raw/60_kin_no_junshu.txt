@@ -1,0 +1,45 @@
+# 禁の遵守を數で示す(專任2 km-109)
+
+刻 2026-09-17T17:31:00+0900
+着手(任の issued_at) 2026-09-17T17:06:00 ―― 之より新しい mtime は當席を疑へ
+
+## ★注進★ `git status --porcelain -- scripts/` は 0 行ではない
+  出た行數 10 ―― ★之は HEAD(75aa92f2 = 己の枝の古い commit)との差であつて
+  當席が触れた跡ではない★。逐語:
+    MM scripts/agent_health_check.sh
+    MM scripts/checks/context_usage_warn.sh
+     M scripts/checks/karo_mac_dasumae_gate.sh
+     M scripts/checks/karo_mac_gate4.sh
+     M scripts/checks/karo_mac_manifest_verify.py
+    MM scripts/inbox_watcher.sh
+     M scripts/inbox_write.sh
+     M scripts/redundancy/shogun_report_watcher.sh
+     M scripts/stop_hook_inbox.sh
+    MM scripts/watchdogs/enter_restart_common_watchdog.sh
+
+## 示し方一 ―― mtime が着手より古い(全 scripts/ を歩く)
+  歩いた file 109
+  ★着手より新しい mtime の file 0 本★
+    (一本も無し)
+
+## 示し方二 ―― 件の三器の blob が宣した値の儘
+  scripts/checks/karo_mac_manifest_verify.py           blob=ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579 mtime=2026-09-17T00:01:41
+  scripts/checks/karo_mac_manifest_append.py           blob=b56d6576c82212c155980968d4ec1e0a8c5c7427 mtime=2026-09-17T01:47:36
+  scripts/checks/karo_mac_dasumae_gate.sh              blob=054c442eaee3886b2283f98f7c3a1ab8cb813b68 mtime=2026-09-17T09:38:26
+  ★verify.py = ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579 は ㋐ で宣した値と同一★
+
+## 示し方三 ―― 束は追跡外の儘(add も commit も push も せず)
+  `git status --porcelain -- <束>` 逐語:
+    ?? docs/evidence/ashigaru-mac-2_km-109-suna-no-kuuhaku-mei-20260917/
+  ★`??` = 追跡外。`A ` (add 済)は一行も無い★
+
+## 示し方四 ―― 己の枝の頭が動いて居らぬ
+  HEAD 75aa92f28929e79496935f2549f3037f6fc79cba
+  枝   ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+  ★本弾で commit を一つも積んで居らぬ(頭は 75aa92f2 の儘)★
+
+## 示し方五 ―― 證を /tmp へ置いて居らぬ
+  本弾の作成物は悉く 束の下(fixtures/ と raw/ と 00_shodan.md と manifest.txt と mon_*.log)。
+  ★然れど一つ宣する★: ㋓ の器は長く走る故 ★背後で走らせた★。其の器の stdout の控は
+  harness が /private/tmp の下に置いた(當席が置いたのではない)。★數は其の控から取らず、
+  束の下の raw/30_gai_no_hirosa.txt から取つた★。

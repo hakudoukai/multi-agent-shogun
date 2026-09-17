@@ -1,0 +1,26 @@
+刻 = 2026-09-17T16:41:13+0900
+12_dochira.py ―― ⑴己の疵の名指し ⑵append.py を ★何處の木が運ぶか★。
+★11_arika.py の疵(逐語で残す)★:
+  11 は「因は当てぬ。此処で言へるは『在る』と『到達せぬ』の二つのみ。」を
+  ★条件分岐の外に固定文として★ 刷つた。實測は hit 有り=「到達する」であり、
+  ★分岐は正しく刷つたのに、其の直前の固定文が逆を述べた★。
+  ∴ 疵の形 = 「判じの前に結語を書いた」。判じから結語を組め。11_raw は其の儘残す。
+
+【一】blob b56d6576c82212c155980968d4ec1e0a8c5c7427 を其の path で運ぶ commit
+  log --all -- scripts/checks/karo_mac_manifest_append.py = ★1件★ (rc=0)
+    61a9fe1c18beffddef6b40503766ba726b8b0a05 1789629493  (karo-mac/manifest-append-track-20260917) feat(checks): 臺  → 61a9fe1c:…append.py = b56d6576 ★此の blob★
+  ★手許の中身と同じ blob を運ぶ commit = 1件★
+
+【二】其の commit へ到達する ref(★數を出した器の出目で対照する★)
+  61a9fe1c18beffddef6b40503766ba726b8b0a05 ← ref 1本 (rc=0)
+      refs/heads/karo-mac/manifest-append-track-20260917
+      遠隔追跡枝(-r --contains) = ★0本★ rc=0
+
+【三】陰性対照 ―― 在らぬ commit への --contains
+  0000…(40) → 出目 0本 / ★rc=129★ (rc≠0 の零は「0本」に非ず)
+
+【四】∴ 言へる事
+  ・blob は ★在る★(cat-file -e rc=0)。km-104 の刻の rc=1 とは ★食ひ違ふ★。
+  ・且つ ★ref から到達する★ ∴ 「書かれたが木に入らぬ疎 object」では ★無い★。
+  ・然れど origin/main にも 幹PR#20 にも ★path が無い★ ∴ 「遠隔には届いて居らぬ」は変らぬ。
+  ・★因(何時・誰が)は本紙では断ぜぬ★。測つたのは在り処のみ。

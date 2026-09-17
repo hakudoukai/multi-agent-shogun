@@ -1,0 +1,23 @@
+刻 = 2026-09-17T16:40:26+0900
+
+【一】km-104 の裁「object すら無し」の再検 ―― blob b56d6576c82212c155980968d4ec1e0a8c5c7427
+  cat-file -e rc=0 ★(km-104 の刻は rc=1 であつた)★
+  cat-file -s = 10959 byte (rc=0)
+  疎では無い ∴ 詰(pack)の中か、別の在り処
+  (詰の照会 rc=0)
+  ★到達する ref★(blob は for-each-ref --contains で問へぬ ∴ rev-list --objects で歩く):
+    rev-list --objects --all の出目に在るか = ★在り★ (rc=0 / 出目 10851 行)
+      b56d6576c82212c155980968d4ec1e0a8c5c7427 scripts/checks/karo_mac_manifest_append.py
+  ∴ 何處かの木が運んで居る
+  ★因は当てぬ★。此処で言へるは「★在る★」と「★到達せぬ★」の二つのみ。
+
+【二】家老の母數(scripts/checks の16本)を己の器で測り直す
+  面1 disk .py/.sh = ★16本★ (家老=16) 一致
+  面2 index に在る = ★15本★ (家老=15) 一致
+     index 外 = karo_mac_manifest_append.py
+  面4 origin/main 行 = 13 (対照 scripts/checks/pane_identity.sh 在り rc=0)
+  ★食ひ違ひ = 5本★ (家老=5) 一致
+    path 無 = 3本 (家老=3): karo_mac_dasumae_gate.sh karo_mac_gate4.sh karo_mac_manifest_append.py
+    中身 異 = 2本 (家老=2):
+      context_usage_warn.sh 遠隔=ce712f78 / 手許=32120394
+      karo_mac_manifest_verify.py 遠隔=b19ec9ea / 手許=ebfc4c0e

@@ -1,0 +1,15 @@
+★裏の規★ 字面の basename を悉く拾ふ(註も usage も含む)
+  裏(字面)=3本 / 表(呼出)=3本
+  裏のみ(=00 が拾はなんだ物):
+  表のみ(=裏が拾はなんだ物 ★0 が正★):
+  ★判じ★ 表 ⊆ 裏 = ★是★
+
+★陽性対照★ _fixture/09_taisho.sh を 00 と同じ規で走らせる
+   拾つた: 3行 [dirname相対] karo_mac_manifest_verify.py
+   拾つた: 4行 [直呼び] scripts/checks/karo_mac_gate4.sh
+   拾つた: 5行 [直呼び] scripts/checks/karo_mac_manifest_append.py
+   拾つた: 6行 [読込み] scripts/checks/pane_identity.sh
+  拾つた数 = ★4★ (期待 4)
+  註の中の gate7 を拾つたか = 拾はず (★拾はぬ★が正)
+
+★対照の結★ = ★通★

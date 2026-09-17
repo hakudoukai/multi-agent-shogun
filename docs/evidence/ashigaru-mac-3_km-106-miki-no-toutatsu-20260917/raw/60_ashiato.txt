@@ -1,0 +1,24 @@
+刻 = 2026-09-17T16:45:35+0900
+根 = /Users/momizimac/multi-agent-shogun
+物差 = 頭 0bb92e2b800c1b434c8a660d38f6feea7d450124 の blob(★HEAD でも status でもない★)
+
+―― 甲 ★何故 status を物差に出来ぬか★ ――
+  當席の枝の HEAD = 75aa92f28929e79496935f2549f3037f6fc79cba (rc=0)
+  HEAD は頭 0bb92e2b800c を含むか = ★否★ (merge-base --is-ancestor rc=1)
+  幹束の紙は .gitignore に掛かるか: rc=0 .gitignore:7:* → docs/evidence/karo-mac-miki-push-negai-20260917/raw/51_toutatsu.txt
+  ∴ ★status も diff HEAD も、此の束に就いては何も見て居らぬ★。
+    「靜か」を「變へて居らぬ」と読めば ―― ★之が初版の誤りであつた★。
+
+―― 乙 頭の blob と disk の一本づつの照合(ls-tree rc=0) ――
+  disk = 17 本 / 頭の tree = 17 本
+  ★同じ = 16 本 / 異なる = 1 本 / 頭に無い = 0 本★
+    異: raw/51_toutatsu.txt
+        頭  sha256=9af73784f8f4a0fd7480eab2c9e490aa25cd47ce724e6013b89023566dd6e6f4 (1673 byte)
+        disk sha256=52ba0d29f9cf83ee99d1610f02f73218a738bd55d68876278f11c8728c9e9934 (1503 byte)
+
+★此の數が意味せぬ事★
+  ・「異なる 1 本」は ★當席が中身を書いた★ の意ではない ―― 器が己の出目を其處へ置いた(仕様)。
+  ・「同じ 16 本」は ★正しい★ の意ではない ―― 唯 頭の blob と一致するといふだけ。
+  ・此の照合は ★commit して居らぬ★ ―― disk の姿を述べたのみ。
+
+⑷刻 = 2026-09-17T16:45:35+0900

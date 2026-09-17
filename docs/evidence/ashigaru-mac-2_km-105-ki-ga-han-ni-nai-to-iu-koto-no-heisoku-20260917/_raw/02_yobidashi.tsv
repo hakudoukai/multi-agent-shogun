@@ -1,0 +1,12 @@
+yobu	gyo	kata	mojizura	yobareru	hanji	gyo_chikugo
+scripts/checks/karo_mac_manifest_append.py	23	import	hashlib	―	宣外(系/標準)	import hashlib
+scripts/checks/karo_mac_manifest_append.py	24	import	os	―	宣外(系/標準)	import os
+scripts/checks/karo_mac_manifest_append.py	25	import	sys	―	宣外(系/標準)	import sys
+scripts/checks/karo_mac_manifest_append.py	26	import	tempfile	―	宣外(系/標準)	import tempfile
+scripts/checks/karo_mac_manifest_append.py	144	import	importlib	―	宣外(系/標準)	import importlib.util
+scripts/checks/karo_mac_dasumae_gate.sh	209	dirname相対	karo_mac_manifest_verify.py	scripts/checks/karo_mac_manifest_verify.py	★閉包へ★	python3 "$(dirname "$0")/karo_mac_manifest_verify.py" "$man" "$KM_GATE_MANIFEST_BASE"
+scripts/checks/karo_mac_dasumae_gate.sh	213	dirname相対	karo_mac_manifest_verify.py	scripts/checks/karo_mac_manifest_verify.py	★閉包へ★	python3 "$(dirname "$0")/karo_mac_manifest_verify.py" "$man"
+scripts/checks/karo_mac_manifest_verify.py	40	import	hashlib	―	宣外(系/標準)	import hashlib
+scripts/checks/karo_mac_manifest_verify.py	41	import	os	―	宣外(系/標準)	import os
+scripts/checks/karo_mac_manifest_verify.py	42	import	re	―	宣外(系/標準)	import re
+scripts/checks/karo_mac_manifest_verify.py	43	import	sys	―	宣外(系/標準)	import sys

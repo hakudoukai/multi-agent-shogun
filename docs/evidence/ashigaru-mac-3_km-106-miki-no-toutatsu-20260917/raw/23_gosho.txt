@@ -1,0 +1,15 @@
+刻 = 2026-09-17T16:40:46+0900
+★走つた後★ docs/evidence/karo-mac-miki-push-negai-20260917/raw/51_toutatsu.txt
+  disk  sha256=2595a0b21e899024d1ed7a57d329921d3113f608c2dacf613098917a7b691c52 bytes=1473
+  頭の blob sha256=9af73784f8f4a0fd7480eab2c9e490aa25cd47ce724e6013b89023566dd6e6f4 bytes=1673
+  disk と頭の blob は ★異なる(器が上書きした)★
+
+器 docs/evidence/karo-mac-miki-push-negai-20260917/driver/50_ref_toutatsu.py の sha256
+  走る前 = d1c0c4120a6fe74789dc05f56fe926a6d20858447ff21445e1af3a014b8daa1f
+  走つた後 = d1c0c4120a6fe74789dc05f56fe926a6d20858447ff21445e1af3a014b8daa1f
+  → ★一指も触れて居らぬ★
+
+★此の上書きが意味する事★
+  ・器は末尾 kaki() で己の出目を幹束へ書く作り(50_ref_toutatsu.py L116)。
+  ・∴ 再走すれば幹束の当該 file は必ず頭の blob と別に成る ―― ★器の仕様★。
+  ・當席は幹束へ commit も restore もせぬ。家老の裁を仰ぐ。

@@ -1,0 +1,36 @@
+刻 = 2026-09-17T16:39:25+0900 / 根 = /Users/momizimac/multi-agent-shogun
+面2 index: ls-files -s -- scripts/checks/ rc=0 行=15
+
+面4 4:origin/main: rc=0 行=13 / ★対照★ scripts/checks/pane_identity.sh = 出目に在り(cat-file rc=0 と一致)
+面5 5:幹PR#20 0bb92e2b800c: rc=0 行=15 / ★対照★ scripts/checks/pane_identity.sh = 出目に在り(cat-file rc=0 と一致)
+
+================================================================================================
+■ scripts/checks/karo_mac_dasumae_gate.sh  [閉包]
+   面1 disk   = 在 / 16261 byte / sha256=2b8449bccd608a1a7f24c888b2e1857ad2af98065fdfb1d3077bf08cdbe6f685
+              blob sha1(中身から組んだ) = 054c442eaee3886b2283f98f7c3a1ab8cb813b68
+   面2 index  = 在 sha=9cd550fc2cf963ca0475b3448bb33483b9aede6b / 手許 blob と ★相違★
+   面3 object = ★在★ (cat-file -e 054c442eaee3886b2283f98f7c3a1ab8cb813b68 rc=0)
+   面4 origin/main = ★path 無★
+   面5 幹PR#20   = path 在 sha=9cd550fc2cf963ca0475b3448bb33483b9aede6b ∴ 手許と ★中身 異★
+■ scripts/checks/karo_mac_manifest_verify.py  [閉包]
+   面1 disk   = 在 / 10965 byte / sha256=a507c998c7bd648543a8dcb8643ba1188254800b039cdad76f4953ef34d5fa41
+              blob sha1(中身から組んだ) = ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579
+   面2 index  = 在 sha=b19ec9ea259653d9e65d052459128c635a44e93f / 手許 blob と ★相違★
+   面3 object = ★在★ (cat-file -e ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579 rc=0)
+   面4 origin/main = path 在 sha=b19ec9ea259653d9e65d052459128c635a44e93f ∴ 手許と ★中身 異★
+   面5 幹PR#20   = path 在 sha=b19ec9ea259653d9e65d052459128c635a44e93f ∴ 手許と ★中身 異★
+■ scripts/checks/karo_mac_manifest_append.py  [閉包]
+   面1 disk   = 在 / 10959 byte / sha256=f5ea5e1e85d64936288e9937421eb8e201bc1f34ed05b9308fa495464c7b2533
+              blob sha1(中身から組んだ) = b56d6576c82212c155980968d4ec1e0a8c5c7427
+   面2 index  = ★外★
+   面3 object = ★在★ (cat-file -e b56d6576c82212c155980968d4ec1e0a8c5c7427 rc=0)
+   面4 origin/main = ★path 無★
+   面5 幹PR#20   = ★path 無★
+■ scripts/checks/context_usage_warn.sh  [★丁(宣外)★]
+   面1 disk   = 在 / 6709 byte / sha256=3010defd413a3479c9572ac2887e50f5375d881d25f9ee3557899f0df296e10a
+              blob sha1(中身から組んだ) = 3212039429ae27aab4cdbd41c3f5e146a10f4ea8
+   面2 index  = 在 sha=ce712f785c8fb34e13d19ccb9ff2166412930481 / 手許 blob と ★相違★
+   面3 object = ★在★ (cat-file -e 3212039429ae27aab4cdbd41c3f5e146a10f4ea8 rc=0)
+   面4 origin/main = path 在 sha=ce712f785c8fb34e13d19ccb9ff2166412930481 ∴ 手許と ★中身 異★
+   面5 幹PR#20   = path 在 sha=ce712f785c8fb34e13d19ccb9ff2166412930481 ∴ 手許と ★中身 異★
+================================================================================================

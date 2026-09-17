@@ -1,0 +1,35 @@
+# ㋐ 器の版を固定する(專任2 km-109)
+刻 2026-09-17T17:13:38+0900   cwd /Users/momizimac/multi-agent-shogun
+
+## 取り方(逐語・此の紙の全ての數は下の口から出た)
+  git hash-object scripts/checks/karo_mac_manifest_verify.py
+  grep -c '' scripts/checks/karo_mac_manifest_verify.py
+  shasum -a 256 scripts/checks/karo_mac_manifest_verify.py
+  git rev-parse main:scripts/checks/karo_mac_manifest_verify.py
+  git rev-parse origin/main:scripts/checks/karo_mac_manifest_verify.py
+  git diff --quiet <ref> -- scripts/checks/karo_mac_manifest_verify.py; echo $?
+
+## 走らせる實体(作業樹)
+  full blob sha  ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579
+  行(grep -c '') 198
+  bytes          10965
+  sha256(内容)   a507c998c7bd648543a8dcb8643ba1188254800b039cdad76f4953ef34d5fa41
+
+## ★注進 ―― 「main」を裸で引くと旧版が出る★
+  local  main      = 363d5fb060845171338c067ef42bfcbef8ad9188
+    blob           = b19ec9ea259653d9e65d052459128c635a44e93f  行=127  ★旧版(127行)★
+  origin/main      = 4f591fc021947b9f477b676c96e36a1dc4437500
+    blob           = ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579  行=198  ★治つた版(198行)★
+  HEAD(己の枝)     = 75aa92f28929e79496935f2549f3037f6fc79cba  枝=ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+
+## 突合(0=同一)
+  git diff --quiet origin/main -- V  rc=0  ← ★走らせる實体 == origin/main == ebfc4c0e / 198行★
+  git diff --quiet main        -- V  rc=1  ← local main は古い(363d5fb)
+
+## 結
+  ・當席が走らせる版 = ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579 / 198行 / 10965B。
+  ・之は ★origin/main(4f591fc0 ―― 裁 seq326873 で PR#22 が着地した點)★ と逐語一致。
+  ・家老の宣「main に着地した讀み手 = ebfc4c0e/198行」は ★正★。
+  ・然れど ★local ref "main" は 363d5fb で止まつて居り、其處からは b19ec9ea/127行(旧版)が出る★。
+    ∴ 以後「main の版」と言ふ時は ★origin/main を指せ★。裸の main は別の物を返す。
+  ・此の一事は本弾の測りには影響せぬ(當席は作業樹の實体を走らせ、其れが origin/main と同一である事を上で示した)。
