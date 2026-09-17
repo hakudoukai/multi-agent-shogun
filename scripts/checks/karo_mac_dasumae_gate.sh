@@ -92,6 +92,8 @@ fix_threshold(){
 #   ―― ★新しい落ち枝を作らぬ。既に在る枝へ合流させる。★
 #   可逆: 呼出二箇所を `wc -c < "$f"` へ戻せば旧挙動(控 = docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_gate_BEFORE.sh)。
 TIMEOUT_BIN="$(command -v timeout 2>/dev/null || command -v gtimeout 2>/dev/null || true)"
+# ★python3 は既に條①②④の依り代ゆゑ新たな依存ではない ―― 在り処を一箇所で定める★
+PY_BIN="$(command -v python3 2>/dev/null || true)"
 SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
 # ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
 fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO || { say "★出す前 門 止まる ―― 閾が使へぬ。数を出さぬ。★"; exit 2; }
@@ -112,11 +114,22 @@ safe_size(){
   case "$r" in (/dev/*) printf 'DEVICE'; return 0 ;; esac
   [ -e "$r" ] || { printf 'DANGLING'; return 0; }
   [ -f "$r" ] || { printf 'NOTREG'; return 0; }
-  if [ -n "$TIMEOUT_BIN" ]; then
-    "$TIMEOUT_BIN" "$SAFE_SIZE_TMO" stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
-  else
-    stat -f %z -- "$r" 2>/dev/null | tr -d ' \n'
+  # ★寸法は開かずに取る(FIFO は「止」)。且つ ★BSD/GNU で同じ答★ を出さねばならぬ。
+  #   疵(2026-09-18・総監督が third=Linux で実測 seq330706): `stat -f %z` は BSD の書式であり、
+  #   GNU coreutils では -f が「★file system の状態★」を指す別の器で、%z を知らぬゆゑ ★「?」★ を刷る。
+  #   ∴ is_num が落ち、清い紙まで「★條⑤ 測れぬ ―― 測れぬは通さぬ★」で rc=1 = ★濡れ衣★。
+  #   當席は Mac 上に ★GNU stat の摸擬★ を PATH へ置いて此の路を踏み、
+  #   ★通28/落6 を名まで含め総監督の Linux 実測と一致させて★ 因を断じた(推量ではない)。
+  #   直し = ①python3 の os.stat(open() せぬ) ②BSD の stat -f %z ③GNU の stat -c %s の順に試み、
+  #   ★いづれも數でなければ 數を出さぬ(既存の「測れぬは通さぬ」へ倒れる)★。
+  _ss(){ if [ -n "$TIMEOUT_BIN" ]; then "$TIMEOUT_BIN" "$SAFE_SIZE_TMO" "$@" 2>/dev/null; else "$@" 2>/dev/null; fi; }
+  local out=''
+  if [ -n "$PY_BIN" ]; then
+    out="$(KM_SZ_PATH="$r" _ss "$PY_BIN" -B -c 'import os,sys;sys.stdout.write(str(os.stat(os.environ["KM_SZ_PATH"]).st_size))' | tr -d ' \n')"
   fi
+  if ! is_num "$out"; then out="$(_ss stat -f %z -- "$r" | tr -d ' \n')"; fi
+  if ! is_num "$out"; then out="$(_ss stat -c %s -- "$r" | tr -d ' \n')"; fi
+  printf '%s' "$out"
 }
 
 check_one_file(){
