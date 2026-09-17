@@ -1,0 +1,34 @@
+# 刻 = 2026-09-17T11:52:05+0900
+# repo根 = /Users/momizimac/multi-agent-shogun
+# 移動先 = /Users/momizimac/multi-agent-shogun/docs/evidence/km-hook-no-sotai-path-ga-mon-wo-hiraku-20260917
+
+## settings.json の hook 宣言(逐語・event と command のみ)
+event=Stop	command=bash scripts/stop_hook_inbox.sh	絶対path=★無(相対)★
+event=Stop	command=python3 scripts/goal_stop_hook.py	絶対path=★無(相対)★
+event=PreToolUse	command=scripts/checks/pretooluse_bash_guard.sh	絶対path=★無(相対)★
+event=PreToolUse	command=bash scripts/checks/dd169_kill_term_guard.sh	絶対path=★無(相対)★
+event=UserPromptSubmit	command=bash scripts/checks/context_usage_warn.sh	絶対path=★無(相対)★
+event=StopFailure	command=python3 scripts/goal_stopfailure_hook.py	絶対path=★無(相対)★
+
+## 呼ばれる器の実在(repo根から)
+在	scripts/stop_hook_inbox.sh	16434byte
+在	scripts/goal_stop_hook.py	4982byte
+在	scripts/checks/pretooluse_bash_guard.sh	2390byte
+在	scripts/checks/dd169_kill_term_guard.sh	4228byte
+在	scripts/checks/context_usage_warn.sh	6709byte
+在	scripts/goal_stopfailure_hook.py	1786byte
+
+## 実走 ―― 同じ command を 二つの cwd から呼ぶ(胴は空json)
+cwd	command	rc	一行目
+根	bash scripts/stop_hook_inbox.sh	rc=0	{"decision": "block", "reason": "inbox未読2件あり。queue/inbox/karo-mac.yamlを読
+★移動後★	bash scripts/stop_hook_inbox.sh	rc=0	bash: scripts/stop_hook_inbox.sh: No such file or directory
+根	python3 scripts/goal_stop_hook.py	rc=0
+★移動後★	python3 scripts/goal_stop_hook.py	rc=0	/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Vers
+根	scripts/checks/pretooluse_bash_guard.sh	rc=0
+★移動後★	scripts/checks/pretooluse_bash_guard.sh	rc=0	docs/evidence/km-hook-no-sotai-path-ga-mon-wo-hiraku-20260917/ki/20_haka
+根	bash scripts/checks/dd169_kill_term_guard.sh	rc=0	date: invalid argument 's' for -I
+★移動後★	bash scripts/checks/dd169_kill_term_guard.sh	rc=0	bash: scripts/checks/dd169_kill_term_guard.sh: No such file or directory
+根	bash scripts/checks/context_usage_warn.sh	rc=0	★context_danger★ session jsonl=157417KB (>=1953KB ≒ 95% heuristic) — ★即
+★移動後★	bash scripts/checks/context_usage_warn.sh	rc=0	bash: scripts/checks/context_usage_warn.sh: No such file or directory
+根	python3 scripts/goal_stopfailure_hook.py	rc=0
+★移動後★	python3 scripts/goal_stopfailure_hook.py	rc=0	/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Vers
