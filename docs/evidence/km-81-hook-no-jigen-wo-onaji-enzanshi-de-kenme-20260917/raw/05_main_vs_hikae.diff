@@ -1,0 +1,52 @@
+42c42,73
+< INPUT=$(cat)
+---
+> # ★2026-09-16 裁 seq320321⑴(313209/314012) ―― stdin を時限読みへ(家老mac 自席の器・可逆・事後1便)★
+> #   旧: `INPUT=$(cat)` は ★EOF が来る迄 永久に待つ★。呼び手が口を閉ぢ損ねれば席は永久に塞がる。
+> #   本形: bash の `read -t` を使ふ ―― 之は ★内で select(2) を待つ★ ゆゑ裁の文言其の儘。
+> #         `-d ''` は NUL 迄読む＝JSON に NUL は無い故、常に「EOF か時限」で戻る(rc≠0 が正常)。
+> #         ★時限切れでも bash は讀めた分を変数へ入れる★(man bash: saves any partial input)。
+> #   ★註(家老mac 實測 2026-09-16)★: 同じ裁の「全 read に timeout(10s)」は ★`cmd < "$f"` の形では効かぬ★。
+> #     `<` 再向は shell が open() する故、timeout が exec される前に止まる(FIFO で 120 秒 戻らなんだ)。
+> #     ∴ 門側は「時限」でなく ★開かぬ(stat)★ で直した。此處は fd が既に開いて居る故 時限が効く。
+> #   下流は json.load の失敗時に既定へ倒れる形が既に在る ∴ 空・欠けでも新しい落ち枝は要らぬ。
+> #   可逆: 下の塊を `INPUT=$(cat)` 一行へ戻せば旧挙動(控 = docs/evidence/karo-mac-gate-hook-fix-20260916/raw/00_hook_BEFORE.sh)。
+> STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"
+> case "$STOP_HOOK_STDIN_TIMEOUT" in
+>     ''|*[!0-9]*)
+>         echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「${STOP_HOOK_STDIN_TIMEOUT}」) — 既定 10 へ倒す(fail-closed)★" >&2
+>         STOP_HOOK_STDIN_TIMEOUT=10 ;;
+> esac
+> INPUT=""
+> __stdin_t0=$SECONDS
+> if IFS= read -r -d '' -t "$STOP_HOOK_STDIN_TIMEOUT" INPUT; then
+>     :
+> else
+>     __read_rc=$?
+>     __stdin_el=$(( SECONDS - __stdin_t0 ))
+>     # ★実測(家老mac 2026-09-16)★: 此の Mac の /bin/bash は 3.2 ゆゑ
+>     #   `read -t` は★時限切れでも rc=1★ を返す(EOF と同じ出目)。
+>     #   rc>128 は bash 4 以降の形であり、shebang は env bash(=brew bash 5)だが
+>     #   呼び手が `/bin/bash <script>` なら 3.2 で走る ―― ★両方在り得る★。
+>     #   ∴ rc だけに頼らず、★経過秒★ でも分ける。
+>     if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+>         echo "[stop_hook] ★stdin 時限切れ(${STOP_HOOK_STDIN_TIMEOUT}秒経過・rc=${__read_rc}) — 讀めた ${#INPUT} 字で続行★" >&2
+>     fi
+> fi
+146a178,193
+> # ★2026-09-16 非數の閾を塞ぐ(専任3 第39弾 の指摘・家老mac が code を讀んで確かめた)★
+> #   旧: 閾が數でないと `[ n -gt 非數 ]` は rc=2 を返し、`if` は之を「偽」と讀む。
+> #       `set -e` は if の條件には掛からぬ ∴ ★器は死なず、番人だけが黙る★。
+> #       結果 塞ぐ帯が [1,5] から ★[1,∞)★ へ開き、5/7 の自己増殖ループの防ぎが消える。
+> #       ―― 之は「赤が青に成る」でなく「番人が居らぬ事に誰も気付かぬ」形の疵である。
+> #   本形: 閾も數も先に検め、數でなければ ★既定へ倒して其の旨を言ふ(fail-closed・黙らぬ)★。
+> case "$MASS_UNREAD_THRESHOLD" in
+>     ''|*[!0-9]*)
+>         echo "[stop_hook] ★MASS_UNREAD_THRESHOLD が數でない(「${MASS_UNREAD_THRESHOLD}」) — 既定 5 へ倒す(fail-closed)★" >&2
+>         MASS_UNREAD_THRESHOLD=5 ;;
+> esac
+> case "${UNREAD_COUNT:-0}" in
+>     ''|*[!0-9]*)
+>         echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+>         UNREAD_COUNT=0 ;;
+> esac
