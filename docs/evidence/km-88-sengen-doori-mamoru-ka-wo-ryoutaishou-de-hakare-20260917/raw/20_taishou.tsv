@@ -1,0 +1,57 @@
+ver	form	env_hyouki	rc	stdout_byte	stderr_gyou_ki	trace_gyou	pu_timeout	pu_event	pu_startup	fixflag_ji
+kyuu	f01_unset	(未設定)	-9	0	51	1469	3	0	1	0
+kyuu	f02_empty	''	-9	0	51	1481	4	0	1	0
+kyuu	f03_blank_sp	' '	-9	0	18	714	0	0	1	0
+kyuu	f04_zero	'0'	-9	0	18	714	0	0	1	0
+kyuu	f05_one	'1'	-9	0	51	1490	4	0	1	0
+kyuu	f06_two	'2'	-9	0	18	714	0	0	1	0
+kyuu	f07_true	'true'	-9	0	18	714	0	0	1	0
+kyuu	f08_minus1	'-1'	-9	0	18	714	0	0	1	0
+kyuu	f09_mark_nl	'␊1'	-9	0	18	714	0	0	1	0
+kyuu	f10_lead_nl	'\n1'	-9	0	23	714	0	0	1	0
+kyuu	f11_zeropad	'01'	-9	0	18	714	0	0	1	0
+kyuu	f12_plus1	'+1'	-9	0	18	714	0	0	1	0
+kyuu	f13_lead_sp1	' 1'	-9	0	18	714	0	0	1	0
+kyuu	f14_zen_zero	'０'	-9	0	18	714	0	0	1	0
+index	f01_unset	(未設定)	-9	0	51	1273	4	0	1	0
+index	f02_empty	''	-9	0	51	1282	4	0	1	0
+index	f03_blank_sp	' '	-9	0	18	506	0	0	1	0
+index	f04_zero	'0'	-9	0	18	506	0	0	1	0
+index	f05_one	'1'	-9	0	51	1282	4	0	1	0
+index	f06_two	'2'	-9	0	18	506	0	0	1	0
+index	f07_true	'true'	-9	0	18	506	0	0	1	0
+index	f08_minus1	'-1'	-9	0	18	506	0	0	1	0
+index	f09_mark_nl	'␊1'	-9	0	18	506	0	0	1	0
+index	f10_lead_nl	'\n1'	-9	0	23	506	0	0	1	0
+index	f11_zeropad	'01'	-9	0	18	506	0	0	1	0
+index	f12_plus1	'+1'	-9	0	18	506	0	0	1	0
+index	f13_lead_sp1	' 1'	-9	0	18	506	0	0	1	0
+index	f14_zen_zero	'０'	-9	0	18	506	0	0	1	0
+shin	f01_unset	(未設定)	-9	0	52	1586	3	0	1	1
+shin	f02_empty	''	-9	0	53	1588	3	0	1	1
+shin	f03_blank_sp	' '	-9	0	53	1591	3	0	1	1
+shin	f04_zero	'0'	-9	0	19	769	0	0	1	1
+shin	f05_one	'1'	-9	0	52	1590	3	0	1	1
+shin	f06_two	'2'	-9	0	53	1595	3	0	1	1
+shin	f07_true	'true'	-9	0	53	1595	3	0	1	1
+shin	f08_minus1	'-1'	-9	0	53	1595	3	0	1	1
+shin	f09_mark_nl	'␊1'	-9	0	53	1593	3	0	1	1
+shin	f10_lead_nl	'\n1'	-9	0	57	1595	3	0	1	1
+shin	f11_zeropad	'01'	-9	0	53	1595	3	0	1	1
+shin	f12_plus1	'+1'	-9	0	53	1595	3	0	1	1
+shin	f13_lead_sp1	' 1'	-9	0	53	1595	3	0	1	1
+shin	f14_zen_zero	'０'	-9	0	53	1595	3	0	1	1
+hashiru_kouho	f01_unset	(未設定)	-9	0	51	1271	4	0	1	0
+hashiru_kouho	f02_empty	''	-9	0	51	1275	4	0	1	0
+hashiru_kouho	f03_blank_sp	' '	-9	0	18	508	0	0	1	0
+hashiru_kouho	f04_zero	'0'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f05_one	'1'	-9	0	51	1263	3	0	1	0
+hashiru_kouho	f06_two	'2'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f07_true	'true'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f08_minus1	'-1'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f09_mark_nl	'␊1'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f10_lead_nl	'\n1'	-9	0	23	508	0	0	1	0
+hashiru_kouho	f11_zeropad	'01'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f12_plus1	'+1'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f13_lead_sp1	' 1'	-9	0	18	508	0	0	1	0
+hashiru_kouho	f14_zen_zero	'０'	-9	0	18	508	0	0	1	0

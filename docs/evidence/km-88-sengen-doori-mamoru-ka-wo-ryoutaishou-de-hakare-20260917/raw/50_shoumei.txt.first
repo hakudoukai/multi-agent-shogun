@@ -1,0 +1,58 @@
+# 50_shoumei ―― 紙の数を器に問ひ直す(刻 2026-09-17T12:33:53)
+
+== 紙の主張 ⇔ 筵の実 ==
+  [合] 走の総数(4版×14形)                                             得=56  期=56
+  [合] rc は 56走 悉く -9                                           得=['-9']  期=['-9']
+  [合] stdout は 56走 悉く 0 byte                                   得=['0']  期=['0']
+  [合] 陽性 shin f04_zero は処理せぬ                                   得=False  期=False
+  [合] 陰性 shin f05_one は処理する                                    得=True  期=True
+  [合] shin は f04 以外 13形 悉く処理する                                 得=[]  期=[]
+  [合] index の14形は kyuu と出目一致                                   得=[]  期=[]
+  [合] hashiru_kouho の14形は kyuu と出目一致                           得=[]  期=[]
+  [合] 変つた組合せ = 10口                                             得=10  期=10
+  [合] 変らぬ組合せ = 4口                                              得=['f01_unset', 'f02_empty', 'f04_zero', 'f05_one']  期=['f01_unset', 'f02_empty', 'f04_zero', 'f05_one']
+  [合] stderr 行が二版で同じ形 = 0(14形 悉く動いた)                           得=[]  期=[]
+  [合] 零の升 = 34口                                                得=34  期=34
+  [合] shin f04_zero の trace 総行                                 得=769  期=769
+  [合] fix_flag を呼ぶ版は shin のみ                                   得=['shin']  期=['shin']
+
+== 紙の逐語引用 ⇔ ki/shin.sh の実(行番も己で引き直す) ==
+  [合] L251 逐語                                                  得=# Optional safety toggles:  期=# Optional safety toggles:
+  [合] L252 逐語                                                  得=# - ASW_DISABLE_ESCALATION=1: disable phase2/phase3 escalation actions  期=# - ASW_DISABLE_ESCALATION=1: disable phase2/phase3 escalation actions
+  [合] L253 逐語(宣)                                               得=# - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)  期=# - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)
+  [合] L258 逐語(直し)                                              得=fix_flag ASW_PROCESS_TIMEOUT 1 ASW_PROCESS_TIMEOUT  期=fix_flag ASW_PROCESS_TIMEOUT 1 ASW_PROCESS_TIMEOUT
+  [合] L1633 逐語(比較器)                                            得=        if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then  期=        if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+  [合] ASW_PROCESS_TIMEOUT の宣は L253 の一行のみ                       得=[253]  期=[253]
+  [合] ESCALATE 閾の行(L204)に PHASE1:120/PHASE2:240/COOLDOWN:300   得=True  期=True
+
+== 走る器 ⇔ disk ⇔ .bak(㋔) ==
+  [合] 生器 ino                                                   得=22062559  期=22062559
+  [合] 生器 bytes                                                 得=83319  期=83319
+  [合] 走る器の ino(21:11 実測) ≠ 生器の ino                             得=True  期=True
+  .bak 候補 = 4 本
+    inbox_watcher.sh.bak-20260903-pre-mac-noautoclear          ino=13913416   bytes=74274
+    inbox_watcher.sh.bak-20260912-shiketsu-karo-mac            ino=21054812   bytes=74274
+    inbox_watcher.sh.bak-noautoclear-20260910                  ino=20561878   bytes=74274
+    inbox_watcher.sh.bak-shikii-zoku2-20260917T022513          ino=21631228   bytes=76554
+  [合] 走る器の ino は .bak の何れとも合はぬ(∴同定は推)                          得=False  期=False
+  [★違★] 74274 B の .bak が在る                                       得=[74274, 76554]  期=[74274]
+
+== scope_out⑴ ―― 走る watcher を止めて居らぬ事(ps rc=0) ==
+  9859 Thu Sep 10 20:07:54 2026     bash scripts/inbox_watcher.sh ashigaru-mac-3 multiagent-mac:0.3 claude
+
+== scope_out⑵ ―― scripts/ の HEAD 差(git rc=0) ==
+   scripts/agent_health_check.sh                      |  20 +++-
+   scripts/checks/context_usage_warn.sh               |  18 +++-
+   scripts/checks/karo_mac_dasumae_gate.sh            |  17 ++-
+   scripts/checks/karo_mac_gate4.sh                   |  17 ++-
+   scripts/checks/karo_mac_manifest_verify.py         |  81 +++++++++++++-
+   scripts/inbox_watcher.sh                           | 117 ++++++++++++++++++---
+   scripts/redundancy/shogun_report_watcher.sh        |  52 ++++++++-
+   scripts/stop_hook_inbox.sh                         |  69 +++++++++++-
+   scripts/watchdogs/enter_restart_common_watchdog.sh |  20 +++-
+   9 files changed, 375 insertions(+), 36 deletions(-)
+  ※ 上の差は ★本弾の前から在つた家老の直し★。mtime=2026-09-17T10:25:19 は下命(12:03)より前。
+     本席は 12:11 以降 scripts/ へ一字も書いて居らぬ。
+
+== 結 ==
+  合=25 / ★違★=1

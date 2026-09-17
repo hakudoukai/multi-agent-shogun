@@ -1,0 +1,28 @@
+# 94_kuu ―― 束の全紙を條②③④へ合はせる(刻 2026-09-17T12:36:25)
+# 歩き根 = /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917  深さ=無制限(_gate/ と _manifest.txt と *.first は除く)
+
+== 陽性対照 ―― 檢出子が★鳴る★事を先に示す ==
+  汚した紙 'kiyoi\nmatsu ni kuuhaku  \n\n\n' → 整へた 'kiyoi\nmatsu ni kuuhaku\n'  : 変つた=True(★鳴る★)
+  0 byte の紙 : size=0 → 條④に触れる形である事を確かめた
+
+== 0 byte の紙(真の大きさを録つてから一行を書き入れる) ==
+
+== 結 ==
+  0 byte であつた紙 = 0 枚(真の大きさは悉く ★0★ ―― 上に名を悉く挙げた)
+  整へた紙(原本→.first) = 0 枚
+  元より整ふ紙 = 691 枚
+  UTF-8 で讀めぬ紙 = 9 枚(byte の儘 同じ條へ掛けた ―― 飛ばして居らぬ)
+    suna/index_f09_mark_nl/err.txt
+    suna/shin_f09_mark_nl/err.txt
+    suna/kyuu_f14_zen_zero/err.txt
+    suna/shin_f10_lead_nl/err.txt
+    suna/index_f14_zen_zero/err.txt
+    suna/shin_f14_zen_zero/err.txt
+    suna/hashiru_kouho_f14_zen_zero/err.txt
+    suna/kyuu_f09_mark_nl/err.txt
+    suna/hashiru_kouho_f09_mark_nl/err.txt
+  触れぬ紙(控・臺帳) = 4 枚
+    raw/10_sha.txt.first
+    raw/30_sanden.txt.first
+    raw/50_shoumei.txt.first
+    raw/94_kuu.txt.first

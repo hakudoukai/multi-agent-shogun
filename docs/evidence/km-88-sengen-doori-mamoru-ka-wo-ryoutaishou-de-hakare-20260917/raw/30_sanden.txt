@@ -1,0 +1,37 @@
+★㋐ 宣・直し・比較器 ―― 逐語で引き直す★
+引き方=「ASW_PROCESS_TIMEOUT」を含む行を悉く出し、役を字面で判じる。
+  宣    = 行頭が "#" で、値の意味を述べる註
+  受け口= 変数へ値を入れる行(旧 `NAME=${NAME:-既定}` / 新 `fix_flag NAME 既定 NAME`)
+  比較器= `[ ... = "1" ]` の形で枝を分ける行
+  註    = 上の三つの何れでもない註(直しの説明など)
+
+══ kyuu (1607 行) ―― 当たり 3 本 ══
+  宣      L210  | # - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)
+  受け口    L212  | ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+  比較器    L1540 |         if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+
+══ index (1554 行) ―― 当たり 3 本 ══
+  宣      L157  | # - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)
+  受け口    L159  | ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+  比較器    L1487 |         if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+
+══ shin (1700 行) ―― 当たり 4 本 ══
+  宣      L253  | # - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)
+  註      L257  | #   下流の比較器(`[ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]`)は ★一字も変へて居らぬ★。
+  受け口    L258  | fix_flag ASW_PROCESS_TIMEOUT 1 ASW_PROCESS_TIMEOUT
+  比較器    L1633 |         if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+
+══ hashiru_kouho (1566 行) ―― 当たり 3 本 ══
+  宣      L169  | # - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)
+  受け口    L171  | ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+  比較器    L1499 |         if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+
+★家老の与へた行番との差(的=shin)★
+  宣      家老=L251-253 / 己=L253 → 合ふ
+  直し     家老=L258 / 己=L258 → 合ふ
+  比較器    家老=L1633 / 己=L1633 → 合ふ
+
+★家老が「L251-253」と書いた幅の中身★ ―― 251/252 は何の行か
+  L251| # Optional safety toggles:
+  L252| # - ASW_DISABLE_ESCALATION=1: disable phase2/phase3 escalation actions
+  L253| # - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)

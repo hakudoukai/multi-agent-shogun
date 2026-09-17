@@ -1,0 +1,324 @@
+# 40_hantei ―― ㋑㋒㋓ の素(刻 2026-09-17T12:29:48)
+# 歩き根 = /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna  深さ=1(<版>_<形>/err.txt の一本のみ・再帰せず)
+# 検出子 = /usr/bin/grep -c -E 〈下記逐語〉   ※殻の grep は ugrep(.gitignore を見る)ゆゑ用ゐず
+# rc は管を通さず subprocess.returncode から直に取る。grep -c は ★当たり0で rc=1★。
+
+== 検出子の逐語 ==
+  fixflag    ^#+TR# fix_flag ASW_PROCESS_TIMEOUT         fix_flag(番人)を呼んだ回数
+  nudge_fail WARNING: send-keys nudge failed             突つきが外れた回数
+  nudge_try  \[SEND-KEYS\] Sending nudge                 実際に突つき(send-keys)を試みた回数
+  pu_event   ^#+TR# process_unread event$                事象 tick で未読処理に入つた回数
+  pu_timeout ^#+TR# process_unread timeout$              刻限 tick で未読処理に入つた回数
+  taoshi     \[watcher\].*ASW_PROCESS_TIMEOUT            番人が「倒す」と声を出した回数
+  throttle   \[SKIP\] Throttling nudge                   突つきを絞つた回数
+
+== 器の陽性対照 ―― 「零」が器の沈黙でない事の証 ==
+  kyuu           f05_one(=1) pu_timeout=4 rc=0 / nudge_try=2 rc=0  ← 同じ検出子が★此処では鳴る★
+  index          f05_one(=1) pu_timeout=4 rc=0 / nudge_try=2 rc=0  ← 同じ検出子が★此処では鳴る★
+  shin           f05_one(=1) pu_timeout=3 rc=0 / nudge_try=2 rc=0  ← 同じ検出子が★此処では鳴る★
+  hashiru_kouho  f05_one(=1) pu_timeout=3 rc=0 / nudge_try=2 rc=0  ← 同じ検出子が★此処では鳴る★
+
+== ㋑ 両対照の表 ==
+  出目4欄 = rc / stdout byte / stderr 行(器の声・TR 行を除く) / 未読が処理されたか
+  「処理されたか」は pu_timeout(刻限 tick の処理)で判ずる。0 の升には四札を後段に立てる。
+
+  版              形             与へた値      rc   out(B) err行   pu_timeout rc   判
+  kyuu           f01_unset     (未設定)     -9   0      51     3         0    処理する
+  kyuu           f02_empty     ''        -9   0      51     4         0    処理する
+  kyuu           f03_blank_sp  ' '       -9   0      18     0         1    処理せぬ
+  kyuu           f04_zero      '0'       -9   0      18     0         1    処理せぬ
+  kyuu           f05_one       '1'       -9   0      51     4         0    処理する
+  kyuu           f06_two       '2'       -9   0      18     0         1    処理せぬ
+  kyuu           f07_true      'true'    -9   0      18     0         1    処理せぬ
+  kyuu           f08_minus1    '-1'      -9   0      18     0         1    処理せぬ
+  kyuu           f09_mark_nl   '␊1'      -9   0      18     0         1    処理せぬ
+  kyuu           f10_lead_nl   '\n1'     -9   0      23     0         1    処理せぬ
+  kyuu           f11_zeropad   '01'      -9   0      18     0         1    処理せぬ
+  kyuu           f12_plus1     '+1'      -9   0      18     0         1    処理せぬ
+  kyuu           f13_lead_sp1  ' 1'      -9   0      18     0         1    処理せぬ
+  kyuu           f14_zen_zero  '０'       -9   0      18     0         1    処理せぬ
+
+  index          f01_unset     (未設定)     -9   0      51     4         0    処理する
+  index          f02_empty     ''        -9   0      51     4         0    処理する
+  index          f03_blank_sp  ' '       -9   0      18     0         1    処理せぬ
+  index          f04_zero      '0'       -9   0      18     0         1    処理せぬ
+  index          f05_one       '1'       -9   0      51     4         0    処理する
+  index          f06_two       '2'       -9   0      18     0         1    処理せぬ
+  index          f07_true      'true'    -9   0      18     0         1    処理せぬ
+  index          f08_minus1    '-1'      -9   0      18     0         1    処理せぬ
+  index          f09_mark_nl   '␊1'      -9   0      18     0         1    処理せぬ
+  index          f10_lead_nl   '\n1'     -9   0      23     0         1    処理せぬ
+  index          f11_zeropad   '01'      -9   0      18     0         1    処理せぬ
+  index          f12_plus1     '+1'      -9   0      18     0         1    処理せぬ
+  index          f13_lead_sp1  ' 1'      -9   0      18     0         1    処理せぬ
+  index          f14_zen_zero  '０'       -9   0      18     0         1    処理せぬ
+
+  shin           f01_unset     (未設定)     -9   0      52     3         0    処理する
+  shin           f02_empty     ''        -9   0      53     3         0    処理する
+  shin           f03_blank_sp  ' '       -9   0      53     3         0    処理する
+  shin           f04_zero      '0'       -9   0      19     0         1    処理せぬ
+  shin           f05_one       '1'       -9   0      52     3         0    処理する
+  shin           f06_two       '2'       -9   0      53     3         0    処理する
+  shin           f07_true      'true'    -9   0      53     3         0    処理する
+  shin           f08_minus1    '-1'      -9   0      53     3         0    処理する
+  shin           f09_mark_nl   '␊1'      -9   0      53     3         0    処理する
+  shin           f10_lead_nl   '\n1'     -9   0      57     3         0    処理する
+  shin           f11_zeropad   '01'      -9   0      53     3         0    処理する
+  shin           f12_plus1     '+1'      -9   0      53     3         0    処理する
+  shin           f13_lead_sp1  ' 1'      -9   0      53     3         0    処理する
+  shin           f14_zen_zero  '０'       -9   0      53     3         0    処理する
+
+  hashiru_kouho  f01_unset     (未設定)     -9   0      51     4         0    処理する
+  hashiru_kouho  f02_empty     ''        -9   0      51     4         0    処理する
+  hashiru_kouho  f03_blank_sp  ' '       -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f04_zero      '0'       -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f05_one       '1'       -9   0      51     3         0    処理する
+  hashiru_kouho  f06_two       '2'       -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f07_true      'true'    -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f08_minus1    '-1'      -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f09_mark_nl   '␊1'      -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f10_lead_nl   '\n1'     -9   0      23     0         1    処理せぬ
+  hashiru_kouho  f11_zeropad   '01'      -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f12_plus1     '+1'      -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f13_lead_sp1  ' 1'      -9   0      18     0         1    処理せぬ
+  hashiru_kouho  f14_zen_zero  '０'       -9   0      18     0         1    処理せぬ
+
+== ㋑ 零の四札(pu_timeout=0 の升 悉く) ==
+  零の升 = 34 口
+  ・kyuu / f03_blank_sp
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f03_blank_sp/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f04_zero
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f04_zero/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f06_two
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f06_two/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f07_true
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f07_true/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f08_minus1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f08_minus1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f09_mark_nl
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f09_mark_nl/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f10_lead_nl
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f10_lead_nl/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f11_zeropad
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f11_zeropad/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f12_plus1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f12_plus1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f13_lead_sp1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f13_lead_sp1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・kyuu / f14_zen_zero
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/kyuu_f14_zen_zero/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=714(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f03_blank_sp
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f03_blank_sp/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f04_zero
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f04_zero/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f06_two
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f06_two/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f07_true
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f07_true/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f08_minus1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f08_minus1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f09_mark_nl
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f09_mark_nl/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f10_lead_nl
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f10_lead_nl/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f11_zeropad
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f11_zeropad/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f12_plus1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f12_plus1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f13_lead_sp1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f13_lead_sp1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・index / f14_zen_zero
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 4(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/index_f14_zen_zero/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=506(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・shin / f04_zero
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/shin_f04_zero/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=769(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f03_blank_sp
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f03_blank_sp/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f04_zero
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f04_zero/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f06_two
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f06_two/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f07_true
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f07_true/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f08_minus1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f08_minus1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f09_mark_nl
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f09_mark_nl/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f10_lead_nl
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f10_lead_nl/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f11_zeropad
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f11_zeropad/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f12_plus1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f12_plus1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f13_lead_sp1
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f13_lead_sp1/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+  ・hashiru_kouho / f14_zen_zero
+      ①陽性対照 : 同版 f05_one を★同じ検出子・同じ路★で測れば 3(rc=0) ―― 器は鳴る
+      ②根と深さ : /Users/momizimac/multi-agent-shogun/docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/hashiru_kouho_f14_zen_zero/err.txt  (一本の file・再帰せず・深さ0)
+      ③rc       : grep -c rc=1(当たり0の正常な 1)／同紙の trace 総行=508(沈黙に非ず)
+      ④刻       : 2026-09-17T12:29:48
+
+== ㋒ 「倒れた先」が現に何を為したか(語ではなく出目) ==
+  版              形             pu_timeout nudge試    nudge外    絞り        番人の声
+  kyuu           f01_unset     3          2         6         6         0
+  kyuu           f02_empty     4          2         6         6         0
+  kyuu           f03_blank_sp  0          2         6         0         0
+  kyuu           f04_zero      0          2         6         0         0
+  kyuu           f05_one       4          2         6         6         0
+  kyuu           f06_two       0          2         6         0         0
+  kyuu           f07_true      0          2         6         0         0
+  kyuu           f08_minus1    0          2         6         0         0
+  kyuu           f09_mark_nl   0          2         6         0         0
+  kyuu           f10_lead_nl   0          2         6         0         0
+  kyuu           f11_zeropad   0          2         6         0         0
+  kyuu           f12_plus1     0          2         6         0         0
+  kyuu           f13_lead_sp1  0          2         6         0         0
+  kyuu           f14_zen_zero  0          2         6         0         0
+
+  shin           f01_unset     3          2         6         6         0
+  shin           f02_empty     3          2         6         6         2
+  shin           f03_blank_sp  3          2         6         6         2
+  shin           f04_zero      0          2         6         0         0
+  shin           f05_one       3          2         6         6         0
+  shin           f06_two       3          2         6         6         2
+  shin           f07_true      3          2         6         6         2
+  shin           f08_minus1    3          2         6         6         2
+  shin           f09_mark_nl   3          2         6         6         2
+  shin           f10_lead_nl   3          2         6         6         2
+  shin           f11_zeropad   3          2         6         6         2
+  shin           f12_plus1     3          2         6         6         2
+  shin           f13_lead_sp1  3          2         6         6         2
+  shin           f14_zen_zero  3          2         6         6         2
+
+== ㋓ 旧(kyuu=HEAD)と新(shin=disk)の差 ==
+  ★出目(未読を処理するか否か)が変つた組合せ = 10 口★
+    ・f03_blank_sp  ' ' → ' '  (処理せぬ → 処理する)
+    ・f06_two       '2' → '2'  (処理せぬ → 処理する)
+    ・f07_true      'true' → 'true'  (処理せぬ → 処理する)
+    ・f08_minus1    '-1' → '-1'  (処理せぬ → 処理する)
+    ・f09_mark_nl   '␊1' → '␊1'  (処理せぬ → 処理する)
+    ・f10_lead_nl   '\n1' → '\n1'  (処理せぬ → 処理する)
+    ・f11_zeropad   '01' → '01'  (処理せぬ → 処理する)
+    ・f12_plus1     '+1' → '+1'  (処理せぬ → 処理する)
+    ・f13_lead_sp1  ' 1' → ' 1'  (処理せぬ → 処理する)
+    ・f14_zen_zero  '０' → '０'  (処理せぬ → 処理する)
+  変らぬ組合せ = 4 口
+    ・f01_unset     (未設定)  ―― 両版とも 処理する
+    ・f02_empty     ''  ―― 両版とも 処理する
+    ・f04_zero      '0'  ―― 両版とも 処理せぬ
+    ・f05_one       '1'  ―― 両版とも 処理する
+
+  ※ rc は 56 走 悉く -9(gtimeout -s KILL の 9 番)・stdout は 56 走 悉く 0 byte。
+     stderr 行は 14 形 ★悉く★ 動いた(番人が声を出す分だけ増える):
+       f01_unset     51 行 → 52 行
+       f02_empty     51 行 → 53 行
+       f03_blank_sp  18 行 → 53 行
+       f04_zero      18 行 → 19 行
+       f05_one       51 行 → 52 行
+       f06_two       18 行 → 53 行
+       f07_true      18 行 → 53 行
+       f08_minus1    18 行 → 53 行
+       f09_mark_nl   18 行 → 53 行
+       f10_lead_nl   23 行 → 57 行
+       f11_zeropad   18 行 → 53 行
+       f12_plus1     18 行 → 53 行
+       f13_lead_sp1  18 行 → 53 行
+       f14_zen_zero  18 行 → 53 行

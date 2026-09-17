@@ -1,0 +1,15 @@
+刻=2026-09-17T12:11:11+0900
+HEAD=0039e1321654e52c15c3bec4998b96282b05667f
+-- 凍結した四版(束内 ki/) --
+kyuu             sha16=5ff53f30cd274956 bytes=77285 lines=1607
+index            sha16=6dcfc02c55419e9a bytes=73304 lines=1554
+shin             sha16=494c8c788d50d724 bytes=83319 lines=1700
+hashiru_kouho    sha16=09b661fe8ec2839b bytes=74274 lines=1566
+-- 生器(scripts/inbox_watcher.sh) 現況 --
+ino=22062559 bytes=83319 mtime=2026-09-17T10:25:19
+sha16=494c8c788d50d724
+-- 走つて居る watcher(自席 ashigaru-mac-3) が握る fd --
+pid=9859
+fd=255r ino=1,14 bytes=74274 path=/Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh
+-- 走る器と disk の突合 --
+(inode が違へば ★走る器は disk の直しを読んで居らぬ★)
