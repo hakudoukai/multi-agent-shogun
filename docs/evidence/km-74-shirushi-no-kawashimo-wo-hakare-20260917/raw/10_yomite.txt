@@ -1,0 +1,29 @@
+# 10 読み手の戸籍 / 刻 2026-09-17T09:03:37+0900 / 凍結点 6dbe09e6 / 根と深さ= ⒜ git grep 6dbe09e6 -- scripts .claude(凍結版の樹) ⒝ ~/bin/*.sh *.py(深さ 1) ⒞ ~/hermes-departments-mac/bin/*.sh(Mac 起動器・深さ 1) ⒟ 走る process(lsof)
+=== ⑴ 落ち先(源の逐語・凍結版) ===
+  watcher   scripts/inbox_watcher.sh:125: _th_say(){ printf '%s\n' "[watcher] $*" >&2; }
+  watchdog  scripts/watchdogs/enter_restart_common_watchdog.sh:73: log() { printf '[%s] %s\n' "$(date -Is)" "$*" | tee -a "$LOG"; }
+  watchdog  scripts/watchdogs/enter_restart_common_watchdog.sh:76: _th_say(){ log "$*"; }
+  health    scripts/agent_health_check.sh:86: _th_say(){ printf '%s\n' "[health_check] $*" >&2; }
+  ctxwarn   scripts/checks/context_usage_warn.sh:32: _th_say(){ echo "[context_warn] $*" >&2; }
+  → watcher/health/ctxwarn= stderr(>&2)・watchdog= tee -a $LOG(ER_LOG_DIR/日付.log)+stdout
+=== ⑵ 落ち先を讀む器 ―― 凍結版 repo(git grep -n・supervisor の >> は書き手ゆゑ除く) ===
+  inbox_watcher の log を讀む: 0 行 (rc 1)
+  watchdog の log を讀む: 0 行 (rc 1)
+  health_check の出目を讀む: 0 行 (rc 1)
+  ctxwarn の出目を讀む: 0 行 (rc 1)
+  ★陽性対照(同じ git grep が在る語 inbox_watcher.sh を拾ふ file 数)= 7 (rc 0)
+=== ⑶ ~/bin(深さ 1・.sh .py・repo 外・讀むのみ) ===
+  母數 30 本 / 四器の出目を指す語を持つ file= 0 本 [] / ★陽性対照 同じ讀み方で「queue/inbox」を持つ file= 3 本★
+=== ⑷ Mac 起動器(repo 外・讀むのみ)―― 四器の出目を何処へ結ぶか ===
+  hermes-departments-mac/bin/boot-mac-fleet.sh:110: # ── inbox_watcher（重複起動しない） ──
+  hermes-departments-mac/bin/boot-mac-fleet.sh:113: pgrep -f "inbox_watcher.sh $ag " >/dev/null 2>&1 && continue
+  hermes-departments-mac/bin/boot-mac-fleet.sh:120: nohup /Users/momizimac/hermes-departments-mac/ashigaru-mac-7/bin/start-downlink-watcher.sh > "/tmp/inbox_watcher_$ag.log" 2>&1 &
+  hermes-departments-mac/bin/boot-mac-fleet.sh:122: nohup bash "$REPO/scripts/inbox_watcher.sh" "$ag" "$tgt" claude > "/tmp/inbox_watcher_$ag.log" 2>&1 &
+  → 起動器は stderr を /tmp/inbox_watcher_$ag.log へ結ぶと書くが、★走る process は logs/ へ結んで居る(⑸)★ ―― 起動元は起動器ではない(09-10 20:07:54 の起動・第73弾までに家老が別経路で起こした由・本紙は「起動元 未特定」と書く)
+=== ⑸ 走る watcher(pid 9826・己の箱)の fd 1/2/255(lsof・刻は本 file 頭) ===
+  COMMAND  PID      USER   FD   TYPE DEVICE SIZE/OFF     NODE NAME
+  bash    9826 momizimac    1w   REG   1,14  4624569 13925799 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-1.log
+  bash    9826 momizimac    2w   REG   1,14  4624569 13925799 /Users/momizimac/multi-agent-shogun/logs/inbox_watcher_ashigaru-mac-1.log
+  bash    9826 momizimac  255r   REG   1,14    74274 20564860 /Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh
+  logs/inbox_watcher_ashigaru-mac-1.log: 総行 43378 / 在る語 unread 17196 行(陽性対照) / 「閾」の行 0 (rc=1)―― ★走る器は旧 inode(00_start)ゆゑ 6dbe09e6 の _th_say は一度も走つて居らぬ。0 は「無い」でなく「未だ刷られて居らぬ」★
+=== ∴ ㋐㋑ の答(此の母數の内) === 四器の _th_say の行を ★値として讀み返す器= 0★(repo 凍結版 0・~/bin 0・起動器 0)。讀む者は人と Claude(端末・紙)であり、器の外。

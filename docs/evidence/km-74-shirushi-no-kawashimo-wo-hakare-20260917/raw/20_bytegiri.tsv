@@ -1,0 +1,5 @@
+器	path	行	種	逐語
+watcher	scripts/inbox_watcher.sh	439	other	"id": f"msg_auto_recovery_{now.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}
+watcher	scripts/inbox_watcher.sh	744	other	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup
+watchdog	scripts/watchdogs/enter_restart_common_watchdog.sh	223	other	print(f"{elapsed:.1f}|{last['created_at']}|{last.get('topic','')[:80]}")
+health	scripts/agent_health_check.sh	361	other	sid_short="${sid:0:8}"

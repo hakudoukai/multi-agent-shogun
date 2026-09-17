@@ -1,0 +1,9 @@
+# 00 起 / 刻 2026-09-17T09:02:49+0900 / 枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 HEAD 6ba8fcb / 凍結点 6dbe09e67c045da1a86c59cd023460bb125d461e (2026-09-17 08:45:00 +0900 feat(scripts): 乙(␊) ―― 閾の値の★行注入★を共)
+★四器(的・讀むのみ・scripts/ へ 0 字)★ 凍結版 sha16(git show) ／ disk sha16 ／ 一致
+  watcher   scripts/inbox_watcher.sh 凍結 15ac9f97f473245d disk 15ac9f97f473245d 一致
+  watchdog  scripts/watchdogs/enter_restart_common_watchdog.sh 凍結 f92cd54e09736a4e disk f92cd54e09736a4e 一致
+  health    scripts/agent_health_check.sh 凍結 7d11ba9f852ac759 disk 7d11ba9f852ac759 一致
+  ctxwarn   scripts/checks/context_usage_warn.sh 凍結 3010defd413a3479 disk 3010defd413a3479 一致
+門・臺帳の器(凍結版 sha16 / disk sha16): dasumae e11f0d0142549086/e11f0d0142549086 / gate4 95b027ea5e4f0fc5/95b027ea5e4f0fc5 / append e3b0c44298fc1c14/f5ea5e1e85d64936 / 照合器 bbde471f70848fc8/a507c998c7bd6485
+disk の inbox_watcher.sh inode=22062559 bytes=80724(lsof で見た走る pid 9826 の fd255 = inode 20564860 bytes 74274 ―― 09:01:53 實測・同じか= ★否(走る器は旧 inode)★)
+前版(第72/73弾で引いた・★古い★・捨てる): watcher cac867f8 / watchdog b224557e / health 6493c1d7 / ctxwarn 897412b0

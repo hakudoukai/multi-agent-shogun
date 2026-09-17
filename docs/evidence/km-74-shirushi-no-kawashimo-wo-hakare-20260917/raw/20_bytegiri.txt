@@ -1,0 +1,15 @@
+# 20 byte 切りの戸籍 / 刻 2026-09-17T09:05:02+0900 / 凍結点 6dbe09e6 / 形= cut -b・cut -c・printf %.N・substr(・${v:0:N}・head -c・LC_ALL=C・[:N](python 切片)
+=== ⑴ 四器の中(凍結版・行番号は git show) ===
+  watcher   scripts/inbox_watcher.sh: byte 切り 2 本 / 母數 1667 行 / _th_say の行 6: [125, 149, 153, 154, 161, 164]
+    :439: "id": f"msg_auto_recovery_{now.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}",  ← _th_say の行か= 否(別の値)
+    :744: echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2  ← _th_say の行か= 否(別の値)
+  watchdog  scripts/watchdogs/enter_restart_common_watchdog.sh: byte 切り 1 本 / 母數 430 行 / _th_say の行 6: [76, 100, 104, 105, 112, 115]
+    :223: print(f"{elapsed:.1f}|{last['created_at']}|{last.get('topic','')[:80]}")  ← _th_say の行か= 否(別の値)
+  health    scripts/agent_health_check.sh: byte 切り 1 本 / 母數 489 行 / _th_say の行 6: [86, 110, 114, 115, 122, 125]
+    :361: sid_short="${sid:0:8}"  ← _th_say の行か= 否(別の値)
+  ctxwarn   scripts/checks/context_usage_warn.sh: byte 切り 0 本 / 母數 101 行 / _th_say の行 5: [32, 60, 61, 68, 71]
+=== ⑵ 讀み手(10 の戸籍で 0 本)の中の byte 切り= ★讀み手が 0 ゆゑ 0(母數 0)★ ―― 「無い」ではなく「讀む器が無い」
+=== ⑶ Mac 起動器(書き手・讀むのみ): byte 切り 0 本 / 母數 160 行 ===
+=== ⑷ ★陽性対照★ 同じ形を凍結版 scripts/ 全体へ(git grep -c)= 2 file: scripts/checks/pane_identity.sh:3 / scripts/redundancy/shogun_report_watcher.sh:1 ―― 器は在る物を見得る
+=== ⑸ 己の第73弾 raw/40 の切り(cut -c1-N・${V:0:N}・printf %.N)は ★己の探り針★ であつて四器の下流の器ではない ―― 18/66 の割れは「切れば割れる」の實證であり「現に切る器が在る」の證ではない
+=== ∴ ㋐ の答 === 四器が刷る _th_say の行の下流に byte 切りは ★現に 0 本★(讀み手 0・起動器 0)。四器の中の切りは ★4 本★(器が数へた・上 ⑴ の行)で、悉く _th_say の行ではなく別の値(uuid 切片・startup_prompt・topic・session id)。★己の初版の結びは頭で 2 と書いた ―― 器の数 4 に直した(書く前に問へ)。★∴ ㋓ は「讀み手が現れた時に開く穴」(潜在)であり、凍結版では ★閉ぢて居る★ ―― 但し人の端末と Claude(hook の stderr)は器の外ゆゑ数へて居らぬ。
