@@ -1,0 +1,19 @@
+分岐点(merge-base)= 6e9d40600a80
+main tip = 4be3ee19e1c5
+main 側 commit = 21
+main 側 file = 14
+
+.gitignore
+docs/incident_logs/2026-08-06_w205_inbox_watcher_send_cli_command_cure_test_evidence_a1.md
+queue/reports/honbucho_ebb0e8ad_receiver_map_acceptance_20260909_0407.md
+queue/reports/honbucho_ebb0e8ad_receiver_map_reacceptance_20260909_0423.md
+scripts/checks/karo_mac_manifest_verify.py
+scripts/idle_backlog_wake.sh
+scripts/inbox_watcher.sh
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py
+tests/agent_selfwatch.bats
+tests/test_ebb0e8ad_receiver_routing.py
+tests/test_ff5c9068_unroutable_notice_dedupe.py
+tests/test_idle_backlog_wake_inbox.bats
+tests/test_secondpc_samepc_role_routing.py
+tests/test_watcher_hotfix.py

@@ -1,0 +1,35 @@
+path	版(blob頭12)	其の版を持つ枝数	main	disk	枝の名
+scripts/checks/karo_mac_dasumae_gate.sh	9cd550fc2cf9	46	-	-	ashigaru-mac-1/a1-jishu-kuumoji-kiten-20260917 ashigaru-mac-1/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 ashigaru-mac-1/km-71-kuumoji-wa-atai-toshite-furumau-20260917 ashigaru-mac-1/km-71b-fusagikata-ni-an-20260917 ashigaru-mac-1/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917
+scripts/checks/karo_mac_dasumae_gate.sh	54e133c85832	6	-	-	karo-mac/a1-r56 karo-mac/a3-r39-fix-20260917 karo-mac/daiko-teishutsu-20260916 karo-mac/km-50-47-20260917 karo-mac/km-dead-inbox-gate-20260917 karo-mac/lot48235904-provenance-20260916
+scripts/checks/karo_mac_dasumae_gate.sh	b0bf5b05eded	2	-	-	karo-mac/gate-hook-fix-20260916 karo-mac/hantei-saiteishutsu-20260917
+scripts/checks/karo_mac_dasumae_gate.sh	054c442eaee3	1	-	★disk と同一★	karo-mac/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917
+scripts/checks/karo_mac_dasumae_gate.sh	(main)	-	★main に無し★	-	-
+scripts/checks/karo_mac_dasumae_gate.sh	(disk)	-	054c442eaee3	★何れかの枝に在り★	-
+scripts/checks/karo_mac_manifest_verify.py	b19ec9ea2596	54	★main と同一★	-	ashigaru-mac-1/a1-jishu-kuumoji-kiten-20260917 ashigaru-mac-1/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 ashigaru-mac-1/km-71-kuumoji-wa-atai-toshite-furumau-20260917 ashigaru-mac-1/km-71b-fusagikata-ni-an-20260917 ashigaru-mac-1/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917
+scripts/checks/karo_mac_manifest_verify.py	ebfc4c0ecc08	1	-	★disk と同一★	karo-mac/hantei-saiteishutsu-20260917
+scripts/checks/karo_mac_manifest_verify.py	224f4f769e3d	1	-	-	karo-mac/manifest-verify-20260909
+scripts/checks/karo_mac_manifest_verify.py	(main)	-	b19ec9ea2596	-	-
+scripts/checks/karo_mac_manifest_verify.py	(disk)	-	ebfc4c0ecc08	★何れかの枝に在り★	-
+scripts/stop_hook_inbox.sh	229c05571ada	56	★main と同一★	-	ashigaru-mac-1/a1-jishu-kuumoji-kiten-20260917 ashigaru-mac-1/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 ashigaru-mac-1/km-71-kuumoji-wa-atai-toshite-furumau-20260917 ashigaru-mac-1/km-71b-fusagikata-ni-an-20260917 ashigaru-mac-1/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917
+scripts/stop_hook_inbox.sh	77c6e585fbb1	2	-	-	karo-mac/gate-hook-fix-20260916 karo-mac/hantei-saiteishutsu-20260917
+scripts/stop_hook_inbox.sh	15d8906f0460	1	-	-	ashigaru-mac-3/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917
+scripts/stop_hook_inbox.sh	8bcea3298161	1	-	★disk と同一★	karo-mac/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917
+scripts/stop_hook_inbox.sh	(main)	-	229c05571ada	-	-
+scripts/stop_hook_inbox.sh	(disk)	-	8bcea3298161	★何れかの枝に在り★	-
+scripts/inbox_watcher.sh	1d2821a3b4bd	50	-	-	ashigaru-mac-1/a1-jishu-kuumoji-kiten-20260917 ashigaru-mac-1/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 ashigaru-mac-1/km-71-kuumoji-wa-atai-toshite-furumau-20260917 ashigaru-mac-1/km-71b-fusagikata-ni-an-20260917 ashigaru-mac-1/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-ates
+scripts/inbox_watcher.sh	00cd905d6eeb	5	-	-	ashigaru-mac-1/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917 ashigaru-mac-2/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917 ashigaru-mac-2/km-53b-gyou-chunyu-no-naoshi-wo-sueru-20260917 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 karo-mac/km-shikii-yokotenkai-20
+scripts/inbox_watcher.sh	428bd79fa78e	3	-	-	karo-mac/km-74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917 karo-mac/km-75-shikii-no-nokori-hitotsu-wo-tojiru-20260917 karo-mac/km-76-repogai-no-ichikasho-wo-nushi-he-watasu-20260917
+scripts/inbox_watcher.sh	084a6eb53d96	1	-	-	karo-mac/km-73-otsu-dash-ichido-no-kane-20260917
+scripts/inbox_watcher.sh	73cdfbc4a8df	1	-	★disk と同一★	karo-mac/km-82-hata-ni-wa-hata-no-bannin-wo-20260917
+scripts/inbox_watcher.sh	(main)	-	778d233445de	-	-
+scripts/inbox_watcher.sh	(disk)	-	73cdfbc4a8df	★何れかの枝に在り★	-
+.claude/settings.json	678cf446464c	59	★main と同一★	-	ashigaru-mac-1/a1-jishu-kuumoji-kiten-20260917 ashigaru-mac-1/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 ashigaru-mac-1/km-71-kuumoji-wa-atai-toshite-furumau-20260917 ashigaru-mac-1/km-71b-fusagikata-ni-an-20260917 ashigaru-mac-1/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917
+.claude/settings.json	fc36299100d8	1	-	-	karo-mac/settings-hook-abs-20260917
+.claude/settings.json	(main)	-	678cf446464c	-	-
+.claude/settings.json	(disk)	-	2745242872db	★何れの枝にも無し(未commit)★	-
+scripts/goal_stop_hook.py	4485f72ef659	1	-	★disk と同一★	karo-mac/settings-hook-abs-20260917
+scripts/goal_stop_hook.py	(main)	-	★main に無し★	-	-
+scripts/goal_stop_hook.py	(disk)	-	4485f72ef659	★何れかの枝に在り★	-
+scripts/goal_stopfailure_hook.py	9ad7b8de49c7	1	-	★disk と同一★	karo-mac/settings-hook-abs-20260917
+scripts/goal_stopfailure_hook.py	(main)	-	★main に無し★	-	-
+scripts/goal_stopfailure_hook.py	(disk)	-	9ad7b8de49c7	★何れかの枝に在り★	-
