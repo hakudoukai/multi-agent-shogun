@@ -1,0 +1,14 @@
+# 41_inyou_kyoudai ―― 兄弟の口の陰陽対照 / 刻= 2026-09-17T10:31:08+0900
+# 對象= scripts/stop_hook_inbox.sh / sha16= f1b49820e234a1ee / 行= 288 / 閾名= MASS_UNREAD_THRESHOLD / 左項= UNREAD_COUNT
+# 番人域(逐語)= 197〜213 行(17 行) / 判定行= 214 行
+# 判定行の候補(字面が当たつた行 悉く)= 1 本 ★註行・if 以外は採らぬ★
+#   214 行: 註行=偽 / if…then=真 / 採=★之★ : if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+# 判定行(逐語): if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+# 番人の形= 旧形(case の glob *[!0-9]*)
+# 寫し= docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/utsushi/u2_mass_in.sh sha16= 73eeee5ee0719388
+# 寫しの形検め(bash -n) rc= 0
+
+--- 寫しの出目(MASS_UNREAD_THRESHOLD= 5 / UNREAD_COUNT= 7) rc= 0 ---
+[out] 番人の後: MASS_UNREAD_THRESHOLD=[5] UNREAD_COUNT=[7]
+[out] 閾比較の素 rc=0
+[out] ★閾を越えたと見る(then へ入つた)★

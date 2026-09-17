@@ -1,0 +1,55 @@
+# 50_bangai ―― 裁の三口の外の file を別行で立てる / 刻= 2026-09-17T10:38:21+0900
+# 條(甲)= 定義丁 條(全) \$\{[A-Za-z_][A-Za-z0-9_]*:-[0-9]+\} (1 出現 1 口)
+# 條(乙)= test(1) の數比較 ∧ 同行に 2>/dev/null ―― 取り落ちが rc=2 に成り得る地(第52弾の「素」)
+# ★二條は別物である。甲=0 は「fail-open が無い」の意に非ず。★
+
+=== 對象= scripts/karo_overload_monitor.sh ===
+# sha256/16= 3196a91236e9b8ef / bytes= 20862 / 行= 523
+[甲] 條(全)の口= 0 / 其の内 條(閾)を満たす口= 0
+  ★甲の口が一つも無い ―― 此の file は定義丁の母數に ★一行も★ 入らぬ(閾を直に代入して居る故)★
+[乙] 素(fail-open 地)= 9
+  180	左=$ts -ge 右=$cutoff	if [ "$ts" -ge "$cutoff" ] 2>/dev/null; then
+  438	左=$m1 -ge 右=$KARO_UNREAD_THRESHOLD	[ "$m1" -ge "$KARO_UNREAD_THRESHOLD" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M1"
+  439	左=$m2 -ge 右=$KARO_LATENCY_THRESHOLD_SEC	[ "$m2" -ge "$KARO_LATENCY_THRESHOLD_SEC" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M2"
+  440	左=$m3 -ge 右=$DISPATCH_LATENCY_THRESHOLD_SEC	[ "$m3" -ge "$DISPATCH_LATENCY_THRESHOLD_SEC" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M3"
+  441	左=$m4 -ge 右=$PARALLEL_CMD_NEW_THRESHOLD	[ "$m4" -ge "$PARALLEL_CMD_NEW_THRESHOLD" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M4"
+  442	左=$m5 -ge 右=$UNSTARTED_SUBPHASE_THRESHOLD	[ "$m5" -ge "$UNSTARTED_SUBPHASE_THRESHOLD" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M5"
+  452	左=$ts -ge 右=$cutoff_1h	if [ "$ts" -ge "$cutoff_1h" ] 2>/dev/null; then
+  472	左=$since_last -lt 右=$COOLDOWN_SEC	if [ "$since_last" -lt "$COOLDOWN_SEC" ] 2>/dev/null; then
+  481	左=$CURRENT_ALERT_COUNT_1H -ge 右=$ALERT_CAP_PER_HOUR	if [ "$CURRENT_ALERT_COUNT_1H" -ge "$ALERT_CAP_PER_HOUR" ] 2>/dev/null; then
+[乙・項] 項の數= 18 (地 9 × 左右2) ―― ★「12」は此の單位の數である★
+  180	左 $ts	外から入る=★真★	生れ= 状態/一覧を辿る(for)@178,450
+  180	右 $cutoff	外から入る=偽	生れ= 算($((…)))@174
+  438	左 $m1	外から入る=★真★	生れ= env既定(:=・展開時に代入)@424 / 他器の出目(read で受く)@423 / 直書き@331,375 / 引數で受く(local N="$k")@331,375
+  438	右 $KARO_UNREAD_THRESHOLD	外から入る=★真★	生れ= env既定(:=・展開時に代入)@71
+  439	左 $m2	外から入る=★真★	生れ= 他器の出目(read で受く)@423 / 直書き@332,376 / 引數で受く(local N="$k")@332,376
+  439	右 $KARO_LATENCY_THRESHOLD_SEC	外から入る=★真★	生れ= env既定(:=・展開時に代入)@72
+  440	左 $m3	外から入る=★真★	生れ= 他器の出目(read で受く)@423 / 直書き@333,377 / 引數で受く(local N="$k")@333,377
+  440	右 $DISPATCH_LATENCY_THRESHOLD_SEC	外から入る=★真★	生れ= env既定(:=・展開時に代入)@73
+  441	左 $m4	外から入る=★真★	生れ= 他器の出目(read で受く)@423 / 直書き@334,378 / 引數で受く(local N="$k")@334,378
+  441	右 $PARALLEL_CMD_NEW_THRESHOLD	外から入る=★真★	生れ= env既定(:=・展開時に代入)@74
+  442	左 $m5	外から入る=★真★	生れ= env既定(:=・展開時に代入)@427 / 外器の出目($(…))@426 / 直書き@335,379 / 引數で受く(local N="$k")@335,379
+  442	右 $UNSTARTED_SUBPHASE_THRESHOLD	外から入る=★真★	生れ= env既定(:=・展開時に代入)@75
+  452	左 $ts	外から入る=★真★	生れ= 状態/一覧を辿る(for)@178,450
+  452	右 $cutoff_1h	外から入る=偽	生れ= 算($((…)))@445
+  472	左 $since_last	外から入る=偽	生れ= 算($((…)))@471
+  472	右 $COOLDOWN_SEC	外から入る=★真★	生れ= env既定(:=・展開時に代入)@78
+  481	左 $CURRENT_ALERT_COUNT_1H	外から入る=偽	生れ= 算($((…)))@453 / 直書き@446,521
+  481	右 $ALERT_CAP_PER_HOUR	外から入る=★真★	生れ= env既定(:=・展開時に代入)@79
+[乙・項] ★外から値が入り得る項= 14 / 18★
+[併記] 甲の口= 0 ／ 乙の素= 9 ―― ★同じ file で二つの數が別々に立つ★
+
+=== 對象= scripts/stop_hook_inbox.sh ===
+# sha256/16= f1b49820e234a1ee / bytes= 16434 / 行= 288
+[甲] 條(全)の口= 7 / 其の内 條(閾)を満たす口= 2
+  64	STOP_HOOK_STDIN_TIMEOUT:-10	註行=偽	閾條=立つ
+  145	UNREAD_COUNT:-0	註行=偽	閾條=落つ
+  197	MASS_UNREAD_THRESHOLD:-5	註行=偽	閾條=立つ
+  209	UNREAD_COUNT:-0	註行=偽	閾條=落つ
+  214	UNREAD_COUNT:-0	註行=偽	閾條=落つ
+  222	UNREAD_COUNT:-0	註行=偽	閾條=落つ
+  241	UNREAD_COUNT:-0	註行=偽	閾條=落つ
+[乙] 素(fail-open 地)= 0
+[乙・項] 項の數= 0 (地 0 × 左右2) ―― ★「12」は此の單位の數である★
+[乙・項] ★外から値が入り得る項= 0 / 0★
+[併記] 甲の口= 7 ／ 乙の素= 0 ―― ★同じ file で二つの數が別々に立つ★
