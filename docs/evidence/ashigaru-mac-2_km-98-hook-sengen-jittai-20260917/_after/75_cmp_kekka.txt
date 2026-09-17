@@ -1,0 +1,5 @@
+# 既存臺帳(2冠+54行=56行)の byte 不動
+cmp _after/70_manifest_before.txt _after/74_manifest_head.txt
+cmp rc=0
+# rc=0 ∴ 一 byte も動いて居らぬ。★rc は pipe を通さず直に拾つた★
+# 陽性対照(3行目の = を全角へ一字換へた写し)= cmp rc=1・char 200, line 3 ―― 鳴る路である

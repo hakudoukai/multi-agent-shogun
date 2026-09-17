@@ -1,0 +1,6 @@
+#no	event	判	path(展開後)	tree(1da2b6b9)	disk	遮断(check-ignore -v)	註
+F1	FixtureEvent	丙	scripts/zettai_ni_nai_km98_hook.py	無(rc=128)	無	.gitignore:7:* : scripts/zettai_ni_nai_km98_hook.py	CLAUDE_PROJECT_DIR=既定
+F2	FixtureEvent	丁	-	-	-	-	★path らしき token 無し(tok=1)★
+F3	FixtureEvent	丁	-	-	-	-	★${ が閉ぢぬ★
+F4	FixtureEvent	丁	-	-	-	-	★shlex 分割不能: No closing quotation★
+F5	FixtureEvent	丁	-	-	-	-	★KM98_NAI_HENSUU 未設定かつ既定無し★

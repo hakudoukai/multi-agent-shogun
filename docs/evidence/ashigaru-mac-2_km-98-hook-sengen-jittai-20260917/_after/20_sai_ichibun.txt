@@ -1,0 +1,1 @@
+据ゑた 1da2b6b9 の settings.json は hook 6本、悉く tree に在り 乙0丙0丁0(器=20_classify.py rc=0、陽性対照 親3b413b7e で乙2 が鳴る)。main との差は「4→6」に非ず ―― 増2本は Stop=goal_stop_hook.py と StopFailure=goal_stopfailure_hook.py、減0、残4本は相対から絶対形へ変つた。丙の python3 hook は rc=2、goal_stop_hook.py:4 曰く exit2 は停止差戻 ∴ 黙つて通らず席を塞ぐ。検査案は紙のみ、据ゑず。

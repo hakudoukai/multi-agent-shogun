@@ -1,0 +1,13 @@
+# main = 4 本 / 1da2b6b9 = 6 本
+# main のみ = 4 / 1da2b6b9 のみ = 6 / 両方 = 0
+main のみ	PreToolUse	scripts/checks/dd169_kill_term_guard.sh	bash scripts/checks/dd169_kill_term_guard.sh
+main のみ	PreToolUse	scripts/checks/pretooluse_bash_guard.sh	scripts/checks/pretooluse_bash_guard.sh
+main のみ	Stop	scripts/stop_hook_inbox.sh	bash scripts/stop_hook_inbox.sh
+main のみ	UserPromptSubmit	scripts/checks/context_usage_warn.sh	bash scripts/checks/context_usage_warn.sh
+★1da2b6b9 で増えた★	PreToolUse	/Users/momizimac/multi-agent-shogun/scripts/checks/dd169_kill_term_guard.sh	bash ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/checks/dd169_kill_term_guard.sh
+★1da2b6b9 で増えた★	PreToolUse	/Users/momizimac/multi-agent-shogun/scripts/checks/pretooluse_bash_guard.sh	${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/checks/pretooluse_bash_guard.sh
+★1da2b6b9 で増えた★	Stop	/Users/momizimac/multi-agent-shogun/scripts/goal_stop_hook.py	python3 ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/goal_stop_hook.py
+★1da2b6b9 で増えた★	Stop	/Users/momizimac/multi-agent-shogun/scripts/stop_hook_inbox.sh	bash ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/stop_hook_inbox.sh
+★1da2b6b9 で増えた★	StopFailure	/Users/momizimac/multi-agent-shogun/scripts/goal_stopfailure_hook.py	python3 ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/goal_stopfailure_hook.py
+★1da2b6b9 で増えた★	UserPromptSubmit	/Users/momizimac/multi-agent-shogun/scripts/checks/context_usage_warn.sh	bash ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/checks/context_usage_warn.sh
+# 両方に在り 字面同一=0 / 字面違ふ=0

@@ -1,0 +1,5 @@
+#no	event	group	idx	matcher	type	command(␊␍␉=可視印)
+1	PreToolUse	0	0	Bash	command	scripts/checks/pretooluse_bash_guard.sh
+2	PreToolUse	0	1	Bash	command	bash scripts/checks/dd169_kill_term_guard.sh
+3	Stop	0	0		command	bash scripts/stop_hook_inbox.sh
+4	UserPromptSubmit	0	0		command	bash scripts/checks/context_usage_warn.sh

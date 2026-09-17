@@ -1,0 +1,6 @@
+#no	event	group	idx	matcher	type	command(␊␍␉=可視印)
+F1	FixtureEvent	0	0		command	python3 ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun}/scripts/zettai_ni_nai_km98_hook.py
+F2	FixtureEvent	0	1		command	true
+F3	FixtureEvent	0	2		command	bash ${CLAUDE_PROJECT_DIR:-/Users/momizimac/multi-agent-shogun/scripts/x.sh
+F4	FixtureEvent	0	3		command	bash '/Users/momizimac/multi-agent-shogun/scripts/quote_hiraki_ppanashi.sh
+F5	FixtureEvent	0	4		command	bash ${KM98_NAI_HENSUU}/scripts/y.sh

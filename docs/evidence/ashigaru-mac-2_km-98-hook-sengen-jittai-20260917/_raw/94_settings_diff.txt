@@ -1,0 +1,11 @@
+--- docs/evidence/ashigaru-mac-2_km-98-hook-sengen-jittai-20260917/_raw/93_base_settings.json	2026-09-17 14:23:46
++++ .claude/settings.json	2026-09-17 12:46:04
+@@ -60,6 +60,8 @@
+     "defaultMode": "bypassPermissions",
+     "allow": [
+       "Bash(kill -TERM:*)",
++    "Bash(bash scripts/inbox_write.sh:*)",
++    "Bash(cd /Users/momizimac/multi-agent-shogun && bash scripts/inbox_write.sh:*)",
+     "Bash(tmux capture-pane:*)",
+     "Bash(tmux list-panes:*)"
+     ],

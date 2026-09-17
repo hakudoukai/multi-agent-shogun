@@ -1,0 +1,5 @@
+#no	event	判	path(展開後)	tree(main)	disk	遮断(check-ignore -v)	註
+1	PreToolUse	甲	scripts/checks/pretooluse_bash_guard.sh	有	有	-	-
+2	PreToolUse	甲	scripts/checks/dd169_kill_term_guard.sh	有	有	-	-
+3	Stop	甲	scripts/stop_hook_inbox.sh	有	有	-	-
+4	UserPromptSubmit	甲	scripts/checks/context_usage_warn.sh	有	有	-	-

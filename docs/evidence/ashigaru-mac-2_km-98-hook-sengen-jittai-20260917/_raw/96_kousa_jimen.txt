@@ -1,0 +1,5 @@
+# 交叉検め(字面): "command": の行数 ―― json 由来の母數 6 と合ふか
+base grep -c "command"=12
+main grep -c "command"=8
+# 註: "type": "command" も同じ字面を持つ ∴ 字面は二重に数へ得る(=字面で数へぬ理由)
+base grep -c type:command=6

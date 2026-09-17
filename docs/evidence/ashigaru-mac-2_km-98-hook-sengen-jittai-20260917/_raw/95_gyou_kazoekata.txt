@@ -1,0 +1,10 @@
+# 行の數へ方 三種(據ゑた commit の settings.json)
+wc -l(改行数)=1107
+grep -c 行=1108
+末尾1byte: 00000000: 7d                                       }
+# main
+grep -c 行=1089
+末尾1byte: 00000000: 7d                                       }
+# disk
+grep -c 行=1110
+末尾1byte: 00000000: 7d                                       }

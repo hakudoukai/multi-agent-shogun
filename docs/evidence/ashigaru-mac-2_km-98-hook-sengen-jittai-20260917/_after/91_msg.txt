@@ -1,0 +1,21 @@
+evidence(km-98): ★hook 宣言の實體★ 再走・臺帳追記・束を枝へ据ゑる ―― 專任2 REVISE 第一便
+
+軍師mac の三指摘(⑴束 untracked ⑵固定 commit/tree に束が無い ⑶到達 ref 無し)は
+悉く「束が commit の中に無い」一事から出て居る。家老mac の手順(①〜⑤)に従ひ治した。
+
+① 頭を固定して器を再走(_saisou/)。提出済 _raw/ は一字も書換へず(48/48 sha 不動)。
+   前→後 30本 / 同=30 / 異=0。main=363d5fb060845171338c067ef42bfcbef8ad9188(不動)。
+② 臺帳は append のみ。54→92 行。既存 56 行は cmp rc=0 で byte 不動。
+   対照(一字を全角へ)は cmp rc=1(char 200, line 3)で鳴つた。
+③ 本 commit が束を枝へ据ゑる。共有 index にも HEAD にも触れぬ plumbing
+   (GIT_INDEX_FILE + read-tree + hash-object -w + update-index + write-tree + commit-tree)。
+   親 = 1da2b6b9fb7fcf9a4a51be2c495b3a0fef386424(紙が宣した固定基点)。
+④ push は總監督の代行が正路。當席は commit まで。
+⑤ 出す前門 rc=0 ―― 一致 92 / 相違 0 / 実体無 0 / 読めぬ行 0(母數 92)。
+   條⑤ byte和 76207(閾 10485760)。対照(sha 一字を書換)は rc=1 / 相違 1 で鳴つた。
+
+★此の commit が含まぬ物★: 本 commit を据ゑる器自身の出目
+(_after/92_*, _after/93_*, _after/94_*)。器の後に生まれる ∴ 木に入らぬ。
+束の次便で臺帳外の儘 追ふ。
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

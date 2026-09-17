@@ -1,0 +1,31 @@
+=== scripts/goal_stop_hook.py L1-8 ===
+#!/usr/bin/env python3
+"""CC-GOAL-HOOK (canon: claude-code-loop-stack.md 一・2026-08-30 総監督canary実装)
+Stop hookとして走る。席のgoal file(queue/goals/<agent_id|session_id>.yaml)が生きている限り
+exit 2で停止を差し戻し続行させる(公式仕様: exit2="Prevents Claude from stopping")。
+安全: goal file無し=即exit0(非対象sessionへ影響ゼロ)/max_turns背止め/blocked:脱出/done・verify緑で解除。
+"""
+import json, os, subprocess, sys, time
+
+
+=== scripts/goal_stopfailure_hook.py L1-8 ===
+#!/usr/bin/env python3
+"""CC-STOPFAILURE-RESUME (canon: claude-code-loop-stack.md 二)
+StopFailure(=turnがAPIエラーで終了)で発火。goal fileが生きている席は
+⑴stallマーカーを必ず書き(外部見張りの拾い先) ⑵exit2で自己再駆動を試みる(版が許せば即復旧)。
+goal無き席はマーカーのみ(exit0)——非対象への注入をしない。
+"""
+import json, os, subprocess, sys, time
+
+
+=== scripts/checks/pretooluse_bash_guard.sh L1-6,50-53 ===
+#!/usr/bin/env bash
+# pretooluse_bash_guard.sh — Claude Code PreToolUse Bash hook
+#
+# 旧 inline (.claude/settings.json) は `if ... then ... fi; exit 0` の一行式で、
+# Windows 上の Claude Code hook executor が `bash <hook_command>` を `bash -c`
+# に渡す際、コマンド先頭が `if` だと `bash if ...` となり構文崩壊した
+fi
+
+# §19 観点・hook はブロック禁: 必ず exit 0
+exit 0

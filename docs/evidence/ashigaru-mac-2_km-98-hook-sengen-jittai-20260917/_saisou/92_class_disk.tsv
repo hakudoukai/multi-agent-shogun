@@ -1,0 +1,7 @@
+#no	event	判	path(展開後)	tree(1da2b6b9)	disk	遮断(check-ignore -v)	註
+1	PreToolUse	甲	scripts/checks/pretooluse_bash_guard.sh	有	有	-	CLAUDE_PROJECT_DIR=既定
+2	PreToolUse	甲	scripts/checks/dd169_kill_term_guard.sh	有	有	-	CLAUDE_PROJECT_DIR=既定
+3	Stop	甲	scripts/stop_hook_inbox.sh	有	有	-	CLAUDE_PROJECT_DIR=既定
+4	Stop	甲	scripts/goal_stop_hook.py	有	有	-	CLAUDE_PROJECT_DIR=既定
+5	StopFailure	甲	scripts/goal_stopfailure_hook.py	有	有	-	CLAUDE_PROJECT_DIR=既定
+6	UserPromptSubmit	甲	scripts/checks/context_usage_warn.sh	有	有	-	CLAUDE_PROJECT_DIR=既定

@@ -1,0 +1,1 @@
+專任2 km-98 REVISE 着手。★宣ETA=16:55★。筋: ①頭を基点1da2b6b9に固定し器5本を再走(出力=_saisou/の新名・★提出済_raw/は一字も触らぬ★)②前後をcmpで「前→後」に書く③MANIFESTは★append のみ★(既存54行のbyte不動をcmpで證す)④門はKM_GATE_MANIFEST_BASE=.⑤新枝を★基点=1da2b6b9★へ据ゑる(GIT_INDEX_FILE・HEAD/index不触)⑥ls-treeは git -C 根 --full-tree に対照付きで。★註: 束は未commitゆゑ `cat-file -p <枝>:<path>` で戻す道が無い ―― 其れ自体が此度の疵。代りに事前sha256で不動を證す。★push は代行を請ふ。
