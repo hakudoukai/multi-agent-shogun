@@ -1,0 +1,15 @@
+## tmux server socket 一覧(既定 socket 以外が在るか)
+total 0
+drwx------@    4 momizimac  wheel     128 Sep 17 08:11 .
+drwxrwxrwt  4908 root       wheel  157056 Sep 17 14:22 ..
+srwxrwx---@    1 momizimac  wheel       0 Aug 15 23:23 default
+srw-rw----@    1 momizimac  wheel       0 Sep 17 08:11 km73
+
+## 既定 socket の session
+gakushu-bucho	1win	created=
+hermes-drm	1win	created=
+hermes-gunshi-mac	1win	created=
+multiagent-mac	1win	created=
+
+## 己の pane
+multiagent-mac:0.3	@agent_id=ashigaru-mac-3	TMUX_PANE=8
