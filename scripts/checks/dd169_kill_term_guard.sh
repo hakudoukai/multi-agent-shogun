@@ -19,11 +19,11 @@
 #
 set -uo pipefail
 
-LOG_DIR="/tmp/dd169_audit_log"
+LOG_DIR="${HOME}/.local/state/dd169"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/$(date +%Y%m%d).log"
 
-log() { printf '[%s] %s\n' "$(date -Is)" "$*" >> "$LOG_FILE"; }
+log() { printf '[%s] %s\n' "$(date '+%Y-%m-%dT%H:%M:%S%z')" "$*" >> "$LOG_FILE"; }
 
 # 公式 PreToolUse hook 仕様: stdin JSON 入力 retain (= env var 依存禁、cycle3 fail-open 真因解消)
 # JSON 構造: {"tool_input": {"command": "..."}} ほか. .tool_input.command を抽出。
