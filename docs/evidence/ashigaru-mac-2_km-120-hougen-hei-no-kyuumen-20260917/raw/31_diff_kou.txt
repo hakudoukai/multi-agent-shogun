@@ -1,0 +1,24 @@
+# ㋓ 案庚 の逐語 diff ―― 基 = _ki/san_c1486ca1.py (= 委員長が据ゑた ⑶ / 枝 karo-mac/daini-no-for-wo-nozoku-20260917 commit c1486ca1)
+# 作り方(逐語・再現可能): git cat-file blob c1486ca1:scripts/checks/karo_mac_manifest_verify.py > _ki/san_c1486ca1.py
+#              然る後 driver/30_an_wo_tateru.py が str.replace(…, 1) で ★一箇所だけ★ 差替(assert n==1)
+#
+--- _ki/san_c1486ca1.py	2026-09-17 20:24:58
++++ _an/an_kou_km120.py	2026-09-17 20:30:58
+@@ -105,6 +105,17 @@
+         _t = _dequote(m2.group(1))
+         if _t:
+             return [_t]          # ★唯一の候補★ ―― 不在なら鳴らせる(fail-open を作らぬ)
++    # ★案庚★ 方言丙(``sha256=`` が ``path=`` より前)では則②が構造上當らぬ。
++    #   其の時 ①③ は空白で切る故 ★短縮 `a` だけが候補に成る★(km-120 ㋐ 丙の五面)。
++    #   ∴ path= から★行末まで★捕り、末尾の ``欄=値`` を剥いだ物を ★唯一の候補★ とする。
++    #   戻し方: 次の `if not m2:` の塊を除けば ⑶(c1486ca1) へ戻る。
++    if not m2:
++        m4 = re.search(r"(?:^|\s)path=(.+)$", line)
++        if m4:
++            _t = re.sub(r"(?:[ \t]+[A-Za-z_][A-Za-z0-9_]*=[^ \t]*)+$", "", m4.group(1))
++            _t = _dequote(_t)
++            if _t:
++                return [_t]
+     for _pat in (r'(?:^|\s)path=([^\s"\']+)',  # ①本形(★引用符を用ゐぬ★・裁321353⑵)
+                  r"(?:^|\s)path=(.+?)[ \t]+sha256=",   # ②非貪欲(素の空白名)
+                  r"(?:^|\s)path=(\S+)"):  # ③従来形(sha256 が前に在る等)

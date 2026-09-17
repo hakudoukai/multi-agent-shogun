@@ -1,0 +1,38 @@
+== ㋐-締 乙の残りを名指す(値は刷らぬ) ==
+歩き根(絶対)= /Users/momizimac/multi-agent-shogun/docs/evidence
+刻(始)= 2026-09-17T22:05:17+0900  刻(終)= 2026-09-17T22:05:18+0900
+file数(S_ISREG のみ)= 9173  読めぬ= 0  種漏れ= 0
+
+-- 陽性対照(★測る当の函数に通した★) 鳴らぬ= 0 --
+  対1_純混字(秘の形)  残る  ★残5_純混字(切れ目無し)★  <伏:38字>  乱れ=5.018
+  対2_path片  残る  残1_path片(/ を含む ―― 他席の束名・歩き路の写し)  <伏:45字>  乱れ=4.756
+  対3_=末尾詰め  残る  残3_=末尾詰め(base64 らしき ―― 値の器)  <伏:37字>  乱れ=5.047
+
+-- 残りの分け(排他・網羅 計=2532) --
+  ★残5_純混字(切れ目無し)★                                   917 件  在処=8束
+  残2_日附入りの札(20YYMMDD を含む ―― 控・枝・弾の名)                511 件  在処=30束
+  残1_path片(/ を含む ―― 他席の束名・歩き路の写し)                   418 件  在処=13束
+  残4_語連結(_ か - で切れる ―― 識別子・file名)                   406 件  在処=9束
+  残3_=末尾詰め(base64 らしき ―― 値の器)                       280 件  在処=6束
+  ―― 和= 2532 (乙の残りと合ふべき数)
+
+★肝★: 残1〜残4 は ★切れ目を持つ★ ―― 秘は切れ目を持たぬ。
+       ∴ 人が全数を開けるべきは ★残5(純混字)= 917 件★ のみである。
+
+-- ★残5 の在処★(file 別・全13本) --
+     292 件  ashigaru-mac-1_km-118-daiyon-no-bin-wo-kooraseyo-20260917/raw/40_freeze/inbox_write.sh.b64
+     240 件  ashigaru-mac-1_km-118-daiyon-no-bin-wo-kooraseyo-20260917/raw/40_freeze/karo_mac_dasumae_gate.sh.b64
+     117 件  ashigaru-mac-1_km-118-daiyon-no-bin-wo-kooraseyo-20260917/raw/40_freeze/karo_mac_gate4.sh.b64
+      95 件  km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52_raw_30_ate.tsv
+      95 件  km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/raw/30_ate.tsv
+      36 件  km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/47_hei.tsv
+      18 件  km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917/raw/20_matrix.tsv
+       8 件  ashigaru-mac-1_km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917/raw2/20_ps_all.txt
+       8 件  ashigaru-mac-1_km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917/raw/20_ps_all.txt
+       2 件  ashigaru-mac-2_km-122-pr24-ga-akeru-to-no-mukou-20260917/driver/11_otsu_midare.py
+       2 件  ashigaru-mac-2_km-122-pr24-ga-akeru-to-no-mukou-20260917/driver/12_nokori_wake.py
+       2 件  ashigaru-mac-1_km-112-shadan-wo-toku-ichigyou-20260917/driver/50_himitsu_scan.py
+  ―― 上位3本(.b64 = ★共有器 script を base64 で凍らせた写し★)で 649/917 件
+★宣★: 之は「残1〜4 に秘が無い」の證ではない ―― ★形で分けただけ★である。
+       残1〜4 に秘を隠す事は出来る(例: 秘に `-` を一字入れれば残4へ落ちる)。
+       其の穴は★塞いで居らぬ・数も測れぬ★。甲(11形)が拾ふ側に回る。

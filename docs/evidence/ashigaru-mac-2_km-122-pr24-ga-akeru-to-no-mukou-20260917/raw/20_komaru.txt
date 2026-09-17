@@ -1,0 +1,74 @@
+== ㋒ 秘の外で「焼いたら困る物」を名指す ==
+歩き根(絶対)= /Users/momizimac/multi-agent-shogun/docs/evidence
+刻(始)= 2026-09-17T22:05:18+0900  刻(終)= 2026-09-17T22:05:24+0900
+file数(S_ISREG のみ)= 9173  byte和= 74385961  読めぬ= 0  種漏れ= 0
+
+-- 陽性対照(★本走査と同じ則 object★) 鳴らぬ= 0 --
+  対_電話     ㋒5a_電話らしき              鳴つた  <伏:29字>
+  対_郵便     ㋒5b_郵便番号らしき            鳴つた  <伏:24字>
+  対_メール    ㋒5c_メールらしき             鳴つた  <伏:32字>
+  対_生年     ㋒5d_生年月日らしき            鳴つた  <伏:26字>
+  対_和暦     ㋒5e_和暦生年らしき            鳴つた  <伏:25字>
+  対_12桁    ㋒5f_12桁連番              鳴つた  <伏:28字>
+  対_敬称     ㋒6_敬称付きの名らしき           鳴つた  <伏:21字>
+  対_診療語    ㋒5g_診療語                鳴つた  <伏:18字>
+
+-- 出目(件数と file数・★値は刷らぬ★) --
+  ㋒5a_電話らしき                      2 件      2 file  ― 個人を特定し得る形
+  ㋒5b_郵便番号らしき                    3 件      2 file  ― 個人を特定し得る形
+  ㋒5c_メールらしき                   142 件     26 file  ― 個人を特定し得る形
+  ㋒5d_生年月日らしき                 3385 件    588 file  ― 個人を特定し得る形
+  ㋒5e_和暦生年らしき                    1 件      1 file  ― 個人を特定し得る形
+  ㋒5f_12桁連番                   1010 件    249 file  ― 個人を特定し得る形
+  ㋒6_敬称付きの名らしき                  55 件     44 file  ― ★辞書無し ∴ 名か否か断ぜぬ★
+  ㋒5g_診療語                       48 件     17 file  ― 語 ―― 人を特定せぬ
+  ㋒3_利用者名入り絶対path             9173 件   9173 file
+  ㋒3b_本文に写された利用者名            42071 件   1714 file
+  相異なる利用者名= 3 通り(値は刷らぬ ―― <伏:9字> <伏:3字> <伏:4字>)
+
+  ㋒1_巨大file(1MiB 以上)= 9 本  byte和= 18288860
+         6733154 byte  ashigaru-mac-3_km-119-mon-wo-yobu-te-ga-nai-wo-tojiro-20260917/raw/11_hit_zenbu.tsv
+         2132659 byte  ashigaru-mac-1_km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917/raw2/15_R5_files.nul.gz
+         2132452 byte  ashigaru-mac-1_km-97-hako-wo-umu-michi-wa-ikutsu-aruka-20260917/raw/15_R5_files.nul.gz
+         1417886 byte  km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917/raw/30_doku.tsv
+         1326817 byte  km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917/raw/30_doku.tsv.first
+  ㋒2___pycache__/.pyc= 2 本  byte和= 11640
+  ㋒4_他席 worktree/.git の写し= 0 本  byte和= 0
+  ㋒7_器の写し(.sh/.b64)= 768 本  byte和= 6730413
+           83319 byte  km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/ki/shin.sh
+           83319 byte  km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/shin_f02_empty/ki/w.sh
+           83319 byte  km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/shin_f09_mark_nl/ki/w.sh
+           83319 byte  km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/shin_f07_true/ki/w.sh
+           83319 byte  km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/suna/shin_f13_lead_sp1/ki/w.sh
+
+-- ★当つた物の字形★(値ではなく形・数字は 9 へ潰した) --
+  ㋒5a_電話らしき 相異なる形= 1
+           2 件  999-9999-9999
+  ㋒5b_郵便番号らしき 相異なる形= 1
+           3 件  999-9999
+  ㋒5d_生年月日らしき 相異なる形= 2
+        3384 件  9999-99-99
+           1 件  9999-99-9
+  ㋒5f_12桁連番 相異なる形= 1
+        1010 件  999999999999
+  ㋒5f の内訳: 刻(YYYYMMDDHHMM)として読める=2  刻として読めぬ(byte/seq の類)=1008
+  ㋒6 敬称の前の語 相異なる= 22 ―― 上位(★値を出す: 氏名ではない事を示す為★)
+          16 件  「公式仕」
+           5 件  「器の仕」
+           3 件  「機構と同」
+           3 件  「に成らぬ」
+           3 件  「悉く一」
+
+-- ★メールの宛先★(局のみ・名は伏せる) 相異なる= 12 通り 計= 142 件
+  公開bot・例示・此の機の局を除いた★実在らしき宛★= 4 通り / 40 件
+        17 件  <伏:10字>@gmail.com
+        11 件  <伏:6字>@sasebo.or.jp
+        10 件  <伏:13字>@gnu.orgGNUcoreutilshomepage
+         2 件  <伏:20字>@users.norep
+
+★数が何を意味せぬか★
+・㋒5g(診療語)は ★語★ の数である ―― 人を一人も特定せぬ。艦の条・紙の議論に現れる。
+・㋒6 は ★辞書を持たぬ★ ∴ 「名か否か」を断じて居らぬ。敬称の前の2〜5字を数へただけ。
+  役職名(委員長様 等)も此処に入る。★∴ 之は上限であつて、氏名の数ではない。★
+・0 は「其の形が無い」意であつて「其の物が無い」意ではない(別形は測れて居らぬ)。
+・㋒3 の 件数 は ★出現の数★ であつて file の数ではない(file数を併記した)。

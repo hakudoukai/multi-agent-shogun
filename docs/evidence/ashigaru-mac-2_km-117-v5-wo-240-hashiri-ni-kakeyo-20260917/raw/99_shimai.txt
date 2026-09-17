@@ -1,0 +1,92 @@
+# km-117 仕舞ひ ―― 刻 2026-09-17T20:03:59+0900
+# 歩き根 = /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-2_km-117-v5-wo-240-hashiri-ni-kakeyo-20260917
+
+== 臺帳 manifest.txt ==
+行(LF数)	70
+path= の行	68
+註(# 始まり)の行	2
+sha256	8656cdd0f41373150fdc625fb49bbe868e287a87f8474f98acec5a033519333f
+bytes	8272
+★臺帳の中の mon_ を含む行(自数)	0★  ―― 門の控は臺帳へ入れて居らぬ
+
+== 門の走り(★控は走り毎に別名★・古い走りも消さずに残す) ==
+控	mon_20260917_195916_ichi	rc=0	err行=7	out行=5
+控	mon_20260917_195927_ni	rc=0	err行=7	out行=5
+控	mon_20260917_200242_san	rc=1	err行=10	out行=5
+控	mon_20260917_200244_shi	rc=1	err行=10	out行=5
+控	mon_20260917_200301_ichi	rc=0	err行=7	out行=5
+控	mon_20260917_200304_ni	rc=0	err行=7	out行=5
+控	mon_20260917_200325_ichi	rc=0	err行=7	out行=5
+控	mon_20260917_200328_ni	rc=0	err行=7	out行=5
+控	mon_ichi_20260917_195616	rc=1	err行=19	out行=5
+★通つた走り=6 / 落ちた走り=3 / 計=9★
+★納めの二走(受取条件⑷)★ = mon_20260917_200325_ichi / mon_20260917_200328_ni
+★二つの控名は違ふか★ = 違ふ
+-- mon_20260917_200325_ichi の條 --
+	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+	條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+	條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(59本)通
+	條⑤ 寸法 = byte和 454228(閾 10485760未満)
+-- mon_20260917_200328_ni の條 --
+	條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+	條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+	條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(59本)通
+	條⑤ 寸法 = byte和 454228(閾 10485760未満)
+★門の出目は悉く stderr ∴ .out に判定は無い★
+
+== 員外(★臺帳に載せたが門へ渡さなんだ物★・9本) ==
+driver/__pycache__/kaki.cpython-314.pyc	bytes=2142	python が生む binary。條②2行・條③CR7行・條④EOF改行0 に鳴る
+raw/10_menseki.err	bytes=0	0byte ―― 條④が 0byte に鳴る(器は一行も吐かなんだ)
+raw/10_menseki.stderr	bytes=0	0byte ―― 同上
+raw/13_otori.stderr	bytes=0	0byte ―― 同上
+raw/30_genbutsu.err	bytes=0	0byte ―― 同上
+raw/31_genbutsu.stderr	bytes=0	0byte ―― 同上
+raw/32_otsu.stderr	bytes=0	0byte ―― 同上
+raw/31_daini_for.tsv	bytes=1160233	★NUL を含む ∴ 條②が濡れ衣を着せる(下の實測)★
+raw/40_naoshi.diff	bytes=703	★unified diff の文脈行は「空白一字の行」∴ 末尾空白 2 行が要る(除けば git apply が落ちる)★
+
+== 門の控 其れ自身(★臺帳にも門にも載らぬ★) ==
+mon_20260917_195916_ichi.err	bytes=490
+mon_20260917_195916_ichi.out	bytes=327
+mon_20260917_195927_ni.err	bytes=490
+mon_20260917_195927_ni.out	bytes=327
+mon_20260917_200242_san.err	bytes=651
+mon_20260917_200242_san.out	bytes=327
+mon_20260917_200244_shi.err	bytes=651
+mon_20260917_200244_shi.out	bytes=327
+mon_20260917_200301_ichi.err	bytes=490
+mon_20260917_200301_ichi.out	bytes=327
+mon_20260917_200304_ni.err	bytes=490
+mon_20260917_200304_ni.out	bytes=327
+mon_20260917_200325_ichi.err	bytes=490
+mon_20260917_200325_ichi.out	bytes=327
+mon_20260917_200328_ni.err	bytes=490
+mon_20260917_200328_ni.out	bytes=327
+mon_ichi_20260917_195616.err	bytes=1166
+mon_ichi_20260917_195616.out	bytes=327
+註: mon_ichi_20260917_195616.* は ★落ちた一走り目★(rc=1)。員外を切る前の走り。消さずに残す。
+
+== 此の器と此の出目(★臺帳が凍つた後に生れた物★) ==
+driver/99_shimai.py	―― 臺帳に無い(★己を数へる器は己を臺帳へ入れられぬ★)
+raw/99_shimai.txt	―― 臺帳に無い(★己を数へる器は己を臺帳へ入れられぬ★)
+driver/__pycache__/99_shimai.cpython-314.pyc	―― 臺帳に無い(★己を数へる器は己を臺帳へ入れられぬ★)
+
+== raw/31_daini_for.tsv の 條② 濡れ衣 ―― 陽性/陰性対照付 ==
+byte で行末が空白/TAB の行	0	(python・母數 3313 行)
+門と同じ形の grep(BSD)	4	(rc=0)
+NUL を含む行	8
+★因★ = ★空白/TAB の直後に NUL が来ると鳴る★(下の六対照で当てた)。字の直後の NUL では鳴らぬ ∴「NUL が在るから」ではない
+陽性対照(真に末尾空白)	出目=1	rc=0	期待=1
+陰性対照(清い行)	出目=0	rc=1	期待=0
+陰性対照(TAB 在るが行末でない)	出目=0	rc=1	期待=0
+★陽性対照(TAB の直後に NUL)★	出目=1	rc=0	期待=1
+★陽性対照(空白の直後に NUL)★	出目=1	rc=0	期待=1
+★陰性対照(字の直後に NUL)★	出目=0	rc=1	期待=0
+
+== 此の数が意味せぬ事 ==
+・「員外 9 本」は「9 本が疵物」ではない ―― ★門の條が其の形の file に当たらぬ★だけである。
+  9 本悉く 條①(臺帳と disk の一致)は通つて居る(母數 68 の内)。
+・「門 rc=0 二度」は「紙の中身が正しい」を言はぬ ―― ★出す前の五條を満たす★の一事のみ。
+・「臺帳 68 行」は束の file 総数ではない ―― 此の器・此の出目・門の控 6 本は後から生れた。
+  ★歩き直せば本数は増える。★ 増分 = 器1 + 出目1 + 其の .pyc 1 + 門の控 18 本 = 21 本(此の刻)。
+・「mon_ 行 0」は grep rc=1(不一致)で得た零である。rc=2 なら測れて居らぬ。

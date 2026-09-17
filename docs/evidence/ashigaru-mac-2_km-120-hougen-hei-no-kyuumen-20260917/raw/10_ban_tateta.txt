@@ -1,0 +1,108 @@
+# ★建てる手順★(走る毎に建て直す・2026-09-17T20:31:04+0900 の走りの逐語)
+# 根 = /private/tmp/km120_ban_20260917T203104_72262  ―― ★束の外★(札 kinshi 順守)
+rm -rf /private/tmp/km120_ban_20260917T203104_72262; mkdir -p /private/tmp/km120_ban_20260917T203104_72262
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/甲_甲
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/甲_甲/a   # prefix=file
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/甲_甲/manifest.txt の一行 = path=a b.txt sha256=f4e0bc76ed98a32241fdd17aaf8bd4fd2341248576d9cfb7a0b3543e91b5e07d bytes=15 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/甲_乙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/甲_乙/a   # prefix=file
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/甲_乙/manifest.txt の一行 = path=a b.txt bytes=15 lines=1 sha256=f4e0bc76ed98a32241fdd17aaf8bd4fd2341248576d9cfb7a0b3543e91b5e07d
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/甲_丙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/甲_丙/a   # prefix=file
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/甲_丙/manifest.txt の一行 = sha256=f4e0bc76ed98a32241fdd17aaf8bd4fd2341248576d9cfb7a0b3543e91b5e07d path=a b.txt bytes=15 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/乙_甲
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/乙_甲/a   # prefix=file
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/乙_甲/manifest.txt の一行 = path=a b.txt sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/乙_乙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/乙_乙/a   # prefix=file
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/乙_乙/manifest.txt の一行 = path=a b.txt bytes=26 lines=1 sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/乙_丙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/乙_丙/a   # prefix=file
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/乙_丙/manifest.txt の一行 = sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 path=a b.txt bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丙_甲
+# prefix 無し(建てぬ)
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丙_甲/manifest.txt の一行 = path=a b.txt sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丙_乙
+# prefix 無し(建てぬ)
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丙_乙/manifest.txt の一行 = path=a b.txt bytes=26 lines=1 sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丙_丙
+# prefix 無し(建てぬ)
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丙_丙/manifest.txt の一行 = sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 path=a b.txt bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丁_甲
+mkdir /private/tmp/km120_ban_20260917T203104_72262/丁_甲/a   # prefix=dir
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丁_甲/manifest.txt の一行 = path=a b.txt sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丁_乙
+mkdir /private/tmp/km120_ban_20260917T203104_72262/丁_乙/a   # prefix=dir
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丁_乙/manifest.txt の一行 = path=a b.txt bytes=26 lines=1 sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丁_丙
+mkdir /private/tmp/km120_ban_20260917T203104_72262/丁_丙/a   # prefix=dir
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丁_丙/manifest.txt の一行 = sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 path=a b.txt bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丁二_甲
+mkdir /private/tmp/km120_ban_20260917T203104_72262/丁二_甲/a   # prefix=dir
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/丁二_甲/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丁二_甲/manifest.txt の一行 = path=a b.txt sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丁二_乙
+mkdir /private/tmp/km120_ban_20260917T203104_72262/丁二_乙/a   # prefix=dir
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/丁二_乙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丁二_乙/manifest.txt の一行 = path=a b.txt bytes=26 lines=1 sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/丁二_丙
+mkdir /private/tmp/km120_ban_20260917T203104_72262/丁二_丙/a   # prefix=dir
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/丁二_丙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/丁二_丙/manifest.txt の一行 = sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 path=a b.txt bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/戊_甲
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/戊_甲/a   # prefix=file
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/戊_甲/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/戊_甲/manifest.txt の一行 = path=a b.txt sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/戊_乙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/戊_乙/a   # prefix=file
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/戊_乙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/戊_乙/manifest.txt の一行 = path=a b.txt bytes=26 lines=1 sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/戊_丙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/戊_丙/a   # prefix=file
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/戊_丙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/戊_丙/manifest.txt の一行 = sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 path=a b.txt bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/戊二_甲
+# prefix 無し(建てぬ)
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/戊二_甲/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/戊二_甲/manifest.txt の一行 = path=a b.txt sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/戊二_乙
+# prefix 無し(建てぬ)
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/戊二_乙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/戊二_乙/manifest.txt の一行 = path=a b.txt bytes=26 lines=1 sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/戊二_丙
+# prefix 無し(建てぬ)
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/戊二_丙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/戊二_丙/manifest.txt の一行 = sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 path=a b.txt bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/己_甲
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/己_甲/a   # prefix=file
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/己_甲/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/己_甲/manifest.txt の一行 = path=a b.txt sha256=f4e0bc76ed98a32241fdd17aaf8bd4fd2341248576d9cfb7a0b3543e91b5e07d bytes=15 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/己_乙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/己_乙/a   # prefix=file
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/己_乙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/己_乙/manifest.txt の一行 = path=a b.txt bytes=15 lines=1 sha256=f4e0bc76ed98a32241fdd17aaf8bd4fd2341248576d9cfb7a0b3543e91b5e07d
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/己_丙
+printf '%s' 'prefix no naka\n' > /private/tmp/km120_ban_20260917T203104_72262/己_丙/a   # prefix=file
+printf '%s' 'real no naka(kuuhaku mei)\n' > '/private/tmp/km120_ban_20260917T203104_72262/己_丙/a b.txt'   # ★空白を含む実名★
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/己_丙/manifest.txt の一行 = sha256=f4e0bc76ed98a32241fdd17aaf8bd4fd2341248576d9cfb7a0b3543e91b5e07d path=a b.txt bytes=15 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/庚_甲
+# prefix 無し(建てぬ)
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/庚_甲/manifest.txt の一行 = path=nai.txt sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/庚_乙
+# prefix 無し(建てぬ)
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/庚_乙/manifest.txt の一行 = path=nai.txt bytes=26 lines=1 sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/庚_丙
+# prefix 無し(建てぬ)
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/庚_丙/manifest.txt の一行 = sha256=6803c1964849463927f38806132309415893ac67edd52a47d11376c706f91d30 path=nai.txt bytes=26 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/辛_甲
+# prefix 無し(建てぬ)
+printf '%s' 'kiyoi\n' > /private/tmp/km120_ban_20260917T203104_72262/辛_甲/kiyoi.txt
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/辛_甲/manifest.txt の一行 = path=kiyoi.txt sha256=b821bfabf81391b18532794bb8c028f7d2a1f0b348dc4757129f73a774bd559c bytes=6 lines=1
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/辛_乙
+# prefix 無し(建てぬ)
+printf '%s' 'kiyoi\n' > /private/tmp/km120_ban_20260917T203104_72262/辛_乙/kiyoi.txt
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/辛_乙/manifest.txt の一行 = path=kiyoi.txt bytes=6 lines=1 sha256=b821bfabf81391b18532794bb8c028f7d2a1f0b348dc4757129f73a774bd559c
+mkdir -p /private/tmp/km120_ban_20260917T203104_72262/辛_丙
+# prefix 無し(建てぬ)
+printf '%s' 'kiyoi\n' > /private/tmp/km120_ban_20260917T203104_72262/辛_丙/kiyoi.txt
+# 臺帳 /private/tmp/km120_ban_20260917T203104_72262/辛_丙/manifest.txt の一行 = sha256=b821bfabf81391b18532794bb8c028f7d2a1f0b348dc4757129f73a774bd559c path=kiyoi.txt bytes=6 lines=1

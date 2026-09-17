@@ -1,0 +1,21 @@
+# ㋓ 案戊 の逐語 diff ―― 基 = _ki/san_c1486ca1.py (= 委員長が据ゑた ⑶ / 枝 karo-mac/daini-no-for-wo-nozoku-20260917 commit c1486ca1)
+# 作り方(逐語・再現可能): git cat-file blob c1486ca1:scripts/checks/karo_mac_manifest_verify.py > _ki/san_c1486ca1.py
+#              然る後 driver/30_an_wo_tateru.py が str.replace(…, 1) で ★一箇所だけ★ 差替(assert n==1)
+#
+--- _ki/san_c1486ca1.py	2026-09-17 20:24:58
++++ _an/an_bo_km120.py	2026-09-17 20:30:58
+@@ -102,7 +102,13 @@
+     #       可逆: 下の ``if m2:`` の塊を除けば第一版(候補列ね)へ戻る。
+     m2 = re.search(r"(?:^|\s)path=(.+?)[ \t]+sha256=", line)
+     if m2:
+-        _t = _dequote(m2.group(1))
++        # ★案戊★ 則②の非貪欲は path= から次の sha256= まで ★他の欄ごと★ 呑む。
++        #   ★剥ぎを _dequote の ★前★ に置く★ ―― 後に置くと _dequote の .strip() が
++        #   ★名の末尾の空白を食ふ★(km-120 ㋒ 実測: km-83/MANIFEST.txt:270 の
++        #   `path=\"40_doku/otsu_suna/ \"` = 名が空白一字で終る現物の行が 偽の赤 に成る)。
++        # 戻し方: 次の二行を `_t = _dequote(m2.group(1))` 一行へ戻せば ⑶(c1486ca1)。
++        _t = re.sub(r"(?:[ \t]+[A-Za-z_][A-Za-z0-9_]*=[^ \t]*)+$", "", m2.group(1))
++        _t = _dequote(_t)
+         if _t:
+             return [_t]          # ★唯一の候補★ ―― 不在なら鳴らせる(fail-open を作らぬ)
+     for _pat in (r'(?:^|\s)path=([^\s"\']+)',  # ①本形(★引用符を用ゐぬ★・裁321353⑵)

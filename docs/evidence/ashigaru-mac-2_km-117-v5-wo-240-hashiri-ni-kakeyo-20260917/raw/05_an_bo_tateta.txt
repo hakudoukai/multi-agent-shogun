@@ -1,0 +1,12 @@
+# 案戊 を建てた證(km-117 ㋔ 別紙)
+# 種 = _an/v5_daini_nashi.py(v5 − 第二の for)
+# 出 = _an/an_bo.py
+# 錠の本数 = 1(1 でなければ据ゑぬ)
+# 足した塊(逐語):
+            _t = _dequote(m2.group(1))
+            # ★案戊★ 則②の非貪欲は `path=` から次の `sha256=` まで ★他の欄ごと★ 呑む。
+            #   例: `path=kiyoi.txt bytes=6 lines=1 sha256=…` → 捕り物 'kiyoi.txt bytes=6 lines=1'
+            #   ∴ 末尾に連なる `<鍵>=<値>` の欄を剥ぐ。★候補は増やさぬ★(増やせば短縮が昇る路が開く)。
+            _t = re.sub(r"(?:[ \t]+[A-Za-z_][A-Za-z0-9_]*=[^ \t]*)+$", "", _t)
+            _t = _dequote(_t)
+            if _t:

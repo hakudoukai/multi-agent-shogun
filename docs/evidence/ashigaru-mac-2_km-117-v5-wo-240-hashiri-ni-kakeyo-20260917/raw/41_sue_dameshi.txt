@@ -1,0 +1,20 @@
+# ㋔-2 ★据ゑ試し★ ―― raw/40_naoshi.diff を仮の木へ当てる
+# 刻 = 2026-09-17T19:46:04+0900
+# ★之が言はぬ事★: 当たる事は「直しが正しい」の意ではない。
+#   正しさは盤(raw/10_menseki.tsv)と囮(raw/13_otori.tsv)と現物(raw/31_genbutsu.txt)が言ふ。
+#   此処で言ふのは『家老が此の diff を git apply -p1 すれば、拙者が測つた物と同じ物が出来る』の一事のみ。
+
+元(PR#23 head の v5)	9e831137f1d33f41b6ba88414b26d44dfb93ebc9c544d263f7c0c1d1234e4d8f	bytes=14808	行(LF数)=240	_ki/v5_pr23.py
+先(第二の for を除いた版)	a390b700cf1b864b631c54bc90927a72c5203a802390a674f6637c9c5ee51124	bytes=14540	行(LF数)=233	_an/v5_daini_nashi.py
+直し(diff)	cc69e4d169259a63b1b2e012622ab75e27977533b86698582918a642f7a4a861	bytes=703	行(LF数)=18	raw/40_naoshi.diff
+
+# 仮の木で打つた手 ―― rc は悉く刷る(0 でない物も刷る)
+  git init -q .	rc=0	-
+  git apply --check -p1 /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-2_km-117-v5-wo-240-hashiri-ni-kakeyo-20260917/raw/40_naoshi.diff	rc=0	-
+  git apply -p1 /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-2_km-117-v5-wo-240-hashiri-ni-kakeyo-20260917/raw/40_naoshi.diff	rc=0	-
+
+出来た物 = a390b700cf1b864b631c54bc90927a72c5203a802390a674f6637c9c5ee51124
+案(第二無) = a390b700cf1b864b631c54bc90927a72c5203a802390a674f6637c9c5ee51124
+★一致★
+
+仮の木 = /private/tmp/km117_sue_x_jep7il (毀した ―― 残つて居らぬ: True)

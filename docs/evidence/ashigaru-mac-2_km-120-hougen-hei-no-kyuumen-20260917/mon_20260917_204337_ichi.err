@@ -1,0 +1,10 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★EOF改行 ―― raw/20_genbutsu.stderr は空file(0byte)★
+★EOF改行 ―― raw/21_taishou.stderr は空file(0byte)★
+★EOF改行 ―― raw/22_an_betsu.stderr は空file(0byte)★
+條⑤ 寸法 = byte和 532430(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

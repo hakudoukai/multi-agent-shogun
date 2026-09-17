@@ -1,0 +1,62 @@
+# ★第二の for(tok.split() で '/' を含む語を候補へ足す)は何処に在るか★ ―― km-117 ㋒ の前提検め
+# 刻 2026-09-17T19:38:15+0900
+# 検め方: grep -c 'for tok in line.split()' <器>   (0/1 を逐語で刷る)
+# ★家老の読み『v5 が第二の for を足した』は、此の表で崩れる。★
+
+器	for tok in line.split() の本数	path
+v1_127gyou.py	1	../karo-mac_km-113-kuuhaku-wo-fukumu-na-ga-arawasenu-kizu-20260917/_ver/v1_127gyou.py
+v2_originmain.py	1	../karo-mac_km-113-kuuhaku-wo-fukumu-na-ga-arawasenu-kizu-20260917/_ver/v2_originmain.py
+v3_worktree.py	1	../karo-mac_km-113-kuuhaku-wo-fukumu-na-ga-arawasenu-kizu-20260917/_ver/v3_worktree.py
+v4_naoshita.py	1	../karo-mac_km-113-kuuhaku-wo-fukumu-na-ga-arawasenu-kizu-20260917/_ver/v4_naoshita.py
+v5_daini_han.py	1	../karo-mac_km-113-kuuhaku-wo-fukumu-na-ga-arawasenu-kizu-20260917/_ver/v5_daini_han.py
+v5_pr23.py	1	_ki/v5_pr23.py
+an_kou_kusari.py	1	_an/an_kou_kusari.py
+an_kou_retsu.py	1	_an/an_kou_retsu.py
+an_otsu.py	1	_an/an_otsu.py
+an_hei.py	1	_an/an_hei.py
+an_tei.py	1	_an/an_tei.py
+v5_daini_nashi.py	0	_an/v5_daini_nashi.py
+an_kusari_daini_nashi.py	0	_an/an_kusari_daini_nashi.py
+
+# ★逐語★ ―― v1_127gyou.py(最も古い版)が現に持つ塊
+    48:    for tok in line.split():
+    49-        if tok.startswith("sha256=") or tok.startswith("bytes=") or tok.startswith("lines="):
+    50-            continue
+    51-        t = tok.split("=", 1)[-1] if tok.startswith("path=") else tok
+    52-        if "/" in t and t not in out:
+    53-            out.append(t)
+    54-    return out
+
+# ★逐語★ ―― 案甲鎖(km-114 で當方が薦めた案)が現に持つ塊
+    76:    for tok in line.split():
+    77-        if tok.startswith("sha256=") or tok.startswith("bytes=") or tok.startswith("lines="):
+    78-            continue
+    79-        t = tok.split("=", 1)[-1] if tok.startswith("path=") else tok
+    80-        t = _dequote(t)
+    81-        if "/" in t and t not in out:
+    82-            out.append(t)
+
+# ★逐語★ ―― v5(PR#23 head)。★return [_t] が此の for より前に在る★
+    101-    #         其れは憶測であつた。測れば repo 内に一例も無い。專任2 の薦めが正しかつた。★
+    102-    #       可逆: 下の ``if m2:`` の塊を除けば第一版(候補列ね)へ戻る。
+    103:    m2 = re.search(r"(?:^|\s)path=(.+?)[ \t]+sha256=", line)
+    104-    if m2:
+    105-        _t = _dequote(m2.group(1))
+    106-        if _t:
+    107-            return [_t]          # ★唯一の候補★ ―― 不在なら鳴らせる(fail-open を作らぬ)
+    108-    for _pat in (r'(?:^|\s)path=([^\s"\']+)',  # ①本形(★引用符を用ゐぬ★・裁321353⑵)
+    109-                 r"(?:^|\s)path=(.+?)[ \t]+sha256=",   # ②非貪欲(素の空白名)
+    110-                 r"(?:^|\s)path=(\S+)"):  # ③従来形(sha256 が前に在る等)
+    111-        m = re.search(_pat, line)
+    112-        if m:
+    113-            _t = _dequote(m.group(1))
+    114-            if _t and _t not in out:
+    115-                out.append(_t)
+    116-    # '=' の右・sha256 でない・'/' を含む語
+    117-    for tok in line.split():
+    118-        if tok.startswith("sha256=") or tok.startswith("bytes=") or tok.startswith("lines="):
+    119-            continue
+
+# ★此の数が言はぬ事★
+#  ・'for tok in line.split()' は ★字面★ の検めである。別の書き方で同じ事をする塊は数へて居らぬ。
+#  ・本数 1 は ★同じ塊★ の意ではない ―― 上の逐語で中身を照らす事。

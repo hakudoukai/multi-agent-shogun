@@ -1,0 +1,26 @@
+★㋔の穴を塞ぐ ―― 案⑵は .gitignore を触れずに成るか★
+repo根= /Users/momizimac/multi-agent-shogun
+束(母数)= 3
+  docs/evidence/ashigaru-mac-2_km-117-v5-wo-240-hashiri-ni-kakeyo-20260917
+  docs/evidence/ashigaru-mac-2_km-120-hougen-hei-no-kyuumen-20260917
+  docs/evidence/ashigaru-mac-2_km-122-pr24-ga-akeru-to-no-mukou-20260917
+
+本番 index sha256 前= ff2be85f221a8e5016d8a24bf6af02663c157086ebc008fb04598d05a33c3c81
+本番 index sha256 後= ff2be85f221a8e5016d8a24bf6af02663c157086ebc008fb04598d05a33c3c81
+★不動を證した上で以下を刷る★
+
+disk 側 三束の本数(S_ISREG・symlink 除)= 178
+本番 index に在る三束の本数= 0  ―― 戸は閉ぢて居る
+check-ignore で遮られる本数= 178 / 178 (rc=0)
+
+[甲_素のadd(-f無)] add rc=0  err行=0  ls-files rc=0  ★捨て臺帳に載つた本数=0★
+[乙_add -f] add rc=0  err行=0  ls-files rc=0  ★捨て臺帳に載つた本数=178★
+
+★断★
+  ⑴ 素の add は ★rc=0 で黙つて 0 本★ ―― 誤つて空の commit を作り得る
+  ⑵ add -f は 178/178 本を載せる ―― ★.gitignore を書換へる要は無い★
+
+★之が意味せぬ事★
+  ・「-f で載る」は「載せてよい」の意ではない ―― 可否は委員長の裁である
+  ・捨て臺帳で成る事は、本番の index・枝・remote で成る事を意味せぬ(測つて居らぬ)
+  ・本数は ★此の刻の disk★ の函数である ―― 束は測る間も育つ

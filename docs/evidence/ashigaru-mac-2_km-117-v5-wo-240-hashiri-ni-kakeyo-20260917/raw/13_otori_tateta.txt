@@ -1,0 +1,29 @@
+# ★建てる手順★(走る毎に建て直す・20260917T194044 の走りの逐語)
+# 根 = /private/tmp/km117_otori_20260917T194044_32978  ―― ★束の外★(札 kinshi 順守)
+rm -rf /private/tmp/km117_otori_20260917T194044_32978; mkdir -p /private/tmp/km117_otori_20260917T194044_32978
+# 囮の中身 sha256 = 9294def62c8b90946556d66e849ad04c0bb29e1880796f74449ceb2a6bd3189f
+# 区癸 の宣 sha(何処にも無い中身) = 6f7ac290a9caa26fe12ed055523f13d1488d26dc44a920660b40a8437a9f9179
+mkdir -p /private/tmp/km117_otori_20260917T194044_32978/壬_甲/aru
+printf '%s' 'otori no naka\n' > /private/tmp/km117_otori_20260917T194044_32978/壬_甲/aru/mono.txt   # ★囮(実在・'/' を含む)★
+# /private/tmp/km117_otori_20260917T194044_32978/壬_甲/nai/mono.txt は ★建てぬ★(臺帳の主張する path は不在)
+# 臺帳 /private/tmp/km117_otori_20260917T194044_32978/壬_甲/manifest.txt の一行 = path=nai/mono.txt sha256=9294def6… bytes=14 lines=1 aru/mono.txt
+mkdir -p /private/tmp/km117_otori_20260917T194044_32978/壬_乙/aru
+printf '%s' 'otori no naka\n' > /private/tmp/km117_otori_20260917T194044_32978/壬_乙/aru/mono.txt   # ★囮(実在・'/' を含む)★
+# /private/tmp/km117_otori_20260917T194044_32978/壬_乙/nai/mono.txt は ★建てぬ★(臺帳の主張する path は不在)
+# 臺帳 /private/tmp/km117_otori_20260917T194044_32978/壬_乙/manifest.txt の一行 = path=nai/mono.txt bytes=14 lines=1 sha256=9294def6… aru/mono.txt
+mkdir -p /private/tmp/km117_otori_20260917T194044_32978/壬_丙/aru
+printf '%s' 'otori no naka\n' > /private/tmp/km117_otori_20260917T194044_32978/壬_丙/aru/mono.txt   # ★囮(実在・'/' を含む)★
+# /private/tmp/km117_otori_20260917T194044_32978/壬_丙/nai/mono.txt は ★建てぬ★(臺帳の主張する path は不在)
+# 臺帳 /private/tmp/km117_otori_20260917T194044_32978/壬_丙/manifest.txt の一行 = sha256=9294def6… path=nai/mono.txt bytes=14 lines=1 aru/mono.txt
+mkdir -p /private/tmp/km117_otori_20260917T194044_32978/癸_甲/aru
+printf '%s' 'otori no naka\n' > /private/tmp/km117_otori_20260917T194044_32978/癸_甲/aru/mono.txt   # ★囮(実在・'/' を含む)★
+# /private/tmp/km117_otori_20260917T194044_32978/癸_甲/nai/mono.txt は ★建てぬ★(臺帳の主張する path は不在)
+# 臺帳 /private/tmp/km117_otori_20260917T194044_32978/癸_甲/manifest.txt の一行 = path=nai/mono.txt sha256=6f7ac290… bytes=14 lines=1 aru/mono.txt
+mkdir -p /private/tmp/km117_otori_20260917T194044_32978/癸_乙/aru
+printf '%s' 'otori no naka\n' > /private/tmp/km117_otori_20260917T194044_32978/癸_乙/aru/mono.txt   # ★囮(実在・'/' を含む)★
+# /private/tmp/km117_otori_20260917T194044_32978/癸_乙/nai/mono.txt は ★建てぬ★(臺帳の主張する path は不在)
+# 臺帳 /private/tmp/km117_otori_20260917T194044_32978/癸_乙/manifest.txt の一行 = path=nai/mono.txt bytes=14 lines=1 sha256=6f7ac290… aru/mono.txt
+mkdir -p /private/tmp/km117_otori_20260917T194044_32978/癸_丙/aru
+printf '%s' 'otori no naka\n' > /private/tmp/km117_otori_20260917T194044_32978/癸_丙/aru/mono.txt   # ★囮(実在・'/' を含む)★
+# /private/tmp/km117_otori_20260917T194044_32978/癸_丙/nai/mono.txt は ★建てぬ★(臺帳の主張する path は不在)
+# 臺帳 /private/tmp/km117_otori_20260917T194044_32978/癸_丙/manifest.txt の一行 = sha256=6f7ac290… path=nai/mono.txt bytes=14 lines=1 aru/mono.txt

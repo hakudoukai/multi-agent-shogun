@@ -1,0 +1,19 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★末尾空白 ―― 00_shodan.md に 2 行★
+★末尾空白 ―― driver/__pycache__/kaki.cpython-314.pyc に 2 行★
+★CR混入 ―― driver/__pycache__/kaki.cpython-314.pyc に 7 行★
+★EOF改行が無い(0) ―― driver/__pycache__/kaki.cpython-314.pyc★
+★EOF改行 ―― raw/10_menseki.err は空file(0byte)★
+★EOF改行 ―― raw/10_menseki.stderr は空file(0byte)★
+★EOF改行 ―― raw/13_otori.stderr は空file(0byte)★
+★EOF改行 ―― raw/30_genbutsu.err は空file(0byte)★
+★末尾空白 ―― raw/31_daini_for.tsv に 4 行★
+★EOF改行 ―― raw/31_genbutsu.stderr は空file(0byte)★
+★EOF改行 ―― raw/32_otsu.stderr は空file(0byte)★
+★末尾空白 ―― raw/40_naoshi.diff に 2 行★
+條⑤ 寸法 = byte和 1614314(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

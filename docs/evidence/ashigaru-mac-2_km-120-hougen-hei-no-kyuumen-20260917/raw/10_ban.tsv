@@ -1,0 +1,151 @@
+方言	区	prefix	実名	宣sha	期待	器	rc	一致	相違	実体無	読めぬ行	曖昧	判定	名指し
+甲	甲	file	無	prefix	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt
+甲	甲	file	無	prefix	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt
+甲	甲	file	無	prefix	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+甲	甲	file	無	prefix	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+甲	甲	file	無	prefix	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+乙	甲	file	無	prefix	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt bytes=15 lines=1
+乙	甲	file	無	prefix	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt bytes=15 lines=1
+乙	甲	file	無	prefix	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+乙	甲	file	無	prefix	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt bytes=15 lines=1
+乙	甲	file	無	prefix	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+丙	甲	file	無	prefix	鳴る	⑶_c1486ca1	0	1	0	0	0	0	★偽の通★	-
+丙	甲	file	無	prefix	鳴る	v5_571f3387	0	1	0	0	0	0	★偽の通★	-
+丙	甲	file	無	prefix	鳴る	案戊	0	1	0	0	0	0	★偽の通★	-
+丙	甲	file	無	prefix	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+丙	甲	file	無	prefix	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+甲	乙	file	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt
+甲	乙	file	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt
+甲	乙	file	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+甲	乙	file	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+甲	乙	file	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+乙	乙	file	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	乙	file	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	乙	file	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+乙	乙	file	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	乙	file	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+丙	乙	file	無	real	鳴る	⑶_c1486ca1	1	0	1	0	0	0	正	相違:a
+丙	乙	file	無	real	鳴る	v5_571f3387	1	0	1	0	0	0	正	相違:a
+丙	乙	file	無	real	鳴る	案戊	1	0	1	0	0	0	正	相違:a
+丙	乙	file	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+丙	乙	file	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丙	無	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丙	無	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丙	無	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丙	無	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丙	無	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+乙	丙	無	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	丙	無	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	丙	無	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+乙	丙	無	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	丙	無	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+丙	丙	無	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a
+丙	丙	無	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a
+丙	丙	無	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a
+丙	丙	無	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+丙	丙	無	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丁	dir	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丁	dir	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丁	dir	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丁	dir	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丁	dir	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+乙	丁	dir	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	丁	dir	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	丁	dir	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a b.txt
+乙	丁	dir	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt bytes=26 lines=1
+乙	丁	dir	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+丙	丁	dir	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a
+丙	丁	dir	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a
+丙	丁	dir	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:a
+丙	丁	dir	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt
+丙	丁	dir	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:a b.txt
+甲	丁二	dir	有	real	通る	⑶_c1486ca1	0	1	0	0	0	0	正	-
+甲	丁二	dir	有	real	通る	v5_571f3387	0	1	0	0	0	0	正	-
+甲	丁二	dir	有	real	通る	案戊	0	1	0	0	0	0	正	-
+甲	丁二	dir	有	real	通る	案庚	0	1	0	0	0	0	正	-
+甲	丁二	dir	有	real	通る	案己	0	1	0	0	0	0	正	-
+乙	丁二	dir	有	real	通る	⑶_c1486ca1	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	丁二	dir	有	real	通る	v5_571f3387	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	丁二	dir	有	real	通る	案戊	0	1	0	0	0	0	正	-
+乙	丁二	dir	有	real	通る	案庚	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	丁二	dir	有	real	通る	案己	0	1	0	0	0	0	正	-
+丙	丁二	dir	有	real	通る	⑶_c1486ca1	1	0	0	1	0	0	★偽の赤★	実体無:a
+丙	丁二	dir	有	real	通る	v5_571f3387	1	0	0	1	0	0	★偽の赤★	実体無:a
+丙	丁二	dir	有	real	通る	案戊	1	0	0	1	0	0	★偽の赤★	実体無:a
+丙	丁二	dir	有	real	通る	案庚	0	1	0	0	0	0	正	-
+丙	丁二	dir	有	real	通る	案己	0	1	0	0	0	0	正	-
+甲	戊	file	有	real	通る	⑶_c1486ca1	0	1	0	0	0	0	正	-
+甲	戊	file	有	real	通る	v5_571f3387	0	1	0	0	0	0	正	-
+甲	戊	file	有	real	通る	案戊	0	1	0	0	0	0	正	-
+甲	戊	file	有	real	通る	案庚	0	1	0	0	0	0	正	-
+甲	戊	file	有	real	通る	案己	0	1	0	0	0	0	正	-
+乙	戊	file	有	real	通る	⑶_c1486ca1	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	戊	file	有	real	通る	v5_571f3387	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	戊	file	有	real	通る	案戊	0	1	0	0	0	0	正	-
+乙	戊	file	有	real	通る	案庚	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	戊	file	有	real	通る	案己	0	1	0	0	0	0	正	-
+丙	戊	file	有	real	通る	⑶_c1486ca1	1	0	1	0	0	0	★偽の赤★	相違:a
+丙	戊	file	有	real	通る	v5_571f3387	1	0	1	0	0	0	★偽の赤★	相違:a
+丙	戊	file	有	real	通る	案戊	1	0	1	0	0	0	★偽の赤★	相違:a
+丙	戊	file	有	real	通る	案庚	0	1	0	0	0	0	正	-
+丙	戊	file	有	real	通る	案己	0	1	0	0	0	0	正	-
+甲	戊二	無	有	real	通る	⑶_c1486ca1	0	1	0	0	0	0	正	-
+甲	戊二	無	有	real	通る	v5_571f3387	0	1	0	0	0	0	正	-
+甲	戊二	無	有	real	通る	案戊	0	1	0	0	0	0	正	-
+甲	戊二	無	有	real	通る	案庚	0	1	0	0	0	0	正	-
+甲	戊二	無	有	real	通る	案己	0	1	0	0	0	0	正	-
+乙	戊二	無	有	real	通る	⑶_c1486ca1	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	戊二	無	有	real	通る	v5_571f3387	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	戊二	無	有	real	通る	案戊	0	1	0	0	0	0	正	-
+乙	戊二	無	有	real	通る	案庚	1	0	0	1	0	0	★偽の赤★	実体無:a b.txt bytes=26 lines=1
+乙	戊二	無	有	real	通る	案己	0	1	0	0	0	0	正	-
+丙	戊二	無	有	real	通る	⑶_c1486ca1	1	0	0	1	0	0	★偽の赤★	実体無:a
+丙	戊二	無	有	real	通る	v5_571f3387	1	0	0	1	0	0	★偽の赤★	実体無:a
+丙	戊二	無	有	real	通る	案戊	1	0	0	1	0	0	★偽の赤★	実体無:a
+丙	戊二	無	有	real	通る	案庚	0	1	0	0	0	0	正	-
+丙	戊二	無	有	real	通る	案己	0	1	0	0	0	0	正	-
+甲	己	file	有	prefix	鳴る	⑶_c1486ca1	1	0	1	0	0	0	正	相違:a b.txt
+甲	己	file	有	prefix	鳴る	v5_571f3387	1	0	1	0	0	0	正	相違:a b.txt
+甲	己	file	有	prefix	鳴る	案戊	1	0	1	0	0	0	正	相違:a b.txt
+甲	己	file	有	prefix	鳴る	案庚	1	0	1	0	0	0	正	相違:a b.txt
+甲	己	file	有	prefix	鳴る	案己	1	0	1	0	0	0	正	相違:a b.txt
+乙	己	file	有	prefix	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:a b.txt bytes=15 lines=1
+乙	己	file	有	prefix	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:a b.txt bytes=15 lines=1
+乙	己	file	有	prefix	鳴る	案戊	1	0	1	0	0	0	正	相違:a b.txt
+乙	己	file	有	prefix	鳴る	案庚	1	0	0	1	0	0	正	実体無:a b.txt bytes=15 lines=1
+乙	己	file	有	prefix	鳴る	案己	1	0	1	0	0	0	正	相違:a b.txt
+丙	己	file	有	prefix	鳴る	⑶_c1486ca1	0	1	0	0	0	0	★偽の通★	-
+丙	己	file	有	prefix	鳴る	v5_571f3387	0	1	0	0	0	0	★偽の通★	-
+丙	己	file	有	prefix	鳴る	案戊	0	1	0	0	0	0	★偽の通★	-
+丙	己	file	有	prefix	鳴る	案庚	1	0	1	0	0	0	正	相違:a b.txt
+丙	己	file	有	prefix	鳴る	案己	1	0	1	0	0	0	正	相違:a b.txt
+甲	庚	無	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:nai.txt
+甲	庚	無	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:nai.txt
+甲	庚	無	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:nai.txt
+甲	庚	無	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:nai.txt
+甲	庚	無	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:nai.txt
+乙	庚	無	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:nai.txt bytes=26 lines=1
+乙	庚	無	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:nai.txt bytes=26 lines=1
+乙	庚	無	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:nai.txt
+乙	庚	無	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:nai.txt bytes=26 lines=1
+乙	庚	無	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:nai.txt
+丙	庚	無	無	real	鳴る	⑶_c1486ca1	1	0	0	1	0	0	正	実体無:nai.txt
+丙	庚	無	無	real	鳴る	v5_571f3387	1	0	0	1	0	0	正	実体無:nai.txt
+丙	庚	無	無	real	鳴る	案戊	1	0	0	1	0	0	正	実体無:nai.txt
+丙	庚	無	無	real	鳴る	案庚	1	0	0	1	0	0	正	実体無:nai.txt
+丙	庚	無	無	real	鳴る	案己	1	0	0	1	0	0	正	実体無:nai.txt
+甲	辛	無	無	kiyoi	通る	⑶_c1486ca1	0	1	0	0	0	0	正	-
+甲	辛	無	無	kiyoi	通る	v5_571f3387	0	1	0	0	0	0	正	-
+甲	辛	無	無	kiyoi	通る	案戊	0	1	0	0	0	0	正	-
+甲	辛	無	無	kiyoi	通る	案庚	0	1	0	0	0	0	正	-
+甲	辛	無	無	kiyoi	通る	案己	0	1	0	0	0	0	正	-
+乙	辛	無	無	kiyoi	通る	⑶_c1486ca1	1	0	0	1	0	0	★偽の赤★	実体無:kiyoi.txt bytes=6 lines=1
+乙	辛	無	無	kiyoi	通る	v5_571f3387	1	0	0	1	0	0	★偽の赤★	実体無:kiyoi.txt bytes=6 lines=1
+乙	辛	無	無	kiyoi	通る	案戊	0	1	0	0	0	0	正	-
+乙	辛	無	無	kiyoi	通る	案庚	1	0	0	1	0	0	★偽の赤★	実体無:kiyoi.txt bytes=6 lines=1
+乙	辛	無	無	kiyoi	通る	案己	0	1	0	0	0	0	正	-
+丙	辛	無	無	kiyoi	通る	⑶_c1486ca1	0	1	0	0	0	0	正	-
+丙	辛	無	無	kiyoi	通る	v5_571f3387	0	1	0	0	0	0	正	-
+丙	辛	無	無	kiyoi	通る	案戊	0	1	0	0	0	0	正	-
+丙	辛	無	無	kiyoi	通る	案庚	0	1	0	0	0	0	正	-
+丙	辛	無	無	kiyoi	通る	案己	0	1	0	0	0	0	正	-

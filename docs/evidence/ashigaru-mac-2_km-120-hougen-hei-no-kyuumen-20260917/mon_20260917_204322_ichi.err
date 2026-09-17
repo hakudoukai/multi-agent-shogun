@@ -1,0 +1,77 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★file が無い: 00_shodan.md
+_an/an_bo.py
+_an/an_bo_km120.py
+_an/an_ki_km120.py
+_an/an_kou_km120.py
+_an/an_kou_kusari.py
+_an/an_kusari_daini_nashi.py
+_an/v5_daini_nashi.py
+_ki/san_c1486ca1.py
+_ki/v5_571f3387.py
+_ki/v5_pr23.py
+driver/10_kyuumen.py
+driver/10_menseki.py
+driver/20_genbutsu.py
+driver/20_hougen.py
+driver/21_taishou.py
+driver/22_an_betsu.py
+driver/30_an_wo_tateru.py
+driver/kaki.py
+raw/10_ban.tsv
+raw/10_ban_tateta.txt
+raw/10_kyuumen.tsv
+raw/10_yoyaku.txt
+raw/20_chigau.tsv
+raw/20_genbutsu.stderr
+raw/20_genbutsu.txt
+raw/21_taishou.stderr
+raw/21_taishou.txt
+raw/22_an_betsu.stderr
+raw/22_an_betsu.tsv
+raw/22_an_betsu.txt
+raw/30_an_wo_tateta.txt
+raw/31_diff_bo.txt
+raw/31_diff_ki.txt
+raw/31_diff_kou.txt★
+★條⑤ 測れぬ(寸法が取れぬ) ―― 00_shodan.md
+_an/an_bo.py
+_an/an_bo_km120.py
+_an/an_ki_km120.py
+_an/an_kou_km120.py
+_an/an_kou_kusari.py
+_an/an_kusari_daini_nashi.py
+_an/v5_daini_nashi.py
+_ki/san_c1486ca1.py
+_ki/v5_571f3387.py
+_ki/v5_pr23.py
+driver/10_kyuumen.py
+driver/10_menseki.py
+driver/20_genbutsu.py
+driver/20_hougen.py
+driver/21_taishou.py
+driver/22_an_betsu.py
+driver/30_an_wo_tateru.py
+driver/kaki.py
+raw/10_ban.tsv
+raw/10_ban_tateta.txt
+raw/10_kyuumen.tsv
+raw/10_yoyaku.txt
+raw/20_chigau.tsv
+raw/20_genbutsu.stderr
+raw/20_genbutsu.txt
+raw/21_taishou.stderr
+raw/21_taishou.txt
+raw/22_an_betsu.stderr
+raw/22_an_betsu.tsv
+raw/22_an_betsu.txt
+raw/30_an_wo_tateta.txt
+raw/31_diff_bo.txt
+raw/31_diff_ki.txt
+raw/31_diff_kou.txt★ ★測れぬは通さぬ(default-deny)★
+條⑤ 寸法 = byte和 0(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

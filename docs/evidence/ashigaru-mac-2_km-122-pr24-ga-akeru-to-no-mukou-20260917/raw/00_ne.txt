@@ -1,0 +1,23 @@
+★根の固定 ―― 走査の前に置く★
+歩き根(絶対)= /Users/momizimac/multi-agent-shogun/docs/evidence
+歩き根は★一本★である(第二の根を歩いて居らぬ)
+刻(歩き始め)= 2026-09-17T22:05:38+0900
+刻(歩き終り)= 2026-09-17T22:05:38+0900
+dir数= 1094
+file数(S_ISREG のみ)= 9173
+byte和(S_ISREG のみ)= 74385961
+最深(歩き根を 0 とする)= 9
+非通常(S_ISREG でない物)= 1 本 ―― 名は raw/00_hijoujou.tsv
+★行器を壊す名★(TAB/改行を含む)= 3 本
+  壊す名: km-46-yomite-no-kizu-20260917/fixture/kata/A03/a\tb.txt  bytes=5
+  壊す名: km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/1\n  bytes=150
+  壊す名: km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917/40_doku/otsu_suna/1\n  bytes=5
+  ∴ 本弾の TSV は rel_path_esc(\t \n \r \\ へ逃がした形)で書く。
+  ★素の TSV で数へると byte欄が 5 ずれ、行が +2 に成る(実測)★
+★己の束(本弾)が母数に入つて居る★= 7 本 / 51339 byte ―― 除いた数ではない
+  非通常: km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/stub_gnu/date  種=symlink  /opt/homebrew/bin/gdate
+
+★此の数が意味せぬ事★
+・queue/ 配下・他席の worktree・他 repo は★歩いて居らぬ★(0 ではなく★測つて居らぬ★)
+・byte和 は disk 上の実体の和であつて、git object の大きさではない
+・file数 は★此の刻★の disk 状態である ―― 走る席が在れば次の刻には動く
