@@ -1,0 +1,31 @@
+★門控 ―― 第29弾 ashigaru-mac-2(二度目 ―― 臺帳を建て直した後)★
+  門 = scripts/checks/karo_mac_dasumae_gate.sh / sha16 8df3d070fb4f9a3e
+  臺帳 = ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_manifest.txt / sha16 947af2c264a480f8
+  刻 = 2026-09-13 13:31:06
+
+― ★一度目との差(隠さぬ)★ ―
+  一度目 臺帳 sha16 a2a2b016a11778e4 / 項 54 / byte和 617432 / 門 rc=0(控 = de/x50_mon_1.txt に残す)
+  二度目 臺帳 sha16 947af2c264a480f8 / 項 60 / byte和 629894
+  ★因 = 一度目の臺帳の後に 宣に無い紙が 2 本生れた(㊂⑴㊂⑵ の最終形再測の出目)★
+     ―― ★再発である。本紙 §3⑶ ㊂ に書いた。★ 二度目は其の 2 本を載せて閉ぢた。
+
+― ★渡した數と載せた數★ ―
+  載せた = 60 本 / 渡した = 61 本 / ★差 = -1★
+  ★差の名 = 本臺帳自身★(門 條②③④⑤ は argv[1] を見ぬ故 file 側へも渡した)
+
+― ★rc(管を通さず直に取つた)★ ―
+  ★GATE_RC = 0★
+
+― 門の出目(そのまま)―
+  台帳 queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_manifest.txt
+    cwd  /Users/momizimac/multi-agent-shogun
+    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+    一致 ★60★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 60)
+  條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(60本)通
+  條⑤ 寸法 = byte和 629894(閾 10485760未満)
+  ★出す前 門 通。出してよい。★
+
+― ★門の rc が言はぬ事(本紙 §1⑷)★ ―
+  ★門の rc=0 は 宣 ⇔ 実測 について何も言はぬ★ ―― 條⑤ は argv の byte を数へ、宣行は註として捨てられる。
+  宣 ⇔ 実測 の一致は de/x92_daichou_2.txt に在る(臺帳を讀み直して数へた物)。

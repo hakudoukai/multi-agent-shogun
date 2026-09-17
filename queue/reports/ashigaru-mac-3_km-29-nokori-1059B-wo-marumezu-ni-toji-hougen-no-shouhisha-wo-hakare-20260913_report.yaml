@@ -1,0 +1,135 @@
+# 添状 ―― 第29弾 足軽3号
+# ★此の紙が存在するか★ = ★存在する(今 貴殿が読んで居る之である)★
+
+task_id: km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913
+seat: ashigaru-mac-3
+round: 29
+status: done
+
+chakushu_hou:            # ★着手報★
+  uketa:   "2026-09-13T12:24:00"   # 任の刻(yaml の assigned_at)
+  chakushu: "2026-09-13T12:26"     # ★受けた turn 内に着手★
+  eta_self: "90 分(己で測つた見積 ―― 三軸 × 器 10 本 + 紙 4 枚)"
+  jissoku:  "2026-09-13T13:01(★着手から約 35 分★)"
+  note:     "ETA は己で測つた。器の本数が見積より 2 本増えた(己の誤りを三度訂した故)。"
+
+shi_mai:                 # ★四紙と其の sha16★
+  honshi:
+    path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913.md"
+    sha16: "06555cefadabefa6"
+    bytes: 17364
+    mtime: "2026-09-13T12:54:45"
+  daichou:
+    path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_manifest.txt"
+    sha16: "e61983c7751dc84e"
+    bytes: 9611
+    mtime: "2026-09-13T12:55:26"
+  monbikae:
+    path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_gate.txt"
+    sha16: "75ec16621c4105fa"
+    bytes: 7977
+    mtime: "2026-09-13T13:01:44"
+  soejou:
+    path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_report.yaml"
+    sha16: "★此の紙自身 ―― 己の sha は己に書けぬ(不動点)。便に載せる★"
+    note:  "★之が「閉ぢ残りは構造上 0 に成らぬ」の最短の証である★"
+
+mon:                     # ★門★
+  rc: 0
+  ketsugo: "★出す前 門 通。出してよい。★"
+  watashita_honsuu: 33
+  youseitaishou:         # 陽性対照(門が盲ゐて居らぬ証)
+    rc: 1
+    ketsugo: "★出す前 門が落ちた。出すな。★"
+    natta_jou: "條④(EOF改行が無い ―― b_saishuu.txt)"
+
+senkou:                  # ★宣行 ⇔ 実測★
+  sen:      { honsuu: 33, byte_wa: 161500 }
+  gyou:     { honsuu: 33, byte_wa: 161500 }
+  disk:     { honsuu: 33, byte_wa: 161500 }
+  hantei:   "★三つの数の一致(宣 = 行 = disk)★"
+
+daichou_go_no_sanbutsu:  # ★臺帳後の産物(＝本弾の閉ぢ残り・実測)★
+  yokoku: "最低 2 本(門控 + 添状)―― 臺帳の註で先に宣言した"
+  jissoku_honsuu: 5   # ★歩いて数へた(添状を書く直前の disk)★
+  shinsuu:        6   # ★真の数 = 上 + 此の添状自身(歩いた刻には未だ生れて居らぬ)★
+  jissoku_byte_wa: 34829
+  uchiwake:
+    - path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/92_monbikae.py"
+      bytes: 6983
+      sha16: "778fb49b73ccd3a7"
+    - path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/93_soejou.py"
+      bytes: 9792
+      sha16: "eaacf72621ba82db"
+    - path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/91_sen_to_jissoku.out"
+      bytes: 466
+      sha16: "6f2e880db9776fe9"
+    - path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_gate.txt"
+      bytes: 7977
+      sha16: "75ec16621c4105fa"
+    - path:  "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_manifest.txt"
+      bytes: 9611
+      sha16: "e61983c7751dc84e"
+  chuu:
+    - "臺帳其の物が此の中に居る ―― ★臺帳は己を載せられぬ(不動点)★。之が ㊀⑶ で述べた「残余 0 に必要な条件⒞」が解を持たぬ事の現物である。"
+    - "★此の添状自身が 6 本目である★。歩いた刻(添状を書く直前)には未だ disk に無い。∴ 己の sha は己に書けぬ。便に載せる。"
+    - "器 92/93 と raw/91 も臺帳後の産物である ―― 臺帳を作る器は臺帳より後に走る物が在る。隠さず名指す。"
+  hantei: "★予告(2 本)以上・実測 5 本(+ 添状自身 = 6 本)。★閉ぢ残りは 0 に成らなかつた★"
+  riyuu:  "門控は門より後に生れ、添状は門控より後に生れる。臺帳は其の前に凍る。∴ 順序が閉ぢ残りを産む。"
+
+ingai:                   # ★員外(臺帳にも門にも渡さぬ)★
+  honsuu: 6
+  riyuu: "故意に形を破つた試料 ―― 鳴る事が役目。直さぬ・名指して外へ出す。"
+  - "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/sakai/a_kuugyou.txt"
+  - "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/sakai/b_saishuu.txt"
+  - "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/sakai/c_saisho.txt"
+  - "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/sakai/d_kugiri_no_ato.txt"
+  - "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/sakai/e_xtrace.txt"
+  - "queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/yabure/y_1.txt"
+
+san_jiku:                # ★三軸の答★
+  maru_ichi_nokori_1059B:
+    kotae: "★測つた★ ―― 足された本ではない。先測り(09:17:27)と門(09:18:00)の間に ★書き直された 2 本★ である。"
+    hon: ["42_daichou_hougen_naoshi.py", "raw/42_hougen.out"]
+    sa:  "26128 B → 27187 B(差 1059 B)"
+    michi: "三つの独立した道が同じ数を出した(集合差 / 刻で分けた partition / 第27弾の門log 條⑤ 298127)"
+    hakareru_nokori: "★2 本への内訳は測れぬ★(同一秒・snapshot 無し)。境は d(py)+d(out)=1059 / d(py)<=11080 / d(out)<=16105。"
+    kikou: "★構造上 0 に成らぬ★ ―― 第26/27/28弾で 7/6/4 本、本弾 6 本。順序(門控>臺帳・添状>門)が最低 2 本を産む。"
+    an: "「閉ぢ残りは必ず残る」と宣する形 ―― ★文のみ★(本紙 ㊀⑶)。据ゑるは委員長裁の後。"
+  maru_ni_hougen_no_shouhisha:
+    nise_no_midori: 0        # ★偽の緑 = 0 件★(故意に疵を入れた試料で測つた)
+    nise_no_aka:    3        # ★偽の赤 = 3 件★ ―― 之が本弾の答である
+    tadashiku_naru: 2
+    kotae: "害は ★偽の緑ではなく偽の赤★ である。器は悉く鳴るが「讀めぬ行」「方言が未知」としか鳴らず、★疵の行を名指さぬ★。"
+    mon_wa_katachi_wo_towanu: "門の本文 214 行中、臺帳の行の形を見る式 ★0 行★。∴ ★門の rc=0 は方言に就いて何も言つて居らぬ★。"
+    kakikomi_scripts: "★0 byte★(証 = 門控 丁節・禁域 7 本の sha16 と mtime)"
+  maru_san_sakai_wo_otosu_ki:
+    mitsuketa: 1
+    ki:   "queue/reports/ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kikai/50_genri_de_tojiru.py L85-L90"
+    shiki: "if l.startswith(\"+\")"
+    kurui: "-3 行(真 6 行 → 器 3 行・★50% 落ちた★)"
+    omoi_kizu: "tomari_gyou が「+ set +x」と成る ―― 真の終行「wc: fifo: 止まつた」と ★入れ替はる★。"
+    bosuu: 246   # 255 本 - 本弾の己の器 10 本 + ... ★己を除いた母數★
+    sakai: { kuugyou: "落ちた", saishuu: "落ちた", saisho: "見えて居る(偶然 + を持つ故)", kugiri_no_ato: "落ちた" }
+    okite: "★記号で行を濾す器は、落した行數を併せて印せ ―― 記号を持たぬ行は「無かつた行」と見分けが付かぬ。★"
+
+hakarenu:                # ★測れぬ★(本紙の冒頭に置いた・各に「何が在れば測れるか」を付す)
+  honsuu: 5
+  basho: "本紙 冒頭(set -u の器は尻から死ぬ故・測れぬを先頭に置く)"
+
+ono_no_ayamari:          # ★己の誤り ―― 本弾で三度訂した★
+  - "偽の緑の誤判 ―― 疵の無い試料の rc=0 を「偽の緑 2 件」と数へた。疵入り試料で測り直し ★0 件★ へ訂す。"
+  - "母數に己を入れた ―― 255 本に本弾の器 10 本が入つて居た。★246★ へ訂す(memory の教へを五度目に破つた)。"
+  - "見ずに断じた ―― 「己に同じ疵は無い」と書いた。残つた 1 件を見たら ★実在の器★ であつた。㊂の答が「無し」から「有り」へ翻つた。"
+
+kinshi_junshu:           # ★禁の順守★
+  dai28dan_yonshi_kakikae: 0      # 再測のみ(門控 戊節・四紙悉く sha 一致)
+  taseki_no_jisshi_kakikae: 0     # 他席の紙は読取のみ・正規表現は逐語で写して砂場で流した
+  git_fetch_add_commit_push: 0    # git は status/diff の讀取のみ
+  scripts_kinniki_kakikomi: 0     # 門控 丁節に sha16 + mtime で証を置いた
+  db_kakikomi: 0                  # 便を出すのは家老である
+  mon_shougouki_naoshi: 0         # 案は文のみ
+
+kansa_teishutsu:         # ★監査提出★
+  saki: "karo-mac"
+  riyuu: "gunshi-mac の箱は 543 通・讀まれた物 0 ―― 死箱である(memory 記録済)。"

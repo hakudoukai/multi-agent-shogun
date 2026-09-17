@@ -1,0 +1,61 @@
+# 門控 ―― 補紙(第29弾 ㊁ に A形を足す)足軽3号
+
+## 甲 本番(臺帳 + 11 本)
+  刻 = 2026-09-13T13:09:01
+  門 = scripts/checks/karo_mac_dasumae_gate.sh sha16 8df3d070fb4f9a3e
+  臺帳 = ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_manifest.txt sha16 c4bc5492515d9cff
+  ★rc = 0★(★pipe を通さず直に取つた rc である★)
+  ―― stdout 逐語 ――
+    台帳 queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_manifest.txt
+      cwd  /Users/momizimac/multi-agent-shogun
+      基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+      一致 ★11★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 11)
+  ―― stderr 逐語 ――
+    條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+    條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(11本)通
+    條⑤ 寸法 = byte和 53607(閾 10485760未満)
+    ★出す前 門 通。出してよい。★
+
+  ★結語 = 「★出す前 門 通。出してよい。★」★
+
+## 乙 ★陽性対照★(門が盲ゐて居らぬ証 ―― 先に示す)
+  渡した物 = 第29弾の員外 b_saishuu.txt(★故意に終の改行を持たせて居らぬ★)
+  ★rc = 1★
+    條① 台帳とdiskの差 = スキップ(台帳未指定)
+    ★EOF改行が無い(0) ―― queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/sakai/b_saishuu.txt★
+    條⑤ 寸法 = byte和 177(閾 10485760未満)
+
+    ★出す前 門が落ちた。出すな。★
+  ∴ ★門は條④で鳴つた。上の rc=0 は「黙つた」のではなく「見て通した」のである。★
+
+## 丙 宣行 ⇔ 実測
+    宣行が言ふ    本数 11 / byte和 53607
+    行を数へた    本数 11 / byte和 53607(母數 = ^path= 行 11・讀めた行 11・★讀めぬ行 0★)
+    disk を歩いた 本数 11 / byte和 53607(sha 一致 11)
+    ★三つの数の一致 = 一致(宣 = 行 = disk)★
+    員外 6 本(臺帳の註に名指し・門へも渡さぬ)
+
+## 丁 ★員外★(臺帳にも門にも渡さぬ 6 本)
+  queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/sunaba/m_A.txt
+  queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/sunaba/m_B.txt
+  queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/sunaba/m_E.txt
+  queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/sunaba/utsushi_sennin2_A.txt
+  queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/sunaba/yabure_A_yonran_inyou.txt
+  queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/sunaba/yabure_E_sanran_sokei.txt
+  理由 = 同上(10番の器が建てた E形 試料臺帳)
+
+## 戊 ★触れて居らぬ物★(書き換へ 0 の証)
+  | 名 | 錨の sha16 | 今 | 一致 |
+  |---|---|---|---|
+  | 第29弾 本紙 | 06555cefadabefa6 | 06555cefadabefa6 | ★一致★ |
+  | 第29弾 臺帳 | e61983c7751dc84e | e61983c7751dc84e | ★一致★ |
+  | 第29弾 門控 | 75ec16621c4105fa | 75ec16621c4105fa | ★一致★ |
+  | 第29弾 添状 | c141d6860a15bdbf | c141d6860a15bdbf | ★一致★ |
+  | 專任2 臺帳(他席) | 1a67c9afc806f58c | 1a67c9afc806f58c | ★一致★ |
+
+  禁域(scripts/ 等)―― ★0 byte★:
+    scripts/checks/karo_mac_dasumae_gate.sh sha16=8df3d070fb4f9a3e mtime=2026-09-12T15:10:21(★本補紙の着手 12:24 より前★)
+    scripts/checks/karo_mac_manifest_verify.py sha16=1f001531b681d1bf mtime=2026-09-12T14:49:23(★本補紙の着手 12:24 より前★)
+    scripts/inbox_write.sh sha16=8de5e3b9e550fd77 mtime=2026-09-06T19:38:23(★本補紙の着手 12:24 より前★)
+    .gitignore sha16=3ccfcf1c05e82b58 mtime=2026-09-09T06:48:52(★本補紙の着手 12:24 より前★)
+    .claude/settings.json sha16=b135e8f17b3be9d5 mtime=2026-08-30T23:21:51(★本補紙の着手 12:24 より前★)

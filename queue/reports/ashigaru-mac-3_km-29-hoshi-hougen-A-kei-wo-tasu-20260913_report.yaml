@@ -1,0 +1,101 @@
+# 添状 ―― 補紙(第29弾 ㊁ に A形を足す)足軽3号
+# ★此の紙が存在するか★ = ★存在する★
+
+task_id: km-29-hoshi-hougen-A-kei-wo-tasu-20260913
+moto:    km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913
+yorite:  "家老mac 指図 msg_20260913_123736_74a8f017 ⑵⑶"
+seat:    ashigaru-mac-3
+status:  done
+
+chakushu_hou:
+  sashizu_uketa: "2026-09-13T12:37:36"
+  chakushu:      "2026-09-13T13:03"   # ★便を出した直後・同 turn 内★
+  eta_self:      "25 分(器 2 本 + 紙 4 枚 ―― 機構は第29弾で既に建てて在る故)"
+  jissoku:       "2026-09-13T13:09"
+
+shi_mai:
+  hoshi:
+    path:  "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913.md"
+    sha16: "b1566df535b81396"
+    bytes: 9250
+  daichou:
+    path:  "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_manifest.txt"
+    sha16: "c4bc5492515d9cff"
+    bytes: 3812
+  monbikae:
+    path:  "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_gate.txt"
+    sha16: "9774acb1aa3c8c48"
+    bytes: 4042
+  soejou:
+    path:  "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_report.yaml"
+    sha16: "★己の sha は己に書けぬ(不動点)。便に載せる★"
+
+mon:
+  rc: 0
+  ketsugo: "★出す前 門 通。出してよい。★"
+  watashita_honsuu: 11
+  rc_no_torikata: "★pipe を通さず直に取つた★(xargs 経由の rc は 123 へ潰れる故)"
+  youseitaishou: { rc: 1, ketsugo: "★出す前 門が落ちた。出すな。★", jou: "條④" }
+
+senkou:
+  sen:  { honsuu: 11, byte_wa: 53607 }
+  gyou: { honsuu: 11, byte_wa: 53607 }
+  disk: { honsuu: 11, byte_wa: 53607 }
+  hantei: "★三つの数の一致(宣 = 行 = disk)★"
+
+kotae:                   # ★家老の指図への答★
+  hougen_wa_mittsu: "承知 ―― A(專任2 引用符付四欄)/ B(專任1 素形四欄)/ E(拙者 三欄素形)"
+  E_to_A: "⒝鳴る(★偽の赤★)―― 讀めた0/讀めぬ3・z_1.txt の名は一度も出ぬ"
+  A_to_E: "⒝鳴る(★偽の赤★)―― 讀めた0/讀めぬ3・同上"
+  kuhou_soatari:         # ★言はずに測つた★
+    bosuu: 9
+    nise_no_midori: 0
+    nise_no_aka: 6
+    tadashiku_naru: 3
+    katachi: "⒞は悉く対角(同方言)・⒝は悉く非対角(異方言)。例外 0。"
+  jitsugami:             # ★模造でなく現物★
+    taishou: "專任2 の第28弾臺帳(sha16 1a67c9afc806f58c・bytes 13639)"
+    atsukai: "★読取のみ★。byte 同一の写しを砂場へ置き、写しに掛けた。原本 sha16 は掛けた後も同一。"
+    bosuu_gyou: 47
+    A_genkaku: { yometa: 47, yomenu: 0 }
+    B_genkaku: { yometa: 0, yomenu: 47 }
+    E_genkaku: { yometa: 0, yomenu: 47 }
+    hantei: "★拙者の式は專任2の実紙を一行も讀めぬ(100%)。模造の出目と完全一致★"
+    seihon_shougouki: "rc=0 / 一致47 / 相違0 / 実体無0 / 読めぬ行0 ―― ★正本の照合器のみが三方言を讀む★"
+  dai29dan_no_kotae: "★覆らぬ。強まる。★ 害は偽の緑ではなく ★偽の赤★ である。"
+  kikou: "疵を名指すには先づ讀めねばならぬ。厳格式は異方言の行を全て落とす ∴ 疵も落ちる。落ちた行は「讀めぬ行」として鳴る ∴ ★厳格式に偽の緑は構造上 生れ得ぬ★。代りに「疵」と「方言違ひ」を区別できぬ鳴り = 狼少年 が出る。"
+  gentei: "★但し之は厳格式に限る。★ 寛容な式(欄を数へぬ・\\S+ で食ふ式)なら偽の緑は生れ得る ―― memory「四欄形は SUMS 器に誤一致し ★偽の実体無★ を産む」が実例。本補紙の母數は ★厳格式 3 本★ のみ。"
+
+kakikae_zero:            # ★書き換へ 0★
+  dai29dan_yonshi: "四紙悉く sha 一致(門控 戊節)"
+  taseki_no_jisshi: "專任2 臺帳 1a67c9afc806f58c ―― 掛ける前後で同一"
+  scripts_kinniki: 0
+  mon_shougouki: 0
+
+daichou_go_no_sanbutsu:
+  yokoku: "最低 2 本(門控 + 添状)"
+  jissoku_honsuu: 4
+  shinsuu: 5   # ★+ 此の添状自身★
+  uchiwake:
+    - "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/ki/92_mon_to_soe.py  (bytes 10390 / sha16 b2f6fb9bfc29c7cc)"
+    - "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_evidence/raw/91_sen_to_jissoku.out  (bytes 339 / sha16 2b6c656f7818c001)"
+    - "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_gate.txt  (bytes 4042 / sha16 9774acb1aa3c8c48)"
+    - "queue/reports/ashigaru-mac-3_km-29-hoshi-hougen-A-kei-wo-tasu-20260913_manifest.txt  (bytes 3812 / sha16 c4bc5492515d9cff)"
+  hantei: "★閉ぢ残りは此処でも 0 に成らなかつた(5 本)★ ―― 第29弾 ㊀⑶ の主張の二度目の現物。"
+
+ono_no_ayamari:
+  - "★測らずに「二つで尽きる」と書いた★(10番の器 壬節)。九回呼ぶだけの器で済む物を言葉で済ませた。11番で総当りを回し数で置き換へた。結果は同じ ―― ★だが「同じ」は測るまで言へぬ★。"
+  - "之は「見ずに断ずるな」の ★本弾で二度目★ である(第29弾㊂で一度)。"
+
+hakarenu:
+  - "C形・D形の実紙 ―― 席に現物が無い。∴ ★五形は名・現物は三形★ と言ふべき。要る物 = 其の形を使ふ席の臺帳 path"
+  - "「偽の緑 0」は此の九通りの中での 0。要る物 = 席の臺帳讀取器の総目録(本補紙の母數は 3 器)"
+  - "專任1(B)の実紙では測つて居らぬ。要る物 = 專任1 の第28弾臺帳の path"
+  - "寛容な式での出目 ―― 本補紙は厳格式のみ見た。要る物 = 席の器から寛容式を拾ふ掃き出し"
+
+an:                      # ★文のみ・据ゑるは委員長裁の後★
+  - "臺帳の一行目に ★方言を宣る★ ―― 專任2 は既に行つて居る。全席の作法とする案"
+  - "席の器は己の式で讀めぬ行が出たら ★正本の照合器へ渡し直す★(厳格式の「讀めぬ」は疵の証ではなく方言の証)"
+  - "鳴りの文を ★「方言が違ふ」と「疵が在る」に分ける★ ―― 今は両方が「讀めぬ行」に潰れて居る"
+
+kansa_teishutsu: { saki: "karo-mac", riyuu: "家老mac 指図⑴ ―― ★家老の箱で可★" }

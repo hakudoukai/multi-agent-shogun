@@ -1,0 +1,89 @@
+# 臺帳 ―― 第29弾 ashigaru-mac-2(km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913)
+# ★方言の宣り★ 本臺帳の行の形は ★㋐引用符付★ 一つのみ:
+#     path="<名>" sha256=<小文字64桁> bytes=<十進> lines=<十進>
+#   ★混ぜて居らぬ★ ―― 素形・裸sha・星印・表升は本臺帳に一行も無い。
+# ★宣行(頭)★ ―― 本臺帳が己について宣する数である。
+# ★載せた項 60 本★
+# ★載せた byte 和 629894(門 條⑤ の閾 10485760 に対し 下)★
+#   ―― ★本弾の㊀は『宣が無ければ照合する相手が無い』を測る弾である★
+#      ∴ 本臺帳は ★己に宣を置く★。消費側が讀まぬ事は 宣が無い事ではない(§1⑷)。
+# ★基点★ repo 根 /Users/momizimac/multi-agent-shogun(名は其處からの相対)
+# ★建てた器★ path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x92r29_daichou_wo_tate_sen_wo_oku.py" sha256=f12dde9e04c445db69255913b1d8e5a5f8315f4f725a181c8d133ee3bc85da47
+# ★載せぬ物★(名で除く ―― 黙つて落として居らぬ)
+#   ⑴ 本臺帳自身 ―― 己の sha は己を書いた後に決まる(自己言及では條①が立たぬ)
+#   ⑵ 門控 …_gate.txt ―― 門が走つた後に生まれる故
+#   ⑶ 添状 …_report.yaml ―― 臺帳の sha を載せる故(後に生まれる)
+#   ⑷ __pycache__ / .pyc ―― 本弾は python3 -B で走らせた故 一本も無い(x40 が実測)
+#   ⑸ ★hyouhon/m_1353_kabe_no_saki.txt(29037738 byte / sha16 8a54bc464ed4387a)★
+#      ―― ★載せれば門 條⑤ の閾 10485760 を越える★ ∴ ★員外として名で宣する。★
+#         中身は ㊁⑷ の fixture(他席の紙から写した 1353 行)であり、
+#         其の sha と行数は 本紙 §2⑺ と de/x20_kabe.txt に在る。
+#   ⑹ ★臺帳を建てた器の出目 de/x92_daichou*.txt と x32 の出目 de/x32_ato*.txt★
+#      (一度目 = de/x92_daichou.txt / de/x32_ato.txt ―― 二度目 = 末尾 _2 の同名)
+#      ―― ★臺帳の sha を載せる故 臺帳の後に生れる。★ 名で宣して居る ∴ 未申告ではない。
+# ★門へは渡すが 臺帳には載せぬ物★ = 本臺帳自身 一本
+#   ―― 門 條②③④⑤ は argv[1](臺帳)を見ぬ ∴ 臺帳を ★file 側へも★ 渡して形を検めさせる。
+#      載せた數 − 渡した數 = −1 の因は之である。
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913.md" sha256=53105f331171d060b2a6d6e21f638bdfd17278178b8d608c5741eb774d8c1e2f bytes=40790 lines=661
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_nashi_gate.err" sha256=7d8fa7427b61be7b63a858e8153b034c59b1dbc88ee90db722ca5c582c23072d bytes=232 lines=4
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_nashi_gate.out" sha256=4d06fb9d3289ea904cecf2cd3cd5d1cb1aed48bc941f90212e132ef1fcee5043 bytes=380 lines=4
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_nashi_verify.err" sha256=a3dea48848416a60ca51080c4dcd11c438ee57f65bafcab87fd2406c19a5895b bytes=261 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_nashi_verify.out" sha256=4d06fb9d3289ea904cecf2cd3cd5d1cb1aed48bc941f90212e132ef1fcee5043 bytes=380 lines=4
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_uso_gate.err" sha256=7d8fa7427b61be7b63a858e8153b034c59b1dbc88ee90db722ca5c582c23072d bytes=232 lines=4
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_uso_gate.out" sha256=e0aaa12c2ec3b08a7b65f994a29cb394a9abb12c53b26ad48207b00ae106a720 bytes=378 lines=4
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_uso_verify.err" sha256=3800bbc37609aa81a150f4e5702e1467fc160330a201c31f5e39dc89b2061055 bytes=259 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_uso_verify.out" sha256=e0aaa12c2ec3b08a7b65f994a29cb394a9abb12c53b26ad48207b00ae106a720 bytes=378 lines=4
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_youse_verify.err" sha256=1659feaf3547dafd87091c13ed2d03858466e366f028e6922a0e0641eeb54bfd bytes=261 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/m_youse_verify.out" sha256=75f0567e2f8e4e71b66267fc844a92b1a92d33e919b054c86629c6af98c5b818 bytes=810 lines=8
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x01_stderr.txt" sha256=d7c7e307b9d130e40e33d9650bc77dae902807e28cabaaf08f0d8d25ccbd4ac4 bytes=257 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x01_stdout.txt" sha256=5869391d769627da733b4c2f8e6cc781b2369411fa6ca3c3b53491e7be4f246a bytes=217 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x01_survey.txt" sha256=bee7cd55946709a3e85515cb09bf0c6ca32575b6fdc8df819e009c39d7c9cabd bytes=358363 lines=1248
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x02_sengen.txt" sha256=8154c453edeff5591d17666212e8ca99351fc0e2cfbd174ca2fa10359775fd35 bytes=12907 lines=102
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x02_stdout.txt" sha256=dd6b31e7e9392de7e8e6e1e80f264ba41b688c9edf1b1756b4684ca63e0bcda2 bytes=225 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x03_judge.txt" sha256=706d7e7d66bb374850434b7a2a61b3bf310e685c6c3c1df7ec3c95170810a9c8 bytes=50735 lines=358
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x03_stdout.txt" sha256=6af3f08e2405f269ae16ed1b1e30f4e4f559d17837e33d5383ca87d032b68057 bytes=266 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x10_stderr.txt" sha256=bfaf73fe077fbc707598c28b0790eaad003c3d2031f5b28658966d7faf5ff29e bytes=257 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x10_stdout.txt" sha256=b6ea4282fbfb4fc8fe2341641d663f546a757fe7d46e8652c27e5d84220eda59 bytes=8503 lines=85
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x10_waru.txt" sha256=59716a764b252d18b4c777902a1b56f577ceb7f6ef2043753c1ca6fb469c1363 bytes=8330 lines=84
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x11_kizu.txt" sha256=938e40aef91c7e07e51c306ddbd1b94a6b78e4252a7ea8639b077bf9eeb39433 bytes=5788 lines=74
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x11_stderr.txt" sha256=295a24a3f0a0f76f60e8e5b8b378fd46b8a993d9fe9e93a4002de4b26a0174d4 bytes=257 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x11_stdout.txt" sha256=f394e1553c4fb174175e586ad6c9932b7c657d0a1776d409004b2ed18407e2a2 bytes=5961 lines=75
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x12_hyou.txt" sha256=99c6d85a34a8f6b0e9ce29d7eebc70c05272d4ea7aaa03701c74365c8fe2403c bytes=1140 lines=20
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x12_stderr.txt" sha256=d8b8b1c682f10c5af9a4a87fb88425bdfedb8b08e120333f84d532b82f672a50 bytes=257 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x12_stdout.txt" sha256=514cdb77bfe954637791fade00ff0f5f096acaf9d22b9297bb78cface574b252 bytes=1313 lines=21
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x20_kabe.txt" sha256=70225079a259a864dfc7ea282299b18ece7788c35f9691620e448cb95c22d028 bytes=3809 lines=37
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x20_kabe.txt.verify.out" sha256=50122a0d3f9fc82b953e49e3647877653222704bbc333fb7122155d89a3037db bytes=2554 lines=29
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x20_stderr.txt" sha256=2829bfcedf7ddf4b7b8e6c715f601c579b977c1e2343d5d8adb9b1f952636d09 bytes=257 lines=1
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x20_stdout.txt" sha256=8ff5717a08266c860384acd304b2d9b6258866d10e882192fb03248e4bf0383e bytes=3982 lines=38
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x30_saihatsu.txt" sha256=8313cbe2f6d8940c2424625575ef88410121a6f13471172dc49d8e6508c6e007 bytes=3575 lines=60
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x31_junjo.txt" sha256=036e77a7efd203d506d5121c8fa45e7f529c5d492b2ec14d5ed5ff0e4dfe9ce7 bytes=1849 lines=37
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x31_junjo_saisoku.txt" sha256=636e7c911e7b4e443ee8a39295ffc6e35c1620da9da02a607dd4f0a36ac70e47 bytes=2559 lines=49
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x32_ato.txt" sha256=f3752da0f5d4d6386b1b5eb7e031b8af20278a46eec10e25df1f9bfdeac54684 bytes=1530 lines=28
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x33_ura.txt" sha256=a0b2abc6333f2a685b8ccead16517ed96e0360c2199d79ba563527b689a732ff bytes=1965 lines=31
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x33_ura_saisoku.txt" sha256=d6ba222b4916859cf3c5ff7ffabf5036c7ef7f2f0cc11d27e9480eb984f1e825 bytes=1990 lines=33
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x40_zensoku.txt" sha256=5196174cfc6643bd35cbf98149a0f51f8743d4cf3f161d5e3520fc2f8ca4856d bytes=980 lines=23
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x40_zensoku_2.txt" sha256=9ceafafdcbb416f6135c5c89b6ea8cd1443f3b0af578507fa27fb5ce3f6a794f bytes=980 lines=23
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x50_mon_1.txt" sha256=476beae347bfcfa76aa6ccc771c80c950b437cbc30a4a647db177848d2bd06a9 bytes=2067 lines=31
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x92_daichou.txt" sha256=3602f4f0bfe3adc15129416f276072e46857d927e9a6529893e6d6dd4b29b9de bytes=1337 lines=25
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/hyouhon/m_nashi.txt" sha256=5536d739310d177b32c2e8dc76234d764e07180f24e2fc1255133fde3a877c2c bytes=274 lines=2
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/hyouhon/m_uso.txt" sha256=f2cc8a20190c9f4b0fec42765f0245759ddde4e5e1f3b211542afd6358c1da49 bytes=333 lines=3
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/hyouhon/m_youse.txt" sha256=66c27943f5d16915b69c0465b0fe5e2c7ae8a098dbb666e11540619559699451 bytes=317 lines=3
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/hyouhon/target.txt" sha256=10e90dc48e431dfe415438864ea9bcebf9027157475824a4dc412b4a7a9bef28 bytes=8 lines=2
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/vk_kaku.py" sha256=4417e380b612ca2b4fff9dee972cdb9d0fb05a961d2e492aafcf05fff206274d bytes=2474 lines=62
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x01_sengen_survey.py" sha256=c03eb62537a92bb2fa49a3fa01ef7c1f517605267cd6bbec34cd894c2be8996b bytes=3150 lines=76
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x02_sengen_count.py" sha256=60fac39afb08e2b911d548a08c3c565726982121cc8c710dfa795c59c423cc16 bytes=8880 lines=190
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x03_sengen_judge.py" sha256=c39436703e82f3c62898549603d3aaace5df68fee0e8709c581028e479295f4e bytes=7611 lines=143
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x10_nisen_nanahyaku_wo_waru.py" sha256=f6546243820d95311cf4649b5791fccd3fe887badee4ce250298a28d8a0b6c97 bytes=11105 lines=214
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x11_bou_no_kizu_wo_hakaru.py" sha256=d4dcd3e0eff6e994f65c0dfb35b12b08710aee9f2333a94c32d984709f2e4c76 bytes=10695 lines=212
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x12_hyou_wo_zenbu_de_kazoeru.py" sha256=1f519af5b36ab3285559398693cefa5a65ae506079ac5473d42299872b39b2c9 bytes=4292 lines=76
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x20_kabe_no_saki_wo_fixture_de_toosu.py" sha256=1c304f20bb35e2aba915657a34a1056837bc7a20d5c4dcbd3908b17f54969d99 bytes=7342 lines=135
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x30_sankenno_saihatsu_wo_kazoeru.py" sha256=d04725b252af6d04c21b15755e1834d2f83168360b2a8892e3632b1f8c448b66 bytes=10332 lines=219
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x31_ketsuron_ga_kazu_yori_saki.py" sha256=dc1e83ea27b2ef9179d8a3fa8878ceeacfd6e737987acdeac61a658bf78bf9c9 bytes=7176 lines=173
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x32_daichou_no_ato_wo_hakaru.py" sha256=8097569ebd26a881c8d8cc50b062fb270cdd92bab3ca70c75d0333cbb17f5ea6 bytes=4509 lines=102
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x33_sakai_wo_hosoku_shite_ura_wo_toru.py" sha256=f292a9aaf26918be552d483984bd5a216e6a3b5383117e5d8d4fb3f172ddf320 bytes=6856 lines=150
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x40_mon_no_mae_ni_hakaru.py" sha256=84377c78b369fe4236cf1aa64b473e49cd8a56d9f5e4e9b625923f8d564e039f bytes=5305 lines=136
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/x92r29_daichou_wo_tate_sen_wo_oku.py" sha256=f12dde9e04c445db69255913b1d8e5a5f8315f4f725a181c8d133ee3bc85da47 bytes=8500 lines=161
+path="queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/utsuwa/xk_kara.py" sha256=08f6ffcdecc5d61da7d2fb8b1eecfc6b17d08ce6e03aab2ece1c9d971071f99d bytes=2164 lines=31
+# ★宣行(尾)★ ―― 頭の宣と同じ値である(消費側が尾しか読まぬ器でも見える様に)。
+# ★載せた項 60 本★
+# ★載せた byte 和 629894(門 條⑤ の閾 10485760 に対し 下)★

@@ -1,0 +1,156 @@
+# 添状 ―― 第29弾 ashigaru-mac-2
+# ★本添状は員外である★(臺帳にも門にも載せぬ ―― 臺帳の sha を載せる故 臺帳の後に生れる)
+task_id: km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913
+seki: ashigaru-mac-2
+dan: 29
+status: done
+shimei_moto: karo-mac
+ETA_mizukara: "12:39 起 → 13:45 出(己で測つた)"
+
+san_shi:
+  honshi:
+    path: queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913.md
+    sha16: 53105f331171d060
+    bytes: 40790
+    lines: 661
+  daichou:
+    path: queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_manifest.txt
+    sha16: 947af2c264a480f8
+    bytes: 17195
+    lines: 89
+    noseta_kou: 60
+    noseta_byte_wa: 629894
+    sengyou: "★在り(頭と尾の二箇所)★ ―― 本数 60 / byte和 629894"
+    sen_to_jissoku: "★一致(器が宣を書いた後に臺帳を讀み直して数へた ―― de/x92_daichou_2.txt)★"
+  monbikae:
+    path: queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_gate.txt
+    sha16: 4f6b17025d602329
+    bytes: 2041
+    lines: 31
+
+tenjou_no_umu: "★在り(本紙 §5⑹ に宣して居る)★ ―― 本file が其れである。員外。"
+
+mon:
+  utsuwa: scripts/checks/karo_mac_dasumae_gate.sh
+  utsuwa_sha16: 8df3d070fb4f9a3e
+  GATE_RC: 0
+  ketsugo: "★出す前 門 通。出してよい。★"
+  jou1: "臺帳と disk の差 = 一致(manifest_verify.py rc=0)"
+  jou234: "全 file(61 本)通"
+  rc_wo_totta_kata: "★管を通さず直に取つた(subprocess の returncode)★"
+  chuu: "★門の rc=0 は 宣 ⇔ 実測 について何も言はぬ(本紙 §1⑷ ―― 行を引用して示した)★"
+  ichidome_no_mon: "一度目(臺帳 a2a2b016a11778e4 / 項 54)も rc=0。控は de/x50_mon_1.txt に ★消さずに残した★。"
+
+sa_wo_na_de_tojiru:
+  noseta: 60
+  watashita: 61
+  sa: -1
+  sa_no_na: "★本臺帳自身★(門 條②③④⑤ は argv[1] を見ぬ故 file 側へも渡した)"
+
+ingai_wo_na_de_sengen:
+  - "queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/hyouhon/m_1353_kabe_no_saki.txt / 29037738 byte / sha16 8a54bc464ed4387a ―― 因: 門 條⑤ の閾 10485760 を越える。㊁⑷ の fixture。"
+  - "本添状(…_report.yaml)―― 臺帳の sha を載せる故"
+  - "門控(…_gate.txt)―― 門の後に生れる故"
+  - "de/x92_daichou*.txt ・ de/x32_ato*.txt ―― 臺帳の後に生れる故(★臺帳の頭書 ⑹ で名で宣した★)"
+
+ji_no_hyou:
+  maru1_sengyou:
+    bosuu_daichou: 38
+    yomenu_daichou: 0
+    sen_ari_ryou: 27
+    sen_ari_kata: 1
+    nari: 0
+    sen_nashi: 10
+    hyouhon_no_de: "★宣偽・宣無 の二つとも 照合器は rc=0 で ⒜黙る(偽の緑)。陽性對照は rc=1 で鳴つた。★"
+    mon_wa_sen_wo_miru_ka: "★見て居らぬ★ ―― 照合器 L98-L101 が註(#)を捨て、門 條⑤ は argv から数へる。門の出目に『宣』の字 0 個。"
+    mottomo_surudoi: "★本席の第28弾の臺帳は宣を持ち両値とも差 0 であつた。而して家老の錨器は『宣無し』と出した ―― 偽の緑は 宣の不在からだけでなく 宣の方言からも生じる。★"
+  maru2_2763:
+    ichido_me_x10: "14 形 / 和 2763(差 0)/ ⒜32 ⒝1327 ⒞1404"
+    nido_me_x11: "12 形 / 和 2763(差 0)/ ⒜2052(己の母數器 2026 + 照合器 26)⒝219 ★⒞492(17.8%)★"
+    saidai_no_katamari: "㋐引用の標 2026 本(525 紙)―― 他席の器の出目に逐語で引かれた引用 ∴ ★本席の母數器の疵★"
+    yomenu_ritsu: "41.0%(3881÷9457)→ ★24.7%(1828÷7404)★(引用を両側から除いた測つた数)"
+    maru2_4_kabe: "1353 行を fixture へ写して ★照合器へ現に通した★ ―― rc=1 / 一致28 相違35 実体無1290 / ★讀めぬ行 0★ ∴ ★35.9% は投影ではなく測つた数★"
+    an3_wo_sueta_ka: "★据ゑて居らぬ(scripts/ へ 0 byte)★"
+  maru3_jibun_no_kizu:
+    kazu_yori_saki_daiikkou: "母數 25 節 / ㋐1 / ㋑4 / 疵無 20 ―― 真に順が逆であつたのは 1 節(§3⑵)"
+    kazu_yori_saki_saishuukei: "★母數 35 節 / ㋐1 / ㋑8 / 疵無 26★(第一稿との差 = 母數 +10 / ㋑ +4 / ㋐ 0)"
+    saisoku_no_chuu: "★増えた 4 節は §5 と §3⑶ の新節である ―― 書いた事で紙が変つた分である。隠さぬ。★"
+    karo_no_kizu_D_to_douke: "★三例を数で出した★ ―― ⑴x10 の戊『=』境 49本/1359本(3.6%) ⑵x30 の日付型が長い数の途中を食ふ ⑶x30 の歩き根が hyouhon/ を歩かず。x33 が測り直して 裏の取れぬ 3 種 → 0 種。★第四例を本弾の終りに己で踏んだ(下の x32 の境)。★"
+    dai28dan_no_kizu_saihatsu:
+      maru1_sengen_ga_saki: "★0★(代理⑴ 母數 48 本 / 代理⑵ 母數 84 種 ―― 裏の取れぬ 0 種)"
+      maru2_nama_no_ukezara: "★23 本(母數 31 本・74.2%)―― 再発して居る★。形の疵 8 本(悉く 0 byte)は x40 が門の前に『空である旨の一行』へ直した。"
+      maru3_mishinkoku_no_sanbutsu: "★2 本 ―― 再発して居る(下の kizu ㊀ に全て書いた)★"
+    okite: "★己の数を己で肯定した rc=0 は緑ではない ―― 宣と実測の二値が揃うて初めて照合であり、宣の無い所・宣を讀まぬ器の所には『合つて居る』も『違ふ』も無い。★"
+
+jibun_no_kizu_kakusazu:
+  - "㊀ ★第28弾の疵 ㊂(未申告の産物)を 本弾で再発させた ―― 2 本★。
+      一度目の臺帳(13:22:10)の後に de/x31_junjo_saisoku.txt(13:22:58)と de/x33_ura_saisoku.txt(13:22:59)が
+      宣に無いまま生れた。因 = ㊂⑴㊂⑵ は ★紙が出来上がつた後でなければ測れぬ節★ であり、
+      其の器の出目は必ず臺帳の後に生れるにも拘らず 宣に入れ忘れた。
+      ★更に ―― 一度目の x32(13:22:48)は之を『後に生れた』と出さなんだ。x32 が走つた後に生れたからである。★
+      ★∴ 一度目の『未申告 0』は 正しい 0 ではなく ★見えて居らぬ 0★ であつた。★
+      直した手 = 臺帳を建て直し(項 54 → 60)・門を通し直し(rc=0)・x32 を二度目に走らせた。
+      ★一度目の出目は消して居らぬ(de/x40_zensoku.txt / de/x32_ato.txt / de/x50_mon_1.txt)。★
+      ★何が在れば防げるか = 『紙の後にしか測れぬ節』の器の出目を臺帳の宣へ名で先に入れる規約。★"
+  - "㊁ ★出目の紙を上書きして、紙に書いた数の裏を己で消した。★ x40 を三度走らせた故、
+      一度目の『257〜261 byte』の行が出目から消え、本紙 §5⑴ の 257 が ★裏の取れぬ数★ に成つた
+      (x33 再測 ―― 母數 112 種中 2 種)。★本弾の後半は之を改め、x40・x92・x32・門控 の二度目を悉く
+      別名(_2 / x50_mon_1)で残した。★"
+  - "㊂ ★shell の wc の出目を紙へ持ち込んだ。★ 第一稿の 24184 byte は器の出目に無い
+      ―― 己の目で見た数を紙へ書いた物である(x33 が 2 種目として当てた)。★数は器の出目から写せ。★"
+  - "㊃ ★x30 の境が粗く、己の出目に偽の『裏の取れぬ 3 種』を出した。★ x30 を書き換へず
+      x33 を別に建てて測り直した(x10 → x11 と同じ作法)。★出目は二つ並べて残して居る。★"
+  - "㊄ ★生の受け皿が 23 本(母數 31 本)再発した。★ 第28弾で己が掟に据ゑた事を守れなんだ。
+      形の疵 8 本は門の前に直したが、★再発した事実は消して居らぬ。★"
+
+x32_no_sakai_futatsu_wo_narabete_dasu:
+  ichidome:
+    deme: "queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x32_ato.txt"
+    ato_ni_umareta: 2
+    mishinkoku: 0
+    chuu: "★之は見えて居らぬ 0 である ―― 器が 13:22:48 に走り、宣に無い 2 本は其の後に生れた。★"
+  nidome:
+    deme: "queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x32_ato_2.txt"
+    rc: 1
+    ato_ni_umareta: 2
+    mishinkoku_kiki_no_SEN_de: 1
+    mishinkoku_no_na: "queue/reports/ashigaru-mac-2_km-29-sengyou-no-nai-daichou-wa-shougou-dekinu-to-nanamokunifun-wo-waru-20260913_evidence/de/x92_daichou_2.txt"
+    daichou_no_sen_de: 0
+    naze_futatsu_no_kotae_ka: "★境が二つ在る★ ―― ⒜臺帳の頭書 ⑹ は『de/x92_daichou*.txt ・ de/x32_ato*.txt
+      (一度目 = 無印 / 二度目 = 末尾 _2)』と ★名で宣して居る★ ∴ 宣に在る = 未申告 0。
+      ⒝x32 の SEN(器の中の写し)は一度目の名のみを持ち ★二度目の名を知らぬ★ ∴ 未申告 1。"
+    dochira_wo_toru_ka: "★正は臺帳の宣である(⒜)★ ―― 器の中の写しは宣そのものではない。
+      ∴ ★未申告 = 0 本★ と読む。而して ★x32 の出目 1 本を削つて居らぬ★(器の出目を後から削る事こそ第28弾の疵 ㊀ の本体)。"
+    kore_wa_nani_no_rei_ka: "★家老の疵 ⒟(境が粗く/古く、別の物が同じに見える)の ★第四例★ であり、
+      ★本弾の中で己が現に踏んだ物★ である。宣を二箇所(臺帳・器の中)に持つた事が因。
+      ★何が在れば防げるか = 宣を一箇所に持ち、器は其れを讀む(器の中に写しを持たぬ)規約。★"
+
+hikiwatashi_an:
+  - "案㊀ 宣行の形を一つに凍らせる(臺帳の頭に 定まつた語順で 本数=N・byte和=B)"
+  - "案㊁ 照合器に宣行を讀ませる(L100 が # を捨てる前に 宣の形へ当てる一段を挟む)"
+  - "案㊂ 門 條⑤ に『宣の byte和 ⇔ argv の byte和』の突合を足す"
+  - "案㊃ 宣無しの時 rc を『保留』にする(宣が無い事は合つて居る事ではない ―― 第三の出目)"
+  - "案㊄ 錨器の『宣無し』の判に 方言の名を添へる(宣無し / 宣は在るが讀めぬ形 を分ける)"
+  - "案㊅ ★本弾の疵から★ ―― 臺帳の宣を ★器の外の一箇所★ に置き、後に生れる物を測る器は其れを讀む
+     (器の中に宣の写しを持たせぬ ―― 写しは必ず古くなる)"
+  - "★六案とも 文のみ。scripts/ ・ scripts/checks/ へ 0 byte。据ゑるは委員長裁の後。★"
+
+hakarenu_to_nani_ga_areba:
+  - "家老の錨器(sha16 2a4a749d80b099c0)が『宣無し』と出す条件 ―― 器が本 disk に無い。★器を證樹へ置くか 宣の正規表現を逐語で示せば測れる。★"
+  - "⒞ に残る 492 本 ―― ★三つの決め手(紙が己を臺帳と宣する / 欄の名の正本集合 / 接頭辞付き sha の裁)★。測れば出る物ではなく 定めれば出る物である。"
+  - "㊂⑴ の『結論が数に拠つたか』―― 器は順のみを測る。★断定に典拠欄(出目の path)を付ける規約★ が在れば拠つたか否かが測れる。"
+  - "★本添状より後に生れる物は 本弾では測れぬ★ ―― 本添状が最後の紙である事は ★宣であり 実測ではない。★"
+
+kin_junshu:
+  dai28dan_no_yonshi: "★四紙とも sha16 一致(7d398b419697a8f7 / 1a67c9afc806f58c / 00f71094462d33c9 / 4887b14b4efba351)★"
+  kakikomi_kin_iki: "scripts/ 09-12 23:52 ・ scripts/checks/ 09-12 18:00 ・ instructions/ 09-01 ・ settings.json 08-30 ・ .gitignore 09-09 ―― ★悉く 弾の起 12:39 より前★"
+  sakai_wo_dan_no_ki_de_kitta: "★家老の疵 ⒟ の掟に従ひ、境は 09:00 ではなく 弾の起 12:39 で切つた★"
+  git: "fetch / add / commit / push / checkout / reset を ★一度も走らせて居らぬ★"
+  db: "POST / PATCH / DELETE を ★一度も走らせて居らぬ★"
+  takaseki_no_jisshi: "★原本に触れて居らぬ★(讀取のみ ―― 1353 行は fixture へ写した)"
+  mon_utsuwa_ikari: "★直して居らぬ(案は文のみ)★"
+  okurigo: "便へ書かぬ"
+
+kanji_gimu:
+  teishutsu_saki: karo-mac
+  riyuu: "★gunshi-mac の箱は 543 通 0 既読の死箱である★ ∴ 家老へ提出する(常命)。"

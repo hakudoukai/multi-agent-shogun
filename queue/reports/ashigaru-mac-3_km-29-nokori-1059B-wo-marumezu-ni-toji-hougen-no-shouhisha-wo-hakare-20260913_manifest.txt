@@ -1,0 +1,60 @@
+# 臺帳 ―― 第29弾 足軽3号(ashigaru-mac-3)
+# ★方言の宣★ = E 三欄 素形 ―― 行の形は `path=<裸path> sha256=<64hex> bytes=<十進>` である。
+#   家老の錨器 KENBUN_KATA_ARGV2.py(sha16 2a4a749d80b099c0)の目録で ★E★ と呼ばれる形。
+#   ★註★ 本弾 ㊁ で測つた通り、此の形は ★專任1 の器(B 四欄前提)では一行も讀めぬ★。
+#         形を変へるのは ★委員長裁★ の事である ∴ 本弾は変へず、★宣して渡す★。
+# ★宣行★ 本数 33 / byte和 161500
+#
+# ―― ★員外★(臺帳に載せぬ物・6 本)――
+#   故意に形を破つた試料である。★門の條②③④を鳴らす事が其の役目★ ∴ 臺帳にも門にも渡さぬ。
+#   直すのではなく ★名指して外へ出す★(第28弾の教へ ―― 証跡は書き換へぬ)。
+#   sunaba/sakai/a_kuugyou.txt bytes=175 sha16=d62c810d9ed39d4f
+#     理由 = ㋐空行の境を測る為の試料
+#   sunaba/sakai/b_saishuu.txt bytes=177 sha16=ca220731095ec0a4
+#     理由 = ㋑最終行の境を測る為、★故意に終の改行を持たせて居らぬ★(條④を鳴らす)
+#   sunaba/sakai/c_saisho.txt bytes=179 sha16=69c453c8ef8d6378
+#     理由 = ㋒最初の行の境を測る為の試料
+#   sunaba/sakai/d_kugiri_no_ato.txt bytes=214 sha16=9997039e29e31e09
+#     理由 = ㋓最後の区切りの後の境を測る為の試料
+#   sunaba/sakai/e_xtrace.txt bytes=63 sha16=bde70cff9bbd99af
+#     理由 = 疵の器へ食はせる xtrace 試料(+ を持たぬ行を故意に含む)
+#   sunaba/yabure/y_1.txt bytes=44 sha16=e7ef15aaafb9d490
+#     理由 = ★故意に臺帳と食ひ違はせた本★(偽の緑を狩る為・臺帳の sha は書き換へ前の物)
+#
+# ―― ★臺帳より後に生れる物(閉ぢ残りの予告)★ ――
+#   門控(_gate.txt)と 添状(_report.yaml)は ★本臺帳より後に生れる★ ∴ 載せ得ぬ。
+#   ★予告 = 最低 2 本★。実測は添状の「臺帳後の産物」欄が持つ。
+#   ―― 本紙 ㊀⑶ の通り、残 0 は構造上 成立せぬ。
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913.md sha256=06555cefadabefa6e80f1af79bb3350da39ea5955c0e6016aa2f7e3a47a39af9 bytes=17364
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/01_zendan_yonshi.py sha256=74e4d3bc4d7e80b3404245b19fca6b28affa74a7afdd17429d9d85f39dd217f7 bytes=2059
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/10_1059_wo_tojiru.py sha256=a3767bfba3a67551e16734b6f278afbed842eab5f77110b5e4970669e59e3af6 bytes=7904
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/11_futatsume_no_ki.py sha256=5996a9c8cdaea760def96d67cb6fb5e4088051b472e1efe9da4b27ab99b136f5 bytes=4510
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/12_mittsume_no_atari.py sha256=5b50aaee7534bb3d93a7dd62723a7457f289cb297d452d0cd206ef37f19fca96 bytes=3988
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/13_tojinokori_no_kikou.py sha256=18c92b7914468d85fcfdada7d5bd202e2d6f1272ff2d1d7155a17b68539dd468 bytes=3663
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/20_hougen_shouhisha.py sha256=f0a2eb42d2b7f5100698ef3f69f52592c95e6a8cbef8e1fbe32a9326ab1aa213 bytes=11866
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/21_nise_no_midori.py sha256=f9e7a38ab3d9bdff4bd4462b7cf76620f3e367b64527d4049f9b7e29cfb8b458 bytes=8908
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/30_sakai_wo_otosu_ki.py sha256=6925b5f26a75af04b3e5302333c622706dc55cb1f828275ef906b12b14b611f4 bytes=9226
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/31_bosuu_wo_naosu.py sha256=6576bc09d6f318e3aa9e8fae001fbb553002df597b1c3ff75467fdc5290e9f03 bytes=3776
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/32_mitsuketa_kizu.py sha256=e035c7f3c0a48ad3a81e9195a3295553bebd4b0f112af4630392bd1e46aac3ba bytes=7096
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/90_honshi.py sha256=5fdbd017144e16fd90d59ff7b8bfb330993040afa5942cfbb756f36421dabf52 bytes=19750
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/91_daichou.py sha256=eb8df94e5be0c756ad522a853fcc5428aafeb411fd05697471341a66b9a12d54 bytes=4849
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ki/K.py sha256=bd085eadbc11d2728021509637093e40501c25c1432a1b38867335fc36e00360 bytes=1565
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/01_zendan_yonshi.out sha256=481dd67df7f161b69926abdb69eaab20ddd60366498969e029eee4ec685458c8 bytes=715
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/10_1059_wo_tojiru.out sha256=336039739a337d0955845b94f46a8c4bcc3264d2420bad62f9c72245b88733f0 bytes=3657
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/11_futatsume_no_ki.out sha256=db07ec69d829119a00bc1c888f009adf01c6e43d3f23c5f321286be1b314db76 bytes=2101
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/12_mittsume_no_atari.out sha256=63570dfeaa0bdc72492fc9ab625b99f9067feaafafcff3f69530196c090af2be bytes=1547
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/13_tojinokori_no_kikou.out sha256=9f9b1a44a378161dae9101154e9f27ec73629816fc17ae844da9f357f421e665 bytes=4473
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/20_hougen_shouhisha.out sha256=52cd7b69c420b3423e2f305d713f2661fe82f09e2c5e31800b31cd9fccb6ff1b bytes=6485
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/21_nise_no_midori.out sha256=79b1845da5624ce2eb17e345e8dec97c75845c8344ac08b9af6697ff9f8c5221 bytes=5668
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/30_sakai_wo_otosu_ki.out sha256=7330a3fef6f7f6ea3239b146772638e2f5576ebee7b801ab311376e791abff0c bytes=13681
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/31_bosuu_wo_naosu.out sha256=da273f6c84c9ed153f1e94e8ebde82e821d2e1ab733657a389c7eec49383f1bc bytes=8377
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/raw/32_mitsuketa_kizu.out sha256=b031b5727d5582d7e23c51cbd52608bbaa1092a917c1fc050866f3374d693552 bytes=5136
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/fixture_B_yonran.txt sha256=a88687feea343de8fe62766affc1f86555a8f5d0206439beaba9bb30753958fa bytes=783
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/fixture_E_sanran.txt sha256=4e6e00f745a0041395906d5b2583294c4e924d9eed1ea78d3b848a01c29e8242 bytes=751
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/mi/hon_0.txt sha256=e5646174b554bb60ea0c71974ca562f566fe92cb2f7bda450939ea3c84e907c9 bytes=22
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/mi/hon_1.txt sha256=b8a5e33c3667511482ec88c51a1dff279a0788017ee1dab05fc6b5131094dac0 bytes=32
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/mi/hon_2.txt sha256=591f57870df2443f6ebcc0d6b26f57a883a1de45e66a26f01bb0078274418369 bytes=4
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/yabure/y_0.txt sha256=f83cff010cda53169c7b422971b78e991a58ed35facb91eb8852b882ed30ee4e bytes=13
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/yabure/y_2.txt sha256=556b37b1d5f0f2535f4a1019d63fd47f9c5a4598376e4d55c554f621f0235111 bytes=13
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/yabure_B_yonran.txt sha256=80c8b35cad0217f0e1505932f94ce1ae89c2374f69415208cbcab12c9169dfd2 bytes=771
+path=queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/yabure_E_sanran.txt sha256=e3fbff30fbadd333f7d685aed43a6ade7d03b0dac3a1f7529e6a699967a9c872 bytes=747

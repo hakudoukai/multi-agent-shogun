@@ -1,0 +1,116 @@
+# 門控 ―― 第29弾 足軽3号
+
+## 甲 本番(臺帳 + 33 本)
+  刻   = 2026-09-13T13:01:44
+  門   = scripts/checks/karo_mac_dasumae_gate.sh sha16 8df3d070fb4f9a3e bytes 8588
+  臺帳 = ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_manifest.txt sha16 e61983c7751dc84e
+  渡した本數 = 33 本(臺帳の ^path= 行から機械で引いた)
+
+  ★rc = 0★
+
+  ―― stdout 逐語 ――
+    台帳 queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_manifest.txt
+      cwd  /Users/momizimac/multi-agent-shogun
+      基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+      一致 ★33★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 33)
+  ―― stderr 逐語 ――
+    條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+    條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(33本)通
+    條⑤ 寸法 = byte和 161500(閾 10485760未満)
+    ★出す前 門 通。出してよい。★
+
+  ★結語 = 「★出す前 門 通。出してよい。★」★
+
+## 乙 ★陽性対照★ ―― 門が盲ゐて居らぬ事を先に示す
+  「33/33 通」だけでは ★門が見えて居るのか黙つて居るのか★ が分らぬ。
+  ∴ ★員外に出した試料★ を門へ渡し、★鳴る事★ を示す。
+
+  渡した物 = sunaba/sakai/b_saishuu.txt(★故意に終の改行を持たせて居らぬ★) と e_xtrace.txt
+  ★rc = 1★
+  ―― stderr 逐語 ――
+    條① 台帳とdiskの差 = スキップ(台帳未指定)
+    ★EOF改行が無い(0) ―― queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/sunaba/sakai/b_saishuu.txt★
+    條⑤ 寸法 = byte和 240(閾 10485760未満)
+
+    ★出す前 門が落ちた。出すな。★
+
+  ∴ ★門は條④で鳴つた。上の rc=0 は「黙つた」のではなく「見て通した」のである。★
+
+## 丙 ★員外★(臺帳にも門にも渡さぬ 6 本) ―― 名指す
+  故意に形を破つた試料である。★鳴る事が其の役目★ ∴ 渡さぬ。
+  ★直さぬ★ ―― 証跡を書き換へるより名指して外へ出す(第28弾の教へ)。
+  sunaba/sakai/a_kuugyou.txt bytes=175 sha16=d62c810d9ed39d4f
+  理由 = ㋐空行の境を測る為の試料
+  sunaba/sakai/b_saishuu.txt bytes=177 sha16=ca220731095ec0a4
+  理由 = ㋑最終行の境を測る為、★故意に終の改行を持たせて居らぬ★(條④を鳴らす)
+  sunaba/sakai/c_saisho.txt bytes=179 sha16=69c453c8ef8d6378
+  理由 = ㋒最初の行の境を測る為の試料
+  sunaba/sakai/d_kugiri_no_ato.txt bytes=214 sha16=9997039e29e31e09
+  理由 = ㋓最後の区切りの後の境を測る為の試料
+  sunaba/sakai/e_xtrace.txt bytes=63 sha16=bde70cff9bbd99af
+  理由 = 疵の器へ食はせる xtrace 試料(+ を持たぬ行を故意に含む)
+  sunaba/yabure/y_1.txt bytes=44 sha16=e7ef15aaafb9d490
+  理由 = ★故意に臺帳と食ひ違はせた本★(偽の緑を狩る為・臺帳の sha は書き換へ前の物)
+
+## 丁 ㊁⑸ ★禁域へ 0 byte★(証)
+  本弾の書込は悉く queue/reports/ashigaru-mac-3_km-29-nokori-1059B-wo-marumezu-ni-toji-hougen-no-shouhisha-wo-hakare-20260913_evidence/ の下のみ。
+  | 禁域の本 | sha16 | bytes | mtime |
+  |---|---|---|---|
+  | scripts/checks/karo_mac_dasumae_gate.sh | 8df3d070fb4f9a3e | 8588 | 2026-09-12T15:10:21 |
+  | scripts/checks/karo_mac_manifest_verify.py | 1f001531b681d1bf | 8230 | 2026-09-12T14:49:23 |
+  | scripts/inbox_write.sh | 8de5e3b9e550fd77 | 13813 | 2026-09-06T19:38:23 |
+  | scripts/inbox_watcher.sh | f8a0160c0bff47c9 | 76554 | 2026-09-12T23:52:47 |
+  | .gitignore | 3ccfcf1c05e82b58 | 13968 | 2026-09-09T06:48:52 |
+  | .claude/settings.json | b135e8f17b3be9d5 | 37170 | 2026-08-30T23:21:51 |
+  | instructions/ashigaru.md | 10c92ce0e9c3b607 | 15343 | 2026-09-01T20:58:27 |
+
+  ★上の悉くが本弾の着手(2026-09-13T12:24)より前の mtime である。★
+  git status --porcelain -- scripts/ .gitignore instructions/ .claude/settings.json
+    rc=0 / 行 31 ―― ★之は本弾より前から在る worktree の差である★
+    (上表の mtime が着手より前である事が其の証。本弾は之等に触れて居らぬ)
+
+  他席の実紙 ―― ★読取のみ★。正規表現は ★逐語で写して★ 拙者の砂場で流した:
+    ashigaru-mac-1_km-argv-wo-minamoto-kara-kumi-naosi-todoku-kami-to-todokanu-kami-wo-wakere-20260913_20260913_evidence/raw/20_todoku.py
+      sha16 aa0b089b9c52c9f5 / bytes 6870 / mtime 2026-09-13T07:04:19(★本弾より前・動いて居らぬ★)
+    ashigaru-mac-1_km-28-bon-no-keiro-wo-katachi-de-toji-mon-no-sanban-no-sa-wo-gyou-de-dase-to-atena-de-toru-kagi-no-ippankei-20260913_evidence/raw/60_gate_run.py
+      sha16 040fd1c90379fe6a / bytes 5510 / mtime 2026-09-13T09:50:34(★本弾より前・動いて居らぬ★)
+    ashigaru-mac-3_km-mon-wo-tomeru-katachi-wo-genri-de-tojiro-20260913_evidence/kikai/50_genri_de_tojiru.py
+      sha16 adf27804b75f4d3c / bytes 10039 / mtime 2026-09-13T06:10:41(★本弾より前・動いて居らぬ★)
+
+## 戊 第28弾の四紙 ―― 再測のみ(★書き換へ 0★)
+  ★第28弾の四紙 再測★ ―― 家老の錨 ⇔ 今の disk
+
+  | 名 | 錨(家老) | 今 | 一致 | bytes | 行 | mtime |
+  |---|---|---|---|---|---|---|
+  | 本紙 | 31a00cfb624628d9 | 31a00cfb624628d9 | ★一致★ | 21825 | 342 | 2026-09-13T09:57:53 |
+  | 臺帳 | dbec6076783f5dc1 | dbec6076783f5dc1 | ★一致★ | 20385 | 109 | 2026-09-13T12:08:56 |
+  | 門控 | a9cec81ebf678bd9 | a9cec81ebf678bd9 | ★一致★ | 5516 | 68 | 2026-09-13T12:10:14 |
+  | 添状 | 6882c7f391591448 | 6882c7f391591448 | ★一致★ | 10935 | 154 | 2026-09-13T12:12:05 |
+
+  ★総判定 = 四紙 悉く 不可侵(書き換へ 0)★
+
+  ―― 本弾の紙は ★新しい名★ で書く(第28弾の紙へは一byte も触れぬ)――
+
+## 己 ★門の rc=0 が言はぬ事★(本弾 ㊁⑷ の実測)
+  ⑴ ★方言★ ―― 門の本文に臺帳の行の形を見る式は ★0 行★(母數 214 行)。
+     門は臺帳を丸ごと照合器へ渡し、其の rc を條①に写すのみ。
+     ∴ 上の rc=0 は ★拙者の E 三欄形が正しい★ とは一言も言つて居らぬ。
+  ⑵ ★臺帳自身★ ―― 門は argv[1](臺帳)を條②③④⑤に掛けぬ(既測・第28弾)。
+     ∴ 上の「全file(33本)通」に ★臺帳其の物は入つて居らぬ★。
+     手ずから測る: 臺帳 bytes 9611 / 末尾2byte 370a / CR 0 / 行末空白 0 行
+
+## 庚 ★門控・添状 其の物を門に掛けた★(臺帳後の産物ゆえ條①には入れられぬ)
+  bash scripts/checks/karo_mac_dasumae_gate.sh ★--★ <門控> <添状>
+  ★rc = 0★
+    條① 台帳とdiskの差 = スキップ(台帳未指定)
+    條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(2本)通
+    條⑤ 寸法 = byte和 16258(閾 10485760未満)
+    ★出す前 門 通。出してよい。★
+  ∴ 此の二紙も 條②③④ を通つて居る(條①は不能 ―― 臺帳より後に生れた故)。
+
+  ―― ★此処で己が一度踏んだ★(隠さず記す)――
+  最初 第一引数に ★空文字列 ""★ を渡して「臺帳未指定」の心算で居た。門は ★rc=1★ を返した。
+  門の本文 L101: if [ "$man" = "--" ]; then ―― ★臺帳を省く合図は "" ではなく `--` である★。
+  "" は臺帳の path として照合器へ渡り「★台帳が無い★」と鳴つた。
+  ★之は門の疵ではない。拙者の読み違ひである。★ 但し ―― 「空を渡せば省かれる」と思ふ者は他にも居らう。
+  (直さぬ・案も出さぬ。門の本体を触るは委員長裁の後。此処は ★実測の記録★ のみ)

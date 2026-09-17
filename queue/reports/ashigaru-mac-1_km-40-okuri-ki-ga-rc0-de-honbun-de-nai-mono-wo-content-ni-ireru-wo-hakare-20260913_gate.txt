@@ -1,0 +1,34 @@
+# 門控 ―― ashigaru-mac-1_km-40-okuri-ki-ga-rc0-de-honbun-de-nai-mono-wo-content-ni-ireru-wo-hakare-20260913(第40弾・★臺帳の外★・門の後に生れた物・宣した名の内)
+刻(門控) 2026-09-13T13:28:54+0900 / 起の刻 2026-09-13T13:14:32+0900 / 門 sha16 走る前 8df3d070fb4f9a3e → 走つた後 8df3d070fb4f9a3e / 照合器 走る前 1f001531b681d1bf → 走つた後 1f001531b681d1bf / .gitignore 3ccfcf1c05e82b58 → 3ccfcf1c05e82b58 / .claude/settings.json b135e8f17b3be9d5 → b135e8f17b3be9d5 / ~/bin/agent_letter.py 27ec1cf5099e96dc → 27ec1cf5099e96dc
+禁域に起の刻より新しい file(find -newer raw/00_start.txt -type f): scripts 0 / scripts/checks 0 / instructions 0 / /Users/momizimac/bin 0 / .claude/settings.json 0 / .gitignore 0 / ★悉く 0 = 禁域へ 0 byte(門 scripts/checks/ と ~/bin を含む)★ / ~/bin/__pycache__ の pyc は悉く本弾より前の mtime(python は悉く -B)/ .git/index mtime 2026-09-10T19:55:51 bytes 57348(起の刻と同じ = add/commit/apply 0 回)
+他席の yaml・箱で起の刻より新しい物(讀むのみ・己の箱 ashigaru-mac-1 は除く・karo-mac.yaml は己の便(inbox_write 経由・着手報 1 + 納め + 監査)で新しい): queue/inbox/ashigaru-mac-3.yaml.lock queue/inbox/karo-mac.yaml queue/inbox/ashigaru-mac-1.yaml.lock queue/inbox/ashigaru-mac-3.yaml queue/tasks/ashigaru-mac-3.yaml
+  git status --porcelain(scripts .gitignore instructions .claude/settings.json)の行 31('??' 0 ―― 起の刻より前からの ' M'・第39弾と同じ 31・本弾が増やした '??' 0)
+DB: POST/PATCH/DELETE 0(sb write 0 回・30 の POST は偽 urlopen が捕へ網へ出て居らぬ)/ 讀み = sb read seqs 68 呼(raw/20)+ 束の前の凡そ 20 呼(session のみ・00_start)+ sb read seq 2 呼(對照)
+臺帳 queue/reports/ashigaru-mac-1_km-40-okuri-ki-ga-rc0-de-honbun-de-nai-mono-wo-content-ni-ireru-wo-hakare-20260913_manifest.txt sha16 3c700dcfef112ea6(10903 B)/ 紙 queue/reports/ashigaru-mac-1_km-40-okuri-ki-ga-rc0-de-honbun-de-nai-mono-wo-content-ni-ireru-wo-hakare-20260913.md sha16 e95b5e6f98c9d3f8(25745 B)
+添状の名(★名を宣す★): 便の本文 = raw/62_report_body.txt / 送りの rc と ★id の列★ = raw/63_sent.txt(此の門控の後に生れる・三 sha は此の門控の版)。_report.yaml は出さぬ。監査提出は karo-mac 宛(gunshi-mac の箱は 543 通既読 0 の死箱・記憶の常令)。
+渡した本数の定義 = 門の argv から argv[1](臺帳)を除いた file 引数の本数。走 三つ: selftest(0)/ main = 紙 1 + 臺帳(2)/ all = 臺帳の項 22(臺帳付)。argv の列は raw/61_gate_argv_{main,all}.txt。rc は subprocess.returncode 直採(pipe 0)。
+★門は一度で通つた: 前置器 59(13:27:56)清 → 60 通(13:28:06)。★ ★門は argv[1](臺帳)を條②③④⑤に掛けぬ(gate.sh:97)∴ 臺帳自身は 60 の別器で検めた(下)。★ ★證の fixture raw/fx/ 8 本(hg_01〜08・空白のみの行 = 條②を鳴らす物 5 本を含む)は ㊇ 員外・門に掛けず・直さず・名と sha を臺帳の註に宣した。★ ★臺帳の ㊂(凍結前に在る予告の出目)は 0 ―― 50 は 59 より先に走つた故、59_/60_/61_/99_ は悉く「門の後(宣した名)」に落ちる(99 が 17 本を其の類に分けた)。★
+★㊃ 宣 ⇔ 実測★: 臺帳の宣行「本数 22 / byte和 6272453」⇔ 門 條① 母數 22(一致 22・相違 0・実体無 0・読めぬ行 0)⇔ 門 條⑤ byte和(all) 6272453 ―― ★本数 一致 / byte和 一致★(之は席の器 60 と門の stderr を席が突き合せた物・門の rc は宣行を見ぬ ―― 第39弾 §2⑵補)。
+前置器 59(臺帳より先)逐語:
+  # 前置器 59 / 刻 2026-09-13T13:27:56+0900 / 渡した 22(紙 1 + 證 21)/ 員外 ㊀0 ㊂0 ㊃0 ㊄0 ㊅1 ㊆0 ㊇8
+  ## ⑴ 己の byte 述語: 鳴つた file 0 / 母數 22
+  ## ⑵ 門 -- 一走(入口側): rc 0 / 札 0 / byte和 6272453 / stderr sha16 63c7f0441a80341b
+  # 前置器 59 計: 己の述語 鳴 0 / 門 rc 0 → 清い ―― 臺帳を組んでよい
+門 60 三走 + 方言(五形) + 臺帳自身 + 禁域(raw/60_gate_rcs.txt 逐語):
+  刻 2026-09-13T13:28:06+0900 / 門 sha16 8df3d070fb4f9a3e / 照合器 sha16 1f001531b681d1bf / 臺帳の項 22 / 臺帳 sha16 3c700dcfef112ea6 / 紙 sha16 e95b5e6f98c9d3f8 / 渡した = argv[1](臺帳)を除く本数
+  selftest | 渡した 0 | rc 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+  main | 渡した 2 | rc 0 | 札 0 | 條① ('22', '0', '0', '0', '22') | 條⑤ byte和 36648 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 bde14720bff3df35
+  all | 渡した 22 | rc 0 | 札 0 | 條① ('22', '0', '0', '0', '22') | 條⑤ byte和 6272453 | 結語 ['★出す前 門 通。出してよい。★'] | stderr sha16 cbf7cfeb7dc2f577
+  臺帳の方言(五形) | 実体行 22 | 空白のみの行(第39弾 §3⑵ の境・本弾 ㊂ で己の器 32 も同じ数を印字する) 0 | A 引用符付 ^path="…" 合致 0 / B 素形 ^path=<裸> 合致 22 / D 三欄 引用符付 合致 0 / E 三欄 素形 合致 0 / C 鍵無し ^<path> … 合致 0 | ★排他性: 合致した形の種数 = 1 ['B 素形 ^path=<裸>']★ | 五形の外の実体行 0 | 緩い錨 'path=' の語 = 33(註を含む・語で数へた數)⇔ 行頭錨 22
+  臺帳自身(別器・門は argv[1] を條②③④⑤に掛けぬ) | bytes 10903 | 末尾 2 byte 380a(0a 一つ = True) | CR 0 | 行末空白 0 行 | 制御・不可視 無 | sha16 3c700dcfef112ea6
+  禁域(門 scripts/checks/ を含む)へ 0 byte | 前(00_start)と今の sha16: scripts/checks/karo_mac_dasumae_gate.sh 8df3d070fb4f9a3e / scripts/checks/karo_mac_manifest_verify.py 1f001531b681d1bf / .gitignore 3ccfcf1c05e82b58 / .claude/settings.json b135e8f17b3be9d5 | git status(scripts/ .gitignore instructions/ .claude/settings.json)の行 31(本弾の前から在る worktree 差・本弾は触れて居らぬ: 00_start の sha16 と一致で示す) | .git/index mtime 2026-09-10T19:55:51
+後歩き 99(門の後・62/63 の前・raw/99_sha_after.txt 頭 5 行):
+  # 99 門の後の歩き / 刻 2026-09-13T13:28:07+0900(★門の後★・62/63 の前)/ 歩き根 queue/reports/ashigaru-mac-1_km-40-okuri-ki-ga-rc0-de-honbun-de-nai-mono-wo-content-ni-ireru-wo-hakare-20260913_evidence / lstat 通常 file 47 / symlink 0 / 臺帳の項(根の下) 21 / 員外(註) 9 / 宣した名(根の下) 21
+  # 分類: 臺帳の項 21 / 員外(註に名) 9 / 門の後(宣した名) 17 / ★宣に無い産物★ 0 / 宣に在つて未だ無い名 3: ['raw/62_report_body.txt', 'raw/63_sent.txt', 'raw/99_sha_after.txt']
+  # 閉ぢ: 47 = 21 + 9 + 17 + 0 → 閉ぢる
+  # ★0byte の file = 0 本: []★ / 臺帳の bytes=0 行 = 0 本
+  # ★空の一行(器が書いた KARA) 2 本: ['raw/60_gate_selftest.out', 'raw/59_gate_pre.out']★ / .part = 0 / __pycache__ = 0
+門の stderr(all)逐語 raw/60_gate_all.err sha16 cbf7cfeb7dc2f577: 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0) / 條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(22本)通 / 條⑤ 寸法 = byte和 6272453(閾 10485760未満) / ★出す前 門 通。出してよい。★
+門の stderr(main)逐語 raw/60_gate_main.err sha16 bde14720bff3df35: 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0) / 條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(2本)通 / 條⑤ 寸法 = byte和 36648(閾 10485760未満) / ★出す前 門 通。出してよい。★
+着手報の ETA 14:10(宣)⇔ 門 60 の刻 13:28:06(実測・起 13:14:32 から 14 分)。
+走りの名: 20 一度 / 21 三度(一度目 對照が鳴・二度目 junk の列 398KB・三度目 清)/ 30 一度 / 32 二度(一度目 FileNotFoundError・二度目 清)/ 40 一度 / 50 一度 / 59 一度(清)/ 60 一度(selftest・main・all)/ 99 一度。
