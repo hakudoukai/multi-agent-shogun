@@ -294,6 +294,7 @@
 !skills/secondpc-dispatch-verify/
 !skills/secondpc-dispatch-verify/SKILL.md
 
+!docs/evidence/**
 # Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
 .venv/
 .venv-pg-test/
