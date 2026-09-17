@@ -1,0 +1,70 @@
+# safe_nudge doppler 対応 ── 当ての実測(試し台)
+# 席=karo-main / 刻=2026-09-17 / 親裁=seq326405 ⑵
+# 対象: scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh
+#
+## ■一 何故 bats で走らせなんだか(①測り)
+#  ⒜ bats_in_PATH=no (rc=1) / bats_node_modules=no
+#     正對照(同じ器で非空): command -v bash -> /usr/bin/bash, awk -> /usr/bin/awk
+#  ⒝ tests/unit/test_safe_nudge.bats の setup_file() は
+#       [ -f "$MDV2_SOURCE_ROOT/scripts/message_delivery_v2/safe_nudge.sh" ] || return 1
+#     を入口条件に持つ。此の path を origin/main の樹で引くと ABSENT。
+#     正對照: scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh -> PRESENT
+#     分母: origin の遠枝 100 本(2026-09-17 測り。同日の早い刻は 109 ゆゑ分母は動く)
+#  ∴ 既存 5 升は「走れば通る」ではなく ★入口で落ちる★。其処へ doppler の升を足せば
+#    ★走らぬ升を増やす★丈に成る ∴ 足さず、下の試し台で ①測り を採つた。
+#
+## ■二 試し台の作り
+#  repo 自身の tests/test_helper/mock_tmux_pane.bash と同じ仕掛(PATH へ mock tmux を挿し、
+#  MOCK_PANE_AGENT_ID / MOCK_PANE_CMD / MOCK_SENDKEYS_RC で器の答を決める)を素の bash へ移した物。
+#  升毎に使ひ捨ての砂場を作り、script は砂場の scripts/message_delivery_v2/ へ置く
+#  (= ${_NUDGE_DIR}/../.. が砂場の根へ解ける深さ。archive の深さでは解けぬ ── ■四)。
+#  「send-keys」欄 = mock tmux の呼ばれ台帳を数へた物 ゆゑ ★着弾の有無を rc と別に測れる★。
+#
+## ■三 生の出(逐語・加工無し)
+    script_canon_sha=e2f5090885a9c017df5b4c50f84d6a0b107240501097e15af609a46a9265e1cd
+    script_fix2_sha =b0c8a0339e4464779ebbcdfa5bba491299594bacaed60b1387cfe15cde9db16e
+
+    tag  | 器    | 条件                                                    | rc   | send-keys | log の extra
+    -----+-------+---------------------------------------------------------+------+-----------+--------------
+    s1o  | 旧   | cli=doppler pane_agent=test_agent  pane_cmd=doppler | rc=0 | send-keys=1 | "extra":"nudge_len=11"
+    s1n  | 新   | cli=doppler pane_agent=test_agent  pane_cmd=doppler | rc=0 | send-keys=1 | "extra":"nudge_len=11"
+    s2o  | 旧   | cli=doppler pane_agent=other_agent pane_cmd=doppler | rc=0 | send-keys=1 | "extra":"nudge_len=11"
+    s2n  | 新   | cli=doppler pane_agent=other_agent pane_cmd=doppler | rc=3 | send-keys=0 | "extra":"expected=test_agent actual=other_agent"
+    s3o  | 旧   | cli=claude  pane_agent=test_agent  pane_cmd=doppler | rc=3 | send-keys=0 | "extra":"expected_cmd=claude actual_cmd=doppler"
+    s3n  | 新   | cli=claude  pane_agent=test_agent  pane_cmd=doppler | rc=0 | send-keys=1 | "extra":"nudge_len=11"
+    s4o  | 旧   | cli=claude  pane_agent=test_agent  pane_cmd=claude  | rc=0 | send-keys=1 | "extra":"nudge_len=11"
+    s4n  | 新   | cli=claude  pane_agent=test_agent  pane_cmd=claude  | rc=0 | send-keys=1 | "extra":"nudge_len=11"
+    s5o  | 旧   | cli=claude  pane_agent=other_agent pane_cmd=claude  | rc=3 | send-keys=0 | "extra":"expected=test_agent actual=other_agent"
+    s5n  | 新   | cli=claude  pane_agent=other_agent pane_cmd=claude  | rc=3 | send-keys=0 | "extra":"expected=test_agent actual=other_agent"
+    -----+-------+---------------------------------------------------------+------+-----------+--------------
+    S6 ── 冷めの置き場が無い時(根がずれた場合の再現): queue/watchers を作らぬ
+    s6n  | 新   | cli=doppler pane_agent=test_agent  pane_cmd=doppler | rc=1 | send-keys=1 | <log無し>
+
+## ■四 読み解き(升毎に格を付す)
+#  S2旧 rc=0 send-keys=1 … ★本件の疵★ cli_type=doppler は :83 の入口条件に掛からず
+#      ★名の照合(:85)ごと素通り★ ∴ 名違ひの pane へ文が入る。之が 15:2x の注入の機序。 [①測り]
+#  S2新 rc=3 extra="expected=test_agent actual=other_agent" … 入口が広がつた事で
+#      名の照合が初めて掛かり、名違ひを止めた。send-keys=0。                          [①測り]
+#  S3旧 rc=3 extra="expected_cmd=claude actual_cmd=doppler" … 之が旧来
+#      「safe_nudge が艦隊を悉く拒む」と呼ばれて居た症状の正体。                        [①測り]
+#  S3新 rc=0 send-keys=1 … :90 を広げた事で doppler 実装の pane へ通る。               [①測り]
+#  S4/S5 旧=新(rc=0 / rc=3) … claude on claude の従前の振舞は ★不変★。逆行無し。      [①測り]
+#  S6新 rc=1 だが send-keys=1 … 冷めの置き場(queue/watchers)が無い時、:132 の書込が
+#      :24 の set -euo pipefail に掛かつて落ちる。:132 は send-keys(:122) の ★後★ ゆゑ
+#      ★rc=1 でも文は既に入つて居る★。rc=1 の二義(⑴:96 の冷め待ち=未着弾 /
+#      ⑵:132 の書込失敗=着弾済)は ★rc だけでは分かれぬ★ ── log の有無と欄で分けよ。  [①測り]
+#
+## ■五 此の試し台が証さぬ事(★誇るな★)
+#  ⒜ 本物の tmux での振舞 … mock ゆゑ ③未測。生きた pane での測りは別紙
+#     20260917_safe_nudge_doppler_controls.txt(N1/N2/D1/P1)に在る。
+#  ⒝ 既存 5 升が新旧いづれでも通る事 … bats が無く入口も死んで居る ∴ 依然 ★③未測★。
+#     S4/S5 は其の 5 升と同じ条件を素の bash で引いた物であつて、5 升其の物ではない。 [②見立て]
+#  ⒞ doppler を覆ふ升が suite に在る事 … ★0 = 穴の儘★。穴を塞ぐには入口の path を
+#     二 file(test_safe_nudge.bats / mock_tmux_pane.bash)で直す要が在り、之は別の裁を仰ぐ。
+#
+## ■六 併せて見付けた三つ目の疵(本枝では直して居らぬ)
+#  archive の深さでは :38 の ${_NUDGE_DIR}/../.. が <repo>/scripts へ解ける(<repo> ではない)。
+#  物証: <repo>/scripts/queue/ と <repo>/scripts/logs/ が在る(3 file)。内
+#  scripts/logs/message_delivery_v2/safe_nudge_20260917.log に當職自身の 13:47:30 の
+#  corr_id=o156-* が 2 行入つて居る。<repo>/scripts/queue/watchers/ は ★無い★
+#  ∴ 実運用でも S6 と同じ rc=1(着弾済) が起こり得る。直すは別弾(owner=當職)として伺ふ。

@@ -1,0 +1,61 @@
+# safe_nudge doppler 升 (tests/unit/test_safe_nudge_doppler.bats) の當機走行 ── ★bats ではなく shim★
+# 席=karo-main / 刻=2026-09-17 / 親裁=seq326673 ⑵⑶・seq326405 ⑵
+#
+## ■一 何故 shim か
+#  bats は當機に無い (PATH / node_modules 共に no・正對照 command -v bash,awk は非空)。
+#  CI (.github/workflows/test.yml "Run unit tests") は `bats tests/unit/ --timing` を走らせる
+#  ∴ 本 file は CI に於いて bats で走る。當機では同梱の最小 shim
+#  (20260917_safe_nudge_doppler_bats_shim.sh) で同じ file の論理を走らせた。
+#  shim が為す事: @test→函数化 / load / run(status,output,lines) / setup_file / setup / BATS_TEST_TMPDIR。
+#  為さぬ事: skip・bats-assert・timing。★CI の bats 走行を代へる物ではない (bats 其の物での通りは ③未測)。★
+#
+## ■二 shim の正對照 ── 落ちる升を含む file で「落ちられる」事 (rc=1 が正)
+    ok 1 selftest-pass: 1 eq 1
+    not ok 2 selftest-fail: 1 eq 2 (must be NOT OK)  (rc=1)
+    ok 3 selftest-run: run false yields status 1
+    1..3  pass=2 fail=1  runner=SHIM(not bats) bash=5.2.21(1)-release
+    selftest_rc=1
+#
+## ■三 当てた樹 (同じ bats file・同じ mock 助け・script 丈が違ふ)
+#    旧 = origin/main の正本 blob 15faa75d… (sha256 e2f5090885a9c017…)
+#    新 = ad540e07 の当て   blob ab97986b… (sha256 b0c8a0339e446477…)
+#    mock 助け = origin/main:tests/test_helper/mock_tmux_pane.bash (sha256 35795550595ecea8…) 両樹で同一
+#
+## ■四 旧に当てる ── 弁別: doppler の升が落ちる筈 (生の出・加工無し)
+    ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered
+    not ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies)  (rc=1)
+    not ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected)  (rc=1)
+    ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged)
+    ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged)
+    not ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys  (rc=1)
+    ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=1 (documents the rc=1 ambiguity)
+    1..7  pass=4 fail=3  runner=SHIM(not bats) bash=5.2.21(1)-release
+    canon_rc=1
+#
+## ■五 新に当てる (生の出・加工無し)
+    ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered
+    ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies)
+    ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected)
+    ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged)
+    ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged)
+    ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys
+    ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=1 (documents the rc=1 ambiguity)
+    1..7  pass=7 fail=0  runner=SHIM(not bats) bash=5.2.21(1)-release
+    fix2_rc=0
+#
+## ■六 読み解き (升毎に格)
+#  002 / 003 / 006 … 旧で落ち・新で通る = 当ての効き所ちやうど            [①測り(shim)]
+#  001 / 004 / 005 … 両樹で通る = claude on claude と正常 doppler に逆行無し [①測り(shim)]
+#  007           … 両樹で通る = 特性 (rc=1 の二義) は当てと独立に存在      [①測り(shim)]
+#  bats 其の物で同じ結果に成る事                                            [③未測 → CI が測る]
+#
+## ■七 裁326673 ⑶ への答 ── T-SND-007 (S6) の「配達後の rc=1」を欠陥として扱ふか
+#  ★扱ふ = 欠陥。★ 同じ rc=1 が「未着弾 (:96 cooldown)」と「着弾済 (:132 書込失敗)」の逆の意味を持つ。
+#  呼び手が前者と讀めば二重に撃ち、後者と讀めば cooldown 待ちを見落とす。
+#  但し ★本 PR (2 行の当て) の範囲外★。根は二つ:
+#    ⒜ :132 の cooldown 書込が :122 send-keys の ★後★ に在り、:24 set -euo pipefail で落ちる順序
+#    ⒝ archive の深さでは :38 の root が <repo>/scripts へ解け queue/watchers が無い
+#       (物証: <repo>/scripts/queue/ と <repo>/scripts/logs/ が実在・後者に 13:47:30 の o156-* が 2 行)
+#  本 PR での扱ひ = T-SND-007 で ★特性として釘付け★ (欠陥の写しであつて受入条件ではない)。
+#  直しは別弾 (owner=karo-main・第九十五報 ■四 で伺ひ済)。直せば 007 の期待値を
+#  「rc=0 (書込先を作る)」か「rc=1 かつ send-keys 0 (順序を入替)」の何れかへ改める要が在り、其の択は裁を仰ぐ。

@@ -17,6 +17,7 @@
 #     3 = pane_drift (= agent_id 不一致、絶対拒否)
 #     4 = book_mode_fallback (= TUI 空白、書面 mode に切替)
 #     5 = bash_shell (= Codex 終了、緊急介入要)
+#     6 = delivered_cooldown_write_failed (= send-keys 済・cooldown 書込のみ失敗。★再送するな★)
 #
 # 設計: docs/message_delivery_v2_design_2026-05-08.md §2.3
 # 本多 HND-MDV2-004 反映: SSoT を本ファイルに固定、root scripts/ に二重実装残さず
@@ -80,14 +81,14 @@ if [[ "$CLI_TYPE" == "codex" || "$CLI_TYPE" == "node" ]]; then
 fi
 
 # 3. Claude pane の場合の pane identity verify (= 反省点 n)
-if [[ "$CLI_TYPE" == "claude" ]]; then
+if [[ "$CLI_TYPE" =~ ^(claude|doppler)$ ]]; then
     pane_agent_id=$(tmux display-message -t "$PANE_TARGET" -p '#{@agent_id}' 2>/dev/null || echo "")
     if [[ "$pane_agent_id" != "$AGENT_ID" ]]; then
         log_event ERROR pane_drift "expected=${AGENT_ID} actual=${pane_agent_id}"
         exit 3
     fi
     pane_cmd=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
-    if [[ "$pane_cmd" != "claude" ]]; then
+    if [[ ! "$pane_cmd" =~ ^(claude|doppler|node)$ ]]; then
         log_event ERROR pane_drift "expected_cmd=claude actual_cmd=${pane_cmd}"
         exit 3
     fi
@@ -128,8 +129,13 @@ if [[ $send_rc -ne 0 ]]; then
     exit 2
 fi
 
-# 7. cooldown 更新
-date +%s > "$COOLDOWN_FILE"
+# 7. cooldown 更新 (= send-keys は済んで居る ∴ 書込失敗を rc 0/1 で偽らず rc=6 + stderr 註で伝へる)
+if ! date +%s > "$COOLDOWN_FILE"; then
+    log_event ERROR delivered_cooldown_write_failed "nudge_len=${nudge_len} cooldown_file=${COOLDOWN_FILE}"
+    echo "delivered: $AGENT_ID at $PANE_TARGET"
+    echo "WARN safe_nudge: send-keys done but cooldown write failed (${COOLDOWN_FILE}); do NOT resend" >&2
+    exit 6
+fi
 
 # 8. 成功 log
 log_event INFO delivered "nudge_len=${nudge_len}"
