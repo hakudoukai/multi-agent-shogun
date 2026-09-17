@@ -1,0 +1,7 @@
+file	line	name	default	note	text
+fleet_liveness_check.sh	28	FLEET_MIN_PANE_WIDTH	80	-	MIN_WIDTH="${FLEET_MIN_PANE_WIDTH:-80}"
+idle_backlog_wake.sh	61	IBW_DRY_RUN	0	-	if [ "${IBW_DRY_RUN:-0}" = 1 ]; then echo "$TS DRY letter→fukuincho: $
+idle_backlog_wake.sh	130	IBW_TOP_STALE_H	6	-	TOP_STALE_H="${IBW_TOP_STALE_H:-6}"
+idle_backlog_wake.sh	154	IBW_FORCE_IDLE	0	-	if [ "${IBW_FORCE_IDLE:-0}" != 1 ] && echo "$cap" | grep -qE 'interrup
+idle_backlog_wake.sh	157	IBW_FORCE_IDLE	0	-	if [ "${IBW_FORCE_IDLE:-0}" = 1 ]; then :
+idle_backlog_wake.sh	205	IBW_DRY_RUN	0	-	if [ "${IBW_DRY_RUN:-0}" = 1 ]; then echo "$TS DRY $name MSG=$MSG"; ec

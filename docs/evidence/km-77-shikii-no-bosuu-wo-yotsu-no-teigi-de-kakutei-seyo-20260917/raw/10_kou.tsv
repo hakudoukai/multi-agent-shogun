@@ -1,0 +1,28 @@
+rev	path	line	kind	name	text
+disk	scripts/agent_health_check.sh	129	call	HEALTH_CHECK_COOLDOWN_SEC	fix_threshold HEALTH_CHECK_COOLDOWN_SEC 300 ALERT_COOLDOWN_SEC  # 5 min (= task spec)
+disk	scripts/agent_health_check.sh	354	call	HEALTH_CHECK_TOKEN_WARN	fix_threshold HEALTH_CHECK_TOKEN_WARN 200000 TOKEN_WARN_THRESHOLD
+disk	scripts/agent_health_check.sh	355	call	HEALTH_CHECK_TOKEN_CRIT	fix_threshold HEALTH_CHECK_TOKEN_CRIT 240000 TOKEN_CRIT_THRESHOLD
+disk	scripts/checks/context_usage_warn.sh	76	call	CONTEXT_WARN_BYTES	fix_threshold CONTEXT_WARN_BYTES 1600000 WARN_BYTES      # ~1.6 MB ≒ 80% (heuristic)
+disk	scripts/checks/context_usage_warn.sh	77	call	CONTEXT_DANGER_BYTES	fix_threshold CONTEXT_DANGER_BYTES 2000000 DANGER_BYTES  # ~2.0 MB ≒ 95% (heuristic)
+disk	scripts/checks/karo_mac_dasumae_gate.sh	77	call	DASUMAE_READ_TIMEOUT	fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO
+disk	scripts/checks/karo_mac_dasumae_gate.sh	81	call	DASUMAE_MAX_BYTES	fix_threshold DASUMAE_MAX_BYTES 10485760 MAXB
+disk	scripts/checks/karo_mac_gate4.sh	96	call	GATE4_MAX_FILE_MB	fix_threshold GATE4_MAX_FILE_MB 50 MAXF
+disk	scripts/checks/karo_mac_gate4.sh	97	call	GATE4_MAX_TOTAL_MB	fix_threshold GATE4_MAX_TOTAL_MB 100 MAXT
+disk	scripts/inbox_watcher.sh	177	call(loop)	★loop 変数(list は上の for 行)★	fix_threshold "$_n" "$_d" "$_n"
+disk	scripts/redundancy/shogun_report_watcher.sh	78	call	SHOGUN_REPORT_WATCHER_COOLDOWN	fix_threshold SHOGUN_REPORT_WATCHER_COOLDOWN 60 COOLDOWN_SEC
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	120	call	ER_THRESHOLD_MIN	fix_threshold ER_THRESHOLD_MIN 10 THRESHOLD_MIN
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	121	call	ER_FIRE_CAP_COUNT	fix_threshold ER_FIRE_CAP_COUNT 3 FIRE_CAP_COUNT
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	122	call	ER_FIRE_CAP_WINDOW_MIN	fix_threshold ER_FIRE_CAP_WINDOW_MIN 15 FIRE_CAP_WINDOW_MIN
+HEAD	scripts/agent_health_check.sh	117	call	HEALTH_CHECK_COOLDOWN_SEC	fix_threshold HEALTH_CHECK_COOLDOWN_SEC 300 ALERT_COOLDOWN_SEC  # 5 min (= task spec)
+HEAD	scripts/agent_health_check.sh	342	call	HEALTH_CHECK_TOKEN_WARN	fix_threshold HEALTH_CHECK_TOKEN_WARN 200000 TOKEN_WARN_THRESHOLD
+HEAD	scripts/agent_health_check.sh	343	call	HEALTH_CHECK_TOKEN_CRIT	fix_threshold HEALTH_CHECK_TOKEN_CRIT 240000 TOKEN_CRIT_THRESHOLD
+HEAD	scripts/checks/context_usage_warn.sh	64	call	CONTEXT_WARN_BYTES	fix_threshold CONTEXT_WARN_BYTES 1600000 WARN_BYTES      # ~1.6 MB ≒ 80% (heuristic)
+HEAD	scripts/checks/context_usage_warn.sh	65	call	CONTEXT_DANGER_BYTES	fix_threshold CONTEXT_DANGER_BYTES 2000000 DANGER_BYTES  # ~2.0 MB ≒ 95% (heuristic)
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	77	call	DASUMAE_READ_TIMEOUT	fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	81	call	DASUMAE_MAX_BYTES	fix_threshold DASUMAE_MAX_BYTES 10485760 MAXB
+HEAD	scripts/checks/karo_mac_gate4.sh	96	call	GATE4_MAX_FILE_MB	fix_threshold GATE4_MAX_FILE_MB 50 MAXF
+HEAD	scripts/checks/karo_mac_gate4.sh	97	call	GATE4_MAX_TOTAL_MB	fix_threshold GATE4_MAX_TOTAL_MB 100 MAXT
+HEAD	scripts/inbox_watcher.sh	165	call(loop)	★loop 変数(list は上の for 行)★	fix_threshold "$_n" "$_d" "$_n"
+HEAD	scripts/watchdogs/enter_restart_common_watchdog.sh	108	call	ER_THRESHOLD_MIN	fix_threshold ER_THRESHOLD_MIN 10 THRESHOLD_MIN
+HEAD	scripts/watchdogs/enter_restart_common_watchdog.sh	109	call	ER_FIRE_CAP_COUNT	fix_threshold ER_FIRE_CAP_COUNT 3 FIRE_CAP_COUNT
+HEAD	scripts/watchdogs/enter_restart_common_watchdog.sh	110	call	ER_FIRE_CAP_WINDOW_MIN	fix_threshold ER_FIRE_CAP_WINDOW_MIN 15 FIRE_CAP_WINDOW_MIN

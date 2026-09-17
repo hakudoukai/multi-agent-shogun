@@ -1,0 +1,76 @@
+rev	path	line	kind	text
+disk	scripts/agent_health_check.sh	110	文字列(_th_say/say/echo)	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+disk	scripts/agent_health_check.sh	114	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/agent_health_check.sh	115	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/agent_health_check.sh	120	註	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+disk	scripts/agent_health_check.sh	122	文字列(_th_say/say/echo)	*␊*|*␍*|*␉*) _th_say "★閾 ${_ft_n} が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 ${_ft_d} へ倒す(fail-closed・裁 seq323980⑵)★"
+disk	scripts/agent_health_check.sh	125	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+disk	scripts/checks/codex_exec_sandbox_guard.sh	8	註	#       live repo cwd + sandbox 未確立なら停止 (fail-closed)。信長 SAFETY 裁定 (2026-07-21) =
+disk	scripts/checks/codex_exec_sandbox_guard.sh	20	註	# 検証済 sandbox 機構が確立し halt 解除されるまで、既定で停止する (fail-closed)。
+disk	scripts/checks/codex_exec_sandbox_guard.sh	25	註	# F-LA-1 非拡大 fail-closed 原則に反する。∴解除は ★改竄痕跡の残る理事長GO記録file★ の
+disk	scripts/checks/context_usage_warn.sh	60	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/checks/context_usage_warn.sh	61	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/checks/context_usage_warn.sh	66	註	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+disk	scripts/checks/context_usage_warn.sh	68	文字列(_th_say/say/echo)	*␊*|*␍*|*␉*) _th_say "★閾 ${_ft_n} が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 ${_ft_d} へ倒す(fail-closed・裁 seq323980⑵)★"
+disk	scripts/checks/context_usage_warn.sh	71	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+disk	scripts/checks/karo_mac_dasumae_gate.sh	38	註	# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+disk	scripts/checks/karo_mac_dasumae_gate.sh	55	文字列(_th_say/say/echo)	empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+disk	scripts/checks/karo_mac_dasumae_gate.sh	56	文字列(_th_say/say/echo)	blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+disk	scripts/checks/karo_mac_dasumae_gate.sh	59	文字列(_th_say/say/echo)	say "★閾 ${name} が比較器で扱へぬ(「${raw}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+disk	scripts/checks/karo_mac_dasumae_gate.sh	76	註	# ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
+disk	scripts/checks/karo_mac_dasumae_gate.sh	80	註	#   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。
+disk	scripts/checks/karo_mac_gate4.sh	70	註	# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+disk	scripts/checks/karo_mac_gate4.sh	88	文字列(_th_say/say/echo)	empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+disk	scripts/checks/karo_mac_gate4.sh	89	文字列(_th_say/say/echo)	blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+disk	scripts/checks/karo_mac_gate4.sh	92	文字列(_th_say/say/echo)	say "★閾 ${name} が比較器で扱へぬ(「${raw}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+disk	scripts/commander_send_shogun_second.sh	69	註	# PREFLIGHT (fail-closed): Commander→SecondPC は常に役職とcanonical topicを明示する。
+disk	scripts/inbox_watcher.sh	149	文字列(_th_say/say/echo)	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+disk	scripts/inbox_watcher.sh	153	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/inbox_watcher.sh	154	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/inbox_watcher.sh	159	註	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+disk	scripts/inbox_watcher.sh	161	文字列(_th_say/say/echo)	*␊*|*␍*|*␉*) _th_say "★閾 ${_ft_n} が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 ${_ft_d} へ倒す(fail-closed・裁 seq323980⑵)★"
+disk	scripts/inbox_watcher.sh	164	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+disk	scripts/inbox_write.sh	62	註	# ★空は「無指定」と同じ＝既定へ倒す(fail-closed)★ ―― `:-` ゆゑ IW_DEAD_LIST="" では
+disk	scripts/redundancy/shogun_report_watcher.sh	54	文字列(_th_say/say/echo)	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+disk	scripts/redundancy/shogun_report_watcher.sh	58	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/redundancy/shogun_report_watcher.sh	59	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/redundancy/shogun_report_watcher.sh	64	註	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+disk	scripts/redundancy/shogun_report_watcher.sh	66	文字列(_th_say/say/echo)	*␊*|*␍*|*␉*) _th_say "★閾 ${_ft_n} が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 ${_ft_d} へ倒す(fail-closed・裁 seq323980⑵)★"
+disk	scripts/redundancy/shogun_report_watcher.sh	69	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+disk	scripts/stop_hook_inbox.sh	55	文字列(_th_say/say/echo)	echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「${STOP_HOOK_STDIN_TIMEOUT}」) — 既定 10 へ倒す(fail-clos
+disk	scripts/stop_hook_inbox.sh	183	註	#   本形: 閾も數も先に検め、數でなければ ★既定へ倒して其の旨を言ふ(fail-closed・黙らぬ)★。
+disk	scripts/stop_hook_inbox.sh	186	文字列(_th_say/say/echo)	echo "[stop_hook] ★MASS_UNREAD_THRESHOLD が數でない(「${MASS_UNREAD_THRESHOLD}」) — 既定 5 へ倒す(fail-closed)★"
+disk	scripts/stop_hook_inbox.sh	191	文字列(_th_say/say/echo)	echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	100	文字列(_th_say/say/echo)	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	104	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	105	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	110	註	#   ★印の曖昧性★=値が元から印を含めば注入と区別できぬ ∴ 其の時は刷らずに倒す(fail-closed)。
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	112	文字列(_th_say/say/echo)	*␊*|*␍*|*␉*) _th_say "★閾 ${_ft_n} が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 ${_ft_d} へ倒す(fail-closed・裁 seq323980⑵)★"
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	115	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+HEAD	scripts/agent_health_check.sh	109	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/agent_health_check.sh	110	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/agent_health_check.sh	113	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_v}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+HEAD	scripts/checks/codex_exec_sandbox_guard.sh	8	註	#       live repo cwd + sandbox 未確立なら停止 (fail-closed)。信長 SAFETY 裁定 (2026-07-21) =
+HEAD	scripts/checks/codex_exec_sandbox_guard.sh	20	註	# 検証済 sandbox 機構が確立し halt 解除されるまで、既定で停止する (fail-closed)。
+HEAD	scripts/checks/codex_exec_sandbox_guard.sh	25	註	# F-LA-1 非拡大 fail-closed 原則に反する。∴解除は ★改竄痕跡の残る理事長GO記録file★ の
+HEAD	scripts/checks/context_usage_warn.sh	55	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/checks/context_usage_warn.sh	56	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/checks/context_usage_warn.sh	59	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_v}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	38	註	# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	55	文字列(_th_say/say/echo)	empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	56	文字列(_th_say/say/echo)	blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	59	文字列(_th_say/say/echo)	say "★閾 ${name} が比較器で扱へぬ(「${raw}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	76	註	# ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	80	註	#   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。
+HEAD	scripts/checks/karo_mac_gate4.sh	70	註	# ★乙(裁 seq322952)★ 未設定/空文字/空白のみ を ★分けて名指し★、既定へ倒す時は ★必ず刷る★。
+HEAD	scripts/checks/karo_mac_gate4.sh	88	文字列(_th_say/say/echo)	empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+HEAD	scripts/checks/karo_mac_gate4.sh	89	文字列(_th_say/say/echo)	blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+HEAD	scripts/checks/karo_mac_gate4.sh	92	文字列(_th_say/say/echo)	say "★閾 ${name} が比較器で扱へぬ(「${raw}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+HEAD	scripts/commander_send_shogun_second.sh	69	註	# PREFLIGHT (fail-closed): Commander→SecondPC は常に役職とcanonical topicを明示する。
+HEAD	scripts/inbox_watcher.sh	148	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/inbox_watcher.sh	149	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/inbox_watcher.sh	152	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_v}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+HEAD	scripts/inbox_write.sh	62	註	# ★空は「無指定」と同じ＝既定へ倒す(fail-closed)★ ―― `:-` ゆゑ IW_DEAD_LIST="" では
+HEAD	scripts/watchdogs/enter_restart_common_watchdog.sh	99	文字列(_th_say/say/echo)	empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/watchdogs/enter_restart_common_watchdog.sh	100	文字列(_th_say/say/echo)	blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0
+HEAD	scripts/watchdogs/enter_restart_common_watchdog.sh	103	文字列(_th_say/say/echo)	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_v}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"

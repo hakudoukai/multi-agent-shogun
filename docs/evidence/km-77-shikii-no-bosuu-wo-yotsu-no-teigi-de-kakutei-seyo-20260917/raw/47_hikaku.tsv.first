@@ -1,0 +1,46 @@
+rev	path	line	name	kind	receiver	comparator	where
+disk	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	var	MAXB	有	243
+disk	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	var	SAFE_SIZE_TMO	無	-
+disk	scripts/inbox_watcher.sh	197	NUDGE_COOLDOWN_SEC	var	NUDGE_COOLDOWN_SEC	無	-
+disk	scripts/inbox_watcher.sh	199	NUDGE_COOLDOWN_SEC_CODEX	var	NUDGE_COOLDOWN_SEC_CODEX	無	-
+disk	scripts/inbox_watcher.sh	215	ASW_PHASE	var	ASW_PHASE	有	216 217
+disk	scripts/inbox_watcher.sh	219	ASW_NO_IDLE_FULL_READ	var	ASW_NO_IDLE_FULL_READ	無	-
+disk	scripts/inbox_watcher.sh	224	ASW_PROCESS_TIMEOUT	var	ASW_PROCESS_TIMEOUT	無	-
+disk	scripts/inbox_watcher.sh	295	NUDGE_COOLDOWN_SEC	var	cooldown_sec	有	307
+disk	scripts/inbox_watcher.sh	297	NUDGE_COOLDOWN_SEC_CODEX	var	cooldown_sec	有	307
+disk	scripts/inbox_watcher.sh	301	NUDGE_COOLDOWN_SEC_CLAUDE	var	cooldown_sec	有	307
+disk	scripts/inbox_watcher.sh	470	ASW_NO_IDLE_FULL_READ	用途	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] 	無	-
+disk	scripts/inbox_watcher.sh	899	APPROVAL_ALERT_COOLDOWN	同行比較	APPROVAL_ALERT_COOLDOWN	有	同行
+disk	scripts/inbox_watcher.sh	1067	MAX_TYPING_SKIP	var	max_typing_skip	有	1068
+disk	scripts/inbox_watcher.sh	1535	INOTIFY_TIMEOUT	var	INOTIFY_TIMEOUT	有	1564
+disk	scripts/inbox_watcher.sh	1599	ASW_PROCESS_TIMEOUT	用途	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]	無	-
+disk	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	var	DETECT_STALE_STALE_SEC	無	-
+disk	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	用途	log "starting watcher (LIVE=${LIVE:-0} S	無	-
+disk	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	用途	log "starting watcher (LIVE=${LIVE:-0} S	無	-
+disk	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	無	-
+disk	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	無	-
+disk	scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	var	STOP_HOOK_STDIN_TIMEOUT	有	70
+disk	scripts/stop_hook_inbox.sh	177	MASS_UNREAD_THRESHOLD	var	MASS_UNREAD_THRESHOLD	有	194
+disk	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	var	ER_THRESHOLD_MIN	無	-
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	var	MAXB	有	243
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	var	SAFE_SIZE_TMO	無	-
+HEAD	scripts/inbox_watcher.sh	185	NUDGE_COOLDOWN_SEC	var	NUDGE_COOLDOWN_SEC	無	-
+HEAD	scripts/inbox_watcher.sh	187	NUDGE_COOLDOWN_SEC_CODEX	var	NUDGE_COOLDOWN_SEC_CODEX	無	-
+HEAD	scripts/inbox_watcher.sh	203	ASW_PHASE	var	ASW_PHASE	有	204 205
+HEAD	scripts/inbox_watcher.sh	207	ASW_NO_IDLE_FULL_READ	var	ASW_NO_IDLE_FULL_READ	無	-
+HEAD	scripts/inbox_watcher.sh	212	ASW_PROCESS_TIMEOUT	var	ASW_PROCESS_TIMEOUT	無	-
+HEAD	scripts/inbox_watcher.sh	283	NUDGE_COOLDOWN_SEC	var	cooldown_sec	有	295
+HEAD	scripts/inbox_watcher.sh	285	NUDGE_COOLDOWN_SEC_CODEX	var	cooldown_sec	有	295
+HEAD	scripts/inbox_watcher.sh	289	NUDGE_COOLDOWN_SEC_CLAUDE	var	cooldown_sec	有	295
+HEAD	scripts/inbox_watcher.sh	458	ASW_NO_IDLE_FULL_READ	用途	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] 	無	-
+HEAD	scripts/inbox_watcher.sh	1024	MAX_TYPING_SKIP	var	max_typing_skip	有	1025
+HEAD	scripts/inbox_watcher.sh	1476	INOTIFY_TIMEOUT	var	INOTIFY_TIMEOUT	有	1505
+HEAD	scripts/inbox_watcher.sh	1540	ASW_PROCESS_TIMEOUT	用途	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]	無	-
+HEAD	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	var	DETECT_STALE_STALE_SEC	無	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	用途	log "starting watcher (LIVE=${LIVE:-0} S	無	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	用途	log "starting watcher (LIVE=${LIVE:-0} S	無	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	無	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	無	-
+HEAD	scripts/redundancy/shogun_report_watcher.sh	29	SHOGUN_REPORT_WATCHER_COOLDOWN	var	COOLDOWN_SEC	有	278
+HEAD	scripts/stop_hook_inbox.sh	146	MASS_UNREAD_THRESHOLD	var	MASS_UNREAD_THRESHOLD	有	147
+HEAD	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	var	ER_THRESHOLD_MIN	無	-

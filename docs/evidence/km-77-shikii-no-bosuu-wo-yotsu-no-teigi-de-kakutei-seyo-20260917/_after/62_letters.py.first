@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+"""納め便の器 62(第75弾・_after= 臺帳の後の器・員外)―― 五便・各 300 字の條・門(宛先/未讀/字数/?/先送り語)を通してから inbox_write。id は箱+archive の胴の頭 40 字で引く(第八の番人)。"""
+import os, sys, re, time, subprocess, hashlib
+B = sys.argv[1]; D = os.path.dirname(B); E = D + '/raw'; OUT = D + '/_after'; sys.path.insert(0, E); import kaki as K
+M = '/Users/momizimac/multi-agent-shogun'; ME = 'ashigaru-mac-1'; TO = 'karo-mac'; KM = os.path.basename(D)
+sha16 = lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest()[:16]
+P_, MN, G = sha16(B + '.md'), sha16(B + '_manifest.txt'), sha16(B + '_gate.txt'); PB = os.path.getsize(B + '.md'); PL = open(B + '.md', encoding='utf-8').read().count('\n')
+rcs = open(OUT + '/60_gate_rcs.txt', encoding='utf-8').read(); g = {k: re.search(k + r'.*rc (\d+)', rcs).group(1) for k in ('selftest', 'main', 'nobase')}
+me = open(OUT + '/60_gate_main.err', encoding='utf-8').read(); bs = (re.search(r'byte和[ =]*(\d+)', me) or re.search(r'(\d+) *byte', me)); bs = bs.group(1) if bs else '?'
+box_k = open(M + '/queue/inbox/karo-mac.yaml', encoding='utf-8').read() + open(M + '/queue/inbox/_archive/karo-mac_pruned.yaml', encoding='utf-8').read()
+st = [q for q in box_k.split('\n- content: ')[1:] if 'km-77 母數四定義 着手' in q]; st_id = re.search(r'\n  id: (\S+)', st[0]).group(1) if st else '?'; st_ts = re.search(r"\n  timestamp: '([^']+)'", st[0]).group(1) if st else '?'
+koku = time.strftime('%Y-%m-%dT%H:%M:%S%z'); t0 = time.mktime(time.strptime(st_ts, '%Y-%m-%dT%H:%M:%S')); jitsu = (time.time() - t0) / 60
+letters = [
+ f"[第75弾 納め 1/5・束] 束 docs/evidence/{KM}/ 紙 {P_}({PB}B・{PL}行)/ 臺帳 {MN}(項27・append.py・束内相対)/ 門控 {G}(員外)。凍結HEAD 6ba8fcb2だがdiskと8file差→主disk副HEAD併記。生器へ0字・箱へは家老便4通の既讀印のみ。着手便 {st_id}({st_ts[11:19]})。",
+ f"[第75弾 納め 2/5・門] selftest rc{g['selftest']}・main rc{g['main']}(27本・byte和{bs}・條①一致27)・nobase rc{g['nobase']}(基点無し・落ちて正)。員外=門控・_after/*(60_gate_run.py・62・70)・raw/50_build_manifest.*・raw/50_sengen.txt。.firstは員内(倒れた走を残す)。",
+ f"[第75弾 納め 3/5・㋐㋑] 甲 呼出14行/7file(HEAD13/6)守る名23/ 乙 7file(HEAD6)/ 丙 11file(内 註のみ3・倒す器持ち8)/ 丁全86口18file・丁閾(大文字∧既定≥1∧註除く)23口6file(HEAD22/7)。★㋑ 裁20/6=甲′(fix_thresholdの語を含む総行=定義+呼出+註)をHEADで足した數(4+3+3+3+2+5)=20/6で立つ。diskでは22/7。甲乙丙丁の何れでも同時に立たぬ。★",
+ f"[第75弾 納め 4/5・㋒㋓㋔] 番人無し=A5口(detect_stale:33・supervisor:50×2,52×2)/A′1(commander_watchdog:35→common:120が守る)/B4(watcher 219,470 ★ASW_NO_IDLE_FULL_READ★・224,1599 ASW_PROCESS_TIMEOUT)/C′2(stop_hook 52,177=case別形番人)。家老の4fileはstop_hookが外れ3+A′1、B名は2。★㋓ 番人無し∧數比較器=0★(子はint()で止・Bは=文字列)。㋔ ~/bin 6口/2file 別表・環境部長。",
+ f"[第75弾 納め 5/5・疵・宣] 疵=器の\\s(macOS EREに無し)で二度落ち・env續き行で子を落とし・-B無しstdin pythonがpycacheを産み門一走目が落ちた(除いて再走・rcをpipe越しに0と読んだ疵も併記)。宣10:15(42分)⇔實{koku[11:19]}({jitsu:.1f}分)=★{42/jitsu:.1f}倍 過大★・器8本 實{jitsu/8:.1f}分/器。㋗專任3束 未讀。㋘突合は追ひ便6。監査代送を家老に乞ふ。",
+]
+raw = open(M + f'/queue/inbox/{ME}.yaml', encoding='utf-8').read(); un = raw.count('\n  read: false')
+ROSTER = sorted(os.path.basename(p)[:-5] for p in os.listdir(M + '/queue/inbox') if p.endswith('.yaml') and not p.startswith('_')); naru = []
+if TO not in ROSTER or TO == ME: naru.append('宛先')
+if un: naru.append(f'己の箱に未読 {un}')
+for i, b in enumerate(letters, 1):
+    if not (40 <= len(b) <= 300): naru.append(f'便{i} 字数 {len(b)}')
+    if '?' in b: naru.append(f'便{i} 引けぬ數')
+    q = subprocess.run(['python3', '-B', os.path.expanduser('~/bin/deferral_gate.py')], input=b.encode('utf-8'), capture_output=True)
+    if q.returncode == 10: naru.append(f'便{i} 先送り語')
+print('字数', [len(b) for b in letters], '門', naru or '通(0 鳴)')
+if naru: K.kaku(OUT + '/62_letters.txt', f'★門が鳴つた {naru}★\n' + '\n---\n'.join(letters)); sys.exit(1)
+out = [f'# 62 納め便 / 刻 {koku} / 便 {len(letters)} / 字数 {[len(b) for b in letters]} / 宛 {TO} / 着手便 {st_id} {st_ts} / 實 {jitsu:.2f} 分']
+for i, b in enumerate(letters, 1):
+    p = subprocess.run(['bash', M + '/scripts/inbox_write.sh', TO, b, 'report_received', ME], capture_output=True, text=True, cwd=M)
+    box = open(M + f'/queue/inbox/{TO}.yaml', encoding='utf-8').read() + open(M + f'/queue/inbox/_archive/{TO}_pruned.yaml', encoding='utf-8').read()
+    ids = [re.search(r'\n  id: (\S+)', q).group(1) for q in box.split('\n- content: ')[1:] if b[:40] in q and re.search(r'\n  id: (\S+)', q)]
+    out.append(f'便{i} rc {p.returncode} / 第八の番人= {len(ids)} 本 {ids}\n{b}')
+K.kaku(OUT + '/62_letters.txt', '\n'.join(out)); print('\n'.join(out)[:2400])

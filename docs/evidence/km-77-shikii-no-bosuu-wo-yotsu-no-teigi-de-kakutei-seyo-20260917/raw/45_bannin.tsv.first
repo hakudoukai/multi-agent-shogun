@@ -1,0 +1,46 @@
+rev	path	line	name	state	kind	receiver	other_file_guard
+disk	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	C 守られて居る(fix_threshold)	var	MAXB	-
+disk	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	C 守られて居る(fix_threshold)	var	SAFE_SIZE_TMO	-
+disk	scripts/inbox_watcher.sh	197	NUDGE_COOLDOWN_SEC	C 守られて居る(fix_threshold)	var	NUDGE_COOLDOWN_SEC	-
+disk	scripts/inbox_watcher.sh	199	NUDGE_COOLDOWN_SEC_CODEX	C 守られて居る(fix_threshold)	var	NUDGE_COOLDOWN_SEC_CODEX	-
+disk	scripts/inbox_watcher.sh	215	ASW_PHASE	C 守られて居る(fix_threshold)	var	ASW_PHASE	-
+disk	scripts/inbox_watcher.sh	219	ASW_NO_IDLE_FULL_READ	B 呼んで居るが其の名を守らぬ	var	ASW_NO_IDLE_FULL_READ	-
+disk	scripts/inbox_watcher.sh	224	ASW_PROCESS_TIMEOUT	B 呼んで居るが其の名を守らぬ	var	ASW_PROCESS_TIMEOUT	-
+disk	scripts/inbox_watcher.sh	295	NUDGE_COOLDOWN_SEC	C 守られて居る(fix_threshold)	var	cooldown_sec	-
+disk	scripts/inbox_watcher.sh	297	NUDGE_COOLDOWN_SEC_CODEX	C 守られて居る(fix_threshold)	var	cooldown_sec	-
+disk	scripts/inbox_watcher.sh	301	NUDGE_COOLDOWN_SEC_CLAUDE	C 守られて居る(fix_threshold)	var	cooldown_sec	-
+disk	scripts/inbox_watcher.sh	470	ASW_NO_IDLE_FULL_READ	B 呼んで居るが其の名を守らぬ	用途	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] 	-
+disk	scripts/inbox_watcher.sh	899	APPROVAL_ALERT_COOLDOWN	C 守られて居る(fix_threshold)	同行比較	APPROVAL_ALERT_COOLDOWN	-
+disk	scripts/inbox_watcher.sh	1067	MAX_TYPING_SKIP	C 守られて居る(fix_threshold)	var	max_typing_skip	-
+disk	scripts/inbox_watcher.sh	1535	INOTIFY_TIMEOUT	C 守られて居る(fix_threshold)	var	INOTIFY_TIMEOUT	-
+disk	scripts/inbox_watcher.sh	1599	ASW_PROCESS_TIMEOUT	B 呼んで居るが其の名を守らぬ	用途	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]	-
+disk	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	A fix_threshold 無し	var	DETECT_STALE_STALE_SEC	-
+disk	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	A fix_threshold 無し	用途	log "starting watcher (LIVE=${LIVE:-0} S	-
+disk	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	A fix_threshold 無し	用途	log "starting watcher (LIVE=${LIVE:-0} S	-
+disk	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	A fix_threshold 無し	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	-
+disk	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	A fix_threshold 無し	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	-
+disk	scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	C′ 別形の番人(case … 既定へ倒す L53)	var	STOP_HOOK_STDIN_TIMEOUT	-
+disk	scripts/stop_hook_inbox.sh	177	MASS_UNREAD_THRESHOLD	C′ 別形の番人(case … 既定へ倒す L184)	var	MASS_UNREAD_THRESHOLD	-
+disk	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	A fix_threshold 無し	var	ER_THRESHOLD_MIN	-
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	C 守られて居る(fix_threshold)	var	MAXB	-
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	C 守られて居る(fix_threshold)	var	SAFE_SIZE_TMO	-
+HEAD	scripts/inbox_watcher.sh	185	NUDGE_COOLDOWN_SEC	C 守られて居る(fix_threshold)	var	NUDGE_COOLDOWN_SEC	-
+HEAD	scripts/inbox_watcher.sh	187	NUDGE_COOLDOWN_SEC_CODEX	C 守られて居る(fix_threshold)	var	NUDGE_COOLDOWN_SEC_CODEX	-
+HEAD	scripts/inbox_watcher.sh	203	ASW_PHASE	C 守られて居る(fix_threshold)	var	ASW_PHASE	-
+HEAD	scripts/inbox_watcher.sh	207	ASW_NO_IDLE_FULL_READ	B 呼んで居るが其の名を守らぬ	var	ASW_NO_IDLE_FULL_READ	-
+HEAD	scripts/inbox_watcher.sh	212	ASW_PROCESS_TIMEOUT	B 呼んで居るが其の名を守らぬ	var	ASW_PROCESS_TIMEOUT	-
+HEAD	scripts/inbox_watcher.sh	283	NUDGE_COOLDOWN_SEC	C 守られて居る(fix_threshold)	var	cooldown_sec	-
+HEAD	scripts/inbox_watcher.sh	285	NUDGE_COOLDOWN_SEC_CODEX	C 守られて居る(fix_threshold)	var	cooldown_sec	-
+HEAD	scripts/inbox_watcher.sh	289	NUDGE_COOLDOWN_SEC_CLAUDE	C 守られて居る(fix_threshold)	var	cooldown_sec	-
+HEAD	scripts/inbox_watcher.sh	458	ASW_NO_IDLE_FULL_READ	B 呼んで居るが其の名を守らぬ	用途	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] 	-
+HEAD	scripts/inbox_watcher.sh	1024	MAX_TYPING_SKIP	C 守られて居る(fix_threshold)	var	max_typing_skip	-
+HEAD	scripts/inbox_watcher.sh	1476	INOTIFY_TIMEOUT	C 守られて居る(fix_threshold)	var	INOTIFY_TIMEOUT	-
+HEAD	scripts/inbox_watcher.sh	1540	ASW_PROCESS_TIMEOUT	B 呼んで居るが其の名を守らぬ	用途	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]	-
+HEAD	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	A fix_threshold 無し	var	DETECT_STALE_STALE_SEC	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	A fix_threshold 無し	用途	log "starting watcher (LIVE=${LIVE:-0} S	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	A fix_threshold 無し	用途	log "starting watcher (LIVE=${LIVE:-0} S	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	A fix_threshold 無し	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	A fix_threshold 無し	用途	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC	-
+HEAD	scripts/redundancy/shogun_report_watcher.sh	29	SHOGUN_REPORT_WATCHER_COOLDOWN	A fix_threshold 無し	var	COOLDOWN_SEC	-
+HEAD	scripts/stop_hook_inbox.sh	146	MASS_UNREAD_THRESHOLD	A fix_threshold 無し	var	MASS_UNREAD_THRESHOLD	-
+HEAD	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	A fix_threshold 無し	var	ER_THRESHOLD_MIN	-

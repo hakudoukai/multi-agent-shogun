@@ -1,0 +1,46 @@
+rev	path	line	name	default	text
+disk	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	10485760	MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+disk	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	10	SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+disk	scripts/inbox_watcher.sh	197	NUDGE_COOLDOWN_SEC	60	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+disk	scripts/inbox_watcher.sh	199	NUDGE_COOLDOWN_SEC_CODEX	300	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+disk	scripts/inbox_watcher.sh	215	ASW_PHASE	2	ASW_PHASE=${ASW_PHASE:-2}
+disk	scripts/inbox_watcher.sh	219	ASW_NO_IDLE_FULL_READ	1	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+disk	scripts/inbox_watcher.sh	224	ASW_PROCESS_TIMEOUT	1	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+disk	scripts/inbox_watcher.sh	295	NUDGE_COOLDOWN_SEC	60	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+disk	scripts/inbox_watcher.sh	297	NUDGE_COOLDOWN_SEC_CODEX	300	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+disk	scripts/inbox_watcher.sh	301	NUDGE_COOLDOWN_SEC_CLAUDE	60	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+disk	scripts/inbox_watcher.sh	470	ASW_NO_IDLE_FULL_READ	1	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+disk	scripts/inbox_watcher.sh	899	APPROVAL_ALERT_COOLDOWN	300	&& [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ];
+disk	scripts/inbox_watcher.sh	1067	MAX_TYPING_SKIP	5	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+disk	scripts/inbox_watcher.sh	1535	INOTIFY_TIMEOUT	30	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+disk	scripts/inbox_watcher.sh	1599	ASW_PROCESS_TIMEOUT	1	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+disk	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	120	DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+disk	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	300	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${PO
+disk	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	10	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${PO
+disk	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	300	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+disk	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	10	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+disk	scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	10	STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"
+disk	scripts/stop_hook_inbox.sh	177	MASS_UNREAD_THRESHOLD	5	MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+disk	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	2	export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	10485760	MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	10	SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+HEAD	scripts/inbox_watcher.sh	185	NUDGE_COOLDOWN_SEC	60	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+HEAD	scripts/inbox_watcher.sh	187	NUDGE_COOLDOWN_SEC_CODEX	300	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+HEAD	scripts/inbox_watcher.sh	203	ASW_PHASE	2	ASW_PHASE=${ASW_PHASE:-2}
+HEAD	scripts/inbox_watcher.sh	207	ASW_NO_IDLE_FULL_READ	1	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+HEAD	scripts/inbox_watcher.sh	212	ASW_PROCESS_TIMEOUT	1	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+HEAD	scripts/inbox_watcher.sh	283	NUDGE_COOLDOWN_SEC	60	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+HEAD	scripts/inbox_watcher.sh	285	NUDGE_COOLDOWN_SEC_CODEX	300	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+HEAD	scripts/inbox_watcher.sh	289	NUDGE_COOLDOWN_SEC_CLAUDE	60	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+HEAD	scripts/inbox_watcher.sh	458	ASW_NO_IDLE_FULL_READ	1	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+HEAD	scripts/inbox_watcher.sh	1024	MAX_TYPING_SKIP	5	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+HEAD	scripts/inbox_watcher.sh	1476	INOTIFY_TIMEOUT	30	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+HEAD	scripts/inbox_watcher.sh	1540	ASW_PROCESS_TIMEOUT	1	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+HEAD	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	120	DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	300	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${PO
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	10	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${PO
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	300	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	10	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+HEAD	scripts/redundancy/shogun_report_watcher.sh	29	SHOGUN_REPORT_WATCHER_COOLDOWN	60	COOLDOWN_SEC="${SHOGUN_REPORT_WATCHER_COOLDOWN:-60}"
+HEAD	scripts/stop_hook_inbox.sh	146	MASS_UNREAD_THRESHOLD	5	MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+HEAD	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	2	export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"

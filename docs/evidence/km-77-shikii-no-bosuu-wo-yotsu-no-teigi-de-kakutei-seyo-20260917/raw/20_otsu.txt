@@ -1,0 +1,6 @@
+# 20 定義乙 fix_threshold() の定義を持つ file / 刻 2026-09-17T09:35:00+0900 / 根= 同上 / 條= ^fix_threshold(){
+[disk] rc 0 / 定義を持つ file ★7★(行 7) / 逐語: git grep -n -E ^fix_threshold\(\)\{ -- scripts .claude
+[HEAD] rc 0 / 定義を持つ file ★6★(行 6) / 逐語: git grep -n -E ^fix_threshold\(\)\{ 6ba8fcb2 -- scripts .claude
+零の札:
+  [disk] 陽性 7 行 rc 0 (^fix_threshold\(\)\{) / 陰性 0 行 rc 1 (ZZ_KM77_NEGATIVE_9x7q)
+  [HEAD 6ba8fcb2] 陽性 6 行 rc 0 (^fix_threshold\(\)\{) / 陰性 0 行 rc 1 (ZZ_KM77_NEGATIVE_9x7q)

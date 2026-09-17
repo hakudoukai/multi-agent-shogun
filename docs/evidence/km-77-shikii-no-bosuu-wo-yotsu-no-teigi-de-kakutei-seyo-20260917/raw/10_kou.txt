@@ -1,0 +1,8 @@
+# 10 定義甲 fix_threshold の呼出 / 刻 2026-09-17T09:35:00+0900 / 根= scripts .claude(git 追跡 file 全深・archive/ 含む) / 條= 行頭空白+fix_threshold+空白 を呼出・^fix_threshold(){ を定義・# 起しを註
+[disk] git grep rc 0 / 総 22 行 = 定義 7 + 呼出行 14(内 loop 行 1) + 註 1 + 他 0 / 呼出行の file 7 / ★守る名= 明示 13 + loop list 10 = 23★ / loop list= APPROVAL_ALERT_COOLDOWN ASW_PHASE ESCALATE_COOLDOWN ESCALATE_PHASE1 ESCALATE_PHASE2 INOTIFY_TIMEOUT MAX_TYPING_SKIP NUDGE_COOLDOWN_SEC NUDGE_COOLDOWN_SEC_CLAUDE NUDGE_COOLDOWN_SEC_CODEX
+  器の逐語: git grep -n -E fix_threshold -- scripts .claude
+[HEAD] git grep rc 0 / 総 20 行 = 定義 6 + 呼出行 13(内 loop 行 1) + 註 1 + 他 0 / 呼出行の file 6 / ★守る名= 明示 12 + loop list 10 = 22★ / loop list= APPROVAL_ALERT_COOLDOWN ASW_PHASE ESCALATE_COOLDOWN ESCALATE_PHASE1 ESCALATE_PHASE2 INOTIFY_TIMEOUT MAX_TYPING_SKIP NUDGE_COOLDOWN_SEC NUDGE_COOLDOWN_SEC_CLAUDE NUDGE_COOLDOWN_SEC_CODEX
+  器の逐語: git grep -n -E fix_threshold 6ba8fcb2 -- scripts .claude
+零の札:
+  [disk] 陽性 22 行 rc 0 (fix_threshold) / 陰性 0 行 rc 1 (ZZ_KM77_NEGATIVE_9x7q)
+  [HEAD 6ba8fcb2] 陽性 20 行 rc 0 (fix_threshold) / 陰性 0 行 rc 1 (ZZ_KM77_NEGATIVE_9x7q)

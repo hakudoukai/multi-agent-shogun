@@ -1,0 +1,166 @@
+rev	path	line	name	default	note	shikii	archive	text
+disk	scripts/agent_health_check.sh	109	_th_unset_told	0	-	-	-	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+disk	scripts/agent_health_check.sh	142	last	0	-	-	-	last=${last:-0}
+disk	scripts/agent_health_check.sh	230	INSERT_COUNT	0	-	-	-	INSERT_COUNT=${INSERT_COUNT:-0}
+disk	scripts/agent_health_check.sh	231	INSERT_COUNT	0	-	-	-	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+disk	scripts/agent_health_check.sh	253	n	0	-	-	-	if [ "${n:-0}" -gt 10 ]; then
+disk	scripts/agent_health_check.sh	270	n	0	-	-	-	if [ "${n:-0}" -gt 10 ]; then
+disk	scripts/agent_health_check.sh	377	max_tokens	0	-	-	-	max_tokens=${max_tokens:-0}
+disk	scripts/agent_periodic_push.sh	64	sp_age	0	-	-	-	sp_age=${sp_age:-0}
+disk	scripts/agent_periodic_push.sh	95	PENDING	0	-	-	-	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRE
+disk	scripts/agent_periodic_push.sh	95	IN_PROGRESS	0	-	-	-	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRE
+disk	scripts/agent_periodic_push.sh	112	PENDING	0	-	-	-	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${
+disk	scripts/agent_periodic_push.sh	112	IN_PROGRESS	0	-	-	-	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${
+disk	scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	64	non_empty_lines	0	-	-	archive	if [[ "${non_empty_lines:-0}" -lt 2 ]]; then
+disk	scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	40	RESTART_COUNT_24H	0	-	-	archive	local restart_count="${RESTART_COUNT_24H:-0}"
+disk	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	72	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+disk	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	84	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+disk	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	93	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+disk	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	99	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+disk	scripts/audit_meta_codex.sh	108	COUNT	0	-	-	-	if [ "${COUNT:-0}" -ge "$SH6_CAP" ]; then
+disk	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	10485760	-	閾	-	MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+disk	scripts/checks/karo_mac_dasumae_gate.sh	25	n	0	註	-	-	#   旧版は 數 を取る口に ★|| true★ を置き、器が落ちても ${n:-0} で ★0(=通)★ に倒れた。
+disk	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	10	-	閾	-	SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+disk	scripts/checks/karo_mac_gate4.sh	71	VAR	50	註	-	-	#   旧形の `${VAR:-50}` は ★未設定と空文字を一つに混ぜ、黙つて既定へ倒して居た★。
+disk	scripts/checks/secondpc_dispatch.sh	34	SP_INBOX_AGE	0	-	-	-	SP_INBOX_AGE=${SP_INBOX_AGE:-0}
+disk	scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	0	-	-	-	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+disk	scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	0	-	-	-	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+disk	scripts/inbox_watcher.sh	148	_th_unset_told	0	-	-	-	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+disk	scripts/inbox_watcher.sh	188	LAST_B_ALERT_TS	0	-	-	-	LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+disk	scripts/inbox_watcher.sh	191	LAST_KARO_ALERT_TS	0	-	-	-	LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
+disk	scripts/inbox_watcher.sh	195	LAST_NUDGE_TS	0	-	-	-	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+disk	scripts/inbox_watcher.sh	197	NUDGE_COOLDOWN_SEC	60	-	閾	-	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+disk	scripts/inbox_watcher.sh	199	NUDGE_COOLDOWN_SEC_CODEX	300	-	閾	-	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+disk	scripts/inbox_watcher.sh	205	NEW_CONTEXT_SENT	0	-	-	-	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+disk	scripts/inbox_watcher.sh	208	STARTUP_PROMPT_SENT	0	-	-	-	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+disk	scripts/inbox_watcher.sh	215	ASW_PHASE	2	-	閾	-	ASW_PHASE=${ASW_PHASE:-2}
+disk	scripts/inbox_watcher.sh	219	ASW_NO_IDLE_FULL_READ	1	-	閾	-	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+disk	scripts/inbox_watcher.sh	223	ASW_DISABLE_ESCALATION	0	-	-	-	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+disk	scripts/inbox_watcher.sh	224	ASW_PROCESS_TIMEOUT	1	-	閾	-	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+disk	scripts/inbox_watcher.sh	228	READ_COUNT	0	-	-	-	READ_COUNT=${READ_COUNT:-0}
+disk	scripts/inbox_watcher.sh	229	READ_BYTES_TOTAL	0	-	-	-	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+disk	scripts/inbox_watcher.sh	230	ESTIMATED_TOKENS_TOTAL	0	-	-	-	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+disk	scripts/inbox_watcher.sh	261	ASW_DISABLE_NORMAL_NUDGE	0	-	-	-	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+disk	scripts/inbox_watcher.sh	295	NUDGE_COOLDOWN_SEC	60	-	閾	-	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+disk	scripts/inbox_watcher.sh	297	NUDGE_COOLDOWN_SEC_CODEX	300	-	閾	-	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+disk	scripts/inbox_watcher.sh	301	NUDGE_COOLDOWN_SEC_CLAUDE	60	-	閾	-	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+disk	scripts/inbox_watcher.sh	305	LAST_NUDGE_TS	0	-	-	-	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS
+disk	scripts/inbox_watcher.sh	470	ASW_NO_IDLE_FULL_READ	1	-	閾	-	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+disk	scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	0	-	-	-	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+disk	scripts/inbox_watcher.sh	637	NEW_CONTEXT_SENT	0	-	-	-	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+disk	scripts/inbox_watcher.sh	898	LAST_APPROVAL_ALERT_TS	0	-	-	-	if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
+disk	scripts/inbox_watcher.sh	899	APPROVAL_ALERT_COOLDOWN	300	-	閾	-	&& [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:
+disk	scripts/inbox_watcher.sh	917	LAST_CLEAR_TS	0	-	-	-	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))
+disk	scripts/inbox_watcher.sh	998	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	-	-	-	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+disk	scripts/inbox_watcher.sh	1036	FINAL_ESCALATION_ONLY	0	-	-	-	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+disk	scripts/inbox_watcher.sh	1067	MAX_TYPING_SKIP	5	-	閾	-	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+disk	scripts/inbox_watcher.sh	1187	FINAL_ESCALATION_ONLY	0	-	-	-	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+disk	scripts/inbox_watcher.sh	1270	read_bytes	0	-	-	-	update_metrics "${read_bytes:-0}"
+disk	scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	0	-	-	-	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEE
+disk	scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	0	-	-	-	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+disk	scripts/inbox_watcher.sh	1447	ASW_DISABLE_ESCALATION	0	-	-	-	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+disk	scripts/inbox_watcher.sh	1535	INOTIFY_TIMEOUT	30	-	閾	-	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+disk	scripts/inbox_watcher.sh	1599	ASW_PROCESS_TIMEOUT	1	-	閾	-	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+disk	scripts/inbox_watcher.sh	1614	LAST_TOKEN_WARN_TS	0	-	-	-	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_co
+disk	scripts/inbox_watcher.sh	1622	_token_int	0	-	-	-	if [ "${_token_int:-0}" -ge 200 ]; then
+disk	scripts/inbox_write.sh	88	_AMP_PATTERN_COUNT	0	-	-	-	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+disk	scripts/inbox_write.sh	209	http_status	000	-	-	-	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}
+disk	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	120	-	閾	-	DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 ve
+disk	scripts/pane_enter_watcher_supervisor.sh	36	LIVE	0	-	-	-	log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+disk	scripts/pane_enter_watcher_supervisor.sh	50	LIVE	0	-	-	-	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POL
+disk	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	300	-	閾	-	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POL
+disk	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	10	-	閾	-	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POL
+disk	scripts/pane_enter_watcher_supervisor.sh	52	LIVE	0	-	-	-	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-
+disk	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	300	-	閾	-	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-
+disk	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	10	-	閾	-	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-
+disk	scripts/ratelimit_check.sh	417	CODEX_LIMIT_HITS	0	-	-	-	CODEX_LIMIT_HITS="${CODEX_LIMIT_HITS:-0}"
+disk	scripts/redundancy/shogun_report_watcher.sh	53	_th_unset_told	0	-	-	-	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+disk	scripts/redundancy/shogun_report_watcher.sh	326	last_ts	0	-	-	-	if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+disk	scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	10	-	閾	-	STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"
+disk	scripts/stop_hook_inbox.sh	125	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+disk	scripts/stop_hook_inbox.sh	177	MASS_UNREAD_THRESHOLD	5	-	閾	-	MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+disk	scripts/stop_hook_inbox.sh	189	UNREAD_COUNT	0	-	-	-	case "${UNREAD_COUNT:-0}" in
+disk	scripts/stop_hook_inbox.sh	194	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+disk	scripts/stop_hook_inbox.sh	202	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+disk	scripts/stop_hook_inbox.sh	221	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+disk	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	2	-	閾	-	export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+disk	scripts/watchdogs/enter_restart_common_watchdog.sh	99	_th_unset_told	0	-	-	-	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+HEAD	scripts/agent_health_check.sh	130	last	0	-	-	-	last=${last:-0}
+HEAD	scripts/agent_health_check.sh	218	INSERT_COUNT	0	-	-	-	INSERT_COUNT=${INSERT_COUNT:-0}
+HEAD	scripts/agent_health_check.sh	219	INSERT_COUNT	0	-	-	-	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+HEAD	scripts/agent_health_check.sh	241	n	0	-	-	-	if [ "${n:-0}" -gt 10 ]; then
+HEAD	scripts/agent_health_check.sh	258	n	0	-	-	-	if [ "${n:-0}" -gt 10 ]; then
+HEAD	scripts/agent_health_check.sh	365	max_tokens	0	-	-	-	max_tokens=${max_tokens:-0}
+HEAD	scripts/agent_periodic_push.sh	64	sp_age	0	-	-	-	sp_age=${sp_age:-0}
+HEAD	scripts/agent_periodic_push.sh	95	PENDING	0	-	-	-	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRE
+HEAD	scripts/agent_periodic_push.sh	95	IN_PROGRESS	0	-	-	-	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRE
+HEAD	scripts/agent_periodic_push.sh	112	PENDING	0	-	-	-	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${
+HEAD	scripts/agent_periodic_push.sh	112	IN_PROGRESS	0	-	-	-	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${
+HEAD	scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	64	non_empty_lines	0	-	-	archive	if [[ "${non_empty_lines:-0}" -lt 2 ]]; then
+HEAD	scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	40	RESTART_COUNT_24H	0	-	-	archive	local restart_count="${RESTART_COUNT_24H:-0}"
+HEAD	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	72	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+HEAD	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	84	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+HEAD	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	93	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+HEAD	scripts/archive/message_delivery_v2_full_20260508/watcher.sh	99	HEARTBEAT_LOOP_PID	0	-	-	archive	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+HEAD	scripts/audit_meta_codex.sh	108	COUNT	0	-	-	-	if [ "${COUNT:-0}" -ge "$SH6_CAP" ]; then
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	10485760	-	閾	-	MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	25	n	0	註	-	-	#   旧版は 數 を取る口に ★|| true★ を置き、器が落ちても ${n:-0} で ★0(=通)★ に倒れた。
+HEAD	scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	10	-	閾	-	SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+HEAD	scripts/checks/karo_mac_gate4.sh	71	VAR	50	註	-	-	#   旧形の `${VAR:-50}` は ★未設定と空文字を一つに混ぜ、黙つて既定へ倒して居た★。
+HEAD	scripts/checks/secondpc_dispatch.sh	34	SP_INBOX_AGE	0	-	-	-	SP_INBOX_AGE=${SP_INBOX_AGE:-0}
+HEAD	scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	0	-	-	-	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+HEAD	scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	0	-	-	-	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+HEAD	scripts/inbox_watcher.sh	176	LAST_B_ALERT_TS	0	-	-	-	LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+HEAD	scripts/inbox_watcher.sh	179	LAST_KARO_ALERT_TS	0	-	-	-	LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
+HEAD	scripts/inbox_watcher.sh	183	LAST_NUDGE_TS	0	-	-	-	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+HEAD	scripts/inbox_watcher.sh	185	NUDGE_COOLDOWN_SEC	60	-	閾	-	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+HEAD	scripts/inbox_watcher.sh	187	NUDGE_COOLDOWN_SEC_CODEX	300	-	閾	-	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+HEAD	scripts/inbox_watcher.sh	193	NEW_CONTEXT_SENT	0	-	-	-	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+HEAD	scripts/inbox_watcher.sh	196	STARTUP_PROMPT_SENT	0	-	-	-	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+HEAD	scripts/inbox_watcher.sh	203	ASW_PHASE	2	-	閾	-	ASW_PHASE=${ASW_PHASE:-2}
+HEAD	scripts/inbox_watcher.sh	207	ASW_NO_IDLE_FULL_READ	1	-	閾	-	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+HEAD	scripts/inbox_watcher.sh	211	ASW_DISABLE_ESCALATION	0	-	-	-	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+HEAD	scripts/inbox_watcher.sh	212	ASW_PROCESS_TIMEOUT	1	-	閾	-	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+HEAD	scripts/inbox_watcher.sh	216	READ_COUNT	0	-	-	-	READ_COUNT=${READ_COUNT:-0}
+HEAD	scripts/inbox_watcher.sh	217	READ_BYTES_TOTAL	0	-	-	-	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+HEAD	scripts/inbox_watcher.sh	218	ESTIMATED_TOKENS_TOTAL	0	-	-	-	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+HEAD	scripts/inbox_watcher.sh	249	ASW_DISABLE_NORMAL_NUDGE	0	-	-	-	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+HEAD	scripts/inbox_watcher.sh	283	NUDGE_COOLDOWN_SEC	60	-	閾	-	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+HEAD	scripts/inbox_watcher.sh	285	NUDGE_COOLDOWN_SEC_CODEX	300	-	閾	-	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+HEAD	scripts/inbox_watcher.sh	289	NUDGE_COOLDOWN_SEC_CLAUDE	60	-	閾	-	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+HEAD	scripts/inbox_watcher.sh	293	LAST_NUDGE_TS	0	-	-	-	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS
+HEAD	scripts/inbox_watcher.sh	458	ASW_NO_IDLE_FULL_READ	1	-	閾	-	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+HEAD	scripts/inbox_watcher.sh	460	FIRST_UNREAD_SEEN	0	-	-	-	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+HEAD	scripts/inbox_watcher.sh	625	NEW_CONTEXT_SENT	0	-	-	-	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+HEAD	scripts/inbox_watcher.sh	874	LAST_CLEAR_TS	0	-	-	-	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))
+HEAD	scripts/inbox_watcher.sh	955	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	-	-	-	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+HEAD	scripts/inbox_watcher.sh	993	FINAL_ESCALATION_ONLY	0	-	-	-	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+HEAD	scripts/inbox_watcher.sh	1024	MAX_TYPING_SKIP	5	-	閾	-	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+HEAD	scripts/inbox_watcher.sh	1144	FINAL_ESCALATION_ONLY	0	-	-	-	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+HEAD	scripts/inbox_watcher.sh	1218	read_bytes	0	-	-	-	update_metrics "${read_bytes:-0}"
+HEAD	scripts/inbox_watcher.sh	1308	FIRST_UNREAD_SEEN	0	-	-	-	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEE
+HEAD	scripts/inbox_watcher.sh	1318	FIRST_UNREAD_SEEN	0	-	-	-	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+HEAD	scripts/inbox_watcher.sh	1388	ASW_DISABLE_ESCALATION	0	-	-	-	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+HEAD	scripts/inbox_watcher.sh	1476	INOTIFY_TIMEOUT	30	-	閾	-	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+HEAD	scripts/inbox_watcher.sh	1540	ASW_PROCESS_TIMEOUT	1	-	閾	-	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+HEAD	scripts/inbox_watcher.sh	1555	LAST_TOKEN_WARN_TS	0	-	-	-	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_co
+HEAD	scripts/inbox_watcher.sh	1563	_token_int	0	-	-	-	if [ "${_token_int:-0}" -ge 200 ]; then
+HEAD	scripts/inbox_write.sh	88	_AMP_PATTERN_COUNT	0	-	-	-	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+HEAD	scripts/inbox_write.sh	209	http_status	000	-	-	-	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target}
+HEAD	scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	120	-	閾	-	DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 ve
+HEAD	scripts/pane_enter_watcher_supervisor.sh	36	LIVE	0	-	-	-	log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	LIVE	0	-	-	-	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POL
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	300	-	閾	-	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POL
+HEAD	scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	10	-	閾	-	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POL
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	LIVE	0	-	-	-	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	300	-	閾	-	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-
+HEAD	scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	10	-	閾	-	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-
+HEAD	scripts/ratelimit_check.sh	417	CODEX_LIMIT_HITS	0	-	-	-	CODEX_LIMIT_HITS="${CODEX_LIMIT_HITS:-0}"
+HEAD	scripts/redundancy/shogun_report_watcher.sh	29	SHOGUN_REPORT_WATCHER_COOLDOWN	60	-	閾	-	COOLDOWN_SEC="${SHOGUN_REPORT_WATCHER_COOLDOWN:-60}"
+HEAD	scripts/redundancy/shogun_report_watcher.sh	276	last_ts	0	-	-	-	if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+HEAD	scripts/stop_hook_inbox.sh	94	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+HEAD	scripts/stop_hook_inbox.sh	146	MASS_UNREAD_THRESHOLD	5	-	閾	-	MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+HEAD	scripts/stop_hook_inbox.sh	147	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+HEAD	scripts/stop_hook_inbox.sh	155	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+HEAD	scripts/stop_hook_inbox.sh	174	UNREAD_COUNT	0	-	-	-	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+HEAD	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	2	-	閾	-	export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
