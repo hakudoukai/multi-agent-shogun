@@ -1,0 +1,9 @@
+# log B_now-121s_SEC2^63(器が先に置いた一行・以下が lib の追記)
+2026-09-17T13:12:25+09:00 [WARN] stale_sec_out_of_range: DETECT_STALE_STALE_SEC='9223372036854775808' (比較器 [ -ge 0 ] rc≠0) → 既定 120 へ倒す
+2026-09-17T13:12:25+09:00 [STALE] corr_id=km92_B_now_121s_SEC2_63 stale判定
+# --- CLI の写し ---
+2026-09-17T13:12:25+09:00 [INVOKE] fukuincho_detect_stale_cli detect-stale-handshake start (pid=24867)
+2026-09-17T13:12:25+09:00 [WARN] stale_sec_out_of_range: DETECT_STALE_STALE_SEC='9223372036854775808' (比較器 [ -ge 0 ] rc≠0) → 既定 120 へ倒す
+2026-09-17T13:12:25+09:00 [STALE] corr_id=km92_B_now_121s_SEC2_63 stale判定
+2026-09-17T13:12:25+09:00 [ERROR] flock_acquire_failed: corr_id=km92_B_now_121s_SEC2_63
+2026-09-17T13:12:25+09:00 [INVOKE] fukuincho_detect_stale_cli done processed=1 enqueued=0 skipped=0 anomalies=0

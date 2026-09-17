@@ -1,0 +1,6 @@
+# log B_injection(器が先に置いた一行・以下が lib の追記)
+2026-09-17T13:12:29+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_injection response_by_time='$(echo INJ92)' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+# --- CLI の写し ---
+2026-09-17T13:12:29+09:00 [INVOKE] fukuincho_detect_stale_cli detect-stale-handshake start (pid=25502)
+2026-09-17T13:12:29+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_injection response_by_time='$(echo INJ92)' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+2026-09-17T13:12:29+09:00 [INVOKE] fukuincho_detect_stale_cli done processed=1 enqueued=0 skipped=0 anomalies=1

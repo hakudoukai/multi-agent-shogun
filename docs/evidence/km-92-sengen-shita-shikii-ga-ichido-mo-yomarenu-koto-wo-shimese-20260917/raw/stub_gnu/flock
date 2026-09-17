@@ -1,0 +1,3 @@
+#!/bin/bash
+# stub flock(第81弾 km-92)―― 当機に flock は無い(command -v rc 1)。Linux の姿を写す為に「取れた」と答へるだけの器。単一 process の測りにのみ使ふ(排他は測らぬ)。
+exit 0

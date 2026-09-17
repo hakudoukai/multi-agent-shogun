@@ -1,0 +1,6 @@
+# log S2_2^63(器が先に置いた一行・以下が lib の追記)
+2026-09-17T13:14:31+09:00 [ANOMALY] deadline_out_of_range: corr_id=km92_S2_2_63 response_by_time='x' epoch='9223372036854775808' (比較器 [ -gt 0 ] rc≠0 = auto-poke 禁)
+# --- CLI の写し ---
+2026-09-17T13:14:31+09:00 [INVOKE] fukuincho_detect_stale_cli detect-stale-handshake start (pid=33312)
+2026-09-17T13:14:31+09:00 [ANOMALY] deadline_out_of_range: corr_id=km92_S2_2_63 response_by_time='x' epoch='9223372036854775808' (比較器 [ -gt 0 ] rc≠0 = auto-poke 禁)
+2026-09-17T13:14:31+09:00 [INVOKE] fukuincho_detect_stale_cli done processed=1 enqueued=0 skipped=0 anomalies=1

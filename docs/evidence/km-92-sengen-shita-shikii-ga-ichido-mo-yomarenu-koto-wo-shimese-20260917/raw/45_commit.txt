@@ -1,0 +1,15 @@
+# 45 直しの commit / 刻 2026-09-17T13:17:29+0900 / 枝 ashigaru-mac-1/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917 / 親 main 363d5fb060845171338c067ef42bfcbef8ad9188 / 枝は無し(新設) / 直し sha256 0964e9a02e655799c250930223332192a424c4528678c7a42b341f1c0f9d323e 17560B 349行
+read-tree 363d5fb06084 rc 0
+hash-object -w 直し → blob c55336139ded7ab5fc5e9eab9c2b95f82163d5ea rc 0
+update-index --cacheinfo 100644,c55336139ded,scripts/lib/detect_stale.sh rc 0
+write-tree → 4d06f305bd2b97e4c6bfb8035d4ebc1833df51fc rc 0
+commit-tree -p main → 463c388c1751b5392b195902a1f65d2938d4a791 rc 0
+update-ref refs/heads/ashigaru-mac-1/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917 rc 0
+★porcelain 前後: 一字も変はらず(一致) / 前 1017 行 / 後 1017 行 / sha16 前 83b70e0b42e1f92b 後 83b70e0b42e1f92b★
+git diff --stat main..463c388c1751:
+  scripts/lib/detect_stale.sh | 69 +++++++++++++++++++++++++++++++++++++++++----
+   1 file changed, 63 insertions(+), 6 deletions(-)
+★変はつた file= ['scripts/lib/detect_stale.sh'] (1 本・的一本なら ○)★
+git show 463c388c1751:scripts/lib/detect_stale.sh sha256 0964e9a02e655799c250930223332192a424c4528678c7a42b341f1c0f9d323e → 直しと 一致 / 生 scripts/lib/detect_stale.sh は 不変(sha16 de4fefbdadb2be63)
+git log -1: 463c388c1751b5392b195902a1f65d2938d4a791 363d5fb060845171338c067ef42bfcbef8ad9188 2026-09-17 13:17:29 +0900 fix(lib): detect_stale.sh ―― 宣した閾 DETECT_STALE_STALE_SEC を★讀ませ★、date -d の方言と非數の番人を塞ぐ(km-92)
+★枝 ashigaru-mac-1/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917 / full sha 463c388c1751b5392b195902a1f65d2938d4a791 / push は請はぬ(代行は家老が総監督へ)★

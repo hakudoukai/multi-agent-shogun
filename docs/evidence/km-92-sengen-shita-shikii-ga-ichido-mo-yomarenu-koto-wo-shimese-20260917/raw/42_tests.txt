@@ -1,0 +1,15 @@
+# 42 既存 test・直し後 / 刻 2026-09-17T13:17:02+0900 / 樹 raw/40_utsushi / lib sha16 0964e9a02e655799
+test_detect_stale.sh: 写し sha16 1bdc71478b9f799a(repo と同じ・31 参照)
+  姿B : rc 1 / 集計行 PASS=40 FAIL=2 SKIP=0 / FAIL 行 3
+      FAIL: 7.1 ★cycle3 fix2 HIGH-2★ atomic first wins、second skipped
+      FAIL: 7.2 ★cycle3 fix2 HIGH-2★ parallel race: 一方のみが winner (race test)
+      FAILURE DETAILS:
+  姿BF: rc 0 / 集計行 PASS (SKIP=0、FKI-AUDIT-GREEN-TRUTH-01 順守)★ / FAIL 行 0
+  姿G : rc 0 / 集計行 PASS (SKIP=0、FKI-AUDIT-GREEN-TRUTH-01 順守)★ / FAIL 行 0
+test_fukuincho_detect_stale_cli.sh: 写し sha16 757e960407bddac8(repo と同じ・31 参照)
+  姿B : rc 1 / 集計行 FAIL] enqueued=0 (期待 1、正常 stale 経路) / FAIL 行 3
+      FAIL: CLI-5 ★cycle4 fix2★ 正常 past-stale row → enqueued=1 (positive control)
+      FAILURE DETAILS:
+        [FAIL] enqueued=0 (期待 1、正常 stale 経路)
+  姿BF: rc 0 / 集計行 PASS (SKIP=0、CLI rc 経路健全、cycle3 RED-C3 退行なし)★ / FAIL 行 0
+  姿G : rc 0 / 集計行 PASS (SKIP=0、CLI rc 経路健全、cycle3 RED-C3 退行なし)★ / FAIL 行 0

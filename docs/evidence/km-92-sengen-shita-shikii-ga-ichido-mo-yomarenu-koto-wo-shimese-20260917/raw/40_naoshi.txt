@@ -1,0 +1,6 @@
+# 40 直し ㋓ / 刻 2026-09-17T13:15:21+0900 / 錨 3 箇所(各 count 1 を assert・行番を焼かぬ)
+前: raw/00_target_detect_stale.sh sha16 de4fefbdadb2be63 13005B 292行 / 後: raw/40_utsushi/scripts/lib/detect_stale.sh sha16 0964e9a02e655799 sha256 0964e9a02e655799c250930223332192a424c4528678c7a42b341f1c0f9d323e 17560B 349行
+bash -n rc 0  / diff +63 -6 行(raw/40_diff.txt) / CRLF 0 / 末尾改行 一つ / 行末空白 0 行
+三箇所: 一= 宣 `:-`→`-` + 既定を _DETECT_STALE_STALE_SEC_DEFAULT に一本化 / 二= _detect_stale_stale_sec(閾を同じ演算子で検め・空/空白/非數/負/桁溢れを名指して既定へ) / 三= date -d → python3 fromisoformat・出目 數字のみ + [ -gt 0 ]・stale= now-sec < deadline で閾を讀む
+捨てた側(宣を消す): 設計 §1.2 の承認値(50a1b936 verbatim・副院長令 341654e4 の表)を実装から消す事に成り、正本と器の食ひ違ひを「器を正本へ合はせる」でなく「正本の値を無かつた事にする」で解く形ゆゑ捨てた。加へて宣は唯一の外からの調整口(cron 側 env)であり、消せば閾は焼き込みに成る。
+捨てた側(date -d を残し BSD -j -f を fallback に足す): 方言二本を保つ事に成り、BSD -j -f は書式一本ゆゑ Z / naive / ±hh:mm を拒む(20_date 実測: past_Z rc1・past_+0900 のみ通る)= 三本目の方言が要る。python3 は本 lib が既に json で依る(新依存 0)。

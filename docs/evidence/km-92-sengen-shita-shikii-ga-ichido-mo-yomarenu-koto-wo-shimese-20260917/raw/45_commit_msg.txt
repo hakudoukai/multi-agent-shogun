@@ -1,0 +1,16 @@
+fix(lib): detect_stale.sh ―― 宣した閾 DETECT_STALE_STALE_SEC を★讀ませ★、date -d の方言と非數の番人を塞ぐ(km-92)
+
+的= scripts/lib/detect_stale.sh 一本(前 sha16 de4fefbdadb2be63 292行 → 後 sha16 0964e9a02e655799 349行)。
+
+㋐ 閾: DETECT_STALE_STALE_SEC(設計 §1.2 verbatim 120s)は宣のみで讀手 0 であつた(repo 全体 git grep 1 行= 宣其の物・
+   閾を 999999/abc にしても出目不変)。stale= now ≥ deadline + 閾 とし、閾は比較器そのもの [ -ge 0 ] で検め、
+   空/空白/非數/負/桁溢れは名指しの WARN と共に既定 120 へ倒す(裁 seq323062⑷ 甲乙)。
+㋑ 方言: `date -d` は GNU 語法・BSD(macOS)では rc1 → `|| echo "0"` → 正しい時刻も悉く ANOMALY。python3 の
+   fromisoformat(本 lib が既に json で依る・enter_restart_common_watchdog.sh と同 idiom)へ。
+㋒ 番人: `[ "$deadline_epoch" -le 0 ]` は非數(abc/空/1e3/2^63/改行)で rc2 → if 偽 → 次の [ -lt ] も偽 →
+   STALE 候補へ落ち auto-poke(実測: 悉く enqueued=1)。出目を 數字のみ + [ -gt 0 ] && [ -le 253402300799 ] で検み ANOMALY へ。
+
+実測= docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/(別 commit)。
+既存 test 二本(scripts/tests/test_detect_stale.sh / test_fukuincho_detect_stale_cli.sh)は写しの樹で GNU 姿・BSD+flock 姿とも PASS。
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>

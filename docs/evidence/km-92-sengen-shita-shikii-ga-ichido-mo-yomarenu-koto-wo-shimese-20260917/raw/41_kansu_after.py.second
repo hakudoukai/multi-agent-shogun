@@ -1,0 +1,73 @@
+# -*- coding: utf-8 -*-
+"""41 函数の出目・直し後(第81弾 km-92 ㋒㋓)―― 30 と同じ打ち方を raw/40_utsushi(直した写し)へ。姿 B= /bin/date(当機・stub 無し・flock 無し)/ BF= B + flock stub / G= stub_gnu(gdate+flock)/ S2= stub_inj2(python3 の parser 呼出だけを差し替へ KM92_D_OUT を注ぐ・flock stub)。
+両対照: 陰性= 正しい時刻(Z / +09:00 / +0900 / naive)が姿 B でも G でも宣どほり(FRESH/STALE)・閾 120 の前後(now-119 → FRESH / now-121 → STALE)/ 陽性= 非數・空・負・2^63・改行 が悉く ANOMALY・閾の毒(空/空白/abc/-5/桁溢れ)が名指しの WARN と共に既定 120 へ倒れ、有効値 30 / 0 / 999999 は讀まれる。"""
+import os, sys, re, time, subprocess, shutil, datetime, hashlib
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K
+T = D + '/raw/40_utsushi'; LIB = T + '/scripts/lib/detect_stale.sh'; CLI = T + '/scripts/fukuincho_detect_stale_cli.sh'; ENV = D + '/raw/41_env'; os.makedirs(ENV, exist_ok=True)
+# ★二走(初走 .first の疵= now を器の起動時に一度だけ取り、各 case は其の 3〜12 秒後に走つた故 now-119s が実齢 122〜131s = STALE が正であつた)★: 時刻は ★各 case の直前★ に取り、閾との差は ±5s の余裕(115/125・25/35)を置く。
+now = int(time.time()); iso = lambda t, **k: datetime.datetime.fromtimestamp(t).astimezone().isoformat(timespec='seconds')
+row = lambda cid, rbt: '{"from":"karo-third","recipient":"fukuincho","type":"auto_poke","status":"pending","correlation_id":"%s","response_by_time":"%s"}' % (cid, rbt.replace('\\', '\\\\').replace('"', '\\"'))
+Z = lambda t: datetime.datetime.fromtimestamp(t, datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'); NC = lambda t: iso(t).replace(':', '', 2)[:-3] + iso(t)[-6:].replace(':', '') if False else re.sub(r'([+-]\d\d):(\d\d)$', r'\1\2', iso(t))
+CASES = [
+ # 陰性: 正しい時刻 × 四形 × 姿 B/G
+ ('B_past_2020_Z',   'B', '2020-01-01T00:00:00Z', None, 0, 'STALE rc0', {}), ('G_past_2020_Z', 'G', '2020-01-01T00:00:00Z', None, 0, 'STALE rc0', {}),
+ ('B_future_2099_Z', 'B', '2099-01-01T00:00:00Z', None, 0, 'FRESH rc1', {}), ('G_future_2099_Z', 'G', '2099-01-01T00:00:00Z', None, 0, 'FRESH rc1', {}),
+ ('B_now-125s_+hh:mm', 'B', (iso, -125), None, 0, 'STALE rc0(閾 120 超)', {}), ('G_now-125s_+hh:mm', 'G', (iso, -125), None, 0, 'STALE rc0', {}),
+ ('B_now-115s_+hh:mm', 'B', (iso, -115), None, 0, 'FRESH rc1(閾 120 未満)', {}), ('G_now-115s_+hh:mm', 'G', (iso, -115), None, 0, 'FRESH rc1', {}),
+ ('B_now-1s_+hh:mm', 'B', (iso, -1), None, 0, 'FRESH rc1(30 では STALE だつた)', {}),
+ ('B_now-125s_+hhmm', 'B', (NC, -125), None, 0, 'STALE rc0(±hhmm 形)', {}), ('B_now-115s_Z', 'B', (Z, -115), None, 0, 'FRESH rc1(Z 形)', {}),
+ ('B_now-125s_naive', 'B', (lambda t: iso(t)[:19].replace('T', ' '), -125), None, 0, 'STALE rc0(naive= local)', {}), ('B_now-115s_naive_T', 'B', (lambda t: iso(t)[:19], -115), None, 0, 'FRESH rc1(naive T)', {}),
+ # 閾を讀む(有効値)
+ ('B_now-35s_SEC30',   'B', (iso, -35), None, 0, 'STALE rc0(閾 30)', {'DETECT_STALE_STALE_SEC': '30'}),
+ ('B_now-25s_SEC30',   'B', (iso, -25), None, 0, 'FRESH rc1(閾 30)', {'DETECT_STALE_STALE_SEC': '30'}),
+ ('B_now-1s_SEC0',     'B', (iso, -1), None, 0, 'STALE rc0(閾 0= 旧の振舞ひ)', {'DETECT_STALE_STALE_SEC': '0'}),
+ ('B_now-125s_SEC999999', 'B', (iso, -125), None, 0, 'FRESH rc1(閾 999999 が讀まれる)', {'DETECT_STALE_STALE_SEC': '999999'}),
+ # 閾の毒(名指しで既定 120 へ)
+ ('B_now-125s_SECempty', 'B', (iso, -125), None, 0, 'STALE rc0 + WARN stale_sec_empty', {'DETECT_STALE_STALE_SEC': ''}),
+ ('B_now-125s_SECblank', 'B', (iso, -125), None, 0, 'STALE rc0 + WARN stale_sec_blank', {'DETECT_STALE_STALE_SEC': '   '}),
+ ('B_now-125s_SECabc',   'B', (iso, -125), None, 0, 'STALE rc0 + WARN stale_sec_malformed', {'DETECT_STALE_STALE_SEC': 'abc'}),
+ ('B_now-125s_SECneg5',  'B', (iso, -125), None, 0, 'STALE rc0 + WARN malformed(- は非數字)', {'DETECT_STALE_STALE_SEC': '-5'}),
+ ('B_now-125s_SEC2^63',  'B', (iso, -125), None, 0, 'STALE rc0 + WARN out_of_range', {'DETECT_STALE_STALE_SEC': '9223372036854775808'}),
+ ('B_now-125s_SEC1e3',   'B', (iso, -125), None, 0, 'STALE rc0 + WARN malformed', {'DETECT_STALE_STALE_SEC': '1e3'}),
+ ('B_now-115s_SECblank', 'B', (iso, -115), None, 0, 'FRESH rc1 + WARN blank(既定 120 が効く)', {'DETECT_STALE_STALE_SEC': ' '}),
+ # 陽性: 壊れた時刻・parser の出目を注ぐ
+ ('B_abc',   'B', 'abc', None, 0, 'ANOMALY rc2', {}), ('G_abc', 'G', 'abc', None, 0, 'ANOMALY rc2', {}),
+ ('B_empty', 'B', '', None, 0, 'ANOMALY rc2(deadline_empty)', {}), ('B_neg5', 'B', '-5', None, 0, 'ANOMALY rc2', {}), ('B_now_word', 'B', 'now', None, 0, 'ANOMALY rc2(GNU 語は受けぬ)', {}),
+ ('B_2^63', 'B', '9223372036854775808', None, 0, 'ANOMALY rc2', {}), ('B_injection', 'B', '$(echo INJ92)', None, 0, 'ANOMALY rc2', {}), ('B_year10000', 'B', '10000-01-01T00:00:00Z', None, 0, 'ANOMALY rc2', {}),
+ ('S2_abc',    'S2', 'x', 'abc', 0, 'ANOMALY rc2(非數)', {}), ('S2_empty', 'S2', 'x', '', 0, 'ANOMALY rc2', {}), ('S2_neg5', 'S2', 'x', '-5', 0, 'ANOMALY rc2', {}),
+ ('S2_2^63',   'S2', 'x', '9223372036854775808', 0, 'ANOMALY rc2(out_of_range・[ が rc2)', {}), ('S2_1e3', 'S2', 'x', '1e3', 0, 'ANOMALY rc2', {}), ('S2_space7', 'S2', 'x', ' 7', 0, 'ANOMALY rc2(空白は非數字)', {}),
+ ('S2_zero',   'S2', 'x', '0', 0, 'ANOMALY rc2(out_of_range)', {}), ('S2_out+rc1', 'S2', 'x', 'garbage', 1, 'ANOMALY rc2', {}), ('S2_newline', 'S2', 'x', '5\n0', 0, 'ANOMALY rc2', {}),
+ ('S2_010',    'S2', 'x', '010', 0, 'STALE rc0(數字のみ・8 秒= 過去)', {}), ('S2_max_int', 'S2', 'x', '9223372036854775807', 0, 'FRESH rc1(2^63-1 は [ が受ける・now-sec < 巨数)', {}),
+]
+def env_for(shape, extra, log, inflight, lock, so=None, src=0):
+    e = dict(os.environ); e.update({'DETECT_STALE_LOG': log, 'DETECT_STALE_INFLIGHT_DIR': inflight, 'DETECT_STALE_LOCK_FILE': lock, 'LC_ALL': 'C'}); e.pop('DETECT_STALE_STALE_SEC', None); e.update(extra)
+    if shape == 'G': e['PATH'] = D + '/raw/stub_gnu:' + e['PATH']
+    if shape == 'BF': e['PATH'] = D + '/raw/stub_flock:' + e['PATH']
+    if shape == 'S2': e['PATH'] = D + '/raw/stub_inj2:' + e['PATH']; e['KM92_D_OUT'] = so; e['KM92_D_RC'] = str(src)
+    return e
+rows = []; out = [f'# 41 函数の出目・直し後(二走・時刻は case 毎) / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / now(器) {now} / lib {os.path.relpath(LIB, D)} sha16 {hashlib.sha256(open(LIB, "rb").read()).hexdigest()[:16]} / 姿 B=/bin/date(flock 無し) G=gdate+flock stub S2=python3 stub(parser のみ差替)+flock stub']
+n_ok = n_ng = 0
+for name, shape, rbt, so, src, sen, extra in CASES:
+    if isinstance(rbt, tuple): fn, off = rbt; now = int(time.time()); rbt = fn(now + off)
+    log = f'{ENV}/{name}.log'; inflight = f'{ENV}/inflight_{name}'; lock = f'{ENV}/lock_{name}'
+    K.kaku(log, f'# log {name}(器が先に置いた一行・以下が lib の追記)'); r = row('km92_' + re.sub(r'[^A-Za-z0-9_]', '_', name), rbt); e = env_for(shape, extra, log, inflight, lock, so, src)
+    p = subprocess.run(['/bin/bash', '-c', 'source "$1"; detect_stale_evaluate_row "$2"; echo "rc=$?"', '_', LIB, r], capture_output=True, text=True, env=e)
+    rc = re.search(r'rc=(\d+)', p.stdout).group(1); err = p.stderr.strip().replace('\n', '␊')[:160]
+    lines = [l for l in open(log, encoding='utf-8').read().split('\n') if l and not l.startswith('#')]; tags = [re.search(r'\[(\w+)\]', l).group(1) for l in lines if re.search(r'\[(\w+)\]', l)]; tag = tags[-1] if tags else '(log 無し)'
+    K.kaku(log, open(log, encoding='utf-8').read() + '# --- CLI の写し ---')
+    c = subprocess.run(['/bin/bash', CLI, '--detect-stale-handshake'], input=r + '\n', capture_output=True, text=True, env=e)
+    L = open(log, encoding='utf-8').read(); done = re.search(r'done processed=(\d+) enqueued=(\d+) skipped=(\d+) anomalies=(\d+)', L); nenq = L.count('[ENQUEUE]')
+    cli = f'enq{done.group(2)} skip{done.group(3)} anom{done.group(4)} ENQUEUE行{nenq} rc{c.returncode}' if done else f'(done 行無し) rc{c.returncode}'
+    if os.path.exists(lock): os.remove(lock)
+    if os.path.isdir(inflight): shutil.rmtree(inflight)
+    poke = '★auto-poke★' if rc == '0' else ('anomaly' if rc == '2' else 'skip')
+    want_tag = re.match(r'(STALE|FRESH|ANOMALY)', sen).group(1); want_rc = re.search(r'rc(\d)', sen).group(1); want_warn = re.search(r'WARN (\w+)', sen)
+    ok = (tag == want_tag and rc == want_rc and (not want_warn or any(want_warn.group(1) in l for l in lines)) and (('WARN' in sen) == any('[WARN]' in l for l in lines)))
+    n_ok += ok; n_ng += (not ok)
+    rows.append((name, shape, repr(rbt if shape != 'S2' else so), rc, tag, poke, cli, err or '-', sen, '○' if ok else '★×★', ' ␊ '.join(lines)[:300], now))
+    out.append(f'{"○" if ok else "★×★"} {name:24s} 姿{shape:2s} 入力 {rows[-1][2]:28s} → rc {rc} log[{"/".join(tags) or tag}] {poke:12s} CLI {cli} | stderr {err or "-"} | 宣: {sen}')
+    out.append('    log 逐語: ' + (' ␊ '.join(lines) if lines else '(無し)'))
+out.insert(1, f'★判 ○ {n_ok} / ★×★ {n_ng} / 母數 {len(CASES)}(判= log の札・rc・WARN の有無と名が宣どほり)★')
+K.kaku_tsv(D + '/raw/41_kansu_after.tsv', rows, header=['name', 'shape', 'input', 'rc', 'log_tag', 'poke', 'cli', 'stderr', 'sengen', 'han', 'log_lines', 'now_at_case'])
+out.append('意味: 姿 B に flock は無い故 CLI の enqueue は refused(ERROR flock_acquire_failed・enq0)に成る= 当機の事情であり的の外(30 の姿 G/S と同じ stub を使ふ G/S2 では enq1 が出る)。「auto-poke」は評価 rc 0 で定める。')
+K.kaku(D + '/raw/41_kansu_after.txt', '\n'.join(out)); print('\n'.join(out)[:9000])

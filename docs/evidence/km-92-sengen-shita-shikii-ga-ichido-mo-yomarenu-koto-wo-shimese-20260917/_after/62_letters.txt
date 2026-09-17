@@ -1,0 +1,11 @@
+# 62 納め便 / 刻 2026-09-17T13:26:25+0900 / 便 5 / 字数 [284, 158, 203, 223, 261] / 宛 karo-mac / 着手便 msg_20260917_130521_54d5c7ec 2026-09-17T13:05:21 / 實 21.07 分(起点= 着手便 timestamp・端点= 此の刻)/ 宣 120〜300 分(幅)
+便1 rc 0 / 第八の番人= 1 本 ['msg_20260917_132625_d03edad9']
+[第81弾 納め 1/5・束] docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/ 紙 README.md 3e3ee24b20352c8b(77行)+追紙 TSUIGAMI_km86.md/ 臺帳 8d5e9c8d07867bab/ 門控 mon_km92_20260917T132607_main fb176efc8b5cabfd。生器 0字・watcher 不觸。着手便 54d5c7ec(13:05:21)。照合器 ○55/55 ×0。
+便2 rc 0 / 第八の番人= 1 本 ['msg_20260917_132625_e1a2aefa']
+[第81弾 納め 2/5・門] selftest rc0・main rc0(227本・byte和720691・條①一致)・nobase rc1(基点無し・落ちて正)。員外=MANIFEST.txt・_gate/*・_after/*・raw/50 の出目三つ(50 の .py 其の物は載せた= km-86 追紙2)。
+便3 rc 0 / 第八の番人= 1 本 ['msg_20260917_132625_181d0c19']
+[第81弾 納め 3/5・㋐㋑] 閾 DETECT_STALE_STALE_SEC=口1讀手0(器A 1079file/git grep 生1+束8/陽性 LOG 口3讀手7/陰性0 rc1/刻 13:04:20)・閾999999/abc でも now-1s が STALE=死。/bin/date -d は12/12 rc1→verbatim 行は悉く[0]・gdate は正(空文字を今日0時に読む)。
+便4 rc 0 / 第八の番人= 1 本 ['msg_20260917_132625_628fabc9']
+[第81弾 納め 4/5・㋒] 姿B(当機)= 正しい時刻2件が悉く ANOMALY。姿S= 非數8形(abc/空/-5/0/2^63/1e3/改行/出力+rc1)の内 ★6 が STALE→CLI enqueued=1★(-5・0 のみ ANOMALY)。家老表の空・2^63 行は zsh の出目・bash3.2 は共に rc2→2^63 は永久FRESHでなく auto-poke。既存test 姿B 単体6落/CLI1落・姿G PASS。
+便5 rc 0 / 第八の番人= 1 本 ['msg_20260917_132626_61f64207']
+[第81弾 納め 5/5・㋓付] 直し= 閾を讀ませ(同演算子・名指し)+fromisoformat+數字のみ&[-gt 0]&[-le 253402300799]。捨てた側=宣を消す(承認値を消す形)。両対照45/45○・test BF/G PASS。自枝 ashigaru-mac-1/km-92-… full 463c388c1751b5392b195902a1f65d2938d4a791・的1本・porcelain不変。追紙=50/60 は臺帳を建て検める器ゆゑ前生は必然。疵12。宣120〜300分⇔實21分。

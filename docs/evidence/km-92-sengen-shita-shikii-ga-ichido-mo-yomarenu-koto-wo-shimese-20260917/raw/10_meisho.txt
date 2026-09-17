@@ -1,0 +1,71 @@
+# 10 名の口 ㋐ / 刻 2026-09-17T13:04:20+0900 / 名(逐語・部分一致 bytes) ['DETECT_STALE_STALE_SEC', 'DETECT_STALE_LOG', 'ZZ_KM92_NEG', 'STALE_THRESHOLD_SEC'] / 己の束 docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917(除く)
+★器A 根1= /Users/momizimac/multi-agent-shogun / 深さ無制限 / 除外(宣)= ['.claude/worktrees', '.git', '.venv', '__pycache__', 'backups', 'node_modules', 'queue'] + docs/evidence/ / 歩いた通常 file 1079 本 110800977 bytes / 非通常・讀めぬ 0 / rc 0(例外なし)★
+  DETECT_STALE_STALE_SEC: 1 行
+    scripts/lib/detect_stale.sh:33: DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+  DETECT_STALE_LOG: 13 行
+    scripts/agent_health_check.sh:419: #   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+    scripts/agent_health_check.sh:448: _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513:375: #   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+    scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513:404: _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    scripts/lib/detect_stale.sh:31: DETECT_STALE_LOG="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    scripts/lib/detect_stale.sh:63: printf '%s [%s] %s\n' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/dev/null || true
+    scripts/tests/test_detect_stale.sh:29: export DETECT_STALE_LOG="$(mktemp -t fukuincho_detect_stale_test.XXXXXX.log)"
+    scripts/tests/test_detect_stale.sh:467: rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:38: DETECT_STALE_LOG="$(mktemp -t fukuincho_cli_test.XXXXXX.log)"
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:41: export DETECT_STALE_LOG DETECT_STALE_INFLIGHT_DIR DETECT_STALE_LOCK_FILE
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:45: rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:58: done_line=$(grep -E '\[INVOKE\].*fukuincho_detect_stale_cli done' "$DETECT_STALE_LOG" | tail -n 1)
+  ZZ_KM92_NEG: 0 行 ← ★零★
+  STALE_THRESHOLD_SEC: 1 行
+    scripts/fukuincho_desktop_poke.py:57: STALE_THRESHOLD_SEC = 120       # response_by_time 超過 stale 判定閾値
+器A 根1′= /Users/momizimac/multi-agent-shogun/docs/evidence / 深さ無制限 / 己の束 km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917 を除く / 歩いた通常 file 5380 本 27838582 bytes / 非通常 0
+  DETECT_STALE_STALE_SEC: 255 行(束別: km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917 8, km-77-shikii-no-bosuu-wo-yotsu-no-teigi-de-kakutei-seyo-20260917 13, km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917 22, km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917 1, km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917 209, km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917 2)
+    km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/README.md:51: | `scripts/lib/detect_stale.sh` | 1 | DETECT_STALE_STALE_SEC:-120@33 |
+    km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/README.md:64: | `scripts/lib/detect_stale.sh` | 1 | DETECT_STALE_STALE_SEC:-120@33 |
+    km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/README.md:78: | `scripts/lib/detect_stale.sh` | 1 | DETECT_STALE_STALE_SEC:-120@33 |
+    km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/README.md:93: | `scripts/lib/detect_stale.sh` | 1 | DETECT_STALE_STALE_SEC:-120@33 |
+    km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/nama/31_kazu_kotei.txt:18: scripts/lib/detect_stale.sh	1	DETECT_STALE_STALE_SEC:-120@33
+    km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/nama/33_kazu_touseki.txt:19: scripts/lib/detect_stale.sh	1	DETECT_STALE_STALE_SEC:-120@33
+  DETECT_STALE_LOG: 322 行(束別: km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 4, km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917 2, km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917 6, km-74-otsu-wo-kyouyuuki-yonhon-he-sueru-20260917 2, km-83-shikii-de-wa-mamorenu-tane-wo-mitsuke-yo-20260917 217, km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917 91)
+    km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh:407: #   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+    km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/km52ki/agent_health_check.sh:436: _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh:412: #   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+    km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/utsushi/namaki/agent_health_check.sh:441: _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/utsushi/scripts_agent_health_check.sh:407: #   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+    km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/utsushi/scripts_agent_health_check.sh:436: _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+  ZZ_KM92_NEG: 0 行(束別: )
+  STALE_THRESHOLD_SEC: 0 行(束別: )
+器A 根3= /Users/momizimac/bin / 深さ無制限 / 歩いた通常 file 77 本 422074 bytes / 非通常 1
+  DETECT_STALE_STALE_SEC: 0 行
+  DETECT_STALE_LOG: 0 行
+  ZZ_KM92_NEG: 0 行
+  STALE_THRESHOLD_SEC: 0 行
+★器B `git grep -n -I -e DETECT_STALE_STALE_SEC -- .`(追跡 file・repo 根)= rc 0 / 9 行= docs/evidence/ 外 1 + 先例の束 8 + 己の束 0(未追跡ゆゑ 0 が正)★
+    scripts/lib/detect_stale.sh:33:DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+★器B `git grep -n -I -e DETECT_STALE_LOG -- .`(追跡 file・repo 根)= rc 0 / 21 行= docs/evidence/ 外 11 + 先例の束 10 + 己の束 0(未追跡ゆゑ 0 が正)★
+    scripts/agent_health_check.sh:419:#   (3) DETECT_STALE_LOG 直近 update (>60min 経過なら cron 不動作の疑い)
+    scripts/agent_health_check.sh:448:    _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    scripts/lib/detect_stale.sh:31:DETECT_STALE_LOG="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    scripts/lib/detect_stale.sh:63:    printf '%s [%s] %s\n' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/dev/null || true
+    scripts/tests/test_detect_stale.sh:29:export DETECT_STALE_LOG="$(mktemp -t fukuincho_detect_stale_test.XXXXXX.log)"
+    scripts/tests/test_detect_stale.sh:467:rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:38:    DETECT_STALE_LOG="$(mktemp -t fukuincho_cli_test.XXXXXX.log)"
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:41:    export DETECT_STALE_LOG DETECT_STALE_INFLIGHT_DIR DETECT_STALE_LOCK_FILE
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:45:    rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:58:    done_line=$(grep -E '\[INVOKE\].*fukuincho_detect_stale_cli done' "$DETECT_STALE_LOG" | tail -n 1)
+    scripts/tests/test_fukuincho_detect_stale_cli.sh:70:    grep -cE "\[${pattern}\]" "$DETECT_STALE_LOG" 2>/dev/null || echo 0
+★器B `git grep -n -I -e ZZ_KM92_NEG -- .`(追跡 file・repo 根)= rc 1 / 0 行= docs/evidence/ 外 0 + 先例の束 0 + 己の束 0(未追跡ゆゑ 0 が正)★
+★器B `git grep -n -I -e STALE_THRESHOLD_SEC -- .`(追跡 file・repo 根)= rc 0 / 1 行= docs/evidence/ 外 1 + 先例の束 0 + 己の束 0(未追跡ゆゑ 0 が正)★
+    scripts/fukuincho_desktop_poke.py:57:STALE_THRESHOLD_SEC = 120       # response_by_time 超過 stale 判定閾値
+★DETECT_STALE_STALE_SEC: 口(代入 `DETECT_STALE_STALE_SEC=`) 1 行 / 讀手(展開 `$DETECT_STALE_STALE_SEC` `${DETECT_STALE_STALE_SEC` ・己の宣の RHS `${DETECT_STALE_STALE_SEC:-…}` は除く) 0 行★
+★DETECT_STALE_LOG: 口(代入 `DETECT_STALE_LOG=`) 3 行 / 讀手(展開 `$DETECT_STALE_LOG` `${DETECT_STALE_LOG` ・己の宣の RHS `${DETECT_STALE_LOG:-…}` は除く) 7 行★
+    讀手 scripts/agent_health_check.sh:448: _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    讀手 scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513:404: _detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+    讀手 scripts/lib/detect_stale.sh:63: printf '%s [%s] %s\n' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/dev/null || true
+    讀手 scripts/tests/test_detect_stale.sh:467: rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    讀手 scripts/tests/test_fukuincho_detect_stale_cli.sh:45: rm -f "$DETECT_STALE_LOG" 2>/dev/null
+    讀手 scripts/tests/test_fukuincho_detect_stale_cli.sh:58: done_line=$(grep -E '\[INVOKE\].*fukuincho_detect_stale_cli done' "$DETECT_STALE_LOG" | tail -n 1)
+    讀手 scripts/tests/test_fukuincho_detect_stale_cli.sh:70: grep -cE "\[${pattern}\]" "$DETECT_STALE_LOG" 2>/dev/null || echo 0
+意味せぬ事: 器A は部分一致(語境界無し)ゆゑ多めに出る側(零なら真に零)。queue/ は 13GB ゆゑ器A で除く(追跡分は器B が歩く)。crontab/launchd/環境の export は歩いて居らぬ(次の行で crontab -l のみ刷る)。
+crontab -l rc 1: crontab: no crontab for momizimac
+此の席の env に DETECT_STALE*: 0

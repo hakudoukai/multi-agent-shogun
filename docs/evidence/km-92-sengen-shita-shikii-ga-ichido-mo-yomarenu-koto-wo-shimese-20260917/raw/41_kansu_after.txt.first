@@ -1,0 +1,89 @@
+# 41 函数の出目・直し後 / 刻 2026-09-17T13:12:14+0900 / now(器) 1789618334 / lib raw/40_utsushi/scripts/lib/detect_stale.sh sha16 1d1774b10a564dd0 / 姿 B=/bin/date(flock 無し) G=gdate+flock stub S2=python3 stub(parser のみ差替)+flock stub
+★判 ○ 37 / ★×★ 6 / 母數 43(判= log の札・rc・WARN の有無と名が宣どほり)★
+○ B_past_2020_Z            姿B  入力 '2020-01-01T00:00:00Z'       → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0
+    log 逐語: 2026-09-17T13:12:14+09:00 [STALE] corr_id=km92_B_past_2020_Z stale判定
+○ G_past_2020_Z            姿G  入力 '2020-01-01T00:00:00Z'       → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: STALE rc0
+    log 逐語: 2026-09-17T13:12:15+09:00 [STALE] corr_id=km92_G_past_2020_Z stale判定
+○ B_future_2099_Z          姿B  入力 '2099-01-01T00:00:00Z'       → rc 1 log[FRESH] skip         CLI enq0 skip1 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1
+    log 逐語: 2026-09-17T13:12:15+09:00 [FRESH] corr_id=km92_B_future_2099_Z response_by_time=2099-01-01T00:00:00Z not yet stale (deadline_epoch=4070908800 stale_sec=120 now=1789618335)
+○ G_future_2099_Z          姿G  入力 '2099-01-01T00:00:00Z'       → rc 1 log[FRESH] skip         CLI enq0 skip1 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1
+    log 逐語: 2026-09-17T13:12:16+09:00 [FRESH] corr_id=km92_G_future_2099_Z response_by_time=2099-01-01T00:00:00Z not yet stale (deadline_epoch=4070908800 stale_sec=120 now=1789618336)
+○ B_now-121s_+hh:mm        姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0(閾 120 超)
+    log 逐語: 2026-09-17T13:12:16+09:00 [STALE] corr_id=km92_B_now_121s__hh_mm stale判定
+○ G_now-121s_+hh:mm        姿G  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: STALE rc0
+    log 逐語: 2026-09-17T13:12:17+09:00 [STALE] corr_id=km92_G_now_121s__hh_mm stale判定
+★×★ B_now-119s_+hh:mm        姿B  入力 '2026-09-17T13:10:15+09:00'  → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1(閾 120 未満)
+    log 逐語: 2026-09-17T13:12:17+09:00 [STALE] corr_id=km92_B_now_119s__hh_mm stale判定
+★×★ G_now-119s_+hh:mm        姿G  入力 '2026-09-17T13:10:15+09:00'  → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: FRESH rc1
+    log 逐語: 2026-09-17T13:12:18+09:00 [STALE] corr_id=km92_G_now_119s__hh_mm stale判定
+○ B_now-1s_+hh:mm          姿B  入力 '2026-09-17T13:12:13+09:00'  → rc 1 log[FRESH] skip         CLI enq0 skip1 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1(30 では STALE だつた)
+    log 逐語: 2026-09-17T13:12:18+09:00 [FRESH] corr_id=km92_B_now_1s__hh_mm response_by_time=2026-09-17T13:12:13+09:00 not yet stale (deadline_epoch=1789618333 stale_sec=120 now=1789618338)
+○ B_now-121s_+hhmm         姿B  入力 '2026-09-17T13:10:13+0900'   → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0(±hhmm 形)
+    log 逐語: 2026-09-17T13:12:19+09:00 [STALE] corr_id=km92_B_now_121s__hhmm stale判定
+★×★ B_now-119s_Z             姿B  入力 '2026-09-17T04:10:15Z'       → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1(Z 形)
+    log 逐語: 2026-09-17T13:12:19+09:00 [STALE] corr_id=km92_B_now_119s_Z stale判定
+○ B_now-121s_naive         姿B  入力 '2026-09-17 13:10:13'        → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0(naive= local)
+    log 逐語: 2026-09-17T13:12:20+09:00 [STALE] corr_id=km92_B_now_121s_naive stale判定
+★×★ B_now-119s_naive_T       姿B  入力 '2026-09-17T13:10:15'        → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1(naive T)
+    log 逐語: 2026-09-17T13:12:20+09:00 [STALE] corr_id=km92_B_now_119s_naive_T stale判定
+○ B_now-31s_SEC30          姿B  入力 '2026-09-17T13:11:43+09:00'  → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0(閾 30)
+    log 逐語: 2026-09-17T13:12:21+09:00 [STALE] corr_id=km92_B_now_31s_SEC30 stale判定
+★×★ B_now-29s_SEC30          姿B  入力 '2026-09-17T13:11:45+09:00'  → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1(閾 30)
+    log 逐語: 2026-09-17T13:12:21+09:00 [STALE] corr_id=km92_B_now_29s_SEC30 stale判定
+○ B_now-1s_SEC0            姿B  入力 '2026-09-17T13:12:13+09:00'  → rc 0 log[STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0(閾 0= 旧の振舞ひ)
+    log 逐語: 2026-09-17T13:12:22+09:00 [STALE] corr_id=km92_B_now_1s_SEC0 stale判定
+○ B_now-121s_SEC999999     姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 1 log[FRESH] skip         CLI enq0 skip1 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1(閾 999999 が讀まれる)
+    log 逐語: 2026-09-17T13:12:22+09:00 [FRESH] corr_id=km92_B_now_121s_SEC999999 response_by_time=2026-09-17T13:10:13+09:00 not yet stale (deadline_epoch=1789618213 stale_sec=999999 now=1789618342)
+○ B_now-121s_SECempty      姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[WARN/STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0 + WARN stale_sec_empty
+    log 逐語: 2026-09-17T13:12:22+09:00 [WARN] stale_sec_empty: DETECT_STALE_STALE_SEC='' → 既定 120 へ倒す ␊ 2026-09-17T13:12:22+09:00 [STALE] corr_id=km92_B_now_121s_SECempty stale判定
+○ B_now-121s_SECblank      姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[WARN/STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0 + WARN stale_sec_blank
+    log 逐語: 2026-09-17T13:12:23+09:00 [WARN] stale_sec_blank: DETECT_STALE_STALE_SEC='   ' (空白のみ) → 既定 120 へ倒す ␊ 2026-09-17T13:12:23+09:00 [STALE] corr_id=km92_B_now_121s_SECblank stale判定
+○ B_now-121s_SECabc        姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[WARN/STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0 + WARN stale_sec_malformed
+    log 逐語: 2026-09-17T13:12:24+09:00 [WARN] stale_sec_malformed: DETECT_STALE_STALE_SEC='abc' (數字のみを受ける) → 既定 120 へ倒す ␊ 2026-09-17T13:12:24+09:00 [STALE] corr_id=km92_B_now_121s_SECabc stale判定
+○ B_now-121s_SECneg5       姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[WARN/STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0 + WARN malformed(- は非數字)
+    log 逐語: 2026-09-17T13:12:24+09:00 [WARN] stale_sec_malformed: DETECT_STALE_STALE_SEC='-5' (數字のみを受ける) → 既定 120 へ倒す ␊ 2026-09-17T13:12:24+09:00 [STALE] corr_id=km92_B_now_121s_SECneg5 stale判定
+○ B_now-121s_SEC2^63       姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[WARN/STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0 + WARN out_of_range
+    log 逐語: 2026-09-17T13:12:25+09:00 [WARN] stale_sec_out_of_range: DETECT_STALE_STALE_SEC='9223372036854775808' (比較器 [ -ge 0 ] rc≠0) → 既定 120 へ倒す ␊ 2026-09-17T13:12:25+09:00 [STALE] corr_id=km92_B_now_121s_SEC2_63 stale判定
+○ B_now-121s_SEC1e3        姿B  入力 '2026-09-17T13:10:13+09:00'  → rc 0 log[WARN/STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0 + WARN malformed
+    log 逐語: 2026-09-17T13:12:25+09:00 [WARN] stale_sec_malformed: DETECT_STALE_STALE_SEC='1e3' (數字のみを受ける) → 既定 120 へ倒す ␊ 2026-09-17T13:12:25+09:00 [STALE] corr_id=km92_B_now_121s_SEC1e3 stale判定
+★×★ B_now-119s_SECblank      姿B  入力 '2026-09-17T13:10:15+09:00'  → rc 0 log[WARN/STALE] ★auto-poke★  CLI enq0 skip0 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1 + WARN blank(既定 120 が効く)
+    log 逐語: 2026-09-17T13:12:26+09:00 [WARN] stale_sec_blank: DETECT_STALE_STALE_SEC=' ' (空白のみ) → 既定 120 へ倒す ␊ 2026-09-17T13:12:26+09:00 [STALE] corr_id=km92_B_now_119s_SECblank stale判定
+○ B_abc                    姿B  入力 'abc'                        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:26+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_abc response_by_time='abc' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ G_abc                    姿G  入力 'abc'                        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:26+09:00 [ANOMALY] deadline_malformed: corr_id=km92_G_abc response_by_time='abc' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ B_empty                  姿B  入力 ''                           → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(deadline_empty)
+    log 逐語: 2026-09-17T13:12:27+09:00 [ANOMALY] deadline_empty: corr_id=km92_B_empty (期限なし row は auto-poke 禁、§2(1))
+○ B_neg5                   姿B  入力 '-5'                         → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:27+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_neg5 response_by_time='-5' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ B_now_word               姿B  入力 'now'                        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(GNU 語は受けぬ)
+    log 逐語: 2026-09-17T13:12:28+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_now_word response_by_time='now' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ B_2^63                   姿B  入力 '9223372036854775808'        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:28+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_2_63 response_by_time='9223372036854775808' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ B_injection              姿B  入力 '$(echo INJ92)'              → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:29+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_injection response_by_time='$(echo INJ92)' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ B_year10000              姿B  入力 '10000-01-01T00:00:00Z'      → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:29+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_year10000 response_by_time='10000-01-01T00:00:00Z' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_abc                   姿S2 入力 'abc'                        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(非數)
+    log 逐語: 2026-09-17T13:12:30+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S2_abc response_by_time='x' epoch='abc' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_empty                 姿S2 入力 ''                           → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:30+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S2_empty response_by_time='x' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_neg5                  姿S2 入力 '-5'                         → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:31+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S2_neg5 response_by_time='x' epoch='-5' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_2^63                  姿S2 入力 '9223372036854775808'        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(out_of_range・[ が rc2)
+    log 逐語: 2026-09-17T13:12:31+09:00 [ANOMALY] deadline_out_of_range: corr_id=km92_S2_2_63 response_by_time='x' epoch='9223372036854775808' (比較器 [ -gt 0 ] rc≠0 = auto-poke 禁)
+○ S2_1e3                   姿S2 入力 '1e3'                        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:32+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S2_1e3 response_by_time='x' epoch='1e3' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_space7                姿S2 入力 ' 7'                         → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(空白は非數字)
+    log 逐語: 2026-09-17T13:12:32+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S2_space7 response_by_time='x' epoch=' 7' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_zero                  姿S2 入力 '0'                          → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(out_of_range)
+    log 逐語: 2026-09-17T13:12:32+09:00 [ANOMALY] deadline_out_of_range: corr_id=km92_S2_zero response_by_time='x' epoch='0' (比較器 [ -gt 0 ] rc≠0 = auto-poke 禁)
+○ S2_out+rc1               姿S2 入力 'garbage'                    → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:33+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S2_out_rc1 response_by_time='x' epoch='' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_newline               姿S2 入力 '5\n0'                       → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:12:33+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S2_newline response_by_time='x' epoch='5 ␊ 0' (parse 不能 or 非數 = auto-poke 禁)
+○ S2_010                   姿S2 入力 '010'                        → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: STALE rc0(數字のみ・8 秒= 過去)
+    log 逐語: 2026-09-17T13:12:34+09:00 [STALE] corr_id=km92_S2_010 stale判定
+○ S2_max_int               姿S2 入力 '9223372036854775807'        → rc 1 log[FRESH] skip         CLI enq0 skip1 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1(2^63-1 は [ が受ける・now-sec < 巨数)
+    log 逐語: 2026-09-17T13:12:34+09:00 [FRESH] corr_id=km92_S2_max_int response_by_time=x not yet stale (deadline_epoch=9223372036854775807 stale_sec=120 now=1789618354)
+意味: 姿 B に flock は無い故 CLI の enqueue は refused(ERROR flock_acquire_failed・enq0)に成る= 当機の事情であり的の外(30 の姿 G/S と同じ stub を使ふ G/S2 では enq1 が出る)。「auto-poke」は評価 rc 0 で定める。

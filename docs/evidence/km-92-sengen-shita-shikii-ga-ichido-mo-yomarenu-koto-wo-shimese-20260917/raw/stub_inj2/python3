@@ -1,0 +1,4 @@
+#!/bin/bash
+# stub python3(第81弾 km-92 ㋒ 直し後)―― 引数に fromisoformat を含む呼出(= 直しの parser)の時だけ KM92_D_OUT を刷り KM92_D_RC で終はる(parser が壊れた時に番人が効くかを測る口)。其れ以外(json の口)は本物 /opt/homebrew/bin/python3 へ渡す。
+for a in "$@"; do case "$a" in *fromisoformat*) printf '%s\n' "${KM92_D_OUT:-}"; exit "${KM92_D_RC:-0}";; esac; done
+exec /opt/homebrew/bin/python3 "$@"

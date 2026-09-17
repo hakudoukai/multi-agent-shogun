@@ -1,0 +1,13 @@
+# 00 起 / 刻 2026-09-17T13:02:48+0900 / 枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 / HEAD 0039e1321654 / main 363d5fb06084 / 札 queue/tasks/ashigaru-mac-1.yaml sha16 16c0eed1b235ac2a 78行 5703B
+★的 scripts/lib/detect_stale.sh ―― 固定(己の手・此の刻)★: sha256 de4fefbdadb2be634f10600aedd4fb923aec83398c8c4f98e22bf5c0220d740e / sha16 de4fefbdadb2be63 / 13005 bytes / 292 行(LF の數) / 札の宣 sha16 de4fefbdadb2be63 292行 → 一致
+git log -1 -- scripts/lib/detect_stale.sh (rc 0): 12af886 2026-06-08 15:03:11 +0900 feat: fukuincho stage3 統合実装 (文言再変更「確認依頼、コマンダーより」 + 二重投稿止血 flock 排他 + watcher single-in
+git status --porcelain -- scripts/lib/detect_stale.sh (rc 0): [] ← 空= 生は追跡版と同じ
+写し raw/00_target_detect_stale.sh sha16 de4fefbdadb2be63 13005B → 生と 一致
+bash= GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25) | Copyright (C) 2007 Free Software Foundation, Inc. (rc 0)
+python3= Python 3.14.6 | /opt/homebrew/bin/python3 (rc 0)
+date= /bin/date | 2026-09-17T13:02:48+09:00 (rc 0)
+gdate= /opt/homebrew/bin/gdate | date (GNU coreutils) 9.11 | Copyright (C) 2026 Free Software Foundation, Inc. | License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>. | This is free software: you are free to change and redistribute it. | There is NO WARRANTY, to the extent permitted by law. | Written by David MacKenzie. (rc 0)
+flock= flock: 無し(command -v rc 1) (rc 0)
+git= git version 2.55.0 (rc 0)
+uname= Darwin 25.5.0 (rc 0)
+則: 生器(scripts/ lib/ ~/bin)へ 0 字 / 稼働 watcher・supervisor 不觸 / settings.json 不觸 / 測りは写し(raw/00_target_detect_stale.sh と其の直し raw/40_*)で / 直しは自枝へ commit(temp index・porcelain 不変・push 請はず)。的は detect_stale.sh 一本(他三本へ手を伸ばさぬ)。

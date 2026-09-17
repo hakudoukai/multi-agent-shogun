@@ -1,0 +1,6 @@
+# log B_now-25s_SEC30(器が先に置いた一行・以下が lib の追記)
+2026-09-17T13:14:21+09:00 [FRESH] corr_id=km92_B_now_25s_SEC30 response_by_time=2026-09-17T13:13:56+09:00 not yet stale (deadline_epoch=1789618436 stale_sec=30 now=1789618461)
+# --- CLI の写し ---
+2026-09-17T13:14:21+09:00 [INVOKE] fukuincho_detect_stale_cli detect-stale-handshake start (pid=31631)
+2026-09-17T13:14:22+09:00 [FRESH] corr_id=km92_B_now_25s_SEC30 response_by_time=2026-09-17T13:13:56+09:00 not yet stale (deadline_epoch=1789618436 stale_sec=30 now=1789618461)
+2026-09-17T13:14:22+09:00 [INVOKE] fukuincho_detect_stale_cli done processed=1 enqueued=0 skipped=1 anomalies=0

@@ -1,0 +1,13 @@
+───────────────────────────────────────
+test_fukuincho_detect_stale_cli.sh
+redo: subtask_thirdpc_p1_fukuincho_stage3_actual_impl_apply_redo_cycle3_003 (cycle4 fix2)
+scope: CLI rc→enqueue 判定 integration、cycle3 RED-C3 (|| true rc 破壊) 退行捕捉用
+───────────────────────────────────────
+PASS: CLI-1 ★cycle4 fix2★ spoof row (karo-spoof) → enqueued=0 + DENY ≥1
+PASS: CLI-2 ★cycle4 fix2★ empty-deadline row → enqueued=0 + ANOMALY ≥1
+PASS: CLI-3 ★cycle4 fix2★ future row → enqueued=0 + FRESH ≥1
+PASS: CLI-4 ★cycle4 fix2★ inflight row → enqueued=0 + SKIP ≥1
+PASS: CLI-5 ★cycle4 fix2★ 正常 past-stale row → enqueued=1 (positive control)
+───────────────────────────────────────
+PASS=5 FAIL=0 SKIP=0
+★ALL PASS (SKIP=0、CLI rc 経路健全、cycle3 RED-C3 退行なし)★

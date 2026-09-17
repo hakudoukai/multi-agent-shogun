@@ -1,0 +1,7 @@
+# log B_now-125s_+hhmm(器が先に置いた一行・以下が lib の追記)
+2026-09-17T13:14:19+09:00 [STALE] corr_id=km92_B_now_125s__hhmm stale判定
+# --- CLI の写し ---
+2026-09-17T13:14:19+09:00 [INVOKE] fukuincho_detect_stale_cli detect-stale-handshake start (pid=31109)
+2026-09-17T13:14:19+09:00 [STALE] corr_id=km92_B_now_125s__hhmm stale判定
+2026-09-17T13:14:20+09:00 [ERROR] flock_acquire_failed: corr_id=km92_B_now_125s__hhmm
+2026-09-17T13:14:20+09:00 [INVOKE] fukuincho_detect_stale_cli done processed=1 enqueued=0 skipped=0 anomalies=0

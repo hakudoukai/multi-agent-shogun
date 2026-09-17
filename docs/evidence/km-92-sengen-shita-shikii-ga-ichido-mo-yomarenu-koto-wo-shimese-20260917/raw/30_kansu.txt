@@ -1,0 +1,44 @@
+# 30 函数の出目 ㋒ / 刻 2026-09-17T13:07:07+0900 / now(器) 1789618027 / lib raw/utsushi/scripts/lib/detect_stale.sh sha16 de4fefbdadb2be63 / shell /bin/bash 3.2 / 姿 B=/bin/date G=stub_gnu(gdate+flock stub) S=stub_inj(date -d → KM92_D_OUT)
+G_past_2020            姿G 入力 '2020-01-01T00:00:00Z'     → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: STALE rc0
+    log 逐語: 2026-09-17T13:07:08+09:00 [STALE] corr_id=km92_G_past_2020 stale判定
+G_future_2099          姿G 入力 '2099-01-01T00:00:00Z'     → rc 1 log[FRESH] skip         CLI enq0 skip1 anom0 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1
+    log 逐語: 2026-09-17T13:07:09+09:00 [FRESH] corr_id=km92_G_future_2099 response_by_time=2099-01-01T00:00:00Z not yet stale
+G_now-1s               姿G 入力 '2026-09-17T13:07:06+09:00' → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: STALE rc0(閾 120 が讀まれて居れば FRESH)
+    log 逐語: 2026-09-17T13:07:09+09:00 [STALE] corr_id=km92_G_now_1s stale判定
+G_now-119s             姿G 入力 '2026-09-17T13:05:08+09:00' → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: STALE rc0(閾 120 が讀まれて居れば FRESH)
+    log 逐語: 2026-09-17T13:07:10+09:00 [STALE] corr_id=km92_G_now_119s stale判定
+G_now-121s             姿G 入力 '2026-09-17T13:05:06+09:00' → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: STALE rc0
+    log 逐語: 2026-09-17T13:07:10+09:00 [STALE] corr_id=km92_G_now_121s stale判定
+G_now-1s_SEC999999     姿G 入力 '2026-09-17T13:07:06+09:00' → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: 宣を 999999 にしても STALE rc0 なら閾は死
+    log 逐語: 2026-09-17T13:07:11+09:00 [STALE] corr_id=km92_G_now_1s_SEC999999 stale判定
+G_now-1s_SECabc        姿G 入力 '2026-09-17T13:07:06+09:00' → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: 宣を abc にしても出目不変なら閾は死
+    log 逐語: 2026-09-17T13:07:12+09:00 [STALE] corr_id=km92_G_now_1s_SECabc stale判定
+G_abc                  姿G 入力 'abc'                      → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(gdate rc1 → 0)
+    log 逐語: 2026-09-17T13:07:12+09:00 [ANOMALY] deadline_malformed: corr_id=km92_G_abc response_by_time='abc' (parse 不能 = auto-poke 禁)
+G_empty                姿G 入力 ''                         → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2(deadline_empty・date へ行かぬ)
+    log 逐語: 2026-09-17T13:07:12+09:00 [ANOMALY] deadline_empty: corr_id=km92_G_empty (期限なし row は auto-poke 禁、§2(1))
+B_past_2020            姿B 入力 '2020-01-01T00:00:00Z'     → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: STALE rc0 の筈(当機は date -d rc1 → 0 → ANOMALY)
+    log 逐語: 2026-09-17T13:07:13+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_past_2020 response_by_time='2020-01-01T00:00:00Z' (parse 不能 = auto-poke 禁)
+B_future_2099          姿B 入力 '2099-01-01T00:00:00Z'     → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: FRESH rc1 の筈(当機は ANOMALY)
+    log 逐語: 2026-09-17T13:07:13+09:00 [ANOMALY] deadline_malformed: corr_id=km92_B_future_2099 response_by_time='2099-01-01T00:00:00Z' (parse 不能 = auto-poke 禁)
+S_abc                  姿S 入力 'abc'                      → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr /Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/utsushi/scripts/lib/detect_stale. | 宣: ANOMALY rc2(註: parse 不能 → ANOMALY)
+    log 逐語: 2026-09-17T13:07:14+09:00 [STALE] corr_id=km92_S_abc stale判定
+S_empty                姿S 入力 ''                         → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr /Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/utsushi/scripts/lib/detect_stale. | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:07:15+09:00 [STALE] corr_id=km92_S_empty stale判定
+S_neg5                 姿S 入力 '-5'                       → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:07:15+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S_neg5 response_by_time='x' (parse 不能 = auto-poke 禁)
+S_2^63                 姿S 入力 '9223372036854775808'      → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr /Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/utsushi/scripts/lib/detect_stale. | 宣: ANOMALY rc2(家老の見立= 永久 FRESH)
+    log 逐語: 2026-09-17T13:07:16+09:00 [STALE] corr_id=km92_S_2_63 stale判定
+S_010                  姿S 入力 '010'                      → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: 過去(8 秒)→ STALE rc0
+    log 逐語: 2026-09-17T13:07:16+09:00 [STALE] corr_id=km92_S_010 stale判定
+S_1e3                  姿S 入力 '1e3'                      → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr /Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/utsushi/scripts/lib/detect_stale. | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:07:17+09:00 [STALE] corr_id=km92_S_1e3 stale判定
+S_space7               姿S 入力 ' 7'                       → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr - | 宣: 過去 → STALE rc0
+    log 逐語: 2026-09-17T13:07:17+09:00 [STALE] corr_id=km92_S_space7 stale判定
+S_zero                 姿S 入力 '0'                        → rc 2 log[ANOMALY] anomaly      CLI enq0 skip0 anom1 ENQUEUE行0 rc0 | stderr - | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:07:18+09:00 [ANOMALY] deadline_malformed: corr_id=km92_S_zero response_by_time='x' (parse 不能 = auto-poke 禁)
+S_out+rc1              姿S 入力 'garbage'                  → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr /Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/utsushi/scripts/lib/detect_stale. | 宣: ANOMALY rc2(date が刷つて且つ落ちる= $() が garbage␊0 を捕る)
+    log 逐語: 2026-09-17T13:07:18+09:00 [STALE] corr_id=km92_S_out_rc1 stale判定
+S_newline_inj          姿S 入力 '5\n0'                     → rc 0 log[STALE] ★auto-poke★  CLI enq1 skip0 anom0 ENQUEUE行1 rc0 | stderr /Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/utsushi/scripts/lib/detect_stale. | 宣: ANOMALY rc2
+    log 逐語: 2026-09-17T13:07:19+09:00 [STALE] corr_id=km92_S_newline_inj stale判定
+意味: rc 0 = CLI の case 0 → detect_stale_enqueue(= auto-poke の経路・Linux では flock 在り → ENQUEUE)。stderr は bash の `[: integer expression expected`(cron では mail/黙・log には残らぬ)。姿 S は date -d の出目だけを差し替へ、+%s と -Iseconds は /bin/date へ渡る。scratch(inflight dir・lock)は讀んだ後に消す(0byte・門 條④)。log は残す(先頭一行は器の印)。

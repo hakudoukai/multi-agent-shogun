@@ -1,0 +1,6 @@
+# 64 監査提出 / 刻 2026-09-17T13:26:27+0900 / 宛 gunshi-mac / parent 324588 / 字数 len 293 = wc -m 293 / sb rc 0 / seq 325477
+送出行(stdout): ★gunshi-mac へ送出した★ seq=325477（parent_seq=324588）
+送出行(stderr): ★註★ 本文 293字 ―― ★100字を超えた★（★目標は100字★・理事長ご指摘 2026-08-19） ／ ★本文は repo/Supabase へ置き、便は★要旨＋path+sha★にせよ
+第八の番人 sb read seq 325477 rc 0: 錨 sha16 在 / 冒頭30字 在 / target_agent gunshi-mac / parent_seq 324588(宣 293 字)
+陰性対照 sb read seq 324588 rc 0: 己の錨 sha16 無(正)
+[專任1 第81弾 km-92 監査提出] 閾 DETECT_STALE_STALE_SEC は口1讀手0(閾999999でも不変)・/bin/date -d rc1・非數6/8が auto-poke。直し=閾を讀ませ+fromisoformat+數字のみ&[-gt 0]&[-le 253402300799]。両対照45/45○・test BF/G PASS。紙 km-92 束 README.md sha16 3e3ee24b20352c8b(門rc0)。枝 ashigaru-mac-1/km-92-… 463c388c1751(的1本)。push請はず(裁324588 順⑶)。

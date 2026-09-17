@@ -1,0 +1,6 @@
+# log G_future_2099(器が先に置いた一行・以下が lib の追記)
+2026-09-17T13:07:09+09:00 [FRESH] corr_id=km92_G_future_2099 response_by_time=2099-01-01T00:00:00Z not yet stale
+# --- CLI の写し ---
+2026-09-17T13:07:09+09:00 [INVOKE] fukuincho_detect_stale_cli detect-stale-handshake start (pid=2009)
+2026-09-17T13:07:09+09:00 [FRESH] corr_id=km92_G_future_2099 response_by_time=2099-01-01T00:00:00Z not yet stale
+2026-09-17T13:07:09+09:00 [INVOKE] fukuincho_detect_stale_cli done processed=1 enqueued=0 skipped=1 anomalies=0

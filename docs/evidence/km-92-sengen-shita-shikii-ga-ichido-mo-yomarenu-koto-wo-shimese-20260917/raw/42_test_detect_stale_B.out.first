@@ -1,0 +1,57 @@
+───────────────────────────────────────
+test_detect_stale.sh
+redo: subtask_thirdpc_p1_fukuincho_stage3_actual_impl_apply_redo_002
+───────────────────────────────────────
+PASS: 1.1 status pending = valid
+PASS: 1.2 status in_progress = valid
+PASS: 1.3 status confirmed = terminal (skip)
+PASS: 1.4 status escalated = terminal (skip)
+PASS: 1.5 status human_required = terminal (skip)
+PASS: 1.6 status closed = terminal (skip)
+PASS: 1.7 status unknown = anomaly
+PASS: 1.8 status empty = anomaly
+PASS: 2.1 ★fix2★ alphanumeric corr_id pass
+PASS: 2.2 ★fix2★ underscore corr_id pass
+PASS: 2.3 ★fix2★ '..' 単独 → reject
+PASS: 2.4 ★fix2★ shell injection ';rm -rf' → reject
+PASS: 2.5 ★fix2★ space 含む → reject
+PASS: 2.6 ★fix2★ empty → reject
+PASS: 2.7 ★fix2★ unicode (日本語) → reject
+PASS: 3.1 in-flight initially not marked
+PASS: 3.2 in-flight mark→check
+PASS: 3.3 in-flight clear
+PASS: 3.4 ★fix2★ unsafe corr_id で in-flight mark/check 拒否
+PASS: 4.1 trusted from pass (karo-third)
+PASS: 4.2 unknown from reject
+PASS: 4.3 全 5 layer (commander/shogun/karo/gunshi/ashigaru) pass
+PASS: 4.4 ★cycle3 fix1 HIGH-1★ karo-spoof / karo-fake / evil prefix attack reject
+PASS: 4.5 ★cycle3 fix1 HIGH-1★ unknown recipient reject (matrix miss)
+PASS: 4.6 ★cycle3 fix1 HIGH-1★ unknown type reject (matrix miss)
+PASS: 4.7 ★cycle3 fix1 HIGH-1★ type=handshake matrix pass
+PASS: 5.1 evaluate_row normal stale → enqueue 推奨
+PASS: 5.2 evaluate_row confirmed → skip
+PASS: 5.3 evaluate_row malformed status → anomaly
+PASS: 5.4 evaluate_row unauthorized → skip
+PASS: 5.5 ★fix2★ evaluate_row unsafe corr_id → skip
+PASS: 5.6 evaluate_row in-flight → skip
+PASS: 6.1 ★cycle3 fix3 HIGH-3★ empty deadline → anomaly (auto-poke 禁)
+PASS: 6.2 ★cycle3 fix3 HIGH-3★ malformed deadline → anomaly (auto-poke 禁)
+PASS: 6.3 ★cycle3 fix3 HIGH-3★ future deadline → fresh (skip)
+PASS: 6.4 ★cycle3 fix3 HIGH-3★ past deadline → stale (enqueue 推奨)
+FAIL: 7.1 ★cycle3 fix2 HIGH-2★ atomic first wins、second skipped
+FAIL: 7.2 ★cycle3 fix2 HIGH-2★ parallel race: 一方のみが winner (race test)
+PASS: 7.3 ★cycle3 fix2 HIGH-2★ atomic with unsafe corr_id → unsafe rc=2
+PASS: 8.1 ★cycle3 fix4 MED-1★ traversal '../../etc/passwd' → reject
+PASS: 8.2 ★cycle3 fix4 MED-1★ absolute '/var/log/syslog' → reject
+PASS: 8.3 ★cycle3 fix4 MED-1★ collision input 'evil/passwd' → reject、clean 'passwd' → pass
+───────────────────────────────────────
+PASS=40 FAIL=2 SKIP=0
+───────────────────────────────────────
+FAILURE DETAILS:
+  - 7.1 ★cycle3 fix2 HIGH-2★ atomic first wins、second skipped
+  - 7.2 ★cycle3 fix2 HIGH-2★ parallel race: 一方のみが winner (race test)
+/Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/40_utsushi/scripts/tests/../lib/detect_stale.sh: line 169: flock: command not found
+/Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/40_utsushi/scripts/tests/../lib/detect_stale.sh: line 169: flock: command not found
+/Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/40_utsushi/scripts/tests/../lib/detect_stale.sh: line 169: flock: command not found
+/Users/momizimac/multi-agent-shogun/docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/raw/40_utsushi/scripts/tests/../lib/detect_stale.sh: line 169: flock: command not found
+  race outcome: rc1=3 rc2=3 (期待 = 一方が 0、他方が 1)

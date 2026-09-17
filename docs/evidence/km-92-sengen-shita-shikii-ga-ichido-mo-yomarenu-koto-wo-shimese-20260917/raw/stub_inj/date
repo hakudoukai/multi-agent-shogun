@@ -1,0 +1,4 @@
+#!/bin/bash
+# stub date(第81弾 km-92 ㋒)―― `-d` の時だけ KM92_D_OUT を刷り KM92_D_RC で終はる(deadline_epoch へ任意の字を注ぐ口)。其れ以外(+%s / -Iseconds)は /bin/date へ渡す。
+if [ "${1:-}" = "-d" ]; then printf '%s\n' "${KM92_D_OUT:-}"; exit "${KM92_D_RC:-0}"; fi
+exec /bin/date "$@"
