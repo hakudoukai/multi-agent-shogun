@@ -117,7 +117,7 @@ class TestSecondpcReceiverRetry:
                 "id": msg_id,
                 "from_pc": "main_pc",
                 "to_pc": "second_pc",
-                "topic": "test",
+                "topic": "cross_pc_inbox_karo-second",
                 "content": "hello",
                 "message_type": "status_update",
             }], f)
@@ -135,8 +135,18 @@ class TestSecondpcReceiverRetry:
             'RETRY_TRACKER_FILE = "/tmp/hakudokai_receiver_retry_tracker.json"',
             f'RETRY_TRACKER_FILE = "{tracker_file}"'
         )
+        source = source.replace(
+            'retry_tracker = load_retry_tracker()',
+            'retry_tracker = {"test-retry-cap-001": 5}',
+            1,
+        )
 
-        with patch("sys.argv", [
+        # Isolate both local delivery-state files: a pre-existing notifier marker
+        # must not suppress this fixture's sender-facing failure notice.
+        with patch.dict(os.environ, {
+            "SECONDPC_RECEIVER_DELIVERY_STATE_FILE": str(tmp_path / "delivery_state.yaml"),
+            "SECONDPC_RECEIVER_DELIVERY_STATE_NOTIFIED_FILE": str(tmp_path / "delivery_notified.txt"),
+        }, clear=False), patch("sys.argv", [
             "test", response_file, processed_file, script_dir,
             "http://localhost:54321/rest/v1", "fake_key"
         ]):
@@ -151,17 +161,16 @@ class TestSecondpcReceiverRetry:
                 except SystemExit:
                     pass
 
-        # Should be recorded as processed (dead-lettered)
+        # ebb0e8ad: retry cap preserves the original handshake ACK, while a
+        # separate sender-facing failure notice is emitted exactly once.
         with open(processed_file) as f:
             processed = set(line.strip() for line in f if line.strip())
-        assert msg_id in processed
-
-        # urlopen should have been called with dead_letter ACK
+        assert msg_id not in processed
         assert mock_urlopen.called
-        req = mock_urlopen.call_args[0][0]
-        body = json.loads(req.data.decode())
-        assert body["acknowledged_by"] == "dead_letter"
-        assert "max_retry_exceeded" in body["context_data"]
+        request = mock_urlopen.call_args[0][0]
+        payload = json.loads(request.data.decode())
+        assert payload["topic"] == "receiver_delivery_failed"
+        assert "acknowledged_by" not in payload
 
     def test_self_send_detection(self, tmp_path):
         """from_pc == to_pc → immediate dead-letter without retry."""

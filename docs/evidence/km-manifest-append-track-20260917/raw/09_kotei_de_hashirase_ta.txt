@@ -1,0 +1,43 @@
+# raw/09 ―― ★据ゑた後、固定 detached worktree で己の器を走らせた★(2026-09-17 16:48 JST)
+# 之は疵を捕へた対照其の物である。働き木で走らせては同じ偽を繰り返す。
+
+[新 commit]
+  sha      = 0bb82bfb96a53aa9e83765b700c533cc8f6dcaa8
+  親       = 61a9fe1c18beffddef6b40503766ba726b8b0a05
+  樹       = a39e23718c53616e0818402a0eaf237901f28f0b
+  枝       = refs/heads/karo-mac/manifest-append-track-20260917
+  差       = A 16本(束) / M 1本(讀み手) ―― 計17
+  HEAD     = 75aa92f28929e79496935f2549f3037f6fc79cba (★据ゑる前後で不動★)
+
+[甲] 固定 worktree /tmp/km_wt_pr22_cure_164828 (detached 0bb82bfb)
+  讀み手 karo_mac_manifest_verify.py = 198行 / blob ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579
+  書き手 karo_mac_manifest_append.py --selftest
+    甲 陽性(空白無)     rc=0 書=1 讀み返し=['kiyoi.txt'] 一致=True
+    乙 往復(空白有)     rc=0 書=1 行=path="a b.txt" … 讀み返し=['a b.txt'] ★一致=True★
+    丙 括らぬ空白名     讀み返し=['a'] 切落=True(★二版とも落ちる事の再確認★)
+    丁 二重引用符 陰性  rc=3 書=0 臺帳不変=True
+    戊 一重引用符 陰性  rc=3 書=0 臺帳不変=True
+    己 全か無か         rc=3 書=0 臺帳不変=True
+    庚 既存旧形は残る   rc=0 書=1 残存=True
+  ★rc=0 ―― selftest 通★
+  ∴ 61a9fe1c で rc=1 であつた物が、0bb82bfb では ★commit の上で★ rc=0 に成つた。
+
+[乙] ★然し門は此の commit では走らぬ★ ―― rc=127「No such file」
+  因: scripts/checks/karo_mac_dasumae_gate.sh が此の樹に無い。
+  歩いた(母數 ref=69):
+    ★持つ=62 / 持たぬ=7★
+    持たぬ7本 = ashigaru-mac-1/km-97 / ashigaru-mac-2/km-101 / ashigaru-mac-3/km-102 /
+                ★karo-mac/manifest-append-track-20260917(本枝)★ /
+                origin/HEAD / origin/karo-third/disk-pressure-evidence-20260912 / ★origin/main★
+  陽性対照(路が生きて居る證): git rev-parse origin/main:scripts/checks/karo_mac_manifest_verify.py
+    → b19ec9ea259653d9e65d052459128c635a44e93f rc=0 ―― 歩き路は健在。「無い」は路の誤りではない。
+  根: 門を据ゑた commit 2320dbb は ★origin/main に無い(未 push)★。
+      local main は origin/main より ★16 commit 先★ で分岐して居る。
+      本枝は origin/main(4be3ee19…)から生えた ∴ 門を連れて居らぬ。
+
+[丙] 數が意味せぬ事
+  ・「62/69 が持つ」は「62 本で門が走る」の意ではない。走らせて居らぬ ―― 樹に在る事しか測つて居らぬ。
+  ・「門 rc=0」(mon_164714.log)は ★働き木で★ 出た値である。
+    ★此の commit を引いた者が同じ値を再現する事は、門の器が無い以上 出来ぬ。★
+  ・selftest rc=0 は「臺帳の照合が正しい」の意ではない ―― paths_of の往復と書き手の全か無かのみ。
+  ・本件は PR#22 の的(⑴⑵⑶)の外ゆゑ、本枝へ門の器を足す事は ★せず★、別に上申する。

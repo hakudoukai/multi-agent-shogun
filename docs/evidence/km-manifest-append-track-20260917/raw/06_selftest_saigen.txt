@@ -1,0 +1,21 @@
+刻 = 2026-09-17T16:40:53+0900
+根 = /Users/momizimac/multi-agent-shogun
+問 = 軍師mac REVISE PR#22 ⑴ ―― 固定 worktree で selftest が rc=1 に落ちるか
+
+甲 働き木(當席の disk)で走らせた場合
+  rc = 0
+  結語 = ★selftest 通★
+  乙 往復 = 乙 往復(空白有) rc=0 書=1 行='path="a b.txt" sha256=73cb3858a687' 讀み返し=['a b.txt'] 一致=True ―― 期待 rc0/1/['a b.txt']
+
+乙 固定 worktree(commit 61a9fe1c の版のみ)で走らせた場合 ―― ★軍師の測り方★
+  worktree = /tmp/km_wt_pr22_69918 (detached 61a9fe1c)
+  append.py sha256 = f5ea5e1e85d64936288e9937421eb8e201bc1f34ed05b9308fa495464c7b2533
+  ★働き木の append.py と同一か = 同一★
+  rc = 1
+  結語 = ★selftest 落★
+  乙 往復 = 乙 往復(空白有) rc=0 書=1 行='path="a b.txt" sha256=73cb3858a687' 讀み返し=['"a'] 一致=False ―― 期待 rc0/1/['a b.txt']
+
+★再現した ―― 軍師mac の指摘⑴は當つて居る★
+
+註: 書き手(append.py)は二處で★同一の blob★である。∴ 疵は書き手に非ず。
+註: 此の raw 自身・臺帳・門の控は本走の後に生れる ∴ 本走の母數の外。

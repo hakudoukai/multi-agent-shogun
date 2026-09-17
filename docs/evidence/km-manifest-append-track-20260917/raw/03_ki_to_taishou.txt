@@ -1,0 +1,26 @@
+# 刻 2026-09-17 16:20:17 +0900
+## 親との差(diff-tree -r --name-status)
+M	.gitignore
+A	scripts/checks/karo_mac_manifest_append.py
+## 樹の総 file 数(ls-tree -r --full-tree -z ―― NUL 区切)
+515
+## 当該三本(陽性対照 verify.py を併記)
+100644 blob 2c809232c39277c0889ae2a80a01aed129cd6319	.gitignore
+100755 blob b56d6576c82212c155980968d4ec1e0a8c5c7427	scripts/checks/karo_mac_manifest_append.py
+100755 blob b19ec9ea259653d9e65d052459128c635a44e93f	scripts/checks/karo_mac_manifest_verify.py
+## .gitignore の差(唯一の変化)
+diff --git a/.gitignore b/.gitignore
+index 1cf7a0d..2c80923 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -166,6 +166,7 @@
+ # Pre-action check scripts (§19 Post-Incident Lessons Capture)
+ !scripts/checks/
+ !scripts/checks/*.sh
++!scripts/checks/karo_mac_manifest_append.py
+ !scripts/checks/karo_mac_manifest_verify.py
+
+ # Redundancy fallback watchers (本多 v3 HND-T1V3-004)
+## 枝と origin/main の隔たり
+origin/main..枝 = 1
+枝..origin/main = 0
