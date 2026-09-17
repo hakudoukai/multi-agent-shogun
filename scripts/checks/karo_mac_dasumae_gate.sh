@@ -11,6 +11,12 @@
 #   manifest = 台帳path(照合する台帳が無ければ "--" を渡す→條①はskip扱ひで表示)
 #   rc=0 : 五條(または台帳skip時は四條)悉く満つ(出してよい)
 #   rc!=0: 何處が落ちたかをstderrへ出して止まる
+#   rc=2 : ★閾が使へぬ(非數/空/空白のみ/比較器が扱へぬ)★ ―― 既定へ倒さず止まる(裁 seq330497)
+#
+# ★env の口★(usage 冠が env を書かぬは疵ゆゑ悉く挙げる)
+#   DASUMAE_MAX_BYTES     條⑤ の閾(既定 10485760)。★使へぬ値は既定へ倒さず rc=2 で止める★
+#   DASUMAE_READ_TIMEOUT  寸法を取る時の時限(既定 10)。同じく使へぬ値は rc=2
+#   KM_GATE_MANIFEST_BASE 條① の基点。★束内相対の臺帳(裁322699)には `.` が要る★
 #
 # usage(自己検め): bash scripts/checks/karo_mac_dasumae_gate.sh --selftest
 #   陽性対照(9/7 REVISE 280158の形=末尾空白+CR+EOF空行を再現)で必ず鳴るか、
@@ -54,8 +60,11 @@ fix_threshold(){
   eval "raw=\"\${$name-}\""
   case "$st" in
     unset) say "閾 ${name} = 未設定 ―― 既定 ${dflt} を用ゐる(★倒した事を刷る★)"; eval "$out=\$dflt"; return 0 ;;
-    empty) say "★閾 ${name} が空文字 ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
-    blank) say "★閾 ${name} が空白のみ ―― 既定 ${dflt} へ倒す(fail-closed)★"; eval "$out=\$dflt"; return 0 ;;
+    # ★2026-09-18 裁 seq330497 ―― 既定へ倒すな。止めよ。★
+    #   由来(家老mac 第28弾 實測): 舊形は「既定 10485760 へ倒す(fail-closed)」と刷りながら ★rc=0 で通した★。
+    #   既定へ倒れるは ★緩い側★ へ倒れる事であり fail-closed に非ず ―― 名と実が食ひ違つて居た。
+    empty) say "★閾 ${name} が空文字 ―― 既定へ倒さず止める(rc=2・裁 seq330497)★"; return 1 ;;
+    blank) say "★閾 ${name} が空白のみ ―― 既定へ倒さず止める(rc=2・裁 seq330497)★"; return 1 ;;
   esac
   if num_same_op "$raw"; then eval "$out=\$raw"; return 0; fi
   # ★乙 行注入の封じ(裁 seq323980⑵ ―― 兄弟器 scripts/redundancy/shogun_report_watcher.sh L63-69 と同形)★
@@ -64,11 +73,11 @@ fix_threshold(){
   #   乙=可視印(␊␍␉)へ置換(UTF-8 正・fork 無し・bash 3.2 可)。甲(0xB6)は UTF-8 不正ゆゑ採らず。
   #   ★印の曖昧性★=値が元から印を含めば注入と區別できぬ ∴ 其の時は ★刷らずに★ 倒す(fail-closed)。
   case "$raw" in
-    *␊*|*␍*|*␉*) say "★閾 ${name} が可視印(␊␍␉)を既に含む ―― 値を刷らず既定 ${dflt} へ倒す(fail-closed・裁 seq323980⑵)★"; eval "$out=\$dflt"; return 0 ;;
+    *␊*|*␍*|*␉*) say "★閾 ${name} が可視印(␊␍␉)を既に含む ―― 値を刷らず止める(rc=2・裁 seq323980⑵ + 330497)★"; return 1 ;;
   esac
   vp="${raw//$'\n'/␊}"; vp="${vp//$'\r'/␍}"; vp="${vp//$'\t'/␉}"
-  say "★閾 ${name} を比較器が扱へぬ(「${vp}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
-  eval "$out=\$dflt"
+  say "★閾 ${name} を比較器が扱へぬ(「${vp}」) ―― 既定へ倒さず止める(rc=2・裁 seq330497)★"
+  return 1
 }
 
 # ★2026-09-16 裁 seq320321⑴(313209/314012) ―― 「止」を通さぬ(家老mac 自席の器・可逆・事後1便)★
@@ -85,11 +94,11 @@ fix_threshold(){
 TIMEOUT_BIN="$(command -v timeout 2>/dev/null || command -v gtimeout 2>/dev/null || true)"
 SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
 # ★閾そのものが數でなければ既定へ倒す(fail-closed) ―― 非數の閾は器を殺さず番人だけ黙らせる★
-fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO
+fix_threshold DASUMAE_READ_TIMEOUT 10 SAFE_SIZE_TMO || { say "★出す前 門 止まる ―― 閾が使へぬ。数を出さぬ。★"; exit 2; }
 # ★同じ病が同じ file の L20 に残つて居た ―― 閾 MAXB は素のままであつた(專任3 第40弾 実測・家老 021211 再測)★
 #   實測(直す前): DASUMAE_MAX_BYTES=abc → L190 の [ ] が rc=2 → if が偽 → ★「條⑤ 寸法 = byte和 6(閾 abc未満)」を刷り rc=0★。
 #   ★肝★ 既定へ倒すだけでは足りぬ。★倒した事を言へ。★ 黙つて倒すのは別の fail-open である(專任3 第40弾 の法)。
-fix_threshold DASUMAE_MAX_BYTES 10485760 MAXB
+fix_threshold DASUMAE_MAX_BYTES 10485760 MAXB || { say "★出す前 門 止まる ―― 閾が使へぬ。数を出さぬ。★"; exit 2; }
 
 safe_size(){
   local f="${1:-}" r
@@ -115,20 +124,32 @@ check_one_file(){
   local f="$1" fail=0
   [ -f "$f" ] || { say "★file が無い: ${f}★"; return 2; }
 
-  local ws_n ws_rc
-  # ★2026-09-12 止血(総監督裁 seq307918 ―― 條②の CRLF 隠れ)★
-  #   旧版の形は $'[ \t]+$' ―― 行末に \r が居ると ★空白は行末に無い★ 事に成り、
-  #   ∴ CRLF の紙では末尾空白が ★黙つて 0 行★ に成つた。實測(此の止血の前):
-  #     同じ中身で LF=條② 2 行 / ★CRLF=條② 0 行★(條③CR だけが鳴つた)。
-  #   本止血: 行末判定を ★\r?$★ にして、\r が在つても無くても行末と読む。
-  #   ★偽の青は作れぬ★ ―― 條②を隠す紙は必ず條③を鳴らす故、此の疵は「數を少なく言ふ」疵である。
-  #   可逆: 下行の $'[ \t]+\r?$' を $'[ \t]+$' へ戻せば旧挙動。
-  ws_n=$(grep -cE $'[ \t]+\r?$' "$f" 2>/dev/null); ws_rc=$?
-  if [ "$ws_rc" -ge 2 ] || ! is_num "$ws_n"; then
-    say "★條② 測れぬ(grep rc=${ws_rc}・出目「${ws_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
-    fail=1
-  elif [ "$ws_n" -gt 0 ]; then
-    say "★末尾空白 ―― ${f} に ${ws_n} 行★"
+  # ★2026-09-18 裁 seq330497 ―― 條②を ★codepoint の類★ で判ずる / 條④は末尾の全空白行を見る★
+  #   由来(家老mac 第28弾 實測 2026-09-18・22紙を一枚づつ通した):
+  #     舊 條② は `grep -cE $'[ \t]+\r?$'` 一行ゆゑ ★ASCII の空白と TAB しか当たらなんだ★ ――
+  #     十形を通して ★10形中8形が黙つた★(U+00A0 U+2003 U+2007 U+202F U+3000 U+007F U+200B U+FEFF)。
+  #     舊 條④ は末尾二字の `0a0a` 一致だけを見たゆゑ、`0d 0a`(CRLF 空行)と
+  #     ★不可視字一字だけの行★(例 `e3 80 80 0a`)に黙つた。
+  #   ★二つの穴が重なると紙全體が通る★ ―― 末尾に U+3000 一字の見えぬ空行を持つ紙が
+  #     rc=0「出してよい」であつた(★完全な偽の青★)。門の body を讀み條②③④が fail=1 の後も
+  #     continue する事を確かめた ∴ 黙りは早落ちに非ず ★真の盲★ であつた。
+  #   併せて測れた一事: shell の `grep` が ugrep の時、`\r?$` は「空の部分式」として
+  #     ★rc=2 で撥ねられ條②が丸ごと測れぬ★。∴ 條②を grep から外すは方言避けにも成る。
+  #   本形: 形を並べず ★Unicode の類 Zs/Zl/Zp/Cc/Cf★ で判ずる(★形で数へる目録は閉ぢぬ★故)。
+  #   可逆: 下の二塊を控(git show 2b652d9b:scripts/checks/karo_mac_dasumae_gate.sh)へ戻せば旧挙動。
+  local fks fks_rc fk2 fk4
+  fks=$(python3 -B "$(dirname "$0")/karo_mac_fukashiji.py" "$f" 2>&1); fks_rc=$?
+  if [ "$fks_rc" -ne 0 ]; then
+    say "★條②④ 測れぬ(不可視字の判じ手 rc=${fks_rc}・出目「${fks}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+    return 1
+  fi
+  fk2="${fks%% *}"; fk4="${fks##* }"
+  if ! is_num "$fk2" || ! is_num "$fk4"; then
+    say "★條②④ 測れぬ(判じ手の出目が數でない「${fks}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+    return 1
+  fi
+  if [ "$fk2" -gt 0 ]; then
+    say "★末尾不可視字 ―― ${f} に ${fk2} 行(codepoint の類 Zs/Zl/Zp/Cc/Cf・裁 seq330497)★"
     fail=1
   fi
 
@@ -142,34 +163,18 @@ check_one_file(){
     fail=1
   fi
 
-  local sz last1 last2
-  sz=$(safe_size "$f")
-  if ! is_num "$sz"; then
-    say "★條④ 測れぬ(寸法が取れぬ・出目「${sz}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
-    return 1
-  fi
-  if [ "$sz" -eq 0 ]; then
-    say "★EOF改行 ―― ${f} は空file(0byte)★"
-    fail=1
-  else
-    last1=$(tail -c1 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
-    if [ -z "$last1" ]; then
-      say "★條④ 測れぬ(末尾一字が取れぬ) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
-      fail=1
-    elif [ "$last1" != "0a" ]; then
+  # 條④ ―― 札 0=良 / 1=EOF改行無 / 2=末尾行が不可視のみ(空行を含む) / 3=0byte
+  case "$fk4" in
+    3)
+      say "★EOF改行 ―― ${f} は空file(0byte)★"
+      fail=1 ;;
+    1)
       say "★EOF改行が無い(0) ―― ${f}★"
-      fail=1
-    elif [ "$sz" -ge 2 ]; then
-      last2=$(tail -c2 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
-      if [ -z "$last2" ]; then
-        say "★條④ 測れぬ(末尾二字が取れぬ) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
-        fail=1
-      elif [ "$last2" = "0a0a" ]; then
-        say "★EOF改行が複数(末尾に空行) ―― ${f}★"
-        fail=1
-      fi
-    fi
-  fi
+      fail=1 ;;
+    2)
+      say "★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― ${f}(裁 seq330497)★"
+      fail=1 ;;
+  esac
 
   return $fail
 }
@@ -237,7 +242,7 @@ run_gate(){
     fi
   done
   if [ $fail -eq 0 ]; then
-    say "條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(${#files[@]}本)通"
+    say "條②末尾不可視字(類 Zs/Zl/Zp/Cc/Cf) / 條③CR混入 / 條④EOF改行丁度1かつ末尾行に可視 = 全file(${#files[@]}本)通"
   fi
 
   local total=0
@@ -252,7 +257,7 @@ run_gate(){
     total=$((total + sz))
   done
   if [ "$total" -ge "$MAXB" ]; then
-    say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)超★"
+    say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)★以上★(比べは -ge ゆゑ「超」に非ず・裁 seq330497)"
     fail=1
   else
     say "條⑤ 寸法 = byte和 ${total}(閾 ${MAXB}未満)"
