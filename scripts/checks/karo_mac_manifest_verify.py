@@ -113,14 +113,7 @@ def paths_of(line: str):
             _t = _dequote(m.group(1))
             if _t and _t not in out:
                 out.append(_t)
-    # '=' の右・sha256 でない・'/' を含む語
-    for tok in line.split():
-        if tok.startswith("sha256=") or tok.startswith("bytes=") or tok.startswith("lines="):
-            continue
-        t = tok.split("=", 1)[-1] if tok.startswith("path=") else tok
-        t = _dequote(t)
-        if "/" in t and t not in out:
-            out.append(t)
+    # ★第二の for(tok.split の '/' 語)は★除いた★(km-117 ㋒ の為の版)
     return out
 
 
