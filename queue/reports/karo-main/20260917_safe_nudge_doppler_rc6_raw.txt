@@ -1,0 +1,89 @@
+# 20260917 safe_nudge doppler — 裁 seq326912 (PR#21 残1点 T-SND-007) raw
+# 発: karo-main  親: 420afdcc46d3db532ca49ffb20f229d6fe135e68  枝: karo-main/safe-nudge-doppler-20260917
+# 五分法: ①測り=本紙の raw 全部 / ③未測=bats 其の物と CI (PR#21 checks で読む)
+#
+# ■一 裁 (seq326912 逐語要旨): safe_nudge.sh を最小変更し、送達済+cooldown 失敗は 別 rc + stderr 註
+#   (rc0 で黙らせない=no-silent-failure)、升007 の期待値を更新。
+#   採つた rc = 6 (0-5,99 は既に使用。裁の「例 4」は book_mode_fallback で既に埋まる ∴ 次の空き番)。
+#   本 repo の 420afdcc に scripts/safe_nudge.sh は無し (git cat-file -e → 不在) ∴ 6 は本樹で未使用。
+#
+# ■二 当て (2 file)
+#   scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh  blob ab97986b6aee2f2ab81d55abd943fd58d413779c → 49fe14faca7db775c412673992e0f8d2140bf9be  (numstat +8/-2: 凡例 1 行 + 第7節 7 行 ← 旧 2 行)
+#     - 書込失敗時: log result=delivered_cooldown_write_failed / stdout "delivered: …" 据置 / stderr 註 / exit 6
+#     - 書込成功時: 従前不変 (rc=0, stderr 0 byte)
+#   tests/unit/test_safe_nudge_doppler.bats  blob dc5871a1822b74688ebc68188d3d23ffe1cdbb1a → c25b10cdbfeb6ee28392d1265e7050dff57e58be  (numstat +10/-7: 007 の期待値 rc=1→rc=6+stderr+log)
+#
+# ■三 呼び手への影響 (①測り: archive watcher.sh :197-233)
+#   旧 rc=1 → watcher は「既読化せず次回 retry」= ★送達済の便を再送★ (二重 nudge の根)。
+#   新 rc=6 → case の *) へ落ち log safe_nudge_unknown_rc rc=6 + increment_retry。再送は止まらぬが
+#   log で区別可。watcher.sh 側の 6) 追加は本 PR 範囲外 (別弾・owner=karo-main・裁を仰ぐ)。
+#
+# ■四 shim 走行 raw (bats 無き機 ∴ 同梱 shim。★bats ではない★)
+## shim runs 2026-09-17T17:11:16+09:00  shim_sha256=bab39d9e2178a7ee
+=== old:旧script+旧bats(420afdcc の儘) ===
+ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered
+ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies)
+ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected)
+ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged)
+ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged)
+ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys
+ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=1 (documents the rc=1 ambiguity)
+1..7  pass=7 fail=0  runner=SHIM(not bats) bash=5.2.21(1)-release
+shim_rc=0
+=== x1:旧script+新bats(★判別升★) ===
+ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered
+ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies)
+ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected)
+ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged)
+ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged)
+ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys
+not ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=6 + stderr note (no silent failure, no rc=1 ambiguity)  (rc=1)
+1..7  pass=6 fail=1  runner=SHIM(not bats) bash=5.2.21(1)-release
+shim_rc=1
+=== x2:新script+旧bats(旧升は挙動変化を捉へるか) ===
+ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered
+ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies)
+ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected)
+ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged)
+ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged)
+ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys
+not ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=1 (documents the rc=1 ambiguity)  (rc=1)
+1..7  pass=6 fail=1  runner=SHIM(not bats) bash=5.2.21(1)-release
+shim_rc=1
+=== new:新script+新bats(当て後) ===
+ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered
+ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies)
+ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected)
+ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged)
+ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged)
+ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys
+ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=6 + stderr note (no silent failure, no rc=1 ambiguity)
+1..7  pass=7 fail=0  runner=SHIM(not bats) bash=5.2.21(1)-release
+shim_rc=0
+=== direct run: new script, watchers dir absent ===
+direct_rc=6
+--stdout--
+delivered: test_agent at test:0.0
+--stderr--
+root/scripts/message_delivery_v2/safe_nudge.sh: line 133: /tmp/snd_direct.ySsp/root/queue/watchers/test_agent.last_nudge: No such file or directory
+WARN safe_nudge: send-keys done but cooldown write failed (/tmp/snd_direct.ySsp/root/queue/watchers/test_agent.last_nudge); do NOT resend
+--mock send-keys count--
+1
+--log--
+{"ts":"…","level":"ERROR","component":"safe_nudge","agent":"test_agent","pane":"test:0.0","cli":"doppler","result":"delivered_cooldown_write_failed","corr_id":"corr-rc6","extra":"nudge_len=6 cooldown_file=/tmp/snd_direct.ySsp/root/queue/watchers/test_agent.last_nudge"}
+=== direct run: new script, watchers dir PRESENT (rc=0 unchanged) ===
+direct_rc=0
+delivered: test_agent at test:0.0
+stderr_bytes=0
+test_agent.last_nudge
+#
+# ■五 読み解き
+#   old(旧script+旧bats)=7/7  x1(旧script+新bats)=6/7 (007落: rc=1≠6)  x2(新script+旧bats)=6/7 (007落: rc=6≠1)
+#   new(新script+新bats)=7/7。∴ 新升は旧 script を落とし、旧升は新 script を落とす = 両向きの判別升。
+#   001-006 は四組合せ悉く ok = 当ては 007 の経路以外に触れず。
+#   直走: watchers 不在 → rc=6・send-keys 1・stdout "delivered:" 据置・stderr に bash の redirect error + 註・
+#         log result=delivered_cooldown_write_failed。watchers 在 → rc=0・stderr 0 byte・last_nudge 生成 (従前不変)。
+#
+# ■六 未測 (③)
+#   bats 其の物での走行 / CI (.github/workflows/test.yml: bats tests/unit/ --timing) = PR#21 checks で読む。
+#   判定紙 reports/audit_326871_pr21_safe_nudge_rerun_20260917.md (sha 5b96a825…) = 当機の艦隊 repo に無く未読。

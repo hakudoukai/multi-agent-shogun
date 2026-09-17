@@ -17,7 +17,7 @@
 #   T-SND-004: cli=claude  / 名一致  / pane=claude  → 0 delivered (従前不変)
 #   T-SND-005: cli=claude  / 名違ひ  / pane=claude  → 3 pane_drift (従前不変)
 #   T-SND-006: cli=doppler / 名一致  / pane=bash    → 3 pane_drift(expected_cmd=), send-keys 0
-#   T-SND-007: queue/watchers 不在 → send-keys 1 の ★後★ に rc=1 (特性の記録 = 欠陥の写し・受入ではない)
+#   T-SND-007: queue/watchers 不在 → send-keys 1 の ★後★ に rc=6 + stderr 註 (裁 seq326912: rc=1 の二義を除く)
 #
 # tmux は mock (tests/test_helper/mock_tmux_pane.bash の setup_tmux_mock) 経由。
 # sandbox は script を <root>/scripts/message_delivery_v2/ へ置く (= ${_NUDGE_DIR}/../.. が根へ解ける深さ)。
@@ -109,16 +109,19 @@ snd_log_count() {
     grep -q 'expected_cmd=claude actual_cmd=bash' "$SND_LOG"
 }
 
-# 特性の記録 (characterization): cooldown 書込 (:132) は send-keys (:122) の後に在り、
-# 置き場が無いと set -e で落ちて rc=1 に成る。∴ rc=1 は「未着弾(cooldown)」と「着弾済(書込失敗)」の二義。
-# 之は欠陥の写しであつて受入条件ではない。直しは別弾 (log の欄で分けよ)。
-@test "T-SND-007: watchers dir absent -> send-keys happens, THEN rc=1 (documents the rc=1 ambiguity)" {
+# 裁 seq326912: cooldown 書込 (:132→:138) は send-keys (:122) の後に在る。旧は set -e で落ちて rc=1 と成り
+# 「未着弾(cooldown)」と「着弾済(書込失敗)」が同じ数で読めた。当て後は rc=6 + stderr 註 + log result=
+# delivered_cooldown_write_failed (rc=0 で黙らせない = no-silent-failure)。呼び手は rc=6 で再送するな。
+@test "T-SND-007: watchers dir absent -> send-keys happens, THEN rc=6 + stderr note (no silent failure, no rc=1 ambiguity)" {
     mock_pane_set "test:0.0" "test_agent" "doppler"
     rmdir "$SND_SANDBOX/queue/watchers"
     HOME="$FAKE_HOME" run bash "$SND_SAFE_NUDGE" test_agent test:0.0 doppler "inbox3"
-    [ "$status" -eq 1 ]
+    [ "$status" -eq 6 ]
     [ "$(snd_sendkeys_count)" -eq 1 ]
-    # 'queued' も 'delivered' も記録されぬ (log_event に届く前に落ちる)
+    [[ "$output" == *"cooldown write failed"* ]]
+    [[ "$output" == *"do NOT resend"* ]]
+    # log は専用の result で記す: queued でも (素の) delivered でもない
+    [ "$(snd_log_count '"result":"delivered_cooldown_write_failed"')" -eq 1 ]
     [ "$(snd_log_count '"result":"queued"')" -eq 0 ]
     [ "$(snd_log_count '"result":"delivered"')" -eq 0 ]
 }
