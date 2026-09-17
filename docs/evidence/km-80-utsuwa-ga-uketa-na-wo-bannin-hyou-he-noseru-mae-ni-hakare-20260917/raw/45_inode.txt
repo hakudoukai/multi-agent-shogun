@@ -1,0 +1,15 @@
+# 45 ㋔ / 刻 2026-09-17T09:59:11+0900 / ps rc 0 / 語 inbox_watcher.sh を含む行 4 = 條(bash scripts/inbox_watcher.sh 起し) 3 + 残り 1(己の系譜等・逐語下記)
+  残り: 4358 22905 Thu Sep 17 09:59:11 2026     /bin/zsh -c source /Users/momizimac/.claude/shell-snapshots/snapshot-zsh-1789602971859-7lit67.sh 2>/dev/null || true &&
+disk: inode 22062559 / bytes 80724 / mtime 2026-09-17T08:25:48 / sha16 15ac9f97f473245d
+HEAD 系譜(git log -- 的)の blob 寸法(git cat-file -s <h>:<path>・python 経由= zsh の :s 修飾を踏まぬ):
+  ab2a1f1 2026-09-17 05:57:09 +0900 bytes 77285 rc 0
+  25e6ec9 2026-08-03 20:25:18 +0900 bytes 73304 rc 0
+  9a3ca57 2026-08-03 18:17:53 +0900 bytes 70709 rc 0
+  9b35ce3 2026-06-07 21:47:46 +0900 bytes 68336 rc 0
+  4f1f82b 2026-06-07 21:21:01 +0900 bytes 73933 rc 0
+  e0e98b7 2026-06-07 19:10:00 +0900 bytes 66231 rc 0
+  57a55f8 2026-06-02 18:46:50 +0900 bytes 63515 rc 0
+  a86cf13 2026-06-02 18:46:50 +0900 bytes 62231 rc 0
+稼働 inode ['20564860'] / 稼働 bytes ['74274'] ⇔ disk inode 22062559 bytes 80724 → ★別 inode(稼働は置換前の版・repo 版は次 respawn まで効かぬ)★
+稼働 bytes と一致する HEAD 系譜 blob= 0 本 [](寸法一致は版の同定の必要條件であつて十分條件ではない ―― 稼働 inode の中身は他 process の fd ゆゑ讀めず sha は取れぬ)
+此の器が意味せぬ事: 稼働 process の版の逐語は取れぬ(寸法と起動刻のみ)。process へは信号 0・kill 0 も打たぬ。

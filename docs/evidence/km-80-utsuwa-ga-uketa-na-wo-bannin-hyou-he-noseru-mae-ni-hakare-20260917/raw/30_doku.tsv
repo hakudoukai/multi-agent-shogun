@@ -1,0 +1,37 @@
+H	形	値(写し)	rc	stdout(BRANCH/TEST_RC/FT_RC/VALUE)	stderr 行数	stderr 逐語(頭 110 字・改行は␊)	倒れ先
+H1	未設定	<unset>	0	BRANCH=timeout_process TEST_RC=0 VALUE=[1]	0		宣どおり(timeout 掃き有・既定)・刷り無し
+H1	空文字	<empty>	0	BRANCH=timeout_process TEST_RC=0 VALUE=[1]	0		宣どおり(timeout 掃き有・既定)・刷り無し
+H1	空白(半角)	<SP>	0	BRANCH=event_only TEST_RC=1 VALUE=[ ]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H1	空白(全角 U+3000)	<U+3000>	0	BRANCH=event_only TEST_RC=1 VALUE=[　]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H1	非数	abc	0	BRANCH=event_only TEST_RC=1 VALUE=[abc]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H1	2^63超の十進	99999999999999999999	0	BRANCH=event_only TEST_RC=1 VALUE=[99999999999999999999]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H1	先頭に改行	␊1	0	BRANCH=event_only TEST_RC=1 VALUE=[ 1]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H1	陰性対照 正しい十進 1(既定)	1	0	BRANCH=timeout_process TEST_RC=0 VALUE=[1]	0		宣どおり(timeout 掃き有・既定)・刷り無し
+H1	陰性対照 正しい十進 0(註の off)	0	0	BRANCH=event_only TEST_RC=1 VALUE=[0]	0		宣どおり(註の off= event-only・値 0 は正)・刷り無し
+H1	域外の十進 2	2	0	BRANCH=event_only TEST_RC=1 VALUE=[2]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H1	域外の十進 01	01	0	BRANCH=event_only TEST_RC=1 VALUE=[01]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H1	域外 +1	+1	0	BRANCH=event_only TEST_RC=1 VALUE=[+1]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H2	未設定	<unset>	0	FT_RC=0 VALUE=[120]	1	[watcher] ★閾 未設定 ―― 既定へ倒す(ESCALATE_PHASE1=120) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★	★刷つて倒す(fail-closed・既定 120)★
+H2	空文字	<empty>	0	FT_RC=0 VALUE=[120]	1	[watcher] ★閾 ESCALATE_PHASE1 が空文字 ―― 既定 120 へ倒す(fail-closed)★	★刷つて倒す(fail-closed・既定 120)★
+H2	空白(半角)	<SP>	0	FT_RC=0 VALUE=[120]	1	[watcher] ★閾 ESCALATE_PHASE1 が空白のみ ―― 既定 120 へ倒す(fail-closed)★	★刷つて倒す(fail-closed・既定 120)★
+H2	空白(全角 U+3000)	<U+3000>	0	FT_RC=0 VALUE=[120]	1	[watcher] ★閾 ESCALATE_PHASE1 が空白のみ ―― 既定 120 へ倒す(fail-closed)★	★刷つて倒す(fail-closed・既定 120)★
+H2	非数	abc	0	FT_RC=0 VALUE=[120]	1	[watcher] ★閾 ESCALATE_PHASE1 を比較器が扱へぬ(「abc」) ―― 既定 120 へ倒す(fail-closed)★	★刷つて倒す(fail-closed・既定 120)★
+H2	2^63超の十進	99999999999999999999	0	FT_RC=0 VALUE=[120]	1	[watcher] ★閾 ESCALATE_PHASE1 を比較器が扱へぬ(「99999999999999999999」) ―― 既定 120 へ倒す(fail-closed)★	★刷つて倒す(fail-closed・既定 120)★
+H2	先頭に改行	␊1	0	FT_RC=0 VALUE=[ 1]	0		黙つて通る(値を採る) ★穴: 先頭改行付きを數と見て通す(test が先頭空白を読み飛ばす)★
+H2	陰性対照 正しい十進 1(既定)	1	0	FT_RC=0 VALUE=[1]	0		黙つて通る(値を採る)
+H2	陰性対照 正しい十進 0(註の off)	0	0	FT_RC=0 VALUE=[0]	0		黙つて通る(値を採る)
+H2	域外の十進 2	2	0	FT_RC=0 VALUE=[2]	0		黙つて通る(値を採る)
+H2	域外の十進 01	01	0	FT_RC=0 VALUE=[01]	0		黙つて通る(値を採る)
+H2	域外 +1	+1	0	FT_RC=0 VALUE=[+1]	0		黙つて通る(値を採る)
+H3	未設定	<unset>	0	FT_RC=0 BRANCH=timeout_process TEST_RC=0 VALUE=[1]	1	[watcher] ★閾 未設定 ―― 既定へ倒す(ASW_PROCESS_TIMEOUT=1) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★	宣どおり(timeout 掃き有・既定)・刷り 1 行
+H3	空文字	<empty>	0	FT_RC=0 BRANCH=timeout_process TEST_RC=0 VALUE=[1]	1	[watcher] ★閾 ASW_PROCESS_TIMEOUT が空文字 ―― 既定 1 へ倒す(fail-closed)★	宣どおり(timeout 掃き有・既定)・刷り 1 行
+H3	空白(半角)	<SP>	0	FT_RC=0 BRANCH=timeout_process TEST_RC=0 VALUE=[1]	1	[watcher] ★閾 ASW_PROCESS_TIMEOUT が空白のみ ―― 既定 1 へ倒す(fail-closed)★	宣どおり(timeout 掃き有・既定)・刷り 1 行
+H3	空白(全角 U+3000)	<U+3000>	0	FT_RC=0 BRANCH=timeout_process TEST_RC=0 VALUE=[1]	1	[watcher] ★閾 ASW_PROCESS_TIMEOUT が空白のみ ―― 既定 1 へ倒す(fail-closed)★	宣どおり(timeout 掃き有・既定)・刷り 1 行
+H3	非数	abc	0	FT_RC=0 BRANCH=timeout_process TEST_RC=0 VALUE=[1]	1	[watcher] ★閾 ASW_PROCESS_TIMEOUT を比較器が扱へぬ(「abc」) ―― 既定 1 へ倒す(fail-closed)★	宣どおり(timeout 掃き有・既定)・刷り 1 行
+H3	2^63超の十進	99999999999999999999	0	FT_RC=0 BRANCH=timeout_process TEST_RC=0 VALUE=[1]	1	[watcher] ★閾 ASW_PROCESS_TIMEOUT を比較器が扱へぬ(「99999999999999999999」) ―― 既定 1 へ倒す(fail-closed)★	宣どおり(timeout 掃き有・既定)・刷り 1 行
+H3	先頭に改行	␊1	0	FT_RC=0 BRANCH=event_only TEST_RC=1 VALUE=[ 1]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H3	陰性対照 正しい十進 1(既定)	1	0	FT_RC=0 BRANCH=timeout_process TEST_RC=0 VALUE=[1]	0		宣どおり(timeout 掃き有・既定)・刷り無し
+H3	陰性対照 正しい十進 0(註の off)	0	0	FT_RC=0 BRANCH=event_only TEST_RC=1 VALUE=[0]	0		宣どおり(註の off= event-only・値 0 は正)・刷り無し
+H3	域外の十進 2	2	0	FT_RC=0 BRANCH=event_only TEST_RC=1 VALUE=[2]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H3	域外の十進 01	01	0	FT_RC=0 BRANCH=event_only TEST_RC=1 VALUE=[01]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し
+H3	域外 +1	+1	0	FT_RC=0 BRANCH=event_only TEST_RC=1 VALUE=[+1]	0		★黙つて縮退(timeout 掃き無= event-only へ落ちる)★・刷り無し

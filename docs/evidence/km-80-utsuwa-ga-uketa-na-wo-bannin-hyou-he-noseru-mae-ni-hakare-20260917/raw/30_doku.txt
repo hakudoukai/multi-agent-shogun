@@ -1,0 +1,5 @@
+# 30 ㋒㋓ / 刻 2026-09-17T10:01:54+0900 / 的 scripts/inbox_watcher.sh(disk)/ 受ける行 L224 / 比較器 L1599 / 番人 _th_say L125-125 num_same_op L130-130 env_state L133-139 fix_threshold L144-166 / 的の set 行 [(28, '    set -euo pipefail'), (1582, '    set -e')] / 写し器= /bin/bash 3.2.57(1)-release
+倒れ先の語: 「縮退」= 比較器が偽 → process_unread "timeout" を呼ばぬ= 未讀が次 event まで滞る(暴発でも氾濫でもない・黙る)。「宣どおり」= 註 L222 の既定 1 の枝。
+H1 の要: 空文字は ${X:-1} が既定 1 に置換へるゆゑ「通る」が、空白/非数/巨大/先頭改行/域外(2・01・+1)は ★悉く rc0・刷り 0 行で event-only へ落ちる★ ―― 字面比較ゆゑ rc2 は出ぬ(数比較器なら rc2 で if 偽=同じ枝・差は stderr の bash 警告の有無)。
+H2 の要(陽性対照の新しい穴): 先頭改行付き十進「␊1」を fix_threshold が ★黙つて通す★(FT_RC 0・stderr 0 行・VALUE=[␊1])―― [ "$v" -ge 0 ] は先頭の空白類を読み飛ばすゆゑ num_same_op が「數」と呼ぶ。數比較の道では正しく 1 として働くが、値を log 行へ挟む器へは改行が其の儘渡る(裁 seq323980⑵ の行注入の封じは「扱へぬ値」の枝にしか無い)。1弾=1file ゆゑ本弾は測るのみ・別口として立てる。
+H3 の要: fix_threshold は「-ge 0 で扱へる整数」を通す ∴ 2・01・+1 は fix_threshold を ★黙つて通り★、比較器 = "1" で ★黙つて event-only★ に落ちる。∴ ㋓ fix_threshold 一行では足らぬ(此の名は閾でなく 0/1 の旗)。

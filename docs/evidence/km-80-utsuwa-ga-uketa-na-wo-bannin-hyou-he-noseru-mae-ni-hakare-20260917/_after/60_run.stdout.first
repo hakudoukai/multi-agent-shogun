@@ -1,0 +1,25 @@
+# 第76弾 門控(員外・名= mon_km80_20260917T100553) / 刻 2026-09-17T10:05:53+0900 / 門 sha16 2b8449bccd608a1a / 照合器 sha16 a507c998c7bd6485 / 臺帳 sha16 7b66391fcfa5f953 / 紙 sha16 72db8538ea903732 / 臺帳の項 25 / 基点 /Users/momizimac/multi-agent-shogun/docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917(束内相対・KM_GATE_MANIFEST_BASE=.)
+① 錠 10:05:53 / raw/ 通常 file 28 → 0444 / dir 1 → 0555
+② 歩哨 _after/00_hosho.txt
+③ selftest | 渡した 0 | rc 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+④ main | 渡した 25 | rc 1 | 結語 ['★出す前 門が落ちた。出すな。★']
+④′ nobase(基点無し・落ちて正) | 渡した 25 | rc 1 | 結語 ['★出す前 門が落ちた。出すな。★']
+## 走り main(stderr 逐語)
+  閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+  ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+  ★EOF改行 ―― /Users/momizimac/multi-agent-shogun/docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/50_run.err は空file(0byte)★
+  ★EOF改行が複数(末尾に空行) ―― /Users/momizimac/multi-agent-shogun/docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/50_run.stdout★
+  條⑤ 寸法 = byte和 69296(閾 10485760未満)
+  ★出す前 門が落ちた。出すな。★
+## 走り nobase(stderr 逐語・基点無し)
+  閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+  ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+  ★EOF改行 ―― /Users/momizimac/multi-agent-shogun/docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/50_run.err は空file(0byte)★
+  ★EOF改行が複数(末尾に空行) ―― /Users/momizimac/multi-agent-shogun/docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/raw/50_run.stdout★
+  條⑤ 寸法 = byte和 69296(閾 10485760未満)
+  ★出す前 門が落ちた。出すな。★
+## 此の門が意味せぬ事: rc0 は形(空白/CR/EOF/寸法/臺帳との一致)のみ。門は箱・logs・scripts の中身を讀まぬ。門控と _after は員外(臺帳の後)。

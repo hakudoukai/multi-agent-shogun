@@ -1,0 +1,7 @@
+版	行	分類	逐語
+disk	222	註	# - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)
+disk	224	受(NAME=${NAME:-既定})	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+disk	1599	比較器([ ] の中)	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+HEAD	210	註	# - ASW_PROCESS_TIMEOUT=0: do not process unread on timeout ticks (event-only)
+HEAD	212	受(NAME=${NAME:-既定})	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+HEAD	1540	比較器([ ] の中)	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then

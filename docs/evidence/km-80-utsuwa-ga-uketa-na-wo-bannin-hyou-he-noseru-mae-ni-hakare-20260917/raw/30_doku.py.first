@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+"""30 ㋒㋓ 毒を實際に当てる(第76弾 km-80)―― 的 file から ★逐語で★ 受ける行・比較器の行・番人四函数(_th_say/num_same_op/env_state/fix_threshold)を錨で切り出し、束内の写し器(bash 3.2 /bin/bash)へ毒を当てる。repo へ 0 字・稼働 process 不觸。
+H1 現形(受→比較器)/ H2 陽性対照(守られて居る名 ESCALATE_PHASE1 へ fix_threshold)/ H3 直し形の演示(fix_threshold ASW_PROCESS_TIMEOUT 1 → 比較器)。毒= 未設定/空文字/空白(半角・全角)/非数/2^63超/先頭改行 + 陰性対照(正しい十進 1・0)+ 域外の十進(2・01・+1)。"""
+import os, sys, re, time, subprocess
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; M = '/Users/momizimac/multi-agent-shogun'; T = 'scripts/inbox_watcher.sh'
+L = open(M + '/' + T, encoding='utf-8').read().split('\n')
+def one(pred, what):
+    h = [i for i, l in enumerate(L) if pred(l)]; assert len(h) == 1, f'{what}: {len(h)} 本'; return h[0]
+def block(start_pred, what):
+    i = one(start_pred, what); j = i
+    while L[j] != '}': j += 1
+    return i, j, L[i:j + 1]
+ri = one(lambda l: l == 'ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}', '受ける行')
+ci = one(lambda l: l.strip() == 'if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then', '比較器の行')
+fn = {}
+for nm in ('_th_say', 'num_same_op', 'env_state', 'fix_threshold'):
+    if nm in ('_th_say', 'num_same_op'):
+        i = one(lambda l, nm=nm: l.startswith(nm + '(){'), nm); fn[nm] = (i, i, [L[i]])
+    else: fn[nm] = block(lambda l, nm=nm: l.startswith(nm + '(){'), nm)
+setu = [(i + 1, l) for i, l in enumerate(L) if re.match(r'^\s*set -', l)]
+FUNCS = '\n'.join('\n'.join(v[2]) for v in fn.values())
+TAIL = '\n'.join(['  printf "BRANCH=timeout_process\\n"', 'else', '  printf "BRANCH=event_only\\n"', 'fi', '[ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; printf "TEST_RC=%s\\n" "$?"', 'printf "VALUE=[%s]\\n" "${ASW_PROCESS_TIMEOUT-<unset>}"'])
+H = {
+ 'H1 現形': '\n'.join([L[ri], L[ci].strip(), TAIL]),
+ 'H2 陽性対照(ESCALATE_PHASE1・守る表に在る名)': FUNCS + '\nfix_threshold ESCALATE_PHASE1 120 ESCALATE_PHASE1; printf "FT_RC=%s\\n" "$?"; printf "VALUE=[%s]\\n" "$ESCALATE_PHASE1"',
+ 'H3 直し形の演示(fix_threshold ASW_PROCESS_TIMEOUT 1 → 比較器)': FUNCS + '\nfix_threshold ASW_PROCESS_TIMEOUT 1 ASW_PROCESS_TIMEOUT; printf "FT_RC=%s\\n" "$?"\n' + L[ci].strip() + '\n' + TAIL,
+}
+POIS = [('未設定', None), ('空文字', ''), ('空白(半角)', ' '), ('空白(全角 U+3000)', '　'), ('非数', 'abc'), ('2^63超の十進', '99999999999999999999'), ('先頭に改行', '\n1'),
+        ('陰性対照 正しい十進 1(既定)', '1'), ('陰性対照 正しい十進 0(註の off)', '0'), ('域外の十進 2', '2'), ('域外の十進 01', '01'), ('域外 +1', '+1')]
+vis = lambda s: '<unset>' if s is None else s.replace('\n', '␊').replace('　', '<U+3000>').replace(' ', '<SP>') or '<empty>'
+out = [f'# 30 ㋒㋓ / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / 的 {T}(disk)/ 受ける行 L{ri+1} / 比較器 L{ci+1} / 番人 ' + ' '.join(f'{k} L{v[0]+1}-{v[1]+1}' for k, v in fn.items()) + f' / 的の set 行 {setu} / 写し器= /bin/bash {subprocess.run(["/bin/bash", "-c", "echo $BASH_VERSION"], capture_output=True, text=True).stdout.strip()}']
+tbl = ['H\t形\t値(写し)\trc\tstdout(BRANCH/TEST_RC/FT_RC/VALUE)\tstderr 行数\tstderr 逐語(頭 110 字・改行は␊)\t倒れ先']
+for hn, script in H.items():
+    K.kaku(D + f'/raw/30_{hn[:2]}.sh', script)
+    for nm, val in POIS:
+        env = {k: v for k, v in os.environ.items() if k not in ('ASW_PROCESS_TIMEOUT', 'ESCALATE_PHASE1', '_th_unset_told')}
+        if val is not None: env['ASW_PROCESS_TIMEOUT' if 'H2' not in hn else 'ESCALATE_PHASE1'] = val
+        p = subprocess.run(['/bin/bash', D + f'/raw/30_{hn[:2]}.sh'], capture_output=True, env=env)
+        so = p.stdout.decode('utf-8', 'replace').strip().replace('\n', ' '); se = p.stderr.decode('utf-8', 'replace').rstrip('\n'); sel = se.count('\n') + 1 if se else 0
+        if 'H2' in hn: fell = '★刷つて倒す(fail-closed・既定 120)★' if sel and 'VALUE=[120]' in so else ('黙つて通る(値を採る)' if sel == 0 and 'VALUE=[120]' not in so and 'VALUE=[<unset>]' not in so else '★要目視★')
+        else:
+            br = re.search(r'BRANCH=(\S+)', so); br = br.group(1) if br else '?'
+            fell = ('宣どおり(timeout 掃き有・既定)' if br == 'timeout_process' else '★黙つて縮退(timeout 掃き無= event-only へ落ちる)★') + ('・刷り無し' if sel == 0 else f'・刷り {sel} 行')
+        tbl.append(f'{hn[:2]}\t{nm}\t{vis(val)}\t{p.returncode}\t{so}\t{sel}\t{se.replace(chr(10), "␊")[:110]}\t{fell}')
+out.append('倒れ先の語: 「縮退」= 比較器が偽 → process_unread "timeout" を呼ばぬ= 未讀が次 event まで滞る(暴発でも氾濫でもない・黙る)。「宣どおり」= 註 L' + str(ri - 1) + ' の既定 1 の枝。')
+out.append('H1 の要: 空文字は ${X:-1} が既定 1 に置換へるゆゑ「通る」が、空白/非数/巨大/先頭改行/域外(2・01・+1)は ★悉く rc0・刷り 0 行で event-only へ落ちる★ ―― 字面比較ゆゑ rc2 は出ぬ(数比較器なら rc2 で if 偽=同じ枝・差は stderr の bash 警告の有無)。')
+out.append('H3 の要: fix_threshold は「-ge 0 で扱へる整数」を通す ∴ 2・01・+1 は fix_threshold を ★黙つて通り★、比較器 = "1" で ★黙つて event-only★ に落ちる。∴ ㋓ fix_threshold 一行では足らぬ(此の名は閾でなく 0/1 の旗)。')
+K.kaku(D + '/raw/30_doku.txt', '\n'.join(out)); K.kaku(D + '/raw/30_doku.tsv', '\n'.join(tbl)); print('\n'.join(out)); print('\n'.join(tbl))
