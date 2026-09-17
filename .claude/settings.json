@@ -57,8 +57,11 @@
     ]
   },
   "permissions": {
+    "defaultMode": "bypassPermissions",
     "allow": [
-      "Bash(kill -TERM:*)"
+      "Bash(kill -TERM:*)",
+    "Bash(tmux capture-pane:*)",
+    "Bash(tmux list-panes:*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
