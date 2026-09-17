@@ -1,0 +1,27 @@
+══ 實器 通し(直し形) ―― 閾を素で走らせ、閾に注入を打つても壊れぬ事を見る ══
+--- 甲 dasumae --selftest
+rc=0
+--- 甲 dasumae 素(2紙)
+rc=0
+--- 甲 dasumae 閾へ改行注入(DASUMAE_MAX_BYTES)
+    | 閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+    | ★閾 DASUMAE_MAX_BYTES を比較器が扱へぬ(「10485760␊★閾 KM79_INJECTED 偽の行★」) ―― 既定 10485760 へ倒す(fail-closed)★
+    | 條① 台帳とdiskの差 = スキップ(台帳未指定)
+    | 條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(1本)通
+    | 條⑤ 寸法 = byte和 197(閾 10485760未満)
+    | ★出す前 門 通。出してよい。★
+--- 甲 dasumae 閾へ注入 rc
+rc=0
+--- 乙 gate4 素(2紙)
+rc=1
+--- 乙 gate4 閾へ改行注入(GATE4_MAX_FILE_MB)
+    | 條④ diff --check = 0
+    | ★staged が 0 file ―― 押す物 が無い(之 を『通』と読むな)★
+    | ★條① 遠 に枝 origin/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 が無い ―― 押し先 を確かめよ★
+    | ★閾 GATE4_MAX_FILE_MB を比較器が扱へぬ(「50␊★閾 KM79_INJECTED 偽の行★」) ―― 既定 50 へ倒す(fail-closed)★
+    | 閾 GATE4_MAX_TOTAL_MB = 未設定 ―― 既定 100 を用ゐる(★倒した事を刷る★)
+    | 條⑤ 寸法 = 単 file 上限 50 MB 以下 / 総和 0 MB(上限 100)
+    |
+    | ★門 が落ちた。押すな。★
+--- 乙 gate4 閾へ注入 rc
+rc=1
