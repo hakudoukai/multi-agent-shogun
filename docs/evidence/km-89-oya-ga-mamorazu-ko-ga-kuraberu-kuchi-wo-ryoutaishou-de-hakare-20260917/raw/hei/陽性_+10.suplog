@@ -1,0 +1,7 @@
+[] === supervisor start (LIVE=0) ===
+[] starting watcher (LIVE=0 STALE_SEC=+10 POLL_SEC=1)
+2026-09-17 12:32:57,381 [INFO] === pane_enter_watcher start ===
+2026-09-17 12:32:57,381 [INFO]   target=commander-third:0.0 stale_sec=10 poll_sec=1 LIVE=False
+2026-09-17 12:33:07,769 [INFO] STALE detected (elapsed=10s, text='km-89 未送信テキスト(贋)'), sending Enter
+2026-09-17 12:33:07,769 [INFO] [DRY-RUN] Enter would be sent to commander-third:0.0
+2026-09-17 12:50:12,121 [INFO] target pane commander-third:0.0 vanished, exit

@@ -1,0 +1,5 @@
+■ raw の text は此の命令で落した(門 條④ ―― 尾の空白を残さぬ)
+  python3 -B driver/30_wakete_kazoeru.py            # 器の側で rstrip(自ら raw/30_wakekazoe.txt を書く)
+  bash an/50_gonari_wo_hakaru.sh | sed $'s/[ \t]*$//' > raw/50_an_gonari.txt
+  bash an/60_gonari_wakeru.sh   | sed $'s/[ \t]*$//' > raw/60_an_gonari_wake.txt
+  註: BSD sed は [ \\t] を「\\ か t」と讀む ∴ zsh の $'…' で ★実 TAB★ を渡す

@@ -1,0 +1,11 @@
+[] === supervisor start (LIVE=0) ===
+[] starting watcher (LIVE=0 STALE_SEC=300 POLL_SEC=abc)
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/utsushi/pane_enter_watcher.py", line 193, in <module>
+    sys.exit(main())
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/utsushi/pane_enter_watcher.py", line 134, in main
+    default=int(os.environ.get("POLL_SEC", DEFAULT_POLL_SEC)),
+ValueError: invalid literal for int() with base 10: 'abc'
+[] watcher exited rc=1
+[] watcher restart in 5s
+[] target pane commander-third:0.0 not found, exit

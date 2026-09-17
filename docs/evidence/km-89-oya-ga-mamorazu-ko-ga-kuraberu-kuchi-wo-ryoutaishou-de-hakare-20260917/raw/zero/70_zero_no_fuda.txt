@@ -1,0 +1,34 @@
+■ 零の札 ―― 「送鍵 0」「実在 tmux 呼び 0」の四札(陽性対照・根と深さ・rc・刻)
+―― 刻= 2026-09-17T12:45:26+0900
+―― 根= docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/raw ・ 深さ= 無制限(find -type f -name *.tmuxlog)
+―― ★本 file は 2 度目の版★。初版は陽性対照が己で落ちて居た(疵⑥・紙 ㋕ に宣す)。
+
+㊀ 陽性対照 ―― 檢出子が★現に鳴る★事を、本番と同じ stub・同じ grep で示す
+  走らせた= stub tmux send-keys -t 贋pane:0.0 C-m ・ ★rc=0★
+  其の tmuxlog 全文=
+    1789616726.304 argv=send-keys -t 贋pane:0.0 C-m
+    SEND-KEYS argv=send-keys -t 贋pane:0.0 C-m
+  ―― 檢出子 grep -Ec "send-keys|SEND-KEYS" の値= 2
+     (grep rc=0)
+  ∴ 檢出子は★鳴つた★。ゆゑに次の 0 は「測れた 0」であり「測らなかつた 0」ではない。
+
+㊁ 本番 57 走の送鍵 N ―― 全 tmuxlog を歩く
+  歩いた tmuxlog 本数= 57 (一覧= raw/zero/71_tmuxlog_ichiran.txt)
+  ★送鍵 行 N= 0 (grep -c rc=1 ―― 0 行の時 rc=1 が正)★
+  比較のため ―― display-message 行 N= 10378 / capture-pane 行 N= 10213 (∴ stub は現に呼ばれて居る)
+
+㊂ 実在 tmux を的にしたか ―― 当 Mac の session 一覧(刻 12:45:26)
+    gakushu-bucho: 1 windows (created Thu Sep 17 01:32:08 2026) (attached)
+    hermes-drm: 1 windows (created Thu Sep 17 04:19:57 2026) (attached)
+    hermes-gunshi-mac: 1 windows (created Sat Sep 12 21:41:39 2026)
+    multiagent-mac: 1 windows (created Sun Aug 16 16:13:46 2026)
+  ★commander-third を含む行 N= 0
+  (的 TARGET_PANE= commander-third:0.0 ―― 当 Mac に其の session は無い)
+
+㊃ LIVE ―― driver が固定した値(逐語)
+    75:    env['LIVE'] = '0'                      # ★DRY-RUN 固定★ 実 Enter は一度も打たぬ
+
+㊄ 生器に一字も書かなかつた事 ―― 凍結時と今の sha
+    scripts/pane_enter_watcher_supervisor.sh sha16=60b61cf3f07d92e7 bytes=2455 lines=66
+    scripts/pane_enter_watcher.py sha16=e5e44197c2544fab bytes=7184 lines=193
+    凍結時の宣= supervisor 60b61cf3f07d92e7/66行/2455B ・ child e5e44197c2544fab/193行/7184B ―― ★一致★

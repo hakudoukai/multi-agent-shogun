@@ -1,0 +1,21 @@
+■ harness hei ―― 注ぐ先= STALE_SEC / 見るのは子の出目
+組                  種      注いだ値(repr)             rc    outB  errL 子待秒       親再起     死に方            子が言つた解/例外
+陰性_正常300_10        陰性     '300'                  ★時切   0     4    1.051     ―       通              stale=300 poll=1
+陰性_未設定             陰性     <未設定>                  ★時切   0     4    1.05      ―       通              stale=300 poll=1
+陽性_空               陽性     ''                     ★時切   0     4    1.043     ―       通              stale=300 poll=1
+陽性_空白のみ            陽性     ' '                    ★時切   0     20   0.06      5.029   落(起動前に死)       ValueError: invalid literal for int() with base 10: ' '
+陽性_0               陽性     '0'                    ★時切   0     4    1.045     ―       通              stale=0 poll=1
+陽性_-1              陽性     '-1'                   ★時切   0     4    1.05      ―       通              stale=-1 poll=1
+陽性_abc             陽性     'abc'                  ★時切   0     20   0.067     5.087   落(起動前に死)       ValueError: invalid literal for int() with base 10: 'abc'
+陽性_300abc          陽性     '300abc'               ★時切   0     20   0.063     5.031   落(起動前に死)       ValueError: invalid literal for int() with base 10: '300abc'
+陽性_010             陽性     '010'                  ★時切   0     4    1.042     ―       通              stale=10 poll=1
+陽性_+10             陽性     '+10'                  ★時切   0     4    1.04      ―       通              stale=10 poll=1
+陽性_4294967295      陽性     '4294967295'           ★時切   0     4    1.046     ―       通              stale=4294967295 poll=1
+陽性_4294967296      陽性     '4294967296'           ★時切   0     4    1.042     ―       通              stale=4294967296 poll=1
+陽性_2p63m1          陽性     '9223372036854775807'  ★時切   0     4    1.039     ―       通              stale=9223372036854775807 poll=1
+陽性_改行尾             陽性     '300\n'                ★時切   0     5    1.044     ―       通              stale=300 poll=1
+追加_改行中             陽性追加   '3\n0'                 ★時切   0     23   0.083     5.039   落(起動前に死)       ValueError: invalid literal for int() with base 10: '3\n0'
+追加_前後空白            陽性追加   ' 300 '                ★時切   0     4    1.054     ―       通              stale=300 poll=1
+追加_下線              陽性追加   '1_0'                  ★時切   0     4    1.045     ―       通              stale=10 poll=1
+追加_0x10            陽性追加   '0x10'                 ★時切   0     20   0.064     5.03    落(起動前に死)       ValueError: invalid literal for int() with base 10: '0x10'
+追加_全角300           陽性追加   '３００'                  ★時切   0     4    1.042     ―       通              stale=300 poll=1

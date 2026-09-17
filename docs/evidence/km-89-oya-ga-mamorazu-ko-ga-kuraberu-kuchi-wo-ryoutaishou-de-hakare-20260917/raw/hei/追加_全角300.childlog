@@ -1,0 +1,5 @@
+2026-09-17 12:34:45,430 [INFO] === pane_enter_watcher start ===
+2026-09-17 12:34:45,430 [INFO]   target=commander-third:0.0 stale_sec=300 poll_sec=1 LIVE=False
+2026-09-17 12:39:45,604 [INFO] STALE detected (elapsed=300s, text='km-89 未送信テキスト(贋)'), sending Enter
+2026-09-17 12:39:45,605 [INFO] [DRY-RUN] Enter would be sent to commander-third:0.0
+2026-09-17 12:52:00,896 [INFO] target pane commander-third:0.0 vanished, exit

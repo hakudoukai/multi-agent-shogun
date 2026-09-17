@@ -1,0 +1,33 @@
+■ 疵⑦ ―― 孤児 process の宣と止め (刻 2026-09-17T12:51:15+0900)
+
+㊀ 止める前 ―― 一本ごとに cmdline を検め「己の寫しか」を確かめる
+  pid=5789 ppid=1 etime=17:06 判=★己の寫し(止めて可)★
+    cmd= /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/utsushi/pane_enter_watcher.py --target commander-third:0.0
+  pid=6989 ppid=1 etime=16:54 判=★己の寫し(止めて可)★
+    cmd= /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/utsushi/pane_enter_watcher.py --target commander-third:0.0
+  pid=9777 ppid=1 etime=16:30 判=★己の寫し(止めて可)★
+    cmd= /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/utsushi/pane_enter_watcher.py --target commander-third:0.0
+
+㊁ 実在の器を的にして居らぬ事 ―― scripts/ 下の生器を走らせて居る process
+  生器 pane_enter_watcher.py を走らせて居る process N= 0
+  (0 = 当 Mac に実稼働 watcher は無い ∴ 止める物と紛れぬ)
+
+㊂ ps で数へ直す(pgrep -f と食ひ違ふ事が在るゆゑ) ―― 刻 12:51:54
+  ps が見た孤児 N= 2
+    pid=9777 ppid=1 etime=17:09
+    pid=65847 ppid=65846 etime=00:00
+
+㊃ 止める ―― DD-169 guard の條 (^kill -TERM <PID>$ 一本ずつ) に従ひ、一本ごとに打つ
+    TERM 信号を 9777 へ打つた → rc=1 「no such process」 ―― ★己で落ちて居た(MAX_OK=999 の上限が効いた)★
+
+㊄ 止めた後 ―― 己の系譜を除いて数へ直す (疵⑧ = 前の数へ器が ugrep を数へて居た)
+    ps rc= 0
+    kouji_N= 0
+
+㊅ 何故生き残つたか
+  丙 harness は 12 秒で ★親を止めた★ が、子は ppid=1 へ引取られた。子を止める口を harness に置かなかつた ―― ★之が疵⑦★。
+  上限は効いた: stub の MAX_OK=999 ゆゑ呼出 999 回で子は自ら落ちる。5 本悉く自死し、当席が打つた信号は 1 本も当らなかつた。
+  害 (甲) 孤児 5 本が 15〜17 分 CPU を回した。
+  害 (乙) 束の中 raw/hei/*.{state,tmuxlog} 18 本を★臺帳を建てた後で★太らせた ―― 門 條① 相違 18 の因は之である。
+  ★実 pane への害は無い★: LIVE=0 固定・PATH は stub_bin・送鍵 0・commander-third は当 Mac に無し(raw/zero/70_zero_no_fuda.txt)。
+  直し方(案・据ゑず): harness が親を止める時、親の process group ごと落とす(setsid + killpg 相当)か、子の pid を state へ刻んで拾ふ。

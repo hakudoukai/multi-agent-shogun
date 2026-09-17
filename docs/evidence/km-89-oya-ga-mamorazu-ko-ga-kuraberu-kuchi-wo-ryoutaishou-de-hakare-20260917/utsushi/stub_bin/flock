@@ -1,0 +1,8 @@
+#!/bin/bash
+# ★km-89 stub flock★ ―― macOS に flock(1) は★不在★(command -v flock = 不在・実測 12:21)。
+#   生器 L34 は `flock -n 200 || { log; exit 0; }` ゆゑ、stub 無しでは
+#   ★command not found → rc=127 → supervisor が子を一度も起さず exit 0★ となり測れぬ。
+#   本 stub は常に rc=0 (錠を取れた) を返し、L34 以降を通す。
+set -u
+printf '%s flock argv=%s\n' "$(date -u '+%H:%M:%S')" "$*" >> "$KM89_TMUX_LOG"
+exit 0

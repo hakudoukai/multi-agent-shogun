@@ -1,0 +1,212 @@
+■ 門 條④ に鳴る 172 file の宣 ―― ★之は己の書き癖ではなく「出目そのもの」である★
+  刻 = 2026-09-17T12:59:48+0900
+  器 = driver/… と utsushi/stub_bin/tmux が走つた際に★其の場で生じた物★
+  歩いた根 = 束の中 (.) / 深さ = 無限 / 除いた枝 = _gate/ ・ MANIFEST.txt
+  控(機械読み) = raw/zero/81_demenozoku_ichiran.json
+
+―― ㊀ 何が鳴るか(実測・形別) ――
+鳴りの種                       N  形の内訳
+0byte                    115  .lock=57 / .state=1 / .stdout=57
+EOF改行が無い                  57  .state=57
+和(除く集合)                  172  ―― 重なりは無い(0byte は EOF 改行の議論の外)
+尾空白 残                      0
+CR 混入                      0
+
+―― ㊁ 何故 0byte なのか・何故 EOF 改行が無いのか(因を名で) ――
+  ⑴ *.lock (57) = 寫しの supervisor が flock の代りに置く ★空の錠★。
+     macOS に flock(1) は無い ∴ 寫しは「file を作るだけ」で排他を表す。
+     ★中身が空である事が錠の意味★ ―― 一字書けば錠ではなく「何かの記録」に化ける。
+  ⑵ *.stdout (57) = 子 python の ★標準出力が空だつた事★ そのもの。
+     子は log を stderr 側(>>suplog)へ出す ∴ stdout は 0byte が正しい出目。
+     ★改行一つ足せば「空だつた」が「空行が出た」に化ける★。
+  ⑶ *.state (57) = 寫しの stub tmux が printf %s で書く ★数取り札★(例: 「3」)。
+     改行を付けぬのは stub の実装 ∴ 之も出目。1 本は 0byte(一度も呼ばれず)。
+     ★改行を足せば「stub が書いた字」を私が書き換へた事になる★。
+
+―― ㊂ 依つて取る道 ―― ★第四の道 = 宣して argv から除く★
+  正す(改行を足す/零を埋める) = ★出目の改竄★ ∴ 取らぬ。
+  黙つて除く                 = ★静かな失敗★ ∴ 取らぬ。
+  門を書き換へる             = 生器への手出し(scope_out ⑴) ∴ 取らぬ。
+  ∴ ★此の紙で宣し、門の argv から 172 を落とす★。門控は落とした事が分かる形で残す。
+
+―― ㊃ 除いても失はれぬ事(★大事★) ――
+  ⑴ 172 は悉く★歩かれて居る★。「除いた」は「歩いて居らぬ」ではない。
+  ⑵ 172 は悉く★臺帳 MANIFEST.txt に行が在る★ ―― sha256 も bytes も lines も載る。
+     ∴ ★宣して除いた物も母數に数へる★。臺帳の母數は 172 を含んだ数である。
+  ⑶ 門 條① (臺帳 ⇔ 実体の照合) は argv と無関係に★臺帳の全行★を見る。
+     ∴ 172 の sha256 は條①で現に検められる ―― 検査から逃げては居らぬ。
+  ⑷ 除いたのは 條②③④⑤ (argv を見る條) のみ。其の中でも鳴るのは條④ だけである。
+
+―― ㊄ 除いた 172 の名(全件) ――
+    1 raw/hei/追加_0x10.lock                                     0byte 0byte
+    2 raw/hei/追加_0x10.state                                    1byte EOF改行無
+    3 raw/hei/追加_0x10.stdout                                   0byte 0byte
+    4 raw/hei/追加_下線.lock                                       0byte 0byte
+    5 raw/hei/追加_下線.state                                      4byte EOF改行無
+    6 raw/hei/追加_下線.stdout                                     0byte 0byte
+    7 raw/hei/追加_全角300.lock                                    0byte 0byte
+    8 raw/hei/追加_全角300.state                                   4byte EOF改行無
+    9 raw/hei/追加_全角300.stdout                                  0byte 0byte
+   10 raw/hei/追加_前後空白.lock                                     0byte 0byte
+   11 raw/hei/追加_前後空白.state                                    4byte EOF改行無
+   12 raw/hei/追加_前後空白.stdout                                   0byte 0byte
+   13 raw/hei/追加_改行中.lock                                      0byte 0byte
+   14 raw/hei/追加_改行中.state                                     1byte EOF改行無
+   15 raw/hei/追加_改行中.stdout                                    0byte 0byte
+   16 raw/hei/陰性_未設定.lock                                      0byte 0byte
+   17 raw/hei/陰性_未設定.state                                     4byte EOF改行無
+   18 raw/hei/陰性_未設定.stdout                                    0byte 0byte
+   19 raw/hei/陰性_正常300_10.lock                                 0byte 0byte
+   20 raw/hei/陰性_正常300_10.state                                4byte EOF改行無
+   21 raw/hei/陰性_正常300_10.stdout                               0byte 0byte
+   22 raw/hei/陽性_+10.lock                                      0byte 0byte
+   23 raw/hei/陽性_+10.state                                     4byte EOF改行無
+   24 raw/hei/陽性_+10.stdout                                    0byte 0byte
+   25 raw/hei/陽性_-1.lock                                       0byte 0byte
+   26 raw/hei/陽性_-1.state                                      4byte EOF改行無
+   27 raw/hei/陽性_-1.stdout                                     0byte 0byte
+   28 raw/hei/陽性_0.lock                                        0byte 0byte
+   29 raw/hei/陽性_0.state                                       4byte EOF改行無
+   30 raw/hei/陽性_0.stdout                                      0byte 0byte
+   31 raw/hei/陽性_010.lock                                      0byte 0byte
+   32 raw/hei/陽性_010.state                                     4byte EOF改行無
+   33 raw/hei/陽性_010.stdout                                    0byte 0byte
+   34 raw/hei/陽性_2p63m1.lock                                   0byte 0byte
+   35 raw/hei/陽性_2p63m1.state                                  4byte EOF改行無
+   36 raw/hei/陽性_2p63m1.stdout                                 0byte 0byte
+   37 raw/hei/陽性_300abc.lock                                   0byte 0byte
+   38 raw/hei/陽性_300abc.state                                  1byte EOF改行無
+   39 raw/hei/陽性_300abc.stdout                                 0byte 0byte
+   40 raw/hei/陽性_4294967295.lock                               0byte 0byte
+   41 raw/hei/陽性_4294967295.state                              4byte EOF改行無
+   42 raw/hei/陽性_4294967295.stdout                             0byte 0byte
+   43 raw/hei/陽性_4294967296.lock                               0byte 0byte
+   44 raw/hei/陽性_4294967296.state                              4byte EOF改行無
+   45 raw/hei/陽性_4294967296.stdout                             0byte 0byte
+   46 raw/hei/陽性_abc.lock                                      0byte 0byte
+   47 raw/hei/陽性_abc.state                                     1byte EOF改行無
+   48 raw/hei/陽性_abc.stdout                                    0byte 0byte
+   49 raw/hei/陽性_改行尾.lock                                      0byte 0byte
+   50 raw/hei/陽性_改行尾.state                                     4byte EOF改行無
+   51 raw/hei/陽性_改行尾.stdout                                    0byte 0byte
+   52 raw/hei/陽性_空.lock                                        0byte 0byte
+   53 raw/hei/陽性_空.state                                       4byte EOF改行無
+   54 raw/hei/陽性_空.stdout                                      0byte 0byte
+   55 raw/hei/陽性_空白のみ.lock                                     0byte 0byte
+   56 raw/hei/陽性_空白のみ.state                                    1byte EOF改行無
+   57 raw/hei/陽性_空白のみ.stdout                                   0byte 0byte
+   58 raw/kou/追加_0x10.lock                                     0byte 0byte
+   59 raw/kou/追加_0x10.state                                    1byte EOF改行無
+   60 raw/kou/追加_0x10.stdout                                   0byte 0byte
+   61 raw/kou/追加_下線.lock                                       0byte 0byte
+   62 raw/kou/追加_下線.state                                      1byte EOF改行無
+   63 raw/kou/追加_下線.stdout                                     0byte 0byte
+   64 raw/kou/追加_全角300.lock                                    0byte 0byte
+   65 raw/kou/追加_全角300.state                                   1byte EOF改行無
+   66 raw/kou/追加_全角300.stdout                                  0byte 0byte
+   67 raw/kou/追加_前後空白.lock                                     0byte 0byte
+   68 raw/kou/追加_前後空白.state                                    1byte EOF改行無
+   69 raw/kou/追加_前後空白.stdout                                   0byte 0byte
+   70 raw/kou/追加_改行中.lock                                      0byte 0byte
+   71 raw/kou/追加_改行中.state                                     1byte EOF改行無
+   72 raw/kou/追加_改行中.stdout                                    0byte 0byte
+   73 raw/kou/陰性_未設定.lock                                      0byte 0byte
+   74 raw/kou/陰性_未設定.state                                     1byte EOF改行無
+   75 raw/kou/陰性_未設定.stdout                                    0byte 0byte
+   76 raw/kou/陰性_正常300_10.lock                                 0byte 0byte
+   77 raw/kou/陰性_正常300_10.state                                1byte EOF改行無
+   78 raw/kou/陰性_正常300_10.stdout                               0byte 0byte
+   79 raw/kou/陽性_+10.lock                                      0byte 0byte
+   80 raw/kou/陽性_+10.state                                     1byte EOF改行無
+   81 raw/kou/陽性_+10.stdout                                    0byte 0byte
+   82 raw/kou/陽性_-1.lock                                       0byte 0byte
+   83 raw/kou/陽性_-1.state                                      1byte EOF改行無
+   84 raw/kou/陽性_-1.stdout                                     0byte 0byte
+   85 raw/kou/陽性_0.lock                                        0byte 0byte
+   86 raw/kou/陽性_0.state                                       1byte EOF改行無
+   87 raw/kou/陽性_0.stdout                                      0byte 0byte
+   88 raw/kou/陽性_010.lock                                      0byte 0byte
+   89 raw/kou/陽性_010.state                                     1byte EOF改行無
+   90 raw/kou/陽性_010.stdout                                    0byte 0byte
+   91 raw/kou/陽性_2p63m1.lock                                   0byte 0byte
+   92 raw/kou/陽性_2p63m1.state                                  1byte EOF改行無
+   93 raw/kou/陽性_2p63m1.stdout                                 0byte 0byte
+   94 raw/kou/陽性_300abc.lock                                   0byte 0byte
+   95 raw/kou/陽性_300abc.state                                  1byte EOF改行無
+   96 raw/kou/陽性_300abc.stdout                                 0byte 0byte
+   97 raw/kou/陽性_4294967295.lock                               0byte 0byte
+   98 raw/kou/陽性_4294967295.state                              1byte EOF改行無
+   99 raw/kou/陽性_4294967295.stdout                             0byte 0byte
+  100 raw/kou/陽性_4294967296.lock                               0byte 0byte
+  101 raw/kou/陽性_4294967296.state                              1byte EOF改行無
+  102 raw/kou/陽性_4294967296.stdout                             0byte 0byte
+  103 raw/kou/陽性_abc.lock                                      0byte 0byte
+  104 raw/kou/陽性_abc.state                                     1byte EOF改行無
+  105 raw/kou/陽性_abc.stdout                                    0byte 0byte
+  106 raw/kou/陽性_改行尾.lock                                      0byte 0byte
+  107 raw/kou/陽性_改行尾.state                                     1byte EOF改行無
+  108 raw/kou/陽性_改行尾.stdout                                    0byte 0byte
+  109 raw/kou/陽性_空.lock                                        0byte 0byte
+  110 raw/kou/陽性_空.state                                       1byte EOF改行無
+  111 raw/kou/陽性_空.stdout                                      0byte 0byte
+  112 raw/kou/陽性_空白のみ.lock                                     0byte 0byte
+  113 raw/kou/陽性_空白のみ.state                                    1byte EOF改行無
+  114 raw/kou/陽性_空白のみ.stdout                                   0byte 0byte
+  115 raw/otsu/追加_0x10.lock                                    0byte 0byte
+  116 raw/otsu/追加_0x10.state                                   1byte EOF改行無
+  117 raw/otsu/追加_0x10.stdout                                  0byte 0byte
+  118 raw/otsu/追加_下線.lock                                      0byte 0byte
+  119 raw/otsu/追加_下線.state                                     1byte EOF改行無
+  120 raw/otsu/追加_下線.stdout                                    0byte 0byte
+  121 raw/otsu/追加_全角300.lock                                   0byte 0byte
+  122 raw/otsu/追加_全角300.state                                  1byte EOF改行無
+  123 raw/otsu/追加_全角300.stdout                                 0byte 0byte
+  124 raw/otsu/追加_前後空白.lock                                    0byte 0byte
+  125 raw/otsu/追加_前後空白.state                                   1byte EOF改行無
+  126 raw/otsu/追加_前後空白.stdout                                  0byte 0byte
+  127 raw/otsu/追加_改行中.lock                                     0byte 0byte
+  128 raw/otsu/追加_改行中.state                                    1byte EOF改行無
+  129 raw/otsu/追加_改行中.stdout                                   0byte 0byte
+  130 raw/otsu/陰性_未設定.lock                                     0byte 0byte
+  131 raw/otsu/陰性_未設定.state                                    1byte EOF改行無
+  132 raw/otsu/陰性_未設定.stdout                                   0byte 0byte
+  133 raw/otsu/陰性_正常300_10.lock                                0byte 0byte
+  134 raw/otsu/陰性_正常300_10.state                               1byte EOF改行無
+  135 raw/otsu/陰性_正常300_10.stdout                              0byte 0byte
+  136 raw/otsu/陽性_+10.lock                                     0byte 0byte
+  137 raw/otsu/陽性_+10.state                                    1byte EOF改行無
+  138 raw/otsu/陽性_+10.stdout                                   0byte 0byte
+  139 raw/otsu/陽性_-1.lock                                      0byte 0byte
+  140 raw/otsu/陽性_-1.state                                     1byte EOF改行無
+  141 raw/otsu/陽性_-1.stdout                                    0byte 0byte
+  142 raw/otsu/陽性_0.lock                                       0byte 0byte
+  143 raw/otsu/陽性_0.state                                      1byte EOF改行無
+  144 raw/otsu/陽性_0.stdout                                     0byte 0byte
+  145 raw/otsu/陽性_010.lock                                     0byte 0byte
+  146 raw/otsu/陽性_010.state                                    1byte EOF改行無
+  147 raw/otsu/陽性_010.stdout                                   0byte 0byte
+  148 raw/otsu/陽性_2p63m1.lock                                  0byte 0byte
+  149 raw/otsu/陽性_2p63m1.state                                 1byte EOF改行無
+  150 raw/otsu/陽性_2p63m1.stdout                                0byte 0byte
+  151 raw/otsu/陽性_300abc.lock                                  0byte 0byte
+  152 raw/otsu/陽性_300abc.state                                 1byte EOF改行無
+  153 raw/otsu/陽性_300abc.stdout                                0byte 0byte
+  154 raw/otsu/陽性_4294967295.lock                              0byte 0byte
+  155 raw/otsu/陽性_4294967295.state                             1byte EOF改行無
+  156 raw/otsu/陽性_4294967295.stdout                            0byte 0byte
+  157 raw/otsu/陽性_4294967296.lock                              0byte 0byte
+  158 raw/otsu/陽性_4294967296.state                             1byte EOF改行無
+  159 raw/otsu/陽性_4294967296.stdout                            0byte 0byte
+  160 raw/otsu/陽性_abc.lock                                     0byte 0byte
+  161 raw/otsu/陽性_abc.state                                    1byte EOF改行無
+  162 raw/otsu/陽性_abc.stdout                                   0byte 0byte
+  163 raw/otsu/陽性_改行尾.lock                                     0byte 0byte
+  164 raw/otsu/陽性_改行尾.state                                    1byte EOF改行無
+  165 raw/otsu/陽性_改行尾.stdout                                   0byte 0byte
+  166 raw/otsu/陽性_空.lock                                       0byte 0byte
+  167 raw/otsu/陽性_空.state                                      1byte EOF改行無
+  168 raw/otsu/陽性_空.stdout                                     0byte 0byte
+  169 raw/otsu/陽性_空白のみ.lock                                    0byte 0byte
+  170 raw/otsu/陽性_空白のみ.state                                   1byte EOF改行無
+  171 raw/otsu/陽性_空白のみ.stdout                                  0byte 0byte
+  172 raw/zero/pc.state                                        0byte 0byte

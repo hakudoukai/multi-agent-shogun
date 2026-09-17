@@ -1,0 +1,12 @@
+[] === supervisor start (LIVE=0) ===
+[] starting watcher (LIVE=0 STALE_SEC=300 POLL_SEC=9223372036854775807)
+2026-09-17 12:26:47,581 [INFO] === pane_enter_watcher start ===
+2026-09-17 12:26:47,581 [INFO]   target=commander-third:0.0 stale_sec=300 poll_sec=9223372036854775807 LIVE=False
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/utsushi/pane_enter_watcher.py", line 193, in <module>
+    sys.exit(main())
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/utsushi/pane_enter_watcher.py", line 189, in main
+    time.sleep(args.poll_sec)
+OverflowError: timestamp too large to convert to C _PyTime_t
+[] watcher exited rc=1
+[] target pane vanished, supervisor exit

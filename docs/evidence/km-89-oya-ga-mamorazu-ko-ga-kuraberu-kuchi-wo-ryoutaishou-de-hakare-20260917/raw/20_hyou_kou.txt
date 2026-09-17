@@ -1,0 +1,21 @@
+■ harness kou ―― 注ぐ先= POLL_SEC / 見るのは子の出目
+組                  種      注いだ値(repr)             rc    outB  errL 子待秒       親再起     死に方            子が言つた解/例外
+陰性_正常300_10        陰性     '300'                  ★時切   0     4    0.052     ―       通              stale=300 poll=300
+陰性_未設定             陰性     <未設定>                  0     0     8    10.035    ―       通              stale=300 poll=10
+陽性_空               陽性     ''                     0     0     8    10.032    ―       通              stale=300 poll=10
+陽性_空白のみ            陽性     ' '                    0     0     10   0.059     5.029   落(起動前に死)       ValueError: invalid literal for int() with base 10: ' '
+陽性_0               陽性     '0'                    0     0     8    0.055     ―       通              stale=300 poll=0
+陽性_-1              陽性     '-1'                   0     0     8    0.052     ―       走り出して落         stale=300 poll=-1  ValueError: sleep length must be non-negative
+陽性_abc             陽性     'abc'                  0     0     10   0.063     5.042   落(起動前に死)       ValueError: invalid literal for int() with base 10: 'abc'
+陽性_300abc          陽性     '300abc'               0     0     10   0.068     5.031   落(起動前に死)       ValueError: invalid literal for int() with base 10: '300abc'
+陽性_010             陽性     '010'                  0     0     8    10.04     ―       通              stale=300 poll=10
+陽性_+10             陽性     '+10'                  0     0     8    10.037    ―       通              stale=300 poll=10
+陽性_4294967295      陽性     '4294967295'           0     0     8    0.056     ―       走り出して落         stale=300 poll=4294967295  OSError: [Errno 22] Invalid argument
+陽性_4294967296      陽性     '4294967296'           0     0     8    0.051     ―       走り出して落         stale=300 poll=4294967296  OSError: [Errno 22] Invalid argument
+陽性_2p63m1          陽性     '9223372036854775807'  0     0     8    0.048     ―       走り出して落         stale=300 poll=9223372036854775807  OverflowError: timestamp too large to convert to C _PyTime_t
+陽性_改行尾             陽性     '300\n'                ★時切   0     5    0.055     ―       通              stale=300 poll=300
+追加_改行中             陽性追加   '3\n0'                 0     0     11   0.06      5.028   落(起動前に死)       ValueError: invalid literal for int() with base 10: '3\n0'
+追加_前後空白            陽性追加   ' 300 '                ★時切   0     4    0.054     ―       通              stale=300 poll=300
+追加_下線              陽性追加   '1_0'                  0     0     8    10.033    ―       通              stale=300 poll=10
+追加_0x10            陽性追加   '0x10'                 0     0     10   0.065     5.03    落(起動前に死)       ValueError: invalid literal for int() with base 10: '0x10'
+追加_全角300           陽性追加   '３００'                  ★時切   0     4    0.053     ―       通              stale=300 poll=300

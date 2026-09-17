@@ -1,0 +1,183 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+★末尾空白 ―― ./an/50_gonari_wo_hakaru.sh に 3 行★
+★末尾空白 ―― ./raw/50_an_gonari.txt に 1 行★
+★末尾空白 ―― ./raw/30_wakekazoe.txt に 26 行★
+★EOF改行が複数(末尾に空行) ―― ./raw/30_wakekazoe.txt★
+★EOF改行 ―― ./raw/zero/pc.state は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/追加_全角300.state★
+★EOF改行 ―― ./raw/otsu/陽性_-1.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_空.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陰性_正常300_10.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/追加_前後空白.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_4294967295.state★
+★EOF改行 ―― ./raw/otsu/陽性_+10.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/追加_下線.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_4294967296.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/追加_改行中.state★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_改行尾.state★
+★EOF改行 ―― ./raw/otsu/陽性_0.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_2p63m1.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/追加_改行中.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_空.state★
+★EOF改行 ―― ./raw/otsu/追加_全角300.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陰性_未設定.state★
+★EOF改行 ―― ./raw/otsu/陽性_abc.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/追加_0x10.state★
+★EOF改行 ―― ./raw/otsu/陽性_改行尾.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_+10.state★
+★EOF改行が無い(0) ―― ./raw/otsu/追加_下線.state★
+★EOF改行 ―― ./raw/otsu/追加_改行中.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/追加_0x10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_4294967296.state★
+★EOF改行 ―― ./raw/otsu/陽性_2p63m1.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_300abc.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陰性_正常300_10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_2p63m1.state★
+★EOF改行 ―― ./raw/otsu/陽性_改行尾.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_4294967295.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_-1.state★
+★EOF改行 ―― ./raw/otsu/陽性_+10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_300abc.state★
+★EOF改行 ―― ./raw/otsu/陰性_未設定.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_010.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_4294967296.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_abc.state★
+★EOF改行 ―― ./raw/otsu/陽性_0.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陰性_未設定.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_300abc.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_4294967295.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_空.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_abc.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_010.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_0.state★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_010.state★
+★EOF改行 ―― ./raw/otsu/追加_0x10.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/陽性_空白のみ.state★
+★EOF改行 ―― ./raw/otsu/追加_前後空白.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_空白のみ.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_-1.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/追加_下線.lock は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/追加_全角300.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/otsu/陽性_空白のみ.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/otsu/追加_前後空白.state★
+★EOF改行が無い(0) ―― ./raw/otsu/陰性_正常300_10.state★
+★EOF改行が無い(0) ―― ./raw/hei/追加_全角300.state★
+★EOF改行 ―― ./raw/hei/陽性_-1.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_空.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陰性_正常300_10.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/追加_前後空白.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_4294967295.state★
+★EOF改行 ―― ./raw/hei/陽性_+10.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/追加_下線.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_4294967296.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/追加_改行中.state★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_改行尾.state★
+★EOF改行 ―― ./raw/hei/陽性_0.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_2p63m1.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/追加_改行中.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_空.state★
+★EOF改行 ―― ./raw/hei/追加_全角300.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陰性_未設定.state★
+★EOF改行 ―― ./raw/hei/陽性_abc.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/追加_0x10.state★
+★EOF改行 ―― ./raw/hei/陽性_改行尾.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_+10.state★
+★EOF改行が無い(0) ―― ./raw/hei/追加_下線.state★
+★EOF改行 ―― ./raw/hei/追加_改行中.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/追加_0x10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_4294967296.state★
+★EOF改行 ―― ./raw/hei/陽性_2p63m1.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_300abc.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陰性_正常300_10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_2p63m1.state★
+★EOF改行 ―― ./raw/hei/陽性_改行尾.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_4294967295.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_-1.state★
+★EOF改行 ―― ./raw/hei/陽性_+10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_300abc.state★
+★EOF改行 ―― ./raw/hei/陰性_未設定.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_010.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_4294967296.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_abc.state★
+★EOF改行 ―― ./raw/hei/陽性_0.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陰性_未設定.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_300abc.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_4294967295.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_空.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_abc.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_010.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_0.state★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_010.state★
+★EOF改行 ―― ./raw/hei/追加_0x10.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/陽性_空白のみ.state★
+★EOF改行 ―― ./raw/hei/追加_前後空白.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_空白のみ.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_-1.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/追加_下線.lock は空file(0byte)★
+★EOF改行 ―― ./raw/hei/追加_全角300.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/hei/陽性_空白のみ.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/hei/追加_前後空白.state★
+★EOF改行が無い(0) ―― ./raw/hei/陰性_正常300_10.state★
+★EOF改行が無い(0) ―― ./raw/kou/追加_全角300.state★
+★EOF改行 ―― ./raw/kou/陽性_-1.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_空.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陰性_正常300_10.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/追加_前後空白.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_4294967295.state★
+★EOF改行 ―― ./raw/kou/陽性_+10.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/追加_下線.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_4294967296.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/追加_改行中.state★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_改行尾.state★
+★EOF改行 ―― ./raw/kou/陽性_0.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_2p63m1.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/追加_改行中.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_空.state★
+★EOF改行 ―― ./raw/kou/追加_全角300.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陰性_未設定.state★
+★EOF改行 ―― ./raw/kou/陽性_abc.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/追加_0x10.state★
+★EOF改行 ―― ./raw/kou/陽性_改行尾.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_+10.state★
+★EOF改行が無い(0) ―― ./raw/kou/追加_下線.state★
+★EOF改行 ―― ./raw/kou/追加_改行中.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/追加_0x10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_4294967296.state★
+★EOF改行 ―― ./raw/kou/陽性_2p63m1.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_300abc.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陰性_正常300_10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_2p63m1.state★
+★EOF改行 ―― ./raw/kou/陽性_改行尾.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_4294967295.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_-1.state★
+★EOF改行 ―― ./raw/kou/陽性_+10.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_300abc.state★
+★EOF改行 ―― ./raw/kou/陰性_未設定.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_010.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_4294967296.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_abc.state★
+★EOF改行 ―― ./raw/kou/陽性_0.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陰性_未設定.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_300abc.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_4294967295.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_空.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_abc.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_010.stdout は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_0.state★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_010.state★
+★EOF改行 ―― ./raw/kou/追加_0x10.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/陽性_空白のみ.state★
+★EOF改行 ―― ./raw/kou/追加_前後空白.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_空白のみ.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_-1.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/追加_下線.lock は空file(0byte)★
+★EOF改行 ―― ./raw/kou/追加_全角300.stdout は空file(0byte)★
+★EOF改行 ―― ./raw/kou/陽性_空白のみ.lock は空file(0byte)★
+★EOF改行が無い(0) ―― ./raw/kou/追加_前後空白.state★
+★EOF改行が無い(0) ―― ./raw/kou/陰性_正常300_10.state★
+條⑤ 寸法 = byte和 2067809(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

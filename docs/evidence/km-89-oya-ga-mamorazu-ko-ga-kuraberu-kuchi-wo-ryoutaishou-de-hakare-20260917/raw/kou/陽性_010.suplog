@@ -1,0 +1,7 @@
+[] === supervisor start (LIVE=0) ===
+[] starting watcher (LIVE=0 STALE_SEC=300 POLL_SEC=010)
+2026-09-17 12:26:27,062 [INFO] === pane_enter_watcher start ===
+2026-09-17 12:26:27,062 [INFO]   target=commander-third:0.0 stale_sec=300 poll_sec=10 LIVE=False
+2026-09-17 12:26:37,117 [INFO] target pane commander-third:0.0 vanished, exit
+[] watcher exited rc=0
+[] target pane vanished, supervisor exit

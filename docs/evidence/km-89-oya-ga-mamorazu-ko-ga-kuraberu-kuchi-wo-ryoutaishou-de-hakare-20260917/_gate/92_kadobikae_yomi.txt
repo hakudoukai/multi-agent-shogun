@@ -1,0 +1,47 @@
+■ 門の讀み ―― 二走を並べる (本紙 README.md には數を書かぬ。紙は己を含む臺帳の數を書けぬゆゑ)
+  刻 = 2026-09-17T13:03:30+0900
+  門 = scripts/checks/karo_mac_dasumae_gate.sh  (生器・読み取りのみ・一字も書かず)
+  臺帳 = MANIFEST.txt ―― ★束内相対★ (裁 seq322699) ∴ 束へ cd し、門へ KM_GATE_MANIFEST_BASE=. を渡す
+
+―― 一走目 _gate/90_gate_20260917T124946 ――
+  rc = 1
+  臺帳 = _gate/90_MANIFEST_ichisou.txt (退避して残す・sha16=43886431222ac83f)
+  argv = 束の全 file (宣して除かず) ―― 423 本
+  條① 一致 405 / ★相違 18★ / 実体無 0 / 読めぬ行 0 (母數 423)
+  條④ 鳴 ―― 末尾空白 4 file(30 行) / EOF改行複数 1 file / 0byte 115 / EOF改行無 57
+  ★因★ 相違 18 は悉く raw/hei/*.state と raw/hei/*.tmuxlog。
+        疵⑩(孤児 5 本が ppid=1 へ移り、臺帳を建てた後も 15〜17 分 poll を続けた)の跡である。
+        ★門が誤つたのではない。己の後片付けの不備が門に正しく映つた。★
+
+―― 二走目 _gate/91_gate_20260917T130246 ――
+  rc = 0
+  命令 = KM_GATE_MANIFEST_BASE=. bash /Users/momizimac/multi-agent-shogun/scripts/checks/karo_mac_dasumae_gate.sh MANIFEST.txt <argv 255 本 = _gate/91_gate_argv.txt>
+  argv = 255 本 (= 全 427 − 宣して除いた 172)  控 = _gate/91_gate_argv.txt / _gate/91_gate_nozoku.txt
+  [out] 台帳 MANIFEST.txt
+  [out]   cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917
+  [out]   基点 引数(明示)
+  [out]   一致 ★427★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 427)
+  [out]   ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+  [err] 閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  [err] 閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  [err] 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+  [err] 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  [err] 條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(255本)通
+  [err] 條⑤ 寸法 = byte和 2190869(閾 10485760未満)
+  [err] ★出す前 門 通。出してよい。★
+
+―― 二走の差は何であつたか (三つ・悉く己の手当て) ――
+  ⑴ 孤児を殺し束を静にした → 條① 相違 18 → ★0★ (臺帳 427 行 ⇔ disk 427 本・一致 427)
+  ⑵ 刷る器の側で尾空白を落とし刷り直した → 條② 末尾空白 4 file → ★0★
+       器 = driver/30_wakete_kazoeru.py (行毎 rstrip・EOF 丁度1) / an/50_・60_ (刷る時 sed で落とす)
+       ★此の刷り直しで疵⑫(argv 無しで呼び表を空にした)を踏み、入れの json から再刷して戻した★
+  ⑶ 出目そのもの 172 を宣して argv から落とした → 條④ 0byte 115・EOF改行無 57 → ★argv の外★
+       宣 = raw/zero/82_deme_nozoku_sen.txt  機械読み = raw/zero/81_demenozoku_ichiran.json
+       ★除いても條①は臺帳の全行を見る ∴ 172 の sha256 は現に検められて居る(一致 427 の内)★
+
+―― 宣して除いた事の限界 (正直に) ――
+  ⑴ 172 の「末尾空白」「CR」は★検められて居らぬ★。今測れば 0 だが、門が判じた訳ではない。
+     (己の測り: 尾空白 0 / CR 0 ―― 控 raw/zero/81_demenozoku_ichiran.json の ws / cr 欄)
+  ⑵ 條⑤ の byte和 2190869 は argv 255 本の和 ∴ 172 の byte は入つて居らぬ。
+     臺帳自身の byte も門の byte和 の外である(既知の穴)。
+  ⑶ 一走目の控 _gate/90_* は★消さぬ★。rc=1 を隠して rc=0 だけ出すのは静かな失敗に当る。

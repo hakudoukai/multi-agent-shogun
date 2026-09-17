@@ -1,0 +1,809 @@
+[
+ {
+  "kou": "otsu",
+  "label": "陰性_正常300_10",
+  "tane": "陰性",
+  "var": "STALE_SEC",
+  "atae": "300",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.041,
+  "sashi": [
+   0.057,
+   1.034,
+   1.03,
+   1.041,
+   1.034,
+   0.022
+  ],
+  "wall_s": 4.25,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   300,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.041,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陰性_未設定",
+  "tane": "陰性",
+  "var": "STALE_SEC",
+  "atae": "<未設定>",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.043,
+  "sashi": [
+   0.054,
+   1.036,
+   1.043,
+   1.038,
+   1.042,
+   0.019
+  ],
+  "wall_s": 4.256,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   300,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.043,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_空",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.038,
+  "sashi": [
+   0.055,
+   1.034,
+   1.031,
+   1.038,
+   1.033,
+   0.02
+  ],
+  "wall_s": 4.234,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   300,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.038,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_空白のみ",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": " ",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 20,
+  "matsu_s": 5.032,
+  "sashi": [
+   0.057,
+   5.027,
+   0.058,
+   5.032,
+   0.068
+  ],
+  "wall_s": 10.273,
+  "kosu_kidou": 3,
+  "kosu_shusshi": 3,
+  "ko_rc": [
+   1,
+   1,
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: ' '",
+  "kaiseki": null,
+  "sendkeys": 0,
+  "reigai": "ValueError: invalid literal for int() with base 10: ' '",
+  "shi_kata": "落(起動前に死)",
+  "matsu_ko": 0.068,
+  "matsu_oya": 5.032,
+  "sup_L": 28
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_0",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "0",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.041,
+  "sashi": [
+   0.052,
+   1.03,
+   1.034,
+   1.041,
+   1.031,
+   0.018
+  ],
+  "wall_s": 4.23,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 1,
+  "dryrun": 1,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   0,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.041,
+  "matsu_oya": null,
+  "sup_L": 9
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_-1",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "-1",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.039,
+  "sashi": [
+   0.052,
+   1.036,
+   1.039,
+   1.033,
+   1.035,
+   0.014
+  ],
+  "wall_s": 4.232,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 1,
+  "dryrun": 1,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   -1,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.039,
+  "matsu_oya": null,
+  "sup_L": 9
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_abc",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "abc",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 20,
+  "matsu_s": 5.028,
+  "sashi": [
+   0.059,
+   5.024,
+   0.057,
+   5.028,
+   0.063
+  ],
+  "wall_s": 10.261,
+  "kosu_kidou": 3,
+  "kosu_shusshi": 3,
+  "ko_rc": [
+   1,
+   1,
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: 'abc'",
+  "kaiseki": null,
+  "sendkeys": 0,
+  "reigai": "ValueError: invalid literal for int() with base 10: 'abc'",
+  "shi_kata": "落(起動前に死)",
+  "matsu_ko": 0.063,
+  "matsu_oya": 5.028,
+  "sup_L": 28
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_300abc",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "300abc",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 20,
+  "matsu_s": 5.028,
+  "sashi": [
+   0.053,
+   5.026,
+   0.057,
+   5.028,
+   0.059
+  ],
+  "wall_s": 10.252,
+  "kosu_kidou": 3,
+  "kosu_shusshi": 3,
+  "ko_rc": [
+   1,
+   1,
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: '300abc'",
+  "kaiseki": null,
+  "sendkeys": 0,
+  "reigai": "ValueError: invalid literal for int() with base 10: '300abc'",
+  "shi_kata": "落(起動前に死)",
+  "matsu_ko": 0.059,
+  "matsu_oya": 5.028,
+  "sup_L": 28
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_010",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "010",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.053,
+  "sashi": [
+   0.054,
+   1.034,
+   1.053,
+   1.043,
+   1.035,
+   0.019
+  ],
+  "wall_s": 4.261,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   10,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.053,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_+10",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "+10",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.035,
+  "sashi": [
+   0.061,
+   1.035,
+   1.035,
+   1.035,
+   1.034,
+   0.021
+  ],
+  "wall_s": 4.248,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   10,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.035,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_4294967295",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "4294967295",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.046,
+  "sashi": [
+   0.056,
+   1.034,
+   1.046,
+   1.034,
+   1.039,
+   0.016
+  ],
+  "wall_s": 4.254,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   4294967295,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.046,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_4294967296",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "4294967296",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.04,
+  "sashi": [
+   0.057,
+   1.03,
+   1.038,
+   1.037,
+   1.04,
+   0.023
+  ],
+  "wall_s": 4.252,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   4294967296,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.04,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_2p63m1",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "9223372036854775807",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.034,
+  "sashi": [
+   0.055,
+   1.034,
+   1.029,
+   1.032,
+   1.029,
+   0.017
+  ],
+  "wall_s": 4.227,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   9223372036854775807,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.034,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "陽性_改行尾",
+  "tane": "陽性",
+  "var": "STALE_SEC",
+  "atae": "300\n",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 9,
+  "matsu_s": 1.038,
+  "sashi": [
+   0.051,
+   1.038,
+   1.035,
+   1.034,
+   1.038,
+   0.018
+  ],
+  "wall_s": 4.242,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   300,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.038,
+  "matsu_oya": null,
+  "sup_L": 8
+ },
+ {
+  "kou": "otsu",
+  "label": "追加_改行中",
+  "tane": "陽性追加",
+  "var": "STALE_SEC",
+  "atae": "3\n0",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 23,
+  "matsu_s": 5.031,
+  "sashi": [
+   0.063,
+   5.031,
+   0.065,
+   5.029,
+   0.065
+  ],
+  "wall_s": 10.282,
+  "kosu_kidou": 3,
+  "kosu_shusshi": 3,
+  "ko_rc": [
+   1,
+   1,
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: '3\\n0'",
+  "kaiseki": null,
+  "sendkeys": 0,
+  "reigai": "ValueError: invalid literal for int() with base 10: '3\\n0'",
+  "shi_kata": "落(起動前に死)",
+  "matsu_ko": 0.065,
+  "matsu_oya": 5.031,
+  "sup_L": 31
+ },
+ {
+  "kou": "otsu",
+  "label": "追加_前後空白",
+  "tane": "陽性追加",
+  "var": "STALE_SEC",
+  "atae": " 300 ",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.048,
+  "sashi": [
+   0.056,
+   1.042,
+   1.048,
+   1.028,
+   1.043,
+   0.02
+  ],
+  "wall_s": 4.272,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   300,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.048,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "追加_下線",
+  "tane": "陽性追加",
+  "var": "STALE_SEC",
+  "atae": "1_0",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.053,
+  "sashi": [
+   0.05,
+   1.053,
+   1.039,
+   1.032,
+   1.04,
+   0.02
+  ],
+  "wall_s": 4.267,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   10,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.053,
+  "matsu_oya": null,
+  "sup_L": 7
+ },
+ {
+  "kou": "otsu",
+  "label": "追加_0x10",
+  "tane": "陽性追加",
+  "var": "STALE_SEC",
+  "atae": "0x10",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 20,
+  "matsu_s": 5.031,
+  "sashi": [
+   0.055,
+   5.024,
+   0.055,
+   5.031,
+   0.072
+  ],
+  "wall_s": 10.27,
+  "kosu_kidou": 3,
+  "kosu_shusshi": 3,
+  "ko_rc": [
+   1,
+   1,
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: '0x10'",
+  "kaiseki": null,
+  "sendkeys": 0,
+  "reigai": "ValueError: invalid literal for int() with base 10: '0x10'",
+  "shi_kata": "落(起動前に死)",
+  "matsu_ko": 0.072,
+  "matsu_oya": 5.031,
+  "sup_L": 28
+ },
+ {
+  "kou": "otsu",
+  "label": "追加_全角300",
+  "tane": "陽性追加",
+  "var": "STALE_SEC",
+  "atae": "３００",
+  "fixed": {
+   "POLL_SEC": "1"
+  },
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 1.05,
+  "sashi": [
+   0.074,
+   1.044,
+   1.05,
+   1.041,
+   1.047,
+   0.028
+  ],
+  "wall_s": 4.322,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   300,
+   1
+  ],
+  "sendkeys": 0,
+  "reigai": null,
+  "shi_kata": "通",
+  "matsu_ko": 1.05,
+  "matsu_oya": null,
+  "sup_L": 7
+ }
+]

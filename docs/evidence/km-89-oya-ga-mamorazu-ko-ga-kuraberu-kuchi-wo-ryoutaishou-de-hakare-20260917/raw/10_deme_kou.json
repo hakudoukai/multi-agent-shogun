@@ -1,0 +1,589 @@
+[
+ {
+  "kou": "kou",
+  "label": "陰性_正常300_10",
+  "tane": "陰性",
+  "var": "POLL_SEC",
+  "atae": "300",
+  "fixed": {},
+  "rc": null,
+  "kire": true,
+  "out_B": 0,
+  "err_L": 4,
+  "matsu_s": 0.052,
+  "sashi": [
+   0.052
+  ],
+  "wall_s": 20.004,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 0,
+  "ko_rc": [],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "300"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陰性_未設定",
+  "tane": "陰性",
+  "var": "POLL_SEC",
+  "atae": "<未設定>",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 10.035,
+  "sashi": [
+   0.055,
+   10.035,
+   0.017
+  ],
+  "wall_s": 10.138,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "10"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_空",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 10.032,
+  "sashi": [
+   0.053,
+   10.032,
+   0.021
+  ],
+  "wall_s": 10.138,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "10"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_空白のみ",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": " ",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 10,
+  "matsu_s": 5.029,
+  "sashi": [
+   0.059,
+   5.029
+  ],
+  "wall_s": 5.118,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: ' '",
+  "kaiseki": null,
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_0",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "0",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 0.055,
+  "sashi": [
+   0.055,
+   0.028,
+   0.015
+  ],
+  "wall_s": 0.126,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "0"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_-1",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "-1",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 0.052,
+  "sashi": [
+   0.052,
+   0.033
+  ],
+  "wall_s": 0.112,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: sleep length must be non-negative",
+  "kaiseki": [
+   "300",
+   "-1"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_abc",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "abc",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 10,
+  "matsu_s": 5.042,
+  "sashi": [
+   0.063,
+   5.042
+  ],
+  "wall_s": 5.135,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: 'abc'",
+  "kaiseki": null,
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_300abc",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "300abc",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 10,
+  "matsu_s": 5.031,
+  "sashi": [
+   0.068,
+   5.031
+  ],
+  "wall_s": 5.128,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: '300abc'",
+  "kaiseki": null,
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_010",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "010",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 10.04,
+  "sashi": [
+   0.054,
+   10.04,
+   0.019
+  ],
+  "wall_s": 10.143,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "10"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_+10",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "+10",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 10.037,
+  "sashi": [
+   0.057,
+   10.037,
+   0.02
+  ],
+  "wall_s": 10.145,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "10"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_4294967295",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "4294967295",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 0.056,
+  "sashi": [
+   0.056,
+   0.041
+  ],
+  "wall_s": 0.123,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "4294967295"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_4294967296",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "4294967296",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 0.051,
+  "sashi": [
+   0.051,
+   0.034
+  ],
+  "wall_s": 0.114,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "4294967296"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_2p63m1",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "9223372036854775807",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 0.048,
+  "sashi": [
+   0.048,
+   0.031
+  ],
+  "wall_s": 0.109,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "OverflowError: timestamp too large to convert to C _PyTime_t",
+  "kaiseki": [
+   "300",
+   "9223372036854775807"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "陽性_改行尾",
+  "tane": "陽性",
+  "var": "POLL_SEC",
+  "atae": "300\n",
+  "fixed": {},
+  "rc": null,
+  "kire": true,
+  "out_B": 0,
+  "err_L": 5,
+  "matsu_s": 0.055,
+  "sashi": [
+   0.055
+  ],
+  "wall_s": 20.004,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 0,
+  "ko_rc": [],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "300"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "追加_改行中",
+  "tane": "陽性追加",
+  "var": "POLL_SEC",
+  "atae": "3\n0",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 11,
+  "matsu_s": 5.028,
+  "sashi": [
+   0.06,
+   5.028
+  ],
+  "wall_s": 5.118,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: '3\\n0'",
+  "kaiseki": null,
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "追加_前後空白",
+  "tane": "陽性追加",
+  "var": "POLL_SEC",
+  "atae": " 300 ",
+  "fixed": {},
+  "rc": null,
+  "kire": true,
+  "out_B": 0,
+  "err_L": 4,
+  "matsu_s": 0.054,
+  "sashi": [
+   0.054
+  ],
+  "wall_s": 20.004,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 0,
+  "ko_rc": [],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "300"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "追加_下線",
+  "tane": "陽性追加",
+  "var": "POLL_SEC",
+  "atae": "1_0",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 8,
+  "matsu_s": 10.033,
+  "sashi": [
+   0.048,
+   10.033,
+   0.022
+  ],
+  "wall_s": 10.132,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   0
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "10"
+  ],
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "追加_0x10",
+  "tane": "陽性追加",
+  "var": "POLL_SEC",
+  "atae": "0x10",
+  "fixed": {},
+  "rc": 0,
+  "kire": false,
+  "out_B": 0,
+  "err_L": 10,
+  "matsu_s": 5.03,
+  "sashi": [
+   0.065,
+   5.03
+  ],
+  "wall_s": 5.123,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 1,
+  "ko_rc": [
+   1
+  ],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": true,
+  "shinkoku": "ValueError: invalid literal for int() with base 10: '0x10'",
+  "kaiseki": null,
+  "sendkeys": 0
+ },
+ {
+  "kou": "kou",
+  "label": "追加_全角300",
+  "tane": "陽性追加",
+  "var": "POLL_SEC",
+  "atae": "３００",
+  "fixed": {},
+  "rc": null,
+  "kire": true,
+  "out_B": 0,
+  "err_L": 4,
+  "matsu_s": 0.053,
+  "sashi": [
+   0.053
+  ],
+  "wall_s": 20.004,
+  "kosu_kidou": 1,
+  "kosu_shusshi": 0,
+  "ko_rc": [],
+  "stale_hatsuka": 0,
+  "dryrun": 0,
+  "traceback": false,
+  "shinkoku": null,
+  "kaiseki": [
+   "300",
+   "300"
+  ],
+  "sendkeys": 0
+ }
+]

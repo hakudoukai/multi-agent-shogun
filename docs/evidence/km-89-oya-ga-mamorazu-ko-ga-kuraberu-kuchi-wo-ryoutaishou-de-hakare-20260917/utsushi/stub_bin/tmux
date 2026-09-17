@@ -1,0 +1,23 @@
+#!/bin/bash
+# ★km-89 stub tmux★ ―― 実在 pane に一切触れぬ為の贋物。
+#   scope_out⑵「稼働中の watcher / supervisor を止めるな・実在の pane を的にするな」の充足器。
+#   KM89_STATE   : display-message 呼出回数を刻む file
+#   KM89_MAX_OK  : 此の回数までは pane 在りと答へ、以降は rc=1 (pane 消滅) を返す
+#   KM89_PANE_TEXT: capture-pane が刷る贋 pane 全文
+#   KM89_TMUX_LOG: 呼出を悉く記す
+set -u
+# ★ミリ秒刻★: macOS date に %N は無い故 perl Time::HiRes を用ゐる(子の実待ち= 呼出間の差)
+now() { perl -MTime::HiRes -e 'printf "%.3f", Time::HiRes::time()'; }
+printf '%s argv=%s\n' "$(now)" "$*" >> "$KM89_TMUX_LOG"
+case "${1:-}" in
+  display-message)
+    n=0; [ -f "$KM89_STATE" ] && n=$(cat "$KM89_STATE")
+    n=$((n+1)); printf '%s' "$n" > "$KM89_STATE"
+    if [ "$n" -le "$KM89_MAX_OK" ]; then echo '%1'; exit 0; fi
+    echo "stub: no such pane (call #$n > MAX_OK=$KM89_MAX_OK)" >&2; exit 1 ;;
+  capture-pane)
+    cat "$KM89_PANE_TEXT"; exit 0 ;;
+  send-keys)
+    printf 'SEND-KEYS argv=%s\n' "$*" >> "$KM89_TMUX_LOG"; exit 0 ;;
+  *) echo "stub: unhandled subcommand ${1:-<none>}" >&2; exit 1 ;;
+esac
