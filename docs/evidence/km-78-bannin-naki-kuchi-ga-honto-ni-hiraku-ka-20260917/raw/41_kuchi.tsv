@@ -1,0 +1,27 @@
+file	name	port_line	use_line	op	side	sigil	default	expr	1未設定	2空文字	3空白のみ	4二十桁	5正常値7	6負数	7改行入り	8既存␊
+scripts/agent_health_check.sh	INSERT_COUNT	230	231	-gt	L	:-	0	[ "${INSERT_COUNT:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/agent_health_check.sh	_th_unset_told	109	109	-eq	L	:-	0	[ "${_th_unset_told:-0}" -eq "0" ]	0	0	2	2	1	1	2	2
+scripts/agent_health_check.sh	max_tokens	377	378	-ge	L	:-	0	[ "${max_tokens:-0}" -ge "0" ]	0	0	2	2	0	1	2	2
+scripts/agent_health_check.sh	n	253	253	-gt	L	:-	0	[ "${n:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/agent_periodic_push.sh	sp_age	64	65	-gt	L	:-	0	[ "${sp_age:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/audit_meta_codex.sh	COUNT	108	108	-ge	L	:-	0	[ "${COUNT:-0}" -ge "0" ]	0	0	2	2	0	1	2	2
+scripts/inbox_watcher.sh	APPROVAL_ALERT_COOLDOWN	899	899	-lt	R	:-	300	[ "0" -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]	0	0	2	2	0	1	2	2
+scripts/inbox_watcher.sh	ASW_PHASE	215	216	-ge	L	:-	2	[ "${ASW_PHASE:-2}" -ge "0" ]	0	0	2	2	0	1	2	2
+scripts/inbox_watcher.sh	FIRST_UNREAD_SEEN	122	243	-gt	L	:-	0	[ "${FIRST_UNREAD_SEEN:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/inbox_watcher.sh	INOTIFY_TIMEOUT	1535	1564	-lt	R	:-	30	[ "0" -lt "${INOTIFY_TIMEOUT:-30}" ]	0	0	2	2	0	1	2	2
+scripts/inbox_watcher.sh	LAST_APPROVAL_ALERT_TS	898	898	-gt	L	:-	0	[ "${LAST_APPROVAL_ALERT_TS:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/inbox_watcher.sh	LAST_CLEAR_TS	123	917	-gt	L	:-	0	[ "${LAST_CLEAR_TS:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/inbox_watcher.sh	LAST_NUDGE_TS	195	305	-gt	L	:-	0	[ "${LAST_NUDGE_TS:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/inbox_watcher.sh	LAST_TOKEN_WARN_TS	1614	1614	-gt	L	:-	0	[ "${LAST_TOKEN_WARN_TS:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/inbox_watcher.sh	NEW_CONTEXT_SENT	205	637	-eq	L	:-	0	[ "${NEW_CONTEXT_SENT:-0}" -eq "0" ]	0	0	2	2	1	1	2	2
+scripts/inbox_watcher.sh	STARTUP_PROMPT_SENT	208	1435	-eq	L	:-	0	[ "${STARTUP_PROMPT_SENT:-0}" -eq "0" ]	0	0	2	2	1	1	2	2
+scripts/inbox_watcher.sh	_th_unset_told	148	148	-eq	L	:-	0	[ "${_th_unset_told:-0}" -eq "0" ]	0	0	2	2	1	1	2	2
+scripts/inbox_watcher.sh	_token_int	1622	1622	-ge	L	:-	0	[ "${_token_int:-0}" -ge "0" ]	0	0	2	2	0	1	2	2
+scripts/inbox_write.sh	_AMP_PATTERN_COUNT	88	88	-ge	L	:-	0	[ "${_AMP_PATTERN_COUNT:-0}" -ge "0" ]	0	0	2	2	0	1	2	2
+scripts/ratelimit_check.sh	CODEX_LIMIT_HITS	417	422	-ge	L	:-	0	[ "${CODEX_LIMIT_HITS:-0}" -ge "0" ]	0	0	2	2	0	1	2	2
+scripts/redundancy/shogun_report_watcher.sh	_th_unset_told	53	53	-eq	L	:-	0	[ "${_th_unset_told:-0}" -eq "0" ]	0	0	2	2	1	1	2	2
+scripts/redundancy/shogun_report_watcher.sh	last_ts	326	326	-gt	L	:-	0	[ "${last_ts:-0}" -gt "0" ]	1	1	2	2	0	1	2	2
+scripts/stop_hook_inbox.sh	MASS_UNREAD_THRESHOLD	177	194	-gt	R	:-	5	[ "0" -gt "${MASS_UNREAD_THRESHOLD:-5}" ]	1	1	2	2	1	0	2	2
+scripts/stop_hook_inbox.sh	STOP_HOOK_STDIN_TIMEOUT	52	70	-gt	R	:-	10	[ "0" -gt "${STOP_HOOK_STDIN_TIMEOUT:-10}" ]	1	1	2	2	1	0	2	2
+scripts/stop_hook_inbox.sh	UNREAD_COUNT	125	125	-eq	L	:-	0	[ "${UNREAD_COUNT:-0}" -eq "0" ]	0	0	2	2	1	1	2	2
+scripts/watchdogs/enter_restart_common_watchdog.sh	_th_unset_told	99	99	-eq	L	:-	0	[ "${_th_unset_told:-0}" -eq "0" ]	0	0	2	2	1	1	2	2

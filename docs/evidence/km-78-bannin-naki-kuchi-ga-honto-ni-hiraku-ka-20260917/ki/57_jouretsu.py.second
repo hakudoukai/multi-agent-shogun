@@ -1,0 +1,110 @@
+# -*- coding: utf-8 -*-
+"""57 ★開く口の序列★(㋔) ―― 欄は 何が抜けるか / 誰が困るか / 気付く路
+
+★「何が抜けるか」を読みで書くな。★ rc=2 は if を偽にする ∴ ★抜けるのは then 枝★ である。
+  故に then 枝を生器から引き、其の逐語を欄に据ゑる。
+
+★「気付く路」も同じ手で測る。★ then 枝の中に ★報せの動詞★(echo/printf/logger/>&2/
+  inbox_write/tmux/notify/curl) が在れば、rc=2 で ★抜けるのは其の報せ其の物★ である。
+  ∴ 其の口は「★倒れても誰も知らぬ★」。報せが枝の外に在る口は「別路で気付く」。
+  ―― 之は ★代理の測り★ である(枝の中の語を見て居るに過ぎぬ)。証ではない旨を併記する。
+
+序列の目(悉く測つた値のみ):
+  一) 由来 ―― 内生(命令の出目) > 内生(字面) > 外来(env のみ)
+      ∵ 41 で倒れた四形の内 ★7改行入り は命令の出目で起き得る★(多行を返す命令)。
+        外来は ★人が env を誤らねば開かぬ★。
+  二) 報せが抜けるか ―― 抜ける方が上(気付く路が無い)
+  三) 開く形の数(4形 > 1形)
+"""
+import io, os, re, sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'raw'))
+import kaki as K
+
+B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = '/Users/momizimac/multi-agent-shogun'
+SHIRASE = re.compile(r'\becho\b|\bprintf\b|\blogger\b|>&2|inbox_write|\btmux\b|notify|\bcurl\b|\bsay\b')
+TOJI = re.compile(r'^\s*(fi|else|elif|esac|done|\}|;;)')
+
+rows = [l.rstrip('\n').split('\t') for l in io.open(B + '/raw/56_kawashimo.tsv', encoding='utf-8')]
+h = rows[0]
+I = {k: h.index(k) for k in ('file', 'line', 'name', '由来', '版', '比較器行', '所', '比較器逐語')}
+body = [r for r in rows[1:] if r[I['比較器行']] != '-']
+assert body, '★56 の出目が空 ―― 序列は組めぬ★'
+
+# 53 から 開く形の数 を引く
+k53 = {}
+r53 = [l.rstrip('\n').split('\t') for l in io.open(B + '/raw/53_saihyou.tsv', encoding='utf-8')]
+h53 = r53[0]
+for r in r53[1:]:
+    if r[h53.index('札')] == '①fail-open':
+        k53[(r[h53.index('file')], r[h53.index('line')], r[h53.index('name')])] = r[h53.index('理由/何が抜けるか')]
+
+cache = {}
+def L(rel):
+    if rel not in cache:
+        cache[rel] = io.open(ROOT + '/' + rel, encoding='utf-8', errors='replace').read().split('\n')
+    return cache[rel]
+
+def eda(rel, k):
+    """then 枝を引く ―― 比較器の行から、閉ぢ語まで(最大12行)"""
+    src = L(rel)
+    out = []
+    for t in src[k:k + 12]:
+        if TOJI.match(t):
+            break
+        if t.strip() and not t.lstrip().startswith('#'):   # 註釈は走らぬ
+            out.append(t.strip())
+    return out
+
+YU = {'内生(命令の出目)': 0, '内生(字面)': 1, '外来(env のみ)': 2, '外来(export有)': 3}
+kumi = {}
+for r in body:
+    key = (r[I['file']], r[I['name']])
+    d = kumi.setdefault(key, {'由来': r[I['由来']], '行': set(), '版': set(), '枝': [], '形': set()})
+    d['行'].add(r[I['line']])
+    d['版'].add(r[I['版']])
+    d['形'].add(k53.get((r[I['file']], r[I['line']], r[I['name']]), '?'))
+    d['枝'].append((int(r[I['比較器行']]), r[I['比較器逐語']], eda(r[I['file']], int(r[I['比較器行']]))))
+
+tbl = []
+for (f, n), d in kumi.items():
+    shirase = any(SHIRASE.search(x) for _, _, e in d['枝'] for x in e)
+    kata4 = any('/' in x for x in d['形'])
+    nukeru = sorted(d['枝'])[0]
+    tbl.append({
+        'file': f, 'name': n, '由来': d['由来'],
+        '口数': len(d['行']),
+        '版': '一致' if d['版'] == {'一致'} else '★ずれ★',
+        '報せが抜ける': '★抜ける★' if shirase else '枝の外',
+        '開く形': '四形' if kata4 else '一形',
+        '抜ける枝の頭': (nukeru[2][0] if nukeru[2] else '(枝 空)')[:110],
+        '比較器': nukeru[1][:110],
+    })
+
+tbl.sort(key=lambda x: (YU.get(x['由来'], 9), 0 if x['報せが抜ける'] == '★抜ける★' else 1,
+                        0 if x['開く形'] == '四形' else 1, -x['口数'], x['file'], x['name']))
+
+K.kaku_tsv(B + '/raw/57_jouretsu.tsv',
+           [[i + 1, t['file'], t['name'], t['由来'], t['口数'], t['版'], t['報せが抜ける'],
+             t['開く形'], t['比較器'], t['抜ける枝の頭']] for i, t in enumerate(tbl)],
+           ['序', 'file', 'name', '由来', '口数', '版', '報せが抜ける', '開く形', '比較器逐語', '抜ける枝の頭'])
+
+s = []
+s.append('# 57 ★開く口の序列★ / 組= %d (口 35 を (file,name) で畳んだ数)' % len(tbl))
+s.append('# 目= ①由来(内生ほど上) ②報せが抜けるか ③開く形の数')
+s.append('# ★報せの有無は代理の測り★ ―― then 枝の中の語を見たに過ぎぬ。抜けた時の實害の証ではない。')
+s.append('')
+for i, t in enumerate(tbl, 1):
+    s.append('%2d %s  %s' % (i, t['file'], t['name']))
+    s.append('     由来=%s  口=%d  版=%s  開く形=%s  報せ=%s' % (t['由来'], t['口数'], t['版'], t['開く形'], t['報せが抜ける']))
+    s.append('     比較器 : %s' % t['比較器'])
+    s.append('     抜ける枝: %s' % t['抜ける枝の頭'])
+s.append('')
+s.append('# ―― 目ごとの数')
+for k in ('由来', '報せが抜ける', '開く形', '版'):
+    c = {}
+    for t in tbl:
+        c[t[k]] = c.get(t[k], 0) + 1
+    s.append('  %s: %s' % (k, ' / '.join('%s=%d' % kv for kv in sorted(c.items()))))
+K.kaku(B + '/raw/57_jouretsu_summary.txt', '\n'.join(s))
+print('\n'.join(s))

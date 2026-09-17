@@ -1,0 +1,17 @@
+name	file	line	性	逐語
+STALE_SEC	scripts/pane_enter_watcher.py	131	★別言語が受ける★	default=int(os.environ.get("STALE_SEC", DEFAULT_STALE_SEC)),
+STALE_SEC	scripts/pane_enter_watcher_supervisor.sh	13	註釈	#   STALE_SEC=300 (既定 5分)
+STALE_SEC	scripts/pane_enter_watcher_supervisor.sh	50	置く/展く	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+STALE_SEC	scripts/pane_enter_watcher_supervisor.sh	52	置く/展く	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+POLL_SEC	scripts/pane_enter_watcher.py	134	★別言語が受ける★	default=int(os.environ.get("POLL_SEC", DEFAULT_POLL_SEC)),
+POLL_SEC	scripts/pane_enter_watcher_supervisor.sh	14	註釈	#   POLL_SEC=10 (既定 10秒)
+POLL_SEC	scripts/pane_enter_watcher_supervisor.sh	50	置く/展く	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+POLL_SEC	scripts/pane_enter_watcher_supervisor.sh	52	置く/展く	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+DETECT_STALE_STALE_SEC	scripts/lib/detect_stale.sh	33	置く/展く	DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+ER_THRESHOLD_MIN	scripts/watchdogs/enter_restart_commander_watchdog.sh	35	置く/展く	export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+ER_THRESHOLD_MIN	scripts/watchdogs/enter_restart_common_watchdog.sh	10	註釈	# 役割: 指定 PC の指定 pane の Claude TUI が ER_THRESHOLD_MIN 分 idle 時、★既入力
+ER_THRESHOLD_MIN	scripts/watchdogs/enter_restart_common_watchdog.sh	26	註釈	#   ER_THRESHOLD_MIN=10        idle 判定閾値 (分)
+ER_THRESHOLD_MIN	scripts/watchdogs/enter_restart_common_watchdog.sh	120	★番人★	fix_threshold ER_THRESHOLD_MIN 10 THRESHOLD_MIN
+ER_THRESHOLD_MIN	scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	38	註釈	#   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+ER_THRESHOLD_MIN	scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	37	註釈	#   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+ER_THRESHOLD_MIN	scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	38	註釈	#   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15

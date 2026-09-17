@@ -1,0 +1,26 @@
+# 11 母數の絞り / 廣= 398 口 / 68 file
+  絞①控 で落ちた口= 191
+  絞②worktree で落ちた口= 120
+  絞③退役 で落ちた口= 6
+  絞④試験具 で落ちた口= 0
+  絞⑤非sh で落ちた口= 0
+★生器の口= 81 口 / 16 file★
+  番人在= 2 / ★番人無= 79★
+  scripts/agent_health_check.sh                              口 7 番人無 7  INSERT_COUNT _th_unset_told last max_tokens n
+  scripts/agent_periodic_push.sh                             口 5 番人無 5  IN_PROGRESS PENDING sp_age
+  scripts/audit_meta_codex.sh                                口 1 番人無 1  COUNT
+  scripts/checks/karo_mac_dasumae_gate.sh                    口 3 番人無 1  n
+  scripts/checks/karo_mac_gate4.sh                           口 1 番人無 1  VAR
+  scripts/checks/secondpc_dispatch.sh                        口 1 番人無 1  SP_INBOX_AGE
+  scripts/inbox_watcher.sh                                   口40 番人無40  APPROVAL_ALERT_COOLDOWN ASW_DISABLE_ESCALATION ASW_DISABLE_NORMAL_NUDGE ASW_NO_IDLE_FULL_READ ASW_PHASE ASW_PROCESS_TIMEOUT ESTIMATED_TOKENS_TOTAL FINAL_ESCALATION_ONLY FIRST_UNREAD_SEEN INBOX_WATCHER_DISABLE_TYPING_CHECK INOTIFY_TIMEOUT LAST_APPROVAL_ALERT_TS LAST_B_ALERT_TS LAST_CLEAR_TS LAST_KARO_ALERT_TS LAST_NUDGE_TS LAST_TOKEN_WARN_TS MAX_TYPING_SKIP NEW_CONTEXT_SENT NUDGE_COOLDOWN_SEC NUDGE_COOLDOWN_SEC_CLAUDE NUDGE_COOLDOWN_SEC_CODEX READ_BYTES_TOTAL READ_COUNT STARTUP_PROMPT_SENT _th_unset_told _token_int read_bytes
+  scripts/inbox_write.sh                                     口 2 番人無 2  _AMP_PATTERN_COUNT http_status
+  scripts/karo_standby_dashboard.sh                          口 1 番人無 1  n
+  scripts/lib/detect_stale.sh                                口 1 番人無 1  DETECT_STALE_STALE_SEC
+  scripts/pane_enter_watcher_supervisor.sh                   口 7 番人無 7  LIVE POLL_SEC STALE_SEC
+  scripts/ratelimit_check.sh                                 口 1 番人無 1  CODEX_LIMIT_HITS
+  scripts/redundancy/shogun_report_watcher.sh                口 2 番人無 2  _th_unset_told last_ts
+  scripts/stop_hook_inbox.sh                                 口 7 番人無 7  MASS_UNREAD_THRESHOLD STOP_HOOK_STDIN_TIMEOUT UNREAD_COUNT
+  scripts/watchdogs/enter_restart_commander_watchdog.sh      口 1 番人無 1  ER_THRESHOLD_MIN
+  scripts/watchdogs/enter_restart_common_watchdog.sh         口 1 番人無 1  _th_unset_told
+# ★之は家老の 22口/8file(定義丁)と一致せぬ。定義丁の本文を當席は持たぬゆゑ、当てに行かず★
+# ★己の定義を宣して己の數を出す。丁との差は 20 の kawashimo(比較器)で埋める。★

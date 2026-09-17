@@ -1,0 +1,47 @@
+# 53 札の引き直し / 母數= 81 口 / 16 file
+    ①fail-open   35 口
+    ②疵でない        45 口
+    ③測れぬ          1 口
+    合計 81 (母數 81 と 一致)
+
+# ①の内訳 ―― ★開く形の数で分つ★
+    一形のみ開く(形C の番人在り・桁だけ抜ける)= 1 口
+    四形開く(番人 無し)                     = 34 口
+
+# ★序列(㋔)★ 目= 誰の手で引けるか / 何が抜けるか / 気付く路
+#   上ほど「人が誤らずとも開く」
+   1 scripts/agent_health_check.sh               :230   INSERT_COUNT             内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   2 scripts/agent_health_check.sh               :231   INSERT_COUNT             内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   3 scripts/agent_health_check.sh               :253   n                        内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   4 scripts/agent_health_check.sh               :270   n                        内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   5 scripts/agent_health_check.sh               :377   max_tokens               内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   6 scripts/agent_periodic_push.sh              :64    sp_age                   内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   7 scripts/audit_meta_codex.sh                 :108   COUNT                    内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   8 scripts/inbox_watcher.sh                    :123   LAST_CLEAR_TS            内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+   9 scripts/inbox_watcher.sh                    :917   LAST_CLEAR_TS            内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  10 scripts/inbox_write.sh                      :88    _AMP_PATTERN_COUNT       内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  11 scripts/ratelimit_check.sh                  :417   CODEX_LIMIT_HITS         内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  12 scripts/stop_hook_inbox.sh                  :125   UNREAD_COUNT             内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  13 scripts/stop_hook_inbox.sh                  :189   UNREAD_COUNT             内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  14 scripts/stop_hook_inbox.sh                  :194   UNREAD_COUNT             内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  15 scripts/stop_hook_inbox.sh                  :202   UNREAD_COUNT             内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  16 scripts/stop_hook_inbox.sh                  :221   UNREAD_COUNT             内生(命令の出目)        3空白のみ/4二十桁/7改行入り/8既存␊
+  17 scripts/agent_health_check.sh               :109   _th_unset_told           内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  18 scripts/inbox_watcher.sh                    :122   FIRST_UNREAD_SEEN        内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  19 scripts/inbox_watcher.sh                    :148   _th_unset_told           内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  20 scripts/inbox_watcher.sh                    :195   LAST_NUDGE_TS            内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  21 scripts/inbox_watcher.sh                    :205   NEW_CONTEXT_SENT         内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  22 scripts/inbox_watcher.sh                    :208   STARTUP_PROMPT_SENT      内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  23 scripts/inbox_watcher.sh                    :305   LAST_NUDGE_TS            内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  24 scripts/inbox_watcher.sh                    :472   FIRST_UNREAD_SEEN        内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  25 scripts/inbox_watcher.sh                    :637   NEW_CONTEXT_SENT         内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  26 scripts/inbox_watcher.sh                    :898   LAST_APPROVAL_ALERT_TS   内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  27 scripts/inbox_watcher.sh                    :1367  FIRST_UNREAD_SEEN        内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  28 scripts/inbox_watcher.sh                    :1377  FIRST_UNREAD_SEEN        内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  29 scripts/inbox_watcher.sh                    :1614  LAST_TOKEN_WARN_TS       内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  30 scripts/inbox_watcher.sh                    :1622  _token_int               内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  31 scripts/redundancy/shogun_report_watcher.sh :53    _th_unset_told           内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  32 scripts/redundancy/shogun_report_watcher.sh :326   last_ts                  内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  33 scripts/watchdogs/enter_restart_common_watchdog.sh:99    _th_unset_told           内生(字面)           3空白のみ/4二十桁/7改行入り/8既存␊
+  34 scripts/stop_hook_inbox.sh                  :52    STOP_HOOK_STDIN_TIMEOUT  外来(env のみ)       3空白のみ/4二十桁/7改行入り/8既存␊
+  35 scripts/stop_hook_inbox.sh                  :177   MASS_UNREAD_THRESHOLD    外来(env のみ)       4二十桁 のみ(形C の番人 196行 が他三形を捕へる ―― ★桁を見て居らぬ

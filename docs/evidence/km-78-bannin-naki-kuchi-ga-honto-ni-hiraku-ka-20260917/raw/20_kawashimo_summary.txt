@@ -1,0 +1,32 @@
+# 20 川下 / 口 81 / 引いた(口,行,類)三つ組= 260
+# 類ごとの三つ組: 他食=156 字比=12 数比=85 算術=7
+# ★排他性★ 一つの口が二類以上へ当つた= 24 口 / 全 57 口(∴類の和は口数を超える)
+★数比に入る口= 26★(rc=2 の目が在る ―― 之のみが札①の候補)
+    scripts/agent_health_check.sh	INSERT_COUNT
+    scripts/agent_health_check.sh	_th_unset_told
+    scripts/agent_health_check.sh	max_tokens
+    scripts/agent_health_check.sh	n
+    scripts/agent_periodic_push.sh	sp_age
+    scripts/audit_meta_codex.sh	COUNT
+    scripts/inbox_watcher.sh	APPROVAL_ALERT_COOLDOWN
+    scripts/inbox_watcher.sh	ASW_PHASE
+    scripts/inbox_watcher.sh	FIRST_UNREAD_SEEN
+    scripts/inbox_watcher.sh	INOTIFY_TIMEOUT
+    scripts/inbox_watcher.sh	LAST_APPROVAL_ALERT_TS
+    scripts/inbox_watcher.sh	LAST_CLEAR_TS
+    scripts/inbox_watcher.sh	LAST_NUDGE_TS
+    scripts/inbox_watcher.sh	LAST_TOKEN_WARN_TS
+    scripts/inbox_watcher.sh	NEW_CONTEXT_SENT
+    scripts/inbox_watcher.sh	STARTUP_PROMPT_SENT
+    scripts/inbox_watcher.sh	_th_unset_told
+    scripts/inbox_watcher.sh	_token_int
+    scripts/inbox_write.sh	_AMP_PATTERN_COUNT
+    scripts/ratelimit_check.sh	CODEX_LIMIT_HITS
+    scripts/redundancy/shogun_report_watcher.sh	_th_unset_told
+    scripts/redundancy/shogun_report_watcher.sh	last_ts
+    scripts/stop_hook_inbox.sh	MASS_UNREAD_THRESHOLD
+    scripts/stop_hook_inbox.sh	STOP_HOOK_STDIN_TIMEOUT
+    scripts/stop_hook_inbox.sh	UNREAD_COUNT
+    scripts/watchdogs/enter_restart_common_watchdog.sh	_th_unset_told
+算術のみに入る口= 0
+★数比にも算術にも入らぬ口= 31(札②「比較器に入らぬゆゑ疵でない」の候補)★

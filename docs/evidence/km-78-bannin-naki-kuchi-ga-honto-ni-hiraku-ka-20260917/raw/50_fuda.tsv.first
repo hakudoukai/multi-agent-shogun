@@ -1,0 +1,82 @@
+file	line	name	default	bannin	由来	札	理由/何が抜けるか
+scripts/agent_health_check.sh	109	_th_unset_told	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/agent_health_check.sh	230	INSERT_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/agent_health_check.sh	231	INSERT_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/agent_health_check.sh	253	n	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/agent_health_check.sh	270	n	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/agent_health_check.sh	377	max_tokens	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/agent_periodic_push.sh	64	sp_age	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/audit_meta_codex.sh	108	COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	148	_th_unset_told	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	195	LAST_NUDGE_TS	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	205	NEW_CONTEXT_SENT	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	208	STARTUP_PROMPT_SENT	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	215	ASW_PHASE	2	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	305	LAST_NUDGE_TS	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	637	NEW_CONTEXT_SENT	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	898	LAST_APPROVAL_ALERT_TS	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	899	APPROVAL_ALERT_COOLDOWN	300	★番人無★	外来(env のみ)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	917	LAST_CLEAR_TS	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	1535	INOTIFY_TIMEOUT	30	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	1614	LAST_TOKEN_WARN_TS	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_watcher.sh	1622	_token_int	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/inbox_write.sh	88	_AMP_PATTERN_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/ratelimit_check.sh	417	CODEX_LIMIT_HITS	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/redundancy/shogun_report_watcher.sh	53	_th_unset_told	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/redundancy/shogun_report_watcher.sh	326	last_ts	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	10	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/stop_hook_inbox.sh	125	UNREAD_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/stop_hook_inbox.sh	177	MASS_UNREAD_THRESHOLD	5	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/stop_hook_inbox.sh	189	UNREAD_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/stop_hook_inbox.sh	194	UNREAD_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/stop_hook_inbox.sh	202	UNREAD_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/stop_hook_inbox.sh	221	UNREAD_COUNT	0	★番人無★	内生(命令の出目)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/watchdogs/enter_restart_common_watchdog.sh	99	_th_unset_told	0	★番人無★	内生(字面)	①fail-open	3空白のみ/4二十桁/7改行入り/8既存␊
+scripts/agent_health_check.sh	142	last	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/agent_periodic_push.sh	95	PENDING	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/agent_periodic_push.sh	95	IN_PROGRESS	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/agent_periodic_push.sh	112	PENDING	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/agent_periodic_push.sh	112	IN_PROGRESS	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	10485760	番人在	外来(env のみ)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/checks/karo_mac_dasumae_gate.sh	25	n	0	★番人無★	外来(env のみ)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	10	番人在	外来(env のみ)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/checks/karo_mac_gate4.sh	71	VAR	50	★番人無★	外来(env のみ)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/checks/secondpc_dispatch.sh	34	SP_INBOX_AGE	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	188	LAST_B_ALERT_TS	0	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	191	LAST_KARO_ALERT_TS	0	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	197	NUDGE_COOLDOWN_SEC	60	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	199	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	219	ASW_NO_IDLE_FULL_READ	1	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	223	ASW_DISABLE_ESCALATION	0	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	224	ASW_PROCESS_TIMEOUT	1	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	228	READ_COUNT	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	229	READ_BYTES_TOTAL	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	230	ESTIMATED_TOKENS_TOTAL	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	261	ASW_DISABLE_NORMAL_NUDGE	0	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	295	NUDGE_COOLDOWN_SEC	60	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	297	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	301	NUDGE_COOLDOWN_SEC_CLAUDE	60	★番人無★	外来(env のみ)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	470	ASW_NO_IDLE_FULL_READ	1	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	998	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	★番人無★	外来(env のみ)	②疵でない	川下は 字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	1036	FINAL_ESCALATION_ONLY	0	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	1067	MAX_TYPING_SKIP	5	★番人無★	外来(env のみ)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	1187	FINAL_ESCALATION_ONLY	0	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	1270	read_bytes	0	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	1447	ASW_DISABLE_ESCALATION	0	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_watcher.sh	1599	ASW_PROCESS_TIMEOUT	1	★番人無★	内生(字面)	②疵でない	川下は 他食・字比 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/inbox_write.sh	209	http_status	000	★番人無★	内生(命令の出目)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/karo_standby_dashboard.sh	56	n	0	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/pane_enter_watcher_supervisor.sh	36	LIVE	0	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/pane_enter_watcher_supervisor.sh	50	LIVE	0	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	300	★番人無★	外来(env のみ)	②疵でない	下流は python の int() ―― ValueError で起動時に落ち、監督が5秒で建て直す★fail-closed・声在り★
+scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	10	★番人無★	外来(env のみ)	②疵でない	下流は python の int() ―― ValueError で起動時に落ち、監督が5秒で建て直す★fail-closed・声在り★
+scripts/pane_enter_watcher_supervisor.sh	52	LIVE	0	★番人無★	内生(字面)	②疵でない	川下は 他食 のみ ―― 数の比較器に入らぬゆゑ rc=2 に成り得ぬ
+scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	300	★番人無★	外来(env のみ)	②疵でない	下流は python の int() ―― ValueError で起動時に落ち、監督が5秒で建て直す★fail-closed・声在り★
+scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	10	★番人無★	外来(env のみ)	②疵でない	下流は python の int() ―― ValueError で起動時に落ち、監督が5秒で建て直す★fail-closed・声在り★
+scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	2	★番人無★	外来(export有)	②疵でない	呼ばれる側 enter_restart_common_watchdog.sh:120 の fix_threshold が★file を跨いで★守る
+scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	120	★番人無★	内生(字面)	③測れぬ	生器全体で参照が此の一行のみ ―― 代入され二度と讀まれぬ★死口★。比較器が無いゆゑ8形に意味が無い

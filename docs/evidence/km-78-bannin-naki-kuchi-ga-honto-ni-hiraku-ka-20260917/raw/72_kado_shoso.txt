@@ -1,0 +1,52 @@
+# 72 門の初控(_gate/92_gate.err)から引いた ★初走の疵★ ―― 器の覚ではなく門の控が典拠
+
+甲 0byte(條④が鳴つた) = 18本
+    ./raw/00_start.err
+    ./raw/10_census.err
+    ./raw/11_shibori.err
+    ./raw/20_kawashimo.err
+    ./raw/30_kou.err
+    ./raw/30_kou.err.first
+    ./raw/40_hakari.err
+    ./raw/41_kuchi.err
+    ./raw/50_fuda.err
+    ./raw/52_bannin.err
+    ./raw/53_saihyou.err
+    ./raw/54_kou_new.err
+    ./raw/55.err
+    ./raw/56_kawashimo.err
+    ./raw/57_jouretsu.err
+    ./raw/58_hei.err
+    ./raw/70_kami.err
+    ./utsushi/kou_diff.txt
+
+乙 末尾空白(條②が鳴つた) = 3本 / 延べ 34行
+    ./raw/30_kou.tsv  16行
+    ./raw/30_kou.tsv.first  16行
+    ./raw/54_kou_new.tsv  2行
+
+★今の disk で「空である旨の一行」を担ふ file = 20本★
+  (門が鳴らした 18本 との差 +2 は、71 の二走目が己の .err を足した分である)
+    utsushi/kou_diff.txt
+    raw/00_start.err
+    raw/10_census.err
+    raw/11_shibori.err
+    raw/20_kawashimo.err
+    raw/30_kou.err
+    raw/30_kou.err.first
+    raw/40_hakari.err
+    raw/41_kuchi.err
+    raw/50_fuda.err
+    raw/52_bannin.err
+    raw/53_saihyou.err
+    raw/54_kou_new.err
+    raw/55.err
+    raw/56_kawashimo.err
+    raw/57_jouretsu.err
+    raw/58_hei.err
+    raw/70_kami.err
+    raw/71_seikei.err
+    raw/73_sen.err
+
+★零の四札★: 陽性対照=條② は初走で現に 3本 鳴つた(∴ 檢出子は生きて居る) /
+            根=束の直下・深さ無限(_gate と __pycache__ のみ除く) / rc=門 初走 1・再走 0 / 刻=本弾

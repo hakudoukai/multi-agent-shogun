@@ -1,0 +1,28 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★EOF改行 ―― ./raw/00_start.err は空file(0byte)★
+★EOF改行 ―― ./raw/10_census.err は空file(0byte)★
+★EOF改行 ―― ./raw/11_shibori.err は空file(0byte)★
+★EOF改行 ―― ./raw/20_kawashimo.err は空file(0byte)★
+★EOF改行 ―― ./raw/30_kou.err は空file(0byte)★
+★EOF改行 ―― ./raw/30_kou.err.first は空file(0byte)★
+★末尾空白 ―― ./raw/30_kou.tsv に 16 行★
+★末尾空白 ―― ./raw/30_kou.tsv.first に 16 行★
+★EOF改行 ―― ./raw/40_hakari.err は空file(0byte)★
+★EOF改行 ―― ./raw/41_kuchi.err は空file(0byte)★
+★EOF改行 ―― ./raw/50_fuda.err は空file(0byte)★
+★EOF改行 ―― ./raw/52_bannin.err は空file(0byte)★
+★EOF改行 ―― ./raw/53_saihyou.err は空file(0byte)★
+★EOF改行 ―― ./raw/54_kou_new.err は空file(0byte)★
+★末尾空白 ―― ./raw/54_kou_new.tsv に 2 行★
+★EOF改行 ―― ./raw/55.err は空file(0byte)★
+★EOF改行 ―― ./raw/56_kawashimo.err は空file(0byte)★
+★EOF改行 ―― ./raw/57_jouretsu.err は空file(0byte)★
+★EOF改行 ―― ./raw/58_hei.err は空file(0byte)★
+★EOF改行 ―― ./raw/70_kami.err は空file(0byte)★
+★EOF改行 ―― ./utsushi/kou_diff.txt は空file(0byte)★
+條⑤ 寸法 = byte和 478689(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

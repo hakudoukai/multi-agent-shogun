@@ -1,0 +1,24 @@
+序	file	name	由来	口数	版	報せが抜ける	開く形	比較器逐語	抜ける枝の頭
+1	scripts/stop_hook_inbox.sh	UNREAD_COUNT	内生(命令の出目)	5	★ずれ★	★抜ける★	四形	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then	exit 0
+2	scripts/inbox_watcher.sh	LAST_CLEAR_TS	内生(命令の出目)	2	一致	★抜ける★	四形	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then	return 0  # busy — /clear still processing
+3	scripts/agent_health_check.sh	max_tokens	内生(命令の出目)	1	一致	★抜ける★	四形	if [ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]; then	cool_key="token_crit_${sid_short}"
+4	scripts/audit_meta_codex.sh	COUNT	内生(命令の出目)	1	一致	★抜ける★	四形	if [ "${COUNT:-0}" -ge "$SH6_CAP" ]; then	log_json "WARN" "sh6" "self-invocation cap reached: $COUNT >= $SH6_CAP for $KEY (last 1h), advisory skip"
+5	scripts/inbox_write.sh	_AMP_PATTERN_COUNT	内生(命令の出目)	1	一致	★抜ける★	四形	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then	echo "[inbox_write] REJECTED: amplification loop detected (${_AMP_PATTERN_COUNT} embedded headers in content,
+6	scripts/agent_health_check.sh	INSERT_COUNT	内生(命令の出目)	2	一致	枝の外	四形	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then	ALERTS+=("ERR-INFRA-LOOP: Supabase ${INSERT_COUNT} INSERTs/1min (=loop suspect, threshold=5)")
+7	scripts/agent_health_check.sh	n	内生(命令の出目)	2	一致	枝の外	四形	if [ "${n:-0}" -gt 10 ]; then	ALERTS+=("ERR-INBOX-OVERFLOW: ${a} unread=${n} (threshold=10, loop の前兆)")
+8	scripts/agent_periodic_push.sh	sp_age	内生(命令の出目)	1	一致	枝の外	四形	if [ "$sp_age" -gt 0 ]; then	age=$(( $(date +%s) - sp_age ))
+9	scripts/ratelimit_check.sh	CODEX_LIMIT_HITS	内生(命令の出目)	1	一致	枝の外	四形	if [[ "$CODEX_LIMIT_HITS" -ge "$CODEX_LIMIT_HITS_WARN" ]]; then	if [[ "$CODEX_STATUS" == "OK" ]]; then
+10	scripts/inbox_watcher.sh	FIRST_UNREAD_SEEN	内生(字面)	4	一致	★抜ける★	四形	if [ "$FIRST_UNREAD_SEEN" -gt 0 ] 2>/dev/null; then	unread_latency_sec=$((now - FIRST_UNREAD_SEEN))
+11	scripts/inbox_watcher.sh	LAST_NUDGE_TS	内生(字面)	2	一致	★抜ける★	四形	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then	local age=$((now - LAST_NUDGE_TS))
+12	scripts/inbox_watcher.sh	NEW_CONTEXT_SENT	内生(字面)	2	一致	★抜ける★	四形	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then	echo "[$(date)] [SKIP] Codex /new already sent for $AGENT_ID — skipping duplicate clear_command" >&2
+13	scripts/inbox_watcher.sh	LAST_TOKEN_WARN_TS	内生(字面)	1	一致	★抜ける★	四形	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then	_pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+14	scripts/inbox_watcher.sh	STARTUP_PROMPT_SENT	内生(字面)	1	一致	★抜ける★	四形	if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then	STARTUP_PROMPT_SENT=0
+15	scripts/inbox_watcher.sh	_token_int	内生(字面)	1	一致	★抜ける★	四形	if [ "${_token_int:-0}" -ge 200 ]; then	echo "[$(date)] [TOKEN-WARN] $AGENT_ID context size ${_token_match} (>= 200k) — sending warning to inbox" >&2
+16	scripts/redundancy/shogun_report_watcher.sh	last_ts	内生(字面)	1	一致	★抜ける★	四形	if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then	diff=$(( now - last_ts ))
+17	scripts/agent_health_check.sh	_th_unset_told	内生(字面)	1	一致	枝の外	四形	if [ "${_th_unset_told:-0}" -eq 0 ]; then	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+18	scripts/inbox_watcher.sh	LAST_APPROVAL_ALERT_TS	内生(字面)	1	一致	枝の外	四形	if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \	&& [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
+19	scripts/inbox_watcher.sh	_th_unset_told	内生(字面)	1	一致	枝の外	四形	if [ "${_th_unset_told:-0}" -eq 0 ]; then	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+20	scripts/redundancy/shogun_report_watcher.sh	_th_unset_told	内生(字面)	1	一致	枝の外	四形	if [ "${_th_unset_told:-0}" -eq 0 ]; then	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+21	scripts/watchdogs/enter_restart_common_watchdog.sh	_th_unset_told	内生(字面)	1	一致	枝の外	四形	if [ "${_th_unset_told:-0}" -eq 0 ]; then	_th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+22	scripts/stop_hook_inbox.sh	STOP_HOOK_STDIN_TIMEOUT	外来(env のみ)	1	★ずれ★	★抜ける★	四形	if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then	echo "[stop_hook] ★stdin 時限切れ(${STOP_HOOK_STDIN_TIMEOUT}秒経過・rc=${__read_rc}) — 讀めた ${#INPUT} 字で続行★" >&2
+23	scripts/stop_hook_inbox.sh	MASS_UNREAD_THRESHOLD	外来(env のみ)	1	★ずれ★	★抜ける★	一形	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then	FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"

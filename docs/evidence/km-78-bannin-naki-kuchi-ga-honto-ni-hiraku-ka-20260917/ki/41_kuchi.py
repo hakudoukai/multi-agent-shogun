@@ -1,0 +1,68 @@
+# -*- coding: utf-8 -*-
+"""41 ★口そのもの★ の 8形 負テスト(40 の訂正器・㋐ 本体)
+★40 の疵★: 40 は `[ "$V" -op "0" ]` ―― ★裸の値★ を比較器へ入れた。
+  然るに現形の口は `${NAME:-D}` である。`:-` は ★未設定と空文字を既定へ倒す★ ゆゑ、
+  形1・形2 は比較器へ届かぬ。∴ 40 の「未設定 26/26 倒れ」は ★比較器の性質★ であつて
+  ★口の性質★ ではない。40 は消さず残す(比較器の法は之で示せる)が、★札は本器で貼る★。
+★本器★: 口の逐語(既定値と `:-`/`-` の別)を其の儘 比較器へ置き、名へ 8形を與へる。
+★陽性対照★: 形5(正常値7)。★陰性対照★: `-` 形(空文字を倒さぬ)の口が在れば形2で割れる筈。"""
+import os, re, sys, subprocess, collections
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K
+live = {}
+for l in open(D + '/raw/11_live.tsv', encoding='utf-8').read().splitlines()[1:]:
+    c = l.split('\t')
+    live[(c[0], c[2], c[1])] = (c[3], c[5])  # (file,name,line) ―― 引く側と同順(41 初走の疵)
+rows = [l.split('\t') for l in open(D + '/raw/20_kawashimo.tsv', encoding='utf-8').read().splitlines()[1:]]
+NUM = re.compile(r'-(?:ge|gt|le|lt|eq|ne)\b')
+FORMS = [('1未設定', None), ('2空文字', ''), ('3空白のみ', ' '),
+         ('4二十桁', '99999999999999999999'), ('5正常値7', '7'), ('6負数', '-5'),
+         ('7改行入り', '1\n2'), ('8既存␊', '1␊2')]
+best = {}
+for f, name, pl, ul, kind, gen in rows:
+    if kind != '数比' or (f, name) in best: continue
+    m = NUM.search(gen)
+    if not m: continue
+    if (f, name, pl) not in live:
+        # ★引き外し★ は測りに非ず。既定が判らねば口を組めぬゆゑ其の場で倒す(fail-closed)。
+        # 初走は之が無く、既定が '?' に落ちた儘 26口 悉く rc=2 を出した ―― 陽性対照は
+        # 名を設ける形ゆゑ ★素通りした★。∴ 陽性対照は「既定の壊れ」を捕へぬ。
+        raise SystemExit('★臺帳に無い口★ %s %s:%s ―― 測らず倒す' % (f, name, pl))
+    d, pgen = live[(f, name, pl)]
+    sig = ':-' if re.search(r'\$\{' + re.escape(name) + r':-', pgen) else '-'
+    left = bool(re.search(r'\$\{?' + re.escape(name) + r'[^\s]*"?\s*' + m.group(0), gen))
+    best[(f, name)] = (m.group(0), 'L' if left else 'R', pl, ul, d, sig)
+out, ctl_bad, colon, bare = [], 0, 0, 0
+for (f, name), (op, side, pl, ul, d, sig) in sorted(best.items()):
+    port = '${%s%s%s}' % (name, sig, d)
+    colon += sig == ':-'; bare += sig == '-'
+    expr = '[ "%s" %s "0" ]' % (port, op) if side == 'L' else '[ "0" %s "%s" ]' % (op, port)
+    res = []
+    for lab, val in FORMS:
+        env = dict(os.environ); env.pop(name, None)
+        if val is not None: env[name] = val
+        p = subprocess.run(['/bin/bash', '-c', expr + '; echo $?'], capture_output=True, text=True, env=env)
+        rc = p.stdout.strip().splitlines()[-1] if p.stdout.strip() else '?'
+        res.append(rc)
+        if lab == '5正常値7' and rc == '2': ctl_bad += 1
+    out.append([f, name, pl, ul, op, side, sig, d, expr] + res)
+K.kaku_tsv(D + '/raw/41_kuchi.tsv', out,
+           header=['file','name','port_line','use_line','op','side','sigil','default','expr'] + [l for l,_ in FORMS])
+c = collections.Counter(); opens = []
+for r in out:
+    hit = [FORMS[i][0] for i in range(8) if r[9+i] == '2']
+    for h in hit: c[h] += 1
+    if hit: opens.append((r[0], r[1], r[2], hit))
+sm = ['# 41 ★口そのもの★ 8形 負テスト / 数比口= %d / %d 走' % (len(out), len(out)*8),
+      '# 既定の形: `:-`(未設定も空も倒す)= %d 口 / `-`(空を倒さぬ)= %d 口' % (colon, bare),
+      '★陽性対照(形5)で rc=2= %d ―― 0 が健全★' % ctl_bad,
+      '# 形ごとの「rc=2 ＝ 比較器が判定を放棄」口数:']
+for lab,_ in FORMS: sm.append('    %-10s %2d / %d 口' % (lab, c[lab], len(out)))
+sm.append('')
+sm.append('★40 との差★ ―― 40(裸の値)は 未設定/空文字 を 26/26 倒したが、')
+sm.append('  本器(口の逐語)では %d / %d ★∴ 40 は比較器の法・41 は口の法である★' % (c['1未設定'], len(out)))
+sm.append('')
+sm.append('# ★一形でも倒れた口(=fail-open 候補)★ = %d 口' % len(opens))
+for f, n, pl, hit in opens: sm.append('    %s:%s %s ← %s' % (f, pl, n, '/'.join(hit)))
+if not opens: sm.append('    (空である旨の一行 ―― 倒れた口は無い)')
+K.kaku(D + '/raw/41_kuchi_summary.txt', '\n'.join(sm))
+print('\n'.join(sm))

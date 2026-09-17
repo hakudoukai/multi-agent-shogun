@@ -1,0 +1,26 @@
+# 58 丙の四名 / 歩き根= scripts/ (80 本) / 引いた行= 16
+# 絞り(逐語)= /worktrees/ /docs/evidence/ /.git/ /node_modules/ /retired/ /_hikae/
+
+■ STALE_SEC ―― 行= 4  ★別言語が受ける★=1 / 置く/展く=2 / 註釈=1
+    ★別言語が受ける★ scripts/pane_enter_watcher.py:131  default=int(os.environ.get("STALE_SEC", DEFAULT_STALE_SEC)),
+    註釈     scripts/pane_enter_watcher_supervisor.sh:13  #   STALE_SEC=300 (既定 5分)
+    置く/展く  scripts/pane_enter_watcher_supervisor.sh:50  log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+    置く/展く  scripts/pane_enter_watcher_supervisor.sh:52  LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+
+■ POLL_SEC ―― 行= 4  ★別言語が受ける★=1 / 置く/展く=2 / 註釈=1
+    ★別言語が受ける★ scripts/pane_enter_watcher.py:134  default=int(os.environ.get("POLL_SEC", DEFAULT_POLL_SEC)),
+    註釈     scripts/pane_enter_watcher_supervisor.sh:14  #   POLL_SEC=10 (既定 10秒)
+    置く/展く  scripts/pane_enter_watcher_supervisor.sh:50  log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+    置く/展く  scripts/pane_enter_watcher_supervisor.sh:52  LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+
+■ DETECT_STALE_STALE_SEC ―― 行= 1  置く/展く=1
+    置く/展く  scripts/lib/detect_stale.sh:33  DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+
+■ ER_THRESHOLD_MIN ―― 行= 7  ★番人★=1 / 置く/展く=1 / 註釈=5
+    置く/展く  scripts/watchdogs/enter_restart_commander_watchdog.sh:35  export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+    註釈     scripts/watchdogs/enter_restart_common_watchdog.sh:10  # 役割: 指定 PC の指定 pane の Claude TUI が ER_THRESHOLD_MIN 分 idle 時、★既入力
+    註釈     scripts/watchdogs/enter_restart_common_watchdog.sh:26  #   ER_THRESHOLD_MIN=10        idle 判定閾値 (分)
+    ★番人★   scripts/watchdogs/enter_restart_common_watchdog.sh:120  fix_threshold ER_THRESHOLD_MIN 10 THRESHOLD_MIN
+    註釈     scripts/watchdogs/enter_restart_shogun_main_watchdog.sh:38  #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+    註釈     scripts/watchdogs/enter_restart_shogun_second_watchdog.sh:37  #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15
+    註釈     scripts/watchdogs/enter_restart_shogun_third_watchdog.sh:38  #   ER_THRESHOLD_MIN=10  ER_FIRE_CAP_COUNT=3  ER_FIRE_CAP_WINDOW_MIN=15

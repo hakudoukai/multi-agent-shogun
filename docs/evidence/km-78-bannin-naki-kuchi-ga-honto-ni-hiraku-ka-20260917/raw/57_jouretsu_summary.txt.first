@@ -1,0 +1,102 @@
+# 57 ★開く口の序列★ / 組= 23 (口 35 を (file,name) で畳んだ数)
+# 目= ①由来(内生ほど上) ②報せが抜けるか ③開く形の数
+# ★報せの有無は代理の測り★ ―― then 枝の中の語を見たに過ぎぬ。抜けた時の實害の証ではない。
+
+ 1 scripts/stop_hook_inbox.sh  UNREAD_COUNT
+     由来=内生(命令の出目)  口=5  版=★ずれ★  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+     抜ける枝: exit 0
+ 2 scripts/agent_health_check.sh  n
+     由来=内生(命令の出目)  口=2  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+     抜ける枝: # ★乙 ―― 未設定/空文字/空白のみ を分けて名指す(裁 seq322952)★
+ 3 scripts/inbox_watcher.sh  LAST_CLEAR_TS
+     由来=内生(命令の出目)  口=2  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+     抜ける枝: return 0  # busy — /clear still processing
+ 4 scripts/agent_health_check.sh  max_tokens
+     由来=内生(命令の出目)  口=1  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]; then
+     抜ける枝: cool_key="token_crit_${sid_short}"
+ 5 scripts/audit_meta_codex.sh  COUNT
+     由来=内生(命令の出目)  口=1  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${COUNT:-0}" -ge "$SH6_CAP" ]; then
+     抜ける枝: log_json "WARN" "sh6" "self-invocation cap reached: $COUNT >= $SH6_CAP for $KEY (last 1h), advisory skip"
+ 6 scripts/inbox_write.sh  _AMP_PATTERN_COUNT
+     由来=内生(命令の出目)  口=1  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+     抜ける枝: echo "[inbox_write] REJECTED: amplification loop detected (${_AMP_PATTERN_COUNT} embedded headers in content,
+ 7 scripts/agent_health_check.sh  INSERT_COUNT
+     由来=内生(命令の出目)  口=2  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+     抜ける枝: ALERTS+=("ERR-INFRA-LOOP: Supabase ${INSERT_COUNT} INSERTs/1min (=loop suspect, threshold=5)")
+ 8 scripts/agent_periodic_push.sh  sp_age
+     由来=内生(命令の出目)  口=1  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [ "$sp_age" -gt 0 ]; then
+     抜ける枝: age=$(( $(date +%s) - sp_age ))
+ 9 scripts/ratelimit_check.sh  CODEX_LIMIT_HITS
+     由来=内生(命令の出目)  口=1  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [[ "$CODEX_LIMIT_HITS" -ge "$CODEX_LIMIT_HITS_WARN" ]]; then
+     抜ける枝: if [[ "$CODEX_STATUS" == "OK" ]]; then
+10 scripts/inbox_watcher.sh  FIRST_UNREAD_SEEN
+     由来=内生(字面)  口=4  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "$FIRST_UNREAD_SEEN" -gt 0 ] 2>/dev/null; then
+     抜ける枝: unread_latency_sec=$((now - FIRST_UNREAD_SEEN))
+11 scripts/inbox_watcher.sh  LAST_NUDGE_TS
+     由来=内生(字面)  口=2  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+     抜ける枝: local age=$((now - LAST_NUDGE_TS))
+12 scripts/inbox_watcher.sh  NEW_CONTEXT_SENT
+     由来=内生(字面)  口=2  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+     抜ける枝: echo "[$(date)] [SKIP] Codex /new already sent for $AGENT_ID — skipping duplicate clear_command" >&2
+13 scripts/inbox_watcher.sh  LAST_TOKEN_WARN_TS
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+     抜ける枝: _pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+14 scripts/inbox_watcher.sh  STARTUP_PROMPT_SENT
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+     抜ける枝: STARTUP_PROMPT_SENT=0
+15 scripts/inbox_watcher.sh  _token_int
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${_token_int:-0}" -ge 200 ]; then
+     抜ける枝: echo "[$(date)] [TOKEN-WARN] $AGENT_ID context size ${_token_match} (>= 200k) — sending warning to inbox" >&2
+16 scripts/redundancy/shogun_report_watcher.sh  last_ts
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=★抜ける★
+     比較器 : if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+     抜ける枝: diff=$(( now - last_ts ))
+17 scripts/agent_health_check.sh  _th_unset_told
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [ "${_th_unset_told:-0}" -eq 0 ]; then
+     抜ける枝: _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+18 scripts/inbox_watcher.sh  LAST_APPROVAL_ALERT_TS
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
+     抜ける枝: && [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
+19 scripts/inbox_watcher.sh  _th_unset_told
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [ "${_th_unset_told:-0}" -eq 0 ]; then
+     抜ける枝: _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+20 scripts/redundancy/shogun_report_watcher.sh  _th_unset_told
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [ "${_th_unset_told:-0}" -eq 0 ]; then
+     抜ける枝: _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+21 scripts/watchdogs/enter_restart_common_watchdog.sh  _th_unset_told
+     由来=内生(字面)  口=1  版=一致  開く形=四形  報せ=枝の外
+     比較器 : if [ "${_th_unset_told:-0}" -eq 0 ]; then
+     抜ける枝: _th_say "★閾 未設定 ―― 既定へ倒す(${_ft_n}=${_ft_d}) ／ 本 process の未設定の報せは★此の一度のみ★(裁 seq323687⑵)★"
+22 scripts/stop_hook_inbox.sh  STOP_HOOK_STDIN_TIMEOUT
+     由来=外来(env のみ)  口=1  版=★ずれ★  開く形=四形  報せ=★抜ける★
+     比較器 : #   20桁の十進を「數」として通すが、下の `[ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]` は
+     抜ける枝: #   2^63 超で rc=2 を返し ★黙つて else(時限切れを見ぬ側)へ落つる★。
+23 scripts/stop_hook_inbox.sh  MASS_UNREAD_THRESHOLD
+     由来=外来(env のみ)  口=1  版=★ずれ★  開く形=一形  報せ=★抜ける★
+     比較器 : if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+     抜ける枝: FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+
+# ―― 目ごとの数
+  由来: 内生(命令の出目)=9 / 内生(字面)=12 / 外来(env のみ)=2
+  報せが抜ける: ★抜ける★=15 / 枝の外=8
+  開く形: 一形=1 / 四形=22
+  版: ★ずれ★=3 / 一致=20

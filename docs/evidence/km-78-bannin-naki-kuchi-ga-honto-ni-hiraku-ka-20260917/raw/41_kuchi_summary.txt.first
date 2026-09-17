@@ -1,0 +1,43 @@
+# 41 ★口そのもの★ 8形 負テスト / 数比口= 26 / 208 走
+# 既定の形: `:-`(未設定も空も倒す)= 0 口 / `-`(空を倒さぬ)= 26 口
+★陽性対照(形5)で rc=2= 0 ―― 0 が健全★
+# 形ごとの「rc=2 ＝ 比較器が判定を放棄」口数:
+    1未設定       26 / 26 口
+    2空文字       26 / 26 口
+    3空白のみ      26 / 26 口
+    4二十桁       26 / 26 口
+    5正常値7       0 / 26 口
+    6負数         0 / 26 口
+    7改行入り      26 / 26 口
+    8既存␊       26 / 26 口
+
+★40 との差★ ―― 40(裸の値)は 未設定/空文字 を 26/26 倒したが、
+  本器(口の逐語)では 26 / 26 ★∴ 40 は比較器の法・41 は口の法である★
+
+# ★一形でも倒れた口(=fail-open 候補)★ = 26 口
+    scripts/agent_health_check.sh:230 INSERT_COUNT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/agent_health_check.sh:109 _th_unset_told ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/agent_health_check.sh:377 max_tokens ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/agent_health_check.sh:253 n ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/agent_periodic_push.sh:64 sp_age ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/audit_meta_codex.sh:108 COUNT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:899 APPROVAL_ALERT_COOLDOWN ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:215 ASW_PHASE ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:122 FIRST_UNREAD_SEEN ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:1535 INOTIFY_TIMEOUT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:898 LAST_APPROVAL_ALERT_TS ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:123 LAST_CLEAR_TS ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:195 LAST_NUDGE_TS ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:1614 LAST_TOKEN_WARN_TS ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:205 NEW_CONTEXT_SENT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:208 STARTUP_PROMPT_SENT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:148 _th_unset_told ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_watcher.sh:1622 _token_int ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/inbox_write.sh:88 _AMP_PATTERN_COUNT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/ratelimit_check.sh:417 CODEX_LIMIT_HITS ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/redundancy/shogun_report_watcher.sh:53 _th_unset_told ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/redundancy/shogun_report_watcher.sh:326 last_ts ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/stop_hook_inbox.sh:177 MASS_UNREAD_THRESHOLD ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/stop_hook_inbox.sh:52 STOP_HOOK_STDIN_TIMEOUT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/stop_hook_inbox.sh:125 UNREAD_COUNT ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊
+    scripts/watchdogs/enter_restart_common_watchdog.sh:99 _th_unset_told ← 1未設定/2空文字/3空白のみ/4二十桁/7改行入り/8既存␊

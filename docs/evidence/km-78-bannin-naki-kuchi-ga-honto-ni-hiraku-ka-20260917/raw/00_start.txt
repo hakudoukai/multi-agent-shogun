@@ -1,0 +1,22 @@
+# 00 起 / 刻 2026-09-17T09:34:17+0900 / 席 ashigaru-mac-2 / 枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 / HEAD 6ba8fcb2402c
+# ★凍結★ 以下の sha16 は本弾の全測りの前提である。走り終りに再測して不変を示す(90 で検む)。
+42c83a9ab41c0166	268行	scripts/stop_hook_inbox.sh
+15ac9f97f473245d	1666行	scripts/inbox_watcher.sh
+60b61cf3f07d92e7	66行	scripts/pane_enter_watcher_supervisor.sh
+de4fefbdadb2be63	292行	scripts/lib/detect_stale.sh
+f878608bfcca4f5d	39行	scripts/watchdogs/enter_restart_commander_watchdog.sh
+f92cd54e09736a4e	429行	scripts/watchdogs/enter_restart_common_watchdog.sh
+7d11ba9f852ac759	488行	scripts/agent_health_check.sh
+3010defd413a3479	100行	scripts/checks/context_usage_warn.sh
+95b027ea5e4f0fc5	122行	scripts/checks/karo_mac_gate4.sh
+e11f0d0142549086	310行	scripts/checks/karo_mac_dasumae_gate.sh
+a82e877eced423ad	395行	scripts/redundancy/shogun_report_watcher.sh
+# HEAD と disk の差(rc 0): 8 本 ―― ★走るのは disk・git grep は HEAD★ ゆゑ本弾は disk を測る
+#   .claude/settings.json
+#   scripts/agent_health_check.sh
+#   scripts/checks/context_usage_warn.sh
+#   scripts/checks/karo_mac_manifest_verify.py
+#   scripts/inbox_watcher.sh
+#   scripts/redundancy/shogun_report_watcher.sh
+#   scripts/stop_hook_inbox.sh
+#   scripts/watchdogs/enter_restart_common_watchdog.sh

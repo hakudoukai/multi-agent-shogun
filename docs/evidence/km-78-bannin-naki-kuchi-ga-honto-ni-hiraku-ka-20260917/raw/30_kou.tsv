@@ -1,0 +1,17 @@
+form	stdin	rc	wall_s	keigo	stderr_1	stdout_1
+1未設定	閉	0	0	無		OUT	INPUT_len=0	el=0	read_rc=1	TMO=10
+2空文字	閉	0	0	無		OUT	INPUT_len=0	el=0	read_rc=1	TMO=10
+3空白のみ	閉	0	0	無	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「 」) — 既定 10 へ倒	OUT	INPUT_len=0	el=0	read_rc=1	TMO=10
+4二十桁	閉	0	0	無	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-k	OUT	INPUT_len=0	el=0	read_rc=1	TMO=99999999999999999999
+5正常値1	閉	0	0	無		OUT	INPUT_len=0	el=0	read_rc=1	TMO=1
+6負数	閉	0	0	無	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「-5」) — 既定 10 へ	OUT	INPUT_len=0	el=0	read_rc=1	TMO=10
+7改行入り	閉	0	0	無	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「1 	OUT	INPUT_len=0	el=0	read_rc=1	TMO=10
+8既存␊	閉	0	0	無	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「1␊2」) — 既定 10 	OUT	INPUT_len=0	el=0	read_rc=1	TMO=10
+1未設定	不達	0	10	★有★	[stop_hook] ★stdin 時限切れ(10秒経過・rc=1) — 讀めた 0 字で続行★ 	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10
+2空文字	不達	0	10	★有★	[stop_hook] ★stdin 時限切れ(10秒経過・rc=1) — 讀めた 0 字で続行★ 	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10
+3空白のみ	不達	0	10	★有★	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「 」) — 既定 10 へ倒	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10
+4二十桁	不達	0	0	無	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-k	OUT	INPUT_len=0	el=0	read_rc=1	TMO=99999999999999999999
+5正常値1	不達	0	1	★有★	[stop_hook] ★stdin 時限切れ(1秒経過・rc=1) — 讀めた 0 字で続行★ 	OUT	INPUT_len=0	el=1	read_rc=1	TMO=1
+6負数	不達	0	10	★有★	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「-5」) — 既定 10 へ	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10
+7改行入り	不達	0	10	★有★	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「1 	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10
+8既存␊	不達	0	10	★有★	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が數でない(「1␊2」) — 既定 10 	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10

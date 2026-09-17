@@ -1,0 +1,399 @@
+file	line	name	default	bannin	genbun
+scripts/agent_health_check.sh	109	_th_unset_told	0	★番人無★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/agent_health_check.sh	142	last	0	★番人無★	last=${last:-0}
+scripts/agent_health_check.sh	230	INSERT_COUNT	0	★番人無★	INSERT_COUNT=${INSERT_COUNT:-0}
+scripts/agent_health_check.sh	231	INSERT_COUNT	0	★番人無★	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+scripts/agent_health_check.sh	253	n	0	★番人無★	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh	270	n	0	★番人無★	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh	377	max_tokens	0	★番人無★	max_tokens=${max_tokens:-0}
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	85	HEALTH_CHECK_COOLDOWN_SEC	300	★番人無★	ALERT_COOLDOWN_SEC="${HEALTH_CHECK_COOLDOWN_SEC:-300}"  # 5 min (= task spec)
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	98	last	0	★番人無★	last=${last:-0}
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	186	INSERT_COUNT	0	★番人無★	INSERT_COUNT=${INSERT_COUNT:-0}
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	187	INSERT_COUNT	0	★番人無★	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	209	n	0	★番人無★	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	226	n	0	★番人無★	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	310	HEALTH_CHECK_TOKEN_WARN	200000	★番人無★	TOKEN_WARN_THRESHOLD="${HEALTH_CHECK_TOKEN_WARN:-200000}"
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	311	HEALTH_CHECK_TOKEN_CRIT	240000	★番人無★	TOKEN_CRIT_THRESHOLD="${HEALTH_CHECK_TOKEN_CRIT:-240000}"
+scripts/agent_health_check.sh.bak-shikii-zoku2-20260917T022513	333	max_tokens	0	★番人無★	max_tokens=${max_tokens:-0}
+scripts/agent_periodic_push.sh	64	sp_age	0	★番人無★	sp_age=${sp_age:-0}
+scripts/agent_periodic_push.sh	95	PENDING	0	★番人無★	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRESS:-0}
+scripts/agent_periodic_push.sh	95	IN_PROGRESS	0	★番人無★	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRESS:-0}
+scripts/agent_periodic_push.sh	112	PENDING	0	★番人無★	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${PENDING:-0}, in_progress=${IN_
+scripts/agent_periodic_push.sh	112	IN_PROGRESS	0	★番人無★	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${PENDING:-0}, in_progress=${IN_
+scripts/audit_meta_codex.sh	108	COUNT	0	★番人無★	if [ "${COUNT:-0}" -ge "$SH6_CAP" ]; then
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	0	★番人無★	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	0	★番人無★	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+scripts/inbox_watcher.sh	148	_th_unset_told	0	★番人無★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh	188	LAST_B_ALERT_TS	0	★番人無★	LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+scripts/inbox_watcher.sh	191	LAST_KARO_ALERT_TS	0	★番人無★	LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
+scripts/inbox_watcher.sh	195	LAST_NUDGE_TS	0	★番人無★	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+scripts/inbox_watcher.sh	197	NUDGE_COOLDOWN_SEC	60	★番人無★	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+scripts/inbox_watcher.sh	199	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+scripts/inbox_watcher.sh	205	NEW_CONTEXT_SENT	0	★番人無★	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+scripts/inbox_watcher.sh	208	STARTUP_PROMPT_SENT	0	★番人無★	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+scripts/inbox_watcher.sh	215	ASW_PHASE	2	★番人無★	ASW_PHASE=${ASW_PHASE:-2}
+scripts/inbox_watcher.sh	219	ASW_NO_IDLE_FULL_READ	1	★番人無★	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+scripts/inbox_watcher.sh	223	ASW_DISABLE_ESCALATION	0	★番人無★	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+scripts/inbox_watcher.sh	224	ASW_PROCESS_TIMEOUT	1	★番人無★	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+scripts/inbox_watcher.sh	228	READ_COUNT	0	★番人無★	READ_COUNT=${READ_COUNT:-0}
+scripts/inbox_watcher.sh	229	READ_BYTES_TOTAL	0	★番人無★	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+scripts/inbox_watcher.sh	230	ESTIMATED_TOKENS_TOTAL	0	★番人無★	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+scripts/inbox_watcher.sh	261	ASW_DISABLE_NORMAL_NUDGE	0	★番人無★	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+scripts/inbox_watcher.sh	295	NUDGE_COOLDOWN_SEC	60	★番人無★	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+scripts/inbox_watcher.sh	297	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+scripts/inbox_watcher.sh	301	NUDGE_COOLDOWN_SEC_CLAUDE	60	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+scripts/inbox_watcher.sh	305	LAST_NUDGE_TS	0	★番人無★	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+scripts/inbox_watcher.sh	470	ASW_NO_IDLE_FULL_READ	1	★番人無★	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	0	★番人無★	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh	637	NEW_CONTEXT_SENT	0	★番人無★	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh	898	LAST_APPROVAL_ALERT_TS	0	★番人無★	if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
+scripts/inbox_watcher.sh	899	APPROVAL_ALERT_COOLDOWN	300	★番人無★	&& [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
+scripts/inbox_watcher.sh	917	LAST_CLEAR_TS	0	★番人無★	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+scripts/inbox_watcher.sh	998	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	★番人無★	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1036	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1067	MAX_TYPING_SKIP	5	★番人無★	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+scripts/inbox_watcher.sh	1187	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1270	read_bytes	0	★番人無★	update_metrics "${read_bytes:-0}"
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh	1447	ASW_DISABLE_ESCALATION	0	★番人無★	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+scripts/inbox_watcher.sh	1535	INOTIFY_TIMEOUT	30	★番人無★	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+scripts/inbox_watcher.sh	1599	ASW_PROCESS_TIMEOUT	1	★番人無★	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+scripts/inbox_watcher.sh	1614	LAST_TOKEN_WARN_TS	0	★番人無★	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+scripts/inbox_watcher.sh	1622	_token_int	0	★番人無★	if [ "${_token_int:-0}" -ge 200 ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	122	FIRST_UNREAD_SEEN	0	★番人無★	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	123	LAST_CLEAR_TS	0	★番人無★	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	124	ESCALATE_PHASE1	120	★番人無★	ESCALATE_PHASE1=${ESCALATE_PHASE1:-120}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	125	ESCALATE_PHASE2	240	★番人無★	ESCALATE_PHASE2=${ESCALATE_PHASE2:-240}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	126	ESCALATE_COOLDOWN	300	★番人無★	ESCALATE_COOLDOWN=${ESCALATE_COOLDOWN:-300}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	135	LAST_B_ALERT_TS	0	★番人無★	LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	138	LAST_KARO_ALERT_TS	0	★番人無★	LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	142	LAST_NUDGE_TS	0	★番人無★	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	144	NUDGE_COOLDOWN_SEC	60	★番人無★	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	146	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	152	NEW_CONTEXT_SENT	0	★番人無★	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	155	STARTUP_PROMPT_SENT	0	★番人無★	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	162	ASW_PHASE	2	★番人無★	ASW_PHASE=${ASW_PHASE:-2}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	166	ASW_NO_IDLE_FULL_READ	1	★番人無★	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	170	ASW_DISABLE_ESCALATION	0	★番人無★	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	171	ASW_PROCESS_TIMEOUT	1	★番人無★	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	175	READ_COUNT	0	★番人無★	READ_COUNT=${READ_COUNT:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	176	READ_BYTES_TOTAL	0	★番人無★	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	177	ESTIMATED_TOKENS_TOTAL	0	★番人無★	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	208	ASW_DISABLE_NORMAL_NUDGE	0	★番人無★	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	242	NUDGE_COOLDOWN_SEC	60	★番人無★	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	244	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	248	NUDGE_COOLDOWN_SEC_CLAUDE	60	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	252	LAST_NUDGE_TS	0	★番人無★	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	417	ASW_NO_IDLE_FULL_READ	1	★番人無★	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	419	FIRST_UNREAD_SEEN	0	★番人無★	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	584	NEW_CONTEXT_SENT	0	★番人無★	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	833	LAST_CLEAR_TS	0	★番人無★	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	914	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	★番人無★	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	952	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	983	MAX_TYPING_SKIP	5	★番人無★	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1103	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1177	read_bytes	0	★番人無★	update_metrics "${read_bytes:-0}"
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1267	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1277	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1347	ASW_DISABLE_ESCALATION	0	★番人無★	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1435	INOTIFY_TIMEOUT	30	★番人無★	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1499	ASW_PROCESS_TIMEOUT	1	★番人無★	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1514	LAST_TOKEN_WARN_TS	0	★番人無★	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear	1522	_token_int	0	★番人無★	if [ "${_token_int:-0}" -ge 200 ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	122	FIRST_UNREAD_SEEN	0	★番人無★	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	123	LAST_CLEAR_TS	0	★番人無★	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	124	ESCALATE_PHASE1	120	★番人無★	ESCALATE_PHASE1=${ESCALATE_PHASE1:-120}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	125	ESCALATE_PHASE2	240	★番人無★	ESCALATE_PHASE2=${ESCALATE_PHASE2:-240}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	126	ESCALATE_COOLDOWN	300	★番人無★	ESCALATE_COOLDOWN=${ESCALATE_COOLDOWN:-300}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	135	LAST_B_ALERT_TS	0	★番人無★	LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	138	LAST_KARO_ALERT_TS	0	★番人無★	LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	142	LAST_NUDGE_TS	0	★番人無★	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	144	NUDGE_COOLDOWN_SEC	60	★番人無★	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	146	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	152	NEW_CONTEXT_SENT	0	★番人無★	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	155	STARTUP_PROMPT_SENT	0	★番人無★	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	162	ASW_PHASE	2	★番人無★	ASW_PHASE=${ASW_PHASE:-2}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	166	ASW_NO_IDLE_FULL_READ	1	★番人無★	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	170	ASW_DISABLE_ESCALATION	0	★番人無★	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	171	ASW_PROCESS_TIMEOUT	1	★番人無★	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	175	READ_COUNT	0	★番人無★	READ_COUNT=${READ_COUNT:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	176	READ_BYTES_TOTAL	0	★番人無★	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	177	ESTIMATED_TOKENS_TOTAL	0	★番人無★	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	208	ASW_DISABLE_NORMAL_NUDGE	0	★番人無★	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	242	NUDGE_COOLDOWN_SEC	60	★番人無★	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	244	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	248	NUDGE_COOLDOWN_SEC_CLAUDE	60	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	252	LAST_NUDGE_TS	0	★番人無★	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	417	ASW_NO_IDLE_FULL_READ	1	★番人無★	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	419	FIRST_UNREAD_SEEN	0	★番人無★	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	584	NEW_CONTEXT_SENT	0	★番人無★	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	833	LAST_CLEAR_TS	0	★番人無★	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	914	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	★番人無★	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	952	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	983	MAX_TYPING_SKIP	5	★番人無★	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1103	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1177	read_bytes	0	★番人無★	update_metrics "${read_bytes:-0}"
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1267	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1277	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1347	ASW_DISABLE_ESCALATION	0	★番人無★	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1435	INOTIFY_TIMEOUT	30	★番人無★	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1499	ASW_PROCESS_TIMEOUT	1	★番人無★	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1514	LAST_TOKEN_WARN_TS	0	★番人無★	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac	1522	_token_int	0	★番人無★	if [ "${_token_int:-0}" -ge 200 ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	122	FIRST_UNREAD_SEEN	0	★番人無★	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	123	LAST_CLEAR_TS	0	★番人無★	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	124	ESCALATE_PHASE1	120	★番人無★	ESCALATE_PHASE1=${ESCALATE_PHASE1:-120}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	125	ESCALATE_PHASE2	240	★番人無★	ESCALATE_PHASE2=${ESCALATE_PHASE2:-240}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	126	ESCALATE_COOLDOWN	300	★番人無★	ESCALATE_COOLDOWN=${ESCALATE_COOLDOWN:-300}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	135	LAST_B_ALERT_TS	0	★番人無★	LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	138	LAST_KARO_ALERT_TS	0	★番人無★	LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	142	LAST_NUDGE_TS	0	★番人無★	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	144	NUDGE_COOLDOWN_SEC	60	★番人無★	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	146	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	152	NEW_CONTEXT_SENT	0	★番人無★	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	155	STARTUP_PROMPT_SENT	0	★番人無★	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	162	ASW_PHASE	2	★番人無★	ASW_PHASE=${ASW_PHASE:-2}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	166	ASW_NO_IDLE_FULL_READ	1	★番人無★	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	170	ASW_DISABLE_ESCALATION	0	★番人無★	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	171	ASW_PROCESS_TIMEOUT	1	★番人無★	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	175	READ_COUNT	0	★番人無★	READ_COUNT=${READ_COUNT:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	176	READ_BYTES_TOTAL	0	★番人無★	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	177	ESTIMATED_TOKENS_TOTAL	0	★番人無★	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	208	ASW_DISABLE_NORMAL_NUDGE	0	★番人無★	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	242	NUDGE_COOLDOWN_SEC	60	★番人無★	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	244	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	248	NUDGE_COOLDOWN_SEC_CLAUDE	60	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	252	LAST_NUDGE_TS	0	★番人無★	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	417	ASW_NO_IDLE_FULL_READ	1	★番人無★	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	419	FIRST_UNREAD_SEEN	0	★番人無★	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	584	NEW_CONTEXT_SENT	0	★番人無★	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	833	LAST_CLEAR_TS	0	★番人無★	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	914	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	★番人無★	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	952	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	983	MAX_TYPING_SKIP	5	★番人無★	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1103	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1177	read_bytes	0	★番人無★	update_metrics "${read_bytes:-0}"
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1267	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1277	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1347	ASW_DISABLE_ESCALATION	0	★番人無★	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1435	INOTIFY_TIMEOUT	30	★番人無★	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1499	ASW_PROCESS_TIMEOUT	1	★番人無★	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1514	LAST_TOKEN_WARN_TS	0	★番人無★	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+scripts/inbox_watcher.sh.bak-noautoclear-20260910	1522	_token_int	0	★番人無★	if [ "${_token_int:-0}" -ge 200 ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	122	FIRST_UNREAD_SEEN	0	★番人無★	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	123	LAST_CLEAR_TS	0	★番人無★	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	124	ESCALATE_PHASE1	120	★番人無★	ESCALATE_PHASE1=${ESCALATE_PHASE1:-120}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	125	ESCALATE_PHASE2	240	★番人無★	ESCALATE_PHASE2=${ESCALATE_PHASE2:-240}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	126	ESCALATE_COOLDOWN	300	★番人無★	ESCALATE_COOLDOWN=${ESCALATE_COOLDOWN:-300}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	135	LAST_B_ALERT_TS	0	★番人無★	LAST_B_ALERT_TS=${LAST_B_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	138	LAST_KARO_ALERT_TS	0	★番人無★	LAST_KARO_ALERT_TS=${LAST_KARO_ALERT_TS:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	142	LAST_NUDGE_TS	0	★番人無★	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	144	NUDGE_COOLDOWN_SEC	60	★番人無★	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	146	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	152	NEW_CONTEXT_SENT	0	★番人無★	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	155	STARTUP_PROMPT_SENT	0	★番人無★	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	162	ASW_PHASE	2	★番人無★	ASW_PHASE=${ASW_PHASE:-2}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	166	ASW_NO_IDLE_FULL_READ	1	★番人無★	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	170	ASW_DISABLE_ESCALATION	0	★番人無★	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	171	ASW_PROCESS_TIMEOUT	1	★番人無★	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	175	READ_COUNT	0	★番人無★	READ_COUNT=${READ_COUNT:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	176	READ_BYTES_TOTAL	0	★番人無★	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	177	ESTIMATED_TOKENS_TOTAL	0	★番人無★	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	208	ASW_DISABLE_NORMAL_NUDGE	0	★番人無★	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	242	NUDGE_COOLDOWN_SEC	60	★番人無★	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	244	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	248	NUDGE_COOLDOWN_SEC_CLAUDE	60	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	252	LAST_NUDGE_TS	0	★番人無★	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	417	ASW_NO_IDLE_FULL_READ	1	★番人無★	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	419	FIRST_UNREAD_SEEN	0	★番人無★	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	584	NEW_CONTEXT_SENT	0	★番人無★	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	845	LAST_APPROVAL_ALERT_TS	0	★番人無★	if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	846	APPROVAL_ALERT_COOLDOWN	300	★番人無★	&& [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	864	LAST_CLEAR_TS	0	★番人無★	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	945	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	★番人無★	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	983	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1014	MAX_TYPING_SKIP	5	★番人無★	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1134	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1217	read_bytes	0	★番人無★	update_metrics "${read_bytes:-0}"
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1314	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1324	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1394	ASW_DISABLE_ESCALATION	0	★番人無★	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1482	INOTIFY_TIMEOUT	30	★番人無★	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1546	ASW_PROCESS_TIMEOUT	1	★番人無★	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1561	LAST_TOKEN_WARN_TS	0	★番人無★	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513	1569	_token_int	0	★番人無★	if [ "${_token_int:-0}" -ge 200 ]; then
+scripts/inbox_write.sh	88	_AMP_PATTERN_COUNT	0	★番人無★	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+scripts/inbox_write.sh	209	http_status	000	★番人無★	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-00
+scripts/inbox_write.sh.bak-20260903-063704-pre-rr	45	_AMP_PATTERN_COUNT	0	★番人無★	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+scripts/inbox_write.sh.bak-20260903-063704-pre-rr	163	http_status	000	★番人無★	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-00
+scripts/inbox_write.sh.bak-deadinbox-20260917T025450	62	_AMP_PATTERN_COUNT	0	★番人無★	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+scripts/inbox_write.sh.bak-deadinbox-20260917T025450	183	http_status	000	★番人無★	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-00
+scripts/inbox_write.sh.bak-deferral-20260906-193823	45	_AMP_PATTERN_COUNT	0	★番人無★	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+scripts/inbox_write.sh.bak-deferral-20260906-193823	166	http_status	000	★番人無★	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-00
+scripts/inbox_write.sh.bak-deferral-20260906-193846	62	_AMP_PATTERN_COUNT	0	★番人無★	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+scripts/inbox_write.sh.bak-deferral-20260906-193846	183	http_status	000	★番人無★	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-00
+scripts/karo_standby_dashboard.sh	56	n	0	★番人無★	echo "${n:-0}"
+scripts/pane_enter_watcher_supervisor.sh	36	LIVE	0	★番人無★	log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+scripts/pane_enter_watcher_supervisor.sh	50	LIVE	0	★番人無★	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	300	★番人無★	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	10	★番人無★	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+scripts/pane_enter_watcher_supervisor.sh	52	LIVE	0	★番人無★	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	300	★番人無★	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	10	★番人無★	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+scripts/ratelimit_check.sh	417	CODEX_LIMIT_HITS	0	★番人無★	CODEX_LIMIT_HITS="${CODEX_LIMIT_HITS:-0}"
+scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	10	★番人無★	STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"
+scripts/stop_hook_inbox.sh	125	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	177	MASS_UNREAD_THRESHOLD	5	★番人無★	MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+scripts/stop_hook_inbox.sh	189	UNREAD_COUNT	0	★番人無★	case "${UNREAD_COUNT:-0}" in
+scripts/stop_hook_inbox.sh	194	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	202	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	221	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	64	non_empty_lines	0	★番人無★	if [[ "${non_empty_lines:-0}" -lt 2 ]]; then
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	40	RESTART_COUNT_24H	0	★番人無★	local restart_count="${RESTART_COUNT_24H:-0}"
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh	72	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh	84	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh	93	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh	99	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/checks/context_usage_warn.sh.bak-shikii-zoku-20260917T021216	31	CONTEXT_WARN_BYTES	1600000	★番人無★	WARN_BYTES="${CONTEXT_WARN_BYTES:-1600000}"   # ~1.6 MB ≒ 80% (heuristic)
+scripts/checks/context_usage_warn.sh.bak-shikii-zoku-20260917T021216	32	CONTEXT_DANGER_BYTES	2000000	★番人無★	DANGER_BYTES="${CONTEXT_DANGER_BYTES:-2000000}" # ~2.0 MB ≒ 95% (heuristic)
+scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	10485760	番人在	MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+scripts/checks/karo_mac_dasumae_gate.sh	25	n	0	★番人無★	#   旧版は 數 を取る口に ★|| true★ を置き、器が落ちても ${n:-0} で ★0(=通)★ に倒れた。
+scripts/checks/karo_mac_dasumae_gate.sh	75	DASUMAE_READ_TIMEOUT	10	番人在	SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216	20	DASUMAE_MAX_BYTES	10485760	★番人無★	MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216	25	n	0	★番人無★	#   旧版は 數 を取る口に ★|| true★ を置き、器が落ちても ${n:-0} で ★0(=通)★ に倒れた。
+scripts/checks/karo_mac_dasumae_gate.sh.bak-shikii-zoku-20260917T021216	43	DASUMAE_READ_TIMEOUT	10	★番人無★	SAFE_SIZE_TMO="${DASUMAE_READ_TIMEOUT:-10}"
+scripts/checks/karo_mac_gate4.sh	71	VAR	50	★番人無★	#   旧形の `${VAR:-50}` は ★未設定と空文字を一つに混ぜ、黙つて既定へ倒して居た★。
+scripts/checks/karo_mac_gate4.sh.bak-shikii-zoku-20260917T021216	63	GATE4_MAX_FILE_MB	50	★番人無★	MAXF="${GATE4_MAX_FILE_MB:-50}"; MAXT="${GATE4_MAX_TOTAL_MB:-100}"
+scripts/checks/karo_mac_gate4.sh.bak-shikii-zoku-20260917T021216	63	GATE4_MAX_TOTAL_MB	100	★番人無★	MAXF="${GATE4_MAX_FILE_MB:-50}"; MAXT="${GATE4_MAX_TOTAL_MB:-100}"
+scripts/checks/secondpc_dispatch.sh	34	SP_INBOX_AGE	0	★番人無★	SP_INBOX_AGE=${SP_INBOX_AGE:-0}
+scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	2	★番人無★	export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+scripts/watchdogs/enter_restart_common_watchdog.sh	99	_th_unset_told	0	★番人無★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/watchdogs/enter_restart_common_watchdog.sh.bak-shikii-zoku2-20260917T022513	59	ER_THRESHOLD_MIN	10	★番人無★	THRESHOLD_MIN="${ER_THRESHOLD_MIN:-10}"
+scripts/watchdogs/enter_restart_common_watchdog.sh.bak-shikii-zoku2-20260917T022513	60	ER_FIRE_CAP_COUNT	3	★番人無★	FIRE_CAP_COUNT="${ER_FIRE_CAP_COUNT:-3}"
+scripts/watchdogs/enter_restart_common_watchdog.sh.bak-shikii-zoku2-20260917T022513	61	ER_FIRE_CAP_WINDOW_MIN	15	★番人無★	FIRE_CAP_WINDOW_MIN="${ER_FIRE_CAP_WINDOW_MIN:-15}"
+scripts/redundancy/shogun_report_watcher.sh	53	_th_unset_told	0	★番人無★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/redundancy/shogun_report_watcher.sh	326	last_ts	0	★番人無★	if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+scripts/redundancy/shogun_report_watcher.sh.bak-shikii-zoku2-20260917T022513	29	SHOGUN_REPORT_WATCHER_COOLDOWN	60	★番人無★	COOLDOWN_SEC="${SHOGUN_REPORT_WATCHER_COOLDOWN:-60}"
+scripts/redundancy/shogun_report_watcher.sh.bak-shikii-zoku2-20260917T022513	276	last_ts	0	★番人無★	if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	120	★番人無★	DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+.claude/worktrees/karo-mac-a1/first_setup.sh	729	_SETUP_ASHIGARU_COUNT	7	★番人無★	_SETUP_ASHIGARU_COUNT=${_SETUP_ASHIGARU_COUNT:-7}
+.claude/worktrees/karo-mac-a1/tests/agent_selfwatch.bats	56	MOCK_SENDKEYS_RC	0	★番人無★	return "${MOCK_SENDKEYS_RC:-0}"
+.claude/worktrees/karo-mac-a1/tests/agent_selfwatch.bats	63	MOCK_PGREP_RC	1	★番人無★	pgrep() { return "${MOCK_PGREP_RC:-1}"; }
+.claude/worktrees/karo-mac-a1/tests/smoke/test_enter_restart_watchdog.sh	121	n	0	★番人無★	echo "${n:-0}"
+.claude/worktrees/karo-mac-a1/tests/unit/test_idle_flag.bats	75	MOCK_SENDKEYS_RC	0	★番人無★	return \${MOCK_SENDKEYS_RC:-0}
+.claude/worktrees/karo-mac-a1/tests/unit/test_ntfy_ack.bats	71	MOCK_NTFY_EXIT_CODE	0	★番人無★	exit ${MOCK_NTFY_EXIT_CODE:-0}
+.claude/worktrees/karo-mac-a1/tests/unit/test_send_wakeup.bats	118	MOCK_SENDKEYS_RC	0	★番人無★	return \${MOCK_SENDKEYS_RC:-0}
+.claude/worktrees/karo-mac-a1/tests/unit/test_send_wakeup.bats	130	MOCK_PANE_ACTIVE	0	★番人無★	echo "\${MOCK_PANE_ACTIVE:-0}"
+.claude/worktrees/karo-mac-a1/tests/unit/test_switch_cli.bats	65	MOCK_PANE_BASE	0	★番人無★	local pane_base="${MOCK_PANE_BASE:-0}"
+.claude/worktrees/karo-mac-a1/tests/checks/pretooluse_stdin_json/smoke_test.sh	74	n	0	★番人無★	echo "${n:-0}"
+.claude/worktrees/karo-mac-a1/tests/test_helper/mock_tmux_pane.bash	95	MOCK_SENDKEYS_RC	0	★番人無★	exit "${MOCK_SENDKEYS_RC:-0}"
+.claude/worktrees/karo-mac-a1/tests/test_helper/mock_tmux_pane.bash	144	count	0	★番人無★	printf '%s\n' "${count:-0}"
+.claude/worktrees/karo-mac-a1/tests/e2e/e2e_codex_startup.bats	388	E2E_ESCALATE_PHASE1	10	★番人無★	ESCALATE_PHASE1="${E2E_ESCALATE_PHASE1:-10}" \
+.claude/worktrees/karo-mac-a1/tests/e2e/e2e_codex_startup.bats	389	E2E_ESCALATE_PHASE2	20	★番人無★	ESCALATE_PHASE2="${E2E_ESCALATE_PHASE2:-20}" \
+.claude/worktrees/karo-mac-a1/tests/e2e/e2e_codex_startup.bats	390	E2E_ESCALATE_COOLDOWN	25	★番人無★	ESCALATE_COOLDOWN="${E2E_ESCALATE_COOLDOWN:-25}" \
+.claude/worktrees/karo-mac-a1/tests/e2e/e2e_codex_startup.bats	391	E2E_INOTIFY_TIMEOUT	5	★番人無★	INOTIFY_TIMEOUT="${E2E_INOTIFY_TIMEOUT:-5}" \
+.claude/worktrees/karo-mac-a1/tests/e2e/mock_cli.sh	28	MOCK_PROCESSING_DELAY	2	★番人無★	MOCK_PROCESSING_DELAY="${MOCK_PROCESSING_DELAY:-2}"
+.claude/worktrees/karo-mac-a1/tests/e2e/mock_cli.sh	303	hold_time	10	★番人無★	hold_time="${hold_time:-10}"
+.claude/worktrees/karo-mac-a1/tests/e2e/helpers/setup.bash	7	MOCK_PROCESSING_DELAY	1	★番人無★	DEFAULT_PROCESSING_DELAY="${MOCK_PROCESSING_DELAY:-1}"
+.claude/worktrees/karo-mac-a1/tests/e2e/helpers/setup.bash	133	E2E_ESCALATE_PHASE1	10	★番人無★	ESCALATE_PHASE1="${E2E_ESCALATE_PHASE1:-10}" \
+.claude/worktrees/karo-mac-a1/tests/e2e/helpers/setup.bash	134	E2E_ESCALATE_PHASE2	20	★番人無★	ESCALATE_PHASE2="${E2E_ESCALATE_PHASE2:-20}" \
+.claude/worktrees/karo-mac-a1/tests/e2e/helpers/setup.bash	135	E2E_ESCALATE_COOLDOWN	25	★番人無★	ESCALATE_COOLDOWN="${E2E_ESCALATE_COOLDOWN:-25}" \
+.claude/worktrees/karo-mac-a1/tests/e2e/helpers/setup.bash	136	E2E_INOTIFY_TIMEOUT	5	★番人無★	INOTIFY_TIMEOUT="${E2E_INOTIFY_TIMEOUT:-5}" \
+.claude/worktrees/karo-mac-a1/docs/runbooks/ERR-INFRA-001.md	57	MEM_AVAIL	0	★番人無★	if [ "${MEM_AVAIL:-0}" -lt 500 ]; then
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	85	HEALTH_CHECK_COOLDOWN_SEC	300	★番人無★	ALERT_COOLDOWN_SEC="${HEALTH_CHECK_COOLDOWN_SEC:-300}"  # 5 min (= task spec)
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	98	last	0	★番人無★	last=${last:-0}
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	186	INSERT_COUNT	0	★番人無★	INSERT_COUNT=${INSERT_COUNT:-0}
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	187	INSERT_COUNT	0	★番人無★	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	209	n	0	★番人無★	if [ "${n:-0}" -gt 10 ]; then
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	226	n	0	★番人無★	if [ "${n:-0}" -gt 10 ]; then
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	310	HEALTH_CHECK_TOKEN_WARN	200000	★番人無★	TOKEN_WARN_THRESHOLD="${HEALTH_CHECK_TOKEN_WARN:-200000}"
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	311	HEALTH_CHECK_TOKEN_CRIT	240000	★番人無★	TOKEN_CRIT_THRESHOLD="${HEALTH_CHECK_TOKEN_CRIT:-240000}"
+.claude/worktrees/karo-mac-a1/scripts/agent_health_check.sh	333	max_tokens	0	★番人無★	max_tokens=${max_tokens:-0}
+.claude/worktrees/karo-mac-a1/scripts/agent_periodic_push.sh	64	sp_age	0	★番人無★	sp_age=${sp_age:-0}
+.claude/worktrees/karo-mac-a1/scripts/agent_periodic_push.sh	95	PENDING	0	★番人無★	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRESS:-0}
+.claude/worktrees/karo-mac-a1/scripts/agent_periodic_push.sh	95	IN_PROGRESS	0	★番人無★	- shogun_to_karo.yaml: pending=${PENDING:-0} / in_progress=${IN_PROGRESS:-0}
+.claude/worktrees/karo-mac-a1/scripts/agent_periodic_push.sh	112	PENDING	0	★番人無★	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${PENDING:-0}, in_progress=${IN_
+.claude/worktrees/karo-mac-a1/scripts/agent_periodic_push.sh	112	IN_PROGRESS	0	★番人無★	echo "[$now_ts] SENT push to karo (idle=${#IDLE_AGENTS[@]}, pending=${PENDING:-0}, in_progress=${IN_
+.claude/worktrees/karo-mac-a1/scripts/audit_meta_codex.sh	108	COUNT	0	★番人無★	if [ "${COUNT:-0}" -ge "$SH6_CAP" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	0	★番人無★	FIRST_UNREAD_SEEN=${FIRST_UNREAD_SEEN:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	0	★番人無★	LAST_CLEAR_TS=${LAST_CLEAR_TS:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	124	ESCALATE_PHASE1	120	★番人無★	ESCALATE_PHASE1=${ESCALATE_PHASE1:-120}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	125	ESCALATE_PHASE2	240	★番人無★	ESCALATE_PHASE2=${ESCALATE_PHASE2:-240}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	126	ESCALATE_COOLDOWN	300	★番人無★	ESCALATE_COOLDOWN=${ESCALATE_COOLDOWN:-300}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	130	LAST_NUDGE_TS	0	★番人無★	LAST_NUDGE_TS=${LAST_NUDGE_TS:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	132	NUDGE_COOLDOWN_SEC	60	★番人無★	NUDGE_COOLDOWN_SEC=${NUDGE_COOLDOWN_SEC:-60}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	134	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	NUDGE_COOLDOWN_SEC_CODEX=${NUDGE_COOLDOWN_SEC_CODEX:-300}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	140	NEW_CONTEXT_SENT	0	★番人無★	NEW_CONTEXT_SENT=${NEW_CONTEXT_SENT:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	143	STARTUP_PROMPT_SENT	0	★番人無★	STARTUP_PROMPT_SENT=${STARTUP_PROMPT_SENT:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	150	ASW_PHASE	2	★番人無★	ASW_PHASE=${ASW_PHASE:-2}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	154	ASW_NO_IDLE_FULL_READ	1	★番人無★	ASW_NO_IDLE_FULL_READ=${ASW_NO_IDLE_FULL_READ:-1}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	158	ASW_DISABLE_ESCALATION	0	★番人無★	ASW_DISABLE_ESCALATION=${ASW_DISABLE_ESCALATION:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	159	ASW_PROCESS_TIMEOUT	1	★番人無★	ASW_PROCESS_TIMEOUT=${ASW_PROCESS_TIMEOUT:-1}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	163	READ_COUNT	0	★番人無★	READ_COUNT=${READ_COUNT:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	164	READ_BYTES_TOTAL	0	★番人無★	READ_BYTES_TOTAL=${READ_BYTES_TOTAL:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	165	ESTIMATED_TOKENS_TOTAL	0	★番人無★	ESTIMATED_TOKENS_TOTAL=${ESTIMATED_TOKENS_TOTAL:-0}
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	196	ASW_DISABLE_NORMAL_NUDGE	0	★番人無★	if [ "${ASW_DISABLE_NORMAL_NUDGE:-0}" != "1" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	230	NUDGE_COOLDOWN_SEC	60	★番人無★	local cooldown_sec="${NUDGE_COOLDOWN_SEC:-60}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	232	NUDGE_COOLDOWN_SEC_CODEX	300	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CODEX:-300}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	236	NUDGE_COOLDOWN_SEC_CLAUDE	60	★番人無★	cooldown_sec="${NUDGE_COOLDOWN_SEC_CLAUDE:-60}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	240	LAST_NUDGE_TS	0	★番人無★	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	405	ASW_NO_IDLE_FULL_READ	1	★番人無★	[ "${ASW_NO_IDLE_FULL_READ:-1}" = "1" ] || return 1
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	407	FIRST_UNREAD_SEEN	0	★番人無★	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	572	NEW_CONTEXT_SENT	0	★番人無★	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	821	LAST_CLEAR_TS	0	★番人無★	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	902	INBOX_WATCHER_DISABLE_TYPING_CHECK	0	★番人無★	if [ "${INBOX_WATCHER_DISABLE_TYPING_CHECK:-0}" = "1" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	940	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	971	MAX_TYPING_SKIP	5	★番人無★	local max_typing_skip="${MAX_TYPING_SKIP:-5}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1091	FINAL_ESCALATION_ONLY	0	★番人無★	if [ "${FINAL_ESCALATION_ONLY:-0}" = "1" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1165	read_bytes	0	★番人無★	update_metrics "${read_bytes:-0}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1255	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1265	FIRST_UNREAD_SEEN	0	★番人無★	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1335	ASW_DISABLE_ESCALATION	0	★番人無★	if [ "${ASW_DISABLE_ESCALATION:-0}" = "1" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1423	INOTIFY_TIMEOUT	30	★番人無★	INOTIFY_TIMEOUT="${INOTIFY_TIMEOUT:-30}"
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1487	ASW_PROCESS_TIMEOUT	1	★番人無★	if [ "${ASW_PROCESS_TIMEOUT:-1}" = "1" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1502	LAST_TOKEN_WARN_TS	0	★番人無★	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1510	_token_int	0	★番人無★	if [ "${_token_int:-0}" -ge 200 ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	45	_AMP_PATTERN_COUNT	0	★番人無★	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	163	http_status	000	★番人無★	echo "[inbox_write] WARN: cross-PC bridge INSERT failed for ${target} (http_status=${http_status:-00
+.claude/worktrees/karo-mac-a1/scripts/pane_enter_watcher_supervisor.sh	36	LIVE	0	★番人無★	log "=== supervisor start (LIVE=${LIVE:-0}) ==="
+.claude/worktrees/karo-mac-a1/scripts/pane_enter_watcher_supervisor.sh	50	LIVE	0	★番人無★	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+.claude/worktrees/karo-mac-a1/scripts/pane_enter_watcher_supervisor.sh	50	STALE_SEC	300	★番人無★	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+.claude/worktrees/karo-mac-a1/scripts/pane_enter_watcher_supervisor.sh	50	POLL_SEC	10	★番人無★	log "starting watcher (LIVE=${LIVE:-0} STALE_SEC=${STALE_SEC:-300} POLL_SEC=${POLL_SEC:-10})"
+.claude/worktrees/karo-mac-a1/scripts/pane_enter_watcher_supervisor.sh	52	LIVE	0	★番人無★	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+.claude/worktrees/karo-mac-a1/scripts/pane_enter_watcher_supervisor.sh	52	STALE_SEC	300	★番人無★	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+.claude/worktrees/karo-mac-a1/scripts/pane_enter_watcher_supervisor.sh	52	POLL_SEC	10	★番人無★	LIVE="${LIVE:-0}" STALE_SEC="${STALE_SEC:-300}" POLL_SEC="${POLL_SEC:-10}" \
+.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	417	CODEX_LIMIT_HITS	0	★番人無★	CODEX_LIMIT_HITS="${CODEX_LIMIT_HITS:-0}"
+.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	94	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	146	MASS_UNREAD_THRESHOLD	5	★番人無★	MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	147	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	155	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	174	UNREAD_COUNT	0	★番人無★	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	64	non_empty_lines	0	★番人無★	if [[ "${non_empty_lines:-0}" -lt 2 ]]; then
+.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	40	RESTART_COUNT_24H	0	★番人無★	local restart_count="${RESTART_COUNT_24H:-0}"
+.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/watcher.sh	72	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/watcher.sh	84	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/watcher.sh	93	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/watcher.sh	99	HEARTBEAT_LOOP_PID	0	★番人無★	kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+.claude/worktrees/karo-mac-a1/scripts/checks/context_usage_warn.sh	31	CONTEXT_WARN_BYTES	1600000	★番人無★	WARN_BYTES="${CONTEXT_WARN_BYTES:-1600000}"   # ~1.6 MB ≒ 80% (heuristic)
+.claude/worktrees/karo-mac-a1/scripts/checks/context_usage_warn.sh	32	CONTEXT_DANGER_BYTES	2000000	★番人無★	DANGER_BYTES="${CONTEXT_DANGER_BYTES:-2000000}" # ~2.0 MB ≒ 95% (heuristic)
+.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	20	DASUMAE_MAX_BYTES	10485760	★番人無★	MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	31	ws_n	0	★番人無★	if [ "${ws_n:-0}" -gt 0 ]; then
+.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	38	cr_n	0	★番人無★	if [ "${cr_n:-0}" -gt 0 ]; then
+.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	63	GATE4_MAX_FILE_MB	50	★番人無★	MAXF="${GATE4_MAX_FILE_MB:-50}"; MAXT="${GATE4_MAX_TOTAL_MB:-100}"
+.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	63	GATE4_MAX_TOTAL_MB	100	★番人無★	MAXF="${GATE4_MAX_FILE_MB:-50}"; MAXT="${GATE4_MAX_TOTAL_MB:-100}"
+.claude/worktrees/karo-mac-a1/scripts/checks/secondpc_dispatch.sh	34	SP_INBOX_AGE	0	★番人無★	SP_INBOX_AGE=${SP_INBOX_AGE:-0}
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_commander_watchdog.sh	35	ER_THRESHOLD_MIN	2	★番人無★	export ER_THRESHOLD_MIN="${ER_THRESHOLD_MIN:-2}"
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	59	ER_THRESHOLD_MIN	10	★番人無★	THRESHOLD_MIN="${ER_THRESHOLD_MIN:-10}"
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	60	ER_FIRE_CAP_COUNT	3	★番人無★	FIRE_CAP_COUNT="${ER_FIRE_CAP_COUNT:-3}"
+.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	61	ER_FIRE_CAP_WINDOW_MIN	15	★番人無★	FIRE_CAP_WINDOW_MIN="${ER_FIRE_CAP_WINDOW_MIN:-15}"
+.claude/worktrees/karo-mac-a1/scripts/redundancy/shogun_report_watcher.sh	29	SHOGUN_REPORT_WATCHER_COOLDOWN	60	★番人無★	COOLDOWN_SEC="${SHOGUN_REPORT_WATCHER_COOLDOWN:-60}"
+.claude/worktrees/karo-mac-a1/scripts/redundancy/shogun_report_watcher.sh	276	last_ts	0	★番人無★	if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+.claude/worktrees/karo-mac-a1/scripts/lib/detect_stale.sh	33	DETECT_STALE_STALE_SEC	120	★番人無★	DETECT_STALE_STALE_SEC="${DETECT_STALE_STALE_SEC:-120}"   # 設計 §1.2 verbatim
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	29	IDLE_THRESHOLD	300	★番人無★	IDLE_THRESHOLD="${IDLE_THRESHOLD:-300}"
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	30	CHECK_INTERVAL	30	★番人無★	CHECK_INTERVAL="${CHECK_INTERVAL:-30}"
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	166	AUDIT_CHECK_INTERVAL	120	★番人無★	AUDIT_CHECK_INTERVAL="${AUDIT_CHECK_INTERVAL:-120}"  # 監査チェックは2分ごと（軽くするため毎回ではない）
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_departure.sh	154	HAKUDOKAI_POLL_INTERVAL	5	★番人無★	INTERVAL="${HAKUDOKAI_POLL_INTERVAL:-5}"
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	75	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	1	★番人無★	D3_FAIL_CLOSED_ON_REGISTRY_ERROR="${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}"
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	357	D3_FAIL_CLOSED_ON_REGISTRY_ERROR	1	★番人無★	if [ "${D3_FAIL_CLOSED_ON_REGISTRY_ERROR:-1}" = "1" ]; then
+.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	737	HB_HTTP	0	★番人無★	log_struct "WARN" "task_heartbeat_touch_failed" "watchdog" "{\"http\":${HB_HTTP:-0},\"rc\":${HB_RC}}

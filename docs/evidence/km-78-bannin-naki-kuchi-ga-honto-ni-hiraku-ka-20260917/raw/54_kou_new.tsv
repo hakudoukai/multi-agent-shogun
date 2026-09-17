@@ -1,0 +1,12 @@
+形	與へた値	砂時計	wall_s	時限切れの報せ	OUT	stderr_1
+1未設定	__UNSET__	0	10	★有★	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10	[stop_hook] ★stdin 時限切れ(10秒経過・rc=1) — 讀めた 0 字で続行★
+2空文字		0	11	★有★	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が空文字 — 既定 10 へ倒す(fail-closed)★
+3空白のみ	 	0	10	★有★	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「 」) — 既定 10 へ倒す(fail-cl
+4二十桁	99999999999999999999	0	10	★有★	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「99999999999999999999」)
+5正常値1	1	0	1	★有★	OUT	INPUT_len=0	el=1	read_rc=1	TMO=1	[stop_hook] ★stdin 時限切れ(1秒経過・rc=1) — 讀めた 0 字で続行★
+6負数	-5	0	0	★有★	OUT	INPUT_len=0	el=0	read_rc=1	TMO=-5	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/u
+7改行入り	1␊2	0	10	★有★	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「1␊2」) — 既定 10 へ倒す(fail-
+8既存␊	1␊2	0	10	★有★	OUT	INPUT_len=0	el=10	read_rc=1	TMO=10	[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT が可視印(␊␍␉)を既に含む — 値を刷らず既定 10 へ倒す(f
+9二の32乗引1	4294967295	0	12	無	OUT	INPUT_len=0	el=12	read_rc=1	TMO=4294967295	-
+10二の32乗	4294967296	0	0	無	OUT	INPUT_len=0	el=0	read_rc=1	TMO=4294967296	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/u
+11二の63乗引1	9223372036854775807	0	0	無	OUT	INPUT_len=0	el=0	read_rc=1	TMO=9223372036854775807	docs/evidence/km-78-bannin-naki-kuchi-ga-honto-ni-hiraku-ka-20260917/u

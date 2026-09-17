@@ -1,0 +1,132 @@
+file	line	name	由来	版	比較器行	所	比較器逐語
+scripts/agent_health_check.sh	109	_th_unset_told	内生(字面)	一致	109	★口の行 自身★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/agent_health_check.sh	230	INSERT_COUNT	内生(命令の出目)	一致	231	川下	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+scripts/agent_health_check.sh	231	INSERT_COUNT	内生(命令の出目)	一致	231	★口の行 自身★	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	91	川下	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	109	川下	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	117	川下	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	143	川下	elapsed=$((now - last))
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	144	川下	if [ "$elapsed" -lt "$ALERT_COOLDOWN_SEC" ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	231	川下	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	253	★口の行 自身★	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	270	川下	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	378	川下	if [ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	391	川下	elif [ "$max_tokens" -ge "$TOKEN_WARN_THRESHOLD" ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	430	川下	_fukuincho_alerts=$((_fukuincho_alerts + 1))
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	434	川下	_fukuincho_alerts=$((_fukuincho_alerts + 1))
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	443	川下	_fukuincho_alerts=$((_fukuincho_alerts + 1))
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	451	川下	_detect_stale_age_min=$(( ($(date +%s) - $(stat -c %Y "$_detect_stale_log_file" 2>/dev/null || echo 0)) / 60 ))
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	452	川下	if [ "$_detect_stale_age_min" -gt 60 ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	458	川下	if [ "$_fukuincho_alerts" -eq 0 ]; then
+scripts/agent_health_check.sh	253	n	内生(命令の出目)	一致	474	川下	if [ "${#ALERTS[@]}" -gt 0 ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	91	川下	num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	109	川下	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	117	川下	if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	143	川下	elapsed=$((now - last))
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	144	川下	if [ "$elapsed" -lt "$ALERT_COOLDOWN_SEC" ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	231	川下	if [ "${INSERT_COUNT:-0}" -gt 5 ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	253	川下	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	270	★口の行 自身★	if [ "${n:-0}" -gt 10 ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	378	川下	if [ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	391	川下	elif [ "$max_tokens" -ge "$TOKEN_WARN_THRESHOLD" ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	430	川下	_fukuincho_alerts=$((_fukuincho_alerts + 1))
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	434	川下	_fukuincho_alerts=$((_fukuincho_alerts + 1))
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	443	川下	_fukuincho_alerts=$((_fukuincho_alerts + 1))
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	451	川下	_detect_stale_age_min=$(( ($(date +%s) - $(stat -c %Y "$_detect_stale_log_file" 2>/dev/null || echo 0)) / 60 ))
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	452	川下	if [ "$_detect_stale_age_min" -gt 60 ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	458	川下	if [ "$_fukuincho_alerts" -eq 0 ]; then
+scripts/agent_health_check.sh	270	n	内生(命令の出目)	一致	474	川下	if [ "${#ALERTS[@]}" -gt 0 ]; then
+scripts/agent_health_check.sh	377	max_tokens	内生(命令の出目)	一致	378	川下	if [ "$max_tokens" -ge "$TOKEN_CRIT_THRESHOLD" ]; then
+scripts/agent_health_check.sh	377	max_tokens	内生(命令の出目)	一致	391	川下	elif [ "$max_tokens" -ge "$TOKEN_WARN_THRESHOLD" ]; then
+scripts/agent_periodic_push.sh	64	sp_age	内生(命令の出目)	一致	65	川下	if [ "$sp_age" -gt 0 ]; then
+scripts/agent_periodic_push.sh	64	sp_age	内生(命令の出目)	一致	66	川下	age=$(( $(date +%s) - sp_age ))
+scripts/audit_meta_codex.sh	108	COUNT	内生(命令の出目)	一致	108	★口の行 自身★	if [ "${COUNT:-0}" -ge "$SH6_CAP" ]; then
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	243	川下	if [ "$FIRST_UNREAD_SEEN" -gt 0 ] 2>/dev/null; then
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	244	川下	unread_latency_sec=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	472	川下	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	1245	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	1367	川下	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]; then
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	1368	川下	echo "[$(date)] WARNING: $AGENT_ID busy for $((now - FIRST_UNREAD_SEEN))s with $normal_count unread — forcing idle flag (stale busy recovery)" >&2
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	1377	川下	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	1443	川下	if [ "$FIRST_UNREAD_SEEN" -eq 0 ]; then
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	1457	川下	local age=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	122	FIRST_UNREAD_SEEN	内生(字面)	一致	1501	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	内生(命令の出目)	一致	917	川下	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	内生(命令の出目)	一致	1046	川下	local _clear_elapsed=$(($(date +%s) - LAST_CLEAR_TS))
+scripts/inbox_watcher.sh	123	LAST_CLEAR_TS	内生(命令の出目)	一致	1473	川下	if [ "$LAST_CLEAR_TS" -lt "$((now - ESCALATE_COOLDOWN))" ]; then
+scripts/inbox_watcher.sh	148	_th_unset_told	内生(字面)	一致	148	★口の行 自身★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh	195	LAST_NUDGE_TS	内生(字面)	一致	305	川下	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+scripts/inbox_watcher.sh	195	LAST_NUDGE_TS	内生(字面)	一致	306	川下	local age=$((now - LAST_NUDGE_TS))
+scripts/inbox_watcher.sh	205	NEW_CONTEXT_SENT	内生(字面)	一致	637	川下	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh	205	NEW_CONTEXT_SENT	内生(字面)	一致	1395	川下	if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+scripts/inbox_watcher.sh	208	STARTUP_PROMPT_SENT	内生(字面)	一致	1435	川下	if [ "$STARTUP_PROMPT_SENT" -eq 1 ]; then
+scripts/inbox_watcher.sh	305	LAST_NUDGE_TS	内生(字面)	一致	305	★口の行 自身★	if [ "${LAST_NUDGE_COUNT:-}" = "$unread_count" ] && [ "${LAST_NUDGE_TS:-0}" -gt 0 ]; then
+scripts/inbox_watcher.sh	305	LAST_NUDGE_TS	内生(字面)	一致	306	川下	local age=$((now - LAST_NUDGE_TS))
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	243	川下	if [ "$FIRST_UNREAD_SEEN" -gt 0 ] 2>/dev/null; then
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	244	川下	unread_latency_sec=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	472	★口の行 自身★	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	1245	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	1367	川下	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]; then
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	1368	川下	echo "[$(date)] WARNING: $AGENT_ID busy for $((now - FIRST_UNREAD_SEEN))s with $normal_count unread — forcing idle flag (stale busy recovery)" >&2
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	1377	川下	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	1443	川下	if [ "$FIRST_UNREAD_SEEN" -eq 0 ]; then
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	1457	川下	local age=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	472	FIRST_UNREAD_SEEN	内生(字面)	一致	1501	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	637	NEW_CONTEXT_SENT	内生(字面)	一致	637	★口の行 自身★	if [ "${NEW_CONTEXT_SENT:-0}" -eq 1 ]; then
+scripts/inbox_watcher.sh	637	NEW_CONTEXT_SENT	内生(字面)	一致	1395	川下	if [ "$has_task_assigned" = "1" ] && [ "$NEW_CONTEXT_SENT" -eq 0 ] && [ "$clear_seen" -eq 0 ]; then
+scripts/inbox_watcher.sh	898	LAST_APPROVAL_ALERT_TS	内生(字面)	一致	898	★口の行 自身★	if [ "${LAST_APPROVAL_ALERT_TS:-0}" -gt 0 ] \
+scripts/inbox_watcher.sh	898	LAST_APPROVAL_ALERT_TS	内生(字面)	一致	899	川下	&& [ $((now - LAST_APPROVAL_ALERT_TS)) -lt "${APPROVAL_ALERT_COOLDOWN:-300}" ]; then
+scripts/inbox_watcher.sh	917	LAST_CLEAR_TS	内生(命令の出目)	一致	917	★口の行 自身★	if [ "${LAST_CLEAR_TS:-0}" -gt 0 ] && [ "$((now_busy - LAST_CLEAR_TS))" -lt 30 ]; then
+scripts/inbox_watcher.sh	917	LAST_CLEAR_TS	内生(命令の出目)	一致	1046	川下	local _clear_elapsed=$(($(date +%s) - LAST_CLEAR_TS))
+scripts/inbox_watcher.sh	917	LAST_CLEAR_TS	内生(命令の出目)	一致	1473	川下	if [ "$LAST_CLEAR_TS" -lt "$((now - ESCALATE_COOLDOWN))" ]; then
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	243	川下	if [ "$FIRST_UNREAD_SEEN" -gt 0 ] 2>/dev/null; then
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	244	川下	unread_latency_sec=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	472	川下	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	1245	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	1367	★口の行 自身★	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]; then
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	1368	川下	echo "[$(date)] WARNING: $AGENT_ID busy for $((now - FIRST_UNREAD_SEEN))s with $normal_count unread — forcing idle flag (stale busy recovery)" >&2
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	1377	川下	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	1443	川下	if [ "$FIRST_UNREAD_SEEN" -eq 0 ]; then
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	1457	川下	local age=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	1367	FIRST_UNREAD_SEEN	内生(字面)	一致	1501	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	243	川下	if [ "$FIRST_UNREAD_SEEN" -gt 0 ] 2>/dev/null; then
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	244	川下	unread_latency_sec=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	472	川下	[ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ] || return 1
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	1245	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	1367	川下	if [ "${FIRST_UNREAD_SEEN:-0}" -gt 0 ] && [ "$((now - FIRST_UNREAD_SEEN))" -ge "$stale_busy_limit" ]; then
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	1368	川下	echo "[$(date)] WARNING: $AGENT_ID busy for $((now - FIRST_UNREAD_SEEN))s with $normal_count unread — forcing idle flag (stale busy recovery)" >&2
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	1377	★口の行 自身★	if [ "${FIRST_UNREAD_SEEN:-0}" -eq 0 ]; then
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	1443	川下	if [ "$FIRST_UNREAD_SEEN" -eq 0 ]; then
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	1457	川下	local age=$((now - FIRST_UNREAD_SEEN))
+scripts/inbox_watcher.sh	1377	FIRST_UNREAD_SEEN	内生(字面)	一致	1501	川下	if [ "$FIRST_UNREAD_SEEN" -ne 0 ]; then
+scripts/inbox_watcher.sh	1614	LAST_TOKEN_WARN_TS	内生(字面)	一致	1614	★口の行 自身★	if [ "$((_now_token - ${LAST_TOKEN_WARN_TS:-0}))" -gt "$_token_warn_cooldown" ]; then
+scripts/inbox_watcher.sh	1622	_token_int	内生(字面)	一致	1622	★口の行 自身★	if [ "${_token_int:-0}" -ge 200 ]; then
+scripts/inbox_write.sh	88	_AMP_PATTERN_COUNT	内生(命令の出目)	一致	88	★口の行 自身★	if [ "${_AMP_PATTERN_COUNT:-0}" -ge 3 ]; then
+scripts/ratelimit_check.sh	417	CODEX_LIMIT_HITS	内生(命令の出目)	一致	422	川下	if [[ "$CODEX_LIMIT_HITS" -ge "$CODEX_LIMIT_HITS_WARN" ]]; then
+scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	外来(env のみ)	★ずれ★	53	川下	#   20桁の十進を「數」として通すが、下の `[ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]` は
+scripts/stop_hook_inbox.sh	52	STOP_HOOK_STDIN_TIMEOUT	外来(env のみ)	★ずれ★	90	川下	if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+scripts/stop_hook_inbox.sh	125	UNREAD_COUNT	内生(命令の出目)	★ずれ★	145	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	125	UNREAD_COUNT	内生(命令の出目)	★ずれ★	214	川下	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	125	UNREAD_COUNT	内生(命令の出目)	★ずれ★	222	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	125	UNREAD_COUNT	内生(命令の出目)	★ずれ★	241	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	177	MASS_UNREAD_THRESHOLD	外来(env のみ)	★ずれ★	214	川下	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	189	UNREAD_COUNT	内生(命令の出目)	★ずれ★	145	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	189	UNREAD_COUNT	内生(命令の出目)	★ずれ★	214	川下	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	189	UNREAD_COUNT	内生(命令の出目)	★ずれ★	222	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	189	UNREAD_COUNT	内生(命令の出目)	★ずれ★	241	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	194	UNREAD_COUNT	内生(命令の出目)	★ずれ★	145	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	194	UNREAD_COUNT	内生(命令の出目)	★ずれ★	214	川下	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	194	UNREAD_COUNT	内生(命令の出目)	★ずれ★	222	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	194	UNREAD_COUNT	内生(命令の出目)	★ずれ★	241	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	202	UNREAD_COUNT	内生(命令の出目)	★ずれ★	145	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	202	UNREAD_COUNT	内生(命令の出目)	★ずれ★	214	川下	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	202	UNREAD_COUNT	内生(命令の出目)	★ずれ★	222	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	202	UNREAD_COUNT	内生(命令の出目)	★ずれ★	241	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	221	UNREAD_COUNT	内生(命令の出目)	★ずれ★	145	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	221	UNREAD_COUNT	内生(命令の出目)	★ずれ★	214	川下	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	221	UNREAD_COUNT	内生(命令の出目)	★ずれ★	222	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	221	UNREAD_COUNT	内生(命令の出目)	★ずれ★	241	川下	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/watchdogs/enter_restart_common_watchdog.sh	99	_th_unset_told	内生(字面)	一致	99	★口の行 自身★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/redundancy/shogun_report_watcher.sh	53	_th_unset_told	内生(字面)	一致	53	★口の行 自身★	if [ "${_th_unset_told:-0}" -eq 0 ]; then
+scripts/redundancy/shogun_report_watcher.sh	326	last_ts	内生(字面)	一致	326	★口の行 自身★	if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+scripts/redundancy/shogun_report_watcher.sh	326	last_ts	内生(字面)	一致	327	川下	diff=$(( now - last_ts ))
