@@ -1,0 +1,25 @@
+器形	形	値(可視印)	rc	BRANCH	器の報せ行	外の声行	FINAL	報せの頭60字
+genkei	①未設定	(未設定)	0	timeout	0	0	[1]
+genkei	②空文字	(空文字)	0	timeout	0	0	[1]
+genkei	③空白半	 	0	★無★	0	0	[ ]
+genkei	④空白全	␠全	0	★無★	0	0	[　]
+genkei	⑤非数	abc	0	★無★	0	0	[abc]
+genkei	⑥20桁	99999999999999999999	0	★無★	0	0	[99999999999999999999]
+genkei	⑦域外2	2	0	★無★	0	0	[2]
+genkei	⑧域外01	01	0	★無★	0	0	[01]
+genkei	⑨域外+1	+1	0	★無★	0	0	[+1]
+genkei	⑩先頭改行	␊1	0	★無★	0	0	[
+genkei	⑪正常1(宣)	1	0	timeout	0	0	[1]
+genkei	⑫正常0(宣)	0	0	★無★	0	0	[0]
+naoshi	①未設定	(未設定)	0	timeout	1	0	[1]	[watcher] ★旗/閾 未設定 ―― 既定へ倒す(ASW_PROCESS_TIMEOUT=1) ／ 本 proce
+naoshi	②空文字	(空文字)	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT が空文字 ―― 既定 1 へ倒す(fail-close
+naoshi	③空白半	 	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT が空白のみ ―― 既定 1 へ倒す(fail-clos
+naoshi	④空白全	␠全	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT が空白のみ ―― 既定 1 へ倒す(fail-clos
+naoshi	⑤非数	abc	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「abc」) ―― 既定 1 へ倒す
+naoshi	⑥20桁	99999999999999999999	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「99999999999999999
+naoshi	⑦域外2	2	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「2」) ―― 既定 1 へ倒す(f
+naoshi	⑧域外01	01	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「01」) ―― 既定 1 へ倒す(
+naoshi	⑨域外+1	+1	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「+1」) ―― 既定 1 へ倒す(
+naoshi	⑩先頭改行	␊1	0	timeout	1	0	[1]	[watcher] ★旗 ASW_PROCESS_TIMEOUT は 0|1 の外(「␊1」) ―― 既定 1 へ倒す(
+naoshi	⑪正常1(宣)	1	0	timeout	0	0	[1]
+naoshi	⑫正常0(宣)	0	0	★無★	0	0	[0]

@@ -1,0 +1,9 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★file が無い: README.md _before/inbox_watcher.sh.snapshot raw/05_hikae_vs_ima.diff raw/06_main_vs_hikae.diff raw/07_oya_kenme.txt raw/10_slice.py raw/12_run12.py raw/13_harness_genkei.sh raw/13_harness_naoshi.sh raw/20_doku12.tsv raw/21_taishou.txt raw/22_kadou.txt raw/45_kadou.sh raw/50_taishou.py raw/60_kami_awase.py raw/61_kami_awase.tsv raw/70_zen_commit_kenme.sh raw/71_oya_ga_hikae_ka.sh raw/90_kaki.py raw/slice_genkei_bannin.sh raw/slice_genkei_hikaku.sh raw/slice_genkei_uke.sh raw/slice_naoshi_bannin.sh raw/slice_naoshi_hikaku.sh raw/slice_naoshi_uke.sh ★
+★條⑤ 測れぬ(寸法が取れぬ) ―― README.md _before/inbox_watcher.sh.snapshot raw/05_hikae_vs_ima.diff raw/06_main_vs_hikae.diff raw/07_oya_kenme.txt raw/10_slice.py raw/12_run12.py raw/13_harness_genkei.sh raw/13_harness_naoshi.sh raw/20_doku12.tsv raw/21_taishou.txt raw/22_kadou.txt raw/45_kadou.sh raw/50_taishou.py raw/60_kami_awase.py raw/61_kami_awase.tsv raw/70_zen_commit_kenme.sh raw/71_oya_ga_hikae_ka.sh raw/90_kaki.py raw/slice_genkei_bannin.sh raw/slice_genkei_hikaku.sh raw/slice_genkei_uke.sh raw/slice_naoshi_bannin.sh raw/slice_naoshi_hikaku.sh raw/slice_naoshi_uke.sh ★ ★測れぬは通さぬ(default-deny)★
+條⑤ 寸法 = byte和 0(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

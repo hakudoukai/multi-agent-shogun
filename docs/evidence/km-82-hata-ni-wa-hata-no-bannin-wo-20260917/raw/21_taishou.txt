@@ -1,0 +1,15 @@
+対照	器形	値	rc	BRANCH	器の報せ行	外の声行
+陰性A(値1・宣どほり)	genkei	1	0	timeout	0	0
+陰性A(値1・宣どほり)	naoshi	1	0	timeout	0	0
+陰性B(値0・宣どほり)	genkei	0	0	無	0	0
+陰性B(値0・宣どほり)	naoshi	0	0	無	0	0
+★陽性(値2・毒)★	genkei	2	0	無	0	0
+★陽性(値2・毒)★	naoshi	2	0	timeout	1	0
+
+○ 陰性A 両形とも BRANCH=timeout・報せ0
+○ 陰性B 両形とも BRANCH=無・報せ0(宣=event-only)
+○ ★陽性 現形= BRANCH無・報せ0(黙つて縮退=害)★
+○ ★陽性 直し形= BRANCH=timeout・報せ1(刷つて倒す)★
+○ 対照の証: 同じ器が BRANCH=timeout を出せる(陰性A) ⇒ 「無」は器の死に非ず
+
+判=通(○=5/5)
