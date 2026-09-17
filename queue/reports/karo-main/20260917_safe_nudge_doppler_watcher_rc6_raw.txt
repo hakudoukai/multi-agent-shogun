@@ -1,0 +1,115 @@
+# 20260917 safe_nudge doppler — 裁 seq327040 (PR#21 残2点: watcher rc6 分岐 + integration/native bats raw) raw
+# 発: karo-main  親: 3d00aa352efaacdf1fc5ac8e9f879a4acfe82990  枝: karo-main/safe-nudge-doppler-20260917
+# 五分法: ①測り=本紙の raw 全部 / ③未測=CI (GitHub Actions は当機で走らせられぬ ∴ PR#21 checks で読む)
+#
+# ■一 裁 (seq327040 逐語要旨): ⑴ watcher.sh に rc6 の分岐 (rc6=送達済として dedup・再送しない)
+#   ⑵ 固定 integration raw + native bats/CI raw を束へ。同枝へ commit→push願ひ 1 行。
+#
+# ■二 当て
+#   scripts/archive/message_delivery_v2_full_20260508/watcher.sh  blob a00da7055c377b6a3069df7e56da24479280c9ea → a991b5946f5641e3b4f96ab4842780938027417a  (numstat +7/-0: case に 6) を追加。5) と *) の間)
+#     6) log_json WARN delivered_cooldown_write_failed (msg_id/corr_id/resend=no) → mark_msg_read delivered → dedup_record delivered
+#     = rc=0 と同じ閉ぢ方・log の level/msg で区別。*) (unknown_rc + increment_retry) は不変。
+#   tests/unit/test_watcher_rc6_integration.bats  新設 blob 7c2b5ff11549c3c0feddc0265b9ba575f34a975c (統合 3 升: watcher 本体を実走・safe_nudge と inotifywait を mock)
+#     T-WRC6-001 rc=6 → 呼出 1 / read=True / ack=delivered / dedup 有 / retry 無 / log WARN 1 / unknown_rc 0
+#     T-WRC6-002 rc=0 → 呼出 1 / delivered (従前不変の対照)
+#     T-WRC6-003 rc=1 → 呼出 3 (巡回毎に再送) / read=False / dedup 無 (rc=1 の意味は保たれる)
+#     仕組み: inotifywait mock = 1 回目 0 / 2 回目 disable flag を置いて 0 → watcher は 3 巡して自ら exit 0 (timeout 30 は保険)。
+#     watcher の出力は file へ逃がす (背景 heartbeat_loop が run の stdout を握り 60s 待たされる: 初回計測 64500ms → 323ms)。
+#
+# ■三 native bats (bats-core 1.14.0 を git clone --depth 1 で /tmp/bats-core へ・system 未導入・CI は npm -g bats)
+## native bats runs 2026-09-17T17:50:23+09:00  Bats 1.14.0  bats_path=/tmp/bats-core/bin/bats (git clone --depth 1 https://github.com/bats-core/bats-core → /tmp のみ・system 未導入)
+=== w_new:新watcher+統合bats  (tests/unit/test_watcher_rc6_integration.bats) ===
+1..3
+ok 1 T-WRC6-001: safe_nudge rc=6 -> watcher closes as delivered, no resend on later sweeps in 323ms
+ok 2 T-WRC6-002: safe_nudge rc=0 -> delivered (unchanged baseline) in 303ms
+ok 3 T-WRC6-003: safe_nudge rc=1 (queued) -> retried on every sweep, never marked read (rc=1 semantics kept) in 384ms
+bats_rc=0
+=== w_old:旧watcher+統合bats(★判別★)  (tests/unit/test_watcher_rc6_integration.bats) ===
+1..3
+not ok 1 T-WRC6-001: safe_nudge rc=6 -> watcher closes as delivered, no resend on later sweeps in 366ms
+# (in test file tests/unit/test_watcher_rc6_integration.bats, line 85)
+#   `[ "$(wrc_calls)" -eq 1 ]' failed
+ok 2 T-WRC6-002: safe_nudge rc=0 -> delivered (unchanged baseline) in 300ms
+ok 3 T-WRC6-003: safe_nudge rc=1 (queued) -> retried on every sweep, never marked read (rc=1 semantics kept) in 376ms
+bats_rc=1
+=== snd_new:新safe_nudge+新doppler bats  (tests/unit/test_safe_nudge_doppler.bats) ===
+1..7
+ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered in 1817ms
+ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies) in 28ms
+ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected) in 31ms
+ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged) in 31ms
+ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged) in 28ms
+ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys in 29ms
+ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=6 + stderr note (no silent failure, no rc=1 ambiguity) in 83ms
+bats_rc=0
+=== snd_x1:旧safe_nudge+新doppler bats(★判別★)  (tests/unit/test_safe_nudge_doppler.bats) ===
+1..7
+ok 1 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered in 1043ms
+ok 2 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies) in 29ms
+ok 3 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected) in 32ms
+ok 4 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged) in 31ms
+ok 5 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged) in 27ms
+ok 6 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys in 32ms
+not ok 7 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=6 + stderr note (no silent failure, no rc=1 ambiguity) in 235ms
+# (in test file tests/unit/test_safe_nudge_doppler.bats, line 119)
+#   `[ "$status" -eq 6 ]' failed
+bats_rc=1
+## shim cross-check (bats に非ず)
+=== shim w_new ===
+ok 1 T-WRC6-001: safe_nudge rc=6 -> watcher closes as delivered, no resend on later sweeps
+ok 2 T-WRC6-002: safe_nudge rc=0 -> delivered (unchanged baseline)
+ok 3 T-WRC6-003: safe_nudge rc=1 (queued) -> retried on every sweep, never marked read (rc=1 semantics kept)
+1..3  pass=3 fail=0  runner=SHIM(not bats) bash=5.2.21(1)-release
+shim_rc=0
+=== shim w_old ===
+not ok 1 T-WRC6-001: safe_nudge rc=6 -> watcher closes as delivered, no resend on later sweeps  (rc=1)
+ok 2 T-WRC6-002: safe_nudge rc=0 -> delivered (unchanged baseline)
+ok 3 T-WRC6-003: safe_nudge rc=1 (queued) -> retried on every sweep, never marked read (rc=1 semantics kept)
+1..3  pass=2 fail=1  runner=SHIM(not bats) bash=5.2.21(1)-release
+shim_rc=1
+## END 2026-09-17T17:50:36+09:00
+#
+# ■四 直走 (mock safe_nudge rc=6・旧/新 watcher・3 巡)
+=== direct old watcher, mock safe_nudge rc=6: watcher_rc=0
+safe_nudge calls=3
+retry_file=3
+dedup=0
+0
+inbox read= False ack_by= None state= None
+--watcher log (msg field only)--
+watcher_start  pane=test:0.0 cli=doppler version=v2.0.0
+main_loop_start  inbox=<tmp>/old/queue/inbox/test_agent.yaml
+initial_sweep  processing existing unread at startup
+inbox_event  unread_count=1
+safe_nudge_unknown_rc  msg_id=msg_20260917_000000_wrc6test rc=6
+inbox_event  unread_count=1
+safe_nudge_unknown_rc  msg_id=msg_20260917_000000_wrc6test rc=6
+inbox_event  unread_count=1
+safe_nudge_unknown_rc  msg_id=msg_20260917_000000_wrc6test rc=6
+watcher_disable_active  flag=<tmp>/home_old/.openclaw/disable_watcher_test_agent
+=== direct new watcher, mock safe_nudge rc=6: watcher_rc=0
+safe_nudge calls=1
+retry_file=ABSENT
+dedup=1
+inbox read= True ack_by= delivered state= delivered
+--watcher log (msg field only)--
+watcher_start  pane=test:0.0 cli=doppler version=v2.0.0
+main_loop_start  inbox=<tmp>/new/queue/inbox/test_agent.yaml
+initial_sweep  processing existing unread at startup
+inbox_event  unread_count=1
+delivered_cooldown_write_failed  msg_id=msg_20260917_000000_wrc6test corr_id=corr-wrc6 resend=no
+inbox_event  unread_count=0
+inbox_event  unread_count=0
+watcher_disable_active  flag=<tmp>/home_new/.openclaw/disable_watcher_test_agent
+#
+# ■五 読み解き
+#   native bats: 新watcher 3/3 ／ 旧watcher 2/3 (001 落: 呼出≠1) ／ 新safe_nudge+新doppler bats 7/7 ／ 旧safe_nudge+新doppler bats 6/7 (007 落: status≠6)。
+#   shim も同じ結果 (3/3・2/3) = 器二つで一致。
+#   直走: 旧 watcher は rc=6 を unknown_rc と読み 3 巡で 3 回再送・retry=3・未読の儘 (= 二重 nudge の根)。
+#         新 watcher は 1 回で閉ぢ (read=True/ack=delivered/dedup=1/retry 無)・2 巡目以降 unread 0。
+#   rc=0 / rc=1 の経路は旧新で同じ (002/003 が両樹 ok) = 当ては 6) の追加以外に触れず。
+#
+# ■六 未測 (③)
+#   CI (.github/workflows/test.yml: npm -g bats → bats tests/unit/ --timing) = PR#21 checks で読む。当機では GitHub Actions を走らせられぬ。
+#   tests/unit/ 全 file の native 走行は本紙の範囲外 (当職の 2 file のみ走らせた)。
+#   判定紙 reports/audit_326984_pr21_safe_nudge_rc6_20260917.md (sha 43d6eb1a…) = 当機の艦隊 repo に無く未読。

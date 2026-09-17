@@ -227,6 +227,13 @@ PYEOF
                 move_to_dead_letter "$AGENT_ID" "$msg_id" "bash_shell_codex_exited"
                 mark_msg_read "$msg_id" "dead_lettered"
                 ;;
+            6)
+                # safe_nudge rc=6 = send-keys 済・cooldown 書込のみ失敗 (裁 seq326912/327040)。
+                # 送達済 ∴ 再送せず rc=0 と同じ閉ぢ方 (既読化 + dedup)。log は WARN で区別する。
+                log_json WARN "delivered_cooldown_write_failed" "msg_id=${msg_id} corr_id=${corr_id} resend=no"
+                mark_msg_read "$msg_id" "delivered"
+                dedup_record "$msg_id" "delivered"
+                ;;
             *)
                 log_json ERROR "safe_nudge_unknown_rc" "msg_id=${msg_id} rc=${nudge_rc}"
                 increment_retry "$AGENT_ID" "$msg_id" >/dev/null
