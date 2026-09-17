@@ -1,0 +1,20 @@
+# 39_han ―― 弾⑴の對象が何處に在るか、三つの版を ★同じ器・同じ條★ で測る / 刻= 2026-09-17T10:49:22+0900
+# 器(逐語)= shasum -a 256 <file> | cut -c1-16 / wc -c < <file> / grep -c '' / grep -n ★-F★ -- '<字面>' / grep -c -F -- 'stop_hook'
+# ★疵①(本弾で踏んだ)★ 初手は -F を付けず探し ★三版悉く「無し」★ と出た ―― grep(=ugrep 7.8.4) の條の
+#   $ は ★行末の錨★ と解される故 $STOP_HOOK_STDIN_TIMEOUT は字面に成らぬ。rc=0・0行 で返る故「無い」と讀めた。
+# ★疵②(本弾で踏んだ)★ $(cat f) で胴を取ると ★末尾改行が落ち★ bytes が 1 減り sha16 が現物と合はぬ ――
+#   實證(disk): file で bytes=16434 sha16=f1b49820e234a1ee ／ $(…) で bytes=16433 sha16=7b3430dd5a6f8d91。
+#   ∴ 版の同一性は ★file を直に食はせて★ 測る。
+# ★零の札★ 「判定行=零」「旧形glob=零」は grep rc=1 で返つた零である。同じ path・同じ器で
+#   陽性対照 'stop_hook' が口を出して居る故、★file が讀めなかつたのではなく其の字面が無い★。
+# ★對象は讀むのみ・hook 本体を触らぬ★
+
+km-81_before控(札が :70 と指す版)	docs/evidence/km-81-…/_before/stop_hook_inbox.sh.snapshot	sha16=42c83a9ab41c0166	bytes=14418	行=268	判定行=70	旧形globの行=54,185,190	陽性対照(stop_hook)=13口
+disk現物(★未commit★)	scripts/stop_hook_inbox.sh	sha16=f1b49820e234a1ee	bytes=16434	行=288	判定行=53,90	旧形globの行=52,205,210	陽性対照(stop_hook)=15口
+凍結点 6ba8fcb	git show 6ba8fcb:scripts/stop_hook_inbox.sh	sha16=0fb2e72891d65297	bytes=10865	行=221	判定行=★零(rc=1)★	旧形globの行=★零(rc=1)★	陽性対照(stop_hook)=9口
+
+--- 臺帳との隔たり(git diff --stat 6ba8fcb -- scripts/stop_hook_inbox.sh) ---
+   scripts/stop_hook_inbox.sh | 69 +++++++++++++++++++++++++++++++++++++++++++++-
+   1 file changed, 68 insertions(+), 1 deletion(-)
+  ∴ ★弾⑴の直し(判定行 新形)は disk に在るのみで、臺帳(commit 6ba8fcb)には未だ入つて居らぬ。★
+  ∴ ★札が指す :70 は disk の行番に非ず ―― disk では 90 行、km-81_before控で 70 行である。★

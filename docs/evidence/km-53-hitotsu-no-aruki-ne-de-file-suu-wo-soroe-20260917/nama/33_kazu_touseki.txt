@@ -1,0 +1,43 @@
+# 30_kazu ―― 定義丁の数へ直し / 刻= 2026-09-17T10:28:22+0900
+# ★根(歩き根 一本)= scripts .claude★ / 深さ= 全深(git 追跡の全 path・上限無し)
+# 頂(歩き根の基点)= /Users/momizimac/multi-agent-shogun
+# 源= 6dbe09e / 歩いた file= 82 / 讀めぬ file= 0
+# 除外(宣)= ①git 非追跡の物(.claude/worktrees/ 配下の別 checkout・*.bak 控 等)は根に入らぬ
+#           ②非UTF-8 は「讀めぬ」として別行に数へる(黙つて落とさぬ)
+#           ③本器は docs/evidence/ に在り根の外ゆゑ己を数へぬ(★宣して除く★)
+# 條(全)= \$\{[A-Za-z_][A-Za-z0-9_]*:-[0-9]+\} / 單位= line / 註= komu / 既定閾= >=1
+# 條(閾)= 名 ^[A-Z][A-Z0-9_]*$ ∧ 既定 >=1 ∧ 註行に非ず
+# rc= rev-parse --show-toplevel:0 ls-tree:0
+# 條(全)に当たつた口(閾を問はず)= 84
+
+★[丁閾] 口= 22  file= 8★
+
+--- file毎内訳(file / 口數 / 名) ---
+scripts/checks/karo_mac_dasumae_gate.sh	2	DASUMAE_MAX_BYTES:-10485760@20 DASUMAE_READ_TIMEOUT:-10@75
+scripts/checks/karo_mac_gate4.sh	1	VAR:-50@71
+scripts/inbox_watcher.sh	13	NUDGE_COOLDOWN_SEC:-60@197 NUDGE_COOLDOWN_SEC_CODEX:-300@199 ASW_PHASE:-2@215 ASW_NO_IDLE_FULL_READ:-1@219 ASW_PROCESS_TIMEOUT:-1@224 NUDGE_COOLDOWN_SEC:-60@295 NUDGE_COOLDOWN_SEC_CODEX:-300@297 NUDGE_COOLDOWN_SEC_CLAUDE:-60@301 ASW_NO_IDLE_FULL_READ:-1@470 APPROVAL_ALERT_COOLDOWN:-300@899 MAX_TYPING_SKIP:-5@1067 INOTIFY_TIMEOUT:-30@1535 ASW_PROCESS_TIMEOUT:-1@1599
+scripts/lib/detect_stale.sh	1	DETECT_STALE_STALE_SEC:-120@33
+scripts/pane_enter_watcher_supervisor.sh	2	STALE_SEC:-300@50 STALE_SEC:-300@52
+scripts/redundancy/shogun_report_watcher.sh	1	SHOGUN_REPORT_WATCHER_COOLDOWN:-60@29
+scripts/stop_hook_inbox.sh	1	MASS_UNREAD_THRESHOLD:-5@146
+scripts/watchdogs/enter_restart_commander_watchdog.sh	1	ER_THRESHOLD_MIN:-2@35
+
+--- 員外(條(全)に当たるが條(閾)で落ちた口) ---
+scripts/agent_health_check.sh	7	_th_unset_told:-0@109(名が大文字條に非ず+既定 0 < 1) last:-0@142(名が大文字條に非ず+既定 0 < 1) INSERT_COUNT:-0@230(既定 0 < 1) INSERT_COUNT:-0@231(既定 0 < 1) n:-0@253(名が大文字條に非ず+既定 0 < 1) n:-0@270(名が大文字條に非ず+既定 0 < 1) max_tokens:-0@377(名が大文字條に非ず+既定 0 < 1)
+scripts/agent_periodic_push.sh	5	sp_age:-0@64(名が大文字條に非ず+既定 0 < 1) PENDING:-0@95(既定 0 < 1) IN_PROGRESS:-0@95(既定 0 < 1) PENDING:-0@112(既定 0 < 1) IN_PROGRESS:-0@112(既定 0 < 1)
+scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	1	non_empty_lines:-0@64(名が大文字條に非ず+既定 0 < 1)
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	1	RESTART_COUNT_24H:-0@40(既定 0 < 1)
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh	4	HEARTBEAT_LOOP_PID:-0@72(既定 0 < 1) HEARTBEAT_LOOP_PID:-0@84(既定 0 < 1) HEARTBEAT_LOOP_PID:-0@93(既定 0 < 1) HEARTBEAT_LOOP_PID:-0@99(既定 0 < 1)
+scripts/audit_meta_codex.sh	1	COUNT:-0@108(既定 0 < 1)
+scripts/checks/karo_mac_dasumae_gate.sh	1	n:-0@25(名が大文字條に非ず+既定 0 < 1)
+scripts/checks/secondpc_dispatch.sh	1	SP_INBOX_AGE:-0@34(既定 0 < 1)
+scripts/inbox_watcher.sh	27	FIRST_UNREAD_SEEN:-0@122(既定 0 < 1) LAST_CLEAR_TS:-0@123(既定 0 < 1) _th_unset_told:-0@148(名が大文字條に非ず+既定 0 < 1) LAST_B_ALERT_TS:-0@188(既定 0 < 1) LAST_KARO_ALERT_TS:-0@191(既定 0 < 1) LAST_NUDGE_TS:-0@195(既定 0 < 1) NEW_CONTEXT_SENT:-0@205(既定 0 < 1) STARTUP_PROMPT_SENT:-0@208(既定 0 < 1) ASW_DISABLE_ESCALATION:-0@223(既定 0 < 1) READ_COUNT:-0@228(既定 0 < 1) READ_BYTES_TOTAL:-0@229(既定 0 < 1) ESTIMATED_TOKENS_TOTAL:-0@230(既定 0 < 1) ASW_DISABLE_NORMAL_NUDGE:-0@261(既定 0 < 1) LAST_NUDGE_TS:-0@305(既定 0 < 1) FIRST_UNREAD_SEEN:-0@472(既定 0 < 1) NEW_CONTEXT_SENT:-0@637(既定 0 < 1) LAST_APPROVAL_ALERT_TS:-0@898(既定 0 < 1) LAST_CLEAR_TS:-0@917(既定 0 < 1) INBOX_WATCHER_DISABLE_TYPING_CHECK:-0@998(既定 0 < 1) FINAL_ESCALATION_ONLY:-0@1036(既定 0 < 1) FINAL_ESCALATION_ONLY:-0@1187(既定 0 < 1) read_bytes:-0@1270(名が大文字條に非ず+既定 0 < 1) FIRST_UNREAD_SEEN:-0@1367(既定 0 < 1) FIRST_UNREAD_SEEN:-0@1377(既定 0 < 1) ASW_DISABLE_ESCALATION:-0@1447(既定 0 < 1) LAST_TOKEN_WARN_TS:-0@1614(既定 0 < 1) _token_int:-0@1622(名が大文字條に非ず+既定 0 < 1)
+scripts/inbox_write.sh	2	_AMP_PATTERN_COUNT:-0@88(名が大文字條に非ず+既定 0 < 1) http_status:-000@209(名が大文字條に非ず+既定 000 < 1)
+scripts/pane_enter_watcher_supervisor.sh	3	LIVE:-0@36(既定 0 < 1) LIVE:-0@50(既定 0 < 1) LIVE:-0@52(既定 0 < 1)
+scripts/ratelimit_check.sh	1	CODEX_LIMIT_HITS:-0@417(既定 0 < 1)
+scripts/redundancy/shogun_report_watcher.sh	1	last_ts:-0@276(名が大文字條に非ず+既定 0 < 1)
+scripts/stop_hook_inbox.sh	4	UNREAD_COUNT:-0@94(既定 0 < 1) UNREAD_COUNT:-0@147(既定 0 < 1) UNREAD_COUNT:-0@155(既定 0 < 1) UNREAD_COUNT:-0@174(既定 0 < 1)
+scripts/watchdogs/enter_restart_common_watchdog.sh	1	_th_unset_told:-0@99(名が大文字條に非ず+既定 0 < 1)
+
+--- 讀めぬ file ---
+(讀めぬ file 無し)

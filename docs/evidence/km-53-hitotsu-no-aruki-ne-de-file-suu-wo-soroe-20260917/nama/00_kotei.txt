@@ -1,0 +1,18 @@
+# 20_kotei ―― 版の固め / 刻= 2026-09-17T10:05:03+0900
+# 根= scripts .claude (★本弾の一本の歩き根★)
+枝= ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 rc=0 / HEAD= 6ba8fcb2402c0487ccfe4b60d910050807ac5007 rc=0
+[HEAD] ls-tree rc=0 行=82 総括sha16= bd386bb2515c75d7
+[index] ls-files -s rc=0 行=82 総括sha16= 5691e3345a37426d
+[disk] 歩いた file=1465 非常体(symlink/讀めぬ)=0 総括sha16= c84e850831e40b2d
+汚れ rc=0 件=11 ―― ★index と disk と HEAD は別物である★
+   M .claude/settings.json
+  MM scripts/agent_health_check.sh
+  MM scripts/checks/context_usage_warn.sh
+   M scripts/checks/karo_mac_dasumae_gate.sh
+   M scripts/checks/karo_mac_gate4.sh
+   M scripts/checks/karo_mac_manifest_verify.py
+  MM scripts/inbox_watcher.sh
+   M scripts/redundancy/shogun_report_watcher.sh
+   M scripts/stop_hook_inbox.sh
+  MM scripts/watchdogs/enter_restart_common_watchdog.sh
+  ?? .claude/worktrees/

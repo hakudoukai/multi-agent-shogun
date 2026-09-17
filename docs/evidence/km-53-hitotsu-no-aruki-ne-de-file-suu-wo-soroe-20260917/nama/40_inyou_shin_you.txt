@@ -1,0 +1,18 @@
+# 40_inyou ―― stdin 時限の陰陽対照 / 刻= 2026-09-17T10:30:33+0900
+# 對象= scripts/stop_hook_inbox.sh / sha16= f1b49820e234a1ee / bytes= 16434 / 行= 288
+# ★對象は讀むのみ(hook 本体を触らぬ)・判定は束の中の寫しで行ふ★
+# 番人域(逐語)= 58〜77 行(20 行)  ★行番号は字面で探した(決め打ちせぬ)★
+# 判定行の候補(字面が当たつた行 悉く)= 2 本 ★註行・if 以外は採らぬ★
+#   53 行: 註行=真 / if…then=偽 / 採=― : #   20桁の十進を「數」として通すが、下の `[ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]` は
+#   90 行: 註行=偽 / if…then=真 / 採=★之★ : if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+# 判定行= 90 行(逐語): if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+# 番人の形= 新形(num_same_op ―― 比べる時と同じ演算子で検む)
+# 閾比較の素(逐語抜き)= [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]
+# 寫し= docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/utsushi/u2_shin_you.sh (2173 bytes / 38 行) sha16= e0fab8dfde3cc454
+# 寫しの形検め(bash -n) rc= 0
+
+--- 寫しの出目(値= 99999999999999999999 / 経過秒= 10) rc= 0 ---
+[out] 番人の後の閾= [10]
+[out] 閾比較の素 rc=0
+[out] ★時限切れを見る(then へ入つた)★
+[err] [stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「99999999999999999999」) — 既定 10 へ倒す(fail-closed)★
