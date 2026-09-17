@@ -1,0 +1,56 @@
+=== safe_nudge doppler 修理 對照の生記録 (karo-main / 2026-09-17) ===
+canon_blob=15faa75d9c4395465704632f8e075a2764d8fffe  origin/main=4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1
+pane_map: %86=ashigaru-main-2(doppler) %84=karo-main(doppler) %87=ashigaru-main-3(claude)
+
+--- N1 負對照: 名違ひ(ashigaru-main-7) + a-2 の pane / 器=fix2 / 期待 rc=3 ---
+argv: bash /tmp/sn_run_fix2.sh ashigaru-main-7 %86 doppler "<令の文言>"
+rc=3
+
+--- N2 負對照: 配下の名(ashigaru-main-2) + 上位自席の pane %84 / 器=fix2 / 期待 rc=3 ---
+argv: bash /tmp/sn_run_fix2.sh ashigaru-main-2 %84 doppler "<令の文言>"
+rc=3
+
+--- D1 破れ試し: 裁の逐語「入口1行」ちやうど(fix1) / 名も pane も正 / 期待 rc=3 = 艦隊が止まる ---
+argv: bash /tmp/sn_run_fix1.sh ashigaru-main-2 %86 doppler "<令の文言>"
+rc=3
+
+--- P1 正對照: 名も pane も正 / 器=fix2 / 期待 rc=0 = 届く ---
+argv: bash /tmp/sn_run_fix2.sh ashigaru-main-2 %86 doppler "<令の文言>" o158-otsu
+delivered: ashigaru-main-2 at %86
+rc=0
+
+=== safe_nudge log の逐語（何処で落ちたかの証。rc だけでは分かれぬ） ===
+{"ts":"2026-09-17T15:51:35+09:00","level":"ERROR","component":"safe_nudge","agent":"ashigaru-main-7","pane":"%86","cli":"doppler","result":"pane_drift","corr_id":"","extra":"expected=ashigaru-main-7 actual=ashigaru-main-2"}
+{"ts":"2026-09-17T15:51:36+09:00","level":"ERROR","component":"safe_nudge","agent":"ashigaru-main-2","pane":"%84","cli":"doppler","result":"pane_drift","corr_id":"","extra":"expected=ashigaru-main-2 actual=karo-main"}
+{"ts":"2026-09-17T15:51:36+09:00","level":"ERROR","component":"safe_nudge","agent":"ashigaru-main-2","pane":"%86","cli":"doppler","result":"pane_drift","corr_id":"","extra":"expected_cmd=claude actual_cmd=doppler"}
+{"ts":"2026-09-17T15:51:59+09:00","level":"INFO","component":"safe_nudge","agent":"ashigaru-main-2","pane":"%86","cli":"doppler","result":"delivered","corr_id":"o158-otsu","extra":"nudge_len=57"}
+
+=== 当ての diff（origin/main の正本 -> 本枝） ===
+--- a/scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh	2026-09-17 15:49:47.326022916 +0900
++++ b/scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh	2026-09-17 15:50:48.630995076 +0900
+@@ -80,14 +80,14 @@
+ fi
+ 
+ # 3. Claude pane の場合の pane identity verify (= 反省点 n)
+-if [[ "$CLI_TYPE" == "claude" ]]; then
++if [[ "$CLI_TYPE" =~ ^(claude|doppler)$ ]]; then
+     pane_agent_id=$(tmux display-message -t "$PANE_TARGET" -p '#{@agent_id}' 2>/dev/null || echo "")
+     if [[ "$pane_agent_id" != "$AGENT_ID" ]]; then
+         log_event ERROR pane_drift "expected=${AGENT_ID} actual=${pane_agent_id}"
+         exit 3
+     fi
+     pane_cmd=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
+-    if [[ "$pane_cmd" != "claude" ]]; then
++    if [[ ! "$pane_cmd" =~ ^(claude|doppler|node)$ ]]; then
+         log_event ERROR pane_drift "expected_cmd=claude actual_cmd=${pane_cmd}"
+         exit 3
+     fi
+
+=== 読み解き ===
+・N1/N2 の落ち場 = 'expected=…actual=…' ＝ :85 の身元検め。★修理前は此の塊が doppler で一度も走らなんだ★(入口 :83 が == "claude" ゆゑ)。
+・D1 の落ち場 = 'expected_cmd=claude actual_cmd=doppler' ＝ :90。∴ ★入口だけ1行広げると、名も pane も正しい doppler の便が rc=3 で撥ねられる★。
+・∴ 当ては 2 行に御座る(:83 入口 と :90 中の述語)。1 行では艦隊の doppler 席(a-1/a-2/a-7・軍師main・研修main)への便が悉く止まり申す。
+・P1 rc=0 で届き、pane は自ら走り出し申した(15:51:59 / corr_id=o158-otsu)。
+・残る疵(直して居らぬ): :91 の log 文言が 'expected_cmd=claude' の儘。差分を最小に保つ為 触れ申さず。★別弾★
+・本枝に試し(bats)は足して居らぬ。既存 tests/unit/test_safe_nudge.bats(blob d916d7510eb2) の5升は悉く cli_type=claude ゆゑ ★本当ては其の5升を動かさぬ★。doppler を覆ふ升は ★0★ ＝ 穴。足す可否は上の裁を待つ。
+・格: N1/N2/D1/P1 と log は ①測り。「艦隊が止まる」は D1 の ①測り から引いた ①。bats 5升が動かぬ件は ②見立て(走らせて居らぬ)。

@@ -80,14 +80,14 @@ if [[ "$CLI_TYPE" == "codex" || "$CLI_TYPE" == "node" ]]; then
 fi
 
 # 3. Claude pane の場合の pane identity verify (= 反省点 n)
-if [[ "$CLI_TYPE" == "claude" ]]; then
+if [[ "$CLI_TYPE" =~ ^(claude|doppler)$ ]]; then
     pane_agent_id=$(tmux display-message -t "$PANE_TARGET" -p '#{@agent_id}' 2>/dev/null || echo "")
     if [[ "$pane_agent_id" != "$AGENT_ID" ]]; then
         log_event ERROR pane_drift "expected=${AGENT_ID} actual=${pane_agent_id}"
         exit 3
     fi
     pane_cmd=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
-    if [[ "$pane_cmd" != "claude" ]]; then
+    if [[ ! "$pane_cmd" =~ ^(claude|doppler|node)$ ]]; then
         log_event ERROR pane_drift "expected_cmd=claude actual_cmd=${pane_cmd}"
         exit 3
     fi
