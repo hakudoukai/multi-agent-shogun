@@ -31,6 +31,49 @@ if [ -z "$TARGET" ] || [ -z "$CONTENT" ] || [ -z "$TYPE" ] || [ -z "$FROM" ]; th
     exit 1
 fi
 
+# ===== NAME-GATE (委員長裁 seq325654・2026-09-17) =====
+# 因: 宛名の検めが無い故、何を書いても★其の字の箱が生れ「成功」と刷る★。
+#   實害①: 裸の "gunshi" → 讀手なき ieyasu.yaml へ監査提出 2通(D25/D28・CLAUDE.md 記載)。
+#   實害②: 迷ひ箱 "karo-mac,gunshi-mac.yaml" に足軽mac4号 tk4st48 の復命が★29日 未讀★
+#           (檢分紙 docs/evidence/karo-mac-mayoi-bako-kenbun-20260917/)。
+# 白名簿は★焼かず實測で作る★: ⑴生きた pane の @agent_id ⑵既存の正名箱(queue/inbox/*.yaml)。
+#   ⑵から 読点・空白を含む名は除く ―― ★迷ひ箱を白名簿へ入れぬ為★。
+# ★読点・空白は無条件に拒む(逃げ道は効かぬ)★。未知の名は IW_ALLOW_NAME=<理由 10字超> で通せる。
+# 拒否時は★許可名一覧★を送り主へ出す(自分で直せる形)。白名簿が空なら通さぬ(fail-closed)。
+_iw_name_list() {
+    _TMUX_BIN="$(command -v tmux 2>/dev/null || true)"
+    {
+        { [ -n "$_TMUX_BIN" ] && "$_TMUX_BIN" list-panes -a -F '#{@agent_id}' 2>/dev/null; } || true
+        ls -1 "$SCRIPT_DIR/queue/inbox" 2>/dev/null | sed -n 's/\.yaml$//p'
+    } | grep -v '^$' | grep -v '[,[:space:]]' | sort -u
+}
+if printf '%s' "$TARGET" | grep -q '[,[:space:]]'; then
+    echo "[inbox_write] REJECTED: ★宛名に読点/空白★ (target=$TARGET) ―― 二名を一字で渡した跡。" >&2
+    echo "[inbox_write]   一名づつ二度書け。此の形は IW_ALLOW_NAME でも通らぬ。" >&2
+    exit 69
+fi
+_IW_NAMES="$(_iw_name_list)"
+if [ -z "$_IW_NAMES" ]; then
+    echo "[inbox_write] REJECTED: ★白名簿が空★(pane も箱も讀めぬ) ―― 名を検められぬ故 書かぬ(fail-closed)。" >&2
+    exit 69
+fi
+if ! printf '%s\n' "$_IW_NAMES" | grep -qx -- "$TARGET"; then
+    _IW_RLEN=$(printf '%s' "${IW_ALLOW_NAME:-}" | python3 -c 'import sys;print(len(sys.stdin.read().strip()))' 2>/dev/null || echo 0)
+    if [ "${_IW_RLEN:-0}" -gt 10 ]; then
+        echo "[inbox_write] ★註★ 未知の名 '$TARGET' を IW_ALLOW_NAME で通した ―― 理由=${IW_ALLOW_NAME}" >&2
+        echo "[inbox_write]   ★新しい箱が生れる★。報告に此の理由を書け(裁 seq325654③)。" >&2
+    else
+        echo "[inbox_write] REJECTED: ★未知の宛名★ '$TARGET' ―― 箱を生ませぬ(fail-closed)。" >&2
+        echo "[inbox_write]   ★許可名(實測)★:" >&2
+        printf '%s\n' "$_IW_NAMES" | sed 's/^/[inbox_write]     /' >&2
+        echo "[inbox_write]   綴りが違ふなら直せ。真に新しい席なら IW_ALLOW_NAME=<理由 10字超> を付けよ。" >&2
+        exit 69
+    fi
+fi
+# ===== name gate end =====
+# ★門を通つた事を測る為の止まり木★(陰性/陽性対照を箱を汚さずに走らせる)
+if [ "${IW_NAME_TEST_ONLY:-}" = "1" ]; then echo "NAME_PASS target=$TARGET"; exit 0; fi
+
 # ===== DEFERRAL-GATE =====
 # rc=67 for deferral; fixed protocol message types are excluded.
 _DG="$HOME/bin/deferral_gate.py"
