@@ -1,0 +1,1003 @@
+file	line	name	class	all_matches	verbatim
+android/gradlew	62	APP_HOME	他	他	*)    app_path=$APP_HOME$link ;;
+android/gradlew	67	APP_HOME	⑶	⑶	APP_HOME=$( cd "${APP_HOME:-./}" && pwd -P ) || exit
+android/gradlew	101	APP_HOME	⑶	⑶	CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+android/gradlew	155	APP_HOME	伝	伝	APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
+first_setup.sh	206	NVM_DIR	口	口	export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+first_setup.sh	207	NVM_DIR	⑶	⑶	if [ -s "$NVM_DIR/nvm.sh" ]; then
+first_setup.sh	209	NVM_DIR	⑶	⑶	\. "$NVM_DIR/nvm.sh"
+first_setup.sh	215	NVM_DIR	⑶	⑶	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+first_setup.sh	453	REPLY	口	口	REPLY=${REPLY:-Y}
+first_setup.sh	454	REPLY	⑸	⑸	if [[ $REPLY =~ ^[Yy]$ ]]; then
+lib/cli_adapter.sh	16	CLI_ADAPTER_SETTINGS	口	口	CLI_ADAPTER_SETTINGS="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	448	CLI_ADAPTER_SETTINGS	口	伝	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	497	CLI_ADAPTER_SETTINGS	口	伝	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	709	CLI_ADAPTER_SETTINGS	口	伝	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	949	CLI_ADAPTER_SETTINGS	口	伝	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	1037	CLI_ADAPTER_SETTINGS	口	伝	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	1168	CLI_ADAPTER_SETTINGS	口	伝	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	1204	CLI_ADAPTER_SETTINGS	口	伝	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	134	PERMISSION_FLAG	口	伝	local permission_flag="${PERMISSION_FLAG:---dangerously-skip-permissions}"
+lib/ntfy_auth.sh	44	NTFY_PASS	口	他	if [ -n "${NTFY_USER:-}" ] && [ -n "${NTFY_PASS:-}" ]; then
+lib/ntfy_auth.sh	45	NTFY_PASS	伝	伝	printf '' "-u" "${NTFY_USER}:${NTFY_PASS}"
+lib/ntfy_auth.sh	38	NTFY_TOKEN	口	他	if [ -n "${NTFY_TOKEN:-}" ]; then
+lib/ntfy_auth.sh	39	NTFY_TOKEN	伝	伝	printf '' "-H" "Authorization: Bearer ${NTFY_TOKEN}"
+lib/ntfy_auth.sh	44	NTFY_USER	口	他	if [ -n "${NTFY_USER:-}" ] && [ -n "${NTFY_PASS:-}" ]; then
+lib/ntfy_auth.sh	45	NTFY_USER	伝	伝	printf '' "-u" "${NTFY_USER}:${NTFY_PASS}"
+scripts/agent_health_check.sh	448	DETECT_STALE_LOG	口	伝	_detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+scripts/agent_health_check.sh	449	DETECT_STALE_LOG	⑶	⑶ 派_detect_stale_log_file	if [ -f "$_detect_stale_log_file" ]; then
+scripts/agent_health_check.sh	451	DETECT_STALE_LOG	⑶	⑶ 派_detect_stale_log_file	_detect_stale_age_min=$(( ($(date +%s) - $(stat -c %Y "$_detect_stale_log_file" 2>/dev/null || echo 0)) / 60 ))
+scripts/agent_health_check.sh	83	HEALTH_CHECK_COOLDOWN_DIR	口	伝	ALERT_COOLDOWN_DIR="${HEALTH_CHECK_COOLDOWN_DIR:-/tmp/agent_health_check_cooldown}"
+scripts/agent_health_check.sh	84	HEALTH_CHECK_COOLDOWN_DIR	⑶	⑶ 派ALERT_COOLDOWN_DIR	mkdir -p "$ALERT_COOLDOWN_DIR" 2>/dev/null || true
+scripts/agent_health_check.sh	137	HEALTH_CHECK_COOLDOWN_DIR	⑶	⑶ 派ALERT_COOLDOWN_DIR	local cf="${ALERT_COOLDOWN_DIR}/${key}.last"
+scripts/agent_health_check.sh	54	HEALTH_CHECK_LOG	口	伝	LOG="${HEALTH_CHECK_LOG:-/tmp/agent_health_check.log}"
+scripts/agent_health_check.sh	65	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	echo "[$(date '')][${CORR_ID}] err_code=ERR-INFRA-002 missing_env=SUPABASE_URL" >> "$LOG"
+scripts/agent_health_check.sh	70	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	echo "[$(date '')][${CORR_ID}] err_code=ERR-INFRA-002 missing_env=SUPABASE_SERVICE_ROLE_KEY" >> "$LOG"
+scripts/agent_health_check.sh	182	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	-d "$payload" 2>>"$LOG" <<EOF >/dev/null || echo "[health_check][${CORR_ID}] error_log INSERT failed (table may not exist)" >> "$LOG"
+scripts/agent_health_check.sh	203	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	bash "$SCRIPT_DIR/scripts/inbox_write.sh" shogun "$content" "$type" health_check 2>>"$LOG" || \
+scripts/agent_health_check.sh	204	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	echo "[health_check][${CORR_ID}] shogun inbox_write failed" >> "$LOG"
+scripts/agent_health_check.sh	432	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	if ! python3 -m py_compile "$_fukuincho_script" 2>>"$LOG"; then
+scripts/agent_health_check.sh	471	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	} >> "$LOG"
+scripts/agent_health_check.sh	481	HEALTH_CHECK_LOG	⑶	⑶ 派LOG	bash "$SCRIPT_DIR/scripts/ntfy.sh" "$MSG" 2>>"$LOG" || true
+scripts/agent_health_check.sh	208	HEALTH_CHECK_STRUCT_LOG	口	伝	STRUCT_LOG="${HEALTH_CHECK_STRUCT_LOG:-/tmp/agent_health_check_struct.log}"
+scripts/agent_health_check.sh	214	HEALTH_CHECK_STRUCT_LOG	⑶	⑶ 派STRUCT_LOG	"$iso" "$level" "$CORR_ID" "$event" "$extra_json" >> "$STRUCT_LOG" 2>/dev/null || true
+scripts/agent_health_check.sh	356	HEALTH_CHECK_TOKEN_PROJECT_DIR	口	伝	TOKEN_PROJECT_DIR="${HEALTH_CHECK_TOKEN_PROJECT_DIR:-$HOME/.claude/projects/-mnt-c-Users-User-projects-multi-agent-shogun}"
+scripts/agent_health_check.sh	357	HEALTH_CHECK_TOKEN_PROJECT_DIR	⑶	⑶ 派TOKEN_PROJECT_DIR	if [ ! -f "$TOKEN_CHECK_DISABLE" ] && [ -d "$TOKEN_PROJECT_DIR" ]; then
+scripts/agent_health_check.sh	405	HEALTH_CHECK_TOKEN_PROJECT_DIR	⑶	⑶ 派TOKEN_PROJECT_DIR	done < <(find "$TOKEN_PROJECT_DIR" -maxdepth 1 -name '' -mmin -10 2>/dev/null)
+scripts/agent_health_check.sh	68	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+scripts/agent_health_check.sh	183	SUPABASE_SERVICE_ROLE_KEY	他	他	header = "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}"
+scripts/agent_health_check.sh	184	SUPABASE_SERVICE_ROLE_KEY	他	他	header = "apikey: ${SUPABASE_SERVICE_ROLE_KEY}"
+scripts/agent_health_check.sh	225	SUPABASE_SERVICE_ROLE_KEY	他	他	header = "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}"
+scripts/agent_health_check.sh	226	SUPABASE_SERVICE_ROLE_KEY	他	他	header = "apikey: ${SUPABASE_SERVICE_ROLE_KEY}"
+scripts/agent_health_check.sh	63	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ]; then
+scripts/agent_health_check.sh	179	SUPABASE_URL	⑶	⑶	"${SUPABASE_URL}/rest/v1/error_log" \
+scripts/agent_health_check.sh	223	SUPABASE_URL	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?topic=like.cross_pc_inbox_*&created_at=gte.${NOW1_JST}&select=created_at" \
+scripts/agent_health_check.sh	196	TEST_INBOX_WRITE_LOG	口	他	if [ -n "${TEST_INBOX_WRITE_LOG:-}" ]; then
+scripts/agent_health_check.sh	197	TEST_INBOX_WRITE_LOG	⑶	⑶	printf '' "${2:-task_assigned}" "$1" >> "$TEST_INBOX_WRITE_LOG" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	127	LAST_ACTION	口	他	write_heartbeat "$agent" "${LAST_ACTION:-idle}" || {
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	41	TUI_CAPTURE_STATE	口	伝	local tui_state="${TUI_CAPTURE_STATE:-unknown}"
+scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh	56	CORRELATION_ID	口	他	"$ts" "$level" "$AGENT_ID" "$PANE_TARGET" "$CLI_TYPE" "$result" "${CORRELATION_ID:-}" "$extra" >> "$LOG_FILE"
+scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh	114	CORRELATION_ID	伝	伝	echo "{\"agent\":\"${AGENT_ID}\",\"book_entry_at\":\"$(date -Iseconds)\",\"reason\":\"long_nudge_codex\",\"nudge\":\"${NUDGE_TEXT//\"/\\\"}\",\"corr_id\":\"${CORRELATION_ID}\"}" \
+scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh	127	HEARTBEAT_VERSION	口	他	log_json INFO "supervisor_secondpc_start" "version=${HEARTBEAT_VERSION:-unknown} agents=${#WATCHER_PANES[@]}"
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh	247	HEARTBEAT_VERSION	口	他	log_json INFO "watcher_start" "pane=${PANE_TARGET} cli=${CLI_TYPE} version=${HEARTBEAT_VERSION:-unknown}"
+scripts/checks/context_usage_warn.sh	79	CLAUDE_CODE_SESSION_ID	口	伝	SESSION_ID="${CLAUDE_CODE_SESSION_ID:-}"
+scripts/checks/context_usage_warn.sh	84	CLAUDE_CODE_SESSION_ID	⑶	⑶ 派SESSION_ID	JSONL_PATH="$HOME/.claude/projects/$PROJECT_SLUG/$SESSION_ID.jsonl"
+scripts/checks/context_usage_warn.sh	80	CLAUDE_PROJECT_DIR	口	伝	PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$HOME/multi-agent-shogun}"
+scripts/checks/ephemeral_worktree_hygiene.sh	26	FREE_GI	口	伝	echo "[worktree-hygiene] free=${FREE_GI:-?}Gi 一時樹=${TMP_N}(掃ける=${SWEEPABLE} / 持主の言が要る=${OWNED} / 生きて居る=${LIVE})"
+scripts/checks/ephemeral_worktree_hygiene.sh	29	FREE_GI	數	數	if [ -n "${FREE_GI:-}" ] && [ "${FREE_GI}" -lt 20 ]; then
+scripts/checks/ephemeral_worktree_hygiene.sh	30	FREE_GI	伝	伝	echo "[worktree-hygiene] ★警告★ 空き ${FREE_GI}Gi < 20Gi ―― 走らせる 前 に掃け(lsof で使用中 0 を確かめてから)"
+scripts/checks/pane_identity.sh	45	CLAUDE_MD	口	口	: "${CLAUDE_MD:=$REPO_ROOT/CLAUDE.md}"
+scripts/checks/pane_identity.sh	293	CLAUDE_MD	⑶	⑶	if [ -f "$CLAUDE_MD" ]; then
+scripts/checks/pane_identity.sh	315	CLAUDE_MD	他	他	' "$CLAUDE_MD" 2>/dev/null); then
+scripts/checks/pane_identity.sh	321	CLAUDE_MD	⑶	⑶	echo "  [WARN] source D 不在: $CLAUDE_MD (degraded mode)" >&2
+scripts/checks/pane_identity.sh	47	DISABLE_FLAG	口	口	: "${DISABLE_FLAG:=$HOME/.openclaw/disable_pane_identity_hook}"
+scripts/checks/pane_identity.sh	66	DISABLE_FLAG	⑶	⑶	if [ -f "$DISABLE_FLAG" ]; then
+scripts/checks/pane_identity.sh	67	DISABLE_FLAG	伝	伝	echo "▼ pane_identity hook disabled by flag: $DISABLE_FLAG"
+scripts/checks/pane_identity.sh	48	LAST_RUN_JSON	口	口	: "${LAST_RUN_JSON:=/tmp/pane_identity_last_run.json}"
+scripts/checks/pane_identity.sh	440	LAST_RUN_JSON	⑶	⑶	} > "$LAST_RUN_JSON" 2>/dev/null || true
+scripts/checks/pane_identity.sh	43	PANE_REGISTRY	口	口	: "${PANE_REGISTRY:=$REPO_ROOT/queue/pane_registry.yaml}"
+scripts/checks/pane_identity.sh	208	PANE_REGISTRY	⑶	⑶	if [ -f "$PANE_REGISTRY" ]; then
+scripts/checks/pane_identity.sh	209	PANE_REGISTRY	他	他	if ! src_b_raw=$(timeout "$TIMEOUT_PER_SOURCE_SECONDS" python3 - "$PANE_REGISTRY" <<'' 2>/dev/null
+scripts/checks/pane_identity.sh	260	PANE_REGISTRY	⑶	⑶	echo "  [WARN] source B 不在: $PANE_REGISTRY (degraded mode)" >&2
+scripts/checks/pane_identity.sh	46	SECTION18_ROLES_LIB	口	口	: "${SECTION18_ROLES_LIB:=$REPO_ROOT/lib/_section18_roles.sh}"
+scripts/checks/pane_identity.sh	75	SECTION18_ROLES_LIB	⑶	⑶	if [ -f "$SECTION18_ROLES_LIB" ]; then
+scripts/checks/pane_identity.sh	77	SECTION18_ROLES_LIB	⑶	⑶	if source "$SECTION18_ROLES_LIB" 2>/dev/null; then
+scripts/checks/pane_identity.sh	397	TMPDIR	口	他	if dump_file=$(mktemp --suffix=.json -p "${TMPDIR:-/tmp}" "pane_identity_drift.XXXXXX" 2>/dev/null); then
+scripts/checks/pane_identity.sh	399	TMPDIR	口	他	elif dump_file=$(mktemp -p "${TMPDIR:-/tmp}" "pane_identity_drift.XXXXXX" 2>/dev/null); then
+scripts/checks/pane_identity.sh	49	TMUX_CMD	口	口	: "${TMUX_CMD:=tmux}"
+scripts/checks/pane_identity.sh	116	TMUX_CMD	他	他	if "$TMUX_CMD" has-session -t "$s" 2>/dev/null; then
+scripts/checks/pane_identity.sh	117	TMUX_CMD	他	他	"$TMUX_CMD" list-panes -t "$s" -a -F '
+scripts/checks/pane_identity.sh	128	TMUX_CMD	伝	伝	actual=$("$TMUX_CMD" display-message -t "$pane_target" -p '' 2>/dev/null)
+scripts/checks/pane_identity.sh	147	TMUX_CMD	伝	伝	dup=$("$TMUX_CMD" list-panes -a -F '' 2>/dev/null | grep -v '' | sort | uniq -d)
+scripts/checks/pane_identity.sh	193	TMUX_CMD	他	他	if src_a_raw=$(timeout "$TIMEOUT_PER_SOURCE_SECONDS" "$TMUX_CMD" list-panes -t multiagent -F '' 2>/dev/null); then
+scripts/checks/pane_identity.sh	44	WATCHER_SUPERVISOR	口	口	: "${WATCHER_SUPERVISOR:=$REPO_ROOT/scripts/watcher_supervisor.sh}"
+scripts/checks/pane_identity.sh	271	WATCHER_SUPERVISOR	⑶	⑶	if [ -f "$WATCHER_SUPERVISOR" ]; then
+scripts/checks/pane_identity.sh	274	WATCHER_SUPERVISOR	他	他	"$WATCHER_SUPERVISOR" 2>/dev/null \
+scripts/checks/pane_identity.sh	281	WATCHER_SUPERVISOR	⑶	⑶	echo "  [WARN] source C 不在: $WATCHER_SUPERVISOR (degraded mode)" >&2
+scripts/checks/verify_state_before_asserting.sh	50	TMPDIR	⑶	⑶	last="$(find "${TMPDIR:-/tmp}" -maxdepth 1 -name '' -newermt '' 2>/dev/null | head -1)"
+scripts/checks/verify_state_before_asserting.sh	51	TMPDIR	⑶	⑶	[ -n "${last}" ] || { echo "[verify] ★止まれ★ 便 が「未 push/残り」を言ふ ―― ★10 分 内 の fetch の跡 が無い★"; echo "         → git fetch -q origin && touch \"${TMPDIR:-/tmp}/.vsba_fetch_$$\" を先 に"; hit=1; }
+scripts/inbox_watcher.sh	35	AGENT_ID	⑷	⑷+⑶	INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+scripts/inbox_watcher.sh	38	AGENT_ID	他	他	if [ -z "$AGENT_ID" ] || [ -z "$PANE_TARGET" ]; then
+scripts/inbox_watcher.sh	44	AGENT_ID	⑶	⑶ 派INBOX	if [ ! -f "$INBOX" ]; then
+scripts/inbox_watcher.sh	45	AGENT_ID	⑶	⑶ 派INBOX	mkdir -p "$(dirname "$INBOX")"
+scripts/inbox_watcher.sh	46	AGENT_ID	⑶	⑶ 派INBOX	echo "messages: []" > "$INBOX"
+scripts/inbox_watcher.sh	49	AGENT_ID	伝	伝	echo "[$(date)] inbox_watcher started — agent: $AGENT_ID, pane: $PANE_TARGET, cli: $CLI_TYPE" >&2
+scripts/inbox_watcher.sh	54	AGENT_ID	⑶	⑶	rm -f "/tmp/inbox_watcher_typing_skip_${AGENT_ID}" 2>/dev/null
+scripts/inbox_watcher.sh	59	AGENT_ID	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/inbox_watcher.sh	60	AGENT_ID	伝	伝	echo "[$(date)] Created initial idle flag for $AGENT_ID (CLI starts idle)" >&2
+scripts/inbox_watcher.sh	231	AGENT_ID	伝	伝	NUDGE_FINGERPRINT_FILE=${NUDGE_FINGERPRINT_FILE:-/tmp/inbox_watcher_nudge_fingerprint_${AGENT_ID:-unknown}}
+scripts/inbox_watcher.sh	265	AGENT_ID	⑶	⑶	METRICS_FILE=${METRICS_FILE:-${SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/queue/metrics/${AGENT_ID:-unknown}_selfwatch.yaml}
+scripts/inbox_watcher.sh	281	AGENT_ID	⑶	⑶ 派METRICS_FILE	mkdir -p "$(dirname "$METRICS_FILE")" 2>/dev/null || true
+scripts/inbox_watcher.sh	282	AGENT_ID	⑶	⑶ 派METRICS_FILE	cat > "$METRICS_FILE" <<EOF
+scripts/inbox_watcher.sh	283	AGENT_ID	口	他	agent_id: "${AGENT_ID:-unknown}"
+scripts/inbox_watcher.sh	299	AGENT_ID	他	他	if [ -f "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" ]; then
+scripts/inbox_watcher.sh	318	AGENT_ID	⑶	⑶ 派INBOX	if [[ "$effective_cli" == "claude" ]] && [ -f "$INBOX" ]; then
+scripts/inbox_watcher.sh	320	AGENT_ID	⑶	⑶ 派INBOX	current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '')
+scripts/inbox_watcher.sh	322	AGENT_ID	⑶	⑶ 派NUDGE_FINGERPRINT_FILE	previous_fingerprint=$(cat "$NUDGE_FINGERPRINT_FILE" 2>/dev/null || true)
+scripts/inbox_watcher.sh	324	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Unchanged inbox nudge already submitted for $AGENT_ID: inbox${unread_count}" >&2
+scripts/inbox_watcher.sh	342	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Throttling nudge for $AGENT_ID: inbox${unread_count} (${age}s < ${cooldown_sec}s, cli=$effective_cli)" >&2
+scripts/inbox_watcher.sh	354	AGENT_ID	⑶	⑶ 派INBOX	[ -f "$INBOX" ] || return 0
+scripts/inbox_watcher.sh	356	AGENT_ID	⑶	⑶ 派INBOX	current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '')
+scripts/inbox_watcher.sh	358	AGENT_ID	⑶	⑶ 派NUDGE_FINGERPRINT_FILE	( umask 077; printf '' "${unread_count}|${current_sha}" > "$NUDGE_FINGERPRINT_FILE" )
+scripts/inbox_watcher.sh	377	AGENT_ID	伝	伝	echo "[$(date)] [WARN] CLI drift detected for $AGENT_ID: arg=${CLI_TYPE}, pane=${pane_cli}. Using pane value." >&2
+scripts/inbox_watcher.sh	385	AGENT_ID	伝	伝	echo "[$(date)] [WARN] Invalid pane @agent_cli for $AGENT_ID: ''. Falling back to arg=${CLI_TYPE}." >&2
+scripts/inbox_watcher.sh	392	AGENT_ID	伝	伝	echo "[$(date)] [WARN] CLI unresolved for $AGENT_ID (pane='', arg=''). Fallback=codex-safe." >&2
+scripts/inbox_watcher.sh	408	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Invalid model_switch payload for $AGENT_ID: ${raw_content:-<empty>}" >&2
+scripts/inbox_watcher.sh	422	AGENT_ID	伝	伝	INBOX_PATH="$INBOX" AGENT_ID="$AGENT_ID" "$SCRIPT_DIR/.venv/bin/python3" - << ''
+scripts/inbox_watcher.sh	639	AGENT_ID	伝	伝	echo "[$(date)] [CLI-RESTART] Delegating to switch_cli.sh for $AGENT_ID: ${restart_args}" >&2
+scripts/inbox_watcher.sh	640	AGENT_ID	他	他	bash "${SCRIPT_DIR}/scripts/switch_cli.sh" "$AGENT_ID" $restart_args 2>&1 | while IFS= read -r line; do
+scripts/inbox_watcher.sh	650	AGENT_ID	⑸	⑸	if [ "$AGENT_ID" = "shogun" ]; then
+scripts/inbox_watcher.sh	659	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Agent is busy — /clear deferred to next cycle (agent=$AGENT_ID)" >&2
+scripts/inbox_watcher.sh	672	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Codex /new already sent for $AGENT_ID — skipping duplicate clear_command" >&2
+scripts/inbox_watcher.sh	675	AGENT_ID	伝	伝	echo "[$(date)] [SEND-KEYS] Codex /clear→/new: starting new conversation for $AGENT_ID" >&2
+scripts/inbox_watcher.sh	698	AGENT_ID	伝	伝	echo "[$(date)] [SEND-KEYS] Copilot /clear: sending Ctrl-C + restart for $AGENT_ID" >&2
+scripts/inbox_watcher.sh	715	AGENT_ID	伝	伝	echo "[$(date)] [SEND-KEYS] Sending CLI command to $AGENT_ID ($effective_cli): $actual_cmd" >&2
+scripts/inbox_watcher.sh	745	AGENT_ID	⑸	⑸	case "$AGENT_ID" in
+scripts/inbox_watcher.sh	762	AGENT_ID	伝	伝	echo "[$(date)] [STARTUP] $AGENT_ID idle after ${attempt}×5s — sending startup prompt" >&2
+scripts/inbox_watcher.sh	765	AGENT_ID	伝	伝	echo "[$(date)] [STARTUP] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
+scripts/inbox_watcher.sh	768	AGENT_ID	伝	伝	echo "[$(date)] [STARTUP] $AGENT_ID still busy after 15s — proceeding with startup prompt anyway" >&2
+scripts/inbox_watcher.sh	773	AGENT_ID	伝	伝	startup_prompt=$(get_startup_prompt "$AGENT_ID" 2>/dev/null || true)
+scripts/inbox_watcher.sh	776	AGENT_ID	⑷	⑷+⑶	startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yaml. 3) Read queue/inbox/${AGENT_ID}.yaml, mark read:true. 4) Read context_files. 5) Execute the assigned task to completion — edit files, run commands, write reports. Keep working until done."
+scripts/inbox_watcher.sh	778	AGENT_ID	伝	伝	echo "[$(date)] [STARTUP] Sending startup prompt to $AGENT_ID (codex): ${startup_prompt:0:80}..." >&2
+scripts/inbox_watcher.sh	804	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] $AGENT_ID: suppressing automatic context reset during SecondPC role recovery" >&2
+scripts/inbox_watcher.sh	812	AGENT_ID	伝	伝	echo "[$(date)] [DEFER] $AGENT_ID: agent busy — postponing context reset (RC-1 cure)" >&2
+scripts/inbox_watcher.sh	825	AGENT_ID	伝	伝	echo "[$(date)] [CONTEXT-RESET] Sending $reset_cmd before task_assigned for $AGENT_ID ($effective_cli)" >&2
+scripts/inbox_watcher.sh	862	AGENT_ID	伝	伝	echo "[$(date)] [CONTEXT-RESET] $AGENT_ID idle after ${attempt}×5s — ready for nudge" >&2
+scripts/inbox_watcher.sh	865	AGENT_ID	伝	伝	echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
+scripts/inbox_watcher.sh	871	AGENT_ID	伝	伝	echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after 15s — skip post-reset nudge (Stop hook will deliver)" >&2
+scripts/inbox_watcher.sh	882	AGENT_ID	⑸	⑸	case "$AGENT_ID" in
+scripts/inbox_watcher.sh	904	AGENT_ID	⑶	⑶	done < <(pgrep -f "inotifywait.*inbox/${AGENT_ID}.yaml" 2>/dev/null)
+scripts/inbox_watcher.sh	931	AGENT_ID	伝	伝	alert_file="${APPROVAL_ALERT_FILE:-/tmp/inbox_watcher_approval_${AGENT_ID}}"
+scripts/inbox_watcher.sh	937	AGENT_ID	⑶	⑶ 派alert_file	printf '' "$now" > "$alert_file"
+scripts/inbox_watcher.sh	938	AGENT_ID	伝	伝	msg="[blocked_on_approval] ${AGENT_ID} ${PANE_TARGET}: Do you want to proceed?/1. Yes/Esc to cancel。人の判断待ち（自動押下なし）。"
+scripts/inbox_watcher.sh	941	AGENT_ID	伝	伝	echo "[$(date)] [APPROVAL-BLOCK] $AGENT_ID blocked_on_approval; alerted karo-mac and iincho" >&2
+scripts/inbox_watcher.sh	982	AGENT_ID	他	他	[ ! -f "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" ]
+scripts/inbox_watcher.sh	1071	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] FINAL_ESCALATION_ONLY=1, suppressing normal nudge for $AGENT_ID" >&2
+scripts/inbox_watcher.sh	1082	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] /clear sent ${_clear_elapsed}s ago for $AGENT_ID — deferring nudge (連結バグ防止)" >&2
+scripts/inbox_watcher.sh	1089	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Agent $AGENT_ID has active self-watch, no nudge needed" >&2
+scripts/inbox_watcher.sh	1095	AGENT_ID	伝	伝	local skip_state_file="/tmp/inbox_watcher_typing_skip_${AGENT_ID}"
+scripts/inbox_watcher.sh	1097	AGENT_ID	⑶	⑶ 派skip_state_file	skip_count=$(cat "$skip_state_file" 2>/dev/null || echo 0)
+scripts/inbox_watcher.sh	1099	AGENT_ID	⑶	⑶ 派skip_state_file	echo "$skip_count" > "$skip_state_file"
+scripts/inbox_watcher.sh	1103	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] $AGENT_ID is typing in pane — deferring nudge (skip ${skip_count}/${max_typing_skip})" >&2
+scripts/inbox_watcher.sh	1106	AGENT_ID	伝	伝	echo "[$(date)] [FORCE] $AGENT_ID typing skip cap (${max_typing_skip}) reached — forcing nudge" >&2
+scripts/inbox_watcher.sh	1107	AGENT_ID	⑶	⑶ 派skip_state_file	rm -f "$skip_state_file"
+scripts/inbox_watcher.sh	1110	AGENT_ID	⑶	⑶	rm -f "/tmp/inbox_watcher_typing_skip_${AGENT_ID}" 2>/dev/null
+scripts/inbox_watcher.sh	1116	AGENT_ID	⑸	⑸	if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+scripts/inbox_watcher.sh	1120	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Agent $AGENT_ID is busy (claude) — Stop hook will deliver, no nudge" >&2
+scripts/inbox_watcher.sh	1122	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Agent $AGENT_ID is busy ($busy_cli_wakeup), deferring nudge" >&2
+scripts/inbox_watcher.sh	1135	AGENT_ID	伝	伝	echo "[$(date)] [SEND-KEYS] Sending nudge to $PANE_TARGET for $AGENT_ID" >&2
+scripts/inbox_watcher.sh	1158	AGENT_ID	伝	伝	echo "[$(date)] WARNING: send-keys nudge failed for $AGENT_ID (attempt $((attempt+1)))" >&2
+scripts/inbox_watcher.sh	1181	AGENT_ID	伝	伝	echo "[$(date)] Wake-up sent to $AGENT_ID (${unread_count} unread, attempt $((attempt+1)))" >&2
+scripts/inbox_watcher.sh	1184	AGENT_ID	伝	伝	echo "[$(date)] WARNING: send-keys failed after $max_retries retries for $AGENT_ID" >&2
+scripts/inbox_watcher.sh	1199	AGENT_ID	⑸	⑸	if [ "$AGENT_ID" = "shogun" ]; then
+scripts/inbox_watcher.sh	1208	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] codex: suppressing Escape escalation for $AGENT_ID; sending plain nudge" >&2
+scripts/inbox_watcher.sh	1216	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] claude: suppressing Escape escalation for $AGENT_ID (Stop hook handles delivery); sending plain nudge" >&2
+scripts/inbox_watcher.sh	1222	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] FINAL_ESCALATION_ONLY=1, suppressing phase2 nudge for $AGENT_ID" >&2
+scripts/inbox_watcher.sh	1232	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Agent $AGENT_ID is busy (Working), deferring Phase 2 nudge" >&2
+scripts/inbox_watcher.sh	1236	AGENT_ID	伝	伝	echo "[$(date)] [SEND-KEYS] ESCALATION Phase 2: Escape×2 + nudge for $AGENT_ID (cli=$effective_cli)" >&2
+scripts/inbox_watcher.sh	1249	AGENT_ID	伝	伝	echo "[$(date)] Escape+nudge sent to $AGENT_ID (${unread_count} unread, cli=$effective_cli, C-c=$c_ctrl_state)" >&2
+scripts/inbox_watcher.sh	1253	AGENT_ID	伝	伝	echo "[$(date)] WARNING: send-keys failed for Escape+nudge ($AGENT_ID)" >&2
+scripts/inbox_watcher.sh	1273	AGENT_ID	伝	伝	echo "[$(date)] [APPROVAL-BLOCK] $AGENT_ID: blocked_on_approval; no key injection" >&2
+scripts/inbox_watcher.sh	1280	AGENT_ID	伝	伝	echo "[$(date)] All messages read for $AGENT_ID — escalation reset (fast-path)" >&2
+scripts/inbox_watcher.sh	1285	AGENT_ID	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh	1288	AGENT_ID	⑸	⑸	if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
+scripts/inbox_watcher.sh	1301	AGENT_ID	⑶	⑶ 派INBOX	if [ -f "$INBOX" ]; then
+scripts/inbox_watcher.sh	1302	AGENT_ID	⑶	⑶ 派INBOX	read_bytes=$(wc -c < "$INBOX" 2>/dev/null || echo 0)
+scripts/inbox_watcher.sh	1326	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] $AGENT_ID: suppressing clear_command during SecondPC role recovery" >&2
+scripts/inbox_watcher.sh	1331	AGENT_ID	⑸	⑸	if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+scripts/inbox_watcher.sh	1332	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Agent $AGENT_ID is busy — /clear (clear_command) deferred to next cycle" >&2
+scripts/inbox_watcher.sh	1356	AGENT_ID	伝	伝	echo "[$(date)] [AUTO-RECOVERY] skipped for $AGENT_ID — task is ${recovery_id#SKIP_CANCELLED:} (not restarting)" >&2
+scripts/inbox_watcher.sh	1358	AGENT_ID	伝	伝	echo "[$(date)] [AUTO-RECOVERY] queued task_assigned for $AGENT_ID ($recovery_id)" >&2
+scripts/inbox_watcher.sh	1390	AGENT_ID	伝	伝	echo "[$(date)] $normal_count unread for $AGENT_ID — blocked_on_approval; human alert sent, no key injection" >&2
+scripts/inbox_watcher.sh	1394	AGENT_ID	⑸	⑸	if agent_is_busy && [[ "$AGENT_ID" != shogun* ]]; then
+scripts/inbox_watcher.sh	1402	AGENT_ID	伝	伝	echo "[$(date)] WARNING: $AGENT_ID busy for $((now - FIRST_UNREAD_SEEN))s with $normal_count unread — forcing idle flag (stale busy recovery)" >&2
+scripts/inbox_watcher.sh	1403	AGENT_ID	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/inbox_watcher.sh	1414	AGENT_ID	伝	伝	echo "[$(date)] $normal_count unread for $AGENT_ID but agent is busy (claude) — Stop hook will deliver" >&2
+scripts/inbox_watcher.sh	1418	AGENT_ID	伝	伝	echo "[$(date)] $normal_count unread for $AGENT_ID but agent is busy ($busy_cli) — pausing escalation timer" >&2
+scripts/inbox_watcher.sh	1448	AGENT_ID	伝	伝	echo "[$(date)] [POST-RESET] Sending immediate post-reset nudge to $AGENT_ID" >&2
+scripts/inbox_watcher.sh	1454	AGENT_ID	伝	伝	echo "[$(date)] [POST-RESET] $AGENT_ID: context reset deferred (busy) — retry next cycle (fc3a5b0b RC-1)" >&2
+scripts/inbox_watcher.sh	1460	AGENT_ID	伝	伝	echo "[$(date)] [POST-RESET] $AGENT_ID: reset sent but still busy — Stop hook will deliver nudge (fc3a5b0b)" >&2
+scripts/inbox_watcher.sh	1471	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] Startup prompt just sent to $AGENT_ID — skipping nudge this cycle" >&2
+scripts/inbox_watcher.sh	1482	AGENT_ID	伝	伝	echo "[$(date)] $normal_count unread for $AGENT_ID (escalation disabled)" >&2
+scripts/inbox_watcher.sh	1484	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] disable_normal_nudge=1, no normal nudge for $AGENT_ID" >&2
+scripts/inbox_watcher.sh	1495	AGENT_ID	伝	伝	echo "[$(date)] $normal_count unread for $AGENT_ID (${age}s)" >&2
+scripts/inbox_watcher.sh	1503	AGENT_ID	伝	伝	echo "[$(date)] $normal_count unread for $AGENT_ID (${age}s — escalating: Escape+nudge)" >&2
+scripts/inbox_watcher.sh	1512	AGENT_ID	伝	伝	echo "[$(date)] ESCALATION Phase 3: $AGENT_ID unresponsive for ${age}s, but cli=codex — skipping /clear." >&2
+scripts/inbox_watcher.sh	1515	AGENT_ID	⑸	⑸	elif [[ "$AGENT_ID" == "shogun" || "$AGENT_ID" == shogun-* || "$AGENT_ID" == "karo" || "$AGENT_ID" == karo-* || "$AGENT_ID" == "gunshi" || "$AGENT_ID" == gunshi-* ]]; then
+scripts/inbox_watcher.sh	1517	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (command-layer agent, ${age}s). Using Escape+nudge." >&2
+scripts/inbox_watcher.sh	1523	AGENT_ID	伝	伝	echo "[$(date)] [SKIP] ESCALATION Phase 3: $AGENT_ID suppressed (auto /clear disabled by iincho seq232016, ${age}s). Using Escape+nudge." >&2
+scripts/inbox_watcher.sh	1529	AGENT_ID	伝	伝	echo "[$(date)] $normal_count unread for $AGENT_ID (${age}s — /clear cooldown, using Escape+nudge)" >&2
+scripts/inbox_watcher.sh	1536	AGENT_ID	伝	伝	echo "[$(date)] All messages read for $AGENT_ID — escalation reset" >&2
+scripts/inbox_watcher.sh	1542	AGENT_ID	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh	1547	AGENT_ID	⑸	⑸	if [ "$AGENT_ID" = "shogun" ] && pane_is_active; then
+scripts/inbox_watcher.sh	1573	AGENT_ID	伝	伝	WATCHER_DISABLE_FLAG="$HOME/.openclaw/disable_inbox_watcher_${AGENT_ID}"
+scripts/inbox_watcher.sh	1577	AGENT_ID	⑶	⑶ 派WATCHER_DISABLE_FLAG	if [ -f "$GLOBAL_DISABLE_FLAG" ] || [ -f "$WATCHER_DISABLE_FLAG" ]; then
+scripts/inbox_watcher.sh	1578	AGENT_ID	伝	伝	echo "[$(date)] inbox_watcher[$AGENT_ID] DISABLED by flag file — exiting gracefully" >&2
+scripts/inbox_watcher.sh	1589	AGENT_ID	⑶	⑶ 派INBOX	gtimeout "$INOTIFY_TIMEOUT" fswatch -1 --event Updated --event Renamed "$INBOX" 2>/dev/null
+scripts/inbox_watcher.sh	1595	AGENT_ID	⑶	⑶ 派INBOX	fswatch -1 --event Updated --event Renamed "$INBOX" &>/dev/null &
+scripts/inbox_watcher.sh	1613	AGENT_ID	⑶	⑶ 派INBOX	inotifywait -q -t "$INOTIFY_TIMEOUT" -e modify -e close_write "$INBOX" 2>/dev/null
+scripts/inbox_watcher.sh	1645	AGENT_ID	⑸	⑸	if [[ "$CLI_TYPE" == "claude" ]] && [[ "$AGENT_ID" != "shogun" ]]; then
+scripts/inbox_watcher.sh	1657	AGENT_ID	伝	伝	echo "[$(date)] [TOKEN-WARN] $AGENT_ID context size ${_token_match} (>= 200k) — sending warning to inbox" >&2
+scripts/inbox_watcher.sh	1658	AGENT_ID	⑷	⑷	bash "$SCRIPT_DIR/scripts/inbox_write.sh" "$AGENT_ID" \
+scripts/inbox_watcher.sh	931	APPROVAL_ALERT_FILE	口	伝	alert_file="${APPROVAL_ALERT_FILE:-/tmp/inbox_watcher_approval_${AGENT_ID}}"
+scripts/inbox_watcher.sh	937	APPROVAL_ALERT_FILE	⑶	⑶ 派alert_file	printf '' "$now" > "$alert_file"
+scripts/inbox_watcher.sh	49	CLI_TYPE	伝	伝	echo "[$(date)] inbox_watcher started — agent: $AGENT_ID, pane: $PANE_TARGET, cli: $CLI_TYPE" >&2
+scripts/inbox_watcher.sh	58	CLI_TYPE	⑸	⑸	if [[ "$CLI_TYPE" == "claude" ]]; then
+scripts/inbox_watcher.sh	376	CLI_TYPE	⑸	⑸	if is_valid_cli_type "${CLI_TYPE:-}" && [ "$pane_cli" != "${CLI_TYPE}" ]; then
+scripts/inbox_watcher.sh	377	CLI_TYPE	伝	伝	echo "[$(date)] [WARN] CLI drift detected for $AGENT_ID: arg=${CLI_TYPE}, pane=${pane_cli}. Using pane value." >&2
+scripts/inbox_watcher.sh	383	CLI_TYPE	口	他	if is_valid_cli_type "${CLI_TYPE:-}"; then
+scripts/inbox_watcher.sh	385	CLI_TYPE	伝	伝	echo "[$(date)] [WARN] Invalid pane @agent_cli for $AGENT_ID: ''. Falling back to arg=${CLI_TYPE}." >&2
+scripts/inbox_watcher.sh	387	CLI_TYPE	伝	伝	echo "${CLI_TYPE}"
+scripts/inbox_watcher.sh	644	CLI_TYPE	伝	伝	CLI_TYPE=$(tmux show-options -p -t "$PANE_TARGET" -v @agent_cli 2>/dev/null || echo "$CLI_TYPE")
+scripts/inbox_watcher.sh	1645	CLI_TYPE	⑸	⑸	if [[ "$CLI_TYPE" == "claude" ]] && [[ "$AGENT_ID" != "shogun" ]]; then
+scripts/inbox_watcher.sh	59	IDLE_FLAG_DIR	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/inbox_watcher.sh	299	IDLE_FLAG_DIR	⑶	⑶	if [ -f "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" ]; then
+scripts/inbox_watcher.sh	982	IDLE_FLAG_DIR	⑶	⑶	[ ! -f "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" ]
+scripts/inbox_watcher.sh	1285	IDLE_FLAG_DIR	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh	1403	IDLE_FLAG_DIR	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/inbox_watcher.sh	1542	IDLE_FLAG_DIR	⑶	⑶	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh	265	METRICS_FILE	口	口	METRICS_FILE=${METRICS_FILE:-${SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/queue/metrics/${AGENT_ID:-unknown}_selfwatch.yaml}
+scripts/inbox_watcher.sh	281	METRICS_FILE	⑶	⑶	mkdir -p "$(dirname "$METRICS_FILE")" 2>/dev/null || true
+scripts/inbox_watcher.sh	282	METRICS_FILE	⑶	⑶	cat > "$METRICS_FILE" <<EOF
+scripts/inbox_watcher.sh	231	NUDGE_FINGERPRINT_FILE	口	口	NUDGE_FINGERPRINT_FILE=${NUDGE_FINGERPRINT_FILE:-/tmp/inbox_watcher_nudge_fingerprint_${AGENT_ID:-unknown}}
+scripts/inbox_watcher.sh	322	NUDGE_FINGERPRINT_FILE	⑶	⑶	previous_fingerprint=$(cat "$NUDGE_FINGERPRINT_FILE" 2>/dev/null || true)
+scripts/inbox_watcher.sh	323	NUDGE_FINGERPRINT_FILE	⑸	⑸ 派previous_fingerprint	if [ -n "$current_sha" ] && [ "$previous_fingerprint" = "$current_fingerprint" ]; then
+scripts/inbox_watcher.sh	358	NUDGE_FINGERPRINT_FILE	⑶	⑶	( umask 077; printf '' "${unread_count}|${current_sha}" > "$NUDGE_FINGERPRINT_FILE" )
+scripts/inbox_watcher.sh	96	WATCH_BACKEND	伝	伝	echo "[$(date)] File watch backend: $WATCH_BACKEND" >&2
+scripts/inbox_watcher.sh	1585	WATCH_BACKEND	口	他	if [ "${WATCH_BACKEND:-inotifywait}" = "fswatch" ]; then
+scripts/inbox_write.sh	272	INBOX_EXPIRES_AT	口	伝	INBOX_CONTENT="$CONTENT" INBOX_EXPIRES_AT="${INBOX_EXPIRES_AT:-}" INBOX_SUPERSEDES_ID="${INBOX_SUPERSEDES_ID:-}" "$SCRIPT_DIR/.venv/bin/python3" -c "
+scripts/inbox_write.sh	272	INBOX_SUPERSEDES_ID	口	伝	INBOX_CONTENT="$CONTENT" INBOX_EXPIRES_AT="${INBOX_EXPIRES_AT:-}" INBOX_SUPERSEDES_ID="${INBOX_SUPERSEDES_ID:-}" "$SCRIPT_DIR/.venv/bin/python3" -c "
+scripts/inbox_write.sh	66	IW_DEAD_LIST	口	伝	_IW_DEAD_LIST="${IW_DEAD_LIST:-gunshi-mac}"
+scripts/inbox_write.sh	157	SUPABASE_SERVICE_ROLE_KEY	口	伝	sb_key="${SUPABASE_SERVICE_ROLE_KEY:-$sb_key}"
+scripts/inbox_write.sh	156	SUPABASE_URL	口	伝	sb_url="${SUPABASE_URL:-$sb_url}"
+scripts/inbox_write.sh	197	SUPABASE_URL	⑶	⑶ 派sb_url	"${sb_url}/rest/v1/pc_handshake" \
+scripts/karo_overload_monitor.sh	67	DISABLE_FLAG	口	口	: "${DISABLE_FLAG:=$HOME/.openclaw/disable_karo_overload_monitor}"
+scripts/karo_overload_monitor.sh	113	DISABLE_FLAG	⑶	⑶	if [ -f "$DISABLE_FLAG" ]; then
+scripts/karo_overload_monitor.sh	114	DISABLE_FLAG	伝	伝	echo "▼ karo_overload_monitor disabled by flag: $DISABLE_FLAG"
+scripts/karo_overload_monitor.sh	115	DISABLE_FLAG	他	他	log_json INFO "disabled_by_flag" "\"flag\":\"$DISABLE_FLAG\""
+scripts/karo_overload_monitor.sh	66	DUMP_DIR	口	口	: "${DUMP_DIR:=/tmp}"
+scripts/karo_overload_monitor.sh	383	DUMP_DIR	⑶	⑶	dump_path=$(mktemp "${DUMP_DIR}/karo_overload_dump.XXXXXX.json") || return 0
+scripts/karo_overload_monitor.sh	384	DUMP_DIR	⑶	⑶ 派dump_path	cat > "$dump_path" <<EOF
+scripts/karo_overload_monitor.sh	409	DUMP_DIR	⑶	⑶ 派dump_path	chmod 600 "$dump_path" 2>/dev/null || true
+scripts/karo_overload_monitor.sh	68	GLOBAL_DISABLE_FLAG	口	口	: "${GLOBAL_DISABLE_FLAG:=$HOME/.openclaw/global_disable}"
+scripts/karo_overload_monitor.sh	108	GLOBAL_DISABLE_FLAG	⑶	⑶	if [ -f "$GLOBAL_DISABLE_FLAG" ]; then
+scripts/karo_overload_monitor.sh	109	GLOBAL_DISABLE_FLAG	伝	伝	echo "▼ karo_overload_monitor disabled by global flag: $GLOBAL_DISABLE_FLAG"
+scripts/karo_overload_monitor.sh	110	GLOBAL_DISABLE_FLAG	他	他	log_json INFO "disabled_by_global_flag" "\"flag\":\"$GLOBAL_DISABLE_FLAG\""
+scripts/karo_overload_monitor.sh	65	HEALTH_FILE	口	口	: "${HEALTH_FILE:=/tmp/karo_overload_monitor.health}"
+scripts/karo_overload_monitor.sh	127	HEALTH_FILE	⑶	⑶	} > "$HEALTH_FILE" 2>/dev/null || true
+scripts/karo_overload_monitor.sh	63	INBOX_WRITE_CMD	口	口	: "${INBOX_WRITE_CMD:=$SCRIPT_DIR/inbox_write.sh}"
+scripts/karo_overload_monitor.sh	350	INBOX_WRITE_CMD	⑶	⑶	if [ -x "$INBOX_WRITE_CMD" ] || [ -f "$INBOX_WRITE_CMD" ]; then
+scripts/karo_overload_monitor.sh	351	INBOX_WRITE_CMD	他	他	if bash "$INBOX_WRITE_CMD" takenaka "$content" assist_request nobunaga >/dev/null 2>&1; then
+scripts/karo_overload_monitor.sh	359	INBOX_WRITE_CMD	他	他	if bash "$INBOX_WRITE_CMD" shogun "$shogun_content" karo_overload_alert nobunaga >/dev/null 2>&1; then
+scripts/karo_overload_monitor.sh	365	INBOX_WRITE_CMD	他	他	log_json ERROR "inbox_write_cmd_unavailable" "\"path\":\"$INBOX_WRITE_CMD\""
+scripts/karo_overload_monitor.sh	59	KARO_INBOX	口	口	: "${KARO_INBOX:=$REPO_ROOT/queue/inbox/karo.yaml}"
+scripts/karo_overload_monitor.sh	226	KARO_INBOX	⑶	⑶	if [ ! -f "$KARO_INBOX" ]; then
+scripts/karo_overload_monitor.sh	227	KARO_INBOX	他	他	log_json WARN "karo_inbox_missing" "\"file\":\"$KARO_INBOX\""
+scripts/karo_overload_monitor.sh	231	KARO_INBOX	伝	伝	python3 - "$KARO_INBOX" "$NOW_EPOCH" <<'' 2>/dev/null || echo "0|0|0|0|parse_error"
+scripts/karo_overload_monitor.sh	84	MONITOR_MODE	口	口	: "${MONITOR_MODE:=default}"
+scripts/karo_overload_monitor.sh	340	MONITOR_MODE	⑸	⑸	if [ "$MONITOR_MODE" = "check-only" ]; then
+scripts/karo_overload_monitor.sh	415	MONITOR_MODE	伝	伝	echo "▼ karo_overload_monitor (corr_id=$CORR_ID, mode=$MONITOR_MODE)"
+scripts/karo_overload_monitor.sh	503	MONITOR_MODE	⑸	⑸	if [ "$MONITOR_MODE" = "check-only" ]; then
+scripts/karo_overload_monitor.sh	62	SHOGUN_INBOX	口	口	: "${SHOGUN_INBOX:=$REPO_ROOT/queue/inbox/shogun.yaml}"
+scripts/karo_overload_monitor.sh	64	STATE_FILE	口	口	: "${STATE_FILE:=/tmp/karo_overload_monitor_state.json}"
+scripts/karo_overload_monitor.sh	138	STATE_FILE	⑶	⑶	if [ ! -f "$STATE_FILE" ]; then
+scripts/karo_overload_monitor.sh	145	STATE_FILE	伝	伝	out=$(python3 - "$STATE_FILE" <<'' 2>/dev/null || true
+scripts/karo_overload_monitor.sh	162	STATE_FILE	他	他	log_json WARN "state_load_failed_fresh_start" "\"file\":\"$STATE_FILE\""
+scripts/karo_overload_monitor.sh	207	STATE_FILE	伝	伝	tmp_state=$(mktemp "${STATE_FILE}.XXXXXX") || return 0
+scripts/karo_overload_monitor.sh	208	STATE_FILE	⑶	⑶ 派tmp_state	cat > "$tmp_state" <<EOF
+scripts/karo_overload_monitor.sh	217	STATE_FILE	⑶	⑶	mv -f "$tmp_state" "$STATE_FILE" 2>/dev/null || rm -f "$tmp_state" 2>/dev/null
+scripts/karo_overload_monitor.sh	61	TAKENAKA_INBOX	口	口	: "${TAKENAKA_INBOX:=$REPO_ROOT/queue/inbox/takenaka.yaml}"
+scripts/karo_overload_monitor.sh	60	TASKS_DIR	口	口	: "${TASKS_DIR:=$REPO_ROOT/queue/tasks}"
+scripts/karo_overload_monitor.sh	310	TASKS_DIR	⑶	⑶	if [ ! -d "$TASKS_DIR" ]; then
+scripts/karo_overload_monitor.sh	317	TASKS_DIR	⑶	⑶	for f in "$TASKS_DIR"/ashigaru*.yaml; do
+scripts/karo_second_send_iincho.sh	164	CURL_ERR	口	他	fatal "LIVE POST failed: http_code=${HTTP_CODE:-<empty>} curl_stderr=${CURL_ERR:-<empty>}"
+scripts/karo_second_send_iincho.sh	49	HAKUDOKAI_CLINIC_ID	口	伝	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+scripts/karo_second_send_iincho.sh	147	HTTP_CODE	⑸	⑸	if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
+scripts/karo_second_send_iincho.sh	159	HTTP_CODE	他	他	fatal "LIVE POST returned http_code=${HTTP_CODE} but no row id in response (return=representation not honored?) response_body=${RESPONSE_BODY:-<empty>}"
+scripts/karo_second_send_iincho.sh	161	HTTP_CODE	伝	伝	echo "LIVE POST OK: http_code=${HTTP_CODE} id=${ROW_ID}"
+scripts/karo_second_send_iincho.sh	164	HTTP_CODE	口	他	fatal "LIVE POST failed: http_code=${HTTP_CODE:-<empty>} curl_stderr=${CURL_ERR:-<empty>}"
+scripts/karo_second_send_iincho.sh	26	KARO_SECOND_SEND_IINCHO_LOG	口	伝	FAIL_LOG="${KARO_SECOND_SEND_IINCHO_LOG:-/tmp/karo_second_send_iincho.log}"
+scripts/karo_second_send_iincho.sh	32	KARO_SECOND_SEND_IINCHO_LOG	⑶	⑶ 派FAIL_LOG	echo "$(date -Iseconds) $msg" >> "$FAIL_LOG"
+scripts/karo_second_send_iincho.sh	148	RESPONSE_BODY	伝	伝	ROW_ID="$(printf '' "$RESPONSE_BODY" | python3 -c '
+scripts/karo_second_send_iincho.sh	159	RESPONSE_BODY	口	他	fatal "LIVE POST returned http_code=${HTTP_CODE} but no row id in response (return=representation not honored?) response_body=${RESPONSE_BODY:-<empty>}"
+scripts/karo_second_send_iincho.sh	127	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+scripts/karo_second_send_iincho.sh	127	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+scripts/karo_second_send_iincho.sh	131	SUPABASE_URL	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+scripts/karo_second_send_iincho.sh	139	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+scripts/karo_second_send_iincho.sh	132	TMPDIR	口	伝	CURL_ERR_FILE="$(mktemp "${TMPDIR:-/tmp}/karo_second_send_iincho_curlerr.XXXXXX")" \
+scripts/karo_second_send_iincho.sh	134	TMPDIR	口	伝	RESPONSE_FILE="$(mktemp "${TMPDIR:-/tmp}/karo_second_send_iincho_resp.XXXXXX")" \
+scripts/karo_second_send_iincho.sh	142	TMPDIR	⑶	⑶ 派CURL_ERR_FILE	-d "$PAYLOAD" 2>"$CURL_ERR_FILE")
+scripts/karo_second_send_iincho.sh	143	TMPDIR	⑶	⑶ 派CURL_ERR_FILE	CURL_ERR="$(cat "$CURL_ERR_FILE")"
+scripts/karo_second_send_iincho.sh	144	TMPDIR	⑶	⑶ 派RESPONSE_FILE	RESPONSE_BODY="$(cat "$RESPONSE_FILE")"
+scripts/karo_second_send_iincho.sh	145	TMPDIR	⑶	⑶ 派RESPONSE_FILE	rm -f "$CURL_ERR_FILE" "$RESPONSE_FILE"
+scripts/lib/detect_stale.sh	32	DETECT_STALE_INFLIGHT_DIR	口	口	DETECT_STALE_INFLIGHT_DIR="${DETECT_STALE_INFLIGHT_DIR:-/tmp/fukuincho_inflight}"
+scripts/lib/detect_stale.sh	102	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/lib/detect_stale.sh	103	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	[ -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" ]
+scripts/lib/detect_stale.sh	110	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/lib/detect_stale.sh	111	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	: > "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight"
+scripts/lib/detect_stale.sh	118	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	rm -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" 2>/dev/null
+scripts/lib/detect_stale.sh	134	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/lib/detect_stale.sh	139	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	if [ -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" ]; then
+scripts/lib/detect_stale.sh	142	DETECT_STALE_INFLIGHT_DIR	⑶	⑶	: > "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight"
+scripts/lib/detect_stale.sh	34	DETECT_STALE_LOCK_FILE	口	口	DETECT_STALE_LOCK_FILE="${DETECT_STALE_LOCK_FILE:-/tmp/fukuincho_detect_stale.lock}"
+scripts/lib/detect_stale.sh	144	DETECT_STALE_LOCK_FILE	⑶	⑶	) 9>"$DETECT_STALE_LOCK_FILE"
+scripts/lib/detect_stale.sh	31	DETECT_STALE_LOG	口	口	DETECT_STALE_LOG="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+scripts/lib/detect_stale.sh	63	DETECT_STALE_LOG	⑶	⑶	printf '' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/dev/null || true
+scripts/lib/inbox_path.sh	27	INBOX_VERSION	口	口	INBOX_VERSION="${INBOX_VERSION:-v1}"
+scripts/lib/inbox_path.sh	37	INBOX_VERSION	⑸	⑸	case "$INBOX_VERSION" in
+scripts/lib/inbox_path.sh	45	INBOX_VERSION	伝	伝	echo "[inbox_path.sh] ERROR: unknown INBOX_VERSION=$INBOX_VERSION" >&2
+scripts/lib/inbox_path.sh	54	INBOX_VERSION	⑸	⑸	case "$INBOX_VERSION" in
+scripts/ntfy_listener.sh	140	NTFY_TOKEN	⑷	⑷	echo "[$(date)] ntfy listener started — topic: $TOPIC (auth: ${NTFY_TOKEN:+token}${NTFY_USER:+basic}${NTFY_TOKEN:-${NTFY_USER:-none}})" >&2
+scripts/ntfy_listener.sh	140	NTFY_USER	⑷	⑷	echo "[$(date)] ntfy listener started — topic: $TOPIC (auth: ${NTFY_TOKEN:+token}${NTFY_USER:+basic}${NTFY_TOKEN:-${NTFY_USER:-none}})" >&2
+scripts/pane_enter_watcher.py	128	POLL_SEC	他	他	parser.add_argument("", default=TARGET_PANE,
+scripts/pane_enter_watcher.py	131	POLL_SEC	口	口	default=int(os.environ.get("", DEFAULT_STALE_SEC)),
+scripts/pane_enter_watcher.py	134	POLL_SEC	口	口	default=int(os.environ.get("", DEFAULT_POLL_SEC)),
+scripts/pane_enter_watcher.py	128	STALE_SEC	他	他	parser.add_argument("", default=TARGET_PANE,
+scripts/pane_enter_watcher.py	131	STALE_SEC	口	口	default=int(os.environ.get("", DEFAULT_STALE_SEC)),
+scripts/pane_enter_watcher.py	134	STALE_SEC	口	口	default=int(os.environ.get("", DEFAULT_POLL_SEC)),
+scripts/ratelimit_check.sh	556	CODEX_MODEL_LABEL	口	伝	printf "  %s:\n" "${CODEX_MODEL_LABEL:-Model}"
+scripts/redundancy/shogun_report_watcher.sh	26	SHOGUN_REPORT_WATCHER_DIR	口	伝	REPORTS_DIR="${SHOGUN_REPORT_WATCHER_DIR:-$SCRIPT_DIR/queue/reports}"
+scripts/redundancy/shogun_report_watcher.sh	112	SHOGUN_REPORT_WATCHER_DIR	⑶	⑶ 派REPORTS_DIR	mkdir -p "$REPORTS_DIR"
+scripts/redundancy/shogun_report_watcher.sh	294	SHOGUN_REPORT_WATCHER_DIR	⑶	⑶ 派REPORTS_DIR	local path="$REPORTS_DIR/$report_name"
+scripts/redundancy/shogun_report_watcher.sh	28	SHOGUN_REPORT_WATCHER_LOCK	口	伝	LOCK_FILE="${SHOGUN_REPORT_WATCHER_LOCK:-/tmp/.shogun_report_watcher.lock}"
+scripts/redundancy/shogun_report_watcher.sh	117	SHOGUN_REPORT_WATCHER_LOCK	⑶	⑶ 派LOCK_FILE	exec 9>"$LOCK_FILE" || {
+scripts/redundancy/shogun_report_watcher.sh	118	SHOGUN_REPORT_WATCHER_LOCK	⑶	⑶ 派LOCK_FILE	echo "$LOG_PREFIX ERROR: cannot open lock file $LOCK_FILE" >&2
+scripts/redundancy/shogun_report_watcher.sh	27	SHOGUN_REPORT_WATCHER_STATE	口	伝	STATE_FILE="${SHOGUN_REPORT_WATCHER_STATE:-/tmp/.shogun_report_watcher_state.json}"
+scripts/redundancy/shogun_report_watcher.sh	138	SHOGUN_REPORT_WATCHER_STATE	⑶	⑶ 派STATE_FILE	if [ ! -f "$STATE_FILE" ]; then
+scripts/redundancy/shogun_report_watcher.sh	139	SHOGUN_REPORT_WATCHER_STATE	⑶	⑶ 派STATE_FILE	echo '' > "$STATE_FILE"
+scripts/setup_known_hosts.sh	22	KNOWN_HOSTS	口	口	KNOWN_HOSTS="${KNOWN_HOSTS:-$HOME/.ssh/known_hosts}"
+scripts/setup_known_hosts.sh	30	KNOWN_HOSTS	伝	伝	echo "[setup_known_hosts] target known_hosts: ${KNOWN_HOSTS}"
+scripts/setup_known_hosts.sh	33	KNOWN_HOSTS	⑶	⑶	mkdir -p "$(dirname "$KNOWN_HOSTS")"
+scripts/setup_known_hosts.sh	34	KNOWN_HOSTS	⑶	⑶	chmod 700 "$(dirname "$KNOWN_HOSTS")"
+scripts/setup_known_hosts.sh	35	KNOWN_HOSTS	⑶	⑶	touch "$KNOWN_HOSTS"
+scripts/setup_known_hosts.sh	36	KNOWN_HOSTS	⑶	⑶	chmod 600 "$KNOWN_HOSTS"
+scripts/setup_known_hosts.sh	43	KNOWN_HOSTS	他	他	if ssh-keygen -F "$host" -f "$KNOWN_HOSTS" >/dev/null 2>&1; then
+scripts/setup_known_hosts.sh	50	KNOWN_HOSTS	⑶	⑶	if ssh-keyscan -T "$KEYSCAN_TIMEOUT" -H "$host" 2>/dev/null >> "$KNOWN_HOSTS"; then
+scripts/stop_hook_inbox.sh	126	IDLE_FLAG_DIR	口	伝	FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/stop_hook_inbox.sh	127	IDLE_FLAG_DIR	⑶	⑶ 派FLAG	touch "$FLAG"
+scripts/stop_hook_inbox.sh	215	IDLE_FLAG_DIR	口	伝	FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/stop_hook_inbox.sh	216	IDLE_FLAG_DIR	⑶	⑶ 派FLAG	touch "$FLAG"
+scripts/stop_hook_inbox.sh	221	IDLE_FLAG_DIR	口	伝	FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/stop_hook_inbox.sh	223	IDLE_FLAG_DIR	⑶	⑶ 派FLAG	touch "$FLAG"
+scripts/stop_hook_inbox.sh	98	TMUX_PANE	口	他	elif [ -n "${TMUX_PANE:-}" ]; then
+scripts/stop_hook_inbox.sh	99	TMUX_PANE	⑴	⑴	AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '' 2>/dev/null || true)
+scripts/stop_hook_inbox.sh	110	TMUX_PANE	⑸	⑸ 派AGENT_ID	if [ "$AGENT_ID" = "shogun" ]; then
+scripts/stop_hook_inbox.sh	115	TMUX_PANE	⑷	⑷+⑶ 派AGENT_ID	INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+scripts/stop_hook_inbox.sh	131	TMUX_PANE	⑸	⑸ 派AGENT_ID	if [ "$AGENT_ID" = "shogun" ]; then
+scripts/stop_hook_inbox.sh	173	TMUX_PANE	⑸	⑸ 派AGENT_ID	if [ -n "$NOTIFY_TYPE" ] && [ "$AGENT_ID" != "shogun" ]; then
+scripts/stop_hook_inbox.sh	181	TMUX_PANE	⑷	⑷+⑶ 派AGENT_ID	INBOX="$SCRIPT_DIR/queue/inbox/${AGENT_ID}.yaml"
+scripts/stop_hook_inbox.sh	227	TMUX_PANE	⑸	⑸ 派AGENT_ID	if [ "$AGENT_ID" = "shogun" ]; then
+scripts/stop_hook_inbox.sh	288	TMUX_PANE	⑷	⑷+⑶ 派AGENT_ID	" 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+scripts/stop_hook_inbox.sh	145	UNREAD_COUNT	他	他	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	209	UNREAD_COUNT	⑸	⑸	case "${UNREAD_COUNT:-0}" in
+scripts/stop_hook_inbox.sh	211	UNREAD_COUNT	口	伝	echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+scripts/stop_hook_inbox.sh	214	UNREAD_COUNT	他	他	if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+scripts/stop_hook_inbox.sh	217	UNREAD_COUNT	伝	伝	echo "[stop_hook] $AGENT_ID has ${UNREAD_COUNT} unread (> ${MASS_UNREAD_THRESHOLD}) — refusing to block (loop防止). bulk ack 推奨。" >&2
+scripts/stop_hook_inbox.sh	222	UNREAD_COUNT	他	他	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	241	UNREAD_COUNT	他	他	if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+scripts/stop_hook_inbox.sh	262	UNREAD_COUNT	伝	伝	__STOP_HOOK_UNREAD_COUNT="$UNREAD_COUNT" \
+scripts/stop_hook_inbox.sh	288	UNREAD_COUNT	伝	伝	" 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	32	ER_CYCLE_LOG_PREFIX	口	口	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	28	ER_EVENT_TYPE	口	口	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_commander_fire}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	26	ER_FROM_PC_FILTER	口	口	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	30	ER_HEARTBEAT_FROM_PC	口	口	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	31	ER_HEARTBEAT_TOPIC_PREFIX	口	口	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] commander alive}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	27	ER_LOG_DIR	口	口	export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	24	ER_PANE_TARGET	口	口	export ER_PANE_TARGET="${ER_PANE_TARGET:-commander-third:0.0}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	29	ER_ROLE_NAME	口	口	export ER_ROLE_NAME="${ER_ROLE_NAME:-Commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	25	ER_SESSION_NAME	口	口	export ER_SESSION_NAME="${ER_SESSION_NAME:-commander-third}"
+scripts/watchdogs/enter_restart_common_watchdog.sh	61	ER_PYTHON3_BIN	口	口	ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/home/hakudoukai/.local/share/hermes-agent/venv/bin/python3}"
+scripts/watchdogs/enter_restart_common_watchdog.sh	149	ER_PYTHON3_BIN	他	他	"$ER_PYTHON3_BIN" - <<'' || true
+scripts/watchdogs/enter_restart_common_watchdog.sh	197	ER_PYTHON3_BIN	他	他	"$ER_PYTHON3_BIN" - <<''
+scripts/watchdogs/enter_restart_common_watchdog.sh	362	ER_PYTHON3_BIN	他	他	"$ER_PYTHON3_BIN" - <<'' || true
+scripts/watchdogs/enter_restart_common_watchdog.sh	402	ER_PYTHON3_BIN	他	他	"$ER_PYTHON3_BIN" - <<'' || true
+scripts/watchdogs/enter_restart_common_watchdog.sh	66	ER_TARGET_PC	口	口	ER_TARGET_PC="${ER_TARGET_PC:-third_pc}"
+scripts/watchdogs/enter_restart_common_watchdog.sh	147	ER_TARGET_PC	伝	伝	ER_TARGET_PC_PY="$ER_TARGET_PC" \
+scripts/watchdogs/enter_restart_common_watchdog.sh	360	ER_TARGET_PC	伝	伝	ER_TARGET_PC_PY="$ER_TARGET_PC" \
+scripts/watchdogs/enter_restart_common_watchdog.sh	396	ER_TARGET_PC	伝	伝	ER_TARGET_PC_PY="$ER_TARGET_PC" \
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	31	ER_CYCLE_LOG_PREFIX	口	口	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	27	ER_EVENT_TYPE	口	口	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_main_fire}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	25	ER_FROM_PC_FILTER	口	口	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-main_pc}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	29	ER_HEARTBEAT_FROM_PC	口	口	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-main_pc}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	30	ER_HEARTBEAT_TOPIC_PREFIX	口	口	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] shogun_main alive}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	26	ER_LOG_DIR	口	口	export ER_LOG_DIR="${ER_LOG_DIR:-/home/user/.local/share/enter_restart_shogun_main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	23	ER_PANE_TARGET	口	口	export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-main:shogun.0}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	36	ER_PYTHON3_BIN	口	口	export ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/usr/bin/python3}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	28	ER_ROLE_NAME	口	口	export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	24	ER_SESSION_NAME	口	口	export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	33	ER_TARGET_PC	口	口	export ER_TARGET_PC="${ER_TARGET_PC:-main_pc}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	31	ER_CYCLE_LOG_PREFIX	口	口	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	27	ER_EVENT_TYPE	口	口	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_second_fire}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	25	ER_FROM_PC_FILTER	口	口	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-second_pc}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	29	ER_HEARTBEAT_FROM_PC	口	口	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-second_pc}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	30	ER_HEARTBEAT_TOPIC_PREFIX	口	口	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] shogun_second alive}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	26	ER_LOG_DIR	口	口	export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudokai/.local/share/enter_restart_shogun_second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	23	ER_PANE_TARGET	口	口	export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-second:0.0}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	35	ER_PYTHON3_BIN	口	口	export ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/usr/bin/python3}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	28	ER_ROLE_NAME	口	口	export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	24	ER_SESSION_NAME	口	口	export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	33	ER_TARGET_PC	口	口	export ER_TARGET_PC="${ER_TARGET_PC:-second_pc}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	36	ER_CYCLE_LOG_PREFIX	口	口	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_third}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	32	ER_EVENT_TYPE	口	口	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_third_fire}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	30	ER_FROM_PC_FILTER	口	口	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-third_pc}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	34	ER_HEARTBEAT_FROM_PC	口	口	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-third_pc}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	35	ER_HEARTBEAT_TOPIC_PREFIX	口	口	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] shogun_third alive}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	31	ER_LOG_DIR	口	口	export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_shogun_third}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	28	ER_PANE_TARGET	口	口	export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-third:0.0}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	33	ER_ROLE_NAME	口	口	export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-third}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	29	ER_SESSION_NAME	口	口	export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-third}"
+shim/hakudokai/hakudokai_ai_jimucho.py	55	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_ai_jimucho.py	302	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default=CLINIC_ID)
+shim/hakudokai/hakudokai_ai_jimucho.py	59	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_ai_jimucho.py	64	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_ai_jimucho.py	68	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_audit_scheduler.sh	16	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_billing_tier.py	39	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_billing_tier.py	272	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default=CLINIC_ID,
+shim/hakudokai/hakudokai_billing_tier.py	80	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_billing_tier.py	85	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_billing_tier.py	89	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_daily_summary.py	20	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_daily_summary.py	211	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_daily_summary.py	25	SUPABASE_SERVICE_ROLE_KEY	口	口	key = os.environ.get("", "")
+shim/hakudokai/hakudokai_daily_summary.py	26	SUPABASE_SERVICE_ROLE_KEY	他	他	if not url or not key:
+shim/hakudokai/hakudokai_daily_summary.py	35	SUPABASE_SERVICE_ROLE_KEY	他	他	key = line.split("", 1)[1]
+shim/hakudokai/hakudokai_daily_summary.py	36	SUPABASE_SERVICE_ROLE_KEY	他	他	return url, key
+shim/hakudokai/hakudokai_daily_summary.py	39	SUPABASE_SERVICE_ROLE_KEY	他	他	def get_recent_handshakes(url, key, hours=24):
+shim/hakudokai/hakudokai_daily_summary.py	49	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {key}")
+shim/hakudokai/hakudokai_daily_summary.py	50	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", key)
+shim/hakudokai/hakudokai_daily_summary.py	105	SUPABASE_SERVICE_ROLE_KEY	他	他	def get_pending_approvals(url, key):
+shim/hakudokai/hakudokai_daily_summary.py	114	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {key}")
+shim/hakudokai/hakudokai_daily_summary.py	115	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", key)
+shim/hakudokai/hakudokai_daily_summary.py	124	SUPABASE_SERVICE_ROLE_KEY	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_daily_summary.py	127	SUPABASE_SERVICE_ROLE_KEY	他	他	handshakes = get_recent_handshakes(url, key) if url else []
+shim/hakudokai/hakudokai_daily_summary.py	131	SUPABASE_SERVICE_ROLE_KEY	他	他	pending = get_pending_approvals(url, key) if url else []
+shim/hakudokai/hakudokai_daily_summary.py	198	SUPABASE_SERVICE_ROLE_KEY	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_daily_summary.py	199	SUPABASE_SERVICE_ROLE_KEY	他	他	if not url or not key:
+shim/hakudokai/hakudokai_daily_summary.py	221	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {key}")
+shim/hakudokai/hakudokai_daily_summary.py	222	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", key)
+shim/hakudokai/hakudokai_daily_summary.py	24	SUPABASE_URL	口	口	url = os.environ.get("", "")
+shim/hakudokai/hakudokai_daily_summary.py	26	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_daily_summary.py	33	SUPABASE_URL	他	他	url = line.split("", 1)[1]
+shim/hakudokai/hakudokai_daily_summary.py	36	SUPABASE_URL	他	他	return url, key
+shim/hakudokai/hakudokai_daily_summary.py	39	SUPABASE_URL	他	他	def get_recent_handshakes(url, key, hours=24):
+shim/hakudokai/hakudokai_daily_summary.py	43	SUPABASE_URL	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_daily_summary.py	105	SUPABASE_URL	他	他	def get_pending_approvals(url, key):
+shim/hakudokai/hakudokai_daily_summary.py	108	SUPABASE_URL	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_daily_summary.py	124	SUPABASE_URL	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_daily_summary.py	127	SUPABASE_URL	他	他	handshakes = get_recent_handshakes(url, key) if url else []
+shim/hakudokai/hakudokai_daily_summary.py	131	SUPABASE_URL	他	他	pending = get_pending_approvals(url, key) if url else []
+shim/hakudokai/hakudokai_daily_summary.py	198	SUPABASE_URL	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_daily_summary.py	199	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_daily_summary.py	218	SUPABASE_URL	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_dashboard_sync.py	46	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_dashboard_sync.py	92	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_dashboard_sync.py	115	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_dashboard_sync.py	140	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_dashboard_sync.py	205	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_dashboard_sync.py	69	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_dashboard_sync.py	74	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_dashboard_sync.py	78	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_departure.sh	102	HAKUDOKAI_CLINIC_ID	口	伝	echo "[departure] HAKUDOKAI_CLINIC_ID=${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_departure.sh	101	HAKUDOKAI_PC_ID	口	伝	echo "[departure] HAKUDOKAI_PC_ID=${HAKUDOKAI_PC_ID:-(unset, will record '')}"
+shim/hakudokai/hakudokai_departure.sh	55	HAKUDOKAI_ROLE	口	伝	ROLE="${HAKUDOKAI_ROLE:-}"
+shim/hakudokai/hakudokai_departure.sh	65	HAKUDOKAI_ROLE	⑸	⑸ 派ROLE	case "$ROLE" in
+shim/hakudokai/hakudokai_departure.sh	96	SUPABASE_KEY	口	他	if [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -z "${SUPABASE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_departure.sh	96	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -z "${SUPABASE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_departure.sh	92	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ]; then
+shim/hakudokai/hakudokai_dev_lessons.py	31	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_dev_lessons.py	78	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_dev_lessons.py	95	HAKUDOKAI_CLINIC_ID	他	他	path = f"dev_lessons?select=error_pattern,root_cause,resolution_attempted&clinic_id=eq.{CLINIC_ID}&created_at=gte.{cutoff}&order=created_at.desc&limit=200"
+shim/hakudokai/hakudokai_dev_lessons.py	113	HAKUDOKAI_CLINIC_ID	他	他	f"improvement_proposals?select=error_pattern&clinic_id=eq.{CLINIC_ID}&status=eq.pending&limit=100"
+shim/hakudokai/hakudokai_dev_lessons.py	129	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_dev_lessons.py	22	SUPABASE_SERVICE_ROLE_KEY	他	他	Prerequisites: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY env vars
+shim/hakudokai/hakudokai_dev_lessons.py	37	SUPABASE_SERVICE_ROLE_KEY	口	口	key = os.environ.get("", "")
+shim/hakudokai/hakudokai_dev_lessons.py	38	SUPABASE_SERVICE_ROLE_KEY	他	他	if not url or not key:
+shim/hakudokai/hakudokai_dev_lessons.py	47	SUPABASE_SERVICE_ROLE_KEY	他	他	key = line.split("", 1)[1]
+shim/hakudokai/hakudokai_dev_lessons.py	48	SUPABASE_SERVICE_ROLE_KEY	他	他	if not url or not key:
+shim/hakudokai/hakudokai_dev_lessons.py	51	SUPABASE_SERVICE_ROLE_KEY	他	他	return url, key
+shim/hakudokai/hakudokai_dev_lessons.py	54	SUPABASE_SERVICE_ROLE_KEY	他	他	def api_request(url, key, path, method="", data=None):
+shim/hakudokai/hakudokai_dev_lessons.py	58	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {key}")
+shim/hakudokai/hakudokai_dev_lessons.py	59	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", key)
+shim/hakudokai/hakudokai_dev_lessons.py	71	SUPABASE_SERVICE_ROLE_KEY	他	他	def record_lesson(url, key, error_pattern, root_cause, resolution):
+shim/hakudokai/hakudokai_dev_lessons.py	81	SUPABASE_SERVICE_ROLE_KEY	他	他	result = api_request(url, key, "", method="", data=data)
+shim/hakudokai/hakudokai_dev_lessons.py	90	SUPABASE_SERVICE_ROLE_KEY	他	他	def check_recurrence_and_dispatch(url, key):
+shim/hakudokai/hakudokai_dev_lessons.py	96	SUPABASE_SERVICE_ROLE_KEY	他	他	lessons = api_request(url, key, path)
+shim/hakudokai/hakudokai_dev_lessons.py	112	SUPABASE_SERVICE_ROLE_KEY	他	他	url, key,
+shim/hakudokai/hakudokai_dev_lessons.py	132	SUPABASE_SERVICE_ROLE_KEY	他	他	result = api_request(url, key, "", method="", data=proposal)
+shim/hakudokai/hakudokai_dev_lessons.py	148	SUPABASE_SERVICE_ROLE_KEY	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_dev_lessons.py	154	SUPABASE_SERVICE_ROLE_KEY	他	他	ok = record_lesson(url, key, args.error_pattern, args.root_cause, args.resolution)
+shim/hakudokai/hakudokai_dev_lessons.py	160	SUPABASE_SERVICE_ROLE_KEY	他	他	check_recurrence_and_dispatch(url, key)
+shim/hakudokai/hakudokai_dev_lessons.py	22	SUPABASE_URL	他	他	Prerequisites: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY env vars
+shim/hakudokai/hakudokai_dev_lessons.py	36	SUPABASE_URL	口	口	url = os.environ.get("", "")
+shim/hakudokai/hakudokai_dev_lessons.py	38	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_dev_lessons.py	45	SUPABASE_URL	他	他	url = line.split("", 1)[1]
+shim/hakudokai/hakudokai_dev_lessons.py	48	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_dev_lessons.py	51	SUPABASE_URL	他	他	return url, key
+shim/hakudokai/hakudokai_dev_lessons.py	54	SUPABASE_URL	他	他	def api_request(url, key, path, method="", data=None):
+shim/hakudokai/hakudokai_dev_lessons.py	55	SUPABASE_URL	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_dev_lessons.py	71	SUPABASE_URL	他	他	def record_lesson(url, key, error_pattern, root_cause, resolution):
+shim/hakudokai/hakudokai_dev_lessons.py	81	SUPABASE_URL	他	他	result = api_request(url, key, "", method="", data=data)
+shim/hakudokai/hakudokai_dev_lessons.py	90	SUPABASE_URL	他	他	def check_recurrence_and_dispatch(url, key):
+shim/hakudokai/hakudokai_dev_lessons.py	96	SUPABASE_URL	他	他	lessons = api_request(url, key, path)
+shim/hakudokai/hakudokai_dev_lessons.py	112	SUPABASE_URL	他	他	url, key,
+shim/hakudokai/hakudokai_dev_lessons.py	132	SUPABASE_URL	他	他	result = api_request(url, key, "", method="", data=proposal)
+shim/hakudokai/hakudokai_dev_lessons.py	148	SUPABASE_URL	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_dev_lessons.py	154	SUPABASE_URL	他	他	ok = record_lesson(url, key, args.error_pattern, args.root_cause, args.resolution)
+shim/hakudokai/hakudokai_dev_lessons.py	160	SUPABASE_URL	他	他	check_recurrence_and_dispatch(url, key)
+shim/hakudokai/hakudokai_escalation.py	29	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_escalation.py	89	NTFY_TOPIC	⑷	⑷	ntfy_topic = os.environ.get("", "")
+shim/hakudokai/hakudokai_escalation.py	99	NTFY_TOPIC	⑷	⑷	ntfy_topic = line.split("", 1)[1]
+shim/hakudokai/hakudokai_escalation.py	102	NTFY_TOPIC	⑷	⑷	if not ntfy_topic:
+shim/hakudokai/hakudokai_escalation.py	103	NTFY_TOPIC	⑷	⑷	ntfy_topic = ""
+shim/hakudokai/hakudokai_escalation.py	104	NTFY_TOPIC	⑷	⑷	return ntfy_url, ntfy_topic
+shim/hakudokai/hakudokai_escalation.py	149	NTFY_TOPIC	⑷	⑷	ntfy_url, ntfy_topic = get_ntfy_config()
+shim/hakudokai/hakudokai_escalation.py	150	NTFY_TOPIC	⑷	⑷+⑶	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_escalation.py	88	NTFY_URL	口	口	ntfy_url = os.environ.get("", "")
+shim/hakudokai/hakudokai_escalation.py	90	NTFY_URL	他	他	if not ntfy_url:
+shim/hakudokai/hakudokai_escalation.py	97	NTFY_URL	他	他	ntfy_url = line.split("", 1)[1]
+shim/hakudokai/hakudokai_escalation.py	100	NTFY_URL	他	他	if not ntfy_url:
+shim/hakudokai/hakudokai_escalation.py	101	NTFY_URL	他	他	ntfy_url = ""
+shim/hakudokai/hakudokai_escalation.py	104	NTFY_URL	⑷	⑷	return ntfy_url, ntfy_topic
+shim/hakudokai/hakudokai_escalation.py	149	NTFY_URL	⑷	⑷	ntfy_url, ntfy_topic = get_ntfy_config()
+shim/hakudokai/hakudokai_escalation.py	150	NTFY_URL	⑷	⑷+⑶	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_escalation.py	72	SUPABASE_SERVICE_ROLE_KEY	口	口	key = os.environ.get("", "")
+shim/hakudokai/hakudokai_escalation.py	73	SUPABASE_SERVICE_ROLE_KEY	他	他	if not url or not key:
+shim/hakudokai/hakudokai_escalation.py	82	SUPABASE_SERVICE_ROLE_KEY	他	他	key = line.split("", 1)[1]
+shim/hakudokai/hakudokai_escalation.py	83	SUPABASE_SERVICE_ROLE_KEY	他	他	return url, key
+shim/hakudokai/hakudokai_escalation.py	192	SUPABASE_SERVICE_ROLE_KEY	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_escalation.py	193	SUPABASE_SERVICE_ROLE_KEY	他	他	if not url or not key:
+shim/hakudokai/hakudokai_escalation.py	214	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {key}")
+shim/hakudokai/hakudokai_escalation.py	215	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", key)
+shim/hakudokai/hakudokai_escalation.py	247	SUPABASE_SERVICE_ROLE_KEY	他	他	for key, answer in AUTO_ANSWER_RULES.items():
+shim/hakudokai/hakudokai_escalation.py	248	SUPABASE_SERVICE_ROLE_KEY	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_escalation.py	250	SUPABASE_SERVICE_ROLE_KEY	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_escalation.py	71	SUPABASE_URL	口	口	url = os.environ.get("", "")
+shim/hakudokai/hakudokai_escalation.py	73	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_escalation.py	80	SUPABASE_URL	他	他	url = line.split("", 1)[1]
+shim/hakudokai/hakudokai_escalation.py	83	SUPABASE_URL	他	他	return url, key
+shim/hakudokai/hakudokai_escalation.py	150	SUPABASE_URL	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_escalation.py	175	SUPABASE_URL	他	他	req = urllib.request.Request(url, data=data, method="")
+shim/hakudokai/hakudokai_escalation.py	192	SUPABASE_URL	他	他	url, key = get_env()
+shim/hakudokai/hakudokai_escalation.py	193	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_escalation.py	207	SUPABASE_URL	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_fast_payment.py	62	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_fast_payment.py	260	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default=CLINIC_ID)
+shim/hakudokai/hakudokai_fast_payment.py	66	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_fast_payment.py	71	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_fast_payment.py	75	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_fukuincho_poll.py	15	SUPABASE_SERVICE_ROLE_KEY	口	口	api_key = os.environ.get("", "")
+shim/hakudokai/hakudokai_fukuincho_poll.py	16	SUPABASE_SERVICE_ROLE_KEY	他	他	if not api_key:
+shim/hakudokai/hakudokai_fukuincho_poll.py	70	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_fukuincho_poll.py	71	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_fukuincho_poll.py	179	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_fukuincho_poll.py	180	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	14	SUPABASE_SERVICE_ROLE_KEY	口	口	api_key = os.environ.get("", "")
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	15	SUPABASE_SERVICE_ROLE_KEY	他	他	if not api_key:
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	70	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	71	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	123	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	124	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	190	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	191	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	44	FUKUINCHO_PANE	口	口	FUKUINCHO_PANE="${FUKUINCHO_PANE:-fukuincho:0.0}"
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	83	FUKUINCHO_PANE	伝	伝	log "started (interval=${POLL_INTERVAL}s, pane=${FUKUINCHO_PANE})"
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	134	FUKUINCHO_PANE	他	他	"$FUKUINCHO_PANE"
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	60	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	128	SUPABASE_SERVICE_ROLE_KEY	伝	伝	env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	54	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	60	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	99	SUPABASE_URL	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	133	SUPABASE_URL	他	他	"${SUPABASE_URL}" \
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	20	HAKUDOKAI_CLINIC_ID	口	伝	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	80	HAKUDOKAI_CLINIC_ID	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	39	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	109	SUPABASE_SERVICE_ROLE_KEY	伝	伝	if env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	33	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	39	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	44	SUPABASE_URL	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	77	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	104	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.fukuincho&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_heartbeat.py	53	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_heartbeat.py	157	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_heartbeat.py	186	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_heartbeat.py	231	HAKUDOKAI_CLINIC_ID	他	他	f"[heartbeat] role={role} from_pc={from_pc} interval={args.interval}s clinic={CLINIC_ID}\n"
+shim/hakudokai/hakudokai_heartbeat.py	5	HAKUDOKAI_ROLE	他	他	各 role が pc_handshake に shogun_kind=heartbeat record を定期 INSERT する。
+shim/hakudokai/hakudokai_heartbeat.py	11	HAKUDOKAI_ROLE	他	他	hakudokai_heartbeat.py --role kouchan
+shim/hakudokai/hakudokai_heartbeat.py	20	HAKUDOKAI_ROLE	他	他	- idempotency_key は `heartbeat-{role}-{bucket_sec}-{bucket}` で重複抑止
+shim/hakudokai/hakudokai_heartbeat.py	72	HAKUDOKAI_ROLE	口	口	role = os.environ.get("")
+shim/hakudokai/hakudokai_heartbeat.py	73	HAKUDOKAI_ROLE	他	他	if role:
+shim/hakudokai/hakudokai_heartbeat.py	74	HAKUDOKAI_ROLE	他	他	return role.lower()
+shim/hakudokai/hakudokai_heartbeat.py	84	HAKUDOKAI_ROLE	他	他	sys.stderr.write(f"[heartbeat] role.json parse failed: {exc}\n")
+shim/hakudokai/hakudokai_heartbeat.py	88	HAKUDOKAI_ROLE	他	他	def _resolve_from_pc(role: str) -> str:
+shim/hakudokai/hakudokai_heartbeat.py	98	HAKUDOKAI_ROLE	他	他	return table.get(role, role)
+shim/hakudokai/hakudokai_heartbeat.py	126	HAKUDOKAI_ROLE	他	他	def _send_heartbeat(sb, role: str, from_pc: str, interval_sec: int,
+shim/hakudokai/hakudokai_heartbeat.py	128	HAKUDOKAI_ROLE	他	他	"""1 回 heartbeat を INSERT。idempotency_key は role + bucket で重複抑止。
+shim/hakudokai/hakudokai_heartbeat.py	140	HAKUDOKAI_ROLE	他	他	idem = f"heartbeat-{role}-{bucket_sec}-{bucket}"
+shim/hakudokai/hakudokai_heartbeat.py	141	HAKUDOKAI_ROLE	他	他	content = f"[heartbeat] role={role} ts={now.strftime("")}"
+shim/hakudokai/hakudokai_heartbeat.py	150	HAKUDOKAI_ROLE	他	他	f"[heartbeat] (dry-run) would insert role={role} idem={idem} target={target}\n"
+shim/hakudokai/hakudokai_heartbeat.py	158	HAKUDOKAI_ROLE	他	他	"": role,
+shim/hakudokai/hakudokai_heartbeat.py	182	HAKUDOKAI_ROLE	他	他	"": f"heartbeat {role}",
+shim/hakudokai/hakudokai_heartbeat.py	189	HAKUDOKAI_ROLE	他	他	"": role,
+shim/hakudokai/hakudokai_heartbeat.py	224	HAKUDOKAI_ROLE	他	他	role = args.role or _resolve_role()
+shim/hakudokai/hakudokai_heartbeat.py	225	HAKUDOKAI_ROLE	⑸	⑸	if role not in VALID_ROLES:
+shim/hakudokai/hakudokai_heartbeat.py	226	HAKUDOKAI_ROLE	他	他	raise SystemExit(f"[heartbeat] invalid role '{role}'")
+shim/hakudokai/hakudokai_heartbeat.py	227	HAKUDOKAI_ROLE	他	他	from_pc = _resolve_from_pc(role)
+shim/hakudokai/hakudokai_heartbeat.py	231	HAKUDOKAI_ROLE	他	他	f"[heartbeat] role={role} from_pc={from_pc} interval={args.interval}s clinic={CLINIC_ID}\n"
+shim/hakudokai/hakudokai_heartbeat.py	235	HAKUDOKAI_ROLE	他	他	hid = _send_heartbeat(sb, role, from_pc, args.interval, dry_run=args.dry_run)
+shim/hakudokai/hakudokai_heartbeat.py	90	HAKUDOKAI_YAMA_PC	口	口	yama_pc = os.environ.get("", "")
+shim/hakudokai/hakudokai_heartbeat.py	93	HAKUDOKAI_YAMA_PC	他	他	"": yama_pc,
+shim/hakudokai/hakudokai_heartbeat.py	102	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_heartbeat.py	107	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_heartbeat.py	111	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_heartbeat_archive.py	18	HAKUDOKAI_CLINIC_ID	他	他	HAKUDOKAI_CLINIC_ID=hakudoukai_main \\
+shim/hakudokai/hakudokai_heartbeat_archive.py	39	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_heartbeat_archive.py	43	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_heartbeat_archive.py	48	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_heartbeat_archive.py	52	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_heartbeat_check.py	51	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_heartbeat_check.py	109	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_heartbeat_check.py	132	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_heartbeat_check.py	161	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_heartbeat_check.py	197	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_heartbeat_check.py	70	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_heartbeat_check.py	75	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_heartbeat_check.py	79	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_inbox_watcher.py	93	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_inbox_watcher.py	115	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_inbox_watcher.py	147	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_inbox_watcher.py	180	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_inbox_watcher.py	314	HAKUDOKAI_CLINIC_ID	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_inbox_watcher.py	333	HAKUDOKAI_CLINIC_ID	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_inbox_watcher.py	346	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_inbox_watcher.py	94	HAKUDOKAI_PC_ID	口	口	NOTIFIED_BY_PC = os.environ.get("", "")
+shim/hakudokai/hakudokai_inbox_watcher.py	150	HAKUDOKAI_PC_ID	他	他	"": NOTIFIED_BY_PC or "",
+shim/hakudokai/hakudokai_inbox_watcher.py	183	HAKUDOKAI_PC_ID	他	他	"": NOTIFIED_BY_PC or "",
+shim/hakudokai/hakudokai_inbox_watcher.py	20	HAKUDOKAI_ROLE	他	他	~/.openclaw/disable_auto_continue_${ROLE}     per-role 緊急停止
+shim/hakudokai/hakudokai_inbox_watcher.py	25	HAKUDOKAI_ROLE	⑶	⑶	HAKUDOKAI_ROLE (or ~/.openclaw/role.json)
+shim/hakudokai/hakudokai_inbox_watcher.py	66	HAKUDOKAI_ROLE	口	口	role = os.environ.get("")
+shim/hakudokai/hakudokai_inbox_watcher.py	67	HAKUDOKAI_ROLE	他	他	if role:
+shim/hakudokai/hakudokai_inbox_watcher.py	68	HAKUDOKAI_ROLE	他	他	return role.lower()
+shim/hakudokai/hakudokai_inbox_watcher.py	70	HAKUDOKAI_ROLE	他	他	role = cfg.get("")
+shim/hakudokai/hakudokai_inbox_watcher.py	71	HAKUDOKAI_ROLE	他	他	if role:
+shim/hakudokai/hakudokai_inbox_watcher.py	72	HAKUDOKAI_ROLE	他	他	return role.lower()
+shim/hakudokai/hakudokai_inbox_watcher.py	79	HAKUDOKAI_ROLE	他	他	def _idle_flag_path(role: str) -> str:
+shim/hakudokai/hakudokai_inbox_watcher.py	85	HAKUDOKAI_ROLE	⑶	⑶	return os.path.join(base, f"hakudokai_idle_{role}")
+shim/hakudokai/hakudokai_inbox_watcher.py	97	HAKUDOKAI_ROLE	他	他	def _notified_cache_path(role: str) -> str:
+shim/hakudokai/hakudokai_inbox_watcher.py	102	HAKUDOKAI_ROLE	⑶	⑶	return os.path.join(base, f"notified_{role}.json")
+shim/hakudokai/hakudokai_inbox_watcher.py	105	HAKUDOKAI_ROLE	他	他	def _load_notified_cache_from_db(sb, role: str) -> set[str]:
+shim/hakudokai/hakudokai_inbox_watcher.py	116	HAKUDOKAI_ROLE	他	他	.eq("", role)
+shim/hakudokai/hakudokai_inbox_watcher.py	127	HAKUDOKAI_ROLE	他	他	def _import_legacy_file_cache(sb, role: str) -> int:
+shim/hakudokai/hakudokai_inbox_watcher.py	131	HAKUDOKAI_ROLE	他	他	path = _notified_cache_path(role)
+shim/hakudokai/hakudokai_inbox_watcher.py	148	HAKUDOKAI_ROLE	他	他	"": role,
+shim/hakudokai/hakudokai_inbox_watcher.py	170	HAKUDOKAI_ROLE	他	他	def _record_notified_in_db(sb, role: str, handshake_ids: list[str]) -> list[str]:
+shim/hakudokai/hakudokai_inbox_watcher.py	181	HAKUDOKAI_ROLE	他	他	"": role,
+shim/hakudokai/hakudokai_inbox_watcher.py	201	HAKUDOKAI_ROLE	他	他	def _is_idle(role: str) -> bool:
+shim/hakudokai/hakudokai_inbox_watcher.py	202	HAKUDOKAI_ROLE	⑶	⑶	return os.path.isfile(_idle_flag_path(role))
+shim/hakudokai/hakudokai_inbox_watcher.py	205	HAKUDOKAI_ROLE	他	他	def _is_disabled(role: str) -> tuple[bool, str]:
+shim/hakudokai/hakudokai_inbox_watcher.py	209	HAKUDOKAI_ROLE	⑶	⑶	role_flag = os.path.join(home, "", f"disable_auto_continue_{role}")
+shim/hakudokai/hakudokai_inbox_watcher.py	213	HAKUDOKAI_ROLE	他	他	return True, f"role disable detected ({role_flag})"
+shim/hakudokai/hakudokai_inbox_watcher.py	229	HAKUDOKAI_ROLE	他	他	"""Fetch unread (acknowledged_at IS NULL) handshakes targeted at the role's pc.
+shim/hakudokai/hakudokai_inbox_watcher.py	248	HAKUDOKAI_ROLE	他	他	def _format_notify(role: str, item: dict) -> str:
+shim/hakudokai/hakudokai_inbox_watcher.py	252	HAKUDOKAI_ROLE	他	他	head = f"[hakudokai_inbox][{role}] unread {item.get("","")} {item.get("","")} kind={kind}"
+shim/hakudokai/hakudokai_inbox_watcher.py	260	HAKUDOKAI_ROLE	他	他	def _emit_notify(items: list[dict], role: str) -> None:
+shim/hakudokai/hakudokai_inbox_watcher.py	266	HAKUDOKAI_ROLE	他	他	"": role,
+shim/hakudokai/hakudokai_inbox_watcher.py	299	HAKUDOKAI_ROLE	他	他	role = _resolve_role()
+shim/hakudokai/hakudokai_inbox_watcher.py	300	HAKUDOKAI_ROLE	⑷	⑷	to_pc = ROLE_TO_PC.get(role)
+shim/hakudokai/hakudokai_inbox_watcher.py	302	HAKUDOKAI_ROLE	他	他	raise SystemExit(f"[inbox_watcher] unknown role '{role}'. valid: {sorted(ROLE_TO_PC)}")
+shim/hakudokai/hakudokai_inbox_watcher.py	307	HAKUDOKAI_ROLE	他	他	imported = _import_legacy_file_cache(sb, role)
+shim/hakudokai/hakudokai_inbox_watcher.py	310	HAKUDOKAI_ROLE	他	他	notified_cache = _load_notified_cache_from_db(sb, role)
+shim/hakudokai/hakudokai_inbox_watcher.py	314	HAKUDOKAI_ROLE	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_inbox_watcher.py	320	HAKUDOKAI_ROLE	他	他	disabled, reason = _is_disabled(role)
+shim/hakudokai/hakudokai_inbox_watcher.py	328	HAKUDOKAI_ROLE	他	他	if args.respect_busy and not _is_idle(role):
+shim/hakudokai/hakudokai_inbox_watcher.py	347	HAKUDOKAI_ROLE	他	他	.eq("", role)
+shim/hakudokai/hakudokai_inbox_watcher.py	360	HAKUDOKAI_ROLE	他	他	inserted_ids = _record_notified_in_db(sb, role, [it[""] for it in new_items])
+shim/hakudokai/hakudokai_inbox_watcher.py	364	HAKUDOKAI_ROLE	他	他	_emit_notify(won_items, role)
+shim/hakudokai/hakudokai_inbox_watcher.py	366	HAKUDOKAI_ROLE	他	他	sys.stderr.write(_format_notify(role, it) + "")
+shim/hakudokai/hakudokai_inbox_watcher.py	16	IDLE_FLAG_DIR	⑶	⑶	/tmp/hakudokai_idle_${ROLE} (default), or $IDLE_FLAG_DIR/hakudokai_idle_${ROLE}
+shim/hakudokai/hakudokai_inbox_watcher.py	81	IDLE_FLAG_DIR	口	口	base = os.environ.get("")
+shim/hakudokai/hakudokai_inbox_watcher.py	82	IDLE_FLAG_DIR	他	他	if not base:
+shim/hakudokai/hakudokai_inbox_watcher.py	84	IDLE_FLAG_DIR	他	他	base = cfg.get("") or ""
+shim/hakudokai/hakudokai_inbox_watcher.py	85	IDLE_FLAG_DIR	⑶	⑶	return os.path.join(base, f"hakudokai_idle_{role}")
+shim/hakudokai/hakudokai_inbox_watcher.py	99	IDLE_FLAG_DIR	口	口	base = os.path.expanduser(os.environ.get(
+shim/hakudokai/hakudokai_inbox_watcher.py	102	IDLE_FLAG_DIR	⑶	⑶	return os.path.join(base, f"notified_{role}.json")
+shim/hakudokai/hakudokai_inbox_watcher.py	24	SUPABASE_KEY	他	他	SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_KEY)
+shim/hakudokai/hakudokai_inbox_watcher.py	24	SUPABASE_SERVICE_ROLE_KEY	他	他	SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_KEY)
+shim/hakudokai/hakudokai_inbox_watcher.py	24	SUPABASE_URL	他	他	SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_KEY)
+shim/hakudokai/hakudokai_inbox_watcher.py	218	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_inbox_watcher.py	223	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_inbox_watcher.py	225	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_inbox_write.py	179	HAKUDOKAI_CLINIC_ID	口	口	clinic_id = os.environ.get("", "")
+shim/hakudokai/hakudokai_inbox_write.py	189	HAKUDOKAI_CLINIC_ID	他	他	"": clinic_id,
+shim/hakudokai/hakudokai_inbox_write.py	140	HAKUDOKAI_ROLE	口	口	from_role_norm = (args.from_role or os.environ.get("", "")).lower().strip()
+shim/hakudokai/hakudokai_inbox_write.py	142	HAKUDOKAI_ROLE	⑸	⑸	if from_role_norm and from_role_norm == to_role_norm and to_role_norm != "":
+shim/hakudokai/hakudokai_inbox_write.py	145	HAKUDOKAI_ROLE	他	他	f"from_role={from_role_norm} to_role={to_role_norm}"
+shim/hakudokai/hakudokai_inbox_write.py	68	HAKUDOKAI_YAMA_PC	他	他	Phase B 独立スレ運用: HAKUDOKAI_YAMA_PC env で別 PC 識別子に切替可能。
+shim/hakudokai/hakudokai_inbox_write.py	71	HAKUDOKAI_YAMA_PC	口	口	yama_pc = os.environ.get("", "")
+shim/hakudokai/hakudokai_inbox_write.py	74	HAKUDOKAI_YAMA_PC	他	他	"": yama_pc,
+shim/hakudokai/hakudokai_inbox_write.py	28	SUPABASE_KEY	他	他	SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_KEY)
+shim/hakudokai/hakudokai_inbox_write.py	28	SUPABASE_SERVICE_ROLE_KEY	他	他	SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_KEY)
+shim/hakudokai/hakudokai_inbox_write.py	28	SUPABASE_URL	他	他	SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_KEY)
+shim/hakudokai/hakudokai_inbox_write.py	124	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_inbox_write.py	129	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_inbox_write.py	133	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_init_agents.sh	13	HAKUDOKAI_CLINIC_ID	口	伝	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	34	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	71	SUPABASE_SERVICE_ROLE_KEY	伝	伝	env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	87	SUPABASE_SERVICE_ROLE_KEY	伝	伝	env SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	28	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	34	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	39	SUPABASE_URL	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	67	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	83	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?to_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_minimal_install.sh	143	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -n "${SUPABASE_URL:-}" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-${SUPABASE_KEY:-}}" ]; then
+shim/hakudokai/hakudokai_minimal_install.sh	143	SUPABASE_URL	口	他	if [ -n "${SUPABASE_URL:-}" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-${SUPABASE_KEY:-}}" ]; then
+shim/hakudokai/hakudokai_patient_chat.py	59	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_patient_chat.py	394	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default=CLINIC_ID)
+shim/hakudokai/hakudokai_patient_chat.py	104	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_patient_chat.py	109	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_patient_chat.py	113	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_patient_notification.py	52	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_patient_notification.py	312	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default=CLINIC_ID)
+shim/hakudokai/hakudokai_patient_notification.py	91	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_patient_notification.py	96	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_patient_notification.py	100	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_patient_notification.py	295	SUPABASE_URL	他	他	url = (
+shim/hakudokai/hakudokai_patient_notification.py	299	SUPABASE_URL	他	他	sys.stdout.write(f"[patient_notify] book_link: {url}\n")
+shim/hakudokai/hakudokai_patient_pwa.py	54	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_patient_pwa.py	226	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default=CLINIC_ID)
+shim/hakudokai/hakudokai_patient_pwa.py	15	SUPABASE_URL	他	他	5. 患者画像 link 生成 (Supabase Storage 想定、本 stub は url stub)
+shim/hakudokai/hakudokai_patient_pwa.py	58	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_patient_pwa.py	63	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_patient_pwa.py	67	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_patient_pwa.py	244	SUPABASE_URL	他	他	url = _image_link_stub(args.clinic_id, args.patient_id)
+shim/hakudokai/hakudokai_patient_pwa.py	245	SUPABASE_URL	他	他	sys.stdout.write(f"[patient_pwa] image_link: {url}\n")
+shim/hakudokai/hakudokai_paylight_integration.py	68	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_paylight_integration.py	427	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default=CLINIC_ID)
+shim/hakudokai/hakudokai_paylight_integration.py	72	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_paylight_integration.py	77	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_paylight_integration.py	81	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_realtime_bridge.py	43	HAKUDOKAI_PC_ROLE	口	口	PC_ROLE = os.environ.get("", "")
+shim/hakudokai/hakudokai_realtime_bridge.py	101	HAKUDOKAI_PC_ROLE	⑷	⑷+⑸	if to_pc == PC_ROLE or to_pc == "":
+shim/hakudokai/hakudokai_realtime_bridge.py	163	HAKUDOKAI_PC_ROLE	他	他	"": PC_ROLE,
+shim/hakudokai/hakudokai_realtime_bridge.py	167	HAKUDOKAI_PC_ROLE	伝	伝	logger.info(f"shogun-bridge subscribed + presence tracked as {PC_ROLE}")
+shim/hakudokai/hakudokai_realtime_bridge.py	33	HOME	口	口	HOME = os.environ.get("", "")
+shim/hakudokai/hakudokai_realtime_bridge.py	34	HOME	⑶	⑶	ENV_FILE = Path(HOME) / "" / ""
+shim/hakudokai/hakudokai_realtime_bridge.py	44	HOME	⑶	⑶	DISABLE_FLAG = Path(HOME) / "" / ""
+shim/hakudokai/hakudokai_realtime_bridge.py	45	HOME	⑶	⑶	GLOBAL_DISABLE = Path(HOME) / "" / ""
+shim/hakudokai/hakudokai_realtime_bridge.py	42	SUPABASE_SERVICE_ROLE_KEY	口	口	SUPABASE_KEY = os.environ.get("", "")
+shim/hakudokai/hakudokai_realtime_bridge.py	124	SUPABASE_SERVICE_ROLE_KEY	他	他	if not SUPABASE_URL or not SUPABASE_KEY:
+shim/hakudokai/hakudokai_realtime_bridge.py	137	SUPABASE_SERVICE_ROLE_KEY	他	他	client = AsyncRealtimeClient(rt_url, SUPABASE_KEY)
+shim/hakudokai/hakudokai_realtime_bridge.py	41	SUPABASE_URL	口	口	SUPABASE_URL = os.environ.get("", "")
+shim/hakudokai/hakudokai_realtime_bridge.py	124	SUPABASE_URL	他	他	if not SUPABASE_URL or not SUPABASE_KEY:
+shim/hakudokai/hakudokai_realtime_bridge.py	136	SUPABASE_URL	他	他	rt_url = SUPABASE_URL.replace("", "").replace("", "") + ""
+shim/hakudokai/hakudokai_reports_sync.sh	37	HAKUDOKAI_CLINIC_ID	口	他	[ -z "${HAKUDOKAI_CLINIC_ID:-}" ] && HAKUDOKAI_CLINIC_ID=$(grep '' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '')
+shim/hakudokai/hakudokai_reports_sync.sh	40	HAKUDOKAI_CLINIC_ID	口	伝	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-}"
+shim/hakudokai/hakudokai_reports_sync.sh	36	SUPABASE_SERVICE_ROLE_KEY	口	他	[ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && SUPABASE_SERVICE_ROLE_KEY=$(grep '' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '')
+shim/hakudokai/hakudokai_reports_sync.sh	42	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_reports_sync.sh	35	SUPABASE_URL	口	他	[ -z "${SUPABASE_URL:-}" ] && SUPABASE_URL=$(grep '' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '')
+shim/hakudokai/hakudokai_reports_sync.sh	42	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_reports_sync.sh	53	SUPABASE_URL	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_reports_sync.sh	153	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_role_init.py	24	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default="")
+shim/hakudokai/hakudokai_role_init.py	25	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default="")
+shim/hakudokai/hakudokai_role_init.py	26	HAKUDOKAI_CLINIC_ID	他	他	parser.add_argument("", default="")
+shim/hakudokai/hakudokai_role_init.py	29	HAKUDOKAI_CLINIC_ID	口	口	default=os.environ.get("", ""),
+shim/hakudokai/hakudokai_secondpc_receiver.sh	34	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_receiver.sh	28	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_secondpc_receiver.sh	34	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_receiver.sh	65	SUPABASE_URL	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,context_data,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_secondpc_receiver.sh	84	SUPABASE_URL	⑶	⑶	"${SUPABASE_URL}/rest/v1" \
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	21	SUPABASE_SERVICE_ROLE_KEY	口	口	api_key = os.environ.get("", "")
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	22	SUPABASE_SERVICE_ROLE_KEY	他	他	if not api_key:
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	79	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	80	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	276	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	277	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	378	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	379	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_secondpc_watcher.sh	14	HAKUDOKAI_CLINIC_ID	口	伝	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	40	SECONDPC_WATCHER_HEALTH_FILE	口	伝	HEALTHCHECK_FILE="${SECONDPC_WATCHER_HEALTH_FILE:-/tmp/hakudokai_secondpc_watcher.health}"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	59	SECONDPC_WATCHER_HEALTH_FILE	⑶	⑶ 派HEALTHCHECK_FILE	echo "{\"alive\":true,\"ts\":$(date +%s),\"uptime\":${uptime},\"polls\":${POLL_COUNT},\"fails\":${FAIL_COUNT}}" > "$HEALTHCHECK_FILE"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	69	SECONDPC_WATCHER_HEALTH_FILE	⑶	⑶ 派HEALTHCHECK_FILE	echo "{\"alive\":true,\"ts\":$(date +%s),\"uptime\":0,\"polls\":0,\"fails\":0}" > "$HEALTHCHECK_FILE"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	75	SECONDPC_WATCHER_HEALTH_FILE	⑶	⑶ 派HEALTHCHECK_FILE	rm -f "$HEALTHCHECK_FILE"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	38	SECONDPC_WATCHER_PROCESSED_FILE	口	伝	PROCESSED_FILE="${SECONDPC_WATCHER_PROCESSED_FILE:-/tmp/hakudokai_secondpc_watcher_processed.txt}"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	41	SECONDPC_WATCHER_PROCESSED_FILE	⑶	⑶ 派PROCESSED_FILE	touch "$PROCESSED_FILE"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	39	SECONDPC_WATCHER_RESPONSE_TMP	口	伝	RESPONSE_TMP="${SECONDPC_WATCHER_RESPONSE_TMP:-/tmp/hakudokai_secondpc_watcher_response.json}"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	32	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_watcher.sh	26	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_secondpc_watcher.sh	32	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_watcher.sh	37	SUPABASE_URL	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	82	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.second_pc&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	13	SUPABASE_SERVICE_ROLE_KEY	口	口	api_key = os.environ.get("", "")
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	14	SUPABASE_SERVICE_ROLE_KEY	他	他	if not api_key:
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	71	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	72	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	97	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", f"Bearer {api_key}")
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	98	SUPABASE_SERVICE_ROLE_KEY	他	他	req.add_header("", api_key)
+shim/hakudokai/hakudokai_skill_candidate.py	51	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_skill_candidate.py	183	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_skill_candidate.py	55	HAKUDOKAI_ROLE	口	口	role = args.from_role or os.environ.get("")
+shim/hakudokai/hakudokai_skill_candidate.py	56	HAKUDOKAI_ROLE	他	他	if not role:
+shim/hakudokai/hakudokai_skill_candidate.py	61	HAKUDOKAI_ROLE	他	他	role = json.load(fh).get("")
+shim/hakudokai/hakudokai_skill_candidate.py	64	HAKUDOKAI_ROLE	他	他	if not role:
+shim/hakudokai/hakudokai_skill_candidate.py	66	HAKUDOKAI_ROLE	他	他	role = role.lower()
+shim/hakudokai/hakudokai_skill_candidate.py	67	HAKUDOKAI_ROLE	⑸	⑸	if role not in VALID_PROPOSER_ROLES:
+shim/hakudokai/hakudokai_skill_candidate.py	69	HAKUDOKAI_ROLE	他	他	f"[skill_candidate] proposer must be in {VALID_PROPOSER_ROLES}, got '{role}'"
+shim/hakudokai/hakudokai_skill_candidate.py	71	HAKUDOKAI_ROLE	他	他	return role
+shim/hakudokai/hakudokai_skill_candidate.py	74	HAKUDOKAI_ROLE	他	他	def _resolve_from_pc(role: str) -> str:
+shim/hakudokai/hakudokai_skill_candidate.py	83	HAKUDOKAI_ROLE	他	他	return table.get(role, role)
+shim/hakudokai/hakudokai_skill_candidate.py	75	HAKUDOKAI_YAMA_PC	口	口	yama_pc = os.environ.get("", "")
+shim/hakudokai/hakudokai_skill_candidate.py	78	HAKUDOKAI_YAMA_PC	他	他	"": yama_pc,
+shim/hakudokai/hakudokai_skill_candidate.py	87	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_skill_candidate.py	92	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_skill_candidate.py	96	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_skill_review.py	41	HAKUDOKAI_CLINIC_ID	口	口	CLINIC_ID = os.environ.get("", "")
+shim/hakudokai/hakudokai_skill_review.py	62	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_skill_review.py	82	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_skill_review.py	129	HAKUDOKAI_CLINIC_ID	他	他	.eq("", CLINIC_ID)
+shim/hakudokai/hakudokai_skill_review.py	200	HAKUDOKAI_CLINIC_ID	他	他	"": CLINIC_ID,
+shim/hakudokai/hakudokai_skill_review.py	164	HAKUDOKAI_YAMA_PC	口	口	yama_pc = os.environ.get("", "")
+shim/hakudokai/hakudokai_skill_review.py	186	HAKUDOKAI_YAMA_PC	他	他	"": yama_pc,
+shim/hakudokai/hakudokai_skill_review.py	45	SUPABASE_URL	口	口	url = os.environ.get("")
+shim/hakudokai/hakudokai_skill_review.py	50	SUPABASE_URL	他	他	if not url or not key:
+shim/hakudokai/hakudokai_skill_review.py	54	SUPABASE_URL	他	他	return create_client(url, key)
+shim/hakudokai/hakudokai_start_watchers.sh	168	HAKUDOKAI_PC_ROLE	口	口	HAKUDOKAI_PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}" \
+shim/hakudokai/hakudokai_start_watchers.sh	26	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	35	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	63	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	95	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	107	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	119	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	131	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	155	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	167	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	26	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	35	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	63	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	95	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	107	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	119	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	131	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	155	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_start_watchers.sh	167	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_task_sync.sh	19	HAKUDOKAI_CLINIC_ID	口	伝	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_task_sync.sh	41	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_task_sync.sh	35	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_task_sync.sh	41	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_task_sync.sh	46	SUPABASE_URL	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_task_sync.sh	128	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_watchdog.sh	68	HAKUDOKAI_CLINIC_ID	口	伝	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_watchdog.sh	390	HAKUDOKAI_CLINIC_ID	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_watchdog.sh	74	HAKUDOKAI_PC_ROLE	口	伝	PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}"
+shim/hakudokai/hakudokai_watchdog.sh	177	HAKUDOKAI_PC_ROLE	⑶	⑶ 派PC_ROLE	result=$(flock -s -w 5 "$REGISTRY_FILE" python3 -c "$script" "$REGISTRY_FILE" "$PC_ROLE" 2>>"$LOG")
+shim/hakudokai/hakudokai_watchdog.sh	387	SUPABASE_API	⑶	⑶	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_watchdog.sh	413	SUPABASE_API	⑶	⑶	"${SUPABASE_API}/dev_lessons" \
+shim/hakudokai/hakudokai_watchdog.sh	723	SUPABASE_API	口	他	if [ ! -f "$HOME/.openclaw/disable_task_heartbeat" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -n "${SUPABASE_API:-}" ]; then
+shim/hakudokai/hakudokai_watchdog.sh	728	SUPABASE_API	⑶	⑶	"${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
+shim/hakudokai/hakudokai_watchdog.sh	423	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_watchdog.sh	462	SUPABASE_SERVICE_ROLE_KEY	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_watchdog.sh	723	SUPABASE_SERVICE_ROLE_KEY	口	他	if [ ! -f "$HOME/.openclaw/disable_task_heartbeat" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -n "${SUPABASE_API:-}" ]; then
+shim/hakudokai/hakudokai_watchdog.sh	58	SUPABASE_URL	口	他	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_watchdog.sh	69	SUPABASE_URL	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_watchdog.sh	387	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_watchdog.sh	413	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/dev_lessons" \
+shim/hakudokai/hakudokai_watchdog.sh	423	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_watchdog.sh	462	SUPABASE_URL	伝	伝	nohup env SUPABASE_URL="$SUPABASE_URL" SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+shim/hakudokai/hakudokai_watchdog.sh	728	SUPABASE_URL	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
+shim/hakudokai/lib/sb_auth.sh	9	TMPDIR	口	伝	_cfg="$(mktemp "${TMPDIR:-/tmp}/sb-curl.XXXXXX")" || exit 1
+shim/hakudokai/lib/sb_auth.sh	10	TMPDIR	⑶	⑶ 派_cfg	_sb_curl_cleanup() { rm -f -- "$_cfg"; }
+shim/hakudokai/lib/sb_auth.sh	15	TMPDIR	⑶	⑶ 派_cfg	chmod 600 "$_cfg" || exit 1
+shim/hakudokai/lib/sb_auth.sh	17	TMPDIR	⑶	⑶ 派_cfg	'     "header = \"Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY:?SUPABASE_SERVICE_ROLE_KEY unset}\""     "header = \"apikey: ${SUPABASE_SERVICE_ROLE_KEY}\"" >"$_cfg" || exit 1
+shim/hakudokai/lib/sb_auth.sh	18	TMPDIR	⑶	⑶ 派_cfg	curl --config "$_cfg" "$@"
+shutsujin_departure.sh	956	HAKUDOKAI_PC_ROLE	口	他	if [[ "${HAKUDOKAI_PC_ROLE:-MainPC}" == "MainPC" ]] && [ -n "${SUPABASE_DB_URL:-}" ]; then
+shutsujin_departure.sh	956	SUPABASE_DB_URL	口	他	if [[ "${HAKUDOKAI_PC_ROLE:-MainPC}" == "MainPC" ]] && [ -n "${SUPABASE_DB_URL:-}" ]; then
+shutsujin_departure.sh	958	SUPABASE_DB_URL	他	他	psql "$SUPABASE_DB_URL" -t -c "SELECT pg_try_advisory_lock(hashtext(''));" 2>/dev/null \
+skills/shogun-screenshot/scripts/capture_local.sh	29	MULTI_AGENT_SHOGUN_DIR	⑶	⑶	elif [[ -n "${MULTI_AGENT_SHOGUN_DIR:-}" && -f "${MULTI_AGENT_SHOGUN_DIR}/config/settings.yaml" ]]; then
+skills/shogun-screenshot/scripts/capture_local.sh	30	MULTI_AGENT_SHOGUN_DIR	⑶	⑶	SETTINGS_FILE="${MULTI_AGENT_SHOGUN_DIR}/config/settings.yaml"
+skills/shogun-screenshot/scripts/capture_local.sh	78	MULTI_AGENT_SHOGUN_DIR	⑶	⑶ 派SETTINGS_FILE	done < "$SETTINGS_FILE"
+tests/e2e/helpers/setup.bash	25	E2E_QUEUE	⑶	⑶	mkdir -p "$E2E_QUEUE"/queue/{inbox,tasks,reports,metrics}
+tests/e2e/helpers/setup.bash	28	E2E_QUEUE	⑶	⑶	mkdir -p "$E2E_QUEUE/scripts"
+tests/e2e/helpers/setup.bash	29	E2E_QUEUE	⑷	⑷+⑶	cp "$PROJECT_ROOT/scripts/inbox_write.sh" "$E2E_QUEUE/scripts/"
+tests/e2e/helpers/setup.bash	30	E2E_QUEUE	⑶	⑶	cp "$PROJECT_ROOT/scripts/inbox_watcher.sh" "$E2E_QUEUE/scripts/"
+tests/e2e/helpers/setup.bash	31	E2E_QUEUE	⑶	⑶	chmod +x "$E2E_QUEUE/scripts/inbox_write.sh"
+tests/e2e/helpers/setup.bash	32	E2E_QUEUE	⑶	⑶	chmod +x "$E2E_QUEUE/scripts/inbox_watcher.sh"
+tests/e2e/helpers/setup.bash	36	E2E_QUEUE	⑶	⑶	mkdir -p "$E2E_QUEUE/lib"
+tests/e2e/helpers/setup.bash	37	E2E_QUEUE	⑶	⑶	cp "$PROJECT_ROOT/lib/cli_adapter.sh" "$E2E_QUEUE/lib/" 2>/dev/null || true
+tests/e2e/helpers/setup.bash	38	E2E_QUEUE	⑶	⑶	cp "$PROJECT_ROOT/lib/agent_status.sh" "$E2E_QUEUE/lib/" 2>/dev/null || true
+tests/e2e/helpers/setup.bash	43	E2E_QUEUE	⑶	⑶	mkdir -p "$E2E_QUEUE/config"
+tests/e2e/helpers/setup.bash	44	E2E_QUEUE	⑶	⑶	cp "$PROJECT_ROOT/config/settings.yaml" "$E2E_QUEUE/config/" 2>/dev/null || true
+tests/e2e/helpers/setup.bash	49	E2E_QUEUE	⑶	⑶	ln -sf "$PROJECT_ROOT/.venv" "$E2E_QUEUE/.venv"
+tests/e2e/helpers/setup.bash	54	E2E_QUEUE	⑶	⑶	if [ ! -x "$E2E_QUEUE/.venv/bin/python3" ] && command -v python3 &>/dev/null; then
+tests/e2e/helpers/setup.bash	55	E2E_QUEUE	⑶	⑶	rm -f "$E2E_QUEUE/.venv"
+tests/e2e/helpers/setup.bash	56	E2E_QUEUE	⑶	⑶	mkdir -p "$E2E_QUEUE/.venv/bin"
+tests/e2e/helpers/setup.bash	57	E2E_QUEUE	⑶	⑶	ln -sf "$(command -v python3)" "$E2E_QUEUE/.venv/bin/python3"
+tests/e2e/helpers/setup.bash	62	E2E_QUEUE	⑶	⑶	echo "messages:" > "$E2E_QUEUE/queue/inbox/${agent}.yaml"
+tests/e2e/helpers/setup.bash	86	E2E_QUEUE	他	他	"MOCK_CLI_TYPE=claude MOCK_AGENT_ID=$agent_id MOCK_PROCESSING_DELAY=$DEFAULT_PROCESSING_DELAY MOCK_PROJECT_ROOT=$E2E_QUEUE bash $PROJECT_ROOT/tests/e2e/mock_cli.sh" Enter
+tests/e2e/helpers/setup.bash	98	E2E_QUEUE	⑶	⑶	if [ -n "${E2E_QUEUE:-}" ] && [ -d "$E2E_QUEUE" ]; then
+tests/e2e/helpers/setup.bash	99	E2E_QUEUE	⑶	⑶	rm -rf "$E2E_QUEUE"
+tests/e2e/helpers/setup.bash	109	E2E_QUEUE	⑶	⑶	echo "messages:" > "$E2E_QUEUE/queue/inbox/${agent}.yaml"
+tests/e2e/helpers/setup.bash	113	E2E_QUEUE	⑶	⑶	rm -f "$E2E_QUEUE"/queue/tasks/*.yaml
+tests/e2e/helpers/setup.bash	116	E2E_QUEUE	⑶	⑶	rm -f "$E2E_QUEUE"/queue/reports/*.yaml
+tests/e2e/helpers/setup.bash	137	E2E_QUEUE	⑶	⑶	bash "$E2E_QUEUE/scripts/inbox_watcher.sh" "$agent_id" "$pane_target" "$cli_type" \
+tests/e2e/mock_behaviors/common.sh	149	IDLE_FLAG_DIR	口	伝	local _flag_dir="${IDLE_FLAG_DIR:-/tmp}"
+tests/e2e/mock_behaviors/common.sh	150	IDLE_FLAG_DIR	⑶	⑶ 派_flag_dir	touch "${_flag_dir}/shogun_idle_${MOCK_AGENT_ID}" 2>/dev/null || true
+tests/e2e/mock_behaviors/common.sh	168	IDLE_FLAG_DIR	口	伝	local _flag_dir="${IDLE_FLAG_DIR:-/tmp}"
+tests/e2e/mock_behaviors/common.sh	169	IDLE_FLAG_DIR	⑶	⑶ 派_flag_dir	rm -f "${_flag_dir}/shogun_idle_${MOCK_AGENT_ID}" 2>/dev/null || true
+tests/e2e/mock_behaviors/common.sh	148	MOCK_AGENT_ID	口	他	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_behaviors/common.sh	150	MOCK_AGENT_ID	⑶	⑶	touch "${_flag_dir}/shogun_idle_${MOCK_AGENT_ID}" 2>/dev/null || true
+tests/e2e/mock_behaviors/common.sh	167	MOCK_AGENT_ID	口	他	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_behaviors/common.sh	169	MOCK_AGENT_ID	⑶	⑶	rm -f "${_flag_dir}/shogun_idle_${MOCK_AGENT_ID}" 2>/dev/null || true
+tests/e2e/mock_behaviors/common.sh	148	MOCK_CLI_TYPE	口	他	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_behaviors/common.sh	167	MOCK_CLI_TYPE	口	他	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_cli.sh	29	MOCK_AGENT_ID	口	口	MOCK_AGENT_ID="${MOCK_AGENT_ID:-unknown}"
+tests/e2e/mock_cli.sh	43	MOCK_AGENT_ID	⑷	⑷+⑶	INBOX_FILE="$MOCK_PROJECT_ROOT/queue/inbox/${MOCK_AGENT_ID}.yaml"
+tests/e2e/mock_cli.sh	44	MOCK_AGENT_ID	⑶	⑶	TASK_FILE="$MOCK_PROJECT_ROOT/queue/tasks/${MOCK_AGENT_ID}.yaml"
+tests/e2e/mock_cli.sh	48	MOCK_AGENT_ID	伝	伝	echo "[mock_cli] Starting as $MOCK_AGENT_ID (type=$MOCK_CLI_TYPE, delay=${MOCK_PROCESSING_DELAY}s)"
+tests/e2e/mock_cli.sh	91	MOCK_AGENT_ID	他	他	write_mock_report "$MOCK_AGENT_ID" "$task_id" "$parent_cmd" "$MOCK_PROJECT_ROOT"
+tests/e2e/mock_cli.sh	106	MOCK_AGENT_ID	⑸	⑸	if [ "$MOCK_AGENT_ID" = "karo" ]; then
+tests/e2e/mock_cli.sh	110	MOCK_AGENT_ID	他	他	"${MOCK_AGENT_ID}号、任務完了。報告YAML確認されたし。" \
+tests/e2e/mock_cli.sh	111	MOCK_AGENT_ID	他	他	"report_received" "$MOCK_AGENT_ID" 2>/dev/null || true
+tests/e2e/mock_cli.sh	120	MOCK_AGENT_ID	⑶	⑶ 派INBOX_FILE	if [ ! -f "$INBOX_FILE" ]; then
+tests/e2e/mock_cli.sh	162	MOCK_AGENT_ID	⑸	⑸	if [ "$MOCK_AGENT_ID" = "karo" ]; then
+tests/e2e/mock_cli.sh	176	MOCK_AGENT_ID	⑶	⑶ 派TASK_FILE	if [ -f "$TASK_FILE" ]; then
+tests/e2e/mock_cli.sh	243	MOCK_AGENT_ID	⑶	⑶ 派TASK_FILE	if [ -f "$TASK_FILE" ]; then
+tests/e2e/mock_cli.sh	277	MOCK_AGENT_ID	⑶	⑶ 派TASK_FILE	if [ -f "$TASK_FILE" ]; then
+tests/e2e/mock_cli.sh	295	MOCK_AGENT_ID	⑸	⑸	if [ "$MOCK_AGENT_ID" = "karo" ]; then
+tests/e2e/mock_cli.sh	27	MOCK_CLI_TYPE	口	口	MOCK_CLI_TYPE="${MOCK_CLI_TYPE:-claude}"
+tests/e2e/mock_cli.sh	35	MOCK_CLI_TYPE	⑸	⑸	case "$MOCK_CLI_TYPE" in
+tests/e2e/mock_cli.sh	48	MOCK_CLI_TYPE	伝	伝	echo "[mock_cli] Starting as $MOCK_AGENT_ID (type=$MOCK_CLI_TYPE, delay=${MOCK_PROCESSING_DELAY}s)"
+tests/e2e/mock_cli.sh	50	MOCK_CLI_TYPE	⑸	⑸	case "$MOCK_CLI_TYPE" in
+tests/e2e/mock_cli.sh	53	MOCK_CLI_TYPE	伝	伝	*)      echo "Mock CLI ($MOCK_CLI_TYPE)" ;;
+tests/e2e/mock_cli.sh	76	MOCK_CLI_TYPE	他	他	show_busy "$MOCK_CLI_TYPE" 0
+tests/e2e/mock_cli.sh	87	MOCK_CLI_TYPE	他	他	show_busy "$MOCK_CLI_TYPE" "$elapsed"
+tests/e2e/mock_cli.sh	185	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	199	MOCK_CLI_TYPE	他	他	show_busy "$MOCK_CLI_TYPE" 0
+tests/e2e/mock_cli.sh	240	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	248	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	266	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	285	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	291	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	298	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	307	MOCK_CLI_TYPE	他	他	show_busy "$MOCK_CLI_TYPE" "$held"
+tests/e2e/mock_cli.sh	312	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	317	MOCK_CLI_TYPE	他	他	show_busy "$MOCK_CLI_TYPE" 0
+tests/e2e/mock_cli.sh	321	MOCK_CLI_TYPE	他	他	show_prompt "$MOCK_CLI_TYPE"
+tests/e2e/mock_cli.sh	30	MOCK_PROJECT_ROOT	口	口	MOCK_PROJECT_ROOT="${MOCK_PROJECT_ROOT:-.}"
+tests/e2e/mock_cli.sh	43	MOCK_PROJECT_ROOT	⑶	⑶	INBOX_FILE="$MOCK_PROJECT_ROOT/queue/inbox/${MOCK_AGENT_ID}.yaml"
+tests/e2e/mock_cli.sh	44	MOCK_PROJECT_ROOT	⑶	⑶	TASK_FILE="$MOCK_PROJECT_ROOT/queue/tasks/${MOCK_AGENT_ID}.yaml"
+tests/e2e/mock_cli.sh	45	MOCK_PROJECT_ROOT	⑶	⑶	REPORT_DIR="$MOCK_PROJECT_ROOT/queue/reports"
+tests/e2e/mock_cli.sh	91	MOCK_PROJECT_ROOT	他	他	write_mock_report "$MOCK_AGENT_ID" "$task_id" "$parent_cmd" "$MOCK_PROJECT_ROOT"
+tests/e2e/mock_cli.sh	99	MOCK_PROJECT_ROOT	⑶	⑶	local inbox_write_script="$MOCK_PROJECT_ROOT/scripts/inbox_write.sh"
+tests/e2e/mock_cli.sh	100	MOCK_PROJECT_ROOT	⑶	⑶ 派inbox_write_script	if [ ! -f "$inbox_write_script" ]; then
+tests/e2e/mock_cli.sh	103	MOCK_PROJECT_ROOT	⑶	⑶ 派inbox_write_script	if [ -f "$inbox_write_script" ]; then
+tests/e2e/mock_cli.sh	109	MOCK_PROJECT_ROOT	伝	伝	SCRIPT_DIR="$MOCK_PROJECT_ROOT" bash "$inbox_write_script" "$report_target" \
+tests/e2e/mock_cli.sh	120	MOCK_PROJECT_ROOT	⑶	⑶ 派INBOX_FILE	if [ ! -f "$INBOX_FILE" ]; then
+tests/e2e/mock_cli.sh	176	MOCK_PROJECT_ROOT	⑶	⑶ 派TASK_FILE	if [ -f "$TASK_FILE" ]; then
+tests/e2e/mock_cli.sh	192	MOCK_PROJECT_ROOT	⑶	⑶	local cmd_file="$MOCK_PROJECT_ROOT/queue/shogun_to_karo.yaml"
+tests/e2e/mock_cli.sh	193	MOCK_PROJECT_ROOT	⑶	⑶ 派cmd_file	if [ ! -f "$cmd_file" ]; then
+tests/e2e/mock_cli.sh	209	MOCK_PROJECT_ROOT	⑶	⑶	local subtask_file="$MOCK_PROJECT_ROOT/queue/tasks/ashigaru1.yaml"
+tests/e2e/mock_cli.sh	211	MOCK_PROJECT_ROOT	⑶	⑶ 派subtask_file	cat > "$subtask_file" <<EOF
+tests/e2e/mock_cli.sh	226	MOCK_PROJECT_ROOT	⑶	⑶	local inbox_write_script="$MOCK_PROJECT_ROOT/scripts/inbox_write.sh"
+tests/e2e/mock_cli.sh	227	MOCK_PROJECT_ROOT	⑶	⑶ 派inbox_write_script	if [ ! -f "$inbox_write_script" ]; then
+tests/e2e/mock_cli.sh	230	MOCK_PROJECT_ROOT	⑶	⑶ 派inbox_write_script	if [ -f "$inbox_write_script" ]; then
+tests/e2e/mock_cli.sh	243	MOCK_PROJECT_ROOT	⑶	⑶ 派TASK_FILE	if [ -f "$TASK_FILE" ]; then
+tests/e2e/mock_cli.sh	277	MOCK_PROJECT_ROOT	⑶	⑶ 派TASK_FILE	if [ -f "$TASK_FILE" ]; then
+tests/smoke/test_enter_restart_watchdog.sh	61	FAKE_PANE_TAIL	口	伝	printf '' "${FAKE_PANE_TAIL:-}"
+tests/smoke/test_enter_restart_watchdog.sh	98	FAKE_PYTHON3_RESPONSE	口	伝	echo "${FAKE_PYTHON3_RESPONSE:-NO_DATA}"
+tests/smoke/test_enter_restart_watchdog.sh	84	SUPABASE_SERVICE_ROLE_KEY	口	口	export SUPABASE_SERVICE_ROLE_KEY="${SUPABASE_SERVICE_ROLE_KEY:-stub_role_key}"
+tests/smoke/test_enter_restart_watchdog.sh	85	SUPABASE_URL	口	口	export SUPABASE_URL="${SUPABASE_URL:-http://stub.invalid}"
+tests/test_helper/mock_tmux_pane.bash	89	MOCK_CAPTURE_PANE	口	他	if [[ -n "${MOCK_CAPTURE_PANE:-}" ]]; then
+tests/test_helper/mock_tmux_pane.bash	90	MOCK_CAPTURE_PANE	伝	伝	printf '' "$MOCK_CAPTURE_PANE"
+tests/test_helper/mock_tmux_pane.bash	77	MOCK_PANE_AGENT_ID	口	伝	printf '' "${MOCK_PANE_AGENT_ID:-}"
+tests/test_helper/mock_tmux_pane.bash	80	MOCK_PANE_CMD	口	伝	printf '' "${MOCK_PANE_CMD:-claude}"
+tests/test_helper/mock_tmux_pane.bash	59	MOCK_PANE_LIST	口	他	if [[ -n "${MOCK_PANE_LIST:-}" ]]; then
+tests/test_helper/mock_tmux_pane.bash	60	MOCK_PANE_LIST	伝	伝	printf '' "$MOCK_PANE_LIST"
+tests/test_secondpc_secret_argv.py	52	PATH	口	口	env={**os.environ,"":str(b)+os.pathsep+os.environ[""],"":str(home),"":"","":MOCK,"":str(calls),"":str(state/""),"":str(state/""),"":str(state/""),"":str(state/"")};(state/"").write_text("")
+tests/test_secondpc_secret_argv.py	54	PATH	他	他	red=subprocess.Popen([str(fakecurl),"",f'Authorization: Bearer {MOCK}""-H""apikey: {MOCK}'],env=env);rh,_=scan(red,120,.005);red.wait()
+tests/test_secondpc_secret_argv.py	68	PATH	他	他	green=subprocess.Popen(["",str(d/""),""],env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True);gh,samples=scan(green,220,.01);o,e=green.communicate(timeout=10)
+tests/test_secondpc_secret_argv.py	77	PATH	他	他	ok=subprocess.run(["",str(poll),str(empty),str(processed),str(repo),""],env=env,capture_output=True,text=True)
+tests/test_secondpc_secret_argv.py	78	PATH	他	他	if ok.returncode!=0:raise SystemExit(f'poll env run failed {poll.name}')
+tests/test_secondpc_secret_argv.py	79	PATH	他	他	badenv=dict(env);badenv.pop("",None)
+tests/test_secondpc_secret_argv.py	80	PATH	他	他	bad=subprocess.run(["",str(poll),str(empty),str(processed),str(repo),""],env=badenv,capture_output=True,text=True)
+tests/test_secondpc_secret_argv.py	81	PATH	他	他	if bad.returncode==0:raise SystemExit(f'poll missing-env fail-closed absent {poll.name}')

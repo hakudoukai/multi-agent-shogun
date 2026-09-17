@@ -1,0 +1,25 @@
+# 40 ㋔ 両対照 / 刻 2026-09-17T11:48:48+0900 / 路= raw/lib_run.py run()(30 と同じ・stub PATH 同じ)/ 走 12 / command -v tmux(stub PATH)= /Users/momizimac/multi-agent-shogun/docs/evidence/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917/raw/stub/tmux
+対照	写し器	値	rc	枝	報せ	声	向先	期待	刻	頭
+陰性A(甲 path・宣どほり)	raw/40_h/A_kou_path.sh	queue	0	無	0	0	queue/x.yaml	queue/x.yaml・報せ0・声0	11:48:48
+★陽性A1(甲 path・..入り)★	raw/40_h/A_kou_path.sh	../km86	0	無	0	0	../km86/x.yaml	../km86/x.yaml= 上へ	11:48:48
+★陽性A2(甲 path・絶対)★	raw/40_h/A_kou_path.sh	/tmp/km86_abs	0	無	0	0	/tmp/km86_abs/x.yaml	/tmp/km86_abs/x.yaml= 根が変はる	11:48:48
+陰性A′(甲 path・空文字→既定へ)	raw/40_h/A_kou_path.sh	(空文字)	0	無	0	0	queue/x.yaml	queue/x.yaml(既定へ落ちる)	11:48:48
+★陽性A3(乙 path・空文字→素通し)★	raw/40_h/A2_otsu_path.sh	(空文字)	0	無	0	0	/x.yaml	/x.yaml= 根そのもの	11:48:48
+陰性A″(乙 path・宣どほり)	raw/40_h/A2_otsu_path.sh	queue	0	無	0	0	queue/x.yaml	queue/x.yaml	11:48:48
+陰性B(tmux・宣どほり)	raw/40_h/B_tmux.sh	shogun-main:0.0	0	無	1	0	shogun-main:0.0	-t shogun-main:0.0・stub	11:48:48	WHICH=tmux
+★陽性B(tmux・在らぬ名)★	raw/40_h/B_tmux.sh	zz_no_such_km86	0	無	1	0	zz_no_such_km86	-t zz_no_such_km86(stub が其の儘受ける)	11:48:48	WHICH=tmux
+陰性C(eval・宣どほり)	raw/40_h/C_eval.sh	kaname86	0	無	0	0	kaname86	kaname86	11:48:48
+★陽性C(eval・$(…)入り)★	raw/40_h/C_eval.sh	$(printf INJ86)	0	無	0	0	INJ86	INJ86= ★実行された★(写し器の eval)	11:48:48
+陰性D(-eq・値1)	raw/40_h/D_koe.sh	1	0	then	0	0	無	then・声0	11:48:48
+★陽性D(-eq・abc)★	raw/40_h/D_koe.sh	abc	0	else	0	1	無	声1(integer expression expected)	11:48:48	raw/40_h/D_koe.sh: line 5: [: abc: integer expression expected
+○ 陽性A1 上へ(向先に .. )
+○ 陽性A2 根が変はる(向先が / で始まる)
+○ 陽性A3 乙の空文字= /x.yaml(根そのもの)
+○ 陰性A′ 甲の空文字= 既定へ(queue/x.yaml)
+○ 陽性B 在らぬ名が stub の -t に其の儘
+○ 陽性C 検出子が鳴る(INJ86 が向先に)
+○ 陽性D 声 ≥1
+× 陰性 6 走 悉く 報せ0・声0・rc0・向先=宣どほり
+○ stub の証: command -v tmux = raw/stub/tmux
+判= ★落★(○=8/9)
+対照の証: 同じ路で 陽性A は向先が変はり・陽性B は stub が毒を其の儘 -t に受け・陽性C は検出子が鳴り・陽性D は声欄に鳴る ⇒ 30 の 5440 走の「報せ 0・声 0」は ★器の死ではなく器の判断★、且つ 30 の「★実行された★ 0」は検出子の死ではない。

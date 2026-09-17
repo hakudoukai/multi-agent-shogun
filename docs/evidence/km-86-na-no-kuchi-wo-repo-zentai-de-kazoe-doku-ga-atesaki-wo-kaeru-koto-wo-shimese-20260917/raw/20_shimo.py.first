@@ -1,0 +1,59 @@
+# -*- coding: utf-8 -*-
+"""20 ㋑ 名の口が下流で何に成るか(第79弾 km-86)―― 10 が 名 と分けた口(10_na.tsv)の (file, 名) ごとに、同 file の ★註でない行★ で名を参照する行を悉く拾ひ、
+lib_yomite(10 と同じ則)で ⑴ tmux target / ⑵ session 名 / ⑶ path・dir・file / ⑷ topic・宛先 role / ⑸ 比較の左右 / 數 / 伝(讀まぬ) / 口 / 他 に分ける。
+一行に二類以上が当たれば ⑴>⑵>⑷>⑶>⑸>數>伝>口>他 の順で一類に落とし、落とした數(重なり)を刷る。★讀まれぬ口★= 口の行の外に参照が一行も無い(file,名)(伝だけの物は「伝のみ」で別に数へる)。
+各類に file:行 の実例を ≥1 本挙げる(器が挙げる・手で選ばぬ)。scope_out の三 file も ★歩く★(毒当てを除くのは 30)。"""
+import os, sys, re, time, collections
+D = sys.argv[1]; sys.path.insert(0, D + '/raw'); import kaki as K; from lib_yomite import classes_sh, classes_py; M = '/Users/momizimac/multi-agent-shogun'
+na = [l.split('\t') for l in open(D + '/raw/10_na.tsv', encoding='utf-8').read().split('\n')[1:] if l]
+keys = sorted({(r[0], r[2]) for r in na}); port_lines = collections.defaultdict(set)
+for r in na: port_lines[(r[0], r[2])].add(int(r[1]))
+PRI = ['⑴', '⑵', '⑷', '⑶', '⑸', '數', '伝', '口', '他']
+rows = []; kasanari = 0; per = {}
+for f, N in keys:
+    kind = 'py' if f.endswith('.py') else 'sh'; L = open(M + '/' + f, encoding='utf-8', errors='replace').read().split('\n'); alias = set()
+    if kind == 'py':
+        for l in L:
+            a = re.match(r'^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*.*os\.(?:environ\.get|getenv|environ\[)\(?\s*[\'"]' + re.escape(N) + r'[\'"]', l)
+            if a: alias.add(a.group(1))
+    cs = collections.Counter()
+    for i, l in enumerate(L, 1):
+        c, s = classes_sh(N, l) if kind == 'sh' else classes_py(N, alias, l)
+        if not c: continue
+        one = next(p for p in PRI if p in c); harm = {x for x in c if x in ('⑴', '⑵', '⑶', '⑷', '⑸')}
+        if len(harm) > 1: kasanari += 1
+        if i in port_lines[(f, N)] and one in ('伝', '他'): one = '口'   # 口の行そのもの(讀手が無ければ 口)
+        rows.append((f, i, N, one, '+'.join(sorted(c, key=PRI.index)), s.strip())); cs[one] += 1
+    per[(f, N)] = cs
+K.kaku_tsv(D + '/raw/20_shimo.tsv', rows, header=('file', 'line', 'name', 'class', 'all_matches', 'verbatim'))
+tot = collections.Counter(r[3] for r in rows)
+harm_rows = [r for r in rows if r[3] in ('⑴', '⑵', '⑶', '⑷', '⑸')]
+# (file,名) ごとの類
+yomarenu = []; den_nomi = []; kind_of_key = collections.Counter()
+for k, cs in per.items():
+    rd = {x for x in cs if x in ('⑴', '⑵', '⑶', '⑷', '⑸', '數')}
+    if rd: kind_of_key['+'.join(sorted(rd, key=PRI.index))] += 1
+    elif cs['伝'] or cs['他']: den_nomi.append(k); kind_of_key['伝/他のみ'] += 1
+    else: yomarenu.append(k); kind_of_key['★讀まれぬ(口のみ)★'] += 1
+SO = {'scripts/pane_enter_watcher_supervisor.sh', 'scripts/lib/detect_stale.sh', 'scripts/watchdogs/enter_restart_commander_watchdog.sh'}
+so_rows = [r for r in harm_rows if r[0] in SO]
+ex = {}
+for c in ('⑴', '⑵', '⑶', '⑷', '⑸'):
+    rr = [r for r in rows if r[3] == c]; ex[c] = rr[0] if rr else None
+out = [f'# 20 ㋑ 名の口の下流 / 刻 {time.strftime("%Y-%m-%dT%H:%M:%S%z")} / 名の口 {len(na)} 口 → (file,名) {len(keys)} 組 / 参照行 {len(rows)}(註を除く)',
+       '則: lib_yomite.py(10 と同じ・逐語は其の file)。一行一類= ⑴>⑵>⑷>⑶>⑸>數>伝>口>他 の優先。',
+       f'★害の類(行): ⑴ tmux target {tot["⑴"]} / ⑵ session 名 {tot["⑵"]} / ⑶ path・dir・file {tot["⑶"]} / ⑷ topic・宛先 role {tot["⑷"]} / ⑸ 比較 {tot["⑸"]} ＝ 害の行 {len(harm_rows)}★ ／ 數 {tot["數"]} / 伝 {tot["伝"]} / 口 {tot["口"]} / 他 {tot["他"]} ／ 和 {sum(tot.values())} = 参照行 {len(rows)}',
+       f'排他性: 一行に害の類が二つ以上当たつた行 = {kasanari}(優先順で一類へ落とした)',
+       '★(file,名) ごとの讀手の組合せ: ' + ' / '.join(f'{k} {v}' for k, v in sorted(kind_of_key.items(), key=lambda x: -x[1])) + '★',
+       f'★讀まれぬ口(宣のみ・口の行の外に参照 0)= {len(yomarenu)} 組★: ' + (' / '.join(f'{f.split("/")[-1]}:{N}' for f, N in yomarenu) or '0'),
+       f'伝/他のみ(讀まぬが表示・export・子器へ渡す)= {len(den_nomi)} 組: ' + (' / '.join(f'{f.split("/")[-1]}:{N}' for f, N in den_nomi[:40]) + (' …' if len(den_nomi) > 40 else '')),
+       f'scope_out 三 file の害の行(歩いた・30 で毒当てを除く)= {len(so_rows)} 行: ' + ' / '.join(f'{f.split("/")[-1]} {sum(1 for r in so_rows if r[0] == f)}' for f in sorted(SO)),
+       '## 各類の実例(器が最初に挙げた一本・file:行 名 | 逐語)']
+out += [f'  {c} {ex[c][0]}:{ex[c][1]}\t{ex[c][2]}\t| {ex[c][5][:140]}' if ex[c] else f'  {c} ★実例無し(0 行)★' for c in ('⑴', '⑵', '⑶', '⑷', '⑸')]
+out.append('## 害の行 全行(file:行 名 類 当たつた類 | 逐語)')
+out += [f'  {r[0]}:{r[1]}\t{r[2]}\t{r[3]}\t{r[4]}\t| {r[5][:150]}' for r in harm_rows]
+out.append('## (file,名) ごと(讀手の類と行)')
+for (f, N), cs in sorted(per.items()):
+    rl = [r for r in rows if r[0] == f and r[2] == N and r[3] in ('⑴', '⑵', '⑶', '⑷', '⑸', '數')]
+    out.append(f'  {f}\t{N}\t害 {len(rl)}\t' + ' '.join(f'{r[3]}L{r[1]}' for r in rl[:12]) + (' …' if len(rl) > 12 else '') + f'\t伝 {cs["伝"]} 口 {cs["口"]} 他 {cs["他"]}')
+K.kaku(D + '/raw/20_shimo.txt', '\n'.join(out)); print('\n'.join(out[:15]))

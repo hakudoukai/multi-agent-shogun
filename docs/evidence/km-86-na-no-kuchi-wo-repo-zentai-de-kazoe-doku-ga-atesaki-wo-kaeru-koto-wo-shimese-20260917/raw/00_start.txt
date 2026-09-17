@@ -1,0 +1,16 @@
+# 00 起 / 刻 2026-09-17T11:25:36+0900 / 枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 / HEAD 0039e1321654 / 札 queue/tasks/ashigaru-mac-1.yaml sha16 ee8467d11659a0b5 74行
+git ls-files -z rc 0 → 追跡 file 2081 本(repo 根 /Users/momizimac/multi-agent-shogun)
+追跡 file の内 disk に無い(追跡だが消えた) 2 本: tests/test_helper/bats-assert / tests/test_helper/bats-support
+★根A(km-84 の根・本弾の主・逐語)= 追跡 .sh/.bash/.py + shebang 拡張子無し 415 本(shell 205 / python 210)、docs/evidence/ 配下 246 本を除き ★169 本★(shell 114 / python 55)
+  shebang で拾つた拡張子無し(逐語): android/gradlew(#!/bin/sh) ／ docs/evidence/ 配下の同類 8 本
+★根B(家老の根・逐語 `git ls-files -- '*.sh' '*.py'`・rc 0)= ★402 本★(内 docs/evidence/ 配下 238 本・disk に無い 0 本)
+★差(file 名で名指す)★: 根A にのみ在る 5 本 / 根B にのみ在る 238 本(内 docs/evidence/ 238 本・其の外 0 本)/ 両方に在る 164 本
+  根A にのみ(= .bash か shebang 拡張子無し): android/gradlew / tests/e2e/helpers/assertions.bash / tests/e2e/helpers/setup.bash / tests/e2e/helpers/tmux_helpers.bash / tests/test_helper/mock_tmux_pane.bash
+  根B にのみ・docs/evidence/ の外(= 根A が落とした .sh/.py・理由を右に): 0 本
+  根B にのみ・docs/evidence/ 配下 238 本= 先例の束の写し器(根A は宣で除く)。束名別: km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917 50 / km-73-mieru-shirushi-ga-hiraku-ana-20260917 45 / km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 25 / km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917 18 / km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917 17 / km-71-kuumoji-wa-atai-toshite-furumau-20260917 14 / km-71b-fusagikata-ni-an-20260917 12 / km-46-yomite-no-kizu-20260917 11 / km-49-buzai-shikii-20260917 11 / km-52-shikii-no-bosuu-wo-kakutei-seyo-20260917 11 / a1-jishu-kuumoji-kiten-20260917 10 / km-50-kara-wa-todokazu-20260917 10 / km-47-yotsu-no-kazu-20260917 4
+根A 上位 dir 別: scripts 73 / shim 46 / tests 25 / queue 13 / (根) 4 / lib 4 / skills 3 / android 1
+員外(根A に載せぬ・宣): docs/evidence/**(先例の束= 写しの器・己の束を含む= 器が己を測る疵の予防)は ★追跡でも除く★ / 追跡外= .bak* / queue/**(fixture・追跡分は載る) / .venv / .claude / backups / __pycache__ / repo 外(~/bin)
+scope_out(札・專任2 km-83 の三 file)= 母數には入れて歩き ★毒当てのみ除く★: scripts/pane_enter_watcher_supervisor.sh(根A 内) / scripts/lib/detect_stale.sh(根A 内) / scripts/watchdogs/enter_restart_commander_watchdog.sh(根A 内)
+bash= /bin/bash / GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+python3= /opt/homebrew/bin/python3 / Python 3.14.6
+則: 生器(scripts/ lib/ shim/ ~/bin)へ 0 字 / 稼働 watcher 不觸 / tmux 実打ち 0(写し器は tmux を echo stub へ差し替へる)/ 直しは紙にのみ。

@@ -1,0 +1,39 @@
+# 第79弾 門控(nobase・走毎に一本・員外・名= mon_km86_20260917T120334_nobase) / 刻 2026-09-17T12:04:06+0900 / 渡した 601 / rc 1 / 結語 ['★出す前 門が落ちた。出すな。★']
+## stderr 逐語
+  閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+  ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+  條⑤ 寸法 = byte和 4676807(閾 10485760未満)
+  ★出す前 門が落ちた。出すな。★
+## stdout 逐語
+  台帳 /Users/momizimac/multi-agent-shogun/docs/evidence/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917/MANIFEST.txt
+    cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917
+    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+    一致 ★0★ / 相違 1 / 実体無 600 / 読めぬ行 0  (母數 601)
+    ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+    ★註★ ★実体無★ は ★『disk に物が無い』とは限らぬ★ ―― ★基点(場所)が違ふ★ 事が在る。
+         上の『基点』行を先に読み、次に ★臺帳を作つた樹の根★ で当て直せ。
+    ★註★ 相違 は ★疵 とは限らぬ★ ―― ★測る樹 の版 が 台帳 を作つた時 と違ふ★ 事 が在る。
+         断ずる前 に ⑴紙 に書かれた版 を読み ⑵其の版 で当て直せ。
+         例: git show <版>:<path> | shasum -a 256
+      ★相違★ README.md
+      ★実体無★ raw/00_rootA.txt
+      ★実体無★ raw/00_rootB.txt
+      ★実体無★ raw/00_start.py
+      ★実体無★ raw/00_start.txt
+      ★実体無★ raw/01_letter.py
+      ★実体無★ raw/01_letter.py.first
+      ★実体無★ raw/01_letter.txt
+      ★実体無★ raw/01_letter.txt.first
+      ★実体無★ raw/10_kuchi.py
+      ★実体無★ raw/10_kuchi.tsv
+      ★実体無★ raw/10_kuchi.tsv.first
+      ★実体無★ raw/10_kuchi.txt
+      ★実体無★ raw/10_kuchi.txt.first
+      ★実体無★ raw/10_na.tsv
+      ★実体無★ raw/10_na.tsv.first
+      ★実体無★ raw/20_cross.tsv
+      ★実体無★ raw/20_shimo.py
+      ★実体無★ raw/20_shimo.py.first
+      ★実体無★ raw/20_shimo.tsv

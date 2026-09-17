@@ -1,0 +1,15 @@
+# 第79弾 門控(main・走毎に一本・員外・名= mon_km86_20260917T120220_main) / 刻 2026-09-17T12:02:35+0900 / 渡した 601 / rc 1 / 結語 ['★出す前 門が落ちた。出すな。★']
+## stderr 逐語
+  閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+  閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+  條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+  條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  ★EOF改行 ―― /Users/momizimac/multi-agent-shogun/docs/evidence/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917/raw/30_run.err は空file(0byte)★
+  條⑤ 寸法 = byte和 4676397(閾 10485760未満)
+  ★出す前 門が落ちた。出すな。★
+## stdout 逐語
+  台帳 /Users/momizimac/multi-agent-shogun/docs/evidence/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917/MANIFEST.txt
+    cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917
+    基点 引数(明示)
+    一致 ★601★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 601)
+    ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)

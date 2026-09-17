@@ -1,0 +1,4 @@
+#!/bin/bash
+# stub(第79弾 km-86)―― 実 tmux を打たぬ。引数を hex で刷るのみ。
+tmux(){ for __a in "$@"; do printf 'TMUX_ARG='; printf '%s' "$__a" | od -An -v -tx1 | tr -d ' \n'; printf '\n'; done; printf 'TMUX_NARGS=%s\n' "$#"; }; timeout(){ shift; "$@"; }; gtimeout(){ shift; "$@"; }
+tmux "$@"

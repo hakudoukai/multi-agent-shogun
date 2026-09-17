@@ -1,0 +1,362 @@
+port_file	name	reader_file	line	class	all_matches	verbatim
+lib/ntfy_auth.sh	NTFY_TOKEN	scripts/ntfy_listener.sh	140	⑷	⑷	echo "[$(date)] ntfy listener started — topic: $TOPIC (auth: ${NTFY_TOKEN:+token}${NTFY_USER:+basic}${NTFY_TOKEN:-${NTFY_USER:-none}})" >&2
+lib/ntfy_auth.sh	NTFY_USER	scripts/ntfy_listener.sh	140	⑷	⑷	echo "[$(date)] ntfy listener started — topic: $TOPIC (auth: ${NTFY_TOKEN:+token}${NTFY_USER:+basic}${NTFY_TOKEN:-${NTFY_USER:-none}})" >&2
+scripts/checks/pane_identity.sh	TMPDIR	scripts/checks/verify_state_before_asserting.sh	50	⑶	⑶	last="$(find "${TMPDIR:-/tmp}" -maxdepth 1 -name '' -newermt '' 2>/dev/null | head -1)"
+scripts/checks/pane_identity.sh	TMPDIR	scripts/checks/verify_state_before_asserting.sh	51	⑶	⑶	[ -n "${last}" ] || { echo "[verify] ★止まれ★ 便 が「未 push/残り」を言ふ ―― ★10 分 内 の fetch の跡 が無い★"; echo "         → git fetch -q origin && touch \"${TMPDIR:-/tmp}/.vsba_fetch_$$\" を先 に"; hit=1; }
+scripts/checks/pane_identity.sh	TMPDIR	scripts/karo_second_send_iincho.sh	142	⑶	⑶ 派CURL_ERR_FILE	-d "$PAYLOAD" 2>"$CURL_ERR_FILE")
+scripts/checks/pane_identity.sh	TMPDIR	scripts/karo_second_send_iincho.sh	143	⑶	⑶ 派CURL_ERR_FILE	CURL_ERR="$(cat "$CURL_ERR_FILE")"
+scripts/checks/pane_identity.sh	TMPDIR	scripts/karo_second_send_iincho.sh	144	⑶	⑶ 派RESPONSE_FILE	RESPONSE_BODY="$(cat "$RESPONSE_FILE")"
+scripts/checks/pane_identity.sh	TMPDIR	scripts/karo_second_send_iincho.sh	145	⑶	⑶ 派RESPONSE_FILE	rm -f "$CURL_ERR_FILE" "$RESPONSE_FILE"
+scripts/checks/pane_identity.sh	TMPDIR	shim/hakudokai/lib/sb_auth.sh	10	⑶	⑶ 派_cfg	_sb_curl_cleanup() { rm -f -- "$_cfg"; }
+scripts/checks/pane_identity.sh	TMPDIR	shim/hakudokai/lib/sb_auth.sh	15	⑶	⑶ 派_cfg	chmod 600 "$_cfg" || exit 1
+scripts/checks/pane_identity.sh	TMPDIR	shim/hakudokai/lib/sb_auth.sh	17	⑶	⑶ 派_cfg	'     "header = \"Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY:?SUPABASE_SERVICE_ROLE_KEY unset}\""     "header = \"apikey: ${SUPABASE_SERVICE_ROLE_KEY}\"" >"$_cfg" || exit 1
+scripts/checks/pane_identity.sh	TMPDIR	shim/hakudokai/lib/sb_auth.sh	18	⑶	⑶ 派_cfg	curl --config "$_cfg" "$@"
+scripts/karo_second_send_iincho.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_fukuincho_watcher.sh	80	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+scripts/karo_second_send_iincho.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_watchdog.sh	390	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	56	⑶	⑶ 派LOG_DIR	mkdir -p "$LOG_DIR"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	57	⑶	⑶ 派LOG_DIR	LOG="$LOG_DIR/$(date +%Y%m%d).log"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	58	⑶	⑶ 派LOG_DIR	FIRE_HISTORY="$LOG_DIR/fires.log"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	180	⑴	⑴ 派PANE_TARGET	if ! tmux display-message -t "$PANE_TARGET" -p '' >/dev/null 2>&1; then
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	244	⑴	⑴ 派PANE_TARGET	PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '' 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	249	⑴	⑴ 派PANE_TARGET	PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -50 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	322	⑴	⑴ 派PANE_TARGET	tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null
+scripts/watchdogs/enter_restart_commander_watchdog.sh	ER_SESSION_NAME	scripts/watchdogs/enter_restart_common_watchdog.sh	176	⑵	⑵ 派SESSION_NAME	if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	56	⑶	⑶ 派LOG_DIR	mkdir -p "$LOG_DIR"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	57	⑶	⑶ 派LOG_DIR	LOG="$LOG_DIR/$(date +%Y%m%d).log"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	58	⑶	⑶ 派LOG_DIR	FIRE_HISTORY="$LOG_DIR/fires.log"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	180	⑴	⑴ 派PANE_TARGET	if ! tmux display-message -t "$PANE_TARGET" -p '' >/dev/null 2>&1; then
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	244	⑴	⑴ 派PANE_TARGET	PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '' 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	249	⑴	⑴ 派PANE_TARGET	PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -50 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	322	⑴	⑴ 派PANE_TARGET	tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	ER_SESSION_NAME	scripts/watchdogs/enter_restart_common_watchdog.sh	176	⑵	⑵ 派SESSION_NAME	if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	56	⑶	⑶ 派LOG_DIR	mkdir -p "$LOG_DIR"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	57	⑶	⑶ 派LOG_DIR	LOG="$LOG_DIR/$(date +%Y%m%d).log"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	58	⑶	⑶ 派LOG_DIR	FIRE_HISTORY="$LOG_DIR/fires.log"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	180	⑴	⑴ 派PANE_TARGET	if ! tmux display-message -t "$PANE_TARGET" -p '' >/dev/null 2>&1; then
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	244	⑴	⑴ 派PANE_TARGET	PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '' 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	249	⑴	⑴ 派PANE_TARGET	PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -50 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	322	⑴	⑴ 派PANE_TARGET	tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	ER_SESSION_NAME	scripts/watchdogs/enter_restart_common_watchdog.sh	176	⑵	⑵ 派SESSION_NAME	if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	56	⑶	⑶ 派LOG_DIR	mkdir -p "$LOG_DIR"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	57	⑶	⑶ 派LOG_DIR	LOG="$LOG_DIR/$(date +%Y%m%d).log"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_LOG_DIR	scripts/watchdogs/enter_restart_common_watchdog.sh	58	⑶	⑶ 派LOG_DIR	FIRE_HISTORY="$LOG_DIR/fires.log"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	180	⑴	⑴ 派PANE_TARGET	if ! tmux display-message -t "$PANE_TARGET" -p '' >/dev/null 2>&1; then
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	244	⑴	⑴ 派PANE_TARGET	PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '' 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	249	⑴	⑴ 派PANE_TARGET	PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -50 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_PANE_TARGET	scripts/watchdogs/enter_restart_common_watchdog.sh	322	⑴	⑴ 派PANE_TARGET	tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	ER_SESSION_NAME	scripts/watchdogs/enter_restart_common_watchdog.sh	176	⑵	⑵ 派SESSION_NAME	if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+shim/hakudokai/hakudokai_ai_jimucho.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_ai_jimucho.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_ai_jimucho.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	scripts/agent_health_check.sh	179	⑶	⑶	"${SUPABASE_URL}/rest/v1/error_log" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	scripts/agent_health_check.sh	223	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?topic=like.cross_pc_inbox_*&created_at=gte.${NOW1_JST}&select=created_at" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	scripts/commander_send_shogun_second.sh	88	⑶	⑶	RESP=$(sb_curl -sS -m 15 -X POST "${SUPABASE_URL}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	scripts/inbox_write.sh	197	⑶	⑶ 派sb_url	"${sb_url}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	131	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	139	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	99	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	44	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	77	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	104	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.fukuincho&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	39	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	67	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	83	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?to_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	53	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	153	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	65	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,context_data,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	84	⑶	⑶	"${SUPABASE_URL}/rest/v1" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	37	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	82	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.second_pc&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	46	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	128	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	69	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	387	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	413	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/dev_lessons" \
+shim/hakudokai/hakudokai_audit_scheduler.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	728	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
+shim/hakudokai/hakudokai_billing_tier.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_billing_tier.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_billing_tier.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_daily_summary.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_daily_summary.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_daily_summary.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_daily_summary.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_dashboard_sync.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_dashboard_sync.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_dashboard_sync.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_departure.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_fukuincho_watcher.sh	80	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_departure.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_watchdog.sh	390	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	scripts/agent_health_check.sh	179	⑶	⑶	"${SUPABASE_URL}/rest/v1/error_log" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	scripts/agent_health_check.sh	223	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?topic=like.cross_pc_inbox_*&created_at=gte.${NOW1_JST}&select=created_at" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	scripts/commander_send_shogun_second.sh	88	⑶	⑶	RESP=$(sb_curl -sS -m 15 -X POST "${SUPABASE_URL}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	scripts/inbox_write.sh	197	⑶	⑶ 派sb_url	"${sb_url}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	131	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	139	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	99	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	44	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	77	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	104	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.fukuincho&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	39	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	67	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	83	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?to_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	53	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	153	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	65	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,context_data,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	84	⑶	⑶	"${SUPABASE_URL}/rest/v1" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	37	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	82	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.second_pc&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	46	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	128	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	69	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	387	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	413	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/dev_lessons" \
+shim/hakudokai/hakudokai_departure.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	728	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
+shim/hakudokai/hakudokai_dev_lessons.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_dev_lessons.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_dev_lessons.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_dev_lessons.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_escalation.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_escalation.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_fast_payment.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_fast_payment.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_fast_payment.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_fukuincho_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_fukuincho_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_heartbeat.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_heartbeat.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_heartbeat.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat_archive.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_heartbeat_archive.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_heartbeat_archive.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat_check.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_heartbeat_check.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_heartbeat_check.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_inbox_watcher.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_inbox_write.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_inbox_write.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_inbox_write.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_init_agents.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_fukuincho_watcher.sh	80	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_init_agents.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_watchdog.sh	390	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	scripts/agent_health_check.sh	179	⑶	⑶	"${SUPABASE_URL}/rest/v1/error_log" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	scripts/agent_health_check.sh	223	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?topic=like.cross_pc_inbox_*&created_at=gte.${NOW1_JST}&select=created_at" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	scripts/commander_send_shogun_second.sh	88	⑶	⑶	RESP=$(sb_curl -sS -m 15 -X POST "${SUPABASE_URL}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	scripts/inbox_write.sh	197	⑶	⑶ 派sb_url	"${sb_url}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	131	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	139	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	99	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	44	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	77	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	104	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.fukuincho&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	39	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	67	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	83	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?to_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	53	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	153	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	65	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,context_data,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	84	⑶	⑶	"${SUPABASE_URL}/rest/v1" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	37	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	82	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.second_pc&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	46	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	128	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	69	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	387	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	413	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/dev_lessons" \
+shim/hakudokai/hakudokai_minimal_install.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	728	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
+shim/hakudokai/hakudokai_patient_chat.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_patient_chat.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_patient_chat.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_notification.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_patient_notification.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_patient_notification.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_pwa.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_patient_pwa.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_patient_pwa.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_paylight_integration.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_paylight_integration.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_paylight_integration.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_realtime_bridge.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_reports_sync.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_fukuincho_watcher.sh	80	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_reports_sync.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_watchdog.sh	390	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_role_init.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_role_init.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_secondpc_watcher.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_fukuincho_watcher.sh	80	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_secondpc_watcher.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_watchdog.sh	390	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_skill_candidate.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_skill_candidate.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_skill_candidate.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_skill_review.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	314	⑷	⑷	f"[inbox_watcher] role={role} clinic={CLINIC_ID} to_pc={to_pc} interval={args.interval}s "
+shim/hakudokai/hakudokai_skill_review.py	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_inbox_watcher.py	333	⑷	⑷	items = _fetch_unread(sb, to_pc, args.max_events, clinic_id=CLINIC_ID)
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	248	⑸	⑸	if key == "":
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_SERVICE_ROLE_KEY	shim/hakudokai/hakudokai_escalation.py	250	⑸	⑸	if key in msg_lower:
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	43	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	108	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_URL	shim/hakudokai/hakudokai_daily_summary.py	218	⑶	⑶	f"{url}/rest/v1/pc_handshake",
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_URL	shim/hakudokai/hakudokai_dev_lessons.py	55	⑶	⑶	full_url = f"{url}/rest/v1/{path}"
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	150	⑷	⑷	url = f"{ntfy_url}/{ntfy_topic}"
+shim/hakudokai/hakudokai_skill_review.py	SUPABASE_URL	shim/hakudokai/hakudokai_escalation.py	207	⑶	⑶	f"{url}/rest/v1/pc_handshake"
+shim/hakudokai/hakudokai_start_watchers.sh	HAKUDOKAI_PC_ROLE	shim/hakudokai/hakudokai_watchdog.sh	177	⑶	⑶ 派PC_ROLE	result=$(flock -s -w 5 "$REGISTRY_FILE" python3 -c "$script" "$REGISTRY_FILE" "$PC_ROLE" 2>>"$LOG")
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	scripts/agent_health_check.sh	179	⑶	⑶	"${SUPABASE_URL}/rest/v1/error_log" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	scripts/agent_health_check.sh	223	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?topic=like.cross_pc_inbox_*&created_at=gte.${NOW1_JST}&select=created_at" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	scripts/commander_send_shogun_second.sh	88	⑶	⑶	RESP=$(sb_curl -sS -m 15 -X POST "${SUPABASE_URL}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	scripts/inbox_write.sh	197	⑶	⑶ 派sb_url	"${sb_url}/rest/v1/pc_handshake" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	131	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	139	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	99	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	44	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	77	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	104	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.fukuincho&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	39	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	67	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	83	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?to_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	53	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	153	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	65	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,context_data,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	84	⑶	⑶	"${SUPABASE_URL}/rest/v1" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	37	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	82	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.second_pc&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	46	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	128	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	69	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	387	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	413	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/dev_lessons" \
+shim/hakudokai/hakudokai_start_watchers.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	728	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \
+shim/hakudokai/hakudokai_task_sync.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_fukuincho_watcher.sh	80	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"main_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watcher_alert\",\"content\":\"$msg\",\"requires_response\":false,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shim/hakudokai/hakudokai_task_sync.sh	HAKUDOKAI_CLINIC_ID	shim/hakudokai/hakudokai_watchdog.sh	390	⑷	⑷ 派CLINIC_ID	-d "{\"message_type\":\"urgent_stop\",\"from_pc\":\"second_pc\",\"to_pc\":\"fukuincho\",\"topic\":\"watchdog_failsafe\",\"content\":\"${msg}\",\"requires_response\":true,\"priority\":\"urgent\",\"clinic_id\":\"${CLINIC_ID}\",\"bypass_5round_limit\":false,\"is_meta_only\":false}" \
+shutsujin_departure.sh	HAKUDOKAI_PC_ROLE	shim/hakudokai/hakudokai_watchdog.sh	177	⑶	⑶ 派PC_ROLE	result=$(flock -s -w 5 "$REGISTRY_FILE" python3 -c "$script" "$REGISTRY_FILE" "$PC_ROLE" 2>>"$LOG")
+tests/e2e/mock_behaviors/common.sh	MOCK_CLI_TYPE	tests/e2e/mock_cli.sh	35	⑸	⑸	case "$MOCK_CLI_TYPE" in
+tests/e2e/mock_behaviors/common.sh	MOCK_CLI_TYPE	tests/e2e/mock_cli.sh	50	⑸	⑸	case "$MOCK_CLI_TYPE" in
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	scripts/agent_health_check.sh	179	⑶	⑶	"${SUPABASE_URL}/rest/v1/error_log" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	scripts/agent_health_check.sh	223	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?topic=like.cross_pc_inbox_*&created_at=gte.${NOW1_JST}&select=created_at" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	scripts/commander_send_shogun_second.sh	88	⑶	⑶	RESP=$(sb_curl -sS -m 15 -X POST "${SUPABASE_URL}/rest/v1/pc_handshake" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	scripts/inbox_write.sh	197	⑶	⑶ 派sb_url	"${sb_url}/rest/v1/pc_handshake" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	131	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	scripts/karo_second_send_iincho.sh	139	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	99	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.fukuincho&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	44	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	77	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_fukuincho_watcher.sh	104	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.fukuincho&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	39	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	67	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	83	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?to_pc=eq.kuro_desktop&acknowledged_at=is.null&order=created_at.asc&limit=5" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	53	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_reports_sync.sh	153	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	65	⑶	⑶	"${SUPABASE_URL}/rest/v1/pc_handshake?select=id,from_pc,to_pc,topic,content,context_data,priority,message_type,created_at&to_pc=eq.second_pc&acknowledged_at=is.null&order=created_at.asc&limit=10" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_receiver.sh	84	⑶	⑶	"${SUPABASE_URL}/rest/v1" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	37	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_secondpc_watcher.sh	82	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake?select=id,from_pc,to_pc,topic,content,priority,message_type,created_at&or=(to_pc.eq.main_pc,to_pc.eq.broadcast)&from_pc=eq.second_pc&acknowledged_at=is.null&clinic_id=eq.${CLINIC_ID}&order=created_at.asc&limit=10" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	46	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_task_sync.sh	128	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	69	⑶	⑶	SUPABASE_API="${SUPABASE_URL}/rest/v1"
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	387	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/pc_handshake" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	413	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/dev_lessons" \
+tests/smoke/test_enter_restart_watchdog.sh	SUPABASE_URL	shim/hakudokai/hakudokai_watchdog.sh	728	⑶	⑶ 派SUPABASE_API	"${SUPABASE_API}/task_tracker?active_on_pc=eq.third_pc&status=eq.in_progress" \

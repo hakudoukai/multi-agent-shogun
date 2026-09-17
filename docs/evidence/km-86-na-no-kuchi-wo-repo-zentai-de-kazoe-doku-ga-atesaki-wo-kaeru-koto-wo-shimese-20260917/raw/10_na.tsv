@@ -1,0 +1,309 @@
+file	line	name	form	op	default	class	sub	rule	verbatim
+android/gradlew	67	APP_HOME	A	:-	./	名	既定が path	R4	APP_HOME=$( cd "${APP_HOME:-./}" && pwd -P ) || exit
+first_setup.sh	206	NVM_DIR	A	:-	$HOME/.nvm	名	讀手 ⑶	R5	export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+first_setup.sh	453	REPLY	A	:-	Y	名	既定が語	R4	REPLY=${REPLY:-Y}
+lib/cli_adapter.sh	16	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	CLI_ADAPTER_SETTINGS="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	134	PERMISSION_FLAG	A	:-	--dangerously-skip-permissions	名	既定が語	R4	local permission_flag="${PERMISSION_FLAG:---dangerously-skip-permissions}"
+lib/cli_adapter.sh	448	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	497	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	709	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	949	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	1037	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	1168	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/cli_adapter.sh	1204	CLI_ADAPTER_SETTINGS	A	:-	${CLI_ADAPTER_PROJECT_ROOT	名	語(含む CLI)	R6b	local settings="${CLI_ADAPTER_SETTINGS:-${CLI_ADAPTER_PROJECT_ROOT}/config/settings.yaml}"
+lib/ntfy_auth.sh	38	NTFY_TOKEN	A	:-	(空)	名	語(末尾 TOKEN)	R6	if [ -n "${NTFY_TOKEN:-}" ]; then
+lib/ntfy_auth.sh	44	NTFY_PASS	A	:-	(空)	名	語(末尾 PASS)	R6	if [ -n "${NTFY_USER:-}" ] && [ -n "${NTFY_PASS:-}" ]; then
+lib/ntfy_auth.sh	44	NTFY_USER	A	:-	(空)	名	語(末尾 USER)	R6	if [ -n "${NTFY_USER:-}" ] && [ -n "${NTFY_PASS:-}" ]; then
+scripts/agent_health_check.sh	54	HEALTH_CHECK_LOG	A	:-	/tmp/agent_health_check.log	名	既定が path	R4	LOG="${HEALTH_CHECK_LOG:-/tmp/agent_health_check.log}"
+scripts/agent_health_check.sh	63	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ]; then
+scripts/agent_health_check.sh	68	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+scripts/agent_health_check.sh	83	HEALTH_CHECK_COOLDOWN_DIR	A	:-	/tmp/agent_health_check_cooldown	名	既定が path	R4	ALERT_COOLDOWN_DIR="${HEALTH_CHECK_COOLDOWN_DIR:-/tmp/agent_health_check_cooldown}"
+scripts/agent_health_check.sh	196	TEST_INBOX_WRITE_LOG	A	:-	(空)	名	讀手 ⑶	R5	if [ -n "${TEST_INBOX_WRITE_LOG:-}" ]; then
+scripts/agent_health_check.sh	208	HEALTH_CHECK_STRUCT_LOG	A	:-	/tmp/agent_health_check_struct.log	名	既定が path	R4	STRUCT_LOG="${HEALTH_CHECK_STRUCT_LOG:-/tmp/agent_health_check_struct.log}"
+scripts/agent_health_check.sh	356	HEALTH_CHECK_TOKEN_PROJECT_DIR	A	:-	$HOME/.claude/projects/-mnt-c-Users-User-projects-multi-agent-shogun	名	語(末尾 DIR)	R6	TOKEN_PROJECT_DIR="${HEALTH_CHECK_TOKEN_PROJECT_DIR:-$HOME/.claude/projects/-mnt-c-Users-User-projects-multi-agent-shogun}"
+scripts/agent_health_check.sh	448	DETECT_STALE_LOG	A	:-	/tmp/fukuincho_detect_stale.log	名	既定が path	R4	_detect_stale_log_file="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	41	TUI_CAPTURE_STATE	A	:-	unknown	名	既定が語	R4	local tui_state="${TUI_CAPTURE_STATE:-unknown}"
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	127	LAST_ACTION	A	:-	idle	名	既定が語	R4	write_heartbeat "$agent" "${LAST_ACTION:-idle}" || {
+scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh	56	CORRELATION_ID	A	:-	(空)	名	語(末尾 ID)	R6	"$ts" "$level" "$AGENT_ID" "$PANE_TARGET" "$CLI_TYPE" "$result" "${CORRELATION_ID:-}" "$extra" >> "$LOG_FILE"
+scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh	127	HEARTBEAT_VERSION	A	:-	unknown	名	既定が語	R4	log_json INFO "supervisor_secondpc_start" "version=${HEARTBEAT_VERSION:-unknown} agents=${#WATCHER_PANES[@]}"
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh	247	HEARTBEAT_VERSION	A	:-	unknown	名	既定が語	R4	log_json INFO "watcher_start" "pane=${PANE_TARGET} cli=${CLI_TYPE} version=${HEARTBEAT_VERSION:-unknown}"
+scripts/checks/context_usage_warn.sh	79	CLAUDE_CODE_SESSION_ID	A	:-	(空)	名	語(末尾 ID)	R6	SESSION_ID="${CLAUDE_CODE_SESSION_ID:-}"
+scripts/checks/context_usage_warn.sh	80	CLAUDE_PROJECT_DIR	A	:-	$HOME/multi-agent-shogun	名	語(末尾 DIR)	R6	PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$HOME/multi-agent-shogun}"
+scripts/checks/ephemeral_worktree_hygiene.sh	26	FREE_GI	A	:-	?	名	既定が語	R4	echo "[worktree-hygiene] free=${FREE_GI:-?}Gi 一時樹=${TMP_N}(掃ける=${SWEEPABLE} / 持主の言が要る=${OWNED} / 生きて居る=${LIVE})"
+scripts/checks/pane_identity.sh	43	PANE_REGISTRY	A	:=	$REPO_ROOT/queue/pane_registry.yaml	名	讀手 ⑶	R5	: "${PANE_REGISTRY:=$REPO_ROOT/queue/pane_registry.yaml}"
+scripts/checks/pane_identity.sh	44	WATCHER_SUPERVISOR	A	:=	$REPO_ROOT/scripts/watcher_supervisor.sh	名	讀手 ⑶	R5	: "${WATCHER_SUPERVISOR:=$REPO_ROOT/scripts/watcher_supervisor.sh}"
+scripts/checks/pane_identity.sh	45	CLAUDE_MD	A	:=	$REPO_ROOT/CLAUDE.md	名	讀手 ⑶	R5	: "${CLAUDE_MD:=$REPO_ROOT/CLAUDE.md}"
+scripts/checks/pane_identity.sh	46	SECTION18_ROLES_LIB	A	:=	$REPO_ROOT/lib/_section18_roles.sh	名	讀手 ⑶	R5	: "${SECTION18_ROLES_LIB:=$REPO_ROOT/lib/_section18_roles.sh}"
+scripts/checks/pane_identity.sh	47	DISABLE_FLAG	A	:=	$HOME/.openclaw/disable_pane_identity_hook	名	讀手 ⑶	R5	: "${DISABLE_FLAG:=$HOME/.openclaw/disable_pane_identity_hook}"
+scripts/checks/pane_identity.sh	48	LAST_RUN_JSON	A	:=	/tmp/pane_identity_last_run.json	名	既定が path	R4	: "${LAST_RUN_JSON:=/tmp/pane_identity_last_run.json}"
+scripts/checks/pane_identity.sh	49	TMUX_CMD	A	:=	tmux	名	既定が語	R4	: "${TMUX_CMD:=tmux}"
+scripts/checks/pane_identity.sh	397	TMPDIR	A	:-	/tmp	名	既定が path	R4	if dump_file=$(mktemp --suffix=.json -p "${TMPDIR:-/tmp}" "pane_identity_drift.XXXXXX" 2>/dev/null); then
+scripts/checks/pane_identity.sh	399	TMPDIR	A	:-	/tmp	名	既定が path	R4	elif dump_file=$(mktemp -p "${TMPDIR:-/tmp}" "pane_identity_drift.XXXXXX" 2>/dev/null); then
+scripts/checks/verify_state_before_asserting.sh	50	TMPDIR	A	:-	/tmp	名	既定が path	R4	last="$(find "${TMPDIR:-/tmp}" -maxdepth 1 -name '.vsba_fetch_*' -newermt '-10 minutes' 2>/dev/null | head -1)"
+scripts/checks/verify_state_before_asserting.sh	51	TMPDIR	A	:-	/tmp	名	既定が path	R4	[ -n "${last}" ] || { echo "[verify] ★止まれ★ 便 が「未 push/残り」を言ふ ―― ★10 分 内 の fetch の跡 が無い★"; echo "         → git fetch -q origin && touch \"${TMPDIR:-/tmp}/.vsba_fetch_$$\" を先 に"; hit=1; }
+scripts/inbox_watcher.sh	59	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/inbox_watcher.sh	231	NUDGE_FINGERPRINT_FILE	A	:-	/tmp/inbox_watcher_nudge_fingerprint_${AGENT_ID:-unknown	名	讀手 ⑶	R5	NUDGE_FINGERPRINT_FILE=${NUDGE_FINGERPRINT_FILE:-/tmp/inbox_watcher_nudge_fingerprint_${AGENT_ID:-unknown}}
+scripts/inbox_watcher.sh	265	AGENT_ID	A	:-	unknown	名	既定が語	R4	METRICS_FILE=${METRICS_FILE:-${SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/queue/metrics/${AGENT_ID:-unknown}_selfwatch.yaml}
+scripts/inbox_watcher.sh	265	METRICS_FILE	A	:-	${SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]	名	讀手 ⑶	R5	METRICS_FILE=${METRICS_FILE:-${SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/queue/metrics/${AGENT_ID:-unknown}_selfwatch.yaml}
+scripts/inbox_watcher.sh	283	AGENT_ID	A	:-	unknown	名	既定が語	R4	agent_id: "${AGENT_ID:-unknown}"
+scripts/inbox_watcher.sh	299	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	if [ -f "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" ]; then
+scripts/inbox_watcher.sh	376	CLI_TYPE	A	:-	(空)	名	讀手 ⑸	R5	if is_valid_cli_type "${CLI_TYPE:-}" && [ "$pane_cli" != "${CLI_TYPE}" ]; then
+scripts/inbox_watcher.sh	383	CLI_TYPE	A	:-	(空)	名	讀手 ⑸	R5	if is_valid_cli_type "${CLI_TYPE:-}"; then
+scripts/inbox_watcher.sh	392	CLI_TYPE	A	:-	<empty>	名	既定が語	R4	echo "[$(date)] [WARN] CLI unresolved for $AGENT_ID (pane='${pane_cli:-<empty>}', arg='${CLI_TYPE:-<empty>}'). Fallback=codex-safe." >&2
+scripts/inbox_watcher.sh	931	APPROVAL_ALERT_FILE	A	:-	/tmp/inbox_watcher_approval_${AGENT_ID	名	語(末尾 FILE)	R6	alert_file="${APPROVAL_ALERT_FILE:-/tmp/inbox_watcher_approval_${AGENT_ID}}"
+scripts/inbox_watcher.sh	982	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	[ ! -f "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" ]
+scripts/inbox_watcher.sh	1285	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh	1403	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/inbox_watcher.sh	1542	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh	1585	WATCH_BACKEND	A	:-	inotifywait	名	既定が語	R4	if [ "${WATCH_BACKEND:-inotifywait}" = "fswatch" ]; then
+scripts/inbox_write.sh	66	IW_DEAD_LIST	A	:-	gunshi-mac	名	既定が語	R4	_IW_DEAD_LIST="${IW_DEAD_LIST:-gunshi-mac}"
+scripts/inbox_write.sh	156	SUPABASE_URL	A	:-	$sb_url	名	語(末尾 URL)	R6	sb_url="${SUPABASE_URL:-$sb_url}"
+scripts/inbox_write.sh	157	SUPABASE_SERVICE_ROLE_KEY	A	:-	$sb_key	名	語(末尾 KEY)	R6	sb_key="${SUPABASE_SERVICE_ROLE_KEY:-$sb_key}"
+scripts/inbox_write.sh	272	INBOX_EXPIRES_AT	A	:-	(空)	名	語(含む INBOX)	R6b	INBOX_CONTENT="$CONTENT" INBOX_EXPIRES_AT="${INBOX_EXPIRES_AT:-}" INBOX_SUPERSEDES_ID="${INBOX_SUPERSEDES_ID:-}" "$SCRIPT_DIR/.venv/bin/python3" -c "
+scripts/inbox_write.sh	272	INBOX_SUPERSEDES_ID	A	:-	(空)	名	語(末尾 ID)	R6	INBOX_CONTENT="$CONTENT" INBOX_EXPIRES_AT="${INBOX_EXPIRES_AT:-}" INBOX_SUPERSEDES_ID="${INBOX_SUPERSEDES_ID:-}" "$SCRIPT_DIR/.venv/bin/python3" -c "
+scripts/karo_overload_monitor.sh	59	KARO_INBOX	A	:=	$REPO_ROOT/queue/inbox/karo.yaml	名	讀手 ⑶	R5	: "${KARO_INBOX:=$REPO_ROOT/queue/inbox/karo.yaml}"
+scripts/karo_overload_monitor.sh	60	TASKS_DIR	A	:=	$REPO_ROOT/queue/tasks	名	讀手 ⑶	R5	: "${TASKS_DIR:=$REPO_ROOT/queue/tasks}"
+scripts/karo_overload_monitor.sh	61	TAKENAKA_INBOX	A	:=	$REPO_ROOT/queue/inbox/takenaka.yaml	名	語(末尾 INBOX)	R6	: "${TAKENAKA_INBOX:=$REPO_ROOT/queue/inbox/takenaka.yaml}"
+scripts/karo_overload_monitor.sh	62	SHOGUN_INBOX	A	:=	$REPO_ROOT/queue/inbox/shogun.yaml	名	語(末尾 INBOX)	R6	: "${SHOGUN_INBOX:=$REPO_ROOT/queue/inbox/shogun.yaml}"
+scripts/karo_overload_monitor.sh	63	INBOX_WRITE_CMD	A	:=	$SCRIPT_DIR/inbox_write.sh	名	讀手 ⑶	R5	: "${INBOX_WRITE_CMD:=$SCRIPT_DIR/inbox_write.sh}"
+scripts/karo_overload_monitor.sh	64	STATE_FILE	A	:=	/tmp/karo_overload_monitor_state.json	名	既定が path	R4	: "${STATE_FILE:=/tmp/karo_overload_monitor_state.json}"
+scripts/karo_overload_monitor.sh	65	HEALTH_FILE	A	:=	/tmp/karo_overload_monitor.health	名	既定が path	R4	: "${HEALTH_FILE:=/tmp/karo_overload_monitor.health}"
+scripts/karo_overload_monitor.sh	66	DUMP_DIR	A	:=	/tmp	名	既定が path	R4	: "${DUMP_DIR:=/tmp}"
+scripts/karo_overload_monitor.sh	67	DISABLE_FLAG	A	:=	$HOME/.openclaw/disable_karo_overload_monitor	名	讀手 ⑶	R5	: "${DISABLE_FLAG:=$HOME/.openclaw/disable_karo_overload_monitor}"
+scripts/karo_overload_monitor.sh	68	GLOBAL_DISABLE_FLAG	A	:=	$HOME/.openclaw/global_disable	名	讀手 ⑶	R5	: "${GLOBAL_DISABLE_FLAG:=$HOME/.openclaw/global_disable}"
+scripts/karo_overload_monitor.sh	84	MONITOR_MODE	A	:=	default	名	既定が語	R4	: "${MONITOR_MODE:=default}"
+scripts/karo_second_send_iincho.sh	26	KARO_SECOND_SEND_IINCHO_LOG	A	:-	/tmp/karo_second_send_iincho.log	名	既定が path	R4	FAIL_LOG="${KARO_SECOND_SEND_IINCHO_LOG:-/tmp/karo_second_send_iincho.log}"
+scripts/karo_second_send_iincho.sh	49	HAKUDOKAI_CLINIC_ID	A	:-	hakudoukai_main	名	既定が語	R4	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+scripts/karo_second_send_iincho.sh	127	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+scripts/karo_second_send_iincho.sh	127	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+scripts/karo_second_send_iincho.sh	132	TMPDIR	A	:-	/tmp	名	既定が path	R4	CURL_ERR_FILE="$(mktemp "${TMPDIR:-/tmp}/karo_second_send_iincho_curlerr.XXXXXX")" \
+scripts/karo_second_send_iincho.sh	134	TMPDIR	A	:-	/tmp	名	既定が path	R4	RESPONSE_FILE="$(mktemp "${TMPDIR:-/tmp}/karo_second_send_iincho_resp.XXXXXX")" \
+scripts/karo_second_send_iincho.sh	159	RESPONSE_BODY	A	:-	<empty>	名	既定が語	R4	fatal "LIVE POST returned http_code=${HTTP_CODE} but no row id in response (return=representation not honored?) response_body=${RESPONSE_BODY:-<empty>}"
+scripts/karo_second_send_iincho.sh	164	CURL_ERR	A	:-	<empty>	名	既定が語	R4	fatal "LIVE POST failed: http_code=${HTTP_CODE:-<empty>} curl_stderr=${CURL_ERR:-<empty>}"
+scripts/karo_second_send_iincho.sh	164	HTTP_CODE	A	:-	<empty>	名	既定が語	R4	fatal "LIVE POST failed: http_code=${HTTP_CODE:-<empty>} curl_stderr=${CURL_ERR:-<empty>}"
+scripts/lib/detect_stale.sh	31	DETECT_STALE_LOG	A	:-	/tmp/fukuincho_detect_stale.log	名	既定が path	R4	DETECT_STALE_LOG="${DETECT_STALE_LOG:-/tmp/fukuincho_detect_stale.log}"
+scripts/lib/detect_stale.sh	32	DETECT_STALE_INFLIGHT_DIR	A	:-	/tmp/fukuincho_inflight	名	既定が path	R4	DETECT_STALE_INFLIGHT_DIR="${DETECT_STALE_INFLIGHT_DIR:-/tmp/fukuincho_inflight}"
+scripts/lib/detect_stale.sh	34	DETECT_STALE_LOCK_FILE	A	:-	/tmp/fukuincho_detect_stale.lock	名	既定が path	R4	DETECT_STALE_LOCK_FILE="${DETECT_STALE_LOCK_FILE:-/tmp/fukuincho_detect_stale.lock}"
+scripts/lib/inbox_path.sh	27	INBOX_VERSION	A	:-	v1	名	既定が語	R4	INBOX_VERSION="${INBOX_VERSION:-v1}"
+scripts/ntfy_listener.sh	140	NTFY_TOKEN	A	:+	token	名	既定が語	R4	echo "[$(date)] ntfy listener started — topic: $TOPIC (auth: ${NTFY_TOKEN:+token}${NTFY_USER:+basic}${NTFY_TOKEN:-${NTFY_USER:-none}})" >&2
+scripts/ntfy_listener.sh	140	NTFY_TOKEN	A	:-	${NTFY_USER:-none	名	讀手 ⑷	R5	echo "[$(date)] ntfy listener started — topic: $TOPIC (auth: ${NTFY_TOKEN:+token}${NTFY_USER:+basic}${NTFY_TOKEN:-${NTFY_USER:-none}})" >&2
+scripts/ntfy_listener.sh	140	NTFY_USER	A	:+	basic	名	既定が語	R4	echo "[$(date)] ntfy listener started — topic: $TOPIC (auth: ${NTFY_TOKEN:+token}${NTFY_USER:+basic}${NTFY_TOKEN:-${NTFY_USER:-none}})" >&2
+scripts/pane_enter_watcher.py	131	STALE_SEC	B get	get	DEFAULT_STALE_SEC	名	既定が語	R4	default=int(os.environ.get("STALE_SEC", DEFAULT_STALE_SEC)),
+scripts/pane_enter_watcher.py	134	POLL_SEC	B get	get	DEFAULT_POLL_SEC	名	既定が語	R4	default=int(os.environ.get("POLL_SEC", DEFAULT_POLL_SEC)),
+scripts/ratelimit_check.sh	556	CODEX_MODEL_LABEL	A	:-	Model	名	既定が語	R4	printf "  %s:\n" "${CODEX_MODEL_LABEL:-Model}"
+scripts/redundancy/shogun_report_watcher.sh	26	SHOGUN_REPORT_WATCHER_DIR	A	:-	$SCRIPT_DIR/queue/reports	名	語(末尾 DIR)	R6	REPORTS_DIR="${SHOGUN_REPORT_WATCHER_DIR:-$SCRIPT_DIR/queue/reports}"
+scripts/redundancy/shogun_report_watcher.sh	27	SHOGUN_REPORT_WATCHER_STATE	A	:-	/tmp/.shogun_report_watcher_state.json	名	既定が path	R4	STATE_FILE="${SHOGUN_REPORT_WATCHER_STATE:-/tmp/.shogun_report_watcher_state.json}"
+scripts/redundancy/shogun_report_watcher.sh	28	SHOGUN_REPORT_WATCHER_LOCK	A	:-	/tmp/.shogun_report_watcher.lock	名	既定が path	R4	LOCK_FILE="${SHOGUN_REPORT_WATCHER_LOCK:-/tmp/.shogun_report_watcher.lock}"
+scripts/setup_known_hosts.sh	22	KNOWN_HOSTS	A	:-	$HOME/.ssh/known_hosts	名	讀手 ⑶	R5	KNOWN_HOSTS="${KNOWN_HOSTS:-$HOME/.ssh/known_hosts}"
+scripts/stop_hook_inbox.sh	98	TMUX_PANE	A	:-	(空)	名	讀手 ⑴	R5	elif [ -n "${TMUX_PANE:-}" ]; then
+scripts/stop_hook_inbox.sh	126	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/stop_hook_inbox.sh	211	UNREAD_COUNT	A	:-	(空)	名	讀手 ⑸	R5	echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+scripts/stop_hook_inbox.sh	215	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/stop_hook_inbox.sh	221	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	24	ER_PANE_TARGET	A	:-	commander-third:0.0	名	既定が語	R4	export ER_PANE_TARGET="${ER_PANE_TARGET:-commander-third:0.0}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	25	ER_SESSION_NAME	A	:-	commander-third	名	既定が語	R4	export ER_SESSION_NAME="${ER_SESSION_NAME:-commander-third}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	26	ER_FROM_PC_FILTER	A	:-	commander	名	既定が語	R4	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	27	ER_LOG_DIR	A	:-	/home/hakudoukai/.local/share/enter_restart_commander	名	既定が path	R4	export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	28	ER_EVENT_TYPE	A	:-	enter_restart_commander_fire	名	既定が語	R4	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_commander_fire}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	29	ER_ROLE_NAME	A	:-	Commander	名	既定が語	R4	export ER_ROLE_NAME="${ER_ROLE_NAME:-Commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	30	ER_HEARTBEAT_FROM_PC	A	:-	commander	名	既定が語	R4	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-commander}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	31	ER_HEARTBEAT_TOPIC_PREFIX	A	:-	[enter_restart] commander alive	名	既定が語	R4	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] commander alive}"
+scripts/watchdogs/enter_restart_commander_watchdog.sh	32	ER_CYCLE_LOG_PREFIX	A	:-	enter_restart_commander	名	既定が語	R4	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_commander}"
+scripts/watchdogs/enter_restart_common_watchdog.sh	61	ER_PYTHON3_BIN	A	:-	/home/hakudoukai/.local/share/hermes-agent/venv/bin/python3	名	既定が path	R4	ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/home/hakudoukai/.local/share/hermes-agent/venv/bin/python3}"
+scripts/watchdogs/enter_restart_common_watchdog.sh	66	ER_TARGET_PC	A	:-	third_pc	名	既定が語	R4	ER_TARGET_PC="${ER_TARGET_PC:-third_pc}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	23	ER_PANE_TARGET	A	:-	shogun-main:shogun.0	名	既定が語	R4	export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-main:shogun.0}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	24	ER_SESSION_NAME	A	:-	shogun-main	名	既定が語	R4	export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	25	ER_FROM_PC_FILTER	A	:-	main_pc	名	既定が語	R4	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-main_pc}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	26	ER_LOG_DIR	A	:-	/home/user/.local/share/enter_restart_shogun_main	名	既定が path	R4	export ER_LOG_DIR="${ER_LOG_DIR:-/home/user/.local/share/enter_restart_shogun_main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	27	ER_EVENT_TYPE	A	:-	enter_restart_shogun_main_fire	名	既定が語	R4	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_main_fire}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	28	ER_ROLE_NAME	A	:-	shogun-main	名	既定が語	R4	export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	29	ER_HEARTBEAT_FROM_PC	A	:-	main_pc	名	既定が語	R4	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-main_pc}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	30	ER_HEARTBEAT_TOPIC_PREFIX	A	:-	[enter_restart] shogun_main alive	名	既定が語	R4	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] shogun_main alive}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	31	ER_CYCLE_LOG_PREFIX	A	:-	enter_restart_shogun_main	名	既定が語	R4	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_main}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	33	ER_TARGET_PC	A	:-	main_pc	名	既定が語	R4	export ER_TARGET_PC="${ER_TARGET_PC:-main_pc}"
+scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	36	ER_PYTHON3_BIN	A	:-	/usr/bin/python3	名	既定が path	R4	export ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/usr/bin/python3}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	23	ER_PANE_TARGET	A	:-	shogun-second:0.0	名	既定が語	R4	export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-second:0.0}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	24	ER_SESSION_NAME	A	:-	shogun-second	名	既定が語	R4	export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	25	ER_FROM_PC_FILTER	A	:-	second_pc	名	既定が語	R4	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-second_pc}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	26	ER_LOG_DIR	A	:-	/home/hakudokai/.local/share/enter_restart_shogun_second	名	既定が path	R4	export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudokai/.local/share/enter_restart_shogun_second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	27	ER_EVENT_TYPE	A	:-	enter_restart_shogun_second_fire	名	既定が語	R4	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_second_fire}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	28	ER_ROLE_NAME	A	:-	shogun-second	名	既定が語	R4	export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	29	ER_HEARTBEAT_FROM_PC	A	:-	second_pc	名	既定が語	R4	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-second_pc}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	30	ER_HEARTBEAT_TOPIC_PREFIX	A	:-	[enter_restart] shogun_second alive	名	既定が語	R4	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] shogun_second alive}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	31	ER_CYCLE_LOG_PREFIX	A	:-	enter_restart_shogun_second	名	既定が語	R4	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_second}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	33	ER_TARGET_PC	A	:-	second_pc	名	既定が語	R4	export ER_TARGET_PC="${ER_TARGET_PC:-second_pc}"
+scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	35	ER_PYTHON3_BIN	A	:-	/usr/bin/python3	名	既定が path	R4	export ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/usr/bin/python3}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	28	ER_PANE_TARGET	A	:-	shogun-third:0.0	名	既定が語	R4	export ER_PANE_TARGET="${ER_PANE_TARGET:-shogun-third:0.0}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	29	ER_SESSION_NAME	A	:-	shogun-third	名	既定が語	R4	export ER_SESSION_NAME="${ER_SESSION_NAME:-shogun-third}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	30	ER_FROM_PC_FILTER	A	:-	third_pc	名	既定が語	R4	export ER_FROM_PC_FILTER="${ER_FROM_PC_FILTER:-third_pc}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	31	ER_LOG_DIR	A	:-	/home/hakudoukai/.local/share/enter_restart_shogun_third	名	既定が path	R4	export ER_LOG_DIR="${ER_LOG_DIR:-/home/hakudoukai/.local/share/enter_restart_shogun_third}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	32	ER_EVENT_TYPE	A	:-	enter_restart_shogun_third_fire	名	既定が語	R4	export ER_EVENT_TYPE="${ER_EVENT_TYPE:-enter_restart_shogun_third_fire}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	33	ER_ROLE_NAME	A	:-	shogun-third	名	既定が語	R4	export ER_ROLE_NAME="${ER_ROLE_NAME:-shogun-third}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	34	ER_HEARTBEAT_FROM_PC	A	:-	third_pc	名	既定が語	R4	export ER_HEARTBEAT_FROM_PC="${ER_HEARTBEAT_FROM_PC:-third_pc}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	35	ER_HEARTBEAT_TOPIC_PREFIX	A	:-	[enter_restart] shogun_third alive	名	既定が語	R4	export ER_HEARTBEAT_TOPIC_PREFIX="${ER_HEARTBEAT_TOPIC_PREFIX:-[enter_restart] shogun_third alive}"
+scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	36	ER_CYCLE_LOG_PREFIX	A	:-	enter_restart_shogun_third	名	既定が語	R4	export ER_CYCLE_LOG_PREFIX="${ER_CYCLE_LOG_PREFIX:-enter_restart_shogun_third}"
+shim/hakudokai/hakudokai_ai_jimucho.py	55	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_ai_jimucho.py	59	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_ai_jimucho.py	61	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_ai_jimucho.py	62	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_audit_scheduler.sh	16	SUPABASE_URL	A	:-	(空)	名	語(末尾 URL)	R6	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_billing_tier.py	39	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_billing_tier.py	80	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_billing_tier.py	82	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_billing_tier.py	83	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_daily_summary.py	20	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_daily_summary.py	24	SUPABASE_URL	B get	get	""	名	讀手 ⑶	R5	url = os.environ.get("SUPABASE_URL", "")
+shim/hakudokai/hakudokai_daily_summary.py	25	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	語(末尾 KEY)	R6	key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_dashboard_sync.py	46	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_dashboard_sync.py	69	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_dashboard_sync.py	71	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_dashboard_sync.py	72	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_departure.sh	55	HAKUDOKAI_ROLE	A	:-	(空)	名	語(末尾 ROLE)	R6	ROLE="${HAKUDOKAI_ROLE:-}"
+shim/hakudokai/hakudokai_departure.sh	92	SUPABASE_URL	A	:-	(空)	名	語(末尾 URL)	R6	if [ -z "${SUPABASE_URL:-}" ]; then
+shim/hakudokai/hakudokai_departure.sh	96	SUPABASE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -z "${SUPABASE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_departure.sh	96	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -z "${SUPABASE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_departure.sh	101	HAKUDOKAI_PC_ID	A	:-	(unset, will record 'unknown')	名	既定が語	R4	echo "[departure] HAKUDOKAI_PC_ID=${HAKUDOKAI_PC_ID:-(unset, will record 'unknown')}"
+shim/hakudokai/hakudokai_departure.sh	102	HAKUDOKAI_CLINIC_ID	A	:-	hakudoukai_main	名	既定が語	R4	echo "[departure] HAKUDOKAI_CLINIC_ID=${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_dev_lessons.py	31	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_dev_lessons.py	36	SUPABASE_URL	B get	get	""	名	讀手 ⑶	R5	url = os.environ.get("SUPABASE_URL", "")
+shim/hakudokai/hakudokai_dev_lessons.py	37	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	語(末尾 KEY)	R6	key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_escalation.py	29	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_escalation.py	71	SUPABASE_URL	B get	get	""	名	讀手 ⑶+⑷	R5	url = os.environ.get("SUPABASE_URL", "")
+shim/hakudokai/hakudokai_escalation.py	72	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	讀手 ⑸	R5	key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_escalation.py	88	NTFY_URL	B get	get	""	名	讀手 ⑶+⑷	R5	ntfy_url = os.environ.get("NTFY_URL", "")
+shim/hakudokai/hakudokai_escalation.py	89	NTFY_TOPIC	B get	get	""	名	讀手 ⑶+⑷	R5	ntfy_topic = os.environ.get("NTFY_TOPIC", "")
+shim/hakudokai/hakudokai_fast_payment.py	62	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_fast_payment.py	66	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_fast_payment.py	68	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_fast_payment.py	69	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_fukuincho_poll.py	15	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	語(末尾 KEY)	R6	api_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	14	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	語(末尾 KEY)	R6	api_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	44	FUKUINCHO_PANE	A	:-	fukuincho:0.0	名	既定が語	R4	FUKUINCHO_PANE="${FUKUINCHO_PANE:-fukuincho:0.0}"
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	54	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	60	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	60	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	20	HAKUDOKAI_CLINIC_ID	A	:-	hakudoukai_main	名	既定が語	R4	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	33	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	39	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_fukuincho_watcher.sh	39	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_heartbeat.py	53	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_heartbeat.py	72	HAKUDOKAI_ROLE	B get	get	(無)	名	讀手 ⑸	R5	role = os.environ.get("HAKUDOKAI_ROLE")
+shim/hakudokai/hakudokai_heartbeat.py	90	HAKUDOKAI_YAMA_PC	B get	get	"fukuincho"	名	既定が語	R4	yama_pc = os.environ.get("HAKUDOKAI_YAMA_PC", "fukuincho")
+shim/hakudokai/hakudokai_heartbeat.py	102	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_heartbeat.py	104	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_heartbeat.py	105	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_heartbeat_archive.py	39	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_heartbeat_archive.py	43	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_heartbeat_archive.py	45	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_heartbeat_archive.py	46	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_heartbeat_check.py	51	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_heartbeat_check.py	70	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_heartbeat_check.py	72	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_heartbeat_check.py	73	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_inbox_watcher.py	66	HAKUDOKAI_ROLE	B get	get	(無)	名	讀手 ⑶+⑷	R5	role = os.environ.get("HAKUDOKAI_ROLE")
+shim/hakudokai/hakudokai_inbox_watcher.py	81	IDLE_FLAG_DIR	B get	get	(無)	名	讀手 ⑶	R5	base = os.environ.get("IDLE_FLAG_DIR")
+shim/hakudokai/hakudokai_inbox_watcher.py	93	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_inbox_watcher.py	94	HAKUDOKAI_PC_ID	B get	get	""	名	語(末尾 ID)	R6	NOTIFIED_BY_PC = os.environ.get("HAKUDOKAI_PC_ID", "")  # §18 配置: main_pc / second_pc
+shim/hakudokai/hakudokai_inbox_watcher.py	218	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_inbox_watcher.py	220	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_inbox_watcher.py	221	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_inbox_write.py	71	HAKUDOKAI_YAMA_PC	B get	get	"fukuincho"	名	既定が語	R4	yama_pc = os.environ.get("HAKUDOKAI_YAMA_PC", "fukuincho")
+shim/hakudokai/hakudokai_inbox_write.py	124	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_inbox_write.py	126	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_inbox_write.py	127	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_inbox_write.py	140	HAKUDOKAI_ROLE	B get	get	""	名	讀手 ⑸	R5	from_role_norm = (args.from_role or os.environ.get("HAKUDOKAI_ROLE", "")).lower().strip()
+shim/hakudokai/hakudokai_inbox_write.py	163	HAKUDOKAI_ROLE	B get	get	""	名	讀手 ⑸	R5	"from_role": args.from_role or os.environ.get("HAKUDOKAI_ROLE", ""),
+shim/hakudokai/hakudokai_inbox_write.py	179	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	clinic_id = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_init_agents.sh	13	HAKUDOKAI_CLINIC_ID	A	:-	hakudoukai_main	名	既定が語	R4	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	28	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	34	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	34	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_minimal_install.sh	143	SUPABASE_SERVICE_ROLE_KEY	A	:-	${SUPABASE_KEY:-	名	語(末尾 KEY)	R6	if [ -n "${SUPABASE_URL:-}" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-${SUPABASE_KEY:-}}" ]; then
+shim/hakudokai/hakudokai_minimal_install.sh	143	SUPABASE_URL	A	:-	(空)	名	語(末尾 URL)	R6	if [ -n "${SUPABASE_URL:-}" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-${SUPABASE_KEY:-}}" ]; then
+shim/hakudokai/hakudokai_patient_chat.py	59	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_patient_chat.py	104	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_patient_chat.py	106	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_patient_chat.py	107	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_patient_notification.py	52	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_patient_notification.py	91	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_patient_notification.py	93	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_patient_notification.py	94	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_patient_pwa.py	54	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_patient_pwa.py	58	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_patient_pwa.py	60	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_patient_pwa.py	61	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_paylight_integration.py	68	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_paylight_integration.py	72	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_paylight_integration.py	74	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_paylight_integration.py	75	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_realtime_bridge.py	33	HOME	B get	get	""	名	讀手 ⑶	R5	HOME = os.environ.get("HOME", "")
+shim/hakudokai/hakudokai_realtime_bridge.py	41	SUPABASE_URL	B get	get	""	名	語(末尾 URL)	R6	SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
+shim/hakudokai/hakudokai_realtime_bridge.py	42	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	語(末尾 KEY)	R6	SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_realtime_bridge.py	43	HAKUDOKAI_PC_ROLE	B get	get	"MainPC"	名	既定が語	R4	PC_ROLE = os.environ.get("HAKUDOKAI_PC_ROLE", "MainPC")
+shim/hakudokai/hakudokai_reports_sync.sh	35	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	[ -z "${SUPABASE_URL:-}" ] && SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+shim/hakudokai/hakudokai_reports_sync.sh	36	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	[ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+shim/hakudokai/hakudokai_reports_sync.sh	37	HAKUDOKAI_CLINIC_ID	A	:-	(空)	名	語(末尾 ID)	R6	[ -z "${HAKUDOKAI_CLINIC_ID:-}" ] && HAKUDOKAI_CLINIC_ID=$(grep '^HAKUDOKAI_CLINIC_ID=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+shim/hakudokai/hakudokai_reports_sync.sh	40	HAKUDOKAI_CLINIC_ID	A	:-	(空)	名	語(末尾 ID)	R6	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-}"
+shim/hakudokai/hakudokai_reports_sync.sh	42	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_reports_sync.sh	42	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_role_init.py	29	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	default=os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main"),
+shim/hakudokai/hakudokai_secondpc_receiver.sh	28	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_secondpc_receiver.sh	34	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_receiver.sh	34	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_receiver_poll.py	21	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	語(末尾 KEY)	R6	api_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_secondpc_watcher.sh	14	HAKUDOKAI_CLINIC_ID	A	:-	hakudoukai_main	名	既定が語	R4	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	26	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_secondpc_watcher.sh	32	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_watcher.sh	32	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_secondpc_watcher.sh	38	SECONDPC_WATCHER_PROCESSED_FILE	A	:-	/tmp/hakudokai_secondpc_watcher_processed.txt	名	既定が path	R4	PROCESSED_FILE="${SECONDPC_WATCHER_PROCESSED_FILE:-/tmp/hakudokai_secondpc_watcher_processed.txt}"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	39	SECONDPC_WATCHER_RESPONSE_TMP	A	:-	/tmp/hakudokai_secondpc_watcher_response.json	名	既定が path	R4	RESPONSE_TMP="${SECONDPC_WATCHER_RESPONSE_TMP:-/tmp/hakudokai_secondpc_watcher_response.json}"
+shim/hakudokai/hakudokai_secondpc_watcher.sh	40	SECONDPC_WATCHER_HEALTH_FILE	A	:-	/tmp/hakudokai_secondpc_watcher.health	名	既定が path	R4	HEALTHCHECK_FILE="${SECONDPC_WATCHER_HEALTH_FILE:-/tmp/hakudokai_secondpc_watcher.health}"
+shim/hakudokai/hakudokai_secondpc_watcher_poll.py	13	SUPABASE_SERVICE_ROLE_KEY	B get	get	""	名	語(末尾 KEY)	R6	api_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+shim/hakudokai/hakudokai_skill_candidate.py	51	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_skill_candidate.py	55	HAKUDOKAI_ROLE	B get	get	(無)	名	讀手 ⑸	R5	role = args.from_role or os.environ.get("HAKUDOKAI_ROLE")
+shim/hakudokai/hakudokai_skill_candidate.py	75	HAKUDOKAI_YAMA_PC	B get	get	"fukuincho"	名	既定が語	R4	yama_pc = os.environ.get("HAKUDOKAI_YAMA_PC", "fukuincho")
+shim/hakudokai/hakudokai_skill_candidate.py	87	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_skill_candidate.py	89	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_skill_candidate.py	90	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_skill_review.py	41	HAKUDOKAI_CLINIC_ID	B get	get	"hakudoukai_main"	名	既定が語	R4	CLINIC_ID = os.environ.get("HAKUDOKAI_CLINIC_ID", "hakudoukai_main")
+shim/hakudokai/hakudokai_skill_review.py	45	SUPABASE_URL	B get	get	(無)	名	語(末尾 URL)	R6	url = os.environ.get("SUPABASE_URL")
+shim/hakudokai/hakudokai_skill_review.py	47	SUPABASE_SERVICE_ROLE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+shim/hakudokai/hakudokai_skill_review.py	48	SUPABASE_KEY	B get	get	(無)	名	語(末尾 KEY)	R6	or os.environ.get("SUPABASE_KEY")
+shim/hakudokai/hakudokai_skill_review.py	164	HAKUDOKAI_YAMA_PC	B get	get	"fukuincho"	名	既定が語	R4	yama_pc = os.environ.get("HAKUDOKAI_YAMA_PC", "fukuincho")
+shim/hakudokai/hakudokai_start_watchers.sh	26	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	26	SUPABASE_URL	A	:-	(空)	名	語(末尾 URL)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	35	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	35	SUPABASE_URL	A	:-	(空)	名	語(末尾 URL)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_start_watchers.sh	168	HAKUDOKAI_PC_ROLE	A	:-	MainPC	名	既定が語	R4	HAKUDOKAI_PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}" \
+shim/hakudokai/hakudokai_task_sync.sh	19	HAKUDOKAI_CLINIC_ID	A	:-	hakudoukai_main	名	既定が語	R4	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_task_sync.sh	35	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_task_sync.sh	41	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_task_sync.sh	41	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+shim/hakudokai/hakudokai_watchdog.sh	58	SUPABASE_URL	A	:-	(空)	名	讀手 ⑶	R5	if [ -z "${SUPABASE_URL:-}" ] && [ -f "$HOME/.hakudokai/env" ]; then
+shim/hakudokai/hakudokai_watchdog.sh	68	HAKUDOKAI_CLINIC_ID	A	:-	hakudoukai_main	名	既定が語	R4	CLINIC_ID="${HAKUDOKAI_CLINIC_ID:-hakudoukai_main}"
+shim/hakudokai/hakudokai_watchdog.sh	74	HAKUDOKAI_PC_ROLE	A	:-	MainPC	名	既定が語	R4	PC_ROLE="${HAKUDOKAI_PC_ROLE:-MainPC}"
+shim/hakudokai/hakudokai_watchdog.sh	723	SUPABASE_API	A	:-	(空)	名	讀手 ⑶	R5	if [ ! -f "$HOME/.openclaw/disable_task_heartbeat" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -n "${SUPABASE_API:-}" ]; then
+shim/hakudokai/hakudokai_watchdog.sh	723	SUPABASE_SERVICE_ROLE_KEY	A	:-	(空)	名	語(末尾 KEY)	R6	if [ ! -f "$HOME/.openclaw/disable_task_heartbeat" ] && [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && [ -n "${SUPABASE_API:-}" ]; then
+shim/hakudokai/lib/sb_auth.sh	9	TMPDIR	A	:-	/tmp	名	既定が path	R4	_cfg="$(mktemp "${TMPDIR:-/tmp}/sb-curl.XXXXXX")" || exit 1
+shutsujin_departure.sh	956	HAKUDOKAI_PC_ROLE	A	:-	MainPC	名	既定が語	R4	if [[ "${HAKUDOKAI_PC_ROLE:-MainPC}" == "MainPC" ]] && [ -n "${SUPABASE_DB_URL:-}" ]; then
+shutsujin_departure.sh	956	SUPABASE_DB_URL	A	:-	(空)	名	語(末尾 URL)	R6	if [[ "${HAKUDOKAI_PC_ROLE:-MainPC}" == "MainPC" ]] && [ -n "${SUPABASE_DB_URL:-}" ]; then
+skills/shogun-screenshot/scripts/capture_local.sh	29	MULTI_AGENT_SHOGUN_DIR	A	:-	(空)	名	讀手 ⑶	R5	elif [[ -n "${MULTI_AGENT_SHOGUN_DIR:-}" && -f "${MULTI_AGENT_SHOGUN_DIR}/config/settings.yaml" ]]; then
+tests/e2e/helpers/setup.bash	98	E2E_QUEUE	A	:-	(空)	名	讀手 ⑶+⑷	R5	if [ -n "${E2E_QUEUE:-}" ] && [ -d "$E2E_QUEUE" ]; then
+tests/e2e/mock_behaviors/common.sh	148	MOCK_AGENT_ID	A	:-	(空)	名	讀手 ⑶	R5	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_behaviors/common.sh	148	MOCK_CLI_TYPE	A	:-	claude	名	既定が語	R4	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_behaviors/common.sh	149	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	local _flag_dir="${IDLE_FLAG_DIR:-/tmp}"
+tests/e2e/mock_behaviors/common.sh	167	MOCK_AGENT_ID	A	:-	(空)	名	讀手 ⑶	R5	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_behaviors/common.sh	167	MOCK_CLI_TYPE	A	:-	claude	名	既定が語	R4	if [[ "${MOCK_CLI_TYPE:-claude}" == "claude" ]] && [[ -n "${MOCK_AGENT_ID:-}" ]]; then
+tests/e2e/mock_behaviors/common.sh	168	IDLE_FLAG_DIR	A	:-	/tmp	名	既定が path	R4	local _flag_dir="${IDLE_FLAG_DIR:-/tmp}"
+tests/e2e/mock_cli.sh	27	MOCK_CLI_TYPE	A	:-	claude	名	既定が語	R4	MOCK_CLI_TYPE="${MOCK_CLI_TYPE:-claude}"
+tests/e2e/mock_cli.sh	29	MOCK_AGENT_ID	A	:-	unknown	名	既定が語	R4	MOCK_AGENT_ID="${MOCK_AGENT_ID:-unknown}"
+tests/e2e/mock_cli.sh	30	MOCK_PROJECT_ROOT	A	:-	.	名	既定が語	R4	MOCK_PROJECT_ROOT="${MOCK_PROJECT_ROOT:-.}"
+tests/smoke/test_enter_restart_watchdog.sh	61	FAKE_PANE_TAIL	A	:-	(空)	名	語(含む PANE)	R6b	printf '%s\n' "${FAKE_PANE_TAIL:-}"
+tests/smoke/test_enter_restart_watchdog.sh	84	SUPABASE_SERVICE_ROLE_KEY	A	:-	stub_role_key	名	既定が語	R4	export SUPABASE_SERVICE_ROLE_KEY="${SUPABASE_SERVICE_ROLE_KEY:-stub_role_key}"
+tests/smoke/test_enter_restart_watchdog.sh	85	SUPABASE_URL	A	:-	http://stub.invalid	名	既定が path	R4	export SUPABASE_URL="${SUPABASE_URL:-http://stub.invalid}"
+tests/smoke/test_enter_restart_watchdog.sh	98	FAKE_PYTHON3_RESPONSE	A	:-	NO_DATA	名	既定が語	R4	echo "${FAKE_PYTHON3_RESPONSE:-NO_DATA}"
+tests/test_helper/mock_tmux_pane.bash	59	MOCK_PANE_LIST	A	:-	(空)	名	語(含む PANE)	R6b	if [[ -n "${MOCK_PANE_LIST:-}" ]]; then
+tests/test_helper/mock_tmux_pane.bash	77	MOCK_PANE_AGENT_ID	A	:-	(空)	名	語(末尾 ID)	R6	printf '%s\n' "${MOCK_PANE_AGENT_ID:-}"
+tests/test_helper/mock_tmux_pane.bash	80	MOCK_PANE_CMD	A	:-	claude	名	既定が語	R4	printf '%s\n' "${MOCK_PANE_CMD:-claude}"
+tests/test_helper/mock_tmux_pane.bash	89	MOCK_CAPTURE_PANE	A	:-	(空)	名	語(末尾 PANE)	R6	if [[ -n "${MOCK_CAPTURE_PANE:-}" ]]; then
+tests/test_secondpc_secret_argv.py	52	PATH	B []	[]	(必須)	名	語(末尾 PATH)	R6	env={**os.environ,'PATH':str(b)+os.pathsep+os.environ['PATH'],'HOME':str(home),'SUPABASE_URL':'https://mock.invalid','SUPABASE_SERVICE_ROLE_KEY':MOCK,'CALLS':str(calls),'SECONDPC_WATCHER_PROCESSED_FILE':str(state/'processed'),'SECONDPC_WATCHER_RESPONSE_TMP':str(state/'response.json'),'SECONDPC_WATCHER_HEALTH_FILE':str(state/'health.json'),'SECONDPC_WATCHER_RETRY_TRACKER_FILE':str(state/'retry.json')};(state/'processed').write_text('')

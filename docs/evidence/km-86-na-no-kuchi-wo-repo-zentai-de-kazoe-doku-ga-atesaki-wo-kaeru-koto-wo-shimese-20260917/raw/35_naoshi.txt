@@ -1,0 +1,22 @@
+# 35 ㋕ 直し形(紙にのみ・据ゑず) / 刻 2026-09-17T11:48:05+0900 / 名の口 308 / 既定空 130 / 既定が path 44
+## 案 × 毒(塞ぐ/塞がぬ)
+  A 空を拒む(:? / 空なら止まる)	空文字=塞ぐ	空白のみ=塞がぬ(非空)	全角空白=塞がぬ	;入り=塞がぬ	$(…)入り=塞がぬ	改行入り=塞がぬ	..入り=塞がぬ	絶対path=塞がぬ	在らぬ名=塞がぬ	256字超=塞がぬ
+  B 正規化+根の内(realpath ⊂ 根)	空文字=塞ぐ(根=空→根そのもの≠内)	空白のみ=塞ぐ(在らぬ)	全角空白=塞ぐ(在らぬ)	;入り=塞ぐ(在らぬ)	$(…)入り=塞ぐ(在らぬ)	改行入り=塞ぐ(在らぬ)	..入り=塞ぐ	絶対path=塞ぐ	在らぬ名=塞ぐ(在らぬ)	256字超=塞ぐ(在らぬ)
+  C 字類の禁(空白/制御/;/$(/256/先頭-)	空文字=塞ぐ	空白のみ=塞ぐ	全角空白=塞ぐ	;入り=塞ぐ	$(…)入り=塞ぐ	改行入り=塞ぐ	..入り=★塞がぬ★	絶対path=★塞がぬ★	在らぬ名=★塞がぬ★	256字超=塞ぐ
+  D 存在・往復の確認(has-session/-e/往復)	空文字=塞ぐ(往復で別名)	空白のみ=塞ぐ	全角空白=塞ぐ	;入り=塞ぐ	$(…)入り=塞ぐ	改行入り=塞ぐ	..入り=塞ぐ(在らねば)/★塞がぬ(在れば)★	絶対path=同左	在らぬ名=塞ぐ	256字超=塞ぐ
+  E 許容集合(roster/registry)	空文字=塞ぐ	空白のみ=塞ぐ	全角空白=塞ぐ	;入り=塞ぐ	$(…)入り=塞ぐ	改行入り=塞ぐ	..入り=塞ぐ	絶対path=塞ぐ	在らぬ名=塞ぐ	256字超=塞ぐ
+## 偽陽性の見積(今 repo の既定・讀手を其の案に当てた數= 正当な値が拒まれる證)
+  A 空を拒む: 既定が空の名の口 130 の内、同 file が -z/-n で「空= 未設定」と扱ふ口 ★52★(之は空が正当ゆゑ A は偽陽性)。残り 78 は空が下流へ行く(⑶ なら根へ・30 の 124 走)。例: ntfy_auth.sh:NTFY_TOKEN / ntfy_auth.sh:NTFY_PASS / ntfy_auth.sh:NTFY_USER / agent_health_check.sh:SUPABASE_URL / agent_health_check.sh:SUPABASE_SERVICE_ROLE_KEY / agent_health_check.sh:TEST_INBOX_WRITE_LOG / karo_second_send_iincho.sh:SUPABASE_SERVICE_ROLE_KEY / karo_second_send_iincho.sh:SUPABASE_URL
+  B 正規化+根の内: 既定が path の口 44 の内、repo 根の外(/tmp /var /usr /opt /etc /private・$HOME・~)を宣で指す口 ★37★(内 $HOME/~ 0)= 根を repo に限れば之が偽陽性 → 根は「repo ∪ $HOME ∪ /tmp」の集合で宣する要。例: agent_health_check.sh:HEALTH_CHECK_LOG=/tmp/agent_health_check.log / agent_health_check.sh:HEALTH_CHECK_COOLDOWN_DIR=/tmp/agent_health_check_cooldo / agent_health_check.sh:HEALTH_CHECK_STRUCT_LOG=/tmp/agent_health_check_struct / agent_health_check.sh:DETECT_STALE_LOG=/tmp/fukuincho_detect_stale.lo / pane_identity.sh:LAST_RUN_JSON=/tmp/pane_identity_last_run.js / pane_identity.sh:TMPDIR=/tmp / pane_identity.sh:TMPDIR=/tmp / verify_state_before_asserting.sh:TMPDIR=/tmp
+  C 字類の禁: 今の既定に禁の字(制御/改行/;/$(/全角空白/256 超/先頭 -)を含む口 ★2★(0 なら偽陽性 0)/ 空白を含む既定 6(空白を禁に入れれば偽陽性)。例: cli_adapter.sh:PERMISSION_FLAG='--dangerously-skip-permissions' / inbox_watcher.sh:METRICS_FILE='${SCRIPT_DIR:-$(cd "$(dirname '
+  D 存在・往復: 偽陽性 0(動的・名を列挙せぬ)。★塞がぬ形= 在る別の pane/file への誤配★(往復も通る)。今の慣行: ⑴ の讀手 17 行の内、前 8 行に has-session/display-message/list-panes の検めが在る ★8★ 行(enter_restart_common_watchdog.sh L180 の形)。
+  E 許容集合: ⑷ の口の既定(役職名)を queue/inbox/<名>.yaml の roster(19 箱)に当てると 在らぬ ★5/5★(之は「既定が死箱を指す」= 偽陽性でなく★宣の腐り★・inbox_write.sh の IW_DEAD の柵が之を止める): inbox_watcher.sh:AGENT_ID=unknown / inbox_watcher.sh:AGENT_ID=unknown / ntfy_listener.sh:NTFY_TOKEN=token / ntfy_listener.sh:NTFY_USER=basic / mock_cli.sh:MOCK_AGENT_ID=unknown
+    ⑴⑵ の既定(pane target 形 `s:w.p`)を queue/pane_registry.yaml(在)に当てると 在らぬ ★4/5★: enter_restart_commander_watchdog.sh:ER_PANE_TARGET=commander-third:0.0 / enter_restart_shogun_main_watchdog.sh:ER_PANE_TARGET=shogun-main:shogun.0 / enter_restart_shogun_third_watchdog.sh:ER_PANE_TARGET=shogun-third:0.0 / hakudokai_fukuincho_reverse_watcher.sh:FUKUINCHO_PANE=fukuincho:0.0
+    inbox_write.sh を直に呼ぶ行の第一引数(字面・根A)= 9 行 / 異なり 4: shogun×5(★箱無し★) / karo×2 / karo-mac×1 / iincho×1(★箱無し★)
+## 問「名は許容集合でしか守れぬのか」の答(反例)
+  反例 B= 正規化+根の内: 名を列挙せず「根の下に在るか」で 10 毒中 10 を塞ぐ(path の類のみ・tmux/topic には効かぬ)。
+  反例 C= 字類の禁: 名を列挙せず 10 毒中 7 を塞ぐ(.. / 絶対 / 在らぬ名 は字類で見分けられぬ= ★字類の番人の限界★)。
+  反例 D= 存在・往復: 名を列挙せず 10 毒中 9〜10 を塞ぐ(在る別名への誤配のみ塞がぬ)。
+  ∴ 許容集合(E)は「在る別名への誤配」を塞ぐ唯一の形だが、偽陽性= 宣の腐り(既定が roster に無い)が今 ★5★ 口在り、E を据ゑれば之が鳴る(鳴るのが正)。
+  乙→甲(`${X-D}`→`${X:-D}`)は空文字のみ塞ぐ。根A に乙は 0 ゆゑ当てる口 0(python get の 96 口は乙と同じ振舞ひ・空文字を素通し)。
+## 案の順(見立て・据ゑるは家老の裁の後): 口の直後に C(字類)→ 類別に B(path)/D(tmux・箱)→ E は roster の在る ⑷ のみ。A は -z/-n で空を扱ふ口 52 を除いて当てる。

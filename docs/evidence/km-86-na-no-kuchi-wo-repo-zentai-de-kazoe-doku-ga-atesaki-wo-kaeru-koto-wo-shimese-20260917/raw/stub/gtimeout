@@ -1,0 +1,3 @@
+#!/bin/sh
+# stub timeout ―― 先頭の秒を捨てて残りを走らせる
+shift; exec "$@"

@@ -1,0 +1,4 @@
+# 写し器 418 ―― 口 shim/hakudokai/hakudokai_fukuincho_reverse_poll.py:SUPABASE_SERVICE_ROLE_KEY(逐語) / 讀手 shim/hakudokai/hakudokai_escalation.py:248 類 ⑸(python= 口の直後の値のみ・下流の合成は写さぬ)
+import os, binascii
+api_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+print('TARGET=' + binascii.hexlify(str(api_key).encode('utf-8')).decode())

@@ -1,0 +1,13 @@
+label	harness	value	rc	branch	utsuwa_lines	soto_lines	target	expect	koku	stderr_head
+陰性A(甲 path・宣どほり)	raw/40_h/A_kou_path.sh	queue	0	無	0	0	queue/x.yaml	queue/x.yaml・報せ0・声0	11:49:05
+★陽性A1(甲 path・..入り)★	raw/40_h/A_kou_path.sh	../km86	0	無	0	0	../km86/x.yaml	../km86/x.yaml= 上へ	11:49:05
+★陽性A2(甲 path・絶対)★	raw/40_h/A_kou_path.sh	/tmp/km86_abs	0	無	0	0	/tmp/km86_abs/x.yaml	/tmp/km86_abs/x.yaml= 根が変はる	11:49:05
+陰性A′(甲 path・空文字→既定へ)	raw/40_h/A_kou_path.sh	(空文字)	0	無	0	0	queue/x.yaml	queue/x.yaml(既定へ落ちる)	11:49:05
+★陽性A3(乙 path・空文字→素通し)★	raw/40_h/A2_otsu_path.sh	(空文字)	0	無	0	0	/x.yaml	/x.yaml= 根そのもの	11:49:05
+陰性A″(乙 path・宣どほり)	raw/40_h/A2_otsu_path.sh	queue	0	無	0	0	queue/x.yaml	queue/x.yaml	11:49:05
+陰性B(tmux・宣どほり)	raw/40_h/B_tmux.sh	shogun-main:0.0	0	無	0	0	shogun-main:0.0	-t shogun-main:0.0・stub	11:49:05
+★陽性B(tmux・在らぬ名)★	raw/40_h/B_tmux.sh	zz_no_such_km86	0	無	0	0	zz_no_such_km86	-t zz_no_such_km86(stub が其の儘受ける)	11:49:05
+陰性C(eval・宣どほり)	raw/40_h/C_eval.sh	kaname86	0	無	0	0	kaname86	kaname86	11:49:05
+★陽性C(eval・$(…)入り)★	raw/40_h/C_eval.sh	$(printf INJ86)	0	無	0	0	INJ86	INJ86= ★実行された★(写し器の eval)	11:49:06
+陰性D(-eq・値1)	raw/40_h/D_koe.sh	1	0	then	0	0	無	then・声0	11:49:06
+★陽性D(-eq・abc)★	raw/40_h/D_koe.sh	abc	0	else	0	1	無	声1(integer expression expected)	11:49:06	raw/40_h/D_koe.sh: line 5: [: abc: integer expression expected
