@@ -1,0 +1,17 @@
+# 32_sa ―― 二つの數の差を名指す / 刻= 2026-09-17T10:23:25+0900
+# 左= 6dbe09e,occ,1,nuku ⇒ 口 23 / file 7
+# 右= 6dbe09e,line,1,komu ⇒ 口 22 / file 8
+# 綴 = gen,tan(occ=出現單位/line=行單位),kitei(既定の下限),chu(nuku=註行除く/komu=註行込)
+
+--- 左のみに在る file(右で落ちた) ---
+(無し)
+
+--- 右のみに在る file(左で落ちた) ---
+scripts/checks/karo_mac_gate4.sh	口 1	VAR:-50
+
+--- 両方に在るが口數が違ふ file ---
+scripts/pane_enter_watcher_supervisor.sh	左 4 ⇔ 右 2	左のみ名[POLL_SEC:-10] 右のみ名[]
+
+--- 勘定 ---
+file: 左 7 ― 左のみ 0 + 右のみ 1 = 右 8
+口  : 左 23 ― 左のみ 0 + 右のみ 1 + 共通の増減 -2 = 22 (右の實測 22 ―― 一致=真)

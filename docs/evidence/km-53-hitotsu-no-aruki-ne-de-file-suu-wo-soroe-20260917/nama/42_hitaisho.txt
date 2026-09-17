@@ -1,0 +1,37 @@
+# 42_hitaisho ―― ★一 file の中で護りが非對照である★ 事の逐語 / 刻= 2026-09-17T10:51:59+0900
+# 對象= scripts/stop_hook_inbox.sh (disk 現物・sha16=f1b49820e234a1ee / 行=288)
+# 器= /usr/bin/grep -n -F -- '<字面>' / sed -n '<域>p' ―― ★讀むのみ・hook 本体を触らぬ★
+
+--- 甲(當席の直しが当たつた口・閾= STOP_HOOK_STDIN_TIMEOUT) ---
+58:num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+65:if ! num_same_op "$STOP_HOOK_STDIN_TIMEOUT"; then
+90:    if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+
+--- 乙(直しが当たつて居らぬ口・閾= MASS_UNREAD_THRESHOLD) ---
+204:case "$MASS_UNREAD_THRESHOLD" in
+205:    ''|*[!0-9]*)
+206:        echo "[stop_hook] ★MASS_UNREAD_THRESHOLD が數でない(「${MASS_UNREAD_THRESHOLD}」) — 既定 5 へ倒す(fail-closed)★" >&2
+207:        MASS_UNREAD_THRESHOLD=5 ;;
+208:esac
+209:case "${UNREAD_COUNT:-0}" in
+210:    ''|*[!0-9]*)
+211:        echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+212:        UNREAD_COUNT=0 ;;
+213:esac
+214:if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+215:    FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+216:    touch "$FLAG"
+217:    echo "[stop_hook] $AGENT_ID has ${UNREAD_COUNT} unread (> ${MASS_UNREAD_THRESHOLD}) — refusing to block (loop防止). bulk ack 推奨。" >&2
+218:    exit 0
+
+--- 當席自身が 52-56 に書いた理(逐語) ---
+52:# ★甲(裁 seq322952)★ 閾は ★後で比べる時と同じ演算子★ で検めよ ―― 旧形の glob `*[!0-9]*` は
+53:#   20桁の十進を「數」として通すが、下の `[ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]` は
+54:#   2^63 超で rc=2 を返し ★黙つて else(時限切れを見ぬ側)へ落つる★。
+55:#   加へて `read -t <20桁>` は bash に ★拒まれ(invalid timeout specification)★ ―― 實測(當席 2026-09-17):
+56:#   rc=1・★讀めた字数 0★ ∴ hook 入力 JSON を ★丸ごと落として先へ進む★。而して上の rc=2 ゆゑ ★其の事を報せぬ★。
+
+--- 勘定 ---
+甲 num_same_op を通す閾= 1 口
+乙 旧形 glob case を通す閾= 2 口(註行を除く)
+∴ ★同じ file・同じ危險の二口に、★別々の護り★が当たつて居る。★
