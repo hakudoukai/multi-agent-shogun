@@ -1,0 +1,12 @@
+    #   引数で基点を渡した時は其れを尊ぶ(従来通り・明示は cwd 相対で宜しい)。
+    #   可逆: 此の三行を控へ戻せば旧挙動。
+    if argv[2:]:
+        bases = argv[2:]
+        base_src = "引数(明示)"
+    else:
+        _root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        bases = [_root + os.sep,
+                 os.path.join(_root, "queue", "reports") + os.sep,
+                 "/Users/momizimac/DentalBI/.claude/worktrees/dino-story-engine/"]
+        base_src = "既定(器の在處から導いた repo 根 %s ―― ★cwd に依らぬ★)" % _root
+    if not os.path.isfile(man):

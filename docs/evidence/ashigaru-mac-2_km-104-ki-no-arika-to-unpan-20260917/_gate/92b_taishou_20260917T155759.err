@@ -1,0 +1,69 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★file が無い: README.md sha256=b956ca02462ca87d74b68338291b10e942153965bd412421c74c5d82d51c9b86 bytes=1625 lines=19★
+★file が無い: ki/20_eda45.py sha256=fa5f0c087a90cf239bf26371cd0d9e3425a103eb7f25e7903a4ef19f7e377b86 bytes=3166 lines=68★
+★file が無い: ki/30_hiroi.py sha256=c65fb191a542948f6b839f6bd82c84964f78d33ffd1e37c2076cf077ebc43b36 bytes=3706 lines=76★
+★file が無い: ki/40_arika.py sha256=c7ddf67310ea9c535217122393e432aad9ff1f47a98071b011b153b1b58b4cbf bytes=7370 lines=156★
+★file が無い: ki/50_miki.py sha256=45a43005c51f885c95d2ec972f3fe7914a92696c7b480d4c47d2d50788710a29 bytes=3188 lines=61★
+★file が無い: ki/55_dohitsu.py sha256=68f4ef7bd3888c956408b513b6732facf3dfc4f24e04511e3fed8533b70745a6 bytes=2091 lines=49★
+★file が無い: ki/56_ban.py sha256=0ecc0fd1cb57b394e95ff49092f3abe80495e787d9b5f533f91d97a01c057e5d bytes=2658 lines=54★
+★file が無い: ki/57_hbin.py sha256=6b2aece4ea8ca086ae6c2f41991744b6c591bc8b2b4214ffcc2258f312b88b44 bytes=2458 lines=50★
+★file が無い: ki/58_taishou.py sha256=6c541d7d822438cd514b49b63d0f2311e2c892b5b360b01a8c1d81c5e29374ea bytes=3003 lines=55★
+★file が無い: ki/90_kaki.py sha256=1258bebc9445c63e1de939fa0776464871daf2c4b5148a6232a47f78d873adde bytes=1726 lines=45★
+★file が無い: ki/91_daichou.py sha256=e06b4905c7ec6c94b795ace696a38917e8e3a187cd6d3de5cdc9752d79b3f960 bytes=1730 lines=36★
+★file が無い: ki/92_mon.py sha256=086dbbcbdaad4d14b055201fee2357ec15e2525cab7c54bac9a954d816e086c2 bytes=2328 lines=49★
+★file が無い: ki/92b_taishou.py sha256=a61fa287f0b806a3970ccaa67a54c78fd666b478ab8feae8ca6669994e72cf84 bytes=1790 lines=29★
+★file が無い: ki/95_bin.py sha256=6a6c4fb1976252575f38e9906fca0385c365accb244fdf39f3ea8ab1ad7a846d bytes=1248 lines=19★
+★file が無い: raw/00_lsremote.txt sha256=1aaaa154ce8a37d8e4659e8ca3ea629e3fe3e13426b2112e8858fa9fd8f00505 bytes=22198 lines=240★
+★file が無い: raw/20_eda45.txt sha256=625001270a8f9aa25ef49c07126ed224398c187809abe949f0c17edb3a2b8130 bytes=4506 lines=46★
+★file が無い: raw/20_eda60.tsv sha256=0225664671cb890b3b06aa73f525f498e84c9ccc0fd69692de8206c458aa7bc1 bytes=31700 lines=61★
+★file が無い: raw/30_hiroi.tsv sha256=3ee7d69fad8d6098771dfd528a0d611262a5a8a4e4bf705103f37cf46d91f8c5 bytes=1260 lines=68★
+★file が無い: raw/30_hiroi_eda.tsv sha256=b28b5a60e30d36c103f7483546289e563294b860fc92b016424eea15a059ef4d bytes=13149 lines=47★
+★file が無い: raw/40_arika.tsv sha256=84ab0ad167f8c4d7d8b15a1d9c9bff5507bd4b9f1658b5caf3717bc56b2c177b bytes=5306 lines=101★
+★file が無い: raw/40_bunrui.tsv sha256=44fc20a787aeec255baeb626b1896c26852f88be3eec78422ef585175f00d12f bytes=1517 lines=68★
+★file が無い: raw/40_ref_bosuu.txt sha256=2914e2bfcc39e127e74a3d1a0a361237779e4811efb9354204833f135d94935a bytes=250 lines=4★
+★file が無い: raw/50_hikizan.tsv sha256=658503ba0e54e9817f64f1aeae98ad5101e125d089ba0b89fdaf6fcbe1b985c8 bytes=1170 lines=15★
+★file が無い: raw/50_miki.tsv sha256=604ecc7b96afc0a997df90200d382626034d1b83534e2991b143202d69ad0eaa bytes=796 lines=16★
+★file が無い: raw/55_dohitsu.tsv sha256=49f0f0d2a500052c5895acb40874c74932c21e40f6696ddbaac9b917739bd6e3 bytes=491 lines=10★
+★file が無い: raw/56_ban.tsv sha256=45af8296e5b918c6792f4cbface561179aeeb7a65bf96e0db661ddf2c2fa517a bytes=460 lines=10★
+★file が無い: raw/57_hbin.tsv sha256=a214b13ea42f664e8962d2ab2f5b01a0b70db67d8d903d2c4a7552cbf07dedf9 bytes=231 lines=6★
+★file が無い: raw/58_taishou.txt sha256=2645f1fec7c90837c13b8dfbba0ae03f9394bd47c607ef3ffca98cf9694f2f57 bytes=492 lines=7★
+★file が無い: raw/95_bin.txt sha256=66de7ff092c66b34282019252406d6d44dd34c4ab9abd259cf30d67a9d36fd39 bytes=546 lines=1★
+★file が無い: raw/95_chakushu.txt sha256=bda8465da28d98876a7a4895e7c09d861f60464f9439e8561227e97666dccc81 bytes=520 lines=1★
+★file が無い: report.md sha256=50501609384890a85e7cff8a994214ed5086bfd65d989c63658ab50fd1337989 bytes=19713 lines=257★
+★條⑤ 測れぬ(寸法が取れぬ) ―― README.md sha256=b956ca02462ca87d74b68338291b10e942153965bd412421c74c5d82d51c9b86 bytes=1625 lines=19★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/20_eda45.py sha256=fa5f0c087a90cf239bf26371cd0d9e3425a103eb7f25e7903a4ef19f7e377b86 bytes=3166 lines=68★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/30_hiroi.py sha256=c65fb191a542948f6b839f6bd82c84964f78d33ffd1e37c2076cf077ebc43b36 bytes=3706 lines=76★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/40_arika.py sha256=c7ddf67310ea9c535217122393e432aad9ff1f47a98071b011b153b1b58b4cbf bytes=7370 lines=156★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/50_miki.py sha256=45a43005c51f885c95d2ec972f3fe7914a92696c7b480d4c47d2d50788710a29 bytes=3188 lines=61★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/55_dohitsu.py sha256=68f4ef7bd3888c956408b513b6732facf3dfc4f24e04511e3fed8533b70745a6 bytes=2091 lines=49★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/56_ban.py sha256=0ecc0fd1cb57b394e95ff49092f3abe80495e787d9b5f533f91d97a01c057e5d bytes=2658 lines=54★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/57_hbin.py sha256=6b2aece4ea8ca086ae6c2f41991744b6c591bc8b2b4214ffcc2258f312b88b44 bytes=2458 lines=50★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/58_taishou.py sha256=6c541d7d822438cd514b49b63d0f2311e2c892b5b360b01a8c1d81c5e29374ea bytes=3003 lines=55★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/90_kaki.py sha256=1258bebc9445c63e1de939fa0776464871daf2c4b5148a6232a47f78d873adde bytes=1726 lines=45★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/91_daichou.py sha256=e06b4905c7ec6c94b795ace696a38917e8e3a187cd6d3de5cdc9752d79b3f960 bytes=1730 lines=36★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/92_mon.py sha256=086dbbcbdaad4d14b055201fee2357ec15e2525cab7c54bac9a954d816e086c2 bytes=2328 lines=49★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/92b_taishou.py sha256=a61fa287f0b806a3970ccaa67a54c78fd666b478ab8feae8ca6669994e72cf84 bytes=1790 lines=29★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― ki/95_bin.py sha256=6a6c4fb1976252575f38e9906fca0385c365accb244fdf39f3ea8ab1ad7a846d bytes=1248 lines=19★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/00_lsremote.txt sha256=1aaaa154ce8a37d8e4659e8ca3ea629e3fe3e13426b2112e8858fa9fd8f00505 bytes=22198 lines=240★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/20_eda45.txt sha256=625001270a8f9aa25ef49c07126ed224398c187809abe949f0c17edb3a2b8130 bytes=4506 lines=46★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/20_eda60.tsv sha256=0225664671cb890b3b06aa73f525f498e84c9ccc0fd69692de8206c458aa7bc1 bytes=31700 lines=61★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/30_hiroi.tsv sha256=3ee7d69fad8d6098771dfd528a0d611262a5a8a4e4bf705103f37cf46d91f8c5 bytes=1260 lines=68★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/30_hiroi_eda.tsv sha256=b28b5a60e30d36c103f7483546289e563294b860fc92b016424eea15a059ef4d bytes=13149 lines=47★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/40_arika.tsv sha256=84ab0ad167f8c4d7d8b15a1d9c9bff5507bd4b9f1658b5caf3717bc56b2c177b bytes=5306 lines=101★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/40_bunrui.tsv sha256=44fc20a787aeec255baeb626b1896c26852f88be3eec78422ef585175f00d12f bytes=1517 lines=68★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/40_ref_bosuu.txt sha256=2914e2bfcc39e127e74a3d1a0a361237779e4811efb9354204833f135d94935a bytes=250 lines=4★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/50_hikizan.tsv sha256=658503ba0e54e9817f64f1aeae98ad5101e125d089ba0b89fdaf6fcbe1b985c8 bytes=1170 lines=15★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/50_miki.tsv sha256=604ecc7b96afc0a997df90200d382626034d1b83534e2991b143202d69ad0eaa bytes=796 lines=16★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/55_dohitsu.tsv sha256=49f0f0d2a500052c5895acb40874c74932c21e40f6696ddbaac9b917739bd6e3 bytes=491 lines=10★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/56_ban.tsv sha256=45af8296e5b918c6792f4cbface561179aeeb7a65bf96e0db661ddf2c2fa517a bytes=460 lines=10★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/57_hbin.tsv sha256=a214b13ea42f664e8962d2ab2f5b01a0b70db67d8d903d2c4a7552cbf07dedf9 bytes=231 lines=6★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/58_taishou.txt sha256=2645f1fec7c90837c13b8dfbba0ae03f9394bd47c607ef3ffca98cf9694f2f57 bytes=492 lines=7★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/95_bin.txt sha256=66de7ff092c66b34282019252406d6d44dd34c4ab9abd259cf30d67a9d36fd39 bytes=546 lines=1★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― raw/95_chakushu.txt sha256=bda8465da28d98876a7a4895e7c09d861f60464f9439e8561227e97666dccc81 bytes=520 lines=1★ ★測れぬは通さぬ(default-deny)★
+★條⑤ 測れぬ(寸法が取れぬ) ―― report.md sha256=50501609384890a85e7cff8a994214ed5086bfd65d989c63658ab50fd1337989 bytes=19713 lines=257★ ★測れぬは通さぬ(default-deny)★
+條⑤ 寸法 = byte和 0(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

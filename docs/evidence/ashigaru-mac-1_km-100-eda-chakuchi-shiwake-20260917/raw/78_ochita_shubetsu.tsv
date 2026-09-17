@@ -1,0 +1,10 @@
+# 落ちた 8 束 ―― 落ち行の種別と本数(gate.err の ★…★ 行を種別で数へる)
+bundle	末尾空白_file	CR_file	EOF改行_file	0byte_file	條①_落	その他★行	例(先頭2)
+ashigaru-mac-1_km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917	15	0	0	0	0	0	末尾空白 ―― raw/fx/kegare.txt に 1 行|末尾空白 ―― raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.rej に 2 行|
+ashigaru-mac-2_km-51-usage-wo-yomazu-ni-yonda-20260917	4	0	0	0	0	0	末尾空白 ―― raw/63_naoshi.diff.hashiri1 に 1 行|末尾空白 ―― raw/66_ima.diff.hashiri1 に 2 行|
+ashigaru-mac-2_km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917	1	0	2	2	0	0	末尾空白 ―― raw/30_ate.tsv に 144 行|EOF改行 ―― raw/40_kougo.err は空file(0byte)|
+ashigaru-mac-2_km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917	4	0	1	0	1	0	EOF改行が無い(0) ―― raw/40_hashiru.json.first|末尾空白 ―― raw/50_chunyu.txt.first に 4 行|
+ashigaru-mac-2_km-87-tatoeba-ochite-mo-toosu-kuchi-20260917	0	0	11	11	0	0	EOF改行 ―― hako/kA_dir/shogun_idle_testseat は空file(0byte)|EOF改行 ―― hako/kA_fifo/shogun_idle_testseat は空file(0byte)|
+ashigaru-mac-3_km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917	2	0	0	0	0	0	末尾空白 ―― .nama/chunyu_gate4.txt に 1 行|末尾空白 ―― .nama/inject_g4.txt に 1 行|
+ashigaru-mac-3_km-50-yabure-hachikei-no-fusagikata-20260917	3	0	0	0	0	0	末尾空白 ―― .nama/hyou51_gate4_GATE4_MAX_FILE_MB_㋐12_kegare.gou.txt に 1 行|末尾空白 ―― .nama/hyou51_gate4_GATE4_MAX_FILE_MB_㋐12_kegare.sei.txt に 1 行|
+ashigaru-mac-3_km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917	1	0	10	3	0	0	EOF改行が無い(0) ―― saya/chunyu/naoshi_out.bin|EOF改行が無い(0) ―― saya/locale/loc_C.bin|

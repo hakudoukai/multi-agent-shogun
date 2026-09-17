@@ -1,0 +1,20 @@
+# origin/main(refs/km110/main)= 4f591fc021947b9f477b676c96e36a1dc4437500  ―― 刻 2026-09-17 17:21:08 +0900
+# main が載せる scripts/checks/ の一覧(門 karo_mac_dasumae_gate.sh が ★無い★ 事を見る為)
+100644 blob 1d1db3ffc80776a36e4af11d84c3dc2ba52e1ad9	scripts/checks/codex_cli_required_persona.sh
+100644 blob e3c454c72c54ea689a69fe1e37732489191209b5	scripts/checks/codex_exec_sandbox_guard.sh
+100755 blob ce712f785c8fb34e13d19ccb9ff2166412930481	scripts/checks/context_usage_warn.sh
+100755 blob d0a3219f11a61ac0377ac9c0c1f94c0e2644394b	scripts/checks/dd169_kill_term_guard.sh
+100755 blob 37dcd93e162463d6d29b95b2ad537e3e638d6444	scripts/checks/ephemeral_worktree_hygiene.sh
+100644 blob db8552f381950075c70054df087e1b2346d258cb	scripts/checks/inbox_alias_integrity.sh
+100644 blob 3ef09fbd6983fed3e24e3c584f8dd8df5e406891	scripts/checks/karo_mac_gate7.sh
+100755 blob b56d6576c82212c155980968d4ec1e0a8c5c7427	scripts/checks/karo_mac_manifest_append.py
+100755 blob ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579	scripts/checks/karo_mac_manifest_verify.py
+100644 blob 0fe53b286a23e0642f20d3989b985cb7ef465c48	scripts/checks/pane_identity.sh
+100755 blob 8720591d7c09356048e5343911e81ef7335b744b	scripts/checks/pretooluse_bash_guard.sh
+100644 blob efb01c963f389ae0ff4b6d3707724d07c2c847b6	scripts/checks/secondpc_dispatch.sh
+100644 blob ecfeeec7f96a569b890fc09cefa2e4b79a8310cd	scripts/checks/symlink_aware_atomic_write.sh
+100755 blob 4a95f7f6e44a23c7060c29b163f48d2125ffd292	scripts/checks/verify_state_before_asserting.sh
+# disk の三器(git hash-object ―― 手元の實体)
+054c442eaee3886b2283f98f7c3a1ab8cb813b68	scripts/checks/karo_mac_dasumae_gate.sh
+ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579	scripts/checks/karo_mac_manifest_verify.py
+b56d6576c82212c155980968d4ec1e0a8c5c7427	scripts/checks/karo_mac_manifest_append.py

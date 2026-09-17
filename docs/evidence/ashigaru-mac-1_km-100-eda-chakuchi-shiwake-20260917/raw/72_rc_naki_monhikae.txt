@@ -1,0 +1,48 @@
+# ② .rc 無き 5 束の門控 ―― 名に gate/mon/hashiri を含む非 .rc の file と、最後の門 log の判の行(git show・読取)
+--- 87d1a6177c2e km-51-usage-wo-yomazu-ni-yonda-20260917
+  門名 file 数=64
+  docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/_manifest.txt.hashiri1
+  docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/_manifest.txt.hashiri2
+  docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/_manifest.txt.hashiri3
+  docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/_manifest.txt.hashiri4
+  docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/20_keiyaku.py.hashiri10
+  docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/20_keiyaku.py.hashiri3
+  [last=docs/evidence/km-51-usage-wo-yomazu-ni-yonda-20260917/raw/e2_mon_list.txt]
+--- a4cafdfd384d km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917
+  門名 file 数=4
+  docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/_gate/dasumae.err
+  docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/_gate/dasumae.out
+  docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/ki/guard_enter_restart_common_watchdog.sh
+  docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/utsushi/scripts_watchdogs_enter_restart_common_watchdog.sh
+  [last=docs/evidence/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917/_gate/dasumae.out]
+      一致 ★84★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 84)
+--- 12ac572845e7 km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917
+  門名 file 数=5
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/ashigaru-mac-3_km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917_gate.first.txt
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/ashigaru-mac-3_km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917_gate.ifs.txt
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/ashigaru-mac-3_km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917_gate.jou2345.ifs.txt
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/ashigaru-mac-3_km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917_gate.jou2345.txt
+  docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/ashigaru-mac-3_km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917_gate.txt
+  [last=docs/evidence/km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917/ashigaru-mac-3_km-48-nise-no-tsuuka-wo-nise-to-wakaru-katachi-de-nokose-20260917_gate.txt]
+      一致 ★0★ / 相違 0 / 実体無 45 / 読めぬ行 0  (母數 45)
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+    ★出す前 門が落ちた。出すな。★
+--- 87762b41b9b5 km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917
+  門名 file 数=13
+  docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/chunyu_dasumae.txt
+  docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/chunyu_gate4.txt
+  docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/fn_gate4.sh
+  docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/mon_dasumae_max.tsv
+  docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/mon_dasumae_tmo.tsv
+  docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/.nama/mon_gate4_maxf.tsv
+  [last=docs/evidence/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917/_gate/mon_dash_060543.txt]
+    ★出す前 門が落ちた。出すな。★
+--- 0039e1321654 km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+  門名 file 数=26
+  docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/_gate/km51_dasumae_075630.err
+  docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/_gate/km51_dasumae_075630.out
+  docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/_gate/km51_dasumae_080150.err
+  docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/_gate/km51_dasumae_080150.out
+  docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/_gate/km51_dasumae_080240.err
+  docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/_gate/km51_dasumae_080240.out
+  [last=docs/evidence/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917/_gate/km51_gate_075556.out]

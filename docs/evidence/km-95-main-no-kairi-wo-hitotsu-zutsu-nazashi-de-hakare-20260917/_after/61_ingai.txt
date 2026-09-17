@@ -1,0 +1,30 @@
+# 61 員外 / 刻 2026-09-17T13:55:05+0900 / 歩き根= 束の根 / 深さ 無制限 / 通常 file 56 / 非通常 0 [] / 臺帳の項 34 / 臺帳に在り disk に無い 0 []
+員外(臺帳に載らぬ通常 file)= ★22★ 本 + 自産 1(此の 61_ingai.txt・歩いた時には無い)= 書いた後の disk では 23
+  (根): 1 本
+    MANIFEST.txt
+  _after: 14 本
+    _after/00_hosho.txt
+    _after/60_gate_main.err
+    _after/60_gate_main.out
+    _after/60_gate_main.rc
+    _after/60_gate_nobase.err
+    _after/60_gate_nobase.out
+    _after/60_gate_nobase.rc
+    _after/60_gate_rcs.txt
+    _after/60_gate_run.py
+    _after/60_gate_selftest.err
+    _after/60_gate_selftest.out
+    _after/60_gate_selftest.rc
+    _after/61_ingai.py
+    _after/62_letters.py
+  _gate: 4 本
+    _gate/mon_km95_20260917T135503.log
+    _gate/mon_km95_20260917T135503_main.log
+    _gate/mon_km95_20260917T135503_nobase.log
+    _gate/mon_km95_20260917T135503_selftest.log
+  raw: 3 本
+    raw/50_build_manifest.err
+    raw/50_build_manifest.out
+    raw/50_sengen.txt
+★疵 8(紙の後・紙は臺帳で固定ゆゑ此処に)★: raw/__pycache__/(kaki.cpython-314.pyc)が門の直前に在つた ―― 紙を書いた ad-hoc python(heredoc)を -B 無しで走らせ kaki を import した故。己の産物ゆゑ rm -r で除いた(臺帳には載つて居らず・門 60 の assert が止めた)。
+意味せぬ事: 員外は「載せ忘れ」ではなく宣した類(臺帳・門控・50 の出目・_after)。数は此の刻の物で、62/64 が書く便の出目で更に増える(其の分は名指せぬ ―― 書く前ゆゑ)。予告: _after/62_letters.txt・62_dry.txt(鳴れば)・64_audit.txt・64_dry.txt(鳴れば)・64_readback_<seq>.txt。

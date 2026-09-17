@@ -1,0 +1,68 @@
+task_id: km-100-eda-yonjuugo-no-chakuchi-shiwake-ashigaru-gun-20260917
+assigned_to: ashigaru-mac-1
+assigned_by: karo-mac
+status: assigned
+priority: high
+bloom_level: L5
+issued_at: '2026-09-17T14:50:09+0900'
+assigned_at: '2026-09-17T14:50:09'
+parent_ruling: '委員長裁 seq325884(親 325872) ―― 枝削除は★不可逆削除＝理事長専管★ゆゑ★消さない★。要点は main 取込 1/60。残45本を「着地させる(PR)／捨てる(理事長裁を待つ)」へ仕分けよ。PR 起票は監督 lot・判定は軍師mac。'
+
+teki: |
+  ★的は「此の枝を着地させるか、捨てるか」一件のみ★。
+  origin に mac の枝は 60 本在る。其の内 ★origin/main(4be3ee19e1c5)に取り込まれて居るのは 1 本のみ★。
+  15 本は「不要(tip が他枝の祖先)」と既に名指した(臺帳 17d7dbf7)ゆゑ ★触れるな★。
+  残 45 本を三席で分けた。貴殿の組 = ★ashigaru-mac-1/2/3 の枝 18 本 (18 本)★。
+  ★消す事ではない。着地の道を測る事である。★枝は一本も消すな。
+
+toi: |
+  ㋐ 母數を宣せ。割当の枝を逐語で列べ、full sha を書け。
+     ★手許に物が在るか★を `git cat-file -e <sha>^{commit}` で一本づつ検め、rc を書け。
+  ㋑ ★二つの差分を測り分けよ(混ぜたら其れ自体が疵)★:
+     ⑴ 対 origin/main の差分 file 数 = `git diff --name-only 4be3ee19e1c5...<sha>` の行数
+     ⑵ ★自前★の差分 file 数 = 60 本の mac 枝 tip の内、其の枝の★真の祖先★である tip を悉く挙げ、
+        `git rev-list --count B..X` が最小の B を選び、`git diff --name-only B..X` の行数
+     ★⑴は「此の枝が変へた file 数」では★ない★。★origin/main が何 file 遅れて居るか★である。
+     ★數が何を意味せぬかを紙に書け(数の規律3)。★祖先 tip が一本も無い枝は ⑵=測れぬ と書き、其の旨を宣せ。
+  ㋒ commit 数(`git rev-list --count 4be3ee19e1c5..<sha>`)と、触る top-level 領域を列べよ。
+  ㋓ 仕分けよ。甲=★着地させる(PR)★ / 乙=★捨てる(理事長裁を待つ)★ / 丙=★測れぬ★。
+     ★判ずる拠り所を先に宣してから使へ。★(例: 器を据ゑる変更を含むか／紙のみか／他枝が悉く含むか)
+     各々に理由を一行。丙が在るなら「何を測れば判ずるか」を書け。
+  ㋔ 甲(着地候補)には ★受入条件★ を書け ―― 何を満たせば PR として通せるか。
+     (門 rc=0 か／臺帳が束内相対か／対照が在るか／他枝と同じ file を触つて衝突するか)
+  ㋕ 重なりを測れ。割当群の中で tip が他の tip の★祖先★に成つて居る対を悉く名指し、鎖(chain)を描け。
+     ★鎖の末端のみ着地させれば足りるか否か★を、理由付きで言へ。
+
+kin: |
+  ★枝を一本も消すな★(裁 325884 = ★消さない★・不可逆削除は理事長専管・破壊7線)。
+  ★checkout / merge / rebase / cherry-pick / push / fetch / refs 書換 悉く禁 ―― ★読取のみ★。
+  ★PR を起票するな★(起票は監督 lot・判定は軍師mac)。★他席の pane を覗くな。★
+  ★工作樹を汚すな★(`git diff` は ref 同士で取れ・checkout 不要)。
+
+osame: |
+  紙 = docs/evidence/<席名>_<件名>-20260917/ の下に README.md + driver + raw + MANIFEST.txt。
+  臺帳は ★束内相対★(cd 束 してから scripts/checks/karo_mac_manifest_append.py を呼べ・裁 seq322699)。
+  門控 = 出す前門を `KM_GATE_MANIFEST_BASE=.` 付きで通し、rc と母數と條①の数を紙の一行目に書け。
+  ★raw に ⑴⑵の生の数を TSV で残せ(枝・sha・⑴・⑵・commit・領域・甲乙丙・理由)。★
+  納め便は家老mac へ(★300字が條★・python3 の len で測り其の数を紙に焼け)。
+  軍師mac は死箱ゆゑ監査は家老mac が代送する。
+
+eda_warimochi: |
+  12d304e55ebd587441fdac2d24d33c76710eb4fc  ashigaru-mac-1/a1-jishu-kuumoji-kiten-20260917
+  ac551f027c60f3e1d5a0ce115c400d086b9ec8bf  ashigaru-mac-1/km-70-daichou-no-ne-wo-sokunai-soutai-e-tatenaosu-20260917
+  622ce44744b7961552fd672c0f47f38b2049b286  ashigaru-mac-1/km-71-kuumoji-wa-atai-toshite-furumau-20260917
+  b1ba78d2b876976a9ff2376a3c757009358b766a  ashigaru-mac-1/km-71b-fusagikata-ni-an-20260917
+  49e36d1e2dc36b8efa7030374a59c820aa6183ab  ashigaru-mac-1/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917
+  a5d2cadde8873d9537351378a0c4049ba3e5acfb  ashigaru-mac-1/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917
+  0260a76a600836efe950efa58965134928b71e88  ashigaru-mac-1/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917
+  87d1a6177c2e40c3676f599d3132a00395e41a42  ashigaru-mac-2/km-51-usage-wo-yomazu-ni-yonda-20260917
+  a4cafdfd384dc0c704c58ff3b286e8f0a4b3c34f  ashigaru-mac-2/km-52-shikii-no-bannin-wo-yoko-kara-yabure-20260917
+  454e4fb22179c8000b0a7f42bbe88f8cc2d9cb11  ashigaru-mac-2/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917
+  05b29300ca8754e6c30a2e40e021297408277b51  ashigaru-mac-2/km-53b-gyou-chunyu-no-naoshi-wo-sueru-20260917
+  56c8b43caaea96a8937e4be50db6fff7e5d23552  ashigaru-mac-2/km-87-tatoeba-ochite-mo-toosu-kuchi-20260917
+  12ac572845e777ba8c07d200afdb3e07229cb4d0  ashigaru-mac-3/km-48-nise-no-tsuuka-20260917
+  87762b41b9b58a03d7438bef9dfd0f67b5c6e64b  ashigaru-mac-3/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917
+  a9bb89a47849c7d6716eafe49f28dad5ed9ccc0c  ashigaru-mac-3/km-50-yabure-hachikei-no-fusagikata-20260917
+  0039e1321654e52c15c3bec4998b96282b05667f  ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+  c2f6dd9bd96f81ffce002783b67605c6199394fb  ashigaru-mac-3/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917
+  eb6cf51de16fd06b76eaf1cf36c47d535e2d5373  ashigaru-mac-3/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917

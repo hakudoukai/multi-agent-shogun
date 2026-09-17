@@ -1,0 +1,17 @@
+# 片付け(己が作つた物のみ) ―― 2026-09-17T17:30:53+0900
+## 前
+scratch dir = 8 口
+refs/km110/* = 244 本
+己の worktree = 0 口(★作つて居らぬ★)
+## 消す ―― ★己の名前空間のみ★(refs/remotes/origin/* と枝と PR には一指も触れぬ)
+refs/km110/ 以外が混じつた數=0
+update-ref --stdin rc=0
+rm .km110_scratch rc=0
+## 後
+# ★註★ 上の一行は zsh の nomatch(消えた後に glob した故) ―― 器の誤りではない
+scratch dir = 0 口
+refs/km110/* = 0 本
+refs/remotes/origin/* = 7 本 ―― ★之を『不触の證』と読むな★: 當席は本弾の★前★に此の數を
+  測つて居らぬ ∴ 前後比較が出来ぬ。言へるのは『refs/remotes/origin/* へ書く語を一度も打つて居らぬ』
+  (fetch の refspec は +refs/heads/*:refs/km110/* ―― 打つた語は紙の末尾に悉く在る)丈である。
+他席の物(読取で存否のみ): /private/tmp/gunshi-km49.* = 1 口 / .claude/worktrees/karo-mac-a1 = 1 口 ―― ★在る儘・一指も触れて居らぬ★

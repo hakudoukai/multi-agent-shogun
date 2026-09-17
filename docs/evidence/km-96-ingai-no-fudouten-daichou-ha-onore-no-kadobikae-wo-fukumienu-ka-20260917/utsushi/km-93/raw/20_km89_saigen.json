@@ -1,0 +1,41 @@
+{
+  "刻(始)": "2026-09-17T13:21:44+0900",
+  "刻(了)": "2026-09-17T13:21:54+0900",
+  "歩いた根": "docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917",
+  "歩きの深さ": 2,
+  "家老の宣": {
+    "束 本": 440,
+    "臺帳 項": 427,
+    "員外": 13,
+    "條① rc": 0
+  },
+  "己の実測": {
+    "束 本": 440,
+    "臺帳 項": 427,
+    "員外": 13,
+    "條① rc": 0
+  },
+  "悉く一致": true,
+  "員外の名": [
+    "MANIFEST.txt",
+    "_gate/90_MANIFEST_ichisou.txt",
+    "_gate/90_gate_20260917T124946.err",
+    "_gate/90_gate_20260917T124946.out",
+    "_gate/90_gate_20260917T124946.rc",
+    "_gate/91_gate_20260917T130246.cmd",
+    "_gate/91_gate_20260917T130246.err",
+    "_gate/91_gate_20260917T130246.out",
+    "_gate/91_gate_20260917T130246.rc",
+    "_gate/91_gate_argv.nul",
+    "_gate/91_gate_argv.txt",
+    "_gate/91_gate_nozoku.txt",
+    "_gate/92_kadobikae_yomi.txt"
+  ],
+  "実体無の名": [],
+  "門 全歩き rc": 1,
+  "門 argv 本": 440,
+  "條① の逐語": [
+    "條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)",
+    "條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)"
+  ]
+}

@@ -1,0 +1,5 @@
+        return 2
+    man = argv[1]
+    bases = argv[2:] or ["", "queue/reports/",
+                         "/Users/momizimac/DentalBI/.claude/worktrees/dino-story-engine/"]
+    if not os.path.isfile(man):

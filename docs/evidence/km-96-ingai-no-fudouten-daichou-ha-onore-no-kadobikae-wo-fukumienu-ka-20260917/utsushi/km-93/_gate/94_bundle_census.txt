@@ -1,0 +1,54 @@
+# 束の census ―― ★臺帳が凍つた後に測つた★(紙は己を含む數を書けぬ故、此處に置く)
+刻 2026-09-17T13:36:48+0900
+
+== 數 ==
+disk 本(regular・束の全歩き) = 139
+臺帳 path行 = 128 / 註行 = 2 / 全行 = 130
+★員外(disk有・臺帳無) = 11★
+  員外 MANIFEST.txt
+  員外 _gate/92_gate_20260917T133700.cmd
+  員外 _gate/92_gate_20260917T133700.err
+  員外 _gate/92_gate_20260917T133700.out
+  員外 _gate/92_gate_20260917T133700.rc
+  員外 _gate/92_gate_argv.nul
+  員外 _gate/92_gate_argv.txt
+  員外 _gate/95_gate_20260917T133612.cmd
+  員外 _gate/95_gate_20260917T133612.err
+  員外 _gate/95_gate_20260917T133612.out
+  員外 _gate/95_gate_20260917T133612.rc
+実体無(臺帳有・disk無) = 0
+宣した除外(_gate/91_NOZOKU.txt) = 9 行
+  宣 MANIFEST.txt
+  宣 _gate/92_gate_20260917T133700.cmd
+  宣 _gate/92_gate_20260917T133700.err
+  宣 _gate/92_gate_20260917T133700.out
+  宣 _gate/92_gate_20260917T133700.rc
+  宣 _gate/92_gate_argv.nul
+  宣 _gate/92_gate_argv.txt
+  宣 _gate/93_kadobikae_yomi.txt  ―― ★此の刻 disk に無し★
+  宣 _gate/94_bundle_census.txt  ―― ★此の刻 disk に無し★
+★過剰除外(宣したが disk に無い) = 2★
+
+== 門 ==
+落(前走) _gate/92_gate_20260917T133700.{cmd,out,err,rc} rc=1
+通(本走) _gate/95_gate_20260917T133612.{cmd,out,err,rc} rc=0
+前走が落ちた因 = ★第一引数に臺帳を渡さず README.md を臺帳として讀ませた★
+  (門の usage 逐語: usage: bash scripts/checks/karo_mac_dasumae_gate.sh <manifest|--> <file...>)
+  ∴ 條① の母數が 0 に成り ok>0 を満たさず rc=1。★落ちた走りは消して居らぬ★。
+本走の argv = 臺帳 1 本 + 紙 128 本 / KM_GATE_MANIFEST_BASE=.
+
+== ★己の疵 二件(隠さず記す)★ ==
+疵一 ★宣した除外の名が本走に当たらぬ★ ―― 91_NOZOKU.txt は前走 92_* の名を宣したが、
+     前走が落ちて名を変へた(95_*)。∴ 宣は ★再走で古びる★。
+     ★案 an/daiyon-no-michi-wo-utsuwa-de-sasaeru.md へは追記して居らぬ★ ――
+     臺帳は既に凍り 門は既に通つて居る ∴ 今 an/ を直せば條①が落ちる(己の sha が変る)。
+     ∴ 此の疵は ★臺帳の外の此の紙★ に記す。案へ入れるのは次弾か、家老の指図に依る。
+     案へ足すべき一行(逐語): 「除外表の行は ★形★ で書き、★刻を含む名を字で書くな★ ――
+     再走で名が変れば宣は古びる。例: `_gate/*_gate_*.out` の形で宣せよ。」
+疵二 ★前走の刻名 20260917T133700 は date から取つて居らぬ★ ―― 手で置いた字である。
+     本走 20260917T133612 は date から取つた ∴ ★名の順と刻の順が逆に成つて居る★。
+     名を刻として讀むな。刻は此の紙と各 .rc の mtime で当てよ。
+
+== 臺帳 ==
+MANIFEST.txt sha16=1446c3a09ab54c40 bytes=15947 行=130(grep -c '')
+紙 README.md sha16=1a8ab7508c4bce58 bytes=15333 行=279(grep -c '')

@@ -1,0 +1,35 @@
+fuda=merged_nobase
+gate=/Users/momizimac/km108_wt_13337/scripts/checks/karo_mac_dasumae_gate.sh
+gate_sha256=e11f0d0142549086584c2d59ea43935c313c37e338b791e1735a952ee5a7554b
+verify_sibling_sha256=a507c998c7bd648543a8dcb8643ba1188254800b039cdad76f4953ef34d5fa41
+cwd=/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-1_km-108-pr20-wo-ima-no-miki-ni-awaseru-20260917
+BASE=-
+刻=2026-09-17T17:16:00+0900
+台帳 manifest_jou1.txt
+  cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-1_km-108-pr20-wo-ima-no-miki-ni-awaseru-20260917
+  基点 既定(器の在處から導いた repo 根 /Users/momizimac/km108_wt_13337 ―― ★cwd に依らぬ★)
+  一致 ★0★ / 相違 0 / 実体無 59 / 読めぬ行 0  (母數 59)
+  ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+  ★註★ ★実体無★ は ★『disk に物が無い』とは限らぬ★ ―― ★基点(場所)が違ふ★ 事が在る。
+       上の『基点』行を先に読み、次に ★臺帳を作つた樹の根★ で当て直せ。
+    ★実体無★ driver/60_gate_runs.sh
+    ★実体無★ driver/K.py
+    ★実体無★ driver/karo_mac_dasumae_gate.pr20.sh
+    ★実体無★ raw/00_chaku_toki.txt
+    ★実体無★ raw/10_wt2_add.out
+    ★実体無★ raw/10_wt2_add.rc
+    ★実体無★ raw/10_wt2_path.txt
+    ★実体無★ raw/10_wt_add.err
+    ★実体無★ raw/10_wt_add.out
+    ★実体無★ raw/10_wt_add.rc
+    ★実体無★ raw/10_wt_path.txt
+    ★実体無★ raw/11_wt2_versions.txt
+    ★実体無★ raw/11_wt_head.txt
+    ★実体無★ raw/12_merge.err
+    ★実体無★ raw/12_merge.out
+    ★実体無★ raw/12_merge.rc
+    ★実体無★ raw/13_ls_files_u.txt
+    ★実体無★ raw/13_status_porcelain.txt
+    ★実体無★ raw/13_unmerged_names.txt
+    ★実体無★ raw/14_conflict_gitignore.txt
+gate_rc=1

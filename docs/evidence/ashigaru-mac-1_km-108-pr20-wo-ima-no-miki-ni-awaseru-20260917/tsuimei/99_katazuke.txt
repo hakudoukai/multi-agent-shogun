@@ -1,0 +1,51 @@
+# 99_katazuke.txt ―― 臺帳の後に書く控(臺帳外・門の後)・追命 子束
+
+## 一 最終 門 三走(控 mon_1732*_final_*)
+fuda=final_m4c99_base BASE=. gate_rc=0 gate_sha256=e11f0d0142549086 條①=條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+fuda=final_m4c99_nobase BASE=- gate_rc=1 gate_sha256=e11f0d0142549086 條①=條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)
+fuda=final_repogate_base BASE=. gate_rc=0 gate_sha256=2b8449bccd608a1a 條①=條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+
+## 二 最終臺帳 生成 3 本 cmp(99_final_gen/70_cmp_result.txt の写し)
+99_final_gen/gen1.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+99_final_gen/gen2.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+99_final_gen/gen3.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+manifest.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+cmp gen1 gen2 rc=0
+cmp gen2 gen3 rc=0
+cmp gen1 gen3 rc=0
+cmp gen1 manifest.txt rc=0
+陽性対照 cmp x gen1 rc=1
+刻=2026-09-17T17:34:52+0900
+
+## 三 己の worktree の片付け
+--- git worktree list (before)
+/Users/momizimac/multi-agent-shogun                               75aa92f2 [ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917]
+/private/tmp/gunshi-km49.TidCf1                                   87762b41 (detached HEAD)
+/Users/momizimac/km108t_wt_47405                                  4c99ff7c (detached HEAD)
+/Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1 86ae8736 [karo-mac/a1-r56]
+remove /Users/momizimac/km108t_wt_47405 rc=0
+prune rc=0
+--- git worktree list (after)
+/Users/momizimac/multi-agent-shogun                               75aa92f2 [ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917]
+/private/tmp/gunshi-km49.TidCf1                                   87762b41 (detached HEAD)
+/Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1 86ae8736 [karo-mac/a1-r56]
+gone /Users/momizimac/km108t_wt_47405
+--- 他席の worktree(不触): /private/tmp/gunshi-km49.TidCf1 / .claude/worktrees/karo-mac-a1 ―― 上の before/after に其の儘在る。
+--- ★註★ 家老の worktree /Users/momizimac/karo_mac_pr20_merge_36939 は 17:23:28(己の起動直後の `git worktree list`・4c99ff7c)には在り、上の before(17:33)には★既に無い★。
+    己が打つた remove は上の逐語の一本(km108t_wt_47405)のみ。誰が何時 外したかは己には測れぬ(持ち主=家老mac の物ゆゑ、家老が己で片付けた前提で調べ、咎めぬ)。
+--- 幹枝・4c99ff7c 不動の證
+karo-mac/km-gate-kou-otsu-20260917=4c99ff7c2a8466487d13a1494ed8f4fa9ca053f7
+origin/main=4f591fc021947b9f477b676c96e36a1dc4437500
+--- 己の一時 ref(親束で取つた物・残す)
+0bb92e2b800c1b434c8a660d38f6feea7d450124
+
+## 四 本 repo 作業樹への不触(束の外・讀取のみ・porcelain の写しは 93KB ゆゑ數に畳む)
+porcelain 全行=1036 / 己の束(docs/evidence/ashigaru-mac-1_km-108-pr20…)の項=0 / 其れ以外=1036(元から在る他席の変更・己は触れて居らぬ)
+其れ以外の flag 内訳: ' M'=39, '??'=38, 'A '=945, 'D '=10, 'MM'=4
+己の束の項(逐語): ★無し(0 行)★ ―― 理由は遮断 甲: `git check-ignore -v` → `.gitignore:7:*`(allowlist 形の bare `*`)が親束・子束を共に遮る。index に 0 本・`-uall` でも 0 行。
+  ∴ 束は disk にのみ在り、git からは見えぬ。家老が据ゑる時は `git add -f <束>` か allowlist 行が要る(他の evidence 束が `A` で乗つて居るのは -f の跡と見える・己は add を打たぬ)。
+
+## 五 子束の員數(disk と臺帳)
+disk file 總=125 / 臺帳 path 行=97 / 臺帳外=28
+臺帳外の内訳: manifest.txt 自身 / mon_*.{log,err,rc}(門の控) / raw_append.{out,err} / 99_katazuke.txt / 99_final_gen/* ―― 悉く「臺帳の後に生まれる物」
+刻=2026-09-17T17:34:52+0900

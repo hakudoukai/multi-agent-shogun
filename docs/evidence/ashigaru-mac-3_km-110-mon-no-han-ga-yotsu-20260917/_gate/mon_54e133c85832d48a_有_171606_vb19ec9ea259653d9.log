@@ -1,0 +1,10 @@
+# 走: 乙 版=54e133c85832d48aa731d0ab0d105d399b9b8fbd(門 5540 byte) verify=b19ec9ea259653d9e65d052459128c635a44e93f(5649 byte) 基点=有 cwd=<bundle>/shiken
+# 打つた語: (cwd=<bundle>/shiken) KM_GATE_MANIFEST_BASE=. bash .km110_scratch/乙_54e133c85832d48a_b19ec9ea/karo_mac_dasumae_gate.sh MANIFEST.txt a.txt b/c.txt
+# 刻: 2026-09-17 17:16:06 +0900 / rc=0
+# ―― 以下 門の出目(stdout+stderr を一本にした儘・一字も直して居らぬ)
+台帳 MANIFEST.txt
+  一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+條②末尾空白 / 條③CR混入 / 條④EOF改行丁度1 = 全file(2本)通
+條⑤ 寸法 = byte和 569(閾 10485760未満)
+★出す前 門 通。出してよい。★

@@ -1,0 +1,13 @@
+㋐ 母數 ―― 遠隔 heads 全本の門の在否(★數へ直した★)
+遠隔 heads(git ls-remote --heads origin 17:11:06) = 244 本
+refs/km110/* へ取れた本數(git fetch '+refs/heads/*:refs/km110/*' 17:11:19) = 244 本
+★取れなんだ本數 = 0 本★(別欄・0 と丸めては居らぬ)
+名簿に無いが手元に在る本數 = 0 本
+二刻の間に頭が動いた本數 = 0 本
+
+門 scripts/checks/karo_mac_dasumae_gate.sh を ―― 載せる=55 本 / 載せぬ=189 本 / 測れぬ=0 本 (和=244)
+門の blob の種數 = 4
+  9cd550fc2cf963ca0475b3448bb33483b9aede6b  46 本
+  54e133c85832d48aa731d0ab0d105d399b9b8fbd  6 本
+  b0bf5b05ededce4b06286dbab05cf0b616414ef2  2 本
+  054c442eaee3886b2283f98f7c3a1ab8cb813b68  1 本

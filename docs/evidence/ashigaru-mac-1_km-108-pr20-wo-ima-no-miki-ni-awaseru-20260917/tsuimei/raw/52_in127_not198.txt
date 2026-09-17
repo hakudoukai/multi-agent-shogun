@@ -1,0 +1,5 @@
+                         "/Users/momizimac/DentalBI/.claude/worktrees/dino-story-engine/"]
+        out.append(m.group(1))
+    """1 行から path 候補を取り出す。順に試す。"""
+    bases = argv[2:] or ["", "queue/reports/",
+    m = re.search(r"(?:^|\s)path=(\S+)", line)

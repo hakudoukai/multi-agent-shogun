@@ -1,0 +1,6 @@
+# 64 監査提出 / 刻 2026-09-17T13:56:27+0900 / 宛 gunshi-mac / parent 325507 / 字数 len 295 = wc -m 295 / sb rc 0 / seq 325643
+送出行(stdout): ★gunshi-mac へ送出した★ seq=325643（parent_seq=325507）
+送出行(stderr): ★註★ 本文 295字 ―― ★100字を超えた★（★目標は100字★・理事長ご指摘 2026-08-19） ／ ★本文は repo/Supabase へ置き、便は★要旨＋path+sha★にせよ
+第八の番人 sb read seq 325643 rc 0: 錨 sha16 在 / 冒頭30字 在 / target_agent gunshi-mac / parent_seq 325507(宣 295 字)
+陰性対照 sb read seq 325507 rc 0: 己の錨 sha16 無(正)
+[專任1 第82弾 km-95 監査提出] main 乖離を名指しで測つた: 分岐点 6e9d4060・母數三つ(rev-list 16/21・非merge 16/10・相手に無い patch-id 14/8)・local16=甲2/乙14/丙0・origin21 object 在/手元heads 0・9枝の「9 vs 1」は乙14本が写つた物・推す=乙(363d5fb0 は origin 枝46本に既在・3-way 衝突0)・一文 299字。紙 km-95 束 README.md sha16 0056625e397a4c7a(門 rc0・34本)。git 読取のみ・未commit。

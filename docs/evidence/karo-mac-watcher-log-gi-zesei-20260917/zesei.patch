@@ -1,0 +1,20 @@
+--- docs/evidence/karo-mac-watcher-log-gi-zesei-20260917/inbox_watcher.sh.before	2026-09-12 23:52:47
++++ docs/evidence/karo-mac-watcher-log-gi-zesei-20260917/inbox_watcher.sh.after	2026-09-17 00:31:07
+@@ -569,7 +569,7 @@
+     # clear_command inbox processor also checks busy, but this is a defense-in-depth guard.
+     # Sending /clear during Working destroys in-progress context and causes data loss.
+     if [[ "$cmd" == "/clear" ]] && agent_is_busy; then
+-        echo "[$(date)] [SKIP] Agent is busy — /clear deferred to next cycle (agent=$AGENT_ID)" >&2
++        echo "[$(date)] [SKIP] Agent is busy — /clear DROPPED, not deferred (special marked read at collection; no retry) (agent=$AGENT_ID)" >&2
+         return 0
+     fi
+ 
+@@ -1242,7 +1242,7 @@
+                 # Busy guard: skip /clear if agent is currently processing.
+                 # Sending /clear during active work destroys in-progress context.
+                 if agent_is_busy && [[ "$AGENT_ID" != "shogun" ]]; then
+-                    echo "[$(date)] [SKIP] Agent $AGENT_ID is busy — /clear (clear_command) deferred to next cycle" >&2
++                    echo "[$(date)] [SKIP] Agent $AGENT_ID is busy — /clear (clear_command) DROPPED, not deferred (marked read at collection; no next cycle)" >&2
+                     continue
+                 fi
+             fi

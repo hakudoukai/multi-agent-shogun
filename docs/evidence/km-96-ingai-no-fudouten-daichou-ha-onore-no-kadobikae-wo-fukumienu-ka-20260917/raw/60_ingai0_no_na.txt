@@ -1,0 +1,22 @@
+刻 2026-09-17T13:56:25+0900
+[kiyoi] 臺帳 rc=0
+[yogore] 臺帳 rc=0
+=== kiyoi ===
+  根=/Users/momizimac/multi-agent-shogun/docs/evidence/km-96-ingai-no-fudouten-daichou-ha-onore-no-kadobikae-wo-fukumienu-ka-20260917/raw/yousei/kiyoi 深さ=無限(os.walk) / disk 本数=3
+  ★門(五條) rc=0★ ―― 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+  ★第六條 rc=0★ ―― ★員外 1★(内 己の控 1 / 他 0)
+★第六條 通 ―― 員外は己の控のみ(1 本)★
+    ★員外 1★(内 己の控 1 / 他 0)
+      控 MANIFEST.txt
+  「員外0」を字義通り当てると = 員外 1 ∴ ★落(0 ではない)★
+=== yogore ===
+  根=/Users/momizimac/multi-agent-shogun/docs/evidence/km-96-ingai-no-fudouten-daichou-ha-onore-no-kadobikae-wo-fukumienu-ka-20260917/raw/yousei/yogore 深さ=無限(os.walk) / disk 本数=4
+  ★門(五條) rc=0★ ―― 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+  ★第六條 rc=1★ ―― ★員外 2★(内 己の控 1 / 他 1)
+★第六條 落 ―― 員外に『己の控』でない物が 1 本★
+    ★員外 2★(内 己の控 1 / 他 1)
+      控 MANIFEST.txt
+      ★他★ c_gaibu.txt
+  「員外0」を字義通り当てると = 員外 2 ∴ ★落(0 ではない)★

@@ -1,0 +1,121 @@
+### hunk 1 (file line 15)
+15	<<<<<<< HEAD
+16	[HEAD]
+17	[HEAD]	    ★台帳の書き手への條(委員長裁 seq321127⑵ / 321257)★
+18	[HEAD]	      ・★宣は要★ ―― どの本形で書いたかを臺帳の頭に明示せよ(落ち防止ではなく読み手の判別用)
+19	[HEAD]	      ・★引用符は禁(新規に書く行のみ)★ ―― 一重も二重も禁(C形は3器全損の実測)
+20	[HEAD]	      ・★既存行は拒まぬ★ ―― 引用符を含む既存行は ★旧形★ として通し、件数のみ報せる
+21	[HEAD]	        (委員長裁 seq321353⑴ 逐語:「引用符禁は★新規に書く行★にのみ適用＝既存行は拒否せず
+22	[HEAD]	         『旧形』札で通し件数を報せる」)
+23	=======
+24	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124
+### hunk 2 (file line 52)
+52	<<<<<<< HEAD
+53	[HEAD]	    r"""1 行から path 候補を取り出す。順に試す。
+54	[HEAD]
+55	[HEAD]	    ★2026-09-12 止血(総監督裁 seq307881/307874 ⑵)★:
+56	[HEAD]	        旧版は ``path=(\S+)`` の一本しか持たず、★名に空白が在ると其處で切り落した★。
+57	[HEAD]	        切り落した儘 disk に問ふ故、出目は「実体無」となり ★盤を責めた★。
+58	[HEAD]	        (實測 2026-09-12: 名に空白二つの一本を 素/quote/CRLF の三綴りで載せた臺帳、
+59	[HEAD]	         三枚悉く「一致 0 / 実体無 1」。紙は byte 正であつた。)
+60	[HEAD]	        ∴ ⑴照合の前に ``\r`` を剥ぎ ⑵quote された名を受け ⑶非貪欲で空白を許す。
+61	[HEAD]	        可逆: 此の函數を控(…bak-20260912-shiketsu-failopen)へ戻せば旧挙動。
+62	[HEAD]	    """
+63	[HEAD]	    def _dequote(t):
+64	[HEAD]	        t = t.strip()
+65	[HEAD]	        if len(t) >= 2 and t[0] == t[-1] and t[0] in "\"'":
+66	[HEAD]	            t = t[1:-1]          # ★旧形★の括りを剥ぐ(拒まぬ為・裁321353⑴)
+67	[HEAD]	        return t
+68	[HEAD]
+69	[HEAD]	    out = []
+70	[HEAD]	    line = line.replace("\r", "")          # ★照合の前に \r を剥ぐ★(CRLF の臺帳を LF と同じに読む)
+71	[HEAD]	    m = re.search(r'(?:^|\s)path=([^\s"\']+)', line)        # ①本形(★引用符を用ゐぬ★・裁321353⑵)
+72	[HEAD]	    if not m:
+73	[HEAD]	        m = re.search(r"(?:^|\s)path=(.+?)[ \t]+sha256=", line)  # ②非貪欲(素の空白名)
+74	[HEAD]	    if not m:
+75	[HEAD]	        m = re.search(r"(?:^|\s)path=(\S+)", line)           # ③従来形(sha256 が前に在る等)
+76	[HEAD]	    if m:
+77	[HEAD]	        out.append(_dequote(m.group(1)))
+78	=======
+79	[PR20]	    """1 行から path 候補を取り出す。順に試す。"""
+80	[PR20]	    out = []
+81	[PR20]	    m = re.search(r"(?:^|\s)path=(\S+)", line)
+82	[PR20]	    if m:
+83	[PR20]	        out.append(m.group(1))
+84	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124
+### hunk 3 (file line 90)
+90	<<<<<<< HEAD
+91	[HEAD]	        t = _dequote(t)
+92	=======
+93	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124
+### hunk 4 (file line 104)
+104	<<<<<<< HEAD
+105	[HEAD]	    # ★2026-09-12 止血(総監督裁 seq307881/307874 ⑴ ―― default-deny 側へ揃へる)★
+106	[HEAD]	    #   旧版の既定基点は第一に ★""(= cwd 相対)★ であつた。故に ★同じ臺帳・同じ刻でも
+107	[HEAD]	    #   立つて居る場所で出目が変つた★ ―― 實測: repo 根 rc=1「出すな」/ fixtures 配下 rc=0「出してよい」。
+108	[HEAD]	    #   ★赤→青 の向きに開く(fail-open)★。
+109	[HEAD]	    #   ∴ 既定基点を ★器自身の在處から導いた repo 根★(cwd に依らぬ)へ据ゑる。
+110	[HEAD]	    #   引数で基点を渡した時は其れを尊ぶ(従来通り・明示は cwd 相対で宜しい)。
+111	[HEAD]	    #   可逆: 此の三行を控へ戻せば旧挙動。
+112	[HEAD]	    if argv[2:]:
+113	[HEAD]	        bases = argv[2:]
+114	[HEAD]	        base_src = "引数(明示)"
+115	[HEAD]	    else:
+116	[HEAD]	        _root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+117	[HEAD]	        bases = [_root + os.sep,
+118	[HEAD]	                 os.path.join(_root, "queue", "reports") + os.sep,
+119	[HEAD]	                 "/Users/momizimac/DentalBI/.claude/worktrees/dino-story-engine/"]
+120	[HEAD]	        base_src = "既定(器の在處から導いた repo 根 %s ―― ★cwd に依らぬ★)" % _root
+121	=======
+122	[PR20]	    bases = argv[2:] or ["", "queue/reports/",
+123	[PR20]	                         "/Users/momizimac/DentalBI/.claude/worktrees/dino-story-engine/"]
+124	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124
+### hunk 5 (file line 130)
+130	<<<<<<< HEAD
+131	[HEAD]	    kyuukei = 0          # ★旧形★(引用符を含む既存行・拒まず通す)
+132	[HEAD]	    kyuu_rows = []
+133	=======
+134	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124
+### hunk 6 (file line 140)
+140	<<<<<<< HEAD
+141	[HEAD]	        # ★2026-09-17 委員長裁 seq321353⑴ ―― 引用符禁は ★新規に書く行のみ★★
+142	[HEAD]	        #   逐語:「引用符禁は★新規に書く行★にのみ適用＝既存行は拒否せず『旧形』札で
+143	[HEAD]	        #   通し件数を報せる(既存台帳を一斉に赤にするのは器の目的=新しい落ちの防止に反する)」
+144	[HEAD]	        #   ★之は拒まぬ★ ―― 数へて報せる丈である(守りではなく数へ)。新規の落ち防止は
+145	[HEAD]	        #   頭註の條(書き手への申し渡し)が担ふ。
+146	[HEAD]	        #   ★前版(裁321257)は此処で拒んでゐた★ ―― 実測 962/4445本・17650/74452行が赤に
+147	[HEAD]	        #   なる為、委員長が改めた。前版の控 = …/karo_mac_manifest_verify.py.after321257
+148	[HEAD]	        #   ★戻し方(一手)★ cp -p docs/evidence/karo-mac-manifest-verify-inyoufu-kin-20260916/\
+149	[HEAD]	        #     karo_mac_manifest_verify.py.before scripts/checks/karo_mac_manifest_verify.py
+150	[HEAD]	        if '"' in line or "'" in line:
+151	[HEAD]	            kyuukei += 1
+152	[HEAD]	            kyuu_rows.append(line[:100])
+153	[HEAD]	            # ★continue せぬ★ ―― 旧形も照合へ進める(拒まぬ)
+154	=======
+155	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124
+### hunk 7 (file line 189)
+189	<<<<<<< HEAD
+190	[HEAD]	    # ★數は「何處から測つたか」を伴はねば讀めぬ★(裁 seq307874⑴ の教へ)
+191	[HEAD]	    print(f"  cwd  {os.getcwd()}")
+192	[HEAD]	    print(f"  基点 {base_src}")
+193	[HEAD]	    print(f"  一致 ★{ok}★ / 相違 {ng} / 実体無 {miss} / 読めぬ行 {unreadable}"
+194	[HEAD]	          f"  (母數 {ok + ng + miss + unreadable})")
+195	[HEAD]	    print(f"  ★旧形(引用符を含む行)★ {kyuukei} 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)")
+196	[HEAD]	    if kyuukei:
+197	[HEAD]	        print("  ★註★ 旧形は ★通した★ ―― 上の 母數 に含まれ、rc を赤にせぬ。")
+198	[HEAD]	        print("       ★新規に書く行では引用符を用ゐるな★(頭註の條)。既存行の書き換へは求めぬ。")
+199	[HEAD]	        for r in kyuu_rows[:5]:
+200	[HEAD]	            print(f"    ★旧形★ {r}")
+201	[HEAD]	        if len(kyuu_rows) > 5:
+202	[HEAD]	            print(f"    … 他 {len(kyuu_rows) - 5} 行(母數 {kyuukei})")
+203	=======
+204	[PR20]	    print(f"  一致 ★{ok}★ / 相違 {ng} / 実体無 {miss} / 読めぬ行 {unreadable}"
+205	[PR20]	          f"  (母數 {ok + ng + miss + unreadable})")
+206	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124
+### hunk 8 (file line 211)
+211	<<<<<<< HEAD
+212	[HEAD]	    if miss:
+213	[HEAD]	        print("  ★註★ ★実体無★ は ★『disk に物が無い』とは限らぬ★ ―― ★基点(場所)が違ふ★ 事が在る。")
+214	[HEAD]	        print("       上の『基点』行を先に読み、次に ★臺帳を作つた樹の根★ で当て直せ。")
+215	=======
+216	>>>>>>> 0bb92e2b800c1b434c8a660d38f6feea7d450124

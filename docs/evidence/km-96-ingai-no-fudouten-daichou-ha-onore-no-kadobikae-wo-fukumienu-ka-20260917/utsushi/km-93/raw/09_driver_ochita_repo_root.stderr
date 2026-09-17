@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/driver/10_ryoutaishou_ingai.py", line 208, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/driver/10_ryoutaishou_ingai.py", line 170, in main
+    print("照合器 %s sha16=%s" % (os.path.relpath(VERIFY, REPO), sha16(VERIFY)))
+                                                                 ~~~~~^^^^^^^^
+  File "/Users/momizimac/multi-agent-shogun/docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/driver/10_ryoutaishou_ingai.py", line 41, in sha16
+    with open(p, "rb") as fh:
+         ~~~~^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/momizimac/multi-agent-shogun/docs/scripts/checks/karo_mac_manifest_verify.py'

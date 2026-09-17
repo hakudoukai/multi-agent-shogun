@@ -1,0 +1,14 @@
+# 46 .gitignore の 3-way(merge-file・ref 不觸) / 刻 2026-09-17T13:48:48+0900
+base 6e9d40600a80:.gitignore → 13924B 440行 sha16 b46fec9b307724a9 (cat-file rc 0)
+local 363d5fb06084:.gitignore → 13968B 441行 sha16 3ccfcf1c05e82b58 (cat-file rc 0)
+origin 4be3ee19e1c5:.gitignore → 13998B 442行 sha16 3826c14806e01614 (cat-file rc 0)
+git merge-file -p local base origin → rc ★0★(= 衝突 hunk の数・0 は衝突無し) / 出目 13998B 442行 / 衝突印 <<<<<<< の行 0
+base→local の差(diff 逐語):
+  167a168
+  > !scripts/checks/karo_mac_manifest_verify.py
+base→origin の差(diff 逐語):
+  134a135
+  > !scripts/idle_backlog_wake.sh
+  167a169
+  > !scripts/checks/karo_mac_manifest_verify.py
+此の測りが意味せぬ事: file 単位の 3-way であり、rename/mode/他 path との連関は見ぬ。scripts/checks/karo_mac_manifest_verify.py は両 tip で同 blob(45①)ゆゑ 3-way 不要。

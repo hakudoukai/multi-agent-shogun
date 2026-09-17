@@ -1,0 +1,441 @@
+# ══════════════════════════════════════════════════
+# Whitelist-based .gitignore
+# デフォルト全除外 → OSS公開対象のみ許可
+# ══════════════════════════════════════════════════
+
+# Step 1: 全て除外
+*
+
+# Step 2: ディレクトリの探索を許可（中身は個別に許可）
+!*/
+
+# Step 3: OSS公開対象ファイルを許可
+!.gitignore
+!.gitattributes
+!.gitleaks.toml
+!CLAUDE.md
+!LICENSE
+!README.md
+!README_ja.md
+!CHANGELOG.md
+!CONTRIBUTING.md
+!SECURITY.md
+
+# Claude Code settings (spinner verbs only, no secrets)
+!.claude/
+!.claude/settings.json
+
+# Instructions (core OSS)
+!instructions/
+!instructions/shogun.md
+!instructions/karo.md
+!instructions/ashigaru.md
+!instructions/gunshi.md
+!instructions/fukuincho.md
+!instructions/maeda.md
+!instructions/ieyasu.md
+!instructions/hideyoshi.md
+!instructions/nobunaga.md
+!instructions/takenaka.md
+!instructions/honda.md
+!instructions/kuroda.md
+!docs/cmd_phase16_honda_meta_audit_draft.md
+
+# Multi-CLI: CLI-specific tool descriptions
+!instructions/cli_specific/
+!instructions/cli_specific/claude_tools.md
+!instructions/cli_specific/codex_tools.md
+!instructions/cli_specific/copilot_tools.md
+!instructions/cli_specific/kimi_tools.md
+
+# Multi-CLI: Build template parts (roles, common sections)
+!instructions/roles/
+!instructions/roles/*.md
+!instructions/common/
+!instructions/common/*.md
+
+# Multi-CLI: Generated instruction files (built by build_instructions.sh)
+!instructions/generated/
+!instructions/generated/*.md
+
+# Multi-CLI: CLI adapter library + ntfy auth
+!lib/
+!lib/cli_adapter.sh
+!lib/ntfy_auth.sh
+!lib/agent_status.sh
+!lib/_section18_roles.sh
+
+# Multi-CLI: Codex auto-load file
+!AGENTS.md
+
+# Setup and deployment scripts
+!shutsujin_departure.sh
+!shutsujin_departure_secondpc.sh
+!first_setup.sh
+!setup.sh
+!install.bat
+
+# Development tooling
+!Makefile
+
+# Config (sample files only, no secrets)
+!config/
+!config/ntfy_auth.env.sample
+# Hakudokai fork: settings.yaml has role mappings (no secrets)
+!config/settings.yaml
+
+# Hakudokai fork: shim/hakudokai (DD-146 R1-R4 modules, no PII)
+!shim/
+!shim/hakudokai/
+!shim/hakudokai/*.py
+!shim/hakudokai/*.sh
+!shim/hakudokai/lib/
+!shim/hakudokai/lib/*.sh
+
+# cmd_root_resolution_001: organizational_lessons migration (Supabase 組織改革事例蓄積基盤、OSS 公開対象、no PII)
+!backend/
+!backend/migrations/
+!backend/migrations/007_organizational_lessons.sql
+!backend/migrations/008_organizational_lessons_seed.sql
+!backend/migrations/009_organizational_lessons_rollback.sql
+
+# Templates
+!templates/
+!templates/**
+
+# Context README
+!context/
+!context/README.md
+
+# Python venv
+!requirements.txt
+
+# Scripts
+!scripts/
+!scripts/inbox_write.sh
+!scripts/inbox_watcher.sh
+!scripts/fukuincho_desktop_poke.py
+# direct-poke bundle (副院長令 FINAL DIRECTIVE phase ②、ba9c7281 + 21a87964 設計実装)
+!scripts/fukuincho_report_poke_bundle.py
+!scripts/fukuincho_detect_stale_cli.sh
+!scripts/lib/
+!scripts/lib/detect_stale.sh
+!scripts/tests/
+!scripts/tests/test_fukuincho_desktop_poke.py
+# direct-poke bundle unit test ((i)-(v) verify SKIP=0)
+!scripts/tests/test_fukuincho_report_poke_bundle.py
+!scripts/tests/test_detect_stale.sh
+!scripts/tests/test_fukuincho_detect_stale_cli.sh
+!scripts/watcher_supervisor.sh
+# third PC 専用 supervisor — phantom inbox1 off-by-one cure 永続化 (karo-third 2026-06-05)
+!scripts/watcher_supervisor_third.sh
+!scripts/ntfy.sh
+!scripts/ntfy_listener.sh
+!scripts/build_instructions.sh
+!scripts/slim_yaml.sh
+!scripts/slim_yaml.py
+!scripts/seo_qc.py
+!scripts/seo_qc.sh
+# 副院長令 86de0a2c: Enter watcher 本体・supervisor 正規 repo 化
+!scripts/pane_enter_watcher.py
+!scripts/pane_enter_watcher_supervisor.sh
+!scripts/stop_hook_inbox.sh
+!scripts/agent_status.sh
+!scripts/ratelimit_check.sh
+!scripts/switch_cli.sh
+!scripts/dashboard-viewer.py
+!scripts/diagnose.sh
+!scripts/audit_codex.sh
+!scripts/audit_gemini.sh
+!scripts/audit_meta_codex.sh
+!scripts/bulk_ack.sh
+!scripts/agent_health_check.sh
+!scripts/setup_known_hosts.sh
+!scripts/karo_overload_monitor.sh
+
+# Box CCG App + 3PC 視覚環境 (副院長裁定 4728acd7、2026-06-04)
+!scripts/box_setup.sh
+!scripts/box_get_carte_pdfs.sh
+!scripts/box_scope_verify.sh
+!scripts/box_pdf_to_png.sh
+!scripts/visual_env_setup.sh
+!scripts/visual_smoke.sh
+!scripts/screen_verify.py
+
+# Pre-action check scripts (§19 Post-Incident Lessons Capture)
+!scripts/checks/
+!scripts/checks/*.sh
+!scripts/checks/karo_mac_manifest_verify.py
+
+# Redundancy fallback watchers (本多 v3 HND-T1V3-004)
+!scripts/redundancy/
+!scripts/redundancy/*.sh
+
+# Enter Restart watchdogs (ee4d6ce4 — commander_failsafe rename + shogun_third 新設)
+!scripts/watchdogs/
+!scripts/watchdogs/*.sh
+!scripts/watchdogs/*.service
+!scripts/watchdogs/*.timer
+
+
+# SayTask (sample template only, not actual data)
+!saytask/
+!saytask/streaks.yaml.sample
+
+# Reports (private — not tracked)
+
+# Memory (MEMORY.md is private; only the sample template is OSS)
+!memory/
+!memory/MEMORY.md.sample
+
+# Docs
+!docs/
+!docs/philosophy.md
+!docs/codex_audits/
+!docs/codex_audits/*.txt
+!docs/runbooks/
+!docs/runbooks/*.md
+!docs/shogun-only-freeze-recovery.md
+!docs/scripts/
+!docs/scripts/*.ps1
+!docs/scripts/*.sh
+!docs/incident_logs/
+!docs/incident_logs/*.md
+!docs/audit-framework.md
+!docs/error_codes.md
+!docs/restart-and-mcp.md
+!docs/phase6_integration_test_plan.md
+!docs/phase7_passport_integration_concept_draft.md
+!docs/phase7_passport_rls_design_draft.md
+!docs/kids_app_push_ceremony_detail_design.md
+!docs/error-design-medical.md
+!docs/clinic-expansion-design.md
+!docs/directive_audit_pregate_diffstat_check_001_draft.md
+!docs/cmd_phase2_watchdog_registry_draft.md
+!docs/cmd_phase3_shutsujin_dynamic_pane_draft.md
+!docs/cmd_phase5_audit_persona_restructure_draft.md
+!docs/cmd_phase15_takenaka_proactive_draft.md
+!docs/cmd_claude_md_section18_autogen_draft.md
+!docs/proposals/
+!docs/proposals/pane_identity_pretool_hook_proposal.md
+
+# CLAUDE.md slim 副院長令 7de922ec 移設先 (X-1+X-4、2026-06-04)
+!docs/00-overview/
+!docs/00-overview/*.md
+!docs/01-architecture/
+!docs/01-architecture/*.md
+!docs/02-roles/
+!docs/02-roles/*.md
+!docs/03-workflows/
+!docs/03-workflows/*.md
+!docs/04-naming/
+!docs/04-naming/*.md
+!docs/05-charter/
+!docs/05-charter/*.md
+!docs/06-protocols/
+!docs/06-protocols/*.md
+!docs/07-tools/
+!docs/07-tools/*.md
+!docs/08-ops/
+!docs/08-ops/*.md
+!docs/09-history/
+!docs/09-history/*.md
+
+# pane registry (= 4-way mapping audit SSoT mirror、CLAUDE.md §18.1 二次 source)
+!queue/
+!queue/pane_registry.yaml
+
+# Screenshots (masked — no secrets)
+!images/
+!images/company-creed-all-panes.png
+!images/screenshots/
+!images/screenshots/tdd_ndd_rdd.png
+!images/screenshots/masked/
+!images/screenshots/masked/ntfy_saytask_rename.jpg
+!images/screenshots/masked/ntfy_cmd043_progress.jpg
+!images/screenshots/masked/ntfy_bloom_oc_test.jpg
+!images/screenshots/masked/ntfy_persona_eval_complete.jpg
+!images/screenshots/masked/ntfy_tasklist_v1_before.jpg
+!images/screenshots/masked/ntfy_tasklist_v2_aligned.jpg
+!images/screenshots/hero/
+!images/screenshots/hero/latest-translucent-20260210-190453.png
+!images/screenshots/hero/latest-translucent-20260208-084602.png
+
+# Skills (public OSS skills committed to repo)
+!skills/
+!skills/skill-creator/
+!skills/skill-creator/SKILL.md
+!skills/shogun-agent-status/
+!skills/shogun-agent-status/SKILL.md
+!skills/shogun-model-list/
+!skills/shogun-model-list/SKILL.md
+!skills/shogun-bloom-config/
+!skills/shogun-bloom-config/SKILL.md
+!skills/shogun-model-switch/
+!skills/shogun-model-switch/SKILL.md
+!skills/shogun-readme-sync/
+!skills/shogun-readme-sync/SKILL.md
+!skills/shogun-screenshot/
+!skills/shogun-screenshot/SKILL.md
+!skills/shogun-screenshot/scripts/
+!skills/shogun-screenshot/scripts/*.sh
+!skills/shogun-screenshot/scripts/*.py
+# §19 Post-Incident skills
+!skills/pane-identity-verify/
+!skills/pane-identity-verify/SKILL.md
+!skills/lessons-to-skill/
+!skills/lessons-to-skill/SKILL.md
+!skills/inbox-alias-integrity/
+!skills/inbox-alias-integrity/SKILL.md
+!skills/symlink-aware-atomic-write/
+!skills/symlink-aware-atomic-write/SKILL.md
+!skills/secondpc-dispatch-verify/
+!skills/secondpc-dispatch-verify/SKILL.md
+
+# Python venv (explicit deny — whitelist patterns like LICENSE leak through !*/)
+.venv/
+.venv-pg-test/
+
+# Test specs
+!tests/specs/
+!tests/specs/*.md
+# Client project specs (not OSS — re-exclude after whitelist)
+tests/specs/osato_lms_*
+
+# Tests
+!tests/
+!tests/*.bats
+!tests/*.sh
+!tests/*.py
+!tests/fixtures/
+!tests/fixtures/*.yaml
+!tests/unit/
+!tests/unit/*.bats
+!tests/integration/
+!tests/integration/*.bats
+!tests/e2e/
+!tests/e2e/*.bats
+!tests/e2e/mock_cli.sh
+!tests/e2e/helpers/
+!tests/e2e/helpers/*.bash
+!tests/e2e/fixtures/
+!tests/e2e/fixtures/*.yaml
+!tests/e2e/mock_behaviors/
+!tests/e2e/mock_behaviors/*.sh
+# checks/ (cycle2 M3: pane_identity.sh bats test for cmd_phase1_pane_identity_4way_audit_001)
+!tests/checks/
+!tests/checks/*.bats
+!tests/checks/fixtures/
+!tests/checks/fixtures/*.yaml
+!tests/checks/fixtures/*.md
+!tests/checks/fixtures/*.sh
+# DD-169 cycle4 smoke test directory (stdin JSON 公式仕様準拠 hook 回帰 gate)
+!tests/checks/dd169_kill_term_guard/
+!tests/checks/dd169_kill_term_guard/*.sh
+# ee4d6ce4 cycle4 B1 smoke test directory (pretooluse_bash_guard stdin JSON 対応 hook 検証 gate)
+!tests/checks/pretooluse_stdin_json/
+!tests/checks/pretooluse_stdin_json/*.sh
+# CANON-SHOGUN-COMMS-RESTORE-01 残 regression #1 (enter_restart footer 耐性 β改修 regression gate)
+!tests/checks/enter_restart_footer_immune/
+!tests/checks/enter_restart_footer_immune/*.sh
+# ee4d6ce4 30f198e3 homework#1 (audit_gemini.sh harness heredoc literal parse bug 根治 regression gate)
+!tests/checks/audit_gemini_harness/
+!tests/checks/audit_gemini_harness/*.sh
+# ee4d6ce4 cycle3 T1 smoke test directory (enter_restart watchdog 4 観点 regression gate)
+!tests/smoke/
+!tests/smoke/*.sh
+!tests/test_helper/
+!tests/test_helper/README.md
+!tests/test_helper/*.bash
+# migrations/ (cmd_organizational_lessons_supabase_001 cycle2: 007 RLS + SECURITY DEFINER apply test)
+!tests/migrations/
+!tests/migrations/*.sh
+!tests/migrations/*.py
+
+# CI/CD
+!.github/
+!.github/FUNDING.yml
+!.github/workflows/
+!.github/workflows/*.yml
+
+# Android companion app
+!android/
+!android/**
+.claude/settings.local.json
+!scripts/agent_periodic_push.sh
+!docs/kids_game_concept_design.md
+!docs/kids_game_phase7_detail_design.md
+!docs/kids_app_push_phase7_detail_design.md
+!docs/section18_residual_cleanup_plan.md
+!docs/cmd_root_resolution_001_draft.md
+!docs/cmd_phase5_codex_personas_immediate_001_draft.md
+!skills/codex-cli-required-persona/
+!skills/codex-cli-required-persona/SKILL.md
+!docs/cmd_karo_overload_takenaka_assist_001_draft.md
+!docs/honda_recommendations_2026-05-08.md
+!docs/honda_phase16_3_retrospective_audit_2026-05-08.md
+!docs/honda_initial_proposals_2026-05-08.md
+!docs/honda_audit_lane_status_design_2026-05-08.md
+!instructions/sanada.md
+!docs/honda_tui_render_root_cause_2026-05-08.md
+!docs/honda_validation_implementation_flow_2026-05-08.md
+!docs/honda_secondpc_inefficiency_retrospective_2026-05-08.md
+!docs/communication_resilience_pack_proposal_2026-05-08.md
+!docs/honda_communication_resilience_proposal_2026-05-08.md
+!docs/ieyasu_communication_breakdown_audit_2026-05-08.md
+!docs/honda_self_resilience_design_2026-05-08.md
+!docs/shogun_control_brief_2026-05-08.md
+!docs/honda_three_perspectives_unified_v2_2026-05-08.md
+!docs/sanada_secondpc_reconciliation_2026-05-08.md
+!docs/inbox_watcher_failure_modes_2026-05-08.md
+!docs/message_delivery_v2_design_2026-05-08.md
+!docs/ieyasu_inbox_watcher_phase0_audit_2026-05-08.md
+# message_delivery_v2 — ゼロベース watcher 新製 (cmd_inbox_watcher_zerobase_redesign_001)
+!scripts/lib/
+!scripts/lib/inbox_path.sh
+!scripts/message_delivery_v2/
+!scripts/message_delivery_v2/heartbeat.sh
+!scripts/message_delivery_v2/watcher.sh
+!scripts/message_delivery_v2/supervisor.sh
+# message_delivery_v2 cycle2 配達本体
+!scripts/message_delivery_v2/safe_nudge.sh
+!scripts/message_delivery_v2/codex_guard.sh
+!scripts/message_delivery_v2/dedup.sh
+!scripts/message_delivery_v2/dead_letter.sh
+!scripts/message_delivery_v2/supervisor_secondpc.sh
+# 旧 watcher archive (rollback path 保持)
+!scripts/archive/
+!scripts/archive/inbox_watcher.sh.archived_2026-05-08
+!scripts/archive/watcher_supervisor.sh.archived_2026-05-08
+!shim/hakudokai/archive/
+!shim/hakudokai/archive/hakudokai_watchdog.sh.archived_2026-05-08
+!shim/hakudokai/archive/hakudokai_start_watchers.sh.archived_2026-05-08
+!shim/hakudokai/archive/hakudokai_secondpc_watcher.sh.archived_2026-05-08
+# 元 path に復元 (Tier 0 archive revert 2026-05-08 21:15)
+!shim/hakudokai/hakudokai_secondpc_watcher.sh
+# v2 試作 archive (= 知見保管、scripts/archive/message_delivery_v2_full_20260508/)
+!scripts/archive/message_delivery_v2_full_20260508/
+!scripts/archive/message_delivery_v2_full_20260508/*.sh
+# pane drift 複合解決策 docs
+!docs/pane_communication_compound_resolution_2026-05-08.md
+!docs/message_delivery_v3_zerobase_design_2026-05-08.md
+!docs/tier1_redundancy_layer_for_two_pc_integrity_design_2026-05-08.md
+!docs/tier1_v2_minimal_extension_design_2026-05-08.md
+!docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md
+
+# 2026-08-03 委員長: helper本体がwhitelist漏れでgit不可視だった穴の是正(裁定seq137615)
+!scripts/commander_send_shogun_second.sh
+
+# 2026-08-03 委員長: instructions正本のwhitelist漏れ是正(裁定seq137644)
+!instructions/
+!instructions/*.md
+!instructions/archive/
+!instructions/archive/*.md
+
+# 2026-08-03 委員長: guard skillのwhitelist漏れ是正(裁定seq137653)
+!skills/
+!skills/codex-exec-sandbox-guard/
+!skills/codex-exec-sandbox-guard/*
+
+# 2026-08-03 委員長: karo-second→iincho uplink helperのwhitelist(同一commit同梱・裁定seq137679)
+!scripts/karo_second_send_iincho.sh

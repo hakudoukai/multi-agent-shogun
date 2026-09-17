@@ -1,0 +1,50 @@
+# 30 ㋒ origin 側 / 刻 2026-09-17T13:46:40+0900 / 母數= origin 側 rev-list 21 本(merge 11・非merge 10)/ 突合せ先= local 側 非merge 16 本
+| # | full sha | 種 | object 手元 | 届く手元の ref | patch-id 一致(local) | committer | 第二親→手元 ref | 測れた事 / 測れぬ事 |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1 | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | 80171642a908 → 手元の heads に無し | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 2 | 80171642a908712e488426d5c001b30edd400c66 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | hakudoukai <227287444+hakudoukai@users.n |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 3 | f4a813a25807e2175845a9954b5e745e9ac7394f | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | hakudoukai <227287444+hakudoukai@users.n |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 4 | 519e2f41e4480e788ef186df0ec51026023676e8 | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | a5fd80157ab7 → 手元の heads に無し | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 5 | a5fd80157ab787df7730d8e46a0d41dbe818a8f0 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | ashigaru-third-3 <227287444+hakudoukai@u |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 6 | 1450318b6212d151b67528d7e55de6a23475e0c7 | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | af0dacfcbc88 → 手元の heads に無し | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 7 | af0dacfcbc8864f09bef4d8fe943190c6435bf7f | single | 在 | remotes/origin/HEAD;remotes/origin/main | 一致 local f2bfa26a163d | iincho <227287444+hakudoukai@users.norep |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / 中身は local main に別 sha で在る(sha だけが違ふ) / ★測れぬ★ |
+| 8 | 26e23590f4e4e479e968660bb68c475b6413c1e8 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 一致 local f0d59a3b6315 | iincho <227287444+hakudoukai@users.norep |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / 中身は local main に別 sha で在る(sha だけが違ふ) / ★測れぬ★ |
+| 9 | c14ff46f16c6678c6497f5701e13494990237933 | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | 6f116f404015 → 手元の heads に無し | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 10 | 6f116f40401526fa44436f77c89dc591bb9e5ba6 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | hakudoukai <hakudoukai@gmail.com> |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 11 | f3415522295cbe682f24ab66f2017b20b6c4c4d5 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | hakudoukai <hakudoukai@gmail.com> |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 12 | d5630faff995b0f4693283beb3a3f0fc9f69105b | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | 7533ae125357 → 手元の heads に無し | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 13 | 7533ae12535712ab0bffcc67478c0027acc35408 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | hakudoukai <hakudoukai@gmail.com> |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 14 | 23d09034e01aa5ba1caffb39a398fc88878a33c0 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | hakudoukai <hakudoukai@gmail.com> |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 15 | 9893b77a9f0003538c89426bfc279dc2e7966979 | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | a8bc158f991b → 手元の heads に無し | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 16 | a8bc158f991b5d1ad56263d62f76d5d70d825f21 | single | 在 | remotes/origin/HEAD;remotes/origin/main | 不一致(中身も届いて居らぬ) | ashigaru-third-3 <ashigaru-third-3@local |  | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / ★測れぬ★: 誰が・何処の PC から押したか／local main へ取り込まぬ判断の |
+| 17 | 49f843c162d13d37568aa3d0f8d922020312a3f5 | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | 6e9d40600a80 → heads 55 本 ['refs/heads/ashigaru-mac-1/a1-jis | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 18 | 3ff35e6759f989dec4571315f50e42383ad77d0f | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | e3d91442f666 → heads 55 本 ['refs/heads/ashigaru-mac-1/a1-jis | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 19 | 8314831b245d7ec00101ef8bbc4b83327b6c246e | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | 58080a332a76 → heads 55 本 ['refs/heads/ashigaru-mac-1/a1-jis | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 20 | edc4872eae80853c281c1d182ef750a14af1066c | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | c3ffdba93c5d → heads 55 本 ['refs/heads/ashigaru-mac-1/a1-jis | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+| 21 | 99fc4c4d0c3b239e6c6fc538c650e879d1418b55 | merge | 在 | remotes/origin/HEAD;remotes/origin/main | merge(対象外) | GitHub <noreply@github.com> | 0405ac55247b → heads 55 本 ['refs/heads/ashigaru-mac-1/a1-jis | local main から届かぬ(rev-list L..O の定義) / object は手元に在る= 過去に fetch 済(refs/remotes/origin/main 経由・reflog 参照) / committer= GitHub(web/PR merge) / ★測れぬ★: 誰が・ |
+
+集計(母數 21): 手元の refs/heads/* から届く 0 / refs/remotes/* からのみ届く 21 / patch-id が local と一致(非merge) 2 / 不一致(非merge) 8 / merge 11
+
+## reflog show(読取・fetch の痕)
+refs/remotes/origin/main (rc 0・8 行・新しい方が上・頭 12 行):
+  4be3ee1 origin/main@{2026-09-17 04:19:56 +0900} fetch origin --quiet: fast-forward
+  1450318 origin/main@{2026-09-10 14:56:42 +0900} fetch -q origin: fast-forward
+  c14ff46 origin/main@{2026-09-09 05:27:58 +0900} fetch -q origin: fast-forward
+  9893b77 origin/main@{2026-09-09 01:58:30 +0900} fetch -q origin main: fast-forward
+  49f843c origin/main@{2026-09-08 20:56:53 +0900} fetch -q origin: fast-forward
+  3ff35e6 origin/main@{2026-09-08 18:41:51 +0900} fetch -q origin: fast-forward
+  99fc4c4 origin/main@{2026-09-08 15:16:04 +0900} fetch -q origin: fast-forward
+  9b8c89b origin/main@{2026-08-07 02:00:12 +0900} fetch origin: fast-forward
+refs/heads/main (rc 0・40 行・新しい方が上・頭 12 行):
+  363d5fb main@{2026-09-17 05:11:58 +0900} commit: fix(checks): 出す前 門 に ★甲(同じ演算子で閾を検む)・乙(未設定/空/空白を分つ)・基点の口★ を据ゑる
+  43808f8 main@{2026-09-17 04:37:05 +0900} commit: evidence(km-47): ★四つの數★ ―― 專任3 第47弾 を版へ固定する(專任1 の照合版が失はれて居る旨を併記)
+  d4849b0 main@{2026-09-17 04:34:11 +0900} commit: evidence(km-50): ★空は届かぬ★ ―― 專任2 第50弾 を版へ固定する
+  2992eec main@{2026-09-17 04:07:09 +0900} commit: docs(evidence): 專任3 第39弾 を ★樹へ固定★する ―― 監査 REVISE seq321131 の是正
+  99ea298 main@{2026-09-17 03:41:29 +0900} commit: docs(evidence): 專任3 第46弾 ―― ★讀手の疵 24形★ を現物で裁き、門が落ちた儘 出す
+  b82b98c main@{2026-09-17 03:38:51 +0900} commit: fix(evidence): km-49 の束を ★測つた版へ揃へる★ ―― 2187e25 は紙と臺帳が食ひ違つて居た
+  2187e25 main@{2026-09-17 03:27:34 +0900} commit: docs(evidence): 專任2 第49弾 ―― ★總和が小さい事は中身が健かである事を意味せぬ★(裁 322247)
+  c771fbf main@{2026-09-17 03:12:14 +0900} commit: docs(evidence): lot48235904 出所の紙 ★12本★ を repo へ収める(裁 320577⑸)
+  561dd8f main@{2026-09-17 02:57:40 +0900} commit: feat(inbox_write): ★死箱の門★ を据ゑる ―― 讀手なき箱への書込みを rc=68 で止める(裁 seq322250)
+  f626f20 main@{2026-09-17 02:43:50 +0900} commit: docs(evidence): 家老の便を ★器で測る★ ―― 100字の負債 11本(300條 0本)
+  f2bfa26 main@{2026-09-10 14:36:28 +0900} commit: fix(checks): 台帳照合の器に ★読めぬ行★ を第四の数として分ける(裁 298712 ②)
+  2320dbb main@{2026-09-09 21:14:34 +0900} commit: feat(checks): 出す前 門 を ★commit へ据ゑる★ ―― karo_mac_dasumae_gate.sh(裁 297343)

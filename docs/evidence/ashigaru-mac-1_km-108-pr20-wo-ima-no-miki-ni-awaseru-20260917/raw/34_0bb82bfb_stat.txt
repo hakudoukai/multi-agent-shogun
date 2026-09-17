@@ -1,0 +1,20 @@
+0bb82bfb96a53aa9e83765b700c533cc8f6dcaa8 fix(checks): 讀み手を ★直つた版★ へ揃へ、束を樹の中へ据ゑる(軍師mac REVISE PR#22)
+
+ .../km-manifest-append-track-20260917/00_shodan.md | 166 +++++++++++++++++++++
+ .../km-manifest-append-track-20260917/01_tsuiho.md |  69 +++++++++
+ .../02_tsuiho_pr22_revise.md                       |  72 +++++++++
+ .../km-manifest-append-track-20260917/manifest.txt |  13 ++
+ .../mon_162139.log                                 |   9 ++
+ .../mon_162247.log                                 |   7 +
+ .../mon_163047.log                                 |  12 ++
+ .../mon_164714.log                                 |  12 ++
+ .../raw/01_sunpou.txt                              |   8 +
+ .../raw/02_secret0.txt                             |  19 +++
+ .../raw/03_ki_to_taishou.txt                       |  26 ++++
+ .../raw/04_shadan_toketa.txt                       |   6 +
+ .../raw/05_fudou.txt                               |   6 +
+ .../raw/06_selftest_saigen.txt                     |  21 +++
+ .../raw/07_yomite_no_han.txt                       |  35 +++++
+ .../raw/08_nihan_santsuzuri.txt                    |  31 ++++
+ scripts/checks/karo_mac_manifest_verify.py         |  81 +++++++++-
+ 17 files changed, 588 insertions(+), 5 deletions(-)

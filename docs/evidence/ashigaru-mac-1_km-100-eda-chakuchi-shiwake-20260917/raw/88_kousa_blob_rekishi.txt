@@ -1,0 +1,13 @@
+# 交差 3 file ―― main 側の blob が枝側の歴史に現れるか(現れれば main の変更は枝に既に含まれ、自動 merge が通る見込み)
+## .gitignore  base_blob=bf689df1efe9 main_blob=1cf7a0dec133
+  main側 commits: 4be3ee1 f4a813a 26e2359
+  X=49e36d1e2dc3 tip_blob=3f066ffda9f4 枝側の版数=2 main_blob が枝の歴史に在る=0
+  X=12d304e55ebd tip_blob=3f066ffda9f4 枝側の版数=2 main_blob が枝の歴史に在る=0
+## scripts/checks/karo_mac_manifest_verify.py  base_blob= main_blob=b19ec9ea2596
+  main側 commits: af0dacf 26e2359
+  X=49e36d1e2dc3 tip_blob=b19ec9ea2596 枝側の版数=2 main_blob が枝の歴史に在る=1
+  X=12d304e55ebd tip_blob=b19ec9ea2596 枝側の版数=2 main_blob が枝の歴史に在る=1
+## scripts/inbox_watcher.sh  base_blob=1d2821a3b4bd main_blob=778d233445de
+  main側 commits: 23d0903
+  X=49e36d1e2dc3 tip_blob=00cd905d6eeb 枝側の版数=2 main_blob が枝の歴史に在る=0
+  X=12d304e55ebd tip_blob=1d2821a3b4bd 枝側の版数=1 main_blob が枝の歴史に在る=0

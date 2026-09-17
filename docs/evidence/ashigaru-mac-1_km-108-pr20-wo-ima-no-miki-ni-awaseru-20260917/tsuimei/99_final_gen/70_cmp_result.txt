@@ -1,0 +1,10 @@
+99_final_gen/gen1.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+99_final_gen/gen2.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+99_final_gen/gen3.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+manifest.txt sha256=021e88254afec31dcfc9e38b75af431bacfaa8b4fbda673f03b77bb7f3882174 bytes=11895 lines=99
+cmp gen1 gen2 rc=0
+cmp gen2 gen3 rc=0
+cmp gen1 gen3 rc=0
+cmp gen1 manifest.txt rc=0
+陽性対照 cmp x gen1 rc=1
+刻=2026-09-17T17:32:50+0900

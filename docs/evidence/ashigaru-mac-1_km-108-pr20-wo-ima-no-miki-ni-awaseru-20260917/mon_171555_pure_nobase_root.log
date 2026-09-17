@@ -1,0 +1,30 @@
+fuda=pure_nobase_root
+gate=/Users/momizimac/km108_wt2_pr20_18848/scripts/checks/karo_mac_dasumae_gate.sh
+gate_sha256=e11f0d0142549086584c2d59ea43935c313c37e338b791e1735a952ee5a7554b
+verify_sibling_sha256=bbde471f70848fc85014ede38917635bbd85f198e877773bdaf78ec7f24fc9c8
+cwd=/Users/momizimac/multi-agent-shogun
+BASE=-
+刻=2026-09-17T17:15:55+0900
+台帳 /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-1_km-108-pr20-wo-ima-no-miki-ni-awaseru-20260917/manifest_jou1.txt
+  一致 ★0★ / 相違 0 / 実体無 59 / 読めぬ行 0  (母數 59)
+    ★実体無★ driver/60_gate_runs.sh
+    ★実体無★ driver/K.py
+    ★実体無★ driver/karo_mac_dasumae_gate.pr20.sh
+    ★実体無★ raw/00_chaku_toki.txt
+    ★実体無★ raw/10_wt2_add.out
+    ★実体無★ raw/10_wt2_add.rc
+    ★実体無★ raw/10_wt2_path.txt
+    ★実体無★ raw/10_wt_add.err
+    ★実体無★ raw/10_wt_add.out
+    ★実体無★ raw/10_wt_add.rc
+    ★実体無★ raw/10_wt_path.txt
+    ★実体無★ raw/11_wt2_versions.txt
+    ★実体無★ raw/11_wt_head.txt
+    ★実体無★ raw/12_merge.err
+    ★実体無★ raw/12_merge.out
+    ★実体無★ raw/12_merge.rc
+    ★実体無★ raw/13_ls_files_u.txt
+    ★実体無★ raw/13_status_porcelain.txt
+    ★実体無★ raw/13_unmerged_names.txt
+    ★実体無★ raw/14_conflict_gitignore.txt
+gate_rc=1

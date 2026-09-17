@@ -1,0 +1,10 @@
+kigu	eda_suu	eda
+scripts/checks/karo_mac_dasumae_gate.sh	4	karo-mac/a1-r56|karo-mac/daiko-teishutsu-20260916|karo-mac/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917|karo-mac/lot48235904-provenance-20260916
+scripts/checks/karo_mac_manifest_verify.py	4	karo-mac/a1-r56|karo-mac/daiko-teishutsu-20260916|karo-mac/hantei-saiteishutsu-20260917|karo-mac/lot48235904-provenance-20260916
+scripts/stop_hook_inbox.sh	2	ashigaru-mac-3/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917|karo-mac/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917
+scripts/lib/detect_stale.sh	1	ashigaru-mac-1/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917
+scripts/checks/karo_mac_gate4.sh	1	karo-mac/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917
+scripts/inbox_watcher.sh	1	karo-mac/km-82-hata-ni-wa-hata-no-bannin-wo-20260917
+.claude/settings.json	1	karo-mac/settings-hook-abs-20260917
+scripts/goal_stop_hook.py	1	karo-mac/settings-hook-abs-20260917
+scripts/goal_stopfailure_hook.py	1	karo-mac/settings-hook-abs-20260917

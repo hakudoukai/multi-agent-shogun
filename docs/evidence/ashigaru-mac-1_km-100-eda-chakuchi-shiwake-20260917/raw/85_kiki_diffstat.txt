@@ -1,0 +1,12 @@
+# 器二本の diff stat(B_min..X・読取のみ)
+## km-91 (B=karo-mac/km-gate-kou-otsu 363d5fb0) scripts/stop_hook_inbox.sh
+ scripts/stop_hook_inbox.sh | 80 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 79 insertions(+), 1 deletion(-)
+## km-92 (B=karo-mac/km-gate-kou-otsu 363d5fb0) scripts/lib/detect_stale.sh
+ scripts/lib/detect_stale.sh | 69 +++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 63 insertions(+), 6 deletions(-)
+## 同 file の origin/main との差(main 側に此の変更が在るか)
+ scripts/stop_hook_inbox.sh | 80 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 79 insertions(+), 1 deletion(-)
+ scripts/lib/detect_stale.sh | 69 +++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 63 insertions(+), 6 deletions(-)

@@ -1,0 +1,10 @@
+# 00 起 / 刻 2026-09-17T13:43:08+0900 / 作業樹の枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917(共有・不觸) / HEAD 0039e1321654 / 札 queue/tasks/ashigaru-mac-1.yaml sha16 e54b5b23542ef48b 64行 4747B
+local main(refs/heads/main)= 363d5fb060845171338c067ef42bfcbef8ad9188
+refs/remotes/origin/main(手元の写し・古び得る)= 4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1
+★ls-remote origin refs/heads/main(今の値・読取 rc 0)= 4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1★ → 手元の写しと 一致
+札の宣 local 一致 / origin 一致
+家老の紙 docs/evidence/karo-mac-origin-eda-kenbun-20260917/README.md = 2620B sha256 585eea9f775e549dcc2d9989508040a6127faf2224f0fe1bb5d6f7e53c1c378e → 札の宣(2620B / 585eea9f775e549d…)と 一致
+git= git version 2.55.0 (rc 0)
+python3= Python 3.14.6 | /opt/homebrew/bin/python3 (rc 0)
+uname= Darwin 25.5.0 (rc 0)
+則: git は読取の口のみ(rev-parse/ls-remote/for-each-ref/merge-base/rev-list/log/cherry/diff-tree/patch-id/cat-file/reflog show)。fetch・pull・merge・rebase・reset・cherry-pick・push・update-ref・branch -f・remote set-url・commit は ★一つも走らせぬ★(札の禁「refs を書き換へる命令を一つも」を字義で読む ∴ 束の commit も己では打たぬ)。生器へ 0 字・watcher 不觸・/tmp 不使用・行番を焼かぬ。

@@ -1,0 +1,63 @@
+刻 2026-09-17T13:26:09+0900
+HEAD 0039e13 / 枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+
+==== git porcelain ―― scripts/ ・ .claude/settings.json ====
+ M .claude/settings.json
+MM scripts/agent_health_check.sh
+MM scripts/checks/context_usage_warn.sh
+ M scripts/checks/karo_mac_dasumae_gate.sh
+ M scripts/checks/karo_mac_gate4.sh
+ M scripts/checks/karo_mac_manifest_verify.py
+MM scripts/inbox_watcher.sh
+ M scripts/redundancy/shogun_report_watcher.sh
+ M scripts/stop_hook_inbox.sh
+MM scripts/watchdogs/enter_restart_common_watchdog.sh
+porcelain rc=0
+★scripts/ + settings.json の porcelain 行 = 10★ (grep rc=0 ―― 0行なら grep rc=1)
+
+==== ★本弾が触れて居らぬ證★ ―― 家老が 13:15 に測つた値との突合 ====
+  scripts/checks/karo_mac_manifest_verify.py
+    家老の宣(13:15) sha16=a507c998c7bd6485 / 198行
+    今の実測        sha16=a507c998c7bd6485 / 198行
+    ★一致 ∴ 本弾は此の器へ一字も書いて居らぬ★
+
+==== scripts/ 配下で ★M(作業樹の差分)★ を持つ器と其の sha16 ====
+  MM scripts/agent_health_check.sh sha16=7d11ba9f852ac759
+  MM scripts/checks/context_usage_warn.sh sha16=3010defd413a3479
+   M scripts/checks/karo_mac_dasumae_gate.sh sha16=2b8449bccd608a1a
+   M scripts/checks/karo_mac_gate4.sh sha16=59cf051d3595fd97
+   M scripts/checks/karo_mac_manifest_verify.py sha16=a507c998c7bd6485
+  MM scripts/inbox_watcher.sh sha16=494c8c788d50d724
+   M scripts/redundancy/shogun_report_watcher.sh sha16=a82e877eced423ad
+   M scripts/stop_hook_inbox.sh sha16=f1b49820e234a1ee
+  MM scripts/watchdogs/enter_restart_common_watchdog.sh sha16=f92cd54e09736a4e
+
+==== ~/bin 配下 ―― 本弾の刻より後に触られた物 ====
+  13:16 以降に mtime が動いた物 = 1 本 (grep rc=0)
+    /Users/momizimac/bin/sweep_manifest.json
+  ★註★ 之は mtime の話であり ★中身が変つたか★ の話ではない ―― ~/bin は git 外ゆゑ porcelain で測れぬ。
+
+==== 本弾が足した物(untracked)は束一つだけか ====
+  ?? .claude/worktrees/
+  ?? docs/05-charter/change-control-iincho-approval.md
+  ?? docs/05-charter/night-maintenance-window.md
+  ?? docs/evidence/km-73-otsu-dash-ichido-no-kane-20260917/
+  ?? docs/evidence/km-75-shikii-no-nokori-hitotsu-wo-tojiru-20260917/
+  ?? docs/evidence/km-76-repogai-no-ichikasho-wo-nushi-he-watasu-20260917/
+  ?? docs/evidence/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917/
+  ?? docs/evidence/km-80-utsuwa-ga-uketa-na-wo-bannin-hyou-he-noseru-mae-ni-hakare-20260917/
+  ?? docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/
+  ?? docs/evidence/km-81b-bannin-zero-no-ratelimit-check-wo-hachikei-no-doku-de-hakare-20260917/
+  ?? docs/evidence/km-82-hata-ni-wa-hata-no-bannin-wo-20260917/
+  ?? docs/evidence/km-84-hata-no-tane-wo-repo-zentai-de-kazoe-yo-20260917/
+  ?? docs/evidence/km-85-onore-no-bannin-no-ana-wo-hachihon-de-hakare-20260917/
+  ?? docs/evidence/km-86-na-no-kuchi-wo-repo-zentai-de-kazoe-doku-ga-atesaki-wo-kaeru-koto-wo-shimese-20260917/
+  ?? docs/evidence/km-88-sengen-doori-mamoru-ka-wo-ryoutaishou-de-hakare-20260917/
+  ?? docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917/
+  ?? docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/
+  ?? docs/evidence/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917/
+  ?? docs/evidence/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917/
+  ?? docs/evidence/km-shikii-yokotenkai-20260917/
+  ?? queue/reports/fixtures/
+
+了 2026-09-17T13:26:10+0900

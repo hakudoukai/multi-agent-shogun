@@ -1,0 +1,11 @@
+root=/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-1_km-108-pr20-wo-ima-no-miki-ni-awaseru-20260917/tsuimei/raw/21_posctl_fixture
+files_walked=2 maxdepth=2 skipped_nonregular=0
+lines_lt(行頭'<<<<<<< ')=1  files=1
+lines_eq(行全体'=======')=1  files=1
+lines_gt(行頭'>>>>>>> ')=1  files=1
+files_with_ordered_triplet=1
+  lt sub/conflicted.txt x1
+  gt sub/conflicted.txt x1
+  eq sub/conflicted.txt x1
+  ORDERED sub/conflicted.txt L2
+koku=2026-09-17T17:25:03+0900

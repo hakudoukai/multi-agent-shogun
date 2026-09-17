@@ -1,0 +1,23 @@
+# 20 ㋑ local 側の判 / 刻 2026-09-17T13:46:32+0900 / 母數= local 側 rev-list 16 本(非merge 16)/ 突合せ先= origin 側 非merge 10 本の patch-id(--stable)
+| # | full sha | 判 | 根拠(patch-id 一致先 / cherry) | 変へた path 数 | 内 O の tip で blob 同じ | subject |
+|---|---|---|---|---|---|---|
+| 1 | 363d5fb060845171338c067ef42bfcbef8ad9188 | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 14 | 0 | fix(checks): 出す前 門 に ★甲(同じ演算子で閾を検む)・乙(未設定/空/空白を分つ)・基点の口★ を据ゑる |
+| 2 | 43808f8363e9320d657f342e92e34a2bae35298d | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 30 | 0 | evidence(km-47): ★四つの數★ ―― 專任3 第47弾 を版へ固定する(專任1 の照合版が失はれて居る旨を併記) |
+| 3 | d4849b0e698734a6f992287c14f5f100acd9726d | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 47 | 0 | evidence(km-50): ★空は届かぬ★ ―― 專任2 第50弾 を版へ固定する |
+| 4 | 2992eecab19d86872c4c0e01f660d38d16397f9a | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 52 | 0 | docs(evidence): 專任3 第39弾 を ★樹へ固定★する ―― 監査 REVISE seq321131 の是正 |
+| 5 | 99ea2984f2a4c2b8fe92d357c3a7bbaec8d6de41 | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 236 | 0 | docs(evidence): 專任3 第46弾 ―― ★讀手の疵 24形★ を現物で裁き、門が落ちた儘 出す |
+| 6 | b82b98c91222529e233d0f3f5ae1fb6756916775 | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 3 | 0 | fix(evidence): km-49 の束を ★測つた版へ揃へる★ ―― 2187e25 は紙と臺帳が食ひ違つて居た |
+| 7 | 2187e25fba274f776a8891e8ca58459139218f0a | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 63 | 0 | docs(evidence): 專任2 第49弾 ―― ★總和が小さい事は中身が健かである事を意味せぬ★(裁 322247) |
+| 8 | c771fbfcc3db08c455ff4890d8c9c89a1f4d13fc | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 12 | 0 | docs(evidence): lot48235904 出所の紙 ★12本★ を repo へ収める(裁 320577⑸) |
+| 9 | 561dd8ff4e1e740f60ef9aab31816a738002908f | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 4 | 0 | feat(inbox_write): ★死箱の門★ を据ゑる ―― 讀手なき箱への書込みを rc=68 で止める(裁 seq322250) |
+| 10 | f626f2002255a4077eb557e44c7f92427e6a7a8e | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 2 | 0 | docs(evidence): 家老の便を ★器で測る★ ―― 100字の負債 11本(300條 0本) |
+| 11 | f2bfa26a163dbee334861bd80bb0bd8affa0636d | 甲 | origin af0dacfcbc88 と patch-id 一致 / cherry - | 1 | 1 | fix(checks): 台帳照合の器に ★読めぬ行★ を第四の数として分ける(裁 298712 ②) |
+| 12 | 2320dbbb871e7934bc4edeacc513202b3a154907 | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 1 | 0 | feat(checks): 出す前 門 を ★commit へ据ゑる★ ―― karo_mac_dasumae_gate.sh(裁 2973 |
+| 13 | f0d59a3b6315058b2af40bd57689b397243e32c9 | 甲 | origin 26e23590f4e4 と patch-id 一致 / cherry - | 2 | 0 | feat(checks): 台帳 照合 の器 を ★一本 に据ゑる★(裁 294773 可・.gitignore 一行) |
+| 14 | e8470d8c453649c8fcbfd3bce459a346b46446b6 | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 1 | 0 | docs(checks): 第五條 の閾 に ★根拠 と as_of★ を註 で置く(裁 294493⑸ ―― 固定値 を焼き込むな) |
+| 15 | dafb24026c77eef3dba7c7a5085f3ed99b5ef650 | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 1 | 0 | feat(checks): 門 に ★第五條= 寸法★ を足す ―― 家老 が 225.6 MB を測らず に押した故 |
+| 16 | 707df79147233d183b373b440e33472ba4c99a32 | 乙 | origin 側 10 本の何れとも不一致 / cherry + | 1 | 0 | feat(checks): 家老mac の門 を ★落ちた時 に止まる★ 形 へ ―― karo_mac_gate4.sh |
+
+判の集計(母數 16): 甲 2 / 乙 14 / 丙 0 → 甲+乙+丙 = 16
+甲の二本は、origin 側 PR #15(mac/karo-manifest-verify-20260910)の中身 af0dacfc / 26e23590 と同 patch-id ―― 即ち ★同じ直しが別の枝で作り直され PR で入つた★(局所 main の sha は origin に無いが中身は在る)。
+乙 14 本の「O の tip で blob 同じ」列が 0 でない物は、path の中身が別の commit で届いた徴に過ぎず、判(乙)は変へぬ。

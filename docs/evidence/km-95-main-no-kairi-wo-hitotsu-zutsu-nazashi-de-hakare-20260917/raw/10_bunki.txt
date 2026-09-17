@@ -1,0 +1,54 @@
+# 10 ㋐ 分岐点 / 刻 2026-09-17T13:44:50+0900 / local main 363d5fb060845171338c067ef42bfcbef8ad9188 / origin main 4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1(ls-remote と一致= 00)
+merge-base --all = ['6e9d40600a801aa713ac238e2e62bbae06c9e683'](本数 1)
+  分岐点 6e9d40600a801aa713ac238e2e62bbae06c9e683 / 2026-09-08T20:53:06+09:00 / MomiziMac / docs(skill): ⑻『語 を数へたら 文脈 を読め』―― 同日 三 度 踏んだ
+
+## 母數の宣(三つ)と数
+local 側(= O..L): (a) rev-list commit 数 16(内 merge 0) / (b) 非merge= cherry の母數 16 / (c) patch-id(--stable) 一意化 16(重複 0・空 diff 0) / 相手側に無い patch-id 14 / cherry + 14 − 2(母數 16) / --stable と --unstable が食ひ違ふ commit 11
+origin 側(= L..O): (a) rev-list commit 数 21(内 merge 11) / (b) 非merge= cherry の母數 10 / (c) patch-id(--stable) 一意化 10(重複 0・空 diff 0) / 相手側に無い patch-id 8 / cherry + 8 − 2(母數 10) / --stable と --unstable が食ひ違ふ commit 7
+∴ 家老の「14」= local 側 cherry + / 「8」= origin 側 cherry +。commit の数(rev-list)は 16/21、非merge は 16/10。
+
+## local 側 全列(16 本・topo 順・新しい方が上)
+| # | full sha | merge | cherry | author 日 | author | subject |
+|---|---|---|---|---|---|---|
+| 1 | 363d5fb060845171338c067ef42bfcbef8ad9188 | - | + | 2026-09-17T05:11:58+09:00 | MomiziMac | fix(checks): 出す前 門 に ★甲(同じ演算子で閾を検む)・乙(未設定/空/空白を分つ)・基点の口★ を据ゑる |
+| 2 | 43808f8363e9320d657f342e92e34a2bae35298d | - | + | 2026-09-17T04:37:05+09:00 | MomiziMac | evidence(km-47): ★四つの數★ ―― 專任3 第47弾 を版へ固定する(專任1 の照合版が失はれて居る旨を併記) |
+| 3 | d4849b0e698734a6f992287c14f5f100acd9726d | - | + | 2026-09-17T04:34:11+09:00 | MomiziMac | evidence(km-50): ★空は届かぬ★ ―― 專任2 第50弾 を版へ固定する |
+| 4 | 2992eecab19d86872c4c0e01f660d38d16397f9a | - | + | 2026-09-17T04:07:09+09:00 | MomiziMac | docs(evidence): 專任3 第39弾 を ★樹へ固定★する ―― 監査 REVISE seq321131 の是正 |
+| 5 | 99ea2984f2a4c2b8fe92d357c3a7bbaec8d6de41 | - | + | 2026-09-17T03:41:29+09:00 | MomiziMac | docs(evidence): 專任3 第46弾 ―― ★讀手の疵 24形★ を現物で裁き、門が落ちた儘 出す |
+| 6 | b82b98c91222529e233d0f3f5ae1fb6756916775 | - | + | 2026-09-17T03:38:51+09:00 | MomiziMac | fix(evidence): km-49 の束を ★測つた版へ揃へる★ ―― 2187e25 は紙と臺帳が食ひ違つて居た |
+| 7 | 2187e25fba274f776a8891e8ca58459139218f0a | - | + | 2026-09-17T03:27:34+09:00 | MomiziMac | docs(evidence): 專任2 第49弾 ―― ★總和が小さい事は中身が健かである事を意味せぬ★(裁 322247) |
+| 8 | c771fbfcc3db08c455ff4890d8c9c89a1f4d13fc | - | + | 2026-09-17T03:12:14+09:00 | MomiziMac | docs(evidence): lot48235904 出所の紙 ★12本★ を repo へ収める(裁 320577⑸) |
+| 9 | 561dd8ff4e1e740f60ef9aab31816a738002908f | - | + | 2026-09-17T02:57:40+09:00 | MomiziMac | feat(inbox_write): ★死箱の門★ を据ゑる ―― 讀手なき箱への書込みを rc=68 で止める(裁 seq322250) |
+| 10 | f626f2002255a4077eb557e44c7f92427e6a7a8e | - | + | 2026-09-17T02:43:50+09:00 | MomiziMac | docs(evidence): 家老の便を ★器で測る★ ―― 100字の負債 11本(300條 0本) |
+| 11 | f2bfa26a163dbee334861bd80bb0bd8affa0636d | - | - | 2026-09-10T14:36:28+09:00 | MomiziMac | fix(checks): 台帳照合の器に ★読めぬ行★ を第四の数として分ける(裁 298712 ②) |
+| 12 | 2320dbbb871e7934bc4edeacc513202b3a154907 | - | + | 2026-09-09T21:14:34+09:00 | MomiziMac | feat(checks): 出す前 門 を ★commit へ据ゑる★ ―― karo_mac_dasumae_gate.sh(裁 297343) |
+| 13 | f0d59a3b6315058b2af40bd57689b397243e32c9 | - | - | 2026-09-09T06:49:24+09:00 | MomiziMac | feat(checks): 台帳 照合 の器 を ★一本 に据ゑる★(裁 294773 可・.gitignore 一行) |
+| 14 | e8470d8c453649c8fcbfd3bce459a346b46446b6 | - | + | 2026-09-09T05:53:42+09:00 | MomiziMac | docs(checks): 第五條 の閾 に ★根拠 と as_of★ を註 で置く(裁 294493⑸ ―― 固定値 を焼き込むな) |
+| 15 | dafb24026c77eef3dba7c7a5085f3ed99b5ef650 | - | + | 2026-09-09T05:38:14+09:00 | MomiziMac | feat(checks): 門 に ★第五條= 寸法★ を足す ―― 家老 が 225.6 MB を測らず に押した故 |
+| 16 | 707df79147233d183b373b440e33472ba4c99a32 | - | + | 2026-09-09T05:27:44+09:00 | MomiziMac | feat(checks): 家老mac の門 を ★落ちた時 に止まる★ 形 へ ―― karo_mac_gate4.sh |
+## origin 側 全列(21 本・topo 順・新しい方が上)
+| # | full sha | merge | cherry | author 日 | author | subject |
+|---|---|---|---|---|---|---|
+| 1 | 4be3ee19e1c5113eb4c2490cd4b496e9b453c7d1 | merge(2親) | 対象外 | 2026-09-11T14:26:24+09:00 | hakudoukai | Merge pull request #17 from hakudoukai/karo-second/p2-b4-bats-20260911 |
+| 2 | 80171642a908712e488426d5c001b30edd400c66 | - | + | 2026-09-11T05:10:49+09:00 | hakudoukai | test(p2-93829374): add isolated bats acceptance for yaml_unread_count |
+| 3 | f4a813a25807e2175845a9954b5e745e9ac7394f | - | + | 2026-09-10T10:12:08+09:00 | hakudoukai | fix: integrate second idle wake yaml backlog |
+| 4 | 519e2f41e4480e788ef186df0ec51026023676e8 | merge(2親) | 対象外 | 2026-09-10T15:54:45+09:00 | hakudoukai | Merge pull request #16 from hakudoukai/fix/secondpc-samepc-role-routing-onmain-2 |
+| 5 | a5fd80157ab787df7730d8e46a0d41dbe818a8f0 | - | + | 2026-09-10T15:00:51+09:00 | hakudoukai | fix(receiver): allow same-PC routing across roles |
+| 6 | 1450318b6212d151b67528d7e55de6a23475e0c7 | merge(2親) | 対象外 | 2026-09-10T14:55:29+09:00 | hakudoukai | Merge pull request #15 from hakudoukai/mac/karo-manifest-verify-20260910 |
+| 7 | af0dacfcbc8864f09bef4d8fe943190c6435bf7f | - | - | 2026-09-10T14:36:28+09:00 | MomiziMac | fix(checks): 台帳照合の器に ★読めぬ行★ を第四の数として分ける(裁 298712 ②) |
+| 8 | 26e23590f4e4e479e968660bb68c475b6413c1e8 | - | - | 2026-09-09T06:49:24+09:00 | MomiziMac | feat(checks): 台帳 照合 の器 を ★一本 に据ゑる★(裁 294773 可・.gitignore 一行) |
+| 9 | c14ff46f16c6678c6497f5701e13494990237933 | merge(2親) | 対象外 | 2026-09-09T04:39:31+09:00 | hakudoukai | Merge pull request #11 from hakudoukai/honbucho/ebb0e8ad-receiver-map |
+| 10 | 6f116f40401526fa44436f77c89dc591bb9e5ba6 | - | + | 2026-09-09T04:23:17+09:00 | hakudoukai | test(receiver): isolate retry-cap failure notice fixture |
+| 11 | f3415522295cbe682f24ab66f2017b20b6c4c4d5 | - | + | 2026-09-09T04:08:01+09:00 | hakudoukai | fix(receiver): resolve identity and preserve delivery failure |
+| 12 | d5630faff995b0f4693283beb3a3f0fc9f69105b | merge(2親) | 対象外 | 2026-09-09T03:40:18+09:00 | hakudoukai | Merge pull request #10 from hakudoukai/honbucho/c6a3b795-batch2-watcher |
+| 13 | 7533ae12535712ab0bffcc67478c0027acc35408 | - | + | 2026-09-09T02:56:35+09:00 | hakudoukai | test(watcher): skip superseded W201 extraction contract |
+| 14 | 23d09034e01aa5ba1caffb39a398fc88878a33c0 | - | + | 2026-08-06T00:44:06+09:00 | hakudoukai | fix(watcher): W205 送出コマンド三点の根治 + 試験証跡 (足軽1号・軍師second 再監査 PASS) |
+| 15 | 9893b77a9f0003538c89426bfc279dc2e7966979 | merge(2親) | 対象外 | 2026-09-09T01:35:46+09:00 | hakudoukai | Merge pull request #9 from hakudoukai/iincho/ff5c9068-cp-on-main |
+| 16 | a8bc158f991b5d1ad56263d62f76d5d70d825f21 | - | + | 2026-09-09T01:30:04+09:00 | hakudoukai | fix(receiver): dedupe unroutable notices |
+| 17 | 49f843c162d13d37568aa3d0f8d922020312a3f5 | merge(2親) | 対象外 | 2026-09-08T20:56:20+09:00 | hakudoukai | Merge pull request #8 from hakudoukai/karo-mac/skills-tools-20260908b |
+| 18 | 3ff35e6759f989dec4571315f50e42383ad77d0f | merge(2親) | 対象外 | 2026-09-08T18:18:55+09:00 | hakudoukai | Merge pull request #7 from hakudoukai/tools/karo-mac-gate7-20260908 |
+| 19 | 8314831b245d7ec00101ef8bbc4b83327b6c246e | merge(2親) | 対象外 | 2026-09-08T16:20:29+09:00 | hakudoukai | Merge pull request #6 from hakudoukai/docs/mac-lessons-6commits-20260908 |
+| 20 | edc4872eae80853c281c1d182ef750a14af1066c | merge(2親) | 対象外 | 2026-09-08T15:29:26+09:00 | hakudoukai | Merge pull request #5 from hakudoukai/docs/verify-state-before-asserting-2026090 |
+| 21 | 99fc4c4d0c3b239e6c6fc538c650e879d1418b55 | merge(2親) | 対象外 | 2026-09-08T15:14:18+09:00 | hakudoukai | Merge pull request #4 from hakudoukai/docs/ephemeral-worktree-hygiene-20260908 |
+
+## origin の枝 snapshot(raw/10_ls_remote_heads.txt): 全 239 本 / karo-mac/ 41 / ashigaru-mac-*/ 18(家老の宣 239 / 41 / 18) / 手元の refs/remotes/origin/* は ★7 本★のみ ['refs/remotes/origin/HEAD', 'refs/remotes/origin/ashigaru-mac-1/km-72-tasekki-no-fusagikata-wo-kami-de-yabure-20260917', 'refs/remotes/origin/ashigaru-mac-2/km-53-tasekki-no-fusagikata-wo-kami-de-yabure-20260917', 'refs/remotes/origin/ashigaru-mac-3/km-49-shikii-no-bannin-wo-yaburi-ni-yuke-20260917', 'refs/remotes/origin/karo-mac/lot48235904-provenance-20260916', 'refs/remotes/origin/karo-third/disk-pressure-evidence-20260912', 'refs/remotes/origin/main'] ∴ origin の枝の殆どは手元に ref が無い(object は在り得る)

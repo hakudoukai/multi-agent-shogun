@@ -1,0 +1,22 @@
+刻 2026-09-17T13:57:30+0900
+=== 逐語① 照合器が sha 欄をどう読むか(karo_mac_manifest_verify.py) ===
+SHA = re.compile(r"sha256=([0-9a-f]{64})")
+        m = SHA.search(line)
+        if not m:
+            continue
+            continue
+            # ★continue せぬ★ ―― 旧形も照合へ進める(拒まぬ)
+            continue
+            continue
+            continue
+=== 逐語② 書き手は sha をどう作るか(karo_mac_manifest_append.py) ===
+        gyou.append("path=%s sha256=%s bytes=%d lines=%d" % (tsuzu, digest(p), n, l))
+def digest(p):
+=== 逐語③ 門が持つ條(karo_mac_dasumae_gate.sh) ===
+   6 條①
+   6 條②
+   4 條③
+   4 條④
+   5 條⑤
+=== 逐語④ verify.py の『宣言』一件は何か(乙の字面0件の内訳) ===
+    # で始まる行は註(基点の宣言など)ゆゑ数へぬ。

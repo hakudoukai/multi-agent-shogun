@@ -1,0 +1,41 @@
+# reflog show --date=iso refs/heads/main / rc 0 / 40 行
+363d5fb main@{2026-09-17 05:11:58 +0900} commit: fix(checks): 出す前 門 に ★甲(同じ演算子で閾を検む)・乙(未設定/空/空白を分つ)・基点の口★ を据ゑる
+43808f8 main@{2026-09-17 04:37:05 +0900} commit: evidence(km-47): ★四つの數★ ―― 專任3 第47弾 を版へ固定する(專任1 の照合版が失はれて居る旨を併記)
+d4849b0 main@{2026-09-17 04:34:11 +0900} commit: evidence(km-50): ★空は届かぬ★ ―― 專任2 第50弾 を版へ固定する
+2992eec main@{2026-09-17 04:07:09 +0900} commit: docs(evidence): 專任3 第39弾 を ★樹へ固定★する ―― 監査 REVISE seq321131 の是正
+99ea298 main@{2026-09-17 03:41:29 +0900} commit: docs(evidence): 專任3 第46弾 ―― ★讀手の疵 24形★ を現物で裁き、門が落ちた儘 出す
+b82b98c main@{2026-09-17 03:38:51 +0900} commit: fix(evidence): km-49 の束を ★測つた版へ揃へる★ ―― 2187e25 は紙と臺帳が食ひ違つて居た
+2187e25 main@{2026-09-17 03:27:34 +0900} commit: docs(evidence): 專任2 第49弾 ―― ★總和が小さい事は中身が健かである事を意味せぬ★(裁 322247)
+c771fbf main@{2026-09-17 03:12:14 +0900} commit: docs(evidence): lot48235904 出所の紙 ★12本★ を repo へ収める(裁 320577⑸)
+561dd8f main@{2026-09-17 02:57:40 +0900} commit: feat(inbox_write): ★死箱の門★ を据ゑる ―― 讀手なき箱への書込みを rc=68 で止める(裁 seq322250)
+f626f20 main@{2026-09-17 02:43:50 +0900} commit: docs(evidence): 家老の便を ★器で測る★ ―― 100字の負債 11本(300條 0本)
+f2bfa26 main@{2026-09-10 14:36:28 +0900} commit: fix(checks): 台帳照合の器に ★読めぬ行★ を第四の数として分ける(裁 298712 ②)
+2320dbb main@{2026-09-09 21:14:34 +0900} commit: feat(checks): 出す前 門 を ★commit へ据ゑる★ ―― karo_mac_dasumae_gate.sh(裁 297343)
+f0d59a3 main@{2026-09-09 06:49:24 +0900} commit: feat(checks): 台帳 照合 の器 を ★一本 に据ゑる★(裁 294773 可・.gitignore 一行)
+e8470d8 main@{2026-09-09 05:53:42 +0900} commit: docs(checks): 第五條 の閾 に ★根拠 と as_of★ を註 で置く(裁 294493⑸ ―― 固定値 を焼き込むな)
+dafb240 main@{2026-09-09 05:38:14 +0900} commit: feat(checks): 門 に ★第五條= 寸法★ を足す ―― 家老 が 225.6 MB を測らず に押した故
+707df79 main@{2026-09-09 05:27:44 +0900} commit: feat(checks): 家老mac の門 を ★落ちた時 に止まる★ 形 へ ―― karo_mac_gate4.sh
+6e9d406 main@{2026-09-08 20:53:06 +0900} commit: docs(skill): ⑻『語 を数へたら 文脈 を読め』―― 同日 三 度 踏んだ
+2a0f4ca main@{2026-09-08 19:52:18 +0900} commit: feat(check): letter 形 に ⑸『人 の測り を引く なら 版 を言へ』―― 同型 四 度目
+58f92ef main@{2026-09-08 18:59:17 +0900} commit: feat(check): paper 形 ―― ★三 度 判じ損ねた 末 に 器 に己 の限 を名乗らせた★
+209fe2c main@{2026-09-08 18:53:56 +0900} commit: feat(check): letter 形 に ⑷『既知 を掃いたか』を足す ―― ★己 の誤 便 で 器 を検した★
+5726b3e main@{2026-09-08 18:44:26 +0900} commit: feat(check): 検 に ★letter 形★ を足す ―― 便 を出す前 に 己 を斬る(十四件目・機構化)
+f1c7895 main@{2026-09-08 18:43:10 +0900} commit: docs(skill): ⑶ に ★再犯★ を刻む ―― 『未 push』を渡す前 は必ず fetch(十三件目)
+8911515 main@{2026-09-08 18:40:34 +0900} commit: fix(skill): ★『main 樹 から走らせよ』は曖昧★ ―― ref を全部 書く(十二件目)
+e3d9144 main@{2026-09-08 18:12:31 +0900} commit: feat(checks): 門v7 の器 karo_mac_gate7.sh を repo へ載せる(総監督裁 291412)
+58080a3 main@{2026-09-08 18:12:31 +0900} reset: moving to HEAD~1
+4fb985b main@{2026-09-08 18:12:12 +0900} commit (amend): feat(checks): 門v7 の器 karo_mac_gate7.sh を repo へ載せる(総監督裁 291412)
+b1badea main@{2026-09-08 18:11:32 +0900} commit: feat(checks): 門v7 の器 karo_mac_gate7.sh を repo へ載せる(総監督裁 291412)
+58080a3 main@{2026-09-08 15:56:13 +0900} commit: docs(skill): 一時 worktree 衛生に『器の在り処』を足す
+f7d034e main@{2026-09-08 15:45:47 +0900} commit: docs(skill): ⑺『紙を main へ載せる前に指し先の生死を数へる』(十件目)
+2aa0812 main@{2026-09-08 15:40:48 +0900} commit: docs(skill): ⑹『器が出来なかつたと言つた時』を足す(本日 三度目の『言はれたのに読まぬ』)
+bf64798 main@{2026-09-08 15:32:37 +0900} commit: docs(skill): 『断ずる前に状態を確かめる』に ⑸inbox の id を足す(五度目の同型)
+c3ffdba main@{2026-09-08 15:18:47 +0900} commit: docs(§19): 『断ずる前に状態を確かめる』skill+check ― 本日 家老が同型の誤りを 6 度 犯した
+3216a90 main@{2026-09-08 15:13:41 +0900} commit: fix(check): 後始末の有無を main と lot 枝で見分ける(PR#212 merge 後)
+0405ac5 main@{2026-09-08 15:05:11 +0900} commit: fix(check): 一時樹の警告を『掃ける物』だけで鳴らす
+f83eb08 main@{2026-09-08 15:02:58 +0900} commit: docs(skill): ephemeral-worktree-hygiene を追加(§19・force add)
+0845eb8 main@{2026-09-08 15:01:36 +0900} commit: docs(§19): disk 満杯事故の incident log + 一時 worktree 衛生 check
+9b8c89b main@{2026-09-08 15:01:36 +0900} reset: moving to HEAD~1
+429334a main@{2026-09-08 14:49:45 +0900} commit: docs(§19): disk 満杯事故の lessons ― 一時 worktree の衛生 skill+check を起こす
+9b8c89b main@{2026-08-07 02:00:57 +0900} merge origin/main: Fast-forward
+ca2bc2a main@{2026-07-11 20:05:51 +0900} clone: from https://github.com/hakudoukai/multi-agent-shogun.git

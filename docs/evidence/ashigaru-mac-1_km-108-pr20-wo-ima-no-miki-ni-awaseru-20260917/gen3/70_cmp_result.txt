@@ -1,0 +1,9 @@
+gen1 sha256=553ac4cf460ee12e6600370d5bd558e321b5051ef049a7c900f8ed0a46010fd8 bytes=7368 lines=61 mtime=17:17:06
+gen2 sha256=553ac4cf460ee12e6600370d5bd558e321b5051ef049a7c900f8ed0a46010fd8 bytes=7368 lines=61 mtime=17:17:07
+gen3 sha256=553ac4cf460ee12e6600370d5bd558e321b5051ef049a7c900f8ed0a46010fd8 bytes=7368 lines=61 mtime=17:17:08
+cmp gen1 gen2 rc=0
+cmp gen2 gen3 rc=0
+cmp gen1 gen3 rc=0
+cmp gen1 manifest_jou1 rc=0
+陽性対照: cmp(異なる二物) rc=1
+刻=2026-09-17T17:17:18+0900

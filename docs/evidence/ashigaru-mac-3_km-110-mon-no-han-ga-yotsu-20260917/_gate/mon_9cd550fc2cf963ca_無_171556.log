@@ -1,0 +1,20 @@
+# 走: 甲 版=9cd550fc2cf963ca0475b3448bb33483b9aede6b(門 15100 byte) verify=ebfc4c0ecc080c0fcac0cb49b8e83c284a61e579(10965 byte) 基点=無 cwd=<bundle>/shiken
+# 打つた語: (cwd=<bundle>/shiken) bash .km110_scratch/甲_9cd550fc2cf963ca_ebfc4c0e/karo_mac_dasumae_gate.sh MANIFEST.txt a.txt b/c.txt
+# 刻: 2026-09-17 17:15:57 +0900 / rc=1
+# ―― 以下 門の出目(stdout+stderr を一本にした儘・一字も直して居らぬ)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+台帳 MANIFEST.txt
+  cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-110-mon-no-han-ga-yotsu-20260917/shiken
+  基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+  一致 ★0★ / 相違 0 / 実体無 2 / 読めぬ行 0  (母數 2)
+  ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+  ★註★ ★実体無★ は ★『disk に物が無い』とは限らぬ★ ―― ★基点(場所)が違ふ★ 事が在る。
+       上の『基点』行を先に読み、次に ★臺帳を作つた樹の根★ で当て直せ。
+    ★実体無★ a.txt
+    ★実体無★ b/c.txt
+條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+條⑤ 寸法 = byte和 569(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

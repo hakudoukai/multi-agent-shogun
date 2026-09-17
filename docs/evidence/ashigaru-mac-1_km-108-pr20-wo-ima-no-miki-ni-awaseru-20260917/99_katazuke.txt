@@ -1,0 +1,79 @@
+# 99_katazuke.txt ―― 臺帳の後に書く控(臺帳外・門の後)
+
+## 一 己の worktree の片付け(99_katazuke_worktrees.txt の写し)
+--- git worktree list (before)
+/Users/momizimac/multi-agent-shogun                               75aa92f2 [ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917]
+/private/tmp/gunshi-km49.TidCf1                                   87762b41 (detached HEAD)
+/Users/momizimac/karo_mac_pr20_merge_36939                        0bb92e2b [karo-mac/km-gate-kou-otsu-20260917]
+/Users/momizimac/km108_wt2_pr20_18848                             0bb92e2b (detached HEAD)
+/Users/momizimac/km108_wt_13337                                   4f591fc0 (detached HEAD)
+/Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1 86ae8736 [karo-mac/a1-r56]
+remove /Users/momizimac/km108_wt_13337 rc=0
+remove /Users/momizimac/km108_wt2_pr20_18848 rc=0
+prune rc=0
+--- git worktree list (after)
+/Users/momizimac/multi-agent-shogun                               75aa92f2 [ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917]
+/private/tmp/gunshi-km49.TidCf1                                   87762b41 (detached HEAD)
+/Users/momizimac/karo_mac_pr20_merge_36939                        0bb92e2b [karo-mac/km-gate-kou-otsu-20260917]
+/Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1 86ae8736 [karo-mac/a1-r56]
+gone /Users/momizimac/km108_wt_13337
+gone /Users/momizimac/km108_wt2_pr20_18848
+--- own temp ref kept
+0bb92e2b800c1b434c8a660d38f6feea7d450124
+--- repo working tree untouched? (status of tracked files outside bundle, excluding pre-existing modifications)
+刻=2026-09-17T17:20:35+0900
+
+## 二 最終臺帳 manifest.txt の生成 3 本 cmp(99_final_gen/70_cmp_result.txt の写し)
+final_gen1 sha256=8dfd6d1ca5a7ee2d1d1315d075592d51faea8c1ce4390dc3221dd8e38e442b58 bytes=8892 lines=74
+final_gen2 sha256=8dfd6d1ca5a7ee2d1d1315d075592d51faea8c1ce4390dc3221dd8e38e442b58 bytes=8892 lines=74
+final_gen3 sha256=8dfd6d1ca5a7ee2d1d1315d075592d51faea8c1ce4390dc3221dd8e38e442b58 bytes=8892 lines=74
+manifest.txt sha256=8dfd6d1ca5a7ee2d1d1315d075592d51faea8c1ce4390dc3221dd8e38e442b58 bytes=8892 lines=74
+cmp gen1 gen2 rc=0
+cmp gen2 gen3 rc=0
+cmp gen1 gen3 rc=0
+cmp gen1 manifest.txt rc=0
+刻=2026-09-17T17:20:32+0900
+
+## 三 束の員數(disk と臺帳)
+disk file 總=105 / 臺帳 path 行=72 / 臺帳外=33
+臺帳外の内訳: manifest.txt 自身 / mon_*.{log,err,rc}(門の控) / raw_append.{out,err}(臺帳を建てた時の出目) / 99_*(本控と最終 3 本) ―― 悉く「臺帳の後に生まれる物」
+  臺帳外: 99_final_gen/70_cmp_result.txt
+  臺帳外: 99_final_gen/append_gen1.out
+  臺帳外: 99_final_gen/append_gen2.out
+  臺帳外: 99_final_gen/append_gen3.out
+  臺帳外: 99_final_gen/manifest_final_gen1.txt
+  臺帳外: 99_final_gen/manifest_final_gen2.txt
+  臺帳外: 99_final_gen/manifest_final_gen3.txt
+  臺帳外: 99_katazuke.txt
+  臺帳外: 99_katazuke_worktrees.txt
+  臺帳外: manifest.txt
+  臺帳外: mon_171550_pure_base.err
+  臺帳外: mon_171550_pure_base.log
+  臺帳外: mon_171550_pure_base.rc
+  臺帳外: mon_171552_pure_nobase.err
+  臺帳外: mon_171552_pure_nobase.log
+  臺帳外: mon_171552_pure_nobase.rc
+  臺帳外: mon_171555_pure_nobase_root.err
+  臺帳外: mon_171555_pure_nobase_root.log
+  臺帳外: mon_171555_pure_nobase_root.rc
+  臺帳外: mon_171558_merged_base.err
+  臺帳外: mon_171558_merged_base.log
+  臺帳外: mon_171558_merged_base.rc
+  臺帳外: mon_171600_merged_nobase.err
+  臺帳外: mon_171600_merged_nobase.log
+  臺帳外: mon_171600_merged_nobase.rc
+  臺帳外: mon_171949_final_repogate.err
+  臺帳外: mon_171949_final_repogate.log
+  臺帳外: mon_171949_final_repogate.rc
+  臺帳外: mon_171952_final_pr20gate.err
+  臺帳外: mon_171952_final_pr20gate.log
+  臺帳外: mon_171952_final_pr20gate.rc
+  臺帳外: raw_append.err
+  臺帳外: raw_append.out
+
+## 四 最終の門(控)
+mon_171949_final_repogate.rc: gate_rc=0
+mon_171952_final_pr20gate.rc: gate_rc=0
+刻=2026-09-17T17:20:57+0900
+
+註: 99_katazuke_worktrees.txt は一へ写した後に消した(∴ 上の disk 總 105 は其れを含む數・今は 104 / 臺帳外 32)。

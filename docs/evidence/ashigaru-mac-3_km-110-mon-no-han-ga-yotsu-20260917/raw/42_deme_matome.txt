@@ -1,0 +1,20 @@
+㋒ 八つの出目(甲 = verify.py を disk 版 ebfc4c0ecc080c0f で固定)
+
+門9cd550fc2cf963ca 基点有 → rc=0    基点 引数(明示)
+門9cd550fc2cf963ca 基点無 → rc=1    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+門54e133c85832d48a 基点有 → rc=0    基点 引数(明示)
+門54e133c85832d48a 基点無 → rc=0    基点 引数(明示)
+門b0bf5b05ededce4b 基点有 → rc=1    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+門b0bf5b05ededce4b 基点無 → rc=1    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+門054c442eaee3886b 基点有 → rc=0    基点 引数(明示)
+門054c442eaee3886b 基点無 → rc=1    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+
+★對照(乙 = 其の枝が同梱する verify.py を据ゑた時)★
+門9cd550fc2cf963ca 基点有 verify=b19ec9ea259653d9 → rc=0    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+門9cd550fc2cf963ca 基点無 verify=b19ec9ea259653d9 → rc=0    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+門54e133c85832d48a 基点有 verify=b19ec9ea259653d9 → rc=0    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+門54e133c85832d48a 基点無 verify=b19ec9ea259653d9 → rc=0    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+門b0bf5b05ededce4b 基点有 verify=ebfc4c0ecc080c0f → rc=1    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+門b0bf5b05ededce4b 基点無 verify=ebfc4c0ecc080c0f → rc=1    基点 既定(器の在處から導いた repo 根 /Users/momizimac/multi-agent-shogun ―― ★cwd に依らぬ★)
+門054c442eaee3886b 基点有 verify=b19ec9ea259653d9 → rc=0    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+門054c442eaee3886b 基点無 verify=b19ec9ea259653d9 → rc=0    一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)

@@ -1,0 +1,21 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+台帳 MANIFEST.txt
+  cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-110-mon-no-han-ga-yotsu-20260917
+  基点 引数(明示)
+  一致 ★62★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 62)
+  ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★EOF改行 ―― ./raw/10_ls_remote_heads.err は空file(0byte)★
+★EOF改行 ―― ./raw/11_fetch.out は空file(0byte)★
+★EOF改行 ―― ./raw/20_bogen.err は空file(0byte)★
+★EOF改行 ―― ./raw/30_han.err は空file(0byte)★
+★EOF改行 ―― ./raw/40_hashiru.err は空file(0byte)★
+★EOF改行 ―― ./raw/45_taisho.err は空file(0byte)★
+★EOF改行 ―― ./raw/50_keifu.err は空file(0byte)★
+★EOF改行 ―― ./raw/55_kinou.err は空file(0byte)★
+★EOF改行 ―― ./raw/58_jou.err は空file(0byte)★
+條⑤ 寸法 = byte和 254299(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

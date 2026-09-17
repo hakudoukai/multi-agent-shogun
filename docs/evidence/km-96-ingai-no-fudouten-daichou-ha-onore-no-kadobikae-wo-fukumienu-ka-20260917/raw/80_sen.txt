@@ -1,0 +1,19 @@
+刻 2026-09-17T14:05:12+0900 ―― ★臺帳を建てる★★前★に宣す(uke④)
+根(cwd) /Users/momizimac/multi-agent-shogun/docs/evidence/km-96-ingai-no-fudouten-daichou-ha-onore-no-kadobikae-wo-fukumienu-ka-20260917
+
+★宣★ 條① 一致 = 211 / 母數 = 211 / 相違 = 0 / 実体無 = 0 / 読めぬ行 = 0
+
+根拠 ―― 臺帳へ載せる本数 = 211(下の則で歩いた disk の常なる file)
+  載せる  : 束の下の常なる file 悉く(★写し utsushi/** も 雛形 raw/yousei/** も載せる★)
+  載せぬ  : MANIFEST.txt(臺帳自身) と _gate/**(門の控)
+            ―― 此の二つは ★臺帳より後に生まれる★ ゆゑ 構造として載らぬ(㋐ 第二の不能)
+  非regular: 0 本(S_ISREG のみ歩いた)
+  名に空白/引用符/改行: 0 本 ∴ 形②(括り)は 0 行の見込み
+
+★宣が外れ得る道(先に名指す)★
+  ⑴ 臺帳を建てた後に ★載せた file を書き換へれば★ 相違が増える → 建てた後は一字も書かぬ
+  ⑵ 基点を渡さねば 條① は repo 根で当たり ★実体無 211★ に成る(裁322949・束内相対の臺帳)
+     → KM_GATE_MANIFEST_BASE=. を渡す
+  ⑶ python3 が __pycache__ を落とせば disk が増える → ★-B★ で走らせる
+
+★実★ は建てた後に `_gate/` の控へ焼く(此の紙は書き換へぬ ―― 宣は宣の儘残す)

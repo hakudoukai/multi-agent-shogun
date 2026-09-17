@@ -1,0 +1,22 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★末尾空白 ―― raw/fx/kegare.txt に 1 行★
+★末尾空白 ―― raw/junjo/hei_kou_gate4/karo_mac_gate4.sh.rej に 2 行★
+★末尾空白 ―― raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej に 2 行★
+★末尾空白 ―― raw/junjo/hei_kou_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 2 行★
+★末尾空白 ―― raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej に 4 行★
+★末尾空白 ―― raw/junjo/hei_otsu_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 1 行★
+★末尾空白 ―― raw/junjo/kou_hei_gate4/karo_mac_gate4.sh.rej に 1 行★
+★末尾空白 ―― raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej に 2 行★
+★末尾空白 ―― raw/junjo/kou_hei_otsu_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 1 行★
+★末尾空白 ―― raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej に 1 行★
+★末尾空白 ―― raw/junjo/kou_otsu_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 2 行★
+★末尾空白 ―― raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej に 4 行★
+★末尾空白 ―― raw/junjo/otsu_hei_kou_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 1 行★
+★末尾空白 ―― raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej に 1 行★
+★末尾空白 ―― raw/junjo/otsu_kou_hei_dasumae/karo_mac_dasumae_gate.sh.rej.orig に 4 行★
+條⑤ 寸法 = byte和 2098589(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

@@ -1,0 +1,4 @@
+97:    if argv[2:]:
+98:        bases = argv[2:]
+102:        bases = [_root + os.sep,
+144:            for b in bases:

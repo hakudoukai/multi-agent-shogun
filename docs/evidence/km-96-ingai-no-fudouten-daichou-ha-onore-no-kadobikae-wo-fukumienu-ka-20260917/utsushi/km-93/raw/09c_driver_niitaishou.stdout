@@ -1,0 +1,63 @@
+刻 2026-09-17T13:20:21+0900
+照合器 scripts/checks/karo_mac_manifest_verify.py sha16=a507c998c7bd6485
+門     scripts/checks/karo_mac_dasumae_gate.sh sha16=2b8449bccd608a1a
+
+==== 対照 you (員外を 1 本 置いた) ====
+  対照 = you
+  刻 = 2026-09-17T13:20:21+0900
+  束 = raw/taishou/you
+  歩いた根 = docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/raw/taishou/you/mono
+  臺帳の置場(歩き根の外) = docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/raw/taishou/you/MANIFEST.txt
+  歩きの深さ = 0
+  disk 本(regular) = 3
+  非regular 本 = 0
+  臺帳 註行 = 2
+  臺帳 path行 = 2
+  ★員外(己の歩き)★ = 1
+  員外の名 = ['mono/NOSENU_ingai_1.txt']
+  実体無(己の歩き) = 0
+  陽性対照の実在 = [{'名': 'mono/NOSENU_ingai_1.txt', 'sha16': '78ce8e9d1b8cd17b', 'bytes': 68}]
+  照合器 rc = 0
+  門 rc = 0
+  ---- 照合器の逐語 ----
+    | 台帳 MANIFEST.txt
+    |   cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/raw/taishou/you
+    |   基点 引数(明示)
+    |   一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+    |   ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+  ---- 門の 條① の逐語 ----
+    | 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+    | 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+
+==== 対照 in (員外を 0 本 置いた) ====
+  対照 = in
+  刻 = 2026-09-17T13:20:22+0900
+  束 = raw/taishou/in
+  歩いた根 = docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/raw/taishou/in/mono
+  臺帳の置場(歩き根の外) = docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/raw/taishou/in/MANIFEST.txt
+  歩きの深さ = 0
+  disk 本(regular) = 2
+  非regular 本 = 0
+  臺帳 註行 = 2
+  臺帳 path行 = 2
+  ★員外(己の歩き)★ = 0
+  員外の名 = []
+  実体無(己の歩き) = 0
+  陽性対照の実在 = []
+  照合器 rc = 0
+  門 rc = 0
+  ---- 照合器の逐語 ----
+    | 台帳 MANIFEST.txt
+    |   cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-93-jou1-ha-ingai-wo-hitotsu-mo-minu-koto-wo-ryoutaishou-de-shimese-20260917/raw/taishou/in
+    |   基点 引数(明示)
+    |   一致 ★2★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 2)
+    |   ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+  ---- 門の 條① の逐語 ----
+    | 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+    | 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+
+==== 断 ====
+  陽性(員外 1) 照合器 rc=0 / 門 rc=0
+  陰性(員外 0) 照合器 rc=0 / 門 rc=0
+  ★出目が同一か = True★
+  ∴ ★條① は員外を一件も検出せぬ★(陽性対照が現に在るのに鳴らぬ)

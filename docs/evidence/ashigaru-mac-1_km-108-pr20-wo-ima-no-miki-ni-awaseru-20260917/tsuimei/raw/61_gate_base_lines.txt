@@ -1,0 +1,4 @@
+193:    #   環境変数 KM_GATE_MANIFEST_BASE が ★set されて居る時のみ★ 渡す
+197:    if [ -n "${KM_GATE_MANIFEST_BASE+set}" ]; then
+198:      python3 "$(dirname "$0")/karo_mac_manifest_verify.py" "$man" "$KM_GATE_MANIFEST_BASE"
+200:      say "條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)"

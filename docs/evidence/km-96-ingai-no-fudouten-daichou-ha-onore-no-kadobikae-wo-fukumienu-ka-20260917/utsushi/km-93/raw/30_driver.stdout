@@ -1,0 +1,50 @@
+刻 2026-09-17T13:22:58+0900
+的 scripts/checks/karo_mac_manifest_verify.py
+  sha16=a507c998c7bd6485 / bytes=10965 / 行=198(grep -c '' の数へ方)
+  歩いた根=此の器一本・全 byte を読んだ(深さ 0 ―― 他の file を見て居らぬ)
+
+==== 陽性対照(在る筈の字面 ―― 探し器が生きて居る證) ====
+  os.path.isfile           出現 2 回 ―― 在
+  hashlib.sha256           出現 1 回 ―― 在
+  for raw in open(man      出現 1 回 ―― 在
+
+==== disk を歩く原始器の有無 ====
+  os.walk                  出現 0 回
+  os.listdir               出現 0 回
+  os.scandir               出現 0 回
+  glob.glob                出現 0 回
+  glob.iglob               出現 0 回
+  iterdir(                 出現 0 回
+  rglob(                   出現 0 回
+  os.popen                 出現 0 回
+  subprocess               出現 0 回
+  ★合計 0 回★ ―― 0 ∴ disk 側を歩く口が一つも無い
+
+==== 母數を決めて居る逐語(★行番を焼かず 字面で引く★) ====
+  【母數の口】出現 1 回
+    逐語: for raw in open(man, encoding="utf-8", errors="replace"):
+  【disk への問】出現 1 回
+    逐語: if os.path.isfile(cand):
+  【rc の式】出現 1 回
+    逐語: return 0 if (ng == 0 and miss == 0 and unreadable == 0 and ok > 0) else 1
+  【出目の四欄】出現 1 回
+    逐語:   一致 ★{ok}★ / 相違 {ng} / 実体無 {miss} / 読めぬ行 {unreadable}
+
+  ★言葉で述べる(行番を用ゐず)★
+    ・『母數の口』の逐語は ★臺帳 man を開いて其の行を一本づつ回す★ 形である。
+      其の前では 一致/相違/実体無/讀めぬ行 の四つの数が 0 に据ゑられる。
+      其の中では 行から sha256 と path 候補を取り、★取れた path を disk に問ふ★。
+      其の後では 四つの数を刷り、rc を決める。
+      ∴ ★回の回数を決めるのは 臺帳の行数であり、disk の file 数ではない。★
+    ・『disk への問』の逐語は ★臺帳の行から取れた path だけ★ を os.path.isfile に掛ける。
+      即ち disk は ★問はれた名にだけ★ 答へる ―― 問はれぬ名(員外)は ★一度も現れぬ★。
+    ・『出目の四欄』の逐語に ★員外の欄が無い★。器は員外を ★刷らぬのではなく、持たぬ★。
+    ・『rc の式』の逐語は 相違・実体無・讀めぬ行 の三つと 一致>0 のみで決まる。
+      ∴ 員外が幾つ在つても rc は 0 のまま。
+    ★∴ 員外は「見落し」ではない ―― ★初めから測つて居らぬ★(家老の見立は当つて居た)。
+
+==== 四つの札 ====
+  ⑴陽性対照が現に在る = True(os.path.isfile／hashlib.sha256／for raw in open(man)
+  ⑵歩いた根と深さ = 器一本 scripts/checks/karo_mac_manifest_verify.py / 深さ 0 / 全 10965 byte
+  ⑶rc = 0(本器の走り)
+  ⑷刻 = 2026-09-17T13:22:58+0900

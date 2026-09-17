@@ -1,0 +1,48 @@
+刻(始) 2026-09-17T13:21:44+0900
+的束   docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917
+臺帳   MANIFEST.txt sha16=f23f36025e9cd7c1 bytes=53213
+照合器 sha16=a507c998c7bd6485 / 門 sha16=2b8449bccd608a1a
+
+==== 己の歩き(器に問はず) ====
+  歩いた根   docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917
+  歩きの深さ 2
+  disk 本(regular) 440 / 非regular 0
+  臺帳 註行 2 / path行 427 / 讀めぬ行 0 / 相異なる path 427
+  ★員外(disk有・臺帳無) 13★
+    員外 MANIFEST.txt
+    員外 _gate/90_MANIFEST_ichisou.txt
+    員外 _gate/90_gate_20260917T124946.err
+    員外 _gate/90_gate_20260917T124946.out
+    員外 _gate/90_gate_20260917T124946.rc
+    員外 _gate/91_gate_20260917T130246.cmd
+    員外 _gate/91_gate_20260917T130246.err
+    員外 _gate/91_gate_20260917T130246.out
+    員外 _gate/91_gate_20260917T130246.rc
+    員外 _gate/91_gate_argv.nul
+    員外 _gate/91_gate_argv.txt
+    員外 _gate/91_gate_nozoku.txt
+    員外 _gate/92_kadobikae_yomi.txt
+  実体無(臺帳有・disk無) 0
+
+==== 條① 単体(照合器・基点 '.') rc=0 ====
+  | 台帳 MANIFEST.txt
+  |   cwd  /Users/momizimac/multi-agent-shogun/docs/evidence/km-89-oya-ga-mamorazu-ko-ga-kuraberu-kuchi-wo-ryoutaishou-de-hakare-20260917
+  |   基点 引数(明示)
+  |   一致 ★427★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 427)
+  |   ★旧形(引用符を含む行)★ 0 行 ―― ★拒んで居らぬ★(裁 seq321353⑴)
+
+==== 門 全歩き(argv 440 本) rc=1 ====
+  ---- 條① の逐語 ----
+  | 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+  | 條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+  ---- 門 全體の判定行 ----
+  | 條⑤ 寸法 = byte和 2336114(閾 10485760未満)
+  | ★出す前 門が落ちた。出すな。★
+
+==== 家老の宣との突合 ====
+  束 本 : 家老 440 / 己 440 ―― 一致
+  臺帳 項 : 家老 427 / 己 427 ―― 一致
+  員外 : 家老 13 / 己 13 ―― 一致
+  條① rc : 家老 0 / 己 0 ―― 一致
+  ★悉く一致か = True★
+  ∴ 家老の実測を再現した ―― ★員外 13 を抱へた儘 條① は rc=0『一致』と言ふ★

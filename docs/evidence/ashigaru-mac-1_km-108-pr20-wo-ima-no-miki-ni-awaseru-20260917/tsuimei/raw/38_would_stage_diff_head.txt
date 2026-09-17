@@ -1,0 +1,30 @@
+diff --git a/docs/runbooks/ERR-EKARTE-001.md b/docs/runbooks/ERR-EKARTE-001.md
+index e6de627b..de00cbd9 100644
+--- a/docs/runbooks/ERR-EKARTE-001.md
++++ b/docs/runbooks/ERR-EKARTE-001.md
+@@ -1,79 +1,67 @@
+----
+-error_code: ERR-EKARTE-001
+-severity: ERROR
+-title: "電子カルテ visit 作成失敗"
+-auto_fix: true
+-retry_cap: 3
+-escalation: "ntfy:director, inbox:shogun"
+-night_mode: defer_unless_critical
+----
+-
+-# Runbook: ERR-EKARTE-001 (電子カルテ visit 作成失敗)
+-
+-## 症状 (検知パターン)
+-
+-- ekarte 入力時、Supabase visits テーブルへの INSERT が失敗
+-- フロントエンドで「カルテの記録に失敗しました」エラー表示
+-- backend ログに `ERR-EKARTE-001` + HTTP 500/503
+-
+-## 自動診断コマンド
+-
+-```bash
+-# 1. FastAPI バックエンド稼働確認
+-curl -sf http://localhost:8000/api/health || echo "BACKEND_DOWN"
+-
+-# 2. Supabase 接続確認

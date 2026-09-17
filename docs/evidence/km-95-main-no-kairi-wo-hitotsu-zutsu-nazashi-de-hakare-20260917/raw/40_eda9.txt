@@ -1,0 +1,16 @@
+# 40 ㋓ 不要候補 9 枝 / 刻 2026-09-17T13:46:40+0900 / 紙から抽いた枝 9 本(宣 9) / 基点 甲= local main 363d5fb06084 / 基点 乙= origin main 4be3ee19e1c5 / 分岐点 6e9d40600a80
+| 枝 | 紙の sha | ls-remote 今 | 手元 ref | object | cherry 基点=local +/− | cherry 基点=origin +/− | 祖先(local/origin) | + に立つ commit(基点=origin) |
+|---|---|---|---|---|---|---|---|---|
+| karo-mac/a3-r39-fix-20260917 | 2992eecab19d | 一致 | heads/karo-mac/a3-r39-fix-20260917 | 在 | +0 −0 | +11 −2 | ○/× | 707df7914723 dafb24026c77 e8470d8c4536 2320dbbb871e f626f2002255 561dd8ff4e1e c771fbfcc3db 2187e25fba27 b82b98c91222 99ea2984f2a4 2992eecab19d(内 local 側 16 本の中 11) |
+| karo-mac/gate4-20260909 | 707df7914723 | 一致 | 無 | 在 | +0 −0 | +1 −0 | ○/× | 707df7914723(内 local 側 16 本の中 1) |
+| karo-mac/gate5-20260909 | e8470d8c4536 | 一致 | 無 | 在 | +0 −0 | +3 −0 | ○/× | 707df7914723 dafb24026c77 e8470d8c4536(内 local 側 16 本の中 3) |
+| karo-mac/gate5-note-20260909 | e8470d8c4536 | 一致 | 無 | 在 | +0 −0 | +3 −0 | ○/× | 707df7914723 dafb24026c77 e8470d8c4536(内 local 側 16 本の中 3) |
+| karo-mac/km-50-47-20260917 | 43808f8363e9 | 一致 | heads/karo-mac/km-50-47-20260917 | 在 | +0 −0 | +13 −2 | ○/× | 707df7914723 dafb24026c77 e8470d8c4536 2320dbbb871e f626f2002255 561dd8ff4e1e c771fbfcc3db 2187e25fba27 b82b98c91222 99ea2984f2a4 2992eecab19d d4849b0e6987 43808f8363e9(内 local 側 16 本の中 13) |
+| karo-mac/km-dead-inbox-gate-20260917 | b82b98c91222 | 一致 | 無 | 在 | +0 −0 | +9 −2 | ○/× | 707df7914723 dafb24026c77 e8470d8c4536 2320dbbb871e f626f2002255 561dd8ff4e1e c771fbfcc3db 2187e25fba27 b82b98c91222(内 local 側 16 本の中 9) |
+| karo-mac/km-gate-kou-otsu-20260917 | 363d5fb06084 | 一致 | heads/karo-mac/km-gate-kou-otsu-20260917 | 在 | +0 −0 | +14 −2 | ○/× | 707df7914723 dafb24026c77 e8470d8c4536 2320dbbb871e f626f2002255 561dd8ff4e1e c771fbfcc3db 2187e25fba27 b82b98c91222 99ea2984f2a4 2992eecab19d d4849b0e6987 43808f8363e9 363d5fb06084(内 local 側 16 本の中 14) |
+| karo-mac/manifest-verify-20260909 | f0d59a3b6315 | 一致 | 無 | 在 | +0 −0 | +3 −1 | ○/× | 707df7914723 dafb24026c77 e8470d8c4536(内 local 側 16 本の中 3) |
+| karo-mac/skills-tools-20260908b | 6e9d40600a80 | 一致 | 無 | 在 | +0 −0 | +0 −0 | ○/○ | (内 local 側 16 本の中 0) |
+
+集計(母數 9): 基点=local で +0 の枝 9(家老の宣 9)/ 基点=origin で +0 の枝 1(家老の宣 1) ['karo-mac/skills-tools-20260908b']
+★食ひ違ひの出所(一行)★: 9 枝の tip は悉く local main の祖先(祖先列 ○/×)ゆゑ基点=local では寄与 0 だが、其の tip が含む commit の内 ★local 側 16 本に属する物(乙 14 本)は origin/main に無い★ ∴ 基点=origin では其れらが + に立つ ―― 差は「枝の中身」でなく「main の乖離 14 本」其の物が写つて居る。
+註: karo-mac/km-gate-kou-otsu-20260917 の tip は local main 其の物(363d5fb0)ゆゑ、基点=origin では 14 本 悉くが + に立つ。skills-tools-20260908b の tip は分岐点 6e9d4060 其の物ゆゑ両基点で 0(origin/main の PR #8 merge がこれを含む)。

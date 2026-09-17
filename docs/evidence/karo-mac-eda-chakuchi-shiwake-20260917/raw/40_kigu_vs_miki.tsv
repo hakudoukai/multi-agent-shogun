@@ -1,0 +1,17 @@
+eda	sha12	kigu	vs_miki	vs_origin_main
+ashigaru-mac-1/km-92-sengen-shita-shikii-ga-ichido-mo-yomarenu-koto-wo-shimese-20260917	0260a76a6008	scripts/lib/detect_stale.sh	幹と異	main と異
+ashigaru-mac-3/km-91-bannin-no-hikaku-ki-ga-fu-wo-toosu-ana-wo-hakare-20260917	eb6cf51de16f	scripts/stop_hook_inbox.sh	幹と異	main と異
+karo-mac/a1-r56	86ae87367c59	scripts/checks/karo_mac_dasumae_gate.sh	幹と異	main に無
+karo-mac/a1-r56	86ae87367c59	scripts/checks/karo_mac_manifest_verify.py	幹と同	main と同
+karo-mac/daiko-teishutsu-20260916	5a12887f953d	scripts/checks/karo_mac_dasumae_gate.sh	幹と異	main に無
+karo-mac/daiko-teishutsu-20260916	5a12887f953d	scripts/checks/karo_mac_manifest_verify.py	幹と同	main と同
+karo-mac/hantei-saiteishutsu-20260917	0138ae57c377	scripts/checks/karo_mac_manifest_verify.py	幹と異	main と異
+karo-mac/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917	157a9736fd17	scripts/checks/karo_mac_dasumae_gate.sh	幹と異	main に無
+karo-mac/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917	157a9736fd17	scripts/checks/karo_mac_gate4.sh	幹と異	main に無
+karo-mac/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917	f82297e292c8	scripts/stop_hook_inbox.sh	幹と異	main と異
+karo-mac/km-82-hata-ni-wa-hata-no-bannin-wo-20260917	1cbc4d4a2da5	scripts/inbox_watcher.sh	幹と異	main と異
+karo-mac/lot48235904-provenance-20260916	a9a6ae34557f	scripts/checks/karo_mac_dasumae_gate.sh	幹と異	main に無
+karo-mac/lot48235904-provenance-20260916	a9a6ae34557f	scripts/checks/karo_mac_manifest_verify.py	幹と同	main と同
+karo-mac/settings-hook-abs-20260917	1da2b6b9fb7f	.claude/settings.json	幹と異	main と異
+karo-mac/settings-hook-abs-20260917	1da2b6b9fb7f	scripts/goal_stop_hook.py	幹に無	main に無
+karo-mac/settings-hook-abs-20260917	1da2b6b9fb7f	scripts/goal_stopfailure_hook.py	幹に無	main に無
