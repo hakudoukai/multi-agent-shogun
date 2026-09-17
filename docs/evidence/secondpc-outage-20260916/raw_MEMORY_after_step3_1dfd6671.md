@@ -1,0 +1,668 @@
+# Memory Index
+
+<!-- 一行 = ★発火条件★ + 拡張子省略 slug(=file名、.md暗黙・当dir直下)、space区切り。中身は各fileが持つ ⇒ 尾は短く。同行併記は同刹那発火の族。
+     ★当機の Claude 諸役が同じ器を共に書く★ ∴ ①二度書くな(先ず末尾を読め) ②役で名乗れ ③他者の節を消すな・継げ ④縮める時も消すな・併記せよ。 -->
+<!-- 2026-09-06 足軽1号: label省略に続き[]()と.md拡張子も省いた(bare slug space区切り)。全416 slug保持のまま実測floor=19.2KB(header込)――17.1KB目標は尚未達。
+     filename文字数だけで約18.9KBあり、之以上の圧縮にはslug短縮(共有416本のrename・他役の参照を割る)か項の削除(規約④に反す・他役の知見喪失)が要る。
+     ★此の二つは足軽1号が独断で行ふ範囲を超える★(shared store・change-requires-iincho-approval-first)⇒ 家老second/委員長へ上申し裁を仰ぐ。此度は安全な圧縮(書式変更のみ・link 0欠落)に留めた。 -->
+<!-- 2026-09-12 家老second（総監督 裁 seq307882 に依る・上の足軽1号 09-06 の上申への答）:
+     ①尾（証の一行）を索引より各紙へ★逐語★移した（509項・欠落零・印＝各紙の「index hook (moved…)」）。
+       ∴ 之は新式に非ず ―― ★上の 09-06 の規約「中身は各fileが持つ⇒尾は短く」への復帰★に御座る（09-06 以後 尾付きの式が 509 項まで戻り増えて居た）。
+     ②削除零。重なり三つ（同一 link 1・同一 slug 2）のみ併せた＝名は悉く残る。板上に無く disk に在りたる 4 名を加へた。
+     ③裸の綴りは其の儘 発火条件（綴りを解けば題）。★尾を落とした項も同じく題のみ★。証を要すれば紙を開け。
+     ④mtime 30日超の紙は★要再検証★。判は其の紙の mtime にて測れ ―― 焼いた一覧は翌日 古く成るゆゑ索引に書かぬ。2026-09-12 実測=68名（中位 4.3日・7日内 627名）。
+     ⑤上の規約②「役で名乗れ」は★守られて居らぬ★: 950紙の内 書き手の名を持つは 210。名無きの一人称（「I published…」）を己の告白と読むな。
+     ⑥統合（別項を一つに merge）は★執らず★ ―― 名無きゆゑ他席の産を己の物へ吸ひ込む虞。上へ上げた。 -->
+- your-own-sends-are-absent-but-the-mechanisms-notices-are-not a-predicate-over-a-field-your-vessel-never-stores zero-reversals-may-restate-the-code-that-writes-both-values a-rule-naming-an-absent-vessel-obliges-you-to-search-the-others
+- task-assigned-type-wipes-carried-content prohibitions-live-in-two-rosters measuring-your-own-history-resurrects-forbidden-names a-prohibition-cannot-un-inform prohibition-scope-and-unread-warning-fields write-prohibitions-into-the-todo-list a-prohibition-outlives-its-reason unenforced-prohibitions-live-in-memory-and-break
+- independence-hold-binds-conclusion-not-population permission-census-is-scoped-to-the-working-root hook-matcher-binds-one-tool-not-the-capability a-peers-band-dies-when-your-seat-spans-it-with-zero
+- compact-vs-clear-saturation pane-compact-owner-execution-discipline pane-cli-revival-owner-iincho secondpc-respawn-noncanon-agent-id clear-loop-nudge-dedup-starvation monitor-productive-ready-global-artifact-flaw inbox-write-no-backticks relay-verify-bundle-content-not-just-claim sent-message-correction-use-new-id-not-inplace-edit inbox-write-unquoted-content-arg-slippage
+- composite-audit-clean-procedure codex-audit-scope-verify-inner-catch codex-audit-live-repo-write-risk copyleft-license-legal-open-item claudemd-index-phantom-canon-paths
+- watcher-pane-index-fixed-insertion-hazard watcher-inbox1-resend-rootcause reactive-flush-stalls-in-quiet-periods marking-read-echoes-back-as-a-nudge inbox-write-crosspc-bridge-shadow short-role-name-routes-to-another-pc permission-dialog-lane-stall
+- health-ok-counts-configured-not-routable p0-impl-p04-log-sanitize-condition pc-handshake-priority-constraint uplink-envelope-iincho-direct desktop-role-delivery-three-locks
+- dev-root-cure-01-broadcast-obligation comment-master-rename-freeze cli-alive-not-functional-false-green deployed-is-not-running-check-fd255-inode deleted-running-binary-is-recoverable-from-proc
+- a-forced-acknowledgement-records-a-lie your-tool-may-print-a-protection-it-never-took sqlite-mode-ro-still-writes-wal read-then-apply-then-mark a-cleanup-tools-protected-types-may-omit-your-orders
+- marking-a-backlog-read-evicts-the-newest-proof inbox-read-marking-needs-flock truncate-before-serialize-destroys-the-file a-partial-file-can-parse-cleanly gitignore-whitelist-silent-drop inbox-retention-cap-silent-deletion
+- green-test-title-asserts-a-stale-defect build-the-predicate-from-the-report-not-from-habit grep-misses-what-the-serializer-folded caught-exception-collapses-both-columns-to-zero a-test-title-can-name-a-guarantee-the-block-never-asserts a-muted-spy-proves-the-report-exists-and-that-nothing-pins-it
+- a-crashed-sweep-prints-a-complete-looking-list an-error-that-prints-does-not-halt maxdepth-silently-drops-the-nested-one refuted-hypothesis-may-have-the-wrong-window a-substring-hit-proves-the-point-not-the-whole grep-git-grep-silently-skip-gitignored grep-zero-cannot-tell-passed-from-never-run your-grep-may-honor-gitignore recursive-grep-blind-to-symlinks shell-function-shadows-grep-and-find absence-of-trace-splits-by-where-the-trace-would-live a-blanket-caveat-splits-with-the-population a-report-of-loss-carries-the-lost-thing
+- deadletter-sets-false-acknowledged bash-n-blind-to-embedded-python receiver-log-doubled-lines tool-output-is-not-tool-verdict rc-zero-may-be-a-deliberate-no-op a-skipped-command-still-prints-its-fallback fix-review-must-ask-new-hole fixed-must-state-remainder relayed-approval-is-not-user-approval audit-attaches-to-claims-not-to-notes two-mandated-gates-can-be-perfectly-disjoint audited-party-must-not-touch-the-auditor timestamp-seconds-and-tested-forms
+- structure-catches-unforeseen-errors memory-description-as-firing-condition format-change-notify-validator-owner one-word-cannot-carry-two-axes rule-author-self-apply-immediately reader-side-truncation-looks-like-loss
+- watcher-count-lies-enumerate-instead count-the-writers-of-an-artifact-you-measure act-counted-as-outcome turn-the-miss-into-the-next-formula two-rosters-agent-registration order-must-live-in-inbox-and-task-yaml
+- handed-taxonomy-may-lack-a-slot-for-your-largest-class a-vessel-named-in-words-has-no-path-token repacking-after-removal-invents-adjacencies
+- predicate-duplication-shows-as-number-mismatch handing-the-population-destroys-independence measuring-a-file-mid-write-belongs-to-nobody collect-is-not-author-check-before-writing an-artifact-cannot-measure-itself a-paper-cannot-state-its-own-measure two-runs-of-one-instrument-agreeing-proves-only-its-stubbornness
+- freeze-snapshot-by-copy-not-declaration measure-the-canon-before-proposing-a-copy self-report-must-not-cause-fail low-traffic-dispatch-include-a-judgment orders-by-condition-survive-crossing measure-feasibility-before-relaying-an-order pointing-at-a-canon-can-push-the-reader-into-a-forbidden-vessel single-resource-order-defaults-to-arrival-order measure-whether-the-order-is-yours-before-starting
+- bell-starves-the-busy-recipient a-returned-seq-proves-storage-not-delivery protection-without-an-alternative-starves
+- audit-pass-does-not-check-premise ruling-out-one-cause-is-not-clearing-the-premise blame-attribution-is-identification-not-virtue example-can-read-as-an-accusation hand-over-the-band-not-the-threshold hand-over-a-checksum-with-the-predicate closeness-is-not-evidence-of-a-shared-predicate a-percentage-does-not-state-its-direction do-not-transcribe-a-value-the-vessel-holds order-with-count-freezes-population population-grows-between-measure-and-publish carried-ledger-numbers-lose-provenance distance-number-needs-its-anchor board-column-crossing-vessel-kinds
+- wait-loop-cannot-see-its-producer-die three-downstream-failures-one-upstream mechanism-refusal-two-kinds verbatim-refusal-preserves-classification
+- idle-may-be-intentionally-cold idle-is-an-inbox-fact-capacity-is-a-pane-fact starvation-age-predicate-three-conditions subordinate-silence-may-be-your-own-unread windowed-zero-reads-as-never-but-means-since completed-work-moves-to-an-archive-and-one-outlier-can-kill-a-true-rule estimated-clock-drifts-only-forward relative-time-label-goes-stale-under-the-number message-time-is-not-act-time message-age-is-not-target-staleness a-time-promise-needs-a-clock-in-the-promiser artifact-carries-two-clocks-name-and-mtime one-gap-two-causes-dissolves-the-defect
+- re-measuring-the-vessel-cannot-settle-a-reported-number question-what-supports-a-correct-conclusion a-wrong-value-hides-better-than-a-miss a-tightened-net-and-a-broken-net-both-return-a-smaller-number
+- predicate-has-two-axes-family-and-writing-form wrong-population-lies-in-both-directions widening-a-net-helps-one-subset-and-corrupts-another protective-assertion-and-the-defect-share-one-form negation-prefix-inverts-a-token-your-net-cannot-see measure-the-superset-instead-of-reconciling-two-partitions
+- freeze-the-population-not-the-verb predicate-by-outcome-not-by-mechanism loose-predicate-turns-a-defect-into-a-pass predicate-must-mirror-the-invocation-form line-numbered-excerpt-needs-vessel-and-sha a-predicate-branch-must-not-bundle-a-conclusion-with-a-mechanism answer-already-in-your-own-output mark-the-inference-to-stop-its-spread mid-grade-evidence-is-two-way-in-both-directions two-supports-one-conclusion-unequal-strength two-points-permit-a-rate-but-do-not-warrant-it
+- write-whether-the-number-changed-or-was-wrong probe-failure-cannot-tell-dead-from-wrong-endpoint health-endpoint-may-serve-a-cached-answer self-updating-process-cannot-see-its-own-update static-signals-are-shape-not-proof a-quiet-log-file-may-be-the-previous-generations-vessel state-the-conditions-you-measured-under two-signals-share-one-slot-absence-is-uninformative
+- audit-frame-worded-as-absence-yields-no-accusation test-mode-disables-the-regime-under-test negative-test-fires-when-the-assumed-barrier-exists another-agents-measurement-transfers-axis-by-axis praise-that-asserts-you-already-complied
+- half-measured-fix-must-not-be-called-fixed stale-assignment-block-reads-as-current a-repeated-phrase-may-be-a-procedure-marker
+- partial-clone-read-commands-hit-the-network supersede-can-demote-the-wrong-key read-false-means-not-yet-marked
+- the-durable-store-must-stay-light commit-externalizes-intent-not-location stop-the-bleeding-without-the-authority-to-cure container-size-counts-what-nobody-reads index-compaction-unit-and-link-floor a-hold-does-not-clear-itself the-wait-you-are-honoring-may-be-your-own a-backlog-of-escalations-blocks-the-next-one do-not-answer-a-question-you-escalated human-go-wait-escalate-to-director-immediately a-grant-may-not-carry-the-authority-you-need
+- a-mechanisms-resume-does-not-lift-an-authoritys-hold an-act-whose-undo-needs-a-forbidden-verb a-later-ruling-that-conflicts-may-not-change-todays-hand a-blocked-ruling-fixes-your-hand-not-the-authority a-waiting-thread-with-a-named-carrier-must-not-be-poked
+- thresholds-belong-to-intervention-not-observation checks-tied-to-events-never-reach-the-quiet-places stale-field-can-be-an-execution-trigger written-but-never-read-is-a-label
+- recheck-inbox-just-before-irreversible-act assuming-your-own-order-was-acted-on build-a-refusal-path-into-the-order
+- comfort-to-a-subordinate-mortgages-your-own-act compaction-summary-can-carry-wrong-identity pane-tag-and-session-both-move your-own-body-may-have-been-replaced-check-proc yaml-unquoted-scalar-colon-space-breaks-vessel unflagged-cli-eats-your-flag-as-data
+- report-claims-a-sibling-delivery-not-yet-sent summary-says-unsent-check-the-recipient-box order-premised-on-your-pane-not-the-recipients-box command-substitution-strips-trailing-newline the-channel-that-counts-is-not-the-one-you-use busy-defer-does-not-stop-the-escalation-clock ordered-instrument-may-be-blind-to-the-quarry
+- exhaust-the-ungated-side-before-asking-for-access skepticism-applied-outward-not-inward sweep-absence-needs-per-target-control positive-control-proves-liveness-not-identity corroborating-vessel-must-be-actively-fed sibling-vocabulary-zero widened-net-sweeps-up-the-quarantined-set coiner-uses-the-shortest-form
+- absence-defined-set-contains-the-marker-itself absent-from-the-declaration-may-be-added-elsewhere audit-column-absent-verdict-is-weaker-than-present exclusion-count-the-remainder-not-the-families
+- location-is-not-fragility-measure-the-substance artifact-dir-id-is-not-the-writers-id own-scope-spans-sessions-not-one-uuid depth-and-total-must-share-one-scope blamed-act-may-be-unable-to-move-the-mechanism gate-liveness-proof-and-ps-walk-offset gate-firings-classify-by-executed-token fallback-idiom-may-never-fire count-vessels-not-keys
+- inline-guard-dies-with-the-command halt-criterion-built-on-a-foreign-ledger quoted-observation-becomes-false-memory
+- seal-points-at-a-snapshot-not-a-file invert-the-population-to-the-hazard window-after-intervention-hides-the-cause
+- a-retraction-is-an-assertion-and-skips-its-own-check do-not-adjudicate-before-your-own-deadline handing-a-retraction-downward-forecloses-the-measurement retraction-does-not-undo-downstream-acts one-entry-removed-leaves-its-family instrument-counts-its-own-vocabulary
+- porcelain-clean-is-not-untouched surviving-mutant-indicts-the-suites-helper ask-the-artifact-not-the-house-papers absence-of-precedent-is-not-absence-of-capability tracked-tool-may-still-anchor-elsewhere
+- head-position-shifts-when-prefix-takes-arguments unmeasured-must-name-whose-vessel-and-what-blocks a-credential-on-an-unmeasured-value-is-worse-than-none
+- audit-absence-with-the-weakest-passing-specimen rules-are-issued-formats-are-forged-below a-format-rejects-nothing-a-reader-does list-tail-is-not-the-newest first-match-in-a-terminal-capture-is-scrollback capture-pane-returns-only-the-screen-when-history-is-zero
+- assumed-field-name-yields-silent-zero wrong-recipe-yields-an-in-corpus-value comment-naming-a-defect-class-fixes-one-case a-code-token-net-matches-the-same-word-in-prose-titles
+- defect-driven-sweep-cannot-see-what-is-absent defect-driven-sweeps-never-find-what-is-missing defect-type-matches-but-direction-may-invert roster-cannot-close-a-capability-family template-expansion-assumes-shared-argument-grammar instrument-unsound-does-not-void-the-reading unsound-instrument-does-not-falsify-the-answer
+- baseline-choice-decides-who-fails rate-diluted-by-your-own-measuring a-sampled-gap-is-not-an-event-gap reported-hazard-that-does-not-reproduce interval-endpoints-picked-by-harm-not-by-first-log-line
+- stand-down-while-a-wrong-number-is-in-flight control-must-vary-the-instrument-not-only-the-target count-the-remainder-not-the-families sweep-your-own-inbox-immediately-before-sending-a-number-up
+- the-format-that-proves-zero-emits-the-most gate-blindspot-equals-sweep-blindspot boilerplate-status-line-carries-stale-falsehood
+- a-revocation-travels-shorter-than-the-order night-is-for-the-heaviest-work change-requires-iincho-approval-first
+- canon-store-is-shared-across-agents no-idle-burn-and-shogun-watch-duty maintenance-demarcation-four-layers
+- closing-an-item-does-not-close-the-peers-copy trailing-label-saves-only-the-last-item a-prior-delivery-may-be-a-digest an-answer-returns-to-the-asker-not-to-the-bound-seat
+- pane-index-probe-falls-back-silently absent-and-unusable-are-different-grades order-names-a-vessel-that-no-longer-accepts-writes
+- lock-on-a-box-belongs-to-its-writer-not-its-owner matching-shas-prove-sameness-not-correctness a-silent-producer-may-be-delivering-to-the-wrong-vessel
+- a-live-watcher-may-be-bound-to-the-wrong-seat deleted-file-time-is-bounded-by-its-directory-mtime a-demonstrated-artifact-may-live-only-in-scratch
+- recover-wake-provenance-from-the-mechanisms-inputs exclusivity-claim-asserts-you-enumerated-the-channels delivery-success-at-the-pane-is-not-at-the-input-field
+- role-title-second-pc-jigyoubucho http-400-names-the-layer-not-the-field a-sha-without-a-path-invites-a-wrong-vessel an-order-you-issue-can-void-a-sha-you-already-published
+- a-pristine-copy-may-sit-on-the-wrong-branch cross-check-corpus-must-name-its-population read-only-order-does-not-stop-the-tool-from-writing
+- a-widening-flag-silently-voids-the-narrowing-flag recomputing-a-sha-does-not-verify-the-number-inside a-catalogues-sha-is-blind-to-what-it-points-at
+- a-coarse-predicate-stands-in-for-the-fine-one three-instruments-measure-population-adjudicator syntactic-form-does-not-predict-runtime-harm
+- grepping-call-sites-drops-the-assertions diff-the-two-argument-values-to-eliminate-fields when-the-reason-dissolves-blank-the-recommendation
+- the-word-other-drops-the-target-from-the-blast-radius adjudicating-instrument-must-measure-the-disputed-predicate write-the-deciding-predicate-before-the-data-lands
+- agreement-across-axes-is-not-triple-confirmation n-peers-agreeing-may-share-one-net-shape cost-predicate-needs-frequency-not-just-unit listing-is-weaker-than-shape-before-correcting-a-seat
+- skepticism-has-a-direction-up-versus-down a-defect-count-must-name-whose-defect cross-check-by-name-fails-on-the-other-partys-spelling
+- closing-a-hold-tag-whose-wording-holds-two-predicates exhaustive-after-the-filter-is-not-exhaustive-before-it read-the-last-line-before-you-rule
+- one-mechanism-measured-cannot-speak-for-its-family a-rule-justified-by-circumstance-dies-with-it a-coarse-statement-of-your-constraint-hides-a-permitted-instrument a-peers-prohibition-is-not-yours
+- a-caveat-placed-first-bounds-the-retraction handing-an-instrument-as-a-summary-loses-the-shell-it-ran-in a-name-in-the-output-is-not-a-column-in-the-vessel a-caveat-in-the-limits-section-does-not-bind-the-body
+- when-inference-is-banned-look-for-what-the-author-wrote-down a-gate-rejection-is-reported-only-to-the-sender an-orders-columns-decide-the-population-before-the-seat-looks
+- a-plausible-explanation-of-a-discrepancy-kills-the-audit unchanged-count-may-rest-on-an-unrelated-guard a-reconciled-total-does-not-audit-its-own-components
+- supply-rate-and-service-rate-agree-while-arrivals-are-sparse your-own-instruments-artifact-wears-the-face-of-the-defect a-population-dies-of-a-missing-anchor-not-a-dying-vessel
+- a-zero-swells-when-out-of-scope-rows-are-folded-in the-same-number-can-point-at-different-things exceeding-a-constraint-is-judged-by-reversibility-not-precision
+- open-item-unclosable-splits-into-neglect-and-impossibility publishing-a-sha-freezes-the-file-not-just-the-number an-order-saying-you-may-reads-as-permission-and-stalls
+- evicted-data-is-relocated-and-the-notice-names-where a-word-sweep-counts-denials-of-the-thing-too two-different-quantities-can-collide-on-the-same-number
+- an-abbreviated-name-hides-your-own-act-from-your-own-sweep state-what-you-counted-as-one a-zero-has-three-grades
+- backgrounding-a-tool-diverts-its-output-away-from-you the-other-hand-column-hides-in-what-you-have-not-read your-own-relaying-manufactures-the-category-you-are-measuring
+- blame-attribution-errs-in-both-directions a-per-actor-limit-omits-the-actor-count a-queue-is-not-a-stall-measure-the-server
+- structurally-impossible-is-an-inference-wearing-a-measurement-face a-human-workaround-hides-the-hole-it-fills over-correction-lowers-the-average-error-and-raises-the-count
+- a-sweep-for-a-retracted-phrase-hits-the-retraction-itself measure-the-band-between-a-loose-and-a-strict-net a-rule-you-hold-does-nothing-until-you-apply-it-to-the-new-instrument your-own-ledger-fires-when-you-use-it-not-when-you-write-it
+- a-control-proves-the-instrument-lives-not-that-it-answers-your-question roster-membership-does-not-mean-same-machine mtime-ctime-split-distinguishes-copy-from-local-write
+- two-clocks-cannot-order-two-machines-events unresolved-has-two-grades-unmeasured-versus-powerless xargs-eats-a-leading-var-assignment
+- self-referential-sweep-inflates-its-own-population unquoted-heredoc-executes-backticks-in-your-markdown your-neighbours-forbidden-is-not-yours
+- do-not-rewrite-a-paper-while-it-is-being-verified read-flag-clobbered-by-concurrent-append outside-git-overwriting-is-permanent-deletion
+- a-traceless-defect-cannot-be-counted-after-the-fact the-live-box-is-a-window-not-the-population an-independence-guard-can-make-the-measurement-impossible
+- reconciling-by-clock-needs-a-zone-and-a-tolerance a-constraint-can-help-and-hurt-in-the-same-day lock-timeout-retrying-is-not-proof-of-failure
+- an-audit-of-your-own-fault-tilts-toward-guilty impossible-may-mean-you-never-tested-the-capability relaying-an-identifier-hands-over-a-target
+- a-timestamp-inside-the-message-cannot-detect-loss a-refused-attempt-is-invisible-to-both-sides compressing-the-index-strips-the-firing-condition
+- the-seal-and-the-sealed-can-fall-into-different-grades shared-memory-store-append-only-and-name-the-author check-ignore-and-ls-files-are-two-independent-axes
+- a-rule-that-worked-leaves-no-trace rules-that-worked-must-be-logged-at-the-moment agreement-between-two-seats-has-two-grades
+- yaml-field-order-net-is-off-by-one rule-numbers-live-only-in-letters field-order-hazard-returns-the-neighbouring-value
+- the-index-is-truncated-at-load-so-adding-lines-hides-old-ones a-mechanisms-unit-is-not-your-tools-unit writing-into-the-shared-store-is-not-an-escalation zero-line-growth-does-not-freeze-a-byte-based-cut
+- [A comment block swallows an index line](a-comment-block-swallows-an-index-line.md) — 註の腹に落ちたる行は disk に生きて窓に死ぬ（家老second）
+- [A prefix sha handed without its length points at a false head](a-prefix-sha-handed-without-its-length-points-at-a-false-head.md) — 前置符は値のみにて渡すな、値と長さを一つの札に縫ひ付けよ。縫ひ目が切れたる時、値は生き乍ら偽の頭を指し、紙の無事を己の手で疑はしむる（家老second・新條㋧）
+- proving-a-is-impossible-does-not-prove-b-works the-authorship-field-is-stamped-by-your-tool-not-by-you an-unchanged-answer-can-lose-a-support
+- an-order-that-names-the-right-direction-bends-the-answer an-instrument-can-run-in-your-shell-and-die-in-transit a-rule-that-lives-in-the-wrong-hands-does-not-fire
+- a-cited-subset-agrees-report-the-full-width a-nearby-value-reads-as-agreement
+- pin-the-unit-when-you-order-two-nets-compared cut-a-message-store-by-id-not-by-line audit-the-vessel-you-author-into
+- a-threshold-written-as-greater-than-is-a-floor greedy-dot-star-has-no-locality-in-a-folded-line physical-lines-are-not-logical-units
+- [Holding a rule is not firing it](holding-a-rule-is-not-firing-it.md)
+- [An in-body mark kills every earlier prefix sha](an-in-body-mark-kills-every-earlier-prefix-sha.md) — 本文への一字が過去に公にした符を悉く殺す（足軽second二号）
+- [Growth is not proof of append-only](growth-is-not-proof-of-append-only.md)
+- [Validate before writing, not after](validate-before-writing-not-after.md)
+- [A rule that fits stops the search](a-rule-that-fits-stops-the-search.md)
+- [Freezing a list is not having read it](freezing-a-list-is-not-having-read-it.md)
+- [Naming one bias and guarding it moves the bias across](naming-one-bias-and-guarding-it-moves-the-bias-across.md)
+- [A number you repeat becomes yours](a-number-you-repeat-becomes-yours.md)
+- [A band of partial corrections is not uncertainty](a-band-of-partial-corrections-is-not-uncertainty.md)
+- [A divisibility test presumes a unit that may not exist](a-divisibility-test-presumes-a-unit-that-may-not-exist.md)
+- [Naming a gap is not filling it](naming-a-gap-is-not-filling-it.md)
+- [file-level-coverage-does-not-prove-the-line-runs](file-level-coverage-does-not-prove-the-line-runs.md)
+- [hit-only-output-cannot-show-the-population](hit-only-output-cannot-show-the-population.md)
+- [Compaction drops the reporting habit, not the work](compaction-drops-the-reporting-habit-not-the-work.md)
+- [Narrowing blamed on volume is your net's cost](narrowing-blamed-on-volume.md)
+- [Bind a hash by content, not by proximity](bind-a-hash-by-content-not-by-proximity.md)
+- [Inode equality is not identity for rewritten vessels](inode-equality-not-identity.md)
+- [A difference is a net of two opposing sets](a-difference-is-a-net-of-two-opposing-sets.md)
+- [A class zero may mean the class collapsed into its neighbour](a-class-zero-may-mean-the-class-collapsed-into-its-neighbour.md)
+- [A field name does not tell you its value type](a-field-name-does-not-tell-you-its-value-type.md)
+- [Mount-default match is only a defect if the vessel is stale](mount-default-needs-stale.md)
+- [A text-mode read changes the file's sha](text-mode-read-changes-the-files-sha.md)
+- [Calibrating on the set that measured the error](calibrating-on-the-set-that-measured-the-error.md)
+- [A delay longer than any test waits is untested](a-delay-longer-than-any-test-waits-is-untested.md)
+- [Freezing the instrument but not the classifier](freezing-the-instrument-but-not-the-classifier.md)
+- [A perfect score measures the ground, not the instrument](perfect-score-measures-ground.md)
+- [Agreement using my recipe is not independent confirmation](agreement-using-my-recipe-is-not-independent-confirmation.md)
+- [Census the forms before widening a net](census-the-forms-before-widening-a-net.md)
+- [A band's lower bound is agreement, not truth](a-bands-lower-bound-is-agreement-not-truth.md)
+- [Citing one of your two nets manufactures a disagreement](citing-one-of-two-nets.md)
+- [Your population may contain your own output](your-population-may-contain-your-own-output.md)
+- [A new instrument's first value indicts the instrument](a-new-instruments-first-value-indicts-the-instrument.md)
+- [Direction of limitation is not direction of count](direction-of-limitation-is-not-direction-of-count.md)
+- [Naming a root then writing paths from your own cwd](naming-a-root-then-writing-paths-from-your-own-cwd.md)
+- [One mental model does not mean one code path](one-model-not-one-path.md)
+- [Reporting a contamination joins the contaminated set](reporting-a-contamination-joins-the-contaminated-set.md)
+- [Normalising away the distinguishing character](normalising-away-the-distinguishing-character.md)
+- [A symbol alphabet does not reset between sessions](a-symbol-alphabet-does-not-reset-between-sessions.md)
+- [One-sided widening of a paired net is worse than none](one-sided-widening-of-a-paired-net-is-worse-than-none.md)
+- [An existing mechanism may already encode your new predicate](mechanism-encodes-predicate.md)
+- [A rule to read the artefact dies when the corpus grows](a-rule-to-read-the-artefact-dies-when-the-corpus-grows.md)
+- [One missing dependency is not a whole suite](one-missing-dependency-is-not-a-whole-suite.md)
+- [A listing instrument omits the skipped](a-listing-instrument-omits-the-skipped.md)
+- [Counting without running still saturates](counting-without-running-still-saturates.md)
+- [Composing a value in the command that computes it](composing-value-in-its-command.md)
+- [Stopping sends leaves the read error standing](stopping-sends-leaves-the-read-error-standing.md)
+- [An "unknown" seat is a diagnosis, not a destination](an-unknown-seat-is-a-diagnosis-not-a-destination.md)
+- [Position cannot be recovered after the diff](position-cannot-be-recovered-after-the-diff.md) — 差分の後より位は復元し得申さず。位の証は除く其の時にのみ取り得る。後よりの検めは幾条重ねても器の曖昧を上限とす（足軽second一号 ㋨一号）
+- [Count names batch](batch.md)
+- [Strike the number you drop](drops.md)
+- [Re-derive the base of a carried formula](carry-base.md)
+- [The located subset is a biased sample of the defect](the-located-subset-is-a-biased-sample-of-the-defect.md)
+- [Restore by inverse diff, not overlay](restore-by-inverse-diff-not-overlay.md)
+- [Your own write moves the quarry](your-own-write-moves-the-quarry.md)
+- [A new net must be shot at its own quarry](a-new-net-must-be-shot-at-its-own-quarry.md)
+- [Two box names may be one file via symlink](two-box-names-may-be-one-file-via-symlink.md)
+- [Re-implementing an instrument inline drops a branch](inline-reimpl-drops-branch.md)
+- [A mask may apply to splitting but not to judgment](mask-splits-not-judges.md)
+- [A correction only cleans the window you found it in](a-correction-only-cleans-the-window-you-found-it-in.md)
+- [Assert the delta, not the invariant, after an append](assert-the-delta-not-the-invariant-after-an-append.md)
+- [A no-touch constraint covers stat, not just reads](a-no-touch-constraint-covers-stat-not-just-reads.md)
+- [Test location inferred from subject location](test-location-inferred-from-subject-location.md)
+- [An index found at a newline yields a prefix without one](an-index-found-at-a-newline-yields-a-prefix-without-one.md)
+- an-artifact-only-in-your-transcript-does-not-exist-for-peers
+- a-comparison-gate-passes-when-both-sides-share-a-fallback
+- respawn-can-duplicate-the-body-not-replace-it
+- a-fresh-inode-at-a-path-proves-the-path-was-vacant
+- same-commit-is-not-the-same-tree
+- an-applied-diff-paper-becomes-a-double-apply-hazard
+- a-rule-quoting-a-control-flag-corrupts-the-flag-readers
+- unmocking-one-layer-fails-if-the-next-layer-mocks-too
+- the-named-symptom-may-not-be-the-rendered-one
+- search-the-defect-vocabulary-before-designing-a-cure
+- same-mechanism-opposite-policy-invites-a-miscopy
+- a-component-that-unmounts-cannot-receive-the-late-answer
+- stat-default-does-not-dereference-a-symlink
+- a-ledger-anchored-by-file-and-line-dies-on-extraction
+- harness-noise-filter-swallows-the-signal-you-assert-on
+- discarding-a-writes-response-inverts-how-4xx-and-5xx-look
+- reverting-a-mutant-by-reverse-replace-fails-silently
+- duplicate-object-key-is-invisible-to-green-tests
+- a-count-assertion-passes-when-the-loop-never-advanced
+- a-defect-gated-on-an-always-supplied-argument-is-invisible-from-the-front-door
+- uncollapsing-two-states-must-not-delete-the-side-effect
+- a-mutant-restored-into-a-changed-shape-is-not-the-old-bug
+- a-collapsed-return-makes-assertions-coarse-not-wrong
+- splitting-a-collapsed-state-splits-only-one-channel
+- a-surviving-mutant-names-the-one-path-to-add
+- an-ordered-new-case-may-be-an-existing-case-rewritten
+- copying-a-neighbour-inherits-an-exemption-you-do-not-have
+- an-ordered-mechanism-may-be-forbidden-by-the-house
+- partition-regression-red-in-a-shared-tree
+- one-generation-counter-shared-by-two-sources-cancels-both
+- mutation-is-not-a-substitute-for-the-red-run
+- a-survivor-list-that-contradicts-a-run-you-already-saw
+- a-guard-beside-the-default-is-not-a-guard
+- a-word-net-catches-words-living-inside-words
+- a-fabricated-empty-collides-with-a-genuine-empty
+- a-mouth-can-live-in-a-field-name-not-a-setter-name
+- a-name-check-passes-when-the-name-is-decoration
+- curing-the-producer-does-not-cure-every-consumer
+- excluding-a-file-to-green-the-control-narrows-the-net
+- a-hand-written-summary-diverges-while-the-total-agrees
+- a-cure-name-can-presume-a-resource-that-does-not-exist
+- a-returned-field-nobody-reads-makes-the-cure-invisible
+- default-substitution-makes-the-lower-layers-unreachable
+- curing-a-flag-unmasks-the-lie-it-suppressed
+- blanket-read-marking-can-swallow-an-unprocessed-order
+- a-cure-that-blocks-one-road-reads-as-blocking-all
+- a-field-net-counts-the-same-words-quoted-in-a-body
+- same-path-same-numbering-different-content
+- a-number-from-a-tree-others-are-editing-belongs-to-nobody
+- the-same-reset-placement-is-a-requirement-in-one-seat-and-a-preference-in-another
+- a-blocked-control-may-be-blocked-for-another-reason
+- mocking-one-layer-frees-only-that-layer
+- your-own-other-fix-can-satisfy-the-receipt
+- curing-the-defect-destroys-the-open-questions-specimen
+- your-env-can-be-richer-and-poorer-than-the-declared-one
+- two-tests-that-mock-each-other-hide-the-seam
+- a-suppression-receipt-needs-three-grades
+- one-sample-cannot-establish-a-baseline
+- local-assignment-masks-the-substitution-rc
+- a-mutant-that-failed-to-apply-looks-like-a-surviving-one
+- a-mutants-green-has-two-faces
+- a-functions-set-e-overrides-the-callers-set-plus-e
+- lowering-the-threshold-reveals-the-family-it-hid
+- rc-after-a-pipe-belongs-to-the-last-stage
+- a-set-in-an-untaken-branch-does-not-move-the-band
+- a-zero-counting-instrument-dies-only-on-zero
+- a-key-that-is-read-can-still-print-nothing
+- nonzero-rc-with-zero-failures-names-a-second-channel
+- a-hardening-is-not-a-fix-lower-the-count
+- exit-code-red-while-every-test-passes
+- a-relayed-number-hardens-into-stone
+- a-handed-roster-can-void-your-own-valid-mechanism
+- a-handed-roster-cannot-refute-your-own-population
+- paying-the-cost-yourself-answers-the-request-better-than-a-ruling
+- a-count-predicate-is-silent-at-sample-size-one
+- caller-zero-and-vessel-guard-are-independent-supports
+- sample-size-one-hides-two-of-three-judgement-faces
+- check-whether-the-vessel-already-blocks-it-before-counting-callers
+- a-mechanism-can-be-shown-without-reproducing-the-failure
+- return-to-the-seats-your-instrument-dropped
+- matching-exit-codes-conceal-a-skipped-handler
+- two-parties-agreeing-may-share-one-borrowed-runtime
+- a-guard-that-never-fires-is-worse-than-none
+- a-number-you-hand-up-returns-as-an-order
+- an-unchanged-metric-across-versions-marks-a-blind-axis
+- asking-for-proof-an-instrument-cannot-measure
+- a-sandbox-that-shows-the-break-more-clearly-differs-from-the-vessel
+- partition-authorship-by-content-not-by-filename
+- a-classifiers-fallthrough-face-must-not-accuse
+- ask-what-the-guard-guards-not-whether-one-exists
+- population-is-the-eligible-set-not-the-observed-set
+- a-classifiers-default-branch-must-not-accuse
+- a-surviving-mutant-has-two-causes-gap-or-redundancy
+- a-guard-has-four-axes-not-one
+- a-config-that-checks-nothing-returns-instantly
+- the-unit-of-a-cure-is-the-mouth-not-the-file
+- a-fallthrough-wearing-a-verdict-hides-your-own-blindness
+- name-the-practice-you-already-follow
+- a-guard-that-covers-part-of-the-view-deepens-the-harm
+- a-label-vocabulary-without-an-unknown-slot-forces-false-verdicts
+- a-practice-not-carved-into-a-tool-is-lost-even-if-the-paper-survives
+- write-a-decoy-specimen-before-trusting-a-new-net
+- half-the-events-omit-the-address
+- the-worst-harm-wears-the-face-of-a-true-success
+- the-dead-sibling-may-be-the-newer-version
+- omitting-the-tenant-field-makes-a-request-uncheckable
+- an-exonerating-default-is-quieter-than-an-accusing-one
+- a-window-cutting-instrument-cuts-the-population-too
+- an-unknown-seat-can-exist-and-still-be-unreachable
+- proving-a-mechanism-is-not-proving-it-applies-here
+- third-party-does-not-have-to-mean-the-designated-auditor
+- a-repaired-net-needs-the-control-more-than-the-original
+- here-it-is-absent-is-not-anywhere-it-is-absent
+- a-type-declaration-does-not-strip-the-payload
+- stacking-reasons-adds-ways-to-fall-not-strength
+- measure-the-reach-of-an-interim-cure-before-ordering-it
+- house-idiom-forks-on-whether-the-read-can-distinguish
+- copy-a-conventions-precondition-with-the-convention
+- a-surviving-mutant-has-three-grades-not-two
+- claiming-novelty-costs-more-evidence-than-claiming-precedent
+- rules-that-live-only-in-messages-rotate-away
+- working-copies-lag-the-ref-and-both-are-copies
+- mtime-equals-ctime-does-not-say-who-wrote-it
+- name-both-populations-before-subtracting
+- canon-read-from-a-worktree-file-is-a-snapshot-read-the-ref
+- the-message-announcing-a-rule-is-where-you-break-it
+- a-format-must-pin-the-end-of-the-line-not-only-the-start
+- a-receipt-that-resolves-too-early-passes-while-broken
+- nine-non-falsifying-specimens-are-one-measurement
+- a-ref-name-can-live-in-two-files-at-once
+- one-name-two-stores-yields-a-plausible-stale-value
+- no-specimen-exists-describes-where-you-searched
+- a-rules-only-copy-may-live-in-the-recipients-mailbox
+- a-listed-search-scope-does-not-grade-the-zero
+- sound-reasoning-on-a-false-premise-has-nothing-to-fix
+- sweep-your-own-output-across-three-vessels
+- list-what-you-did-not-search-not-only-what-you-did
+- check-cells-against-their-source-not-for-emptiness
+- audit-notes-inside-the-corpus-mimic-the-counted-form
+- a-green-without-its-harness-version-fails-in-the-peers-tree
+- marking-read-is-an-irreversible-act-recount-first
+- a-prohibition-binds-a-vessel-not-only-a-verb
+- a-net-built-for-anothers-corpus-was-never-run-on-your-own
+- a-checker-who-writes-back-the-value-exposes-your-edit
+- prove-a-nets-completeness-by-planting-n-differences
+- reverting-the-fix-tells-you-how-many-tests-are-yours
+- evidence-coordinates-must-be-fetchable-by-the-recipient
+- a-peers-differing-count-may-sit-inside-your-own-band
+- writing-it-down-is-not-the-same-as-drawing-on-it
+- a-classifier-that-mixes-content-and-form-misjudges-your-own-work
+- a-nets-prose-in-your-own-paper-may-not-reproduce-your-own-number
+- the-mechanism-you-would-rebuild-may-name-its-own-remaining-work
+- litigating-permission-while-the-target-is-absent
+- adding-an-axis-must-not-raise-the-zero-count
+- a-dead-vessel-with-a-writer-and-a-reader-looks-alive
+- removing-the-whole-module-is-not-a-negative-control
+- dispatched-is-not-delivered-and-idle-seats-are-your-blind-spot
+- the-channel-everyone-uses-may-not-be-the-one-that-wakes
+- filling-an-idle-gap-in-haste-manufactures-a-duplicate
+- a-relative-path-has-no-unique-referent-across-roots
+- citing-a-name-often-is-not-having-read-it
+- reversed-test-trigger-comes-from-the-code-path
+- red-gate-needs-a-counterfactual-run
+- prove-independence-by-curing-one-defect
+- verify-the-pane-map-before-typing-into-someone-elses-seat
+- comparing-a-byte-count-to-a-character-count
+- a-small-anomaly-indicts-the-basis-set
+- a-summary-cell-is-not-the-suite-it-summarizes
+- a-mechanism-can-stop-at-more-than-one-gate
+- count-the-siblings-that-bypass-the-chokepoint
+- two-blobs-matching-is-not-two-trees-matching
+- two-instruments-disagree-on-a-missing-export
+- rollback-target-older-than-the-fix-it-demands
+- a-rollback-target-may-predate-the-fix-it-demands
+- a-classifiers-default-bucket-launders-the-unknown
+- a-symbolic-ref-in-the-instrument-with-a-sha-in-the-paper
+- reverting-the-product-partitions-your-suite
+- the-cure-for-a-type-error-blinds-the-type-checker
+- a-zero-control-may-be-the-controls-own-broken-path
+- overstating-your-own-instruments-flaw
+- a-wake-sums-per-seat-and-shared-backlogs
+- census-line-bounds-a-disappearance-tighter-than-event-lines
+- a-comments-named-actor-may-be-the-ruler-not-the-ruled
+- single-slot-state-read-after-the-event-returns-the-event
+- an-empty-extraction-looks-exactly-like-no-match
+- a-status-field-outlives-the-annotation-that-overrode-it
+- single-document-parser-drops-multidoc-vessels
+- an-unread-citation-is-more-fragile-than-a-read-one
+- a-zero-in-a-vessel-that-does-not-carry-your-channel
+- a-freeze-for-reproducibility-hides-the-answers-that-arrive-later
+- mtime-before-the-citation-exonerates-you
+- silence-upward-audit-the-wake-paths
+- recover-anothers-frozen-window-by-prefix-hashing
+- a-net-anchored-on-a-naming-convention-you-changed
+- a-correction-in-the-same-message-is-invisible-to-a-later-than-test
+- truncating-a-fingerprint-hides-the-forgery-you-found
+- detection-needing-a-counterpart-cannot-bound-the-set-without-one
+- a-published-sha-does-not-prove-the-file-is-in-the-revision
+- count-the-spill-then-measure-whether-it-reaches-your-conclusion
+- a-wake-count-scoped-to-the-machine-is-not-your-queue
+- run-evidence-vocabulary-differs-per-test-runner
+- silencing-stderr-turns-a-rejected-argument-into-a-clean-zero
+- find-here-is-bfs-not-gnu
+- a-new-definition-creates-invisible-backlog-in-old-work
+- naming-a-prior-paper-is-not-reissuing-it
+- a-recount-before-marking-widens-past-what-you-read
+- absence-of-failure-passes-a-zero-run
+- dirty-zero-does-not-mean-safe-to-fold
+- git-checkout-path-stages-the-revert
+- verify-the-branch-after-every-checkout
+- same-head-return-hides-a-branch-switch
+- git-status-is-blind-to-ignored-writes
+- unwritten-proof-is-your-command-list-not-a-measurement
+- survivor-and-inert-test-point-opposite-ways
+- powerless-to-act-is-not-blind-to-the-state
+- module-top-constant-freezes-at-import
+- append-then-validate-leaves-the-vessel-broken
+- an-ordered-act-does-not-feel-irreversible
+- a-halt-does-not-cancel-your-own-in-flight-orders
+- naming-one-cause-reads-as-a-verdict
+- an-earlier-assertion-shields-the-later-one
+- a-mismatched-split-anchor-returns-one-not-zero
+- symlinked-node-modules-writes-into-the-shared-tree
+- the-control-you-are-asked-to-add-may-already-be-there
+- ignored-and-tracked-decide-add-a-together
+- a-witnesss-polarity-is-bound-to-the-tree-that-supplies-its-premise
+- committing-elsewhere-leaves-a-stale-copy-in-the-peers-tree
+- a-handed-sha-is-stale-by-the-time-you-fire
+- place-the-mutation-after-the-early-return
+- a-simulated-cure-greens-one-form-not-the-fix
+- a-negative-only-assertion-passes-hardest-when-the-feature-is-gone
+- product-exists-does-not-mean-the-module-graph-resolves
+- a-failed-test-proves-only-up-to-its-failure-line
+- prove-vacuity-with-a-fall-then-restore-pair
+- a-pass-count-cannot-say-why-it-passed
+- an-older-copy-may-share-the-name-but-not-the-thing
+- a-rewrite-discipline-fires-where-the-test-fails-not-in-the-header
+- totals-delta-audits-the-narratives-completeness
+- slow-adjudicator-issues-rules-not-permissions
+- a-net-for-your-own-mental-act-needs-a-known-positive
+- a-nets-anchor-can-exclude-the-very-population-you-conclude-about
+- fire-the-same-mutant-at-your-own-fix
+- an-unmarked-reason-shields-the-item-from-your-auditor
+- a-cure-you-simulated-is-not-the-cure-that-shipped
+- two-fixes-can-be-in-direct-tension-measure-both-sides
+- a-correction-elsewhere-does-not-reach-the-first-readers
+- a-ban-sent-by-letter-does-not-reach-the-machine
+- a-dead-box-reroutes-you-to-a-smaller-vessel
+- when-your-scoped-measurement-becomes-a-fleet-order
+- a-window-closed-on-the-trigger-line-drops-its-effect-line
+- an-empty-class-caveat-wears-a-live-caveats-face
+- a-freeze-forbids-the-back-pointer-so-the-fix-travels-by-letter
+- a-bounded-zero-demotes-the-hypothesis-it-could-not-test
+- trimming-a-rejected-payload-changes-many-variables
+- the-specimen-you-name-may-be-the-safe-one
+- naming-a-gap-earns-credit-for-filling-it
+- over-credit-conceals-the-cause-of-your-own-error
+- a-streak-of-accepted-corrections-may-measure-the-acceptor
+- composing-the-report-discharges-the-urge-to-send-it
+- a-sha-on-a-growing-file-needs-a-length-anchor
+- a-lifted-prohibition-is-a-tuple-not-a-verb
+- a-detector-that-prints-the-phrase-it-counts
+- read-permissions-narrow-and-prohibitions-broad
+- rebuilding-state-from-the-mailbox-skips-your-own-ledger
+- a-fire-when-instruction-freezes-the-word-today
+- an-overdue-ruling-may-be-sitting-in-the-carrier
+- a-sibling-vessel-may-be-your-own-parent-commit
+- blame-is-not-a-conserved-quantity
+- a-peers-self-blame-is-unverified-too
+- a-precedent-may-cover-a-disjoint-set-from-the-case
+- unanswered-may-mean-fallen-out-of-the-readers-window
+- computing-and-quoting-a-value-in-one-call-authors-it
+- open-the-data-location-before-you-measure
+- a-shell-option-invisible-in-the-net-changes-the-number
+- my-upward-volume-is-a-function-of-my-own-downward-dispatch
+- the-only-live-route-may-be-the-one-you-were-barred-from
+- one-agent-may-own-two-inboxes-and-two-watchers
+- a-truncating-filter-returns-a-plausible-wrong-hit
+- two-agreeing-exit-codes-do-not-agree-on-a-cause
+- your-own-housekeeping-reshapes-the-vessel
+- diff-a-failing-run-against-a-passing-one-before-citing-clean-logs
+- a-correct-measurement-quoted-without-its-subject
+- counters-disagreeing-in-one-report-differ-in-unit-first
+- an-artifact-shows-what-is-never-what-was-ruled
+- a-false-zero-that-agrees-is-the-least-audited
+- indeterminate-belongs-to-the-vessel-not-the-question
+- your-memory-and-your-send-log-are-one-witness
+- a-diff-cannot-tell-a-drop-from-a-never-arrived
+- a-constant-channel-cannot-testify-to-silence
+- pre-registering-a-narrow-predicate-locks-in-a-wrong-answer
+- a-pre-registered-predicate-can-gild-a-blind-answer
+- verifying-without-opening-the-artifact-is-weaker-than-the-report
+- an-output-flag-may-replace-the-default-channel
+- show-the-channel-can-speak-before-using-its-silence
+- scope-of-the-claim-must-not-exceed-scope-of-the-instrument
+- drop-the-inference-if-the-conclusion-stands-without-it
+- many-zeros-can-be-one-missing-source
+- raw-variance-is-not-discriminating-power
+- a-dry-run-bypasses-the-gate-it-should-verify
+- relaying-a-ruling-with-your-own-therefore-attached
+- a-malformed-query-became-a-claimed-missing-capability
+- paused-suffix-meant-inactive-not-stopped
+- start-path-changes-the-zero-under-ignore-rules
+- a-recipe-handed-from-memory-not-from-the-run
+- three-dot-not-two-dot-for-a-branchs-own-changes
+- a-net-that-misses-a-known-member-must-be-discarded
+- inspect-your-tools-type-not-only-a-positive-control
+- a-sample-result-must-not-be-written-in-population-words
+- let-the-machine-do-the-arithmetic-with-asserts
+- a-canon-check-must-name-the-tree-and-branch
+- two-boxes-may-carry-different-senders-not-copies
+- globstar-off-makes-double-star-behave-as-single
+- reading-the-head-of-a-store-and-reporting-zero
+- a-count-question-hides-the-seat-that-never-complied
+- your-own-box-may-live-under-a-superseded-spelling
+- order-a-set-difference-by-time-before-reading-it
+- an-argument-of-the-wrong-identifier-kind-returns-a-silent-zero
+- eviction-takes-the-exceptions-first
+- chase-a-retracted-number-into-the-artifacts-it-reached
+- a-zero-count-returns-a-different-header-shape
+- exact-count-lifts-the-sample-cap-without-paging
+- an-exact-match-reader-hides-sibling-topic-families
+- print-strings-are-not-comments
+- a-rule-about-named-artifacts-is-applied-forward-not-back
+- a-suspiciously-clean-split-means-the-window-dropped-something
+- the-newest-letter-in-the-box-is-not-the-current-verdict
+- a-predicate-repeated-verbatim-needs-a-line-anchor-and-a-reachability-check
+- a-read-flag-may-be-stamped-by-a-sweeper-not-by-you
+- an-instruments-output-vessel-is-chosen-by-its-launcher
+- mechanisms-key-on-a-name-so-redundancy-lives-in-the-inode
+- counting-refusals-without-the-reason-merges-causes
+- a-null-control-separates-no-op-from-effective-pass
+- harm-has-a-time-width-not-just-a-presence
+- an-unreachable-survivor-is-not-a-test-gap
+- string-times-compare-lexicographically-not-chronologically
+- typing-a-field-validates-the-container-not-its-contents
+- try-finally-without-except-escapes-past-an-acquired-lock
+- a-mechanisms-own-seat-table-can-disagree-with-the-live-layout
+- a-mechanisms-state-file-says-which-row-fired
+- your-own-act-becomes-the-blind-spot-of-your-own-baseline
+- a-broken-control-cannot-attribute-the-failure-to-the-case
+- test-harness-silence-is-not-production-silence
+- a-name-to-seat-error-corrupts-the-input-as-well-as-the-output
+- a-number-without-its-vessel-invites-the-readers-default
+- a-state-card-keyed-by-name-blames-the-wrong-seat
+- an-artifacts-key-column-decides-who-the-victim-is
+- repairing-a-mechanism-schedules-its-own-evidence-for-deletion
+- a-frozen-copy-must-be-reachable-and-durable-or-it-is-not-frozen
+- an-unmarked-line-in-a-shared-store-attributes-itself
+- a-column-with-n-values-may-have-one-behaviour
+- a-defect-rejected-at-one-door-is-stamped-at-another
+- identical-outputs-may-mean-the-reader-never-fired
+- fleet-repo-is-a-partial-mirror-of-the-product
+- a-default-path-is-not-the-vessel-in-use
+- check-the-consumer-before-repairing-to-satisfy-a-parser
+- prefix-bisect-breaks-inside-multi-line-constructs
+- pinning-the-code-does-not-pin-its-configuration
+- two-seats-making-one-error-indicts-the-mechanism
+- line-anchor-on-a-wrapped-corpus-measures-wrapping
+- two-nets-agreeing-on-a-count-may-share-no-members
+- a-sha-published-mid-write-reads-as-tampering
+- an-order-you-issued-produces-the-change-you-then-call-a-discrepancy
+- an-unmarked-self-reference-resolves-to-the-busiest-seat-not-the-owner
+- the-self-reference-rule-fired-for-one-column-and-not-its-neighbour
+- a-uniform-correction-corrupts-the-members-already-correct
+- a-one-valued-key-table-confirms-but-cannot-divide
+- block-value-content-is-not-at-the-key
+- a-mark-added-later-cannot-speak-for-the-session-that-created-the-paper
+- a-reader-census-defaults-to-code-and-misses-prose
+- optional-field-is-env-only-and-the-positional-is-dropped
+- a-net-built-from-remembered-labels-undercounts
+- git-dir-vs-file-decides-independence
+- unpushed-count-measures-your-clones-ignorance-of-origin
+- a-typo-hunt-whose-target-is-a-legitimate-identifier
+- strip-the-label-before-you-count
+- the-measurer-leaves-the-population-two-ways
+- measure-the-refuge-before-you-name-it
+- check-ignore-default-hides-tracked-paths
+- a-section-header-with-zero-entries-is-a-deliberate-exclusion
+- a-verbose-flag-widens-the-population-not-just-the-columns
+- a-voided-count-flag-vanishes-with-rc-1-and-empty-stderr
+- a-valid-rule-resting-on-a-wrong-example-gets-discarded-whole
+- publishing-your-numbers-is-what-lets-a-subordinate-peel-your-self-blame
+- one-cause-two-faces-when-one-caller-catches
+- a-missing-instrument-may-not-be-the-binding-constraint
+- a-function-def-line-is-not-the-guard-line
+- a-runtime-assembled-string-has-no-literal-form
+- two-fds-on-one-vessel-make-lines-stop-being-events
+- an-inference-can-be-wrong-in-direction-measure-who-before-when
+- isolated-predicate-reading-says-nothing-about-reachability
+- an-unproven-negation-handed-down-halts-measurement
+- verb-filtered-route-net-cannot-see-a-writing-get
+- reachability-net-marks-a-shared-helper-as-universal
+- fall-out-victims-come-from-the-callers-roster
+- rc-into-command-substitution-is-discarded
+- a-stale-self-coordinate-manufactures-a-foreign-defect
+- a-runtime-table-name-is-found-through-the-literal-list-not-the-variable
+- a-zero-needs-its-instrument-proven-live-on-a-forged-specimen
+- widened-net-found-what-the-orphan-column-had-already-shown
+- ast-node-lineno-points-at-the-statement-not-the-string
+- line-anchored-import-net-reads-only-the-open-paren
+- a-hazard-in-your-gitignored-papers-has-not-been-reported
+- reconcile-the-published-number-against-the-instruments-output
+- a-pipe-eats-the-failure-token-per-vessel
+- upstream-plausible-value-disarms-a-fail-closed-guard
+- empty-is-fail-closed-partial-is-fail-open
+- set-flags-live-below-the-header-comment
+- a-forecast-issued-mid-count-is-an-extrapolation
+- the-error-yields-the-clean-zero
+- a-bare-line-number-resolves-against-the-rows-wrong-file
+- grade-a-logs-absence-by-three-conditions
+- default-arm-identical-to-a-real-branch-hides-misclassification
+- a-rule-you-hold-must-be-applied-to-each-new-instrument
+- a-zero-intersection-usually-means-a-form-mismatch
+- a-safe-direction-correction-disarms-your-check
+- measuring-your-own-paper-must-freeze-the-shape
+- a-cause-being-absent-is-not-the-defect-being-absent
+- an-order-banning-a-status-word-does-not-ban-the-state
+- counting-comments-as-unexecuted-inflates-a-blindness-claim
+- three-agreeing-numbers-may-agree-by-uniform-density
+- an-order-to-annotate-changes-the-instruments-population
+- frozen-copies-in-a-census-count-cured-defects-as-live
+- a-shorter-same-named-vessel-yields-a-confident-absent
+- a-quantity-that-is-an-intersection-given-a-simple-name
+- measuring-your-own-faults-scale-do-not-inflate-to-meet-the-invitation
+- a-readback-that-requires-a-write-is-not-a-read-path
+- both-branches-of-your-offered-choice-may-loosen-the-constraint
+- a-hardened-net-does-not-survive-being-restated
+- closing-a-blindspot-for-one-number-leaves-the-instruments-other-numbers
+- hypotheses-about-your-own-instrument-miss-more-than-about-others
+- checking-beyond-a-boundary-is-not-checking-the-boundary
+- my-own-rules-fail-to-fire-when-i-am-the-measured-party
+- structural-tokens-have-no-runtime-step
+- repeated-correction-in-one-direction-indicts-the-instrument
+- a-report-of-loss-may-arrive-while-the-thing-is-still-savable
+- a-net-drifts-toward-what-you-set-out-to-find
+- a-confessed-defect-is-a-map-not-an-apology
+- classify-a-zero-by-the-subject-of-its-verb
+- adjudicate-from-the-artifact-not-its-cover-letter
+- a-matching-count-can-name-the-wrong-members
+- a-conclusion-can-outlive-the-arithmetic-that-supports-it
+- equal-counts-can-be-structurally-guaranteed
+- a-dropped-qualifier-makes-the-same-number-count-something-else
+
+- a-broken-link-count-folds-three-grades
+- a-rule-has-a-writing-form-and-a-checking-form
+- evidence-sha-no-silent-edit-after-final
+- instrument-unsound-does-not-falsify-the-answer
+<!-- 綴り短縮 第一弾 十本 (2026-09-12 ashigaru-second-1)。旧→新 対応表＝queue/reports/ashigaru1_name_keyed_guard_census_20260912.md §二十五／控へ=/home/hakudokai/ashigaru1_slug10_20260912.bak。削除 0・題 不変・可逆。 -->
+<!--   an-existing-mechanism-may-already-encode-your-new-predicate -> mechanism-encodes-predicate -->
+<!--   mount-default-match-is-only-a-defect-if-the-vessel-is-stale -> mount-default-needs-stale -->
+<!--   citing-one-of-your-two-nets-manufactures-a-disagreement -> citing-one-of-two-nets -->
+<!--   a-perfect-score-measures-the-ground-not-the-instrument -> perfect-score-measures-ground -->
+<!--   inode-equality-is-not-identity-for-rewritten-vessels -> inode-equality-not-identity -->
+<!--   re-implementing-an-instrument-inline-drops-a-branch -> inline-reimpl-drops-branch -->
+<!--   a-mask-may-apply-to-splitting-but-not-to-judgment -> mask-splits-not-judges -->
+<!--   composing-a-value-in-the-command-that-computes-it -> composing-value-in-its-command -->
+<!--   one-mental-model-does-not-mean-one-code-path -> one-model-not-one-path -->
+<!--   narrowing-blamed-on-volume-is-your-nets-cost -> narrowing-blamed-on-volume -->
+- full-length-fingerprint-net-misses-a-truncated-copy
+- a-long-fingerprint-net-manufactures-shorter-family-hits
+- check-vessel-family-overlap-before-cross-checking
+- guard-short-circuit-decides-before-the-clause-under-test
+- a-symbol-collides-only-when-the-papers-are-gathered
+- a-freeze-check-inherits-the-shell-cwd-not-the-frozen-tree
+- adjudicating-collisions-cannot-outpace-concurrent-allocation
+- decoration-characters-break-a-token-boundary-net
+- hidden-by-grouping-must-be-filtered-by-subject-identity
+- a-fix-convention-hides-compliant-cases-from-the-detector
+- define-a-character-class-by-property-not-by-hex-range
+- [Recover a foreign unit by which total its parts sum to](recover-a-foreign-units-by-which-total-its-parts-sum-to.md) — 16+14=30 named his unit as 箇所, not a disagreement
+- [A checksum list of a live corpus fails for the verifier](a-checksum-list-of-a-live-corpus-fails-for-the-verifier.md) — "0 changed" is an instant; hand over your artifact's sha
+- positional-role-arg-forges-the-sender
+- liveness-probe-captures-its-own-command
+- i-did-not-change-it-versus-nobody-is-there
+- a-correction-can-overshoot-its-target
+- a-mouth-in-one-column-does-not-protect-the-next
+- two-numbers-in-one-section-may-lean-opposite-ways
+- a-clock-written-while-drafting-is-guaranteed-false
+- [A correction count measures the pair, not the corrector](a-correction-count-measures-the-pair-not-the-corrector.md) — a zero also means nobody was auditing; name who prompted each one
+- [A falsehood can live between two true statements](a-falsehood-can-live-between-two-true-statements.md) — a per-claim audit passes every line; read consecutive pairs and check what neither states
+- [A protection may live only in an uncommitted line](a-protection-may-live-only-in-an-uncommitted-line.md)
+- [Excluding can subtract from the count or drop from the sequence](excluding-can-subtract-from-the-count-or-drop-from-the-sequence.md) — 母が動くか動かぬか。分子は殆ど動かず★率が動く★（家老second）
+- [Take a net's literal from the vessel, not from prose](take-a-nets-literal-from-the-vessel-not-from-prose.md) — 便は全角＝と書き機構は半角=と書く。零は答の顔をする（足軽second三号）
+- [A band's width crosses units, its position does not](a-bands-width-crosses-units-its-position-does-not.md) — 幅は比べ得 位置は比べ得ぬ（足軽second一号）
+- [Curing one column leaves the same defect in its twin](curing-one-column-leaves-its-twin.md) — 一器二欄の同じ疵 片方の療治は他方に及ばず（足軽second一号）
+- [The sentence naming your fault can fall inside that fault's net](naming-your-fault-inside-its-own-net.md) — 己の非を名指す文が其の非の網に掛かる（足軽second一号）
+- [A bare-number net needs its boundary](a-bare-number-net-needs-its-boundary.md) — 裸の数を網に掛くる時は境を添へよ（足軽second一号）
+- [A fixed-point reporter says converged about what it cannot see](fixed-point-reporter-says-converged.md) — 見得ぬ数に就き器は恒に収束と申す（足軽second一号）
+- [The memory window loads at context start, not at file read](memory-window-loads-at-context-start.md) — 窓は文脈の初めに一度のみ載る（足軽second一号）
+- [A gate that holds your letter does not hold your reading](a-gate-holding-your-letter-does-not-hold-reading.md) — 門は發ちを止め 読みと印を止めず（足軽second一号）
+- [A peer's net catches your plain use of the word too](a-peers-net-catches-your-plain-use-too.md) — 網は素直な用法をも捉ふ（足軽second一号）
+- [A protection that only shrinks needs a period, not a point](a-protection-that-only-shrinks-needs-a-period.md) — 単調に痩する守りは点に非ず期間にて申せ（足軽second一号）
