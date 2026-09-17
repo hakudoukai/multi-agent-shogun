@@ -1,0 +1,5 @@
+# 48 丙四案を dash で走らせた stderr 逐語(esc)―― 47 の dash 欄が 60 字で切れて居た故
+丙1 %q: rc 0 / stdout OUT=99\x0A / stderr /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__丙1_pctq.sh: 25: printf: %q: invalid directive\x0A[watcher] ★閾 KM73_TH を比較器が扱へぬ(「」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+丙2 base64: rc 0 / stdout OUT=99\x0A / stderr [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQrimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCVIOaXouWumiAwIOOBuOWAkuOBmShmYWlsLWNsb3NlZCnimIU=」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+丙3 数のみ: rc 0 / stdout OUT=99\x0A / stderr [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 1 個・制御字 61 byte」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+丙4 刷らぬ: rc 0 / stdout OUT=99\x0A / stderr [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(fail-closed)★\x0A

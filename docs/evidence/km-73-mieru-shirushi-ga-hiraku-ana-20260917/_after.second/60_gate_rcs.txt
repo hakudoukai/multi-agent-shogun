@@ -1,0 +1,16 @@
+刻 2026-09-17T08:19:30+0900 / 門 sha16 e11f0d0142549086 / 照合器 sha16 a507c998c7bd6485 / 臺帳の項 78 / 臺帳 sha16 c79756c2c64b4055 / 紙 sha16 4fe58b6f4bc7012f / cwd /Users/momizimac/multi-agent-shogun / 基点 KM_GATE_MANIFEST_BASE=/Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917
+① 錠 08:19:30 / raw/ 配下 通常 file 77 → 0444 / dir 2(raw 含む)→ 0555 / raw の mode 0o555 / __pycache__ 0
+② 歩哨 _after/00_hosho.txt / mtime_ns 1789600770100896781
+③ selftest | 渡した 0 | rc 0 | 札 0 | 結語 ['★自己検め通 ―― 陽性対照は鳴り・負対照は鳴らず。器として使へる。★']
+③ main | 渡した 2 | rc 1 | 札 1 | 條① ('76', '2', '0', '0', '78') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 27706 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 d127596a96fb6092
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+③ all | 渡した 78 | rc 1 | 札 1 | 條① ('76', '2', '0', '0', '78') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 354073 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 a1ee1f6c7484579e
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+③ all_kiyoi | 渡した 78 | rc 1 | 札 1 | 條① ('76', '2', '0', '0', '78') | 基点 條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE) | 條⑤ byte和 354073 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 a1ee1f6c7484579e
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+③ nobase | 渡した 2 | rc 1 | 札 1 | 條① ('0', '0', '78', '0', '78') | 基点 條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★ | 條⑤ byte和 27706 | 結語 ['★出す前 門が落ちた。出すな。★'] | stderr sha16 21514b29081c6866
+    ★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+③' 宣した行末空白 fixture 0 本(.rej 0 / .rej.orig 0 / kegare.txt 0) ⇔ all で 條② に名指された 0 本 → ★一致★
+④ 臺帳自身(別器・門は argv[1] を條②③④⑤に掛けぬ) | bytes 9527 | 実体行 78 | 括つた行 0 | 末尾 2 byte 330a(0a 一つ = True) | CR 0 | 行末空白 0 行 | sha16 c79756c2c64b4055
+⑤ 禁域へ 0 byte | 前(00_start・無い物は 今 のみ)⇔今: scripts/checks/karo_mac_dasumae_gate.sh e11f0d0142549086→e11f0d0142549086 同 / scripts/checks/karo_mac_gate4.sh 95b027ea5e4f0fc5→95b027ea5e4f0fc5 同 / scripts/checks/karo_mac_manifest_verify.py a507c998c7bd6485→a507c998c7bd6485 同 / scripts/checks/karo_mac_manifest_append.py f5ea5e1e85d64936→f5ea5e1e85d64936 同 / scripts/inbox_watcher.sh cac867f8b94d5be4→cac867f8b94d5be4 同 / scripts/watchdogs/enter_restart_common_watchdog.sh b224557e96e54c8c→b224557e96e54c8c 同 / scripts/agent_health_check.sh 6493c1d72a1e3a39→6493c1d72a1e3a39 同 / scripts/checks/context_usage_warn.sh 897412b069d0a620→897412b069d0a620 同 / .gitignore −→3ccfcf1c05e82b58 (前 無) / .claude/settings.json −→b135e8f17b3be9d5 (前 無) / scripts/inbox_write.sh −→96a1e2355d5acf09 (前 無)
+⑥ 讀んだ二束(專任2 km-53b・km-52)へ 0 字 | 印 前(00_start)⇔今: km-53b e0ea54c71e34fa04(32)→e0ea54c71e34fa04(32) 同 / km-52 59b787bcf3fdfe51(87)→59b787bcf3fdfe51(87) 同

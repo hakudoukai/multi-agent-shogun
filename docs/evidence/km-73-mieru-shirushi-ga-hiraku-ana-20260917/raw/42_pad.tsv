@@ -1,0 +1,41 @@
+値	locale	器	札の値(esc)	値 bytes	値 字	出目(esc)	出目 bytes	| の byte 位置	| の字位置
+乙 1\n2 → 1␊2	C	bash printf %-12s|	1␊2	5	3	1␊2       |	13	12	10
+乙 1\n2 → 1␊2	C	/usr/bin/printf %-12s|	1␊2	5	3	1␊2       |	13	12	10
+乙 1\n2 → 1␊2	C	awk printf %-12s|	1␊2	5	3	1␊2       |	13	12	10
+乙 1\n2 → 1␊2	C	wc -m	1␊2	5	3	5\x0A	9	-	-
+乙 1\n2 → 1␊2	C	bash ${#v}	1␊2	5	3	5	1	-	-
+乙 1\n2 → 1␊2	en_US.UTF-8	bash printf %-12s|	1␊2	5	3	1␊2       |	13	12	10
+乙 1\n2 → 1␊2	en_US.UTF-8	/usr/bin/printf %-12s|	1␊2	5	3	1␊2       |	13	12	10
+乙 1\n2 → 1␊2	en_US.UTF-8	awk printf %-12s|	1␊2	5	3	1␊2       |	13	12	10
+乙 1\n2 → 1␊2	en_US.UTF-8	wc -m	1␊2	5	3	3\x0A	9	-	-
+乙 1\n2 → 1␊2	en_US.UTF-8	bash ${#v}	1␊2	5	3	3	1	-	-
+対照 1x2(ASCII 同字数)	C	bash printf %-12s|	1x2	3	3	1x2         |	13	12	12
+対照 1x2(ASCII 同字数)	C	/usr/bin/printf %-12s|	1x2	3	3	1x2         |	13	12	12
+対照 1x2(ASCII 同字数)	C	awk printf %-12s|	1x2	3	3	1x2         |	13	12	12
+対照 1x2(ASCII 同字数)	C	wc -m	1x2	3	3	3\x0A	9	-	-
+対照 1x2(ASCII 同字数)	C	bash ${#v}	1x2	3	3	3	1	-	-
+対照 1x2(ASCII 同字数)	en_US.UTF-8	bash printf %-12s|	1x2	3	3	1x2         |	13	12	12
+対照 1x2(ASCII 同字数)	en_US.UTF-8	/usr/bin/printf %-12s|	1x2	3	3	1x2         |	13	12	12
+対照 1x2(ASCII 同字数)	en_US.UTF-8	awk printf %-12s|	1x2	3	3	1x2         |	13	12	12
+対照 1x2(ASCII 同字数)	en_US.UTF-8	wc -m	1x2	3	3	3\x0A	9	-	-
+対照 1x2(ASCII 同字数)	en_US.UTF-8	bash ${#v}	1x2	3	3	3	1	-	-
+乙 三印 1\n\r\t2	C	bash printf %-12s|	1␊␍␉2	11	5	1␊␍␉2 |	13	12	6
+乙 三印 1\n\r\t2	C	/usr/bin/printf %-12s|	1␊␍␉2	11	5	1␊␍␉2 |	13	12	6
+乙 三印 1\n\r\t2	C	awk printf %-12s|	1␊␍␉2	11	5	1␊␍␉2 |	13	12	6
+乙 三印 1\n\r\t2	C	wc -m	1␊␍␉2	11	5	11\x0A	9	-	-
+乙 三印 1\n\r\t2	C	bash ${#v}	1␊␍␉2	11	5	11	2	-	-
+乙 三印 1\n\r\t2	en_US.UTF-8	bash printf %-12s|	1␊␍␉2	11	5	1␊␍␉2 |	13	12	6
+乙 三印 1\n\r\t2	en_US.UTF-8	/usr/bin/printf %-12s|	1␊␍␉2	11	5	1␊␍␉2 |	13	12	6
+乙 三印 1\n\r\t2	en_US.UTF-8	awk printf %-12s|	1␊␍␉2	11	5	1␊␍␉2 |	13	12	6
+乙 三印 1\n\r\t2	en_US.UTF-8	wc -m	1␊␍␉2	11	5	5\x0A	9	-	-
+乙 三印 1\n\r\t2	en_US.UTF-8	bash ${#v}	1␊␍␉2	11	5	5	1	-	-
+対照 1xyz2	C	bash printf %-12s|	1xyz2	5	5	1xyz2       |	13	12	12
+対照 1xyz2	C	/usr/bin/printf %-12s|	1xyz2	5	5	1xyz2       |	13	12	12
+対照 1xyz2	C	awk printf %-12s|	1xyz2	5	5	1xyz2       |	13	12	12
+対照 1xyz2	C	wc -m	1xyz2	5	5	5\x0A	9	-	-
+対照 1xyz2	C	bash ${#v}	1xyz2	5	5	5	1	-	-
+対照 1xyz2	en_US.UTF-8	bash printf %-12s|	1xyz2	5	5	1xyz2       |	13	12	12
+対照 1xyz2	en_US.UTF-8	/usr/bin/printf %-12s|	1xyz2	5	5	1xyz2       |	13	12	12
+対照 1xyz2	en_US.UTF-8	awk printf %-12s|	1xyz2	5	5	1xyz2       |	13	12	12
+対照 1xyz2	en_US.UTF-8	wc -m	1xyz2	5	5	5\x0A	9	-	-
+対照 1xyz2	en_US.UTF-8	bash ${#v}	1xyz2	5	5	5	1	-	-

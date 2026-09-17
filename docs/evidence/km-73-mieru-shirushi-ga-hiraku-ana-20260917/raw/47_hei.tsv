@@ -1,0 +1,121 @@
+生器	案	形	LF	py.splitlines	wc-l	awk-NR	UTF-8	可逆	札の値 bytes	札の値 字	陰性が変るか	dash	OUT	札の値(esc)
+scripts/inbox_watcher.sh	丙1 %q	LF \n	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\n\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/inbox_watcher.sh	丙1 %q	CR \r	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\r\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/inbox_watcher.sh	丙1 %q	TAB \t	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\t\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/inbox_watcher.sh	丙1 %q	VT \v	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\v\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/inbox_watcher.sh	丙1 %q	FF \f	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\f\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/inbox_watcher.sh	丙1 %q	BS \b	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\b\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/inbox_watcher.sh	丙1 %q	ESC	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\E\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/inbox_watcher.sh	丙1 %q	U+2028 LS	1	1	1	1	正	戻る	286	286	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\342\\200\\250\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\2
+scripts/inbox_watcher.sh	丙1 %q	U+2029 PS	1	1	1	1	正	戻る	286	286	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\342\\200\\251\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\2
+scripts/inbox_watcher.sh	丙1 %q	U+0085 NEL	1	1	1	1	正	戻る	282	282	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\302\\205\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\2
+scripts/inbox_watcher.sh	丙1 %q	U+00A0 NBSP	1	1	1	1	正	戻る	282	282	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\302\\240\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\2
+scripts/inbox_watcher.sh	丙1 %q	U+3000 全角空白	1	1	1	1	正	戻る	286	286	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\343\\200\\200\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\2
+scripts/inbox_watcher.sh	丙1 %q	陰性 abc	1	1	1	1	正	戻る	3	3	変らず	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	abc
+scripts/inbox_watcher.sh	丙1 %q	陰性 全角０	1	1	1	1	正	戻る	15	15	★変る★	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'\\357\\274\\220'
+scripts/inbox_watcher.sh	丙1 %q	元から␊ 1␊2	1	1	1	1	正	戻る	17	17	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\342\\220\\2122'
+scripts/inbox_watcher.sh	丙2 base64	LF \n	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQrimIXplr4gS003M19USCDjg	99	b64:MQrimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/inbox_watcher.sh	丙2 base64	CR \r	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQ3imIXplr4gS003M19USCDjg	99	b64:MQ3imIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/inbox_watcher.sh	丙2 base64	TAB \t	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQnimIXplr4gS003M19USCDjg	99	b64:MQnimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/inbox_watcher.sh	丙2 base64	VT \v	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQvimIXplr4gS003M19USCDjg	99	b64:MQvimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/inbox_watcher.sh	丙2 base64	FF \f	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQzimIXplr4gS003M19USCDjg	99	b64:MQzimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/inbox_watcher.sh	丙2 base64	BS \b	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQjimIXplr4gS003M19USCDjg	99	b64:MQjimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/inbox_watcher.sh	丙2 base64	ESC	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MRvimIXplr4gS003M19USCDjg	99	b64:MRvimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/inbox_watcher.sh	丙2 base64	U+2028 LS	1	1	1	1	正	戻る	132	132	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeKAqOKYhemWviBLTTczX1RII	99	b64:MeKAqOKYhemWviBLTTczX1RIIOOCkuavlOi8g+WZqOOBjOaJseOBuOOBrCjjgIww44CNKSDigJXi
+scripts/inbox_watcher.sh	丙2 base64	U+2029 PS	1	1	1	1	正	戻る	132	132	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeKAqeKYhemWviBLTTczX1RII	99	b64:MeKAqeKYhemWviBLTTczX1RIIOOCkuavlOi8g+WZqOOBjOaJseOBuOOBrCjjgIww44CNKSDigJXi
+scripts/inbox_watcher.sh	丙2 base64	U+0085 NEL	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:McKF4piF6Za+IEtNNzNfVEgg4	99	b64:McKF4piF6Za+IEtNNzNfVEgg44KS5q+U6LyD5Zmo44GM5omx44G444GsKOOAjDDjgI0pIOKAleKA
+scripts/inbox_watcher.sh	丙2 base64	U+00A0 NBSP	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:McKg4piF6Za+IEtNNzNfVEgg4	99	b64:McKg4piF6Za+IEtNNzNfVEgg44KS5q+U6LyD5Zmo44GM5omx44G444GsKOOAjDDjgI0pIOKAleKA
+scripts/inbox_watcher.sh	丙2 base64	U+3000 全角空白	1	1	1	1	正	戻る	132	132	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeOAgOKYhemWviBLTTczX1RII	99	b64:MeOAgOKYhemWviBLTTczX1RIIOOCkuavlOi8g+WZqOOBjOaJseOBuOOBrCjjgIww44CNKSDigJXi
+scripts/inbox_watcher.sh	丙2 base64	陰性 abc	1	1	1	1	正	戻る	8	8	★変る★	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:YWJj」) ―― 既定 99 へ倒す(fail-	99	b64:YWJj
+scripts/inbox_watcher.sh	丙2 base64	陰性 全角０	1	1	1	1	正	戻る	8	8	★変る★	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:77yQ」) ―― 既定 99 へ倒す(fail-	99	b64:77yQ
+scripts/inbox_watcher.sh	丙2 base64	元から␊ 1␊2	1	1	1	1	正	戻る	12	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeKQijI=」) ―― 既定 99 へ倒す(f	99	b64:MeKQijI=
+scripts/inbox_watcher.sh	丙3 数のみ	LF \n	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 1 個・制御字 61 byte」) ―― 	99	92 字・改行 1 個・制御字 61 byte
+scripts/inbox_watcher.sh	丙3 数のみ	CR \r	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」) ―― 	99	92 字・改行 0 個・制御字 61 byte
+scripts/inbox_watcher.sh	丙3 数のみ	TAB \t	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」) ―― 	99	92 字・改行 0 個・制御字 61 byte
+scripts/inbox_watcher.sh	丙3 数のみ	VT \v	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」) ―― 	99	92 字・改行 0 個・制御字 61 byte
+scripts/inbox_watcher.sh	丙3 数のみ	FF \f	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」) ―― 	99	92 字・改行 0 個・制御字 61 byte
+scripts/inbox_watcher.sh	丙3 数のみ	BS \b	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」) ―― 	99	92 字・改行 0 個・制御字 61 byte
+scripts/inbox_watcher.sh	丙3 数のみ	ESC	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」) ―― 	99	92 字・改行 0 個・制御字 61 byte
+scripts/inbox_watcher.sh	丙3 数のみ	U+2028 LS	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「94 字・改行 0 個・制御字 63 byte」) ―― 	99	94 字・改行 0 個・制御字 63 byte
+scripts/inbox_watcher.sh	丙3 数のみ	U+2029 PS	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「94 字・改行 0 個・制御字 63 byte」) ―― 	99	94 字・改行 0 個・制御字 63 byte
+scripts/inbox_watcher.sh	丙3 数のみ	U+0085 NEL	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「93 字・改行 0 個・制御字 62 byte」) ―― 	99	93 字・改行 0 個・制御字 62 byte
+scripts/inbox_watcher.sh	丙3 数のみ	U+00A0 NBSP	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「93 字・改行 0 個・制御字 62 byte」) ―― 	99	93 字・改行 0 個・制御字 62 byte
+scripts/inbox_watcher.sh	丙3 数のみ	U+3000 全角空白	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「94 字・改行 0 個・制御字 63 byte」) ―― 	99	94 字・改行 0 個・制御字 63 byte
+scripts/inbox_watcher.sh	丙3 数のみ	陰性 abc	1	1	1	1	正	不可逆(設計)	39	21	★変る★	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「3 字・改行 0 個・制御字 0 byte」) ―― 既定	99	3 字・改行 0 個・制御字 0 byte
+scripts/inbox_watcher.sh	丙3 数のみ	陰性 全角０	1	1	1	1	正	不可逆(設計)	39	21	★変る★	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「3 字・改行 0 個・制御字 3 byte」) ―― 既定	99	3 字・改行 0 個・制御字 3 byte
+scripts/inbox_watcher.sh	丙3 数のみ	元から␊ 1␊2	1	1	1	1	正	不可逆(設計)	39	21	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「5 字・改行 0 個・制御字 3 byte」) ―― 既定	99	5 字・改行 0 個・制御字 3 byte
+scripts/inbox_watcher.sh	丙4 刷らぬ	LF \n	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・92 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	CR \r	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・92 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	TAB \t	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・92 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	VT \v	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・92 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	FF \f	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・92 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	BS \b	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・92 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	ESC	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・92 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	U+2028 LS	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・94 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・94 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	U+2029 PS	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・94 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・94 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	U+0085 NEL	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・93 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・93 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	U+00A0 NBSP	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・93 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・93 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	U+3000 全角空白	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・94 字)」) ―― 既定 99 へ倒す(f	99	(値は刷らぬ・94 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	陰性 abc	1	1	1	1	正	不可逆(設計)	25	11	★変る★	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・3 字)」) ―― 既定 99 へ倒す(fa	99	(値は刷らぬ・3 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	陰性 全角０	1	1	1	1	正	不可逆(設計)	25	11	★変る★	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・3 字)」) ―― 既定 99 へ倒す(fa	99	(値は刷らぬ・3 字)
+scripts/inbox_watcher.sh	丙4 刷らぬ	元から␊ 1␊2	1	1	1	1	正	不可逆(設計)	25	11	-	dash rc 0 行 1 [watcher] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・5 字)」) ―― 既定 99 へ倒す(fa	99	(値は刷らぬ・5 字)
+scripts/checks/context_usage_warn.sh	丙1 %q	LF \n	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\n\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/checks/context_usage_warn.sh	丙1 %q	CR \r	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\r\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/checks/context_usage_warn.sh	丙1 %q	TAB \t	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\t\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/checks/context_usage_warn.sh	丙1 %q	VT \v	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\v\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/checks/context_usage_warn.sh	丙1 %q	FF \f	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\f\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/checks/context_usage_warn.sh	丙1 %q	BS \b	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\b\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/checks/context_usage_warn.sh	丙1 %q	ESC	1	1	1	1	正	戻る	276	276	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\E\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\224\\350
+scripts/checks/context_usage_warn.sh	丙1 %q	U+2028 LS	1	1	1	1	正	戻る	286	286	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\342\\200\\250\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\2
+scripts/checks/context_usage_warn.sh	丙1 %q	U+2029 PS	1	1	1	1	正	戻る	286	286	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\342\\200\\251\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\2
+scripts/checks/context_usage_warn.sh	丙1 %q	U+0085 NEL	1	1	1	1	正	戻る	282	282	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\302\\205\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\2
+scripts/checks/context_usage_warn.sh	丙1 %q	U+00A0 NBSP	1	1	1	1	正	戻る	282	282	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\302\\240\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\257\\2
+scripts/checks/context_usage_warn.sh	丙1 %q	U+3000 全角空白	1	1	1	1	正	戻る	286	286	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\343\\200\\200\\342\\230\\205\\351\\226\\276 KM73_TH \\343\\202\\222\\346\\2
+scripts/checks/context_usage_warn.sh	丙1 %q	陰性 abc	1	1	1	1	正	戻る	3	3	変らず	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	abc
+scripts/checks/context_usage_warn.sh	丙1 %q	陰性 全角０	1	1	1	1	正	戻る	15	15	★変る★	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'\\357\\274\\220'
+scripts/checks/context_usage_warn.sh	丙1 %q	元から␊ 1␊2	1	1	1	1	正	戻る	17	17	-	dash rc 0 行 2 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mier	99	$'1\\342\\220\\2122'
+scripts/checks/context_usage_warn.sh	丙2 base64	LF \n	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQrimIXplr4gS003M19U	99	b64:MQrimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/checks/context_usage_warn.sh	丙2 base64	CR \r	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQ3imIXplr4gS003M19U	99	b64:MQ3imIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/checks/context_usage_warn.sh	丙2 base64	TAB \t	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQnimIXplr4gS003M19U	99	b64:MQnimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/checks/context_usage_warn.sh	丙2 base64	VT \v	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQvimIXplr4gS003M19U	99	b64:MQvimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/checks/context_usage_warn.sh	丙2 base64	FF \f	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQzimIXplr4gS003M19U	99	b64:MQzimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/checks/context_usage_warn.sh	丙2 base64	BS \b	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MQjimIXplr4gS003M19U	99	b64:MQjimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/checks/context_usage_warn.sh	丙2 base64	ESC	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MRvimIXplr4gS003M19U	99	b64:MRvimIXplr4gS003M19USCDjgpLmr5TovIPlmajjgYzmibHjgbjjgawo44CMMOOAjSkg4oCV4oCV
+scripts/checks/context_usage_warn.sh	丙2 base64	U+2028 LS	1	1	1	1	正	戻る	132	132	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeKAqOKYhemWviBLTTcz	99	b64:MeKAqOKYhemWviBLTTczX1RIIOOCkuavlOi8g+WZqOOBjOaJseOBuOOBrCjjgIww44CNKSDigJXi
+scripts/checks/context_usage_warn.sh	丙2 base64	U+2029 PS	1	1	1	1	正	戻る	132	132	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeKAqeKYhemWviBLTTcz	99	b64:MeKAqeKYhemWviBLTTczX1RIIOOCkuavlOi8g+WZqOOBjOaJseOBuOOBrCjjgIww44CNKSDigJXi
+scripts/checks/context_usage_warn.sh	丙2 base64	U+0085 NEL	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:McKF4piF6Za+IEtNNzNf	99	b64:McKF4piF6Za+IEtNNzNfVEgg44KS5q+U6LyD5Zmo44GM5omx44G444GsKOOAjDDjgI0pIOKAleKA
+scripts/checks/context_usage_warn.sh	丙2 base64	U+00A0 NBSP	1	1	1	1	正	戻る	128	128	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:McKg4piF6Za+IEtNNzNf	99	b64:McKg4piF6Za+IEtNNzNfVEgg44KS5q+U6LyD5Zmo44GM5omx44G444GsKOOAjDDjgI0pIOKAleKA
+scripts/checks/context_usage_warn.sh	丙2 base64	U+3000 全角空白	1	1	1	1	正	戻る	132	132	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeOAgOKYhemWviBLTTcz	99	b64:MeOAgOKYhemWviBLTTczX1RIIOOCkuavlOi8g+WZqOOBjOaJseOBuOOBrCjjgIww44CNKSDigJXi
+scripts/checks/context_usage_warn.sh	丙2 base64	陰性 abc	1	1	1	1	正	戻る	8	8	★変る★	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:YWJj」) ―― 既定 99 へ倒す(	99	b64:YWJj
+scripts/checks/context_usage_warn.sh	丙2 base64	陰性 全角０	1	1	1	1	正	戻る	8	8	★変る★	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:77yQ」) ―― 既定 99 へ倒す(	99	b64:77yQ
+scripts/checks/context_usage_warn.sh	丙2 base64	元から␊ 1␊2	1	1	1	1	正	戻る	12	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「b64:MeKQijI=」) ―― 既定 99 	99	b64:MeKQijI=
+scripts/checks/context_usage_warn.sh	丙3 数のみ	LF \n	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 1 個・制御字 61 byte」	99	92 字・改行 1 個・制御字 61 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	CR \r	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」	99	92 字・改行 0 個・制御字 61 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	TAB \t	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」	99	92 字・改行 0 個・制御字 61 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	VT \v	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」	99	92 字・改行 0 個・制御字 61 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	FF \f	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」	99	92 字・改行 0 個・制御字 61 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	BS \b	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」	99	92 字・改行 0 個・制御字 61 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	ESC	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「92 字・改行 0 個・制御字 61 byte」	99	92 字・改行 0 個・制御字 61 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	U+2028 LS	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「94 字・改行 0 個・制御字 63 byte」	99	94 字・改行 0 個・制御字 63 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	U+2029 PS	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「94 字・改行 0 個・制御字 63 byte」	99	94 字・改行 0 個・制御字 63 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	U+0085 NEL	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「93 字・改行 0 個・制御字 62 byte」	99	93 字・改行 0 個・制御字 62 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	U+00A0 NBSP	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「93 字・改行 0 個・制御字 62 byte」	99	93 字・改行 0 個・制御字 62 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	U+3000 全角空白	1	1	1	1	正	不可逆(設計)	41	23	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「94 字・改行 0 個・制御字 63 byte」	99	94 字・改行 0 個・制御字 63 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	陰性 abc	1	1	1	1	正	不可逆(設計)	39	21	★変る★	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「3 字・改行 0 個・制御字 0 byte」) 	99	3 字・改行 0 個・制御字 0 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	陰性 全角０	1	1	1	1	正	不可逆(設計)	39	21	★変る★	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「3 字・改行 0 個・制御字 3 byte」) 	99	3 字・改行 0 個・制御字 3 byte
+scripts/checks/context_usage_warn.sh	丙3 数のみ	元から␊ 1␊2	1	1	1	1	正	不可逆(設計)	39	21	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「5 字・改行 0 個・制御字 3 byte」) 	99	5 字・改行 0 個・制御字 3 byte
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	LF \n	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 	99	(値は刷らぬ・92 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	CR \r	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 	99	(値は刷らぬ・92 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	TAB \t	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 	99	(値は刷らぬ・92 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	VT \v	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 	99	(値は刷らぬ・92 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	FF \f	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 	99	(値は刷らぬ・92 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	BS \b	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 	99	(値は刷らぬ・92 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	ESC	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・92 字)」) ―― 既定 99 	99	(値は刷らぬ・92 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	U+2028 LS	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・94 字)」) ―― 既定 99 	99	(値は刷らぬ・94 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	U+2029 PS	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・94 字)」) ―― 既定 99 	99	(値は刷らぬ・94 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	U+0085 NEL	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・93 字)」) ―― 既定 99 	99	(値は刷らぬ・93 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	U+00A0 NBSP	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・93 字)」) ―― 既定 99 	99	(値は刷らぬ・93 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	U+3000 全角空白	1	1	1	1	正	不可逆(設計)	26	12	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・94 字)」) ―― 既定 99 	99	(値は刷らぬ・94 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	陰性 abc	1	1	1	1	正	不可逆(設計)	25	11	★変る★	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・3 字)」) ―― 既定 99 へ	99	(値は刷らぬ・3 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	陰性 全角０	1	1	1	1	正	不可逆(設計)	25	11	★変る★	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・3 字)」) ―― 既定 99 へ	99	(値は刷らぬ・3 字)
+scripts/checks/context_usage_warn.sh	丙4 刷らぬ	元から␊ 1␊2	1	1	1	1	正	不可逆(設計)	25	11	-	dash rc 0 行 1 [context_warn] ★閾 KM73_TH を比較器が扱へぬ(「(値は刷らぬ・5 字)」) ―― 既定 99 へ	99	(値は刷らぬ・5 字)

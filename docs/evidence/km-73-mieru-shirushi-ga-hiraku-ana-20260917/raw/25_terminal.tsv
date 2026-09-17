@@ -1,0 +1,16 @@
+案	形	LF讀手の行	★画面の行(tmux capture-pane・非空)★	画面(esc・150字迄)
+現行	陽性対照 LF \n	2	2	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0
+乙	陰性対照 abc	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A
+乙	LF \n	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x
+乙	CR \r	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␍★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x
+乙	TAB \t	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␉★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x
+乙	VT \v	1	2	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A                                          ★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-c
+乙	FF \f	1	2	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A                                          ★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-c
+乙	BS \b	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A
+乙	ESC	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1M73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0
+乙	ESC[2K	1	1	                                          ★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\
+乙	U+2028 LS	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\u2028★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\
+乙	U+2029 PS	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\u2029★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\
+乙	U+0085 NEL	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x85★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0
+乙	U+00A0 NBSP	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\u00A0★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\
+乙	U+3000 全角空白	1	1	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\u3000★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A\x0A\x0A\x0A\x0A\x0A\x0A\x0A\

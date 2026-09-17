@@ -1,0 +1,57 @@
+# 30 器が bash か / 刻 2026-09-17T08:06:57+0900
+shell の版: /bin/bash(/bin/bash) 3.2.57(1)-release / /bin/sh(/bin/sh) 3.2.57(1)-release / /bin/dash(/bin/dash) (版の変数無し=dash か) / /bin/zsh(/bin/zsh) 5.9 / env bash(/bin/bash) 3.2.57(1)-release / /var/select/sh → /bin/bash
+## ⑴ shebang と bash 固有の語の既存使用数(生器・讀むのみ)
+  scripts/inbox_watcher.sh	#!/usr/bin/env bash	0	1	39	78	0	1
+  scripts/watchdogs/enter_restart_common_watchdog.sh	#!/usr/bin/env bash	0	2	18	2	0	0
+  scripts/agent_health_check.sh	#!/usr/bin/env bash	0	0	0	9	0	1
+  scripts/checks/context_usage_warn.sh	#!/usr/bin/env bash	0	0	0	0	0	0
+## ⑵ 呼び手(scripts/ .claude/ config/ ~/Library/LaunchAgents の grep・讀むのみ)―― shebang を跨いで sh で起動する呼び手が在るか
+  呼び手の行 290 本: agent_health_check.sh←直 exec:25 / context_usage_warn.sh←bash :8 / context_usage_warn.sh←直 exec:1 / enter_restart_common_watchdog.sh←bash :1 / enter_restart_common_watchdog.sh←直 exec:12 / inbox_watcher.sh←bash :29 / inbox_watcher.sh←直 exec:213 / inbox_watcher.sh←言及:1 ―― ★「sh <器>」の形 = 0 本★
+## ⑶ 乙の台(watcher)を五つの shell で実走(値 = 1\n偽札)―― ${v//$'\n'/␊} が其の shell に在るか
+  scripts/inbox_watcher.sh	乙	/bin/bash	0	1	有	無	99
+  scripts/inbox_watcher.sh	乙	/bin/sh	0	1	有	無	99
+  scripts/inbox_watcher.sh	乙	/bin/dash	2	1	無	無	(無)
+  scripts/inbox_watcher.sh	乙	/bin/zsh	0	1	有	無	99
+  scripts/inbox_watcher.sh	乙	env bash	0	1	有	無	99
+  scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/bash	0	1	有	無	99
+  scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/sh	0	1	有	無	99
+  scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/dash	2	1	無	無	(無)
+  scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/zsh	0	1	有	無	99
+  scripts/watchdogs/enter_restart_common_watchdog.sh	乙	env bash	0	1	有	無	99
+  scripts/agent_health_check.sh	乙	/bin/bash	0	1	有	無	99
+  scripts/agent_health_check.sh	乙	/bin/sh	0	1	有	無	99
+  scripts/agent_health_check.sh	乙	/bin/dash	2	1	無	無	(無)
+  scripts/agent_health_check.sh	乙	/bin/zsh	0	1	有	無	99
+  scripts/agent_health_check.sh	乙	env bash	0	1	有	無	99
+  scripts/checks/context_usage_warn.sh	乙	/bin/bash	0	1	有	無	99
+  scripts/checks/context_usage_warn.sh	乙	/bin/sh	0	1	有	無	99
+  scripts/checks/context_usage_warn.sh	乙	/bin/dash	2	1	無	無	(無)
+  scripts/checks/context_usage_warn.sh	乙	/bin/zsh	0	1	有	無	99
+  scripts/checks/context_usage_warn.sh	乙	env bash	0	1	有	無	99
+## ⑷ 小さな検め: 各 shell で v=$'a\nb'; printf %s "${v//$'\n'/␊}"
+  /bin/bash: rc 0 stdout 'a␊b' stderr ''
+  /bin/sh: rc 0 stdout 'a␊b' stderr ''
+  /bin/dash: rc 2 stdout '' stderr '/bin/dash: 1: Bad substitution\\x0A'
+  /bin/zsh: rc 0 stdout 'a␊b' stderr ''
+  env bash: rc 0 stdout 'a␊b' stderr ''
+## ⑸ 生器四本を各 shell の -n(構文のみ・起動せず)に掛ける ―― sh で走らせ得る器か
+  scripts/inbox_watcher.sh	/bin/bash	0
+  scripts/inbox_watcher.sh	/bin/sh	2	/Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh: line 863: syntax error near unexpected token `<'\x0A/Users
+  scripts/inbox_watcher.sh	/bin/dash	2	/Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh: 458: Syntax error: word unexpected (expecting "}")\x0A
+  scripts/inbox_watcher.sh	/bin/zsh	1	/Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh:458: parse error near `200'\x0A
+  scripts/inbox_watcher.sh	env bash	0
+  scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/bash	0
+  scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/sh	0
+  scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/dash	0
+  scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/zsh	0
+  scripts/watchdogs/enter_restart_common_watchdog.sh	env bash	0
+  scripts/agent_health_check.sh	/bin/bash	0
+  scripts/agent_health_check.sh	/bin/sh	2	/Users/momizimac/multi-agent-shogun/scripts/agent_health_check.sh: line 398: syntax error near unexpected token `<'\x0A/
+  scripts/agent_health_check.sh	/bin/dash	2	/Users/momizimac/multi-agent-shogun/scripts/agent_health_check.sh: 124: Syntax error: "(" unexpected\x0A
+  scripts/agent_health_check.sh	/bin/zsh	0
+  scripts/agent_health_check.sh	env bash	0
+  scripts/checks/context_usage_warn.sh	/bin/bash	0
+  scripts/checks/context_usage_warn.sh	/bin/sh	0
+  scripts/checks/context_usage_warn.sh	/bin/dash	0
+  scripts/checks/context_usage_warn.sh	/bin/zsh	0
+  scripts/checks/context_usage_warn.sh	env bash	0

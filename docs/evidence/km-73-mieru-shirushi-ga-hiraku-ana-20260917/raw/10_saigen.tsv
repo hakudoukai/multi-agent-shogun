@@ -1,0 +1,49 @@
+生器	案	形	鳴り行数(LF讀手)	OUT	札のUTF-8	bash -n rc	走 rc	stderr(esc・160字迄)
+scripts/inbox_watcher.sh	現行	甲 行注入(★陽性★)	2	99	正	0	0	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	現行	乙 ★負1★ 清い非数	1	99	正	0	0	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	現行	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/inbox_watcher.sh	現行	丁 ★負3★ 空文字	1	99	正	0	0	[watcher] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	甲	甲 行注入(★陽性★)	1	99	不正0xB6	0	0	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	甲	乙 ★負1★ 清い非数	1	99	正	0	0	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	甲	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/inbox_watcher.sh	甲	丁 ★負3★ 空文字	1	99	正	0	0	[watcher] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	乙	甲 行注入(★陽性★)	1	99	正	0	0	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	乙	乙 ★負1★ 清い非数	1	99	正	0	0	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	乙	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/inbox_watcher.sh	乙	丁 ★負3★ 空文字	1	99	正	0	0	[watcher] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	甲 行注入(★陽性★)	2	99	正	0	0	★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	乙 ★負1★ 清い非数	1	99	正	0	0	★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	丁 ★負3★ 空文字	1	99	正	0	0	★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	甲	甲 行注入(★陽性★)	1	99	不正0xB6	0	0	★閾 KM73_TH を比較器が扱へぬ(「1\xB6★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	甲	乙 ★負1★ 清い非数	1	99	正	0	0	★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	甲	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	甲	丁 ★負3★ 空文字	1	99	正	0	0	★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	甲 行注入(★陽性★)	1	99	正	0	0	★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	乙 ★負1★ 清い非数	1	99	正	0	0	★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	丁 ★負3★ 空文字	1	99	正	0	0	★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	甲 行注入(★陽性★)	2	99	正	0	0	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	乙 ★負1★ 清い非数	1	99	正	0	0	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/agent_health_check.sh	現行	丁 ★負3★ 空文字	1	99	正	0	0	[health_check] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	甲	甲 行注入(★陽性★)	1	99	不正0xB6	0	0	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	甲	乙 ★負1★ 清い非数	1	99	正	0	0	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	甲	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/agent_health_check.sh	甲	丁 ★負3★ 空文字	1	99	正	0	0	[health_check] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	乙	甲 行注入(★陽性★)	1	99	正	0	0	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	乙	乙 ★負1★ 清い非数	1	99	正	0	0	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	乙	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/agent_health_check.sh	乙	丁 ★負3★ 空文字	1	99	正	0	0	[health_check] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	甲 行注入(★陽性★)	2	99	正	0	0	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	乙 ★負1★ 清い非数	1	99	正	0	0	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/checks/context_usage_warn.sh	現行	丁 ★負3★ 空文字	1	99	正	0	0	[context_warn] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	甲	甲 行注入(★陽性★)	1	99	不正0xB6	0	0	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	甲	乙 ★負1★ 清い非数	1	99	正	0	0	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	甲	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/checks/context_usage_warn.sh	甲	丁 ★負3★ 空文字	1	99	正	0	0	[context_warn] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	乙	甲 行注入(★陽性★)	1	99	正	0	0	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	乙	乙 ★負1★ 清い非数	1	99	正	0	0	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「abc」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	乙	丙 ★負2★ 正しい数	0	777	正	0	0
+scripts/checks/context_usage_warn.sh	乙	丁 ★負3★ 空文字	1	99	正	0	0	[context_warn] ★閾 KM73_TH が空文字 ―― 既定 99 へ倒す(fail-closed)★\x0A

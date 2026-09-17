@@ -1,0 +1,16 @@
+案	形	LF讀手の行	★画面の行(tmux capture-pane・非空)★	画面(esc・150字迄)
+現行	陽性対照 LF \n	2	0
+乙	陰性対照 abc	1	0
+乙	LF \n	1	0
+乙	CR \r	1	0
+乙	TAB \t	1	0
+乙	VT \v	1	0
+乙	FF \f	1	0
+乙	BS \b	1	0
+乙	ESC	1	0
+乙	ESC[2K	1	0
+乙	U+2028 LS	1	0
+乙	U+2029 PS	1	0
+乙	U+0085 NEL	1	0
+乙	U+00A0 NBSP	1	0
+乙	U+3000 全角空白	1	0

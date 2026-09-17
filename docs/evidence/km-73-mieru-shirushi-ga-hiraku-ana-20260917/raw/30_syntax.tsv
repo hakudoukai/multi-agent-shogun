@@ -1,0 +1,21 @@
+生器	shell	-n rc	stderr(esc)
+scripts/inbox_watcher.sh	/bin/bash	0
+scripts/inbox_watcher.sh	/bin/sh	2	/Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh: line 863: syntax error near unexpected token `<'\x0A/Users
+scripts/inbox_watcher.sh	/bin/dash	2	/Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh: 458: Syntax error: word unexpected (expecting "}")\x0A
+scripts/inbox_watcher.sh	/bin/zsh	1	/Users/momizimac/multi-agent-shogun/scripts/inbox_watcher.sh:458: parse error near `200'\x0A
+scripts/inbox_watcher.sh	env bash	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/bash	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/sh	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/dash	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	/bin/zsh	0
+scripts/watchdogs/enter_restart_common_watchdog.sh	env bash	0
+scripts/agent_health_check.sh	/bin/bash	0
+scripts/agent_health_check.sh	/bin/sh	2	/Users/momizimac/multi-agent-shogun/scripts/agent_health_check.sh: line 398: syntax error near unexpected token `<'\x0A/
+scripts/agent_health_check.sh	/bin/dash	2	/Users/momizimac/multi-agent-shogun/scripts/agent_health_check.sh: 124: Syntax error: "(" unexpected\x0A
+scripts/agent_health_check.sh	/bin/zsh	0
+scripts/agent_health_check.sh	env bash	0
+scripts/checks/context_usage_warn.sh	/bin/bash	0
+scripts/checks/context_usage_warn.sh	/bin/sh	0
+scripts/checks/context_usage_warn.sh	/bin/dash	0
+scripts/checks/context_usage_warn.sh	/bin/zsh	0
+scripts/checks/context_usage_warn.sh	env bash	0

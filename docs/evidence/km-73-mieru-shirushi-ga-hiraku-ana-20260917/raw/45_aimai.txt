@@ -1,0 +1,4 @@
+# 45 印の曖昧性 / 刻 2026-09-17T08:07:00+0900
+乙: 区別できぬ対 12/20: inbox_watcher.sh A 1\n2⇔B 1␊2 / inbox_watcher.sh C 1\r2⇔D 1␍2 / inbox_watcher.sh E 1\n␊2⇔F 1␊\n2 / enter_restart_common_watchdog.sh A 1\n2⇔B 1␊2 / enter_restart_common_watchdog.sh C 1\r2⇔D 1␍2 / enter_restart_common_watchdog.sh E 1\n␊2⇔F 1␊\n2 / agent_health_check.sh A 1\n2⇔B 1␊2 / agent_health_check.sh C 1\r2⇔D 1␍2 / agent_health_check.sh E 1\n␊2⇔F 1␊\n2 / context_usage_warn.sh A 1\n2⇔B 1␊2 / context_usage_warn.sh C 1\r2⇔D 1␍2 / context_usage_warn.sh E 1\n␊2⇔F 1␊\n2
+乙′: 区別できぬ対 0/20:
+乙′ の逐語(當席の試案・据ゑず): _ft_vp="${_ft_v//\\/\\\\}"; _ft_vp="${_ft_vp//␊/\\␊}"; _ft_vp="${_ft_vp//␍/\\␍}"; _ft_vp="${_ft_vp//␉/\\␉}"; _ft_vp="${_ft_vp//$'\n'/␊}"; _ft_vp="${_ft_vp//$'\r'/␍}"; _ft_vp="${_ft_vp//$'\t'/␉}"  # 乙′(escape の escape)

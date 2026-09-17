@@ -1,0 +1,199 @@
+案	形	locale	器	N	出目のUTF-8	出目のLF数	出目bytes	出目(esc・100字迄)
+現行	陽性 1\n偽札	C	cut -c1-56	56	正	2	112	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― \x0A
+現行	陽性 1\n偽札	C	cut -b1-56	56	正	2	112	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― \x0A
+現行	陽性 1\n偽札	C	cut -c1-40	56	正	2	82	[watcher] ★閾 KM73_TH を比較器が\x0A★閾 KM73_TH を比較器が扱へぬ(\x0A
+現行	陽性 1\n偽札	C	awk length	56	正	2	7	54\x0A137\x0A
+現行	陽性 1\n偽札	C	wc -m	56	正	1	9	     192\x0A
+現行	陽性 1\n偽札	C	wc -c	56	正	1	9	     192\x0A
+現行	陽性 1\n偽札	C	wc -l	56	正	1	9	       1\x0A
+現行	陽性 1\n偽札	C	bash printf %-76s|	56	正	1	193	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒
+現行	陽性 1\n偽札	C	bash printf %.56s	56	不正0xE2	1	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\xE2
+現行	陽性 1\n偽札	C	bash ${V:0:56}	56	不正0xE2	1	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\xE2
+現行	陽性 1\n偽札	C	bash ${#V}	56	正	0	3	192
+現行	陽性 1\n偽札	en_US.UTF-8	cut -c1-56	56	正	2	158	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― \x0A
+現行	陽性 1\n偽札	en_US.UTF-8	cut -b1-56	56	正	2	112	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― \x0A
+現行	陽性 1\n偽札	en_US.UTF-8	cut -c1-40	56	正	2	134	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fai\x0A
+現行	陽性 1\n偽札	en_US.UTF-8	awk length	56	正	2	7	54\x0A137\x0A
+現行	陽性 1\n偽札	en_US.UTF-8	wc -m	56	正	1	9	     112\x0A
+現行	陽性 1\n偽札	en_US.UTF-8	wc -c	56	正	1	9	     192\x0A
+現行	陽性 1\n偽札	en_US.UTF-8	wc -l	56	正	1	9	       1\x0A
+現行	陽性 1\n偽札	en_US.UTF-8	bash printf %-76s|	56	正	1	193	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒
+現行	陽性 1\n偽札	en_US.UTF-8	bash printf %.56s	56	不正0xE2	1	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\xE2
+現行	陽性 1\n偽札	en_US.UTF-8	bash ${V:0:56}	56	正	1	102	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」
+現行	陽性 1\n偽札	en_US.UTF-8	bash ${#V}	56	正	0	3	112
+現行	長 x×60+\n+y	C	cut -c1-115	115	正	1	162	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay」) ―
+現行	長 x×60+\n+y	C	cut -b1-115	115	正	1	162	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay」) ―
+現行	長 x×60+\n+y	C	cut -c1-40	115	正	2	82	[watcher] ★閾 KM73_TH を比較器が\x0Ay」) ―― 既定 99 へ倒す(fail-cl\x0A
+現行	長 x×60+\n+y	C	awk length	115	正	2	7	113\x0A48\x0A
+現行	長 x×60+\n+y	C	wc -m	115	正	1	9	     162\x0A
+現行	長 x×60+\n+y	C	wc -c	115	正	1	9	     162\x0A
+現行	長 x×60+\n+y	C	wc -l	115	正	1	9	       1\x0A
+現行	長 x×60+\n+y	C	bash printf %-135s|	115	正	1	163	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay」) ―
+現行	長 x×60+\n+y	C	bash printf %.115s	115	正	1	115	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay
+現行	長 x×60+\n+y	C	bash ${V:0:115}	115	正	1	115	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay
+現行	長 x×60+\n+y	C	bash ${#V}	115	正	0	3	162
+現行	長 x×60+\n+y	en_US.UTF-8	cut -c1-115	115	正	1	162	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay」) ―
+現行	長 x×60+\n+y	en_US.UTF-8	cut -b1-115	115	正	1	162	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay」) ―
+現行	長 x×60+\n+y	en_US.UTF-8	cut -c1-40	115	正	1	111	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxx\x0Ay」) ―― 既定 99 へ倒す(fail-closed)★
+現行	長 x×60+\n+y	en_US.UTF-8	awk length	115	正	2	7	113\x0A48\x0A
+現行	長 x×60+\n+y	en_US.UTF-8	wc -m	115	正	1	9	     122\x0A
+現行	長 x×60+\n+y	en_US.UTF-8	wc -c	115	正	1	9	     162\x0A
+現行	長 x×60+\n+y	en_US.UTF-8	wc -l	115	正	1	9	       1\x0A
+現行	長 x×60+\n+y	en_US.UTF-8	bash printf %-135s|	115	正	1	163	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay」) ―
+現行	長 x×60+\n+y	en_US.UTF-8	bash printf %.115s	115	正	1	115	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay
+現行	長 x×60+\n+y	en_US.UTF-8	bash ${V:0:115}	115	正	1	153	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\x0Ay」) ―
+現行	長 x×60+\n+y	en_US.UTF-8	bash ${#V}	115	正	0	3	122
+現行	三印 1\n\r\t2	C	cut -c1-56	56	正	1	105	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-closed)★
+現行	三印 1\n\r\t2	C	cut -b1-56	56	正	1	105	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-closed)★
+現行	三印 1\n\r\t2	C	cut -c1-40	56	正	2	82	[watcher] ★閾 KM73_TH を比較器が\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-\x0A
+現行	三印 1\n\r\t2	C	awk length	56	正	2	6	54\x0A50\x0A
+現行	三印 1\n\r\t2	C	wc -m	56	正	1	9	     105\x0A
+現行	三印 1\n\r\t2	C	wc -c	56	正	1	9	     105\x0A
+現行	三印 1\n\r\t2	C	wc -l	56	正	1	9	       1\x0A
+現行	三印 1\n\r\t2	C	bash printf %-76s|	56	正	1	106	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-closed)★|
+現行	三印 1\n\r\t2	C	bash printf %.56s	56	正	1	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D
+現行	三印 1\n\r\t2	C	bash ${V:0:56}	56	正	1	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D
+現行	三印 1\n\r\t2	C	bash ${#V}	56	正	0	3	105
+現行	三印 1\n\r\t2	en_US.UTF-8	cut -c1-56	56	正	1	105	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-closed)★
+現行	三印 1\n\r\t2	en_US.UTF-8	cut -b1-56	56	正	1	105	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-closed)★
+現行	三印 1\n\r\t2	en_US.UTF-8	cut -c1-40	56	正	1	105	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-closed)★
+現行	三印 1\n\r\t2	en_US.UTF-8	awk length	56	正	2	6	54\x0A50\x0A
+現行	三印 1\n\r\t2	en_US.UTF-8	wc -m	56	正	1	9	      65\x0A
+現行	三印 1\n\r\t2	en_US.UTF-8	wc -c	56	正	1	9	     105\x0A
+現行	三印 1\n\r\t2	en_US.UTF-8	wc -l	56	正	1	9	       1\x0A
+現行	三印 1\n\r\t2	en_US.UTF-8	bash printf %-76s|	56	正	1	106	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail-closed)★|
+現行	三印 1\n\r\t2	en_US.UTF-8	bash printf %.56s	56	正	1	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D
+現行	三印 1\n\r\t2	en_US.UTF-8	bash ${V:0:56}	56	正	1	94	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A\x0D\x092」) ―― 既定 99 へ倒す(fail
+現行	三印 1\n\r\t2	en_US.UTF-8	bash ${#V}	56	正	0	2	65
+甲	陽性 1\n偽札	C	cut -c1-56	56	不正0xB6	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6\xE2\x0A
+甲	陽性 1\n偽札	C	cut -b1-56	56	不正0xB6	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6\xE2\x0A
+甲	陽性 1\n偽札	C	cut -c1-40	56	正	1	41	[watcher] ★閾 KM73_TH を比較器が\x0A
+甲	陽性 1\n偽札	C	awk length	56	正	1	4	192\x0A
+甲	陽性 1\n偽札	C	wc -m	56	正	1	9	     192\x0A
+甲	陽性 1\n偽札	C	wc -c	56	正	1	9	     192\x0A
+甲	陽性 1\n偽札	C	wc -l	56	正	1	9	       0\x0A
+甲	陽性 1\n偽札	C	bash printf %-76s|	56	(札が UTF-8 不正ゆゑ env に載せず)	0	77	                                                                            |
+甲	陽性 1\n偽札	C	bash printf %.56s	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	陽性 1\n偽札	C	bash ${V:0:56}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	陽性 1\n偽札	C	bash ${#V}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	1	0
+甲	陽性 1\n偽札	en_US.UTF-8	cut -c1-56	56	正	0	54	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1
+甲	陽性 1\n偽札	en_US.UTF-8	cut -b1-56	56	不正0xB6	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6\xE2\x0A
+甲	陽性 1\n偽札	en_US.UTF-8	cut -c1-40	56	正	0	54	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1
+甲	陽性 1\n偽札	en_US.UTF-8	awk length	56	正	1	4	192\x0A
+甲	陽性 1\n偽札	en_US.UTF-8	wc -m	56	正	1	9	     112\x0A
+甲	陽性 1\n偽札	en_US.UTF-8	wc -c	56	正	1	9	     192\x0A
+甲	陽性 1\n偽札	en_US.UTF-8	wc -l	56	正	1	9	       0\x0A
+甲	陽性 1\n偽札	en_US.UTF-8	bash printf %-76s|	56	(札が UTF-8 不正ゆゑ env に載せず)	0	77	                                                                            |
+甲	陽性 1\n偽札	en_US.UTF-8	bash printf %.56s	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	陽性 1\n偽札	en_US.UTF-8	bash ${V:0:56}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	陽性 1\n偽札	en_US.UTF-8	bash ${#V}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	1	0
+甲	長 x×60+\n+y	C	cut -c1-115	115	不正0xB6	1	116	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xB6y\x0A
+甲	長 x×60+\n+y	C	cut -b1-115	115	不正0xB6	1	116	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xB6y\x0A
+甲	長 x×60+\n+y	C	cut -c1-40	115	正	1	41	[watcher] ★閾 KM73_TH を比較器が\x0A
+甲	長 x×60+\n+y	C	awk length	115	正	1	4	162\x0A
+甲	長 x×60+\n+y	C	wc -m	115	正	1	9	     162\x0A
+甲	長 x×60+\n+y	C	wc -c	115	正	1	9	     162\x0A
+甲	長 x×60+\n+y	C	wc -l	115	正	1	9	       0\x0A
+甲	長 x×60+\n+y	C	bash printf %-135s|	115	(札が UTF-8 不正ゆゑ env に載せず)	0	136
+甲	長 x×60+\n+y	C	bash printf %.115s	115	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	長 x×60+\n+y	C	bash ${V:0:115}	115	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	長 x×60+\n+y	C	bash ${#V}	115	(札が UTF-8 不正ゆゑ env に載せず)	0	1	0
+甲	長 x×60+\n+y	en_US.UTF-8	cut -c1-115	115	正	0	113	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+甲	長 x×60+\n+y	en_US.UTF-8	cut -b1-115	115	不正0xB6	1	116	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xB6y\x0A
+甲	長 x×60+\n+y	en_US.UTF-8	cut -c1-40	115	正	1	63	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxx\x0A
+甲	長 x×60+\n+y	en_US.UTF-8	awk length	115	正	1	4	162\x0A
+甲	長 x×60+\n+y	en_US.UTF-8	wc -m	115	正	1	9	     122\x0A
+甲	長 x×60+\n+y	en_US.UTF-8	wc -c	115	正	1	9	     162\x0A
+甲	長 x×60+\n+y	en_US.UTF-8	wc -l	115	正	1	9	       0\x0A
+甲	長 x×60+\n+y	en_US.UTF-8	bash printf %-135s|	115	(札が UTF-8 不正ゆゑ env に載せず)	0	136
+甲	長 x×60+\n+y	en_US.UTF-8	bash printf %.115s	115	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	長 x×60+\n+y	en_US.UTF-8	bash ${V:0:115}	115	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	長 x×60+\n+y	en_US.UTF-8	bash ${#V}	115	(札が UTF-8 不正ゆゑ env に載せず)	0	1	0
+甲	三印 1\n\r\t2	C	cut -c1-56	56	不正0xB6	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6\x8D\x0A
+甲	三印 1\n\r\t2	C	cut -b1-56	56	不正0xB6	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6\x8D\x0A
+甲	三印 1\n\r\t2	C	cut -c1-40	56	正	1	41	[watcher] ★閾 KM73_TH を比較器が\x0A
+甲	三印 1\n\r\t2	C	awk length	56	正	1	4	105\x0A
+甲	三印 1\n\r\t2	C	wc -m	56	正	1	9	     105\x0A
+甲	三印 1\n\r\t2	C	wc -c	56	正	1	9	     105\x0A
+甲	三印 1\n\r\t2	C	wc -l	56	正	1	9	       0\x0A
+甲	三印 1\n\r\t2	C	bash printf %-76s|	56	(札が UTF-8 不正ゆゑ env に載せず)	0	77	                                                                            |
+甲	三印 1\n\r\t2	C	bash printf %.56s	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	三印 1\n\r\t2	C	bash ${V:0:56}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	三印 1\n\r\t2	C	bash ${#V}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	1	0
+甲	三印 1\n\r\t2	en_US.UTF-8	cut -c1-56	56	正	0	54	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1
+甲	三印 1\n\r\t2	en_US.UTF-8	cut -b1-56	56	不正0xB6	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xB6\x8D\x0A
+甲	三印 1\n\r\t2	en_US.UTF-8	cut -c1-40	56	正	0	54	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1
+甲	三印 1\n\r\t2	en_US.UTF-8	awk length	56	正	1	4	105\x0A
+甲	三印 1\n\r\t2	en_US.UTF-8	wc -m	56	正	1	9	      65\x0A
+甲	三印 1\n\r\t2	en_US.UTF-8	wc -c	56	正	1	9	     105\x0A
+甲	三印 1\n\r\t2	en_US.UTF-8	wc -l	56	正	1	9	       0\x0A
+甲	三印 1\n\r\t2	en_US.UTF-8	bash printf %-76s|	56	(札が UTF-8 不正ゆゑ env に載せず)	0	77	                                                                            |
+甲	三印 1\n\r\t2	en_US.UTF-8	bash printf %.56s	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	三印 1\n\r\t2	en_US.UTF-8	bash ${V:0:56}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	0
+甲	三印 1\n\r\t2	en_US.UTF-8	bash ${#V}	56	(札が UTF-8 不正ゆゑ env に載せず)	0	1	0
+乙	陽性 1\n偽札	C	cut -c1-56	56	不正0xE2	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90\x0A
+乙	陽性 1\n偽札	C	cut -b1-56	56	不正0xE2	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90\x0A
+乙	陽性 1\n偽札	C	cut -c1-40	56	正	1	41	[watcher] ★閾 KM73_TH を比較器が\x0A
+乙	陽性 1\n偽札	C	awk length	56	正	1	4	194\x0A
+乙	陽性 1\n偽札	C	wc -m	56	正	1	9	     194\x0A
+乙	陽性 1\n偽札	C	wc -c	56	正	1	9	     194\x0A
+乙	陽性 1\n偽札	C	wc -l	56	正	1	9	       0\x0A
+乙	陽性 1\n偽札	C	bash printf %-76s|	56	正	0	195	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(f
+乙	陽性 1\n偽札	C	bash printf %.56s	56	不正0xE2	0	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90
+乙	陽性 1\n偽札	C	bash ${V:0:56}	56	不正0xE2	0	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90
+乙	陽性 1\n偽札	C	bash ${#V}	56	正	0	3	194
+乙	陽性 1\n偽札	en_US.UTF-8	cut -c1-56	56	正	1	105	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」\x0A
+乙	陽性 1\n偽札	en_US.UTF-8	cut -b1-56	56	不正0xE2	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90\x0A
+乙	陽性 1\n偽札	en_US.UTF-8	cut -c1-40	56	正	1	69	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73\x0A
+乙	陽性 1\n偽札	en_US.UTF-8	awk length	56	正	1	4	194\x0A
+乙	陽性 1\n偽札	en_US.UTF-8	wc -m	56	正	1	9	     112\x0A
+乙	陽性 1\n偽札	en_US.UTF-8	wc -c	56	正	1	9	     194\x0A
+乙	陽性 1\n偽札	en_US.UTF-8	wc -l	56	正	1	9	       0\x0A
+乙	陽性 1\n偽札	en_US.UTF-8	bash printf %-76s|	56	正	0	195	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(f
+乙	陽性 1\n偽札	en_US.UTF-8	bash printf %.56s	56	不正0xE2	0	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90
+乙	陽性 1\n偽札	en_US.UTF-8	bash ${V:0:56}	56	正	0	104	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」
+乙	陽性 1\n偽札	en_US.UTF-8	bash ${#V}	56	正	0	3	112
+乙	長 x×60+\n+y	C	cut -c1-115	115	不正0xE2	1	116	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xE2\x90\
+乙	長 x×60+\n+y	C	cut -b1-115	115	不正0xE2	1	116	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xE2\x90\
+乙	長 x×60+\n+y	C	cut -c1-40	115	正	1	41	[watcher] ★閾 KM73_TH を比較器が\x0A
+乙	長 x×60+\n+y	C	awk length	115	正	1	4	164\x0A
+乙	長 x×60+\n+y	C	wc -m	115	正	1	9	     164\x0A
+乙	長 x×60+\n+y	C	wc -c	115	正	1	9	     164\x0A
+乙	長 x×60+\n+y	C	wc -l	115	正	1	9	       0\x0A
+乙	長 x×60+\n+y	C	bash printf %-135s|	115	正	0	165	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx␊y」) ―― 既
+乙	長 x×60+\n+y	C	bash printf %.115s	115	不正0xE2	0	115	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xE2\x90
+乙	長 x×60+\n+y	C	bash ${V:0:115}	115	不正0xE2	0	115	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xE2\x90
+乙	長 x×60+\n+y	C	bash ${#V}	115	正	0	3	164
+乙	長 x×60+\n+y	en_US.UTF-8	cut -c1-115	115	正	1	156	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx␊y」) ―― 既
+乙	長 x×60+\n+y	en_US.UTF-8	cut -b1-115	115	不正0xE2	1	116	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xE2\x90\
+乙	長 x×60+\n+y	en_US.UTF-8	cut -c1-40	115	正	1	63	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxx\x0A
+乙	長 x×60+\n+y	en_US.UTF-8	awk length	115	正	1	4	164\x0A
+乙	長 x×60+\n+y	en_US.UTF-8	wc -m	115	正	1	9	     122\x0A
+乙	長 x×60+\n+y	en_US.UTF-8	wc -c	115	正	1	9	     164\x0A
+乙	長 x×60+\n+y	en_US.UTF-8	wc -l	115	正	1	9	       0\x0A
+乙	長 x×60+\n+y	en_US.UTF-8	bash printf %-135s|	115	正	0	165	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx␊y」) ―― 既
+乙	長 x×60+\n+y	en_US.UTF-8	bash printf %.115s	115	不正0xE2	0	115	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\xE2\x90
+乙	長 x×60+\n+y	en_US.UTF-8	bash ${V:0:115}	115	正	0	155	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx␊y」) ―― 既
+乙	長 x×60+\n+y	en_US.UTF-8	bash ${#V}	115	正	0	3	122
+乙	三印 1\n\r\t2	C	cut -c1-56	56	不正0xE2	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90\x0A
+乙	三印 1\n\r\t2	C	cut -b1-56	56	不正0xE2	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90\x0A
+乙	三印 1\n\r\t2	C	cut -c1-40	56	正	1	41	[watcher] ★閾 KM73_TH を比較器が\x0A
+乙	三印 1\n\r\t2	C	awk length	56	正	1	4	111\x0A
+乙	三印 1\n\r\t2	C	wc -m	56	正	1	9	     111\x0A
+乙	三印 1\n\r\t2	C	wc -c	56	正	1	9	     111\x0A
+乙	三印 1\n\r\t2	C	wc -l	56	正	1	9	       0\x0A
+乙	三印 1\n\r\t2	C	bash printf %-76s|	56	正	0	112	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊␍␉2」) ―― 既定 99 へ倒す(fail-closed)★|
+乙	三印 1\n\r\t2	C	bash printf %.56s	56	不正0xE2	0	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90
+乙	三印 1\n\r\t2	C	bash ${V:0:56}	56	不正0xE2	0	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90
+乙	三印 1\n\r\t2	C	bash ${#V}	56	正	0	3	111
+乙	三印 1\n\r\t2	en_US.UTF-8	cut -c1-56	56	正	1	101	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊␍␉2」) ―― 既定 99 へ倒す(fail\x0A
+乙	三印 1\n\r\t2	en_US.UTF-8	cut -b1-56	56	不正0xE2	1	57	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90\x0A
+乙	三印 1\n\r\t2	en_US.UTF-8	cut -c1-40	56	正	1	73	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊␍␉2」) ―\x0A
+乙	三印 1\n\r\t2	en_US.UTF-8	awk length	56	正	1	4	111\x0A
+乙	三印 1\n\r\t2	en_US.UTF-8	wc -m	56	正	1	9	      65\x0A
+乙	三印 1\n\r\t2	en_US.UTF-8	wc -c	56	正	1	9	     111\x0A
+乙	三印 1\n\r\t2	en_US.UTF-8	wc -l	56	正	1	9	       0\x0A
+乙	三印 1\n\r\t2	en_US.UTF-8	bash printf %-76s|	56	正	0	112	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊␍␉2」) ―― 既定 99 へ倒す(fail-closed)★|
+乙	三印 1\n\r\t2	en_US.UTF-8	bash printf %.56s	56	不正0xE2	0	56	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\xE2\x90
+乙	三印 1\n\r\t2	en_US.UTF-8	bash ${V:0:56}	56	正	0	100	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊␍␉2」) ―― 既定 99 へ倒す(fail
+乙	三印 1\n\r\t2	en_US.UTF-8	bash ${#V}	56	正	0	2	65

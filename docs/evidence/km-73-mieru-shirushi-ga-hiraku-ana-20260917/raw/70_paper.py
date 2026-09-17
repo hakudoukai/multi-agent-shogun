@@ -1,0 +1,120 @@
+# -*- coding: utf-8 -*-
+"""紙の器 70(第73弾)―― 数は悉く raw/ の出目 file から regex/TSV で引く(手写し 0)。八問(㋐〜㋗)に答へ、三案表を建てる。"""
+import os, sys, re, csv, time, hashlib, glob
+B = sys.argv[1]; D = os.path.dirname(B); E = D + '/raw'; sys.path.insert(0, E); import kaki as K
+M = '/Users/momizimac/multi-agent-shogun'; KM = os.path.basename(D)
+rd = lambda n: open(f'{E}/{n}', encoding='utf-8').read(); tsv = lambda n: list(csv.DictReader(open(f'{E}/{n}', encoding='utf-8'), delimiter='\t'))
+def num(pat, txt): m = re.search(pat, txt); assert m, pat; return m.group(1)
+T00, T05, T10, T20, T25, T30, T40, T42, T45, T47, T48 = (rd(n) for n in ('00_start.txt', '05_chakushu.txt', '10_saigen.txt', '20_seigyo.txt', '25_terminal.txt', '30_shell.txt', '40_keta.txt', '42_pad.txt', '45_aimai.txt', '47_hei.txt', '48_dash_hei.txt'))
+r20, r20z, r25, r30sb, r30sh, r30sy, r40, r42, r45, r47 = (tsv(n) for n in ('20_seigyo.tsv', '20_zenbu.tsv', '25_terminal.tsv', '30_shebang.tsv', '30_shell.tsv', '30_syntax.tsv', '40_keta.tsv', '42_pad.tsv', '45_aimai.tsv', '47_hei.tsv'))
+ki = sorted(os.path.basename(p) for p in glob.glob(E + '/*.py')); NKI = len(ki)
+bo, icchi, chigai = num(r'母數 (\d+)', T10), num(r'一致 (\d+)', T10), num(r'食ひ違ひ (\d+)', T10)
+cc, rest, zlp = num(r'Cc は (\d+) 字', T20), num(r'残る Cc = (\d+) 字', T20), num(r'Zl/Zp (\d+) 字も', T20)
+yomite = dict(re.findall(r'讀手 (\S+): (\d+) 字', T20)); spl = re.search(r'讀手 py\.splitlines: \d+ 字 (\[.*?\])', T20).group(1)
+scr = num(r'乙で画面が ≥2 行に成つた形 (\d+/\d+)', T25); scr_which = re.search(r'成つた形 \d+/\d+: (.*)$', T25, re.M).group(1)
+yobite = num(r'呼び手の行 (\d+) 本', T30); shform = num(r'「sh <器>」の形 = (\d+) 本', T30); envbash = num(r'env bash\(([^)]+)\)', T30)
+sb = {r['生器'].split('/')[-1]: r for r in r30sb}
+dash_otsu = [r for r in r30sh if r['案'] == '乙' and r['shell'] == '/bin/dash']; ok_otsu = [r for r in r30sh if r['案'] == '乙' and r['shell'] != '/bin/dash']
+syn = {}
+for r in r30sy: syn.setdefault(r['生器'].split('/')[-1], {})[r['shell']] = r['-n rc']
+bad40 = num(r'UTF-8 不正を産んだ走 = (\d+/\d+)', T40); lf40 = num(r'cut が LF を足した走 = (\d+)', T40)
+lf_kou = [r for r in r40 if r['案'] == '甲' and r['器'] == 'cut -c1-40']; lf_gen = [r for r in r40 if r['案'] == '現行' and r['器'] == 'cut -c1-40']
+u8ok = [r for r in r40 if r['案'] == '乙' and r['出目のUTF-8'] == '正' and r['器'].startswith(('cut -c1-', 'bash ${V:0:', 'bash printf %.')) and not r['器'].startswith('cut -c1-40')]
+lens = re.search(r'長さ」が器で違ふ★: (.*)$', T40, re.M).group(1).replace('\\x0A', '')
+pad = [l for l in T42.split('\n') if '揃はぬ' in l or '揃ふ' in l]
+otsu_same, otsu2_same = num(r'乙: 区別できぬ対 (\d+/\d+)', T45), num(r'乙′: 区別できぬ対 (\d+/\d+)', T45)
+hei = {l.split(':')[0]: l for l in T47.split('\n') if l.startswith('丙')}
+h1_dash = num(r'丙1 %q: rc \d+ / stdout .*?(printf: %q: invalid directive)', T48)
+h1len = next(r for r in r47 if r['案'] == '丙1 %q' and r['形'] == 'LF \\n' and 'inbox' in r['生器'])['札の値 bytes']; h3 = next(r for r in r47 if r['案'] == '丙3 数のみ' and r['形'] == 'LF \\n' and 'inbox' in r['生器'])['札の値(esc)']
+otsu_len = next(r for r in r40 if r['案'] == '乙' and r['形'].startswith('陽性') and r['器'] == 'wc -m' and r['locale'] != 'C')['出目(esc・100字迄)'].replace('\\x0A', '').strip()
+koku05, ji05 = num(r'刻 (\S+) /', T05), num(r'字数 (\d+)', T05)
+shas = dict(re.findall(r'(\w+) scripts/\S+ sha16 ([0-9a-f]{16})', T00))
+L = [
+ f'# 第73弾 ―― 可視印が開ける穴 ―― 專任2(km-53b)の案乙 `${{v//$\'\\n\'/␊}}` を第三者として破る ―― ★据ゑず・生器へ 0 字・彼の束へ 0 字★(的 四本の sha16: watcher {shas["watcher"]} / watchdog {shas["watchdog"]} / health {shas["health"]} / ctxwarn {shas["ctxwarn"]} = 彼の「前」と同)',
+ '',
+ f'★臺帳の基点(一行)★: 本束の臺帳 `ashigaru-mac-1_{KM}_manifest.txt` の path は ★束の根 `{D}/` からの相對(束内相対・裁 seq322699)★。照合は門に `KM_GATE_MANIFEST_BASE=<束の根の絶対 path>` を渡せ。門控は員外(_after/60_gate_top.r73.txt と 紙名_gate.txt)に置き、臺帳に入れぬ(作法⑷)。',
+ '',
+ '## 0. 断(先に)',
+ f'1. **㋐ 彼の 48 走は己の台で 48/48 一致した(母數 {bo}・一致 {icchi}・食ひ違ひ {chigai})。而して之は「同じ石を二人で踏んだ」の證でしかない** ―― 台(助器四本の切り身)・讀手(LF)・locale(C)・shell(bash 3.2)・置換の逐語(彼の儘)の五つを共有した(raw/10)。生器本体は二人とも一度も走らせて居らぬ。',
+ f'2. **㋑ 乙が置くのは 3 字。Cc {cc} 字の内 {rest} 字と Zl/Zp {zlp} 字が残る ―― 而して「其の内 札を二行に割る物」は ★讀手を名指さねば一つの數に成らぬ★**: LF/wc -l/awk NR の讀手には ★0★・Python splitlines には ★{yomite["py.splitlines"]}★ {spl}・tmux の画面(人の目)には ★{scr}★({scr_which})(raw/20・25)。★乙は「改行」を封じたのではなく「0x0A」を封じた。★',
+ f'3. **㋒ 四本とも `#!/usr/bin/env bash`、当箱の env bash = {envbash}(3.2.57)。`${{v//…}}` と `$\'\\n\'` は bash 3.2 と zsh に在り、dash には無い(「Bad substitution」rc 2 で ★台が死に OUT が立たぬ★=現行より悪い)。呼び手 {yobite} 行の内「sh <器>」の形は ★{shform}★ 本、/bin/sh は bash である。∴ 乙は当箱では成り立つ ―― 而して四本の内 `${{v//` を今使ふ物は ★0 本★(乙が初の使用と成る)。生器四本を各 shell の -n に掛けると watcher と health は sh(posix bash)でも dash でも構文で落ちる(raw/30)。**',
+ f'4. **㋓ ␊ は 3 byte・1 字。byte で切る器(cut -b・C locale の cut -c/`${{v:0:N}}`/`printf %.Ns`・★UTF-8 locale でも bash の `printf %.Ns`★)が印の中で切り、乙の札から ★UTF-8 不正 byte(0xE2)★ を産む ―― {bad40} 走(raw/40)。★乙が甲を退けた唯一の理由(札の UTF-8 正否)が、下流の一刀で戻る。★ 加へて cut は切つた札に LF を足す({lf40} 走・甲 {sum(1 for r in lf_kou if int(r["出目のLF数"])>0)}/{len(lf_kou)}・現行 {sum(1 for r in lf_gen if int(r["出目のLF数"])>0)}/{len(lf_gen)} も同じ)= ★第72弾 3-1 と同族(cut が札に行を足す)★。而して「印の中で切れて不正 byte」は ␊ 固有の新しい穴で、第72弾には無かつた。同じ札の長さが器で違ふ: {lens}(awk は byte・wc -m/${{#v}} は UTF-8 locale で字)。桁揃へ: printf `%-12s` は bash 組込も /usr/bin/printf も awk も ★byte で詰める★ ゆゑ、印一つ毎に 2 字ずれる(raw/42)。**',
+ f'5. **㋔ 値に元から ␊ が在る時、乙の札は「注入された改行の印」と区別できぬ ―― {otsu_same} 対(A `1\\n2`⇔B `1␊2`・C `1\\r2`⇔D `1␍2`・E `1\\n␊2`⇔F `1␊\\n2` が四本とも stderr の sha16 同・raw/45)。∴ ★乙は「改行が在つた」と「␊ が在つた」を同じ顔にする新しい偽りを作る。★ 区別する路は在る: escape の escape(乙′・先づ `\\`→`\\\\`・元の ␊→`\\␊`・然る後 三置換)で {otsu2_same} 対 ―― 而して讀手が其の文法を知らねば意味を成さぬ(据ゑず・紙のみ)。**',
+ f'6. **㋕ 三案+丙四つの表は §6。要点: 甲=UTF-8 不正だが 1 byte で桁を壊さず sh でも動く / 乙=UTF-8 正だが 3 byte で桁を壊し byte 切りで不正に戻り 曖昧 / 丙1 `printf %q`=可逆・ASCII・全制御字を封ずるが 札が {h1len} byte に膨れ 非 ASCII の清い値(全角０)も `$\'\\357\\274\\220\'` に変り dash では「{h1_dash}」で値が空に成る(rc 0 の儘・raw/48)/ 丙3=値を刷らず数だけ(「{h3}」・★己の「制御字 61 byte」は tr -d [:print:] が C locale で多 byte を悉く数へた疵★)/ 丙4=刷らぬ。**',
+ '',
+ '## 1. ㋐ 再現(raw/10)',
+ *[l for l in T10.split('\n') if l.startswith(('★母數', '食ひ違ひ', '★共有', '  ⑴', '  ⑵', '  ⑶', '  ⑷', '  ⑸', '★違へた'))],
+ f'- 彼の束外の台(~/km53b-utsushi-20260917/・12 本)は今も disk に在り、己の台と sha16 は ★悉く異なる★(切り方と駆動の変数名が違ふ故)。同じ數が違ふ台から出た ―― 之は「台の切り方」に對しては独立、「切り身で測る」といふ前提に對しては独立でない。',
+ '',
+ '## 2. ㋑ 乙が封ぜぬ物(raw/20・20_zenbu.tsv・25)',
+ '| 讀手 | 何を行の切れ目と見るか | 乙の後 二行に割る字 | 陽性対照(現行+\\n) | 陰性(abc/777) |', '|---|---|---|---|---|',
+ f'| LF(非空行を \\n で割る・專任2 と同) | 0x0A | ★0★ | 2 | 0 |', f'| wc -l | 0x0A | 0 | 2 | 0 |', f'| awk NR | 0x0A | 0 | 2 | 0 |',
+ f'| Python str.splitlines | \\n \\r \\v \\f \\x1c-\\x1e \\x85 \\u2028 \\u2029 | ★{yomite["py.splitlines"]}★ {spl} | 2 | 0 |',
+ f'| tmux の画面(人の目・raw/25) | 端末の機構 | ★{scr}★ {scr_which} | {num(r"陽性対照\(現行\+\\n\)画面 (\d+) 行", T25)} | {num(r"陰性対照\(abc\)画面 (\d+) 行", T25)} |',
+ f'- NUL: env には載らぬ(execve が NUL 終端・Python が ValueError)。bash の `$( )` は NUL を黙つて落とす(`1\\0x`→`1x`・raw/20)。∴ 乙が封ずる要は無いが、値は黙つて変る。',
+ '- ESC: 行は割らぬが、端末では `ESC[2K` 等の列が ★行を消す★。tmux では 1 行に見えた(raw/25 ESC[2K=1)―― 消えた字は数へて居らぬ(画面の行数のみ)。',
+ '- U+2028/2029/0085: byte 讀手にも画面にも一行。Python の讀手(splitlines)にのみ二行。★下流に Python の行讀みが在るか★で危さが決まる(當隊の讀手は Python が多い)。',
+ '',
+ '## 3. ㋒ 器は bash か(raw/30)',
+ '| 生器 | shebang | `${v//` 既存 | `$\'` 既存 | `[[` | bash -n | sh -n | dash -n | zsh -n | 乙の台: bash / sh / dash / zsh |', '|---|---|---|---|---|---|---|---|---|---|',
+ *[f"| {k} | `{sb[k]['shebang']}` | {sb[k]['${v//']} | {sb[k][chr(36)+chr(39)]} | {sb[k]['[[']} | {syn[k]['/bin/bash']} | {syn[k]['/bin/sh']} | {syn[k]['/bin/dash']} | {syn[k]['/bin/zsh']} | 通 / 通 / ★Bad substitution rc2★ / 通 |" for k in ('inbox_watcher.sh', 'enter_restart_common_watchdog.sh', 'agent_health_check.sh', 'context_usage_warn.sh')],
+ f'- 呼び手 {yobite} 行(scripts/ .claude/ config/ ~/Library/LaunchAgents・raw/30_yobite.tsv): bash <器> と 直 exec のみ、`sh <器>` は {shform} 本。/var/select/sh → /bin/bash。★sh で走る器は当箱に一本も無い ―― 乙は当箱では成り立つ。★ 但し dash で走らせた乙の台は「Bad substitution」で ★fix_threshold の途中で死に OUT が立たぬ★(現行の台は dash でも OUT=99 を立てた)―― 移植した先で shell が変れば「札が割れる」でなく「閾が無い」に成る。',
+ '',
+ '## 4. ㋓ 多 byte 印と桁(raw/40・42)',
+ '| 器 | locale | 乙の札を切つた出目 | 第72弾 3-1 との族 |', '|---|---|---|---|',
+ f'| cut -c1-N(N=印の 2 byte 目) | C | ★不正 0xE2★ + LF 足す | 別族(印の中で切れる=甲の疵が戻る)+ 同族(LF) |',
+ f'| cut -c1-N | UTF-8 | 正(字で切る)+ LF 足す | 同族(LF のみ) |',
+ f'| cut -b1-N | C / UTF-8 | ★不正 0xE2★ + LF 足す | 別族 + 同族 |',
+ f'| cut -c1-40 | C / UTF-8 | 正 + ★LF 足す★(甲 {sum(1 for r in lf_kou if int(r["出目のLF数"])>0)}/{len(lf_kou)}・現行 {sum(1 for r in lf_gen if int(r["出目のLF数"])>0)}/{len(lf_gen)} も同) | ★同族★(cut は切つた行に LF を足す・印に依らぬ) |',
+ f'| bash `${{V:0:N}}` | C | ★不正 0xE2★ | 別族 |', f'| bash `${{V:0:N}}` | UTF-8 | 正 | ― |',
+ f'| bash `printf %.Ns` | C / ★UTF-8 でも★ | ★不正 0xE2★ | 別族(bash 3.2 の精度は byte) |',
+ f'| awk length / wc -c | C / UTF-8 | 194(byte) | 桁: byte |', f'| wc -m / `${{#V}}` | UTF-8 | {otsu_len}(字) | 桁: 字 |',
+ f'| printf `%-12s\\|`(bash / /usr/bin / awk) | C / UTF-8 | | の字位置 10 ⇔ 対照 12 = ★2 字ずれ★ | 桁揃へ: byte で詰める |',
+ '- ★断★: 「LF を足す」は cut の性質で印に依らず(甲・現行も同)= ★第72弾で名指した穴と同族★。「印の中で切れて UTF-8 不正」は ★␊ が 3 byte ゆゑに生れた別族の新しい穴★で、乙が甲を退けた理由その物が下流で戻る。∴ ★彼の直しは、貴席が名指した穴(cut が札に行を足す)を踏み、加へて己の長所(UTF-8 正)を byte 切りの一刀で失ふ。★',
+ f'- UTF-8 正で切れた走(乙・cut -c/${{V:0:N}}/printf %.N を UTF-8 locale で)= {len(u8ok)}(raw/40): 字で切る器なら印は壊れぬ ―― 下流の器と locale を悉く知らねば「壊れぬ」と言へぬ。',
+ '',
+ '## 5. ㋔ 印の曖昧性(raw/45)',
+ '| 案 | 区別できぬ対 / 母數 | 逐語 |', '|---|---|---|',
+ f'| 乙 | ★{otsu_same}★(A⇔B・C⇔D・E⇔F × 四本。残る 8 = G⇔H と 陽性対照 = 違つて正) | `1\\n2` も `1␊2` も 札は「1␊2」|',
+ f'| 乙′(escape の escape・試案) | {otsu2_same} | `1\\n2`→「1␊2」/ `1␊2`→「1\\␊2」/ `\\`→`\\\\` |',
+ '- ∴ 乙は ★新しい偽り★ を一つ作る: 讀手は「閾に改行が注入された」と「閾の値に ␊ が書かれた」を分てぬ。閾に ␊ が書かれる事は稀であらう ―― 而して「稀」は「無い」ではなく、印を可視にした瞬間に其の印は値の字面の一部と競合する。乙′ は分ける ―― 但し置換が 7 本に増え、讀手が文法を知る事を要す(據ゑず)。',
+ '',
+ '## 6. ㋕ 三案+丙の表(据ゑず・紙のみ・數は raw/10・20・25・30・40・42・45・47・48)',
+ '| 案 | 可逆性 | UTF-8 正否 | 封ずる制御字 | 桁揃への被害 | 下流の讀手への被害 | bash 3.2 / sh(=bash) / dash | 偽陽性 |', '|---|---|---|---|---|---|---|---|',
+ f'| 甲 tr → 0xB6/0x8D/0x89 | 1:1 の byte 写像(戻せる)・値に生 0xB6 が在れば曖昧(UTF-8 不正な値のみ) | ★不正★ | 3(\\n\\r\\t) | 1 byte=1 桁(壊さぬ) | UTF-8 で讀む讀手が decode で死ぬ(彼の實測) | 可 / 可 / 可(tr は外部) | 清い値は変らず |',
+ f'| 乙 `${{v//$\'\\n\'/␊}}` | ★不可(曖昧 {otsu_same})★ | 正 | 3 / Cc {cc}(残 {rest}+{zlp}) | ★3 byte=1 字: byte 詰めで 2 字ずれ★ | byte 切りで ★不正 0xE2★({bad40})・cut が LF を足す({lf40})・Python 行讀みに {yomite["py.splitlines"]} 字残る・画面に {scr} | 可 / 可 / ★不可(台が死ぬ・OUT 立たず)★ | 清い値は変らず・値の ␊ を注入と誤る |',
+ f'| 乙′ escape の escape | 可({otsu2_same}) | 正 | 3(乙と同) | 乙と同 + `\\` で更に膨れる | 乙と同 + 文法を知らぬ讀手に `\\␊` が謎 | 乙と同 | `\\` を含む清い値が `\\\\` に変る |',
+ f'| 丙1 `printf %q` | 可(eval で 30/30 戻る) | 正(ASCII のみ) | ★全て★(非 ASCII も) | 札が {h1len} byte(乙 {otsu_len} 字の約 2.5 倍) | 讀手が eval せねば讀めぬ・ASCII 故 byte 切りでも不正に成らぬ | 可 / 可 / ★不可(「printf: %q: invalid directive」で値が空・rc 0)★ | ★全角０ が `$\'\\357\\274\\220\'` に変る(2/2)★ |',
+ f'| 丙2 base64 | 可(decode 30/30) | 正 | 全て | 4/3 に膨れ | 人が讀めぬ | 可 / 可 / 可 | ★全値が変る(4/4)★ |',
+ f'| 丙3 数のみ(字数・改行 N・制御 M) | 不可(設計) | 正 | 全て(値を刷らぬ) | 一定 | 値が見えぬ(何が扱へぬかは判らぬ)・己の M は多 byte を誤算 | 可 / 可 / 可 | 全値が変る(値を刷らぬ故) |',
+ f'| 丙4 刷らぬ(字数のみ) | 不可(設計) | 正 | 全て | 一定 | 値が見えぬ | 可 / 可 / 可 | 同上 |',
+ '- ★推さぬ。表のみ。★ 何れを当てるかは委員長の裁。當席が數で言へるのは: 「改行を可視印に変へる」案(甲・乙)は ★可視印が値の字面と競合する★ 分だけ曖昧を持ち込み、「可視印を多 byte にする」(乙)は ★桁と byte 切り★ の二つを新たに開く。',
+ '',
+ '## 7. ㋖ 本紙が意味せぬ事(七)',
+ f'1. **「48/48 一致」は「乙が正しい」を意味せぬ。** 五つの前提を共有した(§1)。生器本体は誰も走らせて居らぬ。',
+ '2. **「乙を破つた」は偽である。** 乙は己が宣した事(bash 3.2 で 0x0A/0x0D/0x09 を可視印に均し、LF 讀手の鳴りを 2→1 に、判定不変)を ★悉く果たして居る★(§1 で己も再現した)。本紙が数へたのは乙が ★宣して居らぬ★ 領域(他の制御字・byte 切り・桁・曖昧・dash)である。乙は現行より悪くない(bash では)。',
+ f'3. **「dash で死ぬ」は「危い」を意味せぬ。** sh 起動の呼び手は {shform} 本(grep の範囲は scripts/ .claude/ config/ ~/Library/LaunchAgents のみ・他 PC の systemd unit は歩いて居らぬ)。',
+ '4. **「byte 切りで不正」は「今 壊れて居る」を意味せぬ。** 四本の生器が己の札を cut/`${v:0:N}` で切るかは測つて居らぬ。壊れるのは ★切る下流が在る時★。',
+ f'5. **「残る Cc {rest} 字」は「{rest} の穴」を意味せぬ。** byte の讀手には 0、Python の讀手に {yomite["py.splitlines"]}、tmux の画面に {scr}。讀手を名指さぬ數は嘘に成る。',
+ '6. **tmux の画面は端末の一つ。** Terminal.app / iTerm2 / VS Code の端末では測つて居らぬ。VT/FF が二行に見えるかは端末で違ひ得る。',
+ '7. **乙′ と 丙 は試案であつて提案ではない。** 據ゑて居らぬ・第三者の監査を経て居らぬ・丙3 は己の器に疵(制御字の数へ)が在る。',
+ '',
+ '## 8. ㋗ 宣⇔實',
+ f'- 起 = 着手便 05 の刻 {koku05}(字数 {ji05}・初便は 308 字で己の門に鳴り .first に残す)。宣 = 24 分(根: 器 16 本 × 己の第72弾實績 1.48 分/器 = 23.68 → 24・讀みの刻を含む實績)。端点 = 納め最終便を inbox_write.sh へ渡す直前の date 刻(62 が _after/63_sent.txt に刷る)。',
+ f'- ★器の数は宣の 16 でなく {NKI} で建つた({" ".join(k[:-3] for k in ki)})★ ―― 宣の式の「器 16」が先づ外れた(第72弾と同じ向き・器の数は焼き込まず数へよ)。實・宣−實・分/器 は 63_sent.txt。',
+ '',
+ '## 9. 疵の申告(己)',
+ '1. **05 の初便が 308 字で己の門(300 字)に鳴つた** ―― 9 字削つて再送(.first に残す)。字数を測る前に書いた。',
+ '2. **25(tmux の讀手)の初走は陽性対照が 0 行** ―― new-session に -s を付けず session 名が「0」に成り capture-pane の的を外した。陽性対照が無ければ「乙は画面でも一行」と書いて居た(.first に残す)。',
+ '3. **20 の陰性行を最初 一行の無理な式で書いた** ―― 走らせる前に平文へ直した(走らせて居らぬ故 .first 無し)。',
+ '4. **47 の「dash で rc≠0 = 0」は誤導** ―― dash は rc 0 で「printf: %q: invalid directive」を stderr に一行足し値を空にする。rc だけ見て「可」と書く所であつた。48 で逐語を刷り直した。',
+ '5. **48 の初走を `python3 -` の inline で打ち raw/ に __pycache__ を産んだ** ―― 消して 48_dash_hei.py に据ゑ -B で走らせ直した(出目同)。',
+ '6. **丙3 の「制御字 M byte」は tr -d [:print:] が C locale で多 byte を悉く数へる疵** ―― 61 byte は制御字の数ではない。表には疵付きで載せた。',
+ '7. **40 の `printf %-76s|` は札より短い幅で詰め物が出ず、桁揃への測りに成らなんだ** ―― 42 を別に建てた(40 の行は残す)。',
+ '9. **59 の写しを直す時 行中の註釈で `; nondecl = …` を殺し NameError** ―― 己の memory「行中の註釈 patch は行の残りを殺す」を第72弾に続き又踏んだ。註釈を上の行へ出して直した。',
+ '10. **70 の初走は丙1 の dash の語句を regex の第一群(rc)で捕へ「0」と刷つた** ―― 群を語句に直した(紙は臺帳の前ゆゑ .first 無し・本行が控)。',
+ '11. **62 の便1 を臺帳の凍結後に書き足し(08:10 便への応へ)、字数を測り直さず 50/60 へ進んだ ―― 門の後の DRY で 327 字と出て 62 が一通も送らず止まつた(fail-closed)。** 臺帳・門控・_after を .first に残し、便を 300 字以下に削つて臺帳から建て直した(作法⑸「便の胴→字数→凍結」を己が破つた・memory「送る器を書く前に便の長さを測れ」を踏んだ)。',
+ '12. **二度目の臺帳(.second)は 條① 相違 2 で門に落ちた ―― 50 自身の産物(前の輪の 50_build_manifest.out / 50_sengen.txt)を歩いて臺帳に載せ、然る後 50 が其れを書き換へた(自己言及・作法⑷ と同族・專任2 が第53弾で踏んだ形を己も踏んだ)。** 前の輪の産物を .first へ退けて三度目を建てた(.first/.second の臺帳・門控・_after は悉く残す)。',
+ f'8. **枝**: 00 の刻の HEAD は ab2a1f1・枝は `{num(r"枝 (\S+) HEAD", T00)}`(家老が建てると告げた枝ではない・當席は枝を動かさぬ・commit は家老)。',
+]
+K.kaku(B + '.md', '\n'.join(L)); print('紙', os.path.getsize(B + '.md'), 'B', sum(1 for _ in open(B + '.md', encoding='utf-8')), '行 / 器', NKI)

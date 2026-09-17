@@ -1,0 +1,11 @@
+# 10 再現 / 刻 2026-09-17T08:06:54+0900 / 己の走 48 / 彼の表 /Users/momizimac/multi-agent-shogun/docs/evidence/km-53b-gyou-chunyu-no-naoshi-wo-sueru-20260917/raw/40_an_otsu.tsv sha16 e9ddd602b2f1abd9
+★母數 48(彼の表の行)/ 一致 48 / 食ひ違ひ 0★(欄 = 鳴り行数・OUT・札のUTF-8・bash -n rc・走 rc の五つ)
+食ひ違ひ: 無し(五欄とも 48/48)
+彼の束外の台 12 本(~/km53b-utsushi-20260917/)⇔ 己の台(raw/dai/): an_scripts__agent_health_check.sh__乙(當席案).sh: 彼 a2e0331b2183a07f ⇔ 己 5339671af947fa82 異 / an_scripts__agent_health_check.sh__現行.sh: 彼 3f12e9b7a8f5344e ⇔ 己 9113ca5abeba0091 異 / an_scripts__agent_health_check.sh__紙(甲).sh: 彼 d3a5dd2dd18c9328 ⇔ 己 42de8a0611058a48 異 / an_scripts__checks__context_usage_warn.sh__乙(當席案).sh: 彼 ea213d7998d0a250 ⇔ 己 65e79f43c86170e6 異 / an_scripts__checks__context_usage_warn.sh__現行.sh: 彼 1bd7d9e423da398a ⇔ 己 9c831d62ba9cd96d 異 / an_scripts__checks__context_usage_warn.sh__紙(甲).sh: 彼 58bcba62369d7afd ⇔ 己 f232e4d95be82ea5 異 / an_scripts__inbox_watcher.sh__乙(當席案).sh: 彼 c19d54362a7c5527 ⇔ 己 d2cd47b0714d6a7f 異 / an_scripts__inbox_watcher.sh__現行.sh: 彼 fbe2e03e0b10b99a ⇔ 己 6baa3e60d13188fc 異 / an_scripts__inbox_watcher.sh__紙(甲).sh: 彼 091a4d15aab309f5 ⇔ 己 50d67a988d799586 異 / an_scripts__watchdogs__enter_restart_common_watchdog.sh__乙(當席案).sh: 彼 d1653310b61420be ⇔ 己 73104e2bbcc399b5 異 / an_scripts__watchdogs__enter_restart_common_watchdog.sh__現行.sh: 彼 1f0d309077df472a ⇔ 己 41657d2a21debc1b 異 / an_scripts__watchdogs__enter_restart_common_watchdog.sh__紙(甲).sh: 彼 34262d02d1ecbc81 ⇔ 己 022c8c8d507a0328 異
+★共有した前提(一致しても此処は二人で同じ石を踏んで居る)★:
+  ⑴ 台 = 生器から助器四本(_th_say/num_same_op/env_state/fix_threshold)を抜き 駆動一行を足した物 ―― 生器本体は一度も走らせて居らぬ(preflight の向う側)
+  ⑵ 鳴り行数 = stderr の非空行を \n で割つた数(LF 讀手)―― 他の讀手(splitlines 等)は 20 が別に数へる
+  ⑶ LC_ALL=C・/bin/bash 3.2.57 で走らせた(sh/dash/zsh は 30 が別に)
+  ⑷ 形は彼の四つ(改行一つ・abc・777・空)―― 他の制御字は 20 が別に
+  ⑸ 置換の逐語は彼の ki/40 から一字も変へず写した(彼の逐語に疵が在れば二人とも同じ疵を踏む)
+★違へた前提★: 台の切り方(彼=一塊・己=関数毎)/ 駆動の変数名(KM53B→KM73・札の語が変る故 stderr の逐語は比べず 五欄で比べた)

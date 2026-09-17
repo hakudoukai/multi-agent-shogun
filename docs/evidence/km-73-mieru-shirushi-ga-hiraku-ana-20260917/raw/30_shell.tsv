@@ -1,0 +1,41 @@
+生器	案	shell	rc	LF行	␊が札に	$'\n'の字面が札に	OUT	stderr(esc)
+scripts/inbox_watcher.sh	現行	/bin/bash	0	2	無	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	現行	/bin/sh	0	2	無	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	現行	/bin/dash	0	2	無	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	現行	/bin/zsh	0	2	無	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	現行	env bash	0	2	無	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	乙	/bin/bash	0	1	有	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	乙	/bin/sh	0	1	有	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	乙	/bin/dash	2	1	無	無	(無)	/Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watcher__乙.sh: 25: Bad substitutio
+scripts/inbox_watcher.sh	乙	/bin/zsh	0	1	有	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/inbox_watcher.sh	乙	env bash	0	1	有	無	99	[watcher] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	/bin/bash	0	2	無	無	99	★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	/bin/sh	0	2	無	無	99	★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	/bin/dash	0	2	無	無	99	★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	/bin/zsh	0	2	無	無	99	★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	現行	env bash	0	2	無	無	99	★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/bash	0	1	有	無	99	★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/sh	0	1	有	無	99	★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/dash	2	1	無	無	(無)	/Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_watchdog__乙.sh: 25: Bad substituti
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	/bin/zsh	0	1	有	無	99	★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/watchdogs/enter_restart_common_watchdog.sh	乙	env bash	0	1	有	無	99	★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	/bin/bash	0	2	無	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	/bin/sh	0	2	無	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	/bin/dash	0	2	無	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	/bin/zsh	0	2	無	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	現行	env bash	0	2	無	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	乙	/bin/bash	0	1	有	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	乙	/bin/sh	0	1	有	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	乙	/bin/dash	2	1	無	無	(無)	/Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_health__乙.sh: 25: Bad substitution
+scripts/agent_health_check.sh	乙	/bin/zsh	0	1	有	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/agent_health_check.sh	乙	env bash	0	1	有	無	99	[health_check] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	/bin/bash	0	2	無	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	/bin/sh	0	2	無	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	/bin/dash	0	2	無	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	/bin/zsh	0	2	無	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	現行	env bash	0	2	無	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1\x0A★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	乙	/bin/bash	0	1	有	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	乙	/bin/sh	0	1	有	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	乙	/bin/dash	2	1	無	無	(無)	/Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917/raw/dai/dai_ctxwarn__乙.sh: 20: Bad substitutio
+scripts/checks/context_usage_warn.sh	乙	/bin/zsh	0	1	有	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A
+scripts/checks/context_usage_warn.sh	乙	env bash	0	1	有	無	99	[context_warn] ★閾 KM73_TH を比較器が扱へぬ(「1␊★閾 KM73_TH を比較器が扱へぬ(「0」) ―― 既定 0 へ倒す(fail-closed)★」) ―― 既定 99 へ倒す(fail-closed)★\x0A

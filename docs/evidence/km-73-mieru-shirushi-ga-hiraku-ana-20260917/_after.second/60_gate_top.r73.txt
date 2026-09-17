@@ -1,0 +1,34 @@
+# 第73弾 門控(名 = 60_gate_top.r73・毎回別) # 四走 ―― 「all」(渡した − 本 = 臺帳の項 悉く / byte和 354073 / rc 1 ―― ★行末空白を持つ fixture 0 本(專任3 の diff 写し・.rej・汚れ)が 條② で鳴つて rc1 が正★)・「all_kiyoi」(其の 0 本を宣して除いた − 本 / byte和 354073 / rc 1)・「main」(渡した − 本 = 紙 + 臺帳 / byte和 27706 / rc 1)は ★KM_GATE_MANIFEST_BASE=束の根★ / 「nobase」(main と同じ argv・環境変数 unset / rc 1)は ★既定基点(repo 根)では束内相対の臺帳が悉く実体無で落ちる事の證★ ―― argv _after/61_gate_argv_*.txt・stderr _after/60_gate_*.err / 錠 raw/ 0555/0444 は門の前・歩哨 _after/00_hosho.txt mtime_ns 1789600770100896781
+# 刻 2026-09-17T08:19:34+0900 / 門 sha16 e11f0d0142549086 / 臺帳 sha16 c79756c2c64b4055 / 紙 sha16 4fe58b6f4bc7012f / 基点 /Users/momizimac/multi-agent-shogun/docs/evidence/km-73-mieru-shirushi-ga-hiraku-ana-20260917
+## 走り all(stderr 逐語・基点明示)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+條⑤ 寸法 = byte和 354073(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★
+## 走り all_kiyoi(stderr 逐語・宣した fixture を除く)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+條⑤ 寸法 = byte和 354073(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★
+## 走り main(stderr 逐語・基点明示)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+條⑤ 寸法 = byte和 27706(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★
+## 走り nobase(stderr 逐語・基点無し ―― 落ちて正)
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=既定(器の在處から導いた repo 根・cwd に依らぬ) ―― ★倒した事を刷る(裁322952 乙)★
+★條① 台帳とdiskの差が落ちた(manifest_verify.py 参照)★
+條⑤ 寸法 = byte和 27706(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★
