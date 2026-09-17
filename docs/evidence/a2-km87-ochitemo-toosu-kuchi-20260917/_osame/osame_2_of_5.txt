@@ -1,0 +1,1 @@
+km-87 納2/5 ㋑甲の出目(壊した物/rc/stderr行/眠か止か)。甲4口 悉く【rc=0・stdout 0byte・stderr 0行・★眠つた★】、未讀3を抱へた儘。壊し=権000/箱無/dir/grep落/tmux無。唯 kA_fifo のみ【rc=124・stderr 0行・★止★】。止の在処=pid44689 comm=grep(親=$()の子殻)。lsof -p は fd 0,1,2 のみ＝FIFO の fd 無し∴open(2)の中で待つ。其の fd2 は /dev/null ゆゑ★誤りも誰にも届かぬ★。本番に gtimeout は無く 生では★永久★。

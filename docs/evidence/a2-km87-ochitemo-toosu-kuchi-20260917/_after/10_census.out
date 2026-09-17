@@ -1,0 +1,63 @@
+的 path = utsushi/stop_hook_inbox.sh
+的 sha16 = f1b49820e234a1ee
+行(改行数 = wc -l 相当) = 288
+split 片 = 289 (末尾空片 = True)
+非shell帯(python -c の胴) = [264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287]
+
+=== 方言別 出目(註と非shell帯を除く) ===
+--- 甲a_or_true : 6 片 ---
+  L99   col82  | AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}' 2>/dev/null || true)
+  L138  col53  | "${WATCH_TARGETS_ACTIVE[@]}" 2>/dev/null || true
+  L144  col67  | UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L191  col63  | UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L234  col46  | "${WATCH_TARGETS[@]}" 2>/dev/null || true
+  L240  col67  | UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+--- 甲b_or_echo : 3 片 ---
+  L120  col136 | STOP_HOOK_ACTIVE=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('stop_hook_active', False))" 2>/dev/null || echo "False
+  L155  col131 | LAST_MSG=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('last_assistant_message', ''))" 2>/dev/null || echo "")
+  L288  col14  | " 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+--- 甲c_or_colon : 0 片 ---
+  (0 片)
+--- 乙a_2devnull : 10 片 ---
+  L58   col35  | num_same_op() { [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+  L99   col70  | AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}' 2>/dev/null || true)
+  L120  col124 | STOP_HOOK_ACTIVE=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('stop_hook_active', False))" 2>/dev/null || echo "False
+  L138  col41  | "${WATCH_TARGETS_ACTIVE[@]}" 2>/dev/null || true
+  L144  col55  | UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L155  col119 | LAST_MSG=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('last_assistant_message', ''))" 2>/dev/null || echo "")
+  L191  col51  | UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L234  col34  | "${WATCH_TARGETS[@]}" 2>/dev/null || true
+  L240  col55  | UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+  L288  col2   | " 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+--- 乙b_amp_devnull : 2 片 ---
+  L135  col30  | if command -v inotifywait &>/dev/null; then
+  L231  col30  | if command -v inotifywait &>/dev/null; then
+--- 丙a_colon_dash : 13 片 ---
+  L39   col12  | SCRIPT_DIR="${__STOP_HOOK_SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+  L64   col25  | STOP_HOOK_STDIN_TIMEOUT="${STOP_HOOK_STDIN_TIMEOUT:-10}"
+  L98   col11  | elif [ -n "${TMUX_PANE:-}" ]; then
+  L126  col10  | FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+  L145  col10  | if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+  L197  col22  | MASS_UNREAD_THRESHOLD=${MASS_UNREAD_THRESHOLD:-5}
+  L209  col6   | case "${UNREAD_COUNT:-0}" in
+  L211  col47  | echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+  L214  col6   | if [ "${UNREAD_COUNT:-0}" -gt "$MASS_UNREAD_THRESHOLD" ]; then
+  L215  col10  | FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+  L221  col6   | FLAG="${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}"
+  L222  col6   | if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+  L241  col10  | if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then
+
+=== 排他性 ===
+片の総和 = 34
+片を持つ行 = 25
+二方言以上が乗る行 = 9 {99: ['乙a_2devnull', '甲a_or_true'], 120: ['乙a_2devnull', '甲b_or_echo'], 138: ['乙a_2devnull', '甲a_or_true'], 144: ['乙a_2devnull', '甲a_or_true'], 155: ['乙a_2devnull', '甲b_or_echo'], 191: ['乙a_2devnull', '甲a_or_true'], 234: ['乙a_2devnull', '甲a_or_true'], 240: ['乙a_2devnull', '甲a_or_true'], 288: ['乙a_2devnull', '甲b_or_echo']}
+
+=== 実の exit(註・非shell帯を除く) ===
+  L106  | exit 0
+  L111  | exit 0
+  L146  | exit 0
+  L184  | exit 0
+  L218  | exit 0
+  L242  | exit 0
+実の exit = 6 口
+註の中の exit = 3 (母數の外)

@@ -1,0 +1,24 @@
+case         rc   秒    stdout     err行   判定                         stderr の初行
+----------------------------------------------------------------------------------------------------------------------------------
+kA_dir       0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+kA_fifo      124  60   0 byte     0      ★止★(60秒で己が止めた)             (0行)
+kA_grepfail  0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+kA_nofile    0    1    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+kA_perm      0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+k_badjson    0    0    207 byte   0      止められた(block)               (0行)
+k_bigline    0    0    141 byte   0      止められた(block)               (0行)
+k_dir        0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+k_fifo       0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+k_grepfail   0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+k_nofile     0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+k_nogrep     127  0    0 byte     1      其の他(rc=127 out=0byte)      env: bash: No such file or directory
+k_nostdin    0    11   207 byte   1      止められた(block)               [stop_hook] ★stdin 時限切れ(10秒経過・rc=1) — 讀めた 0 字で続行★
+k_notmux     0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+k_perm       0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+n0           0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+n3           0    0    207 byte   0      止められた(block)               (0行)
+n6           0    0    0 byte     1      ★眠つた(approve・stdout 0byte)★ [stop_hook] testseat has 6 unread (> 5) — refusing to block
+nA0          0    0    0 byte     0      ★眠つた(approve・stdout 0byte)★ (0行)
+nA3          0    1    207 byte   0      止められた(block)               (0行)
+----------------------------------------------------------------------------------------------------------------------------------
+走 = 20 件

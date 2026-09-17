@@ -1,0 +1,56 @@
++ set -euo pipefail
++ SCRIPT_DIR=/Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm
++ '[' -n '' ']'
++ STOP_HOOK_STDIN_TIMEOUT=10
++ num_same_op 10
++ '[' 10 -ge 0 ']'
++ '[' 0 -le 1 ']'
++ INPUT=
++ __stdin_t0=0
++ IFS=
++ read -r -d '' -t 10 INPUT
++ __read_rc=1
++ __stdin_el=0
++ '[' 1 -gt 128 ']'
++ '[' 0 -ge 10 ']'
++ '[' -n x ']'
++ AGENT_ID=testseat
++ '[' -z testseat ']'
++ '[' testseat = shogun ']'
++ INBOX=/Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm/queue/inbox/testseat.yaml
+++ echo '{"stop_hook_active": false, "last_assistant_message": "x"}'
+++ python3 -c 'import sys,json; print(json.load(sys.stdin).get('\''stop_hook_active'\'', False))'
++ STOP_HOOK_ACTIVE=False
++ '[' False = True ']'
+++ echo '{"stop_hook_active": false, "last_assistant_message": "x"}'
+++ python3 -c 'import sys,json; print(json.load(sys.stdin).get('\''last_assistant_message'\'', '\'''\''))'
++ LAST_MSG=x
++ '[' -n x ']'
++ NOTIFY_TYPE=
++ NOTIFY_CONTENT=
++ echo x
++ grep -qiE '任務完了|完了でござる|報告YAML.*更新|report.*updated|task completed|タスク完了'
++ grep -qiE 'エラー.*中断|失敗.*中断|見つからない.*中断|abort|error.*abort|failed.*stop'
++ echo x
++ '[' -n '' ']'
++ INBOX=/Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm/queue/inbox/testseat.yaml
++ '[' '!' -f /Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm/queue/inbox/testseat.yaml ']'
+++ grep -cE '^  read: false$' /Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm/queue/inbox/testseat.yaml
+++ true
++ UNREAD_COUNT=
++ MASS_UNREAD_THRESHOLD=5
++ case "$MASS_UNREAD_THRESHOLD" in
++ case "${UNREAD_COUNT:-0}" in
++ '[' 0 -gt 5 ']'
++ FLAG=/Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm/shogun_idle_testseat
++ '[' 0 -eq 0 ']'
++ touch /Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm/shogun_idle_testseat
++ WATCH_TARGETS=("$INBOX")
++ '[' testseat = shogun ']'
++ command -v inotifywait
++ :
+++ grep -cE '^  read: false$' /Users/momizimac/multi-agent-shogun/docs/evidence/a2-km87-ochitemo-toosu-kuchi-20260917/hako/k_perm/queue/inbox/testseat.yaml
+++ true
++ UNREAD_COUNT=
++ '[' 0 -eq 0 ']'
++ exit 0

@@ -1,0 +1,13 @@
+的 sha16=f1b49820e234a1ee
+逐語一致の行 = [144, 191, 240] (計 3 口)
+★行番で当てず逐語で当てた★ ―― 家老見立の L144/L191/L240 と一致: True
+
+=== L144 の文脈 ===
+  直上の守り : active 枝 L121 | if [ "$STOP_HOOK_ACTIVE" = "True" ]; then
+  直後の始末 : L145 if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then / L146 exit 0 / L147 fi
+=== L191 の文脈 ===
+  直上の守り : -f 守り L183 | if [ ! -f "$INBOX" ]; then
+  直後の始末 :
+=== L240 の文脈 ===
+  直上の守り : -f 守り L183 | if [ ! -f "$INBOX" ]; then
+  直後の始末 : L241 if [ "${UNREAD_COUNT:-0}" -eq 0 ]; then / L242 exit 0 / L243 fi
