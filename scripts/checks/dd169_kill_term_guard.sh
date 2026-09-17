@@ -7,7 +7,7 @@
 # 目的:
 #   - Bash(kill -TERM:*) wildcard を「数値 PID 1 個」制約の代替として扱わない
 #   - 厳格 regex `^kill -TERM ([0-9]+)$` のみ通す
-#   - 通過時: ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID> 証跡を /tmp/dd169_audit_log/ に記録
+#   - 通過時: ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p <PID> 証跡を ${HOME}/.local/state/dd169/ に記録
 #   - blocked 時: exit 2 (PreToolUse hook 中断) + 副院長 escalate handshake INSERT
 #
 # cycle4 修正 (stdin JSON 公式仕様準拠 + 対称 fail-secure):
@@ -80,7 +80,7 @@ if echo "$COMMAND" | grep -qE '^kill[[:space:]]+-TERM[[:space:]]+[0-9]+$'; then
     fi
     log "ALLOWED kill -TERM PID=$PID"
     log "  ps_evidence: $(echo "$PS_EVIDENCE" | tail -n +2)"
-    echo "[DD-169 guard] kill -TERM $PID allowed (証跡 /tmp/dd169_audit_log/)" >&2
+    echo "[DD-169 guard] kill -TERM $PID allowed (証跡 ${HOME}/.local/state/dd169/)" >&2
     exit 0
 fi
 
