@@ -1,0 +1,40 @@
+刻=2026-09-17T12:29:03+0900 写し=docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy.sh log_dir=/Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_log (11_copy_controls.txt の続き。其の他② は素で走らせると止まる為 gtimeout 5 = settings.json の hook timeout 5秒 を模す)
+## 其の他② stdin が閉ぢて居る(<&-)・gtimeout 5
+mode=closed payload=
+rc=124 ms=5039
+stdout=[]
+stderr=<<
+
+>>
+log 新規行数=0 (before=7 after=7)
+log 新規行 逐語(repr, 先頭200字):
+
+## 其の他③ 巨大 JSON(command 300,000字 echo aaa…・通る側)・gtimeout 5
+mode=file payload=docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-202609
+rc=0 ms=90
+stdout=[]
+stderr=<<
+
+>>
+log 新規行数=0 (before=7 after=7)
+log 新規行 逐語(repr, 先頭200字):
+
+## 其の他④ 巨大かつ壊れ JSON(300,000字・塞ぐ側→log へ input= 全文が落ちる)・gtimeout 5
+mode=file payload=docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-202609
+rc=2 ms=86
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=7 after=8)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=1) input={"tool_input": {"command": ""}}xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+--- 写し log の全行数 / bytes
+8
+  300711 docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_log/20260917.log
+--- 写し log 行頭 [..] 分布
+   8 []
+--- 写し log 非空刻 entry 数
+0

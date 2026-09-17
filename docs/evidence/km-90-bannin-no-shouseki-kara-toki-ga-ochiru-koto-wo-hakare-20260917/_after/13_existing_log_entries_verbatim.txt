@@ -1,0 +1,47 @@
+刻=2026-09-17T12:25:39+09:00 根=/tmp/dd169_audit_log 深さ=1 読取のみ
+file 数=3
+== 20260913.log bytes=45511 lines=333 '['起し行=18 '[] '起し行=14 非空刻の entry=0
+== 20260916.log bytes=5186 lines=38 '['起し行=3 '[] '起し行=3 非空刻の entry=0
+== 20260917.log bytes=17916 lines=234 '['起し行=11 '[] '起し行=11 非空刻の entry=0
+全行=605 entry(行頭'[')=32
+--- 最古 file の最初の entry / 最新 file の最後の entry (逐語 repr)
+最古 20260913.log L1: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun'
+最新 20260917.log L172: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun'
+--- 全 entry の行頭 12 byte(repr)と第2語の分布(file 別)
+  20260913.log: b'[] '+BLOCKED×6, b'[] '+ALLOWED×4, b'[] '+×4, b'[[f'+×2, b'[[r'+[[feedback_the_box_g×1, b'[[r'+×1
+  20260916.log: b'[] '+BLOCKED×1, b'[] '+ALLOWED×1, b'[] '+×1
+  20260917.log: b'[] '+BLOCKED×6, b'[] '+PARSE_FAIL:×3, b'[] '+ALLOWED×1, b'[] '+×1
+--- '[[' で始まる行(entry に非ず・input= の続き行)の逐語
+  20260913.log L52: '[[feedback_the_instrument_printing_the_number_can_be_wrong]],'
+  20260913.log L53: '[[feedback_positive_control_before_zero]].'
+  20260913.log L82: '[[reference_no_such_file_is_not_absence]], [[feedback_the_box_grows_while_you_measure_it]].'
+  20260913.log L127: '[[reference_dd169_guard_blocks_command_text_containing_pkill]]).'
+--- 全 entry 逐語(先頭 110 字・input= の本文は切る)
+  20260913.log L1: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun'
+  20260913.log L10: '[] ALLOWED kill -TERM PID=27344'
+  20260913.log L11: '[]   ps_evidence: 27344     1 27324 S      25:51 bash bash -c wc -c < "$1" _ /Users/momizimac/multi-agent-shog'
+  20260913.log L12: '[] ALLOWED kill -TERM PID=28118'
+  20260913.log L13: '[]   ps_evidence: 28118     1 27908 S      25:01 bash bash -c wc -c < "$1" _ /Users/momizimac/multi-agent-shog'
+  20260913.log L14: '[] ALLOWED kill -TERM PID=49575'
+  20260913.log L15: '[]   ps_evidence: '
+  20260913.log L16: '[] BLOCKED non-conforming kill: M=/Users/momizimac/.claude/projects/-Users-momizimac-multi-agent-shogun/memory'
+  20260913.log L144: '[] BLOCKED non-graceful kill: cd /Users/momizimac/multi-agent-shogun; E=queue/reports/ashigaru-mac-1_km-42-ken'
+  20260913.log L249: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun'
+  20260913.log L310: "[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun; echo '===== alias lib'; /usr/bin/grep "
+  20260913.log L331: '[] BLOCKED non-conforming kill: kill 14413 2>/dev/null; kill 14410 2>/dev/null; echo "killed rc=$?"; ps -p 144'
+  20260913.log L332: '[] ALLOWED kill -TERM PID=14413'
+  20260913.log L333: '[]   ps_evidence: 14413 14410 14410 S      03:55 /opt/homebrew/Ce /opt/homebrew/Cellar/python@3.14/3.14.6/Fram'
+  20260916.log L1: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun; T=km-58-ita-no-sengen-sha-wo-genbutsu-'
+  20260916.log L37: '[] ALLOWED kill -TERM PID=77773'
+  20260916.log L38: '[]   ps_evidence: 77773 77769 77763 SN     10:20 /opt/homebrew/Ce /opt/homebrew/Cellar/python@3.14/3.14.6/Fram'
+  20260917.log L1: '[] BLOCKED non-conforming kill: M=/Users/momizimac/.claude/projects/-Users-momizimac-multi-agent-shogun/memory'
+  20260917.log L81: '[] BLOCKED kill -9 (SIGKILL): cd /Users/momizimac/multi-agent-shogun'
+  20260917.log L127: '[] BLOCKED kill -9 (SIGKILL): cd /Users/momizimac/multi-agent-shogun'
+  20260917.log L142: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun'
+  20260917.log L155: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun'
+  20260917.log L167: '[] ALLOWED kill -TERM PID=75921'
+  20260917.log L168: '[]   ps_evidence: 75921 86656 75921 Ss     04:56 /bin/zsh /bin/zsh -c source /Users/momizimac/.claude/shell-sn'
+  20260917.log L169: '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={}'
+  20260917.log L170: '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={}'
+  20260917.log L171: '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={}'
+  20260917.log L172: '[] BLOCKED non-conforming kill: cd /Users/momizimac/multi-agent-shogun'

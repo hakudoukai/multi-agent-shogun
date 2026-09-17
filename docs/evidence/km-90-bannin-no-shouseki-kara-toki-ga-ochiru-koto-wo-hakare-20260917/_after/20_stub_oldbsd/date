@@ -1,0 +1,2 @@
+#!/bin/bash
+case "$1" in -I*) echo "date: illegal option -- I" >&2; exit 1;; esac; exec /bin/date "$@"

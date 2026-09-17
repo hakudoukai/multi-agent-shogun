@@ -1,0 +1,120 @@
+刻=2026-09-17T12:27:40+0900
+--- 14 の残り節(birth 最古 / 掃除機構 / TMPDIR / log)
+--- birth 最古 10(stat %SB)
+2026-08-02T18:54:48 /private/tmp/codex-browser-use
+2026-08-02T18:55:02 /private/tmp/tmux-501
+2026-08-06T17:01:15 /private/tmp/claude-501
+2026-08-07T07:29:06 /private/tmp/shogun_idle_ashigaru-mac-1
+2026-08-07T07:29:06 /private/tmp/shogun_idle_ashigaru-mac-2
+2026-08-07T07:29:06 /private/tmp/shogun_idle_ashigaru-mac-3
+2026-08-07T07:36:57 /private/tmp/inbox_watcher_nudge_fingerprint_ashigaru-mac-1
+2026-08-07T07:37:28 /private/tmp/inbox_watcher_nudge_fingerprint_ashigaru-mac-3
+2026-08-10T23:50:31 /private/tmp/inbox_watcher_nudge_fingerprint_ashigaru-mac-2
+2026-08-11T22:31:39 /private/tmp/cc-socks
+--- 掃除機構の探索(launchd / periodic / tmpfiles)
+com.apple.bsd.dirhelper.plist
+com.apple.systemstats.microstackshot_periodic.plist
+com.apple.tmp_cleaner.plist
+grep rc=0
+ls: /etc/periodic: No such file or directory
+ls: /usr/sbin/periodic: No such file or directory
+-rwxr-xr-x  1 root  wheel  197376 Jun 25 11:29 /usr/libexec/dirhelper
+		   59409   (pe) 	com.apple.systemstats.microstackshot_periodic
+		    7208   (pe) 	com.apple.bsd.dirhelper
+		  0xb703    M   A   com.apple.bsd.dirhelper
+launchctl grep rc=0
+--- /var/folders (TMPDIR) 側の掃除は別機構(参考)
+TMPDIR=/var/folders/z0/bdbk65zj0gjg80g3784jhmvc0000gn/T/
+drwx------@ 2107 momizimac  staff  67424 Sep 17 12:25:48 2026 /var/folders/z0/bdbk65zj0gjg80g3784jhmvc0000gn/T/
+--- 過去 log から 'Removing old temporary files' 等の痕跡
+rc=1
+(eval):log:11: too many arguments
+--- 3日超の物: 普通 file(-rw) のみ 日別
+   1 Jun 25
+   1 Sep 10
+  37 Sep 12
+ 904 Sep 13
+--- 3日超の物: dir(drwx) のみ 日別
+   2 Aug 25
+   2 Aug 26
+   2 Aug 27
+   2 Aug 29
+   8 Aug 30
+   6 Sep 2
+   2 Sep 3
+   1 Sep 4
+   1 Sep 5
+   3 Sep 6
+   1 Sep 7
+   1 Sep 9
+   1 Sep 10
+   1 Sep 11
+   5 Sep 12
+   9 Sep 13
+   1 Sep 17
+--- 3日超 普通 file の最古 5
+-rwxr-xr-x  1 root  wheel  197376 Jun 25 11:29 /usr/libexec/dirhelper
+-rw-r--r--@ 1 momizimac  staff  57348 Sep 10 19:55:51 2026 /private/tmp/karo-realindex-before-90731.bin
+-rw-r--r--@ 1 momizimac  wheel  1527 Sep 12 05:05:47 2026 /private/tmp/seq307150-multiagent-mac_0_2.txt
+-rw-r--r--@ 1 momizimac  wheel  1725 Sep 12 05:05:47 2026 /private/tmp/seq307150-multiagent-mac_0_3.txt
+-rw-r--r--@ 1 momizimac  wheel  1507 Sep 12 05:06:49 2026 /private/tmp/resume-0510-panes.txt
+--- Jun 25 の 1 件
+-rwxr-xr-x  1 root  wheel  197376 Jun 25 11:29 /usr/libexec/dirhelper
+--- cron / LaunchAgents に /tmp 掃除は在るか
+crontab: no crontab for momizimac
+crontab rc=0
+/Library/LaunchAgents:
+com.box.desktop.helper.plist
+com.google.keystone.agent.plist
+com.google.keystone.xpcservice.plist
+org.chromium.chromoting.plist
+
+/Library/LaunchDaemons:
+com.box.desktop.autoupdater.plist
+com.google.GoogleUpdater.wake.system.plist
+com.google.keystone.daemon.plist
+org.chromium.chromoting.broker.plist
+
+/Users/momizimac/Library/LaunchAgents:
+com.box.desktop.launch.plist
+com.dentalbi.gakushu-runtime-sentinel.plist
+com.google.GoogleUpdater.wake.plist
+com.google.keystone.agent.plist
+com.google.keystone.xpcservice.plist
+com.hakudokai.joumu-codex-bridge.plist
+jp.dentalbi.drm-panel.plist
+jp.dentalbi.gunshi-mac-ensure.plist
+jp.dentalbi.hermes-idle-flag-sync.plist
+jp.dentalbi.idle-backlog-wake.plist
+jp.dentalbi.kikaku-bell.plist
+jp.dentalbi.mac-central8080-guard.plist
+jp.dentalbi.mac-fleet-boot.plist
+jp.dentalbi.mac-hermes-compact-sweep.plist
+jp.dentalbi.mimamori.plist
+jp.dentalbi.mimamori.plist.bak-15min-20260907
+jp.dentalbi.mimamori.plist.bak-ccflare2-20260907
+jp.dentalbi.mimamori.plist.bak-exclude-20260906
+jp.dentalbi.mimamori.plist.bak-interval-20260917-001857
+jp.dentalbi.mimamori.plist.bak-interval300-20260906
+jp.dentalbi.mimamori.plist.bak-mac3-rest-20260907
+jp.dentalbi.mimamori.plist.bak-omz-20260905
+jp.dentalbi.mimamori.plist.bak-reportonly-20260906
+jp.dentalbi.mimamori.plist.bak-reportonly-off-20260910
+jp.dentalbi.rdc-agent.plist
+/Users/momizimac/Library/LaunchAgents/com.box.desktop.launch.plist
+plist grep rc=0
+--- repo/~/bin に /tmp を掃く器は在るか(find … -delete / rm -rf /tmp)
+rc=0
+--- 00:00:00 に中身が変はつた dir の例: 中身
+/private/tmp/karo_birthgt_1787587757:
+total 8
+drwxr-xr-x@    3 momizimac  wheel      96 Aug 30 00:00:00 2026 .
+drwxrwxrwt  4661 root       wheel  149152 Sep 17 12:27:20 2026 ..
+-rw-r--r--@    1 momizimac  wheel       2 Jan  1 00:00:00 2010 B
+
+/private/tmp/tk5st138_sandbox:
+total 0
+drwxr-xr-x@    4 momizimac  wheel     128 Sep  2 00:00:01 2026 .
+drwxrwxrwt  4661 root       wheel  149152 Sep 17 12:27:20 2026 ..
+lrwxr-xr-x@    1 momizimac  wheel      41 Aug 24 09:20:41 2026 .venv -> /Users/momizimac/multi-agent-shogun/.venv
+drwxr-xr-x@    3 momizimac  wheel      96 Aug 24 09:20:41 2026 config

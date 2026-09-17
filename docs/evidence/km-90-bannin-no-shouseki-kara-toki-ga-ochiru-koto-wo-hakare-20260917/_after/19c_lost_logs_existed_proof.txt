@@ -1,0 +1,20 @@
+刻=2026-09-17T12:33:52+0900
+--- 消えた log が『実在した』証: jsonl 内の ls 出目(所有者 wheel + 寸法 + 名)を名別に最大 2 行(LC_ALL=C・-a)
+20260824:  rc_grep=
+20260902: momizimac  wheel  12518 Sep  2 00:21 20260902.log| rc_grep=
+20260903: momizimac  wheel  18129 Sep  3 05:59 20260903.log| rc_grep=
+20260906: momizimac  wheel     701 Sep  6 21:56 20260906.log|momizimac  wheel    701 Sep  6 21:56 20260906.log| rc_grep=
+20260907: momizimac  wheel    8493 Sep  7 17:43 20260907.log|momizimac  wheel   8493 Sep  7 17:43 20260907.log| rc_grep=
+20260908: momizimac  wheel    1143 Sep  8 20:28 20260908.log|momizimac  wheel   1143 Sep  8 20:28 20260908.log| rc_grep=
+20260911: momizimac  wheel   40784 Sep 11 09:01 20260911.log|momizimac  wheel   70904 Sep 11 18:10 20260911.log| rc_grep=
+20260912: momizimac  wheel     706 Sep 12 00:19 20260912.log|momizimac  wheel   49631 Sep 12 15:18 20260912.log| rc_grep=
+--- 陽性対照: 今在る 20260913.log の ls 出目も同 regex で拾へるか
+momizimac  wheel   42196 Sep 13 14:56 20260913.log
+momizimac  wheel   45511 Sep 13 19:41 20260913.log
+rc=0
+--- 消えた log の中身の一例(『[] BLOCKED』が jsonl に写つて居るか= 刻が空だつたのは 9/13 以前も同じかの証)
+20260906: /Users/momizimac/.claude/projects/-Users-momizimac-multi-agent-shogun/22c8c724-5fe6-44f8-93be-e29bbdd2b039.jsonl:20260906.log <==\n[] BLOCKED non-conforming kill: kill 2756 2754 2>/|/Users/momizimac/.claude/projects/-Users-momizimac-multi-agent-shogun/22c8c724-5fe6-44f8-93be-e29bbdd2b039.jsonl:20260906.log <==\n[] BLOCKED non-conforming kill: kill 2756 2754 2>/|
+20260911: /Users/momizimac/.claude/projects/-Users-momizimac-multi-agent-shogun/22c8c724-5fe6-44f8-93be-e29bbdd2b039.jsonl:20260911.log\nLOGDIR_RC=0\n[] BLOCKED non-conforming kill: kill 2756 2754 2>/|/Users/momizimac/.claude/projects/-Users-momizimac-multi-agent-shogun/22c8c724-5fe6-44f8-93be-e29bbdd2b039.jsonl:20260911.log\nLOGDIR_RC=0\n[] BLOCKED non-conforming kill: kill 2756 2754 2>/|
+--- 別形: '==> /tmp/dd169_audit_log/2026MMDD.log <==' (tail/head の見出し)の後に続く行頭
+   2 20260906 → []
+   2 20260907 → []

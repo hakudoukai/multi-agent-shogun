@@ -1,0 +1,29 @@
+刻=2026-09-17T12:21:24+0900
+uname=Darwin 25.5.0 arm64
+sw_vers=26.5.2
+date_bin=/bin/date
+shell=/bin/zsh bash=GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+12:21:24	form=-Is	rc=1	stdout=[]	stderr=[date: invalid argument 's' for -I]
+12:21:24	form=-Iseconds	rc=0	stdout=[2026-09-17T12:21:24+09:00]	stderr=[]
+12:21:24	form=-Isec	rc=1	stdout=[]	stderr=[date: invalid argument 'sec' for -I]
+12:21:24	form=-I	rc=0	stdout=[2026-09-17]	stderr=[]
+12:21:24	form=-Idate	rc=0	stdout=[2026-09-17]	stderr=[]
+12:21:24	form=-Ihours	rc=0	stdout=[2026-09-17T12+09:00]	stderr=[]
+12:21:24	form=-Iminutes	rc=0	stdout=[2026-09-17T12:21+09:00]	stderr=[]
+12:21:24	form=-Ins	rc=0	stdout=[2026-09-17T12:21:24,226776000+09:00]	stderr=[]
+12:21:24	form=+%Y-%m-%dT%H:%M:%S%z	rc=0	stdout=[2026-09-17T12:21:24+0900]	stderr=[]
+12:21:24	form=+%Y-%m-%dT%H:%M:%S%:z	rc=0	stdout=[2026-09-17T12:21:24:z]	stderr=[]
+12:21:24	form=+%FT%T%z	rc=0	stdout=[2026-09-17T12:21:24+0900]	stderr=[]
+--- gdate (GNU coreutils) 有無
+/opt/homebrew/bin/gdate
+rc=0
+date (GNU coreutils) 9.11
+gdate -Is rc=0 out=[2026-09-17T12:21:24+09:00]
+gdate -Iseconds rc=0 out=[2026-09-17T12:21:24+09:00]
+--- bash 'date -Is' 経由(番人と同じ呼び方 = printf '[%s]' "$(date -Is)")
+date: invalid argument 's' for -I
+[] probe
+rc=0
+--- python3 で GNU -Is 同形を作る
+2026-09-17T12:21:24+09:00
+rc=0

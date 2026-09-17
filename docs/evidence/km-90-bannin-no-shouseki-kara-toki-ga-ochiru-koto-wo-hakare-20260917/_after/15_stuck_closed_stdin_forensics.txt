@@ -1,0 +1,34 @@
+刻=2026-09-17T12:27:16+0900
+--- 止まつた写し(pid 78930)の系譜と子
+  PID  PPID  PGID STAT     ELAPSED WCHAN  COMMAND
+78641 78620 78620 S          03:38 -      /bin/zsh -c source /Users/momizimac/.claude/shell-snapshots/snapshot-zsh-1789602971859-7lit67.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && eval 'B=docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917 && C="$B/_after/guard_copy.sh" && L="$B/_after/guard_copy_log" && mkdir -p "$L" && cp scripts/checks/dd169_kill_term_guard.sh "$C" && LABS="$(cd "$B/_after" && pwd)/guard_copy_log" && sed -i '"'"''"'"' "s|^LOG_DIR=\"/tmp/dd169_audit_log\"$|LOG_DIR=\"$LABS\"|" "$C" && { echo "刻=$(date '"'"'+%Y-%m-%dT%H:%M:%S%z'"'"')"; echo "生器 sha256=$(shasum -a 256 scripts/checks/dd169_kill_term_guard.sh | cut -c1-64)"; echo "写し sha256=$(shasum -a 256 "$C" | cut -c1-64)"; echo "--- diff 生器 vs 写し(LOG_DIR 一行のみの筈)"; diff scripts/checks/dd169_kill_term_guard.sh "$C"; echo "diff rc=$?"; } | tee "$B/_after/10_copy_diff.txt"\012echo "=== 両対照" \012run(){ lab="$1"; mode="$2"; payload="$3"; lf="$L/$(date +%Y%m%d).log"; before=$(grep -c '"'"''"'"' "$lf" 2>/dev/null || echo 0); t0=$(python3 -c '"'"'import time;print(time.time())'"'"');\012  case "$mode" in\012    str)   out=$(printf '"'"'%s'"'"' "$payload" | bash "$C" 2>"$B/_after/11_err.tmp"); rc=$? ;;\012    null)  out=$(bash "$C" </dev/null 2>"$B/_after/11_err.tmp"); rc=$? ;;\012    closed) out=$(bash "$C" <&- 2>"$B/_after/11_err.tmp"); rc=$? ;;\012    file)  out=$(bash "$C" <"$payload" 2>"$B/_after/11_err.tmp"); rc=$? ;;\012  esac; t1=$(python3 -c '"'"'import time;print(time.time())'"'"'); ms=$(python3 -c "print(int(($t1-$t0)*1000))")\012  after=$(grep -c '"'"''"'"' "$lf" 2>/dev/null || echo 0); new=$((after-before))\012  printf '"'"'## %s\nmode=%s payload=%s\nrc=%s ms=%s\nstdout=[%s]\nstderr=<<\n%s\n>>\nlog 新規行数=%s (before=%s after=%s)\nlog 新規行 逐語(repr, 先頭200字):\n'"'"' "$lab" "$mode" "$(printf '"'"'%s'"'"' "$payload" | head -c 80)" "$rc" "$ms" "$out" "$(cat "$B/_after/11_err.tmp")" "$new" "$before" "$after"\012  if [ "$new" -gt 0 ]; then tail -n "$new" "$lf" | python3 -c '"'"'import sys\012for l in sys.stdin.read().split("\n")[:-1]: print("  ", repr(l[:200]))'"'"'; fi; echo; }\012{\012echo "刻=$(date '"'"'+%Y-%m-%dT%H:%M:%S%z'"'"') 写し=$C log_dir=$LABS"\012run '"'"'陰性① 通る: echo hi'"'"' str '"'"'{"tool_input":{"command":"echo hi"}}'"'"'\012run '"'"'陰性② 通る: file名に下線区切りの語(cp scripts/checks/dd169_kill_term_guard.sh x)'"'"' str '"'"'{"tool_input":{"command":"cp scripts/checks/dd169_kill_term_guard.sh /dev/null"}}'"'"'\012run '"'"'陰性③ 通る: 空白のみの command'"'"' str '"'"'{"tool_input":{"command":"   "}}'"'"'\012run '"'"'陽性① 塞ぐ: command 空'"'"' str '"'"'{"tool_input":{"command":""}}'"'"'\012run '"'"'陽性② 塞ぐ: JSON 壊れ {{{'"'"' str '"'"'{{{'"'"'\012run '"'"'陽性③ 塞ぐ: tool_input 鍵無し {"foo":1}'"'"' str '"'"'{"foo":1}'"'"'\012run '"'"'陽性④ 塞ぐ: tool_input 有り command 鍵無し'"'"' str '"'"'{"tool_input":{}}'"'"'\012run '"'"'陽性⑤ 塞ぐ: JSON が null'"'"' str '"'"'null'"'"'\012run '"'"'陽性⑥ 塞ぐ: tool_input が文字列'"'"' str '"'"'{"tool_input":"x"}'"'"'\012run '"'"'其の他① stdin が空(</dev/null)'"'"' null '"'"''"'"'\012run '"'"'其の他② stdin が閉ぢて居る(<&-)'"'"' closed '"'"''"'"'\012python3 -c "import json;print(json.dumps({'"'"'tool_input'"'"':{'"'"'command'"'"':'"'"'echo '"'"'+'"'"'a'"'"'*300000}}))" > "$B/_after/11_huge_300k.json"\012run '"'"'其の他③ 巨大 JSON(command 300,000字 echo aaa…・通る側)'"'"' file "$B/_after/11_huge_300k.json"\012python3 -c "import json;print(json.dumps({'"'"'tool_input'"'"':{'"'"'command'"'"':'"'"''"'"'}})+'"'"'x'"'"'*300000)" > "$B/_after/11_huge_broken_300k.json"\012run '"'"'其の他④ 巨大かつ壊れ JSON(300,000字・塞ぐ側→log へ input= 全文が落ちる)'"'"' file "$B/_after/11_huge_broken_300k.json"\012echo "--- 写し log の全行数 / bytes"; grep -c '"'"''"'"' "$L"/*.log; wc -c "$L"/*.log\012echo "--- 写し log 行頭 [..] 分布"; grep -o '"'"'^\[[^]]*\]'"'"' "$L"/*.log | sort | uniq -c\012} 2>&1 | tee "$B/_after/11_copy_controls.txt"; rm -f "$B/_after/11_err.tmp"' && pwd -P >| /tmp/claude-47cc-cwd
+78930 78641 78620 S          03:36 -      bash docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy.sh
+78933 78930 78620 S          03:36 -      cat
+--- 子の子
+--- lsof fd 表 (78930)
+FD TYPE NAME
+cwd DIR /Users/momizimac/multi-agent-shogun
+txt REG /bin/bash
+txt REG /usr/lib/dyld
+0 PIPE
+1 PIPE
+2w REG /Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/11_err.tmp
+255r REG /Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy.sh
+--- lsof fd 表 (子 78933)
+FD TYPE NAME
+cwd DIR /Users/momizimac/multi-agent-shogun
+txt REG /bin/cat
+txt REG /usr/lib/dyld
+0 PIPE
+1 PIPE
+2w REG /Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/11_err.tmp
+--- 再現(小): bash -c 'cat' <&- は止まるか(gtimeout 3)
+/opt/homebrew/bin/gtimeout
+cat: stdin: Bad file descriptor
+cat_rc=1
+rc=0
+--- 再現(小): bash -c 'x=$(cat); echo len=${#x}' <&- (gtimeout 3)
+rc=124
+--- 再現(小): bash script.sh <&- で script 自身が fd0 に開くか
+fd0: ls: /dev/fd/0: Bad file descriptor
+rc=0

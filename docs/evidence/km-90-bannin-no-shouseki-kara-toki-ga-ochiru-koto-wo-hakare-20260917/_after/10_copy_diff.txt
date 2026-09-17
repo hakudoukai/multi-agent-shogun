@@ -1,0 +1,9 @@
+刻=2026-09-17T12:23:38+0900
+生器 sha256=3958f4fff3295e6398981f4e970ee7374c9db167860f7a8d7ac2cb2c1b3fa821
+写し sha256=5dedb93cff0d1bdd78e03f768cb67460cfa411cdc662403ed22f42260db2f61a
+--- diff 生器 vs 写し(LOG_DIR 一行のみの筈)
+22c22
+< LOG_DIR="/tmp/dd169_audit_log"
+---
+> LOG_DIR="/Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_log"
+diff rc=1

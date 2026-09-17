@@ -1,0 +1,72 @@
+刻=2026-09-17T12:31:28+0900 fixed=docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_fixed.sh log_dir=/Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_fixed_log
+--- diff 写し(生器と LOG_DIR のみ違ふ) vs 直し写し
+22c22
+< LOG_DIR="/Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_log"
+---
+> LOG_DIR="/Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_fixed_log"
+26c26,28
+< log() { printf '[%s] %s\n' "$(date -Is)" "$*" >> "$LOG_FILE"; }
+---
+> # km-90 直し案(写しにのみ): -Is は GNU の略記。BSD/GNU 両方で通る -Iseconds を先に、無い古い BSD は +%FT%T%z へ倒す(刻を空にしない)
+> ts() { date -Iseconds 2>/dev/null || date '+%Y-%m-%dT%H:%M:%S%z'; }
+> log() { printf '[%s] %s\n' "$(ts)" "$*" >> "$LOG_FILE"; }
+29a32,33
+> # km-90 直し案(写しにのみ): fd0 が閉ぢて居ると $(cat) の pipe 読み口が fd0 に落ちて永久に止まる → 先に検めて exit 2
+> if ! { : <&0; } 2>/dev/null; then log "PARSE_FAIL: stdin closed (fd0 not open)"; echo '[DD-169 guard] BLOCKED: stdin closed (対称 fail-secure)' >&2; exit 2; fi
+diff rc=1
+bash -n rc=0
+## 陰性① echo hi
+rc=0 stdout=[]
+stderr=<<
+
+>>
+log 新規行 0:
+
+## 陽性① command 空
+rc=2 stdout=[]
+stderr=<<
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行 1:
+   '[2026-09-17T12:31:28+09:00] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={"tool_input":{"command":""}}'
+
+## 陽性② JSON 壊れ
+rc=2 stdout=[]
+stderr=<<
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行 1:
+   '[2026-09-17T12:31:28+09:00] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=1) input={{{'
+
+## 陽性③ tool_input 無し
+rc=2 stdout=[]
+stderr=<<
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行 1:
+   '[2026-09-17T12:31:28+09:00] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={"foo":1}'
+
+## 其の他① stdin 空(</dev/null)
+rc=2 stdout=[]
+stderr=<<
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行 1:
+   '[2026-09-17T12:31:28+09:00] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=1) input='
+
+## 其の他② stdin 閉ぢ(<&-)・gtimeout 5
+rc=124 stdout=[]
+stderr=<<
+
+>>
+log 新規行 0:
+
+--- 直し写し log の非空刻 entry / 全 entry
+4
+4
+--- ts() 単体: BSD(此の機) / GNU(gdate を date として PATH 先頭へ) / -I 無し BSD を模す(date を +%FT%T%z のみ通す stub)
+BSD  : 2026-09-17T12:31:33+09:00
+GNU  : docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/20_stub_gnu/date
+2026-09-17T12:31:34+09:00
+旧BSD: docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/20_stub_oldbsd/date
+2026-09-17T12:31:34+0900

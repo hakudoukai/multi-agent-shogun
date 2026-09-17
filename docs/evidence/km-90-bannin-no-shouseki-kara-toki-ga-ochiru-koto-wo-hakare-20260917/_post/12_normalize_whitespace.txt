@@ -1,0 +1,7 @@
+刻= 2026-09-17T12:43:46+09:00
+則: 各行の末尾空白(\x20 \t)を剥ぐ・EOF は改行丁度 1・CR は触れぬ(在れば刷る)。対象= 門 all が名指した 5 本のみ。他 file は触れぬ。
+_after/04_existing_log_readonly.txt: 末尾空白を剥いだ行=1 末尾空行を落とした数=0 CR=0 bytes 10482→10481 sha16 faab688c241af8dd→117ae1d53f291148
+_after/11_copy_controls.txt: 末尾空白を剥いだ行=0 末尾空行を落とした数=1 CR=0 bytes 3874→3873 sha16 fc6e4d476a3cd430→804d465bae5013f1
+_after/15_stuck_closed_stdin_forensics.txt: 末尾空白を剥いだ行=4 末尾空行を落とした数=0 CR=0 bytes 5750→5746 sha16 c872bcc452fef2c8→d93114364fdd8e00
+_after/18_tmp_cleaner_script_and_predicate.txt: 末尾空白を剥いだ行=5 末尾空行を落とした数=0 CR=0 bytes 2884→2879 sha16 917ff9fb9f05dd77→3020039607c031b9
+★中身の字(空白以外)は一字も変へて居らぬ: 各行 rstrip と末尾空行のみ★

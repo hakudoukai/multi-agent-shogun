@@ -1,0 +1,64 @@
+刻=2026-09-17T12:30:24+0900
+--- /usr/libexec/tmp_cleaner 本文 逐語(読取のみ・sha256=b59bfb732b360e3e)
+     1	#!/bin/sh
+     2	#
+     3	# Perform temporary directory cleaning so that long-lived systems
+     4	# don't end up with excessively old files there.
+     5	#
+     6
+     7	# Configurations
+     8	daily_clean_tmps_dirs="/tmp"				# Delete under here
+     9	daily_clean_tmps_days="3"				# If not accessed for
+    10	daily_clean_tmps_ignore=".X*-lock .X11-unix .ICE-unix .font-unix .XIM-unix"
+    11	daily_clean_tmps_ignore="$daily_clean_tmps_ignore quota.user quota.group"
+    12								# Don't delete these
+    13
+    14	echo "Removing old temporary files:"
+    15
+    16	set -f noglob
+    17	args="-atime +$daily_clean_tmps_days -mtime +$daily_clean_tmps_days"
+    18	args="${args} -ctime +$daily_clean_tmps_days"
+    19	dargs="-empty -mtime +$daily_clean_tmps_days"
+    20	dargs="${dargs} ! -name .vfs_rsrc_streams_*"
+    21	args="$args "`echo " ${daily_clean_tmps_ignore% }" |
+    22	    sed 's/[ 	][ 	]*/ ! -name /g'`
+    23	dargs="$dargs "`echo " ${daily_clean_tmps_ignore% }" |
+    24	    sed 's/[ 	][ 	]*/ ! -name /g'`
+    25
+    26	for dir in $daily_clean_tmps_dirs
+    27	do
+    28	    [ ."${dir#/}" != ."$dir" -a -d $dir ] && cd $dir && {
+    29	    find -dx . -fstype local -type f $args -delete -print
+    30	    find -dx . -fstype local ! -name . -type d $dargs -delete -print
+    31	    } | sed "s,^\\.,  $dir,"
+    32	done
+    33	set -f glob
+    34
+    35	exit 0
+--- man find: -atime/-mtime の n の丸め(逐語)
+112-	     Same as -neweram.
+113-
+114:     -atime n[smhdw]
+115-	     If no units are specified, this primary evaluates to true if the
+116-	     difference between the file last access time and the time find
+117-	     was started, rounded up to the next full 24-hour period, is n
+118-	     24-hour periods.
+119-
+120-	     If units are specified, this primary evaluates to true if the
+121-	     difference between the file last access time and the time find
+122-	     was started is exactly n units.  Possible time units are as
+--- 掃除器と同じ述語を今当てると: /private/tmp 直下で次の 0時に消える普通 file の数
+     931
+rc=0
+--- 同述語を /tmp/dd169_audit_log へ(読取のみ・-delete は付けぬ)
+rc=0 件数=0
+--- 各条件を単独で(20260913.log)
+  -atime +3 → 0
+  -mtime +3 → 0
+  -ctime +3 → 0
+--- 陽性対照: 三条件とも 4 日超の普通 file が /private/tmp 直下に在るか(在れば次の 0時に消える)
+-rw-r--r--@ 1 momizimac  wheel  66 Sep 13 06:08:58 2026 /private/tmp/seq311323-commander-send.txt
+-rw-r--r--@ 1 momizimac  wheel  8299 Sep 13 02:10:03 2026 /private/tmp/wake12-gunshi.txt
+-rw-r--r--@ 1 momizimac  wheel  137 Sep 13 00:47:43 2026 /private/tmp/km_push30.out
+--- launchd: tmp_cleaner の最終実行痕(log show・直近 2 日・process 名)
+log show rc=0

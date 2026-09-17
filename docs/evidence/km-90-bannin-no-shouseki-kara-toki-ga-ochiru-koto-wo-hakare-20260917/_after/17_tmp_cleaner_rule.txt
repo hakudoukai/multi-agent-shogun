@@ -1,0 +1,62 @@
+刻=2026-09-17T12:28:48+0900
+--- com.apple.tmp_cleaner.plist 逐語(読取のみ)
+{
+  "Label" => "com.apple.tmp_cleaner"
+  "LowPriorityIO" => true
+  "Nice" => 1
+  "ProgramArguments" => [
+    0 => "/usr/libexec/tmp_cleaner"
+  ]
+  "StartCalendarInterval" => {
+    "Hour" => 0
+  }
+}
+--- com.apple.bsd.dirhelper.plist 逐語
+{
+  "EnablePressuredExit" => true
+  "EnvironmentVariables" => {
+    "CLEAN_FILES_OLDER_THAN_DAYS" => "3"
+  }
+  "Label" => "com.apple.bsd.dirhelper"
+  "MachServices" => {
+    "com.apple.bsd.dirhelper" => true
+  }
+  "ProcessType" => "Adaptive"
+  "ProgramArguments" => [
+    0 => "/usr/libexec/dirhelper"
+  ]
+  "RunAtLoad" => true
+  "StartCalendarInterval" => {
+    "Hour" => 3
+    "Minute" => 35
+  }
+}
+--- launchctl print system/com.apple.tmp_cleaner
+	path = /System/Library/LaunchDaemons/com.apple.tmp_cleaner.plist
+	state = not running
+	program = /usr/libexec/tmp_cleaner
+	arguments = {
+		PATH => /usr/bin:/bin:/usr/sbin:/sbin
+	last exit code = 0
+		state = active
+		state = active
+	properties = low priority i/o | inferred program | system service | exponential throttling | tle system
+--- tmp_cleaner 実体と strings(規則語の探索・読取のみ)
+program=/usr/libexec/tmp_cleaner
+-rwxr-xr-x  1 root  wheel  1142 Jun 25 11:29 /usr/libexec/tmp_cleaner
+daily_clean_tmps_dirs="/tmp"
+daily_clean_tmps_days="3"
+args="-atime +$daily_clean_tmps_days -mtime +$daily_clean_tmps_days"
+args="${args} -ctime +$daily_clean_tmps_days"
+dargs="-empty -mtime +$daily_clean_tmps_days"
+--- /private/tmp 直下 普通 file の 齢(atime/mtime/ctime/birth それぞれの最大, 日)
+普通file数= 4437
+atime: 最大齢=4.52日 (seq310103-readback.txt)  >3日=2338 >4日=931 >5日=0 >7日=0
+mtime: 最大齢=6.69日 (karo-realindex-before-90731.bin)  >3日=2402 >4日=959 >5日=7 >7日=0
+ctime: 最大齢=5.31日 (seq307150-multiagent-mac_0_2.txt)  >3日=2401 >4日=958 >5日=6 >7日=0
+birth: 最大齢=41.21日 (shogun_idle_ashigaru-mac-1)  >3日=2415 >4日=1001 >5日=77 >7日=11
+--- dd169_audit_log の各 log の atime/mtime/ctime(今)
+  20260913.log atime=2026-09-17T07:20:36 mtime=2026-09-13T19:41:36 ctime=2026-09-13T19:41:36 birth=2026-09-13T06:10:00
+  20260916.log atime=2026-09-17T07:20:36 mtime=2026-09-16T22:39:35 ctime=2026-09-16T22:39:35 birth=2026-09-16T22:39:24
+  20260917.log atime=2026-09-17T12:21:34 mtime=2026-09-17T12:17:20 ctime=2026-09-17T12:17:20 birth=2026-09-17T04:53:47
+★註: 己が 12:21:34 に此等を読んだ故 atime は其の刻以後を指す可能性 ―― 読む前の atime は録つて居らぬ(疵)

@@ -1,0 +1,33 @@
+刻=2026-09-17T12:32:54+0900
+★19 の参照探索は無効 ―― ugrep は此の shell に無い(19 末尾 rc=127)。pipe 越しの rc=0 は uniq の rc であつた。以下 /usr/bin/grep で引き直す★
+--- 陽性対照(先): 今在る名を同 regex が拾ふか
+dd169_audit_log/20260913.log
+rc=0
+--- docs/evidence + memory dir(深さ無制限)に在る 'dd169_audit_log/2026MMDD.log' の名
+grep rc=0
+   2 dd169_audit_log/20260913.log
+   1 dd169_audit_log/20260916.log
+   1 dd169_audit_log/20260917.log
+--- session jsonl(~/.claude/projects/<repo>/*.jsonl 深さ1)の寸法
+2.2G	total
+    5052
+--- 同 jsonl に出る log 名(名別・件数)
+grep rc=0
+   1 dd169_audit_log/20260824.log
+   1 dd169_audit_log/20260902.log
+  12 dd169_audit_log/20260903.log
+  33 dd169_audit_log/20260906.log
+  36 dd169_audit_log/20260907.log
+  30 dd169_audit_log/20260908.log
+  48 dd169_audit_log/20260911.log
+  29 dd169_audit_log/20260912.log
+  40 dd169_audit_log/20260913.log
+   2 dd169_audit_log/20260916.log
+   2 dd169_audit_log/20260917.log
+--- 今 disk に在る log 名
+20260913.log
+20260916.log
+20260917.log
+--- /tmp/claude-501(此の Mac で Claude Code が /tmp に作つた dir)の birth = 番人が此の Mac で走り始め得た上限
+2026-08-06T17:01:15 /private/tmp/claude-501
+2026-08-02T18:55:02 /private/tmp/tmux-501

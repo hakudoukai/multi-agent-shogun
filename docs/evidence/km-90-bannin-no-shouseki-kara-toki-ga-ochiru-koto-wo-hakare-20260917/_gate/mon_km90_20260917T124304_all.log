@@ -1,0 +1,11 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★末尾空白 ―― _after/04_existing_log_readonly.txt に 1 行★
+★EOF改行が複数(末尾に空行) ―― _after/11_copy_controls.txt★
+★末尾空白 ―― _after/15_stuck_closed_stdin_forensics.txt に 4 行★
+★末尾空白 ―― _after/18_tmp_cleaner_script_and_predicate.txt に 5 行★
+條⑤ 寸法 = byte和 1075822(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

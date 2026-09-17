@@ -1,0 +1,21 @@
+刻=2026-09-17T12:21:50+0900
+--- /etc/defaults/periodic.conf の tmp 掃除設定
+ugrep: warning: /etc/defaults/periodic.conf: No such file or directory
+rc=2
+--- /etc/periodic.conf(上書き) 有無
+ls: /etc/periodic.conf: No such file or directory
+ls: /etc/periodic.conf.local: No such file or directory
+--- /etc/periodic/daily/110.clean-tmps 逐語(要点)
+1:sed: /etc/periodic/daily/110.clean-tmps: No such file or directory
+--- periodic daily の launchd 登録
+-rw-r--r--    1 root  wheel     417 Jun 25 11:29 com.apple.systemstats.microstackshot_periodic.plist
+--- /var/log/daily.out 末尾(掃除の実行痕)
+ls: /var/log/daily.out: No such file or directory
+--- /tmp 直下 最古 mtime 上位5(掃除の実証)
+lrwxr-xr-x@ 1 root  wheel  11 Jun 25 11:29 /tmp -> private/tmp
+--- /tmp 直下 3日超の file 数(find -mtime +3)
+       1
+       1
+--- uptime / 最終起動
+12:21  up 45 days, 17:28, 3 users, load averages: 5.26 5.09 5.09
+{ sec = 1785664411, usec = 565728 } Sun Aug  2 18:53:31 2026

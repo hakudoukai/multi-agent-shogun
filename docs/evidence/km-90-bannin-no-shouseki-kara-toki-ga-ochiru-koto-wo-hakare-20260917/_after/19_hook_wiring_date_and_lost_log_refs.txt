@@ -1,0 +1,19 @@
+刻=2026-09-17T12:31:28+0900
+--- 番人が settings.json に据ゑられた日(git log -S・此の repo)
+343b037 2026-06-01 18:12:38 +0900 fix(DD-169 cycle3): repo settings.json 同期+正本明記 + PreToolUse hook regex 厳格化 + 文言同期
+rc=0
+--- 番人 script 自身の履歴
+bbe9712 2026-06-01 21:26:58 +0900 ashigaru-second-3 fix(DD-169 cycle4): hook stdin JSON 公式仕様準拠化 + smoke 12 ケース + 文言二層 enforcement 整合
+343b037 2026-06-01 18:12:38 +0900 Commander Third fix(DD-169 cycle3): repo settings.json 同期+正本明記 + PreToolUse hook regex 厳格化 + 文言同期
+--- settings.json は未 commit 変更有り(git status 冒頭 ' M .claude/settings.json')→ HEAD 版に hook 行は在るか
+25:            "command": "bash scripts/checks/dd169_kill_term_guard.sh",
+rc=0
+diff grep rc=1
+--- 此の Mac で番人が最初に鳴つた痕: docs/evidence と memory dir の中の 'dd169_audit_log/2026MMDD' 参照(消えた log の名を探す・根= docs/evidence + memory・深さ無制限)
+rc=0
+--- 同 参照の在る file(先頭 10)
+--- session jsonl(己の過去 session)に /tmp/dd169_audit_log の log 名が出るか(根= ~/.claude/projects/<repo>/ 深さ1 *.jsonl)
+rc=0
+--- 陽性対照(参照検出子): 今在る 20260913.log を同 regex が拾ふか
+(eval):9: command not found: ugrep
+rc=127

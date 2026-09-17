@@ -1,0 +1,48 @@
+刻=2026-09-17T12:25:38+0900
+TZ=Asia/Tokyo
+  BSD  date -Iseconds  =[2026-09-17T12:25:38+09:00]
+  GNU  gdate -Is       =[2026-09-17T12:25:38+09:00]
+  GNU  gdate -Iseconds =[2026-09-17T12:25:38+09:00]
+  BSD  date +%FT%T%z    =[2026-09-17T12:25:38+0900]
+  py3  isoformat(sec)  =[2026-09-17T12:25:39+09:00]
+  一字ずつ突合: BSD -Iseconds == GNU -Is ★同一★ (len=25)
+  +%FT%T%z vs -Iseconds: ★違ふ★ diff at: [(22, ':', '0')] len 25 24
+TZ=UTC
+  BSD  date -Iseconds  =[2026-09-17T03:25:39+00:00]
+  GNU  gdate -Is       =[2026-09-17T03:25:39+00:00]
+  GNU  gdate -Iseconds =[2026-09-17T03:25:39+00:00]
+  BSD  date +%FT%T%z    =[2026-09-17T03:25:39+0000]
+  py3  isoformat(sec)  =[2026-09-17T03:25:39+00:00]
+  一字ずつ突合: BSD -Iseconds == GNU -Is ★同一★ (len=25)
+  +%FT%T%z vs -Iseconds: ★違ふ★ diff at: [(22, ':', '0')] len 25 24
+TZ=America/New_York
+  BSD  date -Iseconds  =[2026-09-16T23:25:39-04:00]
+  GNU  gdate -Is       =[2026-09-16T23:25:39-04:00]
+  GNU  gdate -Iseconds =[2026-09-16T23:25:39-04:00]
+  BSD  date +%FT%T%z    =[2026-09-16T23:25:39-0400]
+  py3  isoformat(sec)  =[2026-09-16T23:25:39-04:00]
+  一字ずつ突合: BSD -Iseconds == GNU -Is ★同一★ (len=25)
+  +%FT%T%z vs -Iseconds: ★違ふ★ diff at: [(22, ':', '0')] len 25 24
+TZ=Asia/Kolkata
+  BSD  date -Iseconds  =[2026-09-17T08:55:39+05:30]
+  GNU  gdate -Is       =[2026-09-17T08:55:39+05:30]
+  GNU  gdate -Iseconds =[2026-09-17T08:55:39+05:30]
+  BSD  date +%FT%T%z    =[2026-09-17T08:55:39+0530]
+  py3  isoformat(sec)  =[2026-09-17T08:55:39+05:30]
+  一字ずつ突合: BSD -Iseconds == GNU -Is ★同一★ (len=25)
+  +%FT%T%z vs -Iseconds: ★違ふ★ diff at: [(22, ':', '3'), (23, '3', '0')] len 25 24
+--- GNU date の -I 引数 略記受理(argmatch)の確認
+gdate -Is rc=0 [2026-09-17T12:25:39+09:00]
+gdate -Isec rc=0 [2026-09-17T12:25:39+09:00]
+gdate -Iseconds rc=0 [2026-09-17T12:25:39+09:00]
+gdate -Ih rc=0 [2026-09-17T12+09:00]
+gdate -Im rc=0 [2026-09-17T12:25+09:00]
+gdate -Id rc=0 [2026-09-17]
+--- BSD date の -I 引数(man 逐語)
+34:     -I[FMT]
+35-	     Use ISO 8601 output format.  FMT may be omitted, in which case
+36-	     the default is date.  Valid FMT values are date, hours, minutes,
+37-	     seconds, and ns (for nanoseconds).  The date and time is
+38-	     formatted to the specified precision.  When FMT is hours (or the
+39-	     more precise minutes, seconds, or ns), the ISO 8601 format
+40-	     includes the timezone.

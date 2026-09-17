@@ -1,0 +1,114 @@
+刻=2026-09-17T12:23:38+0900 写し=docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy.sh log_dir=/Users/momizimac/multi-agent-shogun/docs/evidence/km-90-bannin-no-shouseki-kara-toki-ga-ochiru-koto-wo-hakare-20260917/_after/guard_copy_log
+## 陰性① 通る: echo hi
+mode=str payload={"tool_input":{"command":"echo hi"}}
+rc=0 ms=53
+stdout=[]
+stderr=<<
+
+>>
+log 新規行数=0 (before=0 after=0)
+log 新規行 逐語(repr, 先頭200字):
+
+## 陰性② 通る: file名に下線区切りの語(cp scripts/checks/dd169_kill_term_guard.sh x)
+mode=str payload={"tool_input":{"command":"cp scripts/checks/dd169_kill_term_guard.sh /dev/null"}
+rc=0 ms=68
+stdout=[]
+stderr=<<
+
+>>
+log 新規行数=0 (before=0 after=0)
+log 新規行 逐語(repr, 先頭200字):
+
+## 陰性③ 通る: 空白のみの command
+mode=str payload={"tool_input":{"command":"   "}}
+rc=0 ms=62
+stdout=[]
+stderr=<<
+
+>>
+log 新規行数=0 (before=0 after=0)
+log 新規行 逐語(repr, 先頭200字):
+
+## 陽性① 塞ぐ: command 空
+mode=str payload={"tool_input":{"command":""}}
+rc=2 ms=61
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=0 after=1)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={"tool_input":{"command":""}}'
+
+## 陽性② 塞ぐ: JSON 壊れ {{{
+mode=str payload={{{
+rc=2 ms=68
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=1 after=2)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=1) input={{{'
+
+## 陽性③ 塞ぐ: tool_input 鍵無し {"foo":1}
+mode=str payload={"foo":1}
+rc=2 ms=64
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=2 after=3)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={"foo":1}'
+
+## 陽性④ 塞ぐ: tool_input 有り command 鍵無し
+mode=str payload={"tool_input":{}}
+rc=2 ms=67
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=3 after=4)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=0) input={"tool_input":{}}'
+
+## 陽性⑤ 塞ぐ: JSON が null
+mode=str payload=null
+rc=2 ms=64
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=4 after=5)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=1) input=null'
+
+## 陽性⑥ 塞ぐ: tool_input が文字列
+mode=str payload={"tool_input":"x"}
+rc=2 ms=72
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=5 after=6)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=1) input={"tool_input":"x"}'
+
+## 其の他① stdin が空(</dev/null)
+mode=null payload=
+rc=2 ms=68
+stdout=[]
+stderr=<<
+date: invalid argument 's' for -I
+[DD-169 guard] BLOCKED: stdin JSON parse 失敗 or .tool_input.command 空 (対称 fail-secure)
+>>
+log 新規行数=1 (before=6 after=7)
+log 新規行 逐語(repr, 先頭200字):
+   '[] PARSE_FAIL: stdin JSON parse 失敗 or command 空 (python_rc=1) input='
