@@ -1,0 +1,19 @@
+class	file	line	text
+timeout	tests/agent_selfwatch.bats	62	timeout() { shift; "$@"; }
+timeout	tests/agent_selfwatch.bats	65	export -f tmux timeout sleep pgrep
+timeout	tests/agent_selfwatch.bats	82	@test "TC-FR-002: inotify + timeout fallback is configured" {
+timeout	tests/test_karo_second_send_iincho.bats	139	        timeout 10 bash "$HELPER_SCRIPT" --live -- "T-207 content"
+other	tests/test_karo_second_send_iincho.bats	216	    for _ in $(seq 1 20); do
+timeout	tests/test_karo_second_send_iincho.bats	232	        timeout 10 bash "$HELPER_SCRIPT" --live -- "T-209 content"
+md5sum	tests/unit/test_build_system.bats	281	    checksums_first=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+md5sum	tests/unit/test_build_system.bats	286	    checksums_second=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+timeout	tests/unit/test_idle_flag.bats	91	timeout() { shift; "\$@"; }
+timeout	tests/unit/test_idle_flag.bats	94	export -f tmux timeout pgrep sleep
+timeout	tests/unit/test_ntfy_ack.bats	107	    timeout 3 bash "$MOCK_PROJECT/ntfy_listener_test.sh" 2>/dev/null || true
+other	tests/unit/test_safe_nudge.bats	103	    for _ in $(seq 1 30); do
+timeout	tests/unit/test_send_wakeup.bats	138	timeout() { shift; "\$@"; }
+timeout	tests/unit/test_send_wakeup.bats	141	export -f tmux timeout pgrep sleep
+timeout	tests/unit/test_send_wakeup.bats	502	                timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null
+timeout	tests/unit/test_send_wakeup.bats	525	                timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null
+timeout	tests/unit/test_watcher_rc6_integration.bats	11	#   ∴ watcher は initial sweep (1 巡) + inotify 2 回 (2,3 巡) を回つて自然終了する。timeout は保険。
+timeout	tests/unit/test_watcher_rc6_integration.bats	74	        timeout 30 bash "$SB/scripts/message_delivery_v2/watcher.sh" test_agent test:0.0 doppler \

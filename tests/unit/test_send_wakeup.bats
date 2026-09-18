@@ -1093,13 +1093,20 @@ YAML
 # --- T-CRESET-003: send_context_reset sends /clear for ashigaru ---
 
 @test "T-CRESET-003: send_context_reset sends /clear for ashigaru" {
+    # RC-1 cure (fc3a5b0b, 2026-06-07): a busy agent defers the reset (return 1).
+    # setup() only creates the idle flag for test_agent; create it for ashigaru3.
+    touch "$TEST_TMPDIR/shogun_idle_ashigaru3"
     run bash -c '
         source "'"$TEST_HARNESS"'"
         AGENT_ID="ashigaru3"
         CLI_TYPE="claude"
         send_context_reset
     '
-    [ "$status" -eq 0 ]
+    # rc contract (inbox_watcher.sh L1458-): 0 = sent + post-reset nudge, 2 = sent but the
+    # agent stayed busy for 15s so the nudge is skipped. After send-keys the /clear cooldown
+    # (LAST_CLEAR_TS, T-BUSY-005) makes agent_is_busy() report busy, so 2 is the expected
+    # value here. Either way /clear itself must have been sent (checked below).
+    [ "$status" -eq 0 ] || [ "$status" -eq 2 ]
 
     # /clear should have been sent via send-keys
     grep -q "send-keys.*/clear" "$MOCK_LOG"

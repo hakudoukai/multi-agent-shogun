@@ -104,11 +104,11 @@ run_hook_no_agent() {
 @test "T-HOOK-008: unread inbox messages produce block JSON" {
     cat > "$TEST_TMP/queue/inbox/ashigaru1.yaml" << 'YAML'
 messages:
-  - id: msg_001
-    from: karo
-    type: task_assigned
-    content: "新タスクだ"
-    read: false
+- id: msg_001
+  from: karo
+  type: task_assigned
+  content: "新タスクだ"
+  read: false
 YAML
     run_hook '{"stop_hook_active": false, "last_assistant_message": ""}'
     [ "$status" -eq 0 ]
@@ -119,11 +119,11 @@ YAML
 @test "T-HOOK-009: no unread + completion message exits 0 with notification" {
     cat > "$TEST_TMP/queue/inbox/ashigaru1.yaml" << 'YAML'
 messages:
-  - id: msg_001
-    from: karo
-    type: task_assigned
-    content: "古いメッセージ"
-    read: true
+- id: msg_001
+  from: karo
+  type: task_assigned
+  content: "古いメッセージ"
+  read: true
 YAML
     run_hook '{"stop_hook_active": false, "last_assistant_message": "タスク完了した。report YAML updated。"}'
     [ "$status" -eq 0 ]
@@ -135,11 +135,11 @@ YAML
 @test "T-HOOK-010: unread inbox + completion message blocks AND notifies" {
     cat > "$TEST_TMP/queue/inbox/ashigaru1.yaml" << 'YAML'
 messages:
-  - id: msg_001
-    from: karo
-    type: task_assigned
-    content: "次のタスク"
-    read: false
+- id: msg_001
+  from: karo
+  type: task_assigned
+  content: "次のタスク"
+  read: false
 YAML
     run_hook '{"stop_hook_active": false, "last_assistant_message": "任務完了でござる。"}'
     [ "$status" -eq 0 ]

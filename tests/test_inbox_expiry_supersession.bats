@@ -272,7 +272,14 @@ p = json.loads(sys.argv[1])
 assert len(p["specials"]) == 1, p
 PY
 
-    # Second call: the special was already marked read → must not reappear.
+    # W201 root-cause cure (scripts/inbox_watcher.sh, 2026-08-06): get_unread_info()
+    # no longer marks specials read at extraction time; process_unread marks them via
+    # mark_message_processed() only after successful execution. Emulate that step here
+    # so the "consumed exactly once" contract is checked at its real commit point.
+    run bash -c "source '$TEST_HARNESS'; mark_message_processed msg_clear"
+    [ "$status" -eq 0 ]
+
+    # Second call: the special was marked processed → must not reappear.
     run bash -c "source '$TEST_HARNESS'; get_unread_info"
     [ "$status" -eq 0 ]
     "$VENV_PYTHON" - << 'PY' "$output"

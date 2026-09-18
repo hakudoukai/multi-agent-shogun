@@ -1,0 +1,190 @@
+1..187
+ok 1 LB-01 [general-ashigaru]: plain unread message (no expiry/supersedes) counts as unread
+ok 2 LB-02 [codex]: expired message excluded from count and marked read on disk
+ok 3 LB-03 [command-layer]: supersedes marks the superseded message read on disk
+ok 4 LB-04: future expires_at is not expired yet — still counted as unread
+ok 5 LB-05: supersedes referencing a nonexistent id is a safe no-op
+ok 6 LB-06 [backward-compat]: pre-existing messages without expiry keys work unchanged
+ok 7 LB-07: clear_command special is still consumed exactly once (no regression)
+ok 8 LB-08 [stop-hook]: expired message removed from 'read: false' grep count after get_unread_info
+ok 9 LB-09 [inbox_write integration]: expires_at/supersedes env vars round-trip; absent by default
+ok 10 build: build_instructions.sh exits with status 0
+ok 11 build: generated/ directory exists after build
+ok 12 build: generated/ contains at least 6 files
+ok 13 claude: shogun.md generated
+ok 14 claude: karo.md generated
+ok 15 claude: ashigaru.md generated
+ok 16 codex: codex-shogun.md generated
+ok 17 codex: codex-karo.md generated
+ok 18 codex: codex-ashigaru.md generated
+ok 19 copilot: copilot-shogun.md generated [Phase 2+3]
+ok 20 copilot: copilot-karo.md generated [Phase 2+3]
+ok 21 copilot: copilot-ashigaru.md generated [Phase 2+3]
+ok 22 content: shogun.md is not empty
+ok 23 content: karo.md is not empty
+ok 24 content: ashigaru.md is not empty
+ok 25 content: codex-shogun.md is not empty
+ok 26 content: codex-karo.md is not empty
+ok 27 content: codex-ashigaru.md is not empty
+ok 28 content: shogun.md contains shogun role reference
+ok 29 content: karo.md contains karo role reference
+ok 30 content: ashigaru.md contains ashigaru role reference
+ok 31 content: codex-shogun.md contains shogun role reference
+ok 32 content: codex-karo.md contains karo role reference
+ok 33 content: codex-ashigaru.md contains ashigaru role reference
+ok 34 content: claude files contain Claude-specific tools
+ok 35 content: codex files contain Codex-specific content
+ok 36 content: copilot files contain Copilot-specific content [Phase 2+3]
+ok 37 agents: AGENTS.md generated [Phase 2+3]
+ok 38 agents: AGENTS.md contains Codex-specific content [Phase 2+3]
+ok 39 copilot-inst: .github/copilot-instructions.md generated [Phase 2+3]
+ok 40 copilot-inst: contains Copilot-specific content [Phase 2+3]
+ok 41 codex-clear: AGENTS.md has no /clear Recovery section
+ok 42 codex-clear: AGENTS.md has /new Recovery section
+ok 43 codex-clear: AGENTS.md has no 'Forbidden after /clear'
+ok 44 codex-clear: AGENTS.md has no 'sends `/clear` + Enter via send-keys' (unconverted)
+ok 45 codex-clear: AGENTS.md has no 'delivers `/clear` to the agent' (unconverted)
+ok 46 codex-clear: AGENTS.md has no '/clear wipes old context'
+ok 47 codex-clear: codex-ashigaru.md has no bare '/clear' in escalation table
+ok 48 codex-clear: codex-ashigaru.md protocol uses CLI-neutral context reset
+ok 49 codex-clear: codex-karo.md has no bare '/clear' in redo protocol
+ok 50 codex-clear: codex-gunshi.md protocol uses CLI-neutral context reset
+ok 51 codex-clear: codex-shogun.md protocol uses CLI-neutral context reset
+ok 52 idempotent: second build produces identical output
+ok 53 T-HOOK-001: stop_hook_active=true skips all processing
+ok 54 T-HOOK-002: unknown agent (empty agent_id) exits 0
+ok 55 T-HOOK-003: shogun agent always exits 0
+ok 56 T-HOOK-004: completion message triggers inbox_write to karo
+ok 57 T-HOOK-005: error message triggers inbox_write to karo
+ok 58 T-HOOK-006: neutral message does not trigger inbox_write
+ok 59 T-HOOK-007: empty last_assistant_message does not trigger inbox_write
+ok 60 T-HOOK-008: unread inbox messages produce block JSON
+ok 61 T-HOOK-009: no unread + completion message exits 0 with notification
+ok 62 T-HOOK-010: unread inbox + completion message blocks AND notifies
+ok 63 get_cli_type: cliセクションなし → claude (後方互換)
+ok 64 get_cli_type: claude only設定 → claude
+ok 65 get_cli_type: mixed設定 shogun → claude
+ok 66 get_cli_type: mixed設定 ashigaru5 → codex
+ok 67 get_cli_type: mixed設定 ashigaru7 → copilot
+ok 68 get_cli_type: mixed設定 ashigaru1 → claude (個別設定)
+ok 69 get_cli_type: 文字列形式 ashigaru5 → codex
+ok 70 get_cli_type: 文字列形式 ashigaru7 → copilot
+ok 71 get_cli_type: kimi設定 ashigaru3 → kimi
+ok 72 get_cli_type: kimi設定 ashigaru4 → kimi (モデル指定なし)
+ok 73 get_cli_type: kimiデフォルト設定 → kimi
+ok 74 get_cli_type: 未定義agent → default継承
+ok 75 get_cli_type: 空agent_id → claude
+ok 76 get_cli_type: mixed設定 ashigaru1-8全パターン
+ok 77 get_cli_type: 不正CLI名 → claude フォールバック
+ok 78 get_cli_type: 不正default → claude フォールバック
+ok 79 get_cli_type: 空YAMLファイル → claude
+ok 80 get_cli_type: YAML構文エラー → claude
+ok 81 get_cli_type: 存在しないファイル → claude
+ok 82 build_cli_command: claude + model → claude --model opus --dangerously-skip-permissions
+ok 83 build_cli_command: PERMISSION_FLAG override → claude --permission-mode auto-approved
+ok 84 build_cli_command: codex + default model → codex --model sonnet ...
+ok 85 build_cli_command: copilot → copilot --yolo
+ok 86 build_cli_command: kimi + model → kimi --yolo --model k2.5
+ok 87 build_cli_command: kimi (モデル指定なし) → kimi --yolo --model k2.5
+ok 88 build_cli_command: cliセクションなし → claude フォールバック
+ok 89 build_cli_command: settings読取失敗 → claude フォールバック
+ok 90 get_instruction_file: shogun + claude → instructions/shogun.md
+ok 91 get_instruction_file: karo + claude → instructions/karo.md
+ok 92 get_instruction_file: ashigaru1 + claude → instructions/ashigaru.md
+ok 93 get_instruction_file: ashigaru5 + codex → instructions/codex-ashigaru.md
+ok 94 get_instruction_file: ashigaru7 + copilot → .github/copilot-instructions-ashigaru.md
+ok 95 get_instruction_file: ashigaru3 + kimi → instructions/generated/kimi-ashigaru.md
+ok 96 get_instruction_file: shogun + kimi → instructions/generated/kimi-shogun.md
+ok 97 get_instruction_file: cli_type引数で明示指定 (codex)
+ok 98 get_instruction_file: cli_type引数で明示指定 (copilot)
+ok 99 get_instruction_file: 全CLI × 全role組み合わせ
+ok 100 get_instruction_file: 不明なagent_id → 空文字 + return 1
+ok 101 validate_cli_availability: claude → 0 (インストール済み)
+ok 102 validate_cli_availability: 不正CLI名 → 1 + エラーメッセージ
+ok 103 validate_cli_availability: 空文字 → 1
+ok 104 validate_cli_availability: codex mock (PATH操作)
+ok 105 validate_cli_availability: copilot mock (PATH操作)
+ok 106 validate_cli_availability: kimi-cli mock (PATH操作)
+ok 107 validate_cli_availability: kimi mock (PATH操作)
+ok 108 validate_cli_availability: codex未インストール → 1 + エラーメッセージ
+ok 109 validate_cli_availability: kimi未インストール → 1 + エラーメッセージ
+ok 110 get_agent_model: cliセクションなし shogun → fable (デフォルト)
+ok 111 get_agent_model: cliセクションなし karo → opus (デフォルト)
+ok 112 get_agent_model: cliセクションなし ashigaru1 → sonnet (デフォルト)
+ok 113 get_agent_model: cliセクションなし ashigaru5 → sonnet (デフォルト)
+ok 114 get_agent_model: YAML指定 ashigaru1 → haiku (オーバーライド)
+ok 115 get_agent_model: modelsセクションから取得 karo → sonnet
+ok 116 get_agent_model: codexエージェントのmodel ashigaru5 → gpt-5
+ok 117 get_agent_model: 未知agent → sonnet (デフォルト)
+ok 118 get_agent_model: kimi CLI ashigaru3 → k2.5 (YAML指定)
+ok 119 get_agent_model: kimi CLI ashigaru4 → k2.5 (デフォルト)
+ok 120 get_agent_model: kimi CLI shogun → k2.5 (デフォルト)
+ok 121 get_agent_model: kimi CLI karo → k2.5 (デフォルト)
+ok 122 get_model_display_name: Sonnet + thinking:true → Sonnet+T
+ok 123 get_model_display_name: Opus + thinking:true → Opus+T
+ok 124 get_model_display_name: Haiku + thinking:false → Haiku
+ok 125 get_model_display_name: Sonnet + thinking未設定 → Sonnet+T (default ON)
+ok 126 get_model_display_name: Codex Spark → Spark (thinking無関係)
+ok 127 get_model_display_name: Codex 5.3 → Codex5.3
+ok 128 get_model_display_name: Kimi → Kimi
+ok 129 get_model_display_name: 全モデル × thinking組み合わせ
+ok 130 build_cli_command: thinking:true → MAX_THINKING_TOKENS=0 なし
+ok 131 build_cli_command: thinking:false → MAX_THINKING_TOKENS=0 prefix
+ok 132 build_cli_command: thinking未設定 → MAX_THINKING_TOKENS=0 なし (デフォルトThinking ON)
+ok 133 build_cli_command: codex + thinking:false → MAX_THINKING_TOKENS=0 なし (Codexには無関係)
+ok 134 T-SW-001: send_wakeup skips nudge when agent has active self-watch
+ok 135 T-SW-002: send_wakeup uses tmux send-keys when no self-watch
+ok 136 T-SW-003: send-keys sends inboxN and Enter as separate calls
+ok 137 T-SW-004: send_wakeup returns 0 when send-keys fails (daemon-safe)
+ok 138 T-SW-005: nudge delivery does NOT use paste-buffer or set-buffer
+ok 139 T-SW-006: agent_has_self_watch returns 0 when inotifywait running
+ok 140 T-SW-007: agent_has_self_watch returns 1 when no inotifywait
+ok 141 T-SW-008: send_cli_command /clear uses tmux send-keys
+ok 142 T-SW-009: send_cli_command /model uses tmux send-keys
+ok 143 T-SW-010: nudge content format is inboxN (backward compatible)
+ok 144 T-SW-011: inbox_watcher.sh uses send-keys with required functions
+ok 145 T-ESC-001: escalation state resets when no unread messages
+ok 146 T-ESC-002: escalation Phase 1 — unread under 2min uses standard nudge
+ok 147 T-ESC-003: escalation Phase 2 — unread 2-4min uses Escape+nudge (copilot)
+ok 148 T-ESC-004: escalation Phase 3 — unread over 4min sends /clear
+ok 149 T-ESC-005: escalation /clear cooldown — falls back to Escape+nudge (copilot)
+ok 150 T-BUSY-001: agent_is_busy returns 0 (busy) when no idle flag — claude CLI
+ok 151 T-BUSY-002: agent_is_busy returns 1 when pane is idle
+ok 152 T-BUSY-003: send_wakeup skips nudge when agent is busy
+ok 153 T-BUSY-004: send_wakeup_with_escape skips when agent is busy
+ok 154 T-CODEX-001: send_cli_command converts /clear to /new for codex
+ok 155 T-CODEX-002: send_cli_command skips /model for codex
+ok 156 T-CODEX-003: C-u cleanup sent when no unread and agent is idle
+ok 157 T-CODEX-004: C-u cleanup NOT sent when agent is busy
+ok 158 T-CODEX-005: send_cli_command sends /clear as-is for claude
+ok 159 T-CODEX-006: inbox_watcher.sh contains agent_is_busy and Codex/Copilot handlers
+ok 160 T-CODEX-007: pane @agent_cli=codex overrides stale CLI_TYPE for Phase2 (no C-c)
+ok 161 T-CODEX-008: pane @agent_cli=codex overrides stale CLI_TYPE for /clear (uses /new)
+ok 162 T-CODEX-009: normalize_special_command rejects invalid model_switch payload
+ok 163 T-CODEX-010: unresolved CLI type falls back to codex-safe (/clear->/new, no C-c)
+ok 164 T-CODEX-011: process_unread injects auto-recovery task and sends inbox nudge after clear_command
+ok 165 T-CODEX-012: enqueue_recovery_task_assigned deduplicates unread auto-recovery message
+ok 166 T-CODEX-013: enqueue_recovery_task_assigned skips if task YAML status is cancelled
+ok 167 T-CODEX-014: enqueue_recovery_task_assigned skips if task YAML status is idle
+ok 168 T-CODEX-015: enqueue_recovery_task_assigned proceeds when task YAML status is assigned
+ok 169 T-COPILOT-001: send_cli_command sends Ctrl-C + copilot restart for copilot /clear
+ok 170 T-COPILOT-002: send_cli_command skips /model for copilot
+ok 171 T-SHOGUN-001: session_has_client returns 0 when client attached
+ok 172 T-SHOGUN-002: session_has_client returns 1 when no client
+ok 173 T-SHOGUN-003: send_wakeup shogun + active + attached uses send-keys
+ok 174 T-SHOGUN-004: send_wakeup shogun + active + detached falls through to send-keys
+ok 175 T-BUSY-005: agent_is_busy returns 0 (busy) during /clear cooldown period
+ok 176 T-BUSY-006: agent_is_busy returns 1 (idle) after /clear cooldown expires
+ok 177 T-BUSY-007: agent_is_busy /clear cooldown overrides idle pane state
+ok 178 T-BUSY-008: agent_is_busy returns idle when idle prompt is below old busy markers
+ok 179 T-BUSY-009: agent_is_busy detects 'background terminal running' as busy
+ok 180 T-BUSY-010: agent_is_busy detects 'Compacting conversation' as busy
+ok 181 T-BUSY-011: agent_is_busy detects 'esc to interrupt' as busy
+ok 182 T-SHOOK-001: Claude Code throttle uses 60s cooldown (stop-hook-supplementary)
+ok 183 T-SHOOK-002: Claude Code count change bypasses throttle (stop-hook-supplementary)
+ok 184 T-SHOOK-003: Non-Claude CLIs still bypass throttle on count change
+ok 185 T-CRESET-001: send_context_reset suppresses /clear for karo
+ok 186 T-CRESET-002: send_context_reset suppresses /clear for gunshi
+not ok 187 T-CRESET-003: send_context_reset sends /clear for ashigaru
+# (in test file tests/unit/test_send_wakeup.bats, line 1105)
+#   `[ "$status" -eq 0 ]' failed

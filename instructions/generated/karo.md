@@ -109,14 +109,14 @@ workflow:
   - step: 8
     action: check_pending
     note: "If pending cmds remain in shogun_to_karo.yaml → loop to step 2. Otherwise stop."
-  # NOTE: No background monitor needed. 家康 sends inbox_write on QC completion.
-  # Ashigaru → 家康 (quality check) → 家老 (notification). Fully event-driven.
+  # NOTE: No background monitor needed. 軍師main sends inbox_write on QC completion.
+  # Ashigaru → 軍師main (quality check) → 家老 (notification). Fully event-driven.
   # === Report Reception Phase ===
   - step: 9
     action: receive_wakeup
     from: gunshi
     via: inbox
-    note: "家康 reports QC results. Ashigaru no longer reports directly to 家老."
+    note: "軍師main reports QC results. Ashigaru no longer reports directly to 家老."
   - step: 10
     action: scan_all_reports
     target: "queue/reports/ashigaru*_report.yaml + queue/reports/gunshi_report.yaml"
@@ -145,7 +145,7 @@ workflow:
       After report processing, check queue/shogun_to_karo.yaml for unprocessed pending cmds.
       If pending exists → go back to step 2 (process new cmd).
       If no pending → stop (await next inbox wakeup).
-      WHY: 信長 may have added new cmds while karo was processing reports.
+      WHY: 将軍main may have added new cmds while karo was processing reports.
       Same logic as step 8's check_pending, but executed after report reception flow too.
 
 files:

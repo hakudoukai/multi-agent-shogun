@@ -1,0 +1,55 @@
+1..54
+ok 1 T-SW-001: send_wakeup skips nudge when agent has active self-watch
+ok 2 T-SW-002: send_wakeup uses tmux send-keys when no self-watch
+ok 3 T-SW-003: send-keys sends inboxN and Enter as separate calls
+ok 4 T-SW-004: send_wakeup returns 0 when send-keys fails (daemon-safe)
+ok 5 T-SW-005: nudge delivery does NOT use paste-buffer or set-buffer
+ok 6 T-SW-006: agent_has_self_watch returns 0 when inotifywait running
+ok 7 T-SW-007: agent_has_self_watch returns 1 when no inotifywait
+ok 8 T-SW-008: send_cli_command /clear uses tmux send-keys
+ok 9 T-SW-009: send_cli_command /model uses tmux send-keys
+ok 10 T-SW-010: nudge content format is inboxN (backward compatible)
+ok 11 T-SW-011: inbox_watcher.sh uses send-keys with required functions
+ok 12 T-ESC-001: escalation state resets when no unread messages
+ok 13 T-ESC-002: escalation Phase 1 — unread under 2min uses standard nudge
+ok 14 T-ESC-003: escalation Phase 2 — unread 2-4min uses Escape+nudge (copilot)
+ok 15 T-ESC-004: escalation Phase 3 — unread over 4min sends /clear
+ok 16 T-ESC-005: escalation /clear cooldown — falls back to Escape+nudge (copilot)
+ok 17 T-BUSY-001: agent_is_busy returns 0 (busy) when no idle flag — claude CLI
+ok 18 T-BUSY-002: agent_is_busy returns 1 when pane is idle
+ok 19 T-BUSY-003: send_wakeup skips nudge when agent is busy
+ok 20 T-BUSY-004: send_wakeup_with_escape skips when agent is busy
+ok 21 T-CODEX-001: send_cli_command converts /clear to /new for codex
+ok 22 T-CODEX-002: send_cli_command skips /model for codex
+ok 23 T-CODEX-003: C-u cleanup sent when no unread and agent is idle
+ok 24 T-CODEX-004: C-u cleanup NOT sent when agent is busy
+ok 25 T-CODEX-005: send_cli_command sends /clear as-is for claude
+ok 26 T-CODEX-006: inbox_watcher.sh contains agent_is_busy and Codex/Copilot handlers
+ok 27 T-CODEX-007: pane @agent_cli=codex overrides stale CLI_TYPE for Phase2 (no C-c)
+ok 28 T-CODEX-008: pane @agent_cli=codex overrides stale CLI_TYPE for /clear (uses /new)
+ok 29 T-CODEX-009: normalize_special_command rejects invalid model_switch payload
+ok 30 T-CODEX-010: unresolved CLI type falls back to codex-safe (/clear->/new, no C-c)
+ok 31 T-CODEX-011: process_unread injects auto-recovery task and sends inbox nudge after clear_command
+ok 32 T-CODEX-012: enqueue_recovery_task_assigned deduplicates unread auto-recovery message
+ok 33 T-CODEX-013: enqueue_recovery_task_assigned skips if task YAML status is cancelled
+ok 34 T-CODEX-014: enqueue_recovery_task_assigned skips if task YAML status is idle
+ok 35 T-CODEX-015: enqueue_recovery_task_assigned proceeds when task YAML status is assigned
+ok 36 T-COPILOT-001: send_cli_command sends Ctrl-C + copilot restart for copilot /clear
+ok 37 T-COPILOT-002: send_cli_command skips /model for copilot
+ok 38 T-SHOGUN-001: session_has_client returns 0 when client attached
+ok 39 T-SHOGUN-002: session_has_client returns 1 when no client
+ok 40 T-SHOGUN-003: send_wakeup shogun + active + attached uses send-keys
+ok 41 T-SHOGUN-004: send_wakeup shogun + active + detached falls through to send-keys
+ok 42 T-BUSY-005: agent_is_busy returns 0 (busy) during /clear cooldown period
+ok 43 T-BUSY-006: agent_is_busy returns 1 (idle) after /clear cooldown expires
+ok 44 T-BUSY-007: agent_is_busy /clear cooldown overrides idle pane state
+ok 45 T-BUSY-008: agent_is_busy returns idle when idle prompt is below old busy markers
+ok 46 T-BUSY-009: agent_is_busy detects 'background terminal running' as busy
+ok 47 T-BUSY-010: agent_is_busy detects 'Compacting conversation' as busy
+ok 48 T-BUSY-011: agent_is_busy detects 'esc to interrupt' as busy
+ok 49 T-SHOOK-001: Claude Code throttle uses 60s cooldown (stop-hook-supplementary)
+ok 50 T-SHOOK-002: Claude Code count change bypasses throttle (stop-hook-supplementary)
+ok 51 T-SHOOK-003: Non-Claude CLIs still bypass throttle on count change
+ok 52 T-CRESET-001: send_context_reset suppresses /clear for karo
+ok 53 T-CRESET-002: send_context_reset suppresses /clear for gunshi
+ok 54 T-CRESET-003: send_context_reset sends /clear for ashigaru

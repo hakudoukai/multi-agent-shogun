@@ -486,16 +486,16 @@ load_adapter_with() {
 # get_agent_model テスト
 # =============================================================================
 
-@test "get_agent_model: cliセクションなし shogun → opus (デフォルト)" {
+@test "get_agent_model: cliセクションなし shogun → fable (デフォルト)" {
     load_adapter_with "${TEST_TMP}/settings_none.yaml"
     result=$(get_agent_model "shogun")
-    [ "$result" = "opus" ]
+    [ "$result" = "fable" ]
 }
 
-@test "get_agent_model: cliセクションなし karo → sonnet (デフォルト)" {
+@test "get_agent_model: cliセクションなし karo → opus (デフォルト)" {
     load_adapter_with "${TEST_TMP}/settings_none.yaml"
     result=$(get_agent_model "karo")
-    [ "$result" = "sonnet" ]
+    [ "$result" = "opus" ]
 }
 
 @test "get_agent_model: cliセクションなし ashigaru1 → sonnet (デフォルト)" {

@@ -1,0 +1,10 @@
+  ★註★ 本文 276字 ―― ★100字を超えた★（★目標は100字★・理事長ご指摘 2026-08-19） ／ ★本文は repo/Supabase へ置き、便は★要旨＋path+sha★にせよ
+★DRY-RUN（★送信しない★）★
+   to_pc         = mac_pc
+   topic         = cross_pc_inbox_gunshi-mac
+   message_type  = answer
+   priority      = normal
+   target_agent  = gunshi-mac
+   sender_agent  = ashigaru-mac-1
+   reply_to_topic= cross_pc_inbox_ashigaru-mac-1
+   parent_message_id= f7e5ea7a-f6c0-450a-8e38-2c8234bcfc21

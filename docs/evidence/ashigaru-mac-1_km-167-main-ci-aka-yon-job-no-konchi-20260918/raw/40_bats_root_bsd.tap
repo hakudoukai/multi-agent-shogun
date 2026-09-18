@@ -1,0 +1,138 @@
+1..58
+ok 1 T-P2-01: canonical 三箱すべて既読 → 0
+ok 2 T-P2-02: canonical 一件 read:false → 1 (陽性対照)
+ok 3 T-P2-03: 壊れた YAML → MEAS_FAIL (0 ではない)
+ok 4 T-P2-04: 箱が無い → MEAS_FAIL (0 ではない)
+ok 5 T-P2-05: legacy 別名が在つても canonical の値は変らぬ
+ok 6 T-P2-06: 関はりなき役職 → 0
+not ok 7 setup_file failed
+# (from function `setup_file' in test file tests/test_inbox_expiry_supersession.bats, line 35)
+#   `"$VENV_PYTHON" -c "import yaml" 2>/dev/null || return 1' failed
+not ok 16 setup_file failed
+# (from function `setup_file' in test file tests/test_inbox_write.bats, line 26)
+#   `"$VENV_PYTHON" -c "import yaml" 2>/dev/null || return 1' failed
+ok 30 T-201: normal dry-run → fixed envelope 4 points present in output
+ok 31 T-202: wrong --target-agent/--topic rejected → normalized to canonical, NORMALIZED note shown
+ok 32 T-203: priority is always high, never medium (pc-handshake-priority-constraint)
+ok 33 T-204: missing content → exit 1 with Usage message
+ok 34 T-205: sb_auth.sh missing → hard fail exit 1, FATAL to stderr AND persisted to log
+ok 35 T-206: dry-run output never contains the SUPABASE_SERVICE_ROLE_KEY value
+ok 36 T-207: --live POST failure surfaces curl stderr in FATAL (not swallowed by 2>/dev/null)
+ok 37 T-208: --live never falls back to $HOME/.hakudokai/env (process env only)
+ok 38 T-209: --live success surfaces the pc_handshake row id in stdout (return=representation, not minimal)
+ok 39 T-210: requires_response defaults to false, --requires-response sets it true
+not ok 40 T-001: lib/_section18_roles.sh が存在する
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 41 T-002: SECTION18_MAINPC_PANE_ORDER が pane 配置順 5 件
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 42 T-003: SECTION18_SECONDPC_AGENTS が ashigaru5-8 の 4 件
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 43 T-004: SECTION18_ALL_ROLES に shogun 含む / ashigaru4 を含まない / 旧体制名なし
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 44 T-005: 多重 source で配列が再定義されず _SECTION18_ROLES_LOADED ガードが効く
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 45 T-101: section18_is_secondpc_agent が ashigaru5/6/7/8 を accept
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 46 T-102: section18_is_secondpc_agent が MainPC role を reject
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 47 T-103: section18_is_secondpc_agent が ashigaru4 (欠番) を reject
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 48 T-104: section18_is_secondpc_agent が shogun を reject (別 session)
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 49 T-201: section18_is_mainpc_pane_agent が karo/ashigaru1-3/gunshi を accept
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 50 T-202: section18_is_mainpc_pane_agent が SecondPC role を reject
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 51 T-203: section18_is_mainpc_pane_agent が ashigaru4 (欠番) を reject
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 52 T-204: section18_is_mainpc_pane_agent が shogun を reject (別 session)
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 53 T-301: section18_mainpc_pane_index が pane 配置順を返す
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 54 T-302: section18_mainpc_pane_index が SecondPC role に non-zero exit
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 55 T-303: section18_mainpc_pane_index が ashigaru4 に non-zero exit
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 56 T-304: section18_mainpc_pane_index が shogun に non-zero exit (別 session)
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 57 T-401: pytest 側 TestSection18ShellHelper と同一の SECTION18_MAINPC_PANE_ORDER
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+not ok 58 T-402: pytest 側 TestSection18ShellHelper と同一の SECTION18_SECONDPC_AGENTS
+# (from function `source' in file lib/_section18_roles.sh, line 108,
+#  from function `setup' in test file tests/test_section18_roles.bats, line 36)
+#   `source "$HELPER"' failed with status 2
+# /Users/momizimac/wt/a1-km167-ci/lib/_section18_roles.sh: line 108: declare: -A: invalid option
+# declare: usage: declare [-afFirtx] [-p] [name[=value] ...]
+# bats warning: Executed 37 instead of expected 58 tests
