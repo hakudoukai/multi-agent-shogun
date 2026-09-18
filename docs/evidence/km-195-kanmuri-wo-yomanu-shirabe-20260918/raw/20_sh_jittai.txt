@@ -1,0 +1,10 @@
+koku=2026-09-18T21:03:48+0900 ㋒ macOS の sh の実体(実測)
+-rwxr-xr-x root wheel 101232 /bin/sh
+sh --version: GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25) / sh -c 'shopt -o posix' → posix 	on / BASH_VERSION in sh=3.2.57(1)-release
+bash --version: GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25) / zsh: zsh 5.9 (arm64-apple-darwin25.0)
+/bin/sh と /bin/bash は別 binary(sha256 頭 sh=ad5c194b bash=fde343ee)だが中身は bash 3.2 の POSIX 模式
+--- <( を撥ねる因(初版の種は while 無しで bash でも落ちた=疵・作り直し): seed=while read -r l; do :; done < <(echo a)
+bash -n rc=0 stderr=[]
+sh -n rc=2 stderr=[docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/seed_procsub.sh: line 2: syntax error ne]
+zsh -n rc=0 stderr=[]
+∴ bash 3.2 の POSIX 模式(sh)では process substitution <( ) が無効(bash の man: process substitution is not available in posix mode)。zsh は <( ) を持つゆゑ通る。

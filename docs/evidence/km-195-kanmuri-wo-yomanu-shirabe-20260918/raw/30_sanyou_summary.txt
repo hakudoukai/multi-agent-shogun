@@ -1,0 +1,18 @@
+koku=2026-09-18T21:03:48+0900 ㋑ 實射 ―― repo(己の樹 origin/main)の冠 #!/bin/bash(又は env bash)の .sh へ bash -n / sh -n / zsh -n を当て四に分ける
+冠 bash の .sh 母數=109(全 .sh 110 本の内)
+四分: 甲(三様 rc0)=97 / ★乙(bash 0・sh 非0=本件の形)=11★ / 丙(bash 非0=真の疵)=0 / 丁(其の他: bash 0・sh 0・zsh 非0)=1
+乙 の file と sh の叫び(先頭一行):
+  ./queue/reports/karo-main/20260917_safe_nudge_doppler_bats_shim.sh  sh:2 zsh:0  line 8: syntax error near unexpected token `<'
+  ./scripts/agent_health_check.sh  sh:2 zsh:0  line 361: syntax error near unexpected token `<'
+  ./scripts/agent_status.sh  sh:2 zsh:0  line 109: syntax error near unexpected token `<'
+  ./scripts/checks/codex_cli_required_persona.sh  sh:2 zsh:0  line 48: syntax error near unexpected token `<'
+  ./scripts/checks/karo_mac_gate4.sh  sh:2 zsh:0  line 71: syntax error near unexpected token `<'
+  ./scripts/checks/symlink_aware_atomic_write.sh  sh:2 zsh:0  line 64: syntax error near unexpected token `<'
+  ./scripts/inbox_watcher.sh  sh:2 zsh:1  line 957: syntax error near unexpected token `<'
+  ./scripts/ntfy.sh  sh:2 zsh:0  line 22: syntax error near unexpected token `<'
+  ./scripts/ntfy_listener.sh  sh:2 zsh:1  line 37: syntax error near unexpected token `<'
+  ./scripts/ratelimit_check.sh  sh:2 zsh:0  line 307: syntax error near unexpected token `<'
+  ./scripts/redundancy/shogun_report_watcher.sh  sh:2 zsh:0  line 332: syntax error near unexpected token `<'
+丙 の file:
+丁(zsh のみ非0)の file 数と例:
+  ./tests/e2e/mock_behaviors/common.sh

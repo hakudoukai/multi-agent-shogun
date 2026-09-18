@@ -1,0 +1,16 @@
+koku=2026-09-18T21:02:10+0900 ㋒ macOS の sh の実体(字面でなく実測)
+-rwxr-xr-x  1 root  wheel  101232 Jun 25 11:29 /bin/sh
+sh --version: GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+sh -c 'echo $BASH_VERSION / posix=$(shopt -o posix 2>/dev/null | tr -s " ")': BASH_VERSION=3.2.57(1)-release
+posix          	on
+bash --version: GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+zsh --version: zsh 5.9 (arm64-apple-darwin25.0)
+file: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x
+/bin/sh (for architecture x86_64):	Mach-O 64-bit executable x86_64
+/bin/sh (for architecture arm64e):	Mach-O 64-bit executable arm64e
+同一 binary か: sh=ad5c194b05f83bc5 bash=fde343ee184953c1
+--- <( を撥ねる因: sh -n で試す
+sh -n rc=2
+bash -n rc=2
+zsh -n rc=1
+sh(=bash posix 模式)では process substitution は無効(posix 模式で <( が字句として認められぬ)= bash の man: 'process substitution is not available in posix mode' を実測で確かめた形

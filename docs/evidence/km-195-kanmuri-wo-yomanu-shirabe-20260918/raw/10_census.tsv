@@ -1,0 +1,76 @@
+# koku=2026-09-18T21:03:22+0900 roots=['/Users/momizimac/wt/a1-km195', '/Users/momizimac/bin'] skip=['.git', '.venv', '__pycache__', 'node_modules', 'queue'] files=634 max_depth=10 rc=0
+kind	root	path	line	tool	A	B	verdict	verbatim
+paper	/Users/momizimac/wt/a1-km195	CONTRIBUTING.md	108	shellcheck	-	-	乙(器を固定)	| `scripts/` | Core system utilities | All scripts must pass shellcheck |
+paper	/Users/momizimac/wt/a1-km195	CONTRIBUTING.md	175	shellcheck	-	-	乙(器を固定)	# Run shellcheck before committing
+paper	/Users/momizimac/wt/a1-km195	CONTRIBUTING.md	179	shellcheck	-	B	測れぬ(判が割れる A≠B)	- Use `# shellcheck disable=SCXXXX` only when absolutely necessary (with explanation)
+paper	/Users/momizimac/wt/a1-km195	CONTRIBUTING.md	280	shellcheck	-	-	乙(器を固定)	# Run shellcheck linter
+paper	/Users/momizimac/wt/a1-km195	SECURITY.md	106	shellcheck	-	-	乙(器を固定)	All scripts must pass `shellcheck` to catch common security issues.
+paper	/Users/momizimac/wt/a1-km195	docs/codex_audits/shogun_system_final_audit_round1.txt	11	bash	A	B	甲(冠を読む)	- No Python AST import cycles were found. `bash -n` passed for shell scripts. But three Python scripts have CRLF shebangs and fail when executed direc
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/10_census_summary.round1.txt	1	shellcheck	-	-	乙(器を固定)	全体: 行 65 / file 30 / 甲 2 乙 56 丙 0 測れぬ 7 / 和=65 (=母數) / 器別 {'shellcheck': 48, 'py_compile': 6, 'sh': 4, 'bash': 6, 'zsh': 1}
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/10_census_summary.round1.txt	2	shellcheck	-	-	乙(器を固定)	sh: 行 41 / file 20 / 甲 1 乙 36 丙 0 測れぬ 4 / 和=41 (=母數) / 器別 {'shellcheck': 34, 'bash': 3, 'sh': 1, 'py_compile': 3}
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/10_census_summary.round1.txt	3	shellcheck	-	-	乙(器を固定)	py: 行 4 / file 3 / 甲 0 乙 2 丙 0 測れぬ 2 / 和=4 (=母數) / 器別 {'shellcheck': 1, 'bash': 1, 'py_compile': 2}
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/10_census_summary.round1.txt	4	shellcheck	-	-	乙(器を固定)	yaml: 行 8 / file 1 / 甲 0 乙 8 丙 0 測れぬ 0 / 和=8 (=母數) / 器別 {'shellcheck': 8}
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/10_census_summary.round1.txt	5	shellcheck	-	-	乙(器を固定)	paper: 行 12 / file 6 / 甲 1 乙 10 丙 0 測れぬ 1 / 和=12 (=母數) / 器別 {'shellcheck': 5, 'py_compile': 1, 'sh': 3, 'bash': 2, 'zsh': 1}
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/10_census_summary.round1.txt	6	shellcheck	-	-	乙(器を固定)	根 /Users/momizimac/wt/a1-km195: 行 64 / file 29 / 甲 2 乙 55 丙 0 測れぬ 7 / 和=64 (=母數) / 器別 {'shellcheck': 47, 'py_compile': 6, 'sh': 4, 'bash': 6, 'zsh': 1
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/10_census_summary.round1.txt	7	shellcheck	-	-	乙(器を固定)	根 /Users/momizimac/bin: 行 1 / file 1 / 甲 0 乙 1 丙 0 測れぬ 0 / 和=1 (=母數) / 器別 {'shellcheck': 1}
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/20_sh_jittai.txt	12	sh	-	-	乙(器を固定)	--- <( を撥ねる因: sh -n で試す
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/20_sh_jittai.txt	13	sh	-	-	乙(器を固定)	sh -n rc=2
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/20_sh_jittai.txt	14	bash	-	-	乙(器を固定)	bash -n rc=2
+paper	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/20_sh_jittai.txt	15	zsh	-	-	乙(器を固定)	zsh -n rc=1
+paper	/Users/momizimac/wt/a1-km195	docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md	157	py_compile	-	-	乙(器を固定)	- realtime_bridge.py が syntax PASS + py_compile OK
+paper	/Users/momizimac/wt/a1-km195	skills/shogun-screenshot/SKILL.md	76	sh	-	-	乙(器を固定)	bash skills/shogun-screenshot/scripts/capture_local.sh -n 3
+py	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/01_walk_syntax_checkers.py	3	bash	-	B	測れぬ(判が割れる A≠B)	"""km-195: 文法を検める器の呼出(bash -n / sh -n / zsh -n / shellcheck / py_compile / python -m compileall)を歩き、
+py	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/01_walk_syntax_checkers.py	10	py_compile	-	B	測れぬ(判が割れる A≠B)	R_CALL=re.compile(r'\b(bash|sh|zsh|dash|ksh)\s+-n\b|\bshellcheck\b|py_compile|compileall|\bbash\s+-[a-z]*n[a-z]*\b')
+py	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/01_walk_syntax_checkers.py	36	shellcheck	-	-	註(呼出でない・指示行/註)	# 疵⑴の直し: `# shellcheck disable=/source=` の指示行と註行(先頭 #)は呼出でない → 別勘定 '註' として数へる
+py	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/01_walk_syntax_checkers.py	38	shellcheck	-	-	乙(器を固定)	if re.match(r'#\s*shellcheck\s+(disable|source|shell)=',st) or (st.startswith('#') and k in ('sh','py')):
+py	/Users/momizimac/wt/a1-km195	scripts/fukuincho_desktop_poke.py	37	py_compile	-	-	乙(器を固定)	syntax check (python -m py_compile) は third_pc 上で可能。
+py	/Users/momizimac/wt/a1-km195	tests/test_watcher_hotfix.py	7	shellcheck	-	-	乙(器を固定)	3. Manual disable flag (watchdog.sh, kuro_desktop_watcher.sh) — shellcheck only
+sh	/Users/momizimac/bin	idle_backlog_wake.sh	111	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck source=/home/hakudoukai/bin/stall_wake_lib.sh
+sh	/Users/momizimac/wt/a1-km195	android/gradlew	131	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC3045
+sh	/Users/momizimac/wt/a1-km195	android/gradlew	139	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC3045
+sh	/Users/momizimac/wt/a1-km195	android/gradlew	182	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2086
+sh	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/seed_positive_control.sh	2	bash	-	B	測れぬ(判が割れる A≠B)	bash -n "$f"
+sh	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/seed_positive_control.sh	3	sh	-	B	測れぬ(判が割れる A≠B)	sh -n "$f"
+sh	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/seed_positive_control.sh	4	bash	A	B	甲(冠を読む)	shebang=$(head -1 "$f"); case "$shebang" in *bash*) bash -n "$f";; *) sh -n "$f";; esac
+sh	/Users/momizimac/wt/a1-km195	docs/evidence/km-195-kanmuri-wo-yomanu-shirabe-20260918/raw/seed_positive_control.sh	6	py_compile	-	B	測れぬ(判が割れる A≠B)	python3 -m py_compile x.py
+sh	/Users/momizimac/wt/a1-km195	lib/cli_adapter.sh	1074	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	lib/ntfy_auth.sh	33	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	scripts/agent_health_check.sh	242	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2206
+sh	/Users/momizimac/wt/a1-km195	scripts/agent_health_check.sh	373	py_compile	-	-	註(呼出でない・指示行/註)	#   (1) scripts/fukuincho_desktop_poke.py 存在 + syntax (python -m py_compile)
+sh	/Users/momizimac/wt/a1-km195	scripts/agent_health_check.sh	388	py_compile	-	-	乙(器を固定)	if ! python3 -m py_compile "$_fukuincho_script" 2>>"$LOG"; then
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	58	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2034  # bats test + 外部 caller (e.g. dashboard) が参照
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	60	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2034
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	62	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2034
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	76	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	294	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2016  # awk script intentionally uses single quotes (no shell expansion)
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	331	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2034  # nameref via local -n, shellcheck false positive
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	443	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2034  # 外部 caller / bats test が参照
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	445	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2034
+sh	/Users/momizimac/wt/a1-km195	scripts/checks/pane_identity.sh	447	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2034
+sh	/Users/momizimac/wt/a1-km195	scripts/commander_send_shogun_second.sh	21	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	scripts/fukuincho_detect_stale_cli.sh	33	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	scripts/idle_backlog_wake.sh	134	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck source=/home/hakudoukai/bin/stall_wake_lib.sh
+sh	/Users/momizimac/wt/a1-km195	scripts/ntfy.sh	9	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck source=../lib/ntfy_auth.sh
+sh	/Users/momizimac/wt/a1-km195	scripts/ntfy.sh	24	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2086
+sh	/Users/momizimac/wt/a1-km195	scripts/ntfy_listener.sh	17	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck source=../lib/ntfy_auth.sh
+sh	/Users/momizimac/wt/a1-km195	scripts/tests/test_detect_stale.sh	31	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	shim/hakudokai/hakudokai_audit_scheduler.sh	48	bash	-	-	乙(器を固定)	if ! bash -n "$f" 2>/dev/null; then
+sh	/Users/momizimac/wt/a1-km195	shim/hakudokai/hakudokai_watchdog.sh	52	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1091
+sh	/Users/momizimac/wt/a1-km195	shim/hakudokai/hakudokai_watchdog.sh	364	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2206
+sh	/Users/momizimac/wt/a1-km195	tests/e2e/e2e_bloom_routing.bats	28	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	tests/e2e/e2e_bloom_routing.bats	30	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	tests/e2e/e2e_bloom_routing.bats	97	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2064
+sh	/Users/momizimac/wt/a1-km195	tests/e2e/e2e_bloom_routing.bats	138	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2064
+sh	/Users/momizimac/wt/a1-km195	tests/test_section18_roles.bats	35	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	tests/test_section18_roles.bats	101	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	tests/unit/test_dead_letter.bats	43	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	tests/unit/test_dedup.bats	29	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC1090
+sh	/Users/momizimac/wt/a1-km195	tests/unit/test_ntfy_auth.bats	190	shellcheck	-	-	註(呼出でない・指示行/註)	# shellcheck disable=SC2086
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	157	shellcheck	-	-	乙(器を固定)	shellcheck:
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	165	shellcheck	-	-	乙(器を固定)	- name: Install shellcheck
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	168	shellcheck	-	-	乙(器を固定)	sudo apt-get install -y shellcheck
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	170	shellcheck	-	-	乙(器を固定)	- name: Run shellcheck on lib/
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	173	shellcheck	-	-	乙(器を固定)	find lib -name '*.sh' -type f -exec shellcheck -x -S error {} +
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	178	shellcheck	-	-	乙(器を固定)	- name: Run shellcheck on scripts/
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	181	shellcheck	-	-	乙(器を固定)	find scripts -name '*.sh' -type f -exec shellcheck -x -S error {} +
+yaml	/Users/momizimac/wt/a1-km195	.github/workflows/test.yml	189	shellcheck	-	-	乙(器を固定)	needs: [unit-tests, shellcheck]

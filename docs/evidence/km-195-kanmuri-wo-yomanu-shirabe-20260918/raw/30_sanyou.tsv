@@ -1,0 +1,110 @@
+path	shebang	bash_rc	sh_rc	zsh_rc	class	sh_first_err
+./first_setup.sh	#!/usr/bin/env bash	0	0	0	甲
+./lib/_section18_roles.sh	#!/usr/bin/env bash	0	0	0	甲
+./lib/agent_status.sh	#!/usr/bin/env bash	0	0	0	甲
+./lib/cli_adapter.sh	#!/usr/bin/env bash	0	0	0	甲
+./lib/ntfy_auth.sh	#!/usr/bin/env bash	0	0	0	甲
+./queue/reports/karo-main/20260917_safe_nudge_doppler_bats_shim.sh	#!/usr/bin/env bash	0	2	0	乙	line 8: syntax error near unexpected token `<'
+./queue/reports/karo-main/20260917_safe_nudge_doppler_harness.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/agent_health_check.sh	#!/usr/bin/env bash	0	2	0	乙	line 361: syntax error near unexpected token `<'
+./scripts/agent_periodic_push.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/agent_status.sh	#!/usr/bin/env bash	0	2	0	乙	line 109: syntax error near unexpected token `<'
+./scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/archive/message_delivery_v2_full_20260508/dedup.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/archive/message_delivery_v2_full_20260508/supervisor.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/archive/message_delivery_v2_full_20260508/watcher.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/audit_codex.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/audit_gemini.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/audit_meta_codex.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/box_get_carte_pdfs.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/box_pdf_to_png.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/box_scope_verify.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/box_setup.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/build_instructions.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/bulk_ack.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/codex_cli_required_persona.sh	#!/usr/bin/env bash	0	2	0	乙	line 48: syntax error near unexpected token `<'
+./scripts/checks/codex_exec_sandbox_guard.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/context_usage_warn.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/dd169_kill_term_guard.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/ephemeral_worktree_hygiene.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/inbox_alias_integrity.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/karo_mac_dasumae_gate.sh	#!/bin/bash	0	0	0	甲
+./scripts/checks/karo_mac_gate4.sh	#!/bin/bash	0	2	0	乙	line 71: syntax error near unexpected token `<'
+./scripts/checks/karo_mac_kara_wo_ichigyo.sh	#!/bin/bash	0	0	0	甲
+./scripts/checks/pane_identity.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/pretooluse_bash_guard.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/secondpc_dispatch.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/checks/symlink_aware_atomic_write.sh	#!/usr/bin/env bash	0	2	0	乙	line 64: syntax error near unexpected token `<'
+./scripts/checks/tests/karo_mac_dasumae_gate_negative_test.sh	#!/bin/bash	0	0	0	甲
+./scripts/checks/verify_state_before_asserting.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/commander_send_shogun_second.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/diagnose.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/fukuincho_detect_stale_cli.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/idle_backlog_wake.sh	#!/bin/bash	0	0	0	甲
+./scripts/inbox_watcher.sh	#!/usr/bin/env bash	0	2	1	乙	line 957: syntax error near unexpected token `<'
+./scripts/inbox_write.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/karo_overload_monitor.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/karo_second_send_iincho.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/lib/detect_stale.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/lib/inbox_path.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/ntfy.sh	#!/usr/bin/env bash	0	2	0	乙	line 22: syntax error near unexpected token `<'
+./scripts/ntfy_listener.sh	#!/usr/bin/env bash	0	2	1	乙	line 37: syntax error near unexpected token `<'
+./scripts/pane_enter_watcher_supervisor.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/ratelimit_check.sh	#!/usr/bin/env bash	0	2	0	乙	line 307: syntax error near unexpected token `<'
+./scripts/redundancy/shogun_report_watcher.sh	#!/usr/bin/env bash	0	2	0	乙	line 332: syntax error near unexpected token `<'
+./scripts/seo_qc.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/setup_known_hosts.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/slim_yaml.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/stop_hook_inbox.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/switch_cli.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/tests/test_detect_stale.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/tests/test_fukuincho_detect_stale_cli.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/visual_env_setup.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/visual_smoke.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/watchdogs/enter_restart_commander_watchdog.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/watchdogs/enter_restart_common_watchdog.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/watchdogs/enter_restart_shogun_main_watchdog.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/watchdogs/enter_restart_shogun_second_watchdog.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/watchdogs/enter_restart_shogun_third_watchdog.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/watcher_supervisor.sh	#!/usr/bin/env bash	0	0	0	甲
+./scripts/watcher_supervisor_third.sh	#!/usr/bin/env bash	0	0	0	甲
+./setup.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_activity_monitor.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_audit_scheduler.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_clinic_switch.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_departure.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_fukuincho_watcher.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_init_agents.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_minimal_install.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_reports_sync.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_secondpc_receiver.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_secondpc_setup.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_secondpc_watcher.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_start_watchers.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_task_sync.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/hakudokai_watchdog.sh	#!/usr/bin/env bash	0	0	0	甲
+./shim/hakudokai/lib/sb_auth.sh	#!/usr/bin/env bash	0	0	0	甲
+./shutsujin_departure.sh	#!/usr/bin/env bash	0	0	0	甲
+./shutsujin_departure_secondpc.sh	#!/usr/bin/env bash	0	0	0	甲
+./skills/shogun-screenshot/scripts/capture_local.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/bloom_classification_accuracy.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/checks/audit_gemini_harness/smoke_test.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/checks/dd169_kill_term_guard/smoke_test.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/checks/enter_restart_footer_immune/smoke_test.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/checks/fixtures/fake_tmux.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/checks/fixtures/watcher_supervisor_sample.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/checks/pretooluse_stdin_json/smoke_test.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/dim_d_quality_comparison.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/e2e/mock_behaviors/claude_behavior.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/e2e/mock_behaviors/codex_behavior.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/e2e/mock_behaviors/common.sh	#!/usr/bin/env bash	0	0	1	丁
+./tests/e2e/mock_cli.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/migrations/test_organizational_lessons_rls.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/smoke/test_enter_restart_watchdog.sh	#!/usr/bin/env bash	0	0	0	甲
+./tests/test_shogun_report_watcher.sh	#!/usr/bin/env bash	0	0	0	甲

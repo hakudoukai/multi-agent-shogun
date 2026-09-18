@@ -1,0 +1,15 @@
+koku=2026-09-18T21:04:51+0900 対照(㋑)
+--- 陽性対照: 乙の一本 scripts/checks/karo_mac_gate4.sh の写しを束に置き、末尾に態と壊れた 'if [' 一行を足す(元は一指も触れず)
+  bash -n rc=2
+  sh -n rc=2
+  zsh -n rc=1
+  → 三様とも非0 なら「真の疵は三様が揃つて鳴る」(乙は sh だけが鳴る=器の疵)
+  元の file 不変: sha256 0db0857e32d95b3d / git diff --quiet rc=0
+--- 陰性対照: 同じ file を二度当てて同値
+  1 回目: bash=0 sh=2 zsh=0
+  2 回目: bash=0 sh=2 zsh=0
+--- 乙 11 本の sh の叫びの行は悉く <( か: 11 / 11
+--- 丁 1 本(zsh のみ非0): tests/e2e/mock_behaviors/common.sh の zsh の叫び: tests/e2e/mock_behaviors/common.sh:77: parse error near `200'
+--- shellcheck は冠を読むか(器の側の判・實測): 冠 #!/bin/bash の写しに shellcheck を当て、冠を #!/bin/sh に替へた写しで警告が変はるか
+  冠 bash: 0 件 / 冠 sh: 1 件・SC3001(process substitution is undefined in sh)=2
+  → shellcheck は ★冠から shell を選ぶ★(冠 sh にすると <( を SC3001 で鳴らす)= 甲の器。CI の shellcheck 呼出(test.yml L173/181)は器を固定して見えるが器自身が冠を読む。
