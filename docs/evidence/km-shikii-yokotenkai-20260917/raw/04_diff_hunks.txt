@@ -1,0 +1,20 @@
+--- scripts/inbox_watcher.sh
+6
+@@ -121,9 +121,60 @@ fi
+@@ -644,7 +695,7 @@ send_cli_command() {
+@@ -811,6 +862,37 @@ agent_has_self_watch() {
+@@ -1135,6 +1217,15 @@ process_unread() {
+@@ -1245,6 +1336,13 @@ for s in data.get('specials', []):
+@@ -1372,11 +1470,11 @@ for s in data.get('specials', []):
+--- scripts/watchdogs/enter_restart_common_watchdog.sh
+2
+@@ -56,9 +56,7 @@ LOG_DIR="$ER_LOG_DIR"
+@@ -74,6 +72,43 @@ CYCLE_LOG_PREFIX="$ER_CYCLE_LOG_PREFIX"
+--- scripts/agent_health_check.sh
+2
+@@ -82,7 +82,39 @@ fi
+@@ -307,8 +339,8 @@ fi
+--- scripts/checks/context_usage_warn.sh
+2
+@@ -28,8 +28,41 @@
+@@ -43,7 +76,7 @@ if [ -z "$SESSION_ID" ] || [ ! -f "$JSONL_PATH" ]; then
