@@ -1,0 +1,8 @@
+# koku=2026-09-18T19:52:56+0900 root=docs/evidence/ashigaru-mac-1_km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918/raw/seed_ctrl skip=['.git'] files=2 max_depth=0 rc=0
+kind	path	line	form	verbatim
+py	positive_control.py	1	py_stderr_merged	r = subprocess.run(["git","status"], stderr=subprocess.STDOUT, capture_output=True)
+sh	positive_control.sh	3	count_pipe+var_capture	n=$(git show HEAD:nonexistent 2>&1 | grep -c '')
+sh	positive_control.sh	4	count_pipe+var_capture	m=$(ls /nonexistent 2>&1 | wc -l)
+sh	positive_control.sh	5	var_capture	out="$(some_cmd 2>&1)"; [ "$out" = "x" ] && echo same
+sh	positive_control.sh	6	count_pipe+var_capture	sort_u=$(cat a b 2>&1 | sort -u | wc -l)
+sh	positive_control.sh	7	var_capture	plain=$(echo hi 2>&1)

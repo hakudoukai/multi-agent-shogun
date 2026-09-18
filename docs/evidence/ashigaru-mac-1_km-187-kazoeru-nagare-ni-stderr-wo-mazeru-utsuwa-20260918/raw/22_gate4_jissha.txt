@@ -1,0 +1,18 @@
+koku=2026-09-18T19:55:33+0900 器=scripts/checks/karo_mac_gate4.sh L20-23 `out=$(git diff --cached --check -- "$@" 2>&1); rc=$?; n=$(printf '%s
+' "$out" | grep -c .)`
+種=己の束の raw/seed_ctrl/brokengit(.git file が無い gitdir を指す・末尾空白の行は 0 本=正の数 0)
+走らせる: bash scripts/checks/karo_mac_gate4.sh docs/evidence/ashigaru-mac-1_km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918/raw/seed_ctrl/brokengit f.txt
+rc=1
+-- stderr(門の告げ):
+★條④ diff --check が落ちた ―― 1 行★
+    fatal: not a git repository: (null)
+fatal: not a git repository: (null)
+★staged が 0 file ―― 押す物 が無い(之 を『通』と読むな)★
+fatal: not a git repository: (null)
+★條① 遠 に枝 origin/ が無い ―― 押し先 を確かめよ★
+-- 判: 「條④ diff --check が落ちた ―― 1 行」の ★1 は末尾空白の行数ではなく git の悲鳴 fatal の 1 行★(偽の数・正は 0 本)。但し rc≠0 で門は止まる(fail-closed)ゆゑ数が偽でも通しては居らぬ=載る(方向は安全側)。
+対照(正の樹): bash scripts/checks/karo_mac_gate4.sh /Users/momizimac/wt/a1-km187 scripts/checks/karo_mac_gate4.sh →
+條④ diff --check = 0
+★staged が 0 file ―― 押す物 が無い(之 を『通』と読むな)★
+★條① 遠 に枝 origin/ashigaru-mac-1/km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918 が無い ―― 押し先 を確かめよ★
+  (staged 無しゆゑ別條で止まるが 條④ は「= 0」=正の数)

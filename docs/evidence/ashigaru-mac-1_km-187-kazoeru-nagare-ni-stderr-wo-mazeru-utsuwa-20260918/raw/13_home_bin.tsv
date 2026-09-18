@@ -1,0 +1,7 @@
+# koku=2026-09-18T19:52:56+0900 root=/Users/momizimac/bin skip=['.git'] files=93 max_depth=1 rc=0
+kind	path	line	form	verbatim
+sh	attach_drm_loop.sh	6	other_2>&1	/usr/bin/osascript "$SCRIPT_DIR/set_macos_terminal_role_title.applescript" "$CURRENT_TTY" "ドクターM" >/dev/null 2>&1
+sh	idle_backlog_wake.sh	67	other_2>&1	"$SB_URL/rest/v1/pc_handshake" -d "$body" >/dev/null 2>&1 && return 0
+sh	karo_mac_template.sh	10	other_2>&1	body(){ sh ~/bin/sb read seq "$1" 2>&1 | /usr/bin/grep -E '^  content:' | cut -c12- | sed 's/"/”/g'; }
+sh	karo_mac_template.sh	12	var_capture	body(){ raw=$(sh ~/bin/sb read seq "$1" 2>&1 | /usr/bin/grep -E '^  content:' | cut -c12-); n=$(printf '%s' "$raw" | /usr/bin/grep -o '"' | /usr/bin/grep -c .); printf '%s' "$raw"
+sh	safe_kill_guard.sh	36	other_2>&1	if ! ps -p "$PID" >/dev/null 2>&1; then

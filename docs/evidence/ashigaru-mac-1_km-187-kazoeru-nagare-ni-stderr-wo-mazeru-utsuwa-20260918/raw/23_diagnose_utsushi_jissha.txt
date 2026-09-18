@@ -1,0 +1,6 @@
+koku=2026-09-18T19:55:58+0900 器=scripts/diagnose.sh L278-292(diag_output=$(bash -c "$diag_commands" 2>&1 || true) → python が行を checks に積む)。器は env と引数を要し其の儘は走らせぬゆゑ ★同じ管を写して★ 實射(条件付)
+diag_commands=[echo a=1; ls /nonexistent_km187; echo b=2](正の出目 2 行: a=1・b=2)
+checks 数= 3 (正は 2)
+[{"name": "a", "value": "1", "status": "info"}, {"name": "output", "value": "ls: /nonexistent_km187: No such file or directory", "status": "info"}, {"name": "b", "value": "2", "status": "info"}]
+-- 判: ls の悲鳴(No such file)が name=output の check として ★数に載る★(2 → 3)。status は info ゆゑ赤くも成らぬ=偽の check が一つ増える。
+-- 案: bash -c … 2>err_file にし stderr は別 file へ(out と err 別・此の器は「出目を構造化する」器ゆゑ err を混ぜると構造が壊れる → 別 file が合ふ)

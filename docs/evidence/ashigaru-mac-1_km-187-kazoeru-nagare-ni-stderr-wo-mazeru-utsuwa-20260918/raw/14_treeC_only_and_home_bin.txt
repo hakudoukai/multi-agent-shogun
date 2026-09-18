@@ -1,0 +1,17 @@
+== 樹C にのみ在る数へる流れ(樹B に無い path)
+.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	90	var_capture	out=$(check_one_file "$f" 2>&1); local rc=$?
+reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	23	var_capture	VITEST_OUT=$(NODE_ENV=test npx vitest run src/features/child-passport 2>&1)
+reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	37	var_capture	E2E_OUT=$(npx playwright test --config=playwright.b83.config.ts 2>&1)
+reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	45	var_capture	E2E_RETRY_OUT=$(npx playwright test --config=playwright.b83.config.ts 2>&1)
+reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	62	var_capture	TSC_OUT=$(npx tsc -p tsconfig.json 2>&1)
+reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	69	var_capture	TSCE2E_OUT=$(npx tsc -p tsconfig.e2e.json 2>&1)
+reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	106	var_capture	ROUNDTRIP_OUT=$(npm run validate:episodes-roundtrip --silent 2>&1)
+scripts/checks/karo_mac_dasumae_gate.sh	233	var_capture	out=$(check_one_file "$f" 2>&1); local rc=$?
+scripts/inbox_write.sh	83	var_capture	_DG_OUT=$(printf '%s' "$CONTENT" | ALLOW_DEFER="${IW_ALLOW_DEFER:-}" python3 "$_DG" 2>&1) || _DG_RC=$?
+== ~/bin の 1 件
+sh	karo_mac_template.sh	12	var_capture	body(){ raw=$(sh ~/bin/sb read seq "$1" 2>&1 | /usr/bin/grep -E '^  content:' | cut -c12-); n=$(printf '%s' "$raw" | /usr/bin/grep -o '"' | /usr/bin/grep -c .);
+== ~/bin の other 2>&1 4 件(参考)
+sh	attach_drm_loop.sh	6	other_2>&1	/usr/bin/osascript "$SCRIPT_DIR/set_macos_terminal_role_title.applescript" "$CURRENT_TTY" "ドクターM" >/dev/null 2>&1
+sh	idle_backlog_wake.sh	67	other_2>&1	"$SB_URL/rest/v1/pc_handshake" -d "$body" >/dev/null 2>&1 && return 0
+sh	karo_mac_template.sh	10	other_2>&1	body(){ sh ~/bin/sb read seq "$1" 2>&1 | /usr/bin/grep -E '^  content:' | cut -c12- | sed 's/"/”/g'; }
+sh	safe_kill_guard.sh	36	other_2>&1	if ! ps -p "$PID" >/dev/null 2>&1; then
