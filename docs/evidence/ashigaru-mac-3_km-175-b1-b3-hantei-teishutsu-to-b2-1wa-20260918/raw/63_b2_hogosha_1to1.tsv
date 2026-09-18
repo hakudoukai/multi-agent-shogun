@@ -1,0 +1,7 @@
+何を	数	言
+話の数	15	episodes/*.json の episode.id
+ref の数(重複除く)	15	★重なり 0 件★(1:1 ゆゑ 0 が條)
+解説の鍵の数	15	parentExplanations.ts + .S3S4.ts の 'S3-EP1': explanation( 行
+★未解決(ref→解説が無い)★	0	0 件
+★孤児(解説→話が無い)★	0	0 件
+1:1 か	★立つ★	條= 話数=鍵数 かつ 未解決0 かつ 孤児0 かつ 重なり0

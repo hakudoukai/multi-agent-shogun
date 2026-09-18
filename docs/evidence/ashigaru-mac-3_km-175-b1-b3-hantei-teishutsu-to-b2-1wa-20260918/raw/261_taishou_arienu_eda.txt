@@ -1,0 +1,7 @@
+刻=2026-09-18T13:56:44+0900
+$ git -C /Users/momizimac/DentalBI rev-parse --verify a2/b1-arienu-eda-98765432-negative-control
+rc=128
+--- stdout
+
+--- stderr
+fatal: Needed a single revision

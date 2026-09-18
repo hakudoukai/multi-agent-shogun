@@ -1,0 +1,12 @@
+刻=2026-09-18T13:56:44+0900
+$ git -C /Users/momizimac/DentalBI show --numstat --format=%H%n%T%n%P%n%ad b5892684f
+rc=0
+--- stdout
+b5892684fcc1d317acf2752689311b408ece3f05
+9787b1f05b0b56f499f9185c6c8b88a137223b1a
+96eb9a045d6e4f975dcf83f86e0e74abaa8f5313
+Thu Sep 10 18:21:45 2026 +0900
+
+182	0	frontend/src/features/child-passport/story-engine/__tests__/schema-types-parity.test.ts
+
+--- stderr

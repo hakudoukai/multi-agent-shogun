@@ -1,0 +1,19 @@
+項目	型	定義の在処(★唯一の出所★)	條
+episode.id	string	frontend/src/features/child-passport/story-engine/episodes/episode.ts:16	『S<数>-EP<数>』・file 名と一致(EPISODE_ID_RE)
+episode.title	string	frontend/src/features/child-passport/story-engine/episodes/episode.ts:17	空でない string
+episode.visit	number	frontend/src/features/child-passport/story-engine/episodes/episode.ts:19	★1 以上の整数★
+episode.season	string	frontend/src/features/child-passport/story-engine/episodes/episode.ts:21	'S3' 等の season 記号
+episode.audience	string	frontend/src/features/child-passport/story-engine/episodes/episode.ts:23	'5-6' 等の年齢帯
+episode.mission	string	frontend/src/features/child-passport/story-engine/episodes/episode.ts:25	脚本の 🦷 行 をそのまま
+episode.badge	string	frontend/src/features/child-passport/story-engine/episodes/episode.ts:27	脚本の 🏅 行 をそのまま
+episode.parent_explanation_ref	string	frontend/src/features/child-passport/story-engine/episodes/episode.ts:34	★保護者解説の id('S3-EP1' 形)★ ―― 1:1 の鍵
+scenes[]	Scene[]	frontend/src/features/child-passport/story-engine/episodes/episode.ts:39	★1 場 以上★・場 id は 'episode.id-' で始まる・id 重複禁
+scene.background	string	frontend/src/features/child-passport/story-engine/types.ts:118	同じ場所は同じ名を使ひ回す
+scene.actors[].id	ActorId(10 値)	frontend/src/features/child-passport/story-engine/types.ts:6	you/papa_dino/koron/… の 10 値のみ
+scene.actors[].anim	AnimName?(5 値)	frontend/src/features/child-passport/story-engine/types.ts:27	idle/blink/walk/joy/surprise・既定 idle
+scene.actors[].position	Position(3 値)	frontend/src/features/child-passport/story-engine/types.ts:32	left/center/right
+scene.lines[].speaker	SpeakerId(11 値)	frontend/src/features/child-passport/story-engine/types.ts:22	actor 10 値 + narrator
+scene.lines[].choices	[opt,opt]?	frontend/src/features/child-passport/story-engine/types.ts:95	★丁度 2 択★・label ≤20 字
+scene.effects[].type	EffectType(10 値)	frontend/src/features/child-passport/story-engine/types.ts:43	enter/exit/pause/… transition_mp4
+scene.effects[].at	number	frontend/src/features/child-passport/story-engine/types.ts:110	同 scene の lines index
+(門)未知 key	―	frontend/src/features/child-passport/story-engine/episodes/validateEpisode.ts:52	★封筒・top-level とも 未知 key は赤★

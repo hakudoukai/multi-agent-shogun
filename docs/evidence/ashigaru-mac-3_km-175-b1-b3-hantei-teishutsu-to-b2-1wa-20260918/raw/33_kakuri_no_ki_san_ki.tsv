@@ -1,0 +1,13 @@
+歩いた所	根	器	rc	常の紙 数	言
+隔離樹	/private/tmp/b3poc	find(素) -type f	0	0	-
+隔離樹	/private/tmp/b3poc	find -L -type f (★link を辿る★)	0	29694	-
+隔離樹	/private/tmp/b3poc	find(素) -type d	0	1620	-
+隔離樹	/private/tmp/b3poc	find(素) -type l	0	9	-
+隔離樹	/private/tmp/b3poc	os.walk(followlinks=False)	0	0	dir 1620・link 8(輪の番人=realpath 1620 箇)
+隔離樹	/private/tmp/b3poc	os.walk(followlinks=True)	0	29643	dir 4812・link 59(輪の番人=realpath 4812 箇)
+陽性対照(本束)	/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918	find(素) -type f	0	36	-
+陽性対照(本束)	/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918	find -L -type f (★link を辿る★)	0	36	-
+陽性対照(本束)	/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918	find(素) -type d	0	4	-
+陽性対照(本束)	/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918	find(素) -type l	0	0	-
+陽性対照(本束)	/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918	os.walk(followlinks=False)	0	36	dir 4・link 0(輪の番人=realpath 4 箇)
+陽性対照(本束)	/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918	os.walk(followlinks=True)	0	36	dir 4・link 0(輪の番人=realpath 4 箇)

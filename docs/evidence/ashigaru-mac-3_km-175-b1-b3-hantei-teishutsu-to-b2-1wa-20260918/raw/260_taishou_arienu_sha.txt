@@ -1,0 +1,7 @@
+刻=2026-09-18T13:56:44+0900
+$ git -C /Users/momizimac/DentalBI rev-parse --verify 9876543298765432987654329876543298765432^{commit}
+rc=128
+--- stdout
+
+--- stderr
+fatal: Needed a single revision

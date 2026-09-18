@@ -1,0 +1,20 @@
+名	樹	git の言(58字で截つ)	rc	出目の初行(64字で截つ)	err の初行(48字で截つ)	意
+10_dental_toplevel	DentalBI	rev-parse --show-toplevel	0	/Users/momizimac/DentalBI	-	現物の樹
+11_dental_origin	DentalBI	remote get-url origin	0	git@github.com:hakudoukai/hakudokai-dev.git	-	押し先
+12_shogun_b1_eda	multi-agent-shogun	rev-parse --verify a2/b1-episodes-playback-20260910	128	-	fatal: Needed a single revision	★当repo には無い筈(rc≠0 が正)★
+13_dental_b1_eda	DentalBI	rev-parse --verify a2/b1-episodes-playback-20260910	0	7a99e7556c3839293e6525671c042cb19e2c1ebe	-	★DentalBI に在る筈(rc=0 が正)★
+20_b1_tip	DentalBI	rev-parse --verify 7a99e7556c3839293e6525671c042cb19e2c1eb	0	7a99e7556c3839293e6525671c042cb19e2c1ebe	-	B1 の tip
+21_b1_commit	DentalBI	cat-file commit 7a99e7556c3839293e6525671c042cb19e2c1ebe	0	tree 35493aac21c0363f80348b63357f79fa39151ea0	-	tree/parent/刻 の源
+22_b1_numstat	DentalBI	show --numstat --format=%H%n%T%n%P%n%ad 7a99e7556c3839293e	0	7a99e7556c3839293e6525671c042cb19e2c1ebe	-	1 file +117 の検め
+30_b5_tip	DentalBI	rev-parse --verify b5892684f^{commit}	0	b5892684fcc1d317acf2752689311b408ece3f05	-	別物の tip
+31_b5_numstat	DentalBI	show --numstat --format=%H%n%T%n%P%n%ad b5892684f	0	b5892684fcc1d317acf2752689311b408ece3f05	-	★別の現物(182行)★
+40_b1_lstree	DentalBI	ls-tree 7a99e7556c3839293e6525671c042cb19e2c1ebe frontend/	0	100644 blob 81e9ec0b31cd688b20fe59acf13e74ba34f7ebc9	frontend/sr	-	blob と mode
+41_b1_blob_size	DentalBI	cat-file -s 81e9ec0b31cd688b20fe59acf13e74ba34f7ebc9	0	6058	-	byte 数(git の言)
+42_b1_blob	DentalBI	cat-file blob 81e9ec0b31cd	0	6058 byte / 改行 117 個	-	★中身を己の手で量つた★
+50_ls_remote_heads	DentalBI	ls-remote --heads origin	0	389c2f13c5fca6f6c8f390e1772d5a406d8e0f03	refs/heads/a1-handover-	-	母數と着弾の源
+51_main_oite_no_tsuiseki	DentalBI	rev-parse --verify origin/main	0	405fed71da517b45123e5aa2d38de48f9b41d873	-	★手元の追跡ref ―― 網の實ではない★
+52_main_ami	origin(網)	ls-remote の refs/heads/main 行	0	088961e193c7bb569b41e40e58e0cc49bb23a21d	-	★main の實は此れ ―― 家老の申した 088961e1 と比べる★
+53_ami_wa_tsuiseki_no_oya	DentalBI	merge-base --is-ancestor 088961e193c7bb569b41e40e58e0cc49b	128	-	fatal: Not a valid commit name 088961e193c7bb569	rc=0 なら 網 main は 追跡ref の祖
+54_tsuiseki_wa_ami_no_oya	DentalBI	merge-base --is-ancestor 405fed71da517b45123e5aa2d38de48f9	128	-	fatal: Not a valid commit name 088961e193c7bb569	rc=0 なら 追跡ref は 網 main の祖
+60_taishou_arienu_sha	DentalBI	rev-parse --verify 987654329876543298765432987654329876543	128	-	fatal: Needed a single revision	★陰性対照 ―― rc≠0 が正★
+61_taishou_arienu_eda	DentalBI	rev-parse --verify a2/b1-arienu-eda-98765432-negative-cont	128	-	fatal: Needed a single revision	★陰性対照 ―― rc≠0 が正★

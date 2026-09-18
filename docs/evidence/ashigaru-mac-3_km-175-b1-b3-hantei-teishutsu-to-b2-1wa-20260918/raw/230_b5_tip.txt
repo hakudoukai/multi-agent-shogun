@@ -1,0 +1,7 @@
+刻=2026-09-18T13:56:44+0900
+$ git -C /Users/momizimac/DentalBI rev-parse --verify b5892684f^{commit}
+rc=0
+--- stdout
+b5892684fcc1d317acf2752689311b408ece3f05
+
+--- stderr

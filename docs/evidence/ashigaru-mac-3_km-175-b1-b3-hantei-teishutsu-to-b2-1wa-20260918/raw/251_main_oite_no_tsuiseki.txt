@@ -1,0 +1,7 @@
+刻=2026-09-18T13:56:44+0900
+$ git -C /Users/momizimac/DentalBI rev-parse --verify origin/main
+rc=0
+--- stdout
+405fed71da517b45123e5aa2d38de48f9b41d873
+
+--- stderr

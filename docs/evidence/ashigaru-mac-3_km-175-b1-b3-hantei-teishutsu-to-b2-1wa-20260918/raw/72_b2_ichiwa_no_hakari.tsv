@@ -1,0 +1,8 @@
+何を	在処	数 or rc	言
+脚本 md(現物)	frontend/src/features/child-passport/story-engine/episodes/scripts/S3-EP1.md	2396	c9ad47d2e6ab71f2ef0889e1085f43c67cf091009f5648aebc1967e0752c2a00
+写し(本束)	_b2/S3-EP1.md	2396	c9ad47d2e6ab71f2ef0889e1085f43c67cf091009f5648aebc1967e0752c2a00
+載つて居る data	frontend/src/features/child-passport/story-engine/episodes/S3-EP1.json	5308	699c6fae562cc5de8c009f27af24198e23a72aeb6f542acdf78ac89a67efd062
+CLI 本走り rc	npm run --silent validate:episode-md <写し>	0	出目 4520 字
+★陰性対照★ cap 束 rc	frontend/src/features/child-passport/story-engine/episodes/scripts/_sample/authoring-sample-broken-cap.md	1	★落ちた(正)★ [md2scene] fail-closed(静的門番): scene(S9-EP21-1): at=0 の effect 束が cap(3
+場の数(変換 / 載つて居る)	scenes	3 / 3	一致
+行の数(変換 / 載つて居る)	lines	14 / 14	一致

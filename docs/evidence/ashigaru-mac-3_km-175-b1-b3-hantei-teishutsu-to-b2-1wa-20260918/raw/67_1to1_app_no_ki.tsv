@@ -1,0 +1,8 @@
+何を	値	言	判
+器	npx vitest run src/features/child-passport/story-engine/episodes/__tests__/episodes.test.tsx	cwd=/Users/momizimac/DentalBI/frontend	2026-09-18T17:27:47+0900
+rc(★管を通さぬ★)	0	0 が緑	★緑★
+走つた本数	26	母數 26	★0 本で緑は緑に非ず★ ―― 26 本現に走つた
+skip	0	SKIP=FAIL の條	★skip 無し★
+1:1 の断(逐語)	it('2. 1:1: 15 話の ref は自話の id と等しく、重複が無い(link の形は不斷)', () => {	episodes.test.tsx	-
+★内蔵 負対照★	it('4. ★陽性對照★: 同じ器へ ★空の雛形★ を渡せば 15 件が未解決へ戻る(上の 0 が盲でない證)', () => {	空表を渡すと未解決が 15 に成る断	★対照在り★
+己の二の器(regex)	driver/60 → raw/63_b2_hogosha_1to1.tsv	話15・鍵15・未解決0・孤児0・重なり0	★鍵の在否のみ ―― 中身の空は見ぬ(∴一の器が要る)★

@@ -1,0 +1,24 @@
+刻=2026-09-18T13:56:44+0900
+根=/Users/momizimac/DentalBI(★樹を名指す ―― 当repo で探して『無い』を得ても不在の證に成らぬ★)
+
+【二つの ref は別物である】
+⑴ B1 の本体 ―― 枝=a2/b1-episodes-playback-20260910 / tip=7a99e7556c3839293e6525671c042cb19e2c1ebe / rc(rev-parse)=0
+   tree=35493aac21c0363f80348b63357f79fa39151ea0 / parent=96eb9a045d6e4f975dcf83f86e0e74abaa8f5313
+   現物=frontend/src/features/child-passport/story-engine/__tests__/episodes.playback.test.tsx
+   blob=81e9ec0b31cd688b20fe59acf13e74ba34f7ebc9 / 6058 byte / 改行 117 個 / sha256(中身)=d9a8e3178d64aad065ed438e813a74731a0191468fa5bc72e9f3ea407f6a7a9c
+⑵ 別物 ―― 枝=a2/b1-story-engine-parity-20260910 / tip(短)=b5892684f / rc=0 ―― 加へたのは schema-types-parity.test.ts(raw/231_b5_numstat)
+
+【押し済か(ls-remote・rc は管を通さず採つた)】
+・rc=0 / 母數=599 本
+・B1 の枝に当たる行=1 本
+  逐語= 7a99e7556c3839293e6525671c042cb19e2c1ebe	refs/heads/a2/b1-episodes-playback-20260910
+・別物の枝に当たる行=1 本
+・★陰性対照★ 在らぬ枝 a2/b1-arienu-eda-98765432-negative-control に当たる行=0 本(0 が正)
+・★main の實(網の出目)=088961e193c7bb569b41e40e58e0cc49bb23a21d ―― 家老の申した 088961e1… と★合ふ★★
+・手元の追跡ref origin/main=405fed71da517b45123e5aa2d38de48f9b41d873(rc=0) ―― ★網の實と★食ひ違ふ★★
+  ―― 何方が先か= ★親子に非ず(枝が分かれて居る)★
+
+【之が意味せぬ事】
+・ls-remote が当たつた事は ★中身が上に在る事★ の證ではない(ref の先の obj を fetch して居らぬ)。
+・寸法や行数の一致は ★同一の證に成らぬ★(km-175 ㋒ で家老が 1401 byte の別物に当たつた通り)。
+・當席は押して居らぬ ―― 押したのは委員長(裁 seq332324)であり、本紙は ★着弾を検めた紙★ である。

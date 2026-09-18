@@ -1,0 +1,7 @@
+刻=2026-09-18T13:56:44+0900
+$ git -C /Users/momizimac/DentalBI merge-base --is-ancestor 405fed71da517b45123e5aa2d38de48f9b41d873 088961e193c7bb569b41e40e58e0cc49bb23a21d
+rc=128
+--- stdout
+
+--- stderr
+fatal: Not a valid commit name 088961e193c7bb569b41e40e58e0cc49bb23a21d

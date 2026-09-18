@@ -1,0 +1,218 @@
+{
+  "episode": {
+    "id": "S3-EP1",
+    "title": "川をさかのぼる",
+    "visit": 1,
+    "season": "S3",
+    "audience": "5-6",
+    "mission": "きょう たべたものを ひとつ、おうちの人に はなしてみよう",
+    "badge": "たびだちバッジ",
+    "parent_explanation_ref": "S3-EP1"
+  },
+  "scenes": [
+    {
+      "id": "S3-EP1-1",
+      "background": "kirakira_river_upstream",
+      "actors": [
+        {
+          "id": "koron",
+          "pose": "crouch",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "hana",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "きらきらかわのみずは、いつもより"
+        },
+        {
+          "speaker": "narrator",
+          "text": "つめたい。"
+        },
+        {
+          "speaker": "koron",
+          "text": "このかわ、どこから きてるんだろう",
+          "choices": [
+            {
+              "label": "やまから",
+              "text": "やまから きたのかも。"
+            },
+            {
+              "label": "うみから",
+              "text": "うみから きたのかな。"
+            }
+          ]
+        },
+        {
+          "speaker": "narrator",
+          "text": "みずに てを つけた",
+          "voice": "コロンちゃんが みずに てを つけて いいました"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ハナちゃんが きづく",
+          "voice": "そのとき ハナちゃんが なにかに きづきました"
+        },
+        {
+          "speaker": "narrator",
+          "text": "うえを ゆびさす",
+          "voice": "ハナちゃんが うえを ゆびさします"
+        },
+        {
+          "speaker": "hana",
+          "text": "やまのほう、だれも しらない",
+          "voice": "あっちの 山のほう。だれも いったこと ないんだって"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "koron"
+        },
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "hana"
+        },
+        {
+          "type": "sparkle",
+          "at": 3,
+          "actor": "koron"
+        },
+        {
+          "type": "surprise",
+          "at": 4,
+          "actor": "hana"
+        },
+        {
+          "type": "shake",
+          "at": 5,
+          "actor": "hana"
+        },
+        {
+          "type": "surprise",
+          "at": 6,
+          "actor": "hana"
+        }
+      ]
+    },
+    {
+      "id": "S3-EP1-2",
+      "background": "kirakira_river_upstream",
+      "actors": [
+        {
+          "id": "papa_dino",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        },
+        {
+          "id": "koron",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "hana",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "パパきょうりゅうが うなずきました。"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "たべたもので、からだが できる",
+          "voice": "川は、山の水が あつまって できる。きみたちの からだも おなじだ。たべたものが、あつまって、きみの 歯や ほねに なる"
+        }
+      ],
+      "effects": [
+        {
+          "type": "transition",
+          "at": 0
+        },
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "papa_dino"
+        },
+        {
+          "type": "pause",
+          "at": 1,
+          "ms": 800
+        }
+      ]
+    },
+    {
+      "id": "S3-EP1-3",
+      "background": "kirakira_river_upstream",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "crouch",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "きみは かわのみずを"
+        },
+        {
+          "speaker": "narrator",
+          "text": "すくって みました。てのひらの なかで"
+        },
+        {
+          "speaker": "narrator",
+          "text": "、みずが きらきら ひかっています。",
+          "choices": [
+            {
+              "label": "すくう",
+              "text": "みずが つめたい。"
+            },
+            {
+              "label": "みるだけ",
+              "text": "みずが きらきら する。"
+            }
+          ]
+        },
+        {
+          "speaker": "narrator",
+          "text": "このみずも、いつか だれかの ちからに"
+        },
+        {
+          "speaker": "narrator",
+          "text": "なるのかな。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "transition",
+          "at": 0
+        },
+        {
+          "type": "sparkle",
+          "at": 0
+        },
+        {
+          "type": "transition",
+          "at": 3,
+          "to": "reward"
+        }
+      ]
+    }
+  ]
+}

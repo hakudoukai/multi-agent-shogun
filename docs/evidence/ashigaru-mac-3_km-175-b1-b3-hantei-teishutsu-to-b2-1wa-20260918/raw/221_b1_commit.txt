@@ -1,0 +1,29 @@
+刻=2026-09-18T13:56:44+0900
+$ git -C /Users/momizimac/DentalBI cat-file commit 7a99e7556c3839293e6525671c042cb19e2c1ebe
+rc=0
+--- stdout
+tree 35493aac21c0363f80348b63357f79fa39151ea0
+parent 96eb9a045d6e4f975dcf83f86e0e74abaa8f5313
+author mac_pc <mac_pc@fleet.local> 1789033581 +0900
+committer mac_pc <mac_pc@fleet.local> 1789033581 +0900
+
+test(story-engine): 15話を ★実際に再生する★ 門 ―― episodes.playback.test.tsx(穴三)
+
+之まで episodes/*.json は「検める」門しか無く、★通し再生★ を機械で確かめる器が無かつた。
+本 file は既存の StoryPlayer を其の儘 render し、advance が消える迄叩き、
+終ひの札(story-player-complete)・叩いた數・onComplete の回數 の三つを同時に問ふ。
+
+★新しく書いた物 = 「叩いて終ひ迄行くか」を見る目 のみ★:
+  ・player   = ../StoryPlayer(既存)
+  ・出典読み = tests/e2e/child-passport/flow.ts の loadEpisodes()
+  ・期待値   = 同 expectedTapsOf(台詞總數)・余裕 = 同 ADVANCE_TAP_SLACK
+∴ 數は 1 つも此の file へ転記して居らぬ(母數 15 のみ「母數の器」として置く)。
+
+陽性対照は ★実 file 不触★ ―― structuredClone した写しの場を1つ落とす／台詞を1本抜き、
+門が赤く成る事を toThrow(正規表現で赤の中身まで縛る)で確かめる。
+
+実測: 19 受 悉く通(15話 + 母數 + 陰性対照 + 陽性対照2)。
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+--- stderr

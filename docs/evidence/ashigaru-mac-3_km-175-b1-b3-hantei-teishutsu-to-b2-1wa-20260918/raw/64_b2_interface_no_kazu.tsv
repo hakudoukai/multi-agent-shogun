@@ -1,0 +1,8 @@
+interface	宣言された field	再帰で数へた field	field の名
+Episode	2	34	episode, scenes
+EpisodeMeta	8	8	id, title, visit, season, audience, mission, badge, parent_explanation_ref
+Scene	6	24	id, background, actors, lines, effects, concurrency_cap
+SceneActor	4	4	id, pose, anim, position
+SceneChoiceOption	2	2	label, text
+SceneEffect	5	5	type, at, actor, ms, to
+SceneLine	5	9	speaker, text, voice, choices, rejoin
