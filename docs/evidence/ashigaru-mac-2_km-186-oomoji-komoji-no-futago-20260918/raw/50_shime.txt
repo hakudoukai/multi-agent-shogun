@@ -1,0 +1,40 @@
+★50 の〆 ―― ★命の順で彫つた★(裁333611 ㋓)★
+刻 = 2026-09-18T20:45:08+0900 ／ 枝 = ★ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918★ ／ 場 = /Users/momizimac/wt/a2-km186(己の worktree) ／ 固定 = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+
+★順(一字も入れ替へて居らぬ)★
+  〇 共用樹の姿を再現   ―― 小文字の名を開くと 2596 bytes ／ blob e6de627bd62e… ／ inode 26293928
+  ⑴ git rm --cached <大文字> ―― 後の disk = 2596 bytes ／ inode 26293928(★disk は動いて居らぬ★)
+  ⑵ git checkout -- <小文字> ―― 後の disk = ★3471 bytes★ ／ blob ★de00cbd99d9909f4a923041ae17f0d2cbb587668★
+  ⑶ 検め(assert は ★彫りの前★)
+      ・bytes = 3471 = ★3471★                     ―― 合
+      ・blob sha1(己で計算) = de00cbd99d9909f4a923041ae17f0d2cbb587668 ―― ★de00cbd9…★ 合
+      ・porcelain = ★D  docs/runbooks/ERR-EKARTE-001.md★ ―― ★大文字の D 一行のみ・小文字の M は消えた★
+        ★陽性対照★: 同じ器が ⑵の前には ★ M docs/runbooks/err-ekarte-001.md★ と刷つた(∴ 器は M を刷る能を持つ)
+      ・index に載つた変化 = ★D docs/runbooks/ERR-EKARTE-001.md の一行のみ★
+  ⑷ git commit(★素の commit ―― index の儘★) ―― rc = 0
+
+★彫つた物★
+  HEAD = ★4cb05b976ec0060796840e02dd579f1551d89841★ ／ tree = dd0e82c50326b9e258478c32807c42f0a4ccb5c9
+  樹の中の双子 = ★1 本★ ―― 100644 blob de00cbd99d9909f4a923041ae17f0d2cbb587668 ⇥ docs/runbooks/err-ekarte-001.md
+  4cb05b97 fix(runbooks): ★双子の片方を消す ―― 大文字 ERR-EKARTE-001.md を樹から外す★(委員長裁 seq333611) ⏎  docs/runbooks/ERR-EKARTE-001.md | 79 ----------------------------------------- ⏎  1 file changed, 79 deletions(-) ⏎
+  彫つた後の porcelain(docs/runbooks) = ★★空★★
+
+★未 push の證(★0 行では証せぬ★ ∴ 三役で書く)★
+  ・陽性対照 `git ls-remote origin refs/heads/main`      = ★1 行★(rc=0) ―― ★器は届いて居る★
+  ・当の枝   `git ls-remote origin refs/heads/<当枝>`    = ★0 行★(rc=0) ―― ★未 push★
+  ・負対照   `git ls-remote origin refs/heads/<無き枝>`  = ★0 行★(rc=0) ―― 無い物は 0 行
+
+★⑷ の形について(★命の字義から外した唯一の点★)★
+  ・命は「`git add -f` の後 `git commit --only <同じ path>`」と在る。
+  ・然し此の双子では ★字義通りでは彫れぬ★ ―― `--only <大文字>` も `add -f`+`--only` も
+    ★rc=1「no changes added to commit」で HEAD が動かなかつた★(40/41 の実測)。
+    因 = `--only` は worktree の其の path を読み直すが、case を畳む disk では ★大文字の名がまだ開ける★ 故。
+  ・∴ ⑷ のみ ★素の `git commit`★ を用ゐた。★index には D 一行しか載つて居らぬ事を先に assert して居る★。
+  ・★共用樹では素の commit を打たぬ★(他席の staged を呑む)。此処は ★己が切つた己の枝★ である。
+  ・★家老の御下知を仰ぐ★ ―― 便で名指しする。
+
+★此の數が意味せぬ事★:
+  ・彫つた事は ★PR が在る事を意味せぬ★。push も gh も打つて居らぬ(裁332449・km-172㋕⑶)。
+  ・「双子 1 本」は ★此の枝の tree の話★ であり、★main の話ではない★。main には一指も触れて居らぬ。
+  ・case を区別する Linux で此の commit が如何に見えるかは ★測れぬ★(㋕) ―― 彼方では二本とも
+    ★別々の file として存在して居る筈★ だが、★此の disk からは確かめられぬ★。

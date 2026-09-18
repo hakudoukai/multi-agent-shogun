@@ -1,0 +1,5 @@
+km-186 補㋔ 逆順を ★己の使ひ捨て worktree★ で撃ち申した(共有樹では一発も撃つて居らぬ)。
+素の `git rm docs/runbooks/ERR-EKARTE-001.md` の後、dirent は ★無★・小文字の名も ★開けぬ★。
+続けて `git add -A` を打つと ★index からも正本の行が消え★、`git checkout -- <小文字>` は rc=1 で戻らず、
+`git checkout HEAD -- <両名>` で漸く 3471 bytes が戻り申した。
+∴ ★害は「消えた事」ではなく「気付かぬ儘 commit する事」★。

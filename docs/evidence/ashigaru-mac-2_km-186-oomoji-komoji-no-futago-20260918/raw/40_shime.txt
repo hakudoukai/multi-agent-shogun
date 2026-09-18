@@ -1,0 +1,25 @@
+★40 の〆 ―― ★㋓⑷ を字義通りに踏むと双子が蘇る★★
+刻 = 2026-09-18T20:41:45+0900 ／ 撃つた場 = ★己の使ひ捨て二本★(a2-km186-t1 / a2-km186-t2・detached 6bde7170)
+★共有樹では撃つて居らぬ★。本番の枝(50)へ進む前に ★彫り方だけを先に試した★。
+
+★甲 ―― `git rm --cached` → `git checkout --` → ★`git commit --only <大文字>` のみ★★
+  ・commit の tree に残つた双子 = ★2 本★
+    100644 blob e6de627bd62eb9a4b417155f40748390f49369fe ⇥ docs/runbooks/ERR-EKARTE-001.md
+    100644 blob de00cbd99d9909f4a923041ae17f0d2cbb587668 ⇥ docs/runbooks/err-ekarte-001.md
+★乙 ―― 命の字義通り ★`git add -f <大文字>` を挟む★★
+  ・commit の tree に残つた双子 = ★2 本★
+    100644 blob e6de627bd62eb9a4b417155f40748390f49369fe ⇥ docs/runbooks/ERR-EKARTE-001.md
+    100644 blob de00cbd99d9909f4a923041ae17f0d2cbb587668 ⇥ docs/runbooks/err-ekarte-001.md
+
+★★断(数から出る事のみ)★★
+  ・★甲も乙も彫れて居らぬ★ ―― commit は二つとも ★rc=1「no changes added to commit」★ で、
+    HEAD は 6bde7170 の儘 ★動いて居らぬ★(40_shiken.tsv 逐語)。
+  ・∴ 「双子の行 = 2 本」は ★消しが失敗した事★ を意味する ―― 「add -f が蘇らせた」ではない。
+    ★甲と乙の差は此の測りでは出て居らぬ(二つとも同じ壁で止まつた)。★
+  ・因と ★彫れる形★ は 41 で測り直した ―― `raw/41_shime.txt` を見よ。
+  ・★此の紙の初版には「甲で足りる」と書いた。測る前に断を書いたのが疵である(41 で訂す)。★
+
+★此の數が意味せぬ事★:
+  ・「双子の行 = 1 本」は ★中身が正本である事を意味せぬ★ ―― blob sha を併せ読め(50 で測る)。
+  ・此処の commit は ★使ひ捨ての detached HEAD★ に在り、★枝でも PR でもない★。出さぬ。
+  ・case を区別する Linux で `add -f` が同じ振舞ひを見せるかは ★此の disk からは測れぬ★(㋕)。

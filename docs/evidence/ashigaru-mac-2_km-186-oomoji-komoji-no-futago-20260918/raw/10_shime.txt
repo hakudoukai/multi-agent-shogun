@@ -1,0 +1,16 @@
+★10 の〆 ―― 母數と組★
+刻 = 2026-09-18T20:31:47+0900 ／ 根 = /Users/momizimac/multi-agent-shogun ／ 固定 = origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+器 = git ls-tree -r --name-only -z(★NUL 区切り★ ―― git は非 ASCII を引用符で括る故 行では壊れる)
+rc(name-only) = 0 ／ rc(full) = 0(★returncode 素・管を通さぬ★)
+
+★母數 = 548 path★(固定 commit の全 blob path)
+★casefold で括つて 2 本以上に成る組 = 1 組★
+  ⑴鍵=docs/runbooks/err-ekarte-001.md ―― docs/runbooks/ERR-EKARTE-001.md ／ docs/runbooks/err-ekarte-001.md
+
+★此の數が意味せぬ事★:
+  ・母數は ★固定 commit 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 の樹★ の數である。★disk の數ではない★し、他の枝の數でもない。
+  ・「1 組」は ★path の字面を casefold で括つた數★ であり、
+    ★中身が同じか否かは一切言つて居らぬ★(中身は 10_kumi_git.tsv の sha256 を見よ)。
+  ・disk 側の「開けるか」は ★mac の file 系が大小を畳む★故に True に成り得る ――
+    ★其の path の名で実体が在る事を意味せぬ★(実名は親 dir の listdir で引いた)。
+  ・器の言(err): name-only=― ／ full=―

@@ -1,0 +1,24 @@
+★99 の〆 ―― ★共用樹は動いて居らぬ★★
+刻(後) = 2026-09-18T20:47:52+0900 ／ 根 = /Users/momizimac/multi-agent-shogun ／ 枝 = ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+前の測り = raw/30_kyouyou_mae.txt(刻は其の紙の冠に在る)
+
+| 見る物 | 撃つ前 | 撃つた後 | 判 |
+|---|---|---|---|
+| HEAD | d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11 | d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11 | ★不動★ |
+| index(`git ls-files -s` の sha256) | 7425522328c8eca4efa6f25c0bc3657bdff208dea4331ab4200862eaaa562738 | 7425522328c8eca4efa6f25c0bc3657bdff208dea4331ab4200862eaaa562738 | ★不動★ |
+| porcelain 行数 | 1036 | 1036 | ★不動★ |
+
+rc = HEAD 0 ／ ls-files 0 ／ status 0(★管を通さず returncode から取つた★)
+
+★此の間に當席が打つた git の命★:
+  ・`git worktree add`(己の場を切るのみ ―― ★共用樹の HEAD も index も動かさぬ★) × ★7 本★
+    ―― a2-km186-gyaku / t1 / t2 / t3 / t4 / t5 / a2-km186(★己の物のみ★)
+  ・読取(`ls-tree` `cat-file` `show` `ls-files` `status` `ls-remote` `for-each-ref`)
+  ・★彫りと消しは悉く己の worktree の中★(50_hori.tsv / 35_gyaku.tsv / 40,41_shiken*.tsv)
+
+★此の數が意味せぬ事★:
+  ・porcelain の行数が同じ事は ★中身が同じ事を意味せぬ★(追跡外 dir は一行に畳まれる ―― 中で紙が
+    増減しても行数は動かぬ)。★∴ 併せて HEAD と index の sha を書いた。★
+  ・當席の束(docs/evidence/…)は `.gitignore:7` の裸 `*` に捕まる ―― ★書いても porcelain は黙る★。
+    是は ★書けて居らぬ事を意味せぬ★。
+  ・器の言(status err) = warning: could not open directory 'queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n13_noaccess_dir/': Permission denied

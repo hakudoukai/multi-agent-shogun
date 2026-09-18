@@ -1,0 +1,4 @@
+km-186 ㋓⑷ ★御下知を仰ぎ申す★。命の字義「`git add -f` の後 `git commit --only <同じ path>`」は
+★此の双子では彫れませなんだ★ ―― `--only` も `add -f`+`--only` も ★rc=1「no changes added to commit」・HEAD 不動★(二本実測)。
+因 = `--only` は worktree の其の path を読み直すが、case を畳む disk では ★大文字の名がまだ開ける★。
+∴ ⑷ のみ ★素の commit★。index が D 一行のみと先に assert 仕り候。
