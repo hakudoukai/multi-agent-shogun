@@ -1,0 +1,29 @@
+# 甲 ―― ★旧基底(共用樹 disk)の條④ の黙りを閉ぢる當て紙★。據ゑるな(変更統制) ―― 材のみ。
+diff --git a/scripts/checks/karo_mac_dasumae_gate.sh b/scripts/checks/karo_mac_dasumae_gate.sh
+index 054c442e..14060363 100644
+--- a/scripts/checks/karo_mac_dasumae_gate.sh
++++ b/scripts/checks/karo_mac_dasumae_gate.sh
+@@ -160,11 +160,19 @@ check_one_file(){
+       say "★EOF改行が無い(0) ―― ${f}★"
+       fail=1
+     elif [ "$sz" -ge 2 ]; then
+-      last2=$(tail -c2 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+-      if [ -z "$last2" ]; then
+-        say "★條④ 測れぬ(末尾二字が取れぬ) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
++      # ★2026-09-18 專任3 km-153 ㋐ ―― 末尾「2 byte」ではなく末尾「一行」を見る★
++      #   旧: last2 が丁度 `0a0a` の時だけ鳴つた ∴ CRLF 空行(末尾二字 `0d0a`)に ★黙つた★(fx05 實測)。
++      #   改: 末尾行から CR を落して空なら鳴らす ∴ `0a0a` も `0d0a` も同じ口へ入る。
++      #   ★限界(此の當て紙が閉ぢぬ物)★: 不可視字一字だけの行(U+3000 等・末尾二字 `800a`)は閉ぢぬ。
++      #   之は codepoint の類を見る器が要る ―― 上流(裁 seq330497)は兄弟器 karo_mac_fukashiji.py で閉ぢた。
++      #   ★形を数へ上げる仕方では永久に閉ぢぬ(U+2003 等が幾らでも在る)★ ∴ 本紙は一面のみを閉ぢる材である。
++      local saigo saigo_rc
++      saigo=$(tail -n1 "$f" 2>/dev/null); saigo_rc=$?   # ★管を通さず rc を取る★
++      saigo="${saigo%$'\r'}"
++      if [ "$saigo_rc" -ne 0 ]; then
++        say "★條④ 測れぬ(末尾行が取れぬ・tail rc=${saigo_rc}) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+         fail=1
+-      elif [ "$last2" = "0a0a" ]; then
++      elif [ -z "$saigo" ]; then
+         say "★EOF改行が複数(末尾に空行) ―― ${f}★"
+         fail=1
+       fi

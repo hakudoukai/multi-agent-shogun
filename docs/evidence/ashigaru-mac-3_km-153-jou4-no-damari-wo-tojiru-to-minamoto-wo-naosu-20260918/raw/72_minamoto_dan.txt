@@ -1,0 +1,18 @@
+as-of 2026-09-18 04:29:10(UTC)
+根=/Users/momizimac/multi-agent-shogun
+器=docs/evidence/ashigaru-mac-3_km-153-jou4-no-damari-wo-tojiru-to-minamoto-wo-naosu-20260918/_fx/kara_wo_ichigyo.sh(origin/main の blob・37 行・sha256 a929ee87de48e5f2cb6be9cc02f5c84b34ca23781a8fe4293af9e17787f640f4)
+
+【實測 ―― 形は通る】
+・器を通した産物 6 口: 0byte は ★0 口★・門は旧基底で 6 口/6 口 通・新基底で 6 口/6 口 通。
+・器を通さぬ産物 6 口: 0byte が ★5 口★・門は旧基底で 5 口 ★落ち★(條④ 0byte の口)。
+・rc は握り潰されて居らぬ ―― 「何も言はぬ失敗」で器は 1 を返した(命令の rc を其の儘)。
+・當席の kaki(driver/00_kaki.py)の KARA 一行も同じ形である ―― fx03 は旧基底 rc=0 / 新基底 rc=0 で ★通る★。
+
+【★然し現場は直つて居らぬ★】
+・器は ★共用樹の disk に無い★(raw/70: ls rc=1)。HEAD にも無く、origin/main にのみ在る。
+・∴ 此の席で素に `cmd > x.out 2> x.err` と書けば ★今も 0byte が出来る★。形が正しい事と現場が直つて居る事は別である。
+・治めは當て紙ではなく ★版の入替(origin/main を此の樹へ入れる)★ であり、之は変更統制 ∴ 當席は據ゑず材と數のみを出す。
+
+【之が意味せぬ事】
+・器を通せば全ての 0byte が消える、の意ではない ―― ★陽性対照として 0byte で在らねばならぬ紙は通すな★(器の冠 15 行目)。
+  本弾の fx01/fx02 は其れゆゑ ★器を通して居らぬ★。除いた事と本数(2 本)を此処に書く(『除いた』は『歩いて居らぬ』に非ず)。

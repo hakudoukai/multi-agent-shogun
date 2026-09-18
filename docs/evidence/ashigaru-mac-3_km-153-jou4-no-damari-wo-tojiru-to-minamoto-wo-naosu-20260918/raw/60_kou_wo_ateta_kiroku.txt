@@ -1,0 +1,8 @@
+as-of 2026-09-18 04:40:03(UTC)
+當て先=docs/evidence/ashigaru-mac-3_km-153-jou4-no-damari-wo-tojiru-to-minamoto-wo-naosu-20260918/_fx/kentei/kou_atta/scripts/checks/karo_mac_dasumae_gate.sh(★複製★)
+共用樹の門=scripts/checks/karo_mac_dasumae_gate.sh ―― ★本弾で一字も動かして居らぬ(下の sha256 は 30/50 弾と同一)★
+當てる前 sha256 2b8449bccd608a1a7f24c888b2e1857ad2af98065fdfb1d3077bf08cdbe6f685
+當てた後 sha256 a8ddaea1b77ddde5a2a03d5b59c4d0f1c5eb1791be0257fc64222c8c0c45a638
+git apply rc=0
+Checking patch scripts/checks/karo_mac_dasumae_gate.sh...
+Applied patch scripts/checks/karo_mac_dasumae_gate.sh cleanly.

@@ -1,0 +1,5 @@
+問	命令(逐語)	rc	判	出目(60字で截つ)
+disk(共用樹の實体)	ls -l scripts/checks/karo_mac_kara_wo_ichigyo.sh	1	★無し★	ls: scripts/checks/karo_mac_kara_wo_ichigyo.sh: No such file
+git 追跡(HEAD)	git cat-file -e HEAD:scripts/checks/karo_mac_kara_wo_ichigyo.sh	128	★無し★	fatal: path 'scripts/checks/karo_mac_kara_wo_ichigyo.sh' doe
+git 追跡(origin/main)	git cat-file -e origin/main:scripts/checks/karo_mac_kara_wo_ichigyo.sh	0	在り	(何も言はず)
+陽性対照(同dir の門)	ls -l scripts/checks/karo_mac_dasumae_gate.sh	0	在り	-rwxr-xr-x@ 1 momizimac  staff  16261 Sep 17 09:38 scripts/c

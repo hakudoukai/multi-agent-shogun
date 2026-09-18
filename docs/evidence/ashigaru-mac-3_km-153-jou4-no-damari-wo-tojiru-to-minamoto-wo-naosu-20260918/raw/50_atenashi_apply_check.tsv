@@ -1,0 +1,4 @@
+當て紙	file	全行	+行	-行	旧基底 rc	旧基底	新基底 rc	新基底	意	器の言(52字で截つ)
+甲(條④の黙りを閉ぢる・旧基底で書いた)	50_atenashi_kou_jou4.patch	29	12	4	0	當たる	1	當たらぬ	★旧に當たり新に當たらぬ = 疵は上流で既に閉ぢた★	Checking patch scripts/checks/karo_mac_dasumae_gate.
+丙(★陽性対照★・新基底で書いた)	50_atenashi_hei_seitaishou.patch	13	1	0	0	當たる	0	當たる	★新基底に當たる(=當て器は働く)★	Checking patch scripts/checks/karo_mac_dasumae_gate.
+外れ(★陰性対照★・両基底に無い行)	50_atenashi_hazure_inseitaishou.patch	10	0	1	1	當たらぬ	1	當たらぬ	★両基底とも當たらぬ(=正)★	Checking patch scripts/checks/karo_mac_dasumae_gate.

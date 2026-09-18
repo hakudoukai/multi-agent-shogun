@@ -1,0 +1,49 @@
+刻=2026-09-18T13:46:50+0900(此の紙を書いた時)
+根=/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-153-jou4-no-damari-wo-tojiru-to-minamoto-wo-naosu-20260918(★束★)
+
+【臺帳の數 ―― 己が数へた】
+・臺帳の path= 行 = 160 行／歩いた紙 = 160 本(★一致★)
+・臺帳 sha256 = da54883ffc51616476afdf5c1306f82400f19d2b392de6aa64ba47a81a9828e1
+・★mon_ 行 = 0 行★(門の出目が臺帳へ混ざつて居らぬ事の數)
+・門の argv = 148 本(= 臺帳 160 − 宣して除いた紙 12)
+  ★除いた紙は『札(raw/fx 7本)』と『對照の 0byte(7本)』の ★和集合★★ ―― fx01/fx02 は両方に属す ∴ 足せば二重に数へる。
+
+【員外(臺帳の後に出来た紙)】
+・則 = ★`_gate/` の下に出来る紙は悉く員外★(門の出目・對照の汚れ紙・此の宣そのもの)。
+  臺帳は門の ★前★ に凍る ∴ 門の出目を臺帳へ載せれば臺帳が己の後の紙を指す事に成る。
+・員外の本数 = 21 本(下に悉く名と寸法を挙げる ―― 『員外』は『数へて居らぬ』に非ず)
+・員外の内 0byte = 0 本(出目は悉く kaki を通す ∴ 0 で在るべし)
+・★對照の汚れ紙 2 本だけは kaki を通して居らぬ★ ―― 通せば汚れが落ち對照に成らぬ故(宣して除く第四の道)。
+
+【0byte の始末(_gate/15_zero_wo_ichigyo.tsv)】
+・此の走りで見た 0byte = 7 本 ―― 内 ★0 本を源の形(空である旨の一行)へ直し★、7 本は對照ゆゑ直さず宣して除いた。
+・★KARA 一行で在る紙 = 25 本★ ―― 内 ★3 本は本弾で 0byte から直した捕り★(門の條④が名指した紙)、
+  残りは初めから書き器を通した出目で ★0byte で在つた事が無い★(名と由は _gate/15 に一本づつ)。
+  器は冪等ゆゑ二度目の走りでは 0 を己の目で見ぬ ∴ 『直した』と『此の走りで 0 を見た』を分けて書く。
+・★除いた 12 本は臺帳には悉く載る★(條①は現に之等へ当たる) ―― 『除いた』は『歩いて居らぬ』に非ず。
+
+  _gate/10_daichou_taishou.txt                      5913 byte
+  _gate/15_zero_wo_ichigyo.tsv                      4933 byte
+  _gate/20_daichou_tsumi.err                          85 byte
+  _gate/20_daichou_tsumi.out                         116 byte
+  _gate/20_daichou_tsumi.rc                            2 byte
+  _gate/30_mon_hatsubashiri.err                      491 byte
+  _gate/30_mon_hatsubashiri.out                      347 byte
+  _gate/30_mon_hatsubashiri.rc                         2 byte
+  _gate/31_taishou_hatsubashiri.err                  431 byte
+  _gate/31_taishou_hatsubashiri.out                   85 byte
+  _gate/31_taishou_hatsubashiri.rc                     2 byte
+  _gate/40_mon_nibashiri.err                         491 byte
+  _gate/40_mon_nibashiri.out                         347 byte
+  _gate/40_mon_nibashiri.rc                            2 byte
+  _gate/41_taishou_nibashiri.err                     514 byte
+  _gate/41_taishou_nibashiri.out                      85 byte
+  _gate/41_taishou_nibashiri.rc                        2 byte
+  _gate/60_taishou_ichi_matsubi_kuuhaku.txt            3 byte
+  _gate/61_taishou_ni_crlf_to_kuugyou.txt              4 byte
+  _gate/70_mon_futabashiri.tsv                       545 byte
+  _gate/80_ingai_sengen.txt                         3783 byte
+
+【之が意味せぬ事】
+・門が通つた事は ★紙の中身が正しい事ではない★ ―― 門は形(臺帳一致・不可視字・CR・EOF改行・寸法)のみを見る。
+・員外を宣した事は ★員外が検められた事ではない★ ―― 此の宣は名と寸法と 0byte の數のみを保つ。

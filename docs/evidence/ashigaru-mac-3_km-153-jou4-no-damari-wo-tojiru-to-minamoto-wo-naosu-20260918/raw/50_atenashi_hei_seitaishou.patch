@@ -1,0 +1,13 @@
+# 丙 ―― ★陽性対照★ 新基底から拵へた當て紙(冠に一行)。當て器が働く事の證。
+diff --git a/scripts/checks/karo_mac_dasumae_gate.sh b/scripts/checks/karo_mac_dasumae_gate.sh
+index 04672e15..a037dc44 100644
+--- a/scripts/checks/karo_mac_dasumae_gate.sh
++++ b/scripts/checks/karo_mac_dasumae_gate.sh
+@@ -23,6 +23,7 @@
+ #   負対照(清い紙)で鳴らずに済むかを、器自身に実演させる。
+ #   之で陽性対照が鳴らねば「器では無い」(a1裁・家老採用)。
+ set -u
++# ★陽性対照(丙) ―― 器が働く事を示す為だけの一行。挙動を変へぬ。★
+ MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+
+ say(){ printf '%s\n' "$*" >&2; }

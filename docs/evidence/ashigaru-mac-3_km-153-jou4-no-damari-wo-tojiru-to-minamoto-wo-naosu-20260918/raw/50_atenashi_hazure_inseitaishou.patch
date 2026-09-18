@@ -1,0 +1,10 @@
+# 外れ ―― ★陰性対照★ 何方の基底にも無い行を消す當て紙。両基底で當たらぬのが正。
+diff --git a/scripts/checks/karo_mac_dasumae_gate.sh b/scripts/checks/karo_mac_dasumae_gate.sh
+index 28aa477f..04672e15 100644
+--- a/scripts/checks/karo_mac_dasumae_gate.sh
++++ b/scripts/checks/karo_mac_dasumae_gate.sh
+@@ -337,4 +337,3 @@ fi
+
+ run_gate "$@"
+ exit $?
+-# ★陰性対照 ―― 何方の基底にも存在せぬ此の一行(km-153)★

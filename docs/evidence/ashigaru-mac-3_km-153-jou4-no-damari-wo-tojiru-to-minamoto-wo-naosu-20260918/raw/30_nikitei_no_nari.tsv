@@ -1,0 +1,15 @@
+fx 名	基底	門の rc	其の紙に鳴つた行数	鳴つた條
+01_zero.txt	旧(disk 321行)	1	1	條④(0byte の口)
+01_zero.txt	新(origin/main 339行)	1	1	條④(0byte の口)
+02_zero_kaimei.md	旧(disk 321行)	1	1	條④(0byte の口)
+02_zero_kaimei.md	新(origin/main 339行)	1	1	條④(0byte の口)
+03_kaki_kara.txt	旧(disk 321行)	0	0	★一つも鳴らず★
+03_kaki_kara.txt	新(origin/main 339行)	0	0	★一つも鳴らず★
+04_kiyoi.txt	旧(disk 321行)	0	0	★一つも鳴らず★
+04_kiyoi.txt	新(origin/main 339行)	0	0	★一つも鳴らず★
+05_crlf_kuugyou.txt	旧(disk 321行)	1	1	條③
+05_crlf_kuugyou.txt	新(origin/main 339行)	1	2	條③ / 條④(新・裁 seq330497 の口)
+06_u3000_kuugyou.txt	旧(disk 321行)	0	0	★一つも鳴らず★
+06_u3000_kuugyou.txt	新(origin/main 339行)	1	2	條②(新・類 Zs/Zl/Zp/Cc/Cf) / 條④(新・裁 seq330497 の口)
+07_sunao_kuugyou.txt	旧(disk 321行)	1	1	條④(旧・末尾2字 0a0a の口)
+07_sunao_kuugyou.txt	新(origin/main 339行)	1	1	條④(新・裁 seq330497 の口)

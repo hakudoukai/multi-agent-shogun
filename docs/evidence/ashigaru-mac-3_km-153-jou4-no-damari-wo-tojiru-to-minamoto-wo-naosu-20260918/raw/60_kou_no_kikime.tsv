@@ -1,0 +1,8 @@
+札(fixture)	當てる前 rc(旧基底)	當てる前の鳴り	甲を當てた後 rc	當てた後の鳴り	動き
+01_zero.txt	1	條④(0byte の口)	1	條④(0byte の口)	―― 同じ
+02_zero_kaimei.md	1	條④(0byte の口)	1	條④(0byte の口)	―― 同じ
+03_kaki_kara.txt	0	★一つも鳴らず★	0	一つも鳴らず	―― 同じ
+04_kiyoi.txt	0	★一つも鳴らず★	0	一つも鳴らず	―― 同じ
+05_crlf_kuugyou.txt	1	條③	1	條③ / 條④(旧・末尾2字 0a0a の口)	★動いた★
+06_u3000_kuugyou.txt	0	★一つも鳴らず★	0	一つも鳴らず	―― 同じ
+07_sunao_kuugyou.txt	1	條④(旧・末尾2字 0a0a の口)	1	條④(旧・末尾2字 0a0a の口)	―― 同じ
