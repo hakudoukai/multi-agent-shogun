@@ -1,0 +1,12 @@
+koku=2026-09-18T21:09:01+0900 ㋐ 名簿 ―― 「手元 main」= 総監督/家老の申す d8e3aa58(共有樹の HEAD・現に枝 +ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 )。refs/heads/main=82f23b429a03b88c504cb64917ff37647c07e0a5(origin/main より先んず 0)。∴ 29 は ★d8e3aa58 基準★
+origin/main..d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11 の commit 数=29 / d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11 が origin/main の裔か=no
+
+名簿 行=29
+author と committer の刻が違ふ本数=1 / author≠committer の本数=0
+
+== ㋐ git cherry origin/main d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11(- = 上流に同じ patch 在り・+ = 未到達)
++ (真に未到達)=27 / - (上流に同 patch)=2
+- f0d59a3b6315058b2af40bd57689b397243e32c9
+- f2bfa26a163dbee334861bd80bb0bd8affa0636d
+== patch-id で二重に検める(上流 origin/main の直近 200 commit の patch-id と照合)
+patch-id が上流(直近 200)に在る本数=2 / 無い=27

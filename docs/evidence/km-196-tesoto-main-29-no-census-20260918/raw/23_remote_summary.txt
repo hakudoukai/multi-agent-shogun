@@ -1,0 +1,23 @@
+koku=2026-09-18T21:11:20+0900 陰性対照の 14 行の正体 ―― 29 本の内 ★遠の何れかの ref に既に在る本★(origin/main には無い)
+遠の ref の tip に一致する本=10 / 29 (tip 一致のみ・祖先として含まれる物は別に測る)
+  707df791  karo-mac/gate4-20260909,refs/pull/12/head
+  e8470d8c  karo-mac/gate5-20260909,karo-mac/gate5-note-20260909,refs/pull/13/head
+  f0d59a3b  karo-mac/manifest-verify-20260909,refs/pull/14/head
+  b82b98c9  karo-mac/km-dead-inbox-gate-20260917
+  2992eeca  karo-mac/a3-r39-fix-20260917
+  43808f83  karo-mac/km-50-47-20260917
+  363d5fb0  karo-mac/local-main-363d5fb
+  a6587c02  karo-mac/km-gate4-kou-otsu-20260917
+  ab2a1f16  karo-mac/km-shikii-yokotenkai-20260917
+  d8e3aa58  ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917
+== 祖先として遠の枝に含まれるか(origin/* の枝を fetch 済の ref で contains)
+遠の枝(origin/*)の何れかに含まれる本=18 / 29 ―― ★遠に一本も無い(真に未到達)=11★
+真に未到達の本:
+  6ba8fcb2   0039e132   260f2a06   75aa92f2   f02c7d90   3fe709b1   9af1a96c   4e4cfeeb   36b88f93   1df72e96   d8e3aa58
+== 手元の枝(refs/heads)で各 commit を含む枝の数(和集合の列挙は raw/21)
+707df791:59 dafb2402:59 e8470d8c:59 f0d59a3b:59 2320dbbb:59 f2bfa26a:59 f626f200:55 561dd8ff:55 c771fbfc:55 2187e25f:55 b82b98c9:55 99ea2984:55 2992eeca:55 d4849b0e:54 43808f83:54 363d5fb0:53 a6587c02:21 ab2a1f16:11 6ba8fcb2:2 0039e132:2 260f2a06:2 75aa92f2:2 f02c7d90:1 3fe709b1:1 9af1a96c:1 4e4cfeeb:1 36b88f93:1 1df72e96:1 d8e3aa58:1
+== 4 本(gate4.sh に触れる a6587c02/e8470d8c/dafb2402/707df791)の遠の在否
+  a6587c02: ls-remote tip 一致=1 / origin/* に含む枝数=3
+  e8470d8c: ls-remote tip 一致=3 / origin/* に含む枝数=6
+  dafb2402: ls-remote tip 一致=0 / origin/* に含む枝数=6
+  707df791: ls-remote tip 一致=2 / origin/* に含む枝数=6
