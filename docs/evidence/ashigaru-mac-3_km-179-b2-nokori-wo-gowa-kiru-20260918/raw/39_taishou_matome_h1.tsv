@@ -1,0 +1,5 @@
+対照	崩した所	器	期する鳴り	rc	鳴つたか	器が名指した逐語
+甲	封の頂に shiranu_top / episode に shiranu_meta	driver/10 問ひ①(門)	(門)の欄が『欠』に成り 未知 key を名指す	0	★鳴つた★	未知 key ['shiranu_top', 'episode.shiranu_meta']
+乙	episode.parent_explanation_ref = S3-EP3(他話の id)	driver/11 問ひ②	⑴が× ∵自話と違ふ / ⑶が× ∵S3-EP3 と重なる / 判=否	0	★鳴つた★	ref=S3-EP3 ⑴× ⑶×(['S3-EP2', 'S3-EP3']) 判=否
+丙	scenes[0].effects[0].at = 999	driver/11 問ひ③-甲	at 範外 ≥1 / 明細が場と添字を名指す / 判=否	0	★鳴つた★	場0 effects[0] at=999 (lines 10) ／ 判=否
+丁	scripts/S3-EP2.md の '@effect enter at=0 target=hana' → at=999	★上の器★ npm run validate:episode-md	CLI rc≠0(上の器は rc で判ずる)	1	★鳴つた★	[md2scene] fail-closed: @effect のatが範囲外[reason=at_beyond_lines](場1: at=999, 台詞数=10)

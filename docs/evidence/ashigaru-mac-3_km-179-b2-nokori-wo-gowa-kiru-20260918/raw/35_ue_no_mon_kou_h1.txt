@@ -1,0 +1,7 @@
+★上の器 validateEpisode を対照甲へ当てた★
+path= _b2/taishou_h1_kou/S3-EP2.json
+rc=1
+--- out+err ---
+valid=false errors=2
+  ・未知の top-level key: shiranu_top
+  ・episode: 未知の key: shiranu_meta

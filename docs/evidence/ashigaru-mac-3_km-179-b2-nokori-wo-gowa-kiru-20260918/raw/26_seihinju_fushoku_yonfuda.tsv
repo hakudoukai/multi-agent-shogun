@@ -1,0 +1,7 @@
+問	器(逐語)	根	深さ	rc	行数	出た物
+engine 配下の未彫り	git status --porcelain -- <SE>	/Users/momizimac/DentalBI	再帰(git 管理下 悉く)	0	0	KARA
+(参) repo 全體の未彫り	git status --porcelain	/Users/momizimac/DentalBI	再帰(repo 全體)	0	0	KARA ―― ★DentalBI は repo 全體が清い∴此の器では陽性を作れぬ★
+★陽性対照★ ★同器・別根★(当repo)	git status --porcelain	/Users/momizimac/multi-agent-shogun	再帰(repo 全體)	0	1037	1037 行 ―― 初= warning: could not open directory 'queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n13_noaccess_dir/': Permission denied
+engine 配下 17:00 以降に触られた file	find <SE> -type f -newermt '2026-09-18 17:00'	/Users/momizimac/DentalBI	再帰(全深さ)	0	0	KARA
+★陽性対照★ 同器を本束へ	find <本束> -type f -newermt '2026-09-18 17:00'	/Users/momizimac/multi-agent-shogun	再帰(全深さ)	0	79	79 本 ―― 初= docs/evidence/ashigaru-mac-3_km-179-b2-nokori-wo-gowa-kiru-20260918/driver/13_kaiketsushi.mjs
+刻	2026-09-18T18:21:20+0900	―	―	―	―	★此の表の數は此の刻の disk の状態の函数である★

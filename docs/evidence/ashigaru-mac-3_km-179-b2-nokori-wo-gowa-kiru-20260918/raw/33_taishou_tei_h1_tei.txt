@@ -1,0 +1,16 @@
+★対照丁 md の @effect at を範外へ(上の器=CLI を撃つ)★
+崩した写し= _b2/taishou_h1_tei
+崩した逐語 前= '@effect enter at=0 target=hana'
+崩した逐語 後= '@effect enter at=999 target=hana'
+原 md 1942 B / 写 md 1944 B
+driver/10 rc=0 ／ ★CLI rc=1★
+--- driver out+err ---
+源の紙 /Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918/_b2/00_ukeire_kei_ichiwa.md
+  sha256 待=55900890f5964004b9632625d5e5f848cece4a163a29ee36b602e279ee5df213
+  sha256 實=55900890f5964004b9632625d5e5f848cece4a163a29ee36b602e279ee5df213
+  ★一致 ∴ 形は此の紙の物である★
+抜いた行 = 18 行
+型の源より ―― TOP_KEYS=['episode', 'scenes'] / META_KEYS=8 個 / EPISODE_ID_RE=^S[0-9]+-EP[0-9]+$
+標的 ―― EPD=/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-179-b2-nokori-wo-gowa-kiru-20260918/_b2/taishou_h1_tei / 話=['S3-EP2'] / 出目の尾='_h1_tei'
+S3-EP2 ―― 埋 17 / 欠 1 / 空 0 / CLI rc=1
+★問ひ① 置いた ―― raw/12_toi1_ran.tsv(18 行) / raw/13_toi1_matome.tsv★

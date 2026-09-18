@@ -1,0 +1,229 @@
+rc=0
+--- out+err ---
+{
+  "episode": {
+    "id": "S3-EP12",
+    "title": "きらきら川の祭り",
+    "visit": 12,
+    "season": "S3",
+    "audience": "5-6",
+    "mission": "この一年で いちばん つづけられたことを、ひとつ おしえて",
+    "badge": "冒険者バッジ",
+    "parent_explanation_ref": "S3-EP12"
+  },
+  "scenes": [
+    {
+      "id": "S3-EP12-1",
+      "background": "kirakira_kawa_matsuri",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        },
+        {
+          "id": "koron",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "hana",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        },
+        {
+          "id": "ryuta",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "かわぞいに、あかりが ならびました。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "りゅういきの きょうりゅうたちが、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "みんな あつまってきます。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "きみが なんかい このかわに きたかは、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "だれも きかなかった。きても、こなくても"
+        },
+        {
+          "speaker": "narrator",
+          "text": "、みんなが てを"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ふって むかえてくれた。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "「よく きたね」「まってたよ」"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ハナが かんむりを のせる",
+          "voice": "ハナちゃんが はなの かんむりを のせてくれます"
+        },
+        {
+          "speaker": "narrator",
+          "text": "リュウタが まえへ でる"
+        },
+        {
+          "speaker": "narrator",
+          "text": "リュウタが たてを たたく",
+          "voice": "リュウタくんが たてを たたいて リズムを とります"
+        },
+        {
+          "speaker": "narrator",
+          "text": "コロンが はねている",
+          "voice": "コロンちゃんが、となりで はねています"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "you"
+        },
+        {
+          "type": "enter",
+          "at": 1,
+          "actor": "koron"
+        },
+        {
+          "type": "enter",
+          "at": 3,
+          "actor": "hana"
+        },
+        {
+          "type": "enter",
+          "at": 7,
+          "actor": "ryuta"
+        },
+        {
+          "type": "joy",
+          "at": 8,
+          "actor": "hana"
+        },
+        {
+          "type": "shake",
+          "at": 10,
+          "actor": "ryuta"
+        },
+        {
+          "type": "joy",
+          "at": 11,
+          "actor": "koron"
+        }
+      ],
+      "concurrency_cap": 4
+    },
+    {
+      "id": "S3-EP12-2",
+      "background": "kirakira_kawa_matsuri",
+      "actors": [
+        {
+          "id": "papa_dino",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "パパきょうりゅうが、みんなの まえで"
+        },
+        {
+          "speaker": "narrator",
+          "text": "いいました。"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "まいにちの ちいさな ことが、だいじ",
+          "voice": "この一年、きみたちは たべることを 学んだ。なにを たべるか。いつ たべるか。どれくらい つづけるか。毎日の ちいさいことが、いちばん 遠くまで つれていく"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "papa_dino"
+        },
+        {
+          "type": "pause",
+          "at": 2,
+          "ms": 800
+        }
+      ]
+    },
+    {
+      "id": "S3-EP12-3",
+      "background": "kirakira_kawa_matsuri",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "かわに、あかりが ながれていきます。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "きみの あしもとに、あたらしい みちが"
+        },
+        {
+          "speaker": "narrator",
+          "text": "のびていました。もりのほうへ。ほしの"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ふる へいげんの ほうへ。"
+        },
+        {
+          "speaker": "you",
+          "text": "いこう"
+        },
+        {
+          "speaker": "narrator",
+          "text": "きみは、もりの ぼうけんしゃに"
+        },
+        {
+          "speaker": "narrator",
+          "text": "なりました。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "sparkle",
+          "at": 0
+        },
+        {
+          "type": "transition",
+          "at": 5,
+          "to": "reward"
+        }
+      ]
+    }
+  ]
+}

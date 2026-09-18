@@ -1,0 +1,231 @@
+rc=0
+--- out+err ---
+{
+  "episode": {
+    "id": "S4-EP3",
+    "title": "6さいのきょじん",
+    "visit": 3,
+    "season": "S4",
+    "audience": "6-7",
+    "mission": "いちばん おくの 歯に、はブラシを とどかせてみよう",
+    "badge": "きょじんバッジ",
+    "parent_explanation_ref": "S4-EP3"
+  },
+  "scenes": [
+    {
+      "id": "S4-EP3-1",
+      "background": "hoshifuru_heigen_hiru",
+      "actors": [
+        {
+          "id": "koron",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "ryuta",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "きらきらかわで みつけた、おくの"
+        },
+        {
+          "speaker": "narrator",
+          "text": "かたいもの。あれから、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "しばらく たちました。"
+        },
+        {
+          "speaker": "ryuta",
+          "text": "ねえ、みて"
+        },
+        {
+          "speaker": "narrator",
+          "text": "リュウタが くちを あける",
+          "voice": "リュウタくんが おおきく くちを あけます"
+        },
+        {
+          "speaker": "narrator",
+          "text": "いちばん おくに"
+        },
+        {
+          "speaker": "narrator",
+          "text": "おおきな はが どんと ありました。"
+        },
+        {
+          "speaker": "koron",
+          "text": "でかっ！"
+        },
+        {
+          "speaker": "narrator",
+          "text": "コロンが こえを あげる",
+          "voice": "コロンちゃんが こえを あげます"
+        },
+        {
+          "speaker": "narrator",
+          "text": "パパきょうりゅうが うなずきました。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "koron"
+        },
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "ryuta"
+        },
+        {
+          "type": "surprise",
+          "at": 4,
+          "actor": "ryuta"
+        },
+        {
+          "type": "joy",
+          "at": 8,
+          "actor": "koron"
+        }
+      ]
+    },
+    {
+      "id": "S4-EP3-2",
+      "background": "hoshifuru_heigen_hiru",
+      "actors": [
+        {
+          "id": "papa_dino",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        },
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "hana",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        },
+        {
+          "id": "ryuta",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "papa_dino",
+          "text": "いちばん おおきくて、つよい はだよ",
+          "voice": "きょじんの 歯だ。いちばん 大きくて、いちばん つよい。かむ ちからの まんなかに なる"
+        },
+        {
+          "speaker": "you",
+          "text": "ぬけないの？"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "はえかわらない、おとなの はだよ",
+          "voice": "ぬけない。生えかわらない。だから、はじめから 大人の 歯として 生えてくる"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ハナちゃんが くびを かしげました。"
+        },
+        {
+          "speaker": "hana",
+          "text": "じゃあ、いつから きをつけるの？"
+        },
+        {
+          "speaker": "narrator",
+          "text": "パパきょうりゅうは、しずかに"
+        },
+        {
+          "speaker": "narrator",
+          "text": "いいました。"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "きょうから"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "papa_dino"
+        },
+        {
+          "type": "enter",
+          "at": 1,
+          "actor": "you"
+        },
+        {
+          "type": "enter",
+          "at": 3,
+          "actor": "hana"
+        },
+        {
+          "type": "pause",
+          "at": 0,
+          "ms": 800
+        },
+        {
+          "type": "pause",
+          "at": 2,
+          "ms": 800
+        }
+      ],
+      "concurrency_cap": 4
+    },
+    {
+      "id": "S4-EP3-3",
+      "background": "hoshifuru_heigen_hiru",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "きみは、いちばん おくまで はブラシを"
+        },
+        {
+          "speaker": "narrator",
+          "text": "のばしてみました。とどきにくい。でも、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "とどいた。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "sparkle",
+          "at": 0
+        },
+        {
+          "type": "transition",
+          "at": 0,
+          "to": "reward"
+        }
+      ]
+    }
+  ]
+}

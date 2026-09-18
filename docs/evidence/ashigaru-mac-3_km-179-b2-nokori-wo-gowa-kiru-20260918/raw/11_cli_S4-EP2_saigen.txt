@@ -1,0 +1,206 @@
+rc=0
+--- out+err ---
+{
+  "episode": {
+    "id": "S4-EP2",
+    "title": "ほしが ひとつ落ちた",
+    "visit": 2,
+    "season": "S4",
+    "audience": "6-7",
+    "mission": "ぬけた 歯を、おうちの人と どうするか きめよう",
+    "badge": "ほしバッジ",
+    "parent_explanation_ref": "S4-EP2"
+  },
+  "scenes": [
+    {
+      "id": "S4-EP2-1",
+      "background": "hoshifuru_heigen_asa",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "crouch",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "hana",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "その はは、ごはんの とちゅうで"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ぽろりと とれました。",
+          "voice": "その はは、ごはんの とちゅうで ぽろりと とれました"
+        },
+        {
+          "speaker": "narrator",
+          "text": "てのひらの うえに、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ちいさな しろい かけら。"
+        },
+        {
+          "speaker": "you",
+          "text": "とれた……"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ちが すこし にじんで、すぐ と"
+        },
+        {
+          "speaker": "narrator",
+          "text": "まりました。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ハナが のぞきこむ",
+          "voice": "ハナちゃんが のぞきこみます"
+        },
+        {
+          "speaker": "hana",
+          "text": "わあ、ちいさい！ ずっと"
+        },
+        {
+          "speaker": "hana",
+          "text": "つかってたんだね"
+        },
+        {
+          "speaker": "narrator",
+          "text": "パパが そらを"
+        },
+        {
+          "speaker": "narrator",
+          "text": "みあげた",
+          "voice": "パパきょうりゅうが、そらを みあげました"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "you"
+        },
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "hana"
+        },
+        {
+          "type": "shake",
+          "at": 1,
+          "actor": "you"
+        },
+        {
+          "type": "surprise",
+          "at": 7,
+          "actor": "hana"
+        },
+        {
+          "type": "pause",
+          "at": 11,
+          "ms": 800
+        }
+      ]
+    },
+    {
+      "id": "S4-EP2-2",
+      "background": "hoshifuru_heigen_asa",
+      "actors": [
+        {
+          "id": "papa_dino",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "papa_dino",
+          "text": "やくめを おえたら、ほしに なるよ",
+          "voice": "役目を おえた 歯は、ほしに なる。ほしふる平原の ほしは、みんな そうだ"
+        },
+        {
+          "speaker": "narrator",
+          "text": "よる、きみは はを にぎって そらを"
+        },
+        {
+          "speaker": "narrator",
+          "text": "みました。ほしが、ひとつ ふえた きが"
+        },
+        {
+          "speaker": "narrator",
+          "text": "しました。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "papa_dino"
+        },
+        {
+          "type": "pause",
+          "at": 0,
+          "ms": 800
+        }
+      ]
+    },
+    {
+      "id": "S4-EP2-3",
+      "background": "hoshifuru_heigen_asa",
+      "actors": [
+        {
+          "id": "papa_dino",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "papa_dino",
+          "text": "でもね"
+        },
+        {
+          "speaker": "narrator",
+          "text": "と パパきょうりゅう。"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "つぎの はは、ずっと きみと いるよ",
+          "voice": "これは 生えかわる 歯だから、ほしに なる。あとから 生えてくる 歯は、ほしに ならない。ずっと きみと いる"
+        }
+      ],
+      "effects": [
+        {
+          "type": "pause",
+          "at": 0,
+          "ms": 800
+        },
+        {
+          "type": "sparkle",
+          "at": 0
+        },
+        {
+          "type": "transition",
+          "at": 2,
+          "to": "reward"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "episode": {
+    "id": "S3-EP2",
+    "title": "あまい滝",
+    "visit": 2,
+    "season": "S3",
+    "audience": "5-6",
+    "mission": "あまいものを たべたら、そのあと お水を のんでみよう",
+    "badge": "じかんバッジ",
+    "parent_explanation_ref": "S3-EP2"
+  },
+  "scenes": [
+    {
+      "id": "S3-EP2-1",
+      "background": "amai_taki",
+      "actors": [
+        {
+          "id": "hana",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "ryuta",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "かわを のぼっていくと、おおきな たきが"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ありました。"
+        },
+        {
+          "speaker": "ryuta",
+          "text": "あまい においが する！"
+        },
+        {
+          "speaker": "narrator",
+          "text": "リュウタが かけよる",
+          "voice": "リュウタくんが かけよります"
+        },
+        {
+          "speaker": "narrator",
+          "text": "なめると あまい",
+          "voice": "たきの みずは、なめると あまい あじが しました"
+        },
+        {
+          "speaker": "narrator",
+          "text": "でも たきつぼでは"
+        },
+        {
+          "speaker": "narrator",
+          "text": "さかなが うごかない",
+          "voice": "たきつぼの さかなたちは、なんだか げんきが ありません"
+        },
+        {
+          "speaker": "hana",
+          "text": "ここの さかな、ずっと このみずを の"
+        },
+        {
+          "speaker": "hana",
+          "text": "んでるの"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ハナちゃんが しずかに いいました。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 999,
+          "actor": "hana"
+        },
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "ryuta"
+        },
+        {
+          "type": "shake",
+          "at": 3,
+          "actor": "ryuta"
+        },
+        {
+          "type": "sparkle",
+          "at": 4,
+          "actor": "ryuta"
+        },
+        {
+          "type": "surprise",
+          "at": 6,
+          "actor": "hana"
+        }
+      ]
+    },
+    {
+      "id": "S3-EP2-2",
+      "background": "amai_taki",
+      "actors": [
+        {
+          "id": "papa_dino",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "パパきょうりゅうが さかなを みなが"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ら つぶやきます。"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "ずっと たべると、からだが つかれる",
+          "voice": "あまいものが わるいのでは ない。ずっと つづけて いることが、からだを つかれさせる"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "papa_dino"
+        },
+        {
+          "type": "pause",
+          "at": 2,
+          "ms": 800
+        }
+      ]
+    },
+    {
+      "id": "S3-EP2-3",
+      "background": "amai_taki",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "きみたちは、さかなを"
+        },
+        {
+          "speaker": "narrator",
+          "text": "きれいな かわかみへ はこんで"
+        },
+        {
+          "speaker": "narrator",
+          "text": "あげました。つぎの ひ、さかなは"
+        },
+        {
+          "speaker": "narrator",
+          "text": "すこし はやく およいでいました。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "sparkle",
+          "at": 0
+        },
+        {
+          "type": "transition",
+          "at": 0,
+          "to": "reward"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+★己の器を env/argv 化した後、数が動いて居らぬ事の再現(別名 _saigen)★
+driver/11 rc=0
+--- out+err ---
+標的 ―― EPD=/Users/momizimac/DentalBI/frontend/src/features/child-passport/story-engine/episodes / 話=['S3-EP2', 'S3-EP12', 'S4-EP1', 'S4-EP2', 'S4-EP3'] / 出目の尾='_saigen'
+型の源より ―― MAX_CHOICE_LABEL_CHARS=20 / CHOICE_OPTION_COUNT=2
+解説の鍵 = 15 個(出所 src/features/teriha-passport/story/parentExplanations.S3S4.ts)
+歩いた json = 16 本 ／ ★除いた(宣)= ['TEMPLATE']★ ／ 母數(現物の話)= 15 話
+  ★除いた理由★: TEMPLATE.json の id は S0-EP1 で、解説の鍵 15 個に S0-EP1 は無い
+  ∴ 之を話に数へると ★未解決 1 件★ が立つが、其れは雛形であつて話の疵ではない
+問ひ② ―― 通 5 / 五話
+問ひ③-甲 ―― 通 5 / 五話 ／ 明細の赤 0 件
+上の器(vitest) ―― rc=0 / 通 26 本 / skip 0

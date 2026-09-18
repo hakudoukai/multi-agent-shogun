@@ -1,0 +1,213 @@
+rc=0
+--- out+err ---
+{
+  "episode": {
+    "id": "S4-EP1",
+    "title": "はじめての ぐらぐら",
+    "visit": 1,
+    "season": "S4",
+    "audience": "6-7",
+    "mission": "ぐらぐらする 歯が あったら、おうちの人に おしえよう",
+    "badge": "ぐらぐらバッジ",
+    "parent_explanation_ref": "S4-EP1"
+  },
+  "scenes": [
+    {
+      "id": "S4-EP1-1",
+      "background": "hoshifuru_heigen_yoru",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "crouch",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "koron",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "ほしふるへいげんに ついた よる。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "きみは、まえばを さわって、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "うごきました。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "ぐらっ。",
+          "voice": "ぐらっ。まえばが うごきました"
+        },
+        {
+          "speaker": "you",
+          "text": "……とれちゃう"
+        },
+        {
+          "speaker": "narrator",
+          "text": "こわくて てを はなす",
+          "voice": "こわくなって、てを はなします"
+        },
+        {
+          "speaker": "narrator",
+          "text": "コロンちゃんが となりで きづきました。"
+        },
+        {
+          "speaker": "koron",
+          "text": "どうしたの？"
+        },
+        {
+          "speaker": "you",
+          "text": "はが、ぐらぐらする"
+        },
+        {
+          "speaker": "narrator",
+          "text": "コロンちゃんが めを まるくして、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "それから にっこりしました。"
+        },
+        {
+          "speaker": "koron",
+          "text": "ぼくも なったよ！"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "you"
+        },
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "koron"
+        },
+        {
+          "type": "shake",
+          "at": 3,
+          "actor": "you"
+        },
+        {
+          "type": "surprise",
+          "at": 5,
+          "actor": "you"
+        }
+      ]
+    },
+    {
+      "id": "S4-EP1-2",
+      "background": "hoshifuru_heigen_yoru",
+      "actors": [
+        {
+          "id": "papa_dino",
+          "pose": "crouch",
+          "anim": "idle",
+          "position": "left"
+        },
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "right"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "パパきょうりゅうが やってきて、しゃが"
+        },
+        {
+          "speaker": "narrator",
+          "text": "みました。"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "ぐらぐらは、こわれたんじゃない。",
+          "voice": "ぐらぐらは、こわれたんじゃない。つぎの 歯が、下から おしてるんだ"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "つぎの はが、したから おしてるんだ"
+        },
+        {
+          "speaker": "you",
+          "text": "した？"
+        },
+        {
+          "speaker": "papa_dino",
+          "text": "うえの はが、どいてくれるよ",
+          "voice": "そう。もう 生えてきてる。だから 上の 歯が どいてくれる"
+        }
+      ],
+      "effects": [
+        {
+          "type": "enter",
+          "at": 0,
+          "actor": "papa_dino"
+        },
+        {
+          "type": "pause",
+          "at": 2,
+          "ms": 800
+        },
+        {
+          "type": "shake",
+          "at": 2,
+          "actor": "papa_dino"
+        },
+        {
+          "type": "pause",
+          "at": 5,
+          "ms": 800
+        }
+      ]
+    },
+    {
+      "id": "S4-EP1-3",
+      "background": "hoshifuru_heigen_yoru",
+      "actors": [
+        {
+          "id": "you",
+          "pose": "stand",
+          "anim": "idle",
+          "position": "center"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "きみは もういちど さわりました。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "さっきと おなじ ぐらぐらなのに、"
+        },
+        {
+          "speaker": "narrator",
+          "text": "こわくなくなっていました。"
+        }
+      ],
+      "effects": [
+        {
+          "type": "sparkle",
+          "at": 0
+        },
+        {
+          "type": "transition",
+          "at": 0,
+          "to": "reward"
+        }
+      ]
+    }
+  ]
+}
