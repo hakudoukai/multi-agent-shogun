@@ -1,5 +1,5 @@
 path(束内相対)	bytes	臺帳に	除く理由
-00_shodan.md	16840	載す	-
+00_shodan.md	18136	載す	-
 MANIFEST.txt	10669	★除く★	臺帳其の物 ―― 己を己で照らせぬ
 _fx/atenashi/a/scripts/checks/karo_mac_dasumae_gate.sh	16261	★除く★	型紙(fixture) ―― ★故意に汚した紙・他席の門の写し★を含む。載せれば條②③④が鳴るのが正
 _fx/atenashi/b/scripts/checks/karo_mac_dasumae_gate.sh	16594	★除く★	型紙(fixture) ―― ★故意に汚した紙・他席の門の写し★を含む。載せれば條②③④が鳴るのが正
@@ -26,8 +26,32 @@ _gate/43_saikakunin.txt	2237	★除く★	門自身の出目 ―― ★臺帳が
 _gate/50_mon_hatsubashiri.err	490	★除く★	門自身の出目 ―― ★臺帳が己を照らす★形に成る(裁 seq310228⑴ 自己言及の禁)
 _gate/50_mon_hatsubashiri.out	332	★除く★	門自身の出目 ―― ★臺帳が己を照らす★形に成る(裁 seq310228⑴ 自己言及の禁)
 _gate/50_mon_hatsubashiri.rc	2	★除く★	門自身の出目 ―― ★臺帳が己を照らす★形に成る(裁 seq310228⑴ 自己言及の禁)
+_gate/51_mon_nibashiri.err	490	★除く★	門自身の出目 ―― ★臺帳が己を照らす★形に成る(裁 seq310228⑴ 自己言及の禁)
+_gate/51_mon_nibashiri.out	332	★除く★	門自身の出目 ―― ★臺帳が己を照らす★形に成る(裁 seq310228⑴ 自己言及の禁)
+_gate/51_mon_nibashiri.rc	2	★除く★	門自身の出目 ―― ★臺帳が己を照らす★形に成る(裁 seq310228⑴ 自己言及の禁)
 _letters/00_send.out	151	載す	-
 _letters/00_sengen_eta.txt	467	載す	-
+_letters/01_osame_1of2.send.err	0	載す	-
+_letters/01_osame_1of2.send.out	0	載す	-
+_letters/01_osame_1of2.send.rc	2	載す	-
+_letters/01_osame_1of2.txt	470	載す	-
+_letters/02_osame_2of2.send.err	0	載す	-
+_letters/02_osame_2of2.send.out	0	載す	-
+_letters/02_osame_2of2.send.rc	2	載す	-
+_letters/02_osame_2of2.txt	590	載す	-
+_letters/03_mark_read.err	0	載す	-
+_letters/03_mark_read.out	53	載す	-
+_letters/03_mark_read.rc	2	載す	-
+_letters/04_kansa.send.err	199	載す	-
+_letters/04_kansa.send.out	44	載す	-
+_letters/04_kansa.send.rc	2	載す	-
+_letters/04_kansa_teishutsu.txt	510	載す	-
+_letters/05_yomikaeshi.err	0	載す	-
+_letters/05_yomikaeshi.out	961	載す	-
+_letters/05_yomikaeshi.rc	2	載す	-
+_letters/06_mark_read2.err	0	載す	-
+_letters/06_mark_read2.out	53	載す	-
+_letters/06_mark_read2.rc	2	載す	-
 base_gate.sh	19268	★除く★	origin/main の門の ★byte 忠実の抜き取り★ ―― 當席が書いた紙に非ず(直せぬ)
 driver/00_kaki.py	1399	載す	-
 driver/05_hashiraseru.py	1273	載す	-
@@ -40,7 +64,7 @@ driver/65_kitei_wo_hiku.py	4424	載す	-
 driver/70_futatsu_no_kitei.py	6932	載す	-
 driver/75_shin_kitei_no_sumika.py	9051	載す	-
 driver/85_atenashi_wo_futatsu_no_kitei_ni_ateru.py	8771	載す	-
-driver/90_shodan.py	12471	載す	-
+driver/90_shodan.py	13863	載す	-
 driver/92_tsuka_to_jogai_wo_sengen.py	6703	載す	-
 driver/94_kara_to_nao_senu_kami.py	6238	載す	-
 driver/95_uchiyou_futatsu_no_kitei.py	4664	載す	-
@@ -86,7 +110,7 @@ raw/79_run70.stdout	56	載す	-
 raw/80_naoshi_sengen.txt	951	載す	-
 raw/81_naoshi_chikugo.txt	9840	載す	-
 raw/83_mon_no_argv_sengen.txt	1074	載す	-
-raw/84_zero_byte_no_hikae.tsv	2475	載す	-
+raw/84_zero_byte_no_hikae.tsv	2464	載す	-
 raw/85_atenashi_futatsu_no_kitei.tsv	996	載す	-
 raw/86_atenashi_hei_shin_kitei_seitaishou.patch	720	載す	-
 raw/86_naosenu_kami.tsv	615	載す	-
@@ -94,13 +118,13 @@ raw/87_atenashi_dan.txt	2040	載す	-
 raw/88_apply_check_no_kizu.tsv	675	載す	-
 raw/89_run75.stderr	151	載す	-
 raw/89_run75.stdout	115	載す	-
-raw/92_bundle_no_uchiwake.tsv	7351	載す	-
+raw/92_bundle_no_uchiwake.tsv	7955	載す	-
 raw/93_noseru_ichiran.txt	2237	載す	-
 raw/94_nozoku_mono_no_joudaku.tsv	337	載す	-
 raw/95_daichou_no_sengen.txt	894	載す	-
 raw/95_uchiyou_futatsu.tsv	1548	載す	-
-raw/96_run92.stderr	0	載す	-
-raw/96_run92.stdout	0	載す	-
+raw/96_run92.stderr	151	載す	-
+raw/96_run92.stdout	96	載す	-
 raw/96_uchiyou_sengen.txt	770	載す	-
 raw/97_futatabi_aruku.tsv	62	載す	-
 raw/97_run95.stderr	151	載す	-
