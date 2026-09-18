@@ -1,0 +1,12 @@
+koku=2026-09-18T21:19:21+0900 ㋒ 対照の取り直し ―― cat-file -e は ^{commit} を付けると無い物へ rc128(peel 不能)を返す=當席の判「rc1=不在」が陰性対照で鳴らなかつた(器の疵を対照が捕へた)。peel 無しの -e で不在は rc1。
+  陰性 0×40 (peel 無し) rc=1  ← 1=不在
+  陰性 0×40 ^{commit} rc=128  ← 128=測れぬ(peel 不能)
+  陽性 origin/main (peel 無し) rc=0
+  陽性 origin/main ^{commit} rc=0
+  ∴ 判は二段: ⑴ -e <sha> で 在/不在(rc0/1・其の他=測れぬ) ⑵ 在れば -t で型を読み commit/tree と合ふか
+== 全 sha を二段で判じ直す
+  型の内訳:   14 oya	あり(commit)   13 tip	あり(commit)   15 tree	あり(tree)
+  期待と違ふ型(tip/oya が commit でない・tree が tree でない)=0
+== 非40桁の oya 1 件と 測れぬ jitsu 1 件の正体
+  oya 非40桁: km140_nou_20260918_0101 = '82f23b429a03b88c504cb64917ff37647c07e0a5 (origin/main・fetch 後)'
+  jitsu 形が読めぬ: km170_nou_2026-09-18T1731 = '測り終へ 13:40:55・API 断 13:42→17:23(pool_exhausted 503)・納め便 17:30:48'

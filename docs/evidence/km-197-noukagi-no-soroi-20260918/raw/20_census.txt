@@ -1,0 +1,33 @@
+koku 2026-09-18T21:18:47+0900 帳の写し= docs/evidence/km-197-noukagi-no-soroi-20260918/raw/10_chou_utsushi.yaml (帳は書換へず・写しは commit 前に取つた)
+㋐ 全鍵=82 / 塊(dict)=66 / 塊でない鍵=16 → ['task_id', 'assigned_to', 'assigned_by', 'status', 'priority', 'bloom_level', 'issued_at', 'assigned_at', 'completed_at', 'evidence_bundle', 'saki_ni_shiraseru_koto', 'teki', 'toi', 'uketori_jouken', 'kinshi', 'tsuiho_20260917_1930_sai_327826'] / status==done の塊=★64★(母數)
+   status の内訳(塊): {'None': 0, 'assigned': 1, 'done': 64}
+㋑ 欄ごとの 有/空(None)/無 ―― 和=母數 64
+   task_id            有= 64 空=  0 無=  0 和=64 =母數
+   status             有= 64 空=  0 無=  0 和=64 =母數
+   completed_at       有= 62 空=  0 無=  2 和=64 =母數
+   branch             有= 17 空=  0 無= 47 和=64 =母數
+   tip                有= 13 空=  0 無= 51 和=64 =母數
+   tree               有= 15 空=  0 無= 49 和=64 =母數
+   oya                有= 15 空=  0 無= 49 和=64 =母數
+   worktree           有= 13 空=  0 無= 51 和=64 =母數
+   pushed             有= 16 空=  0 無= 48 和=64 =母數
+   kotae              有= 29 空=  0 無= 35 和=64 =母數
+   bundle             有= 15 空=  0 無= 49 和=64 =母數
+   nou_bin            有= 28 空=  0 無= 36 和=64 =母數
+   kansa_seq          有= 14 空=  0 無= 50 和=64 =母數
+   kansa_parent_seq   有= 14 空=  0 無= 50 和=64 =母數
+   kansa_readback     有=  9 空=  0 無= 55 和=64 =母數
+   board_task         有= 30 空=  2 無= 32 和=64 =母數
+   sen_eta            有= 15 空=  0 無= 49 和=64 =母數
+   jitsu              有= 31 空=  0 無= 33 和=64 =母數
+   18 欄 悉く「有」の done 鍵=★7★ / 64 → 固定 ref を引ける鍵(branch・tip・tree・oya 悉く有)=13
+㋒ tip/tree/oya の形と實在(git cat-file -e・rc は管を通さず)
+   陽性対照 origin/main 6bde7170… commit: あり / 陰性対照 0×40 commit: 測れぬ(rc=128) / tree 陰性: 測れぬ(rc=128)
+   oya   40hex  あり       = 14
+   oya   非40桁   (形が違ふ・引かず) = 1
+   tip   40hex  あり       = 13
+   tree  40hex  あり       = 15
+㋓ 宣⇔實(sen_eta と jitsu を両方持つ鍵のみ・日付は jitsu/completed_at の日付を宣の日付とし跨日は sen>実で 24h を戻す)
+   母數(両方持つ)=★15★ / 64
+   差(分・実−宣): min=-87 max=-14 median=-38 / 早い(負)=14 遅い(正)=0 同=0
+   測れぬ(形が読めぬ)= 1
