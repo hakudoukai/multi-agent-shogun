@@ -1,0 +1,36 @@
+★25 の〆 ―― ★索引は小文字を指し、其の名を開くと大文字の中身が出る★★
+刻 = 2026-09-18T20:37:33+0900 ／ 根 = /Users/momizimac/multi-agent-shogun ／ 固定 = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 ／ rc(show CLAUDE.md) = 0
+
+★⑴ 索引の一行(固定 commit の CLAUDE.md・逐語)★ ―― 当り ★2 行★
+  ―― ★20 の「4 当り」と食ひ違はぬ★: markdown の link は同じ path を ★[題](path) と二度書く★ 故、
+     ★2 行 × 2 = 4 当り★ である。20 は ★語の数★、25 は ★行の数★ を数へて居る(単位が違ふ)。
+  ・L81 ｜ | Runbook ERR-EKARTE-001 | [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) |
+  ・L424 ｜ ★Runbook 完全な記述は [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) に分離 (Lane 4 削減、Commander 2026-05-29)★
+
+★⑵ git の側(固定 commit)★
+  ・docs/runbooks/ERR-EKARTE-001.md
+      blob = e6de627bd62eb9a4b417155f40748390f49369fe ／ 2596 bytes ／ sha256 = abf519d04dc5cfbb3adb7dbcf6a5dd2c132e52c3c492530e4f8b90a0ff363fba
+      冠 = ---
+  ・docs/runbooks/err-ekarte-001.md
+      blob = de00cbd99d9909f4a923041ae17f0d2cbb587668 ／ 3471 bytes ／ sha256 = 24cf87840d94dd6b18a5f292bef598f370eede58127296f01a04b5667ee3d50f
+      冠 = # Runbook: ERR-EKARTE-001 (カルテ visit 作成失敗)
+
+★⑶ disk の側(★此の Mac で実際に open した★)★
+  ・docs/runbooks/ERR-EKARTE-001.md ―― 開けた ／ 2596 bytes ／ inode 10724954 ／ 中身 = ★大文字の blob★
+  ・docs/runbooks/err-ekarte-001.md ―― 開けた ／ 2596 bytes ／ inode 10724954 ／ 中身 = ★大文字の blob★
+  ・listdir(docs/runbooks) が返す ★真名★ = err-ekarte-001.md
+
+★★食ひ違ひ(名指し)★★
+  ・索引(CLAUDE.md の 2 行)は ★悉く小文字の名★ を指して居る ―― 大文字を指す行は ★0★。
+  ・然るに此の Mac では、其の小文字の名を開くと ★大文字の blob の中身★(2596 bytes)が出る。
+  ・∴ ★索引は正しい名を指して居るのに、読者が受け取る中身は旧い方である。★
+    ―― 名は合ひ、中身が違ふ。★link が壊れて居らぬ故、誰も気付かぬ形の食ひ違ひ★ である。
+  ・3471 bytes の中身は ★此の disk に一度も存在して居らぬ★(10_disk.tsv・25_kuichigai.tsv 逐語)。
+
+★此の數が意味せぬ事★:
+  ・「大文字を指す行 = 0」は ★大文字の名が不要である事を意味せぬ★ ―― 孰れを正とするかは
+    ★委員長の裁(seq333611)が既に定めた★ のであつて、此の數が定めたのではない。数は其れに合うて居るだけである。
+  ・`ERR-EKARTE-001`(.md 無し)19 当りは ★error code★ であり、file 名ではない。消えぬし、消してはならぬ。
+  ・disk の測りは ★case を畳む file system(此の Mac)★ の上の話である。
+    ★case を区別する OS(Linux)で同じ二名が如何に見えるかは、此の disk からは測れぬ。★
+  ・器の言(err) = ―

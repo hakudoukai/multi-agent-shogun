@@ -1,0 +1,26 @@
+刻	札	打つた命	rc	out	err/註
+20:45:06	枝を切る(己の worktree)	git worktree add -b ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918 /Users/momizimac/wt/a2-km186 6bde7170ce574090a6139ba2dfe3aa4cb6db8634	0	HEAD is now at 6bde7170 merge PR#27: 出す前門 條②④⑤ 是正+可搬化+負テスト(karo-mac km-118/km-156・軍師mac PASS 330856) ⏎	Preparing worktree (new branch 'ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918') ⏎
+20:45:06	〇 共用樹の姿を再現(★是をせねば ⑵ が仕事を持たぬ★)	git checkout -- docs/runbooks/ERR-EKARTE-001.md	0	―	―
+20:45:06	〇 ★⑴の前★ の porcelain	git status --porcelain -- docs/runbooks/	0	M docs/runbooks/err-ekarte-001.md	行数=1
+20:45:06	⑴ ★git rm --cached <大文字>★	git rm --cached docs/runbooks/ERR-EKARTE-001.md	0	rm 'docs/runbooks/ERR-EKARTE-001.md' ⏎	―
+20:45:07	⑴ の後の porcelain	git status --porcelain -- docs/runbooks/	0	D  docs/runbooks/ERR-EKARTE-001.md｜M docs/runbooks/err-ekarte-001.md	行数=2
+20:45:07	⑵ ★git checkout -- <小文字>★	git checkout -- docs/runbooks/err-ekarte-001.md	0	―	―
+20:45:07	⑵ の後の porcelain	git status --porcelain -- docs/runbooks/	0	D  docs/runbooks/ERR-EKARTE-001.md	行数=1
+20:45:07	⑶ ★index に載つて居る変化(是だけが彫られる)★	git diff --cached --name-status	0	D ⇥ docs/runbooks/ERR-EKARTE-001.md ⏎	―
+20:45:07	⑷ ★彫る(素の commit ―― index の D 一行のみ)★	git commit -m fix(runbooks): ★双子の片方を消す ―― 大文字 ERR-EKARTE-001.md を樹から外す★(委員長裁 seq333611)
+
+正 = docs/runbooks/err-ekarte-001.md ―― 3471 bytes ／ blob de00cbd9… ／ 2026-05-29 の新版
+消 = docs/runbooks/ERR-EKARTE-001.md ―― 2596 bytes ／ blob e6de627b… ／ 2026-05-05 の旧版
+
+★case を畳む disk では二つの名が同じ inode を指す★(実測 10724954)。
+∴ 素の `git rm <大文字>` は ★正本の実体を消す★(実射 raw/35_gyaku.tsv)。
+彫りの順 = ⑴ git rm --cached <大文字> ⑵ git checkout -- <小文字> ⑶ 検め ⑷ 彫り(裁333611 ㋓)。
+canon の側 = 索引は ★小文字のみ★ を指す(2 行 4 当り)・大文字を指す行 0(raw/20,25)。
+測り = docs/evidence/ashigaru-mac-2_km-186-oomoji-komoji-no-futago-20260918/
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+	0	[ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918 4cb05b97] fix(runbooks): ★双子の片方を消す ―― 大文字 ERR-EKARTE-001.md を樹から外す★(委員長裁 seq333611) ⏎  Committer: MomiziMac <momizimac@MomiziMac-mini.local> ⏎ Your name and email address were configured automatically based ⏎ on your username and hostname. Please check that they are accurate. ⏎ You can suppress this message by setting them explicitly. Run the ⏎ following command and follow the instructions in your editor to edit ⏎ your configuration file: ⏎  ⏎     git config --global --edit ⏎  ⏎ After doing this, you may fix the identity used for this commit with: ⏎  ⏎     git commit --amend --reset-author ⏎  ⏎  1 file changed, 79 deletions(-) ⏎  delete mode 100644 docs/runbooks/ERR-EKARTE-001.md ⏎	―
+20:45:07	⑷ の後の porcelain	git status --porcelain -- docs/runbooks/	0	★空★	行数=0
+20:45:08	未push ★陽性対照★	git ls-remote origin refs/heads/main	0	1 行	6bde7170ce574090a6139ba2dfe3aa4cb6db8634 ⇥ refs/heads/main ⏎
+20:45:08	未push ★当の枝★	git ls-remote origin refs/heads/ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918	0	0 行	―
+20:45:08	未push ★負対照★	git ls-remote origin refs/heads/<存在せぬ枝>	0	0 行	―

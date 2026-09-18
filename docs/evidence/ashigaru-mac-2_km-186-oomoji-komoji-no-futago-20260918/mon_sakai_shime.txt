@@ -1,0 +1,26 @@
+★境の證 ―― 追ひ便を出した後(門の後)★
+刻 = 2026-09-18T17:52:57 前後(.git/index の mtime を刻として採る)
+
+| 器 | 値 | 弾の初めの値 | 判 |
+|---|---|---|---|
+| `git rev-parse HEAD`(共用樹) | d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11 | 同じ | ★不動★ |
+| `git ls-files -s` の sha256(2789 行) | 7425522328c8eca4efa6f25c0bc3657bdff208dea4331ab4200862eaaa562738 | 同じ | ★不動★ |
+| `git status --porcelain` の行 | 1036 | 1036 | ★不動★ |
+| `git ls-remote origin refs/heads/main` | ★1 行★ | ―― | ★陽性対照(器は生きて居る)★ |
+| 同 当席の枝 km-186-futago-no-kesu-jun | ★0 行★ | ―― | ★未 push★ |
+
+★器の取り違へを一つ正す(★数の名を焼く★)★:
+  初め「index の sha256 = 7425522328c8…」と書いたが、之は ★`.git/index` の file の sha ではない★ ――
+  ★`git ls-files -s` の出(= index の ★中身★)★ の sha である。
+  `.git/index` の file 自身の sha は ★c1acf51a1ca9f2c84c98dee90a9543c8f7e59d6eecdd8fcfc7a04fd756e99cd6★。
+  ★陽性対照★: `git status --porcelain` を一度 通した前後で
+    ・file の sha = ★同一★(c1acf51a…) ／ mtime = ★同一★(17:52:57)
+    ・中身の sha = ★同一★(74255223…)
+  ∴ 此の刻の此の樹では ★読みが index を書き直しては居らぬ★。
+  ―― ★「二つは別の器である」事は変はらぬ。数を書く時は ★どちらの器か★ を名に焼け。★
+
+★此の數が意味せぬ事★:
+  ・porcelain 1036 は ★追跡外 dir を一行に畳む★ ―― 束に紙を何本足しても動かぬ。
+    ∴ ★1036 の不動は「worktree に一指も触れて居らぬ」の證に成らぬ。★ 其の證は HEAD と ls-files の側である。
+  ・枝が 0 行は「push して居らぬ」の意であつて、★誰も push せぬ事を意味せぬ★(陽性対照 main=1 行で器の生を示した)。
+  ・上の値は ★此の刻★ の物である。他席が共用樹で働けば ★porcelain も index も動き得る。★

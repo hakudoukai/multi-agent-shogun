@@ -1,0 +1,29 @@
+★70 ―― 臺帳外の紙を歩いた★
+歩き根 = 束の根(bundle 相対) ／ 刻 = 歩いた時の disk の状態
+
+★disk の紙 = 95 本★ ／ ★臺帳が宣する path = 82 行★ ／ ★臺帳外 = 13 本★
+
+臺帳外の逐語:
+  ・driver/__pycache__/kaki.cpython-314.pyc
+  ・manifest.txt
+  ・mon_bikae_ichi.err
+  ・mon_bikae_ichi.out
+  ・mon_bikae_ichi.rc
+  ・mon_bikae_ni.err
+  ・mon_bikae_ni.out
+  ・mon_bikae_ni.rc
+  ・mon_bikae_shime.txt
+  ・mon_paths.txt
+  ・mon_sakai_shime.txt
+  ・raw/50_daichou_shime.txt
+  ・raw/70_daichougai.txt
+
+★此の數に入らぬ物(★名を挙げる★)★:
+  ・raw/70_daichougai.txt(★此の紙自身★ ―― 数へた後に書かれる)
+  ・`mon_*`(門控 ―― 此の後に出る)
+∴ ★門を通した後の臺帳外は 13 + 1(此の紙) + 門控の本数 に成る。★
+
+★此の數が意味せぬ事★:
+  ・臺帳外 = 13 本は ★誤りの數ではない★ ―― 臺帳は己(manifest.txt)と `__pycache__` を意図して除く。
+  ・「臺帳外」は ★門の條①に鳴らぬ★(條①は臺帳の行と disk の差を見る故)。★通る事を意味せぬ★ ――
+    門は別に走らせ、rc を刷る。

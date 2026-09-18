@@ -1,0 +1,48 @@
+★彫りの〆★ 刻 = 2026-09-18T20:12:46+0900
+
+[a2-km171] 枝 = ashigaru-mac-2/km-171-uke-ire-no-jimen-20260918
+  親(切り元) = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  ★固定 commit(40桁) = 4b21e86be32feedbbff1e23c65372a03a74efb10★
+  ★tree(40桁)       = efe032725674b5d9a5e42186c5eca66b43ad77da★
+  ★此の commit が持つ file = 191 本★(diff-tree --name-only の行数・rc=0)
+  増減 = 191 files changed, 4412 insertions(+)  (git diff --shortstat 親..子・rc=0)
+  add -f rc=0 / commit --only rc=0
+  ignore 対照 ⑴陽性: docs/evidence/ashigaru-mac-2_km-171-ukeire-to-genbutsu-no-sa-wo-hakaru-403-ka-404-ka-20260918/00_shodan.md → rc=0 逐語「.gitignore:7:*\tdocs/evidence/ashigaru-mac-2_km-171-ukeire-to-genbutsu-no-sa-wo-hakaru-403-ka-404-ka-20260918/00_shodan.md」
+             ⑵陰性: CLAUDE.md → rc=1 逐語「―(何も刷らぬ=落ちぬ)」
+    ―― ★rc=0 が『落ちる』・rc=1 が『落ちぬ』。二つ並べねば器の沈黙と區別が付かぬ。★
+  ★未 push の證★: origin/main..4b21e86b の commit 数 = ★1★(rc=0)
+    陽性対照 = git ls-remote origin refs/heads/main の行数 = ★1★(rc=0)
+    ―― ★0 対 0 は器が黙つただけかも知れぬ ∴ 遠方が引ける事を先に示した。★
+
+[a2-km172] 枝 = ashigaru-mac-2/km-172-hako-no-utsushi-fail-open-20260918
+  親(切り元) = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  ★固定 commit(40桁) = b6ff8a80dd91ba98197ed62d0661695de1bbb002★
+  ★tree(40桁)       = c4459cfc27ce2f0c111bb167835942bfe3018792★
+  ★此の commit が持つ file = 71 本★(diff-tree --name-only の行数・rc=0)
+  増減 = 71 files changed, 6497 insertions(+)  (git diff --shortstat 親..子・rc=0)
+  add -f rc=0 / commit --only rc=0
+  ignore 対照 ⑴陽性: docs/evidence/ashigaru-mac-2_km-172-hako-no-utsushi-de-fail-open-wo-jissho-suru-20260918/00_shodan.md → rc=0 逐語「.gitignore:7:*\tdocs/evidence/ashigaru-mac-2_km-172-hako-no-utsushi-de-fail-open-wo-jissho-suru-20260918/00_shodan.md」
+             ⑵陰性: CLAUDE.md → rc=1 逐語「―(何も刷らぬ=落ちぬ)」
+    ―― ★rc=0 が『落ちる』・rc=1 が『落ちぬ』。二つ並べねば器の沈黙と區別が付かぬ。★
+  ★未 push の證★: origin/main..b6ff8a80 の commit 数 = ★1★(rc=0)
+    陽性対照 = git ls-remote origin refs/heads/main の行数 = ★1★(rc=0)
+    ―― ★0 対 0 は器が黙つただけかも知れぬ ∴ 遠方が引ける事を先に示した。★
+
+[a2-km174] 枝 = ashigaru-mac-2/km-174-otona-ban-yoyaku-iriguchi-20260918
+  親(切り元) = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  ★固定 commit(40桁) = 729f2cd7c458ff82637388c605936e8824812abd★
+  ★tree(40桁)       = 27b22f6265c5a84e667b695bae87f450b10a94e4★
+  ★此の commit が持つ file = 52 本★(diff-tree --name-only の行数・rc=0)
+  増減 = 52 files changed, 1769 insertions(+)  (git diff --shortstat 親..子・rc=0)
+  add -f rc=0 / commit --only rc=0
+  ignore 対照 ⑴陽性: docs/evidence/ashigaru-mac-2_km-174-otona-ban-yoyaku-iriguchi-ichi-oufuku-20260918/00_shodan.md → rc=0 逐語「.gitignore:7:*\tdocs/evidence/ashigaru-mac-2_km-174-otona-ban-yoyaku-iriguchi-ichi-oufuku-20260918/00_shodan.md」
+             ⑵陰性: CLAUDE.md → rc=1 逐語「―(何も刷らぬ=落ちぬ)」
+    ―― ★rc=0 が『落ちる』・rc=1 が『落ちぬ』。二つ並べねば器の沈黙と區別が付かぬ。★
+  ★未 push の證★: origin/main..729f2cd7 の commit 数 = ★1★(rc=0)
+    陽性対照 = git ls-remote origin refs/heads/main の行数 = ★1★(rc=0)
+    ―― ★0 対 0 は器が黙つただけかも知れぬ ∴ 遠方が引ける事を先に示した。★
+
+★此の數が意味せぬ事★:
+  ・file 本数は ★此の commit が持つ紙★ であり、束の disk の紙数と ★一致せぬ事が在る★
+    (臺帳は __pycache__ を除く方言・彫りは disk を其の儘持つ)。差は 40 が名指す。
+  ・未 push の 0 は ★遠方に無い★ の意であり、★誰かが後で push せぬ事を意味せぬ★。

@@ -1,0 +1,70 @@
+★束を git へ入れた控 ―― 裁 seq335122⑶「束は git へ入れよ」★
+刻 = 2026-09-19T01:57:16+0900
+歩き根 = /Users/momizimac/multi-agent-shogun(共有樹・★読取のみ★) ／ 彫りは己の worktree 二本
+
+■一 母數の宣言
+  ・km-185 束 disk = 194 本(__pycache__ 0本・symlink 0本を除いた後の常物のみ)
+  ・km-186 束 disk = 130 本(同上)
+  ・小文字へ畳んで一意 = 194 / 130 ―― ★束内の case 衝突 = 0★(畳む disk 故 先に測つた)
+
+■二 彫る前に測つた「入つて居らぬ數」
+  ・km-185: 固定commit e4e60697 が持つ束 = 167 本 ／ disk 194 → ★差 27★(悉く `mon_` 冠＝門後の紙)
+  ・km-186: 固定commit 4cb05b97 が持つ束 = ★0 本★ ／ disk 130 → ★差 130★
+    ―― 4cb05b97 は「双子の片方を索引から外す 79 deletions」★のみ★であり、
+       ★処置は彫られ、其の證は一本も彫られて居らなんだ。★
+  ・測る器: `git ls-tree -r --name-only <固定commit> -- <束>` を用ゐた。
+    ★共有樹で `git ls-files` を打つと両方 0 が返るが、因は「束が無い」ではなく
+      共有樹の HEAD が★他席の枝★(ashigaru-mac-3/km-51…)である事である。★
+
+■三 実射と陰性対照
+  ・写し = `cp -p` ／ 写した後 ★一本づつ sha256 を突き合はせた★ → 185:27/27 合・186:130/130 合・不一致 0
+  ・陰性対照 = 束内に無き名 `ZZ-nai-kami-9182.txt` を同じ器で引き、★引けぬ★事を確かめた
+    ―― 檢めが「否」を刷れる事の證。
+  ・彫り = ㋔の形 `git add -f <path>` → `git commit --only <同じ path>`
+    (`.gitignore:7` の裸の `*` に捕まる故 `-f` 必須)
+
+■四 rc と出目
+  ・185: add -f rc=0 ／ commit --only rc=0 ／ 27 files changed, 257 insertions(+)
+  ・186: add -f rc=0 ／ commit --only rc=0 ／ 130 files changed, 3717 insertions(+)
+  ・★index に載つた束の外 = 0 本(両弾とも宣する)★
+  ・km-185 の樹に在る ` M docs/runbooks/ERR-EKARTE-001.md` は ★彫らず据ゑ置いた★
+    ―― `--only` が名指した path のみを彫る事の實證。彫り後も porcelain に ` M` の儘在る。
+
+■五 固定(40桁)
+  ・km-185: e4e60697f88960e2c6816086f627673b8d2a8909 → ★2c6bdc042ebf3d3b20ee32e53caed15bcfae9ed8★
+  ・km-186: 4cb05b976ec0060796840e02dd579f1551d89841 → ★e6271725b54ad6f16989db32745b93e9fc3e40cf★
+  ・枝 = ashigaru-mac-2/km-185-gosoku-wo-ono-no-ki-he-kotei-20260918
+       / ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918
+
+■六 彫つた後の突合(★差 0★)
+  ・km-185: disk 194 / 枝 194 / 差 0
+  ・km-186: disk 130 / 枝 130 / 差 0
+  ・★但し此の紙は此の彫りの後に生まれる★ ―― 此の紙を入れる彫りの sha は ★此の紙に書けぬ★。
+    其の sha は納め便に書く(紙は己を含む數を書けぬ)。
+
+■七 未 push ―― ★0 行では証せぬ★(km-185㋖)
+  ・㋐陽性対照 `git ls-remote origin refs/heads/main` = ★1 行★ rc=0 ―― 器は遠樹に届いて居る
+  ・㋑km-185 枝 remote = 0 行 rc=0 ／ ㋒km-186 枝 remote = 0 行 rc=0
+  ・㋓陰性対照 無き枝 `zz-nai-eda-9182` = 0 行 rc=0
+  ∴ ★押して居らぬ。PR も作つて居らぬ。gh を一度も叩いて居らぬ。★(裁334442⑶)
+
+■八 共有樹の不動
+  ・HEAD  起点 01:51 = d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11 ／ 彫り後 = 同値
+  ・index 起点 01:51 = c1acf51a1ca9f2c84c98dee90a9543c8f7e59d6eecdd8fcfc7a04fd756e99cd6 ／ 彫り後 = 同値
+  ・★註★ 前弾(01:35)の index は 74255223… であつた。01:51 迄に動いて居る。
+    ★誰の手が動かしたかは當席には測れぬ★ ―― 當席は共有樹に一度も書いて居らぬ。
+
+■九 己の疵
+  ⒜ ★己の束が git に在るか否かを、前弾迄 一度も測つて居らなんだ。★
+     「固定commit を報じた」を以て「受け手が読める」と思ひ込んで居た。裁⑶が其の穴を突いた。
+  ⒝ `xargs -a <file>` を打つて rc=1 を貰つた ―― ★BSD の xargs に -a は無い★。
+     害は無い(index に一本も載らぬ fail-closed)が、rc を見ねば「彫つた」と誤つて書く所であつた。
+     正は `xargs git add -f -- < <file>`。
+
+■十 ★此の紙が意味せぬ事★
+  ・「束が git に在る」は ★遠樹に在る事を意味せぬ★ ―― 枝は己の樹に置いたまま、未 push である。
+  ・「差 0」は ★門が通る事を意味せぬ★ ―― 門は別に走らせ、控は束の `mon_bikae_*` に在る。
+  ・「共有樹 不動」は ★他席が触れて居らぬ事を意味せぬ★ ―― 當席が触れて居らぬ事のみを言ふ。
+  ・判定の束の型紙 `docs/rules/judge-submission-bundle-template.md` は
+    ★當 repo にも無く、共有樹 /mnt/c も此の mac には無い★(`ls` 二本とも No such file)。
+    ∴ ①〜⑦ の形は ★測れぬ★ の儘 ―― 家老へ申す(裁⑹の指図に従ふ)。

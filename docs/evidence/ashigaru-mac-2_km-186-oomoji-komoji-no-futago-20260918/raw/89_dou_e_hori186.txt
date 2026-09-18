@@ -1,0 +1,4 @@
+km-186 ㋓ 命の順で彫り申した。★⑴と⑵を入れ替へず・⑵を飛ばさず★。
+⑴`git rm --cached <大文字>` = disk 不動(同 inode・2596 bytes)。⑵`git checkout -- <小文字>` = 3471 bytes、
+blob sha1 を己で計算し de00cbd9… と一致。⑶ porcelain = ★大文字の D 一行のみ・小文字の M は消滅★
+(陽性対照 = ⑵の前は M を刷つた)。⑷ rc=0・commit = 4cb05b976ec0060796840e02dd579f1551d89841・79 deletions。
