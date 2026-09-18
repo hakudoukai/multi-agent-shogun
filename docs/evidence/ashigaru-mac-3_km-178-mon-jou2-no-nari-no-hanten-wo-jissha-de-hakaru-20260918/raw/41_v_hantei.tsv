@@ -1,0 +1,11 @@
+種	行	素②	素③	v②	v③	入替か	予測(行-素)	予測と合ふか
+f01_kirei.txt	2	0	0	1	1	×	2,2	○
+f02_matsubi_space.txt	2	1	0	1	1	×	1,2	○
+f03_matsubi_tab.txt	2	1	0	1	1	×	1,2	○
+f04_crlf_space.txt	2	1	1	1	0	×	1,0	○
+f05_crlf_kirei.txt	2	0	1	1	0	○	2,0	○
+f06_nurekinu.bin	1	1	0	0	1	○	0,1	○
+f07_nul_dake.bin	1	0	0	1	1	×	1,1	○
+f08_zenkaku.txt	2	0	0	1	1	×	2,2	○
+f09_cr_nomi.bin	1	0	1	1	0	○	1,0	○
+f10_nul_to_space.bin	2	1	0	1	1	×	1,2	○

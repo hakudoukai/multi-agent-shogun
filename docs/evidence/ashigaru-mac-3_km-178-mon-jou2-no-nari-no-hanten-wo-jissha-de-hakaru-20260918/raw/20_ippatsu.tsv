@@ -1,0 +1,11 @@
+種	問ひ	法_條②	實_條②	合	鳴②	鳴③	鳴④	rc	出目
+f01_kirei.txt	清い紙(陰性対照)	黙る	黙る	○	0	0	0	0	20_01_f01_kirei_txt
+f02_matsubi_space.txt	行末に空白1(陽性対照)	鳴る	鳴る	○	1	0	0	1	20_02_f02_matsubi_space_txt
+f03_matsubi_tab.txt	行末に TAB(陽性対照)	鳴る	鳴る	○	1	0	0	1	20_03_f03_matsubi_tab_txt
+f04_crlf_space.txt	CRLF かつ行末に空白 ―― 止血後は鳴るべし	鳴る	鳴る	○	1	1	0	1	20_04_f04_crlf_space_txt
+f05_crlf_kirei.txt	CRLF だが空白無し ―― ②は黙るべし	黙る	黙る	○	0	1	0	1	20_05_f05_crlf_kirei_txt
+f06_nurekinu.bin	空白が NUL の直前(真の行末には空白無し)	黙る	鳴る	★×★	1	0	0	1	20_06_f06_nurekinu_bin
+f07_nul_dake.bin	NUL 有り・空白無し	黙る	黙る	○	0	0	0	0	20_07_f07_nul_dake_bin
+f08_zenkaku.txt	行末が全角空白(見えぬ字)	黙る	黙る	○	0	0	0	0	20_08_f08_zenkaku_txt
+f09_cr_nomi.bin	CR が行中(行末ではない)	黙る	黙る	○	0	1	0	1	20_09_f09_cr_nomi_bin
+f10_nul_to_space.bin	NUL 直前にも真の行末にも空白	鳴る	鳴る	○	1	0	0	1	20_10_f10_nul_to_space_bin

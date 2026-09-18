@@ -1,0 +1,9 @@
+# 門が解く grep の身元
+
+path = /usr/bin/grep
+which(PATH 先頭) = /usr/bin/grep
+
+--version:
+grep (BSD grep, GNU compatible) 2.6.0-FreeBSD
+
+rc=0

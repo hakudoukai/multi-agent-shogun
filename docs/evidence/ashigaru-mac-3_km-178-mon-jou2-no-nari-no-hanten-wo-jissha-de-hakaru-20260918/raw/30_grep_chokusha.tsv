@@ -1,0 +1,11 @@
+種	行(LF数)	NUL数	素②数	素②rc	NUL除去後②数	素③数	素③rc	v②数	v②rc	v③数	v③rc
+f01_kirei.txt	2	0	0	1	0	0	1	2	0	2	0
+f02_matsubi_space.txt	2	0	1	0	1	0	1	1	0	2	0
+f03_matsubi_tab.txt	2	0	1	0	1	0	1	1	0	2	0
+f04_crlf_space.txt	2	0	1	0	1	2	0	1	0	0	1
+f05_crlf_kirei.txt	2	0	0	1	0	2	0	2	0	0	1
+f06_nurekinu.bin	1	1	1	0	0	0	1	0	1	1	0
+f07_nul_dake.bin	1	1	0	1	0	0	1	1	0	1	0
+f08_zenkaku.txt	2	0	0	1	0	0	1	2	0	2	0
+f09_cr_nomi.bin	1	0	0	1	0	1	0	1	0	0	1
+f10_nul_to_space.bin	2	1	1	0	1	0	1	1	0	2	0

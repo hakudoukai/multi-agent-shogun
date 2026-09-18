@@ -1,0 +1,11 @@
+名	bytes	sha256	hex	LF	CR	NUL	問ひ	法_條②	法_條③	法_條④
+f01_kirei.txt	4	911169ddaaf146aff539f58c26c489af3b892dff0fe283c1c264c65ae5aa59a2	610a620a	2	0	0	清い紙(陰性対照)	黙る	黙る	黙る
+f02_matsubi_space.txt	5	6cb059c3eb00b48fda06091f55f54460f28b893fe3bb490a43c8bc1857677f54	61200a620a	2	0	0	行末に空白1(陽性対照)	鳴る	黙る	黙る
+f03_matsubi_tab.txt	5	604182742a16a6115ba0e0983dbade36c55bbf561a04f953297f2a0531249307	61090a620a	2	0	0	行末に TAB(陽性対照)	鳴る	黙る	黙る
+f04_crlf_space.txt	7	8e2d43103d84f513715fd9cf126f2278203ef0895ef3b5957512c56cf3ca30dc	61200d0a620d0a	2	2	0	CRLF かつ行末に空白 ―― 止血後は鳴るべし	鳴る	鳴る	黙る
+f05_crlf_kirei.txt	6	58055bdcc73787eb88c78d36f0b4939e9c5dc1c3ad17e25cc85a6833cf1a0cab	610d0a620d0a	2	2	0	CRLF だが空白無し ―― ②は黙るべし	黙る	鳴る	黙る
+f06_nurekinu.bin	5	5d309ba0a5653542abb10206e3168b501d6770aafe28e1c79f2c27ca0469f8a1	782000790a	1	0	1	空白が NUL の直前(真の行末には空白無し)	黙る	黙る	黙る
+f07_nul_dake.bin	4	3a100994c4e38751871e6e8eef9adad2b20177fdeaf650daacdcd74f4c9421e3	6100620a	1	0	1	NUL 有り・空白無し	黙る	黙る	黙る
+f08_zenkaku.txt	7	3aa6d61e4b3cdffe45ba0623c2fb2b998554108f2be920f9cc08a6efa82e9ca4	61e380800a620a	2	0	0	行末が全角空白(見えぬ字)	黙る	黙る	黙る
+f09_cr_nomi.bin	4	367d1c77eadc1495a7db4200f46a8b90ea1fa926282722d308c05a65098a4112	610d620a	1	1	0	CR が行中(行末ではない)	黙る	鳴る	黙る
+f10_nul_to_space.bin	8	672fd42e98bec61e4a1ac34b0ef410378c455562d0a0a099b93ac706f7ccc1d4	70200071200a720a	2	0	1	NUL 直前にも真の行末にも空白	鳴る	黙る	黙る

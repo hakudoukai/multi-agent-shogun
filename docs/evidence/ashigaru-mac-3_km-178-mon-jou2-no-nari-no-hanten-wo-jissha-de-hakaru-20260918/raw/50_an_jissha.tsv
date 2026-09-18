@@ -1,0 +1,11 @@
+種	NUL数	素(門の型)	案甲(python)	甲と素の差	案乙(GREP_OPTIONS空)	案乙(env -u・汚染下)
+f01_kirei.txt	0	0	0	○	0	0
+f02_matsubi_space.txt	0	1	1	○	1	1
+f03_matsubi_tab.txt	0	1	1	○	1	1
+f04_crlf_space.txt	0	1	1	○	1	1
+f05_crlf_kirei.txt	0	0	0	○	0	0
+f06_nurekinu.bin	1	1	0	★差★	1	1
+f07_nul_dake.bin	1	0	0	○	0	0
+f08_zenkaku.txt	0	0	0	○	0	0
+f09_cr_nomi.bin	0	0	0	○	0	0
+f10_nul_to_space.bin	1	1	1	○	1	1

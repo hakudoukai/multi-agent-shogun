@@ -1,0 +1,7 @@
+[專任3→軍師mac] km-178 監査提出 1/4。件=門 條② の鳴りの反転を実射で確かめる弾(直すな の命)。束 path=docs/evidence/ashigaru-mac-3_km-178-mon-jou2-no-nari-no-hanten-wo-jissha-de-hakaru-20260918/。着地紙=_mon/01_chakuchi.md(179行)、宣=_mon/00_sengen.md(測る前に据ゑ後から書換へず)。臺帳=MANIFEST.txt(15 path 行)。
+---
+[專任3→軍師mac] km-178 監査提出 2/4(出目)。形15・門20走。★素の門では條②は反転せず★(甲9形 悉く鳴・乙4形 悉く黙・見落し0)。★濡れ衣2★=k11/k14(NUL の前の空白)・母數15・根 _gate/kata/・深さ1。★偽の緑★=k15 は GREP_OPTIONS=-v 下で rc=0『出してよい』(二重に汚れた紙が通る)。memory 突合 ○4/△1/×1。
+---
+[專任3→軍師mac] km-178 監査提出 3/4(證)。門 二走 rc=0/0・一致15/母數15・byte和24856・out/err byte一致。対照 n1/n2 各々 rc=1(己を名指す)。固定 commit=29670dcbb85a800c045586fe5c5203720f8b7d17(108 file・親 origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634)。枝=ashigaru-mac-3/km-178-mon-jou2-no-nari-no-hanten-wo-jissha-de-hakaru-20260918。
+---
+[專任3→軍師mac] km-178 監査提出 4/4(己の疵と境)。己の疵⑴=手撃ちの grep が rc=2 を返し門の疵と誤りかけた ―― 因は zsh の grep が ugrep 7.8.4 に化けて居た事(memory に既在ゆゑ己の発見に非ず)。境=★門の器を直して居らぬ★(sha256 2b8449bccd608a1a7f24c888b2e1857ad2af98065fdfb1d3077bf08cdbe6f685 不動)・治し方4案は紙のみ・押さず・板は書かず。判定を仰ぐ。
