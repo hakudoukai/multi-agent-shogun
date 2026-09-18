@@ -1,0 +1,59 @@
+1..58
+ok 1 T-P2-01: canonical 三箱すべて既読 → 0
+ok 2 T-P2-02: canonical 一件 read:false → 1 (陽性対照)
+ok 3 T-P2-03: 壊れた YAML → MEAS_FAIL (0 ではない)
+ok 4 T-P2-04: 箱が無い → MEAS_FAIL (0 ではない)
+ok 5 T-P2-05: legacy 別名が在つても canonical の値は変らぬ
+ok 6 T-P2-06: 関はりなき役職 → 0
+ok 7 LB-01 [general-ashigaru]: plain unread message (no expiry/supersedes) counts as unread
+ok 8 LB-02 [codex]: expired message excluded from count and marked read on disk
+ok 9 LB-03 [command-layer]: supersedes marks the superseded message read on disk
+ok 10 LB-04: future expires_at is not expired yet — still counted as unread
+ok 11 LB-05: supersedes referencing a nonexistent id is a safe no-op
+ok 12 LB-06 [backward-compat]: pre-existing messages without expiry keys work unchanged
+ok 13 LB-07: clear_command special is still consumed exactly once (no regression)
+ok 14 LB-08 [stop-hook]: expired message removed from 'read: false' grep count after get_unread_info
+ok 15 LB-09 [inbox_write integration]: expires_at/supersedes env vars round-trip; absent by default
+ok 16 T-001: no arguments → exit 1 with Usage message
+ok 17 T-002: only target, no content → exit 1
+ok 18 T-002b: missing type and from → exit 1
+ok 19 T-002c: self-send (from==target) → exit 1 with REJECTED
+ok 20 T-003: normal write to new inbox file → messages array with correct fields
+ok 21 T-004: append to existing inbox → preserves existing messages, adds new one
+ok 22 T-005: message ID uniqueness → 2 rapid writes produce different IDs
+ok 23 T-006: missing type/from → exit 1 with Usage message
+ok 24 T-007: custom type/from → 4th and 5th args set type and from correctly
+ok 25 T-008: overflow protection at 50 messages → oldest read messages removed
+ok 26 T-009: overflow preserves unread → unread messages are NOT removed even when over 50
+ok 27 T-010: concurrent writes (flock test) → 8 parallel writes all succeed, no data loss
+ok 28 T-011: special characters in content → YAML special chars handled safely
+ok 29 T-012: auto-create inbox directory → missing queue/inbox/ directory is created
+ok 30 T-201: normal dry-run → fixed envelope 4 points present in output
+ok 31 T-202: wrong --target-agent/--topic rejected → normalized to canonical, NORMALIZED note shown
+ok 32 T-203: priority is always high, never medium (pc-handshake-priority-constraint)
+ok 33 T-204: missing content → exit 1 with Usage message
+ok 34 T-205: sb_auth.sh missing → hard fail exit 1, FATAL to stderr AND persisted to log
+ok 35 T-206: dry-run output never contains the SUPABASE_SERVICE_ROLE_KEY value
+ok 36 T-207: --live POST failure surfaces curl stderr in FATAL (not swallowed by 2>/dev/null)
+ok 37 T-208: --live never falls back to $HOME/.hakudokai/env (process env only)
+ok 38 T-209: --live success surfaces the pc_handshake row id in stdout (return=representation, not minimal)
+ok 39 T-210: requires_response defaults to false, --requires-response sets it true
+ok 40 T-001: lib/_section18_roles.sh が存在する
+ok 41 T-002: SECTION18_MAINPC_PANE_ORDER が pane 配置順 5 件
+ok 42 T-003: SECTION18_SECONDPC_AGENTS が ashigaru5-8 の 4 件
+ok 43 T-004: SECTION18_ALL_ROLES に shogun 含む / ashigaru4 を含まない / 旧体制名なし
+ok 44 T-005: 多重 source で配列が再定義されず _SECTION18_ROLES_LOADED ガードが効く
+ok 45 T-101: section18_is_secondpc_agent が ashigaru5/6/7/8 を accept
+ok 46 T-102: section18_is_secondpc_agent が MainPC role を reject
+ok 47 T-103: section18_is_secondpc_agent が ashigaru4 (欠番) を reject
+ok 48 T-104: section18_is_secondpc_agent が shogun を reject (別 session)
+ok 49 T-201: section18_is_mainpc_pane_agent が karo/ashigaru1-3/gunshi を accept
+ok 50 T-202: section18_is_mainpc_pane_agent が SecondPC role を reject
+ok 51 T-203: section18_is_mainpc_pane_agent が ashigaru4 (欠番) を reject
+ok 52 T-204: section18_is_mainpc_pane_agent が shogun を reject (別 session)
+ok 53 T-301: section18_mainpc_pane_index が pane 配置順を返す
+ok 54 T-302: section18_mainpc_pane_index が SecondPC role に non-zero exit
+ok 55 T-303: section18_mainpc_pane_index が ashigaru4 に non-zero exit
+ok 56 T-304: section18_mainpc_pane_index が shogun に non-zero exit (別 session)
+ok 57 T-401: pytest 側 TestSection18ShellHelper と同一の SECTION18_MAINPC_PANE_ORDER
+ok 58 T-402: pytest 側 TestSection18ShellHelper と同一の SECTION18_SECONDPC_AGENTS

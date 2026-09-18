@@ -1,0 +1,335 @@
+1..334
+ok 1 build: build_instructions.sh exits with status 0
+ok 2 build: generated/ directory exists after build
+ok 3 build: generated/ contains at least 6 files
+ok 4 claude: shogun.md generated
+ok 5 claude: karo.md generated
+ok 6 claude: ashigaru.md generated
+ok 7 codex: codex-shogun.md generated
+ok 8 codex: codex-karo.md generated
+ok 9 codex: codex-ashigaru.md generated
+ok 10 copilot: copilot-shogun.md generated [Phase 2+3]
+ok 11 copilot: copilot-karo.md generated [Phase 2+3]
+ok 12 copilot: copilot-ashigaru.md generated [Phase 2+3]
+ok 13 content: shogun.md is not empty
+ok 14 content: karo.md is not empty
+ok 15 content: ashigaru.md is not empty
+ok 16 content: codex-shogun.md is not empty
+ok 17 content: codex-karo.md is not empty
+ok 18 content: codex-ashigaru.md is not empty
+ok 19 content: shogun.md contains shogun role reference
+ok 20 content: karo.md contains karo role reference
+ok 21 content: ashigaru.md contains ashigaru role reference
+ok 22 content: codex-shogun.md contains shogun role reference
+ok 23 content: codex-karo.md contains karo role reference
+ok 24 content: codex-ashigaru.md contains ashigaru role reference
+ok 25 content: claude files contain Claude-specific tools
+ok 26 content: codex files contain Codex-specific content
+ok 27 content: copilot files contain Copilot-specific content [Phase 2+3]
+ok 28 agents: AGENTS.md generated [Phase 2+3]
+ok 29 agents: AGENTS.md contains Codex-specific content [Phase 2+3]
+ok 30 copilot-inst: .github/copilot-instructions.md generated [Phase 2+3]
+ok 31 copilot-inst: contains Copilot-specific content [Phase 2+3]
+ok 32 codex-clear: AGENTS.md has no /clear Recovery section
+ok 33 codex-clear: AGENTS.md has /new Recovery section
+ok 34 codex-clear: AGENTS.md has no 'Forbidden after /clear'
+ok 35 codex-clear: AGENTS.md has no 'sends `/clear` + Enter via send-keys' (unconverted)
+ok 36 codex-clear: AGENTS.md has no 'delivers `/clear` to the agent' (unconverted)
+ok 37 codex-clear: AGENTS.md has no '/clear wipes old context'
+ok 38 codex-clear: codex-ashigaru.md has no bare '/clear' in escalation table
+ok 39 codex-clear: codex-ashigaru.md protocol uses CLI-neutral context reset
+ok 40 codex-clear: codex-karo.md has no bare '/clear' in redo protocol
+ok 41 codex-clear: codex-gunshi.md protocol uses CLI-neutral context reset
+ok 42 codex-clear: codex-shogun.md protocol uses CLI-neutral context reset
+ok 43 idempotent: second build produces identical output
+ok 44 get_cli_type: cliセクションなし → claude (後方互換)
+ok 45 get_cli_type: claude only設定 → claude
+ok 46 get_cli_type: mixed設定 shogun → claude
+ok 47 get_cli_type: mixed設定 ashigaru5 → codex
+ok 48 get_cli_type: mixed設定 ashigaru7 → copilot
+ok 49 get_cli_type: mixed設定 ashigaru1 → claude (個別設定)
+ok 50 get_cli_type: 文字列形式 ashigaru5 → codex
+ok 51 get_cli_type: 文字列形式 ashigaru7 → copilot
+ok 52 get_cli_type: kimi設定 ashigaru3 → kimi
+ok 53 get_cli_type: kimi設定 ashigaru4 → kimi (モデル指定なし)
+ok 54 get_cli_type: kimiデフォルト設定 → kimi
+ok 55 get_cli_type: 未定義agent → default継承
+ok 56 get_cli_type: 空agent_id → claude
+ok 57 get_cli_type: mixed設定 ashigaru1-8全パターン
+ok 58 get_cli_type: 不正CLI名 → claude フォールバック
+ok 59 get_cli_type: 不正default → claude フォールバック
+ok 60 get_cli_type: 空YAMLファイル → claude
+ok 61 get_cli_type: YAML構文エラー → claude
+ok 62 get_cli_type: 存在しないファイル → claude
+ok 63 build_cli_command: claude + model → claude --model opus --dangerously-skip-permissions
+ok 64 build_cli_command: PERMISSION_FLAG override → claude --permission-mode auto-approved
+ok 65 build_cli_command: codex + default model → codex --model sonnet ...
+ok 66 build_cli_command: copilot → copilot --yolo
+ok 67 build_cli_command: kimi + model → kimi --yolo --model k2.5
+ok 68 build_cli_command: kimi (モデル指定なし) → kimi --yolo --model k2.5
+ok 69 build_cli_command: cliセクションなし → claude フォールバック
+ok 70 build_cli_command: settings読取失敗 → claude フォールバック
+ok 71 get_instruction_file: shogun + claude → instructions/shogun.md
+ok 72 get_instruction_file: karo + claude → instructions/karo.md
+ok 73 get_instruction_file: ashigaru1 + claude → instructions/ashigaru.md
+ok 74 get_instruction_file: ashigaru5 + codex → instructions/codex-ashigaru.md
+ok 75 get_instruction_file: ashigaru7 + copilot → .github/copilot-instructions-ashigaru.md
+ok 76 get_instruction_file: ashigaru3 + kimi → instructions/generated/kimi-ashigaru.md
+ok 77 get_instruction_file: shogun + kimi → instructions/generated/kimi-shogun.md
+ok 78 get_instruction_file: cli_type引数で明示指定 (codex)
+ok 79 get_instruction_file: cli_type引数で明示指定 (copilot)
+ok 80 get_instruction_file: 全CLI × 全role組み合わせ
+ok 81 get_instruction_file: 不明なagent_id → 空文字 + return 1
+ok 82 validate_cli_availability: claude → 0 (インストール済み)
+ok 83 validate_cli_availability: 不正CLI名 → 1 + エラーメッセージ
+ok 84 validate_cli_availability: 空文字 → 1
+ok 85 validate_cli_availability: codex mock (PATH操作)
+ok 86 validate_cli_availability: copilot mock (PATH操作)
+ok 87 validate_cli_availability: kimi-cli mock (PATH操作)
+ok 88 validate_cli_availability: kimi mock (PATH操作)
+ok 89 validate_cli_availability: codex未インストール → 1 + エラーメッセージ
+ok 90 validate_cli_availability: kimi未インストール → 1 + エラーメッセージ
+ok 91 get_agent_model: cliセクションなし shogun → fable (デフォルト)
+ok 92 get_agent_model: cliセクションなし karo → opus (デフォルト)
+ok 93 get_agent_model: cliセクションなし ashigaru1 → sonnet (デフォルト)
+ok 94 get_agent_model: cliセクションなし ashigaru5 → sonnet (デフォルト)
+ok 95 get_agent_model: YAML指定 ashigaru1 → haiku (オーバーライド)
+ok 96 get_agent_model: modelsセクションから取得 karo → sonnet
+ok 97 get_agent_model: codexエージェントのmodel ashigaru5 → gpt-5
+ok 98 get_agent_model: 未知agent → sonnet (デフォルト)
+ok 99 get_agent_model: kimi CLI ashigaru3 → k2.5 (YAML指定)
+ok 100 get_agent_model: kimi CLI ashigaru4 → k2.5 (デフォルト)
+ok 101 get_agent_model: kimi CLI shogun → k2.5 (デフォルト)
+ok 102 get_agent_model: kimi CLI karo → k2.5 (デフォルト)
+ok 103 get_model_display_name: Sonnet + thinking:true → Sonnet+T
+ok 104 get_model_display_name: Opus + thinking:true → Opus+T
+ok 105 get_model_display_name: Haiku + thinking:false → Haiku
+ok 106 get_model_display_name: Sonnet + thinking未設定 → Sonnet+T (default ON)
+ok 107 get_model_display_name: Codex Spark → Spark (thinking無関係)
+ok 108 get_model_display_name: Codex 5.3 → Codex5.3
+ok 109 get_model_display_name: Kimi → Kimi
+ok 110 get_model_display_name: 全モデル × thinking組み合わせ
+ok 111 build_cli_command: thinking:true → MAX_THINKING_TOKENS=0 なし
+ok 112 build_cli_command: thinking:false → MAX_THINKING_TOKENS=0 prefix
+ok 113 build_cli_command: thinking未設定 → MAX_THINKING_TOKENS=0 なし (デフォルトThinking ON)
+ok 114 build_cli_command: codex + thinking:false → MAX_THINKING_TOKENS=0 なし (Codexには無関係)
+ok 115 TC-DMR-001: FR-01 capability_tiers基本読取 — パースエラーなし
+ok 116 TC-DMR-002: FR-01 capability_tiersセクション不在 — 後方互換
+ok 117 TC-DMR-003: FR-01 cost_group読取
+ok 118 TC-DMR-010: FR-02 Spark → 3
+ok 119 TC-DMR-011: FR-02 Codex 5.3 → 4
+ok 120 TC-DMR-012: FR-02 Sonnet Thinking → 5
+ok 121 TC-DMR-013: FR-02 Opus Thinking → 6
+ok 122 TC-DMR-014: FR-02 未定義モデル → 6
+ok 123 TC-DMR-015: FR-02 capability_tiersセクション不在 → 6
+ok 124 TC-DMR-016: FR-02 YAML破損 → 6
+ok 125 TC-DMR-017: FR-02 空文字入力 → 6
+ok 126 TC-DMR-020: FR-03 L1 → Spark
+ok 127 TC-DMR-021: FR-03 L2 → Spark
+ok 128 TC-DMR-022: FR-03 L3 → Spark
+ok 129 TC-DMR-023: FR-03 L4 → Codex 5.3
+ok 130 TC-DMR-024: FR-03 L5 → Sonnet Thinking
+ok 131 TC-DMR-025: FR-03 L6 → Opus Thinking
+ok 132 TC-DMR-026: FR-03 capability_tiersセクション不在 → 空文字
+ok 133 TC-DMR-027: FR-03 範囲外(0) → exit 1
+ok 134 TC-DMR-028: FR-03 範囲外(7) → exit 1
+ok 135 TC-DMR-029: FR-03 コスト優先 — chatgpt_proが優先
+ok 136 TC-DMR-030: FR-04 Spark → chatgpt_pro
+ok 137 TC-DMR-031: FR-04 Opus → claude_max
+ok 138 TC-DMR-032: FR-04 未定義モデル → unknown
+ok 139 TC-DMR-033: FR-04 capability_tiersセクション不在 → unknown
+ok 140 TC-DMR-040: NFR-01 既存get_cli_type回帰なし
+ok 141 TC-DMR-041: NFR-01 既存get_agent_model回帰なし
+ok 142 TC-DMR-050: NFR-05 CLI_ADAPTER_SETTINGS注入
+ok 143 TC-DMR-055: NFR-06 get_recommended_model連続呼出で同一結果
+ok 144 TC-DMR-220: FR-09 bloom_routing=auto読取
+ok 145 TC-DMR-221: FR-09 bloom_routing=manual読取
+ok 146 TC-DMR-222: FR-09 bloom_routing=off読取
+ok 147 TC-DMR-223: FR-09 bloom_routing未定義 → off
+ok 148 TC-DMR-100: FR-05 switch不要 — bloom=3, model=spark
+ok 149 TC-DMR-101: FR-05 switch必要 — bloom=4, model=spark
+ok 150 TC-DMR-102: FR-05 capability_tiers不在 → 判定スキップ
+ok 151 TC-DMR-103: FR-05 bloomフィールドなし → 判定スキップ
+ok 152 TC-DMR-110: FR-06 同CLI内switch — codex spark→codex 5.3
+ok 153 TC-DMR-111: FR-06 CLI跨ぎ — bloom=5, codex足軽
+ok 154 TC-DMR-112: FR-06 switch不要時は現モデル維持
+ok 155 TC-DMR-113: FR-06 bloom=6でOpusに到達
+ok 156 TC-DMR-120: NFR-02 get_capability_tier応答速度 500ms以内
+ok 157 TC-DMR-121: NFR-02 get_recommended_model応答速度 500ms以内
+ok 158 TC-DMR-130: NFR-03 model_switchはClaude足軽のみ有効
+ok 159 TC-DMR-131: NFR-03 Claude足軽はfull switch可能
+ok 160 TC-DMR-140: NFR-04 L3にOpus不使用
+ok 161 TC-DMR-141: NFR-04 chatgpt_pro優先
+ok 162 TC-DMR-142: NFR-04 不要switch抑制
+ok 163 TC-DMR-200: FR-07 正常YAML — 全フィールド定義
+ok 164 TC-DMR-201: FR-07 #48フィールド省略 — パースエラーなし
+ok 165 TC-DMR-202: FR-07 bloom_level範囲外(0,7) — バリデーションエラー
+ok 166 TC-DMR-203: FR-07 confidence範囲外(-1, 2.0) — バリデーションエラー
+ok 167 TC-DMR-210: FR-08 auto → 全タスク分析トリガー
+ok 168 TC-DMR-211: FR-08 manual + required=true → 分析トリガー
+ok 169 TC-DMR-211b: FR-08 manual + required=false → トリガーなし
+ok 170 TC-DMR-212: FR-08 off → 分析なし
+ok 171 TC-DMR-213: FR-08 bloom_routing未定義 → off扱い → 分析なし
+ok 172 TC-DMR-214: FR-08 should_trigger_bloom_analysis fallback引数
+ok 173 TC-DMR-224: FR-09 bloom_routing不正値 → off + stderr警告
+ok 174 TC-DMR-300: FR-10 履歴追記 — model_performance.yamlに1行追記
+ok 175 TC-DMR-301: FR-10 履歴読取 — task_type×bloom_level別の集計
+ok 176 TC-DMR-302: FR-10 空ファイル — model_performance.yaml不在でもエラーなし
+ok 177 TC-DMR-303: FR-10 適合度算出 — pass率が算出可能
+ok 178 TC-DMR-400: get_available_cost_groups — 明示定義 claude_maxのみ
+ok 179 TC-DMR-401: get_available_cost_groups — 省略時はcapability_tiersから自動推定
+ok 180 TC-DMR-402: get_available_cost_groups — capability_tiers不在 → 空
+ok 181 TC-DMR-403: get_available_cost_groups — Claude onlyの自動推定
+ok 182 TC-DMR-404: get_available_cost_groups — ChatGPT onlyの自動推定
+ok 183 TC-DMR-410: Claude only — L3 → sonnet + overqualified警告
+ok 184 TC-DMR-411: ChatGPT only — L5 → gpt-5.3 + insufficient警告
+ok 185 TC-DMR-412: available_cost_groups=claude_max → chatgpt_proモデルを候補除外
+ok 186 TC-DMR-413: available_cost_groups=chatgpt_pro → claude_maxモデルを候補除外
+ok 187 TC-DMR-414: 両方契約 — L3 → Spark（従来通り最安選択）
+ok 188 TC-DMR-420: validate_subscription_coverage — 全Bloomカバー → ok
+ok 189 TC-DMR-421: validate_subscription_coverage — ChatGPT only → gap:5,6
+ok 190 TC-DMR-422: validate_subscription_coverage — Claude only → カバー(L5+L6あり)
+ok 191 TC-DMR-423: validate_subscription_coverage — capability_tiers不在 → 未設定
+ok 192 TC-FAM-001: 完全一致の足軽が存在 → ashigaru1 を返す（Spark）
+ok 193 TC-FAM-002: Sonnet足軽が存在 → ashigaru4 を返す
+ok 194 TC-FAM-003: Opus足軽が存在 → ashigaru6 を返す
+ok 195 TC-FAM-004: 対応モデルの足軽がない + 他の足軽が存在 → フォールバック（いずれかの足軽）
+ok 196 TC-FAM-005: 引数なし → exit code 1
+ok 197 TC-FAM-006: 空文字引数 → exit code 1
+ok 198 TC-FAM-007: 複数の同モデル足軽 → 番号最小を返す（ashigaru1）
+ok 199 TC-FAM-008: capability_tiersなし設定でも動作する（後方互換）
+ok 200 TC-FAM-009: 足軽のみ対象（karo, gunshiは除外される）
+ok 201 TC-PREF-001: preference defined → first choice selected (range key L1-L2)
+ok 202 TC-PREF-002: first preference capability insufficient → fallback to second
+ok 203 TC-PREF-003: no preference defined → legacy cost_priority behavior
+ok 204 TC-PREF-004: single key L3 matches bloom_level=3 → gpt-5.3 selected
+ok 205 TC-PREF-005: all preferred models unavailable → fallback to cost_priority with warning
+ok 206 TC-PREF-006: available_cost_groups exclusion with preference → skip excluded model, use next
+ok 207 TC-PREF-007: no available_cost_groups → all models are candidates for preference
+ok 208 T-001: stop_hook creates idle flag when unread=0
+ok 209 T-002: stop_hook preserves idle flag when unread>0
+ok 210 T-003: agent_is_busy returns 0 (busy) when no flag file — claude CLI
+ok 211 T-004: agent_is_busy returns 1 (idle) when flag file exists — claude CLI
+ok 212 T-005: agent_is_busy uses pane fallback for non-claude CLI
+ok 213 T-006: stop_hook creates idle flag even when stop_hook_active=True
+ok 214 T-007: /clear cooldown overrides idle flag (returns busy)
+ok 215 T-008: send_wakeup preserves idle flag after sending nudge (v4.0.1)
+ok 216 T-009: rm -f flag_dir/shogun_idle_* clears all idle flags
+ok 217 T-ACK-001: Normal message triggers inbox_write to shogun
+ok 218 T-ACK-002: Outbound message does NOT trigger ACK (loop prevention)
+ok 219 T-ACK-003: No auto-ACK sent (shogun replies directly)
+ok 220 T-ACK-004: ACK failure does not block inbox_write
+ok 221 T-ACK-005: Empty message skips ACK
+ok 222 T-ACK-006: Non-message event (keepalive) skips ACK
+ok 223 T-ACK-007: append_ntfy_inbox failure skips both ACK and inbox_write
+ok 224 T-ACK-008: Special characters in message preserved in inbox_write
+ok 225 T-AUTH-001: ntfy_get_auth_args returns Bearer header when NTFY_TOKEN is set
+ok 226 T-AUTH-002: ntfy_get_auth_args returns -u flag when NTFY_USER and NTFY_PASS are set
+ok 227 T-AUTH-003: ntfy_get_auth_args returns empty when no auth configured
+ok 228 T-AUTH-004: ntfy_get_auth_args prefers token over basic auth
+ok 229 T-AUTH-005: ntfy_get_auth_args loads credentials from env file
+ok 230 T-AUTH-006: ntfy_get_auth_args handles missing auth file gracefully
+ok 231 T-AUTH-007: ntfy_validate_topic accepts secure topic name
+ok 232 T-AUTH-008: ntfy_validate_topic rejects short topic name
+ok 233 T-AUTH-009: ntfy_validate_topic rejects commonly used topic names
+ok 234 T-AUTH-010: ntfy_validate_topic rejects empty topic
+ok 235 T-AUTH-011: ntfy.sh includes auth header in curl when token configured
+ok 236 T-AUTH-012: ntfy_get_auth_args output can be used as curl arguments
+ok 237 T-AUTH-013: ntfy_auth.env.sample exists with configuration instructions
+ok 238 T-AUTH-014: ntfy_auth.env is not tracked by git (whitelist .gitignore)
+ok 239 T-SND-001: cli=doppler, id match, pane cmd doppler -> 0 delivered
+ok 240 T-SND-002: cli=doppler, id MISMATCH -> 3 pane_drift, no send-keys (identity gate now applies)
+ok 241 T-SND-003: cli=claude, id match, pane cmd doppler -> 0 delivered (no longer rejected)
+ok 242 T-SND-004: cli=claude, id match, pane cmd claude -> 0 delivered (unchanged)
+ok 243 T-SND-005: cli=claude, id MISMATCH, pane cmd claude -> 3 pane_drift (unchanged)
+ok 244 T-SND-006: cli=doppler, id match, pane cmd bash -> 3 pane_drift(expected_cmd), no send-keys
+ok 245 T-SND-007: watchers dir absent -> send-keys happens, THEN rc=6 + stderr note (no silent failure, no rc=1 ambiguity)
+ok 246 T-SW-001: send_wakeup skips nudge when agent has active self-watch
+ok 247 T-SW-002: send_wakeup uses tmux send-keys when no self-watch
+ok 248 T-SW-003: send-keys sends inboxN and Enter as separate calls
+ok 249 T-SW-004: send_wakeup returns 0 when send-keys fails (daemon-safe)
+ok 250 T-SW-005: nudge delivery does NOT use paste-buffer or set-buffer
+ok 251 T-SW-006: agent_has_self_watch returns 0 when inotifywait running
+ok 252 T-SW-007: agent_has_self_watch returns 1 when no inotifywait
+ok 253 T-SW-008: send_cli_command /clear uses tmux send-keys
+ok 254 T-SW-009: send_cli_command /model uses tmux send-keys
+ok 255 T-SW-010: nudge content format is inboxN (backward compatible)
+ok 256 T-SW-011: inbox_watcher.sh uses send-keys with required functions
+ok 257 T-ESC-001: escalation state resets when no unread messages
+ok 258 T-ESC-002: escalation Phase 1 — unread under 2min uses standard nudge
+ok 259 T-ESC-003: escalation Phase 2 — unread 2-4min uses Escape+nudge (copilot)
+ok 260 T-ESC-004: escalation Phase 3 — unread over 4min sends /clear
+ok 261 T-ESC-005: escalation /clear cooldown — falls back to Escape+nudge (copilot)
+ok 262 T-BUSY-001: agent_is_busy returns 0 (busy) when no idle flag — claude CLI
+ok 263 T-BUSY-002: agent_is_busy returns 1 when pane is idle
+ok 264 T-BUSY-003: send_wakeup skips nudge when agent is busy
+ok 265 T-BUSY-004: send_wakeup_with_escape skips when agent is busy
+ok 266 T-CODEX-001: send_cli_command converts /clear to /new for codex
+ok 267 T-CODEX-002: send_cli_command skips /model for codex
+ok 268 T-CODEX-003: C-u cleanup sent when no unread and agent is idle
+ok 269 T-CODEX-004: C-u cleanup NOT sent when agent is busy
+ok 270 T-CODEX-005: send_cli_command sends /clear as-is for claude
+ok 271 T-CODEX-006: inbox_watcher.sh contains agent_is_busy and Codex/Copilot handlers
+ok 272 T-CODEX-007: pane @agent_cli=codex overrides stale CLI_TYPE for Phase2 (no C-c)
+ok 273 T-CODEX-008: pane @agent_cli=codex overrides stale CLI_TYPE for /clear (uses /new)
+ok 274 T-CODEX-009: normalize_special_command rejects invalid model_switch payload
+ok 275 T-CODEX-010: unresolved CLI type falls back to codex-safe (/clear->/new, no C-c)
+ok 276 T-CODEX-011: process_unread injects auto-recovery task and sends inbox nudge after clear_command
+ok 277 T-CODEX-012: enqueue_recovery_task_assigned deduplicates unread auto-recovery message
+ok 278 T-CODEX-013: enqueue_recovery_task_assigned skips if task YAML status is cancelled
+ok 279 T-CODEX-014: enqueue_recovery_task_assigned skips if task YAML status is idle
+ok 280 T-CODEX-015: enqueue_recovery_task_assigned proceeds when task YAML status is assigned
+ok 281 T-COPILOT-001: send_cli_command sends Ctrl-C + copilot restart for copilot /clear
+ok 282 T-COPILOT-002: send_cli_command skips /model for copilot
+ok 283 T-SHOGUN-001: session_has_client returns 0 when client attached
+ok 284 T-SHOGUN-002: session_has_client returns 1 when no client
+ok 285 T-SHOGUN-003: send_wakeup shogun + active + attached uses send-keys
+ok 286 T-SHOGUN-004: send_wakeup shogun + active + detached falls through to send-keys
+ok 287 T-BUSY-005: agent_is_busy returns 0 (busy) during /clear cooldown period
+ok 288 T-BUSY-006: agent_is_busy returns 1 (idle) after /clear cooldown expires
+ok 289 T-BUSY-007: agent_is_busy /clear cooldown overrides idle pane state
+ok 290 T-BUSY-008: agent_is_busy returns idle when idle prompt is below old busy markers
+ok 291 T-BUSY-009: agent_is_busy detects 'background terminal running' as busy
+ok 292 T-BUSY-010: agent_is_busy detects 'Compacting conversation' as busy
+ok 293 T-BUSY-011: agent_is_busy detects 'esc to interrupt' as busy
+ok 294 T-SHOOK-001: Claude Code throttle uses 60s cooldown (stop-hook-supplementary)
+ok 295 T-SHOOK-002: Claude Code count change bypasses throttle (stop-hook-supplementary)
+ok 296 T-SHOOK-003: Non-Claude CLIs still bypass throttle on count change
+ok 297 T-CRESET-001: send_context_reset suppresses /clear for karo
+ok 298 T-CRESET-002: send_context_reset suppresses /clear for gunshi
+ok 299 T-CRESET-003: send_context_reset sends /clear for ashigaru
+ok 300 T-HOOK-001: stop_hook_active=true skips all processing
+ok 301 T-HOOK-002: unknown agent (empty agent_id) exits 0
+ok 302 T-HOOK-003: shogun agent always exits 0
+ok 303 T-HOOK-004: completion message triggers inbox_write to karo
+ok 304 T-HOOK-005: error message triggers inbox_write to karo
+ok 305 T-HOOK-006: neutral message does not trigger inbox_write
+ok 306 T-HOOK-007: empty last_assistant_message does not trigger inbox_write
+ok 307 T-HOOK-008: unread inbox messages produce block JSON
+ok 308 T-HOOK-009: no unread + completion message exits 0 with notification
+ok 309 T-HOOK-010: unread inbox + completion message blocks AND notifies
+ok 310 resolve_pane: karo → multiagent:agents.0 (§18 MainPC pane 0)
+ok 311 resolve_pane: ashigaru1 → multiagent:agents.1 (§18 MainPC pane 1)
+ok 312 resolve_pane: ashigaru3 → multiagent:agents.3 (§18 MainPC 非常時)
+ok 313 resolve_pane: gunshi → multiagent:agents.4 (§18 MainPC pane 4, B1/R1 fix)
+ok 314 resolve_pane: ashigaru4 → return 1 (§18 欠番)
+ok 315 resolve_pane: ashigaru5 → return 1 (§18 SecondPC, B2/R2 fix)
+ok 316 resolve_pane: ashigaru6 → return 1 (§18 SecondPC, B2/R2 fix)
+ok 317 resolve_pane: ashigaru7 → return 1 (§18 SecondPC, B2/R2 fix)
+ok 318 resolve_pane: ashigaru8 → return 1 (§18 SecondPC 非常時, B2/R2 fix)
+ok 319 resolve_pane: shogun → return 1 (別 tmux session: shogun:0.0)
+ok 320 resolve_pane: unknown agent → return 1
+ok 321 resolve_pane: pane_base=2 → offset applied to MainPC only
+ok 322 update_settings: type変更でYAMLが正しく更新される
+ok 323 update_settings: model変更後にbuild_cli_commandが反映
+ok 324 update_settings: thinking:false後のbuild_cli_commandにMAX_THINKING_TOKENS=0
+ok 325 switch_cli.sh --help → usage表示 + exit 1
+ok 326 switch_cli.sh -h → usage表示 + exit 1
+ok 327 switch_cli.sh 引数なし → usage表示 + exit 1
+ok 328 switch_cli.sh 不正type → エラー
+ok 329 display_name: 切替前後で表示名が正しく変わる
+ok 330 display_name: Codex → Claude切替で表示名更新
+ok 331 display_name: thinking:false で +T が消える
+ok 332 T-WRC6-001: safe_nudge rc=6 -> watcher closes as delivered, no resend on later sweeps
+ok 333 T-WRC6-002: safe_nudge rc=0 -> delivered (unchanged baseline)
+ok 334 T-WRC6-003: safe_nudge rc=1 (queued) -> retried on every sweep, never marked read (rc=1 semantics kept)

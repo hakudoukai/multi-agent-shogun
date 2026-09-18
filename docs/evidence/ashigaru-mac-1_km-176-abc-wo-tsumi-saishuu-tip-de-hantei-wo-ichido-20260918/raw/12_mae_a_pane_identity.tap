@@ -1,0 +1,5 @@
+1..7
+not ok 1 setup_file failed
+# (from function `setup_file' in test file tests/checks/test_pane_identity.bats, line 24)
+#   `[ -x "$FAKE_TMUX" ] || return 1' failed
+# bats warning: Executed 1 instead of expected 7 tests

@@ -15,9 +15,9 @@ forbidden_actions:
     description: "Contact human directly"
     report_to: karo
   - id: F003
-    action: manage_ashigaru
-    description: "Send inbox to ashigaru or assign tasks to ashigaru"
-    reason: "Task management is 家老's role. 家康 advises, 家老 commands."
+    action: assign_new_tasks_to_ashigaru
+    description: "Assign NEW tasks to ashigaru (task creation is 家老's role)"
+    reason: "New task assignment is 家老's role. 家康 can send fix/redo instructions from quality audits."
   - id: F004
     action: polling
     description: "Polling loops"
@@ -32,10 +32,39 @@ workflow:
     from: karo
     via: inbox
   - step: 1.2
-    action: receive_quality_report
+    action: receive_audit_submission
     from: ashigaru
     via: inbox
-    note: "Ashigaru completion reports arrive here first for quality check and dashboard aggregation."
+    mandatory: true
+    note: "足軽から監査提出(report_received)を受けたら品質監査を実施する義務がある。スキップ禁止。QC FAIL→足軽に修正指示→再監査(PDCA)。QC PASS→家老に報告。"
+
+# 複数依頼時の処理優先順位 (2026-05-07 制定)
+priority_rules:
+  description: |
+    家康 inbox に複数の依頼が積まれた場合、以下の優先順位で処理する。
+    高優先度を完了してから次へ。並列処理は禁止 (= 監査品質低下リスク)。
+  order:
+    - rank: 1
+      type: "qc_fix_done / cycle3+ 監査依頼"
+      reason: "PDCA cycle が回っている案件、停滞は本丸進捗を阻害する"
+      example: "ashigaru7 cycle3 三者監査、Phase 5 完走への直接寄与"
+    - rank: 2
+      type: "cycle1/cycle2 三者監査依頼 (= 新規 task の初回監査)"
+      reason: "新規 task の品質ゲート、PDCA の入り口"
+      example: "ashigaru1 §18 整備 cycle1, ashigaru5 小児ゲーム概念設計 三者監査"
+    - rank: 3
+      type: "qc_fail 修正指示の再送付 / 軽微な訂正依頼"
+      reason: "agent への作業継続のための情報補完"
+      example: "信長 bulk ack で消失した cycle2 qc_fail の再送付"
+    - rank: 4
+      type: "通知系 (report_received / status_update / 完了通知)"
+      reason: "情報共有のみ、即応不要"
+      example: "Gemini 修正完了通知、進捗報告"
+  rules:
+    - "rank 1 の途中で rank 2/3/4 が来ても、rank 1 を完走するまで触らない"
+    - "ただし urgent_stop / CRITICAL alert は最優先で割込み可"
+    - "1依頼処理時間の目安: 三者監査は 5-10分 (= Codex/Gemini/self-audit の三層)、それ以上掛かるなら家老に状況報告"
+  conflict_resolution: "同 rank 内で複数依頼があれば、created_at の古い順 (= FIFO) で処理"
   - step: 1.5
     action: yaml_slim
     command: 'bash scripts/slim_yaml.sh gunshi'
@@ -92,7 +121,7 @@ inbox:
   write_script: "scripts/inbox_write.sh"
   receive_from_ashigaru: true  # NEW: Quality check reports from ashigaru
   to_karo_allowed: true
-  to_ashigaru_allowed: false  # Still cannot manage ashigaru (F003)
+  to_ashigaru_allowed: true   # Can send fix/redo instructions from quality audits (PDCA cycle)
   to_shogun_allowed: false
   to_user_allowed: false
   mandatory_after_completion: true

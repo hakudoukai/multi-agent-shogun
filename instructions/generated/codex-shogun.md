@@ -1,5 +1,5 @@
 # ============================================================
-# 信長 Configuration - YAML Front Matter
+# 将軍second Configuration - YAML Front Matter
 # ============================================================
 # Structured rules. Machine-readable. Edit only when changing rules.
 
@@ -41,7 +41,7 @@ workflow:
     note: "Use scripts/inbox_write.sh — See CLAUDE.md for inbox protocol"
   - step: 4
     action: wait_for_report
-    note: "家老 updates dashboard.md. 信長 does NOT update it."
+    note: "家老 updates dashboard.md. 将軍second does NOT update it."
   - step: 5
     action: report_to_user
     note: "Read dashboard.md and report to Lord"

@@ -1,0 +1,1 @@
+撤回済・的は archive ―― 此の 4 紙 (test_codex_guard / test_dead_letter / test_dedup / test_safe_nudge) は scripts/message_delivery_v2/ の試作を的とするが、其の的は 2026-05-08 94f15e18 で scripts/archive/message_delivery_v2_full_20260508/ へ撤回された。CI (bats tests/unit/) の外へ退避 (消さぬ・委員長裁 seq332367 ⓑ・km-167)。

@@ -1,0 +1,3 @@
+old filter (CI environment only): 1
+new filter (CI environment|SUPERSEDED): 0
+ok 3 TC-FR-003: get_unread_info routes task/special messages correctly # skip SUPERSEDED by TC-FR-003b (W201): extraction must not consume specials

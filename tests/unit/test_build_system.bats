@@ -278,12 +278,12 @@ setup() {
     # 1st build
     bash "$BUILD_SCRIPT" > /dev/null 2>&1
     local checksums_first
-    checksums_first=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+    checksums_first=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec shasum -a 256 {} \; | sort)
 
     # 2nd build
     bash "$BUILD_SCRIPT" > /dev/null 2>&1
     local checksums_second
-    checksums_second=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+    checksums_second=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec shasum -a 256 {} \; | sort)
 
     [ "$checksums_first" = "$checksums_second" ]
 }

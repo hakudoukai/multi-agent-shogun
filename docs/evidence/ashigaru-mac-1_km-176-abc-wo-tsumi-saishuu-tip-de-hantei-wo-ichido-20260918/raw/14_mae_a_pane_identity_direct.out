@@ -1,0 +1,32 @@
+▼ Pane Identity Map
+  multiagent:agents.0  @agent_id=hideyoshi  pid=99999  cmd=fake
+  multiagent:agents.1  @agent_id=ashigaru1  pid=99999  cmd=fake
+  multiagent:agents.2  @agent_id=ashigaru2  pid=99999  cmd=fake
+  multiagent:agents.3  @agent_id=ieyasu  pid=99999  cmd=fake
+  shogun:main.0  @agent_id=nobunaga  pid=99999  cmd=fake
+  multiagent:agents.0  @agent_id=hideyoshi  pid=99999  cmd=fake
+  multiagent:agents.1  @agent_id=ashigaru1  pid=99999  cmd=fake
+  multiagent:agents.2  @agent_id=ashigaru2  pid=99999  cmd=fake
+  multiagent:agents.3  @agent_id=ieyasu  pid=99999  cmd=fake
+  shogun:main.0  @agent_id=nobunaga  pid=99999  cmd=fake
+
+▼ 整合性検証 (= 既存 self-identification check)
+  ✅ multiagent:agents.3 = ieyasu
+  ✅ multiagent:agents.2 = ashigaru2
+  ✅ multiagent:agents.1 = ashigaru1
+  ✅ multiagent:agents.0 = hideyoshi
+  ✅ shogun:main.0 = nobunaga
+
+▼ 重複 @agent_id 検知
+  ✅ 重複なし
+
+▼ 4-way mapping audit (corr_id=pane4way-1789721948-38817, advisory only, budget=5s)
+  ── per-index comparison (multiagent: のみ、shogun は別 source 確認) ──
+  idx   A:tmux       B:registry   C:watchdog   D:§18.1     status
+  0     hideyoshi    hideyoshi    _            hideyoshi    ✅ match
+  1     ashigaru1    ashigaru1    _            ashigaru1    ✅ match
+  2     ashigaru2    ashigaru2    _            ashigaru2    ✅ match
+  3     ieyasu       ieyasu       _            ieyasu       ✅ match
+  ▼ 4-way audit 結果: ✅ 全 source 整合 (sources_skipped=0)
+
+▼ 結果: ✅ 整合性 OK + 4-way audit PASS
