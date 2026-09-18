@@ -1,0 +1,55 @@
+★申し送り(handoff) ―― 專任2 ashigaru-mac-2 が /compact の前に遺す一枚★
+合印 KUGIRI-20260919-A2(家老令 msg_20260919_052433_e92dd212・総監督裁 seq336666 の理)
+刻 = 2026-09-19T05:30:18+0900 ／ 歩き根 = /Users/momizimac/wt/a2-km186(己の樹・共用樹に非ず)
+
+■一 ★持つて居る物(固定 commit ―― 40桁)★
+  km-171 = 4b21e86b……(束 既納)
+  km-172 = b6ff8a80……(束 既納)
+  km-174 = 729f2cd7……(束 既納)
+  km-185 = 3f53e54abfe0ee74c99258a8df3d1cb361bf822e
+           枝 ashigaru-mac-2/km-185-gosoku-wo-ono-no-ki-he-kotei-20260918(樹 /Users/momizimac/wt/a2-km185)
+  km-186 = 64c4c01d3f69adc3ac80b79cfd9b07ba779f9123 ★今の尖★
+           枝 ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918(樹 /Users/momizimac/wt/a2-km186)
+  束一本 = 0ed6c782a7cab71f81046925971abacdf890b923(tree cd3f36b93bc1466ba9356ede97fb05059c7aa0bb)
+           枝 ashigaru-mac-2/km-185-186-taba-ippon-20260919(樹 /Users/momizimac/wt/a2-taba1)
+           親 = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634(= 二枝の merge-base = origin/main)
+           346 files changed, 6986 insertions(+) ―― km-185 195 本 + km-186 151 本を ★一 commit★ に置いた物。
+
+■二 ★家老 裁336241 の名指しと、今の尖の食違ひ★
+  家老便は km-186 = f37cdbec285282c56c3bc7095d29c97f69ad4a2d と名指した。
+  測つた: `git cat-file -t` = commit(在る)／`git merge-base --is-ancestor f37cdbec HEAD` rc=0 ＝ ★己の枝の祖★。
+  f37cdbec と今の尖の間に 0e7c8420(納め便五本の控)・64c4c01d(束一本の控)の二代が在る。
+  ∴ ★f37cdbec は誤りではないが 古い★。★押すなら 64c4c01d を採られたし。★
+
+■三 ★未了(GO 待ち・當席の手では動かせぬ)★
+  ⑴ 押し と PR ―― 御下知 seq333944⑴／裁334442⑶ により ★当席は押さず・PR を作らず・gh を叩かぬ★。
+     origin 上の当席の枝 = 7 本(悉く 09-17 の古い物)。★上の五つの尖は origin に 0 出現★(一本づつ grep で測つた)。
+  ⑵ hosei_186_sai_333611_20260918T2016 = status:assigned の儘(帳 queue/tasks/ashigaru-mac-2.yaml)。
+     owner = 總監督/委員長・human_GO_required = 要・ETA = GO+15分。実作業は了へて居り ★残るは押しと PR のみ★。
+  ⑶ ㋓⑷ の逸脱(km-186 の双子彫りで `add -f`+`commit --only` が case-fold 上の削除を彫れず 素の commit を用ゐた件)
+     ―― seq333993 で上げ seq335570 で再度上げた。★未だ裁を得ず。★
+  ⑷ 裁 seq335122⑹ の判定束 template ―― 当 repo の disk に無く `git log --all -- <path>` 0 行
+     (陽性対照 err-ekarte-001.md = 1 行 ―― 器は非零を刷れる)。/mnt/c は此の Mac に無し。∴ ★依然 測れぬ★。
+  ⑸ 板 task_tracker の己の行 id=1169567c-4492-486d-a8d1-a03208111a71(km-151)= status:reviewing。
+     ★板は家老の手である ―― 当席は書かぬ。★
+
+■四 ★次弾(家老 予告)★
+  km-210 = scripts/checks/inbox_alias_integrity.sh の一器直し
+  (裁335975⑵ の条件付き許可・1器づつ・両対照つき負テスト・直後に実射・報告1通)。
+
+■五 ★境(今も生きて居る禁)★
+  他席の箱・臺帳・樹・作業紙に一指も触れぬ／本番書込 0／push 禁・PR 禁・merge 禁・gh 不触／
+  共用樹の HEAD と index に触れぬ／板を当席が書き換へぬ／~/bin/inbox_mark_read.py を直さぬ／
+  決済の実接続を作らぬ／患者の実データに触れぬ(dev の匿名のみ)／blocker は ★報告のみ★。
+
+■六 ★未 push ―― 0 行では証せぬ(陽性対照つき)★
+  `git ls-remote origin refs/heads/main` = ★1 行★(rc=0) ―― ★器は生きて居る★。
+  `git ls-remote origin refs/heads/ZZ-nai-eda-9182` = ★0 行★ ―― ★器は否も刷れる★。
+  其の上で 上の五尖の origin 出現 = 悉く 0。
+
+■七 ★此の紙が意味せぬ事★
+  ・「固定 commit が在る」は ★remote に在る事を意味せぬ★(裁336241 逐語: 束は固定 commit+tree まで で足り、
+    remote を待たぬ ―― 押しは総監督の別工程)。
+  ・「実作業が了つた」は ★受入が閉ぢた事を意味せぬ★ ―― 判定は軍師mac・merge は総監督の手。
+  ・此の紙は ★己を彫る commit の sha を書けぬ★(紙は己を含む數を書けぬ)。其れは彫つた後の便で告げる。
+  ・上の本数・行数は ★此の刻の disk と origin の状態★ である。後に動けば古びる。
