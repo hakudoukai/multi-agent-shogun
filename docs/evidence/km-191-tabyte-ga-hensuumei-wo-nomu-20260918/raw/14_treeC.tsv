@@ -1,0 +1,141 @@
+# koku=2026-09-18T20:35:53+0900 root=/Users/momizimac/multi-agent-shogun skip=['.git', '.venv', '__pycache__', 'evidence', 'node_modules', 'queue'] files=1596 sh/bats_scanned=289 max_depth=13 rc=0
+kind	path	line	form	match	next_char	ctx	set_u	overlap	verbatim
+bats	.claude/worktrees/karo-mac-a1/tests/e2e/e2e_bloom_routing.bats	106	甲	${busy_rc}	）	code	no-set-u	-	skip "ashigaru4をビジー状態にできなかった（busy_rc=${busy_rc}）"
+bats	.claude/worktrees/karo-mac-a1/tests/e2e/e2e_bloom_routing.bats	149	甲	${rc5}	）	code	no-set-u	-	skip "ashigaru4/5のいずれかをビジー状態にできなかった（rc4=${rc4}, rc5=${rc5}）"
+bats	tests/e2e/e2e_bloom_routing.bats	106	甲	${busy_rc}	）	code	no-set-u	-	skip "ashigaru4をビジー状態にできなかった（busy_rc=${busy_rc}）"
+bats	tests/e2e/e2e_bloom_routing.bats	149	甲	${rc5}	）	code	no-set-u	-	skip "ashigaru4/5のいずれかをビジー状態にできなかった（rc4=${rc4}, rc5=${rc5}）"
+sh	.claude/worktrees/karo-mac-a1/android/gradlew	35	乙	$var	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	.claude/worktrees/karo-mac-a1/android/gradlew	35	甲	${var+SET}	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	.claude/worktrees/karo-mac-a1/android/gradlew	35	甲	${var:-default}	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	.claude/worktrees/karo-mac-a1/android/gradlew	35	甲	${var}	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	.claude/worktrees/karo-mac-a1/android/gradlew	36	甲	${var#prefix}	»	註	no-set-u	-	#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
+sh	.claude/worktrees/karo-mac-a1/android/gradlew	36	甲	${var%suffix}	»	註	no-set-u	-	#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	40	甲	${BOLD}	━	code	no-set-u	-	echo -e "\n${CYAN}${BOLD}━━━ $1 ━━━${NC}\n"
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	196	乙	$NODE_VERSION	）	code	no-set-u	-	log_warn "Node.js 18以上を推奨します（現在: $NODE_VERSION）"
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	736	甲	${i}	専	註	no-set-u	-	# 足軽${i}専用タスクファイル
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	962	甲	${RED}	✗	code	no-set-u	-	echo -e "  ${RED}✗${NC} $result"
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	966	甲	${GREEN}	✓	code	no-set-u	-	echo -e "  ${GREEN}✓${NC} $result"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/codex_exec_sandbox_guard.sh	58	乙	$INTENDED_CWD	。	code	set-u	-	echo "[codex_exec_sandbox_guard] OK: sandbox=$CODEX_SANDBOX_KIND 検証済・非live cwd=$INTENDED_CWD。Codex exec 起動可。"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/ephemeral_worktree_hygiene.sh	48	甲	${k}	」	code	set-u	-	printf '%s' "${GATE_MAIN}" | grep -q "${k}" || { echo "[worktree-hygiene] ★警告★ ★main★ の器 に「${k}」が無い"; warn=1; }
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/ephemeral_worktree_hygiene.sh	57	甲	${k}	」	code	set-u	-	grep -q "${k}" "${GATE}" || { echo "[worktree-hygiene] ★警告★ ${GATE##*/} に「${k}」が無い=後始末/上限/名 の限り の何れか が欠ける"; warn=1; }
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	27	甲	${f}	★	code	set-u	-	[ -f "$f" ] || { say "★file が無い: ${f}★"; return 2; }
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	51	甲	${f}	★	code	set-u	-	say "★EOF改行が無い(0) ―― ${f}★"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	56	甲	${f}	★	code	set-u	-	say "★EOF改行が複数(末尾に空行) ―― ${f}★"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	107	甲	${MAXB}	・	code	set-u	-	say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)超★"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	110	甲	${MAXB}	未	code	set-u	-	say "條⑤ 寸法 = byte和 ${total}(閾 ${MAXB}未満)"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	14	甲	${W}	★	code	set-u	-	cd "$W" || { echo "★樹 が無い: ${W}★" >&2; exit 2; }
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	70	甲	${f}	★	code	set-u	-	if [ "$mb" -ge "$MAXF" ]; then say "★條⑤ 単 file が ${mb} MB(上限 ${MAXF})―― ${f}★"; big=1; fi
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	663	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [STARTUP] $AGENT_ID idle after ${attempt}×5s — sending startup prompt" >&2
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	666	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [STARTUP] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	763	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [CONTEXT-RESET] $AGENT_ID idle after ${attempt}×5s — ready for nudge" >&2
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	766	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
+sh	.claude/worktrees/karo-mac-a1/scripts/karo_overload_monitor.sh	338	乙	$m5	。	code	set-u	-	content="[karo_overload_monitor] 家老輻輳兆候検知 (corr_id=$CORR_ID): hits=[$hit_metrics_csv] / unread=$m1 / oldest_unread_age_sec=$m2 / oldest_cmd_new_unread
+sh	.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	113	甲	${AGENT_ID}	、	code	set-u	-	NOTIFY_CONTENT="${AGENT_ID}、タスク完了。report確認されたし。"
+sh	.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	117	甲	${AGENT_ID}	、	code	set-u	-	NOTIFY_CONTENT="${AGENT_ID}、エラーで停止。確認されたし。"
+sh	.claude/worktrees/karo-mac-a1/scripts/stop_hook_inbox.sh	221	甲	${UNREAD_COUNT}	件	code	set-u	km184	" 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	156	甲	${agent}	が	code	set-u	-	"${agent}が${idle_min}分以上停止中。タスク: ${task_id}。確認が必要。" \
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	156	甲	${idle_min}	分	code	set-u	-	"${agent}が${idle_min}分以上停止中。タスク: ${task_id}。確認が必要。" \
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	156	甲	${task_id}	。	code	set-u	-	"${agent}が${idle_min}分以上停止中。タスク: ${task_id}。確認が必要。" \
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	282	甲	${missing}	が	code	set-u	-	"[三者監査不完全] ${agent}(${task_id})の監査で${missing}が未実施。三者全員のPASSが必須。"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_audit_scheduler.sh	99	甲	${issues}	件	code	no-set-u	-	notify "L3a" "日次チェック: ${issues}件の問題検出 — $report"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_init_agents.sh	46	甲	${CLINIC_ID}	。	code	no-set-u	-	local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。St
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_init_agents.sh	46	甲	${num:+${num}	号	code	no-set-u	-	local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。St
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh	185	甲	${prev:0:8}	→	code	set-u	-	log "CHANGE detected: ${agent}_report.yaml (hash: ${prev:0:8}→${report_hash:0:8})"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh	197	甲	${prev:0:8}	→	code	set-u	-	log "CHANGE detected: ${agent}.yaml (hash: ${prev:0:8}→${task_hash:0:8})"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_task_sync.sh	164	甲	${prev:0:8}	→	code	set-u	-	log "CHANGE detected: ${agent}.yaml (hash: ${prev:0:8}→${current:0:8})"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	264	乙	$SHELL_OVERRIDE	）	code	no-set-u	-	echo "エラー: -shell オプションには bash または zsh を指定してください（指定値: $SHELL_OVERRIDE）"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	397	甲	${i}	専	註	no-set-u	-	# 足軽${i}専用タスクファイル
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	769	甲	${_shogun_display}	）	code	no-set-u	-	log_info "  └─ 将軍（${_shogun_cli_type} / ${_shogun_display}）、召喚完了"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	792	甲	${_karo_display}	）	code	no-set-u	-	log_info "  └─ 家老（${_karo_display}）、召喚完了"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	817	甲	${_ASHIGARU_COUNT}	（	code	no-set-u	-	log_info "  └─ 足軽1-${_ASHIGARU_COUNT}（決戦の陣）、召喚完了"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	837	甲	${_ASHIGARU_COUNT}	（	code	no-set-u	-	log_info "  └─ 足軽1-${_ASHIGARU_COUNT}（平時の陣）、召喚完了"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	858	甲	${_gunshi_display}	）	code	no-set-u	-	log_info "  └─ 軍師（${_gunshi_display}）、召喚完了"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	943	甲	${i}	秒	code	no-set-u	-	echo "  └─ 将軍の Claude Code 起動確認完了（${i}秒）"
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure_secondpc.sh	135	甲	${agent}	、	code	set-u	-	prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md + instructions/roles/ashigaru_role.md を必読
+sh	.claude/worktrees/karo-mac-a1/tests/checks/pretooluse_stdin_json/smoke_test.sh	124	乙	$fires	、	code	set-u	-	pass "$desc (rc=$rc, fires=$fires、fallback 経路で発火)"
+sh	.claude/worktrees/karo-mac-a1/tests/e2e/mock_cli.sh	110	甲	${MOCK_AGENT_ID}	号	code	set-u	-	"${MOCK_AGENT_ID}号、任務完了。報告YAML確認されたし。" \
+sh	.claude/worktrees/karo-mac-a1/tests/smoke/test_enter_restart_watchdog.sh	190	乙	$enter_count	、	code	set-u	-	pass "$desc (send-keys Enter count=$enter_count、cap halt 発動)"
+sh	android/gradlew	35	乙	$var	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	android/gradlew	35	甲	${var+SET}	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	android/gradlew	35	甲	${var:-default}	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	android/gradlew	35	甲	${var}	»	註	no-set-u	-	#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+sh	android/gradlew	36	甲	${var#prefix}	»	註	no-set-u	-	#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
+sh	android/gradlew	36	甲	${var%suffix}	»	註	no-set-u	-	#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
+sh	first_setup.sh	40	甲	${BOLD}	━	code	no-set-u	-	echo -e "\n${CYAN}${BOLD}━━━ $1 ━━━${NC}\n"
+sh	first_setup.sh	196	乙	$NODE_VERSION	）	code	no-set-u	-	log_warn "Node.js 18以上を推奨します（現在: $NODE_VERSION）"
+sh	first_setup.sh	736	甲	${i}	専	註	no-set-u	-	# 足軽${i}専用タスクファイル
+sh	first_setup.sh	962	甲	${RED}	✗	code	no-set-u	-	echo -e "  ${RED}✗${NC} $result"
+sh	first_setup.sh	966	甲	${GREEN}	✓	code	no-set-u	-	echo -e "  ${GREEN}✓${NC} $result"
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	48	甲	${RETRY_TS}	・	code	set-u	-	echo "[2/5 e2e-b83] 再走(${RETRY_TS}・rc非0ゆえ1回だけ単独再走) rc=${E2E_RC} 要約: ${E2E_SUMMARY_RETRY}"
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	110	甲	${ROUNDTRIP_TOTAL}	話	code	set-u	-	echo "[6/6 roundtrip] rc=${ROUNDTRIP_RC} 要約: 全${ROUNDTRIP_TOTAL}話中 不一致=${ROUNDTRIP_MISMATCH}"
+sh	scripts/agent_health_check.sh	125	甲	${_ft_vp}	」	code	set-u	-	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+sh	scripts/checks/codex_exec_sandbox_guard.sh	58	乙	$INTENDED_CWD	。	code	set-u	-	echo "[codex_exec_sandbox_guard] OK: sandbox=$CODEX_SANDBOX_KIND 検証済・非live cwd=$INTENDED_CWD。Codex exec 起動可。"
+sh	scripts/checks/context_usage_warn.sh	71	甲	${_ft_vp}	」	code	set-u	-	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	48	甲	${k}	」	code	set-u	-	printf '%s' "${GATE_MAIN}" | grep -q "${k}" || { echo "[worktree-hygiene] ★警告★ ★main★ の器 に「${k}」が無い"; warn=1; }
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	57	甲	${k}	」	code	set-u	-	grep -q "${k}" "${GATE}" || { echo "[worktree-hygiene] ★警告★ ${GATE##*/} に「${k}」が無い=後始末/上限/名 の限り の何れか が欠ける"; warn=1; }
+sh	scripts/checks/karo_mac_dasumae_gate.sh	70	甲	${vp}	」	code	set-u	-	say "★閾 ${name} を比較器が扱へぬ(「${vp}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	116	甲	${f}	★	code	set-u	-	[ -f "$f" ] || { say "★file が無い: ${f}★"; return 2; }
+sh	scripts/checks/karo_mac_dasumae_gate.sh	128	甲	${f}	★	code	set-u	-	say "★條② 測れぬ(grep rc=${ws_rc}・出目「${ws_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	128	甲	${ws_n}	」	code	set-u	-	say "★條② 測れぬ(grep rc=${ws_rc}・出目「${ws_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	128	甲	${ws_rc}	・	code	set-u	-	say "★條② 測れぬ(grep rc=${ws_rc}・出目「${ws_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	138	甲	${cr_n}	」	code	set-u	-	say "★條③ 測れぬ(grep rc=${cr_rc}・出目「${cr_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	138	甲	${cr_rc}	・	code	set-u	-	say "★條③ 測れぬ(grep rc=${cr_rc}・出目「${cr_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	138	甲	${f}	★	code	set-u	-	say "★條③ 測れぬ(grep rc=${cr_rc}・出目「${cr_n}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	148	甲	${f}	★	code	set-u	-	say "★條④ 測れぬ(寸法が取れぬ・出目「${sz}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	148	甲	${sz}	」	code	set-u	-	say "★條④ 測れぬ(寸法が取れぬ・出目「${sz}」) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	157	甲	${f}	★	code	set-u	-	say "★條④ 測れぬ(末尾一字が取れぬ) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	160	甲	${f}	★	code	set-u	-	say "★EOF改行が無い(0) ―― ${f}★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	165	甲	${f}	★	code	set-u	-	say "★條④ 測れぬ(末尾二字が取れぬ) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	168	甲	${f}	★	code	set-u	-	say "★EOF改行が複数(末尾に空行) ―― ${f}★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	248	甲	${f}	★	code	set-u	-	say "★條⑤ 測れぬ(寸法が取れぬ) ―― ${f}★ ★測れぬは通さぬ(default-deny)★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	255	甲	${MAXB}	・	code	set-u	-	say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)超★"
+sh	scripts/checks/karo_mac_dasumae_gate.sh	258	甲	${MAXB}	未	code	set-u	-	say "條⑤ 寸法 = byte和 ${total}(閾 ${MAXB}未満)"
+sh	scripts/checks/karo_mac_gate4.sh	14	甲	${W}	★	code	set-u	-	cd "$W" || { echo "★樹 が無い: ${W}★" >&2; exit 2; }
+sh	scripts/checks/karo_mac_gate4.sh	23	甲	${rc}	★	code	set-u	-	say "★條④ diff --check が落ちた ―― 疵 $n 行 / 器の叫び $e4 行 / rc=${rc}★"
+sh	scripts/checks/karo_mac_gate4.sh	104	甲	${vp}	」	code	set-u	-	say "★閾 ${name} を比較器が扱へぬ(「${vp}」) ―― 既定 ${dflt} へ倒す(fail-closed)★"
+sh	scripts/checks/karo_mac_gate4.sh	116	甲	${f}	★	code	set-u	-	if [ "$mb" -ge "$MAXF" ]; then say "★條⑤ 単 file が ${mb} MB(上限 ${MAXF})―― ${f}★"; big=1; fi
+sh	scripts/inbox_watcher.sh	164	甲	${_ft_vp}	」	code	set-u	-	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+sh	scripts/inbox_watcher.sh	195	甲	${_fg_vp}	」	code	set-u	-	_th_say "★旗 ${_fg_n} は 0|1 の外(「${_fg_vp}」) ―― 既定 ${_fg_d} へ倒す(fail-closed)★"
+sh	scripts/inbox_watcher.sh	762	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [STARTUP] $AGENT_ID idle after ${attempt}×5s — sending startup prompt" >&2
+sh	scripts/inbox_watcher.sh	765	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [STARTUP] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
+sh	scripts/inbox_watcher.sh	862	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [CONTEXT-RESET] $AGENT_ID idle after ${attempt}×5s — ready for nudge" >&2
+sh	scripts/inbox_watcher.sh	865	甲	${attempt}	×	code	set-u	-	echo "[$(date)] [CONTEXT-RESET] $AGENT_ID still busy after ${attempt}×5s — retrying" >&2
+sh	scripts/karo_overload_monitor.sh	338	乙	$m5	。	code	set-u	-	content="[karo_overload_monitor] 家老輻輳兆候検知 (corr_id=$CORR_ID): hits=[$hit_metrics_csv] / unread=$m1 / oldest_unread_age_sec=$m2 / oldest_cmd_new_unread
+sh	scripts/karo_standby_dashboard.sh	88	甲	${B}	●	code	set-u	-	printf "  ${GRN}${B}● 待機中${R}  自受信箱(%s) 未読 ${GRN}0件${R}\n" "$SELF"
+sh	scripts/karo_standby_dashboard.sh	90	甲	${B}	⚠	code	set-u	-	printf "  ${RED}${B}⚠ 要処理${R}  自受信箱(%s) 未読 ${RED}${B}%s件${R}\n" "$SELF" "$self_unread"
+sh	scripts/karo_standby_dashboard.sh	95	甲	${CYN}	▎	code	set-u	-	printf "  ${CYN}▎受信箱 未読 (read:false)${R}\n"
+sh	scripts/karo_standby_dashboard.sh	113	甲	${CYN}	▎	code	set-u	-	printf "  ${CYN}▎Watcher 健全性 (inbox_watcher.sh)${R}\n"
+sh	scripts/karo_standby_dashboard.sh	126	甲	${CYN}	▎	code	set-u	-	printf "  ${CYN}▎Fleet pane 状態 (%s)${R}\n" "$FLEET_SESSION"
+sh	scripts/karo_standby_dashboard.sh	143	甲	${CYN}	▎	code	set-u	-	printf "  ${CYN}▎自受信箱 最新3件 (%s.yaml)${R}\n" "$SELF"
+sh	scripts/karo_standby_dashboard.sh	162	甲	${DIM}	更	code	set-u	-	printf "  ${DIM}更新 %ss毎 / Ctrl-C 終了 / 読み取り専用(Supabase直接巡回なし)${R}\n" "$INTERVAL"
+sh	scripts/redundancy/shogun_report_watcher.sh	69	甲	${_ft_vp}	」	code	set-u	-	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+sh	scripts/stop_hook_inbox.sh	72	甲	${__th_vp}	」	code	set-u	-	echo "[stop_hook] ★STOP_HOOK_STDIN_TIMEOUT を比較器が扱へぬ(「${__th_vp}」) — 既定 10 へ倒す(fail-closed)★" >&2 ;;
+sh	scripts/stop_hook_inbox.sh	91	甲	${STOP_HOOK_STDIN_TIMEOUT}	秒	code	set-u	-	echo "[stop_hook] ★stdin 時限切れ(${STOP_HOOK_STDIN_TIMEOUT}秒経過・rc=${__read_rc}) — 讀めた ${#INPUT} 字で続行★" >&2
+sh	scripts/stop_hook_inbox.sh	164	甲	${AGENT_ID}	、	code	set-u	-	NOTIFY_CONTENT="${AGENT_ID}、タスク完了。report確認されたし。"
+sh	scripts/stop_hook_inbox.sh	168	甲	${AGENT_ID}	、	code	set-u	-	NOTIFY_CONTENT="${AGENT_ID}、エラーで停止。確認されたし。"
+sh	scripts/stop_hook_inbox.sh	206	甲	${MASS_UNREAD_THRESHOLD}	」	code	set-u	-	echo "[stop_hook] ★MASS_UNREAD_THRESHOLD が數でない(「${MASS_UNREAD_THRESHOLD}」) — 既定 5 へ倒す(fail-closed)★" >&2
+sh	scripts/stop_hook_inbox.sh	211	甲	${UNREAD_COUNT:-}	」	code	set-u	-	echo "[stop_hook] ★UNREAD_COUNT が數でない(「${UNREAD_COUNT:-}」) — 0 へ倒す(fail-closed)★" >&2
+sh	scripts/stop_hook_inbox.sh	288	甲	${UNREAD_COUNT}	件	code	set-u	km184	" 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	115	甲	${_ft_vp}	」	code	set-u	-	_th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_vp}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	156	甲	${agent}	が	code	set-u	-	"${agent}が${idle_min}分以上停止中。タスク: ${task_id}。確認が必要。" \
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	156	甲	${idle_min}	分	code	set-u	-	"${agent}が${idle_min}分以上停止中。タスク: ${task_id}。確認が必要。" \
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	156	甲	${task_id}	。	code	set-u	-	"${agent}が${idle_min}分以上停止中。タスク: ${task_id}。確認が必要。" \
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	282	甲	${missing}	が	code	set-u	-	"[三者監査不完全] ${agent}(${task_id})の監査で${missing}が未実施。三者全員のPASSが必須。"
+sh	shim/hakudokai/hakudokai_audit_scheduler.sh	99	甲	${issues}	件	code	no-set-u	-	notify "L3a" "日次チェック: ${issues}件の問題検出 — $report"
+sh	shim/hakudokai/hakudokai_init_agents.sh	46	甲	${CLINIC_ID}	。	code	no-set-u	-	local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。St
+sh	shim/hakudokai/hakudokai_init_agents.sh	46	甲	${num:+${num}	号	code	no-set-u	-	local prompt="あなたは博道会の${role}${num:+${num}号} (${agent}) として multi-agent-shogun システム内で稼働する。clinic_id: ${CLINIC_ID}。CLAUDE.md の Session Start 手順を実行せよ。St
+sh	shim/hakudokai/hakudokai_reports_sync.sh	185	甲	${prev:0:8}	→	code	set-u	-	log "CHANGE detected: ${agent}_report.yaml (hash: ${prev:0:8}→${report_hash:0:8})"
+sh	shim/hakudokai/hakudokai_reports_sync.sh	197	甲	${prev:0:8}	→	code	set-u	-	log "CHANGE detected: ${agent}.yaml (hash: ${prev:0:8}→${task_hash:0:8})"
+sh	shim/hakudokai/hakudokai_task_sync.sh	164	甲	${prev:0:8}	→	code	set-u	-	log "CHANGE detected: ${agent}.yaml (hash: ${prev:0:8}→${current:0:8})"
+sh	shutsujin_departure.sh	264	乙	$SHELL_OVERRIDE	）	code	no-set-u	-	echo "エラー: -shell オプションには bash または zsh を指定してください（指定値: $SHELL_OVERRIDE）"
+sh	shutsujin_departure.sh	397	甲	${i}	専	註	no-set-u	-	# 足軽${i}専用タスクファイル
+sh	shutsujin_departure.sh	770	甲	${_shogun_display}	）	code	no-set-u	-	log_info "  └─ 将軍（${_shogun_cli_type} / ${_shogun_display}）、召喚完了"
+sh	shutsujin_departure.sh	794	甲	${_karo_display}	）	code	no-set-u	-	log_info "  └─ 家老（${_karo_display}）、召喚完了"
+sh	shutsujin_departure.sh	820	甲	${_ASHIGARU_COUNT}	（	code	no-set-u	-	log_info "  └─ 足軽1-${_ASHIGARU_COUNT}（決戦の陣）、召喚完了"
+sh	shutsujin_departure.sh	841	甲	${_ASHIGARU_COUNT}	（	code	no-set-u	-	log_info "  └─ 足軽1-${_ASHIGARU_COUNT}（平時の陣）、召喚完了"
+sh	shutsujin_departure.sh	862	甲	${_gunshi_display}	）	code	no-set-u	-	log_info "  └─ 軍師（${_gunshi_display}）、召喚完了"
+sh	shutsujin_departure.sh	947	甲	${i}	秒	code	no-set-u	-	echo "  └─ 将軍の Claude Code 起動確認完了（${i}秒）"
+sh	shutsujin_departure_secondpc.sh	135	甲	${agent}	、	code	set-u	-	prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md + instructions/roles/ashigaru_role.md を必読
+sh	tests/checks/pretooluse_stdin_json/smoke_test.sh	124	乙	$fires	、	code	set-u	-	pass "$desc (rc=$rc, fires=$fires、fallback 経路で発火)"
+sh	tests/e2e/mock_cli.sh	110	甲	${MOCK_AGENT_ID}	号	code	set-u	-	"${MOCK_AGENT_ID}号、任務完了。報告YAML確認されたし。" \
+sh	tests/smoke/test_enter_restart_watchdog.sh	190	乙	$enter_count	、	code	set-u	-	pass "$desc (send-keys Enter count=$enter_count、cap halt 発動)"

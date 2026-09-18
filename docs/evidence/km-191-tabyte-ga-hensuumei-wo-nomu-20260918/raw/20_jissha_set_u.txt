@@ -1,0 +1,37 @@
+koku=2026-09-18T20:36:36+0900
+--- shell=/bin/bash LANG=C (3.2.57(1)-release)
+  set -u 有: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 無: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 有: "rc=${rc}★"(甲)         rc=0 out=[rc=0★]
+  set -u 有: "rc=$rc:"(半角・陰性) rc=0 out=[rc=0:]
+  set -u 有: "rc=$rc"★(丙)           rc=0 out=[rc=0★]
+--- shell=/bin/bash LANG=ja_JP.UTF-8 (3.2.57(1)-release)
+  set -u 有: "rc=$rc★"                rc=127 out=[/bin/bash: rc�: unbound variable]
+  set -u 無: "rc=$rc★"                rc=0 out=[rc=��]
+  set -u 有: "rc=${rc}★"(甲)         rc=0 out=[rc=0★]
+  set -u 有: "rc=$rc:"(半角・陰性) rc=0 out=[rc=0:]
+  set -u 有: "rc=$rc"★(丙)           rc=0 out=[rc=0★]
+--- shell=/Users/momizimac/wt/tools/bash52/bin/bash LANG=C (5.2.0(1)-release)
+  set -u 有: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 無: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 有: "rc=${rc}★"(甲)         rc=0 out=[rc=0★]
+  set -u 有: "rc=$rc:"(半角・陰性) rc=0 out=[rc=0:]
+  set -u 有: "rc=$rc"★(丙)           rc=0 out=[rc=0★]
+--- shell=/Users/momizimac/wt/tools/bash52/bin/bash LANG=ja_JP.UTF-8 (5.2.0(1)-release)
+  set -u 有: "rc=$rc★"                rc=127 out=[/Users/momizimac/wt/tools/bash52/bin/bash: 行 1: rc�: 未割り当ての変数です]
+  set -u 無: "rc=$rc★"                rc=0 out=[rc=��]
+  set -u 有: "rc=${rc}★"(甲)         rc=0 out=[rc=0★]
+  set -u 有: "rc=$rc:"(半角・陰性) rc=0 out=[rc=0:]
+  set -u 有: "rc=$rc"★(丙)           rc=0 out=[rc=0★]
+--- shell=/bin/zsh LANG=C (zsh 5.9)
+  set -u 有: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 無: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 有: "rc=${rc}★"(甲)         rc=0 out=[rc=0★]
+  set -u 有: "rc=$rc:"(半角・陰性) rc=0 out=[rc=0:]
+  set -u 有: "rc=$rc"★(丙)           rc=0 out=[rc=0★]
+--- shell=/bin/zsh LANG=ja_JP.UTF-8 (zsh 5.9)
+  set -u 有: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 無: "rc=$rc★"                rc=0 out=[rc=0★]
+  set -u 有: "rc=${rc}★"(甲)         rc=0 out=[rc=0★]
+  set -u 有: "rc=$rc:"(半角・陰性) rc=0 out=[rc=0:]
+  set -u 有: "rc=$rc"★(丙)           rc=0 out=[rc=0★]

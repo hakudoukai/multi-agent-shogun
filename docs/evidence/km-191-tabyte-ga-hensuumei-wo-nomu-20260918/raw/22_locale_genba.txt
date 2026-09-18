@@ -1,0 +1,6 @@
+koku=2026-09-18T20:37:32+0900 此の Mac の locale(器が現に走る環境)
+shell LANG=[C.UTF-8] LC_ALL=[] LC_CTYPE=[]
+tmux global env LANG: LANG=C.UTF-8
+launchctl LANG:
+watcher process の env(pid 9826):
+locale コマンド: LANG="C.UTF-8" LC_CTYPE="C.UTF-8" LC_ALL=

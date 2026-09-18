@@ -1,0 +1,17 @@
+koku=2026-09-18T20:38:04+0900 現場の locale = C.UTF-8(raw/22: shell LANG・tmux LANG とも C.UTF-8)で「何処までが名か」と set -u 有/無 を取り直す
+字	bytes	bash	bash52	zsh
+a	61	呑	呑	呑
+-	2d	否	否	否
+★	e29885	呑	呑	否
+。	e38082	呑	呑	否
+）	efbc89	呑	呑	否
+、	e38081	呑	呑	否
+»	c2bb	呑	呑	否
+あ	e38182	呑	呑	呑
+é	c3a9	呑	呑	呑
+😀	f09f9880	呑	呑	否
+
+set -u 無(黙つて壊れるか)・C.UTF-8:
+  /bin/bash: rc=0 out='rc=��' bytes=72633d9885 ← ★値が消え字が壊れる(鳴らぬ疵)★
+  /Users/momizimac/wt/tools/bash52/bin/bash: rc=0 out='rc=��' bytes=72633d9885 ← ★値が消え字が壊れる(鳴らぬ疵)★
+  /bin/zsh: rc=0 out='rc=0★' bytes=72633d30e29885 ← 無事

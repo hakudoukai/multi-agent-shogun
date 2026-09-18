@@ -1,0 +1,21 @@
+# koku=2026-09-18T20:35:53+0900 root=/Users/momizimac/bin skip=['.git'] files=94 sh/bats_scanned=27 max_depth=1 rc=0
+kind	path	line	form	match	next_char	ctx	set_u	overlap	verbatim
+sh	compact_drain_inject.sh	13	甲	${MAXWAIT}	秒	code	set-u	-	echo "TIMEOUT: idle窓が${MAXWAIT}秒来なかった(注入0回・大声)"; exit 4
+sh	fix_pane_widths.sh	39	甲	${MIN}	桁	code	set-u	-	echo "[$(now)] 是正前: 全${total}pane中 ${before}paneが${MIN}桁未満"
+sh	fix_pane_widths.sh	58	甲	${MIN}	桁	code	set-u	-	echo "[$(now)] 是正後: ${MIN}桁未満が ${before} → ${after}"
+sh	fleet_env.sh	59	甲	${_u}	★	code	no-set-u	-	echo "[fleet_env] ★未知のuser: ${_u}★ どのPCか判定できない。値を設定しない（黙って推測しない）" >&2
+sh	fleet_env.sh	80	甲	${_ng}	★	code	no-set-u	-	echo "[fleet_env] OK=${_ok} ★不在=${_ng}★"
+sh	fleet_liveness_check.sh	32	甲	${MIN_WIDTH}	」	code	set-u	-	is_num "${MIN_WIDTH}" || { printf '%s\n' "[fleet_liveness] ★閾 MIN_WIDTH が數でない(「${MIN_WIDTH}」) ―― 既定 80 へ倒す(fail-closed)★" >&2; MIN_WIDTH=80; }
+sh	fleet_liveness_check.sh	47	甲	${w}	桁	code	set-u	-	narrow="$narrow $name(${w}桁)"
+sh	fleet_liveness_check.sh	73	乙	$ok	。	code	set-u	-	在り=$ok。居るはずの役職のpaneが見つからない。再起動に失敗したまま放置されている恐れがある
+sh	idle_backlog_wake.sh	139	甲	${PCNAME}	の	code	set-u	-	notify_kantoku "[機械wake] 板${pid8}「${ptitle}」(owner=${powner}/p=${pprio}/更新${page}h前)が${PCNAME}の最上段で未着手。各席は自分owner以外を対象外(スキップ)にする→監督が差配/再仕分け/起こしを。行ごと1回
+sh	idle_backlog_wake.sh	139	甲	${pid8}	「	code	set-u	-	notify_kantoku "[機械wake] 板${pid8}「${ptitle}」(owner=${powner}/p=${pprio}/更新${page}h前)が${PCNAME}の最上段で未着手。各席は自分owner以外を対象外(スキップ)にする→監督が差配/再仕分け/起こしを。行ごと1回
+sh	idle_backlog_wake.sh	139	甲	${ptitle}	」	code	set-u	-	notify_kantoku "[機械wake] 板${pid8}「${ptitle}」(owner=${powner}/p=${pprio}/更新${page}h前)が${PCNAME}の最上段で未着手。各席は自分owner以外を対象外(スキップ)にする→監督が差配/再仕分け/起こしを。行ごと1回
+sh	idle_backlog_wake.sh	203	甲	${f}	件	code	set-u	-	if [ -n "$topid" ]; then MSG="[機械wake] 板(自分owner)=${b} 最上段=${topid}「${toptitle}」/要返答=${m}(最古seq${mold}から順に)。他者所有${f}件は対象外。WORK-PULLで処理せよ"
+sh	idle_backlog_wake.sh	203	甲	${mold}	か	code	set-u	-	if [ -n "$topid" ]; then MSG="[機械wake] 板(自分owner)=${b} 最上段=${topid}「${toptitle}」/要返答=${m}(最古seq${mold}から順に)。他者所有${f}件は対象外。WORK-PULLで処理せよ"
+sh	idle_backlog_wake.sh	203	甲	${topid}	「	code	set-u	-	if [ -n "$topid" ]; then MSG="[機械wake] 板(自分owner)=${b} 最上段=${topid}「${toptitle}」/要返答=${m}(最古seq${mold}から順に)。他者所有${f}件は対象外。WORK-PULLで処理せよ"
+sh	idle_backlog_wake.sh	203	甲	${toptitle}	」	code	set-u	-	if [ -n "$topid" ]; then MSG="[機械wake] 板(自分owner)=${b} 最上段=${topid}「${toptitle}」/要返答=${m}(最古seq${mold}から順に)。他者所有${f}件は対象外。WORK-PULLで処理せよ"
+sh	idle_backlog_wake.sh	204	甲	${f}	件	code	set-u	-	else MSG="[機械wake] 板(自分owner)=${b}/要返答=${m}(最古seq${mold}から順に) が未処理。他者所有${f}件は対象外。WORK-PULLで処理せよ"; fi
+sh	idle_backlog_wake.sh	204	甲	${mold}	か	code	set-u	-	else MSG="[機械wake] 板(自分owner)=${b}/要返答=${m}(最古seq${mold}から順に) が未処理。他者所有${f}件は対象外。WORK-PULLで処理せよ"; fi
+sh	km_inbox_read_mark.sh	14	甲	${n_read}	★	code	no-set-u	-	echo "★凍らせた未読=${n_read}★"
+sh	km_inbox_read_mark.sh	29	甲	${rc}	★	code	no-set-u	-	echo "★読=${n_read} / 畳=${n_mark} / rc=${rc}★"

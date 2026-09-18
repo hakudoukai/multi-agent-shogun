@@ -1,0 +1,43 @@
+koku=2026-09-18T20:38:14+0900 到達性の読み(乙 code 8 行・行の前後)
+--- first_setup.sh L193-197 / set -u: 0 行
+    # バージョンチェック（18以上推奨）
+    NODE_MAJOR=$(echo $NODE_VERSION | cut -d'.' -f1 | tr -d 'v')
+    if [ "$NODE_MAJOR" -lt 18 ]; then
+        log_warn "Node.js 18以上を推奨します（現在: $NODE_VERSION）"
+        RESULTS+=("Node.js: OK (v$NODE_MAJOR - 要アップグレード推奨)")
+--- scripts/checks/codex_exec_sandbox_guard.sh L56-59 / set -u: 1 行
+fi
+
+echo "[codex_exec_sandbox_guard] OK: sandbox=$CODEX_SANDBOX_KIND 検証済・非live cwd=$INTENDED_CWD。Codex exec 起動可。"
+exit 0
+--- scripts/karo_overload_monitor.sh L337-339 / set -u: 1 行
+    local content
+    content="[karo_overload_monitor] 家老輻輳兆候検知 (corr_id=$CORR_ID): hits=[$hit_metrics_csv] / unread=$m1 / oldest_unread_age_sec=$m2 / oldest_
+
+--- shutsujin_departure.sh L262-265 / set -u: 0 行
+        SHELL_SETTING="$SHELL_OVERRIDE"
+    else
+        echo "エラー: -shell オプションには bash または zsh を指定してください（指定値: $SHELL_OVERRIDE）"
+        exit 1
+--- tests/checks/pretooluse_stdin_json/smoke_test.sh L122-125 / set -u: 1 行
+
+  if [ "$rc" -eq 0 ] && [ "$fires" -eq 1 ]; then
+    pass "$desc (rc=$rc, fires=$fires、fallback 経路で発火)"
+  else
+--- tests/smoke/test_enter_restart_watchdog.sh L188-191 / set -u: 1 行
+  enter_count=$(count_send_keys_enter)
+  if [ "$enter_count" -eq 0 ]; then
+    pass "$desc (send-keys Enter count=$enter_count、cap halt 発動)"
+  else
+--- ~/bin/fleet_liveness_check.sh L68-75 / set -u: 1
+fi
+
+echo "[$NOW] ★LIVENESS 不在あり★ host=$HOST 在り=$ok 不在=$missing"
+if [ "$ALERT" = "1" ]; then
+  BODY="[liveness→委員長][★役職paneが不在★ host=$HOST] 不在:$missing
+在り=$ok。居るはずの役職のpaneが見つからない。再起動に失敗したまま放置されている恐れがある
+（委員長が手で再起動して失敗を見落とした実例あり=2026-08-08 軍師second・警報55回でも気づかず）。
+paneを実視し、正規launcherで復旧すること。"
+--- karo_overload_monitor L338 の全長: 375 B(切り出しは 150 字で切れ syntax error に成つた=器の粗・行を全長で再走)
+bash: m5�: unbound variable
+bash: m5�: unbound variable

@@ -1,0 +1,9 @@
+koku=2026-09-18T20:37:45+0900 乙 code 7 行を其の行だけ切り出し bash 3.2/ja_JP.UTF-8 で走らせる(変数は仮の値 X・函数 log_warn/pass/echo は echo に置く)
+first_setup.sh:196 $NODE_VERSION） (file は no-set-u) → set -u; rc=127 out=[/bin/bash: NODE_VERSION�: unbound variable] / set +u; rc=0 out=[Node.js 18以上を推奨します（現在: ��]
+scripts/checks/codex_exec_sandbox_guard.sh:58 $INTENDED_CWD。 (file は set-u) → set -u; rc=127 out=[/bin/bash: INTENDED_CWD�: unbound variable] / set +u; rc=0 out=[[codex_exec_sandbox_guard] OK: sandbox=X 検証済・非live cwd=��Codex exec 起動可。]
+scripts/karo_overload_monitor.sh:338 $m5。 (file は set-u) → set -u; rc=2 out=[/bin/bash: -c: line 0: unexpected EOF while looking for matching `"' | /bin/bash: -c: line 1: syntax error: un] / set +u; rc=2 out=[/bin/bash: -c: line 0: unexpected EOF while looking for matching `"' | /bin/bash: -c: line 1: syntax error: un]
+shutsujin_departure.sh:264 $SHELL_OVERRIDE） (file は no-set-u) → set -u; rc=127 out=[/bin/bash: SHELL_OVERRIDE�: unbound variable] / set +u; rc=0 out=[エラー: -shell オプションには bash または zsh を指定してください（指定値: ��]
+tests/checks/pretooluse_stdin_json/smoke_test.sh:124 $fires、 (file は set-u) → set -u; rc=127 out=[/bin/bash: fires�: unbound variable] / set +u; rc=0 out=[X (rc=X, fires=��fallback 経路で発火)]
+tests/smoke/test_enter_restart_watchdog.sh:190 $enter_count、 (file は set-u) → set -u; rc=127 out=[/bin/bash: enter_count�: unbound variable] / set +u; rc=0 out=[X (send-keys Enter count=��cap halt 発動)]
+fleet_liveness_check.sh:73 $ok。 (file は set-u) → set -u; rc=127 out=[/bin/bash: ok�: unbound variable] / set +u; rc=127 out=[/bin/bash: 在り=��居るはずの役職のpaneが見つからない。再起動に失敗したまま放置されている恐れがある: command not found]
+判: rc≠0 は「止まる」・rc 0 で出目に � が在れば「黙つて壊れる」(先頭 byte を呑み値が空に化けた)。

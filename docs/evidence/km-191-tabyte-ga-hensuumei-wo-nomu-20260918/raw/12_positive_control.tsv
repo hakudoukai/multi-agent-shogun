@@ -1,0 +1,7 @@
+# koku=2026-09-18T20:35:53+0900 root=docs/evidence/km-191-tabyte-ga-hensuumei-wo-nomu-20260918/raw/seed_ctrl skip=['.git'] files=1 sh/bats_scanned=1 max_depth=0 rc=0
+kind	path	line	form	match	next_char	ctx	set_u	overlap	verbatim
+sh	positive_control.sh	4	乙	$rc	★	code	set-u	-	echo "rc=$rc★"          # 乙 code
+sh	positive_control.sh	5	甲	${rc}	★	code	set-u	-	echo "rc=${rc}★"        # 甲
+sh	positive_control.sh	7	丙	"$rc"	★	code	set-u	-	echo "$rc"★             # 丙
+sh	positive_control.sh	8	乙	$rc	★	註	set-u	-	# echo "rc=$rc★"        # 註の乙
+sh	positive_control.sh	10	乙	$rc	★	heredoc(展開無)	set-u	-	rc=$rc★ (展開無の heredoc)
