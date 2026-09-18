@@ -1,0 +1,14 @@
+1..24
+not ok 1 setup_file failed
+# (from function `setup_file' in test file tests/unit/test_codex_guard.bats, line 20)
+#   `[ -f "$MDV2_SOURCE_ROOT/scripts/message_delivery_v2/codex_guard.sh" ] || return 1' failed
+not ok 7 setup_file failed
+# (from function `setup_file' in test file tests/unit/test_dead_letter.bats, line 21)
+#   `[ -f "$DLQ_SH" ] || return 1' failed
+not ok 15 setup_file failed
+# (from function `setup_file' in test file tests/unit/test_dedup.bats, line 18)
+#   `[ -f "$DEDUP_SH" ] || return 1' failed
+not ok 20 setup_file failed
+# (from function `setup_file' in test file tests/unit/test_safe_nudge.bats, line 20)
+#   `[ -f "$MDV2_SOURCE_ROOT/scripts/message_delivery_v2/safe_nudge.sh" ] || return 1' failed
+# bats warning: Executed 4 instead of expected 24 tests

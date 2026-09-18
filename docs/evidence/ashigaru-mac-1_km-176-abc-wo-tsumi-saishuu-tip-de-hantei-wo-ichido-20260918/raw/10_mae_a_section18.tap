@@ -1,0 +1,35 @@
+1..19
+ok 1 T-001: lib/_section18_roles.sh が存在する
+not ok 2 T-002: SECTION18_MAINPC_PANE_ORDER が pane 配置順 5 件
+# (in test file tests/test_section18_roles.bats, line 52)
+#   `[ "${#SECTION18_MAINPC_PANE_ORDER[@]}" -eq 5 ]' failed
+not ok 3 T-003: SECTION18_SECONDPC_AGENTS が ashigaru5-8 の 4 件
+# (in test file tests/test_section18_roles.bats, line 61)
+#   `[ "${#SECTION18_SECONDPC_AGENTS[@]}" -eq 4 ]' failed
+not ok 4 T-004: SECTION18_ALL_ROLES に shogun 含む / ashigaru4 を含まない / 旧体制名なし
+# (in test file tests/test_section18_roles.bats, line 89)
+#   `[ "${#SECTION18_ALL_ROLES[@]}" -eq 10 ]' failed
+ok 5 T-005: 多重 source で配列が再定義されず _SECTION18_ROLES_LOADED ガードが効く
+ok 6 T-101: section18_is_secondpc_agent が ashigaru5/6/7/8 を accept
+ok 7 T-102: section18_is_secondpc_agent が MainPC role を reject
+ok 8 T-103: section18_is_secondpc_agent が ashigaru4 (欠番) を reject
+ok 9 T-104: section18_is_secondpc_agent が shogun を reject (別 session)
+not ok 10 T-201: section18_is_mainpc_pane_agent が karo/ashigaru1-3/gunshi を accept
+# (from function `section18_is_mainpc_pane_agent' in file lib/_section18_roles.sh, line 89,
+#  in test file tests/test_section18_roles.bats, line 139)
+#   `section18_is_mainpc_pane_agent karo' failed
+ok 11 T-202: section18_is_mainpc_pane_agent が SecondPC role を reject
+ok 12 T-203: section18_is_mainpc_pane_agent が ashigaru4 (欠番) を reject
+ok 13 T-204: section18_is_mainpc_pane_agent が shogun を reject (別 session)
+not ok 14 T-301: section18_mainpc_pane_index が pane 配置順を返す
+# (in test file tests/test_section18_roles.bats, line 166)
+#   `[ "$(section18_mainpc_pane_index karo)" = "0" ]' failed
+ok 15 T-302: section18_mainpc_pane_index が SecondPC role に non-zero exit
+ok 16 T-303: section18_mainpc_pane_index が ashigaru4 に non-zero exit
+ok 17 T-304: section18_mainpc_pane_index が shogun に non-zero exit (別 session)
+not ok 18 T-401: pytest 側 TestSection18ShellHelper と同一の SECTION18_MAINPC_PANE_ORDER
+# (in test file tests/test_section18_roles.bats, line 198)
+#   `[ "$actual" = "karo ashigaru1 ashigaru2 ashigaru3 gunshi" ]' failed
+not ok 19 T-402: pytest 側 TestSection18ShellHelper と同一の SECTION18_SECONDPC_AGENTS
+# (in test file tests/test_section18_roles.bats, line 203)
+#   `[ "$actual" = "ashigaru5 ashigaru6 ashigaru7 ashigaru8" ]' failed

@@ -1,0 +1,11 @@
+ls: cannot access 'tests/unit/test_codex_guard.bats': No such file or directory
+ls: cannot access 'tests/unit/test_dead_letter.bats': No such file or directory
+ls: cannot access 'tests/unit/test_dedup.bats': No such file or directory
+ls: cannot access 'tests/unit/test_safe_nudge.bats': No such file or directory
+ls rc=2 (2 = 4 紙とも tests/unit に無い)
+README.md
+test_codex_guard.bats
+test_dead_letter.bats
+test_dedup.bats
+test_safe_nudge.bats
+CI glob tests/*.bats tests/unit/*.bats が tests/archive を含むか: 0 件
