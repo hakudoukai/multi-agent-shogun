@@ -1,0 +1,61 @@
+刻=2026-09-18T17:48:00+0900(此の紙を書いた時)
+根=/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-175-b1-b3-hantei-teishutsu-to-b2-1wa-20260918(★束★)
+
+【臺帳の數 ―― 己が数へた】
+・臺帳の path= 行 = 148 行／歩いた紙 = 148 本(★一致★)
+・臺帳 sha256 = 895461d57e7ba27ccf9a62ec9305ad2ac57b8b42f11b4764f4bf869ee788179a
+・★mon_ 行 = 0 行★(門の出目が臺帳へ混ざつて居らぬ事の數)
+・門の argv = 148 本 ―― ★本弾は宣して除いた紙が 0 本★ ∴ 臺帳と同数。
+  (先弾は『直せぬ陽性対照の紙』を宣して除いたが、本弾には其の類の紙が無い。)
+・0byte = 0 本(門の條④が鳴る形 ―― 掃討して 0)／KARA 一行 = 8 本(初めから書き器を通した出目)
+
+【員外(臺帳の後に出来た紙)】
+・則 = ★`_gate/` の下に出来る紙は悉く員外★(門の出目・對照の汚れ紙・此の宣そのもの)。
+  臺帳は門の ★前★ に凍る ∴ 門の出目を臺帳へ載せれば臺帳が己の後の紙を指す事に成る。
+・員外の本数 = 39 本(下に悉く名と寸法を挙げる ―― 『員外』は『数へて居らぬ』に非ず)
+・員外の内 0byte = 0 本(出目は悉く kaki を通す ∴ 0 で在るべし)
+・★對照の汚れ紙 2 本だけは kaki を通して居らぬ★ ―― 通せば汚れが落ち對照に成らぬ故。
+
+  _gate/10_daichou_taishou.txt                      3449 byte
+  _gate/10_daichou_taishou_tsui.txt                 4946 byte
+  _gate/20_daichou_tsumi.err                          85 byte
+  _gate/20_daichou_tsumi.out                         116 byte
+  _gate/20_daichou_tsumi.rc                            2 byte
+  _gate/20_daichou_tsumi_tsui.err                     85 byte
+  _gate/20_daichou_tsumi_tsui.out                    116 byte
+  _gate/20_daichou_tsumi_tsui.rc                       2 byte
+  _gate/30_mon_hatsubashiri.err                      491 byte
+  _gate/30_mon_hatsubashiri.out                      334 byte
+  _gate/30_mon_hatsubashiri.rc                         2 byte
+  _gate/30_mon_hatsubashiri_tsui.err                 491 byte
+  _gate/30_mon_hatsubashiri_tsui.out                 334 byte
+  _gate/30_mon_hatsubashiri_tsui.rc                    2 byte
+  _gate/31_taishou_hatsubashiri.err                  431 byte
+  _gate/31_taishou_hatsubashiri.out                   85 byte
+  _gate/31_taishou_hatsubashiri.rc                     2 byte
+  _gate/31_taishou_hatsubashiri_tsui.err             436 byte
+  _gate/31_taishou_hatsubashiri_tsui.out              85 byte
+  _gate/31_taishou_hatsubashiri_tsui.rc                2 byte
+  _gate/40_mon_nibashiri.err                         491 byte
+  _gate/40_mon_nibashiri.out                         334 byte
+  _gate/40_mon_nibashiri.rc                            2 byte
+  _gate/40_mon_nibashiri_tsui.err                    491 byte
+  _gate/40_mon_nibashiri_tsui.out                    334 byte
+  _gate/40_mon_nibashiri_tsui.rc                       2 byte
+  _gate/41_taishou_nibashiri.err                     514 byte
+  _gate/41_taishou_nibashiri.out                      85 byte
+  _gate/41_taishou_nibashiri.rc                        2 byte
+  _gate/41_taishou_nibashiri_tsui.err                524 byte
+  _gate/41_taishou_nibashiri_tsui.out                 85 byte
+  _gate/41_taishou_nibashiri_tsui.rc                   2 byte
+  _gate/60_taishou_ichi_matsubi_kuuhaku.txt            3 byte
+  _gate/60_taishou_ichi_matsubi_kuuhaku_tsui.txt       3 byte
+  _gate/61_taishou_ni_crlf_to_kuugyou.txt              4 byte
+  _gate/61_taishou_ni_crlf_to_kuugyou_tsui.txt         4 byte
+  _gate/70_mon_futabashiri.tsv                       545 byte
+  _gate/70_mon_futabashiri_tsui.tsv                  559 byte
+  _gate/80_ingai_sengen.txt                         2941 byte
+
+【之が意味せぬ事】
+・門が通つた事は ★紙の中身が正しい事ではない★ ―― 門は形(臺帳一致・不可視字・CR・EOF改行・寸法)のみを見る。
+・員外を宣した事は ★員外が検められた事ではない★ ―― 此の宣は名と寸法と 0byte の數のみを保つ。

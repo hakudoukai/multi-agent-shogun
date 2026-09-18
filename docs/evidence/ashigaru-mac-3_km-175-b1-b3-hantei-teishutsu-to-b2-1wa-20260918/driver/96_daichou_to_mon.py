@@ -26,6 +26,8 @@ for p in (GATE, TSUMI):
 
 os.chdir(BUNDLE)
 GA = "_gate"
+# ★走り毎に控の名を別にする為の尾★ ―― 既定は空 ∴ 先の走り(36b88f93 で彫つた出目)と同名を保つ。
+SFX = os.environ.get("KM_RUN_SUFFIX", "")
 os.makedirs(GA, exist_ok=True)
 
 
@@ -73,7 +75,7 @@ NOKEru = []                       # ★本弾は宣して除く紙が 0 本(直�
 ARGV = [p for p in KAMI if p not in NOKEru]
 assert len(ARGV) == len(KAMI), "★除いた數と argv が合はぬ★"
 
-kaku(os.path.join(GA, "10_daichou_taishou.txt"),
+kaku(os.path.join(GA, "10_daichou_taishou%s.txt" % SFX),
      "刻=%s\n根=%s(★束★)\n"
      "臺帳へ載せる紙=%d 本／門の argv=%d 本(★宣して除く紙 0 本 ∴ 同数★)\n"
      "0byte=%d 本(掃討済)／KARA 一行=%d 本(初めから書き器を通した出目)\n"
@@ -84,7 +86,7 @@ kaku(os.path.join(GA, "10_daichou_taishou.txt"),
 if os.path.exists("MANIFEST.txt"):
     os.remove("MANIFEST.txt")
 o, e, rc = hashiru(["python3", "-B", TSUMI, "MANIFEST.txt"] + KAMI)
-okusu("20_daichou_tsumi", o, e, rc)
+okusu("20_daichou_tsumi" + SFX, o, e, rc)
 assert rc == 0, "★臺帳の積みが rc=%d ―― 止める★\n%s" % (rc, e)
 dai = open("MANIFEST.txt", encoding="utf-8").read().split("\n")
 dai_gyou = [l for l in dai if l.startswith("path=")]
@@ -92,8 +94,8 @@ assert len(dai_gyou) == len(KAMI), "★臺帳 %d 行 ≠ 歩いた %d 本★" % 
 mon_gyou = [l for l in dai_gyou if re.search(r"path=(?:\./)?%s/" % re.escape(GA), l) or "mon_" in l]
 
 # ―― ② 對照(走り毎に ★名を別にした★ 汚れ紙) ――
-TAISHOU = [("hatsubashiri", "60_taishou_ichi_matsubi_kuuhaku.txt", "汚れ=行末の空白一つ", "a \n"),
-           ("nibashiri", "61_taishou_ni_crlf_to_kuugyou.txt", "汚れ=CR混入+末尾空行", "a\r\n\n")]
+TAISHOU = [("hatsubashiri" + SFX, "60_taishou_ichi_matsubi_kuuhaku%s.txt" % SFX, "汚れ=行末の空白一つ", "a \n"),
+           ("nibashiri" + SFX, "61_taishou_ni_crlf_to_kuugyou%s.txt" % SFX, "汚れ=CR混入+末尾空行", "a\r\n\n")]
 for _, na, _, body in TAISHOU:
     with open(os.path.join(GA, na), "w", encoding="utf-8", newline="") as fh:
         fh.write(body)     # ★kaki を通さぬ ―― 通せば汚れが落ちて對照に成らぬ★
@@ -113,7 +115,7 @@ for i, (na, t_na, t_imi, _) in enumerate(TAISHOU, 1):
     assert rc == 0, "★%s の本走りが rc=%d ―― 止める★\n%s" % (na, rc, e)
     assert trc != 0 and nari, "★%s の對照が鳴らず(rc=%d) ―― 門か對照を疑へ★\n%s" % (na, trc, te)
 
-kaku_tsv(os.path.join(GA, "70_mon_futabashiri.tsv"), rows,
+kaku_tsv(os.path.join(GA, "70_mon_futabashiri%s.tsv" % SFX), rows,
          header=["走り", "名", "對照の紙(★走り毎に別名★)", "對照の汚れ", "本走り rc", "本走り",
                  "對照走り rc", "對照の判", "對照の鳴り(58字で截つ)"])
 
@@ -124,7 +126,7 @@ def sha(p):
 
 ingai = sorted(os.path.join(GA, f) for f in os.listdir(GA) if os.path.isfile(os.path.join(GA, f)))
 zero_i = [p for p in ingai if os.path.getsize(p) == 0]
-kaku(os.path.join(GA, "80_ingai_sengen.txt"),
+kaku(os.path.join(GA, "80_ingai_sengen%s.txt" % SFX),
      "刻=%s(此の紙を書いた時)\n根=%s(★束★)\n\n"
      "【臺帳の數 ―― 己が数へた】\n"
      "・臺帳の path= 行 = %d 行／歩いた紙 = %d 本(★一致★)\n"
