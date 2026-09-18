@@ -1,11 +1,11 @@
-刻=2026-09-18T13:46:50+0900(此の紙を書いた時)
+刻=2026-09-18T13:52:59+0900(此の紙を書いた時)
 根=/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-153-jou4-no-damari-wo-tojiru-to-minamoto-wo-naosu-20260918(★束★)
 
 【臺帳の數 ―― 己が数へた】
-・臺帳の path= 行 = 160 行／歩いた紙 = 160 本(★一致★)
-・臺帳 sha256 = da54883ffc51616476afdf5c1306f82400f19d2b392de6aa64ba47a81a9828e1
+・臺帳の path= 行 = 170 行／歩いた紙 = 170 本(★一致★)
+・臺帳 sha256 = 5b255c1ebc59882e1ef5249f39f3791237ee6dd12e01b2c54e25ab952694577e
 ・★mon_ 行 = 0 行★(門の出目が臺帳へ混ざつて居らぬ事の數)
-・門の argv = 148 本(= 臺帳 160 − 宣して除いた紙 12)
+・門の argv = 158 本(= 臺帳 170 − 宣して除いた紙 12)
   ★除いた紙は『札(raw/fx 7本)』と『對照の 0byte(7本)』の ★和集合★★ ―― fx01/fx02 は両方に属す ∴ 足せば二重に数へる。
 
 【員外(臺帳の後に出来た紙)】
@@ -17,13 +17,13 @@
 
 【0byte の始末(_gate/15_zero_wo_ichigyo.tsv)】
 ・此の走りで見た 0byte = 7 本 ―― 内 ★0 本を源の形(空である旨の一行)へ直し★、7 本は對照ゆゑ直さず宣して除いた。
-・★KARA 一行で在る紙 = 25 本★ ―― 内 ★3 本は本弾で 0byte から直した捕り★(門の條④が名指した紙)、
+・★KARA 一行で在る紙 = 27 本★ ―― 内 ★3 本は本弾で 0byte から直した捕り★(門の條④が名指した紙)、
   残りは初めから書き器を通した出目で ★0byte で在つた事が無い★(名と由は _gate/15 に一本づつ)。
   器は冪等ゆゑ二度目の走りでは 0 を己の目で見ぬ ∴ 『直した』と『此の走りで 0 を見た』を分けて書く。
 ・★除いた 12 本は臺帳には悉く載る★(條①は現に之等へ当たる) ―― 『除いた』は『歩いて居らぬ』に非ず。
 
-  _gate/10_daichou_taishou.txt                      5913 byte
-  _gate/15_zero_wo_ichigyo.tsv                      4933 byte
+  _gate/10_daichou_taishou.txt                      6303 byte
+  _gate/15_zero_wo_ichigyo.tsv                      5217 byte
   _gate/20_daichou_tsumi.err                          85 byte
   _gate/20_daichou_tsumi.out                         116 byte
   _gate/20_daichou_tsumi.rc                            2 byte
