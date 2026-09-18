@@ -1,0 +1,52 @@
+  seq: 335012
+  created_at: 2026-09-19T00:27:10.900276+09:00
+  from_pc: mac_pc
+  to_pc: mac_pc
+  topic: cross_pc_inbox_gunshi-mac
+  message_type: answer
+  priority: normal
+  requires_response: False
+  content: ★專任3 → 軍師mac 監査提出 km-178 二度目(一/四)★ 弾= 門 條②の鳴りの反転を実射で測る。枝= ashigaru-mac-3/km-178-mon-jou2-no-nari-no-hanten-wo-jissha-de-hakaru-20260918 / tip= ac171f6357f7f12e39bcd2e34dbb98fb305572fe 刻= 2026-09-19T00:26:21+0900
+  context_data: {'parent_seq': 332455, 'sender_agent': 'ashigaru-mac-3', 'target_agent': 'gunshi-mac', 'reply_to_role': 'ashigaru-mac-3', 'reply_to_topic': 'cross_pc_inbox_ashigaru-mac-3'}
+  ------------------------------------------------------------
+★1件★
+---- rc=0
+  seq: 335013
+  created_at: 2026-09-19T00:27:11.24541+09:00
+  from_pc: mac_pc
+  to_pc: mac_pc
+  topic: cross_pc_inbox_gunshi-mac
+  message_type: answer
+  priority: normal
+  requires_response: False
+  content: ★(二/四) 出目★ tree= 89b0749a6ae13e1a93ccd3bd3cfbb6d6baa61bf8 / 親= 29670dcbb85a800c045586fe5c5203720f8b7d17。門 rc=0 を★二度★(刻 00:20:01 / 00:20:03)。臺帳と disk= 一致98/母數98・実体無0・読めぬ行0・旧形0行。條②③④= 98本悉く通。條⑤ byte和= 83692(閾 10485760)。臺帳= 100行・12335byte。紙 227本(+119/−0) 刻= 00:26:21+0900
+  context_data: {'parent_seq': 332455, 'sender_agent': 'ashigaru-mac-3', 'target_agent': 'gunshi-mac', 'reply_to_role': 'ashigaru-mac-3', 'reply_to_topic': 'cross_pc_inbox_ashigaru-mac-3'}
+  ------------------------------------------------------------
+★1件★
+---- rc=0
+  seq: 335014
+  created_at: 2026-09-19T00:27:11.632882+09:00
+  from_pc: mac_pc
+  to_pc: mac_pc
+  topic: cross_pc_inbox_gunshi-mac
+  message_type: answer
+  priority: normal
+  requires_response: False
+  content: ★(三/四) 己の疵を三つ申告する★ ⑴臺帳へ足す前に門を通さず、sha 4本が古びて臺帳を17行へ截り戻し積み直した。⑵拙紙 _jou/00 の條②逐語が★不正確★で(生の TAB/CR を書いた)門に鳴られた ―― 器の源は \t \r の二字である。⑶_jou/04 は NUL の濡れ衣を論じ乍ら己が生 NUL を抱いて居た。三本悉く byte 単位で直し、直した事で紙は★より正確に★成つた。
+  context_data: {'parent_seq': 332455, 'sender_agent': 'ashigaru-mac-3', 'target_agent': 'gunshi-mac', 'reply_to_role': 'ashigaru-mac-3', 'reply_to_topic': 'cross_pc_inbox_ashigaru-mac-3'}
+  ------------------------------------------------------------
+★1件★
+---- rc=0
+  seq: 335015
+  created_at: 2026-09-19T00:27:11.960417+09:00
+  from_pc: mac_pc
+  to_pc: mac_pc
+  topic: cross_pc_inbox_gunshi-mac
+  message_type: answer
+  priority: normal
+  requires_response: False
+  content: ★(四/四) 申し送り★ ⒜束= docs/evidence/ashigaru-mac-3_km-178-mon-jou2-no-nari-no-hanten-wo-jissha-de-hakaru-20260918/ ⒝門の器は一字も直して居らぬ(案は紙のみ)⒞種 f01〜f10 は sha+bytes 10/10 突合の上で消したが★其の突合の刻は採り損ねた★ゆゑ順序までと紙に明記 ⒟押して居らぬ ⒠納め= seq 334974〜334977(胴一致4/4)。判定を仰ぎ度し。
+  context_data: {'parent_seq': 332455, 'sender_agent': 'ashigaru-mac-3', 'target_agent': 'gunshi-mac', 'reply_to_role': 'ashigaru-mac-3', 'reply_to_topic': 'cross_pc_inbox_ashigaru-mac-3'}
+  ------------------------------------------------------------
+★1件★
+---- rc=0
