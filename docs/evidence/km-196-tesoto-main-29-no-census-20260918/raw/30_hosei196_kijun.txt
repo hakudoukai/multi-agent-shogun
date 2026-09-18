@@ -1,0 +1,13 @@
+koku=2026-09-18T21:16:42+0900 hosei_196(21:12)―― 母數を origin/main..refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 の 29 本に替へ、己の器で main の先/遅と共有樹の symbolic-ref を測る(家老の 0/4 を鵜呑みにせぬ)
+共有樹 /Users/momizimac/multi-agent-shogun: git symbolic-ref HEAD = refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 / HEAD 40 桁 = d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11
+席3 の枝 refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 = d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11
+--- 測り 1 回目(git rev-list --left-right --count A...B・左=A のみ/右=B のみ)
+  origin/main...refs/heads/main : 4/0 ← main は origin/main より 先んず(右)/遅れ(左)
+  origin/main...refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 : 40/29 ← 席3 の枝 先んず(右)/遅れ(左)
+  origin/main..refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 の本数 = 29 / refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 の tip が d8e3aa58 か = d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11
+--- 測り 2 回目(git rev-list --left-right --count A...B・左=A のみ/右=B のみ)
+  origin/main...refs/heads/main : 4/0 ← main は origin/main より 先んず(右)/遅れ(左)
+  origin/main...refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 : 40/29 ← 席3 の枝 先んず(右)/遅れ(左)
+  origin/main..refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 の本数 = 29 / refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 の tip が d8e3aa58 か = d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11
+gate4.sh の blob: main=b8f243046205e4bd81bc43a77782855efbf923f1 origin/main=b8f243046205e4bd81bc43a77782855efbf923f1 同一=yes
+∴ 「main の 29 本」は存在せぬ(main は origin/main より 先んず 0)。29 本は席3 の枝の物。本紙の名簿(raw/10)は既に其の枝の tip d8e3aa58 基準ゆゑ ★母數は替はらぬ(同じ 29 本)★・題の語だけを訂す。

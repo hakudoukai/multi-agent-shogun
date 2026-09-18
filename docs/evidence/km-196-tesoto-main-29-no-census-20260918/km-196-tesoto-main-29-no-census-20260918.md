@@ -1,5 +1,7 @@
 # km-196 ―― 手元 main が origin/main より 29 commit 先んじる ―― 誰の作か・押す要否の census(紙のみ・押さず)
 
+> ★訂正(hosei_196・21:12・家老が己の疵を認めた上での題の訂正)★: 「main の 29 本」は ★存在せぬ★ ―― refs/heads/main は origin/main より 先んず 0・遅れ 4(當席の器で再測・raw/30)。29 本は共有樹の HEAD が指す ★席3 の枝 refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917★(origin/main より 先んず 29・遅れ 40・`git symbolic-ref HEAD` で実測)の物。題の誤りの出所は家老(共有樹の HEAD を「手元 main」と呼んだ)であり、家老は之を認めた。當席は km-194 納め 3/6 で此の数を器で捉へ、本紙の名簿は初めから其の枝の tip d8e3aa58 基準で作つた ★ゆゑ母數 29 本は替はらぬ★。gate4.sh の blob は main と origin/main で同一(b8f24304…)。
+
 - 板 = queue/tasks/ashigaru-mac-1.yaml `tsugi_no_tama_196_20260918T2102`(task_id km-196・総監督 seq334049 の御下命・板 b774c90f)/ 書手 ashigaru-mac-1 / 宛 karo-mac
 - 刻 = 紙を書き始めた刻 2026-09-18T21:13:13+0900 / 着手便は km-195 の納めの後(順)/ 測り 21:09〜21:11
 - 枝 = `ashigaru-mac-1/km-196-tesoto-main-29-no-census-20260918`(origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 から・己の樹 ~/wt/a1-km196)。★押さず・ls-remote(読み)のみ★。束名は家老の指定。
