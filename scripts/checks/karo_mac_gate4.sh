@@ -17,10 +17,11 @@ fail=0
 say(){ printf '%s\n' "$*" >&2; }
 
 # ―― 條④ diff --check(末尾空白・空白のみ の行・CRLF)
-out=$(git diff --cached --check -- "$@" 2>&1); rc=$?
-if [ $rc -ne 0 ] || [ -n "$out" ]; then
+E4=$(mktemp); out=$(git diff --cached --check -- "$@" 2>"$E4"); rc=$?; e4=$(grep -c . "$E4"); e4h=$(head -3 "$E4"); rm -f "$E4"
+if [ $rc -ne 0 ] || [ -n "$out" ] || [ "$e4" -gt 0 ]; then
   n=$(printf '%s\n' "$out" | grep -c .)
-  say "★條④ diff --check が落ちた ―― $n 行★"
+  say "★條④ diff --check が落ちた ―― 疵 $n 行 / 器の叫び $e4 行 / rc=${rc}★"
+  [ "$e4" -gt 0 ] && printf '%s\n' "$e4h" | sed 's/^/    ★器の叫び★ /' >&2
   printf '%s\n' "$out" | head -20 | sed 's/^/    /' >&2
   fail=1
 else
