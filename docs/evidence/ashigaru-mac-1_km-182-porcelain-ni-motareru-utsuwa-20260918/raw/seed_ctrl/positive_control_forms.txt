@@ -1,0 +1,8 @@
+# km-182 walker の陽性対照(當席が己の束に作つた種・器ではない)
+dirty=$(git status --porcelain -- some/dir | wc -l)
+n=$(git -C /x status -s)
+git status --short
+subprocess.run(["git", "status", "--porcelain", "--", "dir"], capture_output=True)
+p = subprocess.run(['git', '-C', tree, 'status', '--porcelain', '--', rel])
+prose: this line says git status --porcelain in a sentence (md 勘定)
+git status --porcelain --ignored -- dir

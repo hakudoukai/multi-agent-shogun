@@ -1,0 +1,9 @@
+# koku=2026-09-18T19:31:01+0900 root=docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/raw/seed_ctrl skip=['.git', '.venv', '__pycache__', 'evidence', 'node_modules', 'queue'] files_walked=1 max_depth=0 rc=0
+kind	path	line	ignored	verbatim
+other	positive_control_forms.txt	2	-	dirty=$(git status --porcelain -- some/dir | wc -l)
+other	positive_control_forms.txt	3	-	n=$(git -C /x status -s)
+other	positive_control_forms.txt	4	-	git status --short
+other	positive_control_forms.txt	5	-	subprocess.run(["git", "status", "--porcelain", "--", "dir"], capture_output=True)
+other	positive_control_forms.txt	6	-	p = subprocess.run(['git', '-C', tree, 'status', '--porcelain', '--', rel])
+other	positive_control_forms.txt	7	-	prose: this line says git status --porcelain in a sentence (md 勘定)
+other	positive_control_forms.txt	8	ignored	git status --porcelain --ignored -- dir

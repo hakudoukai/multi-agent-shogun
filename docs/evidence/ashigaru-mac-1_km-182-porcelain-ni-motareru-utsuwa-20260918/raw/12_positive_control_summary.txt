@@ -1,0 +1,15 @@
+files_walked=1 max_depth=0 hits=7 rows / 1 files
+  sh: 0 行 / 0 file
+  py: 0 行 / 0 file
+  md: 0 行 / 0 file
+  yaml: 0 行 / 0 file
+  other: 7 行 / 1 file
+  --ignored 併記の行: 1
+2 - dirty=$(git status --porcelain -- some/dir | wc -l)
+3 - n=$(git -C /x status -s)
+4 - git status --short
+5 - subprocess.run(["git", "status", "--porcelain", "--", "dir"], capture_
+6 - p = subprocess.run(['git', '-C', tree, 'status', '--porcelain', '--',
+7 - prose: this line says git status --porcelain in a sentence (md 勘定)
+8 ignored git status --porcelain --ignored -- dir
+期待=種 7 行の内 L2〜L8 の 7 行(L7 の prose も字面で当たる=kind は file 単位ゆゑ md 勘定は拡張子で分ける)

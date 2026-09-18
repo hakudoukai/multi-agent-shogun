@@ -1,0 +1,59 @@
+# koku=2026-09-18T19:30:09+0900 root=/Users/momizimac/multi-agent-shogun skip=['.git', '.venv', '__pycache__', 'evidence', 'node_modules', 'queue'] files_walked=1595 max_depth=13 rc=0
+kind	path	line	ignored	verbatim
+md	.claude/worktrees/karo-mac-a1/CLAUDE.md	489	-	dirty treeへpullするな。remote変更ありでdirtyなら local継続し状態を記録・報告(`git status --short --branch`/`git remote -v`/current branch/recent commits/changed files+diff summary)。git完了報告は repo path/前後status/changed files
+md	.github/copilot-instructions.md	527	-	dirty treeへpullするな。remote変更ありでdirtyなら local継続し状態を記録・報告(`git status --short --branch`/`git remote -v`/current branch/recent commits/changed files+diff summary)。git完了報告は repo path/前後status/changed files
+md	agents/default/system.md	527	-	dirty treeへpullするな。remote変更ありでdirtyなら local継続し状態を記録・報告(`git status --short --branch`/`git remote -v`/current branch/recent commits/changed files+diff summary)。git完了報告は repo path/前後status/changed files
+md	dashboard.md	2952	ignored	| `git status --porcelain --ignored=matching -- queue/` | `!!` が竝ぶ | 配下は悉く除外 |
+md	dashboard.md	11147	-	**当職が独立に検めた事**（足軽の申告を写したに非ず）: 四塊とも母集團を ★己の手で導出し直し★、分類の行列検算を撃ち、封を `shasum -a 256` で撃ち直し、scope_out の検出器を ★実機で再走★ させ、非0件は ★実文を読んだ★。第二陣に於て当職が撃つた反証は ★三件（後述 ㋑-2）★、悉く足軽が是として直し申した。DentalBI HEAD `10a276b07e85f
+md	dashboard.md	12748	-	∴ 散発の編輯に非ず。**★一日の内に全file が一度に触られた ―― 単一の一括事象である。★** 併せて `git status --porcelain`＝0行（内容は commit `84121c17` と同一）。
+md	dashboard.md	13638	ignored	∴ ★「追跡外効果」は散在する未追跡 file の積み上げではなく、構造的別種（入れ子 worktree）である。★ `git status --porcelain --ignored=matching` が65行に畳まれる理由も之。
+md	reports/mac/20260907/ashigaru-mac-3_B1-3_20260907.md	107	-	`git status --porcelain`を確認した所(他agentが並走で更に2commit着地済=
+md	reports/mac/20260907/ashigaru-mac-3_B1-7_20260907.md	102	-	- `git add`は3fileを個別path指定 → `git status --porcelain`で他agentの未コミットfile
+md	reports/mac/20260907/ashigaru-mac-3_B1-7r_20260907.md	84	-	- `git add`は2fileを個別path指定 → `git status --porcelain`で他agent未コミットfile
+md	reports/mac/20260907/ashigaru-mac-3_B10-2_20260907.md	108	-	git status --porcelainは読み取りのみで使用)。他agent並行変更(porcelain=5件、B6-10便
+md	reports/mac/20260907/ashigaru-mac-3_B10-3r_20260907.md	93	-	- git: `git status --porcelain`で本紙以外に変更が生じていないことを確認済。**commit 0・push 0**
+md	reports/mac/20260907/ashigaru-mac-3_B2-17_20260907.md	106	-	1行+末尾)のみ。`git status --porcelain`(`12_git_status_porcelain.txt`)で新規untrackedとして
+md	reports/mac/20260907/ashigaru-mac-3_B2-18_20260907.md	111	-	1段落)のみ。`git status --porcelain`(`14_git_status_porcelain.txt`)で新規untrackedとして
+md	reports/mac/20260907/ashigaru-mac-3_B2-18_20260907.md	125	-	共有worktreeの`git status --porcelain`(`14_git_status_porcelain.txt`)に、私の変更ではない
+md	reports/mac/20260907/ashigaru-mac-3_B6-10_20260907.md	60	-	`git status --porcelain`で、他agent並行変更(`LottieActor.tsx`・
+md	reports/mac/20260907/ashigaru-mac-3_B6-11_20260907.md	127	-	- `git status --porcelain`で本紙・manifest以外に変更が生じていないことを確認済。**commit 0・push 0**。
+md	reports/mac/20260907/ashigaru-mac-3_B6-11r_20260907.md	72	-	- `git status --porcelain`(orchestration枝`multi-agent-shogun`・隔離worktree`tmp-b8-16-03a05a9b`いずれも)で本紙由来の変更以外が無いことを確認。**commit 0・push 0**。
+md	reports/mac/20260907/ashigaru-mac-3_B6-6_20260907.md	46	-	読取(呼出/引用)のみで無改変。`git status --porcelain`実測で touched=4件が工区内である事、
+md	reports/mac/20260907/ashigaru-mac-3_B6-7_20260907.md	134	-	変更ファイル(`git status --porcelain`実測、raw: `step7_porcelain.txt`):
+md	reports/mac/20260907/ashigaru-mac-3_B6-7_20260907.md	142	-	**★第一条・出所不明の物★**: `git status --porcelain` には上記3件に加え、私が触れていない
+md	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907.md	102	-	- **第一条(出所不明の物は調べるが手を触れない)**: 作業直前の`git status --porcelain`で、
+md	reports/mac/20260907/ashigaru-mac-3_B6-9_20260907.md	61	-	**第一条(出所不明の物は調べるが手を触れない)**: commit後`git status --porcelain`確認した所
+md	reports/mac/20260907/ashigaru-mac-3_B8-10_20260907.md	28	-	`git status --porcelain`実測(raw: `step2_porcelain.txt`)で frontend 側に本席と無関係な既存差分
+md	reports/mac/20260907/ashigaru-mac-3_B8-11_20260907.md	78	-	(`git status --porcelain`で確認=完全にclean)。にもかかわらず同じエラーが再現した事から、
+md	reports/mac/20260907/ashigaru-mac-3_B8-11_20260907.md	118	-	**第一条(出所不明の物は調べるが手を触れない)**: 作業直前の`git status --porcelain`で、
+md	reports/mac/20260907/ashigaru-mac-3_B8-12_20260907.md	95	-	**第一条(出所不明の物は調べるが手を触れない)**: 作業直前〜中の`git status --porcelain`で、
+md	reports/mac/20260907/ashigaru-mac-3_B8-13_20260907.md	97	-	**第一条(出所不明の物は調べるが手を触れない)**: 作業開始時`git status --porcelain`で、
+md	reports/mac/20260907/ashigaru-mac-3_B8-15_20260907.md	17	-	隔離worktree(`git status --porcelain`=`03_git_status_porcelain.txt`、対象commit `5bd60d274`
+md	reports/mac/20260907/ashigaru-mac-3_B8-16_20260907.md	120	-	`git status --porcelain`で本予行由来の変更が無いことを確認済(実測は本文中②③節のコマンド実行結果参照)。
+md	reports/mac/20260910/ashigaru-mac-3_B4_kenshu_20260910.md	57	-	| 己の改変 | `git status --porcelain` | **0本**(汚れ無し) |
+other	.claude/worktrees/karo-mac-a1/docs/codex_audits/shogun_system_final_audit_round3.txt	47	-	Reason: this is policy logic, not shell glue. Python gives safer path normalization, structured parsing of `git status --porcelain -z`, JSON/YAML config, clearer tests, better WSL path handling, and l
+other	backups/ashigaru-mac-2.yaml.20260909_195043.pre-J3.bak	1626	-	- 2026-09-06T10:12:00 k29_2_landed: commit 81cd33bb2a5a12745cd5106340cf72034ea14ec2 in worktree patient-app-3layer (own 4 paths only via `git commit -m "..." --only -- <4 path>`, no push/stash/reset/m
+other	backups/ashigaru-mac-2.yaml.20260909_195043.pre-J3.bak	1641	-	- 2026-09-06T12:07:30 k37_2_landed: commit 3b8b82cf188555996fe513af939ab592f27a54ce in worktree patient-app-3layer (own 1 path only via `git add`+`git commit -m "..." --only -- <1 path>`, no push/stas
+other	backups/ashigaru-mac-2.yaml.20260909_195043.pre-J3.bak	1649	-	- 2026-09-06T12:34:00 k39_2_gap_reported: commit 0件・worktree HEAD 1e2a2b355のまま不変(k38-2から不変)。前提読み: a1 k37-1 api.ts(PassportApiError export/status付き例外)・MinigameMenu.tsx(handlePlayのcatchで409分岐・MULTI_MEMB
+other	backups/ashigaru-mac-2.yaml.20260909_195043.pre-J3.bak	1652	-	- 2026-09-06T12:38:43 k39_2_landed: commit 1e892e8bd7004001c9ff4b132c32bb0408100d82 in worktree patient-app-3layer (own 1 path only via `git add`+`git commit -m "..." --only -- <1 path>`, no push/stas
+other	backups/ashigaru-mac-3.yaml.20260901_175415.pre-1b5d8e01.bak	65	-	- realpath / HEAD / git status --porcelain
+other	docs/codex_audits/shogun_system_final_audit_round3.txt	47	-	Reason: this is policy logic, not shell glue. Python gives safer path normalization, structured parsing of `git status --porcelain -z`, JSON/YAML config, clearer tests, better WSL path handling, and l
+other	reports/mac/20260907/ashigaru-mac-3_B1-6_20260907/raw/08_git_status_after_commit_no_push.txt	3	-	cmd: git status --porcelain (commit直後・他agent編集中fileの不触確認)
+other	reports/mac/20260907/ashigaru-mac-3_B1-7_20260907/raw/08_commit_and_push0_evidence.txt	3	-	cmd: git show --stat a5fa3ddc7 && git status --porcelain && git log --oneline -1 && git status -sb (push有無確認)
+other	reports/mac/20260907/ashigaru-mac-3_B1-7_20260907/raw/08_commit_and_push0_evidence.txt	22	-	--- git status --porcelain (他agentのfileが混じっていない事) ---
+other	reports/mac/20260907/ashigaru-mac-3_B2-22_20260907/raw/05_isolated_tree_commit0_confirm.txt	2	-	cmd: git status --porcelain=v1 (件数) / git log --oneline -1 (HEAD不変の確認・器確認③の一時patch2箇所は検証後revert済でdiff残らず)
+other	reports/mac/20260907/ashigaru-mac-3_B2-24_20260907/raw/06_commit_and_status.txt	2	-	cmd: git show --stat HEAD && git status --porcelain
+other	reports/mac/20260907/ashigaru-mac-3_B8-15_20260907/03_git_status_porcelain.txt	1	-	as-of: 2026-09-07T03:34:48Z HEAD=5bd60d274 porcelain=2 cmd='git status --porcelain'
+other	reports/mac/20260910/ashigaru-mac-3_B4_kenshu_20260910_raw/03_senju.txt	12	-	# cmd: git status --porcelain | wc -l  (★己の改変の母數★)
+other	reports/mac/20260910/ashigaru-mac-3_km-f311bbdb-taps_20260910_raw/10_git_diff.txt	3	-	cmd: git status --porcelain; git diff --stat; git diff
+other	reports/mac/20260910/ashigaru-mac-3_km-f311bbdb-taps_20260910_raw/13_main_tree_untouched.txt	3	-	cmd: git -C /Users/momizimac/DentalBI log --oneline -1; git -C /Users/momizimac/DentalBI status --porcelain -- frontend/src/features/child-passport/story-engine/__b5__/
+other	scripts/checks/karo_mac_dasumae_gate_manifest.txt	9	-	git status --short frontend/src/features/child-passport frontend/src/features/teriha-passport frontend/scripts = 該当0行。
+other	scripts/checks/karo_mac_dasumae_gate_manifest.txt	10	-	git status --short scripts/checks/karo_mac_dasumae_gate.sh = ?? (新設・未commit・commitは家老へ請ふ前提)。
+py	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_git_guard.py	160	-	status = run_git("status", "--porcelain", "-z")
+py	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_git_guard.py	212	-	status = run_git("status", "--porcelain")
+py	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_git_guard.py	360	-	status = run_git("status", "--porcelain")
+py	shim/hakudokai/hakudokai_git_guard.py	160	-	status = run_git("status", "--porcelain", "-z")
+py	shim/hakudokai/hakudokai_git_guard.py	212	-	status = run_git("status", "--porcelain")
+py	shim/hakudokai/hakudokai_git_guard.py	360	-	status = run_git("status", "--porcelain")
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/ephemeral_worktree_hygiene.sh	19	-	dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	19	-	dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"

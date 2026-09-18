@@ -1,0 +1,12 @@
+koku=2026-09-18T19:33:27+0900 器2=shim/hakudokai/hakudokai_git_guard.py(PROJECT_ROOT=SCRIPT_DIR.parent.parent ゆゑ写しを種 repo の shim/hakudokai/ に置いて走らせる=種 repo が PROJECT_ROOT・実の樹は触らず・action は status のみ(auto-pull/wip-commit は remote と /tmp log に触るゆゑ走らせぬ))
+種 repo の伏せられた追跡外(写し込み) ls-files --others --ignored --exclude-standard 行数=2 / porcelain 行数=0
+== 状態A(伏せられた追跡外のみ)
+Branch: master (ee17924)
+Uncommitted changes: 0
+rc=0  → ★Uncommitted changes: 0★ = 盲(disk には追跡外 2 本)
+== 状態B(追跡済 tracked.txt を一字直す)
+Uncommitted changes: 1
+  → 1 = 鳴る
+  戻し後: Uncommitted changes: 0
+== 判(何故 盲でも害が薄いか): auto_pull は porcelain 空なら pull する=伏せられた追跡外が在つても pull は其れを壊さぬ(追跡外は pull の対象外)。wip_commit は porcelain 行数≥3 で WIP commit=伏せられた紙は数へられぬが、★伏せられた紙を WIP commit すべきでもない★ゆゑ盲が正しい側に働く。show_status の「Uncommitted changes」だけが人を誤らせる数(0 と言ふ)。
+/tmp の health/log に触れたか: or directory   or directory

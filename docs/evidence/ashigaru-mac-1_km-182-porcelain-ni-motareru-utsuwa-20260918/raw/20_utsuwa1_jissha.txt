@@ -1,0 +1,16 @@
+koku=2026-09-18T19:32:28+0900 種の repo=docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/raw/seed_repo/.claude/worktrees/tmp-seed(當席が己の束の内に作つた scratch git repo・.gitignore は裸 * のみ・追跡 2 本)
+== 状態A: 伏せられた追跡外の紙 1 本(seed_ignored.txt)を置く
+  porcelain 行数=0 / check-ignore -v: .gitignore:1:*	seed_ignored.txt / ls-files --others --ignored --exclude-standard 行数=1
+  器1 を REPO=docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/raw/seed_repo で走らせる:
+[worktree-hygiene] free=165Gi 一時樹=1(掃ける=0 / 持主の言が要る=0 / 生きて居る=1)
+[worktree-hygiene] 異常 無し
+  rc=0 → 一時樹 1・★掃ける or 生きて居る★(dirty=0 と判じた=盲。持主の言が要る 0)
+== 状態B: 追跡済 tracked.txt を一字直す(鳴る側の対照)
+  porcelain 行数=1
+[worktree-hygiene] free=165Gi 一時樹=1(掃ける=0 / 持主の言が要る=1 / 生きて居る=0)
+  → 持主の言が要る 1(鳴る)
+  戻し後 porcelain 行数=0(伏せられた種は残る・porcelain は 0)
+== 状態C: 24 時間より古く見せる(掃ける に落ちるか) touch -t で mtime を 2 日前に
+[worktree-hygiene] free=165Gi 一時樹=1(掃ける=1 / 持主の言が要る=0 / 生きて居る=0)
+  → ★掃ける 1★ = 伏せられた紙 1 本を抱いた樹が「中身 commit 済」と数へられる(盲の實射)
+片付け: 種 repo は raw/seed_repo に残す(入れ子 .git ゆゑ commit には入れず・臺帳外・消すは家老の裁)

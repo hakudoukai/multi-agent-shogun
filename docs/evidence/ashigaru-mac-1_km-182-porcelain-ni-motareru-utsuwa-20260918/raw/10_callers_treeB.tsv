@@ -1,0 +1,8 @@
+# koku=2026-09-18T19:30:09+0900 root=/Users/momizimac/wt/a1-km182 skip=['.git', '.venv', '__pycache__', 'evidence', 'node_modules', 'queue'] files_walked=517 max_depth=10 rc=0
+kind	path	line	ignored	verbatim
+md	CLAUDE.md	489	-	dirty treeへpullするな。remote変更ありでdirtyなら local継続し状態を記録・報告(`git status --short --branch`/`git remote -v`/current branch/recent commits/changed files+diff summary)。git完了報告は repo path/前後status/changed files
+other	docs/codex_audits/shogun_system_final_audit_round3.txt	47	-	Reason: this is policy logic, not shell glue. Python gives safer path normalization, structured parsing of `git status --porcelain -z`, JSON/YAML config, clearer tests, better WSL path handling, and l
+py	shim/hakudokai/hakudokai_git_guard.py	160	-	status = run_git("status", "--porcelain", "-z")
+py	shim/hakudokai/hakudokai_git_guard.py	212	-	status = run_git("status", "--porcelain")
+py	shim/hakudokai/hakudokai_git_guard.py	360	-	status = run_git("status", "--porcelain")
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	19	-	dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"

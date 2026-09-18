@@ -1,0 +1,18 @@
+koku=2026-09-18T19:31:12+0900
+.gitignore の negation(!)行の内 docs を許す物:
+42:!docs/cmd_phase16_honda_meta_audit_draft.md
+194:!docs/
+195:!docs/philosophy.md
+196:!docs/codex_audits/
+197:!docs/codex_audits/*.txt
+198:!docs/runbooks/
+199:!docs/runbooks/*.md
+200:!docs/shogun-only-freeze-recovery.md
+201:!docs/scripts/
+202:!docs/scripts/*.ps1
+(件数 79)
+束の中の仮想 path の check-ignore -v --no-index:
+  docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/raw/seed_ignored.txt → .gitignore:7:*	docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/raw/seed_ignored.txt
+  docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/seed_root.md → .gitignore:7:*	docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/seed_root.md
+  docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/raw/seed_ctrl/x.sh → .gitignore:7:*	docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/raw/seed_ctrl/x.sh
+∴ 束の中に置く追跡外の紙は悉く .gitignore:7 の * に当たる(伏せられぬ追跡外の紙は束の内には作れぬ)→ 鳴る側の種は「追跡済の紙を一字直す」(km-180 と同じ)で示す
