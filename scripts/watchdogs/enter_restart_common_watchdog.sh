@@ -56,9 +56,7 @@ LOG_DIR="$ER_LOG_DIR"
 mkdir -p "$LOG_DIR"
 LOG="$LOG_DIR/$(date +%Y%m%d).log"
 FIRE_HISTORY="$LOG_DIR/fires.log"
-THRESHOLD_MIN="${ER_THRESHOLD_MIN:-10}"
-FIRE_CAP_COUNT="${ER_FIRE_CAP_COUNT:-3}"
-FIRE_CAP_WINDOW_MIN="${ER_FIRE_CAP_WINDOW_MIN:-15}"
+# ★閾三本は log() の後の fix_threshold で定める(乙: 此処で ${ER_…:-既定} に倒すと未設定と空文字が混ざる)★
 # ★cycle4 Q1 fix: python3 binary path envvar 化 (smoke test stub 化に対応)★
 ER_PYTHON3_BIN="${ER_PYTHON3_BIN:-/home/hakudoukai/.local/share/hermes-agent/venv/bin/python3}"
 # ★副院長令 baabd1ca 横展開 patch: target_pc envvar 化 (main_pc/second_pc 対応)★
@@ -73,6 +71,43 @@ HEARTBEAT_TOPIC_PREFIX="$ER_HEARTBEAT_TOPIC_PREFIX"
 CYCLE_LOG_PREFIX="$ER_CYCLE_LOG_PREFIX"
 
 log() { printf '[%s] %s\n' "$(date -Is)" "$*" | tee -a "$LOG"; }
+
+# ─── 閾の番人(甲/乙) ───
+_th_say(){ log "$*"; }
+# ★甲 ―― 閾は「比較に使ふのと同じ演算子」で検めよ(裁 seq322952・横展開 裁 seq323062)★
+#   舊 is_num は case の字面判定ゆゑ 99999999999999999999 を「數」と呼ぶ。然し後段の
+#   [ "$x" -ge "$閾" ] は其の値で ★rc=2★ に倒れ、if も elif も偽＝★黙つて既定の枝へ落ちる★。
+#   ∴ 検める器と使ふ器を同じ演算子に揃へる。
+num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+# ★乙 ―― 未設定/空文字/空白のみ を分けて名指す(裁 seq322952)★
+#   ${x+set} は空文字でも set を返す ∴ 未設定と空文字は此処でのみ分かれる。
+env_state(){
+  eval "_es_set=\"\${$1+set}\"; _es_v=\"\${$1-}\""
+  if [ -z "${_es_set}" ]; then printf 'unset\n'
+  elif [ -z "${_es_v}" ]; then printf 'empty\n'
+  elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+  else printf 'value\n'; fi
+}
+# 閾を一本の道で定める ―― $1=環境変数名 $2=既定 $3=受け皿の変数名
+#   ★乙′(高頻度器の例外・家老mac 申告)★: 未設定＝既定 は本器の★設計上の常態★ゆゑ黙る。
+#   逐回鳴らせば起動毎/prompt 毎の空鳴り＝氾濫(本器の旧註と同旨)。★異常の三形★
+#   (空文字・空白のみ・比較器で扱へぬ)は必ず鳴る。門(低頻度器)では四形悉く刷る。
+fix_threshold(){
+  _ft_n="$1"; _ft_d="$2"; _ft_o="$3"; _ft_s="$(env_state "$_ft_n")"; eval "_ft_v=\"\${$_ft_n-}\""
+  case "$_ft_s" in
+    unset) eval "$_ft_o=\$_ft_d"; return 0 ;;
+    empty) _th_say "★閾 ${_ft_n} が空文字 ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+    blank) _th_say "★閾 ${_ft_n} が空白のみ ―― 既定 ${_ft_d} へ倒す(fail-closed)★"; eval "$_ft_o=\$_ft_d"; return 0 ;;
+  esac
+  if num_same_op "$_ft_v" && [ "$_ft_v" -ge 0 ]; then eval "$_ft_o=\$_ft_v"; return 0; fi
+  _th_say "★閾 ${_ft_n} を比較器が扱へぬ(「${_ft_v}」) ―― 既定 ${_ft_d} へ倒す(fail-closed)★"
+  eval "$_ft_o=\$_ft_d"
+}
+# 此の器は set -u 有。比較器で扱へぬ閾は L90 の $(( … )) で ★名前引き★ に落ち unbound で死ぬ。
+# ★然も rc=0★ ∴ 呼手には「通つた」と見える(專任3 第40弾・裁 322099)。閾の意味は不変。
+fix_threshold ER_THRESHOLD_MIN 10 THRESHOLD_MIN
+fix_threshold ER_FIRE_CAP_COUNT 3 FIRE_CAP_COUNT
+fix_threshold ER_FIRE_CAP_WINDOW_MIN 15 FIRE_CAP_WINDOW_MIN
 
 log "=== ${CYCLE_LOG_PREFIX} cycle start (common watchdog) ==="
 
