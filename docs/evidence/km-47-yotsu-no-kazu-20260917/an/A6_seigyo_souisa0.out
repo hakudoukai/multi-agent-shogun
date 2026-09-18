@@ -1,0 +1,29 @@
+= 元の臺帳 docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt (行 232)
+= 対照の臺帳 docs/evidence/km-47-yotsu-no-kazu-20260917/an/seigyo/taishou_manifest.txt (行 232 bytes=38688)
+= ★直した写し★ 1 本 ―― ★元の fixture には一字も触れて居らぬ★
+  元 docs/evidence/km-46-yomite-no-kizu-20260917/fixture/kata/A10/a sha256=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb c.txt
+  写 docs/evidence/km-47-yotsu-no-kazu-20260917/fixture/naoshita/A10/a sha256_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb c.txt   中身同一 sha=a0a466f728880be9… bytes=5
+
+-- ★元の臺帳(破れの fixture 在り)★ --
+   ★走らせた★ /opt/homebrew/opt/python@3.14/bin/python3.14 -B ./docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py docs/evidence/km-46-yomite-no-kizu-20260917/ashigaru-mac-3_km-46-yomite-no-kizu-20260917_manifest.txt .
+   ★器の rc★ 1
+   ★器の四数行(逐語)★ 一致 ★229★ / 相違 1 / 実体無 0 / 読めぬ行 0  (母數 230)
+   ★正準文字列★ 四数札v1|母數=230|一致=229|相違=1|実体無=0|讀めぬ行=0
+   四数札v1 母數=230 一致=229 相違=1 実体無=0 讀めぬ行=0 和検=和=230=母數 封=225f29b2ac4b4576
+   ★rc=1 ―― 相違/実体無/讀めぬ行 の何れかが立つ(または一致0)★
+-- ★対照の臺帳(直した写しへ向けた)★ --
+   ★走らせた★ /opt/homebrew/opt/python@3.14/bin/python3.14 -B ./docs/evidence/km-46-yomite-no-kizu-20260917/patch/verify_AFTER.py docs/evidence/km-47-yotsu-no-kazu-20260917/an/seigyo/taishou_manifest.txt .
+   ★器の rc★ 0
+   ★器の四数行(逐語)★ 一致 ★230★ / 相違 0 / 実体無 0 / 読めぬ行 0  (母數 230)
+   ★正準文字列★ 四数札v1|母數=230|一致=230|相違=0|実体無=0|讀めぬ行=0
+   四数札v1 母數=230 一致=230 相違=0 実体無=0 讀めぬ行=0 和検=和=230=母數 封=5f89880c45ba663b
+   ★rc=0 ―― 四数悉く清し★
+
+★元の rc=1 / 対照の rc=0★
+
+== ★之が偽の通過である理由★ ==
+  ⑴ 直したのは ★検体(fixture の名)★ であつて ★器(sha 欄の抽出)★ ではない。
+  ⑵ 器は今も ★行の最初の sha256=★ を欄として取る。名の中に 64hex が在れば ★其れを録 sha と読む。★
+  ⑶ ∴ 対照が 相違0 を出したのは ★器が直つたから★ ではなく ★器を破る検体を除けたから★ である。
+  ⑷ ★次に同じ形の名が来れば、器は同じ様に黙つて誤る ―― 然も今度は鳴らす検体が無い。★
+  ⑸ 相違1 は疵ではなく ★器の破れが未だ在る事の唯一の證★ である。消せば證が消えるだけである。

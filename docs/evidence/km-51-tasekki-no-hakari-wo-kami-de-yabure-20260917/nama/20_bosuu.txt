@@ -1,0 +1,48 @@
+方言	30_ate	頭13	胴12	ずれ1
+方言	60_gai	頭12	胴12	ずれ0
+
+#閾一覧	番	器	閾名	既定
+閾01	watcher	ESCALATE_PHASE1	120
+閾02	watcher	ESCALATE_PHASE2	240
+閾03	watcher	ESCALATE_COOLDOWN	300
+閾04	watcher	NUDGE_COOLDOWN_SEC	60
+閾05	watcher	NUDGE_COOLDOWN_SEC_CODEX	300
+閾06	watcher	NUDGE_COOLDOWN_SEC_CLAUDE	60
+閾07	watcher	ASW_PHASE	2
+閾08	watcher	APPROVAL_ALERT_COOLDOWN	300
+閾09	watcher	MAX_TYPING_SKIP	5
+閾10	watcher	INOTIFY_TIMEOUT	30
+閾11	enter	ER_THRESHOLD_MIN	10
+閾12	enter	ER_FIRE_CAP_COUNT	3
+閾13	enter	ER_FIRE_CAP_WINDOW_MIN	15
+閾14	health	HEALTH_CHECK_COOLDOWN_SEC	300
+閾15	health	HEALTH_CHECK_TOKEN_WARN	200000
+閾16	health	HEALTH_CHECK_TOKEN_CRIT	240000
+閾17	context	CONTEXT_WARN_BYTES	1600000
+閾18	context	CONTEXT_DANGER_BYTES	2000000
+
+閾_件	18
+形_件	22
+積_組	396
+30_ate_行	396
+一致(積==行)	合
+60_gai_行	126
+
+#區分(★專任2 の物差し★)	組
+無害(既定と同義に讀まれる)	67
+★零へ倒れる★	35
+★極大へ倒れる★	18
+★讀手の割れ★	4
+★外器が拒む★	2
+區分_和_組	126
+★專任2 宣: 有害相当	59	無害	67★
+
+通形_件	7	札=07,08,09,10,16,17,18
+通形_組	07	18
+通形_組	08	18
+通形_組	09	18
+通形_組	10	18
+通形_組	16	18
+通形_組	17	18
+通形_組	18	18
+60_gai_閾_件	18

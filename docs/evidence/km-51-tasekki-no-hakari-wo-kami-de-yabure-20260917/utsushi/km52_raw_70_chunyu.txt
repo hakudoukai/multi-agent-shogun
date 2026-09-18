@@ -1,0 +1,14 @@
+=== 陰性対照: 改行無しの拒否 → 一行 ===
+watcher	行=1
+health 	行=1
+context	行=1
+enter  	行=1 (LOG)
+=== 形12: 値=50<改行>9999 → 二行(注入成立) ===
+watcher	行=2
+health 	行=2
+context	行=2
+enter  	行=2 (LOG)
+=== ★偽記録を仕立てる★: 値に完結した第二行を仕込む ===
+--- watcher stderr 逐字 ---
+     1	[watcher] ★閾 INOTIFY_TIMEOUT を比較器が扱へぬ(「30 へ倒す(fail-closed)★
+     2	[watcher] ★閾 INOTIFY_TIMEOUT 正常 ―― 値9999 受理★」) ―― 既定 30 へ倒す(fail-closed)★

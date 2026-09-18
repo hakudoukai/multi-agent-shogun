@@ -1,0 +1,46 @@
+◆三器 ―― HEAD=0db0857e(番人無し) / 直前=9a58a8b9(is_num有) / 新=95b027ea(甲乙)
+◆生 big.bin = 54525952 byte = 52 MB / 既定 MAXF=50 ∴ ★鳴るのが正★
+
+== ㋐ 閾=99999999999999999999 (★甲の実害★) ==
+-- HEAD --
+/tmp/g4_old.sh: line 70: [: 99999999999999999999: integer expression expected
+條⑤ 寸法 = 単 file 上限 99999999999999999999 MB 以下 / 総和 52 MB(上限 100)
+-- 直前 --
+/tmp/g4_preedit.sh: line 74: [: 99999999999999999999: integer expression expected
+條⑤ 寸法 = 単 file 上限 99999999999999999999 MB 以下 / 総和 52 MB(上限 100)
+-- 新器 --
+★閾 GATE4_MAX_FILE_MB が比較器で扱へぬ(「99999999999999999999」) ―― 既定 50 へ倒す(fail-closed)★
+閾 GATE4_MAX_TOTAL_MB = 未設定 ―― 既定 100 を用ゐる(★倒した事を刷る★)
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+
+== ㋑ 閾=空文字 (★乙★) ==
+-- HEAD --
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+-- 直前 --
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+-- 新器 --
+★閾 GATE4_MAX_FILE_MB が空文字 ―― 既定 50 へ倒す(fail-closed)★
+閾 GATE4_MAX_TOTAL_MB = 未設定 ―― 既定 100 を用ゐる(★倒した事を刷る★)
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+
+== ㋒ 閾=空白のみ (★乙★) ==
+-- HEAD --
+/tmp/g4_old.sh: line 70: [:  : integer expression expected
+條⑤ 寸法 = 単 file 上限   MB 以下 / 総和 52 MB(上限 100)
+-- 直前 --
+★閾 GATE4_MAX_FILE_MB が數でない(「 」) ―― 既定 50 へ倒す(fail-closed)★
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+-- 新器 --
+★閾 GATE4_MAX_FILE_MB が空白のみ ―― 既定 50 へ倒す(fail-closed)★
+閾 GATE4_MAX_TOTAL_MB = 未設定 ―― 既定 100 を用ゐる(★倒した事を刷る★)
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+
+== ㋓ 未設定 (★乙★) ==
+-- HEAD --
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+-- 直前 --
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★
+-- 新器 --
+閾 GATE4_MAX_FILE_MB = 未設定 ―― 既定 50 を用ゐる(★倒した事を刷る★)
+閾 GATE4_MAX_TOTAL_MB = 未設定 ―― 既定 100 を用ゐる(★倒した事を刷る★)
+★條⑤ 単 file が 52 MB(上限 50)―― big.bin★

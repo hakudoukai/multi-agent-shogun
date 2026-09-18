@@ -1,0 +1,33 @@
+#器	前sha16(着手時)	後sha16(納め時)	凍結sha16(當席が測つた版)	index	HEAD	判
+scripts/inbox_watcher.sh	6f6954b455cecf4e	cac867f8b94d5be4	cac867f8b94d5be4	6dcfc02c55419e9a	5ff53f30cd274956	★動いた(他席の手)★
+scripts/agent_health_check.sh	e5bd6ab3e28f1f9c	6493c1d72a1e3a39	6493c1d72a1e3a39	5979e9ac9a884b14	e5bd6ab3e28f1f9c	★動いた(他席の手)★
+scripts/checks/context_usage_warn.sh	be4b1b210f815f0d	897412b069d0a620	897412b069d0a620	6a9ecbad0e8666bb	82e15f7f6e77eccd	★動いた(他席の手)★
+scripts/watchdogs/enter_restart_common_watchdog.sh	31956e6427ade32f	b224557e96e54c8c	b224557e96e54c8c	ba89766923fdf4ea	31956e6427ade32f	★動いた(他席の手)★
+
+不動_件	0
+動いた_件	4
+
+#★対照 ―― 此の検出子が實際に效いて居る事を示す★
+陰性対照	scripts/inbox_write.sh	HEAD=96a1e2355d5acf09	歩=96a1e2355d5acf09	不動
+陰性対照	scripts/checks/karo_mac_gate4.sh	HEAD=95b027ea5e4f0fc5	歩=95b027ea5e4f0fc5	不動
+陽性対照	己の束 nama/90_rcs.txt	HEAD=★HEADに無し(新規)★	歩=df0f1b525d86834a	★動いた(當席の手・己の束の中)★
+
+#★「動いたのは當席の手ではない」の別証★
+⑴ 生器の mtime(一斉に動いて居る=一手の仕業)
+  2026-09-17T07:17:37	scripts/inbox_watcher.sh
+  2026-09-17T07:17:37	scripts/agent_health_check.sh
+  2026-09-17T07:26:05	scripts/checks/context_usage_warn.sh
+  2026-09-17T07:17:37	scripts/watchdogs/enter_restart_common_watchdog.sh
+⑵ 差分の中身が指す裁(當席の下命に非ず)
+     2 seq232016
+     1 seq233904
+     7 seq323687
+  ―― 右の裁は孰れも當席の下命(第51弾・他席の測りを紙の上で破れ)に非ず
+⑶ 差分の規模
+   scripts/agent_health_check.sh                      | 11 +++-
+   scripts/checks/context_usage_warn.sh               |  6 +-
+   scripts/inbox_watcher.sh                           | 70 +++++++++++++++++++---
+   scripts/watchdogs/enter_restart_common_watchdog.sh | 11 +++-
+   4 files changed, 81 insertions(+), 17 deletions(-)
+⑷ 當席が scripts/ 以下へ書いた物
+  ★無★ ―― 本弾の書きは悉く docs/evidence/km-51-.../ の中のみ(下の臺帳が其の全て)

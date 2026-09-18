@@ -1,0 +1,9 @@
+#的	a4cafdf
+#親	a6587c0 feat(checks): gate4 の閾に ★甲(同じ演算子で検む)・乙(未設定/空/空白を分け刷る)★ を当てる(裁 seq322952)
+#當席HEADとの共通祖先	a6587c02ae87a8a737b2d1daf1ed2a1fc6d8fe91
+#器path	fix_threshold_件	_th_say_件	num_same_op_件	行	判
+scripts/inbox_watcher.sh	0	0	0	1554	★番人不在 ―― 此の版では彼の396組を再現できぬ★
+scripts/agent_health_check.sh	0	0	0	444	★番人不在 ―― 此の版では彼の396組を再現できぬ★
+scripts/checks/context_usage_warn.sh	0	0	0	55	★番人不在 ―― 此の版では彼の396組を再現できぬ★
+scripts/watchdogs/enter_restart_common_watchdog.sh	0	0	0	382	★番人不在 ―― 此の版では彼の396組を再現できぬ★
+#註	彼の測定を再現し得るのは束内の写し(utsushi/scripts_*.sh)のみである。★的の宣と、測つた物が違ふ★

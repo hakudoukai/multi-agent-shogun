@@ -1,0 +1,33 @@
+【歩き根】 queue/reports/ashigaru-mac-3_km-39-chu-to-jissou-no-sa-wo-obi-de-hakare-soshite-koku-no-junkan-wo-toji-yo-20260916_evidence
+  ★己の出目として除く★ = 2 本 kou/36_sha.err kou/36_sha.out
+  ★註★ 『除いた』は『歩いて居らぬ』ではない ―― 歩いた上で落とした。
+  母數 = ★33 本★(歩いた 35 ― 除いた 2)
+  讀めた 33 / ★讀めぬ 0★
+
+【対照】
+  陰性(f×64) = ★0 本★ / 陽性(00198d1151c6317d…) = ★1 本★
+  ★対照 二本 通つた★
+
+【甲 ―― 同じ sha の file が二本在るか(己の出目を除いた後)】
+  相異なる sha = ★33★ / file = ★33★ ∴ 重なり = ★0 本★
+  ★二本以上を指す sha = 0 個★
+  ∴ 此の刻の此の束では重なり無し ―― ★『sha は単射』とは言へぬ(未判)★
+    (35_ が見た重なりは ★器自身の空の出目★ であつた ―― 疵A)
+  ★『空である旨の一行』を持つ流れ = 8 本★ ―― 刻と流名を含む故 ★互ひに異なる★。
+    ∴ 裁 seq310228⑶ の一行は ★重なりを生まぬ書き方★ に成つて居る(00_run.sh の功)。
+
+【乙 ―― 束の外に在る物に sha は届くか】
+  queue/tasks/ashigaru-mac-3.yaml      sha c218c46993b7e94a… 束の中の当たり = ★0 本★
+  scripts/stop_hook_inbox.sh           sha 0fb2e72891d65297… 束の中の当たり = ★0 本★
+  ∴ ★『当たり 0』は『在らぬ』ではない ―― 『此の根の下に在らぬ』である。★
+
+【丙 ―― 歩く代償と、歩けぬ根】
+  根                      KB(出目)         rc 鳴(stderr 一行目)
+  …0916_evidence            180          0 (無し)
+  queue/reports        13799936          1 du: queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-no
+  queue                13850344          1 du: queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-no
+  scripts                  1200          0 (無し)
+  ★rc≠0 でも和は出て居る ―― ★『器が鳴つた』と『數が無い』は別事★(疵B)。★
+  ∴ queue/ は ★13.8 GB 級★。★sha で歩けば全 byte を讀む ―― 名なら stat のみ。★
+    加へて ★讀めぬ一本(Permission denied)★ が根の中に在る ――
+    ★sha の歩きは其處で ★静かに欠ける★。欠けを数へぬ器は『無し』と刷る。★

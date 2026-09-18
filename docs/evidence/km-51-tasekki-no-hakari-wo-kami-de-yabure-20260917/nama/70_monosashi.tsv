@@ -1,0 +1,140 @@
+器	閾名	形	逐語	決定の讀手	實(決定が讀む)	面(人が讀む)	當席	立つた述語	專任2	判
+watcher	ESCALATE_PHASE1	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ESCALATE_PHASE1	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ESCALATE_PHASE1	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE1	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE1	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE1	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE1	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	ESCALATE_PHASE2	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ESCALATE_PHASE2	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ESCALATE_PHASE2	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE2	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE2	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE2	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_PHASE2	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	ESCALATE_COOLDOWN	07	-0	算術	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ESCALATE_COOLDOWN	08	0	算術	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ESCALATE_COOLDOWN	09	+50	算術	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_COOLDOWN	10	 50 	算術	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_COOLDOWN	16	007	算術	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ESCALATE_COOLDOWN	17	010	算術	8	10	有害	⑶割れ	★讀手の割れ★	合
+watcher	ESCALATE_COOLDOWN	18	9223372036854775807	算術	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC_CODEX	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC_CODEX	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC_CODEX	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CODEX	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CODEX	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CODEX	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CODEX	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC_CLAUDE	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC_CLAUDE	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	NUDGE_COOLDOWN_SEC_CLAUDE	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CLAUDE	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CLAUDE	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CLAUDE	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	NUDGE_COOLDOWN_SEC_CLAUDE	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	ASW_PHASE	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ASW_PHASE	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	ASW_PHASE	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ASW_PHASE	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ASW_PHASE	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ASW_PHASE	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	ASW_PHASE	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	APPROVAL_ALERT_COOLDOWN	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	APPROVAL_ALERT_COOLDOWN	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	APPROVAL_ALERT_COOLDOWN	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	APPROVAL_ALERT_COOLDOWN	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	APPROVAL_ALERT_COOLDOWN	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	APPROVAL_ALERT_COOLDOWN	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	APPROVAL_ALERT_COOLDOWN	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	MAX_TYPING_SKIP	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	MAX_TYPING_SKIP	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	MAX_TYPING_SKIP	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	MAX_TYPING_SKIP	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	MAX_TYPING_SKIP	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	MAX_TYPING_SKIP	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	MAX_TYPING_SKIP	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+watcher	INOTIFY_TIMEOUT	07	-0	外器	0	0	有害	⑴定値化(零),⑵外器拒	★外器が拒む★	合
+watcher	INOTIFY_TIMEOUT	08	0	外器	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+watcher	INOTIFY_TIMEOUT	09	+50	外器	50	50	無害	―	無害(既定と同義に讀まれる)	合
+watcher	INOTIFY_TIMEOUT	10	 50 	外器	50	50	有害	⑵外器拒	★外器が拒む★	合
+watcher	INOTIFY_TIMEOUT	16	007	外器	7	7	無害	―	無害(既定と同義に讀まれる)	合
+watcher	INOTIFY_TIMEOUT	17	010	外器	10	10	無害	―	無害(既定と同義に讀まれる)	合
+watcher	INOTIFY_TIMEOUT	18	9223372036854775807	外器	2^63-1	9223372036854775807	有害	⑴定値化(極大),⑵外器拒,⑵限り張られず	★極大へ倒れる★	合
+enter	ER_THRESHOLD_MIN	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+enter	ER_THRESHOLD_MIN	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+enter	ER_THRESHOLD_MIN	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_THRESHOLD_MIN	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_THRESHOLD_MIN	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_THRESHOLD_MIN	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_THRESHOLD_MIN	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+enter	ER_FIRE_CAP_COUNT	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+enter	ER_FIRE_CAP_COUNT	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+enter	ER_FIRE_CAP_COUNT	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_FIRE_CAP_COUNT	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_FIRE_CAP_COUNT	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_FIRE_CAP_COUNT	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_FIRE_CAP_COUNT	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+enter	ER_FIRE_CAP_WINDOW_MIN	07	-0	算術	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+enter	ER_FIRE_CAP_WINDOW_MIN	08	0	算術	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+enter	ER_FIRE_CAP_WINDOW_MIN	09	+50	算術	50	50	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_FIRE_CAP_WINDOW_MIN	10	 50 	算術	50	50	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_FIRE_CAP_WINDOW_MIN	16	007	算術	7	7	無害	―	無害(既定と同義に讀まれる)	合
+enter	ER_FIRE_CAP_WINDOW_MIN	17	010	算術	8	10	有害	⑶割れ	★讀手の割れ★	合
+enter	ER_FIRE_CAP_WINDOW_MIN	18	9223372036854775807	算術	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+health	HEALTH_CHECK_COOLDOWN_SEC	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+health	HEALTH_CHECK_COOLDOWN_SEC	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+health	HEALTH_CHECK_COOLDOWN_SEC	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_COOLDOWN_SEC	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_COOLDOWN_SEC	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_COOLDOWN_SEC	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_COOLDOWN_SEC	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+health	HEALTH_CHECK_TOKEN_WARN	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+health	HEALTH_CHECK_TOKEN_WARN	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+health	HEALTH_CHECK_TOKEN_WARN	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_WARN	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_WARN	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_WARN	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_WARN	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+health	HEALTH_CHECK_TOKEN_CRIT	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+health	HEALTH_CHECK_TOKEN_CRIT	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+health	HEALTH_CHECK_TOKEN_CRIT	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_CRIT	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_CRIT	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_CRIT	17	010	test	10	10	無害	―	無害(既定と同義に讀まれる)	合
+health	HEALTH_CHECK_TOKEN_CRIT	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+context	CONTEXT_WARN_BYTES	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+context	CONTEXT_WARN_BYTES	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+context	CONTEXT_WARN_BYTES	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+context	CONTEXT_WARN_BYTES	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+context	CONTEXT_WARN_BYTES	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+context	CONTEXT_WARN_BYTES	17	010	test	10	10	無害	―	★讀手の割れ★	★食ひ違ひ★
+context	CONTEXT_WARN_BYTES	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+context	CONTEXT_DANGER_BYTES	07	-0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+context	CONTEXT_DANGER_BYTES	08	0	test	0	0	有害	⑴定値化(零)	★零へ倒れる★	合
+context	CONTEXT_DANGER_BYTES	09	+50	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+context	CONTEXT_DANGER_BYTES	10	 50 	test	50	50	無害	―	無害(既定と同義に讀まれる)	合
+context	CONTEXT_DANGER_BYTES	16	007	test	7	7	無害	―	無害(既定と同義に讀まれる)	合
+context	CONTEXT_DANGER_BYTES	17	010	test	10	10	無害	―	★讀手の割れ★	★食ひ違ひ★
+context	CONTEXT_DANGER_BYTES	18	9223372036854775807	test	2^63-1	9223372036854775807	有害	⑴定値化(極大)	★極大へ倒れる★	合
+
+母數_組	126
+當席_有害_組	57
+當席_無害_組	69
+專任2_有害_組	59	專任2_無害_組	67
+★食ひ違ひ_組	2★
+食ひ違ひ	context/CONTEXT_WARN_BYTES/形17	逐語=010	決定の讀手=test	專任2=★讀手の割れ★	當席=無害	述語=―
+食ひ違ひ	context/CONTEXT_DANGER_BYTES/形17	逐語=010	決定の讀手=test	專任2=★讀手の割れ★	當席=無害	述語=―
+
+#決定の讀手 内訳
+讀手	test	15閾	APPROVAL_ALERT_COOLDOWN ASW_PHASE CONTEXT_DANGER_BYTES CONTEXT_WARN_BYTES ER_FIRE_CAP_COUNT ER_THRESHOLD_MIN ESCALATE_PHASE1 ESCALATE_PHASE2 HEALTH_CHECK_COOLDOWN_SEC HEALTH_CHECK_TOKEN_CRIT HEALTH_CHECK_TOKEN_WARN MAX_TYPING_SKIP NUDGE_COOLDOWN_SEC NUDGE_COOLDOWN_SEC_CLAUDE NUDGE_COOLDOWN_SEC_CODEX
+讀手	外器	1閾	INOTIFY_TIMEOUT
+讀手	算術	2閾	ER_FIRE_CAP_WINDOW_MIN ESCALATE_COOLDOWN

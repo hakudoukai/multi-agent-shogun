@@ -1,0 +1,16 @@
+# 40_inyou ―― stdin 時限の陰陽対照 / 刻= 2026-09-17T10:30:33+0900
+# 對象= docs/evidence/km-81-hook-no-jigen-wo-onaji-enzanshi-de-kenme-20260917/_before/stop_hook_inbox.sh.snapshot / sha16= 42c83a9ab41c0166 / bytes= 14418 / 行= 268
+# ★對象は讀むのみ(hook 本体を触らぬ)・判定は束の中の寫しで行ふ★
+# 番人域(逐語)= 52〜59 行(8 行)  ★行番号は字面で探した(決め打ちせぬ)★
+# 判定行の候補(字面が当たつた行 悉く)= 1 本 ★註行・if 以外は採らぬ★
+#   70 行: 註行=偽 / if…then=真 / 採=★之★ : if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+# 判定行= 70 行(逐語): if [ "$__read_rc" -gt 128 ] || [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]; then
+# 番人の形= 旧形(case の glob *[!0-9]* ―― 字面で検む)
+# 閾比較の素(逐語抜き)= [ "$__stdin_el" -ge "$STOP_HOOK_STDIN_TIMEOUT" ]
+# 寫し= docs/evidence/km-53-hitotsu-no-aruki-ne-de-file-suu-wo-soroe-20260917/utsushi/u2_kyuu_in.sh (1180 bytes / 26 行) sha16= c0ce527e94273258
+# 寫しの形検め(bash -n) rc= 0
+
+--- 寫しの出目(値= 10 / 経過秒= 10) rc= 0 ---
+[out] 番人の後の閾= [10]
+[out] 閾比較の素 rc=0
+[out] ★時限切れを見る(then へ入つた)★

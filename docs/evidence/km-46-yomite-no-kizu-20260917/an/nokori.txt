@@ -1,0 +1,19 @@
+■ A19_nul ―― 名に NUL(U+0000) を含む
+  disk へ建てられるか = ★建てられぬ ―― ValueError: embedded null byte★
+  行の段: BEFORE 候補=['docs/x/a\x00b.txt']
+          AFTER  候補=['docs/x/a\x00b.txt']
+  ⑴破れるか=★破れぬ(NUL は Python の \s に非ず・分けられぬ)★ ⑵出目=名がそのまま候補になる
+  ⑶★然れど disk に其の名は建て得ぬ★ ゆゑ 実際には ★実体無★ と鳴るのみ ―― ★黙れぬ★
+  ★測れぬ に非ず。★建て得ぬ★ と書く。臺帳へ NUL を書ける書き手が居れば別だが、
+    現物の書き手は togame() が NUL を… ―― 下で問ふ
+  (註) 現物の書き手に NUL 名は ★渡し得ぬ★ ―― argv に NUL は載らぬ。
+
+■ A20_nijuu_kugiri ―― path の中に `//` が在る
+  臺帳の名 = docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nokori/kugiri//c.txt
+  BEFORE 候補=['docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nokori/kugiri//c.txt'] → 解けた=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nokori/kugiri//c.txt
+  AFTER  候補=['docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nokori/kugiri//c.txt'] → 解けた=docs/evidence/km-46-yomite-no-kizu-20260917/fixture/nokori/kugiri//c.txt
+  ⑴破れるか=★破れぬ★ ⑵出目=★一致★(os が `//` を一つに畳む)
+  ⑶★然れど之は 黙りの温床★ ―― 名としては別字列なのに 同じ物へ解ける。
+    ∴ ★臺帳の名と disk の名が一対一でない★。門は之を咎めぬ。
+
+  證: os.path.realpath が一致するか = True

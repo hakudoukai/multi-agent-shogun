@@ -1,0 +1,18 @@
+# 32_sa ―― 二つの數の差を名指す / 刻= 2026-09-17T10:24:18+0900
+# 左= disk,occ,1,nuku ⇒ 口 23 / file 6
+# 右= 6ba8fcb,occ,1,nuku ⇒ 口 22 / file 7
+# 綴 = gen,tan(occ=出現單位/line=行單位),kitei(既定の下限),chu(nuku=註行除く/komu=註行込)
+
+--- 左のみに在る file(右で落ちた) ---
+(無し)
+
+--- 右のみに在る file(左で落ちた) ---
+scripts/redundancy/shogun_report_watcher.sh	口 1	SHOGUN_REPORT_WATCHER_COOLDOWN:-60
+
+--- 両方に在るが口數が違ふ file ---
+scripts/inbox_watcher.sh	左 13 ⇔ 右 12	左のみ名[APPROVAL_ALERT_COOLDOWN:-300] 右のみ名[]
+scripts/stop_hook_inbox.sh	左 2 ⇔ 右 1	左のみ名[STOP_HOOK_STDIN_TIMEOUT:-10] 右のみ名[]
+
+--- 勘定 ---
+file: 左 6 ― 左のみ 0 + 右のみ 1 = 右 7
+口  : 左 23 ― 左のみ 0 + 右のみ 1 + 共通の増減 -2 = 22 (右の實測 22 ―― 一致=真)

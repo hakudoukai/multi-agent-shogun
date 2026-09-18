@@ -1,0 +1,13 @@
+# 両対照 走り書き (2026-09-17・門を必ず通す形＝IW_DEAD_TEST_ONLY)
+# 形	rc	期待
+陽性①死箱gunshi-mac	68	68
+陽性②名簿差替ashigaru-mac-1	68	68
+陽性③名簿二名の後者	68	68
+陽性④空名簿は既定へ倒れる	68	68
+陰性①生箱ashigaru-mac-1	0	0
+陰性②抜け道IW_DEAD_ALLOW=1	0	0
+陰性③名簿外nobody-here	0	0
+陰性④部分一致gunshi-mac-2	0	0
+陰性⑤常路ashigaru-mac-2	0	0
+# 一致 9/9
+# 対照後 箱母數: gunshi-mac=565 ashigaru-mac-1=35 ashigaru-mac-2=44 (不動)
