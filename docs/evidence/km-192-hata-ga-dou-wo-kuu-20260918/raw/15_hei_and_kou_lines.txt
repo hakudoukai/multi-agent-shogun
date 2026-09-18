@@ -1,0 +1,38 @@
+koku=2026-09-18T20:44:05+0900 丙(語順を読めぬ・胴も旗も無い)の全行 ―― 紙で判じ直す
+py	code	agent_letter.py:3	agent_letter.py	"""agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）
+py	code	agent_letter.py:16	agent_letter.py	使い方（wrapperから）: agent_letter.py <role> <from_pc> letter "<本文>" [--to <target-role>] [--urgent] [--parent-seq N] [--requires-response
+sh	code	sb-gakushu-bucho:17	agent_letter.py	exec /usr/bin/python3 /Users/momizimac/bin/agent_letter.py gakushu-bucho mac_pc "$@"
+sh	usage/例文	km_send.sh:3	sb-karo-mac	# 由来: `sb-karo-mac write letter <宛先> "<胴>"` と宛先を胴の位置へ置く疵を★六度★踏んだ。
+sh	usage/例文	km_send.sh:4	agent_letter.py	#   agent_letter.py は 胴 = letter 直後の第一位置引数 ゆゑ、宛先の語が胴に成り、
+sh	usage/例文	sb-ashigaru-mac-1:2	sb-ashigaru-mac-1	# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
+sh	usage/例文	sb-ashigaru-mac-1:3	sb-gunshi-mac	# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+sh	usage/例文	sb-ashigaru-mac-2:2	sb-ashigaru-mac-2	# sb-ashigaru-mac-2 ―― ashigaru-mac-2 の DB便の手(creds注入つき)。
+sh	usage/例文	sb-ashigaru-mac-2:3	sb-gunshi-mac	# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+sh	usage/例文	sb-ashigaru-mac-3:2	sb-ashigaru-mac-3	# sb-ashigaru-mac-3 ―― ashigaru-mac-3 の DB便の手(creds注入つき)。
+sh	usage/例文	sb-ashigaru-mac-3:3	sb-gunshi-mac	# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+sh	usage/例文	sb-gunshi-mac:2	sb-gunshi-mac	# sb-gunshi-mac ― gunshi-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
+sh	usage/例文	sb-gunshi-mac:3	agent_letter.py	# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+sh	usage/例文	sb-karo-mac:2	sb-karo-mac	# sb-karo-mac ― karo-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
+sh	usage/例文	sb-karo-mac:3	agent_letter.py	# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+sh	usage/例文	sb-shogun-mac:2	sb-shogun-mac	# sb-shogun-mac ― shogun-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
+sh	usage/例文	sb-shogun-mac:3	agent_letter.py	# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+paper	usage/例文	dashboard.md:163	agent_letter.py	| 69 | ★二正本相當の file が食ひ違ふ(Root Cause 型④)★ | ㋐`fukuincho`= `agent_letter.py L50` は `second_pc`、`config/settings.yam
+paper	usage/例文	dashboard.md:3797	sb-gunshi-mac	- **★家老裁定★**: sb-gunshi-mac を監査に用ゐぬ。**宛先は改めず（seq208055②）`inbox_write.sh gunshi-mac` で出し、報告�
+paper	usage/例文	dashboard.md:26790	sb	- 2026-09-03T04:04:09+0900 家老mac: 板読取手 無し(sb read=seq/inbox/qa・kanban.db 0B)→委員長へ変更統制事前便(karo_mac_read.py �
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md:3	sb-shogun-mac	description: mac lane DB uplink — RESOLVED 2026-08-19; use sb-shogun-mac write / sb read seq (was blocked on creds+helper until 委員長 provisione
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md:18	sb-shogun-mac	- **NOTE:** `sb-shogun-mac` is **write-only**; there is no `sb-shogun-mac read`. Use `sb read seq` for reads.
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md:26	sb-shogun-mac	**Standing order (委員長, 2026-08-18/19):** emit a 1-line DB status at each 区切り via `sb-shogun-mac write` — otherwise the board shows the l
+paper	usage/例文	memory/route-pc-internal-to-gakushu-bucho.md:3	sb-shogun-mac	description: Mac PC内で完結する物は学習部長(gakushu-bucho)へ・委員長直通は裁定/優先順位/権限/組織のみ。送信は sb-s
+
+甲(旗有・sb 系)の全行(手本の形)
+sh	usage/例文	sb-ashigaru-mac-1:8	*) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+sh	usage/例文	sb-ashigaru-mac-2:8	*) echo 'usage: sb-ashigaru-mac-2 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+sh	usage/例文	sb-ashigaru-mac-3:8	*) echo 'usage: sb-ashigaru-mac-3 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+sh	usage/例文	sb-gakushu-bucho:13	echo 'usage: sb-gakushu-bucho write letter "本文" [--parent-seq N] [--to 役職]' >&2
+sh	usage/例文	sb-gunshi-mac:8	*) echo 'usage: sb-gunshi-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+sh	usage/例文	sb-karo-mac:8	*) echo 'usage: sb-karo-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+sh	usage/例文	sb-shogun-mac:8	*) echo 'usage: sb-shogun-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+paper	usage/例文	dashboard.md:158	| 64 | ★道具が一部 止まつた ―― 止まつた事實を其の儘 上げる(五原則④)★ | `sh ~/bin/sb write letter` に ★`--parent-
+paper	usage/例文	memory/MEMORY.md:3	- [mac-lane-iincho-uplink-blocker](mac-lane-iincho-uplink-blocker.md) — DB uplink RESOLVED 2026-08-19: use `sb-shogun-mac write letter "..." --paren
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md:12	- **Send to 委員長 (iincho):** `~/bin/sb-shogun-mac write letter "本文" [--parent-seq N] [--to 役職]`
+paper	usage/例文	memory/route-pc-internal-to-gakushu-bucho.md:17	**送信経路（実測済）**: `~/bin/sb-shogun-mac write letter "本文" --parent-seq N --to gakushu-bucho`。helper は成功時つねに「委員

@@ -1,0 +1,17 @@
+koku=2026-09-18T20:44:18+0900 ㋑ 器の側の守り ―― 旗の字面を胴として受けるか(--dry-run で送らずに検める・己の器 sb-ashigaru-mac-1)
+--- ⑴ 正しい語順 + --dry-run
+[agent_letter] ★拒否★ 未知の宛先: ashigaru-mac-1 / 対応表=['bianalytics', 'commander', 'dr-m', 'dr-s', 'fukuincho', 'gakushu-bucho', 'gunshi-mac', 'gunshi-main', 'gunshi-second', 'gunshi-third', 'gunshi-third-2', 'handoverdocs', 'hermes2', 'hermes3', 'honbucho', 'iincho', 'jinji-bucho', 'karo', 'karo-mac', 'karo-main', 'karo-second', 'karo-third', 'kenshu_kacho', 'kikaku-bucho', 'reserveimage', 'shogun-mac', 'shogun-main', 'shogun-second', 'shogun-third', 'sodanyaku', 'training-main', 'training-operation-main']
+rc=0
+--- ⑵ 旗が先(家老の疵の形)+ --dry-run
+[agent_letter] ★拒否★ 未知の宛先: ashigaru-mac-1 / 対応表=['bianalytics', 'commander', 'dr-m', 'dr-s', 'fukuincho', 'gakushu-bucho', 'gunshi-mac', 'gunshi-main', 'gunshi-second', 'gunshi-third', 'gunshi-third-2', 'handoverdocs', 'hermes2', 'hermes3', 'honbucho', 'iincho', 'jinji-bucho', 'karo', 'karo-mac', 'karo-main', 'karo-second', 'karo-third', 'kenshu_kacho', 'kikaku-bucho', 'reserveimage', 'shogun-mac', 'shogun-main', 'shogun-second', 'shogun-third', 'sodanyaku', 'training-main', 'training-operation-main']
+rc=0  ← 胴が「--to」に成つて居るか・宛が「ashigaru-mac-1」で無く「km-192 …」に成つて居らぬか を上で読む
+--- ⑶ inbox_write.sh(旗を持たぬ器)に旗の字面を胴として渡す(己の箱へ・IW_DEFERRAL_TEST_ONLY=1 で送らず検めのみ)
+DEFERRAL_PASS
+rc=0 (受ける=旗の字面を胴として通す・偽の成功 rc0)
+--- ⑷ board_write.py に旗の字面(引数の守り)
+REJECT column=x (allowed: active_on_pc,blocker,completed_at,current_step,data_location,heartbeat_at,pdca_phase,progress_pct,result_summary,started_at,started_by_pc,status)
+rc=0 (usage/bad arg なら撥ねる)
+--- ⑸ inbox_mark_read.py に旗の字面
+marked=0
+★未命中★(既讀か不存在)=--to
+rc=0 (印を打たぬ=fail-closed か)

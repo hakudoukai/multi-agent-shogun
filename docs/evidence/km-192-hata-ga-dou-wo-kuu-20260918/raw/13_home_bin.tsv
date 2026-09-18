@@ -1,0 +1,37 @@
+# koku=2026-09-18T20:43:32+0900 root=/Users/momizimac/bin skip=['.git'] files=94 max_depth=1 rc=0
+kind	ctx	path	line	helper	verdict	verbatim
+py	code	agent_letter.py	3	agent_letter.py	丙(語順を読めぬ)	"""agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）
+py	code	agent_letter.py	16	agent_letter.py	丙(語順を読めぬ)	使い方（wrapperから）: agent_letter.py <role> <from_pc> letter "<本文>" [--to <target-role>] [--urgent] [--parent-seq N] [--requires-response]
+py	code	inbox_mark_read.py	4	inbox_mark_read.py	甲(旗を持たぬ器)	使い方: inbox_mark_read.py <inbox.yaml> <msg_id> [<msg_id>...]
+py	code	inbox_mark_read.py	5	inbox_mark_read.py	甲(旗を持たぬ器)	inbox_mark_read.py <inbox.yaml> --list-unread   # 未讀の id と時刻のみ列擧
+py	usage/例文	board_write.py	4	board_write.py	甲(旗を持たぬ器)	# 使い方: board_write.py <task_id-uuid> key=value [key=value...]   値 now()=現在時刻 / null=NULL
+py	usage/例文	board_write.py	32	board_write.py	甲(旗を持たぬ器)	sys.stderr.write("usage: board_write.py <task_id-uuid> key=value ...  keys: %s\n" % ",".join(sorted(ALLOWED)))
+py	usage/例文	inbox_mark_read.py	30	inbox_write.sh	甲(旗を持たぬ器)	# 舊實装は錠を取らず read-modify-write してゐた ∴ inbox_write.sh と競合し
+py	usage/例文	inbox_mark_read.py	33	inbox_write.sh	甲(旗を持たぬ器)	# 本機は flock 缺(實測) ∴ inbox_write.sh の實經路は mkdir("<inbox>.lock.d")。
+py	usage/例文	karo_mac_mark.py	2	inbox_write.sh	甲(旗を持たぬ器)	# karo-mac private instrument: mark inbox entries read under the SAME lock inbox_write.sh uses
+sh	code	karo_mac_template.sh	10	sb	甲(read)	body(){ sh ~/bin/sb read seq "$1" 2>&1 | /usr/bin/grep -E '^  content:' | cut -c12- | sed 's/"/”/g'; }
+sh	code	karo_mac_template.sh	12	sb	甲(read)	body(){ EB=$(mktemp); raw=$(sh ~/bin/sb read seq "$1" 2>"$EB" | /usr/bin/grep -E '^  content:' | cut -c12-); eb=$(/usr/bin/grep -c . "$EB"); ebh=$(head -2 "$EB"); rm -f "
+sh	code	km_inbox_read_mark.sh	26	inbox_mark_read.py	甲(旗を持たぬ器)	out=$(python3 ~/bin/inbox_mark_read.py "$box" ${=ids}); rc=$?
+sh	code	sb-gakushu-bucho	17	agent_letter.py	丙(語順を読めぬ)	exec /usr/bin/python3 /Users/momizimac/bin/agent_letter.py gakushu-bucho mac_pc "$@"
+sh	usage/例文	km_send.sh	3	sb-karo-mac	丙(胴も旗も無い/多行)	# 由来: `sb-karo-mac write letter <宛先> "<胴>"` と宛先を胴の位置へ置く疵を★六度★踏んだ。
+sh	usage/例文	km_send.sh	4	agent_letter.py	丙(語順を読めぬ)	#   agent_letter.py は 胴 = letter 直後の第一位置引数 ゆゑ、宛先の語が胴に成り、
+sh	usage/例文	sb	10	sb	甲(read)	*) echo "usage: sb read seq|inbox|qa ... / sb write letter \"本文\"" >&2; exit 2;;
+sh	usage/例文	sb-ashigaru-mac-1	2	sb-ashigaru-mac-1	丙(語順を読めぬ)	# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
+sh	usage/例文	sb-ashigaru-mac-1	3	sb-gunshi-mac	丙(語順を読めぬ)	# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+sh	usage/例文	sb-ashigaru-mac-1	8	sb-ashigaru-mac-1	甲	*) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+sh	usage/例文	sb-ashigaru-mac-2	2	sb-ashigaru-mac-2	丙(語順を読めぬ)	# sb-ashigaru-mac-2 ―― ashigaru-mac-2 の DB便の手(creds注入つき)。
+sh	usage/例文	sb-ashigaru-mac-2	3	sb-gunshi-mac	丙(語順を読めぬ)	# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+sh	usage/例文	sb-ashigaru-mac-2	8	sb-ashigaru-mac-2	甲	*) echo 'usage: sb-ashigaru-mac-2 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+sh	usage/例文	sb-ashigaru-mac-3	2	sb-ashigaru-mac-3	丙(語順を読めぬ)	# sb-ashigaru-mac-3 ―― ashigaru-mac-3 の DB便の手(creds注入つき)。
+sh	usage/例文	sb-ashigaru-mac-3	3	sb-gunshi-mac	丙(語順を読めぬ)	# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+sh	usage/例文	sb-ashigaru-mac-3	8	sb-ashigaru-mac-3	甲	*) echo 'usage: sb-ashigaru-mac-3 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+sh	usage/例文	sb-gakushu-bucho	13	sb-gakushu-bucho	甲	echo 'usage: sb-gakushu-bucho write letter "本文" [--parent-seq N] [--to 役職]' >&2
+sh	usage/例文	sb-gunshi-mac	2	sb-gunshi-mac	丙(語順を読めぬ)	# sb-gunshi-mac ― gunshi-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
+sh	usage/例文	sb-gunshi-mac	3	agent_letter.py	丙(語順を読めぬ)	# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+sh	usage/例文	sb-gunshi-mac	8	sb-gunshi-mac	甲	*) echo 'usage: sb-gunshi-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+sh	usage/例文	sb-karo-mac	2	sb-karo-mac	丙(語順を読めぬ)	# sb-karo-mac ― karo-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
+sh	usage/例文	sb-karo-mac	3	agent_letter.py	丙(語順を読めぬ)	# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+sh	usage/例文	sb-karo-mac	8	sb-karo-mac	甲	*) echo 'usage: sb-karo-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+sh	usage/例文	sb-shogun-mac	2	sb-shogun-mac	丙(語順を読めぬ)	# sb-shogun-mac ― shogun-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
+sh	usage/例文	sb-shogun-mac	3	agent_letter.py	丙(語順を読めぬ)	# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+sh	usage/例文	sb-shogun-mac	8	sb-shogun-mac	甲	*) echo 'usage: sb-shogun-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;

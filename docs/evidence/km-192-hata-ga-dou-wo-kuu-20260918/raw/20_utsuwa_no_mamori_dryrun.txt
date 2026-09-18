@@ -1,0 +1,18 @@
+koku=2026-09-18T20:45:05+0900 ㋑ 器の側の守り(取り直し: rc は管を通さず・宛は己の名が対応表に無く拒まれる(★未知の宛先 ashigaru-mac-1★)ゆゑ ★--dry-run★ で送らずに封筒を読む・宛は karo-mac)
+--- ⑴ 正しい語順 --dry-run
+rc=0
+docs/evidence/km-192-hata-ga-dou-wo-kuu-20260918/raw/21_dry_sei.out:★DRY-RUN（★送信しない★）★
+docs/evidence/km-192-hata-ga-dou-wo-kuu-20260918/raw/21_dry_sei.out:   target_agent  = karo-mac
+--- ⑵ 旗が先(家老の疵の形) --dry-run
+rc=0
+docs/evidence/km-192-hata-ga-dou-wo-kuu-20260918/raw/22_dry_hata.out:★DRY-RUN（★送信しない★）★
+docs/evidence/km-192-hata-ga-dou-wo-kuu-20260918/raw/22_dry_hata.out:   target_agent  = karo-mac
+(封筒の content が「--to」の 4 字なら受けて居る=偽の成功)
+--- ⑶ 己宛の拒否の rc(管無し)
+rc=2 (拒否は rc≠0 か)
+--- ⑷ inbox_write.sh に旗の字面を胴として(IW_DEFERRAL_TEST_ONLY=1・送らず)
+rc=0 (0=受ける)
+--- ⑸ board_write.py --to x=1
+rc=3 (REJECT column=x を刷つた・引数の型で撥ねる)
+--- ⑹ inbox_mark_read.py <箱> --to
+rc=0 (marked=0・未命中=--to と刷つた=印を打たぬ fail-closed・但し rc は?)

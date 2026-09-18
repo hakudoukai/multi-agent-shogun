@@ -1,0 +1,12 @@
+koku=2026-09-18T20:45:44+0900 ㋒ 實射 ―― dry-run は封筒に胴を刷らぬゆゑ二路で示す: ⒜ agent_letter.py L141-145/L189-193 と同じ取り方を写して両語順の argv に当てる ⒝ 家老の現物 seq333833/333834/333835 を sb read で読み胴の字数を数へる(読むのみ)
+--- ⒜ 写し(器の行を其の儘)
+  正: write letter "<胴>" --to X --parent-seq N
+     → 胴=[km-192 試し打ちの胴 三十字ほどの本文である] 字数=25 宛=karo-mac parent有=True  ← 正
+  乙: write letter --to X "<胴>" --parent-seq N
+     → 胴=[--to] 字数=4 宛=karo-mac parent有=True  ← ★胴が旗の字面 4 字・宛も parent も正しく rc0 で刷られる(偽の成功)★
+--- ⒝ 家老の現物(読むのみ・sb read seq)
+  seq333833 content=[--to] 字数=4 target=target_agent': 'iincho'
+  seq333834 content=[--to] 字数=4 target=target_agent': 'iincho'
+  seq333835 content=[--to] 字数=4 target=target_agent': 'iincho'
+--- 對照: 當席の正しい語順の現物 seq333926 の字数
+  seq333926 字数=276

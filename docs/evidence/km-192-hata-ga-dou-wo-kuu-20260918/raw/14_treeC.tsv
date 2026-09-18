@@ -1,0 +1,220 @@
+# koku=2026-09-18T20:43:33+0900 root=/Users/momizimac/multi-agent-shogun skip=['.git', '.venv', '__pycache__', 'evidence', 'node_modules', 'queue'] files=1596 max_depth=13 rc=0
+kind	ctx	path	line	helper	verdict	verbatim
+paper	usage/例文	.claude/worktrees/karo-mac-a1/CONTRIBUTING.md	54	inbox_write.sh	甲(旗を持たぬ器)	│   ├── inbox_write.sh    # Agent-to-agent messaging (file-based mailbox)
+paper	usage/例文	.claude/worktrees/karo-mac-a1/CONTRIBUTING.md	305	inbox_write.sh	甲(旗を持たぬ器)	@test "inbox_write.sh creates inbox file" {
+paper	usage/例文	.claude/worktrees/karo-mac-a1/CONTRIBUTING.md	360	inbox_write.sh	甲(旗を持たぬ器)	refactor: simplify inbox_write.sh message handling
+paper	usage/例文	.claude/worktrees/karo-mac-a1/README.md	615	inbox_write.sh	甲(旗を持たぬ器)	│ inbox_write.sh       │           │ inbox_watcher.sh         │
+paper	usage/例文	.claude/worktrees/karo-mac-a1/README.md	1566	inbox_write.sh	甲(旗を持たぬ器)	│   ├── inbox_write.sh        # Write messages to agent inbox
+paper	usage/例文	.claude/worktrees/karo-mac-a1/README_ja.md	619	inbox_write.sh	甲(旗を持たぬ器)	│ inbox_write.sh       │           │ inbox_watcher.sh         │
+paper	usage/例文	.claude/worktrees/karo-mac-a1/README_ja.md	1510	inbox_write.sh	甲(旗を持たぬ器)	│   ├── inbox_write.sh        # エージェントinboxへのメッセージ書き込み
+paper	usage/例文	.claude/worktrees/karo-mac-a1/SECURITY.md	146	inbox_write.sh	甲(旗を持たぬ器)	Title: Shell injection in inbox_write.sh via unsanitized message content
+paper	usage/例文	.claude/worktrees/karo-mac-a1/SECURITY.md	149	inbox_write.sh	甲(旗を持たぬ器)	The inbox_write.sh script does not sanitize user input before writing
+paper	usage/例文	.claude/worktrees/karo-mac-a1/config/settings.yaml	127	inbox_write.sh	甲(旗を持たぬ器)	#   fukuincho_pc を pc_mapping に新規追加。これで inbox_write.sh の cross-PC bridge
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	40	inbox_write.sh	甲(旗を持たぬ器)	本エンジンは ★既存 inbox_write.sh / pc_handshake が許す合法経路を wrap するのみ★ で、新経路を増設しない
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	148	inbox_write.sh	甲(旗を持たぬ器)	- **既存 inbox_write.sh guard 再利用**: self-send guard / amplification guard (embedded header ≥3 で reject) を
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	151	inbox_write.sh	甲(旗を持たぬ器)	`correlation_id` を同時操作しても状態破損・二重投函を起こさない (inbox_write.sh の flock 機構と同様、§2.6 test #16-17)。
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	178	inbox_write.sh	甲(旗を持たぬ器)	3. **vs inbox_write.sh / pc_handshake / bulk_ack.sh**: 本案は ★既存 writer / bridge / guard を再利用★ し、
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	197	inbox_write.sh	甲(旗を持たぬ器)	全方向化により ★ローカル実行可能な任意主体が高権限 type を偽装して inbox_write.sh を叩く★ 余地が生じる。
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	201	inbox_write.sh	甲(旗を持たぬ器)	- inbox_write.sh は ★中央管理された trusted pane registry★ を唯一の認可根拠とする。registry =
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	206	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh は当該 pane の `tmux display-message -p '#{pane_pid}'` を取得し、自プロセスの PPID/PGID/SID 系譜を
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	217	inbox_write.sh	甲(旗を持たぬ器)	| self-send | sender == recipient | inbox_write.sh 既存 guard で reject |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	229	inbox_write.sh	甲(旗を持たぬ器)	| inbox YAML entry | `id` | string | no | inbox_write.sh 採番 (既存) |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	231	inbox_write.sh	甲(旗を持たぬ器)	| | `from` / `type` / `content` / `timestamp` | string | no | 既存 inbox_write.sh field |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/ack-retry-omni-engine-design.md	256	inbox_write.sh	甲(旗を持たぬ器)	| 6 | watcher 停止 + 同一 PC | bypass (inbox_write.sh 経由) で投函成功 + 復帰後 dedupe |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	237	inbox_write.sh	甲(旗を持たぬ器)	| 2. self-send 即 ack | ✅ | 本案無関係 (inbox_write.sh guard 不変) |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	50	inbox_write.sh	甲(旗を持たぬ器)	中核命題: **message は inbox_write.sh の flock append で既に「配送済」**。busy な claude agent は Stop hook (`stop_hook_inbox.sh`) が turn 終了時に未読を配送する。ゆえに「起こす」ための /clear は ★不要かつ破壊的★。「本当に読ま
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/auto-clear-hemostasis-proposal.md	229	inbox_write.sh	甲(旗を持たぬ器)	| 2. self-send 即 ack | ✅ | 本案無関係 (inbox_write.sh 既存 guard 不変) |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/fukuincho-stage3-auto-loop-design.md	148	inbox_write.sh	甲(旗を持たぬ器)	(= 既存 inbox_write.sh 経路を wrap した omni engine entrypoint) を呼ぶ。detect_stale 自身は poke を ★直接発火しない★
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/fukuincho-stage3-direct-poke-design.md	40	inbox_write.sh	甲(旗を持たぬ器)	- ★FKI-NO-DUP★: 報告書込は既存経路 (inbox_write.sh / 報告 YAML → Supabase bridge) を再利用、新規 writer 新設禁。
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/fukuincho-stage3-direct-poke-design.md	121	inbox_write.sh	甲(旗を持たぬ器)	| 報告 INSERT | 既存 inbox_write.sh / 報告 YAML → Supabase bridge | なし |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/08-ops/fukuincho-stage3-supabase-jsonl-bridge-design.md	71	inbox_write.sh	甲(旗を持たぬ器)	- PATCH は ★既存 REST 経路 (inbox_write.sh と同 sb_url/sb_key)★ で行い、新規 writer を作らない (FKI-NO-DUP)。
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/inbox_watcher_failure_modes_2026-05-08.md	204	inbox_write.sh	甲(旗を持たぬ器)	### u) bulk_ack.sh / inbox_write.sh / inbox_watcher.sh 三者間の inbox path 想定不一致
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_inbox_split_brain.md	79	inbox_write.sh	甲(旗を持たぬ器)	- D2: 修正後 inbox_write.sh で test write → hideyoshi.yaml +1 件着弾、karo.yaml symlink 保持
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/incident_logs/2026-05-08_inbox_split_brain.md	123	inbox_write.sh	甲(旗を持たぬ器)	1. ✅ inbox_write.sh の atomic write を realpath 経由に修正
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/tier1_redundancy_layer_for_two_pc_integrity_design_2026-05-08.md	71	inbox_write.sh	甲(旗を持たぬ器)	│  hakudokai_watchdog.sh / inbox_watcher.sh / inbox_write.sh     │
+paper	usage/例文	.claude/worktrees/karo-mac-a1/docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md	107	inbox_write.sh	甲(旗を持たぬ器)	- inbox_write.sh で msg INSERT 時に `idempotency_key` 必須付与 (= UUID v4)
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/archive/karo_canon_20260709.md	283	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/common/task_flow.md	169	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md	535	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md	535	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md	615	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md	784	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md	537	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md	535	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md	615	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md	784	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md	537	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md	615	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/karo.md	784	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md	535	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md	615	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md	784	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md	537	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/generated/shogun.md	537	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/instructions/karo.md	271	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	.claude/worktrees/karo-mac-a1/skills/inbox-alias-integrity/SKILL.md	24	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh は dd706ad で恒久 fix 済 (= realpath 経由)。本 skill は再発検知の自動化を担う。
+paper	usage/例文	CONTRIBUTING.md	54	inbox_write.sh	甲(旗を持たぬ器)	│   ├── inbox_write.sh    # Agent-to-agent messaging (file-based mailbox)
+paper	usage/例文	CONTRIBUTING.md	305	inbox_write.sh	甲(旗を持たぬ器)	@test "inbox_write.sh creates inbox file" {
+paper	usage/例文	CONTRIBUTING.md	360	inbox_write.sh	甲(旗を持たぬ器)	refactor: simplify inbox_write.sh message handling
+paper	usage/例文	README.md	615	inbox_write.sh	甲(旗を持たぬ器)	│ inbox_write.sh       │           │ inbox_watcher.sh         │
+paper	usage/例文	README.md	1566	inbox_write.sh	甲(旗を持たぬ器)	│   ├── inbox_write.sh        # Write messages to agent inbox
+paper	usage/例文	README_ja.md	619	inbox_write.sh	甲(旗を持たぬ器)	│ inbox_write.sh       │           │ inbox_watcher.sh         │
+paper	usage/例文	README_ja.md	1510	inbox_write.sh	甲(旗を持たぬ器)	│   ├── inbox_write.sh        # エージェントinboxへのメッセージ書き込み
+paper	usage/例文	SECURITY.md	146	inbox_write.sh	甲(旗を持たぬ器)	Title: Shell injection in inbox_write.sh via unsanitized message content
+paper	usage/例文	SECURITY.md	149	inbox_write.sh	甲(旗を持たぬ器)	The inbox_write.sh script does not sanitize user input before writing
+paper	usage/例文	config/settings.yaml	127	inbox_write.sh	甲(旗を持たぬ器)	#   fukuincho_pc を pc_mapping に新規追加。これで inbox_write.sh の cross-PC bridge
+paper	usage/例文	dashboard.md	88	sb	甲(read)	**發出 (20:44)**: 將軍mac ★seq=233222★(parent 233116・要返答) ―― ★道具の可否は上の領★(sb read が役職固定ゆゑ全役職分布は正路で測れぬ／fleet_read.py は讀ませるのみ・走らせず)＋當職の下命前提誤りの自認。
+paper	usage/例文	dashboard.md	129	sb	甲(read)	| 35 | ★★盤直下命の出所は ★本物★ であつた ―― 副院長令。當職の裁定を撤回し改めた(Z32→Z32-b)★★ | 將軍mac(經路の作法の裁)／家老mac(裁定改訂濟) | a4が★三度目に seq を名指して寄越した★故、當職が `sb read seq 232976` で己の手で讀んだ ⇒ ★實在★。created 19
+paper	usage/例文	dashboard.md	140	inbox_write.sh	甲(旗を持たぬ器)	| 46 | ★★★暗い箱 ―― 家老mac 宛の便 436通が十六日間 誰にも讀まれずに積んで居つた。眞因まで機械で取れた★★★ | 將軍mac(至急 seq=233184 發出濟・要返答)／委員長・環境部長(見張りと宛名の是正) | ★事實★: 箱=`queue/inbox/karo.yaml`(★`karo-mac.yaml` では
+paper	usage/例文	dashboard.md	145	sb	甲(read)	| 51 | ★★正路と裁定した道具の安全機構が效いて居らぬ ―― allowlist は死藏 code であつた★★ | `~/bin/karo_mac_read.py`(sb read の實體)の `ALLOW_TABLES`(39行)と `FORBIDDEN`(41行)は ★定義のみで一度も參照されず★。a5 が名指し、★家老も獨立
+paper	usage/例文	dashboard.md	158	sb	甲	| 64 | ★道具が一部 止まつた ―― 止まつた事實を其の儘 上げる(五原則④)★ | `sh ~/bin/sb write letter` に ★`--parent-seq 233332` を附すと HTTP 400 Bad Request★。★同じ本文でも parent-seq を外せば通る★ | ★切り分け濟(兩方向)★: ①長
+paper	usage/例文	dashboard.md	163	agent_letter.py	丙(語順を読めぬ)	| 69 | ★二正本相當の file が食ひ違ふ(Root Cause 型④)★ | ㋐`fukuincho`= `agent_letter.py L50` は `second_pc`、`config/settings.yaml L133-136` は獨立 pc_id `fukuincho_pc`。㋑`kikaku-bucho`= RO
+paper	usage/例文	dashboard.md	167	inbox_write.sh	甲(旗を持たぬ器)	| 73 | ★箱の末尾は最新の便とは限らぬ ―― 回轉後の順序が時系列でない★ | `queue/inbox/*.yaml` の messages は ★CAP_ROTATED 後 昇順を保たぬ★。實測(21:58 as_of)=a6箱 n=31・昇順判定 ★False★・★最新便(21:52:02)が index 0★・末尾は 21:
+paper	usage/例文	dashboard.md	177	inbox_write.sh	甲(旗を持たぬ器)	| 81 | ★★働いて居る者を『止まつて居る』と二度書いた ―― 着手報を進捗と誤認した當職の管理失態(自己申告)★★(00:05・當職が a3 の席を實見して發覺) | a3 は z66(孤兒箱の出處)を ★2026-09-01T22:26:18 に完遂★ し、紙 `a3_minashigo_hako_no_de_20260901.m
+paper	usage/例文	dashboard.md	3219	sb	甲(read)	家老mac 直讀（`sb read seq 207859`）。合議成立（相談役 207843 / 207845）。
+paper	usage/例文	dashboard.md	3522	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh   L26   LOCKFILE="${INBOX}.lock"              ← ★生の $INBOX（別名の儘）★
+paper	usage/例文	dashboard.md	3523	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh   L266/L268 (archive)                          ← ★realpath★
+paper	usage/例文	dashboard.md	3524	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh   L290   inbox_canonical = os.path.realpath()  ← ★realpath★
+paper	usage/例文	dashboard.md	3797	sb-gunshi-mac	丙(語順を読めぬ)	- **★家老裁定★**: sb-gunshi-mac を監査に用ゐぬ。**宛先は改めず（seq208055②）`inbox_write.sh gunshi-mac` で出し、報告書に「出したが讀み手0」と書き添へる。** 便は殘り、runtime が戻れば讀まれ得る ―― **消えるより殘る方が善し**と判じた。門の崩れ其の物は **s
+paper	usage/例文	dashboard.md	3988	inbox_write.sh	甲(旗を持たぬ器)	―― inbox_write.sh は既に `exit 1` ＋ stderr 一行で **聲を上げて止まつて居る**。
+paper	usage/例文	dashboard.md	4385	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh と見張り自身の内部書換へは ★文字列完全一致の同一錠資源（${INBOX}.lock.d）★ を奪ひ合ふ事も實文確認。
+paper	usage/例文	dashboard.md	4386	inbox_write.sh	甲(旗を持たぬ器)	・★缺陷（無條件 trap）は見張り側 L334/L465 にのみ在り、書き手側 inbox_write.sh には【無い】★（`_release_lock` は ★成功時のみ★ 呼出）。
+paper	usage/例文	dashboard.md	4840	inbox_write.sh	甲(旗を持たぬ器)	副産物として inbox_write.sh 側 read 中の YAML parse 失敗も ★隱さず記載★。
+paper	usage/例文	dashboard.md	5540	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh 実呼出し caller(本番稼働) | **8 file / 9 箇所** | 機械導出14件→実文で言及のみ3・test mock1・archive1 を除外(除外を表に残す) |
+paper	usage/例文	dashboard.md	5542	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh の函數簽名 | TARGET/CONTENT/TYPE/FROM の4引數 | PC 引數を持たぬ |
+paper	usage/例文	dashboard.md	5968	inbox_write.sh	甲(旗を持たぬ器)	実読で判つた機構の形（事実のみ・塞ぎ方は一字も書かせず）＝ `.claude/settings.json` に ★matcher指定なしの Stop hook＝全pane対象★／1turn終了時に完了語を検知すると type=report_completed・本文 `${AGENT_ID}、タスク完了。report確認されたし。` を組み
+paper	usage/例文	dashboard.md	9428	inbox_write.sh	甲(旗を持たぬ器)	- **scripts/agent_periodic_push.sh:109** … inbox_write.sh **karo** "$MSG" **status_update** shogun（systemd timer 15分）
+paper	usage/例文	dashboard.md	9499	inbox_write.sh	甲(旗を持たぬ器)	**因㋐ 宛先が檢められぬ。** inbox_write.sh は宛名を檢め申さぬ。裸名 karo も座名 karo-mac も、同じく通り、同じく箱を作る。座名（karo-mac / gunshi-mac）が後から生まれても、**裸名は死なず、生きた宛先の儘であつた**。∴ 手が滑つても、hook に古い名が殘つて居ても、何も止まらぬ。
+paper	usage/例文	dashboard.md	20981	inbox_write.sh	甲(旗を持たぬ器)	K7:70 inbox_write.sh   25/27  →  114/294   ★+89/+267★
+paper	usage/例文	dashboard.md	24078	inbox_write.sh	甲(旗を持たぬ器)	- queue/inbox へ書込む script を導出＝**3本**（bulk_ack.sh / inbox_watcher.sh / inbox_write.sh）。うち message を吐くのは inbox_write.sh のみ。
+paper	usage/例文	dashboard.md	26790	sb	丙(語順を読めぬ)	- 2026-09-03T04:04:09+0900 家老mac: 板読取手 無し(sb read=seq/inbox/qa・kanban.db 0B)→委員長へ変更統制事前便(karo_mac_read.py へ board 読取 subcmd・read-only・戻し=.bak)。許可待ち。並行で將軍mac へ配分票v2 請求済。
+paper	usage/例文	dashboard.md	26843	inbox_write.sh	甲(旗を持たぬ器)	- 2026-09-03T06:05:20+0900 🚨650 家老mac: ★Z101 大転換★ sshd-session 09-02 21:55:11.582=最後の束の開始秒と一致→受け器は他 PC(鍵名 hermes2@third-envdept=環境部長の db_then_bell 器が最有力)が ssh で inbox_wri
+paper	usage/例文	dashboard.md	26845	inbox_write.sh	甲(旗を持たぬ器)	- 2026-09-03T06:08:15+0900 🚨652 家老mac: 將軍 四箍(機側台帳・断撤去は冪等と同時・再配一発十通除外・入替別 GO・負テスト受入)を a3 yaml へ staged(着手禁)。制御点=當機は inbox_write.sh のみ(冪等台帳+ⓓ+Hermes 誘導)・300 断は遠隔=撤去不可と上申。護符
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	40	inbox_write.sh	甲(旗を持たぬ器)	本エンジンは ★既存 inbox_write.sh / pc_handshake が許す合法経路を wrap するのみ★ で、新経路を増設しない
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	148	inbox_write.sh	甲(旗を持たぬ器)	- **既存 inbox_write.sh guard 再利用**: self-send guard / amplification guard (embedded header ≥3 で reject) を
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	151	inbox_write.sh	甲(旗を持たぬ器)	`correlation_id` を同時操作しても状態破損・二重投函を起こさない (inbox_write.sh の flock 機構と同様、§2.6 test #16-17)。
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	178	inbox_write.sh	甲(旗を持たぬ器)	3. **vs inbox_write.sh / pc_handshake / bulk_ack.sh**: 本案は ★既存 writer / bridge / guard を再利用★ し、
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	197	inbox_write.sh	甲(旗を持たぬ器)	全方向化により ★ローカル実行可能な任意主体が高権限 type を偽装して inbox_write.sh を叩く★ 余地が生じる。
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	201	inbox_write.sh	甲(旗を持たぬ器)	- inbox_write.sh は ★中央管理された trusted pane registry★ を唯一の認可根拠とする。registry =
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	206	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh は当該 pane の `tmux display-message -p '#{pane_pid}'` を取得し、自プロセスの PPID/PGID/SID 系譜を
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	217	inbox_write.sh	甲(旗を持たぬ器)	| self-send | sender == recipient | inbox_write.sh 既存 guard で reject |
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	229	inbox_write.sh	甲(旗を持たぬ器)	| inbox YAML entry | `id` | string | no | inbox_write.sh 採番 (既存) |
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	231	inbox_write.sh	甲(旗を持たぬ器)	| | `from` / `type` / `content` / `timestamp` | string | no | 既存 inbox_write.sh field |
+paper	usage/例文	docs/08-ops/ack-retry-omni-engine-design.md	256	inbox_write.sh	甲(旗を持たぬ器)	| 6 | watcher 停止 + 同一 PC | bypass (inbox_write.sh 経由) で投函成功 + 復帰後 dedupe |
+paper	usage/例文	docs/08-ops/auto-clear-hemostasis-proposal-case-e.md	237	inbox_write.sh	甲(旗を持たぬ器)	| 2. self-send 即 ack | ✅ | 本案無関係 (inbox_write.sh guard 不変) |
+paper	usage/例文	docs/08-ops/auto-clear-hemostasis-proposal.md	50	inbox_write.sh	甲(旗を持たぬ器)	中核命題: **message は inbox_write.sh の flock append で既に「配送済」**。busy な claude agent は Stop hook (`stop_hook_inbox.sh`) が turn 終了時に未読を配送する。ゆえに「起こす」ための /clear は ★不要かつ破壊的★。「本当に読ま
+paper	usage/例文	docs/08-ops/auto-clear-hemostasis-proposal.md	229	inbox_write.sh	甲(旗を持たぬ器)	| 2. self-send 即 ack | ✅ | 本案無関係 (inbox_write.sh 既存 guard 不変) |
+paper	usage/例文	docs/08-ops/fukuincho-stage3-auto-loop-design.md	148	inbox_write.sh	甲(旗を持たぬ器)	(= 既存 inbox_write.sh 経路を wrap した omni engine entrypoint) を呼ぶ。detect_stale 自身は poke を ★直接発火しない★
+paper	usage/例文	docs/08-ops/fukuincho-stage3-direct-poke-design.md	40	inbox_write.sh	甲(旗を持たぬ器)	- ★FKI-NO-DUP★: 報告書込は既存経路 (inbox_write.sh / 報告 YAML → Supabase bridge) を再利用、新規 writer 新設禁。
+paper	usage/例文	docs/08-ops/fukuincho-stage3-direct-poke-design.md	121	inbox_write.sh	甲(旗を持たぬ器)	| 報告 INSERT | 既存 inbox_write.sh / 報告 YAML → Supabase bridge | なし |
+paper	usage/例文	docs/08-ops/fukuincho-stage3-supabase-jsonl-bridge-design.md	71	inbox_write.sh	甲(旗を持たぬ器)	- PATCH は ★既存 REST 経路 (inbox_write.sh と同 sb_url/sb_key)★ で行い、新規 writer を作らない (FKI-NO-DUP)。
+paper	usage/例文	docs/inbox_watcher_failure_modes_2026-05-08.md	204	inbox_write.sh	甲(旗を持たぬ器)	### u) bulk_ack.sh / inbox_write.sh / inbox_watcher.sh 三者間の inbox path 想定不一致
+paper	usage/例文	docs/incident_logs/2026-05-08_inbox_split_brain.md	79	inbox_write.sh	甲(旗を持たぬ器)	- D2: 修正後 inbox_write.sh で test write → hideyoshi.yaml +1 件着弾、karo.yaml symlink 保持
+paper	usage/例文	docs/incident_logs/2026-05-08_inbox_split_brain.md	123	inbox_write.sh	甲(旗を持たぬ器)	1. ✅ inbox_write.sh の atomic write を realpath 経由に修正
+paper	usage/例文	docs/tier1_redundancy_layer_for_two_pc_integrity_design_2026-05-08.md	71	inbox_write.sh	甲(旗を持たぬ器)	│  hakudokai_watchdog.sh / inbox_watcher.sh / inbox_write.sh     │
+paper	usage/例文	docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md	107	inbox_write.sh	甲(旗を持たぬ器)	- inbox_write.sh で msg INSERT 時に `idempotency_key` 必須付与 (= UUID v4)
+paper	usage/例文	instructions/archive/karo_canon_20260709.md	283	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/common/task_flow.md	169	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/ashigaru.md	552	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/codex-ashigaru.md	552	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/codex-gunshi.md	660	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/codex-karo.md	804	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/codex-shogun.md	553	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/copilot-ashigaru.md	552	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/copilot-gunshi.md	660	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/copilot-karo.md	804	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/copilot-shogun.md	553	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/gunshi.md	660	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/karo.md	804	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/kimi-ashigaru.md	552	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/kimi-gunshi.md	660	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/kimi-karo.md	804	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/kimi-shogun.md	553	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/generated/shogun.md	553	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	instructions/karo.md	319	inbox_write.sh	甲(旗を持たぬ器)	| inbox_write.sh | Foreground | Completes instantly |
+paper	usage/例文	memory/MEMORY.md	3	sb-shogun-mac	甲	- [mac-lane-iincho-uplink-blocker](mac-lane-iincho-uplink-blocker.md) — DB uplink RESOLVED 2026-08-19: use `sb-shogun-mac write letter "..." --parent-seq N` (send) / `sb
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md	3	sb-shogun-mac	丙(胴も旗も無い/多行)	description: mac lane DB uplink — RESOLVED 2026-08-19; use sb-shogun-mac write / sb read seq (was blocked on creds+helper until 委員長 provisioned them)
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md	12	sb-shogun-mac	甲	- **Send to 委員長 (iincho):** `~/bin/sb-shogun-mac write letter "本文" [--parent-seq N] [--to 役職]`
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md	17	sb	甲(read)	- **Read any pc_handshake row by seq:** `~/bin/sb read seq <N>` (via `karo_mac_read.py`; seq-read is identity-agnostic — a plain GET, no forgery). Also `sb read inbox [N]
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md	18	sb-shogun-mac	丙(語順を読めぬ)	- **NOTE:** `sb-shogun-mac` is **write-only**; there is no `sb-shogun-mac read`. Use `sb read seq` for reads.
+paper	usage/例文	memory/mac-lane-iincho-uplink-blocker.md	26	sb-shogun-mac	丙(語順を読めぬ)	**Standing order (委員長, 2026-08-18/19):** emit a 1-line DB status at each 区切り via `sb-shogun-mac write` — otherwise the board shows the lane as stopped and 委員長 misreads it
+paper	usage/例文	memory/route-pc-internal-to-gakushu-bucho.md	3	sb-shogun-mac	丙(語順を読めぬ)	description: Mac PC内で完結する物は学習部長(gakushu-bucho)へ・委員長直通は裁定/優先順位/権限/組織のみ。送信は sb-shogun-mac --to gakushu-bucho（疎通実測済）
+paper	usage/例文	memory/route-pc-internal-to-gakushu-bucho.md	17	sb-shogun-mac	甲	**送信経路（実測済）**: `~/bin/sb-shogun-mac write letter "本文" --parent-seq N --to gakushu-bucho`。helper は成功時つねに「委員長へ送出した」と固定表示するが、**実便の宛先は --to で決まる**。seq198421 で `sb read seq 19
+paper	usage/例文	memory/route-pc-internal-to-gakushu-bucho.md	21	sb	甲(read)	- 事業部長側の条＝「配れないも返せ・沈黙は無視と区別つかぬ」。当職側の裏返し＝学習部長の**返り便に気付くには DB自汲み**が要る（file箱 nudge が来ぬ便がある）。区切り毎に `sb read inbox` で拾う。
+paper	usage/例文	skills/inbox-alias-integrity/SKILL.md	24	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh は dd706ad で恒久 fix 済 (= realpath 経由)。本 skill は再発検知の自動化を担う。
+py	code	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	23	inbox_write.sh	甲(旗を持たぬ器)	2. 報告 INSERT (inbox_write.sh shell out、Supabase pc_handshake cross-PC bridge 自動同梱)
+py	code	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	355	inbox_write.sh	甲(旗を持たぬ器)	"""既存 inbox_write.sh 経由で報告 INSERT を実行 (FKI-NO-DUP 順守)。
+py	code	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	368	inbox_write.sh	甲(旗を持たぬ器)	rc=0 → INSERT 成功 (Supabase cross-PC bridge は inbox_write.sh 内 background 実行)
+py	code	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	374	inbox_write.sh	甲(旗を持たぬ器)	露出 cure)。env INBOX_WRITE_CONTENT_STDIN=1 で inbox_write.sh が stdin を受領、$2
+py	code	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	410	inbox_write.sh	甲(旗を持たぬ器)	stderr="inbox_write.sh timeout",
+py	code	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	921	inbox_write.sh	甲(旗を持たぬ器)	inbox_write_path: inbox_write.sh path (省略時=本 file 同 dir)
+py	code	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	933	inbox_write.sh	甲(旗を持たぬ器)	3. inbox_write.sh で報告 INSERT
+py	code	.claude/worktrees/karo-mac-a1/scripts/tests/test_fukuincho_report_poke_bundle.py	214	inbox_write.sh	甲(旗を持たぬ器)	"""inbox_write.sh を subprocess.run 互換 runner で叩くことを確認 (FKI-NO-DUP evidence)。
+py	code	.claude/worktrees/karo-mac-a1/scripts/tests/test_fukuincho_report_poke_bundle.py	1030	inbox_write.sh	甲(旗を持たぬ器)	"""★S2 cure verify★: 実 inbox_write.sh script を起動して stdin 経路 content
+py	code	.claude/worktrees/karo-mac-a1/scripts/tests/test_fukuincho_report_poke_bundle.py	1037	inbox_write.sh	甲(旗を持たぬ器)	raise AssertionError(f"inbox_write.sh not found at {inbox_write}")
+py	code	.claude/worktrees/karo-mac-a1/scripts/tests/test_fukuincho_report_poke_bundle.py	1171	inbox_write.sh	甲(旗を持たぬ器)	("cycle2 fix5 (S2): inbox_write.sh real stdin path",
+py	code	.claude/worktrees/karo-mac-a1/scripts/tests/test_fukuincho_report_poke_bundle.py	1173	inbox_write.sh	甲(旗を持たぬ器)	("cycle2 fix5 (S2): inbox_write.sh argv backward compat",
+py	code	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_watcher_poll.py	192	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh sets topic as 'cross_pc_inbox_{target_agent}'.
+py	code	scripts/fukuincho_report_poke_bundle.py	23	inbox_write.sh	甲(旗を持たぬ器)	2. 報告 INSERT (inbox_write.sh shell out、Supabase pc_handshake cross-PC bridge 自動同梱)
+py	code	scripts/fukuincho_report_poke_bundle.py	355	inbox_write.sh	甲(旗を持たぬ器)	"""既存 inbox_write.sh 経由で報告 INSERT を実行 (FKI-NO-DUP 順守)。
+py	code	scripts/fukuincho_report_poke_bundle.py	368	inbox_write.sh	甲(旗を持たぬ器)	rc=0 → INSERT 成功 (Supabase cross-PC bridge は inbox_write.sh 内 background 実行)
+py	code	scripts/fukuincho_report_poke_bundle.py	374	inbox_write.sh	甲(旗を持たぬ器)	露出 cure)。env INBOX_WRITE_CONTENT_STDIN=1 で inbox_write.sh が stdin を受領、$2
+py	code	scripts/fukuincho_report_poke_bundle.py	410	inbox_write.sh	甲(旗を持たぬ器)	stderr="inbox_write.sh timeout",
+py	code	scripts/fukuincho_report_poke_bundle.py	921	inbox_write.sh	甲(旗を持たぬ器)	inbox_write_path: inbox_write.sh path (省略時=本 file 同 dir)
+py	code	scripts/fukuincho_report_poke_bundle.py	933	inbox_write.sh	甲(旗を持たぬ器)	3. inbox_write.sh で報告 INSERT
+py	code	scripts/tests/test_fukuincho_report_poke_bundle.py	214	inbox_write.sh	甲(旗を持たぬ器)	"""inbox_write.sh を subprocess.run 互換 runner で叩くことを確認 (FKI-NO-DUP evidence)。
+py	code	scripts/tests/test_fukuincho_report_poke_bundle.py	1030	inbox_write.sh	甲(旗を持たぬ器)	"""★S2 cure verify★: 実 inbox_write.sh script を起動して stdin 経路 content
+py	code	scripts/tests/test_fukuincho_report_poke_bundle.py	1037	inbox_write.sh	甲(旗を持たぬ器)	raise AssertionError(f"inbox_write.sh not found at {inbox_write}")
+py	code	scripts/tests/test_fukuincho_report_poke_bundle.py	1171	inbox_write.sh	甲(旗を持たぬ器)	("cycle2 fix5 (S2): inbox_write.sh real stdin path",
+py	code	scripts/tests/test_fukuincho_report_poke_bundle.py	1173	inbox_write.sh	甲(旗を持たぬ器)	("cycle2 fix5 (S2): inbox_write.sh argv backward compat",
+py	code	shim/hakudokai/hakudokai_secondpc_watcher_poll.py	192	inbox_write.sh	甲(旗を持たぬ器)	inbox_write.sh sets topic as 'cross_pc_inbox_{target_agent}'.
+py	usage/例文	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	329	inbox_write.sh	甲(旗を持たぬ器)	# 報告 INSERT 実行 (要件 §2 — INSERT 経路は inbox_write.sh 再利用)
+py	usage/例文	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	341	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh に content を stdin で渡すための placeholder + env (S2 cure)
+py	usage/例文	.claude/worktrees/karo-mac-a1/scripts/fukuincho_report_poke_bundle.py	971	inbox_write.sh	甲(旗を持たぬ器)	# 報告 INSERT (FKI-NO-DUP: inbox_write.sh 再利用)
+py	usage/例文	.claude/worktrees/karo-mac-a1/scripts/tests/test_fukuincho_report_poke_bundle.py	1026	inbox_write.sh	甲(旗を持たぬ器)	# 17. ★cycle2 fix5 (S2)★: inbox_write.sh real stdin path verify (process inspection cure)
+py	usage/例文	scripts/fukuincho_report_poke_bundle.py	329	inbox_write.sh	甲(旗を持たぬ器)	# 報告 INSERT 実行 (要件 §2 — INSERT 経路は inbox_write.sh 再利用)
+py	usage/例文	scripts/fukuincho_report_poke_bundle.py	341	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh に content を stdin で渡すための placeholder + env (S2 cure)
+py	usage/例文	scripts/fukuincho_report_poke_bundle.py	971	inbox_write.sh	甲(旗を持たぬ器)	# 報告 INSERT (FKI-NO-DUP: inbox_write.sh 再利用)
+py	usage/例文	scripts/tests/test_fukuincho_report_poke_bundle.py	1026	inbox_write.sh	甲(旗を持たぬ器)	# 17. ★cycle2 fix5 (S2)★: inbox_write.sh real stdin path verify (process inspection cure)
+sh	code	.claude/worktrees/karo-mac-a1/scripts/redundancy/shogun_report_watcher.sh	55	inbox_write.sh	甲(旗を持たぬ器)	echo "$LOG_PREFIX ERROR: inbox_write.sh not found at $INBOX_WRITE" >&2
+sh	code	.claude/worktrees/karo-mac-a1/tests/e2e/e2e_inbox_delivery.bats	49	inbox_write.sh	甲(旗を持たぬ器)	@test "E2E-002-A: inbox_write.sh creates message with correct fields" {
+sh	code	scripts/redundancy/shogun_report_watcher.sh	105	inbox_write.sh	甲(旗を持たぬ器)	echo "$LOG_PREFIX ERROR: inbox_write.sh not found at $INBOX_WRITE" >&2
+sh	code	tests/e2e/e2e_inbox_delivery.bats	49	inbox_write.sh	甲(旗を持たぬ器)	@test "E2E-002-A: inbox_write.sh creates message with correct fields" {
+sh	usage/例文	.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	111	inbox_write.sh	甲(旗を持たぬ器)	# 信長 inbox に dead-letter 通知を送る (= 既存 inbox_write.sh 経由)
+sh	usage/例文	.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	2	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh — メールボックスへのメッセージ書き込み（排他ロック付き）
+sh	usage/例文	.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	30	inbox_write.sh	甲(旗を持たぬ器)	echo "Usage: inbox_write.sh <target_agent> <content> <type> <from>" >&2
+sh	usage/例文	.claude/worktrees/karo-mac-a1/scripts/karo_overload_monitor.sh	345	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh 経由 (= D006 違反なし、self-send guard あり)
+sh	usage/例文	.claude/worktrees/karo-mac-a1/scripts/lib/detect_stale.sh	250	inbox_write.sh	甲(旗を持たぬ器)	# enqueue (層③ omni engine 呼出 — 既存 inbox_write.sh 経路を wrap)
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/checks/test_agent_health_check.bats	251	inbox_write.sh	甲(旗を持たぬ器)	# 真の inbox_write.sh が呼ばれず、TEST_INBOX_WRITE_LOG に呼出記録のみ残ることを確認。
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/checks/test_agent_health_check.bats	267	inbox_write.sh	甲(旗を持たぬ器)	#  記録ありかつ実 inbox_write.sh が呼ばれていないことが gate の核心保証)
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/e2e/e2e_inbox_delivery.bats	6	inbox_write.sh	甲(旗を持たぬ器)	#   1. inbox_write.sh correctly writes messages to YAML
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/e2e/e2e_inbox_delivery.bats	12	inbox_write.sh	甲(旗を持たぬ器)	# Tests inbox_write.sh → (nudge) → mock_cli processes → read: true
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/e2e/e2e_inbox_delivery.bats	46	inbox_write.sh	甲(旗を持たぬ器)	# E2E-002-A: inbox_write.sh writes message to YAML correctly
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/e2e/e2e_inbox_delivery.bats	129	inbox_write.sh	甲(旗を持たぬ器)	# E2E-002-D: inbox_write.sh to different agents are isolated
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/e2e/helpers/setup.bash	22	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh resolves SCRIPT_DIR to parent of scripts/, then uses queue/inbox/
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/test_inbox_expiry_supersession.bats	62	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh integration tests need a SCRIPT_DIR-relative wrapper
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/test_inbox_write.bats	2	inbox_write.sh	甲(旗を持たぬ器)	# test_inbox_write.bats — inbox_write.sh ユニットテスト
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/test_shogun_report_watcher.sh	12	inbox_write.sh	甲(旗を持たぬ器)	#   T7 inbox_write.sh failure: log + watcher continues
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/unit/test_dead_letter.bats	32	inbox_write.sh	甲(旗を持たぬ器)	# stub inbox_write.sh — 引数を escalation_log に追記
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/unit/test_idle_flag.bats	33	inbox_write.sh	甲(旗を持たぬ器)	# Mock inbox_write.sh
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/unit/test_ntfy_ack.bats	75	inbox_write.sh	甲(旗を持たぬ器)	# mock inbox_write.sh
+sh	usage/例文	.claude/worktrees/karo-mac-a1/tests/unit/test_stop_hook.bats	28	inbox_write.sh	甲(旗を持たぬ器)	# Mock inbox_write.sh — logs arguments to file
+sh	usage/例文	scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	111	inbox_write.sh	甲(旗を持たぬ器)	# 信長 inbox に dead-letter 通知を送る (= 既存 inbox_write.sh 経由)
+sh	usage/例文	scripts/inbox_write.sh	2	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh — メールボックスへのメッセージ書き込み（排他ロック付き）
+sh	usage/例文	scripts/inbox_write.sh	30	inbox_write.sh	甲(旗を持たぬ器)	echo "Usage: inbox_write.sh <target_agent> <content> <type> <from>" >&2
+sh	usage/例文	scripts/karo_overload_monitor.sh	345	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh 経由 (= D006 違反なし、self-send guard あり)
+sh	usage/例文	scripts/lib/detect_stale.sh	250	inbox_write.sh	甲(旗を持たぬ器)	# enqueue (層③ omni engine 呼出 — 既存 inbox_write.sh 経路を wrap)
+sh	usage/例文	tests/checks/test_agent_health_check.bats	251	inbox_write.sh	甲(旗を持たぬ器)	# 真の inbox_write.sh が呼ばれず、TEST_INBOX_WRITE_LOG に呼出記録のみ残ることを確認。
+sh	usage/例文	tests/checks/test_agent_health_check.bats	267	inbox_write.sh	甲(旗を持たぬ器)	#  記録ありかつ実 inbox_write.sh が呼ばれていないことが gate の核心保証)
+sh	usage/例文	tests/e2e/e2e_inbox_delivery.bats	6	inbox_write.sh	甲(旗を持たぬ器)	#   1. inbox_write.sh correctly writes messages to YAML
+sh	usage/例文	tests/e2e/e2e_inbox_delivery.bats	12	inbox_write.sh	甲(旗を持たぬ器)	# Tests inbox_write.sh → (nudge) → mock_cli processes → read: true
+sh	usage/例文	tests/e2e/e2e_inbox_delivery.bats	46	inbox_write.sh	甲(旗を持たぬ器)	# E2E-002-A: inbox_write.sh writes message to YAML correctly
+sh	usage/例文	tests/e2e/e2e_inbox_delivery.bats	129	inbox_write.sh	甲(旗を持たぬ器)	# E2E-002-D: inbox_write.sh to different agents are isolated
+sh	usage/例文	tests/e2e/helpers/setup.bash	22	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh resolves SCRIPT_DIR to parent of scripts/, then uses queue/inbox/
+sh	usage/例文	tests/test_inbox_expiry_supersession.bats	62	inbox_write.sh	甲(旗を持たぬ器)	# inbox_write.sh integration tests need a SCRIPT_DIR-relative wrapper
+sh	usage/例文	tests/test_inbox_write.bats	2	inbox_write.sh	甲(旗を持たぬ器)	# test_inbox_write.bats — inbox_write.sh ユニットテスト
+sh	usage/例文	tests/test_shogun_report_watcher.sh	12	inbox_write.sh	甲(旗を持たぬ器)	#   T7 inbox_write.sh failure: log + watcher continues
+sh	usage/例文	tests/unit/test_dead_letter.bats	32	inbox_write.sh	甲(旗を持たぬ器)	# stub inbox_write.sh — 引数を escalation_log に追記
+sh	usage/例文	tests/unit/test_idle_flag.bats	33	inbox_write.sh	甲(旗を持たぬ器)	# Mock inbox_write.sh
+sh	usage/例文	tests/unit/test_ntfy_ack.bats	75	inbox_write.sh	甲(旗を持たぬ器)	# mock inbox_write.sh
+sh	usage/例文	tests/unit/test_stop_hook.bats	28	inbox_write.sh	甲(旗を持たぬ器)	# Mock inbox_write.sh — logs arguments to file

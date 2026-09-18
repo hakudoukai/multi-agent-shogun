@@ -1,0 +1,6 @@
+# koku=2026-09-18T20:43:32+0900 root=docs/evidence/km-192-hata-ga-dou-wo-kuu-20260918/raw skip=['.git'] files=3 max_depth=0 rc=0
+kind	ctx	path	line	helper	verdict	verbatim
+sh	code	seed_positive_control.sh	2	sb-ashigaru-mac-1	甲	~/bin/sb-ashigaru-mac-1 write letter "正しい胴" --to gunshi-mac --parent-seq 1
+sh	code	seed_positive_control.sh	3	sb-ashigaru-mac-1	★乙(旗が胴より前)★	~/bin/sb-ashigaru-mac-1 write letter --to gunshi-mac "旗が前の胴" --parent-seq 1
+sh	code	seed_positive_control.sh	4	sb	甲(read)	sb read seq 123
+sh	code	seed_positive_control.sh	6	sb-karo-mac	★乙(旗が胴より前)★	sb-karo-mac write letter --to iincho "胴" --parent-seq 333753

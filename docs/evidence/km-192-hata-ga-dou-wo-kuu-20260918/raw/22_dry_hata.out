@@ -1,0 +1,9 @@
+★DRY-RUN（★送信しない★）★
+   to_pc         = mac_pc
+   topic         = cross_pc_inbox_karo-mac
+   message_type  = answer
+   priority      = normal
+   target_agent  = karo-mac
+   sender_agent  = ashigaru-mac-1
+   reply_to_topic= cross_pc_inbox_ashigaru-mac-1
+   parent_message_id= 4e186d1b-a3b5-4d1e-85a7-b018aedf9b07
