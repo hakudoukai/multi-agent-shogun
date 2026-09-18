@@ -1,0 +1,13 @@
+koku=2026-09-18T18:19:53+0900 tree=/Users/momizimac/wt/a1-km167-ci HEAD=7c0d1492acfd5fcef5a60503888ab0dbd53fe5f6
+束=docs/evidence/ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918(disk 94・追跡 70・差 24 = raw/10_census_A.tsv)
+⒜ git status --porcelain -- <束>: rc=0 行数=0(out 0B / err 0B)= ★黙り★
+   同 --ignored 付き: 行数=24 (悉く !! = ignored 印)
+⒝ disk のみ 24 本の逐語= raw/21_km176_disk_only_list.txt(悉く letters/ の便の控・當席が tip を動かさぬ為 commit せぬと宣した物)
+   check-ignore -v: .gitignore:7:* docs/evidence/ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918/letters/km176_hantei_1of6.sent.txt
+   rc=0
+   check-ignore -v: .gitignore:7:* docs/evidence/ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918/letters/km176_hantei_1of6.txt
+   rc=0
+   check-ignore -v: .gitignore:7:* docs/evidence/ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918/letters/km176_hantei_2of6.sent.txt
+   rc=0
+   対照(追跡済の紙): check-ignore -v docs/evidence/ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918/…20260918.md → rc=1(1=規則無し)
+   .gitignore:7 逐語=[*]・.gitignore 全 443 行(allowlist 型・docs/evidence を許す行: )

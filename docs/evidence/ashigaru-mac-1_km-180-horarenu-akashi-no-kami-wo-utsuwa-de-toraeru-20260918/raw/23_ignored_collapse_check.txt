@@ -1,0 +1,9 @@
+koku=2026-09-18T18:20:25+0900 tree=共有樹(読むのみ) HEAD=d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11
+束=docs/evidence/ashigaru-mac-1_km-177-yon-no-chou-ga-yomenu-riyuu-to-yomu-ki-no-bosuu-20260918(disk 56・追跡 0・差 56 = raw/10_census_C.tsv)
+git status --porcelain --ignored -- <束>: 行数=1 → 逐語:
+!! docs/evidence/ashigaru-mac-1_km-177-yon-no-chou-ga-yomenu-riyuu-to-yomu-ki-no-bosuu-20260918/
+git status --porcelain --ignored=matching -- <束>: 行数=56
+git ls-files --others --ignored --exclude-standard -- <束>: 行数=56 rc=?
+  rc(単独)=0
+find <束> -type f: 56
+∴ --ignored(既定 traditional)は追跡外 dir を一行に畳む(memory: porcelain は追跡外 dir を一行に畳む)。=matching か ls-files 形で一本ずつ出る。

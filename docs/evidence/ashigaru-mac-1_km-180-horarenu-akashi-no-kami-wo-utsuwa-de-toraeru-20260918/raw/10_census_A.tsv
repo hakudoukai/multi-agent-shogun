@@ -1,0 +1,9 @@
+# koku=2026-09-18T18:18:32+0900 tree=/Users/momizimac/wt/a1-km167-ci root=docs/evidence depth=1(束)・束内は全深さ walk・symlink 不辿・bundles=3
+bundle	disk	tracked	diff	porcelain	others	others_ignored	deleted	maxdepth	rcs
+ashigaru-mac-1_km-167-main-ci-aka-yon-job-no-konchi-20260918	119	119	0	0	0	0	0	1	00000
+ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918	94	70	24	0	0	24	0	1	00000
+km-manifest-append-track-20260917	19	19	0	0	0	0	0	1	00000
+# 束数=3 差>0=1 束(本数計 24) 差<0=0 束(本数計 0) 差=0=2 束
+# porcelain>0 の束=0 / 差>0 且つ porcelain==0(盲)=1 束
+# 代器 (others+others_ignored)==diff の束=3 / ≠ の束=0
+# rc: 全 git 呼びの rc 連結が 00000 でない束=0
