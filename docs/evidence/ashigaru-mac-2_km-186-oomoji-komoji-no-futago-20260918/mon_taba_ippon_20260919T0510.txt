@@ -1,0 +1,85 @@
+★二束を一 commit へ置いた ―― 家老令 KM-186「別 commit 一本」への応じ★
+刻 = 2026-09-19T05:07〜05:10+0900 ／ 席 = ashigaru-mac-2(專任2) ／ 根 = /Users/momizimac/wt/a2-taba1
+
+■一 母數の宣言
+  ・此の紙が数へるのは ★己の樹に切つた第三の枝一本と、其の上の commit 一本★ である。
+  ・紙の母數 = ★346 本★(km-185 束 195 本 ／ km-186 束 151 本)。
+  ・歩き根 = 上記二束の dir。__pycache__ は歩かぬ(除いた ―― 「除いた」は「歩いて居らぬ」の意である)。
+
+■二 令と、応じ方
+  家老令 KM-186(2026-09-19T01:58:48)逐語の要:
+    「区切りの後、★km-185 の束と併せて別 commit 一本で入れよ★」
+  ★當席が 01:5x に測つた事★: 二束は ★別の枝★ に彫つて在る。
+    km-185 束 → 枝 ashigaru-mac-2/km-185-gosoku-wo-ono-no-ki-he-kotei-20260918(尖 3f53e54a)
+    km-186 束 → 枝 ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918(尖 0e7c8420)
+  ∴ 其の儘では一 commit に同居させ得ぬ。此を seq335674 と箱便で上申し、指図を仰いだ。
+  ★05:07 に指図は未だ来て居らぬ。然れど「paused」と言うて止まるは職務不履行である★(闘魂)。
+  ∴ ★消さず・書き換へず・押さぬ第三の道★ を実射して、選べる形にして差し出す。
+
+■三 実射(第三の枝)
+  ⑴ 二枝の merge-base を測つた = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+     = ★origin/main の現尖と同一★(`git rev-parse origin/main` で照合した)。
+  ⑵ 其の commit から新枝を切つた:
+     枝 = ashigaru-mac-2/km-185-186-taba-ippon-20260919
+     樹 = /Users/momizimac/wt/a2-taba1(★己の樹★・新設)
+  ⑶ 二束を cp -pR で複写し、★紙毎に★ sha256 を突合した。
+  ⑷ `git add -f` で 346 本を名指し、`git commit --only -- <346 本>` で ★一 commit★ に彫つた。
+
+■四 rc と出目(管を通さず $? から取つた)
+  worktree add   rc=0
+  cp -pR         rc=0(二束とも)
+  sha256 突合    母數 346 ／ ★一致 346 ／ 不一致 0 ／ 実体無 0★
+  ★陰性対照★    ZZ-nai-kami-9182.txt を同じ器に当て「実体無」を刷らせた ―― ★器は否を刷れる★
+  git add -f     rc=0 ／ index に載つた = 346(束A 195・束B 151) ／ ★束の外 = 0★
+  git commit     rc=0 ／ 346 files changed, 6986 insertions(+)
+
+■五 固定(40桁)
+  commit = 0ed6c782a7cab71f81046925971abacdf890b923
+  tree   = cd3f36b93bc1466ba9356ede97fb05059c7aa0bb
+  親     = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634(= origin/main 現尖)
+
+■六 彫つた後の突合(差0)
+  `git ls-tree -r --name-only 0ed6c782 -- <束A>` = 195 ／ disk = 195
+  同 <束B> = 151 ／ disk = 151
+  逐名差 = `comm -23`(disk のみ)= 0 ／ `comm -13`(枝のみ)= 0
+  `git show --name-only` の紙 = 346 ／ ★束の外 = 0★
+  porcelain = ` M docs/runbooks/ERR-EKARTE-001.md` 一行 ―― ★彫つて居らぬ★
+    (--only が束のみを彫つた事の陽性対照である)
+
+■七 未 push ―― ★0 行では証せぬ★
+  `git ls-remote origin <ref>`(同じ器・同じ路):
+    此の新枝               = 0 行 rc=0
+    km-185 の枝            = 0 行 rc=0
+    km-186 の枝            = 0 行 rc=0
+    ★陽性対照★ refs/heads/main = ★1 行★ rc=0  ← 器が 1 を刷れる事の證
+    ★陰性対照★ refs/heads/ZZ-nai-eda-9182 = 0 行 rc=0
+  ∴ 0 行は「器が黙つて居る」ではなく「其の ref が遠隔に無い」である。
+
+■八 共有樹の不動(読取のみ・一指も触れて居らぬ)
+  05:07 HEAD = d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11
+        index sha256 = c1acf51a1ca9f2c84c98dee90a9543c8f7e59d6eecdd8fcfc7a04fd756e99cd6
+  05:10 HEAD = d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11
+        index sha256 = c1acf51a1ca9f2c84c98dee90a9543c8f7e59d6eecdd8fcfc7a04fd756e99cd6
+  ★`git worktree add` の前後で共に不動である事を測つた★(add は .git/worktrees/ に書くが
+   共用樹の HEAD・index を動かさぬ ―― 之を字面で信ぜず、二度測つて示した)。
+
+■九 裁 seq335122⑹ の再測 ―― ★依然 測れぬ★
+  docs/rules/judge-submission-bundle-template.md:
+    disk           = 無(`[ -e ]` rc=1)
+    當 repo の全 ref = `git log --all --oneline -- <其の path>` ★0 行★
+    ★陽性対照★    = 同じ器で docs/runbooks/err-ekarte-001.md を引くと ★1 行★
+      ―― 器は 0 でない数を刷れる。∴ 0 は「器の黙り」ではなく「此の repo に無い」である。
+    /mnt/c         = 無(此の Mac に存在せぬ)
+  ∴ 家老の令「手元で読めねば『測れぬ』で止めて当職へ申せ」に従ひ、★測れぬ★ で据ゑる。
+
+■十 ★此の紙が意味せぬ事★
+  ・★「一 commit に置けた」は「此の枝を押すべし」を意味せぬ★。
+    既存の二枝(3f53e54a / 0e7c8420)は ★消して居らぬ・書き換へて居らぬ★。
+    孰れを押すかは ★當席の断ずる所ではない★(裁 seq334442⑶「押すな・PR も作るな」)。
+  ・★同じ path が二経路に在る★ ―― 双方を押せば同名の紙が二つの commit から来る。
+    中身は sha256 で同一と測つて在るが、★併合の是非は家老・總監督の断★である。
+  ・km-186 の ★実体★(双子の消す順の彫り 4cb05b976ec0060796840e02dd579f1551d89841)は
+    此の commit に ★入つて居らぬ★。此の 346 本は ★紙のみ★ である。
+  ・346 本は ★05:08 の disk の状態★ である。後に紙が増えれば此の数は古びる。
+  ・sha256 一致 346 は「複写が壊れて居らぬ」の意であり、★中身が正しい事を意味せぬ★。
+  ・共有樹の不動は「當席が触れて居らぬ」の意であり、★他席が触れぬ事を意味せぬ★。
