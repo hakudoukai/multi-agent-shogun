@@ -1,0 +1,23 @@
+=== 横展開の数へ直し(実測 2026-09-17) ―― env 由来の閾 × is_num のみ ===
+-- file 毎の is_num 呼出 --
+scripts/inbox_watcher.sh                                       呼出=1
+scripts/agent_health_check.sh                                  呼出=3
+scripts/watchdogs/enter_restart_common_watchdog.sh             呼出=3
+scripts/checks/context_usage_warn.sh                           呼出=2
+scripts/redundancy/shogun_report_watcher.sh                    呼出=1
+/Users/momizimac/bin/fleet_liveness_check.sh                   呼出=1
+
+-- inbox_watcher L132-134 は一つの呼出で ★10の閾★ を守る(輪) --
+ESCALATE_PHASE1:120
+ESCALATE_PHASE2:240
+ESCALATE_COOLDOWN:300
+NUDGE_COOLDOWN_SEC:60
+NUDGE_COOLDOWN_SEC_CODEX:300
+NUDGE_COOLDOWN_SEC_CLAUDE:60
+ASW_PHASE:2
+APPROVAL_ALERT_COOLDOWN:300
+MAX_TYPING_SKIP:5
+INOTIFY_TIMEOUT:30
+
+∴ 箇所 = 10 + 3 + 3 + 2 + 1 + 1 = ★20★ / file = ★6★(repo内5・~/bin 1)
+註: karo_mac_dasumae_gate.sh の is_num 4箇所は閾に非ず(測つた寸法の検め・default-deny 済)
