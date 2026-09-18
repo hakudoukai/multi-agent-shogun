@@ -1,0 +1,5 @@
+files 517 depth 10 hits 121
+  sh: 25 行 / 8 file / REPO? 25 行
+  bats: 33 行 / 13 file / REPO? 33 行
+  py: 63 行 / 20 file / REPO? 63 行
+bats で REPO? の file: ['tests/e2e/e2e_basic_flow.bats', 'tests/e2e/e2e_blocked_by.bats', 'tests/e2e/e2e_busy_clear_guard.bats', 'tests/e2e/e2e_clear_recovery.bats', 'tests/e2e/e2e_codex_startup.bats', 'tests/e2e/e2e_escalation.bats', 'tests/e2e/e2e_idle_flag_recovery.bats', 'tests/e2e/e2e_inbox_delivery.bats', 'tests/e2e/e2e_parallel_tasks.bats', 'tests/e2e/e2e_redo.bats', 'tests/e2e/e2e_slim_retention.bats', 'tests/unit/test_ntfy_ack.bats', 'tests/unit/test_ntfy_auth.bats']

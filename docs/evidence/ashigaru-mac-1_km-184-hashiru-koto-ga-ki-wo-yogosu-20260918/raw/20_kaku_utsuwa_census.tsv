@@ -1,0 +1,123 @@
+# koku=2026-09-18T19:44:03+0900 root=/Users/momizimac/wt/a1-km184 skip=['.git', '.venv', '__pycache__', 'evidence', 'node_modules', 'queue'] files=517 max_depth=10 rc=0 ―― 静的な網(書く形の字面)。'REPO?' は tmp の印が同行に無い=作業樹へ書く候補(紙で判ずる)
+kind	path	line	target	verbatim
+bats	tests/e2e/e2e_basic_flow.bats	54	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_basic_flow.bats	90	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/cmd_basic.yaml" \
+bats	tests/e2e/e2e_basic_flow.bats	122	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/cmd_basic.yaml" \
+bats	tests/e2e/e2e_blocked_by.bats	54	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_blocked_by.bats	58	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru2_blocked.yaml" \
+bats	tests/e2e/e2e_blocked_by.bats	111	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru2_blocked.yaml" \
+bats	tests/e2e/e2e_busy_clear_guard.bats	63	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_busy_clear_guard.bats	105	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_clear_recovery.bats	50	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_clear_recovery.bats	109	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_codex_startup.bats	70	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_codex_startup.bats	127	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_codex_startup.bats	181	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_codex_startup.bats	231	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_codex_startup.bats	298	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_codex_startup.bats	376	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_escalation.bats	52	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_idle_flag_recovery.bats	73	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_idle_flag_recovery.bats	113	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_inbox_delivery.bats	73	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_inbox_delivery.bats	156	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_parallel_tasks.bats	50	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_parallel_tasks.bats	52	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru2_basic.yaml" \
+bats	tests/e2e/e2e_parallel_tasks.bats	92	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_parallel_tasks.bats	94	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru2_basic.yaml" \
+bats	tests/e2e/e2e_redo.bats	57	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_redo.bats	112	REPO?	cp "$PROJECT_ROOT/tests/e2e/fixtures/task_ashigaru1_basic.yaml" \
+bats	tests/e2e/e2e_slim_retention.bats	82	REPO?	cp "$PROJECT_ROOT/scripts/slim_yaml.py" "$root/scripts/"
+bats	tests/e2e/e2e_slim_retention.bats	106	REPO?	cp "$PROJECT_ROOT/scripts/slim_yaml.py" "$root/scripts/"
+bats	tests/e2e/e2e_slim_retention.bats	131	REPO?	cp "$PROJECT_ROOT/scripts/slim_yaml.py" "$root/scripts/"
+bats	tests/unit/test_ntfy_ack.bats	42	REPO?	cp "$PROJECT_ROOT/lib/ntfy_auth.sh" "$MOCK_PROJECT/lib/"
+bats	tests/unit/test_ntfy_auth.bats	168	REPO?	cp "$PROJECT_ROOT/lib/ntfy_auth.sh" "$mock_dir/lib/"
+bats	tests/unit/test_ntfy_auth.bats	179	REPO?	cp "$PROJECT_ROOT/scripts/ntfy.sh" "$mock_dir/scripts/ntfy.sh"
+py	scripts/checks/karo_mac_manifest_append.py	168	REPO?	open(yoi, "w", encoding="utf-8").write("a\nb\n")
+py	scripts/checks/karo_mac_manifest_append.py	178	REPO?	open(kuu, "w", encoding="utf-8").write("x\n")
+py	scripts/checks/karo_mac_manifest_append.py	195	REPO?	open(warui, "w", encoding="utf-8").write("x\n")
+py	scripts/checks/karo_mac_manifest_append.py	204	REPO?	open(warui2, "w", encoding="utf-8").write("x\n")
+py	scripts/fukuincho_report_poke_bundle.py	323	REPO?	with open(tmp, "w") as f:
+py	scripts/fukuincho_report_poke_bundle.py	325	REPO?	os.replace(tmp, p)
+py	scripts/seo_qc.py	560	REPO?	with open(outpath, "w", encoding="utf-8") as f:
+py	scripts/seo_qc.py	561	REPO?	yaml.dump(report, f, allow_unicode=True, default_flow_style=False, sort_keys=False)
+py	scripts/slim_yaml.py	38	REPO?	with open(filepath, 'w', encoding='utf-8') as f:
+py	scripts/slim_yaml.py	39	REPO?	yaml.dump(data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+py	scripts/tests/test_fukuincho_report_poke_bundle.py	958	REPO?	f"open({signal_file!r}, 'w').write('blocked' if fd is None else 'acquired')\n"
+py	scripts/tests/test_fukuincho_report_poke_bundle.py	982	REPO?	f"open({signal_file2!r}, 'w').write('blocked' if fd is None else 'acquired')\n"
+py	shim/hakudokai/hakudokai_dashboard_sync.py	369	REPO?	with open(tmp_path, "w", encoding="utf-8") as fh:
+py	shim/hakudokai/hakudokai_dashboard_sync.py	371	REPO?	os.replace(tmp_path, out_path)
+py	shim/hakudokai/hakudokai_fukuincho_poll.py	55	REPO?	with open(RETRY_TRACKER_FILE, "w") as f:
+py	shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	55	REPO?	with open(RETRY_TRACKER_FILE, "w") as f:
+py	shim/hakudokai/hakudokai_fukuincho_reverse_poll.py	366	REPO?	with open(LAST_POKE_TS_FILE, "w") as f:
+py	shim/hakudokai/hakudokai_git_guard.py	107	REPO?	with open(HEALTH_FILE, "w") as f:
+py	shim/hakudokai/hakudokai_inbox_watcher.py	141	REPO?	os.replace(path, path + ".deprecated_phase_r2_empty")
+py	shim/hakudokai/hakudokai_inbox_watcher.py	158	REPO?	os.replace(path, path + ".deprecated_phase_r2")
+py	shim/hakudokai/hakudokai_inbox_watcher.py	164	REPO?	os.replace(path, path + ".deprecated_phase_r2_corrupt")
+py	shim/hakudokai/hakudokai_resistance_guard.py	120	REPO?	with open(full_path, "w", encoding="utf-8") as f:
+py	shim/hakudokai/hakudokai_role_init.py	72	REPO?	with open(role_file, "w", encoding="utf-8") as fh:
+py	shim/hakudokai/hakudokai_secondpc_receiver_poll.py	93	REPO?	with open(RETRY_TRACKER_FILE, "w") as f:
+py	shim/hakudokai/hakudokai_secondpc_receiver_poll.py	199	REPO?	path.write_text(existing.rstrip("\n") + "\n" + entry, encoding="utf-8")
+py	shim/hakudokai/hakudokai_secondpc_receiver_poll.py	284	REPO?	with open(tmp_path, "w", encoding="utf-8") as f:
+py	shim/hakudokai/hakudokai_secondpc_receiver_poll.py	286	REPO?	os.replace(tmp_path, target_path)
+py	shim/hakudokai/hakudokai_secondpc_receiver_poll.py	406	REPO?	path.write_text(existing + entry, encoding="utf-8")
+py	shim/hakudokai/hakudokai_secondpc_watcher_poll.py	56	REPO?	with open(RETRY_TRACKER_FILE, "w") as f:
+py	shim/hakudokai/hakudokai_secondpc_watcher_poll.py	174	REPO?	with open(tmp_path, "w", encoding="utf-8") as f:
+py	shim/hakudokai/hakudokai_secondpc_watcher_poll.py	176	REPO?	os.replace(tmp_path, target_path)
+py	tests/test_ebb0e8ad_receiver_routing.py	20	REPO?	response.write_text(json.dumps(rows), encoding="utf-8")
+py	tests/test_ebb0e8ad_receiver_routing.py	21	REPO?	processed.write_text("", encoding="utf-8")
+py	tests/test_ebb0e8ad_receiver_routing.py	22	REPO?	tracker_path.write_text(json.dumps(tracker or {}), encoding="utf-8")
+py	tests/test_ebb0e8ad_receiver_routing.py	64	REPO?	(tmp_path / "response.json").write_text('[{"id":"already-processed"}]', encoding="utf-8")
+py	tests/test_ebb0e8ad_receiver_routing.py	65	REPO?	(tmp_path / "processed.txt").write_text("already-processed\n", encoding="utf-8")
+py	tests/test_ff5c9068_unroutable_notice_dedupe.py	39	REPO?	with open(resp, "w", encoding="utf-8") as f:
+py	tests/test_ff5c9068_unroutable_notice_dedupe.py	44	REPO?	open(processed_file, "w").close()
+py	tests/test_secondpc_samepc_role_routing.py	17	REPO?	response_file.write_text(json.dumps([message]), encoding="utf-8")
+py	tests/test_secondpc_samepc_role_routing.py	19	REPO?	processed_file.write_text("", encoding="utf-8")
+py	tests/test_secondpc_samepc_role_routing.py	24	REPO?	writer.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+py	tests/test_secondpc_secret_argv.py	22	REPO?	for n in ['hakudokai_secondpc_watcher.sh','hakudokai_secondpc_watcher_poll.py','hakudokai_secondpc_receiver_poll.py']:shutil.copy2(BASE/n,d/n)
+py	tests/test_secondpc_secret_argv.py	24	REPO?	shutil.copy2(helper,d/'lib/sb_auth.sh')
+py	tests/test_secondpc_secret_argv.py	26	REPO?	fakecurl=b/'curl';fakecurl.write_text(r'''#!/usr/bin/env python3
+py	tests/test_secondpc_secret_argv.py	37	REPO?	if out:json.dump([{'id':'11111111-2222-4333-8444-555555555555','from_pc':'second_pc','to_pc':'main_pc','topic':'mock','content':'mock','priority':'high','message_type':'a
+py	tests/test_secondpc_secret_argv.py	39	REPO?	fakepy=b/'python3';fakepy.write_text(r'''#!/usr/bin/env bash
+py	tests/test_secondpc_secret_argv.py	52	REPO?	env={**os.environ,'PATH':str(b)+os.pathsep+os.environ['PATH'],'HOME':str(home),'SUPABASE_URL':'https://mock.invalid','SUPABASE_SERVICE_ROLE_KEY':MOCK,'CALLS':str(calls),'
+py	tests/test_secondpc_secret_argv.py	67	REPO?	calls.write_text('')
+py	tests/test_secondpc_secret_argv.py	75	REPO?	empty=state/'empty.json';empty.write_text('[]');processed=state/'poll_processed';processed.write_text('')
+py	tests/test_section18_migration.py	68	REPO?	with open(path, "w", encoding="utf-8") as f:
+py	tests/test_section18_migration.py	464	REPO?	with open(evil, "w", encoding="utf-8") as f:
+py	tests/test_section18_migration.py	470	REPO?	with open(evil, "w", encoding="utf-8") as f:
+py	tests/test_section18_migration.py	522	REPO?	with open(path, "w", encoding="utf-8") as f:
+py	tests/test_section18_migration.py	767	REPO?	with open(outputs_path, "w", encoding="utf-8") as f:
+py	tests/test_section18_migration.py	769	REPO?	with open(counter_path, "w", encoding="utf-8") as f:
+py	tests/test_section18_migration.py	782	REPO?	with open(stub_path, "w", encoding="utf-8") as f:
+py	tests/test_watcher_hotfix.py	43	REPO?	open(processed_file, "w").close()
+py	tests/test_watcher_hotfix.py	111	REPO?	with open(tracker_file, "w") as f:
+py	tests/test_watcher_hotfix.py	115	REPO?	with open(response_file, "w") as f:
+py	tests/test_watcher_hotfix.py	126	REPO?	open(processed_file, "w").close()
+py	tests/test_watcher_hotfix.py	178	REPO?	with open(tracker_file, "w") as f:
+py	tests/test_watcher_hotfix.py	183	REPO?	with open(response_file, "w") as f:
+py	tests/test_watcher_hotfix.py	194	REPO?	open(processed_file, "w").close()
+sh	first_setup.sh	622	REPO?	cat > "$SCRIPT_DIR/config/settings.yaml" << EOF
+sh	first_setup.sh	657	REPO?	cat > "$SCRIPT_DIR/config/projects.yaml" << 'EOF'
+sh	first_setup.sh	675	REPO?	cp "$SCRIPT_DIR/memory/MEMORY.md.sample" "$SCRIPT_DIR/memory/MEMORY.md"
+sh	first_setup.sh	685	REPO?	cat > "$SCRIPT_DIR/memory/global_context.md" << 'EOF'
+sh	first_setup.sh	807	REPO?	sed -i '/alias css=/d' "$BASHRC_FILE"
+sh	first_setup.sh	811	REPO?	sed -i '/alias csm=/d' "$BASHRC_FILE"
+sh	first_setup.sh	826	REPO?	sed -i '/^css()/d' "$BASHRC_FILE"
+sh	first_setup.sh	838	REPO?	sed -i '/^csm()/d' "$BASHRC_FILE"
+sh	first_setup.sh	850	REPO?	sed -i '/^dash()/d' "$BASHRC_FILE"
+sh	first_setup.sh	889	REPO?	sed -i '/\[experimental\]/a autoMemoryReclaim=gradual' "$WSLCONFIG_PATH"
+sh	scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	126	REPO?	sed -i 's/^escalation_sent: false$/escalation_sent: true/' "$dlq_file" 2>/dev/null || true
+sh	scripts/checks/karo_mac_gate4.sh	4	REPO?	# 由来: 2026-09-09。家老 が `git diff --cached --check && echo 通; git commit …` と繋いだ為、
+sh	shim/hakudokai/hakudokai_clinic_switch.sh	111	REPO?	sed -i '/^export HAKUDOKAI_CLINIC_ID=/d' "$RC_FILE"
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	181	REPO?	sed -i 's/\r$//' "$hook"
+sh	shutsujin_departure.sh	967	REPO?	[ -f "$SCRIPT_DIR/queue/inbox/${agent}.yaml" ] || echo "messages:" > "$SCRIPT_DIR/queue/inbox/${agent}.yaml"
+sh	shutsujin_departure.sh	981	REPO?	>> "$SCRIPT_DIR/logs/inbox_watcher_shogun.log" 2>&1 &
+sh	shutsujin_departure.sh	987	REPO?	>> "$SCRIPT_DIR/logs/inbox_watcher_karo.log" 2>&1 &
+sh	shutsujin_departure.sh	995	REPO?	>> "$SCRIPT_DIR/logs/inbox_watcher_ashigaru${i}.log" 2>&1 &
+sh	shutsujin_departure.sh	1003	REPO?	>> "$SCRIPT_DIR/logs/inbox_watcher_gunshi.log" 2>&1 &
+sh	tests/checks/pretooluse_stdin_json/smoke_test.sh	47	REPO?	cp "$REPO_ROOT/scripts/checks/pretooluse_bash_guard.sh" "$hook_dir/pretooluse_bash_guard.sh"
+sh	tests/e2e/helpers/setup.bash	29	REPO?	cp "$PROJECT_ROOT/scripts/inbox_write.sh" "$E2E_QUEUE/scripts/"
+sh	tests/e2e/helpers/setup.bash	30	REPO?	cp "$PROJECT_ROOT/scripts/inbox_watcher.sh" "$E2E_QUEUE/scripts/"
+sh	tests/e2e/helpers/setup.bash	37	REPO?	cp "$PROJECT_ROOT/lib/cli_adapter.sh" "$E2E_QUEUE/lib/" 2>/dev/null || true
+sh	tests/e2e/helpers/setup.bash	38	REPO?	cp "$PROJECT_ROOT/lib/agent_status.sh" "$E2E_QUEUE/lib/" 2>/dev/null || true
+sh	tests/e2e/helpers/setup.bash	44	REPO?	cp "$PROJECT_ROOT/config/settings.yaml" "$E2E_QUEUE/config/" 2>/dev/null || true

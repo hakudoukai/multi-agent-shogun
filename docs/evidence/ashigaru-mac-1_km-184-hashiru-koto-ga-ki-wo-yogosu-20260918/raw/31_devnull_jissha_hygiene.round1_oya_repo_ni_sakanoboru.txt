@@ -1,0 +1,11 @@
+koku=2026-09-18T19:44:33+0900 器=scripts/checks/ephemeral_worktree_hygiene.sh L19 `git -C $d status --porcelain 2>/dev/null | wc -l` ―― 種=己の束の docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/raw/seed_hyg/.claude/worktrees/tmp-nogit(★git repo でない dir★・紙 1 本)
+直に: git -C docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/raw/seed_hyg/.claude/worktrees/tmp-nogit status --porcelain → rc/stderr:
+ M docs/runbooks/ERR-EKARTE-001.md
+  rc=0 (128=fatal: not a git repository ―― 之が 2>/dev/null に捨てられる告げ)
+器を走らせる(REPO=docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/raw/seed_hyg):
+[worktree-hygiene] free=165Gi 一時樹=1(掃ける=0 / 持主の言が要る=1 / 生きて居る=0)
+[worktree-hygiene] 異常 無し
+  → dirty=0 と数へ「生きて居る」(mtime 新)。mtime を 2 日前にすると:
+[worktree-hygiene] free=165Gi 一時樹=1(掃ける=0 / 持主の言が要る=1 / 生きて居る=0)
+  → ★掃ける 1★ = git でない dir(告げ fatal 128 を捨てた)が「中身 commit 済」と判じられる=番人が現に盲(實射)
+対照(鳴る側): 同じ命令から 2>/dev/null を外すと stderr が立つ(上の直走)・rc 128

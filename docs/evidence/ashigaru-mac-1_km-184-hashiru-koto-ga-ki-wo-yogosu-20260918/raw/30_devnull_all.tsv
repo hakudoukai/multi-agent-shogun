@@ -1,0 +1,367 @@
+scripts/box_pdf_to_png.sh:30:png_count=$(ls "$DST"/*.png 2>/dev/null | wc -l)
+scripts/agent_periodic_push.sh:25:SHOGUN_BOTTOM=$(tmux capture-pane -t "shogun:main.0" -p -e -J -S -10 2>/dev/null \
+scripts/agent_periodic_push.sh:36:    LATEST_JSONL=$(ls -t "$JSONL_DIR"/*.jsonl 2>/dev/null | head -1)
+scripts/agent_periodic_push.sh:38:        jsonl_age=$(( $(date +%s) - $(stat -c '%Y' "$LATEST_JSONL" 2>/dev/null || echo 0) ))
+scripts/agent_periodic_push.sh:51:        mtime=$(stat -c '%Y' "$report" 2>/dev/null || echo 0)
+scripts/agent_periodic_push.sh:60:if ssh -o ConnectTimeout=5 -o BatchMode=yes hakudokai@192.168.11.47 'true' 2>/dev/null; then
+scripts/agent_periodic_push.sh:63:            "stat -c '%Y' ~/projects/multi-agent-shogun/queue/reports/${a}_report.yaml 2>/dev/null || echo 0" 2>/dev/null)
+scripts/agent_periodic_push.sh:75:PENDING=$(grep -c "status: pending" "$SCRIPT_DIR/queue/shogun_to_karo.yaml" 2>/dev/null || echo 0)
+scripts/agent_periodic_push.sh:77:IN_PROGRESS=$(grep -c "status: in_progress" "$SCRIPT_DIR/queue/shogun_to_karo.yaml" 2>/dev/null || echo 0)
+scripts/fukuincho_detect_stale_cli.sh:116:except Exception: print("")' 2>/dev/null || echo "")
+scripts/fukuincho_detect_stale_cli.sh:119:except Exception: print("fukuincho")' 2>/dev/null || echo "fukuincho")
+scripts/audit_gemini.sh:34:DIFF=$(cd "$REPO_PATH" && git diff --unified=2 "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null)
+scripts/audit_gemini.sh:42:CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null | tr '\n' ' ')
+scripts/audit_gemini.sh:62:  mkdir -p "$PROMPT_TMP_DIR" 2>/dev/null || PROMPT_TMP_DIR="/tmp"
+scripts/ntfy_listener.sh:41:    "$SCRIPT_DIR/.venv/bin/python3" -c "import sys,json; print(json.load(sys.stdin).get('$1',''))" 2>/dev/null
+scripts/ntfy_listener.sh:45:    "$SCRIPT_DIR/.venv/bin/python3" -c "import sys,json; print(','.join(json.load(sys.stdin).get('tags',[])))" 2>/dev/null
+scripts/ntfy_listener.sh:58:            while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 50 ] && exit 1; done
+scripts/ntfy_listener.sh:59:            trap "rmdir '$_ld' 2>/dev/null" EXIT
+scripts/ntfy_listener.sh:144:    curl -s --no-buffer "${AUTH_ARGS[@]}" "https://ntfy.sh/$TOPIC/json" 2>/dev/null | while IFS= read -r line; do
+scripts/box_setup.sh:10:if python3 -c "import boxsdk" 2>/dev/null; then
+scripts/diagnose.sh:39:  date -Iseconds 2>/dev/null || date '+%Y-%m-%dT%H:%M:%S%z'
+scripts/diagnose.sh:98:" 2>/dev/null || echo "0")
+scripts/diagnose.sh:210:" 2>/dev/null || echo "$results")
+scripts/diagnose.sh:293:" 2>/dev/null || echo '[{"name":"parse_error","status":"error"}]')
+scripts/agent_status.sh:93:        SESSION_NAME=$(tmux display-message -p '#{session_name}' 2>/dev/null || echo "")
+scripts/agent_status.sh:109:        while IFS= read -r line; do PANE_TARGETS+=("$line"); done < <(tmux list-panes -s -t "$SESSION_NAME" -F '#{session_name}:#{window_name}.#{pane_index}' 2>/dev/null)
+scripts/agent_status.sh:124:        agent_id=$(timeout 2 tmux display-message -t "$pane_target" -p '#{@agent_id}' 2>/dev/null || echo "---")
+scripts/agent_status.sh:172:PANE_BASE=$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)
+scripts/agent_status.sh:193:" 2>/dev/null || echo "--- ---"
+scripts/agent_status.sh:214:" 2>/dev/null || echo "?"
+scripts/agent_status.sh:236:        cli_type=$(get_cli_type "$agent" 2>/dev/null || echo "?")
+scripts/agent_health_check.sh:84:mkdir -p "$ALERT_COOLDOWN_DIR" 2>/dev/null || true
+scripts/agent_health_check.sh:96:    last=$(cat "$cf" 2>/dev/null || echo 0)
+scripts/agent_health_check.sh:103:    echo "$now" > "$cf" 2>/dev/null || true
+scripts/agent_health_check.sh:114:    payload=$(python3 - "$err_code" "$severity" "$message" "$ctx_json" "$CORR_ID" "$now_iso" <<'PY' 2>/dev/null || echo '{}'
+scripts/agent_health_check.sh:153:            printf 'shogun\t%s\t%s\n' "${2:-task_assigned}" "$1" >> "$TEST_INBOX_WRITE_LOG" 2>/dev/null || true
+scripts/agent_health_check.sh:170:        "$iso" "$level" "$CORR_ID" "$event" "$extra_json" >> "$STRUCT_LOG" 2>/dev/null || true
+scripts/agent_health_check.sh:180:    2>/dev/null <<EOF | python3 -c "import sys,json;print(len(json.loads(sys.stdin.read())))" 2>/dev/null || echo 0
+scripts/agent_health_check.sh:195:    cmd=$(tmux list-panes -t "$pane" -F '#{pane_current_command}' 2>/dev/null | head -1)
+scripts/agent_health_check.sh:207:    n=$(grep -c 'read: false' "$inbox" 2>/dev/null || echo 0)
+scripts/agent_health_check.sh:216:if ! ssh "${SECONDPC_SSH_OPTS[@]}" hakudokai@192.168.11.47 'true' 2>/dev/null; then
+scripts/agent_health_check.sh:221:if ssh "${SECONDPC_SSH_OPTS[@]}" hakudokai@192.168.11.47 'true' 2>/dev/null; then
+scripts/agent_health_check.sh:224:            "grep -c 'read: false' ~/projects/multi-agent-shogun/queue/inbox/${a}.yaml 2>/dev/null || echo 0" 2>/dev/null)
+scripts/agent_health_check.sh:258:        pane_pid=$(tmux display-message -t "$target" -p '#{pane_pid}' 2>/dev/null || echo "")
+scripts/agent_health_check.sh:267:        pane_cmd=$(tmux display-message -t "$target" -p '#{pane_current_command}' 2>/dev/null || echo "")
+scripts/agent_health_check.sh:276:                tree_out=$(pstree -p "$pane_pid" 2>/dev/null || echo "")
+scripts/agent_health_check.sh:318:        max_tokens=$(tail -20 "$jsonl_path" 2>/dev/null | python3 -c '
+scripts/agent_health_check.sh:331:' 2>/dev/null || echo 0)
+scripts/agent_health_check.sh:361:    done < <(find "$TOKEN_PROJECT_DIR" -maxdepth 1 -name '*.jsonl' -mmin -10 2>/dev/null)
+scripts/agent_health_check.sh:407:        _detect_stale_age_min=$(( ($(date +%s) - $(stat -c %Y "$_detect_stale_log_file" 2>/dev/null || echo 0)) / 60 ))
+scripts/archive/message_delivery_v2_full_20260508/supervisor_secondpc.sh:89:    tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index}" 2>/dev/null | grep -qx "$pane"
+scripts/archive/message_delivery_v2_full_20260508/dedup.sh:36:    if grep -qE "^\s*- msg_id:\s+${msg_id}\s*$" "$DEDUP_TABLE" 2>/dev/null; then
+scripts/archive/message_delivery_v2_full_20260508/dedup.sh:53:    expires=$(date -Iseconds -d "+24 hours" 2>/dev/null || date -v+1d -Iseconds 2>/dev/null || echo "")
+scripts/archive/message_delivery_v2_full_20260508/dedup.sh:112:    grep -cE '^\s*- msg_id:' "$DEDUP_TABLE" 2>/dev/null || echo 0
+scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh:40:if ! tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index}" 2>/dev/null | grep -qx "$PANE_TARGET"; then
+scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh:46:pane_agent_id=$(tmux display-message -t "$PANE_TARGET" -p '#{@agent_id}' 2>/dev/null || echo "")
+scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh:57:capture=$(tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null || echo "")
+scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh:89:    last_epoch=$(cat "$COOLDOWN_FILE" 2>/dev/null || echo 0)
+scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh:85:    pane_agent_id=$(tmux display-message -t "$PANE_TARGET" -p '#{@agent_id}' 2>/dev/null || echo "")
+scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh:90:    pane_cmd=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_command}' 2>/dev/null || echo "")
+scripts/archive/message_delivery_v2_full_20260508/safe_nudge.sh:100:    last_epoch=$(cat "$COOLDOWN_FILE" 2>/dev/null || echo 0)
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh:72:    kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh:84:        kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh:93:        kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh:99:        kill "${HEARTBEAT_LOOP_PID:-0}" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/watcher.sh:247:    dedup_cleanup 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh:35:    started_epoch=$(date -d "$started_at" +%s 2>/dev/null || echo 0)
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh:69:        mv -f "$tmp_path" "$health_path" 2>/dev/null
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh:70:    } 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh:71:    rm -f "$tmp_path" 2>/dev/null
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh:100:    last_seen=$(grep -oP '"last_seen_at":\s*"\K[^"]+' "$health_path" 2>/dev/null || echo "")
+scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh:106:    last_epoch=$(date -d "$last_seen" +%s 2>/dev/null || echo 0)
+scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh:120:        bash "${_DLQ_PROJECT_ROOT}/scripts/inbox_write.sh" shogun "$content" critical_alert dead_letter_handler 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh:126:        sed -i 's/^escalation_sent: false$/escalation_sent: true/' "$dlq_file" 2>/dev/null || true
+scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh:136:        find "$dlq_dir" -maxdepth 1 -name '*.yaml' 2>/dev/null | wc -l
+scripts/archive/message_delivery_v2_full_20260508/supervisor.sh:119:    tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index}" 2>/dev/null | grep -qx "$pane"
+scripts/switch_cli.sh:45:    echo "$msg" >> "$LOG_FILE" 2>/dev/null || true
+scripts/switch_cli.sh:68:    pane_count=$(tmux list-panes -t "multiagent:agents" 2>/dev/null | wc -l)
+scripts/switch_cli.sh:72:            aid=$(tmux display-message -t "multiagent:agents.$i" -p '#{@agent_id}' 2>/dev/null)
+scripts/switch_cli.sh:92:    pane_base=$(tmux show-options -t multiagent -v @pane_base 2>/dev/null || echo "0")
+scripts/switch_cli.sh:104:    if mainpc_idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
+scripts/switch_cli.sh:226:    tmux show-options -p -t "$pane" -v @agent_cli 2>/dev/null | tr -d '[:space:]' || echo "claude"
+scripts/switch_cli.sh:239:            tmux send-keys -t "$pane" Escape 2>/dev/null || true
+scripts/switch_cli.sh:241:            tmux send-keys -t "$pane" C-c 2>/dev/null || true
+scripts/switch_cli.sh:243:            tmux send-keys -t "$pane" "/exit" 2>/dev/null || true
+scripts/switch_cli.sh:245:            tmux send-keys -t "$pane" Enter 2>/dev/null || true
+scripts/switch_cli.sh:248:            tmux send-keys -t "$pane" "/exit" 2>/dev/null || true
+scripts/switch_cli.sh:250:            tmux send-keys -t "$pane" Enter 2>/dev/null || true
+scripts/switch_cli.sh:253:            tmux send-keys -t "$pane" C-c 2>/dev/null || true
+scripts/switch_cli.sh:255:            tmux send-keys -t "$pane" "/exit" 2>/dev/null || true
+scripts/switch_cli.sh:257:            tmux send-keys -t "$pane" Enter 2>/dev/null || true
+scripts/switch_cli.sh:260:            tmux send-keys -t "$pane" "/exit" 2>/dev/null || true
+scripts/switch_cli.sh:262:            tmux send-keys -t "$pane" Enter 2>/dev/null || true
+scripts/switch_cli.sh:280:        last_lines=$(tmux capture-pane -t "$pane" -p 2>/dev/null | grep -v '^$' | tail -3)
+scripts/switch_cli.sh:312:    tmux set-option -p -t "$pane" @agent_cli "$new_cli_type" 2>/dev/null || true
+scripts/switch_cli.sh:313:    tmux set-option -p -t "$pane" @model_name "$display_name" 2>/dev/null || true
+scripts/switch_cli.sh:314:    tmux select-pane -t "$pane" -T "$display_name" 2>/dev/null || true
+scripts/switch_cli.sh:406:tmux send-keys -t "$PANE_TARGET" "$TARGET_CMD" 2>/dev/null || true
+scripts/switch_cli.sh:408:tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+scripts/ratelimit_check.sh:48:_ashigaru_ids_str=$(get_ashigaru_ids 2>/dev/null || true)
+scripts/ratelimit_check.sh:71:        pane_target=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
+scripts/ratelimit_check.sh:76:    cli=$(timeout 2 tmux display-message -t "$pane_target" -p '#{@agent_cli}' 2>/dev/null || echo "")
+scripts/ratelimit_check.sh:78:        cli=$(get_cli_type "$agent" 2>/dev/null || echo "?")
+scripts/ratelimit_check.sh:81:    model=$(timeout 2 tmux display-message -t "$pane_target" -p '#{@model_name}' 2>/dev/null || echo "")
+scripts/ratelimit_check.sh:83:        model=$(get_agent_model "$agent" 2>/dev/null || echo "?")
+scripts/ratelimit_check.sh:113:    was_zoomed=$(timeout 2 tmux display-message -t "$pane" -p '#{window_zoomed_flag}' 2>/dev/null || echo "0")
+scripts/ratelimit_check.sh:115:        tmux resize-pane -t "$pane" -Z 2>/dev/null || true
+scripts/ratelimit_check.sh:120:    out=$(tmux capture-pane -t "$pane" -p -J -S "$start" 2>/dev/null || echo "")
+scripts/ratelimit_check.sh:123:        tmux resize-pane -t "$pane" -Z 2>/dev/null || true
+scripts/ratelimit_check.sh:135:    was_zoomed=$(timeout 2 tmux display-message -t "$pane" -p '#{window_zoomed_flag}' 2>/dev/null || echo "0")
+scripts/ratelimit_check.sh:137:        tmux resize-pane -t "$pane" -Z 2>/dev/null || true
+scripts/ratelimit_check.sh:142:    tmux send-keys -t "$pane" '/status' 2>/dev/null || true
+scripts/ratelimit_check.sh:144:    tmux send-keys -t "$pane" Enter 2>/dev/null || true
+scripts/ratelimit_check.sh:147:    out=$(tmux capture-pane -t "$pane" -p -J -S -80 2>/dev/null || echo "")
+scripts/ratelimit_check.sh:150:        tmux resize-pane -t "$pane" -Z 2>/dev/null || true
+scripts/ratelimit_check.sh:224:" 2>/dev/null) || oauth_data=""
+scripts/ratelimit_check.sh:289:" 2>/dev/null) || claude_data=""
+scripts/ratelimit_check.sh:336:        ctx=$(tmux capture-pane -t "$pane" -p -S -5 2>/dev/null \
+scripts/ratelimit_check.sh:414:    CODEX_LIMIT_HITS=$(tail -5000 "$CODEX_LOG" 2>/dev/null \
+scripts/checks/dd169_kill_term_guard.sh:38:" 2>/dev/null)
+scripts/checks/dd169_kill_term_guard.sh:75:    PS_EVIDENCE=$(ps -o pid,ppid,pgid,sid,stat,etime,comm,args -p "$PID" 2>/dev/null)
+scripts/checks/karo_mac_gate4.sh:40:br=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+scripts/checks/pretooluse_bash_guard.sh:30:INPUT_JSON=$(cat 2>/dev/null)
+scripts/checks/pretooluse_bash_guard.sh:38:" 2>/dev/null)
+scripts/checks/pretooluse_bash_guard.sh:49:    bash "$here/pane_identity.sh" >&2 2>/dev/null || true
+scripts/checks/context_usage_warn.sh:46:SZ=$(stat -c '%s' "$JSONL_PATH" 2>/dev/null || echo 0)
+scripts/checks/inbox_alias_integrity.sh:61:  resolved="$(readlink -f "$alias_path" 2>/dev/null)"
+scripts/checks/inbox_alias_integrity.sh:62:  expected="$(readlink -f "$canonical_path" 2>/dev/null)"
+scripts/checks/inbox_alias_integrity.sh:71:  alias_md5=$(md5sum "$alias_path" 2>/dev/null | awk '{print $1}')
+scripts/checks/inbox_alias_integrity.sh:72:  canonical_md5=$(md5sum "$canonical_path" 2>/dev/null | awk '{print $1}')
+scripts/checks/codex_exec_sandbox_guard.sh:35:if ! grep -q "$GO_MARKER" "$GO_RECORD" 2>/dev/null; then
+scripts/checks/pane_identity.sh:77:    if source "$SECTION18_ROLES_LIB" 2>/dev/null; then
+scripts/checks/pane_identity.sh:116:    if "$TMUX_CMD" has-session -t "$s" 2>/dev/null; then
+scripts/checks/pane_identity.sh:128:    actual=$("$TMUX_CMD" display-message -t "$pane_target" -p '#{@agent_id}' 2>/dev/null)
+scripts/checks/pane_identity.sh:147:dup=$("$TMUX_CMD" list-panes -a -F '#{@agent_id}' 2>/dev/null | grep -v '^$' | sort | uniq -d)
+scripts/checks/pane_identity.sh:193:        if src_a_raw=$(timeout "$TIMEOUT_PER_SOURCE_SECONDS" "$TMUX_CMD" list-panes -t multiagent -F '#{pane_index}=#{@agent_id}' 2>/dev/null); then
+scripts/checks/pane_identity.sh:209:            if ! src_b_raw=$(timeout "$TIMEOUT_PER_SOURCE_SECONDS" python3 - "$PANE_REGISTRY" <<'PYEOF' 2>/dev/null
+scripts/checks/pane_identity.sh:274:                    "$WATCHER_SUPERVISOR" 2>/dev/null \
+scripts/checks/pane_identity.sh:315:            ' "$CLAUDE_MD" 2>/dev/null); then
+scripts/checks/pane_identity.sh:384:    audit_end_ts=$(date -Iseconds 2>/dev/null || date "+%Y-%m-%dT%H:%M:%S%z")
+scripts/checks/pane_identity.sh:397:        if dump_file=$(mktemp --suffix=.json -p "${TMPDIR:-/tmp}" "pane_identity_drift.XXXXXX" 2>/dev/null); then
+scripts/checks/pane_identity.sh:399:        elif dump_file=$(mktemp -p "${TMPDIR:-/tmp}" "pane_identity_drift.XXXXXX" 2>/dev/null); then
+scripts/checks/pane_identity.sh:401:            if mv -- "$dump_file" "${dump_file}.json" 2>/dev/null; then
+scripts/checks/pane_identity.sh:407:        chmod 600 -- "$dump_file" 2>/dev/null || true
+scripts/checks/pane_identity.sh:423:        } > "$dump_file" 2>/dev/null || true
+scripts/checks/pane_identity.sh:440:    } > "$LAST_RUN_JSON" 2>/dev/null || true
+scripts/checks/secondpc_dispatch.sh:33:    "stat -c %Y ~/projects/multi-agent-shogun/queue/inbox/${TARGET}.yaml 2>/dev/null" 2>/dev/null)
+scripts/checks/symlink_aware_atomic_write.sh:46:  context=$(sed -n "${start},${end}p" "$file" 2>/dev/null)
+scripts/checks/symlink_aware_atomic_write.sh:64:done < <(grep -rnE "os\.(replace|rename)\(" "${TARGETS[@]}" 2>/dev/null)
+scripts/checks/symlink_aware_atomic_write.sh:81:  context=$(sed -n "${start},${end}p" "$file" 2>/dev/null)
+scripts/checks/symlink_aware_atomic_write.sh:89:done < <(grep -rnE "^\s*mv\s+[\"\$].*tmp.*[\"\$]\s+[\"\$].*(yaml|json|md|conf)[\"\$]?" "${TARGETS[@]}" 2>/dev/null)
+scripts/checks/ephemeral_worktree_hygiene.sh:8:FREE_GI="$(df -g "${REPO}" 2>/dev/null | awk 'NR==2{print $4}')"
+scripts/checks/ephemeral_worktree_hygiene.sh:9:TMP_N="$(ls -d "${WT_DIR}"/tmp-* 2>/dev/null | wc -l | tr -d ' ')"
+scripts/checks/ephemeral_worktree_hygiene.sh:19:  dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+scripts/checks/ephemeral_worktree_hygiene.sh:20:  recent="$(find "${d}" -maxdepth 0 -newermt '-24 hours' 2>/dev/null | wc -l | tr -d ' ')"
+scripts/checks/ephemeral_worktree_hygiene.sh:44:GATE_MAIN="$(git -C "${REPO}" show origin/main:frontend/scripts/dino-check-clean.sh 2>/dev/null)"
+scripts/checks/ephemeral_worktree_hygiene.sh:45:GATE_LOT="$(git -C "${REPO}" show origin/mac/dino-story-engine:frontend/scripts/dino-check-clean.sh 2>/dev/null)"
+scripts/checks/codex_cli_required_persona.sh:49:    tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index}'$'\t''#{@agent_id}'$'\t''#{pane_current_command}' 2>/dev/null
+scripts/checks/karo_mac_dasumae_gate.sh:42:num_same_op(){ [ "${1:-}" -ge 0 ] 2>/dev/null; [ $? -le 1 ]; }
+scripts/checks/karo_mac_dasumae_gate.sh:94:TIMEOUT_BIN="$(command -v timeout 2>/dev/null || command -v gtimeout 2>/dev/null || true)"
+scripts/checks/karo_mac_dasumae_gate.sh:96:PY_BIN="$(command -v python3 2>/dev/null || true)"
+scripts/checks/karo_mac_dasumae_gate.sh:109:    r="$(readlink -f -- "$f" 2>/dev/null || true)"
+scripts/checks/karo_mac_dasumae_gate.sh:125:  _ss(){ if [ -n "$TIMEOUT_BIN" ]; then "$TIMEOUT_BIN" "$SAFE_SIZE_TMO" "$@" 2>/dev/null; else "$@" 2>/dev/null; fi; }
+scripts/checks/karo_mac_dasumae_gate.sh:170:  cr_n=$(grep -c $'\r' "$f" 2>/dev/null); cr_rc=$?
+scripts/checks/verify_state_before_asserting.sh:50:      last="$(find "${TMPDIR:-/tmp}" -maxdepth 1 -name '.vsba_fetch_*' -newermt '-10 minutes' 2>/dev/null | head -1)"
+scripts/checks/verify_state_before_asserting.sh:105:    h="$(git -C "${r}" rev-parse "${ref}" 2>/dev/null)"
+scripts/checks/verify_state_before_asserting.sh:107:    if git -C "${r}" merge-base --is-ancestor "${a}" "${ref}" 2>/dev/null; then
+scripts/checks/verify_state_before_asserting.sh:115:    git -C "${r}" fetch -q origin 2>/dev/null
+scripts/checks/verify_state_before_asserting.sh:116:    echo "[verify] origin/main= $(git -C "${r}" rev-parse --short origin/main 2>/dev/null || echo '?') (fetch 済)"
+scripts/audit_codex.sh:33:DIFF=$(cd "$REPO_PATH" && git diff "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null)
+scripts/audit_codex.sh:41:CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null | tr '\n' ' ')
+scripts/audit_codex.sh:97:  if grep -qE "usage limit|rate.?limit|429|quota" "$LOG" 2>/dev/null; then
+scripts/inbox_watcher.sh:54:    rm -f "/tmp/inbox_watcher_typing_skip_${AGENT_ID}" 2>/dev/null
+scripts/inbox_watcher.sh:109:      ( sleep "$duration" && kill "$pid" 2>/dev/null ) &
+scripts/inbox_watcher.sh:111:      wait "$pid" 2>/dev/null
+scripts/inbox_watcher.sh:113:      kill "$watcher" 2>/dev/null
+scripts/inbox_watcher.sh:114:      wait "$watcher" 2>/dev/null
+scripts/inbox_watcher.sh:178:    if [ "$FIRST_UNREAD_SEEN" -gt 0 ] 2>/dev/null; then
+scripts/inbox_watcher.sh:182:    mkdir -p "$(dirname "$METRICS_FILE")" 2>/dev/null || true
+scripts/inbox_watcher.sh:221:        current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+scripts/inbox_watcher.sh:223:        previous_fingerprint=$(cat "$NUDGE_FINGERPRINT_FILE" 2>/dev/null || true)
+scripts/inbox_watcher.sh:257:    current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+scripts/inbox_watcher.sh:273:    pane_cli_raw=$(timeout 2 tmux show-options -p -t "$PANE_TARGET" -v @agent_cli 2>/dev/null || true)
+scripts/inbox_watcher.sh:322:        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 300 ] && break; done; trap "rmdir '$_ld' 2>/dev/null" EXIT; fi
+scripts/inbox_watcher.sh:400:    ) 200>"$LOCKFILE" 2>/dev/null
+scripts/inbox_watcher.sh:453:        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 300 ] && break; done; trap "rmdir '$_ld' 2>/dev/null" EXIT; fi
+scripts/inbox_watcher.sh:528:    ) 200>"$LOCKFILE" 2>/dev/null
+scripts/inbox_watcher.sh:541:        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((_i+1)); [ $_i -ge 300 ] && break; done; trap "rmdir '$_ld' 2>/dev/null" EXIT; fi
+scripts/inbox_watcher.sh:567:    ) 200>"$LOCKFILE" 2>/dev/null
+scripts/inbox_watcher.sh:602:        if [ -f "$sender_inbox" ] && grep -qF "$msg_id" "$sender_inbox" 2>/dev/null; then
+scripts/inbox_watcher.sh:635:        timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null
+scripts/inbox_watcher.sh:637:        if ! timeout 5 tmux send-keys -t "$PANE_TARGET" "$text" 2>/dev/null; then
+scripts/inbox_watcher.sh:643:        if ! timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null; then
+scripts/inbox_watcher.sh:650:        pane_content=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5)
+scripts/inbox_watcher.sh:678:        CLI_TYPE=$(tmux show-options -p -t "$PANE_TARGET" -v @agent_cli 2>/dev/null || echo "$CLI_TYPE")
+scripts/inbox_watcher.sh:724:                timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
+scripts/inbox_watcher.sh:745:                if ! timeout 5 tmux send-keys -t "$PANE_TARGET" C-c 2>/dev/null; then
+scripts/inbox_watcher.sh:769:        if ! timeout 5 tmux send-keys -t "$PANE_TARGET" C-c 2>/dev/null; then
+scripts/inbox_watcher.sh:826:        startup_prompt=$(get_startup_prompt "$AGENT_ID" 2>/dev/null || true)
+scripts/inbox_watcher.sh:833:    timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
+scripts/inbox_watcher.sh:835:    timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+scripts/inbox_watcher.sh:837:    timeout 5 tmux send-keys -l -t "$PANE_TARGET" "$startup_prompt" 2>/dev/null || true
+scripts/inbox_watcher.sh:839:    timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+scripts/inbox_watcher.sh:885:        timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
+scripts/inbox_watcher.sh:887:        timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+scripts/inbox_watcher.sh:889:        timeout 5 tmux send-keys -t "$PANE_TARGET" "/new" 2>/dev/null || true
+scripts/inbox_watcher.sh:891:        timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+scripts/inbox_watcher.sh:900:    timeout 5 tmux send-keys -t "$PANE_TARGET" "$reset_cmd" 2>/dev/null || true
+scripts/inbox_watcher.sh:903:    timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+scripts/inbox_watcher.sh:948:    my_pgid=$(ps -o pgid= -p $$ 2>/dev/null | tr -d ' ')
+scripts/inbox_watcher.sh:952:        pid_pgid=$(ps -o pgid= -p "$pid" 2>/dev/null | tr -d ' ')
+scripts/inbox_watcher.sh:957:    done < <(pgrep -f "inotifywait.*inbox/${AGENT_ID}.yaml" 2>/dev/null)
+scripts/inbox_watcher.sh:998:        pane_capture=$(timeout 2 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null || true)
+scripts/inbox_watcher.sh:1015:    active=$(timeout 2 tmux display-message -p -t "$PANE_TARGET" '#{pane_active}' 2>/dev/null || true)
+scripts/inbox_watcher.sh:1028:    session_name=$(timeout 2 tmux display-message -p -t "$PANE_TARGET" '#{session_name}' 2>/dev/null || true)
+scripts/inbox_watcher.sh:1029:    [ -n "$session_name" ] && [ "$(tmux list-clients -t "$session_name" 2>/dev/null | wc -l)" -gt 0 ]
+scripts/inbox_watcher.sh:1058:    current_prompt=$(timeout 3 tmux capture-pane -t "$pane" -p -e -J 2>/dev/null \
+scripts/inbox_watcher.sh:1119:        skip_count=$(cat "$skip_state_file" 2>/dev/null || echo 0)
+scripts/inbox_watcher.sh:1132:        rm -f "/tmp/inbox_watcher_typing_skip_${AGENT_ID}" 2>/dev/null
+scripts/inbox_watcher.sh:1165:        timeout 5 tmux send-keys -t "$PANE_TARGET" "x" 2>/dev/null || true
+scripts/inbox_watcher.sh:1167:        timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+scripts/inbox_watcher.sh:1176:        timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+scripts/inbox_watcher.sh:1179:        if ! timeout 5 tmux send-keys -t "$PANE_TARGET" "$nudge" 2>/dev/null; then
+scripts/inbox_watcher.sh:1185:        timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+scripts/inbox_watcher.sh:1189:        pane_content=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+scripts/inbox_watcher.sh:1193:            timeout 5 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+scripts/inbox_watcher.sh:1260:    timeout 5 tmux send-keys -t "$PANE_TARGET" Escape Escape 2>/dev/null || true
+scripts/inbox_watcher.sh:1264:        timeout 5 tmux send-keys -t "$PANE_TARGET" C-c 2>/dev/null || true
+scripts/inbox_watcher.sh:1268:    if timeout 5 tmux send-keys -t "$PANE_TARGET" "$nudge" 2>/dev/null; then
+scripts/inbox_watcher.sh:1270:        timeout 5 tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null || true
+scripts/inbox_watcher.sh:1288:    fast_count=$(echo "$fast_info" | "$SCRIPT_DIR/.venv/bin/python3" -c "import sys,json; print(json.load(sys.stdin).get('count',0))" 2>/dev/null)
+scripts/inbox_watcher.sh:1290:    if no_idle_full_read "$trigger" && [ "$fast_count" -eq 0 ] 2>/dev/null; then
+scripts/inbox_watcher.sh:1298:        touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh:1304:                timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+scripts/inbox_watcher.sh:1315:        read_bytes=$(wc -c < "$INBOX" 2>/dev/null || echo 0)
+scripts/inbox_watcher.sh:1330:" 2>/dev/null)
+scripts/inbox_watcher.sh:1405:    normal_count=$(echo "$info" | "$SCRIPT_DIR/.venv/bin/python3" -c "import sys,json; print(json.load(sys.stdin).get('count',0))" 2>/dev/null)
+scripts/inbox_watcher.sh:1409:    has_task_assigned=$(echo "$info" | "$SCRIPT_DIR/.venv/bin/python3" -c "import sys,json; print(1 if json.load(sys.stdin).get('has_task_assigned') else 0)" 2>/dev/null)
+scripts/inbox_watcher.sh:1411:    if [ "$normal_count" -gt 0 ] 2>/dev/null; then
+scripts/inbox_watcher.sh:1570:        touch "${IDLE_FLAG_DIR:-/tmp}/shogun_idle_${AGENT_ID}" 2>/dev/null || true
+scripts/inbox_watcher.sh:1578:                timeout 2 tmux send-keys -t "$PANE_TARGET" C-u 2>/dev/null || true
+scripts/inbox_watcher.sh:1617:            gtimeout "$INOTIFY_TIMEOUT" fswatch -1 --event Updated --event Renamed "$INBOX" 2>/dev/null
+scripts/inbox_watcher.sh:1626:            while [ "$WAITED" -lt "$INOTIFY_TIMEOUT" ] && kill -0 "$FSWATCH_PID" 2>/dev/null; do
+scripts/inbox_watcher.sh:1630:            if kill -0 "$FSWATCH_PID" 2>/dev/null; then
+scripts/inbox_watcher.sh:1631:                kill "$FSWATCH_PID" 2>/dev/null
+scripts/inbox_watcher.sh:1632:                wait "$FSWATCH_PID" 2>/dev/null
+scripts/inbox_watcher.sh:1635:                wait "$FSWATCH_PID" 2>/dev/null
+scripts/inbox_watcher.sh:1641:        inotifywait -q -t "$INOTIFY_TIMEOUT" -e modify -e close_write "$INBOX" 2>/dev/null
+scripts/inbox_watcher.sh:1677:            _pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+scripts/inbox_watcher.sh:1688:                        notification shogun 2>/dev/null || true
+scripts/tests/test_detect_stale.sh:174:    _detect_stale_inflight_mark ".." 2>/dev/null
+scripts/tests/test_detect_stale.sh:176:    if _detect_stale_inflight_check ".." 2>/dev/null; then
+scripts/tests/test_detect_stale.sh:180:    if find "$DETECT_STALE_INFLIGHT_DIR" -name "*passwd*" -o -name "..*" 2>/dev/null | grep -q '.'; then
+scripts/tests/test_detect_stale.sh:197:    if _detect_stale_authz_check "$row" 2>/dev/null; then
+scripts/tests/test_detect_stale.sh:218:        if _detect_stale_authz_check "$row" 2>/dev/null; then
+scripts/tests/test_detect_stale.sh:228:    if _detect_stale_authz_check "$row" 2>/dev/null; then
+scripts/tests/test_detect_stale.sh:236:    if _detect_stale_authz_check "$row" 2>/dev/null; then
+scripts/tests/test_detect_stale.sh:304:    future=$(date -d "+1 hour" --iso-8601=seconds 2>/dev/null || date -v+1H +%Y-%m-%dT%H:%M:%S 2>/dev/null)
+scripts/tests/test_detect_stale.sh:348:    rc1=$(cat "$tmpdir/rc1" 2>/dev/null)
+scripts/tests/test_detect_stale.sh:349:    rc2=$(cat "$tmpdir/rc2" 2>/dev/null)
+scripts/tests/test_detect_stale.sh:362:    _detect_stale_inflight_check_and_mark ".." 2>/dev/null
+scripts/tests/test_detect_stale.sh:466:rm -rf "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/tests/test_detect_stale.sh:467:rm -f "$DETECT_STALE_LOG" 2>/dev/null
+scripts/tests/test_fukuincho_detect_stale_cli.sh:45:    rm -f "$DETECT_STALE_LOG" 2>/dev/null
+scripts/tests/test_fukuincho_detect_stale_cli.sh:46:    rm -rf "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/tests/test_fukuincho_detect_stale_cli.sh:47:    rm -f "$DETECT_STALE_LOCK_FILE" 2>/dev/null
+scripts/tests/test_fukuincho_detect_stale_cli.sh:70:    grep -cE "\[${pattern}\]" "$DETECT_STALE_LOG" 2>/dev/null || echo 0
+scripts/tests/test_fukuincho_detect_stale_cli.sh:142:    future=$(date -d "+1 hour" --iso-8601=seconds 2>/dev/null || date -v+1H +%Y-%m-%dT%H:%M:%S 2>/dev/null)
+scripts/watchdogs/enter_restart_common_watchdog.sh:83:    RECENT_FIRES=$(awk -v cutoff="$WINDOW_EPOCH" 'BEGIN{c=0} { if ($1+0 >= cutoff) c++ } END { print c }' "$FIRE_HISTORY" 2>/dev/null || echo 0)
+scripts/watchdogs/enter_restart_common_watchdog.sh:129:if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+scripts/watchdogs/enter_restart_common_watchdog.sh:197:PANE_META=$(tmux display-message -t "$PANE_TARGET" -p '#{pane_current_path}|#{pane_title}|#{pane_current_command}' 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_common_watchdog.sh:202:PANE_TAIL=$(tmux capture-pane -t "$PANE_TARGET" -p -S -50 2>/dev/null || echo "")
+scripts/watchdogs/enter_restart_common_watchdog.sh:275:    tmux send-keys -t "$PANE_TARGET" Enter 2>/dev/null
+scripts/redundancy/shogun_report_watcher.sh:123:  id=$(python3 - "$f" <<'PY' 2>/dev/null
+scripts/redundancy/shogun_report_watcher.sh:160:    id=$(grep -E "^[[:space:]]*-?[[:space:]]*${field}:[[:space:]]*" "$f" 2>/dev/null \
+scripts/redundancy/shogun_report_watcher.sh:276:  if [ "${last_ts:-0}" -gt 0 ] 2>/dev/null; then
+scripts/redundancy/shogun_report_watcher.sh:312:  if [ -n "$WATCH_PID" ] && kill -0 "$WATCH_PID" 2>/dev/null; then
+scripts/redundancy/shogun_report_watcher.sh:313:    kill "$WATCH_PID" 2>/dev/null || true
+scripts/redundancy/shogun_report_watcher.sh:314:    wait "$WATCH_PID" 2>/dev/null || true
+scripts/karo_second_send_iincho.sh:36:# sb_auth.sh 不在時 hard fail (2>/dev/null や || true は使わぬ)。
+scripts/stop_hook_inbox.sh:48:    AGENT_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}' 2>/dev/null || true)
+scripts/stop_hook_inbox.sh:69:STOP_HOOK_ACTIVE=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('stop_hook_active', False))" 2>/dev/null || echo "False")
+scripts/stop_hook_inbox.sh:87:            "${WATCH_TARGETS_ACTIVE[@]}" 2>/dev/null || true
+scripts/stop_hook_inbox.sh:93:    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+scripts/stop_hook_inbox.sh:104:LAST_MSG=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('last_assistant_message', ''))" 2>/dev/null || echo "")
+scripts/stop_hook_inbox.sh:140:UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+scripts/stop_hook_inbox.sh:167:            "${WATCH_TARGETS[@]}" 2>/dev/null || true
+scripts/stop_hook_inbox.sh:173:    UNREAD_COUNT=$(grep -cE '^  read: false$' "$INBOX" 2>/dev/null || true)
+scripts/stop_hook_inbox.sh:221:" 2>/dev/null || echo "{\"decision\":\"block\",\"reason\":\"inbox未読${UNREAD_COUNT}件あり。queue/inbox/${AGENT_ID}.yamlを読んで処理せよ。\"}"
+scripts/setup_known_hosts.sh:50:    if ssh-keyscan -T "$KEYSCAN_TIMEOUT" -H "$host" 2>/dev/null >> "$KNOWN_HOSTS"; then
+scripts/visual_env_setup.sh:35:if python3 -c "import playwright" 2>/dev/null; then
+scripts/watcher_supervisor_third.sh:30:    tmux list-panes -a -F "#{session_name}:#{window_name}.#{pane_index}" 2>/dev/null | grep -qx "$pane"
+scripts/watcher_supervisor_third.sh:44:        -F '#{pane_index}:#{@agent_id}' 2>/dev/null \
+scripts/watcher_supervisor_third.sh:67:    cli=$(tmux show-options -p -t "$pane" -v @agent_cli 2>/dev/null || echo "claude")
+scripts/watcher_supervisor.sh:32:    tmux list-panes -a -F "#{session_name}:#{window_name}.#{pane_index}" 2>/dev/null | grep -qx "$pane"
+scripts/watcher_supervisor.sh:56:    cli=$(tmux show-options -p -t "$pane" -v @agent_cli 2>/dev/null || echo "claude")
+scripts/lib/inbox_path.sh:91:    resolved=$(realpath -m "$target" 2>/dev/null || echo "$target")
+scripts/lib/detect_stale.sh:63:    printf '%s [%s] %s\n' "$(date -Iseconds)" "$lvl" "$*" >> "$DETECT_STALE_LOG" 2>/dev/null || true
+scripts/lib/detect_stale.sh:102:    mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/lib/detect_stale.sh:110:    mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/lib/detect_stale.sh:118:    rm -f "${DETECT_STALE_INFLIGHT_DIR}/${safe_id}.inflight" 2>/dev/null
+scripts/lib/detect_stale.sh:134:    mkdir -p "$DETECT_STALE_INFLIGHT_DIR" 2>/dev/null
+scripts/lib/detect_stale.sh:156:except Exception: print("")' 2>/dev/null || echo "")
+scripts/lib/detect_stale.sh:159:except Exception: print("fukuincho")' 2>/dev/null || echo "fukuincho")
+scripts/lib/detect_stale.sh:162:except Exception: print("auto_poke")' 2>/dev/null || echo "auto_poke")
+scripts/lib/detect_stale.sh:184:except Exception: print("")' 2>/dev/null || echo "")
+scripts/lib/detect_stale.sh:187:except Exception: print("")' 2>/dev/null || echo "")
+scripts/lib/detect_stale.sh:190:except Exception: print("")' 2>/dev/null || echo "")
+scripts/lib/detect_stale.sh:230:    deadline_epoch=$(date -d "$response_by_time" +%s 2>/dev/null || echo "0")
+scripts/idle_backlog_wake.sh:45:  python3 - "$f" <<'PY' 2>/dev/null || echo MEAS_FAIL
+scripts/idle_backlog_wake.sh:58:      -H "Prefer: count=exact" -H "Range: 0-0" "$SB_URL/rest/v1/$1" -o /dev/null -w '%{header_json}' 2>/dev/null \
+scripts/idle_backlog_wake.sh:65:  r=$(curl -sf -m 12 -H "apikey: $SB_KEY" -H "Authorization: Bearer $SB_KEY" "$SB_URL/rest/v1/$1" 2>/dev/null) || { echo MEAS_FAIL; return; }
+scripts/idle_backlog_wake.sh:126:  tmux display-message -t "$pane" -p '#{@agent_id}' 2>/dev/null | grep -qx "$agent" || return 3
+scripts/idle_backlog_wake.sh:127:  tmux send-keys -t "$pane" -l '[STALL-WAKE] API断で中断した所から再開せよ。何をしていたかを1行書いてから続けよ。' 2>/dev/null || return 4
+scripts/idle_backlog_wake.sh:128:  tmux send-keys -t "$pane" Enter 2>/dev/null || return 5
+scripts/idle_backlog_wake.sh:174:  cap=$(tmux capture-pane -p -t "$pane" 2>/dev/null | tail -8)
+scripts/idle_backlog_wake.sh:200:  mold=$(rest_json "pc_handshake?select=seq&requires_response=eq.true&acknowledged_at=is.null&context_data-%3E%3Etarget_agent=eq.$role&created_at=gt.$CUT24&order=seq.asc&limit=1" | python3 -c "import sys,json\ntry:\n d=json.load(sys.stdin); print(d[0][\"seq\"] if d else \"\")\nexcept Exception: print(\"\")" 2>/dev/null)
+scripts/idle_backlog_wake.sh:214:  tmux send-keys -t "$pane" -l "$MSG" 2>/dev/null || { echo "$TS $name INJECT_FAIL"; meas_fail=$((meas_fail+1)); continue; }
+scripts/idle_backlog_wake.sh:215:  if [ "$kind" = "hermes" ]; then tmux send-keys -t "$pane" -H 1b 5b 31 33 75 2>/dev/null
+scripts/idle_backlog_wake.sh:216:  else tmux send-keys -t "$pane" Enter 2>/dev/null; fi
+scripts/karo_overload_monitor.sh:89:NOW_ISO=$(date -Iseconds 2>/dev/null || date +%Y-%m-%dT%H:%M:%S%z)
+scripts/karo_overload_monitor.sh:127:    } > "$HEALTH_FILE" 2>/dev/null || true
+scripts/karo_overload_monitor.sh:145:    out=$(python3 - "$STATE_FILE" <<'PYEOF' 2>/dev/null || true
+scripts/karo_overload_monitor.sh:180:            if [ "$ts" -ge "$cutoff" ] 2>/dev/null; then
+scripts/karo_overload_monitor.sh:217:    mv -f "$tmp_state" "$STATE_FILE" 2>/dev/null || rm -f "$tmp_state" 2>/dev/null
+scripts/karo_overload_monitor.sh:231:    python3 - "$KARO_INBOX" "$NOW_EPOCH" <<'PYEOF' 2>/dev/null || echo "0|0|0|0|parse_error"
+scripts/karo_overload_monitor.sh:320:        if grep -qE '^\s*status:\s*assigned\s*$' "$f" 2>/dev/null; then
+scripts/karo_overload_monitor.sh:409:    chmod 600 "$dump_path" 2>/dev/null || true
+scripts/karo_overload_monitor.sh:438:    [ "$m1" -ge "$KARO_UNREAD_THRESHOLD" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M1"
+scripts/karo_overload_monitor.sh:439:    [ "$m2" -ge "$KARO_LATENCY_THRESHOLD_SEC" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M2"
+scripts/karo_overload_monitor.sh:440:    [ "$m3" -ge "$DISPATCH_LATENCY_THRESHOLD_SEC" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M3"
+scripts/karo_overload_monitor.sh:441:    [ "$m4" -ge "$PARALLEL_CMD_NEW_THRESHOLD" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M4"
+scripts/karo_overload_monitor.sh:442:    [ "$m5" -ge "$UNSTARTED_SUBPHASE_THRESHOLD" ] 2>/dev/null && hits_csv="${hits_csv:+$hits_csv,}M5"
+scripts/karo_overload_monitor.sh:452:            if [ "$ts" -ge "$cutoff_1h" ] 2>/dev/null; then
+scripts/karo_overload_monitor.sh:470:    if [ "$STATE_LAST_ALERT_AT" -gt 0 ] 2>/dev/null; then
+scripts/karo_overload_monitor.sh:472:        if [ "$since_last" -lt "$COOLDOWN_SEC" ] 2>/dev/null; then
+scripts/karo_overload_monitor.sh:481:    if [ "$CURRENT_ALERT_COUNT_1H" -ge "$ALERT_CAP_PER_HOUR" ] 2>/dev/null; then
+scripts/inbox_write.sh:141:" 2>/dev/null)
+scripts/inbox_write.sh:203:        2>/dev/null)
+scripts/inbox_write.sh:249:        while ! mkdir "$LOCK_DIR" 2>/dev/null; do
+scripts/inbox_write.sh:262:        rmdir "$LOCK_DIR" 2>/dev/null
+scripts/slim_yaml.sh:26:    while ! mkdir "$_ld" 2>/dev/null; do
+scripts/slim_yaml.sh:30:    trap "rmdir '$_ld' 2>/dev/null" EXIT
+scripts/audit_meta_codex.sh:147:DIFF=$(cd "$REPO_PATH" && git diff "${BASE_COMMIT}..${HEAD_COMMIT}" -- . "${EXCLUDE_ARGS[@]}" 2>/dev/null)
+scripts/audit_meta_codex.sh:158:CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . "${EXCLUDE_ARGS[@]}" 2>/dev/null | tr '\n' ' ')
+scripts/audit_meta_codex.sh:267:  if grep -qE "usage limit|rate.?limit|429|quota" "$LOG" 2>/dev/null; then
+lib/agent_status.sh:48:    full_capture=$(timeout 2 tmux capture-pane -t "$pane_target" -p 2>/dev/null)
+lib/cli_adapter.sh:48:" 2>/dev/null)
+lib/cli_adapter.sh:109:" 2>/dev/null)
+lib/cli_adapter.sh:395:" 2>/dev/null)
+lib/cli_adapter.sh:432:" 2>/dev/null)
+lib/cli_adapter.sh:478:" 2>/dev/null)
+lib/cli_adapter.sh:633:" 2>/dev/null)
+lib/cli_adapter.sh:726:" 2>/dev/null)
+lib/cli_adapter.sh:891:" 2>/dev/null
+lib/cli_adapter.sh:934:" 2>/dev/null
+lib/cli_adapter.sh:1000:" 2>/dev/null)
+lib/cli_adapter.sh:1066:" 2>/dev/null)
+lib/cli_adapter.sh:1075:            source "$agent_status_lib" 2>/dev/null
+lib/cli_adapter.sh:1083:        pane_target=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
+lib/cli_adapter.sh:1095:            agent_is_busy_check "$pane_target" 2>/dev/null
+lib/cli_adapter.sh:1125:" 2>/dev/null)
+lib/cli_adapter.sh:1135:        fb_pane=$(tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{@agent_id}' 2>/dev/null \
+lib/cli_adapter.sh:1145:            agent_is_busy_check "$fb_pane" 2>/dev/null
+lib/cli_adapter.sh:1170:    result=$("$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" - "$settings" <<'PYEOF' 2>/dev/null
+lib/cli_adapter.sh:1206:    result=$("$CLI_ADAPTER_PROJECT_ROOT/.venv/bin/python3" - "$settings" <<'PYEOF' 2>/dev/null
+lib/ntfy_auth.sh:27:        script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)" || true

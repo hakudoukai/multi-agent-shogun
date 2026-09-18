@@ -1,0 +1,10 @@
+koku=2026-09-18T19:45:23+0900 器=scripts/checks/ephemeral_worktree_hygiene.sh L19 `git -C $d status --porcelain 2>/dev/null | wc -l`
+v1 の疵: 種 dir が己の樹の内ゆゑ git は親 repo へ遡り fatal に成らず(round1 の控を残す)。v2 種=docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/raw/seed_hyg/.claude/worktrees/tmp-brokengit(.git file が無い gitdir を指す → git は遡らず fatal)
+直に: git -C <種> status --porcelain →
+  rc=128 ← 128 なら fatal(stderr は上に立つ)。之が器の中では 2>/dev/null に捨てられ wc -l が 0 を返す
+器を走らせる(REPO=docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/raw/seed_hyg・mtime 新):
+[worktree-hygiene] free=165Gi 一時樹=1(掃ける=0 / 持主の言が要る=0 / 生きて居る=1)
+mtime を 2 日前に:
+[worktree-hygiene] free=165Gi 一時樹=1(掃ける=1 / 持主の言が要る=0 / 生きて居る=0)
+  → ★掃ける 1★ なら: git が fatal(rc128)を吐いた dir を「中身 commit 済(dirty 0)」と判じた=2>/dev/null に依る番人が現に盲(實射)
+対照(鳴る側)= 2>/dev/null を外した同じ命令は stderr を立て rc 128(上の直走)。直した形(据ゑぬ)= rc を別に取り 128 なら「判じ得ぬ」に分ける。

@@ -1,0 +1,26 @@
+koku=2026-09-18T19:45:41+0900 種=docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/raw/seed_build(scripts/build_instructions.sh と instructions/・AGENTS.md・.github/copilot-instructions.md・agents/default/system.md の写し・ROOT_DIR=dirname(SCRIPT_DIR) ゆゑ写しの根に書く=己の束の内)
+種 file 数=50
+== 前(mtime・sha256 の 16)
+前 出力候補 本数=19
+== 走らせるだけ: bash docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/raw/seed_build/scripts/build_instructions.sh
+rc=1 out=36 行 err=0 行
+== 後との差(sha が変はつた/mtime が変はつた本数)
+sha 変=16 / mtime 変=16 / 母數=19
+書かれた path の型: instructions/generated/*.md(+AGENTS.md・.github/copilot-instructions.md・agents/default/system.md の内 変はつた物)
+  sha 変: instructions/generated/ashigaru.md
+  sha 変: instructions/generated/codex-ashigaru.md
+  sha 変: instructions/generated/codex-gunshi.md
+  sha 変: instructions/generated/codex-karo.md
+  sha 変: instructions/generated/codex-shogun.md
+  sha 変: instructions/generated/copilot-ashigaru.md
+  sha 変: instructions/generated/copilot-gunshi.md
+  sha 変: instructions/generated/copilot-karo.md
+  sha 変: instructions/generated/copilot-shogun.md
+  sha 変: instructions/generated/gunshi.md
+  sha 変: instructions/generated/karo.md
+  sha 変: instructions/generated/kimi-ashigaru.md
+  sha 変: instructions/generated/kimi-gunshi.md
+  sha 変: instructions/generated/kimi-karo.md
+  sha 変: instructions/generated/kimi-shogun.md
+  sha 変: instructions/generated/shogun.md
+呼び手: tests/unit/test_build_system.bats L44 `run bash "$BUILD_SCRIPT"`(PROJECT_ROOT=repo の根・tmp 無し)→ bats tests/unit/ を走らせるだけで作業樹の 19 紙が書き換はる(km-181 raw/70 の實例)。他の呼び手: scripts/build_instructions.sh .github/workflows/test.yml

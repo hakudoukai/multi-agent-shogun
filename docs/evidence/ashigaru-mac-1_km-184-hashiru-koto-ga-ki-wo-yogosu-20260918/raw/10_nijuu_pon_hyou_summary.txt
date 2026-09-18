@@ -1,0 +1,6 @@
+# koku=2026-09-18T19:42:59+0900 源=hosei_181 の控 /Users/momizimac/wt/a1-km181-hosei-bak-20260918T194028/12_mae_sha_bytes_mtime.tsv(戻す前の 20 本)・HEAD=f2c62730978bf22f6b7977fc17dc3279eec010f5・unit 全走の窓 19:20:26〜19:22:04(km-181 raw/60)
+path	mtime	diff_lines_vs_HEAD(+/-)	bytes_disk_mae	sha256_mae(16)	kaita_hashiri
+.github/copilot-instructions.md	2026-09-18T19:20:31	+305/-99	49395	954964799c6174a5	unit 全走(tests/unit/test_build_system.bats→scripts/build_instructions.sh)の窓の内
+... 本数 20
+Counter({'unit 全走(tests/unit/test_build_system.bats→scripts/build_instructions.sh)の窓の内': 19, 'case-fold の双子(樹を切つた直後から M・走りの手ではない)': 1})
+mtime 19:20:31 の本数 19 / ERR-EKARTE の mtime ['2026-09-18T19:14:18']

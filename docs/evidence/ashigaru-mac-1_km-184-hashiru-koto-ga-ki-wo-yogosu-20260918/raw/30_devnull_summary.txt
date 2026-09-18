@@ -1,0 +1,47 @@
+koku=2026-09-18T19:44:16+0900 根=scripts lib hooks(.sh .py .bash・bak 除く)・/usr/bin/grep(ugrep でない)
+== 2>/dev/null の行数 per file(上位 25)
+総 行数=367 / file 数=54
+  78 scripts/inbox_watcher.sh
+  23 scripts/switch_cli.sh
+  20 scripts/ratelimit_check.sh
+  19 scripts/agent_health_check.sh
+  19 lib/cli_adapter.sh
+  17 scripts/karo_overload_monitor.sh
+  15 scripts/checks/pane_identity.sh
+  13 scripts/tests/test_detect_stale.sh
+  12 scripts/lib/detect_stale.sh
+  11 scripts/idle_backlog_wake.sh
+   9 scripts/stop_hook_inbox.sh
+   8 scripts/agent_periodic_push.sh
+   7 scripts/agent_status.sh
+   6 scripts/redundancy/shogun_report_watcher.sh
+   6 scripts/checks/karo_mac_dasumae_gate.sh
+   6 scripts/checks/ephemeral_worktree_hygiene.sh
+   6 scripts/archive/message_delivery_v2_full_20260508/heartbeat.sh
+   5 scripts/watchdogs/enter_restart_common_watchdog.sh
+   5 scripts/tests/test_fukuincho_detect_stale_cli.sh
+   5 scripts/ntfy_listener.sh
+   5 scripts/checks/verify_state_before_asserting.sh
+   5 scripts/archive/message_delivery_v2_full_20260508/watcher.sh
+   4 scripts/inbox_write.sh
+   4 scripts/diagnose.sh
+   4 scripts/checks/symlink_aware_atomic_write.sh
+
+== 形① $( … 2>/dev/null | wc -l ) = 数へる番人の前で捨てる(失敗も 0 に化ける)
+7
+scripts/box_pdf_to_png.sh:30:png_count=$(ls "$DST"/*.png 2>/dev/null | wc -l)
+scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh:136:        find "$dlq_dir" -maxdepth 1 -name '*.yaml' 2>/dev/null | wc -l
+scripts/switch_cli.sh:68:    pane_count=$(tmux list-panes -t "multiagent:agents" 2>/dev/null | wc -l)
+scripts/checks/ephemeral_worktree_hygiene.sh:9:TMP_N="$(ls -d "${WT_DIR}"/tmp-* 2>/dev/null | wc -l | tr -d ' ')"
+scripts/checks/ephemeral_worktree_hygiene.sh:19:  dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+scripts/checks/ephemeral_worktree_hygiene.sh:20:  recent="$(find "${d}" -maxdepth 0 -newermt '-24 hours' 2>/dev/null | wc -l | tr -d ' ')"
+scripts/inbox_watcher.sh:1029:    [ -n "$session_name" ] && [ "$(tmux list-clients -t "$session_name" 2>/dev/null | wc -l)" -gt 0 ]
+
+== 形② if … 2>/dev/null; then(rc だけで判じ 理由を捨てる)
+8
+== 形③ subshell/関数の末尾 ) … 2>/dev/null(中の告げを悉く捨てる)
+scripts/inbox_watcher.sh:400:    ) 200>"$LOCKFILE" 2>/dev/null
+scripts/inbox_watcher.sh:528:    ) 200>"$LOCKFILE" 2>/dev/null
+scripts/inbox_watcher.sh:567:    ) 200>"$LOCKFILE" 2>/dev/null
+== 形④ 2>&1 >/dev/null 等の全捨て
+3
