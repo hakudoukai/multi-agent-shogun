@@ -1,0 +1,9 @@
+名	bytes	宣(條②は鳴るべきか)
+k1_lf_matsubi_kuuhaku	13	鳴る(LF・行末に半角空白)
+k2_lf_matsubi_tab	13	鳴る(LF・行末にTAB)
+k3_crlf_kuuhaku	15	鳴る(CRLF・CRの前に空白)=★止血の的★
+k4_crlf_kiyoshi	14	黙る(CRLF・空白無)=條③のみ鳴るべき
+k5_lf_kiyoshi	12	黙る(清いLF)=陰性対照
+k6_nul_kuuhaku	14	鳴る(NUL在り・空白在り)
+k7_nul_kiyoshi	13	黙る(NUL在り・空白無)=★濡れ衣の的★
+k8_crlf_nul_kuuhaku	16	鳴る(CRLF+NUL+空白)

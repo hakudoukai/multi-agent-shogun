@@ -1,0 +1,25 @@
+=== 己の shell(zsh)で grep は何か ===
+SHELL=/bin/zsh  0=/bin/zsh
+grep is a shell function from /Users/momizimac/.claude/shell-snapshots/snapshot-zsh-1789689437713-rccl41.sh
+grep
+--- ugrep か否 ---
+ugrep 7.8.4 aarch64-apple-macosx +neon/AArch64; -P:pcre2jit; -z:zlib,bzip2,zstd,brotli,7z,tar/pax/cpio/zip
+License: BSD-3-Clause; ugrep user manual: <https://ugrep.com>
+
+=== bash(門が走る殻)で grep は何か ===
+grep is /usr/bin/grep
+/usr/bin/grep
+grep (BSD grep, GNU compatible) 2.6.0-FreeBSD
+
+=== 同じ紙・同じ式を 三つの grep で撃つ(NUL在り・清い) ===
+grep             出目=「ugrep: error: error at position 10
+(?m)[ 	]+|?$
+          \___empty (sub)expression」 rc=2
+/usr/bin/grep    出目=「0」 rc=1
+command grep     出目=「0」 rc=1
+
+=== 末尾空白在りのNUL紙(k9)でも同じか ===
+grep             出目=「ugrep: error: error at position 10
+(?m)[ 	]+|?$
+          \___empty (sub)expression」 rc=2
+/usr/bin/grep    出目=「1」 rc=0

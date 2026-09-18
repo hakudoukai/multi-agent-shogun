@@ -1,0 +1,16 @@
+形	門の條②(行)	真の末尾空白(行)	條③CR(行)	判
+k10_nul_tougyou_kuuhaku	1	1	0	正しい鳴り
+k11_kuuhaku_nul_no_mae	1	0	0	★濡れ衣(偽の鳴り)★
+k12_kuuhaku_shin_no_eol	1	1	0	正しい鳴り
+k13_nul_no_ato_kuuhaku	0	0	0	正しい黙り
+k14_kuuhaku_cr_nul	1	0	1	★濡れ衣(偽の鳴り)★
+k15_zengyou_kuuhaku_to_CR	2	2	2	正しい鳴り
+k1_lf_matsubi_kuuhaku	1	1	0	正しい鳴り
+k2_lf_matsubi_tab	1	1	0	正しい鳴り
+k3_crlf_kuuhaku	1	1	2	正しい鳴り
+k4_crlf_kiyoshi	0	0	2	正しい黙り
+k5_lf_kiyoshi	0	0	0	正しい黙り
+k6_nul_kuuhaku	1	1	0	正しい鳴り
+k7_nul_kiyoshi	0	0	0	正しい黙り
+k8_crlf_nul_kuuhaku	1	1	2	正しい鳴り
+k9_nul_saki_kuuhaku_ato	1	1	0	正しい鳴り
