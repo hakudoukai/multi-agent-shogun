@@ -1,0 +1,80 @@
+koku=2026-09-18T20:26:52+0900
+== scripts/karo_overload_monitor.sh の書込 3 行(何処へ)
+127:    } > "$HEALTH_FILE" 2>/dev/null || true
+208:    cat > "$tmp_state" <<EOF
+384:    cat > "$dump_path" <<EOF
+== lib/cli_adapter.sh の書込(何処へ)
+
+    if 'history' not in doc or not isinstance(doc.get('history'), list):
+        doc['history'] = []
+
+    doc['history'].append(entry)
+
+    with open(yaml_path, 'w') as f:
+        yaml.dump(doc, f, default_flow_style=False, allow_unicode=True)
+except Exception as e:
+== scripts/inbox_watcher.sh の書込 site と錠(L480-490・L596-606・flock 200)
+    expire_supersede_changed = False
+    for m in messages:
+        if m.get("read", False):
+            continue
+        is_superseded = m.get("id") in superseded_ids
+        expires_at = m.get("expires_at")
+        is_expired = bool(expires_at) and now_iso >= expires_at
+        if is_superseded or is_expired:
+            m["read"] = True
+            expire_supersede_changed = True
+
+    unread = [m for m in messages if not m.get("read", False)]
+    special_types = ("clear_command", "model_switch", "cli_restart")
+    specials = [m for m in unread if m.get("type") in special_types]
+
+        bash "$SCRIPT_DIR/scripts/inbox_write.sh" "$msg_from" \
+            "配送失敗通知: ${AGENT_ID} 宛 ${msg_type} (id=${msg_id}) を実行できませなんだ。理由=${reason}" \
+            "delivery_failed" "$AGENT_ID" 2>&1 | while IFS= read -r line; do
+            echo "[$(date)] [RETURN-TO-SENDER] $line" >&2
+        done
+        # Independent-channel landing check (not human-arrival confirmation —
+        # see comment above): re-read the sender's inbox file itself.
+        local sender_inbox="$SCRIPT_DIR/queue/inbox/${msg_from}.yaml"
+        if [ -f "$sender_inbox" ] && grep -qF "$msg_id" "$sender_inbox" 2>/dev/null; then
+            echo "[$(date)] [RETURN-TO-SENDER] landing confirmed via file re-read: ${sender_inbox} contains a reference to ${msg_id}" >&2
+        else
+            echo "[$(date)] [RETURN-TO-SENDER] WARNING: could not confirm delivery_failed notice landed in ${sender_inbox} (msg_id=${msg_id}
+        fi
+322:        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((
+453:        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((
+541:        if command -v flock &>/dev/null; then flock -x 200; else _ld="${LOCKFILE}.d"; _i=0; while ! mkdir "$_ld" 2>/dev/null; do sleep 0.1; _i=$((
+== ~/bin/inbox_mark_read.py の錠(時限・fail-closed)
+# 本機は flock 缺(實測) ∴ inbox_write.sh の實經路は mkdir("<inbox>.lock.d")。
+# ★共有器は不觸★。同じ約束を★此方が守る★だけである。取れねば★印を打たぬ(fail-closed)★。
+import os, time
+class InboxLock:
+    def __init__(self, path, timeout=5.0):
+        self.d = path + '.lock.d'; self.timeout = timeout; self.held = False
+    def __enter__(self):
+        t0 = time.time()
+        while True:
+            try:
+                os.mkdir(self.d); self.held = True; return self
+            except FileExistsError:
+                if time.time() - t0 > self.timeout:
+                    raise TimeoutError('lock 取得できず: ' + self.d)
+                time.sleep(0.05)
+    def __exit__(self, *a):
+        if self.held:
+            try: os.rmdir(self.d)
+            except OSError: pass
+        return False
+
+def main():
+    if len(sys.argv) < 3:
+        sys.stderr.write(__doc__); return 2
+== ~/bin の全 file で queue/tasks を書く物(語 tasks・全拡張子・bak 除く)
+(0 なら家老の帳焼きは Claude Code の Write/Edit 器=code の外・錠は器の内部仕様)
+== hook(.claude/settings.json)に帳を書く物
+"command": "bash scripts/stop_hook_inbox.sh"
+"command": "scripts/checks/pretooluse_bash_guard.sh"
+"command": "bash scripts/checks/dd169_kill_term_guard.sh"
+"command": "bash scripts/checks/context_usage_warn.sh"
+== 己の帳の書き方(當席・本会話): python open(p,'w') で読→足→書・錠無し(自認)

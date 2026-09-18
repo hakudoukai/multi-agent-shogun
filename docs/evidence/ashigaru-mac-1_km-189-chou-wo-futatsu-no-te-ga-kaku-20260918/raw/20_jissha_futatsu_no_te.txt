@@ -1,0 +1,7 @@
+koku 2026-09-18T20:27:16+0900 写し= docs/evidence/ashigaru-mac-1_km-189-chou-wo-futatsu-no-te-ga-kaku-20260918/raw/seed/utsushi_chou.yaml
+写しの鍵数(前)= 69 bytes= 160929
+⒜ 錠無し・二手重ね: 鍵数(後)= 70 (期待 前+2= 71 ) ★消えた鍵= ['senmu1_nou_B'] ( 1 本)★
+⒝ mkdir 錠・二手重ね: 鍵数(後)= 71 (期待 71 ) 消えた鍵= [] ( 0 本)・錠 dir 残= False
+⒞ 當席の python 形の窓(読む→書く・遅延無し・150KB の帳・20 回): min=0.41 ms / median=0.47 ms / max=0.82 ms
+   家老の焼き器(Claude Code の Write/Edit)は「読む(Read)→足す(思考)→書く(Edit)」で人の思考の刻が挟まる=窓は秒〜分の桁(測れぬ・今日 20:16 の窓は 149087→150475 B の間に當席が書けた事が證)
+写しの本体は不変: sha256 前後一致= True

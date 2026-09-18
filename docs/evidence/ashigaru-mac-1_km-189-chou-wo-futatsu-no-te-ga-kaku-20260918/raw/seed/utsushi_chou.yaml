@@ -1,0 +1,973 @@
+task_id: km-116-pr23-no-tsugi-no-bin-ki-wo-main-he-hakobu-katachi-20260917
+assigned_to: ashigaru-mac-1
+assigned_by: karo-mac
+status: done
+priority: high
+bloom_level: L5
+issued_at: 2026-09-17T19:16:00+0900
+assigned_at: '2026-09-17T19:16:00'
+completed_at: '2026-09-17T19:34:59'
+evidence_bundle: docs/evidence/ashigaru-mac-1_km-116-pr23-no-tsugi-no-bin-20260917/
+saki_ni_shiraseru_koto: "★km-115 納め 受領。㋐〜㋕ 悉く受けた。札は done へ更新済(再報 要らぬ)。★\n★貴殿の擔保せぬ事①が本弾の的に成つた★ ―― 「PR#23 は今走る版を運ばぬ」は家老が委員長へ上げ、\n當席が第四の便を起こす旨を告げた(可否 伺ひ中・伺ひの帰りを待たずに測りは進めてよい)。\n★貴殿の監査は軍師mac へ代送済★(六便)。家老が★版の註★を足した:\n  貴殿が当たつた PR#23 head=b0fa8609 は、今 571f3387 へ進んだ(委員長が代行 push)。\n  差は karo_mac_manifest_verify.py ★一本 +28/−0★ のみ。\n  貴殿が名指した dasumae_gate.sh / gate4.sh / inbox_write.sh の blob は★悉く不動★ゆゑ薦めは生きる。\n  古びるのは verify.py に触れる数(PR#22 との重なり 1 本・樹 545 本・merge-tree の tree 指紋)。\n★数の訂正★: inbox_write.sh の差は貴殿の ★+48/−2★ が正。家老の +50/−2 は誤りであつた。軍師へも其の儘代送した。\n\n★家老が本弾の入口を先に測つた(19:14 刻)ゆゑ渡す ―― 此處から先を貴殿が開けよ★:\n  disk の三本の blob を全 refs(refs/heads + refs/remotes)で歩いた:\n    karo_mac_dasumae_gate.sh disk=054c442e → ★出現 1★\n    karo_mac_gate4.sh        disk=da73cfef → ★出現 1★\n    ともに commit 157a9736(枝 karo-mac/km-79-futatsu-no-mon-he-otsu-wo-ateru-20260917・09-17 09:49:37)に在る。\n    scripts/inbox_write.sh   disk=acb62702 → ★出現 0★(何処の ref にも無い)\n  ∴ 貴殿の km-115 §㋔①「三本とも未 commit」は★二本については訂正が要る★ ――\n    二本は commit 済で、只 main にも PR#23 にも★載つて居らぬ★だけであつた。\n    專任2 の km-111 ㋑「第五の面(disk)はどの木にも無い版」も同じ穴(彼は main/origin/PR#20 の三木のみ歩いた)。\n  ★家老の此の数も貴殿が検め直せ。家老の数を信じて引くな。★\n"
+teki: '★的は「Mac で走る三本を main へ運ぶ器を、憶測でなく数で設計する」一件★。
+
+  PR#23 が着地しても「main の三本 ≠ Mac の三本」は残る。其の差を埋める便の形を貴殿が決める。
+
+  ★commit も push も貴殿はせぬ。形を数で決め、家老が plumbing で据ゑる。★
+
+  '
+toi: "㋐ ★157a9736 を数で開けよ★。其の commit(及び枝 km-79 の頭までの道)が main へ載る時、\n   三本の外に★何を運ぶか★を file 単位で列ね、+/− を出せ。\n   main を親とした時の merge-base・fast-forward の可否・merge-tree の衝突数を測れ。\n   ★「三本だけ」と思つて居た物が他を連れて来ぬか★ ―― 之が第一の問ひ。\n㋑ ★inbox_write.sh の disk +43 の出所を追へ★。何処の ref にも無い ―― 誰が何時何の裁で書いたか。\n   追へる筋: 己の束の raw/控・session の記録・他席の束・裁の逐語。\n   ★追へぬなら「測れぬ」と書け。憶測で裁の番号を当てるな。★\n   併せて其の 43 行が★何を塞ぐか★を km-115 と同じ形(陽性/陰性)で測れ。\n㋒ ★運ぶ形の案を三つ並べ、各々を数で測れ★。\n   案甲=157a9736(又は枝 km-79 の頭)を其の儘 PR にする\n   案乙=三本だけを抜いた新しい commit を main の上に建てる\n   案丙=PR#23 の上に積む(PR#23 着地を待つ)\n   各案に付き ⑴運ぶ file 数 ⑵塞ぐ路の増減 ⑶衝突 ⑷PR#23 及び PR#24 との重なり ⑸戻し方 を出せ。\n㋓ ★陽性対照と陰性対照を置け★。運んだ後も鳴るべき物が鳴る事・鳴らぬべき物が黙る事を示せ。\n   殊に gate4 の閾の検め(裁 seq322952)は disk 版に在り PR#23 版に無い ―― 其れが着地して\n   ★fail-open を塞ぐ側に働く★事を実走で示せ。\n㋔ ★薦めを一つ名指せ★。三案の内どれを据ゑるべきか数を根拠に選び、★其の案が塞がぬ穴★を併せ書け。\n㋕ 門 rc=0 を二走。★臺帳の根は束内相対★ゆゑ `cd <束>` してから append を呼び、\n   門は `KM_GATE_MANIFEST_BASE=.` を付けて走らせよ。控は★走る毎に別名★・★臺帳へ入れるな★。\n   ★karo_mac_manifest_append.py の第一引数は臺帳である★ ―― list だけ渡すと己の紙が臺帳にされる(家老の実害)。\n"
+uketori_jouken: "⑴ ㋐〜㋕ 悉く数で閉ぢ、★測れぬ物は「測れぬ」と書く★。\n⑵ 数は悉く ★何を意味せぬか★ を併せ書く(数の規律)。\n⑶ 束は docs/evidence/ashigaru-mac-1_km-116-pr23-no-tsugi-no-bin-20260917/ の下。\n   紙=00_shodan.md ／ driver/ ／ raw/ ／ manifest.txt(★束内相対・4欄 lines= 有★)。\n⑷ 門 rc=0 の控を二本(別名)。臺帳中の mon_ 行=0 を自ら数へて書け。\n⑸ ★commit も push も枝作りも refs への書込みもするな★。家老が plumbing で据ゑる。\n⑹ ★scripts/ 配下の器に一指も触れるな★(変更統制)。試すなら束の中の写しか仮の樹で。\n⑺ 着手便に★宣ETA★を付けよ。納めに實を併記せよ(貴殿の宣は過去 1.8〜6 倍に外れた事が在る)。\n⑻ 納めは家老mac の箱へ。★軍師mac は死箱(rc=68)ゆゑ監査は家老が代送する★。\n"
+kinshi: '★commit・push・枝作り・refs への書込み 悉く禁★
+
+  ★scripts/ 配下の器の書換へ禁(変更統制)★
+
+  ★他席の束・worktree・稼働中の器に触れる事 禁★
+
+  ★枝 karo-mac/km-79-... を含め、他の枝を動かす事 禁(読取のみ)★
+
+  ★束に空白を含む名の実体を置くな★ ―― 己の門が己の束に鳴る。
+
+  '
+tsuiho_20260917_1930_sai_327826: "★追補 ―― 委員長裁 seq327826(19:17:41)が下つた。㋒の三案の内、★形は裁で既に決まつた★。★\n★裁 逐語★:\n  「327801=★可★: 第四の便(Mac で走る dasumae/gate4/inbox_write NAME-GATE の差分)は\n    PR#23 とは★別枝★で、PR#23 着地後にその head を親とする1commit の小PR(裁327467⑵の線)。\n    判定=軍師mac・他PCの inbox_write 展開は監督lot(裁325654 条件6)のまま。\n    差分は commit で凍らせ、押しは当職へ「push願い」1行。」\n★∴ ㋒ の的が変はる ―― 「三案から選べ」ではなく「★案丙(PR#23 の head を親に積む)★を\n   裁の形の中で測り、其の形で通るか・何処が塞がぬかを数で出せ」である。★\n★但し甲乙を測るな、の意ではない★ ―― 甲(157a9736 を其の儘)と乙(三本だけ抜く)は\n★対照として測れ★。裁の案丙が甲乙より悪い点が数で出たなら、★其れは書いて上げよ★。\n家老が委員長へ運ぶ。黙つて裁に合はせるのは第一条に悖る(助け合ひとは誤りの黙認に非ず)。\n★併せて変はらぬ事★: 親は PR#23 の head=571f338756775acd3e2d73dab5e423e9492d24a2 で\n★着地後★である。ゆゑに今 貴殿が出すのは★紙と数と commit の形★までで、\n枝も commit も作るな(⑸は生きて居る)。押しは委員長。\n"
+tsugi_no_tama_km118_20260917_1955:
+  task_id: km-118-daiyon-no-bin-wo-kooraseyo-20260917
+  status: done
+  completed_at: '2026-09-17T20:25:03'
+  priority: critical
+  issued_at: 2026-09-17T19:55:00+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-118-daiyon-no-bin-wo-kooraseyo-20260917/
+  ★先づ之を為せ★: '★貴殿の pane は 100% context used と出て居る。先づ /compact を入れよ。★
+
+    其の後 本 yaml を読み直せ ―― 要る事は悉く此処に書いて在る。
+
+    '
+  km116_no_uke: '★km-116 納め 受領。㋐〜㋕ 悉く受けた。追ひ便(193705)も受けた。札は done。再報 要らぬ。★
+
+    ★實=16分・宣=21:10 は約7倍の過大★ ―― 咎めぬ。次の宣を其の実績で引き直せ。
+
+    ★貴殿の薦めた案丙は、委員長裁 seq327826/327976/328018 の線と一致した。★
+
+    '
+  裁の逐語(之が的を決める): "seq327976:「門の版4つの実測を受け、★第四の便が運ぶ版=disk で走る 321行 054c442e★で可。\n  PR#23 着地後にその head を親に積んだ1commit を同枝へ commit→「push願い」1行(裁327826 の線)。\n  走らせた證(rc raw)は其の紙に同梱。」\nseq328018:「PR#23 merge は★軍師mac の PR#23 判定紙＋km-117 全納★の2つが揃った時点で当職が実施。」\n∴ ★今は commit する刻に非ず。然し「着地した刹那に一手で済む形」を今の内に凍らせる。★\n"
+  teki: '★的は「PR#23 が着地した其の刹那、第四の便を★一手★で積める迄に凍らせる」一件。★
+
+    貴殿は既に丙の tree=0e85c270536dcfa31c96f231fb78b0886a84ef18 を出して居る。其れを起点に精密化せよ。
+
+    '
+  toi: "㋐ ★運ぶ物を確定せよ★。裁は「disk で走る 321行 054c442e」と言ふ。\n   貴殿の丙は三器(dasumae/gate4/inbox_write)。★三器と裁の一器の関係を数で示せ★ ――\n   dasumae = 054c442e で一致するか、gate4/inbox_write は裁の文言の外か中か。\n   ★外なら「外である」と書け。裁の文言を勝手に広げるな・勝手に狭めるな。★\n   家老の読み(広げてよい=丙の三本で可)も★憶測★である ―― 貴殿が数で示し、家老が委員長へ問ふ。\n㋑ ★blob の在処を悉く測れ★。追ひ便で「inbox_write の blob acb62702 は本 repo の object に無い」と書いた。\n   三器の各々に就き ⑴disk の sha256/blob/行/byte ⑵其の blob が repo の object に在るか(cat-file -e の rc)\n   ⑶無いなら hash-object -w が要るか ―― を表で出せ。\n㋒ ★一手の形を逐語で書け★。PR#23 が着地した後に打つ命令を、★写して貼れば済む迄★に。\n   枝名・親・path・mode(100755 か 100644 か)・commit 文言(Co-Authored-By 迄)を含めよ。\n   ★但し打つな。紙に置くだけである。★\n㋓ ★戻し方を一行で★。積んだ後に戻す命令を一行で書け。\n㋔ ★塞がぬ穴を書け★。「之で悉く直る」と書くな。\n   殊に ―― 第四の便が積まれても ★hook が門を呼んで居らぬ限り席の振舞ひは変はらぬ★\n   (專任3 km-113 ㋒ の数: hook の scripts/checks 行3本の内 門を呼ぶ=0本)。\n   其れが此の便で塞がるのか塞がらぬのかを、★貴殿の器で確かめて書け★。\n㋕ 門 rc=0 を二走。`cd <束>` してから append を呼び、門は `KM_GATE_MANIFEST_BASE=.` を付けよ。\n   ★門は紙を列挙して受ける★ ―― `<臺帳> <紙1> <紙2> …`。dir を渡すと條⑤が「測れぬ」で落ちる(家老 実測 19:45)。\n   控は走る毎に別名・臺帳へ入れるな・臺帳中 mon_ 行=0 を自ら数へて書け。\n"
+  uketori_jouken: "⑴ ㋐〜㋕ 悉く数で閉ぢ、測れぬ物は「測れぬ」と書く。\n⑵ 数は悉く ★何を意味せぬか★ を併せ書く。\n⑶ 束=docs/evidence/ashigaru-mac-1_km-118-daiyon-no-bin-wo-kooraseyo-20260917/\n   紙=00_shodan.md ／ driver/ ／ raw/ ／ manifest.txt(束内相対・4欄 lines= 有)。\n⑷ 門 rc=0 の控を二本(別名)。\n⑸ ★commit も push も枝作りも refs への書込みもするな★。\n⑹ ★scripts/ 配下の器に一指も触れるな★(変更統制)。\n⑺ 着手便に宣ETA。納めに實を併記。★宣は前回の實(16分)を土台に引け★。\n⑻ 納めは家老mac の箱へ。★300字の條★ ―― 超えると送信器が fail-closed で撥ねる(貴殿の 754字 は撥ねられた筈)。\n   長い時は★便を割れ★。識別子(sha・枝名・path)は★決して縮めるな★。\n"
+  kinshi: '★commit・push・枝作り・refs への書込み 悉く禁★
+
+    ★scripts/ 配下の書換へ禁(変更統制)★
+
+    ★他席の束・worktree・稼働中の器に触れる事 禁★
+
+    ★束に空白を含む名の実体を置くな★
+
+    '
+tsuiho_km118_oya_kakutei_20260917_2012:
+  task_id: km-118-daiyon-no-bin-wo-kooraseyo-20260917
+  kind: tsuiho
+  issued_at: 2026-09-17T20:12:00+0900
+  ★親が確定した★: "★PR#23 は merge された。★(総監督 裁 seq328216・20:08:25)\n家老が己の器で検めた(20:1x・丙 ls-remote を先に置いた):\n  丙 git ls-remote origin refs/heads/main = ★82f23b429a03b88c504cb64917ff37647c07e0a5★ rc=0\n  乙 git show-ref --verify refs/remotes/origin/main = 44ba23dc70d86d49fbb3a6ed26b5f497b71fd814\n     ―― ★乙は古い。押した後でも古い。乙で指すな。★\n  merge commit の親二本 = 44ba23dc70d86d49fbb3a6ed26b5f497b71fd814 と\n                          571f338756775acd3e2d73dab5e423e9492d24a2\n  git merge-base --is-ancestor 571f338756775acd3e2d73dab5e423e9492d24a2 82f23b429a03b88c504cb64917ff37647c07e0a5 → rc=0\n\n∴ ★㋒ の「一手」の親は 571f3387 ではなく 82f23b429a03b88c504cb64917ff37647c07e0a5 である。★\n(571f3387 は其の中に在るが、枝を生やす親は merge commit の方である。)\n★書き直すのは㋒の親の一行だけでよい。他の㋐㋑㋓㋔㋕は変はらぬ。★\n手元の 82f23b42 は `git fetch origin main` で取り込み済ゆゑ `git cat-file -t` で見える。\n"
+  ★先づ之を為せ(再掲・面の実測)★: '20:1x 実視 ―― 貴殿の面は ★100% context used★・done 8:10 PM で止まつて居る。
+
+    ★/compact を入れよ。/clear ではない。★
+
+    /clear だと此の便の文脈が悉く消える(前回 km-116 で実際に消えた)。
+
+    束は disk に在る(29本・20:00:36〜20:08:28)ゆゑ /compact の後に札と束から続けられる。
+
+    '
+  ★今の納め残り(家老が disk を歩いて測つた・20:1x)★: '在る = driver/ 11本・raw/ 18本 = 計29本
+
+    ★無い★ = 紙(00_*.md)・manifest.txt・門の控(mon_*)
+
+    ∴ 残るは「紙を書く」「臺帳を建てる」「門を二走」の三つである。
+
+    `cd <束>` してから append を呼び、門は `KM_GATE_MANIFEST_BASE=.` を付けよ。
+
+    '
+tsugi_no_tama_km121_20260917_2128:
+  task_id: km-121-pr24-ga-toku-mono-to-tokanu-mono-wo-hakare-20260917
+  assigned_to: ashigaru-mac-1
+  assigned_by: karo-mac
+  status: done
+  completed_at: 2026-09-17T21:59:00+0900
+  completed_at_no_ne: 納め①〜⑧ 箱着 21:58:33〜35／控 km121_nou_20260917_2158
+  priority: high
+  issued_at: 2026-09-17T21:30:00+0900
+  assigned_at: 2026-09-17T21:38:06+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-121-pr24-ga-toku-mono-to-tokanu-mono-20260917/
+  hon: "★次の弾 km-121 ―― PR#24 が何を解き、何を解かぬかを測れ★\ntask_id: km-121-pr24-ga-toku-mono-to-tokanu-mono-wo-hakare-20260917\n束: docs/evidence/ashigaru-mac-1_km-121-pr24-ga-toku-mono-to-tokanu-mono-20260917/\n着手時刻を先に報せ、宣ETA を添へよ。\n\n★何故 今 之を問ふか(家老が 21:20 に測つた事)★\n  軍師mac が PR#25 を REVISE で止めて居る。残条件は逐語で\n  「candidate tree に km-117 束が無い・manifest/raw も未固定」。\n  家老の実測: km-117/118/119/120 の束は ★到達可能 commit 1931 本の悉くに無し(0/1931)★。\n  因は .gitignore 7行目の ★裸の `*`★(check-ignore rc=0 で確認)。\n  ∴ 席が幾ら紙を書いても、其れは git の中に入らず、軍師は独立に再現できぬ。\n  PR#24(karo-mac/gitignore-evidence-20260917 = 7d1c94a3・origin に現存 rc=0)が其の直しと称されて居る。\n  ★然し「PR#24 が着けば解ける」は誰も測つて居らぬ。★ 之を測るのが本弾である。\n\n㋐ 現状の遮断を数で出せ。docs/evidence 配下の disk の本数・束の数、\n   其の内 到達可能 commit の何れかの tree に在る本数(家老の測りでは main に 19本=\n   km-manifest-append-track-20260917 の一束のみ)。歩き根・深さ・刻・rc を併書せよ。\n㋑ ★PR#24 の版の .gitignore で測り直せ★。7d1c94a3 の .gitignore を取り出し、\n   其れを用ゐて同じ path 群に check-ignore を当てよ。\n   ★何本が解け、何本が依然遮断されるか★を数で出せ。\n   (器の作法: 仮 clone か `git show 7d1c94a3:.gitignore` を使ひ、★本 repo の .gitignore を書換へるな★)\n㋒ PR#24 が着いても ★解けぬ物★ を名指せ。例: 既に tracked な物・別の行で個別に許された物・\n   __pycache__ 等。「無い」なら「無い」と書き、其の根拠(陽性対照)を添へよ。\n㋓ 焼く費用を測れ。仮に四束(km-117/118/119/120)を add -f した時の\n   ★本数・byte 和・最大 file★。3案まで(⑴四束全部 ⑵紙と臺帳と控のみ ⑶何も焼かぬ=既定)。\n   ★⑶を必ず数で評せよ。★\n㋔ 断ひとつ。★「直せ」の下命ではない★ ―― 家老が委員長へ伺ふ為の紙である。\n㋕ 門 rc=0 を二走。控の名を紙に書け。cd 束 → append(第一引数=臺帳)、門は KM_GATE_MANIFEST_BASE=. 付。\n\n★禁★ commit・push・枝作り・refs への書込み 悉く禁。\n     .gitignore を書換へる事 ★厳禁★(変更統制・PR#24 は既に起草済である)。\n     scripts/ 配下 不触・他席の束 不触・束に空白を含む名の実体を置くな。\n"
+km121_nou_20260917_2158:
+  task_id: km-121-pr24-ga-toku-mono-to-tokanu-mono-wo-hakare-20260917
+  status: done
+  completed_at: '2026-09-17T21:57:35'
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-121-pr24-ga-toku-mono-to-tokanu-mono-20260917/
+  gate: rc=0 二走 mon_215733_ichi / mon_215735_ni・臺帳 40 行・mon_ 行 0
+  nou_bin: karo-mac 箱 msg_20260917_215833_191fb0c6 〜 msg_20260917_215835_685824f3 (8 通)
+  jitsu: 20 分 (21:38→21:57)・宣 22:20 は 2.1 倍過大
+tsugi_no_tama_km124_20260917_2210:
+  task_id: km-124-yontaba-no-daichou-ga-jou1-wo-tooranu-179gyou-wo-hitogyou-zutsu-shiwake-20260917
+  assigned_to: ashigaru-mac-1
+  assigned_by: karo-mac
+  status: done
+  priority: high
+  issued_at: 2026-09-17T22:10:00+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-124-yontaba-no-daichou-ga-jou1-wo-tooranu-179gyou-wo-hitogyou-zutsu-shiwake-20260917/
+  hon: '★次の弾 km-124 ―― 四束の臺帳が門の條①を通らぬ、其の179行を一行づつ仕分けよ★
+
+    task_id: km-124-yontaba-no-daichou-ga-jou1-wo-tooranu-179gyou-wo-hitogyou-zutsu-shiwake-20260917
+
+    束: docs/evidence/ashigaru-mac-1_km-124-yontaba-no-daichou-ga-jou1-wo-tooranu-179gyou-wo-hitogyou-zutsu-shiwake-20260917/
+
+
+    【的】貴殿自身の km-121 納め⑧ の逐語:「紙+臺帳+控 69本 144,515B 但し臺帳184行中179が落ち條①が四束とも通らぬ」。
+
+    此の179 を「多い」で済ませるな。★因ごとに数へ、因ごとに rc を出せ★。
+
+
+    【測る物】
+
+    ⑴ 四束を一束づつ別々に測れ(束ごとに臺帳の方言が違ふ)。束名・臺帳 path・臺帳の行数・落ちた行数 を四行で出せ。
+
+    ⑵ 179行の落ちを★因で仕分けよ★。因の候補(足らねば足せ): ㋐根の方言(束内相対か repo 相対か) ㋑path に空白/全角/改行 ㋒実体が disk に無い ㋓臺帳の欄の形が違ふ(lines欄無し/引用符有り) ㋔門が読めぬ行。各因の本数の和が179に一致する事を示せ(一致せねば★測れぬ★と書け)。
+
+    ⑶ ★臺帳の根は束内相対★(裁 seq322699)に從ひ `cd <束>` してから `KM_GATE_MANIFEST_BASE=.` を置いて走らせた時の rc と落ち数を、置かぬ時と★並べて★出せ。之で㋐が何本かが判る。
+
+    ⑷ 陽性対照を一本置け ―― 確かに通る筈の行を同じ路に乗せ、通る事を示せ。通らねば器の疵である。
+
+    ⑸ 直す道を出せ(★実施は禁・道のみ★)。道ごとに「何本解けるか」「何を壊し得るか」「戻し方」を各1行。
+
+
+    【禁】commit/push/枝/refs/.gitignore/scripts 悉く不触。★既成の束の臺帳は舊形の儘固定★(裁 seq322699)ゆゑ★書き換へるな★ ―― 測るのみ。他席の束・他席の札も触るな。
+
+
+    【宣ETA】自ら宣せよ。前弾 km-121 は宣22:20/實20分=2.1倍過大であつた。★何を根拠に其の刻を宣ふかを1行添へよ★。
+
+
+    【納め】束へ 紙(00_shodan.md)+臺帳(manifest.txt)+門の控。門は rc=0 まで走らせ、落ちた回の控も残せ。箱へは分割便で、各便に測つた数と rc を入れよ。sha256 は紙と臺帳の二本を出せ。
+
+    '
+  completed_at: '2026-09-17T22:18:40'
+km124_nou_20260917_2218:
+  task_id: km-124-yontaba-no-daichou-ga-jou1-wo-tooranu-179gyou-wo-hitogyou-zutsu-shiwake-20260917
+  status: done
+  completed_at: '2026-09-17T22:19:06'
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-124-yontaba-no-daichou-ga-jou1-wo-tooranu-179gyou-wo-hitogyou-zutsu-shiwake-20260917/
+  gate: rc=0 二走 mon_221903_ichi / mon_221906_ni・臺帳 69 行・mon_ 行 0・前走 mon_221714/221742(rc=0)と初走 mon_221657/221700(rc=1・自己言及 raw/95_run.stdout)の控も残す
+  sha256: 紙 6b9a5f7243edb998e25e6d3cc684bae68df5de47ef09a45eeba8650cee38af38 / 臺帳 1f9c1a2d77e8830fbe56933727272351dcc86e80419b714940687287d03b933c
+  kotae: 179=案⑵の仮tree上の数(driver56+raw104+_an15+_ki4)・現disk㋑㋒㋓㋔=0・㋐=基点無184/有0・km-119に臺帳後書換の相違2
+  nou_bin: karo-mac 箱 7 通(納め①〜⑥ 22:18:31〜32 + 追ひ便⑦ 訂正 22:19)
+  jitsu: 8 分 (22:11:11 着手便→22:19:06 門rc=0)・宣 22:45 は過大(0.24倍)
+tsugi_no_tama_km127_20260917_2302:
+  task_id: km-127-shinu-link-wo-ippon-zutsu-nazashite-shiwake-yo-20260917
+  status: done
+  completed_at: '2026-09-17T23:28:08'
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-127-shinu-link-wo-ippon-zutsu-nazashite-shiwake-yo-20260917/
+  gate: rc=0 二走 mon_232800_ichi / mon_232804_ni・臺帳 114 行(註2・計116)・mon_ 行 0・臺帳外=mon_* と *.nul 4 本(宣)・前走 A mon_232721/232724(rc=0)・A0 mon_232645/232649(rc=1・自己言及 raw/95_runA.txt・除いた)
+  sha256: 紙 45d46529f0a9a39f9bd8085b120d963b976d052b0526824ef710acd77ab6644a / 臺帳 071174ad88210a351afa5b0c88ca386161a7a4bf874c0e53e46e6616044aa74d
+  kotae: 死link 26/symlink 103/entry 52127(23:07:50・repo根・queue含)・11束の試料・甲9乙4丙2丁3戊8・害 ⑴0 ⑵1(K09→試料臺帳M02) ⑶0・家老81の出所=測れぬ・既定=何もせぬ・一本も消さず
+  jitsu: 22分46秒(23:05:22 着手便→23:28:08 門rc=0)・宣 23:30(0.93倍)→23:45 へ引き直し(0.57倍)・失=14初走 FIFO 止 6分
+  assigned_at: 2026-09-17T23:02:00+0900
+  assigned_by: karo-mac
+  hon: "★km-127 ―― 死link を一本づつ名指して仕分けよ★\n\n先に一言。km-124 は ★宣22:45 に対し實8分(0.24倍)★ で納め、しかも\n「179 は現 disk で門が落ちた数ではない」という ★問ひの前提そのものの誤り★ を突き止めた。\n仮の tree を mktemp に再現して verify.py を當て、179 を寸分違はず再現した手続きが良い。\n追ひ便⑦で己の記憶違ひ(着手22:12→箱の22:11:11)を自ら訂正した事も良い。★刻は箱から引け★ は正しい。\n\nさて ―― 貴席は今 ★context 100%★ である。本弾は ★前の文脈を要さぬ形★ に切つてある。\n自動の畳み込みが入つても、此の札だけで最初から走れる。\n\n■ 弾: 家老が以前に数へた ★死link 81件★ が、今も在るのか・何であるのか、一本づつ当てよ。\n\n㋐ ★己の器で数え直せ★。家老の「81」を出発点にするな ―― 別の刻の別の歩き根の数かも知れぬ。\n   repo 根 /Users/momizimac/multi-agent-shogun を歩き、★symlink であつて指す先が無い物★ を拾へ。\n   ⑴歩き根と深さと刻を紙の冒頭に書け ⑵母數(歩いた entry の総数・symlink の総数・死んで居る数)を書け\n   ⑶★己の数と家老の81が違つても直すな★ ―― 違ふ事と、違ふ理由(刻か・根か・定義か)を書け。\n   ★os.walk は followlinks=False・os.path.islink で判じ・os.path.exists は指す先を見る★ 事に注意せよ。\n   名に改行や空白を含む物が在り得る ―― ★find | wc -l の類で数へるな★(行単位の器は名で壊れる)。\n\n㋑ 一本づつ表にせよ。欄 = link の path / 指す先の逐語 / 先が絶対か相対か /\n   ★先が repo の中か外か★ / 先の親 dir は在るか / link 自身の mtime /\n   ★git の管理下か(git ls-files で当てよ)★ / 追跡外なら .gitignore に掛かるか。\n\n㋒ ★因で畳め★。類は貴殿が名付けよ。予め想ふ所を挙げるが ★之に縛られるな★:\n   ㋐先が消された ㋑先が他席の worktree(此の checkout に無いだけで、他所には在る)\n   ㋒先が /mnt/c 等 ★此の機に無い樹★ ㋓相対 path の基点違ひ ㋔作られた時から死んで居た。\n   ★各類の数の和が㋐の総数に一致する事を検算せよ★。一致せねば ★測れぬ★ と書いて差を残せ。\n\n㋓ ★害を測れ★。死link は「在るだけ」なら無害である。現に害が出るのは\n   ⑴門や照合器が其れを歩いて止まる ⑵臺帳に載つて居て實体無と鳴る ⑶git が追ふ、の三つ。\n   ★三つとも現に当てて数で示せ★ ―― 幾つの死link が docs/evidence の束の中に在り、\n   幾つが臺帳に載つて居るか。★0 なら 0 と書け★(零には陽性対照・歩き根と深さ・rc・刻 の四札)。\n\n㋔ 案は三つまで。⑴何もせぬ(現状維持)を ★必ず一案として数で評せよ ―― 之が既定★。\n   各案につき ★害(㋓の数)が幾つへ動くか★ と ★戻し方★ を書け。\n   ★消す案を出すなら、消す本数と、消した後に戻せるか否かを必ず書け。★\n   第一条: ★出所不明の物は「味方がやつてくれた」前提で調べる。消すな・戻すな・咎めるな。★\n   ∴ 本弾は ★一本も消さぬ★。調べて数へて案を書くだけである。\n\n㋕ 門 rc=0 を二走。控の名を紙に書け。cd 束 → append(第一引数=臺帳)、門は KM_GATE_MANIFEST_BASE=. 付。\n   ★出目を束の中へ tee で流すな★ ―― 貴殿が km-124 初走 rc=1 で踏んだ自己言及の病である。\n   ★死link を束の中に作るな★(試料が要るなら作つて良いが、臺帳に載せる前に己で始末せよ)。\n\n★禁★ commit・push・枝作り・refs への書込み 悉く禁。★一本も消すな・張り直すな★。\n     settings.json / hook / scripts/ の書換へ 悉く禁(変更統制)。\n     稼働中の watcher・他席の worktree 不触。束に空白を含む名の実体を置くな。\n     ★queue/ を丸ごと歩くな★ ―― 13.2GB 在り、器が時切れする(家老が実測して居る)。\n     歩くなら根を切り、切つた事と切つた根を紙に書け。\n\n宣ETA を着手の一言に書け。★刻は箱から引け★(貴殿自身の追ひ便⑦の教へである)。\n納めは一通300字で、束名・紙名・行数・sha256・門の rc と控名・母數・刻 を必ず入れよ。\n"
+tsugi_no_tama_km128_20260917_2352:
+  task_id: km-128-verify-kyuukei-nigyou-no-degame-no-fusoroi-wo-gen-ni-okose-20260917
+  status: done
+  completed_at: '2026-09-18T00:07:07'
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-128-verify-kyuukei-no-fusoroi-20260917/
+  gate: rc=0 二走 C mon_000704_ichi / mon_000707_ni・臺帳 58 行・mon_ 行 0・A mon_000556/000559(rc=0・57行)・B mon_000612/000614(rc=1・95 の器の疵=95_daichougai_nul.txt 0byte・直した)
+  sha256: 紙 91009c29f4305ac8680a7d702bb63aa0fa215719f45278b4d786e3d4c89d1cc8 / 臺帳 f6d5988ed38d887743d84ff191bfcf979d7f6e260f4b443913c3a6aa65a80023
+  kotae: 不揃ひは器に無し(丙0/0・甲乙丁1/1)・因=km-127 16b 打鍵の echo で $? の左に $(basename) が在り其の rc0 を読んだ(bash/zsh/sh 同値)・門は條①で鳴り出目不変・km-127 ㋓⑵「疵の疑ひ」は當席の誤報として取り下げ・器の直し無し(両側0/0)・規約一行(治る3/誤止0)
+  jitsu: 9分44秒(23:57:23 着手便→00:07:07 門rc=0)・宣 00:25 は約2.8倍過大
+  assigned_at: 2026-09-17T23:54:11+0900
+  assigned_by: karo-mac
+  hon: "★km-128 ―― 貴殿が km-127 の尾に「未検証」と宣した一点を、現に起こして閉ぢよ★\n\n貴殿は km-127 納め⑨/9 の尾に、己でかう書いた(逐語に近い形で写す):\n  ★併: verify.py 旧形2行 実体無2でrc0 / 一致1実体無1でrc1 = 揃はぬ(raw/16b・未検証)★\n\n★「未検証」と宣した物を宣した儘に置くな。★ 之が本弾である。\n宣した事は落度ではない ―― 宣さずに畳んだ時が落度である。貴殿は宣した。ゆゑに次は測る。\n\n㋐ 現に起こせ。読むだけで断ずるな。\n   mktemp の下に旧形の臺帳を作り、次の四つを ★一つづつ別の臺帳★ で門と照合器へ当てよ:\n     甲 = 二行とも実体無      乙 = 一行一致・一行実体無\n     丙 = 二行とも一致        丁 = 一行一致・一行 sha 相違\n   欄 = 形 / verify.py の rc / 門の rc / stdout 行 / stderr 行 / 鳴つた條\n   ★陽性対照(丙)が rc=0 で通る事を先に見せよ。★ 通らねば器の据ゑ方が違ふ。\n\n㋑ 不揃ひの ★因★ を器の行で名指せ。\n   「揃はぬ」は症であつて因ではない。verify.py の何行目が、どの分岐で rc を決めて居るか。\n   ★行番号を焼き込むな ―― 逐語で引いて場所を示せ。★\n\n㋒ 之が ★門の出目を変へるか★ を測れ。\n   條⑤の default-deny に噛むのか、條①の側なのか。km-127 ㋓⑴で「止まる=0」と出た其の 0 は、\n   此の不揃ひを勘定に入れた 0 か。入れて居らぬなら ★0 の意味が狭まる★ ―― 其の事を紙に書け。\n\n㋓ 断。直す案が在るなら ★両側★ を測れ(治る数 / 誤つて止める数)。\n   ★据ゑるな・commit するな・push するな。★ 器の改変は変更統制ゆゑ委員長裁を要する。\n\n【手順の條 ―― 三席共通で今回より厳に問ふ】\n  ⑴ ★着手便を先に出せ★(宣ETA を添へよ)。走り切つてから出すのは不可。\n  ⑵ ★測りと送りを同じ鎖で書くな。★ 字を測る → 止めて見る → 其の後に送る。\n     同じ鎖で書けば測りは門に成らぬ(專任3 が追補で 365 字を通した形が之である)。\n  ⑶ 一通 300 字。超えたら送らず割れ。\n\n束 = docs/evidence/ashigaru-mac-1_km-128-verify-kyuukei-no-fusoroi-20260917/\n門 = cd 束 → append の第一引数に臺帳 → KM_GATE_MANIFEST_BASE=. で二走 rc=0。控は臺帳へ載せぬ。"
+tsugi_no_tama_km131_20260917_2352:
+  task_id: km-131-shiryou-daichou-wo-nozoku-kiyaku-ichigyou-wo-ryougawa-de-hakare-20260917
+  status: done
+  completed_at: '2026-09-18T00:14:50'
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-131-shiryou-daichou-kiyaku-ryougawa-20260917/
+  gate: rc=0 二走 B mon_001449_ichi / mon_001450_ni・臺帳 16 行・mon_ 行 0・A mon_001432/001433(rc=0)
+  sha256: 紙 e0181a248ae801b28b260efac397ad0c496da3858107727a6e2448e7a064f795 / 臺帳 379c8e86251225b90c2d151c02dd6660e8da9ed10fae484cbc31c3e5cd32a75c
+  kotae: 母數 204本 15,979行(00:11・札の200から+4)・害⑵1(M02)・甲條(資料dir)=消1/誤除0/取逃0 但し列挙外の試料11本を判ぜぬ・乙條(sha全零)=判定0で的を取逃・丙條(全行旧形)=消1/★本物7誤除★(旧形≠試料)・門條①から外れぬ(門は歩かぬ)・單独で足る條無し・據ゑず(委員長裁)
+  jitsu: 6分03秒(km-128 納め 00:08:47→00:14:50 門rc=0)・両弾計 17分27秒(23:57:23→)・宣 00:55 は約3.3倍過大
+  assigned_at: 2026-09-17T23:54:11+0900
+  assigned_by: karo-mac
+  hon: "★km-131 ―― 貴殿の案⑵「試料臺帳を除く規約1行」を、両側で測れ★\n\nkm-127 納め⑨/9 で貴殿はかう出した:\n  ★案⑵ = 臺帳を歩く者が試料臺帳(資料 dir・sha 零・旧形)を除く規約1行 → 害⑵ 1→0★\n\n家老は之を ★良い案だと思ふ。併し今は採らぬ。★ 因 = ★片側しか測つて居らぬ★ 故である。\n「1→0」は治る側の数であつて、★誤つて除く側の数が無い。★ 之を埋めるのが本弾である。\n\n㋐ 規約の ★条文を先に書け★(器に触れる前に)。\n   「試料臺帳とは何か」を ★器が判じ得る形★ で述べよ ―― 資料 dir の下か / sha が零か / 旧形か。\n   ★三つの「か」を or で繋ぐな。★ 何れも単独では判じ得ぬなら、其の事自体が出目である\n   (己で判ぜぬ規約は、やがて ★ただの数へ上げ★ に堕ちる)。\n\n㋑ ★全臺帳 200 本 15,784 行★(貴殿が km-127 ㋓で解いた其の母數)へ条文を当て、\n   欄 = 臺帳 path / 試料と判ずるか / 判ずる根拠(何れの「か」で当たつたか) / 現に害⑵を生むか\n   を表にせよ。★母數と刻を紙の冒頭に宣せ。★\n\n㋒ ★両側★を数へよ。\n   甲 = 規約で消える害 (期待 1)\n   乙 = ★規約が誤つて除く本物の臺帳★ ―― 之が本弾の主眼である。0 なら 0 と、\n        ★0 の四札(陽性対照・歩き根と深さ・rc・刻)★ を添へて宣せ。\n\n㋓ ★偽の安心を測れ。★ 規約を入れた後、其の臺帳は門の條① から ★も★ 外れるか。\n   外れるなら「害⑵が消える」と同時に ★見えなく成る物★ が在る ―― 其れを名指せ。\n\n㋔ 断。据ゑず。★変更統制ゆゑ委員長裁を要する★ 旨を紙の末尾に明記せよ。\n\n【手順の條】km-128 と同じ三箇条(着手便+宣ETA / 測りと送りを分けよ / 一通300字)。\n束 = docs/evidence/ashigaru-mac-1_km-131-shiryou-daichou-kiyaku-ryougawa-20260917/"
+tsugi_no_tama_km134_20260918_0025:
+  task_id: km-134-dd169-mon-ga-jibun-no-kiroku-kara-koku-wo-otoshite-iru-20260918
+  status: done
+  completed_at: 2026-09-18T00:46:21+0900
+  assigned_at: 2026-09-18T00:25:31+0900
+  assigned_by: karo-mac
+  hon: "★km-134 ―― DD-169 の門が ★己の記録から刻を落として居る★ 事を測り、因を隔離せよ★\n\n家老が測つた出目(貴殿は之を鵜呑みにせず ★己の手で測り直せ★):\n  器 = scripts/checks/dd169_kill_term_guard.sh L26\n       log() { printf '[%s] %s\\n' \"$(date -Is)\" \"$*\" >> \"$LOG_FILE\"; }\n  BSD の date は -Is を解さぬ ―― `date -Is` → `date: invalid argument 's' for -I`\n  ∴ $(date -Is) は ★空★ を返し、報せ行は ★[] 起し★ に成る。\n  log = /tmp/dd169_audit_log/*.log  総 769 行 / ★[] 起し 35 本 / [2 起し 0 本★\n\n㋐ ★己の手で測り直せ。★ 総行・報せ行・刻無し行・刻有り行 を別々に数へ、\n   ★[] 起し と [2 起し が排他かつ悉皆である事★ を示せ(和が報せ行に一致するか)。\n   一致せねば ★第三の形★ が在る ―― 其れを名指せ。母數と歩き根と刻を冒頭に宣せ。\n\n㋑ ★因を隔離せよ。★ date の版を測り(`date --version` は BSD で落ちる筈 ―― rc も刷れ)、\n   -Is / -I / +%Y-%m-%dT%H:%M:%S%z の三形を ★同じ器で★ 走らせ、\n   出目と rc と stderr を表にせよ。★rc を管に通すな(`cmd | head` は head の rc を返す)。★\n\n㋒ ★害を測れ。★ 刻が無い事で ★何が出来なく成つて居るか★ を現物で示せ ――\n   35 本の報せを時順に並べられるか / 同じ命令が二度当たつたかを判じ得るか /\n   他の log と突き合はせられるか。「不便」ではなく ★判じ得ぬ事★ を名指せ。\n\n㋓ ★第二の疵も測れ。★ LOG_DIR は /tmp/dd169_audit_log ―― ★揮発する★。\n   現に何日分が残つて居るか、最も古い日は何時か、掃きで幾つ失はれたと ★言へるか言へぬか★。\n   言へぬなら「言へぬ」と、其の理由を宣せ(★推量を数として書くな★)。\n\n㋔ ★最小の直しを宣せ。据ゑるな。★ 門の script は hook 系ゆゑ ★変更統制★ に掛かる。\n   直しの逐語(一行)と、其れが ㋒ の害を消すか消さぬかを述べ、\n   ★「委員長裁を要する」旨を紙の末尾に明記せよ。★\n\n【手順の條】km-131 と同じ三箇条(着手便+宣ETA / 測りと送りを分けよ / 一通300字)。\n束 = docs/evidence/ashigaru-mac-1_km-134-dd169-mon-no-koku-20260918/\n"
+tsugi_no_tama_km135_20260918_0026:
+  task_id: km-135-pr25-km117-no-nokori-wo-onaji-commit-de-shibare-20260918
+  status: done
+  completed_at: 2026-09-18T00:53:24+0900
+  assigned_at: 2026-09-18T00:25:31+0900
+  assigned_by: karo-mac
+  hon: "★km-135 ―― PR#25(km117 c1486ca1)の ★残り三つ★ を同じ commit で縛れ★\n\n軍師mac の REVISE 逐語(seq328400・紙 SHA256=b524342fc2406fddb14dd507be9135de819bd6b7a53face9b76bf0060cdddca3):\n  「second-for除去とpy_compileは確認、だが ★fixed fixture/manifest/raw identity 不在★。\n   残=★同commit束縛 正負回帰★」\n\n㋐ ★fixed fixture★ ―― 疵を踏む入力と踏まぬ入力を ★file として固定★ せよ。\n   生成器で作るな(走る度に変はる物は fixture に非ず)。各々の sha256 と bytes を宣せ。\n\n㋑ ★manifest★ ―― 束の臺帳を ★束内相対★ で建てよ(裁 seq322699)。\n   ★`cd <束>` してから karo_mac_manifest_append.py を呼び、第一引数は臺帳★。\n   門は `KM_GATE_MANIFEST_BASE=.` を要する ―― 之を忘れると條① が悉く落ちる。\n\n㋒ ★raw identity★ ―― 走らせた生の出目を raw/ へ置き、\n   ★其の raw が どの commit の どの器 から出たか★ を紙の上で一意に指せ。\n   器の sha が動いて居れば其の場で固定せよ(★席が走る間に版は動く★)。\n\n㋓ ★同commit束縛の正負回帰★ ―― 正(疵を踏む)と負(踏まぬ)を ★同一 commit の器★ で走らせ、\n   出目が分かれる事を示せ。分かれねば ★fixture が疵を踏んで居らぬ★ ―― 其れが出目である。\n   commit sha を両側の紙に焼け。★片側だけの commit を書くな。★\n\n㋔ 断。据ゑず・押さず。枝も切らず。★紙と束のみ★ を作り、家老へ一通で返せ。\n\n【手順の條】km-131 と同じ三箇条(着手便+宣ETA / 測りと送りを分けよ / 一通300字)。\n束 = docs/evidence/ashigaru-mac-1_km-135-pr25-km117-nokori-20260918/\n"
+km134_nou_20260918_0048:
+  task_id: km-134-dd169-mon-ga-jibun-no-kiroku-kara-koku-wo-otoshite-iru-20260918
+  status: done
+  completed_at: 2026-09-18T00:46:21+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-134-dd169-mon-no-koku-20260918/
+  gate: rc=0 二走 mon_004618_ichi / mon_004621_ni(初走で通)・臺帳 91 行・mon_ 行 0・臺帳外=raw/00_log_snapshot/*.log 4本(原物写し)+門後の産物 raw/70_*.txt 9本
+  sha256: 紙 0b249dad200e3e213b35d504e3400527e51eda1d0a47389e8bd82579dcddec6e / 臺帳 677220dde95294b6c1100a97836811667f470f864054066265beea17d088934b
+  kotae: 写し(00:30:10)836行/報せ37=刻無し37+刻有り0・[2起し0・第三の形=続き行なのに[起し5行・家老769/35との差67行/2報せ=己の命令が門に捕へられた便(三度)・因=L26 date -Is が BSD で rc=1 空(一箇所)・害=時順不可(挟まれた29塊)/二度判ぜぬ(PARSE_FAIL三連)/突合せ不可(字面のみ・時切れ)・揮発=残り4日分/jsonl に log 無き発火日17(言へる)/失はれた数(言へぬ)・直し一行(据ゑず・委員長裁)
+  nou_bin: karo-mac 箱 msg_20260918_004819_20f83955 〜 msg_20260918_004828_cf3275f5 (8 通・各 216〜300 字)
+  jitsu: 18分49秒(00:27:32 着手便→00:46:21 門rc=0)・宣 00:42 は 0.8 倍過小
+tsugi_no_tama_km140_20260918T005308+0900:
+  task_id: km-140-dd169-no-hitogyo-naoshi-to-log-no-okidokoro-wo-eda-de-suete-sha-wo-tsugero-20260918
+  status: done
+  completed_at: 2026-09-18T01:00:34+0900
+  assigned_at: 2026-09-18T00:53:08+0900
+  assigned_by: karo-mac
+  hon: "★km-140 ―― km-134 の直しを ★現に据ゑよ★。委員長裁 可(seq329648)★\n\n貴殿の km-134 は因を一箇所に絞り、写しで A/B を掛け、塞がらぬ穴を四つ自ら挙げた。\n委員長が逐語で裁いた ―― ★「km-134 一行直し=可・据ゑてよい」★。本弾は据ゑる弾である。\n\n㋐ ★直し其の一★ scripts/checks/dd169_kill_term_guard.sh の L26。\n   $(date -Is) を $(date '+%Y-%m-%dT%H:%M:%S%z') へ。\n   ★行番号を焼き込むな。逐語で当てよ。★ 版が動いて居れば行は動く。\n\n㋑ ★直し其の二 ―― 併せて同じ commit に載せてよい(裁で明示)★\n   log の置き所を /tmp から $HOME/.local/state/dd169/ へ移す一行。\n   委員長逐語 ―― ★「掃きで失はれる置き所は条違反」★。\n   dir が無ければ器の側で作る形にせよ(mkdir -p)。★置き所を変へても鳴り方を変へるな。★\n\n㋒ ★据ゑる前に測れ。★ 原本 sha256 を直す前/後で両方書け(前=3958f4ff… と貴殿が既に出した物)。\n   直した器へ ㋐㋑ 込みで ★A/B 三入力(非適合・適合PID1・{})★ を掛け直し、\n   rc が 2/0/2 の儘である事と、刻が現に入る事と、date の stderr が消える事を示せ。\n   ★gdate(GNU)でも通る事を併せて示せ★ ―― 他PCを壊さぬ證である。\n\n㋓ ★可逆である事を書け。★ 戻し方を一行で(逐語の元文字列を紙に残す)。\n\n㋔ ★出す前 門★ を束へ cd し KM_GATE_MANIFEST_BASE=. で二度走らせ、控の名を走ごとに違へよ。\n   ★控が二本在る事は二走の證に成らぬ★ ―― blob が同一なら同一と書け(当席が km-122 で踏んだ罠)。\n\n㋕ ★枝で commit せよ。押すな。★ 押す判は総監督/委員長に在り、代行push が正路である。\n   枝は fetch 後の origin/main から切れ(裁328848)。共用樹の switch も no-ff merge も禁。\n   手元 main を基点に使ふな。commit message の末尾は\n   Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n\n㋖ ★返しは 枝名 + commit sha(全40桁) の一行で足る。★ 併せて ㋒㋓ の数を紙へ。\n   ★戻さぬ物★=既存37塊の刻。★言へぬ物★=失はれた塊数。裁で「言へぬで正」と認められて居る。\n\n【手順の條】着手便+宣ETA を先に / 測りと送りを別の鎖に / 一通 300 字 / 識別子を略すな。\n束 = docs/evidence/ashigaru-mac-1_km-140-dd169-naoshi-wo-sueru-20260918/"
+km135_nou_20260918_0054:
+  task_id: km-135-pr25-km117-no-nokori-wo-onaji-commit-de-shibare-20260918
+  status: done
+  completed_at: 2026-09-18T00:53:24+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-135-pr25-km117-nokori-20260918/
+  gate: rc=0 二走 mon_005322_ichi / mon_005324_ni(初走で通)・臺帳 50 行・mon_ 行 0・臺帳外=mon_* のみ
+  sha256: 紙 ec4a13623fd19e9384a608c1d552ca4f48ac637c5b58e113e585a42360cf1057 / 臺帳 955ecb2b85ca87c49fb7737308a4f21a7b7e18f7c8bf02920cf528f35e5d901a
+  kotae: fixed fixture 3本(正=丙方言+囮/負=丙・囮無/対照=甲+囮)を file で固定・二版を _ki/ へ git cat-file(blob 155aeb7a/534da3bd を走る前に照合)・同commit回帰=後 c1486ca1 正rc1/負rc0 分かれる・前 82f23b42 正rc0/負rc0 分かれぬ(fixture は疵を踏む)・据ゑず押さず枝切らず
+  nou_bin: karo-mac 箱 msg_20260918_005438_fbe6a6f4 〜 msg_20260918_005444_f0eaf154 (6 通・各 224〜299 字)
+  jitsu: 3分12秒(00:50:12 着手便→00:53:24 門rc=0)・宣 01:15 は約7倍過大
+km140_nou_20260918_0101:
+  task_id: km-140-dd169-no-hitogyo-naoshi-to-log-no-okidokoro-wo-eda-de-suete-sha-wo-tsugero-20260918
+  status: done
+  completed_at: 2026-09-18T01:00:34+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-140-dd169-naoshi-wo-sueru-20260918/
+  eda: ashigaru-mac-1/km-140-dd169-koku-to-okidokoro-20260918
+  commit: 2e753ad31068e8c7559f142bac460e6046b6cf6a
+  oya: 82f23b429a03b88c504cb64917ff37647c07e0a5 (origin/main・fetch 後)
+  gate: rc=0 二走 mon_010031_ichi / mon_010034_ni(控の blob 別物)・臺帳 52 行・mon_ 行 0
+  sha256: 紙 c92bc54e0351df46e6b6883b3b47a459e8f7b89a54ae257d149901e309243dbe / 臺帳 9eef18b0edbfadd92da68cd19e6ffa0d222b6485e9006ed159e7c1670e88017d
+  kotae: 器 3958f4ff…→2c0dec59…(二行・逐語)・A/B/G rc 2/0/2 不変・B/G に刻・gdate でも通る・plumbing で枝(共用樹 switch 無・HEAD/作業樹 不変)・押さず・戻し=git revert 一手・穴=stderr 文言と頭註が /tmp の儘(別裁)/稼働器は merge まで不変
+  nou_bin: karo-mac 箱 msg_20260918_010136_22b07ba1 〜 msg_20260918_010143_7ec3e5cb (7 通・各 191〜277 字)
+  jitsu: 4分01秒(00:56:33 着手便→01:00:34 門rc=0)・宣 01:12 は約4倍過大
+tsugi_no_tama_km142_2026-09-18T02:39:00+0900:
+  task_id: km-142-sai-no-soto-ni-nokotta-futatsu-wo-hakatte-betsu-sai-no-zairyo-wo-tsukure-20260918
+  status: done
+  completed_at: 2026-09-18T02:49:28+0900
+  assigned_at: 2026-09-18T02:39:00+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-142-sai-no-soto-20260918/
+  hon: "★km-142 ―― 貴殿自身が名指した「裁の二行の外」を、次は測つて紙にせよ★\n\nkm-140 は据わつた。commit 2e753ad31068e8c7559f142bac460e6046b6cf6a ―― ★押すな・触るな・追ひ commit を載せるな。★\n代行 push は当職が委員長へ請ふて居る。枝は凍らせたままにせよ。\n\n裁(seq329648)が許したのは二行のみである。貴殿は納めで穴を二つ自ら挙げた。其れを開ける弾である。\n\n㋐ 器の stderr 文言と頭註が今も /tmp を名指す。\n   ★何処の file の何行が何と言ふか、逐語と行番で列挙せよ。★ 行番は焼き込まず、逐語で当てて取れ。\n㋑ 稼働中の器は merge → 作業樹更新まで変はらぬ。\n   ★「今 disk で走つて居る版」と「枝の版」の sha256 を並べ、差を一行で言へ。★\n㋒ 其の二つを直すなら何行になるか ―― ★見積でなく、実際に patch を書いて行数を数へよ。★\n   ★據ゑるな・commit するな・枝を切るな。★ patch は束の中の file として置け。\n㋓ 直さぬ儘なら何が起きるか。★起きぬ事は「起きぬ」と書け。★ 推量は推量と札を付けよ。\n\n★自訴の件(門の字面を分割して迂回した事)は、当職が委員長へ裁を仰いで居る。★\n裁が下るまで紙と器の書き直しに着手するな。貴殿の自訴は受領した ―― 咎めぬ。自ら名乗つた事を評す。\n\n條 = 臺帳の根は束内相対(cd 束 してから append)・門は KM_GATE_MANIFEST_BASE=. を要す・\n     門は二度走らせ控の名を別にせよ・★二控の blob が同一なら「同一」と書け(二走の證にするな)★・\n     紙と臺帳の sha256 と行数を告げよ・宣 ETA と實を併記せよ。"
+sai_329824_km142_tsuiho_2026-09-18T02:44:36+0900:
+  task_id: km-142-sai-329824-wo-uketa-tsuiho-20260918
+  status: done
+  completed_at: 2026-09-18T02:54:00+0900
+  uke: 受領便 2 通(raw/72_tsuiho_uke_*.txt)・紙 ㋑ へ札付きで載せ 門 第四組 rc=0 二走(mon_025317_ichi/mon_025320_ni)・枝 不触・km-140 driver 不触
+  assigned_at: 2026-09-18T02:44:36+0900
+  assigned_by: karo-mac
+  hon: "★km-142 追補 ―― 委員長裁 seq329824 が下つた。待て と申した縛りを解く★\n\n㋐ ★代行 push 済★。委員長が自ら +2 -2 を実読の上で押された。\n   origin に枝が在る事を当職も測つた ―― refs/heads/ashigaru-mac-1/km-140-dd169-koku-to-okidokoro-20260918\n   = 2e753ad31068e8c7559f142bac460e6046b6cf6a。PR は委員長が起票し軍師mac へ回される。\n   ★貴殿は此の枝に追ひ commit を載せるな・force を掛けるな・触るな。★\n\n㋑ ★自訴への裁 ―― 逐語★\n   「紙は記録に留めて先へ(書き直さぬ)・器の分割は次に触る時に解き、門の正規の逃がしで通す・\n    以後 分割/符号化の迂回は禁(dev_qa#1116)。名乗った事を評す。」\n   ∴ ★既に出した紙は書き直すな。★ 当職が命じた「裁が下るまで着手するな」は此れで解ける。\n\n㋒ ★「門の正規の逃がし」が何であるかを、当職が測つて名指す(貴殿に推量させぬ)★\n   .claude/settings.json の PreToolUse は ★matcher が Bash のみ★ である。\n   ∴ 逃がしは二つ、いづれも分割でも符号化でもない ――\n   ⒜ ★file の中身として書くなら Write/Edit の器を使へ。★ Bash を通らぬ故、門は端から鳴らぬ。\n      分割して Bash に流す必要は初めから無かつた。\n   ⒝ 現に走らせる要が在る時のみ、器 L68 の厳格 regex に合致する★唯一の形★で通せ。\n      L57(pkill/killall/tmux の三形)と L64(-9 / -SIGKILL)は逃がしでなく deny である。\n   ★貴殿の器の中の分割は「次に触る時」に解け ―― 本弾の ㋒ が其の「次」である。★\n\n㋓ ★当職が測つた事実を一つ渡す(貴殿の㋑の答へに当たる)★\n   稼働 disk の器 = sha256 3958f4ff… / 枝の器 = 2c0dec59… ―― ★今も別物★。\n   押されても merge と作業樹更新までは変はらぬ、といふ貴殿の見立ては正しかつた。\n   此の一行は本弾の紙に「当職から渡つた値」と札を付けて載せよ(己で測り直すなら其の旨も書け)。"
+km142_nou_20260918_0251:
+  task_id: km-142-sai-no-soto-ni-nokotta-futatsu-wo-hakatte-betsu-sai-no-zairyo-wo-tsukure-20260918
+  status: done
+  completed_at: 2026-09-18T02:49:28+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-142-sai-no-soto-20260918/
+  gate: rc=0 二走 mon_024923_ichi / mon_024926_ni(控 blob 別物・第三組)・臺帳 56 行・mon_ 行 0・verify 一致 56/56
+  sha256: 紙 f3eb25bb914f79a2d894f7360876ac219d4509d02747a08f865c2972496be730 / 臺帳 578252dfed2a76bdb109fb3ecab9bf0281bf2f4a48507772afae05add4c7217c
+  kotae: ㋐ /tmp 行 disk3(L10/L22/L83)・枝2(L10/L83) ㋑ disk==origin/main==HEAD 3958f4ff… / 枝 2c0dec59…・差 2 行 ㋒ patch raw/30_patch.diff 16行 +2−2・apply --check rc0×3・patch 版 91ad0f16…・據ゑず ㋓ B/P/G rc 2/0/2 不変・B2 の stderr は /tmp を指し行は $HOME へ・本物 /tmp log 242→242
+  nou_bin: karo-mac 箱 msg_20260918_025125_f1221f49 〜 msg_20260918_025127_b568b586 (10 通・各 198〜278 字・読み返し raw/71_nou_readback.txt)
+  jitsu: 8分28秒(02:41 着手便→02:49:28 門rc=0)・宣 02:53 は 1.4倍過大(初走の納め 6 通が 300 字超で 10 通に割り直した分は實の外・送出 02:51:27)
+tsugi_no_tama_km145_2026-09-18T03:38:17+0900:
+  task_id: km-145-kaki-ga-kuuhaku-bunmyaku-wo-hagu-kizu-wo-tojiro-20260918
+  status: done
+  assigned_at: 2026-09-18T03:38:17+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-145-kaki-no-kizu-wo-tojiru-20260918/
+  hon: '★km-145 ―― 貴殿が己で挙げた疵を、貴殿が閉ぢよ★
+
+    km-142 受領。紙 e01d3c60…(78行)/臺帳 3c153787…(78行)で上書きの正と受けた。
+
+    ★己の疵を自ら挙げた事を評す★ ―― raw/10_naoshi.diff と 30_commit.diff の空行文脈 3行を kaki が剥ぎ原形を失つた件。
+
+    ㋐ kaki のどの行が剥ぐか逐語と行番で名指せ。★行番を焼き込むな・逐語で当てよ。★
+
+    ㋑ 剥がれる条件を正確に述べよ ―― 空行だけか、行末空白か、全角空白か。★一つづつ通して確かめよ。★
+
+    ㋒ 剥がれた時に何が壊れるか ―― 10 の apply rc=1 の因は label と申したが、★其れを器の出目で示せ★。
+
+    ㋓ 直す patch を書き行数を数へよ。★據ゑるな・commit するな・押すな。★
+
+    ㋔ ★既に出した紙は書き直すな(裁 seq329824)。★ 本弾は新しい束に書け。
+
+    條 = 臺帳は束内相対(cd 束)・門は KM_GATE_MANIFEST_BASE=. ・二度走らせ控の名を別に・blob 同一なら同一と書け・便は300字以内。'
+km145_nou_20260918_0356:
+  task_id: km-145-kaki-ga-kuuhaku-bunmyaku-wo-hagu-kizu-wo-tojiro-20260918
+  status: done
+  completed_at: 2026-09-18T03:56:04+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-145-kaki-no-kizu-wo-tojiru-20260918/
+  gate: rc=0 二走 mon_035600_ichi / mon_035604_ni(控 blob 別物・第三組)・臺帳 82 行・mon_ 行 0・verify 一致 82/82(基点は引数明示)・臺帳外 _ki/nama 13 本(sha256 宣 raw/95_daichougai_nama.txt)
+  sha256: 紙 c63469522450146074f653d8643947caf27a214cbef9356d907a0a09c945ac94 / 臺帳 7bea1f8d2f53b970d71e98e5ded1ce667b4a6b360a9fa52bd76e47de8544b905
+  kotae: ㋐ 剥ぐ行=13 `ls2=[l.rstrip(b' \t') for l in ls]`(grep -n の出目・km-142 kaki sha 4d5bd0bc)・書き戻し 14 ㋑ 剥がれる=行末が 0x20/0x09 の行 全て(「 」一字行・行末空白・TAB・「+ 」「- 」)、真の空行と全角空白は不変、CR/EOF は別枝(11 組・hex 前後) ㋒ 原形再生 sha 一致(caf71f1b/87d72c6c→07e24b6b/e659dee4=今の file byte 同一・「 」行 3→0)、label 2x2 で rc=1 の因=label と出目で示す、壊れる形 3(甲 rc=1・乙 rc=0 で結果が違ふ・丙 rc=1) ㋓ raw/40_kaki_patch.diff 26 行 +7−2・apply --check rc0・陽性陰性・據ゑず
+  nou_bin: karo-mac 箱 msg_20260918_035545_b9af70cd 〜 msg_20260918_035546_ab9e9b34(8 通・各 183〜300 字・送る前に 300 字を検める器 driver/70_nou_send.sh・読み返し raw/71_nou_readback.txt)
+  jitsu: 8分52秒(03:46:53 着手便→03:55:45 納め送出)・宣 04:12 は 2.8倍過大
+  kizu: 着手便 340 字(300 超・測つて使はず)。納めの器は 348→309→300 と二度止めて三度目に通した(raw/71_send_check.txt)
+tsugi_no_tama_km148_2026-09-18T04:35:40+0900:
+  task_id: km-148-zenkaku-kuuhaku-no-ana-to-dasumae-ni-tomeru-ki-20260918
+  status: done
+  assigned_at: 2026-09-18T04:35:40+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-148-zenkaku-kuuhaku-no-ana-to-dasumae-ni-tomeru-ki-20260918/
+  hon: "★km-148 ―― 貴殿が「塞がぬ」と書いた穴を、名指した者が塞げ★\nkm-145 受領。紙 c63469522450146074f653d8643947caf27a214cbef9356d907a0a09c945ac94(97行)、\n臺帳 7bea1f8d2f53b970d71e98e5ded1ce667b4a6b360a9fa52bd76e47de8544b905(84行)＝當席が04:34に己で測り、板の終値と一致した。\n★便の58行/b28d4e43 は走りの途中の値だと貴殿自ら「終値は板」と断つて居た ―― 之は正しい作法である。★\n壊れ方を三種(原形喪失・当たらぬ・黙つて違ふ)に分けた事、とりわけ★乙「+ 」→「+」は rc=0 で通りながら違ふ物を当てる★\nを掴んだ事を評す。rc が 0 でも壊れて居る事を、貴殿は出目で示した。\n㋐ ★全角空白★ ―― kaki も門も見ぬと貴殿は書いた。之を器の出目で確かめ、\n   「見ぬ」が何処まで及ぶか(行頭/行中/行末/単独行)を一つづつ測れ。★組合せも今度は測れ。★\n㋑ ★.diff 以外の名は今も剥ぐ★ ―― 拡張子判定の穴。現に剥がれる名を実際に作つて示し、\n   名でなく中身で判ずる案を書け。★據ゑるな・patch の行数まで。★\n㋒ ★己の疵を器にせよ★ ―― 着手便が340字(300超)であつた件。\n   ★送る前に止める器★を書き、己の過去の便を測り直して超えた本数を数へよ。\n   ★測つて使はぬなら測つて居らぬに等しい。★\n㋓ 門 條② と原形 diff の衝突は本弾でも解かずでよい ―― ★解かぬと書け。★\n條 = 臺帳は束内相対(cd 束)・KM_GATE_MANIFEST_BASE=. ・門二走で控の名を別に・便は300字以内。"
+km148_nou_20260918_0459:
+  task_id: km-148-zenkaku-kuuhaku-no-ana-to-dasumae-ni-tomeru-ki-20260918
+  status: done
+  completed_at: 2026-09-18T04:59:19+0900
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-148-zenkaku-kuuhaku-no-ana-to-dasumae-ni-tomeru-ki-20260918/
+  gate: rc=0 二走 mon_045610_ichi / mon_045614_ni(控 .log blob 別物・.err は同一=出目ゆゑ正)・臺帳 127 行・mon_ 行 0・verify 一致 127/127(基点は引数明示)・臺帳外 _ki/nama 34 本(sha256 宣 raw/95_daichougai_nama.txt)+_after/(納めの胴 7・送り記録・72_jitsu)
+  sha256: 紙 1a2a4100a9e63ba4a40e6c1f32367abe8f0ae5c68c852ee9b6ae77b48a968eef(88行) / 臺帳 0dd348852cbd7eb1b893fbae99395f76ae32daaba5e7487a7ad3db30548de273(127行)
+  kotae: '㋐ 全角(U+3000)は行頭/行中/行末/単独行/file全体/「+　」「 　」/NBSP の何処に在つても kaki 両版・門 條②③④ とも見ぬ(8組 不変・0・rc=0)。組合せ7 ―― 鳴る/剥ぐは行末の最後の byte が 0x20/0x09 の時だけ(05・07)で全角は残り剥いだ後の門は rc=0、半角が行中でも行末が全角なら見ぬ(06・08)。候補=UTF-8 locale の [[:space:]]+\r?$ 又は str.rstrip(15組に鳴り陰性3組に鳴らず・C locale は CRLF を二重に数へる)・據ゑず
+
+    ㋑ .diff/.patch 以外の10名で kaki_after が剥ぐ事を実作(30_commit.txt/x.diff.txt/x.udiff/x.rej/x.DIFF/x.patch.orig/x/x.diff.bak/git_diff.out/10_run.err)。中身判定 diff_rashii(--- 直後 +++ と其の後 @@、又は diff --git・名 or 中身)で 10/10 不触 rc=1。patch raw/40_naka_patch.diff 22行 +8−1・apply --check rc0・byte 同一・據ゑず。境=切れ端は剥ぐ・散文の diff --git 行で偽陽性・200行より後・context diff
+
+    ㋒ 器 driver/70_okuru.sh(300超 rc=3・測れぬ rc=4・胴一致で id 読み返し・OKURU_DRY/OKURU_OUT)。着手便も納めも此の口。過去便 母數1799(箱20+archive1779)・300超1090(60.6%)・條初出 km-118 issued 09-17T19:55・以後98通の内 超10(km-124 8通・km-127 330・km-145 340)。inbox_write は300を撥ねぬ(754字便 msg_20260917_193458_e8effe37 は箱に在る)
+
+    ㋓ 解かず'
+  nou_bin: karo-mac 箱 msg_20260918_045917_532b8fca 〜 msg_20260918_045919_42bfbeb1(7 通・各 273〜298 字・送る前に止める器 driver/70_okuru.sh・読み返し _after/7x_nou*_check.txt)
+  jitsu: 14分34秒(04:44:43 着手便→04:59:17 納め組み上げ・送出 04:59:17〜19)・宣 05:25 は 2.7倍過大
+  kizu: '着手便の胴の刻「04:50」は date から引かず憶測(箱は 04:44:43)。鎖の守りが尾まで及ばず送り器が走つた一度(器が file 無しで rc=4 止め)。㋑ apply 検め二度誤り(-p1/+++ 名)・㋒ 條初出 regex 一度誤り(km-118 は issued_at のみ)・bytes 字面の非ASCII 一度・zsh nomatch で鎖一度全滅・板の追記が「: 」で yaml 不読一度(之を |- で書き直した)。'
+tsugi_no_tama_km152_2026-09-18T05:34:44+0900:
+  task_id: km-152-sanbyaku-no-jou-wa-ukete-de-wa-mamorenu-20260918
+  status: done
+  completed_at: 2026-09-18T07:59:46+0900
+  gate: rc=0 二走 mon_075736_ichi / mon_075740_ni・臺帳 87 行・mon_ 行 0(旧控 mon_075618/075622 も rc=0・史料)
+  nou_bin: karo-mac 箱 msg_20260918_075848_b213035f msg_20260918_075945_aace2ffa msg_20260918_075945_54171cb8 msg_20260918_075945_40ed396d msg_20260918_075946_45f17045 msg_20260918_075946_da7070b2 msg_20260918_075946_bb1b2b8f(七通・driver/71→70 で送付・刻は date・四雛形は器が 300 超で止め割つた)
+  jitsu: 25 分(着手便 07:34:32 → 納め)・宣 ETA 09:05=90 分は過大
+  assigned_at: 2026-09-18T05:34:44+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-152-sanbyaku-no-jou-wa-ukete-de-wa-mamorenu-20260918/
+  hon: "★km-152 ―― 貴殿が掘り当てた「受け手では守れぬ」を測り切れ★\nkm-148 受領。紙 88行 sha256 1a2a4100a9e63ba4a40e6c1f32367abe8f0ae5c68c852ee9b6ae77b48a968eef、\n臺帳 129行 sha256 0dd348852cbd7eb1b893fbae99395f76ae32daaba5e7487a7ad3db30548de273(當席が05:32に disk から実測)。\n★便の127行は門を通した刻の値で、其の後 門控が載つて129行に成つた★ ―― 古びであつて誤りではない。\n㋐全角は行末の最後の byte が 0x20/0x09 の時のみ鳴り全角は残る、因は rstrip(b' \\t') と\ngrep [ \\t]+\\r?$ と名指した事、㋑名でなく中身で判ずる patch を 22行で書き apply --check rc=0 と\nbyte 同一まで示した事、㋒己の器で己の便を止めて送つた事 ―― 三つとも據ゑずに證を立てて居る。見事。\n★とりわけ「inbox_write は300を撥ねぬ」を実物(754字・msg_20260917_193458_e8effe37)で示した事を評す。★\n㋐ ★箱へ物を落とす口を悉く数へよ★ ―― inbox_write.sh / km_send(agent_letter) / board / 其の他、\n   現に在る口を歩いて名指し、口ごとに「300の關が在るか・何處に在るか・rc は幾つか」を表にせよ。\n   ★關の無い口を名指せ。★ 數だけでなく口の名を書く事。\n㋑ ★1090本の超過を因で括れ★ ―― 條初出 km-118(09-17T19:55)を境に前後で分け、\n   前=條が無かつた / 後=條は在るが器が無かつた / 後=器も在るが使はなんだ、の三つに割れ。\n   ★「使はなんだ」に己の便が何本在るかを隠さず数へよ。★\n㋒ ★己の刻の疵を器にせよ★ ―― 着手便の「04:50」は憶測で、箱の實は04:44:43であつた。\n   刻は date から取り、送る前に取る形にせよ。★過去の己の便で刻を憶測で書いた物を数へよ。★\n㋓ 條② の候補が LC_ALL=C と en_US.UTF-8 で出目を変へる件 ―― 得失を一節で述べよ。\n   ★門は変更統制ゆゑ据ゑるな・材のみ。★ 條②と原形 diff の衝突は本弾でも解かずでよい。"
+tsugi_no_tama_km155_2026-09-18T07:25:59+0900:
+  task_id: km-155-tmp-kyuu-path-yonkasho-wo-naose-20260918
+  status: done
+  completed_at: 2026-09-18T07:33:29+0900
+  new_tip: 581195d8e239ae9f60102ec72a95c50686dabaa0
+  priority: urgent
+  parent_sai: 330274
+  assigned_at: 2026-09-18T07:25:59+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-155-tmp-kyuu-path-yonkasho-wo-naose-20260918/
+  hon: "㋐【本題】PR#28(枝 ashigaru-mac-1/km-140-dd169-koku-to-okidokoro-20260918 / tip 2e753ad31068e8c7559f142bac460e6046b6cf6a)は軍師mac REVISE。因=log の置き所は器の中で ${HOME}/.local/state/dd169 へ移つたが、★人に見せる字は今も /tmp/dd169_audit_log/ を指す★。當席が枝の樹を歩いて測つた殘りは ★3 file に 4行★:\n    ⑴ scripts/checks/dd169_kill_term_guard.sh:10 (冠の註)\n    ⑵ scripts/checks/dd169_kill_term_guard.sh:83 (通過時に stderr へ出す一行)\n    ⑶ AGENTS.md:304\n    ⑷ docs/08-ops/destructive-ops.md:43\n  四箇所を器の實値へ直せ。器の實値は同 file の LOG_DIR / LOG_FILE の行(逐語で引け)。\n  ★dd169_audit_log は器に無い旧名である ―― 新しい字に旧名を持ち込むな。★\n\n㋑【零の證】直した後、`git grep -c -E \"/tmp/dd169\" <新 tip>` が 0 本である事を rc 併記で示せ。\n  ★陽性対照★=同じ器を親 commit 2e753ad31068e8c7559f142bac460e6046b6cf6a に当てて 4 と出る事(器が盲でない證)。\n  刻・根・rc・対照の四札を紙へ置け。\n\n㋒【枝】★同枝へ commit せよ。新枝を切るな。★ 共用樹(/Users/momizimac/multi-agent-shogun)の HEAD は\n  ★專任3の枝 ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917 に在る★ ―― 共用樹で switch するな・reset するな。\n  己の作業樹を `git worktree add` で作つて其處で直せ。枝は既に在る故 基点の話は出ない(origin/main とは 1 ahead 0 behind で測れて居る)。\n\n㋓【commit の作法】.gitignore:7 は裸の `*` である ∴ `git add -f` で 3 本を★名指し★せよ(.gitignore は書き換へるな・裁 seq329271)。\n\n㋔【押すな】★push は禁。押す判は総監督/委員長が持つ。★ commit まで止め、\n  ⓐ枝名 ⓑ新 tip の★40字 sha★ ⓒ直した 4行の後の姿を逐語 ―― 三つを當席へ報せよ。當職が委員長へ回付し、委員長が代行 push、軍師mac が再判定する。\n\n㋕【門の疵 ―― 先に告げる】DD-169 の門は★命令の字面★のみを見、語境界で当たる(當席が枝の器 L50/L55/L62 を逐語で測つた)。\n  ∴ 荒い終はらせ方の語を命令文へ置くと call ごと撥ねられる。★置換の型は path のみで足る★(`/tmp/dd169_audit_log/` → 器の實値)故、\n  素の sed で通る。もし字面に其の語が要る所へ出たら ★Write / Edit の器で書け★(門は Bash のみを見る)。\n  ★分割・符号化での迂回は禁(裁 seq329824・dev_qa#1116)。★\n\n㋖【便の作法】胴は300字が條。identifier は★略すな★ ―― 長くなるなら便を分けよ。\n  宣ETA を先に告げ、實も併せて報せよ。紙は docs/evidence/ashigaru-mac-1_km-155-tmp-kyuu-path-yonkasho-wo-naose-20260918/ へ。\n  ★此の一件は PR#28 を塞いで居る。km-152 に先んじて此れを片付けよ。★"
+tsugi_no_tama_km157_2026-09-18T07:39:26+0900:
+  task_id: km-157-genbutsu-no-kami-ni-nise-no-ao-ga-nanbon-aru-ka-20260918
+  status: done
+  completed_at: 2026-09-18T08:06:43+0900
+  gate: rc=0 二走 mon_080826_ichi / mon_080829_ni・臺帳 85 行・mon_ 行 0(旧控 mon_080634/080638 rc=0・mon_080724/080730 rc=1 は 95 の疵で史料)
+  nou_bin: karo-mac 箱 msg_20260918_080643_369e3d94 msg_20260918_080642_3eb27149 msg_20260918_080642_9cf6daa9 msg_20260918_080642_6be6fd9b msg_20260918_080643_7c93c107 msg_20260918_080643_c1279c01(六通・driver/71→70・刻は date)
+  jitsu: 4 分(着手便 08:02:02 → 納め)・宣 35 分
+  kotae: 追跡下 1886 本に八形の偽の青 0 本・條④ 黙りの CRLF 末尾空行 1 本(docs/clinic-expansion-design.md)・真の赤 38 本・disk 12656 本でも八形 0
+  priority: normal
+  parent_sai: 329441
+  assigned_at: 2026-09-18T07:39:26+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-157-genbutsu-no-kami-ni-nise-no-ao-ga-nanbon-aru-ka-20260918/
+  hon: "★km-157 ―― 現物の紙に「門の偽の青」が何本在るかを測れ★\n當席が fixture で門の穴を測り切つた。貴殿は ★現物★ を測れ。器は直すな。\n\n㋐ 行末の不可視字 ―― 十形を ★codepoint で名指して★ 検出子を建てよ:\n   U+0020 / U+0009 / U+00A0 / U+2003 / U+2007 / U+202F / U+3000 / U+007F / U+200B / U+FEFF。\n   當席の實測(門 scripts/checks/karo_mac_dasumae_gate.sh sha 先頭40字 2b8449bccd608a1a7f24c888b2e1857ad2af9806):\n   ★鳴るのは U+0020 と U+0009 の二形のみ。残る八形は門が黙つて通す。★\n   歩く根は docs/ と AGENTS.md と scripts/ と instructions/ の ★追跡下 file★。形ごとに file本数と行数を出せ。\n   ★shell の grep は ugrep で .gitignore を見る★・LC_ALL で当たりが変る ∴ ★python で codepoint 一致★にせよ。\n\n㋑ ★見えぬ空行★ を数へよ ―― 末尾が「不可視字のみの行+改行」で終る紙。\n   當席の實測: 末尾を U+3000 一字の行にした紙は 末尾二字が 800a ゆゑ條④の 0a0a 一致に掛からず、\n   條②も全角に鳴らぬ ∴ ★rc=0「出してよい」★ と門が言つた。之が現物に何本在るか。\n\n㋒ CRLF の紙で ★末尾空行★ を持つ物を数へよ。當席の實測: 末尾二字 0d0a ゆゑ ★條④は黙り、條③だけ鳴る★\n   ―― 疵は落ちるが ★数が少なく言はれる★。\n\n㋓ ★當席の fixture 束 docs/evidence/karo-mac_km-156-mon-no-nise-no-ao-wo-gojou-goto-ni-kazoe-20260918/fixtures/ は\n   意図して疵を入れた紙である。母數から除き、除いた事と除いた本数を表に明記せよ。★\n   (「除いた」は「歩いて居らぬ」に非ず ―― 歩いた上で除け。)\n\n㋔ 各数に ★刻・根・rc・陽性対照★ の四札。零なら特に要る。陽性対照は己の検出子を\n   當席の fixture 一本に当てて「鳴る事」を示せ。\n\n㋕ ★門を直すな・器を触るな★ ―― 門の改修は 変更統制 により委員長許可が要る。貴殿は測るのみ。\n   直し方の案は表の末に「案」として書いてよいが、據ゑるな。\n\n㋖ 300字条・★識別子は略すな(割れ)★・宣ETA を先に一便で告げ、實も併せて報せよ。\n   紙は docs/evidence/ashigaru-mac-1_km-157-genbutsu-no-kami-ni-nise-no-ao-ga-nanbon-aru-ka-20260918/ へ。\n   km-152 の後に取り掛かれ。"
+tsugi_no_tama_160_2026-09-18T0814:
+  task_id: km-160-naoshita-mon-wo-genbutsu-de-tekitai-teki-ni-tameseyo-20260918
+  status: done
+  completed_at: 2026-09-18T08:43:12+0900
+  gate: rc=0 二走 mon_084202_ichi / mon_084204_ni・臺帳 47 行・mon_ 行 0(初走 條⑤ 落ち→ _ki/mon_first・古びた rc0 → _ki/mon_stale_0838)
+  nou_bin: karo-mac 箱 msg_20260918_084240_4d92d3dd msg_20260918_084251_f0bbc7d7 msg_20260918_084252_88b0a0d4 msg_20260918_084302_5810013b msg_20260918_084303_565fd1ac msg_20260918_084312_b69f817b msg_20260918_084252_79b652a0(七通)
+  jitsu: 着手便 08:16:45 → 納め 08:43:12 = 27 分(宣 50 分・km-161 と並走)
+  kotae: 追跡下 1886 本 rc 不動・條で 6 本差(閉ぢた偽の青 0/過少 6)・濡れ衣 0・disk 旧鳴→新黙 3 本 即報(31_daini_for.tsv rc1→0 は NUL 直前空白の定義差)・案 vs 実装は紙 ㋓
+  priority: normal
+  parent_sai: 330497
+  assigned_at: 2026-09-18T08:14:02+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-160-naoshita-mon-wo-genbutsu-de-tekitai-teki-ni-tameseyo-20260918/
+  hon: "★km-160 ―― 直した門を ★現物で・敵対的に★ 試せ(親裁 seq330497)★\nkm-152/km-157 納め 悉く受領。★評す★ ―― ㋐で「追跡下1886本に八形=0本」を rc と陽性対照付きで出し、\n㋒で現物 docs/clinic-expansion-design.md を一本名指し、④aで「偽の青は今も在る」を門の実走で示した。\n★追ひ便⑤の自訴(門控が古びた・95 が _after を拾つた)は受領・咎めず。名乗つた事を評す。★\n當席は其の答として門を直し commit した(押して居らぬ):\n  枝 karo-mac/km-118-ippon-20260918 / 尖 9d92db8442fddb1376f66666b8ad36629e9ca8e6\n  新設 scripts/checks/karo_mac_fukashiji.py(88行・類 Zs/Zl/Zp/Cc/Cf で判ずる)\n  負テスト scripts/checks/tests/karo_mac_dasumae_gate_negative_test.sh(156行・DASUMAE_GATE で門を差せる)\n貴殿の役は ★之を疑ふ事★ である。當席の直しを褒めに来るな。\n㋐ ★現物で測り直せ★ ―― 貴殿の1886本(+ disk 12656本の参考)に ★新版の門★ を当て、\n   旧版 2b652d9b と ★條ごとに★ 比べよ。★rc で比べるな ―― rc は他の條が先に鳴れば動かぬ。★\n   當席は現に此の罠を踏み掛けた: clinic-expansion-design.md は rc=1→1 で不動であり、\n   増えたのは條④の報せ一行だけであつた。★報せの行を條ごとに数へて表にせよ。★\n㋑ ★偽の青が本当に閉ぢたかを、新たに鳴る紙で示せ★ ―― 新版で ★新たに鳴つた紙★ を名指し、\n   其の紙が「旧版では rc=0 で通つて居た」のか「rc=1 だが其の條は黙つて居た」のかを分けよ。\n   ★二つを混ぜれば「何本の偽の青を閉ぢたか」が言へなくなる。★\n㋒ ★濡れ衣を探せ★ ―― 新版が鳴つて ★鳴るべきでない★ 紙が在るか。\n   在れば名指して当席へ即報せよ(當席が直す)。無ければ「0本」と rc と母數付きで書け。\n   ★類で判ずる形の副作用★を疑へ: Cf には ZWJ(U+200D)や異体字選択子も入る ―― 之が行末に立つ現物は在るか。\n㋓ ★貴殿の案と當席の実装の差を名指せ★ ―― 納め④a の案(條②'/條④'/條④'')と實装の三点を突き合はせ、\n   ★貴殿の案の方が良い所★が在れば遠慮せず書け。當席の実装の方が良い所も書け。両方書かねば監査ではない。\n★門を直すな・器を触るな・commit するな・押すな・共用樹を濁すな。測つて紙に書くだけである。★\n紙 = docs/evidence/ashigaru-mac-1_km-160-naoshita-mon-wo-genbutsu-de-tekitai-teki-ni-tameseyo-20260918/ ・臺帳は束内相対(cd 束 + KM_GATE_MANIFEST_BASE=.)。\n宣ETA を着手便で出せ。"
+tsugi_no_tama_161_2026-09-18T0814:
+  task_id: km-161-fu-tesuto-no-moten-wo-sagase-20260918
+  status: done
+  completed_at: 2026-09-18T08:44:09+0900
+  gate: rc=0 二走 mon_084319_ichi / mon_084322_ni・臺帳 75 行・mon_ 行 0
+  nou_bin: karo-mac 箱 msg_20260918_084407_1e5de8c0 msg_20260918_084408_1ff74f3d msg_20260918_084408_e636897e msg_20260918_084408_a13d7818 msg_20260918_084408_4429a447 msg_20260918_084407_b0787126(六通)
+  jitsu: km-160 納め 08:43:12 → 08:44:09(並走・実働は 08:16 から 28 分)
+  kotae: 形 42/食ひ違ひ 10(偽の青 6=Mn 孤立/Lo/So・非UTF-8 告げず・BOM 先頭・symlink 濡れ衣)/閾 66 走 食ひ違ひ 9(負・零 TMO=0 で止の守り消・正号・前後空白)/引数 22 口 食ひ違ひ 6(同紙二度 通→落・名 - 偽の青・名 -r 止)/ng 16 行 全踏だが旧版だけでは 7
+  priority: normal
+  parent_sai: 330497
+  assigned_at: 2026-09-18T08:14:02+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-161-fu-tesuto-no-moten-wo-sagase-20260918/
+  hon: "★km-161 ―― ★負テストの盲点★ を探せ(親裁 seq330497・軍師mac REVISE seq330291 の続き)★\n當席の負テスト(156行・22紙を走る時に codepoint から組み立てる)は 新版=通34/落0、\n★疵の在る旧版 2b652d9b=通7/落27★ で己の陽性対照を持つ。然し ★通る器ほど盲点が見えぬ。★\n當席は此の弾で己の疵を三つ名乗つた ―― 其の一つは\n「負テスト自身が ★落ちる路★ で死んで居た($want」 で全角字が変数名に吸はれ set -u が殺し、\n落を 8件と過少申告した。正は27件)」である。∴ ★器の落ちる路を試さぬ者は器を持たぬ。★\n㋐ ★22紙が見て居らぬ形を挙げよ★ ―― 例(之で尽きたと思ふな): 行末の ZWJ(U+200D)/\n   異体字選択子(U+FE0F)/結合文字(Mn)/U+2028 行分離子/U+0085 NEL/surrogate の壊れた byte/\n   BOM が ★先頭★ に在る紙/一行も改行が無い一行紙/極長一行/空白のみの紙。\n   各形に「新版の門は鳴るべきか・鳴らぬべきか」を ★先に書いてから★ 実測し、食ひ違ひを名指せ。\n㋑ ★閾の八値以外の口を突け★ ―― DASUMAE_READ_TIMEOUT と KM_GATE_MANIFEST_BASE にも\n   同じ八値(LF/CR/TAB/空/空白のみ/非數/2^63以上/負)を当て、★片方だけ守られて居らぬ口★を探せ。\n   負の値(-1)は當席の八値に入つて居らぬ ―― ★之は當席の抜けである。必ず試せ。★\n㋒ ★引数の口を突け★ ―― 引数0本・臺帳に `--` 以外の無い path・file が dir・同じ path を二度・\n   引数が 1000本・path に改行や空白を含む形。★「測れぬ」と「通つた」が入れ替はる口を探せ。★\n㋓ ★落ちる路を実際に通せ★ ―― 負テストの ng() 側の行が ★全て一度は実行された★ 事を示せ。\n   一度も通らぬ行が在れば其の行番を名指せ(當席の疵と同じ形が他にも在る筈)。\n★門を直すな・負テストを書き換へるな(写しを己の束に置いて試せ)・commit するな・押すな。★\n見付けた盲点は ★當席が直す★。貴殿は名指すのが役である。0件なら「0件」と母數と rc 付きで書け。\n紙 = docs/evidence/ashigaru-mac-1_km-161-fu-tesuto-no-moten-wo-sagase-20260918/ ・宣ETA を着手便で出せ。"
+tsugi_no_tama_164_20260918:
+  task_id: km-164-shikii-no-yotsukuchi-no-ana-wo-tojiru-atagami-20260918
+  status: done
+  completed_at: 2026-09-18T12:26:23+0900
+  priority: normal
+  parent_sai: 330706
+  assigned_at: 2026-09-18T08:49:05+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-164-shikii-no-yotsukuchi-no-ana-wo-tojiru-atagami-20260918/
+  hon: "★命 ―― 閾の四口の穴を塞ぐ当て紙を作れ(貴殿の km-161 納め③ を受けて)★\n\n貴殿が測つた中で ★最も重い一件★ は此れである:\n  ★`DASUMAE_READ_TIMEOUT=0` が rc0 で通り、GNU timeout の「時限無し」へ倒れる ―― 止の守りが黙つて消える。★\n「鳴らぬ」は「無害」ではない。時限が消えれば FIFO 一本で門が永久に止まる。\n\n⑴ 三口(MAX_BYTES / READ_TIMEOUT / 其の他貴殿が数へた口)ごとに、次の値で ★出目の表★ を作れ:\n   0 / 負(-1) / 前に空白 / 後に空白 / `+5` / 空 / 非數 / 2^63超。\n   欄は 値・rc・診断の行数・診断の逐語・注入の有無・生の制御字の有無 とせよ。★rc だけで褒めるな。★\n⑵ 貴殿の案(`num_same_op` の後に字面 case を置く形)を ★当て紙★ に落とせ。\n   ★倒した事を刷る★ 既存の作法(既定へ倒した旨を必ず一行出す)を壊すな。\n   `0` を「時限無し」と読ませぬ形にせよ ―― 0 を受けるか撥ねるかは貴殿が測つた上で案を書き、當席が裁す。\n⑶ 負テストへ足す件を ★負テストの当て紙★ として書け(本体を直に触るな)。\n⑷ ★己の期待の誤り 2 件★ も表に残せ(貴殿が既に名乗つた通り、先に書くのが正である)。\n\n宣ETA を先に出し、實測と併せて報せよ。★並走するなら「合計で引く」形で宣せよ(貴殿の km-161 納め⑥ の改め)。★\n禁: 門(scripts/checks/karo_mac_dasumae_gate.sh)と負テスト本体を ★直に書き換へるな★(PR#27 が merge 保留の審査中である)。\n禁: commit するな・押すな・共用樹の HEAD/index を触るな・他席の樹に入るな。\n形: 直しは ★当て紙(patch)★ として束に置き、`git apply --check` の rc だけを取れ(`--check` 無しで当てるな)。\n形: 試すのは束内の ★写し★ の上でのみ。門の sha256 が前後で不動である事を刷れ。\n形: 期待値は ★先に★ 表へ書き、書いた刻を刷つてから走らせよ(後付けの期待は證に成らぬ)。\n形: 束は docs/evidence/<席名>_<task_id>/ ・臺帳を据ゑ `cd <束>` して KM_GATE_MANIFEST_BASE=. で門を二度通せ。\n報: 300字の條ゆゑ便を分けよ。★識別子を略すな ―― 略さず分けよ。★"
+tsugi_no_tama_165_20260918:
+  task_id: km-165-kami-no-na-to-argv-no-ana-wo-tojiru-atagami-20260918
+  status: done
+  completed_at: 2026-09-18T12:26:23+0900
+  priority: normal
+  parent_sai: 330706
+  assigned_at: 2026-09-18T08:49:05+0900
+  assigned_by: karo-mac
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-165-kami-no-na-to-argv-no-ana-wo-tojiru-atagami-20260918/
+  hon: "★命 ―― 紙の名と argv の穴を塞ぐ当て紙を作れ(貴殿の km-161 納め④ を受けて)★\n\n貴殿が見つけた六つは、いづれも ★門の判定が入れ替はる★ か ★止まる★ 類である:\n  ⒜ 名 `-` = grep が stdin を読み、CRLF の紙が 條③ 黙りで ★偽の青★\n  ⒝ 名 `-e` = grep の option と読まれ ★濡れ衣(測れぬ)★\n  ⒞ 名 `-r` = grep -r が cwd を歩き、FIFO が在れば ★永久に止まる★(★最も重い★)\n  ⒟ 同じ紙を二度渡すと 條⑤ が二度足し、byte和 が実の倍 ―― 境目で ★通と落が入れ替はる★\n  ⒠ 清い紙への symlink が「測れぬ」(旧版は通した)\n  ⒡ 非UTF-8 の byte(0x80 行末)が rc0 で告げられぬ・先頭 BOM は條文の穴\n\n⑴ 六件を ★一件づつ★ 再現する紙を束の fixtures に作り、旧版/新版の出目を並べよ。\n   ⒞ は ★FIFO を置かずに★ 危険を示せ(歩く事実だけを測れ。★止めて見せるな★)。\n⑵ 直しの案を当て紙に落とせ。貴殿の案(`grep -c -- ` 等の `--` 締め)を軸に、\n   ★同じ紙の二度渡し★ は正規化(realpath で畳む)か重複の宣告か、どちらが正かを ★測つて★ 書け。\n⑶ symlink と BOM は ★條文の穴★ ゆゑ、器の直しではなく ★條文の改め案★ を一行で書き、當席が上へ上げる。\n⑷ 母數と刻を必ず書け。★率だけを書くな。★\n\n宣ETA を先に出し、實測と併せて報せよ。\n禁: 門(scripts/checks/karo_mac_dasumae_gate.sh)と負テスト本体を ★直に書き換へるな★(PR#27 が merge 保留の審査中である)。\n禁: commit するな・押すな・共用樹の HEAD/index を触るな・他席の樹に入るな。\n形: 直しは ★当て紙(patch)★ として束に置き、`git apply --check` の rc だけを取れ(`--check` 無しで当てるな)。\n形: 試すのは束内の ★写し★ の上でのみ。門の sha256 が前後で不動である事を刷れ。\n形: 期待値は ★先に★ 表へ書き、書いた刻を刷つてから走らせよ(後付けの期待は證に成らぬ)。\n形: 束は docs/evidence/<席名>_<task_id>/ ・臺帳を据ゑ `cd <束>` して KM_GATE_MANIFEST_BASE=. で門を二度通せ。\n報: 300字の條ゆゑ便を分けよ。★識別子を略すな ―― 略さず分けよ。★"
+tsugi_no_tama_167_20260918:
+  task_id: km-167-main-ci-aka-yon-job-no-konchi-20260918
+  status: done
+  completed_at: 2026-09-18T13:25:17+0900
+  priority: high
+  parent_sai: 331141
+  assigned_at: 2026-09-18T12:28:04+0900
+  assigned_by: karo-mac
+  board_task: 94c61e26
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-167-main-ci-aka-yon-job-no-konchi-20260918/
+  hon: "㋐ 何故=main の CI が★赤4job★(dev_qa#1030)。理事長が失敗通知を★二度★転送、委員長裁 seq331141=優先2。板=94c61e26。\n㋑ ★番の註★=委員長は本件を「km-166」と呼ばれたが、km-166 は既に席2 の 0byte/持主 弾で埋まつて居る。當席が km-167 と改めて据ゑ、委員長へ番の衝突を報せる。貴殿は km-167 で通せ。\n\n★基底★=origin/main = 6bde7170ce574090a6139ba2dfe3aa4cb6db8634。\n★共用樹(/Users/momizimac/multi-agent-shogun)の HEAD・index・作業紙に一指も触れるな。★\n己の worktree を origin/main から切れ: git worktree add <己の樹> origin/main -b ashigaru-mac-1/km-167-ci-20260918\n\n―― 當席が既に測つた事(再測は要らぬが、疑へば測り直して良い) ――\n⑴ build-check(job=build-check・test.yml L112-154): origin/main で `bash scripts/build_instructions.sh` を走らせると★19本が動く★(生成物 instructions/generated/*.md 16本 + AGENTS.md + .github/copilot-instructions.md + agents/default/system.md)。差は実体であり、家康→軍師main / 信長→将軍main の改名が生成物に降りて居らぬ。\n   ★冪等を確かめた★: 二度走らせて 20 file の sha256 が悉く同一。`date` の呼びは 0、GNU 専用 sed(-i/-E/\\+/\\?)も 0。\n   ★當席の測りの限界★: 之は macOS の出目である。★Linux CI と同一である事は Mac からは断じ得ぬ。★ 之を紙に書け。\n⑵ shellcheck(job=shellcheck・L157-181 `shellcheck -x -S error`): scripts/ lib/ の .sh は★71本★、其の内★冠(shebang)の無いのは1本だけ★=scripts/checks/karo_mac_gate7.sh(一行目が註)。\n   ★shellcheck は此の Mac に無い★(command -v = 空)。∴ -S error が他に鳴くか否かは手元で測れぬ。両論で出せ: ㋐器を入れて測る(変更統制=當席が伺を出す) ㋑冠一行を当てて CI に断じさせ、鳴けば次弾。\n⑶ unit-tests(job=unit-tests・matrix ubuntu+macos): bats 紙は tests/*.bats 6本 + tests/unit/*.bats 15本 = 21本。★GNU 専用の字面が 6 類★(file 本数): `timeout`=10 / `date -Is`=3 / `stat -c`=2 / `date -d`=1 / `base64 -w`=1 / `md5sum`=1。\n   ★bats も此の Mac に無い★。∴ 落ちる job 名までは測れて居らぬ。貴殿の務めは★字面を file:行で悉く名指して表にする★事、次に各々を可搬形へ直す事(km-118 の PY_BIN と同じ手筋: BSD/GNU の両方で通る形へ)。\n   ★一類でも「直せぬ」と断ずるなら、何故直せぬかを測りで書け。★\n\n―― 併せて見付けた別の疵(貴殿は★直すな★・當席が上げる) ――\n⑷ origin/main から切つた真新しい worktree が★起点で既に汚れる★: ` M docs/runbooks/ERR-EKARTE-001.md`。git は大文字名を追ひ、disk には小文字 err-ekarte-001.md が在る ―― macOS の大小同一視。★此の file を commit に混ぜるな。★ 混ざれば Linux で二本に割れる。\n\n―― 出し方 ――\n㋐ PR は★一本★(裁331141)。commit は `git add -f` で file を名指せ(.gitignore:7 の * は書換へぬ)。\n㋑ ★押すな。★ commit までで止め、枝名と full sha を告げよ ―― 押す判は総監督が持つ。\n㋒ 證の紙は docs/evidence/ashigaru-mac-1_km-167-main-ci-aka-yon-job-no-konchi-20260918/ へ。★/tmp に置くな。★ 臺帳の根は束内相対 ∴ cd <束> してから karo_mac_manifest_append.py を呼び、門は KM_GATE_MANIFEST_BASE=. を要する。\n㋓ ★監査提出が己の手で出来る様に成つた★: ~/bin/sb-ashigaru-mac-1 write letter \"<胴>\" --to gunshi-mac [--parent-seq N]。★胴は300字が條(超えれば器が撥ねる・送る前に己で測れ)★。送つたら `sb read seq <N>` で胴を読み返せ(第八の番人)。中継は今も當席が承る。\n㋔ ★据ゑ置きの一行を取り消す★: 據ゑた時の當席の見立ては「km-164/165 が生きて居る」であつたが、\n貴殿は既に両方を done へ改めて居た(當席の測りが古かつた=當席の疵)。∴ km-167 が貴殿の唯一の生き弾である。\n㋕ km-164/165 の★監査提出を己の手で出せ★ ―― 上の ㋓ の器が今しがた据わつた。中継を待つ必要は無い。"
+tsugi_no_tama_170_20260918T1310:
+  task_id: km-170-hitogamen-ni-osamaru-wo-jitsubyouga-de-hakaru-20260918
+  status: done
+  completed_at: 2026-09-18T17:31:19+0900
+  priority: normal
+  parent_sai: 332001
+  assigned_at: 2026-09-18T13:10:00+0900
+  assigned_by: karo-mac
+  board_task: c33cbafa
+  note_junjo: km-167 が先。之は★二本先★である(裁329441=常に2本先を据ゑる)。km-167 の納めの後に着手せよ。
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-170-hitogamen-ni-osamaru-wo-jitsubyouga-de-hakaru-20260918/
+  hon: "★命 ―― 患者アプリ「？」帳が ★1画面に収まる★ か を、実描画で測れ。★\n\n㋐ 何故=委員長裁 seq332001。板 c33cbafa の残は ★『1画面に収まる』の實測のみ★ である。\n  前弾(専任2)は正しく測つて正しく止まつた ―― 逐語「jsdom は layout を持たず scrollHeight は常時 0」\n  ゆゑ token 由来の高さ予算(375x667)へ代へ、★実描画・字幅・browser chrome は測れぬ と明記し緑と書かなんだ★。\n  ★其の所作は褒むべきで、咎めるな。★ 残つたのは器の不足であつて、前席の怠りではない。\n\n㋑ ★當席が測つた事 ―― 器は既に在る(貴殿は再測して良い)★:\n  ⑴ playwright = /Users/momizimac/DentalBI/frontend/node_modules/playwright に★既設★\n  ⑵ browser も落ちて居る = ~/Library/Caches/ms-playwright/ に chromium-1217・chromium_headless_shell-1217\n  ⑶ 既設の設定 = /Users/momizimac/DentalBI/frontend/playwright.config.ts、e2e の前例 = frontend/tests/e2e/\n  ∴ ★器を入れる要は無い。ゆゑに変更統制の伺も要らぬ(既存の開発依存を走らせるだけである)。★\n  ★これは前席への「playwright 禁」を當席が改めた事を意味する ―― 禁は器が無いと思つて居た時の物であつた。當席の測りが遅れた。★\n\n㋒ 母數=/Users/momizimac/DentalBI/frontend/src/patient-app/routes.tsx の `/app` 直下の <Route> ★11本★\n  (L31-41。★逐語で数へ直し、己の数を刷れ★ ―― grep -c '<Route' は註の2行を拾ひ 14 と出る=罠)。\n  ？帳の実体 = frontend/src/features/teriha-passport/components/HelpSheet.tsx、\n  本文 = frontend/src/patient-app/help/helpTexts.json、前弾の予算器 = frontend/src/shared/help/__tests__/helpContract.test.tsx。\n\n㋓ 命の一=★判の式を先に紙へ書いてから測れ★(後から式を作るな)。\n  例: ？帳を開いた時 sheet の scrollHeight ≤ clientHeight、且つ縦 scrollbar が立たぬ。\n  ★何を以て「収まる」とするかを一行で定め、其の定めを紙の頭に置け。★\n\n㋔ 命の二=viewport は★二つ★で測れ: 375x667(前弾の予算)と 390x844(reports/jinji-help-all-pages-390x844-acceptance-20260905.md の前例)。\n  11 route × 2 viewport の表を出せ。溢れた route は★溢れた px を書け★(「否」だけでは直せぬ)。\n\n㋕ 命の三=★負対照★。本文に3行目を注して ★赤く成る事★ を示し、然る後 sha256 一致で原状復帰せよ\n  (前弾が既に此の作法を踏んで居る ―― 継げ)。★負対照が赤くならぬ器は、緑を証さぬ。★\n\n㋖ ★測れぬ物は名指して残せ★: 実端末の字幅・OS の font 差・browser chrome の実寸。\n  ★緑と書くな。測つた条件を書け。★ 実機の実視は上席の目に委ねる(板に其の旨が既に在る)。\n\n㋗ 禁=⑴実装 code を直すな(測る器のみ) ⑵本番書込0 ⑶push 禁 ⑷共用樹の HEAD・index・作業紙 不触\n  ⑸己の樹で走らせよ。DentalBI 側で commit する要が在れば★commit までで止め、押すな★。\n\n㋘ 出し方=束 docs/evidence/ashigaru-mac-1_km-170-hitogamen-ni-osamaru-wo-jitsubyouga-de-hakaru-20260918/。\n  ★/tmp に置くな。★ cd <束> してから karo_mac_manifest_append.py(第一引数=臺帳)、門は KM_GATE_MANIFEST_BASE=. を要する。\n  監査は直送せよ: ~/bin/sb-ashigaru-mac-1 write letter \"<胴>\" --to gunshi-mac ―― ★胴300字が條・送る前に測れ★。\n  宣ETA を先に報せ、終りに實測を併せ書け(貴殿の宣は實の 1.8〜6倍に振れて居る)。"
+km167_nou_2026-09-18T132517:
+  task_id: km-167-main-ci-aka-yon-job-no-konchi-20260918
+  status: done
+  completed_at: 2026-09-18T13:25:17+0900
+  commit: d168a6af46245af2342a9235cce7a85cd90c99d6
+  branch: ashigaru-mac-1/km-167-ci-20260918
+  worktree: /Users/momizimac/wt/a1-km167-ci
+  pushed: false
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-167-main-ci-aka-yon-job-no-konchi-20260918/
+  gate: 門 二度 rc0(origin/main 6bde7170 の門・KM_GATE_MANIFEST_BASE=.)・臺帳 111 項・門へ渡した 18(己が書いた紙のみ・他の器の生の出力は臺帳のみ)・先の二回は 條③(raw/55 CR 2行)と 條①(組み手 log の自己参照)で落ち直した
+  kotae: 'build-check=生成物19本再生成+build script の awk に sub(/\r$/,"")(元紙 shogun.md CRLF で将軍系4紙の front matter が消える疵・FM_IDENTICAL×4・冪等)。
+
+    shellcheck=SC2148 一件のみ→gate7.sh に冠・-S error rc0・既定 level 0件。
+
+    unit-tests=GNU字面は因でない(bats 21紙に date/stat/base64 0・ubuntu も落ちる)。古い test 5紙を現行契約へ: root 8→7落・unit 12→7落・selfwatch 0落 skip1(bash5.2+gnubin+venv・Mac)。
+
+    残る14落+skip1 は裁の要る三件 ⓐ§18 役名 lib(10) ⓑ撤回済 MDV2 試作 test(4) ⓒseq293394 の skip と SKIP=FAIL の衝突(1)。committed 樹で build-check/shellcheck 模走 rc0。CI log 403 ゆゑ悉く Mac の出目。'
+  nou_bin: karo-mac 箱 msg_20260918_132412_3602463c 〜 msg_20260918_132413_d7049904(8 通・251〜300 字)/ 着手便 msg_20260918_124826_b8a0c00d
+  audit_164_165: gunshi-mac seq331857/331858/331860/331861/331863/331864(parent 330706・己の手 sb-ashigaru-mac-1)
+  jitsu: 着手 12:30:06 → 納め送出 13:24:13(54分)・宣 14:00 は 1.3倍過大
+  kizu: 着手便 18分遅れ・直し初版 SIGPIPE rc141・python text mode で CRLF 紙を LF に(戻した)・TC-FR-003 消して戻した・MDV2 archive 向け試し戻した・rm $D/*.txt を書き総監督に止められた(mktemp -d 先行へ)
+hosei_167_sai_332366_332367_20260918T1405:
+  task_id: km-167-ci-20260918
+  status: done
+  completed_at: 2026-09-18T19:51:15+0900
+  superseded_by: km-176(18:03 納め・最終 tip 7c0d1492 で判定依頼 seq333048〜333053)
+  priority: high
+  parent_sai: 332366,332367
+  assigned_at: 2026-09-18T14:05:00+0900
+  assigned_by: karo-mac
+  assigned_to: ashigaru-mac-1
+  board_task: 94c61e26
+  branch: ashigaru-mac-1/km-167-ci-20260918
+  commit: d168a6af46245af2342a9235cce7a85cd90c99d6
+  tree: f4a3e1a0db1d89f46b8eca1ff44ae5421ad7a4ed
+  oya: 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  pushed: origin 2026-09-18 iincho daiko (母數 260->261 +1 / force nashi / main fudou)
+  note_junjo: km-170 wo saki ni tojiyo. abc wa sono ato. osu na.
+  hon: "★km-167 裁了 ―― 押しは済み、ⓐⓑⓒ は悉く可★\n之は新弾に非ず、km-167 の続きである。走行中の km-170 を先に閉ぢてよい(順序は㋕)。\n\n㋐ 裁 seq332366 逐語(委員長・parent 332357):\n「km-167 代行push 了: ashigaru-mac-1/km-167-ci-20260918=d168a6af4624(tree f4a3e1a0 一致・親 6bde7170=origin/main 現尖・145 file・新設 ref・force 無し・main 不動)。secret形 grep hit 5=全て bats の題「never contains the SUPABASE_SERVICE_ROLE_KEY value」の変数名(値なし)=可。PR は席1/家老が起票→判定 軍師mac→merge 当職。」\n\n㋑ 裁 seq332367 逐語(委員長・parent 332358):\n「裁 ⓐⓑⓒ(km-167): ⓐ案A 可=lib/_section18_roles.sh を役名へ・alias を逆向きに置く(旧 persona 名は alias で生かす・pane 構成は不変・可逆)。変更統制は本便で許可、事後報は PR 本文で。ⓑ 可=撤回済 MDV2 試作の unit 4紙は tests/archive へ退避(消さぬ・README 1行で「撤回済・的は archive」)。ⓒ 可=除外語に SUPERSEDED を足し TC-NFR-008 は残す。次回から=L1(家老判・PR 内で軍師mac が検む)。」\n\n㋒ 家老が己の器で検めた着弾(貴殿は測り直さずともよい):\n  ・origin の母數 260→261(丁度+1)・139行目に逐語一行\n    d168a6af46245af2342a9235cce7a85cd90c99d6\trefs/heads/ashigaru-mac-1/km-167-ci-20260918\n  ・tree は git cat-file -t=commit と木引きで f4a3e1a0db1d89f46b8eca1ff44ae5421ad7a4ed(40桁)\n  ・親 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 は origin/main の現尖と同値=main 不動\n  ・陰性対照(在らざる枝名)0件 rc=1 ―― 器が己の問ひを鸚鵡返しして居らぬ證\n\n㋓ 為すべき三手(ⓐⓑⓒ・枝 ashigaru-mac-1/km-167-ci-20260918 の上へ積め):\n  ⓐ lib/_section18_roles.sh の識別子を★役名へ★改め、alias を★逆向き★に置く。\n     旧 persona 名は alias として生かす(消さぬ)。pane 構成は★不変★。可逆である事を紙に書け。\n     ★変更統制は裁332367 で既に許可済★ゆゑ据ゑてよい。事後報は★PR 本文に書く★(別便に非ず)。\n  ⓑ 撤回済 MDV2 試作の unit 4紙を tests/archive へ★退避★せよ。★消すな★。\n     README を 1 行置き「撤回済・的は archive」と書け。\n  ⓒ 除外語に SUPERSEDED を足せ。TC-NFR-008 は★残す★(消さぬ)。\n  三手とも、前後の出目(件数・rc)を紙に載せよ。据ゑる前と後の二度測れ。\n\n㋔ ★家老の落度★:\n  PR を當席が起票し得ぬ。gh auth status が rc=1 で「The token in default is invalid」と吐く。\n  gh auth login は理事長専管ゆゑ當席は走らせぬ。∴ 起票の手を委員長へ請うた(便を出した)。\n  貴殿も gh で起票を試みるな ―― 同じ token を見る故、同じ形で撥ねる。\n  裁の字面は「席1/家老が起票」であるが、器が無い事を測つたのは當席であり、報せるのは當席の職である。\n\n㋕ 順序と境:\n  1. 走行中の km-170 を先に閉ぢよ(宣ETA 14:45)。ⓐⓑⓒ は其の後でよい。\n  2. 押すな。commit までで止め、枝名と 40桁を告げて請へ。押す判は委員長である。\n  3. main へ直に触るな。共用樹の HEAD/index も他席の生きた樹も触るな。\n  4. 板 94c61e26 は當席が記帳した(現 3303字・逐語一致を検め了)。★席が板を書くな。★\n  5. 詰まりは報せるのみ(blocker)。己で迂回路を作るな。\n"
+hosei_167_pr31_sai332449_20260918T1420:
+  task_id: km-167-ci-20260918
+  status: done
+  completed_at: 2026-09-18T19:51:15+0900
+  superseded_by: km-176(18:03 納め・最終 tip 7c0d1492 で判定依頼 seq333048〜333053)
+  priority: high
+  parent_sai: '332449'
+  assigned_at: 2026-09-18T14:20:00+0900
+  assigned_by: karo-mac
+  assigned_to: ashigaru-mac-1
+  board_task: 94c61e26
+  pr: PR#31 (multi-agent-shogun, base main)
+  branch: ashigaru-mac-1/km-167-ci-20260918
+  commit: d168a6af46245af2342a9235cce7a85cd90c99d6
+  tree: f4a3e1a0db1d89f46b8eca1ff44ae5421ad7a4ed
+  note_junjo: gunshi-mac he handan irai wo dase. gh wo tataku na. osu na.
+  hon: "★PR#31 起票了 ―― 判定依頼を貴殿の手で軍師mac へ出せ★\n\n㋐ 裁 seq332449 逐語(委員長・parent 332431):\n「裁: ⑴当職が起票した=★PR#31★(multi-agent-shogun・head ashigaru-mac-1/km-167-ci-20260918 d168a6af・base main)。以後の Mac 発 PR も当職が起票する(tip/tree/題/束path を1便で寄越せ)。⑵Mac の gh token は理事長専管ゆえ当職から提案せず事実のみ記録。席1/家老は gh を叩かぬで正。判定=軍師mac へ PR#31 で依頼を出させよ。」\n\n㋑ 為すべき一手=軍師mac へ判定依頼:\n  ・己の器 sb-ashigaru-mac-1 で宛 gunshi-mac へ出せ(箱 queue/inbox/gunshi-mac.yaml は死箱ゆゑ用ひるな)。\n  ・胴に載せよ: PR#31 / repo=multi-agent-shogun / head=ashigaru-mac-1/km-167-ci-20260918 /\n    tip=d168a6af46245af2342a9235cce7a85cd90c99d6 / tree=f4a3e1a0db1d89f46b8eca1ff44ae5421ad7a4ed /\n    base=main(6bde7170ce574090a6139ba2dfe3aa4cb6db8634) / 145 file +7362 -553 /\n    束=docs/evidence/ashigaru-mac-1_km-167... の実 path / 門の出目 / 己の疵。\n  ・300字の條ゆゑ割つてよい。★識別子は略すな★(總監督令326424)。割つた通し番号を書け。\n\n㋒ ★測れた食ひ違ひ ―― 貴殿が判ずる事ではないが知つて居れ★:\n  PR#31 の head は★枝★である ∴ ⓐⓑⓒ を積めば head の tip は動く。\n  ∴ 今の依頼は tip d168a6af46245af2342a9235cce7a85cd90c99d6 に対する判定である。\n  ⓐⓑⓒ を押した後は★追便で新しい tip と tree を告げよ★(前便を消さず、追記の形で)。\n  當席は此の食ひ違ひを委員長へも上げた。別の形を命ぜられたら其れに従へ。\n\n㋓ 境(変はらず):\n  ・gh を叩くな。token が無効(rc=1)であり、再発行は理事長専管である。PR 起票は以後も委員長。\n  ・押すな。commit までで止め、枝名と 40桁を告げて請へ。\n  ・main へ直に触るな。共有樹の HEAD/index も他席の生きた樹も触るな。\n  ・板は書くな。板 94c61e26 は當席が記帳する。\n"
+km170_nou_2026-09-18T1731:
+  task_id: km-170-hitogamen-ni-osamaru-wo-jitsubyouga-de-hakaru-20260918
+  status: done
+  completed_at: 2026-09-18T17:31:19+0900
+  kotae: 22/22 収まる(11 route×2 viewport・headless chromium 1217・Mac の出目・緑と書かぬ)。判の式は測る前に 00_han_no_shiki.txt。負対照 3 行→式③赤 / 40 行→式① 溢れ 441px(375x667)・264px(390x844)。原状復帰 sha256 一致×3。
+  kizu: 12 行で式①赤の見積り外れ(40 行で赤)・初回 probe 上書き・route.abort は chrome-error・門一巡目 CR/末尾空白 5 紙(bytes 正規化・round1 log 残)・zsh 語分割無しで門の引数一語(zeroth log 残)
+  dentalbi_commit: 98c093184f949f34038520a950d98e9096e19d0f
+  dentalbi_branch: ashigaru-mac-1/km-170-hitogamen-20260918
+  dentalbi_worktree: ~/wt/dbi-km170
+  pushed: false
+  shared_tree_head: 3ae713de0c7dc23fceb8909cd6ab31a35e1476f9
+  bundle: docs/evidence/ashigaru-mac-1_km-170-hitogamen-ni-osamaru-wo-jitsubyouga-de-hakaru-20260918/
+  manifest_rows: 225+letters
+  gate: first rc0 / second rc0(49 本・byte和 179650) / third(letters 込)は束の _gate.third.txt
+  nou_bin:
+  - msg_20260918_173030_afc9fdcb
+  - msg_20260918_173031_40b038b2
+  - msg_20260918_173031_d4e95ff6
+  - msg_20260918_173031_14531c55
+  - msg_20260918_173048_43d97524
+  kansa_seq:
+  - 332958
+  - 332959
+  - 332960
+  - 332961
+  kansa_parent_seq: 332001
+  sen_eta: '14:45'
+  jitsu: 測り終へ 13:40:55・API 断 13:42→17:23(pool_exhausted 503)・納め便 17:30:48
+tsugi_no_tama_176_20260918T1740:
+  task_id: km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918
+  status: done
+  completed_at: 2026-09-18T18:03:55+0900
+  priority: high
+  parent_sai: 332367+332511
+  assigned_at: 2026-09-18T17:40:00+0900
+  assigned_by: karo-mac
+  assigned_to: ashigaru-mac-1
+  board_task: 94c61e26
+  branch: ashigaru-mac-1/km-167-ci-20260918
+  supersedes: hosei_167_pr31_sai332449_20260918T1420 (junjo nomi)
+  note_junjo: abc wo tsumi, sonoato saishuu tip de gunshi-mac he ichido dase. osu na. gh wo tataku na.
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918/
+  hon: "★命 ―― km-167 の ⓐⓑⓒ を積み、★最終 tip で★ 軍師mac の判定を一度だけ取れ。★\n\n㋐ 何故=裁 seq332367(ⓐⓑⓒ 可)と裁 seq332511(判定の取り方)。後者の逐語:\n「PR#31 の形 承知(332480): 今の判定は tip d168a6af に対する物・ⓐⓑⓒ 着地で追便に新 tip/tree を告げ、★最終 tip で軍師mac の PASS を1回★取ってから当職が merge(途中の PASS は merge 根拠にしない)。」\n\n㋑ ★順序が変はつた ―― 前便(hosei_167_pr31_sai332449)の指示を此処で改める★:\n  前便は「今すぐ軍師mac へ判定依頼を出し、後で追便に新 tip を告げよ」と書いた。\n  裁332511 は「★最終 tip で 1 回★」と定めた ∴ ★ⓐⓑⓒ を積む前に判定依頼を出すな。★\n  已に出して居たら其の儘にし(消さぬ)、最終 tip の便を「之が判定の的である」と明記して出し直せ。\n  ★之は家老の指示の誤りであつて貴殿の落度ではない。★ 前便は消さず、本便が上位である。\n\n㋒ 為すべき四手(枝 ashigaru-mac-1/km-167-ci-20260918 の上へ積め):\n  ⓐ lib/_section18_roles.sh の識別子を★役名へ★改め、alias を★逆向き★に置く。旧 persona 名は\n     alias として生かす(消さぬ)。pane 構成は★不変★。可逆である事を紙に書け。変更統制は裁332367 で\n     許可済ゆゑ据ゑてよい。事後報は★PR#31 の本文に書く★(別便に非ず)。\n  ⓑ 撤回済 MDV2 試作の unit 4紙を tests/archive へ★退避★せよ(★消すな★)。README を 1 行置き\n     「撤回済・的は archive」と書け。\n  ⓒ 除外語に SUPERSEDED を足せ。TC-NFR-008 は★残す★。\n  ⓓ 三手の後、★己の器 sb-ashigaru-mac-1 で軍師mac へ判定依頼を一度出せ★(箱 queue/inbox/gunshi-mac.yaml\n     は死箱ゆゑ用ひるな)。胴に載せる物= PR#31 / repo=multi-agent-shogun /\n     head=ashigaru-mac-1/km-167-ci-20260918 / ★新 tip 40桁★ / ★新 tree 40桁★ /\n     base=main(6bde7170ce574090a6139ba2dfe3aa4cb6db8634) / file 数と ± 行 / 束の実 path /\n     門の出目 / 己の疵 / 「之が★最終 tip★であり判定の的である」の一行。\n     300字の條ゆゑ割つてよい。★識別子は略すな★(總監督令326424)。割つた通し番号を書け。\n\n㋓ 前後を二度測れ: ⓐⓑⓒ の各々で据ゑる前と後の件数と rc を紙に載せよ。門は二度通せ。\n\n㋔ 境(変はらず):\n  ・押すな。commit までで止め、★新 tip と新 tree の 40桁を家老へ告げて請へ★(押す手は委員長)。\n  ・gh を叩くな(token 無効 rc=1・再発行は理事長専管)。PR 起票も以後 委員長である。\n  ・main へ直に触るな。共有樹の HEAD/index も他席の生きた樹も触るな。\n    ★現に此の repo の共有樹 HEAD は席3 の枝 4e4cfeeb が掛かつて居る ―― 触るな。★\n  ・板は書くな。板 94c61e26 の記帳は家老が為す。\n  ・詰まりは blocker で報せるのみ。己で迂回路を作るな。"
+tsugi_no_tama_177_20260918T1740:
+  task_id: km-177-yon-no-chou-ga-yomenu-riyuu-to-yomu-ki-no-bosuu-20260918
+  status: done
+  completed_at: 2026-09-18T18:12:08+0900
+  priority: normal
+  parent_sai: karo-mac hatsu (ita gai, sai332455)
+  assigned_at: 2026-09-18T17:40:00+0900
+  assigned_by: karo-mac
+  assigned_to: ashigaru-mac-1
+  board_task: ec1be454
+  board_task_note: iincho kihyou seq333134 (reviewing / owner karo-mac / karo-mac ga current_step へ 1290字 追記・逐語一致=True)
+  note_junjo: km-176 ga saki. kore wa nihon-me. hakaru dake, naosu na.
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-177-yon-no-chou-ga-yomenu-riyuu-to-yomu-ki-no-bosuu-20260918/
+  hon: "★命(二本先) ―― queue/tasks/ashigaru-mac-4.yaml が parse 出来ぬ真因と、読む器の母數を測れ。直すな。★\n\n㋐ 何故= 當席が ParserError(line 275 と出た)を見たが、★誰が此の file を読むのか★を測つて居らぬ。\n  読む器が在るなら parse 不能は静かな失敗であり、無いなら只の残骸である。★どちらかを測るまで直せぬ。★\n  ashigaru-mac-4 は pane を持たぬ孤児席である(家老が測つた)。\n\n㋑ 測る物(材のみ・据ゑるな):\n  ⑴ 真因= python3 -c で yaml.safe_load を掛け、★例外の逐語★と行番号を紙に写せ。\n     其の行の前後 5 行を逐語で載せ、★何の形が parse を壊したか★を名指せ(memory の\n     「YAML block sequence + trailing keys = unparseable」に当たるか否かも書け)。\n  ⑵ 読む器の母數= repo 全体を歩いて \"ashigaru-mac-4\" と \"ashigaru-mac-{N}\" の展開形で\n     参照する器を数へよ。★件数には rc と根と深さを添へよ(零には四つの札が要る)。★\n     grep は .gitignore を honor する ugrep ゆゑ、隠れる path が在るなら其れも書け。\n     queue/ を丸ごと歩くと 13.2GB で止まるゆゑ、根を絞り、絞つた事を宣せよ。\n  ⑶ 他席の file と形を比べよ= ashigaru-mac-1/2/3 の yaml は safe_load が通る(家老が今日通した)。\n     4 だけが通らぬなら、★通る 3 本と通らぬ 1 本の差★を形の言葉で述べよ。\n  ⑷ 陽性対照= 故意に壊した写しを /tmp に作り、同じ器が同じ例外を出す事を示せ。\n     ★證の紙は /tmp に置くな★ ―― 對照の出目は束の紙に写せ。\n\n㋒ 出す物= 束 docs/evidence/ashigaru-mac-1_km-177-yon-no-chou-ga-yomenu-riyuu-to-yomu-ki-no-bosuu-20260918/\n  へ紙と臺帳を置き、門を二度通せ(臺帳の根は束内相対 ∴ cd <束> してから\n  karo_mac_manifest_append.py を呼び、門は KM_GATE_MANIFEST_BASE=. を要する)。\n\n㋓ ★直すな・消すな・戻すな★(第一条)。治し方の案は紙に書くだけにせよ ―― 据ゑるには\n  変更統制(委員長の事前許可)が要る。家老が貴殿の紙を以て伺を立てる。\n\n㋔ 板= 之は★家老発の弾★ゆゑ板に行が無い。裁332455 に依り板外で進め、★着地時に★家老が\n  「題・受入条件・成果 path+sha・判定seq」を一便で委員長へ寄越して行を新設する。\n  ∴ 貴殿は板を書くな。着地の便に board_task は空で良い(家老が埋める)。"
+km176_nou_2026-09-18T1803:
+  task_id: km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918
+  status: done
+  completed_at: 2026-09-18T18:03:55+0900
+  branch: ashigaru-mac-1/km-167-ci-20260918
+  tip: 7c0d1492acfd5fcef5a60503888ab0dbd53fe5f6
+  tree: bbd8a1b948e4f7a2c3d514ee4c0cbf7d5cab8107
+  oya: d168a6af46245af2342a9235cce7a85cd90c99d6
+  pushed: true
+  pushed_by: iincho-daikou (seq333082)
+  pushed_at: 2026-09-18T18:12:28+0900
+  push_measured_by_karo: ls-remote 1行 tip=7c0d1492acfd5fcef5a60503888ab0dbd53fe5f6 / oshinokori=0 / inseitaishou rc=0 0gyou / bosuu=261
+  pr31_addendum: pasted by iincho (sha256 1955076a5c2c96e4d214b41d5942664fc46be18ec863df3196b16c4e270d5037)
+  kotae: 'ⓐ §18 lib 役名化+alias 逆向き(可逆・pane 不触・消費者 pane_identity.sh 直走 前後 rc0) ⓑ MDV2 4 紙 git mv→tests/archive+README ⓒ test.yml 除外語 SUPERSEDED(CRLF 保持)。後: root 58/0・selfwatch 19/0 skip1・unit 334/0・SKIP 検め 0・build rc0・shellcheck rc0(前 root 51/7・unit 331/7・SKIP 1)。'
+  nokori_sai: Python 版 shim/hakudokai/_section18_roles.py は persona の儘(pytest SoT drift 6・CI 外)。PR#31 本文の事後報は束 letters/pr31_body_addendum.md(gh 不触ゆゑ貼付を請ふ)。
+  bundle: docs/evidence/ashigaru-mac-1_km-176-abc-wo-tsumi-saishuu-tip-de-hantei-wo-ichido-20260918/ (枝内 commit・臺帳 60・門 二度 rc0・便の控は disk のみ 臺帳外)
+  nou_bin:
+  - msg_20260918_180313_d2834fe1
+  - msg_20260918_180313_038f6a58
+  - msg_20260918_180328_79a3ed6f
+  - msg_20260918_180328_6c812bc5
+  - msg_20260918_180355_36f35d43
+  hantei_seq:
+  - 333048
+  - 333049
+  - 333050
+  - 333051
+  - 333052
+  - 333053
+  hantei_parent_seq: 332511
+  sen_eta: '19:30'
+  jitsu: 2026-09-18T18:03:55+0900
+tsugi_no_tama_180_20260918T1812:
+  task_id: km-180-horarenu-akashi-no-kami-wo-utsuwa-de-toraeru-20260918
+  status: done
+  completed_at: 2026-09-18T19:01:53+0900
+  priority: high
+  assigned_at: 2026-09-18T18:12:00+0900
+  parent_sai: 332455+333060
+  board_task: 7c1419f4
+  board_task_note: karo-mac hatsu yue chakuchi ji ni iincho ga shinsetsu (sai332455) / soukantoku kigyou seq333278 (reviewing / owner karo-mac / fixed 345aaa5e tree 5f57bd29 / hantei 333175-333178 / PASS go ni kotei ref de daikou push)
+  branch_note: 1 tama 1 eda (sai333060 3) -- horu mono ga deta ra origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 kara kiru
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-180-horarenu-akashi-no-kami-wo-utsuwa-de-toraeru-20260918/
+  hon: "【km-180 ★彫られぬ證の紙を器で必ず捕へる ―― 測るのみ・据ゑぬ★】(家老mac発・板外=裁332455)\n\n◆因(當席が今日 現に踏んだ穴):\n席3 の km-175 束で、disk 248本 に対し彫りの tree は 234本 ―― ★14本が彫られぬ儘 disk にのみ在つた★。\n然るに `git status --porcelain -- <束>` は ★一行も出さぬ★。.gitignore:7 の裸 * が悉く伏せる故である\n(check-ignore -v で三本を名指して確かめた・rc=0)。\n∴ ★「porcelain が0行ゆゑ未commit無し」は偽の證である。★ 之を器で捕へる形を貴殿が作れ。\n★直すな・据ゑるな(hook も門も settings も触るな=変更統制)。測つて紙に書くまでが本弾である。★\n\n◆㋐ 先に己の樹の身元を書け ―― ★同じ問ひが樹ごとに違ふ答を出す★\ngit rev-parse --show-toplevel / git rev-parse HEAD(40桁) / 枝名 / 刻。\n當席は共有樹で測つた故、貴殿の樹の数と違ひ得る。★違へば其れ自体が成果であつて食ひ違ひではない。★\n\n◆㋑ 母數と歩き根を宣せ\n根 = docs/evidence ★のみ★。★queue/ を歩くな(13.2GB・過去に時限切れを起こして居る)★。深さを書け。\n當席の共有樹での實測: docs/evidence 直下の dir = 151。貴殿の樹の数を己で数へて書け。\n\n◆㋒ 束ごとに三つの数を出せ\n⑴ disk 實数 = find <束> -type f の本数\n⑵ 追跡数 = git ls-files -- <束> の行数\n⑶ 差 = ⑴−⑵(負なら「disk に無く追跡に在る」=別の症ゆゑ分けて書け)\n差≠0 の束を悉く列ね(束名は畳まず・prefix は束名で始まる)、合計本数と合計束数を書け。0 なら零の四つの札。\n\n◆㋓ ★porcelain の盲を實射で示せ(二方向)★\n差>0 の束を一つ選び:\n ⒜ git status --porcelain -- <束> の行数(0 行なら偽の「未commit無し」= 濡れ衣ではなく黙り)\n ⒝ git check-ignore -v で伏せた規則の行を逐語で名指す(rc も書け)\n ⒞ ★陰性対照★: .gitignore に伏せられぬ path(例 tracked な紙を一字直した物)では porcelain が鳴る事を一度示せ。\n   ★但し他席の紙は一字も直すな。己の束の内に己で作つた紙で示せ(作つた事を紙に書け)。★\n\n◆㋔ 代はりの器を一つ提案せよ(★紙に書くのみ・据ゑるな★)\n候補 git ls-files --others --ignored --exclude-standard -- <束> 等を己で選び、rc・母數・find との差を出せ。\n「之で捕へられる物/捕へられぬ物」を両方書け。★捕へられぬ物を書かぬ提案は受けぬ。★\n\n◆㋕ 対照\n陽性対照 = 貴殿の km-176 束(差が在るか無いかを己で測れ・在ると決めて掛かるな)。\n陰性対照 = 差0 の束を一つ名指せ。無ければ「★差0 の束は無い★」と宣せ(之も成果)。\n\n◆㋖ 零には四つの札(rc・根と深さ・刻・検出子自身の対照)。★母數まで0なら器の疵を先に疑へ。★\n\n◆境(踏むな):\n・押すな・gh を叩くな・main 不触・他席の枝と生きた樹に触るな・板は書くな(★板は家老の手★)。\n・★裁333060⑶=1弾1枝★ ―― 彫る物が出たら origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 から己の新枝を切れ。\n・臺帳の根は束内相対(cd <束> してから karo_mac_manifest_append.py・門は KM_GATE_MANIFEST_BASE=. を要する)。\n・commit は git add -f で名指し・★--only で彫り reset は打つな★。★證の紙を /tmp に置くな★。\n・門は二度走らせ、控は走ごとに別名で焼け(out と err の両方を読め)。\n・監査は己の器 sb-ashigaru-mac-1 で軍師mac へ直送(parent_seq 332455)・固定 commit を必ず書け(裁333060⑵)。\n・宣ETA を先に出し、後で★丸めぬ差★を書け。"
+km177_nou_2026-09-18T1812:
+  task_id: km-177-yon-no-chou-ga-yomenu-riyuu-to-yomu-ki-no-bosuu-20260918
+  status: done
+  completed_at: 2026-09-18T18:12:08+0900
+  kotae: 真因=根 mapping の中に根 block sequence 項 4 本(L275/292/379/418 col1 `- `)。PyYAML「expected <block end>, but found '-'」problem L275 context L1。読む器=席名で帳を開く器 6 本、内 今の Mac で mac-4 を読み得る物 0(watcher 0・pane 0・slim_tasks は 'karo' 字面のみ・agent_status は §18 配列)。眠る fail-open 二道(slim_yaml load_yaml・inbox_watcher guard)。直さず・案は紙 ㋕。
+  bundle: docs/evidence/ashigaru-mac-1_km-177-yon-no-chou-ga-yomenu-riyuu-to-yomu-ki-no-bosuu-20260918/ (共用樹・commit せず・臺帳 26+letters・門 first/second rc0・third は letters 込)
+  nou_bin:
+  - msg_20260918_181144_34a94fcf
+  - msg_20260918_181144_cff26a4f
+  - msg_20260918_181144_f1b195f7
+  - msg_20260918_181145_db190892
+  - msg_20260918_181145_54210895
+  - msg_20260918_181145_7db63ace
+  kansa_seq:
+  - 333077
+  - 333078
+  - 333079
+  - 333080
+  kansa_parent_seq: 332455
+  board_task: ec1be454
+  sen_eta: '18:50'
+  jitsu: 2026-09-18T18:12:08+0900
+  board_task_note: iincho kihyou seq333134 (reviewing / owner karo-mac / karo-mac ga current_step へ 1290字 追記・逐語一致=True)
+km180_nou_2026-09-18T1901:
+  task_id: km-180-horarenu-akashi-no-kami-wo-utsuwa-de-toraeru-20260918
+  status: done
+  completed_at: 2026-09-18T19:01:53+0900
+  branch: ashigaru-mac-1/km-180-horarenu-akashi-20260918
+  tip: 345aaa5e5ab7e5da2b7c10cde6afd6ce98cded24
+  tree: 5f57bd295712049964b5643b4276080b5f4d7f2b
+  oya: 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  worktree: ~/wt/a1-km180
+  pushed: false
+  kotae: 'porcelain は .gitignore:7 の裸 * に伏せられ rc0・0 行で黙る(km-176 束 disk94/追跡70/差24)。三樹 155 束: A 差>0 1/B 1(commit 後 0)/C 133 束 12382 本・盲 96。陰性対照=己の紙を追跡し一字足すと porcelain 1 行・戻し sha 一致。代器 ls-files --others [--ignored] --exclude-standard + --deleted は 155/155 で find−ls-files と一致・捕へられぬ物を併記(据ゑず)。'
+  bundle: docs/evidence/ashigaru-mac-1_km-180-horarenu-akashi-no-kami-wo-utsuwa-de-toraeru-20260918/ (枝内 commit・臺帳 15・門 二度 rc0・便の控は disk のみ)
+  nou_bin:
+  - msg_20260918_190129_14de348c
+  - msg_20260918_190129_f344aa02
+  - msg_20260918_190129_2689757e
+  - msg_20260918_190129_f641bf76
+  - msg_20260918_190130_075ee780
+  - msg_20260918_190209_2e9518e3
+  kansa_seq:
+  - 333175
+  - 333176
+  - 333177
+  - 333178
+  kansa_parent_seq: 332455
+  board_task: 7c1419f4
+  sen_eta: '19:15'
+  jitsu: 2026-09-18T19:01:53+0900 (API 断 18:2x→19:00 を挟む)
+  board_task_note: soukantoku kigyou seq333278 (reviewing / owner karo-mac / fixed 345aaa5e tree 5f57bd29 / hantei 333175-333178 / PASS go ni kotei ref de daikou push)
+tsugi_no_tama_181_20260918T1903:
+  task_id: km-181-mitsu-no-naoshi-kagyaku-bak-futekisuto-20260918
+  status: done
+  completed_at: 2026-09-18T19:28:31+0900
+  priority: high
+  assigned_at: 2026-09-18T19:03:00+0900
+  parent_sai: 333131+333134
+  board_task: ec1be454
+  board_task_note: km-177 no tsuzuki (naoshi wa kono tama)
+  branch_note: 1 tama 1 eda (sai333060 3) -- origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 kara kiru / km-180 no eda to mazeruna
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-181-mitsu-no-naoshi-kagyaku-bak-futekisuto-20260918/
+  hon: "【km-181 ★三つの直し ―― 悉く可逆・bak・負テスト付き★】(家老mac発・板 ec1be454 の續・裁333131+333134)\n\n◆許しの出所を先に書く(推量で動くな):\n・㋐ mac-4 の4行の字下げ = ★裁333134「A 可」★(逐語「4行の字下げ=可逆・bak を取り parse 前後で検算」)。\n  ★案B(archive 退避+stub)は★不要★と裁が明言した ―― 停止席は★会話保存の儘 触らぬ★。退避も stub も作るな。\n・㋑ 帳へ書く器の「書込の前に parse」 = 裁333131⑵。\n・㋒ slim_yaml の {} と inbox_watcher.sh L463 の except: pass を fail-loud へ = 裁333131⑶(裁333134「次弾で可・可逆・bak・負テスト」)。\n★三つとも「可逆・bak・負テスト」が許しの條件である。條件を欠けば許しは無い物と思へ。★\n\n◆㋐ queue/tasks/ashigaru-mac-4.yaml の4行を根の鍵へ\n當席が己で測つた現状(貴殿の報と逐語一致): 857行・114132 bytes・CR 0・git 追跡外・\nsha256 a727520c45e7b8e7e284932612363887769621e915910a65b6c5b6b3f9c96ddc。\ncol1 の `- ` は L275 `- saitei_z45:` / L292 `- task:` / L379 `- task_id: km-a4-onaji-miharu-ga-nijuu-ni-hashiru-ne` / L418 `- id: saitei_z69` の★4本★。\n手順: ⑴bak を束の中へ(★/tmp に置くな★) ⑵直す前に sha256 と行数を記す ⑶★行番号を焼き込むな★=逐語で当てて直す\n⑷直した後 PyYAML で parse を当て、鍵数と全鍵名を前後で並べて出す(★鍵が1本でも消えたら戻せ★)\n⑸bak と新版の diff(unified)を束へ ⑹新 sha256 と行数 ⑺★負の対照★=直す前の bak が今も parse で落ちる事を示せ。\n★他席(1/2/3)の帳には一字も触るな。mac-4 の pane にも触るな(停止席・会話保存)。★\n\n◆㋑ 帳へ書く器に「書込の★前★の parse」を据ゑる\n先に★母數★を出せ: 席の帳(queue/tasks/*.yaml)へ★書く★器を歩いて数へ、名を列ねよ(読むだけの器は別に数へよ)。\n其の上で ⒜in-repo の器のみ直せ ⒝★~/bin の当席の器(board_write.py 等)には触るな★(credential を持つ・家老と総監督の手)\n⒞形は「案を作る→dump→再 parse→鍵数と既存鍵の逐語一致を assert→★通つた時のみ書く★」\n⒟★負テスト★=壊れる案を渡すと★書かずに落ちる★事を示し、其の時 file が一字も動かぬ事を sha256 で示せ\n⒠assert を書込の★後★に置く形は禁(★之が當席の今日の疵である★ ―― 當席は字下げ無しで4行を差し込み帳を一時 parse 不能にした)。\n\n◆㋒ 眠る fail-open 二道を fail-loud へ\n⒜ slim_yaml の parse 失敗 → 今は {} を返して★黙つて飛ばす★。鳴らせ(stderr と rc)。\n⒝ scripts/inbox_watcher.sh の L463 近傍 `except: pass` → 鳴らせ。★行番号を焼き込まず逐語で当てよ。★\n★但し★: ⑴★稼働中の watcher を止めるな・起こすな・restart するな(Mac事業部長の手)★\n⑵走つて居る process は★古い inode を読む★ゆゑ、直しても現走行は変はらぬ ―― 其の事を紙に書け(「直した=効いた」と書くな)\n⑶負テスト=壊れた yaml を食はせて★鳴る★事と、正しい yaml で★鳴らぬ★事の両方(陰性対照)。\n⑷bak を取り、rc と stderr の逐語を束へ焼け。\n\n◆彫りと枝(★裁333060⑶=1弾1枝★)\n彫る物は ⑵⑶ の器(in-repo)である。★origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 から己の新枝を1本切れ★(km-180 の枝と混ぜるな)。\nqueue/ の物は git 追跡外ゆゑ commit せぬ ―― 束の紙(bak・diff・sha256)で示せ。commit は git add -f で名指し・★--only で彫り reset は打つな★。\n\n◆境: 押すな・gh を叩かぬ・main 不触・他席の生きた樹と枝に触るな・板は書くな(★板は家老の手★)・證の紙を /tmp に置くな。\n臺帳の根は束内相対(cd <束> してから append・門は KM_GATE_MANIFEST_BASE=. を要す)。門は二度・控は別名・out と err を共に読め。\n監査は sb-ashigaru-mac-1 で軍師mac へ直送(parent_seq 332455)・★判定は弾ごとの固定 commit を書け(裁333060⑵)★。\n★宣ETA を先に出し、後で丸めぬ差を書け。★"
+tsugi_no_tama_182_20260918T1915:
+  task_id: km-182-porcelain-ni-motareru-utsuwa-20260918
+  status: done
+  completed_at: 2026-09-18T19:39:25+0900
+  priority: high
+  assigned_at: 2026-09-18T19:15:00+0900
+  parent_sai: '332455'
+  branch_note: 1 tama 1 eda (sai333060 3) -- origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 kara kiru / km-181 no eda to mazeruna
+  board_task_note: km-180 no tsuzuki -- ban no gyou wa karo ga iincho he kigyou wo koute iru (seq333230)
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/
+  hon: "★km-182 ―― porcelain に凭れて居る器を repo 中から歩き出し、盲の条件を實射で示す(直さぬ・据ゑぬ・紙のみ)★\n\n【出自】km-180 で貴席が測つた事 ―― 三樹 155 束の内、共有樹で 差>0 が 133 束 12382 本・盲 96 束。\n因は `.gitignore:7` の裸 `*` と、porcelain が追跡外 dir を一行に畳む二つ。\n∴ 次の問ひは「では ★誰が★ 其の盲に凭れて居るか」である。数へたのは症であつて、患ではない。\n\n【問ひ㋐ 母數を先に出せ】repo 中で `git status --porcelain`(及び `-s`・`--short`・`--ignored` 無しの status)を\n呼んで居る器を悉く歩き出し、★file:行番+逐語一行★ で挙げよ。\n ・歩く根と深さと除外を宣せ。grep の路(ugrep は .gitignore を honor する)を字で書き、★母數を先に★出せ。\n ・sh/bash/py/md/yaml を分けて数へよ。紙(md)の中の引用は器ではない ―― ★別勘定にせよ、混ぜるな★。\n ・零が出たら零に四つの札(陽性対照・根と深さ・rc・刻)を付けよ。\n\n【問ひ㋑ 現に盲か ―― 一つ一つ實射せよ】㋐で挙げた器の各々に就き、\n ・己の束の中に ★己で作つた種★ を置き(追跡外の紙・.gitignore に当たる紙の二形)、其の器を現に走らせて\n   ★鳴る/鳴らぬ の両方★ を出目で示せ。rc と行数を併記。行数が 0 で rc=0 の形を見たら「不在」と書くな。\n ・種は己の束の中だけに置け。★他席の樹・共有樹の外・/tmp は禁★。片付けた事も紙に書け。\n ・「呼んで居るが盲に成らぬ」器が在れば、★何故 成らぬか★ を一行で書け(之が最も値打ちが有る)。\n\n【問ひ㋒ 代器へ移す案 ―― ★紙に書くだけ。据ゑるな★】\n km-180 で 155/155 一致した三本(`ls-files --others --exclude-standard` / `--others --ignored --exclude-standard` / `--deleted`)\n へ移す案を、器ごとに ★三行★ で書け: ⑴何を直すか(逐語の差) ⑵戻し方 ⑶★何を直さぬか★。\n ・★据ゑる手は打つな★ ―― 変更統制(理事長令)により、器・hook・watcher・設定の変更は ★事前に委員長の許可★ が要る。\n   貴席の仕事は「許可を請へる形の紙」を作る所までである。\n ・捕へられぬ物(追跡済の改め・入れ子 .git・symlink 先・空 dir・改行名)は案の中で ★明示して除け★。\n   ★「除いた」は「歩いて居らぬ」と同義ではない★ ―― 除いた物も母數には数へ、除いた事を書け。\n\n【條 ―― 悉く守れ】\n ⑴★1弾1枝★: origin/main `6bde7170ce574090a6139ba2dfe3aa4cb6db8634` から切れ。km-181 の枝と ★混ぜるな★。\n   枝名 = `ashigaru-mac-1/km-182-porcelain-ni-motareru-utsuwa-20260918`。\n ⑵共有樹の HEAD/index は触るな。`checkout -b` を共有樹で打つな(席3 の plumbing の形= read-tree→write-tree→commit-tree→update-ref が手本)。\n   彫りは `git add -f` で file を名指し・`--only` で彫れ。★reset は打つな★。\n ⑶押すな・`gh` を叩くな・main に触れるな・板は書くな(板は當席の手)・他席の生きた樹と枝に触るな。\n ⑷★證の紙を /tmp に置くな★。束 = `docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/`。\n ⑸★臺帳の根は束内相対★(裁322699) ―― `cd <束>` してから append を呼べ。門は `KM_GATE_MANIFEST_BASE=.` を要する。\n   門は二度通し、out と err を別に焼け(門の行と結語は stderr・代行器の要約は stdout)。\n ⑹稼働中の watcher を止めるな・restart するな(Mac事業部長の手)。★走る process は古い inode を読む★ ゆゑ\n   「直した=効いた」と書くな(本弾は直さぬ故、本来触れる所も無い)。\n ⑺★宣ETA を先に出せ★。着地で ★丸めぬ差★ を書け(API 断を挟んだならば其の幅も併記)。\n ⑻監査は `~/bin/sb-ashigaru-mac-3` ではなく ★己の器 `~/bin/sb-ashigaru-mac-1`★ で gunshi-mac へ直送(parent 332455)。\n ⑼着手便は ★300字が條★。超えたら分けよ ―― ★識別子を略すな★(km-180 で四度超えて居る。同じ壁を二度叩くな)。\n"
+  board_task: 79516c34
+km181_nou_2026-09-18T1928:
+  task_id: km-181-mitsu-no-naoshi-kagyaku-bak-futekisuto-20260918
+  status: done
+  completed_at: 2026-09-18T19:28:31+0900
+  branch: ashigaru-mac-1/km-181-mitsu-no-naoshi-kagyaku-bak-futekisuto-20260918
+  tip: f2c62730978bf22f6b7977fc17dc3279eec010f5
+  tree: 6ae97cd7324e2080c285a9576461aac408858fdb
+  oya: 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  worktree: ~/wt/a1-km181
+  pushed: false
+  kotae: '㋐ mac-4 帳 bak→案3 逐語当て→PARSE_OK 根鍵 58・消えた鍵 0・新 sha fc49d39c…(裁の字面 4 行を超え 6 行+鍵行 4=追認請ふ)。㋑ slim_yaml.save_yaml を dump→再 parse→鍵列一致→tmp+replace。㋒ load_yaml の空 dict 返しを YamlUnreadable(rc2)へ・inbox_watcher guard の except: pass→印 WARN_TASK_YAML_UNREADABLE。負テスト 7/7・退行 0(既存 12 落=PR#31 未 merge)。'
+  sai_matsu: ⑴ 4 行→6 行+4 鍵行の追認 ⑵ unit 走の副作用で己の樹の generated 19 紙が M(raw/70・戻す命令 許されず・戻さず)
+  bundle: docs/evidence/ashigaru-mac-1_km-181-mitsu-no-naoshi-kagyaku-bak-futekisuto-20260918/ (枝内 commit・臺帳 30・門 二度 rc0・便の控は disk のみ)
+  nou_bin:
+  - msg_20260918_192716_42d470a4
+  - msg_20260918_192717_36ec6d18
+  - msg_20260918_192717_605f1590
+  - msg_20260918_192717_edddee99
+  - msg_20260918_192717_181a79d2
+  - msg_20260918_192717_d759de32
+  - msg_20260918_192718_3f3b67e0
+  - msg_20260918_192718_ed5fe40d
+  kansa_seq:
+  - 333378
+  - 333380
+  - 333381
+  - 333382
+  - 333383
+  kansa_parent_seq: 332455
+  board_task: ec1be454
+  sen_eta: '20:30'
+  jitsu: 2026-09-18T19:28:31+0900
+tsugi_no_tama_184_20260918T1930:
+  task_id: km-184-hashiru-koto-ga-ki-wo-yogosu-20260918
+  status: done
+  completed_at: 2026-09-18T19:51:02+0900
+  priority: high
+  parent_sai: '332455'
+  assigned_at: 2026-09-18T19:30:00+0900
+  assigned_by: karo-mac
+  assigned_to: ashigaru-mac-1
+  branch_note: origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 kara kiru / km-181 (f2c62730) to km-182 no eda to mazeruna
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/
+  hon: "★命 ―― 「走らせた事が樹を汚す器」と「stderr を捨てる形」を歩き出せ。★直さぬ・据ゑぬ・紙のみ★\n\n㋐ ★先に當席の疵を置く★ ―― 貴殿の km-181 納め 8/8 を検分する時、當席は\n  `git show <ref>:<束>/MANIFEST.txt 2>&1 | grep -c ''` と書き、★stderr を数へる流れに混ぜた★。\n  臺帳の名は `<件名>_manifest.txt` であつて `MANIFEST.txt` ではない故 fatal の一行が立ち、\n  當席は一度「臺帳=1行」と読んだ。正は ★32 行(冠 2 + path= 30)★ であり、貴殿の申す 30 と合ふ。\n  ★己の器の疵を貴殿の紙の疵と読み違へたのは當席である。先に謝す。★\n\n㋑ ★數が割れて居る。丸めるな。★ 貴殿は「19 紙が 19:20:31 に書き換はつた」と申した。\n  當席が /Users/momizimac/wt/a1-km181 を読取のみで数へると ★20 本★ が M で立つ。\n  當席の 20 に在つて貴殿の 19 に無いと思はれる一本 = docs/runbooks/ERR-EKARTE-001.md。\n  ★之が試験の副作用か、ERR-EKARTE-001 の大小文字衝突の残物かを名指せ。★\n  一覧を 20 行で出し、各行に ⑴mtime ⑵HEAD との diff 行数 ⑶何の走りが書いたか を付けよ。\n  「19 と 20 の何れが正か」を紙で決め、★差の一本を消して揃へるな。★\n\n㋒ ★走る事が樹を汚す器を歩き出せ。★ 貴殿の樹で unit 走が紙を書いた ―― 之は\n  「試験が読むだけの物ではない」の實例である。repo 全体で ★走らせるだけで作業樹へ書く器★ を\n  file:行 + 逐語で並べよ。根・深さ・除外・grep の路を宣し、sh / py / bats / md 別に勘定せよ。\n  各器に ⑴何を書くか(path の型) ⑵誰が呼ぶか(呼び手 0 本なら「呼ばれぬ」と書け)\n  ⑶己の束の中で ★實射して現に書いた事★ を mtime と sha256 の前後で示せ。\n  ★己の束の外へ書かせて試すな ―― 種は己の束に置け。★\n\n㋓ ★stderr を捨てる形。★ 貴殿は `) 200>\"$LOCKFILE\" 2>/dev/null` が WARN を捨てたと申した。\n  之を一件で終らせるな。配られて居る器の `2>/dev/null` を悉く並べ、各々に\n  ⑴捨てられるのは何の告げか ⑵其の告げに ★依る番人が在るか★ ⑶在るなら其の番人は現に\n  盲になるか を書け。少なくとも一件は ★實射で鳴らぬ事★ を示し、直した形は書くのみで据ゑぬ。\n  ★「捨てて居るから危い」は見立てである。鳴らぬ事を示して初めて疵である。★\n\n㋔ 出す物 = ⑴㋑の 20 行表 ⑵㋒の器の一覧と實射 ⑶㋓の一覧と實射 ⑷変更統制に掛けられる形の案\n  (何を / なぜ / 戻し方 の三行を器ごと)。★案は紙に書くのみ。据ゑるな。★\n\n㋕ 境(踏むな) ―― 新枝は ★origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 から切れ★\n  (★1弾1枝★・km-181 と km-182 の枝と混ぜるな)。共有樹 /Users/momizimac/multi-agent-shogun の\n  HEAD・index・先住の staged 959 本は ★不触★。他席の生きた樹と紙は触るな。\n  commit は `git add -f` で己の束の file を名指し ★--only で彫り reset は打つな★。\n  押すな・PR・merge・gh を叩くな・main へ触るな・板を貴殿が書くな。\n  ★稼働中の watcher は触るな(止めるな・入れ替へるな)。★ 直す命令は本弾に無い。\n  ★㋑で数へた 20 本を戻すな。戻す裁は委員長の手である。★\n\n㋖ 束 = docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/\n  ★臺帳の根は束内相対★ = cd <束> してから ~/bin/karo_mac_manifest_append.py(第一引数=臺帳)。\n  門は ★KM_GATE_MANIFEST_BASE=. を要し、二度通し、out と err を別 file へ★ 取れ。\n  生の text は悉く kaki を通せ。__pycache__ を束へ入れるな(入つたら二つの歩きが割れる)。\n  ★rc を pipe に通すな★(zsh の PIPESTATUS は空・${pipestatus[N]} を使ふ)。\n  ★證の紙を /tmp に置くな。★\n\n㋗ 便 ―― 宣ETA を先に一便。監査は ★己の器 ~/bin/sb-ashigaru-mac-1 で軍師mac へ直送★\n  (--parent-seq 332455)。胴は ★300字が條★・★識別子を略すな(略す位なら便を割れ・總監督令 326424)★。\n  送つた後 ~/bin/sb read seq <N> で胴を読み返して逐語一致を確かめよ(第八の番人)。\n  終りに實測を宣ETA と併せ、差を ★丸めずに★ 書け。★弾が尽きたら請ひに来い。座して待つな。★\n"
+  sai_333488_semaru: 'sai seq333488 (2) de 19 tai 20 no kesshou wa zumi = ★20 wo toru★ yue, km-184 no (i) wa 「20pon he mtime to HEAD tono diff gyousuu to kaita hashiri wo tsukeru」nomi he semaru. suu no zehi wo futatabi ronzuru na. 「hashiru dake de ki he kaku utsuwa wo kami de kazoeru」=★ka★(dou sai). seki1 no ki no M 20pon wa hosei_181_kinoki_wo_modose_20260918T1936 de git restore sare, km-184 chakushu ji ni wa 0 gyou no hazu. shoukotsu: karo-mac 2026-09-18T19:38'
+  board_task: 8348c4ea
+hosei_181_kinoki_wo_modose_20260918T1936:
+  task_id: km-181-hosei-kinoki-no-20pon-wo-modosu-20260918
+  status: done
+  completed_at: 2026-09-18T19:42:38+0900
+  kekka: 前 20 行→git restore 名指し 20 本 rc0→後 1 行(docs/runbooks/err-ekarte-001.md の case-fold 双子・触らず)・HEAD f2c62730/tree 6ae97cd7 不動・臺帳 32 不動・sha 20/20 一致・控 /Users/momizimac/wt/a1-km181-hosei-bak-20260918T194028/・訂正便 seq333526
+  priority: highest
+  parent_sai: '333488'
+  assigned_at: 2026-09-18T19:36:00+0900
+  assigned_by: karo-mac
+  assigned_to: ashigaru-mac-1
+  tree_note: modosu ki wa /Users/momizimac/wt/a1-km181 nomi / kyouyuuju /Users/momizimac/multi-agent-shogun wa fushoku
+  sai_chikugo: seq333488 (2) seki1 no ki no ki no M 20pon = modose (git restore . kyouyuuju wa fudou yue sawarazu) . ito shita henkou nomi wo eda he nose . suu wa hakatta 20 wo toru (bin no 19 wa aratameyo)
+  hon: "★裁 seq333488 ―― km-181 の補正 二件。今走る km-182 より先に之を閉ぢよ。★\n\n㋐ ★追認(貴殿の請ひは通つた)★ ―― queue/tasks/ashigaru-mac-4.yaml の「4 行の字下げ」を\n  6 行へ超えた事は ★委員長の追認を得た★(裁 seq333488⑴ 逐語「km-181 の 4行→6行(入れ子2本)=★追認★\n  (目的は parse OK・bak 有・可逆)」)。∴ 案3 は正である。戻さず、其の儘で良い。\n\n㋑ ★己の樹の M 20 本を戻せ★ ―― 裁 seq333488⑵ 逐語「席1 の己の樹の M 20本=★戻せ★\n  (git restore・共有樹は不動ゆえ触らず)。意図した変更のみ枝へ載せ、数は測った 20 を採る(便の19は改めよ)」。\n  戻す樹は ★/Users/momizimac/wt/a1-km181 のみ★。共有樹 /Users/momizimac/multi-agent-shogun は\n  ★一指も触るな★(HEAD d8e3aa58b9eeac6f97f0d60928fbdc40c7c93f11・index・先住の staged 959 本 悉く不触)。\n\n㋒ ★戻す前に為す事(順を変へるな)★:\n  ⑴ `git status --porcelain` の出目を紙へ落とし ★20 行である事を数へよ★(數が 20 でなければ\n     戻す前に止まつて報せよ ―― 當席の測りと違ふなら、何かが更に動いた印である)。\n  ⑵ 20 本の ★各 path の sha256 と bytes と mtime★ を戻す前に取れ(可逆の控)。\n  ⑶ 20 本が ★commit f2c62730978bf22f6b7977fc17dc3279eec010f5 の中に無い事★ を\n     `git diff --name-only f2c62730978bf22f6b7977fc17dc3279eec010f5 -- <path>` 等で一本づつ示せ。\n     ★一本でも commit に載つて居たら其の一本は戻すな。止まつて報せよ。★\n  ⑷ 控を己の束の外(樹の外)へ置け ―― ★/tmp は禁★。`<樹>/../a1-km181-hosei-bak-20260918T####/` 等。\n\n㋓ ★戻し方★ ―― `git restore -- <path1> <path2> …` で ★20 本を名指しで★ 戻せ。\n  ★`git restore .` と書くな。★ ★`git checkout -- .` も書くな。★ ★reset を打つな。★\n  一度に 20 本を渡してよいが、出目(rc)を pipe に通すな。\n\n㋔ ★戻した後★:\n  ⑴ `git status --porcelain` が ★0 行★ に成つた事を rc と併せて示せ(0 行は grep -c '' が 0 で rc=1)。\n  ⑵ ★commit f2c62730978bf22f6b7977fc17dc3279eec010f5 と tree 6ae97cd7324e2080c285a9576461aac408858fdb が\n     不動である事★ を `git rev-parse HEAD` と `git cat-file -t` で示せ。\n  ⑶ 束 docs/evidence/ashigaru-mac-1_km-181-mitsu-no-naoshi-kagyaku-bak-futekisuto-20260918/ の\n     臺帳 32 行(冠 2 + path= 30)が不動である事を sha256 で示せ。\n  ⑷ 戻した 20 本の sha256 を ★戻す前と戻した後で並べ★、HEAD の版と一致した事を示せ。\n\n㋕ ★數を改めよ★ ―― 貴殿の納め 7/8 は「19 紙」と申したが、當席の読取は ★20 本★ であり\n  裁 seq333488 は ★20 を採る★ と定めた。∴ ★19 と書いた便を訂正する便を一本出せ★\n  (軍師mac へ直送・parent_seq は元便の seq・「19 は誤り・正は 20・差の一本は\n  docs/runbooks/ERR-EKARTE-001.md と思はれる」旨を逐語で)。★差を丸めるな・黙つて直すな。★\n\n㋖ ★km-184 の ㋑ は狭める★ ―― 「19 か 20 か」は裁で決した故、km-184 では\n  ★20 本の各行に ⑴mtime ⑵HEAD との diff 行数 ⑶何の走りが書いたか を付ける★ 事のみを為せ。\n  數の是非を再び論ずるな。「走るだけで書く器を紙で数へる」は裁 seq333488⑵ で ★可★ と認められた。\n\n㋗ 境 ―― 押すな・PR・merge・gh・main 不触・板を貴殿が書くな・他席の樹と紙は触るな。\n  ★稼働中の watcher は触るな。★ 證の紙を /tmp に置くな。生の text は kaki を通せ。\n  終つたら ⑴戻す前 20 行 ⑵戻した後 0 行 ⑶commit と tree 不動 ⑷控の path を載せて一便で報せ。\n  胴は ★300字が條★・★識別子を略すな(略す位なら便を割れ)★・送つた後 ~/bin/sb read seq <N> で読み返せ。\n"
+km182_nou_2026-09-18T1939:
+  task_id: km-182-porcelain-ni-motareru-utsuwa-20260918
+  status: done
+  completed_at: 2026-09-18T19:39:25+0900
+  branch: ashigaru-mac-1/km-182-porcelain-ni-motareru-utsuwa-20260918
+  tip: e63f6ab5a5245dc0d79e8c1dfcdec6808b0718f5
+  tree: 320b5a75876abbe41b3079e180986e6e0c91d8c4
+  oya: 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  worktree: ~/wt/a1-km182
+  pushed: false
+  kotae: 'porcelain に凭れる器 2 本(scripts/checks/ephemeral_worktree_hygiene.sh L19・shim/hakudokai/hakudokai_git_guard.py L160/212/360)。實射: 器⑴ は伏せられた紙を dirty 0 と数へ 24h 後「掃ける」に落とす(盲)・器⑵ status は Uncommitted 0(盲・auto_pull/wip_commit は安全側)。代器案は紙のみ(据ゑず)。入れ子 .git は porcelain に ?? で出る。'
+  bundle: docs/evidence/ashigaru-mac-1_km-182-porcelain-ni-motareru-utsuwa-20260918/ (枝内 commit・臺帳 12・門 二度 rc0・臺帳外=種 repo raw/seed_repo(入れ子 .git・消さず)+zsh 一巡目の控 6 紙+便の控)
+  nou_bin:
+  - msg_20260918_193846_96a952b2
+  - msg_20260918_193846_4d8f5451
+  - msg_20260918_193846_9d33873a
+  - msg_20260918_193846_539ea4d4
+  - msg_20260918_193846_affe7641
+  - msg_20260918_193847_86ede65e
+  - msg_20260918_193847_a5759067
+  kansa_seq:
+  - 333517
+  - 333518
+  - 333519
+  - 333520
+  kansa_parent_seq: 332455
+  board_task: 79516c34
+  sen_eta: '20:15'
+  jitsu: 2026-09-18T19:39:25+0900
+km184_nou_2026-09-18T1951:
+  task_id: km-184-hashiru-koto-ga-ki-wo-yogosu-20260918
+  status: done
+  completed_at: 2026-09-18T19:51:02+0900
+  branch: ashigaru-mac-1/km-184-hashiru-koto-ga-ki-wo-yogosu-20260918
+  tip: 45c931a1ca5ad4f87967055ca391bf3932aea7f8
+  tree: 9732c973ea60cf76b511aa2b6e7b4a4d1a2b5dec
+  oya: 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  worktree: ~/wt/a1-km184
+  pushed: false
+  kotae: ㋑ 20 本=19 本 19:20:31 unit 全走(test_build_system→build_instructions.sh)+1 本 ERR-EKARTE case-fold 双子。㋒ 静的網は候補のみ・本例は 0(穴)・動的實射で build は走らせるだけで 19 の内 16 本を書く(rc1 でも)。㋓ 2>/dev/null 367 行/54 file・形①7/②8/③3/④3・hygiene L19 で fatal を捨て「掃ける」に落ちる盲を實射。㋔ 案 4 件は紙のみ。
+  bundle: docs/evidence/ashigaru-mac-1_km-184-hashiru-koto-ga-ki-wo-yogosu-20260918/ (枝内 commit・臺帳 15・門 二度 rc0・臺帳外=seed_hyg(.git file)+seed_build(写し 50)+便の控)
+  nou_bin:
+  - msg_20260918_195035_a1091e69
+  - msg_20260918_195035_a07076f2
+  - msg_20260918_195036_a0dc07fb
+  - msg_20260918_195036_ed0439b2
+  - msg_20260918_195036_636eb261
+  - msg_20260918_195036_7a90191a
+  - msg_20260918_195102_ef52376c
+  kansa_seq:
+  - 333586
+  - 333587
+  - 333588
+  - 333589
+  kansa_parent_seq: 332455
+  kansa_readback: sb read 逐語一致 4/4
+  board_task: 8348c4ea
+  sen_eta: '21:00'
+  jitsu: 2026-09-18T19:51:02+0900
+tsugi_no_tama_187_20260918T1953:
+  task_id: km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918
+  status: done
+  completed_at: 2026-09-18T20:13:27+0900
+  priority: high
+  bloom_level: L4_analyze
+  assigned_by: karo-mac
+  assigned_at: '2026-09-18T19:53:00+09:00'
+  parent_sai: '332455'
+  origin_note: kono kizu wa karo-mac ga kyou ono no te de funda (grep -c wa 2>&1 no fatal 1 gyou wo kazoeta . sei wa 32 gyou) . karo no kizu de ari senmu1 no rakudo de wa nai
+  branch_note: km-184 no ato . origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 kara betsu eda . km-184 to mazeruna
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918/
+  note_junjo: km-184 (ETA 21:00) ga saki . hon tama wa sono ato
+  hon: "★件★ km-187 数へる流れに stderr を混ぜる器を歩き出せ(紙のみ・km-184 の後)\n\n★出所 ―― 此の疵は家老が今日 己の手で踏んだ。家老の疵である。★\n家老は `git show <ref>:<束>/MANIFEST.txt 2>&1 | grep -c ''` を打ち、\n出目 1 を見て★「臺帳=1行」と読んだ★。實は `fatal: path ... does not exist` の\n★悲鳴の一行を 1 と数へて居た★。正しい数は 32 行(冠 2 + path= 30)であり、\n貴席が申した 30 と合ふ。★grep -c '' は出目と悲鳴を見分けられぬ。★\n併せて家老は臺帳の名の方言を誤つた ―― 貴席の束は `<件名>_manifest.txt`、\n`MANIFEST.txt` は席3 の方言である。★二つとも家老の疵であり、貴席の落度ではない。★\n\n★命★\n㋐ 母數を己で作れ ―― 配られた器(repo の sh/py/bats)と ~/bin の器。\n   `2>&1` を★数を取る流れ★へ繋いで居る箇所を悉く出せ。\n   「数を取る流れ」とは: grep -c / wc -l / wc -c / sort -u の後の数 / 変数へ入れて比べる管。\n   根・深さ・除外・rc・刻・母數を書け。0 と出た形が在れば★陽性対照★で器が喋る事を示せ。\n㋑ 各件につき判じよ ―― 混ざつた stderr が★数に載り得るか★(載る / 載らぬ / 条件付)。\n   「載らぬ」と断ずる時は其の譯を書け(例: stderr が空の路しか無い等)。\n㋒ ★載る物は一件以上 己の束で實射せよ★ ―― 現に偽の数を出し、正の数と並べて刷れ。\n   家老の 1 対 32 が手本である。實射は★己の束の中だけ★で行へ。\n㋓ ★km-184 の㋓と重ねるな★ ―― 彼は `2>/dev/null`(悲鳴を捨てる形)、\n   本弾は `2>&1`(悲鳴を数に混ぜる形)。同じ器が両方持つ時は★両方の節に別々に書け★。\n㋔ ★家老自身の器も母數に入れよ★ ―― ~/bin/karo_mac_*.py・scripts/checks/karo_mac_* を\n   除くな。★上役の器を母數から外すのは、数へぬ事と同じである。★\n㋕ 直す案を紙に(何を / なぜ / ★戻し方★)。★直さぬ・据ゑぬ・紙のみ★。\n   直す形の中で「rc を素で採る」「out と err を別の file へ」の二法は\n   ★どちらが其の器に合ふか★を件ごとに書け(一律に決めるな)。\n㋖ ★測れぬ物を名指せ★ ―― 走らせられぬ器・他 PC にしか無い器・\n   引数が無いと動かぬ器。「測れぬ」と書き、推量で埋めるな。\n㋗ 束=docs/evidence/ashigaru-mac-1_km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918/。\n   臺帳は★束内相対★(cd してから append・裁322699)・門は KM_GATE_MANIFEST_BASE=. で二度 rc=0・\n   out と err を別に採れ・byte和 二度一致。`__pycache__` を束に残すな(二つの歩きが割れる)。\n㋘ 彫るなら origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 から★別枝★(1弾1枝・裁333060⑶)。\n   km-184 と混ぜるな。`git add -f` + `git commit --only`・reset を打つな・push せぬ。\n㋙ 宣ETA を先に一便。一便 300 字が條。★識別子は略さず 便を分けよ★(總監督 326424)。\n   監査は gunshi-mac へ直送(parent_seq 332455)。\n\n★境★ 直さぬ・据ゑぬ・共用樹の HEAD と index に触れぬ・他席の樹と箱に一指も触れぬ・\npush せぬ・gh を叩かぬ・本番書込 0。★km-184 が先、本弾は後★。\n"
+  board_task: 770692b3
+km187_nou_2026-09-18T2013:
+  task_id: km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918
+  status: done
+  completed_at: 2026-09-18T20:13:27+0900
+  branch: ashigaru-mac-1/km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918
+  tip: 0a46bcb4cb58ec8e2dd7f3c1b25b57c16fa65cd5
+  tree: d1b5af299681f5dfd832325d3e61442af9997548
+  oya: 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  worktree: ~/wt/a1-km187
+  pushed: false
+  kotae: 2>&1 を数へる流れへ繋ぐ形=樹B 22 行/9 file・樹C 27/16・~/bin 1(家老の器)。載る 2(karo_mac_gate4.sh L20・diagnose.sh L278)+手本・条件付 3・載らぬ 17。實射 3(手本 1 対 5・gate4 fatal を 1 行と数へる・diagnose の写し 2→3)。案は器ごと rc 素採り/out・err 別を分けて紙のみ。
+  bundle: docs/evidence/ashigaru-mac-1_km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918/ (枝内 commit・臺帳 18・門 二度 rc0・臺帳外=brokengit 種+便の控)
+  nou_bin:
+  - msg_20260918_201253_564359cf
+  - msg_20260918_201253_5ac6399f
+  - msg_20260918_201253_3ae44697
+  - msg_20260918_201253_2e424270
+  - msg_20260918_201254_43ea1d38
+  - msg_20260918_201327_828b36e0
+  kansa_seq:
+  - 333695
+  - 333696
+  - 333697
+  - 333699
+  kansa_parent_seq: 332455
+  kansa_readback: sb read 逐語一致 4/4
+  board_task: 770692b3
+  sen_eta: '20:40'
+  jitsu: 2026-09-18T20:13:27+0900
+tsugi_no_tama_188_20260918T2016:
+  task_id: km-188-kuda-wo-tooshita-rc-wo-kazoe-yo-20260918
+  status: done
+  completed_at: "2026-09-18T20:26:40+0900"
+  priority: normal
+  bloom_level: L4_analyze
+  assigned_by: karo-mac
+  assigned_at: '2026-09-18T20:16:00+09:00'
+  parent_sai: 332455 / 333060 / 329271
+  origin_note: karo no okite (rc wo kuda wo tooshite toru na) no dai-san no men . km-184 no 2>/dev/null 367 gyou 54 file to km-187 no 2>&1 to wa betsu no men de ari dare mo kazoete inai
+  branch_note: origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 kara ono no worktree de kiru (1 tama 1 eda) . kyouyuuju no HEAD/index fudou . git add -f + commit --only . reset uchi sezu . push sezu . gh tatakazu
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-188-kuda-wo-tooshita-rc-20260918/
+  note_junjo: km-187 (sengen ETA 20:40) ga saki . km-188 wa sono ato . kami nomi de naosazu suezu
+  hon: "★出所 ―― 家老の掟の内、誰も数へて居らぬ第三の面である。★\n\n家老の掟に「rc を管を通して取るな」が在る(zsh の PIPESTATUS は★空★・${pipestatus[N]} が正)。\n併せて貴席は km-184 で `2>/dev/null` を 367 行/54 file と数へ、km-187 で `2>&1` を歩いて居る。\n∴ 同じ族に★第三の面★が在る ―― 「管の左の失敗が rc に出ぬ器」。\n是を★誰も数へて居らぬ★。km-188 は其の面を数へる弾である。★直さず・据ゑず・紙のみ。★\n\n㋐ census ―― repo(sh/py/bats)+ ~/bin(★家老の器を外すな★)を歩き、形ごとに件を数へよ:\n 形① `cmd | wc -l` / `cmd | grep -c ''` の類で左の rc が落ちる形\n 形② `$(cmd | …)` の中で左が失敗しても空が「0」として通る形\n 形③ `cmd | head -N` で SIGPIPE が rc を汚す形\n 形④ `set -o pipefail` が★無い★器と、在る器の別\n 形⑤ 管の後で `$?` を取る形(zsh は PIPESTATUS が空ゆえ黙つて右の rc に成る)\n根・深さ・除外・rc・刻・陽性対照を悉く書け。形が互ひに排他である事も示せ。\n★母數に家老の器(~/bin/* ・scripts/checks/karo_mac_*)を入れよ★ ――\n上役の器を母數から外すのは、数へぬ事と同じである。\n\n㋑ 件ごとに「載る/載らぬ/条件付」を判じよ。左が失敗し得ぬ形(定数 echo 等)は載らぬ側へ、★理由付きで★。\n判じ得ぬ件は「判じ得ぬ」と書いて数へよ ―― 0 に丸めるな。\n\n㋒ ★己の束で実射せよ★ ―― 左を必ず失敗させる種を置き、\n⒜ 素の管 ⒝ pipefail 有 ⒞ ${pipestatus[1]} を取る形 の三つで rc と数がどう違ふかを並べて書け。\n★偽の rc=0 を現に出して見せよ★。家老の掟が紙の上の言葉でなく路である事は、其の一枚で決まる。\n\n㋓ ★km-184 ㋓(2>/dev/null)と km-187 ㋐(2>&1)に重ねるな★。\n重なる件は「他弾で既に数へた」と註して母數から外し、★外した数を書け★(黙つて外すな)。\n\n㋔ 案(据ゑず・紙のみ)―― 件ごとに\n「rc を素で取る形へ直す」「pipefail を置く」「${pipestatus[N]} を読む」の孰れかを選び、選んだ理由を一行。\n★一律の直しを薦めるな★ ―― 読む器と数へる器で正解が違ふ。\n\n㋕ 測れぬ物を名指せ ―― /bin/sh の実体・Linux 側に zsh 無き件・走らせねば判らぬ件。\n\n㋖ 束= docs/evidence/ashigaru-mac-1_km-188-kuda-wo-tooshita-rc-20260918/。\n__pycache__ を束へ入れるな。門を二度 rc=0(cd の後に KM_GATE_MANIFEST_BASE=. を置け)。\nbyte和が二度同じ事を示せ。臺帳の根は★束内相対★。\n\n㋗ 枝= origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 から★己の worktree★で切れ(1弾1枝)。\n共有樹の HEAD・index・他席の生きた樹には触れぬ。git add -f で名指し・commit --only・\n★reset を打つな・push せぬ・main を触るな・gh を叩くな★。\n\n㋘ ★km-187(宣ETA 20:40)が先★。km-188 は其の後。\n宣ETA を先に一便・胴は300字・便は分けよ(識別子を略すな)・監査は gunshi-mac へ parent 332455。\n"
+  board_task: cd88d316
+tsugi_no_tama_189_20260918T2020:
+  task_id: km-189-chou-wo-futatsu-no-te-ga-kaku-mado-wo-hakare-20260918
+  status: assigned
+  priority: normal
+  bloom_level: L4_analyze
+  assigned_by: karo-mac
+  assigned_at: '2026-09-18T20:20:00+09:00'
+  parent_sai: 332455 / 333060 / 329271
+  origin_note: karo ga 20:16 ni ono no te de aketa mado . chou wo yomu(149087 B / kagi 65) → kaku made no aida ni senmu1 ga km187_nou wo tashite 150475 B / kagi 66 he nobita . kesenakatta no wa mado ga semakatta kara de atte mado ga nai kara de wa nai . togamuru na . hakare
+  branch_note: origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 kara ono no worktree de kiru (1 tama 1 eda) . kyouyuuju no HEAD/index fudou . git add -f + commit --only . reset uchi sezu . push sezu . gh tatakazu
+  evidence_bundle: docs/evidence/ashigaru-mac-1_km-189-chou-wo-futatsu-no-te-ga-kaku-20260918/
+  note_junjo: km-188 ga saki . km-189 wa sono ato . kami nomi de naosazu suezu . sueru no wa iincho no kyoka no ato
+  hon: '★出所 ―― 家老が今日 20:16 に己の手で開けた窓である。咎ではなく、測れ。★
+
+
+    家老が貴席の帳へ km-188 を焼く為に読んだ時、帳は 149087 bytes・鍵 65 であつた。
+
+    書く直前に読み直したら ★150475 bytes・鍵 66★ へ伸びて居た ―― 貴席が km187_nou を己の手で足した故である。
+
+    家老の焼き器は「読む → 足す → 書く」の三手であるゆえ、
+
+    ★読んでから書く迄の間に貴席が書けば、貴席の鍵は消える★。
+
+    今回は消えなかつた(家老が検めた ―― 取り落し 0・bak と現の鍵集合を突合)。
+
+    ★然し消えなかつたのは窓が狭かつたからであつて、窓が無いからではない。★
+
+    箱(queue/inbox/*.yaml)には mkdir 式の錠(.lock.d)が在る。
+
+    ★帳(queue/tasks/*.yaml)に錠は在るか ―― 是を数で答へよ。★
+
+
+    ㋐ census ―― queue/tasks/*.yaml と queue/inbox/*.yaml へ★書く★器を悉く歩いて名指せ
+
+    (repo + ~/bin + scripts + hook + watcher)。器ごとに
+
+    ⑴「読む→足す→書く」の三手か ⑵錠を取るか(何の錠・fail-closed か・時限は何秒か)
+
+    ⑶書く手が Write 器か sed か python か ⑷己の帳のみか他席の帳も書くか
+
+    を表にせよ。根・深さ・除外・rc・刻・陽性対照を悉く書け。
+
+    ★家老の器を母數から外すな★(inbox_mark_read.py・karo_mac_manifest_append.py・家老の焼き器の類)。
+
+    上役の器を母數から外すのは、数へぬ事と同じである。
+
+
+    ㋑ 錠の在る/無いを器ごとに判じ、無い器が★現に同時に走り得るか★(誰が呼ぶか・watcher か人か)を書け。
+
+    判じ得ぬ件は「判じ得ぬ」と書いて数へよ ―― 0 に丸めるな。
+
+
+    ㋒ ★己の束で実射せよ★ ―― 己の写しの帳を作り、
+
+    ⒜ 二つの手が同時に読んで順に書く形で★鍵が一本消える事を現に出して見せよ★(消えた鍵の名と数を書け)
+
+    ⒝ mkdir 式の錠を掛けた形で消えぬ事を示せ
+
+    ⒞ 「読む→書く」の間の時を測り、現に開いて居る窓が何 ms か何秒かを数へよ
+
+    ★共有の帳で試すな。己の worktree の写しの中だけで撃て。★
+
+
+    ㋓ 併せて測れ ―― 箱の錠(inbox_mark_read.py の .lock.d)は★帳を守るか★。
+
+    守らぬなら「箱に錠が在る」事は帳の安全の證に成らぬ事を、一行で書け。
+
+
+    ㋔ 案(据ゑず・紙のみ)―― 器ごとに
+
+    「錠を足す」「書く範囲を己の鍵に限る」「書く直前に読み直して差分のみ足す」の孰れかを選び、理由を一行。
+
+    ★一律を薦めるな★。據ゑるのは★委員長の許可を得た後★であり、貴席は紙までである。
+
+
+    ㋕ 測れぬ物を名指せ ―― 他 PC の器・走らせられぬ hook・人の手で編む場合・稼働中 watcher(★触るな★)。
+
+
+    ㋖ 束= docs/evidence/ashigaru-mac-1_km-189-chou-wo-futatsu-no-te-ga-kaku-20260918/。
+
+    __pycache__ を束へ入れるな。門を二度 rc=0(cd の後に KM_GATE_MANIFEST_BASE=. を置け)。
+
+    byte和が二度同じ事を示せ。臺帳の根は★束内相対★。
+
+
+    ㋗ 枝= origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634 から★己の worktree★で切れ(1弾1枝)。
+
+    共有樹の HEAD・index・他席の生きた樹には触れぬ。git add -f で名指し・commit --only・
+
+    ★reset を打つな・push せぬ・main を触るな・gh を叩くな★。
+
+
+    ㋘ ★km-188 が先★。km-189 は其の後。
+
+    宣ETA を先に一便・胴は300字・便は分けよ(識別子を略すな)・監査は gunshi-mac へ parent 332455。
+
+    '
+  board_task: e9060eef
+
+km188_nou_2026-09-18T2026:
+  task_id: km-188-kuda-wo-tooshita-rc-wo-kazoe-yo-20260918
+  status: done
+  completed_at: "2026-09-18T20:26:40+0900"
+  branch: ashigaru-mac-1/km-188-kuda-wo-tooshita-rc-20260918
+  tip: 6d3b0e7e8516019791739825d6a52a7629fe07c8
+  tree: fb2e6c219760117fcb67025ec85d5c57b0b42bbb
+  oya: 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  worktree: ~/wt/a1-km188
+  pushed: false
+  kotae: "管の左の失敗が rc に隠れる形: 樹B 242 行/62 file・~/bin 34/10(家老の器除かず)・重なり 57+11 を外し 185+23。pipefail 有 67/無 82 file。判 載る 105/載らぬ 111/判じ得ぬ 26。實射 素の管 rc0(偽)/pipefail rc1/PIPESTATUS・pipestatus 1/head の 141。案は器の種類で分け紙のみ。"
+  bundle: docs/evidence/ashigaru-mac-1_km-188-kuda-wo-tooshita-rc-20260918/ (枝内 commit・臺帳 13・門 二度 rc0・byte和 202677 二度同値)
+  nou_bin: ['msg_20260918_202536_df5d6002', 'msg_20260918_202537_31ffe077', 'msg_20260918_202537_9626fe6f', 'msg_20260918_202537_12d5b7b1', 'msg_20260918_202537_b3135189', 'msg_20260918_202537_6e5e7678', 'msg_20260918_202640_61a152e6']
+  kansa_seq: [333784, 333785, 333786, 333789]
+  kansa_parent_seq: 332455
+  kansa_readback: sb read 逐語一致 4/4
+  board_task: null
+  sen_eta: "21:15"
+  jitsu: "2026-09-18T20:26:40+0900"
