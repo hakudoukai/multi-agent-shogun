@@ -1,0 +1,14 @@
+# 甲 ―― 語のみ。比較器(-ge)に語を合はせる。★挙動は変へぬ★。
+diff --git a/scripts/checks/karo_mac_dasumae_gate.sh b/scripts/checks/karo_mac_dasumae_gate.sh
+index 054c442e..d519c467 100644
+--- a/scripts/checks/karo_mac_dasumae_gate.sh
++++ b/scripts/checks/karo_mac_dasumae_gate.sh
+@@ -252,7 +252,7 @@ run_gate(){
+     total=$((total + sz))
+   done
+   if [ "$total" -ge "$MAXB" ]; then
+-    say "★條⑤ 寸法 ―― 此の行は器の何處にも無い★陽性対照★★"
++    say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)以上★"
+     fail=1
+   else
+     say "條⑤ 寸法 = byte和 ${total}(閾 ${MAXB}未満)"

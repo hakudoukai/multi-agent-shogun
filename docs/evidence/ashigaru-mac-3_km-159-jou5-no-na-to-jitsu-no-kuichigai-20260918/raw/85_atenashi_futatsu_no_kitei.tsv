@@ -1,0 +1,5 @@
+当て紙	file	旧基底 rc	旧基底	新基底 rc	新基底	意	器の言(56字で截つ)
+甲(語・★旧基底で書いた物★)	60_atenashi_kou_kotoba.patch	0	当たる	1	当たらぬ	★旧に当たり新に当たらぬ ―― 新基底では疵が既に無い★	Checking patch scripts/checks/karo_mac_dasumae_gate.sh..
+乙(名実・★旧基底で書いた物★)	61_atenashi_otsu_meijitsu.patch	0	当たる	1	当たらぬ	★旧に当たり新に当たらぬ ―― 新基底では疵が既に無い★	Checking patch scripts/checks/karo_mac_dasumae_gate.sh..
+丙(★陽性対照★・新基底で書いた物)	86_atenashi_hei_shin_kitei_seitaishou.patch	0	当たる	0	当たる	★新基底に当たる(=器は働く)★	Checking patch scripts/checks/karo_mac_dasumae_gate.sh..
+外れ(★陰性対照★・器に無い行)	62_atenashi_hazure_seitaishou.patch	1	当たらぬ	1	当たらぬ	★両基底とも当たらぬ(=正)★	Checking patch scripts/checks/karo_mac_dasumae_gate.sh..

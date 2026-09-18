@@ -1,0 +1,8 @@
+物	値	rc	判	註
+★陽性対照★ 在らぬ ref	km-159-in-nai-ref-seitaishou	128	★引けぬ(=正)★	fatal: invalid object name 'km-159-in-nai-ref-seitaishou'.
+origin/main の commit	6bde7170ce574090a6139ba2dfe3aa4cb6db8634	0	-	-
+origin/main の blob(git object)	04672e15b1edf4a02b7cea1f4f32cfb9a64e34d5	0	-	-
+HEAD の blob(git object)	9cd550fc2cf963ca0475b3448bb33483b9aede6b	0	★main と別物★	-
+★新基底★ base_gate.sh の中身 sha256	3b8b7182566cc8c4e81533d27d2f6c5d98a9b56429d2d7205dfca9d3a9295bac	0	339行 19268byte	束へ引いた
+★旧基底★ 共用樹 disk の中身 sha256	2b8449bccd608a1a7f24c888b2e1857ad2af98065fdfb1d3077bf08cdbe6f685	0	321行 16261byte	★未commit の三つ目の版(触らず・読むのみ)★
+二つの基底は	★別物★	0	差 3007byte	-

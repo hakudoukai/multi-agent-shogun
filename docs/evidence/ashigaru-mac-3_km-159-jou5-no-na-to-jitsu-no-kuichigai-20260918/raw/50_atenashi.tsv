@@ -1,0 +1,4 @@
+当て紙	hunk数	git apply --check の rc	判	器の言
+60_atenashi_kou_kotoba.patch	1	0	当たる	warning: scripts/checks/karo_mac_dasumae_gate.sh has type 100755, expe
+61_atenashi_otsu_meijitsu.patch	2	0	当たる	warning: scripts/checks/karo_mac_dasumae_gate.sh has type 100755, expe
+62_atenashi_hazure_seitaishou.patch(★陽性対照★)	-	1	★当たらぬ(=正)★	warning: scripts/checks/karo_mac_dasumae_gate.sh has type 100755, expe

@@ -1,0 +1,10 @@
+as-of 2026-09-18 00:07:47(UTC)
+根=/Users/momizimac/multi-agent-shogun
+★和の母數(本弾が宣する定義)★
+  足す = 門の argv のうち ★第二引数以降の file★ (実装 L244-253 の files[])。寸法は safe_size(=stat・開かぬ)。
+  足さぬ = ⑴第一引数へ渡した臺帳 ⑵argv に無い file(束の中に在つても) ⑶dir 其の物 ⑷器自身(門・driver)。
+  ∴ 『byte和』は ★束の大きさ★ では無く ★其の走りで名指した file の和★ である。
+_fx/kiyoi.txt = 85 byte / _fx/tame_no_daichou.txt = 341 byte / 二つの和 = 426 byte
+母數 = 走り 3 本(甲乙丙)
+此の數が意味せぬ事: 束全体の byte 数ではない。臺帳を file としても渡せば(丙)和に入る ――
+  即ち『臺帳は和の外』は ★渡し方の函数★ であつて、器の不変則ではない。

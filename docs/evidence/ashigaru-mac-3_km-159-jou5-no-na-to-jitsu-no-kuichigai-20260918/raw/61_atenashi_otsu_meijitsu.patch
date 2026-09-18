@@ -1,0 +1,24 @@
+# 乙 ―― 名実。倒した閾で通す時は止める。★挙動を変へる ∴ 委員長の許可無くば據ゑぬ★。
+diff --git a/scripts/checks/karo_mac_dasumae_gate.sh b/scripts/checks/karo_mac_dasumae_gate.sh
+index 054c442e..bd2eb464 100644
+--- a/scripts/checks/karo_mac_dasumae_gate.sh
++++ b/scripts/checks/karo_mac_dasumae_gate.sh
+@@ -20,6 +20,7 @@ set -u
+ MAXB="${DASUMAE_MAX_BYTES:-10485760}"  # 10MB(裁294493⑸)
+ 
+ say(){ printf '%s\n' "$*" >&2; }
++MAXB_TAORETA=0  # ★閾が既定へ倒れた印(裁 km-159 乙案)★
+ 
+ # ★2026-09-12 止血(総監督裁 seq307881/307874 ⑴ ―― default-deny 側へ揃へる)★
+ #   旧版は 數 を取る口に ★|| true★ を置き、器が落ちても ${n:-0} で ★0(=通)★ に倒れた。
+@@ -254,6 +255,10 @@ run_gate(){
+   if [ "$total" -ge "$MAXB" ]; then
+     say "★條⑤ 寸法 ―― byte和 ${total}(閾 ${MAXB}・裁294493)超★"
+     fail=1
++  elif [ "${MAXB_TAORETA:-0}" -ne 0 ]; then
++    say "條⑤ 寸法 = byte和 ${total}(倒した閾 ${MAXB}未満)"
++    say "★條⑤ 閾が定まらなんだ儘 通すは fail-closed に非ず ―― 既定へ倒れるは★緩い側★である★"
++    fail=1
+   else
+     say "條⑤ 寸法 = byte和 ${total}(閾 ${MAXB}未満)"
+   fi

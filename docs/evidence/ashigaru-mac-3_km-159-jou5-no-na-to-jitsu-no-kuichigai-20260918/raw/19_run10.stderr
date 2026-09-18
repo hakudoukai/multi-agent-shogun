@@ -1,0 +1,2 @@
+/Users/momizimac/multi-agent-shogun/docs/evidence/ashigaru-mac-3_km-159-jou5-no-na-to-jitsu-no-kuichigai-20260918/driver/10_yonkei_no_shikii.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  % (datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"), ROOT,
