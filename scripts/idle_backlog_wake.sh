@@ -82,8 +82,8 @@ notify_kantoku() { # $1=content  機械便(sender=idle-backlog-wake)を監督の
   if [ "${IBW_DRY_RUN:-0}" = 1 ]; then echo "$TS DRY letter→fukuincho: $1"; return 0; fi
   local body
   body=$(python3 -c 'import sys,json
-print(json.dumps({"from_pc":"third_pc","to_pc":"third_pc","topic":"cross_pc_inbox_fukuincho","message_type":"status_update","requires_response":False,
- "content":sys.argv[1],"context_data":{"target_agent":"fukuincho","sender_agent":"idle-backlog-wake","origin_agent":"idle-backlog-wake","machine":True,"kind":"情報共有"}},ensure_ascii=False))' "$1")
+print(json.dumps({"from_pc":"third_pc","to_pc":"third_pc","topic":"telemetry_fukuincho","message_type":"status_update","requires_response":False,
+ "content":sys.argv[1],"context_data":{"sender_agent":"idle-backlog-wake","origin_agent":"idle-backlog-wake","machine":True,"kind":"情報共有"}},ensure_ascii=False))' "$1")
   curl -sf -m 12 -X POST -H "apikey: $SB_KEY" -H "Authorization: Bearer $SB_KEY" -H "Content-Type: application/json" -H "Prefer: return=minimal" \
     "$SB_URL/rest/v1/pc_handshake" -d "$body" >/dev/null 2>&1 && return 0
   echo "$TS LETTER_FAIL fukuincho"; return 1
@@ -101,8 +101,8 @@ fukuincho|hermes-kantoku:0.0|hermes|third_pc|fukuincho" ;;
 training-main|training-consult-main:0.0|hermes|main_pc|training-main" ;;
   second) DEF="honbucho|hermes-honbucho:0.0|hermes|second_pc|honbucho
 ashigaru-second-1|multiagent-second:0.0|claude|second_pc|ashigaru-second-1
-ashigaru-second-3|multiagent-second:0.1|claude|second_pc|ashigaru-second-3
-ashigaru-second-2|multiagent-second:0.2|claude|second_pc|ashigaru-second-2" ;;
+ashigaru-second-2|multiagent-second:0.1|claude|second_pc|ashigaru-second-2
+ashigaru-second-3|multiagent-second:0.2|claude|second_pc|ashigaru-second-3" ;;
   mac)    DEF="shogun-mac|shogun-mac:0.0|claude|mac_pc|shogun-mac
 gakushu-bucho|gakushu-bucho:0.0|hermes|mac_pc|gakushu-bucho" ;;
   *) DEF="" ;;
