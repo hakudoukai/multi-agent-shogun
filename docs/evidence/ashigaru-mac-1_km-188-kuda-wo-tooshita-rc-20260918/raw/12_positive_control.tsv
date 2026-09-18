@@ -1,0 +1,8 @@
+# koku=2026-09-18T20:20:13+0900 root=docs/evidence/ashigaru-mac-1_km-188-kuda-wo-tooshita-rc-20260918/raw/seed_ctrl skip=['.git'] files=1 sh/bats_scanned=1 max_depth=0 rc=0
+kind	path	line	forms	file_pipefail	overlap	verbatim
+sh	positive_control.sh	3	①count+②subst	no_pipefail	-	n=$(cat /nonexistent | wc -l)
+sh	positive_control.sh	4	②subst	no_pipefail	-	c=$(grep -c '' /nonexistent | tr -d ' ')
+sh	positive_control.sh	5	③head	no_pipefail	-	false | head -1
+sh	positive_control.sh	6	①count	no_pipefail	-	ls /nonexistent | sort -u
+sh	positive_control.sh	7	①count+⑤rc_after	no_pipefail	-	cat /nonexistent | wc -l
+sh	positive_control.sh	9	①count	no_pipefail	-	echo constant | wc -l

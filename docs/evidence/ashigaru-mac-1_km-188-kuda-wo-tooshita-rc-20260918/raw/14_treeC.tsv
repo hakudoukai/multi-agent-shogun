@@ -1,0 +1,477 @@
+# koku=2026-09-18T20:20:42+0900 root=/Users/momizimac/multi-agent-shogun skip=['.git', '.venv', '__pycache__', 'evidence', 'node_modules', 'queue'] files=1595 sh/bats_scanned=289 max_depth=13 rc=0
+kind	path	line	forms	file_pipefail	overlap	verbatim
+bats	.claude/worktrees/karo-mac-a1/tests/checks/test_karo_overload_monitor.bats	184	①count+②subst	no_pipefail	-	before_count=$(echo "$history_before" | grep -oE '[0-9]+' | wc -l)
+bats	.claude/worktrees/karo-mac-a1/tests/checks/test_karo_overload_monitor.bats	185	①count+②subst	no_pipefail	-	after_count=$(echo "$history_after" | grep -oE '[0-9]+' | wc -l)
+bats	.claude/worktrees/karo-mac-a1/tests/checks/test_karo_overload_monitor.bats	238	①count+②subst	no_pipefail	-	pre_task_count=$(find "$FAKE_TASKS_DIR" -name "*.yaml" -type f | wc -l)
+bats	.claude/worktrees/karo-mac-a1/tests/checks/test_karo_overload_monitor.bats	242	①count+②subst	no_pipefail	-	post_task_count=$(find "$FAKE_TASKS_DIR" -name "*.yaml" -type f | wc -l)
+bats	.claude/worktrees/karo-mac-a1/tests/unit/test_build_system.bats	54	①count+②subst	no_pipefail	-	count=$(find "$OUTPUT_DIR" -name "*.md" -type f | wc -l)
+bats	.claude/worktrees/karo-mac-a1/tests/unit/test_build_system.bats	281	②subst	no_pipefail	-	checksums_first=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+bats	.claude/worktrees/karo-mac-a1/tests/unit/test_build_system.bats	286	②subst	no_pipefail	-	checksums_second=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+bats	.claude/worktrees/karo-mac-a1/tests/unit/test_ntfy_auth.bats	188	②subst	no_pipefail	-	TOPIC=\$(grep 'ntfy_topic:' "\$SETTINGS" | awk '{print \$2}' | tr -d '"')
+bats	.claude/worktrees/karo-mac-a1/tests/unit/test_ntfy_auth.bats	216	①count+②subst	no_pipefail	-	line_count=$(echo "$auth_args" | wc -l)
+bats	.claude/worktrees/karo-mac-a1/tests/unit/test_ntfy_auth.bats	220	②subst+③head	no_pipefail	-	first_line=$(echo "$auth_args" | head -1)
+bats	.claude/worktrees/karo-mac-a1/tests/unit/test_ntfy_auth.bats	224	②subst+③head	no_pipefail	-	second_line=$(echo "$auth_args" | tail -1)
+bats	tests/checks/test_karo_overload_monitor.bats	184	①count+②subst	no_pipefail	-	before_count=$(echo "$history_before" | grep -oE '[0-9]+' | wc -l)
+bats	tests/checks/test_karo_overload_monitor.bats	185	①count+②subst	no_pipefail	-	after_count=$(echo "$history_after" | grep -oE '[0-9]+' | wc -l)
+bats	tests/checks/test_karo_overload_monitor.bats	238	①count+②subst	no_pipefail	-	pre_task_count=$(find "$FAKE_TASKS_DIR" -name "*.yaml" -type f | wc -l)
+bats	tests/checks/test_karo_overload_monitor.bats	242	①count+②subst	no_pipefail	-	post_task_count=$(find "$FAKE_TASKS_DIR" -name "*.yaml" -type f | wc -l)
+bats	tests/unit/test_build_system.bats	54	①count+②subst	no_pipefail	-	count=$(find "$OUTPUT_DIR" -name "*.md" -type f | wc -l)
+bats	tests/unit/test_build_system.bats	281	②subst	no_pipefail	-	checksums_first=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+bats	tests/unit/test_build_system.bats	286	②subst	no_pipefail	-	checksums_second=$(find "$OUTPUT_DIR" -name "*.md" -type f -exec md5sum {} \; | sort)
+bats	tests/unit/test_ntfy_auth.bats	188	②subst	no_pipefail	-	TOPIC=\$(grep 'ntfy_topic:' "\$SETTINGS" | awk '{print \$2}' | tr -d '"')
+bats	tests/unit/test_ntfy_auth.bats	216	①count+②subst	no_pipefail	-	line_count=$(echo "$auth_args" | wc -l)
+bats	tests/unit/test_ntfy_auth.bats	220	②subst+③head	no_pipefail	-	first_line=$(echo "$auth_args" | head -1)
+bats	tests/unit/test_ntfy_auth.bats	224	②subst+③head	no_pipefail	-	second_line=$(echo "$auth_args" | tail -1)
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	103	②subst	no_pipefail	-	TMUX_VERSION=$(tmux -V | awk '{print $2}')
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	132	②subst	no_pipefail	-	TMUX_VERSION=$(tmux -V | awk '{print $2}')
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	194	②subst	no_pipefail	-	NODE_MAJOR=$(echo $NODE_VERSION | cut -d'.' -f1 | tr -d 'v')
+sh	.claude/worktrees/karo-mac-a1/first_setup.sh	876	②subst	no_pipefail	km184	WIN_USER_DIR=$(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/lib/agent_status.sh	51	②subst+③head	no_pipefail	-	pane_tail=$(echo "$full_capture" | tail -5)
+sh	.claude/worktrees/karo-mac-a1/lib/agent_status.sh	64	②subst+③head	no_pipefail	-	last_line=$(echo "$pane_tail" | grep -v '^[[:space:]]*$' | tail -1)
+sh	.claude/worktrees/karo-mac-a1/lib/cli_adapter.sh	1084	③head	no_pipefail	-	| awk -v agent="$candidate" '$2 == agent {print $1}' | head -1)
+sh	.claude/worktrees/karo-mac-a1/lib/cli_adapter.sh	1136	③head	no_pipefail	-	| awk -v agent="$fallback" '$2 == agent {print $1}' | head -1)
+sh	.claude/worktrees/karo-mac-a1/lib/ntfy_auth.sh	76	②subst	no_pipefail	-	lower_topic=$(echo "$topic" | tr '[:upper:]' '[:lower:]')
+sh	.claude/worktrees/karo-mac-a1/scripts/agent_periodic_push.sh	27	③head	pipefail	-	| tail -10)
+sh	.claude/worktrees/karo-mac-a1/scripts/agent_periodic_push.sh	36	②subst+③head	pipefail	km184	LATEST_JSONL=$(ls -t "$JSONL_DIR"/*.jsonl 2>/dev/null | head -1)
+sh	.claude/worktrees/karo-mac-a1/scripts/agent_status.sh	75	①count+②subst	pipefail	-	byte_len=$(echo -n "$text" | wc -c)
+sh	.claude/worktrees/karo-mac-a1/scripts/agent_status.sh	253	②subst	pipefail	-	task_id=$(echo "$task_info" | awk '{print $1}')
+sh	.claude/worktrees/karo-mac-a1/scripts/agent_status.sh	254	②subst	pipefail	-	task_status=$(echo "$task_info" | awk '{$1=""; print $0}' | sed 's/^ //')
+sh	.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	58	②subst+③head	pipefail	-	capture_tail=$(echo "$capture" | tail -20)
+sh	.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	63	②subst	pipefail	-	non_empty_lines=$(echo "$capture" | grep -cE '\S' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	91	②subst	pipefail	-	$(echo "${original_content}" | sed 's/^/  /')
+sh	.claude/worktrees/karo-mac-a1/scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	136	①count	pipefail	km184	find "$dlq_dir" -maxdepth 1 -name '*.yaml' 2>/dev/null | wc -l
+sh	.claude/worktrees/karo-mac-a1/scripts/audit_codex.sh	41	②subst	pipefail	km184	CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null | tr '\n' ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/audit_codex.sh	42	①count+②subst	pipefail	-	DIFF_LINES_ADDED=$(echo "$DIFF" | grep -c '^+[^+]' || echo 0)
+sh	.claude/worktrees/karo-mac-a1/scripts/audit_codex.sh	43	①count+②subst	pipefail	-	DIFF_LINES_REMOVED=$(echo "$DIFF" | grep -c '^-[^-]' || echo 0)
+sh	.claude/worktrees/karo-mac-a1/scripts/audit_gemini.sh	42	②subst	pipefail	km184	CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null | tr '\n' ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/audit_meta_codex.sh	158	②subst	pipefail	km184	CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . "${EXCLUDE_ARGS[@]}" 2>/dev/null | tr '\n' ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/audit_meta_codex.sh	159	①count+②subst	pipefail	-	DIFF_LINES_ADDED=$(echo "$DIFF" | grep -c '^+[^+]' || echo 0)
+sh	.claude/worktrees/karo-mac-a1/scripts/audit_meta_codex.sh	160	①count+②subst	pipefail	-	DIFF_LINES_REMOVED=$(echo "$DIFF" | grep -c '^-[^-]' || echo 0)
+sh	.claude/worktrees/karo-mac-a1/scripts/box_pdf_to_png.sh	19	③head	pipefail	km187	pdftoppm -v 2>&1 | head -1 || true
+sh	.claude/worktrees/karo-mac-a1/scripts/box_pdf_to_png.sh	30	①count+②subst	pipefail	km184	png_count=$(ls "$DST"/*.png 2>/dev/null | wc -l)
+sh	.claude/worktrees/karo-mac-a1/scripts/box_pdf_to_png.sh	32	③head	pipefail	-	ls -la "$DST" | head -20
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/context_usage_warn.sh	38	②subst	no_pipefail	-	PROJECT_SLUG="-$(echo "$PROJECT_DIR" | sed 's|^/||; s|/|-|g')"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/dd169_kill_term_guard.sh	70	②subst	pipefail	-	PID=$(echo "$COMMAND" | grep -oE '[0-9]+$')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/dd169_kill_term_guard.sh	82	②subst	pipefail	-	log "  ps_evidence: $(echo "$PS_EVIDENCE" | tail -n +2)"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/ephemeral_worktree_hygiene.sh	8	①count+②subst	pipefail	km184	FREE_GI="$(df -g "${REPO}" 2>/dev/null | awk 'NR==2{print $4}')"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/ephemeral_worktree_hygiene.sh	9	①count+②subst	pipefail	km184	TMP_N="$(ls -d "${WT_DIR}"/tmp-* 2>/dev/null | wc -l | tr -d ' ')"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/ephemeral_worktree_hygiene.sh	19	①count+②subst	pipefail	km184	dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/ephemeral_worktree_hygiene.sh	20	①count+②subst	pipefail	km184	recent="$(find "${d}" -maxdepth 0 -newermt '-24 hours' 2>/dev/null | wc -l | tr -d ' ')"
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/inbox_alias_integrity.sh	71	②subst	no_pipefail	km184	alias_md5=$(md5sum "$alias_path" 2>/dev/null | awk '{print $1}')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/inbox_alias_integrity.sh	72	②subst	no_pipefail	km184	canonical_md5=$(md5sum "$canonical_path" 2>/dev/null | awk '{print $1}')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	44	②subst	no_pipefail	-	sz=$(wc -c < "$f" | tr -d ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	49	②subst	no_pipefail	-	last1=$(tail -c1 "$f" | xxd -p)
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	54	②subst	no_pipefail	-	last2=$(tail -c2 "$f" | xxd -p)
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_dasumae_gate.sh	103	②subst	no_pipefail	-	sz=$(wc -c < "$f" | tr -d ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	22	①count+②subst	no_pipefail	-	n=$(printf '%s\n' "$out" | grep -c .)
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	24	③head	no_pipefail	-	printf '%s\n' "$out" | head -20 | sed 's/^/    /' >&2
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	31	①count+②subst	no_pipefail	-	n_staged=$(git diff --cached --name-only -- "$@" | grep -c .)
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate4.sh	67	②subst	no_pipefail	-	sz=$(wc -c < "$f" | tr -d ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	5	②subst	no_pipefail	-	gate7(){ f=$(cat "$@" | /usr/bin/grep -vE '^> ')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	6	②subst	no_pipefail	-	tab=$(printf '%s\n' "$f" | /usr/bin/grep -E '^\| ?[0-9] ?\|' | /usr/bin/grep -cE "$ZER7")
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	9	②subst	no_pipefail	-	zl=$(printf '%s\n' "$body" | /usr/bin/grep -E "$ZER7")
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	10	②subst	no_pipefail	-	rcst=$(printf '%s\n' "$f" | /usr/bin/grep -vE '^\| ?[0-9] ?\|' | /usr/bin/grep -E 'rc ?= ?0|exit ?0' | /usr/bin/grep -vcE "$(printf '%s' "$ZER7" | sed 's/|=0\$.*//')")
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	11	②subst	no_pipefail	-	kou=$(printf '%s\n' "$zl" | /usr/bin/grep -cE "$INST7"); otsu=$(printf '%s\n' "$zl" | /usr/bin/grep -vcE "$INST7"); hei=$((tab+selfref+rcst))
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	12	②subst	no_pipefail	-	t=$(printf '%s\n' "$f" | /usr/bin/grep -cE '問一|問二|走らせずに|陽性対照を通|二問|提出前')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	13	②subst	no_pipefail	-	c2=$(printf '%s\n' "$f" | /usr/bin/grep -cE 'rc ?= ?[0-9]|exit ?[0-9]|走らせた物 無し')
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	14	②subst	no_pipefail	-	c3a=$(printf '%s\n' "$f" | /usr/bin/grep -E '陽性対照|陽性對照|未測' | /usr/bin/grep -cE ':L?[0-9]+|未測'); c3b=$(printf '%s\n' "$f" | /usr/bin/grep -cE '^\|.*(陽性対照|陽性對照).*\|'); c3=$
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	15	②subst	no_pipefail	-	c3k=$(printf '%s\n' "$f" | /usr/bin/grep -E '陽性対照|陽性對照' | /usr/bin/grep -cE "$INST7|器名|器=|同一の器|同じ器|同器|欄1と同一|欄1 と同一|同一detector|同一検出器|同一器|器の實體"); h3=$(printf '%s\n' "$f" |
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/karo_mac_gate7.sh	16	②subst	no_pipefail	-	c4=$(printf '%s\n' "$f" | /usr/bin/grep -cE '転記|轉記'); c5=$(printf '%s\n' "$f" | /usr/bin/grep -cE "$C5_7"); c6=$(printf '%s\n' "$f" | /usr/bin/grep -cE '①|②|③|④|推論\(|comm
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/pane_identity.sh	369	①count+②subst	pipefail	-	unique=$(printf '%s\n' "${values[@]}" | sort -u | wc -l)
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/symlink_aware_atomic_write.sh	62	②subst	no_pipefail	-	echo "[symlink_aware_atomic_write]       match: $(echo "$match" | sed 's/^[ \t]*//' | head -c 100)" >&2
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/symlink_aware_atomic_write.sh	87	②subst	no_pipefail	-	echo "[symlink_aware_atomic_write]       match: $(echo "$match" | sed 's/^[ \t]*//' | head -c 100)" >&2
+sh	.claude/worktrees/karo-mac-a1/scripts/checks/verify_state_before_asserting.sh	50	②subst+③head	pipefail	km184	last="$(find "${TMPDIR:-/tmp}" -maxdepth 1 -name '.vsba_fetch_*' -newermt '-10 minutes' 2>/dev/null | head -1)"
+sh	.claude/worktrees/karo-mac-a1/scripts/diagnose.sh	73	③head	pipefail	-	sed -n '/^---/,/^---/p' "$file" | tr -d '\r' | grep "^${field}:" | head -1 | sed "s/^${field}: *//;s/\"//g"
+sh	.claude/worktrees/karo-mac-a1/scripts/diagnose.sh	214	①count+②subst	pipefail	-	count=$(find "$RUNBOOK_DIR" -name 'ERR-*.md' | wc -l)
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	221	②subst	pipefail	km184	current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	257	②subst	pipefail	km184	current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	274	②subst+③head	pipefail	-	pane_cli=$(echo "$pane_cli_raw" | tr -d '\r' | head -n1 | tr -d '[:space:]')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	796	②subst	pipefail	km184	my_pgid=$(ps -o pgid= -p $$ 2>/dev/null | tr -d ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	800	②subst	pipefail	km184	pid_pgid=$(ps -o pgid= -p "$pid" 2>/dev/null | tr -d ' ')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	847	②subst+③head	pipefail	-	pane_tail=$(echo "$pane_capture" | tail -12)
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	877	①count+②subst	pipefail	km184	[ -n "$session_name" ] && [ "$(tmux list-clients -t "$session_name" 2>/dev/null | wc -l)" -gt 0 ]
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	909	③head	pipefail	-	| tail -1)
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	916	②subst	pipefail	-	normalized=$(echo "$current_prompt" | sed 's/\xc2\xa0/ /g')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	918	②subst	pipefail	-	content=$(echo "$normalized" | sed 's/^❯[[:space:]]*//' | sed 's/[[:space:]]*$//')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1037	②subst+③head	pipefail	km184	pane_content=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1503	②subst+③head	pipefail	km184	_pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh	1506	③head	pipefail	-	_token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1 || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	44	①count+②subst	no_pipefail	-	_AMP_PATTERN_COUNT=$(echo "$CONTENT" | grep -oE '\[[a-zA-Z_0-9]+→[a-zA-Z_0-9]+\]\[[a-zA-Z_0-9]+\]' | wc -l)
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	110	②subst	no_pipefail	-	sb_url=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	111	②subst	no_pipefail	-	sb_key=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/scripts/inbox_write.sh	191	②subst	no_pipefail	-	MSG_ID="msg_$(date +%Y%m%d_%H%M%S)_$(od -An -N4 -tx1 /dev/urandom | tr -d ' \n')"
+sh	.claude/worktrees/karo-mac-a1/scripts/ntfy.sh	12	②subst	no_pipefail	-	TOPIC=$(grep 'ntfy_topic:' "$SETTINGS" | awk '{print $2}' | tr -d '"')
+sh	.claude/worktrees/karo-mac-a1/scripts/ntfy_listener.sh	11	②subst	no_pipefail	-	TOPIC=$(grep 'ntfy_topic:' "$SETTINGS" | awk '{print $2}' | tr -d '"')
+sh	.claude/worktrees/karo-mac-a1/scripts/ntfy_listener.sh	146	②subst	no_pipefail	-	EVENT=$(echo "$line" | parse_json event)
+sh	.claude/worktrees/karo-mac-a1/scripts/ntfy_listener.sh	150	②subst	no_pipefail	-	TAGS=$(echo "$line" | parse_tags)
+sh	.claude/worktrees/karo-mac-a1/scripts/ntfy_listener.sh	154	②subst	no_pipefail	-	MSG=$(echo "$line" | parse_json message)
+sh	.claude/worktrees/karo-mac-a1/scripts/ntfy_listener.sh	157	②subst	no_pipefail	-	MSG_ID=$(echo "$line" | parse_json id)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	72	③head	pipefail	-	| awk -v a="$agent" '$2 == a {print $1}' | head -1)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	86	②subst	pipefail	-	model=$(echo "$model" | sed -E 's/[Cc]laude-?//g; s/-20[0-9]{6}//g; s/-[0-9]+-[0-9]+$//; s/^-//')
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	227	②subst	pipefail	-	CLAUDE_5H_UTIL=$(echo "$oauth_data" | grep '^5H_UTIL=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	228	②subst	pipefail	-	CLAUDE_5H_RESET=$(echo "$oauth_data" | grep '^5H_RESET=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	229	②subst	pipefail	-	CLAUDE_7D_UTIL=$(echo "$oauth_data" | grep '^7D_UTIL=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	230	②subst	pipefail	-	CLAUDE_7D_RESET=$(echo "$oauth_data" | grep '^7D_RESET=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	231	②subst	pipefail	-	CLAUDE_7D_SONNET_UTIL=$(echo "$oauth_data" | grep '^7D_SONNET=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	232	②subst	pipefail	-	CLAUDE_7D_OPUS_UTIL=$(echo "$oauth_data" | grep '^7D_OPUS=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	233	②subst	pipefail	-	CLAUDE_EXTRA_ENABLED=$(echo "$oauth_data" | grep '^EXTRA=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	292	②subst	pipefail	-	CLAUDE_TODAY_TOTAL=$(echo "$claude_data" | grep '^TOTAL=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	293	②subst	pipefail	-	CLAUDE_DATA_DATE=$(echo "$claude_data" | grep '^DATE=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	294	②subst	pipefail	-	CLAUDE_SESSIONS=$(echo "$claude_data" | grep '^SESSIONS=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	295	②subst	pipefail	-	CLAUDE_MESSAGES=$(echo "$claude_data" | grep '^MESSAGES=' | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	300	②subst	pipefail	-	model_name=$(echo "$line" | sed 's/^MODEL_//' | cut -d= -f1)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	301	②subst	pipefail	-	model_val=$(echo "$line" | cut -d= -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	337	③head	pipefail	-	| grep -oE '[0-9]+% left' | tail -1 \
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	356	②subst	pipefail	-	_5h_lines=$(printf '%s\n' "$_status_block" | grep '5h limit:' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	357	②subst	pipefail	-	_wk_lines=$(printf '%s\n' "$_status_block" | grep 'Weekly limit:' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	360	②subst+③head	pipefail	-	_line=$(printf '%s\n' "$_5h_lines" | head -1 || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	362	②subst+③head	pipefail	-	CODEX_ACCT_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	363	③head	pipefail	-	CODEX_ACCT_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	367	②subst+③head	pipefail	-	_line=$(printf '%s\n' "$_wk_lines" | head -1 || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	369	②subst+③head	pipefail	-	CODEX_ACCT_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	370	③head	pipefail	-	CODEX_ACCT_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	374	②subst+③head	pipefail	-	CODEX_MODEL_LABEL=$(printf '%s\n' "$_status_block" | grep -oE 'GPT-[^:]+ limit:' | head -1 | sed 's/ limit:$//' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	377	②subst	pipefail	-	_line=$(printf '%s\n' "$_5h_lines" | sed -n '2p' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	379	②subst+③head	pipefail	-	CODEX_MODEL_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	380	③head	pipefail	-	CODEX_MODEL_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	384	②subst	pipefail	-	_line=$(printf '%s\n' "$_wk_lines" | sed -n '2p' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	386	②subst+③head	pipefail	-	CODEX_MODEL_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	387	③head	pipefail	-	CODEX_MODEL_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	416	①count	pipefail	-	| grep -c "$current_hour" || true)
+sh	.claude/worktrees/karo-mac-a1/scripts/ratelimit_check.sh	419	②subst	pipefail	-	CODEX_LIMIT_HITS=$(echo "$CODEX_LIMIT_HITS" | tr -d '[:space:]')
+sh	.claude/worktrees/karo-mac-a1/scripts/redundancy/shogun_report_watcher.sh	161	③head	pipefail	-	| tail -1 \
+sh	.claude/worktrees/karo-mac-a1/scripts/switch_cli.sh	68	①count+②subst	pipefail	km184	pane_count=$(tmux list-panes -t "multiagent:agents" 2>/dev/null | wc -l)
+sh	.claude/worktrees/karo-mac-a1/scripts/switch_cli.sh	280	②subst+③head	pipefail	km184	last_lines=$(tmux capture-pane -t "$pane" -p 2>/dev/null | grep -v '^$' | tail -3)
+sh	.claude/worktrees/karo-mac-a1/scripts/tests/test_fukuincho_detect_stale_cli.sh	58	②subst+③head	pipefail	-	done_line=$(grep -E '\[INVOKE\].*fukuincho_detect_stale_cli done' "$DETECT_STALE_LOG" | tail -n 1)
+sh	.claude/worktrees/karo-mac-a1/scripts/visual_env_setup.sh	20	③head	pipefail	km187	fc-cache -f "$FONT_DIR" 2>&1 | tail -2 || true
+sh	.claude/worktrees/karo-mac-a1/scripts/visual_env_setup.sh	29	③head	pipefail	km187	pdftoppm -v 2>&1 | head -1
+sh	.claude/worktrees/karo-mac-a1/scripts/visual_env_setup.sh	42	③head	pipefail	km187	python3 -m playwright install chromium 2>&1 | tail -3 || true
+sh	.claude/worktrees/karo-mac-a1/scripts/visual_env_setup.sh	48	③head	pipefail	km187	npx -y @playwright/test --version 2>&1 | head -1 || true
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	185	②subst	pipefail	-	ELAPSED_MIN=$(echo "$LAST_INFO" | cut -d'|' -f1)
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	186	②subst	pipefail	-	LAST_AT=$(echo "$LAST_INFO" | cut -d'|' -f2)
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	187	②subst	pipefail	-	LAST_TOPIC=$(echo "$LAST_INFO" | cut -d'|' -f3)
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	188	②subst	pipefail	-	ELAPSED_INT=$(echo "$ELAPSED_MIN" | cut -d. -f1)
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	208	②subst	pipefail	-	PANE_TAIL=$(printf '%s' "$PANE_TAIL" | sed 's/\xc2\xa0/ /g')
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	210	②subst	pipefail	-	log "pane tail (last 50 lines, base64, after NBSP normalize): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	237	②subst	pipefail	-	LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	244	②subst	pipefail	-	log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
+sh	.claude/worktrees/karo-mac-a1/scripts/watchdogs/enter_restart_common_watchdog.sh	245	②subst	pipefail	-	log "prompt_line (base64, border-anchored): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	61	②subst+③head	no_pipefail	-	status=$(grep '^\s*status:' "$task_file" | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	153	②subst+③head	no_pipefail	km184	task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	218	②subst+③head	no_pipefail	km184	task_status=$(grep '^\s*status:' "$task_file" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	222	②subst+③head	no_pipefail	km184	task_id=$(grep '^\s*task_id:' "$task_file" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	245	②subst+③head	no_pipefail	km184	qa_decision=$(grep '^\s*qa_decision:' "$gunshi_report" 2>/dev/null | head -1 | sed 's/.*qa_decision:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	249	②subst+③head	no_pipefail	km184	audited_task=$(grep '^\s*ashigaru_task_id:' "$gunshi_report" 2>/dev/null | head -1 | sed 's/.*ashigaru_task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	270	②subst+③head	no_pipefail	km184	codex_verdict=$(grep -A2 'codex:' "$gunshi_report" 2>/dev/null | grep 'verdict:' | head -1 | sed 's/.*verdict:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	273	②subst+③head	no_pipefail	km184	gemini_verdict=$(grep -A2 'gemini:' "$gunshi_report" 2>/dev/null | grep 'verdict:' | head -1 | sed 's/.*verdict:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	299	②subst+③head	no_pipefail	km184	redo_status=$(grep '^\s*status:' "$redo_file" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	343	②subst+③head	no_pipefail	km184	task_status=$(grep '^\s*status:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh	344	②subst+③head	no_pipefail	km184	task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_audit_scheduler.sh	17	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_audit_scheduler.sh	18	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_audit_scheduler.sh	85	①count+②subst	no_pipefail	km184	unpushed=$(git log --oneline origin/main..HEAD 2>/dev/null | wc -l)
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_audit_scheduler.sh	112	②subst+③head	no_pipefail	km184	last_audit=$(ls -t "${AUDIT_DIR}"/weekly_codex_*.txt 2>/dev/null | head -1)
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_audit_scheduler.sh	117	②subst	no_pipefail	-	last_date=$(echo "$last_audit" | grep -oP '\d{8}')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_audit_scheduler.sh	118	②subst+③head	no_pipefail	km184	diff_summary=$(cd "$SCRIPT_DIR" && git log --oneline --since="${last_date:0:4}-${last_date:4:2}-${last_date:6:2}" 2>/dev/null | head -20)
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	55	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	56	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	102	②subst+③head	no_pipefail	-	HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	103	②subst	no_pipefail	-	BODY=$(echo "$RESPONSE" | sed '$d')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_watcher.sh	34	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_fukuincho_watcher.sh	35	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	29	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	30	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_minimal_install.sh	70	③head	pipefail	km187	if ! python3 -m pip install --quiet --user --upgrade "supabase>=2.0.0" 2>&1 | tail -3; then
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh	35	②subst	no_pipefail	-	[ -z "${SUPABASE_URL:-}" ] && SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh	36	②subst	no_pipefail	-	[ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh	37	②subst	no_pipefail	-	[ -z "${HAKUDOKAI_CLINIC_ID:-}" ] && HAKUDOKAI_CLINIC_ID=$(grep '^HAKUDOKAI_CLINIC_ID=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh	76	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh	86	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_receiver.sh	29	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_receiver.sh	30	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	56	②subst+③head	no_pipefail	-	ok "git $(git --version | head -1)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	96	②subst	no_pipefail	-	SB_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	97	②subst	no_pipefail	-	SB_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	188	②subst	no_pipefail	km184	DENTALBI_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||' || echo "master")
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	217	③head	no_pipefail	km187	npm install --no-audit --no-fund 2>&1 | tail -3
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	297	①count+②subst	no_pipefail	km184	PANE_COUNT=$(tmux list-panes -t "${TMUX_SESSION}:0" 2>/dev/null | wc -l)
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	385	②subst+③head	no_pipefail	-	ok "inbox_watcher[${agent_id}]: PID=$(pgrep -f "inbox_watcher.sh ${agent_id}" | head -1)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	404	②subst+③head	no_pipefail	-	ok "Supabase bridge receiver v2: PID=$(pgrep -f 'hakudokai_secondpc_receiver' | head -1)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	471	②subst+③head	no_pipefail	-	echo "    inbox_watcher[${AGENT1_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT1_ID}" | head -1 || echo 'NOT RUNNING')"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	472	②subst+③head	no_pipefail	-	echo "    inbox_watcher[${AGENT2_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT2_ID}" | head -1 || echo 'NOT RUNNING')"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_setup.sh	474	②subst+③head	no_pipefail	-	echo "    reports_sync: $(pgrep -f 'hakudokai_reports_sync' | head -1 || echo 'NOT RUNNING')"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_watcher.sh	27	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_watcher.sh	28	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	29	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	30	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	75	②subst	no_pipefail	-	agent=$(echo "$entry" | cut -d' ' -f1)
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	76	②subst	no_pipefail	-	pane=$(echo "$entry" | cut -d' ' -f2)
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	180	②subst+③head	no_pipefail	-	log "fukuincho_watcher: $(pgrep -f 'hakudokai_fukuincho_watcher.sh' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	181	②subst+③head	no_pipefail	-	log "fukuincho_reverse: $(pgrep -f 'hakudokai_fukuincho_reverse_watcher.sh' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	182	②subst+③head	no_pipefail	-	log "secondpc_watcher: $(pgrep -f 'hakudokai_secondpc_watcher.sh' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	183	②subst+③head	no_pipefail	-	log "kuro_desktop_watcher: $(pgrep -f 'hakudokai_kuro_desktop_watcher.sh' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	184	②subst+③head	no_pipefail	-	log "task_sync: $(pgrep -f 'hakudokai_task_sync.sh' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	185	②subst+③head	no_pipefail	-	log "inbox_watcher[karo]: $(pgrep -f 'inbox_watcher.sh karo' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	186	②subst+③head	no_pipefail	-	log "inbox_watcher[ashigaru1]: $(pgrep -f 'inbox_watcher.sh ashigaru1' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	187	②subst+③head	no_pipefail	-	log "inbox_watcher[gunshi]: $(pgrep -f 'inbox_watcher.sh gunshi' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	188	②subst+③head	no_pipefail	-	log "inbox_watcher[shogun]: $(pgrep -f 'inbox_watcher.sh shogun' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	189	②subst+③head	no_pipefail	-	log "activity_monitor: $(pgrep -f 'hakudokai_activity_monitor.sh' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_start_watchers.sh	190	②subst+③head	no_pipefail	-	log "watchdog: $(pgrep -f 'hakudokai_watchdog.sh' | head -1 || echo DEAD)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_task_sync.sh	36	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_task_sync.sh	37	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_task_sync.sh	68	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_task_sync.sh	78	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_task_sync.sh	144	③head	no_pipefail	km184	grep '^\s*project:' "$yaml_file" 2>/dev/null | head -1 | sed 's/.*project:\s*//' | tr -d '\r" '
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	59	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_watchdog.sh	60	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	22	②subst	no_pipefail	km184	LANG_SETTING=$(grep "^language:" ./config/settings.yaml 2>/dev/null | awk '{print $2}' || echo "ja")
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	28	②subst	no_pipefail	km184	SHELL_SETTING=$(grep "^shell:" ./config/settings.yaml 2>/dev/null | awk '{print $2}' || echo "bash")
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	75	①count+②subst	no_pipefail	-	_ASHIGARU_COUNT=$(echo "$_ASHIGARU_IDS_STR" | wc -w | tr -d ' ')
+sh	.claude/worktrees/karo-mac-a1/shutsujin_departure.sh	1075	②subst	no_pipefail	km184	NTFY_TOPIC=$(grep 'ntfy_topic:' ./config/settings.yaml 2>/dev/null | awk '{print $2}' | tr -d '"')
+sh	.claude/worktrees/karo-mac-a1/skills/shogun-screenshot/scripts/capture_local.sh	71	②subst	pipefail	-	val=$(echo "$line" | sed 's/^[[:space:]]*-[[:space:]]*//')
+sh	.claude/worktrees/karo-mac-a1/tests/checks/dd169_kill_term_guard/smoke_test.sh	35	②subst	pipefail	km187	actual_rc=$(printf '%s' "$stdin_input" | bash "$HOOK" >/dev/null 2>&1; printf '%d' $?)
+sh	.claude/worktrees/karo-mac-a1/tests/checks/enter_restart_footer_immune/smoke_test.sh	29	③head	pipefail	-	FOOTER_PATTERN=$(grep -E "^FOOTER_PATTERN=" "$WATCHDOG" | head -1 | sed -E "s/^FOOTER_PATTERN='([^']+)'/\\1/")
+sh	.claude/worktrees/karo-mac-a1/tests/checks/enter_restart_footer_immune/smoke_test.sh	50	②subst	pipefail	-	pane_tail=$(printf '%s' "$pane_tail" | sed 's/\xc2\xa0/ /g')
+sh	.claude/worktrees/karo-mac-a1/tests/checks/enter_restart_footer_immune/smoke_test.sh	60	②subst	pipefail	-	if [ -z "$(printf '%s\n' "$pane_tail" | { grep -vE "$FOOTER_PATTERN" || true; } | awk 'NF')" ]; then
+sh	.claude/worktrees/karo-mac-a1/tests/checks/enter_restart_footer_immune/smoke_test.sh	88	②subst	pipefail	-	printf '       pane_tail (base64): %s\n' "$(printf '%s' "$pane_tail" | base64 -w0)" >&2
+sh	.claude/worktrees/karo-mac-a1/tests/checks/pretooluse_stdin_json/smoke_test.sh	73	②subst	pipefail	-	n=$(wc -l < "$TEST_DIR/pane_identity-fires.log" | tr -d ' ')
+sh	.claude/worktrees/karo-mac-a1/tests/e2e/helpers/assertions.bash	51	③head	no_pipefail	km184	tmux capture-pane -t "$pane" -p -J -S - 2>/dev/null | tail -40 >&2 || true
+sh	.claude/worktrees/karo-mac-a1/tests/e2e/helpers/tmux_helpers.bash	37	②subst+③head	no_pipefail	km184	content=$(tmux capture-pane -t "$pane" -p 2>/dev/null | tail -5)
+sh	.claude/worktrees/karo-mac-a1/tests/e2e/mock_cli.sh	254	②subst	pipefail	-	input=$(echo "$input" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+sh	.claude/worktrees/karo-mac-a1/tests/smoke/test_enter_restart_watchdog.sh	250	②subst+③head	pipefail	km184	log_file=$(find "$TEST_DIR/log_commander" -name '*.log' -type f 2>/dev/null | head -1)
+sh	.claude/worktrees/karo-mac-a1/tests/test_shogun_report_watcher.sh	419	②subst	no_pipefail	km184	local fail_calls; fail_calls=$(grep -c "^INBOX_FAIL|" "$log" 2>/dev/null || echo 0)
+sh	first_setup.sh	103	②subst	no_pipefail	-	TMUX_VERSION=$(tmux -V | awk '{print $2}')
+sh	first_setup.sh	132	②subst	no_pipefail	-	TMUX_VERSION=$(tmux -V | awk '{print $2}')
+sh	first_setup.sh	194	②subst	no_pipefail	-	NODE_MAJOR=$(echo $NODE_VERSION | cut -d'.' -f1 | tr -d 'v')
+sh	first_setup.sh	876	②subst	no_pipefail	km184	WIN_USER_DIR=$(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r')
+sh	lib/agent_status.sh	51	②subst+③head	no_pipefail	-	pane_tail=$(echo "$full_capture" | tail -5)
+sh	lib/agent_status.sh	64	②subst+③head	no_pipefail	-	last_line=$(echo "$pane_tail" | grep -v '^[[:space:]]*$' | tail -1)
+sh	lib/cli_adapter.sh	1084	③head	no_pipefail	-	| awk -v agent="$candidate" '$2 == agent {print $1}' | head -1)
+sh	lib/cli_adapter.sh	1136	③head	no_pipefail	-	| awk -v agent="$fallback" '$2 == agent {print $1}' | head -1)
+sh	lib/ntfy_auth.sh	76	②subst	no_pipefail	-	lower_topic=$(echo "$topic" | tr '[:upper:]' '[:lower:]')
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	25	②subst	no_pipefail	-	VITEST_SUMMARY=$(echo "$VITEST_OUT" | grep -E "Test Files|^ *Tests " | tr -s '\n' ' ')
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	39	③head	no_pipefail	-	E2E_SUMMARY_RUN1=$(echo "$E2E_OUT" | grep -E "^ *[0-9]+ (passed|failed|skipped)" | tail -3 | tr -s '\n' ' ')
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	47	③head	no_pipefail	-	E2E_SUMMARY_RETRY=$(echo "$E2E_RETRY_OUT" | grep -E "^ *[0-9]+ (passed|failed|skipped)" | tail -3 | tr -s '\n' ' ')
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	64	①count+②subst	no_pipefail	-	TSC_COUNT=$(echo "$TSC_OUT" | grep -c "error TS")
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	71	①count+②subst	no_pipefail	-	TSCE2E_COUNT=$(echo "$TSCE2E_OUT" | grep -c "error TS")
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	108	②subst	no_pipefail	-	ROUNDTRIP_TOTAL=$(echo "$ROUNDTRIP_OUT" | grep -cE "^S[0-9]+-EP[0-9]+ \| ")
+sh	reports/mac/20260907/ashigaru-mac-3_B6-8_20260907/dino-check.sh	109	②subst	no_pipefail	-	ROUNDTRIP_MISMATCH=$(echo "$ROUNDTRIP_OUT" | grep -cE "\| 不一致 \|")
+sh	scripts/agent_health_check.sh	98	②subst	pipefail	-	elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+sh	scripts/agent_periodic_push.sh	27	③head	pipefail	-	| tail -10)
+sh	scripts/agent_periodic_push.sh	36	②subst+③head	pipefail	km184	LATEST_JSONL=$(ls -t "$JSONL_DIR"/*.jsonl 2>/dev/null | head -1)
+sh	scripts/agent_status.sh	75	①count+②subst	pipefail	-	byte_len=$(echo -n "$text" | wc -c)
+sh	scripts/agent_status.sh	253	②subst	pipefail	-	task_id=$(echo "$task_info" | awk '{print $1}')
+sh	scripts/agent_status.sh	254	②subst	pipefail	-	task_status=$(echo "$task_info" | awk '{$1=""; print $0}' | sed 's/^ //')
+sh	scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	58	②subst+③head	pipefail	-	capture_tail=$(echo "$capture" | tail -20)
+sh	scripts/archive/message_delivery_v2_full_20260508/codex_guard.sh	63	②subst	pipefail	-	non_empty_lines=$(echo "$capture" | grep -cE '\S' || true)
+sh	scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	91	②subst	pipefail	-	$(echo "${original_content}" | sed 's/^/  /')
+sh	scripts/archive/message_delivery_v2_full_20260508/dead_letter.sh	136	①count	pipefail	km184	find "$dlq_dir" -maxdepth 1 -name '*.yaml' 2>/dev/null | wc -l
+sh	scripts/audit_codex.sh	41	②subst	pipefail	km184	CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null | tr '\n' ' ')
+sh	scripts/audit_codex.sh	42	①count+②subst	pipefail	-	DIFF_LINES_ADDED=$(echo "$DIFF" | grep -c '^+[^+]' || echo 0)
+sh	scripts/audit_codex.sh	43	①count+②subst	pipefail	-	DIFF_LINES_REMOVED=$(echo "$DIFF" | grep -c '^-[^-]' || echo 0)
+sh	scripts/audit_gemini.sh	42	②subst	pipefail	km184	CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . $EXCLUDE_PATTERN 2>/dev/null | tr '\n' ' ')
+sh	scripts/audit_meta_codex.sh	158	②subst	pipefail	km184	CHANGED_PATHS=$(cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${HEAD_COMMIT}" -- . "${EXCLUDE_ARGS[@]}" 2>/dev/null | tr '\n' ' ')
+sh	scripts/audit_meta_codex.sh	159	①count+②subst	pipefail	-	DIFF_LINES_ADDED=$(echo "$DIFF" | grep -c '^+[^+]' || echo 0)
+sh	scripts/audit_meta_codex.sh	160	①count+②subst	pipefail	-	DIFF_LINES_REMOVED=$(echo "$DIFF" | grep -c '^-[^-]' || echo 0)
+sh	scripts/box_pdf_to_png.sh	19	③head	pipefail	km187	pdftoppm -v 2>&1 | head -1 || true
+sh	scripts/box_pdf_to_png.sh	30	①count+②subst	pipefail	km184	png_count=$(ls "$DST"/*.png 2>/dev/null | wc -l)
+sh	scripts/box_pdf_to_png.sh	32	③head	pipefail	-	ls -la "$DST" | head -20
+sh	scripts/checks/context_usage_warn.sh	44	②subst	no_pipefail	-	elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+sh	scripts/checks/context_usage_warn.sh	83	②subst	no_pipefail	-	PROJECT_SLUG="-$(echo "$PROJECT_DIR" | sed 's|^/||; s|/|-|g')"
+sh	scripts/checks/dd169_kill_term_guard.sh	70	②subst	pipefail	-	PID=$(echo "$COMMAND" | grep -oE '[0-9]+$')
+sh	scripts/checks/dd169_kill_term_guard.sh	82	②subst	pipefail	-	log "  ps_evidence: $(echo "$PS_EVIDENCE" | tail -n +2)"
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	8	①count+②subst	pipefail	km184	FREE_GI="$(df -g "${REPO}" 2>/dev/null | awk 'NR==2{print $4}')"
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	9	①count+②subst	pipefail	km184	TMP_N="$(ls -d "${WT_DIR}"/tmp-* 2>/dev/null | wc -l | tr -d ' ')"
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	19	①count+②subst	pipefail	km184	dirty="$(git -C "${d}" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+sh	scripts/checks/ephemeral_worktree_hygiene.sh	20	①count+②subst	pipefail	km184	recent="$(find "${d}" -maxdepth 0 -newermt '-24 hours' 2>/dev/null | wc -l | tr -d ' ')"
+sh	scripts/checks/inbox_alias_integrity.sh	71	②subst	no_pipefail	km184	alias_md5=$(md5sum "$alias_path" 2>/dev/null | awk '{print $1}')
+sh	scripts/checks/inbox_alias_integrity.sh	72	②subst	no_pipefail	km184	canonical_md5=$(md5sum "$canonical_path" 2>/dev/null | awk '{print $1}')
+sh	scripts/checks/karo_mac_dasumae_gate.sh	46	②subst	no_pipefail	-	elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+sh	scripts/checks/karo_mac_dasumae_gate.sh	155	②subst	no_pipefail	km184	last1=$(tail -c1 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+sh	scripts/checks/karo_mac_dasumae_gate.sh	163	②subst	no_pipefail	km184	last2=$(tail -c2 "$f" 2>/dev/null | xxd -p 2>/dev/null | tr -d ' \n')
+sh	scripts/checks/karo_mac_gate4.sh	22	①count+②subst	no_pipefail	-	n=$(printf '%s\n' "$out" | grep -c .)
+sh	scripts/checks/karo_mac_gate4.sh	24	③head	no_pipefail	-	printf '%s\n' "$out" | head -20 | sed 's/^/    /' >&2
+sh	scripts/checks/karo_mac_gate4.sh	31	①count+②subst	no_pipefail	-	n_staged=$(git diff --cached --name-only -- "$@" | grep -c .)
+sh	scripts/checks/karo_mac_gate4.sh	79	②subst	no_pipefail	-	elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+sh	scripts/checks/karo_mac_gate4.sh	112	②subst	no_pipefail	-	sz=$(wc -c < "$f" | tr -d ' ')
+sh	scripts/checks/karo_mac_gate7.sh	5	②subst	no_pipefail	-	gate7(){ f=$(cat "$@" | /usr/bin/grep -vE '^> ')
+sh	scripts/checks/karo_mac_gate7.sh	6	②subst	no_pipefail	-	tab=$(printf '%s\n' "$f" | /usr/bin/grep -E '^\| ?[0-9] ?\|' | /usr/bin/grep -cE "$ZER7")
+sh	scripts/checks/karo_mac_gate7.sh	9	②subst	no_pipefail	-	zl=$(printf '%s\n' "$body" | /usr/bin/grep -E "$ZER7")
+sh	scripts/checks/karo_mac_gate7.sh	10	②subst	no_pipefail	-	rcst=$(printf '%s\n' "$f" | /usr/bin/grep -vE '^\| ?[0-9] ?\|' | /usr/bin/grep -E 'rc ?= ?0|exit ?0' | /usr/bin/grep -vcE "$(printf '%s' "$ZER7" | sed 's/|=0\$.*//')")
+sh	scripts/checks/karo_mac_gate7.sh	11	②subst	no_pipefail	-	kou=$(printf '%s\n' "$zl" | /usr/bin/grep -cE "$INST7"); otsu=$(printf '%s\n' "$zl" | /usr/bin/grep -vcE "$INST7"); hei=$((tab+selfref+rcst))
+sh	scripts/checks/karo_mac_gate7.sh	12	②subst	no_pipefail	-	t=$(printf '%s\n' "$f" | /usr/bin/grep -cE '問一|問二|走らせずに|陽性対照を通|二問|提出前')
+sh	scripts/checks/karo_mac_gate7.sh	13	②subst	no_pipefail	-	c2=$(printf '%s\n' "$f" | /usr/bin/grep -cE 'rc ?= ?[0-9]|exit ?[0-9]|走らせた物 無し')
+sh	scripts/checks/karo_mac_gate7.sh	14	②subst	no_pipefail	-	c3a=$(printf '%s\n' "$f" | /usr/bin/grep -E '陽性対照|陽性對照|未測' | /usr/bin/grep -cE ':L?[0-9]+|未測'); c3b=$(printf '%s\n' "$f" | /usr/bin/grep -cE '^\|.*(陽性対照|陽性對照).*\|'); c3=$
+sh	scripts/checks/karo_mac_gate7.sh	15	②subst	no_pipefail	-	c3k=$(printf '%s\n' "$f" | /usr/bin/grep -E '陽性対照|陽性對照' | /usr/bin/grep -cE "$INST7|器名|器=|同一の器|同じ器|同器|欄1と同一|欄1 と同一|同一detector|同一検出器|同一器|器の實體"); h3=$(printf '%s\n' "$f" |
+sh	scripts/checks/karo_mac_gate7.sh	16	②subst	no_pipefail	-	c4=$(printf '%s\n' "$f" | /usr/bin/grep -cE '転記|轉記'); c5=$(printf '%s\n' "$f" | /usr/bin/grep -cE "$C5_7"); c6=$(printf '%s\n' "$f" | /usr/bin/grep -cE '①|②|③|④|推論\(|comm
+sh	scripts/checks/pane_identity.sh	369	①count+②subst	pipefail	-	unique=$(printf '%s\n' "${values[@]}" | sort -u | wc -l)
+sh	scripts/checks/symlink_aware_atomic_write.sh	62	②subst	no_pipefail	-	echo "[symlink_aware_atomic_write]       match: $(echo "$match" | sed 's/^[ \t]*//' | head -c 100)" >&2
+sh	scripts/checks/symlink_aware_atomic_write.sh	87	②subst	no_pipefail	-	echo "[symlink_aware_atomic_write]       match: $(echo "$match" | sed 's/^[ \t]*//' | head -c 100)" >&2
+sh	scripts/checks/verify_state_before_asserting.sh	50	②subst+③head	pipefail	km184	last="$(find "${TMPDIR:-/tmp}" -maxdepth 1 -name '.vsba_fetch_*' -newermt '-10 minutes' 2>/dev/null | head -1)"
+sh	scripts/diagnose.sh	73	③head	pipefail	-	sed -n '/^---/,/^---/p' "$file" | tr -d '\r' | grep "^${field}:" | head -1 | sed "s/^${field}: *//;s/\"//g"
+sh	scripts/diagnose.sh	214	①count+②subst	pipefail	-	count=$(find "$RUNBOOK_DIR" -name 'ERR-*.md' | wc -l)
+sh	scripts/inbox_watcher.sh	137	②subst	pipefail	-	elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+sh	scripts/inbox_watcher.sh	320	②subst	pipefail	km184	current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+sh	scripts/inbox_watcher.sh	356	②subst	pipefail	km184	current_sha=$(sha256sum "$INBOX" 2>/dev/null | awk '{print $1}')
+sh	scripts/inbox_watcher.sh	373	②subst+③head	pipefail	-	pane_cli=$(echo "$pane_cli_raw" | tr -d '\r' | head -n1 | tr -d '[:space:]')
+sh	scripts/inbox_watcher.sh	895	②subst	pipefail	km184	my_pgid=$(ps -o pgid= -p $$ 2>/dev/null | tr -d ' ')
+sh	scripts/inbox_watcher.sh	899	②subst	pipefail	km184	pid_pgid=$(ps -o pgid= -p "$pid" 2>/dev/null | tr -d ' ')
+sh	scripts/inbox_watcher.sh	918	②subst+③head	pipefail	-	pane_tail=$(printf '%s\n' "$pane_capture" | tail -80)
+sh	scripts/inbox_watcher.sh	977	②subst+③head	pipefail	-	pane_tail=$(echo "$pane_capture" | tail -12)
+sh	scripts/inbox_watcher.sh	1007	①count+②subst	pipefail	km184	[ -n "$session_name" ] && [ "$(tmux list-clients -t "$session_name" 2>/dev/null | wc -l)" -gt 0 ]
+sh	scripts/inbox_watcher.sh	1039	③head	pipefail	-	| tail -1)
+sh	scripts/inbox_watcher.sh	1046	②subst	pipefail	-	normalized=$(echo "$current_prompt" | sed 's/\xc2\xa0/ /g')
+sh	scripts/inbox_watcher.sh	1048	②subst	pipefail	-	content=$(echo "$normalized" | sed 's/^❯[[:space:]]*//' | sed 's/[[:space:]]*$//')
+sh	scripts/inbox_watcher.sh	1167	②subst+③head	pipefail	km184	pane_content=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+sh	scripts/inbox_watcher.sh	1649	②subst+③head	pipefail	km184	_pane_text=$(timeout 3 tmux capture-pane -t "$PANE_TARGET" -p 2>/dev/null | tail -5 || echo "")
+sh	scripts/inbox_watcher.sh	1652	③head	pipefail	-	_token_match=$(echo "$_pane_text" | grep -oE '[0-9]+(\.[0-9]+)?k tokens' | head -1 || true)
+sh	scripts/inbox_write.sh	48	①count	no_pipefail	-	} | grep -v '^$' | grep -v '[,[:space:]]' | sort -u
+sh	scripts/inbox_write.sh	83	②subst	no_pipefail	km187	_DG_OUT=$(printf '%s' "$CONTENT" | ALLOW_DEFER="${IW_ALLOW_DEFER:-}" python3 "$_DG" 2>&1) || _DG_RC=$?
+sh	scripts/inbox_write.sh	130	①count+②subst	no_pipefail	-	_AMP_PATTERN_COUNT=$(echo "$CONTENT" | grep -oE '\[[a-zA-Z_0-9]+→[a-zA-Z_0-9]+\]\[[a-zA-Z_0-9]+\]' | wc -l)
+sh	scripts/inbox_write.sh	196	②subst	no_pipefail	-	sb_url=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	scripts/inbox_write.sh	197	②subst	no_pipefail	-	sb_key=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	scripts/inbox_write.sh	280	②subst	no_pipefail	-	MSG_ID="msg_$(date +%Y%m%d_%H%M%S)_$(od -An -N4 -tx1 /dev/urandom | tr -d ' \n')"
+sh	scripts/karo_standby_dashboard.sh	60	③head	pipefail	km184	pgrep -f "inbox_watcher.sh $1" 2>/dev/null | head -1
+sh	scripts/karo_standby_dashboard.sh	66	②subst	pipefail	km184	hex="$(printf '%s' "$title" | dd bs=1 count=3 2>/dev/null | xxd -p 2>/dev/null)"
+sh	scripts/ntfy.sh	12	②subst	no_pipefail	-	TOPIC=$(grep 'ntfy_topic:' "$SETTINGS" | awk '{print $2}' | tr -d '"')
+sh	scripts/ntfy_listener.sh	11	②subst	no_pipefail	-	TOPIC=$(grep 'ntfy_topic:' "$SETTINGS" | awk '{print $2}' | tr -d '"')
+sh	scripts/ntfy_listener.sh	146	②subst	no_pipefail	-	EVENT=$(echo "$line" | parse_json event)
+sh	scripts/ntfy_listener.sh	150	②subst	no_pipefail	-	TAGS=$(echo "$line" | parse_tags)
+sh	scripts/ntfy_listener.sh	154	②subst	no_pipefail	-	MSG=$(echo "$line" | parse_json message)
+sh	scripts/ntfy_listener.sh	157	②subst	no_pipefail	-	MSG_ID=$(echo "$line" | parse_json id)
+sh	scripts/ratelimit_check.sh	72	③head	pipefail	-	| awk -v a="$agent" '$2 == a {print $1}' | head -1)
+sh	scripts/ratelimit_check.sh	86	②subst	pipefail	-	model=$(echo "$model" | sed -E 's/[Cc]laude-?//g; s/-20[0-9]{6}//g; s/-[0-9]+-[0-9]+$//; s/^-//')
+sh	scripts/ratelimit_check.sh	227	②subst	pipefail	-	CLAUDE_5H_UTIL=$(echo "$oauth_data" | grep '^5H_UTIL=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	228	②subst	pipefail	-	CLAUDE_5H_RESET=$(echo "$oauth_data" | grep '^5H_RESET=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	229	②subst	pipefail	-	CLAUDE_7D_UTIL=$(echo "$oauth_data" | grep '^7D_UTIL=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	230	②subst	pipefail	-	CLAUDE_7D_RESET=$(echo "$oauth_data" | grep '^7D_RESET=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	231	②subst	pipefail	-	CLAUDE_7D_SONNET_UTIL=$(echo "$oauth_data" | grep '^7D_SONNET=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	232	②subst	pipefail	-	CLAUDE_7D_OPUS_UTIL=$(echo "$oauth_data" | grep '^7D_OPUS=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	233	②subst	pipefail	-	CLAUDE_EXTRA_ENABLED=$(echo "$oauth_data" | grep '^EXTRA=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	292	②subst	pipefail	-	CLAUDE_TODAY_TOTAL=$(echo "$claude_data" | grep '^TOTAL=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	293	②subst	pipefail	-	CLAUDE_DATA_DATE=$(echo "$claude_data" | grep '^DATE=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	294	②subst	pipefail	-	CLAUDE_SESSIONS=$(echo "$claude_data" | grep '^SESSIONS=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	295	②subst	pipefail	-	CLAUDE_MESSAGES=$(echo "$claude_data" | grep '^MESSAGES=' | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	300	②subst	pipefail	-	model_name=$(echo "$line" | sed 's/^MODEL_//' | cut -d= -f1)
+sh	scripts/ratelimit_check.sh	301	②subst	pipefail	-	model_val=$(echo "$line" | cut -d= -f2)
+sh	scripts/ratelimit_check.sh	337	③head	pipefail	-	| grep -oE '[0-9]+% left' | tail -1 \
+sh	scripts/ratelimit_check.sh	356	②subst	pipefail	-	_5h_lines=$(printf '%s\n' "$_status_block" | grep '5h limit:' || true)
+sh	scripts/ratelimit_check.sh	357	②subst	pipefail	-	_wk_lines=$(printf '%s\n' "$_status_block" | grep 'Weekly limit:' || true)
+sh	scripts/ratelimit_check.sh	360	②subst+③head	pipefail	-	_line=$(printf '%s\n' "$_5h_lines" | head -1 || true)
+sh	scripts/ratelimit_check.sh	362	②subst+③head	pipefail	-	CODEX_ACCT_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	scripts/ratelimit_check.sh	363	③head	pipefail	-	CODEX_ACCT_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	scripts/ratelimit_check.sh	367	②subst+③head	pipefail	-	_line=$(printf '%s\n' "$_wk_lines" | head -1 || true)
+sh	scripts/ratelimit_check.sh	369	②subst+③head	pipefail	-	CODEX_ACCT_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	scripts/ratelimit_check.sh	370	③head	pipefail	-	CODEX_ACCT_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	scripts/ratelimit_check.sh	374	②subst+③head	pipefail	-	CODEX_MODEL_LABEL=$(printf '%s\n' "$_status_block" | grep -oE 'GPT-[^:]+ limit:' | head -1 | sed 's/ limit:$//' || true)
+sh	scripts/ratelimit_check.sh	377	②subst	pipefail	-	_line=$(printf '%s\n' "$_5h_lines" | sed -n '2p' || true)
+sh	scripts/ratelimit_check.sh	379	②subst+③head	pipefail	-	CODEX_MODEL_5H_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	scripts/ratelimit_check.sh	380	③head	pipefail	-	CODEX_MODEL_5H_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	scripts/ratelimit_check.sh	384	②subst	pipefail	-	_line=$(printf '%s\n' "$_wk_lines" | sed -n '2p' || true)
+sh	scripts/ratelimit_check.sh	386	②subst+③head	pipefail	-	CODEX_MODEL_7D_LEFT=$(printf '%s\n' "$_line" | grep -oE '[0-9]+% left' | head -1 | grep -oE '[0-9]+' || true)
+sh	scripts/ratelimit_check.sh	387	③head	pipefail	-	CODEX_MODEL_7D_RESET=$(printf '%s\n' "$_line" | sed -n 's/.*(resets \([^)]*\)).*/\1/p' | head -1)
+sh	scripts/ratelimit_check.sh	416	①count	pipefail	-	| grep -c "$current_hour" || true)
+sh	scripts/ratelimit_check.sh	419	②subst	pipefail	-	CODEX_LIMIT_HITS=$(echo "$CODEX_LIMIT_HITS" | tr -d '[:space:]')
+sh	scripts/redundancy/shogun_report_watcher.sh	42	②subst	pipefail	-	elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+sh	scripts/redundancy/shogun_report_watcher.sh	211	③head	pipefail	-	| tail -1 \
+sh	scripts/switch_cli.sh	68	①count+②subst	pipefail	km184	pane_count=$(tmux list-panes -t "multiagent:agents" 2>/dev/null | wc -l)
+sh	scripts/switch_cli.sh	280	②subst+③head	pipefail	km184	last_lines=$(tmux capture-pane -t "$pane" -p 2>/dev/null | grep -v '^$' | tail -3)
+sh	scripts/tests/test_fukuincho_detect_stale_cli.sh	58	②subst+③head	pipefail	-	done_line=$(grep -E '\[INVOKE\].*fukuincho_detect_stale_cli done' "$DETECT_STALE_LOG" | tail -n 1)
+sh	scripts/visual_env_setup.sh	20	③head	pipefail	km187	fc-cache -f "$FONT_DIR" 2>&1 | tail -2 || true
+sh	scripts/visual_env_setup.sh	29	③head	pipefail	km187	pdftoppm -v 2>&1 | head -1
+sh	scripts/visual_env_setup.sh	42	③head	pipefail	km187	python3 -m playwright install chromium 2>&1 | tail -3 || true
+sh	scripts/visual_env_setup.sh	48	③head	pipefail	km187	npx -y @playwright/test --version 2>&1 | head -1 || true
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	88	②subst	pipefail	-	elif [ -z "$(printf '%s' "${_es_v}" | tr -d '[:space:]')" ]; then printf 'blank\n'
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	232	②subst	pipefail	-	ELAPSED_MIN=$(echo "$LAST_INFO" | cut -d'|' -f1)
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	233	②subst	pipefail	-	LAST_AT=$(echo "$LAST_INFO" | cut -d'|' -f2)
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	234	②subst	pipefail	-	LAST_TOPIC=$(echo "$LAST_INFO" | cut -d'|' -f3)
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	235	②subst	pipefail	-	ELAPSED_INT=$(echo "$ELAPSED_MIN" | cut -d. -f1)
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	255	②subst	pipefail	-	PANE_TAIL=$(printf '%s' "$PANE_TAIL" | sed 's/\xc2\xa0/ /g')
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	257	②subst	pipefail	-	log "pane tail (last 50 lines, base64, after NBSP normalize): $(printf '%s' "$PANE_TAIL" | base64 -w0)"
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	284	②subst	pipefail	-	LAST_LINE=$(printf '%s\n' "$PANE_TAIL" | awk 'NF{last=$0} END{print last}')
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	291	②subst	pipefail	-	log "last_line (base64): $(printf '%s' "$LAST_LINE" | base64 -w0)"
+sh	scripts/watchdogs/enter_restart_common_watchdog.sh	292	②subst	pipefail	-	log "prompt_line (base64, border-anchored): $(printf '%s' "$PROMPT_LINE" | base64 -w0)"
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	61	②subst+③head	no_pipefail	-	status=$(grep '^\s*status:' "$task_file" | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	153	②subst+③head	no_pipefail	km184	task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	218	②subst+③head	no_pipefail	km184	task_status=$(grep '^\s*status:' "$task_file" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	222	②subst+③head	no_pipefail	km184	task_id=$(grep '^\s*task_id:' "$task_file" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	245	②subst+③head	no_pipefail	km184	qa_decision=$(grep '^\s*qa_decision:' "$gunshi_report" 2>/dev/null | head -1 | sed 's/.*qa_decision:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	249	②subst+③head	no_pipefail	km184	audited_task=$(grep '^\s*ashigaru_task_id:' "$gunshi_report" 2>/dev/null | head -1 | sed 's/.*ashigaru_task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	270	②subst+③head	no_pipefail	km184	codex_verdict=$(grep -A2 'codex:' "$gunshi_report" 2>/dev/null | grep 'verdict:' | head -1 | sed 's/.*verdict:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	273	②subst+③head	no_pipefail	km184	gemini_verdict=$(grep -A2 'gemini:' "$gunshi_report" 2>/dev/null | grep 'verdict:' | head -1 | sed 's/.*verdict:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	299	②subst+③head	no_pipefail	km184	redo_status=$(grep '^\s*status:' "$redo_file" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	343	②subst+③head	no_pipefail	km184	task_status=$(grep '^\s*status:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_activity_monitor.sh	344	②subst+③head	no_pipefail	km184	task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+sh	shim/hakudokai/hakudokai_audit_scheduler.sh	17	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_audit_scheduler.sh	18	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_audit_scheduler.sh	85	①count+②subst	no_pipefail	km184	unpushed=$(git log --oneline origin/main..HEAD 2>/dev/null | wc -l)
+sh	shim/hakudokai/hakudokai_audit_scheduler.sh	112	②subst+③head	no_pipefail	km184	last_audit=$(ls -t "${AUDIT_DIR}"/weekly_codex_*.txt 2>/dev/null | head -1)
+sh	shim/hakudokai/hakudokai_audit_scheduler.sh	117	②subst	no_pipefail	-	last_date=$(echo "$last_audit" | grep -oP '\d{8}')
+sh	shim/hakudokai/hakudokai_audit_scheduler.sh	118	②subst+③head	no_pipefail	km184	diff_summary=$(cd "$SCRIPT_DIR" && git log --oneline --since="${last_date:0:4}-${last_date:4:2}-${last_date:6:2}" 2>/dev/null | head -20)
+sh	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	55	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	56	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	102	②subst+③head	no_pipefail	-	HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+sh	shim/hakudokai/hakudokai_fukuincho_reverse_watcher.sh	103	②subst	no_pipefail	-	BODY=$(echo "$RESPONSE" | sed '$d')
+sh	shim/hakudokai/hakudokai_fukuincho_watcher.sh	34	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_fukuincho_watcher.sh	35	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	29	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_kuro_desktop_watcher.sh	30	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_minimal_install.sh	70	③head	pipefail	km187	if ! python3 -m pip install --quiet --user --upgrade "supabase>=2.0.0" 2>&1 | tail -3; then
+sh	shim/hakudokai/hakudokai_reports_sync.sh	35	②subst	no_pipefail	-	[ -z "${SUPABASE_URL:-}" ] && SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_reports_sync.sh	36	②subst	no_pipefail	-	[ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_reports_sync.sh	37	②subst	no_pipefail	-	[ -z "${HAKUDOKAI_CLINIC_ID:-}" ] && HAKUDOKAI_CLINIC_ID=$(grep '^HAKUDOKAI_CLINIC_ID=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_reports_sync.sh	76	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	shim/hakudokai/hakudokai_reports_sync.sh	86	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	shim/hakudokai/hakudokai_secondpc_receiver.sh	29	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_secondpc_receiver.sh	30	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	56	②subst+③head	no_pipefail	-	ok "git $(git --version | head -1)"
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	96	②subst	no_pipefail	-	SB_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	97	②subst	no_pipefail	-	SB_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	188	②subst	no_pipefail	km184	DENTALBI_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||' || echo "master")
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	217	③head	no_pipefail	km187	npm install --no-audit --no-fund 2>&1 | tail -3
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	297	①count+②subst	no_pipefail	km184	PANE_COUNT=$(tmux list-panes -t "${TMUX_SESSION}:0" 2>/dev/null | wc -l)
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	385	②subst+③head	no_pipefail	-	ok "inbox_watcher[${agent_id}]: PID=$(pgrep -f "inbox_watcher.sh ${agent_id}" | head -1)"
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	404	②subst+③head	no_pipefail	-	ok "Supabase bridge receiver v2: PID=$(pgrep -f 'hakudokai_secondpc_receiver' | head -1)"
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	471	②subst+③head	no_pipefail	-	echo "    inbox_watcher[${AGENT1_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT1_ID}" | head -1 || echo 'NOT RUNNING')"
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	472	②subst+③head	no_pipefail	-	echo "    inbox_watcher[${AGENT2_ID}]: $(pgrep -f "inbox_watcher.sh ${AGENT2_ID}" | head -1 || echo 'NOT RUNNING')"
+sh	shim/hakudokai/hakudokai_secondpc_setup.sh	474	②subst+③head	no_pipefail	-	echo "    reports_sync: $(pgrep -f 'hakudokai_reports_sync' | head -1 || echo 'NOT RUNNING')"
+sh	shim/hakudokai/hakudokai_secondpc_watcher.sh	27	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_secondpc_watcher.sh	28	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_start_watchers.sh	29	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_start_watchers.sh	30	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_start_watchers.sh	75	②subst	no_pipefail	-	agent=$(echo "$entry" | cut -d' ' -f1)
+sh	shim/hakudokai/hakudokai_start_watchers.sh	76	②subst	no_pipefail	-	pane=$(echo "$entry" | cut -d' ' -f2)
+sh	shim/hakudokai/hakudokai_start_watchers.sh	180	②subst+③head	no_pipefail	-	log "fukuincho_watcher: $(pgrep -f 'hakudokai_fukuincho_watcher.sh' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	181	②subst+③head	no_pipefail	-	log "fukuincho_reverse: $(pgrep -f 'hakudokai_fukuincho_reverse_watcher.sh' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	182	②subst+③head	no_pipefail	-	log "secondpc_watcher: $(pgrep -f 'hakudokai_secondpc_watcher.sh' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	183	②subst+③head	no_pipefail	-	log "kuro_desktop_watcher: $(pgrep -f 'hakudokai_kuro_desktop_watcher.sh' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	184	②subst+③head	no_pipefail	-	log "task_sync: $(pgrep -f 'hakudokai_task_sync.sh' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	185	②subst+③head	no_pipefail	-	log "inbox_watcher[karo]: $(pgrep -f 'inbox_watcher.sh karo' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	186	②subst+③head	no_pipefail	-	log "inbox_watcher[ashigaru1]: $(pgrep -f 'inbox_watcher.sh ashigaru1' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	187	②subst+③head	no_pipefail	-	log "inbox_watcher[gunshi]: $(pgrep -f 'inbox_watcher.sh gunshi' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	188	②subst+③head	no_pipefail	-	log "inbox_watcher[shogun]: $(pgrep -f 'inbox_watcher.sh shogun' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	189	②subst+③head	no_pipefail	-	log "activity_monitor: $(pgrep -f 'hakudokai_activity_monitor.sh' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_start_watchers.sh	190	②subst+③head	no_pipefail	-	log "watchdog: $(pgrep -f 'hakudokai_watchdog.sh' | head -1 || echo DEAD)"
+sh	shim/hakudokai/hakudokai_task_sync.sh	36	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_task_sync.sh	37	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_task_sync.sh	68	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	shim/hakudokai/hakudokai_task_sync.sh	78	②subst	no_pipefail	-	local hash_file="${HASH_DIR}/$(echo "$1" | md5sum | cut -d' ' -f1)"
+sh	shim/hakudokai/hakudokai_task_sync.sh	144	③head	no_pipefail	km184	grep '^\s*project:' "$yaml_file" 2>/dev/null | head -1 | sed 's/.*project:\s*//' | tr -d '\r" '
+sh	shim/hakudokai/hakudokai_watchdog.sh	59	②subst	no_pipefail	-	SUPABASE_URL=$(grep '^SUPABASE_URL=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shim/hakudokai/hakudokai_watchdog.sh	60	②subst	no_pipefail	-	SUPABASE_SERVICE_ROLE_KEY=$(grep '^SUPABASE_SERVICE_ROLE_KEY=' "$HOME/.hakudokai/env" | cut -d= -f2- | tr -d '\r')
+sh	shutsujin_departure.sh	22	②subst	no_pipefail	km184	LANG_SETTING=$(grep "^language:" ./config/settings.yaml 2>/dev/null | awk '{print $2}' || echo "ja")
+sh	shutsujin_departure.sh	28	②subst	no_pipefail	km184	SHELL_SETTING=$(grep "^shell:" ./config/settings.yaml 2>/dev/null | awk '{print $2}' || echo "bash")
+sh	shutsujin_departure.sh	75	①count+②subst	no_pipefail	-	_ASHIGARU_COUNT=$(echo "$_ASHIGARU_IDS_STR" | wc -w | tr -d ' ')
+sh	shutsujin_departure.sh	1079	②subst	no_pipefail	km184	NTFY_TOPIC=$(grep 'ntfy_topic:' ./config/settings.yaml 2>/dev/null | awk '{print $2}' | tr -d '"')
+sh	skills/shogun-screenshot/scripts/capture_local.sh	71	②subst	pipefail	-	val=$(echo "$line" | sed 's/^[[:space:]]*-[[:space:]]*//')
+sh	tests/checks/dd169_kill_term_guard/smoke_test.sh	35	②subst	pipefail	km187	actual_rc=$(printf '%s' "$stdin_input" | bash "$HOOK" >/dev/null 2>&1; printf '%d' $?)
+sh	tests/checks/enter_restart_footer_immune/smoke_test.sh	29	③head	pipefail	-	FOOTER_PATTERN=$(grep -E "^FOOTER_PATTERN=" "$WATCHDOG" | head -1 | sed -E "s/^FOOTER_PATTERN='([^']+)'/\\1/")
+sh	tests/checks/enter_restart_footer_immune/smoke_test.sh	50	②subst	pipefail	-	pane_tail=$(printf '%s' "$pane_tail" | sed 's/\xc2\xa0/ /g')
+sh	tests/checks/enter_restart_footer_immune/smoke_test.sh	60	②subst	pipefail	-	if [ -z "$(printf '%s\n' "$pane_tail" | { grep -vE "$FOOTER_PATTERN" || true; } | awk 'NF')" ]; then
+sh	tests/checks/enter_restart_footer_immune/smoke_test.sh	88	②subst	pipefail	-	printf '       pane_tail (base64): %s\n' "$(printf '%s' "$pane_tail" | base64 -w0)" >&2
+sh	tests/checks/pretooluse_stdin_json/smoke_test.sh	73	②subst	pipefail	-	n=$(wc -l < "$TEST_DIR/pane_identity-fires.log" | tr -d ' ')
+sh	tests/e2e/helpers/assertions.bash	51	③head	no_pipefail	km184	tmux capture-pane -t "$pane" -p -J -S - 2>/dev/null | tail -40 >&2 || true
+sh	tests/e2e/helpers/tmux_helpers.bash	37	②subst+③head	no_pipefail	km184	content=$(tmux capture-pane -t "$pane" -p 2>/dev/null | tail -5)
+sh	tests/e2e/mock_cli.sh	254	②subst	pipefail	-	input=$(echo "$input" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+sh	tests/smoke/test_enter_restart_watchdog.sh	250	②subst+③head	pipefail	km184	log_file=$(find "$TEST_DIR/log_commander" -name '*.log' -type f 2>/dev/null | head -1)
+sh	tests/test_shogun_report_watcher.sh	419	②subst	no_pipefail	km184	local fail_calls; fail_calls=$(grep -c "^INBOX_FAIL|" "$log" 2>/dev/null || echo 0)

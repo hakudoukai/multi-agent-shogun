@@ -1,0 +1,6 @@
+treeB: 行 242 / 載る 105 / 載らぬ 111 / 判じ得ぬ 26 / 重なり(外す) 57 → 本弾の母數 185
+   載る かつ pipefail 無: 81 / 載る かつ 重なり無: 65
+home_bin: 行 34 / 載る 16 / 載らぬ 16 / 判じ得ぬ 2 / 重なり(外す) 11 → 本弾の母數 23
+   載る かつ pipefail 無: 13 / 載る かつ 重なり無: 6
+左の命令 上位(載る): [('grep', 51), ('pgrep', 16), ('tmux', 14), ('find', 10), ('ls', 5), ('git', 5), ('ps', 5), ('wc', 3), ('cat', 2), ('sha256sum', 2)]
+判じ得ぬ の左 例: ['cmd.exe /C "echo %USERPROFILE%" 2>/dev/null', '', '', '', 'cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${H', 'cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${H', 'cd "$REPO_PATH" && git diff --name-only "${BASE_COMMIT}..${H', 'pdftoppm -v 2>&1']

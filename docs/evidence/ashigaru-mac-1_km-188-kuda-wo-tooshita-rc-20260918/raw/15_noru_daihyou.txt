@@ -1,0 +1,4 @@
+tests/checks/test_karo_overload_monitor.bats:238	①count+②subst	pre_task_count=$(find "$FAKE_TASKS_DIR" -name "*.yaml" -type f | wc -l)
+tests/checks/test_karo_overload_monitor.bats:242	①count+②subst	post_task_count=$(find "$FAKE_TASKS_DIR" -name "*.yaml" -type f | wc -l)
+tests/unit/test_build_system.bats:54	①count+②subst	count=$(find "$OUTPUT_DIR" -name "*.md" -type f | wc -l)
+scripts/checks/karo_mac_gate4.sh:31	①count+②subst	n_staged=$(git diff --cached --name-only -- "$@" | grep -c .)

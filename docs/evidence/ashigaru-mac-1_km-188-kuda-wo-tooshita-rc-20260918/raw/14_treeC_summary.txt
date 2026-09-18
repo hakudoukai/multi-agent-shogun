@@ -1,0 +1,6 @@
+files=1595 sh/bats=289 depth=13 hit_lines=475 files_with_hits=121
+  形の延べ: {'②subst': 417, '①count': 59, '③head': 160} (和 636 ≠ 行 475 = 排他でない)
+  多重形の行: 161
+  ④ file pipefail 有: 136 / 無: 153 (走査 sh/bats 289 )
+  ④ hit 行の内 pipefail 無 file の行: 264
+  重なり: km184 96 / km187 17 / 双方 0

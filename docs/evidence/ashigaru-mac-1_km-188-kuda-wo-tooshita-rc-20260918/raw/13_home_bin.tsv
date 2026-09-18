@@ -1,0 +1,36 @@
+# koku=2026-09-18T20:20:13+0900 root=/Users/momizimac/bin skip=['.git'] files=93 sh/bats_scanned=27 max_depth=1 rc=0
+kind	path	line	forms	file_pipefail	overlap	verbatim
+sh	compact_drain_inject.sh	15	②subst+③head	no_pipefail	km184	cap=$(tmux capture-pane -p -t "$PANE" 2>/dev/null | tail -8)
+sh	compact_drain_inject.sh	33	②subst+③head	no_pipefail	km184	after=$(tmux capture-pane -p -t "$PANE" 2>/dev/null | tail -4)
+sh	compact_drain_inject.sh	35	③head	no_pipefail	-	echo "$after" | tail -2
+sh	dept_visual_sweep.sh	20	②subst+③head	no_pipefail	km184	cap=$(tmux capture-pane -p -t "$p" 2>/dev/null | grep -vE '^\s*$' | tail -6)
+sh	fix_pane_widths.sh	34	①count	pipefail	-	| awk -F'|' -v m="$MIN" '$1<m {print $2}' | sort -u
+sh	hermes_idle_flag_sync.sh	9	②subst+③head	no_pipefail	km184	cap=$(tmux capture-pane -p -t "$pane" 2>/dev/null | tail -4) || continue
+sh	idle_backlog_wake.sh	27	②subst+③head	no_pipefail	-	SB_URL=$(grep -E '^SUPABASE_URL=' "$ENVF" | head -1 | cut -d= -f2- | tr -d '"\r')
+sh	idle_backlog_wake.sh	28	③head	no_pipefail	-	SB_KEY=$(grep -E '^SUPABASE_(SERVICE_ROLE_KEY|KEY)=' "$ENVF" | head -1 | cut -d= -f2- | tr -d '"\r')
+sh	idle_backlog_wake.sh	129	②subst+③head	no_pipefail	-	PCNAME=$(printf '%s\n' "$SEATS" | head -1 | cut -d'|' -f4)
+sh	idle_backlog_wake.sh	151	②subst+③head	no_pipefail	km184	cap=$(tmux capture-pane -p -t "$pane" 2>/dev/null | tail -8)
+sh	karo_mac_bundle5.sh	16	②subst	no_pipefail	-	for f in "$Q/$D.md" "$Q/${D}_manifest.txt"; do [ -f "$f" ] && printf '  reports/mac/20260906/queue/reports/%s  %s\n' "$(basename "$f")" "$(shasum -a 256 "$f" | cut -d' '
+sh	karo_mac_bundle5.sh	17	②subst	no_pipefail	-	[ "$R" != "-" ] && [ -f "$Q/$R" ] && printf '  reports/mac/20260906/queue/reports/%s  %s\n' "$R" "$(shasum -a 256 "$Q/$R" | cut -d' ' -f1)"
+sh	karo_mac_bundle5.sh	20	②subst+③head	no_pipefail	km184	echo "⑷負テスト実測=$(grep -E '^\[5/5' "$Q/$R" | head -1 | sed 's/^/段5 /')／器 の祖先 門 陰性: git merge-base --is-ancestor 0000000000000000000000000000000000000000 origin/mac/dino-sto
+sh	karo_mac_bundle5.sh	23	②subst	no_pipefail	km184	echo "⑷負テスト実測=紙 の manifest sha を 1 byte 改変 して shasum -c → 不一致 を期待: $(tmp=$(mktemp); printf 'x' >> "$tmp"; cat "$Q/$D.md" >> "$tmp" 2>/dev/null; a=$(shasum -a 256 "$Q/$D.m
+sh	karo_mac_gate7.sh	5	②subst	no_pipefail	-	gate7(){ f=$(cat "$@" | /usr/bin/grep -vE '^> ')
+sh	karo_mac_gate7.sh	6	②subst	no_pipefail	-	tab=$(printf '%s\n' "$f" | /usr/bin/grep -E '^\| ?[0-9] ?\|' | /usr/bin/grep -cE "$ZER7")
+sh	karo_mac_gate7.sh	9	②subst	no_pipefail	-	zl=$(printf '%s\n' "$body" | /usr/bin/grep -E "$ZER7")
+sh	karo_mac_gate7.sh	10	②subst	no_pipefail	-	rcst=$(printf '%s\n' "$f" | /usr/bin/grep -vE '^\| ?[0-9] ?\|' | /usr/bin/grep -E 'rc ?= ?0|exit ?0' | /usr/bin/grep -vcE "$(printf '%s' "$ZER7" | sed 's/|=0\$.*//')")
+sh	karo_mac_gate7.sh	11	②subst	no_pipefail	-	kou=$(printf '%s\n' "$zl" | /usr/bin/grep -cE "$INST7"); otsu=$(printf '%s\n' "$zl" | /usr/bin/grep -vcE "$INST7"); hei=$((tab+selfref+rcst))
+sh	karo_mac_gate7.sh	12	②subst	no_pipefail	-	t=$(printf '%s\n' "$f" | /usr/bin/grep -cE '問一|問二|走らせずに|陽性対照を通|二問|提出前')
+sh	karo_mac_gate7.sh	13	②subst	no_pipefail	-	c2=$(printf '%s\n' "$f" | /usr/bin/grep -cE 'rc ?= ?[0-9]|exit ?[0-9]|走らせた物 無し')
+sh	karo_mac_gate7.sh	14	②subst	no_pipefail	-	c3a=$(printf '%s\n' "$f" | /usr/bin/grep -E '陽性対照|陽性對照|未測' | /usr/bin/grep -cE ':L?[0-9]+|未測'); c3b=$(printf '%s\n' "$f" | /usr/bin/grep -cE '^\|.*(陽性対照|陽性對照).*\|'); c3=$
+sh	karo_mac_gate7.sh	15	②subst	no_pipefail	-	c3k=$(printf '%s\n' "$f" | /usr/bin/grep -E '陽性対照|陽性對照' | /usr/bin/grep -cE "$INST7|器名|器=|同一の器|同じ器|同器|欄1と同一|欄1 と同一|同一detector|同一検出器|同一器|器の實體"); h3=$(printf '%s\n' "$f" |
+sh	karo_mac_gate7.sh	16	②subst	no_pipefail	-	c4=$(printf '%s\n' "$f" | /usr/bin/grep -cE '転記|轉記'); c5=$(printf '%s\n' "$f" | /usr/bin/grep -cE "$C5_7"); c6=$(printf '%s\n' "$f" | /usr/bin/grep -cE '①|②|③|④|推論\(|comm
+sh	karo_mac_template.sh	12	②subst	no_pipefail	km187	body(){ raw=$(sh ~/bin/sb read seq "$1" 2>&1 | /usr/bin/grep -E '^  content:' | cut -c12-); n=$(printf '%s' "$raw" | /usr/bin/grep -o '"' | /usr/bin/grep -c .); printf '%
+sh	karo_mac_template.sh	14	②subst	no_pipefail	-	gatecard(){ p=$1; g=$2; c="${p%.md}_karo_gate.txt"; printf '%s 門=%s at=%s gate=%s\n' "$(basename "$p")" "$g" "$(date +%Y-%m-%dT%H:%M:%S%z)" "$(shasum -a 256 "$HOME/bin/ka
+sh	karo_mac_template.sh	18	②subst+③head	no_pipefail	-	pre_mark(){ LC=$(/usr/bin/grep -n '結論.\{0,6\}條件\|結論.\{0,6\}条件\|境界\|母集團' "$1" | head -1 | cut -d: -f1); LT=$(/usr/bin/grep -n 'porcelain\|HEAD' "$1" | head -1 | cut -d: -f
+sh	km_inbox_read_mark.sh	13	①count+②subst	no_pipefail	-	n_read=$(echo $ids | wc -w | tr -d ' ')
+sh	km_inbox_read_mark.sh	27	②subst+③head	no_pipefail	-	n_mark=$(echo "$out" | grep -o 'marked=[0-9]*' | head -1 | cut -d= -f2)
+sh	safe_kill_guard.sh	40	②subst+③head	pipefail	km184	CMD="$(ps -o command= -p "$PID" 2>/dev/null | head -1)"
+sh	safe_kill_guard.sh	41	②subst	pipefail	km184	PPID_V="$(ps -o ppid= -p "$PID" 2>/dev/null | tr -d ' ')"
+sh	safe_kill_guard.sh	46	②subst	pipefail	-	info "cmd: $(echo "$CMD" | cut -c1-120)"
+sh	safe_kill_guard.sh	74	②subst	pipefail	-	hit="$(echo "$PANE_MAP" | awk -F'|' -v p="$anc" '$1==p{print $2; exit}')"
+sh	safe_kill_guard.sh	76	②subst	pipefail	km184	anc="$(ps -o ppid= -p "$anc" 2>/dev/null | tr -d ' ')"

@@ -1,0 +1,16 @@
+koku=2026-09-18T20:20:13+0900 種=無い file docs/evidence/ashigaru-mac-1_km-188-kuda-wo-tooshita-rc-20260918/raw/seed_ctrl/km188_missing_file.txt(左 cat は必ず rc 1)
+--- shell=/bin/bash (GNU bash, version 3.2.57(1)-release (arm)
+⒜ 素の管      : rc=0 n=0  ← 偽の rc=0
+⒝ pipefail 有  : rc=1 n=0  ← 左の失敗が rc に出る
+⒞ PIPESTATUS[0]: left_rc=1 right_rc=0 / zsh 名 pipestatus=[空]
+--- shell=/Users/momizimac/wt/tools/bash52/bin/bash (GNU bash, version 5.2.0(1)-release (aarc)
+⒜ 素の管      : rc=0 n=0  ← 偽の rc=0
+⒝ pipefail 有  : rc=1 n=0  ← 左の失敗が rc に出る
+⒞ PIPESTATUS[0]: left_rc=1 right_rc=0 / zsh 名 pipestatus=[空]
+--- shell=/bin/zsh (zsh 5.9 (arm64-apple-darwin25.0))
+⒜ 素の管      : rc=0 n=0  ← 偽の rc=0
+⒝ pipefail 有  : rc=1 n=0  ← 左の失敗が rc に出る
+⒞ pipestatus[1]: left_rc=1 right_rc=0 / PIPESTATUS(bash 名)=[空]
+--- 形③ head の SIGPIPE(bash5・pipefail 有): seq 1 100000 | head -1
+rc=141 (141 なら SIGPIPE が rc を汚す・0 なら seq が先に終はつた)
+yes|head rc=141 PIPESTATUS=[141 0]
