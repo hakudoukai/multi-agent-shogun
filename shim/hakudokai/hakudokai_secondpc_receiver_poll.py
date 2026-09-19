@@ -93,7 +93,26 @@ def save_retry_tracker(tracker):
     with open(RETRY_TRACKER_FILE, "w") as f:
         json.dump(tracker, f)
 
-def dead_letter_message(msg_id, last_error):
+def _merge_context_data(orig, extra):
+    """Preserve the original envelope and add the close fields on top.
+
+    Replacing context_data wholesale destroyed target_agent/sender_agent, and a
+    row with no sender can never pass is_same_agent_send() again, so a single
+    close made the row permanently self-rejecting.  (karo-second 2026-09-12)
+    """
+    base = orig
+    if isinstance(base, str):
+        try:
+            base = json.loads(base)
+        except Exception:
+            base = {"_context_data_unparsed": base[:400]}
+    if not isinstance(base, dict):
+        base = {}
+    merged = dict(base)
+    merged.update(extra)
+    return merged
+
+def dead_letter_message(msg_id, last_error, orig_context=None):
     """Mark message as dead-lettered in Supabase (stop retrying)."""
     try:
         import urllib.request
@@ -102,7 +121,10 @@ def dead_letter_message(msg_id, last_error):
         dl_data = json.dumps({
             "acknowledged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "acknowledged_by": "dead_letter",
-            "context_data": json.dumps({"close_reason": "max_retry_exceeded", "last_error": last_error[:200]})
+            "context_data": json.dumps(_merge_context_data(
+                orig_context,
+                {"close_reason": "max_retry_exceeded", "last_error": last_error[:200]},
+            ), ensure_ascii=False)
         }).encode()
         req = urllib.request.Request(dl_url, data=dl_data, method="PATCH")
         req.add_header("Authorization", f"Bearer {api_key}")
@@ -475,7 +497,7 @@ for msg in new_msgs:
     # same-role send; missing/invalid sender identity fails closed.
     if is_same_agent_send(msg):
         log(f"SELF-SEND detected: {msg_id[:8]} from={from_pc} to={to_pc} — dead-lettering")
-        dead_letter_message(msg_id, "self_send_rejected")
+        dead_letter_message(msg_id, "self_send_rejected", msg.get("context_data"))
         with open(processed_file, "a") as f:
             f.write(msg_id + "\n")
         continue
