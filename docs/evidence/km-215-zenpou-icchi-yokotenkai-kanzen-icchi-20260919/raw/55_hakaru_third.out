@@ -1,0 +1,15 @@
+=== argv="ashigaru-third-1" ===
+cwd=/Users/momizimac/wt/a2-km215
+argv=resolve_agent_pane ashigaru-third-1
+rc=0
+stdout=<空>
+stderr=
+  WARN: 完全一致 session 'multiagent-third:agents' が見つからぬ(km-215 據ゑ・前方一致の誤爆防止) ―― resolve_agent_pane は空を返す(fail-closed)。
+
+=== argv="gunshi-third" ===
+cwd=/Users/momizimac/wt/a2-km215
+argv=resolve_agent_pane gunshi-third
+rc=0
+stdout=<空>
+stderr=
+  WARN: 完全一致 session 'multiagent-third:agents' が見つからぬ(km-215 據ゑ・前方一致の誤爆防止) ―― resolve_agent_pane は空を返す(fail-closed)。

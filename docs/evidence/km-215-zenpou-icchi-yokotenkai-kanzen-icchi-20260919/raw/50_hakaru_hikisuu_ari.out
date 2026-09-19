@@ -1,0 +1,31 @@
+★stub 明記★: section18_is_secondpc_agent / section18_mainpc_pane_index は常に rc=1 を返す最小 stub(理由=上記コメント逐語)。
+
+=== argv="ashigaru2" ===
+cwd=/Users/momizimac/wt/a2-km215
+argv=resolve_pane ashigaru2
+rc=1
+stdout=<空>
+stderr=
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] WARN: 完全一致 session 'multiagent' が見つからぬ(km-215 據ゑ・前方一致の誤爆防止) ―― Phase 2 固定寫像へ fail-closed で落ちる。
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] WARN: 完全一致 session 'multiagent' が見つからぬ ―― @pane_base を既定 0 とする(km-215 fail-closed 宣言・黙つた0を鳴らすに変換)。
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] ERROR: Unknown agent_id: ashigaru2 (§18: ashigaru4 は欠番)
+
+=== argv="ashigaru-mac-2" ===
+cwd=/Users/momizimac/wt/a2-km215
+argv=resolve_pane ashigaru-mac-2
+rc=1
+stdout=<空>
+stderr=
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] WARN: 完全一致 session 'multiagent' が見つからぬ(km-215 據ゑ・前方一致の誤爆防止) ―― Phase 2 固定寫像へ fail-closed で落ちる。
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] WARN: 完全一致 session 'multiagent' が見つからぬ ―― @pane_base を既定 0 とする(km-215 fail-closed 宣言・黙つた0を鳴らすに変換)。
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] ERROR: Unknown agent_id: ashigaru-mac-2 (§18: ashigaru4 は欠番)
+
+=== argv="gunshi" ===
+cwd=/Users/momizimac/wt/a2-km215
+argv=resolve_pane gunshi
+rc=1
+stdout=<空>
+stderr=
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] WARN: 完全一致 session 'multiagent' が見つからぬ(km-215 據ゑ・前方一致の誤爆防止) ―― Phase 2 固定寫像へ fail-closed で落ちる。
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] WARN: 完全一致 session 'multiagent' が見つからぬ ―― @pane_base を既定 0 とする(km-215 fail-closed 宣言・黙つた0を鳴らすに変換)。
+  [2026-09-20 00:35:34] [switch_cli/km215-measure] ERROR: Unknown agent_id: gunshi (§18: ashigaru4 は欠番)

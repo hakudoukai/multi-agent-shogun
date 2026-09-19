@@ -1,0 +1,47 @@
+★其の一(前半) ―― 母數を己の器で数へ直した★
+歩き根 = /Users/momizimac/wt/a2-km215（★共用樹に非ず・己の枝の樹★）／刻 = 下記 raw/00_koku.txt
+器 = /usr/bin/grep（★shell の `grep` は ugrep で .gitignore を見る★ ゆゑ絶対 path で名指した）
+
+■ ⓐ 下命の逐語（`--` の後に `--include`）
+  argv = /usr/bin/grep -rn -- -t *["']\{0,1\}multiagent --include=*.sh scripts lib shutsujin_departure.sh
+  rc = ★2★ ／ out = 36 行 ／ err = 1 行
+  err 逐語 = grep: --include=*.sh: No such file or directory
+  ★疵★: `--` の後の語は ★悉く file 名★ と読まれる。∴ `--include=*.sh` は ★濾過器として働いて居らぬ★。
+        働いたのは「在らぬ file を開かうとして rc=2 を返す」事だけである。
+
+■ ⓑ 正した形（`--include` を pattern の前へ）
+  argv = /usr/bin/grep -rn --include=*.sh -- -t *["']\{0,1\}multiagent scripts lib shutsujin_departure.sh
+  rc = ★0★ ／ out = 36 行 ／ err = 0 行
+
+■ ⓐ と ⓑ の出目の差 = ★0 行★
+  ―― ∴ 家老の申された ★36★ は ★再現する★。濾過器が死んで居ても、
+     scripts/ と lib/ の非 .sh に当たる行は ★元から無かつた★ゆゑ数は動かなんだ。
+     ★然れど rc は 0 でなく 2 であつた★ ―― 「数が合ふ」は「器が正しい」を意味せぬ。
+
+■ file 別（ⓑ・母數 36）
+  scripts/checks/pane_identity.sh = 1 箇所
+  scripts/switch_cli.sh = 3 箇所
+  scripts/watcher_supervisor_third.sh = 1 箇所
+  shutsujin_departure.sh = 31 箇所
+
+■ ★家老は「5 file」と申されたが、此の字面が当たるのは 4 file である★
+  五人目 = scripts/agent_status.sh は ★此の字面 0 箇所★。
+  ―― 因は「無事」ではない。★-t に ★変数★ を渡して居る★ゆゑ字面の器に映らぬのである。
+  scripts/switch_cli.sh
+    字面(-t multiagent) = 3 箇所 ／ 変数形(-t "$…") = 18 箇所
+  scripts/watcher_supervisor_third.sh
+    字面(-t multiagent) = 1 箇所 ／ 変数形(-t "$…") = 1 箇所
+  scripts/agent_status.sh
+    字面(-t multiagent) = 0 箇所 ／ 変数形(-t "$…") = 2 箇所
+  scripts/checks/pane_identity.sh
+    字面(-t multiagent) = 1 箇所 ／ 変数形(-t "$…") = 3 箇所
+  shutsujin_departure.sh
+    字面(-t multiagent) = 31 箇所 ／ 変数形(-t "$…") = 6 箇所
+  ∴ 「0 箇所」は ★危ふくない事を意味せぬ★。(下記「意味せぬ事」を見よ)
+
+★此の數が意味せぬ事★:
+  ・36 は ★`-t` の直後に literal で `multiagent` と書いた行★ の数である。
+    ★`-t "$session"` の形は一行も入つて居らぬ★ ―― 上表の「変数形」がそれで、5 file 計 30 行 在る。
+    此の形も前方一致し得るが、★危ふさは渡る値に依る★ゆゑ字面では断ぜられぬ。★未測である★。
+  ・36 は ★当席の枝(origin/main 6bde7170ce574090a6139ba2dfe3aa4cb6db8634)の版★ の数である。共用樹の作業中の版では異なり得る。
+  ・4 file は「他に無い」ではない ―― 歩いたのは scripts lib shutsujin_departure.sh のみ。

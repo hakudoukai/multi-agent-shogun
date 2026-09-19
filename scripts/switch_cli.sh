@@ -65,13 +65,16 @@ resolve_pane() {
 
     # Phase 1: @agent_id メタデータから動的検索
     local pane_count
-    pane_count=$(tmux list-panes -t "multiagent:agents" 2>/dev/null | wc -l)
+    pane_count=$(tmux list-panes -t "=multiagent:agents" 2>/dev/null | wc -l)
+    if [[ "$pane_count" -eq 0 ]]; then
+        log "WARN: 完全一致 session 'multiagent' が見つからぬ(km-215 據ゑ・前方一致の誤爆防止) ―― Phase 2 固定寫像へ fail-closed で落ちる。"
+    fi
     if [[ "$pane_count" -gt 0 ]]; then
         for i in $(seq 0 $((pane_count - 1))); do
             local aid
-            aid=$(tmux display-message -t "multiagent:agents.$i" -p '#{@agent_id}' 2>/dev/null)
+            aid=$(tmux display-message -t "=multiagent:agents.$i" -p '#{@agent_id}' 2>/dev/null)
             if [[ "$aid" == "$agent_id" ]]; then
-                echo "multiagent:agents.$i"
+                echo "=multiagent:agents.$i"
                 return 0
             fi
         done
@@ -89,7 +92,11 @@ resolve_pane() {
     # 実行する想定 (Phase 1 の @agent_id 動的検索が SecondPC tmux 内で成立する)。
     # MainPC から SecondPC を跨ぐ switch_cli は本スクリプト範囲外。
     local pane_base
-    pane_base=$(tmux show-options -t multiagent -v @pane_base 2>/dev/null || echo "0")
+    pane_base=$(tmux show-options -t "=multiagent" -v @pane_base 2>/dev/null)
+    if [[ -z "$pane_base" ]]; then
+        log "WARN: 完全一致 session 'multiagent' が見つからぬ ―― @pane_base を既定 0 とする(km-215 fail-closed 宣言・黙つた0を鳴らすに変換)。"
+        pane_base="0"
+    fi
 
     # SecondPC agent: 動的検索失敗時はエラー終了 (B2/R2 fix)
     if section18_is_secondpc_agent "$agent_id"; then
@@ -102,7 +109,7 @@ resolve_pane() {
     # MainPC agent: SECTION18_MAINPC_PANE_ORDER 順で pane index を解決
     local mainpc_idx
     if mainpc_idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
-        echo "multiagent:agents.$((pane_base + mainpc_idx))"
+        echo "=multiagent:agents.$((pane_base + mainpc_idx))"
         return 0
     fi
 

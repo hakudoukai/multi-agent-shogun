@@ -1,0 +1,29 @@
+★75 ―― ㋔案は紙のみ(本弾の範囲外・提案のみ・未着手)★
+
+以下は★本弾では触れて居らぬ★。命令書の 二器(switch_cli.sh / watcher_supervisor_third.sh)
+にも 不触三箇所(agent_status.sh / pane_identity.sh / shutsujin_departure.sh)にも当たらぬ、
+★別途の判断を要する提案★として紙にのみ残す。
+
+■提案①: lib/_section18_roles.sh L108 の `declare -A` が bash 3.2(此の Mac の /bin/bash・
+  homebrew bash 不在)で「unbound variable」を発し、switch_cli.sh L39 の source で
+  ★script 全体が即死する★(50_hakaru_hikisuu_ari.sh の driver comment 逐語・本弾で新発見)。
+  ―― 之は pane_identity.sh L104 の既知疵(project_mac_bin_bash_is_3_2_declare_A_fails)
+  と★同根・別箇所★。km-215 の外ゆゑ★直さぬ★。次弾候補として書き置く。
+  想定修正: `declare -A` を bash3.2 互換の代替(例: case文 or 二つの並行 indexed array)へ
+  書き換へるか、または script 冒頭で homebrew bash の有無を検め、無ければ明示エラーで
+  止める(黙つて壊れた儘 source されるのを防ぐ)。★何れも本席の専断では書かぬ★。
+
+■提案②: 「session 名の想定(multiagent)」と「當機の実際の session 名(multiagent-mac)」の
+  不一致そのもの。今回の =anchor 化により、當機では switch_cli.sh の resolve_pane() Phase 1
+  および pane_base 取得は★常に「完全一致で見つからぬ」側へ落ちる★(multiagent が literal に
+  存在せぬ為)。之は★安全側への変化★(前方一致による誤爆の芽を摘む)だが、同時に
+  Phase 1 の動的検索(@agent_id メタデータ照合)が當機では★機能しなくなる★(常にPhase2固定
+  寫像へ落ちる)という副作用も伴ふ。此の Mac が「multiagent」ではなく「multiagent-mac」を
+  正式 session 名として使ふのであれば、根の解は「=anchor」ではなく「session 名を機に応じて
+  可変にする(config 化)」であらう ―― が、之は命令書の指示(-t "$s"→-t "=$s")を超える設計
+  変更ゆゑ、★本席の専断では行はぬ★。委員長/總監督の裁を仰ぐべき論点として書き置く。
+
+■提案③: `--include` を `--` の後に置くと swallow される grep の挙動(10_bosuu.txt 既述)は
+  他の script/手順書にも同型の誤りが残つて居る可能性がある。家老自身の先測りコマンドが
+  正に此の形であつた(rc=2 だが偶然 36 の集合は正しく出た)。横展開して探す価値はあるが、
+  ★本弾の36箇所仕分けの外★ゆゑ、今回は数へず提案のみ。

@@ -1,0 +1,23 @@
+★60 ―― 同一run: 兩對照 + 據ゑ後三値 + bash -n★
+
+■甲 兩對照(read-only ―― has-session のみ・send-keys 皆無)
+  cwd=/Users/momizimac/wt/a2-km215
+  argv(陽性)=/opt/homebrew/bin/tmux has-session -t multiagent
+  rc(陽性)=0  stdout=''  stderr=''
+  argv(陰性)=/opt/homebrew/bin/tmux has-session -t =multiagent
+  rc(陰性)=1  stdout=''  stderr="can't find session: multiagent\n"
+  ★判定★: rc(陽性)=0 かつ rc(陰性)≠0 ならば「前方一致は現に掴み、完全一致は現に掴まぬ」の證が立つ。
+  ★對照成立=真★
+
+■乙 據ゑ後 三値(受入条件⑵)
+  scripts/switch_cli.sh
+    sha256=707400f223764b5a106e9baf9eb70cc41bfbf5b9f6ac701b1f623dac58f5f462 bytes=15755 行=422
+    bash -n rc=0 out='' err=''
+  scripts/watcher_supervisor_third.sh
+    sha256=4f2433e7395e9bc7209a2a487683c23ad371cf72022e8a99c8e9b321074395c8 bytes=3173 行=91
+    bash -n rc=0 out='' err=''
+
+★此の数が意味せぬ事★:
+  ・對照は★此のrunの此の刻★の状態(當機に session multiagent-mac が生きて居る間のみ陽性が成立する)。
+    session が落ちれば陽性対照も落ちる ―― 恒常の證ではない。
+  ・乙の sha256 は★編集後★の値であり、編集が正しい事の證ではない(別途 15_shiwake/50/55 の實行結果と併せ読め)。

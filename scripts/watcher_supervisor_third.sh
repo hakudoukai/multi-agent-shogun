@@ -40,9 +40,12 @@ pane_exists() {
 # msg_20260605_172549_27c4acfb で確認。
 resolve_agent_pane() {
     local agent="$1"
-    tmux list-panes -t multiagent-third:agents \
-        -F '#{pane_index}:#{@agent_id}' 2>/dev/null \
-        | awk -F: -v a="$agent" '$2==a {print "multiagent-third:agents."$1; exit}'
+    local raw
+    raw=$(tmux list-panes -t "=multiagent-third:agents" -F '#{pane_index}:#{@agent_id}' 2>/dev/null)
+    if [[ -z "$raw" ]]; then
+        echo "WARN: 完全一致 session 'multiagent-third:agents' が見つからぬ(km-215 據ゑ・前方一致の誤爆防止) ―― resolve_agent_pane は空を返す(fail-closed)。" >&2
+    fi
+    awk -F: -v a="$agent" '$2==a {print "=multiagent-third:agents."$1; exit}' <<<"$raw"
 }
 
 start_watcher_if_missing() {

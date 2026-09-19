@@ -1,0 +1,36 @@
+scripts/switch_cli.sh:68:    pane_count=$(tmux list-panes -t "multiagent:agents" 2>/dev/null | wc -l)
+scripts/switch_cli.sh:72:            aid=$(tmux display-message -t "multiagent:agents.$i" -p '#{@agent_id}' 2>/dev/null)
+scripts/switch_cli.sh:92:    pane_base=$(tmux show-options -t multiagent -v @pane_base 2>/dev/null || echo "0")
+scripts/checks/pane_identity.sh:193:        if src_a_raw=$(timeout "$TIMEOUT_PER_SOURCE_SECONDS" "$TMUX_CMD" list-panes -t multiagent -F '#{pane_index}=#{@agent_id}' 2>/dev/null); then
+scripts/watcher_supervisor_third.sh:43:    tmux list-panes -t multiagent-third:agents \
+shutsujin_departure.sh:247:            echo "  csm   → tmux attach-session -t multiagent"
+shutsujin_departure.sh:337:tmux kill-session -t multiagent 2>/dev/null && log_info "  └─ multiagent陣、撤収完了" || log_info "  └─ multiagent陣は存在せず"
+shutsujin_departure.sh:592:    echo "  ║  Kill:  tmux kill-session -t multiagent                  ║"
+shutsujin_departure.sh:600:    tmux set-environment -t multiagent DISPLAY_MODE "silent"
+shutsujin_departure.sh:603:    tmux set-environment -t multiagent DISPLAY_MODE "shout"
+shutsujin_departure.sh:624:_init_pid=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+shutsujin_departure.sh:640:tmux select-layout -t "multiagent:agents" even-vertical
+shutsujin_departure.sh:710:# tmux select-pane -t "multiagent:agents.${PANE_BASE}" -P 'bg=#501515'          # 家老: 赤
+shutsujin_departure.sh:711:# tmux select-pane -t "multiagent:agents.$((PANE_BASE+8))" -P 'bg=#454510'      # 軍師: 金
+shutsujin_departure.sh:714:tmux set-option -t multiagent -w pane-border-status top
+shutsujin_departure.sh:715:tmux set-option -t multiagent -w pane-border-format '#{?pane_active,#[reverse],}#[bold]#{@agent_id}#[default] (#{@model_name}) #{@current_task}'
+shutsujin_departure.sh:787:    tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_karo_cli_type"
+shutsujin_departure.sh:788:    tmux send-keys -t "multiagent:agents.${p}" "$_karo_cmd"
+shutsujin_departure.sh:789:    tmux send-keys -t "multiagent:agents.${p}" Enter
+shutsujin_departure.sh:791:    tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_karo_display" 2>/dev/null || true
+shutsujin_departure.sh:813:            tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_ashi_cli_type"
+shutsujin_departure.sh:814:            tmux send-keys -t "multiagent:agents.${p}" "$_ashi_cmd"
+shutsujin_departure.sh:815:            tmux send-keys -t "multiagent:agents.${p}" Enter
+shutsujin_departure.sh:833:            tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_ashi_cli_type"
+shutsujin_departure.sh:834:            tmux send-keys -t "multiagent:agents.${p}" "$_ashi_cmd"
+shutsujin_departure.sh:835:            tmux send-keys -t "multiagent:agents.${p}" Enter
+shutsujin_departure.sh:853:    tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_gunshi_cli_type"
+shutsujin_departure.sh:854:    tmux send-keys -t "multiagent:agents.${p}" "$_gunshi_cmd"
+shutsujin_departure.sh:855:    tmux send-keys -t "multiagent:agents.${p}" Enter
+shutsujin_departure.sh:857:    tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_gunshi_display" 2>/dev/null || true
+shutsujin_departure.sh:985:    _karo_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${PANE_BASE}" -v @agent_cli 2>/dev/null || echo "claude")
+shutsujin_departure.sh:993:        _ashi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
+shutsujin_departure.sh:1001:    _gunshi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
+shutsujin_departure.sh:1138:    echo "  │      tmux send-keys -t multiagent:agents.\$p \\            │"
+shutsujin_departure.sh:1151:echo "  │     tmux attach-session -t multiagent   (または: csm)    │"
+shutsujin_departure.sh:1170:        wt.exe -w 0 new-tab wsl.exe -e bash -c "tmux attach-session -t shogun" \; new-tab wsl.exe -e bash -c "tmux attach-session -t multiagent"
