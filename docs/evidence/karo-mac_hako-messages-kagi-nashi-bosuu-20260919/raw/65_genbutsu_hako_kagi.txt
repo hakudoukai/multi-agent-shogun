@@ -1,0 +1,33 @@
+# raw/65_genbutsu_hako_kagi.txt ―― ★生きた箱 19 本★が messages 鍵を持つか（読取のみ）
+刻 = 2026-09-19T18:05:28+0900
+器 = docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_genbutsu_hako_kagi.py  sha256=4badbf513ca7c4fd36d0ad583331ab1c43513fbccc6d420012897752f9bf2e11
+argv = .venv/bin/python3 -B docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_genbutsu_hako_kagi.py queue/inbox
+cwd = /Users/momizimac/multi-agent-shogun   rc = 0   stderr 行=0
+
+歩いた根 = queue/inbox
+箱                                       byte 頂        旗      未読/項数
+ashigaru-mac-1.yaml                    52503 dict     k      0/45
+ashigaru-mac-2.yaml                    42971 dict     k      0/38
+ashigaru-mac-3.yaml                    58460 dict     k      0/44
+ashigaru-mac-4.yaml                    39838 dict     k      1/45
+ashigaru-mac-5.yaml                    35949 dict     k      0/35
+ashigaru-mac-6.yaml                    30200 dict     k      0/36
+ashigaru-mac-7.yaml                    50485 dict     k      0/32
+dr-m.yaml                               5053 dict     k      3/3
+fukuincho.yaml                          5456 dict     k      1/1
+gakushu-bucho.yaml                     49032 dict     k      42/42
+gunshi-mac.yaml                      1078418 dict     k      565/565
+gunshi.yaml                             6554 dict     k      7/7
+hermes-gunshi-mac.yaml                  2853 dict     k      1/1
+hermes3.yaml                            6067 dict     k      5/5
+karo-mac,gunshi-mac.yaml                1974 dict     k      1/1
+karo-mac.yaml                          23513 dict     k      6/38
+karo.yaml                             266949 dict     k      681/681
+kikaku-bucho.yaml                     195878 dict     k      41/43
+shogun-mac.yaml                       216612 dict     k      177/207
+
+母數 = 19 本 ／ 鍵在(k)=19 ★鍵無=0★(内 空帳=0) 形違=0 parse不能=0
+
+★註★ 本器は agent_status.sh が歩く席（hideyoshi 等 11 席）とは別に、
+  ★箱の file を悉く★歩く。∴ raw/63 の生きた樹の走が「鍵無=0」と刷つたのは
+  「鍵無が無い」證ではなく ★歩いた 11 席の箱が悉く不在（顔=-）★ だからである。

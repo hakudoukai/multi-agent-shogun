@@ -1,0 +1,58 @@
+# raw/64_hantei.txt ―― 期する表との突合（正 N/N）★rc は pipe に通さず其の場で読んだ★
+刻 = 2026-09-19T18:04:45+0900
+器 = docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_hako_hantei.sh  sha256=e59e3d34ea48c728f62330297b8d77a67c7aa345e4bf6f3f1be188c0f7ff5c86
+
+■ 前版（＝器自身の★陰性対照★: 鍵無欄が無い事・no-key 行 0 本を期する）  rc=0
+=== 判定 札=前版 砂場=/tmp/km_hako_WUI9pR ===
+■ 表の顔（十一席）
+  正  顔 hideyoshi  期=2 実=2
+  正  顔 ashigaru1  期=0 実=0
+  正  顔 ashigaru2  期=0 実=0
+  正  顔 ashigaru3  期=0 実=0
+  正  顔 ieyasu  期=S 実=S
+  正  顔 takenaka  期=! 実=!
+  正  顔 maeda  期=S 実=S
+  正  顔 ashigaru5  期=0 実=0
+  正  顔 ashigaru6  期=0 実=0
+  正  顔 ashigaru7  期=0 実=0
+  正  顔 ashigaru8  期=- 実=-
+■ stderr の診断行（本数）
+  正  no-key 行  期=0 実=0
+  正  bad-shape 行  期=2 実=2
+  正  parse-fail 行  期=1 実=1
+■ 母數行の常設欄
+  正  鍵無欄の在否  期=無 実=無
+--- 正=15/15  否=0 ---
+  stderr 行数=0
+
+■ 後版（fixture 悉く）  rc=0
+=== 判定 札=後版 砂場=/tmp/km_hako_8YaH1f ===
+■ 表の顔（十一席）
+  正  顔 hideyoshi  期=2 実=2
+  正  顔 ashigaru1  期=0 実=0
+  正  顔 ashigaru2  期=0 実=0
+  正  顔 ashigaru3  期=0 実=0
+  正  顔 ieyasu  期=S 実=S
+  正  顔 takenaka  期=! 実=!
+  正  顔 maeda  期=S 実=S
+  正  顔 ashigaru5  期=0 実=0
+  正  顔 ashigaru6  期=0 実=0
+  正  顔 ashigaru7  期=0 実=0
+  正  顔 ashigaru8  期=- 実=-
+■ stderr の診断行（本数）
+  正  no-key 行  期=3 実=3
+  正  bad-shape 行  期=2 実=2
+  正  parse-fail 行  期=1 実=1
+■ 母數行の常設欄
+  正  鍵無欄の在否  期=在 実=在
+  正  鍵無の値  期=★messages鍵無=3★(内 空帳=1) 実=★messages鍵無=3★(内 空帳=1)
+  正  註の行  期=1 実=1
+--- 正=17/17  否=0 ---
+  stderr 行数=0
+
+■ 後版・鍵在のみ（★常設の証明★: 欄は在り値は 0）  rc=1
+  ※ 此の走は fixture 4 本ゆゑ上の期する表とは合はぬ ―― ★合はぬ事を見せる為に載せる★。
+     見るべきは「鍵無欄の在否=在／値=★messages鍵無=0★(内 空帳=0)」の二行である。
+  正  鍵無欄の在否  期=在 実=在
+  ★否★ 鍵無の値  期=★messages鍵無=3★(内 空帳=1) 実=★messages鍵無=0★(内 空帳=0)
+--- 正=6/17  否=11 ---

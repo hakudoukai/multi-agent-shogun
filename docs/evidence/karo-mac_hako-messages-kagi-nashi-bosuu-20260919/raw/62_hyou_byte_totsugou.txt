@@ -1,0 +1,31 @@
+# raw/62_hyou_byte_totsugou.txt ―― ★表の顔は動かぬ★ の byte 突合（裁「触れぬが正」）
+刻 = 2026-09-19T18:03:39+0900
+前版の砂場 = /tmp/km_hako_WUI9pR   後版の砂場 = /tmp/km_hako_8YaH1f
+
+■ stdout（＝表そのもの）の sha256 と byte
+km_hako_WUI9pR/out.txt   8d4c1a9325537587dbb3cda36104445eb8e2c51fafbd92a8ac646fd87f276647   1137 byte  15 行
+km_hako_8YaH1f/out.txt   8d4c1a9325537587dbb3cda36104445eb8e2c51fafbd92a8ac646fd87f276647   1137 byte  15 行
+
+■ diff（無ければ★一行も違はぬ★）
+（diff 無し・rc=0）
+
+■ stderr は★増える★（母數行へ常設した分＋鍵無の席ごとの一行）
+km_hako_WUI9pR/err.txt      842 byte   5 行
+km_hako_8YaH1f/err.txt     1508 byte   9 行
+
+■ 箱の十形と顔（前版／後版）―― ★顔は悉く同じ・意味は違ふ★
+席            前版     後版     旗      意味
+hideyoshi    2      2      k      ㋐ 鍵在・未読2
+ashigaru1    0      0      k      ㋑ 鍵在・空list ―― ★真に未読0★
+ashigaru2    0      0      n      ㋒ ★鍵無 dict★ ―― 測れて居らぬ
+ashigaru3    0      0      e      ㋓ 空帳0byte ―― 鍵も無い
+ieyasu       S      S      -      ㋔ 頂が list
+takenaka     !      !      -      ㋕ 壊れ yaml
+maeda        S      S      k      ㋖ messages が dict（鍵は在る）
+ashigaru5    0      0      k      ㋗ 鍵在・全既読 ―― ★真に未読0★
+ashigaru6    0      0      k      ㋘ 鍵在・項が写像に非ず ―― ★真に未読0★
+ashigaru7    0      0      n      ㋙ ★偽鍵 message（単数）★＝鍵無
+ashigaru8    -      -      -      ㋚ 箱無
+
+∴ ★前版では 0 と刷る六席（㋑㋒㋓㋗㋘ と真偽が混在）が区別不能★。
+  後版も ★表の顔は一字も変へず★、母數行が「messages鍵無=3(内 空帳=1)」と宣す。

@@ -1,0 +1,18 @@
+# raw/40_fixtures.txt ―― 箱の fixture 十一形（★稼働中の箱には触れぬ★）
+刻 = 2026-09-19T18:00:09+0900
+根 = docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/fixtures/
+
+席                  byte  sha256  意味
+ashigaru1            13  ab1a54afd56934aa64cbaf657fc3cabaf89559dd0761113f748f1e24de42b24a  ㋑ messages鍵在・空 list（★真に未読 0★）
+ashigaru2            57  90e5e6292b2a93a135e3dd5088888e0c92b62cd8c09c432f1ab829115e28189c  ㋒ ★messages鍵が無い dict★（他の鍵のみ）
+ashigaru3             0  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ㋓ 空帳 0byte（safe_load→None）
+ashigaru5           104  0ee1757dc68d133fceab8d6a2376529a9f8c1f021cee2d0f51ce8c19114b65fb  ㋗ messages鍵在・全既読（★真に未読 0★）
+ashigaru6            68  fcb86d2a4154083dcdb7fed00027b2dd451008eb39b8ac37b8a577efb98db0bc  ㋘ messages鍵在・項が写像に非ず（字の並び）
+ashigaru7            84  3da8ea2cc73b3f647e99bb9d5719a74a7c947d7b2a20b06281a8c97a3b5506de  ㋙ ★message（単数）と綴つた偽鍵★＝鍵無
+hideyoshi           143  e5eddef1cf8386e42b863e516fd75683870243642d6c88963b80994b860653bb  ㋐ messages鍵在・未読2・既読1（正の対照）
+ieyasu               49  7aa19bb3e7511b5339a2cadaf945cfcc1f46877eaaa176f547412cf9f15a2668  ㋔ 頂が list（形違＝S）
+maeda                62  f1ef1fad69280b228394a99c86b62096e2bef5b54039263a149d2ec5532b2f2c  ㋖ messages が dict（list に非ず＝S）
+takenaka             72  3b5be00209fc00f2821e0b2f68fd02f8e147a105769a72d317b233995575a681  ㋕ 壊れ yaml（parse不能＝!）
+
+㋚ 箱無 = ashigaru8（fixture を★置かぬ★・顔は「-」）
+∴ 母數 = 歩いた席 11 ＝ fixture 10 本 ＋ 箱無 1 席

@@ -1,0 +1,26 @@
+# raw/63_genbutsu.txt ―― ★生きた樹★での実走（読取のみ・箱には触れぬ）
+刻 = 2026-09-19T18:04:46+0900
+cwd = /Users/momizimac/multi-agent-shogun
+argv = bash scripts/agent_status.sh
+版 = scripts/agent_status.sh sha256=82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd
+rc = 0   stdout 行=15  stderr 行=1
+
+■ stderr（母數行と註）
+[agent_status] ★母數★ 歩いた席=11 ／ 帳: 讀めた=0 弾無=0 帳無=11 ★parse不能=0★ 形違=0 讀めぬ=0 器無=0 器落=0 ★多鍵形=0★ ／ 箱: 数に非ざる顔=0 ★messages鍵無=0★(内 空帳=0) ／ 的: @agent_idで解けた=0 ★曖昧=0★ 寫像不能(session無)=6 寫像不能(pane無)=0
+
+■ stdout（表）
+
+Agent      CLI     Pane      Task ID                                    Status     Inbox
+---------- ------- --------- ------------------------------------------ ---------- -----
+hideyoshi  claude  不在      (no-file)                                  ---        -
+ashigaru1  claude  不在      (no-file)                                  ---        -
+ashigaru2  claude  不在      (no-file)                                  ---        -
+ashigaru3  claude  不在      (no-file)                                  ---        -
+ieyasu     claude  不在      (no-file)                                  ---        -
+takenaka   claude  不在      (no-file)                                  ---        -
+maeda      claude  不在      (no-file)                                  ---        -
+ashigaru5  claude  不在      (no-file)                                  ---        -
+ashigaru6  claude  不在      (no-file)                                  ---        -
+ashigaru7  claude  不在      (no-file)                                  ---        -
+ashigaru8  claude  不在      (no-file)                                  ---        -
+

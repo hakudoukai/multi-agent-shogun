@@ -1,0 +1,86 @@
+# 66_saisei.txt ―― ★復元 → 再走 → 再正★（雛形⑥ 再正）
+刻 = 2026-09-19 18:14:24 +0900
+cwd = /Users/momizimac/multi-agent-shogun
+ref = refs/heads/karo-mac/km-agent-status-hako-kagi-nashi-bosuu-20260919
+commit = 805056d7b70e90b78bb981a0d4418d2b7894eeba
+tree   = fea7792b7930bf2fa54eafde175e6c2bf7dd27be
+復元 argv = git show "${R}:scripts/agent_status.sh" > /tmp/km_saisei_body.sh
+復元した版 sha256 = 82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd
+  （② の申告 82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd と突合せよ）
+★入力の版だけは /tmp に置いた ―― 之は走の入力であつて證の紙ではない。證は本 file（束内）である。★
+
+--- 走 argv = bash docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_hako_ryoutaishou.sh /tmp/km_saisei_body.sh 復元版 ---
+=== 札=復元版 ===
+走らせた版   = /tmp/km_saisei_body.sh
+版の sha256  = 82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd
+砂場         = /tmp/km_hako_eHxDfV
+砂場の python = 在り（3.9.6）
+置いた箱     = 10 本（KM_HAKO_ONLY=（無指定＝悉く））
+箱の一覧     :
+  ashigaru1.yaml               13 byte
+  ashigaru2.yaml               57 byte
+  ashigaru3.yaml                0 byte
+  ashigaru5.yaml              104 byte
+  ashigaru6.yaml               68 byte
+  ashigaru7.yaml               84 byte
+  hideyoshi.yaml              143 byte
+  ieyasu.yaml                  49 byte
+  maeda.yaml                   62 byte
+  takenaka.yaml                72 byte
+cwd          = /tmp/km_hako_eHxDfV
+argv         = bash scripts/km_hako_target.sh
+rc           = 0
+--- 母數行（stderr より抜く）---
+[agent_status] no-key /tmp/km_hako_eHxDfV/queue/inbox/ashigaru2.yaml: messages 鍵が無い ―― 顔は 0 だが「未読が無い」ではない
+[agent_status] no-key /tmp/km_hako_eHxDfV/queue/inbox/ashigaru3.yaml: 空帳ゆゑ messages 鍵も無い ―― 顔は 0 だが「未読が無い」ではない
+[agent_status] bad-shape /tmp/km_hako_eHxDfV/queue/inbox/ieyasu.yaml: top is list
+[agent_status] parse-fail /tmp/km_hako_eHxDfV/queue/inbox/takenaka.yaml: while scanning a quoted scalar   in "/tmp/km_hako_eHxDfV/queue/inbox/takenaka.yaml", line 2, column 14 found unexpected end of stream   in "/tmp/km_hako_eHxDfV/queue/inbox/takenaka.yaml", line 5, colu
+[agent_status] bad-shape /tmp/km_hako_eHxDfV/queue/inbox/maeda.yaml: messages is dict
+[agent_status] no-key /tmp/km_hako_eHxDfV/queue/inbox/ashigaru7.yaml: messages 鍵が無い ―― 顔は 0 だが「未読が無い」ではない
+[agent_status] ★母數★ 歩いた席=11 ／ 帳: 讀めた=0 弾無=0 帳無=11 ★parse不能=0★ 形違=0 讀めぬ=0 器無=0 器落=0 ★多鍵形=0★ ／ 箱: 数に非ざる顔=3 ★messages鍵無=3★(内 空帳=1) ／ 的: @agent_idで解けた=0 ★曖昧=0★ 寫像不能(session無)=6 寫像不能(pane無)=0
+[agent_status] ★黙らぬ★ 上の顔は「弾が無い」ではない。★帳が読めて居らぬ★。
+[agent_status] ★註★ messages 鍵の無い箱=3（内 空帳=1）―― 表の顔は 0 と刷るが「未読が無い」ではない。★0 と区別が付かぬ★。
+--- 表の Inbox 欄（stdout・席と顔のみ）---
+  hideyoshi    2
+  ashigaru1    0
+  ashigaru2    0
+  ashigaru3    0
+  ieyasu       S
+  takenaka     !
+  maeda        S
+  ashigaru5    0
+  ashigaru6    0
+  ashigaru7    0
+  ashigaru8    -
+--- stdout 行数=15 / stderr 行数=9 ---
+砂場は消さぬ（検分の為）: /tmp/km_hako_eHxDfV
+走 rc=0（pipe に通さず其の場で読んだ）
+砂場 = /tmp/km_hako_eHxDfV
+
+--- 判定 argv = bash docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_hako_hantei.sh /tmp/km_hako_eHxDfV 後版 ---
+=== 判定 札=後版 砂場=/tmp/km_hako_eHxDfV ===
+■ 表の顔（十一席）
+  正  顔 hideyoshi  期=2 実=2
+  正  顔 ashigaru1  期=0 実=0
+  正  顔 ashigaru2  期=0 実=0
+  正  顔 ashigaru3  期=0 実=0
+  正  顔 ieyasu  期=S 実=S
+  正  顔 takenaka  期=! 実=!
+  正  顔 maeda  期=S 実=S
+  正  顔 ashigaru5  期=0 実=0
+  正  顔 ashigaru6  期=0 実=0
+  正  顔 ashigaru7  期=0 実=0
+  正  顔 ashigaru8  期=- 実=-
+■ stderr の診断行（本数）
+  正  no-key 行  期=3 実=3
+  正  bad-shape 行  期=2 実=2
+  正  parse-fail 行  期=1 実=1
+■ 母數行の常設欄
+  正  鍵無欄の在否  期=在 実=在
+  正  鍵無の値  期=★messages鍵無=3★(内 空帳=1) 実=★messages鍵無=3★(内 空帳=1)
+  正  註の行  期=1 実=1
+--- 正=17/17  否=0 ---
+判定 rc=0（pipe に通さず其の場で読んだ）
+--- 復元版の表(stdout) の sha256 ―― ② の 8d4c1a93… と突合 ---
+8d4c1a9325537587dbb3cda36104445eb8e2c51fafbd92a8ac646fd87f276647
+1137

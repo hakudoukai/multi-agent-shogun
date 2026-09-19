@@ -318,6 +318,11 @@ km_pane_id_by_agent_id() {
 # 「帳が無い」「parse が通らぬ」「弾が無い」は ★別の事★ である。一つの「---」へ畳まぬ。
 N_SEKI=0; N_YOMETA=0; N_NOTAMA=0; N_NOFILE=0; N_PARSE_NG=0
 N_NOPY=0; N_SHAPE=0; N_READERR=0; N_PYDIE=0; N_BOX_NG=0; N_MULTI=0
+# ─── 箱の★潜在★の顔（委員長裁 seq337507⑵）───
+# `data.get('messages', [])` は ★messages 鍵の無い箱★ と ★空の箱★ を同型にする。
+# 表の顔は双方 0 ゆゑ「未読が無い」と読まれる ―― 実は ★測れて居らぬ★。
+# 裁は「触れぬが正・但し母數行へ常設」ゆゑ ★表は変へず★ 母數行で顕在化させる（0 でも刷る）。
+N_BOX_NOKEY=0; N_BOX_KARA=0
 # ─── 的（pane）の顔の度數 ―― ★「席が無い」と「的が曖昧」と「寫像が使へぬ」は別の事★
 N_BYID=0; N_AMBIG=0; N_NOSESS=0; N_NOPANE=0
 
@@ -390,14 +395,17 @@ get_unread_count() {
     local agent_id="$1"
     local inbox_file="$SCRIPT_DIR/queue/inbox/${agent_id}.yaml"
     if ! $PYTHON_AVAILABLE; then
-        echo "P"
+        echo "P -"
         return
     fi
     if [[ ! -f "$inbox_file" ]]; then
-        echo "-"
+        echo "- -"
         return
     fi
     # ★2>/dev/null を外した★（命⑶）。箱の顔: -=箱無 !=parse不能 S=形違 E=讀めぬ P=器無 X=器落
+    # ★出目は二欄「<顔> <旗>」★（裁337507⑵）。旗 = k:messages鍵在 / n:★鍵無 dict★ /
+    #   e:空帳(None ゆゑ鍵も無い) / -:判ぜず。★表に刷るのは顔だけ★ ―― 旗は母數行の為に持ち帰る
+    #   （箱を二度歩かぬ＝一度の歩きで済ませる）。
     "$PYTHON" -c "
 import sys, yaml
 p = '${inbox_file}'
@@ -406,21 +414,25 @@ try:
         data = yaml.safe_load(f)
 except yaml.YAMLError as e:
     sys.stderr.write('[agent_status] parse-fail %s: %s\n' % (p, str(e).replace('\n', ' ')[:200]))
-    print('!'); sys.exit(0)
+    print('! -'); sys.exit(0)
 except OSError as e:
     sys.stderr.write('[agent_status] read-err %s: %s\n' % (p, e))
-    print('E'); sys.exit(0)
+    print('E -'); sys.exit(0)
 if data is None:
-    print(0); sys.exit(0)
+    sys.stderr.write('[agent_status] no-key %s: 空帳ゆゑ messages 鍵も無い ―― 顔は 0 だが「未読が無い」ではない\n' % p)
+    print('0 e'); sys.exit(0)
 if not isinstance(data, dict):
     sys.stderr.write('[agent_status] bad-shape %s: top is %s\n' % (p, type(data).__name__))
-    print('S'); sys.exit(0)
-msgs = data.get('messages', [])
+    print('S -'); sys.exit(0)
+if 'messages' not in data:
+    sys.stderr.write('[agent_status] no-key %s: messages 鍵が無い ―― 顔は 0 だが「未読が無い」ではない\n' % p)
+    print('0 n'); sys.exit(0)
+msgs = data['messages']
 if not isinstance(msgs, list):
     sys.stderr.write('[agent_status] bad-shape %s: messages is %s\n' % (p, type(msgs).__name__))
-    print('S'); sys.exit(0)
-print(sum(1 for m in msgs if isinstance(m, dict) and not m.get('read', False)))
-" || echo "X"
+    print('S k'); sys.exit(0)
+print('%d k' % sum(1 for m in msgs if isinstance(m, dict) and not m.get('read', False)))
+" || echo "X -"
 }
 
 # ─── Output ───
@@ -483,11 +495,20 @@ print_agent_row() {
         *)              N_YOMETA=$((N_YOMETA + 1)) ;;
     esac
 
-    # Unread inbox
-    local unread
-    unread=$(get_unread_count "$agent")
+    # Unread inbox ―― 出目は二欄「<顔> <旗>」（裁337507⑵）
+    local box_out unread box_flag
+    box_out=$(get_unread_count "$agent")
+    # bash 3.2 でも読める形（here-string）。欄が落ちたら「判ぜず」へ倒す（黙つて 0 にせぬ）
+    read -r unread box_flag <<< "$box_out"
+    unread="${unread:--}"
+    box_flag="${box_flag:--}"
     case "$unread" in
         "!"|"S"|"E"|"P"|"X") N_BOX_NG=$((N_BOX_NG + 1)) ;;
+    esac
+    # ★messages 鍵の無い箱を数へる★（空帳は「鍵も無い」ゆゑ内数として両方に立つ）
+    case "$box_flag" in
+        n) N_BOX_NOKEY=$((N_BOX_NOKEY + 1)) ;;
+        e) N_BOX_NOKEY=$((N_BOX_NOKEY + 1)); N_BOX_KARA=$((N_BOX_KARA + 1)) ;;
     esac
 
     # Print with CJK padding
@@ -547,12 +568,18 @@ done
 printf "\n"
 
 # ─── 結語 ―― ★母數と parse 不能の数を刷る★（命⑴）。表を崩さぬ為 stderr へ出す（命⑵）。
-printf '[agent_status] ★母數★ 歩いた席=%d ／ 帳: 讀めた=%d 弾無=%d 帳無=%d ★parse不能=%d★ 形違=%d 讀めぬ=%d 器無=%d 器落=%d ★多鍵形=%d★ ／ 箱: 数に非ざる顔=%d ／ 的: @agent_idで解けた=%d ★曖昧=%d★ 寫像不能(session無)=%d 寫像不能(pane無)=%d\n' \
+printf '[agent_status] ★母數★ 歩いた席=%d ／ 帳: 讀めた=%d 弾無=%d 帳無=%d ★parse不能=%d★ 形違=%d 讀めぬ=%d 器無=%d 器落=%d ★多鍵形=%d★ ／ 箱: 数に非ざる顔=%d ★messages鍵無=%d★(内 空帳=%d) ／ 的: @agent_idで解けた=%d ★曖昧=%d★ 寫像不能(session無)=%d 寫像不能(pane無)=%d\n' \
     "$N_SEKI" "$N_YOMETA" "$N_NOTAMA" "$N_NOFILE" "$N_PARSE_NG" \
-    "$N_SHAPE" "$N_READERR" "$N_NOPY" "$N_PYDIE" "$N_MULTI" "$N_BOX_NG" \
+    "$N_SHAPE" "$N_READERR" "$N_NOPY" "$N_PYDIE" "$N_MULTI" "$N_BOX_NG" "$N_BOX_NOKEY" "$N_BOX_KARA" \
     "$N_BYID" "$N_AMBIG" "$N_NOSESS" "$N_NOPANE" >&2
 if [[ $((N_PARSE_NG + N_SHAPE + N_READERR + N_PYDIE + N_MULTI + N_BOX_NG)) -gt 0 ]]; then
     printf '[agent_status] ★黙らぬ★ 上の顔は「弾が無い」ではない。★帳が読めて居らぬ★。\n' >&2
+fi
+if [[ "$N_BOX_NOKEY" -gt 0 ]]; then
+    # ★「読めぬ」ではない★ ―― 帳は読めて居る。読めた上で ★0 と区別が付かぬ★ のである。
+    # ∴ 上の★黙らぬ★（parse不能等の和）には入れず、別の註として立てる。
+    printf '[agent_status] ★註★ messages 鍵の無い箱=%d（内 空帳=%d）―― 表の顔は 0 と刷るが「未読が無い」ではない。★0 と区別が付かぬ★。\n' \
+        "$N_BOX_NOKEY" "$N_BOX_KARA" >&2
 fi
 if [[ "$N_AMBIG" -gt 0 ]]; then
     printf '[agent_status] ★黙らぬ★ @agent_id が二席以上に在る席が %d ―― 当てれば別席を撃ち得る ∴ ★当てなかつた★。\n' "$N_AMBIG" >&2

@@ -1,0 +1,53 @@
+# 60_after.txt ―― ★据ゑた後★ の実走（fixture 悉く）
+刻 = 2026-09-19T18:02:42+0900
+器 = docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_hako_ryoutaishou.sh  sha256=a0d7be3f734b2cd81d40b8321af850079a233dd28e06519ab2af8361d21b1a4d
+測つた版 = scripts/agent_status.sh  sha256=82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd
+argv = KM_HAKO_ONLY="" bash docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_hako_ryoutaishou.sh scripts/agent_status.sh 後版
+cwd(呼び手) = /Users/momizimac/multi-agent-shogun
+
+---8<--- 逐語（器の stdout+stderr） ---8<---
+=== 札=後版 ===
+走らせた版   = scripts/agent_status.sh
+版の sha256  = 82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd
+砂場         = /tmp/km_hako_8YaH1f
+砂場の python = 在り（3.9.6）
+置いた箱     = 10 本（KM_HAKO_ONLY=（無指定＝悉く））
+箱の一覧     :
+  ashigaru1.yaml               13 byte
+  ashigaru2.yaml               57 byte
+  ashigaru3.yaml                0 byte
+  ashigaru5.yaml              104 byte
+  ashigaru6.yaml               68 byte
+  ashigaru7.yaml               84 byte
+  hideyoshi.yaml              143 byte
+  ieyasu.yaml                  49 byte
+  maeda.yaml                   62 byte
+  takenaka.yaml                72 byte
+cwd          = /tmp/km_hako_8YaH1f
+argv         = bash scripts/km_hako_target.sh
+rc           = 0
+--- 母數行（stderr より抜く）---
+[agent_status] no-key /tmp/km_hako_8YaH1f/queue/inbox/ashigaru2.yaml: messages 鍵が無い ―― 顔は 0 だが「未読が無い」ではない
+[agent_status] no-key /tmp/km_hako_8YaH1f/queue/inbox/ashigaru3.yaml: 空帳ゆゑ messages 鍵も無い ―― 顔は 0 だが「未読が無い」ではない
+[agent_status] bad-shape /tmp/km_hako_8YaH1f/queue/inbox/ieyasu.yaml: top is list
+[agent_status] parse-fail /tmp/km_hako_8YaH1f/queue/inbox/takenaka.yaml: while scanning a quoted scalar   in "/tmp/km_hako_8YaH1f/queue/inbox/takenaka.yaml", line 2, column 14 found unexpected end of stream   in "/tmp/km_hako_8YaH1f/queue/inbox/takenaka.yaml", line 5, colu
+[agent_status] bad-shape /tmp/km_hako_8YaH1f/queue/inbox/maeda.yaml: messages is dict
+[agent_status] no-key /tmp/km_hako_8YaH1f/queue/inbox/ashigaru7.yaml: messages 鍵が無い ―― 顔は 0 だが「未読が無い」ではない
+[agent_status] ★母數★ 歩いた席=11 ／ 帳: 讀めた=0 弾無=0 帳無=11 ★parse不能=0★ 形違=0 讀めぬ=0 器無=0 器落=0 ★多鍵形=0★ ／ 箱: 数に非ざる顔=3 ★messages鍵無=3★(内 空帳=1) ／ 的: @agent_idで解けた=0 ★曖昧=0★ 寫像不能(session無)=6 寫像不能(pane無)=0
+[agent_status] ★黙らぬ★ 上の顔は「弾が無い」ではない。★帳が読めて居らぬ★。
+[agent_status] ★註★ messages 鍵の無い箱=3（内 空帳=1）―― 表の顔は 0 と刷るが「未読が無い」ではない。★0 と区別が付かぬ★。
+--- 表の Inbox 欄（stdout・席と顔のみ）---
+  hideyoshi    2
+  ashigaru1    0
+  ashigaru2    0
+  ashigaru3    0
+  ieyasu       S
+  takenaka     !
+  maeda        S
+  ashigaru5    0
+  ashigaru6    0
+  ashigaru7    0
+  ashigaru8    -
+--- stdout 行数=15 / stderr 行数=9 ---
+砂場は消さぬ（検分の為）: /tmp/km_hako_8YaH1f
+---8<--- ここまで ---8<---

@@ -1,0 +1,39 @@
+# 61_after_kagi_ari_only.txt ―― ★常設の陰性対照★ ―― 鍵在の箱のみ置いた走（messages鍵無=0 が刷られるか）
+刻 = 2026-09-19T18:02:42+0900
+器 = docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_hako_ryoutaishou.sh  sha256=a0d7be3f734b2cd81d40b8321af850079a233dd28e06519ab2af8361d21b1a4d
+測つた版 = scripts/agent_status.sh  sha256=82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd
+argv = KM_HAKO_ONLY="hideyoshi ashigaru1 ashigaru5 ashigaru6" bash docs/evidence/karo-mac_hako-messages-kagi-nashi-bosuu-20260919/kiki/km_hako_ryoutaishou.sh scripts/agent_status.sh 後版鍵在のみ
+cwd(呼び手) = /Users/momizimac/multi-agent-shogun
+
+---8<--- 逐語（器の stdout+stderr） ---8<---
+=== 札=後版鍵在のみ ===
+走らせた版   = scripts/agent_status.sh
+版の sha256  = 82bf3043565060d4b49685dfe45c3a84cc55f95374ff429d22015aaf79f9e1bd
+砂場         = /tmp/km_hako_j3rvke
+砂場の python = 在り（3.9.6）
+置いた箱     = 4 本（KM_HAKO_ONLY=hideyoshi ashigaru1 ashigaru5 ashigaru6）
+箱の一覧     :
+  ashigaru1.yaml               13 byte
+  ashigaru5.yaml              104 byte
+  ashigaru6.yaml               68 byte
+  hideyoshi.yaml              143 byte
+cwd          = /tmp/km_hako_j3rvke
+argv         = bash scripts/km_hako_target.sh
+rc           = 0
+--- 母數行（stderr より抜く）---
+[agent_status] ★母數★ 歩いた席=11 ／ 帳: 讀めた=0 弾無=0 帳無=11 ★parse不能=0★ 形違=0 讀めぬ=0 器無=0 器落=0 ★多鍵形=0★ ／ 箱: 数に非ざる顔=0 ★messages鍵無=0★(内 空帳=0) ／ 的: @agent_idで解けた=0 ★曖昧=0★ 寫像不能(session無)=6 寫像不能(pane無)=0
+--- 表の Inbox 欄（stdout・席と顔のみ）---
+  hideyoshi    2
+  ashigaru1    0
+  ashigaru2    -
+  ashigaru3    -
+  ieyasu       -
+  takenaka     -
+  maeda        -
+  ashigaru5    0
+  ashigaru6    0
+  ashigaru7    -
+  ashigaru8    -
+--- stdout 行数=15 / stderr 行数=1 ---
+砂場は消さぬ（検分の為）: /tmp/km_hako_j3rvke
+---8<--- ここまで ---8<---
