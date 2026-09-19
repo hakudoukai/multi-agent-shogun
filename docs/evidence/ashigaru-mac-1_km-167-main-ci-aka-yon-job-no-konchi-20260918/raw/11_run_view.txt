@@ -1,0 +1,100 @@
+
+X main Multi-CLI Test Suite · 35289072580
+Triggered via push about 3 hours ago
+
+JOBS
+X Unit Tests (macos-latest) in 52s (ID 105427765731)
+  ✓ Set up job
+  ✓ Checkout code
+  - Install bats-core (Linux)
+  ✓ Install bats-core (macOS)
+  ✓ Install GNU tools (macOS)
+  ✓ Setup bats helpers
+  - Install system dependencies (Linux)
+  ✓ Setup Python venv with PyYAML
+  X Run root-level tests (except agent_selfwatch)
+  - Run agent self-watch unit tests
+  - Run unit tests
+  - Verify zero unexpected SKIPs (SKIP=FAIL policy)
+  ✓ Upload test results
+  ✓ Post Checkout code
+  ✓ Complete job
+X Shell Script Linting in 19s (ID 105427765946)
+  ✓ Set up job
+  ✓ Checkout code
+  ✓ Install shellcheck
+  ✓ Run shellcheck on lib/
+  X Run shellcheck on scripts/
+  ✓ Post Checkout code
+  ✓ Complete job
+X Build Instructions Check in 6s (ID 105427766069)
+  ✓ Set up job
+  ✓ Checkout code
+  ✓ Check if build script exists
+  ✓ Run build_instructions.sh
+  X Check for uncommitted changes
+  - Skip build check
+  ✓ Post Checkout code
+  ✓ Complete job
+X Unit Tests (ubuntu-latest) in 23s (ID 105427766103)
+  ✓ Set up job
+  ✓ Checkout code
+  ✓ Install bats-core (Linux)
+  - Install bats-core (macOS)
+  - Install GNU tools (macOS)
+  ✓ Setup bats helpers
+  ✓ Install system dependencies (Linux)
+  ✓ Setup Python venv with PyYAML
+  X Run root-level tests (except agent_selfwatch)
+  - Run agent self-watch unit tests
+  - Run unit tests
+  - Verify zero unexpected SKIPs (SKIP=FAIL policy)
+  ✓ Upload test results
+  ✓ Post Checkout code
+  ✓ Complete job
+- Integration Tests (Claude only) in 0s (ID 105427972853)
+- E2E Tests (Mock CLI) in 0s (ID 105427972874)
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Unit Tests (macos-latest): .github#2
+
+X Process completed with exit code 1.
+Unit Tests (macos-latest): .github#97
+
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Shell Script Linting: .github#2
+
+X Process completed with exit code 1.
+Shell Script Linting: .github#16
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Shell Script Linting: .github#1
+
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Build Instructions Check: .github#2
+
+X Process completed with exit code 1.
+Build Instructions Check: .github#1883
+
+X Run 'bash scripts/build_instructions.sh' and commit the changes.
+Build Instructions Check: .github#950
+
+X Generated instructions files are out of sync!
+Build Instructions Check: .github#949
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Build Instructions Check: .github#1
+
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Unit Tests (ubuntu-latest): .github#2
+
+X Process completed with exit code 1.
+Unit Tests (ubuntu-latest): .github#89
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Unit Tests (ubuntu-latest): .github#1
+
+
+To see what failed, try: gh run view 35289072580 --log-failed
+View this run on GitHub: https://github.com/hakudoukai/multi-agent-shogun/actions/runs/35289072580

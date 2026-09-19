@@ -1,0 +1,7 @@
+
+In scripts/checks/karo_mac_gate7.sh line 1:
+# karo_mac_gate7.sh ―― 門 v7(七欄・八版目・將軍裁 01:13)。零語行を 甲(測定の零)/乙(宣言の零)/丙(除外)に仕分け、數だけ出す。
+^-- SC2148 (error): Tips depend on target shell and yours is unknown. Add a shebang or a 'shell' directive.
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2148 -- Tips depend on target shell and y...

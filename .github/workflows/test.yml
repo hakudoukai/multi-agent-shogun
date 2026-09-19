@@ -92,7 +92,9 @@ jobs:
             [ -f "$f" ] || continue
             RESULT=$(bats "$f" --tap 2>/dev/null || true)
             # Count skips, excluding known CI-environment skips (e.g. "claude not installed")
-            COUNT=$(echo "$RESULT" | grep "^ok.*# skip" | grep -cv "CI environment" || true)
+            # and skips a ruling superseded (seq293394: TC-FR-003 "SUPERSEDED by TC-FR-003b",
+            # guarded by TC-NFR-008) -- km-167 (c), iincho ruling seq332367
+            COUNT=$(echo "$RESULT" | grep "^ok.*# skip" | grep -cEv "CI environment|SUPERSEDED" || true)
             SKIP_COUNT=$((SKIP_COUNT + COUNT))
           done
           if [ "$SKIP_COUNT" -gt 0 ]; then

@@ -1,0 +1,144 @@
+..FF...F.F.FF...F                                                        [100%]
+=================================== FAILURES ===================================
+______ TestSection18ShellHelper.test_mainpc_pane_order_matches_section18 _______
+
+self = <test_section18_migration.TestSection18ShellHelper object at 0x10aa4f390>
+
+    def test_mainpc_pane_order_matches_section18(self):
+        out = bash_eval_section18('echo "${SECTION18_MAINPC_PANE_ORDER[@]}"')
+        # MainPC pane 0..4: karo / ashigaru1 / ashigaru2 / ashigaru3 / gunshi
+>       assert out.split() == ["karo", "ashigaru1", "ashigaru2", "ashigaru3", "gunshi"]
+E       AssertionError: assert ['hideyoshi',...', 'takenaka'] == ['karo', 'ash...u3', 'gunshi']
+E
+E         At index 0 diff: 'hideyoshi' != 'karo'
+E         Left contains one more item: 'takenaka'
+E         Use -v to get more diff
+
+tests/test_section18_migration.py:1043: AssertionError
+_______ TestSection18ShellHelper.test_secondpc_agents_matches_section18 ________
+
+self = <test_section18_migration.TestSection18ShellHelper object at 0x10a9eb6f0>
+
+    def test_secondpc_agents_matches_section18(self):
+        out = bash_eval_section18('echo "${SECTION18_SECONDPC_AGENTS[@]}"')
+>       assert out.split() == ["ashigaru5", "ashigaru6", "ashigaru7", "ashigaru8"]
+E       AssertionError: assert ['maeda', 'as..., 'ashigaru8'] == ['ashigaru5',..., 'ashigaru8']
+E
+E         At index 0 diff: 'maeda' != 'ashigaru5'
+E         Left contains one more item: 'ashigaru8'
+E         Use -v to get more diff
+
+tests/test_section18_migration.py:1047: AssertionError
+___ TestSection18ShellHelper.test_mainpc_pane_index_returns_expected_values ____
+
+self = <test_section18_migration.TestSection18ShellHelper object at 0x10a9de8b0>
+
+    def test_mainpc_pane_index_returns_expected_values(self):
+        for ai, expected in [
+            ("karo", "0"),
+            ("ashigaru1", "1"),
+            ("ashigaru2", "2"),
+            ("ashigaru3", "3"),
+            ("gunshi", "4"),  # B1/R1 fix: gunshi は pane index 4
+        ]:
+            out = bash_eval_section18(f'section18_mainpc_pane_index {ai}')
+>           assert out == expected, f"{ai} expected pane index {expected}, got {out}"
+E           AssertionError: karo expected pane index 0, got
+E           assert '' == '0'
+E
+E             - 0
+
+tests/test_section18_migration.py:1077: AssertionError
+_ TestSection18ShellPythonSotDrift.test_mainpc_pane_order_subset_matches_python_mainpc_minus_shogun _
+
+self = <test_section18_migration.TestSection18ShellPythonSotDrift object at 0x10aa4fb10>
+
+    def test_mainpc_pane_order_subset_matches_python_mainpc_minus_shogun(self):
+        """Shell SECTION18_MAINPC_PANE_ORDER は Python MAINPC_ROLES から
+        shogun (別 session) を除いた集合に等しい (順序は pane 配置順)。"""
+        py = self._load_python_roles()
+        py_mainpc_pane_set = set(py.MAINPC_ROLES) - {"shogun"}
+        sh_pane_order = self._shell_array("SECTION18_MAINPC_PANE_ORDER")
+>       assert set(sh_pane_order) == py_mainpc_pane_set, (
+            f"drift: shell {sh_pane_order} vs python {sorted(py_mainpc_pane_set)}"
+        )
+E       AssertionError: drift: shell ['hideyoshi', 'ashigaru1', 'ashigaru2', 'ashigaru3', 'ieyasu', 'takenaka'] vs python ['ashigaru1', 'ashigaru2', 'ashigaru3', 'hideyoshi', 'ieyasu', 'nobunaga', 'takenaka']
+E       assert {'ashigaru1',...', 'takenaka'} == {'ashigaru1',...obunaga', ...}
+E
+E         Extra items in the right set:
+E         'nobunaga'
+E         Use -v to get more diff
+
+tests/test_section18_migration.py:1225: AssertionError
+___ TestSection18ShellPythonSotDrift.test_all_roles_match_python_valid_roles ___
+
+self = <test_section18_migration.TestSection18ShellPythonSotDrift object at 0x10a9ebce0>
+
+    def test_all_roles_match_python_valid_roles(self):
+        """Shell SECTION18_ALL_ROLES の集合 == Python VALID_ROLES の集合。"""
+        py = self._load_python_roles()
+        sh_all = self._shell_array("SECTION18_ALL_ROLES")
+>       assert set(sh_all) == set(py.VALID_ROLES), (
+            f"drift: shell {sorted(sh_all)} vs python {sorted(py.VALID_ROLES)}"
+        )
+E       AssertionError: drift: shell ['ashigaru1', 'ashigaru2', 'ashigaru3', 'ashigaru5', 'ashigaru6', 'ashigaru7', 'ashigaru8', 'hideyoshi', 'ieyasu', 'maeda', 'shogun', 'takenaka'] vs python ['ashigaru1', 'ashigaru2', 'ashigaru3', 'ashigaru5', 'ashigaru6', 'ashigaru7', 'ashigaru8', 'hideyoshi', 'ieyasu', 'maeda', 'nobunaga', 'takenaka']
+E       assert {'ashigaru1',...higaru7', ...} == {'ashigaru1',...higaru7', ...}
+E
+E         Extra items in the left set:
+E         'shogun'
+E         Extra items in the right set:
+E         'nobunaga'
+E         Use -v to get more diff
+
+tests/test_section18_migration.py:1241: AssertionError
+_ TestSection18ShellPythonSotDrift.test_role_to_pc_keys_match_shell_all_roles __
+
+self = <test_section18_migration.TestSection18ShellPythonSotDrift object at 0x10a9ebe10>
+
+    def test_role_to_pc_keys_match_shell_all_roles(self):
+        """Python ROLE_TO_PC のキー集合 == Shell SECTION18_ALL_ROLES の集合。"""
+        py = self._load_python_roles()
+        sh_all = self._shell_array("SECTION18_ALL_ROLES")
+>       assert set(py.ROLE_TO_PC.keys()) == set(sh_all), (
+            f"drift: python keys {sorted(py.ROLE_TO_PC.keys())} vs shell {sorted(sh_all)}"
+        )
+E       AssertionError: drift: python keys ['ashigaru1', 'ashigaru2', 'ashigaru3', 'ashigaru5', 'ashigaru6', 'ashigaru7', 'ashigaru8', 'hideyoshi', 'ieyasu', 'maeda', 'nobunaga', 'takenaka'] vs shell ['ashigaru1', 'ashigaru2', 'ashigaru3', 'ashigaru5', 'ashigaru6', 'ashigaru7', 'ashigaru8', 'hideyoshi', 'ieyasu', 'maeda', 'shogun', 'takenaka']
+E       assert {'ashigaru1',...higaru7', ...} == {'ashigaru1',...higaru7', ...}
+E
+E         Extra items in the left set:
+E         'nobunaga'
+E         Extra items in the right set:
+E         'shogun'
+E         Use -v to get more diff
+
+tests/test_section18_migration.py:1249: AssertionError
+_ TestSection18ShellPythonSotDrift.test_mainpc_pane_index_covers_all_python_mainpc_minus_shogun _
+
+self = <test_section18_migration.TestSection18ShellPythonSotDrift object at 0x10b654a50>
+
+    def test_mainpc_pane_index_covers_all_python_mainpc_minus_shogun(self):
+        """Python MAINPC_ROLES (shogun 除く) 全てに対し shell pane_index が解決可能。"""
+        py = self._load_python_roles()
+        for role in py.MAINPC_ROLES:
+            if role == "shogun":
+                continue  # shogun は別 session のため pane index 対象外
+            out = bash_eval_section18(f'section18_mainpc_pane_index {role}')
+>           assert out.isdigit(), (
+                f"{role}: Python では MainPC だが shell pane index 解決失敗 (drift)"
+            )
+E           AssertionError: nobunaga: Python では MainPC だが shell pane index 解決失敗 (drift)
+E           assert False
+E            +  where False = <built-in method isdigit of str object at 0x1051ef630>()
+E            +    where <built-in method isdigit of str object at 0x1051ef630> = ''.isdigit
+
+tests/test_section18_migration.py:1290: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_section18_migration.py::TestSection18ShellHelper::test_mainpc_pane_order_matches_section18
+FAILED tests/test_section18_migration.py::TestSection18ShellHelper::test_secondpc_agents_matches_section18
+FAILED tests/test_section18_migration.py::TestSection18ShellHelper::test_mainpc_pane_index_returns_expected_values
+FAILED tests/test_section18_migration.py::TestSection18ShellPythonSotDrift::test_mainpc_pane_order_subset_matches_python_mainpc_minus_shogun
+FAILED tests/test_section18_migration.py::TestSection18ShellPythonSotDrift::test_all_roles_match_python_valid_roles
+FAILED tests/test_section18_migration.py::TestSection18ShellPythonSotDrift::test_role_to_pc_keys_match_shell_all_roles
+FAILED tests/test_section18_migration.py::TestSection18ShellPythonSotDrift::test_mainpc_pane_index_covers_all_python_mainpc_minus_shogun
+7 failed, 10 passed, 72 deselected in 0.40s
+mae pytest rc=1

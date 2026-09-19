@@ -1,0 +1,1 @@
+【監査提出 km-164 3/3】当て紙=patches/164_gate_shikii_yotsukuchi.main.patch(十進検めを num_same_op の前に置き零は名指しで rc2・倒した事を刷る作法不変)+patches/164_negative_test_shikii.main.patch(其七ノ二・五札)。git apply --check: main rc0/shin rc0/kyu rc1(陽性対照)。負テスト: 旧門 通34落10・新門 通44落0。門 sha256 前後不動。期待は先書き(09:04:27)。門・負テスト本体は不触・commit無。監査を乞ふ。

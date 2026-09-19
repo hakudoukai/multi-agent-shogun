@@ -1,0 +1,76 @@
+koku=2026-09-18T12:46:03+0900
+--- persona internal ids in live code (scripts lib hooks config tests; not archive/evidence) ---
+  15 lib/_section18_roles.sh
+   7 tests/migrations/test_organizational_lessons_rls.py
+   6 tests/checks/test_karo_overload_monitor.bats
+   6 scripts/checks/pane_identity.sh
+   5 config/settings.yaml
+   4 tests/checks/fixtures/pane_registry_match.yaml
+   4 tests/checks/fixtures/pane_registry_drift.yaml
+   4 scripts/karo_overload_monitor.sh
+   3 scripts/checks/inbox_alias_integrity.sh
+   2 tests/checks/test_agent_health_check.bats
+   2 tests/checks/fixtures/watcher_supervisor_sample.sh
+   2 scripts/checks/codex_cli_required_persona.sh
+   1 tests/migrations/test_organizational_lessons_rls.sh
+   1 tests/checks/test_pane_identity.bats
+   1 tests/checks/fixtures/fake_tmux.sh
+   1 scripts/redundancy/shogun_report_watcher.sh
+   1 scripts/lib/inbox_path.sh
+   1 scripts/inbox_write.sh
+   1 scripts/agent_periodic_push.sh
+   1 scripts/agent_health_check.sh
+--- lines outside lib/_section18_roles.sh ---
+scripts/agent_periodic_push.sh:48:for a in hideyoshi ieyasu ashigaru1 ashigaru2; do
+scripts/agent_health_check.sh:246:            "multiagent:0.3:ieyasu"   # 家康 (R1 統合命令)
+scripts/inbox_write.sh:331:    # (e.g. karo.yaml -> hideyoshi.yaml), os.replace replaced the SYMLINK ITSELF
+scripts/karo_overload_monitor.sh:61:: "${TAKENAKA_INBOX:=$REPO_ROOT/queue/inbox/takenaka.yaml}"
+scripts/karo_overload_monitor.sh:346:    # from = nobunaga (= 信長補完 watcher、F002 違反なし)
+scripts/karo_overload_monitor.sh:351:        if bash "$INBOX_WRITE_CMD" takenaka "$content" assist_request nobunaga >/dev/null 2>&1; then
+scripts/karo_overload_monitor.sh:359:        if bash "$INBOX_WRITE_CMD" shogun "$shogun_content" karo_overload_alert nobunaga >/dev/null 2>&1; then
+scripts/checks/codex_cli_required_persona.sh:5:# 家康 (ieyasu) と本多 (honda) が claude などの別 CLI で誤起動されたら stderr 警告。
+scripts/checks/codex_cli_required_persona.sh:21:REQUIRED_PERSONAS="ieyasu honda"
+scripts/checks/pane_identity.sh:94:            shogun) echo nobunaga ;;
+scripts/checks/pane_identity.sh:95:            karo)   echo hideyoshi ;;
+scripts/checks/pane_identity.sh:96:            gunshi) echo ieyasu ;;
+scripts/checks/pane_identity.sh:105:EXPECTED["multiagent:agents.0"]=hideyoshi
+scripts/checks/pane_identity.sh:108:EXPECTED["multiagent:agents.3"]=ieyasu
+scripts/checks/pane_identity.sh:109:EXPECTED["shogun:main.0"]=nobunaga
+scripts/checks/inbox_alias_integrity.sh:27:  "queue/inbox/shogun.yaml:queue/inbox/nobunaga.yaml"
+scripts/checks/inbox_alias_integrity.sh:28:  "queue/inbox/karo.yaml:queue/inbox/hideyoshi.yaml"
+scripts/checks/inbox_alias_integrity.sh:29:  "queue/inbox/gunshi.yaml:queue/inbox/ieyasu.yaml"
+scripts/redundancy/shogun_report_watcher.sh:12:#   - 対象 5 ファイル (ieyasu/honda/kuroda/sanada/takenaka_report.yaml) を抽出
+config/settings.yaml:18:    nobunaga: claude       # 信長 (= 旧 shogun)
+config/settings.yaml:19:    hideyoshi: claude     # 秀吉 (= 旧 karo, MainPC)
+config/settings.yaml:20:    ieyasu: claude         # 家康 (= 旧 gunshi)
+config/settings.yaml:112:    agents: [nobunaga, hideyoshi, ieyasu, ashigaru1, ashigaru2, ashigaru3]
+config/settings.yaml:131:  #   (1b) 廃止 persona 名 (nobunaga/hideyoshi/ieyasu/maeda/kuro_desktop) の現行役職名是正
+scripts/lib/inbox_path.sh:9:#   inbox_path=$(get_inbox_path "hideyoshi")
+tests/migrations/test_organizational_lessons_rls.py:9:  T2. hideyoshi / shogun も INSERT 成功
+tests/migrations/test_organizational_lessons_rls.py:128:            # T2. hideyoshi / shogun も INSERT 成功 (writer 全員)
+tests/migrations/test_organizational_lessons_rls.py:132:            for writer in ("hideyoshi", "shogun"):
+tests/migrations/test_organizational_lessons_rls.py:147:            results.append(("T2 hideyoshi/shogun INSERT 成功", t2_pass, "; ".join(t2_detail)))
+tests/migrations/test_organizational_lessons_rls.py:188:            #     T2 で hideyoshi/shogun が作った row を honda が DELETE 試行
+tests/migrations/test_organizational_lessons_rls.py:194:                        "WHERE root_cause = 'rc hideyoshi' LIMIT 1"
+tests/migrations/test_organizational_lessons_rls.py:223:            for agent in ("honda", "hideyoshi", "shogun", "ashigaru1", "rijicho", "unknown"):
+tests/migrations/test_organizational_lessons_rls.sh:13:#   - INSERT 成功 + audit row 生成 (writer = honda / hideyoshi / shogun)
+tests/checks/test_pane_identity.bats:40:    export FAKE_TMUX_PANES=$'multiagent:agents.0=hideyoshi\nmultiagent:agents.1=ashigaru1\nmultiagent:agents.2=ashigaru2\nmultiage
+tests/checks/fixtures/fake_tmux.sh:6:#                      例: "multiagent:agents.0=hideyoshi\nmultiagent:agents.1=ashigaru1\n..."
+tests/checks/test_agent_health_check.bats:119:    export HEALTH_CHECK_CODEX_PANES="multiagent:0.3:ieyasu"
+tests/checks/test_agent_health_check.bats:170:    grep -q "ieyasu" "$HEALTH_CHECK_LOG"
+tests/checks/fixtures/watcher_supervisor_sample.sh:5:start_watcher_if_missing "hideyoshi" "multiagent:agents.0"
+tests/checks/fixtures/watcher_supervisor_sample.sh:8:start_watcher_if_missing "ieyasu"    "multiagent:agents.3"
+tests/checks/test_karo_overload_monitor.bats:34:    export TAKENAKA_INBOX="$FAKE_INBOX_DIR/takenaka.yaml"
+tests/checks/test_karo_overload_monitor.bats:58:  from: nobunaga
+tests/checks/test_karo_overload_monitor.bats:88:  from: nobunaga
+tests/checks/test_karo_overload_monitor.bats:162:    # inbox_write stub に takenaka + shogun が呼ばれたか
+tests/checks/test_karo_overload_monitor.bats:164:    grep -q "^takenaka|" "$INBOX_WRITE_LOG"
+tests/checks/test_karo_overload_monitor.bats:229:    [ ! -s "$INBOX_WRITE_LOG" ] || ! grep -q "^takenaka|" "$INBOX_WRITE_LOG"
+tests/checks/fixtures/pane_registry_drift.yaml:9:    persona: hideyoshi
+tests/checks/fixtures/pane_registry_drift.yaml:10:    agent_id: hideyoshi
+tests/checks/fixtures/pane_registry_drift.yaml:21:    persona: ieyasu
+tests/checks/fixtures/pane_registry_drift.yaml:22:    agent_id: ieyasu
+tests/checks/fixtures/pane_registry_match.yaml:9:    persona: hideyoshi
+tests/checks/fixtures/pane_registry_match.yaml:10:    agent_id: hideyoshi
+tests/checks/fixtures/pane_registry_match.yaml:21:    persona: ieyasu
+tests/checks/fixtures/pane_registry_match.yaml:22:    agent_id: ieyasu

@@ -1,0 +1,1 @@
+【監査提出 km-164 2/3】的=出す前門 scripts/checks/karo_mac_dasumae_gate.sh の閾三口(DASUMAE_MAX_BYTES/DASUMAE_READ_TIMEOUT/KM_GATE_MANIFEST_BASE)へ 0/-1/前空白/後空白/+5/空/非数/2^63超 を当てる。旧(origin/main 6bde7170・門 blob 04672e15)は TIMEOUT=0 が rc0 で GNU timeout の「時限無し」へ倒れ止の守りが消える。母数=3口×8値×2版=48走・期待との食ひ違ひ0・注入0・生制御字0。

@@ -1,0 +1,14 @@
+diff --git a/scripts/build_instructions.sh b/scripts/build_instructions.sh
+index 3cdcd1ff..b7098c47 100644
+--- a/scripts/build_instructions.sh
++++ b/scripts/build_instructions.sh
+@@ -31,7 +31,8 @@ build_instruction_file() {
+ 
+     # Extract YAML front matter from original file
+     if [ -f "$original_file" ]; then
+-        awk '/^---$/{if(++n==2) {print "---"; exit} if(n==1) next} n==1' "$original_file" > "$output_path"
++        # sub(/\r$/,"") first: a CRLF source never matches /^---$/ and the front matter is silently dropped.
++        awk '{sub(/\r$/,"")} /^---$/{if(++n==2) {print "---"; exit} if(n==1) next} n==1' "$original_file" > "$output_path"
+         echo "" >> "$output_path"
+     else
+         # Minimal YAML front matter

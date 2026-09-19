@@ -1,0 +1,87 @@
+diff --git a/lib/_section18_roles.sh b/lib/_section18_roles.sh
+index 902b7039..99ec65a9 100644
+--- a/lib/_section18_roles.sh
++++ b/lib/_section18_roles.sh
+@@ -29,28 +29,32 @@ if [[ -n "${_SECTION18_ROLES_LOADED:-}" ]]; then
+ fi
+ _SECTION18_ROLES_LOADED=1
+
+-# ─── MainPC tmux pane 配置順 (multiagent:agents 内 0..5) ───
++# ─── MainPC tmux pane 配置順 (multiagent:agents 内 0..4) ───
+ # pane_base + index で実 pane を解決する。
+ # 注意: shogun は別 tmux session (shogun:0.0) のため本配列に含めない。
+-# Phase 15 (2026-05-08): takenaka (監査役、将軍直轄軍師) 新設、index 5 に配置。
++# km-167 ⓐ (委員長裁 seq332367・2026-09-18): 識別子を persona 内部 id (hideyoshi/ieyasu)
++# から ★役名★ (karo/gunshi) へ戻す。呼び手 (switch_cli.sh / agent_status.sh) と
++# Python SoT (tests/test_section18_migration.py) と本 lib の test は役名を渡す。
++# 旧 persona 名は下の SECTION18_ROLE_ALIASES で逆向き (persona→役名) に生かす。
++# takenaka (Phase 15, 旧 index 5) は §18.1 配置表 (通常 5 + 非常時 1) に無いため配列から
++# 外し alias にのみ残す (pane 構成は不変・可逆)。
+ SECTION18_MAINPC_PANE_ORDER=(
+-    "hideyoshi"   # pane index 0 (= 旧 karo)
++    "karo"        # pane index 0
+     "ashigaru1"   # pane index 1
+     "ashigaru2"   # pane index 2
+     "ashigaru3"   # pane index 3 (非常時 +1)
+-    "ieyasu"      # pane index 4 (= 旧 gunshi、Phase 5 で kuroda 置換予定)
+-    "takenaka"    # pane index 5 (将軍直轄軍師、Phase 15 新設)
++    "gunshi"      # pane index 4
+ )
+
+-# ─── SecondPC tmux pane 配置順 (multiagent:agents 内 0..4) ───
+-# Phase 1 (2026-05-07): SecondPC 家老 maeda 新設、agents.0 に配置。
+-# 旧構成 (a5/6/7 のみ) → 新構成 (maeda + a5/6/7、+8 非常時) に統一。
++# ─── SecondPC tmux pane 配置順 (multiagent:agents 内 0..3) ───
++# §18.1 配置表: 通常 3 体 (ashigaru5/6/7) + 非常時 +1 (ashigaru8)。
++# km-167 ⓐ: maeda (Phase 1 の SecondPC 家老 persona) は配置表に無く、Python SoT
++# (SECONDPC_ROLES) と test (T-003/T-402) も a5-8 の 4 件 ∴ 配列から外し alias にのみ残す。
+ SECTION18_SECONDPC_PANE_ORDER=(
+-    "maeda"        # pane index 0 — SecondPC 家老
+-    "ashigaru5"   # pane index 1
+-    "ashigaru6"   # pane index 2
+-    "ashigaru7"   # pane index 3
+-    "ashigaru8"   # pane index 4 (非常時 +1)
++    "ashigaru5"   # pane index 0
++    "ashigaru6"   # pane index 1
++    "ashigaru7"   # pane index 2
++    "ashigaru8"   # pane index 3 (非常時 +1)
+ )
+
+ # ─── SecondPC エージェント (= 上記 pane_order と同期、互換維持の alias) ───
+@@ -103,21 +107,25 @@ section18_mainpc_pane_index() {
+ }
+
+
+-# ─── Phase 3 partial (2026-05-07): persona 新名 → 旧 internal_id alias ───
+-# Phase 3 full (2026-05-07 deep night): 旧名 → 新名 alias (= 互換のため両方向 resolve)
++# ─── persona 内部 id → 役名 alias (km-167 ⓐ・委員長裁 seq332367: ★逆向き★) ───
++# 旧: 役名→persona (karo→hideyoshi)。新: persona→役名 (hideyoshi→karo)。
++# 旧 persona 名は消さず alias として生かす。役名は identity。
++# 呼び手 scripts/checks/pane_identity.sh は actual/expected の両側を本関数で正規化して
++# 比べるため、向きが変はつても同値判定は保たれる (可逆: 本 map を旧に戻せば旧挙動)。
+ declare -A SECTION18_ROLE_ALIASES=(
+-    [shogun]=nobunaga
+-    [karo]=hideyoshi
+-    [gunshi]=ieyasu
+-    # 新名はそのまま返す (= identity)
+-    [nobunaga]=nobunaga
+-    [hideyoshi]=hideyoshi
+-    [ieyasu]=ieyasu
++    [nobunaga]=shogun
++    [hideyoshi]=karo
++    [ieyasu]=gunshi
++    # 役名はそのまま返す (= identity)
++    [shogun]=shogun
++    [karo]=karo
++    [gunshi]=gunshi
++    # 配置表に役名の無い persona は identity で生かす (消さぬ)
+     [maeda]=maeda
+-    [takenaka]=takenaka  # Phase 15 (2026-05-08): 将軍直轄軍師
++    [takenaka]=takenaka
+ )
+
+-# role 名 → 正規化 (= 旧名なら新名に変換、新名はそのまま、未知名もそのまま)
++# 名 → 正規化 (= persona 内部 id なら役名に変換、役名はそのまま、未知名もそのまま)
+ section18_resolve_alias() {
+     local name="$1"
+     local resolved="${SECTION18_ROLE_ALIASES[$name]:-$name}"

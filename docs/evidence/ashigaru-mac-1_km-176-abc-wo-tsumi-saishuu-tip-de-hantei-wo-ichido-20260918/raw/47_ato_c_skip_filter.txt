@@ -1,0 +1,5 @@
+old filter (CI environment only): 1
+new filter (CI environment|SUPERSEDED) = test.yml の今の行: 0
+95:            # and skips a ruling superseded (seq293394: TC-FR-003 "SUPERSEDED by TC-FR-003b",
+97:            COUNT=$(echo "$RESULT" | grep "^ok.*# skip" | grep -cEv "CI environment|SUPERSEDED" || true)
+1

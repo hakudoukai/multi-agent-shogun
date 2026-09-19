@@ -1,0 +1,23 @@
+1..22
+ok 1 resolve_pane: karo → multiagent:agents.0 (§18 MainPC pane 0)
+ok 2 resolve_pane: ashigaru1 → multiagent:agents.1 (§18 MainPC pane 1)
+ok 3 resolve_pane: ashigaru3 → multiagent:agents.3 (§18 MainPC 非常時)
+ok 4 resolve_pane: gunshi → multiagent:agents.4 (§18 MainPC pane 4, B1/R1 fix)
+ok 5 resolve_pane: ashigaru4 → return 1 (§18 欠番)
+ok 6 resolve_pane: ashigaru5 → return 1 (§18 SecondPC, B2/R2 fix)
+ok 7 resolve_pane: ashigaru6 → return 1 (§18 SecondPC, B2/R2 fix)
+ok 8 resolve_pane: ashigaru7 → return 1 (§18 SecondPC, B2/R2 fix)
+ok 9 resolve_pane: ashigaru8 → return 1 (§18 SecondPC 非常時, B2/R2 fix)
+ok 10 resolve_pane: shogun → return 1 (別 tmux session: shogun:0.0)
+ok 11 resolve_pane: unknown agent → return 1
+ok 12 resolve_pane: pane_base=2 → offset applied to MainPC only
+ok 13 update_settings: type変更でYAMLが正しく更新される
+ok 14 update_settings: model変更後にbuild_cli_commandが反映
+ok 15 update_settings: thinking:false後のbuild_cli_commandにMAX_THINKING_TOKENS=0
+ok 16 switch_cli.sh --help → usage表示 + exit 1
+ok 17 switch_cli.sh -h → usage表示 + exit 1
+ok 18 switch_cli.sh 引数なし → usage表示 + exit 1
+ok 19 switch_cli.sh 不正type → エラー
+ok 20 display_name: 切替前後で表示名が正しく変わる
+ok 21 display_name: Codex → Claude切替で表示名更新
+ok 22 display_name: thinking:false で +T が消える

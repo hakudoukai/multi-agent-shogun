@@ -1,0 +1,15 @@
+koku=2026-09-18T12:45:10+0900
+karo       is_mainpc=rc=1 idx= rc=1
+hideyoshi  is_mainpc=rc=0 idx=0
+ rc=0
+gunshi     is_mainpc=rc=1 idx= rc=1
+ieyasu     is_mainpc=rc=0 idx=4
+ rc=0
+ashigaru1  is_mainpc=rc=0 idx=1
+ rc=0
+shogun     is_mainpc=rc=1 idx= rc=1
+--- runtime callers pass what? ---
+scripts/switch_cli.sh:104:    if mainpc_idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
+scripts/checks/pane_identity.sh:78:        if declare -F section18_resolve_alias >/dev/null 2>&1; then
+scripts/checks/pane_identity.sh:85:# 単一 source: lib/_section18_roles.sh の section18_resolve_alias 関数を利用 (S3)
+scripts/checks/pane_identity.sh:91:        section18_resolve_alias "$name"

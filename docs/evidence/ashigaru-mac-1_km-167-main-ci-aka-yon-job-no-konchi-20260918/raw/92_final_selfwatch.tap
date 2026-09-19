@@ -1,0 +1,21 @@
+1..18
+ok 1 TC-FR-001 [RED]: process_unread_once is defined and called on startup
+ok 2 TC-FR-002: inotify + timeout fallback is configured
+ok 3 TC-FR-003b: get_unread_info does not consume specials at extraction (W201 fix)
+ok 4 TC-FR-004 [RED]: read-update path uses lock/atomic protections
+ok 5 TC-FR-005: post-task inbox check rule is documented for ashigaru
+ok 6 TC-FR-006 [RED]: metrics hooks are defined (unread_latency/read_count/estimated_tokens)
+ok 7 TC-FR-007 [RED]: feature flags for Phase 1/2/3 are defined
+ok 8 TC-FR-008 [RED]: normal nudge can be disabled (Phase 2 behavior)
+ok 9 TC-FR-009: special command compatibility for codex is preserved
+ok 10 TC-FR-016 (W205): busy guard now covers non-/clear commands too
+ok 11 TC-FR-017 (W205): idle agent + successful send-keys still delivers /clear
+ok 12 TC-FR-018 (W205): Enter delivery verification catches stuck unsent text
+ok 13 TC-FR-019 (W205): send-keys failure (rc!=0) is no longer swallowed by || true
+ok 14 TC-FR-010 [RED]: summary-first fast path exists (count/summary before full read)
+ok 15 TC-FR-011 [RED]: send-keys is restricted to final escalation only
+ok 16 TC-FR-014 + TC-NFR-002: inbox_write IF and schema remain backward compatible
+ok 17 TC-NFR-003 [RED]: no-idle-full-read helper exists
+not ok 18 TC-NFR-008: test file has no unapproved skip directives
+# (in test file tests/agent_selfwatch.bats, line 318)
+#   `[ "$(printf '%s\n' "$skips" | sed '/^$/d' | wc -l)" -eq 1 ]' failed

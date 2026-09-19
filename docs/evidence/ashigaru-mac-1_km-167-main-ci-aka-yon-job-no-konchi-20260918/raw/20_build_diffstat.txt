@@ -1,0 +1,21 @@
+ .github/copilot-instructions.md            | 372 +++++++++++++++-----
+ AGENTS.md                                  | 533 +++++++++++++----------------
+ agents/default/system.md                   | 372 +++++++++++++++-----
+ docs/runbooks/ERR-EKARTE-001.md            | 146 ++++----
+ instructions/generated/ashigaru.md         |  23 +-
+ instructions/generated/codex-ashigaru.md   |  23 +-
+ instructions/generated/codex-gunshi.md     |  41 ++-
+ instructions/generated/codex-karo.md       |   8 +-
+ instructions/generated/codex-shogun.md     |  68 ----
+ instructions/generated/copilot-ashigaru.md |  23 +-
+ instructions/generated/copilot-gunshi.md   |  41 ++-
+ instructions/generated/copilot-karo.md     |   8 +-
+ instructions/generated/copilot-shogun.md   |  68 ----
+ instructions/generated/gunshi.md           |  41 ++-
+ instructions/generated/karo.md             |   8 +-
+ instructions/generated/kimi-ashigaru.md    |  23 +-
+ instructions/generated/kimi-gunshi.md      |  41 ++-
+ instructions/generated/kimi-karo.md        |   8 +-
+ instructions/generated/kimi-shogun.md      |  68 ----
+ instructions/generated/shogun.md           |  68 ----
+ 20 files changed, 1111 insertions(+), 872 deletions(-)

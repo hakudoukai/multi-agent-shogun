@@ -1,0 +1,68 @@
+=== Instruction File Build System ===
+Building instruction files...
+Building: shogun.md (CLI: claude, Role: shogun)
+  ✅ Created: shogun.md
+Building: karo.md (CLI: claude, Role: karo)
+  ✅ Created: karo.md
+Building: ashigaru.md (CLI: claude, Role: ashigaru)
+  ✅ Created: ashigaru.md
+Building: gunshi.md (CLI: claude, Role: gunshi)
+  ✅ Created: gunshi.md
+Building: codex-shogun.md (CLI: codex, Role: shogun)
+  ✅ Created: codex-shogun.md
+Building: codex-karo.md (CLI: codex, Role: karo)
+  ✅ Created: codex-karo.md
+Building: codex-ashigaru.md (CLI: codex, Role: ashigaru)
+  ✅ Created: codex-ashigaru.md
+Building: codex-gunshi.md (CLI: codex, Role: gunshi)
+  ✅ Created: codex-gunshi.md
+Building: copilot-shogun.md (CLI: copilot, Role: shogun)
+  ✅ Created: copilot-shogun.md
+Building: copilot-karo.md (CLI: copilot, Role: karo)
+  ✅ Created: copilot-karo.md
+Building: copilot-ashigaru.md (CLI: copilot, Role: ashigaru)
+  ✅ Created: copilot-ashigaru.md
+Building: copilot-gunshi.md (CLI: copilot, Role: gunshi)
+  ✅ Created: copilot-gunshi.md
+Building: kimi-shogun.md (CLI: kimi, Role: shogun)
+  ✅ Created: kimi-shogun.md
+Building: kimi-karo.md (CLI: kimi, Role: karo)
+  ✅ Created: kimi-karo.md
+Building: kimi-ashigaru.md (CLI: kimi, Role: ashigaru)
+  ✅ Created: kimi-ashigaru.md
+Building: kimi-gunshi.md (CLI: kimi, Role: gunshi)
+  ✅ Created: kimi-gunshi.md
+Generating: AGENTS.md (Codex auto-load)
+  ✅ Created: AGENTS.md
+Generating: .github/copilot-instructions.md (Copilot auto-load)
+  ✅ Created: .github/copilot-instructions.md
+Generating: agents/default/system.md + agent.yaml (Kimi auto-load)
+  ✅ Created: agents/default/system.md
+  ✅ Created: agents/default/agent.yaml
+
+=== Build Complete ===
+Output directory: /Users/momizimac/wt/a1-km167-ci/instructions/generated
+
+Generated instruction files:
+-rw-r--r-- 1 momizimac wheel 28K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/ashigaru.md
+-rw-r--r-- 1 momizimac wheel 35K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/codex-ashigaru.md
+-rw-r--r-- 1 momizimac wheel 40K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/codex-gunshi.md
+-rw-r--r-- 1 momizimac wheel 48K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/codex-karo.md
+-rw-r--r-- 1 momizimac wheel 36K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/codex-shogun.md
+-rw-r--r-- 1 momizimac wheel 33K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/copilot-ashigaru.md
+-rw-r--r-- 1 momizimac wheel 37K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/copilot-gunshi.md
+-rw-r--r-- 1 momizimac wheel 45K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/copilot-karo.md
+-rw-r--r-- 1 momizimac wheel 33K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/copilot-shogun.md
+-rw-r--r-- 1 momizimac wheel 33K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/gunshi.md
+-rw-r--r-- 1 momizimac wheel 41K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/karo.md
+-rw-r--r-- 1 momizimac wheel 40K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/kimi-ashigaru.md
+-rw-r--r-- 1 momizimac wheel 45K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/kimi-gunshi.md
+-rw-r--r-- 1 momizimac wheel 53K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/kimi-karo.md
+-rw-r--r-- 1 momizimac wheel 41K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/kimi-shogun.md
+-rw-r--r-- 1 momizimac wheel 29K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/instructions/generated/shogun.md
+
+CLI auto-load files:
+-rw-r--r-- 1 momizimac wheel 49K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/AGENTS.md
+-rw-r--r-- 1 momizimac wheel 49K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/.github/copilot-instructions.md
+-rw-r--r-- 1 momizimac wheel 49K Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/agents/default/system.md
+-rw-r--r-- 1 momizimac wheel 302 Sep 18 17:59 /Users/momizimac/wt/a1-km167-ci/agents/default/agent.yaml
