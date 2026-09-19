@@ -138,9 +138,44 @@ generate_agents_md() {
         -e 's|escalation sends `/clear` (~4 min)|next nudge escalation or task reassignment|g' \
         -e 's|delivers `/clear` to the agent|delivers `/new` to the agent（/clear→/new自動変換）|g' \
         -e 's|`/clear` wipes old context|`/new` wipes old context|g' \
-        "$claude_md" | tr -d '\r' > "$output_path"
+        "$claude_md" | tr -d '' > "$output_path.body"
 
-    echo "  ✅ Created: AGENTS.md"
+    # ★2026-09-19 理事長ご下命「すべて AGENTS.md に統一・違いを無くす」★
+    #   Hermes 席(Commander/監督)は本ファイルを冠正本として読む(公式の先勝ち: AGENTS.md > CLAUDE.md)。
+    #   ∴ 先頭へ DentalBI の現行 canon を置き、当repo固有の旧記述には★廃止の札★を付ける。
+    local fleet_canon="/mnt/c/DentalBI/AGENTS.md"
+    if [ -f "$fleet_canon" ]; then
+        {
+          printf '%s
+' '<!-- ★構成★ 前半=DentalBI 冠正本の写し(現行) / 後半=当repo固有の旧記述(将軍システム時代・廃止済)'
+          printf '%s
+' '     ★編集は /mnt/c/DentalBI/AGENTS.md へ。当ファイルは生成物である。★ -->'
+          printf '
+%s
+
+' '# ★前半：艦隊の冠正本（DentalBI/AGENTS.md の写し・現行）★'
+          sed -e '/^<!--/,/-->$/d' "$fleet_canon"
+          printf '
+---
+
+%s
+
+' '# ★★後半：当repo固有の旧記述 ―― ★現在の体制と一致しない★★★'
+          printf '%s
+' '> **★将軍システム時代の記述である。2026-09-06 のご下命で★将軍職は廃止★され、'
+          printf '%s
+' '> 4PC すべて「事業部長 → 家老(Fable 5.1) → 専任3(Opus 5) ＋ 軍師」の専任医モデルへ移行した。★**'
+          printf '%s
+
+' '> **∴ 前半と食い違う時は★前半が正★。本節は履歴として残す（消さない＝canon 第一条 三-b）。**'
+          cat "$output_path.body"
+        } > "$output_path"
+        rm -f "$output_path.body"
+        echo "  ✅ Created: AGENTS.md (艦隊canon 前置き済)"
+    else
+        mv "$output_path.body" "$output_path"
+        echo "  ⚠️  艦隊canon $fleet_canon が読めず ―― ★前置きなしで生成★（測れなかった事を黙らせない）"
+    fi
 }
 
 # ============================================================
