@@ -101,12 +101,37 @@ normalize_persona() {
 
 # ─── 既存: 設計上の期待配置 (§18 通常 5 + 非常時 +1) ───────────────────
 # 注意: 本 EXPECTED 定義は既存の self-identification check 用 (§18.1 と同等)。
-declare -A EXPECTED
-EXPECTED["multiagent:agents.0"]=hideyoshi
-EXPECTED["multiagent:agents.1"]=ashigaru1
-EXPECTED["multiagent:agents.2"]=ashigaru2
-EXPECTED["multiagent:agents.3"]=ieyasu
-EXPECTED["shogun:main.0"]=nobunaga
+# ★bash 3.2 対応 (2026-09-19 家老mac・裁 seq337297)★
+# declare -A は 3.2 で invalid option であり、続く添字代入が算術評価され
+# set -u で shell が落ちる。∴ ★改行区切りの表 + 関数引き★ へ改める。
+EXPECTED_TABLE='multiagent:agents.0=hideyoshi
+multiagent:agents.1=ashigaru1
+multiagent:agents.2=ashigaru2
+multiagent:agents.3=ieyasu
+shogun:main.0=nobunaga'
+
+# 表から値を引く (見つからぬなら空・常に rc=0)
+table_get() {
+    local tbl="$1" want="$2" line
+    while IFS= read -r line; do
+        [ -z "$line" ] && continue
+        if [ "${line%%=*}" = "$want" ]; then
+            echo "${line#*=}"
+            return 0
+        fi
+    done <<< "$tbl"
+    echo ""
+    return 0
+}
+
+# 表の鍵を列べる (鍵に空白を含まぬことが前提)
+table_keys() {
+    local line
+    while IFS= read -r line; do
+        [ -z "$line" ] && continue
+        echo "${line%%=*}"
+    done <<< "$1"
+}
 
 violations=0
 warnings=0
@@ -123,8 +148,8 @@ done
 
 echo ""
 echo "▼ 整合性検証 (= 既存 self-identification check)"
-for pane_target in "${!EXPECTED[@]}"; do
-    expected="${EXPECTED[$pane_target]}"
+for pane_target in $(table_keys "$EXPECTED_TABLE"); do
+    expected=$(table_get "$EXPECTED_TABLE" "$pane_target")
     actual=$("$TMUX_CMD" display-message -t "$pane_target" -p '#{@agent_id}' 2>/dev/null)
     if [ -z "$actual" ]; then
         if [ "$pane_target" = "shogun:main.0" ]; then
@@ -327,11 +352,11 @@ PYEOF
     fi
 
     # ── parse raw → 連想配列 (index → normalized persona) ───────────
-    declare -A SRC_A SRC_B SRC_C SRC_D
-    # shellcheck disable=SC2034  # nameref via local -n, shellcheck false positive
-    parse_into() {
-        local -n target=$1
-        local raw=$2
+    # ★bash 3.2 対応★: 連想配列も local -n (nameref, bash 4.3+) も 3.2 に無い。
+    # ∴ 各 source を「idx=正規化persona」の★改行区切りの表★へ畳み、table_get で引く。
+    local SRC_A SRC_B SRC_C SRC_D
+    normalize_block() {
+        local raw="$1"
         local line idx val
         while IFS= read -r line; do
             [ -z "$line" ] && continue
@@ -339,24 +364,27 @@ PYEOF
             val="${line#*=}"
             [ -z "$idx" ] && continue
             [ -z "$val" ] && continue
-            target["$idx"]=$(normalize_persona "$val")
+            echo "${idx}=$(normalize_persona "$val")"
         done <<< "$raw"
     }
-    parse_into SRC_A "$src_a_raw"
-    parse_into SRC_B "$src_b_raw"
-    parse_into SRC_C "$src_c_raw"
-    parse_into SRC_D "$src_d_raw"
+    SRC_A=$(normalize_block "$src_a_raw")
+    SRC_B=$(normalize_block "$src_b_raw")
+    SRC_C=$(normalize_block "$src_c_raw")
+    SRC_D=$(normalize_block "$src_d_raw")
 
     # ── 4-way 比較 ────────────────────────────────────────────────────
-    declare -A drift_dump
+    # ★bash 3.2 対応★: drift の積み上げも表(1行1件・`idx=記述`)とする。
+    local drift_dump=""
+    local drift_line=""
     local idx
     echo "  ── per-index comparison (multiagent: のみ、shogun は別 source 確認) ──"
     printf "  %-5s %-12s %-12s %-12s %-12s %s\n" "idx" "A:tmux" "B:registry" "C:watchdog" "D:§18.1" "status"
     for idx in 0 1 2 3 4 5; do
-        local va="${SRC_A[$idx]:-}"
-        local vb="${SRC_B[$idx]:-}"
-        local vc="${SRC_C[$idx]:-}"
-        local vd="${SRC_D[$idx]:-}"
+        local va vb vc vd
+        va=$(table_get "$SRC_A" "$idx")
+        vb=$(table_get "$SRC_B" "$idx")
+        vc=$(table_get "$SRC_C" "$idx")
+        vd=$(table_get "$SRC_D" "$idx")
         if [ -z "$va" ] && [ -z "$vb" ] && [ -z "$vc" ] && [ -z "$vd" ]; then
             continue
         fi
@@ -366,13 +394,18 @@ PYEOF
         [ -n "$vc" ] && values+=("$vc")
         [ -n "$vd" ] && values+=("$vd")
         local unique
-        unique=$(printf '%s\n' "${values[@]}" | sort -u | wc -l)
+        # ★BSD の wc -l は空白を詰める(`       1`)★。
+        # 旧形はその値を [ "$unique" = "1" ] と比べて居た故、
+        # ★一致して居ても決して真にならぬ(=全件 DRIFT に見える)★。
+        # ∴ awk で詰め物の無い数を出す。
+        unique=$(printf '%s\n' "${values[@]}" | sort -u | awk 'END{print NR}')
         local status_mark
         if [ "$unique" = "1" ]; then
             status_mark="✅ match"
         else
             status_mark="❌ DRIFT"
-            drift_dump["$idx"]="A=${va:-_} B=${vb:-_} C=${vc:-_} D=${vd:-_}"
+            drift_dump="${drift_dump}${idx}=A=${va:-_} B=${vb:-_} C=${vc:-_} D=${vd:-_}
+"
             mismatch_count=$((mismatch_count+1))
         fi
         printf "  %-5s %-12s %-12s %-12s %-12s %s\n" \
@@ -387,9 +420,10 @@ PYEOF
         last_run_status="drift"
         echo ""
         echo "  ▼ 4-way audit 結果: ❌ $mismatch_count 件の drift (advisory)" >&2
-        for idx in "${!drift_dump[@]}"; do
-            echo "    [WARN] pane drift detected at index $idx: ${drift_dump[$idx]}" >&2
-        done
+        while IFS= read -r drift_line; do
+            [ -z "$drift_line" ] && continue
+            echo "    [WARN] pane drift detected at index ${drift_line%%=*}: ${drift_line#*=}" >&2
+        done <<< "$drift_dump"
         echo "    {\"timestamp\":\"$audit_end_ts\",\"level\":\"WARN\",\"source\":\"pane_identity_4way\",\"corr_id\":\"$audit_corr_id\",\"err_code\":\"$audit_err_code\",\"mismatch_count\":$mismatch_count,\"sources_skipped\":$source_skipped,\"advisory\":true}" >&2
 
         # cycle2 S2: mktemp + umask 077 で安全な dump file 生成 (symlink/clobber 攻撃対策)
@@ -413,10 +447,11 @@ PYEOF
             echo "  \"sources_skipped\": $source_skipped,"
             echo "  \"mismatches\": {"
             local first=1
-            for idx in "${!drift_dump[@]}"; do
+            while IFS= read -r drift_line; do
+                [ -z "$drift_line" ] && continue
                 if [ "$first" = "1" ]; then first=0; else echo ","; fi
-                printf '    "%s": "%s"' "$idx" "${drift_dump[$idx]}"
-            done
+                printf '    "%s": "%s"' "${drift_line%%=*}" "${drift_line#*=}"
+            done <<< "$drift_dump"
             echo ""
             echo "  }"
             echo "}"
