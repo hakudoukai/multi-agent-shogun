@@ -1,0 +1,126 @@
+A2_RECV_INDEPENDENT — 足軽second二号 独立再検 生記録
+作成刻(UTC) 2026-09-19T17:53:15Z
+依頼 第九百九十八便(msg_20260920_011104_e3a09036) karo-second
+
+====================================================================
+■一 両器 由来・独自實測(己が手にて撃ちたるSHA256・写しに非ず)
+====================================================================
+甲器(koki)  = origin/main 6bde7170 の shim/hakudokai/hakudokai_secondpc_receiver_poll.py
+6f8137e4d073a76d0732abd50855a7ac8dc33dd1fc0f30ab3419fede7420b4d2  /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/koki_main_6bde7170.py
+593 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/koki_main_6bde7170.py
+
+乙器(otsuki) = karo-second/receiver-envelope-preserve-12674e7c 1f0f55f4 の同ファイル
+190638e4ec26b161a3d57b3766e3e57d38dbc7910ad44ed464261185f116bc95  /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/otsuki_branch_1f0f55f4.py
+615 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/otsuki_branch_1f0f55f4.py
+
+====================================================================
+■二 網封じの前検(実撃ちの前・己が目にて確認)
+====================================================================
+=== date -u ===
+2026-09-19T17:53:04Z
+=== ss -tlnp (port 1 に listener 在りや) ===
+(port 1 へのlistener 該当行なし)
+=== ss -tln 全掲 (参照) ===
+State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess
+LISTEN 0      511         127.0.0.1:18789      0.0.0.0:*          
+LISTEN 0      511         127.0.0.1:18791      0.0.0.0:*          
+LISTEN 0      4096          0.0.0.0:5678       0.0.0.0:*          
+LISTEN 0      2048          0.0.0.0:3000       0.0.0.0:*          
+LISTEN 0      4096       127.0.0.54:53         0.0.0.0:*          
+LISTEN 0      1000   10.255.255.254:53         0.0.0.0:*          
+LISTEN 0      128           0.0.0.0:22         0.0.0.0:*          
+LISTEN 0      4096    127.0.0.53%lo:53         0.0.0.0:*          
+LISTEN 0      4096             [::]:5678          [::]:*          
+LISTEN 0      511             [::1]:18789         [::]:*          
+=== curl --max-time 2 http://127.0.0.1:1/ ===
+*   Trying 127.0.0.1:1...
+* connect to 127.0.0.1 port 1 from 127.0.0.1 port 46928 failed: Connection refused
+* Failed to connect to 127.0.0.1 port 1 after 0 ms: Couldn't connect to server
+* Closing connection
+exit=7
+
+====================================================================
+■三 六試の生の出し物(2器 × 甲乙丙の3条・悉く抽出copyのみ・checkout零・DB零)
+====================================================================
+########## 器=koki 条=ko ##########
+-- invoke --
+SUPABASE_SERVICE_ROLE_KEY=FAKE_KEY_NOT_REAL_00000 python3 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/koki_main_6bde7170.py /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/msg_ko.json /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_ko/processed.txt /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_ko http://127.0.0.1:1/rest/v1
+-- stdout+stderr --
+[receiver][01:17:38] NEW: a2test-k type=status_update topic=cross_pc_inbox_honbucho from second_pc
+[receiver][01:17:38] delivery pending without ACK mutation: a2test-k reason=target_owned_by_dedicated_downlink
+[receiver][01:17:38] total: 0 ok, 0 failed (of 1 new)
+-- exit=0 --
+-- /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_ko/queue/inbox/_delivery_state_second.yaml (record_delivery_state が書いたるや) --
+messages:
+  - _handshake_id: a2test-ko-0001
+    delivery_state: delivery_failed
+    reason: "target_owned_by_dedicated_downlink"
+    from_pc: "second_pc"
+    target_agent: "honbucho"
+    acknowledged_mutation: false
+
+########## 器=koki 条=otsu ##########
+-- invoke --
+SUPABASE_SERVICE_ROLE_KEY=FAKE_KEY_NOT_REAL_00000 python3 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/koki_main_6bde7170.py /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/msg_otsu.json /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_otsu/processed.txt /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_otsu http://127.0.0.1:1/rest/v1
+-- stdout+stderr --
+[receiver][01:17:38] NEW: a2test-o type=status_update topic=cross_pc_inbox_honbucho from second_pc
+[receiver][01:17:38] SELF-SEND detected: a2test-o from=second_pc to=second_pc — dead-lettering
+[receiver][01:17:38] dead_letter ACK failed for a2test-o: <urlopen error [Errno 111] Connection refused>
+[receiver][01:17:38] total: 0 ok, 0 failed (of 1 new)
+-- exit=0 --
+-- /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_otsu/queue/inbox/_delivery_state_second.yaml (record_delivery_state が書いたるや) --
+(無し)
+
+########## 器=koki 条=hei ##########
+-- invoke --
+SUPABASE_SERVICE_ROLE_KEY=FAKE_KEY_NOT_REAL_00000 python3 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/koki_main_6bde7170.py /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/msg_hei.json /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_hei/processed.txt /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_hei http://127.0.0.1:1/rest/v1
+-- stdout+stderr --
+[receiver][01:17:38] NEW: a2test-h type=status_update topic=cross_pc_inbox_honbucho from second_pc
+[receiver][01:17:38] SELF-SEND detected: a2test-h from=second_pc to=second_pc — dead-lettering
+[receiver][01:17:38] dead_letter ACK failed for a2test-h: <urlopen error [Errno 111] Connection refused>
+[receiver][01:17:38] total: 0 ok, 0 failed (of 1 new)
+-- exit=0 --
+-- /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/koki_hei/queue/inbox/_delivery_state_second.yaml (record_delivery_state が書いたるや) --
+(無し)
+
+########## 器=otsuki 条=ko ##########
+-- invoke --
+SUPABASE_SERVICE_ROLE_KEY=FAKE_KEY_NOT_REAL_00000 python3 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/otsuki_branch_1f0f55f4.py /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/msg_ko.json /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_ko/processed.txt /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_ko http://127.0.0.1:1/rest/v1
+-- stdout+stderr --
+[receiver][01:17:38] NEW: a2test-k type=status_update topic=cross_pc_inbox_honbucho from second_pc
+[receiver][01:17:38] delivery pending without ACK mutation: a2test-k reason=target_owned_by_dedicated_downlink
+[receiver][01:17:38] total: 0 ok, 0 failed (of 1 new)
+-- exit=0 --
+-- /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_ko/queue/inbox/_delivery_state_second.yaml (record_delivery_state が書いたるや) --
+messages:
+  - _handshake_id: a2test-ko-0001
+    delivery_state: delivery_failed
+    reason: "target_owned_by_dedicated_downlink"
+    from_pc: "second_pc"
+    target_agent: "honbucho"
+    acknowledged_mutation: false
+
+########## 器=otsuki 条=otsu ##########
+-- invoke --
+SUPABASE_SERVICE_ROLE_KEY=FAKE_KEY_NOT_REAL_00000 python3 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/otsuki_branch_1f0f55f4.py /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/msg_otsu.json /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_otsu/processed.txt /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_otsu http://127.0.0.1:1/rest/v1
+-- stdout+stderr --
+[receiver][01:17:38] NEW: a2test-o type=status_update topic=cross_pc_inbox_honbucho from second_pc
+[receiver][01:17:38] SELF-SEND detected: a2test-o from=second_pc to=second_pc — dead-lettering
+[receiver][01:17:38] dead_letter ACK failed for a2test-o: <urlopen error [Errno 111] Connection refused>
+[receiver][01:17:38] total: 0 ok, 0 failed (of 1 new)
+-- exit=0 --
+-- /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_otsu/queue/inbox/_delivery_state_second.yaml (record_delivery_state が書いたるや) --
+(無し)
+
+########## 器=otsuki 条=hei ##########
+-- invoke --
+SUPABASE_SERVICE_ROLE_KEY=FAKE_KEY_NOT_REAL_00000 python3 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/otsuki_branch_1f0f55f4.py /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/msg_hei.json /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_hei/processed.txt /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_hei http://127.0.0.1:1/rest/v1
+-- stdout+stderr --
+[receiver][01:17:38] NEW: a2test-h type=status_update topic=cross_pc_inbox_honbucho from second_pc
+[receiver][01:17:38] SELF-SEND detected: a2test-h from=second_pc to=second_pc — dead-lettering
+[receiver][01:17:38] dead_letter ACK failed for a2test-h: <urlopen error [Errno 111] Connection refused>
+[receiver][01:17:38] total: 0 ok, 0 failed (of 1 new)
+-- exit=0 --
+-- /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/a2recv/run/otsuki_hei/queue/inbox/_delivery_state_second.yaml (record_delivery_state が書いたるや) --
+(無し)
+
