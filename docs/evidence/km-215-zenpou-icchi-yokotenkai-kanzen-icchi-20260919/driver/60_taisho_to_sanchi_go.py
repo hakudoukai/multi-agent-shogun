@@ -17,6 +17,8 @@ ROOT = os.path.abspath(os.path.join(BUNDLE, "..", "..", ".."))
 sys.path.insert(0, HERE)
 import kaki as K  # noqa: E402
 
+TAG = sys.argv[1] if len(sys.argv) > 1 else "60_taisho_to_sanchi_go"
+
 TMUX = "/opt/homebrew/bin/tmux"
 if not os.path.exists(TMUX):
     TMUX = "tmux"
@@ -65,7 +67,7 @@ lines.append(u"  ・對照は★此のrunの此の刻★の状態(當機に sess
 lines.append(u"    session が落ちれば陽性対照も落ちる ―― 恒常の證ではない。")
 lines.append(u"  ・乙の sha256 は★編集後★の値であり、編集が正しい事の證ではない(別途 15_shiwake/50/55 の實行結果と併せ読め)。")
 
-K.kaku(os.path.join(BUNDLE, "raw", "60_taisho_to_sanchi_go.txt"), u"\n".join(lines) + u"\n")
+K.kaku(os.path.join(BUNDLE, "raw", "%s.txt" % TAG), u"\n".join(lines) + u"\n")
 
 print(u"rc_pos=%d rc_neg=%d control_ok=%s" % (rc_pos, rc_neg, ok_control))
 for rel, sha, nb, nl, bnrc, _, _ in rows:

@@ -1,0 +1,30 @@
+★65 ―― ④依存境界(repository-local lockfile 未測・代替=實測)★
+
+■理由
+  對象二器は shell script であり、当repoに shell 依存の lockfile は存在せぬ。
+  代りに、對象二器が★実行時に實際呼ぶ経路★(=`bash <script>` の子process)で
+  在処・rc・版を引いた。
+
+■對話shellとの相違(注意・自己検証)
+  對話 zsh session の裸 `grep` は函數(ugrep 7.8.4 を claude 経由で呼ぶ)に
+  解決される ―― だが此の函數は★zsh固有★であり、對象二器を起動する
+  `bash <script>` の子processへは継がれぬ(函數はshell間を渡らぬ)。
+  ∴ 下記は★`bash -c` を通した実測★(=對象二器と同じ解決経路)。
+
+  bash
+    argv(在処)=bash -c 'command -v bash'  rc=0  在処=/bin/bash
+    argv(版)=bash -c 'bash --version'  rc=0  版=GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+  tmux
+    argv(在処)=bash -c 'command -v tmux'  rc=0  在処=/opt/homebrew/bin/tmux
+    argv(版)=bash -c 'tmux -V'  rc=0  版=tmux 3.7b
+  grep
+    argv(在処)=bash -c 'command -v grep'  rc=0  在処=/usr/bin/grep
+    argv(版)=bash -c 'grep --version'  rc=0  版=grep (BSD grep, GNU compatible) 2.6.0-FreeBSD
+
+■対象二器が literal に呼ぶ外部器(逐語grep済・raw/10_bosuu.txt系とは別に本弾で再確認)
+  scripts/switch_cli.sh: tmux(list-panes/display-message/show-options/send-keys/capture-pane/set-option/select-pane)・grep(-v, -qE, -qiE)
+  scripts/watcher_supervisor_third.sh: tmux(list-panes)・grep(-qx)・pgrep
+
+★此の数が意味せぬ事★:
+  ・此は★系(Mac本体)の器★であって repository-local ではない ―― 之は本弾で直した事ではない。
+  ・對話shellの `grep`(ugrep)とscript内`grep`(/usr/bin/grep BSD)は★別物★ ―― 混同禁(raw/10の`--include`後置罠と同根の注意)。
