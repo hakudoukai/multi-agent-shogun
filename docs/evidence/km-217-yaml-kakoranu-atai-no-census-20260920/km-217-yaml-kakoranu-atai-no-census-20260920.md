@@ -106,7 +106,7 @@ inbox: SUSPECT=836行 (対象ファイル18本)
 ## 受入条件（判定の束 ①〜⑦・雛形v1.3 対応）
 
 - **①対象tuple**: ★本紙には書かない★（雛形v1.3§1/§3 ―― 納め便で40桁宣す）
-- **②成果物**: `docs/evidence/km-217-yaml-kakoranu-atai-no-census-20260920/` 配下（本紙含む10本、下記manifest参照）
+- **②成果物**: `docs/evidence/km-217-yaml-kakoranu-atai-no-census-20260920/` 配下（disk実測=32本【★此の数は本節を確定稿とし、之より後に臺帳再建(r4)+門再走(r4)各2本のみ追加する前提で先算した確定値★】＝臺帳記載17本＋門log14本(`gate.r1.out`/`gate.r1.err`/`gate.r2.out`/`gate.r2.err`/`gate.r4.out`/`gate.r4.err`/`manifest.append.r1.out.log`/`manifest.append.r1.err.log`/`manifest.append.r2.out.log`/`manifest.append.r2.err.log`/`manifest.append.r3.out.log`/`manifest.append.r3.err.log`/`manifest.append.r4.out.log`/`manifest.append.r4.err.log`)＋臺帳自身1本＝17+14+1=32、コミット直前に`ls -1 | wc -l`で再実測し一致を確認（下記manifest参照）
 - **③実走のraw**: cwd=`/Users/momizimac/multi-agent-shogun`（census実行時）・argv=上記㋐の`bfs`実行列・rc=census_yaml.py 双方 rc=0・raw=`10_tasks_census.tsv` `11_inbox_census.tsv`
 - **④依存の境界**: 外部依存無し（`census_yaml.py`/`detector_kakoranu_colon.py`は標準lib(`hashlib`,`re`,`sys`)+`PyYAML`のみ・repo既存の`.venv`内`pyyaml`を使用・lockfile=`未測（理由=本弾はrepo本体のPython依存を新規追加せず、既存.venvのpyyamlを読取専用で呼ぶのみ。census自体はrepoの実行物ではなく評価用の一時器ゆゑlockfile対象外）`）
 - **⑤件数**:
@@ -114,5 +114,5 @@ inbox: SUSPECT=836行 (対象ファイル18本)
   - ★意味負★ = 2/60（真に死んで居るが実害型とは別疵＝block構造衝突。恒真でない証明＝60本悉く同型ではない事を示した）
   - 陽性対照 = 合成positive（`ScannerError`+検出子SUSPECT） / 陰性対照 = `ashigaru-mac-2.yaml`現物（OK）+合成negative（OK+CLEAN）
   - 受入⑴母數三定義と歩いた根=PASS(㋐) ⑵全本rc表(母數と和一致)=PASS(A) ⑶陽性/陰性対照=PASS(C、但し陽性は合成・原物未測を明記) ⑷判定の束=本節 ⑸紙のみ=PASS(器変更0・他席yaml変更0) ⑹家老数の検め直し=PASS(㋓、結論=対象不同ゆゑ直接反証不能だが全帳の別軸統計を添えた)
-- **⑥復元**: 本紙は評価専用worktree(`~/wt/a1-km217`)で作成・repo本体(`scripts/`, 他席`queue/*.yaml`)は一切変更していない。`git status --porcelain -uall --ignored`（worktree側）= 下記manifest直後に確認予定
+- **⑥復元**: 本紙は評価専用worktree(`~/wt/a1-km217`)で作成・repo本体(`scripts/`, 他席`queue/*.yaml`)は一切変更していない。`git status --porcelain -uall --ignored`（worktree側・commit 941b895b直後に実測）= 生raw `50_porcelain_after_commit.txt`（内容= ` M docs/runbooks/ERR-EKARTE-001.md`(★既知の無関係artifact・修正せず不触★)＋自身`!!`（v1.3§4＝臺帳の外の紙は自身を含み得る、当然）・rc=0）。復元sha=`51_restore_sha_check.txt`（`git show HEAD:<path> | sha256sum` vs disk vs 宣言値・本紙/manifest共に一致=YES実測）。再正=gate再走（`gate.r2.out`/`gate.r2.err`、17本版manifestで再実行・rc=0）
 - **⑦法令根拠**: 該当なし（未測ではなく非該当）
