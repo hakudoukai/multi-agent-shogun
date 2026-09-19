@@ -1,0 +1,21 @@
+★10 ―― origin/main case-fold census★
+
+■⒜ 母數
+  cwd=/Users/momizimac/wt/a2-km218
+  argv=git ls-tree -r --name-only origin/main
+  rc=0
+  母數(本数)=548
+
+■衝突の組(case-fold key が同じ path が2本以上)
+  組数=1
+  ―― key=docs/runbooks/err-ekarte-001.md
+     path=docs/runbooks/ERR-EKARTE-001.md sha256=abf519d04dc5cfbb3adb7dbcf6a5dd2c132e52c3c492530e4f8b90a0ff363fba bytes=2596
+     path=docs/runbooks/err-ekarte-001.md sha256=24cf87840d94dd6b18a5f292bef598f370eede58127296f01a04b5667ee3d50f bytes=3471
+     同異=★違ふ★
+     disk[docs/runbooks/ERR-EKARTE-001.md] sha256=24cf87840d94dd6b18a5f292bef598f370eede58127296f01a04b5667ee3d50f bytes=3471 ―― ★現存(blobと一致)★ (=docs/runbooks/err-ekarte-001.md)
+     disk[docs/runbooks/err-ekarte-001.md] sha256=24cf87840d94dd6b18a5f292bef598f370eede58127296f01a04b5667ee3d50f bytes=3471 ―― ★現存(blobと一致)★ (=docs/runbooks/err-ekarte-001.md)
+
+★此の数が意味せぬ事★:
+  ・「disk 現存」は★本worktree(a2-km218)の checkout 直後の状態★であり、
+    他worktree/他席では case-insensitive FS の勝者が異なり得る(チェックアウト順序に依存)。
+  ・母數は origin/main の此の刻(fetch後)の tree であり、次の push で動き得る。

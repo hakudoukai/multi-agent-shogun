@@ -1,0 +1,28 @@
+★20 ―― 使ひ捨て樹(新設直後)の porcelain 実測★
+
+■argv/rc/刻
+  刻(worktree add 前)=2026-09-19T17:58:01Z
+  argv(樹立て)=git -C /Users/momizimac/multi-agent-shogun worktree add --detach /Users/momizimac/wt/km218-throwaway origin/main
+  rc(樹立て)=0
+  刻(樹立て後)=2026-09-19T17:58:01Z
+
+  刻(porcelain 測り)=2026-09-19T18:02:09Z
+  cwd=/Users/momizimac/wt/km218-throwaway
+  argv=git status --porcelain -uall
+  rc=0
+  stdout=
+   M docs/runbooks/ERR-EKARTE-001.md
+
+  argv(ignored込)=git status --porcelain -uall --ignored
+  rc=0
+  stdout=
+   M docs/runbooks/ERR-EKARTE-001.md
+
+■結論
+  ★新設直後の使ひ捨て樹は、他の作業(commit/編集)を一切せずとも★
+  ★案内(checkout)直後から docs/runbooks/ERR-EKARTE-001.md が M(modified)として現れた★。
+  ∴ 此の汚れは★どの席の作業にも因らぬ★構造的な物(case-insensitive FS + case-fold twin blob)である。
+
+★此の数が意味せぬ事★:
+  ・此の1回の測りは a2-km218 席(本worktree)の環境(macOS APFS 既定=case-insensitive)での結果であり、
+    case-sensitive FS(Linux 等)の席では同じ汚れは出ない。

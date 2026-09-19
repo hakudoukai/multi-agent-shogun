@@ -1,0 +1,28 @@
+★30 ―― CLAUDE.md index の逐語 と 判じ得るか否かの吟味★
+
+■⒟ 逐語(argv=grep -n "err-ekarte-001\|ERR-EKARTE-001" CLAUDE.md、rc=0)
+  81:| Runbook ERR-EKARTE-001 | [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) |
+  422:# Runbook: ERR-EKARTE-001 (カルテ visit 作成失敗) — 詳細は別ドキュメント
+  424:★Runbook 完全な記述は [docs/runbooks/err-ekarte-001.md](docs/runbooks/err-ekarte-001.md) に分離 (Lane 4 削減、Commander 2026-05-29)★
+
+  ∴ CLAUDE.md の index(2箇所)は★逐語で★小文字 `docs/runbooks/err-ekarte-001.md` を指す。★大文字形は index 中に0件★。
+
+■補助実測 ―― 両 path の git 履歴(参考・判定には用ゐず)
+  argv=git log --follow --format="%H %ai %s" -- docs/runbooks/ERR-EKARTE-001.md | tail -5
+  rc=0
+  出=911eb135d8058ac5500754e3c4a60af99193699b 2026-05-05 18:37:35 +0900 feat(hakudokai): track 8 runbooks in git (whitelist in .gitignore)
+
+  argv=git log --follow --format="%H %ai %s" -- docs/runbooks/err-ekarte-001.md | tail -5
+  rc=0
+  出=04e7d0f9a5a46c939b6cfd6b98a0cfb211abbae3 2026-05-29 01:12:01 +0900 feat(lane4-stage1): extract medical/clinic content from CLAUDE.md to docs/
+
+■判じ得るか(★推すな★・命⒟後段への応)
+  ★未測（理由）★: index が指す先(=小文字)を測る事と、大文字ファイルの内容が『誤り/廃止すべき』である事の証明は★別軸★である。
+  index は『どの path を利用者向け参照に見せるか』の実測に留まり、大文字ファイル(2596bytes)の内容が
+  無効・重複・誤りであることを独立に立証しない(両ファイルは既に⒝で★内容が違ふ★事のみ実測済 ―― 同一内容の複製ではない)。
+  ∴『小文字が正・大文字が負』は★本測りからは判じ得ない★。判ずるには両ファイルの★内容の当否★を別途 検討する必要が在り、
+  之は本弾の命(⒜〜⒞測るのみ)の外である。
+
+★此の数が意味せぬ事★:
+  ・git log --follow は case-insensitive checkout 環境での rename 検出精度が完全ではない ―― 上記2件は★参考★であり、
+    『どちらが先に存在したか』の厳密な証明ではない(補助実測、主張の根拠には用ゐず)。

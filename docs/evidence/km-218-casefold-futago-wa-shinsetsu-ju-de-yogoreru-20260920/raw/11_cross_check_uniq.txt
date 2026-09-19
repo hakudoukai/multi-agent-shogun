@@ -1,0 +1,39 @@
+★11 ―― 交叉検算(別経路)と陽性/陰性対照★
+
+■交叉検算(driver/10_casefold_census.py とは★別の道具★=awk+sort+uniq -cで衝突数を数え直す)
+  cwd=/Users/momizimac/wt/a2-km218
+  argv=git ls-tree -r --name-only origin/main | awk '{print tolower($0)}' | sort | uniq -c | sort -rn | head -5
+  rc=0
+  出=
+     2 docs/runbooks/err-ekarte-001.md
+     1 tests/unit/test_watcher_rc6_integration.bats
+     1 tests/unit/test_switch_cli.bats
+     1 tests/unit/test_stop_hook.bats
+     1 tests/unit/test_send_wakeup.bats
+  ∴ count=2 の行は★唯一1行★ ―― driver/10_casefold_census.py の「組数=1」と★別経路で一致★。
+
+■件数分布の検算(度数の度数)
+  argv=git ls-tree -r --name-only origin/main | awk '{print tolower($0)}' | sort | uniq -c | awk '{print $1}' | sort | uniq -c
+  rc=0
+  出=
+     546 1
+       1 2
+  ―― case-fold key の本数=547(546+1)、其の内訳=count1のkeyが546本・count2のkeyが1本。
+     path の母數=546*1 + 1*2 = 548 ―― raw/10_casefold_census.txtの母數(本数)=548と★一致★。
+
+■陽性対照 (positive control)
+  key=docs/runbooks/err-ekarte-001.md ―― 実際に衝突として検出された(raw/10_casefold_census.txt)。
+  ∴ 道具は★実在する衝突を見逃していない★。
+
+■陰性対照 (negative control)
+  argv=git ls-tree -r --name-only origin/main | grep -i "^CLAUDE.md$"
+  rc=0
+  出=CLAUDE.md
+  ―― `CLAUDE.md` は tree 中に★1本のみ★(大小変化形は存在せぬ)。raw/10_casefold_census.txt の
+     衝突組(組数=1)にも★含まれない★。∴ 道具は★衝突していない物を誤つて衝突と報告していない★。
+
+■恒真でないことの証明(意味負)
+  driver/10_casefold_census.py L84-85 は `if not rows: lines.append(u"  (無し)")` を持つ ――
+  衝突組が0件なら『(無し)』が出る分岐が★現に存在する★(組数=1という出力は無条件の恒真ではない)。
+  加へて上記の件数分布(uniq -c の uniq -c)は★境界が実測されて居る事★を示す:
+  547 key 中 546 key は count=1(衝突せず)、★唯1 key のみ★ count=2(衝突)。

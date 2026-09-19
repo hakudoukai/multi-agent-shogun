@@ -1,0 +1,41 @@
+★40 ―― 是正案(紙のみ・実行せず)★
+
+■出所の確認(裁326810 一次文書の所在)
+  argv=sb read seq 326810
+  rc=0
+  結果=★別件★(PR#20/22 の main push 可否裁定・本件の是正順とは無関係の内容)であった。
+  argv=grep -rl "rm --cached" .  (repo 全体)
+  結果=本弾の task 本文(queue/tasks/ashigaru-mac-2.yaml 内 hon 欄)★にのみ★逐語が存在し、
+        之とは別の一次文書(裁326810 そのもの)は本repoから読取では当たれなかった。
+  ∴ ★未測（理由：裁326810 の一次文書に本repoから読取で当たれず。DB seq326810 は別件であった。★
+  　以下は家老mac が本弾の命(⒠)に引用した逐語を★そのまま★引く ―― 二次引用である事を明記する）★
+
+■引用(命⒠・queue/tasks/ashigaru-mac-2.yaml hon 欄より逐語)
+  「安全順（裁326810）の逐語を引いて是正案を紙に書け:
+    ⑴`git rm --cached <負>` ⑵`git checkout -- <正>` ⑶verify ⑷`git add -f` + `git commit --only`。
+    素の `git rm` は踏むな。案は紙のみ ―― 実行は家老が監督の裁を得てから」
+
+■是正案(本件 docs/runbooks/ERR-EKARTE-001.md ／ err-ekarte-001.md への適用・★未実行★)
+  前提: ⒝実測により両 blob は★中身が違ふ★(2596bytes/abf519d0.. と 3471bytes/24cf8784..)。
+        ⒟実測により CLAUDE.md の index は小文字を指すが、之は内容の正否を証しない(未測のまま)。
+        ∴ 何方を『負』(rm --cached すべき方)と定めるかは★本弾の外★(内容の当否は別途 判断者が要る)。
+        以下は★手順の型★を示すのみで、『大文字を負とする』等の決め打ちは★していない★。
+
+  ⑴ `git rm --cached <負とする path>`
+     ―― 例: 若し大文字形を負と定めるなら `git rm --cached docs/runbooks/ERR-EKARTE-001.md`
+     ★注★: 素の `git rm`(non --cached)は★禁★ ―― working tree の実体(現に小文字勝ちの内容)を直接消さない。
+  ⑵ `git checkout -- <正とする path>`
+     ―― 負を index から外した直後、正の path を working tree へ再度当て、
+        disk 実体(case-insensitive FS 上は同一 inode)を★正の blob 内容で★確定させる。
+  ⑶ verify
+     ―― `git status --porcelain -uall --ignored` が★当該2 path について空★である事を確認。
+        加へて `git show :<正path> | sha256sum` と disk 実体の sha256 が一致する事を確認。
+  ⑷ `git add -f` + `git commit --only`
+     ―― `.gitignore:7` が裸の `*` ゆゑ `-f` 必須(project_manifest_root_is_bundle_relative 系の既知事情と同型)。
+        `--only` で当該2 path のみを commit へ含め、他の無関係な変更を巻き込まない。
+
+■禁則の再確認(本弾では一切実行しない)
+  ・上記⑴〜⑷は★紙上の案★に留め、本弾では `git rm`/`git rm --cached`/`git checkout --`/`git add -f`/`git commit`
+    の何れも打っていない(本弾で行つた git 操作は read-only な ls-tree/cat-file/status と、
+    使ひ捨て樹の worktree add/remove のみ ―― ⒝⒞の raw 参照)。
+  ・実行は家老が総監督の裁を得てから、家老の監督下で行ふ(本弾の役目ではない)。
