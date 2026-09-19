@@ -23,7 +23,8 @@
 
 ② ★成果物 repo path + sha256★
   束 docs/evidence/km-215-zenpou-icchi-yokotenkai-kanzen-icchi-20260919/ の臺帳。
-  manifest.txt に紙ごとの sha256 を載せる(80_daichou.py・本改訂の彫り確定後に再生成)。
+  manifest.txt に紙ごとの sha256 を載せる(80_daichou.py・門再走(下記⑥)に伴ひ
+  `rm -f manifest.txt` から二度建て直し、33本で凍結。逐語は下記⑥参照)。
 
 ③ ★実走 raw 同一 run・argv/rc(pipe不使用)★
   raw/60_taisho_to_sanchi_go.txt: 兩對照(has-session 陽性rc=0/陰性rc=1)+
@@ -74,6 +75,25 @@
     raw/62_saisei_taisho.txt ―― raw/60_taisho_to_sanchi_go.txtと★sha256完全一致★
     (712c7cdd145e868cc1cd79e434afc74196eddd07f494139e805ef630736554c9)。
     元raw/60は `git diff --stat` 空 ―― 觸れず維持したまま再正を得た。
+  ★門再走★(家老mac 明示指示 msg_20260920_011725_878a0ef1「出す前 門を再走させれば
+    條①が鳴る」への應)。臺帳は改名前の舊entry(raw/90_monbikae.{err,out,rc}單體名・
+    實體は既に raw/90_monbikae_a.*/raw/90_monbikae_b.*(計六本)へ改名濟)を指した儘
+    であつた爲、`rm -f manifest.txt`(裁 seq322699・臺帳の根は束内相對)で全消去し
+    driver/80_daichou.py で disk を歩き直して建て直した(29本→33本・新4本=
+    driver/90_saido_kensho.py・raw/90_saido_kensho.{out,err,rc})。
+    scripts/checks/karo_mac_manifest_verify.py で再走(raw/90_saido_kensho.*に逐語):
+      初回(旧臺帳・改名途中の過渡)=一致28/相違1/實體無4/母數33/rc=1(實體無4=
+        改名で消えた舊driver/90_mon_saisou.py・raw/90_mon_saisou.{err,out,rc}の
+        過渡的な殘骸・臺帳再建で解消)。
+      再建後=一致32/相違1/實體無0/母數33/rc=1(相違1=raw/80_daichou_shime.txt ―― 
+        80_daichou.pyが臺帳を建てた★後★に己を上書きする自己言及の紙ゆゑ、臺帳の
+        entryは常に一世代前を指す。紙は己を含む數を書けぬの延長)。
+    ★最終★ = 上記raw/90_saido_kensho書込み後、manifest.txt をもう一度建て直した所、
+      二囘連續の建て直しの間に本數(33)が動かなかつた爲 raw/80_daichou_shime.txt の
+      内容も不變となり、自己言及の相違すら偶々0へ収束した: ★一致33/相違0/實體無0/
+      讀めぬ行0/母數33/rc=0★(本節執筆時点でのmanifest.txt=此の状態のまま凍結)。
+      ★但し此の rc=0 は恒常ではない★ ―― 本紙以降に紙が増減すれば再び相違1(自己
+      言及)へ戻る。追ふのではなく上記の構造として記す。
 
 ⑦ ★法令根拠★ = ★未測(理由: 本弾は queue/inbox/ の外・shell script二本の
   session一致精度を測る内部器であり、患者データにも本番にも觸れぬ。法令
