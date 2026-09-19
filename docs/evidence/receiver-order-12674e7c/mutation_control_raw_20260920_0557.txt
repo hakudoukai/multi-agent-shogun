@@ -1,0 +1,46 @@
+== 板 12674e7c ㊀ 審査順の直し 6fbe7981 の検証 ==
+測り手 karo-second / 刻 2026-09-20 05:57:11.012206730+0900
+走り手 Linux 6.6.87.2-microsoft-standard-WSL2 / bash 5.2.21(1)-release / Python 3.12.3
+
+-- 器 --
+後像(枝 karo-second/receiver-envelope-preserve-12674e7c HEAD=92b3bdda4731cea06bb44714d5f5966ea1955c88)
+   shim/…receiver_poll.py sha256=02801104367daef538f592812e2bc3ff32329c09b4c1c36b4bf461f882f6e5d0
+   行=624
+前像(6fbe7981^ = 71c72565)
+   sha256=190638e4ec26b161a3d57b3766e3e57d38dbc7910ad44ed464261185f116bc95
+   行=615
+試し紙 tests/test_secondpc_downlink_owned_order.py sha256=1514bcb6f10c59f7f46369b989317ed48f34b55407deaf00b0cb4d296062bd07 (両走り 同一file)
+
+-- 順の当たり --
+[前像] 360:def is_same_agent_send(msg): 498:    if is_same_agent_send(msg): 530:        if target in DOWNLINK_OWNED_TARGETS: 
+[後像] 360:def is_same_agent_send(msg): 504:    if not is_file_sync and detect_target(msg) in DOWNLINK_OWNED_TARGETS: 510:    if is_same_agent_send(msg): 
+
+======== 甲 後像 pytest (三紙) ========
+..........                                                               [100%]
+10 passed in 0.09s
+rc=0
+
+======== 乙 前像 pytest (順の紙のみ・変異対照) ========
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+_____________ test_envelopeless_downlink_row_is_not_dead_lettered ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-hakudokai/pytest-3/test_envelopeless_downlink_row0')
+
+    def test_envelopeless_downlink_row_is_not_dead_lettered(tmp_path):
+        """The case that used to break: no sender identity, target owned by a downlink."""
+        out = _run_poll(tmp_path, _row("own-no-sender", "cross_pc_inbox_honbucho"))
+>       assert "PATCH" not in out["methods"], "the source row must not be mutated at all"
+E       AssertionError: the source row must not be mutated at all
+E       assert 'PATCH' not in ['PATCH']
+
+tests/test_secondpc_downlink_owned_order.py:80: AssertionError
+----------------------------- Captured stderr call -----------------------------
+[receiver][05:57:11] NEW: own-no-s type=answer topic=cross_pc_inbox_honbucho from second_pc
+[receiver][05:57:11] SELF-SEND detected: own-no-s from=second_pc to=second_pc — dead-lettering
+[receiver][05:57:11] DEAD-LETTERED: own-no-s after 5 retries
+[receiver][05:57:11] total: 0 ok, 0 failed (of 1 new)
+=========================== short test summary info ============================
+FAILED tests/test_secondpc_downlink_owned_order.py::test_envelopeless_downlink_row_is_not_dead_lettered
+1 failed, 3 passed in 0.05s
+rc=1
