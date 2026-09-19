@@ -17,6 +17,8 @@
 #   DASUMAE_MAX_BYTES     條⑤ の閾(既定 10485760)。★使へぬ値は既定へ倒さず rc=2 で止める★
 #   DASUMAE_READ_TIMEOUT  寸法を取る時の時限(既定 10)。同じく使へぬ値は rc=2
 #   KM_GATE_MANIFEST_BASE 條① の基点。★束内相対の臺帳(裁322699)には `.` が要る★
+#   DASUMAE_JOU4_SCOPE   條④ の射程(既定 existing_exempt=既存は對象外・裁 seq339959)。
+#                         ★all を渡せば旧挙動(既存にも当てる)★ ―― 可逆の口
 #
 # usage(自己検め): bash scripts/checks/karo_mac_dasumae_gate.sh --selftest
 #   陽性対照(9/7 REVISE 280158の形=末尾空白+CR+EOF空行を再現)で必ず鳴るか、
@@ -132,6 +134,37 @@ safe_size(){
   printf '%s' "$out"
 }
 
+# ★裁 seq339959 ―― 條④ の對象を「★新規に出す出力★」に限る判じ手★
+#   裁の逐語: 「門條④は★新規に出す出力★にのみ当てる。既存の原file・臺帳 15件は
+#   改めず棄て置く(門は既存を對象外にせよ・可逆)。次回から=L1。」
+#   ★條②③へは広げない★ ―― 裁は條④のみを名指す。逐語より広く直すは独断である。
+#
+#   rc=0 を返す = ★既存(追跡済 かつ HEAD と差無し)★ ゆゑ 條④ の對象外
+#   rc=1 を返す = 未追跳 / 変更有り / git の外 / 測れぬ ―― 悉く★當てる(default-deny)★
+#     ★測れぬを「容す」側へ倒すな★ ―― 器自身が 30行目で宣する通り、
+#     「測れなんだ」が「疵が無い」と同じ顔をするのが fail-open である。
+#   可逆: DASUMAE_JOU4_SCOPE=all で旧挙動(既存にも当てる)へ戻る。
+#
+#   ★path は絶対へ解いてから git へ渡す★ ―― `git -C <dir>` は <dir> を cwd とみなすゆゑ、
+#     束内相対のまま渡せば二重に解けて★当たらぬ★(臺帳の根で踏んだ疵と同じ形)。
+#   ★dirname を見るのは他席の樹・共用樹・己の樹の何れをも渡され得る故★。
+kizon_futtou(){
+  local f="${1:-}" d fa
+  [ "${DASUMAE_JOU4_SCOPE:-existing_exempt}" = "all" ] && return 1
+  [ -n "$f" ] || return 1
+  case "$f" in
+    /*) fa="$f" ;;
+    *)  fa="$PWD/$f" ;;
+  esac
+  [ -f "$fa" ] || return 1
+  d=$(dirname "$fa") || return 1
+  [ -d "$d" ] || return 1
+  git -C "$d" rev-parse --is-inside-work-tree >/dev/null 2>&1 || return 1
+  git -C "$d" ls-files --error-unmatch -- "$fa" >/dev/null 2>&1 || return 1
+  git -C "$d" diff --quiet HEAD -- "$fa" >/dev/null 2>&1 || return 1
+  return 0
+}
+
 check_one_file(){
   # $1=file → stdout: "PASS|FAIL <条名> <詳細>" の行を複数出す。rc=0(全PASS)/1(何か落ちた)
   local f="$1" fail=0
@@ -177,6 +210,10 @@ check_one_file(){
   fi
 
   # 條④ ―― 札 0=良 / 1=EOF改行無 / 2=末尾行が不可視のみ(空行を含む) / 3=0byte
+  # ★裁 seq339959 ―― 條④は「新規に出す出力」にのみ当てる★(既存は對象外)
+  if [ "$fk4" != "0" ] && kizon_futtou "$f"; then
+    say "條④ 對象外 ―― ${f} は既存(追跡済・HEADと差無し)・札=${fk4}(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)"
+  else
   case "$fk4" in
     3)
       say "★EOF改行 ―― ${f} は空file(0byte)★"
@@ -188,6 +225,7 @@ check_one_file(){
       say "★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― ${f}(裁 seq330497)★"
       fail=1 ;;
   esac
+  fi
 
   return $fail
 }
@@ -206,6 +244,11 @@ run_gate(){
   local man="$1"; shift
   local files=("$@")
   local fail=0
+
+  # ★可逆の口も「倒した事を刷る」★(器自身の法・16行目「usage 冠が env を書かぬは疵」)
+  #   條④ の射程は既定で「既存は對象外」(裁 seq339959) ―― 之を刷らねば
+  #   後の者は log から ★何故 鳴らなかつたか★ を判じられぬ。
+  say "條④ 射程 DASUMAE_JOU4_SCOPE = $(env_state DASUMAE_JOU4_SCOPE) ―― 実効「${DASUMAE_JOU4_SCOPE:-existing_exempt}」(既定=existing_exempt=既存は對象外・裁 seq339959)"
 
   if [ "$man" = "--" ]; then
     say "條① 台帳とdiskの差 = スキップ(台帳未指定)"
@@ -246,16 +289,34 @@ run_gate(){
   fi
 
   local any_ws=0 any_cr=0 any_eof=0
+  # ★2026-09-20 疵(己が同段で作つた物を同段で直す)★
+  #   旧: `out=$(check_one_file …)` は ★rc≠0 の時のみ out を刷つた★ ゆゑ、
+  #       裁 seq339959 で足した「條④ 對象外」の告知が ★rc=0 の時 黙つて捨てられた★。
+  #       實測(陰性対照 raw/20_insei_kizon.err): 對象外の行が一行も出ず、
+  #       結語だけが「條④EOF改行丁度1かつ末尾行に可視 = 通」と ★偽を刷つた★。
+  #   ∴ ⑴rc=0 でも器が語つた事は捨てぬ ⑵對象外の本数を数へて結語へ書く。
+  #   ★command substitution は subshell ゆゑ check_one_file 内で数へても伝はらぬ★ ―― 故に
+  #     親で out を篩ふ(己の法「數を出す器は己の外で数へさせよ」の形)。
+  local jou4_menjo=0
   for f in "${files[@]}"; do
-    local out
-    out=$(check_one_file "$f" 2>&1); local rc=$?
+    local out rc menjo_n
+    out=$(check_one_file "$f" 2>&1); rc=$?
+    menjo_n=$(printf '%s\n' "$out" | grep -c '^條④ 對象外 ')
+    is_num "$menjo_n" || menjo_n=0
+    jou4_menjo=$((jou4_menjo + menjo_n))
     if [ $rc -ne 0 ]; then
       printf '%s\n' "$out" >&2
       fail=1
+    elif [ -n "$out" ]; then
+      printf '%s\n' "$out" >&2
     fi
   done
   if [ $fail -eq 0 ]; then
-    say "條②末尾不可視字(類 Zs/Zl/Zp/Cc/Cf) / 條③CR混入 / 條④EOF改行丁度1かつ末尾行に可視 = 全file(${#files[@]}本)通"
+    if [ "$jou4_menjo" -gt 0 ]; then
+      say "條②末尾不可視字(類 Zs/Zl/Zp/Cc/Cf) / 條③CR混入 = 全file(${#files[@]}本)通 ―― ★條④は ${jou4_menjo}/${#files[@]} 本を既存として對象外にした(裁 seq339959)★。★對象外は「EOF改行が在つた」の意に非ず★"
+    else
+      say "條②末尾不可視字(類 Zs/Zl/Zp/Cc/Cf) / 條③CR混入 / 條④EOF改行丁度1かつ末尾行に可視 = 全file(${#files[@]}本)通(條④ 對象外 0本)"
+    fi
   fi
 
   local total=0

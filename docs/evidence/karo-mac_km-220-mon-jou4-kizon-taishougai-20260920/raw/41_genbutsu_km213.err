@@ -1,0 +1,14 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條④ 射程 DASUMAE_JOU4_SCOPE = unset ―― 実効「existing_exempt」(既定=existing_exempt=既存は對象外・裁 seq339959)
+條① 台帳とdiskの差 = スキップ(台帳未指定)
+條④ 對象外 ―― /Users/momizimac/wt/a1-km213/docs/evidence/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919_manifest.append.err.log は既存(追跡済・HEADと差無し)・札=3(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條④ 對象外 ―― /Users/momizimac/wt/a1-km213/docs/evidence/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919_manifest.append.r2.err.log は既存(追跡済・HEADと差無し)・札=3(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條④ 對象外 ―― /Users/momizimac/wt/a1-km213/docs/evidence/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919_manifest.append.r3.err.log は既存(追跡済・HEADと差無し)・札=3(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條④ 對象外 ―― /Users/momizimac/wt/a1-km213/docs/evidence/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919/raw/21_dashboard_mae.err は既存(追跡済・HEADと差無し)・札=2(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條④ 對象外 ―― /Users/momizimac/wt/a1-km213/docs/evidence/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919/raw/22_dashboard_ato.err は既存(追跡済・HEADと差無し)・札=2(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條②末尾不可視字(類 Zs/Zl/Zp/Cc/Cf) / 條③CR混入 = 全file(5本)通 ―― ★條④は 5/5 本を既存として對象外にした(裁 seq339959)★。★對象外は「EOF改行が在つた」の意に非ず★
+條⑤ 寸法 = byte和 2(閾 10485760未満)
+★出す前 門 通。出してよい。★
+rc=0
+母数(條④に鳴る)=5
