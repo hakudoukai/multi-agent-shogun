@@ -178,7 +178,7 @@ PANE_BASE=$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)
 # ─── 顔の度數 ―― ★母數 = 歩いた席の数★（委員長裁 seq336105⑷ / no-silent-failure §4）───
 # 「帳が無い」「parse が通らぬ」「弾が無い」は ★別の事★ である。一つの「---」へ畳まぬ。
 N_SEKI=0; N_YOMETA=0; N_NOTAMA=0; N_NOFILE=0; N_PARSE_NG=0
-N_NOPY=0; N_SHAPE=0; N_READERR=0; N_PYDIE=0; N_BOX_NG=0; N_MULTI=0
+N_NOPY=0; N_SHAPE=0; N_READERR=0; N_PYDIE=0; N_BOX_NG=0
 
 # ─── Helper: task info from YAML ───
 # ★出目は常に二欄（task_id / status）★。顔は悉く ASCII で書く ―― printf の %-42s は
@@ -189,8 +189,6 @@ N_NOPY=0; N_SHAPE=0; N_READERR=0; N_PYDIE=0; N_BOX_NG=0; N_MULTI=0
 #   (read-err)   開けぬ（権限・I/O）
 #   (no-python)  器（.venv の python3）が無い
 #   (py-die)     python が非零で落ちた
-#   (multi:A/N)  帳は読めたが頂に task 鍵が無い ★多鍵形★（assigned=A本 / 弾鍵=N本）
-#                ← 旧弾は之を黙つて頂の旧形 task_id へ倒し、★古い一組を今の弾と偽つて居た★
 #   --- ---      ★帳は在り parse も通り、其の上で弾が無い★
 get_task_info() {
     local agent_id="$1"
@@ -221,22 +219,7 @@ if data is None:
 if not isinstance(data, dict):
     sys.stderr.write('[agent_status] bad-shape %s: top is %s\n' % (p, type(data).__name__))
     print('(bad-shape) !'); sys.exit(0)
-if 'task' in data:
-    task = data['task']
-else:
-    # ★無言の代入を止めた★（委員長裁 seq337393⑴ / 「意味が変はる fallback を無言で行ふな」）
-    # 旧: task = data.get('task', data)
-    # 実測 2026-09-19（両対照）―― 此の fallback が刷つて居たのは「弾無 --- ---」ではない。
-    # 帳の頂には旧形の欄（task_id / status / priority / assigned_at）が居坐つて居り、
-    # ★其の古い一組を「今の弾」として刷つて居た★。
-    #   席2: 頂=km-117…/done ―― 其の時 弾鍵25本中 ★assigned が3本★ 走つて居た
-    #   席3: 頂=km-113…/done ―― 同 29本中 ★assigned が2本★
-    # ∴ 症は「読めぬ」ではなく ★尤もらしい偽値★ であり、之が最も悪い顔である。
-    # 何れの弾を「今の弾」と選ぶかは ★政策★ ゆゑ器が選んではならぬ。器は ★測つた数★ を出す。
-    tamakagi = [k for k, v in data.items() if isinstance(v, dict) and 'task_id' in v]
-    asg = [k for k in tamakagi if data[k].get('status') == 'assigned']
-    sys.stderr.write('[agent_status] multi-key %s: 頂に task 鍵無し・多鍵形（頂の鍵=%d本 弾鍵=%d本 assigned=%d本）―― ★頂の旧形 task_id=%r status=%r は今の弾に非ず・用ゐぬ★\n' % (p, len(data), len(tamakagi), len(asg), data.get('task_id'), data.get('status')))
-    print('(multi:%d/%d) !' % (len(asg), len(tamakagi))); sys.exit(0)
+task = data.get('task', data)
 if not isinstance(task, dict):
     sys.stderr.write('[agent_status] bad-shape %s: task is %s\n' % (p, type(task).__name__))
     print('(bad-shape) !'); sys.exit(0)
@@ -333,7 +316,6 @@ print_agent_row() {
         "(bad-shape)")  N_SHAPE=$((N_SHAPE + 1)) ;;
         "(read-err)")   N_READERR=$((N_READERR + 1)) ;;
         "(py-die)")     N_PYDIE=$((N_PYDIE + 1)) ;;
-        "(multi:"*)     N_MULTI=$((N_MULTI + 1)) ;;
         "---")          N_NOTAMA=$((N_NOTAMA + 1)) ;;
         *)              N_YOMETA=$((N_YOMETA + 1)) ;;
     esac
@@ -367,9 +349,9 @@ done
 printf "\n"
 
 # ─── 結語 ―― ★母數と parse 不能の数を刷る★（命⑴）。表を崩さぬ為 stderr へ出す（命⑵）。
-printf '[agent_status] ★母數★ 歩いた席=%d ／ 帳: 讀めた=%d 弾無=%d 帳無=%d ★parse不能=%d★ 形違=%d 讀めぬ=%d 器無=%d 器落=%d ★多鍵形=%d★ ／ 箱: 数に非ざる顔=%d\n' \
+printf '[agent_status] ★母數★ 歩いた席=%d ／ 帳: 讀めた=%d 弾無=%d 帳無=%d ★parse不能=%d★ 形違=%d 讀めぬ=%d 器無=%d 器落=%d ／ 箱: 数に非ざる顔=%d\n' \
     "$N_SEKI" "$N_YOMETA" "$N_NOTAMA" "$N_NOFILE" "$N_PARSE_NG" \
-    "$N_SHAPE" "$N_READERR" "$N_NOPY" "$N_PYDIE" "$N_MULTI" "$N_BOX_NG" >&2
-if [[ $((N_PARSE_NG + N_SHAPE + N_READERR + N_PYDIE + N_MULTI + N_BOX_NG)) -gt 0 ]]; then
+    "$N_SHAPE" "$N_READERR" "$N_NOPY" "$N_PYDIE" "$N_BOX_NG" >&2
+if [[ $((N_PARSE_NG + N_SHAPE + N_READERR + N_PYDIE + N_BOX_NG)) -gt 0 ]]; then
     printf '[agent_status] ★黙らぬ★ 上の顔は「弾が無い」ではない。★帳が読めて居らぬ★。\n' >&2
 fi

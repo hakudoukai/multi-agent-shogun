@@ -1,0 +1,80 @@
+── ㋕ @agent_id の実体(読取のみ) ―― switch_cli の動的検索が Mac で当たるか
+gakushu-bucho:0.0 %124 @agent_id=gakushu-bucho
+hermes-drm:0.0 %123 @agent_id=dr-m
+hermes-gunshi-mac:0.0 %127 @agent_id=gunshi-mac
+multiagent-mac:0.0 %68 @agent_id=karo-mac
+multiagent-mac:0.1 %72 @agent_id=ashigaru-mac-1
+multiagent-mac:0.2 %7 @agent_id=ashigaru-mac-2
+multiagent-mac:0.3 %125 @agent_id=ashigaru-mac-3
+
+── ㋖ 前方一致(委員長裁337394 の別疵・session 版) ―― -t multiagent は何を掴むか
+argv: tmux list-panes -t multiagent:agents
+  multiagent-mac:0.0 %68
+  multiagent-mac:0.1 %72
+  multiagent-mac:0.2 %7
+  multiagent-mac:0.3 %125
+argv: tmux list-panes -t =multiagent:agents (完全一致)
+  can't find session: multiagent
+
+── ㋗ usage が名乗る席名(逐語)
+usage() {
+    echo "Usage: $0 <agent_id> [--type <cli_type>] [--model <model_name>]"
+    echo ""
+    echo "  agent_id   karo, ashigaru1-3, ashigaru5-8, gunshi (§18: 4 = 欠番)"
+    echo "  --type     claude | codex | copilot | kimi"
+    echo "  --model    claude-sonnet-4-6 | claude-opus-4-6 | gpt-5.3-codex | etc."
+    echo ""
+    echo "If --type/--model omitted, uses current settings.yaml values."
+    exit 1
+}
+
+── ㋘ 疵の行(㋓の死に所)
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --type)
+            NEW_TYPE="$2"
+            shift 2
+            ;;
+        --model)
+            NEW_MODEL="$2"
+── ㋙ 固定写像(旧名 → pane)の逐語 ―― 誤爆路の証
+    # を返していたが、これは MainPC 上では存在しない pane (= 別 agent の pane を踏みかねない)。
+    # 動的検索失敗時に send-keys で送信先を誤ると、model_switch / clear_command が
+    # 別 agent に届く事故になるため、SecondPC agent には明示エラー終了を返す。
+    #
+    # SecondPC で switch_cli を実行する場合は、SecondPC 側 tmux で本スクリプトを
+    # 実行する想定 (Phase 1 の @agent_id 動的検索が SecondPC tmux 内で成立する)。
+    # MainPC から SecondPC を跨ぐ switch_cli は本スクリプト範囲外。
+    local pane_base
+    pane_base=$(tmux show-options -t multiagent -v @pane_base 2>/dev/null || echo "0")
+
+    # SecondPC agent: 動的検索失敗時はエラー終了 (B2/R2 fix)
+    if section18_is_secondpc_agent "$agent_id"; then
+        log "ERROR: SecondPC agent ($agent_id) の pane が動的検索で見つかりませんでした。"
+        log "       SecondPC tmux 上で本スクリプトを実行するか、@agent_id metadata を確認してください。"
+        log "       (CLAUDE.md §18.1: SecondPC は別 tmux session、MainPC からの fallback 不可)"
+        return 1
+    fi
+
+    # MainPC agent: SECTION18_MAINPC_PANE_ORDER 順で pane index を解決
+    local mainpc_idx
+    if mainpc_idx=$(section18_mainpc_pane_index "$agent_id" 2>/dev/null); then
+        echo "multiagent:agents.$((pane_base + mainpc_idx))"
+        return 0
+    fi
+
+    log "ERROR: Unknown agent_id: $agent_id (§18: ashigaru4 は欠番)"
+    return 1
+}
+
+# ─── settings.yaml 更新 (Python使用) ───
+update_settings_yaml() {
+    local agent_id="$1"
+    local new_type="${2:-}"
+    local new_model="${3:-}"
+
+    if [[ -z "$new_type" && -z "$new_model" ]]; then
+        return 0
+    fi
+

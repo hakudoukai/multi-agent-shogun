@@ -1,0 +1,3 @@
+★此の紙は 0 行であつた★ ―― 取り落しではない。古い弾(原本 ratelimit_check.sh)は
+L64 の `declare -A` が bash 3.2 で撥ねられ、`set -euo pipefail` ゆゑ ★其の場で死んだ★。
+∴ 表(stdout)は ★一行も出て居らぬ★。鳴りは 43_rl_furui_stderr.txt に 2 行だけ在る。

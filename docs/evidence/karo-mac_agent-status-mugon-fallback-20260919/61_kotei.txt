@@ -1,0 +1,29 @@
+# 固定(sha256 / bytes / 行) ―― 刻 2026-09-19T07:39:49+0900
+scripts/agent_status.sh
+  sha256=4ff08530e5ea70106c04c5de1b54a49dcdadfc5a6f3468ac4b809364717faac5
+  bytes=16339 行=375
+scripts/ratelimit_check.sh
+  sha256=0fef67f291d9dc3f5b3cd139d007a94e98266b39ceb3bdd3150c55ce139bbbd9
+  bytes=23454 行=603
+scripts/switch_cli.sh
+  sha256=392936c92eed7e66c365dd42b1190d9639562a575fa675fa924a34e39534acd0
+  bytes=15296 行=415
+docs/evidence/karo-mac_agent-status-mugon-fallback-20260919/20_genpon_agent_status.sh
+  sha256=5492eda09883942dd91260c12d922a85a27e278d30c4e8a4e9b7a250e08ce0f3
+  bytes=14543 行=357
+docs/evidence/karo-mac_agent-status-mugon-fallback-20260919/40_genpon_ratelimit.sh
+  sha256=7f1e0311149667440e5ae2ef16c720fad3e6b4c32268bd381b93bb45902219fd
+  bytes=22145 行=582
+docs/evidence/karo-mac_agent-status-mugon-fallback-20260919/70_shinpon_agent_status.sh
+  sha256=4ff08530e5ea70106c04c5de1b54a49dcdadfc5a6f3468ac4b809364717faac5
+  bytes=16339 行=375
+docs/evidence/karo-mac_agent-status-mugon-fallback-20260919/71_shinpon_ratelimit.sh
+  sha256=0fef67f291d9dc3f5b3cd139d007a94e98266b39ceb3bdd3150c55ce139bbbd9
+  bytes=23454 行=603
+
+★可逆★ 戻し方(逐語):
+  cp docs/evidence/karo-mac_agent-status-mugon-fallback-20260919/20_genpon_agent_status.sh scripts/agent_status.sh
+  cp docs/evidence/karo-mac_agent-status-mugon-fallback-20260919/40_genpon_ratelimit.sh    scripts/ratelimit_check.sh
+  switch_cli.sh は ★一字も触れて居らぬ★（測つただけ）
+
+置換は ⑴agent_status=6箇所 ⑵ratelimit=10箇所 ―― 悉く ★hit=1 を assert してから★ 当てた

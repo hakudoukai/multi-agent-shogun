@@ -1,0 +1,47 @@
+──── ㋐ 引数無し(usage で閉ぢるか)
+argv = bash scripts/switch_cli.sh 
+rc   = 1
+stdout 行=7
+  | Usage: scripts/switch_cli.sh <agent_id> [--type <cli_type>] [--model <model_name>]
+  | 
+  |   agent_id   karo, ashigaru1-3, ashigaru5-8, gunshi (§18: 4 = 欠番)
+  |   --type     claude | codex | copilot | kimi
+  |   --model    claude-sonnet-4-6 | claude-opus-4-6 | gpt-5.3-codex | etc.
+  | 
+  | If --type/--model omitted, uses current settings.yaml values.
+stderr 行=0
+──── ㋑ 在らぬ席(pane 解決の失敗路)
+argv = bash scripts/switch_cli.sh ashigaru-mac-99
+rc   = 1
+stdout 行=0
+  | 
+stderr 行=2
+  ! [2026-09-19 07:38:34] [switch_cli] WARN: @agent_id=ashigaru-mac-99 not found in any pane. Falling back to fixed mapping.
+  ! [2026-09-19 07:38:34] [switch_cli] ERROR: Unknown agent_id: ashigaru-mac-99 (§18: ashigaru4 は欠番)
+──── ㋒ 種別が不正(--type の検め)
+argv = bash scripts/switch_cli.sh ashigaru-mac-3 --type nonesuch
+rc   = 1
+stdout 行=0
+  | 
+stderr 行=1
+  ! [2026-09-19 07:38:34] [switch_cli] ERROR: Invalid CLI type: nonesuch. Allowed: claude codex copilot kimi gemini
+──── ㋓ --type に値無し
+argv = bash scripts/switch_cli.sh ashigaru-mac-3 --type
+rc   = 1
+stdout 行=0
+  | 
+stderr 行=1
+  ! scripts/switch_cli.sh: line 340: $2: unbound variable
+──── ㋔ 知らぬ旗
+argv = bash scripts/switch_cli.sh ashigaru-mac-3 --nonesuch
+rc   = 1
+stdout 行=7
+  | Usage: scripts/switch_cli.sh <agent_id> [--type <cli_type>] [--model <model_name>]
+  | 
+  |   agent_id   karo, ashigaru1-3, ashigaru5-8, gunshi (§18: 4 = 欠番)
+  |   --type     claude | codex | copilot | kimi
+  |   --model    claude-sonnet-4-6 | claude-opus-4-6 | gpt-5.3-codex | etc.
+  | 
+  | If --type/--model omitted, uses current settings.yaml values.
+stderr 行=1
+  ! Unknown option: --nonesuch
