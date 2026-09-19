@@ -1,0 +1,249 @@
+# 横展開 丙（★走る器★のみ・根=. ・docs/evidence と .claude/worktrees は器⑵の SKIPDIR が除く）
+# 刻=2026-09-19T13:23:03+0900 cwd=/Users/momizimac/multi-agent-shogun
+# argv= python3 -B docs/evidence/karo-mac_agent-status-maehou-ichi-wo-haisu-20260919/kiki/km_tmux_census2.py .
+# 註: 前走(本日 午前)の母數 全file=330/器=195 は★根を絞つた★走であり、本走(根=.)とは母數が違ふ。並べて讀むな。
+=== 母數(★走る器★) ===
+根        = .
+rc(歩行)  = 0
+全file    = 35288 / 器(実行bit or 拡張子, .bak除) = 2435 / 読めた = 2435 / 器でない=32853
+
+=== 甲 ★-t に裸の session 名★(前方一致で当たる) : 99件 / 7本 ===
+  ./first_setup.sh:798  的=shogun
+      | CSS_FUNC='css() { local s="shogun-$$"; local cols=$(tput cols 2>/dev/null || echo 80); tmux new-session -d -t shogun -s "$s" 2>/dev/null && tmux set-option -t "$s" destro
+  ./first_setup.sh:798  的=shogun
+      | CSS_FUNC='css() { local s="shogun-$$"; local cols=$(tput cols 2>/dev/null || echo 80); tmux new-session -d -t shogun -s "$s" 2>/dev/null && tmux set-option -t "$s" destro
+  ./first_setup.sh:798  的=shogun
+      | CSS_FUNC='css() { local s="shogun-$$"; local cols=$(tput cols 2>/dev/null || echo 80); tmux new-session -d -t shogun -s "$s" 2>/dev/null && tmux set-option -t "$s" destro
+  ./first_setup.sh:799  的=multiagent
+      | CSM_FUNC='csm() { local s="multi-$$"; local cols=$(tput cols 2>/dev/null || echo 80); tmux new-session -d -t multiagent -s "$s" 2>/dev/null && tmux set-option -t "$s" des
+  ./first_setup.sh:799  的=multiagent
+      | CSM_FUNC='csm() { local s="multi-$$"; local cols=$(tput cols 2>/dev/null || echo 80); tmux new-session -d -t multiagent -s "$s" 2>/dev/null && tmux set-option -t "$s" des
+  ./first_setup.sh:799  的=multiagent
+      | CSM_FUNC='csm() { local s="multi-$$"; local cols=$(tput cols 2>/dev/null || echo 80); tmux new-session -d -t multiagent -s "$s" 2>/dev/null && tmux set-option -t "$s" des
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:246  的=shogun
+      | echo "  css   → tmux attach-session -t shogun"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:247  的=multiagent
+      | echo "  csm   → tmux attach-session -t multiagent"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:337  的=multiagent
+      | tmux kill-session -t multiagent 2>/dev/null && log_info "  └─ multiagent陣、撤収完了" || log_info "  └─ multiagent陣は存在せず"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:338  的=shogun
+      | tmux kill-session -t shogun 2>/dev/null && log_info "  └─ shogun本陣、撤収完了" || log_info "  └─ shogun本陣は存在せず"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:549  的=shogun
+      | if ! tmux has-session -t shogun 2>/dev/null; then
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:560  的=shogun
+      | tmux send-keys -t shogun:main "cd \"$(pwd)\" && export PS1='${SHOGUN_PROMPT}' && clear" Enter
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:561  的=shogun
+      | tmux select-pane -t shogun:main -P 'bg=#002b36'  # 将軍の Solarized Dark
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:562  的=shogun
+      | tmux set-option -p -t shogun:main @agent_id "shogun"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:592  的=multiagent
+      | echo "  ║  Kill:  tmux kill-session -t multiagent                  ║"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:600  的=multiagent
+      | tmux set-environment -t multiagent DISPLAY_MODE "silent"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:603  的=multiagent
+      | tmux set-environment -t multiagent DISPLAY_MODE "shout"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:624  的=multiagent
+      | _init_pid=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:640  的=multiagent
+      | tmux select-layout -t "multiagent:agents" even-vertical
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:714  的=multiagent
+      | tmux set-option -t multiagent -w pane-border-status top
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:715  的=multiagent
+      | tmux set-option -t multiagent -w pane-border-format '#{?pane_active,#[reverse],}#[bold]#{@agent_id}#[default] (#{@model_name}) #{@current_task}'
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:764  的=shogun
+      | tmux set-option -p -t "shogun:main" @agent_cli "$_shogun_cli_type"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:766  的=shogun
+      | tmux send-keys -t shogun:main "$_shogun_cmd"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:767  的=shogun
+      | tmux send-keys -t shogun:main Enter
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:769  的=shogun
+      | tmux set-option -p -t "shogun:main" @model_name "$_shogun_display" 2>/dev/null || true
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:788  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_karo_cli_type"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:790  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_karo_cmd"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:791  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:793  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_karo_display" 2>/dev/null || true
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:815  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_ashi_cli_type"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:817  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_ashi_cmd"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:818  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:836  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_ashi_cli_type"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:838  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_ashi_cmd"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:839  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:857  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_gunshi_cli_type"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:858  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_gunshi_cmd"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:859  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:861  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_gunshi_display" 2>/dev/null || true
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:946  的=shogun
+      | if tmux capture-pane -t shogun:main -p | grep -q "bypass permissions"; then
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:982  的=shogun
+      | _shogun_watcher_cli=$(tmux show-options -p -t "shogun:main" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:989  的=multiagent
+      | _karo_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${PANE_BASE}" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:997  的=multiagent
+      | _ashi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:1005  的=multiagent
+      | _gunshi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:1137  的=shogun
+      | echo "  │  tmux send-keys -t shogun:main \\                         │"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:1142  的=multiagent
+      | echo "  │      tmux send-keys -t multiagent:agents.\$p \\            │"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:1152  的=shogun
+      | echo "  │     tmux attach-session -t shogun   (または: css)        │"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:1155  的=multiagent
+      | echo "  │     tmux attach-session -t multiagent   (または: csm)    │"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:1174  的=shogun
+      | wt.exe -w 0 new-tab wsl.exe -e bash -c "tmux attach-session -t shogun" \; new-tab wsl.exe -e bash -c "tmux attach-session -t multiagent"
+  ./shutsujin_departure.sh.karo-mac-bak-20260820T000340:1174  的=multiagent
+      | wt.exe -w 0 new-tab wsl.exe -e bash -c "tmux attach-session -t shogun" \; new-tab wsl.exe -e bash -c "tmux attach-session -t multiagent"
+  ./shutsujin_departure.sh:246  的=shogun
+      | echo "  css   → tmux attach-session -t shogun"
+  ./shutsujin_departure.sh:247  的=multiagent
+      | echo "  csm   → tmux attach-session -t multiagent"
+  ./shutsujin_departure.sh:337  的=multiagent
+      | tmux kill-session -t multiagent 2>/dev/null && log_info "  └─ multiagent陣、撤収完了" || log_info "  └─ multiagent陣は存在せず"
+  ./shutsujin_departure.sh:338  的=shogun
+      | tmux kill-session -t shogun 2>/dev/null && log_info "  └─ shogun本陣、撤収完了" || log_info "  └─ shogun本陣は存在せず"
+  ./shutsujin_departure.sh:549  的=shogun
+      | if ! tmux has-session -t shogun 2>/dev/null; then
+  ./shutsujin_departure.sh:560  的=shogun
+      | tmux send-keys -t shogun:main "cd \"$(pwd)\" && export PS1='${SHOGUN_PROMPT}' && clear" Enter
+  ./shutsujin_departure.sh:561  的=shogun
+      | tmux select-pane -t shogun:main -P 'bg=#002b36'  # 将軍の Solarized Dark
+  ./shutsujin_departure.sh:562  的=shogun
+      | tmux set-option -p -t shogun:main @agent_id "shogun"
+  ./shutsujin_departure.sh:592  的=multiagent
+      | echo "  ║  Kill:  tmux kill-session -t multiagent                  ║"
+  ./shutsujin_departure.sh:600  的=multiagent
+      | tmux set-environment -t multiagent DISPLAY_MODE "silent"
+  ./shutsujin_departure.sh:603  的=multiagent
+      | tmux set-environment -t multiagent DISPLAY_MODE "shout"
+  ./shutsujin_departure.sh:624  的=multiagent
+      | _init_pid=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+  ./shutsujin_departure.sh:640  的=multiagent
+      | tmux select-layout -t "multiagent:agents" even-vertical
+  ./shutsujin_departure.sh:714  的=multiagent
+      | tmux set-option -t multiagent -w pane-border-status top
+  ./shutsujin_departure.sh:715  的=multiagent
+      | tmux set-option -t multiagent -w pane-border-format '#{?pane_active,#[reverse],}#[bold]#{@agent_id}#[default] (#{@model_name}) #{@current_task}'
+  ./shutsujin_departure.sh:764  的=shogun
+      | tmux set-option -p -t "shogun:main" @agent_cli "$_shogun_cli_type"
+  ./shutsujin_departure.sh:766  的=shogun
+      | tmux send-keys -t shogun:main "$_shogun_cmd"
+  ./shutsujin_departure.sh:767  的=shogun
+      | tmux send-keys -t shogun:main Enter
+  ./shutsujin_departure.sh:769  的=shogun
+      | tmux set-option -p -t "shogun:main" @model_name "$_shogun_display" 2>/dev/null || true
+  ./shutsujin_departure.sh:788  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_karo_cli_type"
+  ./shutsujin_departure.sh:790  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_karo_cmd"
+  ./shutsujin_departure.sh:791  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh:793  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_karo_display" 2>/dev/null || true
+  ./shutsujin_departure.sh:815  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_ashi_cli_type"
+  ./shutsujin_departure.sh:817  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_ashi_cmd"
+  ./shutsujin_departure.sh:818  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh:836  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_ashi_cli_type"
+  ./shutsujin_departure.sh:838  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_ashi_cmd"
+  ./shutsujin_departure.sh:839  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh:857  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @agent_cli "$_gunshi_cli_type"
+  ./shutsujin_departure.sh:858  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" "$_gunshi_cmd"
+  ./shutsujin_departure.sh:859  的=multiagent
+      | tmux send-keys -t "multiagent:agents.${p}" Enter
+  ./shutsujin_departure.sh:861  的=multiagent
+      | tmux set-option -p -t "multiagent:agents.${p}" @model_name "$_gunshi_display" 2>/dev/null || true
+  ./shutsujin_departure.sh:946  的=shogun
+      | if tmux capture-pane -t shogun:main -p | grep -q "bypass permissions"; then
+  ./shutsujin_departure.sh:982  的=shogun
+      | _shogun_watcher_cli=$(tmux show-options -p -t "shogun:main" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh:989  的=multiagent
+      | _karo_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${PANE_BASE}" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh:997  的=multiagent
+      | _ashi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh:1005  的=multiagent
+      | _gunshi_watcher_cli=$(tmux show-options -p -t "multiagent:agents.${p}" -v @agent_cli 2>/dev/null || echo "claude")
+  ./shutsujin_departure.sh:1137  的=shogun
+      | echo "  │  tmux send-keys -t shogun:main \\                         │"
+  ./shutsujin_departure.sh:1142  的=multiagent
+      | echo "  │      tmux send-keys -t multiagent:agents.\$p \\            │"
+  ./shutsujin_departure.sh:1152  的=shogun
+      | echo "  │     tmux attach-session -t shogun   (または: css)        │"
+  ./shutsujin_departure.sh:1155  的=multiagent
+      | echo "  │     tmux attach-session -t multiagent   (または: csm)    │"
+  ./shutsujin_departure.sh:1174  的=shogun
+      | wt.exe -w 0 new-tab wsl.exe -e bash -c "tmux attach-session -t shogun" \; new-tab wsl.exe -e bash -c "tmux attach-session -t multiagent"
+  ./shutsujin_departure.sh:1174  的=multiagent
+      | wt.exe -w 0 new-tab wsl.exe -e bash -c "tmux attach-session -t shogun" \; new-tab wsl.exe -e bash -c "tmux attach-session -t multiagent"
+  ./tests/test_section18_migration.py:792  的=multiagent
+      | _init_pid=$(tmux display-message -t "multiagent:agents" -p '#{pane_id}')
+  ./tests/e2e/e2e_bloom_routing.bats:21  的=multiagent
+      | if ! tmux has-session -t multiagent 2>/dev/null; then
+  ./scripts/agent_periodic_push.sh:25  的=shogun
+      | SHOGUN_BOTTOM=$(tmux capture-pane -t "shogun:main.0" -p -e -J -S -10 2>/dev/null \
+  ./queue/reports/ashigaru-mac-1_km-shizukana-shippai-wa-doko-ni-hisomu-ka_20260912_evidence/raw/31_write_paper.py:29  的=multiagent-mac
+      | 3. **丁 4**(§四): goal file 0 本(hook は毎 Stop に exit 0)/ a7 の idle flag(pane :0.7 無・capture rc=1)/ ibw の shogun-mac state(席無・MEAS_FAIL 毎 15 分)/ kikaku hook state(hook 配線 0)。
+  ./queue/reports/ashigaru-mac-1_km-shizukana-shippai-wa-doko-ni-hisomu-ka_20260912_evidence/raw/31_write_paper.py:104  的=multiagent-mac
+      | | 9 | ★tmux display-message -t multiagent-mac:0.{4,5,6,7,9}★ | 無い pane | ★悉く `%%8 ashigaru-mac-3` を返す(rc=0)★・capture-pane は rc=1 | ★読み手が「別の物」を黙つて読む型★(tmux 3.7b・raw/19b)。g
+
+=== 乙 ★的を組む代入に裸の session 名★(-t は変数ゆゑ甲に出ぬ) : 16件 / 11本 ===
+  ./tests/unit/test_send_wakeup.bats:844  AGENT_ID=shogun
+      | AGENT_ID="shogun"
+  ./tests/unit/test_send_wakeup.bats:860  AGENT_ID=shogun
+      | AGENT_ID="shogun"
+  ./tests/checks/test_agent_health_check.bats:119  HEALTH_CHECK_CODEX_PANES=multiagent:0.3:ieyasu
+      | export HEALTH_CHECK_CODEX_PANES="multiagent:0.3:ieyasu"
+  ./tests/e2e/mock_cli.sh:107  report_target=shogun
+      | report_target="shogun"
+  ./scripts/bulk_ack.sh:71  AGENTS=shogun
+      | AGENTS="shogun karo gunshi ashigaru1 ashigaru2 ashigaru3 ashigaru5 ashigaru6 ashigaru7 ashigaru8"
+  ./scripts/agent_status.sh:416  FIXED_SESSION=multiagent
+      | FIXED_SESSION="multiagent"
+  ./scripts/ratelimit_check.sh:90  pane_target=shogun:main
+      | pane_target="shogun:main"
+  ./scripts/karo_standby_dashboard.sh:27  FLEET_SESSION=multiagent-mac
+      | FLEET_SESSION="multiagent-mac"
+  ./scripts/checks/pane_identity.sh:107  EXPECTED_TABLE=multiagent:agents.0=hideyoshi
+      | EXPECTED_TABLE='multiagent:agents.0=hideyoshi
+  ./queue/reports/ashigaru-mac-1_km-mon-wa-nani-o-hakatte-inai-ka_20260912_evidence/raw/.write_paper.py:133  cwd=shogun
+      | ㋒′ 対照(歩き出しの根を変へた再走・raw/jo1_counter_cwd_shogun.txt・raw/jo1_counter_base_bundle.txt): 同じ 15 臺帳を cwd = shogun repo で当てると ★一致 35/46/24/6/3/1/6/2/1/1★ と成り、rc 0 が 5 走に増えた(形 B 3
+  ./queue/reports/ashigaru-mac-1_km-mon-wa-nani-o-hakatte-inai-ka_20260912_evidence/raw/.write_paper.py:133  cwd=shogun
+      | ㋒′ 対照(歩き出しの根を変へた再走・raw/jo1_counter_cwd_shogun.txt・raw/jo1_counter_base_bundle.txt): 同じ 15 臺帳を cwd = shogun repo で当てると ★一致 35/46/24/6/3/1/6/2/1/1★ と成り、rc 0 が 5 走に増えた(形 B 3
+  ./queue/reports/ashigaru-mac-1_km-mon-wa-nani-o-hakatte-inai-ka_20260912_evidence/raw/.write_paper.py:184  cwd=shogun
+      | 4. ★條①が落ちた ＝ 臺帳が壊れて居る ではない。★ §2⑵ の通り、同じ臺帳が根を変へれば通る。落ちた 15 走の内、真に「無い」のは根の位置が違ふ事の反映で、記録の消失ではない(cwd = shogun で 一致 46 等)。
+  ./queue/reports/ashigaru-mac-1_km-mon-wa-nani-o-hakatte-inai-ka_20260912_evidence/raw/.write_paper.py:185  cwd=shogun
+      | 5. ★條①の「一致」＝ HEAD の樹との一致 とは限らぬ。★ 器の既定 bases の第三は別 worktree(dino-story-engine)の絶対 path。cwd = shogun で「frontend/…」が一致したのは其の worktree の版に対してである。臺帳は「何處の物か」を持たぬ(器自身の註の通り)。
+  ./lib/cli_adapter.sh:185  role=shogun
+      | shogun)    role="shogun" ;;
+  ./shim/hakudokai/hakudokai_activity_monitor.sh:335  pane=multiagent:0.${pane_index}
+      | local pane="multiagent:0.${pane_index}"
+  ./shim/hakudokai/hakudokai_activity_monitor.sh:396  pane=multiagent:0.${pane_index}
+      | pane="multiagent:0.${pane_index}"
+
+=== 丙 -t %N (pane_id) : 0件 / 0本 ===
+
+=== 丁 -t =名 (完全一致) : 2件 / 1本 ===
+  ./scripts/agent_status.sh:106 | if ! tmux has-session -t "=${SESSION_NAME}" 2>/dev/null; then
+  ./scripts/agent_status.sh:418 | if tmux has-session -t "=${FIXED_SESSION}" 2>/dev/null; then
+rc=0

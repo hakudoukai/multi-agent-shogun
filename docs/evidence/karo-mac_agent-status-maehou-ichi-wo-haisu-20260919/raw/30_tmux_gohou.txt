@@ -1,0 +1,42 @@
+# 生席の實體（@agent_id 悉皆）刻=2026-09-19T13:18:23+0900
+# argv= tmux list-panes -a -F '#{pane_id} #{session_name}:#{window_name}.#{pane_index} #{@agent_id}'
+%124 gakushu-bucho:doppler.0 gakushu-bucho
+%123 hermes-drm:doppler.0 dr-m
+%127 hermes-gunshi-mac:doppler.0 gunshi-mac
+%68 multiagent-mac:agents.0 karo-mac
+%72 multiagent-mac:agents.1 ashigaru-mac-1
+%7 multiagent-mac:agents.2 ashigaru-mac-2
+%125 multiagent-mac:agents.3 ashigaru-mac-3
+rc=0
+# has-session -t '=multiagent'
+can't find session: multiagent
+rc=1
+# has-session -t '=multiagent-mac'
+rc=0
+# list-panes -s -t '=multiagent'  ★=名 が list-panes では効かぬ證★
+%68 multiagent-mac
+%72 multiagent-mac
+%7 multiagent-mac
+%125 multiagent-mac
+rc=0
+# display-message -t '=zzzz:agents.0' ★不在でも rc=0 の證★
+
+rc=0
+# display-message -t '%99999' ★不在 pane_id でも rc=0★
+
+rc=0
+# display-message -t 'multiagent:agents.4' ★index 溢れが現用 pane へ黙つて倒れる證★
+%7 ashigaru-mac-2
+rc=0
+# capture-pane -t 'multiagent:agents.4' ★此れのみ鳴る★
+can't find pane: 4
+rc=
+# bash --version
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+# ★訂★ 上の capture-pane 行は rc を管に通した爲 zsh で空に成つた（zsh は PIPESTATUS を持たぬ・己の疵）。
+# 管を通さず測り直す 刻=2026-09-19T13:18:38+0900
+out=can't find pane: 4
+rc=1
+# 併せ pane_id 不在での capture-pane
+out=can't find pane: %99999
+rc=1

@@ -1,0 +1,47 @@
+# 前像（疵の在る版 sha256=4ff08530e5ea70106c04c5de1b54a49dcdadfc5a6f3468ac4b809364717faac5）
+# 刻=2026-09-19T13:17:53+0900  cwd=/Users/momizimac/multi-agent-shogun
+# argv= bash scripts/.km_before_4ff08530.sh
+--- 8< --- MainPC 路 --- 8< ---
+
+Agent      CLI     Pane      Task ID                                    Status     Inbox
+---------- ------- --------- ------------------------------------------ ---------- -----
+hideyoshi  claude  稼働中    (no-file)                                  ---        -
+ashigaru1  claude  待機中    (no-file)                                  ---        -
+ashigaru2  claude  待機中    (no-file)                                  ---        -
+ashigaru3  claude  待機中    (no-file)                                  ---        -
+ieyasu     claude  待機中    (no-file)                                  ---        -
+takenaka   claude  待機中    (no-file)                                  ---        -
+maeda      claude  不在      (no-file)                                  ---        -
+ashigaru5  claude  不在      (no-file)                                  ---        -
+ashigaru6  claude  不在      (no-file)                                  ---        -
+ashigaru7  claude  不在      (no-file)                                  ---        -
+ashigaru8  claude  不在      (no-file)                                  ---        -
+
+[agent_status] ★母數★ 歩いた席=11 ／ 帳: 讀めた=0 弾無=0 帳無=11 ★parse不能=0★ 形違=0 讀めぬ=0 器無=0 器落=0 ★多鍵形=0★ ／ 箱: 数に非ざる顔=0
+rc=0
+--- 8< --- standalone 路 --session multiagent（当機に無い名）--- 8< ---
+
+Pane                           状態     Agent ID
+------------------------------ ---------- ----------
+multiagent-mac:agents.0        稼働中     karo-mac
+multiagent-mac:agents.1        待機中     ashigaru-mac-1
+multiagent-mac:agents.2        待機中     ashigaru-mac-2
+multiagent-mac:agents.3        待機中     ashigaru-mac-3
+
+rc=0
+--- 8< --- standalone 路 --session zzzznosuch --- 8< ---
+
+Pane                           状態     Agent ID
+------------------------------ ---------- ----------
+scripts/.km_before_4ff08530.sh: line 137: PANE_TARGETS[@]: unbound variable
+rc=1
+--- 8< --- standalone 路 --session multiagent-mac（有る名）--- 8< ---
+
+Pane                           状態     Agent ID
+------------------------------ ---------- ----------
+multiagent-mac:agents.0        稼働中     karo-mac
+multiagent-mac:agents.1        待機中     ashigaru-mac-1
+multiagent-mac:agents.2        待機中     ashigaru-mac-2
+multiagent-mac:agents.3        待機中     ashigaru-mac-3
+
+rc=0

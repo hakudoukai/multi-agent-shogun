@@ -1,0 +1,40 @@
+# 後像（治した版 sha256=55c9acd9a9f1215625d4e47afad03aed562fdeceed89b79ed415612500514e31）
+# 刻=2026-09-19T13:18:22+0900  cwd=/Users/momizimac/multi-agent-shogun
+# argv= bash scripts/agent_status.sh [args]
+--- 8< --- MainPC 路 --- 8< ---
+
+Agent      CLI     Pane      Task ID                                    Status     Inbox
+---------- ------- --------- ------------------------------------------ ---------- -----
+hideyoshi  claude  不在      (no-file)                                  ---        -
+ashigaru1  claude  不在      (no-file)                                  ---        -
+ashigaru2  claude  不在      (no-file)                                  ---        -
+ashigaru3  claude  不在      (no-file)                                  ---        -
+ieyasu     claude  不在      (no-file)                                  ---        -
+takenaka   claude  不在      (no-file)                                  ---        -
+maeda      claude  不在      (no-file)                                  ---        -
+ashigaru5  claude  不在      (no-file)                                  ---        -
+ashigaru6  claude  不在      (no-file)                                  ---        -
+ashigaru7  claude  不在      (no-file)                                  ---        -
+ashigaru8  claude  不在      (no-file)                                  ---        -
+
+[agent_status] ★母數★ 歩いた席=11 ／ 帳: 讀めた=0 弾無=0 帳無=11 ★parse不能=0★ 形違=0 讀めぬ=0 器無=0 器落=0 ★多鍵形=0★ ／ 箱: 数に非ざる顔=0 ／ 的: @agent_idで解けた=0 ★曖昧=0★ 寫像不能(session無)=6 寫像不能(pane無)=0
+rc=0
+--- 8< --- standalone 路 --session multiagent（当機に無い名）--- 8< ---
+Error: session 'multiagent' は完全一致で存在せぬ（前方一致では当てぬ）
+rc=1
+--- 8< --- standalone 路 --session zzzznosuch --- 8< ---
+Error: session 'zzzznosuch' は完全一致で存在せぬ（前方一致では当てぬ）
+rc=1
+--- 8< --- standalone 路 --session multiagent-mac（有る名）--- 8< ---
+
+Pane                           状態     Agent ID
+------------------------------ ---------- ----------
+multiagent-mac:agents.0        稼働中     karo-mac
+multiagent-mac:agents.1        待機中     ashigaru-mac-1
+multiagent-mac:agents.2        待機中     ashigaru-mac-2
+multiagent-mac:agents.3        待機中     ashigaru-mac-3
+
+rc=0
+--- 8< --- standalone 路 --session multiagent-mac --panes 99（有る名・無い pane）--- 8< ---
+Error: session 'multiagent-mac' に該当する pane が無い（--panes の指定を含む）
+rc=1
