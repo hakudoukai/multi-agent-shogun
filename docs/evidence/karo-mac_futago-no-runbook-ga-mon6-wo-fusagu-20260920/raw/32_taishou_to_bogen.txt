@@ -1,0 +1,26 @@
+★対照二つ と 母数 ―― 雛形⑤ の實測★
+刻  = 2026-09-20T06:00:52+0900
+cwd = /Users/momizimac/wt/karo-km225
+HEAD= 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+----
+■陽性対照(★疵が在る側 ―― 器が鳴る事★)
+argv1 = git status --porcelain -uall -- docs/runbooks/ERR-EKARTE-001.md docs/runbooks/err-ekarte-001.md
+  rc=0 / 行=1 / 逐語:
+     M docs/runbooks/ERR-EKARTE-001.md$
+■陰性対照(★疵の無い path ―― 器が黙る事★・在る物で選んだ: 同じ docs/ の追跡 file)
+argv2 = git status --porcelain -uall -- docs/error-design-medical.md
+  rc=0 / 行=0 / ★出力は空である★
+argv3 = git ls-files -s docs/error-design-medical.md
+  rc=0 / 行=1 / 逐語:
+    100644 5c7aef718e6195f9ded8dc32043edf3648f9340f 0\tdocs/err\
+    or-design-medical.md$
+■母数(★全 ref を歩いて大文字側 path を持つ ref を数へる★)
+argv4 = git for-each-ref --format='%(refname)' | grep -c ''
+  rc=0 / 行=1 / 逐語:
+    425$
+  ↑ 母数 = ref の総本数
+argv5 = (for each ref) git cat-file -e <ref>:docs/runbooks/ERR-EKARTE-001.md
+  ★大文字側を持つ ref = 391 / 母数 425★ ―― 差 34 本は持たぬ ∴ ★恒真ではない(意味負)★
+----
+★読み★ 器は双子の二名を指した時のみ1行を出し、疵の無い path では黙る(0行)。
+  ∴ 「常に1行を刷る器」ではない ―― 出た1行は ★双子に固有★ である。

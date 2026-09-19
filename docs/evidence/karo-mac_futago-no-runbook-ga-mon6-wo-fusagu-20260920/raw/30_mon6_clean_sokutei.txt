@@ -1,0 +1,36 @@
+★雛形⑥ clean の実測 ―― 双子の runbook が零を塞ぐ★
+刻    = 2026-09-20T05:59:50+0900
+cwd   = /Users/momizimac/wt/karo-km225
+樹    = /Users/momizimac/wt/karo-km225 (枝 karo-mac/km-225-futago-no-runbook-ga-mon6-wo-fusagu-20260920 / HEAD 6bde7170ce574090a6139ba2dfe3aa4cb6db8634)
+----
+argv1 = git status --porcelain -uall
+  rc=0 / 行=1 / 出力を逐語(sed -n l で不可視字も見せる):
+     M docs/runbooks/ERR-EKARTE-001.md$
+argv2 = git status --porcelain -uall --ignored
+  rc=0 / 行=6 / 出力を逐語(sed -n l で不可視字も見せる):
+     M docs/runbooks/ERR-EKARTE-001.md$
+    !! docs/evidence/karo-mac_futago-no-runbook-ga-mon6-wo-fusa\
+    gu-20260920/raw/10_futago_sokutei.txt$
+    !! docs/evidence/karo-mac_futago-no-runbook-ga-mon6-wo-fusa\
+    gu-20260920/raw/20_yomikaeshi_seq341096.txt$
+    !! docs/evidence/karo-mac_futago-no-runbook-ga-mon6-wo-fusa\
+    gu-20260920/raw/20_yomikaeshi_seq341097.txt$
+    !! docs/evidence/karo-mac_futago-no-runbook-ga-mon6-wo-fusa\
+    gu-20260920/raw/20_yomikaeshi_seq341098.txt$
+    !! docs/evidence/karo-mac_futago-no-runbook-ga-mon6-wo-fusa\
+    gu-20260920/raw/30_mon6_clean_sokutei.txt$
+argv3 = git ls-files -s docs/runbooks/ERR-EKARTE-001.md docs/runbooks/err-ekarte-001.md
+  rc=0 / 行=2 / 出力を逐語(sed -n l で不可視字も見せる):
+    100644 e6de627bd62eb9a4b417155f40748390f49369fe 0\tdocs/run\
+    books/ERR-EKARTE-001.md$
+    100644 de00cbd99d9909f4a923041ae17f0d2cbb587668 0\tdocs/run\
+    books/err-ekarte-001.md$
+argv4 = git hash-object docs/runbooks/err-ekarte-001.md
+  rc=0 / 行=1 / 出力を逐語(sed -n l で不可視字も見せる):
+    de00cbd99d9909f4a923041ae17f0d2cbb587668$
+----
+★読み★ 双子(docs/runbooks/ERR-EKARTE-001.md と docs/runbooks/err-ekarte-001.md)は
+  git の index に二 entry・二 blob(e6de627b… / de00cbd9…)として在るが、macOS の fs は
+  case 無差別ゆゑ disk の dirent は ★一本のみ★。∴ disk の中身が二 blob の一方と一致し、
+  ★他方が必ず " M" と出る★。零にする手が無い ―― 雛形⑥ の「porcelain が空」は
+  ★此の repo では構造上 満たせぬ★。どの名が出るかは樹ごとに入替はる。

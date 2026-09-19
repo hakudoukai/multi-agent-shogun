@@ -1,0 +1,29 @@
+★新しい樹は必ず汚れて生まれる ―― 再現の測り★
+刻  = 2026-09-20T06:00:20+0900
+cwd = /Users/momizimac/multi-agent-shogun
+狙 = origin/main から★白紙の detached 樹★を新たに切り、一度も手を触れずに porcelain を見る。
+     一行出るなら「誰かが汚した」に非ず ★checkout 自身が汚す★ である。
+----
+argv1 = git -C /Users/momizimac/multi-agent-shogun worktree add --detach /Users/momizimac/wt/karo-futago-probe 6bde7170ce574090a6139ba2dfe3aa4cb6db8634
+  rc=0 / 出力:
+    Preparing worktree (detached HEAD 6bde7170)
+    HEAD is now at 6bde7170 merge PR#27: 出す前門 條②④⑤ 是正+可搬化+負テスト(karo-mac km-118/km-156・軍師mac PASS 330856)
+argv2 = git -C /Users/momizimac/wt/karo-futago-probe status --porcelain -uall
+  rc=0 / 行=1 / 逐語:
+     M docs/runbooks/ERR-EKARTE-001.md$
+argv3 = git -C /Users/momizimac/wt/karo-futago-probe hash-object docs/runbooks/err-ekarte-001.md
+  rc=0 / 行=1 / 逐語:
+    de00cbd99d9909f4a923041ae17f0d2cbb587668$
+argv4 = git -C /Users/momizimac/wt/karo-futago-probe rev-parse HEAD
+  rc=0 / 行=1 / 逐語:
+    6bde7170ce574090a6139ba2dfe3aa4cb6db8634$
+argv5 = git -C /Users/momizimac/multi-agent-shogun worktree remove --force /Users/momizimac/wt/karo-futago-probe
+  rc=0 / 出力=★空である★
+argv6 = /bin/ls -d /Users/momizimac/wt/karo-futago-probe
+  rc=1 / 出力=ls: /Users/momizimac/wt/karo-futago-probe: No such file or directory ―― ★畳めた事の確かめ★
+----
+★読み★ 一指も触れぬ新樹で ★1行出た★。∴ 「席が汚した」のではなく
+  ★index に双子が在る限り checkout そのものが必ず1行を作る★。
+  因は書き順: index は ERR-…(0x45) が err-…(0x65) より前 ∴ 大文字側の中身を先に書き、
+  小文字側の中身が★後から同じ inode を上書きする★。残るのは小文字側の blob de00cbd9… で、
+  食ひ違ふ大文字側 e6de627b… が " M docs/runbooks/ERR-EKARTE-001.md" と出る。

@@ -1,0 +1,40 @@
+★刻★ = 2026-09-20T05:51:08+0900
+★cwd★ = /Users/momizimac/multi-agent-shogun
+
+=== argv1: git ls-files -s -- docs/runbooks/ERR-EKARTE-001.md docs/runbooks/err-ekarte-001.md (共有樹) ===
+100644 e6de627bd62eb9a4b417155f40748390f49369fe 0	docs/runbooks/ERR-EKARTE-001.md
+100644 de00cbd99d9909f4a923041ae17f0d2cbb587668 0	docs/runbooks/err-ekarte-001.md
+rc=0
+
+=== argv2: ls -1 docs/runbooks/ | grep -i ekarte (共有樹 disk の実 dirent) ===
+err-ekarte-001.md
+rc=0
+
+=== argv3: inode の同一(python os.stat) ===
+ino 大文字= 10724954  ino 小文字= 10724954  同一= True
+実 dirent = ['err-ekarte-001.md']
+rc=0
+
+=== argv4: 二 blob の bytes/行 ===
+e6de627bd62eb9a4b417155f40748390f49369fe bytes=2596 行=79
+de00cbd99d9909f4a923041ae17f0d2cbb587668 bytes=3471 行=67
+rc=0
+
+=== argv5: 三樹の disk 実体を git blob sha1 で測る ===
+/Users/momizimac/multi-agent-shogun : disk blob=e6de627bd62eb9a4b417155f40748390f49369fe
+/Users/momizimac/wt/karo-km223 : disk blob=de00cbd99d9909f4a923041ae17f0d2cbb587668
+/Users/momizimac/wt/a1-km221 : disk blob=de00cbd99d9909f4a923041ae17f0d2cbb587668
+rc=0
+
+=== argv6: 三樹の porcelain(名の大小を sed -n l で刷る) ===
+--- /Users/momizimac/multi-agent-shogun ---
+ M docs/runbooks/err-ekarte-001.md$
+--- /Users/momizimac/wt/karo-km223 ---
+ M docs/runbooks/ERR-EKARTE-001.md$
+--- /Users/momizimac/wt/a1-km221 ---
+ M docs/runbooks/ERR-EKARTE-001.md$
+rc=0
+
+=== argv7: 大文字側を持つ ref の本数(母数=全 ref) ===
+母数(全 ref)=424 ／ 大文字側を持つ ref=390
+rc=0
