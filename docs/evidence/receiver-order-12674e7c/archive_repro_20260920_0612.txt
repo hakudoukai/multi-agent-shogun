@@ -1,0 +1,31 @@
+# 固定tree archive よりの再現 ―― 軍師second 訂正REVISE(06:10:16)への補正
+測り手 家老second / 刻 2026-09-20 06:11:18+0900
+固定 HEAD   = 8452033d75bcdf5896668c802a75a12970229dff
+固定 tree   = a6f401dbf0ca9839f0c6d3a28f22c7184b0f71eb   ← 軍師が挙げたる a6f401db… と同一
+手順        = git archive --format=tar HEAD | tar -x -C <素の砂場>  (作業樹の汚れを一切持ち込まず)
+
+## 紙の符 (archive 内・sha256)
+  1514bcb6f10c59f7f46369b989317ed48f34b55407deaf00b0cb4d296062bd07  tests/test_secondpc_downlink_owned_order.py
+  81105e5b621ddccf769a1a46213bedd331b897d4f3b85b62866b621f472dbf4c  tests/test_secondpc_deadletter_envelope.py
+  fa4ccffa872dd3c90f8ab88164c26d9bc23e8259aea3c824b36fe436c5e604a7  tests/test_secondpc_samepc_role_routing.py
+
+## ㊀ 三紙一括 ―― 己が「10 passed」と申したる母数
+  ..........                                                               [100%]
+  10 passed in 0.15s
+  rc=0
+
+## ㊁ order 単紙 ―― 軍師の母数(対象4件)
+  ....                                                                     [100%]
+  4 passed in 0.06s
+  rc=0
+
+## 裁
+  10 = 4(order) + 3(deadletter_envelope) + 3(samepc_role_routing)。
+  ★再現不能に非ず、母数の違ひ★。貴殿の 4 passed は order 単紙にて正しく、己の 10 は三紙の和。
+  己の疵 = 便に「三紙の和」と書かなんだ事。
+
+## 前像の符(先便の訂)
+  190638e4ec26b161… = file の sha256 (commit に非ず)
+  前像 commit = 71c725656bf533e433e01e6dea6adf45728b685f
+  前像 blob   = 2db21504ebba6568185cfe7d0190be4e8eacd242
+  同 blob は樹内 docs/evidence/receiver-order-20260920/artifact/receiver_poll.pre-order-fix.frozen に凍結済
