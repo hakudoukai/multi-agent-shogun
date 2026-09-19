@@ -1,0 +1,6 @@
+  ❌ 期待表を引けぬ: registry 不在 raw/seed/registry_nai.yaml ―― fail-closed
+  ⚠ session shogun が存在しない
+  ⚠ session multiagent が存在しない
+  [WARN] source A (tmux) 取得失敗 (degraded mode)
+  [WARN] source B 不在: raw/seed/registry_nai.yaml (degraded mode)
+▼ 結果: ❌ 1 件の整合性違反 + 0 件の 4-way drift

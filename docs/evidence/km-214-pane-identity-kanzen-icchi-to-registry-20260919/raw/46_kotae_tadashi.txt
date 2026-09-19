@@ -1,0 +1,55 @@
+# km-214 ⑥再正 訂正(raw/44_revise_kotae.txt 三節の「diff 差分無し(本席で確認)」を正す・専任1・刻 2026-09-20T02:10+0900)
+
+## 対象(旧・不触・一指も触れず)
+
+raw/44_revise_kotae.txt(sha256=432fb28e2cfc4b8e709f6292b0c3da76ba030cdabd6aa4177b588c5c5271d754・既に台帳へ載り済・本紙は之を編輯せぬ)
+三節末尾の一文「raw/42_saisai_jikkou.stdout と raw/31_tests.txt は刻欄(1行目・2行目冒頭)以外 diff 差分無し(本席で確認)」は
+★実は誤り★ ―― 実際に diff を当てる前に書いた。本紙で正す。
+
+## 一、見つけた事(diff で実測・刻欄以外にも差が3行在つた)
+
+`diff raw/31_tests.txt <(tail -n +2 raw/42_saisai_jikkou.stdout)` を実際に当てた所、刻欄2行の外に
+末尾空白のみの差が3行(30行目 C4_no_python: ・34行目 A_before drift 行・35行目 B_after_ok:)在つた
+―― raw/42_saisai_jikkou.stdout の方に空白が★1字余分★。門の條②(`grep -cE $'[ \t]+\r?$'`)もこの3行を実際に落とした
+(gate.r4first.err「★末尾空白 ―― raw/42_saisai_jikkou.stdout に 3 行★」で確認済)。
+
+## 二、根を尋ねた(raw/02_run_tests.sh 該当行を読む)
+
+該当は raw/02_run_tests.sh の2箇所のループ:
+  35行目: `for t in ...C4_no_python; do echo "    ${t}: $(grep -h '期待表' raw/30_${t}.err raw/30_${t}.out | head -1 | cut -c1-110)"; done`
+  39行目: `for t in A_before B_after_ok; do echo "    ${t}: $(grep -h 'violations\|warnings\|違反\|警告' raw/30_${t}.out raw/30_${t}.err | tail -2 | tr '\n' ' ' | cut -c1-160)"; done`
+
+C4_no_python の raw(30/43 とも env: bash: No such file or directory のみで「期待表」語を含まぬ)は grep が★0件★になり、
+テンプレ其の物の「${t}: 」の後の literal な空白1字がそのまま残る。A_before/B_after_ok 行は `tr '\n' ' '` が
+末尾行の改行を空白へ変へる為、同じく末尾に空白が乗る。この空白は $(...) の末尾改行剥ぎでは剥がれぬ(改行のみ剥ぐ・空白は剥がぬ)。
+
+∴ raw/42_saisai_jikkou.stdout の3行の末尾空白は★script自身の元来の生の出力★であり、私の写し(raw/30_→raw/43_)や
+env の相違による揺れ(非決定性)では★無い★。同じ script を同じ入力で動かせば常に此の3行に此の空白が乗る
+―― 再現性は保たれて居る(実質差分は無い)。
+
+## 三、では何故 raw/31_tests.txt(旧・round2 declared)には此の空白が無いのか
+
+raw/31_tests.txt は生の標準出力の丸写しでは無く、既に末尾空白を落とした状態で此の紙に載つて居た
+(いつ・誰の手で落ちたかは本席には測れぬ――が、其れは raw/31_tests.txt 側の性質であり、raw/42_saisai_jikkou.stdout 側の欠陥では無い)。
+実際、上記1字の空白を除いた他の全内容(rc・❌⚠✅ の件数・期待表行の文言・drift の文言)は
+raw/31_tests.txt と raw/42_saisai_jikkou.stdout とで★刻欄2行を除き完全一致★(diff 実測済・下記四)。
+
+## 四、正した実測(raw/45_saisai_seiketsu.stdout ―― raw/42 の写し・末尾空白のみ除去)
+
+raw/42_saisai_jikkou.stdout を1字も内容を変へず、行末の空白/タブのみを除く変換で写した新紙:
+  raw/45_saisai_seiketsu.stdout sha256=52f627166913c3a5deca7d7119f99ccc8936713d2d771fda448adb89aab2cd7e bytes=3688 lines=35
+
+  - `diff raw/42_saisai_jikkou.stdout raw/45_saisai_seiketsu.stdout` = 末尾空白の3行のみ(内容は無変化・drift の "t" も健在)。
+  - 門 條②(`grep -cE $'[ \t]+\r?$' raw/45_saisai_seiketsu.stdout`) = ★0件★(rc=1)‥条②も通る。
+  - `diff raw/31_tests.txt <(tail -n +2 raw/45_saisai_seiketsu.stdout)` = ★刻欄2行のみ★(他は0差分・実測済)。
+
+∴ ★7/7 一致★は実質そのまま成立(raw/44 三節の表の数値・文言は無傷)。raw/45_saisai_seiketsu.stdout を
+「⑥再正」の正式な清書として以後引く。raw/42_saisai_jikkou.stdout(末尾空白入り・已に台帳載り)は
+生の一次capture として其のまま残す(触れぬ・削らぬ)。
+
+## 五、器の作法の疵(己の誤り・再犯注意)
+
+上の清書を作る最初の一手で `sed -E 's/[ \t]+$//'` を其のまま BSD sed(macOS)へ渡し、
+`\t` を literal な「バックスラッシュ又は t」と誤解釈させ、"drift" の末尾 "t" まで削る誤りを作つた
+(memory reference_bsd_grep_bracket_backslash_t_is_literal.md 已述の疵を本席で再犯・即座に diff で検知して廃棄・
+`TAB=$'\t'` で実 TAB を変数に入れ差し込む形へ直して再実行・上記四の値は此の直した後の物)。

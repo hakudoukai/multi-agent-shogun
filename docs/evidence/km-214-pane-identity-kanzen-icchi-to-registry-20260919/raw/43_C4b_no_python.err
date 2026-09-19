@@ -1,0 +1,8 @@
+  ❌ 期待表を引けぬ: python3 が無い (.venv/bin/python3 も PATH も) ―― fail-closed
+  ⚠ session shogun が存在しない
+  ⚠ session multiagent が存在しない
+/Users/momizimac/wt/a1-km214/scripts/checks/pane_identity.sh: line 233: grep: command not found
+  [WARN] source A (tmux) 取得失敗 (degraded mode)
+  [WARN] source B (pane_registry.yaml) 解析失敗 (degraded mode)
+  [WARN] source C (watcher_supervisor.sh) 解析失敗 (degraded mode)
+▼ 結果: ❌ 1 件の整合性違反 + 0 件の 4-way drift

@@ -1,0 +1,26 @@
+▼ Pane Identity Map
+  gakushu-bucho:doppler.0  @agent_id=gakushu-bucho  pid=94545  cmd=doppler
+  hermes-drm:doppler.0  @agent_id=dr-m  pid=38115  cmd=doppler
+  hermes-gunshi-mac:doppler.0  @agent_id=gunshi-mac  pid=57227  cmd=doppler
+  multiagent-mac:agents.0  @agent_id=karo-mac  pid=86247  cmd=claude.exe
+  multiagent-mac:agents.1  @agent_id=ashigaru-mac-1  pid=44325  cmd=2.1.275
+  multiagent-mac:agents.2  @agent_id=ashigaru-mac-2  pid=86656  cmd=2.1.266
+  multiagent-mac:agents.3  @agent_id=ashigaru-mac-3  pid=62693  cmd=2.1.275
+
+▼ 整合性検証 (= 既存 self-identification check)
+  ⚪ shogun:main.0 @agent_id=空 (= shogun pane、許容範囲)
+
+▼ 重複 @agent_id 検知
+  ✅ 重複なし
+
+▼ 4-way mapping audit (corr_id=pane4way-1789834582-64381, advisory only, budget=5s)
+  ── per-index comparison (multiagent: のみ、shogun は別 source 確認) ──
+  idx   A:tmux       B:registry   C:watchdog   D:§18.1     status
+  0     karo-mac     hideyoshi    _            _            ❌ DRIFT
+  1     ashigaru-mac-1 ashigaru1    _            _            ❌ DRIFT
+  2     ashigaru-mac-2 ashigaru2    _            _            ❌ DRIFT
+  3     ashigaru-mac-3 ieyasu       _            _            ❌ DRIFT
+  4     _            ashigaru3    _            _            ✅ match
+  5     _            takenaka     _            _            ✅ match
+
+

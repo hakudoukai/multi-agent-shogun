@@ -1,0 +1,63 @@
+# km-214 REVISE 答へ(家老mac msg_20260920_010222_e48b741c・専任1・刻 2026-09-20T01:16+0900)
+
+## 一、④ 外部 symlink 参照(実測・find で数へ直す)
+
+raw/seed 配下の symlink 総数 = ★57★(bin_no_python 28・bin_with_python 29)。
+差は python3 一つのみ(diff /tmp/km214_no_python.txt /tmp/km214_with_python.txt = `15a16 > python3`)。
+
+的(readlink で解いた実体・絶対 path 群・重複除く):
+  /bin/{cat,date,ls,mkdir,mv,rm}
+  /usr/bin/{awk,basename,cut,dirname,env,head,mktemp,readlink,sed,sort,stat,tail,touch,tr,uniq,wc}
+  /opt/homebrew/bin/{timeout,tmux}
+  bin_with_python のみ: /Users/momizimac/multi-agent-shogun/.venv/bin/python3
+
+加へて自己名の相対 symlink 4種(両側・各 1 = false/grep/printf/true。例: `raw/seed/bin_no_python/false -> false` ―― 的が己と同名で在り、其の場に実体が無い故に意図して解決させぬ壊れ fixture。raw/03_c4_rerun.sh の C4 系「python3 が無い PATH」を作る為の一部品)。
+
+∴ 28 コマンド名 × 2 面(no_python/with_python、差は python3 の有無) = 56 + python3 1 = 57。
+悉く raw/seed 配下の試験 fixture(raw/03_c4_rerun.sh・raw/02_run_tests.sh の C1〜C4 が env -i PATH= で参照)であり、
+scripts/checks/pane_identity.sh 本体の実行時外部依存(紙④已述の /bin/bash・tmux・.venv/bin/python3+PyYAML・coreutils timeout)とは別枠 ―― 紙④が既に其の場所(raw/seed)を明した通り。
+
+## 二、⑥ 復元 sha256(共有樹・不触の確認・刻 2026-09-20T01:15+0900)
+
+紙⑥「共有樹の器・lib・registry・pane 不触(読取のみ)」を、着手前の値(raw/10_mae_sanchi.txt・raw/34_lib_hakken.txt)と
+本席が★今★実測した値とで突合す:
+
+  scripts/checks/pane_identity.sh(生きた版・未commit M)
+    前(raw/10) sha256=db1ce339534e8bcb82e142047d42da4d991abe44dcafc373ebbe063940236db2 bytes=21636 行=509
+    今(本紙)   sha256=db1ce339534e8bcb82e142047d42da4d991abe44dcafc373ebbe063940236db2 bytes=21636 行=509
+    → 同値。不触を実測で確認。
+
+  lib/_section18_roles.sh(生きた版・未commit M)
+    前(raw/34) sha256=8473838e23bbcee8132b1e7fc16d36ae00d480e1e78d0b3f1c620a74ec488db0
+    今(本紙)   sha256=8473838e23bbcee8132b1e7fc16d36ae00d480e1e78d0b3f1c620a74ec488db0 bytes=5740 行=148
+    → 同値。不触を実測で確認。
+
+  queue/pane_registry.yaml
+    前(raw/10) sha256=1c807cb4ae8603da9d32c4a70730be5ae06bebb3953ab4cfff51702c7cf3c874 行=196
+    今(本紙)   sha256=1c807cb4ae8603da9d32c4a70730be5ae06bebb3953ab4cfff51702c7cf3c874 bytes=7181 行=196
+    → 同値。不触を実測で確認。
+
+∴ 三値とも着手前と今とで sha256 完全一致 ―― 共有樹への書込み副作用は無し(実測)。
+
+## 三、⑥ 再正(N/N・raw/02・raw/03 を raw/30_→raw/43_ へ写して非破壊で取り直す)
+
+raw/42_saisai_jikkou.sh(raw/02_run_tests.sh の写し・出力先のみ raw/30_→raw/43_)と
+raw/42b_c4_saisai.sh(raw/03_c4_rerun.sh の写し・同)を作り、原本 raw/30_*・raw/31_* を上書きせずに取り直した。
+
+対照する7形(raw/31_tests.txt・raw/31_c4_rerun.txt の確定値、C4 は正式版=C4b_no_python を採る):
+  A_before        rc=2   期待=陽性対照(旧版で drift ❌4件)      → 取り直し rc=2 ❌=10 ✅=3 偽の掴み=4  一致
+  B_after_ok      rc=1   期待=正(❌0・⚠のみ)                    → 取り直し rc=1 ❌=0 ⚠=10 ✅=8       一致
+  C1_no_registry  rc=2   期待=fail-closed(registry 不在)         → 取り直し rc=2 (同一文言)            一致
+  C2_parse_error  rc=2   期待=fail-closed(parse 不能)            → 取り直し rc=2 (同一文言)            一致
+  C3_empty        rc=2   期待=fail-closed(席0)                   → 取り直し rc=2 (同一文言)            一致
+  C3b_no_mainpc   rc=2   期待=fail-closed(MainPC席0)             → 取り直し rc=2 (同一文言)            一致
+  C4b_no_python   rc=2   期待=fail-closed(python3無し)           → 取り直し rc=2 (同一文言)            一致
+
+∴ ★7/7★ 一致(rc・❌/⚠/✅ 件数・期待表行の文言、時刻欄を除き実質差分無し)。
+raw/42_saisai_jikkou.stdout と raw/31_tests.txt は刻欄(1行目・2行目冒頭)以外 diff 差分無し(本席で確認)。
+
+## 四、器の作法(既知の疵の再犯なきを確認)
+
+`$m★` 型の呑み: 新設 raw/42_*.sh 二本を `grep -n '\$[a-zA-Z_]*★'` で lint 済 ―― 0 件。
+0 byte 出目: raw/42_saisai_jikkou.stderr・raw/42b_c4_saisai.stderr は空だつた故、裁310228⑶(0byte禁)と裁330497④(末尾行不可視のみ禁)を
+本弾已述の作法(raw/41_r3_kara_fuda_koku と同じ精神)に依り `(空 0byte)\n` の可視札に替へた(bash -c、生の空 > には非ず)。

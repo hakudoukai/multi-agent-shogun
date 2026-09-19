@@ -1,0 +1,35 @@
+# round2: SECTION18_ROLES_LIB を生きた樹の lib へ(己の樹の lib は bash 3.2 で source が落ち器が黙る・raw/34)。round1 は raw/31_tests_round1.txt に残置。
+# km-214 両対照 + fail-closed(刻 2026-09-20T01:16:22+0900・/bin/bash 3.2.57(1)-release・tmux tmux 3.7b・TMUX=set)
+## A 前版(生きた版の写し・sha db1ce339534e8bcb) ―― 陽性対照: 前方一致で Mac の pane を掴む形
+A_before | rc=2 | ❌=10 ⚠=1 ✅=3 | 期待表行=[] | 偽の掴み(実態=karo-mac|ashigaru-mac)=4
+      0     karo-mac     hideyoshi    _            _            ❌ DRIFT
+      1     ashigaru-mac-1 ashigaru1    _            _            ❌ DRIFT
+      2     ashigaru-mac-2 ashigaru2    _            _            ❌ DRIFT
+      3     ashigaru-mac-3 ieyasu       _            _            ❌ DRIFT
+## B 後版(己の樹・sha b26f6df4050e85e3) ―― 正しい registry・python 在り
+B_after_ok | rc=1 | ❌=0 ⚠=10 ✅=8 | 期待表行=[  ▷ 期待表 = /Users/momizimac/wt/a1-km214/queue/pane_registry.yaml から 7 席] | 偽の掴み(実態=karo-mac|ashigaru-mac)=0
+      ▷ 期待表 = /Users/momizimac/wt/a1-km214/queue/pane_registry.yaml から 7 席 (MainPC・通常運用) を引いた
+    ▼ 結果: ⚠ 9 件の warning
+      ⚠ session shogun が存在しない
+      ⚠ session multiagent が存在しない
+      ⚠ shogun:0.0: session shogun が無い(完全一致) ―― 比較せず (期待=nobunaga)
+      ⚠ multiagent:0.0: session multiagent が無い(完全一致) ―― 比較せず (期待=hideyoshi)
+      ⚠ multiagent:0.1: session multiagent が無い(完全一致) ―― 比較せず (期待=ashigaru1)
+      ⚠ multiagent:0.2: session multiagent が無い(完全一致) ―― 比較せず (期待=ashigaru2)
+      ⚠ multiagent:0.3: session multiagent が無い(完全一致) ―― 比較せず (期待=ieyasu)
+## C 後版 fail-closed 四形(各々別の出目)
+C1_no_registry | rc=2 | ❌=2 ⚠=2 ✅=2 | 期待表行=[  ❌ 期待表を引けぬ: registry 不在 raw/seed/registry_nai.yaml ―― fail-closed] | 偽の掴み(実態=karo-mac|ashigaru-mac)=0
+C2_parse_error | rc=2 | ❌=2 ⚠=2 ✅=2 | 期待表行=[  ❌ 期待表を引けぬ: registry を parse できぬ raw/seed/registry_broken.yaml ―― fai] | 偽の掴み(実態=karo-mac|ashigaru-mac)=0
+C3_empty | rc=2 | ❌=2 ⚠=2 ✅=2 | 期待表行=[  ❌ 期待表を引けぬ: registry に MainPC・通常運用 の席が 0 ―― fail-closed] | 偽の掴み(実態=karo-mac|ashigaru-mac)=0
+C3b_no_mainpc | rc=2 | ❌=2 ⚠=2 ✅=2 | 期待表行=[  ❌ 期待表を引けぬ: registry に MainPC・通常運用 の席が 0 ―― fail-closed] | 偽の掴み(実態=karo-mac|ashigaru-mac)=0
+C4_no_python | rc=127 | ❌=0 ⚠=0 ✅=0 | 期待表行=[] | 偽の掴み(実態=karo-mac|ashigaru-mac)=0
+    C1_no_registry:   ❌ 期待表を引けぬ: registry 不在 raw/seed/registry_nai.yaml ―― fail-closed
+    C2_parse_error:   ❌ 期待表を引けぬ: registry を parse できぬ raw/seed/registry_broken.yaml ―― fail-closed
+    C3_empty:   ❌ 期待表を引けぬ: registry に MainPC・通常運用 の席が 0 ―― fail-closed
+    C3b_no_mainpc:   ❌ 期待表を引けぬ: registry に MainPC・通常運用 の席が 0 ―― fail-closed
+    C4_no_python: 
+## D 後版 陰性対照: 前版の tmux_target を持つ session が★無い★のに違反を数へぬ(⚠ のみ)・前版は偽の ❌ を数へる
+    前版 ❌(偽の掴み)=4 / 後版 ❌(偽の掴み)=0
+## E 前後の rc と violations の刷り(器の末尾の行)
+    A_before: ▼ 結果: ❌ 4 件の整合性違反 + 4 件の 4-way drift 
+    B_after_ok: 
