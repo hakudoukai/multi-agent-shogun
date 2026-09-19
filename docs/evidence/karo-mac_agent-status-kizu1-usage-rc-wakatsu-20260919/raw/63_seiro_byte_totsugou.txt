@@ -1,0 +1,28 @@
+# 前版 = scripts/.km_kizu1_zenban.sh  sha=55c9acd9a9f1215625d4e47afad03aed562fdeceed89b79ed415612500514e31
+# 後版 = scripts/agent_status.sh  sha=8552c2c967088c35c889ce4d1574e3ab30c3014e6d7c9df481afc323c30f77fb
+# bash = 3.2.57(1)-release  刻=2026-09-19T15:21:35+0900
+-----------------------------------------------------------------
+argv = [--session multiagent-mac]
+  前版 rc=0 出sha=f71809214878557a45613feccfe3aa0b0c93fdbc0c18f0514c37b99cf000f252 行=7
+  後版 rc=0 出sha=f71809214878557a45613feccfe3aa0b0c93fdbc0c18f0514c37b99cf000f252 行=7
+  ★出は byte 一致★
+-----------------------------------------------------------------
+argv = [--lang ja]
+  前版 rc=0 出sha=93dab8bd1cf9ee026f094e86b8699566939f5b0834edbbd8039f34ae63476b5a 行=16
+  後版 rc=0 出sha=93dab8bd1cf9ee026f094e86b8699566939f5b0834edbbd8039f34ae63476b5a 行=16
+  ★出は byte 一致★
+-----------------------------------------------------------------
+argv = [--lang en]
+  前版 rc=0 出sha=726af013d77c64e3051dc686aa4c91d9f3c59f7f1b03225f1ba44cd1d3d9b514 行=16
+  後版 rc=0 出sha=726af013d77c64e3051dc686aa4c91d9f3c59f7f1b03225f1ba44cd1d3d9b514 行=16
+  ★出は byte 一致★
+-----------------------------------------------------------------
+argv = []
+  前版 rc=0 出sha=93dab8bd1cf9ee026f094e86b8699566939f5b0834edbbd8039f34ae63476b5a 行=16
+  後版 rc=0 出sha=93dab8bd1cf9ee026f094e86b8699566939f5b0834edbbd8039f34ae63476b5a 行=16
+  ★出は byte 一致★
+-----------------------------------------------------------------
+argv = [--session multiagent-mac --panes 0]
+  前版 rc=0 出sha=6c8ccdbd40edfc1fbd9aef5f2a2180c106c6891ae6ec9bffbc6c10a65cc35622 行=4
+  後版 rc=0 出sha=6c8ccdbd40edfc1fbd9aef5f2a2180c106c6891ae6ec9bffbc6c10a65cc35622 行=4
+  ★出は byte 一致★

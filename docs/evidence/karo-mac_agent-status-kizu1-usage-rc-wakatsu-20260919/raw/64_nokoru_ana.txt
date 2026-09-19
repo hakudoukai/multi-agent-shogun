@@ -1,0 +1,28 @@
+# 64_nokoru_ana.txt ―― ★本弾で閉ぢて居らぬ穴★を測る（紙に「閉ぢた」と書かぬ為）
+# 本体 sha=8552c2c967088c35c889ce4d1574e3ab30c3014e6d7c9df481afc323c30f77fb
+# 刻=2026-09-19T15:22:45+0900  cwd=/Users/momizimac/multi-agent-shogun
+-----------------------------------------------------------------
+# argv = [--lang zz]
+
+Agent      CLI     Pane      Task ID                                    Status     Inbox
+---------- ------- --------- ------------------------------------------ ---------- -----
+hideyoshi  claude  不在      (no-file)                                  ---        -
+# rc=0  出行数=16
+-----------------------------------------------------------------
+# argv = [--panes abc]
+Error: session 'multiagent-mac' に該当する pane が無い（--panes の指定を含む）
+# rc=1  出行数=1
+-----------------------------------------------------------------
+# argv = [--lang ja --lang en]
+
+Agent      CLI     State     Task ID                                    Status     Inbox
+---------- ------- --------- ------------------------------------------ ---------- -----
+hideyoshi  claude  N/A       (no-file)                                  ---        -
+# rc=0  出行数=16
+-----------------------------------------------------------------
+# argv = [--session multiagent-mac --panes 0,abc]
+
+Pane                           状態     Agent ID
+------------------------------ ---------- ----------
+multiagent-mac:agents.0        待機中     karo-mac
+# rc=0  出行数=4

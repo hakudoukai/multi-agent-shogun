@@ -1,0 +1,55 @@
+# ★★此の生は無効である（家老mac 自訂 2026-09-19）★★
+# 因: 此の測りを Bash tool の中で直に書いた ―― ★当機の Bash tool は zsh★ ゆゑ
+#     `$a` が★語分割されず一語★に成り、両版とも `--session multiagent-mac` を
+#     ★一つの旗★として受けて「未知の旗」を刷つた。∴ 正路を測れて居らぬ。
+#     （之は既に己の memory に在る罠であり、★二度目の再踏★である）
+# 是正: argv を測る器は★bash の file に書き bash で走らせる★（63_… を見よ）
+# ---------------------------------------------------------------
+# 62_seiro_byte_totsugou.txt ―― ★正路の出が変はつて居らぬか★を byte で突合
+# 前版 = git show cef84a32…:scripts/agent_status.sh を scripts/.km_kizu1_zenban.sh へ置いた物
+#        （★SCRIPT_DIR=dirname/.. ゆゑ scripts/ の下から走らせねば根が狂ふ★）
+# 刻=2026-09-19T15:21:02+0900
+-----------------------------------------------------------------
+argv = [--session multiagent-mac]
+  前版 rc=1 出sha=498d9daff927cdb927cfd1757007179d08debf0a0d37a5caa73d947bd6d00cad 行=1
+  後版 rc=1 出sha=bfa0b37da84eb5bd6f0170d486c6e1cd2260f4d240641749f9cc813e7e583d3f 行=14
+  ★不一致 ―― 差を刷る（時で動く欄か、疵かを判ずる為）★
+    1c1,14
+    < Unknown option: --session multiagent-mac
+    ---
+    > Error: 未知の旗: --session multiagent-mac
+    > Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+    > 
+    > Options:
+    >   --session NAME   Tmux session to scan (default: auto-detect)
+    >   --panes N,N,N    Comma-separated pane indices to check
+    >   --lang en|ja     Output language (default: ja)
+    > 
+    > Without options, reads config/settings.yaml for agent definitions.
+    > 
+    > Exit codes:
+    >   0  measured
+    >   1  usage error: unknown flag / missing or empty value / no such session
+    >   2  instrument unusable: tmux absent / shared lib unreadable
+-----------------------------------------------------------------
+argv = [--lang ja]
+  前版 rc=1 出sha=1fec419349664a00cde92d3ad160635e4d29831d98da08f6bf68cced38b26a0b 行=1
+  後版 rc=1 出sha=5332ebd8c026cab661fe28650ccd9a672067a2ab2e6942d4f049275f90ec4c2b 行=14
+  ★不一致 ―― 差を刷る（時で動く欄か、疵かを判ずる為）★
+    1c1,14
+    < Unknown option: --lang ja
+    ---
+    > Error: 未知の旗: --lang ja
+    > Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+    > 
+    > Options:
+    >   --session NAME   Tmux session to scan (default: auto-detect)
+    >   --panes N,N,N    Comma-separated pane indices to check
+    >   --lang en|ja     Output language (default: ja)
+    > 
+    > Without options, reads config/settings.yaml for agent definitions.
+    > 
+    > Exit codes:
+    >   0  measured
+    >   1  usage error: unknown flag / missing or empty value / no such session
+    >   2  instrument unusable: tmux absent / shared lib unreadable

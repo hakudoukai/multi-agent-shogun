@@ -1,0 +1,146 @@
+cwd       = /Users/momizimac/multi-agent-shogun
+本体      = scripts/agent_status.sh
+本体 sha  = 8552c2c967088c35c889ce4d1574e3ab30c3014e6d7c9df481afc323c30f77fb
+bash      = 3.2.57(1)-release (/bin/bash)
+tmux      = tmux 3.7b
+刻        = 2026-09-19T15:20:15+0900
+PATH      = /Users/momizimac/.local/bin:/opt/homebrew/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+-----------------------------------------------------------------
+■ ㋐ 引数無(project 路)
+   argv = []
+   rc   = 0
+   出行数 = 16
+   出> 
+   出> Agent      CLI     Pane      Task ID                                    Status     Inbox
+   出> ---------- ------- --------- ------------------------------------------ ---------- -----
+
+■ ㋑ --help
+   argv = [--help]
+   rc   = 0
+   出行数 = 13
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+   出> Options:
+
+■ ㋒ -h
+   argv = [-h]
+   rc   = 0
+   出行数 = 13
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+   出> Options:
+
+■ ㋓ --lang 値無し
+   argv = [--lang]
+   rc   = 1
+   出行数 = 14
+   出> Error: --lang は値を要るが、値が無い
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+
+■ ㋔ --session 値無し
+   argv = [--session]
+   rc   = 1
+   出行数 = 14
+   出> Error: --session は値を要るが、値が無い
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+
+■ ㋕ --panes 値無し
+   argv = [--panes]
+   rc   = 1
+   出行数 = 14
+   出> Error: --panes は値を要るが、値が無い
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+
+■ ㋖ --lang 空の値
+   argv = [--lang ]
+   rc   = 1
+   出行数 = 14
+   出> Error: --lang の値が空である（黙つて既定へ倒さぬ）
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+
+■ ㋗ --session 空の値
+   argv = [--session ]
+   rc   = 1
+   出行数 = 14
+   出> Error: --session の値が空である（黙つて既定へ倒さぬ）
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+
+■ ㋘ --lang の値が旗
+   argv = [--lang --session]
+   rc   = 1
+   出行数 = 14
+   出> Error: --lang の値が旗に見える（'--session'）―― 値を落として居らぬか
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+
+■ ㋙ 未知の旗
+   argv = [--zzz]
+   rc   = 1
+   出行数 = 14
+   出> Error: 未知の旗: --zzz
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+
+■ ㋚ --lang ja(正)
+   argv = [--lang ja]
+   rc   = 0
+   出行数 = 16
+   出> 
+   出> Agent      CLI     Pane      Task ID                                    Status     Inbox
+   出> ---------- ------- --------- ------------------------------------------ ---------- -----
+
+■ ㋛ --session 当たる(陽性対照)
+   argv = [--session multiagent-mac]
+   rc   = 0
+   出行数 = 7
+   出> 
+   出> Pane                           状態     Agent ID
+   出> ------------------------------ ---------- ----------
+
+■ ㋜ --session 無い名(陰性対照)
+   argv = [--session zzzznosuch]
+   rc   = 1
+   出行数 = 1
+   出> Error: session 'zzzznosuch' は完全一致で存在せぬ（前方一致では当てぬ）
+
+■ ㋝ --session 前方一致の餌
+   argv = [--session multiagent]
+   rc   = 1
+   出行数 = 1
+   出> Error: session 'multiagent' は完全一致で存在せぬ（前方一致では当てぬ）
+
+■ ㋞ --panes 該当無
+   argv = [--session multiagent-mac --panes 99]
+   rc   = 1
+   出行数 = 1
+   出> Error: session 'multiagent-mac' に該当する pane が無い（--panes の指定を含む）
+
+-----------------------------------------------------------------
+■ ㋟ tmux 不在（PATH を空 dir へ据ゑる）
+   argv = [--session multiagent-mac]  PATH=<空 dir>
+   rc   = 2
+   出行数 = 3
+   出> scripts/agent_status.sh: line 17: dirname: command not found
+   出> Error: tmux が機に無い ―― 本器は tmux の pane を測る物ゆゑ何も測れぬ
+   出>        （呼び手の誤りではない。rc=2 ＝ 器の死）
+
+■ ㋠ tmux のみ不在（他の器は symlink で残す＝★㋟ の交絡を除いた形★）
+   shim  = awk basename cat cut date dirname env grep gtimeout head ls mktemp printf python3 rm sed shasum sort tail test timeout tr uniq wc 
+   tmux 在否(shim) = (無し)
+   argv = [--session multiagent-mac]  PATH=<tmux 以外の shim>
+   rc   = 2
+   出行数 = 2
+   出> Error: tmux が機に無い ―― 本器は tmux の pane を測る物ゆゑ何も測れぬ
+   出>        （呼び手の誤りではない。rc=2 ＝ 器の死）
+   argv = []  PATH=<tmux 以外の shim>
+   rc   = 2
+   出行数 = 2
+   出> Error: tmux が機に無い ―― 本器は tmux の pane を測る物ゆゑ何も測れぬ
+   出>        （呼び手の誤りではない。rc=2 ＝ 器の死）
+
+■ 器自身の出目 = 0（此処まで到達した事の證）

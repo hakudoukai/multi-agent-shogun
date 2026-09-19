@@ -1,0 +1,137 @@
+cwd       = /Users/momizimac/multi-agent-shogun
+本体      = scripts/agent_status.sh
+本体 sha  = 55c9acd9a9f1215625d4e47afad03aed562fdeceed89b79ed415612500514e31
+bash      = 3.2.57(1)-release (/bin/bash)
+tmux      = tmux 3.7b
+刻        = 2026-09-19T15:17:22+0900
+PATH      = /Users/momizimac/.local/bin:/opt/homebrew/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+-----------------------------------------------------------------
+■ ㋐ 引数無(project 路)
+   argv = []
+   rc   = 0
+   出行数 = 16
+   出> 
+   出> Agent      CLI     Pane      Task ID                                    Status     Inbox
+   出> ---------- ------- --------- ------------------------------------------ ---------- -----
+
+■ ㋑ --help
+   argv = [--help]
+   rc   = 0
+   出行数 = 8
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+   出> Options:
+
+■ ㋒ -h
+   argv = [-h]
+   rc   = 0
+   出行数 = 8
+   出> Usage: agent_status.sh [--session NAME] [--panes 0,1,2] [--lang en|ja]
+   出> 
+   出> Options:
+
+■ ㋓ --lang 値無し
+   argv = [--lang]
+   rc   = 1
+   出行数 = 1
+   出> scripts/agent_status.sh: line 28: $2: unbound variable
+
+■ ㋔ --session 値無し
+   argv = [--session]
+   rc   = 1
+   出行数 = 1
+   出> scripts/agent_status.sh: line 29: $2: unbound variable
+
+■ ㋕ --panes 値無し
+   argv = [--panes]
+   rc   = 1
+   出行数 = 1
+   出> scripts/agent_status.sh: line 30: $2: unbound variable
+
+■ ㋖ --lang 空の値
+   argv = [--lang ]
+   rc   = 0
+   出行数 = 16
+   出> 
+   出> Agent      CLI     Pane      Task ID                                    Status     Inbox
+   出> ---------- ------- --------- ------------------------------------------ ---------- -----
+
+■ ㋗ --session 空の値
+   argv = [--session ]
+   rc   = 0
+   出行数 = 7
+   出> 
+   出> Pane                           状態     Agent ID
+   出> ------------------------------ ---------- ----------
+
+■ ㋘ --lang の値が旗
+   argv = [--lang --session]
+   rc   = 0
+   出行数 = 16
+   出> 
+   出> Agent      CLI     Pane      Task ID                                    Status     Inbox
+   出> ---------- ------- --------- ------------------------------------------ ---------- -----
+
+■ ㋙ 未知の旗
+   argv = [--zzz]
+   rc   = 1
+   出行数 = 1
+   出> Unknown option: --zzz
+
+■ ㋚ --lang ja(正)
+   argv = [--lang ja]
+   rc   = 0
+   出行数 = 16
+   出> 
+   出> Agent      CLI     Pane      Task ID                                    Status     Inbox
+   出> ---------- ------- --------- ------------------------------------------ ---------- -----
+
+■ ㋛ --session 当たる(陽性対照)
+   argv = [--session multiagent-mac]
+   rc   = 0
+   出行数 = 7
+   出> 
+   出> Pane                           状態     Agent ID
+   出> ------------------------------ ---------- ----------
+
+■ ㋜ --session 無い名(陰性対照)
+   argv = [--session zzzznosuch]
+   rc   = 1
+   出行数 = 1
+   出> Error: session 'zzzznosuch' は完全一致で存在せぬ（前方一致では当てぬ）
+
+■ ㋝ --session 前方一致の餌
+   argv = [--session multiagent]
+   rc   = 1
+   出行数 = 1
+   出> Error: session 'multiagent' は完全一致で存在せぬ（前方一致では当てぬ）
+
+■ ㋞ --panes 該当無
+   argv = [--session multiagent-mac --panes 99]
+   rc   = 1
+   出行数 = 1
+   出> Error: session 'multiagent-mac' に該当する pane が無い（--panes の指定を含む）
+
+-----------------------------------------------------------------
+■ ㋟ tmux 不在（PATH を空 dir へ据ゑる）
+   argv = [--session multiagent-mac]  PATH=<空 dir>
+   rc   = 1
+   出行数 = 2
+   出> scripts/agent_status.sh: line 17: dirname: command not found
+   出> scripts/agent_status.sh: line 47: //lib/agent_status.sh: No such file or directory
+
+■ ㋠ tmux のみ不在（他の器は symlink で残す＝★㋟ の交絡を除いた形★）
+   shim  = awk basename cat cut date dirname env grep gtimeout head ls mktemp printf python3 rm sed shasum sort tail test timeout tr uniq wc 
+   tmux 在否(shim) = (無し)
+   argv = [--session multiagent-mac]  PATH=<tmux 以外の shim>
+   rc   = 1
+   出行数 = 1
+   出> Error: session 'multiagent-mac' は完全一致で存在せぬ（前方一致では当てぬ）
+   argv = []  PATH=<tmux 以外の shim>
+   rc   = 0
+   出行数 = 16
+   出> 
+   出> Agent      CLI     Pane      Task ID                                    Status     Inbox
+   出> ---------- ------- --------- ------------------------------------------ ---------- -----
+
+■ 器自身の出目 = 0（此処まで到達した事の證）

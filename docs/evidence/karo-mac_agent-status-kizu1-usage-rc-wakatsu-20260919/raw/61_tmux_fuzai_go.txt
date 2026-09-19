@@ -1,0 +1,15 @@
+# 61_tmux_fuzai_go.txt ―― ★据ゑた後★の tmux 不在（tmux のみ抜いた PATH）
+# 本体 sha=8552c2c967088c35c889ce4d1574e3ab30c3014e6d7c9df481afc323c30f77fb
+# 刻=2026-09-19T15:21:57+0900
+# shim=awk basename cat cut date dirname env grep gtimeout head ls mktemp printf python3 rm sed shasum sort tail test timeout tr uniq wc 
+# tmux 在否(shim)=(無し)
+-----------------------------------------------------------------
+# argv = project(引数無)
+Error: tmux が機に無い ―― 本器は tmux の pane を測る物ゆゑ何も測れぬ
+       （呼び手の誤りではない。rc=2 ＝ 器の死）
+# rc=2  出行数=2
+-----------------------------------------------------------------
+# argv = standalone(--session multiagent-mac)
+Error: tmux が機に無い ―― 本器は tmux の pane を測る物ゆゑ何も測れぬ
+       （呼び手の誤りではない。rc=2 ＝ 器の死）
+# rc=2  出行数=2

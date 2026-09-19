@@ -1,0 +1,29 @@
+# 51_tmux_fuzai_project.txt ―― ★据ゑる前★の tmux 不在 × project 路 の全文
+# cwd=/Users/momizimac/multi-agent-shogun
+# 本体 sha=55c9acd9a9f1215625d4e47afad03aed562fdeceed89b79ed415612500514e31
+# argv=[](引数無)  PATH=<tmux 以外の shim・awk basename cat cut date dirname env grep gtimeout head ls mktemp printf python3 rm sed shasum sort tail test timeout tr uniq wc >
+# 刻=2026-09-19T15:17:47+0900
+# ★此の出が問題である★: tmux が機に無いのに ★rc=0★ を返す。
+# ★家老mac の自訂(2026-09-19)★ ―― 初め此れを「偽の通」と書いたが★言ひ過ぎ★である:
+#   刷つた表の中身は★正直★(Pane=不在・Status=--- ・母數行が『的: @agent_idで解けた=0 /
+#   寫像不能(session無)=6』と宣して居る)。疵は中身でなく ★出目★ ――
+#   ★何一つ測れて居らぬのに「通(0)」を返す★事である。∴ 之を rc=2(器の死) へ移す。
+-----------------------------------------------------------------
+
+Agent      CLI     Pane      Task ID                                    Status     Inbox
+---------- ------- --------- ------------------------------------------ ---------- -----
+hideyoshi  claude  不在      (no-file)                                  ---        -
+ashigaru1  claude  不在      (no-file)                                  ---        -
+ashigaru2  claude  不在      (no-file)                                  ---        -
+ashigaru3  claude  不在      (no-file)                                  ---        -
+ieyasu     claude  不在      (no-file)                                  ---        -
+takenaka   claude  不在      (no-file)                                  ---        -
+maeda      claude  不在      (no-file)                                  ---        -
+ashigaru5  claude  不在      (no-file)                                  ---        -
+ashigaru6  claude  不在      (no-file)                                  ---        -
+ashigaru7  claude  不在      (no-file)                                  ---        -
+ashigaru8  claude  不在      (no-file)                                  ---        -
+
+[agent_status] ★母數★ 歩いた席=11 ／ 帳: 讀めた=0 弾無=0 帳無=11 ★parse不能=0★ 形違=0 讀めぬ=0 器無=0 器落=0 ★多鍵形=0★ ／ 箱: 数に非ざる顔=0 ／ 的: @agent_idで解けた=0 ★曖昧=0★ 寫像不能(session無)=6 寫像不能(pane無)=0
+-----------------------------------------------------------------
+# rc=0  出行数=16
