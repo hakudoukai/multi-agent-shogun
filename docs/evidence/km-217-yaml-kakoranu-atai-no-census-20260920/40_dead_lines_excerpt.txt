@@ -1,0 +1,42 @@
+=== ashigaru-mac-5.yaml (queue/tasks/_stopped-20260903/) line 268-276 (break=272, problem_mark) ===
+268:     - "★code を一字も直すな★。★credential の値を寫すな(在る事實と行番號のみ)★。DB書込0。commit/push/merge禁。gh auth login禁。"
+269:   fukumei: "path + sha256(algo名明記) + 行数/byte + as_of。★便の要旨は紙の中で最も弱い斷定を寫せ★。"
+270:
+271: # ════════════════════════════════════════════════════════════
+272: - saitei_z43:
+273:   timestamp: "2026-09-01T21:05+0900"
+274:   from: karo-mac
+275:   title: "★『宣言と實行の差』受理 ―― 中でも agent_letter.py の docstring 矛盾は本日の實害と同根である★"
+276:   body:
+
+=== ashigaru-mac-6.yaml (queue/tasks/_stopped-20260903/) line 227-235 (break=231, problem_mark -- 訂正: 前稿は誤つて270行目付近を掲げた。census TSV(problem_mark)は231行目を指し、之は#1と全同型「fukumei: 直後にコメント区切り→列1の- saitei_zNN:」である) ===
+227:     - "★watcher/process を起こすな・止めるな(D-lane/F002域)★。tmux 操作禁。code を直すな。commit/push/merge禁。gh auth login禁。"
+228:   fukumei: "path + sha256(algo名明記) + 行数/byte + as_of。★便の要旨は紙の中で最も弱い斷定を寫せ★。"
+229:
+230: # ════════════════════════════════════════════════════════════
+231: - saitei_z44:
+232:   timestamp: "2026-09-01T21:06+0900"
+233:   from: karo-mac
+234:   title: "★『13』の出所は當職が答へる ―― 貴殿の名指しは正しく、其の數を運んだのは家老である★"
+235:   body:
+
+=== ashigaru-mac-6.yaml 参考: 270行目付近(旧誤稿が指した箇所) -- parserが231で既に停止した後の未到達領域であり死因ではない ===
+266:     - "★RACE-001★: ★箱の名が何故生まれたか(機構・git 生年)は a3 の領分ゆゑ觸れるな★。貴殿は ★中身★ だけを見よ。"
+267:     - "★process を止めるな・起こすな。tmux 操作禁。git は讀取のみ。credential の値を寫すな★。"
+268:     - "★裁くな・名指すのみ(節七十六)。咎めるな ―― 誰も見て居らぬ箱が在るのは機構の缺であつて、席の怠りではない★。"
+269:
+270:   - task_id: km-a6-mimiyomarezu-shite-shirizoketaru-bin
+271:     parent_cmd: saitei_z50
+272:     status: assigned
+273:     assigned_at: "2026-09-01T21:29:00"
+274:     title: "未讀のまま退避された便は、當職の箱だけの病か"
+
+=== ashigaru-mac-1_pruned.yaml (queue/inbox/_archive/) line 183-190 (代表1件) ===
+183:   read: true
+184:   supersedes: null
+185:   timestamp: '2026-08-16T18:47:20'
+186:   type: task_assigned
+187: pruned_at: '2026-08-16T23:57:35'
+188: ---
+189: count: 20
+190: messages:

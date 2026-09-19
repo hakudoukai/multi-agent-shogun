@@ -1,0 +1,7 @@
+=== find argv used (tasks) ===
+find "/Users/momizimac/multi-agent-shogun/queue/tasks" -type f -name '*.yaml'
+tasks_count=24
+=== find argv used (inbox) ===
+find "/Users/momizimac/multi-agent-shogun/queue/inbox" -type f -name '*.yaml'
+inbox_count=36
+sum=60

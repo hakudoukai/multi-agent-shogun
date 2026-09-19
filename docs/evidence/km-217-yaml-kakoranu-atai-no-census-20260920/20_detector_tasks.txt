@@ -1,0 +1,31 @@
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-105_ashigaru-mac-2.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-106_ashigaru-mac-3.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-107_ashigaru-mac-1.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-88_ashigaru-mac-3.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-89_ashigaru-mac-2.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-90_ashigaru-mac-1.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-91_ashigaru-mac-3.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-92_ashigaru-mac-1.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-93_ashigaru-mac-2.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-94_ashigaru-mac-3.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-95_ashigaru-mac-1.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_fuda_hikae/km-96_ashigaru-mac-2.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_goal_a1_B2_draft_20260906.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_goal_a2_B4_draft_20260906.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_goal_a3_B1_draft_20260906.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/_stopped-20260903/ashigaru-mac-5.yaml	SUSPECT	line=706	len=133	key="process	val=/bin/ps -axo command | grep inbox_watcher.sh(引数 agent 名)。pane: tmux list-panes -a -F '#{@agent_id}'(読取のみ・capture 禁)。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/_stopped-20260903/ashigaru-mac-5.yaml	SUSPECT	line=707	len=103	key="陽性対照	val=gunshi-mac.yaml が『読み手無し・265 通前後・既読 0』で出る事。陰性対照: karo-mac.yaml が『読み手あり(watcher+pane)』で出る事。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/_stopped-20260903/ashigaru-mac-6.yaml	SUSPECT	line=39	len=74	key="禁	val=gh auth login。禁: 他席の yaml へ書く。禁: board への書込(mac に書き口が無い ―― 咎めは無い)"
+/Users/momizimac/multi-agent-shogun/queue/tasks/_stopped-20260903/ashigaru-mac-6.yaml	SUSPECT	line=131	len=130	key="⑵ ★檢出器の檢定(§23-b 兩方向)★	val=素朴な grep 'read: false' は★本文中に其の語列を引用する便で僞陽性を出す★(當職の帳簿🚨17に實例あり)。錨定 pattern を用ゐ、僞陽性を分けて數へよ。兩方の數を併記せよ。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/_stopped-20260903/ashigaru-mac-6.yaml	SUSPECT	line=153	len=115	key="    ★當職の箱で本日實證された★	val=素朴=7 / 錨定=6 ―― 差1は★貴殿の rev4 本文が當職の箱に屆き、其の content 中の `read: false` といふ文字列が偽陽性を生んだ★物である。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/_stopped-20260903/ashigaru-mac-6.yaml	SUSPECT	line=183	len=170	key="⑹ ★yaml の構造に注意★	val=此の箱の top-level は list ではなく `{messages: [...]}` である。當職の走り書きは之を list と決め付け `AttributeError` で止まつた ―― ★止まつたのは file ではなく道具★(五原則④)。貴殿は rev5 で正しく扱つて居る。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/_stopped-20260903/ashigaru-mac-6.yaml	SUSPECT	line=713	len=107	key="陽性対照	val=shogun-mac 箱で 300 ちやうど 30 件(Z-A)が再現する事。陰性対照: file 経路の便(inbox_write 由来・前置無し)は本表に混ぜぬ(混入 0 を示せ)。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/ashigaru-mac-1.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/ashigaru-mac-2.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/ashigaru-mac-3.yaml	SUSPECT	line=503	len=194	key=・疵は二箇所で、★二重に黙る★ ―― get_task_info(L175-194)	val=`except Exception: print(''--- ---'')` ／ get_unread_count(L197-215): `except Exception: print(''?'')`。加へて両方の末に `2>/dev/null` が在り、python の悲鳴も捨てて居る。
+/Users/momizimac/multi-agent-shogun/queue/tasks/ashigaru-mac-4.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/ashigaru-mac-7.yaml	CLEAN
+/Users/momizimac/multi-agent-shogun/queue/tasks/gunshi-mac.yaml	SUSPECT	line=24	len=97	key=git_head	val=eb8421ba9864cd58b0cf246cdffc6d45f6949372   # "fmt(js): npm run fix on merge (#80725)"
+/Users/momizimac/multi-agent-shogun/queue/tasks/gunshi-mac.yaml	SUSPECT	line=422	len=152	key="S2	val=★差の実体を読む★: git diff ac8dff4fb -- tools/registry.py (66追加/445削除) を全文読み、live registry.py が ac8dff4fb に無い独自実装を持つか判定せよ。★持つなら丸ごと上書きは其れを落とす★=不可。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/gunshi-mac.yaml	SUSPECT	line=423	len=163	key="S3	val=判定に応じ最小治療を選ぶ: (a) 独自実装なし → registry.py を ac8dff4fb 版へ揃える / (b) 独自実装あり → ★定数 _MAX_TOOL_ERROR_CHARS と其れが使われる truncate helper だけ★ を移植する。どちらを採ったか理由付きで書け。"
+/Users/momizimac/multi-agent-shogun/queue/tasks/pending.yaml	CLEAN
