@@ -26,7 +26,10 @@ def _run_poll(tmp_path, message):
     retry_file = tmp_path / "retry.json"
 
     source = _receiver_source()
-    with patch.dict(os.environ, {"SECONDPC_RECEIVER_RETRY_TRACKER_FILE": str(retry_file)}):
+    with patch.dict(os.environ, {
+        "SECONDPC_RECEIVER_RETRY_TRACKER_FILE": str(retry_file),
+        "SUPABASE_SERVICE_ROLE_KEY": "fake_key",
+    }):
         with patch("sys.argv", [
             "test", str(response_file), str(processed_file), str(script_dir),
             "http://localhost:54321/rest/v1", "fake_key",

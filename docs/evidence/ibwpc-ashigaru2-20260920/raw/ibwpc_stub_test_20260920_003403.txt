@@ -1,0 +1,20 @@
+IBW_PC stub test raw output (足軽second二号・2026-09-20 00:34:03)
+対象=/home/hakudokai/bin/idle_backlog_wake.sh SHA256=d703708db068d6787a52c7c6590297aeffdb6c93752aafe235ce895df9c3e46b 行271 -L321
+抽出=sed -n 37,81p(funcs.sh)/229,261p(loopbody_raw.sh) ―― 同一樹より一撃で抽出、両caseで共用
+呼出器=ibwpc_case.sh RC規約: 0=wake成立(MSG非空) / 3=wake見送り(MSG空)
+
+=== 正の試 呼出 ===
+argv: pos ashigaru-second-2 test_pc_disposable_xyz case_pos 0 0 0 (mold=空) (top=空) STUB_BE=1 STUB_BETOP='b1234567|試験板題|-|1|2.0'
+argv=[pos ashigaru-second-2 test_pc_disposable_xyz case_pos 0 0 0   1 b1234567|試験板題|-|1|2.0]
+backlog=3
+MSG=[機械wake] 板(自分owner)=0/箱未読=2/箱最古(msg_test_old・karo-second・第一の未読・これは покажет purpose抽出のtest文字列で四十字を)/要返答=0(最古seqから順に)/owner空板=1(b1234567「試験板題」) が未処理。他者所有0件は対象外。WORK-PULLで処理せよ
+sig=b0m0y2otoidmsg_test_oldbe1btb1234567
+RC_POS=0
+
+=== 負の試 呼出 ===
+argv: neg ashigaru-second-3 test_pc_disposable_xyz case_neg 0 0 0 (mold=空) (top=空) STUB_BE=0 STUB_BETOP=(空)
+argv=[neg ashigaru-second-3 test_pc_disposable_xyz case_neg 0 0 0   0 ]
+backlog=0
+MSG=<未設定=wake見送り>
+sig=<未設定>
+RC_NEG=3
