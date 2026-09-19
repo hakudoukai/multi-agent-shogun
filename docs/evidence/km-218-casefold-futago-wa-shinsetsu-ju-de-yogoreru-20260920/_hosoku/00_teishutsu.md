@@ -76,7 +76,10 @@ commit 後の実測（cwd=`/Users/momizimac/wt/a2-km218`）:
 
 ```
 argv=git status --porcelain -uall --ignored
-（commit 直後に実走・結果は納便へ転記）
+cwd=/Users/momizimac/wt/a2-km218
+rc=0
+出= M docs/runbooks/ERR-EKARTE-001.md
+（commit=c624318c226a2e678e4015da3b2ab2c9d121ae28 の直後・上記の既知1行のみ・他の行は0 ―― ⑥clean(本弾定義)は満たされた）
 ```
 
 再正N/N: ⑴〜⑹ の6件中6件 PASS（上記⑤表と同一・commit 後も内容は不変のため再測しても同じ）。
