@@ -1,0 +1,5 @@
+# 発見: lib/_section18_roles.sh の版の食ひ違ひ(刻 2026-09-19T18:32:19+0900)
+origin/main 6bde7170 の lib: 125 行 sha256=7efbaa511ea0acfd16e3ecadc329fe5127b7bf460031264ca9b8234e9a99b8cc ―― L108 に declare -A(bash 4+)。bash 3.2 + set -u で source が『shogun: unbound variable』rc=127 で落ち(raw/33)、pane_identity.sh は★一行も刷らず rc=0★で終はる(raw/30_B_after_ok・raw/30_dbg.xtrace の尾 = source の行)。
+生きた共有樹の lib: 148 行 sha256=8473838e23bbcee8132b1e7fc16d36ae00d480e1e78d0b3f1c620a74ec488db0 未 commit(M)・bash 3.2 化(改行区切りの表)済 → 生きた pane_identity.sh は走る(raw/32: rc=2・out 26 行)。
+∴ 本弾の試験は SECTION18_ROLES_LIB=<共有樹の lib>(env の上書き口・器 L46)で生きた lib を指して走らす。lib は本弾で触らぬ(命の外)。origin/main の lib の bash 3.2 化は別弾(家老の未 commit を commit するか)。
+108:declare -A SECTION18_ROLE_ALIASES=(

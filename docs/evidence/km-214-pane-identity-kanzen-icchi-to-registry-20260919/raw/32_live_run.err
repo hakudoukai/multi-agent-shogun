@@ -1,0 +1,13 @@
+  ⚠ session shogun が存在しない
+  ❌ multiagent:agents.0: 期待=hideyoshi 実態=karo-mac
+  ❌ multiagent:agents.1: 期待=ashigaru1 実態=ashigaru-mac-1
+  ❌ multiagent:agents.2: 期待=ashigaru2 実態=ashigaru-mac-2
+  ❌ multiagent:agents.3: 期待=ieyasu 実態=ashigaru-mac-3
+  ▼ 4-way audit 結果: ❌ 4 件の drift (advisory)
+    [WARN] pane drift detected at index 0: A=karo-mac B=hideyoshi C=_ D=_
+    [WARN] pane drift detected at index 1: A=ashigaru-mac-1 B=ashigaru1 C=_ D=_
+    [WARN] pane drift detected at index 2: A=ashigaru-mac-2 B=ashigaru2 C=_ D=_
+    [WARN] pane drift detected at index 3: A=ashigaru-mac-3 B=ieyasu C=_ D=_
+    {"timestamp":"2026-09-19T18:31:44+09:00","level":"WARN","source":"pane_identity_4way","corr_id":"pane4way-1789810304-91912","err_code":"ERR-INFRA-PANE-DRIFT-001","mismatch_count":4,"sources_skipped":0,"advisory":true}
+    pane drift detected, advisory only — see /var/folders/z0/bdbk65zj0gjg80g3784jhmvc0000gn/T//pane_identity_drift.77Ek4T.json for details
+▼ 結果: ❌ 4 件の整合性違反 + 4 件の 4-way drift

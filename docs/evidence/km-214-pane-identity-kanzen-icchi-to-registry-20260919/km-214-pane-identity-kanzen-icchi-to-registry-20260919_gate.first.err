@@ -1,0 +1,15 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★EOF改行が複数(末尾に空行) ―― raw/30_A_before.out★
+★EOF改行が複数(末尾に空行) ―― raw/30_A_before_round1.out★
+★EOF改行が複数(末尾に空行) ―― raw/30_C1_no_registry.out★
+★EOF改行が複数(末尾に空行) ―― raw/30_C2_parse_error.out★
+★EOF改行が複数(末尾に空行) ―― raw/30_C3_empty.out★
+★EOF改行が複数(末尾に空行) ―― raw/30_C3b_no_mainpc.out★
+★EOF改行が複数(末尾に空行) ―― raw/30_C4b_no_python.out★
+★EOF改行が複数(末尾に空行) ―― raw/32_live_run.out★
+條⑤ 寸法 = byte和 50394(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

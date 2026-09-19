@@ -1,0 +1,7 @@
+pane_registry:
+  panes:
+  - tmux_target: multiagent:0.9
+    agent_id: only-second
+    persona: only-second
+    pc: SecondPC
+    status: 通常運用

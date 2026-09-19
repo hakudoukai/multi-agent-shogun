@@ -1,0 +1,17 @@
+# 触る前の tmux 実測(読取のみ・bash で走らす=zsh の = 展開を避ける・刻 2026-09-19T18:28:27+0900・tmux tmux 3.7b)
+## session 名: gakushu-bucho hermes-drm hermes-gunshi-mac multiagent-mac
+has-session -t multiagent → rc=0
+has-session -t =multiagent → rc=1
+has-session -t shogun → rc=1
+has-session -t =shogun → rc=1
+has-session -t =multiagent-mac → rc=0
+## pane 目標の前方一致(★生きた Mac の pane を掴むか★)
+display-message -t multiagent:0.0 → rc=0 出目=[multiagent-mac:0.0 @agent_id=karo-mac]
+display-message -t =multiagent:0.0 → rc=0 出目=[:. @agent_id=]
+display-message -t multiagent:0.1 → rc=0 出目=[multiagent-mac:0.1 @agent_id=ashigaru-mac-1]
+display-message -t =multiagent:0.1 → rc=0 出目=[:. @agent_id=]
+display-message -t multiagent:agents.0 → rc=0 出目=[multiagent-mac:0.0 @agent_id=karo-mac]
+display-message -t =multiagent-mac:0.1 → rc=0 出目=[multiagent-mac:0.1 @agent_id=ashigaru-mac-1]
+## list-panes -t multiagent(source A の形)
+list-panes -t multiagent → rc=0 行=4 頭=0=karo-mac
+list-panes -t =multiagent → rc=0 出目=0=karo-mac

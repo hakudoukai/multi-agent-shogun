@@ -1,0 +1,20 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_B_after_ok_round1.err(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_B_after_ok_round1.out(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C1_no_registry_round1.err(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C1_no_registry_round1.out(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C2_parse_error_round1.err(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C2_parse_error_round1.out(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C3_empty_round1.err(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C3_empty_round1.out(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C3b_no_mainpc_round1.err(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C3b_no_mainpc_round1.out(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C4_no_python.out(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_C4_no_python_round1.out(裁 seq330497)★
+★末尾行が不可視のみ(空行・CRLF空行・不可視字一字を含む) ―― raw/30_dbg_round1.out(裁 seq330497)★
+條⑤ 寸法 = byte和 50881(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

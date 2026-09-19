@@ -1,0 +1,13 @@
+# 触る前の tmux 実測 その二 ―― = の後の落ち先(TMUX の中と外・刻 2026-09-19T18:29:28+0900)
+## TMUX 環境変数の中(hook が走る形): TMUX=set
+  display-message -t =multiagent:0.0 → rc=0 出目=[:.|]
+  display-message -t =nosuch:0.0 → rc=0 出目=[:.|]
+  display-message -t =multiagent → rc=0 出目=[:.|]
+  list-panes -t =multiagent → (管の rc=0) 頭=[multiagent-mac:0=karo-mac]
+  list-panes -t =nosuch → (管の rc=0) 頭=[can't find window: nosuch]
+## TMUX を外す(env -u TMUX)
+  display-message -t =multiagent:0.0 → rc=0 出目=[:|]
+  display-message -t multiagent:0.0 → rc=0 出目=[multiagent-mac:0|karo-mac]
+  list-panes -t =multiagent → rc=0 頭=[multiagent-mac:0=karo-mac]
+  list-panes -t multiagent → rc=0 頭=[multiagent-mac:0=karo-mac]
+## 読み: = は has-session では効く。display-message/list-panes は目標が無い時、TMUX の中では★今の client の session/pane へ黙つて落ちる★(rc 0)。∴ 器は pane を問ふ前に has-session -t =名 で session の実在を確かめねば fail-closed に成らぬ。

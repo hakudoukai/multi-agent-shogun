@@ -1,0 +1,117 @@
+diff --git a/scripts/checks/pane_identity.sh b/scripts/checks/pane_identity.sh
+index 3d02cbda..ad5b1130 100644
+--- a/scripts/checks/pane_identity.sh
++++ b/scripts/checks/pane_identity.sh
+@@ -104,11 +104,52 @@ normalize_persona() {
+ # ★bash 3.2 対応 (2026-09-19 家老mac・裁 seq337297)★
+ # declare -A は 3.2 で invalid option であり、続く添字代入が算術評価され
+ # set -u で shell が落ちる。∴ ★改行区切りの表 + 関数引き★ へ改める。
+-EXPECTED_TABLE='multiagent:agents.0=hideyoshi
+-multiagent:agents.1=ashigaru1
+-multiagent:agents.2=ashigaru2
+-multiagent:agents.3=ieyasu
+-shogun:main.0=nobunaga'
++# ★km-214 (2026-09-19 專任1・裁 seq337388㋑)★ 期待表は手書きせず ★queue/pane_registry.yaml から引く★
++#   (理「手で表へ足せば腐る」)。鍵 = tmux_target 逐語・値 = persona(無ければ agent_id)。
++#   対象 = pc: MainPC かつ status: 通常運用。registry 無し / parse 不能 / 席 0 / python 無し の四形は
++#   ★各々別の出目で fail-closed★(黙つて空表へ倒れず violations に数へる)。
++#   引く手は .venv/bin/python3(env PYTHON で上書き可・無ければ PATH の python3・其れも無ければ fail-closed)。
++: "${PYTHON:=$REPO_ROOT/.venv/bin/python3}"
++if [ ! -x "$PYTHON" ]; then
++    if command -v python3 >/dev/null 2>&1; then PYTHON="$(command -v python3)"; else PYTHON=""; fi
++fi
++EXPECTED_TABLE=""
++EXPECTED_TABLE_STATE=""   # ok / no_python / no_registry / parse_error / empty
++if [ -z "$PYTHON" ]; then
++    EXPECTED_TABLE_STATE="no_python"
++elif [ ! -f "$PANE_REGISTRY" ]; then
++    EXPECTED_TABLE_STATE="no_registry"
++else
++    if EXPECTED_TABLE=$("$PYTHON" - "$PANE_REGISTRY" <<'PYEOF' 2>/dev/null
++import sys
++try:
++    import yaml
++    d = yaml.safe_load(open(sys.argv[1], encoding="utf-8"))
++    panes = (d or {}).get("pane_registry", {}).get("panes") or []
++except Exception as e:
++    sys.exit(3)
++rows = []
++for p in panes:
++    if not isinstance(p, dict):
++        continue
++    if p.get("pc") != "MainPC" or p.get("status") != "通常運用":
++        continue
++    tt = str(p.get("tmux_target") or "").strip()
++    who = str(p.get("persona") or p.get("agent_id") or "").strip()
++    if tt and who and " " not in tt:
++        rows.append(f"{tt}={who}")
++if not rows:
++    sys.exit(4)
++print("\n".join(rows))
++PYEOF
++    ); then
++        EXPECTED_TABLE_STATE="ok"
++    else
++        _rc=$?
++        if [ "$_rc" -eq 4 ]; then EXPECTED_TABLE_STATE="empty"; else EXPECTED_TABLE_STATE="parse_error"; fi
++        EXPECTED_TABLE=""
++    fi
++fi
+
+ # 表から値を引く (見つからぬなら空・常に rc=0)
+ table_get() {
+@@ -136,10 +177,21 @@ table_keys() {
+ violations=0
+ warnings=0
+
++# ★km-214★ 期待表の四形を先に刷る(fail-closed・黙らぬ)
++case "$EXPECTED_TABLE_STATE" in
++    ok)          echo "  ▷ 期待表 = $PANE_REGISTRY から $(table_keys "$EXPECTED_TABLE" | grep -c .) 席 (MainPC・通常運用) を引いた" ;;
++    no_python)   echo "  ❌ 期待表を引けぬ: python3 が無い (.venv/bin/python3 も PATH も) ―― fail-closed" >&2; violations=$((violations+1)) ;;
++    no_registry) echo "  ❌ 期待表を引けぬ: registry 不在 $PANE_REGISTRY ―― fail-closed" >&2; violations=$((violations+1)) ;;
++    parse_error) echo "  ❌ 期待表を引けぬ: registry を parse できぬ $PANE_REGISTRY ―― fail-closed" >&2; violations=$((violations+1)) ;;
++    empty)       echo "  ❌ 期待表を引けぬ: registry に MainPC・通常運用 の席が 0 ―― fail-closed" >&2; violations=$((violations+1)) ;;
++    *)           echo "  ❌ 期待表の状態が不明 [$EXPECTED_TABLE_STATE] ―― fail-closed" >&2; violations=$((violations+1)) ;;
++esac
++
+ echo "▼ Pane Identity Map"
++# ★km-214 (裁 seq337507⑶疵②)★ -t は ★=名★(完全一致)。前方一致は生きた別 session(例 multiagent-mac)を掴む。
+ for s in shogun multiagent; do
+-    if "$TMUX_CMD" has-session -t "$s" 2>/dev/null; then
+-        "$TMUX_CMD" list-panes -t "$s" -a -F '  #{session_name}:#{window_name}.#{pane_index}  @agent_id=#{@agent_id}  pid=#{pane_pid}  cmd=#{pane_current_command}' 2>&1
++    if "$TMUX_CMD" has-session -t "=$s" 2>/dev/null; then
++        "$TMUX_CMD" list-panes -t "=$s" -a -F '  #{session_name}:#{window_name}.#{pane_index}  @agent_id=#{@agent_id}  pid=#{pane_pid}  cmd=#{pane_current_command}' 2>&1
+     else
+         echo "  ⚠ session $s が存在しない" >&2
+         warnings=$((warnings+1))
+@@ -150,9 +202,18 @@ echo ""
+ echo "▼ 整合性検証 (= 既存 self-identification check)"
+ for pane_target in $(table_keys "$EXPECTED_TABLE"); do
+     expected=$(table_get "$EXPECTED_TABLE" "$pane_target")
+-    actual=$("$TMUX_CMD" display-message -t "$pane_target" -p '#{@agent_id}' 2>/dev/null)
++    # ★km-214★ display-message/list-panes は目標が無い時 TMUX の中では今の client へ黙つて落ちる(実測 raw/21)。
++    #   ∴ 先づ session を完全一致で確かめ、無ければ比較せず「session 不在」と刷る(fail-closed: 掴み違ひを防ぐ)。
++    _sess="${pane_target%%:*}"
++    if ! "$TMUX_CMD" has-session -t "=$_sess" 2>/dev/null; then
++        echo "  ⚠ $pane_target: session $_sess が無い(完全一致) ―― 比較せず (期待=$expected)" >&2
++        warnings=$((warnings+1))
++        continue
++    fi
++    actual=$("$TMUX_CMD" display-message -t "=$pane_target" -p '#{@agent_id}' 2>/dev/null)
+     if [ -z "$actual" ]; then
+-        if [ "$pane_target" = "shogun:main.0" ]; then
++        case "$pane_target" in shogun:*) _is_shogun=1 ;; *) _is_shogun=0 ;; esac
++        if [ "$_is_shogun" -eq 1 ]; then
+             echo "  ⚪ $pane_target @agent_id=空 (= shogun pane、許容範囲)"
+         else
+             echo "  ❌ $pane_target: pane 不在 or @agent_id 未設定 (期待=$expected)" >&2
+@@ -215,7 +276,8 @@ run_4way_audit() {
+     # ── A. tmux 実態 ─────────────────────────────────────────────────
+     local src_a_raw=""
+     if _check_deadline; then
+-        if src_a_raw=$(timeout "$TIMEOUT_PER_SOURCE_SECONDS" "$TMUX_CMD" list-panes -t multiagent -F '#{pane_index}=#{@agent_id}' 2>/dev/null); then
++        # ★km-214★ =multiagent(完全一致)・session が無ければ list-panes は今の client へ落ちるゆゑ has-session を先に
++        if "$TMUX_CMD" has-session -t "=multiagent" 2>/dev/null && src_a_raw=$(timeout "$TIMEOUT_PER_SOURCE_SECONDS" "$TMUX_CMD" list-panes -t "=multiagent" -F '#{pane_index}=#{@agent_id}' 2>/dev/null); then
+             :
+         else
+             echo "  [WARN] source A (tmux) 取得失敗 (degraded mode)" >&2

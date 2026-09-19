@@ -1,0 +1,11 @@
+▼ Pane Identity Map
+
+▼ 整合性検証 (= 既存 self-identification check)
+
+▼ 重複 @agent_id 検知
+  ✅ 重複なし
+
+▼ 4-way mapping audit (corr_id=pane4way-1789810347-93252, advisory only, budget=5s)
+  ── per-index comparison (multiagent: のみ、shogun は別 source 確認) ──
+  idx   A:tmux       B:registry   C:watchdog   D:§18.1     status
+  ▼ 4-way audit 結果: ✅ 全 source 整合 (sources_skipped=1)

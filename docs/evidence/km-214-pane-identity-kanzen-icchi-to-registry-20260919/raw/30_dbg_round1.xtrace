@@ -1,0 +1,25 @@
++ set -uo pipefail
++ umask 077
++++ dirname /Users/momizimac/wt/a1-km214/scripts/checks/pane_identity.sh
+++ cd /Users/momizimac/wt/a1-km214/scripts/checks
+++ pwd
++ SCRIPT_DIR=/Users/momizimac/wt/a1-km214/scripts/checks
+++ cd /Users/momizimac/wt/a1-km214/scripts/checks/../..
+++ pwd
++ REPO_ROOT=/Users/momizimac/wt/a1-km214
++ : /Users/momizimac/wt/a1-km214/queue/pane_registry.yaml
++ : /Users/momizimac/wt/a1-km214/scripts/watcher_supervisor.sh
++ : /Users/momizimac/wt/a1-km214/CLAUDE.md
++ : /Users/momizimac/wt/a1-km214/lib/_section18_roles.sh
++ : /Users/momizimac/.openclaw/disable_pane_identity_hook
++ : raw/30_dbg_last_run.json
++ : /opt/homebrew/bin/tmux
++ TIMEOUT_GLOBAL_SECONDS=5
++ TIMEOUT_PER_SOURCE_SECONDS=2
++ MISMATCH_COUNT_GLOBAL=0
++ SOURCES_SKIPPED_GLOBAL=0
++ LAST_AUDIT_STATUS_GLOBAL=unknown
++ '[' -f /Users/momizimac/.openclaw/disable_pane_identity_hook ']'
++ ALIAS_NORMALIZE_OK=0
++ '[' -f /Users/momizimac/wt/a1-km214/lib/_section18_roles.sh ']'
++ source /Users/momizimac/wt/a1-km214/lib/_section18_roles.sh
