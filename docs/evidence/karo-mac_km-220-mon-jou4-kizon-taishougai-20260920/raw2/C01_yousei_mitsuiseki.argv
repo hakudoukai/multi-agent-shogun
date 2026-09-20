@@ -1,0 +1,11 @@
+札=C01_yousei_mitsuiseki
+cwd=/Users/momizimac/wt/km-220-jou4-kizon-taishougai
+刻(UTC)=2026-09-20T02:42:18Z
+env DASUMAE_JOU4_SCOPE=★未設定★
+env KM_GATE_MANIFEST_BASE=★未設定★
+argc=4
+argv[1]=/bin/bash
+argv[2]=scripts/checks/karo_mac_dasumae_gate.sh
+argv[3]=--
+argv[4]=docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/fixtures/saitei_taishou_20260920.txt
+rc=1

@@ -1,0 +1,11 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條④ 射程 DASUMAE_JOU4_SCOPE = unset ―― 実効「existing_exempt」(既定=existing_exempt=既存は對象外・裁 seq339959)
+條① 台帳とdiskの差 = スキップ(台帳未指定)
+條④ 對象外 ―― fixtures/saitei_taishou_20260920.txt は既存(追跡済・HEADと差無し)・札=1(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條④ 對象外 ―― fixtures/taishou_eof_kaigyou_nashi.txt は既存(追跡済・HEADと差無し)・札=1(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條④ 對象外 ―― fixtures/taishou_repo_nai_mitsuiseki.txt は既存(追跡済・HEADと差無し)・札=1(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條④ 對象外 ―― fixtures/taishou_tsuiseki_zumi_sa_ari.txt は既存(追跡済・HEADと差無し)・札=1(裁 seq339959。悉く当てるには DASUMAE_JOU4_SCOPE=all)
+條②末尾不可視字(類 Zs/Zl/Zp/Cc/Cf) / 條③CR混入 = 全file(85本)通 ―― ★條④は 4/85 本を既存として對象外にした(裁 seq339959)★。★對象外は「EOF改行が在つた」の意に非ず★
+條⑤ 寸法 = byte和 174419(閾 10485760未満)
+★出す前 門 通。出してよい。★
