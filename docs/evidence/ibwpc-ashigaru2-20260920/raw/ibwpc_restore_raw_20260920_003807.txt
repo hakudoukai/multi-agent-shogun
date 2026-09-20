@@ -1,0 +1,29 @@
+IBW_PC 復元実演・生の捕獲(足軽second二号・2026-09-20 00:38:07)
+境=scratchpadのみ・実配 /home/hakudokai/bin/idle_backlog_wake.sh には一切触れず
+
+=== 控1(bak-ibwpc-20260920-0016) の復元 ===
+-- 復元前(控の現ハッシュ) --
+0ddf1725b60c9926b266284bf93456e964faba5c68448c0563c05c115ec6b2a9  /home/hakudokai/bin/idle_backlog_wake.sh.bak-ibwpc-20260920-0016
+-- cp 実行 --
+++ cp -v /home/hakudokai/bin/idle_backlog_wake.sh.bak-ibwpc-20260920-0016 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/ibwpc_restore_raw/restore_target_bak1_20260920_003807.sh
+'/home/hakudokai/bin/idle_backlog_wake.sh.bak-ibwpc-20260920-0016' -> '/tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/ibwpc_restore_raw/restore_target_bak1_20260920_003807.sh'
+++ set +x
+-- 復元後(復元先の実ハッシュ) --
+0ddf1725b60c9926b266284bf93456e964faba5c68448c0563c05c115ec6b2a9  /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/ibwpc_restore_raw/restore_target_bak1_20260920_003807.sh
+-- 一致判定 --
+      2 0ddf1725b60c9926b266284bf93456e964faba5c68448c0563c05c115ec6b2a9
+
+=== 控2(bak-ibwpc2-20260920-002039) の復元 ===
+-- 復元前(控の現ハッシュ) --
+a77f8d901cf15217abddc72fe815fbaf1f306a17025b117ad901b426e531498f  /home/hakudokai/bin/idle_backlog_wake.sh.bak-ibwpc2-20260920-002039
+-- cp 実行 --
+++ cp -v /home/hakudokai/bin/idle_backlog_wake.sh.bak-ibwpc2-20260920-002039 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/ibwpc_restore_raw/restore_target_bak2_20260920_003807.sh
+'/home/hakudokai/bin/idle_backlog_wake.sh.bak-ibwpc2-20260920-002039' -> '/tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/ibwpc_restore_raw/restore_target_bak2_20260920_003807.sh'
+++ set +x
+-- 復元後(復元先の実ハッシュ) --
+a77f8d901cf15217abddc72fe815fbaf1f306a17025b117ad901b426e531498f  /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/ibwpc_restore_raw/restore_target_bak2_20260920_003807.sh
+-- 一致判定 --
+      2 a77f8d901cf15217abddc72fe815fbaf1f306a17025b117ad901b426e531498f
+
+=== 控2 行数の正誤(家老second指摘への検め) ===
+  250   321 /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/15cc9b47-f467-4924-8f53-6555ed23dcb9/scratchpad/ibwpc_restore_raw/restore_target_bak2_20260920_003807.sh

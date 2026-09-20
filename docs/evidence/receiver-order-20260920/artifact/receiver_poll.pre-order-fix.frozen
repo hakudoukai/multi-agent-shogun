@@ -493,18 +493,6 @@ for msg in new_msgs:
 
     log(f"NEW: {msg_id[:8]} type={message_type} topic={topic} from {from_pc}")
 
-    # A dedicated downlink owns these recipients end to end, so the generic
-    # receiver must not classify, close, or mutate such a row at all.  The
-    # ownership decision has to be made HERE, ahead of the self-send test: that
-    # test fails closed on a missing sender identity, so an envelope-less row
-    # bound for a downlink-owned target used to be dead-lettered below and never
-    # reached the skip that was meant to protect it.  The skip existed; it was
-    # simply adjudicated too late.  (board 12674e7c)
-    is_file_sync = message_type == "file_sync" or topic.startswith("file_sync")
-    if not is_file_sync and detect_target(msg) in DOWNLINK_OWNED_TARGETS:
-        preserve_delivery_failure(msg, "target_owned_by_dedicated_downlink")
-        continue
-
     # Same-PC delivery is valid across distinct roles.  Reject only a proven
     # same-role send; missing/invalid sender identity fails closed.
     if is_same_agent_send(msg):
@@ -525,7 +513,7 @@ for msg in new_msgs:
         continue
 
     # --- file_sync: write files to local filesystem (no inbox_write needed) ---
-    if is_file_sync:
+    if message_type == "file_sync" or topic.startswith("file_sync"):
         write_ok = handle_file_sync(msg, script_dir)
         if write_ok:
             # Determine target agent for nudge
@@ -538,9 +526,12 @@ for msg in new_msgs:
                 agent_deliveries[target] = agent_deliveries.get(target, 0) + 1
     else:
         # --- Standard message: write to inbox ---
-        # Ownership of downlink-owned targets is settled above, before the
-        # self-send test; reaching here means this target is not one of them.
         target = detect_target(msg)
+        if target in DOWNLINK_OWNED_TARGETS:
+            # Dedicated downlink owns its recipient ACK.  The generic receiver
+            # must not write, retry, or mutate this source row.
+            preserve_delivery_failure(msg, "target_owned_by_dedicated_downlink")
+            continue
         if not target:
             # Preserve an invalid target locally without mutating the original
             # recipient ACK.  Keep the established one-time escalation so the

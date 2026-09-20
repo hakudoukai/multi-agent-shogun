@@ -1,0 +1,59 @@
+==== 刻 2026-09-20T02:13:53,746041716+09:00 ====
+cwd=/home/hakudokai/karo/wt-12674e7c
+host=USER-O6AK917NTU whoami=hakudokai
+枝=karo-second/receiver-envelope-preserve-12674e7c
+HEAD=71c725656bf533e433e01e6dea6adf45728b685f
+python=Python 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+pytest=pytest 9.0.3
+bats=NOT INSTALLED
+
+==== 器の符 ====
+直し後 shim/hakudokai/hakudokai_secondpc_receiver_poll.py
+02801104367daef538f592812e2bc3ff32329c09b4c1c36b4bf461f882f6e5d0  shim/hakudokai/hakudokai_secondpc_receiver_poll.py
+直し前 (退避写し)
+190638e4ec26b161a3d57b3766e3e57d38dbc7910ad44ed464261185f116bc95  /tmp/claude-1000/-home-hakudokai-projects-multi-agent-shogun/f077782d-3b2f-4d48-a260-4d7841430575/scratchpad/receiver.pre_cond_order.py
+試し
+1514bcb6f10c59f7f46369b989317ed48f34b55407deaf00b0cb4d296062bd07  tests/test_secondpc_downlink_owned_order.py
+
+==== ① 陽性対照: 直し前の器へ戻して同じ試しを撃つ ====
+argv: python3 -m pytest tests/test_secondpc_downlink_owned_order.py -q
+        out = _run_poll(tmp_path, _row("own-no-sender", "cross_pc_inbox_honbucho"))
+>       assert "PATCH" not in out["methods"], "the source row must not be mutated at all"
+E       AssertionError: the source row must not be mutated at all
+E       assert 'PATCH' not in ['PATCH']
+
+tests/test_secondpc_downlink_owned_order.py:80: AssertionError
+----------------------------- Captured stderr call -----------------------------
+[receiver][02:13:54] NEW: own-no-s type=answer topic=cross_pc_inbox_honbucho from second_pc
+[receiver][02:13:54] SELF-SEND detected: own-no-s from=second_pc to=second_pc — dead-lettering
+[receiver][02:13:54] DEAD-LETTERED: own-no-s after 5 retries
+[receiver][02:13:54] total: 0 ok, 0 failed (of 1 new)
+=========================== short test summary info ============================
+FAILED tests/test_secondpc_downlink_owned_order.py::test_envelopeless_downlink_row_is_not_dead_lettered
+1 failed, 3 passed in 0.05s
+rc=1
+
+==== ② 直し後 ====
+02801104367daef538f592812e2bc3ff32329c09b4c1c36b4bf461f882f6e5d0  shim/hakudokai/hakudokai_secondpc_receiver_poll.py
+argv: python3 -m pytest tests/test_secondpc_downlink_owned_order.py -q
+....                                                                     [100%]
+4 passed in 0.04s
+rc=0
+
+==== ③ 既存回帰（env 与へ・pgserver 1本のみ除外） ====
+argv: env SUPABASE_SERVICE_ROLE_KEY=fake_key python3 -m pytest tests/ -q --ignore=tests/migrations/test_organizational_lessons_rls.py
+FAILED tests/test_section18_migration.py::TestSection18ShellPythonSotDrift::test_mainpc_pane_index_covers_all_python_mainpc_minus_shogun
+24 failed, 113 passed in 4.11s
+rc=1
+
+==== ④ 直し前の同じ測り（己の試し4本のみ更に除外） ====
+FAILED tests/test_section18_migration.py::TestSection18ShellPythonSotDrift::test_mainpc_pane_index_covers_all_python_mainpc_minus_shogun
+24 failed, 109 passed in 4.26s
+rc=1
+
+==== ⑤ 復元の確かめ ====
+02801104367daef538f592812e2bc3ff32329c09b4c1c36b4bf461f882f6e5d0  shim/hakudokai/hakudokai_secondpc_receiver_poll.py
+clean? -> 2 行の変更
+ M shim/hakudokai/hakudokai_secondpc_receiver_poll.py
+?? tests/test_secondpc_downlink_owned_order.py
+==== 畢 2026-09-20T02:14:03,840412116+09:00 ====

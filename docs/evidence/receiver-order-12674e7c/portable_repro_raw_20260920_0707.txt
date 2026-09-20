@@ -1,0 +1,43 @@
+# 可搬なる再走 生紙 ―― pytest に依らず(標準庫のみ)・正負両対照
+測り手 家老second / 刻 2026-09-20 07:04:48+0900 / host USER-O6AK917NTU / Python 3.12.3
+条件   PYTHONNOUSERSITE=1 ―― ★利用者siteを無効にして測る＝席に依らぬ事を示す為★
+固定 HEAD = 3da2076d25f624458f06402f331a97b0990246eb
+固定 tree = b6349da119f9f500ac48676cabe497e35e0e7340
+手順      = git archive --format=tar <固定HEAD> | tar -x -C <素の砂場>  (砂場 570紙)
+走らす器  = run_nopytest.py sha256=ac40c0bd5388fc527eef337c223d7d29b5f71efe393c884471139ec5bd1dc838
+            借る pytest 機構は組込 fixture `tmp_path` ただ一つ。tempfile にて自前で与ふ。
+
+## ㊀ 正対照 ―― 後像 (blob c014232ce75de23633c3a16c827f98dd8e233013)
+  受信器 sha256=02801104367daef538f592812e2bc3ff32329c09b4c1c36b4bf461f882f6e5d0
+  PASS tests/test_secondpc_downlink_owned_order.py test_downlink_row_with_sender_is_also_left_alone
+  PASS tests/test_secondpc_downlink_owned_order.py test_envelopeless_downlink_row_is_not_dead_lettered
+  PASS tests/test_secondpc_downlink_owned_order.py test_negative_control_file_sync_is_not_captured_by_the_guard
+  PASS tests/test_secondpc_downlink_owned_order.py test_negative_control_ordinary_target_still_dead_letters
+  PASS tests/test_secondpc_deadletter_envelope.py test_dead_letter_preserves_envelope_supplied_as_json_string
+  PASS tests/test_secondpc_deadletter_envelope.py test_dead_letter_preserves_routing_identity
+  PASS tests/test_secondpc_deadletter_envelope.py test_dead_letter_without_envelope_is_unchanged
+  PASS tests/test_secondpc_samepc_role_routing.py test_same_pc_different_role_is_delivered
+  PASS tests/test_secondpc_samepc_role_routing.py test_same_pc_missing_sender_identity_fails_closed
+  PASS tests/test_secondpc_samepc_role_routing.py test_same_pc_same_role_is_rejected
+  === ok=10 fail=0 ===
+  rc=0
+
+## ㊁ 負対照 ―― 前像へ差戻し (blob 2db21504ebba6568185cfe7d0190be4e8eacd242)
+  受信器 sha256=190638e4ec26b161a3d57b3766e3e57d38dbc7910ad44ed464261185f116bc95
+  PASS tests/test_secondpc_downlink_owned_order.py test_downlink_row_with_sender_is_also_left_alone
+  FAIL tests/test_secondpc_downlink_owned_order.py test_envelopeless_downlink_row_is_not_dead_lettered
+  PASS tests/test_secondpc_downlink_owned_order.py test_negative_control_file_sync_is_not_captured_by_the_guard
+  PASS tests/test_secondpc_downlink_owned_order.py test_negative_control_ordinary_target_still_dead_letters
+  PASS tests/test_secondpc_deadletter_envelope.py test_dead_letter_preserves_envelope_supplied_as_json_string
+  PASS tests/test_secondpc_deadletter_envelope.py test_dead_letter_preserves_routing_identity
+  PASS tests/test_secondpc_deadletter_envelope.py test_dead_letter_without_envelope_is_unchanged
+  PASS tests/test_secondpc_samepc_role_routing.py test_same_pc_different_role_is_delivered
+  PASS tests/test_secondpc_samepc_role_routing.py test_same_pc_missing_sender_identity_fails_closed
+  PASS tests/test_secondpc_samepc_role_routing.py test_same_pc_same_role_is_rejected
+  === ok=9 fail=1 ===
+  rc=1
+
+## 母数の註 ―― 数の食ひ違ひに非ず
+  軍師second 06:57:34「order 3 pass/1 fail RC1」= ★order 単紙 4件★ が母数
+  本紙                                          = ★三紙 10件★ が母数
+  前後を分かつ紙は両者同一の一本 = test_envelopeless_downlink_row_is_not_dead_lettered
