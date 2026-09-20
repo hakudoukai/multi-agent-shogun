@@ -1,0 +1,21 @@
+札=R02b_yousei_scope_all
+cwd=/Users/momizimac/wt/km-220-jou4-kizon-taishougai
+刻(UTC)=2026-09-20T05:15:04Z
+git_toplevel=/Users/momizimac/wt/km-220-jou4-kizon-taishougai
+git_ref=karo-mac/km-220-mon-jou4-kizon-wo-taishougai-20260920
+git_commit40=21bac4df79af0d928afb4cb970edd7f4b37d03f0
+git_tree40=2efba8da26cf97e9241db9497d6a79485b1ece0c
+mon_path=scripts/checks/karo_mac_dasumae_gate.sh
+mon_blob40=484e7a36aa8145925cf8f86942e29357d249db53
+mon_disk_sha256=5c46ef7b5fbc8d4f0f13e394a93e3a4d9bef6c8a4f14f045480c490c8b9421e1
+yogore_zensu=1
+yogore_zen:  M docs/runbooks/ERR-EKARTE-001.md
+yogore_tsuka_nai_sokusoku=0
+env DASUMAE_JOU4_SCOPE=all
+env KM_GATE_MANIFEST_BASE=★未設定★
+argc=4
+argv[1]=/bin/bash
+argv[2]=scripts/checks/karo_mac_dasumae_gate.sh
+argv[3]=--
+argv[4]=docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/fixtures/saitei_taishou_20260920.txt
+rc=1

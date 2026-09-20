@@ -1,0 +1,32 @@
+# clean raw ―― 刻(UTC)=2026-09-20T05:20:31Z
+# cwd=/Users/momizimac/wt/km-220-jou4-kizon-taishougai
+## git status --porcelain -uall
+ M docs/runbooks/ERR-EKARTE-001.md
+rc=0
+## git status --porcelain --ignored -uall
+ M docs/runbooks/ERR-EKARTE-001.md
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/fixtures/taishou_r3_eof_nashi.txt
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/.R01.args
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R00_clean.txt
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R01_kessai_saisou.argv
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R01_kessai_saisou.err
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R01_kessai_saisou.out
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R01_kessai_saisou.rc
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02_yousei_mitsuiseki.argv
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02_yousei_mitsuiseki.err
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02_yousei_mitsuiseki.out
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02_yousei_mitsuiseki.rc
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02b_yousei_scope_all.argv
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02b_yousei_scope_all.err
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02b_yousei_scope_all.out
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02b_yousei_scope_all.rc
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02c_yousei_mitsuiseki_shin.argv
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02c_yousei_mitsuiseki_shin.err
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02c_yousei_mitsuiseki_shin.out
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/raw3/R02c_yousei_mitsuiseki_shin.rc
+!! docs/evidence/karo-mac_km-220-mon-jou4-kizon-taishougai-20260920/utsuwa/hashiru2.sh
+rc=0
+## rev-parse
+ref=karo-mac/km-220-mon-jou4-kizon-wo-taishougai-20260920
+commit40=21bac4df79af0d928afb4cb970edd7f4b37d03f0
+tree40=2efba8da26cf97e9241db9497d6a79485b1ece0c
