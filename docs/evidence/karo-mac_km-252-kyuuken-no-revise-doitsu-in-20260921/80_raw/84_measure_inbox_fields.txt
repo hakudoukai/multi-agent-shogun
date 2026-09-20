@@ -1,0 +1,16 @@
+# 測D ―― sb read inbox が刷る欄（器の限界・己の空振りの記録）
+刻: 2026-09-21T02:11:15+09:00
+器(argv 逐語): $HOME/bin/sb read inbox 200 → grep -oE '^  [a-z_]+:' | sort | uniq -c
+母數: 取得 200 件 / 母数 2197 / ★落ち 1997★（冠の逐語より）
+--- 欄名と出現数 ---
+ 200   seq:
+ 200   requires_response:
+ 200   priority:
+ 200   message_type:
+ 200   created_at:
+ 200   content:
+   3   resolved_at:
+--- 空振りの記録（家老mac の落度） ---
+當職は此の出目に対し sender_agent='karo-mac' を grep し 0 を得て「gunshi-mac は DB へ書かぬ」と讀みかけた。
+★陽性對照(己=karo-mac)も 0 を返した★ ∴ 之は席の状態でなく★器の欄が無い★事の證であつた。
+∴ 発・宛・親を測るには sb read seq <N> を個別に打たねばならぬ（inbox は6欄のみ）。

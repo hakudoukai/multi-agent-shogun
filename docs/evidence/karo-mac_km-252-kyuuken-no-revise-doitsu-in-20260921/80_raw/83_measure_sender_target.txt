@@ -1,0 +1,30 @@
+# 測C ―― 九件の REVISE の発 と 親九件の宛（路㋒の可否）
+刻: 2026-09-21T02:11:15+09:00
+器(argv 逐語): ~/bin/sb read seq <N> → context_data の sender_agent / target_agent を grep
+母數: REVISE 9 件 ＋ 親 9 件 = 18 件（悉く個別に引いた・要約や記憶に依らぬ）
+
+seq      created_at           親        発              宛
+344826   2026-09-20T18:10:35  337810   gunshi-main    karo-mac
+344827   2026-09-20T18:10:35  342968   gunshi-main    karo-mac
+344835   2026-09-20T18:11:42  330866   gunshi-main    karo-mac
+344845   2026-09-20T18:13:15  330886   gunshi-main    karo-mac
+344855   2026-09-20T18:14:57  331860   gunshi-main    karo-mac
+344856   2026-09-20T18:14:57  331864   gunshi-main    karo-mac
+344978   2026-09-20T18:33:25  343175   gunshi-main    karo-mac
+344979   2026-09-20T18:33:25  343176   gunshi-main    karo-mac
+344980   2026-09-20T18:33:25  343177   gunshi-main    karo-mac
+
+親seq     発                宛
+337810   dr-m             gunshi-mac
+342968   karo-mac         gunshi-mac
+330866   karo-mac         gunshi-mac
+330886   karo-mac         gunshi-mac
+331860   ashigaru-mac-1   gunshi-mac
+331864   ashigaru-mac-1   gunshi-mac
+343175   karo-mac         gunshi-mac
+343176   karo-mac         gunshi-mac
+343177   karo-mac         gunshi-mac
+
+數: 親の宛 gunshi-mac = 9/9 ／ 判の発 gunshi-main = 9/9 ／ 判の発 gunshi-mac = 0/9
+∴ ★路㋒(判を gunshi-mac へ移す)は既に實行済であり成らなかつた★ ―― 宛先は初めから gunshi-mac であり、main_pc の gunshi-main が代りに取つた。
+★之は家老mac が seq347130/347252 で宣した『當職の見立ては㋒』を數が反証する ―― 家老mac の落度である。★

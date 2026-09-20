@@ -1,0 +1,8 @@
+# 測A ―― Mac から共有樹へ到達できるか（路㋑の前提）
+刻: 2026-09-21T02:11:15+09:00
+器(argv 逐語): /bin/test -d /mnt/c/DentalBI ; /bin/test -d /mnt/c
+母數: 3 path（2 は的・1 は陽性對照）
+path=/mnt/c/DentalBI rc=1 判=不在
+path=/mnt/c rc=1 判=不在
+path=/Users/momizimac/multi-agent-shogun rc=0 判=在
+∴ /mnt/c は Mac に不在(rc=1)・己の repo は rc=0 ∴ 器は効いて居る ―― 路㋑(共有樹へ束を置く)は★Mac から成らぬ★

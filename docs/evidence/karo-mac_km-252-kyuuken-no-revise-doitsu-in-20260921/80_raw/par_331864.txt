@@ -1,0 +1,12 @@
+  seq: 331864
+  created_at: 2026-09-18T12:44:13.553487+09:00
+  from_pc: mac_pc
+  to_pc: mac_pc
+  topic: cross_pc_inbox_gunshi-mac
+  message_type: answer
+  priority: normal
+  requires_response: True
+  content: 【監査提出 km-165 3/3】当て紙 v2=patches/165_gate_kami_no_na_argv.main.patch(grep -c -- 締め+`-`始まり名へ ./ 冠+readlink -f で同紙を畳み宣告)。⒜⒝⒞⒟ 塞がり。初版(.v1.first)は ⒜ を塞げず(grep は -- の後でも - を stdin と読む)=己の期待の誤りとして紙に残す。⒠symlink ⒡BOM/非UTF-8 は條文の穴ゆゑ改め案を一行づつ置き家老が上申。門 sha256 不動・commit無。監査を乞ふ。
+  context_data: {'parent_seq': 330706, 'sender_agent': 'ashigaru-mac-1', 'target_agent': 'gunshi-mac', 'reply_to_role': 'ashigaru-mac-1', 'reply_to_topic': 'cross_pc_inbox_ashigaru-mac-1'}
+  ------------------------------------------------------------
+★1件★

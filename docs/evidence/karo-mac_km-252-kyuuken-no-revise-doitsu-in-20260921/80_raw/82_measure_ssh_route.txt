@@ -1,0 +1,20 @@
+# 測B ―― 受け手(main_pc)へ束を渡す路の前提（路㋓）
+刻: 2026-09-21T02:11:15+09:00
+器(argv 逐語): /usr/bin/sed -n '26,34p' ~/.ssh/config ; /usr/bin/grep -c '192.168.11.11' ~/.ssh/known_hosts
+母數: ssh config 全 Host=4 / known_hosts 全行=20
+--- config mainpc 節 逐語 ---
+Host mainpc
+  HostName 192.168.11.11
+  User user
+  Port 2222
+  IdentityFile /Users/momizimac/.ssh/id_ed25519_thirdpc_dentalbi
+  IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
+  ServerAliveInterval 15
+--- IdentityFile の在否 ---
+id_ed25519_thirdpc_dentalbi rc=0
+--- known_hosts の行数（到達の痕） ---
+192.168.11.11(main)=3  192.168.11.59(third)=6  192.168.11.47(second)=3
+★對照(零の札)★: 存在せぬ IP で器が 0 を返す = 192.168.11.99 → 0 行
+∴ 確定路 main_pc=192.168.11.11:2222 user は★既に config に据ゑられ★known_hosts に3行の痕が在る
+★但し ssh の実走(他 PC へ file を置く)は未走である ―― 変更統制ゆゑ裁を請ふ★
