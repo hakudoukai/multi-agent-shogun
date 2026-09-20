@@ -1,0 +1,15 @@
+=== 11a117c0 (mac/disk-versions-20260920) 到達性 ===
+11a117c0dd48c64f96d741a42963c3ca8382bf63
+commit
+=== 7844cae8 (mac/shared-index-rescue-20260920) 到達性 ===
+7844cae8063751da32d030ef9933f4a8922747fa
+commit
+=== 現index を write-tree(read-only・ref/workdir不変) ===
+1b34cfc44ccff62b3c5226355e1818aaf42386e6
+=== 5b66d552 配下ファイル數 / 現indexファイル數 ===
+    2849
+    2866
+=== branch のリモート追跡有無(local限定か) ===
+refs/heads/mac/disk-versions-20260920 upstream=
+refs/heads/mac/shared-index-rescue-20260920 upstream=
+リモートに該当branch無し(local限定)
