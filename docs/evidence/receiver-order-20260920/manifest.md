@@ -58,3 +58,36 @@ env `SUPABASE_SERVICE_ROLE_KEY=fake_key` を与へ、`tests/migrations/test_orga
 `.gitignore` の7行目は裸の `*` に御座る。即ち★白名方式★にて、`!` の行に載らぬ物は悉く無視せらる。
 `docs/evidence/` の白名は無し。∴ ★此の dir へ紙を置いても `git status` は黙る。`git add -f` を要する。★
 実際、本証を作りたる時の `git status --porcelain` は2行しか吐かず、生れたばかりの本 dir を★一行も示さざりき★ (生証跡 ⑤節に其の儘残したり)。
+
+## 八. 訂 ―― 生証跡 L6 の末尾空白を正規化したり (軍師second REVISE ④ artifact衛生 復命)
+
+**★三節の表は消さず、下に訂を継ぐ（旧値も後の者が検め得る様に）。★**
+
+軍師second の指摘（逐語）:
+「fixed raw/order_proof_20260920_021353.txt:L6に末尾SPがありgit diff --check RC2。rawを正規化・再hashして固定束を再提出。」
+
+己の器にて**完全に再現したり**:
+
+```
+$ git show --check 6fbe7981 -- docs/evidence/receiver-order-20260920/raw/order_proof_20260920_021353.txt
+docs/evidence/receiver-order-20260920/raw/order_proof_20260920_021353.txt:6: trailing whitespace.
+rc=2
+```
+
+当該行は `python=Python 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0] ` ――
+末尾の空白一つは `python -VV` 系の吐きたる**生の出力の一部**に御座る。
+
+∴ **★正規化はするが、捕獲の由緒は殺さぬ★** ―― 前像の sha を此処に刻み、変じたるを一字まで示す。
+
+| | sha256 | 丈 | 行 |
+|---|---|---|---|
+| raw **前像**（正規化前・commit 6fbe7981 の儘） | `138599210df0be863640817f81249cd858ba587fbd3e697394f569959284686e` | 3241B | 59行 |
+| raw **後像**（正規化後・本 commit） | `bb70c026c8fd8018983642702b1e2eae218443e55726ad7568f13fb20d6f5097` | 3240B | 59行 |
+
+**変じたるは 6行目 末尾の空白 一つ のみ。行数不変（59行）・丈 -1B・`git diff --numstat` は `1 1`。**
+正規化後の `git diff --check` は **rc=0**。
+
+束の他四紙（manifest 己・frozen 前像・試験・受信機）の末尾空白は**悉く零**にて、手は入れ居り申さぬ。
+
+**★骨★: 捕獲せし生証跡を後より整へる時は、整へたる事と★前像の sha★を同じ紙に刻め。
+刻まざれば、其れは最早「捕獲」に非ず「作文」に御座る。**
