@@ -1,0 +1,5 @@
+03_old_gate.sh(舊版blob 054c442e)は同dir内の karo_mac_manifest_verify.py を dirname($0) から探す。
+raw/ 単体にはそれが無く rc=1(★條①が測れずに落ちた偽の疵★)を出した(71_gate_old.err 初回・別途 71b で保存)。
+∴ 本弾の眼目(㋑=條②の新旧差)を測る為、main版と同一の karo_mac_manifest_verify.py をraw/へ複写して
+dirname依存を満たした。條①のcheckerは新旧run共通・固定である ―― 本比較は條②③④⑤のみを新旧で変へる
+制御比較であり、條①の版差は本弾の的ではない(命の的は㋑=main門での再走・條②の新旧差)。

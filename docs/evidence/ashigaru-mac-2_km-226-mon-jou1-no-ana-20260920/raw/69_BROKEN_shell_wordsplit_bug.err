@@ -1,0 +1,57 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★file が無い: 01_teishutsu.md
+kiki/30_diff_kou_otsu.py
+kiki/kaki.py
+kiki/40_normalize_raw.py
+raw/20_shot_kou.meta.txt
+raw/20_shot_kou.stderr.txt
+raw/20_shot_kou.stdout.txt
+raw/20_shot_kou.stdout.txt.b64
+raw/21_shot_otsu.meta.txt
+raw/21_shot_otsu.stderr.txt
+raw/21_shot_otsu.stdout.txt
+raw/21_shot_otsu.stdout.txt.b64
+raw/22_diff_kou_otsu.txt
+raw/23_semai_ne_grep_houhou_to_kekka.txt
+raw/23b_find_err.txt
+raw/23b_grep_err.txt
+raw/23b_semai_ne_hits.txt
+raw/24_kaki_seikei.txt
+raw/60_gate.out
+raw/60_gate.err
+raw/60_gate.rc
+raw/61_gate2.out
+raw/61_gate2.err
+raw/61_gate2.rc
+_hosoku/61_fukugen.txt★
+★條⑤ 測れぬ(寸法が取れぬ) ―― 01_teishutsu.md
+kiki/30_diff_kou_otsu.py
+kiki/kaki.py
+kiki/40_normalize_raw.py
+raw/20_shot_kou.meta.txt
+raw/20_shot_kou.stderr.txt
+raw/20_shot_kou.stdout.txt
+raw/20_shot_kou.stdout.txt.b64
+raw/21_shot_otsu.meta.txt
+raw/21_shot_otsu.stderr.txt
+raw/21_shot_otsu.stdout.txt
+raw/21_shot_otsu.stdout.txt.b64
+raw/22_diff_kou_otsu.txt
+raw/23_semai_ne_grep_houhou_to_kekka.txt
+raw/23b_find_err.txt
+raw/23b_grep_err.txt
+raw/23b_semai_ne_hits.txt
+raw/24_kaki_seikei.txt
+raw/60_gate.out
+raw/60_gate.err
+raw/60_gate.rc
+raw/61_gate2.out
+raw/61_gate2.err
+raw/61_gate2.rc
+_hosoku/61_fukugen.txt★ ★測れぬは通さぬ(default-deny)★
+條⑤ 寸法 = byte和 0(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

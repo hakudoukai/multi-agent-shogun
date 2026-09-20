@@ -1,0 +1,10 @@
+# 空stream捕獲の是正 ―― raw/03_old_gate.err と raw/71b_...missing_dep.out
+
+両fileは元、捕獲した stream が空であつた為、文字通り 0 byte の file として書いた。
+0 byte file は門條④(EOF改行丁度1)を必ず落とす(改行が0本ゆゑ)ので、
+記憶(feedback_prescan_before_gate_every_instrument_writes_empty_as_one_line)の
+規約に従ひ、其の場を「一行の空宣言」形式へ書き改めた(器・元byte=0・刻を明記)。
+
+★内容の實質(捕獲した stream が空であつた、という事実)は変へて居らぬ★ ――
+書式のみを、門を通す形へ正規化した。元の 0 byte という實測値は上記一行の中に
+「byte=0」として明記して残して在る。

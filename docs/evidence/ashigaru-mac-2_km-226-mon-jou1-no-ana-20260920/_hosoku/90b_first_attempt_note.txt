@@ -1,0 +1,11 @@
+# 90番台の注記 ―― 自己門(束全体への最終check)は都合三走した
+
+⑴ 最初(rc=2、raw未保存=次呼出しで上書きされた): manifest.txt のみを渡し、
+   被檢查 file 引数を渡さなかつた為、gate script の usage error で終つた
+   (己の呼出し誤り、raw は残せず此処に告白する)。
+⑵ 二回目 = `90_SECOND_ATTEMPT_before_empty_stream_fix_gate.*`(rc=1):
+   file 引数を正しく渡したが、raw/03_old_gate.err と raw/71b_..._dep.out の
+   2 file が文字通り0byte(門條④=EOF改行丁度1、を必ず落とす形)であった為に落ちた。
+   此の2 file を raw/03c_empty_stream_correction_note.txt の通り一行宣言形式へ是正し、
+   臺帳(manifest.txt)を建て直した。
+⑶ 三回目(最終) = `91_final_gate.*`(rc=0): 是正後の全39 file で ★出す前 門 通。出してよい。★
