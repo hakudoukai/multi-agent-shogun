@@ -1,0 +1,98 @@
+{
+  "sim_duration_sec": 10800,
+  "poll_interval_sec": 10,
+  "escalate_phase2_sec": 240,
+  "escalate_cooldown_sec": 300,
+  "total_clear_events": 70,
+  "clear_event_times_sec": [
+    0.0,
+    10,
+    310,
+    320,
+    620,
+    630,
+    930,
+    940,
+    1240,
+    1250,
+    1550,
+    1560,
+    1860,
+    1870,
+    2170,
+    2180,
+    2480,
+    2490,
+    2790,
+    2800,
+    3100,
+    3110,
+    3410,
+    3420,
+    3720,
+    3730,
+    4030,
+    4040,
+    4340,
+    4350,
+    4650,
+    4660,
+    4960,
+    4970,
+    5270,
+    5280,
+    5580,
+    5590,
+    5890,
+    5900,
+    6200,
+    6210,
+    6510,
+    6520,
+    6820,
+    6830,
+    7130,
+    7140,
+    7440,
+    7450,
+    7750,
+    7760,
+    8060,
+    8070,
+    8370,
+    8380,
+    8680,
+    8690,
+    8990,
+    9000,
+    9300,
+    9310,
+    9610,
+    9620,
+    9920,
+    9930,
+    10230,
+    10240,
+    10540,
+    10550
+  ],
+  "note": "agent が一度も inbox を読まぬ最悪ケースの見積り。上限を実装する counter/cooldown-on-total-cycles は四版いずれにも見付からず(grep実測・raw/01参照)、∴ 理論上は sim_duration を延ばす限り clear_events も増え続ける(線形)。"
+}
+
+--- log(先頭10件+末尾5件) ---
+t=0.0s clear_command 経由 1回目 /clear (clear_sent=1)
+t=8.0s enqueue_recovery_task_assigned で auto_recovery 便を1通書く(以後 has_task_assigned=True 固定・agent 無応答前提)
+t=10s [CONTEXT-RESET] send_context_reset 発火 → /clear 送出 (NEW_CONTEXT_SENT: False→True)
+t=310s ESCALATION Phase3 発火 → /clear 送出 (FIRST_UNREAD_SEEN・NEW_CONTEXT_SENT を 0 に戻す)
+t=320s [CONTEXT-RESET] send_context_reset 発火 → /clear 送出 (NEW_CONTEXT_SENT: False→True)
+t=620s ESCALATION Phase3 発火 → /clear 送出 (FIRST_UNREAD_SEEN・NEW_CONTEXT_SENT を 0 に戻す)
+t=630s [CONTEXT-RESET] send_context_reset 発火 → /clear 送出 (NEW_CONTEXT_SENT: False→True)
+t=930s ESCALATION Phase3 発火 → /clear 送出 (FIRST_UNREAD_SEEN・NEW_CONTEXT_SENT を 0 に戻す)
+t=940s [CONTEXT-RESET] send_context_reset 発火 → /clear 送出 (NEW_CONTEXT_SENT: False→True)
+t=1240s ESCALATION Phase3 発火 → /clear 送出 (FIRST_UNREAD_SEEN・NEW_CONTEXT_SENT を 0 に戻す)
+...
+t=9930s [CONTEXT-RESET] send_context_reset 発火 → /clear 送出 (NEW_CONTEXT_SENT: False→True)
+t=10230s ESCALATION Phase3 発火 → /clear 送出 (FIRST_UNREAD_SEEN・NEW_CONTEXT_SENT を 0 に戻す)
+t=10240s [CONTEXT-RESET] send_context_reset 発火 → /clear 送出 (NEW_CONTEXT_SENT: False→True)
+t=10540s ESCALATION Phase3 発火 → /clear 送出 (FIRST_UNREAD_SEEN・NEW_CONTEXT_SENT を 0 に戻す)
+t=10550s [CONTEXT-RESET] send_context_reset 発火 → /clear 送出 (NEW_CONTEXT_SENT: False→True)
