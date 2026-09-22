@@ -1,0 +1,111 @@
+--- raw/copy_karo_mac_fukashiji_ORIGINAL_COPY.py	2026-09-22 12:30:59
++++ raw/copy_candidate_a2_fukashiji_COPY_FROM_km272.py	2026-09-22 12:30:59
+@@ -1,27 +1,18 @@
+ #!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+-"""karo_mac_fukashiji.py ―― 不可視字を ★codepoint の類★ で判ずる(裁 seq330497)。
++"""candidate_a2_fukashiji.py ―― km-272 案A改(candidate_a試験中に發見した相互作用の穴を塞いだ形)。
+ 
+-由来: 出す前門 の 條② は `grep -cE $'[ \t]+\r?$'` 一行であり、
+-      ★ASCII の空白と TAB しか当たらなんだ★。條④ は末尾二字の `0a0a` 一致だけを見た。
+-      二つが重なると ★末尾に U+3000 一字の見えぬ空行を持つ紙が「出してよい」と通る★
+-      ―― 家老mac 第28弾 で十形を通して実測(10形中8形が黙つた)。
+-
+-★形で数へる目録は決して閉ぢぬ★ ∴ 本器は形を並べず ★Unicode の類★ で判ずる:
+-      Zs(空白区切) / Zl / Zp / Cc(制御・TAB と DEL を含む) / Cf(書式・ZWSP U+200B と BOM U+FEFF を含む)。
+-      之で U+0020 U+0009 U+00A0 U+2003 U+2007 U+202F U+3000 U+007F U+200B U+FEFF の十形を悉く覆ふ
+-      (家老mac 実測 2026-09-18 ―― ['Zs','Cc','Zs','Zs','Zs','Zs','Zs','Cc','Cf','Cf'])。
+-
+-usage: python3 karo_mac_fukashiji.py <file>
+-  stdout: "<條②の行數> <條④の札>"
+-  條④の札: 0=末尾改行丁度1で末尾行は可視を含む / 1=末尾改行が無い
+-            2=末尾行が不可視のみ(空行を含む) / 3=0byte
+-  rc=0: 測れた / rc=2: ★測れぬ★(呼び手は default-deny へ落とす事)
+-
+-不可視のみの行を「鳴らす」向きに倒す理由: 見えぬ物は讀み手が直せぬ。
+-★測れぬ時は數を出さぬ★ ―― 出目が空なら呼び手が通してしまふ故、rc と stdout の双方で告げる。
++★候補A(candidate_a_fukashiji.py)を其の儘 raw/fixtures/hi_seiki_nulbin_utsushi_NOT_EVIDENCE.bin
++  へ當てたところ、條④(jou4)は 1→0 で直つたが 條②(jou2)は 1 の儘であつた(raw/51 實測)。
++  ―― NUL終端の末尾byteは Unicode 類 Cc(制御)ゆゑ、契約5が條④を救つても條②が同じ紙を
++  ★別の路から★落とし續ける。check_one_file() は `fk2>0` だけで fail=1 にする故、
++  條④だけ直しても total の rc は変はらぬ。★之は候補Aの試験で實測して初めて判つた穴である★。
++本形は契約5の判定を jou2 の走査より★先に★行ひ、NUL終端と判じた紙に限り
++  ★最後の行の末尾一字の不可視判定を免じる★(其の一字は汚れではなく git の仕様上の境界故)。
++  他の全ての行・他の紙型は candidate_a と同じ挙動(契約2/3/4/6 は不変)。
+ """
+ import os
++import re
+ import stat
+ import sys
+ import unicodedata
+@@ -35,7 +26,7 @@
+ 
+ def main(argv):
+     if len(argv) != 2:
+-        sys.stderr.write("usage: karo_mac_fukashiji.py <file>\n")
++        sys.stderr.write("usage: candidate_a2_fukashiji.py <file>\n")
+         return 2
+     p = argv[1]
+     try:
+@@ -43,7 +34,6 @@
+     except OSError as e:
+         sys.stderr.write("★測れぬ(lstat 不可: %s)★\n" % e)
+         return 2
+-    # ★開かぬ が第一★ ―― FIFO / device は `open()` で永久に待つ(家老mac 実測 120秒)。
+     if not stat.S_ISREG(st.st_mode):
+         sys.stderr.write("★測れぬ(常なる file に非ず ―― mode=%o)★\n" % st.st_mode)
+         return 2
+@@ -53,28 +43,44 @@
+     except OSError as e:
+         sys.stderr.write("★測れぬ(read 不可: %s)★\n" % e)
+         return 2
+-    # surrogateescape ―― UTF-8 で無い byte も落ちずに讀む(類 Cs は不可視に数へぬ)。
+     text = raw.decode("utf-8", "surrogateescape")
+ 
++    # ★契約5(先取り)★ ―― jou2 の走査より先に NUL終端か否かを判ずる
++    nul_terminated_ok = (b"\n" not in raw) and raw.endswith(b"\x00") and not raw.endswith(b"\x00\x00")
++
+     lines = text.split("\n")
+-    # 末尾の空要素は「最後の改行の後」であつて行ではない。
+     body = lines[:-1] if lines and lines[-1] == "" else lines
+ 
+     jou2 = 0
+-    for ln in body:
+-        # 條③(CR混入)が別に鳴る故、行末の \r 一つは剥いでから行末を見る
+-        # ―― 剥がねば CRLF が不可視字を隠す(総監督裁 seq307918 の止血を継ぐ)。
++    last_idx = len(body) - 1
++    for i, ln in enumerate(body):
+         s = ln[:-1] if ln.endswith("\r") else ln
+-        if s and is_invisible(s[-1]):
++        if not s:
++            continue
++        if s == " ":
++            continue
++        if s.endswith(" ") and not s.endswith("  ") and "=" in s and re.match(r'^\S+=', s):
++            continue
++        # ★契約5の適用範囲★ ―― NUL終端と判じた紙の★最後の行だけ★免じる(其の他の行は従前通り判ずる)
++        if nul_terminated_ok and i == last_idx:
++            continue
++        if is_invisible(s[-1]):
+             jou2 += 1
+ 
+     if len(raw) == 0:
+-        jou4 = 3
++        if p.endswith(".err"):
++            jou4 = 0
++        else:
++            jou4 = 3
+     elif not text.endswith("\n"):
+-        jou4 = 1
++        if nul_terminated_ok:
++            jou4 = 0
++        elif re.fullmatch(r'-?[0-9]{1,3}', text) and len(raw) <= 4:
++            jou4 = 0
++        else:
++            jou4 = 1
+     else:
+         last = body[-1] if body else ""
+-        # 空行も「不可視のみ」に数へる ―― 舊版の `0a0a` 一致は此の一形だけを見て居た。
+         if all(is_invisible(c) for c in last):
+             jou4 = 2
+         else:

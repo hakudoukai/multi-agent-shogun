@@ -1,0 +1,13 @@
+閾 DASUMAE_READ_TIMEOUT = 未設定 ―― 既定 10 を用ゐる(★倒した事を刷る★)
+閾 DASUMAE_MAX_BYTES = 未設定 ―― 既定 10485760 を用ゐる(★倒した事を刷る★)
+條① 基点=★引数 明示★(KM_GATE_MANIFEST_BASE)
+條① 台帳とdiskの差 = 一致(manifest_verify.py rc=0)
+★末尾不可視字 ―― ./raw/70_diff_orig_vs_a2_20260922.txt に 5 行(codepoint の類 Zs/Zl/Zp/Cc/Cf・裁 seq330497)★
+★EOF改行が無い(0) ―― ./raw/fixtures/gizou_nulbin_kabure_NOT_EVIDENCE.bin★
+★EOF改行が無い(0) ―― ./raw/fixtures/gizou_rc_moji_NOT_EVIDENCE.rc★
+★末尾不可視字 ―― ./raw/fixtures/seiki_nulterm_lstree_NOT_EVIDENCE.bin に 1 行(codepoint の類 Zs/Zl/Zp/Cc/Cf・裁 seq330497)★
+★EOF改行が無い(0) ―― ./raw/fixtures/seiki_nulterm_lstree_NOT_EVIDENCE.bin★
+★EOF改行が無い(0) ―― ./raw/fixtures/seiki_rc_no_newline_NOT_EVIDENCE.rc★
+條⑤ 寸法 = byte和 32872(閾 10485760未満)
+
+★出す前 門が落ちた。出すな。★

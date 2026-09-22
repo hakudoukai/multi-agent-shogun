@@ -1,0 +1,10 @@
+=== ORIGINAL (copy_karo_mac_fukashiji_ORIGINAL_COPY.py) ===
+gizou_nulbin_kabure_NOT_EVIDENCE.bin : rc=0 out=[0 1]
+gizou_rc_moji_NOT_EVIDENCE.rc : rc=0 out=[0 1]
+seiki_nulterm_lstree_NOT_EVIDENCE.bin : rc=0 out=[1 1]
+seiki_rc_no_newline_NOT_EVIDENCE.rc : rc=0 out=[0 1]
+=== FIX (copy_candidate_a2_fukashiji_COPY_FROM_km272.py) ===
+gizou_nulbin_kabure_NOT_EVIDENCE.bin : rc=0 out=[0 1]
+gizou_rc_moji_NOT_EVIDENCE.rc : rc=0 out=[0 1]
+seiki_nulterm_lstree_NOT_EVIDENCE.bin : rc=0 out=[0 0]
+seiki_rc_no_newline_NOT_EVIDENCE.rc : rc=0 out=[0 0]

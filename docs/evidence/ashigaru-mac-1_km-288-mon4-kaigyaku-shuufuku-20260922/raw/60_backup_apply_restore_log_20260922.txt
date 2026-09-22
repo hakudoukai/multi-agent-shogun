@@ -1,0 +1,15 @@
+① backup: 原本の sha256 を控へる(對象=寫し・實物のscriptには一指も触れず)
+8c06f5c58147ccba3b1e040c0930a6f10374987fb717d29b3cd5dc2e766800ad  /Users/momizimac/wt/a1-km288/docs/evidence/ashigaru-mac-1_km-288-mon4-kaigyaku-shuufuku-20260922/raw/copy_karo_mac_fukashiji_ORIGINAL_COPY.py
+② apply前: sim_target へ原本の内容を據ゑる(=實物の path に見立てた寫し先)
+8c06f5c58147ccba3b1e040c0930a6f10374987fb717d29b3cd5dc2e766800ad  /Users/momizimac/wt/a1-km288/docs/evidence/ashigaru-mac-1_km-288-mon4-kaigyaku-shuufuku-20260922/raw/sim_target_fukashiji_SCRATCH_COPY.py
+③ apply: sim_target へ直し案(candidate_a2)の内容を上書き(=L1 captaincy 的patch)
+d8ee455021793aa7cf7523147e6db2db7703d7e2bdf6579b21d6a1c4d3801cba  /Users/momizimac/wt/a1-km288/docs/evidence/ashigaru-mac-1_km-288-mon4-kaigyaku-shuufuku-20260922/raw/sim_target_fukashiji_SCRATCH_COPY.py
+d8ee455021793aa7cf7523147e6db2db7703d7e2bdf6579b21d6a1c4d3801cba  /Users/momizimac/wt/a1-km288/docs/evidence/ashigaru-mac-1_km-288-mon4-kaigyaku-shuufuku-20260922/raw/copy_candidate_a2_fukashiji_COPY_FROM_km272.py
+④ 測る: sim_target(=直し適用後)を4 fixture へ當てる
+gizou_nulbin_kabure_NOT_EVIDENCE.bin : rc=0 out=[0 1]
+gizou_rc_moji_NOT_EVIDENCE.rc : rc=0 out=[0 1]
+seiki_nulterm_lstree_NOT_EVIDENCE.bin : rc=0 out=[0 0]
+seiki_rc_no_newline_NOT_EVIDENCE.rc : rc=0 out=[0 0]
+⑤ restore: sim_target を原本の内容へ戻す
+8c06f5c58147ccba3b1e040c0930a6f10374987fb717d29b3cd5dc2e766800ad  /Users/momizimac/wt/a1-km288/docs/evidence/ashigaru-mac-1_km-288-mon4-kaigyaku-shuufuku-20260922/raw/sim_target_fukashiji_SCRATCH_COPY.py
+8c06f5c58147ccba3b1e040c0930a6f10374987fb717d29b3cd5dc2e766800ad  /Users/momizimac/wt/a1-km288/docs/evidence/ashigaru-mac-1_km-288-mon4-kaigyaku-shuufuku-20260922/raw/copy_karo_mac_fukashiji_ORIGINAL_COPY.py
