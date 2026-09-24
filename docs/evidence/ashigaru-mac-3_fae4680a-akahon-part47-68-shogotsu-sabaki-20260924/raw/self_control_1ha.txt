@@ -1,0 +1,4 @@
+self control (ashigaru-mac-3, 2026-09-24): token "1歯" in nums_missing_in_ai
+p0759: KEY_RE (\d[\d,，]*\s*(?:点|歯|円|回|分)) matched OCR "歯科技工土連携加算 1, 歯科技工土" -> "1,歯" -> key "1歯". Not a body token: key-extraction artifact.
+p0786: layer text "[取扱いを定めた理由1\n歯周精密検査" -> "1\n歯" -> key "1歯". Not a body token: key-extraction artifact (line join).
+Instrument: python3 with akahon_r8_pipeline.KEY_RE (read-only import).
