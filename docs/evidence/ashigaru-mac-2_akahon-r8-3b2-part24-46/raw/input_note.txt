@@ -1,0 +1,8 @@
+測定刻: 2026-09-25T02:52:31+0900 (akahon root=/Users/momizimac/akahon-r8/out/akahon・読取のみ)
+入力: Part24〜46 の qc/ai/ocr 各1本(計69)＋qc/overrides.jsonl = 70本。sha256 は raw/input_sha256.txt。
+qc の mtime は悉く 2026-09-24T21:38:58〜21:39:00 (旧束 100 頁を切った後に再生成された)。
+母數の再測(_ki/remeasure.out): 頁範囲346..690・行345・conflict(全Part)=134・reconciled 無Part の conflict=112。
+旧束 conflict_pages.txt=100 との差: 現qc−旧=12頁(全て Part25: 361,363,364,365,366,368,369,370,371,372,373,375)・旧−現qc=0。
+∴ 本束の母數=112=旧100(記録不変)+Part25追加12(本束で新たに裁いた)。
+reconciled 有の Part24/28/29/30/33 の conflict 22 頁は既に裁定済(reconciled)ゆゑ母數外。overrides・adjudications と本束の交差は 0。
+此の數が何を意味せぬか: 112 は「現 qc で未裁定の conflict 頁数」であり、conflict でない頁(345−134)の AI 本文が正しい事は何も言はぬ。
