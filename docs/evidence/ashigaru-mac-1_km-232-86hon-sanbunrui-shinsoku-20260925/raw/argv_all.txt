@@ -1,0 +1,14 @@
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main claude absent <sbx>/out/neg_main_claude_absent <sbx>/bin_absent
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main claude negctrl <sbx>/out/neg_main_claude_negctrl <sbx>/bin_negctrl
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main codex absent <sbx>/out/neg_main_codex_absent <sbx>/bin_absent
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main codex negctrl <sbx>/out/neg_main_codex_negctrl <sbx>/bin_negctrl
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main codex absent <sbx>/out/neg_main_codex_phase2 <sbx>/bin_absent 150
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main codex absent <sbx>/out/neg_main_codex_phase3 <sbx>/bin_absent 250
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_karo claude absent <sbx>/out/neg_karo_claude_absent <sbx>/bin_absent
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_karo codex absent <sbx>/out/neg_karo_codex_absent <sbx>/bin_absent
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_karo codex absent <sbx>/out/neg_karo_codex_phase2 <sbx>/bin_absent 150
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_karo codex absent <sbx>/out/neg_karo_codex_phase3 <sbx>/bin_absent 250
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main_mut claude absent <sbx>/out/pos_main_claude_absent <sbx>/bin_absent
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_main_mut codex absent <sbx>/out/pos_main_codex_absent <sbx>/bin_absent
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_karo_mut claude absent <sbx>/out/pos_karo_claude_absent <sbx>/bin_absent
+cwd=<sbx> argv=bash harness/run_case.sh <sbx>/ver_karo_mut codex absent <sbx>/out/pos_karo_codex_absent <sbx>/bin_absent

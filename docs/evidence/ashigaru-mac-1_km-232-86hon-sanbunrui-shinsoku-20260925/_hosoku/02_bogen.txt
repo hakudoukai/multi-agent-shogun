@@ -1,0 +1,6 @@
+刻=2026-09-25T07:39:44+0900
+條①(臺帳の path 行) 母數=187  器=grep -c '^path=' MANIFEST.txt（初回 grep -c 'path=' は見出し行 `# dialect: path=` も数へ 188 と出した・錨を打つて測り直した）  ／ verify の母數行:  一致 ★187★ / 相違 0 / 実体無 0 / 読めぬ行 0 (母數 187)
+條②③(門へ渡した file 数) 母數=187  器=14_gate.argv.txt の4行目以降の行数  ／ 門の行: 條②末尾不可視字(類 Zs/Zl/Zp/Cc/Cf) / 條③CR混入 / 條④EOF改行丁度1かつ末尾行に可視 = 全file(187本)通
+門 rc=0  門 blob=04672e15b1edf4a02b7cea1f4f32cfb9a64e34d5  append blob=b56d6576c82212c155980968d4ec1e0a8c5c7427  verify blob=155aeb7a3929786fe97bc58e3f909c710a99e796
+臺帳 MANIFEST.txt sha256=b5c386a2701fb47383ab984dbf4dda2135a2eefcbd3e86b58259c6d437b18b2f bytes=25282
+本紙 00_honmon.md sha256=b2fd991c30fa242c441afe17c6a3d9126c4811637bf32df3266dcf09745eac24
