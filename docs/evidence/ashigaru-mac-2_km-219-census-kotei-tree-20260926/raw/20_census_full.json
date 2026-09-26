@@ -1,0 +1,3230 @@
+{
+  "measured_at_start": "2026-09-26T17:01:23.667297+09:00",
+  "measured_at_end": "2026-09-26T17:01:23.703623+09:00",
+  "porcelain_rc": 0,
+  "base_ref": "b9573b2d376e9a0a372234b696a733677feb7919",
+  "base_sha": "b9573b2d376e9a0a372234b696a733677feb7919",
+  "total": 161,
+  "records": [
+    {
+      "path": "/Users/momizimac/multi-agent-shogun",
+      "branch": "refs/heads/ashigaru-mac-3/km-51-tasekki-no-hakari-wo-kami-de-yabure-20260917",
+      "head": "10000ff89716da925a14ff6e6fed57e626fbf8ee",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1046,
+      "status_err": "warning: could not open directory 'queue/reports/ashigaru-mac-3_km-sakai-wa-dare-ga-hiku-noka_20260912_evidence/sakai/nanmon/n13_noaccess_dir/': Permission denied",
+      "head_ahead_of_origin": "36",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/private/tmp/gm423.3ArrZj/wt",
+      "branch": null,
+      "head": "581195d8e239ae9f60102ec72a95c50686dabaa0",
+      "detached": true,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/gm646.UX8iL8/wt",
+      "branch": null,
+      "head": "9d92db8442fddb1376f66666b8ad36629e9ca8e6",
+      "detached": true,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/gm646c.LTSrpN/wt",
+      "branch": null,
+      "head": "9d92db8442fddb1376f66666b8ad36629e9ca8e6",
+      "detached": true,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/gunshi-km49.TidCf1",
+      "branch": null,
+      "head": "87762b41b9b58a03d7438bef9dfd0f67b5c6e64b",
+      "detached": true,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/km113-cbEA0r",
+      "branch": null,
+      "head": "9b67fc1e32903f047575f2fd88ce5be21ba27567",
+      "detached": true,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/km141-68jlzG",
+      "branch": "refs/heads/ashigaru-mac-3/km-141-an3-wo-sueru-20260918",
+      "head": "3e8c83c8a3ff44d8ae2287cd06842ea8ccb7e0b0",
+      "detached": false,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/km155-k98PlH",
+      "branch": "refs/heads/ashigaru-mac-1/km-140-dd169-koku-to-okidokoro-20260918",
+      "head": "581195d8e239ae9f60102ec72a95c50686dabaa0",
+      "detached": false,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/km156-gate",
+      "branch": "refs/heads/karo-mac/km-118-ippon-20260918",
+      "head": "c022012885947f1579f7a15de6d6372af84eae89",
+      "detached": false,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/km167-ci",
+      "branch": null,
+      "head": "6bde7170ce574090a6139ba2dfe3aa4cb6db8634",
+      "detached": true,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/km168-ki",
+      "branch": "refs/heads/karo-mac/km-168-ki-20260918",
+      "head": "eadfcae4df0232b7dbbe8b0a37dd9bc3a6eb72b9",
+      "detached": false,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/km169-kami",
+      "branch": "refs/heads/karo-mac/km-169-kami-20260918",
+      "head": "e80511f68ac436f5f8b2c0d0d4c7bd8a46635d39",
+      "detached": false,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/secondfor-eLQKQx",
+      "branch": null,
+      "head": "c1486ca195973382c8376688aec627f0d3efbff0",
+      "detached": true,
+      "prunable": "prunable gitdir file points to non-existent location",
+      "locked": false,
+      "status_rc": 128,
+      "status_lines": 0,
+      "status_err": "fatal: not a git repository (or any of the parent directories): .git",
+      "head_ahead_of_origin": "",
+      "origin_ahead_of_head": "",
+      "revlist_rc": [
+        128,
+        128
+      ],
+      "revlist_err": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git",
+      "is_ancestor_rc": 128,
+      "is_ancestor_err": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    {
+      "path": "/private/tmp/wt_km231chk",
+      "branch": null,
+      "head": "dc53cf2165aeeec7b08af0d7d9fe0bf850432ab3",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/multi-agent-shogun/.claude/worktrees/karo-mac-a1",
+      "branch": "refs/heads/karo-mac/a1-r56",
+      "head": "86ae87367c59a483b3248938569d01f484176d2d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 216,
+      "status_err": "",
+      "head_ahead_of_origin": "11",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-3859",
+      "branch": "refs/heads/ashigaru-mac-1/3859cda0-ko3-ko4-20260925",
+      "head": "a764b314fb584a38438e0e8a6d25bcebf1b9f061",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-f30a0660",
+      "branch": "refs/heads/ashigaru-mac-1/f30a0660-akahon-r8-3b1-part01-23-20260924",
+      "head": "b9186ef1e2633ac63574fb9a70ff815485870930",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-handoff",
+      "branch": "refs/heads/ashigaru-mac-1/handoff-kugiri-20260919",
+      "head": "631d03ecb05d12b6413b1269e159af52ab06c062",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km167-ci",
+      "branch": "refs/heads/ashigaru-mac-1/km-167-ci-20260918",
+      "head": "7c0d1492acfd5fcef5a60503888ab0dbd53fe5f6",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km180",
+      "branch": "refs/heads/ashigaru-mac-1/km-180-horarenu-akashi-20260918",
+      "head": "345aaa5e5ab7e5da2b7c10cde6afd6ce98cded24",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km181",
+      "branch": "refs/heads/ashigaru-mac-1/km-181-mitsu-no-naoshi-kagyaku-bak-futekisuto-20260918",
+      "head": "f2c62730978bf22f6b7977fc17dc3279eec010f5",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km182",
+      "branch": "refs/heads/ashigaru-mac-1/km-182-porcelain-ni-motareru-utsuwa-20260918",
+      "head": "e63f6ab5a5245dc0d79e8c1dfcdec6808b0718f5",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 2,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km184",
+      "branch": "refs/heads/ashigaru-mac-1/km-184-hashiru-koto-ga-ki-wo-yogosu-20260918",
+      "head": "45c931a1ca5ad4f87967055ca391bf3932aea7f8",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 2,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km187",
+      "branch": "refs/heads/ashigaru-mac-1/km-187-kazoeru-nagare-ni-stderr-wo-mazeru-utsuwa-20260918",
+      "head": "0a46bcb4cb58ec8e2dd7f3c1b25b57c16fa65cd5",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km188",
+      "branch": "refs/heads/ashigaru-mac-1/km-188-kuda-wo-tooshita-rc-20260918",
+      "head": "6d3b0e7e8516019791739825d6a52a7629fe07c8",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km189",
+      "branch": "refs/heads/ashigaru-mac-1/km-189-chou-wo-futatsu-no-te-ga-kaku-20260918",
+      "head": "af696aaabeacc335dbb7aa2bcac10691ebc15a67",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km191",
+      "branch": "refs/heads/ashigaru-mac-1/km-191-tabyte-ga-hensuumei-wo-nomu-20260918",
+      "head": "217d958969a4e83c2e1b3404a4cb13e0c16887fb",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km192",
+      "branch": "refs/heads/ashigaru-mac-1/km-192-hata-ga-dou-wo-kuu-20260918",
+      "head": "31cf7d32ccc75440280dcaac0ea461c38f0502c3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km194",
+      "branch": "refs/heads/ashigaru-mac-1/km-194-kijun-wo-senseyo-20260918",
+      "head": "9b4c68a023e04ac6cfefdaf2f7866b83ff00370e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km195",
+      "branch": "refs/heads/ashigaru-mac-1/km-195-kanmuri-wo-yomanu-shirabe-20260918",
+      "head": "2fd8dc429143614ad61e37c84f767b26259bb1e3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km196",
+      "branch": "refs/heads/ashigaru-mac-1/km-196-tesoto-main-29-no-census-20260918",
+      "head": "5bf4397cb4c86460430d6826dfcd6b9da7a33370",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km197",
+      "branch": "refs/heads/ashigaru-mac-1/km-197-noukagi-no-soroi-20260918",
+      "head": "ae16ffe5e2453a4db54b71044019e3b9626d312e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km197b",
+      "branch": "refs/heads/ashigaru-mac-1/km-197-sanso-20260926",
+      "head": "b51b8db5fde0a398581ad6229a9bb8610e360eb0",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km198",
+      "branch": "refs/heads/ashigaru-mac-1/km-198-toki-wo-surazu-hakaru-utsuwa-no-census-20260918",
+      "head": "05817e91e02947a55766fb06b940b79763f1a963",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km198b",
+      "branch": "refs/heads/ashigaru-mac-1/km-198-sanso-20260926",
+      "head": "de4502f7ae91b5a644d1459c3601529c7f4d6a34",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km199",
+      "branch": "refs/heads/ashigaru-mac-1/km-199-onore-no-tayori-wo-kazoeru-michi-no-census-20260918",
+      "head": "3f249fb2aee82d02949ad6dd15c2e6291908e343",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km199b",
+      "branch": "refs/heads/ashigaru-mac-1/km-199-sai-census-20260926",
+      "head": "0d75e06aa4bb5b2ddb6f28cfecf626e859e6fefe",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km200",
+      "branch": "refs/heads/ashigaru-mac-1/km-200-karano-dou-wo-toosu-utsuwa-no-census-20260918",
+      "head": "2b3405a8578b8ee0f72dc7bbadb5f215e9386a42",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km200b",
+      "branch": "refs/heads/ashigaru-mac-1/km-200-sai-census-20260926",
+      "head": "932f054def170385cb5c85e6ee71c673c42c3c02",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km201",
+      "branch": "refs/heads/ashigaru-mac-1/km-201-mado-ga-atarashii-hou-wo-otosu-utsuwa-no-census-20260919",
+      "head": "b060223a00c4be1deb3edb2309471db40b33836c",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km202",
+      "branch": "refs/heads/ashigaru-mac-1/km-202-ita8keta-wo-motanu-done-no-census-20260919",
+      "head": "5de94c2548038ad03bd5c11720574c36f3fffc8e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km204",
+      "branch": "refs/heads/ashigaru-mac-1/km-204-kitei-e-ochite-rc-wo-suteru-katachi-no-census-20260919",
+      "head": "8e977c6eeb80bc00d0c823ccc24fa3e79b30587b",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km205",
+      "branch": "refs/heads/ashigaru-mac-1/km-205-kitei-no-123-wo-han-ni-kiku-ka-de-wakeru-20260919",
+      "head": "b171437a762a5d4c52f53da23544d26d9e43e749",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km206",
+      "branch": "refs/heads/ashigaru-mac-1/km-206-jisho-ni-arazaru-kagi-no-census-20260919",
+      "head": "d8729bf6d8d2dfd1078cc5b99dc40e239ccca2cc",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km207",
+      "branch": "refs/heads/ashigaru-mac-1/km-207-danmari-ga-tsuu-ni-mieru-utsuwa-no-census-20260919",
+      "head": "7cdedca06d11a660ffa357e2a071739ae4250851",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km208",
+      "branch": "refs/heads/ashigaru-mac-1/km-208-yobu-mono-no-hanten-to-hougen-de-kao-ga-kawaru-20260919",
+      "head": "6395076ae8598881f5fd48165bcb3ff8afbe050b",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km209",
+      "branch": "refs/heads/ashigaru-mac-1/km-209-damaru-ki-wo-narase-20260919",
+      "head": "7be60c734f76fd7187c9abd2e5bd5b6e7cd0e4f9",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "4",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km213",
+      "branch": "refs/heads/ashigaru-mac-1/km-213-haisen-ga-teishiseki-wo-nazasu-kagiri-hako-wo-ugokasenu-20260919",
+      "head": "66741317019a7388be7a2747dfb7ee12316523e0",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "5",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km214",
+      "branch": "refs/heads/ashigaru-mac-1/km-214-pane-identity-kanzen-icchi-to-registry-20260919",
+      "head": "65ecbe3570a9232ff2eca64928f85bcf54686426",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "4",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km217",
+      "branch": "refs/heads/ashigaru-mac-1/km-217-yaml-kakoranu-atai-no-census-20260920",
+      "head": "07298d992a1229578a8e085c84965506255982a3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km221",
+      "branch": "refs/heads/ashigaru-mac-1/km-221-hashiru-ki-no-bak-jogai-ga-hasami-bak-wo-minu-kizu-wo-tojiru-20260920",
+      "head": "c4e0bd618ca9940ecf253a38c723f61abfeed138",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km227",
+      "branch": "refs/heads/ashigaru-mac-1/km-227-bak-sankei-to-nise-no-taiki-20260920",
+      "head": "e4df8056150fe85417fac7d45428fd34e53b512d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km227b",
+      "branch": "refs/heads/ashigaru-mac-1/km-227b-fuzai-pane-goukan-ga-te-made-todoku-ka-20260920",
+      "head": "1288610b05c0767d5cef7fa9992a5876aa880569",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "5",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km232",
+      "branch": "refs/heads/ashigaru-mac-1/km-232-86ken-0byte-genbutsu-hantei-20260920",
+      "head": "2ba9e671ca51848cd9fa1aa3f0c680ea16d23da1",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km232b",
+      "branch": "refs/heads/ashigaru-mac-1/km-232-shinsoku-20260925",
+      "head": "34613267604ab12d2c54bf1ef2d269ead1fafc37",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km236",
+      "branch": "refs/heads/ashigaru-mac-1/km-236-zero-byte-no-gen-to-mon-no-jou4-no-ana-20260920",
+      "head": "825f262caf8813f8650466ce96d2d2ebbbedb7b9",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km240",
+      "branch": "refs/heads/ashigaru-mac-1/km-240-daichou-no-uchi-to-soto-no-sakai-20260920",
+      "head": "efc92ce202365b3e4762d43828f64c038796640d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km241",
+      "branch": "refs/heads/ashigaru-mac-1/km-241-jiseki-no-mihari-te-ga-juunichikan-zero-hon-20260920",
+      "head": "364f8d118c92b931553354a189035c4d2b05c76e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km245",
+      "branch": "refs/heads/ashigaru-mac-1/km-245-clear-no-zen-keiro-x-zen-seki-no-mamori-hyou-20260921",
+      "head": "29c50c3175a61919a4a0cf50819e9b9385926b62",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km257r",
+      "branch": "refs/heads/ashigaru-mac-1/km-269-3859cda0-ko3-ko4-worktree-recut-20260922",
+      "head": "85ffc37720b2e936bbff9acb5450723c5c1ea7eb",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km266",
+      "branch": "refs/heads/ashigaru-mac-1/km-266-463ea245-fixed-evidence-sakuin-20260922",
+      "head": "75fc30db586c3ea35eb4a1e9757f52aa9a446f43",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km276",
+      "branch": "refs/heads/ashigaru-mac-1/km-276-jou2-no-dai7-no-ana-ka-kizon-no-kizu-ka-wo-wakatsu-20260922",
+      "head": "572b306ac6bc538e78ae1aa5d551c79d182d621d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km279",
+      "branch": "refs/heads/ashigaru-mac-1/km-279-seki3-saigen-tejun-dokuritsu-kensho-20260922",
+      "head": "07fca7092dbfd6bbd6721b693077d5dbcb066e27",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km282",
+      "branch": "refs/heads/ashigaru-mac-1/km-282-shoko-saishu-sahou-no-kizu-wo-tozu-20260922",
+      "head": "a576e09cf4d5fde203dafd65a1c175d21d03a337",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km288",
+      "branch": "refs/heads/ashigaru-mac-1/km-288-mon4-kaigyaku-shuufuku-20260922",
+      "head": "ce7f3cdd8cc2f79b8578798704fb03cb4b8b9d70",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km291",
+      "branch": "refs/heads/ashigaru-mac-1/km-291-guard-gi-yousei-oudan-20260922",
+      "head": "754f0ebe915124d2889e049871a47ce6347b483f",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km293",
+      "branch": "refs/heads/ashigaru-mac-1/km-293-manifest-root-form-oudan-20260922",
+      "head": "36f6f3d8ee5442fde0b447a63973f6809dab93d2",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km298",
+      "branch": "refs/heads/ashigaru-mac-1/km-298-mon-jou2-jou4-no-ana-no-bogen-20260922",
+      "head": "73fa9488763a225d50d40e5437735005796e9786",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km299",
+      "branch": "refs/heads/ashigaru-mac-1/km-299-noubin-no-kazu-wo-ki-kara-dasu-20260922",
+      "head": "60471a305b281c9e7ea74cfb2d172822fdd95f24",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a1-km308",
+      "branch": "refs/heads/ashigaru-mac-1/km-308-kieta-45shi-no-in-wo-keifu-de-ware-20260922",
+      "head": "4c5f16cafa72f4af93a5f75269d6133d99733777",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-akahon-p24-46",
+      "branch": "refs/heads/ashigaru-mac-2/akahon-r8-shoutotsu-sabaki-p24-46-20260924",
+      "head": "3ed8f93c8c72dd00562a0b089b213213a444413f",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-akahon-rem24",
+      "branch": "refs/heads/ashigaru-mac-2/akahon-r8-rem24-20260925",
+      "head": "8a362a014e07bb0f529d238eb85fdbe805d0e28e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-img-28726463",
+      "branch": "refs/heads/ashigaru-mac-2/img-contract-28726463-20260925",
+      "head": "46e5d243eed24ab2e3ab41d3bfdff7efeb27f288",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-kanban-trg-45bd5f6d",
+      "branch": "refs/heads/ashigaru-mac-2/kanban-trg-45bd5f6d-20260925",
+      "head": "f98590cf3b022ee33667355de414653b38c6871d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km171",
+      "branch": "refs/heads/ashigaru-mac-2/km-171-uke-ire-no-jimen-20260918",
+      "head": "4b21e86be32feedbbff1e23c65372a03a74efb10",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km172",
+      "branch": "refs/heads/ashigaru-mac-2/km-172-hako-no-utsushi-fail-open-20260918",
+      "head": "b6ff8a80dd91ba98197ed62d0661695de1bbb002",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km174",
+      "branch": "refs/heads/ashigaru-mac-2/km-174-otona-ban-yoyaku-iriguchi-20260918",
+      "head": "729f2cd7c458ff82637388c605936e8824812abd",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km185",
+      "branch": "refs/heads/ashigaru-mac-2/km-185-gosoku-wo-ono-no-ki-he-kotei-20260918",
+      "head": "3f53e54abfe0ee74c99258a8df3d1cb361bf822e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km186",
+      "branch": "refs/heads/ashigaru-mac-2/km-186-futago-no-kesu-jun-20260918",
+      "head": "9cefa9b02bdaebcabae0053f2911d2c6532687ce",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "6",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km186-gyaku",
+      "branch": null,
+      "head": "6bde7170ce574090a6139ba2dfe3aa4cb6db8634",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "0",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 0,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km186-t1",
+      "branch": null,
+      "head": "6bde7170ce574090a6139ba2dfe3aa4cb6db8634",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "0",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 0,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km186-t2",
+      "branch": null,
+      "head": "6bde7170ce574090a6139ba2dfe3aa4cb6db8634",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "0",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 0,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km186-t3",
+      "branch": null,
+      "head": "c51dbd42f51231f99d18e3f163ef770defc0f7a6",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km186-t4",
+      "branch": null,
+      "head": "6bde7170ce574090a6139ba2dfe3aa4cb6db8634",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "0",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 0,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km186-t5",
+      "branch": null,
+      "head": "6bde7170ce574090a6139ba2dfe3aa4cb6db8634",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "0",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 0,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km210",
+      "branch": "refs/heads/ashigaru-mac-2/km-210-damaru-ki-wo-narase-20260919",
+      "head": "303098ba5f92a05eaf436554e2038e5b9623e231",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km215",
+      "branch": "refs/heads/ashigaru-mac-2/km-215-zenpou-icchi-yokotenkai-kanzen-icchi-20260919",
+      "head": "6d8a4366e20b792a4c6a76ce9e4f90e7ea112e71",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km218",
+      "branch": "refs/heads/ashigaru-mac-2/km-218-casefold-futago-wa-shinsetsu-ju-de-yogoreru-20260920",
+      "head": "599146c428e74b3ce163ed04b696d704f1ff543c",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km219c",
+      "branch": "refs/heads/ashigaru-mac-2/km-219-census-kotei-tree-20260926",
+      "head": "b9573b2d376e9a0a372234b696a733677feb7919",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "0",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 0,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km222",
+      "branch": "refs/heads/ashigaru-mac-2/km-222-otsu-no-sa-wo-tojiru-20260920",
+      "head": "74c16d0b8e70b35b18e04353f015166f13b4b3a2",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km226",
+      "branch": "refs/heads/ashigaru-mac-2/km-226-mon-jou1-no-ana-20260920",
+      "head": "d5c8a847634460d67b6df37a07bb492440124659",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km226b",
+      "branch": "refs/heads/ashigaru-mac-2/km-226b-mon-no-kakujou-no-bosuu-wa-daichou-ka-disk-ka-20260920",
+      "head": "47088c4eba7fcbf95c18248a545255a6dcf2dc10",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km228",
+      "branch": "refs/heads/ashigaru-mac-2/km-228-fukusou-no-in-to-km226b-no-mitsu-no-yowami-20260920",
+      "head": "cba4cadf3f038973a291e682f48b6d8b4ba4ff62",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km229",
+      "branch": "refs/heads/ashigaru-mac-2/km-229-fukashiji-hei-no-rc1-20260920",
+      "head": "2f2dc04eac3852fa83888b751803e9586049db85",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km230",
+      "branch": "refs/heads/ashigaru-mac-2/km-230-jou1-no-hodo-wo-hakaru-20260920",
+      "head": "0429fa4531bc5f3d5a521a0429eea77849924115",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km235",
+      "branch": "refs/heads/ashigaru-mac-2/km-235-daichou-no-ne-no-hougen-20260920",
+      "head": "080d4b3824d42e21999114f44dd3fefbeabe0af2",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km238",
+      "branch": "refs/heads/ashigaru-mac-2/km-238-shou-no-nama-no-shutsuryoku-to-mon-no-shoutotsu-20260920",
+      "head": "42c671e3b11007e652a5c0306abeba14a2ce3c79",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km242",
+      "branch": "refs/heads/ashigaru-mac-2/km-242-osae-rareta-clear-ga-midoku-ni-nokoru-ana-20260920",
+      "head": "a4e1b59e8a851dd68119dfe88b3a2ddc55c1aa19",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km244",
+      "branch": "refs/heads/ashigaru-mac-2/km-244-onaji-path-ni-yon-blob-mac-lane-wo-mamoru-han-wa-disk-dake-20260921",
+      "head": "9107dc4250ede6cd5deff21fd70740cb3dc9b0f3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km248",
+      "branch": "refs/heads/ashigaru-mac-2/km-248-sai341919-yon-ga-ushinau-jou-33-mai-hook-wo-fukumu-20260921",
+      "head": "7e10d1991d6e37f7b3f71590d251e72c379f6754",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km251",
+      "branch": "refs/heads/ashigaru-mac-2/km-251-untracked-38-ken-no-kyuushutsu-to-fukugen-no-jissoku-20260921",
+      "head": "663c795949d134c4265c9869c801252fe97dd65e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "35",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km254",
+      "branch": "refs/heads/ashigaru-mac-2/km-254-kyuushutsu-eda-no-oya-wo-tadasu-20260921",
+      "head": "80919b2c664d687f4ec989540a456d23db4d1420",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "35",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km264r",
+      "branch": "refs/heads/ashigaru-mac-2/km-264-taba-no-oya-no-ana-commit-20260922",
+      "head": "bd3f0ad47f364177ee526898bf99364071dbbab2",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km267",
+      "branch": "refs/heads/ashigaru-mac-2/km-267-463ea245-revise339842-fixed-tree-rerun-sakuin-20260922",
+      "head": "2647a6d4d96078f655c4a348b9cee00a2b02c6a5",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km272",
+      "branch": "refs/heads/ashigaru-mac-2/km-272-mon-no-jou2-jou4-no-ana-no-mokuroku-to-naoshi-an-20260922",
+      "head": "303f35dc0c0bf13956a99dda51cae4f1e9d8b654",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km273",
+      "branch": "refs/heads/ashigaru-mac-2/km-273-nihon-eda-teishutsu-tanni-kenzan-20260922",
+      "head": "d6757f554b1a7af39b19df378e210e8372e9ee44",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km277",
+      "branch": "refs/heads/ashigaru-mac-2/km-277-seki1-U00A0-dai7-no-ana-ka-20260922",
+      "head": "c53199e3cd4c3f17232c6d9c9dc938a208ec00d8",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km280",
+      "branch": "refs/heads/ashigaru-mac-2/km-280-jou24-hensei-touse-kian-20260922",
+      "head": "837628965b2cef8984b74f5b453c76b13f5609d5",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km283",
+      "branch": "refs/heads/ashigaru-mac-2/km-283-raw13-hole-a-fukusayou-20260922",
+      "head": "debd1dc545f882a26db6150265b0e3d95e94910d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km287",
+      "branch": "refs/heads/ashigaru-mac-2/km-287-clear-jiken-hakaru-20260922",
+      "head": "cebc3c5ac82bde9f93c1f2863ede315577790da2",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km292",
+      "branch": "refs/heads/ashigaru-mac-2/km-292-km280-tsuishi-kanou-20260922",
+      "head": "f0cec23f239aa95176a6f3e695f6b55cdc6cbad9",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km294",
+      "branch": "refs/heads/ashigaru-mac-2/km-294-mamoru-an-modoshi-kata-hakaru-20260922",
+      "head": "dd2acca896a44c696b55ac869e99d05cb74c10b8",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km297",
+      "branch": "refs/heads/ashigaru-mac-2/km-297-km283-raw23-out-naki-ken-20260922",
+      "head": "ed4339d9bb0469eaf4e23b6e682f94f9f0f8a73b",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km306",
+      "branch": "refs/heads/ashigaru-mac-2/km-306-daichou-no-na-to-rc-kami-no-kata-20260922",
+      "head": "8a45e73b9de3a003bfcbf3abc541ac666a2e6da4",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km307",
+      "branch": "refs/heads/ashigaru-mac-2/km-307-monsou-ga-yuukou-ka-wo-hanzuru-ki-20260922",
+      "head": "a02395d7cb867dd78a8dc8f45b9515bd95f76f6e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-km309",
+      "branch": "refs/heads/ashigaru-mac-2/km-309-jou4-ga-0byte-no-nama-no-shou-wo-bassuru-oudan-20260922",
+      "head": "3ab3062d2f8a751bf8325898be6a6274c5f45f09",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a2-taba1",
+      "branch": "refs/heads/ashigaru-mac-2/km-185-186-taba-ippon-20260919",
+      "head": "0ed6c782a7cab71f81046925971abacdf890b923",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-a51340c6",
+      "branch": "refs/heads/ashigaru-mac-3/a51340c6-akahon-lot3-ai-missing-38-yomi-20260925",
+      "head": "2582c8789aca143a3d89bdaaba6f90d1378f6490",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-fae4680a",
+      "branch": "refs/heads/ashigaru-mac-3/fae4680a-akahon-part47-68-shogotsu-sabaki-20260924",
+      "head": "050cc8e843477ce9ccf6fd001e889934365f6102",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km224",
+      "branch": null,
+      "head": "5dc399383e0980ec4c09b1118ff9e4ab393bd15b",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "5",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km224b",
+      "branch": "refs/heads/ashigaru-mac-3/km-224b-kakoku-no-taba-saisou-20260920",
+      "head": "4647c4d6539532006da717c4c9cfddd3c8040228",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 31,
+      "status_err": "",
+      "head_ahead_of_origin": "35",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km231",
+      "branch": "refs/heads/ashigaru-mac-3/km-231-daichou-shougou-no-utsuwa-ga-misho-de-chigau-20260920",
+      "head": "d9dac05da98825fcb8778e6be1cee5738951432b",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "36",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km231-naoshi",
+      "branch": "refs/heads/ashigaru-mac-3/km-231-manifest-verify-naoshi-20260924",
+      "head": "814a45eb5dd818f6d8149ada6e5a0c75f8b42a8b",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km233",
+      "branch": "refs/heads/ashigaru-mac-3/km-233-daichou-shougou-no-nijimi-wo-hakaru-20260920",
+      "head": "244758555166e720fee76a830fd9cce320aa84dd",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "35",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km234",
+      "branch": "refs/heads/ashigaru-mac-3/km-234-mon-no-jou2-no-gishousei-wo-hakaru-20260920",
+      "head": "eb7ec8785c1e79a41b31c416f2ad80835da1af8e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km237",
+      "branch": "refs/heads/ashigaru-mac-3/km-237-mon-no-han-no-chizu-wo-tsukuru-20260920",
+      "head": "80d8fa6a1f7a8bcea314dda5653ec144c23966f9",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km239",
+      "branch": "refs/heads/ashigaru-mac-3/km-239-daichou-no-na-no-yonkei-to-sensuu-no-mikei-20260920",
+      "head": "cbb92bdbd2554c0c068ce232bb2317743bb84b73",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km243",
+      "branch": "refs/heads/ashigaru-mac-3/km-243-fuzai-pane-no-nise-no-taiki-wo-fail-closed-he-20260920",
+      "head": "5736fb0577baf257c4007313c8639b01390860b4",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km246",
+      "branch": "refs/heads/ashigaru-mac-3/km-246-auto-recovery-bin-ga-tsugi-no-clear-no-hikigane-20260921",
+      "head": "f4ede1f24cd45c8081a38b8230d59188850363b3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km249",
+      "branch": "refs/heads/ashigaru-mac-3/km-249-hoken-jitsu-ka-kensho-20260921",
+      "head": "7ead073485ec88434a8b424fed7bac39fe67fdca",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km253",
+      "branch": "refs/heads/ashigaru-mac-3/km-253-yonjuuketa-to-kotei-taba-de-revise347250-wo-tojiru-20260921",
+      "head": "048638c48f5b7422c57104992c5708fa1b1429a8",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km256",
+      "branch": "refs/heads/ashigaru-mac-3/km-256-b4-artifact-no-fuzai-wo-kazu-de-kakutei-20260921",
+      "head": "0a21202b0d389b9b03ff71f2b961785153787786",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km263",
+      "branch": "refs/heads/ashigaru-mac-3/km-263-dentalbi-de-b4-no-jitsuzai-wo-kazu-de-wakatsu-20260921",
+      "head": "f9ea70d1014a6049ea2a608fc81f6f5d80924733",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km268",
+      "branch": "refs/heads/ashigaru-mac-3/km-274-km268-eda-20260922",
+      "head": "31c9d39374752154afb723a0beef43cc8c3daa20",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km278",
+      "branch": "refs/heads/ashigaru-mac-3/km-278-karo-no-teishutsu-shi-kenbun-20260922",
+      "head": "65165a6cf104310633f4bdce93e791a9c65955c3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km281",
+      "branch": "refs/heads/ashigaru-mac-3/km-281-U00A0-dai7-ana-ka-jishu-saigen-20260922",
+      "head": "815fa5ef531fc02f0dd22eb0f47dc03fbe34e048",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km284",
+      "branch": "refs/heads/ashigaru-mac-3/km-284-sanseki-no-han-ga-wareta-sono-ne-wo-hakare-20260922",
+      "head": "8229d8ca1766faa9acc16b71f9e6f21058398e80",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km285",
+      "branch": "refs/heads/ashigaru-mac-3/km-285-karo-no-besshi-12-no-kenbun-20260922",
+      "head": "caadced999b6e2648cb98334107763fb80ba2253",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km286",
+      "branch": "refs/heads/ashigaru-mac-3/km-286-hako-db-nirotto-no-kikou-20260922",
+      "head": "87759c9c63652d18433479aac3863c9741c3df38",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km289",
+      "branch": "refs/heads/ashigaru-mac-3/km-289-kazu-wo-senshita-kami-ga-yakareta-koku-ni-sude-ni-furui-20260922",
+      "head": "4e4c028b3b69169ed72625dcbeff98922099994b",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km290",
+      "branch": "refs/heads/ashigaru-mac-3/km-290-watcher-nikeitou-wo-arukikire-20260922",
+      "head": "95fda421560260ed17ccd5cd84b1500b0a07b4cf",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km295",
+      "branch": "refs/heads/ashigaru-mac-3/km-295-shizuka-na-shippai-yotsu-no-ana-20260922",
+      "head": "b1e340e1885adf8324de297e9cbbabe121a57a70",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km300",
+      "branch": "refs/heads/ashigaru-mac-3/km-300-daichou-no-ne-repo-soutai-no-yurai-20260922",
+      "head": "4b52f03a644073c3922f1b1a3bb827f51aec555e",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km301",
+      "branch": "refs/heads/ashigaru-mac-3/km-301-mon-no-deme-ga-taba-ni-nai-ken-20260922",
+      "head": "a8e2ad42385a9a1d98fbde2b2ca992bf3b9bc1d9",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km302",
+      "branch": "refs/heads/ashigaru-mac-3/km-302-mon-wa-onore-no-deme-wo-bassuru-20260922",
+      "head": "0dd3942e0f3efec64bf9b014cc090a8a0139a81d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km303",
+      "branch": "refs/heads/ashigaru-mac-3/km-303-jou1-wa-mitsu-no-ne-wo-wakatsu-20260922",
+      "head": "fd8fe96328ab0fd83810d207779d79a4d800e083",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km310",
+      "branch": "refs/heads/ashigaru-mac-3/km-310-taicho-no-ne-no-kata-no-zenba-census-20260922",
+      "head": "bd38c80516575c7135500d894da2c5c7673d8e37",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-km310-463ea245",
+      "branch": "refs/heads/ashigaru-mac-3/km-310-463ea245-revise2-kotei-shoseki-20260925",
+      "head": "4e82e5c02c57d867992f2d2f3ad1d5e0ab3b7337",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-msh-082ebca1",
+      "branch": "refs/heads/ashigaru-mac-3/082ebca1-akahon-r8-mokushi-20260925",
+      "head": "f3f88a5674ddfe43a9ca5c796b8948d796d01f3d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/a3-msh-8c2d7119",
+      "branch": "refs/heads/ashigaru-mac-3/8c2d7119-kiramon-koukai-saisoku-20260925",
+      "head": "e61ceca60df72ee7afbdeac5b46886df7ac18abd",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-child-watch-3859",
+      "branch": "refs/heads/karo-mac/km-3859cda0-children-20260924",
+      "head": "1e3f52c99334b5cd31a623e67ba2f36c2c032cd2",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-km193-teisei",
+      "branch": "refs/heads/karo-mac/km-193-ichidanme-refmei-teisei-20260919",
+      "head": "33dc35780da1171f07b030113badb977516f3711",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-km223",
+      "branch": "refs/heads/karo-mac/km-223-furui-bin-kyuutsuu-no-1-2-wo-umeru-20260920",
+      "head": "0a7c4b8c4f362b9a35733ae0ba028f79e99c0dad",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "3",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-km225",
+      "branch": "refs/heads/karo-mac/km-225-futago-no-runbook-ga-mon6-wo-fusagu-20260920",
+      "head": "ac371c8ce775d03db612f5919354291ad3efca88",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-km252",
+      "branch": null,
+      "head": "bae8206d59c2f3d667d980befffaf491c375dc11",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-main-ff",
+      "branch": null,
+      "head": "6bde7170ce574090a6139ba2dfe3aa4cb6db8634",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "0",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 0,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-uncommitted",
+      "branch": "refs/heads/karo-mac/km-uncommitted-yotsu-20260920",
+      "head": "0cb86512052c6ef578bb378ec84e5cba33cef1cf",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/karo-wkonchi",
+      "branch": "refs/heads/karo-mac/watcher-konchi-3859cda0-20260920",
+      "head": "5bae2d5dd381f35c7533d1afe71b3099a110150d",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "2",
+      "origin_ahead_of_head": "2",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/km-220-jou4-kizon-taishougai",
+      "branch": "refs/heads/karo-mac/km-220-mon-jou4-kizon-wo-taishougai-20260920",
+      "head": "e3819ed71d2167a4da182e7f1eeef7e5bb4037d3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 1,
+      "status_err": "",
+      "head_ahead_of_origin": "9",
+      "origin_ahead_of_head": "3",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/km-296-a2-20260922145341",
+      "branch": "refs/heads/ashigaru-mac-2/km-296-disk-ban-mujouken-yokusei-no-yurai-20260922",
+      "head": "834edf9baa9ee1388e85df3a67647e07768216e3",
+      "detached": false,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "1",
+      "origin_ahead_of_head": "0",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    },
+    {
+      "path": "/Users/momizimac/wt/km249-insurance-check",
+      "branch": null,
+      "head": "11a117c0dd48c64f96d741a42963c3ca8382bf63",
+      "detached": true,
+      "prunable": null,
+      "locked": false,
+      "status_rc": 0,
+      "status_lines": 0,
+      "status_err": "",
+      "head_ahead_of_origin": "34",
+      "origin_ahead_of_head": "43",
+      "revlist_rc": [
+        0,
+        0
+      ],
+      "revlist_err": "",
+      "is_ancestor_rc": 1,
+      "is_ancestor_err": ""
+    }
+  ]
+}

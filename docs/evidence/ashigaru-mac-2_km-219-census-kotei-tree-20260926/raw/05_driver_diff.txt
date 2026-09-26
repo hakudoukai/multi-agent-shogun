@@ -1,0 +1,10 @@
+7c7,9
+< BASE_REF = "origin/main"
+---
+> import os
+> ENV = dict(os.environ, GIT_OPTIONAL_LOCKS="0")  # 専任2: 他席の index を掴まぬ
+> BASE_REF = sys.argv[1]  # 専任2: 固定 sha を argv で受ける
+10c12
+<     p = subprocess.run(args, cwd=cwd, capture_output=True, text=True)
+---
+>     p = subprocess.run(args, cwd=cwd, capture_output=True, text=True, env=ENV)
