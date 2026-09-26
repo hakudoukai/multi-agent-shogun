@@ -1,0 +1,26 @@
+帳=docs/evidence/km-197-noukagi-no-soroi-20260918/_sanso_20260926/11_chou_0926_utsushi.yaml
+全鍵=15 塊=0 塊でない鍵=15 status内訳={} 母数(done塊)=1
+  task_id            有=  1 空=  0 無=  0 和=1
+  status             有=  1 空=  0 無=  0 和=1
+  completed_at       有=  0 空=  0 無=  1 和=1
+  branch             有=  0 空=  0 無=  1 和=1
+  tip                有=  0 空=  0 無=  1 和=1
+  tree               有=  0 空=  0 無=  1 和=1
+  oya                有=  0 空=  0 無=  1 和=1
+  worktree           有=  0 空=  0 無=  1 和=1
+  pushed             有=  0 空=  0 無=  1 和=1
+  kotae              有=  0 空=  0 無=  1 和=1
+  bundle             有=  0 空=  0 無=  1 和=1
+  nou_bin            有=  0 空=  0 無=  1 和=1
+  kansa_seq          有=  0 空=  0 無=  1 和=1
+  kansa_parent_seq   有=  0 空=  0 無=  1 和=1
+  kansa_readback     有=  0 空=  0 無=  1 和=1
+  board_task         有=  1 空=  0 無=  0 和=1
+  sen_eta            有=  0 空=  0 無=  1 和=1
+  jitsu              有=  0 空=  0 無=  1 和=1
+18欄悉く有=0/1 固定ref四点(branch,tip,tree,oya)悉く有=0/1
+  tip: 
+  tree: 
+  oya: 
+  陽性対照(HEAD) 10000ff89716da925a14ff6e6fed57e626fbf8ee → 在 型=commit rc=0
+  陰性対照(0x40) 0000000000000000000000000000000000000000 → 不在 型=- rc=1

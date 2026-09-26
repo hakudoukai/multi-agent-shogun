@@ -1,0 +1,26 @@
+帳=docs/evidence/km-197-noukagi-no-soroi-20260918/_sanso_20260926/10_chou_0918_from_object.yaml
+全鍵=82 塊=66 塊でない鍵=16 status内訳={'done': 64, 'None': 1, 'assigned': 1} 母数(done塊)=64
+  task_id            有= 64 空=  0 無=  0 和=64
+  status             有= 64 空=  0 無=  0 和=64
+  completed_at       有= 62 空=  0 無=  2 和=64
+  branch             有= 17 空=  0 無= 47 和=64
+  tip                有= 13 空=  0 無= 51 和=64
+  tree               有= 15 空=  0 無= 49 和=64
+  oya                有= 15 空=  0 無= 49 和=64
+  worktree           有= 13 空=  0 無= 51 和=64
+  pushed             有= 16 空=  0 無= 48 和=64
+  kotae              有= 29 空=  0 無= 35 和=64
+  bundle             有= 15 空=  0 無= 49 和=64
+  nou_bin            有= 28 空=  0 無= 36 和=64
+  kansa_seq          有= 14 空=  0 無= 50 和=64
+  kansa_parent_seq   有= 14 空=  0 無= 50 和=64
+  kansa_readback     有=  9 空=  0 無= 55 和=64
+  board_task         有= 30 空=  2 無= 32 和=64
+  sen_eta            有= 15 空=  0 無= 49 和=64
+  jitsu              有= 31 空=  0 無= 33 和=64
+18欄悉く有=7/64 固定ref四点(branch,tip,tree,oya)悉く有=13/64
+  tip: kata:commit=13 在=13
+  tree: kata:tree=15 在=15
+  oya: kata:commit=14 在=14 非40桁=1
+  陽性対照(HEAD) 10000ff89716da925a14ff6e6fed57e626fbf8ee → 在 型=commit rc=0
+  陰性対照(0x40) 0000000000000000000000000000000000000000 → 不在 型=- rc=1

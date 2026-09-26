@@ -1,0 +1,74 @@
+task_id: km-308-kieta-45shi-no-in-wo-keifu-de-ware-20260922
+assigned_to: ashigaru-mac-1
+assigned_by: karo-mac
+status: done
+priority: high
+bloom_level: L5
+issued_at: 2026-09-22T19:37:02+0900
+board_task: 463ea245-eb6e-4e44-a6ee-ee754bb612e9
+board_note: |
+  ★板鍵 = 463ea245-eb6e-4e44-a6ee-ee754bb612e9（36字全き）★。弾鍵と納鍵の★両方★へ焼け（裁334478 他）。
+  ★board_write は打つな★（owner_role=gakushu-bucho・彫るのは當職）。
+
+karo_no_ochido: |
+  ★當職の落度（本弾を据ゑるに先立ち述べる）★
+  ⑴★本 yaml は 15:47:43 から 19:3x まで km-291 を本弾として掲げた儘であつた★。
+    貴殿は已に km-291 を納め、km-299 まで納めて「殘弾0――請ふ」と報じて居られた。
+    ∴ 此の間に /clear が走れば貴殿は★已に納めた弾を再走した★筈である。★本弾へ昇格させるのは當職の役★。
+  ⑵★門を渡す時に基点の渡し方を一度も宣して居なかつた★ ―― 出す前門は既定で「器の在處から導いた repo 根」を
+    基点に取り、束内相対の臺帳（裁322699 の本形）は悉く「実体無」で落ちる。口は KM_GATE_MANIFEST_BASE（裁 seq322949）。
+    當職が之を宣さなかつた為、部長が同じ門・同じ紙で rc=1・実体無55 を踏まれた（seq354946）。
+    ★以後、門を走らせる時は基点の env を argv ごと紙へ焼け★。本弾でも其の形を用ゐよ。
+  ⑶★當職の 54 という數は disk 由來であつた★ ―― commit 側で測れば母數は 425紙、生の門の出目は 53紙、
+    其のうち★45紙が當職の54列の外★に在つた。∴ 本弾の母數は★貴殿が己の器で建て直せ★。
+
+zen_dan_no_uke: |
+  km-291/293/294/295/298/299 の納めは受領して居る。
+  ★七〜八納（km-296/297/299/300/301/302/303/306/307）は當職の檢分が未了ゆゑ、
+  受入も差戻しも宣さぬ。檢分（器 = ~/bin/km_kenbun.sh・commit の object から）の後に別便で宣す★。
+  之は當職が書いた約束であり、履行する。
+
+mato: |
+  ★45紙が何故 disk から消えたかの因を、commit の系譜で一本づつ割れ★
+  （當職の 01_honmon.md ⑻未測②に「未着手」と焼いた項 ―― 之を閉ぢるのが本弾）。
+
+jou:
+  - |
+    ★母數を己の器で建て直せ（當職の數を其の儘に取るな）★。
+    ㋐ commit 側の全紙を出せ ―― git log --all --name-only --pretty=format(空) で docs/evidence/karo-mac_* を歩き、數を宣せ。
+    ㋑ 其の blob の★中身★で門の字面を引き（名で當て推量するな）、hit の數を宣せ。
+    ㋒ hit から「門を引用した本文」「器の census」を除き、★生の門の出目★の數と名列を出せ。
+    ㋓ 其のうち disk に無い紙の名列を出せ。當職の宣（425/59/53/45）と一致するか否かを★名の列で★突き合はせよ。
+  - |
+    各紙について次を commit の object から歩き、表にせよ ――
+    ㋔ 其の紙を最後に持つ commit40（full 40桁）と其の tree40（full 40桁）。
+    ㋕ 其の commit の到達 ref（for-each-ref --contains）と 親の數・親40。
+    ㋖ ★其の紙を消した commit が在るか★（log --all --diff-filter=D --name-only を其の紙で打て）。
+      在れば其の commit40・刻・message を焼け。無ければ「消した commit 無し」と焼け。
+  - |
+    ★消失の型で分類し、型ごとの枚数と名列を出せ★（例 = D commit 在り／枝が main へ未 merge のみ／
+    束ごと現れて居ない／其の他）。★型の定義を先に書き、後から足すな★。
+  - |
+    零を出す型が在れば★陽性對照と rc を添へよ★（在る事が判つて居る紙で器が鳴るのを先に示せ）。
+  - |
+    ★己の疑ひを一つ以上立て、器で測り、出目を書け★（眞でも偽でも）。
+
+nou_no_kata: |
+  ★部長令の逐語（msg_20260922_175510_1383dc0e）に合はせる★ ――
+  固定 repo 絶対 path・full 40桁 commit/tree・artifact の full SHA256・bytes/lines・raw の argv と rc・
+  母數の定義と★測つた刻★。之を欠く提出は受入不可。
+  束 = docs/evidence/ashigaru-mac-1_km-308-kieta-45shi-no-in-wo-keifu-de-ware-20260922/
+  ⑴ 紙を確定 → ⑵★正規化は最後に★（行末の空白/tab/CR を剥ぎ・末尾改行丁度1・LF のみ。
+     ★正規化前の bytes/lines/sha を先に捕へて raw へ焼け★）→ ⑶ 臺帳を建てる
+     （★karo_mac_manifest_append.py のみ★・裁321856。cwd=束 で束内相対名を渡せ ―― 根は★束内相対★が本形）
+   → ⑷ 門を★基点明示★で走らせ rc=0 を得よ:
+     KM_GATE_MANIFEST_BASE=<束の絶対path> /bin/bash scripts/checks/karo_mac_dasumae_gate.sh MANIFEST.txt <紙…>
+     ★門の出目（argv/out/err/rc）は束の外へ置け ―― 門は己の出目を罰する★。
+   → ⑸ 1弾1枝（origin/main から切る）・git add -f で名指し・commit --only。★push は打つな★。
+
+kin:
+  - ★disk を直すな・消えた紙を復元するな（復元の判は上に在る）★。
+  - ★他席の worktree / HEAD / index へ書くな（讀取は可）★。
+  - ★提出済の紙を其の場で直すな ―― 別紙へ移し path+sha256 で參照せよ★。
+  - ★40/64桁を目で写すな（器の出力を貼れ）・行番号を焼き込むな（逐語で locate せよ）★。
+  - ★main へ直彫り・push・gh は打つな★。
