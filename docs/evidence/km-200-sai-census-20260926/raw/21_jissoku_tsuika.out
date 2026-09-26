@@ -1,0 +1,62 @@
+# 刻 2026-09-26T12:37:49+0900  E0=0字 E1=3字 E2=1字 C=29字
+## E sb-* 他6本（⒜⒝⒞ は --dry-run・⒟ は usage 形のみ）
+E sb-ashigaru-mac-2 ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-ashigaru-mac-2 ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-ashigaru-mac-2 ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-ashigaru-mac-2 ⒟引数其の物が無い | rc=2 | usage: sb-ashigaru-mac-2 write letter "本文" [--parent-seq N] [--to 役]
+E sb-ashigaru-mac-2 ⒟write のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-ashigaru-mac-2 ⒟write letter のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-ashigaru-mac-3 ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-ashigaru-mac-3 ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-ashigaru-mac-3 ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-ashigaru-mac-3 ⒟引数其の物が無い | rc=2 | usage: sb-ashigaru-mac-3 write letter "本文" [--parent-seq N] [--to 役]
+E sb-ashigaru-mac-3 ⒟write のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-ashigaru-mac-3 ⒟write letter のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-gunshi-mac ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-gunshi-mac ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-gunshi-mac ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-gunshi-mac ⒟引数其の物が無い | rc=2 | usage: sb-gunshi-mac write letter "本文" [--parent-seq N] [--to 役職]
+E sb-gunshi-mac ⒟write のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-gunshi-mac ⒟write letter のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-shogun-mac ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-shogun-mac ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-shogun-mac ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-shogun-mac ⒟引数其の物が無い | rc=2 | usage: sb-shogun-mac write letter "本文" [--parent-seq N] [--to 役職]
+E sb-shogun-mac ⒟write のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-shogun-mac ⒟write letter のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-karo-mac ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-karo-mac ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-karo-mac ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-karo-mac ⒟引数其の物が無い | rc=2 | usage: sb-karo-mac write letter "本文" [--parent-seq N] [--to 役職]
+E sb-karo-mac ⒟write のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-karo-mac ⒟write letter のみ | 未実走 | 字面: 後ろに --requires-response が付き args=4・本文が「--」始まりで L186 die の筈
+E sb-gakushu-bucho ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-gakushu-bucho ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-gakushu-bucho ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+E sb-gakushu-bucho ⒟引数其の物が無い | rc=2 | usage: sb-gakushu-bucho write letter "本文" [--parent-seq N] [--to 役職]
+E sb-gakushu-bucho ⒟write のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+E sb-gakushu-bucho ⒟write letter のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+## F inbox_write 稼働木版の後段（止まり木2つ）
+F DEFERRAL argv ⒜0byte | rc=1 | Usage: inbox_write.sh <target_agent> <content> <type> <from>
+F DEFERRAL argv ⒝空白のみ | rc=0 | DEFERRAL_PASS
+F DEFERRAL argv ⒞改行のみ | rc=0 | DEFERRAL_PASS
+F DEFERRAL argv 対照 | rc=0 | DEFERRAL_PASS
+F DEFERRAL stdin e0_0byte | rc=1 | Usage: inbox_write.sh <target_agent> <content> <type> <from>
+F DEFERRAL stdin e1_kuuhaku | rc=0 | DEFERRAL_PASS
+F DEFERRAL stdin e2_kaigyou | rc=1 | Usage: inbox_write.sh <target_agent> <content> <type> <from>
+F DEFERRAL stdin c_jitsu | rc=0 | DEFERRAL_PASS
+F DEAD karo-mac(死箱) ⒝空白のみ | rc=68 | [inbox_write] REJECTED: ★karo-mac は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。 [inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc /
+F DEAD ashigaru-mac-2(生箱) ⒝空白のみ | rc=0 | DEAD_INBOX_PASS target=ashigaru-mac-2
+F DEAD karo-mac(死箱) ⒞改行のみ | rc=68 | [inbox_write] REJECTED: ★karo-mac は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。 [inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc /
+F DEAD ashigaru-mac-2(生箱) ⒞改行のみ | rc=0 | DEAD_INBOX_PASS target=ashigaru-mac-2
+F DEAD karo-mac(死箱) 対照 | rc=68 | [inbox_write] REJECTED: ★karo-mac は死箱(DEAD-INBOX)★ ―― 當席は局所箱を讀まぬ。 [inbox_write]   正路: pc_handshake へ直送せよ (to_pc=mac_pc /
+F DEAD ashigaru-mac-2(生箱) 対照 | rc=0 | DEAD_INBOX_PASS target=ashigaru-mac-2
+## G mac_send.py（標 x・cwd=空 dir）
+G send e0_0byte | rc=3 | 送る前 相手未讀=-1  自未讀=-1 ★標が本文に無い ―― 送らぬ(測れぬ物は送らぬ)★
+G send e1_kuuhaku | rc=3 | 送る前 相手未讀=-1  自未讀=-1 ★標が本文に無い ―― 送らぬ(測れぬ物は送らぬ)★
+G send e2_kaigyou | rc=3 | 送る前 相手未讀=-1  自未讀=-1 ★標が本文に無い ―― 送らぬ(測れぬ物は送らぬ)★
+G send c_jitsu | rc=3 | 送る前 相手未讀=-1  自未讀=-1 ★標が本文に無い ―― 送らぬ(測れぬ物は送らぬ)★
+G send 対照(標 km-200) | rc=4 | inbox_write rc=127 bash: scripts/inbox_write.sh: No such file or directory  送る前 相手未讀=-1  自未讀=-1
+G ⒟引数無し | rc=2 | 將軍mac 私器: 便を送り、着地を★測る★器。 ★此の器は判じぬ。數と眞僞値を出すのみ。通/止の判は人が持つ。★  (2026-09-04 b130 にて家老の先置檢査器から「止め」の權を取り上げた。   當方の器も同じ形で作る ―― 人
+G ⒟send のみ | rc=2 | 將軍mac 私器: 便を送り、着地を★測る★器。 ★此の器は判じぬ。數と眞僞値を出すのみ。通/止の判は人が持つ。★  (2026-09-04 b130 にて家老の先置檢査器から「止め」の權を取り上げた。   當方の器も同じ形で作る ―― 人
+# cwd は空のまま（何も書かれていない）

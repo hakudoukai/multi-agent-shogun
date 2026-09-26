@@ -1,0 +1,141 @@
+# sb-* の形の差（基準 sb-ashigaru-mac-1・刻 2026-09-26T12:38:01+0900・diff -u の逐語）
+## sb-ashigaru-mac-2 sha256=1c51e7e49e449fec16960fb230982057ee422b2092b4da115b6d3a1c2ebce429
+--- sb-ashigaru-mac-1	2026-09-18 12:23:00
++++ sb-ashigaru-mac-2	2026-09-18 12:23:00
+@@ -1,9 +1,9 @@
+ #!/bin/sh
+-# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
++# sb-ashigaru-mac-2 ―― ashigaru-mac-2 の DB便の手(creds注入つき)。
+ # 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+ set -a; . "$HOME/.dept_env"; set +a
+ c="$1"; shift 2>/dev/null || true
+ case "$c" in
+-  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-1 mac_pc "$@";;
+-  *) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
++  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-2 mac_pc "$@";;
++  *) echo 'usage: sb-ashigaru-mac-2 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+ esac
+diff_rc=1
+## sb-ashigaru-mac-3 sha256=0edb36a2f44f9cd226f9679b7aedcc7c08a99731aeb642b68fc8914072211062
+--- sb-ashigaru-mac-1	2026-09-18 12:23:00
++++ sb-ashigaru-mac-3	2026-09-18 12:23:00
+@@ -1,9 +1,9 @@
+ #!/bin/sh
+-# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
++# sb-ashigaru-mac-3 ―― ashigaru-mac-3 の DB便の手(creds注入つき)。
+ # 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+ set -a; . "$HOME/.dept_env"; set +a
+ c="$1"; shift 2>/dev/null || true
+ case "$c" in
+-  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-1 mac_pc "$@";;
+-  *) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
++  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-3 mac_pc "$@";;
++  *) echo 'usage: sb-ashigaru-mac-3 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+ esac
+diff_rc=1
+## sb-gunshi-mac sha256=fe42dcd309daa4da0d79b93fce5df34ef86f1eb74ec3ccd32c203b92ba7b8ebe
+--- sb-ashigaru-mac-1	2026-09-18 12:23:00
++++ sb-gunshi-mac	2026-08-19 00:12:20
+@@ -1,9 +1,9 @@
+ #!/bin/sh
+-# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
+-# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
++# sb-gunshi-mac ― gunshi-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
++# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+ set -a; . "$HOME/.dept_env"; set +a
+ c="$1"; shift 2>/dev/null || true
+ case "$c" in
+-  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-1 mac_pc "$@";;
+-  *) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
++  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" gunshi-mac mac_pc "$@";;
++  *) echo 'usage: sb-gunshi-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+ esac
+diff_rc=1
+## sb-shogun-mac sha256=109dc4f3c01eee53a6ab2f042cfdd6a189bfe0532e935105f48087598cb3921d
+--- sb-ashigaru-mac-1	2026-09-18 12:23:00
++++ sb-shogun-mac	2026-08-19 00:12:19
+@@ -1,9 +1,9 @@
+ #!/bin/sh
+-# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
+-# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
++# sb-shogun-mac ― shogun-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
++# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+ set -a; . "$HOME/.dept_env"; set +a
+ c="$1"; shift 2>/dev/null || true
+ case "$c" in
+-  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-1 mac_pc "$@";;
+-  *) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
++  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" shogun-mac mac_pc "$@";;
++  *) echo 'usage: sb-shogun-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+ esac
+diff_rc=1
+## sb-karo-mac sha256=410a0bc31a7128b6626d6b5494c870ea7aa0266be175024a204ccb9f09a7d1cd
+--- sb-ashigaru-mac-1	2026-09-18 12:23:00
++++ sb-karo-mac	2026-09-07 14:58:51
+@@ -1,9 +1,9 @@
+ #!/bin/sh
+-# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
+-# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
++# sb-karo-mac ― karo-macのDB発信の手（creds注入つき入口・2026-08-19 委員長配線）
++# 由来: mac隊は agent_letter.py も .env も無く★DBへ出す手段が無かった★（52時間の偽の沈黙の真因）
+ set -a; . "$HOME/.dept_env"; set +a
+ c="$1"; shift 2>/dev/null || true
+ case "$c" in
+-  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-1 mac_pc "$@";;
+-  *) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
++  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" karo-mac mac_pc "$@" --requires-response;;
++  *) echo 'usage: sb-karo-mac write letter "本文" [--parent-seq N] [--to 役職]' >&2; exit 2;;
+ esac
+diff_rc=1
+## sb-gakushu-bucho sha256=07fa7f5704ddeed75ee450dffb25af7cddee0aea69aa9d59959d5e860f1d7e7a
+--- sb-ashigaru-mac-1	2026-09-18 12:23:00
++++ sb-gakushu-bucho	2026-08-25 21:35:03
+@@ -1,9 +1,17 @@
+ #!/bin/sh
+-# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
+-# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+-set -a; . "$HOME/.dept_env"; set +a
+-c="$1"; shift 2>/dev/null || true
+-case "$c" in
+-  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-1 mac_pc "$@";;
+-  *) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
+-esac
++# Mac事業部長(gakushu-bucho)専用の正式上り。役職・from_pcは固定し、宛先と親はagent_letterの門で検証する。
++set -eu
++if [ ! -r /Users/momizimac/.dept_env ]; then
++  echo 'gakushu_uplink_blocked=dept_env_missing' >&2
++  exit 76
++fi
++set -a
++. /Users/momizimac/.dept_env
++set +a
++command_name="${1:-}"
++if [ "$command_name" != write ]; then
++  echo 'usage: sb-gakushu-bucho write letter "本文" [--parent-seq N] [--to 役職]' >&2
++  exit 2
++fi
++shift
++exec /usr/bin/python3 /Users/momizimac/bin/agent_letter.py gakushu-bucho mac_pc "$@"
+diff_rc=1
+## sb sha256=2670b305a432e552d893127e9f9c452fcdf8bc5c06b7c578ce0bc8d82c87e836
+--- sb-ashigaru-mac-1	2026-09-18 12:23:00
++++ sb	2026-08-15 00:22:17
+@@ -1,9 +1,11 @@
+ #!/bin/sh
+-# sb-ashigaru-mac-1 ―― ashigaru-mac-1 の DB便の手(creds注入つき)。
+-# 裁 seq330942(総監督)で据ゑ可。形は sb-gunshi-mac と同形。戻し=本file の削除のみ。
+-set -a; . "$HOME/.dept_env"; set +a
+-c="$1"; shift 2>/dev/null || true
++# sb ― karo-macのDB読み書きの手（creds注入つき入口・2026-08-14 委員長配線）
++# creds本体は ~/.sb_env（600）。この入口以外からhelperを直に呼ぶとcreds不在で拒否される。
++set -a; . "$HOME/.sb_env"; set +a
++c="$1"; [ $# -gt 0 ] && shift
+ case "$c" in
+-  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" ashigaru-mac-1 mac_pc "$@";;
+-  *) echo 'usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]' >&2; exit 2;;
++  read)  exec /usr/bin/python3 "$HOME/bin/karo_mac_read.py"  "$@";;
++  # 2026-08-15: 書きは汎用agent_letter(宛先可変 --to)へ。karo_mac_write.py(iincho固定)は退役
++  write) exec /usr/bin/python3 "$HOME/bin/agent_letter.py" karo-mac mac_pc "$@";;
++  *) echo "usage: sb read seq|inbox|qa ... / sb write letter \"本文\"" >&2; exit 2;;
+ esac
+diff_rc=1
