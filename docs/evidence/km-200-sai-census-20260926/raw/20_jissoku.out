@@ -1,0 +1,33 @@
+# 刻 2026-09-26T11:59:45+0900  E0=0字 E1=3字 E2=1字 C=29字
+## A agent_letter.py 直・argv 形（env -i・creds 無し・--dry-run）
+A ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+A ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+A ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+A 対照 | rc=0 | ★DRY-RUN（★送信しない★）★    to_pc         = mac_pc    topic         = cross_pc_inbox_karo-mac    message_type  = answer    pri
+A ⒟引数無し(letter の後が無い) | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+A ⒟引数無し(letter も無い) | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+## A2 agent_letter.py 直・--content-file 形（新しい路・9/19 には無かつた）
+A2 e0_0byte | rc=2 | [agent_letter] ★拒否★ --content-file が空: /Users/momizimac/wt/a1-km200b/docs/evidence/km-200-sai-census-20260926/raw/seed/e
+A2 e1_kuuhaku | rc=2 | [agent_letter] ★拒否★ --content-file が空: /Users/momizimac/wt/a1-km200b/docs/evidence/km-200-sai-census-20260926/raw/seed/e
+A2 e2_kaigyou | rc=2 | [agent_letter] ★拒否★ --content-file が空: /Users/momizimac/wt/a1-km200b/docs/evidence/km-200-sai-census-20260926/raw/seed/e
+A2 c_jitsu | rc=0 | ★DRY-RUN（★送信しない★）★    to_pc         = mac_pc    topic         = cross_pc_inbox_karo-mac    message_type  = answer    pri
+A2 ⒟file 無し(旗のみ) | rc=2 | [agent_letter] ★拒否★ 本文が「--content-file」＝引数の取り違え。本文は file に書き agent_letter.py <自分の役職> <自分のPC> letter --content-file <file
+## B sb-ashigaru-mac-1 経由（--dry-run・POST 前に return）
+B ⒜0byte | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+B ⒝空白のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+B ⒞改行のみ | rc=2 | [agent_letter] ★拒否★ 本文を指定せよ
+B ⒟write letter のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+B ⒟write のみ | rc=0 | agent_letter.py ― 登録役職宛letterの汎用書き手（2026-08-14）  ★なぜ汎用か★   karo_mac_write.py は ME="karo-mac" を焼き込んだ。同日 理事長令   「ハードコード部分は
+B ⒟引数其の物が無い | rc=2 | usage: sb-ashigaru-mac-1 write letter "本文" [--parent-seq N] [--to 役]
+## C inbox_write.sh 稼働木の版（IW_NAME_TEST_ONLY=1・箱へ書かぬ）
+C argv ⒜0byte | rc=1 | Usage: inbox_write.sh <target_agent> <content> <type> <from>
+C argv ⒝空白のみ | rc=0 | NAME_PASS target=karo-mac
+C argv ⒞改行のみ | rc=0 | NAME_PASS target=karo-mac
+C argv 対照 | rc=0 | NAME_PASS target=karo-mac
+C stdin e0_0byte | rc=1 | Usage: inbox_write.sh <target_agent> <content> <type> <from>
+C stdin e1_kuuhaku | rc=0 | NAME_PASS target=karo-mac
+C stdin e2_kaigyou | rc=1 | Usage: inbox_write.sh <target_agent> <content> <type> <from>
+C stdin c_jitsu | rc=0 | NAME_PASS target=karo-mac
+C ⒟胴の位置を抜く | rc=1 | Usage: inbox_write.sh <target_agent> <content> <type> <from>
+## D board_write.py（引数無しのみ・kv 有りは板へ PATCH ゆゑ走らせぬ）
+D ⒟引数無し | rc=2 | usage: board_write.py <task_id-uuid> key=value ...  keys: active_on_pc,blocker,completed_at,current_step,data_location,h

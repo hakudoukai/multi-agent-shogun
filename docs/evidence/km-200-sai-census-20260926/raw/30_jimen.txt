@@ -1,0 +1,102 @@
+# 字面の判定の根拠（逐語・刻 2026-09-26T12:01:14+0900・走らせずに読んだだけ）
+## /Users/momizimac/bin/km_send.sh  sha256=51499c10445ce482bd663d2ff6ad253bed375f83a9fcf95f3faeb5f14290b22f
+## /Users/momizimac/bin/l1send  sha256=6d25affb1f5065cd08cd4e839b95ea3bf6a209e61fb34ce697b6cf535c5c67a4
+## /Users/momizimac/bin/mac_send.py  sha256=263b218718f6033932f3d19b171a5e998cbc77b5e3d1393fdbe656716ccb04e3
+## /Users/momizimac/bin/board_write.py  sha256=70d37a934d4438d661d7b837add64363328784147160f8ef62758080e29ad597
+## km_send.sh
+13:[ $# -ge 1 ] || { echo '★拒★ 胴が無い' >&2; exit 2; }
+16:  --*) echo "★拒★ 胴が旗で始まる(旗は胴の後へ): $body" >&2; exit 2;;
+17:  '')  echo '★拒★ 胴が空' >&2; exit 2;;
+20:# ★2026-09-17 疵★: 旧版は while+shift で "$@" を★食ひ尽くし★、exec へ旗が一つも渡らなかつた。
+34:[ "$machi" -eq 0 ] || { echo "★拒★ 旗に値が無い(末尾の旗が値を欠く)" >&2; exit 2; }
+35:[ "$n" -eq 0 ] || { echo "★拒★ 位置引数=1+$n ―― 胴は★一つだけ★" >&2; exit 2; }
+41:[ "${KM_SEND_DRYRUN:-0}" = "1" ] && { echo '★空走(KM_SEND_DRYRUN=1) ―― 送らず了★' >&2; exit 0; }
+42:exec "$HOME/bin/sb-karo-mac" write letter "$body" "$@"
+## l1send
+23:HELPER = os.path.expanduser("~/bin/sb-shogun-mac")
+32:    while i < len(a):
+40:    text = text.strip()
+41:    n = len(text)
+56:    print(out.rstrip())
+57:    m = re.search(r"seq=(\d+)", out)
+64:    ta = re.search(r"'target_agent': '([^']*)'", t)
+74:sys.exit(main())
+## mac_send.py
+8:  mac_send.py send   <bodyfile> <mark> [--to karo-mac] [--type cmd_new] [--from shogun-mac]
+9:  mac_send.py verify <bodyfile> <mark> [--inbox queue/inbox/karo-mac.yaml]
+11:mark = 本文中に必ず現れる短い標(例 'b131 裁')。
+39:def bare(mark):
+41:    m = re.match(r'(b\d+)', mark.strip())
+44:def verify(bodyfile, mark, inbox):
+47:    hits = [d for d in ents if mark in str(d.get('content', ''))]
+54:    b = bare(mark)
+58:              % (b, nb, mark, len(hits),
+70:    if len(sys.argv) < 4: sys.stderr.write(__doc__); return 2
+71:    mode, bodyfile, mark = sys.argv[1], sys.argv[2], sys.argv[3]
+74:    a = sys.argv[4:]
+79:        return verify(bodyfile, mark, inbox)
+83:    if mark not in body:
+85:    r = subprocess.run(['bash', 'scripts/inbox_write.sh', opt['to'], body, opt['type'], opt['from']],
+88:        sys.stderr.write('inbox_write rc=%d %s\n' % (r.returncode, r.stderr[:300])); return 4
+89:    return verify(bodyfile, mark, inbox)
+91:sys.exit(main())
+## board_write.py L25-50
+        if "=" in line:
+            k, v = line.split("=", 1)
+            env[k] = v.strip().strip('"').strip("'")
+    return env
+
+def main():
+    if len(sys.argv) < 3:
+        sys.stderr.write("usage: board_write.py <task_id-uuid> key=value ...  keys: %s\n" % ",".join(sorted(ALLOWED)))
+        return 2
+    tid = sys.argv[1]
+    body = {}
+    for kv in sys.argv[2:]:
+        if "=" not in kv:
+            sys.stderr.write("bad arg: %s\n" % kv); return 2
+        k, v = kv.split("=", 1)
+        if k not in ALLOWED:
+            sys.stderr.write("REJECT column=%s (allowed: %s)\n" % (k, ",".join(sorted(ALLOWED)))); return 3
+        if v == "now()":
+            v = datetime.datetime.utcnow().isoformat() + "Z"
+        body[k] = None if v == "null" else (int(v) if k == "progress_pct" else v)
+    env = load_env()
+    url = "%s/rest/v1/task_tracker?id=eq.%s&assigned_pc=eq.mac_pc" % (env["SUPABASE_URL"], urllib.parse.quote(tid))
+    req = urllib.request.Request(url, data=json.dumps(body).encode(),
+        headers={"apikey": env["SUPABASE_SERVICE_ROLE_KEY"],
+                 "Authorization": "Bearer " + env["SUPABASE_SERVICE_ROLE_KEY"],
+                 "Content-Type": "application/json",
+## origin/main scripts/inbox_write.sh L25-35
+INBOX="$SCRIPT_DIR/queue/inbox/${TARGET}.yaml"
+LOCKFILE="${INBOX}.lock"
+
+# Validate arguments
+if [ -z "$TARGET" ] || [ -z "$CONTENT" ] || [ -z "$TYPE" ] || [ -z "$FROM" ]; then
+    echo "Usage: inbox_write.sh <target_agent> <content> <type> <from>" >&2
+    exit 1
+fi
+
+# ===== DEFERRAL-GATE =====
+# rc=67 for deferral; fixed protocol message types are excluded.
+## 稼働木 scripts/inbox_write.sh L25-35 と L70-78
+INBOX="$SCRIPT_DIR/queue/inbox/${TARGET}.yaml"
+LOCKFILE="${INBOX}.lock"
+
+# Validate arguments
+if [ -z "$TARGET" ] || [ -z "$CONTENT" ] || [ -z "$TYPE" ] || [ -z "$FROM" ]; then
+    echo "Usage: inbox_write.sh <target_agent> <content> <type> <from>" >&2
+    exit 1
+fi
+
+# ===== NAME-GATE (委員長裁 seq325654・2026-09-17) =====
+# 因: 宛名の検めが無い故、何を書いても★其の字の箱が生れ「成功」と刷る★。
+        exit 69
+    fi
+fi
+# ===== name gate end =====
+# ★門を通つた事を測る為の止まり木★(陰性/陽性対照を箱を汚さずに走らせる)
+if [ "${IW_NAME_TEST_ONLY:-}" = "1" ]; then echo "NAME_PASS target=$TARGET"; exit 0; fi
+
+# ===== DEFERRAL-GATE =====
+# rc=67 for deferral; fixed protocol message types are excluded.
