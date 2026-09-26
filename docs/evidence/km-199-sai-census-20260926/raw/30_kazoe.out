@@ -1,0 +1,42 @@
+# 刻 2026-09-26T15:16:29+09:00
+## ⒝ 胴の字数（宣 → 各路の返り）
+seq | 宣 | ⑴seq | ⑵seqs(刷字/content_len) | ⑶sent 在否 | ⑷inbox200 在否(字) | ⑦pcid(刷字/content_len)
+334180 | 230 | 230 | 230/230 | 無 | 無 | 未測
+334181 | 258 | 258 | 258/258 | 無 | 無 | 未測
+334182 | 122 | 122 | 122/122 | 無 | 無 | 未測
+334183 | 240 | 240 | 240/240 | 無 | 無 | 未測
+334184 | 237 | 237 | 237/237 | 無 | 無 | 未測
+334185 | 132 | 132 | 132/132 | 無 | 無 | 未測
+378724 | 283 | 283 | 283/283 | 在(karo-mac・111字) | 在(283) | 121/283
+378725 | 248 | 248 | 248/248 | 在(gunshi-mac・111字) | 無 | 121/248
+⑴ seq 路の 宣≠返り = 0/8
+## ⒞ context_data の出方
+⑴ seq 334180: {'parent_seq': 334085, 'sender_agent': 'karo-mac', 'target_agent': 'iincho', 'reply_to_role': 'karo-mac', 'reply_to_topic': 'cross_pc_inbox_karo-mac'}
+⑴ seq 378724: {'parent_seq': 378690, 'sender_agent': 'karo-mac', 'target_agent': 'karo-mac', 'reply_to_role': 'karo-mac', 'reply_to_topic': 'cross_pc_inbox_karo-mac'}
+r2_seqs_378724,378725.out: 刷る欄 = ['content', 'content_len', 'created_at', 'from_pc', 'id', 'message_type', 'sender_agent', 'seq', 'target_agent', 'to_pc', 'topic']
+r3_sent_karo-mac.out: 刷る欄 = ['content', 'created_at', 'requires_response', 'seq']
+r4_inbox_20.out: 刷る欄 = ['content', 'created_at', 'message_type', 'priority', 'requires_response', 'seq']
+r7_pcid_8986a8e8.out: 刷る欄 = ['content', 'content_len', 'created_at', 'from_pc', 'id', 'message_type', 'seq', 'target_agent', 'to_pc', 'topic']
+## ⒟ 並びと窓
+r2_seqs_334180-334185.out: 取得=6 / limit=200 / 母数=6(完全) | 行=6 頭=334180 尾=334185 並び=asc
+r3_sent_karo-mac.out: 取得=22 / limit=500 / 母数=22(完全) | 行=22 頭=313232 尾=378724 並び=asc
+r3_sent_gunshi-mac.out: 取得=494 / limit=500 / 母数=494(完全) | 行=494 頭=197428 尾=379480 並び=asc
+r3_sent_iincho.out: ★切り詰め★ 取得=500 / limit=500 / 母数=1589 / ★落ち=1089★ | 行=500 頭=193671 尾=292455 並び=asc
+r4_inbox_20.out: ★切り詰め★ 取得=20 / limit=20 / 母数=2742 / ★落ち=2722★ | 行=20 頭=379502 尾=378310 並び=desc
+r4_inbox_200.out: ★切り詰め★ 取得=200 / limit=200 / 母数=2742 / ★落ち=2542★ | 行=200 頭=379502 尾=366583 並び=desc
+r7_pcid_8986a8e8.out: 取得=1 / limit=20 / 母数=1(完全) | 行=1 頭=378724 尾=378724 並び=asc
+## ⒠ 截り（刷られた胴が '…' で終る行の数 / 行数）
+r3_sent_karo-mac.out: 截り 21/22 ・截った行の刷字 = [111]
+r3_sent_gunshi-mac.out: 截り 474/494 ・截った行の刷字 = [111]
+r3_sent_iincho.out: 截り 488/500 ・截った行の刷字 = [111]
+r7_pcid_8986a8e8.out: 截り 1/1 ・截った行の刷字 = [121]
+r7_pcid_5c88b950.out: 截り 1/1 ・截った行の刷字 = [121]
+r4_inbox_200.out: 截り 0/200 ・截った行の刷字 = []
+## 今日の己の便（378724/378725・km_send.sh 経由）を sent 路は返すか
+378724: resolved_at=無(未返答) ・ context_data={'parent_seq': 378690, 'sender_agent': 'karo-mac', 'target_agent': 'karo-mac', 'reply_to_role': 'karo-mac', 'reply_to_topic': 'cross_pc_inbox_karo-mac'} ・ sent 路=在
+378725: resolved_at=無(未返答) ・ context_data={'parent_seq': 378690, 'sender_agent': 'karo-mac', 'target_agent': 'gunshi-mac', 'reply_to_role': 'karo-mac', 'reply_to_topic': 'cross_pc_inbox_karo-mac'} ・ sent 路=在
+## ⑹ 箱 file の尾（DB の seq を持つか・今日の便の胴が在るか）
+karo-mac.yaml: 字=30679 ・ 'seq: ' 欄=0 ・ '378724' の字面=0 ・ 378724 の胴の頭40字=0
+gunshi-mac.yaml: 字=686619 ・ 'seq: ' 欄=0 ・ '378724' の字面=0 ・ 378724 の胴の頭40字=0
+ashigaru-mac-1.yaml: 字=16507 ・ 'seq: ' 欄=0 ・ '378724' の字面=0 ・ 378724 の胴の頭40字=0
+# 了 2026-09-26T15:16:30+09:00
