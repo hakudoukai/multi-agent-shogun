@@ -27,6 +27,68 @@
 - sb-* 8本の形の差は `raw/22_sb_diff.txt`（sb-ashigaru-mac-1 を基準にした diff の逐語）。役の名だけ違う物が5本、sb-karo-mac は後ろに `--requires-response` を足す、sb-gakushu-bucho は `set -eu` と `$1 != write` で rc2、sb は `read` の口を持ち役が karo-mac。
 - .bak と .pre の族53本は census の外（呼ばれる器ではない）。
 
+### 母數17・除外4・対象13・追加2版・判定表17行の対応（REVISE⑤追加・親 seq379502）
+
+「17」という数が二か所に出る。★同じ集合ではない★。
+
+- **母數17** は `~/bin` の17本だけを数えた数。repo 側の `inbox_write.sh` 2版は含まない。
+- **判定表17行** は、対象13本と追加2版を合わせた15の器を行にした数。ここに除外4本は含まない。
+- 15器が17行になるのは、2器を路で2行に割ったため：
+  - agent_letter.py は argv と --content-file の2行。
+  - 稼働木の inbox_write.sh は argv と stdin の2行。
+
+式にすると次のとおり（`raw/40_taiou.out` の算の行）：
+
+`母數17 − 除外4 = 対象13 ; 対象13 + 追加2 = 器15 ; 器15 + 割れ2 = 行17`
+
+各組の重なり（`raw/40_taiou.out`［実走］）：
+
+| 組 | 重なり |
+|---|---|
+| 除外∩対象 | 0 |
+| 追加2版と `~/bin` の名 | 0（追加2版は `~/bin` の外にある） |
+| 除外4が判定表に出る行 | 0 |
+| 対象13のうち表に行が無い器 | 0 |
+| 表の器のうち、対象13∪追加2の外にある物 | 0 |
+
+実物一覧（`raw/10_bosuu.txt` 11:57:54 の値。15:19:04 の disk と 19/19 が同じ sha であることを `raw/41_ima_sha.out` で確かめた［実走］）：
+
+| 区分 | 名 | path | 版（行数） | sha256 | 表の行 |
+|---|---|---|---|---|---|
+| 対象 | agent_letter.py | /Users/momizimac/bin/agent_letter.py | 341 | 8118c84d07c9fdd50c916629c60ba6651c21e8dfb07f4c839753189227fc6d35 | 2（argv・--content-file） |
+| 対象 | board_write.py | /Users/momizimac/bin/board_write.py | 62 | 70d37a934d4438d661d7b837add64363328784147160f8ef62758080e29ad597 | 1 |
+| 対象 | km_send.sh | /Users/momizimac/bin/km_send.sh | 42 | 51499c10445ce482bd663d2ff6ad253bed375f83a9fcf95f3faeb5f14290b22f | 1 |
+| 対象 | l1send | /Users/momizimac/bin/l1send | 74 | 6d25affb1f5065cd08cd4e839b95ea3bf6a209e61fb34ce697b6cf535c5c67a4 | 1 |
+| 対象 | mac_send.py | /Users/momizimac/bin/mac_send.py | 91 | 263b218718f6033932f3d19b171a5e998cbc77b5e3d1393fdbe656716ccb04e3 | 1 |
+| 対象 | sb | /Users/momizimac/bin/sb | 11 | 2670b305a432e552d893127e9f9c452fcdf8bc5c06b7c578ce0bc8d82c87e836 | 1 |
+| 対象 | sb-ashigaru-mac-1 | /Users/momizimac/bin/sb-ashigaru-mac-1 | 9 | 7c55ef880d099fdaae1e2428498f0cdd56877f82379b2ff4695c9517ee850a0f | 1 |
+| 対象 | sb-ashigaru-mac-2 | /Users/momizimac/bin/sb-ashigaru-mac-2 | 9 | 1c51e7e49e449fec16960fb230982057ee422b2092b4da115b6d3a1c2ebce429 | 1 |
+| 対象 | sb-ashigaru-mac-3 | /Users/momizimac/bin/sb-ashigaru-mac-3 | 9 | 0edb36a2f44f9cd226f9679b7aedcc7c08a99731aeb642b68fc8914072211062 | 1 |
+| 対象 | sb-gakushu-bucho | /Users/momizimac/bin/sb-gakushu-bucho | 17 | 07fa7f5704ddeed75ee450dffb25af7cddee0aea69aa9d59959d5e860f1d7e7a | 1 |
+| 対象 | sb-gunshi-mac | /Users/momizimac/bin/sb-gunshi-mac | 9 | fe42dcd309daa4da0d79b93fce5df34ef86f1eb74ec3ccd32c203b92ba7b8ebe | 1 |
+| 対象 | sb-karo-mac | /Users/momizimac/bin/sb-karo-mac | 9 | 410a0bc31a7128b6626d6b5494c870ea7aa0266be175024a204ccb9f09a7d1cd | 1 |
+| 対象 | sb-shogun-mac | /Users/momizimac/bin/sb-shogun-mac | 9 | 109dc4f3c01eee53a6ab2f042cfdd6a189bfe0532e935105f48087598cb3921d | 1 |
+| 除外 | cc_goal_from_board.py | /Users/momizimac/bin/cc_goal_from_board.py | 250 | dd756ce2aba9d57df8445867804eddcbba5682a302a1e37ecfc551ae42e851bd | 0 |
+| 除外 | inbox_mark_read.py | /Users/momizimac/bin/inbox_mark_read.py | 86 | 48d4504d74a4d2806226cf00f7aec58ac507d2c1b740173546a20b032de481a9 | 0 |
+| 除外 | km_inbox_read_mark.sh | /Users/momizimac/bin/km_inbox_read_mark.sh | 30 | 1b3478ae3ae364c74a518f29727e847686f347edfb3bc8290e3e1b23a94c61d8 | 0 |
+| 除外 | orphan_inbox_trap.py | /Users/momizimac/bin/orphan_inbox_trap.py | 80 | a71e18ef265220179c28da25297fa5427f7c37cff175233bc19b5efbd689687b | 0 |
+| 追加（母數の外） | inbox_write.sh 稼働木 | /Users/momizimac/multi-agent-shogun/scripts/inbox_write.sh | 409 | 563271eac9ee7ceaa3fda39c9980c91131c0090689375b319ba4429c646a3911 | 2（argv・stdin） |
+| 追加（母數の外） | inbox_write.sh origin/main | b9573b2d:scripts/inbox_write.sh（取り出し先 /Users/momizimac/wt/a1-km200b/scripts/inbox_write.sh） | 366 | 96a1e2355d5acf093763af0ea05da3a35a9c7135be478da6160960501bc21660（git blob から取った値と同じ） | 1 |
+
+表の行を足すと、対象13本で14行、追加2版で3行、除外4本で0行。合わせて17行になり、判定表の17行と一致する。
+
+再現の手順（どれも読むだけで、器・板・箱・DB には触れない）：
+
+```
+cd /Users/momizimac/wt/a1-km200b/docs/evidence/km-200-sai-census-20260926/raw
+/usr/bin/python3 -B 40_taiou.py > 40_taiou.out 2> 40_taiou.err; echo $? > 40_taiou.rc     # 対応を再構成する（一致なら rc0・不一致なら rc1）
+sh 41_ima_sha.sh > 41_ima_sha.out 2> 41_ima_sha.err; echo $? > 41_ima_sha.rc               # 記録した sha と今の disk を突き合わせる
+```
+
+- `40_taiou.py` の入力は束の中の `raw/10_bosuu.txt` と本 README の判定表だけ。
+- 除外4本の名は本節の上（L21〜25）に書いた4つを、器の中に字面で写した。
+- 今回の値：40_taiou rc=0、41_ima_sha rc=0、sha は19本とも「同」。
+
 ## 測り方（板・箱・DB へ出さぬ形のみ）
 
 - 種は `raw/seed/` の4本（sha と hex は `raw/12_seed_sha.txt`）。e0=0byte、e1=半角空白・TAB・全角空白、e2=改行のみ、c=対照。
