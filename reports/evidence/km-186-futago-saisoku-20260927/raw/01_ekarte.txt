@@ -1,0 +1,8 @@
+2026-09-27T00:24:30+0900
+origin/main=b9573b2d376e9a0a372234b696a733677feb7919
+100644 blob de00cbd99d9909f4a923041ae17f0d2cbb587668	docs/runbooks/err-ekarte-001.md
+4cb05b976ec0060796840e02dd579f1551d89841 is_ancestor_of_origin_main_rc=1
+eab623bc017c01cfd4da1e2dce9119f9090ebfc7 is_ancestor_of_origin_main_rc=0
+origin/main で大文字 ERR-EKARTE-001.md に触れた commit:
+eab623bc017c01cfd4da1e2dce9119f9090ebfc7 docs/runbooks: 双子 ERR-EKARTE-001.md(大文字)を index から外す ―― case-insensitive FS で porcelain が必ず1行出る(家老mac seq341096・小文字 err-ekarte-001.md が正・CLAUDE.md 索引と一致)
+911eb135d8058ac5500754e3c4a60af99193699b feat(hakudokai): track 8 runbooks in git (whitelist in .gitignore)
