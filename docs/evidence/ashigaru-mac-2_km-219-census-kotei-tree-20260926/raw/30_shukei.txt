@@ -16,6 +16,6 @@ rc 異常: status_rc!=0 → 12 / revlist_rc!=[0,0] → 12 / is_ancestor_rc が 0
   異常: /private/tmp/km169-kami status_rc=128 is_ancestor_rc=128
   異常: /private/tmp/secondfor-eLQKQx status_rc=128 is_ancestor_rc=128
 重複 checkout(同一 branch が複数 worktree)=0 []
-is_ancestor rc 集計: rc=0(HEAD は base の祖先=ff 可)=7 / rc=1(祖先でない=ff 不可)=142 / 他=12
+is_ancestor rc 集計: rc=0(HEAD は base の祖先=ff 可)=7（うち HEAD=base 自己行1を除く実質判定6） / rc=1(祖先でない=ff 不可)=142 / 他=12
 未commit の変更を持つ worktree(status_lines>0)=60
 此の数が意味せぬ事: rc=0 は「HEAD が固定 base の祖先」ゆゑ base へ ff できるの意。枝を main へ入れてよいかの判ではない。status は -uall のみで --ignored は測って居らぬ。

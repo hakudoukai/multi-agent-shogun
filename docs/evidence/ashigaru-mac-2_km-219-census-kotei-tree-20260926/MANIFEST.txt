@@ -1,8 +1,11 @@
 # dialect: path= sha256= bytes= lines=  ―― 裁 seq320321⑶「4欄(lines=有)を本形」
-# ★此の臺帳へ行を足すのは karo_mac_manifest_append.py のみ★(案一・裁 seq321856)
-path=README.md sha256=0b2d4b49f628bbbef1dc3dfa5625b3f423f06ee9d38a8947ee4c213ac1448a5d bytes=2777 lines=37
+# ★修正束の固定SHA台帳。修正README/rawを全件列挙★
+path=README.md sha256=806c931c415e1a83f8a8c2cad235f6e4b8cc525bcd199017700eaaee50d90fc7 bytes=2978 lines=37
 path=driver/10_census_kotei.py sha256=eb9372d643fcaf9775492254c42ce08c62b525030183034390bbb3ade10601a3 bytes=3273 lines=81
 path=driver/10_census_seki3_f77a3456.py sha256=3fd45583c686e39eee8c475a0333345ea777da65da815cec48418c7b4f159832 bytes=3123 lines=79
+path=gate.err sha256=bb251e37d22ffbbb08f4685715fa9efdecce8b89d04b2890c42c97257a890137 bytes=540 lines=7
+path=gate.out sha256=1e9861039a5c9fc01b096b18887d5dc670c2f8d23c092e5c34ea1a2360cb0de4 bytes=311 lines=5
+path=gate.rc sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa bytes=2 lines=1
 path=raw/00_before_normalize.txt sha256=8636caaf1de12a108d017c3d5b8f97e20b5bbed6724fda878c475bda881fd520 bytes=76 lines=1
 path=raw/00_kiten.txt sha256=754777cc320fa75414ddd9ec62618319ae56d9108e05ed8b6525c6f135070fba bytes=409 lines=5
 path=raw/05_driver_diff.txt sha256=fb1179cd8d69019d553fd786b6814700373faaa7eab3a397b32a03379e03e2e6 bytes=372 lines=10
@@ -11,5 +14,5 @@ path=raw/10_worktree_list_porcelain.txt sha256=553987b998be527c13bd9947cd54f44a2
 path=raw/20.rc sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa bytes=2 lines=1
 path=raw/20_census_full.err sha256=9552dec61dd135b5762b6d801391c6f49f762cbb856ba6efa71a9b9122f393e4 bytes=245 lines=3
 path=raw/20_census_full.json sha256=1c7502f52abd41b6204063d6d7ff18a4e9db9e0f761246f53bb023c4cd326082 bytes=92312 lines=3230
-path=raw/30_shukei.txt sha256=2fb6623571dbf46a849580eb89a09b97d123a19898bf0ff4aace3c0730b4c7ba bytes=1789 lines=21
+path=raw/30_shukei.txt sha256=ef3f9655c169bc5bf34a4f72d72695df945c47fdb5244dd915fc7bdee46e7c8c bytes=1844 lines=21
 path=raw/40_checkout_table.tsv sha256=7e796c5a93323bca22ea15ba5bb320591512b6c187aeaf9cb71fb85f7916324d bytes=22465 lines=162
