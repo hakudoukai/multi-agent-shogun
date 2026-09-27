@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# ★これは實 tmux ではない・km-227b 陰性対照 mock 器★
+# 「在る・稼働中」paneを模す: display-message succeeds with real pane id,
+# capture-pane succeeds with a busy status-bar tail ("esc to interrupt").
+# 目的: 本 harness が「不在→鍵を打つ」だけでなく「在る稼働中→鍵を打たぬ」も
+# 正しく区別できる事の陰性対照(instrumentそのものの健全性の証)。
+LOG="${MOCK_TMUX_LOG:?MOCK_TMUX_LOG must be set}"
+ts="$(date '+%Y-%m-%dT%H:%M:%S%z')"
+sub="${1:-}"
+printf 'MOCK_TMUX_NEGCTRL ts=%s subcmd=%s argv=%s\n' "$ts" "$sub" "$*" >> "$LOG"
+case "$sub" in
+  display-message)
+    # -p フォーマット文字列に応じ最小限の妥当値を返す (pane_id/pane_active/session_name)
+    fmt="${*: -1}"
+    case "$fmt" in
+      *pane_active*) echo "1" ;;
+      *session_name*) echo "mocksession" ;;
+      *) echo "%7" ;;
+    esac
+    exit 0
+    ;;
+  capture-pane)
+    printf '%s\n' "some old scrollback line" "> " "Working on task (esc to interrupt)"
+    exit 0
+    ;;
+  send-keys)
+    printf 'MOCK_TMUX_NEGCTRL_SENDKEYS ts=%s argv=%s\n' "$ts" "$*" >> "$LOG"
+    exit 0
+    ;;
+  list-clients)
+    echo "mockclient"
+    exit 0
+    ;;
+  show-options)
+    exit 1
+    ;;
+  list-panes)
+    exit 1
+    ;;
+  *)
+    printf 'MOCK_TMUX_NEGCTRL_UNHANDLED ts=%s subcmd=%s argv=%s\n' "$ts" "$sub" "$*" >> "$LOG"
+    exit 1
+    ;;
+esac

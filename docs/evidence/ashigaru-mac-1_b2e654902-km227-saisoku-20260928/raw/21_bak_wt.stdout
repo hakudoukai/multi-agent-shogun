@@ -1,0 +1,19 @@
+=== 母數(walk_root='.') ===
+歩き根 = .
+os.walk 全candidate(器判定前) = 537
+S_ISREG かつ symlink でない   = 537
+器候補(EXT or 実行bit, bak判定前) = 205
+いずれかの形(form1/2/3/~)に当たる file = 0 本
+
+=== per-file 表(旧器/新器の除外の当否・changed=除外の当たりが変わつた) ===
+path	form1(.bak)	form2(.bak-)	form3(-bak-)	tilde(~)	old_excluded	new_excluded	changed
+
+=== 排他性(和集合の中での重なり) ===
+form1 実本数=0 / form2 実本数=0 / form3 実本数=0 / 和集合=0
+form1∩form2=0 / form1∩form3=0 / form2∩form3=0 / 三形全交差=0
+
+=== 集計(old/new excluded 件数・changed 件数) ===
+old_excluded=0本 / new_excluded=0本 / changed(除外の当たりが変わつた)=0本
+和集合との整合: len(rows)=0 (old/newいずれかで excluded の全候補と一致すべき)
+
+=== changed 本の名指し(old→new で除外の当否が変わつた file のみ) ===

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# ★これは實 tmux ではない・km-227b 專用 mock 器★
+# 測定済 real 挙動 (km-227 evidence 32b/32e/32h/32f, tmux 3.7b, worktree eab623bc) を再現する。
+# display-message -> rc=0, 空出力 (現実に観測: 全ての不在形で rc=0・空文字列)
+# capture-pane    -> rc=1, stderr="can't find pane: ..." (現実に観測: 32f rc=1)
+LOG="${MOCK_TMUX_LOG:?MOCK_TMUX_LOG must be set}"
+ts="$(date '+%Y-%m-%dT%H:%M:%S%z')"
+sub="${1:-}"
+printf 'MOCK_TMUX ts=%s subcmd=%s argv=%s\n' "$ts" "$sub" "$*" >> "$LOG"
+case "$sub" in
+  display-message)
+    exit 0
+    ;;
+  capture-pane)
+    echo "can't find pane: mocked-absent-km227b" >&2
+    exit 1
+    ;;
+  send-keys)
+    printf 'MOCK_TMUX_SENDKEYS ts=%s argv=%s\n' "$ts" "$*" >> "$LOG"
+    exit 0
+    ;;
+  list-clients)
+    exit 0
+    ;;
+  show-options)
+    exit 1
+    ;;
+  list-panes)
+    exit 1
+    ;;
+  *)
+    printf 'MOCK_TMUX_UNHANDLED ts=%s subcmd=%s argv=%s\n' "$ts" "$sub" "$*" >> "$LOG"
+    exit 1
+    ;;
+esac

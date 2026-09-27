@@ -1,0 +1,5 @@
+MOCK_TMUX ts=2026-09-28T07:25:53+0900 subcmd=show-options argv=show-options -p -t %999999 -v @agent_cli
+MOCK_TMUX ts=2026-09-28T07:25:53+0900 subcmd=display-message argv=display-message -t %999999 -p #{pane_id}
+MOCK_TMUX ts=2026-09-28T07:25:53+0900 subcmd=show-options argv=show-options -p -t %999999 -v @agent_cli
+MOCK_TMUX ts=2026-09-28T07:25:53+0900 subcmd=show-options argv=show-options -p -t %999999 -v @agent_cli
+MOCK_TMUX ts=2026-09-28T07:25:53+0900 subcmd=display-message argv=display-message -t %999999 -p #{pane_id}
