@@ -1,0 +1,21 @@
+# dialect: path= sha256= bytes= lines=  ―― 裁 seq320321⑶「4欄(lines=有)を本形」
+# ★此の臺帳へ行を足すのは karo_mac_manifest_append.py のみ★(案一・裁 seq321856)
+path=01_kekka.md sha256=47bf2e35bf94abab8e84e749851ae2ba7d6e2b09c341258cc9b988c40501fd8d bytes=3846 lines=42
+path=raw/00_gate_blobs_from_origin_main_b9573b2d.txt sha256=2842f7a51a5ce2a5dd851afa0df97356835c50a17015cfbfa9663d7ee4a30bfe bytes=123 lines=3
+path=raw/01_gate_sha256.txt sha256=7e422072f7aaf1b2dc280c212a8a0e80d111fbdde0d9547b61f7b9fde4313726 bytes=273 lines=3
+path=raw/10_run_pinned.rc sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa bytes=2 lines=1
+path=raw/10_run_pinned.stderr_bytes.txt sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa bytes=2 lines=1
+path=raw/10_run_pinned.stdout sha256=2fb08262acf0f3ba839f264f8e0dab54f6bb72b2474a0ed8079d12e02ff7d7a2 bytes=522 lines=5
+path=raw/20_posctrl_outdir_count.txt sha256=4eff2db4bada317fd099671a040fa9fe488186f2b7729f52463202065730cd78 bytes=9 lines=1
+path=raw/20_posctrl_tampered.rc sha256=4393447bd3c1d55ea7f97417ecb1b36a691ccaacaaf2ebd21c59a5acf825fb7b bytes=3 lines=1
+path=raw/20_posctrl_tampered.stdout sha256=7b807cc236e5400be57a3c91f48961ba46c0d35779408a3550c7d8873584583f bytes=226 lines=2
+path=raw/30_cmp_vs_seki2_d5c8a847.txt sha256=a948730160d5ea7566a439fa875a5ae5eb428b7cfbda26bfece050b2eef031c8 bytes=197 lines=4
+path=raw/31_diff_out_vs_seki2.rc sha256=4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865 bytes=2 lines=1
+path=raw/31_diff_out_vs_seki2.txt sha256=baebcd2fd8fa44f828c2af8bf6f8cd9ed57b943fa4b49de2824b6d4b9e847207 bytes=226 lines=4
+path=raw/70_gate_main.err sha256=178d4b9c8903674da7253793641fcf50d372075f2b050cfda0b3388658761356 bytes=541 lines=7
+path=raw/70_gate_main.out sha256=d959d0b88087eb4167844f8bc3d7ae274727a8c950d65316a25b5592fe2cd73b bytes=324 lines=5
+path=raw/70_gate_main.rc sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa bytes=2 lines=1
+path=raw/gate/karo_mac_dasumae_gate.sh sha256=3b8b7182566cc8c4e81533d27d2f6c5d98a9b56429d2d7205dfca9d3a9295bac bytes=19268 lines=339
+path=raw/gate/karo_mac_fukashiji.py sha256=8c06f5c58147ccba3b1e040c0930a6f10374987fb717d29b3cd5dc2e766800ad bytes=3659 lines=88
+path=raw/gate/karo_mac_manifest_verify.py sha256=9e831137f1d33f41b6ba88414b26d44dfb93ebc9c544d263f7c0c1d1234e4d8f bytes=14808 lines=240
+path=run_pinned.sh sha256=3b09df5673ed4d87178a2ccae7fd39aaeab20530fea3f5b82d96f374c3f78bf6 bytes=1220 lines=24
