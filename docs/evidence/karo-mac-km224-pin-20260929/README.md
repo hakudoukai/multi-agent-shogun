@@ -1,7 +1,7 @@
 # KM-224: 現在の門の版とpin案（Mac家老）
 
 - Board: `f1c9b1b5-6990-4491-ad41-dceb32ed048e`。今回読み戻し: `assigned`, `assigned_pc=mac_pc`, `owner_role=karo-mac`。受入条件はdisk/HEAD/mainの門SHA三様を実測しpin案を示すこと。
-- 固定参照：前回の専任3提出 `fbdf94cad7b976f31e29b869735dfdaacf23ce60`（reports/evidence/km-224-mon-sanyou-saisoku-20260926）。そのREADMEとraw 5点をこの束へ無改変複写。原本ハッシュは `SHA256SUMS` と `raw/05_previous_blob_digests.txt` を参照。
+- 固定参照：前回の専任3提出 `fbdf94cad7b976f31e29b869735dfdaacf23ce60`（reports/evidence/km-224-mon-sanyou-saisoku-20260926）。そのREADMEとraw 5点をこの束へ無改変複写。`SHA256SUMS` はそのうち7ファイルのみを列挙し、今回採取の4ファイルを含めていなかった。
 - 今回の再確認: `origin/main` tip `b9573b2d376e9a0a372234b696a733677feb7919` の対象gate blob=`04672e15b1edf4a02b7cea1f4f32cfb9a64e34d5`。固定ref HEAD `10000ff89716da925a14ff6e6fed57e626fbf8ee` のgate blob=`9cd550fc2cf963ca0475b3448bb33483b9aede6b`。両blobの内容を採取してsha256/bytes/line数を再計測し、rawに保存。
 - Shared-tree disk版の前回報告値はSHA `2b8449bccd608a1a7f24c888b2e1857ad2af98065fdfb1d3077bf08cdbe6f685`（blob `054c442eaee3886b2283f98f7c3a1ab8cb813b68`）。今回は共同作業treeの未追跡・変更物を誤編集しないためdisk対象を直接再読せず、再測値としては主張しない。よって今回のdisk/HEAD/main三者完全再測定は未了。
 
