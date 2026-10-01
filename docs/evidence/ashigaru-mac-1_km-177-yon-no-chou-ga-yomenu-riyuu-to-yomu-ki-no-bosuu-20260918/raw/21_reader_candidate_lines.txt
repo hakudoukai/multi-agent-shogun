@@ -1,0 +1,36 @@
+koku=2026-09-18T18:06:03+0900
+=== scripts/inbox_watcher.sh
+433:        data = yaml.safe_load(f) or {}
+456:                task_data = yaml.safe_load(tf) or {}
+470:            f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+524:        data = yaml.safe_load(f) or {}
+562:        data = yaml.safe_load(f) or {}
+776:        startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yaml. 3) Read queue/i
+892:    # For Claude Code agents: check if an inotifywait exists that is NOT
+=== scripts/checks/secondpc_dispatch.sh
+22:# MainPC 側 queue/tasks/<TARGET>.yaml が更新済みか
+24:TASK_FILE="$SCRIPT_DIR/queue/tasks/${TARGET}.yaml"
+=== scripts/agent_status.sh
+177:    local yaml_file="$SCRIPT_DIR/queue/tasks/${agent_id}.yaml"
+186:        data = yaml.safe_load(f) or {}
+208:        data = yaml.safe_load(f) or {}
+=== lib/cli_adapter.sh
+33:        cfg = yaml.safe_load(f) or {}
+84:        cfg = yaml.safe_load(f) or {}
+351:            echo "Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message -t \"\$TMUX_PANE\" -p '#{@agent_id}' to identify yourself. 2) Read queue/tasks/${
+381:        cfg = yaml.safe_load(f) or {}
+421:        cfg = yaml.safe_load(f) or {}
+455:        cfg = yaml.safe_load(f) or {}
+517:        cfg = yaml.safe_load(f) or {}
+628:        cfg = yaml.safe_load(f) or {}
+716:        cfg = yaml.safe_load(f) or {}
+757:        doc = yaml.safe_load(f)
+877:            doc = yaml.safe_load(f) or {}
+915:        doc = yaml.safe_load(f) or {}
+=== scripts/karo_standby_dashboard.sh
+97:  for mb in shogun-mac gunshi-mac ashigaru-mac-1 ashigaru-mac-2 ashigaru-mac-3 ashigaru-mac-4 ashigaru-mac-5 ashigaru-mac-6 ashigaru-mac-7; do
+=== /Users/momizimac/bin/karo_mac_read.py
+154:        seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+=== scripts/slim_yaml.sh
+=== scripts/stop_hook_inbox.sh
+273:        data = yaml.safe_load(f)

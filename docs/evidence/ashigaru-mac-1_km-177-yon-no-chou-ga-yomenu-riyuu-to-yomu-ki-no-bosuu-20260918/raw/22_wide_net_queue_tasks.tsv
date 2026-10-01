@@ -1,0 +1,7 @@
+scripts/agent_status.sh:177:    local yaml_file="$SCRIPT_DIR/queue/tasks/${agent_id}.yaml"
+scripts/checks/secondpc_dispatch.sh:22:# MainPC 側 queue/tasks/<TARGET>.yaml が更新済みか
+scripts/checks/secondpc_dispatch.sh:24:TASK_FILE="$SCRIPT_DIR/queue/tasks/${TARGET}.yaml"
+scripts/inbox_watcher.sh:470:            f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+scripts/inbox_watcher.sh:776:        startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yaml. 3) Read queue/inbox/${AGENT_ID}.yaml, mark read:true. 4) Read context_files. 5) Execute the assigned task to completion — edit files, run commands, write reports. Keep working until done."
+scripts/karo_overload_monitor.sh:60:: "${TASKS_DIR:=$REPO_ROOT/queue/tasks}"
+lib/cli_adapter.sh:351:            echo "Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message -t \"\$TMUX_PANE\" -p '#{@agent_id}' to identify yourself. 2) Read queue/tasks/${agent_id}.yaml. 3) Read queue/inbox/${agent_id}.yaml, mark read:true. 4) Read files listed in context_files. 5) Execute the assigned task to completion — edit files, run commands, write reports. Keep working until the task is done."

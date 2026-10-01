@@ -1,0 +1,9 @@
+koku=2026-09-18T18:08:24+0900
+slim_yaml.load_yaml を import して mac-4 の帳に当てる(読むのみ・書かぬ):
+returned: {} -> isinstance dict: True -> slim_tasks は data.get("task",{}) が空ゆゑ continue(黙つて飛ばす)
+rc=0
+stderr(逐語):
+Error parsing queue/tasks/ashigaru-mac-4.yaml: while parsing a block mapping
+  in "queue/tasks/ashigaru-mac-4.yaml", line 1, column 1
+expected <block end>, but found '-'
+  in "queue/tasks/ashigaru-mac-4.yaml", line 275, column 1

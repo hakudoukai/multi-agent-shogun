@@ -1,0 +1,15 @@
+koku=2026-09-18T18:06:56+0900
+=== 走つて居る watcher(pgrep -fl inbox_watcher・己の grep を含まぬ)
+9826 ashigaru-mac-1 multiagent-mac:0.1 claude
+9838 ashigaru-mac-2 multiagent-mac:0.2 claude
+9859 ashigaru-mac-3 multiagent-mac:0.3 claude
+57173 ]* */\1 /
+mac-4 の watcher 数=0
+=== logs に mac-4 の名を持つ file
+34910 Sep 3 16:36 inbox_watcher_ashigaru-mac-4.log
+--- logs/inbox_watcher_ashigaru-mac-4.log: lines=437 ParserError=0 last3:
+/Users/momizimac/multi-agent-shogun/queue/inbox/ashigaru-mac-4.yaml
+/Users/momizimac/multi-agent-shogun/queue/inbox/ashigaru-mac-4.yaml
+[Thu Sep  3 16:36:12 JST 2026] All messages read for ashigaru-mac-4 — escalation reset
+=== logs/*.log で ParserError と ashigaru-mac-4.yaml を同時に持つ行(size 1MB 未満の log のみ・大きい log は歩かぬと宣す)
+(歩いた log 数=0 / 全 log=9)

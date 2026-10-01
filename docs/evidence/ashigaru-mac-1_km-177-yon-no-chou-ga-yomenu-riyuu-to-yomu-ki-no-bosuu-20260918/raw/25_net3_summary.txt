@@ -1,0 +1,21 @@
+koku=2026-09-18T18:07:23+0900
+第三の網: 語 tasks(join 形も拾ふ)を scripts lib hooks ~/bin の *.py *.sh *.bash(bak 除く)で
+rc=0 lines=10 files=6
+   3 scripts/inbox_watcher.sh
+   2 scripts/slim_yaml.py
+   2 scripts/checks/secondpc_dispatch.sh
+   1 scripts/karo_overload_monitor.sh
+   1 scripts/agent_status.sh
+   1 lib/cli_adapter.sh
+
+陽性対照 slim_yaml.py: 2 行 →
+scripts/slim_yaml.py:99:    tasks_dir = queue_dir / 'tasks'
+scripts/slim_yaml.py:100:    archive_dir = queue_dir / 'archive' / 'tasks'
+
+各 file: tasks を path として開く行(open/cat/read/safe_load を同行か直後に持つ物は紙で判ずる)・yaml.safe_load の有無:
+  lib/cli_adapter.sh tasks行=1 safe_load行=16 except_pass=12
+  scripts/agent_status.sh tasks行=1 safe_load行=2 except_pass=2
+  scripts/checks/secondpc_dispatch.sh tasks行=2 safe_load行=0 except_pass=0
+  scripts/inbox_watcher.sh tasks行=3 safe_load行=4 except_pass=4
+  scripts/karo_overload_monitor.sh tasks行=1 safe_load行=1 except_pass=3
+  scripts/slim_yaml.py tasks行=2 safe_load行=1 except_pass=0

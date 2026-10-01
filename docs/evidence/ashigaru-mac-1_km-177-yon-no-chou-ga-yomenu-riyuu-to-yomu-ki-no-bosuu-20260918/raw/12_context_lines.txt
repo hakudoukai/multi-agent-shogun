@@ -1,0 +1,19 @@
+== around line 1 (±5) ==
+    1|agent_id: ashigaru-mac-4
+    2|task_id: km-P3-p4-saitei002-004-daichou
+    3|card_id: d63eebea-6366-43a8-8d78-79ab180ef217
+    4|task_rev: 3
+    5|supersedes: karo-mac-Z31
+    6|status: assigned
+== around line 275 (±5) ==
+  270|    - "★process を一本も止めるな・起こすな(D-lane/F002域)。tmux 操作禁★。code を一字も直すな。"
+  271|    - "★queue/inbox 配下へ書くな(read-mark も附けるな)★。commit/push/merge禁。gh auth login禁。★裁くな・名指すのみ★。"
+  272|  fukumei: "path + sha256(algo名明記) + 行数/byte + as_of。★便の要旨は紙の中で最も弱い斷定を寫せ★。"
+  273|
+  274|# ════════════════════════════════════════════════════════════
+  275|- saitei_z45:
+  276|  timestamp: "2026-09-01T21:14+0900"
+  277|  from: karo-mac
+  278|  title: "★正本 受理 ―― 而して貴殿の紙が、當職自身の落度を一つ掘り出した★"
+  279|  body:
+  280|    - "sha256=48ab6595…62 / 143行 / 15158B ―― ★當職が己の手で打ち直して EXACT★。"

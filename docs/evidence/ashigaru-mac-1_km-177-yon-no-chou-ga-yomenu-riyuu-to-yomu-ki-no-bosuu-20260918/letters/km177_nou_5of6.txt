@@ -1,0 +1,1 @@
+眠る二道(fail-open・名指すのみ)=ⓐ `slim_yaml.sh karo` を此の樹で走らせれば stderr「Error parsing…」+{} で ★黙つて飛ばす★(import 実測 raw/29)ⓑ mac-4 に watcher が立てば auto-recovery の status guard が except: pass で素通り(inbox_watcher.sh L463)。案(据ゑぬ)=A: 4 本の `- ` を根の鍵へ/B: 孤児席ゆゑ archive へ退避+idle stub。

@@ -1,0 +1,468 @@
+koku 2026-09-18T18:04:50+0900
+cwd /Users/momizimac/multi-agent-shogun
+roots ['scripts', 'lib', 'hooks', 'config', 'tests', 'bin', 'instructions', 'shim', 'agents', 'skills', 'docs', 'CLAUDE.md', 'AGENTS.md', '.claude', 'dashboard.md'] + /Users/momizimac/bin
+skip_dirs ['.git', '.venv', '__pycache__', 'evidence', 'node_modules']
+ROOT_MISSING hooks
+ROOT_MISSING bin
+files_scanned 1018 max_depth 13
+
+## literal ashigaru-mac-4: 108 行 / 19 file
+  scripts/karo_standby_dashboard.sh:97: for mb in shogun-mac gunshi-mac ashigaru-mac-1 ashigaru-mac-2 ashigaru-mac-3 ashigaru-mac-4 ashigaru-mac-5 ashigaru-mac-6 ashigaru-mac-7; do
+  config/settings.yaml:138: agents: [shogun-mac, karo-mac, ashigaru-mac-1, ashigaru-mac-2, ashigaru-mac-3, ashigaru-mac-4, ashigaru-mac-5, ashigaru-mac-6, ashigaru-mac-7, gunshi-mac, gakus
+  config/settings.yaml:164: ashigaru-mac-4: claude-sonnet-5
+  config/settings.yaml.bak-karo-opus-20260907:138: agents: [shogun-mac, karo-mac, ashigaru-mac-1, ashigaru-mac-2, ashigaru-mac-3, ashigaru-mac-4, ashigaru-mac-5, ashigaru-mac-6, ashigaru-mac-7, gunshi-mac, gakus
+  config/settings.yaml.bak-karo-opus-20260907:164: ashigaru-mac-4: claude-sonnet-5
+  config/settings.yaml.bak-opus-a123-20260907:138: agents: [shogun-mac, karo-mac, ashigaru-mac-1, ashigaru-mac-2, ashigaru-mac-3, ashigaru-mac-4, ashigaru-mac-5, ashigaru-mac-6, ashigaru-mac-7, gunshi-mac, gakus
+  config/settings.yaml.bak-opus-a123-20260907:164: ashigaru-mac-4: claude-sonnet-5
+  config/settings.yaml.bak-karo-fable51-20260902:138: agents: [shogun-mac, karo-mac, ashigaru-mac-1, ashigaru-mac-2, ashigaru-mac-3, ashigaru-mac-4, ashigaru-mac-5, ashigaru-mac-6, ashigaru-mac-7, gunshi-mac, gakus
+  config/settings.yaml.bak-karo-fable51-20260902:164: ashigaru-mac-4: claude-sonnet-5
+  docs/mac-lane-recovery-net-preimage.md:197: - /private/tmp/inbox_watcher_ashigaru-mac-4.log を lsof機械確認・stderr78箇所転記。窓01:42:46〜03:37:52で 送2・失敗0・**SKIP計285件**・Phase3再発火19。∴ ㊹穴は a4箱でも大量踏破。
+  docs/mac-lane-recovery-net-preimage.md:273: - ㋑ **§4 canary/identity対象=a4(executor)、聾者=a6**: 仕様l45『permitted identity extension は ashigaru-mac-4 の Mac preimage で証した runtime identity のみ』l63『watcher count f
+  docs/mac-lane-recovery-net-preimage.md:329: - preimage(/tmp/tk4st151_fixtures_ashigaru-mac-4/...053309...bak) **同SHA=写母=現物**
+  dashboard.md:155: | 61 | ★耳の無い箱へ書いて居た者の中に家老が居る★ | `gakushu-bucho.yaml` を家老が己で測る(21:12): 総33/未讀33(100%)・差出人= ★commander 27★(8/17〜8/23) / shogun-mac 3 / ★kikaku-bucho 1(本日19:46:43)
+  dashboard.md:201: | 105 | ★救出箱の悉皆が畢はつた ―― 三箱26通・新規㋒4件★(00:01・a6/z94) | karo 5通 / gunshi-mac 15通 / ashigaru-mac-4 6通 = ★計26通 悉皆分類★。㋒(新規)4件=#17夜間深仕事原則・#18變更統制(★既知/盤89 と重複★)・★#20 V6
+  dashboard.md:859: 1號が tk1st179 を測り終へた後、當職は塊3(`queue/tasks/ashigaru-mac-4.yaml`)を tk4st139 から tk4st140 へ書き換へた。
+  dashboard.md:1409: | 仕様§3 | 「**ashigaru-mac-4** の runtime identity を證せ」 |
+  dashboard.md:1545: 4號の箱へ書き込んだ際、**`CAP_ROTATED: 20 read messages moved to _archive/ashigaru-mac-4_pruned.yaml`** が **現に發火**仕つた。
+  dashboard.md:1745: ashigaru-mac-4            0        1   ←★食ひ違ひ★
+  dashboard.md:1913: 2. 送信側の檢出器も生きて居る ―― 同じ pattern で `ashigaru-mac-4` は **326件**
+  dashboard.md:2055: | ⑷ | first-bad log の封印保存 | **濟** ―― `logs/evidence/SEALED_20260824_inbox_watcher_ashigaru-mac-4_firstbad.log`(9841行/1022405byte・sha256=`19960b23e94ca62bcd8e3d0
+  dashboard.md:2265: 00:01:10 ESCALATION Phase 3: ashigaru-mac-4 unresponsive for 325s. Sending /clear.
+  dashboard.md:2266: 00:01:10 [SEND-KEYS] Sending CLI command to ashigaru-mac-4 (claude): /clear
+  dashboard.md:2267: 00:01:45 [CONTEXT-RESET] Sending /clear before task_assigned for ashigaru-mac-4 (claude)   ← 35秒後・二度目
+  dashboard.md:2372: 08:09:29 WARNING: send-keys failed after 2 retries for ashigaru-mac-4
+  dashboard.md:3437: | ashigaru-mac-4 | 15 | 263 | **FAIL** |
+  dashboard.md:3761: - 本Mac から env-dept(hermes2) へ**生きた經路は 1本のみ**＝`agent_letter.py` 直呼び（role 引數は ACL で縛られず、creds さえ讀めれば任意の呼び手が名乘れる）。`--dry-run` で `sender_agent=ashigaru-mac-4` が化けぬ事
+  dashboard.md:3839: | 17373 | ashigaru-mac-4 | REG …-4.log | 同左 | 絶對路 |
+  dashboard.md:3857: - ★role="ashigaru-mac-4" は ROLE_PC 辭書に未登録のまま 無檢證で通る★（4號が己の名を陽性對照に使うた）。
+  dashboard.md:5683: **封**: `queue/reports/ashigaru-mac-4_tk4st177_yogoreta-shouko-20260824.md`
+  dashboard.md:5783: - 封 `queue/reports/ashigaru-mac-4_tk4st178_soto-wa-byte-de-icchi-suru-ka-20260824.md` sha256=`d2621167fc5d85af0a83e80ffd6c61b357b92d7120febbbd4472347b89be46a7`
+  dashboard.md:5820: - ★動く傍証★: `queue/inbox/karo-mac,gunshi-mac.yaml` なる ★二名連結の異形箱★ が実在（ashigaru-mac-4発・2026-08-19）。target に「karo-mac,gunshi-mac」がその儘渡り、其の文字列が file 名に成つた ―― target 側
+  dashboard.md:6352: - 封（家老mac 自ら檢め・申告と完全一致）: `queue/reports/ashigaru-mac-4_tk4st183_chi_no_shin_ikutsu_zaiko-20260824.md` sha256=`df59e4a4266a648d6e8046d00bfe76ab583a730a2c8bc8e435
+  dashboard.md:6441: - 封は家老mac の手で檢めた: `queue/reports/ashigaru-mac-4_tk4st184_kata-goto-no-tsuiritsu-20260824.md` sha256=`0f5b5fbd73854b3c567dce2d0f2c6f083ccb280603e3fc958ec14ba3205
+  dashboard.md:6464: - `queue/tasks/ashigaru-mac-4.yaml` 差替（10 criteria／25 forbidden・`yaml.safe_load` 通過）。配送 `msg_20260824_183536_a75b9ff1`・着地 EXACT。
+  dashboard.md:6521: - `queue/reports/ashigaru-mac-4_tk4st185_nokemono-no-sou-to-sou-betsu-20260824.md` sha256=`cdaede966c6395b525acce3a6848f861fc601c04e42b0968bb0a2689e065c809` / 2
+  dashboard.md:6645: - `queue/reports/ashigaru-mac-4_tk4st186_monosashi-izondo-20260824.md` sha256=`c9dc0dc6f62762c04460a256b392fece5c913c211aa5b7bf719d824212be145a` / 281行 / 22,810
+  dashboard.md:6850: - 3箱(ashigaru-mac-4/karo-mac/shogun-mac の各_pruned)の log 未記錄1文書は、通常の `count/messages/pruned_at` 3key に非ず
+  dashboard.md:7456: | ashigaru-mac-4 | 49 | **否** | idx1 | 21:57:09 | 21:57:09 | 0 |
+  dashboard.md:7948: ashigaru-mac-1_tk1st235… / ashigaru-mac-4_tk4st84…
+  dashboard.md:8192: 08-24 07:18:46 ino=11697525 → 08-24 07:19:42 ino=11696162  (ashigaru-mac-4_tk4st155_yogen1-20260824.md)
+  dashboard.md:8322: 前側 ino=11697525  m==b ✔  c-b=      664.853s   SEALED_20260824_inbox_watcher_ashigaru-mac-4_…
+  dashboard.md:8672: [02:43:06] [CONTEXT-RESET] Sending /clear before task_assigned for ashigaru-mac-4 (claude)
+  dashboard.md:8673: [02:43:22] [POST-RESET] ashigaru-mac-4: reset sent but still busy — Stop hook will deliver nudge
+  dashboard.md:8702: `queue/tasks/ashigaru-mac-4.yaml` ← `karo_addendum_v1_20260825_0244` 追記・parse 前後檢證濟（156行／forbidden 30項 不變／task_id・status 不變）。
+  dashboard.md:8826: 當職が書いた本文 : 恐れ入るが `queue/tasks/ashigaru-mac-4.yaml` の末尾のみ 今一度 讀まれたし
+  dashboard.md:8832: (eval):2: permission denied: queue/tasks/ashigaru-mac-4.yaml
+  dashboard.md:8843: A(陽性対照): echo "恐れ入るが `queue/tasks/ashigaru-mac-4.yaml` の末尾のみ"
+  dashboard.md:8844: → (eval):4: permission denied: queue/tasks/ashigaru-mac-4.yaml
+  dashboard.md:8864: shogun-mac 19 / ashigaru-mac-1 3 / ashigaru-mac-3 3 / ashigaru-mac-4 2 / gunshi-mac 2 / ashigaru-mac-6 1
+  dashboard.md:9019: - a4: 訂正便 `msg_20260825_025636_48fd646e`（notification・413字）★全文一致で着地・喰はれた path 復元済★。但し 02:56:44 `send-keys failed after 2 retries for ashigaru-mac-4` ―― ★便は箱に在るが
+  dashboard.md:9038: 02:56:44  WARNING: send-keys failed after 2 retries for ashigaru-mac-4
+  dashboard.md:9040: 02:57:50  WARNING: send-keys failed after 2 retries for ashigaru-mac-4
+  dashboard.md:9041: 03:01:24  ESCALATION Phase 3: Agent ashigaru-mac-4 unresponsive for 285s. Sending /clear.
+  dashboard.md:9042: 03:01:24  [SEND-KEYS] Sending CLI command to ashigaru-mac-4 (claude): /clear
+  dashboard.md:9077: archive 内譯 = {shogun-mac 868, ashigaru-mac-1 305, ashigaru-mac-4 296, ashigaru-mac-2 290,
+  dashboard.md:9189: 03:01:24  ESCALATION Phase 3: Agent ashigaru-mac-4 unresponsive for 285s. Sending /clear.
+  dashboard.md:9274: ashigaru-mac-4       總  32 既讀  32 未讀   0
+  dashboard.md:9329: from = ashigaru-mac-4
+  dashboard.md:9434: 差出 = **shogun-mac 29**, ashigaru-mac-4 1, ashigaru-mac-2 2 ／ 和 32（己で檢めた）。刻 = 2026-08-17T03:30:12 〜 2026-08-24T11:47:55。
+  dashboard.md:9624: **★正しい。★** 當職は己の手で捜した ―― 〔grep -rn '7,135|7135' dashboard.md queue/tasks/ashigaru-mac-4.yaml〕。出て來たのは **數だけが三箇所**（卓上L45・卓上L79・dashboard L7086）。**★其の數を出した命令は、卓上にも
+  dashboard.md:10264: **出**: ashigaru-mac-4（`report_received`）
+  dashboard.md:10428: | MB-C | `queue/reports/ashigaru-mac-4_p1r0-mbC_tests-inventory-20260826.md` | `c47f16f0178a965b05cd77ceb817179f0befe69b8e25f3be937b46c941b26ab3` | 293 |
+  dashboard.md:11379: - ★物証★: `queue/tasks/ashigaru-mac-4.yaml:105` は今も `report_path_convention: queue/reports/ashigaru-mac-4_p1r0-mb-K_★何れも repo 直下にて…` と壊れて居り、`population_note`(18行目
+  dashboard.md:14118: `queue/reports/ashigaru-mac-4_p1r0-mbAK_sanhou-sansu-teiban-20260827.md`
+  dashboard.md:15770: queue/reports/ashigaru-mac-4_p1r0-mbAK_sanhou-sansu-teiban-20260827.md
+  dashboard.md:15818: | a4 | productively_assigned (MB-AK15) | ashigaru-mac-4_p1r0-mbAK7_dai4-no-chinmoku-no-zero-keni-20 | 1:40:37 |
+  dashboard.md:15833: queue/reports/ashigaru-mac-4_p1r0-mbAK_sanhou-sansu-teiban-20260827.md
+  dashboard.md:15847: ashigaru-mac-4_p1r0-mbAK6_no-silent-failure_namae-ichiran-20260827.txt  (18:28:01 / 2,176byte)
+  dashboard.md:17707: queue/reports/ashigaru-mac-4_p1r0-mbAK_sanhou-sansu-teiban-20260827.md
+  dashboard.md:17787: 2. **二版目の非零を實文で当たる（§23-b）**: a4 の `yaml○` は當職の裁ではなく **a4 自身の自記封**（`ashigaru-mac-4.yaml:412`）であり得た ―― と疑つたが、實文を讀むに **當職の受領証で正**。
+  dashboard.md:17894: **`from=ashigaru-mac-4` ／ `2026-08-19T23:24:07` ／ ★`read: false`★ ／ 890字 ／ `type=task_report` ／ 内容 = `tk4st48` 復命**（三項対称差 325,500通り全数・混成式二型 1,953,000通り×2・size6集
+  dashboard.md:17941: | 便 | ― | `msg_20260819_232453_a07c5109` / from=ashigaru-mac-4 / 2026-08-19T23:24:53 / **`read: false`** / 959字 |
+  dashboard.md:18041: - **母集團135件（ls 機械導出）＝當職の `ls -1 queue/reports/ashigaru-mac-4_*.md` 導出と完全一致。**
+  dashboard.md:18381: **①a4 継投済**：札 **`karo-mac-Z01`**「forward再測 158→163 の残差5件」／owner=ashigaru-mac-4／CD=22時検収前／WIP=1。**※先刻の弾が無札であつたは當職の過失。札を後追いで補填し、a4 へ「貴殿の落度に非ず」と明示済。**
+  dashboard.md:18895: `queue/reports/ashigaru-mac-4_karo-mac-Z03_dai32-tanihenkou-saihasshi-20260828.md`
+  dashboard.md:19052: 當職の實査: `queue/reports/ashigaru-mac-4_b0b315ce-mac-runtime-saishuu-kenshuu-20260828.md`（9004byte / **mtime 2026-08-28 20:20**）実在。將軍mac の申告と一致し、當職が封印済。a4 は今 `karo
+  dashboard.md:19957: **當職の網**: 全file（拡張子不問）の `head -6` に文字列 `ashigaru-mac-4` が現れる物 = **98**
+  dashboard.md:20144: | 覆はぬ .md 外 file | N3符牒`ashigaru-mac-4` | N4符牒 | 判 |
+  dashboard.md:20154: 原因は内容ではなく **網の到達範圍** に在る。a4 の母集團 N1 は `find -maxdepth 1 -type f -name 'ashigaru-mac-4_*'` ＝ **拡張子不問**。而して網 N2/N3/N4 は悉く `queue/reports/*.md` ＝ **.md 限定**。∴ 母集團1
+  dashboard.md:21343: **發**: 家老mac（karo-mac）／**時**: 2026-08-29 未明／**對象**: `ashigaru-mac-4` Z12・`ashigaru-mac-6` K10
+  dashboard.md:22191: glob 'ashigaru-mac-4_karo-mac-Z0[2-9]*' + 'Z1[0-3]*' → ★13 file★
+  dashboard.md:23141: 當職は `ls queue/reports/Z17_cmd*.py` を撃ち「不在」を得た。**が、a4 の命名は `ashigaru-mac-4_karo-mac-Z17_cmd1_...` ―― 席名が前置ゆゑ、`Z17_` で始まる假定の glob は永久に當たらぬ。**
+  dashboard.md:23150: 當職は 🔺83（script非保存）の「五件目」として a2/C18 の `/tmp/c18_work/` を擧げた。**a4 は同じ夜に、附屬script 3本を `queue/reports/` へ永續化して居る**（`ashigaru-mac-4_karo-mac-Z17_cmd1_seal_form_censu
+  dashboard.md:23656: **當職の手による裏取り**：`ashigaru-mac-4_dai24jou-158tai163-zansa-kaimei-20260828.md` の實測 sha256 `c2d91541974f…`・**44行/4156byte/2313字** ―― a4 の申告と**完全一致**。紙は實在し裁定濟。
+  dashboard.md:23774: 板: `queue/reports/board-karo-mac-K17_kakudai-shindan_ashigaru-mac-6-20260829.md` ／ `queue/reports/ashigaru-mac-4_karo-mac-Z21_shakkan-tekiyou-135-oyobi-yontsuu-
+  dashboard.md:24229: | ashigaru-mac-4 | 6 | 3 | 3 | 0 |
+  dashboard.md:24303: a5 は 8箱の archive sha を照合し「一致5・不一致3(shogun-mac/karo-mac/ashigaru-mac-4)」と報じた。**★併し『不一致』を其の儘置いた ―― 追記か書換かを分けなんだ。之は安心の側へも不安の側へも效く分岐ゆゑ、括つてはならぬ。★**
+  dashboard.md:24311: | ashigaru-mac-4 | 不一致 | **★純追記★** prefix byte[0:3709] 完全一致・以後 1,496,616 byte 追記 |
+  dashboard.md:24323: 同一値 ab1a54afd56934aa64cbaf65…  x6 (gunshi-mac/gakushu-bucho/kikaku-bucho/ashigaru-mac-4/karo/fukuincho)
+  dashboard.md:24339: | ashigaru-mac-4 | 6 | **6** | [0] |
+  dashboard.md:24485: | ashigaru-mac-4 | 23 | **21** | 1 | 1 |
+  dashboard.md:26240: | ⑴ | `queue/tasks/ashigaru-mac-4.yaml` を **`task_id: karo-mac-Z31`** へ書き改めた（6,466 byte） | 可逆（寫し殘置） |
+  dashboard.md:26241: | ⑵ | 舊札を `queue/reports/_old_card_ashigaru-mac-4_p1r0_mb-Z_20260827.yaml.bak` に殘置（**消してをらぬ**）・sha256=`9b989413…` | ― |
+  dashboard.md:26754: - 器の瑕(2026-09-02 20:57): queue/tasks/ashigaru-mac-4.yaml / -5.yaml は ★2026-09-01 以降 YAML として parse 不能★(L272/275 以降、裁定節が「- key:」list 形式と mapping 形式で混在)。席は Read で
+  dashboard.md:26767: - a4 1b5d8e01 突合 完遂 21:08: pr69_red4_totsugou_ashigaru-mac-4_20260902.md sha 9dc7fe24…f316/10979B + manifest(家老再hash一致)。赤4 owner 0/4・blocker=gh再認証(既報同一)。軍師mac 受
+  dashboard.md:26798: - 2026-09-03T04:23:29+0900 🚨634 家老mac: 総監督GO seq237706 ①board 読取 subcmd 装着(sha c63ddc383e7c→7302ce34390e・.bak) ②inbox_watcher 8/8 再起動(canary a4 OK・新pid ashigaru
+  /Users/momizimac/bin/karo_mac_read.py.bak-20260903-114110-preseqsfix:115: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+  /Users/momizimac/bin/karo_mac_read.py.bak-20260903-prepcid:113: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+  /Users/momizimac/bin/karo_mac_read.py.bak-20260909-pre-sent:154: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+  /Users/momizimac/bin/karo_mac_read.py.bak_242968_090620:148: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+  /Users/momizimac/bin/karo_mac_read.py.bak_20260903_2010:140: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+  /Users/momizimac/bin/agent_letter.py.bak-deferral-20260906-193823:54: "ashigaru-mac-4": "mac_pc", "ashigaru-mac-5": "mac_pc", "ashigaru-mac-6": "mac_pc",
+  /Users/momizimac/bin/agent_letter.py.bak-deferral-20260906-193846:54: "ashigaru-mac-4": "mac_pc", "ashigaru-mac-5": "mac_pc", "ashigaru-mac-6": "mac_pc",
+  /Users/momizimac/bin/agent_letter.py.bak-roster-20260907:54: "ashigaru-mac-4": "mac_pc", "ashigaru-mac-5": "mac_pc", "ashigaru-mac-6": "mac_pc",
+  /Users/momizimac/bin/karo_mac_read.py.bak-20260903-preboardone:115: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+  /Users/momizimac/bin/agent_letter.py.bak-unify-20260909:60: "ashigaru-mac-4": "mac_pc", "ashigaru-mac-5": "mac_pc", "ashigaru-mac-6": "mac_pc",
+  /Users/momizimac/bin/karo_mac_read.py.bak_20260903_1958:115: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+  /Users/momizimac/bin/karo_mac_read.py:154: seats = "karo-mac,ashigaru-mac-1,ashigaru-mac-2,ashigaru-mac-3,ashigaru-mac-4,ashigaru-mac-5,ashigaru-mac-6,ashigaru-mac-7"
+
+## expansion ashigaru-mac-$N / ${N} / {N} / %s / -mac-N(shell/py/format): 9 行 / 1 file
+  dashboard.md:203: | 107 | ★★當隊は現に /clear を打たれ續けて居た ―― 冠正本の記述は本機に當てはまらぬ★★(00:25・將軍mac ■四を當職が實讀檢證) | 將軍mac の警告=⑴除外表 `is_no_auto_clear_agent` に karo-mac も gunshi-mac も無い ⑵冠正本の 2026-
+  dashboard.md:7934: （測定命令: `queue/tasks/ashigaru-mac-{3,4}.yaml` の safe_load／各箱の safe_load_all で read:false 抽出／`queue/reports` 悉皆を birth>=08-24T20:17:00 で切り 26件を列擧。切り落とした物＝其れ以前に生れた
+  dashboard.md:15550: | 紙の主 | `ashigaru-mac-**3**_p1r0-mbB_…` | `ashigaru-mac-**1**_p1r0-mbB_…`・**「a1殿の紙」** | **mac-3 のみ在り／mac-1 は無し** |
+  dashboard.md:15776: 定盤悉皆走査の検出器 ashigaru-mac-[0-9] が ★a4 自身の座名にも合致する★ 事を自ら見つけ、
+  dashboard.md:23774: 板: `queue/reports/board-karo-mac-K17_kakudai-shindan_ashigaru-mac-6-20260829.md` ／ `queue/reports/ashigaru-mac-4_karo-mac-Z21_shakkan-tekiyou-135-oyobi-yontsuu-
+  dashboard.md:23812: 眞は在つた ―― `board-karo-mac-K17_kakudai-shindan_ashigaru-mac-6-20260829_cmd3.py` および `_seal.py`。a6 は**後綴**を書き、當職は**前綴**として讀んだ。
+  dashboard.md:24544: a6 は 65桁の宣言を自ら訂正。當職の實測: 板 `board-karo-mac-K20_kioku-no-ami_ashigaru-mac-6-20260829.md` ＝ 改行176/byte19959/len10617/FFFD0・sha `c8115e522d5e33f5968bc64eb5bd0d96a30
+  dashboard.md:25864: 導出: `tmux list-panes -F '#{pane_index} #{pane_pid} #{pane_current_command}'`（pane0〜6 悉く `2.1.238`＝claude 稼働）／各箱の `read: false` 計數／`find queue/reports -name '*as
+  dashboard.md:26395: - 紙: `queue/reports/board-karo-mac-C26_jikoreki-tekiyou-to-nimen-nettowaaku_ashigaru-mac-2-20260830.md`
+
+## generic queue/tasks/<var>.yaml (読み手の可能性): 336 行 / 107 file
+  scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:383: f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+  scripts/inbox_watcher.sh.bak-20260912-shiketsu-karo-mac:689: startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yam
+  scripts/agent_status.sh:177: local yaml_file="$SCRIPT_DIR/queue/tasks/${agent_id}.yaml"
+  scripts/inbox_watcher.sh:470: f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+  scripts/inbox_watcher.sh:776: startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yam
+  scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:383: f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+  scripts/inbox_watcher.sh.bak-20260903-pre-mac-noautoclear:689: startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yam
+  scripts/inbox_watcher.sh.bak-noautoclear-20260910:383: f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+  scripts/inbox_watcher.sh.bak-noautoclear-20260910:689: startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yam
+  scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513:383: f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+  scripts/inbox_watcher.sh.bak-shikii-zoku2-20260917T022513:689: startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yam
+  scripts/checks/secondpc_dispatch.sh:24: TASK_FILE="$SCRIPT_DIR/queue/tasks/${TARGET}.yaml"
+  lib/cli_adapter.sh:351: echo "Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message -t \"\$TMUX_PANE\" -p '#{@agent_id}' to identify yourself. 2) Read
+  tests/bloom_classification_accuracy.sh:17: GUNSHI_TASK_FILE="${PROJECT_ROOT}/queue/tasks/gunshi.yaml"
+  tests/e2e/mock_cli.sh:44: TASK_FILE="$MOCK_PROJECT_ROOT/queue/tasks/${MOCK_AGENT_ID}.yaml"
+  tests/e2e/helpers/setup.bash:113: rm -f "$E2E_QUEUE"/queue/tasks/*.yaml
+  tests/e2e/mock_behaviors/claude_behavior.sh:22: local task_file="$project_root/queue/tasks/${agent_id}.yaml"
+  tests/e2e/mock_behaviors/codex_behavior.sh:21: local task_file="$project_root/queue/tasks/${agent_id}.yaml"
+  instructions/sanada.md:132: 9. queue/tasks/sanada.yaml 読込 → status 確認
+  instructions/sanada.md:144: | `queue/tasks/sanada.yaml` | 自身 task |
+  instructions/gunshi.md:75: target: queue/tasks/gunshi.yaml
+  instructions/gunshi.md:113: task: queue/tasks/gunshi.yaml
+  instructions/gunshi.md:161: 3. 家老 writes task YAML to `queue/tasks/gunshi.yaml`
+  instructions/gunshi.md:276: queue/tasks/gunshi.yaml           ← Read only this
+  instructions/gunshi.md:490: 2. Read `queue/tasks/gunshi.yaml`
+  instructions/gunshi.md:504: Step 3: Read queue/tasks/gunshi.yaml → assigned=work, idle=wait
+  instructions/takenaka.md:161: 7. queue/tasks/takenaka.yaml 読込 → status 確認
+  instructions/takenaka.md:175: | `queue/tasks/takenaka.yaml` | 自身 task |
+  instructions/shogun_charter_v1.md:6: 2. **巡回義務（wait_for_reportは受動待機の免罪符ではない）**: 報告処理のたび、および最低30分に1回、dashboard.md と queue/tasks/*.yaml を実査し、idle の配下を発見したら同サイクル内に家老へ次 cmd を投入する。待っている間も巡回する。
+  instructions/karo.md:155: gunshi_task: queue/tasks/gunshi.yaml
+  instructions/karo.md:722: 2. **No active tasks**: No `queue/tasks/ashigaru*.yaml` or `queue/tasks/gunshi.yaml` with `status: assigned` or `status: in_progress`
+  instructions/karo.md:828: STEP 2: Write task YAML to queue/tasks/gunshi.yaml
+  instructions/shogun.md:113: 2. **巡回義務（wait_for_reportは受動待機の免罪符ではない）**: 報告処理のたび、および最低30分に1回、dashboard.md と queue/tasks/*.yaml を実査し、idle の配下を発見したら同サイクル内に家老へ次 cmd を投入する。待っている間も巡回する。
+  instructions/generated/gunshi.md:74: target: queue/tasks/gunshi.yaml
+  instructions/generated/gunshi.md:112: task: queue/tasks/gunshi.yaml
+  instructions/generated/gunshi.md:506: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/gunshi.md:507: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/gunshi.md:563: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/gunshi.md:588: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/codex-gunshi.md:74: target: queue/tasks/gunshi.yaml
+  instructions/generated/codex-gunshi.md:112: task: queue/tasks/gunshi.yaml
+  instructions/generated/codex-gunshi.md:506: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/codex-gunshi.md:507: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/codex-gunshi.md:563: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/codex-gunshi.md:588: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/codex-gunshi.md:955: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  instructions/generated/kimi-karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  instructions/generated/kimi-karo.md:374: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  instructions/generated/kimi-karo.md:650: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/kimi-karo.md:651: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/kimi-karo.md:707: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/kimi-karo.md:732: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/codex-ashigaru.md:398: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/codex-ashigaru.md:399: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/codex-ashigaru.md:455: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/codex-ashigaru.md:480: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/codex-ashigaru.md:847: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  instructions/generated/codex-karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  instructions/generated/codex-karo.md:374: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  instructions/generated/codex-karo.md:650: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/codex-karo.md:651: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/codex-karo.md:707: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/codex-karo.md:732: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/codex-karo.md:1099: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  instructions/generated/kimi-gunshi.md:74: target: queue/tasks/gunshi.yaml
+  instructions/generated/kimi-gunshi.md:112: task: queue/tasks/gunshi.yaml
+  instructions/generated/kimi-gunshi.md:506: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/kimi-gunshi.md:507: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/kimi-gunshi.md:563: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/kimi-gunshi.md:588: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/copilot-karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  instructions/generated/copilot-karo.md:374: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  instructions/generated/copilot-karo.md:650: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/copilot-karo.md:651: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/copilot-karo.md:707: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/copilot-karo.md:732: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/copilot-shogun.md:399: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/copilot-shogun.md:400: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/copilot-shogun.md:456: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/copilot-shogun.md:481: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  instructions/generated/karo.md:374: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  instructions/generated/karo.md:650: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/karo.md:651: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/karo.md:707: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/karo.md:732: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/kimi-ashigaru.md:398: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/kimi-ashigaru.md:399: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/kimi-ashigaru.md:455: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/kimi-ashigaru.md:480: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/shogun.md:399: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/shogun.md:400: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/shogun.md:456: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/shogun.md:481: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/codex-shogun.md:399: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/codex-shogun.md:400: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/codex-shogun.md:456: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/codex-shogun.md:481: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/codex-shogun.md:848: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  instructions/generated/karo.md.bak-1786058418:154: gunshi_task: queue/tasks/gunshi.yaml
+  instructions/generated/karo.md.bak-1786058418:374: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  instructions/generated/karo.md.bak-1786058418:628: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/karo.md.bak-1786058418:629: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/karo.md.bak-1786058418:685: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/karo.md.bak-1786058418:710: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/kimi-shogun.md:399: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/kimi-shogun.md:400: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/kimi-shogun.md:456: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/kimi-shogun.md:481: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/copilot-ashigaru.md:398: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/copilot-ashigaru.md:399: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/copilot-ashigaru.md:455: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/copilot-ashigaru.md:480: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/ashigaru.md:398: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/ashigaru.md:399: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/ashigaru.md:455: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/ashigaru.md:480: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/generated/copilot-gunshi.md:74: target: queue/tasks/gunshi.yaml
+  instructions/generated/copilot-gunshi.md:112: task: queue/tasks/gunshi.yaml
+  instructions/generated/copilot-gunshi.md:506: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/generated/copilot-gunshi.md:507: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/generated/copilot-gunshi.md:563: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/generated/copilot-gunshi.md:588: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/archive/karo_canon_20260709.md:156: gunshi_task: queue/tasks/gunshi.yaml
+  instructions/archive/karo_canon_20260709.md:686: 2. **No active tasks**: No `queue/tasks/ashigaru*.yaml` or `queue/tasks/gunshi.yaml` with `status: assigned` or `status: in_progress`
+  instructions/archive/karo_canon_20260709.md:792: STEP 2: Write task YAML to queue/tasks/gunshi.yaml
+  instructions/archive/gunshi_canon_20260709.md:76: target: queue/tasks/gunshi.yaml
+  instructions/archive/gunshi_canon_20260709.md:114: task: queue/tasks/gunshi.yaml
+  instructions/archive/gunshi_canon_20260709.md:175: 3. 家老 writes task YAML to `queue/tasks/gunshi.yaml`
+  instructions/archive/gunshi_canon_20260709.md:290: queue/tasks/gunshi.yaml           ← Read only this
+  instructions/archive/gunshi_canon_20260709.md:504: 2. Read `queue/tasks/gunshi.yaml`
+  instructions/archive/gunshi_canon_20260709.md:518: Step 3: Read queue/tasks/gunshi.yaml → assigned=work, idle=wait
+  instructions/archive/shogun_canon_20260709.md:93: 2. **巡回義務（wait_for_reportは受動待機の免罪符ではない）**: 報告処理のたび、および最低30分に1回、dashboard.md と queue/tasks/*.yaml を実査し、idle の配下を発見したら同サイクル内に家老へ次 cmd を投入する。待っている間も巡回する。
+  instructions/roles/karo_role.md:184: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  instructions/common/task_flow.md:15: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  instructions/common/task_flow.md:16: - `queue/tasks/pending.yaml`: `pending_blocked`
+  instructions/common/task_flow.md:72: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  instructions/common/task_flow.md:97: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  instructions/cli_specific/codex_tools.md:83: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  shim/hakudokai/hakudokai_task_sync.sh:150: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  shim/hakudokai/hakudokai_activity_monitor.sh:56: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  shim/hakudokai/hakudokai_activity_monitor.sh:153: task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+  shim/hakudokai/hakudokai_activity_monitor.sh:214: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  shim/hakudokai/hakudokai_activity_monitor.sh:295: local redo_file="${SCRIPT_DIR}/queue/tasks/${redo_agent}.yaml"
+  shim/hakudokai/hakudokai_activity_monitor.sh:342: if [ -f "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" ]; then
+  shim/hakudokai/hakudokai_activity_monitor.sh:343: task_status=$(grep '^\s*status:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+  shim/hakudokai/hakudokai_activity_monitor.sh:344: task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+  shim/hakudokai/hakudokai_activity_monitor.sh:420: [ -f "${SCRIPT_DIR}/queue/tasks/${sp_agent}.yaml" ] && send_idle_alert "$sp_agent" "$idle_sec"
+  shim/hakudokai/hakudokai_secondpc_receiver_poll.py:118: Allowed paths: queue/tasks/*.yaml, context/*.md, CLAUDE.md
+  shim/hakudokai/hakudokai_reports_sync.sh:170: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  agents/default/system.md:58: gunshi_task: queue/tasks/gunshi.yaml  # 家老 → 軍師 strategic assignments
+  agents/default/system.md:59: pending_tasks: queue/tasks/pending.yaml # 家老管理の保留タスク（blocked未割当）
+  agents/default/system.md:165: Step 3: Read queue/tasks/{your_id}.yaml →
+  skills/shogun-agent-status/SKILL.md:13: 2. **タスクYAML**: `queue/tasks/{agent}.yaml` のtask_idとstatus
+  docs/honda_recommendations_2026-05-08.md:98: - `queue/tasks/pending.yaml`: 家老未処理 backlog の一時退避
+  docs/honda_recommendations_2026-05-08.md:137: Red では新規 cmd を家老へ即送らず、`queue/tasks/pending.yaml` または `queue/intake_pending.yaml` に積む。dashboard の 🚨要対応へ「発令上限到達、優先順位選択が必要」と出す。
+  docs/cmd_phase5_codex_personas_immediate_001_draft.md:47: - `queue/inbox/honda.yaml`、`queue/tasks/honda.yaml`、`queue/reports/honda_report.yaml` 新規作成 (= 空 yaml templates)
+  docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md:73: - ✅ task YAML local 編集 (= queue/tasks/maeda.yaml 等)
+  docs/cmd_phase15_takenaka_proactive_draft.md:63: - `queue/tasks/takenaka.yaml` 新設 (canonical)
+  docs/cmd_phase15_takenaka_proactive_draft.md:87: - queue/inbox/takenaka.yaml + queue/tasks/takenaka.yaml + queue/reports/takenaka_report.yaml 新設
+  CLAUDE.md:73: gunshi_task: queue/tasks/gunshi.yaml  # 家老 → 軍師 strategic assignments
+  CLAUDE.md:74: pending_tasks: queue/tasks/pending.yaml # 家老管理の保留タスク（blocked未割当）
+  CLAUDE.md:179: Step 3: Read queue/tasks/{your_id}.yaml →
+  AGENTS.md:73: gunshi_task: queue/tasks/gunshi.yaml  # 家老 → 軍師 strategic assignments
+  AGENTS.md:74: pending_tasks: queue/tasks/pending.yaml # 家老管理の保留タスク（blocked未割当）
+  AGENTS.md:177: Step 3: Read queue/tasks/{your_id}.yaml →
+  .claude/worktrees/karo-mac-a1/shutsujin_departure_secondpc.sh:135: prompt="拙者${agent}、SecondPC で召喚さる。Session Start: ①tmux display-message → ${agent} ②instructions/ashigaru.md + instructions/roles/ashigaru_role.md を必読 ③自分専用 queu
+  .claude/worktrees/karo-mac-a1/shutsujin_departure.sh:409: cat > ./queue/tasks/ieyasu.yaml << EOF
+  .claude/worktrees/karo-mac-a1/AGENTS.md:20: gunshi_task: queue/tasks/gunshi.yaml  # Karo → Gunshi strategic assignments
+  .claude/worktrees/karo-mac-a1/AGENTS.md:21: pending_tasks: queue/tasks/pending.yaml # Karo管理の保留タスク（blocked未割当）
+  .claude/worktrees/karo-mac-a1/AGENTS.md:85: Step 3: Read queue/tasks/{your_id}.yaml →
+  .claude/worktrees/karo-mac-a1/CLAUDE.md:20: gunshi_task: queue/tasks/gunshi.yaml  # 家老 → 軍師 strategic assignments
+  .claude/worktrees/karo-mac-a1/CLAUDE.md:21: pending_tasks: queue/tasks/pending.yaml # 家老管理の保留タスク（blocked未割当）
+  .claude/worktrees/karo-mac-a1/CLAUDE.md:127: Step 3: Read queue/tasks/{your_id}.yaml →
+  .claude/worktrees/karo-mac-a1/instructions/sanada.md:132: 9. queue/tasks/sanada.yaml 読込 → status 確認
+  .claude/worktrees/karo-mac-a1/instructions/sanada.md:144: | `queue/tasks/sanada.yaml` | 自身 task |
+  .claude/worktrees/karo-mac-a1/instructions/gunshi.md:75: target: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/gunshi.md:113: task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/gunshi.md:161: 3. 家老 writes task YAML to `queue/tasks/gunshi.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/gunshi.md:276: queue/tasks/gunshi.yaml           ← Read only this
+  .claude/worktrees/karo-mac-a1/instructions/gunshi.md:490: 2. Read `queue/tasks/gunshi.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/gunshi.md:504: Step 3: Read queue/tasks/gunshi.yaml → assigned=work, idle=wait
+  .claude/worktrees/karo-mac-a1/instructions/takenaka.md:161: 7. queue/tasks/takenaka.yaml 読込 → status 確認
+  .claude/worktrees/karo-mac-a1/instructions/takenaka.md:175: | `queue/tasks/takenaka.yaml` | 自身 task |
+  .claude/worktrees/karo-mac-a1/instructions/shogun_charter_v1.md:6: 2. **巡回義務（wait_for_reportは受動待機の免罪符ではない）**: 報告処理のたび、および最低30分に1回、dashboard.md と queue/tasks/*.yaml を実査し、idle の配下を発見したら同サイクル内に家老へ次 cmd を投入する。待っている間も巡回する。
+  .claude/worktrees/karo-mac-a1/instructions/karo.md:155: gunshi_task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/karo.md:674: 2. **No active tasks**: No `queue/tasks/ashigaru*.yaml` or `queue/tasks/gunshi.yaml` with `status: assigned` or `status: in_progress`
+  .claude/worktrees/karo-mac-a1/instructions/karo.md:780: STEP 2: Write task YAML to queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/shogun.md:83: 2. **巡回義務（wait_for_reportは受動待機の免罪符ではない）**: 報告処理のたび、および最低30分に1回、dashboard.md と queue/tasks/*.yaml を実査し、idle の配下を発見したら同サイクル内に家老へ次 cmd を投入する。待っている間も巡回する。
+  .claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md:45: target: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md:83: task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md:461: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md:462: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md:518: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/gunshi.md:543: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md:45: target: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md:83: task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md:461: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md:462: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md:518: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md:543: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-gunshi.md:790: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md:376: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md:630: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md:631: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md:687: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-karo.md:712: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md:381: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md:382: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md:438: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md:463: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-ashigaru.md:710: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md:376: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md:630: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md:631: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md:687: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md:712: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-karo.md:959: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md:45: target: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md:83: task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md:461: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md:462: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md:518: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-gunshi.md:543: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md:376: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md:630: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md:631: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md:687: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-karo.md:712: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md:383: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md:384: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md:440: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-shogun.md:465: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/karo.md:154: gunshi_task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/karo.md:376: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  .claude/worktrees/karo-mac-a1/instructions/generated/karo.md:630: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/karo.md:631: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/karo.md:687: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/karo.md:712: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md:381: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md:382: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md:438: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-ashigaru.md:463: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/shogun.md:383: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/shogun.md:384: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/shogun.md:440: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/shogun.md:465: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md:383: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md:384: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md:440: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md:465: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/codex-shogun.md:712: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md:383: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md:384: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md:440: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/kimi-shogun.md:465: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md:381: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md:382: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md:438: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-ashigaru.md:463: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md:381: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md:382: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md:438: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/ashigaru.md:463: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md:45: target: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md:83: task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md:461: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md:462: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md:518: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/generated/copilot-gunshi.md:543: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/archive/karo_canon_20260709.md:156: gunshi_task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/archive/karo_canon_20260709.md:686: 2. **No active tasks**: No `queue/tasks/ashigaru*.yaml` or `queue/tasks/gunshi.yaml` with `status: assigned` or `status: in_progress`
+  .claude/worktrees/karo-mac-a1/instructions/archive/karo_canon_20260709.md:792: STEP 2: Write task YAML to queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/archive/gunshi_canon_20260709.md:76: target: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/archive/gunshi_canon_20260709.md:114: task: queue/tasks/gunshi.yaml
+  .claude/worktrees/karo-mac-a1/instructions/archive/gunshi_canon_20260709.md:175: 3. 家老 writes task YAML to `queue/tasks/gunshi.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/archive/gunshi_canon_20260709.md:290: queue/tasks/gunshi.yaml           ← Read only this
+  .claude/worktrees/karo-mac-a1/instructions/archive/gunshi_canon_20260709.md:504: 2. Read `queue/tasks/gunshi.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/archive/gunshi_canon_20260709.md:518: Step 3: Read queue/tasks/gunshi.yaml → assigned=work, idle=wait
+  .claude/worktrees/karo-mac-a1/instructions/archive/shogun_canon_20260709.md:93: 2. **巡回義務（wait_for_reportは受動待機の免罪符ではない）**: 報告処理のたび、および最低30分に1回、dashboard.md と queue/tasks/*.yaml を実査し、idle の配下を発見したら同サイクル内に家老へ次 cmd を投入する。待っている間も巡回する。
+  .claude/worktrees/karo-mac-a1/instructions/roles/karo_role.md:184: Route these to 家康 via `queue/tasks/gunshi.yaml`:
+  .claude/worktrees/karo-mac-a1/instructions/common/task_flow.md:15: - `queue/tasks/ashigaruN.yaml`: `assigned`, `blocked`, `done`, `failed`
+  .claude/worktrees/karo-mac-a1/instructions/common/task_flow.md:16: - `queue/tasks/pending.yaml`: `pending_blocked`
+  .claude/worktrees/karo-mac-a1/instructions/common/task_flow.md:72: ### Ashigaru Task File: `queue/tasks/ashigaruN.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/common/task_flow.md:97: ### Pending Tasks (家老-managed): `queue/tasks/pending.yaml`
+  .claude/worktrees/karo-mac-a1/instructions/cli_specific/codex_tools.md:83: - File-based state (queue/tasks/*.yaml, queue/reports/*.yaml)
+  .claude/worktrees/karo-mac-a1/tests/bloom_classification_accuracy.sh:17: GUNSHI_TASK_FILE="${PROJECT_ROOT}/queue/tasks/gunshi.yaml"
+  .claude/worktrees/karo-mac-a1/tests/e2e/mock_cli.sh:44: TASK_FILE="$MOCK_PROJECT_ROOT/queue/tasks/${MOCK_AGENT_ID}.yaml"
+  .claude/worktrees/karo-mac-a1/tests/e2e/helpers/setup.bash:113: rm -f "$E2E_QUEUE"/queue/tasks/*.yaml
+  .claude/worktrees/karo-mac-a1/tests/e2e/mock_behaviors/claude_behavior.sh:22: local task_file="$project_root/queue/tasks/${agent_id}.yaml"
+  .claude/worktrees/karo-mac-a1/tests/e2e/mock_behaviors/codex_behavior.sh:21: local task_file="$project_root/queue/tasks/${agent_id}.yaml"
+  .claude/worktrees/karo-mac-a1/agents/default/system.md:20: gunshi_task: queue/tasks/gunshi.yaml  # Karo → Gunshi strategic assignments
+  .claude/worktrees/karo-mac-a1/agents/default/system.md:21: pending_tasks: queue/tasks/pending.yaml # Karo管理の保留タスク（blocked未割当）
+  .claude/worktrees/karo-mac-a1/agents/default/system.md:85: Step 3: Read queue/tasks/{your_id}.yaml →
+  .claude/worktrees/karo-mac-a1/docs/honda_recommendations_2026-05-08.md:98: - `queue/tasks/pending.yaml`: 家老未処理 backlog の一時退避
+  .claude/worktrees/karo-mac-a1/docs/honda_recommendations_2026-05-08.md:137: Red では新規 cmd を家老へ即送らず、`queue/tasks/pending.yaml` または `queue/intake_pending.yaml` に積む。dashboard の 🚨要対応へ「発令上限到達、優先順位選択が必要」と出す。
+  .claude/worktrees/karo-mac-a1/docs/cmd_phase5_codex_personas_immediate_001_draft.md:47: - `queue/inbox/honda.yaml`、`queue/tasks/honda.yaml`、`queue/reports/honda_report.yaml` 新規作成 (= 空 yaml templates)
+  .claude/worktrees/karo-mac-a1/docs/tier1_v3_revised_with_audit_corrections_2026-05-08.md:73: - ✅ task YAML local 編集 (= queue/tasks/maeda.yaml 等)
+  .claude/worktrees/karo-mac-a1/docs/cmd_phase15_takenaka_proactive_draft.md:63: - `queue/tasks/takenaka.yaml` 新設 (canonical)
+  .claude/worktrees/karo-mac-a1/docs/cmd_phase15_takenaka_proactive_draft.md:87: - queue/inbox/takenaka.yaml + queue/tasks/takenaka.yaml + queue/reports/takenaka_report.yaml 新設
+  .claude/worktrees/karo-mac-a1/scripts/agent_status.sh:177: local yaml_file="$SCRIPT_DIR/queue/tasks/${agent_id}.yaml"
+  .claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh:371: f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+  .claude/worktrees/karo-mac-a1/scripts/inbox_watcher.sh:677: startup_prompt="Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message to identify yourself. 2) Read queue/tasks/${AGENT_ID}.yam
+  .claude/worktrees/karo-mac-a1/scripts/checks/secondpc_dispatch.sh:24: TASK_FILE="$SCRIPT_DIR/queue/tasks/${TARGET}.yaml"
+  .claude/worktrees/karo-mac-a1/.github/copilot-instructions.md:20: gunshi_task: queue/tasks/gunshi.yaml  # Karo → Gunshi strategic assignments
+  .claude/worktrees/karo-mac-a1/.github/copilot-instructions.md:21: pending_tasks: queue/tasks/pending.yaml # Karo管理の保留タスク（blocked未割当）
+  .claude/worktrees/karo-mac-a1/.github/copilot-instructions.md:85: Step 3: Read queue/tasks/{your_id}.yaml →
+  .claude/worktrees/karo-mac-a1/lib/cli_adapter.sh:351: echo "Session Start — do ALL of this in one turn, do NOT stop early: 1) tmux display-message -t \"\$TMUX_PANE\" -p '#{@agent_id}' to identify yourself. 2) Read
+  .claude/worktrees/karo-mac-a1/skills/shogun-agent-status/SKILL.md:13: 2. **タスクYAML**: `queue/tasks/{agent}.yaml` のtask_idとstatus
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_task_sync.sh:150: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:56: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:153: task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:214: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:295: local redo_file="${SCRIPT_DIR}/queue/tasks/${redo_agent}.yaml"
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:342: if [ -f "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" ]; then
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:343: task_status=$(grep '^\s*status:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d "' \"" | tr -d $'\r')
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:344: task_id=$(grep '^\s*task_id:' "${SCRIPT_DIR}/queue/tasks/${agent}.yaml" 2>/dev/null | head -1 | sed 's/.*task_id:\s*//' | tr -d "' \"" | tr -d $'\r')
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_activity_monitor.sh:420: [ -f "${SCRIPT_DIR}/queue/tasks/${sp_agent}.yaml" ] && send_idle_alert "$sp_agent" "$idle_sec"
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_secondpc_receiver_poll.py:118: Allowed paths: queue/tasks/*.yaml, context/*.md, CLAUDE.md
+  .claude/worktrees/karo-mac-a1/shim/hakudokai/hakudokai_reports_sync.sh:170: local task_file="${SCRIPT_DIR}/queue/tasks/${agent}.yaml"
+  dashboard.md:684: - ★3號の最良手★=`queue/tasks/*.yaml` の 8hit を「指示であって claim に非ず」と截り、
+  dashboard.md:5135: - 母集團導出: `queue/tasks/*.yaml` 9帳を機械全走査（parse error 0）、`report_path`/`deliverable` 兩key を拾ひ、key 無し3帳（mac-7・gunshi-mac・pending）を別掲。
+  dashboard.md:7042: - ⑸ ★當職が前段より引き回して居た `agent_letter.py` といふ名は、本repo に存在せぬ★ ―― `find . -iname "*agent_letter*"` 0件・`git ls-files` にも無し。★五號は之を糊塗せず「本session内では所在確認不能」と declared★ し、代
+  dashboard.md:8846: C(陰性対照): echo '恐れ入るが `queue/tasks/x.yaml` の末尾のみ'
+  dashboard.md:8847: → 恐れ入るが `queue/tasks/x.yaml` の末尾のみ   ★無傷★
+  dashboard.md:8848: 陰性2      : 恐れ入るが queue/tasks/x.yaml の末尾のみ  → 痕 False
+  dashboard.md:17849: 1. **「板id必携」の板id が記録から一意に定まらぬ。** `queue/tasks/pending.yaml` を實文で検めるに **`id:` field は存在せず、識別子は `slot:`**（母集團を導出＝P4/P6/R2/K1/K2 の五つ）。∴ 本弾の札は **`slot=K2`** と名乗つた。*
+  dashboard.md:18410: **★當職の見立て（判じ得ぬ・範囲付き）★**：a6 が `queue/tasks/pending.yaml` の slot K1 を讀み、**`status: pending_undistributed` ゆゑ未配布の弾と解した**のではないか。pending.yaml は「足軽は讀取のみ」で**足軽に開かれた常備庫
+  dashboard.md:19519: - **a6 K4**: `queue/tasks/pending.yaml` が版管理の外に在る事を陽性對照付きで證し、所有者を**候補として提示するに留め斷ぜなんだ**。書込履歴が導けぬ理由は、次節に在る。
+  dashboard.md:25079: **但し「pending.yaml に ready彈5件」は實測と合はぬ。** `queue/tasks/pending.yaml`（as_of 2026-08-29T08:41、機械讀取）の實測 ―― 5 slot のうち **R2・K1・K2 は `status: consumed_2026-08-28`**（消費
+  dashboard.md:25608: 08:35 の令は「pending.yaml に **ready彈5件** が保留のまま足輕へ未配」と述べた。當職が實測した（`queue/tasks/pending.yaml`・mtime 2026-08-28 21:04・以後不變）:
+  dashboard.md:25901: 1. **a4 / a5 へ再發** ―― 未讀便の**全文を機械で寫し**（🔺「印を目で寫すな」）、頭に⑴何が起きたか⑵咎は貴殿に無い旨⑶**`queue/tasks/*.yaml` は 8-27 の舊札ゆゑ `p1r0_mb-*` に着手するな**⑷seq224250 周知 ―― を附して再送。錨は `len(hi
+  dashboard.md:26111: `queue/tasks/pending.yaml` を機械で開いた（`yaml.safe_load`・as_of 20:00）:
+
+RC 0 (walk completed)

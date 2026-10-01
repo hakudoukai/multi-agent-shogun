@@ -1,0 +1,62 @@
+koku=2026-09-18T18:08:06+0900
+=== scripts/slim_yaml.py L20-45(load_yaml の例外)
+IDLE_STUB = {'task': {'status': 'idle'}}
+
+
+def load_yaml(filepath):
+    """Safely load YAML file."""
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return yaml.safe_load(f) or {}
+    except FileNotFoundError:
+        return {}
+    except yaml.YAMLError as e:
+        print(f"Error parsing {filepath}: {e}", file=sys.stderr)
+        return {}
+
+
+def save_yaml(filepath, data):
+    """Safely save YAML file."""
+    try:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            yaml.dump(data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+        return True
+    except Exception as e:
+        print(f"Error writing {filepath}: {e}", file=sys.stderr)
+        return False
+
+
+=== L360-392(main: 誰の時に slim_tasks が走るか)
+
+def main():
+    """Main entry point."""
+    agent_id, dry_run = parse_arguments()
+
+    # Ensure archive directory exists
+    archive_dir = get_queue_dir() / 'archive'
+    archive_dir.mkdir(parents=True, exist_ok=True)
+
+    # Process shogun_to_karo if this is 家老
+    if agent_id == 'karo':
+        if not slim_shugun_to_karo():
+            sys.exit(1)
+        migration(dry_run)
+        if not slim_tasks(dry_run):
+            sys.exit(1)
+        if not slim_reports(dry_run):
+            sys.exit(1)
+        if not slim_all_inboxes(dry_run):
+            sys.exit(1)
+
+    # Process inbox for all agents
+    if not slim_inbox(agent_id, dry_run):
+        sys.exit(1)
+
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+    main()
+=== 実走(dry-run・己の席で・mac-4 の帳が何と出るか)
+dry-run rc=?
+dry-run rc=0 stderr_lines=0 mac-4_lines=0

@@ -1,0 +1,15 @@
+koku=2026-09-18T18:07:29+0900
+走つて居る watcher(pgrep -fl 'inbox_watche[r]'・己の argv は [r] ゆゑ合致せぬ)
+9826 ashigaru-mac-1 multiagent-mac:0.1 claude
+9838 ashigaru-mac-2 multiagent-mac:0.2 claude
+9859 ashigaru-mac-3 multiagent-mac:0.3 claude
+mac-4 の watcher 数=0
+tmux @agent_id 一覧:
+gakushu-bucho:0.0 gakushu-bucho
+hermes-drm:0.0 dr-m
+hermes-gunshi-mac:0.0 gunshi-mac
+multiagent-mac:0.0 karo-mac
+multiagent-mac:0.1 ashigaru-mac-1
+multiagent-mac:0.2 ashigaru-mac-2
+multiagent-mac:0.3 ashigaru-mac-3
+launchd/cron に mac-4: 0 / 0

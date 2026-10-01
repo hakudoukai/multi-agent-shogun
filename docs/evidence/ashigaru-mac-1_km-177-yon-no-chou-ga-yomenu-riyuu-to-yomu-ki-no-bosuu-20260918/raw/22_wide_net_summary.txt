@@ -1,0 +1,15 @@
+koku=2026-09-18T18:06:11+0900
+広い網: /usr/bin/grep -rnE 'queue/tasks' scripts lib hooks ~/bin --include=*.sh --include=*.py --include=*.bash (bak を除く)
+rc=0 lines=7 files=5
+   2 scripts/inbox_watcher.sh
+   2 scripts/checks/secondpc_dispatch.sh
+   1 scripts/karo_overload_monitor.sh
+   1 scripts/agent_status.sh
+   1 lib/cli_adapter.sh
+
+其の内 safe_load / yaml.load を同 file に持つ物:
+  lib/cli_adapter.sh safe_load行=16
+  scripts/agent_status.sh safe_load行=2
+  scripts/inbox_watcher.sh safe_load行=4
+  scripts/karo_overload_monitor.sh safe_load行=1
+陽性対照(網の検出子): scripts/slim_yaml.sh は queue/tasks を読む器として既知 → 網に 0 行

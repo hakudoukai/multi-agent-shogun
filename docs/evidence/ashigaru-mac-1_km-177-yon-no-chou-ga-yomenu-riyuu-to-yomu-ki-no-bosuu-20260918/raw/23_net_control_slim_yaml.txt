@@ -1,0 +1,11 @@
+koku=2026-09-18T18:06:39+0900
+=== scripts/slim_yaml.sh: path の形(網の陽性対照の検め)
+3:# slim_yaml.sh - YAML slimming wrapper with file locking
+5:# Usage: bash slim_yaml.sh <agent_id>
+14:LOCK_FILE="${SCRIPT_DIR}/../queue/.slim_yaml.lock"
+34:python3 "$(dirname "$0")/slim_yaml.py" "$@"
+=== 網を 'tasks/' に広げる(scripts lib hooks ~/bin・bak 除く)
+   2 scripts/inbox_watcher.sh
+   2 scripts/checks/secondpc_dispatch.sh
+   1 scripts/agent_status.sh
+   1 lib/cli_adapter.sh

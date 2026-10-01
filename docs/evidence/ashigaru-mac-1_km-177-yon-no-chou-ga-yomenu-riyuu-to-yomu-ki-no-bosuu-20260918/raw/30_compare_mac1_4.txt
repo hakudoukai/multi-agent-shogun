@@ -1,0 +1,8 @@
+queue/tasks/ashigaru-mac-1.yaml PARSE_OK top_type=dict top_keys=54
+  lines=1023 bytes=112427 top_level_keys(^[A-Za-z_]+:)=41 seq_items(^- )=0 doc_markers(^---)=0
+queue/tasks/ashigaru-mac-2.yaml PARSE_OK top_type=dict top_keys=39
+  lines=714 bytes=70794 top_level_keys(^[A-Za-z_]+:)=31 seq_items(^- )=0 doc_markers(^---)=0
+queue/tasks/ashigaru-mac-3.yaml PARSE_OK top_type=dict top_keys=36
+  lines=680 bytes=74798 top_level_keys(^[A-Za-z_]+:)=27 seq_items(^- )=0 doc_markers(^---)=0
+queue/tasks/ashigaru-mac-4.yaml PARSE_FAIL ParserError while parsing a block mapping |   in "queue/tasks/ashigaru-mac-4.yaml", line 1, column 1 | expected <block end>, but found '-' |   in "queue/tasks/ashigaru-mac-4.yaml", line 275, column 1
+  lines=857 bytes=114132 top_level_keys(^[A-Za-z_]+:)=54 seq_items(^- )=4 doc_markers(^---)=0

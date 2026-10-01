@@ -1,0 +1,120 @@
+koku=2026-09-18T18:07:51+0900
+=== scripts/slim_yaml.py L88-140(tasks_dir の使ひ方・argv の席のみか・safe_load の例外)
+    ensure_parent_dir(archive_path)
+    if not save_yaml(archive_path, data):
+        return False
+
+    if filepath.name in archive_path.name:
+        return True
+    return filepath.rename(archive_path)
+
+
+def slim_tasks(dry_run=False):
+    queue_dir = get_queue_dir()
+    tasks_dir = queue_dir / 'tasks'
+    archive_dir = queue_dir / 'archive' / 'tasks'
+
+    if not tasks_dir.exists():
+        return True
+
+    timestamp = get_timestamp()
+    done_statuses = {'done', 'completed', 'cancelled'}
+
+    for filepath in sorted(tasks_dir.glob('*.yaml')):
+        data = load_yaml(filepath)
+        if not isinstance(data, dict):
+            continue
+
+        task = data.get('task', {}) if isinstance(data.get('task', {}), dict) else {}
+        status = task.get('status', '') if isinstance(task, dict) else ''
+        if not status:
+            continue
+
+        stem = filepath.stem
+        if stem in CANONICAL_TASKS:
+            if status not in done_statuses:
+                continue
+
+            archive_path = archive_dir / f'{stem}_{timestamp}.yaml'
+            if not archive_taskspec(filepath, archive_path, data, dry_run=dry_run):
+                return False
+
+            if dry_run:
+                print(f"[DRY-RUN] would overwrite: {filepath} with {IDLE_STUB}")
+                continue
+
+            if not save_yaml(filepath, IDLE_STUB):
+                return False
+            continue
+
+        if status not in {'done', 'cancelled'}:
+            continue
+
+        archive_path = archive_dir / filepath.name
+        if archive_path.exists():
+            archive_path = archive_dir / f'{filepath.stem}_{timestamp}{filepath.suffix}'
+=== slim_yaml.py の safe_load 行と try/except
+25:    try:
+27:            return yaml.safe_load(f) or {}
+28:    except FileNotFoundError:
+30:    except yaml.YAMLError as e:
+37:    try:
+41:    except Exception as e:
+193:def slim_inbox(agent_id, dry_run=False):
+197:    inbox_file = queue_dir / 'inbox' / f'{agent_id}.yaml'
+228:    archive_file = archive_dir / f'inbox_{agent_id}_{archive_timestamp}.yaml'
+247:        print(f"Archived {len(archived)} messages from {agent_id} to {archive_file.name}", file=sys.stderr)
+312:        agent_id = filepath.stem
+315:        if not slim_inbox(agent_id, dry_run=dry_run):
+352:    args = [arg for arg in sys.argv[1:] if arg != '--dry-run']
+353:    dry_run = '--dry-run' in sys.argv[1:]
+355:        print("Usage: slim_yaml.py <agent_id> [--dry-run]", file=sys.stderr)
+363:    agent_id, dry_run = parse_arguments()
+370:    if agent_id == 'karo':
+382:    if not slim_inbox(agent_id, dry_run):
+=== slim_yaml を呼ぶ者(scripts lib hooks instructions ~/bin・bak 除く)
+instructions/generated/gunshi.md:70:    command: 'bash scripts/slim_yaml.sh gunshi'
+instructions/generated/codex-gunshi.md:70:    command: 'bash scripts/slim_yaml.sh gunshi'
+instructions/generated/kimi-karo.md:38:    command: 'bash scripts/slim_yaml.sh karo'
+instructions/generated/codex-ashigaru.md:36:    command: 'bash scripts/slim_yaml.sh $(tmux display-message -t "$TMUX_PANE" -p "#{@agent_id}")'
+instructions/generated/codex-karo.md:38:    command: 'bash scripts/slim_yaml.sh karo'
+instructions/generated/kimi-gunshi.md:70:    command: 'bash scripts/slim_yaml.sh gunshi'
+instructions/generated/copilot-karo.md:38:    command: 'bash scripts/slim_yaml.sh karo'
+instructions/generated/karo.md:38:    command: 'bash scripts/slim_yaml.sh karo'
+instructions/generated/kimi-ashigaru.md:36:    command: 'bash scripts/slim_yaml.sh $(tmux display-message -t "$TMUX_PANE" -p "#{@agent_id}")'
+instructions/generated/copilot-ashigaru.md:36:    command: 'bash scripts/slim_yaml.sh $(tmux display-message -t "$TMUX_PANE" -p "#{@agent_id}")'
+=== scripts/karo_overload_monitor.sh の TASKS_DIR 使用行
+60:: "${TASKS_DIR:=$REPO_ROOT/queue/tasks}"
+310:    if [ ! -d "$TASKS_DIR" ]; then
+317:    for f in "$TASKS_DIR"/ashigaru*.yaml; do
+# M5: 未着手 sub-phase = ashigaru*.yaml で status: assigned のもの
+count_unstarted_subphases() {
+    local count=0
+    if [ ! -d "$TASKS_DIR" ]; then
+        echo "0"
+        return 0
+    fi
+    # ashigaru タスク YAML のみ対象 (= 家老 dispatch 範囲)
+    shopt -s nullglob
+    local f
+    for f in "$TASKS_DIR"/ashigaru*.yaml; do
+        [ -f "$f" ] || continue
+        # status: assigned を grep (= シンプルさ優先、advisory)
+        if grep -qE '^\s*status:\s*assigned\s*$' "$f" 2>/dev/null; then
+            count=$((count + 1))
+        fi
+    done
+    shopt -u nullglob
+    echo "$count"
+}
+
+# ─── alert 送信 ───────────────────────────────────────────────────────
+send_alert() {
+    local hit_metrics_csv="$1"
+    local m1="$2"
+    local m2="$3"
+    local m3="$4"
+    local m4="$5"
+    local m5="$6"
+=== karo_overload_monitor は走つて居るか
+0

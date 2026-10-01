@@ -1,0 +1,1 @@
+PyYAML 逐語「expected <block end>, but found '-'」problem L275 col1・context L1(pyyaml 6.0.3)。memory「block sequence + trailing keys」の鏡像形(mapping→sequence→鍵 21)。字(CR/全角)は因でない。他席 mac-1/2/3 は根 `- ` 0 で OK(大きさ・鍵数は因でない)。陽性対照=mac-1 写しに根 `- ` を足すと同じ例外(L1026)。

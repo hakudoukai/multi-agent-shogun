@@ -1,0 +1,154 @@
+koku=2026-09-18T18:06:45+0900
+=== scripts/inbox_watcher.sh L440-478
+            m.get("from") == "inbox_watcher"
+            and m.get("type") == "task_assigned"
+            and m.get("read", False) is False
+            and "[auto-recovery]" in (m.get("content") or "")
+        ):
+            print("SKIP_DUPLICATE")
+            raise SystemExit(0)
+
+    # Task YAML status guard: skip auto-recovery if task is cancelled or idle.
+    # This prevents restarting a task that 家老 intentionally cancelled via clear_command.
+    task_yaml_path = os.path.join(
+        os.path.dirname(os.path.dirname(inbox)), "tasks", f"{agent_id}.yaml"
+    )
+    if os.path.exists(task_yaml_path):
+        try:
+            with open(task_yaml_path, "r", encoding="utf-8") as tf:
+                task_data = yaml.safe_load(tf) or {}
+            task_status = str(task_data.get("status") or "").strip().strip("'\"")
+            if task_status in ("cancelled", "idle"):
+                print(f"SKIP_CANCELLED:{task_status}")
+                raise SystemExit(0)
+        except SystemExit:
+            raise
+        except Exception:
+            pass  # If task YAML is unreadable, proceed with auto-recovery as safety net
+
+    now = datetime.datetime.now(datetime.timezone.utc).astimezone()
+    msg = {
+        "content": (
+            f"[auto-recovery] /clear 後の再着手通知。"
+            f"queue/tasks/{agent_id}.yaml を再読し、assigned タスクを即時再開せよ。"
+        ),
+        "from": "inbox_watcher",
+        "id": f"msg_auto_recovery_{now.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}",
+        "read": False,
+        "timestamp": now.replace(microsecond=0).isoformat(),
+        "type": "task_assigned",
+    }
+    messages.append(msg)
+=== scripts/agent_status.sh L170-215
+
+# pane-base-index
+PANE_BASE=$(tmux show-options -gv pane-base-index 2>/dev/null || echo 0)
+
+# ─── Helper: task info from YAML ───
+get_task_info() {
+    local agent_id="$1"
+    local yaml_file="$SCRIPT_DIR/queue/tasks/${agent_id}.yaml"
+    if [[ ! -f "$yaml_file" ]] || ! $PYTHON_AVAILABLE; then
+        echo "--- ---"
+        return
+    fi
+    "$PYTHON" -c "
+import yaml, sys
+try:
+    with open('${yaml_file}') as f:
+        data = yaml.safe_load(f) or {}
+    task = data.get('task', data)
+    tid = task.get('task_id', '---')
+    status = task.get('status', '---')
+    print(f'{tid} {status}')
+except Exception:
+    print('--- ---')
+" 2>/dev/null || echo "--- ---"
+}
+
+# ─── Helper: unread inbox count ───
+get_unread_count() {
+    local agent_id="$1"
+    local inbox_file="$SCRIPT_DIR/queue/inbox/${agent_id}.yaml"
+    if [[ ! -f "$inbox_file" ]] || ! $PYTHON_AVAILABLE; then
+        echo "-"
+        return
+    fi
+    "$PYTHON" -c "
+import yaml, sys
+try:
+    with open('${inbox_file}') as f:
+        data = yaml.safe_load(f) or {}
+    msgs = data.get('messages', [])
+    unread = sum(1 for m in msgs if not m.get('read', False))
+    print(unread)
+except Exception:
+    print('?')
+" 2>/dev/null || echo "?"
+}
+=== agent_status.sh の agents 源
+104:        for pidx in "${_indices[@]}"; do
+122:    for pane_target in "${PANE_TARGETS[@]}"; do
+168:MAINPC_AGENTS=("${SECTION18_MAINPC_PANE_ORDER[@]}")
+169:SECONDPC_AGENTS=("${SECTION18_SECONDPC_AGENTS[@]}")
+210:    unread = sum(1 for m in msgs if not m.get('read', False))
+267:for i in "${!MAINPC_AGENTS[@]}"; do
+275:for agent in "${SECONDPC_AGENTS[@]}"; do
+=== scripts/karo_overload_monitor.sh (queue/tasks 行 ±8)
+umask 077
+
+# ─── 定数 / 設定 ──────────────────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+# bats / external test 用 env override
+: "${KARO_INBOX:=$REPO_ROOT/queue/inbox/karo.yaml}"
+: "${TASKS_DIR:=$REPO_ROOT/queue/tasks}"
+: "${TAKENAKA_INBOX:=$REPO_ROOT/queue/inbox/takenaka.yaml}"
+: "${SHOGUN_INBOX:=$REPO_ROOT/queue/inbox/shogun.yaml}"
+: "${INBOX_WRITE_CMD:=$SCRIPT_DIR/inbox_write.sh}"
+: "${STATE_FILE:=/tmp/karo_overload_monitor_state.json}"
+: "${HEALTH_FILE:=/tmp/karo_overload_monitor.health}"
+: "${DUMP_DIR:=/tmp}"
+: "${DISABLE_FLAG:=$HOME/.openclaw/disable_karo_overload_monitor}"
+: "${GLOBAL_DISABLE_FLAG:=$HOME/.openclaw/global_disable}"
+=== scripts/checks/secondpc_dispatch.sh L18-40
+        exit 2
+        ;;
+esac
+
+# MainPC 側 queue/tasks/<TARGET>.yaml が更新済みか
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+TASK_FILE="$SCRIPT_DIR/queue/tasks/${TARGET}.yaml"
+if [ ! -f "$TASK_FILE" ]; then
+    echo "[WARN] $TASK_FILE が存在しない (= タスク未割当?)" >&2
+    exit 1
+fi
+TASK_AGE=$(( $(date +%s) - $(stat -c %Y "$TASK_FILE") ))
+
+# SecondPC 側 inbox 直近書込 mtime
+SP_INBOX_AGE=$(ssh -o ConnectTimeout=5 -o BatchMode=yes hakudokai@192.168.11.47 \
+    "stat -c %Y ~/projects/multi-agent-shogun/queue/inbox/${TARGET}.yaml 2>/dev/null" 2>/dev/null)
+SP_INBOX_AGE=${SP_INBOX_AGE:-0}
+SP_INBOX_AGE_DIFF=$(( $(date +%s) - SP_INBOX_AGE ))
+
+echo "▼ $TARGET 配信検証"
+echo "  MainPC task YAML 更新: ${TASK_AGE}s 前"
+echo "  SecondPC inbox 最終書込: ${SP_INBOX_AGE_DIFF}s 前"
+
+=== scripts/karo_standby_dashboard.sh L92-106
+
+  # ── 全受信箱 未読 ──
+  echo
+  printf "  ${CYN}▎受信箱 未読 (read:false)${R}\n"
+  local mb c label
+  for mb in shogun-mac gunshi-mac ashigaru-mac-1 ashigaru-mac-2 ashigaru-mac-3 ashigaru-mac-4 ashigaru-mac-5 ashigaru-mac-6 ashigaru-mac-7; do
+    c="$(unread_count "$mb")"
+    case "$mb" in
+      shogun-mac) label="将軍   (上り宛先)" ;;
+      gunshi-mac) label="軍師           " ;;
+      *)          label="足軽 ${mb##*-}         " ;;
+    esac
+    if [[ "$c" -gt 0 ]]; then
+      printf "    %s %s: ${YLW}%s${R}\n" "$label" "$mb" "$c"
+    else
