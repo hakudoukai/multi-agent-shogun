@@ -1,0 +1,28 @@
+# HEAD=7c5a91f9e8dddc1337c4282431ccd8f706c68345
+# porcelain_lines=0
+# sha256=75def80e55198bc816988fc04b5a5c06e41cc5a13424a7c4d2858508345ae701 blob=10795ea8b9f46e4c32b420c1a4f553cc3c8bbad9 crlf=0 shim/hakudokai/hakudokai_hermes2_reverse_watcher.sh
+# sha256=33d51d78786e4f0807860e997942772128c54b84c78d158c6c337fe89965c510 blob=8865d4ed62a04b2f9f89064d58766cefd84abcfa crlf=0 shim/hakudokai/lib/hermes2_reverse_guard.sh
+# sha256=0815f7ae73a5a1ff6c0a9fdb9cbc58f6d8c98765f6970c6a5880c9a90bdd902e blob=afa95fa569bd56bbeb4190ad510235593c59f4da crlf=0 tests/test_hermes2_reverse_wake_dedup.py
+# ran_at=2026-10-02T09:49:38+09:00
+# 旧 guard 試験(本体 repo 未追跡・他席の物ゆゑ無改変) sha256=3d81f6f682501330473c9fb937a6b5f8498ca0769bedda638eb0157e9bda1813 tests/test_hermes2_reverse_guard.py
+# 基準 fc1bb3fb の2file で走らせた出力 (/tmp/h2base-*):
+FAIL capture change during idle sampling deferred: 
+PASS third host maps to canonical identity
+PASS non-Third host fails closed
+PASS idle blank composer accepted
+PASS busy/queued pane rejected
+PASS nonempty composer rejected
+PASS approval/security modal rejected without keys
+PASS screen without explicit composer fails closed
+PASS three unchanged explicit idle samples accepted
+# 本 commit の2file で走らせた出力 (/tmp/h2old-7BRZ):
+FAIL capture change during idle sampling deferred: 
+PASS third host maps to canonical identity
+PASS non-Third host fails closed
+PASS idle blank composer accepted
+PASS busy/queued pane rejected
+PASS nonempty composer rejected
+PASS approval/security modal rejected without keys
+PASS screen without explicit composer fails closed
+PASS three unchanged explicit idle samples accepted
+# diff=空(同一)・何れも rc=1 で同じ所で止まる＝基準時点から赤・本改修で悪化無し

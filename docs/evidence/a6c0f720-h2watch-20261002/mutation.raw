@@ -1,0 +1,47 @@
+# HEAD=7c5a91f9e8dddc1337c4282431ccd8f706c68345
+# porcelain_lines=0
+# sha256=75def80e55198bc816988fc04b5a5c06e41cc5a13424a7c4d2858508345ae701 blob=10795ea8b9f46e4c32b420c1a4f553cc3c8bbad9 crlf=0 shim/hakudokai/hakudokai_hermes2_reverse_watcher.sh
+# sha256=33d51d78786e4f0807860e997942772128c54b84c78d158c6c337fe89965c510 blob=8865d4ed62a04b2f9f89064d58766cefd84abcfa crlf=0 shim/hakudokai/lib/hermes2_reverse_guard.sh
+# sha256=0815f7ae73a5a1ff6c0a9fdb9cbc58f6d8c98765f6970c6a5880c9a90bdd902e blob=afa95fa569bd56bbeb4190ad510235593c59f4da crlf=0 tests/test_hermes2_reverse_wake_dedup.py
+# ran_at=2026-10-02T09:39:00+09:00
+# cmd=systemd-run --user --scope -p MemoryMax=12G python3 mutate.py (写しを /tmp に作り一箇所だけ壊す・原本無改変)
+# mutate.py sha256=5fd61566bf089d4e7c8a9f5fd47c775f07387f24c4739a86c632da2962f4f3d2
+RED  M1 wake_select が常に起こす(⑴) rc=1 fails=8
+    FAIL unit⑴ 陰性: 同じ組は起こさない  [wake ['00000000-0000-4000-8000-000000000001']]
+    FAIL unit⑴ 陽性: 新しい seq が加はれば其の行だけ起こす  [wake ['00000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002']]
+    FAIL unit⑴ 陰性: 減つただけなら起こさない  [wake ['00000000-0000-4000-8000-000000000002']]
+    FAIL int⑴ 陰性: 同じ組を3回照会しても起こすのは1回  [pokes=3 rc=0]
+    FAIL int⑴ 陽性: 新しい seq が加はれば再び起こす(計2回)  [pokes=3]
+    FAIL int⑴ 2回目の起床は新しい seq だけ  [['H2WAKE:1790901577 New pc_handshake rows for hermes2 (to_pc / target_agent / topic cross_pc_inbox_hermes2) are waiting. Please SE
+    FAIL int⑴ 陽性: 状態が変はれば同じ seq でも起こす(計2回)  [pokes=3]
+    FAIL int⑴ 陰性: 減つただけなら起こさない(計1回)  [pokes=3]
+RED  M2 照会を旧い to_pc 単独へ戻す(⑵) rc=1 fails=5
+    FAIL int⑵ 照会に to_pc.eq.hermes2 が在る  [['http://fake.invalid/rest/v1/pc_handshake?to_pc=eq.hermes2&acknowledged_at=is.null&order=created_at.desc&limit=100&select=
+    FAIL int⑵ 照会に context_data->>target_agent.eq.hermes2 が在る  [['http://fake.invalid/rest/v1/pc_handshake?to_pc=eq.hermes2&acknowledged_at=is.null&order=created_at.
+    FAIL int⑵ 照会に topic.eq.cross_pc_inbox_hermes2 が在る  [['http://fake.invalid/rest/v1/pc_handshake?to_pc=eq.hermes2&acknowledged_at=is.null&order=created_at.desc&li
+    FAIL int⑵ 三つは or=(...) で結ぶ(AND で狭めない)  [['http://fake.invalid/rest/v1/pc_handshake?to_pc=eq.hermes2&acknowledged_at=is.null&order=created_at.desc&limit=100&sele
+    FAIL int⑵ 陰性: 旧い to_pc=eq.hermes2 単独の照会は残つてゐない  [['http://fake.invalid/rest/v1/pc_handshake?to_pc=eq.hermes2&acknowledged_at=is.null&order=created_at.desc&limit
+RED  M3 照会から topic だけ落とす(⑵) rc=1 fails=1
+    FAIL int⑵ 照会に topic.eq.cross_pc_inbox_hermes2 が在る  [['http://fake.invalid/rest/v1/pc_handshake?or=(to_pc.eq.hermes2,context_data-%3E%3Etarget_agent.eq.hermes2)&
+RED  M4 起床の記録を外す(⑴) rc=1 fails=5
+    FAIL int⑴ 陰性: 同じ組を3回照会しても起こすのは1回  [pokes=3 rc=0]
+    FAIL int⑴ 陽性: 新しい seq が加はれば再び起こす(計2回)  [pokes=3]
+    FAIL int⑴ 2回目の起床は新しい seq だけ  [['H2WAKE:1790901911 New pc_handshake rows for hermes2 (to_pc / target_agent / topic cross_pc_inbox_hermes2) are waiting. Please SE
+    FAIL int⑴ 陽性: 状態が変はれば同じ seq でも起こす(計2回)  [pokes=3]
+    FAIL int⑴ 陰性: 減つただけなら起こさない(計1回)  [pokes=3]
+RED  M5 門の拒否を見ない＝黙る(⑶) rc=1 fails=1
+    FAIL unit⑶ 陽性: 門の拒否(400/P0001)は rc=0 で帳へ書く
+RED  M6 帳へ書かない(⑶) rc=1 fails=8
+    FAIL unit⑶ 帳に id・seq・http・code・kind・本文の頭が在る  [{}]
+    FAIL unit⑶ 陰性: 同じ id は二度書かない(rc=3)
+    FAIL unit⑶ 陰性: 門以外の失敗(401)は帳に書かない(rc=1)
+    FAIL unit⑶ h2_ack_gate_rejected 陽性
+    FAIL int⑶ 陽性: 門に拒まれた2行が帳へ1件づつ  [[]]
+    FAIL int⑶ health に ack_gate_rejected=2  [{'timestamp': '2026-10-02T00:47:22Z', 'poll_count': 3, 'fail_count': 0, 'status': 'running', 'interval': 0, 'pane': 'he
+    FAIL int⑶ 陽性: telemetry の拒否も帳へ1件  [[]]
+    FAIL int⑶ 陰性: telemetry へ PATCH を繰り返さない(1回)  [patch=3]
+RED  M7 帳の id を見ず PATCH を繰り返す(⑶) rc=1 fails=2
+    FAIL unit⑶ h2_ack_gate_rejected 陽性
+    FAIL int⑶ 陰性: telemetry へ PATCH を繰り返さない(1回)  [patch=3]
+MUTATION SUMMARY red=7/7
+# rc=0

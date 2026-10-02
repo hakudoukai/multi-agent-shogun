@@ -1,0 +1,45 @@
+# HEAD=7c5a91f9e8dddc1337c4282431ccd8f706c68345
+# porcelain_lines=0
+# sha256=75def80e55198bc816988fc04b5a5c06e41cc5a13424a7c4d2858508345ae701 blob=10795ea8b9f46e4c32b420c1a4f553cc3c8bbad9 crlf=0 shim/hakudokai/hakudokai_hermes2_reverse_watcher.sh
+# sha256=33d51d78786e4f0807860e997942772128c54b84c78d158c6c337fe89965c510 blob=8865d4ed62a04b2f9f89064d58766cefd84abcfa crlf=0 shim/hakudokai/lib/hermes2_reverse_guard.sh
+# sha256=0815f7ae73a5a1ff6c0a9fdb9cbc58f6d8c98765f6970c6a5880c9a90bdd902e blob=afa95fa569bd56bbeb4190ad510235593c59f4da crlf=0 tests/test_hermes2_reverse_wake_dedup.py
+# ran_at=2026-10-02T09:37:27+09:00
+# cmd=systemd-run --user --scope -p MemoryMax=12G python3 tests/test_hermes2_reverse_wake_dedup.py
+PASS unit⑴ 陽性: 初回は起こす
+PASS unit⑴ 陰性: 同じ組は起こさない
+PASS unit⑴ 陽性: 新しい seq が加はれば其の行だけ起こす
+PASS unit⑴ 陽性: 同じ seq でも状態(priority)が変はれば起こす
+PASS unit⑴ 陽性: requires_response が変はれば起こす
+PASS unit⑴ 陰性: 減つただけなら起こさない
+PASS unit⑴ 陰性: 空なら起こさない
+PASS unit⑴ 記録は重ならない
+PASS unit⑴ 記録は末尾 H2_WOKEN_KEEP 行に保つ
+PASS unit⑶ 陽性: 門の拒否(400/P0001)は rc=0 で帳へ書く
+PASS unit⑶ 帳に id・seq・http・code・kind・本文の頭が在る
+PASS unit⑶ 陰性: 同じ id は二度書かない(rc=3)
+PASS unit⑶ 陰性: 門以外の失敗(401)は帳に書かない(rc=1)
+PASS unit⑶ 陰性: 400 でも門の拒否でなければ帳に書かない
+PASS unit⑶ h2_ack_gate_rejected 陽性
+PASS unit⑶ h2_ack_gate_rejected 陰性
+PASS int⑴ 陰性: 同じ組を3回照会しても起こすのは1回
+PASS int⑴ 初回の起床に両 seq が載る
+PASS int⑶ 陽性: 門に拒まれた2行が帳へ1件づつ
+PASS int⑶ 陰性: 拒まれた id へ PATCH を繰り返さない(各1回)
+PASS int⑶ health に ack_gate_rejected=2
+PASS int⑶ log に GATE-REJECTED が出る(黙らない)
+PASS int⑵ 照会に to_pc.eq.hermes2 が在る
+PASS int⑵ 照会に context_data->>target_agent.eq.hermes2 が在る
+PASS int⑵ 照会に topic.eq.cross_pc_inbox_hermes2 が在る
+PASS int⑵ 三つは or=(...) で結ぶ(AND で狭めない)
+PASS int⑵ 陰性: 旧い to_pc=eq.hermes2 単独の照会は残つてゐない
+PASS int⑴ 陽性: 新しい seq が加はれば再び起こす(計2回)
+PASS int⑴ 2回目の起床は新しい seq だけ
+PASS int⑴ 陽性: 状態が変はれば同じ seq でも起こす(計2回)
+PASS int⑴ 陰性: 減つただけなら起こさない(計1回)
+PASS int⑶ 陽性: telemetry の拒否も帳へ1件
+PASS int⑶ 陰性: telemetry へ PATCH を繰り返さない(1回)
+PASS int telemetry は pane を起こさない
+PASS int⑶ 陰性: ACK が通れば帳に書かない
+PASS int ACK が通れば起こすのは1回
+SUMMARY pass=True fails=0
+# rc=0
