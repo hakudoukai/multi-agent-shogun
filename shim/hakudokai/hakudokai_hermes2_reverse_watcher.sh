@@ -29,10 +29,17 @@ POKE_RATE_LIMIT_SEC="${H2_POKE_RATE_LIMIT_SEC:-120}"
 DEFER_FILE="${H2_DEFER_FILE:-/tmp/hakudokai_hermes2_reverse_defer.count}"
 DEFER_ALERT_AFTER="${H2_DEFER_ALERT_AFTER:-10}"
 DEFER_ALERT_FILE="${H2_DEFER_ALERT_FILE:-/tmp/hakudokai_hermes2_reverse_defer.alert}"
+# ★a6c0f720★ 起こした行の状態キー(⑴)・門に拒まれた ACK の帳(⑶)・照会の窓(⑵)・作業 file の置き場
+WOKEN_STATE="${H2_WOKEN_STATE:-/tmp/hakudokai_hermes2_reverse_woken.state}"
+ACK_REJECT_LEDGER="${H2_ACK_REJECT_LEDGER:-/tmp/hakudokai_hermes2_reverse_ack_rejected.jsonl}"
+QUERY_LIMIT="${H2_QUERY_LIMIT:-100}"
+TMP_DIR="${H2_TMP_DIR:-/tmp}"
+# 試験用: 指定した回数の poll で抜ける(既定は空=止まらない)
+MAX_POLLS="${H2_MAX_POLLS:-}"
 FAIL_COUNT=0
 MAX_FAILS=5
 POLL_COUNT=0
-PAYLOAD="New pc_handshake rows to_pc=hermes2 are waiting. Please SELECT unacknowledged rows and process them. -- Commander reverse-watcher"
+PAYLOAD="New pc_handshake rows for hermes2 (to_pc / target_agent / topic cross_pc_inbox_hermes2) are waiting. Please SELECT unacknowledged rows and process them. -- Commander reverse-watcher"
 
 GLOBAL_DISABLE="$HOME/.openclaw/global_disable"
 WATCHER_DISABLE="$HOME/.openclaw/disable_hermes2_reverse_watcher"
@@ -48,20 +55,40 @@ trap 'echo "[$(date -Iseconds)] [hermes2_reverse] SIGTERM graceful exit" >&2; ex
 if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
   echo "ERROR: SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY required (run via doppler run)" >&2; exit 1
 fi
-touch "$PROCESSED_FILE"
+touch "$PROCESSED_FILE" "$WOKEN_STATE"
 export H2_LOG="$LOG"
 log(){ h2_log "$1"; }
-health(){ printf '{"timestamp":"%s","poll_count":%d,"fail_count":%d,"status":"running","interval":%d,"pane":"%s","socket":"%s"}\n' \
-  "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$POLL_COUNT" "$FAIL_COUNT" "$POLL_INTERVAL" "$H2_PANE" "$SOCK" > "$HEALTH_FILE"; }
+health(){
+  local rejected
+  rejected=$(grep -c . "$ACK_REJECT_LEDGER" 2>/dev/null || true); rejected=${rejected:-0}
+  printf '{"timestamp":"%s","poll_count":%d,"fail_count":%d,"status":"running","interval":%d,"pane":"%s","socket":"%s","ack_gate_rejected":%d,"ack_reject_ledger":"%s"}\n' \
+  "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$POLL_COUNT" "$FAIL_COUNT" "$POLL_INTERVAL" "$H2_PANE" "$SOCK" "$rejected" "$ACK_REJECT_LEDGER" > "$HEALTH_FILE"; }
+# ★a6c0f720 ⑶★ ACK の失敗を黙らせない。門の拒否は帳へ id ごとに一度だけ書き、
+#   以後その id へは PATCH を繰り返さない。門以外の失敗は従来どほり次の poll で再試行する。
+#   使ひ方: ack_failed <id> <seq> <http> <body_file> <kind>
+ack_failed(){
+  local id="$1" seq="$2" http="$3" body="$4" kind="$5" err rc=0
+  err=$(tr '\n' ' ' <"$body" 2>/dev/null | head -c 500)
+  h2_ack_reject_record "$ACK_REJECT_LEDGER" "$id" "$seq" "$http" "$body" "$kind" || rc=$?
+  case "$rc" in
+    0) log "ACK GATE-REJECTED ${kind} id=${id:0:8} seq=${seq} http=${http} recorded=${ACK_REJECT_LEDGER} error=${err}" ;;
+    3) : ;;
+    *) log "${kind} ACK failed id=${id:0:8} seq=${seq} http=${http} error=${err}; left unprocessed" ;;
+  esac
+}
 
-log "started (interval=${POLL_INTERVAL}s pane=${H2_PANE} socket=${SOCK})"
+log "started (interval=${POLL_INTERVAL}s pane=${H2_PANE} socket=${SOCK} limit=${QUERY_LIMIT})"
 while true; do
+  if [ -n "$MAX_POLLS" ] && [ "$POLL_COUNT" -ge "$MAX_POLLS" ]; then log "max polls reached ($MAX_POLLS) — exit"; exit 0; fi
   sleep "$POLL_INTERVAL"
   if [ -f "$GLOBAL_DISABLE" ] || [ -f "$WATCHER_DISABLE" ]; then log "DISABLED by flag — graceful exit"; rm -f "$HEALTH_FILE"; exit 0; fi
   POLL_COUNT=$((POLL_COUNT+1))
 
+  # ★a6c0f720 ⑵★ hermes2 宛は to_pc だけでなく context_data.target_agent と
+  #   topic=cross_pc_inbox_hermes2 でも届く(実測: 新しい 100 行のうち 94 行が to_pc=third_pc)。
+  #   三つを OR で照会する。">>" は %3E%3E と書く。
   RESP=$(sb_curl -sS -w "\n%{http_code}" \
-    "${SUPABASE_URL}/rest/v1/pc_handshake?to_pc=eq.hermes2&acknowledged_at=is.null&order=created_at.desc&limit=20&select=id,seq,from_pc,created_at,requires_response,message_type,priority,topic,context_data" \
+    "${SUPABASE_URL}/rest/v1/pc_handshake?or=(to_pc.eq.hermes2,context_data-%3E%3Etarget_agent.eq.hermes2,topic.eq.cross_pc_inbox_hermes2)&acknowledged_at=is.null&order=created_at.desc&limit=${QUERY_LIMIT}&select=id,seq,from_pc,to_pc,created_at,requires_response,message_type,priority,topic,context_data" \
     2>/dev/null)
   CODE=$(echo "$RESP" | tail -1); BODY=$(echo "$RESP" | sed '$d')
   if [ "$CODE" != "200" ]; then
@@ -75,9 +102,11 @@ while true; do
   # Telemetry is durable machine state, not a human letter. ACK it silently and
   # remove it before pane eligibility so telemetry can never generate H2WAKE.
   TELEMETRY_BODY=$(H2_INBOUND_JSON="$BODY" h2_filter_telemetry_json)
-  TELEMETRY_IDS=$(echo "$TELEMETRY_BODY" | python3 -c 'import json,sys; print(" ".join(r["id"] for r in json.load(sys.stdin) if r.get("id")))')
-  for id in $TELEMETRY_IDS; do
-    ACK_BODY="/tmp/hakudokai_hermes2_telemetry_ack-${id}.json"
+  TELEMETRY_IDS=$(echo "$TELEMETRY_BODY" | python3 -c 'import json,sys; print(" ".join(r["id"]+":"+str(r.get("seq")) for r in json.load(sys.stdin) if r.get("id")))')
+  for idseq in $TELEMETRY_IDS; do
+    id="${idseq%%:*}"; seq="${idseq#*:}"
+    h2_ack_gate_rejected "$ACK_REJECT_LEDGER" "$id" && continue
+    ACK_BODY="${TMP_DIR}/hakudokai_hermes2_telemetry_ack-${id}.json"
     ACODE=$(sb_curl -sS -o "$ACK_BODY" -w "%{http_code}" -X PATCH \
       "${SUPABASE_URL}/rest/v1/pc_handshake?id=eq.${id}&acknowledged_at=is.null" \
       -H "Content-Type: application/json" -H "Prefer: return=minimal" \
@@ -86,7 +115,7 @@ while true; do
       echo "$id" >> "$PROCESSED_FILE"
       log "telemetry silently ACKed without pane wake id=${id:0:8}"
     else
-      log "telemetry ACK failed id=${id:0:8} http=$ACODE; left unprocessed"
+      ack_failed "$id" "$seq" "$ACODE" "$ACK_BODY" telemetry
     fi
   done
   BODY=$(H2_INBOUND_JSON="$BODY" h2_filter_actionable_json)
@@ -98,7 +127,7 @@ while true; do
   # re-injected forever when the ACK bridge is unavailable.
   PARENT_IDS=$(echo "$BODY" | python3 -c 'import json,sys; print(",".join(r["id"] for r in json.load(sys.stdin) if r.get("id")))')
   CHILD_RESP=$(sb_curl -sS -w "\n%{http_code}" \
-    "${SUPABASE_URL}/rest/v1/pc_handshake?parent_message_id=in.(${PARENT_IDS})&select=parent_message_id&limit=200" \
+    "${SUPABASE_URL}/rest/v1/pc_handshake?parent_message_id=in.(${PARENT_IDS})&select=parent_message_id&limit=1000" \
     2>/dev/null)
   CHILD_CODE=$(echo "$CHILD_RESP" | tail -1); CHILD_BODY=$(echo "$CHILD_RESP" | sed '$d')
   if [ "$CHILD_CODE" != "200" ]; then
@@ -120,8 +149,18 @@ rows=json.load(sys.stdin)
 fresh=[r["id"] for r in rows if r.get("id") and r["id"] not in seen]
 print(" ".join(fresh))')
   [ -z "$NEW_IDS" ] && { health; continue; }
+  CANDIDATE_BODY=$(echo "$BODY" | NEW_IDS="$NEW_IDS" python3 -c 'import os,sys,json; wanted=set(os.environ.get("NEW_IDS","").split()); print(json.dumps([r for r in json.load(sys.stdin) if r.get("id") in wanted],separators=(",",":")))')
+
+  # ★a6c0f720 ⑴★ 起こすのは初回と状態が変はつた時だけ。同じ組なら黙つて次の poll へ。
+  WAKE_SEL=$(H2_ROWS_JSON="$CANDIDATE_BODY" H2_WOKEN_STATE="$WOKEN_STATE" h2_wake_select)
+  WAKE_VERDICT=$(echo "$WAKE_SEL" | sed -n 1p)
+  if [ "$WAKE_VERDICT" != "wake" ]; then
+    health
+    continue
+  fi
+  NEW_IDS=$(echo "$WAKE_SEL" | sed -n 2p)
   NCOUNT=$(echo "$NEW_IDS" | wc -w)
-  log "detected $NCOUNT fresh to_pc=hermes2 rows"
+  log "detected $NCOUNT fresh-or-changed hermes2 rows"
 
   # 1 poll = 1 bundled pane poke, rate-limited. Do not ACK before a real
   # pane poke succeeds; otherwise a failed/stuck paste can hide the row forever.
@@ -142,10 +181,10 @@ print(" ".join(fresh))')
     # ★2026-08-13 iincho: 壊れているpaneは叩かない(死のスパイラル封じ)★
     # 相手が context 超過で応答不能な時、起床通知は「起こす」ではなく「埋める」。
     # 叩くたびに context が増え、二度と圧縮できなくなる(実測 479k->499k)。
-    BROKEN_CAP="/tmp/hakudokai_hermes2_broken_check.txt"
+    BROKEN_CAP="${TMP_DIR}/hakudokai_hermes2_broken_check.txt"
     sudo -n -u hermes tmux -S "$SOCK" capture-pane -p -t "$H2_PANE" -S -40 >"$BROKEN_CAP" 2>/dev/null || true
     if grep -qE "Context length exceeded|Cannot compress further" "$BROKEN_CAP" 2>/dev/null; then
-      BROKEN_MARK="/tmp/hakudokai_hermes2_broken_notified"
+      BROKEN_MARK="${TMP_DIR}/hakudokai_hermes2_broken_notified"
       BNOW=$(date +%s); BLAST=$(cat "$BROKEN_MARK" 2>/dev/null || echo 0)
       log "poke SUPPRESSED: pane is context-broken (叩けば悪化する). unACKed rows kept for later."
       if [ $((BNOW-BLAST)) -ge 3600 ]; then
@@ -157,9 +196,9 @@ print(" ".join(fresh))')
 
     # Require three unchanged explicit idle+empty-composer captures. Absence of
     # a busy word is never idle proof; modal/no-composer screens fail closed.
-    CAPTURE_PRE1="/tmp/hakudokai_hermes2_delivery-${NOW}-pre1.txt"
-    CAPTURE_PRE2="/tmp/hakudokai_hermes2_delivery-${NOW}-pre2.txt"
-    CAPTURE_PRE3="/tmp/hakudokai_hermes2_delivery-${NOW}-pre3.txt"
+    CAPTURE_PRE1="${TMP_DIR}/hakudokai_hermes2_delivery-${NOW}-pre1.txt"
+    CAPTURE_PRE2="${TMP_DIR}/hakudokai_hermes2_delivery-${NOW}-pre2.txt"
+    CAPTURE_PRE3="${TMP_DIR}/hakudokai_hermes2_delivery-${NOW}-pre3.txt"
     # shellcheck disable=SC2024
     sudo -n -u hermes tmux -S "$SOCK" capture-pane -p -t "$H2_PANE" -S -80 >"$CAPTURE_PRE1" 2>>"$LOG" || { log "poke deferred: preflight capture1 failed"; health; continue; }
     sleep 2
@@ -193,18 +232,18 @@ print(" ".join(fresh))')
     # One repeat is allowed only when a fresh capture proves the token remains.
     sudo -n -u hermes tmux -S "$SOCK" send-keys -t "$H2_PANE" -H 1b 5b 31 33 75 2>>"$LOG" || { log "poke failed: CSI-u submit-one"; health; continue; }
     sleep 1
-    CAPTURE_POST1="/tmp/hakudokai_hermes2_delivery-${NOW}-post1.txt"
+    CAPTURE_POST1="${TMP_DIR}/hakudokai_hermes2_delivery-${NOW}-post1.txt"
     # shellcheck disable=SC2024
     sudo -n -u hermes tmux -S "$SOCK" capture-pane -p -t "$H2_PANE" -S -80 >"$CAPTURE_POST1" 2>>"$LOG" || { log "poke failed: post1 capture"; health; continue; }
     if h2_payload_in_composer "$CAPTURE_POST1" "$DELIVERY_TOKEN"; then
       sudo -n -u hermes tmux -S "$SOCK" send-keys -t "$H2_PANE" -H 1b 5b 31 33 75 2>>"$LOG" || { log "poke failed: CSI-u fallback"; health; continue; }
     fi
     sleep 2
-    CAPTURE_POST2="/tmp/hakudokai_hermes2_delivery-${NOW}-post2.txt"
+    CAPTURE_POST2="${TMP_DIR}/hakudokai_hermes2_delivery-${NOW}-post2.txt"
     # shellcheck disable=SC2024
     sudo -n -u hermes tmux -S "$SOCK" capture-pane -p -t "$H2_PANE" -S -80 >"$CAPTURE_POST2" 2>>"$LOG" || { log "poke failed: post2 capture"; health; continue; }
     sleep 2
-    CAPTURE_POST3="/tmp/hakudokai_hermes2_delivery-${NOW}-post3.txt"
+    CAPTURE_POST3="${TMP_DIR}/hakudokai_hermes2_delivery-${NOW}-post3.txt"
     # shellcheck disable=SC2024
     sudo -n -u hermes tmux -S "$SOCK" capture-pane -p -t "$H2_PANE" -S -80 >"$CAPTURE_POST3" 2>>"$LOG" || { log "poke failed: post3 capture"; health; continue; }
     if ! h2_delivery_positive_multi "$DELIVERY_TOKEN" "$CAPTURE_POST1" "$CAPTURE_POST2" "$CAPTURE_POST3"; then
@@ -213,6 +252,9 @@ print(" ".join(fresh))')
       continue
     fi
     echo "$NOW" > "$LAST_POKE_FILE"
+    # 起こした事は ACK の成否に依らず記録する(門が ACK を拒んでも同じ組で再び起こさぬため)
+    H2_ROWS_JSON="$CANDIDATE_BODY" H2_WOKEN_STATE="$WOKEN_STATE" H2_WAKE_IDS="$NEW_IDS" h2_wake_record \
+      || log "woken-state record FAILED state=$WOKEN_STATE"
     log "POKED hermes2 pane (bundled $NCOUNT rows seqs=$SEQ_LIST); captures=$CAPTURE_POST1,$CAPTURE_POST2,$CAPTURE_POST3"
   else
     log "hermes2 session absent on $SOCK — left unACKed for next poll"
@@ -224,7 +266,9 @@ print(" ".join(fresh))')
   # evidence (never input-clear alone), the existing delivery bridge records a machine ACK under a
   # distinct identity. This is not evidence of task completion or an answer.
   for id in $NEW_IDS; do
-    ACK_BODY="/tmp/hakudokai_hermes2_ack-${id}.json"
+    h2_ack_gate_rejected "$ACK_REJECT_LEDGER" "$id" && continue
+    seq=$(echo "$CANDIDATE_BODY" | ID="$id" python3 -c 'import os,sys,json; print(next((r.get("seq") for r in json.load(sys.stdin) if r.get("id")==os.environ["ID"]),""))')
+    ACK_BODY="${TMP_DIR}/hakudokai_hermes2_ack-${id}.json"
     ACODE=$(sb_curl -sS -o "$ACK_BODY" -w "%{http_code}" -X PATCH \
       "${SUPABASE_URL}/rest/v1/pc_handshake?id=eq.${id}&acknowledged_at=is.null" \
       -H "Content-Type: application/json" -H "Prefer: return=minimal" \
@@ -233,8 +277,7 @@ print(" ".join(fresh))')
       echo "$id" >> "$PROCESSED_FILE"
       log "machine ACK recorded after visible submit id=${id:0:8} capture=$CAPTURE_POST3"
     else
-      ACK_ERROR=$(tr '\n' ' ' <"$ACK_BODY" | head -c 500)
-      log "machine ACK failed id=${id:0:8} http=$ACODE error=$ACK_ERROR; left unprocessed"
+      ack_failed "$id" "$seq" "$ACODE" "$ACK_BODY" machine
     fi
   done
   health

@@ -148,6 +148,121 @@ h2_delivery_positive() {
   printf '%s\n' "$tail_text" | grep -Eiq -- 'reasoning|contemplating|thinking|processing|working|Ctrl[+-]C to interrupt|tool calls|…[[:space:]]*·'
 }
 
+# ★a6c0f720 ⑴★ 同じ seq の組は状態が変わるまで再び起こさない。
+#   旧版は「processed 済み id 以外」を毎 poll 新着と見做した。ところが machine ACK は
+#   門(HUMAN_ACK_ONLY)に拒まれて processed に入らず、同じ組が rate-limit 毎に再着火した。
+#   ここでは行の状態キー(id|seq|priority|requires_response|message_type)を起こした記録と比べ、
+#   初めて見たキーか状態の変はつたキーが在る時だけ起こす。減つただけ・同じだけなら起こさない。
+# 入力: env H2_ROWS_JSON(起こす候補の行) / H2_WOKEN_STATE(起こした記録の file)
+# 出力: 1行目 wake|quiet、2行目 起こすべき id(空白区切り)
+h2_wake_select() {
+  python3 - <<'PY'
+import json
+import os
+
+rows = json.loads(os.environ.get("H2_ROWS_JSON", "[]") or "[]")
+path = os.environ.get("H2_WOKEN_STATE", "")
+woken = set()
+if path and os.path.exists(path):
+    with open(path) as f:
+        woken = {line.strip() for line in f if line.strip()}
+
+def key(row):
+    return "|".join(str(row.get(k)) for k in ("id", "seq", "priority", "requires_response", "message_type"))
+
+fresh = [row["id"] for row in rows if row.get("id") and key(row) not in woken]
+print("wake" if fresh else "quiet")
+print(" ".join(fresh))
+PY
+}
+
+# 起こした行の状態キーを記録へ足す(和集合・末尾 H2_WOKEN_KEEP 行だけ残す)。
+# 入力: env H2_ROWS_JSON / H2_WOKEN_STATE / H2_WAKE_IDS(今回起こした id)
+h2_wake_record() {
+  python3 - <<'PY'
+import json
+import os
+
+rows = json.loads(os.environ.get("H2_ROWS_JSON", "[]") or "[]")
+path = os.environ["H2_WOKEN_STATE"]
+ids = set(os.environ.get("H2_WAKE_IDS", "").split())
+keep = int(os.environ.get("H2_WOKEN_KEEP", "5000"))
+old = []
+if os.path.exists(path):
+    with open(path) as f:
+        old = [line.strip() for line in f if line.strip()]
+seen = set(old)
+for row in rows:
+    if row.get("id") in ids:
+        k = "|".join(str(row.get(c)) for c in ("id", "seq", "priority", "requires_response", "message_type"))
+        if k not in seen:
+            old.append(k)
+            seen.add(k)
+tmp = path + ".tmp"
+with open(tmp, "w") as f:
+    f.write("".join(line + "\n" for line in old[-keep:]))
+os.replace(tmp, path)
+PY
+}
+
+# ★a6c0f720 ⑶★ system の ack が門に拒まれた時は黙らず記録する。
+#   門の拒否(http 400 かつ P0001 / HUMAN_ACK_ONLY)は一行の JSONL として id ごとに一度だけ帳へ書く。
+#   使ひ方: h2_ack_reject_record <ledger> <id> <seq> <http> <body_file> <kind>
+#   戻り値: 0=門の拒否として今回初めて記録 / 3=門の拒否で記録済み / 1=門の拒否ではない(他の失敗)
+h2_ack_reject_record() {
+  H2_REJ_LEDGER="$1" H2_REJ_ID="$2" H2_REJ_SEQ="$3" H2_REJ_HTTP="$4" H2_REJ_BODY="$5" H2_REJ_KIND="$6" python3 - <<'PY'
+import datetime
+import json
+import os
+import sys
+
+body = ""
+try:
+    with open(os.environ["H2_REJ_BODY"], errors="replace") as f:
+        body = f.read()
+except OSError:
+    pass
+code = message = ""
+try:
+    parsed = json.loads(body)
+    code = str(parsed.get("code") or "")
+    message = str(parsed.get("message") or "")
+except Exception:
+    message = body
+gate = os.environ["H2_REJ_HTTP"] == "400" and (code == "P0001" or "HUMAN_ACK_ONLY" in body)
+if not gate:
+    sys.exit(1)
+ledger = os.environ["H2_REJ_LEDGER"]
+rid = os.environ["H2_REJ_ID"]
+if os.path.exists(ledger):
+    with open(ledger) as f:
+        for line in f:
+            try:
+                if json.loads(line).get("id") == rid:
+                    sys.exit(3)
+            except Exception:
+                continue
+entry = {
+    "recorded_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    "id": rid,
+    "seq": os.environ["H2_REJ_SEQ"],
+    "kind": os.environ["H2_REJ_KIND"],
+    "http": os.environ["H2_REJ_HTTP"],
+    "code": code,
+    "message_head": message.replace("\n", " ")[:200],
+}
+with open(ledger, "a") as f:
+    f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+PY
+}
+
+# 帳に門の拒否として載つてゐる id か(載つてゐれば PATCH を繰り返さない)。
+h2_ack_gate_rejected() {
+  local ledger="$1" id="$2"
+  [ -r "$ledger" ] || return 1
+  grep -Fq -- "\"id\": \"$id\"" "$ledger"
+}
+
 h2_log() {
   local msg="$1"
   : "${H2_LOG:?H2_LOG must be set}"
