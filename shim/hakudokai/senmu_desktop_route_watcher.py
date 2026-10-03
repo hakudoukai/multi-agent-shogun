@@ -77,8 +77,20 @@ def inbound_once(state):
   elif ast in ('delivery_unverified','paste_or_enter_failed'):status='delivery_unknown_no_retry'
   elif attempts>=MAX_ATTEMPTS:status='retry_exhausted'
   else:status='pending_delivery'
-  handled[rid]={'seq':row.get('seq'),'status':status,'attempts':attempts,'last_result':result,'updated_at':now_iso(),'database_ack_written':False}
-  print(json.dumps({'mode':'inbound','role':ROLE,'seq':row.get('seq'),'status':status,'actuator_status':ast,'database_ack_written':False},ensure_ascii=False),flush=True)
+  record={'seq':row.get('seq'),'status':status,'attempts':attempts,'last_result':result,'updated_at':now_iso(),'database_ack_written':False}
+  hold_fields={}
+  if status=='queued_unrung':
+   hold_fields={'box_held':True,'return_to_sender_required':True,'return_reason':ast,'return_event_key':f'{rid}:attempt:{attempts}','preflight_blocks':int(saved.get('preflight_blocks',0))+1}
+  if status=='delivery_unknown_no_retry':
+   hold_fields={'box_held':True,'return_to_sender_required':True,'return_reason':ast,'return_event_key':f'{rid}:attempt:{attempts}','delivery_status':'unknown_no_retry'}
+  if status=='retry_exhausted':
+   hold_fields={'box_held':True,'return_to_sender_required':True,'return_reason':ast,'return_event_key':f'{rid}:attempt:{attempts}','terminal_reason':'attempt_limit_reached'}
+  record.update(hold_fields)
+  if status=='queued_unrung':record['next_retry_epoch']=time.time()+30
+  handled[rid]=record
+  line={'mode':'inbound','role':ROLE,'seq':row.get('seq'),'status':status,'actuator_status':ast,'database_ack_written':False}
+  line.update(hold_fields)
+  print(json.dumps(line,ensure_ascii=False),flush=True)
   break
 def outbound_once(state):
  floor=int(state.get('outbound_floor',MIN_SEQ));rows=fetch({'select':'id,seq,message_type,from_pc,to_pc,topic,parent_message_id,created_at','from_pc':f'eq.{ROLE}','seq':f'gt.{floor}','order':'seq.asc','limit':'50'})
